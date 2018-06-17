@@ -260,19 +260,21 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
           accum_size != gegl_buffer_get_width  (paint_buffer) ||
           accum_size != gegl_buffer_get_height (paint_buffer))
         {
-          GimpRGB    pixel;
+          gfloat     pixel[4];
           GeglColor *color;
 
-          gimp_pickable_get_color_at (GIMP_PICKABLE (drawable),
+          gimp_pickable_get_pixel_at (GIMP_PICKABLE (drawable),
                                       CLAMP ((gint) coords->x,
                                              0,
                                              gimp_item_get_width (GIMP_ITEM (drawable)) - 1),
                                       CLAMP ((gint) coords->y,
                                              0,
                                              gimp_item_get_height (GIMP_ITEM (drawable)) - 1),
-                                      &pixel);
+                                      babl_format ("RGBA float"),
+                                      pixel);
 
-          color = gimp_gegl_color_new (&pixel);
+          color = gegl_color_new (NULL);
+          gegl_color_set_pixel (color, babl_format ("RGBA float"), pixel);
           gegl_buffer_set_color (accum_buffer, NULL, color);
           g_object_unref (color);
         }
