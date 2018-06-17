@@ -56,7 +56,6 @@
 #include "gimppropgui-hue-saturation.h"
 #include "gimppropgui-panorama-projection.h"
 #include "gimppropgui-recursive-transform.h"
-#include "gimppropgui-recursive-transform-plus.h"
 #include "gimppropgui-shadows-highlights.h"
 #include "gimppropgui-spiral.h"
 #include "gimppropgui-supernova.h"
@@ -457,8 +456,6 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_panorama_projection },
   { "GimpGegl-gegl-recursive-transform-config",
     _gimp_prop_gui_new_recursive_transform },
-  { "GimpGegl-gegl-recursive-transform-plus-config",
-    _gimp_prop_gui_new_recursive_transform_plus },
   { "GimpGegl-gegl-shadows-highlights-config",
     _gimp_prop_gui_new_shadows_highlights },
   { "GimpGegl-gegl-spiral-config",
