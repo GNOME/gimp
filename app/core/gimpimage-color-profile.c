@@ -604,9 +604,6 @@ gimp_image_color_profile_srgb_to_pixel (GimpImage     *image,
 
   if (transform)
     {
-      /* for the alpha channel */
-      gimp_rgba_get_pixel (color, pixel_format, pixel);
-
       gimp_color_transform_process_pixels (transform,
                                            babl_format ("R'G'B'A double"),
                                            color,
