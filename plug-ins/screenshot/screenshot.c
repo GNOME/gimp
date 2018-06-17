@@ -110,13 +110,13 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run-mode",  "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
-    { GIMP_PDB_INT32, "root",      "Root window { TRUE, FALSE }"      },
-    { GIMP_PDB_INT32, "window-id", "Window id"                        },
-    { GIMP_PDB_INT32, "x1",        "(optional) Region left x coord"   },
-    { GIMP_PDB_INT32, "y1",        "(optional) Region top y coord"    },
-    { GIMP_PDB_INT32, "x2",        "(optional) Region right x coord"  },
-    { GIMP_PDB_INT32, "y2",        "(optional) Region bottom y coord" }
+    { GIMP_PDB_INT32, "run-mode",   "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
+    { GIMP_PDB_INT32, "shoot-type", "The Shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }" },
+    { GIMP_PDB_INT32, "window-id",  "Window id for SHOOT-WINDOW"       },
+    { GIMP_PDB_INT32, "x1",         "(optional) Region left x coord"   },
+    { GIMP_PDB_INT32, "y1",         "(optional) Region top y coord"    },
+    { GIMP_PDB_INT32, "x2",         "(optional) Region right x coord"  },
+    { GIMP_PDB_INT32, "y2",         "(optional) Region bottom y coord" }
   };
 
   static const GimpParamDef return_vals[] =
@@ -252,38 +252,49 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams == 3)
+      if (nparams == 3 || nparams == 7)
         {
-          gboolean do_root = param[1].data.d_int32;
+          shootvals.shoot_type   = param[1].data.d_int32;
+          shootvals.window_id    = param[2].data.d_int32;
+          shootvals.select_delay = 0;
 
-          shootvals.shoot_type   = do_root ? SHOOT_ROOT : SHOOT_WINDOW;
-          shootvals.window_id    = param[2].data.d_int32;
-          shootvals.select_delay = 0;
-        }
-      else if (nparams == 7)
-        {
-          shootvals.shoot_type   = SHOOT_REGION;
-          shootvals.window_id    = param[2].data.d_int32;
-          shootvals.select_delay = 0;
-          shootvals.x1           = param[3].data.d_int32;
-          shootvals.y1           = param[4].data.d_int32;
-          shootvals.x2           = param[5].data.d_int32;
-          shootvals.y2           = param[6].data.d_int32;
+          if (shootvals.shoot_type < SHOOT_WINDOW ||
+              shootvals.shoot_type > SHOOT_REGION)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else if (shootvals.shoot_type == SHOOT_REGION)
+            {
+              if (nparams == 7)
+                {
+                  shootvals.x1 = param[3].data.d_int32;
+                  shootvals.y1 = param[4].data.d_int32;
+                  shootvals.x2 = param[5].data.d_int32;
+                  shootvals.y2 = param[6].data.d_int32;
+                }
+              else
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
+            }
         }
       else
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
 
-      if (! gdk_init_check (NULL, NULL))
-        status = GIMP_PDB_CALLING_ERROR;
-
-      if (! (capabilities & SCREENSHOT_CAN_PICK_NONINTERACTIVELY))
+      if (status == GIMP_PDB_SUCCESS)
         {
-          if (shootvals.shoot_type == SHOOT_WINDOW ||
-              shootvals.shoot_type == SHOOT_REGION)
+          if (! gdk_init_check (NULL, NULL))
+            status = GIMP_PDB_CALLING_ERROR;
+
+          if (! (capabilities & SCREENSHOT_CAN_PICK_NONINTERACTIVELY))
             {
-              status = GIMP_PDB_CALLING_ERROR;
+              if (shootvals.shoot_type == SHOOT_WINDOW ||
+                  shootvals.shoot_type == SHOOT_REGION)
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
             }
         }
         break;

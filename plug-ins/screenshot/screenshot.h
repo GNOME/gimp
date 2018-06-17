@@ -52,9 +52,9 @@ typedef enum
 
 typedef enum
 {
+  SHOOT_WINDOW,
   SHOOT_ROOT,
-  SHOOT_REGION,
-  SHOOT_WINDOW
+  SHOOT_REGION
 } ShootType;
 
 typedef struct
