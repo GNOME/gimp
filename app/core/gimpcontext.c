@@ -1476,7 +1476,7 @@ gimp_context_new (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (! template || GIMP_IS_CONTEXT (template), NULL);
+  g_return_val_if_fail (template == NULL || GIMP_IS_CONTEXT (template), NULL);
 
   context = g_object_new (GIMP_TYPE_CONTEXT,
                           "name", name,
@@ -1916,6 +1916,8 @@ gimp_context_set_image (GimpContext *context,
                         GimpImage   *image)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_IMAGE);
 
   gimp_context_real_set_image (context, image);
@@ -1970,6 +1972,8 @@ gimp_context_set_display (GimpContext *context,
                           gpointer     display)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (display == NULL || GIMP_IS_OBJECT (display));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_DISPLAY);
 
   gimp_context_real_set_display (context, display);
@@ -2062,7 +2066,8 @@ gimp_context_set_tool (GimpContext  *context,
                        GimpToolInfo *tool_info)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
+  g_return_if_fail (tool_info == NULL || GIMP_IS_TOOL_INFO (tool_info));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_TOOL);
 
   gimp_context_real_set_tool (context, tool_info);
@@ -2177,7 +2182,8 @@ gimp_context_set_paint_info (GimpContext   *context,
                              GimpPaintInfo *paint_info)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! paint_info || GIMP_IS_PAINT_INFO (paint_info));
+  g_return_if_fail (paint_info == NULL || GIMP_IS_PAINT_INFO (paint_info));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_PAINT_INFO);
 
   gimp_context_real_set_paint_info (context, paint_info);
@@ -2293,6 +2299,7 @@ gimp_context_set_foreground (GimpContext   *context,
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (color != NULL);
+
   context_find_defined (context, GIMP_CONTEXT_PROP_FOREGROUND);
 
   gimp_context_real_set_foreground (context, color);
@@ -2343,6 +2350,7 @@ gimp_context_set_background (GimpContext   *context,
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (color != NULL);
+
   context_find_defined (context, GIMP_CONTEXT_PROP_BACKGROUND);
 
   gimp_context_real_set_background (context, color);
@@ -2435,6 +2443,7 @@ gimp_context_set_opacity (GimpContext *context,
                           gdouble      opacity)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_OPACITY);
 
   gimp_context_real_set_opacity (context, opacity);
@@ -2480,6 +2489,7 @@ gimp_context_set_paint_mode (GimpContext   *context,
                              GimpLayerMode  paint_mode)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_PAINT_MODE);
 
   gimp_context_real_set_paint_mode (context, paint_mode);
@@ -2525,7 +2535,8 @@ gimp_context_set_brush (GimpContext *context,
                         GimpBrush   *brush)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! brush || GIMP_IS_BRUSH (brush));
+  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_BRUSH);
 
   gimp_context_real_set_brush (context, brush);
@@ -2638,7 +2649,8 @@ gimp_context_set_dynamics (GimpContext  *context,
                            GimpDynamics *dynamics)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! dynamics || GIMP_IS_DYNAMICS (dynamics));
+  g_return_if_fail (dynamics == NULL || GIMP_IS_DYNAMICS (dynamics));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_DYNAMICS);
 
   gimp_context_real_set_dynamics (context, dynamics);
@@ -2750,7 +2762,8 @@ gimp_context_set_mybrush (GimpContext *context,
                           GimpMybrush *brush)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! brush || GIMP_IS_MYBRUSH (brush));
+  g_return_if_fail (brush == NULL || GIMP_IS_MYBRUSH (brush));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_MYBRUSH);
 
   gimp_context_real_set_mybrush (context, brush);
@@ -2862,6 +2875,8 @@ gimp_context_set_pattern (GimpContext *context,
                           GimpPattern *pattern)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_PATTERN);
 
   gimp_context_real_set_pattern (context, pattern);
@@ -2973,6 +2988,8 @@ gimp_context_set_gradient (GimpContext  *context,
                            GimpGradient *gradient)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (gradient == NULL || GIMP_IS_GRADIENT (gradient));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_GRADIENT);
 
   gimp_context_real_set_gradient (context, gradient);
@@ -3084,6 +3101,8 @@ gimp_context_set_palette (GimpContext *context,
                           GimpPalette *palette)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (palette == NULL || GIMP_IS_PALETTE (palette));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_PALETTE);
 
   gimp_context_real_set_palette (context, palette);
@@ -3195,6 +3214,8 @@ gimp_context_set_font (GimpContext *context,
                        GimpFont    *font)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (font == NULL || GIMP_IS_FONT (font));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_FONT);
 
   gimp_context_real_set_font (context, font);
@@ -3342,7 +3363,8 @@ gimp_context_set_tool_preset (GimpContext    *context,
                               GimpToolPreset *tool_preset)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (! tool_preset || GIMP_IS_TOOL_PRESET (tool_preset));
+  g_return_if_fail (tool_preset == NULL || GIMP_IS_TOOL_PRESET (tool_preset));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_TOOL_PRESET);
 
   gimp_context_real_set_tool_preset (context, tool_preset);
@@ -3449,6 +3471,8 @@ gimp_context_set_buffer (GimpContext *context,
                          GimpBuffer *buffer)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (buffer == NULL || GIMP_IS_BUFFER (buffer));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_BUFFER);
 
   gimp_context_real_set_buffer (context, buffer);
@@ -3563,6 +3587,8 @@ gimp_context_set_imagefile (GimpContext   *context,
                             GimpImagefile *imagefile)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (imagefile == NULL || GIMP_IS_IMAGEFILE (imagefile));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_IMAGEFILE);
 
   gimp_context_real_set_imagefile (context, imagefile);
@@ -3677,6 +3703,8 @@ gimp_context_set_template (GimpContext  *context,
                            GimpTemplate *template)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (template == NULL || GIMP_IS_TEMPLATE (template));
+
   context_find_defined (context, GIMP_CONTEXT_PROP_TEMPLATE);
 
   gimp_context_real_set_template (context, template);
