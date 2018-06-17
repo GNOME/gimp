@@ -113,10 +113,10 @@ query (void)
     { GIMP_PDB_INT32, "run-mode",   "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
     { GIMP_PDB_INT32, "shoot-type", "The Shoot type { SHOOT-WINDOW (0), SHOOT-ROOT (1), SHOOT-REGION (2) }" },
     { GIMP_PDB_INT32, "window-id",  "Window id for SHOOT-WINDOW"       },
-    { GIMP_PDB_INT32, "x1",         "(optional) Region left x coord"   },
-    { GIMP_PDB_INT32, "y1",         "(optional) Region top y coord"    },
-    { GIMP_PDB_INT32, "x2",         "(optional) Region right x coord"  },
-    { GIMP_PDB_INT32, "y2",         "(optional) Region bottom y coord" }
+    { GIMP_PDB_INT32, "x1",         "Region left x coord for SHOOT-REGION"   },
+    { GIMP_PDB_INT32, "y1",         "Region top y coord for SHOOT-REGION"    },
+    { GIMP_PDB_INT32, "x2",         "Region right x coord for SHOOT-REGION"  },
+    { GIMP_PDB_INT32, "y2",         "Region bottom y coord for SHOOT-REGION" }
   };
 
   static const GimpParamDef return_vals[] =
