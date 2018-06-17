@@ -126,7 +126,8 @@ G_DEFINE_TYPE (GimpTextStyleEditor, gimp_text_style_editor,
 static void
 gimp_text_style_editor_class_init (GimpTextStyleEditorClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed  = gimp_text_style_editor_constructed;
   object_class->dispose      = gimp_text_style_editor_dispose;
@@ -179,6 +180,8 @@ gimp_text_style_editor_class_init (GimpTextStyleEditorClass *klass)
                                                         1.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpTextStyleEditor");
 }
 
 static void
@@ -941,10 +944,17 @@ gimp_text_style_editor_set_baseline (GimpTextStyleEditor *editor,
                                    gimp_text_style_editor_baseline_changed,
                                    editor);
 
-  gtk_adjustment_set_value (editor->baseline_adjustment,
-                            (gdouble) baseline / PANGO_SCALE);
-  /* make sure the "" really gets replaced */
-  gtk_adjustment_value_changed (editor->baseline_adjustment);
+  if (gtk_adjustment_get_value (editor->baseline_adjustment) !=
+      (gdouble) baseline / PANGO_SCALE)
+    {
+      gtk_adjustment_set_value (editor->baseline_adjustment,
+                                (gdouble) baseline / PANGO_SCALE);
+    }
+  else
+    {
+      /* make sure the "" really gets replaced */
+      g_signal_emit_by_name (editor->baseline_adjustment, "value-changed");
+    }
 
   g_signal_handlers_unblock_by_func (editor->baseline_adjustment,
                                      gimp_text_style_editor_baseline_changed,
@@ -984,10 +994,17 @@ gimp_text_style_editor_set_kerning (GimpTextStyleEditor *editor,
                                    gimp_text_style_editor_kerning_changed,
                                    editor);
 
-  gtk_adjustment_set_value (editor->kerning_adjustment,
-                            (gdouble) kerning / PANGO_SCALE);
-  /* make sure the "" really gets replaced */
-  gtk_adjustment_value_changed (editor->kerning_adjustment);
+  if (gtk_adjustment_get_value (editor->baseline_adjustment) !=
+      (gdouble) kerning / PANGO_SCALE)
+    {
+      gtk_adjustment_set_value (editor->kerning_adjustment,
+                                (gdouble) kerning / PANGO_SCALE);
+    }
+  else
+    {
+      /* make sure the "" really gets replaced */
+      g_signal_emit_by_name (editor->kerning_adjustment, "value-changed");
+    }
 
   g_signal_handlers_unblock_by_func (editor->kerning_adjustment,
                                      gimp_text_style_editor_kerning_changed,
