@@ -626,16 +626,17 @@ typedef enum  /*< pdb-skip, skip >*/
                                   GIMP_CONTEXT_PROP_MASK_PATTERN    |
                                   GIMP_CONTEXT_PROP_MASK_GRADIENT),
 
-  GIMP_CONTEXT_PROP_MASK_ALL   = (GIMP_CONTEXT_PROP_MASK_IMAGE      |
-                                  GIMP_CONTEXT_PROP_MASK_DISPLAY    |
-                                  GIMP_CONTEXT_PROP_MASK_TOOL       |
-                                  GIMP_CONTEXT_PROP_MASK_PAINT_INFO |
-                                  GIMP_CONTEXT_PROP_MASK_MYBRUSH    |
-                                  GIMP_CONTEXT_PROP_MASK_PALETTE    |
-                                  GIMP_CONTEXT_PROP_MASK_FONT       |
-                                  GIMP_CONTEXT_PROP_MASK_BUFFER     |
-                                  GIMP_CONTEXT_PROP_MASK_IMAGEFILE  |
-                                  GIMP_CONTEXT_PROP_MASK_TEMPLATE   |
+  GIMP_CONTEXT_PROP_MASK_ALL   = (GIMP_CONTEXT_PROP_MASK_IMAGE       |
+                                  GIMP_CONTEXT_PROP_MASK_DISPLAY     |
+                                  GIMP_CONTEXT_PROP_MASK_TOOL        |
+                                  GIMP_CONTEXT_PROP_MASK_PAINT_INFO  |
+                                  GIMP_CONTEXT_PROP_MASK_MYBRUSH     |
+                                  GIMP_CONTEXT_PROP_MASK_PALETTE     |
+                                  GIMP_CONTEXT_PROP_MASK_FONT        |
+                                  GIMP_CONTEXT_PROP_MASK_TOOL_PRESET |
+                                  GIMP_CONTEXT_PROP_MASK_BUFFER      |
+                                  GIMP_CONTEXT_PROP_MASK_IMAGEFILE   |
+                                  GIMP_CONTEXT_PROP_MASK_TEMPLATE    |
                                   GIMP_CONTEXT_PROP_MASK_PAINT)
 } GimpContextPropMask;
 
