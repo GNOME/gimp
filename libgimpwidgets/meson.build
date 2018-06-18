@@ -82,6 +82,8 @@ libgimpwidgets_sources = [
   gimpwidgetsenums,
   gimpwidgetsmarshal,
   icons_imgs_sources,
+  cursors_sources,
+  pickers_sources,
 ]
 
 libgimpwidgets_headers = [
