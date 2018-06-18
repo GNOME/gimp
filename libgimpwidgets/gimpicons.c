@@ -27,12 +27,6 @@
 
 #include "gimpicons.h"
 
-#ifdef MESON_BUILD
-#include "icons/Color/gimp-icon-pixbufs.h"
-#else
-#include "icons/Color/gimp-icon-pixbufs.c"
-#endif
-
 #include "libgimp/libgimp-intl.h"
 
 

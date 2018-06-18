@@ -444,7 +444,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_VECTORS_REMOVE,              /*< desc="Delete path"                    >*/
   GIMP_UNDO_VECTORS_MOD,                 /*< desc="Path modification"              >*/
   GIMP_UNDO_FS_TO_LAYER,                 /*< desc="Floating selection to layer"    >*/
-  GIMP_UNDO_TRANSFORM,                   /*< desc="Transform"                      >*/
+  GIMP_UNDO_TRANSFORM_GRID,              /*< desc="Transform grid"                 >*/
   GIMP_UNDO_PAINT,                       /*< desc="Paint"                          >*/
   GIMP_UNDO_INK,                         /*< desc="Ink"                            >*/
   GIMP_UNDO_FOREGROUND_SELECT,           /*< desc="Select foreground"              >*/
@@ -626,16 +626,17 @@ typedef enum  /*< pdb-skip, skip >*/
                                   GIMP_CONTEXT_PROP_MASK_PATTERN    |
                                   GIMP_CONTEXT_PROP_MASK_GRADIENT),
 
-  GIMP_CONTEXT_PROP_MASK_ALL   = (GIMP_CONTEXT_PROP_MASK_IMAGE      |
-                                  GIMP_CONTEXT_PROP_MASK_DISPLAY    |
-                                  GIMP_CONTEXT_PROP_MASK_TOOL       |
-                                  GIMP_CONTEXT_PROP_MASK_PAINT_INFO |
-                                  GIMP_CONTEXT_PROP_MASK_MYBRUSH    |
-                                  GIMP_CONTEXT_PROP_MASK_PALETTE    |
-                                  GIMP_CONTEXT_PROP_MASK_FONT       |
-                                  GIMP_CONTEXT_PROP_MASK_BUFFER     |
-                                  GIMP_CONTEXT_PROP_MASK_IMAGEFILE  |
-                                  GIMP_CONTEXT_PROP_MASK_TEMPLATE   |
+  GIMP_CONTEXT_PROP_MASK_ALL   = (GIMP_CONTEXT_PROP_MASK_IMAGE       |
+                                  GIMP_CONTEXT_PROP_MASK_DISPLAY     |
+                                  GIMP_CONTEXT_PROP_MASK_TOOL        |
+                                  GIMP_CONTEXT_PROP_MASK_PAINT_INFO  |
+                                  GIMP_CONTEXT_PROP_MASK_MYBRUSH     |
+                                  GIMP_CONTEXT_PROP_MASK_PALETTE     |
+                                  GIMP_CONTEXT_PROP_MASK_FONT        |
+                                  GIMP_CONTEXT_PROP_MASK_TOOL_PRESET |
+                                  GIMP_CONTEXT_PROP_MASK_BUFFER      |
+                                  GIMP_CONTEXT_PROP_MASK_IMAGEFILE   |
+                                  GIMP_CONTEXT_PROP_MASK_TEMPLATE    |
                                   GIMP_CONTEXT_PROP_MASK_PAINT)
 } GimpContextPropMask;
 

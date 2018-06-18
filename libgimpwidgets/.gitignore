@@ -5,6 +5,10 @@
 /Makefile
 /Makefile.in
 /_libs
+/gimp-color-picker-cursors.c
+/gimp-color-picker-cursors.h
+/gimp-icon-pixbufs.c
+/gimp-icon-pixbufs.h
 /gimpwidgetsmarshal.c
 /gimpwidgetsmarshal.h
 /makefile.mingw
@@ -13,5 +17,3 @@
 /*.trs
 /*.log
 /xgen-wec
-/gimp-color-picker-cursors.c
-/gimp-color-picker-cursors.h

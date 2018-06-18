@@ -385,7 +385,6 @@ app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
 app/propgui/gimppropgui-panorama-projection.c
 app/propgui/gimppropgui-recursive-transform.c
-app/propgui/gimppropgui-recursive-transform-plus.c
 app/propgui/gimppropgui-shadows-highlights.c
 app/propgui/gimppropgui-spiral.c
 app/propgui/gimppropgui-supernova.c
@@ -485,6 +484,8 @@ app/tools/gimptexttool.c
 app/tools/gimptexttool-editor.c
 app/tools/gimpthresholdtool.c
 app/tools/gimptool.c
+app/tools/gimptransformgridoptions.c
+app/tools/gimptransformgridtool.c
 app/tools/gimptransformoptions.c
 app/tools/gimptransformtool.c
 app/tools/gimpunifiedtransformtool.c

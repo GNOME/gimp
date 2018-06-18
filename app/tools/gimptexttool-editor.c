@@ -200,7 +200,7 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
                                       0, 0,
                                       GIMP_HANDLE_ANCHOR_CENTER, 0, 0);
       gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
-                                          text_tool->style_overlay, 0.7);
+                                          text_tool->style_overlay, 0.85);
 
       if (text_tool->image)
         gimp_image_get_resolution (text_tool->image, &xres, &yres);

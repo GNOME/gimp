@@ -3,6 +3,8 @@
 /.libs
 /Makefile
 /Makefile.in
+/gimp-core-pixbufs.c
+/gimp-core-pixbufs.h
 /gimpmarshal.c
 /gimpmarshal.h
 /libappcore.a

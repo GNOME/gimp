@@ -564,8 +564,6 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                 {
                   gtk_notebook_append_page (GTK_NOTEBOOK (dockbook),
                                             dialog, NULL);
-                  gtk_widget_show (dialog);
-
                   gtk_widget_show (dock);
                 }
               else

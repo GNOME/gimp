@@ -184,6 +184,8 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
 
   gtk_binding_entry_add_signal (gtk_binding_set_by_class (klass),
                                 GDK_KEY_Escape, 0, "close", 0);
+
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpOverlayDialog");
 }
 
 static void

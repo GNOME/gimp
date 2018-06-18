@@ -29,12 +29,20 @@ GimpColorNotebook tab {
     padding: 0 0 0 0;
 }
 
-GimpColorScales spinbutton button {
-    padding: 0 0 0 0;
+GimpColorScales spinbutton {
+    min-height: 0;
 }
 
 GimpColorScales spinbutton entry {
     min-height: 0;
+}
+
+GimpColorScales spinbutton button {
+    padding: 0 0 0 0;
+}
+
+GimpColorHistory button {
+    padding: 3px 3px 3px 3px;
 }
 
 GimpDock {
@@ -45,20 +53,48 @@ GimpDock notebook tab {
     padding: 0 0 0 0;
 }
 
-GimpDock spinbutton button {
-    padding: 0 0 0 0;
+GimpDock :not(toolbutton) > button,
+GimpOverlayDialog button,
+GimpToolDialog :not(headerbar) button,
+GimpTextStyleEditor button {
+    padding: 0px 2px 0px 2px;
 }
 
-GimpDock spinbutton entry {
+GimpToolDialog headerbar {
     min-height: 0;
 }
 
-GimpDockable {
+GimpToolDialog headerbar button {
+    padding: 2px 2px 2px 2px;
+}
+
+GimpDock entry,
+GimpOverlayDialog entry,
+GimpToolDialog entry,
+GimpTextStyleEditor entry {
+    min-height: 2.5em;
+}
+
+GimpDock spinbutton,
+GimpOverlayDialog spinbutton,
+GimpToolDialog spinbutton,
+GimpTextStyleEditor spinbutton {
+    min-height: 2.5em;
+}
+
+GimpDock spinbutton button,
+GimpOverlayDialog spinbutton button,
+GimpToolDialog spinbutton button,
+GimpTextStyleEditor spinbutton button {
+    padding: 0 0 0 0;
+}
+
+GimpDock frame {
     -GimpFrame-label-bold:       0;
     -GimpFrame-label-spacing:    2;
 }
 
-GimpDisplayShell grid>button {
+GimpDisplayShell grid > button {
     min-height: 0;
     min-width: 0;
     padding: 0 0 0 0;

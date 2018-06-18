@@ -833,7 +833,7 @@ p_save_pointfile (BenderDialog *cd,
   gint j;
   FILE *l_fp;
 
-  l_fp = g_fopen(filename, "wb+");
+  l_fp = g_fopen(filename, "w+b");
   if (!l_fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),

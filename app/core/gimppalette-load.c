@@ -247,7 +247,7 @@ gimp_palette_load_act (GimpContext   *context,
   gsize        bytes_read;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
@@ -283,7 +283,7 @@ gimp_palette_load_riff (GimpContext   *context,
   gsize        bytes_read;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
@@ -332,7 +332,7 @@ gimp_palette_load_psp (GimpContext   *context,
   gchar      **ascii_colors;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
@@ -418,7 +418,7 @@ gimp_palette_load_aco (GimpContext   *context,
   gsize        bytes_read;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (! g_input_stream_read_all (input, header, sizeof (header),
@@ -587,7 +587,7 @@ gimp_palette_load_css (GimpContext   *context,
   gchar            *buf;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   regex = g_regex_new (".*color.*:(?P<param>.*);", G_REGEX_CASELESS, 0, error);

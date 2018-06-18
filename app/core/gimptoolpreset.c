@@ -390,6 +390,14 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
             break;
           }
 
+        if (! strcmp (type_name, "GimpTransformOptions"))
+          {
+            g_printerr ("Correcting tool options type GimpTransformOptions "
+                        "to GimpTransformGridOptions\n");
+            g_free (type_name);
+            type_name = g_strdup ("GimpTransformGridOptions");
+          }
+
         type = g_type_from_name (type_name);
 
         if (! type)

@@ -108,6 +108,7 @@ gimp_color_history_class_init (GimpColorHistoryClass *klass)
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_HISTORY_SIZE,
                                    g_param_spec_int ("history-size",
                                                      NULL, NULL,
@@ -115,6 +116,8 @@ gimp_color_history_class_init (GimpColorHistoryClass *klass)
                                                      DEFAULT_HISTORY_SIZE,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
+
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorHistory");
 
   klass->color_selected = NULL;
 }
@@ -166,6 +169,7 @@ gimp_color_history_set_property (GObject      *object,
     case PROP_CONTEXT:
       history->context = g_value_get_object (value);
       break;
+
     case PROP_HISTORY_SIZE:
         {
           GtkWidget *button;
@@ -233,6 +237,7 @@ gimp_color_history_get_property (GObject    *object,
     case PROP_CONTEXT:
       g_value_set_object (value, history->context);
       break;
+
     case PROP_HISTORY_SIZE:
       g_value_set_int (value, history->history_size);
       break;
@@ -242,6 +247,7 @@ gimp_color_history_get_property (GObject    *object,
       break;
     }
 }
+
 
 /*  Public Functions  */
 

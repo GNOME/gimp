@@ -19,7 +19,7 @@
 #define __GIMP_SHEAR_TOOL_H__
 
 
-#include "gimptransformtool.h"
+#include "gimptransformgridtool.h"
 
 
 #define GIMP_TYPE_SHEAR_TOOL            (gimp_shear_tool_get_type ())
@@ -35,15 +35,15 @@ typedef struct _GimpShearToolClass GimpShearToolClass;
 
 struct _GimpShearTool
 {
-  GimpTransformTool  parent_instance;
+  GimpTransformGridTool  parent_instance;
 
-  GtkAdjustment     *x_adj;
-  GtkAdjustment     *y_adj;
+  GtkAdjustment         *x_adj;
+  GtkAdjustment         *y_adj;
 };
 
 struct _GimpShearToolClass
 {
-  GimpTransformToolClass  parent_class;
+  GimpTransformGridToolClass  parent_class;
 };
 
 

@@ -198,6 +198,8 @@ libgimpwidgets_sources = \
 libgimpwidgets_built_sources = \
 	gimp-color-picker-cursors.c	\
 	gimp-color-picker-cursors.h	\
+	gimp-icon-pixbufs.c		\
+	gimp-icon-pixbufs.h		\
 	gimpwidgetsenums.c		\
 	gimpwidgetsmarshal.c		\
 	gimpwidgetsmarshal.h
@@ -210,6 +212,7 @@ libgimpwidgets_@GIMP_API_VERSION@_la_SOURCES = \
 
 libgimpwidgetsinclude_HEADERS = \
 	gimpbrowser.h			\
+	gimpbusybox.h			\
 	gimpbutton.h			\
 	gimpcairo-utils.h		\
 	gimpcellrenderercolor.h		\
@@ -315,9 +318,12 @@ endif
 gen_sources = \
 	gimp-color-picker-cursors.c	\
 	gimp-color-picker-cursors.h	\
+	gimp-icon-pixbufs.c		\
+	gimp-icon-pixbufs.h		\
 	xgen-wec 			\
 	xgen-wmh			\
 	xgen-wmc
+
 CLEANFILES = $(gen_sources)
 
 xgen-wec: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS) Makefile.am
@@ -363,6 +369,16 @@ gimp-color-picker-cursors.c: gimp-color-picker-cursors.h
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/cursors --generate-source \
 	  --target=$@ $(top_builddir)/cursors/gimp-color-picker-cursors.gresource.xml
+
+gimp-icon-pixbufs.h: $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(top_srcdir)/icons/Color --generate-header \
+	  --target=$@ $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
+
+gimp-icon-pixbufs.c: gimp-icon-pixbufs.h
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(top_srcdir)/icons/Color --generate-source \
+	  --target=$@ $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
 
 
 #

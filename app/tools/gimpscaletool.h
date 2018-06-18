@@ -19,7 +19,7 @@
 #define __GIMP_SCALE_TOOL_H__
 
 
-#include "gimptransformtool.h"
+#include "gimptransformgridtool.h"
 
 
 #define GIMP_TYPE_SCALE_TOOL            (gimp_scale_tool_get_type ())
@@ -34,14 +34,14 @@ typedef struct _GimpScaleToolClass GimpScaleToolClass;
 
 struct _GimpScaleTool
 {
-  GimpTransformTool  parent_instance;
+  GimpTransformGridTool  parent_instance;
 
-  GtkWidget         *box;
+  GtkWidget             *box;
 };
 
 struct _GimpScaleToolClass
 {
-  GimpTransformToolClass parent_class;
+  GimpTransformGridToolClass parent_class;
 };
 
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 #   Foreground Extraction Benchmark
 #   Copyright 2005  Sven Neumann <sven@gimp.org>
@@ -79,22 +79,22 @@ def benchmark (folder, save_output):
         mask_layer = mask.active_layer;
 
         truth = pdb.gimp_file_load (truth_name, truth_name)
-	convert_grayscale (truth)
+        convert_grayscale (truth)
         truth_layer = truth.active_layer;
 
         unclassified = unclassified_pixels (mask_layer, truth_layer)
 
         sys.stderr.write (os.path.basename (image_name))
 
-	start = time.time ()
+        start = time.time ()
         pdb.gimp_drawable_foreground_extract (image_layer,
-					      FOREGROUND_EXTRACT_SIOX,
-					      mask_layer)
-	end = time.time ()
+                                              FOREGROUND_EXTRACT_SIOX,
+                                              mask_layer)
+        end = time.time ()
 
         sys.stderr.write (" ")
 
-	mask_layer.flush ()
+        mask_layer.flush ()
 
         # Ignore errors when creating image displays;
         # allows us to be used without a display.
@@ -112,38 +112,38 @@ def benchmark (folder, save_output):
         misclassified = misclassified_pixels (mask_layer, truth_layer)
 
         sys.stderr.write ("%d %d %.2f%% %.3fs\n" %
-			  (unclassified, misclassified,
-			   (misclassified * 100.0 / unclassified),
-			   end - start))
+                          (unclassified, misclassified,
+                           (misclassified * 100.0 / unclassified),
+                           end - start))
 
-	total_unclassified += unclassified
-	total_misclassified += misclassified
-	total_time += end - start
+        total_unclassified += unclassified
+        total_misclassified += misclassified
+        total_time += end - start
 
         gimp.delete (truth)
 
-	if save_output:
-	    filename = os.path.join (folder, "output", name + '.png')
-	    pdb.gimp_file_save (mask, mask_layer, filename, filename)
+        if save_output:
+            filename = os.path.join (folder, "output", name + '.png')
+            pdb.gimp_file_save (mask, mask_layer, filename, filename)
 
         gimp.delete (mask)
 
     # for loop ends
 
     try:
-	gimp.delete (image_display)
-	gimp.delete (mask_display)
+        gimp.delete (image_display)
+        gimp.delete (mask_display)
     except UnboundLocalError:
-	pass
+        pass
 
     sys.stderr.write ("Total: %d %d %.2f%% %.3fs\n" %
-		      (total_unclassified, total_misclassified,
-		       (total_misclassified * 100.0 / total_unclassified),
-		       total_time))
+                      (total_unclassified, total_misclassified,
+                       (total_misclassified * 100.0 / total_unclassified),
+                       total_time))
 
 def convert_grayscale (image):
     if image.base_type != GRAY:
-	pdb.gimp_image_convert_grayscale (image)
+        pdb.gimp_image_convert_grayscale (image)
 
 
 def unclassified_pixels (mask, truth):
@@ -174,7 +174,7 @@ def misclassified_pixels (mask, truth):
 
     (mean, std_dev, median, pixels,
      count, percentile) = pdb.gimp_histogram (image.flatten (),
-					      HISTOGRAM_VALUE, 255, 255)
+                                              HISTOGRAM_VALUE, 255, 255)
 
     return count
 

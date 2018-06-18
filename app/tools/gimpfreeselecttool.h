@@ -61,5 +61,9 @@ GType   gimp_free_select_tool_get_type     (void) G_GNUC_CONST;
 
 gint    gimp_free_select_tool_get_n_points (GimpFreeSelectTool *tool);
 
+/*  protected functions */
+
+void    gimp_free_select_tool_halt         (GimpFreeSelectTool *tool);
+
 
 #endif  /*  __GIMP_FREE_SELECT_TOOL_H__  */

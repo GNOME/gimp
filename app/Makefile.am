@@ -130,8 +130,7 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
 	-Wl,-u,$(SYMPREFIX)gimp_parallel_init			\
 	-Wl,-u,$(SYMPREFIX)gimp_async_set_new			\
-	-Wl,-u,$(SYMPREFIX)gimp_uncancelable_waitable_new	\
-	-Wl,-u,$(SYMPREFIX)gimp_tool_cursors_get_resource
+	-Wl,-u,$(SYMPREFIX)gimp_uncancelable_waitable_new
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a						\
@@ -174,10 +173,13 @@ gimpconsoleldadd = \
 	$(libm)
 
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
-	$(AM_LDFLAGS)		\
-	$(win32_ldflags)	\
-	$(framework_cocoa)	\
-	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog
+	$(AM_LDFLAGS)						\
+	$(win32_ldflags)					\
+	$(framework_cocoa)					\
+	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog			\
+	-Wl,-u,$(SYMPREFIX)gimp_core_pixbufs_get_resource	\
+	-Wl,-u,$(SYMPREFIX)gimp_tool_cursors_get_resource
+
 
 gimp_@GIMP_APP_VERSION@_LDADD = \
 	gui/libappgui.a			\

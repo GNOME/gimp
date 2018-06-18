@@ -461,8 +461,10 @@ libappcore_a_sources = \
 	gimpwaitable.h
 
 libappcore_a_built_sources = \
-	core-enums.c	\
-	gimpmarshal.c	\
+	gimp-core-pixbufs.c	\
+	gimp-core-pixbufs.h	\
+	core-enums.c		\
+	gimpmarshal.c		\
 	gimpmarshal.h
 
 libappcore_a_extra_sources = \
@@ -477,7 +479,13 @@ EXTRA_DIST = \
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-gmh xgen-gmc xgen-cec
+gen_sources = \
+	gimp-core-pixbufs.c	\
+	gimp-core-pixbufs.h	\
+	xgen-gmh		\
+	xgen-gmc		\
+	xgen-cec
+
 CLEANFILES = $(gen_sources)
 
 gimpmarshal.h: $(srcdir)/gimpmarshal.list
@@ -513,3 +521,13 @@ $(srcdir)/core-enums.c: xgen-cec
 		touch $@ 2> /dev/null \
 		|| true; \
 	fi
+
+gimp-core-pixbufs.h: $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(top_srcdir)/icons/Color --generate-header \
+	  --target=$@ $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml
+
+gimp-core-pixbufs.c: gimp-core-pixbufs.h
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(top_srcdir)/icons/Color --generate-source \
+	  --target=$@ $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml

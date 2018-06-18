@@ -35,26 +35,12 @@ typedef struct _GimpTransformOptionsClass GimpTransformOptionsClass;
 
 struct _GimpTransformOptions
 {
-  GimpToolOptions           parent_instance;
+  GimpToolOptions        parent_instance;
 
-  GimpTransformType         type;
-  GimpTransformDirection    direction;
-  GimpInterpolationType     interpolation;
-  GimpTransformResize       clip;
-  gboolean                  show_preview;
-  gdouble                   preview_opacity;
-  GimpGuidesType            grid_type;
-  gint                      grid_size;
-  gboolean                  constrain_move;
-  gboolean                  constrain_scale;
-  gboolean                  constrain_rotate;
-  gboolean                  constrain_shear;
-  gboolean                  constrain_perspective;
-  gboolean                  frompivot_scale;
-  gboolean                  frompivot_shear;
-  gboolean                  frompivot_perspective;
-  gboolean                  cornersnap;
-  gboolean                  fixedpivot;
+  GimpTransformType      type;
+  GimpTransformDirection direction;
+  GimpInterpolationType  interpolation;
+  GimpTransformResize    clip;
 };
 
 struct _GimpTransformOptionsClass
@@ -63,11 +49,12 @@ struct _GimpTransformOptionsClass
 };
 
 
-GType       gimp_transform_options_get_type     (void) G_GNUC_CONST;
+GType       gimp_transform_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_transform_options_gui          (GimpToolOptions *tool_options);
-
-gboolean    gimp_transform_options_show_preview (GimpTransformOptions *options);
+GtkWidget * gimp_transform_options_gui      (GimpToolOptions *tool_options,
+                                             gboolean         direction,
+                                             gboolean         interpolation,
+                                             gboolean         clipping);
 
 
 #endif /* __GIMP_TRANSFORM_OPTIONS_H__ */

@@ -364,6 +364,15 @@ gimp_data_factory_real_data_save (GimpDataFactory *factory)
       if (! gimp_data_get_file (data))
         gimp_data_create_filename (data, writable_dir);
 
+      if (factory->priv->gimp->be_verbose)
+        {
+          GFile *file = gimp_data_get_file (data);
+
+          if (file)
+            g_print ("Writing dirty data '%s'\n",
+                     gimp_file_get_utf8_name (file));
+        }
+
       if (! gimp_data_save (data, &error))
         {
           /*  check if there actually was an error (no error
@@ -701,6 +710,15 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
 
   if (! gimp_data_is_writable (data))
     return FALSE;
+
+  if (factory->priv->gimp->be_verbose)
+    {
+      GFile *file = gimp_data_get_file (data);
+
+      if (file)
+        g_print ("Writing dirty data '%s'\n",
+                 gimp_file_get_utf8_name (file));
+    }
 
   if (! gimp_data_save (data, error))
     {

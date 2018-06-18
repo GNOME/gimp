@@ -72,7 +72,8 @@ static void     gimp_interpreter_db_add_binfmt_misc  (GimpInterpreterDB  *db,
                                                       GFile              *file,
                                                       gchar              *buffer);
 
-static gboolean gimp_interpreter_db_add_extension    (GimpInterpreterDB  *db,
+static gboolean gimp_interpreter_db_add_extension    (GFile              *file,
+                                                      GimpInterpreterDB  *db,
                                                       gchar             **tokens);
 static gboolean gimp_interpreter_db_add_magic        (GimpInterpreterDB  *db,
                                                       gchar             **tokens);
@@ -293,14 +294,22 @@ gimp_interpreter_db_add_program (GimpInterpreterDB  *db,
 
   if (! g_file_test (program, G_FILE_TEST_IS_EXECUTABLE))
     {
-      g_message (_("Bad interpreter referenced in interpreter file %s: %s"),
-                 gimp_file_get_utf8_name (file),
-                 gimp_filename_to_utf8 (program));
-      return;
+      program = g_find_program_in_path (program);
+      if (! program || ! g_file_test (program, G_FILE_TEST_IS_EXECUTABLE))
+        {
+          g_message (_("Bad interpreter referenced in interpreter file %s: %s"),
+                     gimp_file_get_utf8_name (file),
+                     gimp_filename_to_utf8 (program));
+          if (program)
+            g_free (program);
+          return;
+        }
     }
+  else
+    program = g_strdup (program);
 
   if (! g_hash_table_lookup (db->programs, name))
-    g_hash_table_insert (db->programs, g_strdup (name), g_strdup (program));
+    g_hash_table_insert (db->programs, g_strdup (name), program);
 }
 
 static void
@@ -340,7 +349,7 @@ gimp_interpreter_db_add_binfmt_misc (GimpInterpreterDB *db,
   switch (type[0])
     {
     case 'E':
-      if (! gimp_interpreter_db_add_extension (db, tokens))
+      if (! gimp_interpreter_db_add_extension (file, db, tokens))
         goto bail;
       break;
 
@@ -364,7 +373,8 @@ out:
 }
 
 static gboolean
-gimp_interpreter_db_add_extension (GimpInterpreterDB  *db,
+gimp_interpreter_db_add_extension (GFile              *file,
+                                   GimpInterpreterDB  *db,
                                    gchar             **tokens)
 {
   const gchar *name      = tokens[0];
@@ -378,7 +388,21 @@ gimp_interpreter_db_add_extension (GimpInterpreterDB  *db,
       if (extension[0] == '\0' || extension[0] == '/')
         return FALSE;
 
-      prog = g_strdup (program);
+      if (! g_file_test (program, G_FILE_TEST_IS_EXECUTABLE))
+        {
+          prog = g_find_program_in_path (program);
+          if (! prog || ! g_file_test (prog, G_FILE_TEST_IS_EXECUTABLE))
+            {
+              g_message (_("Bad interpreter referenced in interpreter file %s: %s"),
+                         gimp_file_get_utf8_name (file),
+                         gimp_filename_to_utf8 (program));
+              if (prog)
+                g_free (prog);
+              return FALSE;
+            }
+        }
+      else
+        prog = g_strdup (program);
 
       g_hash_table_insert (db->extensions, g_strdup (extension), prog);
       g_hash_table_insert (db->extension_names, g_strdup (name), prog);
@@ -752,7 +776,7 @@ resolve_magic (GimpInterpreterDB *db,
       list = list->next;
     }
 
-  return resolve_extension (db, program_path);
+  return NULL;
 }
 
 gchar *
@@ -762,8 +786,7 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
 {
   GFile        *file;
   GInputStream *input;
-  gsize         bytes_read;
-  gchar         buffer[BUFSIZE];
+  gchar        *program = NULL;
 
   g_return_val_if_fail (GIMP_IS_INTERPRETER_DB (db), NULL);
   g_return_val_if_fail (program_path != NULL, NULL);
@@ -775,22 +798,31 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
   input = G_INPUT_STREAM (g_file_read (file, NULL, NULL));
   g_object_unref (file);
 
-  if (! input)
-    return resolve_extension (db, program_path);
+  if (input)
+    {
+      gsize bytes_read;
+      gchar buffer[BUFSIZE];
 
-  memset (buffer, 0, sizeof (buffer));
-  g_input_stream_read_all (input, buffer,
-                           sizeof (buffer) - 1, /* leave one nul at the end */
-                           &bytes_read, NULL, NULL);
-  g_object_unref (input);
+      memset (buffer, 0, sizeof (buffer));
+      g_input_stream_read_all (input, buffer,
+                               sizeof (buffer) - 1, /* leave one nul at the end */
+                               &bytes_read, NULL, NULL);
+      g_object_unref (input);
 
-  if (bytes_read == 0)
-    return resolve_extension (db, program_path);
+      if (bytes_read)
+        {
+          if (bytes_read > 3 && buffer[0] == '#' && buffer[1] == '!')
+            program = resolve_sh_bang (db, program_path, buffer, bytes_read, interp_arg);
 
-  if (bytes_read > 3 && buffer[0] == '#' && buffer[1] == '!')
-    return resolve_sh_bang (db, program_path, buffer, bytes_read, interp_arg);
+          if (! program)
+            program = resolve_magic (db, program_path, buffer);
+        }
+    }
 
-  return resolve_magic (db, program_path, buffer);
+  if (! program)
+    program = resolve_extension (db, program_path);
+
+  return program;
 }
 
 static void

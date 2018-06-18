@@ -715,7 +715,7 @@ save_image (GFile             *file,
 }
 
 
-/*  the dialogs  */
+/*  the load dialog  */
 
 #define MAX_THUMBNAIL_SIZE 320
 
@@ -762,6 +762,7 @@ load_thumbnails (struct heif_context *heif,
       gint                      thumbnail_width;
       gint                      thumbnail_height;
 
+      images[i].ID         = IDs[i];
       images[i].caption[0] = 0;
       images[i].thumbnail  = NULL;
 
@@ -894,22 +895,31 @@ load_thumbnails (struct heif_context *heif,
   return TRUE;
 }
 
+static void
+load_dialog_item_activated (GtkIconView *icon_view,
+                            GtkTreePath *path,
+                            GtkDialog   *dialog)
+{
+  gtk_dialog_response (dialog, GTK_RESPONSE_OK);
+}
 
 static gboolean
 load_dialog (struct heif_context *heif,
              uint32_t            *selected_image)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *frame;
-  HeifImage    *heif_images;
-  GtkListStore *list_store;
-  GtkTreeIter   iter;
-  GtkWidget    *icon_view;
-  gint          n_images;
-  gint          i;
-  gint          selected_idx = -1;
-  gboolean      run          = FALSE;
+  GtkWidget       *dialog;
+  GtkWidget       *main_vbox;
+  GtkWidget       *frame;
+  HeifImage       *heif_images;
+  GtkListStore    *list_store;
+  GtkTreeIter      iter;
+  GtkWidget       *scrolled_window;
+  GtkWidget       *icon_view;
+  GtkCellRenderer *renderer;
+  gint             n_images;
+  gint             i;
+  gint             selected_idx = -1;
+  gboolean         run          = FALSE;
 
   n_images = heif_context_get_number_of_top_level_images (heif);
 
@@ -922,18 +932,18 @@ load_dialog (struct heif_context *heif,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
 
   frame = gimp_frame_new (_("Select Image"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   /* prepare list store with all thumbnails and caption */
@@ -966,13 +976,40 @@ load_dialog (struct heif_context *heif,
       gtk_list_store_set (list_store, &iter, 1, pixbuf, -1);
     }
 
-  icon_view = gtk_icon_view_new ();
-  gtk_icon_view_set_model (GTK_ICON_VIEW (icon_view),
-                           GTK_TREE_MODEL (list_store));
-  gtk_icon_view_set_text_column (GTK_ICON_VIEW (icon_view), 0);
-  gtk_icon_view_set_pixbuf_column (GTK_ICON_VIEW (icon_view), 1);
-  gtk_container_add (GTK_CONTAINER (frame), icon_view);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_IN);
+  gtk_widget_set_size_request (scrolled_window,
+                               2   * MAX_THUMBNAIL_SIZE,
+                               1.5 * MAX_THUMBNAIL_SIZE);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  icon_view = gtk_icon_view_new_with_model (GTK_TREE_MODEL (list_store));
+  gtk_container_add (GTK_CONTAINER (scrolled_window), icon_view);
   gtk_widget_show (icon_view);
+
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (icon_view), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (icon_view), renderer,
+                                  "pixbuf", 1,
+                                  NULL);
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (icon_view), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (icon_view), renderer,
+                                  "text", 0,
+                                  NULL);
+  g_object_set (renderer,
+                "alignment", PANGO_ALIGN_CENTER,
+                "wrap-mode", PANGO_WRAP_WORD_CHAR,
+                "xalign",    0.5,
+                "yalign",    0.0,
+                NULL);
+
+  g_signal_connect (icon_view, "item-activated",
+                    G_CALLBACK (load_dialog_item_activated),
+                    dialog);
 
   /* pre-select the primary image */
 
@@ -1025,9 +1062,12 @@ load_dialog (struct heif_context *heif,
   return run;
 }
 
+
+/*  the save dialog  */
+
 static void
-lossless_button_toggled (GtkToggleButton *source,
-                         GtkWidget       *slider)
+save_dialog_lossless_button_toggled (GtkToggleButton *source,
+                                     GtkWidget       *slider)
 {
   gboolean lossless = gtk_toggle_button_get_active (source);
 
@@ -1047,7 +1087,7 @@ save_dialog (SaveParams *params)
 
   dialog = gimp_export_dialog_new (_("HEIF"), PLUG_IN_BINARY, SAVE_PROC);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
@@ -1055,9 +1095,10 @@ save_dialog (SaveParams *params)
   lossless_button = gtk_check_button_new_with_label (_("Lossless"));
   gtk_box_pack_start (GTK_BOX (main_vbox), lossless_button, FALSE, FALSE, 0);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   label = gtk_label_new (_("Quality:"));
-  quality_slider = gtk_hscale_new_with_range (0, 100, 5);
+  quality_slider = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
+                                             0, 100, 5);
   gtk_scale_set_value_pos (GTK_SCALE (quality_slider), GTK_POS_RIGHT);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), quality_slider, TRUE, TRUE, 0);
@@ -1069,7 +1110,7 @@ save_dialog (SaveParams *params)
   gtk_widget_set_sensitive (quality_slider, !params->lossless);
 
   g_signal_connect (lossless_button, "toggled",
-                    G_CALLBACK (lossless_button_toggled),
+                    G_CALLBACK (save_dialog_lossless_button_toggled),
                     quality_slider);
 
   gtk_widget_show_all (dialog);

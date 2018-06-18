@@ -39,12 +39,6 @@
 #include "gimptempbuf.h"
 #include "gimpviewable.h"
 
-#ifdef MESON_BUILD
-#include "icons/Color/gimp-core-pixbufs.h"
-#else
-#include "icons/Color/gimp-core-pixbufs.c"
-#endif
-
 
 enum
 {

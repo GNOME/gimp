@@ -5,6 +5,7 @@
     'blinds' => { ui => 1 },
     'blur' => {},
     'border-average' => { ui => 1, gegl => 1 },
+    'busy-dialog' => { ui => 1, gegl => 1 },
     'cartoon' => { ui => 1 },
     'checkerboard' => { ui => 1 },
     'cml-explorer' => { ui => 1 },

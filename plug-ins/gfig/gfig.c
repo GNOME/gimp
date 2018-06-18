@@ -787,7 +787,7 @@ gfig_save_callbk (void)
 
   savename = gfig_context->current_obj->filename;
 
-  fp = g_fopen (savename, "wb+");
+  fp = g_fopen (savename, "w+b");
 
   if (!fp)
     {

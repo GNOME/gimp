@@ -52,13 +52,10 @@ EXTRA_DIST = \
 	color-scalable.svg
 
 noinst_DATA = \
-	gimp-core-pixbufs.c	\
-	gimp-icon-pixbufs.c
-
-CLEANFILES = \
-	$(noinst_DATA)			\
 	gimp-core-pixbufs.gresource.xml	\
 	gimp-icon-pixbufs.gresource.xml
+
+CLEANFILES = $(noinst_DATA)
 
 
 gimp-core-pixbufs.gresource.xml: $(CORE_IMAGES) Makefile.am
@@ -72,12 +69,6 @@ gimp-core-pixbufs.gresource.xml: $(CORE_IMAGES) Makefile.am
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-gimp-core-pixbufs.c: gimp-core-pixbufs.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(srcdir) --generate-source \
-	  --target=$@ gimp-core-pixbufs.gresource.xml
-
-
 gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
@@ -88,8 +79,3 @@ gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
 	  done; \
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
-
-gimp-icon-pixbufs.c: gimp-icon-pixbufs.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(srcdir) --generate-source \
-	  --target=$@ gimp-icon-pixbufs.gresource.xml
