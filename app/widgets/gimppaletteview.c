@@ -174,7 +174,6 @@ gimp_palette_view_expose (GtkWidget      *widget,
   if (view->renderer->viewable && pal_view->selected)
     {
       GimpViewRendererPalette *renderer;
-      GtkStyle                *style = gtk_widget_get_style (widget);
       GtkAllocation            allocation;
       cairo_t                 *cr;
       gint                     row, col;
@@ -199,12 +198,12 @@ gimp_palette_view_expose (GtkWidget      *widget,
                        renderer->cell_height);
 
       cairo_set_line_width (cr, 1.0);
-      gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_SELECTED]);
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
       cairo_stroke_preserve (cr);
 
       if (gimp_cairo_set_focus_line_pattern (cr, widget))
         {
-          gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
+          cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
           cairo_stroke (cr);
         }
 
