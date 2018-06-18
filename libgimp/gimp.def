@@ -276,7 +276,6 @@ EXPORTS
 	gimp_fonts_popup
 	gimp_fonts_refresh
 	gimp_fonts_set_popup
-	gimp_gamma
 	gimp_get_color_configuration
 	gimp_get_default_comment
 	gimp_get_default_unit
