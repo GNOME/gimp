@@ -38,6 +38,7 @@ struct _GimpPaletteEditor
 
   GtkWidget        *view;
 
+  GtkWidget        *index_label;
   GtkWidget        *color_name;
   GtkAdjustment    *columns_adj;
 

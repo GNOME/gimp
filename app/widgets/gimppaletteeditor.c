@@ -236,7 +236,15 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-
+  
+  /*  The color index number  */
+  editor->index_label = gtk_label_new ("####:");
+  gtk_widget_set_margin_start(GTK_WIDGET (editor->index_label), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), editor->index_label, FALSE, FALSE, 0);
+  gimp_label_set_attributes (GTK_LABEL (editor->index_label),
+                             PANGO_ATTR_FAMILY, "Monospace", -1);
+  gtk_widget_show (editor->index_label);
+  
   /*  The color name entry  */
   editor->color_name = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), editor->color_name, TRUE, TRUE, 0);
@@ -248,7 +256,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   g_signal_connect (editor->color_name, "changed",
                     G_CALLBACK (palette_editor_color_name_changed),
                     editor);
-
+  
   icon = gtk_image_new_from_icon_name (GIMP_ICON_GRID, GTK_ICON_SIZE_MENU);
   gtk_widget_set_margin_start (icon, 2);
   gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
@@ -406,7 +414,7 @@ gimp_palette_editor_set_aux_info (GimpDocked *docked,
 
           zoom_factor = g_ascii_strtod (aux->value, NULL);
 
-          editor->zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
+          editor->zoom_factor = (gfloat) CLAMP (zoom_factor, 0.1, 4.0);
         }
     }
 }
@@ -714,6 +722,9 @@ palette_editor_entry_selected (GimpPaletteView   *view,
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
 
+  gtk_label_set_text (GTK_LABEL (editor->index_label),
+                      entry ? g_strdup_printf("%04i:", entry->position) : "####:");
+  
   if (editor->color != entry)
     {
       editor->color = entry;
@@ -826,7 +837,7 @@ palette_editor_resize (GimpPaletteEditor *editor,
   if (! palette)
     return;
 
-  editor->zoom_factor = zoom_factor;
+  editor->zoom_factor = (gfloat) zoom_factor;
   editor->last_width  = width;
   editor->col_width   = width / (editor->columns + 1) - SPACING;
 
