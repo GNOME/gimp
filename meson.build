@@ -1154,6 +1154,7 @@ conf.set_quoted('GIMP_PLUGIN_VERSION',    api_version)
 conf.set_quoted('GIMP_SYSCONF_VERSION',   api_version)
 conf.set_quoted('GIMP_TOOL_VERSION',      api_version)
 conf.set_quoted('GIMP_USER_VERSION',      user_version)
+conf.set_quoted('GIMP_PKGCONFIG_VERSION', gimp_version)
 
 # Directories
 conf.set_quoted('PREFIX',          prefix)

@@ -86,6 +86,7 @@ libgimpwidgets_sources = [
 
 libgimpwidgets_headers = [
   'gimpbrowser.h',
+  'gimpbusybox.h',
   'gimpbutton.h',
   'gimpcairo-utils.h',
   'gimpcellrenderercolor.h',
