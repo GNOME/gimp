@@ -25,16 +25,18 @@ libexecdir = $(gimpplugindir)/plug-ins/pagecurl
 
 libexec_PROGRAMS = pagecurl
 
-pagecurl_SOURCES = pagecurl.c
-
-BUILT_SOURCES = \
-	pagecurl-icons.c \
+pagecurl_built_sources = \
+	pagecurl-icons.c	\
 	pagecurl-icons.h
+
+pagecurl_SOURCES = \
+	$(pagecurl_built_sources)	\
+	pagecurl.c
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
-	$(GEGL_CFLAGS) \
+	$(GEGL_CFLAGS)	\
 	-I$(includedir)
 
 LDADD = \
@@ -65,7 +67,13 @@ PAGECURL_IMAGES = \
 
 EXTRA_DIST = $(PAGECURL_IMAGES)
 
-CLEANFILES = $(BUILT_SOURCES) pagecurl-icons.gresource.xml
+gen_sources = \
+	pagecurl-icons.c	\
+	pagecurl-icons.h
+
+CLEANFILES = \
+	$(gen_sources)	\
+	pagecurl-icons.gresource.xml
 
 pagecurl-icons.gresource.xml: $(PAGECURL_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
@@ -78,12 +86,12 @@ pagecurl-icons.gresource.xml: $(PAGECURL_IMAGES) Makefile.am
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-pagecurl-icons.c: pagecurl-icons.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(srcdir) --generate-source \
-	  --target=$@ pagecurl-icons.gresource.xml
-
 pagecurl-icons.h: pagecurl-icons.gresource.xml
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-header \
+	  --target=$@ pagecurl-icons.gresource.xml
+
+pagecurl-icons.c: pagecurl-icons.h
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ pagecurl-icons.gresource.xml
