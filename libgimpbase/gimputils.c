@@ -44,7 +44,10 @@
 #else /* G_OS_WIN32 */
 
 /* For waitpid() */
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
+#endif
+
 #include <unistd.h>
 #include <errno.h>
 

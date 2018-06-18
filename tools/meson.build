@@ -5,10 +5,6 @@ if platform_win32
   )
 endif
 
-tools_cflags = [
-  '-DGIMPDATADIR=' +'"'+ join_paths(prefix, gimpdatadir) +'"',
-]
-
 
 gimptool = executable('gimptool-' + api_version,
   'gimptool.c',
@@ -19,7 +15,6 @@ gimptool = executable('gimptool-' + api_version,
   link_with: [
     libgimpbase,
   ],
-  c_args: tools_cflags,
   install: true,
 )
 
