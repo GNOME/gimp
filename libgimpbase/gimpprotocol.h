@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0100
+#define GIMP_PROTOCOL_VERSION  0x0101
 
 
 enum
@@ -69,6 +69,7 @@ struct _GPConfig
   gint8    show_help_button;
   gint8    use_cpu_accel;
   gint8    use_opencl;
+  gint8    export_profile;
   gint8    export_exif;
   gint8    export_xmp;
   gint8    export_iptc;

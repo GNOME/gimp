@@ -215,6 +215,7 @@ static gint           _shm_ID            = -1;
 static guchar        *_shm_addr          = NULL;
 static const gdouble  _gamma_val         = 2.2;
 static gboolean       _show_help_button  = TRUE;
+static gboolean       _export_profile    = FALSE;
 static gboolean       _export_exif       = FALSE;
 static gboolean       _export_xmp        = FALSE;
 static gboolean       _export_iptc       = FALSE;
@@ -1417,6 +1418,22 @@ gimp_show_help_button (void)
 }
 
 /**
+ * gimp_export_color_profile:
+ *
+ * Returns whether file plug-ins should default to exporting the
+ * image's color profile.
+ *
+ * Return value: TRUE if preferences are set to export the color profile.
+ *
+ * Since: 2.10.4
+ **/
+gboolean
+gimp_export_color_profile (void)
+{
+  return _export_profile;
+}
+
+/**
  * gimp_export_exif:
  *
  * Returns whether file plug-ins should default to exporting Exif
@@ -2155,6 +2172,7 @@ gimp_config (GPConfig *config)
   _check_size       = config->check_size;
   _check_type       = config->check_type;
   _show_help_button = config->show_help_button ? TRUE : FALSE;
+  _export_profile   = config->export_profile   ? TRUE : FALSE;
   _export_exif      = config->export_exif      ? TRUE : FALSE;
   _export_xmp       = config->export_xmp       ? TRUE : FALSE;
   _export_iptc      = config->export_iptc      ? TRUE : FALSE;
