@@ -516,7 +516,8 @@ _gp_config_read (GIOChannel      *channel,
                               user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
-                              (guint8 *) &config->install_cmap, 1, user_data))
+                              (guint8 *) &config->export_profile, 1,
+                              user_data))
     goto cleanup;
   if (! _gimp_wire_read_int8 (channel,
                               (guint8 *) &config->show_tooltips, 1, user_data))
@@ -617,7 +618,7 @@ _gp_config_write (GIOChannel      *channel,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,
-                               (const guint8 *) &config->install_cmap, 1,
+                               (const guint8 *) &config->export_profile, 1,
                                user_data))
     return;
   if (! _gimp_wire_write_int8 (channel,

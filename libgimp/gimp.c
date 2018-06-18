@@ -214,9 +214,9 @@ static gint           _tile_height       = -1;
 static gint           _shm_ID            = -1;
 static guchar        *_shm_addr          = NULL;
 static const gdouble  _gamma_val         = 2.2;
-static gboolean       _install_cmap      = FALSE;
 static gboolean       _show_tool_tips    = TRUE;
 static gboolean       _show_help_button  = TRUE;
+static gboolean       _export_profile    = FALSE;
 static gboolean       _export_exif       = FALSE;
 static gboolean       _export_xmp        = FALSE;
 static gboolean       _export_iptc       = FALSE;
@@ -1393,7 +1393,7 @@ gimp_gamma (void)
 gboolean
 gimp_install_cmap (void)
 {
-  return _install_cmap;
+  return FALSE;
 }
 
 /**
@@ -1447,6 +1447,22 @@ gboolean
 gimp_show_help_button (void)
 {
   return _show_help_button;
+}
+
+/**
+ * gimp_export_color_profile:
+ *
+ * Returns whether file plug-ins should default to exporting the
+ * image's color profile.
+ *
+ * Return value: TRUE if preferences are set to export the color profile.
+ *
+ * Since: 2.10.4
+ **/
+gboolean
+gimp_export_color_profile (void)
+{
+  return _export_profile;
 }
 
 /**
@@ -2299,9 +2315,9 @@ gimp_config (GPConfig *config)
   _shm_ID           = config->shm_ID;
   _check_size       = config->check_size;
   _check_type       = config->check_type;
-  _install_cmap     = config->install_cmap     ? TRUE : FALSE;
   _show_tool_tips   = config->show_tooltips    ? TRUE : FALSE;
   _show_help_button = config->show_help_button ? TRUE : FALSE;
+  _export_profile   = config->export_profile   ? TRUE : FALSE;
   _export_exif      = config->export_exif      ? TRUE : FALSE;
   _export_xmp       = config->export_xmp       ? TRUE : FALSE;
   _export_iptc      = config->export_iptc      ? TRUE : FALSE;

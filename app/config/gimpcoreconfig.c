@@ -110,6 +110,7 @@ enum
   PROP_IMPORT_PROMOTE_DITHER,
   PROP_IMPORT_ADD_ALPHA,
   PROP_IMPORT_RAW_PLUG_IN,
+  PROP_EXPORT_COLOR_PROFILE,
   PROP_EXPORT_METADATA_EXIF,
   PROP_EXPORT_METADATA_XMP,
   PROP_EXPORT_METADATA_IPTC,
@@ -641,6 +642,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_COLOR_PROFILE,
+                            "export-color-profile",
+                            "Export Color Profile",
+                            EXPORT_COLOR_PROFILE_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EXPORT_METADATA_EXIF,
                             "export-metadata-exif",
                             "Export Exif metadata",
@@ -967,6 +975,9 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->import_raw_plug_in);
       core_config->import_raw_plug_in = g_value_dup_string (value);
       break;
+    case PROP_EXPORT_COLOR_PROFILE:
+      core_config->export_color_profile = g_value_get_boolean (value);
+      break;
     case PROP_EXPORT_METADATA_EXIF:
       core_config->export_metadata_exif = g_value_get_boolean (value);
       break;
@@ -1165,6 +1176,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_IMPORT_RAW_PLUG_IN:
       g_value_set_string (value, core_config->import_raw_plug_in);
+      break;
+    case PROP_EXPORT_COLOR_PROFILE:
+      g_value_set_boolean (value, core_config->export_color_profile);
       break;
     case PROP_EXPORT_METADATA_EXIF:
       g_value_set_boolean (value, core_config->export_metadata_exif);

@@ -1484,6 +1484,9 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Export Policies"),
                            GTK_CONTAINER (vbox), FALSE);
 
+  button = prefs_check_button_add (object, "export-color-profile",
+                                   _("Export the image's color profile by default"),
+                                   GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-exif",
                                    _("Export Exif metadata by default when available"),
                                    GTK_BOX (vbox2));
