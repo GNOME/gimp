@@ -6,6 +6,7 @@ gimpenums_notail = custom_target('gimpenums.c.notail',
     gimp_mkenums,
     '--fhead','#include "config.h"\n'
             + '#include <gio/gio.h>\n'
+            + '#include <gegl.h>\n'
             + '#undef GIMP_DISABLE_DEPRECATED\n'
             + '#include "libgimpbase/gimpbase.h"\n'
             + '#include "libgimpbase/gimpbase-private.h"\n'

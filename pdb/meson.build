@@ -110,42 +110,41 @@ groups_pl = custom_target('groups.pl',
   capture: true,
 )
 
-enumgen_pl = files('enumgen.pl')
-
 enums_pl = custom_target('enums.pl',
-  input : [ enumgen_pl, enum_headers, ],
+  input : [ 'enumgen.pl', 'enums-external.pl', enum_headers, ],
   output: [ 'enums.pl', ],
   command: [
-    perl_env, enumgen_pl,
+    perl_env, '@INPUT0@',
     enum_headers,
   ],
 )
 
-pdbgen_pl   = files('pdbgen.pl')
-app_pl      = files('app.pl')
-lib_pl      = files('lib.pl')
-pdb_pl      = files('pdb.pl')
-util_pl     = files('util.pl')
-stddefs_pdb = files('stddefs.pdb')
 
 pdbgen = custom_target('stamp-pdbgen',
   input : [
-    app_pl, enums_pl, groups_pl, lib_pl, pdb_pl, pdbgen_pl, util_pl, stddefs_pdb,
+    'pdbgen.pl',
+
+    'app.pl',
+    'lib.pl',
+    'pdb.pl',
+    'stddefs.pdb',
+    'util.pl',
+
+    enums_pl,
+    groups_pl,
     pdb_sources,
   ],
   output: [ 'stamp-pdbgen', ],
   command: [
-    perl_env, pdbgen_pl,
+    perl_env, '@INPUT0@',
     'app', 'lib',
   ],
 )
 
-enumcode_pl = files('enumcode.pl')
-
 stamp_enumcode = custom_target('stamp-enum-code',
-  input : [ enumcode_pl, ],
+  input : [ 'enumcode.pl', ],
   output: [ 'stamp-enum-code', ],
   command: [
-    perl_env, enumcode_pl,
+    perl_env, '@INPUT0@',
   ],
 )

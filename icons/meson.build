@@ -23,6 +23,7 @@ vector_scalable = [
   'scalable/format-justify-left.svg',
   'scalable/format-justify-right.svg',
   'scalable/gimp-anchor.svg',
+  'scalable/gimp-attach.svg',
   'scalable/gimp-business-card.svg',
   'scalable/gimp-cap-butt.svg',
   'scalable/gimp-cap-round.svg',
@@ -63,6 +64,7 @@ vector_scalable = [
   'scalable/gimp-curve-smooth.svg',
   'scalable/gimp-dashboard.svg',
   'scalable/gimp-default-colors.svg',
+  'scalable/gimp-detach.svg',
   'scalable/gimp-device-status.svg',
   'scalable/gimp-display-filter-clip-warning.svg',
   'scalable/gimp-display-filter-colorblind.svg',
@@ -490,8 +492,10 @@ vector_24 = [
   '24/media-optical.svg',
 ]
 bitmap_12 = [
+  '12/gimp-attach.png',
   '12/gimp-close.png',
   '12/gimp-default-colors.png',
+  '12/gimp-detach.png',
   '12/gimp-linked.png',
   '12/gimp-menu-left.png',
   '12/gimp-menu-right.png',
@@ -841,6 +845,7 @@ bitmap_22 = [
 bitmap_24 = [
   '24/dialog-information.png',
   '24/document-print.png',
+  '24/gimp-attach.png',
   '24/gimp-business-card.png',
   '24/gimp-center.png',
   '24/gimp-channel-alpha.png',
@@ -858,6 +863,7 @@ bitmap_24 = [
   '24/gimp-controller-wheel.png',
   '24/gimp-controller.png',
   '24/gimp-cursor.png',
+  '24/gimp-detach.png',
   '24/gimp-device-status.png',
   '24/gimp-display-filter-colorblind.png',
   '24/gimp-display-filter-contrast.png',

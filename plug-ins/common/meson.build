@@ -193,7 +193,7 @@ common_exes_list = [
   [
     'file-jp2-load',
     [ 'file-jp2-load.c', ],
-    [ gtk2, gegl, gdk_pixbuf, jasper, ],
+    [ gtk2, gegl, gdk_pixbuf, openjpeg, ],
   ],
   [
     'file-mng',
