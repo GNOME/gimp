@@ -13,7 +13,7 @@ option('with-directx-sdk',  type: 'string',  value: '',   description: 'Prefix w
 option('with-ghostscript',  type: 'boolean', value: true, description: 'Ghostscript support')
 option('with-gtk-doc',      type: 'boolean', value: true, description: 'Build developer documentation for app')
 option('with-gudev',        type: 'boolean', value: true, description: 'Gudev support')
-option('with-jasper',       type: 'boolean', value: true, description: 'Jpeg-2000 support')
+option('with-jpeg2000',     type: 'boolean', value: true, description: 'Jpeg-2000 support')
 option('with-linux-input',  type: 'boolean', value: true, description: 'Linux input event controller module')
 option('with-mng',          type: 'boolean', value: true, description: 'Mng support')
 option('with-openexr',      type: 'boolean', value: true, description: 'Openexr support')
