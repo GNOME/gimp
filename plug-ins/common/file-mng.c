@@ -750,7 +750,7 @@ mng_save_image (const gchar  *filename,
   if (mng_data.gama)
     {
       if (mng_putchunk_gama (handle, MNG_FALSE,
-                             (1.0 / (gimp_gamma ()) * 100000)) != MNG_NOERROR)
+                             (1.0 / 2.2 * 100000)) != MNG_NOERROR)
         {
           g_warning ("Unable to mng_putchunk_gama() in mng_save_image()");
           goto err3;

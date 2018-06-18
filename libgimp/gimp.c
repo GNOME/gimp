@@ -213,7 +213,6 @@ static gint           _tile_width        = -1;
 static gint           _tile_height       = -1;
 static gint           _shm_ID            = -1;
 static guchar        *_shm_addr          = NULL;
-static const gdouble  _gamma_val         = 2.2;
 static gboolean       _show_tool_tips    = TRUE;
 static gboolean       _show_help_button  = TRUE;
 static gboolean       _export_profile    = FALSE;
@@ -1364,18 +1363,22 @@ gimp_shm_addr (void)
  * Returns the global gamma value GIMP and all its plug-ins should
  * use.
  *
- * This is a constant value given at plug-in configuration time.
+ * This is a constant value.
  *
  * NOTE: This function will always return 2.2, the gamma value for
- * sRGB. There's currently no way to change this and all operations
- * should assume that pixel data is in the sRGB colorspace.
+ * sRGB. If you need the actual gamma value of a drawable, look at its
+ * format.
+ *
+ * See also: gimp_drawable_get_format().
+ *
+ * @Deprecated: 2.8.4
  *
  * Return value: the gamma value
  **/
 gdouble
 gimp_gamma (void)
 {
-  return _gamma_val;
+  return 2.2;
 }
 
 /**

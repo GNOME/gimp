@@ -327,7 +327,6 @@ guint          gimp_tile_width           (void) G_GNUC_CONST;
 guint          gimp_tile_height          (void) G_GNUC_CONST;
 gint           gimp_shm_ID               (void) G_GNUC_CONST;
 guchar       * gimp_shm_addr             (void) G_GNUC_CONST;
-gdouble        gimp_gamma                (void) G_GNUC_CONST;
 gboolean       gimp_show_tool_tips       (void) G_GNUC_CONST;
 gboolean       gimp_show_help_button     (void) G_GNUC_CONST;
 gboolean       gimp_export_color_profile (void) G_GNUC_CONST;
@@ -345,6 +344,8 @@ const gchar  * gimp_icon_theme_dir       (void) G_GNUC_CONST;
 
 const gchar  * gimp_get_progname         (void) G_GNUC_CONST;
 
+GIMP_DEPRECATED
+gdouble        gimp_gamma                (void) G_GNUC_CONST;
 GIMP_DEPRECATED
 gboolean       gimp_install_cmap         (void) G_GNUC_CONST;
 GIMP_DEPRECATED
