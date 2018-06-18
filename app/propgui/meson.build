@@ -9,7 +9,6 @@ libapppropgui_sources = [
   'gimppropgui-generic.c',
   'gimppropgui-hue-saturation.c',
   'gimppropgui-panorama-projection.c',
-  'gimppropgui-recursive-transform-plus.c',
   'gimppropgui-recursive-transform.c',
   'gimppropgui-shadows-highlights.c',
   'gimppropgui-spiral.c',

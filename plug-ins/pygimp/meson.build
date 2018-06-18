@@ -143,10 +143,11 @@ custom_target('pygimp.env',
 custom_target('pygimp.interp',
   input : [],
   output: [ 'pygimp.interp' ],
-  command: [
-    'echo', 'python='          + python2.path()
-    + '\n'+ '/usr/bin/python=' + python2.path()
-    + '\n'+ ':Python:E::py::python:'
+  command: [ 'echo',
+    'python='          + python2.path() + '\n' +
+    'python2='         + python2.path() + '\n' +
+    '/usr/bin/python=' + python2.path() + '\n' +
+    ':Python:E::py::python2:'
   ],
   capture: true,
   install: true,
