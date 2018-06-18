@@ -330,7 +330,8 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_ALPHA_NAMES:
-            load_resource_1006 (res_a, image_id, img_a, f, error);
+            if (! img_a->merged_image_only)
+              load_resource_1006 (res_a, image_id, img_a, f, error);
             break;
 
           case PSD_DISPLAY_INFO:
@@ -342,15 +343,18 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_QUICK_MASK:
-            load_resource_1022 (res_a, image_id, img_a, f, error);
+            if (! img_a->merged_image_only)
+              load_resource_1022 (res_a, image_id, img_a, f, error);
             break;
 
           case PSD_LAYER_STATE:
-            load_resource_1024 (res_a, image_id, img_a, f, error);
+            if (! img_a->merged_image_only)
+              load_resource_1024 (res_a, image_id, img_a, f, error);
             break;
 
           case PSD_WORKING_PATH:
-            load_resource_2000 (res_a, image_id, f, error);
+            if (! img_a->merged_image_only)
+              load_resource_2000 (res_a, image_id, f, error);
             break;
 
           case PSD_IPTC_NAA_DATA:
@@ -358,7 +362,8 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_GRID_GUIDE:
-            load_resource_1032 (res_a, image_id, f, error);
+            if (! img_a->merged_image_only)
+              load_resource_1032 (res_a, image_id, f, error);
             break;
 
           case PSD_ICC_PROFILE:
@@ -366,7 +371,8 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_ALPHA_NAMES_UNI:
-            load_resource_1045 (res_a, image_id, img_a, f, error);
+            if (! img_a->merged_image_only)
+              load_resource_1045 (res_a, image_id, img_a, f, error);
             break;
 
           case PSD_IDX_COL_TAB_CNT:
@@ -374,7 +380,8 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_ALPHA_ID:
-            load_resource_1053 (res_a, image_id, img_a, f, error);
+            if (! img_a->merged_image_only)
+              load_resource_1053 (res_a, image_id, img_a, f, error);
             break;
 
           case PSD_EXIF_DATA:

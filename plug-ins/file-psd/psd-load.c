@@ -113,6 +113,7 @@ static const Babl*      get_mask_format            (PSDimage    *img_a);
 /* Main file load function */
 gint32
 load_image (const gchar  *filename,
+            gboolean      merged_image_only,
             gboolean     *resolution_loaded,
             GError      **load_error)
 {
@@ -140,6 +141,8 @@ load_image (const gchar  *filename,
       return -1;
     }
 
+  img_a.merged_image_only = merged_image_only;
+
   /* ----- Read the PSD file Header block ----- */
   IFDBG(2) g_debug ("Read header block");
   if (read_header_block (&img_a, f, &error) < 0)
@@ -161,7 +164,7 @@ load_image (const gchar  *filename,
   /* ----- Read the PSD file Layer & Mask block ----- */
   IFDBG(2) g_debug ("Read layer & mask block");
   lyr_a = read_layer_block (&img_a, f, &error);
-  if (img_a.num_layers != 0 && lyr_a == NULL)
+  if (! img_a.merged_image_only && img_a.num_layers != 0 && lyr_a == NULL)
     goto load_error;
   gimp_progress_update (0.4);
 
@@ -496,7 +499,7 @@ read_layer_info (PSDimage  *img_a,
       img_a->num_layers = -img_a->num_layers;
     }
 
-  if (img_a->num_layers)
+  if (! img_a->merged_image_only && img_a->num_layers)
     {
       /* Read layer records */
       PSDlayerres           res_a;
@@ -1146,7 +1149,7 @@ add_layers (gint32     image_id,
 
   IFDBG(2) g_debug ("Number of layers: %d", img_a->num_layers);
 
-  if (img_a->num_layers == 0)
+  if (img_a->merged_image_only || img_a->num_layers == 0)
     {
       IFDBG(2) g_debug ("No layers to process");
       return 0;
@@ -1734,9 +1737,16 @@ add_merged_image (gint32     image_id,
     extra_channels--;
   base_channels = total_channels - extra_channels;
 
+  if (img_a->merged_image_only)
+    {
+      extra_channels = 0;
+      total_channels = base_channels;
+    }
+
   /* ----- Read merged image & extra channel pixel data ----- */
-  if (img_a->num_layers == 0
-      || extra_channels > 0)
+  if (img_a->merged_image_only ||
+      img_a->num_layers == 0   ||
+      extra_channels > 0)
     {
       guint32 block_len;
       guint32 block_start;
@@ -1790,6 +1800,14 @@ add_merged_image (gint32     image_id,
                   }
               }
 
+            /* Skip channel length data for unloaded channels */
+            if (fseek (f, (img_a->channels - total_channels) * img_a->rows * 2,
+                       SEEK_CUR) < 0)
+              {
+                psd_set_error (feof (f), errno, error);
+                return -1;
+              }
+
             IFDBG(3) g_debug ("RLE decode - data");
             for (cidx = 0; cidx < total_channels; ++cidx)
               {
@@ -1812,7 +1830,8 @@ add_merged_image (gint32     image_id,
     }
 
   /* ----- Draw merged image ----- */
-  if (img_a->num_layers == 0)            /* Merged image - Photoshop 2 style */
+  if (img_a->merged_image_only ||
+      img_a->num_layers == 0)            /* Merged image - Photoshop 2 style */
     {
       image_type = get_gimp_image_type (img_a->base_type, img_a->transparency);
 
@@ -1836,6 +1855,7 @@ add_merged_image (gint32     image_id,
                                  100,
                                  gimp_image_get_default_new_layer_mode (image_id));
       gimp_image_insert_layer (image_id, layer_id, -1, 0);
+
       buffer = gimp_drawable_get_buffer (layer_id);
       gegl_buffer_set (buffer,
                        GEGL_RECTANGLE (0, 0,
@@ -1843,6 +1863,36 @@ add_merged_image (gint32     image_id,
                                        gegl_buffer_get_height (buffer)),
                        0, get_layer_format (img_a, img_a->transparency),
                        pixels, GEGL_AUTO_ROWSTRIDE);
+
+      /* Merged image data is blended against white.  Unblend it. */
+      if (img_a->transparency)
+        {
+          GeglBufferIterator *iter;
+
+          iter = gegl_buffer_iterator_new (buffer, NULL, 0,
+                                           babl_format ("R'G'B'A float"),
+                                           GEGL_ACCESS_READWRITE,
+                                           GEGL_ABYSS_NONE);
+
+          while (gegl_buffer_iterator_next (iter))
+            {
+              gfloat *data = iter->data[0];
+
+              for (i = 0; i < iter->length; i++)
+                {
+                  gint c;
+
+                  if (data[3])
+                    {
+                      for (c = 0; c < 3; c++)
+                        data[c] = (data[c] + data[3] - 1.0f) / data[3];
+                    }
+
+                  data += 4;
+                }
+            }
+        }
+
       g_object_unref (buffer);
       g_free (pixels);
     }
@@ -1854,9 +1904,19 @@ add_merged_image (gint32     image_id,
           g_free (chn_a[cidx].data);
     }
 
+  if (img_a->transparency)
+    {
+      /* Free "Transparency" channel name */
+      if (img_a->alpha_names)
+        {
+          alpha_name = g_ptr_array_index (img_a->alpha_names, 0);
+          if (alpha_name)
+            g_free (alpha_name);
+        }
+    }
+
   /* ----- Draw extra alpha channels ----- */
-  if ((extra_channels                   /* Extra alpha channels */
-      || img_a->transparency)           /* Transparency alpha channel */
+  if (extra_channels                   /* Extra alpha channels */
       && image_id > -1)
     {
       IFDBG(2) g_debug ("Add extra channels");
@@ -1864,17 +1924,7 @@ add_merged_image (gint32     image_id,
 
       /* Get channel resource data */
       if (img_a->transparency)
-        {
-          offset = 1;
-
-          /* Free "Transparency" channel name */
-          if (img_a->alpha_names)
-            {
-              alpha_name = g_ptr_array_index (img_a->alpha_names, 0);
-              if (alpha_name)
-                g_free (alpha_name);
-            }
-        }
+        offset = 1;
       else
         offset = 0;
 

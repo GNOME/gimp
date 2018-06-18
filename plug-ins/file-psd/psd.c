@@ -119,6 +119,27 @@ query (void)
                                     "",
                                     "0,string,8BPS");
 
+  /* File load (merged) */
+  gimp_install_procedure (LOAD_MERGED_PROC,
+                          "Loads merged images from the Photoshop PSD file format",
+                          "This plug-in loads the merged image data in Adobe "
+                          "Photoshop (TM) native PSD format.",
+                          "Ell",
+                          "Ell",
+                          "2018",
+                          N_("Photoshop image (merged)"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load_args, load_return_vals);
+
+  gimp_register_file_handler_mime (LOAD_MERGED_PROC, "image/x-psd");
+  gimp_register_magic_load_handler (LOAD_MERGED_PROC,
+                                    "psd",
+                                    "",
+                                    "0,string,8BPS");
+
   /* Thumbnail load */
   gimp_install_procedure (LOAD_THUMB_PROC,
                           "Loads thumbnails from the Photoshop PSD file format",
@@ -176,7 +197,8 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  if (strcmp (name, LOAD_PROC) == 0 ||
+      strcmp (name, LOAD_MERGED_PROC) == 0)
     {
       gboolean resolution_loaded = FALSE;
       gboolean interactive;
@@ -194,6 +216,7 @@ run (const gchar      *name,
         }
 
       image_ID = load_image (param[1].data.d_string,
+                             strcmp (name, LOAD_MERGED_PROC) == 0,
                              &resolution_loaded, &error);
 
       if (image_ID != -1)

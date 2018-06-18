@@ -32,6 +32,7 @@
 #define CONVERSION_WARNINGS             FALSE
 
 #define LOAD_PROC                       "file-psd-load"
+#define LOAD_MERGED_PROC                "file-psd-load-merged"
 #define LOAD_THUMB_PROC                 "file-psd-load-thumb"
 #define SAVE_PROC                       "file-psd-save"
 #define PLUG_IN_BINARY                  "file-psd"
@@ -642,6 +643,8 @@ typedef struct
 /* PSD File data structures */
 typedef struct
 {
+  gboolean              merged_image_only;      /* Whether to load only the merged image data */
+
   guint16               channels;               /* Number of channels: 1- 56 */
   gboolean              transparency;           /* Image has merged transparency alpha channel */
   guint32               rows;                   /* Number of rows: 1 - 30000 */
