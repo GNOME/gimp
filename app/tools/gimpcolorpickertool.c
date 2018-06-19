@@ -428,8 +428,11 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
                                     gint                 x,
                                     gint                 y)
 {
+  GimpTool     *tool     = GIMP_TOOL (picker_tool);
   GimpImage    *image    = gimp_display_get_image (display);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+  tool->display = display;
 
   gimp_tool_gui_set_shell (picker_tool->gui,
                            gimp_display_get_shell (display));
