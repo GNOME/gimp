@@ -733,6 +733,8 @@ gimp_dashboard_init (GimpDashboard *dashboard)
 {
   GimpDashboardPrivate *priv;
   GtkWidget            *box;
+  GtkWidget            *scrolled_window;
+  GtkWidget            *viewport;
   GtkWidget            *vbox;
   GtkWidget            *expander;
   GtkWidget            *hbox;
@@ -773,9 +775,25 @@ gimp_dashboard_init (GimpDashboard *dashboard)
   gtk_box_pack_start (GTK_BOX (dashboard), box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 
+  /* scrolled window */
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_add (GTK_CONTAINER (box), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  /* viewport */
+  viewport = gtk_viewport_new (
+    gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (scrolled_window)),
+    gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_window)));
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), viewport);
+  gtk_widget_show (viewport);
+
   /* main vbox */
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2 * content_spacing);
-  gtk_container_add (GTK_CONTAINER (box), vbox);
+  gtk_container_add (GTK_CONTAINER (viewport), vbox);
   gtk_widget_show (vbox);
 
   /* construct the groups */
