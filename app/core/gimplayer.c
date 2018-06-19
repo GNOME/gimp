@@ -1919,20 +1919,10 @@ gimp_layer_create_mask (GimpLayer       *layer,
     {
     case GIMP_ADD_MASK_WHITE:
       gimp_channel_all (GIMP_CHANNEL (mask), FALSE);
-      return mask;
+      break;
 
     case GIMP_ADD_MASK_BLACK:
       gimp_channel_clear (GIMP_CHANNEL (mask), NULL, FALSE);
-      return mask;
-
-    default:
-      break;
-    }
-
-  switch (add_mask_type)
-    {
-    case GIMP_ADD_MASK_WHITE:
-    case GIMP_ADD_MASK_BLACK:
       break;
 
     case GIMP_ADD_MASK_ALPHA:
@@ -2001,12 +1991,17 @@ gimp_layer_create_mask (GimpLayer       *layer,
 
         if ((copy_width || copy_height) && ! channel_empty)
           {
-            GeglBuffer    *src;
-            GeglBuffer    *dest;
+            GeglBuffer *src;
+            GeglBuffer *dest;
+            const Babl *format;
 
             src  = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
             dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
+            format = gegl_buffer_get_format (src);
+
+            /* make sure no gamma conversion happens */
+            gegl_buffer_set_format (dest, format);
             gimp_gegl_buffer_copy (src,
                                    GEGL_RECTANGLE (copy_x, copy_y,
                                                    copy_width, copy_height),
@@ -2015,6 +2010,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
                                    GEGL_RECTANGLE (copy_x - offset_x,
                                                    copy_y - offset_y,
                                                    0, 0));
+            gegl_buffer_set_format (dest, NULL);
 
             GIMP_CHANNEL (mask)->bounds_known = FALSE;
           }
