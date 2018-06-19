@@ -45,6 +45,10 @@ GimpColorHistory button {
     padding: 3px 3px 3px 3px;
 }
 
+#gimp-color-tag-box button {
+    padding: 4px 6px 4px 6px;
+}
+
 GimpDock {
     font-size: smaller;
 }
