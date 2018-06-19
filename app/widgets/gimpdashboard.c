@@ -26,13 +26,23 @@
 #include <gio/gio.h>
 #include <gtk/gtk.h>
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#define HAVE_CPU_GROUP
+#define HAVE_MEMORY_GROUP
+#else /* ! G_OS_WIN32 */
 #ifdef HAVE_SYS_TIMES_H
 #include <sys/times.h>
 #define HAVE_CPU_GROUP
-#elif defined (G_OS_WIN32)
-#include <windows.h>
-#define HAVE_CPU_GROUP
-#endif
+#endif /* HAVE_SYS_TIMES_H */
+#if defined (HAVE_UNISTD_H) && defined (HAVE_FCNTL_H)
+#include <unistd.h>
+#include <fcntl.h>
+#ifdef _SC_PAGE_SIZE
+#define HAVE_MEMORY_GROUP
+#endif /* _SC_PAGE_SIZE */
+#endif /* HAVE_UNISTD_H && HAVE_FCNTL_H */
+#endif /* ! G_OS_WIN32 */
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -41,6 +51,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 
 #include "gimpactiongroup.h"
 #include "gimpdocked.h"
@@ -95,6 +106,13 @@ typedef enum
   VARIABLE_CPU_ACTIVE_TIME,
 #endif
 
+#ifdef HAVE_MEMORY_GROUP
+  /* memory */
+  VARIABLE_MEMORY_USED,
+  VARIABLE_MEMORY_AVAILABLE,
+  VARIABLE_MEMORY_SIZE,
+#endif
+
   /* misc */
   VARIABLE_MIPMAPED,
 
@@ -122,6 +140,9 @@ typedef enum
   GROUP_SWAP,
 #ifdef HAVE_CPU_GROUP
   GROUP_CPU,
+#endif
+#ifdef HAVE_MEMORY_GROUP
+  GROUP_MEMORY,
 #endif
   GROUP_MISC,
 
@@ -154,11 +175,13 @@ struct _VariableInfo
 
 struct _FieldInfo
 {
-  Variable variable;
-  gboolean default_active;
-  gboolean show_in_header;
-  Variable meter_variable;
-  gint     meter_value;
+  Variable     variable;
+  const gchar *title;
+  gboolean     default_active;
+  gboolean     show_in_header;
+  Variable     meter_variable;
+  gint         meter_value;
+  gboolean     meter_cumulative;
 };
 
 struct _GroupInfo
@@ -293,6 +316,15 @@ static void       gimp_dashboard_sample_cpu_active_time      (GimpDashboard     
 static void       gimp_dashboard_reset_cpu_active_time       (GimpDashboard       *dashboard,
                                                               Variable             variable);
 #endif /* HAVE_CPU_GROUP */
+
+#ifdef HAVE_MEMORY_GROUP
+static void       gimp_dashboard_sample_memory_used          (GimpDashboard       *dashboard,
+                                                              Variable             variable);
+static void       gimp_dashboard_sample_memory_available     (GimpDashboard       *dashboard,
+                                                              Variable             variable);
+static void       gimp_dashboard_sample_memory_size          (GimpDashboard       *dashboard,
+                                                              Variable             variable);
+#endif /* HAVE_MEMORY_GROUP */
 
 static void       gimp_dashboard_sample_object               (GimpDashboard       *dashboard,
                                                               GObject             *object,
@@ -466,6 +498,37 @@ static const VariableInfo variables[] =
 #endif /* HAVE_CPU_GROUP */
 
 
+#ifdef HAVE_MEMORY_GROUP
+  /* memory variables */
+
+  [VARIABLE_MEMORY_USED] =
+  { .name             = "memory-used",
+    .title            = NC_("dashboard-variable", "Used"),
+    .description      = N_("Amount of memory used by the process"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .color            = {0.8, 0.5, 0.2, 1.0},
+    .sample_func      = gimp_dashboard_sample_memory_used
+  },
+
+  [VARIABLE_MEMORY_AVAILABLE] =
+  { .name             = "memory-available",
+    .title            = NC_("dashboard-variable", "Available"),
+    .description      = N_("Amount of available physical memory"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .color            = {0.8, 0.5, 0.2, 0.4},
+    .sample_func      = gimp_dashboard_sample_memory_available
+  },
+
+  [VARIABLE_MEMORY_SIZE] =
+  { .name             = "memory-size",
+    .title            = NC_("dashboard-variable", "Size"),
+    .description      = N_("Physical memory size"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .sample_func      = gimp_dashboard_sample_memory_size
+  },
+#endif /* HAVE_MEMORY_GROUP */
+
+
   /* misc variables */
 
   [VARIABLE_MIPMAPED] =
@@ -491,26 +554,26 @@ static const GroupInfo groups[] =
     .meter_limit      = VARIABLE_CACHE_LIMIT,
     .fields           = (const FieldInfo[])
                         {
-                          { .variable       = VARIABLE_CACHE_OCCUPIED,
-                            .default_active = TRUE,
-                            .show_in_header = TRUE,
-                            .meter_value    = 2
+                          { .variable         = VARIABLE_CACHE_OCCUPIED,
+                            .default_active   = TRUE,
+                            .show_in_header   = TRUE,
+                            .meter_value      = 2
                           },
-                          { .variable       = VARIABLE_CACHE_MAXIMUM,
-                            .default_active = FALSE,
-                            .meter_value    = 1
+                          { .variable         = VARIABLE_CACHE_MAXIMUM,
+                            .default_active   = FALSE,
+                            .meter_value      = 1
                           },
-                          { .variable       = VARIABLE_CACHE_LIMIT,
-                            .default_active = TRUE
+                          { .variable         = VARIABLE_CACHE_LIMIT,
+                            .default_active   = TRUE
                           },
 
                           { VARIABLE_SEPARATOR },
 
-                          { .variable       = VARIABLE_CACHE_COMPRESSION,
-                            .default_active = FALSE
+                          { .variable         = VARIABLE_CACHE_COMPRESSION,
+                            .default_active   = FALSE
                           },
-                          { .variable       = VARIABLE_CACHE_HIT_MISS,
-                            .default_active = FALSE
+                          { .variable         = VARIABLE_CACHE_HIT_MISS,
+                            .default_active   = FALSE
                           },
 
                           {}
@@ -529,17 +592,17 @@ static const GroupInfo groups[] =
     .meter_led        = VARIABLE_SWAP_BUSY,
     .fields           = (const FieldInfo[])
                         {
-                          { .variable       = VARIABLE_SWAP_OCCUPIED,
-                            .default_active = TRUE,
-                            .show_in_header = TRUE,
-                            .meter_value    = 2
+                          { .variable         = VARIABLE_SWAP_OCCUPIED,
+                            .default_active   = TRUE,
+                            .show_in_header   = TRUE,
+                            .meter_value      = 2
                           },
-                          { .variable       = VARIABLE_SWAP_SIZE,
-                            .default_active = TRUE,
-                            .meter_value    = 1
+                          { .variable         = VARIABLE_SWAP_SIZE,
+                            .default_active   = TRUE,
+                            .meter_value      = 1
                           },
-                          { .variable       = VARIABLE_SWAP_LIMIT,
-                            .default_active = TRUE
+                          { .variable         = VARIABLE_SWAP_LIMIT,
+                            .default_active   = TRUE
                           },
 
                           {}
@@ -558,24 +621,64 @@ static const GroupInfo groups[] =
     .meter_led        = VARIABLE_CPU_ACTIVE,
     .fields           = (const FieldInfo[])
                         {
-                          { .variable       = VARIABLE_CPU_USAGE,
-                            .default_active = TRUE,
-                            .show_in_header = TRUE,
-                            .meter_value    = 2
+                          { .variable         = VARIABLE_CPU_USAGE,
+                            .default_active   = TRUE,
+                            .show_in_header   = TRUE,
+                            .meter_value      = 2
                           },
 
                           { VARIABLE_SEPARATOR },
 
-                          { .variable       = VARIABLE_CPU_ACTIVE_TIME,
-                            .default_active = FALSE,
-                            .meter_variable = VARIABLE_CPU_ACTIVE,
-                            .meter_value    = 1
+                          { .variable         = VARIABLE_CPU_ACTIVE_TIME,
+                            .default_active   = FALSE,
+                            .meter_variable   = VARIABLE_CPU_ACTIVE,
+                            .meter_value      = 1
                           },
 
                           {}
                         }
   },
 #endif /* HAVE_CPU_GROUP */
+
+#ifdef HAVE_MEMORY_GROUP
+  /* memory group */
+  [GROUP_MEMORY] =
+  { .name             = "memory",
+    .title            = NC_("dashboard-group", "Memory"),
+    .description      = N_("Memory usage"),
+    .default_active   = TRUE,
+    .default_expanded = FALSE,
+    .has_meter        = TRUE,
+    .meter_limit      = VARIABLE_MEMORY_SIZE,
+    .fields           = (const FieldInfo[])
+                        {
+                          { .variable         = VARIABLE_CACHE_OCCUPIED,
+                            .title            = NC_("dashboard-variable", "Cache"),
+                            .default_active   = FALSE,
+                            .meter_value      = 3
+                          },
+
+                          { VARIABLE_SEPARATOR },
+
+                          { .variable         = VARIABLE_MEMORY_USED,
+                            .default_active   = TRUE,
+                            .show_in_header   = TRUE,
+                            .meter_value      = 2,
+                            .meter_cumulative = TRUE
+                          },
+                          { .variable         = VARIABLE_MEMORY_AVAILABLE,
+                            .default_active   = TRUE,
+                            .meter_value      = 1,
+                            .meter_cumulative = TRUE
+                          },
+                          { .variable         = VARIABLE_MEMORY_SIZE,
+                            .default_active   = TRUE
+                          },
+
+                          {}
+                        }
+  },
+#endif /* HAVE_MEMORY_GROUP */
 
   /* misc group */
   [GROUP_MISC] =
@@ -771,7 +874,9 @@ gimp_dashboard_init (GimpDashboard *dashboard)
               const VariableInfo *variable_info = &variables[field_info->variable];
 
               item = gtk_check_menu_item_new_with_label (
-                g_dpgettext2 (NULL, "dashboard-variable", variable_info->title));
+                g_dpgettext2 (NULL, "dashboard-variable",
+                              field_info->title ? field_info->title :
+                                                  variable_info->title));
               field_data->menu_item = GTK_CHECK_MENU_ITEM (item);
               gimp_help_set_help_data (item,
                                        g_dgettext (NULL, variable_info->description),
@@ -1351,6 +1456,7 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
               const GroupInfo *group_info = &groups[group];
               GroupData       *group_data = &priv->groups[group];
               gdouble         *sample;
+              gdouble          total      = 0.0;
 
               if (! group_info->has_meter)
                 continue;
@@ -1363,13 +1469,23 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
 
                   if (field_info->meter_value)
                     {
+                      gdouble value;
+
                       if (field_info->meter_variable)
                         variable = field_info->meter_variable;
                       else
                         variable = field_info->variable;
 
-                      sample[field_info->meter_value - 1] =
-                        gimp_dashboard_variable_to_double (dashboard, variable);
+                      value = gimp_dashboard_variable_to_double (dashboard,
+                                                                 variable);
+
+                      if (field_info->meter_cumulative)
+                        {
+                          total += value;
+                          value  = total;
+                        }
+
+                      sample[field_info->meter_value - 1] = value;
                     }
                 }
 
@@ -1798,6 +1914,199 @@ gimp_dashboard_reset_cpu_active_time (GimpDashboard *dashboard,
 
 #endif /* HAVE_CPU_GROUP */
 
+#ifdef HAVE_MEMORY_GROUP
+
+#ifndef G_OS_WIN32
+
+static void
+gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+                                   Variable       variable)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  VariableData         *variable_data = &priv->variables[variable];
+  static gboolean       initialized   = FALSE;
+  static long           page_size;
+  static gint           fd;
+  gchar                 buffer[128];
+  gint                  size;
+  unsigned long long    resident;
+  unsigned long long    shared;
+
+  if (! initialized)
+    {
+      page_size = sysconf (_SC_PAGE_SIZE);
+
+      if (page_size > 0)
+        fd = open ("/proc/self/statm", O_RDONLY);
+
+      initialized = TRUE;
+    }
+
+  variable_data->available = FALSE;
+
+  if (fd < 0)
+    return;
+
+  if (lseek (fd, 0, SEEK_SET))
+    return;
+
+  size = read (fd, buffer, sizeof (buffer) - 1);
+
+  if (size <= 0)
+    return;
+
+  buffer[size] = '\0';
+
+  if (sscanf (buffer, "%*u %llu %llu", &resident, &shared) != 2)
+    return;
+
+  variable_data->available  = TRUE;
+  variable_data->value.size = (guint64) (resident - shared) * page_size;
+}
+
+static void
+gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+                                        Variable       variable)
+{
+  GimpDashboardPrivate *priv            = dashboard->priv;
+  VariableData         *variable_data   = &priv->variables[variable];
+  static gboolean       initialized     = FALSE;
+  static gint64         last_check_time = 0;
+  static gint           fd;
+  static guint64        available;
+  static gboolean       has_available   = FALSE;
+  gint64                time;
+
+  if (! initialized)
+    {
+      fd = open ("/proc/meminfo", O_RDONLY);
+
+      initialized = TRUE;
+    }
+
+  variable_data->available = FALSE;
+
+  if (fd < 0)
+    return;
+
+  /* we don't have a config option for limiting the swap size, so we simply
+   * return the free space available on the filesystem containing the swap
+   */
+
+  time = g_get_monotonic_time ();
+
+  if (time - last_check_time >= G_TIME_SPAN_SECOND)
+    {
+      gchar  buffer[512];
+      gint   size;
+      gchar *str;
+
+      last_check_time = time;
+
+      has_available = FALSE;
+
+      if (lseek (fd, 0, SEEK_SET))
+        return;
+
+      size = read (fd, buffer, sizeof (buffer) - 1);
+
+      if (size <= 0)
+        return;
+
+      buffer[size] = '\0';
+
+      str = strstr (buffer, "MemAvailable:");
+
+      if (! str)
+        return;
+
+      available = strtoull (str + 13, &str, 0);
+
+      if (! str)
+        return;
+
+      for (; *str; str++)
+        {
+          if (*str == 'k')
+            {
+              available <<= 10;
+              break;
+            }
+          else if (*str == 'M')
+            {
+              available <<= 20;
+              break;
+            }
+        }
+
+      if (! *str)
+        return;
+
+      has_available = TRUE;
+    }
+
+  if (! has_available)
+    return;
+
+  variable_data->available  = TRUE;
+  variable_data->value.size = available;
+}
+
+#else /* G_OS_WIN32 */
+
+
+static void
+gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+                                   Variable       variable)
+{
+  GimpDashboardPrivate        *priv          = dashboard->priv;
+  VariableData                *variable_data = &priv->variables[variable];
+  PPROCESS_MEMORY_COUNTERS_EX  pmc;
+
+  variable_data->available = FALSE;
+
+  if (! GetProcessMemoryInfo (GetCurrentProcess (), &pmc, sizeof (pmc)))
+    return;
+
+  variable_data->available  = TRUE;
+  variable_data->value.size = pmc.PrivateUsage;
+}
+
+static void
+gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+                                        Variable       variable)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  VariableData         *variable_data = &priv->variables[variable];
+  MEMORYSTATUSEX        ms;
+
+  variable_data->available = FALSE;
+
+  ms.dwLength = sizeof (ms);
+
+  if (! GlobalMemoryStatusEx (&ms))
+    return;
+
+  variable_data->available  = TRUE;
+  variable_data->value.size = ms.ullAvailPhys;
+}
+
+
+#endif /* G_OS_WIN32 */
+
+static void
+gimp_dashboard_sample_memory_size (GimpDashboard *dashboard,
+                                   Variable       variable)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  VariableData         *variable_data = &priv->variables[variable];
+
+  variable_data->value.size = gimp_get_physical_memory_size ();
+  variable_data->available  = variable_data->value.size > 0;
+}
+
+#endif /* HAVE_MEMORY_GROUP */
+
 static void
 gimp_dashboard_sample_object (GimpDashboard *dashboard,
                               GObject       *object,
@@ -2028,7 +2337,9 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
 
           str = g_strdup_printf ("%s:",
                                  g_dpgettext2 (NULL, "dashboard-variable",
-                                               variable_info->title));
+                                               field_info->title ?
+                                                 field_info->title :
+                                                 variable_info->title));
 
           label = gtk_label_new (str);
           gimp_help_set_help_data (label, description,
