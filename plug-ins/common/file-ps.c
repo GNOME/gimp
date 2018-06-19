@@ -880,7 +880,7 @@ run (const gchar      *name,
           plvals.resolution = size / 4;
           plvals.width      = size;
           plvals.height     = size;
-          strcpy (plvals.pages, "1");
+          strncpy (plvals.pages, "1", sizeof (plvals.pages) - 1);
 
           check_load_vals ();
           image_ID = load_image (param[0].data.d_string, &error);
@@ -1310,7 +1310,7 @@ check_load_vals (void)
     plvals.height = 2;
   plvals.use_bbox = (plvals.use_bbox != 0);
   if (plvals.pages[0] == '\0')
-    strcpy (plvals.pages, "1-99");
+    strncpy (plvals.pages, "1-99", sizeof (plvals.pages) - 1);
   if ((plvals.pnm_type < 4) || (plvals.pnm_type > 7))
     plvals.pnm_type = 6;
   if (   (plvals.textalpha != 1) && (plvals.textalpha != 2)
