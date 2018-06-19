@@ -17,22 +17,15 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
-
-#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-loops.h"
 
 #include "gimperror.h"
 #include "gimpimage.h"
-#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 
@@ -210,29 +203,6 @@ gimp_layer_mask_new (GimpImage     *image,
   /*  selection mask variables  */
   GIMP_CHANNEL (layer_mask)->x2 = width;
   GIMP_CHANNEL (layer_mask)->y2 = height;
-
-  return layer_mask;
-}
-
-GimpLayerMask *
-gimp_layer_mask_new_from_buffer (GeglBuffer    *buffer,
-                                 GimpImage     *image,
-                                 const gchar   *name,
-                                 const GimpRGB *color)
-{
-  GimpLayerMask *layer_mask;
-  GeglBuffer    *dest;
-
-  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  layer_mask = gimp_layer_mask_new (image,
-                                    gegl_buffer_get_width  (buffer),
-                                    gegl_buffer_get_height (buffer),
-                                    name, color);
-
-  dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer_mask));
-  gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
 
   return layer_mask;
 }
