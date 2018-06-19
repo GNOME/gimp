@@ -1944,7 +1944,7 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
   VariableData         *variable_data = &priv->variables[variable];
   static gboolean       initialized   = FALSE;
   static long           page_size;
-  static gint           fd;
+  static gint           fd            = -1;
   gchar                 buffer[128];
   gint                  size;
   unsigned long long    resident;
