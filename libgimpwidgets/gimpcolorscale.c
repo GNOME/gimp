@@ -96,8 +96,6 @@ static void     gimp_color_scale_set_property        (GObject          *object,
 
 static void     gimp_color_scale_size_allocate       (GtkWidget        *widget,
                                                       GtkAllocation    *allocation);
-static gboolean gimp_color_scale_scroll              (GtkWidget        *widget,
-                                                      GdkEventScroll   *event);
 static gboolean gimp_color_scale_draw                (GtkWidget        *widget,
                                                       cairo_t          *cr);
 
@@ -111,7 +109,7 @@ static void     gimp_color_scale_notify_config       (GimpColorConfig  *config,
                                                       GimpColorScale   *scale);
 
 
-G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_RANGE)
+G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
 
 #define parent_class gimp_color_scale_parent_class
 
@@ -131,7 +129,6 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   object_class->set_property  = gimp_color_scale_set_property;
 
   widget_class->size_allocate = gimp_color_scale_size_allocate;
-  widget_class->scroll_event  = gimp_color_scale_scroll;
   widget_class->draw          = gimp_color_scale_draw;
 
   /**
@@ -177,6 +174,7 @@ gimp_color_scale_init (GimpColorScale *scale)
 
   gtk_range_set_slider_size_fixed (range, TRUE);
   gtk_range_set_flippable (GTK_RANGE (scale), TRUE);
+  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
   priv->channel      = GIMP_COLOR_SELECTOR_VALUE;
   priv->needs_render = TRUE;
@@ -193,13 +191,19 @@ gimp_color_scale_init (GimpColorScale *scale)
 
   css = gtk_css_provider_new ();
   gtk_css_provider_load_from_data (css,
-                                   "GimpColorScale contents {"
+                                   "GimpColorScale {"
+                                   "  padding:    2px 12px 2px 12px;"
                                    "  min-width:  24px;"
                                    "  min-height: 24px;"
                                    "}\n"
+                                   "GimpColorScale contents trough {"
+                                   "  min-width:  20px;"
+                                   "  min-height: 20px;"
+                                   "}\n"
                                    "GimpColorScale contents trough slider {"
-                                   "  min-width:  14px;"
-                                   "  min-height: 14px;"
+                                   "  min-width:  12px;"
+                                   "  min-height: 12px;"
+                                   "  margin:     -6px -6px -6px -6px;"
                                    "}",
                                    -1, NULL);
   gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (scale)),
@@ -278,61 +282,16 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
   GimpColorScalePrivate *priv  = GET_PRIVATE (widget);
   GtkRange              *range = GTK_RANGE (widget);
   GdkRectangle           range_rect;
-  gint                   focus = 0;
-  gint                   trough_border;
-  gint                   scale_width;
-  gint                   scale_height;
-  gint                   slider_start;
-  gint                   slider_end;
-  gint                   slider_size;
 
-  gtk_widget_style_get (widget,
-                        "trough-border", &trough_border,
-                        NULL);
-
-  if (gtk_widget_get_can_focus (widget))
-    {
-      gint focus_padding = 0;
-
-      gtk_widget_style_get (widget,
-                            "focus-line-width", &focus,
-                            "focus-padding",    &focus_padding,
-                            NULL);
-      focus += focus_padding;
-    }
-
-  gtk_range_set_min_slider_size (range, 14);
-
-  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
-    GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   gtk_range_get_range_rect (range, &range_rect);
-  gtk_range_get_slider_range (range, &slider_start, &slider_end);
-  slider_size = slider_end - slider_start;
 
-  g_printerr ("slider_size = %d   min = %d\n",
-              slider_size, gtk_range_get_min_slider_size (range));
-
-  scale_width  = range_rect.width  - 2 * (focus + trough_border);
-  scale_height = range_rect.height - 2 * (focus + trough_border);
-
-  switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
+  if (range_rect.width  != priv->width ||
+      range_rect.height != priv->height)
     {
-    case GTK_ORIENTATION_HORIZONTAL:
-      scale_width  -= slider_size / 2;
-      scale_height -= 2;
-      break;
-
-    case GTK_ORIENTATION_VERTICAL:
-      scale_width  -= 2;
-      scale_height -= slider_size / 2;
-      break;
-    }
-
-  if (scale_width != priv->width || scale_height != priv->height)
-    {
-      priv->width  = scale_width;
-      priv->height = scale_height;
+      priv->width  = range_rect.width;
+      priv->height = range_rect.height;
 
       priv->rowstride = priv->width * 4;
 
@@ -341,42 +300,6 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
 
       priv->needs_render = TRUE;
     }
-}
-
-static gboolean
-gimp_color_scale_scroll (GtkWidget      *widget,
-                         GdkEventScroll *event)
-{
-  if (gtk_orientable_get_orientation (GTK_ORIENTABLE (widget)) ==
-      GTK_ORIENTATION_HORIZONTAL)
-    {
-      GdkEventScroll *my_event;
-      gboolean        retval;
-
-      my_event = (GdkEventScroll *) gdk_event_copy ((GdkEvent *) event);
-
-      switch (my_event->direction)
-        {
-        case GDK_SCROLL_UP:
-          my_event->direction = GDK_SCROLL_RIGHT;
-          break;
-
-        case GDK_SCROLL_DOWN:
-          my_event->direction = GDK_SCROLL_LEFT;
-          break;
-
-        default:
-          break;
-        }
-
-      retval = GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, my_event);
-
-      gdk_event_free ((GdkEvent *) my_event);
-
-      return retval;
-    }
-
-  return GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, event);
 }
 
 static gboolean
@@ -390,46 +313,19 @@ gimp_color_scale_draw (GtkWidget *widget,
   GdkRectangle           range_rect;
   GdkRectangle           area      = { 0, };
   cairo_surface_t       *buffer;
-  gint                   focus = 0;
-  gint                   trough_border;
   gint                   slider_start;
   gint                   slider_end;
+  gint                   slider_mid;
   gint                   slider_size;
-  gint                   x, y;
-  gint                   w, h;
 
   if (! priv->buf)
     return FALSE;
 
-  gtk_style_context_save (context);
-
-  gtk_style_context_add_class (context, GTK_STYLE_CLASS_TROUGH);
-
-  gtk_widget_style_get (widget,
-                        "trough-border", &trough_border,
-                        NULL);
-
-  if (gtk_widget_get_can_focus (widget))
-    {
-      gint focus_padding = 0;
-
-      gtk_widget_style_get (widget,
-                            "focus-line-width", &focus,
-                            "focus-padding",    &focus_padding,
-                            NULL);
-      focus += focus_padding;
-    }
-
   gtk_range_get_range_rect (range, &range_rect);
   gtk_range_get_slider_range (range, &slider_start, &slider_end);
-  slider_size = slider_end - slider_start;
 
-  x = range_rect.x + focus;
-  y = range_rect.y + focus;
-  w = range_rect.width  - 2 * focus;
-  h = range_rect.height - 2 * focus;
-
-  slider_size /= 2;
+  slider_mid = slider_start + (slider_end - slider_start) / 2;
+  slider_size = 6;
 
   if (priv->needs_render)
     {
@@ -437,11 +333,6 @@ gimp_color_scale_draw (GtkWidget *widget,
 
       priv->needs_render = FALSE;
     }
-
-  gtk_style_context_set_state (context, gtk_widget_get_state_flags (widget));
-
-  gtk_render_background (context, cr, x, y, w, h);
-  gtk_render_frame (context, cr, x, y, w, h);
 
   if (! priv->transform)
     gimp_color_scale_create_transform (scale);
@@ -486,14 +377,12 @@ gimp_color_scale_draw (GtkWidget *widget,
     {
     case GTK_ORIENTATION_HORIZONTAL:
       cairo_set_source_surface (cr, buffer,
-                                x + trough_border + slider_size / 2 + 1,
-                                y + trough_border + 1);
+                                range_rect.x, range_rect.y);
       break;
 
     case GTK_ORIENTATION_VERTICAL:
       cairo_set_source_surface (cr, buffer,
-                                x + trough_border + 1,
-                                y + trough_border + slider_size / 2 + 1);
+                                range_rect.x, range_rect.y);
       break;
     }
 
@@ -530,25 +419,24 @@ gimp_color_scale_draw (GtkWidget *widget,
 
   if (gtk_widget_has_focus (widget))
     gtk_render_focus (context, cr,
-                      range_rect.x,
-                      range_rect.y,
-                      range_rect.width,
-                      range_rect.height);
+                      0, 0,
+                      gtk_widget_get_allocated_width  (widget),
+                      gtk_widget_get_allocated_height (widget));
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      area.x      = slider_start;
-      area.y      = y + trough_border;
-      area.width  = 2 * slider_size + 1;
-      area.height = h - 2 * trough_border;
+      area.x      = slider_mid - slider_size;
+      area.y      = range_rect.y;
+      area.width  = 2 * slider_size;
+      area.height = range_rect.height;
       break;
 
     case GTK_ORIENTATION_VERTICAL:
-      area.x      = x + trough_border;
-      area.y      = slider_start;
-      area.width  = w - 2 * trough_border;
-      area.height = 2 * slider_size + 1;
+      area.x      = range_rect.x;
+      area.y      = slider_mid - slider_size;
+      area.width  = range_rect.width;
+      area.height = 2 * slider_size;
       break;
     }
 
@@ -564,14 +452,14 @@ gimp_color_scale_draw (GtkWidget *widget,
       cairo_line_to (cr, area.x + area.width, area.y);
       cairo_line_to (cr,
                      area.x + area.width / 2 + 0.5,
-                     area.y + area.width / 2);
+                     area.y + slider_size);
       break;
 
     case GTK_ORIENTATION_VERTICAL:
       cairo_move_to (cr, area.x, area.y);
       cairo_line_to (cr, area.x, area.y + area.height);
       cairo_line_to (cr,
-                     area.x + area.height / 2,
+                     area.x + slider_size,
                      area.y + area.height / 2 + 0.5);
       break;
     }
@@ -591,22 +479,20 @@ gimp_color_scale_draw (GtkWidget *widget,
       cairo_line_to (cr, area.x + area.width, area.y + area.height);
       cairo_line_to (cr,
                      area.x + area.width / 2 + 0.5,
-                     area.y + area.height - area.width / 2);
+                     area.y + area.height - slider_size);
       break;
 
     case GTK_ORIENTATION_VERTICAL:
       cairo_move_to (cr, area.x + area.width, area.y);
       cairo_line_to (cr, area.x + area.width, area.y + area.height);
       cairo_line_to (cr,
-                     area.x + area.width - area.height / 2,
+                     area.x + area.width - slider_size,
                      area.y + area.height / 2 + 0.5);
       break;
     }
 
   cairo_close_path (cr);
   cairo_fill (cr);
-
-  gtk_style_context_restore (context);
 
   return FALSE;
 }
