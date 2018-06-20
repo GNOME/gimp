@@ -32,6 +32,7 @@
 
 #include "config/gimpxmlparser.h"
 
+#include "gimp-utils.h"
 #include "gimpgradient.h"
 #include "gimpgradient-load.h"
 
@@ -61,8 +62,8 @@ gimp_gradient_load (GimpContext   *context,
 
   linenum = 1;
   line_len = 1024;
-  line = g_data_input_stream_read_line (data_input, &line_len,
-                                        NULL, error);
+  line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+                                                  NULL, error);
   if (! line)
     goto failed;
 
@@ -82,8 +83,8 @@ gimp_gradient_load (GimpContext   *context,
 
   linenum++;
   line_len = 1024;
-  line = g_data_input_stream_read_line (data_input, &line_len,
-                                        NULL, error);
+  line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+                                                  NULL, error);
   if (! line)
     goto failed;
 
@@ -100,8 +101,8 @@ gimp_gradient_load (GimpContext   *context,
 
       linenum++;
       line_len = 1024;
-      line = g_data_input_stream_read_line (data_input, &line_len,
-                                            NULL, error);
+      line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+                                                      NULL, error);
       if (! line)
         goto failed;
     }
@@ -128,6 +129,10 @@ gimp_gradient_load (GimpContext   *context,
     {
       GimpGradientSegment *seg;
       gchar               *end;
+      gint                 color;
+      gint                 type;
+      gint                 left_color_type;
+      gint                 right_color_type;
 
       seg = gimp_gradient_segment_new ();
 
@@ -140,99 +145,80 @@ gimp_gradient_load (GimpContext   *context,
 
       linenum++;
       line_len = 1024;
-      line = g_data_input_stream_read_line (data_input, &line_len,
-                                            NULL, error);
+      line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+                                                      NULL, error);
       if (! line)
         goto failed;
 
-      seg->left = g_ascii_strtod (line, &end);
-      if (end && errno != ERANGE)
-        seg->middle = g_ascii_strtod (end, &end);
-      if (end && errno != ERANGE)
-        seg->right = g_ascii_strtod (end, &end);
+      if (! gimp_ascii_strtod (line, &end, &seg->left)          ||
+          ! gimp_ascii_strtod (end,  &end, &seg->middle)        ||
+          ! gimp_ascii_strtod (end,  &end, &seg->right)         ||
 
-      if (end && errno != ERANGE)
-        seg->left_color.r = g_ascii_strtod (end, &end);
-      if (end && errno != ERANGE)
-        seg->left_color.g = g_ascii_strtod (end, &end);
-      if (end && errno != ERANGE)
-        seg->left_color.b = g_ascii_strtod (end, &end);
-      if (end && errno != ERANGE)
-        seg->left_color.a = g_ascii_strtod (end, &end);
+          ! gimp_ascii_strtod (end,  &end, &seg->left_color.r)  ||
+          ! gimp_ascii_strtod (end,  &end, &seg->left_color.g)  ||
+          ! gimp_ascii_strtod (end,  &end, &seg->left_color.b)  ||
+          ! gimp_ascii_strtod (end,  &end, &seg->left_color.a)  ||
 
-      if (end && errno != ERANGE)
-        seg->right_color.r = g_ascii_strtod (end, &end);
-      if (end && errno != ERANGE)
-        seg->right_color.g = g_ascii_strtod (end, &end);
-      if (end && errno != ERANGE)
-        seg->right_color.b = g_ascii_strtod (end, &end);
-      if (end && errno != ERANGE)
-        seg->right_color.a = g_ascii_strtod (end, &end);
-
-      if (errno != ERANGE)
+          ! gimp_ascii_strtod (end,  &end, &seg->right_color.r) ||
+          ! gimp_ascii_strtod (end,  &end, &seg->right_color.g) ||
+          ! gimp_ascii_strtod (end,  &end, &seg->right_color.b) ||
+          ! gimp_ascii_strtod (end,  &end, &seg->right_color.a))
         {
-          gint color;
-          gint type;
-          gint left_color_type;
-          gint right_color_type;
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Corrupt segment %d."), i);
+          g_free (line);
+          goto failed;
+        }
 
-          switch (sscanf (end, "%d %d %d %d",
-                          &type, &color,
-                          &left_color_type, &right_color_type))
+      switch (sscanf (end, "%d %d %d %d",
+                      &type, &color,
+                      &left_color_type, &right_color_type))
+        {
+        case 4:
+          seg->left_color_type  = (GimpGradientColor) left_color_type;
+          if (seg->left_color_type < GIMP_GRADIENT_COLOR_FIXED ||
+              seg->left_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
             {
-            case 4:
-              seg->left_color_type  = (GimpGradientColor) left_color_type;
-              if (seg->left_color_type < GIMP_GRADIENT_COLOR_FIXED ||
-                  seg->left_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-                {
-                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                               _("Corrupt segment %d."), i);
-                  g_free (line);
-                  goto failed;
-                }
-
-              seg->right_color_type = (GimpGradientColor) right_color_type;
-              if (seg->right_color_type < GIMP_GRADIENT_COLOR_FIXED ||
-                  seg->right_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-                {
-                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                               _("Corrupt segment %d."), i);
-                  g_free (line);
-                  goto failed;
-                }
-              /* fall thru */
-
-            case 2:
-              seg->type  = (GimpGradientSegmentType) type;
-              if (seg->type < GIMP_GRADIENT_SEGMENT_LINEAR ||
-                  seg->type > GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING)
-                {
-                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                               _("Corrupt segment %d."), i);
-                  g_free (line);
-                  goto failed;
-                }
-
-              seg->color = (GimpGradientSegmentColor) color;
-              if (seg->color < GIMP_GRADIENT_SEGMENT_RGB ||
-                  seg->color > GIMP_GRADIENT_SEGMENT_HSV_CW)
-                {
-                  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                               _("Corrupt segment %d."), i);
-                  g_free (line);
-                  goto failed;
-                }
-              break;
-
-            default:
               g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Corrupt segment %d."), i);
               g_free (line);
               goto failed;
             }
-        }
-      else
-        {
+
+          seg->right_color_type = (GimpGradientColor) right_color_type;
+          if (seg->right_color_type < GIMP_GRADIENT_COLOR_FIXED ||
+              seg->right_color_type > GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+            {
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Corrupt segment %d."), i);
+              g_free (line);
+              goto failed;
+            }
+          /* fall thru */
+
+        case 2:
+          seg->type  = (GimpGradientSegmentType) type;
+          if (seg->type < GIMP_GRADIENT_SEGMENT_LINEAR ||
+              seg->type > GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING)
+            {
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Corrupt segment %d."), i);
+              g_free (line);
+              goto failed;
+            }
+
+          seg->color = (GimpGradientSegmentColor) color;
+          if (seg->color < GIMP_GRADIENT_SEGMENT_RGB ||
+              seg->color > GIMP_GRADIENT_SEGMENT_HSV_CW)
+            {
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Corrupt segment %d."), i);
+              g_free (line);
+              goto failed;
+            }
+          break;
+
+        default:
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Corrupt segment %d."), i);
           g_free (line);
@@ -241,8 +227,10 @@ gimp_gradient_load (GimpContext   *context,
 
       g_free (line);
 
-      if ((  prev && (prev->right < seg->left)) ||
-          (! prev && (0.0         < seg->left)))
+      if (seg->left   > seg->middle              ||
+          seg->middle > seg->right               ||
+          (  prev && (prev->right != seg->left)) ||
+          (! prev && (0.0         != seg->left)))
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Segments do not span the range 0-1."));
@@ -252,7 +240,7 @@ gimp_gradient_load (GimpContext   *context,
       prev = seg;
     }
 
-  if (prev->right < 1.0)
+  if (prev->right != 1.0)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Segments do not span the range 0-1."));

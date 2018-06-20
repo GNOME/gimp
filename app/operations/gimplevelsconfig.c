@@ -33,6 +33,7 @@
 
 #include "operations-types.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpcurve.h"
 #include "core/gimphistogram.h"
 
@@ -831,8 +832,8 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
   data_input = g_data_input_stream_new (input);
 
   line_len = 64;
-  line = g_data_input_stream_read_line (data_input, &line_len,
-                                        NULL, error);
+  line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+                                                  NULL, error);
   if (! line)
     return FALSE;
 
@@ -854,8 +855,8 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
       gint   fields;
 
       line_len = 64;
-      line = g_data_input_stream_read_line (data_input, &line_len,
-                                            NULL, error);
+      line = gimp_data_input_stream_read_line_always (data_input, &line_len,
+                                                      NULL, error);
       if (! line)
         {
           g_object_unref (data_input);
