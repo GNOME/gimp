@@ -88,6 +88,14 @@ gchar      * gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
                                                       GCancellable      *cancellable,
                                                       GError           **error);
 
+gboolean     gimp_ascii_strtoi                     (const gchar     *nptr,
+                                                    gchar          **endptr,
+                                                    gint             base,
+                                                    gint            *result);
+gboolean     gimp_ascii_strtod                     (const gchar     *nptr,
+                                                    gchar          **endptr,
+                                                    gdouble         *result);
+
 GimpImage  * gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer,
                                                     const gchar     *image_name);
