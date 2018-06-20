@@ -28,6 +28,7 @@
 
 #include "core-types.h"
 
+#include "gimp-utils.h"
 #include "gimppalette.h"
 #include "gimppalette-load.h"
 
@@ -59,8 +60,8 @@ gimp_palette_load (GimpContext   *context,
 
   linenum = 1;
   str_len = 1024;
-  str = g_data_input_stream_read_line (data_input, &str_len,
-                                       NULL, error);
+  str = gimp_data_input_stream_read_line_always (data_input, &str_len,
+                                                 NULL, error);
   if (! str)
     goto failed;
 
@@ -80,8 +81,8 @@ gimp_palette_load (GimpContext   *context,
 
   linenum++;
   str_len = 1024;
-  str = g_data_input_stream_read_line (data_input, &str_len,
-                                       NULL, error);
+  str = gimp_data_input_stream_read_line_always (data_input, &str_len,
+                                                 NULL, error);
   if (! str)
     goto failed;
 
@@ -97,8 +98,8 @@ gimp_palette_load (GimpContext   *context,
 
       linenum++;
       str_len = 1024;
-      str = g_data_input_stream_read_line (data_input, &str_len,
-                                           NULL, error);
+      str = gimp_data_input_stream_read_line_always (data_input, &str_len,
+                                                     NULL, error);
       if (! str)
         goto failed;
 
@@ -106,7 +107,14 @@ gimp_palette_load (GimpContext   *context,
         {
           gint columns;
 
-          columns = atoi (g_strstrip (str + strlen ("Columns: ")));
+          if (! gimp_ascii_strtoi (g_strstrip (str + strlen ("Columns: ")),
+                                   NULL, 10, &columns))
+            {
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Invalid column count."));
+              g_free (str);
+              goto failed;
+            }
 
           if (columns < 0 || columns > 256)
             {
@@ -122,8 +130,8 @@ gimp_palette_load (GimpContext   *context,
 
           linenum++;
           str_len = 1024;
-          str = g_data_input_stream_read_line (data_input, &str_len,
-                                               NULL, error);
+          str = gimp_data_input_stream_read_line_always (data_input, &str_len,
+                                                         NULL, error);
           if (! str)
             goto failed;
         }
@@ -138,7 +146,7 @@ gimp_palette_load (GimpContext   *context,
     {
       GError *my_error = NULL;
 
-      if (str[0] != '#' && str[0] != '\n')
+      if (str[0] != '#' && str[0] != '\0')
         {
           tok = strtok (str, " \t");
           if (tok)
@@ -196,24 +204,14 @@ gimp_palette_load (GimpContext   *context,
       str_len = 1024;
       str = g_data_input_stream_read_line (data_input, &str_len,
                                            NULL, &my_error);
-      if (! str)
+      if (! str && my_error)
         {
-          if (! palette->colors)
-            {
-              g_propagate_error (error, my_error);
-              goto failed;
-            }
-
-          if (my_error)
-            {
-              g_message (_("Reading palette file '%s': "
-                           "Read %d colors from truncated file: %s"),
-                         gimp_file_get_utf8_name (file),
-                         g_list_length (palette->colors),
-                         my_error->message);
-              g_clear_error (&my_error);
-              break;
-            }
+          g_message (_("Reading palette file '%s': "
+                       "Read %d colors from truncated file: %s"),
+                     gimp_file_get_utf8_name (file),
+                     g_list_length (palette->colors),
+                     my_error->message);
+          g_clear_error (&my_error);
         }
     }
 

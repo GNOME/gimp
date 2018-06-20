@@ -28,6 +28,7 @@
 
 #include "core-types.h"
 
+#include "gimp-utils.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushgenerated-load.h"
 
@@ -64,8 +65,8 @@ gimp_brush_generated_load (GimpContext   *context,
   /* make sure the file we are reading is the right type */
   linenum = 1;
   string_len = 256;
-  string = g_data_input_stream_read_line (data_input, &string_len,
-                                          NULL, error);
+  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                    NULL, error);
   if (! string)
     goto failed;
 
@@ -82,8 +83,8 @@ gimp_brush_generated_load (GimpContext   *context,
   /* make sure we are reading a compatible version */
   linenum++;
   string_len = 256;
-  string = g_data_input_stream_read_line (data_input, &string_len,
-                                          NULL, error);
+  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                    NULL, error);
   if (! string)
     goto failed;
 
@@ -107,8 +108,8 @@ gimp_brush_generated_load (GimpContext   *context,
   /* read name */
   linenum++;
   string_len = 256;
-  string = g_data_input_stream_read_line (data_input, &string_len,
-                                          NULL, error);
+  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                    NULL, error);
   if (! string)
     goto failed;
 
@@ -138,8 +139,8 @@ gimp_brush_generated_load (GimpContext   *context,
       /* read shape */
       linenum++;
       string_len = 256;
-      string = g_data_input_stream_read_line (data_input, &string_len,
-                                              NULL, error);
+      string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                        NULL, error);
       if (! string)
         goto failed;
 
@@ -162,21 +163,34 @@ gimp_brush_generated_load (GimpContext   *context,
   /* read brush spacing */
   linenum++;
   string_len = 256;
-  string = g_data_input_stream_read_line (data_input, &string_len,
-                                          NULL, error);
+  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                    NULL, error);
   if (! string)
     goto failed;
-  spacing = g_ascii_strtod (string, NULL);
+  if (! gimp_ascii_strtod (string, NULL, &spacing))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid brush spacing."));
+      g_free (string);
+      goto failed;
+    }
   g_free (string);
+
 
   /* read brush radius */
   linenum++;
   string_len = 256;
-  string = g_data_input_stream_read_line (data_input, &string_len,
-                                          NULL, error);
+  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                    NULL, error);
   if (! string)
     goto failed;
-  radius = g_ascii_strtod (string, NULL);
+  if (! gimp_ascii_strtod (string, NULL, &radius))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid brush radius."));
+      g_free (string);
+      goto failed;
+    }
   g_free (string);
 
   if (have_shape)
@@ -184,42 +198,67 @@ gimp_brush_generated_load (GimpContext   *context,
       /* read number of spikes */
       linenum++;
       string_len = 256;
-      string = g_data_input_stream_read_line (data_input, &string_len,
-                                              NULL, error);
+      string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                        NULL, error);
       if (! string)
         goto failed;
-      spikes = CLAMP (atoi (string), 2, 20);
+      if (! gimp_ascii_strtoi (string, NULL, 10, &spikes) ||
+          spikes < 2 || spikes > 20)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Invalid brush spike count."));
+          g_free (string);
+          goto failed;
+        }
       g_free (string);
     }
 
   /* read brush hardness */
   linenum++;
   string_len = 256;
-  string = g_data_input_stream_read_line (data_input, &string_len,
-                                          NULL, error);
+  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                    NULL, error);
   if (! string)
     goto failed;
-  hardness = g_ascii_strtod (string, NULL);
+  if (! gimp_ascii_strtod (string, NULL, &hardness))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid brush hardness."));
+      g_free (string);
+      goto failed;
+    }
   g_free (string);
 
   /* read brush aspect_ratio */
   linenum++;
   string_len = 256;
-  string = g_data_input_stream_read_line (data_input, &string_len,
-                                          NULL, error);
+  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                    NULL, error);
   if (! string)
     goto failed;
-  aspect_ratio = g_ascii_strtod (string, NULL);
+  if (! gimp_ascii_strtod (string, NULL, &aspect_ratio))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid brush aspect ratio."));
+      g_free (string);
+      goto failed;
+    }
   g_free (string);
 
   /* read brush angle */
   linenum++;
   string_len = 256;
-  string = g_data_input_stream_read_line (data_input, &string_len,
-                                          NULL, error);
+  string = gimp_data_input_stream_read_line_always (data_input, &string_len,
+                                                    NULL, error);
   if (! string)
     goto failed;
-  angle = g_ascii_strtod (string, NULL);
+  if (! gimp_ascii_strtod (string, NULL, &angle))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Invalid brush angle."));
+      g_free (string);
+      goto failed;
+    }
   g_free (string);
 
   g_object_unref (data_input);
