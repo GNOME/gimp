@@ -245,6 +245,8 @@ window_actions_display_closed (GdkDisplay      *display,
 
   displays = g_object_get_data (G_OBJECT (group), "display-table");
 
+  display_name = gdk_display_get_name (display);
+
   count = GPOINTER_TO_INT (g_hash_table_lookup (displays,
                                                 display_name));
 
