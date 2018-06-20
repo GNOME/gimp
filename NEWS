@@ -21,12 +21,26 @@ Core:
     so). All non-text related activities can be performed right away.
   - Change of the URL from bugzilla to gitlab where appropriate.
 
+User Interface:
+
+  - The Dashboard dockable dialog now has a 'Memory' group that shows
+    memory-usage information: the currently used memory size, the
+    available physical memory size, and the total physical memory size.
+    It can also show the tile-cache size, for comparison against the
+    other memory stats. Note that the upper-bound of the meter is the
+    physical memory size, so the memory usage may be over 100% when GIMP
+    uses the swap.
+  - Fonts can now be tagged. The user interface is the same as for brushes,
+    patterns etc.
+  
 Tools:
 
   - The Measurement tool now has an "Auto straighten" option allowing to
     rotate the active drawable (layer, channel…) so that the measurement
     line is used as horizon. As other transform tools, the feature will
     work on linked drawables as well.
+  - The Smudge tool now paints correctly on images with a color profile
+    other than the GIMP's built-in one.
 
 Build:
 
@@ -40,12 +54,28 @@ Plug-ins:
 
   - gimptool-2.0 binary now accepts source files with non-standard
     extensions if it can try to guess appropriate language from the
-    compiler being used. It will also properly quote arguments for shell
-    usage.
+    compiler being used. It will also properly quote arguments for
+    shell usage.
   - Run explicitly Python 2 as Python plug-in interpreter to prevent
     breakage on systems where Python 3 is the default.
   - raw_input()'s argument in Python console is now optional, and
     input() support has been added.
+
+File Formats:
+
+  - The PSD loader now provides an option to load "merged",
+    pre-composited version of the images that becomes available when
+    a PSD file was saved with "Maximize Compatibility" option enabled
+    in Photoshop. This is useful when loading PSD files that use features
+    that GIMP doesn't currently support, and therefore can't render
+    correctly, such as adjustment layers. When loading the merged image
+    version, we avoid loading certain additional data from the file, such
+    as channels, paths, and guides, while still loading metadata. This
+    option is currently exposed as an additional file type
+    ("Photoshop image (merged)"), which has to be explicitly selected from
+    the file-type list when opening the image.
+  - Embedding GIMP's built-in sRGB color profile to exported files is now
+    optional. The default choice can be set in the Preferences dialog.
 
 Translations:
 
