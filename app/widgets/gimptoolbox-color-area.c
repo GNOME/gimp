@@ -24,12 +24,15 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
 #include "gimpcolordialog.h"
 #include "gimpdialogfactory.h"
 #include "gimpfgbgeditor.h"
+#include "gimpsessioninfo.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
 
@@ -238,6 +241,39 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
       g_signal_connect_object (context, "background-changed",
                                G_CALLBACK (color_area_background_changed),
                                G_OBJECT (color_dialog), 0);
+    }
+  else if (! gtk_widget_get_visible (color_dialog))
+    {
+      /*  See https://gitlab.gnome.org/GNOME/gimp/issues/1093
+       *
+       *  We correctly position all newly created dialog via
+       *  gimp_dialog_factory_add_dialog(), but the color dialog is
+       *  special, it's never destroyed but created only once per
+       *  session. On re-showing, whatever window managing magic kicks
+       *  in and the dialog sometimes goes where it shouldn't.
+       *
+       *  The code below belongs into GimpDialogFactory, perhaps a new
+       *  function gimp_dialog_factory_position_dialog() and does the
+       *  same positioning logic as add_dialog().
+       */
+      GimpDialogFactory *dialog_factory = gimp_dialog_factory_get_singleton ();
+      GimpSessionInfo   *info;
+
+      info = gimp_dialog_factory_find_session_info (dialog_factory,
+                                                    "gimp-toolbox-color-dialog");
+
+      if (gimp_session_info_get_widget (info) == color_dialog)
+        {
+          GdkScreen     *screen  = gtk_widget_get_screen (GTK_WIDGET (editor));
+          gint           monitor = gimp_widget_get_monitor (GTK_WIDGET (editor));
+          GimpGuiConfig *gui_config;
+
+          gui_config = GIMP_GUI_CONFIG (context->gimp->config);
+
+          gimp_session_info_apply_geometry (info,
+                                            screen, monitor,
+                                            gui_config->restore_monitor);
+        }
     }
 
   gtk_window_set_title (GTK_WINDOW (color_dialog), title);
