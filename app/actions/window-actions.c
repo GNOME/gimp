@@ -58,6 +58,12 @@ window_actions_setup (GimpActionGroup *group,
                           g_strdup (move_to_screen_help_id),
                           (GDestroyNotify) g_free);
 
+  g_object_set_data_full (G_OBJECT (group), "display-table",
+                          g_hash_table_new_full (g_str_hash,
+                                                 g_str_equal,
+                                                 g_free, NULL),
+                          (GDestroyNotify) g_hash_table_unref);
+
   displays = gdk_display_manager_list_displays (manager);
 
   /*  present displays in the order in which they were opened  */
@@ -143,11 +149,28 @@ window_actions_display_opened (GdkDisplayManager *manager,
                                GimpActionGroup   *group)
 {
   GimpRadioActionEntry *entries;
+  GHashTable           *displays;
+  const gchar          *display_name;
   const gchar          *help_id;
   const gchar          *group_name;
   GSList               *radio_group;
+  gint                  count;
   gint                  n_screens;
   gint                  i;
+
+  displays = g_object_get_data (G_OBJECT (group), "display-table");
+
+  display_name = gdk_display_get_name (display);
+
+  count = GPOINTER_TO_INT (g_hash_table_lookup (displays,
+                                                display_name));
+
+  g_hash_table_insert (displays, g_strdup (display_name),
+                       GINT_TO_POINTER (count + 1));
+
+  /*  don't add the same display twice  */
+  if (count > 0)
+    return;
 
   help_id = g_object_get_data (G_OBJECT (group), "change-to-screen-help-id");
 
@@ -213,9 +236,27 @@ window_actions_display_closed (GdkDisplay      *display,
                                gboolean         is_error,
                                GimpActionGroup *group)
 {
+  GHashTable  *displays;
+  const gchar *display_name;
   const gchar *group_name;
+  gint         count;
   gint         n_screens;
   gint         i;
+
+  displays = g_object_get_data (G_OBJECT (group), "display-table");
+
+  count = GPOINTER_TO_INT (g_hash_table_lookup (displays,
+                                                display_name));
+
+  /*  don't remove the same display twice  */
+  if (count > 1)
+    {
+      g_hash_table_insert (displays, g_strdup (display_name),
+                           GINT_TO_POINTER (count - 1));
+      return;
+    }
+
+  g_hash_table_remove (displays, display_name);
 
   group_name = gtk_action_group_get_name (GTK_ACTION_GROUP (group));
 
