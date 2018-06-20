@@ -844,6 +844,63 @@ gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
   return result;
 }
 
+gboolean
+gimp_ascii_strtoi (const gchar  *nptr,
+                   gchar       **endptr,
+                   gint          base,
+                   gint         *result)
+{
+  gchar  *temp_endptr;
+  gint64  temp_result;
+
+  g_return_val_if_fail (nptr != NULL, FALSE);
+  g_return_val_if_fail (base == 0 || (base >= 2 && base <= 36), FALSE);
+
+  if (! endptr)
+    endptr = &temp_endptr;
+
+  temp_result = g_ascii_strtoll (nptr, endptr, base);
+
+  if (*endptr == nptr || errno == ERANGE ||
+      temp_result < G_MININT || temp_result > G_MAXINT)
+    {
+      errno = 0;
+
+      return FALSE;
+    }
+
+  if (result) *result = temp_result;
+
+  return TRUE;
+}
+
+gboolean
+gimp_ascii_strtod (const gchar  *nptr,
+                   gchar       **endptr,
+                   gdouble      *result)
+{
+  gchar   *temp_endptr;
+  gdouble  temp_result;
+
+  g_return_val_if_fail (nptr != NULL, FALSE);
+
+  if (! endptr)
+    endptr = &temp_endptr;
+
+  temp_result = g_ascii_strtod (nptr, endptr);
+
+  if (*endptr == nptr || errno == ERANGE)
+    {
+      errno = 0;
+
+      return FALSE;
+    }
+
+  if (result) *result = temp_result;
+
+  return TRUE;
+}
+
 
 /*  debug stuff  */
 
