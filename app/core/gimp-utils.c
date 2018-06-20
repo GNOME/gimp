@@ -815,6 +815,35 @@ gimp_file_with_new_extension (GFile *file,
   return ret;
 }
 
+gchar *
+gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
+                                         gsize             *length,
+                                         GCancellable      *cancellable,
+                                         GError           **error)
+{
+  GError *temp_error = NULL;
+  gchar  *result;
+
+  g_return_val_if_fail (G_IS_DATA_INPUT_STREAM (stream), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (! error)
+    error = &temp_error;
+
+  result = g_data_input_stream_read_line (stream, length, cancellable, error);
+
+  if (! result && ! *error)
+    {
+      result = g_strdup ("");
+
+      if (length) *length = 0;
+    }
+
+  g_clear_error (&temp_error);
+
+  return result;
+}
+
 
 /*  debug stuff  */
 

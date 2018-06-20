@@ -83,6 +83,11 @@ gchar      * gimp_file_get_extension               (GFile           *file);
 GFile      * gimp_file_with_new_extension          (GFile           *file,
                                                     GFile           *ext_file);
 
+gchar      * gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
+                                                      gsize             *length,
+                                                      GCancellable      *cancellable,
+                                                      GError           **error);
+
 GimpImage  * gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer,
                                                     const gchar     *image_name);
