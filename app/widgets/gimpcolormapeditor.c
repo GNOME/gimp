@@ -34,7 +34,9 @@
 #include "core/gimpmarshal.h"
 #include "core/gimppalette.h"
 
+#include "gimpcolordialog.h"
 #include "gimpcolormapeditor.h"
+#include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"
 #include "gimpmenufactory.h"
@@ -106,6 +108,12 @@ static void   gimp_colormap_image_mode_changed     (GimpImage          *image,
 static void   gimp_colormap_image_colormap_changed (GimpImage          *image,
                                                     gint                ncol,
                                                     GimpColormapEditor *editor);
+
+static void   gimp_colormap_editor_edit_color_update
+                                                    (GimpColorDialog    *dialog,
+                                                     const GimpRGB      *color,
+                                                     GimpColorDialogState state,
+                                                     GimpColormapEditor *editor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColormapEditor, gimp_colormap_editor,
@@ -258,11 +266,7 @@ gimp_colormap_editor_dispose (GObject *object)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
 
-  if (editor->color_dialog)
-    {
-      gtk_widget_destroy (editor->color_dialog);
-      editor->color_dialog = NULL;
-    }
+  g_clear_pointer (&editor->color_dialog, gtk_widget_destroy);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -368,6 +372,71 @@ gimp_colormap_editor_new (GimpMenuFactory *menu_factory)
                        NULL);
 }
 
+void
+gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
+{
+  GimpImage    *image;
+  const guchar *colormap;
+  GimpRGB       color;
+  gchar        *desc;
+  gint         index;
+
+  g_return_if_fail (GIMP_IS_COLORMAP_EDITOR (editor));
+
+  image = GIMP_IMAGE_EDITOR (editor)->image;
+
+  if (! HAVE_COLORMAP (image))
+    return;
+
+  index = editor->col_index;
+
+  colormap = gimp_image_get_colormap (image);
+
+  gimp_rgba_set_uchar (&color,
+                       colormap[index * 3],
+                       colormap[index * 3 + 1],
+                       colormap[index * 3 + 2],
+                       255);
+
+  desc = g_strdup_printf (_("Edit colormap entry #%d"), index);
+
+  if (! editor->color_dialog)
+    {
+      editor->color_dialog =
+        gimp_color_dialog_new (GIMP_VIEWABLE (image),
+                               GIMP_IMAGE_EDITOR (editor)->context,
+                               _("Edit Colormap Entry"),
+                               GIMP_ICON_COLORMAP,
+                               desc,
+                               GTK_WIDGET (editor),
+                               gimp_dialog_factory_get_singleton (),
+                               "gimp-colormap-editor-color-dialog",
+                               (const GimpRGB *) &color,
+                               FALSE, FALSE);
+
+      g_signal_connect (editor->color_dialog, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &editor->color_dialog);
+
+      g_signal_connect (editor->color_dialog, "update",
+                        G_CALLBACK (gimp_colormap_editor_edit_color_update),
+                        editor);
+    }
+  else
+    {
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
+                                         GIMP_VIEWABLE (image),
+                                         GIMP_IMAGE_EDITOR (editor)->context);
+      g_object_set (editor->color_dialog, "description", desc, NULL);
+      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
+                                   &color);
+    }
+
+  g_free (desc);
+
+  gtk_window_present (GTK_WINDOW (editor->color_dialog));
+}
+
 gint
 gimp_colormap_editor_get_index (GimpColormapEditor *editor,
                                 const GimpRGB      *search)
@@ -375,7 +444,7 @@ gimp_colormap_editor_get_index (GimpColormapEditor *editor,
   GimpImage *image;
   gint       index;
 
-  g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), 01);
+  g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), 0);
 
   image = GIMP_IMAGE_EDITOR (editor)->image;
 
@@ -694,4 +763,28 @@ gimp_colormap_image_colormap_changed (GimpImage          *image,
 
   if (ncol == editor->col_index || ncol == -1)
     gimp_colormap_editor_update_entries (editor);
+}
+
+static void
+gimp_colormap_editor_edit_color_update (GimpColorDialog      *dialog,
+                                        const GimpRGB        *color,
+                                        GimpColorDialogState  state,
+                                        GimpColormapEditor   *editor)
+{
+  GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
+
+  switch (state)
+    {
+    case GIMP_COLOR_DIALOG_UPDATE:
+      break;
+
+    case GIMP_COLOR_DIALOG_OK:
+      gimp_image_set_colormap_entry (image, editor->col_index, color, TRUE);
+      gimp_image_flush (image);
+      /* Fall through */
+
+    case GIMP_COLOR_DIALOG_CANCEL:
+      gtk_widget_hide (editor->color_dialog);
+      break;
+    }
 }

@@ -20,7 +20,6 @@ app/actions/buffers-actions.c
 app/actions/channels-actions.c
 app/actions/channels-commands.c
 app/actions/colormap-actions.c
-app/actions/colormap-commands.c
 app/actions/context-actions.c
 app/actions/context-commands.c
 app/actions/cursor-info-actions.c
