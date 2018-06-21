@@ -679,14 +679,14 @@ static const GroupInfo groups[] =
                             .default_active   = FALSE,
                             .show_in_header   = FALSE,
                             .meter_variable   = VARIABLE_SWAP_READING,
-                            .meter_value      = 1
+                            .meter_value      = 2
                           },
 
                           { .variable         = VARIABLE_SWAP_WRITTEN,
                             .default_active   = FALSE,
                             .show_in_header   = FALSE,
                             .meter_variable   = VARIABLE_SWAP_WRITING,
-                            .meter_value      = 2
+                            .meter_value      = 1
                           },
 
                           {}
@@ -1584,11 +1584,9 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
                                                                  variable);
 
                       if (variables[variable].type == VARIABLE_TYPE_BOOLEAN &&
-                          group_info->meter_limit                           &&
                           value)
                         {
-                          value = gimp_dashboard_variable_to_double (
-                            dashboard, group_info->meter_limit);
+                          value = G_MAXDOUBLE;
                         }
 
                       if (field_info->meter_cumulative)
@@ -2973,9 +2971,10 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
           break;
         }
 
-      if (show_limit               &&
-          variable_data->available &&
-          field_info->meter_value  &&
+      if (show_limit                   &&
+          variable_data->available     &&
+          field_info->meter_value      &&
+          ! field_info->meter_variable &&
           group_data->limit)
         {
           gdouble  value;
