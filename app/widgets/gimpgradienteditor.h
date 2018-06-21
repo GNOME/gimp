@@ -111,7 +111,6 @@ GType       gimp_gradient_editor_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_gradient_editor_new      (GimpContext        *context,
                                            GimpMenuFactory    *menu_factory);
 
-void        gimp_gradient_editor_update   (GimpGradientEditor *editor);
 void        gimp_gradient_editor_zoom     (GimpGradientEditor *editor,
                                            GimpZoomType        zoom_type);
 

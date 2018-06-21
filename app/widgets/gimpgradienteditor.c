@@ -116,6 +116,7 @@ static void   gimp_gradient_editor_set_data         (GimpDataEditor     *editor,
 static void   gimp_gradient_editor_set_context      (GimpDocked         *docked,
                                                      GimpContext        *context);
 
+static void   gimp_gradient_editor_update          (GimpGradientEditor  *editor);
 static void   gimp_gradient_editor_gradient_dirty   (GimpGradientEditor *editor,
                                                      GimpGradient       *gradient);
 static void   gradient_editor_drop_gradient         (GtkWidget          *widget,
@@ -538,19 +539,6 @@ gimp_gradient_editor_new (GimpContext     *context,
 }
 
 void
-gimp_gradient_editor_update (GimpGradientEditor *editor)
-{
-  GimpGradient *gradient = NULL;
-
-  g_return_if_fail (GIMP_IS_GRADIENT_EDITOR (editor));
-
-  if (GIMP_DATA_EDITOR (editor)->data)
-    gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
-
-  control_update (editor, gradient, FALSE);
-}
-
-void
 gimp_gradient_editor_zoom (GimpGradientEditor *editor,
                            GimpZoomType        zoom_type)
 {
@@ -614,6 +602,14 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
 
 /*  private functions  */
+
+static void
+gimp_gradient_editor_update (GimpGradientEditor *editor)
+{
+  GimpGradient *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+
+  control_update (editor, gradient, FALSE);
+}
 
 static void
 gimp_gradient_editor_gradient_dirty (GimpGradientEditor *editor,
