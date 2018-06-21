@@ -58,7 +58,6 @@ app/actions/layers-actions.c
 app/actions/layers-commands.c
 app/actions/mypaint-brushes-actions.c
 app/actions/palette-editor-actions.c
-app/actions/palette-editor-commands.c
 app/actions/palettes-actions.c
 app/actions/palettes-commands.c
 app/actions/patterns-actions.c
