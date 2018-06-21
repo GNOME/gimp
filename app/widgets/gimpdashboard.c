@@ -367,6 +367,8 @@ static void       gimp_dashboard_field_set_active            (GimpDashboard     
                                                               gint                 field,
                                                               gboolean             active);
 
+static void       gimp_dashboard_reset_variables             (GimpDashboard       *dashboard);
+
 static gpointer   gimp_dashboard_variable_get_data           (GimpDashboard       *dashboard,
                                                               Variable             variable,
                                                               gsize                size);
@@ -1174,7 +1176,7 @@ gimp_dashboard_dispose (GObject *object)
       priv->low_swap_space_idle_id = 0;
     }
 
-  gimp_dashboard_reset (dashboard);
+  gimp_dashboard_reset_variables (dashboard);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -2748,6 +2750,25 @@ gimp_dashboard_field_set_active (GimpDashboard *dashboard,
     }
 }
 
+static void
+gimp_dashboard_reset_variables (GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+  Variable              variable;
+
+  for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
+    {
+      const VariableInfo *variable_info = &variables[variable];
+      VariableData       *variable_data = &priv->variables[variable];
+
+      if (variable_info->reset_func)
+        variable_info->reset_func (dashboard, variable);
+
+      g_clear_pointer (&variable_data->data, g_free);
+      variable_data->data_size = 0;
+    }
+}
+
 static gpointer
 gimp_dashboard_variable_get_data (GimpDashboard *dashboard,
                                   Variable       variable,
@@ -2761,7 +2782,10 @@ gimp_dashboard_variable_get_data (GimpDashboard *dashboard,
       variable_data->data = g_realloc (variable_data->data, size);
 
       if (variable_data->data_size < size)
-        memset (variable_data->data, 0, size - variable_data->data_size);
+        {
+          memset ((guint8 *) variable_data->data + variable_data->data_size,
+                  0, size - variable_data->data_size);
+        }
 
       variable_data->data_size = size;
     }
@@ -3024,7 +3048,6 @@ void
 gimp_dashboard_reset (GimpDashboard *dashboard)
 {
   GimpDashboardPrivate *priv;
-  Variable              variable;
   Group                 group;
 
   g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
@@ -3035,17 +3058,7 @@ gimp_dashboard_reset (GimpDashboard *dashboard)
 
   gegl_reset_stats ();
 
-  for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
-    {
-      const VariableInfo *variable_info = &variables[variable];
-      VariableData       *variable_data = &priv->variables[variable];
-
-      if (variable_info->reset_func)
-        variable_info->reset_func (dashboard, variable);
-
-      g_clear_pointer (&variable_data->data, g_free);
-      variable_data->data_size = 0;
-    }
+  gimp_dashboard_reset_variables (dashboard);
 
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
     {
