@@ -1319,14 +1319,17 @@ do_layer_blend (GeglBuffer    *src_buffer,
  */
 
 void
-mask_components_onto (GeglBuffer        *src_buffer,
-                      GeglBuffer        *aux_buffer,
-                      GeglBuffer        *dst_buffer,
-                      GeglRectangle     *roi,
-                      GimpComponentMask  mask,
-                      gboolean           linear_mode)
+mask_components_onto (GeglBuffer          *src_buffer,
+                      GeglBuffer          *aux_buffer,
+                      GeglBuffer          *dst_buffer,
+                      const GeglRectangle *roi,
+                      GimpComponentMask    mask,
+                      gboolean             linear_mode)
 {
   const Babl *iterator_format;
+
+  if (! roi)
+    roi = gegl_buffer_get_extent (dst_buffer);
 
   if (linear_mode)
     iterator_format = babl_format ("RGBA float");
