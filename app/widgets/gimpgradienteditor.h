@@ -106,14 +106,17 @@ struct _GimpGradientEditorClass
 };
 
 
-GType       gimp_gradient_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_gradient_editor_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_gradient_editor_new      (GimpContext        *context,
-                                           GimpMenuFactory    *menu_factory);
+GtkWidget * gimp_gradient_editor_new              (GimpContext        *context,
+                                                   GimpMenuFactory    *menu_factory);
 
-void        gimp_gradient_editor_zoom     (GimpGradientEditor *editor,
-                                           GimpZoomType        zoom_type,
-                                           gdouble             delta);
+void        gimp_gradient_editor_edit_left_color  (GimpGradientEditor *editor);
+void        gimp_gradient_editor_edit_right_color (GimpGradientEditor *editor);
+
+void        gimp_gradient_editor_zoom             (GimpGradientEditor *editor,
+                                                   GimpZoomType        zoom_type,
+                                                   gdouble             delta);
 
 
 #endif  /* __GIMP_GRADIENT_EDITOR_H__ */
