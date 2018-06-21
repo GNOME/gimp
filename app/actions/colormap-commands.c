@@ -20,9 +20,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "actions-types.h"
 
 #include "core/gimpchannel-select.h"
@@ -30,22 +27,10 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
 
-#include "widgets/gimpcolordialog.h"
 #include "widgets/gimpcolormapeditor.h"
-#include "widgets/gimpdialogfactory.h"
 
 #include "actions.h"
 #include "colormap-commands.h"
-
-#include "gimp-intl.h"
-
-
-/*  local function prototypes  */
-
-static void   colormap_edit_color_update (GimpColorDialog      *dialog,
-                                          const GimpRGB        *color,
-                                          GimpColorDialogState  state,
-                                          GimpColormapEditor   *editor);
 
 
 /*  public functions  */
@@ -54,60 +39,9 @@ void
 colormap_edit_color_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  GimpColormapEditor *editor;
-  GimpImage          *image;
-  const guchar       *colormap;
-  GimpRGB             color;
-  gchar              *desc;
-  return_if_no_image (image, data);
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
 
-  editor = GIMP_COLORMAP_EDITOR (data);
-
-  colormap = gimp_image_get_colormap (image);
-
-  gimp_rgba_set_uchar (&color,
-                       colormap[editor->col_index * 3],
-                       colormap[editor->col_index * 3 + 1],
-                       colormap[editor->col_index * 3 + 2],
-                       255);
-
-  desc = g_strdup_printf (_("Edit colormap entry #%d"), editor->col_index);
-
-  if (! editor->color_dialog)
-    {
-      editor->color_dialog =
-        gimp_color_dialog_new (GIMP_VIEWABLE (image),
-                               action_data_get_context (data),
-                               _("Edit Colormap Entry"),
-                               GIMP_ICON_COLORMAP,
-                               desc,
-                               GTK_WIDGET (editor),
-                               gimp_dialog_factory_get_singleton (),
-                               "gimp-colormap-editor-color-dialog",
-                               (const GimpRGB *) &color,
-                               FALSE, FALSE);
-
-      g_signal_connect (editor->color_dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &editor->color_dialog);
-
-      g_signal_connect (editor->color_dialog, "update",
-                        G_CALLBACK (colormap_edit_color_update),
-                        editor);
-    }
-  else
-    {
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
-                                         GIMP_VIEWABLE (image),
-                                         action_data_get_context (data));
-      g_object_set (editor->color_dialog, "description", desc, NULL);
-      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
-                                   &color);
-    }
-
-  g_free (desc);
-
-  gtk_window_present (GTK_WINDOW (editor->color_dialog));
+  gimp_colormap_editor_edit_color (editor);
 }
 
 void
@@ -153,31 +87,4 @@ colormap_to_selection_cmd_callback (GtkAction *action,
                                 editor->col_index,
                                 op,
                                 FALSE, 0.0, 0.0);
-}
-
-
-/*  private functions  */
-
-static void
-colormap_edit_color_update (GimpColorDialog      *dialog,
-                            const GimpRGB        *color,
-                            GimpColorDialogState  state,
-                            GimpColormapEditor   *editor)
-{
-  GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
-
-  switch (state)
-    {
-    case GIMP_COLOR_DIALOG_UPDATE:
-      break;
-
-    case GIMP_COLOR_DIALOG_OK:
-      gimp_image_set_colormap_entry (image, editor->col_index, color, TRUE);
-      gimp_image_flush (image);
-      /* Fall through */
-
-    case GIMP_COLOR_DIALOG_CANCEL:
-      gtk_widget_hide (editor->color_dialog);
-      break;
-    }
 }
