@@ -16,8 +16,8 @@
    viewBox="0 0 24 24"
    id="svg30571"
    version="1.1"
-   inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-airbrush-24.svg"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="gimp-tool-airbrush-symbolic.svg"
    inkscape:export-filename="/home/klaus/Bilder/icons/Symbolic/hicolor/24x24/apps/gimp-channel.png"
    inkscape:export-xdpi="98.181816"
    inkscape:export-ydpi="98.181816">
@@ -32,10 +32,14 @@
          offset="0"
          id="stop19284-0" />
     </linearGradient>
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4597-5"
+       is_visible="true" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10444"
+       id="linearGradient10444-3"
        x1="25"
        y1="183.78217"
        x2="35.901054"
@@ -45,21 +49,17 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10456"
+       id="linearGradient10456-3"
        x1="30.021198"
        y1="189.02136"
        x2="35.030022"
        y2="189.02136"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.6034898,0,0,1.4484545,-33.185437,770.57367)" />
-    <inkscape:path-effect
-       effect="spiro"
-       id="path-effect4597-5"
-       is_visible="true" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10514"
+       id="linearGradient10514-7"
        x1="24"
        y1="188.5"
        x2="25"
@@ -69,7 +69,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10482"
+       id="linearGradient10482-2"
        x1="23"
        y1="189.5"
        x2="24"
@@ -79,7 +79,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10470"
+       id="linearGradient10470-7"
        x1="24"
        y1="190.5"
        x2="25"
@@ -89,7 +89,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10502"
+       id="linearGradient10502-3"
        gradientUnits="userSpaceOnUse"
        x1="23"
        y1="191.5"
@@ -99,7 +99,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10462"
+       id="linearGradient10462-5"
        x1="22"
        y1="190.5"
        x2="23"
@@ -109,7 +109,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10520"
+       id="linearGradient10520-5"
        x1="21"
        y1="191.5"
        x2="22"
@@ -119,7 +119,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10494"
+       id="linearGradient10494-4"
        x1="20"
        y1="190.5"
        x2="21"
@@ -129,7 +129,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10488"
+       id="linearGradient10488-6"
        x1="21"
        y1="189.5"
        x2="22"
@@ -139,7 +139,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10464"
+       id="linearGradient10464-4"
        x1="22"
        y1="192.5"
        x2="23"
@@ -149,7 +149,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10468"
+       id="linearGradient10468-6"
        x1="20"
        y1="192.5"
        x2="21"
@@ -159,7 +159,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10500"
+       id="linearGradient10500-7"
        x1="21"
        y1="193.5"
        x2="22"
@@ -169,7 +169,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10466"
+       id="linearGradient10466-5"
        x1="23"
        y1="193.5"
        x2="24"
@@ -184,9 +184,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="16"
-     inkscape:cx="-7.400391"
-     inkscape:cy="14.628924"
+     inkscape:zoom="4"
+     inkscape:cx="-25.566183"
+     inkscape:cy="11.563576"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -206,16 +206,22 @@
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
      showborder="false"
-     inkscape:window-width="1440"
-     inkscape:window-height="752"
+     inkscape:window-width="1366"
+     inkscape:window-height="704"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
      inkscape:snap-global="false"
-     showguides="false">
+     showguides="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
     <inkscape:grid
        type="xygrid"
-       id="grid4369" />
+       id="grid4369"
+       originx="0.50000001"
+       originy="3" />
   </sodipodi:namedview>
   <metadata
      id="metadata30576">
@@ -238,12 +244,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1028.3622)">
+     transform="translate(0.50000001,-1031.3622)">
     <g
-       id="g11179">
+       style="display:inline"
+       id="gimp-tool-airbrush-24"
+       transform="translate(-0.50000001,3.0000174)">
       <rect
-         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;fill:none;stroke:none;stroke-width:1.5;marker:none"
-         id="rect2941"
+         style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:1.5;marker:none"
+         id="rect2941-2"
          width="24"
          height="24"
          x="-1052.3622"
@@ -251,22 +259,19 @@
          inkscape:label="audio-volume-high"
          transform="rotate(-90)" />
       <path
-         style="display:inline;fill:url(#linearGradient10444);fill-opacity:1;stroke:none;stroke-width:1.4796741"
+         style="display:inline;fill:url(#linearGradient10444-3);fill-opacity:1;stroke:none;stroke-width:1.4796741"
          d="m 23.023806,1030.4546 c 0,0 -6.25601,2.8876 -8.978258,4.956 l -3.606432,2.7403 -1.676107,2.7189 c -0.6402274,0.2249 -0.7630095,1.3858 -0.7630095,1.7202 0,0.4224 0.3441473,0.7722 0.7621952,0.7722 0.330961,0 1.4133543,-0.067 1.5985213,-0.6045 l 2.599465,0.2527 0.697371,-0.5125 0.633633,0.7701 1.704648,-1.3393 -0.620588,-0.7572 1.445221,-0.9909 c 2.843968,-1.9498 7.00461,-8.7331 7.00461,-8.7331 0.480126,-0.5657 -0.107701,-1.357 -0.80127,-0.9929 z"
-         id="path2948"
+         id="path2948-2"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="csccssccccccscc" />
       <path
-         style="display:inline;fill:none;stroke:url(#linearGradient10456);stroke-width:1.52400196px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         d="m 15.586359,1043.5358 c 0.337095,0.4061 0.619187,0.8579 0.836173,1.339 0.150497,0.3337 0.270677,0.6831 0.461809,0.9953 0.09557,0.1561 0.208976,0.3024 0.346049,0.4237 0.137074,0.1213 0.298555,0.2172 0.474901,0.2662 0.331534,0.092 0.696413,0.011 0.987726,-0.1727 0.291312,-0.1832 0.514667,-0.4597 0.682512,-0.7601 0.335692,-0.6008 0.464012,-1.2997 0.798351,-1.9013 0.274943,-0.4947 0.687559,-0.9119 1.179158,-1.1924 0.491599,-0.2804 1.060756,-0.4232 1.626516,-0.4081"
-         id="path4595"
-         inkscape:path-effect="#path-effect4597-5"
-         inkscape:original-d="m 15.586359,1043.5358 c 0,0 1.229637,0.9704 0.836173,1.339 -0.130846,0.1225 0.331312,1.6158 1.282759,1.6852 1.902894,0.1388 0.492928,-2.8341 2.468589,-2.8341 1.97566,0 2.805674,-1.6005 2.805674,-1.6005"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="cscsc" />
+         style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:url(#linearGradient10456-3);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.52400196px;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         d="m 23,1041.3633 c -0.70747,-0.019 -1.410638,0.1571 -2.025391,0.5078 -0.614672,0.3507 -1.122966,0.8657 -1.466797,1.4844 -0.415851,0.7482 -0.543588,1.447 -0.796874,1.9004 -0.124557,0.2229 -0.276421,0.3936 -0.423829,0.4863 -0.133308,0.084 -0.294892,0.1061 -0.376953,0.084 -0.04486,-0.013 -0.109907,-0.047 -0.173828,-0.1035 -0.06556,-0.058 -0.135062,-0.1421 -0.201172,-0.25 -0.133211,-0.2176 -0.248022,-0.5334 -0.417968,-0.9102 v 0 c -0.24524,-0.5437 -0.564255,-1.0526 -0.945313,-1.5117 L 15,1044.0234 c 0.293132,0.3532 0.539783,0.7456 0.728516,1.1641 0.131047,0.2906 0.256806,0.6733 0.505859,1.0801 0.12503,0.2042 0.28165,0.4131 0.490234,0.5976 0.210227,0.1861 0.469512,0.3442 0.777344,0.4297 0.581387,0.1614 1.148997,0.019 1.597656,-0.2637 0.434479,-0.2736 0.730491,-0.6557 0.941407,-1.0332 0.418097,-0.7482 0.546002,-1.4474 0.798828,-1.9023 0.206056,-0.3707 0.522099,-0.6901 0.890625,-0.9004 0.368445,-0.2101 0.804465,-0.3199 1.228515,-0.3086 z"
+         id="path4595-9"
+         inkscape:connector-curvature="0" />
       <rect
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.5;fill:url(#linearGradient10514);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
-         id="rect3269"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.5;fill:url(#linearGradient10514-7);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
+         id="rect3269-9"
          width="1.5"
          height="1.5"
          x="6"
@@ -276,11 +281,11 @@
          x="4.5"
          height="1.5"
          width="1.5"
-         id="rect3271"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.4;fill:url(#linearGradient10482);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
+         id="rect3271-0"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.4;fill:url(#linearGradient10482-2);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
       <rect
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.3;fill:url(#linearGradient10470);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
-         id="rect3273"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.3;fill:url(#linearGradient10470-7);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
+         id="rect3273-0"
          width="1.5"
          height="1.5"
          x="6"
@@ -290,18 +295,18 @@
          x="4.5"
          height="1.5"
          width="1.5"
-         id="rect3275"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.1;fill:url(#linearGradient10502);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
+         id="rect3275-0"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.1;fill:url(#linearGradient10502-3);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
       <rect
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.28395063;fill:url(#linearGradient10462);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
-         id="rect3277"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.28395063;fill:url(#linearGradient10462-5);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
+         id="rect3277-0"
          width="1.5"
          height="1.5"
          x="3"
          y="1046.3622" />
       <rect
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.23868312;fill:url(#linearGradient10520);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
-         id="rect4084"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.23868312;fill:url(#linearGradient10520-5);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
+         id="rect4084-8"
          width="1.5"
          height="1.5"
          x="1.5"
@@ -311,11 +316,11 @@
          x="0"
          height="1.5"
          width="1.5"
-         id="rect4086"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10494);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
+         id="rect4086-9"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10494-4);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
       <rect
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10488);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
-         id="rect4088"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10488-6);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
+         id="rect4088-0"
          width="1.5"
          height="1.5"
          x="1.5"
@@ -325,11 +330,11 @@
          x="3"
          height="1.5"
          width="1.5"
-         id="rect4090"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10464);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
+         id="rect4090-9"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10464-4);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
       <rect
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10468);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
-         id="rect4092"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10468-6);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
+         id="rect4092-2"
          width="1.5"
          height="1.5"
          x="0"
@@ -339,11 +344,11 @@
          x="1.5"
          height="1.5"
          width="1.5"
-         id="rect4094"
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10500);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
+         id="rect4094-7"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10500-7);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new" />
       <rect
-         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10466);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
-         id="rect4096"
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:url(#linearGradient10466-5);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5;marker:none;enable-background:new"
+         id="rect4096-3"
          width="1.5"
          height="1.5"
          x="4.5"
