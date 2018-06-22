@@ -1184,7 +1184,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
   DWORD    tid = GetCurrentThreadId ();
 #elif defined(PLATFORM_OSX)
    uint64 tid64;
-   pthread_threadid_np(NULL, &tid64);
+   pthread_threadid_np (NULL, &tid64);
    long tid = (long)tid64;
 #elif defined(SYS_gettid)
   long     tid = syscall (SYS_gettid);
@@ -1281,7 +1281,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
 
       while ((read_n = read (out_fd[0], buffer, 256)) != 0)
         {
-          if(read_n == -1) {
+          if (read_n == -1) {
             if (errno == EINTR) continue;
             break;
           }
