@@ -67,7 +67,8 @@ static const gchar * gimp_gegl_procedure_get_label      (GimpProcedure  *procedu
 static const gchar * gimp_gegl_procedure_get_menu_label (GimpProcedure  *procedure);
 static const gchar * gimp_gegl_procedure_get_help_id    (GimpProcedure  *procedure);
 static gboolean      gimp_gegl_procedure_get_sensitive  (GimpProcedure  *procedure,
-                                                         GimpObject     *object);
+                                                         GimpObject     *object,
+                                                         const gchar   **tooltip);
 static GimpValueArray * gimp_gegl_procedure_execute     (GimpProcedure  *procedure,
                                                          Gimp           *gimp,
                                                          GimpContext    *context,
@@ -201,15 +202,12 @@ gimp_gegl_procedure_get_help_id (GimpProcedure *procedure)
 }
 
 static gboolean
-gimp_gegl_procedure_get_sensitive (GimpProcedure *procedure,
-                                   GimpObject    *object)
+gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
+                                   GimpObject     *object,
+                                   const gchar   **tooltip)
 {
-  GimpDrawable *drawable;
+  GimpDrawable *drawable  = GIMP_DRAWABLE (object);;
   gboolean      sensitive = FALSE;
-
-  g_return_val_if_fail (object == NULL || GIMP_IS_DRAWABLE (object), FALSE);
-
-  drawable = GIMP_DRAWABLE (object);
 
   if (drawable)
     {
