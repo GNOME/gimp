@@ -30,9 +30,15 @@ User Interface:
     other memory stats. Note that the upper-bound of the meter is the
     physical memory size, so the memory usage may be over 100% when GIMP
     uses the swap.
+  - The Dashboard dockable dialog now has "read" and "written" fields
+    in the dashboard swap group, which report the total amount of data
+    read-from/written-to the tile swap, respetively. Additionally, the
+    swap busy indicator (used as the meter's LED) has been improved, so
+    that it's active whenever data has been read-from/written-to the swap
+    during the last sampling interval, rather than at the point of sampling.
   - Fonts can now be tagged. The user interface is the same as for brushes,
     patterns etc.
-  
+
 Tools:
 
   - The Measurement tool now has an "Auto straighten" option allowing to
