@@ -156,13 +156,24 @@ plug_in_actions_update (GimpActionGroup *group,
           ! proc->file_proc                      &&
           proc->image_types_val)
         {
-          gboolean sensitive =
-            gimp_procedure_get_sensitive (GIMP_PROCEDURE (proc),
-                                          GIMP_OBJECT (drawable));
+          GimpProcedure *procedure = GIMP_PROCEDURE (proc);
+          gboolean       sensitive;
+          const gchar   *tooltip;
+
+          sensitive = gimp_procedure_get_sensitive (procedure,
+                                                    GIMP_OBJECT (drawable),
+                                                    &tooltip);
 
           gimp_action_group_set_action_sensitive (group,
                                                   gimp_object_get_name (proc),
                                                   sensitive);
+
+          if (sensitive || ! drawable || ! tooltip)
+            tooltip = gimp_procedure_get_blurb (procedure);
+
+          gimp_action_group_set_action_tooltip (group,
+                                                gimp_object_get_name (proc),
+                                                tooltip);
         }
     }
 }
@@ -368,16 +379,23 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       GimpImage    *image    = gimp_context_get_image (context);
       GimpDrawable *drawable = NULL;
       gboolean      sensitive;
+      const gchar  *tooltip;
 
       if (image)
         drawable = gimp_image_get_active_drawable (image);
 
       sensitive = gimp_procedure_get_sensitive (GIMP_PROCEDURE (proc),
-                                                GIMP_OBJECT (drawable));
+                                                GIMP_OBJECT (drawable),
+                                                &tooltip);
 
       gimp_action_group_set_action_sensitive (group,
                                               gimp_object_get_name (proc),
                                               sensitive);
+
+      if (! sensitive && drawable && tooltip)
+        gimp_action_group_set_action_tooltip (group,
+                                              gimp_object_get_name (proc),
+                                              tooltip);
     }
 }
 
