@@ -87,4 +87,6 @@ colormap_to_selection_cmd_callback (GtkAction *action,
                                 editor->col_index,
                                 op,
                                 FALSE, 0.0, 0.0);
+
+  gimp_image_flush (image);
 }
