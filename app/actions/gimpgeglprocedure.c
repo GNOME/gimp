@@ -206,7 +206,7 @@ gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
                                    GimpObject     *object,
                                    const gchar   **tooltip)
 {
-  GimpDrawable *drawable  = GIMP_DRAWABLE (object);;
+  GimpDrawable *drawable  = GIMP_DRAWABLE (object);
   gboolean      sensitive = FALSE;
 
   if (drawable)
