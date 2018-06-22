@@ -39,6 +39,12 @@ User Interface:
   - Fonts can now be tagged. The user interface is the same as for brushes,
     patterns etc.
 
+Usability:
+
+  - When a plug-in cannot be applied to an image because of mismatch in image
+    types (e.g. layer has no alpha or image is greyscale), GIMP now displays
+    a message listing supported image types for this plug-in.
+
 Tools:
 
   - The Measurement tool now has an "Auto straighten" option allowing to
