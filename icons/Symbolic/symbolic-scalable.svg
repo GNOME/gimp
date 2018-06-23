@@ -49,13 +49,13 @@
      inkscape:window-height="741"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="2.0000001"
-     inkscape:cx="171.91047"
-     inkscape:cy="181.10166"
+     inkscape:zoom="1.0000001"
+     inkscape:cx="1024.9098"
+     inkscape:cy="183.81292"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="tools"
+     inkscape:current-layer="stock"
      showborder="false"
      inkscape:snap-nodes="true"
      inkscape:snap-bbox="true"
@@ -31242,12 +31242,13 @@
          d="m 10,1046.3622 v 8 h 8 v -8 z m 1,1 h 6 v 6 h -6 z"
          style="fill:url(#linearGradient7875);fill-opacity:1;stroke:none;stroke-width:1.33517039" />
       <rect
-         style="display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.5"
+         style="display:inline;opacity:1;fill:#000000 !important;fill-opacity:1;stroke:none;stroke-width:1.5"
          id="rect13014-5-5"
          width="6"
          height="6"
          x="11"
-         y="1047.3622" />
+         y="1047.3622"
+         inkscape:label="color-important" />
     </g>
     <g
        id="gimp-color-picker-white"
@@ -31285,12 +31286,13 @@
          d="m 10,1046.3622 v 8 h 8 v -8 z m 1,1 h 6 v 6 h -6 z"
          style="fill:url(#linearGradient7855);fill-opacity:1;stroke:none;stroke-width:1.33517039" />
       <rect
-         style="display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.5"
+         style="display:inline;opacity:1;fill:#ffffff !important;fill-opacity:1;stroke:none;stroke-width:1.5"
          id="rect13014-5"
          width="6"
          height="6"
          x="11"
-         y="1047.3622" />
+         y="1047.3622"
+         inkscape:label="color-important" />
     </g>
     <g
        id="gimp-color-picker-gray"
@@ -31328,12 +31330,13 @@
          d="m 10,1046.3622 v 8 h 8 v -8 z m 1,1 h 6 v 6 h -6 z"
          style="fill:url(#linearGradient7837);fill-opacity:1;stroke:none;stroke-width:1.33517039" />
       <rect
-         style="display:inline;opacity:1;fill:#7f7f7f;fill-opacity:1;stroke:none;stroke-width:1.5"
+         style="display:inline;opacity:1;fill:#7f7f7f !important;fill-opacity:1;stroke:none;stroke-width:1.5"
          id="rect13014-5-9"
          width="6"
          height="6"
          x="11"
-         y="1047.3622" />
+         y="1047.3622"
+         inkscape:label="color-important" />
     </g>
     <g
        transform="matrix(0.75,0,0,0.75,474.40162,-356.10295)"
@@ -32622,7 +32625,8 @@
          height="5"
          width="5"
          id="rect9128-9"
-         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.30977488;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="opacity:1;fill:#ffffff !important;fill-opacity:1;stroke:none;stroke-width:0.30977488;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         inkscape:label="color-important" />
       <rect
          y="1040.3622"
          x="0"
@@ -32636,7 +32640,8 @@
          height="5"
          width="5"
          id="rect9128-9-4"
-         style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.30977488;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+         style="opacity:1;fill:#000000 !important;fill-opacity:1;stroke:none;stroke-width:0.30977488;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         inkscape:label="color-important" />
     </g>
     <rect
        style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.61777443;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"

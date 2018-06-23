@@ -140,7 +140,7 @@
          x="5"
          y="1045.3622" />
       <rect
-         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.30977488;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         style="opacity:1;fill:#ffffff !important;fill-opacity:1;stroke:none;stroke-width:0.30977488;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect9128-9"
          width="5"
          height="5"
@@ -154,7 +154,7 @@
          x="0"
          y="1040.3622" />
       <rect
-         style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.30977488;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         style="opacity:1;fill:#000000 !important;fill-opacity:1;stroke:none;stroke-width:0.30977488;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
          id="rect9128-9-4"
          width="5"
          height="5"
