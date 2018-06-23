@@ -22,7 +22,7 @@
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_GRAIDENT_SELECT_H__
+#ifndef __GIMP_GRADIENT_SELECT_H__
 #define __GIMP_GRADIENT_SELECT_H__
 
 G_BEGIN_DECLS
