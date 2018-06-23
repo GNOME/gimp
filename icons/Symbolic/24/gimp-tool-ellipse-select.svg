@@ -35,13 +35,12 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10686-3"
-       x1="-178"
-       y1="48"
-       x2="-166"
-       y2="48"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.3333333,0,0,1.25,241.33333,980.36224)" />
+       id="linearGradient8672"
+       x1="4"
+       y1="1040.3623"
+       x2="20"
+       y2="1040.3623"
+       gradientUnits="userSpaceOnUse" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
@@ -60,9 +59,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.313709"
-     inkscape:cx="-11.465798"
-     inkscape:cy="8.3752255"
+     inkscape:zoom="2.8284273"
+     inkscape:cx="-14.791819"
+     inkscape:cy="-2.1514226"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -95,8 +94,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid4369"
-       originx="-8.6361142"
-       originy="3.3847007" />
+       originx="15.031147"
+       originy="16.091807" />
   </sodipodi:namedview>
   <metadata
      id="metadata30576">
@@ -119,10 +118,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-8.6361142,-1031.7469)">
+     transform="translate(15.031147,-1044.454)">
     <g
        style="display:inline"
-       transform="translate(8.6361142,3.3847094)"
+       transform="translate(-15.031147,16.091824)"
        id="gimp-tool-ellipse-select-24"
        inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-tool-ellipse-select.png"
        inkscape:export-xdpi="95.999985"
@@ -134,13 +133,11 @@
          width="24"
          id="rect4708-2"
          style="opacity:0;fill:none;fill-opacity:1;stroke:none;stroke-width:1.5" />
-      <ellipse
-         id="path4710-9"
-         style="fill:url(#linearGradient10686-3);fill-opacity:1;stroke:none;stroke-width:1.29099452"
-         cx="12"
-         cy="1040.3623"
-         rx="8"
-         ry="5" />
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:url(#linearGradient8672);fill-opacity:1;stroke:none;stroke-width:1.29099452"
+         d="m 20,1040.3623 a 8,5 0 0 1 -8,5 8,5 0 0 1 -8,-5 8,5 0 0 1 8,-5 8,5 0 0 1 8,5 z"
+         id="path4710-9" />
       <path
          inkscape:connector-curvature="0"
          style="fill:url(#linearGradient9738-5);fill-opacity:1;stroke:none;stroke-width:1.65144014"

@@ -30,12 +30,16 @@
      id="namedview1508"
      showgrid="false"
      inkscape:zoom="10.429825"
-     inkscape:cx="1.4506204"
-     inkscape:cy="6.9965113"
+     inkscape:cx="-16.244921"
+     inkscape:cy="6.9426813"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg7384" />
+     inkscape:current-layer="svg7384"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -44,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -127,7 +131,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient10686-7"
+       id="linearGradient10686-0"
        x1="-178"
        y1="48"
        x2="-166"
@@ -136,7 +140,7 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient19282-4"
-       id="linearGradient9738-9"
+       id="linearGradient9738-6"
        x1="-177"
        y1="48"
        x2="-166"
@@ -148,7 +152,10 @@
      style="display:inline"
      id="gimp-tool-ellipse-select"
      inkscape:label="gimp-tool-ellipse-select"
-     transform="translate(-61.0002,-257)">
+     transform="translate(-61.0002,-257)"
+     inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/16/gimp-tool-ellipse-select.png"
+     inkscape:export-xdpi="95.999985"
+     inkscape:export-ydpi="95.999985">
     <rect
        transform="translate(241.0002,217)"
        y="40"
@@ -157,16 +164,14 @@
        width="16"
        id="rect4708"
        style="opacity:0;fill:none;fill-opacity:1;stroke:none" />
-    <ellipse
-       transform="matrix(0.83333356,0,0,0.75,212.33357,229)"
-       id="path4710"
-       style="fill:url(#linearGradient10686-7);fill-opacity:1;stroke:none"
-       cx="-172"
-       cy="48"
-       rx="6"
-       ry="4" />
     <path
-       style="fill:url(#linearGradient9738-9);fill-opacity:1;stroke:none"
+       inkscape:connector-curvature="0"
+       transform="matrix(0.83333356,0,0,0.75,212.33357,229)"
+       style="fill:url(#linearGradient10686-0);fill-opacity:1;stroke:none"
+       d="m -166,48 a 6,4 0 0 1 -6,4 6,4 0 0 1 -6,-4 6,4 0 0 1 6,-4 6,4 0 0 1 6,4 z"
+       id="path4710" />
+    <path
+       style="fill:url(#linearGradient9738-6);fill-opacity:1;stroke:none"
        d="m -53.98495,127.71477 h -2 l 5.75e-4,1.0001 h 2 z m -2.999425,0.18757 c -0.34262,0.0663 -0.67761,0.15236 -1,0.25 v 1.0625 c 0.32247,-0.10972 0.6537,-0.20469 1,-0.28125 z m 4,0 v 1.03125 c 0.3463,0.0766 0.67753,0.17153 1,0.28125 v -1.0625 c -0.32239,-0.0976 -0.65738,-0.1837 -1,-0.25 z m -6,0.625 c -0.35696,0.15527 -0.68046,0.33809 -1,0.53125 v 1.1875 c 0.30947,-0.22708 0.63617,-0.44271 1,-0.625 z m 8,0 v 1.09375 c 0.36383,0.18228 0.69053,0.39791 1,0.625 v -1.1875 c -0.31954,-0.19317 -0.64304,-0.37599 -1,-0.53125 z m -9,8.6875 v 1.15625 c 0.3196,0.19312 0.6429,0.37601 1,0.53125 v -1.0625 c -0.36558,-0.18304 -0.68997,-0.39601 -1,-0.625 z m 10,0 c -0.31003,0.22898 -0.63442,0.44195 -1,0.625 v 1.0625 c 0.3571,-0.15524 0.6804,-0.33814 1,-0.53125 z m -8,1.03125 v 1.03125 c 0.3255,0.099 0.65476,0.1835 1,0.25 v -1 c -0.35191,-0.0744 -0.67387,-0.16968 -1,-0.28125 z m 6,0 c -0.32613,0.11156 -0.64809,0.20685 -1,0.28125 v 1 c 0.34524,-0.0665 0.6745,-0.151 1,-0.25 z m -4,0.46875 -5.75e-4,0.99993 2.000575,7e-5 v -1 z"
        transform="translate(123.98515,131.28523)"
        id="path4760"

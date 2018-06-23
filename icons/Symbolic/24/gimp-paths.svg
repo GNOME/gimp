@@ -9,13 +9,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 23.999999 24"
+   viewBox="0 0 23.999999 23.999996"
    id="svg7384"
-   height="24"
+   height="23.999996"
    width="24"
    version="1.1"
-   inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-paths.svg">
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="gimp-paths-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -25,20 +25,26 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="640"
+     inkscape:window-width="792"
      inkscape:window-height="480"
      id="namedview1511"
      showgrid="true"
-     inkscape:zoom="14.75"
-     inkscape:cx="-9.7408184"
-     inkscape:cy="9.6610169"
+     inkscape:zoom="5.2149125"
+     inkscape:cx="6.2009801"
+     inkscape:cy="14.464831"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg7384">
+     inkscape:current-layer="svg7384"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
     <inkscape:grid
        type="xygrid"
-       id="grid4252" />
+       id="grid4252"
+       originx="-2.5095998"
+       originy="2.6038724" />
   </sodipodi:namedview>
   <metadata
      id="metadata90">
@@ -116,16 +122,24 @@
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     transform="matrix(1.4999998,0,0,1.4999998,-42.163193,-107.6987)"
+     transform="matrix(1.4999998,0,0,1.4999998,-42.163192,-107.6987)"
      style="display:inline"
-     id="stock">
+     id="gimp-paths-24">
     <g
-       id="gimp-paths"
+       id="gimp-paths-2"
        style="display:inline"
        transform="translate(-132.8914,-347.20086)">
       <rect
+         style="opacity:0;fill:none;stroke:none"
+         id="rect11834-8"
+         width="16"
+         height="16"
+         x="-80"
+         y="202"
+         transform="translate(241.0002,217)" />
+      <rect
          style="fill:url(#linearGradient7662);fill-opacity:1;stroke:none"
-         id="rect11849"
+         id="rect11849-8"
          width="4"
          height="4"
          x="161.0002"
@@ -135,27 +149,26 @@
          x="173.0002"
          height="4"
          width="4.0000014"
-         id="rect11851"
+         id="rect11851-6"
          style="fill:url(#linearGradient7668);fill-opacity:1;stroke:none" />
       <rect
          style="fill:url(#linearGradient7674);fill-opacity:1;stroke:none;stroke-width:0.66666675"
-         id="rect11853"
+         id="rect11853-0"
          width="8.000001"
          height="1.3333335"
          x="165.0002"
          y="424.33331" />
-      <circle
-         r="1.5"
-         cy="206.5"
-         cx="-71.5"
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(1.3333333,0,0,1.3333312,264.33353,149.66712)"
          style="fill:url(#linearGradient7666);fill-opacity:1;stroke:none"
-         id="path11855"
-         transform="matrix(1.3333333,0,0,1.3333312,264.33353,149.66712)" />
+         d="m -70,206.5 a 1.5,1.5 0 0 1 -1.5,1.5 1.5,1.5 0 0 1 -1.5,-1.5 1.5,1.5 0 0 1 1.5,-1.5 1.5,1.5 0 0 1 1.5,1.5 z"
+         id="path11855-6" />
       <path
          style="fill:url(#linearGradient7676);fill-opacity:1;stroke:none"
          d="m -65,216 c 0,-3.31371 -3.13401,-6 -7,-6 -3.86599,0 -7,2.68629 -7,6 h 2.015625 c 0.287851,-2.25391 2.407621,-4 4.984375,-4 2.576754,0 4.696524,1.74609 4.984375,4 z"
          transform="translate(241.0002,217)"
-         id="path11857"
+         id="path11857-9"
          inkscape:connector-curvature="0" />
     </g>
   </g>
