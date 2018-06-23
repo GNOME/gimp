@@ -508,7 +508,7 @@ motion_notify_event (GtkWidget      *widget,
                           y / allocation.height, pressure);
             }
 
-          g_free (coords);
+          gdk_device_free_history (coords, nevents);
         }
       else
         {
