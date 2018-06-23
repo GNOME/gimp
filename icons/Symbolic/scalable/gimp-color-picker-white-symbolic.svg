@@ -176,7 +176,7 @@
          height="6"
          width="6"
          id="rect13014-5"
-         style="display:inline;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.5" />
+         style="display:inline;opacity:1;fill:#ffffff !important;fill-opacity:1;stroke:none;stroke-width:1.5" />
     </g>
   </g>
 </svg>
