@@ -1279,10 +1279,12 @@ gimp_stack_trace_print (const gchar   *prog_name,
        */
       close (out_fd[1]);
 
+      int eintr_count = 0;
       while ((read_n = read (out_fd[0], buffer, 256)) != 0)
         {
-          if (read_n == -1) {
-            if (errno == EINTR) {
+          if (read_n < 0) {
+            if (errno == EINTR && eintr_count <= 5) {
+              eintr_count++;
               continue;
             }
             break;
