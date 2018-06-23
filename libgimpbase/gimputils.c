@@ -1282,13 +1282,15 @@ gimp_stack_trace_print (const gchar   *prog_name,
       int eintr_count = 0;
       while ((read_n = read (out_fd[0], buffer, 256)) != 0)
         {
-          if (read_n < 0) {
-            if (errno == EINTR && eintr_count <= 5) {
-              eintr_count++;
-              continue;
+          if (read_n < 0) 
+            {
+              if (errno == EINTR && eintr_count <= 5) 
+                {
+                  eintr_count++;
+                  continue;
+                }
+              break;
             }
-            break;
-          }
           if (! stack_printed)
             {
 #if defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)
