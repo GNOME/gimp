@@ -118,6 +118,8 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
   selector_class->icon_name  = GIMP_ICON_COLOR_SELECTOR_CMYK;
   selector_class->set_color  = colorsel_cmyk_set_color;
   selector_class->set_config = colorsel_cmyk_set_config;
+
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "ColorselCmyk");
 }
 
 static void

@@ -61,6 +61,9 @@ gimp_color_selector_palette_class_init (GimpColorSelectorPaletteClass *klass)
   selector_class->icon_name  = GIMP_ICON_PALETTE;
   selector_class->set_color  = gimp_color_selector_palette_set_color;
   selector_class->set_config = gimp_color_selector_palette_set_config;
+
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass),
+                                 "GimpColorSelectorPalette");
 }
 
 static void
@@ -139,13 +142,6 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
 
       if (! select->view)
         {
-          GtkWidget *frame;
-
-          frame = gtk_frame_new (NULL);
-          gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-          gtk_box_pack_start (GTK_BOX (select), frame, TRUE, TRUE, 0);
-          gtk_widget_show (frame);
-
           select->view = gimp_view_new_full_by_types (select->context,
                                                       GIMP_TYPE_PALETTE_VIEW,
                                                       GIMP_TYPE_PALETTE,
@@ -158,7 +154,7 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
           gimp_view_renderer_palette_set_draw_grid
             (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (select->view)->renderer),
              TRUE);
-          gtk_container_add (GTK_CONTAINER (frame), select->view);
+          gtk_box_pack_start (GTK_BOX (select), select->view, TRUE, TRUE, 0);
           gtk_widget_show (select->view);
 
           g_signal_connect (select->view, "entry-clicked",

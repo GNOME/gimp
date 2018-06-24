@@ -106,6 +106,8 @@ colorsel_wheel_class_init (ColorselWheelClass *klass)
   selector_class->icon_name  = GIMP_ICON_COLOR_SELECTOR_TRIANGLE;
   selector_class->set_color  = colorsel_wheel_set_color;
   selector_class->set_config = colorsel_wheel_set_config;
+
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "ColorselWheel");
 }
 
 static void
@@ -116,17 +118,10 @@ colorsel_wheel_class_finalize (ColorselWheelClass *klass)
 static void
 colorsel_wheel_init (ColorselWheel *wheel)
 {
-  GtkWidget *frame;
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (wheel), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   wheel->hsv = gimp_color_wheel_new ();
   g_object_add_weak_pointer (G_OBJECT (wheel->hsv),
                              (gpointer) &wheel->hsv);
-  gtk_container_add (GTK_CONTAINER (frame), wheel->hsv);
+  gtk_box_pack_start (GTK_BOX (wheel), wheel->hsv, TRUE, TRUE, 0);
   gtk_widget_show (wheel->hsv);
 
   g_signal_connect (wheel->hsv, "changed",

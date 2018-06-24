@@ -167,6 +167,8 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelection");
+
   g_type_class_add_private (object_class, sizeof (GimpColorSelectionPrivate));
 }
 

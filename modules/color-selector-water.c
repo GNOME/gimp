@@ -131,6 +131,8 @@ colorsel_water_class_init (ColorselWaterClass *klass)
   selector_class->help_id    = "gimp-colorselector-watercolor";
   selector_class->icon_name  = GIMP_ICON_COLOR_SELECTOR_WATER;
   selector_class->set_config = colorsel_water_set_config;
+
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "ColorselWater");
 }
 
 static void

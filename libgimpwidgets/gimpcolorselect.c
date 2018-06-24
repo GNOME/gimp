@@ -329,6 +329,8 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
   selector_class->set_model_visible     = gimp_color_select_set_model_visible;
   selector_class->set_config            = gimp_color_select_set_config;
 
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelect");
+
   fish_rgb_to_lch    = babl_fish (babl_format ("R'G'B'A double"),
                                   babl_format ("CIE LCH(ab) double"));
   fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) double"),
