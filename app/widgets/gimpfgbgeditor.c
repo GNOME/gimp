@@ -250,10 +250,8 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   cairo_t        *cr;
   GtkAllocation   allocation;
   gint            width, height;
-  gint            default_w = 0;
-  gint            default_h = 0;
-  gint            swap_w    = 0;
-  gint            swap_h    = 0;
+  gint            default_w, default_h;
+  gint            swap_w, swap_h;
   gint            rect_w, rect_h;
   GimpRGB         color;
   GimpRGB         transformed_color;
@@ -277,65 +275,37 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
     editor->default_icon = gimp_widget_load_icon (widget,
                                                   GIMP_ICON_COLORS_DEFAULT, 12);
 
-  if (editor->default_icon)
-    {
-      default_w = gdk_pixbuf_get_width  (editor->default_icon);
-      default_h = gdk_pixbuf_get_height (editor->default_icon);
+  default_w = gdk_pixbuf_get_width  (editor->default_icon);
+  default_h = gdk_pixbuf_get_height (editor->default_icon);
 
-      if (default_w < width / 2 && default_h < height / 2)
-        {
-          gdk_cairo_set_source_pixbuf (cr, editor->default_icon,
-                                       0, height - default_h);
-          cairo_paint (cr);
-        }
-      else
-        {
-          default_w = default_h = 0;
-        }
+  if (default_w < width / 2 && default_h < height / 2)
+    {
+      gdk_cairo_set_source_pixbuf (cr, editor->default_icon,
+                                   0, height - default_h);
+      cairo_paint (cr);
     }
   else
     {
-      g_printerr ("%s: invisible default colors area because of "
-                  "missing or broken icons in your theme.\n",
-                  G_STRFUNC);
-      /* If icon is too small, we may not draw it but still assigns some
-       * dimensions for the default color area, which will still exist,
-       * though not designated by an icon.
-       */
-      default_w = width / 4;
-      default_h = height / 4;
+      default_w = default_h = 0;
     }
 
   /*  draw the swap colors pixbuf  */
   if (! editor->swap_icon)
     editor->swap_icon = gimp_widget_load_icon (widget,
                                                GIMP_ICON_COLORS_SWAP, 12);
-  if (editor->swap_icon)
-    {
-      swap_w = gdk_pixbuf_get_width  (editor->swap_icon);
-      swap_h = gdk_pixbuf_get_height (editor->swap_icon);
 
-      if (swap_w < width / 2 && swap_h < height / 2)
-        {
-          gdk_cairo_set_source_pixbuf (cr, editor->swap_icon,
-                                       width - swap_w, 0);
-          cairo_paint (cr);
-        }
-      else
-        {
-          swap_w = swap_h = 0;
-        }
+  swap_w = gdk_pixbuf_get_width  (editor->swap_icon);
+  swap_h = gdk_pixbuf_get_height (editor->swap_icon);
+
+  if (swap_w < width / 2 && swap_h < height / 2)
+    {
+      gdk_cairo_set_source_pixbuf (cr, editor->swap_icon,
+                                   width - swap_w, 0);
+      cairo_paint (cr);
     }
   else
     {
-      g_printerr ("%s: invisible color swap area because of missing or "
-                  "broken icons in your theme.\n", G_STRFUNC);
-      /* If icon is too small, we may not draw it but still assigns some
-       * dimensions for the color swap area, which will still exist,
-       * though not designated by an icon.
-       */
-      swap_w = width / 4;
-      swap_h = height / 4;
+      swap_w = swap_h = 0;
     }
 
   rect_h = height - MAX (default_h, swap_h) - 2;
