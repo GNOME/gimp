@@ -366,6 +366,26 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
   gimp_enum_radio_box_add (GTK_BOX (box), widget, enum_value, below);
 }
 
+/**
+ * gimp_widget_load_icon:
+ * @widget:                  parent widget (to determine icon theme and
+ *                           style)
+ * @icon_name:               icon name
+ * @size:                    requested pixel size
+ *
+ * Loads an icon into a pixbuf with size as close as possible to @size.
+ * If icon does not exist or fail to load, the function will fallback to
+ * "gimp-wilber-eek" instead to prevent NULL pixbuf.
+ * Nevertheless it is still possible for this function to return NULL,
+ * in the edge case where "gimp-wilber-eek" is also missing, its file
+ * corrupted or maybe other reasons. So calling code must take the NULL
+ * return possibility into account.
+ *
+ * Return value: a newly allocated #GdkPixbuf containing @icon_name at
+ * size @size or a fallback icon/size. NULL return is a possibility in
+ * if neither the requested icon nor fallback could be loaded
+ * successfully.
+ **/
 GdkPixbuf *
 gimp_widget_load_icon (GtkWidget   *widget,
                        const gchar *icon_name,
