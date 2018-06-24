@@ -324,6 +324,7 @@ gimp_widget_load_icon (GtkWidget   *widget,
                        const gchar *icon_name,
                        gint         size)
 {
+  GdkPixbuf    *pixbuf;
   GtkIconTheme *icon_theme;
   GtkIconInfo  *icon_info;
   gchar        *name;
@@ -345,21 +346,48 @@ gimp_widget_load_icon (GtkWidget   *widget,
 
   if (! icon_info)
     {
-      g_printerr ("gimp_widget_load_icon(): icon theme has no icon '%s'.\n",
-                  icon_name);
+      g_printerr ("WARNING: icon theme has no icon '%s'.\n", icon_name);
       icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
                                                         GIMP_ICON_WILBER_EEK "-symbolic",
                                                         size, scale_factor,
                                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK);
 
-      return gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                      gtk_widget_get_style_context (widget),
-                                                      NULL, NULL);
+      pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                        gtk_widget_get_style_context (widget),
+                                                        NULL, NULL);
+    }
+  else
+    {
+      pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                        gtk_widget_get_style_context (widget),
+                                                        NULL, NULL);
+      if (! pixbuf)
+        {
+          /* The icon was seemingly present in the current icon theme, yet
+           * it failed to load. Maybe the file is broken?
+           * As last resort, try to load "gimp-wilber-eek" as fallback.
+           * Note that we are not making more checks, so if the fallback
+           * icon fails to load as well, the function may still return NULL.
+           */
+          g_printerr ("WARNING: icon '%s' failed to load. Check the files "
+                      "in your icon theme.\n", icon_name);
+
+          g_object_unref (icon_info);
+          icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
+                                                            GIMP_ICON_WILBER_EEK "-symbolic",
+                                                            size, scale_factor,
+                                                            GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+
+          pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                            gtk_widget_get_style_context (widget),
+                                                            NULL, NULL);
+        }
     }
 
-  return gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                  gtk_widget_get_style_context (widget),
-                                                  NULL, NULL);
+  if (icon_info)
+    g_object_unref (icon_info);
+
+  return pixbuf;
 }
 
 GtkIconSize
