@@ -33,6 +33,9 @@
 
 #include "gimpcellrenderercolor.h"
 #include "gimpcolorhexentry.h"
+#include "gimphelpui.h"
+
+#include "libgimp/libgimp-intl.h"
 
 
 /**
@@ -110,6 +113,11 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
    * for our use case
    */
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 8);
+
+  gimp_help_set_help_data (GTK_WIDGET (entry),
+                           _("Hexadecimal color notation as used in HTML and "
+                             "CSS.  This entry also accepts CSS color names."),
+                           NULL);
 
   gimp_rgba_set (&entry->color, 0.0, 0.0, 0.0, 1.0);
 

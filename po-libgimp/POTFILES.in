@@ -43,6 +43,7 @@ libgimpthumb/gimpthumbnail.c
 
 libgimpwidgets/gimpbrowser.c
 libgimpwidgets/gimpcolorbutton.c
+libgimpwidgets/gimpcolorhexentry.c
 libgimpwidgets/gimpcolorprofilechooserdialog.c
 libgimpwidgets/gimpcolorprofilestore.c
 libgimpwidgets/gimpcolorprofileview.c

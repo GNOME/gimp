@@ -216,7 +216,6 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
                     editor);
 
   editor->color_entry = gimp_color_hex_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 12);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("HTML notation:"), 0.0, 0.5,
                              editor->color_entry, 1, TRUE);
