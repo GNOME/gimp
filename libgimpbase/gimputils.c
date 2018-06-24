@@ -1180,6 +1180,7 @@ gimp_stack_trace_print (const gchar   *prog_name,
   int      out_fd[2];
   pid_t    fork_pid;
   pid_t    pid = getpid();
+  gint     eintr_count = 0;
 #if defined(G_OS_WIN32)
   DWORD    tid = GetCurrentThreadId ();
 #elif defined(PLATFORM_OSX)
@@ -1279,7 +1280,6 @@ gimp_stack_trace_print (const gchar   *prog_name,
        */
       close (out_fd[1]);
 
-      gint eintr_count = 0;
       while ((read_n = read (out_fd[0], buffer, 256)) != 0)
         {
           if (read_n < 0) 
