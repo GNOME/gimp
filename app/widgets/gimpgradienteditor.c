@@ -322,10 +322,6 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  /* Gradient view */
-  editor->view_last_x      = 0;
-  editor->view_button_down = FALSE;
-
   data_editor->view = gimp_view_new_full_by_types (NULL,
                                                    GIMP_TYPE_VIEW,
                                                    GIMP_TYPE_GRADIENT,
@@ -352,16 +348,6 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                               editor);
 
   /* Gradient control */
-  editor->control_drag_segment = NULL;
-  editor->control_sel_l        = NULL;
-  editor->control_sel_r        = NULL;
-  editor->control_drag_mode    = GRAD_DRAG_NONE;
-  editor->control_click_time   = 0;
-  editor->control_compress     = FALSE;
-  editor->control_last_x       = 0;
-  editor->control_last_gx      = 0.0;
-  editor->control_orig_pos     = 0.0;
-
   editor->control = gtk_drawing_area_new ();
   gtk_widget_set_size_request (editor->control, -1, GRAD_CONTROL_HEIGHT);
   gtk_widget_set_events (editor->control, GRAD_CONTROL_EVENT_MASK);
@@ -429,13 +415,6 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   editor->hint_label2 = gradient_hint_label_add (GTK_BOX (hint_vbox));
   editor->hint_label3 = gradient_hint_label_add (GTK_BOX (hint_vbox));
   editor->hint_label4 = gradient_hint_label_add (GTK_BOX (hint_vbox));
-
-  /* Initialize other data */
-  editor->left_saved_segments = NULL;
-  editor->left_saved_dirty    = FALSE;
-
-  editor->right_saved_segments = NULL;
-  editor->right_saved_dirty    = FALSE;
 
   /* Black, 50% Gray, White, Clear */
   gimp_rgba_set (&editor->saved_colors[0], 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
@@ -600,8 +579,8 @@ gimp_gradient_editor_edit_left_color (GimpGradientEditor *editor)
       editor->control_sel_l->left_color_type != GIMP_GRADIENT_COLOR_FIXED)
     return;
 
-  editor->left_saved_dirty    = gimp_data_is_dirty (GIMP_DATA (gradient));
-  editor->left_saved_segments = gradient_editor_save_selection (editor);
+  editor->saved_dirty    = gimp_data_is_dirty (GIMP_DATA (gradient));
+  editor->saved_segments = gradient_editor_save_selection (editor);
 
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
@@ -644,8 +623,8 @@ gimp_gradient_editor_edit_right_color (GimpGradientEditor *editor)
       editor->control_sel_r->right_color_type != GIMP_GRADIENT_COLOR_FIXED)
     return;
 
-  editor->right_saved_dirty    = gimp_data_is_dirty (GIMP_DATA (gradient));
-  editor->right_saved_segments = gradient_editor_save_selection (editor);
+  editor->saved_dirty    = gimp_data_is_dirty (GIMP_DATA (gradient));
+  editor->saved_segments = gradient_editor_save_selection (editor);
 
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
@@ -1022,7 +1001,7 @@ gradient_editor_left_color_update (GimpColorDialog      *dialog,
                                          color,
                                          &editor->control_sel_r->right_color,
                                          TRUE, TRUE);
-      gimp_gradient_segments_free (editor->left_saved_segments);
+      gimp_gradient_segments_free (editor->saved_segments);
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
@@ -1031,8 +1010,8 @@ gradient_editor_left_color_update (GimpColorDialog      *dialog,
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
-      gradient_editor_replace_selection (editor, editor->left_saved_segments);
-      if (! editor->left_saved_dirty)
+      gradient_editor_replace_selection (editor, editor->saved_segments);
+      if (! editor->saved_dirty)
         gimp_data_clean (GIMP_DATA (gradient));
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
       gtk_widget_destroy (editor->color_dialog);
@@ -1070,7 +1049,7 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
                                          &editor->control_sel_l->left_color,
                                          color,
                                          TRUE, TRUE);
-      gimp_gradient_segments_free (editor->right_saved_segments);
+      gimp_gradient_segments_free (editor->saved_segments);
       gtk_widget_destroy (editor->color_dialog);
       editor->color_dialog = NULL;
       gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
@@ -1079,8 +1058,8 @@ gradient_editor_right_color_update (GimpColorDialog      *dialog,
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
-      gradient_editor_replace_selection (editor, editor->right_saved_segments);
-      if (! editor->right_saved_dirty)
+      gradient_editor_replace_selection (editor, editor->saved_segments);
+      if (! editor->saved_dirty)
         gimp_data_clean (GIMP_DATA (gradient));
       gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gradient));
       gtk_widget_destroy (editor->color_dialog);

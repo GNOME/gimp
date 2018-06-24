@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -364,6 +365,7 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
 {
   GimpGradientEditor  *editor      = GIMP_GRADIENT_EDITOR (data);
   GimpDataEditor      *data_editor = GIMP_DATA_EDITOR (data);
+  GimpGradient        *gradient;
   GimpGradientSegment *left;
   GimpGradientSegment *right;
   GtkWidget           *dialog;
@@ -374,7 +376,7 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
   const gchar         *title;
   const gchar         *desc;
 
-  gimp_gradient_editor_get_selection (editor, NULL, &left, &right);
+  gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
   if (left == right)
     {
@@ -387,19 +389,19 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
       desc  = _("Replicate Gradient Selection");
     }
 
-  dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (data_editor->data),
-                              data_editor->context,
-                              title, "gimp-gradient-segment-replicate",
-                              GIMP_ICON_GRADIENT, desc,
-                              GTK_WIDGET (editor),
-                              gimp_standard_help_func,
-                              GIMP_HELP_GRADIENT_EDITOR_REPLICATE,
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gradient),
+                                     data_editor->context,
+                                     title,
+                                     "gimp-gradient-segment-replicate",
+                                     GIMP_ICON_GRADIENT, desc,
+                                     GTK_WIDGET (editor),
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_GRADIENT_EDITOR_REPLICATE,
 
-                              _("_Cancel"),    GTK_RESPONSE_CANCEL,
-                              _("_Replicate"), GTK_RESPONSE_OK,
+                                     _("_Cancel"),    GTK_RESPONSE_CANCEL,
+                                     _("_Replicate"), GTK_RESPONSE_OK,
 
-                              NULL);
+                                     NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -428,8 +430,7 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
   gtk_widget_show (label);
 
   /*  Scale  */
-  editor->replicate_times = 2;
-  scale_data  = GTK_ADJUSTMENT (gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0));
+  scale_data = GTK_ADJUSTMENT (gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0));
 
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_data);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
@@ -437,9 +438,7 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, TRUE, 4);
   gtk_widget_show (scale);
 
-  g_signal_connect (scale_data, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &editor->replicate_times);
+  g_object_set_data (G_OBJECT (dialog), "adjustment", scale_data);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
@@ -475,6 +474,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
 {
   GimpGradientEditor  *editor      = GIMP_GRADIENT_EDITOR (data);
   GimpDataEditor      *data_editor = GIMP_DATA_EDITOR (data);
+  GimpGradient        *gradient;
   GimpGradientSegment *left;
   GimpGradientSegment *right;
   GtkWidget           *dialog;
@@ -485,7 +485,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
   const gchar         *title;
   const gchar         *desc;
 
-  gimp_gradient_editor_get_selection (editor, NULL, &left, &right);
+  gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
   if (left == right)
     {
@@ -498,19 +498,19 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
       desc  = _("Split Gradient Segments Uniformly");
     }
 
-  dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (data_editor->data),
-                              data_editor->context,
-                              title, "gimp-gradient-segment-split-uniformly",
-                              GIMP_ICON_GRADIENT, desc,
-                              GTK_WIDGET (editor),
-                              gimp_standard_help_func,
-                              GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM,
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gradient),
+                                     data_editor->context,
+                                     title,
+                                     "gimp-gradient-segment-split-uniformly",
+                                     GIMP_ICON_GRADIENT, desc,
+                                     GTK_WIDGET (editor),
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM,
 
-                              _("_Cancel"), GTK_RESPONSE_CANCEL,
-                              _("_Split"),  GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Split"),  GTK_RESPONSE_OK,
 
-                              NULL);
+                                     NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -540,7 +540,6 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
   gtk_widget_show (label);
 
   /*  Scale  */
-  editor->split_parts = 2;
   scale_data = GTK_ADJUSTMENT (gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0));
 
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_data);
@@ -549,9 +548,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 4);
   gtk_widget_show (scale);
 
-  g_signal_connect (scale_data, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &editor->split_parts);
+  g_object_set_data (G_OBJECT (dialog), "adjustment", scale_data);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
@@ -658,6 +655,13 @@ gradient_editor_split_uniform_response (GtkWidget          *widget,
                                         gint                response_id,
                                         GimpGradientEditor *editor)
 {
+  GtkAdjustment *adjustment;
+  gint           split_parts;
+
+  adjustment = g_object_get_data (G_OBJECT (widget), "adjustment");
+
+  split_parts = RINT (gtk_adjustment_get_value (adjustment));
+
   gtk_widget_destroy (widget);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
@@ -675,7 +679,7 @@ gradient_editor_split_uniform_response (GtkWidget          *widget,
       gimp_gradient_segment_range_split_uniform (gradient,
                                                  data_editor->context,
                                                  left, right,
-                                                 editor->split_parts,
+                                                 split_parts,
                                                  editor->blend_color_space,
                                                  &left, &right);
 
@@ -688,6 +692,13 @@ gradient_editor_replicate_response (GtkWidget          *widget,
                                     gint                response_id,
                                     GimpGradientEditor *editor)
 {
+  GtkAdjustment *adjustment;
+  gint           replicate_times;
+
+  adjustment = g_object_get_data (G_OBJECT (widget), "adjustment");
+
+  replicate_times = RINT (gtk_adjustment_get_value (adjustment));
+
   gtk_widget_destroy (widget);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
   gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
@@ -703,7 +714,7 @@ gradient_editor_replicate_response (GtkWidget          *widget,
 
       gimp_gradient_segment_range_replicate (gradient,
                                              left, right,
-                                             editor->replicate_times,
+                                             replicate_times,
                                              &left, &right);
 
       gimp_gradient_editor_set_selection (editor, left, right);
