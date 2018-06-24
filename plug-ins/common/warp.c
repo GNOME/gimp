@@ -367,7 +367,7 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
   *adjustment = gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+  spinbutton = gtk_spin_button_new (*adjustment,
                                     climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);

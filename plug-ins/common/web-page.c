@@ -344,8 +344,7 @@ webpage_dialog (void)
       g_free (webpagevals.url);
       webpagevals.url = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
 
-      webpagevals.width = (gint) gtk_adjustment_get_value
-        (GTK_ADJUSTMENT (adjustment));
+      webpagevals.width = (gint) gtk_adjustment_get_value (adjustment);
 
       gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo),
                                      &webpagevals.font_size);

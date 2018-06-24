@@ -73,9 +73,8 @@ gimp_brush_factory_view_class_init (GimpBrushFactoryViewClass *klass)
 static void
 gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 {
-  view->spacing_adjustment =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 5000.0,
-                                        1.0, 10.0, 0.0));
+  view->spacing_adjustment = gtk_adjustment_new (0.0, 1.0, 5000.0,
+                                                 1.0, 10.0, 0.0);
 
   view->spacing_scale = gimp_spin_scale_new (view->spacing_adjustment,
                                              _("Spacing"), 1);

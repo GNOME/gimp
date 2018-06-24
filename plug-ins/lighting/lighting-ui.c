@@ -352,8 +352,7 @@ create_options_page (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 12);
   gtk_widget_show (grid);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                               _("Distance:"), 100, 6,
                               mapvals.viewpoint.z,
                               0.0, 2.0, 0.01, 0.05,
@@ -1546,11 +1545,10 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
 {
   GtkWidget *spinbutton;
 
-  *adjustment = (GtkAdjustment *)
-                gtk_adjustment_new (value, lower, upper,
+  *adjustment = gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+  spinbutton = gtk_spin_button_new (*adjustment,
                                     climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);

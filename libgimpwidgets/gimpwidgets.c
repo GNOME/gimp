@@ -457,8 +457,7 @@ gimp_random_seed_new (guint    *seed,
   if (*random_seed)
     *seed = g_random_int ();
 
-  adj = (GtkAdjustment *)
-    gtk_adjustment_new (*seed, 0, (guint32) -1, 1, 10, 0);
+  adj = gtk_adjustment_new (*seed, 0, (guint32) -1, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
@@ -694,7 +693,7 @@ gimp_coordinates_new (GimpUnit         unit,
   GtkWidget           *sizeentry;
   GtkWidget           *chainbutton;
 
-  adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 0, 1, 1, 10, 0);
+  adjustment = gtk_adjustment_new (1, 0, 1, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 

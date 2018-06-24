@@ -272,7 +272,7 @@ print_size_frame (PrintData    *data,
 
   gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   height = gtk_spin_button_new (adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
@@ -314,7 +314,7 @@ print_size_frame (PrintData    *data,
 
   gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   height = gtk_spin_button_new (adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
@@ -398,7 +398,7 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (grid);
 
   /* left */
-  info.left_adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  info.left_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   spinner = gtk_spin_button_new (info.left_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
@@ -415,7 +415,7 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (label);
 
   /* right */
-  info.right_adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  info.right_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   spinner = gtk_spin_button_new (info.right_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
@@ -435,7 +435,7 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (label);
 
   /* top */
-  info.top_adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  info.top_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   spinner = gtk_spin_button_new (info.top_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
@@ -452,7 +452,7 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (label);
 
   /* bottom */
-  info.bottom_adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  info.bottom_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   spinner = gtk_spin_button_new (info.bottom_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 

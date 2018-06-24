@@ -430,7 +430,7 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
   gtk_widget_show (label);
 
   /*  Scale  */
-  scale_data = GTK_ADJUSTMENT (gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0));
+  scale_data = gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
 
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_data);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
@@ -540,7 +540,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
   gtk_widget_show (label);
 
   /*  Scale  */
-  scale_data = GTK_ADJUSTMENT (gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0));
+  scale_data = gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
 
   scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_data);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);

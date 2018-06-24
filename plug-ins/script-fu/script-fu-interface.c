@@ -410,7 +410,7 @@ script_fu_interface (SFScript  *script,
           switch (arg->default_value.sfa_adjustment.type)
             {
             case SF_SLIDER:
-              arg->value.sfa_adjustment.adj = (GtkAdjustment *)
+              arg->value.sfa_adjustment.adj =
                 gimp_scale_entry_new (GTK_GRID (sf_interface->grid),
                                       0, row,
                                       label_text, SLIDER_WIDTH, -1,
@@ -432,7 +432,7 @@ script_fu_interface (SFScript  *script,
 
             case SF_SPINNER:
               left_align = TRUE;
-              arg->value.sfa_adjustment.adj = (GtkAdjustment *)
+              arg->value.sfa_adjustment.adj =
                 gtk_adjustment_new (arg->value.sfa_adjustment.value,
                                     arg->default_value.sfa_adjustment.lower,
                                     arg->default_value.sfa_adjustment.upper,

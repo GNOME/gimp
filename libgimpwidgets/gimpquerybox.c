@@ -337,8 +337,7 @@ gimp_query_int_box (const gchar          *title,
   if (! query_box)
     return NULL;
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
+  adjustment = gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
@@ -401,8 +400,7 @@ gimp_query_double_box (const gchar             *title,
   if (! query_box)
     return NULL;
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
+  adjustment = gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);

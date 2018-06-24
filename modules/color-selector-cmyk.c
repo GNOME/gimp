@@ -130,9 +130,8 @@ colorsel_cmyk_class_finalize (ColorselCmykClass *klass)
 static void
 colorsel_cmyk_init (ColorselCmyk *module)
 {
-  GtkWidget     *grid;
-  GtkAdjustment *adj;
-  gint           i;
+  GtkWidget *grid;
+  gint       i;
 
   static const gchar * const cmyk_labels[] =
   {
@@ -169,22 +168,20 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   for (i = 0; i < 4; i++)
     {
-      adj = gimp_scale_entry_new (GTK_GRID (grid), 1, i,
-                                  gettext (cmyk_labels[i]),
-                                  -1, -1,
-                                  0.0,
-                                  0.0, 100.0,
-                                  1.0, 10.0,
-                                  0,
-                                  TRUE, 0.0, 0.0,
-                                  gettext (cmyk_tips[i]),
-                                  NULL);
+      module->adj[i] = gimp_scale_entry_new (GTK_GRID (grid), 1, i,
+                                             gettext (cmyk_labels[i]),
+                                             -1, -1,
+                                             0.0,
+                                             0.0, 100.0,
+                                             1.0, 10.0,
+                                             0,
+                                             TRUE, 0.0, 0.0,
+                                             gettext (cmyk_tips[i]),
+                                             NULL);
 
-      g_signal_connect (adj, "value-changed",
+      g_signal_connect (module->adj[i], "value-changed",
                         G_CALLBACK (colorsel_cmyk_adj_update),
                         module);
-
-      module->adj[i] = GTK_ADJUSTMENT (adj);
     }
 
   module->name_label = gtk_label_new (NULL);

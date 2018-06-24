@@ -575,7 +575,7 @@ create_orientmap_dialog (GtkWidget *parent)
                    G_CALLBACK (map_click_callback), NULL);
   gtk_widget_show (ebox);
 
-  vector_preview_brightness_adjust = (GtkAdjustment *)
+  vector_preview_brightness_adjust =
     gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
   tmpw = gtk_scale_new (GTK_ORIENTATION_VERTICAL,
                         vector_preview_brightness_adjust);
@@ -664,7 +664,7 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_box_pack_start (GTK_BOX (hbox), grid2, TRUE, TRUE, 0);
   gtk_widget_show (grid2);
 
-  angle_adjust = (GtkAdjustment *)
+  angle_adjust =
     gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
                           _("A_ngle:"),
                           150, 6, 0.0,
@@ -675,7 +675,7 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (angle_adjust, "value-changed",
                     G_CALLBACK (angle_adjust_move_callback), NULL);
 
-  angle_offset_adjust = (GtkAdjustment *)
+  angle_offset_adjust =
     gimp_scale_entry_new (GTK_GRID (grid2), 0, 1,
                           _("Ang_le offset:"),
                           150, 6, 0.0,
@@ -686,7 +686,7 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (angle_offset_adjust, "value-changed",
                     G_CALLBACK (angle_offset_adjust_move_callback), NULL);
 
-  strength_adjust = (GtkAdjustment *)
+  strength_adjust =
     gimp_scale_entry_new (GTK_GRID (grid2), 0, 2,
                           _("_Strength:"),
                           150, 6, 1.0,
@@ -697,7 +697,7 @@ create_orientmap_dialog (GtkWidget *parent)
   g_signal_connect (strength_adjust, "value-changed",
                     G_CALLBACK (strength_adjust_move_callback), NULL);
 
-  orient_map_str_exp_adjust = (GtkAdjustment *)
+  orient_map_str_exp_adjust =
     gimp_scale_entry_new (GTK_GRID (grid2), 0, 3,
                           _("S_trength exp.:"),
                           150, 6, 1.0,

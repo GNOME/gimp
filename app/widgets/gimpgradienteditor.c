@@ -365,10 +365,10 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   /*  Scrollbar  */
   editor->zoom_factor = 1;
 
-  editor->scroll_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1.0,
-                                                            GRAD_SCROLLBAR_STEP_SIZE,
-                                                            GRAD_SCROLLBAR_PAGE_SIZE,
-                                                            1.0));
+  editor->scroll_data = gtk_adjustment_new (0.0, 0.0, 1.0,
+                                            GRAD_SCROLLBAR_STEP_SIZE,
+                                            GRAD_SCROLLBAR_PAGE_SIZE,
+                                            1.0);
 
   g_signal_connect (editor->scroll_data, "value-changed",
                     G_CALLBACK (gradient_editor_scrollbar_update),

@@ -57,7 +57,7 @@ getsiz_proto (double x, double y, int n, smvector_t *vec,
     {
       n = numsmvect;
       vec = smvector;
-      smstrexp = gtk_adjustment_get_value (GTK_ADJUSTMENT (smstrexpadjust));
+      smstrexp = gtk_adjustment_get_value (smstrexpadjust);
       voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (size_voronoi));
     }
   else

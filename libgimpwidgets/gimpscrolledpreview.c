@@ -149,8 +149,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
 
   /*  scrollbars  */
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, width - 1, 1.0,
-                                            width, width));
+  adj = gtk_adjustment_new (0, 0, width - 1, 1.0, width, width);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_scrolled_preview_h_scroll),
@@ -160,8 +159,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   gtk_widget_set_hexpand (priv->hscr, TRUE);
   gtk_grid_attach (GTK_GRID (grid), priv->hscr, 0, 1, 1, 1);
 
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, height - 1, 1.0,
-                                            height, height));
+  adj = gtk_adjustment_new (0, 0, height - 1, 1.0, height, height);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_scrolled_preview_v_scroll),

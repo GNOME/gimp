@@ -284,9 +284,8 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Opacity scale  */
 
-  view->priv->opacity_adjustment =
-    GTK_ADJUSTMENT (gtk_adjustment_new (100.0, 0.0, 100.0,
-                                        1.0, 10.0, 0.0));
+  view->priv->opacity_adjustment = gtk_adjustment_new (100.0, 0.0, 100.0,
+                                                       1.0, 10.0, 0.0);
   scale = gimp_spin_scale_new (view->priv->opacity_adjustment, _("Opacity"), 1);
   gimp_help_set_help_data (scale, NULL,
                            GIMP_HELP_LAYER_DIALOG_OPACITY_SCALE);

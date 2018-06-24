@@ -1309,10 +1309,9 @@ save_dialog (gint32 drawable_ID)
                           grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  adj = (GtkAdjustment *)
-    gtk_adjustment_new (xsvals.x_hot, 0,
-                        gimp_drawable_width (drawable_ID) - 1,
-                        1, 10, 0);
+  adj = gtk_adjustment_new (xsvals.x_hot, 0,
+                            gimp_drawable_width (drawable_ID) - 1,
+                            1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
@@ -1323,10 +1322,9 @@ save_dialog (gint32 drawable_ID)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.x_hot);
 
-  adj = (GtkAdjustment *)
-    gtk_adjustment_new (xsvals.y_hot, 0,
-                        gimp_drawable_height (drawable_ID) - 1,
-                        1, 10, 0);
+  adj = gtk_adjustment_new (xsvals.y_hot, 0,
+                            gimp_drawable_height (drawable_ID) - 1,
+                            1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,

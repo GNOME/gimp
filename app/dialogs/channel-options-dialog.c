@@ -139,8 +139,7 @@ channel_options_dialog_new (GimpImage                  *image,
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) channel_options_dialog_free, private);
 
-  opacity_adj = (GtkAdjustment *)
-                gtk_adjustment_new (channel_color->a * 100.0,
+  opacity_adj = gtk_adjustment_new (channel_color->a * 100.0,
                                     0.0, 100.0, 1.0, 10.0, 0);
   scale = gimp_spin_scale_new (opacity_adj, NULL, 1);
   gtk_widget_set_size_request (scale, 200, -1);

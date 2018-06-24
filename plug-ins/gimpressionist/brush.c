@@ -483,9 +483,9 @@ brush_preview_size_allocate (GtkWidget *preview)
 }
 
 static void
-brush_asepct_adjust_cb (GtkWidget *w, gpointer data)
+brush_asepct_adjust_cb (GtkAdjustment *a, gpointer data)
 {
-  gimp_double_adjustment_update (GTK_ADJUSTMENT (w), data);
+  gimp_double_adjustment_update (a, data);
   update_brush_preview (pcvals.selected_brush);
 }
 
@@ -543,8 +543,8 @@ create_brushpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box3), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
 
-  brush_gamma_adjust = GTK_ADJUSTMENT (gtk_adjustment_new (pcvals.brushgamma,
-                                                           0.5, 3.0, 0.1, 0.1, 1.0));
+  brush_gamma_adjust = gtk_adjustment_new (pcvals.brushgamma,
+                                           0.5, 3.0, 0.1, 0.1, 1.0);
   tmpw = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, brush_gamma_adjust);
   gtk_widget_set_size_request (GTK_WIDGET (tmpw), 100, 30);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
@@ -591,7 +591,7 @@ create_brushpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (thispage), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  brush_aspect_adjust = (GtkAdjustment *)
+  brush_aspect_adjust =
     gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                           _("Aspect ratio:"),
                           150, -1, pcvals.brush_aspect,
@@ -602,9 +602,10 @@ create_brushpage (GtkNotebook *notebook)
   gtk_size_group_add_widget (group,
                              GIMP_SCALE_ENTRY_LABEL (brush_aspect_adjust));
   g_signal_connect (brush_aspect_adjust, "value-changed",
-                    G_CALLBACK (brush_asepct_adjust_cb), &pcvals.brush_aspect);
+                    G_CALLBACK (brush_asepct_adjust_cb),
+                    &pcvals.brush_aspect);
 
-  brush_relief_adjust = (GtkAdjustment *)
+  brush_relief_adjust =
     gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                           _("Relief:"),
                           150, -1, pcvals.brush_relief,

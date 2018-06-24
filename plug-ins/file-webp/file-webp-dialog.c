@@ -274,9 +274,9 @@ save_dialog (WebPSaveParams *params,
       gtk_widget_show (label_kf);
 
       /* key-frame distance entry */
-      adj_kf = (GtkAdjustment *) gtk_adjustment_new (params->kf_distance,
-                                                     0.0, 10000.0,
-                                                     1.0, 10.0, 0.0);
+      adj_kf = gtk_adjustment_new (params->kf_distance,
+                                   0.0, 10000.0,
+                                   1.0, 10.0, 0.0);
       kf_distance = gtk_spin_button_new (adj_kf, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (kf_distance), TRUE);
       gtk_box_pack_start (GTK_BOX (hbox_kf), kf_distance, FALSE, FALSE, 0);

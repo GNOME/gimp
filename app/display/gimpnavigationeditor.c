@@ -430,8 +430,8 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       gtk_box_pack_end (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      editor->zoom_adjustment =
-        GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -8.0, 8.0, 0.5, 1.0, 0.0));
+      editor->zoom_adjustment = gtk_adjustment_new (0.0, -8.0, 8.0,
+                                                    0.5, 1.0, 0.0);
 
       g_signal_connect (editor->zoom_adjustment, "value-changed",
                         G_CALLBACK (gimp_navigation_editor_zoom_adj_changed),

@@ -62,13 +62,13 @@ void
 general_store (void)
 {
   pcvals.general_paint_edges = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_paint_edges));
-  pcvals.general_dark_edge = gtk_adjustment_get_value (GTK_ADJUSTMENT (general_dark_edge_adjust));
+  pcvals.general_dark_edge = gtk_adjustment_get_value (general_dark_edge_adjust);
   pcvals.general_tileable = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_tileable));
   pcvals.general_drop_shadow = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (general_drop_shadow));
-  pcvals.general_shadow_darkness = gtk_adjustment_get_value (GTK_ADJUSTMENT (general_shadow_adjust));
-  pcvals.general_shadow_depth = gtk_adjustment_get_value (GTK_ADJUSTMENT (general_shadow_depth));
-  pcvals.general_shadow_blur = gtk_adjustment_get_value (GTK_ADJUSTMENT (general_shadow_blur));
-  pcvals.devthresh = gtk_adjustment_get_value (GTK_ADJUSTMENT (dev_thresh_adjust));
+  pcvals.general_shadow_darkness = gtk_adjustment_get_value (general_shadow_adjust);
+  pcvals.general_shadow_depth = gtk_adjustment_get_value (general_shadow_depth);
+  pcvals.general_shadow_blur = gtk_adjustment_get_value (general_shadow_blur);
+  pcvals.devthresh = gtk_adjustment_get_value (dev_thresh_adjust);
 }
 
 int
@@ -86,21 +86,21 @@ general_restore (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_paint_edges),
                                 pcvals.general_paint_edges);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (general_dark_edge_adjust),
+  gtk_adjustment_set_value (general_dark_edge_adjust,
                             pcvals.general_dark_edge);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (general_shadow_adjust),
+  gtk_adjustment_set_value (general_shadow_adjust,
                             pcvals.general_shadow_darkness);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_drop_shadow),
                                 pcvals.general_drop_shadow);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (general_shadow_depth),
+  gtk_adjustment_set_value (general_shadow_depth,
                             pcvals.general_shadow_depth);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (general_shadow_blur),
+  gtk_adjustment_set_value (general_shadow_blur,
                             pcvals.general_shadow_blur);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (general_tileable),
                                 pcvals.general_tileable);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (general_color_button),
                                &pcvals.color);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (dev_thresh_adjust),
+  gtk_adjustment_set_value (dev_thresh_adjust,
                             pcvals.devthresh);
 }
 

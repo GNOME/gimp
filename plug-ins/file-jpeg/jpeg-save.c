@@ -770,8 +770,7 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  pg.quality = entry = (GtkAdjustment *)
-                       gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+  pg.quality = entry = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                                              _("_Quality:"),
                                              SCALE_WIDTH, 0, jsvals.quality,
                                              0.0, 100.0, 1.0, 10.0, 0,
@@ -837,8 +836,7 @@ save_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), grid2, 2, 0, 4, 1);
   gtk_widget_show (grid2);
 
-  pg.smoothing = entry = (GtkAdjustment *)
-                         gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
+  pg.smoothing = entry = gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
                                                _("S_moothing:"),
                                                100, 0, jsvals.smoothing,
                                                0.0, 1.0, 0.01, 0.1, 2,
@@ -857,10 +855,9 @@ save_dialog (void)
   gtk_grid_attach (GTK_GRID (grid), restart_markers_label, 4, 1, 1, 1);
   gtk_widget_show (restart_markers_label);
 
-  pg.scale_data = (GtkAdjustment *)
-    gtk_adjustment_new (((jsvals.restart == 0) ?
-                         DEFAULT_RESTART_MCU_ROWS : jsvals.restart),
-                        1.0, 64.0, 1.0, 1.0, 0);
+  pg.scale_data = gtk_adjustment_new (((jsvals.restart == 0) ?
+                                       DEFAULT_RESTART_MCU_ROWS : jsvals.restart),
+                                      1.0, 64.0, 1.0, 1.0, 0);
   pg.restart = restart_markers_scale = spinbutton =
     gtk_spin_button_new (pg.scale_data, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);

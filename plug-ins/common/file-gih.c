@@ -800,7 +800,7 @@ gih_load_image (GFile   *file,
 /*  save routines */
 
 static void
-size_adjustment_callback (GtkWidget          *widget,
+size_adjustment_callback (GtkAdjustment      *adjustment,
                           SizeAdjustmentData *adj)
 {
   gint  i;
@@ -815,7 +815,7 @@ size_adjustment_callback (GtkWidget          *widget,
   adj->guides = NULL;
   gimp_displays_flush ();
 
-  *(adj->value) = gtk_adjustment_get_value (GTK_ADJUSTMENT (widget));
+  *(adj->value) = gtk_adjustment_get_value (adjustment);
 
   if (adj->orientation == GIMP_ORIENTATION_VERTICAL)
     {

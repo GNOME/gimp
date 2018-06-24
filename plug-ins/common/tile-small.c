@@ -359,8 +359,7 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
   *adjustment = gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
-                                    climb_rate, digits);
+  spinbutton = gtk_spin_button_new (*adjustment, climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
@@ -715,8 +714,8 @@ exp_need_update (gint nx,
                                        tileit_exp_update_f,
                                        &exp_call);
 
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (exp_call.c_adj), nx);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (exp_call.r_adj), ny);
+      gtk_adjustment_set_value (exp_call.c_adj, nx);
+      gtk_adjustment_set_value (exp_call.r_adj, ny);
 
       g_signal_handlers_unblock_by_func (exp_call.c_adj,
                                          tileit_exp_update_f,
@@ -773,12 +772,12 @@ explicit_update (gboolean settile)
   gint x,y;
 
   /* Make sure bounds are OK */
-  y = ROUND (gtk_adjustment_get_value (GTK_ADJUSTMENT (exp_call.r_adj)));
+  y = ROUND (gtk_adjustment_get_value (exp_call.r_adj));
   if (y > itvals.numtiles || y <= 0)
     {
       y = itvals.numtiles;
     }
-  x = ROUND (gtk_adjustment_get_value (GTK_ADJUSTMENT (exp_call.c_adj)));
+  x = ROUND (gtk_adjustment_get_value (exp_call.c_adj));
   if (x > itvals.numtiles || x <= 0)
     {
       x = itvals.numtiles;

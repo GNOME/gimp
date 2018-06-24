@@ -889,7 +889,7 @@ load_dialog (const gchar *filename)
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
    */
-  adj = (GtkAdjustment *) gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
+  adj = gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
@@ -899,7 +899,7 @@ load_dialog (const gchar *filename)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
+  adj = gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
@@ -947,7 +947,7 @@ save_dialog (gint32 image_id)
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
    */
-  adj = (GtkAdjustment *) gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
+  adj = gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
@@ -957,7 +957,7 @@ save_dialog (gint32 image_id)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
+  adj = gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
