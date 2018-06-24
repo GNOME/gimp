@@ -49,26 +49,23 @@ typedef struct _GimpGradientEditorClass GimpGradientEditorClass;
 
 struct _GimpGradientEditor
 {
-  GimpDataEditor  parent_instance;
+  GimpDataEditor          parent_instance;
 
-  GtkWidget      *current_color;
-  GtkWidget      *hint_label1;
-  GtkWidget      *hint_label2;
-  GtkWidget      *hint_label3;
-  GtkWidget      *hint_label4;
-  GtkWidget      *scrollbar;
-  GtkWidget      *control;
+  GtkWidget              *current_color;
+  GtkWidget              *hint_label1;
+  GtkWidget              *hint_label2;
+  GtkWidget              *hint_label3;
+  GtkWidget              *hint_label4;
+  GtkWidget              *scrollbar;
+  GtkWidget              *control;
 
   /*  Zoom and scrollbar  */
-  guint           zoom_factor;
-  GtkAdjustment  *scroll_data;
-
-  /*  Color dialog  */
-  GtkWidget      *color_dialog;
+  guint                   zoom_factor;
+  GtkAdjustment          *scroll_data;
 
   /*  Gradient view  */
-  gint            view_last_x;
-  gboolean        view_button_down;
+  gint                    view_last_x;
+  gboolean                view_button_down;
 
   /*  Gradient control  */
   GimpGradientSegment    *control_drag_segment; /* Segment which is being dragged */
@@ -83,21 +80,13 @@ struct _GimpGradientEditor
 
   GimpGradientBlendColorSpace  blend_color_space;
 
-  /*  Split uniformly dialog  */
-  gint          split_parts;
-
-  /*  Replicate dialog  */
-  gint          replicate_times;
-
   /*  Saved colors  */
-  GimpRGB       saved_colors[GRAD_NUM_COLORS];
+  GimpRGB                 saved_colors[GRAD_NUM_COLORS];
 
-  /*  Color dialogs  */
-  GimpGradientSegment *left_saved_segments;
-  gboolean             left_saved_dirty;
-
-  GimpGradientSegment *right_saved_segments;
-  gboolean             right_saved_dirty;
+  /*  Color dialog  */
+  GtkWidget              *color_dialog;
+  GimpGradientSegment    *saved_segments;
+  gboolean                saved_dirty;
 };
 
 struct _GimpGradientEditorClass
