@@ -457,12 +457,15 @@ gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
                         }
                     }
                 }
+
               g_free (path);
             }
 
           g_object_unref (child);
           g_object_unref (info);
         }
+
+      g_object_unref (enumerator);
     }
   else
     {
@@ -485,6 +488,7 @@ gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            "- %s%s", path, G_DIR_SEPARATOR_S);
             }
+
           g_free (path);
         }
     }
