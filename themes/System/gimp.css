@@ -49,6 +49,10 @@ GimpColorHistory button {
     padding: 4px 6px 4px 6px;
 }
 
+tab GimpFgBgView {
+    padding: 6px 6px 6px 6px;
+}
+
 GimpDock {
     font-size: smaller;
 }

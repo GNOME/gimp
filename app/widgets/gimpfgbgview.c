@@ -86,6 +86,8 @@ gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpFgBgView");
 }
 
 static void
@@ -157,32 +159,34 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
   GtkStyleContext *style  = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
   GtkBorder        border;
-  gint             outline_width;
-  gint             outline_offset;
-  gint             rect_w, rect_h;
+  GtkBorder        padding;
+  GdkRectangle     rect;
   GimpRGB          color;
 
   gtk_widget_get_allocation (widget, &allocation);
 
   gtk_style_context_save (style);
 
-  gtk_style_context_get (style, gtk_style_context_get_state (style),
-                         "outline-width",  &outline_width,
-                         "outline-offset", &outline_offset,
-                         NULL);
+  gtk_style_context_get_border (style, gtk_style_context_get_state (style),
+                                &border);
+  gtk_style_context_get_padding (style, gtk_style_context_get_state (style),
+                                 &padding);
 
-  border.left   = outline_width + ABS (outline_offset);
-  border.right  = outline_width + ABS (outline_offset);
-  border.top    = outline_width + ABS (outline_offset);
-  border.bottom = outline_width + ABS (outline_offset);
+  border.left   += padding.left;
+  border.right  += padding.right;
+  border.top    += padding.top;
+  border.bottom += padding.bottom;
 
-  rect_w = allocation.width  * 3 / 4;
-  rect_h = allocation.height * 3 / 4;
+  rect.width  = (allocation.width  - border.left - border.right)  * 3 / 4;
+  rect.height = (allocation.height - border.top  - border.bottom) * 3 / 4;
 
   if (! view->transform)
     gimp_fg_bg_view_create_transform (view);
 
   /*  draw the background area  */
+
+  rect.x = allocation.width  - rect.width  - border.right;
+  rect.y = allocation.height - rect.height - border.bottom;
 
   if (view->context)
     {
@@ -198,22 +202,18 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
 
       gimp_cairo_set_source_rgb (cr, &color);
 
-      cairo_rectangle (cr,
-                       allocation.width  - rect_w + border.left,
-                       allocation.height - rect_h + border.top,
-                       rect_w - (border.left + border.right),
-                       rect_h - (border.top + border.bottom));
+      cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
       cairo_fill (cr);
     }
 
-  gtk_style_context_set_state (style, GTK_STATE_FLAG_ACTIVE);
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_FRAME);
 
-  gtk_render_frame (style, cr,
-                    allocation.width  - rect_w,
-                    allocation.height - rect_h,
-                    rect_w, rect_h);
+  gtk_render_frame (style, cr, rect.x, rect.y, rect.width, rect.height);
 
   /*  draw the foreground area  */
+
+  rect.x = border.left;
+  rect.y = border.top;
 
   if (view->context)
     {
@@ -229,18 +229,11 @@ gimp_fg_bg_view_draw (GtkWidget *widget,
 
       gimp_cairo_set_source_rgb (cr, &color);
 
-      cairo_rectangle (cr,
-                       border.left,
-                       border.top,
-                       rect_w - (border.left + border.right),
-                       rect_h - (border.top + border.bottom));
+      cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
       cairo_fill (cr);
     }
 
-  gtk_style_context_set_state (style, 0);
-
-  gtk_render_frame (style, cr,
-                    0, 0, rect_w, rect_h);
+  gtk_render_frame (style, cr, rect.x, rect.y, rect.width, rect.height);
 
   gtk_style_context_restore (style);
 
