@@ -1488,12 +1488,21 @@ prefs_dialog_new (Gimp       *gimp,
                                    _("Export the image's color profile by default"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-exif",
+                                   /* Translators: label for configuration option (checkbox).
+                                    * It determines how file export plug-ins handle Exif by default.
+                                    */
                                    _("Export Exif metadata by default when available"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-xmp",
+                                   /* Translators: label for configuration option (checkbox).
+                                    * It determines how file export plug-ins handle XMP by default.
+                                    */
                                    _("Export XMP metadata by default when available"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-iptc",
+                                   /* Translators: label for configuration option (checkbox).
+                                    * It determines how file export plug-ins handle IPTC by default.
+                                    */
                                    _("Export IPTC metadata by default when available"),
                                    GTK_BOX (vbox2));
   hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,

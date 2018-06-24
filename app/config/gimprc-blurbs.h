@@ -207,12 +207,21 @@ _("Which plug-in to use for importing raw digital camera files.")
 #define EXPORT_COLOR_PROFILE_BLURB \
 _("Export the image's color profile by default.")
 
+/* Translators: tooltip for configuration option (checkbox).
+ * It determines how file export plug-ins handle Exif by default.
+ */
 #define EXPORT_METADATA_EXIF_BLURB \
 _("Export Exif metadata by default.")
 
+/* Translators: tooltip for configuration option (checkbox).
+ * It determines how file export plug-ins handle XMP by default.
+ */
 #define EXPORT_METADATA_XMP_BLURB \
 _("Export XMP metadata by default.")
 
+/* Translators: tooltip for configuration option (checkbox).
+ * It determines how file export plug-ins handle IPTC by default.
+ */
 #define EXPORT_METADATA_IPTC_BLURB \
 _("Export IPTC metadata by default.")
 
