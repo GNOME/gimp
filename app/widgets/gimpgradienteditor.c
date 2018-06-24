@@ -556,6 +556,37 @@ gimp_gradient_editor_new (GimpContext     *context,
 }
 
 void
+gimp_gradient_editor_get_selection (GimpGradientEditor   *editor,
+                                    GimpGradient        **gradient,
+                                    GimpGradientSegment **left,
+                                    GimpGradientSegment **right)
+{
+  g_return_if_fail (GIMP_IS_GRADIENT_EDITOR (editor));
+
+  if (gradient)
+    *gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+
+  if (left)
+    *left = editor->control_sel_l;
+
+  if (right)
+    *right = editor->control_sel_r;
+}
+
+void
+gimp_gradient_editor_set_selection (GimpGradientEditor  *editor,
+                                    GimpGradientSegment *left,
+                                    GimpGradientSegment *right)
+{
+  g_return_if_fail (GIMP_IS_GRADIENT_EDITOR (editor));
+  g_return_if_fail (left != NULL);
+  g_return_if_fail (right != NULL);
+
+  editor->control_sel_l = left;
+  editor->control_sel_r = right;
+}
+
+void
 gimp_gradient_editor_edit_left_color (GimpGradientEditor *editor)
 {
   GimpGradient *gradient;
