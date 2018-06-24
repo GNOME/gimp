@@ -372,9 +372,10 @@ gimp_widget_load_icon (GtkWidget   *widget,
                                                         size, scale_factor,
                                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK);
 
-      pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                        gtk_widget_get_style_context (widget),
-                                                        NULL, NULL);
+      if (icon_info)
+        pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                          gtk_widget_get_style_context (widget),
+                                                          NULL, NULL);
     }
   else
     {
@@ -398,9 +399,10 @@ gimp_widget_load_icon (GtkWidget   *widget,
                                                             size, scale_factor,
                                                             GTK_ICON_LOOKUP_GENERIC_FALLBACK);
 
-          pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                            gtk_widget_get_style_context (widget),
-                                                            NULL, NULL);
+          if (icon_info)
+            pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                              gtk_widget_get_style_context (widget),
+                                                              NULL, NULL);
         }
     }
 
