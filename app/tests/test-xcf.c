@@ -295,7 +295,8 @@ gimp_write_and_read_file (Gimp     *gimp,
   GimpImage           *image;
   GimpImage           *loaded_image;
   GimpPlugInProcedure *proc;
-  gchar               *filename;
+  gchar               *filename = NULL;
+  gint                 file_handle;
   GFile               *file;
 
   /* Create the image */
@@ -311,7 +312,9 @@ gimp_write_and_read_file (Gimp     *gimp,
                          use_gimp_2_8_features);
 
   /* Write to file */
-  filename = g_build_filename (g_get_tmp_dir (), "gimp-test.xcf", NULL);
+  file_handle = g_file_open_tmp ("gimp-test-XXXXXX.xcf", &filename, NULL);
+  g_assert (file_handle != -1);
+  close (file_handle);
   file = g_file_new_for_path (filename);
   g_free (filename);
 
