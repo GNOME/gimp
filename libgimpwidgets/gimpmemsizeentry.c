@@ -59,6 +59,7 @@ struct _GimpMemsizeEntryPrivate
 
   guint          shift;
 
+  /* adjustement is owned by spinbutton. Do not unref() it. */
   GtkAdjustment *adjustment;
   GtkWidget     *spinbutton;
   GtkWidget     *menu;
@@ -66,8 +67,6 @@ struct _GimpMemsizeEntryPrivate
 
 #define GET_PRIVATE(obj) (((GimpMemsizeEntry *) (obj))->priv)
 
-
-static void  gimp_memsize_entry_finalize      (GObject          *object);
 
 static void  gimp_memsize_entry_adj_callback  (GtkAdjustment    *adj,
                                                GimpMemsizeEntry *entry);
@@ -86,8 +85,6 @@ static void
 gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  object_class->finalize = gimp_memsize_entry_finalize;
 
   klass->value_changed   = NULL;
 
@@ -114,16 +111,6 @@ gimp_memsize_entry_init (GimpMemsizeEntry *entry)
                                   GTK_ORIENTATION_HORIZONTAL);
 
   gtk_box_set_spacing (GTK_BOX (entry), 4);
-}
-
-static void
-gimp_memsize_entry_finalize (GObject *object)
-{
-  GimpMemsizeEntryPrivate *private = GET_PRIVATE (object);
-
-  g_clear_object (&private->adjustment);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
