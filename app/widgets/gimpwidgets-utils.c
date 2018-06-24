@@ -375,16 +375,13 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
  *
  * Loads an icon into a pixbuf with size as close as possible to @size.
  * If icon does not exist or fail to load, the function will fallback to
- * "gimp-wilber-eek" instead to prevent NULL pixbuf.
- * Nevertheless it is still possible for this function to return NULL,
- * in the edge case where "gimp-wilber-eek" is also missing, its file
- * corrupted or maybe other reasons. So calling code must take the NULL
- * return possibility into account.
+ * "gimp-wilber-eek" instead to prevent NULL pixbuf. As a last resort,
+ * if even the fallback failed to load, a magenta @size square will be
+ * returned, so this function is guaranteed to always return a
+ * #GdkPixbuf.
  *
  * Return value: a newly allocated #GdkPixbuf containing @icon_name at
- * size @size or a fallback icon/size. NULL return is a possibility in
- * if neither the requested icon nor fallback could be loaded
- * successfully.
+ * size @size or a fallback icon/size.
  **/
 GdkPixbuf *
 gimp_widget_load_icon (GtkWidget   *widget,
@@ -449,6 +446,31 @@ gimp_widget_load_icon (GtkWidget   *widget,
       pixbuf = gtk_icon_theme_load_icon (icon_theme,
                                          GIMP_ICON_WILBER_EEK,
                                          size, 0, NULL);
+      if (! pixbuf)
+        {
+          /* As last resort, just draw an ugly magenta square. */
+          guchar *data;
+          gint    rowstride = 3 * size;
+          gint    i, j;
+
+          g_printerr ("WARNING: icon '%s' failed to load. Check the files "
+                      "in your icon theme.\n", GIMP_ICON_WILBER_EEK);
+
+          data = g_new (guchar, rowstride * size);
+          for (i = 0; i < size; i++)
+            {
+              for (j = 0; j < size; j++)
+                {
+                  data[i * rowstride + j * 3] = 255;
+                  data[i * rowstride + j * 3 + 1] = 0;
+                  data[i * rowstride + j * 3 + 2] = 255;
+                }
+            }
+          pixbuf = gdk_pixbuf_new_from_data (data, GDK_COLORSPACE_RGB, FALSE,
+                                             8, size, size, rowstride,
+                                             (GdkPixbufDestroyNotify) g_free,
+                                             NULL);
+        }
     }
 
   return pixbuf;
