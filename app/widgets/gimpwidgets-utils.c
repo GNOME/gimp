@@ -371,6 +371,7 @@ gimp_widget_load_icon (GtkWidget   *widget,
                        const gchar *icon_name,
                        gint         size)
 {
+  GdkPixbuf    *pixbuf;
   GtkIconTheme *icon_theme;
   gint         *icon_sizes;
   gint          closest_size = -1;
@@ -384,7 +385,7 @@ gimp_widget_load_icon (GtkWidget   *widget,
 
   if (! gtk_icon_theme_has_icon (icon_theme, icon_name))
     {
-      g_printerr ("gimp_widget_load_icon(): icon theme has no icon '%s'.\n",
+      g_printerr ("WARNING: icon theme has no icon '%s'.\n",
                   icon_name);
 
       return gtk_icon_theme_load_icon (icon_theme, GIMP_ICON_WILBER_EEK,
@@ -411,8 +412,26 @@ gimp_widget_load_icon (GtkWidget   *widget,
   if (closest_size != -1)
     size = closest_size;
 
-  return gtk_icon_theme_load_icon (icon_theme, icon_name, size,
-                                   GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
+  pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name, size,
+                                     GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
+
+  if (! pixbuf)
+    {
+      /* The icon was seemingly present in the current icon theme, yet
+       * it failed to load. Maybe the file is broken?
+       * As last resort, try to load "gimp-wilber-eek" as fallback.
+       * Note that we are not making more checks, so if the fallback
+       * icon fails to load as well, the function may still return NULL.
+       */
+      g_printerr ("WARNING: icon '%s' failed to load. Check the files "
+                  "in your icon theme.\n", icon_name);
+
+      pixbuf = gtk_icon_theme_load_icon (icon_theme,
+                                         GIMP_ICON_WILBER_EEK,
+                                         size, 0, NULL);
+    }
+
+  return pixbuf;
 }
 
 GtkIconSize
