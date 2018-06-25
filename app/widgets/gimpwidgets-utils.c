@@ -429,6 +429,11 @@ gimp_widget_load_icon (GtkWidget   *widget,
                                          NULL);
     }
 
+  /* Small assertion test to get a warning if we ever get NULL return
+   * value, as this is never supposed to happen.
+   */
+  g_return_val_if_fail (pixbuf != NULL, NULL);
+
   return pixbuf;
 }
 
