@@ -52,14 +52,6 @@
 #include "gimp-intl.h"
 
 
-static void gimp_paint_options_gui_brush_changed
-                                               (GimpContext      *context,
-                                                GimpBrush        *brush,
-                                                GtkWidget        *gui);
-static void gimp_paint_options_gui_brush_notify(GimpBrush        *brush,
-                                                const GParamSpec *pspec,
-                                                GimpPaintOptions *options);
-
 static void gimp_paint_options_gui_reset_size  (GtkWidget        *button,
                                                 GimpPaintOptions *paint_options);
 static void gimp_paint_options_gui_reset_aspect_ratio
@@ -238,10 +230,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       frame = jitter_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
-
-      g_signal_connect_object (options, "brush-changed",
-                               G_CALLBACK (gimp_paint_options_gui_brush_changed),
-                               G_OBJECT (vbox), 0);
     }
 
   /*  the "smooth stroke" options  */
@@ -442,65 +430,6 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
   gtk_widget_show (scale);
 
   return frame;
-}
-
-static void
-gimp_paint_options_gui_brush_changed (GimpContext *context,
-                                      GimpBrush   *brush,
-                                      GtkWidget   *gui)
-{
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (context);
-
-  if (options->brush)
-    {
-      g_signal_handlers_disconnect_by_func (options->brush,
-                                            gimp_paint_options_gui_brush_notify,
-                                            options);
-      g_object_remove_weak_pointer (G_OBJECT (options->brush),
-                                    (gpointer) &options->brush);
-    }
-
-  options->brush = brush;
-
-  if (options->brush)
-    {
-      GClosure *closure;
-
-      g_object_add_weak_pointer (G_OBJECT (options->brush),
-                                 (gpointer) &options->brush);
-
-      closure = g_cclosure_new (G_CALLBACK (gimp_paint_options_gui_brush_notify),
-                                options, NULL);
-      g_object_watch_closure (G_OBJECT (gui), closure);
-      g_signal_connect_closure (options->brush, "notify", closure, FALSE);
-
-      gimp_paint_options_gui_brush_notify (options->brush, NULL, options);
-    }
-}
-
-static void
-gimp_paint_options_gui_brush_notify (GimpBrush        *brush,
-                                     const GParamSpec *pspec,
-                                     GimpPaintOptions *options)
-{
-#define IS_PSPEC(p,n) (p == NULL || ! strcmp (n, p->name))
-
-  if (options->brush_link_size && IS_PSPEC (pspec, "radius"))
-    gimp_paint_options_set_default_brush_size (options, brush);
-
-  if (options->brush_link_aspect_ratio && IS_PSPEC (pspec, "aspect-ratio"))
-    gimp_paint_options_set_default_brush_aspect_ratio (options, brush);
-
-  if (options->brush_link_angle && IS_PSPEC (pspec, "angle"))
-    gimp_paint_options_set_default_brush_angle (options, brush);
-
-  if (options->brush_link_spacing && IS_PSPEC (pspec, "spacing"))
-    gimp_paint_options_set_default_brush_spacing (options, brush);
-
-  if (options->brush_link_hardness && IS_PSPEC (pspec, "hardness"))
-    gimp_paint_options_set_default_brush_hardness (options, brush);
-
-#undef IS_SPEC
 }
 
 static void

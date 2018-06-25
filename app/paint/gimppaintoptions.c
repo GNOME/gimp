@@ -34,6 +34,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimppaintinfo.h"
 
+#include "gimpbrushcore.h"
 #include "gimppaintoptions.h"
 
 #include "gimp-intl.h"
@@ -135,22 +136,28 @@ enum
 
 static void         gimp_paint_options_config_iface_init (GimpConfigInterface *config_iface);
 
-static void         gimp_paint_options_dispose           (GObject      *object);
-static void         gimp_paint_options_finalize          (GObject      *object);
-static void         gimp_paint_options_set_property      (GObject      *object,
-                                                          guint         property_id,
-                                                          const GValue *value,
-                                                          GParamSpec   *pspec);
-static void         gimp_paint_options_get_property      (GObject      *object,
-                                                          guint         property_id,
-                                                          GValue       *value,
-                                                          GParamSpec   *pspec);
+static void         gimp_paint_options_dispose           (GObject          *object);
+static void         gimp_paint_options_finalize          (GObject          *object);
+static void         gimp_paint_options_set_property      (GObject          *object,
+                                                          guint             property_id,
+                                                          const GValue     *value,
+                                                          GParamSpec       *pspec);
+static void         gimp_paint_options_get_property      (GObject          *object,
+                                                          guint             property_id,
+                                                          GValue           *value,
+                                                          GParamSpec       *pspec);
 
-static GimpConfig * gimp_paint_options_duplicate         (GimpConfig   *config);
-static gboolean     gimp_paint_options_copy              (GimpConfig   *src,
-                                                          GimpConfig   *dest,
-                                                          GParamFlags   flags);
-static void         gimp_paint_options_reset             (GimpConfig   *config);
+static void         gimp_paint_options_brush_changed     (GimpContext      *context,
+                                                          GimpBrush        *brush);
+static void         gimp_paint_options_brush_notify      (GimpBrush        *brush,
+                                                          const GParamSpec *pspec,
+                                                          GimpPaintOptions *options);
+
+static GimpConfig * gimp_paint_options_duplicate         (GimpConfig       *config);
+static gboolean     gimp_paint_options_copy              (GimpConfig       *src,
+                                                          GimpConfig       *dest,
+                                                          GParamFlags       flags);
+static void         gimp_paint_options_reset             (GimpConfig       *config);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpPaintOptions, gimp_paint_options,
@@ -166,12 +173,15 @@ static GimpConfigInterface *parent_config_iface = NULL;
 static void
 gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
+  GimpContextClass *context_class = GIMP_CONTEXT_CLASS (klass);
 
-  object_class->dispose        = gimp_paint_options_dispose;
-  object_class->finalize       = gimp_paint_options_finalize;
-  object_class->set_property   = gimp_paint_options_set_property;
-  object_class->get_property   = gimp_paint_options_get_property;
+  object_class->dispose         = gimp_paint_options_dispose;
+  object_class->finalize        = gimp_paint_options_finalize;
+  object_class->set_property    = gimp_paint_options_set_property;
+  object_class->get_property    = gimp_paint_options_get_property;
+
+  context_class->brush_changed  = gimp_paint_options_brush_changed;
 
   g_object_class_install_property (object_class, PROP_PAINT_INFO,
                                    g_param_spec_object ("paint-info",
@@ -454,11 +464,7 @@ gimp_paint_options_dispose (GObject *object)
 {
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
-  if (options->paint_info)
-    {
-      g_object_unref (options->paint_info);
-      options->paint_info = NULL;
-    }
+  g_clear_object (&options->paint_info);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -799,6 +805,68 @@ gimp_paint_options_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_paint_options_brush_changed (GimpContext *context,
+                                  GimpBrush   *brush)
+{
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (context);
+
+  if (options->paint_info &&
+      g_type_is_a (options->paint_info->paint_type,
+                   GIMP_TYPE_BRUSH_CORE))
+    {
+      if (options->brush)
+        {
+          g_signal_handlers_disconnect_by_func (options->brush,
+                                                gimp_paint_options_brush_notify,
+                                                options);
+          g_object_remove_weak_pointer (G_OBJECT (options->brush),
+                                        (gpointer) &options->brush);
+        }
+
+      options->brush = brush;
+
+      if (options->brush)
+        {
+          g_object_add_weak_pointer (G_OBJECT (options->brush),
+                                     (gpointer) &options->brush);
+          g_signal_connect_object (options->brush, "notify",
+                                   G_CALLBACK (gimp_paint_options_brush_notify),
+                                   options, 0);
+
+          gimp_paint_options_brush_notify (options->brush, NULL, options);
+        }
+    }
+}
+
+static void
+gimp_paint_options_brush_notify (GimpBrush        *brush,
+                                 const GParamSpec *pspec,
+                                 GimpPaintOptions *options)
+{
+  if (gimp_tool_options_get_gui_mode (GIMP_TOOL_OPTIONS (options)))
+    {
+#define IS_PSPEC(p,n) (p == NULL || ! strcmp (n, p->name))
+
+      if (options->brush_link_size && IS_PSPEC (pspec, "radius"))
+        gimp_paint_options_set_default_brush_size (options, brush);
+
+      if (options->brush_link_aspect_ratio && IS_PSPEC (pspec, "aspect-ratio"))
+        gimp_paint_options_set_default_brush_aspect_ratio (options, brush);
+
+      if (options->brush_link_angle && IS_PSPEC (pspec, "angle"))
+        gimp_paint_options_set_default_brush_angle (options, brush);
+
+      if (options->brush_link_spacing && IS_PSPEC (pspec, "spacing"))
+        gimp_paint_options_set_default_brush_spacing (options, brush);
+
+      if (options->brush_link_hardness && IS_PSPEC (pspec, "hardness"))
+        gimp_paint_options_set_default_brush_hardness (options, brush);
+
+#undef IS_SPEC
     }
 }
 

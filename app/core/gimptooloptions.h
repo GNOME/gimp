@@ -37,6 +37,15 @@ struct _GimpToolOptions
   GimpContext   parent_instance;
 
   GimpToolInfo *tool_info;
+
+  /*  if TRUE this instance is the main tool options object used for
+   *  the GUI, this is not exactly clean, but there are some things
+   *  (like linking brush properties to the active brush, or properly
+   *  maintaining global brush, pattern etc.) that can only be done
+   *  right in the object, and not by signal connections from the GUI,
+   *  or upon switching tools, all of which was much more horrible.
+   */
+  gboolean      gui_mode;
 };
 
 struct _GimpToolOptionsClass
@@ -46,6 +55,10 @@ struct _GimpToolOptionsClass
 
 
 GType      gimp_tool_options_get_type      (void) G_GNUC_CONST;
+
+void       gimp_tool_options_set_gui_mode  (GimpToolOptions   *tool_options,
+                                            gboolean           gui_mode);
+gboolean   gimp_tool_options_get_gui_mode  (GimpToolOptions   *tool_options);
 
 gboolean   gimp_tool_options_serialize     (GimpToolOptions   *tool_options,
                                             GError           **error);
