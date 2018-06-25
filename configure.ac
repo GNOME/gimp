@@ -59,7 +59,7 @@ m4_define([fontconfig_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([gtkdoc_required_version], [1.0])
-m4_define([webkitgtk_required_version], [2.4.11])
+m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.40.6])
 m4_define([wmf_required_version], [0.2.8])
@@ -1709,7 +1709,7 @@ AC_ARG_WITH(webkit, [  --without-webkit        don't build the help-browser and 
 
 have_webkit=no
 if test "x$with_webkit" != xno; then
-  PKG_CHECK_MODULES(WEBKIT, webkitgtk-3.0 >= webkitgtk_required_version,
+  PKG_CHECK_MODULES(WEBKIT, webkit2gtk-4.0 >= webkitgtk_required_version,
     WEB_PAGE='web-page$(EXEEXT)'
     have_webkit=yes,
     have_webkit="no (WebKit not found)")
