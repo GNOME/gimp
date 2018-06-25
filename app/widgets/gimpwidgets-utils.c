@@ -345,7 +345,7 @@ gimp_widget_load_icon (GtkWidget   *widget,
                        const gchar *icon_name,
                        gint         size)
 {
-  GdkPixbuf    *pixbuf;
+  GdkPixbuf    *pixbuf = NULL;
   GtkIconTheme *icon_theme;
   GtkIconInfo  *icon_info;
   gchar        *name;
@@ -365,75 +365,69 @@ gimp_widget_load_icon (GtkWidget   *widget,
                                                      GTK_ICON_LOOKUP_GENERIC_FALLBACK);
   g_free (name);
 
-  if (! icon_info)
-    {
-      g_printerr ("WARNING: icon theme has no icon '%s'.\n", icon_name);
-      icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
-                                                        GIMP_ICON_WILBER_EEK "-symbolic",
-                                                        size, scale_factor,
-                                                        GTK_ICON_LOOKUP_GENERIC_FALLBACK);
-
-      if (icon_info)
-        pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                          gtk_widget_get_style_context (widget),
-                                                          NULL, NULL);
-    }
-  else
+  if (icon_info)
     {
       pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
                                                         gtk_widget_get_style_context (widget),
                                                         NULL, NULL);
+      g_object_unref (icon_info);
       if (! pixbuf)
+        /* The icon was seemingly present in the current icon theme, yet
+         * it failed to load. Maybe the file is broken?
+         * As last resort, try to load "gimp-wilber-eek" as fallback.
+         * Note that we are not making more checks, so if the fallback
+         * icon fails to load as well, the function may still return NULL.
+         */
+        g_printerr ("WARNING: icon '%s' failed to load. Check the files "
+                    "in your icon theme.\n", icon_name);
+    }
+  else
+    g_printerr ("WARNING: icon theme has no icon '%s'.\n", icon_name);
+
+  /* First fallback: gimp-wilber-eek */
+  if (! pixbuf)
+    {
+      icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
+                                                        GIMP_ICON_WILBER_EEK "-symbolic",
+                                                        size, scale_factor,
+                                                        GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+      if (icon_info)
         {
-          /* The icon was seemingly present in the current icon theme, yet
-           * it failed to load. Maybe the file is broken?
-           * As last resort, try to load "gimp-wilber-eek" as fallback.
-           * Note that we are not making more checks, so if the fallback
-           * icon fails to load as well, the function may still return NULL.
-           */
-          g_printerr ("WARNING: icon '%s' failed to load. Check the files "
-                      "in your icon theme.\n", icon_name);
-
+          pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                            gtk_widget_get_style_context (widget),
+                                                            NULL, NULL);
           g_object_unref (icon_info);
-          icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
-                                                            GIMP_ICON_WILBER_EEK "-symbolic",
-                                                            size, scale_factor,
-                                                            GTK_ICON_LOOKUP_GENERIC_FALLBACK);
-
-          if (icon_info)
-            pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                              gtk_widget_get_style_context (widget),
-                                                              NULL, NULL);
           if (! pixbuf)
-            {
-              /* As last resort, just draw an ugly magenta square. */
-              guchar *data;
-              gint    rowstride = 3 * size;
-              gint    i, j;
-
-              g_printerr ("WARNING: icon '%s' failed to load. Check the files "
-                          "in your icon theme.\n", GIMP_ICON_WILBER_EEK);
-
-              data = g_new (guchar, rowstride * size);
-              for (i = 0; i < size; i++)
-                {
-                  for (j = 0; j < size; j++)
-                    {
-                      data[i * rowstride + j * 3] = 255;
-                      data[i * rowstride + j * 3 + 1] = 0;
-                      data[i * rowstride + j * 3 + 2] = 255;
-                    }
-                }
-              pixbuf = gdk_pixbuf_new_from_data (data, GDK_COLORSPACE_RGB, FALSE,
-                                                 8, size, size, rowstride,
-                                                 (GdkPixbufDestroyNotify) g_free,
-                                                 NULL);
-            }
+            g_printerr ("WARNING: icon '%s' failed to load. Check the files "
+                        "in your icon theme.\n", GIMP_ICON_WILBER_EEK);
         }
+      else
+        g_printerr ("WARNING: icon theme has no icon '%s'.\n", GIMP_ICON_WILBER_EEK);
     }
 
-  if (icon_info)
-    g_object_unref (icon_info);
+  /* Last fallback: just a magenta square. */
+  if (! pixbuf)
+    {
+      /* As last resort, just draw an ugly magenta square. */
+      guchar *data;
+      gint    rowstride = 3 * size;
+      gint    i, j;
+
+      data = g_new (guchar, rowstride * size);
+      for (i = 0; i < size; i++)
+        {
+          for (j = 0; j < size; j++)
+            {
+              data[i * rowstride + j * 3] = 255;
+              data[i * rowstride + j * 3 + 1] = 0;
+              data[i * rowstride + j * 3 + 2] = 255;
+            }
+        }
+      pixbuf = gdk_pixbuf_new_from_data (data, GDK_COLORSPACE_RGB, FALSE,
+                                         8, size, size, rowstride,
+                                         (GdkPixbufDestroyNotify) g_free,
+                                         NULL);
+    }
 
   return pixbuf;
 }
