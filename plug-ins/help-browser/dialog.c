@@ -31,7 +31,7 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include <webkit/webkit.h>
+#include <webkit2/webkit2.h>
 
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
@@ -119,14 +119,12 @@ static gboolean   view_button_press       (GtkWidget         *widget,
 static gboolean   view_key_press          (GtkWidget         *widget,
                                            GdkEventKey       *event);
 
-static void       title_changed           (GtkWidget         *view,
-                                           WebKitWebFrame    *frame,
-                                           const gchar       *title,
+static void       title_changed           (WebKitWebView     *view,
+                                           GParamSpec        *pspec,
                                            GtkWidget         *window);
-static void       load_started            (GtkWidget         *view,
-                                           WebKitWebFrame    *frame);
-static void       load_finished           (GtkWidget         *view,
-                                           WebKitWebFrame    *frame);
+
+static void       load_changed            (WebKitWebView     *view,
+                                           WebKitLoadEvent    event);
 
 static void       select_index            (const gchar       *uri);
 
@@ -138,8 +136,7 @@ static void       search_prev_clicked     (GtkWidget         *button,
 static void       search_next_clicked     (GtkWidget         *button,
                                            GtkWidget         *entry);
 static void       search_close_clicked    (GtkWidget         *button);
-static void       search                  (const gchar       *text,
-                                           gboolean           forward);
+static void       search                  (const gchar       *text);
 
 
 /*  private variables  */
@@ -269,8 +266,6 @@ browser_dialog_open (const gchar *plug_in_binary)
   gtk_widget_show (scrolled);
 
   view = webkit_web_view_new ();
-  webkit_web_view_set_maintains_back_forward_list (WEBKIT_WEB_VIEW (view),
-                                                   TRUE);
   gtk_container_add (GTK_CONTAINER (scrolled), view);
   gtk_widget_show (view);
 
@@ -293,15 +288,12 @@ browser_dialog_open (const gchar *plug_in_binary)
 
   webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (view), data.zoom);
 
-  g_signal_connect (view, "title-changed",
+  g_signal_connect (view, "notify::title",
                     G_CALLBACK (title_changed),
                     window);
 
-  g_signal_connect (view, "load-started",
-                    G_CALLBACK (load_started),
-                    NULL);
-  g_signal_connect (view, "load-finished",
-                    G_CALLBACK (load_finished),
+  g_signal_connect (view, "load-changed",
+                    G_CALLBACK (load_changed),
                     NULL);
 
   gtk_widget_grab_focus (view);
@@ -794,18 +786,16 @@ find_again_callback (GtkAction *action,
   gtk_widget_show (searchbar);
   gtk_widget_grab_focus (entry);
 
-  search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
+  search (gtk_entry_get_text (GTK_ENTRY (entry)));
 }
 
 static void
 copy_location_callback (GtkAction *action,
                         gpointer   data)
 {
-  WebKitWebFrame *frame;
-  const gchar    *uri;
+  const gchar *uri;
 
-  frame = webkit_web_view_get_main_frame (WEBKIT_WEB_VIEW (view));
-  uri = webkit_web_frame_get_uri (frame);
+  uri = webkit_web_view_get_uri (WEBKIT_WEB_VIEW (view));
 
   if (uri)
     {
@@ -821,9 +811,13 @@ static void
 copy_selection_callback (GtkAction *action,
                          gpointer   data)
 {
-  if (webkit_web_view_can_copy_clipboard (WEBKIT_WEB_VIEW (view)))
+  WebKitEditorState *editor_state =
+    webkit_web_view_get_editor_state (WEBKIT_WEB_VIEW (view));
+
+  if (webkit_editor_state_is_copy_available (editor_state))
     {
-      webkit_web_view_copy_clipboard (WEBKIT_WEB_VIEW (view));
+      webkit_web_view_execute_editing_command (WEBKIT_WEB_VIEW (view),
+                                               WEBKIT_EDITING_COMMAND_COPY);
     }
 }
 
@@ -839,14 +833,18 @@ static void
 zoom_in_callback (GtkAction *action,
                   gpointer   data)
 {
-  webkit_web_view_zoom_in (WEBKIT_WEB_VIEW (view));
+  gdouble zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (view));
+  if (zoom_level < 10.0)
+    webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (view), zoom_level + 0.1);
 }
 
 static void
 zoom_out_callback (GtkAction *action,
                    gpointer   data)
 {
-  webkit_web_view_zoom_out (WEBKIT_WEB_VIEW (view));
+  gdouble zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (view));
+  if (zoom_level > 0.1)
+    webkit_web_view_set_zoom_level (WEBKIT_WEB_VIEW (view), zoom_level - 0.1);
 }
 
 static void
@@ -869,7 +867,14 @@ menu_callback (GtkWidget *menu,
 {
   gint steps = GPOINTER_TO_INT (data);
 
-  webkit_web_view_go_back_or_forward (WEBKIT_WEB_VIEW (view), steps);
+  WebKitBackForwardList *back_fw_list =
+    webkit_web_view_get_back_forward_list (WEBKIT_WEB_VIEW (view));
+  WebKitBackForwardListItem *back_fw_list_item =
+    webkit_back_forward_list_get_nth_item (back_fw_list, steps);
+
+  if (back_fw_list_item)
+    webkit_web_view_go_to_back_forward_list_item (WEBKIT_WEB_VIEW (view),
+                                                  back_fw_list_item);
 }
 
 static GtkWidget *
@@ -887,10 +892,10 @@ build_menu (const GList *items,
 
   for (iter = items, steps = 1; iter; iter = g_list_next (iter), steps++)
     {
-      WebKitWebHistoryItem *item = iter->data;
-      const gchar          *title;
+      WebKitBackForwardListItem *item = iter->data;
+      const gchar               *title;
 
-      title = webkit_web_history_item_get_title (item);
+      title = webkit_back_forward_list_item_get_title (item);
 
       if (title)
         {
@@ -911,9 +916,8 @@ build_menu (const GList *items,
 static void
 update_actions (void)
 {
-  GtkAction                *action;
-  WebKitWebBackForwardList *back_forward_list;
-  WebKitWebFrame           *frame;
+  GtkAction             *action;
+  WebKitBackForwardList *back_forward_list;
 
   back_forward_list =
     webkit_web_view_get_back_forward_list (WEBKIT_WEB_VIEW (view));
@@ -929,8 +933,8 @@ update_actions (void)
     {
       const GList *list;
 
-      list = webkit_web_back_forward_list_get_back_list_with_limit (back_forward_list,
-                                                                    12);
+      list = webkit_back_forward_list_get_back_list_with_limit (back_forward_list,
+                                                                12);
       gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_prev),
                                      build_menu (list, TRUE));
     }
@@ -950,8 +954,8 @@ update_actions (void)
     {
       const GList *list;
 
-      list = webkit_web_back_forward_list_get_forward_list_with_limit (back_forward_list,
-                                                                       12);
+      list = webkit_back_forward_list_get_forward_list_with_limit (back_forward_list,
+                                                                   12);
       gtk_menu_tool_button_set_menu (GTK_MENU_TOOL_BUTTON (button_next),
                                      build_menu (list, FALSE));
     }
@@ -964,8 +968,7 @@ update_actions (void)
   action = gtk_ui_manager_get_action (ui_manager,
                                       "/ui/help-browser-popup/copy-location");
 
-  frame = webkit_web_view_get_main_frame (WEBKIT_WEB_VIEW (view));
-  gtk_action_set_sensitive (action, webkit_web_frame_get_uri (frame) != NULL);
+  gtk_action_set_sensitive (action, webkit_web_view_get_uri (WEBKIT_WEB_VIEW (view)) != NULL);
 
   /*  update the show-index action  */
   action = gtk_ui_manager_get_action (ui_manager,
@@ -1050,7 +1053,10 @@ view_popup_menu (GtkWidget      *widget,
   GtkWidget   *menu;
   const gchar *path;
 
-  if (webkit_web_view_can_copy_clipboard (WEBKIT_WEB_VIEW (view)))
+  WebKitEditorState *editor_state =
+    webkit_web_view_get_editor_state (WEBKIT_WEB_VIEW (view));
+
+  if (webkit_editor_state_is_copy_available (editor_state))
     path = "/help-browser-copy-popup";
   else
     path = "/help-browser-popup";
@@ -1092,13 +1098,13 @@ view_key_press (GtkWidget   *widget,
 }
 
 static void
-title_changed (GtkWidget      *view,
-               WebKitWebFrame *frame,
-               const gchar    *title,
+title_changed (WebKitWebView  *view,
+               GParamSpec     *pspec,
                GtkWidget      *window)
 {
   gchar *full_title;
 
+  const char *title = webkit_web_view_get_title (view);
   full_title = g_strdup_printf ("%s - %s",
                                 title ? title : _("Untitled"),
                                 _("GIMP Help Browser"));
@@ -1110,25 +1116,23 @@ title_changed (GtkWidget      *view,
 }
 
 static void
-load_started (GtkWidget      *view,
-              WebKitWebFrame *frame)
+load_changed (WebKitWebView   *view,
+              WebKitLoadEvent  event)
 {
   GtkAction *action = gtk_ui_manager_get_action (ui_manager,
                                                  "/ui/help-browser-popup/stop");
-  gtk_action_set_sensitive (action, TRUE);
-}
+  switch (event)
+    {
+    case WEBKIT_LOAD_STARTED:
+      gtk_action_set_sensitive (action, TRUE);
+      break;
 
-static void
-load_finished (GtkWidget      *view,
-               WebKitWebFrame *frame)
-{
-  GtkAction *action = gtk_ui_manager_get_action (ui_manager,
-                                                 "/ui/help-browser-popup/stop");
-  gtk_action_set_sensitive (action, FALSE);
-
-  update_actions ();
-
-  select_index (webkit_web_frame_get_uri (frame));
+    case WEBKIT_LOAD_FINISHED:
+      gtk_action_set_sensitive (action, FALSE);
+      update_actions ();
+      select_index (webkit_web_view_get_uri (view));
+      break;
+    }
 }
 
 static GtkWidget *
@@ -1197,24 +1201,27 @@ build_searchbar (void)
 static void
 search_entry_changed (GtkWidget *entry)
 {
-  search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
+  search (gtk_entry_get_text (GTK_ENTRY (entry)));
 }
 
 static gboolean
 search_entry_key_press (GtkWidget   *entry,
                         GdkEventKey *event)
 {
+  WebKitFindController *find_controller =
+    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
+
   switch (event->keyval)
     {
     case GDK_KEY_Escape:
       gtk_widget_hide (searchbar);
-      webkit_web_view_unmark_text_matches (WEBKIT_WEB_VIEW (view));
+      webkit_find_controller_search_finish (find_controller);
       return TRUE;
 
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
+      search (gtk_entry_get_text (GTK_ENTRY (entry)));
       return TRUE;
     }
 
@@ -1225,28 +1232,51 @@ static void
 search_prev_clicked (GtkWidget *button,
                      GtkWidget *entry)
 {
-  search (gtk_entry_get_text (GTK_ENTRY (entry)), FALSE);
+  WebKitFindController *find_controller =
+    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
+  webkit_find_controller_search_previous (find_controller);
 }
 
 static void
 search_next_clicked (GtkWidget *button,
                      GtkWidget *entry)
 {
-  search (gtk_entry_get_text (GTK_ENTRY (entry)), TRUE);
+  WebKitFindController *find_controller =
+    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
+  webkit_find_controller_search_next (find_controller);
 }
 
 static void
-search (const gchar *text,
-        gboolean     forward)
+search (const gchar *text)
 {
+  WebKitFindController *find_controller =
+    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
   if (text)
-    webkit_web_view_search_text (WEBKIT_WEB_VIEW (view),
-                                 text, FALSE, forward, TRUE);
+    {
+      const char *prev_text =
+        webkit_find_controller_get_search_text (find_controller);
+
+      /* The previous search, if any, may ned to be canceled. */
+      if (prev_text && strcmp (text, prev_text) != 0)
+        webkit_find_controller_search_finish (find_controller);
+
+      webkit_find_controller_search (find_controller,
+                                     text,
+                                     WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
+                                     WEBKIT_FIND_OPTIONS_WRAP_AROUND,
+                                     G_MAXUINT);
+    }
+  else
+    webkit_find_controller_search_finish (find_controller);
 }
 
 static void
 search_close_clicked (GtkWidget *button)
 {
+  WebKitFindController *find_controller =
+    webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (view));
+
   gtk_widget_hide (searchbar);
-  webkit_web_view_unmark_text_matches (WEBKIT_WEB_VIEW (view));
+
+  webkit_find_controller_search_finish (find_controller);
 }
