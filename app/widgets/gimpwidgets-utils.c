@@ -33,6 +33,10 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef PLATFORM_OSX
+#include <Carbon/Carbon.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
@@ -855,16 +859,31 @@ gimp_get_monitor_resolution (GdkScreen *screen,
   gint         width_mm, height_mm;
   gdouble      x = 0.0;
   gdouble      y = 0.0;
+#ifdef PLATFORM_OSX
+  CGSize       size;
+#endif
 
   g_return_if_fail (GDK_IS_SCREEN (screen));
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
 
+#ifndef PLATFORM_OSX
   gdk_screen_get_monitor_geometry (screen, monitor, &size_pixels);
 
   width_mm  = gdk_screen_get_monitor_width_mm  (screen, monitor);
   height_mm = gdk_screen_get_monitor_height_mm (screen, monitor);
-
+#else
+  width_mm  = 0;
+  height_mm = 0;
+  size = CGDisplayScreenSize (kCGDirectMainDisplay);
+  if (!CGSizeEqualToSize (size, CGSizeZero))
+    {
+      width_mm  = size.width;
+      height_mm = size.height;
+    }
+  size_pixels.width  = CGDisplayPixelsWide (kCGDirectMainDisplay);
+  size_pixels.height = CGDisplayPixelsHigh (kCGDirectMainDisplay);
+#endif
   /*
    * From xdpyinfo.c:
    *
