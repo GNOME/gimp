@@ -26,7 +26,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <webkit/webkit.h>
+#include <webkit2/webkit2.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -363,11 +363,7 @@ notify_progress_cb (WebKitWebView  *view,
                     gpointer        user_data)
 {
   static gdouble old_progress = 0.0;
-  gdouble progress;
-
-  g_object_get (view,
-                "progress", &progress,
-                NULL);
+  gdouble progress = webkit_web_view_get_estimated_load_progress (view);
 
   if ((progress - old_progress) > 0.01)
     {
@@ -377,11 +373,11 @@ notify_progress_cb (WebKitWebView  *view,
 }
 
 static gboolean
-load_error_cb (WebKitWebView  *view,
-               WebKitWebFrame *web_frame,
-               gchar          *uri,
-               gpointer        web_error,
-               gpointer        user_data)
+load_failed_cb (WebKitWebView   *view,
+                WebKitLoadEvent  event,
+                gchar           *uri,
+                gpointer         web_error,
+                gpointer         user_data)
 {
   webpagevals.error = g_error_copy ((GError *) web_error);
 
@@ -391,17 +387,11 @@ load_error_cb (WebKitWebView  *view,
 }
 
 static void
-notify_load_status_cb (WebKitWebView  *view,
-                       GParamSpec     *pspec,
-                       gpointer        user_data)
+load_changed_cb (WebKitWebView   *view,
+                 WebKitLoadEvent  event,
+                 gpointer         user_data)
 {
-  WebKitLoadStatus status;
-
-  g_object_get (view,
-                "load-status", &status,
-                NULL);
-
-  if (status == WEBKIT_LOAD_FINISHED)
+  if (event == WEBKIT_LOAD_FINISHED)
     {
       if (!webpagevals.error)
         {
@@ -420,8 +410,7 @@ webpage_capture (void)
   gchar *scheme;
   GtkWidget *window;
   GtkWidget *view;
-  WebKitWebSettings *settings;
-  char *ua_old;
+  WebKitSettings *settings;
   char *ua;
 
   if (webpagevals.pixbuf)
@@ -480,35 +469,29 @@ webpage_capture (void)
 
   /* Append "GIMP/<GIMP_VERSION>" to the user agent string */
   settings = webkit_web_view_get_settings (WEBKIT_WEB_VIEW (view));
-  g_object_get (settings,
-                "user-agent", &ua_old,
-                NULL);
-  ua = g_strdup_printf ("%s GIMP/%s", ua_old, GIMP_VERSION);
-  g_object_set (settings,
-                "user-agent", ua,
-                NULL);
-  g_free (ua_old);
+  ua = g_strdup_printf ("%s GIMP/%s",
+                        webkit_settings_get_user_agent (settings),
+                        GIMP_VERSION);
+  webkit_settings_set_user_agent (settings, ua);
   g_free (ua);
 
   /* Set font size */
-  g_object_set (settings,
-                "default-font-size", webpagevals.font_size,
-                NULL);
+  webkit_settings_set_default_font_size (settings, webpagevals.font_size);
 
-  g_signal_connect (view, "notify::progress",
+  g_signal_connect (view, "notify::estimated-load-progress",
                     G_CALLBACK (notify_progress_cb),
                     window);
-  g_signal_connect (view, "load-error",
-                    G_CALLBACK (load_error_cb),
+  g_signal_connect (view, "load-failed",
+                    G_CALLBACK (load_failed_cb),
                     window);
-  g_signal_connect (view, "notify::load-status",
-                    G_CALLBACK (notify_load_status_cb),
+  g_signal_connect (view, "load-changed",
+                    G_CALLBACK (load_changed_cb),
                     window);
 
   gimp_progress_init_printf (_("Downloading webpage '%s'"), webpagevals.url);
 
-  webkit_web_view_open (WEBKIT_WEB_VIEW (view),
-                        webpagevals.url);
+  webkit_web_view_load_uri (WEBKIT_WEB_VIEW (view),
+                            webpagevals.url);
 
   gtk_main ();
 
