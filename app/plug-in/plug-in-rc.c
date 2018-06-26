@@ -45,7 +45,8 @@
 
 /*
  *  All deserialize functions return G_TOKEN_LEFT_PAREN on success,
- *  or the GTokenType they would have expected but didn't get.
+ *  or the GTokenType they would have expected but didn't get,
+ *  or G_TOKEN_ERROR if the function already set an error itself.
  */
 
 static GTokenType plug_in_def_deserialize        (Gimp                 *gimp,
@@ -238,7 +239,7 @@ plug_in_rc_parse (Gimp    *gimp,
                        _("Skipping '%s': wrong pluginrc file format version."),
                        gimp_file_get_utf8_name (file));
         }
-      else
+      else if (token != G_TOKEN_ERROR)
         {
           g_scanner_get_next_token (scanner);
           g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
@@ -267,12 +268,22 @@ plug_in_def_deserialize (Gimp      *gimp,
   GFile               *file;
   gint64               mtime;
   GTokenType           token;
+  GError              *error = NULL;
 
   if (! gimp_scanner_parse_string (scanner, &path))
     return G_TOKEN_STRING;
 
-  file = gimp_file_new_for_config_path (path, NULL);
+  file = gimp_file_new_for_config_path (path, &error);
   g_free (path);
+
+  if (! file)
+    {
+      g_scanner_error (scanner,
+                       "unable to parse plug-in filename: %s",
+                       error->message);
+      g_clear_error (&error);
+      return G_TOKEN_ERROR;
+    }
 
   plug_in_def = gimp_plug_in_def_new (file);
   g_object_unref (file);
