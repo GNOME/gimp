@@ -72,27 +72,35 @@
   </provides>
 
   <releases>
-    <!--
-    <release version="2.10.4" date="TODO">
+    <release version="2.10.4" date="2018-07-07">
       <description>
         <_p>
           GIMP 2.10.4 includes a lot of bug fixes as well as various
-          optimizations. In particular fonts loading is not blocking
-          startup anymore. Instead any feature using fonts (such as the
-          Text tool) will now be blocked until fonts are fully loaded.
-          This change was highly requested on some platforms where font
-          loading was sometimes painfully slow.
+          optimizations. Most notable changes are:
         </_p>
-        <_p>
-          The Measurement tool is augmented with a new feature, "Auto
-          straighten", allowing to rotate the active drawable (layer,
-          channel…) with the measurement line used as horizon.
-          As other transform tools, the feature will work on linked
-          drawables as well.
-        </_p>
+        <ul>
+          <_li>
+          Straightening in Measurement tool: layers can be rotated using
+          the measurement line as horizon
+          </_li>
+          <_li>
+          Fast startup: fonts loading is not blocking startup anymore
+          </_li>
+          <_li>
+          Fonts Tagging with the same user interface as for brushes,
+          patterns, and gradients
+          </_li>
+          <_li>
+          PSD support: a pre-composited version of a PSD image can be
+          imported
+          </_li>
+          <_li>
+          Dashboard update: new "Memory" group and improved "Swap"
+          group showing various metrics
+          </_li>
+        </ul>
       </description>
     </release>
-    -->
     <release version="2.10.2" date="2018-05-20">
       <description>
         <_p>
