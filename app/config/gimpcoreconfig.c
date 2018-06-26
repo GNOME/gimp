@@ -263,7 +263,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
-#ifdef ENABLE_BUNDLED_MYPAINT_BRUSHES
+#ifdef ENABLE_RELOCATABLE_RESOURCES
   mypaint_brushes = g_build_filename ("${gimp_installation_dir}",
                                       "share", "mypaint-data",
                                       "1.0", "brushes", NULL);
