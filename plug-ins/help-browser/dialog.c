@@ -257,17 +257,11 @@ browser_dialog_open (const gchar *plug_in_binary)
   gtk_widget_show (main_vbox);
   gtk_paned_pack2 (GTK_PANED (paned), main_vbox, TRUE, TRUE);
 
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
-                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-
-  gtk_widget_set_size_request (scrolled, 300, 200);
-  gtk_box_pack_start (GTK_BOX (main_vbox), scrolled, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled);
-
   view = webkit_web_view_new ();
-  gtk_container_add (GTK_CONTAINER (scrolled), view);
+  gtk_widget_set_size_request (view, 300, 200);
   gtk_widget_show (view);
+
+  gtk_box_pack_start (GTK_BOX (main_vbox), view, TRUE, TRUE, 0);
 
   g_signal_connect (view, "realize",
                     G_CALLBACK (view_realize),
