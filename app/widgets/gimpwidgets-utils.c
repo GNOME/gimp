@@ -34,7 +34,7 @@
 #endif
 
 #ifdef PLATFORM_OSX
-#include <Carbon/Carbon.h>
+#include <CoreGraphics/CoreGraphics.h>
 #endif
 
 #include "libgimpbase/gimpbase.h"
