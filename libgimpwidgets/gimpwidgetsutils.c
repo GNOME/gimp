@@ -526,7 +526,7 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
       {
         CFDataRef data;
 
-        data = CGColorSpaceCopyICCProfile (space);
+        data = CGColorSpaceCopyICCData (space);
 
         if (data)
           {
