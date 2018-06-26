@@ -1396,6 +1396,35 @@ AC_SUBST(GIMP_COMMAND)
 # unconditionally:
 MIME_TYPES="image/bmp;image/g3fax;image/gif;image/x-fits;image/x-pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-tga;image/x-xbitmap;image/x-xwindowdump;image/x-xcf;image/x-compressed-xcf;image/x-gimp-gbr;image/x-gimp-pat;image/x-gimp-gih"
 
+#################
+# Bundle packages
+#################
+
+AC_MSG_CHECKING([whether we build a relocatable package])
+AC_ARG_ENABLE(relocatable-bundle,
+              [  --enable-relocatable-bundle
+                          build with resources considered bundled under the same prefix
+                          (default=auto)],,
+              enable_relocatable_bundle=auto)
+
+if test "x$enable_relocatable_bundle" != xno &&
+   test "x$enable_relocatable_bundle" != xyes; then
+  # By default, assume building for Windows or macOS everything to be on
+  # the same prefix and can be relocated.
+  # On other platforms, build-time paths are meaningful.
+  if test "x$platform_osx" = "xyes" ||
+     test "x$platform_win32" = "xyes"; then
+     enable_relocatable_bundle=yes
+  else
+     enable_relocatable_bundle=no
+  fi
+fi
+if test "x$enable_relocatable_bundle" = xyes; then
+  AC_DEFINE(ENABLE_RELOCATABLE_RESOURCES, 1,
+            [Define to 1 if resources are considered bundled under the same prefix])
+fi
+
+AC_MSG_RESULT([$enable_relocatable_bundle])
 
 ###################
 # Check for libtiff
@@ -1713,22 +1742,11 @@ PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version,,
 PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,,
                   [add_deps_error([mypaint-brushes-1.0])])
 
-AC_MSG_CHECKING([whether to treat MyPaint brushes as bundled])
-AC_ARG_ENABLE(bundled-mypaint-brushes,
-              [  --enable-bundled-mypaint-brushes
-                          treat MyPaint brushes as bundled in the install prefix
-                          (default=no)],,
-              enable_bundled_mypaint_brushes=no)
-
-if test "x$enable_bundled_mypaint_brushes" != xno; then
-  AC_DEFINE(ENABLE_BUNDLED_MYPAINT_BRUSHES, 1,
-            [Define to 1 to if MyPaint brushes are bundled with GIMP])
+if test "x$enable_relocatable_bundle" != xno; then
   mypaint_brushes_dir='${gimp_installation_dir}/share/mypaint-data/1.0/brushes'
 else
   mypaint_brushes_dir=`$PKG_CONFIG --variable=brushesdir mypaint-brushes-1.0`
 fi
-
-AC_MSG_RESULT([$enable_bundled_mypaint_brushes])
 AC_SUBST(mypaint_brushes_dir)
 
 
@@ -2844,7 +2862,7 @@ Optional Features:
   Language selection:      $have_iso_codes
   Vector icons:            $enable_vector_icons
   Dr. Mingw (Win32):       $enable_drmingw
-  Bundled MyPaint Brushes: $enable_bundled_mypaint_brushes (at $mypaint_brushes_dir)
+  Relocatable bundle:      $enable_relocatable_bundle
   Default ICC directory:   $with_icc_directory
 
 Optional Plug-Ins:
