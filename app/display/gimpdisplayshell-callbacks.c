@@ -118,23 +118,23 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   shell->xfer = gimp_display_xfer_realize (GTK_WIDGET(shell));
 }
 
-void
-gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
-                                         GtkAllocation    *allocation,
-                                         GimpDisplayShell *shell)
+static gboolean
+gimp_display_shell_canvas_tick (GtkWidget        *widget,
+                                GdkFrameClock    *frame_clock,
+                                GimpDisplayShell *shell)
 {
-  /*  are we in destruction?  */
-  if (! shell->display || ! gimp_display_get_shell (shell->display))
-    return;
+  GtkAllocation allocation;
 
-  if ((shell->disp_width  != allocation->width) ||
-      (shell->disp_height != allocation->height))
+  gtk_widget_get_allocation (widget, &allocation);
+
+  if ((shell->disp_width  != allocation.width) ||
+      (shell->disp_height != allocation.height))
     {
       if (shell->zoom_on_resize   &&
           shell->disp_width  > 64 &&
           shell->disp_height > 64 &&
-          allocation->width  > 64 &&
-          allocation->height > 64)
+          allocation.width   > 64 &&
+          allocation.height  > 64)
         {
           gdouble scale = gimp_zoom_model_get_factor (shell->zoom);
           gint    offset_x;
@@ -145,8 +145,8 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           /*  multiply the zoom_factor with the ratio of the new and
            *  old canvas diagonals
            */
-          scale *= (sqrt (SQR (allocation->width) +
-                          SQR (allocation->height)) /
+          scale *= (sqrt (SQR (allocation.width) +
+                          SQR (allocation.height)) /
                     sqrt (SQR (shell->disp_width) +
                           SQR (shell->disp_height)));
 
@@ -159,8 +159,8 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
           shell->offset_y = SCALEY (shell, offset_y);
         }
 
-      shell->disp_width  = allocation->width;
-      shell->disp_height = allocation->height;
+      shell->disp_width  = allocation.width;
+      shell->disp_height = allocation.height;
 
       /* When we size-allocate due to resize of the top level window,
        * we want some additional logic. Don't apply it on
@@ -210,12 +210,34 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
       gimp_display_shell_scroll_clamp_and_update (shell);
       gimp_display_shell_scaled (shell);
 
-      /* Reset */
       shell->size_allocate_from_configure_event = FALSE;
+    }
+
+  if (shell->size_allocate_center_image)
+    {
+      gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
+
+      shell->size_allocate_center_image = FALSE;
     }
 
   /* undo size request from gimp_display_shell_constructed() */
   gtk_widget_set_size_request (widget, -1, -1);
+
+  return G_SOURCE_REMOVE;
+}
+
+void
+gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
+                                         GtkAllocation    *allocation,
+                                         GimpDisplayShell *shell)
+{
+  /*  are we in destruction?  */
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return;
+
+  gtk_widget_add_tick_callback (widget,
+                                (GtkTickCallback) gimp_display_shell_canvas_tick,
+                                shell, NULL);
 }
 
 gboolean
@@ -225,6 +247,12 @@ gimp_display_shell_canvas_draw (GtkWidget        *widget,
 {
   /*  are we in destruction?  */
   if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return TRUE;
+
+  /*  we will scroll around in the next tick anyway, so we just can as
+   *  well skip the drawing of this frame and wait for the next
+   */
+  if (shell->size_allocate_center_image)
     return TRUE;
 
   /*  ignore events on overlays  */

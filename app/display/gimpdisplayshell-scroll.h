@@ -40,10 +40,6 @@ void   gimp_display_shell_scroll_center_image_xy     (GimpDisplayShell *shell,
 void   gimp_display_shell_scroll_center_image        (GimpDisplayShell *shell,
                                                       gboolean          horizontally,
                                                       gboolean          vertically);
-void   gimp_display_shell_scroll_center_image_on_size_allocate
-                                                     (GimpDisplayShell *shell,
-                                                      gboolean          horizontally,
-                                                      gboolean          vertically);
 
 void   gimp_display_shell_scroll_get_scaled_viewport (GimpDisplayShell *shell,
                                                       gint             *x,
