@@ -145,6 +145,7 @@ EXPORTS
 	gimp_personal_rc_file
 	gimp_pixels_to_units
 	gimp_pixpipe_params_build
+	gimp_pixpipe_params_free
 	gimp_pixpipe_params_init
 	gimp_pixpipe_params_parse
 	gimp_plug_in_directory
