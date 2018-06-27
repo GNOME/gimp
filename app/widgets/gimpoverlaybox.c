@@ -493,8 +493,8 @@ gimp_overlay_box_set_child_opacity (GimpOverlayBox *box,
  * @offset_x: the x scroll amount.
  * @offset_y: the y scroll amount.
  *
- * Scrolls the box using gdk_window_scroll() and makes sure the result
- * is displayed immediately by calling gdk_window_process_updates().
+ * Scrolls the box using gdk_window_scroll(), taking care of properly
+ * handling overlay children.
  **/
 void
 gimp_overlay_box_scroll (GimpOverlayBox *box,
@@ -532,7 +532,4 @@ gimp_overlay_box_scroll (GimpOverlayBox *box,
 
       gimp_overlay_child_invalidate (box, child);
     }
-
-  /*  Make sure expose events are processed before scrolling again  */
-  gdk_window_process_updates (window, FALSE);
 }
