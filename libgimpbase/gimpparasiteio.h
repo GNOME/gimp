@@ -53,6 +53,7 @@ struct _GimpPixPipeParams
   gboolean  free_placement_string;
   gint      rank[GIMP_PIXPIPE_MAXDIM];
   gchar    *selection[GIMP_PIXPIPE_MAXDIM];
+  /* this flag is now useless. All selection strings are allocated. */
   gboolean  free_selection_string;
 };
 
