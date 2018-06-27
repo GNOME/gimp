@@ -235,8 +235,14 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
       gimp_display_shell_scroll_clamp_and_update (shell);
       gimp_display_shell_scaled (shell);
 
-      /* Reset */
       shell->size_allocate_from_configure_event = FALSE;
+    }
+
+  if (shell->size_allocate_center_image)
+    {
+      gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
+
+      shell->size_allocate_center_image = FALSE;
     }
 }
 
@@ -247,6 +253,12 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 {
   /*  are we in destruction?  */
   if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return TRUE;
+
+  /*  we will scroll around in the next tick anyway, so we just can as
+   *  well skip the drawing of this frame and wait for the next
+   */
+  if (shell->size_allocate_center_image)
     return TRUE;
 
   /*  ignore events on overlays  */

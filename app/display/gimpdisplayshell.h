@@ -179,6 +179,7 @@ struct _GimpDisplayShell
   gboolean           zoom_on_resize;
 
   gboolean           size_allocate_from_configure_event;
+  gboolean           size_allocate_center_image;
 
   /*  the state of gimp_display_shell_tool_events()  */
   gboolean           pointer_grabbed;

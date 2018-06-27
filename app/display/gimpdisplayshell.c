@@ -779,8 +779,7 @@ gimp_display_shell_constructed (GObject *object)
        * not even finished creating the display shell, we can safely
        * assume we will get a size-allocate later.
        */
-      gimp_display_shell_scroll_center_image_on_size_allocate (shell,
-                                                               TRUE, TRUE);
+      shell->size_allocate_center_image = TRUE;
     }
   else
     {
@@ -1505,11 +1504,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
   gimp_display_shell_scale_update (shell);
 
-  /* center the image so subsequent stuff only moves it a little in
-   * the center
-   */
-  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
-
   gimp_display_shell_sync_config (shell, config);
 
   gimp_image_window_suspend_keep_pos (window);
@@ -1526,7 +1520,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   /* A size-allocate will always occur because the scrollbars will
    * become visible forcing the canvas to become smaller
    */
-  gimp_display_shell_scroll_center_image_on_size_allocate (shell, TRUE, TRUE);
+  shell->size_allocate_center_image = TRUE;
 
   if (shell->blink_timeout_id)
     {
