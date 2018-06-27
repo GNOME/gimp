@@ -43,7 +43,6 @@ gimp_brush_pipe_load (GimpContext   *context,
                       GError       **error)
 {
   GimpBrushPipe     *pipe = NULL;
-  GimpPixPipeParams  params;
   gint               i;
   gint               num_of_brushes = 0;
   gint               totalcells;
@@ -125,6 +124,8 @@ gimp_brush_pipe_load (GimpContext   *context,
 
   if (*paramstring)
     {
+      GimpPixPipeParams params;
+
       gimp_pixpipe_params_init (&params);
       gimp_pixpipe_params_parse (paramstring, &params);
 
@@ -132,10 +133,7 @@ gimp_brush_pipe_load (GimpContext   *context,
       pipe->rank      = g_new0 (gint, pipe->dimension);
       pipe->select    = g_new0 (PipeSelectModes, pipe->dimension);
       pipe->index     = g_new0 (gint, pipe->dimension);
-
       /* placement is not used at all ?? */
-      if (params.free_placement_string)
-        g_free (params.placement);
 
       for (i = 0; i < pipe->dimension; i++)
         {
@@ -156,9 +154,10 @@ gimp_brush_pipe_load (GimpContext   *context,
             pipe->select[i] = PIPE_SELECT_TILT_Y;
           else
             pipe->select[i] = PIPE_SELECT_CONSTANT;
-          g_free (params.selection[i]);
           pipe->index[i] = 0;
         }
+
+      gimp_pixpipe_params_free (&params);
     }
   else
     {

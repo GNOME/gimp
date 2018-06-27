@@ -424,6 +424,8 @@ run (const gchar      *name,
             }
         }
 
+      gimp_pixpipe_params_free (&gihparams);
+
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
     }
