@@ -190,3 +190,15 @@ gimp_pixpipe_params_build (GimpPixPipeParams *params)
 
   return g_string_free (str, FALSE);
 }
+
+void
+gimp_pixpipe_params_free (GimpPixPipeParams *params)
+{
+  gint i;
+
+  for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
+    g_free (params->selection[i]);
+
+  if (params->free_placement_string)
+    g_free (params->placement);
+}

@@ -67,6 +67,8 @@ void    gimp_pixpipe_params_parse (const gchar       *parameters,
 /* Build a string representation of GimpPixPipeParams */
 gchar * gimp_pixpipe_params_build (GimpPixPipeParams *params) G_GNUC_MALLOC;
 
+/* Free the internal values. It does not free the struct itsef. */
+void    gimp_pixpipe_params_free  (GimpPixPipeParams *params);
 
 G_END_DECLS
 
