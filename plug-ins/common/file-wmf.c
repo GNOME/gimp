@@ -310,6 +310,7 @@ load_wmf_size (const gchar *filename,
   guint           width   = -1;
   guint           height  = -1;
   gboolean        success = TRUE;
+  char*           wmffontdirs[2] = { NULL, NULL };
 
   file = g_mapped_file_new (filename, FALSE, NULL);
   if (! file)
@@ -318,7 +319,16 @@ load_wmf_size (const gchar *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+  wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
+                                     "share/libwmf/fonts", NULL);
+  flags |= WMF_OPT_FONTDIRS;
+  api_options.fontdirs = wmffontdirs;
+#endif
+
   err = wmf_api_create (&API, flags, &api_options);
+  if (wmffontdirs[0])
+    g_free (wmffontdirs[0]);
   if (err != wmf_E_None)
     success = FALSE;
 
@@ -788,6 +798,7 @@ wmf_get_pixbuf (const gchar *filename,
   guint           file_height;
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
+  char*           wmffontdirs[2] = { NULL, NULL };
 
   file = g_mapped_file_new (filename, FALSE, NULL);
   if (! file)
@@ -796,7 +807,16 @@ wmf_get_pixbuf (const gchar *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+  wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
+                                     "share/libwmf/fonts", NULL);
+  flags |= WMF_OPT_FONTDIRS;
+  api_options.fontdirs = wmffontdirs;
+#endif
+
   err = wmf_api_create (&API, flags, &api_options);
+  if (wmffontdirs[0])
+    g_free (wmffontdirs[0]);
   if (err != wmf_E_None)
     goto _wmf_error;
 
@@ -895,6 +915,7 @@ wmf_load_file (const gchar  *filename,
   wmfAPI_Options  api_options;
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
+  char*           wmffontdirs[2] = { NULL, NULL };
 
   *width = *height = -1;
 
@@ -905,7 +926,16 @@ wmf_load_file (const gchar  *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+  wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
+                                     "share/libwmf/fonts/", NULL);
+  flags |= WMF_OPT_FONTDIRS;
+  api_options.fontdirs = wmffontdirs;
+#endif
+
   err = wmf_api_create (&API, flags, &api_options);
+  if (wmffontdirs[0])
+    g_free (wmffontdirs[0]);
   if (err != wmf_E_None)
     goto _wmf_error;
 
