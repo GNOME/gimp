@@ -411,7 +411,7 @@ snapshot_ready (GObject      *source_object,
       gimp_image_undo_disable (webpagevals.image);
       layer = gimp_layer_new_from_surface (webpagevals.image, _("Webpage"),
                                            surface,
-                                           0.0, 1.0);
+                                           0.25, 1.0);
       gimp_image_insert_layer (webpagevals.image, layer, -1, 0);
       gimp_image_undo_enable (webpagevals.image);
 
@@ -421,6 +421,30 @@ snapshot_ready (GObject      *source_object,
   gimp_progress_update (1.0);
 
   gtk_main_quit ();
+}
+
+static gboolean
+load_finished_idle (gpointer data)
+{
+  static gint count = 0;
+
+  gimp_progress_update ((gdouble) count * 0.025);
+
+  count++;
+
+  if (count < 10)
+    return G_SOURCE_CONTINUE;
+
+  webkit_web_view_get_snapshot (WEBKIT_WEB_VIEW (data),
+                                WEBKIT_SNAPSHOT_REGION_FULL_DOCUMENT,
+                                WEBKIT_SNAPSHOT_OPTIONS_NONE,
+                                NULL,
+                                snapshot_ready,
+                                NULL);
+
+  count = 0;
+
+  return G_SOURCE_REMOVE;
 }
 
 static void
@@ -435,12 +459,8 @@ load_changed_cb (WebKitWebView   *view,
           gimp_progress_init_printf (_("Transferring webpage image for '%s'"),
                                      webpagevals.url);
 
-          webkit_web_view_get_snapshot (view,
-                                        WEBKIT_SNAPSHOT_REGION_FULL_DOCUMENT,
-                                        WEBKIT_SNAPSHOT_OPTIONS_NONE,
-                                        NULL,
-                                        snapshot_ready,
-                                        user_data);
+          g_timeout_add (100, load_finished_idle, view);
+
           return;
         }
 
