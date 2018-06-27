@@ -156,8 +156,7 @@ gimp_brush_pipe_load (GimpContext   *context,
             pipe->select[i] = PIPE_SELECT_TILT_Y;
           else
             pipe->select[i] = PIPE_SELECT_CONSTANT;
-          if (params.free_selection_string)
-            g_free (params.selection[i]);
+          g_free (params.selection[i]);
           pipe->index[i] = 0;
         }
     }

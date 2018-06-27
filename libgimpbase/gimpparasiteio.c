@@ -64,10 +64,7 @@ gimp_pixpipe_params_init (GimpPixPipeParams *params)
   params->placement  = "constant";
   params->free_placement_string = FALSE;
   for (i = 0; i < GIMP_PIXPIPE_MAXDIM; i++)
-    {
-      params->selection[i]          = "random";
-      params->free_selection_string = FALSE;
-    }
+    params->selection[i] = g_strdup ("random");
   params->rank[0] = 1;
   for (i = 1; i < GIMP_PIXPIPE_MAXDIM; i++)
     params->rank[i] = 0;
@@ -156,8 +153,8 @@ gimp_pixpipe_params_parse (const gchar       *string,
               i = atoi (p + strlen ("sel"));
               if (i >= 0 && i < params->dim)
                 {
+                  g_free (params->selection[i]);
                   params->selection[i] = g_strdup (r + 1);
-                  params->free_selection_string = TRUE;
                 }
             }
         }
