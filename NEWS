@@ -38,6 +38,8 @@ User Interface:
     during the last sampling interval, rather than at the point of sampling.
   - Fonts can now be tagged. The user interface is the same as for brushes,
     patterns etc.
+  - Some icons fixed: larger spacing between broken chains and
+    gimp-tool-ellipse-select made symmetrical.
 
 Usability:
 
@@ -61,6 +63,9 @@ Build:
   - Put back compatibility DLLs for really old plugins.
   - Install binary tool `gimp-test-clipboard` on the system to allow
     people to help us debug clipboard bugs.
+  - --enable-bundled-mypaint-brushes renamed --enable-relocatable-bundle
+    and also make WMF fonts looked up on the runtime prefix of GIMP
+    (instead of the build-time path) when this build option was set.
   
 Plug-ins:
 
