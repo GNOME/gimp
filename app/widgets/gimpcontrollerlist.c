@@ -543,7 +543,7 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
 
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (list->dest),
                                    GIMP_VIEWABLE (info));
-  gimp_controller_list_edit_clicked (NULL, list);
+  gimp_controller_list_edit_clicked (list->edit_button, list);
 }
 
 static void
