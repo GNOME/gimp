@@ -543,6 +543,7 @@ gimp_container_icon_view_select_item (GimpContainerView *view,
                                        gimp_container_icon_view_selection_changed,
                                        icon_view);
 
+      gtk_icon_view_unselect_all (icon_view->view);
       gtk_icon_view_select_path (icon_view->view, path);
       gtk_icon_view_set_cursor (icon_view->view, path, NULL, FALSE);
 
