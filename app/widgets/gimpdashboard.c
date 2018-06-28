@@ -104,8 +104,6 @@ typedef enum
   VARIABLE_SWAP_WRITTEN,
   VARIABLE_SWAP_WRITING,
 
-  VARIABLE_SWAP_BUSY,
-
 #ifdef HAVE_CPU_GROUP
   /* cpu */
   VARIABLE_CPU_USAGE,
@@ -200,7 +198,7 @@ struct _GroupInfo
   gboolean         default_expanded;
   gboolean         has_meter;
   Variable         meter_limit;
-  Variable         meter_led;
+  const Variable  *meter_led;
   const FieldInfo *fields;
 };
 
@@ -312,13 +310,6 @@ static void       gimp_dashboard_sample_gegl_config          (GimpDashboard     
                                                               Variable             variable);
 static void       gimp_dashboard_sample_gegl_stats           (GimpDashboard       *dashboard,
                                                               Variable             variable);
-static void       gimp_dashboard_sample_variable_or          (GimpDashboard       *dashboard,
-                                                              Variable             variable);
-#if 0
-/* avoid "defined but not used" warning.  un-#if 0 when needed */
-static void       gimp_dashboard_sample_variable_and         (GimpDashboard       *dashboard,
-                                                              Variable             variable);
-#endif
 static void       gimp_dashboard_sample_variable_changed     (GimpDashboard       *dashboard,
                                                               Variable             variable);
 static void       gimp_dashboard_sample_swap_limit           (GimpDashboard       *dashboard,
@@ -492,6 +483,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Reading"),
     .description      = N_("Whether data is being read from the swap"),
     .type             = VARIABLE_TYPE_BOOLEAN,
+    .color            = {0.2, 0.4, 1.0, 1.0},
     .sample_func      = gimp_dashboard_sample_variable_changed,
     .data             = GINT_TO_POINTER (VARIABLE_SWAP_READ)
   },
@@ -514,24 +506,9 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Writing"),
     .description      = N_("Whether data is being written to the swap"),
     .type             = VARIABLE_TYPE_BOOLEAN,
+    .color            = {0.8, 0.3, 0.2, 1.0},
     .sample_func      = gimp_dashboard_sample_variable_changed,
     .data             = GINT_TO_POINTER (VARIABLE_SWAP_WRITTEN)
-  },
-
-  [VARIABLE_SWAP_BUSY] =
-  { .name             = "swap-busy",
-    .title            = NC_("dashboard-variable", "Busy"),
-    .description      = N_("Whether data is transferred to or from the swap"),
-    .type             = VARIABLE_TYPE_BOOLEAN,
-    .color            = {0.8, 0.4, 0.4, 1.0},
-    .sample_func      = gimp_dashboard_sample_variable_or,
-    .data             = (const Variable[])
-                        {
-                          VARIABLE_SWAP_READING,
-                          VARIABLE_SWAP_WRITING,
-
-                          VARIABLE_NONE
-                        }
   },
 
 
@@ -658,7 +635,13 @@ static const GroupInfo groups[] =
     .default_expanded = TRUE,
     .has_meter        = TRUE,
     .meter_limit      = VARIABLE_SWAP_LIMIT,
-    .meter_led        = VARIABLE_SWAP_BUSY,
+    .meter_led        = (const Variable[])
+                        {
+                          VARIABLE_SWAP_READING,
+                          VARIABLE_SWAP_WRITING,
+
+                          VARIABLE_NONE
+                        },
     .fields           = (const FieldInfo[])
                         {
                           { .variable         = VARIABLE_SWAP_OCCUPIED,
@@ -703,7 +686,12 @@ static const GroupInfo groups[] =
     .default_active   = TRUE,
     .default_expanded = FALSE,
     .has_meter        = TRUE,
-    .meter_led        = VARIABLE_CPU_ACTIVE,
+    .meter_led        = (const Variable[])
+                        {
+                          VARIABLE_CPU_ACTIVE,
+
+                          VARIABLE_NONE
+                        },
     .fields           = (const FieldInfo[])
                         {
                           { .variable         = VARIABLE_CPU_USAGE,
@@ -1029,12 +1017,6 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                                            priv->history_duration / 1000.0);
           gtk_box_pack_start (GTK_BOX (vbox2), meter, FALSE, FALSE, 0);
           gtk_widget_show (meter);
-
-          if (group_info->meter_led)
-            {
-              gimp_meter_set_led_color (GIMP_METER (meter),
-                                        &variables[group_info->meter_led].color);
-            }
 
           for (field = 0; field < group_data->n_fields; field++)
             {
@@ -1684,22 +1666,7 @@ gimp_dashboard_update (GimpDashboard *dashboard)
   g_mutex_lock (&priv->mutex);
 
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
-    {
-      const GroupInfo *group_info = &groups[group];
-      GroupData       *group_data = &priv->groups[group];
-
-      if (group_info->has_meter && group_info->meter_led)
-        {
-          gboolean active;
-
-          active = gimp_dashboard_variable_to_boolean (dashboard,
-                                                       group_info->meter_led);
-
-          gimp_meter_set_led_active (group_data->meter, active);
-        }
-
-      gimp_dashboard_update_group_values (dashboard, group);
-    }
+    gimp_dashboard_update_group_values (dashboard, group);
 
   priv->update_idle_id = 0;
 
@@ -1767,66 +1734,6 @@ gimp_dashboard_sample_gegl_stats (GimpDashboard *dashboard,
 {
   gimp_dashboard_sample_object (dashboard, G_OBJECT (gegl_stats ()), variable);
 }
-
-static void
-gimp_dashboard_sample_variable_or (GimpDashboard *dashboard,
-                                   Variable       variable)
-{
-  GimpDashboardPrivate *priv          = dashboard->priv;
-  const VariableInfo   *variable_info = &variables[variable];
-  VariableData         *variable_data = &priv->variables[variable];
-  const Variable       *var;
-
-  variable_data->available     = TRUE;
-  variable_data->value.boolean = FALSE;
-
-  for (var = variable_info->data; *var; var++)
-    {
-      const VariableData *var_data = &priv->variables[*var];
-
-      if (! var_data->available)
-        {
-          variable_data->available = FALSE;
-
-          break;
-        }
-
-      variable_data->value.boolean |= var_data->value.boolean;
-    }
-}
-
-#if 0
-
-/* avoid "defined but not used" warning.  un-#if 0 when needed */
-
-static void
-gimp_dashboard_sample_variable_and (GimpDashboard *dashboard,
-                                    Variable       variable)
-{
-  GimpDashboardPrivate *priv          = dashboard->priv;
-  const VariableInfo   *variable_info = &variables[variable];
-  VariableData         *variable_data = &priv->variables[variable];
-  const Variable       *var;
-
-  variable_data->available     = TRUE;
-  variable_data->value.boolean = TRUE;
-
-  for (var = variable_info->data; *var; var++)
-    {
-      const VariableData *var_data = &priv->variables[*var];
-
-      if (! var_data->available)
-        {
-          variable_data->available = FALSE;
-
-          break;
-        }
-
-      variable_data->value.boolean &= var_data->value.boolean;
-    }
-}
-
-#endif /* 0 */
 
 static void
 gimp_dashboard_sample_variable_changed (GimpDashboard *dashboard,
@@ -2647,10 +2554,28 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
 
       if (group_info->meter_led)
         {
-          gimp_meter_set_led_active (
-            group_data->meter,
-            gimp_dashboard_variable_to_boolean (dashboard,
-                                                group_info->meter_led));
+          GimpRGB         color  = {0.0, 0.0, 0.0, 1.0};
+          gboolean        active = FALSE;
+          const Variable *var;
+
+          for (var = group_info->meter_led; *var; var++)
+            {
+              if (gimp_dashboard_variable_to_boolean (dashboard, *var))
+                {
+                  const VariableInfo *variable_info = &variables[*var];
+
+                  color.r = MAX (color.r, variable_info->color.r);
+                  color.g = MAX (color.g, variable_info->color.g);
+                  color.b = MAX (color.b, variable_info->color.b);
+
+                  active = TRUE;
+                }
+            }
+
+          if (active)
+            gimp_meter_set_led_color (group_data->meter, &color);
+
+          gimp_meter_set_led_active (group_data->meter, active);
         }
     }
 

@@ -1315,7 +1315,8 @@ gimp_meter_set_led_color (GimpMeter     *meter,
     {
       meter->priv->led_color = *color;
 
-      gtk_widget_queue_draw (GTK_WIDGET (meter));
+      if (meter->priv->led_active)
+        gtk_widget_queue_draw (GTK_WIDGET (meter));
 
       g_object_notify (G_OBJECT (meter), "led-color");
     }
