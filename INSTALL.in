@@ -180,7 +180,7 @@ header files installed.
      libxpm              -              XPM
      openexr             @OPENEXR_REQUIRED_VERSION@          OpenEXR
      python 2            @PYTHON2_REQUIRED_VERSION@          Python plug-ins
-     webkit              @WEBKIT_REQUIRED_VERSION@          Help browser & webpage
+     webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
 
  21. Summary of optional runtime dependencies:
 
