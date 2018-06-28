@@ -202,9 +202,9 @@ compilation and installation output is not shown.
 
   % tar xvfz gimp-@GIMP_VERSION@.tar.gz   # unpack the sources
   % cd gimp-@GIMP_VERSION@                # change to the toplevel directory
-  % ./configure                           # run the `configure' script
-  % make                                  # build GIMP
-  % make install                          # install GIMP
+  % ./configure                   # run the `configure' script
+  % make                          # build GIMP
+  % make install                  # install GIMP
 
 
 The `configure' script examines your system, and adapts GIMP to run on
@@ -216,6 +216,10 @@ These are:
 
   --disable-vector-icons.  This option installs raster icons instead of
      vector icons.
+
+  --enable-relocatable-bundle.  This option forces GIMP to search some
+     resources (e.g. MyPaint brushes or libwmf fonts) relatively to the
+     running prefix, rather than using build-time paths.
 
   --enable-shared and --disable-shared.  This option affects whether
      shared libraries will be built or not. Shared libraries provide
