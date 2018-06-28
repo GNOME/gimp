@@ -271,35 +271,21 @@ tool_options_manager_global_notify (GimpCoreConfig         *config,
   enabled_global_props  = global_props & ~manager->global_props;
   disabled_global_props = manager->global_props & ~global_props;
 
-  /*  if the active tool uses any of the newly enabled global props,
-   *  copy them to the user_context/global_paint_options first, so
-   *  what the user currently uses becomes the new global values
-   */
-  if (manager->active_tool &&
-      manager->active_tool->context_props & enabled_global_props)
-    {
-      GimpToolInfo *active = manager->active_tool;
-
-      gimp_context_copy_properties (GIMP_CONTEXT (active->tool_options),
-                                    gimp_get_user_context (manager->gimp),
-                                    active->context_props &
-                                    enabled_global_props);
-
-      if (GIMP_IS_PAINT_OPTIONS (active->tool_options))
-        tool_options_manager_copy_paint_props (GIMP_PAINT_OPTIONS (active->tool_options),
-                                               manager->global_paint_options,
-                                               active->context_props &
-                                               enabled_global_props);
-    }
-
-  /*  then, copy the newly enabled global props to all tool options,
-   *  and disconnect the newly disabled ones from the user context
+  /*  copy the newly enabled global props to all tool options, and
+   *  disconnect the newly disabled ones from the user context
    */
   for (list = gimp_get_tool_info_iter (manager->gimp);
        list;
        list = g_list_next (list))
     {
       GimpToolInfo *tool_info = list->data;
+
+      /*  don't change the active tool, it is always fully connected
+       *  to the user_context anway because we set its
+       *  defined/undefined context props in tool_changed()
+       */
+      if (tool_info == manager->active_tool)
+        continue;
 
       /*  defining the newly disabled ones disconnects them from the
        *  parent user context
@@ -371,7 +357,8 @@ tool_options_manager_paint_options_notify (GimpPaintOptions *src,
   GimpCoreConfig         *config = gimp->config;
   GimpToolOptionsManager *manager;
   GimpToolInfo           *tool_info;
-  GValue                  value = G_VALUE_INIT;
+  gboolean                active = FALSE;
+  GValue                  value  = G_VALUE_INIT;
   gint                    i;
 
   manager = g_object_get_qdata (G_OBJECT (gimp), manager_quark);
@@ -384,7 +371,10 @@ tool_options_manager_paint_options_notify (GimpPaintOptions *src,
   else
     tool_info = gimp_context_get_tool (GIMP_CONTEXT (src));
 
-  if (config->global_brush &&
+  if (tool_info == manager->active_tool)
+    active = TRUE;
+
+  if ((active || config->global_brush) &&
       tool_info->context_props & GIMP_CONTEXT_PROP_MASK_BRUSH)
     {
       for (i = 0; i < G_N_ELEMENTS (brush_props); i++)
@@ -392,7 +382,7 @@ tool_options_manager_paint_options_notify (GimpPaintOptions *src,
           goto copy_value;
     }
 
-  if (config->global_dynamics &&
+  if ((active || config->global_dynamics) &&
       tool_info->context_props & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
     {
       for (i = 0; i < G_N_ELEMENTS (dynamics_props); i++)
@@ -400,7 +390,7 @@ tool_options_manager_paint_options_notify (GimpPaintOptions *src,
           goto copy_value;
     }
 
-  if (config->global_gradient &&
+  if ((active || config->global_gradient) &&
       tool_info->context_props & GIMP_CONTEXT_PROP_MASK_GRADIENT)
     {
       for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
