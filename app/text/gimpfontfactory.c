@@ -37,6 +37,7 @@
 #include "core/gimp-parallel.h"
 #include "core/gimpasync.h"
 #include "core/gimpasyncset.h"
+#include "core/gimpcancelable.h"
 #include "core/gimpcontainer.h"
 
 #include "gimpfont.h"
@@ -64,6 +65,8 @@ struct _GimpFontFactoryPrivate
 
 #define GET_PRIVATE(obj) (((GimpFontFactory *) (obj))->priv)
 
+
+static void       gimp_font_factory_finalize        (GObject         *object);
 
 static void       gimp_font_factory_data_init       (GimpDataFactory *factory,
                                                      GimpContext     *context);
@@ -101,7 +104,10 @@ G_DEFINE_TYPE (GimpFontFactory, gimp_font_factory, GIMP_TYPE_DATA_FACTORY)
 static void
 gimp_font_factory_class_init (GimpFontFactoryClass *klass)
 {
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
   GimpDataFactoryClass *factory_class = GIMP_DATA_FACTORY_CLASS (klass);
+
+  object_class->finalize        = gimp_font_factory_finalize;
 
   factory_class->data_init      = gimp_font_factory_data_init;
   factory_class->data_refresh   = gimp_font_factory_data_refresh;
@@ -118,6 +124,25 @@ gimp_font_factory_init (GimpFontFactory *factory)
   factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
                                                GIMP_TYPE_FONT_FACTORY,
                                                GimpFontFactoryPrivate);
+}
+
+static void
+gimp_font_factory_finalize (GObject *object)
+{
+  GimpDataFactory *factory   = GIMP_DATA_FACTORY (object);
+  GimpAsyncSet    *async_set = gimp_data_factory_get_async_set (factory);
+
+  /* the finalize() method of GimpDataFactory normally cancels and waits on the
+   * async set, however, since we can't really cancel font loading, we just let
+   * the factory die without waiting for font loading to finish, by clearing
+   * the async set here.  we also cancel the async set beforehand, as a way to
+   * signal to gimp_font_factory_load_async_callback() that the factory is
+   * dead, and that it should just do nothing.
+   */
+  gimp_cancelable_cancel (GIMP_CANCELABLE (async_set));
+  gimp_async_set_clear (async_set);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -230,13 +255,11 @@ gimp_font_factory_load_async_callback (GimpAsync       *async,
 {
   GimpContainer *container;
 
-  container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
-
+  /* the operation was canceled during factory destruction. bail. */
   if (gimp_async_is_canceled (async))
-    {
-      gimp_container_thaw (container);
-      return;
-    }
+    return;
+
+  container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
 
   if (gimp_async_is_finished (async))
     {
@@ -258,9 +281,9 @@ gimp_font_factory_load_async_callback (GimpAsync       *async,
 
       gimp_font_factory_load_names (container, PANGO_FONT_MAP (fontmap), context);
       g_object_unref (context);
-
-      gimp_container_thaw (container);
     }
+
+  gimp_container_thaw (container);
 }
 
 static void
