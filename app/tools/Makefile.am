@@ -15,6 +15,8 @@ noinst_LIBRARIES = libapptools.a
 libapptools_a_sources = \
 	tools-enums.h			\
 	tools-types.h			\
+	gimp-tool-options-manager.c	\
+	gimp-tool-options-manager.h	\
 	gimp-tools.c			\
 	gimp-tools.h			\
 	tool_manager.c			\
