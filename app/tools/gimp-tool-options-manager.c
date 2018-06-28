@@ -480,11 +480,6 @@ tool_options_manager_tool_changed (GimpContext            *user_context,
   if (user_context->gimp->busy)
     return;
 
-  /*  note that in this function we only deal with non-global
-   *  properties, so we never have to copy from or to the global paint
-   *  options
-   */
-
   if (manager->active_tool)
     {
       GimpToolInfo *active = manager->active_tool;
@@ -512,6 +507,12 @@ tool_options_manager_tool_changed (GimpContext            *user_context,
                                     gimp_get_user_context (manager->gimp),
                                     active->context_props &
                                     ~manager->global_props);
+
+      if (GIMP_IS_PAINT_OPTIONS (active->tool_options))
+        tool_options_manager_copy_paint_props (GIMP_PAINT_OPTIONS (active->tool_options),
+                                               manager->global_paint_options,
+                                               active->context_props &
+                                               ~manager->global_props);
 
       /*  then, undefine these properties so the tool syncs with the
        *  user context automatically
