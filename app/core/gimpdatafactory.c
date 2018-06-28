@@ -288,6 +288,7 @@ gimp_data_factory_finalize (GObject *object)
   if (priv->async_set)
     {
       gimp_cancelable_cancel (GIMP_CANCELABLE (priv->async_set));
+      gimp_waitable_wait (GIMP_WAITABLE (priv->async_set));
 
       g_clear_object (&priv->async_set);
     }
