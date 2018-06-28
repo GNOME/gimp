@@ -2272,14 +2272,19 @@ static void
 gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
                                    Variable       variable)
 {
-  GimpDashboardPrivate        *priv          = dashboard->priv;
-  VariableData                *variable_data = &priv->variables[variable];
-  PPROCESS_MEMORY_COUNTERS_EX  pmc;
+  GimpDashboardPrivate       *priv          = dashboard->priv;
+  VariableData               *variable_data = &priv->variables[variable];
+  PROCESS_MEMORY_COUNTERS_EX  pmc           = {};
 
   variable_data->available = FALSE;
 
-  if (! GetProcessMemoryInfo (GetCurrentProcess (), &pmc, sizeof (pmc)))
-    return;
+  if (! GetProcessMemoryInfo (GetCurrentProcess (),
+                              (PPROCESS_MEMORY_COUNTERS) &pmc,
+                              sizeof (pmc)) ||
+      pmc.cb != sizeof (pmc))
+    {
+      return;
+    }
 
   variable_data->available  = TRUE;
   variable_data->value.size = pmc.PrivateUsage;
