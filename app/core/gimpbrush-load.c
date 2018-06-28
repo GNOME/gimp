@@ -34,7 +34,6 @@
 
 #include "gimp-intl.h"
 
-
 /* stuff from abr2gbr Copyright (C) 2001 Marco Lamberto <lm@sunnyspot.org>  */
 /* the above is GPL  see http://the.sunnyspot.org/gimp/  */
 
@@ -186,6 +185,15 @@ gimp_brush_load_brush (GimpContext   *context,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: Bytes = 0."));
+      return NULL;
+    }
+
+  if (header.width > GIMP_BRUSH_MAX_SIZE ||
+      header.height > GIMP_BRUSH_MAX_SIZE)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file: %dx%d over max size."),
+                   header.width, header.height);
       return NULL;
     }
 
