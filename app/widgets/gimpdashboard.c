@@ -29,6 +29,7 @@
 
 #ifdef G_OS_WIN32
 #include <windows.h>
+#include <psapi.h>
 #define HAVE_CPU_GROUP
 #define HAVE_MEMORY_GROUP
 #else /* ! G_OS_WIN32 */
@@ -1994,8 +1995,8 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
 {
   typedef struct
   {
-    static guint64 prev_time;
-    static guint64 prev_usage;
+    guint64 prev_time;
+    guint64 prev_usage;
   } Data;
 
   GimpDashboardPrivate *priv            = dashboard->priv;
