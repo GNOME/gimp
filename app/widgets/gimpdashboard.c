@@ -2000,7 +2000,7 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
 
   GimpDashboardPrivate *priv            = dashboard->priv;
   VariableData         *variable_data   = &priv->variables[variable];
-  DAta                 *data            = gimp_dashboard_variable_get_data (
+  Data                 *data            = gimp_dashboard_variable_get_data (
                                             dashboard, variable, sizeof (Data));
   guint64               curr_time;
   guint64               curr_usage;
