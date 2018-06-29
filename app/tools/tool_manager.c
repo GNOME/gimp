@@ -739,8 +739,12 @@ tool_manager_preset_changed (GimpContext     *user_context,
 
   if (GIMP_IS_PAINT_OPTIONS (preset->tool_options))
     {
-      GimpToolOptions *src  = preset->tool_options;
-      GimpToolOptions *dest = tool_manager->active_tool->tool_info->tool_options;
+      GimpToolOptions     *src;
+      GimpToolOptions     *dest;
+      GimpContextPropMask  prop_mask = 0;
+
+      src  = preset->tool_options;
+      dest = tool_manager->active_tool->tool_info->tool_options;
 
       /*  copy various data objects' additional tool options again
        *  manually, they might have been overwritten by e.g. the "link
@@ -748,16 +752,17 @@ tool_manager_preset_changed (GimpContext     *user_context,
        *  gimptooloptions-gui.c
        */
       if (preset->use_brush)
-        gimp_paint_options_copy_brush_props (GIMP_PAINT_OPTIONS (src),
-                                             GIMP_PAINT_OPTIONS (dest));
+        prop_mask |= GIMP_CONTEXT_PROP_MASK_BRUSH;
 
       if (preset->use_dynamics)
-        gimp_paint_options_copy_dynamics_props (GIMP_PAINT_OPTIONS (src),
-                                                GIMP_PAINT_OPTIONS (dest));
+        prop_mask |= GIMP_CONTEXT_PROP_MASK_DYNAMICS;
 
       if (preset->use_gradient)
-        gimp_paint_options_copy_gradient_props (GIMP_PAINT_OPTIONS (src),
-                                                GIMP_PAINT_OPTIONS (dest));
+        prop_mask |= GIMP_CONTEXT_PROP_MASK_GRADIENT;
+
+      gimp_paint_options_copy_props (GIMP_PAINT_OPTIONS (src),
+                                     GIMP_PAINT_OPTIONS (dest),
+                                     prop_mask);
     }
 }
 

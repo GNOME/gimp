@@ -313,41 +313,6 @@ tool_options_manager_global_notify (GimpCoreConfig         *config,
   manager->global_props = global_props;
 }
 
-static const gchar *brush_props[] =
-{
-  "brush-size",
-  "brush-angle",
-  "brush-aspect-ratio",
-  "brush-spacing",
-  "brush-hardness",
-  "brush-force",
-  "brush-link-size",
-  "brush-link-angle",
-  "brush-link-aspect-ratio",
-  "brush-link-spacing",
-  "brush-link-hardness",
-  "brush-lock-to-view"
-};
-
-static const gchar *dynamics_props[] =
-{
-  "dynamics-expanded",
-  "fade-reverse",
-  "fade-length",
-  "fade-unit",
-  "fade-repeat"
-};
-
-static const gchar *gradient_props[] =
-{
-  "gradient-reverse",
-  "gradient-blend-color-space"
-};
-
-static const gint max_n_props = (G_N_ELEMENTS (brush_props) +
-                                 G_N_ELEMENTS (dynamics_props) +
-                                 G_N_ELEMENTS (gradient_props));
-
 static void
 tool_options_manager_paint_options_notify (GimpPaintOptions *src,
                                            const GParamSpec *pspec,
@@ -357,9 +322,8 @@ tool_options_manager_paint_options_notify (GimpPaintOptions *src,
   GimpCoreConfig         *config = gimp->config;
   GimpToolOptionsManager *manager;
   GimpToolInfo           *tool_info;
-  gboolean                active = FALSE;
-  GValue                  value  = G_VALUE_INIT;
-  gint                    i;
+  GimpContextPropMask     prop_mask = 0;
+  gboolean                active    = FALSE;
 
   manager = g_object_get_qdata (G_OBJECT (gimp), manager_quark);
 
@@ -377,46 +341,39 @@ tool_options_manager_paint_options_notify (GimpPaintOptions *src,
   if ((active || config->global_brush) &&
       tool_info->context_props & GIMP_CONTEXT_PROP_MASK_BRUSH)
     {
-      for (i = 0; i < G_N_ELEMENTS (brush_props); i++)
-        if (! strcmp (pspec->name, brush_props[i]))
-          goto copy_value;
+      prop_mask |= GIMP_CONTEXT_PROP_MASK_BRUSH;
     }
-
-  if ((active || config->global_dynamics) &&
-      tool_info->context_props & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
+  else if ((active || config->global_dynamics) &&
+           tool_info->context_props & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
     {
-      for (i = 0; i < G_N_ELEMENTS (dynamics_props); i++)
-        if (! strcmp (pspec->name, dynamics_props[i]))
-          goto copy_value;
+      prop_mask |= GIMP_CONTEXT_PROP_MASK_DYNAMICS;
     }
-
-  if ((active || config->global_gradient) &&
-      tool_info->context_props & GIMP_CONTEXT_PROP_MASK_GRADIENT)
+  else if ((active || config->global_gradient) &&
+           tool_info->context_props & GIMP_CONTEXT_PROP_MASK_GRADIENT)
     {
-      for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
-        if (! strcmp (pspec->name, gradient_props[i]))
-          goto copy_value;
+      prop_mask |= GIMP_CONTEXT_PROP_MASK_GRADIENT;
     }
 
-  return;
+  if (gimp_paint_options_is_prop (pspec->name, prop_mask))
+    {
+      GValue value = G_VALUE_INIT;
 
- copy_value:
+      g_value_init (&value, pspec->value_type);
 
-  g_value_init (&value, pspec->value_type);
+      g_object_get_property (G_OBJECT (src), pspec->name, &value);
 
-  g_object_get_property (G_OBJECT (src), pspec->name, &value);
+      g_signal_handlers_block_by_func (dest,
+                                       tool_options_manager_paint_options_notify,
+                                       src);
 
-  g_signal_handlers_block_by_func (dest,
-                                   tool_options_manager_paint_options_notify,
-                                   src);
+      g_object_set_property (G_OBJECT (dest), pspec->name, &value);
 
-  g_object_set_property (G_OBJECT (dest), pspec->name, &value);
+      g_signal_handlers_unblock_by_func (dest,
+                                         tool_options_manager_paint_options_notify,
+                                         src);
 
-  g_signal_handlers_unblock_by_func (dest,
-                                     tool_options_manager_paint_options_notify,
-                                     src);
-
-  g_value_unset (&value);
+      g_value_unset (&value);
+    }
 }
 
 static void
@@ -424,46 +381,15 @@ tool_options_manager_copy_paint_props (GimpPaintOptions    *src,
                                        GimpPaintOptions    *dest,
                                        GimpContextPropMask  prop_mask)
 {
-  const gchar *names[max_n_props];
-  GValue       values[max_n_props];
-  gint         n_props = 0;
-  gint         i;
+  g_signal_handlers_block_by_func (dest,
+                                   tool_options_manager_paint_options_notify,
+                                   src);
 
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_BRUSH)
-    {
-      for (i = 0; i < G_N_ELEMENTS (brush_props); i++)
-        names[n_props++] = brush_props[i];
-    }
+  gimp_paint_options_copy_props (src, dest, prop_mask);
 
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
-    {
-      for (i = 0; i < G_N_ELEMENTS (dynamics_props); i++)
-        names[n_props++] = dynamics_props[i];
-    }
-
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_GRADIENT)
-    {
-      for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
-        names[n_props++] = gradient_props[i];
-    }
-
-  if (n_props > 0)
-    {
-      g_object_getv (G_OBJECT (src), n_props, names, values);
-
-      g_signal_handlers_block_by_func (dest,
-                                       tool_options_manager_paint_options_notify,
-                                       src);
-
-      g_object_setv (G_OBJECT (dest), n_props, names, values);
-
-      g_signal_handlers_unblock_by_func (dest,
-                                         tool_options_manager_paint_options_notify,
-                                         src);
-
-      while (n_props--)
-        g_value_unset (&values[n_props]);
-    }
+  g_signal_handlers_unblock_by_func (dest,
+                                     tool_options_manager_paint_options_notify,
+                                     src);
 }
 
 static void
