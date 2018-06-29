@@ -128,49 +128,49 @@ struct _GimpPaintOptionsClass
 };
 
 
-GType              gimp_paint_options_get_type (void) G_GNUC_CONST;
+GType    gimp_paint_options_get_type (void) G_GNUC_CONST;
 
-GimpPaintOptions * gimp_paint_options_new      (GimpPaintInfo    *paint_info);
+GimpPaintOptions *
+         gimp_paint_options_new                (GimpPaintInfo       *paint_info);
 
-gdouble            gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
-                                                GimpImage        *image,
-                                                gdouble           pixel_dist);
+gdouble  gimp_paint_options_get_fade           (GimpPaintOptions    *options,
+                                                GimpImage           *image,
+                                                gdouble              pixel_dist);
 
-gdouble          gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
-                                                GimpImage        *image);
+gdouble  gimp_paint_options_get_jitter         (GimpPaintOptions    *options,
+                                                GimpImage           *image);
 
-gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
-                                                GimpImage        *image,
-                                                gdouble           grad_point,
-                                                gdouble           pixel_dist,
-                                                GimpRGB          *color);
+gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions    *options,
+                                                GimpImage           *image,
+                                                gdouble              grad_point,
+                                                gdouble              pixel_dist,
+                                                GimpRGB             *color);
 
 GimpBrushApplicationMode
-        gimp_paint_options_get_brush_mode      (GimpPaintOptions *paint_options);
+         gimp_paint_options_get_brush_mode     (GimpPaintOptions    *options);
 
-void    gimp_paint_options_set_default_brush_size
-                                               (GimpPaintOptions *paint_options,
-                                                GimpBrush        *brush);
-void    gimp_paint_options_set_default_brush_angle
-                                               (GimpPaintOptions *paint_options,
-                                                GimpBrush        *brush);
-void    gimp_paint_options_set_default_brush_aspect_ratio
-                                               (GimpPaintOptions *paint_options,
-                                                GimpBrush        *brush);
-void    gimp_paint_options_set_default_brush_spacing
-                                               (GimpPaintOptions *paint_options,
-                                                GimpBrush        *brush);
+void     gimp_paint_options_set_default_brush_size
+                                               (GimpPaintOptions    *options,
+                                                GimpBrush           *brush);
+void     gimp_paint_options_set_default_brush_angle
+                                               (GimpPaintOptions    *options,
+                                                GimpBrush           *brush);
+void     gimp_paint_options_set_default_brush_aspect_ratio
+                                               (GimpPaintOptions    *options,
+                                                GimpBrush           *brush);
+void     gimp_paint_options_set_default_brush_spacing
+                                               (GimpPaintOptions    *options,
+                                                GimpBrush           *brush);
 
-void    gimp_paint_options_set_default_brush_hardness
-                                               (GimpPaintOptions *paint_options,
-                                                GimpBrush        *brush);
+void     gimp_paint_options_set_default_brush_hardness
+                                               (GimpPaintOptions    *options,
+                                                GimpBrush           *brush);
 
-void    gimp_paint_options_copy_brush_props    (GimpPaintOptions *src,
-                                                GimpPaintOptions *dest);
-void    gimp_paint_options_copy_dynamics_props (GimpPaintOptions *src,
-                                                GimpPaintOptions *dest);
-void    gimp_paint_options_copy_gradient_props (GimpPaintOptions *src,
-                                                GimpPaintOptions *dest);
+gboolean gimp_paint_options_is_prop            (const gchar         *prop_name,
+                                                GimpContextPropMask  prop_mask);
+void     gimp_paint_options_copy_props         (GimpPaintOptions    *src,
+                                                GimpPaintOptions    *dest,
+                                                GimpContextPropMask  prop_mask);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

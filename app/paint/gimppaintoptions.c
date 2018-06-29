@@ -1189,106 +1189,110 @@ gimp_paint_options_set_default_brush_hardness (GimpPaintOptions *paint_options,
     }
 }
 
-void
-gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
-                                     GimpPaintOptions *dest)
+static const gchar *brush_props[] =
 {
-  gdouble  brush_size;
-  gdouble  brush_angle;
-  gdouble  brush_aspect_ratio;
-  gdouble  brush_spacing;
-  gdouble  brush_hardness;
-  gdouble  brush_force;
+  "brush-size",
+  "brush-angle",
+  "brush-aspect-ratio",
+  "brush-spacing",
+  "brush-hardness",
+  "brush-force",
+  "brush-link-size",
+  "brush-link-angle",
+  "brush-link-aspect-ratio",
+  "brush-link-spacing",
+  "brush-link-hardness",
+  "brush-lock-to-view"
+};
 
-  gboolean brush_link_size;
-  gboolean brush_link_angle;
-  gboolean brush_link_aspect_ratio;
-  gboolean brush_link_spacing;
-  gboolean brush_link_hardness;
+static const gchar *dynamics_props[] =
+{
+  "dynamics-expanded",
+  "fade-reverse",
+  "fade-length",
+  "fade-unit",
+  "fade-repeat"
+};
 
-  gboolean brush_lock_to_view;
+static const gchar *gradient_props[] =
+{
+  "gradient-reverse",
+  "gradient-blend-color-space"
+};
 
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
+static const gint max_n_props = (G_N_ELEMENTS (brush_props) +
+                                 G_N_ELEMENTS (dynamics_props) +
+                                 G_N_ELEMENTS (gradient_props));
 
-  g_object_get (src,
-                "brush-size",              &brush_size,
-                "brush-angle",             &brush_angle,
-                "brush-aspect-ratio",      &brush_aspect_ratio,
-                "brush-spacing",           &brush_spacing,
-                "brush-hardness",          &brush_hardness,
-                "brush-force",             &brush_force,
-                "brush-link-size",         &brush_link_size,
-                "brush-link-angle",        &brush_link_angle,
-                "brush-link-aspect-ratio", &brush_link_aspect_ratio,
-                "brush-link-spacing",      &brush_link_spacing,
-                "brush-link-hardness",     &brush_link_hardness,
-                "brush-lock-to-view",      &brush_lock_to_view,
-                NULL);
+gboolean
+gimp_paint_options_is_prop (const gchar         *prop_name,
+                            GimpContextPropMask  prop_mask)
+{
+  gint i;
 
-  g_object_set (dest,
-                "brush-size",              brush_size,
-                "brush-angle",             brush_angle,
-                "brush-aspect-ratio",      brush_aspect_ratio,
-                "brush-spacing",           brush_spacing,
-                "brush-hardness",          brush_hardness,
-                "brush-force",             brush_force,
-                "brush-link-size",         brush_link_size,
-                "brush-link-angle",        brush_link_angle,
-                "brush-link-aspect-ratio", brush_link_aspect_ratio,
-                "brush-link-spacing",      brush_link_spacing,
-                "brush-link-hardness",     brush_link_hardness,
-                "brush-lock-to-view",      brush_lock_to_view,
-                NULL);
+  g_return_val_if_fail (prop_name != NULL, FALSE);
+
+  if (prop_mask & GIMP_CONTEXT_PROP_MASK_BRUSH)
+    {
+      for (i = 0; i < G_N_ELEMENTS (brush_props); i++)
+        if (! strcmp (prop_name, brush_props[i]))
+          return TRUE;
+    }
+
+  if (prop_mask & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
+    {
+      for (i = 0; i < G_N_ELEMENTS (dynamics_props); i++)
+        if (! strcmp (prop_name, dynamics_props[i]))
+          return TRUE;
+    }
+
+  if (prop_mask & GIMP_CONTEXT_PROP_MASK_GRADIENT)
+    {
+      for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
+        if (! strcmp (prop_name, gradient_props[i]))
+          return TRUE;
+    }
+
+  return FALSE;
 }
 
 void
-gimp_paint_options_copy_dynamics_props (GimpPaintOptions *src,
-                                        GimpPaintOptions *dest)
+gimp_paint_options_copy_props (GimpPaintOptions    *src,
+                               GimpPaintOptions    *dest,
+                               GimpContextPropMask  prop_mask)
 {
-  gboolean       dynamics_expanded;
-  gboolean       fade_reverse;
-  gdouble        fade_length;
-  GimpUnit       fade_unit;
-  GimpRepeatMode fade_repeat;
+  const gchar *names[max_n_props];
+  GValue       values[max_n_props];
+  gint         n_props = 0;
+  gint         i;
 
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
 
-  g_object_get (src,
-                "dynamics-expanded", &dynamics_expanded,
-                "fade-reverse",      &fade_reverse,
-                "fade-length",       &fade_length,
-                "fade-unit",         &fade_unit,
-                "fade-repeat",       &fade_repeat,
-                NULL);
+  if (prop_mask & GIMP_CONTEXT_PROP_MASK_BRUSH)
+    {
+      for (i = 0; i < G_N_ELEMENTS (brush_props); i++)
+        names[n_props++] = brush_props[i];
+    }
 
-  g_object_set (dest,
-                "dynamics-expanded", dynamics_expanded,
-                "fade-reverse",      fade_reverse,
-                "fade-length",       fade_length,
-                "fade-unit",         fade_unit,
-                "fade-repeat",       fade_repeat,
-                NULL);
-}
+  if (prop_mask & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
+    {
+      for (i = 0; i < G_N_ELEMENTS (dynamics_props); i++)
+        names[n_props++] = dynamics_props[i];
+    }
 
-void
-gimp_paint_options_copy_gradient_props (GimpPaintOptions *src,
-                                        GimpPaintOptions *dest)
-{
-  gboolean                    gradient_reverse;
-  GimpGradientBlendColorSpace gradient_blend_color_space;
+  if (prop_mask & GIMP_CONTEXT_PROP_MASK_GRADIENT)
+    {
+      for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
+        names[n_props++] = gradient_props[i];
+    }
 
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
+  if (n_props > 0)
+    {
+      g_object_getv (G_OBJECT (src), n_props, names, values);
+      g_object_setv (G_OBJECT (dest), n_props, names, values);
 
-  g_object_get (src,
-                "gradient-reverse",           &gradient_reverse,
-                "gradient-blend-color-space", &gradient_blend_color_space,
-                NULL);
-
-  g_object_set (dest,
-                "gradient-reverse",           gradient_reverse,
-                "gradient-blend-color-space", gradient_blend_color_space,
-                NULL);
+      while (n_props--)
+        g_value_unset (&values[n_props]);
+    }
 }
