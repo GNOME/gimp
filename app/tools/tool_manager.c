@@ -23,14 +23,12 @@
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
@@ -52,12 +50,11 @@ typedef struct _GimpToolManager GimpToolManager;
 
 struct _GimpToolManager
 {
-  GimpTool         *active_tool;
-  GimpPaintOptions *shared_paint_options;
-  GSList           *tool_stack;
+  GimpTool *active_tool;
+  GSList   *tool_stack;
 
-  GQuark            image_clean_handler_id;
-  GQuark            image_dirty_handler_id;
+  GQuark    image_clean_handler_id;
+  GQuark    image_dirty_handler_id;
 };
 
 
@@ -77,13 +74,6 @@ static void   tool_manager_preset_changed     (GimpContext     *user_context,
 static void   tool_manager_image_clean_dirty  (GimpImage       *image,
                                                GimpDirtyMask    dirty_mask,
                                                GimpToolManager *tool_manager);
-
-static void   tool_manager_connect_options    (GimpToolManager *tool_manager,
-                                               GimpContext     *user_context,
-                                               GimpToolInfo    *tool_info);
-static void   tool_manager_disconnect_options (GimpToolManager *tool_manager,
-                                               GimpContext     *user_context,
-                                               GimpToolInfo    *tool_info);
 
 static void   tool_manager_cast_spell         (GimpToolInfo    *tool_info);
 
@@ -119,17 +109,16 @@ tool_manager_init (Gimp *gimp)
 
   user_context = gimp_get_user_context (gimp);
 
-  tool_manager->shared_paint_options = g_object_new (GIMP_TYPE_PAINT_OPTIONS,
-                                                     "gimp", gimp,
-                                                     "name", "tool-manager-shared-paint-options",
-                                                     NULL);
-
   g_signal_connect (user_context, "tool-changed",
                     G_CALLBACK (tool_manager_tool_changed),
                     tool_manager);
   g_signal_connect (user_context, "tool-preset-changed",
                     G_CALLBACK (tool_manager_preset_changed),
                     tool_manager);
+
+  tool_manager_tool_changed (user_context,
+                             gimp_context_get_tool (user_context),
+                             tool_manager);
 }
 
 void
@@ -158,7 +147,6 @@ tool_manager_exit (Gimp *gimp)
                                  tool_manager->image_dirty_handler_id);
 
   g_clear_object (&tool_manager->active_tool);
-  g_clear_object (&tool_manager->shared_paint_options);
 
   g_slice_free (GimpToolManager, tool_manager);
 }
@@ -702,19 +690,11 @@ tool_manager_tool_changed (GimpContext     *user_context,
       if (display)
         tool_manager_control_active (user_context->gimp, GIMP_TOOL_ACTION_COMMIT,
                                      display);
-
-      /*  disconnect the old tool's context  */
-      if (active_tool->tool_info)
-        tool_manager_disconnect_options (tool_manager, user_context,
-                                         active_tool->tool_info);
     }
 
   new_tool = g_object_new (tool_info->tool_type,
                            "tool-info", tool_info,
                            NULL);
-
-  /*  connect the new tool's context  */
-  tool_manager_connect_options (tool_manager, user_context, tool_info);
 
   tool_manager_select_tool (user_context->gimp, new_tool);
 
@@ -741,9 +721,6 @@ tool_manager_preset_changed (GimpContext     *user_context,
   if (preset_tool != gimp_context_get_tool (user_context))
     tool_change = TRUE;
 
-  if (! tool_change)
-    tool_manager_disconnect_options (tool_manager, user_context, preset_tool);
-
   /*  save the name, we don't want to overwrite it  */
   options_name = g_strdup (gimp_object_get_name (preset_tool->tool_options));
 
@@ -755,8 +732,6 @@ tool_manager_preset_changed (GimpContext     *user_context,
 
   if (tool_change)
     gimp_context_set_tool (user_context, preset_tool);
-  else
-    tool_manager_connect_options (tool_manager, user_context, preset_tool);
 
   gimp_context_copy_properties (GIMP_CONTEXT (preset->tool_options),
                                 user_context,
@@ -802,82 +777,6 @@ tool_manager_image_clean_dirty (GimpImage       *image,
       if (display)
         tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,
                                      display);
-    }
-}
-
-static void
-tool_manager_connect_options (GimpToolManager *tool_manager,
-                              GimpContext     *user_context,
-                              GimpToolInfo    *tool_info)
-{
-  if (tool_info->context_props)
-    {
-      GimpCoreConfig      *config       = user_context->gimp->config;
-      GimpContextPropMask  global_props = 0;
-
-      /*  FG and BG are always shared between all tools  */
-      global_props |= GIMP_CONTEXT_PROP_MASK_FOREGROUND;
-      global_props |= GIMP_CONTEXT_PROP_MASK_BACKGROUND;
-
-      if (config->global_brush)
-        global_props |= GIMP_CONTEXT_PROP_MASK_BRUSH;
-      if (config->global_dynamics)
-        global_props |= GIMP_CONTEXT_PROP_MASK_DYNAMICS;
-      if (config->global_pattern)
-        global_props |= GIMP_CONTEXT_PROP_MASK_PATTERN;
-      if (config->global_palette)
-        global_props |= GIMP_CONTEXT_PROP_MASK_PALETTE;
-      if (config->global_gradient)
-        global_props |= GIMP_CONTEXT_PROP_MASK_GRADIENT;
-      if (config->global_font)
-        global_props |= GIMP_CONTEXT_PROP_MASK_FONT;
-
-      gimp_context_copy_properties (GIMP_CONTEXT (tool_info->tool_options),
-                                    user_context,
-                                    tool_info->context_props & ~global_props);
-      gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options),
-                               user_context);
-
-      if (GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
-        {
-          if (config->global_brush)
-            gimp_paint_options_copy_brush_props (tool_manager->shared_paint_options,
-                                                 GIMP_PAINT_OPTIONS (tool_info->tool_options));
-
-          if (config->global_dynamics)
-            gimp_paint_options_copy_dynamics_props (tool_manager->shared_paint_options,
-                                                    GIMP_PAINT_OPTIONS (tool_info->tool_options));
-
-          if (config->global_gradient)
-            gimp_paint_options_copy_gradient_props (tool_manager->shared_paint_options,
-                                                    GIMP_PAINT_OPTIONS (tool_info->tool_options));
-        }
-    }
-}
-
-static void
-tool_manager_disconnect_options (GimpToolManager *tool_manager,
-                                 GimpContext     *user_context,
-                                 GimpToolInfo    *tool_info)
-{
-  if (tool_info->context_props)
-    {
-      if (GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
-        {
-          /* Storing is unconditional, because the user may turn on
-           * brush sharing mid use
-           */
-          gimp_paint_options_copy_brush_props (GIMP_PAINT_OPTIONS (tool_info->tool_options),
-                                               tool_manager->shared_paint_options);
-
-          gimp_paint_options_copy_dynamics_props (GIMP_PAINT_OPTIONS (tool_info->tool_options),
-                                                  tool_manager->shared_paint_options);
-
-          gimp_paint_options_copy_gradient_props (GIMP_PAINT_OPTIONS (tool_info->tool_options),
-                                                  tool_manager->shared_paint_options);
-        }
-
-      gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options), NULL);
     }
 }
 

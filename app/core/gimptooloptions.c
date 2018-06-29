@@ -191,10 +191,6 @@ gimp_tool_options_set_property (GObject      *object,
           {
             options->tool_info = g_object_ref (tool_info);
 
-            if (tool_info->context_props)
-              gimp_context_define_properties (GIMP_CONTEXT (options),
-                                              tool_info->context_props, FALSE);
-
             gimp_context_set_serialize_properties (GIMP_CONTEXT (options),
                                                    tool_info->context_props);
           }
