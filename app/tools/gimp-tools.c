@@ -419,12 +419,12 @@ gimp_tools_save (Gimp     *gimp,
           g_clear_error (&error);
         }
 
-        if (! gimp_internal_data_save (gimp, &error))
-          {
-            gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
-                                  error->message);
-            g_clear_error (&error);
-          }
+      if (! gimp_internal_data_save (gimp, &error))
+        {
+          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
+                                error->message);
+          g_clear_error (&error);
+        }
 
       gimp_tool_options_create_folder ();
 
