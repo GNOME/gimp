@@ -343,13 +343,15 @@ tool_options_manager_paint_options_notify (GimpPaintOptions *src,
     {
       prop_mask |= GIMP_CONTEXT_PROP_MASK_BRUSH;
     }
-  else if ((active || config->global_dynamics) &&
-           tool_info->context_props & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
+
+  if ((active || config->global_dynamics) &&
+      tool_info->context_props & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
     {
       prop_mask |= GIMP_CONTEXT_PROP_MASK_DYNAMICS;
     }
-  else if ((active || config->global_gradient) &&
-           tool_info->context_props & GIMP_CONTEXT_PROP_MASK_GRADIENT)
+
+  if ((active || config->global_gradient) &&
+      tool_info->context_props & GIMP_CONTEXT_PROP_MASK_GRADIENT)
     {
       prop_mask |= GIMP_CONTEXT_PROP_MASK_GRADIENT;
     }
