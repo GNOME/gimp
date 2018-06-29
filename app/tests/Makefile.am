@@ -1,6 +1,6 @@
 # Prevent parallel builds for the tests, as e.g. done by make -j check
 # The tests must not be run in parallel or in a different order as specified
-.NOTPARALLEL
+.NOTPARALLEL: check
 
 SUBDIRS = \
 	files		\
