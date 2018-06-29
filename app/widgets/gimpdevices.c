@@ -174,6 +174,15 @@ gimp_devices_save (Gimp     *gimp,
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
+  if (! GIMP_GUI_CONFIG (gimp->config)->devices_share_tool)
+    {
+      GimpDeviceInfo *current_device;
+
+      current_device = gimp_device_manager_get_current_device (manager);
+
+      gimp_device_info_save_tool (current_device);
+    }
+
   if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (manager),
                                         file,
                                         "GIMP devicerc",
