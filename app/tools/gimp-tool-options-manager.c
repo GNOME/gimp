@@ -30,7 +30,6 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
@@ -48,9 +47,6 @@ struct _GimpToolOptionsManager
 
   GimpToolInfo        *active_tool;
 };
-
-
-static GQuark manager_quark = 0;
 
 
 /*  local function prototypes  */
@@ -77,6 +73,9 @@ static void   tool_options_manager_tool_changed  (GimpContext            *user_c
                                                   GimpToolOptionsManager *manager);
 
 
+static GQuark manager_quark = 0;
+
+
 /*  public functions  */
 
 void
@@ -84,7 +83,6 @@ gimp_tool_options_manager_init (Gimp *gimp)
 {
   GimpToolOptionsManager *manager;
   GimpContext            *user_context;
-  GimpCoreConfig         *config;
   GList                  *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -92,9 +90,9 @@ gimp_tool_options_manager_init (Gimp *gimp)
 
   manager_quark = g_quark_from_static_string ("gimp-tool-options-manager");
 
-  config = gimp->config;
-
   manager = g_slice_new0 (GimpToolOptionsManager);
+
+  g_object_set_qdata (G_OBJECT (gimp), manager_quark, manager);
 
   manager->gimp = gimp;
 
@@ -104,9 +102,7 @@ gimp_tool_options_manager_init (Gimp *gimp)
                   "name", "tool-options-manager-global-paint-options",
                   NULL);
 
-  manager->global_props = tool_options_manager_get_global_props (config);
-
-  g_object_set_qdata (G_OBJECT (gimp), manager_quark, manager);
+  manager->global_props = tool_options_manager_get_global_props (gimp->config);
 
   user_context = gimp_get_user_context (gimp);
 
@@ -405,7 +401,7 @@ tool_options_manager_tool_changed (GimpContext            *user_context,
   /*  FIXME: gimp_busy HACK
    *  the tool manager will stop the emission, so simply return
    */
-  if (user_context->gimp->busy)
+  if (manager->gimp->busy)
     return;
 
   if (manager->active_tool)

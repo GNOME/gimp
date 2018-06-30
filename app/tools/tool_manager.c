@@ -29,8 +29,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimplist.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptoolpreset.h"
@@ -61,8 +60,7 @@ struct _GimpToolManager
 /*  local function prototypes  */
 
 static GimpToolManager * tool_manager_get     (Gimp            *gimp);
-static void              tool_manager_set     (Gimp            *gimp,
-                                               GimpToolManager *tool_manager);
+
 static void   tool_manager_select_tool        (Gimp            *gimp,
                                                GimpTool        *tool);
 static void   tool_manager_tool_changed       (GimpContext     *user_context,
@@ -78,6 +76,9 @@ static void   tool_manager_image_clean_dirty  (GimpImage       *image,
 static void   tool_manager_cast_spell         (GimpToolInfo    *tool_info);
 
 
+static GQuark tool_manager_quark = 0;
+
+
 /*  public functions  */
 
 void
@@ -87,15 +88,13 @@ tool_manager_init (Gimp *gimp)
   GimpContext     *user_context;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (tool_manager_quark == 0);
+
+  tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
 
   tool_manager = g_slice_new0 (GimpToolManager);
 
-  tool_manager->active_tool            = NULL;
-  tool_manager->tool_stack             = NULL;
-  tool_manager->image_clean_handler_id = 0;
-  tool_manager->image_dirty_handler_id = 0;
-
-  tool_manager_set (gimp, tool_manager);
+  g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, tool_manager);
 
   tool_manager->image_clean_handler_id =
     gimp_container_add_handler (gimp->images, "clean",
@@ -130,7 +129,8 @@ tool_manager_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   tool_manager = tool_manager_get (gimp);
-  tool_manager_set (gimp, NULL);
+
+  g_return_if_fail (tool_manager != NULL);
 
   user_context = gimp_get_user_context (gimp);
 
@@ -149,6 +149,8 @@ tool_manager_exit (Gimp *gimp)
   g_clear_object (&tool_manager->active_tool);
 
   g_slice_free (GimpToolManager, tool_manager);
+
+  g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, NULL);
 }
 
 GimpTool *
@@ -577,25 +579,10 @@ tool_manager_get_popup_active (Gimp             *gimp,
 
 /*  private functions  */
 
-static GQuark tool_manager_quark = 0;
-
 static GimpToolManager *
 tool_manager_get (Gimp *gimp)
 {
-  if (! tool_manager_quark)
-    tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
-
   return g_object_get_qdata (G_OBJECT (gimp), tool_manager_quark);
-}
-
-static void
-tool_manager_set (Gimp            *gimp,
-                  GimpToolManager *tool_manager)
-{
-  if (! tool_manager_quark)
-    tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
-
-  g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, tool_manager);
 }
 
 static void
@@ -748,8 +735,7 @@ tool_manager_preset_changed (GimpContext     *user_context,
 
       /*  copy various data objects' additional tool options again
        *  manually, they might have been overwritten by e.g. the "link
-       *  brush stuff to brush defaults" logic in
-       *  gimptooloptions-gui.c
+       *  brush stuff to brush defaults" logic in gimptooloptions.c
        */
       if (preset->use_brush)
         prop_mask |= GIMP_CONTEXT_PROP_MASK_BRUSH;
