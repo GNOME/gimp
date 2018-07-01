@@ -31,11 +31,14 @@
 #define GIMP_VIEW_RENDERER_DRAWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_DRAWABLE, GimpViewRendererDrawableClass))
 
 
-typedef struct _GimpViewRendererDrawableClass  GimpViewRendererDrawableClass;
+typedef struct _GimpViewRendererDrawablePrivate GimpViewRendererDrawablePrivate;
+typedef struct _GimpViewRendererDrawableClass   GimpViewRendererDrawableClass;
 
 struct _GimpViewRendererDrawable
 {
-  GimpViewRenderer  parent_instance;
+  GimpViewRenderer                 parent_instance;
+
+  GimpViewRendererDrawablePrivate *priv;
 };
 
 struct _GimpViewRendererDrawableClass
