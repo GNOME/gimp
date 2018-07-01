@@ -83,7 +83,6 @@ test_run (GtkWidget *area,
                               WIDTH * 4);
     }
 
-  gdk_window_process_all_updates ();
   gdk_display_flush (gtk_widget_get_display (area));
 
   timer = g_timer_new ();
@@ -104,8 +103,6 @@ test_run (GtkWidget *area,
                                   enum_value->value,
                                   buf + offset,
                                   WIDTH * 4);
-
-          gdk_window_process_updates (area->window, FALSE);
         }
 
       gdk_display_flush (gtk_widget_get_display (area));
@@ -134,8 +131,6 @@ test_run (GtkWidget *area,
                                    buf + offset2,
                                    WIDTH * 4,
                                    rand () & 0xFF);
-
-          gdk_window_process_updates (area->window, FALSE);
         }
 
       gdk_display_flush (gtk_widget_get_display (area));
@@ -166,8 +161,6 @@ test_run (GtkWidget *area,
                                   WIDTH * 4,
                                   buf + offset3,
                                   WIDTH);
-
-          gdk_window_process_updates (area->window, FALSE);
         }
 
       gdk_display_flush (gtk_widget_get_display (area));
@@ -193,8 +186,6 @@ test_run (GtkWidget *area,
       gimp_preview_area_fill (GIMP_PREVIEW_AREA (area),
                               0, 0, WIDTH, HEIGHT,
                               r, g, b);
-
-      gdk_window_process_updates (area->window, FALSE);
     }
 
   gdk_display_flush (gtk_widget_get_display (area));
