@@ -348,7 +348,6 @@ gimp_histogram_calculate_async (GimpHistogram       *histogram,
     }
 
   histogram->priv->calculate_async = gimp_parallel_run_async (
-    FALSE,
     (GimpParallelRunAsyncFunc) gimp_histogram_calculate_internal,
     context);
 

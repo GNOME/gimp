@@ -537,8 +537,7 @@ gui_wait (Gimp         *gimp,
   if (GIMP_IS_CANCELABLE (waitable))
     {
       /* listens for a cancellation request */
-      input_async = gimp_parallel_run_async (
-        TRUE,
+      input_async = gimp_parallel_run_async_independent (
         (GimpParallelRunAsyncFunc) gui_wait_input_async,
         input_pipe);
 
