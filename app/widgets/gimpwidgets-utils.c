@@ -1505,18 +1505,6 @@ gimp_tools_set_tool_options_gui (GimpToolOptions   *tool_options,
                           widget ? (GDestroyNotify) g_object_unref : NULL);
 }
 
-void
-gimp_widget_flush_expose (GtkWidget *widget)
-{
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-
-  if (! gtk_widget_is_drawable (widget))
-    return;
-
-  gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
-  gdk_display_flush (gtk_widget_get_display (widget));
-}
-
 gboolean
 gimp_widget_get_fully_opaque (GtkWidget *widget)
 {

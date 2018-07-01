@@ -101,8 +101,6 @@ GtkWidget       * gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_o
 void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,
                                                     GtkWidget            *widget);
 
-void              gimp_widget_flush_expose         (GtkWidget            *widget);
-
 gboolean          gimp_widget_get_fully_opaque     (GtkWidget            *widget);
 void              gimp_widget_set_fully_opaque     (GtkWidget            *widget,
                                                     gboolean              fully_opaque);

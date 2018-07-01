@@ -1691,39 +1691,32 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_flush (GimpDisplayShell *shell,
-                          gboolean          now)
+gimp_display_shell_flush (GimpDisplayShell *shell)
 {
+  GimpImageWindow *window;
+  GimpContext     *context;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (now)
+  window = gimp_display_shell_get_window (shell);
+
+  gimp_display_shell_title_update (shell);
+
+  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                        gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
+
+  if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      gdk_window_process_updates (gtk_widget_get_window (shell->canvas),
-                                  FALSE);
+      GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+
+      gimp_ui_manager_update (manager, shell->display);
     }
-  else
+
+  context = gimp_get_user_context (shell->display->gimp);
+
+  if (shell->display == gimp_context_get_display (context))
     {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
-      GimpContext     *context;
-
-      gimp_display_shell_title_update (shell);
-
-      gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
-                                            gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
-
-      if (window && gimp_image_window_get_active_shell (window) == shell)
-        {
-          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
-
-          gimp_ui_manager_update (manager, shell->display);
-        }
-
-      context = gimp_get_user_context (shell->display->gimp);
-
-      if (shell->display == gimp_context_get_display (context))
-        {
-          gimp_ui_manager_update (shell->popup_manager, shell->display);
-        }
+      gimp_ui_manager_update (shell->popup_manager, shell->display);
     }
 }
 

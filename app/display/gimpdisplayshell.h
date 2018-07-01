@@ -293,8 +293,7 @@ gboolean          gimp_display_shell_mask_bounds   (GimpDisplayShell   *shell,
                                                     gint               *width,
                                                     gint               *height);
 
-void              gimp_display_shell_flush         (GimpDisplayShell   *shell,
-                                                    gboolean            now);
+void              gimp_display_shell_flush         (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_pause         (GimpDisplayShell   *shell);
 void              gimp_display_shell_resume        (GimpDisplayShell   *shell);
