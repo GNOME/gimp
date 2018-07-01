@@ -54,6 +54,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
+#include "core/gimpasync.h"
 
 #include "gimpactiongroup.h"
 #include "gimpdocked.h"
@@ -120,6 +121,7 @@ typedef enum
 
   /* misc */
   VARIABLE_MIPMAPED,
+  VARIABLE_ASYNC_RUNNING,
 
 
   N_VARIABLES,
@@ -130,6 +132,7 @@ typedef enum
 typedef enum
 {
   VARIABLE_TYPE_BOOLEAN,
+  VARIABLE_TYPE_INTEGER,
   VARIABLE_TYPE_SIZE,
   VARIABLE_TYPE_SIZE_RATIO,
   VARIABLE_TYPE_INT_RATIO,
@@ -209,6 +212,7 @@ struct _VariableData
   union
   {
     gboolean  boolean;
+    gint      integer;
     guint64   size;       /* in bytes    */
     struct
     {
@@ -306,6 +310,8 @@ static gpointer   gimp_dashboard_sample                      (GimpDashboard     
 static gboolean   gimp_dashboard_update                      (GimpDashboard       *dashboard);
 static gboolean   gimp_dashboard_low_swap_space              (GimpDashboard       *dashboard);
 
+static void       gimp_dashboard_sample_function             (GimpDashboard       *dashboard,
+                                                              Variable             variable);
 static void       gimp_dashboard_sample_gegl_config          (GimpDashboard       *dashboard,
                                                               Variable             variable);
 static void       gimp_dashboard_sample_gegl_stats           (GimpDashboard       *dashboard,
@@ -585,6 +591,15 @@ static const VariableInfo variables[] =
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "zoom-total"
   },
+
+  [VARIABLE_ASYNC_RUNNING] =
+  { .name             = "async-running",
+    .title            = NC_("dashboard-variable", "Async"),
+    .description      = N_("Number of ongoing asynchronous operations"),
+    .type             = VARIABLE_TYPE_INTEGER,
+    .sample_func      = gimp_dashboard_sample_function,
+    .data             = gimp_async_get_n_running
+  }
 };
 
 static const GroupInfo groups[] =
@@ -764,6 +779,9 @@ static const GroupInfo groups[] =
     .fields           = (const FieldInfo[])
                         {
                           { .variable       = VARIABLE_MIPMAPED,
+                            .default_active = TRUE
+                          },
+                          { .variable       = VARIABLE_ASYNC_RUNNING,
                             .default_active = TRUE
                           },
 
@@ -1722,6 +1740,49 @@ gimp_dashboard_low_swap_space (GimpDashboard *dashboard)
 }
 
 static void
+gimp_dashboard_sample_function (GimpDashboard *dashboard,
+                                Variable       variable)
+{
+  GimpDashboardPrivate *priv          = dashboard->priv;
+  const VariableInfo   *variable_info = &variables[variable];
+  VariableData         *variable_data = &priv->variables[variable];
+
+  #define CALL_FUNC(result_type) \
+    (((result_type (*) (void)) variable_info->data) ())
+
+  switch (variable_info->type)
+    {
+    case VARIABLE_TYPE_BOOLEAN:
+      variable_data->value.boolean = CALL_FUNC (gboolean);
+      break;
+
+    case VARIABLE_TYPE_INTEGER:
+      variable_data->value.integer = CALL_FUNC (gint);
+
+    case VARIABLE_TYPE_SIZE:
+      variable_data->value.size = CALL_FUNC (guint64);
+      break;
+
+    case VARIABLE_TYPE_PERCENTAGE:
+      variable_data->value.percentage = CALL_FUNC (gdouble);
+      break;
+
+    case VARIABLE_TYPE_DURATION:
+      variable_data->value.duration = CALL_FUNC (gdouble);
+      break;
+
+    case VARIABLE_TYPE_SIZE_RATIO:
+    case VARIABLE_TYPE_INT_RATIO:
+      g_return_if_reached ();
+      break;
+    }
+
+  #undef CALL_FUNC
+
+  variable_data->available = TRUE;
+}
+
+static void
 gimp_dashboard_sample_gegl_config (GimpDashboard *dashboard,
                                    Variable       variable)
 {
@@ -2257,6 +2318,17 @@ gimp_dashboard_sample_object (GimpDashboard *dashboard,
         }
       break;
 
+    case VARIABLE_TYPE_INTEGER:
+      if (g_object_class_find_property (klass, variable_info->data))
+        {
+          variable_data->available = TRUE;
+
+          g_object_get (object,
+                        variable_info->data, &variable_data->value.integer,
+                        NULL);
+        }
+      break;
+
     case VARIABLE_TYPE_SIZE:
       if (g_object_class_find_property (klass, variable_info->data))
         {
@@ -2737,6 +2809,9 @@ gimp_dashboard_variable_to_boolean (GimpDashboard *dashboard,
         case VARIABLE_TYPE_BOOLEAN:
           return variable_data->value.boolean;
 
+        case VARIABLE_TYPE_INTEGER:
+          return variable_data->value.integer != 0;
+
         case VARIABLE_TYPE_SIZE:
           return variable_data->value.size > 0;
 
@@ -2773,6 +2848,9 @@ gimp_dashboard_variable_to_double (GimpDashboard *dashboard,
         {
         case VARIABLE_TYPE_BOOLEAN:
           return variable_data->value.boolean ? 1.0 : 0.0;
+
+        case VARIABLE_TYPE_INTEGER:
+          return variable_data->value.integer;
 
         case VARIABLE_TYPE_SIZE:
           return variable_data->value.size;
@@ -2828,6 +2906,11 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
         case VARIABLE_TYPE_BOOLEAN:
           str = variable_data->value.boolean ? C_("dashboard-value", "Yes") :
                                                C_("dashboard-value", "No");
+          break;
+
+        case VARIABLE_TYPE_INTEGER:
+          str        = g_strdup_printf ("%d", variable_data->value.integer);
+          static_str = FALSE;
           break;
 
         case VARIABLE_TYPE_SIZE:
