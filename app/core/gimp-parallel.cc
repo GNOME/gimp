@@ -454,6 +454,7 @@ gimp_parallel_run_async_set_n_threads (gint n_threads)
 
   gimp_parallel_run_async_n_threads = n_threads;
 }
+
 static gpointer
 gimp_parallel_run_async_thread_func (GimpParallelRunAsyncThread *thread)
 {
@@ -463,10 +464,10 @@ gimp_parallel_run_async_thread_func (GimpParallelRunAsyncThread *thread)
     {
       GimpParallelRunAsyncTask *task;
 
-      if (thread->quit)
-        break;
-
-      while ((task = (GimpParallelRunAsyncTask *) g_queue_pop_head (&gimp_parallel_run_async_queue)))
+      while (! thread->quit &&
+             (task =
+                (GimpParallelRunAsyncTask *) g_queue_pop_head (
+                                               &gimp_parallel_run_async_queue)))
         {
           g_object_set_data (G_OBJECT (task->async),
                              "gimp-parallel-run-async-link", NULL);
@@ -477,6 +478,9 @@ gimp_parallel_run_async_thread_func (GimpParallelRunAsyncThread *thread)
 
           g_mutex_lock (&gimp_parallel_run_async_mutex);
         }
+
+      if (thread->quit)
+        break;
 
       g_cond_wait (&gimp_parallel_run_async_cond,
                    &gimp_parallel_run_async_mutex);
