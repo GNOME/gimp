@@ -27,7 +27,11 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpimage.h"
 
 #include "text/gimptextlayer.h"
 
@@ -75,8 +79,16 @@ gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
     {
       GimpContainer *children = gimp_viewable_get_children (renderer->viewable);
 
-      if (children && gimp_container_get_n_children (children) == 0)
-        icon_name = "folder";
+      if (children)
+        {
+          GimpItem  *item  = GIMP_ITEM (renderer->viewable);
+          GimpImage *image = gimp_item_get_image (item);
+
+          if (gimp_container_get_n_children (children) == 0)
+            icon_name = "folder";
+          else if (image && ! image->gimp->config->group_layer_previews)
+            icon_name = gimp_viewable_get_icon_name (renderer->viewable);
+        }
     }
 
   if (icon_name)

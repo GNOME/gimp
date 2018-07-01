@@ -85,6 +85,7 @@ struct _GimpCoreConfig
   gint                    filter_history_size;
   gchar                  *plug_in_rc_path;
   gboolean                layer_previews;
+  gboolean                group_layer_previews;
   GimpViewSize            layer_preview_size;
   GimpThumbnailSize       thumbnail_size;
   guint64                 thumbnail_filesize_limit;

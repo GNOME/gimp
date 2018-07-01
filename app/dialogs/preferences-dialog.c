@@ -1745,9 +1745,17 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Previews  */
   vbox2 = prefs_frame_new (_("Previews"), GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "layer-previews",
-                          _("_Enable layer & channel previews"),
-                          GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "layer-previews",
+                                   _("_Enable layer & channel previews"),
+                                   GTK_BOX (vbox2));
+
+  vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
+  g_object_bind_property (button, "active",
+                          vbox3,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
+  button = prefs_check_button_add (object, "group-layer-previews",
+                                   _("Enable layer group previews"),
+                                   GTK_BOX (vbox3));
 
   table = prefs_table_new (3, GTK_CONTAINER (vbox2));
 
