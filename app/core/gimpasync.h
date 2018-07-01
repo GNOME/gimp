@@ -80,4 +80,9 @@ gboolean    gimp_async_is_canceled     (GimpAsync         *async);
 void        gimp_async_cancel_and_wait (GimpAsync         *async);
 
 
+/*  stats  */
+
+gint        gimp_async_get_n_running   (void);
+
+
 #endif /* __GIMP_ASYNC_H__ */
