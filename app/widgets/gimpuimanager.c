@@ -704,18 +704,36 @@ gimp_ui_manager_entry_load (GimpUIManager         *manager,
                             GimpUIManagerUIEntry  *entry,
                             GError               **error)
 {
-  gchar       *filename           = NULL;
-  const gchar *menus_dir_override = g_getenv ("GIMP_TESTING_MENUS_DIR");
+  gchar       *filename            = NULL;
+  const gchar *menus_path_override = g_getenv ("GIMP_TESTING_MENUS_PATH");
 
   /* In order for test cases to be able to run without GIMP being
    * installed yet, allow them to override the menus directory to the
    * menus dir in the source root
    */
-  if (menus_dir_override)
-    filename = g_build_filename (menus_dir_override, entry->basename, NULL);
+  if (menus_path_override)
+    {
+      GList *path = gimp_path_parse (menus_path_override, 2, FALSE, NULL);
+      GList *list;
+
+      for (list = path; list; list = g_list_next (list))
+        {
+          filename = g_build_filename (list->data, entry->basename, NULL);
+
+          if (! list->next ||
+              g_file_test (filename, G_FILE_TEST_EXISTS))
+            break;
+
+          g_free (filename);
+        }
+
+      g_list_free_full (path, g_free);
+    }
   else
-    filename = g_build_filename (gimp_data_directory (), "menus",
-                                 entry->basename, NULL);
+    {
+      filename = g_build_filename (gimp_data_directory (), "menus",
+                                   entry->basename, NULL);
+    }
 
   if (manager->gimp->be_verbose)
     g_print ("loading menu '%s' for %s\n",

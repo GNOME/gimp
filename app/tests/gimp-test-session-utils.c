@@ -177,7 +177,7 @@ gimp_test_session_load_and_write_session_files (const gchar *loaded_sessionrc,
   /* Make sure to run this before we use any GIMP functions */
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
                                        "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_dir ();
+  gimp_test_utils_setup_menus_path ();
 
   /* Note that we expect the resulting sessionrc to be different from
    * the read file, which is why we check the MD5 of the -expected

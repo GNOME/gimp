@@ -50,9 +50,9 @@
 #endif /* G_OS_WIN32 */
 
 void
-gimp_test_utils_set_env_to_subpath (const gchar *root_env_var,
-                                    const gchar *subdir,
-                                    const gchar *target_env_var)
+gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
+                                   const gchar *subdir,
+                                   const gchar *target_env_var)
 {
   const gchar *root_dir   = NULL;
   gchar       *target_dir = NULL;
@@ -75,6 +75,55 @@ gimp_test_utils_set_env_to_subpath (const gchar *root_env_var,
   g_free (target_dir);
 }
 
+void
+gimp_test_utils_set_env_to_subpath (const gchar *root_env_var1,
+                                    const gchar *root_env_var2,
+                                    const gchar *subdir,
+                                    const gchar *target_env_var)
+{
+  const gchar *root_dir1   = NULL;
+  const gchar *root_dir2   = NULL;
+  gchar       *target_dir1 = NULL;
+  gchar       *target_dir2 = NULL;
+  gchar       *target_path = NULL;
+
+  /* Get root dir */
+  root_dir1 = g_getenv (root_env_var1);
+  if (! root_dir1)
+    g_printerr ("*\n"
+                "*  The env var %s is not set, you are probably running\n"
+                "*  in a debugger. Set it manually, e.g.:\n"
+                "*\n"
+                "*    set env %s=%s/source/gimp\n"
+                "*\n",
+                root_env_var1,
+                root_env_var1, g_get_home_dir ());
+
+  root_dir2 = g_getenv (root_env_var2);
+  if (! root_dir2)
+    g_printerr ("*\n"
+                "*  The env var %s is not set, you are probably running\n"
+                "*  in a debugger. Set it manually, e.g.:\n"
+                "*\n"
+                "*    set env %s=%s/source/gimp\n"
+                "*\n",
+                root_env_var2,
+                root_env_var2, g_get_home_dir ());
+
+  /* Construct path and setup target env var */
+  target_dir1 = g_build_filename (root_dir1, subdir, NULL);
+  target_dir2 = g_build_filename (root_dir2, subdir, NULL);
+
+  target_path = g_strconcat (target_dir1, G_SEARCHPATH_SEPARATOR_S,
+                             target_dir2, NULL);
+
+  g_free (target_dir1);
+  g_free (target_dir2);
+
+  g_setenv (target_env_var, target_path, TRUE);
+  g_free (target_path);
+}
+
 
 /**
  * gimp_test_utils_set_gimp2_directory:
@@ -89,25 +138,26 @@ void
 gimp_test_utils_set_gimp2_directory (const gchar *root_env_var,
                                      const gchar *subdir)
 {
-  gimp_test_utils_set_env_to_subpath (root_env_var,
-                                      subdir,
-                                      "GIMP2_DIRECTORY" /*target_env_var*/);
+  gimp_test_utils_set_env_to_subdir (root_env_var,
+                                     subdir,
+                                     "GIMP2_DIRECTORY" /*target_env_var*/);
 }
 
 /**
- * gimp_test_utils_setup_menus_dir:
+ * gimp_test_utils_setup_menus_path:
  *
- * Sets GIMP_TESTING_MENUS_DIR to "$top_srcdir/menus".
+ * Sets GIMP_TESTING_MENUS_PATH to "$top_srcdir/menus:$top_builddir/menus".
  **/
 void
-gimp_test_utils_setup_menus_dir (void)
+gimp_test_utils_setup_menus_path (void)
 {
   /* GIMP_TESTING_ABS_TOP_SRCDIR is set by the automake test runner,
    * see Makefile.am
    */
-  gimp_test_utils_set_env_to_subpath ("GIMP_TESTING_ABS_TOP_SRCDIR" /*root_env_var*/,
-                                      "menus" /*subdir*/,
-                                      "GIMP_TESTING_MENUS_DIR" /*target_env_var*/);
+  gimp_test_utils_set_env_to_subpath ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                      "GIMP_TESTING_ABS_TOP_BUILDDIR",
+                                      "menus",
+                                      "GIMP_TESTING_MENUS_PATH");
 }
 
 /**

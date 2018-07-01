@@ -135,7 +135,7 @@ int main(int argc, char **argv)
 
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
                                        "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_dir ();
+  gimp_test_utils_setup_menus_path ();
 
   /* Launch GIMP in single-window mode */
   g_setenv ("GIMP_TESTING_SESSIONRC_NAME", "sessionrc-2-8-single-window", TRUE /*overwrite*/);

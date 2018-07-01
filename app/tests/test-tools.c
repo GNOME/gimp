@@ -468,7 +468,7 @@ int main(int argc, char **argv)
 
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
                                        "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_dir ();
+  gimp_test_utils_setup_menus_path ();
 
   /* Start up GIMP */
   gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
