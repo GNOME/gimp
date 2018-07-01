@@ -340,9 +340,9 @@ gimp_font_factory_load (GimpFontFactory  *factory,
    * in the case a cache rebuild is to be done it will not block
    * the UI.
    */
-  async = gimp_parallel_run_async (TRUE,
-                                   (GimpParallelRunAsyncFunc) gimp_font_factory_load_async,
-                                   config);
+  async = gimp_parallel_run_async_independent (
+    (GimpParallelRunAsyncFunc) gimp_font_factory_load_async,
+    config);
 
   gimp_async_add_callback (async,
                            (GimpAsyncCallback) gimp_font_factory_load_async_callback,
