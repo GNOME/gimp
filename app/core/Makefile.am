@@ -15,6 +15,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)					\
 	-I$(top_builddir)/app				\
 	-I$(top_srcdir)/app				\
+	$(APPSTREAM_GLIB_CFLAGS)			\
 	$(CAIRO_CFLAGS)					\
 	$(GEGL_CFLAGS)					\
 	$(GDK_PIXBUF_CFLAGS)				\
@@ -214,6 +215,12 @@ libappcore_a_sources = \
 	gimpdynamicsoutput.h			\
 	gimperror.c				\
 	gimperror.h				\
+	gimpextension.c				\
+	gimpextension.h				\
+	gimpextension-error.c			\
+	gimpextension-error.h			\
+	gimpextensionmanager.c			\
+	gimpextensionmanager.h			\
 	gimpfilloptions.c			\
 	gimpfilloptions.h			\
 	gimpfilter.c				\

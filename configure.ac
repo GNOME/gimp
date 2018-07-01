@@ -73,6 +73,7 @@ m4_define([libmypaint_required_version], [1.3.0])
 m4_define([lcms_required_version], [2.8])
 m4_define([libpng_required_version], [1.6.25])
 m4_define([liblzma_required_version], [5.0.0])
+m4_define([appstream_glib_required_version], [0.7.7])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([openjpeg_required_version], [2.1.0])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
@@ -1502,6 +1503,14 @@ AC_SUBST(BZIP2_LIBS)
 
 PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version,,
                  [add_deps_error([liblzma >= liblzma_required_version])])
+
+
+##########################
+# Check for appstream-glib
+##########################
+
+PKG_CHECK_MODULES(APPSTREAM_GLIB, appstream-glib >= appstream_glib_required_version,,
+                 [add_deps_error([appstream-glib >= appstream_glib_required_version])])
 
 
 ###############################

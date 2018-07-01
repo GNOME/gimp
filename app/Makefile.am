@@ -158,6 +158,7 @@ gimpconsoleldadd = \
 	$(libgimpcolor)						\
 	$(libgimpmodule)					\
 	$(libgimpbase)						\
+	$(APPSTREAM_GLIB_LIBS)					\
 	$(GDK_PIXBUF_LIBS)					\
 	$(FREETYPE_LIBS)					\
 	$(FONTCONFIG_LIBS)					\
