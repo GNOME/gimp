@@ -1466,6 +1466,9 @@ prefs_dialog_new (Gimp       *gimp,
                                    GTK_BOX (vbox2));
 
   vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
+  g_object_bind_property (button, "active",
+                          vbox3,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
   button = prefs_check_button_add (object, "import-promote-dither",
                                    _("Dither images when promoting to "
                                      "floating point"),
