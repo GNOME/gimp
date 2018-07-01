@@ -309,6 +309,10 @@ _("Sets whether GIMP should create previews of layers and channels. " \
   "Previews in the layers and channels dialog are nice to have but they " \
   "can slow things down when working with large images.")
 
+#define GROUP_LAYER_PREVIEWS_BLURB \
+_("Sets whether GIMP should create previews of layer groups. " \
+  "Layer group previews are more expensive than ordinary layer previews.")
+
 #define LAYER_PREVIEW_SIZE_BLURB \
 _("Sets the preview size used for layers and channel previews in newly " \
   "created dialogs.")

@@ -100,6 +100,7 @@ enum
   PROP_FILTER_HISTORY_SIZE,
   PROP_PLUGINRC_PATH,
   PROP_LAYER_PREVIEWS,
+  PROP_GROUP_LAYER_PREVIEWS,
   PROP_LAYER_PREVIEW_SIZE,
   PROP_THUMBNAIL_SIZE,
   PROP_THUMBNAIL_FILESIZE_LIMIT,
@@ -567,6 +568,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GROUP_LAYER_PREVIEWS,
+                            "group-layer-previews",
+                            "Layer group previews",
+                            GROUP_LAYER_PREVIEWS_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_PREVIEW_SIZE,
                          "layer-preview-size",
                          "Layer preview size",
@@ -942,6 +950,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_LAYER_PREVIEWS:
       core_config->layer_previews = g_value_get_boolean (value);
       break;
+    case PROP_GROUP_LAYER_PREVIEWS:
+      core_config->group_layer_previews = g_value_get_boolean (value);
+      break;
     case PROP_LAYER_PREVIEW_SIZE:
       core_config->layer_preview_size = g_value_get_enum (value);
       break;
@@ -1146,6 +1157,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_LAYER_PREVIEWS:
       g_value_set_boolean (value, core_config->layer_previews);
+      break;
+    case PROP_GROUP_LAYER_PREVIEWS:
+      g_value_set_boolean (value, core_config->group_layer_previews);
       break;
     case PROP_LAYER_PREVIEW_SIZE:
       g_value_set_enum (value, core_config->layer_preview_size);
