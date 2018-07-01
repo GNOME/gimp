@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-28 19:40+0000\n"
-"PO-Revision-Date: 2018-06-29 00:16+0100\n"
+"POT-Creation-Date: 2018-06-28 22:23+0000\n"
+"PO-Revision-Date: 2018-07-01 09:59+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -86,32 +86,41 @@ msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
+"A GIMP 2.10.4 rengeteg hibajavítást és optimalizációt tartalmaz. A"
+" legfontosabb változások:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr ""
+"Egyenesítés a Mérőeszközben: a rétegek elforgathatók a mérővonal horizontként"
+" használatával"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Fast startup: fonts loading is not blocking startup anymore"
-msgstr ""
+msgstr "Gyors indulás: a betűkészletek betöltése már nem blokkolja az indítást"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
+"Betűkészletek címkézése ugyanazzal a felhasználói felülettel, mint az"
+" ecsetek, minták és színátmenetek"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
+"PSD támogatás: a PSD képek előzetesen kompozitált verziója importálható"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
 msgstr ""
+"A Vezérlőpulton megjelent a Memória csoport, és a Cserehely csoport is"
+" különféle mérőszámok megjelenítésével bővült"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
@@ -12245,11 +12254,10 @@ msgstr "Végzetes feldolgozási hiba az ecsetfájlban: a bájtok száma 0."
 
 #: ../app/core/gimpbrush-load.c:195
 #, c-format
-#| msgid "Fatal parse error in brush file: Width = 0."
 msgid "Fatal parse error in brush file: %dx%d over max size."
 msgstr ""
-"Végzetes feldolgozási hiba az ecsetfájlban: ennyivel nagyobb a maximális"
-" mérettől: %dx%d."
+"Végzetes feldolgozási hiba az ecsetfájlban: ennyivel nagyobb a maximális "
+"mérettől: %dx%d."
 
 #: ../app/core/gimpbrush-load.c:221
 #, c-format
@@ -12384,37 +12392,31 @@ msgstr "Ismeretlen GIMP-ecsetalakzat."
 
 #: ../app/core/gimpbrushgenerated-load.c:173
 #, c-format
-#| msgid "Invalid empty brush name"
 msgid "Invalid brush spacing."
 msgstr "Érvénytelen ecsettávolság."
 
 #: ../app/core/gimpbrushgenerated-load.c:190
 #, c-format
-#| msgid "Invalid shortcut."
 msgid "Invalid brush radius."
 msgstr "Érvénytelen ecsetátmérő."
 
 #: ../app/core/gimpbrushgenerated-load.c:209
 #, c-format
-#| msgid "Invalid shortcut."
 msgid "Invalid brush spike count."
 msgstr "Érvénytelen tüskeszám."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
-#| msgid "Invalid empty brush name"
 msgid "Invalid brush hardness."
 msgstr "Érvénytelen ecsetkeménység."
 
 #: ../app/core/gimpbrushgenerated-load.c:242
 #, c-format
-#| msgid "Brush Aspect Ratio"
 msgid "Invalid brush aspect ratio."
 msgstr "Érvénytelen ecsetméretarány."
 
 #: ../app/core/gimpbrushgenerated-load.c:258
 #, c-format
-#| msgid "Invalid empty brush name"
 msgid "Invalid brush angle."
 msgstr "Érvénytelen ecsetszög."
 
@@ -13755,7 +13757,6 @@ msgstr "Érvénytelen UTF-8 karakterlánc a(z) „%s” palettafájlban"
 
 #: ../app/core/gimppalette-load.c:114
 #, c-format
-#| msgid "Invalid shortcut."
 msgid "Invalid column count."
 msgstr "Érvénytelen oszlopszám."
 
@@ -20040,38 +20041,32 @@ msgid "Starting Extensions"
 msgstr "Kiegészítők indítása"
 
 #: ../app/plug-in/gimppluginprocedure.c:1017
-#| msgid "RGB-alpha"
 msgid "RGB without alpha"
 msgstr "RGB alfa nélkül"
 
 #: ../app/plug-in/gimppluginprocedure.c:1021
-#| msgid "RGB-alpha"
 msgid "RGB with alpha"
 msgstr "RGB alfával"
 
 #: ../app/plug-in/gimppluginprocedure.c:1035
-#| msgid "Grayscale-alpha"
 msgid "Grayscale without alpha"
 msgstr "Szürkeárnyalatos alfa nélkül"
 
 #: ../app/plug-in/gimppluginprocedure.c:1039
-#| msgid "Grayscale-alpha"
 msgid "Grayscale with alpha"
 msgstr "Szürkeárnyalatos alfával"
 
 #: ../app/plug-in/gimppluginprocedure.c:1053
-#| msgid "Indexed-alpha"
 msgid "Indexed without alpha"
 msgstr "Indexelt alfa nélkül"
 
 #: ../app/plug-in/gimppluginprocedure.c:1057
-#| msgid "Indexed-alpha"
 msgid "Indexed with alpha"
 msgstr "Indexelt alfával"
 
 #: ../app/plug-in/gimppluginprocedure.c:1071
 msgid "This plug-in only works on the following layer types:"
-msgstr ""
+msgstr "Ez a bővítmény csak a következő rétegtípusokon működik:"
 
 #: ../app/plug-in/gimppluginprocedure.c:1265
 #, c-format
@@ -24231,24 +24226,20 @@ msgstr "Cserefájl méretkorlátja"
 #. *              as in "total amount of data read from the swap".
 #.
 #: ../app/widgets/gimpdashboard.c:473
-#| msgid "Ready"
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Olvasott"
 
 #: ../app/widgets/gimpdashboard.c:474
-#| msgid "Total amount of time the CPU has been active"
 msgid "Total amount of data read from the swap"
 msgstr "A cserehelyről olvasott teljes adatmennyiség"
 
 #: ../app/widgets/gimpdashboard.c:483
-#| msgid "Ready"
 msgctxt "dashboard-variable"
 msgid "Reading"
 msgstr "Olvasás"
 
 #: ../app/widgets/gimpdashboard.c:484
-#| msgid "Whether there is work queued for the swap file"
 msgid "Whether data is being read from the swap"
 msgstr "A cserehelyről történik-e adatolvasás"
 
@@ -24256,25 +24247,20 @@ msgstr "A cserehelyről történik-e adatolvasás"
 #. *              as in "total amount of data written to the swap".
 #.
 #: ../app/widgets/gimpdashboard.c:496
-#| msgctxt "dynamics-output-type"
-#| msgid "Jitter"
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Kiírt"
 
 #: ../app/widgets/gimpdashboard.c:497
-#| msgid "Total amount of time the CPU has been active"
 msgid "Total amount of data written to the swap"
 msgstr "A cserehelyre kiírt teljes adatmennyiség"
 
 #: ../app/widgets/gimpdashboard.c:506
-#| msgid "Hinting"
 msgctxt "dashboard-variable"
 msgid "Writing"
 msgstr "Írás"
 
 #: ../app/widgets/gimpdashboard.c:507
-#| msgid "Whether there is work queued for the swap file"
 msgid "Whether data is being written to the swap"
 msgstr "A cserehelyre történik-e adatírás"
 
