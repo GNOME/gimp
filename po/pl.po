@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-01 19:24+0200\n"
-"PO-Revision-Date: 2018-07-01 19:25+0200\n"
+"POT-Creation-Date: 2018-07-02 17:07+0200\n"
+"PO-Revision-Date: 2018-07-02 17:08+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -5166,8 +5166,8 @@ msgstr "_Bezszwowe kafelki…"
 
 #: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
-msgid "_Unsharp Mask..."
-msgstr "_Maska wyostrzająca…"
+msgid "Sharpen (_Unsharp Mask)..."
+msgstr "Wyostrz (_maska wyostrzająca)…"
 
 #: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
@@ -25443,15 +25443,15 @@ msgstr "Usuń ustawienia narzędzia…"
 msgid "%s Preset"
 msgstr "Ustawienia narzędzia %s"
 
-#: ../app/widgets/gimpuimanager.c:760
+#: ../app/widgets/gimpuimanager.c:778
 msgid "Your GIMP installation is incomplete:"
 msgstr "Instalacja programu GIMP jest niepełna:"
 
-#: ../app/widgets/gimpuimanager.c:762
+#: ../app/widgets/gimpuimanager.c:780
 msgid "Please make sure the menu XML files are correctly installed."
 msgstr "Proszę upewnić się, że pliki XML menu są poprawnie zainstalowane."
 
-#: ../app/widgets/gimpuimanager.c:768
+#: ../app/widgets/gimpuimanager.c:786
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr "Wystąpił błąd podczas przetwarzania definicji menu %s: %s"
