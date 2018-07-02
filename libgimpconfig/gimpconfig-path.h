@@ -92,6 +92,7 @@ gchar             * gimp_file_get_config_path        (GFile        *file,
 gchar             * gimp_config_build_data_path      (const gchar  *name) G_GNUC_MALLOC;
 gchar             * gimp_config_build_writable_path  (const gchar  *name) G_GNUC_MALLOC;
 gchar             * gimp_config_build_plug_in_path   (const gchar  *name) G_GNUC_MALLOC;
+gchar             * gimp_config_build_system_path    (const gchar  *name) G_GNUC_MALLOC;
 
 
 G_END_DECLS
