@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-28 22:23+0000\n"
-"PO-Revision-Date: 2018-06-29 18:30+0200\n"
+"POT-Creation-Date: 2018-07-02 09:51+0000\n"
+"PO-Revision-Date: 2018-07-02 15:59+0200\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -5186,9 +5186,11 @@ msgid "_Tile Seamless..."
 msgstr "_Mosaico sin costura…"
 
 #: ../app/actions/filters-actions.c:672
+#| msgctxt "filters-action"
+#| msgid "_Unsharp Mask..."
 msgctxt "filters-action"
-msgid "_Unsharp Mask..."
-msgstr "Máscara de desenfoq_ue…"
+msgid "Sharpen (_Unsharp Mask)..."
+msgstr "Afilar (_desafilar máscara)..."
 
 #: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
@@ -9666,12 +9668,11 @@ msgid "Zoom 1:16"
 msgstr "Ampliación 1:16"
 
 #: ../app/actions/view-actions.c:457
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Set zoom factor"
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "Establece factor de ampliación"
+msgstr "_Otro factor de ampliación..."
 
 #: ../app/actions/view-actions.c:458
 msgctxt "view-zoom-action"
@@ -9714,12 +9715,11 @@ msgid "Rotate 15° _clockwise"
 msgstr "Rotar 15° en sentido _horario"
 
 #: ../app/actions/view-actions.c:499
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the right"
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
-msgstr "Rota la imagen 90 grados a la derecha"
+msgstr "Rota la vista 15 grados a la derecha"
 
 #: ../app/actions/view-actions.c:504
 msgctxt "view-action"
@@ -9727,12 +9727,11 @@ msgid "Rotate 90° _clockwise"
 msgstr "Rotar 90° en sentido _horario"
 
 #: ../app/actions/view-actions.c:505
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the right"
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
-msgstr "Rota la imagen 90 grados a la derecha"
+msgstr "Rota la vista 90 grados a la derecha"
 
 #: ../app/actions/view-actions.c:510
 msgctxt "view-action"
@@ -9740,12 +9739,11 @@ msgid "Rotate _180°"
 msgstr "Rotar _180°"
 
 #: ../app/actions/view-actions.c:511
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Turn the image upside-down"
 msgctxt "view-action"
 msgid "Turn the view upside-down"
-msgstr "Pone la imagen cabeza abajo"
+msgstr "Rota la vista boca abajo"
 
 #: ../app/actions/view-actions.c:516
 msgctxt "view-action"
@@ -9753,12 +9751,11 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "Rotar 90° en sentido _antihorario"
 
 #: ../app/actions/view-actions.c:517
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
-msgstr "Rota la imagen 90 grados a la izquierda"
+msgstr "Rota la vista 90 grados a la izquierda"
 
 #: ../app/actions/view-actions.c:522
 msgctxt "view-action"
@@ -9766,12 +9763,11 @@ msgid "Rotate 15° counter-clock_wise"
 msgstr "Rotar 15° en sentido _antihorario"
 
 #: ../app/actions/view-actions.c:523
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
-msgstr "Rota la imagen 90 grados a la izquierda"
+msgstr "Rota la vista 15 grados a la izquierda"
 
 #: ../app/actions/view-actions.c:531 ../app/actions/view-actions.c:558
 msgctxt "view-action"
@@ -9886,7 +9882,7 @@ msgstr "Reiniciar el color de relleno a lo establecido en las preferencias"
 #: ../app/actions/view-actions.c:619
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
-msgstr ""
+msgstr "Establecer la compensación del desplazamiento horizontal"
 
 #: ../app/actions/view-actions.c:624
 msgctxt "view-action"
@@ -9921,7 +9917,7 @@ msgstr "Desplazar página a la derecha"
 #: ../app/actions/view-actions.c:657
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
-msgstr ""
+msgstr "Establecer la compensación del desplazamiento vertical"
 
 #: ../app/actions/view-actions.c:662
 msgctxt "view-action"
@@ -10209,11 +10205,10 @@ msgid "Guess ideal size"
 msgstr "Adivinar el tamaño ideal"
 
 #: ../app/config/config-enums.c:179
-#, fuzzy
 #| msgid "Themes"
 msgctxt "icon-size"
 msgid "Theme-set size"
-msgstr "Temas"
+msgstr "Tamaño del conjunto de temas"
 
 #: ../app/config/config-enums.c:180
 msgctxt "icon-size"
@@ -10380,11 +10375,11 @@ msgid "How to handle embedded color profiles when opening a file."
 msgstr "Cómo tratar los perfiles de color incrustados al abrir un archivo."
 
 #: ../app/config/gimprc-blurbs.h:46
-#, fuzzy
 #| msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr ""
-"Establece el tamaño de la miniatura que se muestra en el diálogo Abrir."
+"Establece la ruta predeterminada de la carpeta para todos los diálogos sobre "
+"archivos de perfil de color."
 
 #: ../app/config/gimprc-blurbs.h:49
 msgid "Sets the type of mouse pointers to use."
@@ -10632,12 +10627,12 @@ msgstr ""
 "Establece el tamaño de la vista previa de la navegación disponible en la "
 "esquina inferior derecha de la ventana de la imagen."
 
+# Un procesador tiene varios núcleos. Cada núcleo puede manejar dos hilos. Esto se conoce como multi-threading y permite realizar varias tareas en paralelo.
 #: ../app/config/gimprc-blurbs.h:286
-#, fuzzy
 #| msgid "Sets how many processors GIMP should try to use simultaneously."
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
-"Establece cuántos procesadores debe intentar usar simultáneamente GIMP."
+"Establece cuántos hilos debería usar GIMP para operaciones que lo admitan."
 
 #: ../app/config/gimprc-blurbs.h:308
 msgid ""
@@ -10927,206 +10922,269 @@ msgstr ""
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
+"Establece la intención de renderizado predeterminada para el diálogo "
+"«Convertir en perfil de color»."
 
 #: ../app/config/gimprc-blurbs.h:482
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
+"Establece el estado de «Compensación de punto negro» predeterminado para el "
+"diálogo «Convertir en perfil de color»."
 
+# https://es.wikipedia.org/wiki/Tramado
 #: ../app/config/gimprc-blurbs.h:486
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"Establece el método de tramado de capa predeterminado para el diálogo "
+"«Convertir precisión»."
 
 #: ../app/config/gimprc-blurbs.h:489
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
+"Establece el método de tramado de capa de texto predeterminado para el "
+"diálogo «Convertir precisión»."
 
 #: ../app/config/gimprc-blurbs.h:492
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"Establece el método de tramado de canal predeterminado para el diálogo "
+"«Convertir precisión»."
 
 #: ../app/config/gimprc-blurbs.h:495
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
+"Establece el tipo de paleta predeterminado para el diálogo «Convertir en "
+"indexado»."
 
 #: ../app/config/gimprc-blurbs.h:498
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"Establece el número máximo de colores predeterminado para el diálogo "
+"«Convertir en indexado»."
 
 #: ../app/config/gimprc-blurbs.h:501
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr ""
+"Establece el estado de «Eliminar colores duplicados» predeterminado para el "
+"diálogo «Convertir en indexado»."
 
 #: ../app/config/gimprc-blurbs.h:504
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
+"Establece el tipo de tramado predeterminado para el diálogo «Convertir en "
+"indexado»."
 
 #: ../app/config/gimprc-blurbs.h:507
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
+"Establece el estado de «Tramado alfa» predeterminado para el diálogo "
+"«Convertir en indexado»."
 
 #: ../app/config/gimprc-blurbs.h:510
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"Establece el estado de «Tramado de capas de texto» predeterminado para el "
+"diálogo «Convertir en indexado»."
 
 #: ../app/config/gimprc-blurbs.h:513
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr ""
+"Establece el tipo de relleno predeterminado para el diálogo «Tamaño del "
+"lienzo»."
 
 #: ../app/config/gimprc-blurbs.h:516
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
+"Establece el conjunto de capas predeterminado a redimensionar para el "
+"diálogo «Tamaño del lienzo»."
 
 #: ../app/config/gimprc-blurbs.h:519
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
+"Establece el estado de «Redimensionar capas de texto» predeterminado para el "
+"diálogo «Tamaño del lienzo»."
 
 #: ../app/config/gimprc-blurbs.h:522
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr ""
+"Establece el nombre de capa predeterminado para el diálogo «Capa nueva»."
 
 #: ../app/config/gimprc-blurbs.h:525
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "Establece el modo predeterminado para el diálogo «Capa nueva»."
 
 #: ../app/config/gimprc-blurbs.h:528
-#, fuzzy
 #| msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
-"Establece el tamaño de la miniatura que se muestra en el diálogo Abrir."
+"Establece el espacio combinado predeterminado para el diálogo «Capa nueva»."
 
 #: ../app/config/gimprc-blurbs.h:531
-#, fuzzy
 #| msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr ""
-"Establece el tamaño de la miniatura que se muestra en el diálogo Abrir."
+"Establece el espacio compuesto predeterminado para el diálogo «Capa nueva»."
 
 #: ../app/config/gimprc-blurbs.h:534
-#, fuzzy
 #| msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr ""
-"Establece el tamaño de la miniatura que se muestra en el diálogo Abrir."
+"Establece el modo de composición predeterminado para el diálogo «Capa nueva»."
 
 #: ../app/config/gimprc-blurbs.h:537
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr ""
+msgstr "Establece la opacidad predeterminada para el diálogo «Capa nueva»."
 
 #: ../app/config/gimprc-blurbs.h:540
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr ""
+"Establece el tipo de relleno predeterminado para el diálogo «Capa nueva»."
 
 #: ../app/config/gimprc-blurbs.h:543
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
+"Establece el tipo de relleno predeterminado para el diálogo «Tamaño del "
+"límite de la capa»."
 
 #: ../app/config/gimprc-blurbs.h:546
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr ""
+"Establece la máscara predeterminada para el diálogo «Añadir máscara de capa»."
 
 #: ../app/config/gimprc-blurbs.h:549
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
+"Establece el estado de «invertir máscara» predeterminado para el diálogo "
+"«Añadir máscara de capa»."
 
 #: ../app/config/gimprc-blurbs.h:552
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
+"Establece el tipo de fusión predeterminado para el diálogo «Combinar capas "
+"visibles»."
 
 #: ../app/config/gimprc-blurbs.h:555
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"Establece el estado de «Solo el grupo activo» predeterminado para el diálogo "
+"«Combinar capas visibles»."
 
 #: ../app/config/gimprc-blurbs.h:558
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"Establece el estado de «Descartar las invisibles» predeterminado para el "
+"diálogo «Combinar capas visibles»."
 
 #: ../app/config/gimprc-blurbs.h:561
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr ""
+"Establece el nombre de canal predeterminado para el diálogo «Canal nuevo»."
 
 #: ../app/config/gimprc-blurbs.h:564
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
+"Establece el color y opacidad predeterminados para el diálogo «Canal nuevo»."
 
 #: ../app/config/gimprc-blurbs.h:567
-#, fuzzy
 #| msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr ""
-"Establece el tamaño de la miniatura que se muestra en el diálogo Abrir."
+"Establece el nombre de ruta predeterminado para el diálogo «Ruta nueva»."
 
 #: ../app/config/gimprc-blurbs.h:570
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
+"Establece la ruta de carpeta predeterminada para el diálogo «Exportar ruta»."
 
 #: ../app/config/gimprc-blurbs.h:573
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
+"Establece el estado de «Exportar la ruta activa» predeterminado para el "
+"diálogo «Exportar ruta»."
 
 #: ../app/config/gimprc-blurbs.h:576
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
+"Establece la ruta de carpeta predeterminada para el diálogo «Importar ruta»."
 
 #: ../app/config/gimprc-blurbs.h:579
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
+"Establece el estado de «Combinar las rutas importadas» predeterminado para "
+"el diálogo «Importar ruta»."
 
 #: ../app/config/gimprc-blurbs.h:582
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
+"Establece el estado de «Escalar las rutas importadas para ajustarse al "
+"tamaño» predeterminado para el diálogo «Importar ruta»."
 
 #: ../app/config/gimprc-blurbs.h:585
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr ""
+"Establece el radio de pluma predeterminado para el diálogo «Selección de "
+"pluma»."
 
 #: ../app/config/gimprc-blurbs.h:588
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
+"Establece el radio de crecimiento predeterminado para el diálogo «Selección "
+"de crecimiento»."
 
+# reducción, encogimiento, contracción, ... se aceptan sugerencias
 #: ../app/config/gimprc-blurbs.h:591
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
+"Establece el radio de encogimiento predeterminado para el diálogo «Selección "
+"de encogimiento»."
 
 #: ../app/config/gimprc-blurbs.h:594
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr ""
+"Establece la configuración «Las áreas seleccionadas continúan fuera de la "
+"imagen» predeterminada para el diálogo «Selección de encogimiento»."
 
 #: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
+"Establece el radio de borde predeterminado para el diálogo «Selección de "
+"borde»."
 
 #: ../app/config/gimprc-blurbs.h:601
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
+"Establece la configuración «Las áreas seleccionadas continúan fuera de la "
+"imagen» predeterminada para el diálogo «Selección de borde»."
 
 #: ../app/config/gimprc-blurbs.h:605
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
+"Establece el estilo de borde predeterminado para el diálogo «Selección de "
+"borde»."
 
 #: ../app/config/gimprc-blurbs.h:614
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -14856,7 +14914,7 @@ msgstr "La capa final combinada debería ser:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:138
 msgid "Merge within active _group only"
-msgstr "Mezclar solamente dentro del grupo acti_vo"
+msgstr "Combinar solamente dentro del grupo acti_vo"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
@@ -18564,10 +18622,11 @@ msgctxt "layer-mode"
 msgid "Erase"
 msgstr "Borrar"
 
+# Es mejor reservar la palabra mezclar para blend. Otra opción sería la palabra fusionar.
 #: ../app/operations/operations-enums.c:284
 msgctxt "layer-mode"
 msgid "Merge"
-msgstr "Mezclar"
+msgstr "Combinar"
 
 #: ../app/operations/operations-enums.c:285
 msgctxt "layer-mode"
@@ -25957,16 +26016,16 @@ msgstr "Eliminar ajuste prefijado de herramienta…"
 msgid "%s Preset"
 msgstr "Ajuste prefijado %s"
 
-#: ../app/widgets/gimpuimanager.c:760
+#: ../app/widgets/gimpuimanager.c:778
 msgid "Your GIMP installation is incomplete:"
 msgstr "Su instalación de GIMP está incompleta:"
 
-#: ../app/widgets/gimpuimanager.c:762
+#: ../app/widgets/gimpuimanager.c:780
 msgid "Please make sure the menu XML files are correctly installed."
 msgstr ""
 "Asegúrese de que los archivos XML del menú están instalados correctamente."
 
-#: ../app/widgets/gimpuimanager.c:768
+#: ../app/widgets/gimpuimanager.c:786
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr "Hubo un error al analizar la definición de menú a partir de %s: %s"
