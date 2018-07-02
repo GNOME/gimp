@@ -188,6 +188,7 @@ gimp_extension_load (GimpExtension  *extension,
 {
   AsApp     *app;
   GPtrArray *extends;
+  GPtrArray *requires;
   AsRelease *release;
   gchar     *appdata_name;
   gchar     *path;
@@ -262,6 +263,44 @@ gimp_extension_load (GimpExtension  *extension,
                               GIMP_EXTENSION_NO_VERSION,
                               _("Extension AppData must advertize a version in a <release> tag."));
       success = FALSE;
+    }
+
+  requires = as_app_get_requires (app);
+  if (success && requires)
+    {
+      gint i;
+
+      /* An extension could set requirements, in particular a range of
+       * supported version of GIMP, but also other extensions.
+       */
+
+      for (i = 0; i < requires->len; i++)
+        {
+          AsRequire *require = g_ptr_array_index (requires, i);
+
+          if (as_require_get_kind (require) == AS_REQUIRE_KIND_ID &&
+              g_strcmp0 (as_require_get_value (require), "org.gimp.GIMP") == 0)
+            {
+              if (! as_require_version_compare (require, GIMP_APP_VERSION, error))
+                {
+                  success = FALSE;
+                  break;
+                }
+            }
+          else if (error && *error == NULL)
+            {
+              /* Right now we only support requirement relative to GIMP
+               * version.
+               */
+              *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                    GIMP_EXTENSION_FAILED,
+                                    _("Unsupported <requires> \"%s\" (type %s)."),
+                                    as_require_get_value (require),
+                                    as_require_kind_to_string (as_require_get_kind (require)));
+              success = FALSE;
+              break;
+            }
+        }
     }
 
   if (success)
