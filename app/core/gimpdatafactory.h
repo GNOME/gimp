@@ -116,6 +116,7 @@ GimpContainer * gimp_data_factory_get_container_obsolete
 GList         * gimp_data_factory_get_data_path     (GimpDataFactory  *factory);
 GList         * gimp_data_factory_get_data_path_writable
                                                     (GimpDataFactory  *factory);
+const GList   * gimp_data_factory_get_data_path_ext (GimpDataFactory  *factory);
 
 
 

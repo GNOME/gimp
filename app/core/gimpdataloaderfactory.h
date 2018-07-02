@@ -57,11 +57,12 @@ struct _GimpDataLoaderFactoryClass
 
 GType             gimp_data_loader_factory_get_type     (void) G_GNUC_CONST;
 
-GimpDataFactory * gimp_data_loader_factory_new          (Gimp                   *gimp,
-                                                         GType                   data_type,
-                                                         const gchar            *path_property_name,
-                                                         const gchar            *writable_property_name,
-                                                         GimpDataNewFunc         new_func,
+GimpDataFactory * gimp_data_loader_factory_new          (Gimp                    *gimp,
+                                                         GType                    data_type,
+                                                         const gchar             *path_property_name,
+                                                         const gchar             *writable_property_name,
+                                                         const gchar             *ext_property_name,
+                                                         GimpDataNewFunc          new_func,
                                                          GimpDataGetStandardFunc  get_standard_func);
 
 void              gimp_data_loader_factory_add_loader   (GimpDataFactory         *factory,

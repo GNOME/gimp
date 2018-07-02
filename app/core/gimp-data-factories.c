@@ -69,6 +69,7 @@ gimp_data_factories_init (Gimp *gimp)
                                   GIMP_TYPE_BRUSH,
                                   "brush-path",
                                   "brush-path-writable",
+                                  "brush-paths",
                                   gimp_brush_new,
                                   gimp_brush_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->brush_factory),
@@ -109,6 +110,7 @@ gimp_data_factories_init (Gimp *gimp)
                                   GIMP_TYPE_DYNAMICS,
                                   "dynamics-path",
                                   "dynamics-path-writable",
+                                  "dynamics-paths",
                                   gimp_dynamics_new,
                                   gimp_dynamics_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->dynamics_factory),
@@ -124,6 +126,7 @@ gimp_data_factories_init (Gimp *gimp)
                                   GIMP_TYPE_MYBRUSH,
                                   "mypaint-brush-path",
                                   "mypaint-brush-path-writable",
+                                  "mypaint-brush-paths",
                                   NULL,
                                   NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->mybrush_factory),
@@ -139,6 +142,7 @@ gimp_data_factories_init (Gimp *gimp)
                                   GIMP_TYPE_PATTERN,
                                   "pattern-path",
                                   "pattern-path-writable",
+                                  "pattern-paths",
                                   NULL,
                                   gimp_pattern_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->pattern_factory),
@@ -157,6 +161,7 @@ gimp_data_factories_init (Gimp *gimp)
                                   GIMP_TYPE_GRADIENT,
                                   "gradient-path",
                                   "gradient-path-writable",
+                                  "gradient-paths",
                                   gimp_gradient_new,
                                   gimp_gradient_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->gradient_factory),
@@ -177,6 +182,7 @@ gimp_data_factories_init (Gimp *gimp)
                                   GIMP_TYPE_PALETTE,
                                   "palette-path",
                                   "palette-path-writable",
+                                  "palette-paths",
                                   gimp_palette_new,
                                   gimp_palette_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->palette_factory),
@@ -198,6 +204,7 @@ gimp_data_factories_init (Gimp *gimp)
                                   GIMP_TYPE_TOOL_PRESET,
                                   "tool-preset-path",
                                   "tool-preset-path-writable",
+                                  "tool-preset-paths",
                                   gimp_tool_preset_new,
                                   NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_preset_factory),

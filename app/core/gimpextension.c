@@ -44,19 +44,32 @@ struct _GimpExtensionPrivate
 
   AsApp    *app;
   gboolean  writable;
+
+  /* Extension metadata. */
+  GList    *brush_paths;
+  GList    *dynamics_paths;
+  GList    *mypaint_brush_paths;
+  GList    *pattern_paths;
+  GList    *gradient_paths;
+  GList    *palette_paths;
+  GList    *tool_preset_paths;
 };
 
 
-static void         gimp_extension_finalize        (GObject      *object);
-static void         gimp_extension_set_property    (GObject      *object,
-                                                    guint         property_id,
-                                                    const GValue *value,
-                                                    GParamSpec   *pspec);
-static void         gimp_extension_get_property    (GObject      *object,
-                                                    guint         property_id,
-                                                    GValue       *value,
-                                                    GParamSpec   *pspec);
+static void         gimp_extension_finalize        (GObject        *object);
+static void         gimp_extension_set_property    (GObject        *object,
+                                                    guint           property_id,
+                                                    const GValue   *value,
+                                                    GParamSpec     *pspec);
+static void         gimp_extension_get_property    (GObject        *object,
+                                                    guint           property_id,
+                                                    GValue         *value,
+                                                    GParamSpec     *pspec);
 
+static GList      * gimp_extension_validate_paths  (GimpExtension  *extension,
+                                                    const gchar    *paths,
+                                                    gboolean        as_directories,
+                                                    GError        **error);
 
 G_DEFINE_TYPE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
 
@@ -98,6 +111,8 @@ static void
 gimp_extension_finalize (GObject *object)
 {
   GimpExtension *extension = GIMP_EXTENSION (object);
+
+  gimp_extension_stop (extension);
 
   g_free (extension->p->path);
   if (extension->p->app)
@@ -255,4 +270,247 @@ gimp_extension_load (GimpExtension  *extension,
     g_object_unref (app);
 
   return success;
+}
+
+gboolean
+gimp_extension_run (GimpExtension  *extension,
+                    GError        **error)
+{
+  GHashTable *metadata;
+  gchar      *value;
+
+  g_return_val_if_fail (extension->p->app != NULL, FALSE);
+  g_return_val_if_fail (error && *error == NULL, FALSE);
+
+  gimp_extension_stop (extension);
+  metadata = as_app_get_metadata (extension->p->app);
+
+  value = g_hash_table_lookup (metadata, "GIMP::brush-path");
+  extension->p->brush_paths = gimp_extension_validate_paths (extension,
+                                                             value, TRUE,
+                                                             error);
+
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::dynamics-path");
+      extension->p->dynamics_paths = gimp_extension_validate_paths (extension,
+                                                                    value, TRUE,
+                                                                    error);
+    }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::mypaint-brush-path");
+      extension->p->mypaint_brush_paths = gimp_extension_validate_paths (extension,
+                                                                         value, TRUE,
+                                                                         error);
+    }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::pattern-path");
+      extension->p->pattern_paths = gimp_extension_validate_paths (extension,
+                                                                   value, TRUE,
+                                                                   error);
+    }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::gradient-path");
+      extension->p->gradient_paths = gimp_extension_validate_paths (extension,
+                                                                    value, TRUE,
+                                                                    error);
+    }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::palette-path");
+      extension->p->palette_paths = gimp_extension_validate_paths (extension,
+                                                                   value, TRUE,
+                                                                   error);
+    }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::tool-preset-path");
+      extension->p->tool_preset_paths = gimp_extension_validate_paths (extension,
+                                                                       value, TRUE,
+                                                                       error);
+    }
+
+  if (*error)
+    gimp_extension_stop (extension);
+
+  return (*error == NULL);
+}
+
+void
+gimp_extension_stop (GimpExtension  *extension)
+{
+  g_list_free_full (extension->p->brush_paths, g_object_unref);
+  extension->p->brush_paths = NULL;
+  g_list_free_full (extension->p->dynamics_paths, g_object_unref);
+  extension->p->dynamics_paths = NULL;
+  g_list_free_full (extension->p->mypaint_brush_paths, g_object_unref);
+  extension->p->brush_paths = NULL;
+  g_list_free_full (extension->p->pattern_paths, g_object_unref);
+  extension->p->pattern_paths = NULL;
+  g_list_free_full (extension->p->gradient_paths, g_object_unref);
+  extension->p->gradient_paths = NULL;
+  g_list_free_full (extension->p->palette_paths, g_object_unref);
+  extension->p->palette_paths = NULL;
+  g_list_free_full (extension->p->tool_preset_paths, g_object_unref);
+  extension->p->tool_preset_paths = NULL;
+}
+
+GList *
+gimp_extension_get_brush_paths (GimpExtension  *extension)
+{
+  return extension->p->brush_paths;
+}
+
+GList *
+gimp_extension_get_dynamics_paths (GimpExtension *extension)
+{
+  return extension->p->dynamics_paths;
+}
+
+GList *
+gimp_extension_get_mypaint_brush_paths (GimpExtension *extension)
+{
+  return extension->p->mypaint_brush_paths;
+}
+
+GList *
+gimp_extension_get_pattern_paths (GimpExtension *extension)
+{
+  return extension->p->pattern_paths;
+}
+
+GList *
+gimp_extension_get_gradient_paths (GimpExtension *extension)
+{
+  return extension->p->gradient_paths;
+}
+
+GList *
+gimp_extension_get_palette_paths (GimpExtension *extension)
+{
+  return extension->p->palette_paths;
+}
+
+GList *
+gimp_extension_get_tool_preset_paths (GimpExtension *extension)
+{
+  return extension->p->tool_preset_paths;
+}
+
+/**
+ * gimp_extension_validate_paths:
+ * @extension: the #GimpExtension
+ * @path:      A list of directories separated by ':'.
+ * @error:
+ *
+ * Very similar to gimp_path_parse() except that we don't use
+ * G_SEARCHPATH_SEPARATOR as path separator, because it must not be
+ * os-dependent.
+ * Also we only allow relative path which are children of the main
+ * extension directory (we do not allow extensions to list external
+ * folders).
+ *
+ * Returns: A #GList of #GFile as listed in @path.
+ **/
+static GList *
+gimp_extension_validate_paths (GimpExtension  *extension,
+                               const gchar    *paths,
+                               gboolean        as_directories,
+                               GError        **error)
+{
+  gchar **patharray;
+  GList *list      = NULL;
+  gint   i;
+
+  g_return_val_if_fail (error && *error == NULL, FALSE);
+
+  if (!paths || ! (*paths))
+    return NULL;
+
+  patharray = g_strsplit (paths, ":", 0);
+
+  for (i = 0; patharray[i]; i++)
+    {
+      /* Note: appstream-glib is supposed to return everything as UTF-8,
+       * so we should not have to bother about this. */
+      gchar *path;
+      GFile *file;
+      GFile *ext_dir;
+
+      if (g_path_is_absolute (patharray[i]))
+        {
+          *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                GIMP_EXTENSION_BAD_PATH,
+                                _("'%s' is not a relative path."),
+                                patharray[i]);
+          break;
+        }
+      path = g_build_filename (extension->p->path, patharray[i], NULL);
+      file = g_file_new_for_path (path);
+      g_free (path);
+
+      ext_dir = g_file_new_for_path (extension->p->path);
+
+      if (! g_file_has_parent (file, ext_dir))
+        {
+          /* Even with relative paths, it is easy to trick the system
+           * and leak out of the extension. So check actual kinship.
+           */
+          *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                GIMP_EXTENSION_BAD_PATH,
+                                _("'%s' is not a child of the extension."),
+                                patharray[i]);
+          g_object_unref (ext_dir);
+          g_object_unref (file);
+          break;
+        }
+      g_object_unref (ext_dir);
+
+      if (as_directories)
+        {
+          if (g_file_query_file_type (file,
+                                      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+                                      NULL) != G_FILE_TYPE_DIRECTORY)
+            {
+              *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                    GIMP_EXTENSION_BAD_PATH,
+                                    _("'%s' is not a directory."),
+                                    patharray[i]);
+              g_object_unref (file);
+              break;
+            }
+        }
+      else
+        {
+          if (g_file_query_file_type (file,
+                                      G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+                                      NULL) != G_FILE_TYPE_REGULAR)
+            {
+              *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                    GIMP_EXTENSION_BAD_PATH,
+                                    _("'%s' is not a valid file."),
+                                    patharray[i]);
+              g_object_unref (file);
+              break;
+            }
+        }
+
+      g_return_val_if_fail (path != NULL, NULL);
+      if (g_list_find_custom (list, file, (GCompareFunc) g_file_equal))
+        {
+          /* Silently ignore duplicate paths. */
+          g_object_unref (file);
+          continue;
+        }
+
+      list = g_list_prepend (list, file);
+    }
+
+  g_strfreev (patharray);
+  list = g_list_reverse (list);
+
+  return list;
 }

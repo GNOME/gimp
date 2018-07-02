@@ -50,11 +50,21 @@ struct _GimpExtensionClass
 
 GType           gimp_extension_get_type (void) G_GNUC_CONST;
 
-GimpExtension * gimp_extension_new  (const gchar    *dir,
-                                     gboolean        writable);
+GimpExtension * gimp_extension_new                     (const gchar    *dir,
+                                                        gboolean        writable);
 
-gboolean        gimp_extension_load (GimpExtension  *extension,
-                                     GError        **error);
+gboolean        gimp_extension_load                    (GimpExtension  *extension,
+                                                        GError        **error);
+gboolean        gimp_extension_run                     (GimpExtension  *extension,
+                                                        GError        **error);
+void            gimp_extension_stop                    (GimpExtension  *extension);
+
+GList         * gimp_extension_get_brush_paths         (GimpExtension  *extension);
+GList         * gimp_extension_get_dynamics_paths      (GimpExtension  *extension);
+GList         * gimp_extension_get_mypaint_brush_paths (GimpExtension  *extension);
+GList         * gimp_extension_get_pattern_paths       (GimpExtension  *extension);
+GList         * gimp_extension_get_gradient_paths      (GimpExtension  *extension);
+GList         * gimp_extension_get_palette_paths       (GimpExtension  *extension);
+GList         * gimp_extension_get_tool_preset_paths   (GimpExtension  *extension);
 
 #endif  /* __GIMP_EXTENSION_H__ */
-

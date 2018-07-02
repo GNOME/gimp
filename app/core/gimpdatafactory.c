@@ -50,6 +50,7 @@ enum
   PROP_DATA_TYPE,
   PROP_PATH_PROPERTY_NAME,
   PROP_WRITABLE_PROPERTY_NAME,
+  PROP_EXT_PROPERTY_NAME,
   PROP_NEW_FUNC,
   PROP_GET_STANDARD_FUNC
 };
@@ -65,6 +66,7 @@ struct _GimpDataFactoryPrivate
 
   gchar                   *path_property_name;
   gchar                   *writable_property_name;
+  gchar                   *ext_property_name;
 
   GimpDataNewFunc          data_new_func;
   GimpDataGetStandardFunc  data_get_standard_func;
@@ -154,6 +156,13 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_EXT_PROPERTY_NAME,
+                                   g_param_spec_string ("ext-property-name",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_NEW_FUNC,
                                    g_param_spec_pointer ("new-func",
                                                          NULL, NULL,
@@ -226,6 +235,10 @@ gimp_data_factory_set_property (GObject      *object,
       priv->writable_property_name = g_value_dup_string (value);
       break;
 
+    case PROP_EXT_PROPERTY_NAME:
+      priv->ext_property_name = g_value_dup_string (value);
+      break;
+
     case PROP_NEW_FUNC:
       priv->data_new_func = g_value_get_pointer (value);
       break;
@@ -266,6 +279,10 @@ gimp_data_factory_get_property (GObject    *object,
       g_value_set_string (value, priv->writable_property_name);
       break;
 
+    case PROP_EXT_PROPERTY_NAME:
+      g_value_set_string (value, priv->ext_property_name);
+      break;
+
     case PROP_NEW_FUNC:
       g_value_set_pointer (value, priv->data_new_func);
       break;
@@ -298,6 +315,7 @@ gimp_data_factory_finalize (GObject *object)
 
   g_clear_pointer (&priv->path_property_name,     g_free);
   g_clear_pointer (&priv->writable_property_name, g_free);
+  g_clear_pointer (&priv->ext_property_name,      g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -484,6 +502,12 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   signal_name = g_strdup_printf ("notify::%s", priv->path_property_name);
   g_signal_connect_object (priv->gimp->config, signal_name,
+                           G_CALLBACK (gimp_data_factory_path_notify),
+                           factory, 0);
+  g_free (signal_name);
+
+  signal_name = g_strdup_printf ("notify::%s", priv->ext_property_name);
+  g_signal_connect_object (priv->gimp->extension_manager, signal_name,
                            G_CALLBACK (gimp_data_factory_path_notify),
                            factory, 0);
   g_free (signal_name);
@@ -838,6 +862,21 @@ gimp_data_factory_get_data_path_writable (GimpDataFactory *factory)
       list = gimp_config_path_expand_to_files (path, NULL);
       g_free (path);
     }
+
+  return list;
+}
+
+const GList *
+gimp_data_factory_get_data_path_ext (GimpDataFactory *factory)
+{
+  GimpDataFactoryPrivate *priv = GET_PRIVATE (factory);
+  GList                  *list = NULL;
+
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+
+  g_object_get (priv->gimp->extension_manager,
+                priv->ext_property_name, &list,
+                NULL);
 
   return list;
 }

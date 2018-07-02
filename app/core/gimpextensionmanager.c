@@ -45,7 +45,14 @@
 enum
 {
   PROP_0,
-  PROP_GIMP
+  PROP_GIMP,
+  PROP_BRUSH_PATHS,
+  PROP_DYNAMICS_PATHS,
+  PROP_MYPAINT_BRUSH_PATHS,
+  PROP_PATTERN_PATHS,
+  PROP_GRADIENT_PATHS,
+  PROP_PALETTE_PATHS,
+  PROP_TOOL_PRESET_PATHS,
 };
 
 struct _GimpExtensionManagerPrivate
@@ -59,6 +66,15 @@ struct _GimpExtensionManagerPrivate
 
   /* Running extensions */
   GHashTable *active_extensions;
+
+  /* Metadata properties */
+  GList      *brush_paths;
+  GList      *dynamics_paths;
+  GList      *mypaint_brush_paths;
+  GList      *pattern_paths;
+  GList      *gradient_paths;
+  GList      *palette_paths;
+  GList      *tool_preset_paths;
 };
 
 static void     gimp_extension_manager_finalize     (GObject    *object);
@@ -71,6 +87,7 @@ static void     gimp_extension_manager_get_property (GObject      *object,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
 
+static void     gimp_extension_manager_refresh          (GimpExtensionManager *manager);
 static void     gimp_extension_manager_search_directory (GimpExtensionManager *manager,
                                                          GFile                *directory,
                                                          gboolean              system_dir);
@@ -93,6 +110,35 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_BRUSH_PATHS,
+                                   g_param_spec_pointer ("brush-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_DYNAMICS_PATHS,
+                                   g_param_spec_pointer ("dynamics-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_MYPAINT_BRUSH_PATHS,
+                                   g_param_spec_pointer ("mypaint-brush-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_PATTERN_PATHS,
+                                   g_param_spec_pointer ("pattern-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_GRADIENT_PATHS,
+                                   g_param_spec_pointer ("gradient-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_PALETTE_PATHS,
+                                   g_param_spec_pointer ("palette-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_TOOL_PRESET_PATHS,
+                                   g_param_spec_pointer ("tool-preset-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpExtensionManagerPrivate));
 }
@@ -130,6 +176,27 @@ gimp_extension_manager_set_property (GObject      *object,
     case PROP_GIMP:
       manager->p->gimp = g_value_get_object (value);
       break;
+    case PROP_BRUSH_PATHS:
+      manager->p->brush_paths = g_value_get_pointer (value);
+      break;
+    case PROP_DYNAMICS_PATHS:
+      manager->p->dynamics_paths = g_value_get_pointer (value);
+      break;
+    case PROP_MYPAINT_BRUSH_PATHS:
+      manager->p->mypaint_brush_paths = g_value_get_pointer (value);
+      break;
+    case PROP_PATTERN_PATHS:
+      manager->p->pattern_paths = g_value_get_pointer (value);
+      break;
+    case PROP_GRADIENT_PATHS:
+      manager->p->gradient_paths = g_value_get_pointer (value);
+      break;
+    case PROP_PALETTE_PATHS:
+      manager->p->palette_paths = g_value_get_pointer (value);
+      break;
+    case PROP_TOOL_PRESET_PATHS:
+      manager->p->tool_preset_paths = g_value_get_pointer (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -149,6 +216,27 @@ gimp_extension_manager_get_property (GObject      *object,
     {
     case PROP_GIMP:
       g_value_set_object (value, manager->p->gimp);
+      break;
+    case PROP_BRUSH_PATHS:
+      g_value_set_pointer (value, manager->p->brush_paths);
+      break;
+    case PROP_DYNAMICS_PATHS:
+      g_value_set_pointer (value, manager->p->dynamics_paths);
+      break;
+    case PROP_MYPAINT_BRUSH_PATHS:
+      g_value_set_pointer (value, manager->p->mypaint_brush_paths);
+      break;
+    case PROP_PATTERN_PATHS:
+      g_value_set_pointer (value, manager->p->pattern_paths);
+      break;
+    case PROP_GRADIENT_PATHS:
+      g_value_set_pointer (value, manager->p->gradient_paths);
+      break;
+    case PROP_PALETTE_PATHS:
+      g_value_set_pointer (value, manager->p->palette_paths);
+      break;
+    case PROP_TOOL_PRESET_PATHS:
+      g_value_set_pointer (value, manager->p->tool_preset_paths);
       break;
 
     default:
@@ -200,11 +288,20 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
       if (! g_hash_table_contains (manager->p->active_extensions,
                                    gimp_object_get_name (list->data)))
         {
+          GError *error = NULL;
+
           g_hash_table_insert (manager->p->active_extensions,
                                (gpointer) gimp_object_get_name (list->data),
                                list->data);
-          /* TODO: do whatever is needed to make extension "active". */
 
+          if (! gimp_extension_run (list->data, &error))
+            {
+              g_hash_table_remove (manager->p->active_extensions, list->data);
+              if (error)
+                g_printerr ("Extension '%s' failed to run: %s\n",
+                            gimp_object_get_name (list->data),
+                            error->message);
+            }
         }
     }
   for (list = manager->p->sys_extensions; list; list = g_list_next (list))
@@ -212,12 +309,84 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
       if (! g_hash_table_contains (manager->p->active_extensions,
                                    gimp_object_get_name (list->data)))
         {
+          GError *error = NULL;
+
           g_hash_table_insert (manager->p->active_extensions,
                                (gpointer) gimp_object_get_name (list->data),
                                list->data);
-          /* TODO: do whatever is needed to make extension "active". */
+
+          if (! gimp_extension_run (list->data, &error))
+            {
+              g_hash_table_remove (manager->p->active_extensions, list->data);
+              if (error)
+                g_printerr ("Extension '%s' failed to run: %s\n",
+                            gimp_object_get_name (list->data),
+                            error->message);
+            }
         }
     }
+
+  gimp_extension_manager_refresh (manager);
+}
+
+static void
+gimp_extension_manager_refresh (GimpExtensionManager *manager)
+{
+  GHashTableIter iter;
+  gpointer       key;
+  gpointer       value;
+  GList         *brush_paths         = NULL;
+  GList         *dynamics_paths      = NULL;
+  GList         *mypaint_brush_paths = NULL;
+  GList         *pattern_paths       = NULL;
+  GList         *gradient_paths      = NULL;
+  GList         *palette_paths       = NULL;
+  GList         *tool_preset_paths   = NULL;
+
+  g_hash_table_iter_init (&iter, manager->p->active_extensions);
+  while (g_hash_table_iter_next (&iter, &key, &value))
+    {
+      GimpExtension *extension = value;
+      GList         *new_paths;
+
+      new_paths = g_list_copy_deep (gimp_extension_get_brush_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      brush_paths = g_list_concat (brush_paths, new_paths);
+
+      new_paths = g_list_copy_deep (gimp_extension_get_dynamics_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      dynamics_paths = g_list_concat (dynamics_paths, new_paths);
+
+      new_paths = g_list_copy_deep (gimp_extension_get_mypaint_brush_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      mypaint_brush_paths = g_list_concat (mypaint_brush_paths, new_paths);
+
+      new_paths = g_list_copy_deep (gimp_extension_get_pattern_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      pattern_paths = g_list_concat (pattern_paths, new_paths);
+
+      new_paths = g_list_copy_deep (gimp_extension_get_gradient_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      gradient_paths = g_list_concat (gradient_paths, new_paths);
+
+      new_paths = g_list_copy_deep (gimp_extension_get_palette_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      palette_paths = g_list_concat (palette_paths, new_paths);
+
+      new_paths = g_list_copy_deep (gimp_extension_get_tool_preset_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      tool_preset_paths = g_list_concat (tool_preset_paths, new_paths);
+    }
+
+  g_object_set (manager,
+                "brush-paths",         brush_paths,
+                "dynamics-paths",      dynamics_paths,
+                "mypaint-brush-paths", brush_paths,
+                "pattern-paths",       pattern_paths,
+                "gradient-paths",      gradient_paths,
+                "palette-paths",       palette_paths,
+                "tool-preset-paths",   tool_preset_paths,
+                NULL);
 }
 
 static void
