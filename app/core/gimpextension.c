@@ -45,7 +45,7 @@ struct _GimpExtensionPrivate
   AsApp    *app;
   gboolean  writable;
 
-  /* Extension metadata. */
+  /* Extension metadata: directories. */
   GList    *brush_paths;
   GList    *dynamics_paths;
   GList    *mypaint_brush_paths;
@@ -53,6 +53,9 @@ struct _GimpExtensionPrivate
   GList    *gradient_paths;
   GList    *palette_paths;
   GList    *tool_preset_paths;
+
+  /* Extension metadata: plug-in entry points. */
+  GList    *plug_in_paths;
 };
 
 
@@ -371,6 +374,13 @@ gimp_extension_run (GimpExtension  *extension,
                                                                        value, TRUE,
                                                                        error);
     }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::plug-in-path");
+      extension->p->plug_in_paths = gimp_extension_validate_paths (extension,
+                                                                   value, FALSE,
+                                                                   error);
+    }
 
   if (*error)
     gimp_extension_stop (extension);
@@ -395,6 +405,8 @@ gimp_extension_stop (GimpExtension  *extension)
   extension->p->palette_paths = NULL;
   g_list_free_full (extension->p->tool_preset_paths, g_object_unref);
   extension->p->tool_preset_paths = NULL;
+  g_list_free_full (extension->p->plug_in_paths, g_object_unref);
+  extension->p->plug_in_paths = NULL;
 }
 
 GList *
@@ -437,6 +449,12 @@ GList *
 gimp_extension_get_tool_preset_paths (GimpExtension *extension)
 {
   return extension->p->tool_preset_paths;
+}
+
+GList *
+gimp_extension_get_plug_in_paths (GimpExtension *extension)
+{
+  return extension->p->plug_in_paths;
 }
 
 /**

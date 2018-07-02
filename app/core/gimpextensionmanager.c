@@ -53,6 +53,7 @@ enum
   PROP_GRADIENT_PATHS,
   PROP_PALETTE_PATHS,
   PROP_TOOL_PRESET_PATHS,
+  PROP_PLUG_IN_PATHS,
 };
 
 struct _GimpExtensionManagerPrivate
@@ -75,6 +76,7 @@ struct _GimpExtensionManagerPrivate
   GList      *gradient_paths;
   GList      *palette_paths;
   GList      *tool_preset_paths;
+  GList      *plug_in_paths;
 };
 
 static void     gimp_extension_manager_finalize     (GObject    *object);
@@ -139,6 +141,10 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                    g_param_spec_pointer ("tool-preset-paths",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_PLUG_IN_PATHS,
+                                   g_param_spec_pointer ("plug-in-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpExtensionManagerPrivate));
 }
@@ -197,6 +203,9 @@ gimp_extension_manager_set_property (GObject      *object,
     case PROP_TOOL_PRESET_PATHS:
       manager->p->tool_preset_paths = g_value_get_pointer (value);
       break;
+    case PROP_PLUG_IN_PATHS:
+      manager->p->plug_in_paths = g_value_get_pointer (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -237,6 +246,9 @@ gimp_extension_manager_get_property (GObject      *object,
       break;
     case PROP_TOOL_PRESET_PATHS:
       g_value_set_pointer (value, manager->p->tool_preset_paths);
+      break;
+    case PROP_PLUG_IN_PATHS:
+      g_value_set_pointer (value, manager->p->plug_in_paths);
       break;
 
     default:
@@ -342,6 +354,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
   GList         *gradient_paths      = NULL;
   GList         *palette_paths       = NULL;
   GList         *tool_preset_paths   = NULL;
+  GList         *plug_in_paths       = NULL;
 
   g_hash_table_iter_init (&iter, manager->p->active_extensions);
   while (g_hash_table_iter_next (&iter, &key, &value))
@@ -376,6 +389,10 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
       new_paths = g_list_copy_deep (gimp_extension_get_tool_preset_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       tool_preset_paths = g_list_concat (tool_preset_paths, new_paths);
+
+      new_paths = g_list_copy_deep (gimp_extension_get_plug_in_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      plug_in_paths = g_list_concat (plug_in_paths, new_paths);
     }
 
   g_object_set (manager,
@@ -386,6 +403,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
                 "gradient-paths",      gradient_paths,
                 "palette-paths",       palette_paths,
                 "tool-preset-paths",   tool_preset_paths,
+                "plug-in-paths",       plug_in_paths,
                 NULL);
 }
 

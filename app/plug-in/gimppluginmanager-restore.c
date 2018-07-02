@@ -227,6 +227,26 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
     }
 #endif /* G_OS_WIN32 */
 
+  status_callback (_("Loading extension plug-ins"), "", 0.0);
+  g_object_get (manager->gimp->extension_manager,
+                "plug-in-paths", &path,
+                NULL);
+  for (list = path; list; list = g_list_next (list))
+    {
+      if (gimp_file_is_executable (list->data))
+        {
+          guint64 mtime;
+          GFileInfo *info;
+
+          info = g_file_query_info (list->data, G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                    G_FILE_QUERY_INFO_NONE, NULL, NULL);
+          mtime = g_file_info_get_attribute_uint64 (info,
+                                                    G_FILE_ATTRIBUTE_TIME_MODIFIED);
+          gimp_plug_in_manager_add_from_file (manager, list->data, mtime);
+          g_object_unref (info);
+        }
+    }
+
   status_callback (_("Searching plug-ins"), "", 0.0);
 
   /* Give automatic tests a chance to use plug-ins from the build
