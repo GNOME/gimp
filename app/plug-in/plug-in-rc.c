@@ -273,6 +273,12 @@ plug_in_def_deserialize (Gimp      *gimp,
   if (! gimp_scanner_parse_string (scanner, &path))
     return G_TOKEN_STRING;
 
+  if (! (path && *path))
+    {
+      g_scanner_error (scanner, "plug-in filename is empty");
+      return G_TOKEN_ERROR;
+    }
+
   file = gimp_file_new_for_config_path (path, &error);
   g_free (path);
 
@@ -383,10 +389,25 @@ plug_in_procedure_deserialize (GScanner             *scanner,
   if (! gimp_scanner_parse_string (scanner, &str))
     return G_TOKEN_STRING;
 
+  if (! (str && *str))
+    {
+      g_scanner_error (scanner, "procedure name is empty");
+      return G_TOKEN_ERROR;
+    }
+
   if (! gimp_scanner_parse_int (scanner, &proc_type))
     {
       g_free (str);
       return G_TOKEN_INT;
+    }
+
+  if (proc_type != GIMP_PLUGIN &&
+      proc_type != GIMP_EXTENSION)
+    {
+      g_free (str);
+      g_scanner_error (scanner, "procedure type %d is out of range",
+                       proc_type);
+      return G_TOKEN_ERROR;
     }
 
   procedure = gimp_plug_in_procedure_new (proc_type, file);
