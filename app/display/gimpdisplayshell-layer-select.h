@@ -20,8 +20,8 @@
 
 
 void   gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
-                                             gint              move,
-                                             guint32           time);
+                                             GdkEvent         *event,
+                                             gint              move);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_LAYER_SELECT_H__  */

@@ -1703,11 +1703,11 @@ gimp_display_shell_tab_pressed (GimpDisplayShell  *shell,
         {
           if (kevent->keyval == GDK_KEY_Tab ||
               kevent->keyval == GDK_KEY_KP_Tab)
-            gimp_display_shell_layer_select_init (shell,
-                                                  1, kevent->time);
+            gimp_display_shell_layer_select_init (shell, (GdkEvent *) kevent,
+                                                  1);
           else
-            gimp_display_shell_layer_select_init (shell,
-                                                  -1, kevent->time);
+            gimp_display_shell_layer_select_init (shell, (GdkEvent *) kevent,
+                                                  -1);
 
           return TRUE;
         }

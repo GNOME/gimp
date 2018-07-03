@@ -60,7 +60,7 @@ static LayerSelect * layer_select_new       (GimpDisplayShell *shell,
                                              GimpLayer        *layer,
                                              gint              view_size);
 static void          layer_select_destroy   (LayerSelect      *layer_select,
-                                             guint32           time);
+                                             GdkEvent         *event);
 static void          layer_select_advance   (LayerSelect      *layer_select,
                                              gint              move);
 static gboolean      layer_select_events    (GtkWidget        *widget,
@@ -72,8 +72,8 @@ static gboolean      layer_select_events    (GtkWidget        *widget,
 
 void
 gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
-                                      gint              move,
-                                      guint32           time)
+                                      GdkEvent         *event,
+                                      gint              move)
 {
   LayerSelect   *layer_select;
   GimpImage     *image;
@@ -81,6 +81,7 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
   GdkGrabStatus  status;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (event != NULL);
 
   image = gimp_display_get_image (shell->display);
 
@@ -98,9 +99,16 @@ gimp_display_shell_layer_select_init (GimpDisplayShell *shell,
 
   gtk_widget_show (layer_select->window);
 
-  status = gdk_keyboard_grab (gtk_widget_get_window (layer_select->window), FALSE, time);
+  status = gdk_seat_grab (gdk_event_get_seat (event),
+                          gtk_widget_get_window (layer_select->window),
+                          GDK_SEAT_CAPABILITY_KEYBOARD,
+                          FALSE, NULL, event, NULL, NULL);
+
   if (status != GDK_GRAB_SUCCESS)
-    g_printerr ("gdk_keyboard_grab failed with status %d\n", status);
+    {
+      g_printerr ("gdk_keyboard_grab failed with status %d\n", status);
+      layer_select_destroy (layer_select, event);
+    }
 }
 
 
@@ -173,10 +181,9 @@ layer_select_new (GimpDisplayShell *shell,
 
 static void
 layer_select_destroy (LayerSelect *layer_select,
-                      guint32      time)
+                      GdkEvent    *event)
 {
-  gdk_display_keyboard_ungrab (gtk_widget_get_display (layer_select->window),
-                                                       time);
+  gdk_seat_ungrab (gdk_event_get_seat (event));
 
   gtk_widget_destroy (layer_select->window);
 
@@ -243,15 +250,12 @@ layer_select_events (GtkWidget   *widget,
                      GdkEvent    *event,
                      LayerSelect *layer_select)
 {
-  GdkEventKey    *kevent;
-  GdkEventButton *bevent;
+  GdkEventKey *kevent;
 
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
-
-      layer_select_destroy (layer_select, bevent->time);
+      layer_select_destroy (layer_select, event);
       break;
 
     case GDK_KEY_PRESS:
@@ -286,7 +290,7 @@ layer_select_events (GtkWidget   *widget,
         }
 
       if (! (kevent->state & GDK_CONTROL_MASK))
-        layer_select_destroy (layer_select, kevent->time);
+        layer_select_destroy (layer_select, event);
 
       return TRUE;
       break;
