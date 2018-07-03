@@ -571,9 +571,8 @@ gimp_meter_expose_event (GtkWidget      *widget,
                      allocation.width - BORDER_WIDTH - 0.5 * size,
                      0.25 * size);
       cairo_close_path (cr);
-      cairo_clip (cr);
 
-      cairo_clip_extents (cr,
+      cairo_path_extents (cr,
                           &history_x1, &history_y1,
                           &history_x2, &history_y2);
 
@@ -581,6 +580,8 @@ gimp_meter_expose_event (GtkWidget      *widget,
       history_y1 = floor (history_y1);
       history_x2 = ceil  (history_x2);
       history_y2 = ceil  (history_y2);
+
+      cairo_clip (cr);
 
       /* paint history background */
       gdk_cairo_set_source_color (cr, &style->light[state]);
