@@ -962,7 +962,6 @@ gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
-  GdkColor    gdk_color;
   guchar      r, g, b;
 
   gimp_rgb_get_uchar (color, &r, &g, &b);
@@ -990,14 +989,10 @@ gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
   g_snprintf (name, sizeof (name), "color-#%02x%02x%02x",
               r, g, b);
 
-  gdk_color.red   = (r << 8) | r;
-  gdk_color.green = (g << 8) | g;
-  gdk_color.blue  = (b << 8) | b;
-
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "foreground-gdk", &gdk_color,
-                                    "foreground-set", TRUE,
+                                    "foreground-rgba", (GdkRGBA *) color,
+                                    "foreground-set",  TRUE,
                                     NULL);
 
   buffer->color_tags = g_list_prepend (buffer->color_tags, tag);
@@ -1048,7 +1043,6 @@ gimp_text_buffer_get_preedit_color_tag (GimpTextBuffer *buffer,
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
-  GdkColor    gdk_color;
   guchar      r, g, b;
 
   gimp_rgb_get_uchar (color, &r, &g, &b);
@@ -1076,14 +1070,10 @@ gimp_text_buffer_get_preedit_color_tag (GimpTextBuffer *buffer,
   g_snprintf (name, sizeof (name), "preedit-color-#%02x%02x%02x",
               r, g, b);
 
-  gdk_color.red   = (r << 8) | r;
-  gdk_color.green = (g << 8) | g;
-  gdk_color.blue  = (b << 8) | b;
-
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "foreground-gdk", &gdk_color,
-                                    "foreground-set", TRUE,
+                                    "foreground-rgba", (GdkRGBA *) color,
+                                    "foreground-set",  TRUE,
                                     NULL);
 
   buffer->preedit_color_tags = g_list_prepend (buffer->preedit_color_tags, tag);
@@ -1132,7 +1122,6 @@ gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer *buffer,
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
-  GdkColor    gdk_color;
   guchar      r, g, b;
 
   gimp_rgb_get_uchar (color, &r, &g, &b);
@@ -1160,14 +1149,10 @@ gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer *buffer,
   g_snprintf (name, sizeof (name), "bg-color-#%02x%02x%02x",
               r, g, b);
 
-  gdk_color.red   = (r << 8) | r;
-  gdk_color.green = (g << 8) | g;
-  gdk_color.blue  = (b << 8) | b;
-
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "background-gdk", &gdk_color,
-                                    "background-set", TRUE,
+                                    "background-rgba", (GdkRGBA *) color,
+                                    "background-set",  TRUE,
                                     NULL);
 
   buffer->preedit_bg_color_tags = g_list_prepend (buffer->preedit_bg_color_tags, tag);

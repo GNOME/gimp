@@ -84,22 +84,17 @@ gboolean
 gimp_text_tag_get_fg_color (GtkTextTag *tag,
                             GimpRGB    *color)
 {
-  GdkColor *gdk_color;
+  GdkRGBA  *rgba;
   gboolean  set;
-  guchar    r, g, b;
 
   g_object_get (tag,
                 "foreground-set",             &set,
-                GIMP_TEXT_PROP_NAME_FG_COLOR, &gdk_color,
+                GIMP_TEXT_PROP_NAME_FG_COLOR, &rgba,
                 NULL);
 
-  r = gdk_color->red   >> 8;
-  g = gdk_color->green >> 8;
-  b = gdk_color->blue  >> 8;
+  gimp_rgb_set (color, rgba->red, rgba->green, rgba->blue);
 
-  gimp_rgb_set_uchar (color, r, g, b);
-
-  gdk_color_free (gdk_color);
+  gdk_rgba_free (rgba);
 
   return set;
 }
@@ -108,22 +103,17 @@ gboolean
 gimp_text_tag_get_bg_color (GtkTextTag *tag,
                             GimpRGB    *color)
 {
-  GdkColor *gdk_color;
+  GdkRGBA  *rgba;
   gboolean  set;
-  guchar    r, g, b;
 
   g_object_get (tag,
                 "background-set",             &set,
-                GIMP_TEXT_PROP_NAME_BG_COLOR, &gdk_color,
+                GIMP_TEXT_PROP_NAME_BG_COLOR, &rgba,
                 NULL);
 
-  r = gdk_color->red   >> 8;
-  g = gdk_color->green >> 8;
-  b = gdk_color->blue  >> 8;
+  gimp_rgb_set (color, rgba->red, rgba->green, rgba->blue);
 
-  gimp_rgb_set_uchar (color, r, g, b);
-
-  gdk_color_free (gdk_color);
+  gdk_rgba_free (rgba);
 
   return set;
 }

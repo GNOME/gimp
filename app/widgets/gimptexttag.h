@@ -28,8 +28,8 @@
 #define GIMP_TEXT_PROP_NAME_BASELINE "rise"
 #define GIMP_TEXT_PROP_NAME_KERNING  "rise" /* FIXME */
 #define GIMP_TEXT_PROP_NAME_FONT     "font"
-#define GIMP_TEXT_PROP_NAME_FG_COLOR "foreground-gdk"
-#define GIMP_TEXT_PROP_NAME_BG_COLOR "background-gdk"
+#define GIMP_TEXT_PROP_NAME_FG_COLOR "foreground-rgba"
+#define GIMP_TEXT_PROP_NAME_BG_COLOR "background-rgba"
 
 
 gint       gimp_text_tag_get_size     (GtkTextTag *tag);
