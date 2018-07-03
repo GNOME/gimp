@@ -186,11 +186,6 @@ common_exes_list = [
     [ gtk3, gegl, gdk_pixbuf, ],
   ],
   [
-    'file-heif',
-    [ 'file-heif.c', ],
-    [ gtk3, gegl, libheif, ],
-  ],
-  [
     'file-html-table',
     [ 'file-html-table.c', ],
     [ gtk3, gegl, gdk_pixbuf, ],
@@ -443,6 +438,16 @@ if platform_win32
       'mail',
       [ 'mail.c', ],
       [ gtk3, gegl, gdk_pixbuf, ],
+    ],
+  ]
+endif
+
+if libheif.found()
+  common_exes_list += [
+    [
+      'file-heif',
+      [ 'file-heif.c', ],
+      [ gtk3, gegl, libheif, ],
     ],
   ]
 endif
