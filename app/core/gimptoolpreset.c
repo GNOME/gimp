@@ -390,6 +390,14 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
             break;
           }
 
+        if (! (type_name && *type_name))
+          {
+            g_scanner_error (scanner, "GimpToolOptions type name is empty");
+            *expected = G_TOKEN_NONE;
+            g_free (type_name);
+            break;
+          }
+
         if (! strcmp (type_name, "GimpTransformOptions"))
           {
             g_printerr ("Correcting tool options type GimpTransformOptions "
