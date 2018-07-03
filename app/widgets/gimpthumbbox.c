@@ -415,9 +415,10 @@ gimp_thumb_box_new (GimpContext *context)
   gtk_widget_show (box->info);
 
   box->progress = gtk_progress_bar_new ();
+  gtk_widget_set_halign (box->progress, GTK_ALIGN_FILL);
+  gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (box->progress), TRUE);
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "Fog");
   gtk_box_pack_end (GTK_BOX (vbox2), box->progress, FALSE, FALSE, 0);
-  gtk_widget_set_no_show_all (box->progress, TRUE);
   /* don't gtk_widget_show (box->progress); */
 
   gtk_widget_set_size_request (GTK_WIDGET (box),
@@ -586,8 +587,8 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
           gimp_progress_set_value (progress, 0.0);
 
-          while (gtk_events_pending ())
-            gtk_main_iteration ();
+          while (g_main_context_pending (NULL))
+            g_main_context_iteration (NULL, FALSE);
 
           gimp_thumb_box_create_thumbnail (box,
                                            list->data,
@@ -607,8 +608,8 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
       gimp_progress_set_value (progress, 0.0);
 
-      while (gtk_events_pending ())
-        gtk_main_iteration ();
+      while (g_main_context_pending (NULL))
+        g_main_context_iteration (NULL, FALSE);
     }
 
   if (box->files)

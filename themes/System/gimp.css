@@ -133,6 +133,12 @@ GimpDisplayShell progressbar progress {
     min-height: 1em;
 }
 
+GimpFileDialog progressbar trough,
+GimpFileDialog progressbar progress {
+    min-width: 1px; /* hack */
+    min-height: 1em;
+}
+
 GimpRuler {
     font-size: smaller;
 }

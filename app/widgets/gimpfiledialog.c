@@ -223,6 +223,8 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
                                                       GIMP_FILE_PROCEDURE_GROUP_NONE,
                                                       GIMP_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT_ONLY));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpFileDialog");
 }
 
 static void
