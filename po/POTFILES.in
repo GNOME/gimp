@@ -103,6 +103,8 @@ app/core/gimp-batch.c
 app/core/gimp-contexts.c
 app/core/gimp-data-factories.c
 app/core/gimp-edit.c
+app/core/gimpextension.c
+app/core/gimpextensionmanager.c
 app/core/gimp-gradients.c
 app/core/gimp-gui.c
 app/core/gimp-internal-data.c
