@@ -19,6 +19,7 @@ EXPORTS
 	gimp_color_rendering_intent_get_type
 	gimp_config_build_data_path
 	gimp_config_build_plug_in_path
+	gimp_config_build_system_path
 	gimp_config_build_writable_path
 	gimp_config_copy
 	gimp_config_deserialize
