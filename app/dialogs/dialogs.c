@@ -290,6 +290,8 @@ static const GimpDialogFactoryEntry entries[] =
             dialogs_close_all_get,          TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-quit-dialog",
             dialogs_quit_get,               TRUE, FALSE, FALSE),
+  TOPLEVEL ("gimp-extensions-dialog",
+            dialogs_extensions_get,         TRUE, TRUE,  TRUE),
 
   /*  docks  */
   DOCK ("gimp-dock",

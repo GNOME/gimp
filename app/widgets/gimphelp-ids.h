@@ -737,4 +737,9 @@
 #define GIMP_HELP_CONTROLLER_MOUSE                "gimp-controller-mouse"
 #define GIMP_HELP_CONTROLLER_WHEEL                "gimp-controller-wheel"
 
+#define GIMP_HELP_EXTENSIONS_DIALOG               "gimp-extensions-dialog"
+#define GIMP_HELP_EXTENSIONS_INSTALLED            "gimp-extensions-installed"
+#define GIMP_HELP_EXTENSIONS_SYSTEM               "gimp-extensions-system"
+#define GIMP_HELP_EXTENSIONS_INSTALL              "gimp-extensions-install"
+
 #endif /* __GIMP_HELP_IDS_H__ */

@@ -145,6 +145,15 @@ dialogs_preferences_get (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_extensions_get (GimpDialogFactory *factory,
+                        GimpContext       *context,
+                        GimpUIManager     *ui_manager,
+                        gint               view_size)
+{
+  return extensions_dialog_new (context->gimp);
+}
+
+GtkWidget *
 dialogs_keyboard_shortcuts_get (GimpDialogFactory *factory,
                                 GimpContext       *context,
                                 GimpUIManager     *ui_manager,

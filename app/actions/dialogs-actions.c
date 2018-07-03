@@ -293,7 +293,13 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     NC_("dialogs-action", "_Search and Run a Command"), "slash",
     NC_("dialogs-action", "Search commands by keyword, and run them"),
     "gimp-action-search-dialog",
-    GIMP_HELP_ACTION_SEARCH_DIALOG }
+    GIMP_HELP_ACTION_SEARCH_DIALOG },
+
+  { "dialogs-extensions", GIMP_ICON_PLUGIN,
+    NC_("dialogs-action", "Manage _Extensions"), NULL,
+    NC_("dialogs-action", "Manage Extensions: search, install, uninstall, update."),
+    "gimp-extensions-dialog",
+    GIMP_HELP_EXTENSIONS_DIALOG }
 };
 
 

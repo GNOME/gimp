@@ -35,6 +35,8 @@ libappdialogs_a_sources = \
 	convert-precision-dialog.h	\
 	data-delete-dialog.c		\
 	data-delete-dialog.h		\
+	extensions-dialog.c		\
+	extensions-dialog.h		\
 	fade-dialog.c			\
 	fade-dialog.h			\
 	file-open-dialog.c		\
