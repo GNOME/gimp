@@ -68,8 +68,7 @@ extern "C++"
 
 template <class ParallelRunAsyncFunc>
 inline GimpAsync *
-gimp_parallel_run_async (gboolean             independent,
-                         ParallelRunAsyncFunc func)
+gimp_parallel_run_async (ParallelRunAsyncFunc func)
 {
   ParallelRunAsyncFunc *func_copy = g_new (ParallelRunAsyncFunc, 1);
 
