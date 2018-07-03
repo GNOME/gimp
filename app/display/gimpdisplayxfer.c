@@ -232,15 +232,23 @@ gimp_display_xfer_realize (GtkWidget *widget)
 
   if (xfer == NULL)
     {
-      cairo_t *cr;
-      gint     w = GIMP_DISPLAY_RENDER_BUF_WIDTH;
-      gint     h = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
-      int      n;
+      GdkDrawingContext *context;
+      cairo_region_t    *region;
+      cairo_t           *cr;
+      gint               w = GIMP_DISPLAY_RENDER_BUF_WIDTH;
+      gint               h = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
+      int                n;
 
       xfer = g_new (GimpDisplayXfer, 1);
       rtree_init (&xfer->rtree, w, h);
 
-      cr = gdk_cairo_create (gtk_widget_get_window (widget));
+      region = cairo_region_create ();
+      context = gdk_window_begin_draw_frame (gtk_widget_get_window (widget),
+                                             region);
+      cairo_region_destroy (region);
+
+      cr = gdk_drawing_context_get_cairo_context (context);
+
       for (n = 0; n < NUM_PAGES; n++)
         {
           xfer->render_surface[n] =
@@ -248,7 +256,10 @@ gimp_display_xfer_realize (GtkWidget *widget)
                                                 CAIRO_FORMAT_ARGB32, w, h);
           cairo_surface_mark_dirty (xfer->render_surface[n]);
         }
-      cairo_destroy (cr);
+
+      gdk_window_end_draw_frame (gtk_widget_get_window (widget),
+                                 context);
+
       xfer->page = 0;
 
       g_object_set_data_full (G_OBJECT (screen),
