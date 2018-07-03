@@ -1754,7 +1754,7 @@ prefs_dialog_new (Gimp       *gimp,
                           vbox3,  "sensitive",
                           G_BINDING_SYNC_CREATE);
   button = prefs_check_button_add (object, "group-layer-previews",
-                                   _("Enable layer group previews"),
+                                   _("Enable layer _group previews"),
                                    GTK_BOX (vbox3));
 
   table = prefs_table_new (3, GTK_CONTAINER (vbox2));
