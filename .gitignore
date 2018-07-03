@@ -1,3 +1,4 @@
+_build
 *.la
 *.lo
 *.o

@@ -234,13 +234,17 @@ endif
 #     # #      #      #      #   ## #    # #      #   ## #    # # #      #    #
 ######  ###### #      ###### #    # #####  ###### #    #  ####  # ######  ####
 
+relocatable_bundle = get_option('relocatable-bundle')
+conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
 
 
 math              = cc.find_library('m')
 
 atk               = dependency('atk',                version: '>=2.4.0')
 
-babl              = dependency('babl',               version: '>=0.1.51')
+appstream_glib    = dependency('appstream-glib',     version: '>=0.7.7')
+
+babl              = dependency('babl',               version: '>=0.1.52')
 
 cairo             = dependency('cairo',              version: '>=1.12.2')
 
@@ -283,16 +287,13 @@ lcms              = dependency('lcms2',              version: '>=2.8')
 libmypaint_name   = platform_win32 ? 'libmypaint' : 'libmypaint-1.3'
 libmypaint        = dependency(libmypaint_name,      version: '>=1.3.0')
 
-libmypaint_brushes_bundled = get_option('with-bundled-mypaint-brushes')
-conf.set('ENABLE_BUNDLED_MYPAINT_BRUSHES', libmypaint_brushes_bundled)
-
-if libmypaint_brushes_bundled
+if relocatable_bundle
   libmypaint_brushes = dependency('', required: false)
   libmypaint_brushes_dir = join_paths(
     '${gimp_installation_dir}', 'share', 'mypaint-data', '1.0', 'brushes'
   )
 else
-  libmypaint_brushes= dependency('mypaint-brushes-1.0',version: '>=1.3.0', required: false)
+  libmypaint_brushes = dependency('mypaint-brushes-1.0',version: '>=1.3.0', required: false)
   libmypaint_brushes_dir = libmypaint_brushes.get_pkgconfig_variable('brushesdir')
 endif
 conf.set_quoted('MYPAINT_BRUSHES_DIR', libmypaint_brushes_dir)
@@ -302,8 +303,8 @@ pangocairo        = dependency('pangocairo',         version: '>=1.29.4')
 pangoft2          = dependency('pangoft2',           version: '>=1.29.4')
 rsvg              = dependency('librsvg-2.0',        version: '>=2.40.6')
 
-conf.set('GDK_DISABLE_DEPRECATED', true)
-conf.set('GTK_DISABLE_DEPRECATED', true)
+# conf.set('GDK_DISABLE_DEPRECATED', true)
+# conf.set('GTK_DISABLE_DEPRECATED', true)
 conf.set('G_DISABLE_DEPRECATED', true)
 conf.set('PANGO_DISABLE_DEPRECATED', true)
 
@@ -550,7 +551,7 @@ else
 endif
 
 if get_option('with-webkit')
-  webkit = dependency('webkitgtk-3.0', version: '>=2.4.11')
+  webkit = dependency('webkit2gtk-4.0', version: '>=2.20.3')
 else
   webkit = dependency('', required: false)
 endif
@@ -1499,7 +1500,7 @@ Optional Features:
   Language selection:  @0@'''.format(isocodes.found()) +'''
   Vector icons:        @0@'''.format(have_vector_icons) +'''
   Dr. Mingw (Win32):   @0@'''.format(drmingw.found()) +'''
-  Bundled MyPaint Brushes: @0@ (at @1@)'''.format('enable_bundled_mypaint_brushes', libmypaint_brushes_dir)+'''
+  Relocatable Bundle:  @0@'''.format(relocatable_bundle)+'''
   Default ICC directory:   @0@'''.format(icc_directory)+'''
 
 Optional Plug-Ins:

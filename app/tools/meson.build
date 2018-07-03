@@ -7,6 +7,7 @@ apptoolsenums = custom_target('tools-enums.c',
 )
 
 libapptools_sources = [
+  'gimp-tool-options-manager.c',
   'gimp-tools.c',
   'gimpairbrushtool.c',
   'gimpalignoptions.c',
