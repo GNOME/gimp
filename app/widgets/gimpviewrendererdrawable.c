@@ -333,8 +333,8 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
       renderdrawable->priv->render_async  = async;
       renderdrawable->priv->render_widget = g_object_ref (widget);
-      renderdrawable->priv->render_buf_x  = 0;
-      renderdrawable->priv->render_buf_y  = 0;
+      renderdrawable->priv->render_buf_x  = render_buf_x;
+      renderdrawable->priv->render_buf_y  = render_buf_y;
       renderdrawable->priv->render_update = FALSE;
 
       gimp_async_add_callback (
