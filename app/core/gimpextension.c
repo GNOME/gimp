@@ -185,6 +185,36 @@ gimp_extension_new (const gchar *dir,
                        NULL);
 }
 
+const gchar *
+gimp_extension_get_name (GimpExtension *extension)
+{
+  g_return_val_if_fail (extension->p->app != NULL, NULL);
+
+  return as_app_get_name (extension->p->app, g_getenv ("LANGUAGE")) ?
+    as_app_get_name (extension->p->app, g_getenv ("LANGUAGE")) :
+    as_app_get_name (extension->p->app, NULL);
+}
+
+const gchar *
+gimp_extension_get_comment (GimpExtension *extension)
+{
+  g_return_val_if_fail (extension->p->app != NULL, NULL);
+
+  return as_app_get_comment (extension->p->app, g_getenv ("LANGUAGE")) ?
+    as_app_get_comment (extension->p->app, g_getenv ("LANGUAGE")) :
+    as_app_get_comment (extension->p->app, NULL);
+}
+
+const gchar *
+gimp_extension_get_description (GimpExtension *extension)
+{
+  g_return_val_if_fail (extension->p->app != NULL, NULL);
+
+  return as_app_get_description (extension->p->app, g_getenv ("LANGUAGE")) ?
+    as_app_get_description (extension->p->app, g_getenv ("LANGUAGE")) :
+    as_app_get_description (extension->p->app, NULL);
+}
+
 gboolean
 gimp_extension_load (GimpExtension  *extension,
                      GError        **error)

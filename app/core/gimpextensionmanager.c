@@ -341,6 +341,27 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
   gimp_extension_manager_refresh (manager);
 }
 
+const GList *
+gimp_extension_manager_get_system_extensions (GimpExtensionManager *manager)
+{
+  return manager->p->sys_extensions;
+}
+
+const GList *
+gimp_extension_manager_get_user_extensions (GimpExtensionManager *manager)
+{
+  return manager->p->extensions;
+}
+
+gboolean
+gimp_extension_manager_is_active (GimpExtensionManager *manager,
+                                  const gchar          *id)
+{
+  return g_hash_table_contains (manager->p->active_extensions, id);
+}
+
+/* Private functions. */
+
 static void
 gimp_extension_manager_refresh (GimpExtensionManager *manager)
 {
