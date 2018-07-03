@@ -195,7 +195,8 @@ gimp_extension_load (GimpExtension  *extension,
   AsRelease *release;
   gchar     *appdata_name;
   gchar     *path;
-  gboolean   success = FALSE;
+  gboolean   success     = FALSE;
+  gboolean   has_require = FALSE;
 
   g_clear_object (&extension->p->app);
 
@@ -284,7 +285,8 @@ gimp_extension_load (GimpExtension  *extension,
           if (as_require_get_kind (require) == AS_REQUIRE_KIND_ID &&
               g_strcmp0 (as_require_get_value (require), "org.gimp.GIMP") == 0)
             {
-              if (! as_require_version_compare (require, GIMP_APP_VERSION, error))
+              has_require = TRUE;
+              if (! as_require_version_compare (require, GIMP_VERSION, error))
                 {
                   success = FALSE;
                   break;
@@ -303,6 +305,16 @@ gimp_extension_load (GimpExtension  *extension,
               success = FALSE;
               break;
             }
+        }
+    }
+  if (! has_require)
+    {
+      success = FALSE;
+      if (error && *error == NULL)
+        {
+          *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                GIMP_EXTENSION_FAILED,
+                                _("<requires><id>org.gimp.GIMP</id></requires> for version comparison is mandatory."));
         }
     }
 

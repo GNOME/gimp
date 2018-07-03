@@ -8,6 +8,7 @@ endif
 
 AM_CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"			\
+	-DGIMP_VERSION=\"$(GIMP_VERSION)\"		\
 	-DGIMP_APP_VERSION=\"$(GIMP_APP_VERSION)\"	\
 	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"	\
 	-DG_LOG_DOMAIN=\"Gimp-Core\"			\
