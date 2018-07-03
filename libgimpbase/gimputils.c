@@ -1177,8 +1177,15 @@ gimp_stack_trace_print (const gchar   *prog_name,
   int      out_fd[2];
   pid_t    fork_pid;
   pid_t    pid = getpid();
+  gint     eintr_count = 0;
 #if defined(G_OS_WIN32)
   DWORD    tid = GetCurrentThreadId ();
+#elif defined(PLATFORM_OSX)
+  uint64   tid64;
+  long     tid;
+
+  pthread_threadid_np (NULL, &tid64);
+  tid = (long) tid64;
 #elif defined(SYS_gettid)
   long     tid = syscall (SYS_gettid);
 #elif defined(HAVE_THR_SELF)
@@ -1272,8 +1279,25 @@ gimp_stack_trace_print (const gchar   *prog_name,
        */
       close (out_fd[1]);
 
-      while ((read_n = read (out_fd[0], buffer, 256)) > 0)
+      while ((read_n = read (out_fd[0], buffer, 256)) != 0)
         {
+          if (read_n < 0)
+            {
+              /* LLDB on macOS seems to trigger a few EINTR error (see
+               * !13), though read() finally ends up working later. So
+               * let's not make this error fatal, and instead try again.
+               * Yet to avoid infinite loop (in case the error really
+               * happens at every call), we abandon after a few
+               * consecutive errors.
+               */
+              if (errno == EINTR && eintr_count <= 5)
+                {
+                  eintr_count++;
+                  continue;
+                }
+              break;
+            }
+          eintr_count = 0;
           if (! stack_printed)
             {
 #if defined(G_OS_WIN32) || defined(SYS_gettid) || defined(HAVE_THR_SELF)

@@ -445,7 +445,7 @@ create_sizemap_dialog (GtkWidget *parent)
                     G_CALLBACK (smmapclick), NULL);
   gtk_widget_show (tmpw2);
 
-  smvectprevbrightadjust = (GtkAdjustment *)
+  smvectprevbrightadjust =
     gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 1.0, 1.0);
   tmpw = gtk_scale_new (GTK_ORIENTATION_VERTICAL, smvectprevbrightadjust);
   gtk_scale_set_draw_value (GTK_SCALE (tmpw), FALSE);
@@ -504,7 +504,7 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_grid_attach (GTK_GRID (grid1), grid2, 0, 2, 2, 1);
   gtk_widget_show (grid2);
 
-  sizadjust = (GtkAdjustment *)
+  sizadjust =
     gimp_scale_entry_new (GTK_GRID (grid2), 0, 0,
                           _("_Size:"),
                           150, 6, 50.0,
@@ -515,7 +515,7 @@ create_sizemap_dialog (GtkWidget *parent)
   g_signal_connect (sizadjust, "value-changed",
                     G_CALLBACK (angsmadjmove), NULL);
 
-  smstradjust = (GtkAdjustment *)
+  smstradjust =
     gimp_scale_entry_new (GTK_GRID (grid2), 0, 1,
                           _("S_trength:"),
                           150, 6, 1.0,
@@ -526,7 +526,7 @@ create_sizemap_dialog (GtkWidget *parent)
   g_signal_connect (smstradjust, "value-changed",
                     G_CALLBACK (strsmadjmove), NULL);
 
-  smstrexpadjust = (GtkAdjustment *)
+  smstrexpadjust =
     gimp_scale_entry_new (GTK_GRID (grid2), 0, 2,
                           _("St_rength exp.:"),
                           150, 6, 1.0,

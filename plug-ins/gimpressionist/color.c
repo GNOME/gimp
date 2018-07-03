@@ -39,7 +39,7 @@ color_restore (void)
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (colorradio[pcvals.color_type]), TRUE);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (colornoiseadjust),
+  gtk_adjustment_set_value (colornoiseadjust,
                             pcvals.color_noise);
 }
 

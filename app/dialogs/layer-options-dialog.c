@@ -233,8 +233,8 @@ layer_options_dialog_new (GimpImage                *image,
   /*  set the sensitivity of above 3 menus  */
   layer_options_dialog_update_mode_sensitivity (private);
 
-  adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (private->opacity, 0.0, 100.0,
-                                                   1.0, 10.0, 0.0));
+  adjustment = gtk_adjustment_new (private->opacity, 0.0, 100.0,
+                                   1.0, 10.0, 0.0);
   scale = gimp_spin_scale_new (adjustment, NULL, 1);
   item_options_dialog_add_widget (dialog, _("_Opacity:"), scale);
 
@@ -260,8 +260,7 @@ layer_options_dialog_new (GimpImage                *image,
       gtk_widget_show (label);
 
       /*  The size sizeentry  */
-      adjustment = (GtkAdjustment *)
-        gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+      adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
       spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
@@ -318,8 +317,7 @@ layer_options_dialog_new (GimpImage                *image,
   gtk_widget_show (label);
 
   /*  The offset sizeentry  */
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (0, 1, 1, 1, 10, 0);
+  adjustment = gtk_adjustment_new (0, 1, 1, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);

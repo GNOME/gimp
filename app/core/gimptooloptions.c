@@ -191,10 +191,6 @@ gimp_tool_options_set_property (GObject      *object,
           {
             options->tool_info = g_object_ref (tool_info);
 
-            if (tool_info->context_props)
-              gimp_context_define_properties (GIMP_CONTEXT (options),
-                                              tool_info->context_props, FALSE);
-
             gimp_context_set_serialize_properties (GIMP_CONTEXT (options),
                                                    tool_info->context_props);
           }
@@ -261,6 +257,23 @@ gimp_tool_options_tool_notify (GimpToolOptions *options,
 
 
 /*  public functions  */
+
+void
+gimp_tool_options_set_gui_mode (GimpToolOptions *tool_options,
+                                gboolean         gui_mode)
+{
+  g_return_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options));
+
+  tool_options->gui_mode = gui_mode ? TRUE : FALSE;
+}
+
+gboolean
+gimp_tool_options_get_gui_mode (GimpToolOptions *tool_options)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
+
+  return tool_options->gui_mode;
+}
 
 gboolean
 gimp_tool_options_serialize (GimpToolOptions  *tool_options,

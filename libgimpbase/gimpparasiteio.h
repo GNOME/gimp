@@ -53,6 +53,7 @@ struct _GimpPixPipeParams
   gboolean  free_placement_string;
   gint      rank[GIMP_PIXPIPE_MAXDIM];
   gchar    *selection[GIMP_PIXPIPE_MAXDIM];
+  /* this flag is now useless. All selection strings are allocated. */
   gboolean  free_selection_string;
 };
 
@@ -66,6 +67,8 @@ void    gimp_pixpipe_params_parse (const gchar       *parameters,
 /* Build a string representation of GimpPixPipeParams */
 gchar * gimp_pixpipe_params_build (GimpPixPipeParams *params) G_GNUC_MALLOC;
 
+/* Free the internal values. It does not free the struct itsef. */
+void    gimp_pixpipe_params_free  (GimpPixPipeParams *params);
 
 G_END_DECLS
 

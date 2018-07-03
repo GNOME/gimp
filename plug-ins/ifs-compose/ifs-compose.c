@@ -2087,11 +2087,10 @@ value_pair_create (gpointer      data,
   value_pair->type   = type;
   value_pair->timeout_id = 0;
 
-  value_pair->adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (1.0, lower, upper,
-                        (upper - lower) / 100,
-                        (upper - lower) / 10,
-                        0.0);
+  value_pair->adjustment = gtk_adjustment_new (1.0, lower, upper,
+                                               (upper - lower) / 100,
+                                               (upper - lower) / 10,
+                                               0.0);
   value_pair->spin = gtk_spin_button_new (value_pair->adjustment, 1.0, 3);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (value_pair->spin), TRUE);
   gtk_widget_set_size_request (value_pair->spin, 72, -1);

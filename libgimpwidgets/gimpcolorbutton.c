@@ -443,8 +443,7 @@ gimp_color_button_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpColorButton        *button = GIMP_COLOR_BUTTON (object);
-  GimpColorButtonPrivate *priv   = GET_PRIVATE (object);
+  GimpColorButtonPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {

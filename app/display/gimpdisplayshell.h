@@ -178,6 +178,7 @@ struct _GimpDisplayShell
   gboolean           zoom_on_resize;
 
   gboolean           size_allocate_from_configure_event;
+  gboolean           size_allocate_center_image;
 
   /*  the state of gimp_display_shell_tool_events()  */
   GdkDevice         *grab_pointer;
@@ -292,8 +293,7 @@ gboolean          gimp_display_shell_mask_bounds   (GimpDisplayShell   *shell,
                                                     gint               *width,
                                                     gint               *height);
 
-void              gimp_display_shell_flush         (GimpDisplayShell   *shell,
-                                                    gboolean            now);
+void              gimp_display_shell_flush         (GimpDisplayShell   *shell);
 
 void              gimp_display_shell_pause         (GimpDisplayShell   *shell);
 void              gimp_display_shell_resume        (GimpDisplayShell   *shell);

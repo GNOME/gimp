@@ -1,16 +1,12 @@
                    ------------------------------
                    GNU Image Manipulation Program
-                         2.10 Stable Branch
+                      2.99 Development Branch
                    ------------------------------
 
-This is a stable release in the GIMP 2.10 series.
-
-GIMP 2.10 replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP 2.10. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP 2.10, you have to
-choose a separate prefix which is not in your default library search
-path. Otherwise your previous GIMP installation will start to use the
-new libraries. You have been warned.
+This is an unstable development release, an intermediate state on the
+way to the next stable release: GIMP 3. GIMP 2.99 may or may not do what
+you expect. Save your work early and often. If you want a stable
+version, please use GIMP 2.10 instead.
 
 If you think you found a bug in this version, please make sure that it
 hasn't been reported earlier and that it is not just new stuff that is
@@ -78,16 +74,17 @@ servers are:
 4. Customizing
 ==============
 
-The look of GIMP's interface can be customized like any other GTK app
-by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
-customizations).  For downloadable themes and further details, see
-http://art.gnome.org/themes/gtk2 . Additionally, GIMP reads the file
-~/.config/GIMP/2.10/gtkrc so you can have settings that only apply to GIMP.
+The look of GIMP's interface can be customized like any other GTK+ app
+by editing files in `${XDG_CONFIG_HOME}/gtk-3.0/` (settings.ini and
+gtk.css in particular) or by using "themes" (ready-made customizations).
+Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/2.99/gimp.css` so you
+can have settings that only apply to GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
 You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.config/GIMP/2.10/menurc. You can also manually change the keybindings
-to any of your choice by editing ~/.config/GIMP/2.10/menurc.
+to `${XDG_CONFIG_HOME}/GIMP/2.99/menurc`. You can also manually change
+the keybindings to any of your choice by editing:
+`${XDG_CONFIG_HOME}/GIMP/2.99/menurc`.
 
 
 Have fun,

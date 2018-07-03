@@ -123,11 +123,11 @@ struct _GimpSizeEntryPrivate
 static void      gimp_size_entry_finalize            (GObject            *object);
 static void      gimp_size_entry_update_value        (GimpSizeEntryField *gsef,
                                                       gdouble             value);
-static void      gimp_size_entry_value_callback      (GtkWidget          *widget,
+static void      gimp_size_entry_value_callback      (GtkAdjustment      *adjustment,
                                                       gpointer            data);
 static void      gimp_size_entry_update_refval       (GimpSizeEntryField *gsef,
                                                       gdouble             refval);
-static void      gimp_size_entry_refval_callback     (GtkWidget          *widget,
+static void      gimp_size_entry_refval_callback     (GtkAdjustment      *adjustment,
                                                       gpointer            data);
 static void      gimp_size_entry_update_unit         (GimpSizeEntry      *gse,
                                                       GimpUnit            unit);
@@ -935,15 +935,15 @@ gimp_size_entry_set_value (GimpSizeEntry *gse,
 
 
 static void
-gimp_size_entry_value_callback (GtkWidget *widget,
-                                gpointer   data)
+gimp_size_entry_value_callback (GtkAdjustment *adjustment,
+                                gpointer       data)
 {
   GimpSizeEntryField *gsef;
   gdouble             new_value;
 
   gsef = (GimpSizeEntryField *) data;
 
-  new_value = gtk_adjustment_get_value (GTK_ADJUSTMENT (widget));
+  new_value = gtk_adjustment_get_value (adjustment);
 
   if (gsef->value != new_value)
     gimp_size_entry_update_value (gsef, new_value);
@@ -1217,15 +1217,15 @@ gimp_size_entry_set_refval (GimpSizeEntry *gse,
 }
 
 static void
-gimp_size_entry_refval_callback (GtkWidget *widget,
-                                 gpointer   data)
+gimp_size_entry_refval_callback (GtkAdjustment *adjustment,
+                                 gpointer       data)
 {
   GimpSizeEntryField *gsef;
   gdouble             new_refval;
 
   gsef = (GimpSizeEntryField *) data;
 
-  new_refval = gtk_adjustment_get_value (GTK_ADJUSTMENT (widget));
+  new_refval = gtk_adjustment_get_value (adjustment);
 
   if (gsef->refval != new_refval)
     gimp_size_entry_update_refval (gsef, new_refval);

@@ -50,8 +50,6 @@
 #include "gimp-intl.h"
 
 
-#define FLUSH_NOW_INTERVAL      20000 /* 20 ms in microseconds */
-
 #define PAINT_AREA_CHUNK_WIDTH  32
 #define PAINT_AREA_CHUNK_HEIGHT 32
 
@@ -78,8 +76,6 @@ struct _GimpDisplayPrivate
 
   GtkWidget      *shell;
   cairo_region_t *update_region;
-
-  guint64         last_flush_now;
 };
 
 #define GIMP_DISPLAY_GET_PRIVATE(display) \
@@ -121,8 +117,7 @@ static gboolean gimp_display_progress_message       (GimpProgress        *progre
 static void     gimp_display_progress_canceled      (GimpProgress        *progress,
                                                      GimpDisplay         *display);
 
-static void     gimp_display_flush_whenever         (GimpDisplay         *display,
-                                                     gboolean             now);
+static void     gimp_display_flush_update_region    (GimpDisplay         *display);
 static void     gimp_display_paint_area             (GimpDisplay         *display,
                                                      gint                 x,
                                                      gint                 y,
@@ -802,7 +797,9 @@ gimp_display_flush (GimpDisplay *display)
 {
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  gimp_display_flush_whenever (display, FALSE);
+  gimp_display_flush_update_region (display);
+
+  gimp_display_shell_flush (gimp_display_get_shell (display));
 }
 
 void
@@ -810,15 +807,14 @@ gimp_display_flush_now (GimpDisplay *display)
 {
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
-  gimp_display_flush_whenever (display, TRUE);
+  gimp_display_flush_update_region (display);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_display_flush_whenever (GimpDisplay *display,
-                             gboolean     now)
+gimp_display_flush_update_region (GimpDisplay *display)
 {
   GimpDisplayPrivate *private = GIMP_DISPLAY_GET_PRIVATE (display);
 
@@ -842,22 +838,6 @@ gimp_display_flush_whenever (GimpDisplay *display,
         }
 
       g_clear_pointer (&private->update_region, cairo_region_destroy);
-    }
-
-  if (now)
-    {
-      guint64 now = g_get_monotonic_time ();
-
-      if ((now - private->last_flush_now) > FLUSH_NOW_INTERVAL)
-        {
-          gimp_display_shell_flush (gimp_display_get_shell (display), now);
-
-          private->last_flush_now = now;
-        }
-    }
-  else
-    {
-      gimp_display_shell_flush (gimp_display_get_shell (display), now);
     }
 }
 

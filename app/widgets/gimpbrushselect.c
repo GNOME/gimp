@@ -167,9 +167,9 @@ gimp_brush_select_constructed (GObject *object)
 
   /*  Create the opacity scale widget  */
   select->opacity_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (gimp_context_get_opacity (dialog->context) * 100.0,
-                                        0.0, 100.0,
-                                        1.0, 10.0, 0.0));
+    gtk_adjustment_new (gimp_context_get_opacity (dialog->context) * 100.0,
+                        0.0, 100.0,
+                        1.0, 10.0, 0.0);
 
   scale = gimp_spin_scale_new (select->opacity_data,
                                _("Opacity"), 1);

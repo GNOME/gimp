@@ -1458,6 +1458,9 @@ prefs_dialog_new (Gimp       *gimp,
                                    GTK_BOX (vbox2));
 
   vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
+  g_object_bind_property (button, "active",
+                          vbox3,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
   button = prefs_check_button_add (object, "import-promote-dither",
                                    _("Dither images when promoting to "
                                      "floating point"),
@@ -1480,12 +1483,21 @@ prefs_dialog_new (Gimp       *gimp,
                                    _("Export the image's color profile by default"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-exif",
+                                   /* Translators: label for configuration option (checkbox).
+                                    * It determines how file export plug-ins handle Exif by default.
+                                    */
                                    _("Export Exif metadata by default when available"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-xmp",
+                                   /* Translators: label for configuration option (checkbox).
+                                    * It determines how file export plug-ins handle XMP by default.
+                                    */
                                    _("Export XMP metadata by default when available"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-iptc",
+                                   /* Translators: label for configuration option (checkbox).
+                                    * It determines how file export plug-ins handle IPTC by default.
+                                    */
                                    _("Export IPTC metadata by default when available"),
                                    GTK_BOX (vbox2));
   hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
@@ -1726,9 +1738,17 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Previews  */
   vbox2 = prefs_frame_new (_("Previews"), GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "layer-previews",
-                          _("_Enable layer & channel previews"),
-                          GTK_BOX (vbox2));
+  button = prefs_check_button_add (object, "layer-previews",
+                                   _("_Enable layer & channel previews"),
+                                   GTK_BOX (vbox2));
+
+  vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
+  g_object_bind_property (button, "active",
+                          vbox3,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
+  button = prefs_check_button_add (object, "group-layer-previews",
+                                   _("Enable layer _group previews"),
+                                   GTK_BOX (vbox3));
 
   grid = prefs_grid_new (GTK_CONTAINER (vbox2));
 

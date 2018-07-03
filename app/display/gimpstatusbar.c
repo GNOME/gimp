@@ -446,7 +446,10 @@ gimp_statusbar_progress_start (GimpProgress *progress,
           statusbar->progress_shown = TRUE;
         }
 
+#if 0
+      /* FIXME flush_expose */
       gimp_widget_flush_expose (bar);
+#endif
 
       gimp_statusbar_override_window_title (statusbar);
 
@@ -503,11 +506,12 @@ gimp_statusbar_progress_set_text (GimpProgress *progress,
 
   if (statusbar->progress_active)
     {
-      GtkWidget *bar = statusbar->progressbar;
-
       gimp_statusbar_replace (statusbar, "progress", NULL, "%s", message);
 
+#if 0
+      /* FIXME flush_expose */
       gimp_widget_flush_expose (bar);
+#endif
 
       gimp_statusbar_override_window_title (statusbar);
     }
@@ -545,7 +549,10 @@ gimp_statusbar_progress_set_value (GimpProgress *progress,
               gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar),
                                              percentage);
 
+#if 0
+              /* FIXME flush_expose */
               gimp_widget_flush_expose (bar);
+#endif
             }
         }
     }
@@ -580,7 +587,10 @@ gimp_statusbar_progress_pulse (GimpProgress *progress)
 
           gtk_progress_bar_pulse (GTK_PROGRESS_BAR (bar));
 
+#if 0
+          /* FIXME flush_expose */
           gimp_widget_flush_expose (bar);
+#endif
         }
     }
 }

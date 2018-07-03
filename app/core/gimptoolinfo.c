@@ -250,6 +250,8 @@ gimp_tool_info_new (Gimp                *gimp,
                 "tool",      tool_info,
                 "tool-info", tool_info, NULL);
 
+  gimp_tool_options_set_gui_mode (tool_info->tool_options, TRUE);
+
   if (tool_info->tool_options_type != GIMP_TYPE_TOOL_OPTIONS)
     {
       GimpContainer *presets;

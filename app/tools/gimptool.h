@@ -75,6 +75,7 @@ struct _GimpTool
   GimpCanvasItem  *progress;
   GimpDisplay     *progress_display;
   GtkWidget       *progress_grab_widget;
+  gboolean         progress_cancelable;
 };
 
 struct _GimpToolClass

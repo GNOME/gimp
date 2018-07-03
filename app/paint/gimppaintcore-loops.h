@@ -95,7 +95,7 @@ void do_layer_blend                     (GeglBuffer                     *src_buf
 void mask_components_onto               (GeglBuffer                     *src_buffer,
                                          GeglBuffer                     *aux_buffer,
                                          GeglBuffer                     *dst_buffer,
-                                         GeglRectangle                  *roi,
+                                         const GeglRectangle            *roi,
                                          GimpComponentMask               mask,
                                          gboolean                        linear_mode);
 

@@ -341,7 +341,7 @@ gimp_scale_entry_set_logarithmic (GtkAdjustment *adjustment,
 
   g_return_if_fail (GTK_IS_ADJUSTMENT (adjustment));
 
-  spin_adj  = GTK_ADJUSTMENT (adjustment);
+  spin_adj  = adjustment;
   scale_adj = GIMP_SCALE_ENTRY_SCALE_ADJ (adjustment);
   binding   = g_object_get_data (G_OBJECT (adjustment), "binding");
 

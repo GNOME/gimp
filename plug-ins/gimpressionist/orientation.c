@@ -47,18 +47,14 @@ int orientation_type_input (int in)
 
 void orientation_restore (void)
 {
-  gtk_toggle_button_set_active (
-      GTK_TOGGLE_BUTTON (orient_radio[pcvals.orient_type]),
-      TRUE);
-  gtk_adjustment_set_value (
-      GTK_ADJUSTMENT (orient_num_adjust),
-      pcvals.orient_num);
-  gtk_adjustment_set_value (
-      GTK_ADJUSTMENT (orient_first_adjust),
-      pcvals.orient_first);
-  gtk_adjustment_set_value (
-      GTK_ADJUSTMENT (orient_last_adjust),
-      pcvals.orient_last);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (orient_radio[pcvals.orient_type]),
+                                TRUE);
+  gtk_adjustment_set_value (orient_num_adjust,
+                            pcvals.orient_num);
+  gtk_adjustment_set_value (orient_first_adjust,
+                            pcvals.orient_first);
+  gtk_adjustment_set_value (orient_last_adjust,
+                            pcvals.orient_last);
 }
 
 static void

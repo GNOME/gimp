@@ -58,11 +58,11 @@ void
 size_restore (void)
 {
   size_type_restore ();
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (sizenumadjust),
+  gtk_adjustment_set_value (sizenumadjust,
                             pcvals.size_num);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (sizefirstadjust),
+  gtk_adjustment_set_value (sizefirstadjust,
                             pcvals.size_first);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (sizelastadjust),
+  gtk_adjustment_set_value (sizelastadjust,
                             pcvals.size_last);
 }
 

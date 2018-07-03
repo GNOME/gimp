@@ -263,8 +263,8 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     G_CALLBACK (gimp_text_style_editor_color_changed),
                     editor);
 
-  editor->kerning_adjustment =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -1000.0, 1000.0, 1.0, 10.0, 0.0));
+  editor->kerning_adjustment = gtk_adjustment_new (0.0, -1000.0, 1000.0,
+                                                   1.0, 10.0, 0.0);
   editor->kerning_spinbutton = gtk_spin_button_new (editor->kerning_adjustment,
                                                     1.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (editor->kerning_spinbutton), 5);
@@ -279,8 +279,8 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     G_CALLBACK (gimp_text_style_editor_kerning_changed),
                     editor);
 
-  editor->baseline_adjustment =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -1000.0, 1000.0, 1.0, 10.0, 0.0));
+  editor->baseline_adjustment = gtk_adjustment_new (0.0, -1000.0, 1000.0,
+                                                    1.0, 10.0, 0.0);
   editor->baseline_spinbutton = gtk_spin_button_new (editor->baseline_adjustment,
                                                      1.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (editor->baseline_spinbutton), 5);

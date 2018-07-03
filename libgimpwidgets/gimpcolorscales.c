@@ -308,7 +308,7 @@ create_group (GimpColorScales           *scales,
 
       gtk_size_group_add_widget (size_group0, scales->toggles[i]);
 
-      scales->adjustments[i] = (GtkAdjustment *)
+      scales->adjustments[i] =
         gimp_color_scale_entry_new (GTK_GRID (grid), 1, row,
                                     gettext (enum_desc->value_desc),
                                     -1, -1,

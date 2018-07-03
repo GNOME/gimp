@@ -53,7 +53,8 @@ static const gchar * gimp_procedure_real_get_menu_label (GimpProcedure   *proced
 static const gchar * gimp_procedure_real_get_blurb      (GimpProcedure   *procedure);
 static const gchar * gimp_procedure_real_get_help_id    (GimpProcedure   *procedure);
 static gboolean      gimp_procedure_real_get_sensitive  (GimpProcedure   *procedure,
-                                                         GimpObject      *object);
+                                                         GimpObject      *object,
+                                                         const gchar    **tooltip);
 static GimpValueArray * gimp_procedure_real_execute     (GimpProcedure   *procedure,
                                                          Gimp            *gimp,
                                                          GimpContext     *context,
@@ -193,8 +194,9 @@ gimp_procedure_real_get_help_id (GimpProcedure *procedure)
 }
 
 static gboolean
-gimp_procedure_real_get_sensitive (GimpProcedure *procedure,
-                                   GimpObject    *object)
+gimp_procedure_real_get_sensitive (GimpProcedure  *procedure,
+                                   GimpObject     *object,
+                                   const gchar   **tooltip)
 {
   return TRUE /* random fallback */;
 }
@@ -370,14 +372,24 @@ gimp_procedure_get_help_id (GimpProcedure *procedure)
 }
 
 gboolean
-gimp_procedure_get_sensitive (GimpProcedure *procedure,
-                              GimpObject    *object)
+gimp_procedure_get_sensitive (GimpProcedure  *procedure,
+                              GimpObject     *object,
+                              const gchar   **tooltip)
 {
+  const gchar *my_tooltip = NULL;
+  gboolean     sensitive;
+
   g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), FALSE);
   g_return_val_if_fail (object == NULL || GIMP_IS_OBJECT (object), FALSE);
 
-  return GIMP_PROCEDURE_GET_CLASS (procedure)->get_sensitive (procedure,
-                                                              object);
+  sensitive = GIMP_PROCEDURE_GET_CLASS (procedure)->get_sensitive (procedure,
+                                                                   object,
+                                                                   &my_tooltip);
+
+  if (tooltip)
+    *tooltip = my_tooltip;
+
+  return sensitive;
 }
 
 GimpValueArray *

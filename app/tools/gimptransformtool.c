@@ -98,6 +98,9 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
                                   "%s", klass->progress_text);
 
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, FALSE);
+
   if (orig_buffer)
     {
       /*  this happens when transforming a selection cut out of a

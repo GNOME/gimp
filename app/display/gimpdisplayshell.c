@@ -434,14 +434,14 @@ gimp_display_shell_constructed (GObject *object)
   gtk_widget_show (grid);
 
   /*  the horizontal scrollbar  */
-  shell->hsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_width,
-                                                       1, 1, image_width));
+  shell->hsbdata = gtk_adjustment_new (0, 0, image_width,
+                                       1, 1, image_width);
   shell->hsb = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL, shell->hsbdata);
   gtk_widget_set_can_focus (shell->hsb, FALSE);
 
   /*  the vertical scrollbar  */
-  shell->vsbdata = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, image_height,
-                                                       1, 1, image_height));
+  shell->vsbdata = gtk_adjustment_new (0, 0, image_height,
+                                       1, 1, image_height);
   shell->vsb = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL, shell->vsbdata);
   gtk_widget_set_can_focus (shell->vsb, FALSE);
 
@@ -675,8 +675,7 @@ gimp_display_shell_constructed (GObject *object)
        * not even finished creating the display shell, we can safely
        * assume we will get a size-allocate later.
        */
-      gimp_display_shell_scroll_center_image_on_size_allocate (shell,
-                                                               TRUE, TRUE);
+      shell->size_allocate_center_image = TRUE;
     }
   else
     {
@@ -1411,11 +1410,6 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   gimp_display_shell_set_initial_scale (shell, scale, NULL, NULL);
   gimp_display_shell_scale_update (shell);
 
-  /* center the image so subsequent stuff only moves it a little in
-   * the center
-   */
-  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
-
   gimp_display_shell_sync_config (shell, config);
 
   gimp_image_window_suspend_keep_pos (window);
@@ -1432,7 +1426,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
   /* A size-allocate will always occur because the scrollbars will
    * become visible forcing the canvas to become smaller
    */
-  gimp_display_shell_scroll_center_image_on_size_allocate (shell, TRUE, TRUE);
+  shell->size_allocate_center_image = TRUE;
 
   if (shell->blink_timeout_id)
     {
@@ -1697,39 +1691,32 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_flush (GimpDisplayShell *shell,
-                          gboolean          now)
+gimp_display_shell_flush (GimpDisplayShell *shell)
 {
+  GimpImageWindow *window;
+  GimpContext     *context;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (now)
+  window = gimp_display_shell_get_window (shell);
+
+  gimp_display_shell_title_update (shell);
+
+  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                        gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
+
+  if (window && gimp_image_window_get_active_shell (window) == shell)
     {
-      gdk_window_process_updates (gtk_widget_get_window (shell->canvas),
-                                  FALSE);
+      GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+
+      gimp_ui_manager_update (manager, shell->display);
     }
-  else
+
+  context = gimp_get_user_context (shell->display->gimp);
+
+  if (shell->display == gimp_context_get_display (context))
     {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
-      GimpContext     *context;
-
-      gimp_display_shell_title_update (shell);
-
-      gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
-                                            gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
-
-      if (window && gimp_image_window_get_active_shell (window) == shell)
-        {
-          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
-
-          gimp_ui_manager_update (manager, shell->display);
-        }
-
-      context = gimp_get_user_context (shell->display->gimp);
-
-      if (shell->display == gimp_context_get_display (context))
-        {
-          gimp_ui_manager_update (shell->popup_manager, shell->display);
-        }
+      gimp_ui_manager_update (shell->popup_manager, shell->display);
     }
 }
 

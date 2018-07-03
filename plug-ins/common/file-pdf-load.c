@@ -228,7 +228,7 @@ static void   gimp_resolution_entry_init            (GimpResolutionEntry      *g
 
 static void   gimp_resolution_entry_update_value    (GimpResolutionEntryField *gref,
                                                      gdouble              value);
-static void   gimp_resolution_entry_value_callback  (GtkWidget           *widget,
+static void   gimp_resolution_entry_value_callback  (GtkAdjustment       *adjustment,
                                                      gpointer             data);
 static void   gimp_resolution_entry_update_unit     (GimpResolutionEntry *gre,
                                                      GimpUnit             unit);
@@ -1560,11 +1560,10 @@ gimp_resolution_entry_field_init (GimpResolutionEntry      *gre,
 
   digits = size ? 0 : MIN (gimp_unit_get_digits (initial_unit), 5) + 1;
 
-  gref->adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (gref->value,
-                        gref->min_value,
-                        gref->max_value,
-                        1.0, 10.0, 0.0);
+  gref->adjustment = gtk_adjustment_new (gref->value,
+                                         gref->min_value,
+                                         gref->max_value,
+                                         1.0, 10.0, 0.0);
   gref->spinbutton = gtk_spin_button_new (gref->adjustment,
                                           1.0, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (gref->spinbutton), TRUE);
@@ -1825,13 +1824,13 @@ gimp_resolution_entry_update_value (GimpResolutionEntryField *gref,
 }
 
 static void
-gimp_resolution_entry_value_callback (GtkWidget *widget,
-                                      gpointer   data)
+gimp_resolution_entry_value_callback (GtkAdjustment *adjustment,
+                                      gpointer       data)
 {
   GimpResolutionEntryField *gref = (GimpResolutionEntryField *) data;
   gdouble                   new_value;
 
-  new_value = gtk_adjustment_get_value (GTK_ADJUSTMENT (widget));
+  new_value = gtk_adjustment_get_value (adjustment);
 
   if (gref->value != new_value)
     gimp_resolution_entry_update_value (gref, new_value);

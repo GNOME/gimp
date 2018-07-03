@@ -267,6 +267,27 @@ gimp_config_build_writable_path (const gchar *name)
   return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name, NULL);
 }
 
+/**
+ * gimp_config_build_system_path:
+ * @name: directory name (in UTF-8 encoding)
+ *
+ * Creates a search path as it is used in the gimprc file.  The path
+ * returned by gimp_config_build_system_path() is just the read-only
+ * parts of the search path constructed by gimp_config_build_plug_in_path().
+ *
+ * Note that you cannot use this path directly with gimp_path_parse().
+ * As it is in the gimprc notation, you first need to expand and
+ * recode it using gimp_config_path_expand().
+ *
+ * Returns: a newly allocated string
+ *
+ * Since: 2.10.6
+ **/
+gchar *
+gimp_config_build_system_path (const gchar *name)
+{
+  return g_strconcat ("${gimp_plug_in_dir}", G_DIR_SEPARATOR_S, name, NULL);
+}
 
 /**
  * gimp_config_path_expand:

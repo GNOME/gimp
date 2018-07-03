@@ -669,7 +669,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     GIMP_HELP_FILTER_TILE_SEAMLESS },
 
   { "filters-unsharp-mask", GIMP_ICON_GEGL,
-    NC_("filters-action", "_Unsharp Mask..."), NULL, NULL,
+    NC_("filters-action", "Sharpen (_Unsharp Mask)..."), NULL, NULL,
     "gegl:unsharp-mask",
     GIMP_HELP_FILTER_UNSHARP_MASK },
 
@@ -957,7 +957,8 @@ filters_actions_update (GimpActionGroup *group,
     GimpProcedure *proc = gimp_filter_history_nth (group->gimp, 0);
     gint           i;
 
-    if (proc && gimp_procedure_get_sensitive (proc, GIMP_OBJECT (drawable)))
+    if (proc &&
+        gimp_procedure_get_sensitive (proc, GIMP_OBJECT (drawable), NULL))
       {
         gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE);
         gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE);
@@ -975,7 +976,8 @@ filters_actions_update (GimpActionGroup *group,
 
         proc = gimp_filter_history_nth (group->gimp, i);
 
-        sensitive = gimp_procedure_get_sensitive (proc, GIMP_OBJECT (drawable));
+        sensitive = gimp_procedure_get_sensitive (proc, GIMP_OBJECT (drawable),
+                                                  NULL);
 
         gimp_action_group_set_action_sensitive (group, name, sensitive);
 

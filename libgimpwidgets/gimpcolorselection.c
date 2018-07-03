@@ -167,6 +167,8 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelection");
+
   g_type_class_add_private (object_class, sizeof (GimpColorSelectionPrivate));
 }
 
@@ -341,10 +343,6 @@ gimp_color_selection_init (GimpColorSelection *selection)
 
   /* The hex triplet entry */
   entry = gimp_color_hex_entry_new ();
-  gimp_help_set_help_data (entry,
-                           _("Hexadecimal color notation as used in HTML and "
-                             "CSS.  This entry also accepts CSS color names."),
-                           NULL);
   gtk_box_pack_end (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_widget_show (entry);
 

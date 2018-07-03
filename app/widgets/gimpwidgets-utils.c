@@ -33,6 +33,10 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef PLATFORM_OSX
+#include <CoreGraphics/CoreGraphics.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
@@ -319,11 +323,29 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
   gimp_enum_radio_box_add (GTK_BOX (box), widget, enum_value, below);
 }
 
+/**
+ * gimp_widget_load_icon:
+ * @widget:                  parent widget (to determine icon theme and
+ *                           style)
+ * @icon_name:               icon name
+ * @size:                    requested pixel size
+ *
+ * Loads an icon into a pixbuf with size as close as possible to @size.
+ * If icon does not exist or fail to load, the function will fallback to
+ * "gimp-wilber-eek" instead to prevent NULL pixbuf. As a last resort,
+ * if even the fallback failed to load, a magenta @size square will be
+ * returned, so this function is guaranteed to always return a
+ * #GdkPixbuf.
+ *
+ * Return value: a newly allocated #GdkPixbuf containing @icon_name at
+ * size @size or a fallback icon/size.
+ **/
 GdkPixbuf *
 gimp_widget_load_icon (GtkWidget   *widget,
                        const gchar *icon_name,
                        gint         size)
 {
+  GdkPixbuf    *pixbuf = NULL;
   GtkIconTheme *icon_theme;
   GtkIconInfo  *icon_info;
   gchar        *name;
@@ -343,23 +365,76 @@ gimp_widget_load_icon (GtkWidget   *widget,
                                                      GTK_ICON_LOOKUP_GENERIC_FALLBACK);
   g_free (name);
 
-  if (! icon_info)
+  if (icon_info)
     {
-      g_printerr ("gimp_widget_load_icon(): icon theme has no icon '%s'.\n",
-                  icon_name);
+      pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                        gtk_widget_get_style_context (widget),
+                                                        NULL, NULL);
+      g_object_unref (icon_info);
+      if (! pixbuf)
+        /* The icon was seemingly present in the current icon theme, yet
+         * it failed to load. Maybe the file is broken?
+         * As last resort, try to load "gimp-wilber-eek" as fallback.
+         * Note that we are not making more checks, so if the fallback
+         * icon fails to load as well, the function may still return NULL.
+         */
+        g_printerr ("WARNING: icon '%s' failed to load. Check the files "
+                    "in your icon theme.\n", icon_name);
+    }
+  else
+    g_printerr ("WARNING: icon theme has no icon '%s'.\n", icon_name);
+
+  /* First fallback: gimp-wilber-eek */
+  if (! pixbuf)
+    {
       icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme,
                                                         GIMP_ICON_WILBER_EEK "-symbolic",
                                                         size, scale_factor,
                                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK);
-
-      return gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                      gtk_widget_get_style_context (widget),
-                                                      NULL, NULL);
+      if (icon_info)
+        {
+          pixbuf = gtk_icon_info_load_symbolic_for_context (icon_info,
+                                                            gtk_widget_get_style_context (widget),
+                                                            NULL, NULL);
+          g_object_unref (icon_info);
+          if (! pixbuf)
+            g_printerr ("WARNING: icon '%s' failed to load. Check the files "
+                        "in your icon theme.\n", GIMP_ICON_WILBER_EEK);
+        }
+      else
+        g_printerr ("WARNING: icon theme has no icon '%s'.\n", GIMP_ICON_WILBER_EEK);
     }
 
-  return gtk_icon_info_load_symbolic_for_context (icon_info,
-                                                  gtk_widget_get_style_context (widget),
-                                                  NULL, NULL);
+  /* Last fallback: just a magenta square. */
+  if (! pixbuf)
+    {
+      /* As last resort, just draw an ugly magenta square. */
+      guchar *data;
+      gint    rowstride = 3 * size;
+      gint    i, j;
+
+      data = g_new (guchar, rowstride * size);
+      for (i = 0; i < size; i++)
+        {
+          for (j = 0; j < size; j++)
+            {
+              data[i * rowstride + j * 3] = 255;
+              data[i * rowstride + j * 3 + 1] = 0;
+              data[i * rowstride + j * 3 + 2] = 255;
+            }
+        }
+      pixbuf = gdk_pixbuf_new_from_data (data, GDK_COLORSPACE_RGB, FALSE,
+                                         8, size, size, rowstride,
+                                         (GdkPixbufDestroyNotify) g_free,
+                                         NULL);
+    }
+
+  /* Small assertion test to get a warning if we ever get NULL return
+   * value, as this is never supposed to happen.
+   */
+  g_return_val_if_fail (pixbuf != NULL, NULL);
+
+  return pixbuf;
 }
 
 GtkIconSize
@@ -737,16 +812,31 @@ gimp_get_monitor_resolution (GdkMonitor *monitor,
   gint         width_mm, height_mm;
   gdouble      x = 0.0;
   gdouble      y = 0.0;
+#ifdef PLATFORM_OSX
+  CGSize       size;
+#endif
 
   g_return_if_fail (GDK_IS_MONITOR (monitor));
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
 
+#ifndef PLATFORM_OSX
   gdk_monitor_get_geometry (monitor, &size_pixels);
 
   width_mm  = gdk_monitor_get_width_mm  (monitor);
   height_mm = gdk_monitor_get_height_mm (monitor);
-
+#else
+  width_mm  = 0;
+  height_mm = 0;
+  size = CGDisplayScreenSize (kCGDirectMainDisplay);
+  if (!CGSizeEqualToSize (size, CGSizeZero))
+    {
+      width_mm  = size.width;
+      height_mm = size.height;
+    }
+  size_pixels.width  = CGDisplayPixelsWide (kCGDirectMainDisplay);
+  size_pixels.height = CGDisplayPixelsHigh (kCGDirectMainDisplay);
+#endif
   /*
    * From xdpyinfo.c:
    *
@@ -1413,18 +1503,6 @@ gimp_tools_set_tool_options_gui (GimpToolOptions   *tool_options,
                           GIMP_TOOL_OPTIONS_GUI_KEY,
                           widget,
                           widget ? (GDestroyNotify) g_object_unref : NULL);
-}
-
-void
-gimp_widget_flush_expose (GtkWidget *widget)
-{
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-
-  if (! gtk_widget_is_drawable (widget))
-    return;
-
-  gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
-  gdk_display_flush (gtk_widget_get_display (widget));
 }
 
 gboolean

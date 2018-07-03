@@ -69,7 +69,8 @@ static const gchar * gimp_plug_in_procedure_get_menu_label
 static const gchar * gimp_plug_in_procedure_get_blurb  (GimpProcedure  *procedure);
 static const gchar * gimp_plug_in_procedure_get_help_id(GimpProcedure  *procedure);
 static gboolean   gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
-                                                        GimpObject     *object);
+                                                        GimpObject     *object,
+                                                        const gchar  **tooltip);
 static GimpValueArray * gimp_plug_in_procedure_execute (GimpProcedure  *procedure,
                                                         Gimp           *gimp,
                                                         GimpContext    *context,
@@ -159,6 +160,7 @@ gimp_plug_in_procedure_finalize (GObject *object)
 
   g_free (proc->icon_data);
   g_free (proc->image_types);
+  g_free (proc->image_types_tooltip);
 
   g_free (proc->extensions);
   g_free (proc->prefixes);
@@ -338,8 +340,9 @@ gimp_plug_in_procedure_get_help_id (GimpProcedure *procedure)
 }
 
 static gboolean
-gimp_plug_in_procedure_get_sensitive (GimpProcedure *procedure,
-                                      GimpObject    *object)
+gimp_plug_in_procedure_get_sensitive (GimpProcedure  *procedure,
+                                      GimpObject     *object,
+                                      const gchar   **tooltip)
 {
   GimpPlugInProcedure *proc       = GIMP_PLUG_IN_PROCEDURE (procedure);
   GimpDrawable        *drawable;
@@ -380,6 +383,9 @@ gimp_plug_in_procedure_get_sensitive (GimpProcedure *procedure,
     default:
       break;
     }
+
+  if (! sensitive)
+    *tooltip = proc->image_types_tooltip;
 
   return sensitive ? TRUE : FALSE;
 }
@@ -985,6 +991,8 @@ void
 gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
                                         const gchar         *image_types)
 {
+  GList *types = NULL;
+
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
   if (proc->image_types)
@@ -993,6 +1001,91 @@ gimp_plug_in_procedure_set_image_types (GimpPlugInProcedure *proc,
   proc->image_types     = g_strdup (image_types);
   proc->image_types_val = image_types_parse (gimp_object_get_name (proc),
                                              proc->image_types);
+
+  g_clear_pointer (&proc->image_types_tooltip, g_free);
+
+  if (proc->image_types_val &
+      (GIMP_PLUG_IN_RGB_IMAGE | GIMP_PLUG_IN_RGBA_IMAGE))
+    {
+      if ((proc->image_types_val & GIMP_PLUG_IN_RGB_IMAGE) &&
+          (proc->image_types_val & GIMP_PLUG_IN_RGBA_IMAGE))
+        {
+          types = g_list_prepend (types, _("RGB"));
+        }
+      else if (proc->image_types_val & GIMP_PLUG_IN_RGB_IMAGE)
+        {
+          types = g_list_prepend (types, _("RGB without alpha"));
+        }
+      else
+        {
+          types = g_list_prepend (types, _("RGB with alpha"));
+        }
+    }
+
+  if (proc->image_types_val &
+      (GIMP_PLUG_IN_GRAY_IMAGE | GIMP_PLUG_IN_GRAYA_IMAGE))
+    {
+      if ((proc->image_types_val & GIMP_PLUG_IN_GRAY_IMAGE) &&
+          (proc->image_types_val & GIMP_PLUG_IN_GRAYA_IMAGE))
+        {
+          types = g_list_prepend (types, _("Grayscale"));
+        }
+      else if (proc->image_types_val & GIMP_PLUG_IN_GRAY_IMAGE)
+        {
+          types = g_list_prepend (types, _("Grayscale without alpha"));
+        }
+      else
+        {
+          types = g_list_prepend (types, _("Grayscale with alpha"));
+        }
+    }
+
+  if (proc->image_types_val &
+      (GIMP_PLUG_IN_INDEXED_IMAGE | GIMP_PLUG_IN_INDEXEDA_IMAGE))
+    {
+      if ((proc->image_types_val & GIMP_PLUG_IN_INDEXED_IMAGE) &&
+          (proc->image_types_val & GIMP_PLUG_IN_INDEXEDA_IMAGE))
+        {
+          types = g_list_prepend (types, _("Indexed"));
+        }
+      else if (proc->image_types_val & GIMP_PLUG_IN_INDEXED_IMAGE)
+        {
+          types = g_list_prepend (types, _("Indexed without alpha"));
+        }
+      else
+        {
+          types = g_list_prepend (types, _("Indexed with alpha"));
+        }
+    }
+
+  if (types)
+    {
+      GString *string;
+      GList   *list;
+
+      types = g_list_reverse (types);
+
+      string = g_string_new (gimp_procedure_get_blurb (GIMP_PROCEDURE (proc)));
+
+      g_string_append (string, "\n\n");
+      g_string_append (string, _("This plug-in only works on the "
+                                 "following layer types:"));
+      g_string_append (string, "\n");
+
+      for (list = types; list; list = g_list_next (list))
+        {
+          g_string_append (string, list->data);
+
+          if (list->next)
+            g_string_append (string, ", ");
+          else
+            g_string_append (string, ".");
+        }
+
+      g_list_free (types);
+
+      proc->image_types_tooltip = g_string_free (string, FALSE);
+    }
 }
 
 static GSList *

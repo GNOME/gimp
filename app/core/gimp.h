@@ -75,6 +75,7 @@ struct _Gimp
   GimpModuleDB           *module_db;
   gboolean                write_modulerc;
 
+  GimpExtensionManager   *extension_manager;
   GimpPlugInManager      *plug_in_manager;
 
   GList                  *filter_history;

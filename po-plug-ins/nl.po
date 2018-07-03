@@ -3,6 +3,7 @@
 # Branko Collin <collin@xs4all.nl>, 2001, 2002, 2003, 2004.
 # Tino Meinen <a.t.meinen@chello.nl>, 2004, 2005.
 # Filip Vervloesem <filip.vervloesem@member.fsf.org>, 2008.
+# Paul Matthijsse <paul.matthijsse@wanadoo.fr>, 2018.
 # -------------------------------------------------
 # bumpmap           bumpprojectie/bultprojectie/bumpmap
 # hue               tint

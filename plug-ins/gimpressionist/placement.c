@@ -41,7 +41,7 @@ place_restore (void)
     (GTK_TOGGLE_BUTTON (placement_radio[pcvals.place_type]), TRUE);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (placement_center),
                                 pcvals.placement_center);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (brush_density_adjust),
+  gtk_adjustment_set_value (brush_density_adjust,
                             pcvals.brush_density);
 }
 

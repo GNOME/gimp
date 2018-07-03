@@ -135,10 +135,6 @@ gimp_progress_box_progress_start (GimpProgress *progress,
       box->cancellable = cancellable;
       box->value       = 0.0;
 
-      if (gtk_widget_is_drawable (box->progress))
-        gdk_window_process_updates (gtk_widget_get_window (box->progress),
-                                    TRUE);
-
       return progress;
     }
 
@@ -179,10 +175,6 @@ gimp_progress_box_progress_set_text (GimpProgress *progress,
       GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
 
       gtk_label_set_text (GTK_LABEL (box->label), message);
-
-      if (gtk_widget_is_drawable (box->progress))
-        gdk_window_process_updates (gtk_widget_get_window (box->progress),
-                                    TRUE);
     }
 }
 
@@ -205,8 +197,6 @@ gimp_progress_box_progress_set_value (GimpProgress *progress,
                 (percentage - gtk_progress_bar_get_fraction (bar))) > 1.0)
         {
           gtk_progress_bar_set_fraction (bar, box->value);
-
-          gimp_widget_flush_expose (box->progress);
         }
     }
 }
@@ -231,10 +221,6 @@ gimp_progress_box_progress_pulse (GimpProgress *progress)
       GtkProgressBar  *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_pulse (bar);
-
-      if (gtk_widget_is_drawable (box->progress))
-        gdk_window_process_updates (gtk_widget_get_window (box->progress),
-                                    TRUE);
     }
 }
 

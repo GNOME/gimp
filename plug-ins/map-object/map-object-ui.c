@@ -91,7 +91,7 @@ update_light_pos_entries (void)
   g_signal_handlers_block_by_func (xadj,
                                    double_adjustment_update,
                                    &mapvals.lightsource.position.x);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (xadj),
+  gtk_adjustment_set_value (xadj,
                             mapvals.lightsource.position.x);
   g_signal_handlers_unblock_by_func (xadj,
                                      double_adjustment_update,
@@ -100,7 +100,7 @@ update_light_pos_entries (void)
   g_signal_handlers_block_by_func (yadj,
                                    double_adjustment_update,
                                    &mapvals.lightsource.position.y);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (yadj),
+  gtk_adjustment_set_value (yadj,
                             mapvals.lightsource.position.y);
   g_signal_handlers_unblock_by_func (yadj,
                                      double_adjustment_update,
@@ -109,7 +109,7 @@ update_light_pos_entries (void)
   g_signal_handlers_block_by_func (zadj,
                                    double_adjustment_update,
                                    &mapvals.lightsource.position.z);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (zadj),
+  gtk_adjustment_set_value (zadj,
                             mapvals.lightsource.position.z);
   g_signal_handlers_unblock_by_func (zadj,
                                      double_adjustment_update,
@@ -400,11 +400,10 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
 {
   GtkWidget *spinbutton;
 
-  *adjustment = (GtkAdjustment *)
-                gtk_adjustment_new (value, lower, upper,
+  *adjustment = gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+  spinbutton = gtk_spin_button_new (*adjustment,
                                     climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -549,8 +548,7 @@ create_options_page (void)
                           grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                               _("_Depth:"), 0, 0,
                               mapvals.maxdepth, 1.0, 5.0, 0.1, 1.0,
                               1, TRUE, 0, 0,
@@ -967,8 +965,7 @@ create_orientation_page (void)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                               _("X:"), 0, 0,
                               mapvals.position.x, -1.0, 2.0, 0.01, 0.1, 5,
                               TRUE, 0, 0,
@@ -981,8 +978,7 @@ create_orientation_page (void)
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.position.x);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                               _("Y:"), 0, 0,
                               mapvals.position.y, -1.0, 2.0, 0.01, 0.1, 5,
                               TRUE, 0, 0,
@@ -995,8 +991,7 @@ create_orientation_page (void)
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.position.y);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                               _("Z:"), 0, 0,
                               mapvals.position.z, -1.0, 2.0, 0.01, 0.1, 5,
                               TRUE, 0, 0,
@@ -1019,8 +1014,7 @@ create_orientation_page (void)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                               _("X:"), 0, 0,
                               mapvals.alpha, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
@@ -1031,8 +1025,7 @@ create_orientation_page (void)
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.alpha);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                               _("Y:"), 0, 0,
                               mapvals.beta, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
@@ -1043,8 +1036,7 @@ create_orientation_page (void)
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.beta);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                               _("Z:"), 0, 0,
                               mapvals.gamma, -180.0, 180.0, 1.0, 15.0, 1,
                               TRUE, 0, 0,
@@ -1119,8 +1111,7 @@ create_box_page (void)
   gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                               _("Scale X:"), 0, 0,
                               mapvals.scale.x, 0.0, 5.0, 0.01, 0.1, 2,
                               TRUE, 0, 0,
@@ -1132,8 +1123,7 @@ create_box_page (void)
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.scale.x);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                               _("Y:"), 0, 0,
                               mapvals.scale.y, 0.0, 5.0, 0.01, 0.1, 2,
                               TRUE, 0, 0,
@@ -1145,8 +1135,7 @@ create_box_page (void)
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.scale.y);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 2,
                               _("Z:"), 0, 0,
                               mapvals.scale.z, 0.0, 5.0, 0.01, 0.1, 2,
                               TRUE, 0, 0,
@@ -1217,8 +1206,7 @@ create_cylinder_page (void)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 0,
                               _("R_adius:"), 0, 0,
                               mapvals.cylinder_radius,
                               0.0, 2.0, 0.01, 0.1, 2,
@@ -1232,8 +1220,7 @@ create_cylinder_page (void)
                     G_CALLBACK (double_adjustment_update),
                     &mapvals.cylinder_radius);
 
-  adj = (GtkAdjustment *)
-        gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
+  adj = gimp_scale_entry_new (GTK_GRID (grid), 0, 1,
                               _("L_ength:"), 0, 0,
                               mapvals.cylinder_length,
                               0.0, 2.0, 0.01, 0.1, 2,

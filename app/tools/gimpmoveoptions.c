@@ -130,38 +130,50 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
                                GParamSpec      *pspec,
                                GtkWidget       *frame)
 {
-  const gchar *false_label = NULL;
-  const gchar *true_label  = NULL;
-  GtkWidget   *button;
-  GSList      *group;
-
-  button = g_object_get_data (G_OBJECT (frame), "radio-button");
-
-  switch (move_options->move_type)
+  if (move_options->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
     {
-    case GIMP_TRANSFORM_TYPE_LAYER:
-      false_label = _("Pick a layer or guide");
-      true_label  = _("Move the active layer");
-      break;
-
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-      false_label = true_label = _("Move selection");
-      break;
-
-    case GIMP_TRANSFORM_TYPE_PATH:
-      false_label = _("Pick a path");
-      true_label  = _("Move the active path");
-     break;
+      gtk_widget_hide (gtk_bin_get_child (GTK_BIN (frame)));
+      gtk_frame_set_label (GTK_FRAME (frame), _("Move selection"));
     }
+  else
+    {
+      const gchar *false_label = NULL;
+      const gchar *true_label  = NULL;
+      GtkWidget   *button;
+      GSList      *group;
+      gchar       *title;
 
-  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-  gtk_button_set_label (GTK_BUTTON (group->data), true_label);
+      title = g_strdup_printf (_("Tool Toggle  (%s)"),
+                               gimp_get_mod_string (gimp_get_extend_selection_mask ()));
+      gtk_frame_set_label (GTK_FRAME (frame), title);
+      g_free (title);
 
-  group = g_slist_next (group);
-  gtk_button_set_label (GTK_BUTTON (group->data), false_label);
+      switch (move_options->move_type)
+        {
+        case GIMP_TRANSFORM_TYPE_LAYER:
+          false_label = _("Pick a layer or guide");
+          true_label  = _("Move the active layer");
+          break;
 
-  gtk_widget_set_sensitive (frame,
-                            move_options->move_type != GIMP_TRANSFORM_TYPE_SELECTION);
+        case GIMP_TRANSFORM_TYPE_PATH:
+          false_label = _("Pick a path");
+          true_label  = _("Move the active path");
+          break;
+
+        default: /* GIMP_TRANSFORM_TYPE_SELECTION */
+          g_return_if_reached ();
+        }
+
+      button = g_object_get_data (G_OBJECT (frame), "radio-button");
+
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+      gtk_button_set_label (GTK_BUTTON (group->data), true_label);
+
+      group = g_slist_next (group);
+      gtk_button_set_label (GTK_BUTTON (group->data), false_label);
+
+      gtk_widget_show (gtk_bin_get_child (GTK_BIN (frame)));
+    }
 }
 
 GtkWidget *

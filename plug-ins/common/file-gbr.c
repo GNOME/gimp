@@ -820,7 +820,7 @@ save_dialog (void)
                     G_CALLBACK (entry_callback),
                     info.description);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
+  adj = gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);

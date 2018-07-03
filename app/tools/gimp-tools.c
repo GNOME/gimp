@@ -35,6 +35,7 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
 
+#include "gimp-tool-options-manager.h"
 #include "gimp-tools.h"
 #include "gimptooloptions-gui.h"
 #include "tool_manager.h"
@@ -191,8 +192,6 @@ gimp_tools_init (Gimp *gimp)
 
   gimp_tool_options_create_folder ();
 
-  tool_manager_init (gimp);
-
   gimp_container_freeze (gimp->tool_info_list);
 
   for (i = 0; i < G_N_ELEMENTS (register_funcs); i++)
@@ -201,6 +200,10 @@ gimp_tools_init (Gimp *gimp)
     }
 
   gimp_container_thaw (gimp->tool_info_list);
+
+  gimp_tool_options_manager_init (gimp);
+
+  tool_manager_init (gimp);
 
   for (list = gimp_get_tool_info_iter (gimp);
        list;
@@ -233,6 +236,8 @@ gimp_tools_exit (Gimp *gimp)
   g_object_set_data (G_OBJECT (gimp), "gimp-tools-default-order", NULL);
 
   tool_manager_exit (gimp);
+
+  gimp_tool_options_manager_exit (gimp);
 
   for (list = gimp_get_tool_info_iter (gimp);
        list;
@@ -414,12 +419,12 @@ gimp_tools_save (Gimp     *gimp,
           g_clear_error (&error);
         }
 
-        if (! gimp_internal_data_save (gimp, &error))
-          {
-            gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
-                                  error->message);
-            g_clear_error (&error);
-          }
+      if (! gimp_internal_data_save (gimp, &error))
+        {
+          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
+                                error->message);
+          g_clear_error (&error);
+        }
 
       gimp_tool_options_create_folder ();
 

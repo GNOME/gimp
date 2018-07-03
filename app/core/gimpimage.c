@@ -856,6 +856,9 @@ gimp_image_constructed (GObject *object)
   g_signal_connect_object (config, "notify::layer-previews",
                            G_CALLBACK (gimp_viewable_size_changed),
                            image, G_CONNECT_SWAPPED);
+  g_signal_connect_object (config, "notify::group-layer-previews",
+                           G_CALLBACK (gimp_viewable_size_changed),
+                           image, G_CONNECT_SWAPPED);
 
   gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
 }

@@ -120,6 +120,11 @@ G_DEFINE_TYPE_WITH_CODE (GimpAsync, gimp_async, G_TYPE_OBJECT,
 #define parent_class gimp_async_parent_class
 
 
+/*  local variables  */
+
+static volatile gint gimp_async_n_running = 0;
+
+
 /*  private functions  */
 
 
@@ -158,6 +163,8 @@ gimp_async_init (GimpAsync *async)
   g_cond_init  (&async->priv->cond);
 
   g_queue_init (&async->priv->callbacks);
+
+  g_atomic_int_inc (&gimp_async_n_running);
 
 #ifdef TIME_ASYNC_OPS
   async->priv->start_time = g_get_monotonic_time ();
@@ -307,6 +314,8 @@ gimp_async_stop (GimpAsync *async)
                 async->priv->finished ? "" : " (aborted)");
   }
 #endif
+
+  g_atomic_int_dec_and_test (&gimp_async_n_running);
 
   if (! g_queue_is_empty (&async->priv->callbacks))
     {
@@ -586,4 +595,14 @@ gimp_async_cancel_and_wait (GimpAsync *async)
 
   gimp_cancelable_cancel (GIMP_CANCELABLE (async));
   gimp_waitable_wait (GIMP_WAITABLE (async));
+}
+
+
+/*  public functions (stats)  */
+
+
+gint
+gimp_async_get_n_running (void)
+{
+  return gimp_async_n_running;
 }

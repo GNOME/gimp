@@ -154,12 +154,12 @@ print_size_dialog_new (GimpImage              *image,
 
   /*  the print size entry  */
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   width = gtk_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   height = gtk_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
@@ -215,12 +215,12 @@ print_size_dialog_new (GimpImage              *image,
 
   /*  the resolution entry  */
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   width = gtk_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   height = gtk_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);

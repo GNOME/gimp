@@ -258,10 +258,12 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
                                             G_FILE_CREATE_NONE,
                                             NULL, error));
 
-  g_object_unref (file);
-
   if (! output)
-    return FALSE;
+    {
+      g_object_unref (file);
+
+      return FALSE;
+    }
 
   data = data_file->get_func (gimp);
 
@@ -276,7 +278,31 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
   gimp_assert (GIMP_DATA_GET_CLASS (data)->save);
   success = GIMP_DATA_GET_CLASS (data)->save (data, output, error);
 
+  if (success)
+    {
+      if (! g_output_stream_close (output, NULL, error))
+        {
+          g_prefix_error (error,
+                          _("Error saving '%s': "),
+                          gimp_file_get_utf8_name (file));
+          success = FALSE;
+        }
+    }
+  else if (error && *error)
+    {
+      g_prefix_error (error,
+                      _("Error saving '%s': "),
+                      gimp_file_get_utf8_name (file));
+    }
+  else
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+                   _("Error saving '%s'"),
+                   gimp_file_get_utf8_name (file));
+    }
+
   g_object_unref (output);
+  g_object_unref (file);
 
   return success;
 }

@@ -43,7 +43,7 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.51])
+m4_define([babl_required_version], [0.1.52])
 m4_define([gegl_major_minor_version], [0.4])
 m4_define([gegl_micro_version], [3])
 m4_define([gegl_required_version],
@@ -59,7 +59,7 @@ m4_define([fontconfig_required_version], [2.12.4])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([gtkdoc_required_version], [1.0])
-m4_define([webkitgtk_required_version], [2.4.11])
+m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.40.6])
 m4_define([wmf_required_version], [0.2.8])
@@ -73,6 +73,7 @@ m4_define([libmypaint_required_version], [1.3.0])
 m4_define([lcms_required_version], [2.8])
 m4_define([libpng_required_version], [1.6.25])
 m4_define([liblzma_required_version], [5.0.0])
+m4_define([appstream_glib_required_version], [0.7.7])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([openjpeg_required_version], [2.1.0])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
@@ -1365,6 +1366,35 @@ AC_SUBST(GIMP_COMMAND)
 # unconditionally:
 MIME_TYPES="image/bmp;image/g3fax;image/gif;image/x-fits;image/x-pcx;image/x-portable-anymap;image/x-portable-bitmap;image/x-portable-graymap;image/x-portable-pixmap;image/x-psd;image/x-sgi;image/x-tga;image/x-xbitmap;image/x-xwindowdump;image/x-xcf;image/x-compressed-xcf;image/x-gimp-gbr;image/x-gimp-pat;image/x-gimp-gih"
 
+#################
+# Bundle packages
+#################
+
+AC_MSG_CHECKING([whether we build a relocatable package])
+AC_ARG_ENABLE(relocatable-bundle,
+              [  --enable-relocatable-bundle
+                          build with resources considered bundled under the same prefix
+                          (default=auto)],,
+              enable_relocatable_bundle=auto)
+
+if test "x$enable_relocatable_bundle" != xno &&
+   test "x$enable_relocatable_bundle" != xyes; then
+  # By default, assume building for Windows or macOS everything to be on
+  # the same prefix and can be relocated.
+  # On other platforms, build-time paths are meaningful.
+  if test "x$platform_osx" = "xyes" ||
+     test "x$platform_win32" = "xyes"; then
+     enable_relocatable_bundle=yes
+  else
+     enable_relocatable_bundle=no
+  fi
+fi
+if test "x$enable_relocatable_bundle" = xyes; then
+  AC_DEFINE(ENABLE_RELOCATABLE_RESOURCES, 1,
+            [Define to 1 if resources are considered bundled under the same prefix])
+fi
+
+AC_MSG_RESULT([$enable_relocatable_bundle])
 
 ###################
 # Check for libtiff
@@ -1473,6 +1503,14 @@ AC_SUBST(BZIP2_LIBS)
 
 PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version,,
                  [add_deps_error([liblzma >= liblzma_required_version])])
+
+
+##########################
+# Check for appstream-glib
+##########################
+
+PKG_CHECK_MODULES(APPSTREAM_GLIB, appstream-glib >= appstream_glib_required_version,,
+                 [add_deps_error([appstream-glib >= appstream_glib_required_version])])
 
 
 ###############################
@@ -1682,22 +1720,11 @@ PKG_CHECK_MODULES(LIBMYPAINT, libmypaint >= libmypaint_required_version,,
 PKG_CHECK_MODULES(MYPAINT_BRUSHES, mypaint-brushes-1.0,,
                   [add_deps_error([mypaint-brushes-1.0])])
 
-AC_MSG_CHECKING([whether to treat MyPaint brushes as bundled])
-AC_ARG_ENABLE(bundled-mypaint-brushes,
-              [  --enable-bundled-mypaint-brushes
-                          treat MyPaint brushes as bundled in the install prefix
-                          (default=no)],,
-              enable_bundled_mypaint_brushes=no)
-
-if test "x$enable_bundled_mypaint_brushes" != xno; then
-  AC_DEFINE(ENABLE_BUNDLED_MYPAINT_BRUSHES, 1,
-            [Define to 1 to if MyPaint brushes are bundled with GIMP])
+if test "x$enable_relocatable_bundle" != xno; then
   mypaint_brushes_dir='${gimp_installation_dir}/share/mypaint-data/1.0/brushes'
 else
   mypaint_brushes_dir=`$PKG_CONFIG --variable=brushesdir mypaint-brushes-1.0`
 fi
-
-AC_MSG_RESULT([$enable_bundled_mypaint_brushes])
 AC_SUBST(mypaint_brushes_dir)
 
 
@@ -1709,7 +1736,7 @@ AC_ARG_WITH(webkit, [  --without-webkit        don't build the help-browser and 
 
 have_webkit=no
 if test "x$with_webkit" != xno; then
-  PKG_CHECK_MODULES(WEBKIT, webkitgtk-3.0 >= webkitgtk_required_version,
+  PKG_CHECK_MODULES(WEBKIT, webkit2gtk-4.0 >= webkitgtk_required_version,
     WEB_PAGE='web-page$(EXEEXT)'
     have_webkit=yes,
     have_webkit="no (WebKit not found)")
@@ -2803,7 +2830,7 @@ Optional Features:
   Language selection:      $have_iso_codes
   Vector icons:            $enable_vector_icons
   Dr. Mingw (Win32):       $enable_drmingw
-  Bundled MyPaint Brushes: $enable_bundled_mypaint_brushes (at $mypaint_brushes_dir)
+  Relocatable bundle:      $enable_relocatable_bundle
   Default ICC directory:   $with_icc_directory
 
 Optional Plug-Ins:

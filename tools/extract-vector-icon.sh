@@ -47,13 +47,17 @@ fi
 
 # Extract the icon code.
 #icon=`xmllint "$source" --xpath '//*[local-name()="g" and @id="'$id'"]'`
-icon=`xmllint "$source" --xpath '//*[@id="'$id'"]'`
+icon=`xmllint "$source" --xpath '//*[@id="'$id'"]' --noblanks`
 # Get rid of any transform on the top node to help librsvg.
 #icon=`echo $icon | sed 's/^\(<[^>]*\) transform="[^"]*"/\1/'`
 if [ $? -ne 0 ]; then
   >&2 echo "extract-vector-icon.sh: object id \"$id\" not found in \"$source\" ";
   exit 1;
 fi;
+
+# Add !important to any object with label "color-important".
+icon=`echo $icon | sed 's/<\([^<>]*\)style="\([^"]*\)fill:\([^;"]*\)\([^"]*\)"\([^<>]*\)inkscape:label="color-important"\([^>]*\)>/<\1style="\2fill:\3 !important\4"\5\6>/'`
+icon=`echo $icon | sed 's/<\([^<>]*\)inkscape:label="color-important"\([^>]*\)style="\([^"]*\)fill:\([^;"]*\)\([^"]*\)"\([^<>]*\)>/<\1\2style="\3fill:\4 !important\5"\6>/'`
 
 # The typical namespaces declared at start of a SVG made with Inkscape.
 # Since we are not sure of what namespace will use the object XML, and

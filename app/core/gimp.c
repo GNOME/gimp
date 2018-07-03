@@ -57,6 +57,7 @@
 #include "gimpcontext.h"
 #include "gimpdynamics.h"
 #include "gimpdocumentlist.h"
+#include "gimpextensionmanager.h"
 #include "gimpgradient.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
@@ -278,8 +279,9 @@ gimp_constructed (GObject *object)
 
   gimp_paint_init (gimp);
 
-  gimp->plug_in_manager = gimp_plug_in_manager_new (gimp);
-  gimp->pdb             = gimp_pdb_new (gimp);
+  gimp->extension_manager = gimp_extension_manager_new (gimp);
+  gimp->plug_in_manager   = gimp_plug_in_manager_new (gimp);
+  gimp->pdb               = gimp_pdb_new (gimp);
 
   xcf_init (gimp);
 
@@ -514,6 +516,7 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_pdb_compat_procs_register (gimp->pdb, gimp->pdb_compat_mode);
 
   gimp_plug_in_manager_initialize (gimp->plug_in_manager, status_callback);
+  gimp_extension_manager_initialize (gimp->extension_manager);
 
   status_callback (NULL, "", 1.0);
 }

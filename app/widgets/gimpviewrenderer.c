@@ -966,6 +966,9 @@ gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
                                 const gchar      *icon_name)
 {
   GdkPixbuf *pixbuf;
+  gint       width;
+  gint       height;
+
 
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -976,32 +979,28 @@ gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
 
   pixbuf = gimp_widget_load_icon (widget, icon_name,
                                   MIN (renderer->width, renderer->height));
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
 
-  if (pixbuf)
+  if (width > renderer->width || height > renderer->height)
     {
-      gint  width  = gdk_pixbuf_get_width (pixbuf);
-      gint  height = gdk_pixbuf_get_height (pixbuf);
+      GdkPixbuf *scaled_pixbuf;
 
-      if (width > renderer->width || height > renderer->height)
-        {
-          GdkPixbuf *scaled_pixbuf;
+      gimp_viewable_calc_preview_size (width, height,
+                                       renderer->width, renderer->height,
+                                       TRUE, 1.0, 1.0,
+                                       &width, &height,
+                                       NULL);
 
-          gimp_viewable_calc_preview_size (width, height,
-                                           renderer->width, renderer->height,
-                                           TRUE, 1.0, 1.0,
-                                           &width, &height,
-                                           NULL);
+      scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
+                                               width, height,
+                                               GDK_INTERP_BILINEAR);
 
-          scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-                                                   width, height,
-                                                   GDK_INTERP_BILINEAR);
-
-          g_object_unref (pixbuf);
-          pixbuf = scaled_pixbuf;
-        }
-
-      renderer->priv->pixbuf = pixbuf;
+      g_object_unref (pixbuf);
+      pixbuf = scaled_pixbuf;
     }
+
+  renderer->priv->pixbuf = pixbuf;
 }
 
 GimpColorTransform *
@@ -1320,23 +1319,19 @@ gimp_view_renderer_create_background (GimpViewRenderer *renderer,
 
   if (renderer->priv->bg_icon_name)
     {
-      GdkPixbuf *pixbuf = gimp_widget_load_icon (widget,
-                                                 renderer->priv->bg_icon_name,
-                                                 64);
+      cairo_surface_t *surface;
+      GdkPixbuf       *pixbuf;
 
-      if (pixbuf)
-        {
-          cairo_surface_t *surface;
+      pixbuf = gimp_widget_load_icon (widget,
+                                      renderer->priv->bg_icon_name,
+                                      64);
+      surface = gimp_cairo_surface_create_from_pixbuf (pixbuf);
+      g_object_unref (pixbuf);
 
-          surface = gimp_cairo_surface_create_from_pixbuf (pixbuf);
+      pattern = cairo_pattern_create_for_surface (surface);
+      cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
 
-          g_object_unref (pixbuf);
-
-          pattern = cairo_pattern_create_for_surface (surface);
-          cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-
-          cairo_surface_destroy (surface);
-        }
+      cairo_surface_destroy (surface);
     }
 
   return pattern;

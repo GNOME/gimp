@@ -9,13 +9,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 16.000001 16"
+   viewBox="0 0 16.014005 16"
    id="svg7384"
    height="16"
-   width="16.000002"
+   width="16.014006"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-paths.svg">
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="gimp-paths-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -25,17 +25,21 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="640"
-     inkscape:window-height="480"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
      id="namedview1511"
      showgrid="false"
-     inkscape:zoom="14.75"
-     inkscape:cx="-316.91975"
-     inkscape:cy="242.91897"
+     inkscape:zoom="5.2149125"
+     inkscape:cx="-23.005593"
+     inkscape:cy="24.233813"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="svg7384" />
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7384"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata90">
     <rdf:RDF>
@@ -44,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -151,49 +155,98 @@
        x1="-79"
        id="linearGradient7676"
        xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient7662-3"
+       x1="161.0002"
+       y1="425"
+       x2="165.0002"
+       y2="425"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient7668-6"
+       x1="173.0002"
+       y1="425"
+       x2="177.0002"
+       y2="425"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient7674-2"
+       x1="163.0002"
+       y1="425"
+       x2="175.0002"
+       y2="425"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient7666-9"
+       x1="-73"
+       y1="206.5"
+       x2="-70"
+       y2="206.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient7676-1"
+       x1="-79"
+       y1="213"
+       x2="-65"
+       y2="213"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
-     transform="translate(-28.108798,-71.79914)"
+     transform="matrix(1.0008752,0,0,1,-161.14111,-419)"
      style="display:inline"
-     id="stock">
-    <g
-       id="gimp-paths"
-       style="display:inline"
-       transform="translate(-132.8914,-347.20086)">
-      <rect
-         style="fill:url(#linearGradient7662);fill-opacity:1;stroke:none"
-         id="rect11849"
-         width="4"
-         height="4"
-         x="161.0002"
-         y="423" />
-      <rect
-         y="423"
-         x="173.0002"
-         height="4"
-         width="4.0000014"
-         id="rect11851"
-         style="fill:url(#linearGradient7668);fill-opacity:1;stroke:none" />
-      <rect
-         style="fill:url(#linearGradient7674);fill-opacity:1;stroke:none"
-         id="rect11853"
-         width="12"
-         height="2"
-         x="163.0002"
-         y="424" />
-      <circle
-         r="1.5"
-         cy="206.5"
-         cx="-71.5"
-         style="fill:url(#linearGradient7666);fill-opacity:1;stroke:none"
-         id="path11855"
-         transform="matrix(1.3333333,0,0,1.3333312,264.33353,149.66712)" />
-      <path
-         style="fill:url(#linearGradient7676);fill-opacity:1;stroke:none"
-         d="m -65,216 c 0,-3.31371 -3.13401,-6 -7,-6 -3.86599,0 -7,2.68629 -7,6 l 2.015625,0 c 0.287851,-2.25391 2.407621,-4 4.984375,-4 2.576754,0 4.696524,1.74609 4.984375,4 z"
-         transform="translate(241.0002,217)"
-         id="path11857"
-         inkscape:connector-curvature="0" />
-    </g>
+     id="gimp-paths"
+     inkscape:label="gimp-paths">
+    <rect
+       transform="translate(241.0002,217)"
+       y="202"
+       x="-80"
+       height="16"
+       width="16"
+       id="rect11834"
+       style="fill:none;stroke:none" />
+    <rect
+       y="423"
+       x="161.0002"
+       height="4"
+       width="4"
+       id="rect11849"
+       style="fill:url(#linearGradient7662-3);fill-opacity:1;stroke:none" />
+    <rect
+       style="fill:url(#linearGradient7668-6);fill-opacity:1;stroke:none"
+       id="rect11851"
+       width="4.0000014"
+       height="4"
+       x="173.0002"
+       y="423" />
+    <rect
+       y="424"
+       x="163.0002"
+       height="2"
+       width="12"
+       id="rect11853"
+       style="fill:url(#linearGradient7674-2);fill-opacity:1;stroke:none" />
+    <path
+       inkscape:connector-curvature="0"
+       transform="matrix(1.3333333,0,0,1.3333312,264.33353,149.66712)"
+       style="fill:url(#linearGradient7666-9);fill-opacity:1;stroke:none"
+       d="m -70,206.5 a 1.5,1.5 0 0 1 -1.5,1.5 1.5,1.5 0 0 1 -1.5,-1.5 1.5,1.5 0 0 1 1.5,-1.5 1.5,1.5 0 0 1 1.5,1.5 z"
+       id="path11855" />
+    <path
+       sodipodi:nodetypes="csccscc"
+       inkscape:connector-curvature="0"
+       id="path11857"
+       transform="translate(241.0002,217)"
+       d="m -65,216 c 0,-3.31371 -3.13401,-6 -7,-6 -3.86599,0 -7,2.68629 -7,6 h 2.015625 c 0.287851,-2.25391 2.407621,-4 4.984375,-4 2.576754,0 4.696524,1.74609 4.984375,4 z"
+       style="fill:url(#linearGradient7676-1);fill-opacity:1;stroke:none" />
   </g>
 </svg>

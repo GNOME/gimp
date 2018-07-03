@@ -146,6 +146,8 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
                                                       GIMP_TYPE_ACTIVE_COLOR,
                                                       GIMP_ACTIVE_COLOR_FOREGROUND,
                                                       GIMP_PARAM_READWRITE));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpFgBgEditor");
 }
 
 static void
@@ -153,6 +155,7 @@ gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
 {
   editor->active_color = GIMP_ACTIVE_COLOR_FOREGROUND;
 
+  gtk_widget_set_can_focus (GTK_WIDGET (editor), FALSE);
   gtk_event_box_set_visible_window (GTK_EVENT_BOX (editor), FALSE);
 
   gtk_widget_add_events (GTK_WIDGET (editor),
@@ -244,25 +247,29 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 {
   GimpFgBgEditor  *editor = GIMP_FG_BG_EDITOR (widget);
   GtkStyleContext *style  = gtk_widget_get_style_context (widget);
-  GtkAllocation    allocation;
   GtkBorder        border;
+  GtkBorder        padding;
+  GdkRectangle     rect;
   gint             width, height;
   gint             default_w, default_h;
   gint             swap_w, swap_h;
-  gint             rect_w, rect_h;
   GimpRGB          color;
   GimpRGB          transformed_color;
 
-  gtk_widget_get_allocation (widget, &allocation);
-
   gtk_style_context_save (style);
-  gtk_style_context_add_class (style, GTK_STYLE_CLASS_BUTTON);
 
-  gtk_style_context_get_border (style, gtk_widget_get_state_flags (widget),
+  width  = gtk_widget_get_allocated_width  (widget);
+  height = gtk_widget_get_allocated_height (widget);
+
+  gtk_style_context_get_border (style, gtk_style_context_get_state (style),
                                 &border);
+  gtk_style_context_get_padding (style, gtk_style_context_get_state (style),
+                                 &padding);
 
-  width  = allocation.width;
-  height = allocation.height;
+  border.left   += padding.left;
+  border.right  += padding.right;
+  border.top    += padding.top;
+  border.bottom += padding.bottom;
 
   /*  draw the default colors pixbuf  */
   if (! editor->default_icon)
@@ -275,7 +282,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (default_w < width / 2 && default_h < height / 2)
     {
       gdk_cairo_set_source_pixbuf (cr, editor->default_icon,
-                                   0, height - default_h);
+                                   border.left,
+                                   height - border.bottom - default_h);
       cairo_paint (cr);
     }
   else
@@ -294,7 +302,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (swap_w < width / 2 && swap_h < height / 2)
     {
       gdk_cairo_set_source_pixbuf (cr, editor->swap_icon,
-                                   width - swap_w, 0);
+                                   width - border.right - swap_w,
+                                   border.top);
       cairo_paint (cr);
     }
   else
@@ -302,21 +311,24 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
       swap_w = swap_h = 0;
     }
 
-  rect_h = height - MAX (default_h, swap_h) - 2;
-  rect_w = width  - MAX (default_w, swap_w) - 4;
+  rect.width  = width  - MAX (default_w, swap_w) - 4 - border.top  - border.bottom;
+  rect.height = height - MAX (default_h, swap_h) - 2 - border.left - border.right;
 
-  if (rect_h > (height * 3 / 4))
-    rect_w = MAX (rect_w - (rect_h - ((height * 3 / 4))),
-                  width * 2 / 3);
+  if (rect.height > (height * 3 / 4))
+    rect.width = MAX (rect.width - (rect.height - ((height * 3 / 4))),
+                      width * 2 / 3);
 
-  editor->rect_width  = rect_w;
-  editor->rect_height = rect_h;
+  editor->rect_width  = rect.width;
+  editor->rect_height = rect.height;
 
 
   if (! editor->transform)
     gimp_fg_bg_editor_create_transform (editor);
 
   /*  draw the background area  */
+
+  rect.x = width  - rect.width  - border.right;
+  rect.y = height - rect.height - border.bottom;
 
   if (editor->context)
     {
@@ -334,11 +346,7 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 
       gimp_cairo_set_source_rgb (cr, &transformed_color);
 
-      cairo_rectangle (cr,
-                       width  - rect_w + border.left,
-                       height - rect_h + border.top,
-                       rect_w - (border.left + border.right),
-                       rect_h - (border.top + border.bottom));
+      cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
       cairo_fill (cr);
 
       if (editor->color_config &&
@@ -347,12 +355,14 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
            color.b < 0.0 || color.b > 1.0))
         {
           GimpRGB color;
-          gint    side = MIN (rect_w, rect_h) * 2 / 3;
+          gint    side     = MIN (rect.width, rect.height) * 2 / 3;
+          gint    corner_x = rect.x + rect.width;
+          gint    corner_y = rect.y + rect.height;
 
-          cairo_move_to (cr, width, height);
-          cairo_line_to (cr, width - side, height);
-          cairo_line_to (cr, width, height - side);
-          cairo_line_to (cr, width, height);
+          cairo_move_to (cr, corner_x, corner_y);
+          cairo_line_to (cr, corner_x - side, corner_y);
+          cairo_line_to (cr, corner_x, corner_y - side);
+          cairo_close_path (cr);
 
           gimp_color_config_get_out_of_gamut_color (editor->color_config,
                                                     &color);
@@ -366,13 +376,15 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
                                GIMP_ACTIVE_COLOR_FOREGROUND ?
                                0 : GTK_STATE_FLAG_ACTIVE);
 
-  gtk_render_frame (style, cr,
-                    width  - rect_w,
-                    height - rect_h,
-                    rect_w, rect_h);
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_FRAME);
+
+  gtk_render_frame (style, cr, rect.x, rect.y, rect.width, rect.height);
 
 
   /*  draw the foreground area  */
+
+  rect.x = border.left;
+  rect.y = border.top;
 
   if (editor->context)
     {
@@ -390,11 +402,7 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 
       gimp_cairo_set_source_rgb (cr, &transformed_color);
 
-      cairo_rectangle (cr,
-                       border.left,
-                       border.top,
-                       rect_w - (border.left + border.right),
-                       rect_h - (border.top + border.bottom));
+      cairo_rectangle (cr, rect.x, rect.y, rect.width, rect.height);
       cairo_fill (cr);
 
       if (editor->color_config &&
@@ -403,12 +411,14 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
            color.b < 0.0 || color.b > 1.0))
         {
           GimpRGB color;
-          gint    side = MIN (rect_w, rect_h) * 2 / 3;
+          gint    side     = MIN (rect.width, rect.height) * 2 / 3;
+          gint    corner_x = rect.x;
+          gint    corner_y = rect.y;
 
-          cairo_move_to (cr, 0, 0);
-          cairo_line_to (cr, 0, side);
-          cairo_line_to (cr, side, 0);
-          cairo_line_to (cr, 0, 0);
+          cairo_move_to (cr, corner_x, corner_y);
+          cairo_line_to (cr, corner_x + side, corner_y);
+          cairo_line_to (cr, corner_x, corner_y + side);
+          cairo_close_path (cr);
 
           gimp_color_config_get_out_of_gamut_color (editor->color_config,
                                                     &color);
@@ -422,9 +432,7 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
                                GIMP_ACTIVE_COLOR_BACKGROUND ?
                                0 : GTK_STATE_FLAG_ACTIVE);
 
-  gtk_render_frame (style, cr,
-                    0, 0,
-                    rect_w, rect_h);
+  gtk_render_frame (style, cr, rect.x, rect.y, rect.width, rect.height);
 
   gtk_style_context_restore (style);
 
@@ -436,28 +444,61 @@ gimp_fg_bg_editor_target (GimpFgBgEditor *editor,
                           gint            x,
                           gint            y)
 {
-  GtkAllocation allocation;
-  gint          width;
-  gint          height;
-  gint          rect_w = editor->rect_width;
-  gint          rect_h = editor->rect_height;
+  GtkWidget       *widget = GTK_WIDGET (editor);
+  GtkStyleContext *style  = gtk_widget_get_style_context (widget);
+  GtkBorder        border;
+  GtkBorder        padding;
+  gint             width;
+  gint             height;
+  gint             rect_w = editor->rect_width;
+  gint             rect_h = editor->rect_height;
+  gint             button_width;
+  gint             button_height;
 
-  gtk_widget_get_allocation (GTK_WIDGET (editor), &allocation);
+  width  = gtk_widget_get_allocated_width  (widget);
+  height = gtk_widget_get_allocated_height (widget);
 
-  width  = allocation.width;
-  height = allocation.height;
+  gtk_style_context_get_border (style, gtk_style_context_get_state (style),
+                                &border);
+  gtk_style_context_get_padding (style, gtk_style_context_get_state (style),
+                                 &padding);
 
-  if (x > 0 && x < rect_w && y > 0 && y < rect_h)
-    return FOREGROUND_AREA;
-  else if (x > (width - rect_w)  && x < width  &&
-           y > (height - rect_h) && y < height)
-    return BACKGROUND_AREA;
-  else if (x > 0      && x < (width - rect_w) &&
-           y > rect_h && y < height)
-    return DEFAULT_AREA;
-  else if (x > rect_w && x < width &&
-           y > 0      && y < (height - rect_h))
-    return SWAP_AREA;
+  border.left   += padding.left;
+  border.right  += padding.right;
+  border.top    += padding.top;
+  border.bottom += padding.bottom;
+
+  button_width  = width  - border.left - border.right  - rect_w;
+  button_height = height - border.top  - border.bottom - rect_h;
+
+  if (x > border.left          &&
+      x < border.left + rect_w &&
+      y > border.top           &&
+      y < border.top + rect_h)
+    {
+      return FOREGROUND_AREA;
+    }
+  else if (x > width  - border.right - rect_w  &&
+           x < width  - border.right           &&
+           y > height - border.bottom - rect_h &&
+           y < height - border.bottom)
+    {
+      return BACKGROUND_AREA;
+    }
+  else if (x > border.left                &&
+           x < border.left + button_width &&
+           y > border.top + rect_h        &&
+           y < height - border.bottom)
+    {
+      return DEFAULT_AREA;
+    }
+  else if (x > border.left + rect_w &&
+           x < width - border.right &&
+           y > border.top           &&
+           y < border.top + button_height)
+    {
+      return SWAP_AREA;
+    }
 
   return INVALID_AREA;
 }

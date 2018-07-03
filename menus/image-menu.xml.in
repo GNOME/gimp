@@ -25,6 +25,8 @@
 
 <!--  The debug-menu is hidden by default for stable releases  -->
       <menu action="debug-menu" name="Debug">
+        <menuitem action="debug-gtk-inspector" />
+        <separator />
         <menuitem action="debug-mem-profile" />
         <menuitem action="debug-benchmark-projection" />
         <menuitem action="debug-show-image-graph" />

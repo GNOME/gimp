@@ -693,9 +693,8 @@ shoot_dialog (GdkMonitor **monitor)
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
-  adj = (GtkAdjustment *)
-    gtk_adjustment_new (shootvals.select_delay,
-                        0.0, 100.0, 1.0, 5.0, 0.0);
+  adj = gtk_adjustment_new (shootvals.select_delay,
+                            0.0, 100.0, 1.0, 5.0, 0.0);
   spinner = gtk_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
@@ -753,9 +752,8 @@ shoot_dialog (GdkMonitor **monitor)
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
-  adj = (GtkAdjustment *)
-    gtk_adjustment_new (shootvals.screenshot_delay,
-                        0.0, 100.0, 1.0, 5.0, 0.0);
+  adj = gtk_adjustment_new (shootvals.screenshot_delay,
+                            0.0, 100.0, 1.0, 5.0, 0.0);
   spinner = gtk_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);

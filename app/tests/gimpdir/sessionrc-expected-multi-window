@@ -106,7 +106,7 @@
 (session-info "toplevel"
     (factory-entry "gimp-empty-image-window")
     (position 140 30)
-    (size 610 190)
+    (size 610 705)
     (open-on-exit))
 (session-info "toplevel"
     (factory-entry "gimp-single-image-window")

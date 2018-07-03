@@ -180,7 +180,6 @@ item_options_dialog_new (GimpImage               *image,
   /*  The name label and entry  */
   if (name_label)
     {
-      GtkWidget *hbox;
       GtkWidget *radio;
       GtkWidget *radio_box;
       GList     *children;
@@ -193,15 +192,17 @@ item_options_dialog_new (GimpImage               *image,
                                 name_label, 0.0, 0.5,
                                 private->name_entry, 1);
 
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, private->grid_row++,
-                                _("Color tag:"), 0.0, 0.5,
-                                hbox, 1);
-
       radio_box = gimp_enum_radio_box_new (GIMP_TYPE_COLOR_TAG,
                                            G_CALLBACK (gimp_radio_button_update),
                                            &private->color_tag,
                                            &radio);
+      gtk_widget_set_name (radio_box, "gimp-color-tag-box");
+      gtk_orientable_set_orientation (GTK_ORIENTABLE (radio_box),
+                                      GTK_ORIENTATION_HORIZONTAL);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, private->grid_row++,
+                                _("Color tag:"), 0.0, 0.5,
+                                radio_box, 1);
+
       gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (radio),
                                        private->color_tag);
 
@@ -217,11 +218,7 @@ item_options_dialog_new (GimpImage               *image,
 
           radio = list->data;
 
-          g_object_ref (radio);
-          gtk_container_remove (GTK_CONTAINER (radio_box), radio);
           g_object_set (radio, "draw-indicator", FALSE, NULL);
-          gtk_box_pack_start (GTK_BOX (hbox), radio, FALSE, FALSE, 0);
-          g_object_unref (radio);
 
           gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (radio)));
 
@@ -249,7 +246,6 @@ item_options_dialog_new (GimpImage               *image,
         }
 
       g_list_free (children);
-      gtk_widget_destroy (radio_box);
     }
 
   /*  The switches frame & vbox  */

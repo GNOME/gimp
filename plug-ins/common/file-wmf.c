@@ -310,6 +310,7 @@ load_wmf_size (const gchar *filename,
   guint           width   = -1;
   guint           height  = -1;
   gboolean        success = TRUE;
+  char*           wmffontdirs[2] = { NULL, NULL };
 
   file = g_mapped_file_new (filename, FALSE, NULL);
   if (! file)
@@ -318,7 +319,16 @@ load_wmf_size (const gchar *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+  wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
+                                     "share/libwmf/fonts", NULL);
+  flags |= WMF_OPT_FONTDIRS;
+  api_options.fontdirs = wmffontdirs;
+#endif
+
   err = wmf_api_create (&API, flags, &api_options);
+  if (wmffontdirs[0])
+    g_free (wmffontdirs[0]);
   if (err != wmf_E_None)
     success = FALSE;
 
@@ -580,7 +590,7 @@ load_dialog (const gchar *filename)
   gtk_grid_attach (GTK_GRID (grid), hbox, 1, 0, 1, 1);
   gtk_widget_show (hbox);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
@@ -625,11 +635,10 @@ load_dialog (const gchar *filename)
   grid2 = gtk_grid_new ();
   gtk_box_pack_start (GTK_BOX (hbox), grid2, FALSE, FALSE, 0);
 
-  xadj = (GtkAdjustment *)
-    gtk_adjustment_new (ratio_x,
-                        (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_width,
-                        (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_width,
-                        0.01, 0.1, 0);
+  xadj = gtk_adjustment_new (ratio_x,
+                             (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_width,
+                             (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_width,
+                             0.01, 0.1, 0);
   spinbutton = gtk_spin_button_new (xadj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
@@ -646,11 +655,10 @@ load_dialog (const gchar *filename)
   gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
   gtk_widget_show (label);
 
-  yadj = (GtkAdjustment *)
-    gtk_adjustment_new (ratio_y,
-                        (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_height,
-                        (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_height,
-                        0.01, 0.1, 0);
+  yadj = gtk_adjustment_new (ratio_y,
+                             (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_height,
+                             (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_height,
+                             0.01, 0.1, 0);
   spinbutton = gtk_spin_button_new (yadj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
@@ -773,6 +781,7 @@ wmf_get_pixbuf (const gchar *filename,
   guint           file_height;
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
+  char*           wmffontdirs[2] = { NULL, NULL };
 
   file = g_mapped_file_new (filename, FALSE, NULL);
   if (! file)
@@ -781,7 +790,16 @@ wmf_get_pixbuf (const gchar *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+  wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
+                                     "share/libwmf/fonts", NULL);
+  flags |= WMF_OPT_FONTDIRS;
+  api_options.fontdirs = wmffontdirs;
+#endif
+
   err = wmf_api_create (&API, flags, &api_options);
+  if (wmffontdirs[0])
+    g_free (wmffontdirs[0]);
   if (err != wmf_E_None)
     goto _wmf_error;
 
@@ -880,6 +898,7 @@ wmf_load_file (const gchar  *filename,
   wmfAPI_Options  api_options;
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
+  char*           wmffontdirs[2] = { NULL, NULL };
 
   *width = *height = -1;
 
@@ -890,7 +909,16 @@ wmf_load_file (const gchar  *filename,
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
 
+#ifdef ENABLE_RELOCATABLE_RESOURCES
+  wmffontdirs[0] = g_build_filename (gimp_installation_directory (),
+                                     "share/libwmf/fonts/", NULL);
+  flags |= WMF_OPT_FONTDIRS;
+  api_options.fontdirs = wmffontdirs;
+#endif
+
   err = wmf_api_create (&API, flags, &api_options);
+  if (wmffontdirs[0])
+    g_free (wmffontdirs[0]);
   if (err != wmf_E_None)
     goto _wmf_error;
 

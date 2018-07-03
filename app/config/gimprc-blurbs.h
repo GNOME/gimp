@@ -207,12 +207,21 @@ _("Which plug-in to use for importing raw digital camera files.")
 #define EXPORT_COLOR_PROFILE_BLURB \
 _("Export the image's color profile by default.")
 
+/* Translators: tooltip for configuration option (checkbox).
+ * It determines how file export plug-ins handle Exif by default.
+ */
 #define EXPORT_METADATA_EXIF_BLURB \
 _("Export Exif metadata by default.")
 
+/* Translators: tooltip for configuration option (checkbox).
+ * It determines how file export plug-ins handle XMP by default.
+ */
 #define EXPORT_METADATA_XMP_BLURB \
 _("Export XMP metadata by default.")
 
+/* Translators: tooltip for configuration option (checkbox).
+ * It determines how file export plug-ins handle IPTC by default.
+ */
 #define EXPORT_METADATA_IPTC_BLURB \
 _("Export IPTC metadata by default.")
 
@@ -299,6 +308,10 @@ _("Sets how many threads GIMP should use for operations that support it.")
 _("Sets whether GIMP should create previews of layers and channels. " \
   "Previews in the layers and channels dialog are nice to have but they " \
   "can slow things down when working with large images.")
+
+#define GROUP_LAYER_PREVIEWS_BLURB \
+_("Sets whether GIMP should create previews of layer groups. " \
+  "Layer group previews are more expensive than ordinary layer previews.")
 
 #define LAYER_PREVIEW_SIZE_BLURB \
 _("Sets the preview size used for layers and channel previews in newly " \

@@ -395,7 +395,8 @@
         },
         {
             "name": "gimp",
-            "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html", "--enable-vector-icons" ],
+            "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html",
+                             "--with-icc-directory=/run/host/usr/share/color/icc/" ],
             "cleanup": [ "/bin/gimptool-3.0", "/bin/gimp-console-2.99" ],
             "sources": [
                 {

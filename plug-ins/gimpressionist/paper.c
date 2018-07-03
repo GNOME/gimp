@@ -109,8 +109,8 @@ void
 paper_restore (void)
 {
   reselect (paper_list, pcvals.selected_paper);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (paper_relief_adjust), pcvals.paper_relief);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (paper_scale_adjust), pcvals.paper_scale);
+  gtk_adjustment_set_value (paper_relief_adjust, pcvals.paper_relief);
+  gtk_adjustment_set_value (paper_scale_adjust, pcvals.paper_scale);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (paper_invert), pcvals.paper_invert);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (paper_overlay), pcvals.paper_overlay);
 }

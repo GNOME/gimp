@@ -374,8 +374,6 @@ gimp_overlay_child_draw (GimpOverlayBox   *box,
         {
           cairo_surface_t *surface;
 
-          gdk_window_process_updates (child->window, FALSE);
-
           surface = gdk_offscreen_window_get_surface (child->window);
 
           cairo_save (cr);

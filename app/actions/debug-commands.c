@@ -71,6 +71,13 @@ static gboolean  debug_accel_find_func         (GtkAccelKey *key,
 /*  public functions  */
 
 void
+debug_gtk_inspector_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  gtk_window_set_interactive_debugging (TRUE);
+}
+
+void
 debug_mem_profile_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {

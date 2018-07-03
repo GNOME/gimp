@@ -26,7 +26,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <webkit/webkit.h>
+#include <webkit2/webkit2.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -41,7 +41,7 @@ typedef struct
   char      *url;
   gint32     width;
   gint       font_size;
-  GdkPixbuf *pixbuf;
+  gint32     image;
   GError    *error;
 } WebpageVals;
 
@@ -120,8 +120,8 @@ run (const gchar      *name,
 {
   GimpRunMode        run_mode = param[0].data.d_int32;
   GimpPDBStatusType  status   = GIMP_PDB_EXECUTION_ERROR;
-  gint32             image_id = -1;
   static GimpParam   values[2];
+  gint32             image_id;
   WebpageSaveVals    save = {"http://www.gimp.org/", 1024, 12};
 
   INIT_I18N ();
@@ -344,8 +344,7 @@ webpage_dialog (void)
       g_free (webpagevals.url);
       webpagevals.url = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
 
-      webpagevals.width = (gint) gtk_adjustment_get_value
-        (GTK_ADJUSTMENT (adjustment));
+      webpagevals.width = (gint) gtk_adjustment_get_value (adjustment);
 
       gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo),
                                      &webpagevals.font_size);
@@ -364,11 +363,7 @@ notify_progress_cb (WebKitWebView  *view,
                     gpointer        user_data)
 {
   static gdouble old_progress = 0.0;
-  gdouble progress;
-
-  g_object_get (view,
-                "progress", &progress,
-                NULL);
+  gdouble progress = webkit_web_view_get_estimated_load_progress (view);
 
   if ((progress - old_progress) > 0.01)
     {
@@ -378,11 +373,11 @@ notify_progress_cb (WebKitWebView  *view,
 }
 
 static gboolean
-load_error_cb (WebKitWebView  *view,
-               WebKitWebFrame *web_frame,
-               gchar          *uri,
-               gpointer        web_error,
-               gpointer        user_data)
+load_failed_cb (WebKitWebView   *view,
+                WebKitLoadEvent  event,
+                gchar           *uri,
+                gpointer         web_error,
+                gpointer         user_data)
 {
   webpagevals.error = g_error_copy ((GError *) web_error);
 
@@ -392,22 +387,81 @@ load_error_cb (WebKitWebView  *view,
 }
 
 static void
-notify_load_status_cb (WebKitWebView  *view,
-                       GParamSpec     *pspec,
-                       gpointer        user_data)
+snapshot_ready (GObject      *source_object,
+                GAsyncResult *result,
+                gpointer      user_data)
 {
-  WebKitLoadStatus status;
+  WebKitWebView   *view = WEBKIT_WEB_VIEW (source_object);
+  cairo_surface_t *surface;
 
-  g_object_get (view,
-                "load-status", &status,
-                NULL);
+  surface = webkit_web_view_get_snapshot_finish (view, result,
+                                                 &webpagevals.error);
 
-  if (status == WEBKIT_LOAD_FINISHED)
+  if (surface)
     {
-      if (!webpagevals.error)
+      gint   width;
+      gint   height;
+      gint32 layer;
+
+      width  = cairo_image_surface_get_width (surface);
+      height = cairo_image_surface_get_height (surface);
+
+      webpagevals.image = gimp_image_new (width, height, GIMP_RGB);
+
+      gimp_image_undo_disable (webpagevals.image);
+      layer = gimp_layer_new_from_surface (webpagevals.image, _("Webpage"),
+                                           surface,
+                                           0.25, 1.0);
+      gimp_image_insert_layer (webpagevals.image, layer, -1, 0);
+      gimp_image_undo_enable (webpagevals.image);
+
+      cairo_surface_destroy (surface);
+    }
+
+  gimp_progress_update (1.0);
+
+  gtk_main_quit ();
+}
+
+static gboolean
+load_finished_idle (gpointer data)
+{
+  static gint count = 0;
+
+  gimp_progress_update ((gdouble) count * 0.025);
+
+  count++;
+
+  if (count < 10)
+    return G_SOURCE_CONTINUE;
+
+  webkit_web_view_get_snapshot (WEBKIT_WEB_VIEW (data),
+                                WEBKIT_SNAPSHOT_REGION_FULL_DOCUMENT,
+                                WEBKIT_SNAPSHOT_OPTIONS_NONE,
+                                NULL,
+                                snapshot_ready,
+                                NULL);
+
+  count = 0;
+
+  return G_SOURCE_REMOVE;
+}
+
+static void
+load_changed_cb (WebKitWebView   *view,
+                 WebKitLoadEvent  event,
+                 gpointer         user_data)
+{
+  if (event == WEBKIT_LOAD_FINISHED)
+    {
+      if (! webpagevals.error)
         {
-          webpagevals.pixbuf = gtk_offscreen_window_get_pixbuf
-            (GTK_OFFSCREEN_WINDOW (user_data));
+          gimp_progress_init_printf (_("Transferring webpage image for '%s'"),
+                                     webpagevals.url);
+
+          g_timeout_add (100, load_finished_idle, view);
+
+          return;
         }
 
       gtk_main_quit ();
@@ -417,24 +471,11 @@ notify_load_status_cb (WebKitWebView  *view,
 static gint32
 webpage_capture (void)
 {
-  gint32 image = -1;
   gchar *scheme;
   GtkWidget *window;
   GtkWidget *view;
-  WebKitWebSettings *settings;
-  char *ua_old;
+  WebKitSettings *settings;
   char *ua;
-
-  if (webpagevals.pixbuf)
-    {
-      g_object_unref (webpagevals.pixbuf);
-      webpagevals.pixbuf = NULL;
-    }
-  if (webpagevals.error)
-    {
-      g_error_free (webpagevals.error);
-      webpagevals.error = NULL;
-    }
 
   if ((!webpagevals.url) ||
       (strlen (webpagevals.url) == 0))
@@ -476,40 +517,35 @@ webpage_capture (void)
   view = webkit_web_view_new ();
   gtk_widget_show (view);
 
+  gtk_widget_set_vexpand (view, TRUE);
   gtk_widget_set_size_request (view, webpagevals.width, -1);
   gtk_container_add (GTK_CONTAINER (window), view);
 
   /* Append "GIMP/<GIMP_VERSION>" to the user agent string */
   settings = webkit_web_view_get_settings (WEBKIT_WEB_VIEW (view));
-  g_object_get (settings,
-                "user-agent", &ua_old,
-                NULL);
-  ua = g_strdup_printf ("%s GIMP/%s", ua_old, GIMP_VERSION);
-  g_object_set (settings,
-                "user-agent", ua,
-                NULL);
-  g_free (ua_old);
+  ua = g_strdup_printf ("%s GIMP/%s",
+                        webkit_settings_get_user_agent (settings),
+                        GIMP_VERSION);
+  webkit_settings_set_user_agent (settings, ua);
   g_free (ua);
 
   /* Set font size */
-  g_object_set (settings,
-                "default-font-size", webpagevals.font_size,
-                NULL);
+  webkit_settings_set_default_font_size (settings, webpagevals.font_size);
 
-  g_signal_connect (view, "notify::progress",
+  g_signal_connect (view, "notify::estimated-load-progress",
                     G_CALLBACK (notify_progress_cb),
                     window);
-  g_signal_connect (view, "load-error",
-                    G_CALLBACK (load_error_cb),
+  g_signal_connect (view, "load-failed",
+                    G_CALLBACK (load_failed_cb),
                     window);
-  g_signal_connect (view, "notify::load-status",
-                    G_CALLBACK (notify_load_status_cb),
+  g_signal_connect (view, "load-changed",
+                    G_CALLBACK (load_changed_cb),
                     window);
 
   gimp_progress_init_printf (_("Downloading webpage '%s'"), webpagevals.url);
 
-  webkit_web_view_open (WEBKIT_WEB_VIEW (view),
-                        webpagevals.url);
+  webkit_web_view_load_uri (WEBKIT_WEB_VIEW (view),
+                            webpagevals.url);
 
   gtk_main ();
 
@@ -517,34 +553,5 @@ webpage_capture (void)
 
   gimp_progress_update (1.0);
 
-  if (webpagevals.pixbuf)
-    {
-      gint width;
-      gint height;
-      gint32 layer;
-
-      gimp_progress_init_printf (_("Transferring webpage image for '%s'"),
-                                 webpagevals.url);
-
-      width  = gdk_pixbuf_get_width (webpagevals.pixbuf);
-      height = gdk_pixbuf_get_height (webpagevals.pixbuf);
-
-      image = gimp_image_new (width, height, GIMP_RGB);
-
-      gimp_image_undo_disable (image);
-      layer = gimp_layer_new_from_pixbuf (image, _("Webpage"),
-                                          webpagevals.pixbuf,
-                                          100,
-                                          gimp_image_get_default_new_layer_mode (image),
-                                          0.0, 1.0);
-      gimp_image_insert_layer (image, layer, -1, 0);
-      gimp_image_undo_enable (image);
-
-      g_object_unref (webpagevals.pixbuf);
-      webpagevals.pixbuf = NULL;
-
-      gimp_progress_update (1.0);
-    }
-
-  return image;
+  return webpagevals.image;
 }

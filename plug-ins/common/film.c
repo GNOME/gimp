@@ -1000,8 +1000,8 @@ create_selection_tab (GtkWidget *notebook,
   gtk_widget_show (grid);
 
   /* Film height */
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (filmvals.film_height, 10,
-                                            GIMP_MAX_IMAGE_SIZE, 1, 10, 0));
+  adj = gtk_adjustment_new (filmvals.film_height, 10,
+                            GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
@@ -1059,8 +1059,8 @@ create_selection_tab (GtkWidget *notebook,
   gtk_widget_show (grid);
 
   /* Startindex */
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (filmvals.number_start, 0,
-                                            GIMP_MAX_IMAGE_SIZE, 1, 10, 0));
+  adj = gtk_adjustment_new (filmvals.number_start, 0,
+                            GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 

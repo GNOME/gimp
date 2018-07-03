@@ -183,6 +183,8 @@ typedef struct _GimpAsyncSet                    GimpAsyncSet;
 typedef struct _GimpBuffer                      GimpBuffer;
 typedef struct _GimpDrawableFilter              GimpDrawableFilter;
 typedef struct _GimpEnvironTable                GimpEnvironTable;
+typedef struct _GimpExtension                   GimpExtension;
+typedef struct _GimpExtensionManager            GimpExtensionManager;
 typedef struct _GimpGuide                       GimpGuide;
 typedef struct _GimpHistogram                   GimpHistogram;
 typedef struct _GimpIdTable                     GimpIdTable;

@@ -1229,9 +1229,8 @@ gimp_prop_spin_button_new (GObject     *config,
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (value, lower, upper,
-                        step_increment, page_increment, 0);
+  adjustment = gtk_adjustment_new (value, lower, upper,
+                                   step_increment, page_increment, 0);
 
   spinbutton = gtk_spin_button_new (adjustment, step_increment, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
@@ -1289,9 +1288,8 @@ gimp_prop_hscale_new (GObject     *config,
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (value, lower, upper,
-                        step_increment, page_increment, 0.0);
+  adjustment = gtk_adjustment_new (value, lower, upper,
+                                   step_increment, page_increment, 0.0);
 
   scale = g_object_new (GTK_TYPE_SCALE,
                         "orientation", GTK_ORIENTATION_HORIZONTAL,
@@ -1509,7 +1507,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
   if (adjustment)
     {
       gimp_prop_widget_set_factor (GIMP_SCALE_ENTRY_SPINBUTTON (adjustment),
-                                   GTK_ADJUSTMENT (adjustment),
+                                   adjustment,
                                    100.0, 0.0, 0.0, 1);
     }
 
