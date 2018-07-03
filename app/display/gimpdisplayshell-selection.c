@@ -63,7 +63,8 @@ struct _Selection
 static void      selection_start          (Selection          *selection);
 static void      selection_stop           (Selection          *selection);
 
-static void      selection_draw           (Selection          *selection);
+static void      selection_draw           (Selection          *selection,
+                                           cairo_t            *cr);
 static void      selection_undraw         (Selection          *selection);
 
 static void      selection_render_mask    (Selection          *selection);
@@ -246,19 +247,14 @@ selection_stop (Selection *selection)
 }
 
 static void
-selection_draw (Selection *selection)
+selection_draw (Selection *selection,
+                cairo_t   *cr)
 {
   if (selection->segs_in)
     {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
-
       gimp_display_shell_draw_selection_in (selection->shell, cr,
                                             selection->segs_in_mask,
                                             selection->index % 8);
-
-      cairo_destroy (cr);
     }
 }
 
@@ -427,24 +423,23 @@ selection_start_timeout (Selection *selection)
   if (selection->show_selection)
     {
       GimpDisplayConfig *config = selection->shell->display->config;
+      cairo_t           *cr;
 
-      selection_draw (selection);
+      cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
+
+      selection_draw (selection, cr);
 
       if (selection->segs_out)
         {
-          cairo_t *cr;
-
-          cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
-
           if (selection->shell->rotate_transform)
             cairo_transform (cr, selection->shell->rotate_transform);
 
           gimp_display_shell_draw_selection_out (selection->shell, cr,
                                                  selection->segs_out,
                                                  selection->n_segs_out);
-
-          cairo_destroy (cr);
         }
+
+      cairo_destroy (cr);
 
       if (selection->segs_in && selection->shell_visible)
         selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
@@ -459,8 +454,14 @@ selection_start_timeout (Selection *selection)
 static gboolean
 selection_timeout (Selection *selection)
 {
+  cairo_t *cr;
+
+  cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
+
   selection->index++;
-  selection_draw (selection);
+  selection_draw (selection, cr);
+
+  cairo_destroy (cr);
 
   return TRUE;
 }
