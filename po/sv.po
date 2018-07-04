@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-26 20:01+0000\n"
-"PO-Revision-Date: 2018-06-28 00:54+0200\n"
+"POT-Creation-Date: 2018-07-04 16:17+0000\n"
+"PO-Revision-Date: 2018-07-04 20:41+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -5133,8 +5133,8 @@ msgstr "Pla_ttlägg sömlöst…"
 
 #: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
-msgid "_Unsharp Mask..."
-msgstr "_Oskarp mask…"
+msgid "Sharpen (_Unsharp Mask)..."
+msgstr "Gör skarpare (_Oskarp mask)…"
 
 #: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
@@ -11995,9 +11995,9 @@ msgstr "Ingen satstolk angiven, använder standardtolken ”%s”.\n"
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Satstolken ”%s” är inte tillgänglig. Satsläge inaktiverat."
 
-#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:304
-#: ../app/core/gimptooloptions.c:365 ../app/gui/session.c:428
-#: ../app/menus/menus.c:476 ../app/widgets/gimpdevices.c:216
+#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:330
+#: ../app/core/gimptooloptions.c:361 ../app/gui/session.c:428
+#: ../app/menus/menus.c:476 ../app/widgets/gimpdevices.c:225
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Ta bort ”%s” misslyckades: %s"
@@ -12066,6 +12066,17 @@ msgstr "FG till Transparent"
 msgid "Please wait: %s\n"
 msgstr "Var god vänta: %s\n"
 
+#: ../app/core/gimp-internal-data.c:286 ../app/core/gimp-internal-data.c:294
+#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:598
+#, c-format
+msgid "Error saving '%s': "
+msgstr "Fel vid sparning av ”%s”: "
+
+#: ../app/core/gimp-internal-data.c:300 ../app/core/gimpdata.c:604
+#, c-format
+msgid "Error saving '%s'"
+msgstr "Fel vid sparning av ”%s”"
+
 #: ../app/core/gimp-spawn.c:186
 #, c-format
 msgid "Failed to fork (%s)"
@@ -12123,49 +12134,54 @@ msgstr "Kan inte skapa mappen ”%s”: %s"
 msgid "No patterns available for this operation."
 msgstr "Inga mönster tillgängliga för denna åtgärd."
 
-#: ../app/core/gimpbrush-load.c:174
+#: ../app/core/gimpbrush-load.c:173
 #, c-format
 msgid "Fatal parse error in brush file: Width = 0."
 msgstr "Ödesdigert tolkningsfel i penselfil: Bredd = 0."
 
-#: ../app/core/gimpbrush-load.c:181
+#: ../app/core/gimpbrush-load.c:180
 #, c-format
 msgid "Fatal parse error in brush file: Height = 0."
 msgstr "Ödesdigert tolkningsfel i penselfil: Höjd = 0."
 
-#: ../app/core/gimpbrush-load.c:188
+#: ../app/core/gimpbrush-load.c:187
 #, c-format
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "Ödesdigert tolkningsfel i penselfil: Byte = 0."
 
-#: ../app/core/gimpbrush-load.c:213
+#: ../app/core/gimpbrush-load.c:195
+#, c-format
+msgid "Fatal parse error in brush file: %dx%d over max size."
+msgstr "Ödesdigert tolkningsfel i penselfil: %dx%d är över maximal storlek."
+
+#: ../app/core/gimpbrush-load.c:221
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr "Ödesdigert tolkningsfel i penselfil: Okänt djup %d."
 
-#: ../app/core/gimpbrush-load.c:225
+#: ../app/core/gimpbrush-load.c:233
 #, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr "Ödesdigert tolkningsfel i penselfil: Okänd version %d."
 
-#: ../app/core/gimpbrush-load.c:233
+#: ../app/core/gimpbrush-load.c:241
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Penselformat stöds inte"
 
-#: ../app/core/gimpbrush-load.c:253 ../app/core/gimpbrushgenerated-load.c:126
-#: ../app/core/gimpbrushpipe-load.c:75
+#: ../app/core/gimpbrush-load.c:261 ../app/core/gimpbrushgenerated-load.c:126
+#: ../app/core/gimpbrushpipe-load.c:74
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen ”%s”."
 
-#: ../app/core/gimpbrush-load.c:260 ../app/core/gimppattern-load.c:130
+#: ../app/core/gimpbrush-load.c:268 ../app/core/gimppattern-load.c:130
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:566
 msgid "Unnamed"
 msgstr "Namnlös"
 
-#: ../app/core/gimpbrush-load.c:331
+#: ../app/core/gimpbrush-load.c:339
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12180,7 +12196,7 @@ msgstr ""
 "Detta kan vara en föråldrad GIMP-penselfil, försök läsa in den som bild och "
 "spara den igen."
 
-#: ../app/core/gimpbrush-load.c:378
+#: ../app/core/gimpbrush-load.c:386
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12191,46 +12207,46 @@ msgstr ""
 "Penseldjupet %d stöds inte.\n"
 "GIMP-penslar måste vara GRÅ eller RGBA."
 
-#: ../app/core/gimpbrush-load.c:454
+#: ../app/core/gimpbrush-load.c:462
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr ""
 "Ödesdigert tolkningsfel i penselfil: kunde inte avkoda abr-format version %d."
 
-#: ../app/core/gimpbrush-load.c:572 ../app/core/gimpbrush-load.c:791
+#: ../app/core/gimpbrush-load.c:580 ../app/core/gimpbrush-load.c:799
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
 "Ödesdigert tolkningsfel i penselfil: Värdet för penselstorlek är felaktigt."
 
-#: ../app/core/gimpbrush-load.c:659 ../app/core/gimpbrush-load.c:849
+#: ../app/core/gimpbrush-load.c:667 ../app/core/gimpbrush-load.c:857
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Ödesdigert tolkningsfel i penselfil: Penseldimensioner utanför intervall."
 
-#: ../app/core/gimpbrush-load.c:671
+#: ../app/core/gimpbrush-load.c:679
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr "Ödesdigert tolkningsfel i penselfil: Breda penslar stöds inte."
 
-#: ../app/core/gimpbrush-load.c:820
+#: ../app/core/gimpbrush-load.c:828
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "Ödesdigert tolkningsfel i penselfil: Filen verkar avhuggen: "
 
-#: ../app/core/gimpbrush-load.c:857
+#: ../app/core/gimpbrush-load.c:865
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr "Ödesdigert tolkningsfel i penselfil: Okänd komprimeringsmetod."
 
-#: ../app/core/gimpbrush-load.c:993
+#: ../app/core/gimpbrush-load.c:1001
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
 "Ödesdigert tolkningsfel i penselfil: kunde inte avkoda abr-format version %d."
 
-#: ../app/core/gimpbrush-load.c:1114 ../app/core/gimpbrush-load.c:1132
+#: ../app/core/gimpbrush-load.c:1122 ../app/core/gimpbrush-load.c:1140
 #, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
@@ -12323,7 +12339,7 @@ msgstr "Penselns bildförhållande"
 msgid "Brush Angle"
 msgstr "Penselvinkel"
 
-#: ../app/core/gimpbrushpipe-load.c:91 ../app/core/gimpbrushpipe-load.c:115
+#: ../app/core/gimpbrushpipe-load.c:90 ../app/core/gimpbrushpipe-load.c:114
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Ödesdigert tolkningsfel i penselfilen ”%s”: Filen är skadad."
@@ -12580,18 +12596,8 @@ msgstr "Typsnitt"
 msgid "Tool Preset"
 msgstr "Verktygsförinställning"
 
-#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:598
-#, c-format
-msgid "Error saving '%s': "
-msgstr "Fel vid sparning av ”%s”: "
-
-#: ../app/core/gimpdata.c:604
-#, c-format
-msgid "Error saving '%s'"
-msgstr "Fel vid sparning av ”%s”"
-
-#: ../app/core/gimpdatafactory.c:350 ../app/core/gimpdatafactory.c:384
-#: ../app/core/gimpdatafactory.c:699 ../app/core/gimpdatafactory.c:730
+#: ../app/core/gimpdatafactory.c:351 ../app/core/gimpdatafactory.c:385
+#: ../app/core/gimpdatafactory.c:700 ../app/core/gimpdatafactory.c:731
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -12602,22 +12608,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:414 ../app/core/gimpdatafactory.c:417
+#: ../app/core/gimpdatafactory.c:415 ../app/core/gimpdatafactory.c:418
 #: ../app/core/gimpitem.c:546 ../app/core/gimpitem.c:549
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:426 ../app/core/gimpitem.c:557
+#: ../app/core/gimpdatafactory.c:427 ../app/core/gimpitem.c:557
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopia"
 
-#: ../app/core/gimpdatafactory.c:575 ../app/tools/gimptextoptions.c:536
+#: ../app/core/gimpdatafactory.c:576 ../app/tools/gimptextoptions.c:536
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Läser in typsnitt (det här kan ta en stund…)"
 
-#: ../app/core/gimpdatafactory.c:894
+#: ../app/core/gimpdatafactory.c:895
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -12628,7 +12634,7 @@ msgstr ""
 "Skapa mappen eller justera din konfiguration i delen ”kataloger” i "
 "Inställningsdialogrutan."
 
-#: ../app/core/gimpdatafactory.c:913
+#: ../app/core/gimpdatafactory.c:914
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -12639,7 +12645,7 @@ msgstr ""
 "din datasökväg. Du redigerade förmodligen gimprc-filen manuellt, justera "
 "detta i delen ”kataloger” i Inställningsdialogrutan."
 
-#: ../app/core/gimpdatafactory.c:923
+#: ../app/core/gimpdatafactory.c:924
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Du har ingen skrivbar datamapp konfigurerad."
@@ -16955,12 +16961,12 @@ msgstr "Visa snabbmask"
 msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
-#: ../app/display/gimpdisplayshell.c:792 ../app/display/gimpdisplayshell.c:1448
+#: ../app/display/gimpdisplayshell.c:791 ../app/display/gimpdisplayshell.c:1447
 #: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
 
-#: ../app/display/gimpdisplayshell-callbacks.c:543
+#: ../app/display/gimpdisplayshell-callbacks.c:555
 #, c-format
 msgid ""
 "<big>Unstable Development Version</big>\n"
@@ -19950,12 +19956,12 @@ msgstr "Hoppar över ”%s”: fel GIMP-protokollversion."
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Hoppar över ”%s”: fel filformatsversion för pluginrc."
 
-#: ../app/plug-in/plug-in-rc.c:521
+#: ../app/plug-in/plug-in-rc.c:542
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "ogiltigt värde ”%s” för ikontyp"
 
-#: ../app/plug-in/plug-in-rc.c:536
+#: ../app/plug-in/plug-in-rc.c:557
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "ogiltigt värde ”%ld” för ikontyp"
@@ -20290,7 +20296,7 @@ msgstr ""
 "Yxmördaren Julia Blomqvist\n"
 "på fäktning i Schweiz."
 
-#: ../app/text/gimpfontfactory.c:380
+#: ../app/text/gimpfontfactory.c:403
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -20388,7 +20394,7 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Fast"
 
-#: ../app/tools/gimp-tools.c:382
+#: ../app/tools/gimp-tools.c:387
 msgid ""
 "This tool has\n"
 "no options."
@@ -21878,34 +21884,34 @@ msgstr "Mät avstånd och vinklar"
 msgid "Distance:"
 msgstr "Avstånd:"
 
-#: ../app/tools/gimpmoveoptions.c:143
-msgid "Pick a layer or guide"
-msgstr "Välj ett lager eller hjälplinje"
-
-#: ../app/tools/gimpmoveoptions.c:144
-msgid "Move the active layer"
-msgstr "Flytta det aktiva lagret"
-
-#: ../app/tools/gimpmoveoptions.c:148
+#: ../app/tools/gimpmoveoptions.c:136
 msgid "Move selection"
 msgstr "Flytta markering"
 
-#: ../app/tools/gimpmoveoptions.c:152
-msgid "Pick a path"
-msgstr "Välj en bana"
-
-#: ../app/tools/gimpmoveoptions.c:153
-msgid "Move the active path"
-msgstr "Flytta den aktiva banan"
-
-#: ../app/tools/gimpmoveoptions.c:182
-msgid "Move:"
-msgstr "Flytta:"
-
-#: ../app/tools/gimpmoveoptions.c:192
+#: ../app/tools/gimpmoveoptions.c:146 ../app/tools/gimpmoveoptions.c:204
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Verktygsväxel  (%s)"
+
+#: ../app/tools/gimpmoveoptions.c:154
+msgid "Pick a layer or guide"
+msgstr "Välj ett lager eller hjälplinje"
+
+#: ../app/tools/gimpmoveoptions.c:155
+msgid "Move the active layer"
+msgstr "Flytta det aktiva lagret"
+
+#: ../app/tools/gimpmoveoptions.c:159
+msgid "Pick a path"
+msgstr "Välj en bana"
+
+#: ../app/tools/gimpmoveoptions.c:160
+msgid "Move the active path"
+msgstr "Flytta den aktiva banan"
+
+#: ../app/tools/gimpmoveoptions.c:194
+msgid "Move:"
+msgstr "Flytta:"
 
 #: ../app/tools/gimpmovetool.c:112
 msgctxt "tool"
@@ -24003,239 +24009,230 @@ msgstr "GIMP stötte på flera kritiska fel!"
 msgid "_Restart GIMP"
 msgstr "Sta_rta om GIMP"
 
-#: ../app/widgets/gimpdashboard.c:398 ../app/widgets/gimpdashboard.c:450
+#: ../app/widgets/gimpdashboard.c:390 ../app/widgets/gimpdashboard.c:442
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Upptaget"
 
-#: ../app/widgets/gimpdashboard.c:399
+#: ../app/widgets/gimpdashboard.c:391
 msgid "Tile cache occupied size"
 msgstr "Använd bildblockscachestorlek"
 
-#: ../app/widgets/gimpdashboard.c:408
+#: ../app/widgets/gimpdashboard.c:400
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Maximum"
 
-#: ../app/widgets/gimpdashboard.c:409
+#: ../app/widgets/gimpdashboard.c:401
 msgid "Maximal tile cache occupied size"
 msgstr "Maximal använd bildblockscachestorlek"
 
-#: ../app/widgets/gimpdashboard.c:418 ../app/widgets/gimpdashboard.c:470
+#: ../app/widgets/gimpdashboard.c:410 ../app/widgets/gimpdashboard.c:462
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Gräns"
 
-#: ../app/widgets/gimpdashboard.c:419
+#: ../app/widgets/gimpdashboard.c:411
 msgid "Tile cache size limit"
 msgstr "Gräns för bildblockscachestorlek"
 
-#: ../app/widgets/gimpdashboard.c:427
+#: ../app/widgets/gimpdashboard.c:419
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Komprimering"
 
-#: ../app/widgets/gimpdashboard.c:428
+#: ../app/widgets/gimpdashboard.c:420
 msgid "Tile cache compression ratio"
 msgstr "Komprimeringsförhållande för bildblockscache"
 
-#: ../app/widgets/gimpdashboard.c:437
+#: ../app/widgets/gimpdashboard.c:429
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Träff/miss"
 
-#: ../app/widgets/gimpdashboard.c:438
+#: ../app/widgets/gimpdashboard.c:430
 msgid "Tile cache hit/miss ratio"
 msgstr "Träff/miss-förhållande för bildblockscache"
 
-#: ../app/widgets/gimpdashboard.c:451
+#: ../app/widgets/gimpdashboard.c:443
 msgid "Swap file occupied size"
 msgstr "Använd växlingsfilsstorlek"
 
-#: ../app/widgets/gimpdashboard.c:460 ../app/widgets/gimpdashboard.c:592
+#: ../app/widgets/gimpdashboard.c:452 ../app/widgets/gimpdashboard.c:570
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Storlek"
 
-#: ../app/widgets/gimpdashboard.c:461
+#: ../app/widgets/gimpdashboard.c:453
 msgid "Swap file size"
 msgstr "Växlingsfilsstorlek"
 
-#: ../app/widgets/gimpdashboard.c:471
+#: ../app/widgets/gimpdashboard.c:463
 msgid "Swap file size limit"
 msgstr "Gräns för växlingsfilsstorlek"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:481
+#: ../app/widgets/gimpdashboard.c:473
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Läst"
 
-#: ../app/widgets/gimpdashboard.c:482
+#: ../app/widgets/gimpdashboard.c:474
 msgid "Total amount of data read from the swap"
 msgstr "Total mängd data läst från växlingsfilen"
 
-#: ../app/widgets/gimpdashboard.c:491
+#: ../app/widgets/gimpdashboard.c:483
 msgctxt "dashboard-variable"
 msgid "Reading"
 msgstr "Läser"
 
-#: ../app/widgets/gimpdashboard.c:492
+#: ../app/widgets/gimpdashboard.c:484
 msgid "Whether data is being read from the swap"
 msgstr "Huruvida data läses från växlingsfilen"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:503
+#: ../app/widgets/gimpdashboard.c:496
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Skrivet"
 
-#: ../app/widgets/gimpdashboard.c:504
+#: ../app/widgets/gimpdashboard.c:497
 msgid "Total amount of data written to the swap"
 msgstr "Total mängd data skrivet till växlingsfilen"
 
-#: ../app/widgets/gimpdashboard.c:513
+#: ../app/widgets/gimpdashboard.c:506
 msgctxt "dashboard-variable"
 msgid "Writing"
 msgstr "Skriver"
 
-#: ../app/widgets/gimpdashboard.c:514
+#: ../app/widgets/gimpdashboard.c:507
 msgid "Whether data is being written to the swap"
 msgstr "Huruvida data skrivs till växlingsfilen"
 
-#: ../app/widgets/gimpdashboard.c:522
-msgctxt "dashboard-variable"
-msgid "Busy"
-msgstr "Upptagen"
-
-#: ../app/widgets/gimpdashboard.c:523
-msgid "Whether data is transferred to or from the swap"
-msgstr "Huruvida data överförs till eller från växlingsfilen"
-
-#: ../app/widgets/gimpdashboard.c:542
+#: ../app/widgets/gimpdashboard.c:520
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Användning"
 
-#: ../app/widgets/gimpdashboard.c:543
+#: ../app/widgets/gimpdashboard.c:521
 msgid "Total CPU usage"
 msgstr "Total CPU-användning"
 
-#: ../app/widgets/gimpdashboard.c:551 ../app/widgets/gimpdashboard.c:560
+#: ../app/widgets/gimpdashboard.c:529 ../app/widgets/gimpdashboard.c:538
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Aktiv"
 
-#: ../app/widgets/gimpdashboard.c:552
+#: ../app/widgets/gimpdashboard.c:530
 msgid "Whether the CPU is active"
 msgstr "Huruvida CPU:n är aktiv"
 
-#: ../app/widgets/gimpdashboard.c:561
+#: ../app/widgets/gimpdashboard.c:539
 msgid "Total amount of time the CPU has been active"
 msgstr "Total mängd tid som CPU:n har varit aktiv"
 
-#: ../app/widgets/gimpdashboard.c:574
+#: ../app/widgets/gimpdashboard.c:552
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Använt"
 
-#: ../app/widgets/gimpdashboard.c:575
+#: ../app/widgets/gimpdashboard.c:553
 msgid "Amount of memory used by the process"
 msgstr "Mängden minne som används av processen"
 
-#: ../app/widgets/gimpdashboard.c:583
+#: ../app/widgets/gimpdashboard.c:561
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Tillgängligt"
 
-#: ../app/widgets/gimpdashboard.c:584
+#: ../app/widgets/gimpdashboard.c:562
 msgid "Amount of available physical memory"
 msgstr "Mängden tillgängligt fysiskt minne"
 
-#: ../app/widgets/gimpdashboard.c:593
+#: ../app/widgets/gimpdashboard.c:571
 msgid "Physical memory size"
 msgstr "Storleken på fysiskt minne"
 
-#: ../app/widgets/gimpdashboard.c:604
+#: ../app/widgets/gimpdashboard.c:582
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mipmappad"
 
-#: ../app/widgets/gimpdashboard.c:605
+#: ../app/widgets/gimpdashboard.c:583
 msgid "Total size of processed mipmapped data"
 msgstr "Total storlek för bearbetad mipmappad data"
 
-#: ../app/widgets/gimpdashboard.c:617
+#: ../app/widgets/gimpdashboard.c:595
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Cache"
 
-#: ../app/widgets/gimpdashboard.c:618
+#: ../app/widgets/gimpdashboard.c:596
 msgid "In-memory tile cache"
 msgstr "Bildblockscache i minne"
 
-#: ../app/widgets/gimpdashboard.c:654
+#: ../app/widgets/gimpdashboard.c:632
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Växling"
 
-#: ../app/widgets/gimpdashboard.c:655
+#: ../app/widgets/gimpdashboard.c:633
 msgid "On-disk tile swap"
 msgstr "Bildblocksväxlingsfil på disk"
 
-#: ../app/widgets/gimpdashboard.c:700
+#: ../app/widgets/gimpdashboard.c:684
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "CPU"
 
-#: ../app/widgets/gimpdashboard.c:701
+#: ../app/widgets/gimpdashboard.c:685
 msgid "CPU usage"
 msgstr "CPU-användning"
 
-#: ../app/widgets/gimpdashboard.c:731
+#: ../app/widgets/gimpdashboard.c:720
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Minne"
 
-#: ../app/widgets/gimpdashboard.c:732
+#: ../app/widgets/gimpdashboard.c:721
 msgid "Memory usage"
 msgstr "Minnesanvändning"
 
-#: ../app/widgets/gimpdashboard.c:740
+#: ../app/widgets/gimpdashboard.c:729
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Cache"
 
-#: ../app/widgets/gimpdashboard.c:770
+#: ../app/widgets/gimpdashboard.c:759
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Diverse"
 
-#: ../app/widgets/gimpdashboard.c:771
+#: ../app/widgets/gimpdashboard.c:760
 msgid "Miscellaneous information"
 msgstr "Diverse information"
 
-#: ../app/widgets/gimpdashboard.c:949
+#: ../app/widgets/gimpdashboard.c:938
 msgid "Select fields"
 msgstr "Markerad fält"
 
 # sebras: blir det bättre med "Finns ej"?
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:2889
+#: ../app/widgets/gimpdashboard.c:2820
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "-"
 
-#: ../app/widgets/gimpdashboard.c:2898
+#: ../app/widgets/gimpdashboard.c:2829
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../app/widgets/gimpdashboard.c:2899
+#: ../app/widgets/gimpdashboard.c:2830
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nej"
@@ -25318,15 +25315,15 @@ msgstr "Ta bort verktygsförinställning…"
 msgid "%s Preset"
 msgstr "%s-förinställning"
 
-#: ../app/widgets/gimpuimanager.c:760
+#: ../app/widgets/gimpuimanager.c:778
 msgid "Your GIMP installation is incomplete:"
 msgstr "Din GIMP-installation är ofullständig:"
 
-#: ../app/widgets/gimpuimanager.c:762
+#: ../app/widgets/gimpuimanager.c:780
 msgid "Please make sure the menu XML files are correctly installed."
 msgstr "Försäkra dig om att XML-filerna för menyer är korrekt installerade."
 
-#: ../app/widgets/gimpuimanager.c:768
+#: ../app/widgets/gimpuimanager.c:786
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr "Det inträffade ett fel vid tolkning av menydefinitionen från %s: %s"
@@ -25666,6 +25663,13 @@ msgstr "rund"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "luddig"
+
+#~ msgctxt "dashboard-variable"
+#~ msgid "Busy"
+#~ msgstr "Upptagen"
+
+#~ msgid "Whether data is transferred to or from the swap"
+#~ msgstr "Huruvida data överförs till eller från växlingsfilen"
 
 #~ msgid ""
 #~ "Hexadecimal color notation as used in HTML and CSS.  This entry also "
