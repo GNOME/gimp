@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp 2.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-30 05:35+0300\n"
+"POT-Creation-Date: 2018-06-30 20:58+0300\n"
 "PO-Revision-Date: 2018-04-30 05:38+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
@@ -1449,7 +1449,7 @@ msgstr "Пропорциональная"
 msgid "Can load metadata only from local files"
 msgstr "Загружать метаданные можно только из локальных файлов"
 
-#: ../libgimpbase/gimpmetadata.c:859
+#: ../libgimpbase/gimpmetadata.c:859 ../libgimpbase/gimpmetadata.c:929
 #, c-format
 msgid "Conversion of the filename to system codepage failed."
 msgstr ""
@@ -1459,17 +1459,17 @@ msgstr ""
 msgid "Can save metadata only to local files"
 msgstr "Метаданные можно сохранять только в локальные файлы"
 
-#: ../libgimpbase/gimpmetadata.c:992
+#: ../libgimpbase/gimpmetadata.c:1002
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Не удалось разобрать данные Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1043
+#: ../libgimpbase/gimpmetadata.c:1053
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Не удалось разобрать данные IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1092
+#: ../libgimpbase/gimpmetadata.c:1102
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Не удалось разобрать данные XMP."
@@ -1771,8 +1771,8 @@ msgstr "неверное значение '%ld' для маркёра %s"
 msgid "while parsing token '%s': %s"
 msgstr "при синтаксическом разборе маркёра '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:662
-#: ../libgimpconfig/gimpconfig-iface.c:675 ../libgimpconfig/gimpscanner.c:742
+#: ../libgimpconfig/gimpconfig-iface.c:682
+#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:742
 #: ../libgimpconfig/gimpscanner.c:824
 #: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
@@ -1905,6 +1905,14 @@ msgstr "_Сбросить"
 msgid "_OK"
 msgstr "_OK"
 
+#: ../libgimpwidgets/gimpcolorhexentry.c:118
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Шестнадцатеричная запись цвета, используемая в HTML и CSS. Также можно "
+"вводить имена цветов в нотации CSS."
+
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:101
 msgid "All files (*.*)"
 msgstr "Все файлы (*.*)"
@@ -1939,11 +1947,11 @@ msgctxt "profile"
 msgid "None"
 msgstr "Нет"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:170
+#: ../libgimpwidgets/gimpcolorprofileview.c:163
 msgid "Manufacturer: "
 msgstr "Производитель: "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:182
+#: ../libgimpwidgets/gimpcolorprofileview.c:175
 msgid "Copyright: "
 msgstr "Авторские права: "
 
@@ -1975,15 +1983,7 @@ msgstr "Текущий:"
 msgid "Old:"
 msgstr "Прежний:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:316
-msgid ""
-"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
-"CSS color names."
-msgstr ""
-"Шестнадцатеричная запись цвета, используемая в HTML и CSS. Также можно "
-"вводить имена цветов в нотации CSS."
-
-#: ../libgimpwidgets/gimpcolorselection.c:322
+#: ../libgimpwidgets/gimpcolorselection.c:318
 msgid "HTML _notation:"
 msgstr "HTML-р_азметка:"
 
@@ -2433,11 +2433,11 @@ msgstr "Желтый"
 msgid "Black"
 msgstr "Черный"
 
-#: ../modules/color-selector-cmyk.c:380
+#: ../modules/color-selector-cmyk.c:374
 msgid "Profile: (none)"
 msgstr "Профиль: (нет)"
 
-#: ../modules/color-selector-cmyk.c:392
+#: ../modules/color-selector-cmyk.c:386
 #, c-format
 msgid "Profile: %s"
 msgstr "Профиль: %s"
