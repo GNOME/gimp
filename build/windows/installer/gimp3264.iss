@@ -207,7 +207,7 @@ Name: deps64; Description: "{cm:ComponentsDeps,{#GTK_VERSION}}"; Types: full com
 Name: deps64\wimp; Description: "{cm:ComponentsGtkWimp}"; Types: full custom; Flags: dontinheritcheck disablenouninstallwarning; Check: Check3264('64')
 
 #ifdef DEBUG_SYMBOLS
-Name: debug; Description: "{cm:ComponentsDebug}"; Types: custom; Flags: disablenouninstallwarning
+Name: debug; Description: "{cm:ComponentsDebug}"; Types: full custom; Flags: disablenouninstallwarning
 #endif
 
 Name: gs; Description: "{cm:ComponentsGhostscript}"; Types: full custom
