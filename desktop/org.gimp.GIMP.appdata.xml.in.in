@@ -72,7 +72,7 @@
   </provides>
 
   <releases>
-    <release version="2.10.4" date="2018-07-07">
+    <release version="2.10.4" date="2018-07-04">
       <description>
         <_p>
           GIMP 2.10.4 includes a lot of bug fixes as well as various
