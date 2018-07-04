@@ -7,6 +7,7 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+
 Overview of Changes from GIMP 2.10.2 to GIMP 2.10.4
 ===================================================
 
@@ -27,47 +28,50 @@ User Interface:
 
   - The Dashboard dockable dialog now has a 'Memory' group that shows
     memory-usage information: the currently used memory size, the
-    available physical memory size, and the total physical memory size.
-    It can also show the tile-cache size, for comparison against the
-    other memory stats. Note that the upper-bound of the meter is the
-    physical memory size, so the memory usage may be over 100% when GIMP
-    uses the swap.
-  - The Dashboard dockable dialog now has "read" and "written" fields
-    in the dashboard swap group, which report the total amount of data
+    available physical memory size, and the total physical memory
+    size.  It can also show the tile-cache size, for comparison
+    against the other memory stats. Note that the upper-bound of the
+    meter is the physical memory size, so the memory usage may be over
+    100% when GIMP uses the swap.
+  - The Dashboard dockable dialog now has "read" and "written" fields in
+    the dashboard swap group, which report the total amount of data
     read-from/written-to the tile swap, respetively. Additionally, the
-    swap busy indicator (used as the meter's LED) has been improved, so
-    that it's active whenever data has been read-from/written-to the swap
-    during the last sampling interval, rather than at the point of sampling.
-  - Fonts can now be tagged. The user interface is the same as for brushes,
-    patterns etc.
+    swap busy indicator (used as the meter's LED) has been improved,
+    so that it's active whenever data has been read-from/written-to
+    the swap during the last sampling interval, rather than at the
+    point of sampling.
+  - Fonts can now be tagged. The user interface is the same as for
+    brushes, patterns etc.
   - Some icons fixed: larger spacing between broken chains and
     gimp-tool-ellipse-select made symmetrical.
 
 Usability:
 
-  - When a plug-in cannot be applied to an image because of mismatch in image
-    types (e.g. layer has no alpha or image is greyscale), GIMP now displays
-    a message listing supported image types for this plug-in.
+  - When a plug-in cannot be applied to an image because of mismatch
+    in image types (e.g. layer has no alpha or image is greyscale),
+    GIMP now displays a message listing supported image types for this
+    plug-in.
 
 Tools:
 
-  - The Measurement tool now has an "Auto straighten" option allowing to
-    rotate the active drawable (layer, channel…) so that the measurement
-    line is used as horizon. As other transform tools, the feature will
-    work on linked drawables as well.
-  - The Smudge tool now paints correctly on images with a color profile
-    other than the GIMP's built-in one.
+  - The Measurement tool now has an "Auto straighten" option allowing
+    to rotate the active drawable (layer, channel…) so that the
+    measurement line is used as horizon. As other transform tools, the
+    feature will work on linked drawables as well.
+  - The Smudge tool now paints correctly on images with a color
+    profile other than the GIMP's built-in one.
 
 Build:
 
-  - Installer: set compatibility options to run Python plugins
-    in HiDPI-aware mode.
+  - Installer: set compatibility options to run Python plugins in
+    HiDPI-aware mode.
   - Put back compatibility DLLs for really old plugins.
   - Install binary tool `gimp-test-clipboard` on the system to allow
     people to help us debug clipboard bugs.
-  - --enable-bundled-mypaint-brushes renamed --enable-relocatable-bundle
-    and also make WMF fonts looked up on the runtime prefix of GIMP
-    (instead of the build-time path) when this build option was set.
+  - --enable-bundled-mypaint-brushes renamed
+    --enable-relocatable-bundle and also make WMF fonts looked up on
+    the runtime prefix of GIMP (instead of the build-time path) when
+    this build option was set.
   
 Plug-ins:
 
@@ -83,24 +87,25 @@ Plug-ins:
 File Formats:
 
   - The PSD loader now provides an option to load "merged",
-    pre-composited version of the images that becomes available when
-    a PSD file was saved with "Maximize Compatibility" option enabled
-    in Photoshop. This is useful when loading PSD files that use features
+    pre-composited version of the images that becomes available when a
+    PSD file was saved with "Maximize Compatibility" option enabled in
+    Photoshop. This is useful when loading PSD files that use features
     that GIMP doesn't currently support, and therefore can't render
-    correctly, such as adjustment layers. When loading the merged image
-    version, we avoid loading certain additional data from the file, such
-    as channels, paths, and guides, while still loading metadata. This
-    option is currently exposed as an additional file type
-    ("Photoshop image (merged)"), which has to be explicitly selected from
-    the file-type list when opening the image.
-  - Embedding GIMP's built-in sRGB color profile to exported files is now
-    optional. The default choice can be set in the Preferences dialog.
+    correctly, such as adjustment layers. When loading the merged
+    image version, we avoid loading certain additional data from the
+    file, such as channels, paths, and guides, while still loading
+    metadata. This option is currently exposed as an additional file
+    type ("Photoshop image (merged)"), which has to be explicitly
+    selected from the file-type list when opening the image.
+  - Embedding GIMP's built-in sRGB color profile to exported files is
+    now optional. The default choice can be set in the Preferences
+    dialog.
 
 Translations:
 
-  - Updated translations: Catalan, Czech, Danish, Dutch, Finnish, Greek,
-    Hungarian, Italian, Latvian, Polish, Romanian, Russian, Spanish,
-    Swedish, Ukrainian.
+  - Updated translations: Catalan, Czech, Danish, Dutch, Finnish,
+    Greek, Hungarian, Italian, Latvian, Polish, Romanian, Russian,
+    Spanish, Swedish, Ukrainian.
 
 
 Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
