@@ -24,6 +24,7 @@ Source: "{#DEPS_DIR}\{#DDIR}\bin\*.dll"; DestDir: "{app}\bin"; Excludes: "\bin\l
 Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs and deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\gdk-pixbuf-query-loaders.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\bzip2.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\gdk-pixbuf-2.0\2.10.0\loaders.cache"; DestDir: "{app}\lib\gdk-pixbuf-2.0\2.10.0\"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\babl-0.1\*.dll"; DestDir: "{app}\lib\babl-0.1"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
