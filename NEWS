@@ -20,6 +20,8 @@ Core:
     fully loaded yet (and will output an appropriate error if you do
     so). All non-text related activities can be performed right away.
   - Change of the URL from bugzilla to gitlab where appropriate.
+  - New tool option manager to better keep track of user context and
+    paint options in a consistent manner.
 
 User Interface:
 
@@ -97,7 +99,9 @@ File Formats:
 Translations:
 
   - Updated translations: Catalan, Czech, Danish, Dutch, Finnish, Greek,
-    Italian, Polish, Romanian, Spanish, Swedish.
+    Hungarian, Italian, Latvian, Polish, Romanian, Russian, Spanish,
+    Swedish, Ukrainian.
+
 
 Overview of Changes from GIMP 2.10.0 to GIMP 2.10.2
 ===================================================
