@@ -301,17 +301,16 @@ msgid "Step _back"
 msgstr "Шаг _назад"
 
 #: ../plug-ins/common/animation-play.c:592
-#, fuzzy
 msgid "Step back to previous frame"
-msgstr "Шаг до следующего кадра"
+msgstr "Перейти на предыдущий кадр"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "_Step"
-msgstr "_Шаг"
+msgstr "_Шаг вперёд"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "Step to next frame"
-msgstr "Шаг до следующего кадра"
+msgstr "Перейти на следующий кадр"
 
 #: ../plug-ins/common/animation-play.c:600
 msgid "Rewind the animation"
@@ -530,17 +529,16 @@ msgstr "_Количество цветов:"
 
 #: ../plug-ins/common/busy-dialog.c:195 ../plug-ins/common/busy-dialog.c:211
 msgid "Please Wait"
-msgstr ""
+msgstr "Подождите, пожалуйста"
 
 #. the title label
 #: ../plug-ins/common/busy-dialog.c:239
 msgid "Please wait for the operation to complete"
-msgstr ""
+msgstr "Дождитесь завершения операции"
 
 #: ../plug-ins/common/busy-dialog.c:299
-#, fuzzy
 msgid "Canceling..."
-msgstr "О_тмена"
+msgstr "Выполняется отмена..."
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
@@ -647,7 +645,6 @@ msgid "sin^p, stepped"
 msgstr "Пошаговая sin^p"
 
 #: ../plug-ins/common/cml-explorer.c:166
-#, fuzzy
 msgctxt "cml-composition"
 msgid "None"
 msgstr "Нет"
@@ -2172,9 +2169,9 @@ msgstr "Загрузка палитры KISS"
 
 #: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-cel.c:363
 #: ../plug-ins/common/file-cel.c:383
-#, fuzzy, c-format
+#, c-format
 msgid "EOF or error while reading image header"
-msgstr "Ошибка при чтении '%s'. %s"
+msgstr "Конец файла, либо ошибка при чтении заголовка изображения"
 
 #. Read file pointer
 #. File header
@@ -2259,9 +2256,9 @@ msgstr "Невозможно создать новое изображение"
 
 #: ../plug-ins/common/file-cel.c:471 ../plug-ins/common/file-cel.c:507
 #: ../plug-ins/common/file-cel.c:532
-#, fuzzy, c-format
+#, c-format
 msgid "EOF or error while reading image data"
-msgstr "Ошибка при чтении '%s'. %s"
+msgstr "Конец файла, либо ошибка при чтении данных изображения"
 
 #: ../plug-ins/common/file-cel.c:549
 #, c-format
@@ -2284,15 +2281,15 @@ msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr ""
 
 #: ../plug-ins/common/file-cel.c:672
-#, fuzzy, c-format
+#, c-format
 msgid "'%s': illegal number of colors: %u"
-msgstr "Число цветов:"
+msgstr "'%s': недопустимое число цветов: %u"
 
 #: ../plug-ins/common/file-cel.c:687 ../plug-ins/common/file-cel.c:704
 #: ../plug-ins/common/file-cel.c:724
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
-msgstr ""
+msgstr "'%s': конец файла, либо ошибка при чтении данных палитры"
 
 #. init the progress meter
 #.
@@ -2531,20 +2528,17 @@ msgstr ""
 "работать или не сохранится корректно."
 
 #: ../plug-ins/common/file-gif-save.c:541
-#, fuzzy
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
-msgstr ""
-"Невозможно дальнейшее уменьшение цветов.\n"
-"Сохраняется как непрозрачное."
+msgstr "Невозможно дальнейшее уменьшение цветов. Сохраняется как непрозрачное."
 
 #: ../plug-ins/common/file-gif-save.c:660
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Невозможно сохранить '%s'. Формат GIF не поддерживает изображения больше %d "
-"пикселов в длину или ширину."
+"Невозможно экспортировать '%s'. Формат GIF не поддерживает изображения больше %d "
+"пикселей в длину или ширину."
 
 #: ../plug-ins/common/file-gif-save.c:773
 msgid ""
@@ -2678,15 +2672,16 @@ msgid "C source code header"
 msgstr "Заголовок исходного кода C"
 
 #: ../plug-ins/common/file-heif.c:106
-#, fuzzy
 msgid "Loads HEIF images"
-msgstr "Загрузка карты изображения"
+msgstr "Загрузка изображений HEIF"
 
 #: ../plug-ins/common/file-heif.c:107
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
 msgstr ""
+"Загрузить изображения в формате HEIF (High Efficiency Image File Format). "
+"Обычные расширения файлов HEIF — .heif, .heic."
 
 #: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:131
 msgid "HEIF/HEIC"
@@ -2703,40 +2698,37 @@ msgstr ""
 
 #: ../plug-ins/common/file-heif.c:371 ../plug-ins/common/file-heif.c:404
 #: ../plug-ins/common/file-heif.c:443 ../plug-ins/common/file-heif.c:461
-#, fuzzy, c-format
+#, c-format
 msgid "Loading HEIF image failed: %s"
-msgstr "Закачивается изображение (%s из %s)"
+msgstr "Не удалось загрузить изображение HEIF: %s"
 
 #: ../plug-ins/common/file-heif.c:393
 msgid "Loading HEIF image failed: Input file contains no readable images"
-msgstr ""
+msgstr "Не удалось загрузить изображение HEIF: в файле нет читаемых данных"
 
 #: ../plug-ins/common/file-heif.c:482
-#, fuzzy
 msgid "image content"
-msgstr "Содержимое ячейки:"
+msgstr "Содержимое изображения"
 
 #: ../plug-ins/common/file-heif.c:677
 #, c-format
 msgid "Encoding HEIF image failed: %s"
-msgstr ""
+msgstr "Не удалось сформировать изображение HEIF: %s"
 
 #: ../plug-ins/common/file-heif.c:700
-#, fuzzy, c-format
+#, c-format
 msgid "Writing HEIF image failed: %s"
-msgstr "Ошибка при записи файла '%s': %s"
+msgstr "Ошибка при записи файла HEIF: %s"
 
 #: ../plug-ins/common/file-heif.c:786
 msgid "primary"
 msgstr ""
 
 #: ../plug-ins/common/file-heif.c:931
-#, fuzzy
 msgid "Load HEIF Image"
-msgstr "Загрузка карты изображения"
+msgstr "Загрузить изображение HEIF"
 
 #: ../plug-ins/common/file-heif.c:945
-#, fuzzy
 msgid "Select Image"
 msgstr "Выбрать файл изображения"
 
@@ -4544,14 +4536,14 @@ msgid "Saving '%s'"
 msgstr "Сохранение \"%s\""
 
 #: ../plug-ins/common/file-xmc.c:1545
-#, fuzzy, c-format
+#, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
-msgstr "Высота '%s' слишком велика. Сократите её более чем на %dpx."
+msgstr "Кадр '%s' слишком широкий. Сократите ширину до не более чем %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1554
-#, fuzzy, c-format
+#, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
-msgstr "Высота '%s' слишком велика. Сократите её более чем на %dpx."
+msgstr "Кадр '%s' слишком высокий. Сократите высоту до не более чем %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1563
 #, c-format
