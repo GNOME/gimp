@@ -430,6 +430,11 @@ Which plug-in to use for importing raw digital camera files.  This is a single
 filename.
 
 .TP
+(export-color-profile yes)
+
+Export the image's color profile by default.  Possible values are yes and no.
+
+.TP
 (export-metadata-exif yes)
 
 Export Exif metadata by default.  Possible values are yes and no.

@@ -351,6 +351,11 @@
 # 
 # (import-raw-plug-in "")
 
+# Export the image's color profile by default.  Possible values are yes and
+# no.
+# 
+# (export-color-profile yes)
+
 # Export Exif metadata by default.  Possible values are yes and no.
 # 
 # (export-metadata-exif yes)
