@@ -228,7 +228,6 @@ Name: gimp32on64\compat; Description: "{cm:ComponentsCompat}"; Types: full custo
 
 [Tasks]
 Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
-Name: quicklaunchicon; Description: "{cm:AdditionalIconsQuickLaunch}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
 #if Defined(DEVEL) && DEVEL != ""
@@ -238,7 +237,6 @@ Name: quicklaunchicon; Description: "{cm:AdditionalIconsQuickLaunch}"; GroupDesc
 #endif
 Name: "{commonprograms}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"
 Name: "{commondesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"; Tasks: quicklaunchicon
 
 [Files]
 ;setup files
