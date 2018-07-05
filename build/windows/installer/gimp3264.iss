@@ -230,11 +230,7 @@ Name: gimp32on64\compat; Description: "{cm:ComponentsCompat}"; Types: full custo
 Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Icons]
-#if Defined(DEVEL) && DEVEL != ""
-	#define ICON_VERSION=MAJOR + "." + MINOR
-#else
-	#define ICON_VERSION=MAJOR
-#endif
+#define ICON_VERSION=MAJOR + "." + MINOR + "." + MICRO
 Name: "{commonprograms}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"
 Name: "{commondesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"; Tasks: desktopicon
 
@@ -330,6 +326,7 @@ Source: "{#DEPS_DIR32}\lib\python2.7\*"; DestDir: "{app}\32\lib\python2.7"; Comp
 Type: files; Name: "{app}\bin\gimp-?.?.exe"
 Type: files; Name: "{app}\bin\gimp-?.??.exe"
 Type: files; Name: "{app}\bin\gimp-console-?.?.exe"
+Type: files; Name: "{app}\bin\gimp-console-?.??.exe"
 Type: files; Name: "{app}\lib\gegl-0.1\*.dll"
 ;obsolete plugins from gimp 2.6
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\file-pdf.exe"
@@ -337,6 +334,7 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee.exe"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\gee-zoom.exe"
 ;old Python
 Type: filesandordirs; Name: "{app}\Python\*"
+Type: dirifempty; Name: "{app}\Python"
 ;remove incompatible version shipped with 2.8
 Type: files; Name: "{app}\bin\zlib1.dll"
 Type: files; Name: "{app}\32\bin\zlib1.dll"
@@ -351,6 +349,12 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\pyconsole.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console.py"
 ;DLLs in plug-ins directory (see bug 796225)
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
+;old icons
+Type: files; Name: "{commonprograms}\GIMP 2.lnk"
+Type: files; Name: "{commondesktop}\GIMP 2.lnk"
+;get previous GIMP icon name from uninstall name in Registry
+Type: files; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
+Type: files; Name: "{commondesktop}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
@@ -499,6 +503,12 @@ begin
 	end;
 
 	DebugMsg('BadSysDLL','Result: ' + BoolToStr(Result));
+end;
+
+
+function CheckRegValueExists(const SubKeyName, ValueName: String): Boolean;
+begin
+	Result := RegValueExists(HKEY_LOCAL_MACHINE, SubKeyName, ValueName);
 end;
 
 
