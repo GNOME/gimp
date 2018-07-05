@@ -28,6 +28,6 @@ custom_target('validate-tags',
     '--path', meson.current_source_dir(),
     '--valid', '@INPUT@',
   ],
-  build_always: false,
+  build_always_stale: false,
   build_by_default: false,
 )
