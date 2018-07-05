@@ -782,6 +782,7 @@
         <menuitem action="filters-displace" />
         <menuitem action="filters-fractal-trace" />
         <menuitem action="filters-illusion" />
+        <menuitem action="filters-little-planet" />
         <menuitem action="filters-panorama-projection" />
         <menuitem action="filters-recursive-transform" />
         <menuitem action="filters-tile-paper" />
