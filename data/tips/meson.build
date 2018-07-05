@@ -28,7 +28,7 @@ custom_target('validate-tips',
     '--path', meson.current_source_dir(),
     '--valid', '@INPUT@',
   ],
-  build_always: false,
+  build_always_stale: false,
   build_by_default: false,
 )
 
@@ -43,6 +43,6 @@ custom_target('fortunes-tips',
     '@INPUT1@',
     '@INPUT0@',
   ],
-  build_always: false,
+  build_always_stale: false,
   build_by_default: false,
 )
