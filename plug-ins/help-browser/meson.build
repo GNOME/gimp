@@ -28,6 +28,7 @@ executable(plugin_name,
     gtk3, gegl, gio, webkit,
   ],
   link_with: [
+    help_plugin_lib,
     libgimp,
     libgimpbase,
     libgimpcolor,
