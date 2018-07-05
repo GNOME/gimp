@@ -391,6 +391,7 @@
 #define GIMP_HELP_FILTER_KALEIDOSCOPE             "gimp-filter-kaleidoscope"
 #define GIMP_HELP_FILTER_LENS_DISTORTION          "gimp-filter-lens-distortion"
 #define GIMP_HELP_FILTER_LENS_FLARE               "gimp-filter-lens-flare"
+#define GIMP_HELP_FILTER_LITTLE_PLANET            "gimp-filter-little-planet"
 #define GIMP_HELP_FILTER_MANTIUK_2006             "gimp-filter-manituk-2006"
 #define GIMP_HELP_FILTER_MAZE                     "gimp-filter-maze"
 #define GIMP_HELP_FILTER_MEDIAN_BLUR              "gimp-filter-median-blur"
