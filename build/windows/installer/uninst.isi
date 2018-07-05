@@ -11,7 +11,7 @@ begin
 	d := Pos('/',pInf);
 	if d = 0 then
 	begin
-		DebugMsg('SplitRegParams','Error: malformed line (no /)');
+		DebugMsg('SplitRegParams','Malformed line (missing /): ' + pInf);
 		exit;
 	end;
 
@@ -23,7 +23,7 @@ begin
 		d := RevPos('\',oKey);
 		if d = 0 then
 		begin
-			DebugMsg('SplitRegParams','Error: malformed line (no \)');
+			DebugMsg('SplitRegParams','Malformed line (missing \): ' + pInf);
 			exit;
 		end;
 
