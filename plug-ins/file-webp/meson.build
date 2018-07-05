@@ -1,4 +1,4 @@
-if webp.found()
+if libwebp.found() and libwebpmux.found() and libwebpdemux.found()
 
 plugin_name = 'file-webp'
 
@@ -24,7 +24,7 @@ executable(plugin_name,
   ],
   include_directories: [ rootInclude, ],
   dependencies: [
-    gtk3, gegl, gexiv2, webp,
+    gtk3, gegl, gexiv2, libwebp, libwebpmux, libwebpdemux,
   ],
   link_with: [
     libgimp,
