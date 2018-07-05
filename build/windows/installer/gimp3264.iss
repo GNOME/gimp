@@ -571,12 +571,14 @@ begin
 		
 		if IsComponentSelected('py') then
 		begin
-			Interp := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 + 
-			           '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
+			Interp := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+			          'python2=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+			          '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
 		end else
 		begin
-			Interp := 'python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10 + 
-			           '/usr/bin/python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
+			Interp := 'python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10 +
+			          'python2=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10 +
+			          '/usr/bin/python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
 		end;
 
 		
