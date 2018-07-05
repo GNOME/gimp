@@ -1,7 +1,7 @@
 # Meson build file
 
 project('gimp', ['c', 'cpp'], version: '2.99.1',
-  meson_version: '>=0.44.0',
+  meson_version: '>=0.47.0',
   default_options: [
     'cpp_std=gnu++14',
     'sysconfdir=/etc',
@@ -1187,7 +1187,6 @@ install_conf.set('BABL_REQUIRED_VERSION',         babl        .version())
 install_conf.set('CAIRO_PDF_REQUIRED_VERSION',    cairopdf    .version())
 install_conf.set('CAIRO_REQUIRED_VERSION',        cairo       .version())
 install_conf.set('FONTCONFIG_REQUIRED_VERSION',   fontconfig  .version())
-install_conf.set('FONTCONFIG_WIN32_RECOMMENDED_VERSION', fontconfig.version())
 install_conf.set('FREETYPE2_REQUIRED_VERSION',    freetype2   .version())
 install_conf.set('GDK_PIXBUF_REQUIRED_VERSION',   gdk_pixbuf  .version())
 install_conf.set('GEGL_REQUIRED_VERSION',         gegl        .version())
@@ -1196,6 +1195,7 @@ install_conf.set('GTK_REQUIRED_VERSION',          gtk3        .version())
 install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz    .version())
 install_conf.set('INTLTOOL_REQUIRED_VERSION',     '0.40.1')
 install_conf.set('LCMS_REQUIRED_VERSION',         lcms        .version())
+install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif     .version())
 install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma     .version())
 install_conf.set('LIBMYPAINT_REQUIRED_VERSION',   libmypaint  .version())
 install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng      .version())
@@ -1205,9 +1205,8 @@ install_conf.set('POPPLER_DATA_REQUIRED_VERSION', poppler[1]  .version())
 install_conf.set('POPPLER_REQUIRED_VERSION',      poppler[0]  .version())
 install_conf.set('PYTHON2_REQUIRED_VERSION',      '2.5.0')
 install_conf.set('RSVG_REQUIRED_VERSION',         rsvg        .version())
-install_conf.set('WEBKIT_REQUIRED_VERSION',       webkit      .version())
+install_conf.set('WEBKITGTK_REQUIRED_VERSION',    webkit      .version())
 install_conf.set('WEBP_REQUIRED_VERSION',         libwebp     .version())
-install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif     .version())
 install_conf.set('WMF_REQUIRED_VERSION',          wmf         .version())
 install_conf.set('XGETTEXT_RECOMMENDED_VERSION', '0.19')
 
