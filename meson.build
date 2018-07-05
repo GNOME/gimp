@@ -418,8 +418,8 @@ conf.set('HAVE_X11_XMU_WINUTIL_H',      cc.has_header('X11/Xmu/WinUtil.h'))
 # Features requiring x11
 
 have_doc_shooter= x11_target
-have_print      = get_option('with-print')
-have_screenshot = get_option('with-screenshot')
+have_screenshot = get_option('screenshot')
+have_print      = get_option('print')
 if have_print and not x11_target
   error('Printing requires x libs')
 endif
@@ -456,109 +456,76 @@ MIMEtypes = [
 
 
 
-libtiff = dependency('libtiff-4', required: false)
+libtiff = dependency('libtiff-4', required: get_option('tiff'))
 if libtiff.found()
   MIMEtypes += 'image/tiff'
 endif
 
 
-libjpeg = dependency('libjpeg', required: false)
+libjpeg = dependency('libjpeg', required: get_option('jpeg'))
+conf.set('HAVE_LIBJPEG', libjpeg.found())
 if libjpeg.found()
   MIMEtypes += 'image/jpeg'
 endif
-conf.set('HAVE_LIBJPEG', libjpeg.found())
 
 
-zlib = dependency('zlib', required: false)
-if zlib.found()
-  MIMEtypes += 'image/x-psp'
-endif
+zlib = dependency('zlib')
+MIMEtypes += 'image/x-psp'
+
+bz2 = cc.find_library('bz2')
+
+liblzma = dependency('liblzma', version: '>=5.0.0')
 
 
-bz2 = cc.find_library('bz2', required: false)
-
-
-liblzma = dependency('liblzma', version: '>=5.0.0', required: false)
-
-
-if get_option('with-ghostscript')
-  ghostscript = cc.find_library('gs')
+ghostscript = cc.find_library('gs', required: get_option('ghostscript'))
+if ghostscript.found()
   MIMEtypes += 'application/postscript'
-else
-  ghostscript = dependency('', required: false)
 endif
 
 
-libpng = dependency('libpng', version: '>=1.6.25', required: false)
+libpng = dependency('libpng', version: '>=1.6.25', required: get_option('png'))
 if libpng.found()
   MIMEtypes += [ 'image/png', 'image/x-icon']
 endif
 
 
-if get_option('with-mng')
-  libmng = cc.find_library('mng')
-else
-  libmng = dependency('', required: false)
-endif
+libmng = cc.find_library('mng', required: get_option('mng'))
 
+libaa = cc.find_library('aa', required: get_option('aa'))
 
-if get_option('with-aa')
-  libaa = cc.find_library('aa')
-else
-  libaa = dependency('', required: false)
-endif
-
-
-if get_option('with-xpm')
-  libxpm = dependency('xpm')
+libxpm = dependency('xpm', required: get_option('xpm'))
+if libxpm.found()
   MIMEtypes += 'image/x-xpixmap'
-else
-  libxpm = dependency('', required: false)
 endif
 
 
-if get_option('with-openexr')
-  openexr = dependency('OpenEXR', version: '>=1.6.1')
+openexr = dependency('OpenEXR', version: '>=1.6.1', required: get_option('openexr'))
+if openexr.found()
   MIMEtypes += 'image/x-exr'
-else
-  openexr = dependency('', required: false)
 endif
 
 
-if get_option('with-webp')
-  webp_deps = [
-    dependency('libwebp',     version: '>=0.6.0'),
-    dependency('libwebpmux',  version: '>=0.6.0'),
-    dependency('libwebpdemux',version: '>=0.6.0'),
-  ]
-  webp = declare_dependency(
-    dependencies: webp_deps,
-    version: webp_deps[0].version(),
-  )
+libwebp      = dependency('libwebp',     version: '>=0.6.0', required: get_option('webp'))
+libwebpmux   = dependency('libwebpmux',  version: '>=0.6.0', required: get_option('webp'))
+libwebpdemux = dependency('libwebpdemux',version: '>=0.6.0', required: get_option('webp'))
+if libwebp.found() and libwebpmux.found() and libwebpdemux.found()
   MIMEtypes += 'image/x-webp'
-else
-  webp = dependency('', required: false)
 endif
 
-if get_option('with-heif')
-  libheif = dependency('libheif',   version: '>=1.1.0')
+
+libheif = dependency('libheif', version: '>=1.1.0', required: get_option('heif'))
+if libheif.found()
   MIMEtypes += [
     'image/heif',
     'image/heic',
   ]
-else
-  libheif = dependency('', required: false)
 endif
 
-if get_option('with-webkit')
-  webkit = dependency('webkit2gtk-4.0', version: '>=2.20.3')
-else
-  webkit = dependency('', required: false)
-endif
+webkit = dependency('webkit2gtk-4.0', version: '>=2.20.3', required: get_option('webkit'))
 conf.set('HAVE_WEBKIT', webkit.found())
 
 
-if get_option('with-poppler')
+if get_option('poppler')
   # All modern distributions have at least this version and CJK/Cyrillic
   # support should not be considered as "second-zone citizen".
   poppler = [
@@ -570,56 +537,43 @@ else
 endif
 
 
-if get_option('with-cairo-pdf')
-  cairopdf = dependency('cairo-pdf', version: '>=1.12.2')
-else
+cairopdf = dependency('cairo-pdf', version: '>=1.12.2', required: get_option('cairo-pdf'))
+if cairopdf.found()
   cairopdf = dependency('', required: false)
 endif
-
 
 # PDF import support is a granted feature.
 MIMEtypes += 'application/pdf'
 
-
-if get_option('with-wmf')
-  wmf = dependency('libwmf', version: '>=0.2.8')
+wmf = dependency('libwmf', version: '>=0.2.8', required: get_option('wmf'))
+if wmf.found()
   MIMEtypes += [ 'image/x-wmf', ]
-else
-  wmf = dependency('', required: false)
 endif
 
 
-if get_option('with-jpeg2000')
-  openjpeg = dependency('libopenjp2', version: '>=2.1.0')
+openjpeg = dependency('libopenjp2', version: '>=2.1.0', required: get_option('jpeg2000'))
+if openjpeg.found()
   MIMEtypes += [ 'image/jp2', 'image/jpeg2000', 'image/jpx', ]
-else
-  openjpeg = dependency('', required: false)
 endif
 
 
-if get_option('with-xcursor')
-  xmc = dependency('xcursor')
+xmc = dependency('xcursor', required: get_option('xcursor'))
+if xmc.found()
   MIMEtypes += [ 'image/x-xcursor', ]
-else
-  xmc = dependency('', required: false)
 endif
 
 
-if get_option('with-alsa')
-  alsa = dependency('alsa', version: '>=1.0.0')
-else
-  alsa = dependency('', required: false)
-endif
+alsa = dependency('alsa', version: '>=1.0.0', required: get_option('alsa'))
 conf.set('HAVE_ALSA', alsa.found())
 
 
-have_linuxinput = get_option('with-linux-input')
+have_linuxinput = get_option('linux-input')
 if have_linuxinput and not cc.has_header('linux/input.h')
   error('linux/input.h header not found.')
 endif
 
 # DirectX DirectInput
-directx_sdk_path = get_option('with-directx-sdk')
+directx_sdk_path = get_option('directx-sdk-dir')
 if directx_sdk_path != '' and platform_win32
   if directx_sdk_path.contains(' ')
     warning('''
@@ -645,11 +599,7 @@ endif
 conf.set('HAVE_DX_DINPUT', directx.found())
 
 
-if get_option('with-gudev')
-  gudev = dependency('gudev-1.0', version: '>=167')
-else
-  gudev = dependency('', required: false)
-endif
+gudev = dependency('gudev-1.0', version: '>=167', required: get_option('gudev'))
 conf.set('HAVE_LIBGUDEV', gudev.found())
 
 
@@ -719,7 +669,7 @@ perl = find_program('perl5', 'perl', 'perl5.005', 'perl5.004', 'perl')
 
 
 # python
-have_python = get_option('with-python')
+have_python = get_option('python')
 if have_python
   python2 = find_program('python2')
 
@@ -751,15 +701,11 @@ intltool_merge      = find_program('intltool-merge')
 desktop_validate    = find_program('desktop-file-validate')
 gdk_pixbuf_csource  = find_program('gdk-pixbuf-csource')
 
-if get_option('with-appdata-test')
-  appstream_util = find_program('appstream-util')
-else
-  appstream_util = dependency('', required: false)
-endif
+appstream_util = find_program('appstream-util', required: get_option('appdata-test'))
 
 
 # Check for vector icons
-have_vector_icons = get_option('with-vec-icons')
+have_vector_icons = get_option('vec-icons')
 if have_vector_icons
   # shared-mime-info is needed to correctly detect SVG files
   # (except on Windows, apparently).
@@ -775,11 +721,7 @@ if have_vector_icons
   endif
 endif
 
-if get_option('with-xvfb-run')
-  xvfb_run = find_program('xvfb-run')
-else
-  xvfb_run = dependency('', required: false)
-endif
+xvfb_run = find_program('xvfb-run', required: get_option('xvfb-run'))
 conf.set('HAVE_XVFB_RUN', xvfb_run.found())
 
 # Set bug report URL
@@ -819,11 +761,7 @@ conf.set_quoted('COLOR_PROFILE_DIRECTORY', icc_directory)
 # endif
 
 
-if get_option('with-gtk-doc')
-  gtkdoc_scan = find_program('gtkdoc-scan', required : true)
-else
-  gtkdoc_scan = dependency('', required: false)
-endif
+gtkdoc_scan = find_program('gtkdoc-scan', required : get_option('gtk-doc'))
 
 enable_default_bin = get_option('enable-default-bin')
 enable_console_bin = get_option('enable-console-bin')
@@ -1268,7 +1206,7 @@ install_conf.set('POPPLER_REQUIRED_VERSION',      poppler[0]  .version())
 install_conf.set('PYTHON2_REQUIRED_VERSION',      '2.5.0')
 install_conf.set('RSVG_REQUIRED_VERSION',         rsvg        .version())
 install_conf.set('WEBKIT_REQUIRED_VERSION',       webkit      .version())
-install_conf.set('WEBP_REQUIRED_VERSION',         webp        .version())
+install_conf.set('WEBP_REQUIRED_VERSION',         libwebp     .version())
 install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif     .version())
 install_conf.set('WMF_REQUIRED_VERSION',          wmf         .version())
 install_conf.set('XGETTEXT_RECOMMENDED_VERSION', '0.19')
@@ -1510,7 +1448,7 @@ Optional Plug-Ins:
   JPEG 2000:           @0@'''.format(openjpeg.found()) +'''
   MNG:                 @0@'''.format(libmng.found()) +'''
   OpenEXR:             @0@'''.format(openexr.found()) +'''
-  WebP:                @0@'''.format(webp.found()) +'''
+  WebP:                @0@'''.format(get_option('webp')) +'''
   Heif:                @0@'''.format(libheif.found()) +'''
   PDF (export):        @0@'''.format(cairopdf.found()) +'''
   Print:               @0@'''.format(have_print) +'''
