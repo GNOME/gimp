@@ -355,10 +355,24 @@ void
 gimp_action_history_activate_callback (GtkAction *action,
                                        gpointer   user_data)
 {
-  GimpGuiConfig         *config = GIMP_GUI_CONFIG (history.gimp->config);
+  GimpGuiConfig         *config;
   const gchar           *action_name;
   GList                 *link;
   GimpActionHistoryItem *item;
+
+  /* we can get here after gimp_action_history_exit() has been called, if
+   * gimp_exit() was called during the execution of a temporary procedure,
+   * which was executed in response to a GimpProcedureAction, such as a script-
+   * fu script (temporary procedures run a nested mainloop, during which
+   * anything can happen.)  the GimpProcedureAction's "selected" signal, in
+   * response to which the procedure is run, is emitted before any user-
+   * provided "activate" handlers are invoked, and so this function will be
+   * called *after* the procedure returns.
+   */
+  if (! history.gimp)
+    return;
+
+  config = GIMP_GUI_CONFIG (history.gimp->config);
 
   if (config->action_history_size == 0)
     return;
