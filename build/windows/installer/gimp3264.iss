@@ -1571,7 +1571,8 @@ end;
 procedure RemoveDebugFilesFromDir(pDir: String; var pDirectories: TArrayOfString);
 var FindRec: TFindRec;
 begin
-DebugMsg('RemoveDebugFilesFromDir', pDir);
+	DebugMsg('RemoveDebugFilesFromDir', pDir);
+	WizardForm.FilenameLabel.Caption := pDir;
 	if FindFirst(AddBackSlash(pDir) + '*', FindRec) then
 	begin
 		try
