@@ -1703,8 +1703,7 @@ gimp_image_new (Gimp              *gimp,
                 GimpPrecision      precision)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (base_type != GIMP_INDEXED ||
-                        precision == GIMP_PRECISION_U8_GAMMA, NULL);
+  g_return_val_if_fail (gimp_babl_is_valid (base_type, precision), NULL);
 
   return g_object_new (GIMP_TYPE_IMAGE,
                        "gimp",      gimp,
