@@ -496,6 +496,14 @@ gih_load_one_brush (GInputStream  *input,
 
   if ((size = (bh.header_size - sizeof (bh))) > 0)
     {
+      if (size > GIMP_BRUSH_MAX_NAME)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Brush name is too long: %lu"),
+                       (gulong) size);
+          return FALSE;
+        }
+
       name = g_new0 (gchar, size + 1);
 
       if (! g_input_stream_read_all (input, name, size,
@@ -704,7 +712,7 @@ gih_load_image (GFile   *file,
 
   g_string_free (buffer, FALSE);
 
-  if (!name)
+  if (! name)
     {
       g_message ("Couldn't read name for brush pipe from '%s'",
                  g_file_get_parse_name (file));
