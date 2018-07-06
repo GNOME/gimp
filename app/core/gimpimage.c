@@ -3542,12 +3542,15 @@ gimp_image_parasite_validate (GimpImage           *image,
     {
       const gchar *data   = gimp_parasite_data (parasite);
       gssize       length = gimp_parasite_data_size (parasite);
-      gboolean     valid;
+      gboolean     valid  = FALSE;
 
-      if (data[length - 1] == '\0')
-        valid = g_utf8_validate (data, -1, NULL);
-      else
-        valid = g_utf8_validate (data, length, NULL);
+      if (length > 0)
+        {
+          if (data[length - 1] == '\0')
+            valid = g_utf8_validate (data, -1, NULL);
+          else
+            valid = g_utf8_validate (data, length, NULL);
+        }
 
       if (! valid)
         {
