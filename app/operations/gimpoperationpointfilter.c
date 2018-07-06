@@ -117,12 +117,14 @@ static void
 gimp_operation_point_filter_prepare (GeglOperation *operation)
 {
   GimpOperationPointFilter *self = GIMP_OPERATION_POINT_FILTER (operation);
+  const Babl               *space = gegl_operation_get_source_space (operation,
+                                                                     "input");
   const Babl               *format;
 
   if (self->linear)
-    format = babl_format ("RGBA float");
+    format = babl_format_with_space ("RGBA float", space);
   else
-    format = babl_format ("R'G'B'A float");
+    format = babl_format_with_space ("R'G'B'A float", space);
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
