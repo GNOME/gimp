@@ -188,7 +188,7 @@ gimp_brush_load_brush (GimpContext   *context,
       return NULL;
     }
 
-  if (header.width > GIMP_BRUSH_MAX_SIZE ||
+  if (header.width  > GIMP_BRUSH_MAX_SIZE ||
       header.height > GIMP_BRUSH_MAX_SIZE)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -247,7 +247,17 @@ gimp_brush_load_brush (GimpContext   *context,
     {
       gchar *utf8;
 
-      name = g_new (gchar, bn_size);
+      if (bn_size > GIMP_BRUSH_MAX_NAME)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Invalid header data in '%s': "
+                         "Brush name is too long: %lu"),
+                       gimp_file_get_utf8_name (file),
+                       (gulong) bn_size);
+          return NULL;
+        }
+
+      name = g_new0 (gchar, bn_size + 1);
 
       if (! g_input_stream_read_all (input, name, bn_size,
                                      &bytes_read, NULL, error) ||
@@ -264,7 +274,7 @@ gimp_brush_load_brush (GimpContext   *context,
       name = utf8;
     }
 
-  if (!name)
+  if (! name)
     name = g_strdup (_("Unnamed"));
 
   brush = g_object_new (GIMP_TYPE_BRUSH,

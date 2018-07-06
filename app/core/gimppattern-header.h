@@ -18,9 +18,13 @@
 #ifndef __GIMP_PATTERN_HEADER_H__
 #define __GIMP_PATTERN_HEADER_H__
 
+
 #define GIMP_PATTERN_FILE_VERSION  1
 #define GIMP_PATTERN_MAGIC         (('G' << 24) + ('P' << 16) + \
                                     ('A' << 8)  + ('T' << 0))
+#define GIMP_PATTERN_MAX_SIZE      10000 /* Max size in either dimension in px */
+#define GIMP_PATTERN_MAX_NAME      256   /* Max length of the pattern's name   */
+
 
 /*  All field entries are MSB  */
 
@@ -39,5 +43,6 @@ struct _GimpPatternHeader
 /*  In a pattern file, next comes the pattern name, null-terminated.  After that
  *  comes the pattern data--width * height * bytes bytes of it...
  */
+
 
 #endif  /*  __GIMP_PATTERN_HEADER_H__  */

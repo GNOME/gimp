@@ -23,6 +23,7 @@
 #define GIMP_BRUSH_MAGIC         (('G' << 24) + ('I' << 16) + \
                                   ('M' << 8)  + ('P' << 0))
 #define GIMP_BRUSH_MAX_SIZE      10000 /* Max size in either dimension in px */
+#define GIMP_BRUSH_MAX_NAME      256   /* Max length of the brush's name     */
 
 
 /*  All field entries are MSB  */

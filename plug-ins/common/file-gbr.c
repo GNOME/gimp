@@ -395,8 +395,9 @@ load_image (GFile   *file,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Invalid header data in '%s': width=%lu, height=%lu, "
                      "bytes=%lu"), g_file_get_parse_name (file),
-                   (unsigned long int)bh.width, (unsigned long int)bh.height,
-                   (unsigned long int)bh.bytes);
+                   (gulong) bh.width,
+                   (gulong) bh.height,
+                   (gulong) bh.bytes);
       return -1;
     }
 
@@ -459,7 +460,19 @@ load_image (GFile   *file,
 
   if ((size = (bh.header_size - sizeof (GimpBrushHeader))) > 0)
     {
-      gchar *temp = g_new (gchar, size);
+      gchar *temp;
+
+      if (size > GIMP_BRUSH_MAX_NAME)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid header data in '%s': "
+                         "Brush name is too long: %lu"),
+                       gimp_file_get_utf8_name (file),
+                       (gulong) size);
+          return -1;
+        }
+
+      temp = g_new0 (gchar, size + 1);
 
       if (! g_input_stream_read_all (input, temp, size,
                                      &bytes_read, NULL, error) ||

@@ -332,6 +332,7 @@ load_image (GFile   *file,
   GimpImageBaseType   base_type;
   GimpImageType       image_type;
   gsize               bytes_read;
+  gsize               size;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
@@ -364,22 +365,37 @@ load_image (GFile   *file,
       return -1;
     }
 
-  temp = g_new (gchar, ph.header_size - sizeof (GimpPatternHeader));
-
-  if (! g_input_stream_read_all (input,
-                                 temp, ph.header_size - sizeof (GimpPatternHeader),
-                                 &bytes_read, NULL, error) ||
-      bytes_read != ph.header_size - sizeof (GimpPatternHeader))
+  if ((size = (ph.header_size - sizeof (GimpPatternHeader))) > 0)
     {
+      if (size > GIMP_PATTERN_MAX_NAME)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid header data in '%s': "
+                         "Pattern name is too long: %lu"),
+                       gimp_file_get_utf8_name (file),
+                       (gulong) size);
+          return -1;
+        }
+
+      temp = g_new0 (gchar, size + 1);
+
+      if (! g_input_stream_read_all (input, temp, size,
+                                     &bytes_read, NULL, error) ||
+          bytes_read != size)
+        {
+          g_free (temp);
+          g_object_unref (input);
+          return -1;
+        }
+
+      name = gimp_any_to_utf8 (temp, size - 1,
+                               _("Invalid UTF-8 string in pattern file '%s'."),
+                               g_file_get_parse_name (file));
       g_free (temp);
-      g_object_unref (input);
-      return -1;
     }
 
-  name = gimp_any_to_utf8 (temp, ph.header_size - sizeof (GimpPatternHeader) - 1,
-                           _("Invalid UTF-8 string in pattern file '%s'."),
-                           g_file_get_parse_name (file));
-  g_free (temp);
+  if (! name)
+    name = g_strdup (_("Unnamed"));
 
   /* Now there's just raw data left. */
 
@@ -417,15 +433,16 @@ load_image (GFile   *file,
     }
 
   /* Sanitize input dimensions and guard against overflows. */
-  if ((ph.width == 0) || (ph.width > GIMP_MAX_IMAGE_SIZE) ||
-      (ph.height == 0) || (ph.height > GIMP_MAX_IMAGE_SIZE) ||
+  if ((ph.width == 0)  || (ph.width  > GIMP_PATTERN_MAX_SIZE) ||
+      (ph.height == 0) || (ph.height > GIMP_PATTERN_MAX_SIZE) ||
       (G_MAXSIZE / ph.width / ph.bytes < 1))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Invalid header data in '%s': width=%lu, height=%lu, "
                      "bytes=%lu"), g_file_get_parse_name (file),
-                   (unsigned long int)ph.width, (unsigned long int)ph.height,
-                   (unsigned long int)ph.bytes);
+                   (gulong) ph.width,
+                   (gulong) ph.height,
+                   (gulong) ph.bytes);
       g_object_unref (input);
       return -1;
     }
@@ -449,7 +466,7 @@ load_image (GFile   *file,
 
   buffer = gimp_drawable_get_buffer (layer_ID);
 
-  /* this can't overflow because ph.width is <= GIMP_MAX_IMAGE_SIZE */
+  /* this can't overflow because ph.width is <= GIMP_PATTERN_MAX_SIZE */
   buf = g_malloc (ph.width * ph.bytes);
 
   for (line = 0; line < ph.height; line++)
@@ -570,7 +587,7 @@ save_image (GFile   *file,
 
   line_size = width * babl_format_get_bytes_per_pixel (file_format);
 
-  /* this can't overflow because drawable->width is <= GIMP_MAX_IMAGE_SIZE */
+  /* this can't overflow because drawable->width is <= GIMP_PATTERN_MAX_SIZE */
   buf = g_alloca (line_size);
 
   for (line = 0; line < height; line++)
