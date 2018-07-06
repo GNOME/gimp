@@ -38,6 +38,9 @@ gboolean            gimp_babl_linear           (GimpPrecision      precision);
 GimpPrecision       gimp_babl_precision        (GimpComponentType  component,
                                                 gboolean           linear);
 
+gboolean            gimp_babl_is_valid         (GimpImageBaseType  base_type,
+                                                GimpPrecision      precision);
+
 const Babl        * gimp_babl_format           (GimpImageBaseType  base_type,
                                                 GimpPrecision      precision,
                                                 gboolean           with_alpha);

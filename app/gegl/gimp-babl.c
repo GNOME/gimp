@@ -755,6 +755,30 @@ gimp_babl_precision (GimpComponentType component,
   g_return_val_if_reached (-1);
 }
 
+gboolean
+gimp_babl_is_valid (GimpImageBaseType base_type,
+                    GimpPrecision     precision)
+{
+  switch (base_type)
+    {
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      return TRUE;
+
+    case GIMP_INDEXED:
+      switch (precision)
+        {
+        case GIMP_PRECISION_U8_GAMMA:
+          return TRUE;
+
+        default:
+          return FALSE;
+        }
+    }
+
+  g_return_val_if_reached (FALSE);
+}
+
 const Babl *
 gimp_babl_format (GimpImageBaseType  base_type,
                   GimpPrecision      precision,

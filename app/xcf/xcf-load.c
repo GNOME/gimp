@@ -31,6 +31,7 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-tile-compat.h"
 
 #include "core/gimp.h"
@@ -219,6 +220,14 @@ xcf_load_image (Gimp     *gimp,
 
   GIMP_LOG (XCF, "version=%d, width=%d, height=%d, image_type=%d, precision=%d",
             info->file_version, width, height, image_type, precision);
+
+  if (! gimp_babl_is_valid (image_type, precision))
+    {
+      gimp_message_literal (gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_ERROR,
+                            _("Invalid image mode and precision combination."));
+      goto hard_error;
+    }
 
   image = gimp_create_image (gimp, width, height, image_type, precision,
                              FALSE);
