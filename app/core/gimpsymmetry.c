@@ -471,7 +471,13 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
                         NULL);
 
   str = gimp_parasite_data (parasite);
-  g_return_val_if_fail (str != NULL, NULL);
+
+  if (! str)
+    {
+      g_warning ("Empty symmetry parasite \"%s\"", parasite_name);
+
+      return NULL;
+    }
 
   symmetry = gimp_image_symmetry_new (image, type);
 
