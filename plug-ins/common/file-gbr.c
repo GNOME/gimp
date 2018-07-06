@@ -348,7 +348,7 @@ load_image (GFile   *file,
 {
   GInputStream      *input;
   gchar             *name;
-  BrushHeader        bh;
+  GimpBrushHeader    bh;
   guchar            *brush_buf = NULL;
   gint32             image_ID;
   gint32             layer_ID;
@@ -368,7 +368,7 @@ load_image (GFile   *file,
   if (! input)
     return -1;
 
-  size = G_STRUCT_OFFSET (BrushHeader, magic_number);
+  size = G_STRUCT_OFFSET (GimpBrushHeader, magic_number);
 
   if (! g_input_stream_read_all (input, &bh, size,
                                  &bytes_read, NULL, error) ||
@@ -406,7 +406,7 @@ load_image (GFile   *file,
       /* Version 1 didn't have a magic number and had no spacing  */
       bh.spacing = 25;
       bh.header_size += 8;
-      if (bh.header_size < sizeof (BrushHeader))
+      if (bh.header_size < sizeof (GimpBrushHeader))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unsupported brush format"));
@@ -421,7 +421,7 @@ load_image (GFile   *file,
 
       if (! g_input_stream_read_all (input,
                                      (guchar *) &bh +
-                                     G_STRUCT_OFFSET (BrushHeader,
+                                     G_STRUCT_OFFSET (GimpBrushHeader,
                                                       magic_number), size,
                                      &bytes_read, NULL, error) ||
           bytes_read != size)
@@ -447,8 +447,8 @@ load_image (GFile   *file,
             }
         }
 
-      if (bh.magic_number == GBRUSH_MAGIC &&
-          bh.header_size  >  sizeof (BrushHeader))
+      if (bh.magic_number == GIMP_BRUSH_MAGIC &&
+          bh.header_size  >  sizeof (GimpBrushHeader))
         break;
 
     default:
@@ -457,7 +457,7 @@ load_image (GFile   *file,
       return -1;
     }
 
-  if ((size = (bh.header_size - sizeof (BrushHeader))) > 0)
+  if ((size = (bh.header_size - sizeof (GimpBrushHeader))) > 0)
     {
       gchar *temp = g_new (gchar, size);
 
@@ -502,15 +502,15 @@ load_image (GFile   *file,
     {
     case 1:
       {
-        PatternHeader ph;
+        GimpPatternHeader ph;
 
         /* For backwards-compatibility, check if a pattern follows.
          * The obsolete .gpb format did it this way.
          */
 
-        if (g_input_stream_read_all (input, &ph, sizeof (PatternHeader),
+        if (g_input_stream_read_all (input, &ph, sizeof (GimpPatternHeader),
                                      &bytes_read, NULL, NULL) &&
-            bytes_read == sizeof (PatternHeader))
+            bytes_read == sizeof (GimpPatternHeader))
           {
             /*  rearrange the bytes in each unsigned int  */
             ph.header_size  = g_ntohl (ph.header_size);
@@ -520,16 +520,16 @@ load_image (GFile   *file,
             ph.bytes        = g_ntohl (ph.bytes);
             ph.magic_number = g_ntohl (ph.magic_number);
 
-            if (ph.magic_number == GPATTERN_MAGIC        &&
-                ph.version      == 1                     &&
-                ph.header_size  > sizeof (PatternHeader) &&
-                ph.bytes        == 3                     &&
-                ph.width        == bh.width              &&
-                ph.height       == bh.height             &&
+            if (ph.magic_number == GIMP_PATTERN_MAGIC        &&
+                ph.version      == 1                         &&
+                ph.header_size  > sizeof (GimpPatternHeader) &&
+                ph.bytes        == 3                         &&
+                ph.width        == bh.width                  &&
+                ph.height       == bh.height                 &&
                 g_input_stream_skip (input,
-                                     ph.header_size - sizeof (PatternHeader),
+                                     ph.header_size - sizeof (GimpPatternHeader),
                                      NULL, NULL) ==
-                ph.header_size - sizeof (PatternHeader))
+                ph.header_size - sizeof (GimpPatternHeader))
               {
                 guchar *plain_brush = brush_buf;
                 gint    i;
@@ -660,18 +660,18 @@ save_image (GFile   *file,
             gint32   drawable_ID,
             GError **error)
 {
-  GOutputStream *output;
-  BrushHeader    bh;
-  guchar        *brush_buf;
-  GeglBuffer    *buffer;
-  const Babl    *format;
-  gint           line;
-  gint           x;
-  gint           bpp;
-  gint           file_bpp;
-  gint           width;
-  gint           height;
-  GimpRGB        gray, white;
+  GOutputStream   *output;
+  GimpBrushHeader  bh;
+  guchar          *brush_buf;
+  GeglBuffer      *buffer;
+  const Babl      *format;
+  gint             line;
+  gint             x;
+  gint             bpp;
+  gint             file_bpp;
+  gint             width;
+  gint             height;
+  GimpRGB          gray, white;
 
   gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
@@ -709,16 +709,16 @@ save_image (GFile   *file,
   width  = gimp_drawable_width  (drawable_ID);
   height = gimp_drawable_height (drawable_ID);
 
-  bh.header_size  = g_htonl (sizeof (BrushHeader) +
+  bh.header_size  = g_htonl (sizeof (GimpBrushHeader) +
                              strlen (info.description) + 1);
   bh.version      = g_htonl (2);
   bh.width        = g_htonl (width);
   bh.height       = g_htonl (height);
   bh.bytes        = g_htonl (file_bpp);
-  bh.magic_number = g_htonl (GBRUSH_MAGIC);
+  bh.magic_number = g_htonl (GIMP_BRUSH_MAGIC);
   bh.spacing      = g_htonl (info.spacing);
 
-  if (! g_output_stream_write_all (output, &bh, sizeof (BrushHeader),
+  if (! g_output_stream_write_all (output, &bh, sizeof (GimpBrushHeader),
                                    NULL, NULL, error))
     {
       g_object_unref (output);

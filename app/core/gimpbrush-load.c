@@ -134,15 +134,15 @@ gimp_brush_load_brush (GimpContext   *context,
                        GInputStream  *input,
                        GError       **error)
 {
-  GimpBrush   *brush;
-  gsize        bn_size;
-  BrushHeader  header;
-  gchar       *name = NULL;
-  guchar      *pixmap;
-  guchar      *mask;
-  gsize        bytes_read;
-  gssize       i, size;
-  gboolean     success = TRUE;
+  GimpBrush       *brush;
+  gsize            bn_size;
+  GimpBrushHeader  header;
+  gchar           *name = NULL;
+  guchar          *pixmap;
+  guchar          *mask;
+  gsize            bytes_read;
+  gssize           i, size;
+  gboolean         success = TRUE;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
@@ -225,7 +225,7 @@ gimp_brush_load_brush (GimpContext   *context,
       /*  fallthrough  */
 
     case 2:
-      if (header.magic_number == GBRUSH_MAGIC)
+      if (header.magic_number == GIMP_BRUSH_MAGIC)
         break;
 
     default:
@@ -235,7 +235,7 @@ gimp_brush_load_brush (GimpContext   *context,
       return NULL;
     }
 
-  if (header.header_size < sizeof (BrushHeader))
+  if (header.header_size < sizeof (GimpBrushHeader))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Unsupported brush format"));

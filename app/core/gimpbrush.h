@@ -21,7 +21,7 @@
 
 #include "gimpdata.h"
 
-#define GIMP_BRUSH_MAX_SIZE 10000.0 /*Max size in either dimension in px*/
+#define GIMP_BRUSH_MAX_SIZE 10000 /* Max size in either dimension in px */
 
 #define GIMP_TYPE_BRUSH            (gimp_brush_get_type ())
 #define GIMP_BRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
