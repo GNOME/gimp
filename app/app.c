@@ -499,6 +499,8 @@ app_exit_after_callback (Gimp       *gimp,
 
 #else
 
+  gimp_gegl_exit (gimp);
+
   gegl_exit ();
 
   exit (EXIT_SUCCESS);
