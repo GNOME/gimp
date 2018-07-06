@@ -513,8 +513,8 @@ gimp_config_writer_data (GimpConfigWriter *writer,
   gint i;
 
   g_return_if_fail (writer != NULL);
-  g_return_if_fail (length > 0);
-  g_return_if_fail (data != NULL);
+  g_return_if_fail (length >= 0);
+  g_return_if_fail (data != NULL || length == 0);
 
   if (writer->error)
     return;
