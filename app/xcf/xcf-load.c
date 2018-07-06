@@ -257,12 +257,14 @@ xcf_load_image (Gimp     *gimp,
                                        "gimp-image-metadata");
   if (parasite)
     {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-      GimpMetadata     *metadata;
+      GimpImagePrivate *private  = GIMP_IMAGE_GET_PRIVATE (image);
+      GimpMetadata     *metadata = NULL;
       const gchar      *meta_string;
 
       meta_string = (gchar *) gimp_parasite_data (parasite);
-      metadata = gimp_metadata_deserialize (meta_string);
+
+      if (meta_string)
+        metadata = gimp_metadata_deserialize (meta_string);
 
       if (metadata)
         {
