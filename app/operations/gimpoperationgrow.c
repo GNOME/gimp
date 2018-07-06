@@ -167,8 +167,9 @@ gimp_operation_grow_set_property (GObject      *object,
 static void
 gimp_operation_grow_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("Y float"));
-  gegl_operation_set_format (operation, "output", babl_format ("Y float"));
+  const Babl *space = gegl_operation_get_source_space (operation, "input");
+  gegl_operation_set_format (operation, "input",  babl_format_with_space ("Y float", space));
+  gegl_operation_set_format (operation, "output", babl_format_with_space ("Y float", space));
 }
 
 static GeglRectangle
@@ -235,8 +236,8 @@ gimp_operation_grow_process (GeglOperation       *operation,
    * Blame all bugs in this function on jaycox@gimp.org
    */
   GimpOperationGrow *self          = GIMP_OPERATION_GROW (operation);
-  const Babl        *input_format  = babl_format ("Y float");
-  const Babl        *output_format = babl_format ("Y float");
+  const Babl        *input_format  = gegl_operation_get_format (operation, "input");
+  const Babl        *output_format = gegl_operation_get_format (operation, "output");
   gint32             i, j, x, y;
   gfloat           **buf;  /* caches the region's pixel data */
   gfloat            *out;  /* holds the new scan line we are computing */
