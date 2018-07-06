@@ -120,6 +120,7 @@ test_config_LDADD = \
 	$(libgimpmath)							\
 	$(libgimpconfig)						\
 	$(libgimpbase)							\
+	$(APPSTREAM_GLIB_LIBS)						\
 	$(PANGOCAIRO_LIBS)						\
 	$(HARFBUZZ_LIBS)						\
 	$(GDK_PIXBUF_LIBS)						\

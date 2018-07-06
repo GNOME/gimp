@@ -120,6 +120,7 @@ LDADD = \
 	$(libgimpbase)							\
 	$(GIMPICONRC)							\
 	$(GTK_LIBS)							\
+	$(APPSTREAM_GLIB_LIBS)						\
 	$(DBUS_GLIB_LIBS)						\
 	$(GDK_PIXBUF_LIBS)						\
 	$(FREETYPE_LIBS)						\
