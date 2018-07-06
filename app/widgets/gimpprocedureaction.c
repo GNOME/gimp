@@ -160,6 +160,8 @@ gimp_procedure_action_activate (GtkAction *action)
 {
   GimpProcedureAction *procedure_action = GIMP_PROCEDURE_ACTION (action);
 
+  GTK_ACTION_CLASS (parent_class)->activate (action);
+
   /* Not all actions have procedures associated with them, for example
    * unused "filters-recent-[N]" actions, so check for NULL before we
    * invoke the action

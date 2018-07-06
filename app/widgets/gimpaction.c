@@ -56,7 +56,6 @@ enum
 };
 
 
-static void   gimp_action_constructed       (GObject          *object);
 static void   gimp_action_finalize          (GObject          *object);
 static void   gimp_action_set_property      (GObject          *object,
                                              guint             prop_id,
@@ -67,6 +66,7 @@ static void   gimp_action_get_property      (GObject          *object,
                                              GValue           *value,
                                              GParamSpec       *pspec);
 
+static void   gimp_action_activate          (GtkAction        *action);
 static void   gimp_action_connect_proxy     (GtkAction        *action,
                                              GtkWidget        *proxy);
 static void   gimp_action_set_proxy         (GimpAction       *action,
@@ -90,11 +90,11 @@ gimp_action_class_init (GimpActionClass *klass)
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
   GimpRGB         black;
 
-  object_class->constructed   = gimp_action_constructed;
   object_class->finalize      = gimp_action_finalize;
   object_class->set_property  = gimp_action_set_property;
   object_class->get_property  = gimp_action_get_property;
 
+  action_class->activate      = gimp_action_activate;
   action_class->connect_proxy = gimp_action_connect_proxy;
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
@@ -141,16 +141,6 @@ gimp_action_init (GimpAction *action)
 
   g_signal_connect (action, "notify::tooltip",
                     G_CALLBACK (gimp_action_tooltip_notify),
-                    NULL);
-}
-
-static void
-gimp_action_constructed (GObject *object)
-{
-  GimpAction *action = GIMP_ACTION (object);
-
-  g_signal_connect (action, "activate",
-                    (GCallback) gimp_action_history_activate_callback,
                     NULL);
 }
 
@@ -259,6 +249,15 @@ gimp_action_set_property (GObject      *object,
           gimp_action_set_proxy (action, list->data);
         }
     }
+}
+
+static void
+gimp_action_activate (GtkAction *action)
+{
+  if (GTK_ACTION_CLASS (parent_class)->activate)
+    GTK_ACTION_CLASS (parent_class)->activate (action);
+
+  gimp_action_history_action_activated (action);
 }
 
 static void

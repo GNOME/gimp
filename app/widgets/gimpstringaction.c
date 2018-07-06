@@ -175,6 +175,8 @@ gimp_string_action_activate (GtkAction *action)
 {
   GimpStringAction *string_action = GIMP_STRING_ACTION (action);
 
+  GTK_ACTION_CLASS (parent_class)->activate (action);
+
   gimp_string_action_selected (string_action, string_action->value);
 }
 

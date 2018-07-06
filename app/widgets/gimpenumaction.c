@@ -170,6 +170,8 @@ gimp_enum_action_activate (GtkAction *action)
 {
   GimpEnumAction *enum_action = GIMP_ENUM_ACTION (action);
 
+  GTK_ACTION_CLASS (parent_class)->activate (action);
+
   gimp_enum_action_selected (enum_action, enum_action->value);
 }
 
