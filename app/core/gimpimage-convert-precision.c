@@ -67,8 +67,8 @@ gimp_image_convert_precision (GimpImage        *image,
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (precision != gimp_image_get_precision (image));
-  g_return_if_fail (precision == GIMP_PRECISION_U8_GAMMA ||
-                    gimp_image_get_base_type (image) != GIMP_INDEXED);
+  g_return_if_fail (gimp_babl_is_valid (gimp_image_get_base_type (image),
+                                        precision));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   switch (precision)

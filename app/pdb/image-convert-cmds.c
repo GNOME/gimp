@@ -35,6 +35,7 @@
 #include "core/gimpitemstack.h"
 #include "core/gimppalette.h"
 #include "core/gimpparamspecs.h"
+#include "gegl/gimp-babl.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 
@@ -62,7 +63,8 @@ image_convert_rgb_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error))
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_RGB, error) &&
+          gimp_babl_is_valid (GIMP_RGB, gimp_image_get_precision (image)))
         {
           success = gimp_image_convert_type (image, GIMP_RGB, NULL, NULL, error);
         }
@@ -91,7 +93,8 @@ image_convert_grayscale_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error) &&
+          gimp_babl_is_valid (GIMP_GRAY, gimp_image_get_precision (image)))
         {
           success = gimp_image_convert_type (image, GIMP_GRAY, NULL, NULL, error);
         }
@@ -134,8 +137,9 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
     {
       GimpPalette *pal = NULL;
 
-      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error)        &&
           gimp_pdb_image_is_precision (image, GIMP_PRECISION_U8_GAMMA, error) &&
+          gimp_babl_is_valid (GIMP_INDEXED, gimp_image_get_precision (image)) &&
           gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
         {
           switch (palette_type)
@@ -242,7 +246,8 @@ image_convert_precision_invoker (GimpProcedure         *procedure,
         gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
 
       if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
-          gimp_pdb_image_is_not_precision (image, precision, error))
+          gimp_pdb_image_is_not_precision (image, precision, error)    &&
+          gimp_babl_is_valid (gimp_image_get_base_type (image), precision))
         {
           gimp_image_convert_precision (image, precision,
                                         GEGL_DITHER_NONE,

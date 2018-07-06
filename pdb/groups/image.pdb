@@ -161,7 +161,7 @@ HELP
   if (gimp->plug_in_manager->current_plug_in)
     gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
 
-  if (type != GIMP_INDEXED || precision == GIMP_PRECISION_U8_GAMMA)
+  if (gimp_babl_is_valid (type, precision))
     {
       image = gimp_create_image (gimp, width, height, type,
                                  precision, FALSE);
@@ -3074,6 +3074,7 @@ CODE
 
 @headers = qw("libgimpmath/gimpmath.h"
               "libgimpbase/gimpbase.h"
+              "gegl/gimp-babl.h"
               "core/gimp.h"
               "core/gimpcontainer.h"
               "core/gimpimage-metadata.h"

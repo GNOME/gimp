@@ -53,6 +53,7 @@
 #include "core/gimpselection.h"
 #include "core/gimptempbuf.h"
 #include "file/file-utils.h"
+#include "gegl/gimp-babl.h"
 #include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
@@ -197,7 +198,7 @@ image_new_with_precision_invoker (GimpProcedure         *procedure,
       if (gimp->plug_in_manager->current_plug_in)
         gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
 
-      if (type != GIMP_INDEXED || precision == GIMP_PRECISION_U8_GAMMA)
+      if (gimp_babl_is_valid (type, precision))
         {
           image = gimp_create_image (gimp, width, height, type,
                                      precision, FALSE);
