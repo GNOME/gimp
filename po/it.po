@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-06 11:25+0200\n"
-"PO-Revision-Date: 2018-07-06 13:49+0200\n"
+"POT-Creation-Date: 2018-07-06 13:50+0200\n"
+"PO-Revision-Date: 2018-07-06 13:51+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -102,13 +102,17 @@ msgstr "Fotoritocco in GIMP"
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
-msgstr "GIMP 2.10.4 include molte correzioni di difetti come varie ottimizzazioni. I cambiamenti più importanti sono:"
+msgstr ""
+"GIMP 2.10.4 include molte correzioni di difetti come varie ottimizzazioni. I "
+"cambiamenti più importanti sono:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
-msgstr "Allineamento allo strumento di misura: i livelli possono venire ruotati usanto la linea dello strumento di misura come orizzonte"
+msgstr ""
+"Allineamento allo strumento di misura: i livelli possono venire ruotati "
+"usanto la linea dello strumento di misura come orizzonte"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Fast startup: fonts loading is not blocking startup anymore"
@@ -118,17 +122,22 @@ msgstr "Avvio veloce: il caricamento dei font non blocca più la partenza"
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
-msgstr "Marcatura font con la stessa interfaccia utente dei pennelli, motivi e gradienti"
+msgstr ""
+"Marcatura font con la stessa interfaccia utente dei pennelli, motivi e "
+"gradienti"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
-msgstr "Supporto PSD: si può importare la versione pre-composta di un'immagine PSD"
+msgstr ""
+"Supporto PSD: si può importare la versione pre-composta di un'immagine PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
-msgstr "Aggiornamento cruscotto: nuovo gruppo \"Memoria\" e migliorato gruppo \"Scambio\" mostrano diversi utili indicatori"
+msgstr ""
+"Aggiornamento cruscotto: nuovo gruppo \"Memoria\" e migliorato gruppo "
+"\"Scambio\" mostrano diversi utili indicatori"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
@@ -4124,7 +4133,8 @@ msgstr "Copia visibile con nome "
 
 #: ../app/actions/edit-commands.c:572 ../app/display/gimpdisplayshell-dnd.c:480
 msgid "Pasted as new layer because the target is a layer group."
-msgstr "Incollato come nuovo livello dato che l'obiettivo è un gruppo di livelli."
+msgstr ""
+"Incollato come nuovo livello dato che l'obiettivo è un gruppo di livelli."
 
 #: ../app/actions/edit-commands.c:579 ../app/display/gimpdisplayshell-dnd.c:489
 msgid "Pasted as new layer because the target's pixels are locked."
@@ -10599,7 +10609,9 @@ msgstr ""
 msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
-msgstr "Imposta se GIMP deve creare anteprime di gruppi di livelli. Le anteprime dei gruppi di livelli sono più pesanti delle anteprime dei livelli ordinari. "
+msgstr ""
+"Imposta se GIMP deve creare anteprime di gruppi di livelli. Le anteprime dei "
+"gruppi di livelli sono più pesanti delle anteprime dei livelli ordinari. "
 
 #: ../app/config/gimprc-blurbs.h:317
 msgid ""
@@ -12282,7 +12294,9 @@ msgstr "Errore fatale nel file pennello: byte = 0."
 #: ../app/core/gimpbrush-load.c:195
 #, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
-msgstr "Errore fatale di analisi nel file pennello: %dx%d supera la dimensione massima."
+msgstr ""
+"Errore fatale di analisi nel file pennello: %dx%d supera la dimensione "
+"massima."
 
 #: ../app/core/gimpbrush-load.c:221
 #, c-format
@@ -12299,19 +12313,24 @@ msgstr "Errore fatale di analisi nel file pennello: versione sconosciuta %d."
 msgid "Unsupported brush format"
 msgstr "Formato pennello non supportato"
 
-#: ../app/core/gimpbrush-load.c:261 ../app/core/gimpbrushgenerated-load.c:126
+#: ../app/core/gimpbrush-load.c:253
+#, c-format
+msgid "Invalid header data in '%s': Brush name is too long: %lu"
+msgstr "Dati di intestazione non validi in '%s': nome pennello troppo lungo=%lu"
+
+#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrushgenerated-load.c:126
 #: ../app/core/gimpbrushpipe-load.c:74
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: ../app/core/gimpbrush-load.c:268 ../app/core/gimppattern-load.c:130
+#: ../app/core/gimpbrush-load.c:278 ../app/core/gimppattern-load.c:141
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:566
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: ../app/core/gimpbrush-load.c:339
+#: ../app/core/gimpbrush-load.c:349
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12326,7 +12345,7 @@ msgstr ""
 "Potrebbe trattarsi di un file pennello obsoleto di GIMP; provare a caricarlo "
 "come immagine e salvarlo nuovamente."
 
-#: ../app/core/gimpbrush-load.c:386
+#: ../app/core/gimpbrush-load.c:396
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12337,42 +12356,42 @@ msgstr ""
 "profondita pennello non supportata %d\n"
 "I pennelli di GIMP devono essere grigi o RGBA."
 
-#: ../app/core/gimpbrush-load.c:462
+#: ../app/core/gimpbrush-load.c:472
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "Impossibile decodificare versione formato abr %d."
 
-#: ../app/core/gimpbrush-load.c:580 ../app/core/gimpbrush-load.c:799
+#: ../app/core/gimpbrush-load.c:590 ../app/core/gimpbrush-load.c:809
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
 "Errore fatale di analisi file pennello: valore dimensione del pennello "
 "rovinato."
 
-#: ../app/core/gimpbrush-load.c:667 ../app/core/gimpbrush-load.c:857
+#: ../app/core/gimpbrush-load.c:677 ../app/core/gimpbrush-load.c:867
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Errore fatale di analisi file pennello: dimensioni pennello fuori campo."
 
-#: ../app/core/gimpbrush-load.c:679
+#: ../app/core/gimpbrush-load.c:689
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Errore fatale di analisi file pennello: i pennelli estesi non sono "
 "supportati."
 
-#: ../app/core/gimpbrush-load.c:828
+#: ../app/core/gimpbrush-load.c:838
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "Errore fatale di analisi file pennello: il file sembra troncato: "
 
-#: ../app/core/gimpbrush-load.c:865
+#: ../app/core/gimpbrush-load.c:875
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr ""
 "Errore fatale di analisi file pennello: metodo di compressione sconosciuto."
 
-#: ../app/core/gimpbrush-load.c:1001
+#: ../app/core/gimpbrush-load.c:1011
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
@@ -12380,14 +12399,14 @@ msgstr ""
 "Errore fatale di analisi file pennello: impossibile decodificare versione "
 "formato abr %d."
 
-#: ../app/core/gimpbrush-load.c:1122 ../app/core/gimpbrush-load.c:1140
+#: ../app/core/gimpbrush-load.c:1132 ../app/core/gimpbrush-load.c:1150
 #, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
 "Errore fatale di analisi file pennello: dati pennello compresso RLE "
 "danneggiati."
 
-#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:225
+#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:226
 msgid "Brush Spacing"
 msgstr "Spaziatura pennello"
 
@@ -12461,15 +12480,15 @@ msgstr "Raggio pennello"
 msgid "Brush Spikes"
 msgstr "Punte pennello"
 
-#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:232
+#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:233
 msgid "Brush Hardness"
 msgstr "Durezza pennello"
 
-#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:211
+#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:212
 msgid "Brush Aspect Ratio"
 msgstr "Rapporto dimensioni pennello"
 
-#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:218
+#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:219
 msgid "Brush Angle"
 msgstr "Angolo pennello"
 
@@ -13840,12 +13859,12 @@ msgstr "Colore cronologia"
 msgid "File appears truncated: "
 msgstr "Il file sembra troncato: "
 
-#: ../app/core/gimppattern-load.c:77
+#: ../app/core/gimppattern-load.c:78
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "Versione formato motivo %d sconosciuta."
 
-#: ../app/core/gimppattern-load.c:86
+#: ../app/core/gimppattern-load.c:87
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
@@ -13854,22 +13873,27 @@ msgstr ""
 "Profondità motivo %d non supportata.\n"
 "I motivi di GIMP devono essere in toni di grigio o RGB."
 
-#: ../app/core/gimppattern-load.c:98
+#: ../app/core/gimppattern-load.c:99
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
 "Dati di intestazione non validi in '%s': larghezza=%lu, altezza=%lu, byte=%lu"
 
-#: ../app/core/gimppattern-load.c:117 ../app/core/gimppattern-load.c:155
+#: ../app/core/gimppattern-load.c:115
+#, c-format
+msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+msgstr "Dati di intestazione non validi in '%s': nome motivo troppo lungo=%lu"
+
+#: ../app/core/gimppattern-load.c:128 ../app/core/gimppattern-load.c:166
 msgid "File appears truncated."
 msgstr "Il file sembra troncato."
 
-#: ../app/core/gimppattern-load.c:123
+#: ../app/core/gimppattern-load.c:134
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Stringa UTF-8 non valida nel file motivo di GIMP \"%s\"."
 
-#: ../app/core/gimppattern-load.c:166
+#: ../app/core/gimppattern-load.c:177
 msgid "Fatal parse error in pattern file: "
 msgstr "Errore fatale di analisi nel file motivo: "
 
@@ -16836,7 +16860,7 @@ msgstr "_Verticale:"
 msgid "Image Size"
 msgstr "Dimensione immagine"
 
-#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:422
+#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:423
 msgid "Quality"
 msgstr "Qualità"
 
@@ -18754,7 +18778,7 @@ msgid "Ink"
 msgstr "Stilo"
 
 #: ../app/paint/gimpinkoptions.c:74 ../app/paint/gimpinkoptions.c:87
-#: ../app/paint/gimppaintoptions.c:203 ../app/tools/gimpwarpoptions.c:91
+#: ../app/paint/gimppaintoptions.c:204 ../app/tools/gimpwarpoptions.c:91
 msgid "Size"
 msgstr "Dimensione"
 
@@ -18763,7 +18787,7 @@ msgid "Ink Blob Size"
 msgstr "Dimensione macchia stilo"
 
 #: ../app/paint/gimpinkoptions.c:80 ../app/paint/gimpinkoptions.c:119
-#: ../app/paint/gimppaintoptions.c:217 ../app/widgets/gimpbrusheditor.c:200
+#: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Angolo"
 
@@ -18808,7 +18832,7 @@ msgstr "Raggio"
 msgid "Base Opacity"
 msgstr "Opacità base"
 
-#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:231
+#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:232
 #: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
 msgstr "Durezza"
@@ -18833,164 +18857,164 @@ msgstr "Pennello"
 msgid "Paint"
 msgstr "Disegna"
 
-#: ../app/paint/gimppaintoptions.c:204
+#: ../app/paint/gimppaintoptions.c:205
 msgid "Brush Size"
 msgstr "Dimensione pennello"
 
-#: ../app/paint/gimppaintoptions.c:210
+#: ../app/paint/gimppaintoptions.c:211
 msgid "Aspect Ratio"
 msgstr "Rapporto dimensioni"
 
-#: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
+#: ../app/paint/gimppaintoptions.c:225 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Spaziatura"
 
-#: ../app/paint/gimppaintoptions.c:238
+#: ../app/paint/gimppaintoptions.c:239
 msgid "Force"
 msgstr "Forza"
 
-#: ../app/paint/gimppaintoptions.c:239
+#: ../app/paint/gimppaintoptions.c:240
 msgid "Brush Force"
 msgstr "Forza pennello"
 
-#: ../app/paint/gimppaintoptions.c:245
+#: ../app/paint/gimppaintoptions.c:246
 msgid "Link Size"
 msgstr "Dimensione collegamento"
 
-#: ../app/paint/gimppaintoptions.c:246
+#: ../app/paint/gimppaintoptions.c:247
 msgid "Link brush size to brush native"
 msgstr "Collega la dimensione pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:252
+#: ../app/paint/gimppaintoptions.c:253
 msgid "Link Aspect Ratio"
 msgstr "Rapporto dimensioni collegamento"
 
-#: ../app/paint/gimppaintoptions.c:253
+#: ../app/paint/gimppaintoptions.c:254
 msgid "Link brush aspect ratio to brush native"
 msgstr "Collega il rapporto dimensioni pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:259
+#: ../app/paint/gimppaintoptions.c:260
 msgid "Link Angle"
 msgstr "Angolo collegamento"
 
-#: ../app/paint/gimppaintoptions.c:260
+#: ../app/paint/gimppaintoptions.c:261
 msgid "Link brush angle to brush native"
 msgstr "Collega l'angolo pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:266
+#: ../app/paint/gimppaintoptions.c:267
 msgid "Link Spacing"
 msgstr "Spaziatura collegamento"
 
-#: ../app/paint/gimppaintoptions.c:267
+#: ../app/paint/gimppaintoptions.c:268
 msgid "Link brush spacing to brush native"
 msgstr "Collega la spaziatura pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:273
+#: ../app/paint/gimppaintoptions.c:274
 msgid "Link Hardness"
 msgstr "Durezza collegamento"
 
-#: ../app/paint/gimppaintoptions.c:274
+#: ../app/paint/gimppaintoptions.c:275
 msgid "Link brush hardness to brush native"
 msgstr "Collega la durezza pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:280
+#: ../app/paint/gimppaintoptions.c:281
 msgid "Lock brush to view"
 msgstr "Blocca il pennello alla vista"
 
-#: ../app/paint/gimppaintoptions.c:281
+#: ../app/paint/gimppaintoptions.c:282
 msgid "Keep brush appearance fixed relative to the view"
 msgstr "Mantieni l'aspetto del pennello bloccato relativamente alla vista"
 
-#: ../app/paint/gimppaintoptions.c:287
+#: ../app/paint/gimppaintoptions.c:288
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../app/paint/gimppaintoptions.c:288
+#: ../app/paint/gimppaintoptions.c:289
 msgid "Every stamp has its own opacity"
 msgstr "Ogni timbro possiede una propria opacità"
 
-#: ../app/paint/gimppaintoptions.c:295
+#: ../app/paint/gimppaintoptions.c:296
 msgid "Hard edge"
 msgstr "Margine netto"
 
-#: ../app/paint/gimppaintoptions.c:296
+#: ../app/paint/gimppaintoptions.c:297
 msgid "Ignore fuzziness of the current brush"
 msgstr "Ignora le increspature del pennello corrente"
 
-#: ../app/paint/gimppaintoptions.c:302
+#: ../app/paint/gimppaintoptions.c:303
 msgid "Apply Jitter"
 msgstr "Applica tremolio"
 
-#: ../app/paint/gimppaintoptions.c:303
+#: ../app/paint/gimppaintoptions.c:304
 msgid "Scatter brush as you paint"
 msgstr "Distribuisci il pennello durante il disegno"
 
-#: ../app/paint/gimppaintoptions.c:308
+#: ../app/paint/gimppaintoptions.c:309
 msgid "Amount"
 msgstr "Intensità"
 
-#: ../app/paint/gimppaintoptions.c:309
+#: ../app/paint/gimppaintoptions.c:310
 msgid "Distance of scattering"
 msgstr "Distanza della distribuzione"
 
-#: ../app/paint/gimppaintoptions.c:315
+#: ../app/paint/gimppaintoptions.c:316
 msgid "Dynamics Options"
 msgstr "Opzioni delle dinamiche"
 
-#: ../app/paint/gimppaintoptions.c:322
+#: ../app/paint/gimppaintoptions.c:323
 msgid "Fade length"
 msgstr "Lunghezza dissolvenza "
 
-#: ../app/paint/gimppaintoptions.c:323
+#: ../app/paint/gimppaintoptions.c:324
 msgid "Distance over which strokes fade out"
 msgstr "Distanza oltre la quale il tratto si dissolve"
 
-#: ../app/paint/gimppaintoptions.c:333 ../app/widgets/gimpviewablebox.c:385
+#: ../app/paint/gimppaintoptions.c:334 ../app/widgets/gimpviewablebox.c:385
 msgid "Reverse"
 msgstr "Inverso"
 
-#: ../app/paint/gimppaintoptions.c:334
+#: ../app/paint/gimppaintoptions.c:335
 msgid "Reverse direction of fading"
 msgstr "Inverti la direzione della dissolvenza"
 
-#: ../app/paint/gimppaintoptions.c:339 ../app/tools/gimpgradientoptions.c:109
+#: ../app/paint/gimppaintoptions.c:340 ../app/tools/gimpgradientoptions.c:109
 #: ../app/tools/gimpgradientoptions.c:326
 #: ../app/tools/gimppaintoptions-gui.c:345
 msgid "Repeat"
 msgstr "Ripetizione"
 
-#: ../app/paint/gimppaintoptions.c:340
+#: ../app/paint/gimppaintoptions.c:341
 msgid "How fade is repeated as you paint"
 msgstr "Come la dissolvenza viene ripetuta durante il disegno"
 
-#: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:298
+#: ../app/paint/gimppaintoptions.c:353 ../app/tools/gimpgradientoptions.c:298
 #: ../app/tools/gimppaintoptions-gui.c:381
 msgid "Blend Color Space"
 msgstr "Spazio colore sfumatura"
 
-#: ../app/paint/gimppaintoptions.c:353
+#: ../app/paint/gimppaintoptions.c:354
 msgid "Which color space to use when blending RGB gradient segments"
 msgstr "Che spazio colore usare quando si sfumano i segmenti del gradiente RGB"
 
-#: ../app/paint/gimppaintoptions.c:416
+#: ../app/paint/gimppaintoptions.c:417
 msgid "Smooth stroke"
 msgstr "Smussa delineatura"
 
-#: ../app/paint/gimppaintoptions.c:417
+#: ../app/paint/gimppaintoptions.c:418
 msgid "Paint smoother strokes"
 msgstr "Disegna tratteggi più smussati"
 
-#: ../app/paint/gimppaintoptions.c:423
+#: ../app/paint/gimppaintoptions.c:424
 msgid "Depth of smoothing"
 msgstr "Profondità della smussatura"
 
-#: ../app/paint/gimppaintoptions.c:428
+#: ../app/paint/gimppaintoptions.c:429
 msgid "Weight"
 msgstr "Peso"
 
-#: ../app/paint/gimppaintoptions.c:429
+#: ../app/paint/gimppaintoptions.c:430
 msgid "Gravity of the pen"
 msgstr "Gravità della matita"
 
@@ -19003,7 +19027,7 @@ msgstr "Matita"
 msgid "Perspective Clone"
 msgstr "Clona in prospettiva"
 
-#: ../app/paint/gimpsmudge.c:86 ../app/tools/gimpsmudgetool.c:55
+#: ../app/paint/gimpsmudge.c:87 ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge"
 msgstr "Sfumino"
 
