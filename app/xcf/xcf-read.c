@@ -37,12 +37,18 @@ xcf_read_int8 (XcfInfo *info,
                guint8  *data,
                gint     count)
 {
-  gsize bytes_read;
+  gsize bytes_read = 0;
 
-  g_input_stream_read_all (info->input, data, count,
-                           &bytes_read, NULL, NULL);
+  /* we allow for 'data == NULL && count == 0', which g_input_stream_read_all()
+   * rejects.
+   */
+  if (count > 0)
+    {
+      g_input_stream_read_all (info->input, data, count,
+                               &bytes_read, NULL, NULL);
 
-  info->cp += bytes_read;
+      info->cp += bytes_read;
+    }
 
   return bytes_read;
 }
