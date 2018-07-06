@@ -969,10 +969,15 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
   const guint8  eoi[2] = { 0xff, 0xd9 };
 
   g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
-  g_return_val_if_fail (exif_data != NULL, FALSE);
-  g_return_val_if_fail (exif_data_length > 0, FALSE);
-  g_return_val_if_fail (exif_data_length + 2 < 65536, FALSE);
+  g_return_val_if_fail (exif_data != NULL || exif_data_length == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (exif_data_length < 0 || exif_data_length + 2 >= 65536)
+    {
+      g_set_error (error, GIMP_METADATA_ERROR, 0,
+                   _("Invalid Exif data size."));
+      return FALSE;
+    }
 
   data_size[0] = ((exif_data_length + 2) & 0xFF00) >> 8;
   data_size[1] = ((exif_data_length + 2) & 0x00FF);
@@ -1034,8 +1039,7 @@ gimp_metadata_set_from_iptc (GimpMetadata  *metadata,
   GimpMetadata *iptc_metadata;
 
   g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
-  g_return_val_if_fail (iptc_data != NULL, FALSE);
-  g_return_val_if_fail (iptc_data_length > 0, FALSE);
+  g_return_val_if_fail (iptc_data != NULL || iptc_data_length == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   iptc_metadata = gimp_metadata_new ();
@@ -1083,8 +1087,7 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
   GimpMetadata *xmp_metadata;
 
   g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
-  g_return_val_if_fail (xmp_data != NULL, FALSE);
-  g_return_val_if_fail (xmp_data_length > 0, FALSE);
+  g_return_val_if_fail (xmp_data != NULL || xmp_data_length == 0, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   xmp_metadata = gimp_metadata_new ();
