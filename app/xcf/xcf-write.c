@@ -35,17 +35,23 @@ xcf_write_int8 (XcfInfo       *info,
                 gint           count,
                 GError       **error)
 {
-  GError *my_error = NULL;
-  gsize   bytes_written;
+  GError *my_error      = NULL;
+  gsize   bytes_written = 0;
 
-  if (! g_output_stream_write_all (info->output, data, count,
-                                   &bytes_written, NULL, &my_error))
+  /* we allow for 'data == NULL && count == 0', which
+   * g_output_stream_write_all() rejects.
+   */
+  if (count > 0)
     {
-      g_propagate_prefixed_error (error, my_error,
-                                  _("Error writing XCF: "));
-    }
+      if (! g_output_stream_write_all (info->output, data, count,
+                                       &bytes_written, NULL, &my_error))
+        {
+          g_propagate_prefixed_error (error, my_error,
+                                      _("Error writing XCF: "));
+        }
 
-  info->cp += bytes_written;
+      info->cp += bytes_written;
+    }
 
   return bytes_written;
 }
