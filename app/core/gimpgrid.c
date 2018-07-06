@@ -335,7 +335,13 @@ gimp_grid_from_parasite (const GimpParasite *parasite)
                                 gimp_grid_parasite_name ()) == 0, NULL);
 
   str = gimp_parasite_data (parasite);
-  g_return_val_if_fail (str != NULL, NULL);
+
+  if (! str)
+    {
+      g_warning ("Empty grid parasite");
+
+      return NULL;
+    }
 
   grid = g_object_new (GIMP_TYPE_GRID, NULL);
 
