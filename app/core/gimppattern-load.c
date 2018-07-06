@@ -40,13 +40,13 @@ gimp_pattern_load (GimpContext   *context,
                    GInputStream  *input,
                    GError       **error)
 {
-  GimpPattern   *pattern = NULL;
-  const Babl    *format  = NULL;
-  PatternHeader  header;
-  gsize          size;
-  gsize          bytes_read;
-  gint           bn_size;
-  gchar         *name = NULL;
+  GimpPattern       *pattern = NULL;
+  const Babl        *format  = NULL;
+  GimpPatternHeader  header;
+  gsize              size;
+  gsize              bytes_read;
+  gint               bn_size;
+  gchar             *name = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
@@ -70,7 +70,7 @@ gimp_pattern_load (GimpContext   *context,
   header.magic_number = g_ntohl (header.magic_number);
 
   /*  Check for correct file format */
-  if (header.magic_number != GPATTERN_MAGIC || header.version != 1 ||
+  if (header.magic_number != GIMP_PATTERN_MAGIC || header.version != 1 ||
       header.header_size <= sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
