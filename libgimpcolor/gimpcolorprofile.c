@@ -286,14 +286,14 @@ gimp_color_profile_new_from_icc_profile (const guint8  *data,
                                          gsize          length,
                                          GError       **error)
 {
-  cmsHPROFILE       lcms_profile;
-  GimpColorProfile *profile = NULL;
+  cmsHPROFILE       lcms_profile = 0;
+  GimpColorProfile *profile      = NULL;
 
-  g_return_val_if_fail (data != NULL, NULL);
-  g_return_val_if_fail (length > 0, NULL);
+  g_return_val_if_fail (data != NULL || length == 0, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  lcms_profile = cmsOpenProfileFromMem (data, length);
+  if (length > 0)
+    lcms_profile = cmsOpenProfileFromMem (data, length);
 
   if (lcms_profile)
     {
