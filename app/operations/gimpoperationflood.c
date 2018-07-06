@@ -258,8 +258,9 @@ gimp_operation_flood_init (GimpOperationFlood *self)
 static void
 gimp_operation_flood_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("Y float"));
-  gegl_operation_set_format (operation, "output", babl_format ("Y float"));
+  const Babl *space = gegl_operation_get_source_space (operation, "input");
+  gegl_operation_set_format (operation, "input",  babl_format_with_space ("Y float", space));
+  gegl_operation_set_format (operation, "output", babl_format_with_space ("Y float", space));
 }
 
 static GeglRectangle
@@ -993,8 +994,8 @@ gimp_operation_flood_process (GeglOperation       *operation,
                               const GeglRectangle *roi,
                               gint                 level)
 {
-  const Babl                   *input_format  = babl_format ("Y float");
-  const Babl                   *output_format = babl_format ("Y float");
+  const Babl                   *input_format  = gegl_operation_get_format (operation, "input");
+  const Babl                   *output_format = gegl_operation_get_format (operation, "output");
   GeglColor                    *color;
   gint                          max_size;
   GimpOperationFloodContext     ctx;
