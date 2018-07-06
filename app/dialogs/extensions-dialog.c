@@ -32,6 +32,7 @@
 #include "core/gimpextensionmanager.h"
 #include "core/gimpextension.h"
 
+#include "widgets/gimpextensionlist.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprefsbox.h"
 
@@ -39,9 +40,18 @@
 
 #include "gimp-intl.h"
 
-static void        extensions_dialog_response                  (GtkWidget  *widget,
-                                                                gint        response_id,
-                                                                GtkWidget  *dialog);
+#define GIMP_EXTENSION_LIST_STACK_CHILD    "extension-list"
+#define GIMP_EXTENSION_DETAILS_STACK_CHILD "extension-details"
+
+static void extensions_dialog_response            (GtkWidget            *widget,
+                                                   gint                  response_id,
+                                                   GtkWidget            *dialog);
+static void extensions_dialog_search_activate     (GtkEntry             *entry,
+                                                   gpointer              user_data);
+static void extensions_dialog_search_icon_pressed (GtkEntry             *entry,
+                                                   GtkEntryIconPosition  icon_pos,
+                                                   GdkEvent             *event,
+                                                   gpointer              user_data);
 
 /*  public function  */
 
@@ -49,11 +59,12 @@ GtkWidget *
 extensions_dialog_new (Gimp *gimp)
 {
   GtkWidget   *dialog;
+  GtkWidget   *stack;
   GtkWidget   *prefs_box;
   GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GtkWidget   *list;
   GtkWidget   *widget;
-  const GList *extensions;
-  GList       *iter;
   GtkTreeIter  top_iter;
 
   dialog = gimp_dialog_new (_("Extensions"), "gimp-extensions",
@@ -66,10 +77,18 @@ extensions_dialog_new (Gimp *gimp)
                     G_CALLBACK (extensions_dialog_response),
                     dialog);
 
+  stack = gtk_stack_new ();
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      stack, TRUE, TRUE, 0);
+  gtk_widget_show (stack);
+
+  /* The extension lists. */
   prefs_box = gimp_prefs_box_new ();
   gtk_container_set_border_width (GTK_CONTAINER (prefs_box), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      prefs_box, TRUE, TRUE, 0);
+  gtk_stack_add_named (GTK_STACK (stack), prefs_box,
+                       GIMP_EXTENSION_LIST_STACK_CHILD);
+  gtk_stack_set_visible_child_name (GTK_STACK (stack),
+                                    GIMP_EXTENSION_LIST_STACK_CHILD);
   gtk_widget_show (prefs_box);
 
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
@@ -81,57 +100,11 @@ extensions_dialog_new (Gimp *gimp)
                                   NULL,
                                   &top_iter);
 
-  widget = gtk_list_box_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), widget, TRUE, TRUE, 1);
-  gtk_widget_show (widget);
+  list = gimp_extension_list_new (gimp->extension_manager);
+  gimp_extension_list_show_user (GIMP_EXTENSION_LIST (list));
+  gtk_box_pack_start (GTK_BOX (vbox), list, TRUE, TRUE, 1);
+  gtk_widget_show (list);
 
-  extensions = gimp_extension_manager_get_user_extensions (gimp->extension_manager);
-  iter = (GList *) extensions;
-
-  for (; iter; iter = iter->next)
-    {
-      GimpExtension *extension = iter->data;
-      GtkWidget     *frame;
-      GtkWidget     *hbox;
-      GtkWidget     *onoff;
-
-      frame = gtk_frame_new (gimp_extension_get_name (extension));
-      gtk_container_add (GTK_CONTAINER (widget), frame);
-      gtk_widget_show (frame);
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
-      gtk_widget_show (hbox);
-
-      if (gimp_extension_get_comment (extension))
-        {
-          GtkWidget     *desc = gtk_text_view_new ();
-          GtkTextBuffer *buffer;
-
-          buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (desc));
-          gtk_text_buffer_set_text (buffer,
-                                    gimp_extension_get_comment (extension),
-                                    -1);
-          gtk_text_view_set_editable (GTK_TEXT_VIEW (desc), FALSE);
-          gtk_box_pack_start (GTK_BOX (hbox), desc, TRUE, TRUE, 1);
-          gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (desc),
-                                       GTK_WRAP_WORD_CHAR);
-          gtk_widget_show (desc);
-        }
-
-      onoff = gtk_switch_new ();
-      gtk_switch_set_active (GTK_SWITCH (onoff),
-                             gimp_extension_manager_is_active (gimp->extension_manager,
-                                                               gimp_object_get_name (extension)));
-      gtk_box_pack_end (GTK_BOX (hbox), onoff, FALSE, FALSE, 1);
-      gtk_widget_show (onoff);
-    }
-
-  /* TODO: system extensions show in a similar list except that they
-   * cannot be uninstalled, yet they can be deactivated as well.
-   * Also you can override a system extension by installing another
-   * version (same id, same extension).
-   */
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   "system-software-install",
                                   _("System Extensions"),
@@ -140,17 +113,60 @@ extensions_dialog_new (Gimp *gimp)
                                   NULL,
                                   &top_iter);
 
+  list = gimp_extension_list_new (gimp->extension_manager);
+  gimp_extension_list_show_system (GIMP_EXTENSION_LIST (list));
+  gtk_box_pack_start (GTK_BOX (vbox), list, TRUE, TRUE, 1);
+  gtk_widget_show (list);
 
-  /* TODO: provide a search box and a list of uninstalled extension from
-   * a remote repository list.
-   */
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   "system-software-install",
-                                  _("Search Extensions"),
-                                  _("Search Extensions"),
+                                  _("Install Extensions"),
+                                  _("Install Extensions"),
                                   GIMP_HELP_EXTENSIONS_INSTALL,
                                   NULL,
                                   &top_iter);
+
+  list = gimp_extension_list_new (gimp->extension_manager);
+  gimp_extension_list_show_search (GIMP_EXTENSION_LIST (list), NULL);
+  gtk_box_pack_end (GTK_BOX (vbox), list, TRUE, TRUE, 1);
+  gtk_widget_show (list);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 1);
+  gtk_widget_show (hbox);
+
+  widget = gtk_label_new (_("Search extension:"));
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 1);
+  gtk_widget_show (widget);
+
+  widget = gtk_entry_new ();
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (widget),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     "edit-find");
+  gtk_entry_set_icon_activatable (GTK_ENTRY (widget),
+                                  GTK_ENTRY_ICON_SECONDARY,
+                                  TRUE);
+  gtk_entry_set_icon_sensitive (GTK_ENTRY (widget),
+                                GTK_ENTRY_ICON_SECONDARY,
+                                TRUE);
+  gtk_entry_set_icon_tooltip_text (GTK_ENTRY (widget),
+                                   GTK_ENTRY_ICON_SECONDARY,
+                                   _("Search extensions matching these keywords"));
+  g_signal_connect (widget, "activate",
+                    G_CALLBACK (extensions_dialog_search_activate),
+                    list);
+  g_signal_connect (widget, "icon-press",
+                    G_CALLBACK (extensions_dialog_search_icon_pressed),
+                    list);
+
+  gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 1);
+  gtk_widget_show (widget);
+
+  /* The extension details. */
+
+  /*TODO: add a widget to show extension details when activating a row.
+   */
+
   return dialog;
 }
 
@@ -161,4 +177,22 @@ extensions_dialog_response (GtkWidget  *widget,
                             GtkWidget  *dialog)
 {
   gtk_widget_destroy (dialog);
+}
+
+static void
+extensions_dialog_search_activate (GtkEntry *entry,
+                                   gpointer  user_data)
+{
+  GimpExtensionList *list = user_data;
+
+  gimp_extension_list_show_search  (list, gtk_entry_get_text (entry));
+}
+
+static void
+extensions_dialog_search_icon_pressed (GtkEntry             *entry,
+                                       GtkEntryIconPosition  icon_pos,
+                                       GdkEvent             *event,
+                                       gpointer              user_data)
+{
+  extensions_dialog_search_activate (entry, user_data);
 }

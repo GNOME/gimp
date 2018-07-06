@@ -199,6 +199,8 @@ libappwidgets_a_sources = \
 	gimperrordialog.h		\
 	gimpexportdialog.c		\
 	gimpexportdialog.h		\
+	gimpextensionlist.c		\
+	gimpextensionlist.h		\
 	gimpfgbgeditor.c		\
 	gimpfgbgeditor.h		\
 	gimpfgbgview.c			\
