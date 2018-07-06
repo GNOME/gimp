@@ -143,15 +143,15 @@ static void
 gimp_operation_desaturate_prepare (GeglOperation *operation)
 {
   GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (operation);
-  const Babl              *format;
+  const Babl              *format = gegl_operation_get_source_format (operation, "input");
 
   if (desaturate->mode == GIMP_DESATURATE_LUMINANCE)
     {
-      format = babl_format ("RGBA float");
+      format = babl_format_with_space ("RGBA float", format);
     }
   else
     {
-      format = babl_format ("R'G'B'A float");
+      format = babl_format_with_space ("R'G'B'A float", format);
     }
 
   gegl_operation_set_format (operation, "input",  format);
