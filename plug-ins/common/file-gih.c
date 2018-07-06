@@ -479,8 +479,8 @@ gih_load_one_brush (GInputStream  *input,
   bh.spacing      = g_ntohl (bh.spacing);
 
   /* Sanitize values */
-  if ((bh.width  == 0) || (bh.width  > GIMP_MAX_IMAGE_SIZE) ||
-      (bh.height == 0) || (bh.height > GIMP_MAX_IMAGE_SIZE) ||
+  if ((bh.width  == 0) || (bh.width  > GIMP_BRUSH_MAX_SIZE) ||
+      (bh.height == 0) || (bh.height > GIMP_BRUSH_MAX_SIZE) ||
       ((bh.bytes != 1) && (bh.bytes != 4)) ||
       (G_MAXSIZE / bh.width / bh.height / bh.bytes < 1))
     {
