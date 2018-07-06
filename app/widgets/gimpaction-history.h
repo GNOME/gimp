@@ -40,8 +40,7 @@ GList    * gimp_action_history_search                (Gimp                *gimp,
 gboolean   gimp_action_history_is_blacklisted_action (const gchar         *action_name);
 gboolean   gimp_action_history_is_excluded_action    (const gchar         *action_name);
 
-void       gimp_action_history_activate_callback     (GtkAction           *action,
-                                                      gpointer             user_data);
+void       gimp_action_history_action_activated      (GtkAction           *action);
 
 
 #endif  /* __GIMP_ACTION_HISTORY_H__ */

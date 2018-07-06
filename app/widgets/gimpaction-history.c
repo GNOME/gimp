@@ -348,29 +348,18 @@ gimp_action_history_is_excluded_action (const gchar *action_name)
           g_strcmp0 (action_name, "filters-reshow") == 0);
 }
 
-/* Callback run on the `activate` signal of an action.
- * It allows us to log all used action.
+/* Called whenever a GimpAction is activated.
+ * It allows us to log all used actions.
  */
 void
-gimp_action_history_activate_callback (GtkAction *action,
-                                       gpointer   user_data)
+gimp_action_history_action_activated (GtkAction *action)
 {
   GimpGuiConfig         *config;
   const gchar           *action_name;
   GList                 *link;
   GimpActionHistoryItem *item;
 
-  /* we can get here after gimp_action_history_exit() has been called, if
-   * gimp_exit() was called during the execution of a temporary procedure,
-   * which was executed in response to a GimpProcedureAction, such as a script-
-   * fu script (temporary procedures run a nested mainloop, during which
-   * anything can happen.)  the GimpProcedureAction's "selected" signal, in
-   * response to which the procedure is run, is emitted before any user-
-   * provided "activate" handlers are invoked, and so this function will be
-   * called *after* the procedure returns.
-   */
-  if (! history.gimp)
-    return;
+  g_return_if_fail (history.gimp != NULL);
 
   config = GIMP_GUI_CONFIG (history.gimp->config);
 
