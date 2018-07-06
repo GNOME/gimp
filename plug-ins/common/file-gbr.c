@@ -386,8 +386,8 @@ load_image (GFile   *file,
   bh.bytes        = g_ntohl (bh.bytes);
 
   /* Sanitize values */
-  if ((bh.width  == 0) || (bh.width  > GIMP_MAX_IMAGE_SIZE) ||
-      (bh.height == 0) || (bh.height > GIMP_MAX_IMAGE_SIZE) ||
+  if ((bh.width  == 0) || (bh.width  > GIMP_BRUSH_MAX_SIZE) ||
+      (bh.height == 0) || (bh.height > GIMP_BRUSH_MAX_SIZE) ||
       ((bh.bytes != 1) && (bh.bytes != 2) && (bh.bytes != 4) &&
        (bh.bytes != 18)) ||
       (G_MAXSIZE / bh.width / bh.height / MAX (4, bh.bytes) < 1))

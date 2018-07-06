@@ -29,6 +29,7 @@
 
 #include "core/gimp-palettes.h"
 #include "core/gimpbrush.h"
+#include "core/gimpbrush-header.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpimage.h"
