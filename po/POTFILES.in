@@ -397,6 +397,7 @@ app/propgui/gimppropgui.c
 app/text/gimpfont.c
 app/text/gimpfontfactory.c
 app/text/gimptext-compat.c
+app/text/gimptext-parasite.c
 app/text/gimptextlayer.c
 app/text/gimptextlayer-transform.c
 app/text/gimptextlayer-xcf.c

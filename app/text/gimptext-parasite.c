@@ -33,9 +33,13 @@
 
 #include "text-types.h"
 
+#include "core/gimperror.h"
+
 #include "gimptext.h"
 #include "gimptext-parasite.h"
 #include "gimptext-xlfd.h"
+
+#include "gimp-intl.h"
 
 
 /****************************************/
@@ -80,15 +84,22 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   str = gimp_parasite_data (parasite);
-  g_return_val_if_fail (str != NULL, NULL);
 
   text = g_object_new (GIMP_TYPE_TEXT, NULL);
 
-  gimp_config_deserialize_string (GIMP_CONFIG (text),
-                                  str,
-                                  gimp_parasite_data_size (parasite),
-                                  NULL,
-                                  error);
+  if (str != NULL)
+    {
+      gimp_config_deserialize_string (GIMP_CONFIG (text),
+                                      str,
+                                      gimp_parasite_data_size (parasite),
+                                      NULL,
+                                      error);
+    }
+  else
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("Empty text parasite"));
+    }
 
   return text;
 }
