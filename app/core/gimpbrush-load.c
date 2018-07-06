@@ -134,15 +134,15 @@ gimp_brush_load_brush (GimpContext   *context,
                        GInputStream  *input,
                        GError       **error)
 {
-  GimpBrush   *brush;
-  gsize        bn_size;
-  BrushHeader  header;
-  gchar       *name = NULL;
-  guchar      *pixmap;
-  guchar      *mask;
-  gsize        bytes_read;
-  gssize       i, size;
-  gboolean     success = TRUE;
+  GimpBrush       *brush;
+  gsize            bn_size;
+  GimpBrushHeader  header;
+  gchar           *name = NULL;
+  guchar          *pixmap;
+  guchar          *mask;
+  gsize            bytes_read;
+  gssize           i, size;
+  gboolean         success = TRUE;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
@@ -188,7 +188,7 @@ gimp_brush_load_brush (GimpContext   *context,
       return NULL;
     }
 
-  if (header.width > GIMP_BRUSH_MAX_SIZE ||
+  if (header.width  > GIMP_BRUSH_MAX_SIZE ||
       header.height > GIMP_BRUSH_MAX_SIZE)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -225,7 +225,7 @@ gimp_brush_load_brush (GimpContext   *context,
       /*  fallthrough  */
 
     case 2:
-      if (header.magic_number == GBRUSH_MAGIC)
+      if (header.magic_number == GIMP_BRUSH_MAGIC)
         break;
 
     default:
@@ -235,7 +235,7 @@ gimp_brush_load_brush (GimpContext   *context,
       return NULL;
     }
 
-  if (header.header_size < sizeof (BrushHeader))
+  if (header.header_size < sizeof (GimpBrushHeader))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Unsupported brush format"));
@@ -247,7 +247,17 @@ gimp_brush_load_brush (GimpContext   *context,
     {
       gchar *utf8;
 
-      name = g_new (gchar, bn_size);
+      if (bn_size > GIMP_BRUSH_MAX_NAME)
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Invalid header data in '%s': "
+                         "Brush name is too long: %lu"),
+                       gimp_file_get_utf8_name (file),
+                       (gulong) bn_size);
+          return NULL;
+        }
+
+      name = g_new0 (gchar, bn_size + 1);
 
       if (! g_input_stream_read_all (input, name, bn_size,
                                      &bytes_read, NULL, error) ||
@@ -264,7 +274,7 @@ gimp_brush_load_brush (GimpContext   *context,
       name = utf8;
     }
 
-  if (!name)
+  if (! name)
     name = g_strdup (_("Unnamed"));
 
   brush = g_object_new (GIMP_TYPE_BRUSH,

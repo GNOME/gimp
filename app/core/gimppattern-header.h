@@ -18,16 +18,21 @@
 #ifndef __GIMP_PATTERN_HEADER_H__
 #define __GIMP_PATTERN_HEADER_H__
 
-#define GPATTERN_FILE_VERSION    1
-#define GPATTERN_MAGIC    (('G' << 24) + ('P' << 16) + ('A' << 8) + ('T' << 0))
+
+#define GIMP_PATTERN_FILE_VERSION  1
+#define GIMP_PATTERN_MAGIC         (('G' << 24) + ('P' << 16) + \
+                                    ('A' << 8)  + ('T' << 0))
+#define GIMP_PATTERN_MAX_SIZE      10000 /* Max size in either dimension in px */
+#define GIMP_PATTERN_MAX_NAME      256   /* Max length of the pattern's name   */
+
 
 /*  All field entries are MSB  */
 
-typedef struct _PatternHeader PatternHeader;
+typedef struct _GimpPatternHeader GimpPatternHeader;
 
-struct _PatternHeader
+struct _GimpPatternHeader
 {
-  guint32   header_size;  /*  header_size = sizeof(PatternHeader) + pattern name  */
+  guint32   header_size;  /*  = sizeof (GimpPatternHeader) + pattern name  */
   guint32   version;      /*  pattern file version #  */
   guint32   width;        /*  width of pattern  */
   guint32   height;       /*  height of pattern  */
@@ -38,5 +43,6 @@ struct _PatternHeader
 /*  In a pattern file, next comes the pattern name, null-terminated.  After that
  *  comes the pattern data--width * height * bytes bytes of it...
  */
+
 
 #endif  /*  __GIMP_PATTERN_HEADER_H__  */

@@ -27,6 +27,7 @@
 #include "paint-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpbrush-header.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpimage.h"
 #include "core/gimpdynamics.h"

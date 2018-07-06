@@ -452,15 +452,15 @@ gih_load_one_brush (GInputStream  *input,
                     gint32         image_ID,
                     GError       **error)
 {
-  gchar         *name       = NULL;
-  BrushHeader    bh;
-  guchar        *brush_buf  = NULL;
-  gint32         layer_ID;
-  gsize          size;
-  GimpImageType  image_type;
-  gint           width, height;
-  gint           new_width, new_height;
-  gsize          bytes_read;
+  gchar             *name       = NULL;
+  GimpBrushHeader    bh;
+  guchar            *brush_buf  = NULL;
+  gint32             layer_ID;
+  gsize              size;
+  GimpImageType      image_type;
+  gint               width, height;
+  gint               new_width, new_height;
+  gsize              bytes_read;
 
   if (! g_input_stream_read_all (input, &bh, sizeof (bh),
                                  &bytes_read, NULL, error) ||
@@ -479,15 +479,16 @@ gih_load_one_brush (GInputStream  *input,
   bh.spacing      = g_ntohl (bh.spacing);
 
   /* Sanitize values */
-  if ((bh.width  == 0) || (bh.width  > GIMP_MAX_IMAGE_SIZE) ||
-      (bh.height == 0) || (bh.height > GIMP_MAX_IMAGE_SIZE) ||
+  if ((bh.width  == 0) || (bh.width  > GIMP_BRUSH_MAX_SIZE) ||
+      (bh.height == 0) || (bh.height > GIMP_BRUSH_MAX_SIZE) ||
       ((bh.bytes != 1) && (bh.bytes != 4)) ||
       (G_MAXSIZE / bh.width / bh.height / bh.bytes < 1))
     {
       return FALSE;
     }
 
-  if ((bh.magic_number != GBRUSH_MAGIC || bh.version != 2) ||
+  if ((bh.magic_number != GIMP_BRUSH_MAGIC ||
+       bh.version != 2)                    ||
       bh.header_size <= sizeof (bh))
     {
       return FALSE;
@@ -495,6 +496,14 @@ gih_load_one_brush (GInputStream  *input,
 
   if ((size = (bh.header_size - sizeof (bh))) > 0)
     {
+      if (size > GIMP_BRUSH_MAX_NAME)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Brush name is too long: %lu"),
+                       (gulong) size);
+          return FALSE;
+        }
+
       name = g_new0 (gchar, size + 1);
 
       if (! g_input_stream_read_all (input, name, size,
@@ -526,15 +535,15 @@ gih_load_one_brush (GInputStream  *input,
 
   if (bh.bytes == 1)
     {
-      PatternHeader ph;
+      GimpPatternHeader ph;
 
       /* For backwards-compatibility, check if a pattern follows.
        * The obsolete .gpb format did it this way.
        */
 
-      if (g_input_stream_read_all (input, &ph, sizeof (PatternHeader),
+      if (g_input_stream_read_all (input, &ph, sizeof (GimpPatternHeader),
                                    &bytes_read, NULL, error) &&
-          bytes_read == sizeof (PatternHeader))
+          bytes_read == sizeof (GimpPatternHeader))
         {
           /*  rearrange the bytes in each unsigned int  */
           ph.header_size  = g_ntohl (ph.header_size);
@@ -544,16 +553,16 @@ gih_load_one_brush (GInputStream  *input,
           ph.bytes        = g_ntohl (ph.bytes);
           ph.magic_number = g_ntohl (ph.magic_number);
 
-          if (ph.magic_number == GPATTERN_MAGIC        &&
-              ph.version      == 1                     &&
-              ph.header_size  > sizeof (PatternHeader) &&
-              ph.bytes        == 3                     &&
-              ph.width        == bh.width              &&
-              ph.height       == bh.height             &&
+          if (ph.magic_number == GIMP_PATTERN_MAGIC        &&
+              ph.version      == 1                         &&
+              ph.header_size  > sizeof (GimpPatternHeader) &&
+              ph.bytes        == 3                         &&
+              ph.width        == bh.width                  &&
+              ph.height       == bh.height                 &&
               g_input_stream_skip (input,
-                                   ph.header_size - sizeof (PatternHeader),
+                                   ph.header_size - sizeof (GimpPatternHeader),
                                    NULL, NULL) ==
-              ph.header_size - sizeof (PatternHeader))
+              ph.header_size - sizeof (GimpPatternHeader))
             {
               guchar *plain_brush = brush_buf;
               gint    i;
@@ -580,7 +589,7 @@ gih_load_one_brush (GInputStream  *input,
               g_free (plain_brush);
             }
           else if (! g_seekable_seek (G_SEEKABLE (input),
-                                      - sizeof (PatternHeader), G_SEEK_CUR,
+                                      - sizeof (GimpPatternHeader), G_SEEK_CUR,
                                       NULL, NULL))
             {
               g_message (_("GIMP brush file appears to be corrupted."));
@@ -703,7 +712,7 @@ gih_load_image (GFile   *file,
 
   g_string_free (buffer, FALSE);
 
-  if (!name)
+  if (! name)
     {
       g_message ("Couldn't read name for brush pipe from '%s'",
                  g_file_get_parse_name (file));
@@ -1193,13 +1202,13 @@ gih_save_one_brush (GOutputStream  *output,
                     const gchar    *name,
                     GError        **error)
 {
-  GeglBuffer    *buffer;
-  const Babl    *format;
-  BrushHeader    bh;
-  guchar        *data;
-  GimpImageType  drawable_type;
-  gint           bpp;
-  gint           y;
+  GeglBuffer      *buffer;
+  const Babl      *format;
+  GimpBrushHeader  bh;
+  guchar          *data;
+  GimpImageType    drawable_type;
+  gint             bpp;
+  gint             y;
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
@@ -1232,7 +1241,7 @@ gih_save_one_brush (GOutputStream  *output,
   bh.width        = g_htonl (rect->width);
   bh.height       = g_htonl (rect->height);
   bh.bytes        = g_htonl (bpp);
-  bh.magic_number = g_htonl (GBRUSH_MAGIC);
+  bh.magic_number = g_htonl (GIMP_BRUSH_MAGIC);
   bh.spacing      = g_htonl (info.spacing);
 
   if (! g_output_stream_write_all (output, &bh, sizeof (bh),

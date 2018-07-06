@@ -30,7 +30,7 @@
 
 #include "gegl/gimp-babl.h"
 
-#include "core/gimpbrush.h"
+#include "core/gimpbrush-header.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
