@@ -1,0 +1,295 @@
+# Marathi translation for GIMP tips
+# Copyright (C) 2018 Listed translators
+# This file is distributed under the same license as the GIMP package.
+# Manish R Joshi <joshmanish@gmail.com>, 2018.
+# Snehalata B Shirude <snehalata.shirude@gmail.com>, 2018.
+# Project Developed by School of Computer Sciences, North Maharashtra University, Jalgaon MS, India, 
+# And Rajya Marathi Vikas Sanstha Mumbai, MS, India
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2018-07-07 09:46+0000\n"
+"PO-Revision-Date: 2018-07-07 14:57+0000\n"
+"Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
+"Language-Team: Marathi\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/tips/gimp-tips.xml.in.h:1
+msgid ""
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
+msgstr ""
+"आपण कोणत्याही वेळी F1 हे बटण दाबून गिम्पच्या जास्तीत जास्त संदर्भ-संवेदनशील वैशिष्ट्यांची "
+"मदत मिळवू  शकता हे सूचीच्या आत देखील कार्य करते."
+
+#: ../data/tips/gimp-tips.xml.in.h:2
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr ""
+"गिम्प आपणास आपली प्रतिमा आयोजित करण्यास स्तर लावते. स्लाइड्स किंवा गाळणी, त्याच्याकडे "
+"बघतांना त्या तुम्हाला संमिश्र दिसतील."
+
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr ""
+"आपण स्तराच्या सुचना फलकमधील एका स्तराच्या मजकूर  खुणेवर उजवे क्लिक करून अनेक स्तर कार्यकृती "
+"कार्यान्वित करू शकता."
+
+#: ../data/tips/gimp-tips.xml.in.h:4
+msgid ""
+"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"progress, allowing to work on it again later. Once a project is completed, "
+"you can export it as JPEG, PNG, GIF, etc."
+msgstr ""
+"जेव्हा आपण एखादी प्रतिमा पुन्हा नंतर कार्य करण्यासाठी जतन करता, तेव्हा एक्ससीएफ वापरून "
+"पहा, गिम्पच्या मुळ धारिका स्वरूप (धारिका विस्तार <tt>.xcf</tt> चा वापर करा)आपल्या "
+"कार्य प्रगतीचा स्तर आणि अनेक पैलू. एकदा प्रकल्प पूर्ण झाले, आपण ते जीपीईजी, पीएनजी, "
+"जीआयएफ, इत्यादी म्हणून निर्यात करू शकता."
+
+#: ../data/tips/gimp-tips.xml.in.h:5
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image→Flatten Image) if you want the plug-"
+"in to work on the whole image."
+msgstr ""
+"बहुतेक जोडणी वर्तमान प्रतिमाच्या वर्तमान स्तरावर कार्य करतात. काही प्रकरणांमध्ये, "
+"आपल्याला जोडणी करणे आवश्यक असल्यास आपल्याला सर्व स्तर (प्रतिमा→प्रतिमा समतल) विलीन "
+"करणे आवश्यक आहे संपूर्ण प्रतिमेवर काम करण्यासाठी."
+
+#: ../data/tips/gimp-tips.xml.in.h:6
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer→Transparency→Add Alpha Channel."
+msgstr ""
+"जर स्तराचे नाव संदेश पटल पेटी मध्ये <b>ठळक</b> दिसत असेल तर त्या स्तरामध्ये अल्फा-चॅनेल "
+"नाही स्तर→पारदर्शकता→अल्फा चॅनेल जोडा. अश्याप्रकारे अल्फा-चॅनेल जोडू शकता."
+
+#: ../data/tips/gimp-tips.xml.in.h:7
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
+msgstr ""
+"सर्व प्रकारच्या प्रतिमांवर सर्व प्रभाव लागू करता येणार नाहीत हा ग्रेडी आऊट सूची-"
+"प्रवेशाद्वारे दर्शविला जातो. आपल्याला प्रतिमा रीतला आरजीबी (प्रतिमा→रीत→आरजीबी) मध्ये "
+"बदलण्याची गरज भासू शकते, अल्फा-चॅनेल जोडा (स्तर→पारदर्शकता→अल्फा चॅनल जोडा)किंवा समतल  "
+"करू शकता (प्रतिमा→समतल प्रतिमा )."
+
+#: ../data/tips/gimp-tips.xml.in.h:8
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr ""
+"आपण <tt>Alt</tt>-drag वापरून निवड किंवा समायोजित करू शकता.जर हे चौकट हलवा, तुमचा "
+"पटल व्यवस्थापक आधीच <tt>Alt</tt> चा वापर करतो. बहुतेक पटल व्यवस्थापकांना <tt>Alt</"
+"tt> की दुर्लक्ष करण्याकरीता किंवा त्याऐवजी <tt>सुपर</tt> बटण (किंवा \"पटल ओळखचिन्ह\")."
+
+#: ../data/tips/gimp-tips.xml.in.h:9
+msgid ""
+"You can drag and drop many things in GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current selection with that color."
+msgstr ""
+"तुम्ही गिम्पमध्ये अनेक गोष्टी ओढा आणि सोडा करू शकता. उदाहरणार्थ, रंग साधनपेटीमधून किंवा "
+"रंग पॅलेटमधून आणि त्यास प्रतिमा मध्ये सोडल्याने वर्तमान रंग त्या रंगासह भरा."
+
+#: ../data/tips/gimp-tips.xml.in.h:10
+msgid ""
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr ""
+"आपण प्रतिमेचे भोवताली पॅन करण्यासाठी मधली माऊस बटण वापरू शकता (किंवा वैकल्पिकरित्या "
+"आपण माउस हलवताना <tt>आंतरकळ</tt> धरून ठेवा."
+
+#: ../data/tips/gimp-tips.xml.in.h:11
+msgid ""
+"Click and drag on a ruler to place a guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"एखाद्या चित्रपटावर मार्गदर्शक ठेवण्यासाठी एका शासक वर क्लिक आणि ओढा करा सर्व निवडी "
+"मार्गदर्शकांना स्नॅप करतील आपण त्यांना ओढून मार्गदर्शक काढू शकता सरकावण्याचे साधनासह "
+"प्रतिमा बंद करा."
+
+#: ../data/tips/gimp-tips.xml.in.h:12
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"तुम्ही स्तराच्या संदेश पटलावरून एक स्तर ओढून साधनपेटीवर टाकू शकता.हे केवळ त्या स्तरासह नवीन "
+"प्रतिमा तयार करेल."
+
+#: ../data/tips/gimp-tips.xml.in.h:13
+msgid ""
+"A floating selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
+msgstr ""
+"एका फ्लोटिंग निवडीला नवीन स्तर किंवा शेवटच्या सक्रिय मध्ये अडकवणे आवश्यक आहे प्रतिमेवरील "
+"इतर कार्यकृती करण्यापूर्वी स्तर.नवीन स्तर संदेश पटलामधील स्तर किंवा &quot;अडकवणे "
+"स्तर&quot; बटण, किंवाहे करण्यासाठी सूची वापरा."
+
+#: ../data/tips/gimp-tips.xml.in.h:14
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"जीआयएमपी फ्लाइटवर gzip संक्षेपाचे समर्थन करते. फक्त <tt>.gz</tt> जोडा (किंवा <tt>."
+"bz2</tt>, जर आपल्याकडे bzip2 प्रतिष्ठापीत असेल तर) आणि आपल्या प्रतिमेत संकुचित जतन करुन "
+"ठेवा. अर्थात, संकुचित प्रतिमा देखील लोड केल्या जातात."
+
+#: ../data/tips/gimp-tips.xml.in.h:15
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"निवड करण्यापूर्वी आपण <tt>Shift</tt> दाबून आणि धारण करीत असल्यास आपल्याला त्याऐवजी "
+"बदलण्याची वर्तमान निवड जोडण्याची परवानगी देते. निवड करण्यापूर्वी <tt>Ctrl</tt> वापरणे "
+"सद्यस्थितीतील वजाबाकी करते."
+
+#: ../data/tips/gimp-tips.xml.in.h:16
+msgid ""
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters→Render→Gfig."
+msgstr ""
+"आपण संपादित→बाह्यरेषा निवड वापरून सोपी चौरस किंवा मंडळ काढू शकता. हे आपल्या वर्तमान "
+"निवडीच्या काठाला सरकवते. मार्ग साधनासह किंवा गाळणी→प्रस्तुत→जीएफआयजी सह अधिक किचकट "
+"आकृत्या काढल्या जाऊ शकतात."
+
+#: ../data/tips/gimp-tips.xml.in.h:17
+msgid ""
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
+msgstr ""
+"जर आपण बाह्यरेषा मार्ग (संपादित→बाह्यरेषा मार्ग) निवडला, तर रंगकाम साधने त्यांच्या "
+"सध्याच्या सेटिंग्जसह वापरले जाऊ शकतात. आपण रंगकाम कुंचल्याची रंगछटा रीत किंवा खोडरबर "
+"किंवा पसरवणे साधन वापरु शकता."
+
+#: ../data/tips/gimp-tips.xml.in.h:18
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"आपण मार्ग  साधन वापरून किचकट निवडी तयार आणि संपादित करू शकता. मार्ग संदेश पटल "
+"आपल्याला एकापेक्षा जास्त मार्गांवर कार्य करण्याची आणि त्यांना निवड करण्यासाठी रूपांतरित "
+"करण्याची परवानगी देतो."
+
+#: ../data/tips/gimp-tips.xml.in.h:19
+msgid ""
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
+msgstr ""
+"आपण निवड बदलण्यासाठी पेंट साधने वापरू शकता. &Quot; जलद आच्छादक&quot;प्रतिमा पटलच्या "
+"तळाशी असलेल्या बटणावर क्लिक करा प्रतिमेत चित्रकला करून आपली निवड बदला आणि पुन्हा एकदा "
+"सामान्य निवड वर रूपांतरित करण्यासाठी बटणावर क्लिक करा."
+
+#: ../data/tips/gimp-tips.xml.in.h:20
+msgid ""
+"You can save a selection to a channel (Select→Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr ""
+"आपण चॅनेलवर निवड जतन करू शकता (चॅनेल→जतन करा निवडा) आणि नंतर कोणत्याही रंग साधनांसह "
+"हा चॅनेल सुधारित करा. चॅनेलच्या सुचना फलकातील बटणे वापरणे, आपण या नवीन चॅनेलची दृश्यमानता "
+"अदलाबदल करू शकता किंवा त्याला एका निवडमध्ये रूपांतरीत करू शकता."
+
+#: ../data/tips/gimp-tips.xml.in.h:21
+msgid ""
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
+"shortcuts."
+msgstr ""
+"आपण  &quot;गतिमान कळपाट लहान मार्ग&quot; प्राधान्ये संदेश पटल अंतर्गत,आपण लहान मार्ग "
+"की पुन्हाने नियुक्त करू शकता. सूची लावून, सूची घटक निवडून आणि आवश्यक कळ संयोजन दाबून तसे "
+"करा. जर  &quot; कळपाट लहान मार्ग जतन करा&quot;सक्षम केले आहे, जेव्हा आपण गिम्प मधून "
+"निर्गमन कराल तेव्हा की बाइंडिंग जतन केले जाईल. आपण कदाचित &quot; गतिमान कळपाट लहान "
+"मार्ग् &quot; नंतर, अनपेक्षितपणे लहान मार्ग नियुक्त/पुनर्निर्देशित करणे टाळण्यासाठी."
+
+#: ../data/tips/gimp-tips.xml.in.h:22
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr ""
+"आपली पडदा खूप चिकट असल्यास, आपण प्रतिमामध्ये <tt> Tab </tt> दाबू शकता साधनपेटी  आणि "
+"इतर संदेश पटलाची दृश्यमानता अदलाबदल करण्यासाठी पटल."
+
+#: ../data/tips/gimp-tips.xml.in.h:23
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"सर्व स्तर लपविण्यासाठी स्तर संदेश पटलातील डोळा चिन्हावर <tt>Shift</tt>-क्लिक करा पण "
+"त्या. <tt>Shift</tt> सर्व स्तर दर्शविण्यासाठी परत क्लिक करा."
+
+#: ../data/tips/gimp-tips.xml.in.h:24
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr ""
+"<tt>Ctrl</tt>-स्तराच्या संदेश पटलामधील  स्तर  आच्छादकाच्या पूर्वावलोकनावर  क्लिक करणे  "
+"स्तर  आच्छादकाच्या प्रभावाला दाबून टाकते. <tt>Alt</tt>-आच्छादक  पाहताना स्लाईड संदेश "
+"पटलामध्ये स्तर आच्छादकाच्या  पूर्वावलोकनावर क्लिक करणे थेट क्लिक करते."
+
+#: ../data/tips/gimp-tips.xml.in.h:25
+msgid ""
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"एका प्रतिमेतील सर्व स्तर चक्राकार करण्यासाठी आपण <tt>Ctrl</tt>-<tt>Tab</tt> चा "
+"वापर करु शकता (जर आपल्या पटल व्यवस्थापकाने त्या कळा फोडत नाही...)."
+
+#: ../data/tips/gimp-tips.xml.in.h:26
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
+msgstr ""
+"<tt>Ctrl</tt>-बादली भरा साधनासह क्लिक करा ज्यात अग्रभाग रंगांऐवजी पृष्ठभाग रंग "
+"वापरावा. त्याचप्रमाणे, <tt>Ctrl</tt>-आयड्रॉपर साधनांसह क्लीकिंग करणे अग्रभूमी रंगाऐवजी "
+"पृष्ठभाग रंग बदलते."
+
+#: ../data/tips/gimp-tips.xml.in.h:27
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr "<tt>Ctrl</tt>-फिरवणे साधनाने ओढून गती १५ अंश कोनामध्ये मोडीत काढेल."
+
+#: ../data/tips/gimp-tips.xml.in.h:28
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Colors→Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Colors→Curves)."
+msgstr ""
+"आपले काही स्कॅन केलेले छायाचित्र पुरेसे रंगीत दिसत नसल्यास, आपण आपल्या ध्वनीच्या श्रेणीत "
+"&quot;स्वयं &quot; रंग पातळ्या साधनात बटण (रंग→पातळ्या). जर तिथे कोणत्याही रंगाचे डाव "
+"असतील तर आपण त्यास वक्र साधन (रंग→वक्र) वापरून सुधारू शकता."

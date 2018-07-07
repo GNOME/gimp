@@ -1,0 +1,386 @@
+# Marathi translation for GIMP Windows installer.
+# Copyright (C) 2018 Listed translators
+# This file is distributed under the same license as the GIMP package.
+# Manish R Joshi <joshmanish@gmail.com>, 2018.
+# Snehalata B Shirude <snehalata.shirude@gmail.com>, 2018.
+# Project Developed by School of Computer Sciences, North Maharashtra University, Jalgaon MS, India, 
+# And Rajya Marathi Vikas Sanstha Mumbai, MS, India
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2018-07-07 09:46+0000\n"
+"PO-Revision-Date: 2018-07-07 14:57+0000\n"
+"Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
+"Language-Team: Marathi\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:1
+msgid "License Agreement"
+msgstr "परवाना करार"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:2
+msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "जर्निएज सायमनिएई, jernej-gimp@ena.si द्वारे निर्मीत सेटअप"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:3
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgstr "गिम्प ची ही आवृत्ती पटल  ७ ची आवश्यकता आहे, किंवा पटलाची नवीन आवृत्ती आहे."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:4
+msgid "Development version"
+msgstr "विकास आवृत्ती"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:6
+#, no-c-format
+msgid ""
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP bugzilla:"
+"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
+"continue with installation anyway?"
+msgstr ""
+"ही गिम्प ची एक विकास आवृत्ती आहे जिथे काही वैशिष्ट्ये पूर्ण होऊ शकत नाहीत किंवा ती "
+"कदाचित अस्थिर असू शकते.% गिम्प ची ही आवृत्ती रोजच्या कामासाठी नाही कारण ती अस्थिर असू "
+"शकते आणि आपण आपले कार्य गमावू शकता. %n जर आपल्याला कोणतीही अडचण आली असेल, तर प्रथम "
+"विकसकाशी संपर्क साधण्यापूर्वी किंवा ते गिम्प बगजिलाला कळवण्यापूर्वी त्यांनी गिट मध्ये "
+"निश्चित केले नसल्याची खात्री करा:%n_https://bugzilla.gnome.org/enter_bug."
+"cgiproduct=GIMP%n%n आपण तरीही स्थापित करणे सुरू ठेऊ इच्छिता?"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:7
+msgid "&Continue"
+msgstr "&सुरू"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:8
+msgid "Exit"
+msgstr "बाहेर पडा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:9
+msgid ""
+"This version of GIMP requires a processor that supports SSE instructions."
+msgstr "गिम्प ची ही आवृत्ती प्रोसेसरची आवश्यकता आहे जी एसएसई सूचनांचे समर्थन करते."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:10
+msgid "Display settings problem"
+msgstr "सेटिंग्स समस्या प्रदर्शित करा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:11
+msgid ""
+"Setup has detected that your Windows is not running in 32 bits-per-pixel "
+"display mode. This has been known to cause stability problems with GIMP, so "
+"it's recommended to change the display colour depth to 32BPP before "
+"continuing."
+msgstr ""
+"सेटअपला आढळले आहे की आपला पटल ३२ बिट-प्रति-पिक्सेल दर्शक रीतमध्ये चालत नाही. हे गिम्प "
+"सह स्थिरता समस्यांना कारणीभूत आहे म्हणून ज्ञात आहे, त्यामुळे सुरू ठेवण्यापूर्वी दर्शक रंग खोली "
+"३२ बीपीपी बदलण्याची शिफारस केली आहे."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:12
+msgid "E&xit"
+msgstr "बाहेर &पडा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:13
+msgid ""
+"GIMP is now ready to be installed. Click the Install now button to install "
+"using the default settings, or click the Customize button if you'd like to "
+"have more control over what gets installed."
+msgstr ""
+"गिम्प आता स्थापित होण्यास सज्ज आहे. क्रियापूर्व सेटिंग्ज वापरून स्थापित करण्यासाठी आता "
+"स्थापित करा बटण क्लिक करा किंवा आपण स्थापित केलेल्या कायद्यावर अधिक नियंत्रण ठेवू इच्छित "
+"असल्यास सानुकूल करा बटण क्लिक करा."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:14
+msgid "&Install"
+msgstr "स्थापित करा&"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:15
+msgid "&Customize"
+msgstr "सानुकूल करा&"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:16
+msgid "Compact installation"
+msgstr "संक्षिप्त स्थापना"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:17
+msgid "Custom installation"
+msgstr "सानुकूल स्थापना"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:18
+msgid "Full installation"
+msgstr "पूर्ण स्थापना"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:19
+msgid "Description"
+msgstr "वर्णन"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:20
+msgid "GIMP"
+msgstr "गिम्प"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:21
+msgid "GIMP and all default plug-ins"
+msgstr "गिम्प आणि सर्व क्रियापूर्व प्ल-गिन्स "
+
+#: ../build/windows/installer/lang/setup.isl.in.h:22
+msgid "Run-time libraries"
+msgstr "कार्यान्वित करतेवेळीच्या लायब्ररी"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:23
+msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgstr ""
+"गिम्प द्वारे वापरलेले कार्यान्वित करतेवेळीच्या लायब्ररी, जीटीके+ कार्यान्वित करतेवेळीचा परिसर"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:24
+msgid "Debug symbols"
+msgstr "तृटी निवारण प्रतीके"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:25
+msgid "Include information to help with debugging GIMP"
+msgstr "गिम्प तृटी निवारण करण्यासह मदत करण्यासाठी माहिती समाविष्ट करा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:26
+msgid "MS-Windows engine for GTK+"
+msgstr "जीटीके+ साठी एमएस-विंडोज इंजिन"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:27
+msgid "Native Windows look for GIMP"
+msgstr "गिम्प साठी मूळचा पटल दिसत आहे"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:28
+msgid "Support for old plug-ins"
+msgstr "जुन्या प्लग-इनसाठी समर्थन"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:29
+msgid "Install libraries needed by old third-party plug-ins"
+msgstr "जुन्या तृतीय-पक्ष प्लग-इन द्वारे आवश्यक लायब्ररी स्थापित करा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:30
+msgid "Translations"
+msgstr "अनुवाद"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:31
+msgid "Python scripting"
+msgstr "पायथन स्क्रिप्टिंग"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:32
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr "आपल्याला पायथन स्क्रिप्टिंग भाषेमध्ये लिहीलेली गिम्प प्लगइन वापरण्याची अनुमती देते."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:33
+msgid "MyPaint brushes"
+msgstr "मायपेंट कुंचले"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:34
+msgid "Install the default set of MyPaint brushes"
+msgstr "मायपेंट कुंचल्यांचा क्रियापूर्व संच स्थापित करा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:35
+msgid "PostScript support"
+msgstr "पोस्टस्क्रिप्ट समर्थन"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:36
+msgid "Allow GIMP to load PostScript files"
+msgstr "गिम्पला पोस्टस्क्रिप्ट धारिका लोड करण्याची परवानगी द्या"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:37
+msgid "Support for 32-bit plug-ins"
+msgstr "३२-बिट प्लग-इनसाठी समर्थन"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:39
+#, no-c-format
+msgid ""
+"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"support."
+msgstr ""
+"पायथन समर्थनासाठी ३२-बिट प्लग-इन.%nआवश्यक करण्यासाठी आवश्यक धारिका समाविष्ट करा."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:40
+msgid "Additional icons:"
+msgstr "अतिरिक्त चिन्हे:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:41
+msgid "Create a &desktop icon"
+msgstr ""
+
+#: ../build/windows/installer/lang/setup.isl.in.h:42
+msgid "Create a &Quick Launch icon"
+msgstr "एक डेस्कटॉप& चिन्ह तयार करा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:43
+msgid "Remove previous GIMP version"
+msgstr "मागील गिम्प आवृत्ती काढा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:45
+#, no-c-format
+msgid ""
+"There was a problem updating GIMP's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing GIMP."
+msgstr ""
+"%१ मध्ये गिम्प चा परिसर सुधारित करण्यात समस्या आली आहे. आपण प्लग-इन लोड करताना "
+"कोणतीही त्रुटी असल्यास, गिम्प विस्थापित करुन पुन्हा-स्थापित करण्याचा प्रयत्न करा."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:46
+msgid "Error extracting temporary data."
+msgstr "तात्पुरती माहिती काढताना त्रुटी"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:47
+msgid "Error updating Python interpreter info."
+msgstr "पायथन दुभाषा माहिती अद्यतनित करताना त्रुटी."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:48
+msgid "Error updating MyPaint brushes info."
+msgstr "मायपेंट कुंचल्यांची माहिती अद्यतनित करताना त्रुटी"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:50
+#, no-c-format
+msgid "There was an error updating %1."
+msgstr "%१ अद्यतनित करताना त्रुटी आली."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:52
+#, no-c-format
+msgid "There was an error updating GIMP's configuration file %1."
+msgstr "गिम्प ची संरचना धारिका %१ अद्ययावत करताना त्रुटी आली."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:53
+msgid "Edit with GIMP"
+msgstr "गिम्प सह संपादन करा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:54
+msgid "Select file associations"
+msgstr "धारिका संघ निवडा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:55
+msgid "Extensions:"
+msgstr "विस्तार:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:56
+msgid "Select the file types you wish to associate with GIMP"
+msgstr "गिम्प शी संबंधित असणाऱ्या धारिका प्रकारांची निवड करा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:57
+msgid ""
+"This will make selected files open in GIMP when you double-click them in "
+"Explorer."
+msgstr ""
+"जेव्हा आपण एक्सप्लोररवर पुन्हा-क्लिक करता तेव्हा या निवडलेल्या धारिका गिम्प मध्ये उघडतील."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:58
+msgid "Select &All"
+msgstr "&सर्व निवडा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:59
+msgid "Unselect &All"
+msgstr "निवडलेले &सर्व काढा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:60
+msgid "Select &Unused"
+msgstr "&न वापरलेले निवडा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:61
+msgid "File types to associate with GIMP:"
+msgstr "गिम्प सह संबंधित करण्यासाठी धारिका प्रकार:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:62
+msgid "Removing previous version of GIMP:"
+msgstr "गिम्प ची मागील आवृत्ती काढून टाकत आहे:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:64
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"the automatic uninstall of old version has failed.%n%nPlease remove the "
+"previous version of GIMP yourself before installing this version in %2, or "
+"choose a Custom install, and select a different installation folder.%n%nThe "
+"Setup will now exit."
+msgstr ""
+"जुन्या आवृत्तीची स्वयंचलित विस्थापन अयशस्वी झाले.%n%n कृपया या आवृत्तीला %२ मध्ये स्थापित "
+"करण्यापूर्वी स्वत: गिम्पची पूर्वीची आवृत्ती काढून टाका किंवा सानुकूल स्थापना निवडा आणि "
+"वेगळ्या स्थापना संचयिकेची निवड करा.%n%n सेटअप आता बाहेर पडेल."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:66
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"Setup couldn't determine how to remove the old version automatically.%n"
+"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"installing this version in %2, or choose a Custom install, and select a "
+"different installation folder.%n%nThe Setup will now exit."
+msgstr ""
+"गिम्प %१ आपल्या वर्तमानतः स्थापित केलेल्या गिम्प आवृत्तीवर स्थापित केले जाऊ शकत नाही, आणि "
+"सेटअप आपोआप जुनी आवृत्ती कशी काढून टाकायची ते निर्धारीत करू शकत नाही.%n%nकृपया गिम्प "
+"ची मागील आवृत्ती काढून टाका आणि कोणत्याही ऍड-ऑनला ही आवृत्ती %२ किंवा सानुकूल स्थापना "
+"निवडा आणि वेगळ्या स्थापना संचयिकेची निवड करा.%n%nसेटअप आता बाहेर पडेल."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:68
+#, no-c-format
+msgid ""
+"Previous GIMP version was removed successfully, but Windows has to be "
+"restarted before the Setup can continue.%n%nAfter restarting your computer, "
+"Setup will continue next time an administrator logs in."
+msgstr ""
+"पूर्वीचे गिम्प आवृत्ती यशस्वीरित्या काढून टाकली, परंतु सेटअप सुरू ठेवण्यापूर्वी पटल पुन्हा चालू "
+"करावे लागेल.%n%nआपल्या संगणकाचा पुनर्रआरंभ, प्रशासक एकदा लॉग इन करुन सेट अप पुढील काळात "
+"चालू राहील."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:70
+#, no-c-format
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "सेटअप पुनर्रआरंभ करताना त्रुटी आली. (%१)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:71
+msgid "Cleaning up old files..."
+msgstr "जुन्या धारिका साफ करत आहे..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:73
+#, no-c-format
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "लक्षात ठेवा: गिम्प मोफत आज्ञावली आहे.%n%n कृपया येथे भेट द्या"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:74
+msgid "for free updates."
+msgstr "मोफत अद्यतनांसाठी"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:75
+msgid "Setting up file associations..."
+msgstr "धारिका संबद्धता सेट करीत आहे..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:76
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "गिम्प पायथन विस्तारासाठी परिसर सेट करणे..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:77
+msgid "Setting up MyPaint brushes..."
+msgstr "मायपेंट कुंचले सेट करीत आहे..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:78
+msgid "Setting up GIMP environment..."
+msgstr "गिम्प परिसर सेट करीत आहे..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:79
+msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgstr "३२-बिट प्लग-इन समर्थनासाठी गिम्प संरचना सेट करत आहे..."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:80
+msgid "Launch GIMP"
+msgstr "गिम्प लाँच करा"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:81
+msgid "Removing add-on"
+msgstr "ऍड-ऑन काढून टाकत आहे"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:83
+#, no-c-format
+msgid "Internal error (%1)."
+msgstr "अंतर्गत त्रुटी (%१)."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:84
+msgid ""
+"GIMP does not appear to be installed in the selected directory. Continue "
+"anyway?"
+msgstr "निवडलेल्या मार्गदर्शिकेत गिम्प संस्थापित असल्याचे दिसत नाही. तरीही पुढे जायचे? "
