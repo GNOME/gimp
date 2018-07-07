@@ -8,6 +8,30 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.4 to GIMP 2.10.6
+===================================================
+
+Core:
+
+  - Render drawable previews asynchronously.
+
+Filters:
+
+  - New "Little Planet" (gegl:stereographic-projection) filter.
+
+User Interface:
+
+  - The Dashboard dockable dialog now has an "async" field to the
+    dashboard's "misc" group, showing the number of async operations
+    currently in the "running" state.
+  - New Preferences option to enable/disable layer-group previews, since
+    these can get quite time-expensive.
+
+Translations:
+
+  - New language: Marathi
+  - 3 translations were updated: Italian, Spanish, Swedish.
+
 Overview of Changes from GIMP 2.10.2 to GIMP 2.10.4
 ===================================================
 
