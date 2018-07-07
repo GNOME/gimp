@@ -418,6 +418,10 @@ Type: files; Name: "{commondesktop}\GIMP 2.lnk"
 Type: files; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
 Type: files; Name: "{commondesktop}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
 
+[Registry]
+;fix broken toolbox icons
+Root: HKLM; Subkey: "Software\Classes\.svg"; ValueType: string; ValueName: "Content Type"; ValueData: "image/svg+xml"; Flags: noerror createvalueifdoesntexist
+
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
 ;need to clean out all the generated .pyc files
