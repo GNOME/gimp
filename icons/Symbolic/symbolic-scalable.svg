@@ -15,7 +15,7 @@
    width="1322.0306"
    height="388.46494"
    id="svg7384"
-   inkscape:version="0.92.2 2405546, 2018-03-11"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="symbolic-scalable.svg"
    viewBox="0 0 1322.0306 388.46493">
   <metadata
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -49,13 +49,13 @@
      inkscape:window-height="741"
      id="namedview88"
      showgrid="true"
-     inkscape:zoom="8"
-     inkscape:cx="633.94844"
-     inkscape:cy="49.874466"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="228.63304"
+     inkscape:cy="-143.25938"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="stock"
+     inkscape:current-layer="layer2"
      showborder="false"
      inkscape:snap-nodes="true"
      inkscape:snap-bbox="true"
@@ -26361,7 +26361,7 @@
                inkscape:connector-curvature="0"
                id="rect28186-4-57"
                d="m 0,1036.3622 h 16 v 16 H 0 Z"
-               style="fill:none;stroke:none" />
+               style="fill:none;stroke:none;opacity:0" />
           </g>
           <g
              id="g4010"

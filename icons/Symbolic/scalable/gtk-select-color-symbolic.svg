@@ -12,8 +12,8 @@
    viewBox="0 0 16 16"
    id="svg30571"
    version="1.1"
-   inkscape:version="0.92pre1 unknown"
-   sodipodi:docname="gimp-color-palette.svg">
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="gtk-select-color-symbolic.svg">
   <defs
      id="defs30573" />
   <sodipodi:namedview
@@ -23,9 +23,9 @@
      borderopacity="1"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="41.5625"
-     inkscape:cx="6.1593983"
-     inkscape:cy="7.4766665"
+     inkscape:zoom="20.78125"
+     inkscape:cx="-3.7754616"
+     inkscape:cy="8.9633363"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -45,8 +45,8 @@
      inkscape:snap-center="true"
      inkscape:snap-text-baseline="true"
      showborder="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -95,7 +95,7 @@
                inkscape:connector-curvature="0"
                id="rect28186-4"
                d="m 0,1036.3622 h 16 v 16 H 0 Z"
-               style="fill:none;stroke:none" />
+               style="fill:none;stroke:none;opacity:0" />
           </g>
           <g
              id="g4010"
