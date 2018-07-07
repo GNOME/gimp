@@ -107,6 +107,8 @@ static void          gimp_container_tree_view_name_started      (GtkCellRenderer
 static void          gimp_container_tree_view_name_canceled     (GtkCellRendererText         *cell,
                                                                  GimpContainerTreeView       *tree_view);
 
+static void          gimp_container_tree_view_cursor_changed    (GtkTreeView                 *view,
+                                                                 GimpContainerTreeView       *tree_view);
 static void          gimp_container_tree_view_selection_changed (GtkTreeSelection            *sel,
                                                                  GimpContainerTreeView       *tree_view);
 static gboolean      gimp_container_tree_view_button_press      (GtkWidget                   *widget,
@@ -137,6 +139,8 @@ static void          gimp_container_tree_view_expand_rows         (GtkTreeModel 
                                                                    GtkTreeIter              *parent);
 
 static void          gimp_container_tree_view_monitor_changed     (GimpContainerTreeView    *view);
+
+static void          gimp_container_tree_view_process_updates     (GimpContainerTreeView    *tree_view);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
@@ -264,6 +268,10 @@ gimp_container_tree_view_constructed (GObject *object)
   gtk_widget_show (GTK_WIDGET (tree_view->view));
 
   gimp_container_view_set_dnd_widget (view, GTK_WIDGET (tree_view->view));
+
+  g_signal_connect (tree_view->view, "cursor-changed",
+                    G_CALLBACK (gimp_container_tree_view_cursor_changed),
+                    tree_view);
 
   tree_view->main_column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, tree_view->main_column, 0);
@@ -1093,6 +1101,13 @@ gimp_container_tree_view_name_canceled (GtkCellRendererText   *cell,
 }
 
 static void
+gimp_container_tree_view_cursor_changed (GtkTreeView           *view,
+                                         GimpContainerTreeView *tree_view)
+{
+  gimp_container_tree_view_process_updates (tree_view);
+}
+
+static void
 gimp_container_tree_view_selection_changed (GtkTreeSelection      *selection,
                                             GimpContainerTreeView *tree_view)
 {
@@ -1102,6 +1117,8 @@ gimp_container_tree_view_selection_changed (GtkTreeSelection      *selection,
   gimp_container_tree_view_get_selected (view, &items);
   gimp_container_view_multi_selected (view, items);
   g_list_free (items);
+
+  gimp_container_tree_view_process_updates (tree_view);
 }
 
 static GtkCellRenderer *
@@ -1661,4 +1678,17 @@ gimp_container_tree_view_monitor_changed (GimpContainerTreeView *view)
   gtk_tree_model_foreach (view->model,
                           gimp_container_tree_view_monitor_changed_foreach,
                           NULL);
+}
+
+static void
+gimp_container_tree_view_process_updates (GimpContainerTreeView *tree_view)
+{
+  GdkWindow *window = gtk_tree_view_get_bin_window (tree_view->view);
+
+  /* this is a hack, necessary to work around a gtk bug which can cause the
+   * window containing the tree view to stop processing updates until
+   * explicitly requested.
+   */
+  if (window)
+    gdk_window_process_updates (window, TRUE);
 }
