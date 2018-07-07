@@ -420,15 +420,25 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
   gtk_widget_set_visible (editor->empty_label,
                           image_editor->image && n_points == 0);
 
-  if (n_points < editor->n_color_frames)
+  /*  Keep that many color frames around so they remember their color
+   *  model. Let's hope nobody uses more and notices they get reset to
+   *  "pixel". See https://gitlab.gnome.org/GNOME/gimp/issues/1805
+   */
+#define RANDOM_MAGIC 16
+
+  if (n_points < editor->n_color_frames &&
+      n_points < RANDOM_MAGIC           &&
+      editor->n_color_frames > RANDOM_MAGIC)
     {
-      for (i = n_points; i < editor->n_color_frames; i++)
+      for (i = RANDOM_MAGIC; i < editor->n_color_frames; i++)
         {
           gtk_widget_destroy (editor->color_frames[i]);
         }
 
       editor->color_frames = g_renew (GtkWidget *, editor->color_frames,
-                                      n_points);
+                                      RANDOM_MAGIC);
+
+      editor->n_color_frames = RANDOM_MAGIC;
     }
   else if (n_points > editor->n_color_frames)
     {
@@ -459,14 +469,18 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
           gtk_table_attach (GTK_TABLE (editor->table), editor->color_frames[i],
                             column, column + 1, row, row + 1,
                             GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-          gtk_widget_show (editor->color_frames[i]);
 
           g_object_set_data (G_OBJECT (editor->color_frames[i]),
                              "dirty", GINT_TO_POINTER (TRUE));
         }
+
+      editor->n_color_frames = n_points;
     }
 
-  editor->n_color_frames = n_points;
+  for (i = 0; i < editor->n_color_frames; i++)
+    {
+      gtk_widget_set_visible (editor->color_frames[i], i < n_points);
+    }
 
   if (n_points > 0)
     gimp_sample_point_editor_dirty (editor, -1);
