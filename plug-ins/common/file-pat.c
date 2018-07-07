@@ -320,7 +320,7 @@ load_image (GFile   *file,
 {
   GInputStream       *input;
   GimpPatternHeader   ph;
-  gchar              *name;
+  gchar              *name = NULL;
   gchar              *temp;
   guchar             *buf;
   gint32              image_ID;
