@@ -1,0 +1,29 @@
+# Marathi translation for GIMP tags.
+# Copyright (C) 2018 Listed translators
+# This file is distributed under the same license as the GIMP package.
+# Manish R Joshi <joshmanish@gmail.com>, 2018.
+# Snehalata B Shirude <snehalata.shirude@gmail.com>, 2018.
+# Project Developed by School of Computer Sciences, North Maharashtra University, Jalgaon MS, India, 
+# And Rajya Marathi Vikas Sanstha Mumbai, MS, India
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2018-07-07 09:45+0000\n"
+"PO-Revision-Date: 2018-07-07 14:57+0000\n"
+"Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
+"Language-Team: Marathi\n"
+"Language: mr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:1
+msgid "round"
+msgstr "गोल"
+
+#. fuzzy as in a feathered, blurred, unfocused, soft brush
+#: ../data/tags/gimp-tags-default.xml.in.h:3
+msgid "fuzzy"
+msgstr "अविशद निवड"
