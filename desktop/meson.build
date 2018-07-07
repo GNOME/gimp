@@ -20,11 +20,11 @@ endforeach
 desktopfilename = 'gimp.desktop'
 
 desktop_conf = configuration_data()
-desktop_conf.set('GIMP_APP_VERSION', app_version)
-desktop_conf.set('GIMP_COMMAND', gimp_command)
-desktop_conf.set('GIMP_VERSION', gimp_version)
-desktop_conf.set('MIME_TYPES', ';'.join(MIMEtypes))
-desktop_conf.set('BUG_REPORT_URL', bug_report_url)
+desktop_conf.set('GIMP_COMMAND',      gimp_command)
+desktop_conf.set('GIMP_VERSION',      api_version)
+desktop_conf.set('GIMP_APP_VERSION',  api_version)
+desktop_conf.set('MIME_TYPES',        ';'.join(MIMEtypes))
+desktop_conf.set('BUG_REPORT_URL',    bug_report_url)
 
 desktopfilein = configure_file(
   input : desktopfilename+'.in.in',
