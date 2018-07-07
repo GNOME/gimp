@@ -29,28 +29,49 @@
 
 #include "core/gimpextension.h"
 #include "core/gimpextensionmanager.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpextensionlist.h"
 
 #include "gimp-intl.h"
+
+enum
+{
+  EXTENSION_ACTIVATED,
+  LAST_SIGNAL
+};
 
 struct _GimpExtensionListPrivate
 {
   GimpExtensionManager *manager;
 };
 
-static void gimp_extension_list_set (GimpExtensionList *list,
-                                     const GList       *extensions,
-                                     gboolean           is_system);
+static void gimp_extension_list_set      (GimpExtensionList *list,
+                                          const GList       *extensions,
+                                          gboolean           is_system);
+static void gimp_extension_row_activated (GtkListBox        *box,
+                                          GtkListBoxRow     *row,
+                                          gpointer           user_data);
 
 G_DEFINE_TYPE (GimpExtensionList, gimp_extension_list, GTK_TYPE_LIST_BOX)
 
 #define parent_class gimp_extension_list_parent_class
 
+static guint signals[LAST_SIGNAL] = { 0, };
 
 static void
 gimp_extension_list_class_init (GimpExtensionListClass *klass)
 {
+  signals[EXTENSION_ACTIVATED] =
+    g_signal_new ("extension-activated",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpExtensionListClass, extension_activated),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_OBJECT);
+
   g_type_class_add_private (klass, sizeof (GimpExtensionListPrivate));
 }
 
@@ -59,6 +80,8 @@ gimp_extension_list_init (GimpExtensionList *list)
 {
   gtk_list_box_set_selection_mode (GTK_LIST_BOX (list),
                                    GTK_SELECTION_SINGLE);
+  gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (list),
+                                             FALSE);
   list->p = G_TYPE_INSTANCE_GET_PRIVATE (list,
                                          GIMP_TYPE_EXTENSION_LIST,
                                          GimpExtensionListPrivate);
@@ -121,6 +144,8 @@ gimp_extension_list_set (GimpExtensionList *list,
 
       frame = gtk_frame_new (gimp_extension_get_name (extension));
       gtk_container_add (GTK_CONTAINER (list), frame);
+      g_object_set_data (G_OBJECT (gtk_widget_get_parent (frame)),
+                         "extension", extension);
       gtk_widget_show (frame);
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
@@ -150,4 +175,19 @@ gimp_extension_list_set (GimpExtensionList *list,
       gtk_box_pack_end (GTK_BOX (hbox), onoff, FALSE, FALSE, 1);
       gtk_widget_show (onoff);
     }
+  gtk_container_foreach (GTK_CONTAINER (list),
+                         (GtkCallback) gtk_list_box_row_set_activatable,
+                         GUINT_TO_POINTER (TRUE));
+  g_signal_connect (list, "row-activated",
+                    G_CALLBACK (gimp_extension_row_activated), NULL);
+}
+
+static void
+gimp_extension_row_activated (GtkListBox    *box,
+                              GtkListBoxRow *row,
+                              gpointer       user_data)
+{
+  g_signal_emit (box, signals[EXTENSION_ACTIVATED], 0,
+                 g_object_get_data (G_OBJECT (row),
+                                    "extension"));
 }

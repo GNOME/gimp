@@ -43,6 +43,9 @@ struct _GimpExtensionList
 struct _GimpExtensionListClass
 {
   GtkListBoxClass           parent_class;
+
+  void         (* extension_activated) (GimpExtensionList *list,
+                                        GimpExtension     *extension);
 };
 
 

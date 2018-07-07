@@ -185,6 +185,7 @@ typedef struct _GimpDeviceEditor             GimpDeviceEditor;
 typedef struct _GimpDeviceInfoEditor         GimpDeviceInfoEditor;
 typedef struct _GimpDial                     GimpDial;
 typedef struct _GimpDynamicsOutputEditor     GimpDynamicsOutputEditor;
+typedef struct _GimpExtensionDetails         GimpExtensionDetails;
 typedef struct _GimpExtensionList            GimpExtensionList;
 typedef struct _GimpFgBgEditor               GimpFgBgEditor;
 typedef struct _GimpFgBgView                 GimpFgBgView;
