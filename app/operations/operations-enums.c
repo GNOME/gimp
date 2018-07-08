@@ -191,22 +191,22 @@ gimp_layer_mode_get_type (void)
     /* Translators: this is an abbreviated version of "Lighten only (legacy)".
        Keep it short. */
     { GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY, NC_("layer-mode", "Lighten only (l)"), NULL },
-    { GIMP_LAYER_MODE_HSV_HUE_LEGACY, NC_("layer-mode", "Hue (HSV) (legacy)"), NULL },
-    /* Translators: this is an abbreviated version of "Hue (HSV) (legacy)".
+    { GIMP_LAYER_MODE_HSV_HUE_LEGACY, NC_("layer-mode", "HSV Hue (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "HSV Hue (legacy)".
        Keep it short. */
-    { GIMP_LAYER_MODE_HSV_HUE_LEGACY, NC_("layer-mode", "Hue (HSV) (l)"), NULL },
-    { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, NC_("layer-mode", "Saturation (HSV) (legacy)"), NULL },
-    /* Translators: this is an abbreviated version of "Saturation (HSV) (legacy)".
+    { GIMP_LAYER_MODE_HSV_HUE_LEGACY, NC_("layer-mode", "HSV Hue (l)"), NULL },
+    { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, NC_("layer-mode", "HSV Saturation (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "HSV Saturation (legacy)".
        Keep it short. */
-    { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, NC_("layer-mode", "Saturation (HSV) (l)"), NULL },
-    { GIMP_LAYER_MODE_HSL_COLOR_LEGACY, NC_("layer-mode", "Color (HSL) (legacy)"), NULL },
-    /* Translators: this is an abbreviated version of "Color (HSL) (legacy)".
+    { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, NC_("layer-mode", "HSV Saturation (l)"), NULL },
+    { GIMP_LAYER_MODE_HSL_COLOR_LEGACY, NC_("layer-mode", "HSL Color (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "HSL Color (legacy)".
        Keep it short. */
-    { GIMP_LAYER_MODE_HSL_COLOR_LEGACY, NC_("layer-mode", "Color (HSL) (l)"), NULL },
-    { GIMP_LAYER_MODE_HSV_VALUE_LEGACY, NC_("layer-mode", "Value (HSV) (legacy)"), NULL },
-    /* Translators: this is an abbreviated version of "Value (HSV) (legacy)".
+    { GIMP_LAYER_MODE_HSL_COLOR_LEGACY, NC_("layer-mode", "HSL Color (l)"), NULL },
+    { GIMP_LAYER_MODE_HSV_VALUE_LEGACY, NC_("layer-mode", "HSV Value (legacy)"), NULL },
+    /* Translators: this is an abbreviated version of "HSV Value (legacy)".
        Keep it short. */
-    { GIMP_LAYER_MODE_HSV_VALUE_LEGACY, NC_("layer-mode", "Value (HSV) (l)"), NULL },
+    { GIMP_LAYER_MODE_HSV_VALUE_LEGACY, NC_("layer-mode", "HSV Value (l)"), NULL },
     { GIMP_LAYER_MODE_DIVIDE_LEGACY, NC_("layer-mode", "Divide (legacy)"), NULL },
     /* Translators: this is an abbreviated version of "Divide (legacy)".
        Keep it short. */
@@ -240,10 +240,10 @@ gimp_layer_mode_get_type (void)
        Keep it short. */
     { GIMP_LAYER_MODE_COLOR_ERASE_LEGACY, NC_("layer-mode", "Color erase (l)"), NULL },
     { GIMP_LAYER_MODE_OVERLAY, NC_("layer-mode", "Overlay"), NULL },
-    { GIMP_LAYER_MODE_LCH_HUE, NC_("layer-mode", "Hue (LCH)"), NULL },
-    { GIMP_LAYER_MODE_LCH_CHROMA, NC_("layer-mode", "Chroma (LCH)"), NULL },
-    { GIMP_LAYER_MODE_LCH_COLOR, NC_("layer-mode", "Color (LCH)"), NULL },
-    { GIMP_LAYER_MODE_LCH_LIGHTNESS, NC_("layer-mode", "Lightness (LCH)"), NULL },
+    { GIMP_LAYER_MODE_LCH_HUE, NC_("layer-mode", "LCh Hue"), NULL },
+    { GIMP_LAYER_MODE_LCH_CHROMA, NC_("layer-mode", "LCh Chroma"), NULL },
+    { GIMP_LAYER_MODE_LCH_COLOR, NC_("layer-mode", "LCh Color"), NULL },
+    { GIMP_LAYER_MODE_LCH_LIGHTNESS, NC_("layer-mode", "LCh Lightness"), NULL },
     { GIMP_LAYER_MODE_NORMAL, NC_("layer-mode", "Normal"), NULL },
     { GIMP_LAYER_MODE_BEHIND, NC_("layer-mode", "Behind"), NULL },
     { GIMP_LAYER_MODE_MULTIPLY, NC_("layer-mode", "Multiply"), NULL },
@@ -253,10 +253,10 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_SUBTRACT, NC_("layer-mode", "Subtract"), NULL },
     { GIMP_LAYER_MODE_DARKEN_ONLY, NC_("layer-mode", "Darken only"), NULL },
     { GIMP_LAYER_MODE_LIGHTEN_ONLY, NC_("layer-mode", "Lighten only"), NULL },
-    { GIMP_LAYER_MODE_HSV_HUE, NC_("layer-mode", "Hue (HSV)"), NULL },
-    { GIMP_LAYER_MODE_HSV_SATURATION, NC_("layer-mode", "Saturation (HSV)"), NULL },
-    { GIMP_LAYER_MODE_HSL_COLOR, NC_("layer-mode", "Color (HSL)"), NULL },
-    { GIMP_LAYER_MODE_HSV_VALUE, NC_("layer-mode", "Value (HSV)"), NULL },
+    { GIMP_LAYER_MODE_HSV_HUE, NC_("layer-mode", "HSV Hue"), NULL },
+    { GIMP_LAYER_MODE_HSV_SATURATION, NC_("layer-mode", "HSV Saturation"), NULL },
+    { GIMP_LAYER_MODE_HSL_COLOR, NC_("layer-mode", "HSL Color"), NULL },
+    { GIMP_LAYER_MODE_HSV_VALUE, NC_("layer-mode", "HSV Value"), NULL },
     { GIMP_LAYER_MODE_DIVIDE, NC_("layer-mode", "Divide"), NULL },
     { GIMP_LAYER_MODE_DODGE, NC_("layer-mode", "Dodge"), NULL },
     { GIMP_LAYER_MODE_BURN, NC_("layer-mode", "Burn"), NULL },

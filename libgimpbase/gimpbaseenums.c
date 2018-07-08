@@ -1649,13 +1649,13 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_R, NC_("select-criterion", "Red"), NULL },
     { GIMP_SELECT_CRITERION_G, NC_("select-criterion", "Green"), NULL },
     { GIMP_SELECT_CRITERION_B, NC_("select-criterion", "Blue"), NULL },
-    { GIMP_SELECT_CRITERION_H, NC_("select-criterion", "Hue (HSV)"), NULL },
-    { GIMP_SELECT_CRITERION_S, NC_("select-criterion", "Saturation (HSV)"), NULL },
-    { GIMP_SELECT_CRITERION_V, NC_("select-criterion", "Value (HSV)"), NULL },
+    { GIMP_SELECT_CRITERION_H, NC_("select-criterion", "HSV Hue"), NULL },
+    { GIMP_SELECT_CRITERION_S, NC_("select-criterion", "HSV Saturation"), NULL },
+    { GIMP_SELECT_CRITERION_V, NC_("select-criterion", "HSV Value"), NULL },
     { GIMP_SELECT_CRITERION_A, NC_("select-criterion", "Alpha"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_L, NC_("select-criterion", "Lightness (LCH)"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_C, NC_("select-criterion", "Chroma (LCH)"), NULL },
-    { GIMP_SELECT_CRITERION_LCH_H, NC_("select-criterion", "Hue (LCH)"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_L, NC_("select-criterion", "LCh Lightness"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_C, NC_("select-criterion", "LCh Chroma"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_H, NC_("select-criterion", "LCh Hue"), NULL },
     { 0, NULL, NULL }
   };
 

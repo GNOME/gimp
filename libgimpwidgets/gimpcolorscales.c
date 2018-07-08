@@ -457,7 +457,7 @@ gimp_color_scales_init (GimpColorScales *scales)
 
   radio_group = NULL;
 
-  radio1      = gtk_radio_button_new_with_label (NULL,  _("LCH"));
+  radio1      = gtk_radio_button_new_with_label (NULL,  _("LCh"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio1));
   radio2      = gtk_radio_button_new_with_label (radio_group, _("HSV"));
 

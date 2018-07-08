@@ -1250,13 +1250,13 @@ typedef enum
  * @GIMP_SELECT_CRITERION_R:         Red
  * @GIMP_SELECT_CRITERION_G:         Green
  * @GIMP_SELECT_CRITERION_B:         Blue
- * @GIMP_SELECT_CRITERION_H:         Hue (HSV)
- * @GIMP_SELECT_CRITERION_S:         Saturation (HSV)
- * @GIMP_SELECT_CRITERION_V:         Value (HSV)
+ * @GIMP_SELECT_CRITERION_H:         HSV Hue
+ * @GIMP_SELECT_CRITERION_S:         HSV Saturation
+ * @GIMP_SELECT_CRITERION_V:         HSV Value
  * @GIMP_SELECT_CRITERION_A:         Alpha
- * @GIMP_SELECT_CRITERION_LCH_L:     Lightness (LCH)
- * @GIMP_SELECT_CRITERION_LCH_C:     Chroma (LCH)
- * @GIMP_SELECT_CRITERION_LCH_H:     Hue (LCH)
+ * @GIMP_SELECT_CRITERION_LCH_L:     LCh Lightness
+ * @GIMP_SELECT_CRITERION_LCH_C:     LCh Chroma
+ * @GIMP_SELECT_CRITERION_LCH_H:     LCh Hue)
  *
  * Criterions for color similarity.
  **/
@@ -1266,17 +1266,17 @@ GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"        >*/
-  GIMP_SELECT_CRITERION_R,          /*< desc="Red"              >*/
-  GIMP_SELECT_CRITERION_G,          /*< desc="Green"            >*/
-  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"             >*/
-  GIMP_SELECT_CRITERION_H,          /*< desc="Hue (HSV)"        >*/
-  GIMP_SELECT_CRITERION_S,          /*< desc="Saturation (HSV)" >*/
-  GIMP_SELECT_CRITERION_V,          /*< desc="Value (HSV)"      >*/
-  GIMP_SELECT_CRITERION_A,          /*< desc="Alpha"            >*/
-  GIMP_SELECT_CRITERION_LCH_L,      /*< desc="Lightness (LCH)"  >*/
-  GIMP_SELECT_CRITERION_LCH_C,      /*< desc="Chroma (LCH)"     >*/
-  GIMP_SELECT_CRITERION_LCH_H,      /*< desc="Hue (LCH)"        >*/
+  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"      >*/
+  GIMP_SELECT_CRITERION_R,          /*< desc="Red"            >*/
+  GIMP_SELECT_CRITERION_G,          /*< desc="Green"          >*/
+  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"           >*/
+  GIMP_SELECT_CRITERION_H,          /*< desc="HSV Hue"        >*/
+  GIMP_SELECT_CRITERION_S,          /*< desc="HSV Saturation" >*/
+  GIMP_SELECT_CRITERION_V,          /*< desc="HSV Value"      >*/
+  GIMP_SELECT_CRITERION_A,          /*< desc="Alpha"          >*/
+  GIMP_SELECT_CRITERION_LCH_L,      /*< desc="LCh Lightness"  >*/
+  GIMP_SELECT_CRITERION_LCH_C,      /*< desc="LCh Chroma"     >*/
+  GIMP_SELECT_CRITERION_LCH_H,      /*< desc="LCh Hue"        >*/
 } GimpSelectCriterion;
 
 

@@ -118,7 +118,7 @@ gimp_color_frame_mode_get_type (void)
     { GIMP_COLOR_FRAME_MODE_RGB_PERCENT, NC_("color-frame-mode", "RGB (%)"), NULL },
     { GIMP_COLOR_FRAME_MODE_RGB_U8, NC_("color-frame-mode", "RGB (0..255)"), NULL },
     { GIMP_COLOR_FRAME_MODE_HSV, NC_("color-frame-mode", "HSV"), NULL },
-    { GIMP_COLOR_FRAME_MODE_LCH, NC_("color-frame-mode", "CIE LCH"), NULL },
+    { GIMP_COLOR_FRAME_MODE_LCH, NC_("color-frame-mode", "CIE LCh"), NULL },
     { GIMP_COLOR_FRAME_MODE_LAB, NC_("color-frame-mode", "CIE LAB"), NULL },
     { GIMP_COLOR_FRAME_MODE_CMYK, NC_("color-frame-mode", "CMYK"), NULL },
     { 0, NULL, NULL }
