@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-08 17:11+0200\n"
-"PO-Revision-Date: 2018-07-08 17:12+0200\n"
+"POT-Creation-Date: 2018-07-08 17:34+0200\n"
+"PO-Revision-Date: 2018-07-08 17:35+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2257,7 +2257,6 @@ msgid "Landscape"
 msgstr "Poziomo"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
@@ -2337,6 +2336,11 @@ msgstr "_C"
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Chroma"
 msgstr "Nasycenie LCh"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgctxt "color-selector-channel"
+msgid "_h"
+msgstr "_h"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgid "LCh Hue"
