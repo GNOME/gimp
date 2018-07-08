@@ -118,7 +118,7 @@ typedef enum
   GIMP_COLOR_SELECTOR_ALPHA,         /*< desc="_A", help="Alpha"          >*/
   GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, /*< desc="_L", help="LCh Lightness"  >*/
   GIMP_COLOR_SELECTOR_LCH_CHROMA,    /*< desc="_C", help="LCh Chroma"     >*/
-  GIMP_COLOR_SELECTOR_LCH_HUE        /*< desc="_H", help="LCh Hue"        >*/
+  GIMP_COLOR_SELECTOR_LCH_HUE        /*< desc="_h", help="LCh Hue"        >*/
 } GimpColorSelectorChannel;
 
 
