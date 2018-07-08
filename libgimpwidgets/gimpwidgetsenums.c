@@ -135,7 +135,7 @@ gimp_color_selector_channel_get_type (void)
     { GIMP_COLOR_SELECTOR_ALPHA, NC_("color-selector-channel", "_A"), N_("Alpha") },
     { GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, NC_("color-selector-channel", "_L"), N_("LCh Lightness") },
     { GIMP_COLOR_SELECTOR_LCH_CHROMA, NC_("color-selector-channel", "_C"), N_("LCh Chroma") },
-    { GIMP_COLOR_SELECTOR_LCH_HUE, NC_("color-selector-channel", "_H"), N_("LCh Hue") },
+    { GIMP_COLOR_SELECTOR_LCH_HUE, NC_("color-selector-channel", "_h"), N_("LCh Hue") },
     { 0, NULL, NULL }
   };
 
