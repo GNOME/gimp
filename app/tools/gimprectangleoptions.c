@@ -39,7 +39,7 @@
 #include "gimp-intl.h"
 
 
-#define SB_WIDTH 7
+#define SB_WIDTH 5
 
 
 enum
@@ -785,7 +785,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gtk_widget_show (menu);
 
   /*  content  */
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
