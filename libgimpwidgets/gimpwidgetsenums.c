@@ -133,9 +133,9 @@ gimp_color_selector_channel_get_type (void)
     { GIMP_COLOR_SELECTOR_GREEN, NC_("color-selector-channel", "_G"), N_("Green") },
     { GIMP_COLOR_SELECTOR_BLUE, NC_("color-selector-channel", "_B"), N_("Blue") },
     { GIMP_COLOR_SELECTOR_ALPHA, NC_("color-selector-channel", "_A"), N_("Alpha") },
-    { GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, NC_("color-selector-channel", "_L"), N_("LCH Lightness") },
-    { GIMP_COLOR_SELECTOR_LCH_CHROMA, NC_("color-selector-channel", "_C"), N_("LCH Chroma") },
-    { GIMP_COLOR_SELECTOR_LCH_HUE, NC_("color-selector-channel", "_H"), N_("LCH Hue") },
+    { GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, NC_("color-selector-channel", "_L"), N_("LCh Lightness") },
+    { GIMP_COLOR_SELECTOR_LCH_CHROMA, NC_("color-selector-channel", "_C"), N_("LCh Chroma") },
+    { GIMP_COLOR_SELECTOR_LCH_HUE, NC_("color-selector-channel", "_H"), N_("LCh Hue") },
     { 0, NULL, NULL }
   };
 
@@ -166,7 +166,7 @@ gimp_color_selector_model_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_COLOR_SELECTOR_MODEL_RGB, NC_("color-selector-model", "RGB"), N_("RGB color model") },
-    { GIMP_COLOR_SELECTOR_MODEL_LCH, NC_("color-selector-model", "LCH"), N_("CIELCh color model") },
+    { GIMP_COLOR_SELECTOR_MODEL_LCH, NC_("color-selector-model", "LCH"), N_("CIE LCh color model") },
     { GIMP_COLOR_SELECTOR_MODEL_HSV, NC_("color-selector-model", "HSV"), N_("HSV color model") },
     { 0, NULL, NULL }
   };

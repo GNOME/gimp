@@ -116,16 +116,16 @@ typedef enum
   GIMP_COLOR_SELECTOR_GREEN,         /*< desc="_G", help="Green"          >*/
   GIMP_COLOR_SELECTOR_BLUE,          /*< desc="_B", help="Blue"           >*/
   GIMP_COLOR_SELECTOR_ALPHA,         /*< desc="_A", help="Alpha"          >*/
-  GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, /*< desc="_L", help="LCH Lightness"  >*/
-  GIMP_COLOR_SELECTOR_LCH_CHROMA,    /*< desc="_C", help="LCH Chroma"     >*/
-  GIMP_COLOR_SELECTOR_LCH_HUE        /*< desc="_H", help="LCH Hue"        >*/
+  GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, /*< desc="_L", help="LCh Lightness"  >*/
+  GIMP_COLOR_SELECTOR_LCH_CHROMA,    /*< desc="_C", help="LCh Chroma"     >*/
+  GIMP_COLOR_SELECTOR_LCH_HUE        /*< desc="_H", help="LCh Hue"        >*/
 } GimpColorSelectorChannel;
 
 
 /**
  * GimpColorSelectorModel:
  * @GIMP_COLOR_SELECTOR_MODEL_RGB: RGB color model
- * @GIMP_COLOR_SELECTOR_MODEL_LCH: CIELCh color model
+ * @GIMP_COLOR_SELECTOR_MODEL_LCH: CIE LCh color model
  * @GIMP_COLOR_SELECTOR_MODEL_HSV: HSV color model
  *
  * An enum to specify the types of color spaces edited in
@@ -139,9 +139,9 @@ GType gimp_color_selector_model_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_SELECTOR_MODEL_RGB, /*< desc="RGB", help="RGB color model"    >*/
-  GIMP_COLOR_SELECTOR_MODEL_LCH, /*< desc="LCH", help="CIELCh color model" >*/
-  GIMP_COLOR_SELECTOR_MODEL_HSV  /*< desc="HSV", help="HSV color model"    >*/
+  GIMP_COLOR_SELECTOR_MODEL_RGB, /*< desc="RGB", help="RGB color model"     >*/
+  GIMP_COLOR_SELECTOR_MODEL_LCH, /*< desc="LCH", help="CIE LCh color model" >*/
+  GIMP_COLOR_SELECTOR_MODEL_HSV  /*< desc="HSV", help="HSV color model"     >*/
 } GimpColorSelectorModel;
 
 
