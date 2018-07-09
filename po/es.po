@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-05 10:19+0000\n"
-"PO-Revision-Date: 2018-07-06 09:20+0200\n"
+"POT-Creation-Date: 2018-07-08 15:03+0000\n"
+"PO-Revision-Date: 2018-07-09 08:27+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -2794,7 +2794,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114
 #: ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1991
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1990
 #: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -4935,337 +4935,342 @@ msgstr "_Niveles…"
 
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
+msgid "_Little Planet..."
+msgstr "_Planeta pequeño..."
+
+#: ../app/actions/filters-actions.c:422
+msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006…"
 
-#: ../app/actions/filters-actions.c:422
+#: ../app/actions/filters-actions.c:427
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Laberinto…"
 
-#: ../app/actions/filters-actions.c:427
+#: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "Desenfoque _medio…"
 
-#: ../app/actions/filters-actions.c:432
+#: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "Mezclador _mono…"
 
-#: ../app/actions/filters-actions.c:437
+#: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mosaico…"
 
-#: ../app/actions/filters-actions.c:442
+#: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Desenfoque de movimiento circular…"
 
-#: ../app/actions/filters-actions.c:447
+#: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Desenfoque de movimiento lineal…"
 
-#: ../app/actions/filters-actions.c:452
+#: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Ampliar desenfoque de movimiento…"
 
-#: ../app/actions/filters-actions.c:457
+#: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "Ruido _celular…"
 
-#: ../app/actions/filters-actions.c:462
+#: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Ruido CIE lch…"
 
-#: ../app/actions/filters-actions.c:467
+#: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Ruido HSV…"
 
-#: ../app/actions/filters-actions.c:472
+#: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "Des_ordenar…"
 
-#: ../app/actions/filters-actions.c:477
+#: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Ruido _Perlin…"
 
-#: ../app/actions/filters-actions.c:482
+#: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Escoger…"
 
-#: ../app/actions/filters-actions.c:487
+#: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Ruido _RGB…"
 
-#: ../app/actions/filters-actions.c:492
+#: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "_Reducción de ruido…"
 
-#: ../app/actions/filters-actions.c:497
+#: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "Ruido _simplex…"
 
-#: ../app/actions/filters-actions.c:502
+#: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Derretir…"
 
-#: ../app/actions/filters-actions.c:507
+#: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Ruido sólido…"
 
-#: ../app/actions/filters-actions.c:512
+#: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Esparcir…"
 
-#: ../app/actions/filters-actions.c:517
+#: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Pintura al ó_leo…"
 
-#: ../app/actions/filters-actions.c:522
+#: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Proyección de panorama…"
 
-#: ../app/actions/filters-actions.c:527
+#: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotocopia…"
 
-#: ../app/actions/filters-actions.c:532
+#: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pixelar…"
 
-#: ../app/actions/filters-actions.c:537
+#: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma…"
 
-#: ../app/actions/filters-actions.c:542
+#: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Coordenadas p_olares…"
 
-#: ../app/actions/filters-actions.c:547
+#: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterizar…"
 
 # Vease recursividad en matemáticas e informática.
-#: ../app/actions/filters-actions.c:552
+#: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "Transformación _recursiva..."
 
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Eliminar ojos rojos..."
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005…"
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "_Recortar RGB…"
 
-#: ../app/actions/filters-actions.c:572
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Remolino…"
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Saturación…"
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Semiaplanar…"
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Sombras-Resaltados..."
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Desplazamiento…"
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Seno…"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "Agrupamiento iterativo lineal _simple…"
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "Vecino más cercano _simétrico…"
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "Brillo _suave…"
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "Esferifi_car..."
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "Es_piral…"
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Expansión del contraste…"
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Énfasis…"
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "_Supernova…"
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Umbral..."
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Umbral alfa…"
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Mosaico de _cristal…"
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "Mosaico de _papel…"
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Mosaico sin costura…"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Afilar (_desafilar máscara)..."
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Propagar valor…"
 
 # Location lo traducimos por lugar (Serrador)
-#: ../app/actions/filters-actions.c:682
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradación del vídeo…"
 
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Viñeta…"
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Ondas..."
 
-#: ../app/actions/filters-actions.c:697
+#: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Ondas…"
 
-#: ../app/actions/filters-actions.c:702
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Girar y comprimir..."
 
-#: ../app/actions/filters-actions.c:707
+#: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_V_iento…"
 
-#: ../app/actions/filters-actions.c:715
+#: ../app/actions/filters-actions.c:720
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "R_epetir el último"
 
-#: ../app/actions/filters-actions.c:717
+#: ../app/actions/filters-actions.c:722
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "Volver a ejecutar el último filtro utilizado con la misma configuración"
 
-#: ../app/actions/filters-actions.c:722
+#: ../app/actions/filters-actions.c:727
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Volver a mostrar el último"
 
-#: ../app/actions/filters-actions.c:723
+#: ../app/actions/filters-actions.c:728
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostrar otra vez el diálogo del último filtro utilizado"
 
-#: ../app/actions/filters-actions.c:1051
+#: ../app/actions/filters-actions.c:1057
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Rep_etir «%s»"
 
-#: ../app/actions/filters-actions.c:1052
+#: ../app/actions/filters-actions.c:1058
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Volver a mostrar «%s»"
 
-#: ../app/actions/filters-actions.c:1090
+#: ../app/actions/filters-actions.c:1096
 msgid "Repeat Last"
 msgstr "Repetir el último"
 
-#: ../app/actions/filters-actions.c:1092
+#: ../app/actions/filters-actions.c:1098
 msgid "Re-Show Last"
 msgstr "Volver a mostrar el último"
 
@@ -12342,19 +12347,27 @@ msgstr ""
 msgid "Unsupported brush format"
 msgstr "Formato de pincel no soportado"
 
-#: ../app/core/gimpbrush-load.c:261 ../app/core/gimpbrushgenerated-load.c:126
+#: ../app/core/gimpbrush-load.c:253
+#, c-format
+#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgid "Invalid header data in '%s': Brush name is too long: %lu"
+msgstr ""
+"Datos de cabecera no válidos en «%s»: el nombre del pincel es demasiado "
+"largo: %lu"
+
+#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrushgenerated-load.c:126
 #: ../app/core/gimpbrushpipe-load.c:74
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Cadena UTF-8 no válida en el archivo de pincel «%s»."
 
-#: ../app/core/gimpbrush-load.c:268 ../app/core/gimppattern-load.c:130
+#: ../app/core/gimpbrush-load.c:278 ../app/core/gimppattern-load.c:141
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:566
 msgid "Unnamed"
 msgstr "Sin nombre"
 
-#: ../app/core/gimpbrush-load.c:339
+#: ../app/core/gimpbrush-load.c:349
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12369,7 +12382,7 @@ msgstr ""
 "Este podría ser un archivo obsoleto de pincel GIMP, trate de cargarlo como "
 "imagen y guárdelo de nuevo."
 
-#: ../app/core/gimpbrush-load.c:386
+#: ../app/core/gimpbrush-load.c:396
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12380,12 +12393,12 @@ msgstr ""
 "profundidad del pincel no soportada %d\n"
 "Los pinceles de GIMP deben ser GRAY o RGBA."
 
-#: ../app/core/gimpbrush-load.c:462
+#: ../app/core/gimpbrush-load.c:472
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "No se puede decodificar el formato abr versión %d."
 
-#: ../app/core/gimpbrush-load.c:580 ../app/core/gimpbrush-load.c:799
+#: ../app/core/gimpbrush-load.c:590 ../app/core/gimpbrush-load.c:809
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
@@ -12393,34 +12406,34 @@ msgstr ""
 "pincel está corrupto."
 
 # rango, límite, ámbito
-#: ../app/core/gimpbrush-load.c:667 ../app/core/gimpbrush-load.c:857
+#: ../app/core/gimpbrush-load.c:677 ../app/core/gimpbrush-load.c:867
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: las dimensiones del pincel "
 "están fuera de rango."
 
-#: ../app/core/gimpbrush-load.c:679
+#: ../app/core/gimpbrush-load.c:689
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: los pinceles anchos no "
 "están soportados."
 
-#: ../app/core/gimpbrush-load.c:828
+#: ../app/core/gimpbrush-load.c:838
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: el archivo parece estar "
 "truncado."
 
-#: ../app/core/gimpbrush-load.c:865
+#: ../app/core/gimpbrush-load.c:875
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: método de compresión "
 "desconocido."
 
-#: ../app/core/gimpbrush-load.c:1001
+#: ../app/core/gimpbrush-load.c:1011
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
@@ -12428,14 +12441,14 @@ msgstr ""
 "Error fatal de análisis en el archivo del pincel: no se puede decodificar el "
 "formato abr versión %d."
 
-#: ../app/core/gimpbrush-load.c:1122 ../app/core/gimpbrush-load.c:1140
+#: ../app/core/gimpbrush-load.c:1132 ../app/core/gimpbrush-load.c:1150
 #, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
 "Error fatal de análisis en el archivo de pincel: los datos de pincel "
 "comprimidos en RLE están corruptos."
 
-#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:225
+#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:226
 msgid "Brush Spacing"
 msgstr "Espaciado del pincel"
 
@@ -12509,15 +12522,15 @@ msgstr "Radio del pincel"
 msgid "Brush Spikes"
 msgstr "Puntas del pincel"
 
-#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:232
+#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:233
 msgid "Brush Hardness"
 msgstr "Dureza del pincel"
 
-#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:211
+#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:212
 msgid "Brush Aspect Ratio"
 msgstr "Proporción de aspecto del pincel"
 
-#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:218
+#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:219
 msgid "Brush Angle"
 msgstr "Ángulo del pincel"
 
@@ -13137,55 +13150,55 @@ msgstr "Transformar el grupo de capas"
 msgid "Symmetry"
 msgstr "Simetría"
 
-#: ../app/core/gimpimage.c:2218
+#: ../app/core/gimpimage.c:2217
 msgid " (exported)"
 msgstr " (exportada)"
 
-#: ../app/core/gimpimage.c:2222
+#: ../app/core/gimpimage.c:2221
 msgid " (overwritten)"
 msgstr " (sobreescrita)"
 
-#: ../app/core/gimpimage.c:2231
+#: ../app/core/gimpimage.c:2230
 msgid " (imported)"
 msgstr " (importada)"
 
-#: ../app/core/gimpimage.c:2405 ../app/core/gimpimage.c:2419
-#: ../app/core/gimpimage.c:2462
+#: ../app/core/gimpimage.c:2404 ../app/core/gimpimage.c:2418
+#: ../app/core/gimpimage.c:2461
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "El modo de capa «%s» se añadió en %s"
 
-#: ../app/core/gimpimage.c:2477
+#: ../app/core/gimpimage.c:2476
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Se añadieron grupos de capas en %s"
 
-#: ../app/core/gimpimage.c:2484
+#: ../app/core/gimpimage.c:2483
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Se añadieron máscaras en grupos de capas en %s"
 
-#: ../app/core/gimpimage.c:2500
+#: ../app/core/gimpimage.c:2499
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Se añadieron imágenes con profundidad de bit alta en %s"
 
-#: ../app/core/gimpimage.c:2525
+#: ../app/core/gimpimage.c:2524
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Se añadió soporte para archivos de imagen mayores que 4GB en %s"
 
-#: ../app/core/gimpimage.c:2619
+#: ../app/core/gimpimage.c:2618
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambiar la resolución de la imagen"
 
-#: ../app/core/gimpimage.c:2671
+#: ../app/core/gimpimage.c:2670
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambiar la unidad de medida"
 
-#: ../app/core/gimpimage.c:3555
+#: ../app/core/gimpimage.c:3557
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13193,47 +13206,47 @@ msgstr ""
 "La validación del parásito «gimp-comment» falló: el comentario contiene "
 "UTF-8 no válido"
 
-#: ../app/core/gimpimage.c:3607
+#: ../app/core/gimpimage.c:3609
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjuntar parásito a la imagen"
 
-#: ../app/core/gimpimage.c:3648
+#: ../app/core/gimpimage.c:3650
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Eliminar el parásito de la imagen"
 
-#: ../app/core/gimpimage.c:4375
+#: ../app/core/gimpimage.c:4377
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Añadir una capa"
 
-#: ../app/core/gimpimage.c:4417 ../app/core/gimpimage.c:4448
+#: ../app/core/gimpimage.c:4419 ../app/core/gimpimage.c:4450
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Eliminar una capa"
 
-#: ../app/core/gimpimage.c:4442
+#: ../app/core/gimpimage.c:4444
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Eliminar la selección flotante"
 
-#: ../app/core/gimpimage.c:4609
+#: ../app/core/gimpimage.c:4611
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: ../app/core/gimpimage.c:4637 ../app/core/gimpimage.c:4661
+#: ../app/core/gimpimage.c:4639 ../app/core/gimpimage.c:4663
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Eliminar un canal"
 
-#: ../app/core/gimpimage.c:4717
+#: ../app/core/gimpimage.c:4719
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: ../app/core/gimpimage.c:4747 ../app/core/gimpimage.c:4754
+#: ../app/core/gimpimage.c:4749 ../app/core/gimpimage.c:4756
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Eliminar una ruta"
@@ -13257,29 +13270,29 @@ msgstr ""
 "La validación de perfiles ICC falló: las opciones del parásito no son "
 "(PERSISTENT | UNDOABLE)"
 
-#: ../app/core/gimpimage-color-profile.c:188
+#: ../app/core/gimpimage-color-profile.c:187
 msgid "ICC profile validation failed: "
 msgstr "La validación de perfiles ICC falló:"
 
-#: ../app/core/gimpimage-color-profile.c:332
+#: ../app/core/gimpimage-color-profile.c:331
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "La validación de perfiles ICC falló: el perfil de color no es para el "
 "espacio de color de escala de grises"
 
-#: ../app/core/gimpimage-color-profile.c:342
+#: ../app/core/gimpimage-color-profile.c:341
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "La validación de perfiles ICC falló: el perfil de color no es para el "
 "espacio de color RGB"
 
-#: ../app/core/gimpimage-color-profile.c:397
+#: ../app/core/gimpimage-color-profile.c:396
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Convirtiendo de «%s» a «%s»"
 
-#: ../app/core/gimpimage-color-profile.c:402
+#: ../app/core/gimpimage-color-profile.c:401
 msgid "Color profile conversion"
 msgstr "Conversión del perfil de color"
 
@@ -13308,20 +13321,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Añadir color al mapa de colores"
 
-#: ../app/core/gimpimage-convert-indexed.c:786
+#: ../app/core/gimpimage-convert-indexed.c:790
 msgid "Cannot convert image: palette is empty."
 msgstr "No se puede convertir la imagen, la paleta está vacía."
 
-#: ../app/core/gimpimage-convert-indexed.c:798
+#: ../app/core/gimpimage-convert-indexed.c:802
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Convertir la imagen a colores indexados"
 
-#: ../app/core/gimpimage-convert-indexed.c:890
+#: ../app/core/gimpimage-convert-indexed.c:894
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Convirtiendo a colores indexados (paso 2)"
 
-#: ../app/core/gimpimage-convert-indexed.c:939
+#: ../app/core/gimpimage-convert-indexed.c:943
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Convirtiendo a colores indexados (paso 3)"
 
@@ -13394,12 +13407,12 @@ msgstr "Convertir la imagen a punto flotante gamma de 64 bits"
 msgid "Dithering"
 msgstr "Difuminado"
 
-#: ../app/core/gimpimage-convert-type.c:81
+#: ../app/core/gimpimage-convert-type.c:84
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
 msgstr "Convertir la imagen a RGB"
 
-#: ../app/core/gimpimage-convert-type.c:85
+#: ../app/core/gimpimage-convert-type.c:88
 msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Convertir la imagen a escala de grises"
@@ -13896,12 +13909,12 @@ msgstr "Histórico de color"
 msgid "File appears truncated: "
 msgstr "El archivo parecer estar truncado:"
 
-#: ../app/core/gimppattern-load.c:77
+#: ../app/core/gimppattern-load.c:78
 #, c-format
 msgid "Unknown pattern format version %d."
 msgstr "Versión del formato de patrón desconocida %d."
 
-#: ../app/core/gimppattern-load.c:86
+#: ../app/core/gimppattern-load.c:87
 #, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
@@ -13910,22 +13923,30 @@ msgstr ""
 "Profundidad del patrón no soportada %d.\n"
 "Los patrones de GIMP deben ser GRAY o RGB."
 
-#: ../app/core/gimppattern-load.c:98
+#: ../app/core/gimppattern-load.c:99
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
 "Datos de cabecera no válidos en «%s»: anchura=%lu, altura=%lu, bytes=%lu"
 
-#: ../app/core/gimppattern-load.c:117 ../app/core/gimppattern-load.c:155
+#: ../app/core/gimppattern-load.c:115
+#, c-format
+#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+msgstr ""
+"Datos de cabecera no válidos en «%s»: el nombre del patrón es demasiado "
+"largo: %lu"
+
+#: ../app/core/gimppattern-load.c:128 ../app/core/gimppattern-load.c:166
 msgid "File appears truncated."
 msgstr "El archivo parece estar truncado."
 
-#: ../app/core/gimppattern-load.c:123
+#: ../app/core/gimppattern-load.c:134
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Cadena UTF-8 no válida en el archivo de patrón «%s»."
 
-#: ../app/core/gimppattern-load.c:166
+#: ../app/core/gimppattern-load.c:177
 msgid "Fatal parse error in pattern file: "
 msgstr "Error fatal de análisis en el archivo de paleta:"
 
@@ -14593,7 +14614,7 @@ msgid "Dithering text layers will make them uneditable"
 msgstr "Difuminar las capas de texto hará que no sean editables"
 
 #: ../app/dialogs/convert-indexed-dialog.c:415
-#: ../app/pdb/image-convert-cmds.c:159
+#: ../app/pdb/image-convert-cmds.c:163
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "No se puede convertir a una paleta con más de 256 colores."
 
@@ -16911,7 +16932,7 @@ msgstr "_Vertical:"
 msgid "Image Size"
 msgstr "Tamaño de la imagen"
 
-#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:422
+#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:423
 msgid "Quality"
 msgstr "Calidad"
 
@@ -18088,52 +18109,68 @@ msgid "Lighten only (l)"
 msgstr "Clarear sólo (her)"
 
 #: ../app/operations/operations-enums.c:194
+#| msgctxt "layer-mode"
+#| msgid "Screen (legacy)"
 msgctxt "layer-mode"
-msgid "Hue (HSV) (legacy)"
-msgstr "Tono (HSV) (heredado)"
+msgid "HSV Hue (legacy)"
+msgstr "Tono HSV (heredado)"
 
-#. Translators: this is an abbreviated version of "Hue (HSV) (legacy)".
+#. Translators: this is an abbreviated version of "HSV Hue (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:197
+#| msgctxt "layer-mode"
+#| msgid "Hue (LCH)"
 msgctxt "layer-mode"
-msgid "Hue (HSV) (l)"
-msgstr "Tono (HSV) (her)"
+msgid "HSV Hue (l)"
+msgstr "Tono (LCH) (l)"
 
 #: ../app/operations/operations-enums.c:198
+#| msgctxt "layer-mode"
+#| msgid "Saturation (HSV) (legacy)"
 msgctxt "layer-mode"
-msgid "Saturation (HSV) (legacy)"
-msgstr "Saturación (HSV) (heredado)"
+msgid "HSV Saturation (legacy)"
+msgstr "Saturación HSV (heredado)"
 
-#. Translators: this is an abbreviated version of "Saturation (HSV) (legacy)".
+#. Translators: this is an abbreviated version of "HSV Saturation (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:201
+#| msgctxt "layer-mode"
+#| msgid "Saturation (HSV)"
 msgctxt "layer-mode"
-msgid "Saturation (HSV) (l)"
-msgstr "Saturación (HSV) (her)"
+msgid "HSV Saturation (l)"
+msgstr "Saturación (HSV) (l)"
 
 #: ../app/operations/operations-enums.c:202
+#| msgctxt "layer-mode"
+#| msgid "Color (HSL) (legacy)"
 msgctxt "layer-mode"
-msgid "Color (HSL) (legacy)"
-msgstr "Color (HSV) (heredado)"
+msgid "HSL Color (legacy)"
+msgstr "Color HSL (heredado)"
 
-#. Translators: this is an abbreviated version of "Color (HSL) (legacy)".
+#. Translators: this is an abbreviated version of "HSL Color (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:205
+#| msgctxt "layer-mode"
+#| msgid "Color (LCH)"
 msgctxt "layer-mode"
-msgid "Color (HSL) (l)"
-msgstr "Color (HSV) (her)"
+msgid "HSL Color (l)"
+msgstr "Color HSL (l)"
 
 #: ../app/operations/operations-enums.c:206
+#| msgctxt "layer-mode"
+#| msgid "Value (HSV) (legacy)"
 msgctxt "layer-mode"
-msgid "Value (HSV) (legacy)"
-msgstr "Valor (HSV) (heredado)"
+msgid "HSV Value (legacy)"
+msgstr "Valor HSV (heredado)"
 
-#. Translators: this is an abbreviated version of "Value (HSV) (legacy)".
+#. Translators: this is an abbreviated version of "HSV Value (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:209
+#| msgctxt "layer-mode"
+#| msgid "Value (HSV)"
 msgctxt "layer-mode"
-msgid "Value (HSV) (l)"
-msgstr "Valor (HSV) (her)"
+msgid "HSV Value (l)"
+msgstr "Valor (HSV) (l)"
 
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
@@ -18239,23 +18276,25 @@ msgstr "Solapar"
 
 #: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
-msgid "Hue (LCH)"
-msgstr "Tono (LCH)"
+msgid "LCh Hue"
+msgstr "Tono LCh"
 
 #: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
-msgid "Chroma (LCH)"
-msgstr "Croma (LCH)"
+msgid "LCh Chroma"
+msgstr "Chroma LCh"
 
 #: ../app/operations/operations-enums.c:245
+#| msgid "Color"
 msgctxt "layer-mode"
-msgid "Color (LCH)"
-msgstr "Color (LCH)"
+msgid "LCh Color"
+msgstr "Color LCh"
 
 #: ../app/operations/operations-enums.c:246
+#| msgid "Lightness"
 msgctxt "layer-mode"
-msgid "Lightness (LCH)"
-msgstr "Luminosidad (LCH)"
+msgid "LCh Lightness"
+msgstr "Luminosidad LCh"
 
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
@@ -18304,23 +18343,27 @@ msgstr "Clarear sólo"
 
 #: ../app/operations/operations-enums.c:256
 msgctxt "layer-mode"
-msgid "Hue (HSV)"
-msgstr "Tono (HSV)"
+msgid "HSV Hue"
+msgstr "Tono HSV"
 
 #: ../app/operations/operations-enums.c:257
+#| msgid "Saturation"
 msgctxt "layer-mode"
-msgid "Saturation (HSV)"
-msgstr "Saturación (HSV)"
+msgid "HSV Saturation"
+msgstr "Saturación HSL"
 
 #: ../app/operations/operations-enums.c:258
+#| msgid "Color"
 msgctxt "layer-mode"
-msgid "Color (HSL)"
-msgstr "Color (HSL)"
+msgid "HSL Color"
+msgstr "Color HSL"
 
 #: ../app/operations/operations-enums.c:259
+#| msgctxt "histogram-channel"
+#| msgid "Value"
 msgctxt "layer-mode"
-msgid "Value (HSV)"
-msgstr "Valor (HSV)"
+msgid "HSV Value"
+msgstr "Valor HSV"
 
 #: ../app/operations/operations-enums.c:260
 msgctxt "layer-mode"
@@ -18843,7 +18886,7 @@ msgid "Ink"
 msgstr "Tinta"
 
 #: ../app/paint/gimpinkoptions.c:74 ../app/paint/gimpinkoptions.c:87
-#: ../app/paint/gimppaintoptions.c:203 ../app/tools/gimpwarpoptions.c:91
+#: ../app/paint/gimppaintoptions.c:204 ../app/tools/gimpwarpoptions.c:91
 msgid "Size"
 msgstr "Tamaño"
 
@@ -18852,7 +18895,7 @@ msgid "Ink Blob Size"
 msgstr "Tamaño de la gota de tinta"
 
 #: ../app/paint/gimpinkoptions.c:80 ../app/paint/gimpinkoptions.c:119
-#: ../app/paint/gimppaintoptions.c:217 ../app/widgets/gimpbrusheditor.c:200
+#: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Ángulo"
 
@@ -18898,7 +18941,7 @@ msgstr "Radio"
 msgid "Base Opacity"
 msgstr "Opacidad base"
 
-#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:231
+#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:232
 #: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
 msgstr "Dureza"
@@ -18923,165 +18966,165 @@ msgstr "Pincel"
 msgid "Paint"
 msgstr "Pintar"
 
-#: ../app/paint/gimppaintoptions.c:204
+#: ../app/paint/gimppaintoptions.c:205
 msgid "Brush Size"
 msgstr "Tamaño del pincel"
 
-#: ../app/paint/gimppaintoptions.c:210
+#: ../app/paint/gimppaintoptions.c:211
 msgid "Aspect Ratio"
 msgstr "Proporción de aspecto"
 
-#: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
+#: ../app/paint/gimppaintoptions.c:225 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:81
 #: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaciado"
 
-#: ../app/paint/gimppaintoptions.c:238
+#: ../app/paint/gimppaintoptions.c:239
 msgid "Force"
 msgstr "Forzar"
 
-#: ../app/paint/gimppaintoptions.c:239
+#: ../app/paint/gimppaintoptions.c:240
 msgid "Brush Force"
 msgstr "Fuerza del pincel"
 
-#: ../app/paint/gimppaintoptions.c:245
+#: ../app/paint/gimppaintoptions.c:246
 msgid "Link Size"
 msgstr "Tamaño del enlace"
 
-#: ../app/paint/gimppaintoptions.c:246
+#: ../app/paint/gimppaintoptions.c:247
 msgid "Link brush size to brush native"
 msgstr "Enlazar el tamaño del pincel al pincel nativo"
 
-#: ../app/paint/gimppaintoptions.c:252
+#: ../app/paint/gimppaintoptions.c:253
 msgid "Link Aspect Ratio"
 msgstr "Enlazar la proporción de aspecto"
 
-#: ../app/paint/gimppaintoptions.c:253
+#: ../app/paint/gimppaintoptions.c:254
 msgid "Link brush aspect ratio to brush native"
 msgstr "Enlazar la proporción de aspecto del pincel al pincel nativo"
 
-#: ../app/paint/gimppaintoptions.c:259
+#: ../app/paint/gimppaintoptions.c:260
 msgid "Link Angle"
 msgstr "Ángulo del enlace"
 
-#: ../app/paint/gimppaintoptions.c:260
+#: ../app/paint/gimppaintoptions.c:261
 msgid "Link brush angle to brush native"
 msgstr "Enlazar el ángulo del pincel al pincel nativo"
 
-#: ../app/paint/gimppaintoptions.c:266
+#: ../app/paint/gimppaintoptions.c:267
 msgid "Link Spacing"
 msgstr "Espaciado del enlace"
 
-#: ../app/paint/gimppaintoptions.c:267
+#: ../app/paint/gimppaintoptions.c:268
 msgid "Link brush spacing to brush native"
 msgstr "Enlazar el espaciado del pincel al pincel nativo"
 
-#: ../app/paint/gimppaintoptions.c:273
+#: ../app/paint/gimppaintoptions.c:274
 msgid "Link Hardness"
 msgstr "Dureza del enlace"
 
-#: ../app/paint/gimppaintoptions.c:274
+#: ../app/paint/gimppaintoptions.c:275
 msgid "Link brush hardness to brush native"
 msgstr "Enlazar la dureza del pincel al pincel nativo"
 
-#: ../app/paint/gimppaintoptions.c:280
+#: ../app/paint/gimppaintoptions.c:281
 msgid "Lock brush to view"
 msgstr "Bloquear el pincel a la vista"
 
-#: ../app/paint/gimppaintoptions.c:281
+#: ../app/paint/gimppaintoptions.c:282
 msgid "Keep brush appearance fixed relative to the view"
 msgstr "Mantener la apariencia del pincel fija en relación a la vista"
 
-#: ../app/paint/gimppaintoptions.c:287
+#: ../app/paint/gimppaintoptions.c:288
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../app/paint/gimppaintoptions.c:288
+#: ../app/paint/gimppaintoptions.c:289
 msgid "Every stamp has its own opacity"
 msgstr "Cada sello tiene su propia opacidad"
 
-#: ../app/paint/gimppaintoptions.c:295
+#: ../app/paint/gimppaintoptions.c:296
 msgid "Hard edge"
 msgstr "Bordes duros"
 
-#: ../app/paint/gimppaintoptions.c:296
+#: ../app/paint/gimppaintoptions.c:297
 msgid "Ignore fuzziness of the current brush"
 msgstr "Ignorar la borrosidad del pincel actual"
 
-#: ../app/paint/gimppaintoptions.c:302
+#: ../app/paint/gimppaintoptions.c:303
 msgid "Apply Jitter"
 msgstr "Aplicar «jitter»"
 
-#: ../app/paint/gimppaintoptions.c:303
+#: ../app/paint/gimppaintoptions.c:304
 msgid "Scatter brush as you paint"
 msgstr "Hacer pinceladas dispersas con el pincel mientras pinta"
 
-#: ../app/paint/gimppaintoptions.c:308
+#: ../app/paint/gimppaintoptions.c:309
 msgid "Amount"
 msgstr "Cantidad"
 
-#: ../app/paint/gimppaintoptions.c:309
+#: ../app/paint/gimppaintoptions.c:310
 msgid "Distance of scattering"
 msgstr "Distancia de la dispersión"
 
-#: ../app/paint/gimppaintoptions.c:315
+#: ../app/paint/gimppaintoptions.c:316
 msgid "Dynamics Options"
 msgstr "Opciones de dinámica"
 
-#: ../app/paint/gimppaintoptions.c:322
+#: ../app/paint/gimppaintoptions.c:323
 msgid "Fade length"
 msgstr "Longitud de desvanecimiento"
 
-#: ../app/paint/gimppaintoptions.c:323
+#: ../app/paint/gimppaintoptions.c:324
 msgid "Distance over which strokes fade out"
 msgstr "Distancia sobre la que se desvanecen las pinceladas"
 
-#: ../app/paint/gimppaintoptions.c:333 ../app/widgets/gimpviewablebox.c:385
+#: ../app/paint/gimppaintoptions.c:334 ../app/widgets/gimpviewablebox.c:385
 msgid "Reverse"
 msgstr "Invertido"
 
-#: ../app/paint/gimppaintoptions.c:334
+#: ../app/paint/gimppaintoptions.c:335
 msgid "Reverse direction of fading"
 msgstr "Dirección invertida del desvanecimiento"
 
-#: ../app/paint/gimppaintoptions.c:339 ../app/tools/gimpgradientoptions.c:109
+#: ../app/paint/gimppaintoptions.c:340 ../app/tools/gimpgradientoptions.c:109
 #: ../app/tools/gimpgradientoptions.c:326
 #: ../app/tools/gimppaintoptions-gui.c:345
 msgid "Repeat"
 msgstr "Repetir"
 
-#: ../app/paint/gimppaintoptions.c:340
+#: ../app/paint/gimppaintoptions.c:341
 msgid "How fade is repeated as you paint"
 msgstr "Cómo se repite el desvanecimiento mientras pinta"
 
-#: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:298
+#: ../app/paint/gimppaintoptions.c:353 ../app/tools/gimpgradientoptions.c:298
 #: ../app/tools/gimppaintoptions-gui.c:381
 msgid "Blend Color Space"
 msgstr "Espacio de color de la mezcla"
 
-#: ../app/paint/gimppaintoptions.c:353
+#: ../app/paint/gimppaintoptions.c:354
 msgid "Which color space to use when blending RGB gradient segments"
 msgstr "Qué espacio de color usar al mezclar segmentos de degradados RGB"
 
-#: ../app/paint/gimppaintoptions.c:416
+#: ../app/paint/gimppaintoptions.c:417
 msgid "Smooth stroke"
 msgstr "Trazado suave"
 
-#: ../app/paint/gimppaintoptions.c:417
+#: ../app/paint/gimppaintoptions.c:418
 msgid "Paint smoother strokes"
 msgstr "Hacer pinceladas más suaves"
 
-#: ../app/paint/gimppaintoptions.c:423
+#: ../app/paint/gimppaintoptions.c:424
 msgid "Depth of smoothing"
 msgstr "Profundidad del suavizado"
 
-#: ../app/paint/gimppaintoptions.c:428
+#: ../app/paint/gimppaintoptions.c:429
 msgid "Weight"
 msgstr "Peso"
 
-#: ../app/paint/gimppaintoptions.c:429
+#: ../app/paint/gimppaintoptions.c:430
 msgid "Gravity of the pen"
 msgstr "Gravedad de la pluma"
 
@@ -19094,7 +19137,7 @@ msgstr "Lápiz"
 msgid "Perspective Clone"
 msgstr "Clonar con perspectiva"
 
-#: ../app/paint/gimpsmudge.c:86 ../app/tools/gimpsmudgetool.c:55
+#: ../app/paint/gimpsmudge.c:87 ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge"
 msgstr "Borronear"
 
@@ -19691,7 +19734,7 @@ msgstr ""
 "El procedimiento «%s» se ha llamado con un valor «%s» para el argumento "
 "«%s» (#%d, tipo %s). Este valor está fuera de los límites."
 
-#: ../app/pdb/image-cmds.c:2523
+#: ../app/pdb/image-cmds.c:2524
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -20565,6 +20608,11 @@ msgstr ""
 #: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1559
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
+
+# Aquí creo que Empty es adjetivo también
+#: ../app/text/gimptext-parasite.c:101
+msgid "Empty text parasite"
+msgstr "Parásito de texto vacío"
 
 #: ../app/text/gimptextlayer.c:152
 msgid "Text Layer"
@@ -21659,8 +21707,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Selección difusa"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:541
-#: ../app/tools/gimpgegltool.c:542 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:542
+#: ../app/tools/gimpgegltool.c:543 ../app/tools/gimpoperationtool.c:134
 msgid "GEGL Operation"
 msgstr "Operación de GEGL"
 
@@ -21674,7 +21722,7 @@ msgid "_GEGL Operation..."
 msgstr "Operación _GEGL…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:486
+#: ../app/tools/gimpgegltool.c:487
 msgid "Select an operation from the list above"
 msgstr "Seleccionar una operación de la lista de arriba"
 
@@ -25760,9 +25808,11 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../app/widgets/widgets-enums.c:121
+#| msgctxt "color-frame-mode"
+#| msgid "CIE LCH"
 msgctxt "color-frame-mode"
-msgid "CIE LCH"
-msgstr "CIE LCH"
+msgid "CIE LCh"
+msgstr "CIE LCh"
 
 #: ../app/widgets/widgets-enums.c:122
 msgctxt "color-frame-mode"
@@ -25888,7 +25938,11 @@ msgstr "Error al escribir «%s»: "
 msgid "Error creating '%s': "
 msgstr "Ocurrió un error al crear «%s»:"
 
-#: ../app/xcf/xcf-load.c:342
+#: ../app/xcf/xcf-load.c:228
+msgid "Invalid image mode and precision combination."
+msgstr "Modo de imagen y precisión de la combinación no válida."
+
+#: ../app/xcf/xcf-load.c:353
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -25897,7 +25951,7 @@ msgstr ""
 "Parásito corrupto de datos exif descubierto.\n"
 "Los datos exif no se pudieron migrar: %s"
 
-#: ../app/xcf/xcf-load.c:379
+#: ../app/xcf/xcf-load.c:390
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -25905,7 +25959,7 @@ msgstr ""
 "Parásito corrupto de metadatos gimp descubierto.\n"
 "Los datos XMP no se pudieron migrar."
 
-#: ../app/xcf/xcf-load.c:399
+#: ../app/xcf/xcf-load.c:410
 #, c-format
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
@@ -25914,7 +25968,7 @@ msgstr ""
 "Parásito corrupto de metadatos gimp descubierto.\n"
 "Los datos XMP no se pudieron migrar: %s"
 
-#: ../app/xcf/xcf-load.c:586
+#: ../app/xcf/xcf-load.c:597
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -25922,7 +25976,7 @@ msgstr ""
 "¡Este archivo XCF está corrupto! He cargado de él todo lo que he podido, "
 "pero está incompleto."
 
-#: ../app/xcf/xcf-load.c:597
+#: ../app/xcf/xcf-load.c:608
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -25930,7 +25984,7 @@ msgstr ""
 "¡Este archivo XCF está corrupto! No he podido salvar de él ni siquiera una "
 "imagen parcial."
 
-#: ../app/xcf/xcf-load.c:689
+#: ../app/xcf/xcf-load.c:700
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -25940,7 +25994,7 @@ msgstr ""
 "XCF no guardaba mapas de colores indexados \n"
 "correctamente. Sustituyendo mapa de grises."
 
-#: ../app/xcf/xcf-read.c:189
+#: ../app/xcf/xcf-read.c:195
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Cadena UTF-8 no válida en el archivo XCF"
 
@@ -25948,16 +26002,16 @@ msgstr "Cadena UTF-8 no válida en el archivo XCF"
 msgid "Could not seek in XCF file: "
 msgstr "No se ha podido buscar en el archivo XCF:"
 
-#: ../app/xcf/xcf-write.c:45
+#: ../app/xcf/xcf-write.c:50
 msgid "Error writing XCF: "
 msgstr "Ocurrió un error al escribir XCF:"
 
-#: ../app/xcf/xcf-write.c:193
+#: ../app/xcf/xcf-write.c:199
 #, c-format
 msgid "Error writing XCF: failed to allocate %d bytes of memory."
 msgstr "Error al escribir XCF: falló al reservar %d bytes de memoria."
 
-#: ../app/xcf/xcf-write.c:287
+#: ../app/xcf/xcf-write.c:293
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr "Error al escribir el XCF: BPC no soportado al escribir el píxel: %d"
@@ -25974,6 +26028,42 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Hue (HSV) (legacy)"
+#~ msgstr "Tono (HSV) (heredado)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Hue (HSV) (l)"
+#~ msgstr "Tono (HSV) (her)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Saturation (HSV) (l)"
+#~ msgstr "Saturación (HSV) (her)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Color (HSL) (l)"
+#~ msgstr "Color (HSV) (her)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Value (HSV) (l)"
+#~ msgstr "Valor (HSV) (her)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Chroma (LCH)"
+#~ msgstr "Croma (LCH)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Lightness (LCH)"
+#~ msgstr "Luminosidad (LCH)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Hue (HSV)"
+#~ msgstr "Tono (HSV)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Color (HSL)"
+#~ msgstr "Color (HSL)"
 
 #~ msgctxt "dashboard-variable"
 #~ msgid "Busy"
