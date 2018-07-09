@@ -4,7 +4,6 @@
 #
 #
 #
-# Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>, 2000-2002.
 # Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
@@ -15,14 +14,15 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2011, 2012.
 #
 # Monica Canizo <kamitdevica@gmail.com>, 2016.
+# Rodrigo <rodhos92@gmail.com>, 2000-2002, 2018.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2015, 2016, 2017, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-04 16:19+0000\n"
-"PO-Revision-Date: 2018-07-06 09:54+0200\n"
+"POT-Creation-Date: 2018-07-06 17:58+0000\n"
+"PO-Revision-Date: 2018-07-09 08:30+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -549,7 +549,6 @@ msgid "Please wait for the operation to complete"
 msgstr "Espere a que termine la operación"
 
 #: ../plug-ins/common/busy-dialog.c:299
-#| msgid "_Cancel"
 msgid "Canceling..."
 msgstr "Cancelando…"
 
@@ -2238,9 +2237,9 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:681
+#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
 #: ../plug-ins/common/file-heif.c:341 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
 #: ../plug-ins/common/file-png.c:919 ../plug-ins/common/file-pnm.c:566
 #: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
@@ -2327,10 +2326,10 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1307
+#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:711
+#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1316
 #: ../plug-ins/common/file-heif.c:622 ../plug-ins/common/file-html-table.c:237
-#: ../plug-ins/common/file-pat.c:535 ../plug-ins/common/file-pcx.c:743
+#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:743
 #: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1575
 #: ../plug-ins/common/file-pnm.c:1246 ../plug-ins/common/file-ps.c:1236
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
@@ -2457,46 +2456,54 @@ msgstr "No puede operar sobre tipos de imagen desconocidos."
 msgid "GIMP brush"
 msgstr "PincGIMP"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:425
+#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
 "Datos de cabecera no válidos en «%s»: anchura=%lu, altura=%lu, bytes=%lu"
 
-#: ../plug-ins/common/file-gbr.c:412 ../plug-ins/common/file-gbr.c:444
-#: ../plug-ins/common/file-gbr.c:455
+#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
+#: ../plug-ins/common/file-gbr.c:456
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Formato de pincel no soportado"
 
-#: ../plug-ins/common/file-gbr.c:469
+#: ../plug-ins/common/file-gbr.c:468
+#, c-format
+#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgid "Invalid header data in '%s': Brush name is too long: %lu"
+msgstr ""
+"Datos de cabecera no válidos en «%s»: el nombre del pincel es demasiado "
+"largo: %lu"
+
+#: ../plug-ins/common/file-gbr.c:482
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Error en el archivo de pinceles «%s» de GIMP"
 
-#: ../plug-ins/common/file-gbr.c:477
+#: ../plug-ins/common/file-gbr.c:490
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de pincel «%s»."
 
 # # //R ¿Con subrayado?
-#: ../plug-ins/common/file-gbr.c:483 ../plug-ins/common/file-gih.c:510
-#: ../plug-ins/common/file-gih.c:1209
+#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
+#: ../plug-ins/common/file-gih.c:1218 ../plug-ins/common/file-pat.c:398
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Sin nombre"
 
-#: ../plug-ins/common/file-gbr.c:800
+#: ../plug-ins/common/file-gbr.c:813
 msgid "Brush"
 msgstr "Pincel"
 
-#: ../plug-ins/common/file-gbr.c:816 ../plug-ins/common/file-gih.c:935
-#: ../plug-ins/common/file-pat.c:624 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:829 ../plug-ins/common/file-gih.c:944
+#: ../plug-ins/common/file-pat.c:641 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Descripción:"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:828 ../plug-ins/common/grid.c:799
+#: ../plug-ins/common/file-gbr.c:841 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "Espaciado:"
 
@@ -2645,55 +2652,60 @@ msgstr "El comentario predeterminado está limitado a %d caracteres."
 msgid "GIMP brush (animated)"
 msgstr "Pincel GIMP (animado)"
 
-#: ../plug-ins/common/file-gih.c:586
+#: ../plug-ins/common/file-gih.c:502
+#, c-format
+msgid "Brush name is too long: %lu"
+msgstr "El nombre del pincel es demasiado largo: %lu"
+
+#: ../plug-ins/common/file-gih.c:595
 msgid "GIMP brush file appears to be corrupted."
 msgstr "El archivo de pinceles de GIMP parece defectuoso."
 
-#: ../plug-ins/common/file-gih.c:917
+#: ../plug-ins/common/file-gih.c:926
 msgid "Brush Pipe"
 msgstr "Tubería de pinceles"
 
-#: ../plug-ins/common/file-gih.c:950
+#: ../plug-ins/common/file-gih.c:959
 msgid "Spacing (percent):"
 msgstr "Espaciado (porcentaje):"
 
-#: ../plug-ins/common/file-gih.c:1005
+#: ../plug-ins/common/file-gih.c:1014
 msgid "Pixels"
 msgstr "Píxeles"
 
-#: ../plug-ins/common/file-gih.c:1010
+#: ../plug-ins/common/file-gih.c:1019
 msgid "Cell size:"
 msgstr "Tamaño de celda:"
 
-#: ../plug-ins/common/file-gih.c:1023
+#: ../plug-ins/common/file-gih.c:1032
 msgid "Number of cells:"
 msgstr "Número de celdas:"
 
-#: ../plug-ins/common/file-gih.c:1048
+#: ../plug-ins/common/file-gih.c:1057
 msgid " Rows of "
 msgstr " fila(s) de"
 
-#: ../plug-ins/common/file-gih.c:1060
+#: ../plug-ins/common/file-gih.c:1069
 msgid " Columns on each layer"
 msgstr "Columnas en cada capa"
 
-#: ../plug-ins/common/file-gih.c:1064
+#: ../plug-ins/common/file-gih.c:1073
 msgid " (Width Mismatch!) "
 msgstr " (¡Anchura incoherente!) "
 
-#: ../plug-ins/common/file-gih.c:1068
+#: ../plug-ins/common/file-gih.c:1077
 msgid " (Height Mismatch!) "
 msgstr " (¡Altura incoherente!) "
 
-#: ../plug-ins/common/file-gih.c:1073
+#: ../plug-ins/common/file-gih.c:1082
 msgid "Display as:"
 msgstr "Mostrar como:"
 
-#: ../plug-ins/common/file-gih.c:1084
+#: ../plug-ins/common/file-gih.c:1093
 msgid "Dimension:"
 msgstr "Dimensión:"
 
-#: ../plug-ins/common/file-gih.c:1160
+#: ../plug-ins/common/file-gih.c:1169
 msgid "Ranks:"
 msgstr "Rangos:"
 
@@ -2705,11 +2717,15 @@ msgstr "Cabecera de código fuente en C"
 msgid "Loads HEIF images"
 msgstr "Carga imágenes HEIF"
 
+# ¿En vez de «suffices» quizo decir «suffixes»?
 #: ../plug-ins/common/file-heif.c:107
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
 msgstr ""
+"Carga la imagen almacenada en formato HEIF (formato de archivo de imagen de "
+"alta eficiencia). Las extensiones típicas de los archivos HEIF son .heif y ."
+"heic."
 
 #: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:131
 msgid "HEIF/HEIC"
@@ -2722,6 +2738,8 @@ msgstr "Exporta imágenes HEIF"
 #: ../plug-ins/common/file-heif.c:126
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
+"Guarda la imagen en formato HEIF (formato de archivo de imagen de alta "
+"eficiencia)."
 
 #: ../plug-ins/common/file-heif.c:371 ../plug-ins/common/file-heif.c:404
 #: ../plug-ins/common/file-heif.c:443 ../plug-ins/common/file-heif.c:461
@@ -2915,10 +2933,8 @@ msgid "JPEG 2000 image"
 msgstr "Imagen JPEG 2000"
 
 #: ../plug-ins/common/file-jp2-load.c:185
-#, fuzzy
-#| msgid "JPEG 2000 image"
 msgid "JPEG 2000 codestream"
-msgstr "Imagen JPEG 2000"
+msgstr "Flujo de código de JPEG 2000"
 
 #. Can be RGB, YUV and YCC.
 #. Can be RGB, YUV and YCC with alpha or CMYK.
@@ -2940,7 +2956,7 @@ msgstr "xvYCC"
 #: ../plug-ins/common/file-jp2-load.c:991
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
-msgstr ""
+msgstr "JPEG 2000%s «%s» con componentes %d no admitidos."
 
 #: ../plug-ins/common/file-jp2-load.c:1000
 msgid "Color space:"
@@ -2952,10 +2968,9 @@ msgid "Could not open '%s' for reading"
 msgstr "No se pudo abrir «%s» para lectura"
 
 #: ../plug-ins/common/file-jp2-load.c:1082
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
-msgstr "No se pudo decodificar «%s»."
+msgstr "No se pudieron asignar los parámetros en el descodificador para «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1090
 #, c-format
@@ -2965,7 +2980,7 @@ msgstr "No se pudo leer la cabecera de la imagen JP2 desde «%s»."
 #: ../plug-ins/common/file-jp2-load.c:1098
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
-msgstr "No se pudo decodificar la imagen JP2 en «%s»."
+msgstr "No se pudo descodificar la imagen JP2 en «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1106
 #, c-format
@@ -2973,16 +2988,14 @@ msgid "Couldn't decompress JP2 image in '%s'."
 msgstr "No se pudo descomprimir la imagen JP2 en «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1135
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
-msgstr "No se pudo decodificar «%s»."
+msgstr "No se pudo descodificar la imagen CIELAB JP2 en «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1192
-#, fuzzy, c-format
-#| msgid "Unknown color model in PNG file '%s'."
+#, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
-msgstr "Modelo de color desconocido en el archivo PNG «%s»."
+msgstr "Espacio de color desconocido en el flujo de código de JP2 «%s»."
 
 #: ../plug-ins/common/file-jp2-load.c:1203
 #, c-format
@@ -3134,12 +3147,20 @@ msgstr "Animación MNG"
 msgid "GIMP pattern"
 msgstr "Patrón GIMP"
 
-#: ../plug-ins/common/file-pat.c:380
+#: ../plug-ins/common/file-pat.c:373
+#, c-format
+#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+msgstr ""
+"Datos de cabecera no válidos en «%s»: el nombre del patrón es demasiado "
+"largo: %lu"
+
+#: ../plug-ins/common/file-pat.c:392
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»."
 
-#: ../plug-ins/common/file-pat.c:609
+#: ../plug-ins/common/file-pat.c:626
 msgid "Pattern"
 msgstr "Patrón"
 
@@ -3253,7 +3274,7 @@ msgstr "PDF cifrado"
 
 #: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
-msgstr ""
+msgstr "Contraseña incorrecta. Introduzca una válida:"
 
 #: ../plug-ins/common/file-pdf-load.c:1077
 #, c-format
@@ -3407,7 +3428,6 @@ msgstr "Imagen PNG"
 
 #: ../plug-ins/common/file-png.c:768
 #, c-format
-#| msgid "Error loading PNG file: %s"
 msgid "Error loading PNG file: %s\n"
 msgstr "Error al cargar el archivo PNG: %s\n"
 
@@ -3418,7 +3438,6 @@ msgstr "Error al crear la estructura de lectura PNG mientras carga «%s»."
 
 #: ../plug-ins/common/file-png.c:894
 #, c-format
-#| msgid "Error while exporting '%s'. Could not export image."
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr "Error al leer «%s». No se pudo crear la estructura de información PNG."
 
@@ -3472,15 +3491,16 @@ msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Error al crear la estructura de escritura PNG mientras exporta «%s»."
 
 #: ../plug-ins/common/file-png.c:1550
-#, fuzzy, c-format
-#| msgid "Error while exporting '%s'. Could not export image."
+#, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "Error al exportar «%s». No se puede exportar la imagen."
+msgstr ""
+"Error al exportar «%s». No se pudo crear la estructura de información del "
+"encabezado PNG."
 
 #: ../plug-ins/common/file-png.c:1558
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "Error al exportar «%s». No se puede exportar la imagen."
+msgstr "Error al exportar «%s». No se pudo exportar la imagen."
 
 #: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
@@ -3789,27 +3809,23 @@ msgstr "Bloque de cabecera no válido en %ld"
 
 #: ../plug-ins/common/file-psp.c:738
 #, c-format
-#| msgid "Invalid file."
 msgid "Invalid block header"
 msgstr "Bloque de cabecera no válido"
 
 #: ../plug-ins/common/file-psp.c:841
 #, c-format
-#| msgid ""
-#| "Parse error in '%s':\n"
-#| "%s"
 msgid "Seek error: %s"
 msgstr "Error de búsqueda: %s"
 
 #: ../plug-ins/common/file-psp.c:881
 #, c-format
 msgid "Error reading creator keyword chunk"
-msgstr ""
+msgstr "Error al leer la parte de creación de palabra clave"
 
 #: ../plug-ins/common/file-psp.c:887
 #, c-format
 msgid "Invalid keyword chunk header"
-msgstr ""
+msgstr "La parte del encabezado sobre la palabra clave no es válida"
 
 #: ../plug-ins/common/file-psp.c:902 ../plug-ins/common/file-psp.c:934
 #, c-format
@@ -3819,7 +3835,7 @@ msgstr "Error al leer el origen de las palabras clave"
 #: ../plug-ins/common/file-psp.c:909
 #, c-format
 msgid "Creator keyword data not nul-terminated"
-msgstr ""
+msgstr "Los datos de creación de la palabra clave no terminan en nulo"
 
 #: ../plug-ins/common/file-psp.c:1285 ../plug-ins/common/file-psp.c:1299
 #, c-format
@@ -3829,17 +3845,15 @@ msgstr "error de zlib"
 #: ../plug-ins/common/file-psp.c:1365
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
-msgstr ""
+msgstr "El sub-bloque de la capa %s no es válido, debería ser CAPA"
 
 #: ../plug-ins/common/file-psp.c:1397 ../plug-ins/common/file-psp.c:1428
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error reading layer information chunk"
-msgstr "Ocurrió un error al leer cabecera del archivo BMP de «%s»"
+msgstr "Error al leer la parte sobre la información de la capa"
 
 #: ../plug-ins/common/file-psp.c:1462
 #, c-format
-#| msgid "Image dimensions: %d × %d"
 msgid "Invalid layer dimensions: %dx%d"
 msgstr "Dimensiones de la capa no válidas: %dx%d"
 
@@ -3851,28 +3865,28 @@ msgstr "Error al crear la capa"
 #: ../plug-ins/common/file-psp.c:1566
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr ""
+msgstr "El sub-bloque de la capa %s no es válido, debería ser CANAL"
 
 #: ../plug-ins/common/file-psp.c:1582
 #, c-format
 msgid "Error reading channel information chunk"
-msgstr ""
+msgstr "Error al leer la parte sobre la información del canal"
 
 #: ../plug-ins/common/file-psp.c:1594
 #, c-format
 msgid "Invalid bitmap type %d in channel information chunk"
 msgstr ""
+"Tipo de mapa de bits %d no válido en la parte sobre información del canal"
 
 #: ../plug-ins/common/file-psp.c:1602
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
-msgstr ""
+msgstr "Tipo de canal %d no válido en la parte sobre información del canal"
 
 #: ../plug-ins/common/file-psp.c:1682
-#, fuzzy, c-format
-#| msgid "Error reading pixel data from '%s'"
+#, c-format
 msgid "Error reading tube data chunk"
-msgstr "Error al leer los datos de los píxeles de «%s»"
+msgstr "Error al leer la parte sobre datos del tubo"
 
 #: ../plug-ins/common/file-psp.c:1783
 #, c-format
@@ -3885,10 +3899,9 @@ msgid "Incorrect file signature."
 msgstr "Firma del archivo incorrecta."
 
 #: ../plug-ins/common/file-psp.c:1808
-#, fuzzy, c-format
-#| msgid "Unsupported file format version: %d"
+#, c-format
 msgid "Unsupported PSP file format version %d.%d."
-msgstr "Versión del formato de archivo no soportada: %d"
+msgstr "La versión %d.%d del formato de archivo PSP no está soportada."
 
 #: ../plug-ins/common/file-psp.c:1828
 msgid "invalid block size"
@@ -3918,11 +3931,10 @@ msgstr "Datos de imagen en bruto"
 #: ../plug-ins/common/file-raw-data.c:304
 #: ../plug-ins/common/file-raw-data.c:1882
 msgid "Digital Elevation Model data"
-msgstr ""
+msgstr "Datos del modelo digital de elevación"
 
 #: ../plug-ins/common/file-raw-data.c:424
 #, c-format
-#| msgid "Could not open '%s' for writing: %s"
 msgid "Could not open '%s' for size verification: %s"
 msgstr "No se pudo abrir el archivo «%s» para verificarlo: %s"
 
@@ -3950,11 +3962,11 @@ msgstr "Cargar imagen a partir de los datos en bruto"
 #.
 #: ../plug-ins/common/file-raw-data.c:1878
 msgid "Digital Elevation Model data (1 arc-second)"
-msgstr ""
+msgstr "Datos del modelo digital de elevación (1 arcosegundo)"
 
 #: ../plug-ins/common/file-raw-data.c:1880
 msgid "Digital Elevation Model data (3 arc-seconds)"
-msgstr ""
+msgstr "Datos del modelo digital de elevación (3 arcosegundos)"
 
 #: ../plug-ins/common/file-raw-data.c:1886
 msgid "Image"
@@ -6896,7 +6908,6 @@ msgstr "Ocurrió un error al leer cabecera del archivo BMP de «%s»"
 
 #: ../plug-ins/file-bmp/bmp-load.c:381
 #, c-format
-#| msgid "Unsupported compression (%lu) in BMP file from '%s'"
 msgid "Unsupported compression (%u) in BMP file from '%s'"
 msgstr "Compresión no soportada (%u) en el archivo BMP de «%s»"
 
@@ -7438,7 +7449,6 @@ msgid "Photoshop image"
 msgstr "Imagen de Photoshop"
 
 #: ../plug-ins/file-psd/psd.c:130
-#| msgid "Photoshop image"
 msgid "Photoshop image (merged)"
 msgstr "Imagen de Photoshop (combinada)"
 
@@ -7755,7 +7765,7 @@ msgstr ""
 #. minimize-size checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:308
 msgid "Minimize output size (slower)"
-msgstr ""
+msgstr "Minimizar tamaño de salida (más lento)"
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:331
@@ -7766,7 +7776,6 @@ msgstr "Retraso entre cua_dros cuando no esté especificado:"
 
 #. Create the force-delay checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:354
-#| msgid "_Use delay entered above for all frames"
 msgid "Use delay entered above for all frames"
 msgstr "Usar el retraso introducido anteriormente para todos los cuadros"
 
@@ -7778,7 +7787,6 @@ msgstr "Archivo WebP «%s» no válido."
 # //R ¿Drawables?
 #: ../plug-ins/file-webp/file-webp-load.c:184
 #, c-format
-#| msgid "Failed to save PPM file '%s': %s"
 msgid "Failed to decode animated WebP file '%s'"
 msgstr "Falló al decodificar el archivo WebP animado «%s»"
 
@@ -7823,7 +7831,7 @@ msgstr "La partición es superior a los 512K"
 
 #: ../plug-ins/file-webp/file-webp-save.c:124
 msgid "partition is bigger than 16M"
-msgstr ""
+msgstr "la partición es superior a 16M"
 
 #: ../plug-ins/file-webp/file-webp-save.c:126
 msgid "unable to flush bytes"
@@ -7848,15 +7856,11 @@ msgstr "error desconocido"
 #: ../plug-ins/file-webp/file-webp-save.c:181
 #: ../plug-ins/file-webp/file-webp-save.c:515
 #, c-format
-#| msgid "Could not open '%s' for writing."
 msgid "Unable to open '%s' for writing: %s"
 msgstr "No se pudo abrir «%s» para escritura: %s"
 
 #: ../plug-ins/file-webp/file-webp-save.c:254
 #, c-format
-#| msgid ""
-#| "Parse error in '%s':\n"
-#| "%s"
 msgid "WebP error: '%s'"
 msgstr "Error de WebP: «%s»"
 
@@ -9904,7 +9908,6 @@ msgid "Model Release Status"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
-#| msgid "Add Additional Guides"
 msgid "Additional Model Info"
 msgstr "Información adicional del modeo"
 
@@ -10083,7 +10086,6 @@ msgid "Study Description"
 msgstr "Descripción"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:97
-#| msgid "Select Number Color"
 msgid "Series Number"
 msgstr "Número de serie"
 
@@ -10096,7 +10098,6 @@ msgid "Series Date"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
-#| msgid "Description"
 msgid "Series Description"
 msgstr "Descripción del estudio"
 
@@ -10715,7 +10716,6 @@ msgid "Open IFS Fractal file"
 msgstr "Abrir archivo de fractal IFS"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-#| msgid "Image Map Plug-In"
 msgid "Image Map Plug-in"
 msgstr "Complemento de mapa de imagen"
 
@@ -12070,12 +12070,10 @@ msgid "Unrated"
 msgstr "Sin puntuar"
 
 #: ../plug-ins/metadata/metadata-editor.c:5645
-#| msgid "Import metadata"
 msgid "Import Metadata File"
 msgstr "Importar archivo de metadatos"
 
 #: ../plug-ins/metadata/metadata-editor.c:5680
-#| msgid "Export metadata"
 msgid "Export Metadata File"
 msgstr "Exportar archivo de metadatos"
 
@@ -12255,7 +12253,6 @@ msgid "Female"
 msgstr "Mujer"
 
 #: ../plug-ins/metadata/metadata-tags.h:335
-#| msgid "_Other:"
 msgid "Other"
 msgstr "Otras"
 
@@ -12493,7 +12490,6 @@ msgid "Delay"
 msgstr "Retardo"
 
 #: ../plug-ins/screenshot/screenshot.c:692
-#| msgid "Se_lection only"
 msgid "Selection delay: "
 msgstr "Retardo de la selección: "
 
@@ -12519,7 +12515,6 @@ msgid "At the end of the delay, click in a window to snap it."
 msgstr "Al finalizar la pausa, pulse sobre una ventana para capturarla."
 
 #: ../plug-ins/screenshot/screenshot.c:755
-#| msgid "Screenshot"
 msgid "Screenshot delay: "
 msgstr "Retardo de la captura: "
 
@@ -12536,7 +12531,6 @@ msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 
 #: ../plug-ins/screenshot/screenshot.c:799
-#| msgid "After the delay, the screenshot is taken."
 msgid "After the delay, the active window will be captured."
 msgstr "La captura de pantalla se tomará después de la pausa."
 
