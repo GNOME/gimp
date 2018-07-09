@@ -771,17 +771,19 @@ palette_editor_entry_selected (GimpPaletteView   *view,
                                GimpPaletteEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  gchar          *index       = NULL;
 
   if (editor->color != entry)
     {
+      gchar index[8];
+
       editor->color = entry;
 
       if (entry)
-        index = g_strdup_printf("%04i", entry->position);
-      gtk_label_set_text (GTK_LABEL (editor->index_label),
-                          entry ? index : "####");
-      g_free (index);
+        g_snprintf (index, sizeof (index), "%04i", entry->position);
+      else
+        g_snprintf (index, sizeof (index), "####");
+
+      gtk_label_set_text (GTK_LABEL (editor->index_label), index);
 
       g_signal_handlers_block_by_func (editor->color_name,
                                        palette_editor_color_name_changed,
