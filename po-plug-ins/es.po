@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-06 17:58+0000\n"
-"PO-Revision-Date: 2018-07-09 08:30+0200\n"
+"POT-Creation-Date: 2018-07-09 06:43+0000\n"
+"PO-Revision-Date: 2018-07-09 12:58+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -2470,7 +2470,6 @@ msgstr "Formato de pincel no soportado"
 
 #: ../plug-ins/common/file-gbr.c:468
 #, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr ""
 "Datos de cabecera no válidos en «%s»: el nombre del pincel es demasiado "
@@ -3149,7 +3148,6 @@ msgstr "Patrón GIMP"
 
 #: ../plug-ins/common/file-pat.c:373
 #, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr ""
 "Datos de cabecera no válidos en «%s»: el nombre del patrón es demasiado "
@@ -3910,12 +3908,12 @@ msgstr "tamaño de bloque no válido"
 #: ../plug-ins/common/file-psp.c:1837
 #, c-format
 msgid "Duplicate General Image Attributes block."
-msgstr ""
+msgstr "El bloque general de atributos de imagen está duplicado."
 
 #: ../plug-ins/common/file-psp.c:1867
 #, c-format
 msgid "Missing General Image Attributes block."
-msgstr ""
+msgstr "Falta el bloque general de atributos de imagen."
 
 #: ../plug-ins/common/file-psp.c:1956
 #, c-format
@@ -3943,6 +3941,8 @@ msgstr "No se pudo abrir el archivo «%s» para verificarlo: %s"
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
 msgstr ""
+"%d no es un espaciado de muestra válido. Los valores válidos son: 0 (auto-"
+"detectar), 1 y 3."
 
 #: ../plug-ins/common/file-raw-data.c:520
 #, c-format
@@ -3951,6 +3951,10 @@ msgid ""
 "valid HGT file or its variant is not supported yet. Supported HGT files are: "
 "SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
 msgstr ""
+"Ha fallado la auto-detección del espaciado de muestra. «%s» no parece un "
+"archivo HGT válido o sus variantes aun no están soportadas. Los archivos HGT "
+"soportados son: SRTM-1 and SRTM-3. Si conoce la variante, ejecute con "
+"argumento 1 o 3."
 
 #: ../plug-ins/common/file-raw-data.c:1829
 msgid "Load Image from Raw Data"
@@ -4638,20 +4642,17 @@ msgstr ""
 "exportar sin auto-recorte."
 
 #: ../plug-ins/common/file-xmc.c:1765
-#, fuzzy, c-format
-#| msgid ""
-#| "Your cursor was successfully exported but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
+#, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose width or height is more than %ipx, a historical max dimension value "
 "for X bitmap cursors.\n"
 "It might be unsupported by some environments."
 msgstr ""
-"El cursor se ha exportado correctamente pero no contiene uno o más cuadros "
-"cuya anchura o altura es más de %ipx.\n"
-"Esto desordenara la pantalla en algunos entornos."
+"El cursor se ha exportado correctamente pero contiene uno o más cuadros cuya "
+"anchura o altura es mayor que %ipx, un valor de dimensión máximo histórico "
+"para cursores de mapas de bits de X.\n"
+"Podría no estar admitido en algunos entornos."
 
 #: ../plug-ins/common/file-xmc.c:1773
 msgid ""
@@ -4676,19 +4677,15 @@ msgstr ""
 "recortado para que quepa."
 
 #: ../plug-ins/common/file-xmc.c:2125
-#, fuzzy, c-format
-#| msgid ""
-#| "Your cursor was successfully exported but it contains one or more frames "
-#| "whose width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
+#, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose size is over 8 digits.\n"
 "We clamped it to %dpx. You should check the exported cursor."
 msgstr ""
-"El cursor se ha exportado correctamente pero no contiene uno o más cuadros "
-"cuya anchura o altura es más de %ipx.\n"
-"Esto desordenara la pantalla en algunos entornos."
+"El cursor se ha exportado correctamente pero contiene uno o más cuadros cuyo "
+"tamaño es mayor que 8 dígitos.\n"
+"Se ha fijado a %dpx. Debería comprobar el cursor exportado."
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2222
@@ -6707,22 +6704,16 @@ msgstr "Paso del flujo %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:97
 #: ../plug-ins/common/wavelet-decompose.c:350
-#, fuzzy
-#| msgid "Decompose"
 msgid "Wavelet decompose"
-msgstr "Descomponer"
+msgstr "Descomposición en ondículas"
 
 #: ../plug-ins/common/wavelet-decompose.c:102
-#, fuzzy
-#| msgid "_Decompose..."
 msgid "_Wavelet-decompose..."
-msgstr "_Descomponer…"
+msgstr "_Descomposición-en-ondículas…"
 
 #: ../plug-ins/common/wavelet-decompose.c:177
-#, fuzzy
-#| msgid "Decompose"
 msgid "Wavelet-Decompose"
-msgstr "Descomponer"
+msgstr "Descomposición-en-ondículas"
 
 #: ../plug-ins/common/wavelet-decompose.c:186
 msgid "Decomposition"
@@ -6743,15 +6734,13 @@ msgstr "Escalas:"
 
 #. create group layer
 #: ../plug-ins/common/wavelet-decompose.c:393
-#, fuzzy
-#| msgid "Image not suitable for this decomposition"
 msgid "Create a layer group to store the decomposition"
-msgstr "Imagen no adecuada para esta decomposición"
+msgstr "Crear un grupo de capas para almacenar la descomposición"
 
 #. create layer masks
 #: ../plug-ins/common/wavelet-decompose.c:405
 msgid "Add a layer mask to each scales layers"
-msgstr ""
+msgstr "Añadir una máscara de capa para cada capa de escalas"
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
@@ -7563,6 +7552,13 @@ msgid ""
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
+"No hay un cargador RAW instalado para abrir archivos «%s».\n"
+"\n"
+"Actualmente GIMP admite estos cargadores RAW:\n"
+"- darktable (http://www.darktable.org/), al menos 1.7\n"
+"- RawTherapee (http://rawtherapee.com/), al menos 5.2\n"
+"\n"
+"Instale uno de ellos para cargar archivos RAW."
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -7712,11 +7708,11 @@ msgstr "Imagen WebP"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:70
 msgid "(no keyframes)"
-msgstr ""
+msgstr "(sin fotogramas clave)"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:74
 msgid "(all frames are keyframes)"
-msgstr ""
+msgstr "(todos los fotogramas son fotogramas clave)"
 
 #. Create the dialog
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
@@ -7745,7 +7741,7 @@ msgstr "Tipo de la fuente:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:195
 msgid "WebP encoder \"preset\""
-msgstr ""
+msgstr "Codificador WebP «preajuste»"
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:227
@@ -7760,7 +7756,7 @@ msgstr "Bucle infinito"
 #. label for 'max key-frame distance' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:273
 msgid "Max distance between key-frames:"
-msgstr ""
+msgstr "Distancia máxima entre fotogramas clave:"
 
 #. minimize-size checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:308
@@ -7769,10 +7765,8 @@ msgstr "Minimizar tamaño de salida (más lento)"
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:331
-#, fuzzy
-#| msgid "_Delay between frames where unspecified:"
 msgid "Delay between frames where unspecified:"
-msgstr "Retraso entre cua_dros cuando no esté especificado:"
+msgstr "Retraso entre fotogramas cuando no esté especificado:"
 
 #. Create the force-delay checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:354
@@ -7793,12 +7787,12 @@ msgstr "Falló al decodificar el archivo WebP animado «%s»"
 #: ../plug-ins/file-webp/file-webp-load.c:192
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
-msgstr ""
+msgstr "Fallo al descodificar la información del WebP animado desde «%s»"
 
 #: ../plug-ins/file-webp/file-webp-load.c:211
 #, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
-msgstr ""
+msgstr "Fallo al descodificar el fotograma del WebP animado desde «%s»"
 
 #: ../plug-ins/file-webp/file-webp-load.c:216
 #, c-format
@@ -7811,7 +7805,7 @@ msgstr "sin memoria"
 
 #: ../plug-ins/file-webp/file-webp-save.c:114
 msgid "not enough memory to flush bits"
-msgstr ""
+msgstr "no hay memoria suficiente para descargar bits"
 
 #: ../plug-ins/file-webp/file-webp-save.c:116
 msgid "NULL parameter"
@@ -7835,7 +7829,7 @@ msgstr "la partición es superior a 16M"
 
 #: ../plug-ins/file-webp/file-webp-save.c:126
 msgid "unable to flush bytes"
-msgstr ""
+msgstr "no se pueden descargar los bytes"
 
 #: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
@@ -9538,7 +9532,7 @@ msgstr "Retraso entre cua_dros cuando no esté especificado:"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "GIF supports hundredths of a second precision."
-msgstr ""
+msgstr "GIF admite precisiones de centésimas de segundo."
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
 msgid "_Frame disposal where unspecified:"
@@ -9615,10 +9609,8 @@ msgid "Co_mpression level:"
 msgstr "Nivel de co_mpresión:"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:18
-#, fuzzy
-#| msgid "Automatic pre_view"
 msgid "automatic pixelformat"
-msgstr "_Vista previa automática"
+msgstr "formato de píxel automático"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:19
 msgid "8bpc RGB"
@@ -9705,10 +9697,8 @@ msgid "Description"
 msgstr "Descripción"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
-#, fuzzy
-#| msgid "Description"
 msgid "Description Writer\t"
-msgstr "Descripción"
+msgstr "Descripción del escritor\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
 msgid "Rating"
@@ -9770,9 +9760,10 @@ msgstr "Fecha de creación"
 msgid "Intellectual Genre"
 msgstr "Género intelectual"
 
+# https://www.controlledvocabulary.com/help/iptc-codes.html
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:21
 msgid "IPTC Scene Code"
-msgstr ""
+msgstr "Código de la escena IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
 msgid "Sublocation\t"
@@ -9784,7 +9775,7 @@ msgstr "Código ISO de país"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:24
 msgid "IPTC Subject Code"
-msgstr ""
+msgstr "Código del tema IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
 msgid "Headline"
@@ -9872,10 +9863,8 @@ msgid "Country ISO Code"
 msgstr "Código ISO de país"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
-#, fuzzy
-#| msgid "Map to Object"
 msgid "Artwork or Object"
-msgstr "Mapear al objeto"
+msgstr "Obra o objeto"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:48
 msgid "Title"
@@ -9891,21 +9880,19 @@ msgstr "Creador"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:51
 msgid "Source Inventory ID"
-msgstr ""
+msgstr "ID del inventario de origen"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:52
-#, fuzzy
-#| msgid "Mode _1"
 msgid "Model Age"
-msgstr "Modo _1"
+msgstr "Edad del modelo"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:53
 msgid "Minor Model Age Disclosure"
-msgstr ""
+msgstr "Revelación de edad del modelo menor"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:54
 msgid "Model Release Status"
-msgstr ""
+msgstr "Estado del lanzamiento del modelo"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
 msgid "Additional Model Info"
@@ -9913,27 +9900,23 @@ msgstr "Información adicional del modeo"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:56
 msgid "Model Release Identifier"
-msgstr ""
+msgstr "Identificador de lanzamiento del modelo"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:57
-#, fuzzy
-#| msgid "Image Size"
 msgid "Image Supplier ID"
-msgstr "Tamaño de imagen"
+msgstr "ID del proveedor de la imagen"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:58
 msgid "Supplier's Image ID"
-msgstr ""
+msgstr "ID de la imagen del proveedor"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:59
 msgid "Registry Entry"
 msgstr "Entrada de registro"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:60
-#, fuzzy
-#| msgid "Image Size"
 msgid "Image Supplier Name"
-msgstr "Tamaño de imagen"
+msgstr "Nombre del proveedor de la imagen"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:61
 msgid "Max. Available Width"
@@ -9960,14 +9943,12 @@ msgid "Copyright Owner"
 msgstr "Propietario del copyright"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:67
-#, fuzzy
-#| msgid "_License:"
 msgid "Licensor"
-msgstr "_Licencia:"
+msgstr "Licenciante"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:68
 msgid "Property Release Status"
-msgstr ""
+msgstr "Estado del lanzamiento de las propiedades"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
 msgid "Image Creator"
@@ -10003,7 +9984,7 @@ msgstr "Dirección web"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
 msgid "Property Release Identifier"
-msgstr ""
+msgstr "Identificador del lanzamiento de las propiedades"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
 msgid "IPTC Extension"
@@ -10070,20 +10051,16 @@ msgid "Study ID"
 msgstr "ID del estudio"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
-#, fuzzy
-#| msgid "Rendering wind"
 msgid "Referring Physician"
-msgstr "Renderizando viento"
+msgstr "Médico de referencia"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:95
 msgid "Study Date"
 msgstr "Fecha del estudio"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:96
-#, fuzzy
-#| msgid "Description"
 msgid "Study Description"
-msgstr "Descripción"
+msgstr "Descripción del estudio"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:97
 msgid "Series Number"
@@ -10095,15 +10072,15 @@ msgstr "Modalidad"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:99
 msgid "Series Date"
-msgstr ""
+msgstr "Fecha de la serie"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
 msgid "Series Description"
-msgstr "Descripción del estudio"
+msgstr "Descripción de la serie"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:101
 msgid "Equipment Institution"
-msgstr ""
+msgstr "Institución del equipo"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:102
 msgid "Equipment Manufacturer"
@@ -12083,25 +12060,23 @@ msgstr "_Exportar"
 
 #: ../plug-ins/metadata/metadata-tags.h:250
 msgid "Original digital capture of a real life scene"
-msgstr ""
+msgstr "Captura digital original de una escena de la vida real"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
 msgid "Digitised from a negative on film"
-msgstr ""
+msgstr "Digitalizado de un negativo en una película"
 
 #: ../plug-ins/metadata/metadata-tags.h:252
 msgid "Digitised from a positive on film"
-msgstr ""
+msgstr "Digitalizado de un positivo en una película"
 
 #: ../plug-ins/metadata/metadata-tags.h:253
 msgid "Digitised from a print on non-transparent medium"
-msgstr ""
+msgstr "Digitalizado de una impresión en un medio no transparente"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
-#, fuzzy
-#| msgid "Create star"
 msgid "Created by software"
-msgstr "Crear una estrella"
+msgstr "Creado por software"
 
 #: ../plug-ins/metadata/metadata-tags.h:262
 #: ../plug-ins/metadata/metadata-tags.h:273
@@ -12116,19 +12091,19 @@ msgstr "No es aplicable"
 
 #: ../plug-ins/metadata/metadata-tags.h:264
 msgid "Unlimited Model Releases"
-msgstr ""
+msgstr "Lanzamientos de modelos sin límite"
 
 #: ../plug-ins/metadata/metadata-tags.h:265
 msgid "Limited or Incomplete Model Releases"
-msgstr ""
+msgstr "Lanzamientos de modelos limitados o incompletos"
 
 #: ../plug-ins/metadata/metadata-tags.h:275
 msgid "Unlimited Property Releases"
-msgstr ""
+msgstr "Lanzamientos de propiedades sin límite"
 
 #: ../plug-ins/metadata/metadata-tags.h:276
 msgid "Limited or Incomplete Property Releases"
-msgstr ""
+msgstr "Lanzamientos de propiedades limitados o incompletos"
 
 #: ../plug-ins/metadata/metadata-tags.h:284
 msgid "Age Unknown"
@@ -12508,7 +12483,7 @@ msgstr ""
 
 #: ../plug-ins/screenshot/screenshot.c:729
 msgid "Click in a window to snap it after delay."
-msgstr ""
+msgstr "Pulse en una ventana para encajarla la después del retardo."
 
 #: ../plug-ins/screenshot/screenshot.c:734
 msgid "At the end of the delay, click in a window to snap it."
@@ -12525,10 +12500,12 @@ msgstr "La captura de pantalla se tomará después de la pausa."
 #: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr ""
+"Una vez que se selecciona la región, se capturará después de este retardo."
 
 #: ../plug-ins/screenshot/screenshot.c:793
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
+"Una vez que se selecciona la ventana, se capturará después de este retardo."
 
 #: ../plug-ins/screenshot/screenshot.c:799
 msgid "After the delay, the active window will be captured."
@@ -12540,7 +12517,7 @@ msgstr "Perfil de color"
 
 #: ../plug-ins/screenshot/screenshot.c:811
 msgid "Tag image with _monitor profile"
-msgstr ""
+msgstr "Etiquetar la imagen con el perfil del _monitor"
 
 #: ../plug-ins/screenshot/screenshot.c:815
 msgid "Convert image to sR_GB"
