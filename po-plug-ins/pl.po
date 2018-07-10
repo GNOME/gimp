@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-08 17:09+0200\n"
-"PO-Revision-Date: 2018-07-08 17:10+0200\n"
+"POT-Creation-Date: 2018-07-10 05:48+0200\n"
+"PO-Revision-Date: 2018-07-10 05:49+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3244,7 +3244,7 @@ msgstr "Import z PDF"
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
 #: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
-msgstr "Za_importuj"
+msgstr "Zai_mportuj"
 
 #: ../plug-ins/common/file-pdf-load.c:1306
 msgid "Error getting number of pages from the given PDF file."
@@ -3272,7 +3272,7 @@ msgstr "Użycie _wygładzania"
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
-msgstr "piksele/%a"
+msgstr "px/%a"
 
 #: ../plug-ins/common/file-pdf-save.c:370
 msgid "_Create multipage PDF..."
