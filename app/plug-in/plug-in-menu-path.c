@@ -42,26 +42,6 @@ struct _MenuPathMapping
 
 static const MenuPathMapping menu_path_mappings[] =
 {
-  { "<Toolbox>/Xtns/Languages",       NULL, "<Image>/Filters/Languages"           },
-  { "<Toolbox>/Xtns/Extensions",      NULL, "<Image>/Filters/Extensions"          },
-
-  { "<Toolbox>/Xtns/Buttons",         NULL, "<Image>/File/Create/Buttons"         },
-  { "<Toolbox>/Xtns/Logos",           NULL, "<Image>/File/Create/Logos"           },
-  { "<Toolbox>/Xtns/Misc",            NULL, "<Image>/File/Create/Misc"            },
-  { "<Toolbox>/Xtns/Patterns",        NULL, "<Image>/File/Create/Patterns"        },
-  { "<Toolbox>/Xtns/Web Page Themes", NULL, "<Image>/File/Create/Web Page Themes" },
-
-  { "<Toolbox>/Xtns", "Buttons",            "<Image>/File/Create"                 },
-  { "<Toolbox>/Xtns", "Logos",              "<Image>/File/Create"                 },
-  { "<Toolbox>/Xtns", "Misc",               "<Image>/File/Create"                 },
-  { "<Toolbox>/Xtns", "Patterns",           "<Image>/File/Create"                 },
-  { "<Toolbox>/Xtns", "Web Page Themes",    "<Image>/File/Create"                 },
-
-  { "<Toolbox>/Xtns",                 NULL, "<Image>/Filters/Extensions"          },
-  { "<Toolbox>/Help",                 NULL, "<Image>/Help"                        },
-
-  { "<Toolbox>/File/Acquire",           NULL, "<Image>/File/Create/Acquire"       },
-  { "<Toolbox>",                        NULL, "<Image>"                           },
   { "<Image>/File/Acquire",             NULL, "<Image>/File/Create/Acquire"       },
   { "<Image>/File/New",                 NULL, "<Image>/File/Create"               },
   { "<Image>/Image/Mode/Color Profile", NULL, "<Image>/Image/Color Management"    },

@@ -635,8 +635,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       goto failure;
     }
 
-  if (g_str_has_prefix (menu_path, "<Toolbox>") ||
-      g_str_has_prefix (menu_path, "<Image>"))
+  if (g_str_has_prefix (menu_path, "<Image>"))
     {
       if ((procedure->num_args < 1) ||
           ! GIMP_IS_PARAM_SPEC_INT32 (procedure->args[0]))
