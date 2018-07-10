@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-08 17:21+0200\n"
-"PO-Revision-Date: 2018-07-08 17:22+0200\n"
+"POT-Creation-Date: 2018-07-10 05:48+0200\n"
+"PO-Revision-Date: 2018-07-10 05:49+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -7306,7 +7306,7 @@ msgstr "Tworzy nową paletę"
 #: ../app/actions/palettes-actions.c:54
 msgctxt "palettes-action"
 msgid "_Import Palette..."
-msgstr "Za_importuj paletę…"
+msgstr "Zai_mportuj paletę…"
 
 #: ../app/actions/palettes-actions.c:55
 msgctxt "palettes-action"
@@ -8844,7 +8844,7 @@ msgstr "Wy_eksportuj ścieżkę…"
 #: ../app/actions/vectors-actions.c:158
 msgctxt "vectors-action"
 msgid "I_mport Path..."
-msgstr "Za_importuj ścieżkę…"
+msgstr "Zai_mportuj ścieżkę…"
 
 #: ../app/actions/vectors-actions.c:166
 msgctxt "vectors-action"
@@ -14852,7 +14852,7 @@ msgstr "Potwierdzenie skalowania"
 #: ../app/dialogs/image-scale-dialog.c:211 ../app/dialogs/scale-dialog.c:138
 #: ../app/tools/gimpscaletool.c:94 ../app/tools/gimpscaletool.c:117
 msgid "_Scale"
-msgstr "_Skalowanie"
+msgstr "_Skaluj"
 
 #: ../app/dialogs/image-scale-dialog.c:243
 #, c-format
@@ -15151,7 +15151,7 @@ msgstr "Import nowej palety"
 
 #: ../app/dialogs/palette-import-dialog.c:163
 msgid "_Import"
-msgstr "Za_importuj"
+msgstr "Zai_mportuj"
 
 #. The "Source" frame
 #: ../app/dialogs/palette-import-dialog.c:201
@@ -15173,7 +15173,7 @@ msgstr "_Wszystkie próbki"
 
 #: ../app/dialogs/palette-import-dialog.c:249
 msgid "_Selected Pixels only"
-msgstr "_Tylko zaznaczone punkty"
+msgstr "_Tylko zaznaczone piksele"
 
 #: ../app/dialogs/palette-import-dialog.c:261
 msgid "Palette _file"
@@ -16678,7 +16678,7 @@ msgstr "Pi_onowa rozdzielczość:"
 #: ../app/dialogs/print-size-dialog.c:254 ../app/widgets/gimpsizebox.c:256
 #, c-format
 msgid "pixels/%a"
-msgstr "pikseli/%a"
+msgstr "px/%a"
 
 #: ../app/dialogs/quit-dialog.c:164
 msgid "Quit GIMP"
@@ -24995,7 +24995,7 @@ msgstr "Liczba ścieżek:"
 #: ../app/widgets/gimptemplateeditor.c:349
 #, c-format
 msgid "pixels/%s"
-msgstr "pikseli/%s"
+msgstr "px/%s"
 
 #: ../app/widgets/gimpimagepropview.c:454
 #, c-format
@@ -25140,7 +25140,7 @@ msgstr "Zarządza ustawieniami"
 
 #: ../app/widgets/gimpsettingsbox.c:360
 msgid "_Import Current Settings from File..."
-msgstr "Za_importuj bieżące ustawienia z pliku…"
+msgstr "Zai_mportuj bieżące ustawienia z pliku…"
 
 #: ../app/widgets/gimpsettingsbox.c:366
 msgid "_Export Current Settings to File..."
