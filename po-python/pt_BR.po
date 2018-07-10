@@ -4,54 +4,53 @@
 # Joao S. O. Bueno <gwidion@mpc.com.br>, 2007, 2008.
 # Mateus Gondim R. Batista <gondim.mateus@gmail.com>, 2012.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
-#
+# Rafael Fontenelle <rafaelff@gnome.org>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-01-15 15:01+0000\n"
-"PO-Revision-Date: 2013-01-15 19:57-0300\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2018-07-08 15:43+0000\n"
+"PO-Revision-Date: 2018-07-10 15:03-0200\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 0.5.2\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
 msgstr "Sem informação sobre a exceção"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Ocorreu um erro ao executar %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
 msgstr "_Mais informações"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
 msgstr "Não"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
 msgstr "Sim"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Seleção de arquivos do python-fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Seleção de pastas do python-fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Saída inválida para '%s'"
@@ -78,7 +77,7 @@ msgstr "Or_igem dos caracteres"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
-msgstr "Código fonte"
+msgstr "Código-fonte"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
@@ -107,6 +106,50 @@ msgstr "Degradê a utilizar"
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
 msgstr "Nome do arquivo"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "Exporta o histograma da imagem para um arquivo de texto (CSV)"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+msgid "_Export histogram..."
+msgstr "_Exportar histograma..."
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+msgid "_Image"
+msgstr "_Imagem"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+msgid "_Drawable"
+msgstr "_Desenháveis"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+msgid "Histogram _File"
+msgstr "_Arquivo de histograma"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+msgid "_Bucket Size"
+msgstr "Tamanho do _balde"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+msgid "Sample _Average"
+msgstr "_Amostra da média"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+msgid "Output format"
+msgstr "Formato da saída"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+msgid "Pixel count"
+msgstr "Contagem de pixels"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+msgid "Normalized"
+msgstr "Normalizado"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+msgid "Percent"
+msgstr "Percentagem"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -145,7 +188,7 @@ msgid "_Offset Palette..."
 msgstr "_Deslocar paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:309
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -155,119 +198,125 @@ msgstr "Paleta"
 msgid "Off_set"
 msgstr "D_eslocamento"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
 msgid "Red"
 msgstr "Vermelho"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
 msgid "Green"
 msgstr "Verde"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
 msgid "Blue"
 msgstr "Azul"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:23
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
 msgid "Luma (Y)"
 msgstr "Luminosidade (Y)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Hue"
 msgstr "Tonalidade"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Saturation"
 msgstr "Saturação"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Value"
 msgstr "Valor"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
 msgid "Saturation (HSL)"
 msgstr "Saturação (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
 msgid "Lightness (HSL)"
 msgstr "Claridade (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
 msgid "Index"
 msgstr "Índice"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
 msgid "Random"
 msgstr "Aleatório"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
 msgid "Lightness (LAB)"
 msgstr "Claridade (LAB)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
 msgid "A-color"
 msgstr "Cor-A"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
 msgid "B-color"
 msgstr "Cor-B"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
 msgid "Chroma (LCHab)"
 msgstr "Crominância (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
 msgid "Hue (LCHab)"
 msgstr "Tonalidade (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:300
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
 msgid "Sort the colors in a palette"
 msgstr "Ordena as cores da paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:306
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
 msgid "_Sort Palette..."
 msgstr "_Ordena paleta..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:310
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 msgid "Se_lections"
 msgstr "Se_leções"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "All"
 msgstr "Todas"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Slice / Array"
 msgstr "Fatia / Vetor"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Autoslice (fg->bg)"
 msgstr "Fatiamento automático (frente->fundo)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Partitioned"
 msgstr "Particionado"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
 msgid "Slice _expression"
 msgstr "E_xpressão de fatiamento"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
 msgstr "Canal a _ordenar"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:315
-msgid "_Quantization"
-msgstr "_Quantização"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:316
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
 msgid "_Ascending"
 msgstr "_Ascendente"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:317
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#| msgid "Channel to _sort"
+msgid "Secondary Channel to s_ort"
+msgstr "Canal secundário para _ordenar"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+msgid "_Quantization"
+msgstr "_Quantização"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
 msgid "_Partitioning channel"
 msgstr "Canal de _particionamento"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:319
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
 msgid "Partition q_uantization"
 msgstr "Q_uantização da partição"
 
@@ -292,85 +341,85 @@ msgid "Slice"
 msgstr "Fatiar"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Corta uma imagem ao longo das suas guias, cria imagens e um trecho de HTML "
 "com uma tabela - opcionalmente gera javascript para animar as três camadas "
 "de cima da imagem quando o mouse estiver sobre a tabela"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "_Fatiar..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Caminho para a exportação de HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Nome do arquivo para exportação"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Prefixo dos nomes das imagens"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Formato das imagens"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Separar pasta de imagens"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Pasta para exportação de imagens"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Espaço entre os elementos da tabela"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "Animação Javascript para onmouseover e clicked"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Não animar os cantos da tabela"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Console Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Procurar..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Navegador procedural do Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Não foi possível abrir '%s' para escrita: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Não foi possível escrever em '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "Salvar saída do console Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interpretador interativo de Python no GIMP"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "_Console"
 
