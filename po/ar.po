@@ -222,7 +222,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "جمب برمجية حرة: يمكنك توزيعه و/أو تعديله حسب بنود رخصة جنو العمومية كما "
 "نشرتها مؤسسة البرامج الحرة، الإصدار الثالث أو أي إصدار أحدث (حسب رغبتك).\n"
@@ -232,7 +232,7 @@ msgstr ""
 "لمزيد من التفاصيل.\n"
 "\n"
 "من المفترض أنك تلقيت نسخة من رخصة جنو العمومية مع هذا البرنامج، وإلا فراجع "
-"http://www.gnu.org/licenses/"
+"https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

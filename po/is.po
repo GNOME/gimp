@@ -355,7 +355,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP er frjáls hugbúnaður; þú getur dreift honum eða breytt að vild undir "
 "GNU General Public License eins og það er gefið út af Free Software "
@@ -368,7 +368,7 @@ msgstr ""
 "upplýsingar má sjá GNU General Public License.\n"
 "\n"
 "Með GIMP hefði átt að fylgja eintak af GNU General Public License; en ef svo "
-"er ekki þá skaltu skoða: http://www.gnu.org/licenses/"
+"er ekki þá skaltu skoða: https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

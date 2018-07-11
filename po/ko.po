@@ -330,7 +330,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "김프는 자유로운 프로그램 입니다. 자유 소프트웨어 재단의 GNU 일반 공중 사용허"
 "가서 버전 2 또는(여러분의 선택에 따라) 그 이후 버전의 조항에 의거하여 재배"
@@ -341,7 +341,7 @@ msgstr ""
 "다.\n"
 "\n"
 "김프와 함께 GNU 일반 공증 허가서 사본을 받아야 합니다. 만약 그렇지 않다면, 다"
-"음을 참조하시기 바랍니다 http://www.gnu.org/licenses/."
+"음을 참조하시기 바랍니다 https://www.gnu.org/licenses/."
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

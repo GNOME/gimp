@@ -423,7 +423,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP is vrije software; u kunt het verder verspreiden en/of aanpassen onder "
 "de voorwaarden van de GNU General Public License zoals gepubliceerd door de "
@@ -436,7 +436,7 @@ msgstr ""
 "voor meer details.\n"
 "\n"
 "U moet een kopie van de GNU General Public License hebben gekregen samen met "
-"GIMP. Zo niet, zie http://www.gnu.org/licenses/"
+"GIMP. Zo niet, zie https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

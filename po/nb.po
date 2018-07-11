@@ -57,7 +57,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 "GIMP er fri programvare. Du kan distribuere det videre eller modifisere det "
 "som beskrevet i GNU General Public License versjon 3 eller en valgfri senere "
@@ -69,7 +69,7 @@ msgstr ""
 "informasjon.\n"
 "\n"
 "Du skal ha mottat en kopi av GNU General Public License sammen med GIMP. "
-"Hvis dette ikke er tilfelle se http://www.gnu.org/licenses/."
+"Hvis dette ikke er tilfelle se https://www.gnu.org/licenses/."
 
 #: ../app/batch.c:75
 #, c-format

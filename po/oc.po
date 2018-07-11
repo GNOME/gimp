@@ -61,7 +61,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP es un logicial liure ; lo podètz difusar e/o lo modificar segon los "
 "tèrmes de la Licéncia Publica Generala GNU tala coma publicada per la Free "
@@ -74,7 +74,7 @@ msgstr ""
 "detalhs.\n"
 "\n"
 "Deuriatz aver recebut una còpia de la Licéncia Publica Generala GNU amb "
-"GIMP. Siquenon, consultatz <http://www.gnu.org/licenses/>."
+"GIMP. Siquenon, consultatz <https://www.gnu.org/licenses/>."
 
 #: ../app/app.c:225
 #, c-format

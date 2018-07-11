@@ -113,7 +113,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP je slobodný softvér; môžete ho šíriť a/alebo meniť za podmienok "
 "licencie GNU General Public License ako ju publikovala Free Software "
@@ -125,7 +125,7 @@ msgstr ""
 "ÚČEL. Podrobnosti nájdete v GNU General Public License.\n"
 "\n"
 "Spolu s programom GIMP by ste mali dostať kópiu GNU General Public License. "
-"Ak sa tak nestalo, nájdete ju na adrese http://www.gnu.org/licenses/"
+"Ak sa tak nestalo, nájdete ju na adrese https://www.gnu.org/licenses/"
 
 # popis voľby príkazového riadka
 #: ../app/main.c:160

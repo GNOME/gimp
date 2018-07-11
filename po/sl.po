@@ -375,7 +375,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP je prosta programska oprema: lahko jo razširjate in/ali spreminjate pod "
 "pogoji Splošnega javnega dovoljenja GNU, ki ga je objavila Free Software "
@@ -388,7 +388,7 @@ msgstr ""
 "Splošno javno licenco GNU.\n"
 "\n"
 "Kopijo Splošne javne licence GIMP ste prejeli s programom GIMP; če je niste "
-"prejeli, si oglejte http://www.gnu.org/licenses/"
+"prejeli, si oglejte https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

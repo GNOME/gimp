@@ -182,13 +182,13 @@ msgid ""
 "\n"
 "GIMP is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with GIMP. If not, see: http://www.gnu.org/licenses/"
+"You should have received a copy of the GNU General Public License along with GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "El GIMP és programari lliure; podeu distribuir-lo i/o modificar-lo sota els termes de la llicència GNU General Public License tal com està publicada per la Free Software Foundation; ja siga la versió 3 de la llicència, o bé (si ho preferiu) qualsevol versió posterior.\n"
 "\n"
 "El GIMP es distribueix amb la voluntat què puga ser útil, però SENSE CAP GARANTIA, ni tan sols les garanties implícites MERCANTILS o ESPECÍFIQUES PER A UN PROPÒSIT DETERMINAT. Si voleu més informació, vegeu la llicència GNU General Public License.\n"
 "\n"
-"Heu d'haver rebut una còpia de la llicència GNU General Public License juntament amb el GIMP; si no és així, consulteu <http://www.gnu.org/licenses/licenses.ca.html>."
+"Heu d'haver rebut una còpia de la llicència GNU General Public License juntament amb el GIMP; si no és així, consulteu <https://www.gnu.org/licenses/licenses.ca.html>."
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

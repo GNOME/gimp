@@ -435,7 +435,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "Följande text är en informell översättning som enbart tillhandahålls i "
 "informativt syfte. För alla juridiska tolkningar gäller den engelska "
@@ -451,7 +451,7 @@ msgstr ""
 "ytterligare information.\n"
 "\n"
 "Du bör ha fått en kopia av GNU General Public License tillsammans med detta "
-"program. Om inte, se http://www.gnu.org/licenses/"
+"program. Om inte, se https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format
