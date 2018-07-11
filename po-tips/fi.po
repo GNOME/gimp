@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2012-06-26 20:31+0300\n"
 "PO-Revision-Date: 2013-01-27 18:53+0200\n"
 "Last-Translator: Ville Skyttä <ville.skytta@iki.fi>\n"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8.x\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2013-05-27 22:22+0200\n"
 "PO-Revision-Date: 2013-05-27 22:23+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2015-12-02 20:55+0400\n"
 "PO-Revision-Date: 2011-02-19 18:27+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"

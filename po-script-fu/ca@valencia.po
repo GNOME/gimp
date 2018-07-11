@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2011-12-22 23:13+0100\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
