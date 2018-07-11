@@ -1,4 +1,4 @@
-#'gimp/po-plug-ins
+# 'gimp/po-plug-ins
 # Slovenian translation of gimp-plugins.
 # Copyright (C) 2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-06-24 19:50+0000\n"
-"PO-Revision-Date: 2018-06-25 22:24+0200\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"PO-Revision-Date: 2018-07-11 22:34+0200\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
