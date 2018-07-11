@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2013-01-27 21:40+0000\n"
 "PO-Revision-Date: 2015-02-14 22:23+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"

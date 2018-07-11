@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2007-05-05 03:36+0100\n"
 "PO-Revision-Date: 2007-04-25 19:03+0330\n"
 "Last-Translator: Meelad Zakaria <meelad@farsiweb.info>\n"

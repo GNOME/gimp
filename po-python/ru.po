@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Python-Fu 2.8\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2016-05-09 02:14+0300\n"
 "PO-Revision-Date: 2016-05-09 02:19+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"

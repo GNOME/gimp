@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp po-plug-ins CVS\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2004-12-28 15:41+0100\n"
 "PO-Revision-Date: 2004-03-21 00:23+0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
