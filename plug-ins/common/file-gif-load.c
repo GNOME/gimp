@@ -1120,7 +1120,8 @@ ReadImage (FILE        *fd,
       /* I don't see how one would easily construct a GIF in which
          this could happen, but it's a mad mad world. */
       g_message ("Ouch!  Can't handle non-alpha RGB frames.\n"
-                 "Please file a bug report in GIMP's bugzilla.");
+                 "Please file a bug report at "
+                 "https://gitlab.gnome.org/GNOME/gimp/issues");
       gimp_quit ();
     }
 
