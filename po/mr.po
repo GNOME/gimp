@@ -413,7 +413,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "गिम्प स्वतंत्र संगणकाची आज्ञावली आहे: आपण ती पुनर्वितरीत करू शकता आणि /किंवा स्वतंत्र "
 "संगणकाची आज्ञावलीद्वारे प्रकाशित  जीएनयू  सामान्य सार्वजनिक  परवान्याच्या अटी संस्था;"
@@ -424,7 +424,7 @@ msgstr ""
 "तपशील.\n"
 "\n"
 "आपणांस जीएनयू सामान्य सार्वजनिक परवान्याची एक प्रत प्राप्त झाली असावी गिम्प जर नसेल तर "
-"पहा: http://www.gnu.org/licenses/"
+"पहा: https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

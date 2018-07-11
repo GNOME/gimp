@@ -62,7 +62,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 "Chương trình này là phần mềm tự do; bạn có thể phát hành lại nó và/hoặc sửa "
 "đổi nó với điều kiện của Giấy Phép Công Cộng GNU như được xuất bản bởi Tổ "
@@ -75,7 +75,7 @@ msgstr ""
 "\n"
 "Bạn đã nhận một bản sao của Giấy Phép Công Cộng GNU cùng với chương trình "
 "này; nếu không, hãy viết thư cho Tổ Chức Phần Mềm Tự Do,\n"
-"Có thể xem tại http://www.gnu.org/licenses/."
+"Có thể xem tại https://www.gnu.org/licenses/."
 
 #: ../app/app.c:224
 #, c-format

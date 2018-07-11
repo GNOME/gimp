@@ -444,7 +444,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP ir brīva programmatūra; jūs varat to izplatīt tālāk un/vai modificēt "
 "saskaņā ar GNU Vispārējās publiskās licences noteikumiem, ko publicējis "
@@ -457,7 +457,7 @@ msgstr ""
 "publiskajā licencē.\n"
 "\n"
 "Jums vajadzēja saņemt GNU Vispārējās publiskās licences kopiju kopā GIMP; ja "
-"jūs to nesaņēmāt, skatiet http://www.gnu.org/licenses/"
+"jūs to nesaņēmāt, skatiet https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  * This is a first loader for FLI and FLC movies. It uses as the same method as
  * the gif plug-in to store the animation (i.e. 1 layer/frame).

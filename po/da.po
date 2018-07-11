@@ -500,7 +500,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP. If not, see: http://www.gnu.org/licenses/"
+"GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP er fri software. Du kan redistribuere og/eller modificere det under de "
 "betingelser som er angivet i GNU General Public License, som udgivet af Free "
@@ -513,7 +513,7 @@ msgstr ""
 "Public License.\n"
 "\n"
 "Du bør have modtaget en kopi af GNU General Public License sammen med GIMP. "
-"Hvis ikke, så se http://www.gnu.org/licenses/"
+"Hvis ikke, så se https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format

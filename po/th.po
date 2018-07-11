@@ -61,7 +61,7 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP.  If not, see https://www.gnu.org/licenses/."
 msgstr ""
 "GIMP เป็นซอฟต์แวร์เสรี คุณสามารถแจกจ่ายต่อ และ/หรือ แก้ไขโปรแกรมได้ ภายใต้เงื่อนไขของ GNU "
 "General Public License ที่เผยแพร่โดยมูลนิธิซอฟต์แวร์เสรี ไม่ว่าจะเป็นสัญญาอนุญาตรุ่นที่ 3 "
@@ -73,7 +73,7 @@ msgstr ""
 "เพื่อดูรายละเอียดเพิ่มเติม\n"
 "\n"
 "คุณควรจะได้รับสำเนาของ GNU General Public License มาพร้อมกับ GIMP ถ้าคุณไม่ได้รับ "
-"กรุณาดูได้ที่ http://www.gnu.org/licenses/"
+"กรุณาดูได้ที่ https://www.gnu.org/licenses/"
 
 #: ../app/app.c:224
 #, c-format
