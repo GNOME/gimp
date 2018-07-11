@@ -1,8 +1,8 @@
-bugzilla-milestones.txt
+gitlab-milestones.txt
 -----------------------
 
 This document describes how the GIMP project uses milestones in the
-Bugzilla bugtracker found at:
+GNOME gitlab issue tracker found at:
 https://gitlab.gnome.org/GNOME/gimp
 
 
