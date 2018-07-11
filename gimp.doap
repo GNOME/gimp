@@ -62,7 +62,7 @@
   <download-page rdf:resource="http:///www.gimp.org/downloads/" />
 
   <bug-database
-    rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=GIMP"
+    rdf:resource="https://gitlab.gnome.org/GNOME/gimp/issues"
   />
 
   <programming-language>C</programming-language>
