@@ -45,7 +45,6 @@ enum
   PROP_OFFSET,
   PROP_GRADIENT_TYPE,
   PROP_DISTANCE_METRIC,
-  PROP_GRADIENT_REPEAT,  /*  overrides a GimpPaintOptions property  */
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
   PROP_SUPERSAMPLE_THRESHOLD,
@@ -103,13 +102,6 @@ gimp_gradient_options_class_init (GimpGradientOptionsClass *klass)
                          _("Metric to use for the distance calculation"),
                          GEGL_TYPE_DISTANCE_METRIC,
                          GEGL_DISTANCE_METRIC_EUCLIDEAN,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
-                         "gradient-repeat",
-                         _("Repeat"),
-                         NULL,
-                         GIMP_TYPE_REPEAT_MODE,
-                         GIMP_REPEAT_NONE,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
@@ -177,10 +169,6 @@ gimp_gradient_options_set_property (GObject      *object,
     case PROP_DISTANCE_METRIC:
       options->distance_metric = g_value_get_enum (value);
       break;
-    case PROP_GRADIENT_REPEAT:
-      GIMP_PAINT_OPTIONS (options)->gradient_options->gradient_repeat =
-        g_value_get_enum (value);
-      break;
 
     case PROP_SUPERSAMPLE:
       options->supersample = g_value_get_boolean (value);
@@ -227,10 +215,6 @@ gimp_gradient_options_get_property (GObject    *object,
       break;
     case PROP_DISTANCE_METRIC:
       g_value_set_enum (value, options->distance_metric);
-      break;
-    case PROP_GRADIENT_REPEAT:
-      g_value_set_enum (value,
-                        GIMP_PAINT_OPTIONS (options)->gradient_options->gradient_repeat);
       break;
 
     case PROP_SUPERSAMPLE:
