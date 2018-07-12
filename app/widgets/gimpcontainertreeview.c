@@ -1111,14 +1111,15 @@ static void
 gimp_container_tree_view_selection_changed (GtkTreeSelection      *selection,
                                             GimpContainerTreeView *tree_view)
 {
-  GimpContainerView    *view = GIMP_CONTAINER_VIEW (tree_view);
-  GList                *items;
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
+  GList             *items;
 
   gimp_container_tree_view_get_selected (view, &items);
   gimp_container_view_multi_selected (view, items);
   g_list_free (items);
 
-  gimp_container_tree_view_process_updates (tree_view);
+  if (items)
+    gimp_container_tree_view_process_updates (tree_view);
 }
 
 static GtkCellRenderer *
