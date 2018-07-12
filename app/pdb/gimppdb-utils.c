@@ -46,17 +46,26 @@
 
 
 static GimpObject *
-gimp_pdb_get_data_factory_item (GimpDataFactory *data_factory,
+gimp_pdb_get_data_factory_item (GimpDataFactory *factory,
                                 const gchar     *name)
 {
-  GimpObject *gimp_object;
+  GimpObject *object;
 
-  gimp_object = gimp_container_get_child_by_name (gimp_data_factory_get_container (data_factory), name);
+  object = gimp_container_get_child_by_name (gimp_data_factory_get_container (factory), name);
 
-  if (! gimp_object)
-    gimp_object = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (data_factory), name);
+  if (! object)
+    object = gimp_container_get_child_by_name (gimp_data_factory_get_container_obsolete (factory), name);
 
-  return gimp_object;
+  if (! object && ! strcmp (name, "Standard"))
+    {
+      Gimp *gimp = gimp_data_factory_get_gimp (factory);
+
+      object = (GimpObject *)
+        gimp_data_factory_data_get_standard (factory,
+                                             gimp_get_user_context (gimp));
+    }
+
+  return object;
 }
 
 
