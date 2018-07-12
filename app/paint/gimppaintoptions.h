@@ -54,7 +54,7 @@ struct _GimpGradientPaintOptions
 {
   gboolean                    gradient_reverse;
   GimpGradientBlendColorSpace gradient_blend_color_space;
-  GimpRepeatMode              gradient_repeat;
+  GimpRepeatMode              gradient_repeat; /* only used by gradient tool */
 };
 
 struct _GimpSmoothingOptions

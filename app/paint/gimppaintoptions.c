@@ -71,9 +71,7 @@
 
 #define DEFAULT_GRADIENT_REVERSE        FALSE
 #define DEFAULT_GRADIENT_BLEND_SPACE    GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL
-#define DEFAULT_GRADIENT_REPEAT         GIMP_REPEAT_TRIANGULAR
-#define DEFAULT_GRADIENT_LENGTH         100.0
-#define DEFAULT_GRADIENT_UNIT           GIMP_UNIT_PIXEL
+#define DEFAULT_GRADIENT_REPEAT         GIMP_REPEAT_NONE
 
 #define DYNAMIC_MAX_VALUE               1.0
 #define DYNAMIC_MIN_VALUE               0.0
@@ -119,6 +117,7 @@ enum
 
   PROP_GRADIENT_REVERSE,
   PROP_GRADIENT_BLEND_COLOR_SPACE,
+  PROP_GRADIENT_REPEAT,
 
   PROP_BRUSH_VIEW_TYPE,
   PROP_BRUSH_VIEW_SIZE,
@@ -355,6 +354,13 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                          GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
                          DEFAULT_GRADIENT_BLEND_SPACE,
                          GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
+                         "gradient-repeat",
+                         _("Repeat"),
+                         NULL,
+                         GIMP_TYPE_REPEAT_MODE,
+                         DEFAULT_GRADIENT_REPEAT,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
                          "brush-view-type",
@@ -508,23 +514,18 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_BRUSH_SIZE:
       options->brush_size = g_value_get_double (value);
       break;
-
     case PROP_BRUSH_ASPECT_RATIO:
       options->brush_aspect_ratio = g_value_get_double (value);
       break;
-
     case PROP_BRUSH_ANGLE:
       options->brush_angle = - 1.0 * g_value_get_double (value) / 360.0; /* let's make the angle mathematically correct */
       break;
-
     case PROP_BRUSH_SPACING:
       options->brush_spacing = g_value_get_double (value);
       break;
-
     case PROP_BRUSH_HARDNESS:
       options->brush_hardness = g_value_get_double (value);
       break;
-
     case PROP_BRUSH_FORCE:
       options->brush_force = g_value_get_double (value);
       break;
@@ -532,19 +533,15 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_BRUSH_LINK_SIZE:
       options->brush_link_size = g_value_get_boolean (value);
       break;
-
     case PROP_BRUSH_LINK_ASPECT_RATIO:
       options->brush_link_aspect_ratio = g_value_get_boolean (value);
       break;
-
     case PROP_BRUSH_LINK_ANGLE:
       options->brush_link_angle = g_value_get_boolean (value);
       break;
-
     case PROP_BRUSH_LINK_SPACING:
       options->brush_link_spacing = g_value_get_boolean (value);
       break;
-
     case PROP_BRUSH_LINK_HARDNESS:
       options->brush_link_hardness = g_value_get_boolean (value);
       break;
@@ -556,7 +553,6 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_APPLICATION_MODE:
       options->application_mode = g_value_get_enum (value);
       break;
-
     case PROP_HARD:
       options->hard = g_value_get_boolean (value);
       break;
@@ -564,7 +560,6 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_USE_JITTER:
       jitter_options->use_jitter = g_value_get_boolean (value);
       break;
-
     case PROP_JITTER_AMOUNT:
       jitter_options->jitter_amount = g_value_get_double (value);
       break;
@@ -576,15 +571,12 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_FADE_LENGTH:
       fade_options->fade_length = g_value_get_double (value);
       break;
-
     case PROP_FADE_REVERSE:
       fade_options->fade_reverse = g_value_get_boolean (value);
       break;
-
     case PROP_FADE_REPEAT:
       fade_options->fade_repeat = g_value_get_enum (value);
       break;
-
     case PROP_FADE_UNIT:
       fade_options->fade_unit = g_value_get_int (value);
       break;
@@ -595,11 +587,13 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_GRADIENT_BLEND_COLOR_SPACE:
       gradient_options->gradient_blend_color_space = g_value_get_enum (value);
       break;
+    case PROP_GRADIENT_REPEAT:
+      gradient_options->gradient_repeat = g_value_get_enum (value);
+      break;
 
     case PROP_BRUSH_VIEW_TYPE:
       options->brush_view_type = g_value_get_enum (value);
       break;
-
     case PROP_BRUSH_VIEW_SIZE:
       options->brush_view_size = g_value_get_int (value);
       break;
@@ -607,7 +601,6 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_DYNAMICS_VIEW_TYPE:
       options->dynamics_view_type = g_value_get_enum (value);
       break;
-
     case PROP_DYNAMICS_VIEW_SIZE:
       options->dynamics_view_size = g_value_get_int (value);
       break;
@@ -615,7 +608,6 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_PATTERN_VIEW_TYPE:
       options->pattern_view_type = g_value_get_enum (value);
       break;
-
     case PROP_PATTERN_VIEW_SIZE:
       options->pattern_view_size = g_value_get_int (value);
       break;
@@ -623,7 +615,6 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_GRADIENT_VIEW_TYPE:
       options->gradient_view_type = g_value_get_enum (value);
       break;
-
     case PROP_GRADIENT_VIEW_SIZE:
       options->gradient_view_size = g_value_get_int (value);
       break;
@@ -631,11 +622,9 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_USE_SMOOTHING:
       smoothing_options->use_smoothing = g_value_get_boolean (value);
       break;
-
     case PROP_SMOOTHING_QUALITY:
       smoothing_options->smoothing_quality = g_value_get_int (value);
       break;
-
     case PROP_SMOOTHING_FACTOR:
       smoothing_options->smoothing_factor = g_value_get_double (value);
       break;
@@ -671,23 +660,18 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_BRUSH_SIZE:
       g_value_set_double (value, options->brush_size);
       break;
-
     case PROP_BRUSH_ASPECT_RATIO:
       g_value_set_double (value, options->brush_aspect_ratio);
       break;
-
     case PROP_BRUSH_ANGLE:
       g_value_set_double (value, - 1.0 * options->brush_angle * 360.0); /* mathematically correct -> intuitively correct */
       break;
-
     case PROP_BRUSH_SPACING:
       g_value_set_double (value, options->brush_spacing);
       break;
-
     case PROP_BRUSH_HARDNESS:
       g_value_set_double (value, options->brush_hardness);
       break;
-
     case PROP_BRUSH_FORCE:
       g_value_set_double (value, options->brush_force);
       break;
@@ -695,19 +679,15 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_BRUSH_LINK_SIZE:
       g_value_set_boolean (value, options->brush_link_size);
       break;
-
     case PROP_BRUSH_LINK_ASPECT_RATIO:
       g_value_set_boolean (value, options->brush_link_aspect_ratio);
       break;
-
     case PROP_BRUSH_LINK_ANGLE:
       g_value_set_boolean (value, options->brush_link_angle);
       break;
-
     case PROP_BRUSH_LINK_SPACING:
       g_value_set_boolean (value, options->brush_link_spacing);
       break;
-
     case PROP_BRUSH_LINK_HARDNESS:
       g_value_set_boolean (value, options->brush_link_hardness);
       break;
@@ -719,7 +699,6 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_APPLICATION_MODE:
       g_value_set_enum (value, options->application_mode);
       break;
-
     case PROP_HARD:
       g_value_set_boolean (value, options->hard);
       break;
@@ -727,7 +706,6 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_USE_JITTER:
       g_value_set_boolean (value, jitter_options->use_jitter);
       break;
-
     case PROP_JITTER_AMOUNT:
       g_value_set_double (value, jitter_options->jitter_amount);
       break;
@@ -739,15 +717,12 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_FADE_LENGTH:
       g_value_set_double (value, fade_options->fade_length);
       break;
-
     case PROP_FADE_REVERSE:
       g_value_set_boolean (value, fade_options->fade_reverse);
       break;
-
     case PROP_FADE_REPEAT:
       g_value_set_enum (value, fade_options->fade_repeat);
       break;
-
     case PROP_FADE_UNIT:
       g_value_set_int (value, fade_options->fade_unit);
       break;
@@ -758,11 +733,13 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_GRADIENT_BLEND_COLOR_SPACE:
       g_value_set_enum (value, gradient_options->gradient_blend_color_space);
       break;
+    case PROP_GRADIENT_REPEAT:
+      g_value_set_enum (value, gradient_options->gradient_repeat);
+      break;
 
     case PROP_BRUSH_VIEW_TYPE:
       g_value_set_enum (value, options->brush_view_type);
       break;
-
     case PROP_BRUSH_VIEW_SIZE:
       g_value_set_int (value, options->brush_view_size);
       break;
@@ -770,7 +747,6 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_DYNAMICS_VIEW_TYPE:
       g_value_set_enum (value, options->dynamics_view_type);
       break;
-
     case PROP_DYNAMICS_VIEW_SIZE:
       g_value_set_int (value, options->dynamics_view_size);
       break;
@@ -778,7 +754,6 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_PATTERN_VIEW_TYPE:
       g_value_set_enum (value, options->pattern_view_type);
       break;
-
     case PROP_PATTERN_VIEW_SIZE:
       g_value_set_int (value, options->pattern_view_size);
       break;
@@ -786,7 +761,6 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_GRADIENT_VIEW_TYPE:
       g_value_set_enum (value, options->gradient_view_type);
       break;
-
     case PROP_GRADIENT_VIEW_SIZE:
       g_value_set_int (value, options->gradient_view_size);
       break;
@@ -794,11 +768,9 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_USE_SMOOTHING:
       g_value_set_boolean (value, smoothing_options->use_smoothing);
       break;
-
     case PROP_SMOOTHING_QUALITY:
       g_value_set_int (value, smoothing_options->smoothing_quality);
       break;
-
     case PROP_SMOOTHING_FACTOR:
       g_value_set_double (value, smoothing_options->smoothing_factor);
       break;
@@ -1218,7 +1190,8 @@ static const gchar *dynamics_props[] =
 static const gchar *gradient_props[] =
 {
   "gradient-reverse",
-  "gradient-blend-color-space"
+  "gradient-blend-color-space",
+  "gradient-repeat"
 };
 
 static const gint max_n_props = (G_N_ELEMENTS (brush_props) +
