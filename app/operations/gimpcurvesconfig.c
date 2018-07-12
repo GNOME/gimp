@@ -39,8 +39,6 @@
 
 #include "gimp-intl.h"
 
-#include "gimp-intl.h"
-
 
 enum
 {
