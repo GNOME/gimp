@@ -71,6 +71,7 @@
 #include "action-search-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
+#include "extensions-dialog.h"
 #include "file-open-dialog.h"
 #include "file-open-location-dialog.h"
 #include "file-save-dialog.h"
