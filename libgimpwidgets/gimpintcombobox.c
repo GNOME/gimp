@@ -52,15 +52,10 @@ enum
 
 struct _GimpIntComboBoxPrivate
 {
-  GtkCellRenderer        *pixbuf_renderer;
   GtkCellRenderer        *text_renderer;
-
-  GtkCellRenderer        *menu_pixbuf_renderer;
-  GtkCellRenderer        *menu_text_renderer;
 
   PangoEllipsizeMode      ellipsize;
   gchar                  *label;
-  GtkCellRenderer        *label_renderer;
   GimpIntComboBoxLayout   layout;
 
   GimpIntSensitivityFunc  sensitivity_func;
@@ -641,9 +636,24 @@ gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
   if (label == priv->label)
     return;
 
-  g_free (priv->label);
+  if (priv->label)
+    {
+      g_free (priv->label);
+      priv->label = NULL;
 
-  priv->label = g_strdup (label);
+      g_signal_handlers_disconnect_by_func (combo_box,
+                                            gimp_int_combo_box_create_cells,
+                                            NULL);
+    }
+
+  if (label)
+    {
+      priv->label = g_strdup (label);
+
+      g_signal_connect (combo_box, "notify::popup-shown",
+                        G_CALLBACK (gimp_int_combo_box_create_cells),
+                        NULL);
+    }
 
   gimp_int_combo_box_create_cells (combo_box);
 
@@ -764,181 +774,136 @@ gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,
 /*  private functions  */
 
 static void
-queue_resize_cell_view (GtkContainer *container)
-{
-  GList *children = gtk_container_get_children (container);
-  GList *list;
-
-  for (list = children; list; list = g_list_next (list))
-    {
-      if (GTK_IS_CELL_VIEW (list->data))
-        {
-          gtk_widget_queue_resize (list->data);
-          break;
-        }
-      else if (GTK_IS_CONTAINER (list->data))
-        {
-          queue_resize_cell_view (list->data);
-        }
-    }
-
-  g_list_free (children);
-}
-
-static void
 gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
 {
-  GimpIntComboBoxPrivate *priv = GET_PRIVATE (combo_box);
-  GtkCellLayout          *layout;
+  GimpIntComboBoxPrivate *priv   = GET_PRIVATE (combo_box);
+  GtkCellLayout          *layout = GTK_CELL_LAYOUT (combo_box);
+  GtkCellRenderer        *text_renderer;
+  GtkCellRenderer        *pixbuf_renderer;
+  gboolean                popup_shown;
 
-  /*  menu layout  */
-
-  layout = GTK_CELL_LAYOUT (combo_box);
-
-  gtk_cell_layout_clear (layout);
-
-  priv->menu_pixbuf_renderer = gtk_cell_renderer_pixbuf_new ();
-  g_object_set (priv->menu_pixbuf_renderer,
-                "xpad", 2,
-                NULL);
-
-  priv->menu_text_renderer = gtk_cell_renderer_text_new ();
-
-  gtk_cell_layout_pack_start (layout,
-                              priv->menu_pixbuf_renderer, FALSE);
-  gtk_cell_layout_pack_start (layout,
-                              priv->menu_text_renderer, TRUE);
-
-  gtk_cell_layout_set_attributes (layout,
-                                  priv->menu_pixbuf_renderer,
-                                  "icon-name", GIMP_INT_STORE_ICON_NAME,
-                                  "pixbuf",    GIMP_INT_STORE_PIXBUF,
-                                  NULL);
-  gtk_cell_layout_set_attributes (layout,
-                                  priv->menu_text_renderer,
-                                  "text", GIMP_INT_STORE_LABEL,
-                                  NULL);
-
-  if (priv->sensitivity_func)
-    {
-      gtk_cell_layout_set_cell_data_func (layout,
-                                          priv->menu_pixbuf_renderer,
-                                          gimp_int_combo_box_data_func,
-                                          priv, NULL);
-
-      gtk_cell_layout_set_cell_data_func (layout,
-                                          priv->menu_text_renderer,
-                                          gimp_int_combo_box_data_func,
-                                          priv, NULL);
-    }
-
-  /*  combo box layout  */
-
-  layout = GTK_CELL_LAYOUT (gtk_bin_get_child (GTK_BIN (combo_box)));
+  g_object_get (combo_box, "popup-shown", &popup_shown, NULL);
 
   gtk_cell_layout_clear (layout);
 
-  if (priv->layout != GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY)
-    {
-      priv->text_renderer = gtk_cell_renderer_text_new ();
-      g_object_set (priv->text_renderer,
-                    "ellipsize", priv->ellipsize,
-                    NULL);
-    }
-  else
-    {
-      priv->text_renderer = NULL;
-    }
+  priv->text_renderer = NULL;
 
-  priv->pixbuf_renderer = gtk_cell_renderer_pixbuf_new ();
-
-  if (priv->text_renderer)
+  if (popup_shown)
     {
-      g_object_set (priv->pixbuf_renderer,
+      /*  menu layout  */
+
+      pixbuf_renderer = gtk_cell_renderer_pixbuf_new ();
+      g_object_set (pixbuf_renderer,
                     "xpad", 2,
                     NULL);
-    }
 
-  if (priv->label)
-    {
-      priv->label_renderer = gtk_cell_renderer_text_new ();
-      g_object_set (priv->label_renderer,
-                    "text", priv->label,
-                    NULL);
+      text_renderer = gtk_cell_renderer_text_new ();
 
-      gtk_cell_layout_pack_start (layout,
-                                  priv->label_renderer, FALSE);
+      gtk_cell_layout_pack_start (layout, pixbuf_renderer, FALSE);
+      gtk_cell_layout_pack_start (layout, text_renderer, TRUE);
 
-      gtk_cell_layout_pack_end (layout,
-                                priv->pixbuf_renderer, FALSE);
-
-      if (priv->text_renderer)
-        {
-          gtk_cell_layout_pack_end (layout,
-                                    priv->text_renderer, TRUE);
-
-          g_object_set (priv->text_renderer,
-                        "xalign", 1.0,
-                        NULL);
-        }
-    }
-  else
-    {
-      gtk_cell_layout_pack_start (layout,
-                                  priv->pixbuf_renderer, FALSE);
-
-      if (priv->text_renderer)
-        {
-          gtk_cell_layout_pack_start (layout,
-                                      priv->text_renderer, TRUE);
-        }
-    }
-
-  gtk_cell_layout_set_attributes (layout,
-                                  priv->pixbuf_renderer,
-                                  "icon-name", GIMP_INT_STORE_ICON_NAME,
-                                  NULL);
-
-  if (priv->text_renderer)
-    {
       gtk_cell_layout_set_attributes (layout,
-                                      priv->text_renderer,
+                                      pixbuf_renderer,
+                                      "icon-name", GIMP_INT_STORE_ICON_NAME,
+                                      "pixbuf",    GIMP_INT_STORE_PIXBUF,
+                                      NULL);
+      gtk_cell_layout_set_attributes (layout,
+                                      text_renderer,
                                       "text", GIMP_INT_STORE_LABEL,
                                       NULL);
-    }
 
-  if (priv->layout == GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED ||
-      priv->sensitivity_func)
-    {
-      gtk_cell_layout_set_cell_data_func (layout,
-                                          priv->pixbuf_renderer,
-                                          gimp_int_combo_box_data_func,
-                                          priv, NULL);
-
-      if (priv->text_renderer)
+      if (priv->sensitivity_func)
         {
           gtk_cell_layout_set_cell_data_func (layout,
-                                              priv->text_renderer,
+                                              pixbuf_renderer,
+                                              gimp_int_combo_box_data_func,
+                                              priv, NULL);
+
+          gtk_cell_layout_set_cell_data_func (layout,
+                                              text_renderer,
                                               gimp_int_combo_box_data_func,
                                               priv, NULL);
         }
     }
-
-  /* HACK: GtkCellView doesn't invalidate itself when stuff is
-   * added/removed, work around this bug until GTK+ 2.24.19
-   */
-  if (gtk_check_version (2, 24, 19))
+  else
     {
-      GList *attached_menus;
+      /*  combo box layout  */
 
-      queue_resize_cell_view (GTK_CONTAINER (combo_box));
+      if (priv->layout != GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY)
+        {
+          priv->text_renderer = text_renderer = gtk_cell_renderer_text_new ();
+          g_object_set (priv->text_renderer,
+                        "ellipsize", priv->ellipsize,
+                        NULL);
+        }
+      else
+        {
+          text_renderer = NULL;
+        }
 
-      /* HACK HACK HACK OMG */
-      attached_menus = g_object_get_data (G_OBJECT (combo_box),
-                                          "gtk-attached-menus");
+      pixbuf_renderer = gtk_cell_renderer_pixbuf_new ();
 
-      for (; attached_menus; attached_menus = g_list_next (attached_menus))
-        queue_resize_cell_view (attached_menus->data);
+      if (text_renderer)
+        {
+          g_object_set (pixbuf_renderer,
+                        "xpad", 2,
+                        NULL);
+        }
+
+      if (priv->label)
+        {
+          GtkCellRenderer *label_renderer;
+
+          label_renderer = gtk_cell_renderer_text_new ();
+          g_object_set (label_renderer,
+                        "text", priv->label,
+                        NULL);
+
+          gtk_cell_layout_pack_start (layout, label_renderer, FALSE);
+          gtk_cell_layout_pack_end (layout, pixbuf_renderer, FALSE);
+
+          if (text_renderer)
+            {
+              gtk_cell_layout_pack_end (layout, text_renderer, TRUE);
+
+              g_object_set (text_renderer,
+                            "xalign", 1.0,
+                            NULL);
+            }
+        }
+      else
+        {
+          gtk_cell_layout_pack_start (layout, pixbuf_renderer, FALSE);
+
+          if (priv->text_renderer)
+            gtk_cell_layout_pack_start (layout, text_renderer, TRUE);
+        }
+
+      gtk_cell_layout_set_attributes (layout,
+                                      pixbuf_renderer,
+                                      "icon-name", GIMP_INT_STORE_ICON_NAME,
+                                      NULL);
+
+      if (text_renderer)
+        gtk_cell_layout_set_attributes (layout,
+                                        text_renderer,
+                                        "text", GIMP_INT_STORE_LABEL,
+                                        NULL);
+
+      if (priv->layout == GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED ||
+          priv->sensitivity_func)
+        {
+          gtk_cell_layout_set_cell_data_func (layout,
+                                              pixbuf_renderer,
+                                              gimp_int_combo_box_data_func,
+                                              priv, NULL);
+
+          if (text_renderer)
+            gtk_cell_layout_set_cell_data_func (layout,
+                                                text_renderer,
+                                                gimp_int_combo_box_data_func,
+                                                priv, NULL);
+        }
     }
 }
 
