@@ -754,8 +754,9 @@ gimp_filter_tool_set_gyroscope (Controller    *controller,
                                      controller);
 }
 
-static void   gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
-                                                  Controller     *controller)
+static void
+gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
+                                    Controller     *controller)
 {
   GimpFilterTool                  *filter_tool = controller->filter_tool;
   GimpControllerGyroscopeCallback  gyroscope_callback;
