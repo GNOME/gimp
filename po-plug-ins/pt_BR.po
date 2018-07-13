@@ -6,21 +6,23 @@
 # Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2007, 2008, 2012.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
 # Rafael Fontenelle <rafaelff@gmail.com>, 2013.
+# Laudivan Freire de Almeida <laudivan@riseup.net>, 2016.
+# Caio Nascimento <caiocnwp@Hotmail.com>, 2017.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-07-10 18:15+0000\n"
-"PO-Revision-Date: 2018-07-11 09:35-0300\n"
-"Last-Translator: Bruno Lopes da Silva <brunolopesbldsb@gmail.com>\n"
+"PO-Revision-Date: 2017-12-23 17:12-0200\n"
+"Last-Translator: Caio Nascimento <caiocnwp@Hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -2066,8 +2068,6 @@ msgid "Edge detection with control of edge thickness"
 msgstr "Detecção de bordas com controle de espessura da borda"
 
 #: ../plug-ins/common/edge-dog.c:142
-#, fuzzy
-#| msgid "_Difference of Gaussians..."
 msgid "_Difference of Gaussians (legacy)..."
 msgstr "_Diferença de gaussianas (legado)..."
 
@@ -2449,7 +2449,7 @@ msgstr "Formato de pincel sem suporte"
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr ""
-"Dados inválidos de cabeçalho em '%s': O nome do pincel é muito grande: %lu"
+"Dados inválidos de cabeçalho em \"%s\": O nome do pincel é muito grande: %lu"
 
 #: ../plug-ins/common/file-gbr.c:482
 #, c-format
@@ -2492,7 +2492,7 @@ msgstr "Imagem OpenEXR"
 #: ../plug-ins/common/file-gegl.c:336
 #, c-format
 msgid "Could not open '%s'"
-msgstr "Não foi possível abrir o arquivo '%s'"
+msgstr "Não foi possível abrir o arquivo \"%s\""
 
 #: ../plug-ins/common/file-gif-load.c:148
 #: ../plug-ins/common/file-gif-save.c:167
@@ -2597,16 +2597,12 @@ msgid "Cr_op"
 msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1101
-#, fuzzy
-#| msgid ""
-#| "The GIF file format does not allow this.  You may choose whether to crop "
-#| "all of the layers to the image borders, or cancel this save."
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
 msgstr ""
 "O formato GIF não permite isso. Você tem a opção de cortar todas as camadas "
-"para as bordas da imagem ou cancelar esta gravação."
+"para as bordas da imagem ou cancelar esta exportação."
 
 #: ../plug-ins/common/file-gif-save.c:1235
 msgid "GIF"
@@ -3187,7 +3183,7 @@ msgstr "Número inválido de bytes por linha no cabeçalho do PCX"
 
 #: ../plug-ins/common/file-pcx.c:429
 msgid "Resolution out of bounds in XCX header, using 72x72"
-msgstr ""
+msgstr "Resolução fora dos limites no cabeçalho XCX, usando 72x72"
 
 #: ../plug-ins/common/file-pcx.c:437
 #, c-format
@@ -3245,7 +3241,9 @@ msgstr "Portable Document Format: PDF"
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
+"O documento PDF '%1$s' tem %3$d página. A página %2$d está fora de alcance."
 msgstr[1] ""
+"O documento PDF '%1$s' têm %3$d páginas. A página %2$d está fora de alcance."
 
 #: ../plug-ins/common/file-pdf-load.c:679
 #: ../plug-ins/common/file-pdf-load.c:749
@@ -3255,7 +3253,7 @@ msgstr "Falha ao carregar arquivo \"%s\": %s"
 
 #: ../plug-ins/common/file-pdf-load.c:694
 msgid "PDF is password protected, please input the password:"
-msgstr ""
+msgstr "PDF tem proteção por senha, por favor insira a senha."
 
 #: ../plug-ins/common/file-pdf-load.c:704
 msgid "Encrypted PDF"
@@ -3405,7 +3403,7 @@ msgstr ""
 #: ../plug-ins/common/file-pdf-save.c:1372
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
-msgstr ""
+msgstr "Não pode manipular o tamanho (largura ou altura) da imagem."
 
 #: ../plug-ins/common/file-pix.c:143 ../plug-ins/common/file-pix.c:159
 msgid "Alias Pix image"
@@ -3565,7 +3563,7 @@ msgstr "A altura da imagem é maior do que as capacidades do GIMP."
 
 #: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
-msgstr ""
+msgstr "Fator escalar falso."
 
 #: ../plug-ins/common/file-pnm.c:650
 #, fuzzy
@@ -5833,7 +5831,7 @@ msgstr "_Obter cores da amostra"
 #: ../plug-ins/gimpressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
-msgstr ""
+msgstr "_Aplicar"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample-colorize.c:1359
@@ -5947,7 +5945,7 @@ msgstr ""
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow (legacy)..."
-msgstr "_Brilho suave (legado..."
+msgstr "_Brilho suave (legado)..."
 
 #: ../plug-ins/common/softglow.c:628
 msgid "Softglow"
@@ -6177,11 +6175,11 @@ msgstr "Designer de esferas"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2926
 #: ../plug-ins/ifs-compose/ifs-compose.c:1027
 msgid "_New"
-msgstr ""
+msgstr "_Novo"
 
 #: ../plug-ins/common/sphere-designer.c:2674
 msgid "D_uplicate"
-msgstr ""
+msgstr "D_uplicar"
 
 #: ../plug-ins/common/sphere-designer.c:2680
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:761
@@ -6782,7 +6780,7 @@ msgstr "Escala X:"
 
 #: ../plug-ins/common/wavelet-decompose.c:272
 msgid "Residual"
-msgstr ""
+msgstr "Residual"
 
 #: ../plug-ins/common/wavelet-decompose.c:381
 #, fuzzy
@@ -6793,12 +6791,12 @@ msgstr "Escala:"
 #. create group layer
 #: ../plug-ins/common/wavelet-decompose.c:393
 msgid "Create a layer group to store the decomposition"
-msgstr ""
+msgstr "Criar um grupo de camadas para armazenar a decomposição"
 
 #. create layer masks
 #: ../plug-ins/common/wavelet-decompose.c:405
 msgid "Add a layer mask to each scales layers"
-msgstr ""
+msgstr "Adicionar uma máscara para cada escala de camada"
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
@@ -6879,7 +6877,7 @@ msgstr "Criar de página web"
 
 #: ../plug-ins/common/web-page.c:235
 msgid "Cre_ate"
-msgstr ""
+msgstr "Cri_ar"
 
 #: ../plug-ins/common/web-page.c:264
 msgid "Enter location (URI):"
@@ -7198,7 +7196,7 @@ msgstr "Falha ao carregar arquivo \"%s\": %s"
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
 msgid "Icon #%d has zero width or height"
-msgstr ""
+msgstr "Ícone #%d tem largura ou altura zero"
 
 #. read successfully. add to image
 #: ../plug-ins/file-ico/ico-load.c:634
@@ -7274,7 +7272,7 @@ msgstr "_Otimizar"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:917
 msgid "Use arithmetic _coding"
-msgstr ""
+msgstr "Usar código _aritmético"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:919
 msgid "Older software may have trouble opening arithmetic-coded images"
@@ -7726,7 +7724,7 @@ msgstr ""
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:632
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
-msgstr ""
+msgstr "Figuras indexadas não podem ser comprimidas com \"JPEG\"."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:731
 msgid ""
@@ -7739,7 +7737,7 @@ msgstr ""
 #: ../plug-ins/file-tiff/file-tiff-save.c:823
 #, c-format
 msgid "Failed a scanline write on row %d"
-msgstr ""
+msgstr "Falha na escrita de varredura de linha na linha %d"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:948
 msgid "TIFF"
@@ -7847,12 +7845,12 @@ msgstr "Repetir _indefinidamente"
 #. label for 'max key-frame distance' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:273
 msgid "Max distance between key-frames:"
-msgstr ""
+msgstr "Distância máxima entre quadros chaves:"
 
 #. minimize-size checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:308
 msgid "Minimize output size (slower)"
-msgstr ""
+msgstr "Minimiza o tamanho de saída (lento)"
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:331
@@ -9857,70 +9855,56 @@ msgid "Rating"
 msgstr "Rotacionando"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
-#, fuzzy
-#| msgid "_Keywords:"
 msgid "Keywords"
-msgstr "_Palavras-chave:"
+msgstr "Palavras-chave:"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:8
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyright Status"
-msgstr "Direitos autorais"
+msgstr "Status dos direitos autorais"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:9
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyright Notice"
-msgstr "Direitos autorais"
+msgstr "Avisos de direitos autorais"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:10
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyright URL"
-msgstr "Direitos autorais"
+msgstr "URL de Direitos autorais"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:11
 msgid "Address"
-msgstr ""
+msgstr "Endereço"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:12
 msgid "City"
-msgstr ""
+msgstr "Cidade"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:13
 msgid "Postal Code\t"
-msgstr ""
+msgstr "Código postal\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:14
-#, fuzzy
-#| msgid "Rotate / Scale"
 msgid "State / Province"
-msgstr "Rotaciona / redimensiona"
+msgstr "Estado / Província"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:15
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:16
-#, fuzzy
-#| msgid "Phong"
 msgid "Phone(s)"
-msgstr "Brilho"
+msgstr "Telefone(s)"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:17
 msgid "Email(s)"
-msgstr ""
+msgstr "E-mail(s)"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:18
 msgid "Website(s)"
-msgstr ""
+msgstr "Site(s)"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:19
-#, fuzzy
-#| msgid "Installation Date"
 msgid "Creation Date"
-msgstr "Data de instalação"
+msgstr "Data de criação"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:20
 msgid "Intellectual Genre"
@@ -9952,17 +9936,15 @@ msgstr "Criar linhas"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:26
 msgid "Urgency"
-msgstr ""
+msgstr "Urgência"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:27
 msgid "Job Identifier\t"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
-#, fuzzy
-#| msgid "Intersection"
 msgid "Instructions"
-msgstr "Intersecção"
+msgstr "Instruções"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:29
 #, fuzzy
@@ -9985,7 +9967,7 @@ msgstr "Tipos de imagem"
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:32
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:7
 msgid "IPTC"
-msgstr ""
+msgstr "IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
 #, fuzzy
@@ -10209,11 +10191,11 @@ msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:80
 msgid "Category"
-msgstr ""
+msgstr "Categoria"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:81
 msgid "Categories"
-msgstr ""
+msgstr "Categorias"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:82
 msgid "Longitude Reference"
@@ -10316,28 +10298,24 @@ msgid "Equipment Manufacturer"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
-#, fuzzy
-#| msgid "DICOM image"
 msgid "DICOM"
-msgstr "Imagem DICOM"
+msgstr "DICOM"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
 msgid "Exif Tag"
-msgstr ""
+msgstr "Etiqueta Exif"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
 msgid "Exif"
-msgstr ""
+msgstr "Exif"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:4
 msgid "XMP Tag"
-msgstr ""
+msgstr "Etiqueta XMP"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:5
-#, fuzzy
-#| msgid "XBM"
 msgid "XMP"
-msgstr "XBM"
+msgstr "XMP"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:6
 msgid "IPTC Tag"
@@ -12846,6 +12824,8 @@ msgstr "Limiar:"
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:102
 msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr ""
+"Se dois pontos de extremidade estão mais próximos do que este, eles são "
+"feitos para serem iguais."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
 #, fuzzy
@@ -12859,6 +12839,9 @@ msgid ""
 "smaller than this, it's a corner, even if it's within `corner_surround' "
 "pixels of a point with a smaller angle."
 msgstr ""
+"Se o ângulo definido por um ponto e os seus predecessores e sucessores é "
+"menor do que este, ele é um canto, mesmo que esteja dentro dos pixels de "
+"\"corner_surround\" de um ponto com um ângulo menor."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:126
 #, fuzzy
