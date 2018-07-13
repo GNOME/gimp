@@ -8,7 +8,8 @@
     "separate-locales": false,
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
-    "finish-args": ["--share=ipc", "--socket=x11", "--share=network",
+    "finish-args": ["--share=ipc", "--share=network",
+                    "--socket=x11", "--socket=wayland",
                     "--filesystem=host", "--filesystem=xdg-config/GIMP",
                     "--filesystem=xdg-config/gtk-3.0", "--filesystem=/tmp",
                     "--talk-name=org.gtk.vfs", "--talk-name=org.gtk.vfs.*" ],
@@ -150,8 +151,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://www.libraw.org/data/LibRaw-0.18.0.tar.gz",
-                    "sha256": "d56a0c9a0e6d1b8c8c5585346acf2cfb0554eee0f0948da66f580cd65c8c5c9b"
+                    "url": "http://www.libraw.org/data/LibRaw-0.19.0.tar.gz",
+                    "sha256": "e83f51e83b19f9ba6b8bd144475fc12edf2d7b3b930d8d280bdebd8a8f3ed259"
                 }
             ]
         },
