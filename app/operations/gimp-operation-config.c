@@ -271,7 +271,6 @@ gimp_operation_config_get_type (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), G_TYPE_NONE);
   g_return_val_if_fail (operation != NULL, G_TYPE_NONE);
-  g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), G_TYPE_NONE);
 
   config_types = gimp_operation_config_get_type_table (gimp);
 
@@ -280,6 +279,9 @@ gimp_operation_config_get_type (Gimp        *gimp,
   if (! config_type)
     {
       GTypeQuery query;
+
+      g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT),
+                            G_TYPE_NONE);
 
       g_type_query (parent_type, &query);
 
