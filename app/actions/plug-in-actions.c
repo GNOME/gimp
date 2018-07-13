@@ -152,8 +152,8 @@ plug_in_actions_update (GimpActionGroup *group,
     {
       GimpPlugInProcedure *proc = list->data;
 
-      if ((proc->menu_label || proc->menu_paths) &&
-          ! proc->file_proc                      &&
+      if (proc->menu_label  &&
+          ! proc->file_proc &&
           proc->image_types_val)
         {
           GimpProcedure *procedure = GIMP_PROCEDURE (proc);
@@ -224,7 +224,7 @@ plug_in_actions_register_procedure (GimpPDB         *pdb,
                                G_CALLBACK (plug_in_actions_menu_path_added),
                                group, 0);
 
-      if ((plug_in_proc->menu_label || plug_in_proc->menu_paths) &&
+      if (plug_in_proc->menu_label &&
           ! plug_in_proc->file_proc)
         {
 #if 0
@@ -250,7 +250,7 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
                                             plug_in_actions_menu_path_added,
                                             group);
 
-      if ((plug_in_proc->menu_label || plug_in_proc->menu_paths) &&
+      if (plug_in_proc->menu_label &&
           ! plug_in_proc->file_proc)
         {
           GtkAction *action;
@@ -298,44 +298,9 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
 {
   GimpProcedureActionEntry  entry;
   const gchar              *locale_domain;
-  gchar                    *path_original    = NULL;
-  gchar                    *path_translated  = NULL;
+  GList                    *list;
 
   locale_domain = gimp_plug_in_procedure_get_locale_domain (proc);
-
-  if (! proc->menu_label)
-    {
-      gchar *p1, *p2;
-
-      path_original   = proc->menu_paths->data;
-      path_translated = dgettext (locale_domain, path_original);
-
-      path_original = g_strdup (path_original);
-
-      if (plug_in_actions_check_translation (path_original, path_translated))
-        path_translated = g_strdup (path_translated);
-      else
-        path_translated = g_strdup (path_original);
-
-      p1 = strrchr (path_original, '/');
-      p2 = strrchr (path_translated, '/');
-
-      if (p1 && p2)
-        {
-          *p1 = '\0';
-          *p2 = '\0';
-        }
-      else
-        {
-          g_warning ("bad menu path for procedure \"%s\": \"%s\"",
-                     gimp_object_get_name (proc), path_original);
-
-          g_free (path_original);
-          g_free (path_translated);
-
-          return;
-        }
-    }
 
   entry.name        = gimp_object_get_name (proc);
   entry.icon_name   = gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc));
@@ -348,32 +313,18 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   gimp_action_group_add_procedure_actions (group, &entry, 1,
                                            G_CALLBACK (plug_in_run_cmd_callback));
 
-  if (proc->menu_label)
+  for (list = proc->menu_paths; list; list = g_list_next (list))
     {
-      GList *list;
+      const gchar *original   = list->data;
+      const gchar *translated = dgettext (locale_domain, original);
 
-      for (list = proc->menu_paths; list; list = g_list_next (list))
-        {
-          const gchar *original   = list->data;
-          const gchar *translated = dgettext (locale_domain, original);
-
-          if (plug_in_actions_check_translation (original, translated))
-            plug_in_actions_build_path (group, original, translated);
-          else
-            plug_in_actions_build_path (group, original, original);
-        }
-    }
-  else
-    {
-      plug_in_actions_build_path (group, path_original, path_translated);
-
-      g_free (path_original);
-      g_free (path_translated);
+      if (plug_in_actions_check_translation (original, translated))
+        plug_in_actions_build_path (group, original, translated);
+      else
+        plug_in_actions_build_path (group, original, original);
     }
 
-  if ((proc->menu_label || proc->menu_paths) &&
-      ! proc->file_proc                      &&
-      proc->image_types_val)
+  if (proc->image_types_val)
     {
       GimpContext  *context  = gimp_get_user_context (group->gimp);
       GimpImage    *image    = gimp_context_get_image (context);

@@ -746,11 +746,7 @@ gimp_quit (void)
  *
  * @menu_label defines the label that should be used for the
  * procedure's menu entry. The position where to register in the menu
- * hierarchy is chosen using gimp_plugin_menu_register().  This
- * function also still accepts the old (pre-2.2) way of registering a
- * menu entry and takes a string in the form
- * "&lt;Domain&gt;/Path/To/My/Menu"
- * (e.g. "&lt;Image&gt;/Filters/Render/Useless").
+ * hierarchy is chosen using gimp_plugin_menu_register().
  *
  * It is possible to register a procedure only for keyboard-shortcut
  * activation by passing a @menu_label to gimp_install_procedure() but
@@ -813,7 +809,7 @@ gimp_install_procedure (const gchar        *name,
   proc_install.author       = (gchar *) author;
   proc_install.copyright    = (gchar *) copyright;
   proc_install.date         = (gchar *) date;
-  proc_install.menu_path    = (gchar *) menu_label;
+  proc_install.menu_label   = (gchar *) menu_label;
   proc_install.image_types  = (gchar *) image_types;
   proc_install.type         = type;
   proc_install.nparams      = n_params;

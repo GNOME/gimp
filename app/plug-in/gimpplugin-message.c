@@ -747,18 +747,18 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
 #define VALIDATE(str)         (g_utf8_validate ((str), -1, NULL))
 #define VALIDATE_OR_NULL(str) ((str) == NULL || g_utf8_validate ((str), -1, NULL))
 
-  if (VALIDATE_OR_NULL (proc_install->menu_path) &&
-      VALIDATE         (canonical)               &&
-      VALIDATE_OR_NULL (proc_install->blurb)     &&
-      VALIDATE_OR_NULL (proc_install->help)      &&
-      VALIDATE_OR_NULL (proc_install->author)    &&
-      VALIDATE_OR_NULL (proc_install->copyright) &&
+  if (VALIDATE_OR_NULL (proc_install->menu_label) &&
+      VALIDATE         (canonical)                &&
+      VALIDATE_OR_NULL (proc_install->blurb)      &&
+      VALIDATE_OR_NULL (proc_install->help)       &&
+      VALIDATE_OR_NULL (proc_install->author)     &&
+      VALIDATE_OR_NULL (proc_install->copyright)  &&
       VALIDATE_OR_NULL (proc_install->date))
     {
       null_name  = FALSE;
       valid_utf8 = TRUE;
 
-      for (i = 0; i < proc_install->nparams && valid_utf8 && !null_name; i++)
+      for (i = 0; i < proc_install->nparams && valid_utf8 && ! null_name; i++)
         {
           if (! proc_install->params[i].name)
             {
@@ -810,6 +810,19 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
       return;
     }
 
+  if (proc_install->menu_label && strlen (proc_install->menu_label) &&
+      proc_install->menu_label[0] == '<')
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-in \"%s\"\n(%s)\n\n"
+                    "attempted to install a procedure with a full menu path "
+                    "as menu label, this is not supported any longer.",
+                    gimp_object_get_name (plug_in),
+                    gimp_file_get_utf8_name (plug_in->file));
+      g_free (canonical);
+      return;
+    }
+
   /*  Create the procedure object  */
 
   switch (proc_install->type)
@@ -840,6 +853,9 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                               proc_install->date,
                               NULL);
 
+  if (proc_install->menu_label && strlen (proc_install->menu_label))
+    proc->menu_label = g_strdup (proc_install->menu_label);
+
   gimp_plug_in_procedure_set_image_types (proc, proc_install->image_types);
 
   for (i = 0; i < proc_install->nparams; i++)
@@ -862,30 +878,6 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                                     proc_install->return_vals[i].description);
 
       gimp_procedure_add_return_value (procedure, pspec);
-    }
-
-  /*  Sanity check menu path  */
-
-  if (proc_install->menu_path && strlen (proc_install->menu_path))
-    {
-      if (proc_install->menu_path[0] == '<')
-        {
-          GError *error = NULL;
-
-          if (! gimp_plug_in_procedure_add_menu_path (proc,
-                                                      proc_install->menu_path,
-                                                      &error))
-            {
-              gimp_message_literal (plug_in->manager->gimp,
-                                    NULL, GIMP_MESSAGE_WARNING,
-                                    error->message);
-              g_clear_error (&error);
-            }
-        }
-      else
-        {
-          proc->menu_label = g_strdup (proc_install->menu_path);
-        }
     }
 
   /*  Install the procedure  */

@@ -242,31 +242,20 @@ static const gchar *
 gimp_plug_in_procedure_get_label (GimpProcedure *procedure)
 {
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-  const gchar         *path;
-  gchar               *stripped;
+  const gchar         *translated;
   gchar               *ellipsis;
   gchar               *label;
 
   if (proc->label)
     return proc->label;
 
-  if (proc->menu_label)
-    path = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     proc->menu_label);
-  else if (proc->menu_paths)
-    path = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     proc->menu_paths->data);
-  else
+  if (! proc->menu_label)
     return NULL;
 
-  stripped = gimp_strip_uline (path);
+  translated = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                         proc->menu_label);
 
-  if (proc->menu_label)
-    label = g_strdup (stripped);
-  else
-    label = g_path_get_basename (stripped);
-
-  g_free (stripped);
+  label = gimp_strip_uline (translated);
 
   ellipsis = strstr (label, "...");
 
@@ -287,22 +276,8 @@ gimp_plug_in_procedure_get_menu_label (GimpProcedure *procedure)
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
   if (proc->menu_label)
-    {
-      return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                       proc->menu_label);
-    }
-  else if (proc->menu_paths)
-    {
-      const gchar *translated;
-
-      translated = dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                             proc->menu_paths->data);
-
-      translated = strrchr (translated, '/');
-
-      if (translated)
-        return translated + 1;
-    }
+    return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
+                     proc->menu_label);
 
   return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
 }
