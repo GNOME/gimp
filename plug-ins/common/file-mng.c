@@ -849,8 +849,8 @@ mng_save_image (const gchar  *filename,
       layer_drawable_type = gimp_drawable_type (layers[i]);
 
       layer_buffer        = gimp_drawable_get_buffer (layers[i]);
-      layer_rows          = gegl_buffer_get_width  (layer_buffer);
-      layer_cols          = gegl_buffer_get_height (layer_buffer);
+      layer_cols          = gegl_buffer_get_width  (layer_buffer);
+      layer_rows          = gegl_buffer_get_height (layer_buffer);
 
       gimp_drawable_offsets (layers[i], &layer_offset_x, &layer_offset_y);
       layer_has_unique_palette = TRUE;
