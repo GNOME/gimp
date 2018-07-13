@@ -119,9 +119,6 @@ static gboolean   gui_exit_callback             (Gimp               *gimp,
 static gboolean   gui_exit_after_callback       (Gimp               *gimp,
                                                  gboolean            force);
 
-static void       gui_show_tooltips_notify      (GimpGuiConfig      *gui_config,
-                                                 GParamSpec         *pspec,
-                                                 Gimp               *gimp);
 static void       gui_show_help_button_notify   (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  Gimp               *gimp);
