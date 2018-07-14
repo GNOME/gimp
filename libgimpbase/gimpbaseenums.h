@@ -951,7 +951,7 @@ typedef enum
  * @GIMP_ORIENTATION_VERTICAL:   Vertical
  * @GIMP_ORIENTATION_UNKNOWN:    Unknown
  *
- * Orientations for verious purposes.
+ * Orientations for various purposes.
  **/
 #define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
 

@@ -281,7 +281,7 @@ tool_options_manager_global_notify (GimpCoreConfig         *config,
       GimpToolInfo *tool_info = list->data;
 
       /*  don't change the active tool, it is always fully connected
-       *  to the user_context anway because we set its
+       *  to the user_context anyway because we set its
        *  defined/undefined context props in tool_changed()
        */
       if (tool_info == manager->active_tool)
