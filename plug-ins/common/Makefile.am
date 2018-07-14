@@ -137,7 +137,6 @@ libexec_PROGRAMS = \
 	tile \
 	tile-small \
 	unit-editor \
-	unsharp-mask \
 	van-gogh-lic \
 	warp \
 	wavelet-decompose \
@@ -1721,23 +1720,6 @@ unit_editor_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(unit_editor_RC)
-
-unsharp_mask_SOURCES = \
-	unsharp-mask.c
-
-unsharp_mask_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(unsharp_mask_RC)
 
 van_gogh_lic_SOURCES = \
 	van-gogh-lic.c
