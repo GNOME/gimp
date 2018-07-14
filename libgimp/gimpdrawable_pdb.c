@@ -979,7 +979,7 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
  * Extract the foreground of a drawable using a given trimap.
  *
  * Image Segmentation by Uniform Color Clustering, see
- * http://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
+ * https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
  *
  * Returns: TRUE on success.
  *

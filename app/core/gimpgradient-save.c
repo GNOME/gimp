@@ -142,7 +142,7 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
     return FALSE;
 
   string = g_string_new ("/* color_map file created by GIMP */\n"
-                         "/* http://www.gimp.org/           */\n"
+                         "/* https://www.gimp.org/          */\n"
                          "color_map {\n");
 
   for (seg = gradient->segments; seg; seg = seg->next)

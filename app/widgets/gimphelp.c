@@ -614,7 +614,7 @@ gimp_help_get_help_domains (Gimp    *gimp,
   *domain_names = g_new0 (gchar *, n_domains + 1);
   *domain_uris  = g_new0 (gchar *, n_domains + 1);
 
-  (*domain_names)[0] = g_strdup ("http://www.gimp.org/help");
+  (*domain_names)[0] = g_strdup ("https://www.gimp.org/help");
   (*domain_uris)[0]  = gimp_help_get_default_domain_uri (gimp);
 
   for (i = 0; i < n_domains; i++)

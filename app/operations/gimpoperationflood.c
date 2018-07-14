@@ -20,7 +20,7 @@
 
 
 /* Implementation of the Flood algorithm.
- * See http://wiki.gimp.org/wiki/Algorithms:Flood for details.
+ * See https://wiki.gimp.org/wiki/Algorithms:Flood for details.
  */
 
 
@@ -238,7 +238,7 @@ gimp_operation_flood_class_init (GimpOperationFloodClass *klass)
                                  "name",        "gimp:flood",
                                  "categories",  "gimp",
                                  "description", "GIMP Flood operation",
-                                 "reference", "http://wiki.gimp.org/wiki/Algorithms:Flood",
+                                 "reference", "https://wiki.gimp.org/wiki/Algorithms:Flood",
                                  "reference-image", "flood-output.png",
                                  "reference-composition", reference_xml,
                                  NULL);

@@ -40,7 +40,7 @@
 #endif
 
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
-  "http://docs.gimp.org/" GIMP_APP_VERSION_STRING
+  "https://docs.gimp.org/" GIMP_APP_VERSION_STRING
 
 
 enum

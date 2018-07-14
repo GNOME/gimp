@@ -157,7 +157,7 @@ gimp_text_layer_set_text (gint32       layer_ID,
  *
  * This procedure returns the markup of the styles from a text layer.
  * The markup will be in the form of Pango's markup - See
- * http://www.pango.org/ for more information about Pango and its
+ * https://www.pango.org/ for more information about Pango and its
  * markup. Note: Setting the markup of a text layer using Pango's
  * markup is not supported for now.
  *

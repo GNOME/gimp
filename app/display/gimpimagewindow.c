@@ -424,7 +424,7 @@ gimp_image_window_constructed (GObject *object)
                           private->menubar, FALSE, FALSE, 0);
 
       /*  make sure we can activate accels even if the menubar is invisible
-       *  (see http://bugzilla.gnome.org/show_bug.cgi?id=137151)
+       *  (see https://bugzilla.gnome.org/show_bug.cgi?id=137151)
        */
       g_signal_connect (private->menubar, "can-activate-accel",
                         G_CALLBACK (gtk_true),
@@ -799,7 +799,7 @@ gimp_image_window_style_set (GtkWidget *widget,
 
   /*  Only set user pos on the empty display because it gets a pos
    *  set by gimp. All other displays should be placed by the window
-   *  manager. See http://bugzilla.gnome.org/show_bug.cgi?id=559580
+   *  manager. See https://bugzilla.gnome.org/show_bug.cgi?id=559580
    */
   if (! gimp_display_get_image (shell->display))
     geometry_mask |= GDK_HINT_USER_POS;

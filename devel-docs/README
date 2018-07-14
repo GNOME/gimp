@@ -4,7 +4,7 @@ Developers documentation
 This directory holds information that you will find useful if you
 develop a GIMP plug-in or want to work on the GIMP core.
 
-See http://wiki.gimp.org/index.php/Main_Page for more information.
+See https://wiki.gimp.org/index.php/Main_Page for more information.
 
    app                     - setup for documentation of the GIMP core;
                              not built by default since it is huge and

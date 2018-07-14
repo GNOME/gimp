@@ -853,7 +853,7 @@ static void
 website_callback (GtkAction *action,
                   gpointer   data)
 {
-  browser_dialog_load ("http://docs.gimp.org/");
+  browser_dialog_load ("https://docs.gimp.org/");
 }
 
 static void

@@ -5,7 +5,7 @@
   <extends>gimp.desktop</extends>
   <_name>Extra files for GIMP</_name>
   <_summary>Patterns, gradients, and other extra files for GIMP</_summary>
-  <url type="homepage">http://www.gimp.org/</url>
+  <url type="homepage">https://www.gimp.org/</url>
   <url type="bugtracker">@BUG_REPORT_URL@</url>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>

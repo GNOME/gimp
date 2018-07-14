@@ -341,7 +341,7 @@ gimp_frame_get_label_spacing (GtkFrame *frame)
  * variant of #GtkFrame. It doesn't render a frame at all but
  * otherwise behaves like a frame. The frame's title is rendered in
  * bold and the frame content is indented four spaces as suggested by
- * the GNOME HIG (see http://developer.gnome.org/projects/gup/hig/).
+ * the GNOME HIG (see https://developer.gnome.org/hig/stable/).
  *
  * Return value: a new #GimpFrame widget
  *

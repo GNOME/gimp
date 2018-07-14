@@ -122,7 +122,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status   = GIMP_PDB_EXECUTION_ERROR;
   gint32             image_id = -1;
   static GimpParam   values[2];
-  WebpageSaveVals    save = {"http://www.gimp.org/", 1024, 12};
+  WebpageSaveVals    save = {"https://www.gimp.org/", 1024, 12};
 
   INIT_I18N ();
 

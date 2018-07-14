@@ -130,7 +130,7 @@ else
       echo "  You must have gtk-doc installed to compile $PROJECT."
       echo "  Install the appropriate package for your distribution,"
       echo "  or get the source tarball at"
-      echo "  http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/"
+      echo "  https://ftp.gnome.org/pub/GNOME/sources/gtk-doc/"
       echo "  You can also use the option --disable-gtk-doc to skip"
       echo "  this test but then you will not be able to generate a"
       echo "  configure script that can build the API documentation."

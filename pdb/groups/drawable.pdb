@@ -935,7 +935,7 @@ sub drawable_foreground_extract {
 
     $help = <<'HELP';
 Image Segmentation by Uniform Color Clustering, see
-http://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
+https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
 HELP
 
     $author    = 'Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>';

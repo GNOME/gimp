@@ -395,10 +395,10 @@ gimp_font_get_sample_string (PangoContext         *context,
   /* This is a table of scripts and corresponding short sample strings
    * to be used instead of the Latin sample string Aa. The script
    * codes are as in ISO15924 (see
-   * http://www.unicode.org/iso15924/iso15924-codes.html), but in
+   * https://www.unicode.org/iso15924/iso15924-codes.html), but in
    * lower case. The Unicode subrange bit numbers, as used in TrueType
    * so-called OS/2 tables, are from
-   * http://www.microsoft.com/typography/otspec/os2.htm#ur .
+   * https://www.microsoft.com/typography/otspec/os2.htm#ur .
    *
    * The table is mostly ordered by Unicode order. But as there are
    * fonts that support several of these scripts, the ordering is
@@ -414,7 +414,7 @@ gimp_font_get_sample_string (PangoContext         *context,
    * This table is used to determine the primary script a font has
    * been designed for.
    *
-   * Very useful link: http://www.travelphrases.info/fonts.html
+   * Very useful link: https://www.wazu.jp/index.html
    */
   static const struct
   {
