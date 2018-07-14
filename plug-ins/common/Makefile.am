@@ -133,7 +133,6 @@ sphere_designer_libexecdir = $(gimpplugindir)/plug-ins/sphere-designer
 tile_libexecdir = $(gimpplugindir)/plug-ins/tile
 tile_small_libexecdir = $(gimpplugindir)/plug-ins/tile-small
 unit_editor_libexecdir = $(gimpplugindir)/plug-ins/unit-editor
-unsharp_mask_libexecdir = $(gimpplugindir)/plug-ins/unsharp-mask
 van_gogh_lic_libexecdir = $(gimpplugindir)/plug-ins/van-gogh-lic
 warp_libexecdir = $(gimpplugindir)/plug-ins/warp
 wavelet_decompose_libexecdir = $(gimpplugindir)/plug-ins/wavelet-decompose
@@ -228,7 +227,6 @@ sphere_designer_libexec_PROGRAMS = sphere-designer
 tile_libexec_PROGRAMS = tile
 tile_small_libexec_PROGRAMS = tile-small
 unit_editor_libexec_PROGRAMS = unit-editor
-unsharp_mask_libexec_PROGRAMS = unsharp-mask
 van_gogh_lic_libexec_PROGRAMS = van-gogh-lic
 warp_libexec_PROGRAMS = warp
 wavelet_decompose_libexec_PROGRAMS = wavelet-decompose
@@ -1796,23 +1794,6 @@ unit_editor_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(unit_editor_RC)
-
-unsharp_mask_SOURCES = \
-	unsharp-mask.c
-
-unsharp_mask_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(unsharp_mask_RC)
 
 van_gogh_lic_SOURCES = \
 	van-gogh-lic.c
