@@ -15345,7 +15345,7 @@ GResource *lebl_dialog_get_resource (void)
 #elif defined(__SUNPRO_C)
 
 /* This is not tested, but i believe it should work, based on:
- * http://opensource.apple.com/source/OpenSSL098/OpenSSL098-35/src/fips/fips_premain.c
+ * https://opensource.apple.com/source/OpenSSL098/OpenSSL098-35/src/fips/fips_premain.c
  */
 
 #define G_HAS_CONSTRUCTORS 1

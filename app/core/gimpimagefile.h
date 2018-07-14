@@ -4,7 +4,7 @@
  * gimpimagefile.h
  *
  * Thumbnail handling according to the Thumbnail Managing Standard.
- * http://triq.net/~pearl/thumbnail-spec/
+ * https://specifications.freedesktop.org/thumbnail-spec/
  *
  * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
  *                          Michael Natterer <mitch@gimp.org>

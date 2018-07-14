@@ -32,7 +32,7 @@
 #include "gimphelpprogress.h"
 
 
-#define GIMP_HELP_DEFAULT_DOMAIN  "http://www.gimp.org/help"
+#define GIMP_HELP_DEFAULT_DOMAIN  "https://www.gimp.org/help"
 #define GIMP_HELP_DEFAULT_ID      "gimp-main"
 #define GIMP_HELP_DEFAULT_LOCALE  "en"
 

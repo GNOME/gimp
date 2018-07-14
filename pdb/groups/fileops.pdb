@@ -21,12 +21,13 @@ sub file_load {
     $blurb = 'Loads an image file by invoking the right load handler.';
 
     $help = <<'HELP';
-This procedure invokes the correct file load handler using magic if possible,
-and falling back on the file's extension and/or prefix if not. The name of
-the file to load is typically a full pathname, and the name entered is what
-the user actually typed before prepending a directory path. The reason for
-this is that if the user types http://www.xcf/~gimp/ he wants to fetch a URL,
-and the full pathname will not look like a URL.
+This procedure invokes the correct file load handler using magic if
+possible, and falling back on the file's extension and/or prefix if
+not. The name of the file to load is typically a full pathname, and
+the name entered is what the user actually typed before prepending a
+directory path. The reason for this is that if the user types
+https://www.gimp.org/foo.png he wants to fetch a URL, and the full
+pathname will not look like a URL.
 HELP
 
     &josh_pdb_misc('1997');
@@ -258,12 +259,12 @@ sub file_save {
     $blurb = 'Saves a file by extension.';
 
     $help = <<'HELP';
-This procedure invokes the correct file save handler according to the file's
-extension and/or prefix. The name of the file to save is typically a full
-pathname, and the name entered is what the user actually typed before
-prepending a directory path. The reason for this is that if the user types
-http://www.xcf/~gimp/ she wants to fetch a URL, and the full pathname will not
-look like a URL.
+This procedure invokes the correct file save handler according to the
+file's extension and/or prefix. The name of the file to save is
+typically a full pathname, and the name entered is what the user
+actually typed before prepending a directory path. The reason for this
+is that if the user types https://www.gimp.org/foo.png she wants to
+fetch a URL, and the full pathname will not look like a URL.
 HELP
 
     &josh_pdb_misc('1997');

@@ -189,7 +189,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  more_button = gtk_link_button_new_with_label ("http://docs.gimp.org/",
+  more_button = gtk_link_button_new_with_label ("https://docs.gimp.org/",
   /*  a link to the related section in the user manual  */
                                                 _("Learn more"));
   gtk_widget_show (more_button);
@@ -249,7 +249,7 @@ tips_dialog_set_tip (GimpTip *tip)
 
   /*  set the URI to unset the "visited" state  */
   gtk_link_button_set_uri (GTK_LINK_BUTTON (more_button),
-                           "http://docs.gimp.org/");
+                           "https://docs.gimp.org/");
 
   gtk_widget_set_sensitive (more_button, tip->help_id != NULL);
 }

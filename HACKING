@@ -10,14 +10,14 @@ to have the following packages (or newer versions) installed:
     * GNU libtool 1.5
         - ftp://ftp.gnu.org/gnu/libtool/
 
-Fine GNU mirrors are listed at http://www.gnu.org/prep/ftp.html
+Fine GNU mirrors are listed at https://www.gnu.org/prep/ftp.html
 Beta software can be found at alpha.gnu.org.
 
     * pkg-config 0.16.0 (or preferably a newer version)
-        - http://www.freedesktop.org/software/pkgconfig/
+        - https://www.freedesktop.org/software/pkgconfig/
 
     * gtkdocize
-        - http://ftp.gnome.org/pub/GNOME/sources/gtk-doc/
+        - https://ftp.gnome.org/pub/GNOME/sources/gtk-doc/
 
     * xsltproc
         - ftp://ftp.gnome.org/pub/GNOME/sources/libxslt/1.1/
@@ -83,8 +83,8 @@ to get GIMP from the the git server:
 
 You can read more on using GNOME's git service at these URLs:
 
-    http://live.gnome.org/Git
-    http://www.kernel.org/pub/software/scm/git/docs/
+    https://wiki.gnome.org/Git
+    https://www.kernel.org/pub/software/scm/git/docs/
 
 
 You will also need relatively new stable releases of glib, pango, atk,

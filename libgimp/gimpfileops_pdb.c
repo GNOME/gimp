@@ -49,8 +49,8 @@
  * not. The name of the file to load is typically a full pathname, and
  * the name entered is what the user actually typed before prepending a
  * directory path. The reason for this is that if the user types
- * http://www.xcf/~gimp/ he wants to fetch a URL, and the full pathname
- * will not look like a URL.
+ * https://www.gimp.org/foo.png he wants to fetch a URL, and the full
+ * pathname will not look like a URL.
  *
  * Returns: The output image.
  **/
@@ -184,8 +184,9 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * the file's extension and/or prefix. The name of the file to save is
  * typically a full pathname, and the name entered is what the user
  * actually typed before prepending a directory path. The reason for
- * this is that if the user types http://www.xcf/~gimp/ she wants to
- * fetch a URL, and the full pathname will not look like a URL.
+ * this is that if the user types https://www.gimp.org/foo.png she
+ * wants to fetch a URL, and the full pathname will not look like a
+ * URL.
  *
  * Returns: TRUE on success.
  **/
