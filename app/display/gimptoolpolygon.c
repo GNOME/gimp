@@ -112,7 +112,7 @@ struct _GimpToolPolygonPrivate
   /* Whether or not to suppress handles (so that new segments can be
    * created immediately after an existing segment vertex.
    */
-  gboolean           supress_handles;
+  gboolean           suppress_handles;
 
   /* Last _oper_update or _motion coords */
   gboolean           hover;
@@ -387,7 +387,7 @@ gimp_tool_polygon_should_close (GimpToolPolygon  *polygon,
                      dist_from_last_point < double_click_distance;
     }
 
-  return ((! priv->supress_handles && dist < POINT_GRAB_THRESHOLD_SQ) ||
+  return ((! priv->suppress_handles && dist < POINT_GRAB_THRESHOLD_SQ) ||
           double_click);
 }
 
@@ -969,7 +969,7 @@ gimp_tool_polygon_changed (GimpToolWidget *widget)
 
       if (private->hover             &&
           handles_wants_to_show      &&
-          ! private->supress_handles &&
+          ! private->suppress_handles &&
 
           /* If the first point is hovered while button1 is held down,
            * only draw the first handle, the other handles are not
@@ -1359,7 +1359,7 @@ gimp_tool_polygon_hover_modifier (GimpToolWidget  *widget,
   priv->constrain_angle = ((state & gimp_get_constrain_behavior_mask ()) ?
                            TRUE : FALSE);
 
-  priv->supress_handles = ((state & gimp_get_extend_selection_mask ()) ?
+  priv->suppress_handles = ((state & gimp_get_extend_selection_mask ()) ?
                            TRUE : FALSE);
 
   gimp_tool_polygon_changed (widget);
@@ -1395,7 +1395,7 @@ gimp_tool_polygon_get_segment_index (GimpToolPolygon  *polygon,
   GimpToolPolygonPrivate *priv          = polygon->private;
   gint                    segment_index = INVALID_INDEX;
 
-  if (! priv->supress_handles)
+  if (! priv->suppress_handles)
     {
       gdouble shortest_dist = POINT_GRAB_THRESHOLD_SQ;
       gint    i;
