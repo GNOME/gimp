@@ -782,7 +782,7 @@ gimp_transform_grid_tool_real_widget_changed (GimpTransformGridTool *tg_tool)
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpToolWidget    *widget  = tg_tool->widget;
 
-  /* supress the call to GimpTransformGridTool::update_widget() when
+  /* suppress the call to GimpTransformGridTool::update_widget() when
    * recalculating the matrix
    */
   tg_tool->widget = NULL;

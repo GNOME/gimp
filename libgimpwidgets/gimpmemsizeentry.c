@@ -59,7 +59,7 @@ struct _GimpMemsizeEntryPrivate
 
   guint          shift;
 
-  /* adjustement is owned by spinbutton. Do not unref() it. */
+  /* adjustment is owned by spinbutton. Do not unref() it. */
   GtkAdjustment *adjustment;
   GtkWidget     *spinbutton;
   GtkWidget     *menu;

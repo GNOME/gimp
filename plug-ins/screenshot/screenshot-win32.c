@@ -518,13 +518,15 @@ GetAccurateWindowRect (HWND hwndTarget,
   /* In this case, we did not got the rect from the dwm api so we try to get the rect with the normal function */
   if (GetWindowRect (hwndTarget, outRect))
     {
-      /* If the window is maximized then we need and can fix the rect variable (we need to do this if the rect not comming from dwm api) */
+      /* If the window is maximized then we need and can fix the rect variable 
+       * (we need to do this if the rect isn't coming from dwm api) 
+       */
       ZeroMemory (&windowplacment, sizeof (WINDOWPLACEMENT));
       if (GetWindowPlacement (hwndTarget, &windowplacment) && windowplacment.showCmd == SW_SHOWMAXIMIZED)
         {
           RECT *rectScreens = NULL;
 
-          /* if this is not the first time we call this function for some
+          /* If this is not the first time we call this function for some
            * reason then we reset the rectScreens count
            */
           if (rectScreensCount)

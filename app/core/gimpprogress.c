@@ -47,7 +47,7 @@ G_DEFINE_INTERFACE (GimpProgress, gimp_progress, G_TYPE_OBJECT)
 static guint progress_signals[LAST_SIGNAL] = { 0 };
 
 
-/*  private functionss  */
+/*  private functions  */
 
 
 static void
