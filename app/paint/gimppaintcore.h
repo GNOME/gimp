@@ -160,7 +160,9 @@ void      gimp_paint_core_get_last_coords           (GimpPaintCore    *core,
 void      gimp_paint_core_round_line                (GimpPaintCore    *core,
                                                      GimpPaintOptions *options,
                                                      gboolean          constrain_15_degrees,
-                                                     gdouble           constrain_offset_angle);
+                                                     gdouble           constrain_offset_angle,
+                                                     gdouble           constrain_xres,
+                                                     gdouble           constrain_yres);
 
 
 /*  protected functions  */

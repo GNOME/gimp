@@ -570,11 +570,16 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
            *  draw a line.
            */
           gchar   *status_help;
+          gdouble  offset_angle;
+          gdouble  xres, yres;
 
-          gimp_paint_core_round_line (
-            core, paint_options,
-            (state & constrain_mask) != 0,
-            gimp_display_shell_get_constrained_line_offset_angle (shell));
+          gimp_display_shell_get_constrained_line_params (shell,
+                                                          &offset_angle,
+                                                          &xres, &yres);
+
+          gimp_paint_core_round_line (core, paint_options,
+                                      (state & constrain_mask) != 0,
+                                      offset_angle, xres, yres);
 
           status_help = gimp_suggest_modifiers (paint_tool->status_line,
                                                 constrain_mask & ~state,

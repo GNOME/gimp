@@ -289,13 +289,18 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
     }
   else if (paint_tool->draw_line)
     {
+      gdouble offset_angle;
+      gdouble xres, yres;
+
+      gimp_display_shell_get_constrained_line_params (shell,
+                                                      &offset_angle,
+                                                      &xres, &yres);
+
       /*  If shift is down and this is not the first paint
        *  stroke, then draw a line from the last coords to the pointer
        */
-      gimp_paint_core_round_line (
-        core, paint_options,
-        constrain,
-        gimp_display_shell_get_constrained_line_offset_angle (shell));
+      gimp_paint_core_round_line (core, paint_options,
+                                  constrain, offset_angle, xres, yres);
     }
 
   /*  Notify subclasses  */
