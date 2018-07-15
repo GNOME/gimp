@@ -22,9 +22,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-10 05:48+0200\n"
-"PO-Revision-Date: 2018-07-10 05:49+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-15 19:49+0200\n"
+"PO-Revision-Date: 2018-07-15 19:50+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -10273,7 +10273,7 @@ msgid "Layer"
 msgstr "Warstwa"
 
 #: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:271
-#: ../app/operations/gimpcurvesconfig.c:112
+#: ../app/operations/gimpcurvesconfig.c:110
 #: ../app/operations/gimplevelsconfig.c:115
 #: ../app/operations/gimpoperationthreshold.c:89
 #: ../app/widgets/gimpchanneltreeview.c:332
@@ -12354,7 +12354,7 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: dane pędzla "
 "skompresowane za pomocą RLE są uszkodzone."
 
-#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:226
+#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
 msgstr "Odstępy pędzla"
 
@@ -12428,15 +12428,15 @@ msgstr "Promień pędzla"
 msgid "Brush Spikes"
 msgstr "Ostrza pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:233
+#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:232
 msgid "Brush Hardness"
 msgstr "Twardość pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:212
+#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:211
 msgid "Brush Aspect Ratio"
 msgstr "Proporcje pędzla"
 
-#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:219
+#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:218
 msgid "Brush Angle"
 msgstr "Nachylenie pędzla"
 
@@ -12680,7 +12680,7 @@ msgstr "Deseń"
 
 #: ../app/core/gimpcontext.c:742 ../app/core/gimpcontext.c:743
 #: ../app/pdb/drawable-edit-cmds.c:253 ../app/pdb/edit-cmds.c:803
-#: ../app/tools/gimpgradientoptions.c:284 ../app/tools/gimpgradienttool.c:158
+#: ../app/tools/gimpgradientoptions.c:268 ../app/tools/gimpgradienttool.c:158
 #: ../app/tools/gimppaintoptions-gui.c:367
 msgid "Gradient"
 msgstr "Gradient"
@@ -13306,7 +13306,7 @@ msgstr "Konwersja obrazu do trybu 64-bitowego (gamma, zmiennoprzecinkowego)"
 #: ../app/core/gimpimage-convert-precision.c:289
 #: ../app/dialogs/convert-indexed-dialog.c:241
 #: ../app/dialogs/convert-precision-dialog.c:221
-#: ../app/tools/gimpgradientoptions.c:136
+#: ../app/tools/gimpgradientoptions.c:128
 msgid "Dithering"
 msgstr "Dithering"
 
@@ -13445,7 +13445,7 @@ msgctxt "undo-type"
 msgid "Remove Sample Point"
 msgstr "Usunięcie punktu wzorcowego"
 
-#: ../app/core/gimpimage-sample-points.c:123
+#: ../app/core/gimpimage-sample-points.c:126
 msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Przesunięcie punktu wzorcowego"
@@ -14824,7 +14824,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/image-properties-dialog.c:68
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
-#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:349
+#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:351
 #: ../app/tools/gimpgradienttool-editor.c:1857
 #: ../app/tools/gimpmeasuretool.c:735 ../app/widgets/gimpcontrollerlist.c:640
 #: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
@@ -15106,7 +15106,7 @@ msgstr "Przesunięcie kanału"
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:129 ../app/dialogs/offset-dialog.c:163
 #: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
-#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:89
+#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:88
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Przesunięcie"
@@ -16811,7 +16811,7 @@ msgstr "Pio_nowo:"
 msgid "Image Size"
 msgstr "Wymiary obrazu"
 
-#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:423
+#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:429
 msgid "Quality"
 msgstr "Jakość"
 
@@ -18407,36 +18407,36 @@ msgstr "Żółty-niebieski"
 msgid "Preserve Luminosity"
 msgstr "Zachowanie luminancji"
 
-#: ../app/operations/gimpcurvesconfig.c:106
+#: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:109
 #: ../app/widgets/gimphistogrameditor.c:111
 msgid "Linear"
 msgstr "Liniowy"
 
-#: ../app/operations/gimpcurvesconfig.c:107
+#: ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:110
 msgid "Work on linear RGB"
 msgstr "Działanie na liniowym RGB"
 
-#: ../app/operations/gimpcurvesconfig.c:113
+#: ../app/operations/gimpcurvesconfig.c:111
 #: ../app/operations/gimplevelsconfig.c:116
 msgid "The affected channel"
 msgstr "Uwzględniany kanał"
 
-#: ../app/operations/gimpcurvesconfig.c:119
-#: ../app/operations/gimpcurvesconfig.c:120
+#: ../app/operations/gimpcurvesconfig.c:117
+#: ../app/operations/gimpcurvesconfig.c:118
 msgid "Curve"
 msgstr "Krzywa"
 
-#: ../app/operations/gimpcurvesconfig.c:549
+#: ../app/operations/gimpcurvesconfig.c:547
 msgid "not a GIMP Curves file"
 msgstr "nie jest plikiem krzywych programu GIMP"
 
-#: ../app/operations/gimpcurvesconfig.c:580
+#: ../app/operations/gimpcurvesconfig.c:578
 msgid "Parse error, didn't find 2 integers"
 msgstr "Błąd podczas przetwarzania, nie odnaleziono dwóch liczb całkowitych"
 
-#: ../app/operations/gimpcurvesconfig.c:700
+#: ../app/operations/gimpcurvesconfig.c:698
 msgid "Writing curves file failed: "
 msgstr "Zapisanie pliku krzywych się nie powiodło: "
 
@@ -18741,7 +18741,7 @@ msgid "Ink"
 msgstr "Stalówka"
 
 #: ../app/paint/gimpinkoptions.c:74 ../app/paint/gimpinkoptions.c:87
-#: ../app/paint/gimppaintoptions.c:204 ../app/tools/gimpwarpoptions.c:91
+#: ../app/paint/gimppaintoptions.c:203 ../app/tools/gimpwarpoptions.c:91
 msgid "Size"
 msgstr "Rozmiar"
 
@@ -18750,7 +18750,7 @@ msgid "Ink Blob Size"
 msgstr "Rozmiar kropli tuszu"
 
 #: ../app/paint/gimpinkoptions.c:80 ../app/paint/gimpinkoptions.c:119
-#: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:200
+#: ../app/paint/gimppaintoptions.c:217 ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Kąt"
 
@@ -18760,8 +18760,8 @@ msgid "Tilt"
 msgstr "Nachylenie"
 
 #. Blob shape widgets
-#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpgradientoptions.c:95
-#: ../app/tools/gimpgradientoptions.c:305 ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpgradientoptions.c:94
+#: ../app/tools/gimpgradientoptions.c:289 ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Kształt"
 
@@ -18795,7 +18795,7 @@ msgstr "Promień"
 msgid "Base Opacity"
 msgstr "Krycie bazowe"
 
-#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:232
+#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:231
 #: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
 msgstr "Twardość"
@@ -18820,165 +18820,165 @@ msgstr "Pędzel"
 msgid "Paint"
 msgstr "Rysowanie"
 
-#: ../app/paint/gimppaintoptions.c:205
+#: ../app/paint/gimppaintoptions.c:204
 msgid "Brush Size"
 msgstr "Rozmiar pędzla"
 
-#: ../app/paint/gimppaintoptions.c:211
+#: ../app/paint/gimppaintoptions.c:210
 msgid "Aspect Ratio"
 msgstr "Proporcje"
 
-#: ../app/paint/gimppaintoptions.c:225 ../app/tools/gimpwarpoptions.c:112
+#: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Odstępy"
 
-#: ../app/paint/gimppaintoptions.c:239
+#: ../app/paint/gimppaintoptions.c:238
 msgid "Force"
 msgstr "Siła"
 
-#: ../app/paint/gimppaintoptions.c:240
+#: ../app/paint/gimppaintoptions.c:239
 msgid "Brush Force"
 msgstr "Siła pędzla"
 
-#: ../app/paint/gimppaintoptions.c:246
+#: ../app/paint/gimppaintoptions.c:245
 msgid "Link Size"
 msgstr "Dowiązanie rozmiaru"
 
-#: ../app/paint/gimppaintoptions.c:247
+#: ../app/paint/gimppaintoptions.c:246
 msgid "Link brush size to brush native"
 msgstr "Dowiązuje rozmiar do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:253
+#: ../app/paint/gimppaintoptions.c:252
 msgid "Link Aspect Ratio"
 msgstr "Dowiązanie proporcji"
 
-#: ../app/paint/gimppaintoptions.c:254
+#: ../app/paint/gimppaintoptions.c:253
 msgid "Link brush aspect ratio to brush native"
 msgstr "Dowiązuje proporcje do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:260
+#: ../app/paint/gimppaintoptions.c:259
 msgid "Link Angle"
 msgstr "Dowiązanie kąta"
 
-#: ../app/paint/gimppaintoptions.c:261
+#: ../app/paint/gimppaintoptions.c:260
 msgid "Link brush angle to brush native"
 msgstr "Dowiązuje kąt do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:267
+#: ../app/paint/gimppaintoptions.c:266
 msgid "Link Spacing"
 msgstr "Dowiązanie odstępu"
 
-#: ../app/paint/gimppaintoptions.c:268
+#: ../app/paint/gimppaintoptions.c:267
 msgid "Link brush spacing to brush native"
 msgstr "Dowiązuje odstęp do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:274
+#: ../app/paint/gimppaintoptions.c:273
 msgid "Link Hardness"
 msgstr "Dowiązanie twardości"
 
-#: ../app/paint/gimppaintoptions.c:275
+#: ../app/paint/gimppaintoptions.c:274
 msgid "Link brush hardness to brush native"
 msgstr "Dowiązuje twardość do natywnej wartości pędzla"
 
-#: ../app/paint/gimppaintoptions.c:281
+#: ../app/paint/gimppaintoptions.c:280
 msgid "Lock brush to view"
 msgstr "Zablokowanie pędzla do widoku"
 
-#: ../app/paint/gimppaintoptions.c:282
+#: ../app/paint/gimppaintoptions.c:281
 msgid "Keep brush appearance fixed relative to the view"
 msgstr "Utrzymuje stały wygląd pędzla względnie do widoku"
 
-#: ../app/paint/gimppaintoptions.c:288
+#: ../app/paint/gimppaintoptions.c:287
 msgid "Incremental"
 msgstr "Przyrostowe"
 
-#: ../app/paint/gimppaintoptions.c:289
+#: ../app/paint/gimppaintoptions.c:288
 msgid "Every stamp has its own opacity"
 msgstr "Każda pieczątka ma swoje własne krycie"
 
-#: ../app/paint/gimppaintoptions.c:296
+#: ../app/paint/gimppaintoptions.c:295
 msgid "Hard edge"
 msgstr "Twarda krawędź"
 
-#: ../app/paint/gimppaintoptions.c:297
+#: ../app/paint/gimppaintoptions.c:296
 msgid "Ignore fuzziness of the current brush"
 msgstr "Ignorowanie rozmycia bieżącego pędzla"
 
-#: ../app/paint/gimppaintoptions.c:303
+#: ../app/paint/gimppaintoptions.c:302
 msgid "Apply Jitter"
 msgstr "Drganie"
 
-#: ../app/paint/gimppaintoptions.c:304
+#: ../app/paint/gimppaintoptions.c:303
 msgid "Scatter brush as you paint"
 msgstr "Rozpraszanie pędzla podczas rysowania"
 
-#: ../app/paint/gimppaintoptions.c:309
+#: ../app/paint/gimppaintoptions.c:308
 msgid "Amount"
 msgstr "Ilość"
 
-#: ../app/paint/gimppaintoptions.c:310
+#: ../app/paint/gimppaintoptions.c:309
 msgid "Distance of scattering"
 msgstr "Dystans rozpraszania"
 
-#: ../app/paint/gimppaintoptions.c:316
+#: ../app/paint/gimppaintoptions.c:315
 msgid "Dynamics Options"
 msgstr "Opcje dynamiki"
 
-#: ../app/paint/gimppaintoptions.c:323
+#: ../app/paint/gimppaintoptions.c:322
 msgid "Fade length"
 msgstr "Długość zanikania"
 
-#: ../app/paint/gimppaintoptions.c:324
+#: ../app/paint/gimppaintoptions.c:323
 msgid "Distance over which strokes fade out"
 msgstr "Dystans, po którym krzywe zanikają"
 
-#: ../app/paint/gimppaintoptions.c:334 ../app/widgets/gimpviewablebox.c:385
+#: ../app/paint/gimppaintoptions.c:333 ../app/widgets/gimpviewablebox.c:385
 msgid "Reverse"
 msgstr "Odwrócenie"
 
-#: ../app/paint/gimppaintoptions.c:335
+#: ../app/paint/gimppaintoptions.c:334
 msgid "Reverse direction of fading"
 msgstr "Odwrócony kierunek zanikania"
 
-#: ../app/paint/gimppaintoptions.c:340 ../app/tools/gimpgradientoptions.c:109
-#: ../app/tools/gimpgradientoptions.c:326
+#: ../app/paint/gimppaintoptions.c:339 ../app/paint/gimppaintoptions.c:359
+#: ../app/tools/gimpgradientoptions.c:310
 #: ../app/tools/gimppaintoptions-gui.c:345
 msgid "Repeat"
 msgstr "Okresowość"
 
-#: ../app/paint/gimppaintoptions.c:341
+#: ../app/paint/gimppaintoptions.c:340
 msgid "How fade is repeated as you paint"
 msgstr "Jak zanikanie jest powtarzane podczas rysowania"
 
-#: ../app/paint/gimppaintoptions.c:353 ../app/tools/gimpgradientoptions.c:298
+#: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:282
 #: ../app/tools/gimppaintoptions-gui.c:381
 msgid "Blend Color Space"
 msgstr "Przestrzeń kolorów gradientu"
 
-#: ../app/paint/gimppaintoptions.c:354
+#: ../app/paint/gimppaintoptions.c:353
 msgid "Which color space to use when blending RGB gradient segments"
 msgstr ""
 "Której przestrzeni kolorów używać podczas mieszania segmentów gradientu RGB"
 
-#: ../app/paint/gimppaintoptions.c:417
+#: ../app/paint/gimppaintoptions.c:423
 msgid "Smooth stroke"
 msgstr "Płynne rysowanie"
 
-#: ../app/paint/gimppaintoptions.c:418
+#: ../app/paint/gimppaintoptions.c:424
 msgid "Paint smoother strokes"
 msgstr "Rysowanie gładkich krzywych"
 
-#: ../app/paint/gimppaintoptions.c:424
+#: ../app/paint/gimppaintoptions.c:430
 msgid "Depth of smoothing"
 msgstr "Głębia wygładzania"
 
-#: ../app/paint/gimppaintoptions.c:429
+#: ../app/paint/gimppaintoptions.c:435
 msgid "Weight"
 msgstr "Waga"
 
-#: ../app/paint/gimppaintoptions.c:430
+#: ../app/paint/gimppaintoptions.c:436
 msgid "Gravity of the pen"
 msgstr "Ciążenie ołówka"
 
@@ -19193,156 +19193,156 @@ msgstr "Zapisanie pliku PDB „%s” się nie powiodło: %s"
 msgid "Procedure '%s' not found"
 msgstr "Nie odnaleziono procedury „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:77
+#: ../app/pdb/gimppdb-utils.c:86
 msgid "Invalid empty brush name"
 msgstr "Nieprawidłowa, pusta nazwa pędzla"
 
-#: ../app/pdb/gimppdb-utils.c:86
+#: ../app/pdb/gimppdb-utils.c:95
 #, c-format
 msgid "Brush '%s' not found"
 msgstr "Nie odnaleziono pędzla „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:92
+#: ../app/pdb/gimppdb-utils.c:101
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "Nie można modyfikować pędzla „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:99
+#: ../app/pdb/gimppdb-utils.c:108
 #, c-format
 msgid "Brush '%s' is not renamable"
 msgstr "Nie można zmienić nazwy pędzla „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:125
+#: ../app/pdb/gimppdb-utils.c:134
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Pędzel „%s” nie jest wygenerowany"
 
-#: ../app/pdb/gimppdb-utils.c:146
+#: ../app/pdb/gimppdb-utils.c:155
 msgid "Invalid empty paint dynamics name"
 msgstr "Nieprawidłowa, pusta nazwa dynamiki rysowania"
 
-#: ../app/pdb/gimppdb-utils.c:155
+#: ../app/pdb/gimppdb-utils.c:164
 #, c-format
 msgid "Paint dynamics '%s' not found"
 msgstr "Nie odnaleziono dynamiki rysowania „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:161
+#: ../app/pdb/gimppdb-utils.c:170
 #, c-format
 msgid "Paint dynamics '%s' is not editable"
 msgstr "Nie można modyfikować dynamiki rysowania „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:168
+#: ../app/pdb/gimppdb-utils.c:177
 #, c-format
 msgid "Paint dynamics '%s' is not renamable"
 msgstr "Nie można zmienić nazwy dynamiki rysowania „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:189
+#: ../app/pdb/gimppdb-utils.c:198
 msgid "Invalid empty MyPaint brush name"
 msgstr "Nieprawidłowa, pusta nazwa pędzla programu MyPaint"
 
-#: ../app/pdb/gimppdb-utils.c:198
+#: ../app/pdb/gimppdb-utils.c:207
 #, c-format
 msgid "MyPaint brush '%s' not found"
 msgstr "Nie odnaleziono pędzla programu MyPaint „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:204
+#: ../app/pdb/gimppdb-utils.c:213
 #, c-format
 msgid "MyPaint brush '%s' is not editable"
 msgstr "Nie można modyfikować pędzla programu MyPaint „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:211
+#: ../app/pdb/gimppdb-utils.c:220
 #, c-format
 msgid "MyPaint brush '%s' is not renamable"
 msgstr "Nie można zmienić nazwy pędzla programu MyPaint „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:231
+#: ../app/pdb/gimppdb-utils.c:240
 msgid "Invalid empty pattern name"
 msgstr "Nieprawidłowa, pusta nazwa desenia"
 
-#: ../app/pdb/gimppdb-utils.c:240
+#: ../app/pdb/gimppdb-utils.c:249
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Nie odnaleziono desenia „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:260
+#: ../app/pdb/gimppdb-utils.c:269
 msgid "Invalid empty gradient name"
 msgstr "Nieprawidłowa, pusta nazwa gradientu"
 
-#: ../app/pdb/gimppdb-utils.c:269
+#: ../app/pdb/gimppdb-utils.c:278
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Nie odnaleziono gradientu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:275
+#: ../app/pdb/gimppdb-utils.c:284
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Nie można modyfikować gradientu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:282
+#: ../app/pdb/gimppdb-utils.c:291
 #, c-format
 msgid "Gradient '%s' is not renamable"
 msgstr "Nie można zmienić nazwy gradientu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:303
+#: ../app/pdb/gimppdb-utils.c:312
 msgid "Invalid empty palette name"
 msgstr "Nieprawidłowa, pusta nazwa palety"
 
-#: ../app/pdb/gimppdb-utils.c:312
+#: ../app/pdb/gimppdb-utils.c:321
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Nie odnaleziono palety „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:318
+#: ../app/pdb/gimppdb-utils.c:327
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "Nie można modyfikować palety „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:325
+#: ../app/pdb/gimppdb-utils.c:334
 #, c-format
 msgid "Palette '%s' is not renamable"
 msgstr "Nie można zmienić nazwy palety „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:345
+#: ../app/pdb/gimppdb-utils.c:354
 msgid "Invalid empty font name"
 msgstr "Nieprawidłowa, pusta nazwa czcionki"
 
-#: ../app/pdb/gimppdb-utils.c:354
+#: ../app/pdb/gimppdb-utils.c:363
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Nie odnaleziono czcionki „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:373
+#: ../app/pdb/gimppdb-utils.c:382
 msgid "Invalid empty buffer name"
 msgstr "Nieprawidłowa, pusta nazwa buforu"
 
-#: ../app/pdb/gimppdb-utils.c:383
+#: ../app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Nie odnaleziono buforu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:402
+#: ../app/pdb/gimppdb-utils.c:411
 msgid "Invalid empty paint method name"
 msgstr "Nieprawidłowa, pusta nazwa metody rysowania"
 
-#: ../app/pdb/gimppdb-utils.c:412
+#: ../app/pdb/gimppdb-utils.c:421
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Metoda rysowania „%s” nie istnieje"
 
-#: ../app/pdb/gimppdb-utils.c:431
+#: ../app/pdb/gimppdb-utils.c:440
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "Element „%s” (%d) nie może zostać użyty, ponieważ nie został dodany do obrazu"
 
-#: ../app/pdb/gimppdb-utils.c:441
+#: ../app/pdb/gimppdb-utils.c:450
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "Element „%s” (%d) nie może zostać użyty, ponieważ jest dołączony do innego "
 "obrazu"
 
-#: ../app/pdb/gimppdb-utils.c:467
+#: ../app/pdb/gimppdb-utils.c:476
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -19351,7 +19351,7 @@ msgstr ""
 "Element „%s” (%d) nie może zostać użyty, ponieważ nie jest bezpośrednim "
 "potomkiem drzewa elementów"
 
-#: ../app/pdb/gimppdb-utils.c:495
+#: ../app/pdb/gimppdb-utils.c:504
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -19360,29 +19360,29 @@ msgstr ""
 "Elementy „%s” (%d) oraz „%s” (%d)  nie mogą zostać użyte, ponieważ nie "
 "należą do tego samego drzewa elementów"
 
-#: ../app/pdb/gimppdb-utils.c:520
+#: ../app/pdb/gimppdb-utils.c:529
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "Element „%s” (%d) nie może zostać przodkiem „%s” (%d)"
 
-#: ../app/pdb/gimppdb-utils.c:544
+#: ../app/pdb/gimppdb-utils.c:553
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "Element „%s” (%d) został już dodany do obrazu"
 
-#: ../app/pdb/gimppdb-utils.c:552
+#: ../app/pdb/gimppdb-utils.c:561
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Próbowano dodać element „%s” (%d) do błędnego obrazu"
 
-#: ../app/pdb/gimppdb-utils.c:579
+#: ../app/pdb/gimppdb-utils.c:588
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "Element „%s” (%d) nie może zostać zmodyfikowany, ponieważ jego zawartość "
 "jest zablokowana"
 
-#: ../app/pdb/gimppdb-utils.c:589
+#: ../app/pdb/gimppdb-utils.c:598
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
@@ -19390,37 +19390,37 @@ msgstr ""
 "Element „%s” (%d) nie może zostać zmodyfikowany, ponieważ jego położenie "
 "i rozmiar są zablokowane"
 
-#: ../app/pdb/gimppdb-utils.c:609
+#: ../app/pdb/gimppdb-utils.c:618
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr ""
 "Element „%s” (%d) nie może zostać użyty, ponieważ nie jest to element grupy"
 
-#: ../app/pdb/gimppdb-utils.c:629
+#: ../app/pdb/gimppdb-utils.c:638
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
 "Element „%s” (%d) nie może zostać zmodyfikowany, ponieważ jest to grupa "
 "elementów"
 
-#: ../app/pdb/gimppdb-utils.c:650
+#: ../app/pdb/gimppdb-utils.c:659
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr ""
 "Warstwa „%s” (%d) nie może zostać użyta, ponieważ nie jest warstwą tekstową"
 
-#: ../app/pdb/gimppdb-utils.c:691
+#: ../app/pdb/gimppdb-utils.c:700
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "Obraz „%s” (%d) jest typu „%s”, natomiast spodziewany typ obrazu to „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:714
+#: ../app/pdb/gimppdb-utils.c:723
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "Obraz „%s” (%d) nie może być typu „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:734
+#: ../app/pdb/gimppdb-utils.c:743
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
@@ -19429,22 +19429,22 @@ msgstr ""
 "Obraz „%s” (%d) ma dokładność „%s”, natomiast spodziewana dokładność obrazu "
 "to „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:757
+#: ../app/pdb/gimppdb-utils.c:766
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Obraz „%s” (%d) nie może mieć dokładności „%s”"
 
-#: ../app/pdb/gimppdb-utils.c:781 ../app/pdb/image-guides-cmds.c:179
+#: ../app/pdb/gimppdb-utils.c:790 ../app/pdb/image-guides-cmds.c:179
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "Obraz „%s” (%d) nie zawiera prowadnicy o identyfikatorze %d"
 
-#: ../app/pdb/gimppdb-utils.c:804 ../app/pdb/image-sample-points-cmds.c:144
+#: ../app/pdb/gimppdb-utils.c:813 ../app/pdb/image-sample-points-cmds.c:144
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "Obraz „%s” (%d) nie zawiera punktu wzorcowego o identyfikatorze %d"
 
-#: ../app/pdb/gimppdb-utils.c:832
+#: ../app/pdb/gimppdb-utils.c:841
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Obiekt wektorowy %d nie zawiera krzywej o identyfikatorze %d"
@@ -19862,40 +19862,45 @@ msgstr "Próg alfy"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4018
 msgctxt "undo-type"
+msgid "Sharpen (Unsharp Mask)"
+msgstr "Wyostrzenie (maska wyostrzająca)"
+
+#: ../app/pdb/plug-in-compat-cmds.c:4064
+msgctxt "undo-type"
 msgid "Video"
 msgstr "Wideo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4055
+#: ../app/pdb/plug-in-compat-cmds.c:4101
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Odwrócenie wartości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4159
+#: ../app/pdb/plug-in-compat-cmds.c:4205
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Rozprowadzanie wartości"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4206
+#: ../app/pdb/plug-in-compat-cmds.c:4252
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Rozciągnięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4253
+#: ../app/pdb/plug-in-compat-cmds.c:4299
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erozja"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4316
+#: ../app/pdb/plug-in-compat-cmds.c:4362
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Fale"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4364
+#: ../app/pdb/plug-in-compat-cmds.c:4410
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Skręcenie i zaciśnięcie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4416
+#: ../app/pdb/plug-in-compat-cmds.c:4462
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Wiatr"
@@ -20741,7 +20746,7 @@ msgstr ""
 "zobaczyć próg). Wyłączenie wygładzania wypełni cały obszar równomiernie."
 
 #: ../app/tools/gimpbucketfilloptions.c:142
-#: ../app/tools/gimpgradientoptions.c:129
+#: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
@@ -20895,12 +20900,12 @@ msgid "Color Picker Average Radius"
 msgstr "Promień średniego pobrania koloru"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
-msgid "Pick Mode"
-msgstr "Tryb wybierania"
+msgid "Pick Target"
+msgstr "Cel wyboru"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
-msgid "Choose what color picker will do"
-msgstr "Proszę wybrać tryb działania wyboru kolorów"
+msgid "Choose what the color picker will do"
+msgstr "Proszę wybrać cel działania wyboru kolorów"
 
 #: ../app/tools/gimpcolorpickeroptions.c:87
 #: ../app/tools/gimpmeasureoptions.c:68
@@ -20917,8 +20922,8 @@ msgstr ""
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:195
 #, c-format
-msgid "Pick Mode  (%s)"
-msgstr "Tryb wybierania  (%s)"
+msgid "Pick Target  (%s)"
+msgstr "Cel wyboru  (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:204
@@ -20938,23 +20943,23 @@ msgstr "Pobranie koloru: ustawia kolor z punktów obrazu"
 msgid "C_olor Picker"
 msgstr "Po_branie koloru"
 
-#: ../app/tools/gimpcolorpickertool.c:253
+#: ../app/tools/gimpcolorpickertool.c:255
 msgid "Click in any image to view its color"
 msgstr "Kliknięcie w dowolnym obrazie wyświetli jego kolor"
 
-#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:424
+#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:424
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor pierwszoplanowy"
 
-#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:430
+#: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:430
 msgid "Click in any image to pick the background color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor tła"
 
-#: ../app/tools/gimpcolorpickertool.c:276
+#: ../app/tools/gimpcolorpickertool.c:278
 msgid "Click in any image to add the color to the palette"
 msgstr "Kliknięcie w dowolnym obrazie doda kolor do palety"
 
-#: ../app/tools/gimpcolorpickertool.c:343
+#: ../app/tools/gimpcolorpickertool.c:345
 msgid "Color Picker Information"
 msgstr "Informacje o zakraplaczu"
 
@@ -21569,51 +21574,51 @@ msgstr "Przekształcenie macierzowe"
 msgid "Invalid transform"
 msgstr "Nieprawidłowe przekształcenie"
 
-#: ../app/tools/gimpgradientoptions.c:102
-#: ../app/tools/gimpgradientoptions.c:314
+#: ../app/tools/gimpgradientoptions.c:101
+#: ../app/tools/gimpgradientoptions.c:298
 msgid "Metric"
 msgstr "Metryka"
 
-#: ../app/tools/gimpgradientoptions.c:103
+#: ../app/tools/gimpgradientoptions.c:102
 msgid "Metric to use for the distance calculation"
 msgstr "Metryka używana do obliczania odległości"
 
-#: ../app/tools/gimpgradientoptions.c:117
+#: ../app/tools/gimpgradientoptions.c:109
 msgid "Adaptive Supersampling"
 msgstr "Nadpróbkowanie adaptatywne"
 
-#: ../app/tools/gimpgradientoptions.c:123
+#: ../app/tools/gimpgradientoptions.c:115
 msgid "Max depth"
 msgstr "Maksymalna głębia"
 
-#: ../app/tools/gimpgradientoptions.c:143
+#: ../app/tools/gimpgradientoptions.c:135
 msgid "Instant mode"
 msgstr "Tryb natychmiastowy"
 
-#: ../app/tools/gimpgradientoptions.c:144
+#: ../app/tools/gimpgradientoptions.c:136
 msgid "Commit gradient instantly"
 msgstr "Od razu zatwierdza gradient"
 
-#: ../app/tools/gimpgradientoptions.c:150
+#: ../app/tools/gimpgradientoptions.c:142
 msgid "Modify active gradient"
 msgstr "Modyfikuj aktywny gradient"
 
-#: ../app/tools/gimpgradientoptions.c:151
+#: ../app/tools/gimpgradientoptions.c:143
 msgid "Modify the active gradient in-place"
 msgstr "Modyfikuje aktywny gradient na płótnie"
 
-#: ../app/tools/gimpgradientoptions.c:290
+#: ../app/tools/gimpgradientoptions.c:274
 #: ../app/tools/gimppaintoptions-gui.c:373
 msgid "Edit this gradient"
 msgstr "Modyfikuje ten gradient"
 
 #. the instant toggle
-#: ../app/tools/gimpgradientoptions.c:367
+#: ../app/tools/gimpgradientoptions.c:351
 #, c-format
 msgid "Instant mode  (%s)"
 msgstr "Tryb natychmiastowy  (%s)"
 
-#: ../app/tools/gimpgradientoptions.c:387
+#: ../app/tools/gimpgradientoptions.c:371
 msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
@@ -22474,21 +22479,21 @@ msgstr "_Poziomy środek:"
 msgid "Center _Y:"
 msgstr "Pi_onowy środek:"
 
-#: ../app/tools/gimpsamplepointtool.c:240
+#: ../app/tools/gimpsamplepointtool.c:237
 msgid "Remove Sample Point"
 msgstr "Usuń punkt wzorcowy"
 
-#: ../app/tools/gimpsamplepointtool.c:241
+#: ../app/tools/gimpsamplepointtool.c:238
 msgid "Cancel Sample Point"
 msgstr "Anuluj punkt wzorcowy"
 
-#: ../app/tools/gimpsamplepointtool.c:247
-#: ../app/tools/gimpsamplepointtool.c:333
+#: ../app/tools/gimpsamplepointtool.c:244
+#: ../app/tools/gimpsamplepointtool.c:330
 msgid "Move Sample Point: "
 msgstr "Przesunięcie punktu wzorcowego: "
 
-#: ../app/tools/gimpsamplepointtool.c:259
-#: ../app/tools/gimpsamplepointtool.c:345
+#: ../app/tools/gimpsamplepointtool.c:256
+#: ../app/tools/gimpsamplepointtool.c:342
 msgid "Add Sample Point: "
 msgstr "Dodanie punktu wzorcowego: "
 
@@ -25633,22 +25638,22 @@ msgid "CMYK"
 msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:153
-msgctxt "color-pick-mode"
+msgctxt "color-pick-target"
 msgid "Pick only"
 msgstr "Tylko wybór"
 
 #: ../app/widgets/widgets-enums.c:154
-msgctxt "color-pick-mode"
+msgctxt "color-pick-target"
 msgid "Set foreground color"
 msgstr "Ustawienie koloru pierwszoplanowego"
 
 #: ../app/widgets/widgets-enums.c:155
-msgctxt "color-pick-mode"
+msgctxt "color-pick-target"
 msgid "Set background color"
 msgstr "Ustawienie koloru tła"
 
 #: ../app/widgets/widgets-enums.c:156
-msgctxt "color-pick-mode"
+msgctxt "color-pick-target"
 msgid "Add to palette"
 msgstr "Dodanie do palety"
 
