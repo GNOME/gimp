@@ -183,15 +183,11 @@ gimp_guide_custom_new (GimpOrientationType  orientation,
                        guint32              guide_ID,
                        GimpGuideStyle       guide_style)
 {
-  GimpGuide *guide;
-
-  guide = g_object_new (GIMP_TYPE_GUIDE,
-                        "id",                guide_ID,
-                        "orientation",       orientation,
-                        "style",             guide_style,
-                        NULL);
-
-  return guide;
+  return g_object_new (GIMP_TYPE_GUIDE,
+                       "id",          guide_ID,
+                       "orientation", orientation,
+                       "style",       guide_style,
+                       NULL);
 }
 
 GimpOrientationType
