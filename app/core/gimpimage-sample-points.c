@@ -131,6 +131,27 @@ gimp_image_move_sample_point (GimpImage       *image,
   gimp_image_sample_point_moved (image, sample_point);
 }
 
+void
+gimp_image_set_sample_point_pick_mode (GimpImage         *image,
+                                       GimpSamplePoint   *sample_point,
+                                       GimpColorPickMode  pick_mode,
+                                       gboolean           push_undo)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
+
+  if (push_undo)
+    gimp_image_undo_push_sample_point (image,
+                                       C_("undo-type",
+                                          "Set Sample Point Pick Mode"),
+                                       sample_point);
+
+  gimp_sample_point_set_pick_mode (sample_point, pick_mode);
+
+  /* well... */
+  gimp_image_sample_point_moved (image, sample_point);
+}
+
 GList *
 gimp_image_get_sample_points (GimpImage *image)
 {
