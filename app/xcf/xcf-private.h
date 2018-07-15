@@ -52,7 +52,7 @@ typedef enum
   PROP_USER_UNIT          = 24,
   PROP_VECTORS            = 25,
   PROP_TEXT_LAYER_FLAGS   = 26,
-  PROP_SAMPLE_POINTS      = 27,
+  PROP_OLD_SAMPLE_POINTS  = 27,
   PROP_LOCK_CONTENT       = 28,
   PROP_GROUP_ITEM         = 29,
   PROP_ITEM_PATH          = 30,
@@ -63,7 +63,8 @@ typedef enum
   PROP_COMPOSITE_MODE     = 35,
   PROP_COMPOSITE_SPACE    = 36,
   PROP_BLEND_SPACE        = 37,
-  PROP_FLOAT_COLOR        = 38
+  PROP_FLOAT_COLOR        = 38,
+  PROP_SAMPLE_POINTS      = 39,
 } PropType;
 
 typedef enum

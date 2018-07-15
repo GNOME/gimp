@@ -383,8 +383,15 @@ xcf_save_image_props (XcfInfo    *info,
                                     gimp_image_get_guides (image)));
 
   if (gimp_image_get_sample_points (image))
-    xcf_check_error (xcf_save_prop (info, image, PROP_SAMPLE_POINTS, error,
-                                    gimp_image_get_sample_points (image)));
+    {
+      /* save the new property before the old one, so loading can skip
+       * the latter
+       */
+      xcf_check_error (xcf_save_prop (info, image, PROP_SAMPLE_POINTS, error,
+                                      gimp_image_get_sample_points (image)));
+      xcf_check_error (xcf_save_prop (info, image, PROP_OLD_SAMPLE_POINTS, error,
+                                      gimp_image_get_sample_points (image)));
+    }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_RESOLUTION, error,
                                   xres, yres));
@@ -1074,6 +1081,34 @@ xcf_save_prop (XcfInfo    *info,
       break;
 
     case PROP_SAMPLE_POINTS:
+      {
+        GList *sample_points   = va_arg (args, GList *);
+        gint   n_sample_points = g_list_length (sample_points);
+
+        size = n_sample_points * (5 * 4);
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+
+        for (; sample_points; sample_points = g_list_next (sample_points))
+          {
+            GimpSamplePoint   *sample_point = sample_points->data;
+            gint32             x, y;
+            GimpColorPickMode  pick_mode;
+            guint32            padding[2] = { 0, };
+
+            gimp_sample_point_get_position (sample_point, &x, &y);
+            pick_mode = gimp_sample_point_get_pick_mode (sample_point);
+
+            xcf_write_int32_check_error (info, (guint32 *) &x,         1);
+            xcf_write_int32_check_error (info, (guint32 *) &y,         1);
+            xcf_write_int32_check_error (info, (guint32 *) &pick_mode, 1);
+            xcf_write_int32_check_error (info, (guint32 *) padding,    2);
+          }
+      }
+      break;
+
+    case PROP_OLD_SAMPLE_POINTS:
       {
         GList *sample_points   = va_arg (args, GList *);
         gint   n_sample_points = g_list_length (sample_points);
