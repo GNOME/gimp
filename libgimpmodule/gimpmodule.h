@@ -51,7 +51,7 @@ G_BEGIN_DECLS
  *  - one of the classes implemented by modules (currently #GimpColorDisplay,
  *    #GimpColorSelector and #GimpController).
  **/
-#define GIMP_MODULE_ABI_VERSION 0x0004
+#define GIMP_MODULE_ABI_VERSION 0x0005
 
 
 /**
