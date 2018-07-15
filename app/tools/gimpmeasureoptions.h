@@ -35,12 +35,13 @@ typedef struct _GimpMeasureOptionsClass GimpMeasureOptionsClass;
 
 struct _GimpMeasureOptions
 {
-  GimpTransformOptions  parent_instance;
+  GimpTransformOptions    parent_instance;
 
-  gboolean              use_info_window;
+  GimpCompassOrientation  orientation;
+  gboolean                use_info_window;
 
   /*  options gui  */
-  GtkWidget            *straighten_button;
+  GtkWidget              *straighten_button;
 };
 
 struct _GimpMeasureOptionsClass

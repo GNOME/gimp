@@ -28,6 +28,8 @@
 
 #include "tools-types.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpmeasureoptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -37,6 +39,7 @@
 enum
 {
   PROP_0,
+  PROP_ORIENTATION,
   PROP_USE_INFO_WINDOW
 };
 
@@ -63,6 +66,14 @@ gimp_measure_options_class_init (GimpMeasureOptionsClass *klass)
   object_class->set_property = gimp_measure_options_set_property;
   object_class->get_property = gimp_measure_options_get_property;
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
+                         "orientation",
+                         _("Orientation"),
+                         _("Orientation against which the angle is measured"),
+                         GIMP_TYPE_COMPASS_ORIENTATION,
+                         GIMP_COMPASS_ORIENTATION_AUTO,
+                         GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
                             "use-info-window",
                             _("Use info window"),
@@ -87,6 +98,9 @@ gimp_measure_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_ORIENTATION:
+      options->orientation = g_value_get_enum (value);
+      break;
     case PROP_USE_INFO_WINDOW:
       options->use_info_window = g_value_get_boolean (value);
       break;
@@ -106,6 +120,9 @@ gimp_measure_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_ORIENTATION:
+      g_value_set_enum (value, options->orientation);
+      break;
     case PROP_USE_INFO_WINDOW:
       g_value_set_boolean (value, options->use_info_window);
       break;
@@ -121,9 +138,19 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
   GObject            *config  = G_OBJECT (tool_options);
   GimpMeasureOptions *options = GIMP_MEASURE_OPTIONS (tool_options);
   GtkWidget          *vbox    = gimp_tool_options_gui (tool_options);
-  GtkWidget          *button;
   GtkWidget          *frame;
+  GtkWidget          *button;
   GtkWidget          *vbox2;
+  gchar              *str;
+  GdkModifierType     toggle_mask = gimp_get_toggle_behavior_mask ();
+
+  /*  the orientation frame  */
+  str = g_strdup_printf (_("Orientation  (%s)"),
+                         gimp_get_mod_string (toggle_mask));
+  frame = gimp_prop_enum_radio_frame_new (config, "orientation", str, -1, -1);
+  g_free (str);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   /*  the use_info_window toggle button  */
   button = gimp_prop_check_button_new (config, "use-info-window", NULL);
