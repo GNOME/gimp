@@ -313,26 +313,26 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
     }
   else
     {
-      GimpColorPickMode  mode;
-      gchar             *status      = NULL;
-      GdkModifierType    extend_mask = gimp_get_extend_selection_mask ();
-      GdkModifierType    toggle_mask = gimp_get_toggle_behavior_mask ();
+      GimpColorPickTarget  target;
+      gchar               *status      = NULL;
+      GdkModifierType      extend_mask = gimp_get_extend_selection_mask ();
+      GdkModifierType      toggle_mask = gimp_get_toggle_behavior_mask ();
 
       gimp_tool_pop_status (tool, display);
 
       if (state & extend_mask)
         {
-          mode   = GIMP_COLOR_PICK_MODE_PALETTE;
+          target = GIMP_COLOR_PICK_TARGET_PALETTE;
           status = g_strdup (_("Click to add a control point"));
         }
       else if (state & toggle_mask)
         {
-          mode   = GIMP_COLOR_PICK_MODE_PALETTE;
+          target = GIMP_COLOR_PICK_TARGET_PALETTE;
           status = g_strdup (_("Click to add control points to all channels"));
         }
       else
         {
-          mode   = GIMP_COLOR_PICK_MODE_NONE;
+          target = GIMP_COLOR_PICK_TARGET_NONE;
           status = gimp_suggest_modifiers (_("Click to locate on curve"),
                                            (extend_mask | toggle_mask) & ~state,
                                            _("%s: add control point"),
@@ -340,7 +340,7 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
                                            NULL);
         }
 
-      GIMP_COLOR_TOOL (tool)->pick_mode = mode;
+      GIMP_COLOR_TOOL (tool)->pick_target = target;
 
       if (proximity)
         gimp_tool_push_status (tool, display, "%s", status);

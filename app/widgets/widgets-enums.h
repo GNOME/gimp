@@ -73,17 +73,17 @@ typedef enum
 } GimpColorFrameMode;
 
 
-#define GIMP_TYPE_COLOR_PICK_MODE (gimp_color_pick_mode_get_type ())
+#define GIMP_TYPE_COLOR_PICK_TARGET (gimp_color_pick_target_get_type ())
 
-GType gimp_color_pick_mode_get_type (void) G_GNUC_CONST;
+GType gimp_color_pick_target_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_PICK_MODE_NONE,       /*< desc="Pick only"            >*/
-  GIMP_COLOR_PICK_MODE_FOREGROUND, /*< desc="Set foreground color" >*/
-  GIMP_COLOR_PICK_MODE_BACKGROUND, /*< desc="Set background color" >*/
-  GIMP_COLOR_PICK_MODE_PALETTE     /*< desc="Add to palette"       >*/
-} GimpColorPickMode;
+  GIMP_COLOR_PICK_TARGET_NONE,       /*< desc="Pick only"            >*/
+  GIMP_COLOR_PICK_TARGET_FOREGROUND, /*< desc="Set foreground color" >*/
+  GIMP_COLOR_PICK_TARGET_BACKGROUND, /*< desc="Set background color" >*/
+  GIMP_COLOR_PICK_TARGET_PALETTE     /*< desc="Add to palette"       >*/
+} GimpColorPickTarget;
 
 
 #define GIMP_TYPE_COLOR_PICK_STATE (gimp_color_pick_state_get_type ())

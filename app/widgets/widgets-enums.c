@@ -137,23 +137,23 @@ gimp_color_frame_mode_get_type (void)
 }
 
 GType
-gimp_color_pick_mode_get_type (void)
+gimp_color_pick_target_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_COLOR_PICK_MODE_NONE, "GIMP_COLOR_PICK_MODE_NONE", "none" },
-    { GIMP_COLOR_PICK_MODE_FOREGROUND, "GIMP_COLOR_PICK_MODE_FOREGROUND", "foreground" },
-    { GIMP_COLOR_PICK_MODE_BACKGROUND, "GIMP_COLOR_PICK_MODE_BACKGROUND", "background" },
-    { GIMP_COLOR_PICK_MODE_PALETTE, "GIMP_COLOR_PICK_MODE_PALETTE", "palette" },
+    { GIMP_COLOR_PICK_TARGET_NONE, "GIMP_COLOR_PICK_TARGET_NONE", "none" },
+    { GIMP_COLOR_PICK_TARGET_FOREGROUND, "GIMP_COLOR_PICK_TARGET_FOREGROUND", "foreground" },
+    { GIMP_COLOR_PICK_TARGET_BACKGROUND, "GIMP_COLOR_PICK_TARGET_BACKGROUND", "background" },
+    { GIMP_COLOR_PICK_TARGET_PALETTE, "GIMP_COLOR_PICK_TARGET_PALETTE", "palette" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_COLOR_PICK_MODE_NONE, NC_("color-pick-mode", "Pick only"), NULL },
-    { GIMP_COLOR_PICK_MODE_FOREGROUND, NC_("color-pick-mode", "Set foreground color"), NULL },
-    { GIMP_COLOR_PICK_MODE_BACKGROUND, NC_("color-pick-mode", "Set background color"), NULL },
-    { GIMP_COLOR_PICK_MODE_PALETTE, NC_("color-pick-mode", "Add to palette"), NULL },
+    { GIMP_COLOR_PICK_TARGET_NONE, NC_("color-pick-target", "Pick only"), NULL },
+    { GIMP_COLOR_PICK_TARGET_FOREGROUND, NC_("color-pick-target", "Set foreground color"), NULL },
+    { GIMP_COLOR_PICK_TARGET_BACKGROUND, NC_("color-pick-target", "Set background color"), NULL },
+    { GIMP_COLOR_PICK_TARGET_PALETTE, NC_("color-pick-target", "Add to palette"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -161,8 +161,8 @@ gimp_color_pick_mode_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpColorPickMode", values);
-      gimp_type_set_translation_context (type, "color-pick-mode");
+      type = g_enum_register_static ("GimpColorPickTarget", values);
+      gimp_type_set_translation_context (type, "color-pick-target");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

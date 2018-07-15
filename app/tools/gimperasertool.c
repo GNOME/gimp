@@ -100,7 +100,7 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
                                                 GIMP_CURSOR_MODIFIER_MINUS);
 
   gimp_paint_tool_enable_color_picker (paint_tool,
-                                       GIMP_COLOR_PICK_MODE_BACKGROUND);
+                                       GIMP_COLOR_PICK_TARGET_BACKGROUND);
 
   paint_tool->status      = _("Click to erase");
   paint_tool->status_line = _("Click to erase the line");
