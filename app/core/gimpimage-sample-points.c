@@ -53,7 +53,7 @@ gimp_image_add_sample_point_at_pos (GimpImage *image,
                                        sample_point);
 
   gimp_image_add_sample_point (image, sample_point, x, y);
-  gimp_sample_point_unref (sample_point);
+  g_object_unref (sample_point);
 
   return sample_point;
 }
@@ -67,14 +67,14 @@ gimp_image_add_sample_point (GimpImage       *image,
   GimpImagePrivate *private;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   private->sample_points = g_list_append (private->sample_points, sample_point);
 
   gimp_sample_point_set_position (sample_point, x, y);
-  gimp_sample_point_ref (sample_point);
+  g_object_ref (sample_point);
 
   gimp_image_sample_point_added (image, sample_point);
 }
@@ -87,7 +87,7 @@ gimp_image_remove_sample_point (GimpImage       *image,
   GimpImagePrivate *private;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
@@ -97,11 +97,14 @@ gimp_image_remove_sample_point (GimpImage       *image,
                                        sample_point);
 
   private->sample_points = g_list_remove (private->sample_points, sample_point);
+  gimp_sample_point_removed (sample_point);
 
   gimp_image_sample_point_removed (image, sample_point);
 
-  gimp_sample_point_set_position (sample_point, -1, -1);
-  gimp_sample_point_unref (sample_point);
+  gimp_sample_point_set_position (sample_point,
+                                  GIMP_SAMPLE_POINT_POSITION_UNDEFINED,
+                                  GIMP_SAMPLE_POINT_POSITION_UNDEFINED);
+  g_object_unref (sample_point);
 }
 
 void
@@ -112,7 +115,7 @@ gimp_image_move_sample_point (GimpImage       *image,
                               gboolean         push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
   g_return_if_fail (x >= 0);
   g_return_if_fail (y >= 0);
   g_return_if_fail (x < gimp_image_get_width  (image));

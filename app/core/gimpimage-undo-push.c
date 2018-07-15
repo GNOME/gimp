@@ -228,7 +228,7 @@ gimp_image_undo_push_sample_point (GimpImage       *image,
                                    GimpSamplePoint *sample_point)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (sample_point != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_SAMPLE_POINT (sample_point), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_SAMPLE_POINT_UNDO,
                                GIMP_UNDO_SAMPLE_POINT, undo_desc,
