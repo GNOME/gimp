@@ -80,9 +80,6 @@ static void     gimp_measure_tool_motion          (GimpTool              *tool,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
-static void     gimp_measure_tool_options_notify  (GimpTool              *tool,
-                                                   GimpToolOptions       *options,
-                                                   const GParamSpec      *pspec);
 
 static void     gimp_measure_tool_recalc_matrix   (GimpTransformTool     *tr_tool);
 static gchar  * gimp_measure_tool_get_undo_desc   (GimpTransformTool     *tr_tool);
@@ -149,7 +146,6 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   tool_class->button_press   = gimp_measure_tool_button_press;
   tool_class->button_release = gimp_measure_tool_button_release;
   tool_class->motion         = gimp_measure_tool_motion;
-  tool_class->options_notify = gimp_measure_tool_options_notify;
 
   tr_class->recalc_matrix    = gimp_measure_tool_recalc_matrix;
   tr_class->get_undo_desc    = gimp_measure_tool_get_undo_desc;
@@ -323,27 +319,6 @@ gimp_measure_tool_motion (GimpTool         *tool,
 }
 
 static void
-gimp_measure_tool_options_notify (GimpTool         *tool,
-                                  GimpToolOptions  *options,
-                                  const GParamSpec *pspec)
-{
-  GimpMeasureTool    *measure         = GIMP_MEASURE_TOOL (tool);
-  GimpMeasureOptions *measure_options = GIMP_MEASURE_OPTIONS (options);
-
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
-
-  if (! strcmp (pspec->name, "orientation"))
-    {
-      if (measure->widget)
-        {
-          g_object_set (measure->widget,
-                        "orientation", measure_options->orientation,
-                        NULL);
-        }
-    }
-}
-
-static void
 gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
   GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tr_tool);
@@ -487,6 +462,10 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
                                            measure->y[2]);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), measure->widget);
+
+  g_object_bind_property (options,         "orientation",
+                          measure->widget, "orientation",
+                          G_BINDING_DEFAULT);
 
   g_signal_connect (measure->widget, "changed",
                     G_CALLBACK (gimp_measure_tool_compass_changed),
