@@ -90,7 +90,6 @@ gimp_guide_class_init (GimpGuideClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-
   object_class->get_property = gimp_guide_get_property;
   object_class->set_property = gimp_guide_set_property;
 
@@ -135,10 +134,10 @@ gimp_guide_init (GimpGuide *guide)
 }
 
 static void
-gimp_guide_get_property (GObject      *object,
-                         guint         property_id,
-                         GValue       *value,
-                         GParamSpec   *pspec)
+gimp_guide_get_property (GObject    *object,
+                         guint       property_id,
+                         GValue     *value,
+                         GParamSpec *pspec)
 {
   GimpGuide *guide = GIMP_GUIDE (object);
 
@@ -241,6 +240,14 @@ gimp_guide_get_ID (GimpGuide *guide)
   return guide->priv->guide_ID;
 }
 
+void
+gimp_guide_removed (GimpGuide *guide)
+{
+  g_return_if_fail (GIMP_IS_GUIDE (guide));
+
+  g_signal_emit (guide, gimp_guide_signals[REMOVED], 0);
+}
+
 GimpOrientationType
 gimp_guide_get_orientation (GimpGuide *guide)
 {
@@ -277,14 +284,6 @@ gimp_guide_set_position (GimpGuide *guide,
   guide->priv->position = position;
 
   g_object_notify (G_OBJECT (guide), "position");
-}
-
-void
-gimp_guide_removed (GimpGuide *guide)
-{
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
-
-  g_signal_emit (guide, gimp_guide_signals[REMOVED], 0);
 }
 
 GimpGuideStyle
