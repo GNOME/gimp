@@ -42,6 +42,8 @@ struct _GimpMeasureTool
   GimpToolWidget    *widget;
   GimpToolWidget    *grab_widget;
 
+  gboolean           supress_guides;
+
   gint               n_points;
   gint               x[3];
   gint               y[3];
