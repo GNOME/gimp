@@ -86,6 +86,22 @@ typedef enum  /*< pdb-skip >*/
 } GimpChannelBorderStyle;
 
 
+#define GIMP_TYPE_COLOR_PICK_MODE (gimp_color_pick_mode_get_type ())
+
+GType gimp_color_pick_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_COLOR_PICK_MODE_PIXEL,       /*< desc="Pixel"        >*/
+  GIMP_COLOR_PICK_MODE_RGB_PERCENT, /*< desc="RGB (%)"      >*/
+  GIMP_COLOR_PICK_MODE_RGB_U8,      /*< desc="RGB (0..255)" >*/
+  GIMP_COLOR_PICK_MODE_HSV,         /*< desc="HSV"          >*/
+  GIMP_COLOR_PICK_MODE_LCH,         /*< desc="CIE LCh"      >*/
+  GIMP_COLOR_PICK_MODE_LAB,         /*< desc="CIE LAB"      >*/
+  GIMP_COLOR_PICK_MODE_CMYK         /*< desc="CMYK"         >*/
+} GimpColorPickMode;
+
+
 #define GIMP_TYPE_COLOR_PROFILE_POLICY (gimp_color_profile_policy_get_type ())
 
 GType gimp_color_profile_policy_get_type (void) G_GNUC_CONST;

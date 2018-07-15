@@ -44,7 +44,7 @@ struct _GimpColorFrame
   gint                x;
   gint                y;
 
-  GimpColorFrameMode  frame_mode;
+  GimpColorPickMode   pick_mode;
 
   PangoEllipsizeMode  ellipsize;
 
@@ -54,7 +54,7 @@ struct _GimpColorFrame
   gboolean            has_color_area;
   gboolean            has_coords;
 
-  GtkWidget          *menu;
+  GtkWidget          *combo;
   GtkWidget          *color_area;
   GtkWidget          *coords_box_x;
   GtkWidget          *coords_box_y;
@@ -80,7 +80,7 @@ GType       gimp_color_frame_get_type           (void) G_GNUC_CONST;
 GtkWidget * gimp_color_frame_new                (void);
 
 void        gimp_color_frame_set_mode           (GimpColorFrame     *frame,
-                                                 GimpColorFrameMode  mode);
+                                                 GimpColorPickMode   mode);
 
 void        gimp_color_frame_set_ellipsize      (GimpColorFrame     *frame,
                                                  PangoEllipsizeMode  ellipsize);

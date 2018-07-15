@@ -39,7 +39,7 @@ enum
   PROP_PICK_TARGET,
   PROP_USE_INFO_WINDOW,
   PROP_FRAME1_MODE,
-  PROP_FRAME2_MODE,
+  PROP_FRAME2_MODE
 };
 
 
@@ -93,15 +93,15 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FRAME1_MODE,
                          "frame1-mode",
                          "Frame 1 Mode", NULL,
-                         GIMP_TYPE_COLOR_FRAME_MODE,
-                         GIMP_COLOR_FRAME_MODE_PIXEL,
+                         GIMP_TYPE_COLOR_PICK_MODE,
+                         GIMP_COLOR_PICK_MODE_PIXEL,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FRAME2_MODE,
                          "frame2-mode",
                          "Frame 2 Mode", NULL,
-                         GIMP_TYPE_COLOR_FRAME_MODE,
-                         GIMP_COLOR_FRAME_MODE_RGB_PERCENT,
+                         GIMP_TYPE_COLOR_PICK_MODE,
+                         GIMP_COLOR_PICK_MODE_RGB_PERCENT,
                          GIMP_PARAM_STATIC_STRINGS);
 }
 

@@ -130,6 +130,45 @@ gimp_channel_border_style_get_type (void)
 }
 
 GType
+gimp_color_pick_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_COLOR_PICK_MODE_PIXEL, "GIMP_COLOR_PICK_MODE_PIXEL", "pixel" },
+    { GIMP_COLOR_PICK_MODE_RGB_PERCENT, "GIMP_COLOR_PICK_MODE_RGB_PERCENT", "rgb-percent" },
+    { GIMP_COLOR_PICK_MODE_RGB_U8, "GIMP_COLOR_PICK_MODE_RGB_U8", "rgb-u8" },
+    { GIMP_COLOR_PICK_MODE_HSV, "GIMP_COLOR_PICK_MODE_HSV", "hsv" },
+    { GIMP_COLOR_PICK_MODE_LCH, "GIMP_COLOR_PICK_MODE_LCH", "lch" },
+    { GIMP_COLOR_PICK_MODE_LAB, "GIMP_COLOR_PICK_MODE_LAB", "lab" },
+    { GIMP_COLOR_PICK_MODE_CMYK, "GIMP_COLOR_PICK_MODE_CMYK", "cmyk" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_COLOR_PICK_MODE_PIXEL, NC_("color-pick-mode", "Pixel"), NULL },
+    { GIMP_COLOR_PICK_MODE_RGB_PERCENT, NC_("color-pick-mode", "RGB (%)"), NULL },
+    { GIMP_COLOR_PICK_MODE_RGB_U8, NC_("color-pick-mode", "RGB (0..255)"), NULL },
+    { GIMP_COLOR_PICK_MODE_HSV, NC_("color-pick-mode", "HSV"), NULL },
+    { GIMP_COLOR_PICK_MODE_LCH, NC_("color-pick-mode", "CIE LCh"), NULL },
+    { GIMP_COLOR_PICK_MODE_LAB, NC_("color-pick-mode", "CIE LAB"), NULL },
+    { GIMP_COLOR_PICK_MODE_CMYK, NC_("color-pick-mode", "CMYK"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpColorPickMode", values);
+      gimp_type_set_translation_context (type, "color-pick-mode");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_color_profile_policy_get_type (void)
 {
   static const GEnumValue values[] =
