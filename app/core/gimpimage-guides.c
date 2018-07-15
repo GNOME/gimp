@@ -77,7 +77,7 @@ gimp_image_add_vguide (GimpImage *image,
                                 C_("undo-type", "Add Vertical Guide"), guide);
 
   gimp_image_add_guide (image, guide, position);
-  g_object_unref (G_OBJECT (guide));
+  g_object_unref (guide);
 
   return guide;
 }
@@ -97,7 +97,7 @@ gimp_image_add_guide (GimpImage *image,
   private->guides = g_list_prepend (private->guides, guide);
 
   gimp_guide_set_position (guide, position);
-  g_object_ref (G_OBJECT (guide));
+  g_object_ref (guide);
 
   gimp_image_guide_added (image, guide);
 }
@@ -126,7 +126,7 @@ gimp_image_remove_guide (GimpImage *image,
   gimp_image_guide_removed (image, guide);
 
   gimp_guide_set_position (guide, GIMP_GUIDE_POSITION_UNDEFINED);
-  g_object_unref (G_OBJECT (guide));
+  g_object_unref (guide);
 }
 
 void
