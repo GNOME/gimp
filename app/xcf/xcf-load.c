@@ -802,8 +802,47 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_SAMPLE_POINTS:
           {
+            gint n_sample_points, i;
+
+            n_sample_points = prop_size / (5 * 4);
+            for (i = 0; i < n_sample_points; i++)
+              {
+                GimpSamplePoint   *sample_point;
+                gint32             x, y;
+                GimpColorPickMode  pick_mode;
+                guint32            padding[2] = { 0, };
+
+                xcf_read_int32 (info, (guint32 *) &x,         1);
+                xcf_read_int32 (info, (guint32 *) &y,         1);
+                xcf_read_int32 (info, (guint32 *) &pick_mode, 1);
+                xcf_read_int32 (info, (guint32 *) padding,    2);
+
+                GIMP_LOG (XCF, "prop sample point x=%d y=%d mode=%d",
+                          x, y, pick_mode);
+
+                sample_point = gimp_image_add_sample_point_at_pos (image,
+                                                                   x, y, FALSE);
+                gimp_image_set_sample_point_pick_mode (image, sample_point,
+                                                       pick_mode, FALSE);
+              }
+          }
+          break;
+
+        case PROP_OLD_SAMPLE_POINTS:
+          {
             gint32 x, y;
             gint   i, n_sample_points;
+
+            /* if there are already sample points, we loaded the new
+             * prop before
+             */
+            if (gimp_image_get_sample_points (image))
+              {
+                if (! xcf_skip_unknown_prop (info, prop_size))
+                  return FALSE;
+
+                break;
+              }
 
             n_sample_points = prop_size / (4 + 4);
             for (i = 0; i < n_sample_points; i++)
@@ -811,7 +850,7 @@ xcf_load_image_props (XcfInfo   *info,
                 xcf_read_int32 (info, (guint32 *) &x, 1);
                 xcf_read_int32 (info, (guint32 *) &y, 1);
 
-                GIMP_LOG (XCF, "prop sample point x=%d y=%d", x, y);
+                GIMP_LOG (XCF, "prop old sample point x=%d y=%d", x, y);
 
                 gimp_image_add_sample_point_at_pos (image, x, y, FALSE);
               }
