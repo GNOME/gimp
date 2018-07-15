@@ -436,6 +436,7 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
   measure->y[2]     = 0;
 
   measure->widget = gimp_tool_compass_new (shell,
+                                           GIMP_COMPASS_ORIENTATION_AUTO,
                                            measure->n_points,
                                            measure->x[0],
                                            measure->y[0],
