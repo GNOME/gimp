@@ -19,6 +19,9 @@
 #define __GIMP_SAMPLE_POINT_H__
 
 
+#include "gimpauxitem.h"
+
+
 #define GIMP_SAMPLE_POINT_POSITION_UNDEFINED G_MININT
 
 
@@ -35,27 +38,20 @@ typedef struct _GimpSamplePointClass   GimpSamplePointClass;
 
 struct _GimpSamplePoint
 {
-  GObject                 parent_instance;
+  GimpAuxItem             parent_instance;
 
   GimpSamplePointPrivate *priv;
 };
 
 struct _GimpSamplePointClass
 {
-  GObjectClass  parent_class;
-
-  /*  signals  */
-  void (* removed) (GimpSamplePoint *sample_point);
+  GimpAuxItemClass  parent_class;
 };
 
 
 GType             gimp_sample_point_get_type (void) G_GNUC_CONST;
 
 GimpSamplePoint * gimp_sample_point_new          (guint32          sample_point_ID);
-
-guint32           gimp_sample_point_get_ID       (GimpSamplePoint *sample_point);
-
-void              gimp_sample_point_removed      (GimpSamplePoint *sample_point);
 
 void              gimp_sample_point_get_position (GimpSamplePoint *sample_point,
                                                   gint            *position_x,

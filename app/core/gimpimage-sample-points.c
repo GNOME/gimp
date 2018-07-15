@@ -97,7 +97,7 @@ gimp_image_remove_sample_point (GimpImage       *image,
                                        sample_point);
 
   private->sample_points = g_list_remove (private->sample_points, sample_point);
-  gimp_sample_point_removed (sample_point);
+  gimp_aux_item_removed (GIMP_AUX_ITEM (sample_point));
 
   gimp_image_sample_point_removed (image, sample_point);
 
@@ -153,7 +153,7 @@ gimp_image_get_sample_point (GimpImage *image,
     {
       GimpSamplePoint *sample_point = sample_points->data;
 
-      if (gimp_sample_point_get_ID (sample_point) == id)
+      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (sample_point)) == id)
         return sample_point;
     }
 
@@ -184,7 +184,7 @@ gimp_image_get_next_sample_point (GimpImage *image,
       if (*sample_point_found) /* this is the first guide after the found one */
         return sample_point;
 
-      if (gimp_sample_point_get_ID (sample_point) == id) /* found it, next one will be returned */
+      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (sample_point)) == id) /* found it, next one will be returned */
         *sample_point_found = TRUE;
     }
 

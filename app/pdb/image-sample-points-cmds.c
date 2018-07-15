@@ -69,7 +69,7 @@ image_add_sample_point_invoker (GimpProcedure         *procedure,
 
           sp = gimp_image_add_sample_point_at_pos (image, position_x, position_y,
                                                    TRUE);
-          sample_point = gimp_sample_point_get_ID (sp);
+          sample_point = gimp_aux_item_get_ID (GIMP_AUX_ITEM (sp));
         }
       else
         success = FALSE;
@@ -137,7 +137,7 @@ image_find_next_sample_point_invoker (GimpProcedure         *procedure,
                                                               &success);
 
       if (sp)
-        next_sample_point = gimp_sample_point_get_ID (sp);
+        next_sample_point = gimp_aux_item_get_ID (GIMP_AUX_ITEM (sp));
 
       if (! success)
         g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,

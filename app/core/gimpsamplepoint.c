@@ -24,20 +24,12 @@
 
 #include "core-types.h"
 
-#include "gimpmarshal.h"
 #include "gimpsamplepoint.h"
 
 
 enum
 {
-  REMOVED,
-  LAST_SIGNAL
-};
-
-enum
-{
   PROP_0,
-  PROP_ID,
   PROP_POSITION_X,
   PROP_POSITION_Y
 };
@@ -45,9 +37,8 @@ enum
 
 struct _GimpSamplePointPrivate
 {
-  guint32  sample_point_ID;
-  gint     position_x;
-  gint     position_y;
+  gint  position_x;
+  gint  position_y;
 };
 
 
@@ -61,9 +52,7 @@ static void   gimp_sample_point_set_property (GObject      *object,
                                               GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpSamplePoint, gimp_sample_point, G_TYPE_OBJECT)
-
-static guint gimp_sample_point_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpSamplePoint, gimp_sample_point, GIMP_TYPE_AUX_ITEM)
 
 
 static void
@@ -71,25 +60,8 @@ gimp_sample_point_class_init (GimpSamplePointClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  gimp_sample_point_signals[REMOVED] =
-    g_signal_new ("removed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSamplePointClass, removed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
   object_class->get_property = gimp_sample_point_get_property;
   object_class->set_property = gimp_sample_point_set_property;
-
-  klass->removed             = NULL;
-
-  g_object_class_install_property (object_class, PROP_ID,
-                                   g_param_spec_uint ("id", NULL, NULL,
-                                                      0, G_MAXUINT32, 0,
-                                                      G_PARAM_CONSTRUCT_ONLY |
-                                                      GIMP_PARAM_READWRITE));
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_POSITION_X,
                         "position-x",
@@ -128,9 +100,6 @@ gimp_sample_point_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_ID:
-      g_value_set_uint (value, sample_point->priv->sample_point_ID);
-      break;
     case PROP_POSITION_X:
       g_value_set_int (value, sample_point->priv->position_x);
       break;
@@ -154,9 +123,6 @@ gimp_sample_point_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_ID:
-      sample_point->priv->sample_point_ID = g_value_get_uint (value);
-      break;
     case PROP_POSITION_X:
       sample_point->priv->position_x = g_value_get_int (value);
       break;
@@ -176,22 +142,6 @@ gimp_sample_point_new (guint32 sample_point_ID)
   return g_object_new (GIMP_TYPE_SAMPLE_POINT,
                        "id", sample_point_ID,
                        NULL);
-}
-
-guint32
-gimp_sample_point_get_ID (GimpSamplePoint *sample_point)
-{
-  g_return_val_if_fail (GIMP_IS_SAMPLE_POINT (sample_point), 0);
-
-  return sample_point->priv->sample_point_ID;
-}
-
-void
-gimp_sample_point_removed (GimpSamplePoint *sample_point)
-{
-  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
-
-  g_signal_emit (sample_point, gimp_sample_point_signals[REMOVED], 0);
 }
 
 void

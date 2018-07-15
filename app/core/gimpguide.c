@@ -20,31 +20,19 @@
 
 #include "config.h"
 
-#include <cairo.h>
-#include <gegl.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimpguide.h"
-#include "gimpmarshal.h"
 
-
-enum
-{
-  REMOVED,
-  LAST_SIGNAL
-};
 
 enum
 {
   PROP_0,
-  PROP_ID,
   PROP_ORIENTATION,
   PROP_POSITION,
   PROP_STYLE
@@ -53,7 +41,6 @@ enum
 
 struct _GimpGuidePrivate
 {
-  guint32              guide_ID;
   GimpOrientationType  orientation;
   gint                 position;
 
@@ -71,9 +58,7 @@ static void   gimp_guide_set_property (GObject      *object,
                                        GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpGuide, gimp_guide, G_TYPE_OBJECT)
-
-static guint gimp_guide_signals[LAST_SIGNAL] = { 0 };
+G_DEFINE_TYPE (GimpGuide, gimp_guide, GIMP_TYPE_AUX_ITEM)
 
 
 static void
@@ -81,25 +66,8 @@ gimp_guide_class_init (GimpGuideClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  gimp_guide_signals[REMOVED] =
-    g_signal_new ("removed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpGuideClass, removed),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
   object_class->get_property = gimp_guide_get_property;
   object_class->set_property = gimp_guide_set_property;
-
-  klass->removed             = NULL;
-
-  g_object_class_install_property (object_class, PROP_ID,
-                                   g_param_spec_uint ("id", NULL, NULL,
-                                                      0, G_MAXUINT32, 0,
-                                                      G_PARAM_CONSTRUCT_ONLY |
-                                                      GIMP_PARAM_READWRITE));
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_ORIENTATION,
                          "orientation",
@@ -143,9 +111,6 @@ gimp_guide_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_ID:
-      g_value_set_uint (value, guide->priv->guide_ID);
-      break;
     case PROP_ORIENTATION:
       g_value_set_enum (value, guide->priv->orientation);
       break;
@@ -171,9 +136,6 @@ gimp_guide_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_ID:
-      guide->priv->guide_ID = g_value_get_uint (value);
-      break;
     case PROP_ORIENTATION:
       guide->priv->orientation = g_value_get_enum (value);
       break;
@@ -230,22 +192,6 @@ gimp_guide_custom_new (GimpOrientationType  orientation,
                         NULL);
 
   return guide;
-}
-
-guint32
-gimp_guide_get_ID (GimpGuide *guide)
-{
-  g_return_val_if_fail (GIMP_IS_GUIDE (guide), 0);
-
-  return guide->priv->guide_ID;
-}
-
-void
-gimp_guide_removed (GimpGuide *guide)
-{
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
-
-  g_signal_emit (guide, gimp_guide_signals[REMOVED], 0);
 }
 
 GimpOrientationType

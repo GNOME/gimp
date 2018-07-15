@@ -84,6 +84,7 @@ typedef struct _GimpObject                      GimpObject;
 typedef struct _GimpViewable                    GimpViewable;
 typedef struct _GimpFilter                      GimpFilter;
 typedef struct _GimpItem                        GimpItem;
+typedef struct _GimpAuxItem                     GimpAuxItem;
 
 typedef struct _Gimp                            Gimp;
 typedef struct _GimpImage                       GimpImage;
@@ -154,6 +155,12 @@ typedef struct _GimpLayer                       GimpLayer;
 typedef struct _GimpGroupLayer                  GimpGroupLayer;
 
 
+/*  auxillary image items  */
+
+typedef struct _GimpGuide                       GimpGuide;
+typedef struct _GimpSamplePoint                 GimpSamplePoint;
+
+
 /*  undo objects  */
 
 typedef struct _GimpUndo                        GimpUndo;
@@ -176,7 +183,6 @@ typedef struct _GimpAsyncSet                    GimpAsyncSet;
 typedef struct _GimpBuffer                      GimpBuffer;
 typedef struct _GimpDrawableFilter              GimpDrawableFilter;
 typedef struct _GimpEnvironTable                GimpEnvironTable;
-typedef struct _GimpGuide                       GimpGuide;
 typedef struct _GimpHistogram                   GimpHistogram;
 typedef struct _GimpIdTable                     GimpIdTable;
 typedef struct _GimpImagefile                   GimpImagefile;
@@ -185,7 +191,6 @@ typedef struct _GimpObjectQueue                 GimpObjectQueue;
 typedef struct _GimpParasiteList                GimpParasiteList;
 typedef struct _GimpPdbProgress                 GimpPdbProgress;
 typedef struct _GimpProjection                  GimpProjection;
-typedef struct _GimpSamplePoint                 GimpSamplePoint;
 typedef struct _GimpSettings                    GimpSettings;
 typedef struct _GimpSubProgress                 GimpSubProgress;
 typedef struct _GimpTag                         GimpTag;

@@ -22,6 +22,9 @@
 #define __GIMP_GUIDE_H__
 
 
+#include "gimpauxitem.h"
+
+
 #define GIMP_GUIDE_POSITION_UNDEFINED G_MININT
 
 
@@ -38,17 +41,14 @@ typedef struct _GimpGuideClass   GimpGuideClass;
 
 struct _GimpGuide
 {
-  GObject           parent_instance;
+  GimpAuxItem       parent_instance;
 
   GimpGuidePrivate *priv;
 };
 
 struct _GimpGuideClass
 {
-  GObjectClass  parent_class;
-
-  /*  signals  */
-  void (* removed) (GimpGuide *guide);
+  GimpAuxItemClass  parent_class;
 };
 
 
@@ -59,10 +59,6 @@ GimpGuide *         gimp_guide_new              (GimpOrientationType  orientatio
 GimpGuide *         gimp_guide_custom_new       (GimpOrientationType  orientation,
                                                  guint32              guide_ID,
                                                  GimpGuideStyle       guide_style);
-
-guint32             gimp_guide_get_ID           (GimpGuide           *guide);
-
-void                gimp_guide_removed          (GimpGuide           *guide);
 
 GimpOrientationType gimp_guide_get_orientation  (GimpGuide           *guide);
 void                gimp_guide_set_orientation  (GimpGuide           *guide,
