@@ -19,15 +19,33 @@
 #define __GIMP_SAMPLE_POINT_H__
 
 
-#define GIMP_TYPE_SAMPLE_POINT (gimp_sample_point_get_type ())
+#define GIMP_SAMPLE_POINT_POSITION_UNDEFINED G_MININT
 
+
+#define GIMP_TYPE_SAMPLE_POINT            (gimp_sample_point_get_type ())
+#define GIMP_SAMPLE_POINT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SAMPLE_POINT, GimpSamplePoint))
+#define GIMP_SAMPLE_POINT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SAMPLE_POINT, GimpSamplePointClass))
+#define GIMP_IS_SAMPLE_POINT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SAMPLE_POINT))
+#define GIMP_IS_SAMPLE_POINT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SAMPLE_POINT))
+#define GIMP_SAMPLE_POINT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAMPLE_POINT, GimpSamplePointClass))
+
+
+typedef struct _GimpSamplePointPrivate GimpSamplePointPrivate;
+typedef struct _GimpSamplePointClass   GimpSamplePointClass;
 
 struct _GimpSamplePoint
 {
-  gint     ref_count;
-  guint32  sample_point_ID;
-  gint     x;
-  gint     y;
+  GObject                 parent_instance;
+
+  GimpSamplePointPrivate *priv;
+};
+
+struct _GimpSamplePointClass
+{
+  GObjectClass  parent_class;
+
+  /*  signals  */
+  void (* removed) (GimpSamplePoint *sample_point);
 };
 
 
@@ -35,10 +53,9 @@ GType             gimp_sample_point_get_type (void) G_GNUC_CONST;
 
 GimpSamplePoint * gimp_sample_point_new          (guint32          sample_point_ID);
 
-GimpSamplePoint * gimp_sample_point_ref          (GimpSamplePoint *sample_point);
-void              gimp_sample_point_unref        (GimpSamplePoint *sample_point);
-
 guint32           gimp_sample_point_get_ID       (GimpSamplePoint *sample_point);
+
+void              gimp_sample_point_removed      (GimpSamplePoint *sample_point);
 
 void              gimp_sample_point_get_position (GimpSamplePoint *sample_point,
                                                   gint            *position_x,
@@ -46,5 +63,6 @@ void              gimp_sample_point_get_position (GimpSamplePoint *sample_point,
 void              gimp_sample_point_set_position (GimpSamplePoint *sample_point,
                                                   gint             position_x,
                                                   gint             position_y);
+
 
 #endif /* __GIMP_SAMPLE_POINT_H__ */

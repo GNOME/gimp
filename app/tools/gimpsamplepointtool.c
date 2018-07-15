@@ -41,9 +41,6 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_SAMPLE_POINT_POSITION_UNDEFINED G_MININT
-
-
 /*  local function prototypes  */
 
 static void   gimp_sample_point_tool_button_release (GimpTool              *tool,
@@ -370,7 +367,7 @@ gimp_sample_point_tool_start_edit (GimpTool        *parent_tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (parent_tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   gimp_sample_point_tool_start (parent_tool, display, sample_point);
 }

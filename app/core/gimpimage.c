@@ -486,9 +486,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, sample_point_added),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
+                  GIMP_TYPE_SAMPLE_POINT);
 
   gimp_image_signals[SAMPLE_POINT_REMOVED] =
     g_signal_new ("sample-point-removed",
@@ -496,9 +496,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, sample_point_removed),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
+                  GIMP_TYPE_SAMPLE_POINT);
 
   gimp_image_signals[SAMPLE_POINT_MOVED] =
     g_signal_new ("sample-point-moved",
@@ -506,9 +506,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, sample_point_moved),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
+                  gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
+                  GIMP_TYPE_SAMPLE_POINT);
 
   gimp_image_signals[PARASITE_ATTACHED] =
     g_signal_new ("parasite-attached",
@@ -1084,7 +1084,7 @@ gimp_image_finalize (GObject *object)
   if (private->sample_points)
     {
       g_list_free_full (private->sample_points,
-                        (GDestroyNotify) gimp_sample_point_unref);
+                        (GDestroyNotify) g_object_unref);
       private->sample_points = NULL;
     }
 
@@ -3146,7 +3146,7 @@ gimp_image_sample_point_added (GimpImage       *image,
                                GimpSamplePoint *sample_point)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_ADDED], 0,
                  sample_point);
@@ -3157,7 +3157,7 @@ gimp_image_sample_point_removed (GimpImage       *image,
                                  GimpSamplePoint *sample_point)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_REMOVED], 0,
                  sample_point);
@@ -3168,7 +3168,7 @@ gimp_image_sample_point_moved (GimpImage       *image,
                                GimpSamplePoint *sample_point)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
+  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
 
   g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_MOVED], 0,
                  sample_point);
