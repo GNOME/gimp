@@ -101,7 +101,7 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
                                          "tools/tools-mypaint-brush-hardness-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
-                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
+                                       GIMP_COLOR_PICK_TARGET_FOREGROUND);
 }
 
 static void

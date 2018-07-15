@@ -79,7 +79,7 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
                                      GIMP_TOOL_CURSOR_PAINTBRUSH);
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (paintbrush),
-                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
+                                       GIMP_COLOR_PICK_TARGET_FOREGROUND);
 }
 
 static gboolean

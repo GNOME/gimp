@@ -36,18 +36,18 @@ typedef struct _GimpColorToolClass GimpColorToolClass;
 
 struct _GimpColorTool
 {
-  GimpDrawTool       parent_instance;
+  GimpDrawTool         parent_instance;
 
-  gboolean           enabled;
-  GimpColorOptions  *options;
-  gboolean           saved_snap_to;
+  gboolean             enabled;
+  GimpColorOptions    *options;
+  gboolean             saved_snap_to;
 
-  GimpColorPickMode  pick_mode;
+  GimpColorPickTarget  pick_target;
 
-  gboolean           can_pick;
-  gint               center_x;
-  gint               center_y;
-  GimpSamplePoint   *sample_point;
+  gboolean             can_pick;
+  gint                 center_x;
+  gint                 center_y;
+  GimpSamplePoint     *sample_point;
 };
 
 struct _GimpColorToolClass

@@ -417,15 +417,15 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
                   gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                                           GIMP_COLOR_OPTIONS (info->tool_options));
 
-                  switch (GIMP_COLOR_TOOL (tool)->pick_mode)
+                  switch (GIMP_COLOR_TOOL (tool)->pick_target)
                     {
-                    case GIMP_COLOR_PICK_MODE_FOREGROUND:
+                    case GIMP_COLOR_PICK_TARGET_FOREGROUND:
                       gimp_tool_push_status (tool, display,
                                              _("Click in any image to pick the "
                                                "foreground color"));
                       break;
 
-                    case GIMP_COLOR_PICK_MODE_BACKGROUND:
+                    case GIMP_COLOR_PICK_TARGET_BACKGROUND:
                       gimp_tool_push_status (tool, display,
                                              _("Click in any image to pick the "
                                                "background color"));
@@ -857,8 +857,8 @@ gimp_paint_tool_cursor_notify (GimpDisplayConfig *config,
 
 /**
  * gimp_paint_tool_enable_color_picker:
- * @tool: a #GimpPaintTool
- * @mode: the #GimpColorPickMode to set
+ * @tool:   a #GimpPaintTool
+ * @target: the #GimpColorPickTarget to set
  *
  * This is a convenience function used from the init method of paint
  * tools that want the color picking functionality. The @mode that is
@@ -866,14 +866,14 @@ gimp_paint_tool_cursor_notify (GimpDisplayConfig *config,
  * picked color goes to the foreground or background color.
  **/
 void
-gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
-                                     GimpColorPickMode  mode)
+gimp_paint_tool_enable_color_picker (GimpPaintTool       *tool,
+                                     GimpColorPickTarget  target)
 {
   g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
 
   tool->pick_colors = TRUE;
 
-  GIMP_COLOR_TOOL (tool)->pick_mode = mode;
+  GIMP_COLOR_TOOL (tool)->pick_target = target;
 }
 
 void

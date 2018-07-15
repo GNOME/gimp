@@ -93,7 +93,7 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
                                        "tools/tools-ink-blob-angle-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (ink_tool),
-                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
+                                       GIMP_COLOR_PICK_TARGET_FOREGROUND);
 }
 
 static GimpCanvasItem *

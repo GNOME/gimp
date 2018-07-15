@@ -175,8 +175,6 @@ gimp_color_tool_init (GimpColorTool *color_tool)
 
   gimp_tool_control_set_action_size (tool->control,
                                      "tools/tools-color-average-radius-set");
-
-  color_tool->pick_mode = GIMP_COLOR_PICK_MODE_NONE;
 }
 
 static void
@@ -371,18 +369,18 @@ gimp_color_tool_cursor_update (GimpTool         *tool,
 
           if (gimp_color_tool_can_pick (color_tool, coords, display))
             {
-              switch (color_tool->pick_mode)
+              switch (color_tool->pick_target)
                 {
-                case GIMP_COLOR_PICK_MODE_NONE:
+                case GIMP_COLOR_PICK_TARGET_NONE:
                   modifier = GIMP_CURSOR_MODIFIER_NONE;
                   break;
-                case GIMP_COLOR_PICK_MODE_FOREGROUND:
+                case GIMP_COLOR_PICK_TARGET_FOREGROUND:
                   modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
                   break;
-                case GIMP_COLOR_PICK_MODE_BACKGROUND:
+                case GIMP_COLOR_PICK_TARGET_BACKGROUND:
                   modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
                   break;
-                case GIMP_COLOR_PICK_MODE_PALETTE:
+                case GIMP_COLOR_PICK_TARGET_PALETTE:
                   modifier = GIMP_CURSOR_MODIFIER_PLUS;
                   break;
                 }
@@ -496,8 +494,8 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
   /*  use this tool's own options here (NOT color_tool->options)  */
   context = GIMP_CONTEXT (gimp_tool_get_options (tool));
 
-  if (color_tool->pick_mode == GIMP_COLOR_PICK_MODE_FOREGROUND ||
-      color_tool->pick_mode == GIMP_COLOR_PICK_MODE_BACKGROUND)
+  if (color_tool->pick_target == GIMP_COLOR_PICK_TARGET_FOREGROUND ||
+      color_tool->pick_target == GIMP_COLOR_PICK_TARGET_BACKGROUND)
     {
       GtkWidget *widget;
 
@@ -530,20 +528,20 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
         }
     }
 
-  switch (color_tool->pick_mode)
+  switch (color_tool->pick_target)
     {
-    case GIMP_COLOR_PICK_MODE_NONE:
+    case GIMP_COLOR_PICK_TARGET_NONE:
       break;
 
-    case GIMP_COLOR_PICK_MODE_FOREGROUND:
+    case GIMP_COLOR_PICK_TARGET_FOREGROUND:
       gimp_context_set_foreground (context, color);
       break;
 
-    case GIMP_COLOR_PICK_MODE_BACKGROUND:
+    case GIMP_COLOR_PICK_TARGET_BACKGROUND:
       gimp_context_set_background (context, color);
       break;
 
-    case GIMP_COLOR_PICK_MODE_PALETTE:
+    case GIMP_COLOR_PICK_TARGET_PALETTE:
       {
         GdkScreen *screen  = gtk_widget_get_screen (GTK_WIDGET (shell));
         gint       monitor = gimp_widget_get_monitor (GTK_WIDGET (shell));

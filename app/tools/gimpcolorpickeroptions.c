@@ -36,7 +36,7 @@ enum
 {
   PROP_0,
   PROP_SAMPLE_AVERAGE, /* overrides a GimpColorOptions property */
-  PROP_PICK_MODE,
+  PROP_PICK_TARGET,
   PROP_USE_INFO_WINDOW,
   PROP_FRAME1_MODE,
   PROP_FRAME2_MODE,
@@ -74,12 +74,12 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PICK_MODE,
-                         "pick-mode",
-                         _("Pick Mode"),
-                         _("Choose what color picker will do"),
-                         GIMP_TYPE_COLOR_PICK_MODE,
-                         GIMP_COLOR_PICK_MODE_FOREGROUND,
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PICK_TARGET,
+                         "pick-target",
+                         _("Pick Target"),
+                         _("Choose what the color picker will do"),
+                         GIMP_TYPE_COLOR_PICK_TARGET,
+                         GIMP_COLOR_PICK_TARGET_FOREGROUND,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
@@ -123,8 +123,8 @@ gimp_color_picker_options_set_property (GObject      *object,
     case PROP_SAMPLE_AVERAGE:
       GIMP_COLOR_OPTIONS (options)->sample_average = g_value_get_boolean (value);
       break;
-    case PROP_PICK_MODE:
-      options->pick_mode = g_value_get_enum (value);
+    case PROP_PICK_TARGET:
+      options->pick_target = g_value_get_enum (value);
       break;
     case PROP_USE_INFO_WINDOW:
       options->use_info_window = g_value_get_boolean (value);
@@ -156,8 +156,8 @@ gimp_color_picker_options_get_property (GObject    *object,
       g_value_set_boolean (value,
                            GIMP_COLOR_OPTIONS (options)->sample_average);
       break;
-    case PROP_PICK_MODE:
-      g_value_set_enum (value, options->pick_mode);
+    case PROP_PICK_TARGET:
+      g_value_set_enum (value, options->pick_target);
       break;
     case PROP_USE_INFO_WINDOW:
       g_value_set_boolean (value, options->use_info_window);
@@ -192,9 +192,9 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  the pick FG/BG frame  */
-  str = g_strdup_printf (_("Pick Mode  (%s)"),
+  str = g_strdup_printf (_("Pick Target  (%s)"),
                          gimp_get_mod_string (toggle_mask));
-  frame = gimp_prop_enum_radio_frame_new (config, "pick-mode", str, -1, -1);
+  frame = gimp_prop_enum_radio_frame_new (config, "pick-target", str, -1, -1);
   g_free (str);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
