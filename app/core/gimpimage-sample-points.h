@@ -43,6 +43,11 @@ void              gimp_image_move_sample_point       (GimpImage       *image,
                                                       gint             x,
                                                       gint             y,
                                                       gboolean         push_undo);
+void              gimp_image_set_sample_point_pick_mode
+                                                     (GimpImage       *image,
+                                                      GimpSamplePoint *sample_point,
+                                                      GimpColorPickMode pick_mode,
+                                                      gboolean         push_undo);
 
 GList           * gimp_image_get_sample_points       (GimpImage       *image);
 GimpSamplePoint * gimp_image_get_sample_point        (GimpImage       *image,

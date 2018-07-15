@@ -86,6 +86,9 @@ static void   gimp_sample_point_editor_points_changed (GimpSamplePointEditor *ed
 static void   gimp_sample_point_editor_dirty          (GimpSamplePointEditor *editor,
                                                        gint                   index);
 static gboolean gimp_sample_point_editor_update       (GimpSamplePointEditor *editor);
+static void     gimp_sample_point_editor_mode_notify  (GimpColorFrame        *frame,
+                                                       const GParamSpec      *pspec,
+                                                       GimpSamplePointEditor *editor);
 
 
 G_DEFINE_TYPE (GimpSamplePointEditor, gimp_sample_point_editor,
@@ -470,6 +473,10 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
                             column, column + 1, row, row + 1,
                             GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
+          g_signal_connect_object (editor->color_frames[i], "notify::mode",
+                                   G_CALLBACK (gimp_sample_point_editor_mode_notify),
+                                   editor, 0);
+
           g_object_set_data (G_OBJECT (editor->color_frames[i]),
                              "dirty", GINT_TO_POINTER (TRUE));
         }
@@ -517,7 +524,7 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
   GList           *sample_points;
-  gint             n_points     = 0;
+  gint             n_points;
   GList           *list;
   gint             i;
 
@@ -534,17 +541,18 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
        i < n_points;
        i++, list = g_list_next (list))
     {
-      GimpColorFrame  *color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
+      GimpColorFrame *color_frame = GIMP_COLOR_FRAME (editor->color_frames[i]);
 
       if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (color_frame),
                                               "dirty")))
         {
-          GimpSamplePoint *sample_point = list->data;
-          const Babl      *format;
-          guchar           pixel[32];
-          GimpRGB          color;
-          gint             x;
-          gint             y;
+          GimpSamplePoint   *sample_point = list->data;
+          const Babl        *format;
+          guchar             pixel[32];
+          GimpRGB            color;
+          GimpColorPickMode  pick_mode;
+          gint               x;
+          gint               y;
 
           g_object_set_data (G_OBJECT (color_frame),
                              "dirty", GINT_TO_POINTER (FALSE));
@@ -567,8 +575,48 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
             {
               gimp_color_frame_set_invalid (color_frame);
             }
+
+          pick_mode = gimp_sample_point_get_pick_mode (sample_point);
+
+          gimp_color_frame_set_mode (color_frame, pick_mode);
         }
     }
 
   return FALSE;
+}
+
+static void
+gimp_sample_point_editor_mode_notify (GimpColorFrame        *frame,
+                                      const GParamSpec      *pspec,
+                                      GimpSamplePointEditor *editor)
+{
+  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GList           *sample_points;
+  gint             n_points;
+  GList           *list;
+  gint             i;
+
+  sample_points = gimp_image_get_sample_points (image_editor->image);
+
+  n_points = MIN (editor->n_color_frames, g_list_length (sample_points));
+
+  for (i = 0, list = sample_points;
+       i < n_points;
+       i++, list = g_list_next (list))
+    {
+      if (GIMP_COLOR_FRAME (editor->color_frames[i]) == frame)
+        {
+          GimpSamplePoint   *sample_point = list->data;
+          GimpColorPickMode  pick_mode;
+
+          g_object_get (frame, "mode", &pick_mode, NULL);
+
+          if (pick_mode != gimp_sample_point_get_pick_mode (sample_point))
+            gimp_image_set_sample_point_pick_mode (image_editor->image,
+                                                   sample_point,
+                                                   pick_mode,
+                                                   TRUE);
+          break;
+        }
+    }
 }

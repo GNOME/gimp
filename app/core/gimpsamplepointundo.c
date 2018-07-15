@@ -72,6 +72,7 @@ gimp_sample_point_undo_constructed (GObject *object)
   gimp_sample_point_get_position (sample_point,
                                   &sample_point_undo->x,
                                   &sample_point_undo->y);
+  sample_point_undo->pick_mode = gimp_sample_point_get_pick_mode (sample_point);
 }
 
 static void
@@ -83,12 +84,14 @@ gimp_sample_point_undo_pop (GimpUndo              *undo,
   GimpSamplePoint     *sample_point;
   gint                 x;
   gint                 y;
+  GimpColorPickMode    pick_mode;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   sample_point = GIMP_SAMPLE_POINT (GIMP_AUX_ITEM_UNDO (undo)->aux_item);
 
   gimp_sample_point_get_position (sample_point, &x, &y);
+  pick_mode = gimp_sample_point_get_pick_mode (sample_point);
 
   if (x == GIMP_SAMPLE_POINT_POSITION_UNDEFINED)
     {
@@ -106,10 +109,13 @@ gimp_sample_point_undo_pop (GimpUndo              *undo,
       gimp_sample_point_set_position (sample_point,
                                       sample_point_undo->x,
                                       sample_point_undo->y);
+      gimp_sample_point_set_pick_mode (sample_point,
+                                       sample_point_undo->pick_mode);
 
       gimp_image_sample_point_moved (undo->image, sample_point);
     }
 
-  sample_point_undo->x = x;
-  sample_point_undo->y = y;
+  sample_point_undo->x         = x;
+  sample_point_undo->y         = y;
+  sample_point_undo->pick_mode = pick_mode;
 }
