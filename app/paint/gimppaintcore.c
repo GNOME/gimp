@@ -673,9 +673,12 @@ gimp_paint_core_get_last_coords (GimpPaintCore *core,
 
 /**
  * gimp_paint_core_round_line:
- * @core:                 the #GimpPaintCore
- * @options:              the #GimpPaintOptions to use
- * @constrain_15_degrees: the modifier state
+ * @core:                   the #GimpPaintCore
+ * @options:                the #GimpPaintOptions to use
+ * @constrain_15_degrees:   the modifier state
+ * @constrain_offset_angle: the angle by which to offset the lines, in degrees
+ * @constrain_xres:         the horizontal resolution
+ * @constrain_yres:         the vertical resolution
  *
  * Adjusts core->last_coords and core_cur_coords in preparation to
  * drawing a straight line. If @center_pixels is TRUE the endpoints
@@ -689,7 +692,9 @@ void
 gimp_paint_core_round_line (GimpPaintCore    *core,
                             GimpPaintOptions *paint_options,
                             gboolean          constrain_15_degrees,
-                            gdouble           constrain_offset_angle)
+                            gdouble           constrain_offset_angle,
+                            gdouble           constrain_xres,
+                            gdouble           constrain_yres)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
@@ -706,7 +711,8 @@ gimp_paint_core_round_line (GimpPaintCore    *core,
     gimp_constrain_line (core->last_coords.x, core->last_coords.y,
                          &core->cur_coords.x, &core->cur_coords.y,
                          GIMP_CONSTRAIN_LINE_15_DEGREES,
-                         constrain_offset_angle);
+                         constrain_offset_angle,
+                         constrain_xres, constrain_yres);
 }
 
 
