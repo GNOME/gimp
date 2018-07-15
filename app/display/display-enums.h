@@ -197,6 +197,18 @@ typedef enum
 } GimpVectorMode;
 
 
+#define GIMP_TYPE_COMPASS_ORIENTATION (gimp_compass_orientation_get_type ())
+
+GType gimp_compass_orientation_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COMPASS_ORIENTATION_AUTO,       /*< desc="Auto"       >*/
+  GIMP_COMPASS_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
+  GIMP_COMPASS_ORIENTATION_VERTICAL    /*< desc="Vertical"   >*/
+} GimpCompassOrientation;
+
+
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
 
 GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;
