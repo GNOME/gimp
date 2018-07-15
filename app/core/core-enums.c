@@ -9,6 +9,158 @@
 
 /* enumerations from "core-enums.h" */
 GType
+gimp_align_reference_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ALIGN_REFERENCE_FIRST, "GIMP_ALIGN_REFERENCE_FIRST", "first" },
+    { GIMP_ALIGN_REFERENCE_IMAGE, "GIMP_ALIGN_REFERENCE_IMAGE", "image" },
+    { GIMP_ALIGN_REFERENCE_SELECTION, "GIMP_ALIGN_REFERENCE_SELECTION", "selection" },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_LAYER, "GIMP_ALIGN_REFERENCE_ACTIVE_LAYER", "active-layer" },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL, "GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL", "active-channel" },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_PATH, "GIMP_ALIGN_REFERENCE_ACTIVE_PATH", "active-path" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ALIGN_REFERENCE_FIRST, NC_("align-reference-type", "First item"), NULL },
+    { GIMP_ALIGN_REFERENCE_IMAGE, NC_("align-reference-type", "Image"), NULL },
+    { GIMP_ALIGN_REFERENCE_SELECTION, NC_("align-reference-type", "Selection"), NULL },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_LAYER, NC_("align-reference-type", "Active layer"), NULL },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL, NC_("align-reference-type", "Active channel"), NULL },
+    { GIMP_ALIGN_REFERENCE_ACTIVE_PATH, NC_("align-reference-type", "Active path"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpAlignReferenceType", values);
+      gimp_type_set_translation_context (type, "align-reference-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_alignment_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", "align-left" },
+    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", "align-hcenter" },
+    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", "align-right" },
+    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", "align-top" },
+    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", "align-vcenter" },
+    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", "align-bottom" },
+    { GIMP_ARRANGE_LEFT, "GIMP_ARRANGE_LEFT", "arrange-left" },
+    { GIMP_ARRANGE_HCENTER, "GIMP_ARRANGE_HCENTER", "arrange-hcenter" },
+    { GIMP_ARRANGE_RIGHT, "GIMP_ARRANGE_RIGHT", "arrange-right" },
+    { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", "arrange-top" },
+    { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", "arrange-vcenter" },
+    { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", "arrange-bottom" },
+    { GIMP_ARRANGE_HFILL, "GIMP_ARRANGE_HFILL", "arrange-hfill" },
+    { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", "arrange-vfill" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", NULL },
+    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", NULL },
+    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", NULL },
+    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", NULL },
+    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", NULL },
+    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", NULL },
+    { GIMP_ARRANGE_LEFT, "GIMP_ARRANGE_LEFT", NULL },
+    { GIMP_ARRANGE_HCENTER, "GIMP_ARRANGE_HCENTER", NULL },
+    { GIMP_ARRANGE_RIGHT, "GIMP_ARRANGE_RIGHT", NULL },
+    { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", NULL },
+    { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", NULL },
+    { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", NULL },
+    { GIMP_ARRANGE_HFILL, "GIMP_ARRANGE_HFILL", NULL },
+    { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpAlignmentType", values);
+      gimp_type_set_translation_context (type, "alignment-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_channel_border_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_CHANNEL_BORDER_STYLE_HARD, "GIMP_CHANNEL_BORDER_STYLE_HARD", "hard" },
+    { GIMP_CHANNEL_BORDER_STYLE_SMOOTH, "GIMP_CHANNEL_BORDER_STYLE_SMOOTH", "smooth" },
+    { GIMP_CHANNEL_BORDER_STYLE_FEATHERED, "GIMP_CHANNEL_BORDER_STYLE_FEATHERED", "feathered" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_CHANNEL_BORDER_STYLE_HARD, NC_("channel-border-style", "Hard"), NULL },
+    { GIMP_CHANNEL_BORDER_STYLE_SMOOTH, NC_("channel-border-style", "Smooth"), NULL },
+    { GIMP_CHANNEL_BORDER_STYLE_FEATHERED, NC_("channel-border-style", "Feathered"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpChannelBorderStyle", values);
+      gimp_type_set_translation_context (type, "channel-border-style");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_color_profile_policy_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_COLOR_PROFILE_POLICY_ASK, "GIMP_COLOR_PROFILE_POLICY_ASK", "ask" },
+    { GIMP_COLOR_PROFILE_POLICY_KEEP, "GIMP_COLOR_PROFILE_POLICY_KEEP", "keep" },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT, "GIMP_COLOR_PROFILE_POLICY_CONVERT", "convert" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_COLOR_PROFILE_POLICY_ASK, NC_("color-profile-policy", "Ask what to do"), NULL },
+    { GIMP_COLOR_PROFILE_POLICY_KEEP, NC_("color-profile-policy", "Keep embedded profile"), NULL },
+    { GIMP_COLOR_PROFILE_POLICY_CONVERT, NC_("color-profile-policy", "Convert to preferred RGB color profile"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpColorProfilePolicy", values);
+      gimp_type_set_translation_context (type, "color-profile-policy");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_component_mask_get_type (void)
 {
   static const GFlagsValue values[] =
@@ -166,6 +318,287 @@ gimp_curve_type_get_type (void)
 }
 
 GType
+gimp_dash_preset_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DASH_CUSTOM, "GIMP_DASH_CUSTOM", "custom" },
+    { GIMP_DASH_LINE, "GIMP_DASH_LINE", "line" },
+    { GIMP_DASH_LONG_DASH, "GIMP_DASH_LONG_DASH", "long-dash" },
+    { GIMP_DASH_MEDIUM_DASH, "GIMP_DASH_MEDIUM_DASH", "medium-dash" },
+    { GIMP_DASH_SHORT_DASH, "GIMP_DASH_SHORT_DASH", "short-dash" },
+    { GIMP_DASH_SPARSE_DOTS, "GIMP_DASH_SPARSE_DOTS", "sparse-dots" },
+    { GIMP_DASH_NORMAL_DOTS, "GIMP_DASH_NORMAL_DOTS", "normal-dots" },
+    { GIMP_DASH_DENSE_DOTS, "GIMP_DASH_DENSE_DOTS", "dense-dots" },
+    { GIMP_DASH_STIPPLES, "GIMP_DASH_STIPPLES", "stipples" },
+    { GIMP_DASH_DASH_DOT, "GIMP_DASH_DASH_DOT", "dash-dot" },
+    { GIMP_DASH_DASH_DOT_DOT, "GIMP_DASH_DASH_DOT_DOT", "dash-dot-dot" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DASH_CUSTOM, NC_("dash-preset", "Custom"), NULL },
+    { GIMP_DASH_LINE, NC_("dash-preset", "Line"), NULL },
+    { GIMP_DASH_LONG_DASH, NC_("dash-preset", "Long dashes"), NULL },
+    { GIMP_DASH_MEDIUM_DASH, NC_("dash-preset", "Medium dashes"), NULL },
+    { GIMP_DASH_SHORT_DASH, NC_("dash-preset", "Short dashes"), NULL },
+    { GIMP_DASH_SPARSE_DOTS, NC_("dash-preset", "Sparse dots"), NULL },
+    { GIMP_DASH_NORMAL_DOTS, NC_("dash-preset", "Normal dots"), NULL },
+    { GIMP_DASH_DENSE_DOTS, NC_("dash-preset", "Dense dots"), NULL },
+    { GIMP_DASH_STIPPLES, NC_("dash-preset", "Stipples"), NULL },
+    { GIMP_DASH_DASH_DOT, NC_("dash-preset", "Dash, dot"), NULL },
+    { GIMP_DASH_DASH_DOT_DOT, NC_("dash-preset", "Dash, dot, dot"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDashPreset", values);
+      gimp_type_set_translation_context (type, "dash-preset");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_debug_policy_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DEBUG_POLICY_WARNING, "GIMP_DEBUG_POLICY_WARNING", "warning" },
+    { GIMP_DEBUG_POLICY_CRITICAL, "GIMP_DEBUG_POLICY_CRITICAL", "critical" },
+    { GIMP_DEBUG_POLICY_FATAL, "GIMP_DEBUG_POLICY_FATAL", "fatal" },
+    { GIMP_DEBUG_POLICY_NEVER, "GIMP_DEBUG_POLICY_NEVER", "never" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DEBUG_POLICY_WARNING, NC_("debug-policy", "Debug warnings, critical errors and crashes"), NULL },
+    { GIMP_DEBUG_POLICY_CRITICAL, NC_("debug-policy", "Debug critical errors and crashes"), NULL },
+    { GIMP_DEBUG_POLICY_FATAL, NC_("debug-policy", "Debug crashes only"), NULL },
+    { GIMP_DEBUG_POLICY_NEVER, NC_("debug-policy", "Never debug GIMP"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDebugPolicy", values);
+      gimp_type_set_translation_context (type, "debug-policy");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_dirty_mask_get_type (void)
+{
+  static const GFlagsValue values[] =
+  {
+    { GIMP_DIRTY_NONE, "GIMP_DIRTY_NONE", "none" },
+    { GIMP_DIRTY_IMAGE, "GIMP_DIRTY_IMAGE", "image" },
+    { GIMP_DIRTY_IMAGE_SIZE, "GIMP_DIRTY_IMAGE_SIZE", "image-size" },
+    { GIMP_DIRTY_IMAGE_META, "GIMP_DIRTY_IMAGE_META", "image-meta" },
+    { GIMP_DIRTY_IMAGE_STRUCTURE, "GIMP_DIRTY_IMAGE_STRUCTURE", "image-structure" },
+    { GIMP_DIRTY_ITEM, "GIMP_DIRTY_ITEM", "item" },
+    { GIMP_DIRTY_ITEM_META, "GIMP_DIRTY_ITEM_META", "item-meta" },
+    { GIMP_DIRTY_DRAWABLE, "GIMP_DIRTY_DRAWABLE", "drawable" },
+    { GIMP_DIRTY_VECTORS, "GIMP_DIRTY_VECTORS", "vectors" },
+    { GIMP_DIRTY_SELECTION, "GIMP_DIRTY_SELECTION", "selection" },
+    { GIMP_DIRTY_ACTIVE_DRAWABLE, "GIMP_DIRTY_ACTIVE_DRAWABLE", "active-drawable" },
+    { GIMP_DIRTY_ALL, "GIMP_DIRTY_ALL", "all" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpFlagsDesc descs[] =
+  {
+    { GIMP_DIRTY_NONE, "GIMP_DIRTY_NONE", NULL },
+    { GIMP_DIRTY_IMAGE, "GIMP_DIRTY_IMAGE", NULL },
+    { GIMP_DIRTY_IMAGE_SIZE, "GIMP_DIRTY_IMAGE_SIZE", NULL },
+    { GIMP_DIRTY_IMAGE_META, "GIMP_DIRTY_IMAGE_META", NULL },
+    { GIMP_DIRTY_IMAGE_STRUCTURE, "GIMP_DIRTY_IMAGE_STRUCTURE", NULL },
+    { GIMP_DIRTY_ITEM, "GIMP_DIRTY_ITEM", NULL },
+    { GIMP_DIRTY_ITEM_META, "GIMP_DIRTY_ITEM_META", NULL },
+    { GIMP_DIRTY_DRAWABLE, "GIMP_DIRTY_DRAWABLE", NULL },
+    { GIMP_DIRTY_VECTORS, "GIMP_DIRTY_VECTORS", NULL },
+    { GIMP_DIRTY_SELECTION, "GIMP_DIRTY_SELECTION", NULL },
+    { GIMP_DIRTY_ACTIVE_DRAWABLE, "GIMP_DIRTY_ACTIVE_DRAWABLE", NULL },
+    { GIMP_DIRTY_ALL, "GIMP_DIRTY_ALL", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_flags_register_static ("GimpDirtyMask", values);
+      gimp_type_set_translation_context (type, "dirty-mask");
+      gimp_flags_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_dynamics_output_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DYNAMICS_OUTPUT_OPACITY, "GIMP_DYNAMICS_OUTPUT_OPACITY", "opacity" },
+    { GIMP_DYNAMICS_OUTPUT_SIZE, "GIMP_DYNAMICS_OUTPUT_SIZE", "size" },
+    { GIMP_DYNAMICS_OUTPUT_ANGLE, "GIMP_DYNAMICS_OUTPUT_ANGLE", "angle" },
+    { GIMP_DYNAMICS_OUTPUT_COLOR, "GIMP_DYNAMICS_OUTPUT_COLOR", "color" },
+    { GIMP_DYNAMICS_OUTPUT_HARDNESS, "GIMP_DYNAMICS_OUTPUT_HARDNESS", "hardness" },
+    { GIMP_DYNAMICS_OUTPUT_FORCE, "GIMP_DYNAMICS_OUTPUT_FORCE", "force" },
+    { GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO, "GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO", "aspect-ratio" },
+    { GIMP_DYNAMICS_OUTPUT_SPACING, "GIMP_DYNAMICS_OUTPUT_SPACING", "spacing" },
+    { GIMP_DYNAMICS_OUTPUT_RATE, "GIMP_DYNAMICS_OUTPUT_RATE", "rate" },
+    { GIMP_DYNAMICS_OUTPUT_FLOW, "GIMP_DYNAMICS_OUTPUT_FLOW", "flow" },
+    { GIMP_DYNAMICS_OUTPUT_JITTER, "GIMP_DYNAMICS_OUTPUT_JITTER", "jitter" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DYNAMICS_OUTPUT_OPACITY, NC_("dynamics-output-type", "Opacity"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_SIZE, NC_("dynamics-output-type", "Size"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_ANGLE, NC_("dynamics-output-type", "Angle"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_COLOR, NC_("dynamics-output-type", "Color"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_HARDNESS, NC_("dynamics-output-type", "Hardness"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_FORCE, NC_("dynamics-output-type", "Force"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO, NC_("dynamics-output-type", "Aspect ratio"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_SPACING, NC_("dynamics-output-type", "Spacing"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_RATE, NC_("dynamics-output-type", "Rate"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_FLOW, NC_("dynamics-output-type", "Flow"), NULL },
+    { GIMP_DYNAMICS_OUTPUT_JITTER, NC_("dynamics-output-type", "Jitter"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDynamicsOutputType", values);
+      gimp_type_set_translation_context (type, "dynamics-output-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_fill_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_FILL_STYLE_SOLID, "GIMP_FILL_STYLE_SOLID", "solid" },
+    { GIMP_FILL_STYLE_PATTERN, "GIMP_FILL_STYLE_PATTERN", "pattern" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_FILL_STYLE_SOLID, NC_("fill-style", "Solid color"), NULL },
+    { GIMP_FILL_STYLE_PATTERN, NC_("fill-style", "Pattern"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpFillStyle", values);
+      gimp_type_set_translation_context (type, "fill-style");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_filter_region_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_FILTER_REGION_SELECTION, "GIMP_FILTER_REGION_SELECTION", "selection" },
+    { GIMP_FILTER_REGION_DRAWABLE, "GIMP_FILTER_REGION_DRAWABLE", "drawable" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_FILTER_REGION_SELECTION, NC_("filter-region", "Use the selection as input"), NULL },
+    { GIMP_FILTER_REGION_DRAWABLE, NC_("filter-region", "Use the entire layer as input"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpFilterRegion", values);
+      gimp_type_set_translation_context (type, "filter-region");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_gradient_color_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_GRADIENT_COLOR_FIXED, "GIMP_GRADIENT_COLOR_FIXED", "fixed" },
+    { GIMP_GRADIENT_COLOR_FOREGROUND, "GIMP_GRADIENT_COLOR_FOREGROUND", "foreground" },
+    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, "GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT", "foreground-transparent" },
+    { GIMP_GRADIENT_COLOR_BACKGROUND, "GIMP_GRADIENT_COLOR_BACKGROUND", "background" },
+    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, "GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT", "background-transparent" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_GRADIENT_COLOR_FIXED, NC_("gradient-color", "Fixed"), NULL },
+    { GIMP_GRADIENT_COLOR_FOREGROUND, NC_("gradient-color", "Foreground color"), NULL },
+    /* Translators: this is an abbreviated version of "Foreground color".
+       Keep it short. */
+    { GIMP_GRADIENT_COLOR_FOREGROUND, NC_("gradient-color", "FG"), NULL },
+    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "Foreground color (transparent)"), NULL },
+    /* Translators: this is an abbreviated version of "Foreground color (transparent)".
+       Keep it short. */
+    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "FG (t)"), NULL },
+    { GIMP_GRADIENT_COLOR_BACKGROUND, NC_("gradient-color", "Background color"), NULL },
+    /* Translators: this is an abbreviated version of "Background color".
+       Keep it short. */
+    { GIMP_GRADIENT_COLOR_BACKGROUND, NC_("gradient-color", "BG"), NULL },
+    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, NC_("gradient-color", "Background color (transparent)"), NULL },
+    /* Translators: this is an abbreviated version of "Background color (transparent)".
+       Keep it short. */
+    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, NC_("gradient-color", "BG (t)"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpGradientColor", values);
+      gimp_type_set_translation_context (type, "gradient-color");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_gravity_type_get_type (void)
 {
   static const GEnumValue values[] =
@@ -285,6 +718,41 @@ gimp_histogram_channel_get_type (void)
 }
 
 GType
+gimp_item_set_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ITEM_SET_NONE, "GIMP_ITEM_SET_NONE", "none" },
+    { GIMP_ITEM_SET_ALL, "GIMP_ITEM_SET_ALL", "all" },
+    { GIMP_ITEM_SET_IMAGE_SIZED, "GIMP_ITEM_SET_IMAGE_SIZED", "image-sized" },
+    { GIMP_ITEM_SET_VISIBLE, "GIMP_ITEM_SET_VISIBLE", "visible" },
+    { GIMP_ITEM_SET_LINKED, "GIMP_ITEM_SET_LINKED", "linked" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ITEM_SET_NONE, NC_("item-set", "None"), NULL },
+    { GIMP_ITEM_SET_ALL, NC_("item-set", "All layers"), NULL },
+    { GIMP_ITEM_SET_IMAGE_SIZED, NC_("item-set", "Image-sized layers"), NULL },
+    { GIMP_ITEM_SET_VISIBLE, NC_("item-set", "All visible layers"), NULL },
+    { GIMP_ITEM_SET_LINKED, NC_("item-set", "All linked layers"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpItemSet", values);
+      gimp_type_set_translation_context (type, "item-set");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_matting_engine_get_type (void)
 {
   static const GEnumValue values[] =
@@ -307,6 +775,41 @@ gimp_matting_engine_get_type (void)
     {
       type = g_enum_register_static ("GimpMattingEngine", values);
       gimp_type_set_translation_context (type, "matting-engine");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_message_severity_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MESSAGE_INFO, "GIMP_MESSAGE_INFO", "info" },
+    { GIMP_MESSAGE_WARNING, "GIMP_MESSAGE_WARNING", "warning" },
+    { GIMP_MESSAGE_ERROR, "GIMP_MESSAGE_ERROR", "error" },
+    { GIMP_MESSAGE_BUG_WARNING, "GIMP_MESSAGE_BUG_WARNING", "bug-warning" },
+    { GIMP_MESSAGE_BUG_CRITICAL, "GIMP_MESSAGE_BUG_CRITICAL", "bug-critical" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_MESSAGE_INFO, NC_("message-severity", "Message"), NULL },
+    { GIMP_MESSAGE_WARNING, NC_("message-severity", "Warning"), NULL },
+    { GIMP_MESSAGE_ERROR, NC_("message-severity", "Error"), NULL },
+    { GIMP_MESSAGE_BUG_WARNING, NC_("message-severity", "WARNING"), NULL },
+    { GIMP_MESSAGE_BUG_CRITICAL, NC_("message-severity", "CRITICAL"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpMessageSeverity", values);
+      gimp_type_set_translation_context (type, "message-severity");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -351,279 +854,6 @@ gimp_paste_type_get_type (void)
 }
 
 GType
-gimp_alignment_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", "align-left" },
-    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", "align-hcenter" },
-    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", "align-right" },
-    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", "align-top" },
-    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", "align-vcenter" },
-    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", "align-bottom" },
-    { GIMP_ARRANGE_LEFT, "GIMP_ARRANGE_LEFT", "arrange-left" },
-    { GIMP_ARRANGE_HCENTER, "GIMP_ARRANGE_HCENTER", "arrange-hcenter" },
-    { GIMP_ARRANGE_RIGHT, "GIMP_ARRANGE_RIGHT", "arrange-right" },
-    { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", "arrange-top" },
-    { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", "arrange-vcenter" },
-    { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", "arrange-bottom" },
-    { GIMP_ARRANGE_HFILL, "GIMP_ARRANGE_HFILL", "arrange-hfill" },
-    { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", "arrange-vfill" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", NULL },
-    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", NULL },
-    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", NULL },
-    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", NULL },
-    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", NULL },
-    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", NULL },
-    { GIMP_ARRANGE_LEFT, "GIMP_ARRANGE_LEFT", NULL },
-    { GIMP_ARRANGE_HCENTER, "GIMP_ARRANGE_HCENTER", NULL },
-    { GIMP_ARRANGE_RIGHT, "GIMP_ARRANGE_RIGHT", NULL },
-    { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", NULL },
-    { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", NULL },
-    { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", NULL },
-    { GIMP_ARRANGE_HFILL, "GIMP_ARRANGE_HFILL", NULL },
-    { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpAlignmentType", values);
-      gimp_type_set_translation_context (type, "alignment-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_align_reference_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ALIGN_REFERENCE_FIRST, "GIMP_ALIGN_REFERENCE_FIRST", "first" },
-    { GIMP_ALIGN_REFERENCE_IMAGE, "GIMP_ALIGN_REFERENCE_IMAGE", "image" },
-    { GIMP_ALIGN_REFERENCE_SELECTION, "GIMP_ALIGN_REFERENCE_SELECTION", "selection" },
-    { GIMP_ALIGN_REFERENCE_ACTIVE_LAYER, "GIMP_ALIGN_REFERENCE_ACTIVE_LAYER", "active-layer" },
-    { GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL, "GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL", "active-channel" },
-    { GIMP_ALIGN_REFERENCE_ACTIVE_PATH, "GIMP_ALIGN_REFERENCE_ACTIVE_PATH", "active-path" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ALIGN_REFERENCE_FIRST, NC_("align-reference-type", "First item"), NULL },
-    { GIMP_ALIGN_REFERENCE_IMAGE, NC_("align-reference-type", "Image"), NULL },
-    { GIMP_ALIGN_REFERENCE_SELECTION, NC_("align-reference-type", "Selection"), NULL },
-    { GIMP_ALIGN_REFERENCE_ACTIVE_LAYER, NC_("align-reference-type", "Active layer"), NULL },
-    { GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL, NC_("align-reference-type", "Active channel"), NULL },
-    { GIMP_ALIGN_REFERENCE_ACTIVE_PATH, NC_("align-reference-type", "Active path"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpAlignReferenceType", values);
-      gimp_type_set_translation_context (type, "align-reference-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_fill_style_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_FILL_STYLE_SOLID, "GIMP_FILL_STYLE_SOLID", "solid" },
-    { GIMP_FILL_STYLE_PATTERN, "GIMP_FILL_STYLE_PATTERN", "pattern" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_FILL_STYLE_SOLID, NC_("fill-style", "Solid color"), NULL },
-    { GIMP_FILL_STYLE_PATTERN, NC_("fill-style", "Pattern"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpFillStyle", values);
-      gimp_type_set_translation_context (type, "fill-style");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_dash_preset_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_DASH_CUSTOM, "GIMP_DASH_CUSTOM", "custom" },
-    { GIMP_DASH_LINE, "GIMP_DASH_LINE", "line" },
-    { GIMP_DASH_LONG_DASH, "GIMP_DASH_LONG_DASH", "long-dash" },
-    { GIMP_DASH_MEDIUM_DASH, "GIMP_DASH_MEDIUM_DASH", "medium-dash" },
-    { GIMP_DASH_SHORT_DASH, "GIMP_DASH_SHORT_DASH", "short-dash" },
-    { GIMP_DASH_SPARSE_DOTS, "GIMP_DASH_SPARSE_DOTS", "sparse-dots" },
-    { GIMP_DASH_NORMAL_DOTS, "GIMP_DASH_NORMAL_DOTS", "normal-dots" },
-    { GIMP_DASH_DENSE_DOTS, "GIMP_DASH_DENSE_DOTS", "dense-dots" },
-    { GIMP_DASH_STIPPLES, "GIMP_DASH_STIPPLES", "stipples" },
-    { GIMP_DASH_DASH_DOT, "GIMP_DASH_DASH_DOT", "dash-dot" },
-    { GIMP_DASH_DASH_DOT_DOT, "GIMP_DASH_DASH_DOT_DOT", "dash-dot-dot" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_DASH_CUSTOM, NC_("dash-preset", "Custom"), NULL },
-    { GIMP_DASH_LINE, NC_("dash-preset", "Line"), NULL },
-    { GIMP_DASH_LONG_DASH, NC_("dash-preset", "Long dashes"), NULL },
-    { GIMP_DASH_MEDIUM_DASH, NC_("dash-preset", "Medium dashes"), NULL },
-    { GIMP_DASH_SHORT_DASH, NC_("dash-preset", "Short dashes"), NULL },
-    { GIMP_DASH_SPARSE_DOTS, NC_("dash-preset", "Sparse dots"), NULL },
-    { GIMP_DASH_NORMAL_DOTS, NC_("dash-preset", "Normal dots"), NULL },
-    { GIMP_DASH_DENSE_DOTS, NC_("dash-preset", "Dense dots"), NULL },
-    { GIMP_DASH_STIPPLES, NC_("dash-preset", "Stipples"), NULL },
-    { GIMP_DASH_DASH_DOT, NC_("dash-preset", "Dash, dot"), NULL },
-    { GIMP_DASH_DASH_DOT_DOT, NC_("dash-preset", "Dash, dot, dot"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpDashPreset", values);
-      gimp_type_set_translation_context (type, "dash-preset");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_item_set_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ITEM_SET_NONE, "GIMP_ITEM_SET_NONE", "none" },
-    { GIMP_ITEM_SET_ALL, "GIMP_ITEM_SET_ALL", "all" },
-    { GIMP_ITEM_SET_IMAGE_SIZED, "GIMP_ITEM_SET_IMAGE_SIZED", "image-sized" },
-    { GIMP_ITEM_SET_VISIBLE, "GIMP_ITEM_SET_VISIBLE", "visible" },
-    { GIMP_ITEM_SET_LINKED, "GIMP_ITEM_SET_LINKED", "linked" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ITEM_SET_NONE, NC_("item-set", "None"), NULL },
-    { GIMP_ITEM_SET_ALL, NC_("item-set", "All layers"), NULL },
-    { GIMP_ITEM_SET_IMAGE_SIZED, NC_("item-set", "Image-sized layers"), NULL },
-    { GIMP_ITEM_SET_VISIBLE, NC_("item-set", "All visible layers"), NULL },
-    { GIMP_ITEM_SET_LINKED, NC_("item-set", "All linked layers"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpItemSet", values);
-      gimp_type_set_translation_context (type, "item-set");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_view_size_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_VIEW_SIZE_TINY, "GIMP_VIEW_SIZE_TINY", "tiny" },
-    { GIMP_VIEW_SIZE_EXTRA_SMALL, "GIMP_VIEW_SIZE_EXTRA_SMALL", "extra-small" },
-    { GIMP_VIEW_SIZE_SMALL, "GIMP_VIEW_SIZE_SMALL", "small" },
-    { GIMP_VIEW_SIZE_MEDIUM, "GIMP_VIEW_SIZE_MEDIUM", "medium" },
-    { GIMP_VIEW_SIZE_LARGE, "GIMP_VIEW_SIZE_LARGE", "large" },
-    { GIMP_VIEW_SIZE_EXTRA_LARGE, "GIMP_VIEW_SIZE_EXTRA_LARGE", "extra-large" },
-    { GIMP_VIEW_SIZE_HUGE, "GIMP_VIEW_SIZE_HUGE", "huge" },
-    { GIMP_VIEW_SIZE_ENORMOUS, "GIMP_VIEW_SIZE_ENORMOUS", "enormous" },
-    { GIMP_VIEW_SIZE_GIGANTIC, "GIMP_VIEW_SIZE_GIGANTIC", "gigantic" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_VIEW_SIZE_TINY, NC_("view-size", "Tiny"), NULL },
-    { GIMP_VIEW_SIZE_EXTRA_SMALL, NC_("view-size", "Very small"), NULL },
-    { GIMP_VIEW_SIZE_SMALL, NC_("view-size", "Small"), NULL },
-    { GIMP_VIEW_SIZE_MEDIUM, NC_("view-size", "Medium"), NULL },
-    { GIMP_VIEW_SIZE_LARGE, NC_("view-size", "Large"), NULL },
-    { GIMP_VIEW_SIZE_EXTRA_LARGE, NC_("view-size", "Very large"), NULL },
-    { GIMP_VIEW_SIZE_HUGE, NC_("view-size", "Huge"), NULL },
-    { GIMP_VIEW_SIZE_ENORMOUS, NC_("view-size", "Enormous"), NULL },
-    { GIMP_VIEW_SIZE_GIGANTIC, NC_("view-size", "Gigantic"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpViewSize", values);
-      gimp_type_set_translation_context (type, "view-size");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_view_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_VIEW_TYPE_LIST, "GIMP_VIEW_TYPE_LIST", "list" },
-    { GIMP_VIEW_TYPE_GRID, "GIMP_VIEW_TYPE_GRID", "grid" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_VIEW_TYPE_LIST, NC_("view-type", "View as list"), NULL },
-    { GIMP_VIEW_TYPE_GRID, NC_("view-type", "View as grid"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpViewType", values);
-      gimp_type_set_translation_context (type, "view-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_thumbnail_size_get_type (void)
 {
   static const GEnumValue values[] =
@@ -648,68 +878,6 @@ gimp_thumbnail_size_get_type (void)
     {
       type = g_enum_register_static ("GimpThumbnailSize", values);
       gimp_type_set_translation_context (type, "thumbnail-size");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_debug_policy_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_DEBUG_POLICY_WARNING, "GIMP_DEBUG_POLICY_WARNING", "warning" },
-    { GIMP_DEBUG_POLICY_CRITICAL, "GIMP_DEBUG_POLICY_CRITICAL", "critical" },
-    { GIMP_DEBUG_POLICY_FATAL, "GIMP_DEBUG_POLICY_FATAL", "fatal" },
-    { GIMP_DEBUG_POLICY_NEVER, "GIMP_DEBUG_POLICY_NEVER", "never" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_DEBUG_POLICY_WARNING, NC_("debug-policy", "Debug warnings, critical errors and crashes"), NULL },
-    { GIMP_DEBUG_POLICY_CRITICAL, NC_("debug-policy", "Debug critical errors and crashes"), NULL },
-    { GIMP_DEBUG_POLICY_FATAL, NC_("debug-policy", "Debug crashes only"), NULL },
-    { GIMP_DEBUG_POLICY_NEVER, NC_("debug-policy", "Never debug GIMP"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpDebugPolicy", values);
-      gimp_type_set_translation_context (type, "debug-policy");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_undo_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_UNDO_MODE_UNDO, "GIMP_UNDO_MODE_UNDO", "undo" },
-    { GIMP_UNDO_MODE_REDO, "GIMP_UNDO_MODE_REDO", "redo" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_UNDO_MODE_UNDO, "GIMP_UNDO_MODE_UNDO", NULL },
-    { GIMP_UNDO_MODE_REDO, "GIMP_UNDO_MODE_REDO", NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpUndoMode", values);
-      gimp_type_set_translation_context (type, "undo-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -751,6 +919,35 @@ gimp_undo_event_get_type (void)
     {
       type = g_enum_register_static ("GimpUndoEvent", values);
       gimp_type_set_translation_context (type, "undo-event");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_undo_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_UNDO_MODE_UNDO, "GIMP_UNDO_MODE_UNDO", "undo" },
+    { GIMP_UNDO_MODE_REDO, "GIMP_UNDO_MODE_REDO", "redo" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_UNDO_MODE_UNDO, "GIMP_UNDO_MODE_UNDO", NULL },
+    { GIMP_UNDO_MODE_REDO, "GIMP_UNDO_MODE_REDO", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpUndoMode", values);
+      gimp_type_set_translation_context (type, "undo-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -969,86 +1166,33 @@ gimp_undo_type_get_type (void)
 }
 
 GType
-gimp_dirty_mask_get_type (void)
-{
-  static const GFlagsValue values[] =
-  {
-    { GIMP_DIRTY_NONE, "GIMP_DIRTY_NONE", "none" },
-    { GIMP_DIRTY_IMAGE, "GIMP_DIRTY_IMAGE", "image" },
-    { GIMP_DIRTY_IMAGE_SIZE, "GIMP_DIRTY_IMAGE_SIZE", "image-size" },
-    { GIMP_DIRTY_IMAGE_META, "GIMP_DIRTY_IMAGE_META", "image-meta" },
-    { GIMP_DIRTY_IMAGE_STRUCTURE, "GIMP_DIRTY_IMAGE_STRUCTURE", "image-structure" },
-    { GIMP_DIRTY_ITEM, "GIMP_DIRTY_ITEM", "item" },
-    { GIMP_DIRTY_ITEM_META, "GIMP_DIRTY_ITEM_META", "item-meta" },
-    { GIMP_DIRTY_DRAWABLE, "GIMP_DIRTY_DRAWABLE", "drawable" },
-    { GIMP_DIRTY_VECTORS, "GIMP_DIRTY_VECTORS", "vectors" },
-    { GIMP_DIRTY_SELECTION, "GIMP_DIRTY_SELECTION", "selection" },
-    { GIMP_DIRTY_ACTIVE_DRAWABLE, "GIMP_DIRTY_ACTIVE_DRAWABLE", "active-drawable" },
-    { GIMP_DIRTY_ALL, "GIMP_DIRTY_ALL", "all" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpFlagsDesc descs[] =
-  {
-    { GIMP_DIRTY_NONE, "GIMP_DIRTY_NONE", NULL },
-    { GIMP_DIRTY_IMAGE, "GIMP_DIRTY_IMAGE", NULL },
-    { GIMP_DIRTY_IMAGE_SIZE, "GIMP_DIRTY_IMAGE_SIZE", NULL },
-    { GIMP_DIRTY_IMAGE_META, "GIMP_DIRTY_IMAGE_META", NULL },
-    { GIMP_DIRTY_IMAGE_STRUCTURE, "GIMP_DIRTY_IMAGE_STRUCTURE", NULL },
-    { GIMP_DIRTY_ITEM, "GIMP_DIRTY_ITEM", NULL },
-    { GIMP_DIRTY_ITEM_META, "GIMP_DIRTY_ITEM_META", NULL },
-    { GIMP_DIRTY_DRAWABLE, "GIMP_DIRTY_DRAWABLE", NULL },
-    { GIMP_DIRTY_VECTORS, "GIMP_DIRTY_VECTORS", NULL },
-    { GIMP_DIRTY_SELECTION, "GIMP_DIRTY_SELECTION", NULL },
-    { GIMP_DIRTY_ACTIVE_DRAWABLE, "GIMP_DIRTY_ACTIVE_DRAWABLE", NULL },
-    { GIMP_DIRTY_ALL, "GIMP_DIRTY_ALL", NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_flags_register_static ("GimpDirtyMask", values);
-      gimp_type_set_translation_context (type, "dirty-mask");
-      gimp_flags_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_gradient_color_get_type (void)
+gimp_view_size_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_GRADIENT_COLOR_FIXED, "GIMP_GRADIENT_COLOR_FIXED", "fixed" },
-    { GIMP_GRADIENT_COLOR_FOREGROUND, "GIMP_GRADIENT_COLOR_FOREGROUND", "foreground" },
-    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, "GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT", "foreground-transparent" },
-    { GIMP_GRADIENT_COLOR_BACKGROUND, "GIMP_GRADIENT_COLOR_BACKGROUND", "background" },
-    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, "GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT", "background-transparent" },
+    { GIMP_VIEW_SIZE_TINY, "GIMP_VIEW_SIZE_TINY", "tiny" },
+    { GIMP_VIEW_SIZE_EXTRA_SMALL, "GIMP_VIEW_SIZE_EXTRA_SMALL", "extra-small" },
+    { GIMP_VIEW_SIZE_SMALL, "GIMP_VIEW_SIZE_SMALL", "small" },
+    { GIMP_VIEW_SIZE_MEDIUM, "GIMP_VIEW_SIZE_MEDIUM", "medium" },
+    { GIMP_VIEW_SIZE_LARGE, "GIMP_VIEW_SIZE_LARGE", "large" },
+    { GIMP_VIEW_SIZE_EXTRA_LARGE, "GIMP_VIEW_SIZE_EXTRA_LARGE", "extra-large" },
+    { GIMP_VIEW_SIZE_HUGE, "GIMP_VIEW_SIZE_HUGE", "huge" },
+    { GIMP_VIEW_SIZE_ENORMOUS, "GIMP_VIEW_SIZE_ENORMOUS", "enormous" },
+    { GIMP_VIEW_SIZE_GIGANTIC, "GIMP_VIEW_SIZE_GIGANTIC", "gigantic" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_GRADIENT_COLOR_FIXED, NC_("gradient-color", "Fixed"), NULL },
-    { GIMP_GRADIENT_COLOR_FOREGROUND, NC_("gradient-color", "Foreground color"), NULL },
-    /* Translators: this is an abbreviated version of "Foreground color".
-       Keep it short. */
-    { GIMP_GRADIENT_COLOR_FOREGROUND, NC_("gradient-color", "FG"), NULL },
-    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "Foreground color (transparent)"), NULL },
-    /* Translators: this is an abbreviated version of "Foreground color (transparent)".
-       Keep it short. */
-    { GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT, NC_("gradient-color", "FG (t)"), NULL },
-    { GIMP_GRADIENT_COLOR_BACKGROUND, NC_("gradient-color", "Background color"), NULL },
-    /* Translators: this is an abbreviated version of "Background color".
-       Keep it short. */
-    { GIMP_GRADIENT_COLOR_BACKGROUND, NC_("gradient-color", "BG"), NULL },
-    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, NC_("gradient-color", "Background color (transparent)"), NULL },
-    /* Translators: this is an abbreviated version of "Background color (transparent)".
-       Keep it short. */
-    { GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT, NC_("gradient-color", "BG (t)"), NULL },
+    { GIMP_VIEW_SIZE_TINY, NC_("view-size", "Tiny"), NULL },
+    { GIMP_VIEW_SIZE_EXTRA_SMALL, NC_("view-size", "Very small"), NULL },
+    { GIMP_VIEW_SIZE_SMALL, NC_("view-size", "Small"), NULL },
+    { GIMP_VIEW_SIZE_MEDIUM, NC_("view-size", "Medium"), NULL },
+    { GIMP_VIEW_SIZE_LARGE, NC_("view-size", "Large"), NULL },
+    { GIMP_VIEW_SIZE_EXTRA_LARGE, NC_("view-size", "Very large"), NULL },
+    { GIMP_VIEW_SIZE_HUGE, NC_("view-size", "Huge"), NULL },
+    { GIMP_VIEW_SIZE_ENORMOUS, NC_("view-size", "Enormous"), NULL },
+    { GIMP_VIEW_SIZE_GIGANTIC, NC_("view-size", "Gigantic"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -1056,8 +1200,8 @@ gimp_gradient_color_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpGradientColor", values);
-      gimp_type_set_translation_context (type, "gradient-color");
+      type = g_enum_register_static ("GimpViewSize", values);
+      gimp_type_set_translation_context (type, "view-size");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -1065,25 +1209,19 @@ gimp_gradient_color_get_type (void)
 }
 
 GType
-gimp_message_severity_get_type (void)
+gimp_view_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_MESSAGE_INFO, "GIMP_MESSAGE_INFO", "info" },
-    { GIMP_MESSAGE_WARNING, "GIMP_MESSAGE_WARNING", "warning" },
-    { GIMP_MESSAGE_ERROR, "GIMP_MESSAGE_ERROR", "error" },
-    { GIMP_MESSAGE_BUG_WARNING, "GIMP_MESSAGE_BUG_WARNING", "bug-warning" },
-    { GIMP_MESSAGE_BUG_CRITICAL, "GIMP_MESSAGE_BUG_CRITICAL", "bug-critical" },
+    { GIMP_VIEW_TYPE_LIST, "GIMP_VIEW_TYPE_LIST", "list" },
+    { GIMP_VIEW_TYPE_GRID, "GIMP_VIEW_TYPE_GRID", "grid" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_MESSAGE_INFO, NC_("message-severity", "Message"), NULL },
-    { GIMP_MESSAGE_WARNING, NC_("message-severity", "Warning"), NULL },
-    { GIMP_MESSAGE_ERROR, NC_("message-severity", "Error"), NULL },
-    { GIMP_MESSAGE_BUG_WARNING, NC_("message-severity", "WARNING"), NULL },
-    { GIMP_MESSAGE_BUG_CRITICAL, NC_("message-severity", "CRITICAL"), NULL },
+    { GIMP_VIEW_TYPE_LIST, NC_("view-type", "View as list"), NULL },
+    { GIMP_VIEW_TYPE_GRID, NC_("view-type", "View as grid"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -1091,146 +1229,8 @@ gimp_message_severity_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpMessageSeverity", values);
-      gimp_type_set_translation_context (type, "message-severity");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_color_profile_policy_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_COLOR_PROFILE_POLICY_ASK, "GIMP_COLOR_PROFILE_POLICY_ASK", "ask" },
-    { GIMP_COLOR_PROFILE_POLICY_KEEP, "GIMP_COLOR_PROFILE_POLICY_KEEP", "keep" },
-    { GIMP_COLOR_PROFILE_POLICY_CONVERT, "GIMP_COLOR_PROFILE_POLICY_CONVERT", "convert" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_COLOR_PROFILE_POLICY_ASK, NC_("color-profile-policy", "Ask what to do"), NULL },
-    { GIMP_COLOR_PROFILE_POLICY_KEEP, NC_("color-profile-policy", "Keep embedded profile"), NULL },
-    { GIMP_COLOR_PROFILE_POLICY_CONVERT, NC_("color-profile-policy", "Convert to preferred RGB color profile"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpColorProfilePolicy", values);
-      gimp_type_set_translation_context (type, "color-profile-policy");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_dynamics_output_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_DYNAMICS_OUTPUT_OPACITY, "GIMP_DYNAMICS_OUTPUT_OPACITY", "opacity" },
-    { GIMP_DYNAMICS_OUTPUT_SIZE, "GIMP_DYNAMICS_OUTPUT_SIZE", "size" },
-    { GIMP_DYNAMICS_OUTPUT_ANGLE, "GIMP_DYNAMICS_OUTPUT_ANGLE", "angle" },
-    { GIMP_DYNAMICS_OUTPUT_COLOR, "GIMP_DYNAMICS_OUTPUT_COLOR", "color" },
-    { GIMP_DYNAMICS_OUTPUT_HARDNESS, "GIMP_DYNAMICS_OUTPUT_HARDNESS", "hardness" },
-    { GIMP_DYNAMICS_OUTPUT_FORCE, "GIMP_DYNAMICS_OUTPUT_FORCE", "force" },
-    { GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO, "GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO", "aspect-ratio" },
-    { GIMP_DYNAMICS_OUTPUT_SPACING, "GIMP_DYNAMICS_OUTPUT_SPACING", "spacing" },
-    { GIMP_DYNAMICS_OUTPUT_RATE, "GIMP_DYNAMICS_OUTPUT_RATE", "rate" },
-    { GIMP_DYNAMICS_OUTPUT_FLOW, "GIMP_DYNAMICS_OUTPUT_FLOW", "flow" },
-    { GIMP_DYNAMICS_OUTPUT_JITTER, "GIMP_DYNAMICS_OUTPUT_JITTER", "jitter" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_DYNAMICS_OUTPUT_OPACITY, NC_("dynamics-output-type", "Opacity"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_SIZE, NC_("dynamics-output-type", "Size"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_ANGLE, NC_("dynamics-output-type", "Angle"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_COLOR, NC_("dynamics-output-type", "Color"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_HARDNESS, NC_("dynamics-output-type", "Hardness"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_FORCE, NC_("dynamics-output-type", "Force"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO, NC_("dynamics-output-type", "Aspect ratio"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_SPACING, NC_("dynamics-output-type", "Spacing"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_RATE, NC_("dynamics-output-type", "Rate"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_FLOW, NC_("dynamics-output-type", "Flow"), NULL },
-    { GIMP_DYNAMICS_OUTPUT_JITTER, NC_("dynamics-output-type", "Jitter"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpDynamicsOutputType", values);
-      gimp_type_set_translation_context (type, "dynamics-output-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_filter_region_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_FILTER_REGION_SELECTION, "GIMP_FILTER_REGION_SELECTION", "selection" },
-    { GIMP_FILTER_REGION_DRAWABLE, "GIMP_FILTER_REGION_DRAWABLE", "drawable" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_FILTER_REGION_SELECTION, NC_("filter-region", "Use the selection as input"), NULL },
-    { GIMP_FILTER_REGION_DRAWABLE, NC_("filter-region", "Use the entire layer as input"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpFilterRegion", values);
-      gimp_type_set_translation_context (type, "filter-region");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_channel_border_style_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_CHANNEL_BORDER_STYLE_HARD, "GIMP_CHANNEL_BORDER_STYLE_HARD", "hard" },
-    { GIMP_CHANNEL_BORDER_STYLE_SMOOTH, "GIMP_CHANNEL_BORDER_STYLE_SMOOTH", "smooth" },
-    { GIMP_CHANNEL_BORDER_STYLE_FEATHERED, "GIMP_CHANNEL_BORDER_STYLE_FEATHERED", "feathered" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_CHANNEL_BORDER_STYLE_HARD, NC_("channel-border-style", "Hard"), NULL },
-    { GIMP_CHANNEL_BORDER_STYLE_SMOOTH, NC_("channel-border-style", "Smooth"), NULL },
-    { GIMP_CHANNEL_BORDER_STYLE_FEATHERED, NC_("channel-border-style", "Feathered"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpChannelBorderStyle", values);
-      gimp_type_set_translation_context (type, "channel-border-style");
+      type = g_enum_register_static ("GimpViewType", values);
+      gimp_type_set_translation_context (type, "view-type");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
