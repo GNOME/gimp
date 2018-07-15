@@ -140,8 +140,6 @@ gimp_parallel_init (Gimp *gimp)
 void
 gimp_parallel_exit (Gimp *gimp)
 {
-  GimpParallelRunAsyncTask *task;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_signal_handlers_disconnect_by_func (gimp->config,
@@ -150,16 +148,6 @@ gimp_parallel_exit (Gimp *gimp)
 
   /* stop all threads */
   gimp_parallel_set_n_threads (0);
-
-  /* finish remaining tasks */
-  while ((task = (GimpParallelRunAsyncTask *)
-                   g_queue_pop_head (&gimp_parallel_run_async_queue)))
-    {
-      g_object_set_data (G_OBJECT (task->async),
-                         "gimp-parallel-run-async-link", NULL);
-
-      gimp_parallel_run_async_execute_task (task);
-    }
 }
 
 GimpAsync *
@@ -521,6 +509,21 @@ gimp_parallel_run_async_set_n_threads (gint n_threads)
     }
 
   gimp_parallel_run_async_n_threads = n_threads;
+
+  if (n_threads == 0)
+    {
+      GimpParallelRunAsyncTask *task;
+
+      /* finish remaining tasks */
+      while ((task = (GimpParallelRunAsyncTask *)
+                       g_queue_pop_head (&gimp_parallel_run_async_queue)))
+        {
+          g_object_set_data (G_OBJECT (task->async),
+                             "gimp-parallel-run-async-link", NULL);
+
+          gimp_parallel_run_async_execute_task (task);
+        }
+    }
 }
 
 static gpointer
@@ -613,11 +616,8 @@ gimp_parallel_distribute_set_n_threads (gint n_threads)
 {
   gint i;
 
-  if (! g_atomic_int_compare_and_exchange (&gimp_parallel_distribute_busy,
-                                           0, 1))
-    {
-      g_return_if_reached ();
-    }
+  while (! g_atomic_int_compare_and_exchange (&gimp_parallel_distribute_busy,
+                                              0, 1));
 
   n_threads = CLAMP (n_threads, 1, GIMP_PARALLEL_DISTRIBUTE_MAX_THREADS);
 

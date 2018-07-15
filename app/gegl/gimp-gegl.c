@@ -57,6 +57,8 @@ gimp_gegl_init (Gimp *gimp)
                 "use-opencl",      config->use_opencl,
                 NULL);
 
+  gimp_parallel_init (gimp);
+
   g_signal_connect (config, "notify::tile-cache-size",
                     G_CALLBACK (gimp_gegl_notify_tile_cache_size),
                     NULL);
@@ -66,8 +68,6 @@ gimp_gegl_init (Gimp *gimp)
   g_signal_connect (config, "notify::use-opencl",
                     G_CALLBACK (gimp_gegl_notify_use_opencl),
                     NULL);
-
-  gimp_parallel_init (gimp);
 
   gimp_babl_init ();
 
