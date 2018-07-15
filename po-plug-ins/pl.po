@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-10 05:48+0200\n"
-"PO-Revision-Date: 2018-07-10 05:49+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-15 19:49+0200\n"
+"PO-Revision-Date: 2018-07-15 19:50+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -70,10 +70,9 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
-#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
+#: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -129,10 +128,9 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:439
 #: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:355 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -485,7 +483,7 @@ msgstr "Proste rozmycie, szybkie, ale niezbyt silne"
 msgid "_Blur"
 msgstr "_Rozmyj"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:592
+#: ../plug-ins/common/blur.c:175
 msgid "Blurring"
 msgstr "Rozmywanie"
 
@@ -2009,7 +2007,7 @@ msgid "R_ecursive"
 msgstr "_Rekurencyjne"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
+#: ../plug-ins/common/nl-filter.c:1092
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -2097,7 +2095,7 @@ msgstr "Neon"
 msgid "Neon Detection"
 msgstr "Wykrywanie neonu"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:888
+#: ../plug-ins/common/edge-neon.c:749
 msgid "_Amount:"
 msgstr "Roz_miar:"
 
@@ -6417,28 +6415,6 @@ msgstr "Edytor jednostek"
 msgid "_Refresh"
 msgstr "_Odśwież"
 
-#: ../plug-ins/common/unsharp-mask.c:132
-msgid "The most widely useful method for sharpening an image"
-msgstr "Najczęściej używana metoda wyostrzania obrazu"
-
-#: ../plug-ins/common/unsharp-mask.c:142
-msgid "_Unsharp Mask (legacy)..."
-msgstr "_Maska wyostrzająca (poprzednia wersja)…"
-
-#: ../plug-ins/common/unsharp-mask.c:694
-msgid "Merging"
-msgstr "Łączenie"
-
-#: ../plug-ins/common/unsharp-mask.c:838
-msgid "Unsharp Mask"
-msgstr "Maska wyostrzająca"
-
-#: ../plug-ins/common/unsharp-mask.c:901
-#: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:566
-msgid "_Threshold:"
-msgstr "_Próg:"
-
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
@@ -10401,10 +10377,10 @@ msgstr "Podręcznik użytkownika programu GIMP jest niedostępny."
 #: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"http://docs.gimp.org/"
+"https://docs.gimp.org/"
 msgstr ""
 "Proszę zainstalować dodatkowy pakiet pomocy lub skorzystać z podręcznika "
-"użytkownika na stronie http://docs.gimp.org/"
+"użytkownika na stronie https://docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -11265,6 +11241,11 @@ msgstr "Interakcja:"
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "_Ciągły obszar"
+
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:566
+msgid "_Threshold:"
+msgstr "_Próg:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
