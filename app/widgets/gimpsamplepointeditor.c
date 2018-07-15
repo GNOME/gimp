@@ -456,7 +456,7 @@ gimp_sample_point_editor_points_changed (GimpSamplePointEditor *editor)
 
           editor->color_frames[i] =
             g_object_new (GIMP_TYPE_COLOR_FRAME,
-                          "mode",           GIMP_COLOR_FRAME_MODE_PIXEL,
+                          "mode",           GIMP_COLOR_PICK_MODE_PIXEL,
                           "has-number",     TRUE,
                           "number",         i + 1,
                           "has-color-area", TRUE,

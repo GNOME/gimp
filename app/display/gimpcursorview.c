@@ -321,7 +321,7 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   view->priv->color_frame_1 = gimp_color_frame_new ();
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                             GIMP_COLOR_FRAME_MODE_PIXEL);
+                             GIMP_COLOR_PICK_MODE_PIXEL);
   gimp_color_frame_set_ellipsize (GIMP_COLOR_FRAME (view->priv->color_frame_1),
                                   PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_1,
@@ -330,7 +330,7 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   view->priv->color_frame_2 = gimp_color_frame_new ();
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                             GIMP_COLOR_FRAME_MODE_RGB_PERCENT);
+                             GIMP_COLOR_PICK_MODE_RGB_PERCENT);
   gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_2,
                       TRUE, TRUE, 0);
   gtk_widget_show (view->priv->color_frame_2);
@@ -442,7 +442,7 @@ gimp_cursor_view_set_aux_info (GimpDocked *docked,
           GEnumClass *enum_class;
           GEnumValue *enum_value;
 
-          enum_class = g_type_class_peek (GIMP_TYPE_COLOR_FRAME_MODE);
+          enum_class = g_type_class_peek (GIMP_TYPE_COLOR_PICK_MODE);
           enum_value = g_enum_get_value_by_nick (enum_class, aux->value);
 
           if (enum_value)
@@ -462,16 +462,16 @@ gimp_cursor_view_get_aux_info (GimpDocked *docked)
 
   aux_info = parent_docked_iface->get_aux_info (docked);
 
-  if (gimp_enum_get_value (GIMP_TYPE_COLOR_FRAME_MODE,
-                           GIMP_COLOR_FRAME (view->priv->color_frame_1)->frame_mode,
+  if (gimp_enum_get_value (GIMP_TYPE_COLOR_PICK_MODE,
+                           GIMP_COLOR_FRAME (view->priv->color_frame_1)->pick_mode,
                            NULL, &nick, NULL, NULL))
     {
       aux = gimp_session_info_aux_new (AUX_INFO_FRAME_1_MODE, nick);
       aux_info = g_list_append (aux_info, aux);
     }
 
-  if (gimp_enum_get_value (GIMP_TYPE_COLOR_FRAME_MODE,
-                           GIMP_COLOR_FRAME (view->priv->color_frame_2)->frame_mode,
+  if (gimp_enum_get_value (GIMP_TYPE_COLOR_PICK_MODE,
+                           GIMP_COLOR_FRAME (view->priv->color_frame_2)->pick_mode,
                            NULL, &nick, NULL, NULL))
     {
       aux = gimp_session_info_aux_new (AUX_INFO_FRAME_2_MODE, nick);
