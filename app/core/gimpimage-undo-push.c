@@ -218,7 +218,7 @@ gimp_image_undo_push_guide (GimpImage   *image,
   return gimp_image_undo_push (image, GIMP_TYPE_GUIDE_UNDO,
                                GIMP_UNDO_GUIDE, undo_desc,
                                GIMP_DIRTY_IMAGE_META,
-                               "guide", guide,
+                               "aux-item", guide,
                                NULL);
 }
 
@@ -233,7 +233,7 @@ gimp_image_undo_push_sample_point (GimpImage       *image,
   return gimp_image_undo_push (image, GIMP_TYPE_SAMPLE_POINT_UNDO,
                                GIMP_UNDO_SAMPLE_POINT, undo_desc,
                                GIMP_DIRTY_IMAGE_META,
-                               "sample-point", sample_point,
+                               "aux-item", sample_point,
                                NULL);
 }
 

@@ -28,31 +28,15 @@
 #include "gimpsamplepointundo.h"
 
 
-enum
-{
-  PROP_0,
-  PROP_SAMPLE_POINT
-};
-
-
 static void   gimp_sample_point_undo_constructed  (GObject             *object);
-static void   gimp_sample_point_undo_set_property (GObject             *object,
-                                                   guint                property_id,
-                                                   const GValue        *value,
-                                                   GParamSpec          *pspec);
-static void   gimp_sample_point_undo_get_property (GObject             *object,
-                                                   guint                property_id,
-                                                   GValue              *value,
-                                                   GParamSpec          *pspec);
 
 static void   gimp_sample_point_undo_pop          (GimpUndo            *undo,
                                                    GimpUndoMode         undo_mode,
                                                    GimpUndoAccumulator *accum);
-static void   gimp_sample_point_undo_free         (GimpUndo            *undo,
-                                                   GimpUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpSamplePointUndo, gimp_sample_point_undo, GIMP_TYPE_UNDO)
+G_DEFINE_TYPE (GimpSamplePointUndo, gimp_sample_point_undo,
+               GIMP_TYPE_AUX_ITEM_UNDO)
 
 #define parent_class gimp_sample_point_undo_parent_class
 
@@ -63,18 +47,9 @@ gimp_sample_point_undo_class_init (GimpSamplePointUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructed  = gimp_sample_point_undo_constructed;
-  object_class->set_property = gimp_sample_point_undo_set_property;
-  object_class->get_property = gimp_sample_point_undo_get_property;
+  object_class->constructed = gimp_sample_point_undo_constructed;
 
-  undo_class->pop            = gimp_sample_point_undo_pop;
-  undo_class->free           = gimp_sample_point_undo_free;
-
-  g_object_class_install_property (object_class, PROP_SAMPLE_POINT,
-                                   g_param_spec_object ("sample-point", NULL, NULL,
-                                                        GIMP_TYPE_SAMPLE_POINT,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+  undo_class->pop           = gimp_sample_point_undo_pop;
 }
 
 static void
@@ -86,54 +61,17 @@ static void
 gimp_sample_point_undo_constructed (GObject *object)
 {
   GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (object);
+  GimpSamplePoint     *sample_point;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_SAMPLE_POINT (sample_point_undo->sample_point));
+  sample_point = GIMP_SAMPLE_POINT (GIMP_AUX_ITEM_UNDO (object)->aux_item);
 
-  gimp_sample_point_get_position (sample_point_undo->sample_point,
+  gimp_assert (GIMP_IS_SAMPLE_POINT (sample_point));
+
+  gimp_sample_point_get_position (sample_point,
                                   &sample_point_undo->x,
                                   &sample_point_undo->y);
-}
-
-static void
-gimp_sample_point_undo_set_property (GObject      *object,
-                                     guint         property_id,
-                                     const GValue *value,
-                                     GParamSpec   *pspec)
-{
-  GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (object);
-
-  switch (property_id)
-    {
-    case PROP_SAMPLE_POINT:
-      sample_point_undo->sample_point = g_value_dup_object (value);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_sample_point_undo_get_property (GObject    *object,
-                                     guint       property_id,
-                                     GValue     *value,
-                                     GParamSpec *pspec)
-{
-  GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (object);
-
-  switch (property_id)
-    {
-    case PROP_SAMPLE_POINT:
-      g_value_set_object (value, sample_point_undo->sample_point);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
 }
 
 static void
@@ -142,46 +80,36 @@ gimp_sample_point_undo_pop (GimpUndo              *undo,
                             GimpUndoAccumulator   *accum)
 {
   GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (undo);
+  GimpSamplePoint     *sample_point;
   gint                 x;
   gint                 y;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  gimp_sample_point_get_position (sample_point_undo->sample_point, &x, &y);
+  sample_point = GIMP_SAMPLE_POINT (GIMP_AUX_ITEM_UNDO (undo)->aux_item);
+
+  gimp_sample_point_get_position (sample_point, &x, &y);
 
   if (x == GIMP_SAMPLE_POINT_POSITION_UNDEFINED)
     {
       gimp_image_add_sample_point (undo->image,
-                                   sample_point_undo->sample_point,
+                                   sample_point,
                                    sample_point_undo->x,
                                    sample_point_undo->y);
     }
   else if (sample_point_undo->x == GIMP_SAMPLE_POINT_POSITION_UNDEFINED)
     {
-      gimp_image_remove_sample_point (undo->image,
-                                      sample_point_undo->sample_point, FALSE);
+      gimp_image_remove_sample_point (undo->image, sample_point, FALSE);
     }
   else
     {
-      gimp_sample_point_set_position (sample_point_undo->sample_point,
+      gimp_sample_point_set_position (sample_point,
                                       sample_point_undo->x,
                                       sample_point_undo->y);
 
-      gimp_image_sample_point_moved (undo->image,
-                                     sample_point_undo->sample_point);
+      gimp_image_sample_point_moved (undo->image, sample_point);
     }
 
   sample_point_undo->x = x;
   sample_point_undo->y = y;
-}
-
-static void
-gimp_sample_point_undo_free (GimpUndo     *undo,
-                             GimpUndoMode  undo_mode)
-{
-  GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (undo);
-
-  g_clear_object (&sample_point_undo->sample_point);
-
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

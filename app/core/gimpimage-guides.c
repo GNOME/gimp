@@ -121,7 +121,7 @@ gimp_image_remove_guide (GimpImage *image,
     gimp_image_undo_push_guide (image, C_("undo-type", "Remove Guide"), guide);
 
   private->guides = g_list_remove (private->guides, guide);
-  gimp_guide_removed (guide);
+  gimp_aux_item_removed (GIMP_AUX_ITEM (guide));
 
   gimp_image_guide_removed (image, guide);
 
@@ -177,7 +177,7 @@ gimp_image_get_guide (GimpImage *image,
     {
       GimpGuide *guide = guides->data;
 
-      if (gimp_guide_get_ID (guide) == id)
+      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (guide)) == id)
         return guide;
     }
 
@@ -208,7 +208,7 @@ gimp_image_get_next_guide (GimpImage *image,
       if (*guide_found) /* this is the first guide after the found one */
         return guide;
 
-      if (gimp_guide_get_ID (guide) == id) /* found it, next one will be returned */
+      if (gimp_aux_item_get_ID (GIMP_AUX_ITEM (guide)) == id) /* found it, next one will be returned */
         *guide_found = TRUE;
     }
 

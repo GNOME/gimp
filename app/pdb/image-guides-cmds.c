@@ -67,7 +67,7 @@ image_add_hguide_invoker (GimpProcedure         *procedure,
           GimpGuide *g;
 
           g = gimp_image_add_hguide (image, yposition, TRUE);
-          guide = gimp_guide_get_ID (g);
+          guide = gimp_aux_item_get_ID (GIMP_AUX_ITEM (g));
         }
       else
         success = FALSE;
@@ -106,7 +106,7 @@ image_add_vguide_invoker (GimpProcedure         *procedure,
           GimpGuide *g;
 
           g = gimp_image_add_vguide (image, xposition, TRUE);
-          guide = gimp_guide_get_ID (g);
+          guide = gimp_aux_item_get_ID (GIMP_AUX_ITEM (g));
         }
       else
         success = FALSE;
@@ -172,7 +172,7 @@ image_find_next_guide_invoker (GimpProcedure         *procedure,
       GimpGuide *g = gimp_image_get_next_guide (image, guide, &success);
 
       if (g)
-        next_guide = gimp_guide_get_ID (g);
+        next_guide = gimp_aux_item_get_ID (GIMP_AUX_ITEM (g));
 
       if (! success)
         g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
