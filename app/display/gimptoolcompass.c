@@ -292,11 +292,19 @@ gimp_tool_compass_constructed (GObject *object)
 {
   GimpToolCompass        *compass = GIMP_TOOL_COMPASS (object);
   GimpToolWidget         *widget  = GIMP_TOOL_WIDGET (object);
+  GimpDisplayShell       *shell   = gimp_tool_widget_get_shell (widget);
   GimpToolCompassPrivate *private = compass->private;
   GimpCanvasGroup        *stroke_group;
   gint                    i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_signal_connect_object (shell, "scaled",
+                           G_CALLBACK (gimp_tool_compass_changed),
+                           compass, G_CONNECT_SWAPPED);
+  g_signal_connect_object (shell, "rotated",
+                           G_CALLBACK (gimp_tool_compass_changed),
+                           compass, G_CONNECT_SWAPPED);
 
   stroke_group = gimp_tool_widget_add_stroke_group (widget);
 
@@ -1069,6 +1077,8 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
   GimpImage              *image   = gimp_display_get_image (shell->display);
   GimpVector2             radius1;
   GimpVector2             radius2;
+  gdouble                 pixel_angle;
+  gdouble                 unit_angle;
   gdouble                 xres;
   gdouble                 yres;
 
@@ -1112,8 +1122,8 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
   radius1 = private->radius1;
   radius2 = private->radius2;
 
-  private->pixel_angle = atan2 (gimp_vector2_cross_product (&radius1, &radius2).x,
-                                gimp_vector2_inner_product (&radius1, &radius2));
+  pixel_angle = atan2 (gimp_vector2_cross_product (&radius1, &radius2).x,
+                       gimp_vector2_inner_product (&radius1, &radius2));
 
   radius1.x /= xres;
   radius1.y /= yres;
@@ -1121,19 +1131,21 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
   radius2.x /= xres;
   radius2.y /= yres;
 
-  private->unit_angle = atan2 (gimp_vector2_cross_product (&radius1, &radius2).x,
-                               gimp_vector2_inner_product (&radius1, &radius2));
+  unit_angle = atan2 (gimp_vector2_cross_product (&radius1, &radius2).x,
+                      gimp_vector2_inner_product (&radius1, &radius2));
 
   if (shell->dot_for_dot)
-    private->display_angle = private->pixel_angle;
+    private->display_angle = pixel_angle;
   else
-    private->display_angle = private->unit_angle;
+    private->display_angle = unit_angle;
 
   if (private->n_points == 2)
     {
       if (! flip && fabs (private->display_angle) > G_PI / 2.0 + EPSILON)
         {
           gimp_tool_compass_update_angle (compass, orientation, TRUE);
+
+          return;
         }
       else if (orientation == GIMP_COMPASS_ORIENTATION_AUTO &&
                fabs (private->display_angle) > G_PI / 4.0 + EPSILON)
@@ -1141,7 +1153,23 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
           gimp_tool_compass_update_angle (compass,
                                           GIMP_COMPASS_ORIENTATION_VERTICAL,
                                           FALSE);
+
+          return;
         }
+    }
+
+  if (pixel_angle != private->pixel_angle)
+    {
+      private->pixel_angle = pixel_angle;
+
+      g_object_notify (G_OBJECT (compass), "pixel-angle");
+    }
+
+  if (unit_angle != private->unit_angle)
+    {
+      private->unit_angle = unit_angle;
+
+      g_object_notify (G_OBJECT (compass), "unit-angle");
     }
 }
 
