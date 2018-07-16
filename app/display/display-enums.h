@@ -44,6 +44,18 @@ typedef enum
 } GimpButtonReleaseType;
 
 
+#define GIMP_TYPE_COMPASS_ORIENTATION (gimp_compass_orientation_get_type ())
+
+GType gimp_compass_orientation_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COMPASS_ORIENTATION_AUTO,       /*< desc="Auto"       >*/
+  GIMP_COMPASS_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
+  GIMP_COMPASS_ORIENTATION_VERTICAL    /*< desc="Vertical"   >*/
+} GimpCompassOrientation;
+
+
 #define GIMP_TYPE_CURSOR_PRECISION (gimp_cursor_precision_get_type ())
 
 GType gimp_cursor_precision_get_type (void) G_GNUC_CONST;
@@ -195,18 +207,6 @@ typedef enum
   GIMP_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
   GIMP_VECTOR_MODE_MOVE         /*< desc="Move"   >*/
 } GimpVectorMode;
-
-
-#define GIMP_TYPE_COMPASS_ORIENTATION (gimp_compass_orientation_get_type ())
-
-GType gimp_compass_orientation_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_COMPASS_ORIENTATION_AUTO,       /*< desc="Auto"       >*/
-  GIMP_COMPASS_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
-  GIMP_COMPASS_ORIENTATION_VERTICAL    /*< desc="Vertical"   >*/
-} GimpCompassOrientation;
 
 
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
