@@ -50,6 +50,7 @@
 
 
 #define ARC_RADIUS 30
+#define ARC_GAP    (ARC_RADIUS / 2)
 #define EPSILON    1e-6
 
 
@@ -438,12 +439,14 @@ gimp_tool_compass_get_property (GObject    *object,
 static void
 gimp_tool_compass_changed (GimpToolWidget *widget)
 {
-  GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
-  GimpToolCompassPrivate *private = compass->private;
-  GimpDisplayShell       *shell   = gimp_tool_widget_get_shell (widget);
+  GimpToolCompass        *compass       = GIMP_TOOL_COMPASS (widget);
+  GimpToolCompassPrivate *private       = compass->private;
+  GimpDisplayShell       *shell         = gimp_tool_widget_get_shell (widget);
   gdouble                 angle1;
   gdouble                 angle2;
-  gint                    draw_arc = 0;
+  gint                    draw_arc      = 0;
+  gboolean                draw_arc_line = FALSE;
+  gdouble                 arc_line_display_length;
   gdouble                 arc_line_length;
 
   gimp_tool_compass_update_angle (compass, private->orientation, FALSE);
@@ -468,20 +471,55 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
       draw_arc++;
     }
 
-  gimp_canvas_line_set (private->line2,
-                        private->x[0],
-                        private->y[0],
-                        private->x[2],
-                        private->y[2]);
-  gimp_canvas_item_set_visible (private->line2, private->n_points > 2);
-  if (private->n_points > 2 &&
-      gimp_canvas_item_transform_distance (private->line2,
-                                           private->x[0],
-                                           private->y[0],
-                                           private->x[2],
-                                           private->y[2]) > ARC_RADIUS)
+
+  arc_line_display_length = ARC_RADIUS                           +
+                            (GIMP_CANVAS_HANDLE_SIZE_CROSS >> 1) +
+                            ARC_GAP;
+  arc_line_length         = arc_line_display_length              /
+                            hypot (private->radius2.x * shell->scale_x,
+                                  private->radius2.y * shell->scale_y);
+
+  if (private->n_points > 2)
     {
-      draw_arc++;
+      gdouble length = gimp_canvas_item_transform_distance (private->line2,
+                                                            private->x[0],
+                                                            private->y[0],
+                                                            private->x[2],
+                                                            private->y[2]);
+
+      if (length > ARC_RADIUS)
+        {
+          draw_arc++;
+          draw_arc_line = TRUE;
+
+          if (length > arc_line_display_length)
+            {
+              gimp_canvas_line_set (
+                private->line2,
+                private->x[0] + private->radius2.x * arc_line_length,
+                private->y[0] + private->radius2.y * arc_line_length,
+                private->x[2],
+                private->y[2]);
+              gimp_canvas_item_set_visible (private->line2, TRUE);
+            }
+          else
+            {
+              gimp_canvas_item_set_visible (private->line2, FALSE);
+            }
+        }
+      else
+        {
+          gimp_canvas_line_set (private->line2,
+                                private->x[0],
+                                private->y[0],
+                                private->x[2],
+                                private->y[2]);
+          gimp_canvas_item_set_visible (private->line2, TRUE);
+        }
+    }
+  else
+    {
+      gimp_canvas_item_set_visible (private->line2, FALSE);
     }
 
   gimp_canvas_handle_set_position (private->arc,
@@ -502,7 +540,7 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
                         private->x[0] + private->radius2.x * arc_line_length,
                         private->y[0] + private->radius2.y * arc_line_length);
   gimp_canvas_item_set_visible (private->arc_line,
-                                private->n_points == 2 &&
+                                (private->n_points == 2 || draw_arc_line) &&
                                 fabs (angle2) > EPSILON);
 
   gimp_canvas_handle_set_position (private->handles[0],
