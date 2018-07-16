@@ -853,24 +853,5 @@ gimp_measure_tool_straighten_button_clicked (GtkWidget       *button,
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (measure);
 
   if (gimp_transform_tool_transform (tr_tool, tool->display))
-    {
-      gdouble x0, y0;
-      gdouble x1, y1;
-
-      gimp_matrix3_transform_point (&tr_tool->transform,
-                                    measure->x[0],
-                                    measure->y[0],
-                                    &x0, &y0);
-      gimp_matrix3_transform_point (&tr_tool->transform,
-                                    measure->x[1],
-                                    measure->y[1],
-                                    &x1, &y1);
-
-      g_object_set (measure->widget,
-                    "x1", SIGNED_ROUND (x0),
-                    "y1", SIGNED_ROUND (y0),
-                    "x2", SIGNED_ROUND (x1),
-                    "y2", SIGNED_ROUND (y1),
-                    NULL);
-    }
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
 }
