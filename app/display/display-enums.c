@@ -73,6 +73,37 @@ gimp_button_release_type_get_type (void)
 }
 
 GType
+gimp_compass_orientation_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_COMPASS_ORIENTATION_AUTO, "GIMP_COMPASS_ORIENTATION_AUTO", "auto" },
+    { GIMP_COMPASS_ORIENTATION_HORIZONTAL, "GIMP_COMPASS_ORIENTATION_HORIZONTAL", "horizontal" },
+    { GIMP_COMPASS_ORIENTATION_VERTICAL, "GIMP_COMPASS_ORIENTATION_VERTICAL", "vertical" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_COMPASS_ORIENTATION_AUTO, NC_("compass-orientation", "Auto"), NULL },
+    { GIMP_COMPASS_ORIENTATION_HORIZONTAL, NC_("compass-orientation", "Horizontal"), NULL },
+    { GIMP_COMPASS_ORIENTATION_VERTICAL, NC_("compass-orientation", "Vertical"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpCompassOrientation", values);
+      gimp_type_set_translation_context (type, "compass-orientation");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_cursor_precision_get_type (void)
 {
   static const GEnumValue values[] =
@@ -449,37 +480,6 @@ gimp_vector_mode_get_type (void)
     {
       type = g_enum_register_static ("GimpVectorMode", values);
       gimp_type_set_translation_context (type, "vector-mode");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_compass_orientation_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_COMPASS_ORIENTATION_AUTO, "GIMP_COMPASS_ORIENTATION_AUTO", "auto" },
-    { GIMP_COMPASS_ORIENTATION_HORIZONTAL, "GIMP_COMPASS_ORIENTATION_HORIZONTAL", "horizontal" },
-    { GIMP_COMPASS_ORIENTATION_VERTICAL, "GIMP_COMPASS_ORIENTATION_VERTICAL", "vertical" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_COMPASS_ORIENTATION_AUTO, NC_("compass-orientation", "Auto"), NULL },
-    { GIMP_COMPASS_ORIENTATION_HORIZONTAL, NC_("compass-orientation", "Horizontal"), NULL },
-    { GIMP_COMPASS_ORIENTATION_VERTICAL, NC_("compass-orientation", "Vertical"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpCompassOrientation", values);
-      gimp_type_set_translation_context (type, "compass-orientation");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
