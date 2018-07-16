@@ -1476,7 +1476,7 @@ gimp_color_profile_get_space (GimpColorProfile          *profile,
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  space = babl_icc_make_space ((const gchar *) profile->priv->data,
+  space = babl_space_from_icc ((const gchar *) profile->priv->data,
                                profile->priv->length,
                                (BablIccIntent) intent,
                                &babl_error);
