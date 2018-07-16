@@ -1453,9 +1453,47 @@ gimp_color_profile_new_d50_gray_lab_trc (void)
 }
 
 /**
+ * gimp_color_profile_get_space:
+ * @profile: a #GimpColorProfile
+ * @intent:  a #GimpColorRenderingIntent
+ * @error:   return location for #GError
+ *
+ * This function returns the #Babl space of @profile, for the
+ * specified @intent.
+ *
+ * Return value: the new #Babl space.
+ *
+ * Since: 2.10.6
+ **/
+const Babl *
+gimp_color_profile_get_space (GimpColorProfile          *profile,
+                              GimpColorRenderingIntent   intent,
+                              GError                   **error)
+{
+  const Babl  *space;
+  const gchar *babl_error = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  space = babl_icc_make_space ((const gchar *) profile->priv->data,
+                               profile->priv->length,
+                               (BablIccIntent) intent,
+                               &babl_error);
+
+  if (! space)
+    g_set_error (error, GIMP_COLOR_PROFILE_ERROR, 0,
+                 "%s: %s",
+                 gimp_color_profile_get_label (profile), babl_error);
+
+  return space;
+}
+
+/**
  * gimp_color_profile_get_format:
  * @profile: a #GimpColorProfile
  * @format:  a #Babl format
+ * @intent:  a #GimpColorRenderingIntent
  * @error:   return location for #GError
  *
  * This function takes a #GimpColorProfile and a #Babl format and
@@ -1472,25 +1510,16 @@ gimp_color_profile_get_format (GimpColorProfile          *profile,
                                GimpColorRenderingIntent   intent,
                                GError                   **error)
 {
-  const Babl  *space;
-  const gchar *babl_error = NULL;
+  const Babl *space;
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
   g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  space = babl_icc_make_space ((const gchar *) profile->priv->data,
-                               profile->priv->length,
-                               (BablIccIntent)intent,
-                               &babl_error);
+  space = gimp_color_profile_get_space (profile, intent, error);
 
   if (! space)
-    {
-      g_set_error (error, GIMP_COLOR_PROFILE_ERROR, 0,
-                   "%s: %s",
-                   gimp_color_profile_get_label (profile), babl_error);
-      return NULL;
-    }
+    return NULL;
 
   return babl_format_with_space (babl_get_name (format), space);
 }
