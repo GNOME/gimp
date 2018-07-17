@@ -500,6 +500,41 @@ gimp_extension_get_plug_in_paths (GimpExtension *extension)
 }
 
 /**
+ * @extension1: a #GimpExtension.
+ * @extension2: another #GimpExtension.
+ *
+ * Compare 2 extensions by their ID.
+ *
+ * Returns: 0 if the 2 extensions have the same ID (even though they may
+ * represent different versions of the same extension).
+ */
+gint
+gimp_extension_cmp (GimpExtension *extension1,
+                    GimpExtension *extension2)
+{
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension1), -1);
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension2), -1);
+
+  return g_strcmp0 (gimp_object_get_name (extension1),
+                    gimp_object_get_name (extension2));
+}
+
+/**
+ * @extension: a #GimpExtension.
+ * @id:        an extension ID (reverse-DNS scheme)
+ *
+ * Compare the extension ID with @id.
+ *
+ * Returns: 0 if @extension have @id as appstream ID.
+ */
+gint
+gimp_extension_id_cmp (GimpExtension *extension,
+                       const gchar   *id)
+{
+  return g_strcmp0 (gimp_object_get_name (extension), id);
+}
+
+/**
  * gimp_extension_validate_paths:
  * @extension: the #GimpExtension
  * @path:      A list of directories separated by ':'.

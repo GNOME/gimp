@@ -53,7 +53,8 @@ GType                  gimp_extension_manager_get_type   (void) G_GNUC_CONST;
 
 GimpExtensionManager * gimp_extension_manager_new        (Gimp *gimp);
 
-void                   gimp_extension_manager_initialize (GimpExtensionManager *manager);
+void                   gimp_extension_manager_initialize            (GimpExtensionManager *manager);
+void                   gimp_extension_manager_exit                  (GimpExtensionManager *manager);
 
 const GList          * gimp_extension_manager_get_system_extensions (GimpExtensionManager *manager);
 const GList          * gimp_extension_manager_get_user_extensions   (GimpExtensionManager *manager);

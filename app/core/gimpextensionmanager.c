@@ -79,22 +79,37 @@ struct _GimpExtensionManagerPrivate
   GList      *plug_in_paths;
 };
 
-static void     gimp_extension_manager_finalize     (GObject    *object);
-static void     gimp_extension_manager_set_property (GObject      *object,
-                                                     guint         property_id,
-                                                     const GValue *value,
-                                                     GParamSpec   *pspec);
-static void     gimp_extension_manager_get_property (GObject      *object,
-                                                     guint         property_id,
-                                                     GValue       *value,
-                                                     GParamSpec   *pspec);
+static void     gimp_extension_manager_config_iface_init   (GimpConfigInterface  *iface);
+static gboolean gimp_extension_manager_serialize           (GimpConfig           *config,
+                                                            GimpConfigWriter     *writer,
+                                                            gpointer              data);
+static gboolean gimp_extension_manager_deserialize         (GimpConfig           *config,
+                                                            GScanner             *scanner,
+                                                            gint                  nest_level,
+                                                            gpointer              data);
 
-static void     gimp_extension_manager_refresh          (GimpExtensionManager *manager);
-static void     gimp_extension_manager_search_directory (GimpExtensionManager *manager,
-                                                         GFile                *directory,
-                                                         gboolean              system_dir);
+static void     gimp_extension_manager_finalize            (GObject              *object);
+static void     gimp_extension_manager_set_property        (GObject              *object,
+                                                            guint                 property_id,
+                                                            const GValue         *value,
+                                                            GParamSpec           *pspec);
+static void     gimp_extension_manager_get_property        (GObject              *object,
+                                                            guint                 property_id,
+                                                            GValue               *value,
+                                                            GParamSpec           *pspec);
 
-G_DEFINE_TYPE (GimpExtensionManager, gimp_extension_manager, GIMP_TYPE_OBJECT)
+static void     gimp_extension_manager_serialize_extension (GimpExtensionManager *manager,
+                                                            GimpExtension        *extension,
+                                                            GimpConfigWriter     *writer);
+
+static void     gimp_extension_manager_refresh             (GimpExtensionManager *manager);
+static void     gimp_extension_manager_search_directory    (GimpExtensionManager *manager,
+                                                            GFile                *directory,
+                                                            gboolean              system_dir);
+
+G_DEFINE_TYPE_WITH_CODE (GimpExtensionManager, gimp_extension_manager, GIMP_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_extension_manager_config_iface_init))
 
 #define parent_class gimp_extension_manager_parent_class
 
@@ -155,6 +170,182 @@ gimp_extension_manager_init (GimpExtensionManager *manager)
   manager->p = G_TYPE_INSTANCE_GET_PRIVATE (manager,
                                             GIMP_TYPE_EXTENSION_MANAGER,
                                             GimpExtensionManagerPrivate);
+  manager->p->extensions     = NULL;
+  manager->p->sys_extensions = NULL;
+}
+
+static void
+gimp_extension_manager_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->serialize   = gimp_extension_manager_serialize;
+  iface->deserialize = gimp_extension_manager_deserialize;
+}
+
+static gboolean
+gimp_extension_manager_serialize (GimpConfig       *config,
+                                  GimpConfigWriter *writer,
+                                  gpointer          data G_GNUC_UNUSED)
+{
+  GimpExtensionManager *manager = GIMP_EXTENSION_MANAGER (config);
+  GList                *iter;
+
+  /* TODO: another information we will want to add will be the last
+   * extension list update to allow ourselves to regularly check for
+   * updates while not doing it too often.
+   */
+  for (iter = manager->p->extensions; iter; iter = iter->next)
+    gimp_extension_manager_serialize_extension (manager, iter->data, writer);
+  for (iter = manager->p->sys_extensions; iter; iter = iter->next)
+    {
+      if (g_list_find_custom (manager->p->extensions, iter->data,
+                              (GCompareFunc) gimp_extension_cmp))
+        continue;
+      gimp_extension_manager_serialize_extension (manager, iter->data, writer);
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_extension_manager_deserialize (GimpConfig *config,
+                                    GScanner   *scanner,
+                                    gint        nest_level,
+                                    gpointer    data)
+{
+  GimpExtensionManager *manager = GIMP_EXTENSION_MANAGER (config);
+  GList                *processed = *(GList**) data;
+  GTokenType            token;
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_IDENTIFIER;
+          break;
+
+        case G_TOKEN_IDENTIFIER:
+          {
+            gchar    *name      = NULL;
+            gboolean  is_active = FALSE;
+            GType     type;
+
+            type = g_type_from_name (scanner->value.v_identifier);
+
+            if (! type)
+              {
+                g_scanner_error (scanner,
+                                 "unable to determine type of '%s'",
+                                 scanner->value.v_identifier);
+                return FALSE;
+              }
+
+            if (! g_type_is_a (type, GIMP_TYPE_EXTENSION))
+              {
+                g_scanner_error (scanner,
+                                 "'%s' is not a subclass of '%s'",
+                                 scanner->value.v_identifier,
+                                 g_type_name (GIMP_TYPE_EXTENSION));
+                return FALSE;
+              }
+
+            if (! gimp_scanner_parse_string (scanner, &name))
+              {
+                g_scanner_error (scanner,
+                                 "Expected extension id not found after GimpExtension.");
+                return FALSE;
+              }
+
+            if (! name || strlen (name) == 0)
+              {
+                g_scanner_error (scanner,
+                                 "NULL or empty strings are not valid extension IDs.");
+                if (name)
+                  g_free (name);
+                return FALSE;
+              }
+
+            if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
+              {
+                g_scanner_error (scanner,
+                                 "Left paren expected after extension ID.");
+                g_free (name);
+                return FALSE;
+              }
+            if (! gimp_scanner_parse_identifier (scanner, "active"))
+              {
+                g_scanner_error (scanner,
+                                 "Expected identifier \"active\" after extension ID.");
+                g_free (name);
+                return FALSE;
+              }
+            if (gimp_scanner_parse_boolean (scanner, &is_active))
+              {
+                if (is_active)
+                  {
+                    GList *list;
+
+                    list = g_list_find_custom (manager->p->extensions, name,
+                                               (GCompareFunc) gimp_extension_id_cmp);
+                    if (! list)
+                      list = g_list_find_custom (manager->p->sys_extensions, name,
+                                                 (GCompareFunc) gimp_extension_id_cmp);
+                    if (list)
+                      {
+                        GError *error = NULL;
+
+                        if (gimp_extension_run (list->data, &error))
+                          {
+                            g_hash_table_insert (manager->p->active_extensions,
+                                                 (gpointer) name, list->data);
+                          }
+                        else
+                          {
+                            g_printerr ("Extension '%s' failed to run: %s\n",
+                                        gimp_object_get_name (list->data),
+                                        error->message);
+                            g_error_free (error);
+                          }
+                      }
+                  }
+
+                /* Save the list of processed extension IDs, whether
+                 * active or not.
+                 */
+                processed = g_list_prepend (processed, name);
+              }
+            else
+              {
+                g_scanner_error (scanner,
+                                 "Expected boolean after \"active\" identifier.");
+                g_free (name);
+                return FALSE;
+              }
+
+            if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+              {
+                g_scanner_error (scanner,
+                                 "Right paren expected after \"active\" identifier.");
+                return FALSE;
+              }
+          }
+          token = G_TOKEN_RIGHT_PAREN;
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+
+  return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
 static void
@@ -257,6 +448,8 @@ gimp_extension_manager_get_property (GObject      *object,
     }
 }
 
+/* Public functions. */
+
 GimpExtensionManager *
 gimp_extension_manager_new (Gimp *gimp)
 {
@@ -272,9 +465,14 @@ gimp_extension_manager_new (Gimp *gimp)
 void
 gimp_extension_manager_initialize (GimpExtensionManager *manager)
 {
-  gchar *path_str;
-  GList *path;
-  GList *list;
+  GFile  *file;
+  GError *error = NULL;
+  gchar  *path_str;
+  GList  *path;
+  GList  *list;
+  GList  *processed_ids;
+
+  g_return_if_fail (GIMP_IS_EXTENSION_MANAGER (manager));
 
   /* List user-installed extensions. */
   path_str = gimp_config_build_writable_path ("extensions");
@@ -295,50 +493,96 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
     g_hash_table_unref (manager->p->active_extensions);
   manager->p->active_extensions = g_hash_table_new (g_str_hash,
                                                     g_str_equal);
-  for (list = manager->p->extensions; list; list = g_list_next (list))
+
+  file = gimp_directory_file ("extensionrc", NULL);
+
+  if (manager->p->gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+
+  processed_ids = NULL;
+  gimp_config_deserialize_gfile (GIMP_CONFIG (manager),
+                                 file, &processed_ids, &error);
+  if (error)
     {
-      if (! g_hash_table_contains (manager->p->active_extensions,
-                                   gimp_object_get_name (list->data)))
-        {
-          GError *error = NULL;
+      g_printerr ("Failed to parse '%s': %s\n",
+                  gimp_file_get_utf8_name (file),
+                  error->message);
+      g_error_free (error);
+    }
+  g_object_unref (file);
 
-          g_hash_table_insert (manager->p->active_extensions,
-                               (gpointer) gimp_object_get_name (list->data),
-                               list->data);
-
-          if (! gimp_extension_run (list->data, &error))
-            {
-              g_hash_table_remove (manager->p->active_extensions, list->data);
-              if (error)
-                g_printerr ("Extension '%s' failed to run: %s\n",
-                            gimp_object_get_name (list->data),
-                            error->message);
-            }
-        }
+  /* System extensions are on by default and user ones are off by
+   * default */
+  for (list = manager->p->extensions; list; list = list->next)
+    {
+      /* Directly flag user-installed extensions as processed. We do not
+       * load them unless they were explicitly loaded (i.e. they must be
+       * set in extensionrc.
+       */
+      if (! g_list_find_custom (processed_ids,
+                                gimp_object_get_name (list->data),
+                                (GCompareFunc) g_strcmp0))
+        processed_ids = g_list_prepend (processed_ids,
+                                        g_strdup (gimp_object_get_name (list->data)));
     }
   for (list = manager->p->sys_extensions; list; list = g_list_next (list))
     {
-      if (! g_hash_table_contains (manager->p->active_extensions,
-                                   gimp_object_get_name (list->data)))
+      /* Unlike user-installed extensions, system extensions are loaded
+       * by default if they were not set in the extensionrc (so that new
+       * extensions installed with GIMP updates get loaded) and if they
+       * were not overrided by a user-installed extension (same ID).
+       */
+      if (! g_list_find_custom (processed_ids,
+                                gimp_object_get_name (list->data),
+                                (GCompareFunc) g_strcmp0))
+
         {
-          GError *error = NULL;
-
-          g_hash_table_insert (manager->p->active_extensions,
-                               (gpointer) gimp_object_get_name (list->data),
-                               list->data);
-
-          if (! gimp_extension_run (list->data, &error))
+          error = NULL;
+          if (gimp_extension_run (list->data, &error))
             {
-              g_hash_table_remove (manager->p->active_extensions, list->data);
-              if (error)
-                g_printerr ("Extension '%s' failed to run: %s\n",
-                            gimp_object_get_name (list->data),
-                            error->message);
+              g_hash_table_insert (manager->p->active_extensions,
+                                   (gpointer) gimp_object_get_name (list->data),
+                                   list->data);
+            }
+          else
+            {
+              g_printerr ("Extension '%s' failed to run: %s\n",
+                          gimp_object_get_name (list->data),
+                          error->message);
+              g_error_free (error);
             }
         }
     }
 
   gimp_extension_manager_refresh (manager);
+  g_list_free_full (processed_ids, g_free);
+}
+
+void
+gimp_extension_manager_exit (GimpExtensionManager *manager)
+{
+  GFile  *file;
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_EXTENSION_MANAGER (manager));
+
+  file = gimp_directory_file ("extensionrc", NULL);
+
+  if (manager->p->gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+
+  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (manager),
+                                        file,
+                                        "GIMP extensionrc",
+                                        "end of extensionrc",
+                                        NULL,
+                                        &error))
+    {
+      gimp_message_literal (manager->p->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      g_error_free (error);
+    }
+
+  g_object_unref (file);
 }
 
 const GList *
@@ -361,6 +605,36 @@ gimp_extension_manager_is_active (GimpExtensionManager *manager,
 }
 
 /* Private functions. */
+
+static void
+gimp_extension_manager_serialize_extension (GimpExtensionManager *manager,
+                                            GimpExtension        *extension,
+                                            GimpConfigWriter     *writer)
+{
+  const gchar *name = gimp_object_get_name (extension);
+
+  g_return_if_fail (name != NULL);
+
+  gimp_config_writer_open (writer, g_type_name (G_TYPE_FROM_INSTANCE (extension)));
+  gimp_config_writer_string (writer, name);
+
+  /* The extensionrc does not need to save any information about an
+   * extension. This is all saved in the metadata. The only thing we
+   * care to store is the state of extensions, i.e. which one is loaded
+   * or not (since you can install an extension but leave it unloaded),
+   * named by its unique ID.
+   * As a consequence, GimpExtension does not need to implement
+   * GimpConfigInterface.
+   */
+  gimp_config_writer_open (writer, "active");
+  if (g_hash_table_contains (manager->p->active_extensions, name))
+    gimp_config_writer_identifier (writer, "yes");
+  else
+    gimp_config_writer_identifier (writer, "no");
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_close (writer);
+}
 
 static void
 gimp_extension_manager_refresh (GimpExtensionManager *manager)
@@ -480,8 +754,11 @@ gimp_extension_manager_search_directory (GimpExtensionManager *manager,
                 {
                   g_object_unref (extension);
                   if (error)
-                    g_printerr (_("Skipping extension '%s': %s\n"),
-                                g_file_peek_path (subdir), error->message);
+                    {
+                      g_printerr (_("Skipping extension '%s': %s\n"),
+                                  g_file_peek_path (subdir), error->message);
+                      g_error_free (error);
+                    }
                 }
             }
           else

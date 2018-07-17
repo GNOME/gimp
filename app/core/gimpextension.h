@@ -71,4 +71,9 @@ GList         * gimp_extension_get_palette_paths       (GimpExtension  *extensio
 GList         * gimp_extension_get_tool_preset_paths   (GimpExtension  *extension);
 GList         * gimp_extension_get_plug_in_paths       (GimpExtension  *extension);
 
+gint            gimp_extension_cmp                     (GimpExtension  *extension1,
+                                                        GimpExtension  *extension2);
+gint            gimp_extension_id_cmp                  (GimpExtension  *extension1,
+                                                        const gchar    *id);
+
 #endif  /* __GIMP_EXTENSION_H__ */

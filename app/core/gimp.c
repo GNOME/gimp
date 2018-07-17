@@ -399,6 +399,7 @@ gimp_finalize (GObject *object)
   g_clear_object (&gimp->image_table);
   g_clear_object (&gimp->images);
   g_clear_object (&gimp->plug_in_manager);
+  g_clear_object (&gimp->extension_manager);
 
   if (gimp->module_db)
     gimp_modules_exit (gimp);
@@ -546,6 +547,7 @@ gimp_real_exit (Gimp     *gimp,
     g_print ("EXIT: %s\n", G_STRFUNC);
 
   gimp_plug_in_manager_exit (gimp->plug_in_manager);
+  gimp_extension_manager_exit (gimp->extension_manager);
   gimp_modules_unload (gimp);
 
   gimp_data_factories_save (gimp);
