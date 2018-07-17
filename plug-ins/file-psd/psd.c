@@ -134,6 +134,7 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
+  gimp_register_file_handler_priority (LOAD_MERGED_PROC, +1);
   gimp_register_file_handler_mime (LOAD_MERGED_PROC, "image/x-psd");
   gimp_register_magic_load_handler (LOAD_MERGED_PROC,
                                     "psd",
