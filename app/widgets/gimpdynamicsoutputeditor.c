@@ -73,8 +73,10 @@ inputs[] =
   { "use-tilt",      "tilt-curve",      N_("Tilt"),             { 1.0, 0.5, 0.0, 1.0 } },
   { "use-wheel",     "wheel-curve",     N_("Wheel / Rotation"), { 1.0, 0.0, 1.0, 1.0 } },
   { "use-random",    "random-curve",    N_("Random"),           { 0.0, 1.0, 1.0, 1.0 } },
-  { "use-fade",      "fade-curve",      N_("Fade"),             { 0.2, 0.2, 0.2, 1.0 } }
+  { "use-fade",      "fade-curve",      N_("Fade"),             { 0.5, 0.5, 0.5, 0.0 } }
 };
+
+#define INPUT_COLOR(i) (inputs[(i)].color.a ? &inputs[(i)].color : NULL)
 
 
 typedef struct _GimpDynamicsOutputEditorPrivate GimpDynamicsOutputEditorPrivate;
@@ -420,7 +422,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
       if (input == i)
         {
           gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                     input_curve, &inputs[i].color);
+                                     input_curve, INPUT_COLOR (i));
           private->active_curve = input_curve;
 
           gimp_curve_view_set_x_axis_label (GIMP_CURVE_VIEW (private->curve_view),
@@ -429,8 +431,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
       else if (use_input)
         {
           gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                          input_curve,
-                                          &inputs[i].color);
+                                          input_curve, INPUT_COLOR (i));
         }
 
       g_object_unref (input_curve);
@@ -470,8 +471,7 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
               if (use_input)
                 {
                   gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                                  input_curve,
-                                                  &inputs[i].color);
+                                                  input_curve, INPUT_COLOR (i));
                 }
               else
                 {
