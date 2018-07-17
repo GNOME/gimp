@@ -339,9 +339,9 @@ gimp_scanner_destroy (GScanner *scanner)
  * gimp_scanner_parse_token:
  * @scanner: A #GScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @token: Return location for the parsed token
+ * @token: the #GTokenType expected as next token.
  *
- * Return value: %TRUE on success
+ * Return value: %TRUE if the next token is @token, %FALSE otherwise.
  *
  * Since: 2.4
  **/
@@ -361,9 +361,10 @@ gimp_scanner_parse_token (GScanner   *scanner,
  * gimp_scanner_parse_identifier:
  * @scanner: A #GScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
- * @identifier: Return location for the parsed identifier
+ * @identifier: the expected identifier.
  *
- * Return value: %TRUE on success
+ * Return value: %TRUE if the next token is an identifier and if its
+ * value matches @identifier.
  *
  * Since: 2.4
  **/
