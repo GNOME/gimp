@@ -59,7 +59,9 @@ void                   gimp_extension_manager_exit                  (GimpExtensi
 const GList          * gimp_extension_manager_get_system_extensions (GimpExtensionManager *manager);
 const GList          * gimp_extension_manager_get_user_extensions   (GimpExtensionManager *manager);
 
-gboolean               gimp_extension_manager_is_active             (GimpExtensionManager *manager,
-                                                                     const gchar          *id);
+gboolean               gimp_extension_manager_is_running            (GimpExtensionManager *manager,
+                                                                     GimpExtension        *extension);
+gboolean               gimp_extension_manager_can_run               (GimpExtensionManager *manager,
+                                                                     GimpExtension        *extension);
 
 #endif  /* __GIMP_EXTENSION_MANAGER_H__ */

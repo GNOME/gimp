@@ -66,7 +66,7 @@ struct _GimpExtensionManagerPrivate
   GList      *extensions;
 
   /* Running extensions */
-  GHashTable *active_extensions;
+  GHashTable *running_extensions;
 
   /* Metadata properties */
   GList      *brush_paths;
@@ -300,7 +300,7 @@ gimp_extension_manager_deserialize (GimpConfig *config,
 
                         if (gimp_extension_run (list->data, &error))
                           {
-                            g_hash_table_insert (manager->p->active_extensions,
+                            g_hash_table_insert (manager->p->running_extensions,
                                                  (gpointer) name, list->data);
                           }
                         else
@@ -355,7 +355,7 @@ gimp_extension_manager_finalize (GObject *object)
 
   g_list_free_full (manager->p->sys_extensions, g_object_unref);
   g_list_free_full (manager->p->extensions, g_object_unref);
-  g_hash_table_unref (manager->p->active_extensions);
+  g_hash_table_unref (manager->p->running_extensions);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -489,10 +489,9 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   /* Actually load the extensions. */
-  if (manager->p->active_extensions)
-    g_hash_table_unref (manager->p->active_extensions);
-  manager->p->active_extensions = g_hash_table_new (g_str_hash,
-                                                    g_str_equal);
+  if (manager->p->running_extensions)
+    g_hash_table_unref (manager->p->running_extensions);
+  manager->p->running_extensions = g_hash_table_new (g_str_hash, g_str_equal);
 
   file = gimp_directory_file ("extensionrc", NULL);
 
@@ -540,7 +539,7 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
           error = NULL;
           if (gimp_extension_run (list->data, &error))
             {
-              g_hash_table_insert (manager->p->active_extensions,
+              g_hash_table_insert (manager->p->running_extensions,
                                    (gpointer) gimp_object_get_name (list->data),
                                    list->data);
             }
@@ -597,11 +596,45 @@ gimp_extension_manager_get_user_extensions (GimpExtensionManager *manager)
   return manager->p->extensions;
 }
 
+/**
+ * gimp_extension_manager_is_running:
+ * @extension:
+ *
+ * Returns: %TRUE if @extension is ON.
+ */
 gboolean
-gimp_extension_manager_is_active (GimpExtensionManager *manager,
-                                  const gchar          *id)
+gimp_extension_manager_is_running (GimpExtensionManager *manager,
+                                   GimpExtension        *extension)
 {
-  return g_hash_table_contains (manager->p->active_extensions, id);
+  GimpExtension *ext;
+
+  ext = g_hash_table_lookup (manager->p->running_extensions,
+                             gimp_object_get_name (extension));
+
+  return (ext && ext == extension);
+}
+
+/**
+ * gimp_extension_manager_can_run:
+ * @extension:
+ *
+ * Returns: %TRUE is @extension can be run.
+ */
+gboolean
+gimp_extension_manager_can_run (GimpExtensionManager *manager,
+                                GimpExtension        *extension)
+{
+  /* System extension overrided by another extension. */
+  if (g_list_find (manager->p->sys_extensions, extension) &&
+      g_list_find_custom (manager->p->extensions, extension,
+                          (GCompareFunc) gimp_extension_cmp))
+    return FALSE;
+
+  /* TODO: should return FALSE if required GIMP version or other
+   * requirements are not filled as well.
+   */
+
+  return TRUE;
 }
 
 /* Private functions. */
@@ -627,7 +660,7 @@ gimp_extension_manager_serialize_extension (GimpExtensionManager *manager,
    * GimpConfigInterface.
    */
   gimp_config_writer_open (writer, "active");
-  if (g_hash_table_contains (manager->p->active_extensions, name))
+  if (g_hash_table_contains (manager->p->running_extensions, name))
     gimp_config_writer_identifier (writer, "yes");
   else
     gimp_config_writer_identifier (writer, "no");
@@ -651,7 +684,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
   GList         *tool_preset_paths   = NULL;
   GList         *plug_in_paths       = NULL;
 
-  g_hash_table_iter_init (&iter, manager->p->active_extensions);
+  g_hash_table_iter_init (&iter, manager->p->running_extensions);
   while (g_hash_table_iter_next (&iter, &key, &value))
     {
       GimpExtension *extension = value;
