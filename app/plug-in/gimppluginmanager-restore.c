@@ -1020,7 +1020,7 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
   gboolean             display = GPOINTER_TO_INT (data);
   const gchar         *label_a;
   const gchar         *label_b;
-  gint                 retval        = 0;
+  gint                 retval  = 0;
 
   if (g_str_has_prefix (gimp_file_get_utf8_name (proc_a->file),
                                                  "gimp-xcf"))
