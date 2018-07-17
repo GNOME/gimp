@@ -60,6 +60,7 @@ struct _GimpPlugInProcedure
   gchar               *extensions;
   gchar               *prefixes;
   gchar               *magics;
+  gint                 priority;
   gchar               *mime_types;
   gboolean             handles_uri;
   gboolean             handles_raw;
@@ -120,6 +121,8 @@ void          gimp_plug_in_procedure_set_file_proc     (GimpPlugInProcedure *pro
                                                         const gchar         *extensions,
                                                         const gchar         *prefixes,
                                                         const gchar         *magics);
+void          gimp_plug_in_procedure_set_priority      (GimpPlugInProcedure *proc,
+                                                        gint                 priority);
 void          gimp_plug_in_procedure_set_mime_types    (GimpPlugInProcedure *proc,
                                                         const gchar         *mime_ypes);
 void          gimp_plug_in_procedure_set_handles_uri   (GimpPlugInProcedure *proc);

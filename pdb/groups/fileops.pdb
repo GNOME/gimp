@@ -555,6 +555,40 @@ CODE
     );
 }
 
+sub register_file_handler_priority {
+    $blurb = 'Sets the priority of a file handler procedure.';
+
+    $help = <<'HELP';
+Sets the priority of a file handler procedure. When more than one
+procedure matches a given file, the procedure with the lowest priority
+is used; if more than one procedure has the lowest priority, it is
+unspecified which one of them is used. The default priority for file
+handler procedures is 0.
+HELP
+
+    &ell_pdb_misc('2018', '2.10.6');
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => "The name of the procedure to set the priority of." },
+        { name => 'priority', type => 'int32',
+          desc => "The procedure priority." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+  success = gimp_plug_in_manager_register_priority (gimp->plug_in_manager,
+                                                    canonical, priority);
+
+  g_free (canonical);
+}
+CODE
+    );
+}
+
 sub register_file_handler_uri {
     $blurb = 'Registers a file handler procedure as capable of handling URIs.';
 
@@ -706,12 +740,13 @@ CODE
             register_magic_load_handler
             register_load_handler
             register_save_handler
+            register_file_handler_priority
             register_file_handler_mime
             register_file_handler_uri
             register_file_handler_raw
             register_thumbnail_loader);
 
-%exports = (app => [@procs], lib => [@procs[0..3,5..12]]);
+%exports = (app => [@procs], lib => [@procs[0..3,5..13]]);
 
 $desc = 'File Operations';
 $doc_title = 'gimpfileops';

@@ -506,6 +506,35 @@ register_save_handler_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+register_file_handler_priority_invoker (GimpProcedure         *procedure,
+                                        Gimp                  *gimp,
+                                        GimpContext           *context,
+                                        GimpProgress          *progress,
+                                        const GimpValueArray  *args,
+                                        GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+  gint32 priority;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  priority = g_value_get_int (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+      success = gimp_plug_in_manager_register_priority (gimp->plug_in_manager,
+                                                        canonical, priority);
+
+      g_free (canonical);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 register_file_handler_mime_invoker (GimpProcedure         *procedure,
                                     Gimp                  *gimp,
                                     GimpContext           *context,
@@ -1010,6 +1039,36 @@ register_fileops_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-register-file-handler-priority
+   */
+  procedure = gimp_procedure_new (register_file_handler_priority_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-register-file-handler-priority");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-register-file-handler-priority",
+                                     "Sets the priority of a file handler procedure.",
+                                     "Sets the priority of a file handler procedure. When more than one procedure matches a given file, the procedure with the lowest priority is used; if more than one procedure has the lowest priority, it is unspecified which one of them is used. The default priority for file handler procedures is 0.",
+                                     "Ell",
+                                     "Ell",
+                                     "2018",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to set the priority of.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("priority",
+                                                      "priority",
+                                                      "The procedure priority.",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
