@@ -170,8 +170,11 @@ gimp_extension_list_set (GimpExtensionList *list,
 
       onoff = gtk_switch_new ();
       gtk_switch_set_active (GTK_SWITCH (onoff),
-                             gimp_extension_manager_is_active (list->p->manager,
-                                                               gimp_object_get_name (extension)));
+                             gimp_extension_manager_is_running (list->p->manager,
+                                                                extension));
+      gtk_widget_set_sensitive (onoff,
+                                gimp_extension_manager_can_run (list->p->manager,
+                                                                extension));
       gtk_box_pack_end (GTK_BOX (hbox), onoff, FALSE, FALSE, 1);
       gtk_widget_show (onoff);
     }
