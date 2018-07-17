@@ -366,6 +366,44 @@ gimp_register_save_handler (const gchar *procedure_name,
 }
 
 /**
+ * gimp_register_file_handler_priority:
+ * @procedure_name: The name of the procedure to set the priority of.
+ * @priority: The procedure priority.
+ *
+ * Sets the priority of a file handler procedure.
+ *
+ * Sets the priority of a file handler procedure. When more than one
+ * procedure matches a given file, the procedure with the lowest
+ * priority is used; if more than one procedure has the lowest
+ * priority, it is unspecified which one of them is used. The default
+ * priority for file handler procedures is 0.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10.6
+ **/
+gboolean
+gimp_register_file_handler_priority (const gchar *procedure_name,
+                                     gint         priority)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-register-file-handler-priority",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_INT32, priority,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_register_file_handler_mime:
  * @procedure_name: The name of the procedure to associate a MIME type with.
  * @mime_types: A comma-separated list of MIME types, such as \"image/jpeg\".

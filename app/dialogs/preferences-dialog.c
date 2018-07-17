@@ -1529,7 +1529,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_window, TRUE, TRUE, 0);
     gtk_widget_show (scrolled_window);
 
-    view = gimp_plug_in_view_new (gimp->plug_in_manager->raw_load_procs);
+    view = gimp_plug_in_view_new (gimp->plug_in_manager->display_raw_load_procs);
     gimp_plug_in_view_set_plug_in (GIMP_PLUG_IN_VIEW (view),
                                    core_config->import_raw_plug_in);
     gtk_container_add (GTK_CONTAINER (scrolled_window), view);

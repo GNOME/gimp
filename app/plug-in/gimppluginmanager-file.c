@@ -158,6 +158,32 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
 }
 
 gboolean
+gimp_plug_in_manager_register_priority (GimpPlugInManager *manager,
+                                        const gchar       *name,
+                                        gint               priority)
+{
+  GimpPlugInProcedure *file_proc;
+  GSList              *list;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
+  g_return_val_if_fail (name != NULL, FALSE);
+
+  if (manager->current_plug_in && manager->current_plug_in->plug_in_def)
+    list = manager->current_plug_in->plug_in_def->procedures;
+  else
+    list = manager->plug_in_procedures;
+
+  file_proc = gimp_plug_in_procedure_find (list, name);
+
+  if (! file_proc)
+    return FALSE;
+
+  gimp_plug_in_procedure_set_priority (file_proc, priority);
+
+  return TRUE;
+}
+
+gboolean
 gimp_plug_in_manager_register_mime_types (GimpPlugInManager *manager,
                                           const gchar       *name,
                                           const gchar       *mime_types)
@@ -273,13 +299,13 @@ gimp_plug_in_manager_get_file_procedures (GimpPlugInManager      *manager,
       return NULL;
 
     case GIMP_FILE_PROCEDURE_GROUP_OPEN:
-      return manager->load_procs;
+      return manager->display_load_procs;
 
     case GIMP_FILE_PROCEDURE_GROUP_SAVE:
-      return manager->save_procs;
+      return manager->display_save_procs;
 
     case GIMP_FILE_PROCEDURE_GROUP_EXPORT:
-      return manager->export_procs;
+      return manager->display_export_procs;
 
     default:
       g_return_val_if_reached (NULL);

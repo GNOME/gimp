@@ -1189,6 +1189,15 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
 }
 
 void
+gimp_plug_in_procedure_set_priority (GimpPlugInProcedure *proc,
+                                     gint                 priority)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  proc->priority = priority;
+}
+
+void
 gimp_plug_in_procedure_set_mime_types (GimpPlugInProcedure *proc,
                                        const gchar         *mime_types)
 {

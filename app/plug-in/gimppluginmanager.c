@@ -137,6 +137,11 @@ gimp_plug_in_manager_finalize (GObject *object)
   g_clear_pointer (&manager->export_procs,   g_slist_free);
   g_clear_pointer (&manager->raw_load_procs, g_slist_free);
 
+  g_clear_pointer (&manager->display_load_procs,     g_slist_free);
+  g_clear_pointer (&manager->display_save_procs,     g_slist_free);
+  g_clear_pointer (&manager->display_export_procs,   g_slist_free);
+  g_clear_pointer (&manager->display_raw_load_procs, g_slist_free);
+
   if (manager->plug_in_procedures)
     {
       g_slist_free_full (manager->plug_in_procedures,
@@ -180,6 +185,11 @@ gimp_plug_in_manager_get_memsize (GimpObject *object,
   memsize += gimp_g_slist_get_memsize (manager->load_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->save_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->export_procs, 0);
+  memsize += gimp_g_slist_get_memsize (manager->raw_load_procs, 0);
+  memsize += gimp_g_slist_get_memsize (manager->display_load_procs, 0);
+  memsize += gimp_g_slist_get_memsize (manager->display_save_procs, 0);
+  memsize += gimp_g_slist_get_memsize (manager->display_export_procs, 0);
+  memsize += gimp_g_slist_get_memsize (manager->display_raw_load_procs, 0);
 
   memsize += gimp_g_slist_get_memsize (manager->menu_branches,  0 /* FIXME */);
   memsize += gimp_g_slist_get_memsize (manager->locale_domains, 0 /* FIXME */);
@@ -304,9 +314,14 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
             }
 
           /* also remove it from the lists of load, save and export procs */
-          manager->load_procs   = g_slist_remove (manager->load_procs,   tmp_proc);
-          manager->save_procs   = g_slist_remove (manager->save_procs,   tmp_proc);
-          manager->export_procs = g_slist_remove (manager->export_procs, tmp_proc);
+          manager->load_procs             = g_slist_remove (manager->load_procs,             tmp_proc);
+          manager->save_procs             = g_slist_remove (manager->save_procs,             tmp_proc);
+          manager->export_procs           = g_slist_remove (manager->export_procs,           tmp_proc);
+          manager->raw_load_procs         = g_slist_remove (manager->raw_load_procs,         tmp_proc);
+          manager->display_load_procs     = g_slist_remove (manager->display_load_procs,     tmp_proc);
+          manager->display_save_procs     = g_slist_remove (manager->display_save_procs,     tmp_proc);
+          manager->display_export_procs   = g_slist_remove (manager->display_export_procs,   tmp_proc);
+          manager->display_raw_load_procs = g_slist_remove (manager->display_raw_load_procs, tmp_proc);
 
           /* and from the history */
           gimp_filter_history_remove (manager->gimp, GIMP_PROCEDURE (tmp_proc));

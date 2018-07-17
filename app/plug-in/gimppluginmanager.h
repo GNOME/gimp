@@ -49,6 +49,11 @@ struct _GimpPlugInManager
   GSList            *export_procs;
   GSList            *raw_load_procs;
 
+  GSList            *display_load_procs;
+  GSList            *display_save_procs;
+  GSList            *display_export_procs;
+  GSList            *display_raw_load_procs;
+
   GSList            *menu_branches;
   GSList            *locale_domains;
   GSList            *help_domains;

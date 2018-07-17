@@ -869,14 +869,40 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
 
   manager->load_procs =
     g_slist_sort_with_data (manager->load_procs,
-                            gimp_plug_in_manager_file_proc_compare, manager);
+                            gimp_plug_in_manager_file_proc_compare,
+                            GINT_TO_POINTER (FALSE));
   manager->save_procs =
     g_slist_sort_with_data (manager->save_procs,
-                            gimp_plug_in_manager_file_proc_compare, manager);
+                            gimp_plug_in_manager_file_proc_compare,
+                            GINT_TO_POINTER (FALSE));
   manager->export_procs =
     g_slist_sort_with_data (manager->export_procs,
-                            gimp_plug_in_manager_file_proc_compare, manager);
+                            gimp_plug_in_manager_file_proc_compare,
+                            GINT_TO_POINTER (FALSE));
 
+  g_clear_pointer (&manager->display_load_procs,   g_slist_free);
+  g_clear_pointer (&manager->display_save_procs,   g_slist_free);
+  g_clear_pointer (&manager->display_export_procs, g_slist_free);
+
+  manager->display_load_procs   = g_slist_copy (manager->load_procs);
+  manager->display_save_procs   = g_slist_copy (manager->save_procs);
+  manager->display_export_procs = g_slist_copy (manager->export_procs);
+
+  manager->display_load_procs =
+    g_slist_sort_with_data (manager->display_load_procs,
+                            gimp_plug_in_manager_file_proc_compare,
+                            GINT_TO_POINTER (TRUE));
+  manager->display_save_procs =
+    g_slist_sort_with_data (manager->display_save_procs,
+                            gimp_plug_in_manager_file_proc_compare,
+                            GINT_TO_POINTER (TRUE));
+  manager->display_export_procs =
+    g_slist_sort_with_data (manager->display_export_procs,
+                            gimp_plug_in_manager_file_proc_compare,
+                            GINT_TO_POINTER (TRUE));
+
+  g_clear_pointer (&manager->raw_load_procs,         g_slist_free);
+  g_clear_pointer (&manager->display_raw_load_procs, g_slist_free);
 
   if (config->import_raw_plug_in)
     {
@@ -898,8 +924,8 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
         {
           GFile *file;
 
-          manager->raw_load_procs = g_slist_append (manager->raw_load_procs,
-                                                    file_proc);
+          manager->raw_load_procs = g_slist_prepend (manager->raw_load_procs,
+                                                     file_proc);
 
           file = gimp_plug_in_procedure_get_file (file_proc);
 
@@ -911,6 +937,13 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
             }
         }
     }
+
+  manager->raw_load_procs         = g_slist_reverse (manager->raw_load_procs);
+  manager->display_raw_load_procs = g_slist_copy (manager->raw_load_procs);
+  manager->display_raw_load_procs =
+    g_slist_sort_with_data (manager->display_raw_load_procs,
+                            gimp_plug_in_manager_file_proc_compare,
+                            GINT_TO_POINTER (TRUE));
 
   if (config_plug_in)
     g_object_unref (config_plug_in);
@@ -969,8 +1002,10 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
           ! g_file_equal (gimp_plug_in_procedure_get_file (file_proc),
                           raw_plug_in))
         {
-          manager->load_procs = g_slist_remove (manager->load_procs,
-                                                file_proc);
+          manager->load_procs =
+            g_slist_remove (manager->load_procs, file_proc);
+          manager->display_load_procs =
+            g_slist_remove (manager->display_load_procs, file_proc);
         }
     }
 }
@@ -980,23 +1015,49 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
                                         gconstpointer b,
                                         gpointer      data)
 {
-  GimpPlugInProcedure *proc_a = GIMP_PLUG_IN_PROCEDURE (a);
-  GimpPlugInProcedure *proc_b = GIMP_PLUG_IN_PROCEDURE (b);
+  GimpPlugInProcedure *proc_a  = GIMP_PLUG_IN_PROCEDURE (a);
+  GimpPlugInProcedure *proc_b  = GIMP_PLUG_IN_PROCEDURE (b);
+  gboolean             display = GPOINTER_TO_INT (data);
   const gchar         *label_a;
   const gchar         *label_b;
-  gint                 retval = 0;
+  gint                 retval        = 0;
 
-  if (g_str_has_prefix (gimp_file_get_utf8_name (proc_a->file), "gimp-xcf"))
-    return -1;
+  if (g_str_has_prefix (gimp_file_get_utf8_name (proc_a->file),
+                                                 "gimp-xcf"))
+    {
+      if (! g_str_has_prefix (gimp_file_get_utf8_name (proc_b->file),
+                              "gimp-xcf"))
+        {
+          return -1;
+        }
+    }
+  else if (g_str_has_prefix (gimp_file_get_utf8_name (proc_b->file),
+                             "gimp-xcf"))
+    {
+      return 1;
+    }
 
-  if (g_str_has_prefix (gimp_file_get_utf8_name (proc_b->file), "gimp-xcf"))
-    return 1;
+  if (! display && proc_a->priority != proc_b->priority)
+    return proc_a->priority - proc_b->priority;
 
   label_a = gimp_procedure_get_label (GIMP_PROCEDURE (proc_a));
   label_b = gimp_procedure_get_label (GIMP_PROCEDURE (proc_b));
 
-  if (label_a && label_b)
-    retval = g_utf8_collate (label_a, label_b);
+  if (label_a)
+    {
+      if (label_b)
+        retval = g_utf8_collate (label_a, label_b);
+      else
+        return -1;
+    }
+  else if (label_b)
+    {
+      return 1;
+    }
+  else
+    {
+      retval = (proc_b < proc_a) - (proc_a < proc_b);
+    }
 
   return retval;
 }

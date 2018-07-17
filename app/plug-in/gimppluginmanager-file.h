@@ -31,6 +31,11 @@ gboolean   gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manage
                                                        const gchar       *extensions,
                                                        const gchar       *prefixes);
 
+gboolean   gimp_plug_in_manager_register_priority     (GimpPlugInManager *manager,
+                                                       const gchar       *name,
+                                                       gint               priority);
+
+
 gboolean   gimp_plug_in_manager_register_mime_types   (GimpPlugInManager *manager,
                                                        const gchar       *name,
                                                        const gchar       *mime_types);
