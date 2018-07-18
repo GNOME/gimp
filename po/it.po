@@ -34,9 +34,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-06 13:50+0200\n"
-"PO-Revision-Date: 2018-07-06 13:51+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-19 00:42+0200\n"
+"PO-Revision-Date: 2018-07-19 00:51+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -2799,7 +2799,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1991
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1990
 #: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -3360,7 +3360,7 @@ msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "St_ato e testo"
 
-#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:261
+#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:222
 msgctxt "tab-style"
 msgid "Automatic"
 msgstr "Automatico"
@@ -10304,7 +10304,7 @@ msgid "Layer"
 msgstr "Livello"
 
 #: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:271
-#: ../app/operations/gimpcurvesconfig.c:112
+#: ../app/operations/gimpcurvesconfig.c:110
 #: ../app/operations/gimplevelsconfig.c:115
 #: ../app/operations/gimpoperationthreshold.c:89
 #: ../app/widgets/gimpchanneltreeview.c:332
@@ -11250,7 +11250,7 @@ msgstr "Se abilitata, usa OpenCL per alcune operazioni."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:131
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:293
-#: ../app/plug-in/plug-in-rc.c:246
+#: ../app/plug-in/plug-in-rc.c:251
 msgid "fatal parse error"
 msgstr "errore di analisi fatale"
 
@@ -11259,849 +11259,884 @@ msgstr "errore di analisi fatale"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "il valore per il token %s non è una stringa UTF-8 valida"
 
-#: ../app/core/core-enums.c:89
-msgctxt "convert-dither-type"
-msgid "None"
-msgstr "Nessuna"
-
-#: ../app/core/core-enums.c:90
-msgctxt "convert-dither-type"
-msgid "Floyd-Steinberg (normal)"
-msgstr "Floyd-Steinberg (normale)"
-
-#: ../app/core/core-enums.c:91
-msgctxt "convert-dither-type"
-msgid "Floyd-Steinberg (reduced color bleeding)"
-msgstr "Floyd-Steinberg (sbavature di colore ridotte)"
-
-#: ../app/core/core-enums.c:92
-msgctxt "convert-dither-type"
-msgid "Positioned"
-msgstr "Posizionato"
-
-#: ../app/core/core-enums.c:151
-msgctxt "curve-type"
-msgid "Smooth"
-msgstr "Smussata"
-
-#: ../app/core/core-enums.c:152
-msgctxt "curve-type"
-msgid "Freehand"
-msgstr "Mano libera"
-
-#: ../app/core/core-enums.c:265
-msgctxt "histogram-channel"
-msgid "Value"
-msgstr "Valore"
-
-#: ../app/core/core-enums.c:266
-msgctxt "histogram-channel"
-msgid "Red"
-msgstr "Rosso"
-
-#: ../app/core/core-enums.c:267
-msgctxt "histogram-channel"
-msgid "Green"
-msgstr "Verde"
-
-#: ../app/core/core-enums.c:268
-msgctxt "histogram-channel"
-msgid "Blue"
-msgstr "Blu"
-
-#: ../app/core/core-enums.c:269
-msgctxt "histogram-channel"
-msgid "Alpha"
-msgstr "Alfa"
-
-#: ../app/core/core-enums.c:270
-msgctxt "histogram-channel"
-msgid "Luminance"
-msgstr "Luminanza"
-
-#: ../app/core/core-enums.c:271
-msgctxt "histogram-channel"
-msgid "RGB"
-msgstr "RGB"
-
-#: ../app/core/core-enums.c:299
-msgctxt "matting-engine"
-msgid "Matting Global"
-msgstr "Matting Global"
-
-#: ../app/core/core-enums.c:300
-msgctxt "matting-engine"
-msgid "Matting Levin"
-msgstr "Matting Levin"
-
-#: ../app/core/core-enums.c:422
+#: ../app/core/core-enums.c:27
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Primo elemento"
 
-#: ../app/core/core-enums.c:423
+#: ../app/core/core-enums.c:28
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Immagine"
 
-#: ../app/core/core-enums.c:424
+#: ../app/core/core-enums.c:29
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Selezione"
 
-#: ../app/core/core-enums.c:425
+#: ../app/core/core-enums.c:30
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Livello attivo"
 
-#: ../app/core/core-enums.c:426
+#: ../app/core/core-enums.c:31
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Canale attivo"
 
-#: ../app/core/core-enums.c:427
+#: ../app/core/core-enums.c:32
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Tracciato attivo"
 
-#: ../app/core/core-enums.c:455
-msgctxt "fill-style"
-msgid "Solid color"
-msgstr "Tinta unita"
+#: ../app/core/core-enums.c:114
+msgctxt "channel-border-style"
+msgid "Hard"
+msgstr "Netto"
 
-#: ../app/core/core-enums.c:456
-msgctxt "fill-style"
-msgid "Pattern"
-msgstr "Motivo"
+#: ../app/core/core-enums.c:115
+msgctxt "channel-border-style"
+msgid "Smooth"
+msgstr "Smussato"
 
-#: ../app/core/core-enums.c:493
+#: ../app/core/core-enums.c:116
+msgctxt "channel-border-style"
+msgid "Feathered"
+msgstr "Sfumato"
+
+#: ../app/core/core-enums.c:149
+msgctxt "color-pick-mode"
+msgid "Pixel"
+msgstr "Pixel"
+
+#: ../app/core/core-enums.c:150
+msgctxt "color-pick-mode"
+msgid "RGB (%)"
+msgstr "RGB (%)"
+
+#: ../app/core/core-enums.c:151
+msgctxt "color-pick-mode"
+msgid "RGB (0..255)"
+msgstr "RGB (0..255)"
+
+#: ../app/core/core-enums.c:152
+msgctxt "color-pick-mode"
+msgid "HSV"
+msgstr "HSV"
+
+#: ../app/core/core-enums.c:153
+msgctxt "color-pick-mode"
+msgid "CIE LCh"
+msgstr "CIE LCh"
+
+#: ../app/core/core-enums.c:154
+msgctxt "color-pick-mode"
+msgid "CIE LAB"
+msgstr "CIE LAB"
+
+#: ../app/core/core-enums.c:155
+msgctxt "color-pick-mode"
+msgid "CMYK"
+msgstr "CMYK"
+
+#: ../app/core/core-enums.c:184
+msgctxt "color-profile-policy"
+msgid "Ask what to do"
+msgstr "Domanda cosa fare"
+
+#: ../app/core/core-enums.c:185
+msgctxt "color-profile-policy"
+msgid "Keep embedded profile"
+msgstr "Mantieni il profilo incorporato"
+
+#: ../app/core/core-enums.c:186
+msgctxt "color-profile-policy"
+msgid "Convert to preferred RGB color profile"
+msgstr "Converte al profilo colore RGB preferito"
+
+#: ../app/core/core-enums.c:280
+msgctxt "convert-dither-type"
+msgid "None"
+msgstr "Nessuna"
+
+#: ../app/core/core-enums.c:281
+msgctxt "convert-dither-type"
+msgid "Floyd-Steinberg (normal)"
+msgstr "Floyd-Steinberg (normale)"
+
+#: ../app/core/core-enums.c:282
+msgctxt "convert-dither-type"
+msgid "Floyd-Steinberg (reduced color bleeding)"
+msgstr "Floyd-Steinberg (sbavature di colore ridotte)"
+
+#: ../app/core/core-enums.c:283
+msgctxt "convert-dither-type"
+msgid "Positioned"
+msgstr "Posizionato"
+
+#: ../app/core/core-enums.c:342
+msgctxt "curve-type"
+msgid "Smooth"
+msgstr "Smussata"
+
+#: ../app/core/core-enums.c:343
+msgctxt "curve-type"
+msgid "Freehand"
+msgstr "Mano libera"
+
+#: ../app/core/core-enums.c:380
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Personalizzata"
 
-#: ../app/core/core-enums.c:494
+#: ../app/core/core-enums.c:381
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Linea"
 
-#: ../app/core/core-enums.c:495
+#: ../app/core/core-enums.c:382
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Trattini lunghi"
 
-#: ../app/core/core-enums.c:496
+#: ../app/core/core-enums.c:383
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Trattini medi"
 
-#: ../app/core/core-enums.c:497
+#: ../app/core/core-enums.c:384
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Trattini corti"
 
-#: ../app/core/core-enums.c:498
+#: ../app/core/core-enums.c:385
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Punti sparsi"
 
-#: ../app/core/core-enums.c:499
+#: ../app/core/core-enums.c:386
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Punti normali"
 
-#: ../app/core/core-enums.c:500
+#: ../app/core/core-enums.c:387
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Punti fitti"
 
-#: ../app/core/core-enums.c:501
+#: ../app/core/core-enums.c:388
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Puntinatura"
 
-#: ../app/core/core-enums.c:502
+#: ../app/core/core-enums.c:389
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Linea punto"
 
-#: ../app/core/core-enums.c:503
+#: ../app/core/core-enums.c:390
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Linea punto punto"
 
-#: ../app/core/core-enums.c:534
-msgctxt "item-set"
-msgid "None"
-msgstr "No"
-
-#: ../app/core/core-enums.c:535
-msgctxt "item-set"
-msgid "All layers"
-msgstr "Tutti i livelli"
-
-#: ../app/core/core-enums.c:536
-msgctxt "item-set"
-msgid "Image-sized layers"
-msgstr "Livelli a grandezza immagine"
-
-#: ../app/core/core-enums.c:537
-msgctxt "item-set"
-msgid "All visible layers"
-msgstr "Tutti i livelli visibili"
-
-#: ../app/core/core-enums.c:538
-msgctxt "item-set"
-msgid "All linked layers"
-msgstr "Tutti i livelli collegati"
-
-#: ../app/core/core-enums.c:573
-msgctxt "view-size"
-msgid "Tiny"
-msgstr "Piccolissima"
-
-#: ../app/core/core-enums.c:574
-msgctxt "view-size"
-msgid "Very small"
-msgstr "Molto piccola"
-
-#: ../app/core/core-enums.c:575
-msgctxt "view-size"
-msgid "Small"
-msgstr "Piccola"
-
-#: ../app/core/core-enums.c:576
-msgctxt "view-size"
-msgid "Medium"
-msgstr "Media"
-
-#: ../app/core/core-enums.c:577
-msgctxt "view-size"
-msgid "Large"
-msgstr "Grande"
-
-#: ../app/core/core-enums.c:578
-msgctxt "view-size"
-msgid "Very large"
-msgstr "Molto grande"
-
-#: ../app/core/core-enums.c:579
-msgctxt "view-size"
-msgid "Huge"
-msgstr "Grandissima"
-
-#: ../app/core/core-enums.c:580
-msgctxt "view-size"
-msgid "Enormous"
-msgstr "Enorme"
-
-#: ../app/core/core-enums.c:581
-msgctxt "view-size"
-msgid "Gigantic"
-msgstr "Gigantesca"
-
-#: ../app/core/core-enums.c:609
-msgctxt "view-type"
-msgid "View as list"
-msgstr "Mostra come elenco"
-
-#: ../app/core/core-enums.c:610
-msgctxt "view-type"
-msgid "View as grid"
-msgstr "Mostra come griglia"
-
-#: ../app/core/core-enums.c:639
-msgctxt "thumbnail-size"
-msgid "No thumbnails"
-msgstr "Senza miniature"
-
-#: ../app/core/core-enums.c:640
-msgctxt "thumbnail-size"
-msgid "Normal (128x128)"
-msgstr "Normale (128x128)"
-
-#: ../app/core/core-enums.c:641
-msgctxt "thumbnail-size"
-msgid "Large (256x256)"
-msgstr "Grande (256x256)"
-
-#: ../app/core/core-enums.c:671
+#: ../app/core/core-enums.c:420
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
 msgstr "Debug di avvertimenti, errori critici e crash"
 
-#: ../app/core/core-enums.c:672
+#: ../app/core/core-enums.c:421
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
 msgstr "Debug di errori critici e crash"
 
-#: ../app/core/core-enums.c:673
+#: ../app/core/core-enums.c:422
 msgctxt "debug-policy"
 msgid "Debug crashes only"
 msgstr "Debug solo dei crash"
 
-#: ../app/core/core-enums.c:674
+#: ../app/core/core-enums.c:423
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
 msgstr "Nessun debug di GIMP"
 
-#: ../app/core/core-enums.c:863
-msgctxt "undo-type"
-msgid "<<invalid>>"
-msgstr "<<invalido>>"
-
-#: ../app/core/core-enums.c:864
-msgctxt "undo-type"
-msgid "Scale image"
-msgstr "Scala immagine"
-
-#: ../app/core/core-enums.c:865
-msgctxt "undo-type"
-msgid "Resize image"
-msgstr "Ridimensiona immagine"
-
-#: ../app/core/core-enums.c:866
-msgctxt "undo-type"
-msgid "Flip image"
-msgstr "Rifletti immagine"
-
-#: ../app/core/core-enums.c:867
-msgctxt "undo-type"
-msgid "Rotate image"
-msgstr "Ruota immagine"
-
-#: ../app/core/core-enums.c:868
-msgctxt "undo-type"
-msgid "Crop image"
-msgstr "Ritaglia immagine"
-
-#: ../app/core/core-enums.c:869
-msgctxt "undo-type"
-msgid "Convert image"
-msgstr "Converti immagine"
-
-#: ../app/core/core-enums.c:870
-msgctxt "undo-type"
-msgid "Remove item"
-msgstr "Rimuovi l'elemento"
-
-#: ../app/core/core-enums.c:871 ../app/core/core-enums.c:915
-msgctxt "undo-type"
-msgid "Reorder item"
-msgstr "Riordino elemento"
-
-#: ../app/core/core-enums.c:872
-msgctxt "undo-type"
-msgid "Merge layers"
-msgstr "Fondi i livelli"
-
-#: ../app/core/core-enums.c:873
-msgctxt "undo-type"
-msgid "Merge paths"
-msgstr "Fondi tracciati"
-
-#: ../app/core/core-enums.c:874
-msgctxt "undo-type"
-msgid "Quick Mask"
-msgstr "Maschera veloce"
-
-#: ../app/core/core-enums.c:875 ../app/core/core-enums.c:906
-#: ../app/core/gimpimage-grid.c:64
-msgctxt "undo-type"
-msgid "Grid"
-msgstr "Griglia"
-
-#: ../app/core/core-enums.c:876 ../app/core/core-enums.c:910
-msgctxt "undo-type"
-msgid "Guide"
-msgstr "Guida"
-
-#: ../app/core/core-enums.c:877 ../app/core/core-enums.c:911
-msgctxt "undo-type"
-msgid "Sample Point"
-msgstr "Punto di campionamento"
-
-#: ../app/core/core-enums.c:878 ../app/core/core-enums.c:912
-msgctxt "undo-type"
-msgid "Layer/Channel"
-msgstr "Livello/Canale"
-
-#: ../app/core/core-enums.c:879 ../app/core/core-enums.c:913
-msgctxt "undo-type"
-msgid "Layer/Channel modification"
-msgstr "Livello/Modifica canale"
-
-#: ../app/core/core-enums.c:880 ../app/core/core-enums.c:914
-msgctxt "undo-type"
-msgid "Selection mask"
-msgstr "Maschera di selezione"
-
-#: ../app/core/core-enums.c:881 ../app/core/core-enums.c:918
-msgctxt "undo-type"
-msgid "Item visibility"
-msgstr "Visibilità elemento"
-
-#: ../app/core/core-enums.c:882 ../app/core/core-enums.c:919
-msgctxt "undo-type"
-msgid "Link/Unlink item"
-msgstr "Collega/Scollega elemento"
-
-#: ../app/core/core-enums.c:883
-msgctxt "undo-type"
-msgid "Item properties"
-msgstr "Proprietà dell'elemento"
-
-#: ../app/core/core-enums.c:884 ../app/core/core-enums.c:917
-msgctxt "undo-type"
-msgid "Move item"
-msgstr "Sposta elemento"
-
-#: ../app/core/core-enums.c:885
-msgctxt "undo-type"
-msgid "Scale item"
-msgstr "Scala elemento"
-
-#: ../app/core/core-enums.c:886
-msgctxt "undo-type"
-msgid "Resize item"
-msgstr "Ridimensiona elemento"
-
-#: ../app/core/core-enums.c:887
-msgctxt "undo-type"
-msgid "Add layer"
-msgstr "Aggiungi livello"
-
-#: ../app/core/core-enums.c:888 ../app/core/core-enums.c:938
-msgctxt "undo-type"
-msgid "Add layer mask"
-msgstr "Aggiungi maschera di livello"
-
-#: ../app/core/core-enums.c:889 ../app/core/core-enums.c:940
-msgctxt "undo-type"
-msgid "Apply layer mask"
-msgstr "Applica maschera di livello"
-
-#: ../app/core/core-enums.c:890 ../app/core/core-enums.c:948
-msgctxt "undo-type"
-msgid "Floating selection to layer"
-msgstr "Selezione fluttuante al livello"
-
-#: ../app/core/core-enums.c:891
-msgctxt "undo-type"
-msgid "Float selection"
-msgstr "Selezione fluttuante"
-
-#: ../app/core/core-enums.c:892
-msgctxt "undo-type"
-msgid "Anchor floating selection"
-msgstr "Àncora selezione fluttuante"
-
-#: ../app/core/core-enums.c:893 ../app/core/gimp-edit.c:492
-msgctxt "undo-type"
-msgid "Paste"
-msgstr "Incolla"
-
-#: ../app/core/core-enums.c:894 ../app/core/gimp-edit.c:710
-msgctxt "undo-type"
-msgid "Cut"
-msgstr "Taglia"
-
-#: ../app/core/core-enums.c:895
-msgctxt "undo-type"
-msgid "Text"
-msgstr "Testo"
-
-#: ../app/core/core-enums.c:896 ../app/core/gimpdrawable-transform.c:736
-msgctxt "undo-type"
-msgid "Transform"
-msgstr "Trasforma"
-
-#: ../app/core/core-enums.c:897 ../app/core/core-enums.c:950
-msgctxt "undo-type"
-msgid "Paint"
-msgstr "Disegna"
-
-#: ../app/core/core-enums.c:898 ../app/core/core-enums.c:953
-msgctxt "undo-type"
-msgid "Attach parasite"
-msgstr "Allega parasite"
-
-#: ../app/core/core-enums.c:899 ../app/core/core-enums.c:954
-msgctxt "undo-type"
-msgid "Remove parasite"
-msgstr "Rimuovi parasite"
-
-#: ../app/core/core-enums.c:900
-msgctxt "undo-type"
-msgid "Import paths"
-msgstr "Importa tracciati"
-
-#: ../app/core/core-enums.c:901
-msgctxt "undo-type"
-msgid "Plug-In"
-msgstr "Plug-in"
-
-#: ../app/core/core-enums.c:902
-msgctxt "undo-type"
-msgid "Image type"
-msgstr "Tipo di immagine"
-
-#: ../app/core/core-enums.c:903
-msgctxt "undo-type"
-msgid "Image precision"
-msgstr "Precisione immagine"
-
-#: ../app/core/core-enums.c:904
-msgctxt "undo-type"
-msgid "Image size"
-msgstr "Dimensione immagine"
-
-#: ../app/core/core-enums.c:905
-msgctxt "undo-type"
-msgid "Image resolution change"
-msgstr "Cambio risoluzione immagine"
-
-#: ../app/core/core-enums.c:907
-msgctxt "undo-type"
-msgid "Change metadata"
-msgstr "Cambio metadati"
-
-#: ../app/core/core-enums.c:908
-msgctxt "undo-type"
-msgid "Change indexed palette"
-msgstr "Cambio tavolozza indicizzata"
-
-#: ../app/core/core-enums.c:909
-msgctxt "undo-type"
-msgid "Change color managed state"
-msgstr "Cambia lo stato della gestione del colore"
-
-#: ../app/core/core-enums.c:916
-msgctxt "undo-type"
-msgid "Rename item"
-msgstr "Rinomina elemento"
-
-#: ../app/core/core-enums.c:920
-msgctxt "undo-type"
-msgid "Item color tag"
-msgstr "Etichetta colore elemento"
-
-#: ../app/core/core-enums.c:921
-msgctxt "undo-type"
-msgid "Lock/Unlock content"
-msgstr "Blocca/sblocca il contenuto"
-
-#: ../app/core/core-enums.c:922
-msgctxt "undo-type"
-msgid "Lock/Unlock position"
-msgstr "Blocca/sblocca la posizione"
-
-#: ../app/core/core-enums.c:923
-msgctxt "undo-type"
-msgid "New layer"
-msgstr "Nuovo livello"
-
-#: ../app/core/core-enums.c:924
-msgctxt "undo-type"
-msgid "Delete layer"
-msgstr "Cancella livello"
-
-#: ../app/core/core-enums.c:925
-msgctxt "undo-type"
-msgid "Set layer mode"
-msgstr "Imposta la modalità del livello"
-
-#: ../app/core/core-enums.c:926
-msgctxt "undo-type"
-msgid "Set layer opacity"
-msgstr "Imposta l'opacità del livello"
-
-#: ../app/core/core-enums.c:927
-msgctxt "undo-type"
-msgid "Lock/Unlock alpha channel"
-msgstr "Blocca/sblocca canale alfa"
-
-#: ../app/core/core-enums.c:928
-msgctxt "undo-type"
-msgid "Suspend group layer resize"
-msgstr "Sospendi il ridimensionamento del gruppo di livelli"
-
-#: ../app/core/core-enums.c:929
-msgctxt "undo-type"
-msgid "Resume group layer resize"
-msgstr "Riprendi il ridimensionamento del gruppo di livelli"
-
-#: ../app/core/core-enums.c:930
-msgctxt "undo-type"
-msgid "Suspend group layer mask"
-msgstr "Sospendi la maschera del gruppo di livelli"
-
-#: ../app/core/core-enums.c:931
-msgctxt "undo-type"
-msgid "Resume group layer mask"
-msgstr "Riprendi la maschera del gruppo di livelli"
-
-#: ../app/core/core-enums.c:932
-msgctxt "undo-type"
-msgid "Start transforming group layer"
-msgstr "Inizio trasformazione gruppo di livelli"
-
-#: ../app/core/core-enums.c:933
-msgctxt "undo-type"
-msgid "End transforming group layer"
-msgstr "Fine trasformazione gruppo livelli"
-
-#: ../app/core/core-enums.c:934
-msgctxt "undo-type"
-msgid "Convert group layer"
-msgstr "Converti il gruppo di livelli"
-
-#: ../app/core/core-enums.c:935
-msgctxt "undo-type"
-msgid "Text layer"
-msgstr "Livello testo"
-
-#: ../app/core/core-enums.c:936
-msgctxt "undo-type"
-msgid "Text layer modification"
-msgstr "Modifica livello testo"
-
-#: ../app/core/core-enums.c:937
-msgctxt "undo-type"
-msgid "Convert text layer"
-msgstr "Converti il livello di testo"
-
-#: ../app/core/core-enums.c:939
-msgctxt "undo-type"
-msgid "Delete layer mask"
-msgstr "Elimina maschera di livello"
-
-#: ../app/core/core-enums.c:941
-msgctxt "undo-type"
-msgid "Show layer mask"
-msgstr "Mostra maschera di livello"
-
-#: ../app/core/core-enums.c:942
-msgctxt "undo-type"
-msgid "New channel"
-msgstr "Nuovo canale"
-
-#: ../app/core/core-enums.c:943
-msgctxt "undo-type"
-msgid "Delete channel"
-msgstr "Elimina canale"
-
-#: ../app/core/core-enums.c:944
-msgctxt "undo-type"
-msgid "Channel color"
-msgstr "Colore canale"
-
-#: ../app/core/core-enums.c:945
-msgctxt "undo-type"
-msgid "New path"
-msgstr "Nuovo tracciato"
-
-#: ../app/core/core-enums.c:946
-msgctxt "undo-type"
-msgid "Delete path"
-msgstr "Cancella tracciato"
-
-#: ../app/core/core-enums.c:947
-msgctxt "undo-type"
-msgid "Path modification"
-msgstr "Modifica tracciato"
-
-#: ../app/core/core-enums.c:949
-msgctxt "undo-type"
-msgid "Transform grid"
-msgstr "Griglia di trasformazione"
-
-#: ../app/core/core-enums.c:951
-msgctxt "undo-type"
-msgid "Ink"
-msgstr "Stilo"
-
-#: ../app/core/core-enums.c:952
-msgctxt "undo-type"
-msgid "Select foreground"
-msgstr "Seleziona primo piano"
-
-#: ../app/core/core-enums.c:955
-msgctxt "undo-type"
-msgid "Not undoable"
-msgstr "Non annullabile"
-
-#: ../app/core/core-enums.c:1035
+#: ../app/core/core-enums.c:509
+msgctxt "dynamics-output-type"
+msgid "Opacity"
+msgstr "Opacità"
+
+#: ../app/core/core-enums.c:510
+msgctxt "dynamics-output-type"
+msgid "Size"
+msgstr "Dimensione"
+
+#: ../app/core/core-enums.c:511
+msgctxt "dynamics-output-type"
+msgid "Angle"
+msgstr "Angolo"
+
+#: ../app/core/core-enums.c:512
+msgctxt "dynamics-output-type"
+msgid "Color"
+msgstr "Colore"
+
+#: ../app/core/core-enums.c:513
+msgctxt "dynamics-output-type"
+msgid "Hardness"
+msgstr "Durezza"
+
+#: ../app/core/core-enums.c:514
+msgctxt "dynamics-output-type"
+msgid "Force"
+msgstr "Forza"
+
+#: ../app/core/core-enums.c:515
+msgctxt "dynamics-output-type"
+msgid "Aspect ratio"
+msgstr "Rapporto dimensioni"
+
+#: ../app/core/core-enums.c:516
+msgctxt "dynamics-output-type"
+msgid "Spacing"
+msgstr "Spaziatura"
+
+#: ../app/core/core-enums.c:517
+msgctxt "dynamics-output-type"
+msgid "Rate"
+msgstr "Frequenza"
+
+#: ../app/core/core-enums.c:518
+msgctxt "dynamics-output-type"
+msgid "Flow"
+msgstr "Flusso"
+
+#: ../app/core/core-enums.c:519
+msgctxt "dynamics-output-type"
+msgid "Jitter"
+msgstr "Tremolio"
+
+#: ../app/core/core-enums.c:547
+msgctxt "fill-style"
+msgid "Solid color"
+msgstr "Tinta unita"
+
+#: ../app/core/core-enums.c:548
+msgctxt "fill-style"
+msgid "Pattern"
+msgstr "Motivo"
+
+#: ../app/core/core-enums.c:576
+msgctxt "filter-region"
+msgid "Use the selection as input"
+msgstr "Usa la selezione come ingresso"
+
+#: ../app/core/core-enums.c:577
+msgctxt "filter-region"
+msgid "Use the entire layer as input"
+msgstr "Usa l'intero livello come ingresso"
+
+#: ../app/core/core-enums.c:608
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Fisso"
 
-#: ../app/core/core-enums.c:1036
+#: ../app/core/core-enums.c:609
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "Colore di primo piano"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: ../app/core/core-enums.c:1039
+#: ../app/core/core-enums.c:612
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "PP"
 
-#: ../app/core/core-enums.c:1040
+#: ../app/core/core-enums.c:613
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "Colore di primo piano (trasparente)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:1043
+#: ../app/core/core-enums.c:616
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "PP (t)"
 
-#: ../app/core/core-enums.c:1044
+#: ../app/core/core-enums.c:617
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "Colore di sfondo"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: ../app/core/core-enums.c:1047
+#: ../app/core/core-enums.c:620
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "SF"
 
-#: ../app/core/core-enums.c:1048
+#: ../app/core/core-enums.c:621
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "Colore di sfondo (trasparente)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:1051
+#: ../app/core/core-enums.c:624
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "SF (t)"
 
-#: ../app/core/core-enums.c:1082
+#: ../app/core/core-enums.c:737
+msgctxt "histogram-channel"
+msgid "Value"
+msgstr "Valore"
+
+#: ../app/core/core-enums.c:738
+msgctxt "histogram-channel"
+msgid "Red"
+msgstr "Rosso"
+
+#: ../app/core/core-enums.c:739
+msgctxt "histogram-channel"
+msgid "Green"
+msgstr "Verde"
+
+#: ../app/core/core-enums.c:740
+msgctxt "histogram-channel"
+msgid "Blue"
+msgstr "Blu"
+
+#: ../app/core/core-enums.c:741
+msgctxt "histogram-channel"
+msgid "Alpha"
+msgstr "Alfa"
+
+#: ../app/core/core-enums.c:742
+msgctxt "histogram-channel"
+msgid "Luminance"
+msgstr "Luminanza"
+
+#: ../app/core/core-enums.c:743
+msgctxt "histogram-channel"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../app/core/core-enums.c:774
+msgctxt "item-set"
+msgid "None"
+msgstr "No"
+
+#: ../app/core/core-enums.c:775
+msgctxt "item-set"
+msgid "All layers"
+msgstr "Tutti i livelli"
+
+#: ../app/core/core-enums.c:776
+msgctxt "item-set"
+msgid "Image-sized layers"
+msgstr "Livelli a grandezza immagine"
+
+#: ../app/core/core-enums.c:777
+msgctxt "item-set"
+msgid "All visible layers"
+msgstr "Tutti i livelli visibili"
+
+#: ../app/core/core-enums.c:778
+msgctxt "item-set"
+msgid "All linked layers"
+msgstr "Tutti i livelli collegati"
+
+#: ../app/core/core-enums.c:806
+msgctxt "matting-engine"
+msgid "Matting Global"
+msgstr "Matting Global"
+
+#: ../app/core/core-enums.c:807
+msgctxt "matting-engine"
+msgid "Matting Levin"
+msgstr "Matting Levin"
+
+#: ../app/core/core-enums.c:838
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Messaggio"
 
-#: ../app/core/core-enums.c:1083
+#: ../app/core/core-enums.c:839
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Attenzione"
 
-#: ../app/core/core-enums.c:1084
+#: ../app/core/core-enums.c:840
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Errore"
 
-#: ../app/core/core-enums.c:1085
+#: ../app/core/core-enums.c:841
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr "ATTENZIONE"
 
-#: ../app/core/core-enums.c:1086
+#: ../app/core/core-enums.c:842
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "CRITICITÀ"
 
-#: ../app/core/core-enums.c:1115
-msgctxt "color-profile-policy"
-msgid "Ask what to do"
-msgstr "Domanda cosa fare"
+#: ../app/core/core-enums.c:908
+msgctxt "thumbnail-size"
+msgid "No thumbnails"
+msgstr "Senza miniature"
 
-#: ../app/core/core-enums.c:1116
-msgctxt "color-profile-policy"
-msgid "Keep embedded profile"
-msgstr "Mantieni il profilo incorporato"
+#: ../app/core/core-enums.c:909
+msgctxt "thumbnail-size"
+msgid "Normal (128x128)"
+msgstr "Normale (128x128)"
 
-#: ../app/core/core-enums.c:1117
-msgctxt "color-profile-policy"
-msgid "Convert to preferred RGB color profile"
-msgstr "Converte al profilo colore RGB preferito"
+#: ../app/core/core-enums.c:910
+msgctxt "thumbnail-size"
+msgid "Large (256x256)"
+msgstr "Grande (256x256)"
 
-#: ../app/core/core-enums.c:1154
-msgctxt "dynamics-output-type"
-msgid "Opacity"
-msgstr "Opacità"
+#: ../app/core/core-enums.c:1099
+msgctxt "undo-type"
+msgid "<<invalid>>"
+msgstr "<<invalido>>"
 
-#: ../app/core/core-enums.c:1155
-msgctxt "dynamics-output-type"
-msgid "Size"
-msgstr "Dimensione"
+#: ../app/core/core-enums.c:1100
+msgctxt "undo-type"
+msgid "Scale image"
+msgstr "Scala immagine"
+
+#: ../app/core/core-enums.c:1101
+msgctxt "undo-type"
+msgid "Resize image"
+msgstr "Ridimensiona immagine"
+
+#: ../app/core/core-enums.c:1102
+msgctxt "undo-type"
+msgid "Flip image"
+msgstr "Rifletti immagine"
+
+#: ../app/core/core-enums.c:1103
+msgctxt "undo-type"
+msgid "Rotate image"
+msgstr "Ruota immagine"
+
+#: ../app/core/core-enums.c:1104
+msgctxt "undo-type"
+msgid "Crop image"
+msgstr "Ritaglia immagine"
+
+#: ../app/core/core-enums.c:1105
+msgctxt "undo-type"
+msgid "Convert image"
+msgstr "Converti immagine"
+
+#: ../app/core/core-enums.c:1106
+msgctxt "undo-type"
+msgid "Remove item"
+msgstr "Rimuovi l'elemento"
+
+#: ../app/core/core-enums.c:1107 ../app/core/core-enums.c:1151
+msgctxt "undo-type"
+msgid "Reorder item"
+msgstr "Riordino elemento"
+
+#: ../app/core/core-enums.c:1108
+msgctxt "undo-type"
+msgid "Merge layers"
+msgstr "Fondi i livelli"
+
+#: ../app/core/core-enums.c:1109
+msgctxt "undo-type"
+msgid "Merge paths"
+msgstr "Fondi tracciati"
+
+#: ../app/core/core-enums.c:1110
+msgctxt "undo-type"
+msgid "Quick Mask"
+msgstr "Maschera veloce"
+
+#: ../app/core/core-enums.c:1111 ../app/core/core-enums.c:1142
+#: ../app/core/gimpimage-grid.c:64
+msgctxt "undo-type"
+msgid "Grid"
+msgstr "Griglia"
+
+#: ../app/core/core-enums.c:1112 ../app/core/core-enums.c:1146
+msgctxt "undo-type"
+msgid "Guide"
+msgstr "Guida"
+
+#: ../app/core/core-enums.c:1113 ../app/core/core-enums.c:1147
+msgctxt "undo-type"
+msgid "Sample Point"
+msgstr "Punto di campionamento"
+
+#: ../app/core/core-enums.c:1114 ../app/core/core-enums.c:1148
+msgctxt "undo-type"
+msgid "Layer/Channel"
+msgstr "Livello/Canale"
+
+#: ../app/core/core-enums.c:1115 ../app/core/core-enums.c:1149
+msgctxt "undo-type"
+msgid "Layer/Channel modification"
+msgstr "Livello/Modifica canale"
+
+#: ../app/core/core-enums.c:1116 ../app/core/core-enums.c:1150
+msgctxt "undo-type"
+msgid "Selection mask"
+msgstr "Maschera di selezione"
+
+#: ../app/core/core-enums.c:1117 ../app/core/core-enums.c:1154
+msgctxt "undo-type"
+msgid "Item visibility"
+msgstr "Visibilità elemento"
+
+#: ../app/core/core-enums.c:1118 ../app/core/core-enums.c:1155
+msgctxt "undo-type"
+msgid "Link/Unlink item"
+msgstr "Collega/Scollega elemento"
+
+#: ../app/core/core-enums.c:1119
+msgctxt "undo-type"
+msgid "Item properties"
+msgstr "Proprietà dell'elemento"
+
+#: ../app/core/core-enums.c:1120 ../app/core/core-enums.c:1153
+msgctxt "undo-type"
+msgid "Move item"
+msgstr "Sposta elemento"
+
+#: ../app/core/core-enums.c:1121
+msgctxt "undo-type"
+msgid "Scale item"
+msgstr "Scala elemento"
+
+#: ../app/core/core-enums.c:1122
+msgctxt "undo-type"
+msgid "Resize item"
+msgstr "Ridimensiona elemento"
+
+#: ../app/core/core-enums.c:1123
+msgctxt "undo-type"
+msgid "Add layer"
+msgstr "Aggiungi livello"
+
+#: ../app/core/core-enums.c:1124 ../app/core/core-enums.c:1174
+msgctxt "undo-type"
+msgid "Add layer mask"
+msgstr "Aggiungi maschera di livello"
+
+#: ../app/core/core-enums.c:1125 ../app/core/core-enums.c:1176
+msgctxt "undo-type"
+msgid "Apply layer mask"
+msgstr "Applica maschera di livello"
+
+#: ../app/core/core-enums.c:1126 ../app/core/core-enums.c:1184
+msgctxt "undo-type"
+msgid "Floating selection to layer"
+msgstr "Selezione fluttuante al livello"
+
+#: ../app/core/core-enums.c:1127
+msgctxt "undo-type"
+msgid "Float selection"
+msgstr "Selezione fluttuante"
+
+#: ../app/core/core-enums.c:1128
+msgctxt "undo-type"
+msgid "Anchor floating selection"
+msgstr "Àncora selezione fluttuante"
+
+#: ../app/core/core-enums.c:1129 ../app/core/gimp-edit.c:492
+msgctxt "undo-type"
+msgid "Paste"
+msgstr "Incolla"
+
+#: ../app/core/core-enums.c:1130 ../app/core/gimp-edit.c:710
+msgctxt "undo-type"
+msgid "Cut"
+msgstr "Taglia"
+
+#: ../app/core/core-enums.c:1131
+msgctxt "undo-type"
+msgid "Text"
+msgstr "Testo"
+
+#: ../app/core/core-enums.c:1132 ../app/core/gimpdrawable-transform.c:736
+msgctxt "undo-type"
+msgid "Transform"
+msgstr "Trasforma"
+
+#: ../app/core/core-enums.c:1133 ../app/core/core-enums.c:1186
+msgctxt "undo-type"
+msgid "Paint"
+msgstr "Disegna"
+
+#: ../app/core/core-enums.c:1134 ../app/core/core-enums.c:1189
+msgctxt "undo-type"
+msgid "Attach parasite"
+msgstr "Allega parasite"
+
+#: ../app/core/core-enums.c:1135 ../app/core/core-enums.c:1190
+msgctxt "undo-type"
+msgid "Remove parasite"
+msgstr "Rimuovi parasite"
+
+#: ../app/core/core-enums.c:1136
+msgctxt "undo-type"
+msgid "Import paths"
+msgstr "Importa tracciati"
+
+#: ../app/core/core-enums.c:1137
+msgctxt "undo-type"
+msgid "Plug-In"
+msgstr "Plug-in"
+
+#: ../app/core/core-enums.c:1138
+msgctxt "undo-type"
+msgid "Image type"
+msgstr "Tipo di immagine"
+
+#: ../app/core/core-enums.c:1139
+msgctxt "undo-type"
+msgid "Image precision"
+msgstr "Precisione immagine"
+
+#: ../app/core/core-enums.c:1140
+msgctxt "undo-type"
+msgid "Image size"
+msgstr "Dimensione immagine"
+
+#: ../app/core/core-enums.c:1141
+msgctxt "undo-type"
+msgid "Image resolution change"
+msgstr "Cambio risoluzione immagine"
+
+#: ../app/core/core-enums.c:1143
+msgctxt "undo-type"
+msgid "Change metadata"
+msgstr "Cambio metadati"
+
+#: ../app/core/core-enums.c:1144
+msgctxt "undo-type"
+msgid "Change indexed palette"
+msgstr "Cambio tavolozza indicizzata"
+
+#: ../app/core/core-enums.c:1145
+msgctxt "undo-type"
+msgid "Change color managed state"
+msgstr "Cambia lo stato della gestione del colore"
+
+#: ../app/core/core-enums.c:1152
+msgctxt "undo-type"
+msgid "Rename item"
+msgstr "Rinomina elemento"
 
 #: ../app/core/core-enums.c:1156
-msgctxt "dynamics-output-type"
-msgid "Angle"
-msgstr "Angolo"
+msgctxt "undo-type"
+msgid "Item color tag"
+msgstr "Etichetta colore elemento"
 
 #: ../app/core/core-enums.c:1157
-msgctxt "dynamics-output-type"
-msgid "Color"
-msgstr "Colore"
+msgctxt "undo-type"
+msgid "Lock/Unlock content"
+msgstr "Blocca/sblocca il contenuto"
 
 #: ../app/core/core-enums.c:1158
-msgctxt "dynamics-output-type"
-msgid "Hardness"
-msgstr "Durezza"
+msgctxt "undo-type"
+msgid "Lock/Unlock position"
+msgstr "Blocca/sblocca la posizione"
 
 #: ../app/core/core-enums.c:1159
-msgctxt "dynamics-output-type"
-msgid "Force"
-msgstr "Forza"
+msgctxt "undo-type"
+msgid "New layer"
+msgstr "Nuovo livello"
 
 #: ../app/core/core-enums.c:1160
-msgctxt "dynamics-output-type"
-msgid "Aspect ratio"
-msgstr "Rapporto dimensioni"
+msgctxt "undo-type"
+msgid "Delete layer"
+msgstr "Cancella livello"
 
 #: ../app/core/core-enums.c:1161
-msgctxt "dynamics-output-type"
-msgid "Spacing"
-msgstr "Spaziatura"
+msgctxt "undo-type"
+msgid "Set layer mode"
+msgstr "Imposta la modalità del livello"
 
 #: ../app/core/core-enums.c:1162
-msgctxt "dynamics-output-type"
-msgid "Rate"
-msgstr "Frequenza"
+msgctxt "undo-type"
+msgid "Set layer opacity"
+msgstr "Imposta l'opacità del livello"
 
 #: ../app/core/core-enums.c:1163
-msgctxt "dynamics-output-type"
-msgid "Flow"
-msgstr "Flusso"
+msgctxt "undo-type"
+msgid "Lock/Unlock alpha channel"
+msgstr "Blocca/sblocca canale alfa"
 
 #: ../app/core/core-enums.c:1164
-msgctxt "dynamics-output-type"
-msgid "Jitter"
-msgstr "Tremolio"
+msgctxt "undo-type"
+msgid "Suspend group layer resize"
+msgstr "Sospendi il ridimensionamento del gruppo di livelli"
 
-#: ../app/core/core-enums.c:1192
-msgctxt "filter-region"
-msgid "Use the selection as input"
-msgstr "Usa la selezione come ingresso"
+#: ../app/core/core-enums.c:1165
+msgctxt "undo-type"
+msgid "Resume group layer resize"
+msgstr "Riprendi il ridimensionamento del gruppo di livelli"
 
-#: ../app/core/core-enums.c:1193
-msgctxt "filter-region"
-msgid "Use the entire layer as input"
-msgstr "Usa l'intero livello come ingresso"
+#: ../app/core/core-enums.c:1166
+msgctxt "undo-type"
+msgid "Suspend group layer mask"
+msgstr "Sospendi la maschera del gruppo di livelli"
 
-#: ../app/core/core-enums.c:1222
-msgctxt "channel-border-style"
-msgid "Hard"
-msgstr "Netto"
+#: ../app/core/core-enums.c:1167
+msgctxt "undo-type"
+msgid "Resume group layer mask"
+msgstr "Riprendi la maschera del gruppo di livelli"
 
-#: ../app/core/core-enums.c:1223
-msgctxt "channel-border-style"
-msgid "Smooth"
-msgstr "Smussato"
+#: ../app/core/core-enums.c:1168
+msgctxt "undo-type"
+msgid "Start transforming group layer"
+msgstr "Inizio trasformazione gruppo di livelli"
 
-#: ../app/core/core-enums.c:1224
-msgctxt "channel-border-style"
-msgid "Feathered"
-msgstr "Sfumato"
+#: ../app/core/core-enums.c:1169
+msgctxt "undo-type"
+msgid "End transforming group layer"
+msgstr "Fine trasformazione gruppo livelli"
+
+#: ../app/core/core-enums.c:1170
+msgctxt "undo-type"
+msgid "Convert group layer"
+msgstr "Converti il gruppo di livelli"
+
+#: ../app/core/core-enums.c:1171
+msgctxt "undo-type"
+msgid "Text layer"
+msgstr "Livello testo"
+
+#: ../app/core/core-enums.c:1172
+msgctxt "undo-type"
+msgid "Text layer modification"
+msgstr "Modifica livello testo"
+
+#: ../app/core/core-enums.c:1173
+msgctxt "undo-type"
+msgid "Convert text layer"
+msgstr "Converti il livello di testo"
+
+#: ../app/core/core-enums.c:1175
+msgctxt "undo-type"
+msgid "Delete layer mask"
+msgstr "Elimina maschera di livello"
+
+#: ../app/core/core-enums.c:1177
+msgctxt "undo-type"
+msgid "Show layer mask"
+msgstr "Mostra maschera di livello"
+
+#: ../app/core/core-enums.c:1178
+msgctxt "undo-type"
+msgid "New channel"
+msgstr "Nuovo canale"
+
+#: ../app/core/core-enums.c:1179
+msgctxt "undo-type"
+msgid "Delete channel"
+msgstr "Elimina canale"
+
+#: ../app/core/core-enums.c:1180
+msgctxt "undo-type"
+msgid "Channel color"
+msgstr "Colore canale"
+
+#: ../app/core/core-enums.c:1181
+msgctxt "undo-type"
+msgid "New path"
+msgstr "Nuovo tracciato"
+
+#: ../app/core/core-enums.c:1182
+msgctxt "undo-type"
+msgid "Delete path"
+msgstr "Cancella tracciato"
+
+#: ../app/core/core-enums.c:1183
+msgctxt "undo-type"
+msgid "Path modification"
+msgstr "Modifica tracciato"
+
+#: ../app/core/core-enums.c:1185
+msgctxt "undo-type"
+msgid "Transform grid"
+msgstr "Griglia di trasformazione"
+
+#: ../app/core/core-enums.c:1187
+msgctxt "undo-type"
+msgid "Ink"
+msgstr "Stilo"
+
+#: ../app/core/core-enums.c:1188
+msgctxt "undo-type"
+msgid "Select foreground"
+msgstr "Seleziona primo piano"
+
+#: ../app/core/core-enums.c:1191
+msgctxt "undo-type"
+msgid "Not undoable"
+msgstr "Non annullabile"
+
+#: ../app/core/core-enums.c:1226
+msgctxt "view-size"
+msgid "Tiny"
+msgstr "Piccolissima"
+
+#: ../app/core/core-enums.c:1227
+msgctxt "view-size"
+msgid "Very small"
+msgstr "Molto piccola"
+
+#: ../app/core/core-enums.c:1228
+msgctxt "view-size"
+msgid "Small"
+msgstr "Piccola"
+
+#: ../app/core/core-enums.c:1229
+msgctxt "view-size"
+msgid "Medium"
+msgstr "Media"
+
+#: ../app/core/core-enums.c:1230
+msgctxt "view-size"
+msgid "Large"
+msgstr "Grande"
+
+#: ../app/core/core-enums.c:1231
+msgctxt "view-size"
+msgid "Very large"
+msgstr "Molto grande"
+
+#: ../app/core/core-enums.c:1232
+msgctxt "view-size"
+msgid "Huge"
+msgstr "Grandissima"
+
+#: ../app/core/core-enums.c:1233
+msgctxt "view-size"
+msgid "Enormous"
+msgstr "Enorme"
+
+#: ../app/core/core-enums.c:1234
+msgctxt "view-size"
+msgid "Gigantic"
+msgstr "Gigantesca"
+
+#: ../app/core/core-enums.c:1262
+msgctxt "view-type"
+msgid "View as list"
+msgstr "Mostra come elenco"
+
+#: ../app/core/core-enums.c:1263
+msgctxt "view-type"
+msgid "View as grid"
+msgstr "Mostra come griglia"
 
 #. initialize babl fishes
 #: ../app/core/gimp.c:502 ../app/core/gimp.c:532
@@ -12316,7 +12351,8 @@ msgstr "Formato pennello non supportato"
 #: ../app/core/gimpbrush-load.c:253
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
-msgstr "Dati di intestazione non validi in '%s': nome pennello troppo lungo=%lu"
+msgstr ""
+"Dati di intestazione non validi in '%s': nome pennello troppo lungo=%lu"
 
 #: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrushgenerated-load.c:126
 #: ../app/core/gimpbrushpipe-load.c:74
@@ -12406,7 +12442,7 @@ msgstr ""
 "Errore fatale di analisi file pennello: dati pennello compresso RLE "
 "danneggiati."
 
-#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:226
+#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
 msgstr "Spaziatura pennello"
 
@@ -12480,15 +12516,15 @@ msgstr "Raggio pennello"
 msgid "Brush Spikes"
 msgstr "Punte pennello"
 
-#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:233
+#: ../app/core/gimpbrushgenerated.c:157 ../app/paint/gimppaintoptions.c:232
 msgid "Brush Hardness"
 msgstr "Durezza pennello"
 
-#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:212
+#: ../app/core/gimpbrushgenerated.c:165 ../app/paint/gimppaintoptions.c:211
 msgid "Brush Aspect Ratio"
 msgstr "Rapporto dimensioni pennello"
 
-#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:219
+#: ../app/core/gimpbrushgenerated.c:172 ../app/paint/gimppaintoptions.c:218
 msgid "Brush Angle"
 msgstr "Angolo pennello"
 
@@ -12730,7 +12766,7 @@ msgstr "Motivo"
 
 #: ../app/core/gimpcontext.c:742 ../app/core/gimpcontext.c:743
 #: ../app/pdb/drawable-edit-cmds.c:253 ../app/pdb/edit-cmds.c:803
-#: ../app/tools/gimpgradientoptions.c:284 ../app/tools/gimpgradienttool.c:158
+#: ../app/tools/gimpgradientoptions.c:268 ../app/tools/gimpgradienttool.c:158
 #: ../app/tools/gimppaintoptions-gui.c:367
 msgid "Gradient"
 msgstr "Gradiente"
@@ -13105,55 +13141,55 @@ msgstr "Trasforma gruppo di livelli"
 msgid "Symmetry"
 msgstr "Simmetria"
 
-#: ../app/core/gimpimage.c:2218
+#: ../app/core/gimpimage.c:2217
 msgid " (exported)"
 msgstr " (esportata)"
 
-#: ../app/core/gimpimage.c:2222
+#: ../app/core/gimpimage.c:2221
 msgid " (overwritten)"
 msgstr " (sovrascritta)"
 
-#: ../app/core/gimpimage.c:2231
+#: ../app/core/gimpimage.c:2230
 msgid " (imported)"
 msgstr " (importata)"
 
-#: ../app/core/gimpimage.c:2405 ../app/core/gimpimage.c:2419
-#: ../app/core/gimpimage.c:2462
+#: ../app/core/gimpimage.c:2404 ../app/core/gimpimage.c:2418
+#: ../app/core/gimpimage.c:2461
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "La modalità di livello '%s' è stata aggiunta in %s"
 
-#: ../app/core/gimpimage.c:2477
+#: ../app/core/gimpimage.c:2476
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "I gruppi livello sono stati aggiunti in %s"
 
-#: ../app/core/gimpimage.c:2484
+#: ../app/core/gimpimage.c:2483
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Le maschere sui gruppi livello sono state aggiunte in %s"
 
-#: ../app/core/gimpimage.c:2500
+#: ../app/core/gimpimage.c:2499
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Le immagini ad alta profondità di colore sono state aggiunte in %s"
 
-#: ../app/core/gimpimage.c:2525
+#: ../app/core/gimpimage.c:2524
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Il supporto per file immagine più grandi di 4GB è stato aggiunto in %s"
 
-#: ../app/core/gimpimage.c:2619
+#: ../app/core/gimpimage.c:2618
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:2671
+#: ../app/core/gimpimage.c:2670
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:3558
+#: ../app/core/gimpimage.c:3557
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13161,47 +13197,47 @@ msgstr ""
 "validazione parassita 'gimp-comment' fallita: il commento contiene UTF-8 non "
 "valido"
 
-#: ../app/core/gimpimage.c:3610
+#: ../app/core/gimpimage.c:3609
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Allega parassita all'immagine"
 
-#: ../app/core/gimpimage.c:3651
+#: ../app/core/gimpimage.c:3650
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parassita dall'immagine"
 
-#: ../app/core/gimpimage.c:4378
+#: ../app/core/gimpimage.c:4377
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:4420 ../app/core/gimpimage.c:4451
+#: ../app/core/gimpimage.c:4419 ../app/core/gimpimage.c:4450
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:4445
+#: ../app/core/gimpimage.c:4444
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/gimpimage.c:4612
+#: ../app/core/gimpimage.c:4611
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:4640 ../app/core/gimpimage.c:4664
+#: ../app/core/gimpimage.c:4639 ../app/core/gimpimage.c:4663
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:4720
+#: ../app/core/gimpimage.c:4719
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:4750 ../app/core/gimpimage.c:4757
+#: ../app/core/gimpimage.c:4749 ../app/core/gimpimage.c:4756
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"
@@ -13275,20 +13311,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Aggiungi colore alla mappa colore"
 
-#: ../app/core/gimpimage-convert-indexed.c:786
+#: ../app/core/gimpimage-convert-indexed.c:790
 msgid "Cannot convert image: palette is empty."
 msgstr "Impossibile convertire l'immagine: la tavolozza è vuota."
 
-#: ../app/core/gimpimage-convert-indexed.c:798
+#: ../app/core/gimpimage-convert-indexed.c:802
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Converti immagine in indicizzata"
 
-#: ../app/core/gimpimage-convert-indexed.c:890
+#: ../app/core/gimpimage-convert-indexed.c:894
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Conversione in colori indicizzati (fase 2)"
 
-#: ../app/core/gimpimage-convert-indexed.c:939
+#: ../app/core/gimpimage-convert-indexed.c:943
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Conversione in colori indicizzati (fase 3)"
 
@@ -13357,16 +13393,16 @@ msgstr "Converti l'immagine a 64 bit in virgola mobile gamma"
 #: ../app/core/gimpimage-convert-precision.c:289
 #: ../app/dialogs/convert-indexed-dialog.c:241
 #: ../app/dialogs/convert-precision-dialog.c:221
-#: ../app/tools/gimpgradientoptions.c:136
+#: ../app/tools/gimpgradientoptions.c:128
 msgid "Dithering"
 msgstr "Dithering"
 
-#: ../app/core/gimpimage-convert-type.c:81
+#: ../app/core/gimpimage-convert-type.c:84
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
 msgstr "Converti immagine in RGB"
 
-#: ../app/core/gimpimage-convert-type.c:85
+#: ../app/core/gimpimage-convert-type.c:88
 msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Converti immagine in scala di grigi"
@@ -13496,10 +13532,15 @@ msgctxt "undo-type"
 msgid "Remove Sample Point"
 msgstr "Rimuovi punto di campionamento"
 
-#: ../app/core/gimpimage-sample-points.c:123
+#: ../app/core/gimpimage-sample-points.c:126
 msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Sposta punto di campionamento"
+
+#: ../app/core/gimpimage-sample-points.c:146
+msgctxt "undo-type"
+msgid "Set Sample Point Pick Mode"
+msgstr "Imposta modalità prelievo punto di campionamento"
 
 #: ../app/core/gimpimage-scale.c:79
 msgctxt "undo-type"
@@ -14556,7 +14597,7 @@ msgid "Dithering text layers will make them uneditable"
 msgstr "Facendo il dithering su livelli di testo li si rende immodificabili"
 
 #: ../app/dialogs/convert-indexed-dialog.c:415
-#: ../app/pdb/image-convert-cmds.c:159
+#: ../app/pdb/image-convert-cmds.c:163
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Impossibile convertire in una tavolozza con più di 256 colori."
 
@@ -14867,9 +14908,9 @@ msgstr "Proprietà dell'immagine"
 #: ../app/dialogs/image-properties-dialog.c:68
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
-#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:349
+#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:351
 #: ../app/tools/gimpgradienttool-editor.c:1857
-#: ../app/tools/gimpmeasuretool.c:735 ../app/widgets/gimpcontrollerlist.c:640
+#: ../app/tools/gimpmeasuretool.c:715 ../app/widgets/gimpcontrollerlist.c:640
 #: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:163
 msgid "_Close"
@@ -15007,11 +15048,11 @@ msgid "_Opacity:"
 msgstr "_Opacità:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:810
+#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:790
 msgid "Width:"
 msgstr "Larghezza:"
 
-#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:838
+#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:818
 msgid "Height:"
 msgstr "Altezza:"
 
@@ -15151,7 +15192,7 @@ msgstr "Spostamento canale"
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:129 ../app/dialogs/offset-dialog.c:163
 #: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
-#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:89
+#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpgradientoptions.c:88
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Scostamento"
@@ -16860,7 +16901,7 @@ msgstr "_Verticale:"
 msgid "Image Size"
 msgstr "Dimensione immagine"
 
-#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:423
+#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:429
 msgid "Quality"
 msgstr "Qualità"
 
@@ -16988,92 +17029,107 @@ msgstr "Blocca le delinea_ture del tracciato"
 msgid "Lock path _position"
 msgstr "Blocca la _posizione del tracciato"
 
-#: ../app/display/display-enums.c:124
+#: ../app/display/display-enums.c:88
+msgctxt "compass-orientation"
+msgid "Auto"
+msgstr "Auto"
+
+#: ../app/display/display-enums.c:89
+msgctxt "compass-orientation"
+msgid "Horizontal"
+msgstr "Orizzontale"
+
+#: ../app/display/display-enums.c:90
+msgctxt "compass-orientation"
+msgid "Vertical"
+msgstr "Verticale"
+
+#: ../app/display/display-enums.c:155
 msgctxt "guides-type"
 msgid "No guides"
 msgstr "Nessuna guida"
 
-#: ../app/display/display-enums.c:125
+#: ../app/display/display-enums.c:156
 msgctxt "guides-type"
 msgid "Center lines"
 msgstr "Centra le righe"
 
-#: ../app/display/display-enums.c:126
+#: ../app/display/display-enums.c:157
 msgctxt "guides-type"
 msgid "Rule of thirds"
 msgstr "Regola dei terzi"
 
-#: ../app/display/display-enums.c:127
+#: ../app/display/display-enums.c:158
 msgctxt "guides-type"
 msgid "Rule of fifths"
 msgstr "Regola dei quinti"
 
-#: ../app/display/display-enums.c:128
+#: ../app/display/display-enums.c:159
 msgctxt "guides-type"
 msgid "Golden sections"
 msgstr "Sezioni auree"
 
-#: ../app/display/display-enums.c:129
+#: ../app/display/display-enums.c:160
 msgctxt "guides-type"
 msgid "Diagonal lines"
 msgstr "Righe diagonali"
 
-#: ../app/display/display-enums.c:130
+#: ../app/display/display-enums.c:161
 msgctxt "guides-type"
 msgid "Number of lines"
 msgstr "Numero di righe"
 
-#: ../app/display/display-enums.c:131
+#: ../app/display/display-enums.c:162
 msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Spaziatura righe"
 
-#: ../app/display/display-enums.c:313
+#: ../app/display/display-enums.c:344
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Rapporto dimensioni"
 
-#: ../app/display/display-enums.c:314
+#: ../app/display/display-enums.c:345
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "Larghezza"
 
-#: ../app/display/display-enums.c:315
+#: ../app/display/display-enums.c:346
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "Altezza"
 
-#: ../app/display/display-enums.c:316
+#: ../app/display/display-enums.c:347
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
 msgstr "Dimensioni"
 
-#: ../app/display/display-enums.c:409
+#: ../app/display/display-enums.c:440
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
 msgstr "Aggiungi / Trasforma"
 
-#: ../app/display/display-enums.c:410
+#: ../app/display/display-enums.c:441
 msgctxt "transform-handle-mode"
 msgid "Move"
 msgstr "Sposta"
 
-#: ../app/display/display-enums.c:411
+#: ../app/display/display-enums.c:442
 msgctxt "transform-handle-mode"
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: ../app/display/display-enums.c:440
+#: ../app/display/display-enums.c:471
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Progetta"
 
-#: ../app/display/display-enums.c:441
+#: ../app/display/display-enums.c:472
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Modifica"
 
-#: ../app/display/display-enums.c:442
+#: ../app/display/display-enums.c:473
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Sposta"
@@ -17309,7 +17365,7 @@ msgid "Select Rotation Angle"
 msgstr "Seleziona l'angolo di rotazione"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:782
+#: ../app/tools/gimpmeasuretool.c:762
 msgid "Angle:"
 msgstr "Angolo:"
 
@@ -17353,9 +17409,9 @@ msgstr "(nessuna)"
 msgid "not color managed"
 msgstr "gestione del colore non attiva"
 
-#: ../app/display/gimpdisplayshell-utils.c:149
-#: ../app/tools/gimpmeasuretool.c:612 ../app/tools/gimpmeasuretool.c:765
-#: ../app/tools/gimpmeasuretool.c:821 ../app/tools/gimpmeasuretool.c:849
+#: ../app/display/gimpdisplayshell-utils.c:174
+#: ../app/tools/gimpmeasuretool.c:592 ../app/tools/gimpmeasuretool.c:745
+#: ../app/tools/gimpmeasuretool.c:801 ../app/tools/gimpmeasuretool.c:829
 msgid "pixels"
 msgstr "pixel"
 
@@ -17364,27 +17420,27 @@ msgstr "pixel"
 msgid "Cancel <i>%s</i>"
 msgstr "Cancella <i>%s</i>"
 
-#: ../app/display/gimptoolcompass.c:830
+#: ../app/display/gimptoolcompass.c:845
 msgid "Click to place vertical and horizontal guides"
 msgstr "Fare clic per piazzare delle guide verticali o orizzontali"
 
-#: ../app/display/gimptoolcompass.c:838
+#: ../app/display/gimptoolcompass.c:853
 msgid "Click to place a horizontal guide"
 msgstr "Fare clic per piazzare una guida orizzontale"
 
-#: ../app/display/gimptoolcompass.c:846
+#: ../app/display/gimptoolcompass.c:861
 msgid "Click to place a vertical guide"
 msgstr "Fare clic per piazzare una guida verticale"
 
-#: ../app/display/gimptoolcompass.c:854
+#: ../app/display/gimptoolcompass.c:869
 msgid "Click-Drag to add a new point"
 msgstr "Fare clic e trascinare per aggiungere un nuovo punto"
 
-#: ../app/display/gimptoolcompass.c:865 ../app/tools/gimpiscissorstool.c:911
+#: ../app/display/gimptoolcompass.c:880 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Fare clic e trascinare per spostare questo punto"
 
-#: ../app/display/gimptoolcompass.c:882
+#: ../app/display/gimptoolcompass.c:897
 msgid "Click-Drag to move all points"
 msgstr "Fare clic e trascinare per spostare tutti i punti"
 
@@ -17403,7 +17459,7 @@ msgid "Click-Drag to rotate"
 msgstr "Fare clic e trascinare per ruotare"
 
 #: ../app/display/gimptoolgyroscope.c:731 ../app/display/gimptoolline.c:1563
-#: ../app/tools/gimppainttool.c:582
+#: ../app/tools/gimppainttool.c:587
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per gli angoli bloccati"
@@ -18032,51 +18088,51 @@ msgstr "Solo toni chiari (t)"
 
 #: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
-msgid "Hue (HSV) (legacy)"
-msgstr "Tonalità (HSV) (tradizionale)"
+msgid "HSV Hue (legacy)"
+msgstr "Tonalità HSV (tradizionale)"
 
-#. Translators: this is an abbreviated version of "Hue (HSV) (legacy)".
+#. Translators: this is an abbreviated version of "HSV Hue (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:197
 msgctxt "layer-mode"
-msgid "Hue (HSV) (l)"
-msgstr "Tonalità (HSV) (t)"
+msgid "HSV Hue (l)"
+msgstr "Tonalità HSV (l)"
 
 #: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
-msgid "Saturation (HSV) (legacy)"
-msgstr "Saturazione (HSV) (tradizionale)"
+msgid "HSV Saturation (legacy)"
+msgstr "Saturazione HSV (tradizionale)"
 
-#. Translators: this is an abbreviated version of "Saturation (HSV) (legacy)".
+#. Translators: this is an abbreviated version of "HSV Saturation (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:201
 msgctxt "layer-mode"
-msgid "Saturation (HSV) (l)"
-msgstr "Saturazione (HSV) (t)"
+msgid "HSV Saturation (l)"
+msgstr "Saturazione HSV (l)"
 
 #: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
-msgid "Color (HSL) (legacy)"
-msgstr "Colore (HSL) (tradizionale)"
+msgid "HSL Color (legacy)"
+msgstr "Colore HSL (tradizionale)"
 
-#. Translators: this is an abbreviated version of "Color (HSL) (legacy)".
+#. Translators: this is an abbreviated version of "HSL Color (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:205
 msgctxt "layer-mode"
-msgid "Color (HSL) (l)"
-msgstr "Colore (HSL) (t)"
+msgid "HSL Color (l)"
+msgstr "Colore HSL (l)"
 
 #: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
-msgid "Value (HSV) (legacy)"
-msgstr "Valore (HSV) (tradizionale)"
+msgid "HSV Value (legacy)"
+msgstr "Valore HSV (tradizionale)"
 
-#. Translators: this is an abbreviated version of "Value (HSV) (legacy)".
+#. Translators: this is an abbreviated version of "HSV Value (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:209
 msgctxt "layer-mode"
-msgid "Value (HSV) (l)"
-msgstr "Valore (HSV) (t)"
+msgid "HSV Value (l)"
+msgstr "Valore HSV (l)"
 
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
@@ -18181,23 +18237,23 @@ msgstr "Sovrapposto"
 
 #: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
-msgid "Hue (LCH)"
-msgstr "Tonalità (LCH)"
+msgid "LCh Hue"
+msgstr "LCh Hue"
 
 #: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
-msgid "Chroma (LCH)"
-msgstr "Cromaticità (LCH)"
+msgid "LCh Chroma"
+msgstr "Cromaticità LCh"
 
 #: ../app/operations/operations-enums.c:245
 msgctxt "layer-mode"
-msgid "Color (LCH)"
-msgstr "Colore (LCH)"
+msgid "LCh Color"
+msgstr "Colore LCh"
 
 #: ../app/operations/operations-enums.c:246
 msgctxt "layer-mode"
-msgid "Lightness (LCH)"
-msgstr "Luminosità (LCH)"
+msgid "LCh Lightness"
+msgstr "Luminosità LCh"
 
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
@@ -18246,23 +18302,23 @@ msgstr "Solo chiari"
 
 #: ../app/operations/operations-enums.c:256
 msgctxt "layer-mode"
-msgid "Hue (HSV)"
-msgstr "Tonalità (HSV)"
+msgid "HSV Hue"
+msgstr "Tonalità HSV"
 
 #: ../app/operations/operations-enums.c:257
 msgctxt "layer-mode"
-msgid "Saturation (HSV)"
-msgstr "Saturazione (HSV)"
+msgid "HSV Saturation"
+msgstr "Saturazione HSV"
 
 #: ../app/operations/operations-enums.c:258
 msgctxt "layer-mode"
-msgid "Color (HSL)"
-msgstr "Colore (HSL)"
+msgid "HSL Color"
+msgstr "Colore HSL"
 
 #: ../app/operations/operations-enums.c:259
 msgctxt "layer-mode"
-msgid "Value (HSV)"
-msgstr "Valore (HSV)"
+msgid "HSV Value"
+msgstr "Valore HSL"
 
 #: ../app/operations/operations-enums.c:260
 msgctxt "layer-mode"
@@ -18444,36 +18500,36 @@ msgstr "Giallo-blu"
 msgid "Preserve Luminosity"
 msgstr "Preserva luminosità"
 
-#: ../app/operations/gimpcurvesconfig.c:106
+#: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:109
 #: ../app/widgets/gimphistogrameditor.c:111
 msgid "Linear"
 msgstr "Lineare"
 
-#: ../app/operations/gimpcurvesconfig.c:107
+#: ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:110
 msgid "Work on linear RGB"
 msgstr "Lavora su RGB lineare"
 
-#: ../app/operations/gimpcurvesconfig.c:113
+#: ../app/operations/gimpcurvesconfig.c:111
 #: ../app/operations/gimplevelsconfig.c:116
 msgid "The affected channel"
 msgstr "Il canale interessato"
 
-#: ../app/operations/gimpcurvesconfig.c:119
-#: ../app/operations/gimpcurvesconfig.c:120
+#: ../app/operations/gimpcurvesconfig.c:117
+#: ../app/operations/gimpcurvesconfig.c:118
 msgid "Curve"
 msgstr "Curve"
 
-#: ../app/operations/gimpcurvesconfig.c:549
+#: ../app/operations/gimpcurvesconfig.c:547
 msgid "not a GIMP Curves file"
 msgstr "non è un file curve di GIMP"
 
-#: ../app/operations/gimpcurvesconfig.c:580
+#: ../app/operations/gimpcurvesconfig.c:578
 msgid "Parse error, didn't find 2 integers"
 msgstr "Errore di analisi, non sono stati trovati 2 interi"
 
-#: ../app/operations/gimpcurvesconfig.c:700
+#: ../app/operations/gimpcurvesconfig.c:698
 msgid "Writing curves file failed: "
 msgstr "Scrittura file curve fallita: "
 
@@ -18778,7 +18834,7 @@ msgid "Ink"
 msgstr "Stilo"
 
 #: ../app/paint/gimpinkoptions.c:74 ../app/paint/gimpinkoptions.c:87
-#: ../app/paint/gimppaintoptions.c:204 ../app/tools/gimpwarpoptions.c:91
+#: ../app/paint/gimppaintoptions.c:203 ../app/tools/gimpwarpoptions.c:91
 msgid "Size"
 msgstr "Dimensione"
 
@@ -18787,7 +18843,7 @@ msgid "Ink Blob Size"
 msgstr "Dimensione macchia stilo"
 
 #: ../app/paint/gimpinkoptions.c:80 ../app/paint/gimpinkoptions.c:119
-#: ../app/paint/gimppaintoptions.c:218 ../app/widgets/gimpbrusheditor.c:200
+#: ../app/paint/gimppaintoptions.c:217 ../app/widgets/gimpbrusheditor.c:200
 msgid "Angle"
 msgstr "Angolo"
 
@@ -18797,8 +18853,8 @@ msgid "Tilt"
 msgstr "Inclinazione"
 
 #. Blob shape widgets
-#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpgradientoptions.c:95
-#: ../app/tools/gimpgradientoptions.c:305 ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpgradientoptions.c:94
+#: ../app/tools/gimpgradientoptions.c:289 ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Taglio"
 
@@ -18832,7 +18888,7 @@ msgstr "Raggio"
 msgid "Base Opacity"
 msgstr "Opacità base"
 
-#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:232
+#: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:231
 #: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
 msgstr "Durezza"
@@ -18857,164 +18913,164 @@ msgstr "Pennello"
 msgid "Paint"
 msgstr "Disegna"
 
-#: ../app/paint/gimppaintoptions.c:205
+#: ../app/paint/gimppaintoptions.c:204
 msgid "Brush Size"
 msgstr "Dimensione pennello"
 
-#: ../app/paint/gimppaintoptions.c:211
+#: ../app/paint/gimppaintoptions.c:210
 msgid "Aspect Ratio"
 msgstr "Rapporto dimensioni"
 
-#: ../app/paint/gimppaintoptions.c:225 ../app/tools/gimpwarpoptions.c:112
+#: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Spaziatura"
 
-#: ../app/paint/gimppaintoptions.c:239
+#: ../app/paint/gimppaintoptions.c:238
 msgid "Force"
 msgstr "Forza"
 
-#: ../app/paint/gimppaintoptions.c:240
+#: ../app/paint/gimppaintoptions.c:239
 msgid "Brush Force"
 msgstr "Forza pennello"
 
-#: ../app/paint/gimppaintoptions.c:246
+#: ../app/paint/gimppaintoptions.c:245
 msgid "Link Size"
 msgstr "Dimensione collegamento"
 
-#: ../app/paint/gimppaintoptions.c:247
+#: ../app/paint/gimppaintoptions.c:246
 msgid "Link brush size to brush native"
 msgstr "Collega la dimensione pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:253
+#: ../app/paint/gimppaintoptions.c:252
 msgid "Link Aspect Ratio"
 msgstr "Rapporto dimensioni collegamento"
 
-#: ../app/paint/gimppaintoptions.c:254
+#: ../app/paint/gimppaintoptions.c:253
 msgid "Link brush aspect ratio to brush native"
 msgstr "Collega il rapporto dimensioni pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:260
+#: ../app/paint/gimppaintoptions.c:259
 msgid "Link Angle"
 msgstr "Angolo collegamento"
 
-#: ../app/paint/gimppaintoptions.c:261
+#: ../app/paint/gimppaintoptions.c:260
 msgid "Link brush angle to brush native"
 msgstr "Collega l'angolo pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:267
+#: ../app/paint/gimppaintoptions.c:266
 msgid "Link Spacing"
 msgstr "Spaziatura collegamento"
 
-#: ../app/paint/gimppaintoptions.c:268
+#: ../app/paint/gimppaintoptions.c:267
 msgid "Link brush spacing to brush native"
 msgstr "Collega la spaziatura pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:274
+#: ../app/paint/gimppaintoptions.c:273
 msgid "Link Hardness"
 msgstr "Durezza collegamento"
 
-#: ../app/paint/gimppaintoptions.c:275
+#: ../app/paint/gimppaintoptions.c:274
 msgid "Link brush hardness to brush native"
 msgstr "Collega la durezza pennello all'originale"
 
-#: ../app/paint/gimppaintoptions.c:281
+#: ../app/paint/gimppaintoptions.c:280
 msgid "Lock brush to view"
 msgstr "Blocca il pennello alla vista"
 
-#: ../app/paint/gimppaintoptions.c:282
+#: ../app/paint/gimppaintoptions.c:281
 msgid "Keep brush appearance fixed relative to the view"
 msgstr "Mantieni l'aspetto del pennello bloccato relativamente alla vista"
 
-#: ../app/paint/gimppaintoptions.c:288
+#: ../app/paint/gimppaintoptions.c:287
 msgid "Incremental"
 msgstr "Incrementale"
 
-#: ../app/paint/gimppaintoptions.c:289
+#: ../app/paint/gimppaintoptions.c:288
 msgid "Every stamp has its own opacity"
 msgstr "Ogni timbro possiede una propria opacità"
 
-#: ../app/paint/gimppaintoptions.c:296
+#: ../app/paint/gimppaintoptions.c:295
 msgid "Hard edge"
 msgstr "Margine netto"
 
-#: ../app/paint/gimppaintoptions.c:297
+#: ../app/paint/gimppaintoptions.c:296
 msgid "Ignore fuzziness of the current brush"
 msgstr "Ignora le increspature del pennello corrente"
 
-#: ../app/paint/gimppaintoptions.c:303
+#: ../app/paint/gimppaintoptions.c:302
 msgid "Apply Jitter"
 msgstr "Applica tremolio"
 
-#: ../app/paint/gimppaintoptions.c:304
+#: ../app/paint/gimppaintoptions.c:303
 msgid "Scatter brush as you paint"
 msgstr "Distribuisci il pennello durante il disegno"
 
-#: ../app/paint/gimppaintoptions.c:309
+#: ../app/paint/gimppaintoptions.c:308
 msgid "Amount"
 msgstr "Intensità"
 
-#: ../app/paint/gimppaintoptions.c:310
+#: ../app/paint/gimppaintoptions.c:309
 msgid "Distance of scattering"
 msgstr "Distanza della distribuzione"
 
-#: ../app/paint/gimppaintoptions.c:316
+#: ../app/paint/gimppaintoptions.c:315
 msgid "Dynamics Options"
 msgstr "Opzioni delle dinamiche"
 
-#: ../app/paint/gimppaintoptions.c:323
+#: ../app/paint/gimppaintoptions.c:322
 msgid "Fade length"
 msgstr "Lunghezza dissolvenza "
 
-#: ../app/paint/gimppaintoptions.c:324
+#: ../app/paint/gimppaintoptions.c:323
 msgid "Distance over which strokes fade out"
 msgstr "Distanza oltre la quale il tratto si dissolve"
 
-#: ../app/paint/gimppaintoptions.c:334 ../app/widgets/gimpviewablebox.c:385
+#: ../app/paint/gimppaintoptions.c:333 ../app/widgets/gimpviewablebox.c:385
 msgid "Reverse"
 msgstr "Inverso"
 
-#: ../app/paint/gimppaintoptions.c:335
+#: ../app/paint/gimppaintoptions.c:334
 msgid "Reverse direction of fading"
 msgstr "Inverti la direzione della dissolvenza"
 
-#: ../app/paint/gimppaintoptions.c:340 ../app/tools/gimpgradientoptions.c:109
-#: ../app/tools/gimpgradientoptions.c:326
+#: ../app/paint/gimppaintoptions.c:339 ../app/paint/gimppaintoptions.c:359
+#: ../app/tools/gimpgradientoptions.c:310
 #: ../app/tools/gimppaintoptions-gui.c:345
 msgid "Repeat"
 msgstr "Ripetizione"
 
-#: ../app/paint/gimppaintoptions.c:341
+#: ../app/paint/gimppaintoptions.c:340
 msgid "How fade is repeated as you paint"
 msgstr "Come la dissolvenza viene ripetuta durante il disegno"
 
-#: ../app/paint/gimppaintoptions.c:353 ../app/tools/gimpgradientoptions.c:298
+#: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:282
 #: ../app/tools/gimppaintoptions-gui.c:381
 msgid "Blend Color Space"
 msgstr "Spazio colore sfumatura"
 
-#: ../app/paint/gimppaintoptions.c:354
+#: ../app/paint/gimppaintoptions.c:353
 msgid "Which color space to use when blending RGB gradient segments"
 msgstr "Che spazio colore usare quando si sfumano i segmenti del gradiente RGB"
 
-#: ../app/paint/gimppaintoptions.c:417
+#: ../app/paint/gimppaintoptions.c:423
 msgid "Smooth stroke"
 msgstr "Smussa delineatura"
 
-#: ../app/paint/gimppaintoptions.c:418
+#: ../app/paint/gimppaintoptions.c:424
 msgid "Paint smoother strokes"
 msgstr "Disegna tratteggi più smussati"
 
-#: ../app/paint/gimppaintoptions.c:424
+#: ../app/paint/gimppaintoptions.c:430
 msgid "Depth of smoothing"
 msgstr "Profondità della smussatura"
 
-#: ../app/paint/gimppaintoptions.c:429
+#: ../app/paint/gimppaintoptions.c:435
 msgid "Weight"
 msgstr "Peso"
 
-#: ../app/paint/gimppaintoptions.c:430
+#: ../app/paint/gimppaintoptions.c:436
 msgid "Gravity of the pen"
 msgstr "Gravità della matita"
 
@@ -19229,157 +19285,157 @@ msgstr "Scrittura file PDB \"%s\" fallita: %s"
 msgid "Procedure '%s' not found"
 msgstr "Procedura \"%s\" non trovata"
 
-#: ../app/pdb/gimppdb-utils.c:77
+#: ../app/pdb/gimppdb-utils.c:86
 msgid "Invalid empty brush name"
 msgstr "Un nome pennello vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:86
+#: ../app/pdb/gimppdb-utils.c:95
 #, c-format
 msgid "Brush '%s' not found"
 msgstr "Pennello \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:92
+#: ../app/pdb/gimppdb-utils.c:101
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "Il pennello \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:99
+#: ../app/pdb/gimppdb-utils.c:108
 #, c-format
 msgid "Brush '%s' is not renamable"
 msgstr "Il pennello \"%s\" non è rinominabile"
 
-#: ../app/pdb/gimppdb-utils.c:125
+#: ../app/pdb/gimppdb-utils.c:134
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Il pennello \"%s\" non è un pennello generato"
 
-#: ../app/pdb/gimppdb-utils.c:146
+#: ../app/pdb/gimppdb-utils.c:155
 msgid "Invalid empty paint dynamics name"
 msgstr "Un nome vuoto per le dinamiche di disegno non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:155
+#: ../app/pdb/gimppdb-utils.c:164
 #, c-format
 msgid "Paint dynamics '%s' not found"
 msgstr "Dinamiche di disegno \"%s\" non trovate"
 
-#: ../app/pdb/gimppdb-utils.c:161
+#: ../app/pdb/gimppdb-utils.c:170
 #, c-format
 msgid "Paint dynamics '%s' is not editable"
 msgstr "Dinamiche di disegno \"%s\" non modificabili"
 
-#: ../app/pdb/gimppdb-utils.c:168
+#: ../app/pdb/gimppdb-utils.c:177
 #, c-format
 msgid "Paint dynamics '%s' is not renamable"
 msgstr "Dinamiche di disegno \"%s\" non rinominabili"
 
-#: ../app/pdb/gimppdb-utils.c:189
+#: ../app/pdb/gimppdb-utils.c:198
 msgid "Invalid empty MyPaint brush name"
 msgstr "Un nome pennello MyPaint vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:198
+#: ../app/pdb/gimppdb-utils.c:207
 #, c-format
 msgid "MyPaint brush '%s' not found"
 msgstr "Pennello MyPaint \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:204
+#: ../app/pdb/gimppdb-utils.c:213
 #, c-format
 msgid "MyPaint brush '%s' is not editable"
 msgstr "Il pennello MyPaint \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:211
+#: ../app/pdb/gimppdb-utils.c:220
 #, c-format
 msgid "MyPaint brush '%s' is not renamable"
 msgstr "Il pennello MyPaint \"%s\" non è rinominabile"
 
-#: ../app/pdb/gimppdb-utils.c:231
+#: ../app/pdb/gimppdb-utils.c:240
 msgid "Invalid empty pattern name"
 msgstr "Un nome motivo vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:240
+#: ../app/pdb/gimppdb-utils.c:249
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Motivo \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:260
+#: ../app/pdb/gimppdb-utils.c:269
 msgid "Invalid empty gradient name"
 msgstr "Un nome gradiente vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:269
+#: ../app/pdb/gimppdb-utils.c:278
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Gradiente \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:275
+#: ../app/pdb/gimppdb-utils.c:284
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Il gradiente \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:282
+#: ../app/pdb/gimppdb-utils.c:291
 #, c-format
 msgid "Gradient '%s' is not renamable"
 msgstr "Il gradiente \"%s\" non è rinominabile"
 
-#: ../app/pdb/gimppdb-utils.c:303
+#: ../app/pdb/gimppdb-utils.c:312
 msgid "Invalid empty palette name"
 msgstr "Un nome tavolozza vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:312
+#: ../app/pdb/gimppdb-utils.c:321
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Tavolozza \"%s\" non trovata"
 
-#: ../app/pdb/gimppdb-utils.c:318
+#: ../app/pdb/gimppdb-utils.c:327
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "La tavolozza \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:325
+#: ../app/pdb/gimppdb-utils.c:334
 #, c-format
 msgid "Palette '%s' is not renamable"
 msgstr "La tavolozza \"%s\" non è rinominabile"
 
-#: ../app/pdb/gimppdb-utils.c:345
+#: ../app/pdb/gimppdb-utils.c:354
 msgid "Invalid empty font name"
 msgstr "Un nome carattere vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:354
+#: ../app/pdb/gimppdb-utils.c:363
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Carattere \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:373
+#: ../app/pdb/gimppdb-utils.c:382
 msgid "Invalid empty buffer name"
 msgstr "Un nome buffer vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:383
+#: ../app/pdb/gimppdb-utils.c:392
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Buffer con nome \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:402
+#: ../app/pdb/gimppdb-utils.c:411
 msgid "Invalid empty paint method name"
 msgstr "Un nome vuoto per il metodo di disegno non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:412
+#: ../app/pdb/gimppdb-utils.c:421
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Il metodo di disegno \"%s\" non esiste"
 
-#: ../app/pdb/gimppdb-utils.c:431
+#: ../app/pdb/gimppdb-utils.c:440
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è stato aggiunto ad "
 "un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:441
+#: ../app/pdb/gimppdb-utils.c:450
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è stato allegato ad "
 "un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:467
+#: ../app/pdb/gimppdb-utils.c:476
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -19388,7 +19444,7 @@ msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è figlio diretto di "
 "un albero elementi"
 
-#: ../app/pdb/gimppdb-utils.c:495
+#: ../app/pdb/gimppdb-utils.c:504
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -19397,29 +19453,29 @@ msgstr ""
 "Gli elementi \"%s\" (%d) e \"%s\" (%d) non possono essere usati perché non "
 "sono parte dello stesso albero elementi"
 
-#: ../app/pdb/gimppdb-utils.c:520
+#: ../app/pdb/gimppdb-utils.c:529
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "L'elemento \"%s\" (%d) non deve essere un antenato di \"%s\" (%d)"
 
-#: ../app/pdb/gimppdb-utils.c:544
+#: ../app/pdb/gimppdb-utils.c:553
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "L'elemento \"%s\" (%d) è già stato aggiunto ad un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:552
+#: ../app/pdb/gimppdb-utils.c:561
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Tentativo di aggiungere la voce \"%s\" (%d) all'immagine sbagliata"
 
-#: ../app/pdb/gimppdb-utils.c:579
+#: ../app/pdb/gimppdb-utils.c:588
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché il suo contenuto è "
 "bloccato"
 
-#: ../app/pdb/gimppdb-utils.c:589
+#: ../app/pdb/gimppdb-utils.c:598
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
@@ -19427,37 +19483,37 @@ msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché la sua posizione e "
 "dimensione sono bloccate."
 
-#: ../app/pdb/gimppdb-utils.c:609
+#: ../app/pdb/gimppdb-utils.c:618
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è un'elemento gruppo"
 
-#: ../app/pdb/gimppdb-utils.c:629
+#: ../app/pdb/gimppdb-utils.c:638
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché è un'elemento gruppo"
 
-#: ../app/pdb/gimppdb-utils.c:650
+#: ../app/pdb/gimppdb-utils.c:659
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr ""
 "Il livello \"%s\" (%d) non può essere usato perché non è un livello di testo"
 
-#: ../app/pdb/gimppdb-utils.c:691
+#: ../app/pdb/gimppdb-utils.c:700
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "L'immagine \"%s\" (%d) è di tipo \"%s\", ma era prevista un'immagine di tipo "
 "\"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:714
+#: ../app/pdb/gimppdb-utils.c:723
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "L'immagine \"%s\" (%d) non deve essere di tipo \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:734
+#: ../app/pdb/gimppdb-utils.c:743
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
@@ -19466,22 +19522,22 @@ msgstr ""
 "L'immagine \"%s\" (%d) ha precisione \"%s\", invece era prevista una "
 "precisione \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:757
+#: ../app/pdb/gimppdb-utils.c:766
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "L'immagine \"%s\" (%d) non deve essere di precisione \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:781 ../app/pdb/image-guides-cmds.c:179
+#: ../app/pdb/gimppdb-utils.c:790 ../app/pdb/image-guides-cmds.c:179
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "L'immagine \"%s\" (%d) non contiene una guida con ID %d"
 
-#: ../app/pdb/gimppdb-utils.c:804 ../app/pdb/image-sample-points-cmds.c:144
+#: ../app/pdb/gimppdb-utils.c:813 ../app/pdb/image-sample-points-cmds.c:144
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "L'immagine \"%s\" (%d) non contiene punti di campionamento con ID %d"
 
-#: ../app/pdb/gimppdb-utils.c:832
+#: ../app/pdb/gimppdb-utils.c:841
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "L'oggetto vettori %d non contiene un tracciato con ID %d"
@@ -19627,7 +19683,7 @@ msgstr ""
 "La procedura \"%s\" è stata chiamata con il valore \"%s\" l'argomento \"%s"
 "\" (#%d, tipo %s). Questo valore è fuori limite."
 
-#: ../app/pdb/image-cmds.c:2523
+#: ../app/pdb/image-cmds.c:2524
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -19903,40 +19959,45 @@ msgstr "Soglia alfa"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4018
 msgctxt "undo-type"
+msgid "Sharpen (Unsharp Mask)"
+msgstr "Affila (maschera di contrasto)"
+
+#: ../app/pdb/plug-in-compat-cmds.c:4064
+msgctxt "undo-type"
 msgid "Video"
 msgstr "Video"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4055
+#: ../app/pdb/plug-in-compat-cmds.c:4101
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Inverti valore"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4159
+#: ../app/pdb/plug-in-compat-cmds.c:4205
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Propagazione valore"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4206
+#: ../app/pdb/plug-in-compat-cmds.c:4252
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Dilata"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4253
+#: ../app/pdb/plug-in-compat-cmds.c:4299
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erodi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4316
+#: ../app/pdb/plug-in-compat-cmds.c:4362
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Onde"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4364
+#: ../app/pdb/plug-in-compat-cmds.c:4410
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Vortice e pizzico"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4416
+#: ../app/pdb/plug-in-compat-cmds.c:4462
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Vento"
@@ -20049,11 +20110,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Annullato"
 
-#: ../app/plug-in/gimppluginmanager.c:230
+#: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
 msgstr "Interpreti dei plug-in"
 
-#: ../app/plug-in/gimppluginmanager.c:236
+#: ../app/plug-in/gimppluginmanager.c:246
 msgid "Plug-in Environment"
 msgstr "Ambiente plug-in"
 
@@ -20116,7 +20177,7 @@ msgstr "Indicizzata con alfa"
 msgid "This plug-in only works on the following layer types:"
 msgstr "Questo plug-in funziona solamente nei seguenti tipi di livelli:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1265
+#: ../app/plug-in/gimppluginprocedure.c:1274
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -20125,7 +20186,7 @@ msgstr ""
 "Errore di chiamata per \"%s\":\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1277
+#: ../app/plug-in/gimppluginprocedure.c:1286
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -20134,22 +20195,22 @@ msgstr ""
 "Errore di esecuzione per \"%s\":\n"
 "%s"
 
-#: ../app/plug-in/plug-in-rc.c:232
+#: ../app/plug-in/plug-in-rc.c:237
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Salto di '%s': versione protocollo GIMP errata."
 
-#: ../app/plug-in/plug-in-rc.c:239
+#: ../app/plug-in/plug-in-rc.c:244
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Salto di '%s': versione del formato del file pluginrc errata."
 
-#: ../app/plug-in/plug-in-rc.c:542
+#: ../app/plug-in/plug-in-rc.c:547
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "valore non valido '%s' per il tipo icona"
 
-#: ../app/plug-in/plug-in-rc.c:557
+#: ../app/plug-in/plug-in-rc.c:562
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "valore non valido '%ld' per il tipo icona"
@@ -20782,7 +20843,7 @@ msgstr ""
 "uniformemente."
 
 #: ../app/tools/gimpbucketfilloptions.c:142
-#: ../app/tools/gimpgradientoptions.c:129
+#: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
@@ -20937,15 +20998,15 @@ msgid "Color Picker Average Radius"
 msgstr "Raggio medio del prelievo colore"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
-msgid "Pick Mode"
-msgstr "Modalità prelievo"
+msgid "Pick Target"
+msgstr "Preleva tracciato"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
-msgid "Choose what color picker will do"
+msgid "Choose what the color picker will do"
 msgstr "Scegliere cosa farà il prelievo colore"
 
 #: ../app/tools/gimpcolorpickeroptions.c:87
-#: ../app/tools/gimpmeasureoptions.c:68
+#: ../app/tools/gimpmeasureoptions.c:79
 msgid "Use info window"
 msgstr "Usa la finestra informazioni"
 
@@ -20959,8 +21020,8 @@ msgstr ""
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:195
 #, c-format
-msgid "Pick Mode  (%s)"
-msgstr "Modalità prelievo (%s)"
+msgid "Pick Target  (%s)"
+msgstr "Obiettivo prelievo (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:204
@@ -20980,23 +21041,23 @@ msgstr "Prelievo colore: imposta i colori dai pixel di un'immagine"
 msgid "C_olor Picker"
 msgstr "Prelievo c_olore"
 
-#: ../app/tools/gimpcolorpickertool.c:253
+#: ../app/tools/gimpcolorpickertool.c:255
 msgid "Click in any image to view its color"
 msgstr "Fare clic sull'immagine per visualizzare il colore"
 
-#: ../app/tools/gimpcolorpickertool.c:260 ../app/tools/gimppainttool.c:424
+#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:424
 msgid "Click in any image to pick the foreground color"
 msgstr "Fare clic sull'immagine per prelevare il colore di primo piano"
 
-#: ../app/tools/gimpcolorpickertool.c:268 ../app/tools/gimppainttool.c:430
+#: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:430
 msgid "Click in any image to pick the background color"
 msgstr "Fare clic sull'immagine per prelevare il colore di sfondo"
 
-#: ../app/tools/gimpcolorpickertool.c:276
+#: ../app/tools/gimpcolorpickertool.c:278
 msgid "Click in any image to add the color to the palette"
 msgstr "Fare clic sull'immagine per aggiungere il colore alla tavolozza"
 
-#: ../app/tools/gimpcolorpickertool.c:343
+#: ../app/tools/gimpcolorpickertool.c:345
 msgid "Color Picker Information"
 msgstr "Informazioni sul prelievo colore"
 
@@ -21614,51 +21675,51 @@ msgstr "Matrice di trasformazione"
 msgid "Invalid transform"
 msgstr "Trasformazione non valida"
 
-#: ../app/tools/gimpgradientoptions.c:102
-#: ../app/tools/gimpgradientoptions.c:314
+#: ../app/tools/gimpgradientoptions.c:101
+#: ../app/tools/gimpgradientoptions.c:298
 msgid "Metric"
 msgstr "Metrica"
 
-#: ../app/tools/gimpgradientoptions.c:103
+#: ../app/tools/gimpgradientoptions.c:102
 msgid "Metric to use for the distance calculation"
 msgstr "Metrica da usare per il calcolo delle distanze"
 
-#: ../app/tools/gimpgradientoptions.c:117
+#: ../app/tools/gimpgradientoptions.c:109
 msgid "Adaptive Supersampling"
 msgstr "Sovracampionamento adattivo"
 
-#: ../app/tools/gimpgradientoptions.c:123
+#: ../app/tools/gimpgradientoptions.c:115
 msgid "Max depth"
 msgstr "Profondità max"
 
-#: ../app/tools/gimpgradientoptions.c:143
+#: ../app/tools/gimpgradientoptions.c:135
 msgid "Instant mode"
 msgstr "Modalità istantanea"
 
-#: ../app/tools/gimpgradientoptions.c:144
+#: ../app/tools/gimpgradientoptions.c:136
 msgid "Commit gradient instantly"
 msgstr "Imposta il gradiente istantaneamente"
 
-#: ../app/tools/gimpgradientoptions.c:150
+#: ../app/tools/gimpgradientoptions.c:142
 msgid "Modify active gradient"
 msgstr "Modifica il gradiente attivo"
 
-#: ../app/tools/gimpgradientoptions.c:151
+#: ../app/tools/gimpgradientoptions.c:143
 msgid "Modify the active gradient in-place"
 msgstr "Modifica il gradiente attivo sul posto"
 
-#: ../app/tools/gimpgradientoptions.c:290
+#: ../app/tools/gimpgradientoptions.c:274
 #: ../app/tools/gimppaintoptions-gui.c:373
 msgid "Edit this gradient"
 msgstr "Modifica questo gradiente"
 
 #. the instant toggle
-#: ../app/tools/gimpgradientoptions.c:367
+#: ../app/tools/gimpgradientoptions.c:351
 #, c-format
 msgid "Instant mode  (%s)"
 msgstr "Modalità istantanea (%s)"
 
-#: ../app/tools/gimpgradientoptions.c:387
+#: ../app/tools/gimpgradientoptions.c:371
 msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
@@ -22045,53 +22106,67 @@ msgstr "Strumento zoom: regola l'ingrandimento delle immagini"
 msgid "_Zoom"
 msgstr "_Zoom"
 
-#: ../app/tools/gimpmeasureoptions.c:69
+#: ../app/tools/gimpmeasureoptions.c:71
+msgid "Orientation"
+msgstr "Orientamento"
+
+#: ../app/tools/gimpmeasureoptions.c:72
+msgid "Orientation against which the angle is measured"
+msgstr "Rispetto a quale angolo viene misurato l'orientamento"
+
+#: ../app/tools/gimpmeasureoptions.c:80
 msgid "Open a floating dialog to view details about measurements"
 msgstr ""
 "Apre una finestra di dialogo flottante per visualizzare i dettagli sulle "
 "misurazioni"
 
+#. the orientation frame
+#: ../app/tools/gimpmeasureoptions.c:148
+#, c-format
+msgid "Orientation  (%s)"
+msgstr "Orientamento (%s)"
+
 #. the straighten frame
 #. the straighten button
-#: ../app/tools/gimpmeasureoptions.c:134 ../app/tools/gimpmeasureoptions.c:144
-#: ../app/tools/gimpmeasuretool.c:336
+#: ../app/tools/gimpmeasureoptions.c:161 ../app/tools/gimpmeasureoptions.c:171
+#: ../app/tools/gimpmeasuretool.c:349
 msgid "Straighten"
 msgstr "Raddrizza"
 
-#: ../app/tools/gimpmeasureoptions.c:148
+#: ../app/tools/gimpmeasureoptions.c:175
 msgid "Rotate the active layer, selection or path by the measured angle"
 msgstr ""
 "Ruota il livello attivo, la selezione o il tracciato dell'angolo misurato"
 
-#: ../app/tools/gimpmeasuretool.c:129
+#: ../app/tools/gimpmeasuretool.c:130
 msgid "Measure"
 msgstr "Misurino"
 
-#: ../app/tools/gimpmeasuretool.c:130
+#: ../app/tools/gimpmeasuretool.c:131
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Strumento misurino: misura distanze ed angoli"
 
-#: ../app/tools/gimpmeasuretool.c:131
+#: ../app/tools/gimpmeasuretool.c:132
 msgid "_Measure"
 msgstr "_Misurino"
 
-#: ../app/tools/gimpmeasuretool.c:151
+#: ../app/tools/gimpmeasuretool.c:153
 msgid "Straightening"
 msgstr "Raddrizzamento"
 
-#: ../app/tools/gimpmeasuretool.c:170
+#: ../app/tools/gimpmeasuretool.c:172
 msgid "Click-Drag to create a line"
 msgstr "Clic-trascina per creare una linea"
 
-#: ../app/tools/gimpmeasuretool.c:406
+#: ../app/tools/gimpmeasuretool.c:422
 msgid "Add Guides"
 msgstr "Aggiungi righelli"
 
-#: ../app/tools/gimpmeasuretool.c:729
+#: ../app/tools/gimpmeasuretool.c:709
 msgid "Measure Distances and Angles"
 msgstr "Misura distanze e angoli"
 
-#: ../app/tools/gimpmeasuretool.c:754
+#: ../app/tools/gimpmeasuretool.c:734
 msgid "Distance:"
 msgstr "Distanza:"
 
@@ -22289,16 +22364,16 @@ msgstr "%s per prelevare un colore"
 msgid "Cannot paint on layer groups."
 msgstr "Impossibile disegnare sui gruppi di livelli."
 
-#: ../app/tools/gimppainttool.c:613
+#: ../app/tools/gimppainttool.c:618
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s per una riga diritta"
 
-#: ../app/tools/gimppainttool.c:815
+#: ../app/tools/gimppainttool.c:820
 msgid "The active layer does not have an alpha channel."
 msgstr "Il livello attivo non ha un canale alfa."
 
-#: ../app/tools/gimppainttool.c:825
+#: ../app/tools/gimppainttool.c:830
 msgid "The active layer's alpha channel is locked."
 msgstr "Il canale alfa del livello attivo è bloccato."
 
@@ -22530,21 +22605,21 @@ msgstr "Centro _X:"
 msgid "Center _Y:"
 msgstr "Centro _Y:"
 
-#: ../app/tools/gimpsamplepointtool.c:240
+#: ../app/tools/gimpsamplepointtool.c:237
 msgid "Remove Sample Point"
 msgstr "Rimuovi punto di campionamento"
 
-#: ../app/tools/gimpsamplepointtool.c:241
+#: ../app/tools/gimpsamplepointtool.c:238
 msgid "Cancel Sample Point"
 msgstr "Elimina punto di campionamento"
 
-#: ../app/tools/gimpsamplepointtool.c:247
-#: ../app/tools/gimpsamplepointtool.c:333
+#: ../app/tools/gimpsamplepointtool.c:244
+#: ../app/tools/gimpsamplepointtool.c:330
 msgid "Move Sample Point: "
 msgstr "Sposta punto di campionamento: "
 
-#: ../app/tools/gimpsamplepointtool.c:259
-#: ../app/tools/gimpsamplepointtool.c:345
+#: ../app/tools/gimpsamplepointtool.c:256
+#: ../app/tools/gimpsamplepointtool.c:342
 msgid "Add Sample Point: "
 msgstr "Aggiungi punto di campionamento: "
 
@@ -24550,7 +24625,7 @@ msgid "%s Curve"
 msgstr "Curve %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:477
-#: ../app/widgets/gimpdynamicsoutputeditor.c:209
+#: ../app/widgets/gimpdynamicsoutputeditor.c:211
 msgid "_Reset Curve"
 msgstr "_Reimposta la curva"
 
@@ -25144,7 +25219,7 @@ msgstr "Plug-in"
 msgid "Progress"
 msgstr "Operazione in corso"
 
-#: ../app/widgets/gimpsamplepointeditor.c:158
+#: ../app/widgets/gimpsamplepointeditor.c:161
 msgid ""
 "This image\n"
 "has no\n"
@@ -25670,112 +25745,77 @@ msgctxt "circle-background"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:117
-msgctxt "color-frame-mode"
-msgid "Pixel"
-msgstr "Pixel"
-
-#: ../app/widgets/widgets-enums.c:118
-msgctxt "color-frame-mode"
-msgid "RGB (%)"
-msgstr "RGB (%)"
-
-#: ../app/widgets/widgets-enums.c:119
-msgctxt "color-frame-mode"
-msgid "RGB (0..255)"
-msgstr "RGB (0..255)"
-
-#: ../app/widgets/widgets-enums.c:120
-msgctxt "color-frame-mode"
-msgid "HSV"
-msgstr "HSV"
-
-#: ../app/widgets/widgets-enums.c:121
-msgctxt "color-frame-mode"
-msgid "CIE LCH"
-msgstr "CIE LCH"
-
-#: ../app/widgets/widgets-enums.c:122
-msgctxt "color-frame-mode"
-msgid "CIE LAB"
-msgstr "CIE LAB"
-
-#: ../app/widgets/widgets-enums.c:123
-msgctxt "color-frame-mode"
-msgid "CMYK"
-msgstr "CMYK"
-
-#: ../app/widgets/widgets-enums.c:153
-msgctxt "color-pick-mode"
+#: ../app/widgets/widgets-enums.c:114
+msgctxt "color-pick-target"
 msgid "Pick only"
 msgstr "Solo prelievo"
 
-#: ../app/widgets/widgets-enums.c:154
-msgctxt "color-pick-mode"
+#: ../app/widgets/widgets-enums.c:115
+msgctxt "color-pick-target"
 msgid "Set foreground color"
 msgstr "Imposta il colore di primo piano"
 
-#: ../app/widgets/widgets-enums.c:155
-msgctxt "color-pick-mode"
+#: ../app/widgets/widgets-enums.c:116
+msgctxt "color-pick-target"
 msgid "Set background color"
 msgstr "Imposta il colore di sfondo"
 
-#: ../app/widgets/widgets-enums.c:156
-msgctxt "color-pick-mode"
+#: ../app/widgets/widgets-enums.c:117
+msgctxt "color-pick-target"
 msgid "Add to palette"
 msgstr "Aggiungi alla tavolozza"
 
-#: ../app/widgets/widgets-enums.c:215
+#: ../app/widgets/widgets-enums.c:176
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr "Istogramma lineare"
 
-#: ../app/widgets/widgets-enums.c:216
+#: ../app/widgets/widgets-enums.c:177
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Istogramma logaritmico"
 
-#: ../app/widgets/widgets-enums.c:252
+#: ../app/widgets/widgets-enums.c:213
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Icona"
 
-#: ../app/widgets/widgets-enums.c:253
+#: ../app/widgets/widgets-enums.c:214
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Stato corrente"
 
-#: ../app/widgets/widgets-enums.c:254
+#: ../app/widgets/widgets-enums.c:215
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Testo"
 
-#: ../app/widgets/widgets-enums.c:255
+#: ../app/widgets/widgets-enums.c:216
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Descrizione"
 
-#: ../app/widgets/widgets-enums.c:256
+#: ../app/widgets/widgets-enums.c:217
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Icona e testo"
 
-#: ../app/widgets/widgets-enums.c:257
+#: ../app/widgets/widgets-enums.c:218
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Icona e desc"
 
-#: ../app/widgets/widgets-enums.c:258
+#: ../app/widgets/widgets-enums.c:219
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Stato e testo"
 
-#: ../app/widgets/widgets-enums.c:259
+#: ../app/widgets/widgets-enums.c:220
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stato e desc"
 
-#: ../app/widgets/widgets-enums.c:260
+#: ../app/widgets/widgets-enums.c:221
 msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Indefinito"
@@ -25818,7 +25858,11 @@ msgstr "Errore durante la scrittura di \"%s\": "
 msgid "Error creating '%s': "
 msgstr "Errore durante la creazione di \"%s\":"
 
-#: ../app/xcf/xcf-load.c:344
+#: ../app/xcf/xcf-load.c:228
+msgid "Invalid image mode and precision combination."
+msgstr "Combinazione di modalità immagine e precisione non valide."
+
+#: ../app/xcf/xcf-load.c:353
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -25827,7 +25871,7 @@ msgstr ""
 "Scoperto parassita 'exif-data' rovinato.\n"
 "I dati Exif non possono essere migrati: %s"
 
-#: ../app/xcf/xcf-load.c:381
+#: ../app/xcf/xcf-load.c:390
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -25835,7 +25879,7 @@ msgstr ""
 "Scoperto parassita 'gimp-metadata' rovinato.\n"
 "I dati XMP non possono essere migrati."
 
-#: ../app/xcf/xcf-load.c:401
+#: ../app/xcf/xcf-load.c:410
 #, c-format
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
@@ -25844,7 +25888,7 @@ msgstr ""
 "Scoperto parassita 'gimp-metadata' rovinato.\n"
 "I dati XMP non possono essere migrati: %s"
 
-#: ../app/xcf/xcf-load.c:588
+#: ../app/xcf/xcf-load.c:597
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -25852,7 +25896,7 @@ msgstr ""
 "Questo file XCF è danneggiato! È stato caricato tutto quello che si è "
 "potuto, ma è incompleto."
 
-#: ../app/xcf/xcf-load.c:599
+#: ../app/xcf/xcf-load.c:608
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -25860,7 +25904,7 @@ msgstr ""
 "Questo file XCF è danneggiato! Non è stato possibile ripristinare neanche "
 "una parte di esso."
 
-#: ../app/xcf/xcf-load.c:691
+#: ../app/xcf/xcf-load.c:700
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -25907,3 +25951,46 @@ msgstr "tondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "frastagliata"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Hue (HSV) (legacy)"
+#~ msgstr "Tonalità (HSV) (tradizionale)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Hue (HSV) (l)"
+#~ msgstr "Tonalità (HSV) (t)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Saturation (HSV) (l)"
+#~ msgstr "Saturazione (HSV) (t)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Color (HSL) (l)"
+#~ msgstr "Colore (HSL) (t)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Value (HSV) (l)"
+#~ msgstr "Valore (HSV) (t)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Chroma (LCH)"
+#~ msgstr "Cromaticità (LCH)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Lightness (LCH)"
+#~ msgstr "Luminosità (LCH)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Hue (HSV)"
+#~ msgstr "Tonalità (HSV)"
+
+#~ msgctxt "layer-mode"
+#~ msgid "Color (HSL)"
+#~ msgstr "Colore (HSL)"
+
+#~ msgid "Pick Mode"
+#~ msgstr "Modalità prelievo"
+
+#~ msgctxt "color-frame-mode"
+#~ msgid "HSV"
+#~ msgstr "HSV"
