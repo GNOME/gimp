@@ -107,6 +107,10 @@ static void     gimp_extension_manager_search_directory    (GimpExtensionManager
                                                             GFile                *directory,
                                                             gboolean              system_dir);
 
+static void     gimp_extension_manager_extension_running   (GimpExtension        *extension,
+                                                            GParamSpec           *pspec,
+                                                            GimpExtensionManager *manager);
+
 G_DEFINE_TYPE_WITH_CODE (GimpExtensionManager, gimp_extension_manager, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_extension_manager_config_iface_init))
@@ -523,6 +527,9 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
                                 (GCompareFunc) g_strcmp0))
         processed_ids = g_list_prepend (processed_ids,
                                         g_strdup (gimp_object_get_name (list->data)));
+      g_signal_connect (list->data, "notify::running",
+                        G_CALLBACK (gimp_extension_manager_extension_running),
+                        manager);
     }
   for (list = manager->p->sys_extensions; list; list = g_list_next (list))
     {
@@ -551,6 +558,9 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
               g_error_free (error);
             }
         }
+      g_signal_connect (list->data, "notify::running",
+                        G_CALLBACK (gimp_extension_manager_extension_running),
+                        manager);
     }
 
   gimp_extension_manager_refresh (manager);
@@ -806,4 +816,25 @@ gimp_extension_manager_search_directory (GimpExtensionManager *manager,
 
       g_object_unref (enumerator);
     }
+}
+
+static void
+gimp_extension_manager_extension_running (GimpExtension        *extension,
+                                          GParamSpec           *pspec,
+                                          GimpExtensionManager *manager)
+{
+  gboolean running;
+
+  g_object_get (extension,
+                "running", &running,
+                NULL);
+  if (running)
+    g_hash_table_insert (manager->p->running_extensions,
+                         (gpointer) gimp_object_get_name (extension),
+                         extension);
+  else
+    g_hash_table_remove (manager->p->running_extensions,
+                         (gpointer) gimp_object_get_name (extension));
+
+  gimp_extension_manager_refresh (manager);
 }

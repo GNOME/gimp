@@ -35,7 +35,8 @@ enum
 {
   PROP_0,
   PROP_PATH,
-  PROP_WRITABLE
+  PROP_WRITABLE,
+  PROP_RUNNING
 };
 
 struct _GimpExtensionPrivate
@@ -44,6 +45,7 @@ struct _GimpExtensionPrivate
 
   AsApp    *app;
   gboolean  writable;
+  gboolean  running;
 
   /* Extension metadata: directories. */
   GList    *brush_paths;
@@ -69,6 +71,7 @@ static void         gimp_extension_get_property    (GObject        *object,
                                                     GValue         *value,
                                                     GParamSpec     *pspec);
 
+static void         gimp_extension_clean           (GimpExtension  *extension);
 static GList      * gimp_extension_validate_paths  (GimpExtension  *extension,
                                                     const gchar    *paths,
                                                     gboolean        as_directories,
@@ -98,6 +101,10 @@ gimp_extension_class_init (GimpExtensionClass *klass)
                                                          NULL, NULL, FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_RUNNING,
+                                   g_param_spec_boolean ("running",
+                                                         NULL, NULL, FALSE,
+                                                         GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpExtensionPrivate));
 }
@@ -115,7 +122,7 @@ gimp_extension_finalize (GObject *object)
 {
   GimpExtension *extension = GIMP_EXTENSION (object);
 
-  gimp_extension_stop (extension);
+  gimp_extension_clean (extension);
 
   g_free (extension->p->path);
   if (extension->p->app)
@@ -141,6 +148,9 @@ gimp_extension_set_property (GObject      *object,
     case PROP_WRITABLE:
       extension->p->writable = g_value_get_boolean (value);
       break;
+    case PROP_RUNNING:
+      extension->p->running = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -163,6 +173,9 @@ gimp_extension_get_property (GObject      *object,
       break;
     case PROP_WRITABLE:
       g_value_set_boolean (value, extension->p->writable);
+      break;
+    case PROP_RUNNING:
+      g_value_set_boolean (value, extension->p->running);
       break;
 
     default:
@@ -366,7 +379,7 @@ gimp_extension_run (GimpExtension  *extension,
   g_return_val_if_fail (extension->p->app != NULL, FALSE);
   g_return_val_if_fail (error && *error == NULL, FALSE);
 
-  gimp_extension_stop (extension);
+  gimp_extension_clean (extension);
   metadata = as_app_get_metadata (extension->p->app);
 
   value = g_hash_table_lookup (metadata, "GIMP::brush-path");
@@ -425,7 +438,11 @@ gimp_extension_run (GimpExtension  *extension,
     }
 
   if (*error)
-    gimp_extension_stop (extension);
+    gimp_extension_clean (extension);
+
+  g_object_set (extension,
+                "running", TRUE,
+                NULL);
 
   return (*error == NULL);
 }
@@ -433,22 +450,10 @@ gimp_extension_run (GimpExtension  *extension,
 void
 gimp_extension_stop (GimpExtension  *extension)
 {
-  g_list_free_full (extension->p->brush_paths, g_object_unref);
-  extension->p->brush_paths = NULL;
-  g_list_free_full (extension->p->dynamics_paths, g_object_unref);
-  extension->p->dynamics_paths = NULL;
-  g_list_free_full (extension->p->mypaint_brush_paths, g_object_unref);
-  extension->p->brush_paths = NULL;
-  g_list_free_full (extension->p->pattern_paths, g_object_unref);
-  extension->p->pattern_paths = NULL;
-  g_list_free_full (extension->p->gradient_paths, g_object_unref);
-  extension->p->gradient_paths = NULL;
-  g_list_free_full (extension->p->palette_paths, g_object_unref);
-  extension->p->palette_paths = NULL;
-  g_list_free_full (extension->p->tool_preset_paths, g_object_unref);
-  extension->p->tool_preset_paths = NULL;
-  g_list_free_full (extension->p->plug_in_paths, g_object_unref);
-  extension->p->plug_in_paths = NULL;
+  gimp_extension_clean (extension);
+  g_object_set (extension,
+                "running", FALSE,
+                NULL);
 }
 
 GList *
@@ -532,6 +537,27 @@ gimp_extension_id_cmp (GimpExtension *extension,
                        const gchar   *id)
 {
   return g_strcmp0 (gimp_object_get_name (extension), id);
+}
+
+static void
+gimp_extension_clean (GimpExtension  *extension)
+{
+  g_list_free_full (extension->p->brush_paths, g_object_unref);
+  extension->p->brush_paths = NULL;
+  g_list_free_full (extension->p->dynamics_paths, g_object_unref);
+  extension->p->dynamics_paths = NULL;
+  g_list_free_full (extension->p->mypaint_brush_paths, g_object_unref);
+  extension->p->brush_paths = NULL;
+  g_list_free_full (extension->p->pattern_paths, g_object_unref);
+  extension->p->pattern_paths = NULL;
+  g_list_free_full (extension->p->gradient_paths, g_object_unref);
+  extension->p->gradient_paths = NULL;
+  g_list_free_full (extension->p->palette_paths, g_object_unref);
+  extension->p->palette_paths = NULL;
+  g_list_free_full (extension->p->tool_preset_paths, g_object_unref);
+  extension->p->tool_preset_paths = NULL;
+  g_list_free_full (extension->p->plug_in_paths, g_object_unref);
+  extension->p->plug_in_paths = NULL;
 }
 
 /**
