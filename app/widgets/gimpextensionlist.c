@@ -49,6 +49,9 @@ struct _GimpExtensionListPrivate
 static void gimp_extension_list_set      (GimpExtensionList *list,
                                           const GList       *extensions,
                                           gboolean           is_system);
+static void gimp_extension_switch_active (GObject           *onoff,
+                                          GParamSpec        *spec,
+                                          gpointer           extension);
 static void gimp_extension_row_activated (GtkListBox        *box,
                                           GtkListBoxRow     *row,
                                           gpointer           user_data);
@@ -175,6 +178,8 @@ gimp_extension_list_set (GimpExtensionList *list,
       gtk_widget_set_sensitive (onoff,
                                 gimp_extension_manager_can_run (list->p->manager,
                                                                 extension));
+      g_signal_connect (onoff, "notify::active",
+                        G_CALLBACK (gimp_extension_switch_active), extension);
       gtk_box_pack_end (GTK_BOX (hbox), onoff, FALSE, FALSE, 1);
       gtk_widget_show (onoff);
     }
@@ -183,6 +188,37 @@ gimp_extension_list_set (GimpExtensionList *list,
                          GUINT_TO_POINTER (TRUE));
   g_signal_connect (list, "row-activated",
                     G_CALLBACK (gimp_extension_row_activated), NULL);
+}
+
+static void
+gimp_extension_switch_active (GObject    *onoff,
+                              GParamSpec *pspec,
+                              gpointer    extension)
+{
+  GimpExtension *ext = (GimpExtension *) extension;
+
+  if (gtk_switch_get_active (GTK_SWITCH (onoff)))
+    {
+      GError *error = NULL;
+
+      gimp_extension_run (ext, &error);
+      if (error)
+        {
+          g_signal_handlers_block_by_func (onoff,
+                                           G_CALLBACK (gimp_extension_switch_active),
+                                           extension);
+          gtk_switch_set_active (GTK_SWITCH (onoff), FALSE);
+          g_signal_handlers_unblock_by_func (onoff,
+                                             G_CALLBACK (gimp_extension_switch_active),
+                                             extension);
+          g_printerr ("Extension '%s' failed to run: %s\n",
+                      gimp_object_get_name (ext),
+                      error->message);
+          g_error_free (error);
+        }
+    }
+  else
+    gimp_extension_stop (ext);
 }
 
 static void
