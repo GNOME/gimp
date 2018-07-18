@@ -45,6 +45,10 @@ header files installed.
        https://gitlab.gnome.org/GNOME/babl.git
        https://gitlab.gnome.org/GNOME/gegl.git
 
+     Note: install GEGL with libumfpack (SuiteSparse) for alternative Matting
+     engine "gegl:matting-levin" and OpenEXR library for OpenEXR format
+     support.
+
   4. You need to have installed GTK+ version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
      (>= @GDK_PIXBUF_REQUIRED_VERSION@), and Pango (>= @PANGOCAIRO_REQUIRED_VERSION@). Sources for these can be grabbed
