@@ -1020,7 +1020,6 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
   gboolean             display = GPOINTER_TO_INT (data);
   const gchar         *label_a;
   const gchar         *label_b;
-  gint                 retval  = 0;
 
   if (g_str_has_prefix (gimp_file_get_utf8_name (proc_a->file),
                                                  "gimp-xcf"))
@@ -1046,18 +1045,21 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
   if (label_a)
     {
       if (label_b)
-        retval = g_utf8_collate (label_a, label_b);
+        {
+          gint comp = g_utf8_collate (label_a, label_b);
+
+          if (comp)
+            return comp;
+        }
       else
-        return -1;
+        {
+          return -1;
+        }
     }
   else if (label_b)
     {
       return 1;
     }
-  else
-    {
-      retval = (proc_b < proc_a) - (proc_a < proc_b);
-    }
 
-  return retval;
+  return strcmp (gimp_object_get_name (proc_a), gimp_object_get_name (proc_b));
 }
