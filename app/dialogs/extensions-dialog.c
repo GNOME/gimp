@@ -79,6 +79,10 @@ extensions_dialog_new (Gimp *gimp)
                             _("_OK"), GTK_RESPONSE_OK,
                             NULL);
 
+  widget = gtk_window_get_titlebar (GTK_WINDOW (dialog));
+  gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (widget),
+                                        FALSE);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (extensions_dialog_response),
                     dialog);
