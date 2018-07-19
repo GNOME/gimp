@@ -2054,6 +2054,9 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
   g_return_val_if_fail (GIMP_IS_TEXT_TOOL (text_tool), FALSE);
   g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), FALSE);
 
+  if (layer == GIMP_LAYER (text_tool->layer))
+    return TRUE;
+
   /*  FIXME this function works, and I have no clue why: first we set
    *  the drawable, then we HALT the tool and start() it without
    *  re-setting the drawable. Why this works perfectly anyway when
