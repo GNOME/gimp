@@ -132,6 +132,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_COLOR_SELECTOR_WATER      "gimp-color-water"
 
 #define GIMP_ICON_COLOR_SPACE_LINEAR        "gimp-color-space-linear"
+#define GIMP_ICON_COLOR_SPACE_NON_LINEAR    "gimp-color-space-non-linear"
 #define GIMP_ICON_COLOR_SPACE_PERCEPTUAL    "gimp-color-space-perceptual"
 
 #define GIMP_ICON_COLORS_DEFAULT            "gimp-default-colors"
