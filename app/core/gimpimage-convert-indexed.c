@@ -809,14 +809,11 @@ gimp_image_convert_indexed (GimpImage               *image,
 
   g_object_set (image, "base-type", GIMP_INDEXED, NULL);
 
-  /* when converting from GRAY, convert to the new type's builtin
-   * profile.
+  /* when converting from GRAY, always convert to the new type's
+   * builtin profile
    */
   if (old_type == GIMP_GRAY)
-    {
-      if (gimp_image_get_color_profile (image))
-        dest_profile = gimp_image_get_builtin_color_profile (image);
-    }
+    dest_profile = gimp_image_get_builtin_color_profile (image);
 
   /*  Build histogram if necessary.  */
   rgb_to_lab_fish = babl_fish (babl_format ("R'G'B' float"),
@@ -1062,12 +1059,7 @@ gimp_image_convert_indexed (GimpImage               *image,
   /*  When converting from GRAY, set the new profile.
    */
   if (old_type == GIMP_GRAY)
-    {
-      if (gimp_image_get_color_profile (image))
-        gimp_image_set_color_profile (image, dest_profile, NULL);
-      else
-        gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
-    }
+    gimp_image_set_color_profile (image, dest_profile, NULL);
 
   /*  Delete the quantizer object, if there is one */
   if (quantobj)

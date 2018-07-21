@@ -268,30 +268,28 @@ image_convert_base_type_cmd_callback (GtkAction *action,
           GimpColorProfileCallback  callback;
           GimpColorProfile         *current_profile;
           GimpColorProfile         *default_profile;
-          const Babl               *format;
+          GimpTRCType               trc;
 
           current_profile =
             gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+          trc = gimp_babl_trc (gimp_image_get_precision (image));
 
           if (value == GIMP_RGB)
             {
               dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_RGB;
               callback    = image_convert_rgb_callback;
 
-              format = gimp_babl_format (GIMP_RGB,
-                                         gimp_image_get_precision (image),
-                                         TRUE);
-              default_profile = gimp_babl_format_get_color_profile (format);
+              default_profile = gimp_babl_get_builtin_color_profile (GIMP_RGB,
+                                                                     trc);
             }
           else
             {
               dialog_type = COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY;
               callback    = image_convert_gray_callback;
 
-              format = gimp_babl_format (GIMP_GRAY,
-                                         gimp_image_get_precision (image),
-                                         TRUE);
-              default_profile = gimp_babl_format_get_color_profile (format);
+              default_profile = gimp_babl_get_builtin_color_profile (GIMP_GRAY,
+                                                                     trc);
             }
 
           dialog = color_profile_dialog_new (dialog_type,
@@ -394,21 +392,21 @@ image_convert_precision_cmd_callback (GtkAction *action,
 }
 
 void
-image_convert_gamma_cmd_callback (GtkAction *action,
-                                  GtkAction *current,
-                                  gpointer   data)
+image_convert_trc_cmd_callback (GtkAction *action,
+                                GtkAction *current,
+                                gpointer   data)
 {
   GimpImage     *image;
   GimpDisplay   *display;
-  gboolean       value;
+  GimpTRCType    value;
   GimpPrecision  precision;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (value == gimp_babl_format_get_linear (gimp_image_get_layer_format (image,
-                                                                         FALSE)))
+  if (value == gimp_babl_format_get_trc (gimp_image_get_layer_format (image,
+                                                                      FALSE)))
     return;
 
   precision = gimp_babl_precision (gimp_image_get_component_type (image),
@@ -530,7 +528,7 @@ image_color_profile_discard_cmd_callback (GtkAction *action,
   GimpImage *image;
   return_if_no_image (image, data);
 
-  gimp_image_set_color_profile (image, NULL, NULL);
+  gimp_image_assign_color_profile (image, NULL, NULL, NULL);
   gimp_image_flush (image);
 }
 
@@ -1191,7 +1189,7 @@ image_convert_precision_callback (GtkWidget        *dialog,
 
   /* random formats with the right precision */
   old_format = gimp_image_get_layer_format (image, FALSE);
-  new_format = gimp_babl_format (GIMP_RGB, precision, FALSE);
+  new_format = gimp_babl_format (GIMP_RGB, precision, FALSE, NULL);
 
   old_bits = (babl_format_get_bytes_per_pixel (old_format) * 8 /
               babl_format_get_n_components (old_format));
@@ -1242,11 +1240,7 @@ image_profile_assign_callback (GtkWidget                *dialog,
 {
   GError *error = NULL;
 
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_PARASITE_ATTACH,
-                               _("Assign color profile"));
-
-  if (! gimp_image_set_color_profile (image, new_profile, &error))
+  if (! gimp_image_assign_color_profile (image, new_profile, NULL, &error))
     {
       gimp_message (image->gimp, G_OBJECT (dialog),
                     GIMP_MESSAGE_ERROR,
@@ -1258,13 +1252,6 @@ image_profile_assign_callback (GtkWidget                *dialog,
 
       return;
     }
-
-  gimp_image_set_is_color_managed (image, TRUE, TRUE);
-
-  /*  omg...  */
-  gimp_image_parasite_detach (image, "icc-profile-name");
-
-  gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
 

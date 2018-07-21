@@ -137,7 +137,9 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
  *
  * This procedure sets the image's color profile, or unsets it if NULL
  * is passed as 'color_profile'. This procedure does no color
- * conversion.
+ * conversion. However, it will change the pixel format of all layers
+ * to contain the babl space matching the profile. You must call this
+ * procedure before adding layers to the image.
  *
  * Returns: TRUE on success.
  *
@@ -175,7 +177,10 @@ _gimp_image_set_color_profile (gint32        image_ID,
  *
  * This procedure sets the image's color profile from a file containing
  * an ICC profile, or unsets it if NULL is passed as 'uri'. This
- * procedure does no color conversion.
+ * procedure does no color conversion. However, it will change the
+ * pixel format of all layers to contain the babl space matching the
+ * profile. You must call this procedure before adding layers to the
+ * image.
  *
  * Returns: TRUE on success.
  *

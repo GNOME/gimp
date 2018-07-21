@@ -564,34 +564,18 @@ gboolean
 gimp_color_transform_can_gegl_copy (GimpColorProfile *src_profile,
                                     GimpColorProfile *dest_profile)
 {
-  static GimpColorProfile *srgb_profile        = NULL;
-  static GimpColorProfile *srgb_linear_profile = NULL;
-  static GimpColorProfile *gray_profile        = NULL;
-  static GimpColorProfile *gray_linear_profile = NULL;
-
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), FALSE);
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile), FALSE);
 
   if (gimp_color_profile_is_equal (src_profile, dest_profile))
     return TRUE;
 
-  if (! srgb_profile)
-    {
-      srgb_profile        = gimp_color_profile_new_rgb_srgb ();
-      srgb_linear_profile = gimp_color_profile_new_rgb_srgb_linear ();
-      gray_profile        = gimp_color_profile_new_d65_gray_srgb_trc ();
-      gray_linear_profile = gimp_color_profile_new_d65_gray_linear ();
-    }
-
-  if ((gimp_color_profile_is_equal (src_profile, srgb_profile)        ||
-       gimp_color_profile_is_equal (src_profile, srgb_linear_profile) ||
-       gimp_color_profile_is_equal (src_profile, gray_profile)        ||
-       gimp_color_profile_is_equal (src_profile, gray_linear_profile))
-      &&
-      (gimp_color_profile_is_equal (dest_profile, srgb_profile)        ||
-       gimp_color_profile_is_equal (dest_profile, srgb_linear_profile) ||
-       gimp_color_profile_is_equal (dest_profile, gray_profile)        ||
-       gimp_color_profile_is_equal (dest_profile, gray_linear_profile)))
+  if (gimp_color_profile_get_space (src_profile,
+                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                    NULL) &&
+      gimp_color_profile_get_space (dest_profile,
+                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                    NULL))
     {
       return TRUE;
     }

@@ -403,10 +403,9 @@ gimp_template_editor_constructed (GObject *object)
                     G_CALLBACK (gimp_template_editor_precision_changed),
                     editor);
 
-  combo = gimp_prop_boolean_combo_box_new (G_OBJECT (template),
-                                           "linear",
-                                           _("Linear light"),
-                                           _("Perceptual gamma (sRGB)"));
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template), "trc",
+                                        GIMP_TRC_LINEAR,
+                                        GIMP_TRC_NON_LINEAR);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Gamma:"), 0.0, 0.5,
                             combo, 1);
@@ -637,7 +636,7 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
     case GIMP_COMPONENT_TYPE_U8:
       /* default to gamma for 8 bit */
       g_object_set (private->template,
-                    "linear", FALSE,
+                    "trc", GIMP_TRC_NON_LINEAR,
                     NULL);
       break;
 
@@ -652,7 +651,7 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
     case GIMP_COMPONENT_TYPE_DOUBLE:
       /* default to linear for floating point */
       g_object_set (private->template,
-                    "linear", TRUE,
+                    "trc", GIMP_TRC_LINEAR,
                     NULL);
       break;
     }

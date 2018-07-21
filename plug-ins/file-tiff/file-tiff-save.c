@@ -344,38 +344,44 @@ save_image (GFile        *file,
         }
       break;
 
-    case GIMP_PRECISION_U8_GAMMA:
+    case GIMP_PRECISION_U8_NON_LINEAR:
+    case GIMP_PRECISION_U8_PERCEPTUAL:
       bitspersample = 8;
       sampleformat  = SAMPLEFORMAT_UINT;
       break;
 
     case GIMP_PRECISION_U16_LINEAR:
-    case GIMP_PRECISION_U16_GAMMA:
+    case GIMP_PRECISION_U16_NON_LINEAR:
+    case GIMP_PRECISION_U16_PERCEPTUAL:
       bitspersample = 16;
       sampleformat  = SAMPLEFORMAT_UINT;
       break;
 
     case GIMP_PRECISION_U32_LINEAR:
-    case GIMP_PRECISION_U32_GAMMA:
+    case GIMP_PRECISION_U32_NON_LINEAR:
+    case GIMP_PRECISION_U32_PERCEPTUAL:
       bitspersample = 32;
       sampleformat  = SAMPLEFORMAT_UINT;
       break;
 
     case GIMP_PRECISION_HALF_LINEAR:
-    case GIMP_PRECISION_HALF_GAMMA:
+    case GIMP_PRECISION_HALF_NON_LINEAR:
+    case GIMP_PRECISION_HALF_PERCEPTUAL:
       bitspersample = 16;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
       break;
 
     default:
     case GIMP_PRECISION_FLOAT_LINEAR:
-    case GIMP_PRECISION_FLOAT_GAMMA:
+    case GIMP_PRECISION_FLOAT_NON_LINEAR:
+    case GIMP_PRECISION_FLOAT_PERCEPTUAL:
       bitspersample = 32;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
       break;
 
     case GIMP_PRECISION_DOUBLE_LINEAR:
-    case GIMP_PRECISION_DOUBLE_GAMMA:
+    case GIMP_PRECISION_DOUBLE_NON_LINEAR:
+    case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
       bitspersample = 64;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
       break;
@@ -399,12 +405,6 @@ save_image (GFile        *file,
       break;
 
     default:
-    case GIMP_PRECISION_U8_GAMMA:
-    case GIMP_PRECISION_U16_GAMMA:
-    case GIMP_PRECISION_U32_GAMMA:
-    case GIMP_PRECISION_HALF_GAMMA:
-    case GIMP_PRECISION_FLOAT_GAMMA:
-    case GIMP_PRECISION_DOUBLE_GAMMA:
       linear = FALSE;
       break;
     }

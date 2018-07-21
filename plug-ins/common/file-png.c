@@ -959,14 +959,14 @@ load_image (const gchar  *filename,
       if (linear)
         image_precision = GIMP_PRECISION_U16_LINEAR;
       else
-        image_precision = GIMP_PRECISION_U16_GAMMA;
+        image_precision = GIMP_PRECISION_U16_NON_LINEAR;
     }
   else
     {
       if (linear)
         image_precision = GIMP_PRECISION_U8_LINEAR;
       else
-        image_precision = GIMP_PRECISION_U8_GAMMA;
+        image_precision = GIMP_PRECISION_U8_NON_LINEAR;
     }
 
   if (png_get_bit_depth (pp, info) < 8)
@@ -1519,14 +1519,11 @@ save_image (const gchar  *filename,
         linear = FALSE;
       break;
 
-    case GIMP_PRECISION_U8_GAMMA:
+    case GIMP_PRECISION_U8_NON_LINEAR:
+    case GIMP_PRECISION_U8_PERCEPTUAL:
       bit_depth = 8;
 
-    case GIMP_PRECISION_U16_GAMMA:
-    case GIMP_PRECISION_U32_GAMMA:
-    case GIMP_PRECISION_HALF_GAMMA:
-    case GIMP_PRECISION_FLOAT_GAMMA:
-    case GIMP_PRECISION_DOUBLE_GAMMA:
+    default:
       linear = FALSE;
       break;
     }

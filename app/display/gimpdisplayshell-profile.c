@@ -108,7 +108,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   if (gimp_display_shell_has_filter (shell))
     {
       filter_format  = shell->filter_format;
-      filter_profile = gimp_babl_format_get_color_profile (filter_format);
+      filter_profile = shell->filter_profile;
     }
   else
     {

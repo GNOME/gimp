@@ -402,10 +402,12 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
    *  gimp-channel-combine-masks procedure, it's the only place that
    *  allows to combine arbitrary channels with each other.
    */
-  if (gimp_babl_format_get_linear (gegl_buffer_get_format (mask)))
-    mask_format = babl_format ("Y float");
-  else
-    mask_format = babl_format ("Y' float");
+  mask_format = gegl_buffer_get_format (mask);
+  mask_format = gimp_babl_format
+    (GIMP_GRAY,
+     gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                          gimp_babl_format_get_trc (mask_format)),
+     FALSE, NULL);
 
   iter = gegl_buffer_iterator_new (mask, &rect, 0,
                                    mask_format,
@@ -424,10 +426,12 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
    *
    *  See https://bugzilla.gnome.org/show_bug.cgi?id=791519
    */
-  if (gimp_babl_format_get_linear (gegl_buffer_get_format (add_on)))
-    add_on_format = babl_format ("Y float");
-  else
-    add_on_format = babl_format ("Y' float");
+  add_on_format = gegl_buffer_get_format (add_on);
+  add_on_format = gimp_babl_format
+    (GIMP_GRAY,
+     gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                          gimp_babl_format_get_trc (mask_format)),
+     FALSE, NULL);
 
   gegl_buffer_iterator_add (iter, add_on, &rect, 0,
                             add_on_format,

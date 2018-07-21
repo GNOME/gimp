@@ -45,7 +45,7 @@ struct _ConvertDialog
 {
   GimpImage                    *image;
   GimpComponentType             component_type;
-  gboolean                      linear;
+  GimpTRCType                   trc;
   GeglDitherMethod              layer_dither_method;
   GeglDitherMethod              text_layer_dither_method;
   GeglDitherMethod              channel_dither_method;
@@ -88,7 +88,7 @@ convert_precision_dialog_new (GimpImage                    *image,
   gint           old_bits;
   gint           new_bits;
   gboolean       dither;
-  gboolean       linear;
+  GimpTRCType    trc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -99,7 +99,8 @@ convert_precision_dialog_new (GimpImage                    *image,
   old_format = gimp_image_get_layer_format (image, FALSE);
   new_format = gimp_babl_format (GIMP_RGB,
                                  gimp_babl_precision (component_type, FALSE),
-                                 FALSE);
+                                 FALSE,
+                                 babl_format_get_space (old_format));
 
   old_bits = (babl_format_get_bytes_per_pixel (old_format) * 8 /
               babl_format_get_n_components (old_format));
@@ -119,21 +120,21 @@ convert_precision_dialog_new (GimpImage                    *image,
     {
     case GIMP_COMPONENT_TYPE_U8:
       /* default to gamma when converting 8 bit */
-      linear = FALSE;
+      trc = GIMP_TRC_NON_LINEAR;
       break;
 
     case GIMP_COMPONENT_TYPE_U16:
     case GIMP_COMPONENT_TYPE_U32:
     default:
       /* leave gamma alone by default when converting to 16/32 bit int */
-      linear = gimp_babl_format_get_linear (old_format);
+      trc = gimp_babl_format_get_trc (old_format);
       break;
 
     case GIMP_COMPONENT_TYPE_HALF:
     case GIMP_COMPONENT_TYPE_FLOAT:
     case GIMP_COMPONENT_TYPE_DOUBLE:
       /* default to linear when converting to floating point */
-      linear = TRUE;
+      trc = GIMP_TRC_LINEAR;
       break;
     }
 
@@ -141,7 +142,7 @@ convert_precision_dialog_new (GimpImage                    *image,
 
   private->image                    = image;
   private->component_type           = component_type;
-  private->linear                   = linear;
+  private->trc                      = trc;
   private->layer_dither_method      = layer_dither_method;
   private->text_layer_dither_method = text_layer_dither_method;
   private->channel_dither_method    = channel_dither_method;
@@ -198,11 +199,17 @@ convert_precision_dialog_new (GimpImage                    *image,
 
   vbox = gimp_int_radio_group_new (FALSE, NULL,
                                    G_CALLBACK (gimp_radio_button_update),
-                                   &private->linear,
-                                   linear,
+                                   &private->trc,
+                                   trc,
 
-                                   _("Perceptual gamma (sRGB)"), FALSE, NULL,
-                                   _("Linear light"),            TRUE,  NULL,
+                                   _("Linear light"),
+                                   GIMP_TRC_LINEAR, NULL,
+
+                                   _("Non-Linear"),
+                                   GIMP_TRC_NON_LINEAR, NULL,
+
+                                   _("Perceptual (sRGB)"),
+                                   GIMP_TRC_PERCEPTUAL, NULL,
 
                                    NULL);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -322,7 +329,7 @@ convert_precision_dialog_response (GtkWidget     *dialog,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpPrecision precision = gimp_babl_precision (private->component_type,
-                                                     private->linear);
+                                                     private->trc);
 
       private->callback (dialog,
                          private->image,

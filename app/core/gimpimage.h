@@ -122,7 +122,10 @@ GimpPrecision      gimp_image_get_precision      (GimpImage          *image);
 const Babl    * gimp_image_get_format            (GimpImage          *image,
                                                   GimpImageBaseType   base_type,
                                                   GimpPrecision       precision,
-                                                  gboolean            with_alpha);
+                                                  gboolean            with_alpha,
+                                                  const Babl         *space);
+
+const Babl    * gimp_image_get_layer_space       (GimpImage          *image);
 const Babl    * gimp_image_get_layer_format      (GimpImage          *image,
                                                   gboolean            with_alpha);
 const Babl    * gimp_image_get_channel_format    (GimpImage          *image);

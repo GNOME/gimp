@@ -633,7 +633,7 @@ gimp_image_class_init (GimpImageClass *klass)
   g_object_class_install_property (object_class, PROP_PRECISION,
                                    g_param_spec_enum ("precision", NULL, NULL,
                                                       GIMP_TYPE_PRECISION,
-                                                      GIMP_PRECISION_U8_GAMMA,
+                                                      GIMP_PRECISION_U8_NON_LINEAR,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -705,7 +705,7 @@ gimp_image_init (GimpImage *image)
   private->yresolution         = 1.0;
   private->resolution_unit     = GIMP_UNIT_INCH;
   private->base_type           = GIMP_RGB;
-  private->precision           = GIMP_PRECISION_U8_GAMMA;
+  private->precision           = GIMP_PRECISION_U8_NON_LINEAR;
   private->new_layer_mode      = -1;
 
   private->colormap            = NULL;
@@ -1342,14 +1342,18 @@ gimp_image_real_colormap_changed (GimpImage *image,
 
   if (private->colormap && private->n_colors > 0)
     {
+      const Babl *space = gimp_image_get_layer_space (image);
+
       babl_palette_set_palette (private->babl_palette_rgb,
                                 gimp_babl_format (GIMP_RGB,
-                                                  private->precision, FALSE),
+                                                  private->precision, FALSE,
+                                                  space),
                                 private->colormap,
                                 private->n_colors);
       babl_palette_set_palette (private->babl_palette_rgba,
                                 gimp_babl_format (GIMP_RGB,
-                                                  private->precision, FALSE),
+                                                  private->precision, FALSE,
+                                                  space),
                                 private->colormap,
                                 private->n_colors);
     }
@@ -1449,11 +1453,13 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
     case GIMP_RGB:
     case GIMP_INDEXED:
       return gimp_image_get_format (image, GIMP_RGB,
-                                    gimp_image_get_precision (image), TRUE);
+                                    gimp_image_get_precision (image), TRUE,
+                                    gimp_image_get_layer_space (image));
 
     case GIMP_GRAY:
       return gimp_image_get_format (image, GIMP_GRAY,
-                                    gimp_image_get_precision (image), TRUE);
+                                    gimp_image_get_precision (image), TRUE,
+                                    gimp_image_get_layer_space (image));
     }
 
   g_return_val_if_reached (NULL);
@@ -1817,7 +1823,8 @@ const Babl *
 gimp_image_get_format (GimpImage         *image,
                        GimpImageBaseType  base_type,
                        GimpPrecision      precision,
-                       gboolean           with_alpha)
+                       gboolean           with_alpha,
+                       const Babl        *space)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -1825,10 +1832,10 @@ gimp_image_get_format (GimpImage         *image,
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      return gimp_babl_format (base_type, precision, with_alpha);
+      return gimp_babl_format (base_type, precision, with_alpha, space);
 
     case GIMP_INDEXED:
-      if (precision == GIMP_PRECISION_U8_GAMMA)
+      if (precision == GIMP_PRECISION_U8_NON_LINEAR)
         {
           if (with_alpha)
             return gimp_image_colormap_get_rgba_format (image);
@@ -1841,6 +1848,14 @@ gimp_image_get_format (GimpImage         *image,
 }
 
 const Babl *
+gimp_image_get_layer_space (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->layer_space;
+}
+
+const Babl *
 gimp_image_get_layer_format (GimpImage *image,
                              gboolean   with_alpha)
 {
@@ -1849,7 +1864,8 @@ gimp_image_get_layer_format (GimpImage *image,
   return gimp_image_get_format (image,
                                 gimp_image_get_base_type (image),
                                 gimp_image_get_precision (image),
-                                with_alpha);
+                                with_alpha,
+                                gimp_image_get_layer_space (image));
 }
 
 const Babl *
@@ -1861,10 +1877,10 @@ gimp_image_get_channel_format (GimpImage *image)
 
   precision = gimp_image_get_precision (image);
 
-  if (precision == GIMP_PRECISION_U8_GAMMA)
+  if (precision == GIMP_PRECISION_U8_NON_LINEAR)
     return gimp_image_get_format (image, GIMP_GRAY,
                                   gimp_image_get_precision (image),
-                                  FALSE);
+                                  FALSE, NULL);
 
   return gimp_babl_mask_format (precision);
 }
@@ -2494,7 +2510,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
    */
 
   /* need version 7 for != 8-bit gamma images */
-  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
+  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_NON_LINEAR)
     {
       ADD_REASON (g_strdup_printf (_("High bit-depth images were added "
                                      "in %s"), "GIMP 2.10"));
@@ -2502,8 +2518,12 @@ gimp_image_get_xcf_version (GimpImage    *image,
     }
 
   /* need version 12 for > 8-bit images for proper endian swapping */
-  if (gimp_image_get_precision (image) > GIMP_PRECISION_U8_GAMMA)
-    version = MAX (12, version);
+  if (gimp_image_get_component_type (image) > GIMP_COMPONENT_TYPE_U8)
+    {
+      ADD_REASON (g_strdup_printf (_("Encoding of high bit-depth images was "
+                                     "fixed in %s"), "GIMP 2.10"));
+      version = MAX (12, version);
+    }
 
   /* need version 8 for zlib compression */
   if (zlib_compression)

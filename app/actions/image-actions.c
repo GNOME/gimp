@@ -244,19 +244,19 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
     GIMP_COMPONENT_TYPE_DOUBLE, GIMP_HELP_IMAGE_CONVERT_DOUBLE }
 };
 
-static const GimpRadioActionEntry image_convert_gamma_actions[] =
+static const GimpRadioActionEntry image_convert_trc_actions[] =
 {
   { "image-convert-gamma", NULL,
     NC_("image-convert-action", "Perceptual gamma (sRGB)"), NULL,
     NC_("image-convert-action",
         "Convert the image to perceptual (sRGB) gamma"),
-    FALSE, GIMP_HELP_IMAGE_CONVERT_GAMMA },
+    GIMP_TRC_NON_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
 
   { "image-convert-linear", NULL,
     NC_("image-convert-action", "Linear light"), NULL,
     NC_("image-convert-action",
         "Convert the image to linear light"),
-    TRUE, GIMP_HELP_IMAGE_CONVERT_GAMMA }
+    GIMP_TRC_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA }
 };
 
 static const GimpEnumActionEntry image_flip_actions[] =
@@ -320,10 +320,10 @@ image_actions_setup (GimpActionGroup *group)
                                        G_CALLBACK (image_convert_precision_cmd_callback));
 
   gimp_action_group_add_radio_actions (group, "image-convert-action",
-                                       image_convert_gamma_actions,
-                                       G_N_ELEMENTS (image_convert_gamma_actions),
+                                       image_convert_trc_actions,
+                                       G_N_ELEMENTS (image_convert_trc_actions),
                                        NULL, 0,
-                                       G_CALLBACK (image_convert_gamma_cmd_callback));
+                                       G_CALLBACK (image_convert_trc_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, "image-action",
                                       image_flip_actions,
@@ -393,8 +393,9 @@ image_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      if (gimp_babl_format_get_linear (gimp_image_get_layer_format (image,
-                                                                    FALSE)))
+      if (gimp_babl_format_get_trc (gimp_image_get_layer_format (image,
+                                                                 FALSE)) ==
+          GIMP_TRC_LINEAR)
         {
           gimp_action_group_set_action_active (group, "image-convert-linear",
                                                TRUE);
@@ -406,7 +407,7 @@ image_actions_update (GimpActionGroup *group,
         }
 
       is_indexed  = (base_type == GIMP_INDEXED);
-      is_u8_gamma = (precision == GIMP_PRECISION_U8_GAMMA);
+      is_u8_gamma = (precision == GIMP_PRECISION_U8_NON_LINEAR);
       is_double   = (component_type == GIMP_COMPONENT_TYPE_DOUBLE);
       aux         = (gimp_image_get_active_channel (image) != NULL);
       lp          = ! gimp_image_is_empty (image);

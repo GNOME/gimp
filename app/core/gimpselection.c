@@ -713,7 +713,8 @@ gimp_selection_extract (GimpSelection *selection,
       dest_format = gimp_image_get_format (image, GIMP_RGB,
                                            gimp_image_get_precision (image),
                                            add_alpha ||
-                                           babl_format_has_alpha (src_format));
+                                           babl_format_has_alpha (src_format),
+                                           babl_format_get_space (src_format));
     }
   else
     {

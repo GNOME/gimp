@@ -407,6 +407,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpThumbnailSize;
 
 
+#define GIMP_TYPE_TRC_TYPE (gimp_trc_type_get_type ())
+
+GType gimp_trc_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_TRC_LINEAR,     /*< desc="Linear"     >*/
+  GIMP_TRC_NON_LINEAR, /*< desc="Non-Linear" >*/
+  GIMP_TRC_PERCEPTUAL  /*< desc="Perceptual" >*/
+} GimpTRCType;
+
+
 #define GIMP_TYPE_UNDO_EVENT (gimp_undo_event_get_type ())
 
 GType gimp_undo_event_get_type (void) G_GNUC_CONST;

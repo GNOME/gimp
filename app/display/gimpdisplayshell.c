@@ -35,6 +35,8 @@
 #include "config/gimpdisplayconfig.h"
 #include "config/gimpdisplayoptions.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
@@ -320,6 +322,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->override_cursor   = (GimpCursorType) -1;
 
   shell->filter_format     = babl_format ("R'G'B'A float");
+  shell->filter_profile    = gimp_babl_get_builtin_color_profile (GIMP_RGB,
+                                                                  GIMP_TRC_NON_LINEAR);
 
   shell->motion_buffer   = gimp_motion_buffer_new ();
 

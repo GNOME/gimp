@@ -121,7 +121,7 @@ static GeglNode *
 wrap_in_gamma_cast (GeglNode     *node,
                     GimpDrawable *drawable)
 {
-  if (! gimp_drawable_get_linear (drawable))
+  if (gimp_drawable_get_trc (drawable) != GIMP_TRC_LINEAR)
     {
       const Babl *drawable_format;
       const Babl *cast_format;
@@ -137,7 +137,8 @@ wrap_in_gamma_cast (GeglNode     *node,
         gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
                           gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
                                                TRUE),
-                          babl_format_has_alpha (drawable_format));
+                          babl_format_has_alpha (drawable_format),
+                          babl_format_get_space (drawable_format));
 
       new_node = gegl_node_new ();
 

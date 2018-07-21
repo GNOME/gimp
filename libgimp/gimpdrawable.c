@@ -422,6 +422,10 @@ gimp_drawable_get_format (gint32 drawable_ID)
   const Babl *format     = NULL;
   gchar      *format_str = _gimp_drawable_get_format (drawable_ID);
 
+  /* EEK SPACE _gimp_drawable_get_format() only returns the encoding,
+   * needs to create the actual space from the image's profile
+   */
+
   if (format_str)
     {
       if (gimp_drawable_is_indexed (drawable_ID))

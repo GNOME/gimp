@@ -405,7 +405,7 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
           gint           n_bins;
           gint           start;
           gboolean       precision_enabled;
-          gboolean       linear;
+          GimpTRCType    trc;
           gint           end;
 
           precision_enabled =
@@ -413,11 +413,11 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
             gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in);
 
           if (precision_enabled)
-            linear = gimp_drawable_get_linear (drawable);
+            trc = gimp_drawable_get_trc (drawable);
           else
-            linear = FALSE;
+            trc = GIMP_TRC_NON_LINEAR;
 
-          histogram = gimp_histogram_new (linear);
+          histogram = gimp_histogram_new (trc);
           gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
 
           n_bins = gimp_histogram_n_bins (histogram);

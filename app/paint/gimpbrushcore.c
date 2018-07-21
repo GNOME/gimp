@@ -1287,14 +1287,16 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
 
   if (mode == GIMP_BRUSH_SOFT && brush_mask)
     {
-      GimpImageBaseType pixmap_base_type;
-      GimpPrecision     pixmap_precision;
+      GimpImageBaseType  pixmap_base_type;
+      GimpPrecision      pixmap_precision;
+      const Babl        *pixmap_space;
 
       pixmap_base_type = gimp_babl_format_get_base_type (pixmap_format);
       pixmap_precision = gimp_babl_format_get_precision (pixmap_format);
+      pixmap_space     = babl_format_get_space (pixmap_format);
 
       fish = babl_fish (gimp_babl_format (pixmap_base_type, pixmap_precision,
-                                          TRUE),
+                                          TRUE, pixmap_space),
                         area_format);
     }
   else

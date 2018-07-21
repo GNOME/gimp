@@ -295,7 +295,7 @@ load_image (GFile              *file,
           if (profile_linear)
             image_precision = GIMP_PRECISION_U8_LINEAR;
           else
-            image_precision = GIMP_PRECISION_U8_GAMMA;
+            image_precision = GIMP_PRECISION_U8_NON_LINEAR;
 
           type = babl_type ("u8");
           break;
@@ -306,7 +306,7 @@ load_image (GFile              *file,
               if (profile_linear)
                 image_precision = GIMP_PRECISION_HALF_LINEAR;
               else
-                image_precision = GIMP_PRECISION_HALF_GAMMA;
+                image_precision = GIMP_PRECISION_HALF_NON_LINEAR;
 
               type = babl_type ("half");
             }
@@ -315,7 +315,7 @@ load_image (GFile              *file,
               if (profile_linear)
                 image_precision = GIMP_PRECISION_U16_LINEAR;
               else
-                image_precision = GIMP_PRECISION_U16_GAMMA;
+                image_precision = GIMP_PRECISION_U16_NON_LINEAR;
 
               type = babl_type ("u16");
             }
@@ -327,7 +327,7 @@ load_image (GFile              *file,
               if (profile_linear)
                 image_precision = GIMP_PRECISION_FLOAT_LINEAR;
               else
-                image_precision = GIMP_PRECISION_FLOAT_GAMMA;
+                image_precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
 
               type = babl_type ("float");
             }
@@ -336,7 +336,7 @@ load_image (GFile              *file,
               if (profile_linear)
                 image_precision = GIMP_PRECISION_U32_LINEAR;
               else
-                image_precision = GIMP_PRECISION_U32_GAMMA;
+                image_precision = GIMP_PRECISION_U32_NON_LINEAR;
 
               type = babl_type ("u32");
             }
@@ -346,7 +346,7 @@ load_image (GFile              *file,
           if (profile_linear)
             image_precision = GIMP_PRECISION_DOUBLE_LINEAR;
           else
-            image_precision = GIMP_PRECISION_DOUBLE_GAMMA;
+            image_precision = GIMP_PRECISION_DOUBLE_NON_LINEAR;
 
           type = babl_type ("double");
           break;
@@ -355,7 +355,7 @@ load_image (GFile              *file,
           if (profile_linear)
             image_precision = GIMP_PRECISION_U16_LINEAR;
           else
-            image_precision = GIMP_PRECISION_U16_GAMMA;
+            image_precision = GIMP_PRECISION_U16_NON_LINEAR;
 
           type = babl_type ("u16");
         }

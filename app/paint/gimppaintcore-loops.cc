@@ -25,6 +25,8 @@ extern "C"
 
 #include "paint-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "operations/layer-modes/gimp-layer-modes.h"
 
 #include "core/gimp-parallel.h"
@@ -1324,17 +1326,18 @@ mask_components_onto (GeglBuffer          *src_buffer,
                       GeglBuffer          *dst_buffer,
                       const GeglRectangle *roi,
                       GimpComponentMask    mask,
-                      gboolean             linear_mode)
+                      GimpTRCType          trc,
+                      const Babl          *space)
 {
   const Babl *iterator_format;
 
   if (! roi)
     roi = gegl_buffer_get_extent (dst_buffer);
 
-  if (linear_mode)
-    iterator_format = babl_format ("RGBA float");
-  else
-    iterator_format = babl_format ("R'G'B'A float");
+  iterator_format =
+    gimp_babl_format (GIMP_RGB,
+                      gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT, trc),
+                      TRUE, space);
 
   gimp_parallel_distribute_area (roi, MIN_PARALLEL_SUB_AREA,
                                  [=] (const GeglRectangle *area)

@@ -32,6 +32,7 @@
 #include "paint/gimppaintcore-stroke.h"
 #include "paint/gimppaintoptions.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
@@ -406,10 +407,11 @@ gimp_channel_get_node (GimpFilter *filter)
 
   g_warn_if_fail (channel->color_node == NULL);
 
-  if (gimp_drawable_get_linear (drawable))
-    color_format = babl_format ("RGBA float");
-  else
-    color_format = babl_format ("R'G'B'A float");
+  color_format =
+    gimp_babl_format (GIMP_RGB,
+                      gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                           gimp_drawable_get_trc (drawable)),
+                      TRUE, NULL);
 
   channel->color_node = gegl_node_new_child (node,
                                              "operation", "gegl:color",
@@ -1040,12 +1042,11 @@ gimp_channel_set_buffer (GimpDrawable *drawable,
 
   if (gimp_filter_peek_node (GIMP_FILTER (channel)))
     {
-      const Babl *color_format;
-
-      if (gimp_drawable_get_linear (drawable))
-        color_format = babl_format ("RGBA float");
-      else
-        color_format = babl_format ("R'G'B'A float");
+      const Babl *color_format =
+        gimp_babl_format (GIMP_RGB,
+                          gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                               gimp_drawable_get_trc (drawable)),
+                          TRUE, NULL);
 
       gegl_node_set (channel->color_node,
                      "format", color_format,

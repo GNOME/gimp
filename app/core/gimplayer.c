@@ -1366,6 +1366,8 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
 {
   GimpLayer       *layer = GIMP_LAYER (drawable);
   GimpObjectQueue *queue = NULL;
+  const Babl      *dest_space;
+  const Babl      *space_format;
   gboolean         convert_mask;
 
   convert_mask = layer->mask &&
@@ -1394,7 +1396,26 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
   if (queue)
     gimp_object_queue_pop (queue);
 
-  GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, new_format,
+  /*  when called with a dest_profile, always use the space from that
+   *  profile, we can't use gimp_image_get_layer_space() during an
+   *  image type or precision conversion
+   */
+  if (dest_profile)
+    {
+      dest_space =
+        gimp_color_profile_get_space (dest_profile,
+                                      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                      NULL);
+    }
+  else
+    {
+      dest_space = gimp_image_get_layer_space (dest_image);
+    }
+
+  space_format = babl_format_with_space (babl_format_get_encoding (new_format),
+                                         dest_space);
+
+  GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, space_format,
                                               dest_profile, layer_dither_type,
                                               mask_dither_type, push_undo,
                                               progress);
@@ -1480,10 +1501,10 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
                        gint          offset_y)
 {
   GeglBuffer *old_buffer = gimp_drawable_get_buffer (drawable);
-  gint        old_linear = -1;
+  gint        old_trc    = -1;
 
   if (old_buffer)
-    old_linear = gimp_drawable_get_linear (drawable);
+    old_trc = gimp_drawable_get_trc (drawable);
 
   GIMP_DRAWABLE_CLASS (parent_class)->set_buffer (drawable,
                                                   push_undo, undo_desc,
@@ -1492,7 +1513,7 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
 
   if (gimp_filter_peek_node (GIMP_FILTER (drawable)))
     {
-      if (gimp_drawable_get_linear (drawable) != old_linear)
+      if (gimp_drawable_get_trc (drawable) != old_trc)
         gimp_layer_update_mode_node (GIMP_LAYER (drawable));
     }
 }
@@ -1768,6 +1789,48 @@ gimp_layer_layer_mask_update (GimpDrawable *drawable,
 
 /*  public functions  */
 
+void
+gimp_layer_fix_format_space (GimpLayer *layer,
+                             gboolean   copy_buffer,
+                             gboolean   push_undo)
+{
+  GimpDrawable *drawable;
+  const Babl   *format;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+  g_return_if_fail (push_undo == FALSE || copy_buffer == TRUE);
+
+  drawable = GIMP_DRAWABLE (layer);
+
+  format = gimp_image_get_layer_format (gimp_item_get_image (GIMP_ITEM (layer)),
+                                        gimp_drawable_has_alpha (drawable));
+
+  if (format != gimp_drawable_get_format (drawable))
+    {
+      GeglBuffer *buffer;
+
+      buffer = gegl_buffer_new
+        (GEGL_RECTANGLE (0, 0,
+                         gimp_item_get_width  (GIMP_ITEM (layer)),
+                         gimp_item_get_height (GIMP_ITEM (layer))),
+         format);
+
+      if (copy_buffer)
+        {
+          gegl_buffer_set_format (buffer, gimp_drawable_get_format (drawable));
+
+          gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                                 NULL, GEGL_ABYSS_NONE,
+                                 buffer, NULL);
+
+          gegl_buffer_set_format (buffer, NULL);
+        }
+
+      gimp_drawable_set_buffer (drawable, push_undo, NULL, buffer);
+      g_object_unref (buffer);
+    }
+}
+
 GimpLayer *
 gimp_layer_get_parent (GimpLayer *layer)
 {
@@ -2022,7 +2085,8 @@ gimp_layer_create_mask (GimpLayer       *layer,
             const Babl *copy_format =
               gimp_image_get_format (image, GIMP_GRAY,
                                      gimp_drawable_get_precision (drawable),
-                                     gimp_drawable_has_alpha (drawable));
+                                     gimp_drawable_has_alpha (drawable),
+                                     NULL);
 
             src_buffer =
               gegl_buffer_new (GEGL_RECTANGLE (0, 0,

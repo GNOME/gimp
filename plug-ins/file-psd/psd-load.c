@@ -1002,16 +1002,16 @@ create_gimp_image (PSDimage    *img_a,
     switch (img_a->bps)
       {
       case 32:
-        precision = GIMP_PRECISION_U32_GAMMA;
+        precision = GIMP_PRECISION_U32_NON_LINEAR;
         break;
 
       case 16:
-        precision = GIMP_PRECISION_U16_GAMMA;
+        precision = GIMP_PRECISION_U16_NON_LINEAR;
         break;
 
       case 8:
       case 1:
-        precision = GIMP_PRECISION_U8_GAMMA;
+        precision = GIMP_PRECISION_U8_NON_LINEAR;
         break;
 
       default:

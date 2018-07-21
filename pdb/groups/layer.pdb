@@ -96,12 +96,21 @@ HELP
       break;
     }
 
-  /* do not use gimp_image_get_layer_format() because it might
-   * be the floating selection of a channel or mask
-   */
-  format = gimp_image_get_format (image, base_type,
-                                  gimp_image_get_precision (image),
-                                  has_alpha);
+  if (base_type == GIMP_GRAY)
+    {
+      /* do not use gimp_image_get_layer_format() because it might
+       * be the floating selection of a channel or mask, we will
+       * fix the format in image-add-layer and floating-sel-attach
+       */
+      format = gimp_image_get_format (image, base_type,
+                                      gimp_image_get_precision (image),
+                                      has_alpha,
+                                      NULL /* will fix later */);
+    }
+  else
+    {
+      format = gimp_image_get_layer_format (image, has_alpha);
+    }
 
   layer = gimp_layer_new (image, width, height,
                           format, name, opacity / 100.0, mode);

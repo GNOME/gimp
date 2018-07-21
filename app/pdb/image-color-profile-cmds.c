@@ -163,7 +163,8 @@ image_set_color_profile_invoker (GimpProcedure         *procedure,
 
           if (profile)
             {
-              success = gimp_image_set_color_profile (image, profile, error);
+              success = gimp_image_assign_color_profile (image, profile,
+                                                         progress, error);
               g_object_unref (profile);
             }
           else
@@ -171,7 +172,8 @@ image_set_color_profile_invoker (GimpProcedure         *procedure,
         }
       else
         {
-          success = gimp_image_set_color_profile (image, NULL, error);
+          success = gimp_image_assign_color_profile (image, NULL,
+                                                     progress, error);
         }
     }
 
@@ -205,7 +207,8 @@ image_set_color_profile_from_file_invoker (GimpProcedure         *procedure,
 
           if (profile)
             {
-              success = gimp_image_set_color_profile (image, profile, error);
+              success = gimp_image_assign_color_profile (image, profile,
+                                                         progress, error);
               g_object_unref (profile);
             }
           else
@@ -215,7 +218,8 @@ image_set_color_profile_from_file_invoker (GimpProcedure         *procedure,
         }
       else
         {
-          success = gimp_image_set_color_profile (image, NULL, error);
+          success = gimp_image_assign_color_profile (image, NULL,
+                                                     progress, error);
         }
     }
 
@@ -402,7 +406,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-set-color-profile",
                                      "Sets the image's color profile",
-                                     "This procedure sets the image's color profile, or unsets it if NULL is passed as 'color_profile'. This procedure does no color conversion.",
+                                     "This procedure sets the image's color profile, or unsets it if NULL is passed as 'color_profile'. This procedure does no color conversion. However, it will change the pixel format of all layers to contain the babl space matching the profile. You must call this procedure before adding layers to the image.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
@@ -436,7 +440,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-set-color-profile-from-file",
                                      "Sets the image's color profile from an ICC file",
-                                     "This procedure sets the image's color profile from a file containing an ICC profile, or unsets it if NULL is passed as 'uri'. This procedure does no color conversion.",
+                                     "This procedure sets the image's color profile from a file containing an ICC profile, or unsets it if NULL is passed as 'uri'. This procedure does no color conversion. However, it will change the pixel format of all layers to contain the babl space matching the profile. You must call this procedure before adding layers to the image.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",

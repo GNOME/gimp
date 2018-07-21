@@ -205,7 +205,7 @@ gimp_operation_compose_crop_prepare (GeglOperation *operation)
         {
           const Babl *model = babl_format_get_model (input_format);
 
-          if (model == babl_model ("R'G'B'A"))
+          if (! strcmp (babl_get_name (model), "R'G'B'A"))
             format = babl_format_with_space ("R'G'B'A float", input_format);
           else
             format = babl_format_with_space ("RGBA float", input_format);

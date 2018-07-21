@@ -947,10 +947,12 @@ get_projection_format (GimpProjectable   *projectable,
     {
     case GIMP_RGB:
     case GIMP_INDEXED:
-      return gimp_image_get_format (image, GIMP_RGB, precision, TRUE);
+      return gimp_image_get_format (image, GIMP_RGB, precision, TRUE,
+                                    gimp_image_get_layer_space (image));
 
     case GIMP_GRAY:
-      return gimp_image_get_format (image, GIMP_GRAY, precision, TRUE);
+      return gimp_image_get_format (image, GIMP_GRAY, precision, TRUE,
+                                    gimp_image_get_layer_space (image));
     }
 
   g_return_val_if_reached (NULL);

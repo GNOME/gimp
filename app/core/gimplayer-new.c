@@ -237,6 +237,10 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
 
       src_profile = gimp_babl_format_get_color_profile (src_format);
     }
+  else
+    {
+      g_object_ref (src_profile);
+    }
 
   dest_profile =
     gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
@@ -245,4 +249,6 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
                                    dest_buffer, NULL, dest_profile,
                                    GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                    TRUE, NULL);
+
+  g_object_unref (src_profile);
 }

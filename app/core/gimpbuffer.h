@@ -45,6 +45,7 @@ struct _GimpBuffer
   GimpUnit          unit;
 
   GimpColorProfile *color_profile;
+  GimpColorProfile *format_profile;
 };
 
 struct _GimpBufferClass

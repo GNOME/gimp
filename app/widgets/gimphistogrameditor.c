@@ -46,7 +46,7 @@
 enum
 {
   PROP_0,
-  PROP_LINEAR
+  PROP_TRC
 };
 
 
@@ -107,12 +107,14 @@ gimp_histogram_editor_class_init (GimpHistogramEditorClass *klass)
 
   image_editor_class->set_image = gimp_histogram_editor_set_image;
 
-  g_object_class_install_property (object_class, PROP_LINEAR,
-                                   g_param_spec_boolean ("linear",
-                                                         _("Linear"), NULL,
-                                                         TRUE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class, PROP_TRC,
+                                   g_param_spec_enum ("trc",
+                                                      _("Linear/Preceptual"),
+                                                      NULL,
+                                                      GIMP_TYPE_TRC_TYPE,
+                                                      GIMP_TRC_LINEAR,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -167,11 +169,9 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
-  menu = gimp_prop_boolean_icon_box_new (G_OBJECT (editor), "linear",
-                                         GIMP_ICON_COLOR_SPACE_LINEAR,
-                                         GIMP_ICON_COLOR_SPACE_PERCEPTUAL,
-                                         _("Show values in linear space"),
-                                         _("Show values in perceptual space"));
+  menu = gimp_prop_enum_icon_box_new (G_OBJECT (editor), "trc",
+                                      "gimp-color-space",
+                                      -1, -1);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
@@ -246,8 +246,8 @@ gimp_histogram_editor_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_LINEAR:
-      editor->linear = g_value_get_boolean (value);
+    case PROP_TRC:
+      editor->trc = g_value_get_enum (value);
 
       if (editor->histogram)
         {
@@ -280,8 +280,8 @@ gimp_histogram_editor_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_LINEAR:
-      g_value_set_boolean (value, editor->linear);
+    case PROP_TRC:
+      g_value_set_enum (value, editor->trc);
       break;
 
    default:
@@ -487,7 +487,7 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
             {
               GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
 
-              editor->histogram = gimp_histogram_new (editor->linear);
+              editor->histogram = gimp_histogram_new (editor->trc);
 
               gimp_histogram_view_set_histogram (view, editor->histogram);
             }
@@ -557,7 +557,7 @@ gimp_histogram_editor_buffer_update (GimpHistogramEditor *editor,
                                      const GParamSpec    *pspec)
 {
   g_object_set (editor,
-                "linear", gimp_drawable_get_linear (editor->drawable),
+                "trc", gimp_drawable_get_trc (editor->drawable),
                 NULL);
 }
 

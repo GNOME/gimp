@@ -30,6 +30,7 @@
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
@@ -467,12 +468,12 @@ gimp_paint_core_start (GimpPaintCore     *core,
       /* Allocate the scratch buffer if there's a component mask */
       if (gimp_drawable_get_active_mask (drawable) != GIMP_COMPONENT_MASK_ALL)
         {
-          const Babl *format;
-
-          if (gimp_drawable_get_linear (drawable))
-            format = babl_format ("RGBA float");
-          else
-            format = babl_format ("R'G'B'A float");
+          const Babl *format =
+            gimp_babl_format (GIMP_RGB,
+                              gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                                   gimp_drawable_get_trc (drawable)),
+                              TRUE,
+                              gimp_drawable_get_space (drawable));
 
           core->comp_buffer =
             gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -950,7 +951,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                                 width,
                                                 height),
                                 gimp_drawable_get_active_mask (drawable),
-                                gimp_drawable_get_linear (drawable));
+                                gimp_drawable_get_trc (drawable),
+                                gimp_drawable_get_space (drawable));
         }
     }
 

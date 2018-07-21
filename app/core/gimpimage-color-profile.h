@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpimage-color-profile.h
- * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2015-2018 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,11 @@ gboolean             gimp_image_validate_color_profile_by_format
 
 GimpColorProfile   * gimp_image_get_builtin_color_profile
                                                        (GimpImage           *image);
+
+gboolean             gimp_image_assign_color_profile   (GimpImage           *image,
+                                                        GimpColorProfile    *dest_profile,
+                                                        GimpProgress        *progress,
+                                                        GError             **error);
 
 gboolean             gimp_image_convert_color_profile  (GimpImage           *image,
                                                         GimpColorProfile    *dest_profile,

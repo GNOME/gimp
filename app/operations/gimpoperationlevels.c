@@ -67,12 +67,13 @@ gimp_operation_levels_class_init (GimpOperationLevelsClass *klass)
   point_class->process = gimp_operation_levels_process;
 
   g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_LINEAR,
-                                   g_param_spec_boolean ("linear",
-                                                         "Linear",
-                                                         "Whether to operate on linear RGB",
-                                                         FALSE,
-                                                         G_PARAM_READWRITE));
+                                   GIMP_OPERATION_POINT_FILTER_PROP_TRC,
+                                   g_param_spec_enum ("trc",
+                                                      "Linear/Percptual",
+                                                      "What TRC to operate on",
+                                                      GIMP_TYPE_TRC_TYPE,
+                                                      GIMP_TRC_NON_LINEAR,
+                                                      G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,

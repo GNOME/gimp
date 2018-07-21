@@ -73,7 +73,7 @@ file_import_image (GimpImage    *image,
                                             progress);
 
               if (config->import_promote_dither &&
-                  old_precision == GIMP_PRECISION_U8_GAMMA)
+                  old_precision == GIMP_PRECISION_U8_NON_LINEAR)
                 {
                   gimp_image_convert_dither_u8 (image, progress);
                 }

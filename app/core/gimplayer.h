@@ -143,6 +143,10 @@ struct _GimpLayerClass
 
 GType           gimp_layer_get_type            (void) G_GNUC_CONST;
 
+void            gimp_layer_fix_format_space    (GimpLayer            *layer,
+                                                gboolean              copy_buffer,
+                                                gboolean              push_undo);
+
 GimpLayer     * gimp_layer_get_parent          (GimpLayer            *layer);
 
 GimpLayerMask * gimp_layer_get_mask            (GimpLayer            *layer);

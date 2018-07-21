@@ -74,7 +74,10 @@ drawable_get_format_invoker (GimpProcedure         *procedure,
       if (gimp->plug_in_manager->current_plug_in)
         gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
 
-      format = g_strdup (babl_get_name (gimp_drawable_get_format (drawable)));
+      /* EEK SPACE: this needs more code on the libgimp side, we currently
+       * lose the space
+       */
+      format = g_strdup (babl_format_get_encoding (gimp_drawable_get_format (drawable)));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

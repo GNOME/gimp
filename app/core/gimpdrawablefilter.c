@@ -713,8 +713,9 @@ gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
       drawable_format =
         gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
                           gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
-                                               gimp_babl_format_get_linear (drawable_format)),
-                          babl_format_has_alpha (drawable_format));
+                                               gimp_babl_format_get_trc (drawable_format)),
+                          babl_format_has_alpha (drawable_format),
+                          babl_format_get_space (drawable_format));
 
       /*  convert the filter input/output formats to something we have
        *  built-in color profiles for (see the get_color_profile()
@@ -764,8 +765,16 @@ gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
                          "dest-format",  drawable_format,
                          NULL);
 
+          if (filter->has_input)
+            g_object_unref (input_profile);
+          g_object_unref (output_profile);
+
           return;
         }
+
+      if (filter->has_input)
+        g_object_unref (input_profile);
+      g_object_unref (output_profile);
     }
 
   g_printerr ("using gegl copy\n");
@@ -787,8 +796,16 @@ gimp_drawable_filter_sync_gamma_hack (GimpDrawableFilter *filter)
 {
   if (filter->gamma_hack)
     {
-      const Babl *drawable_format;
-      const Babl *cast_format;
+      const Babl  *drawable_format;
+      const Babl  *cast_format;
+      GimpTRCType  trc = GIMP_TRC_LINEAR;
+
+      switch (gimp_drawable_get_trc (filter->drawable))
+        {
+        case GIMP_TRC_LINEAR:     trc = GIMP_TRC_NON_LINEAR; break;
+        case GIMP_TRC_NON_LINEAR: trc = GIMP_TRC_LINEAR;     break;
+        case GIMP_TRC_PERCEPTUAL: trc = GIMP_TRC_LINEAR;     break;
+        }
 
       drawable_format =
         gimp_drawable_get_format_with_alpha (filter->drawable);
@@ -796,8 +813,9 @@ gimp_drawable_filter_sync_gamma_hack (GimpDrawableFilter *filter)
       cast_format =
         gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
                           gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
-                                               ! gimp_babl_format_get_linear (drawable_format)),
-                          TRUE);
+                                               trc),
+                          TRUE,
+                          babl_format_get_space (drawable_format));
 
       if (filter->has_input)
         {

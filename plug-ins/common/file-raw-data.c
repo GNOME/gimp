@@ -1383,7 +1383,7 @@ load_image (const gchar  *filename,
     data->image_id = gimp_image_new_with_precision (runtime->image_width,
                                                     runtime->image_height,
                                                     itype,
-                                                    GIMP_PRECISION_U16_GAMMA);
+                                                    GIMP_PRECISION_U16_NON_LINEAR);
   else
     data->image_id = gimp_image_new (runtime->image_width,
                                      runtime->image_height,

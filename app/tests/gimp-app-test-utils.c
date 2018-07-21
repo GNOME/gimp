@@ -180,7 +180,7 @@ gimp_test_utils_create_image (Gimp *gimp,
   GimpLayer *layer;
 
   image = gimp_image_new (gimp, width, height,
-                          GIMP_RGB, GIMP_PRECISION_U8_GAMMA);
+                          GIMP_RGB, GIMP_PRECISION_U8_NON_LINEAR);
 
   layer = gimp_layer_new (image,
                           width,

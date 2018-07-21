@@ -399,26 +399,26 @@ file_open_thumbnail (Gimp           *gimp,
                     {
                     case GIMP_RGB_IMAGE:
                       *format = gimp_babl_format (GIMP_RGB,
-                                                  GIMP_PRECISION_U8_GAMMA,
-                                                  FALSE);
+                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                                                  FALSE, NULL);
                       break;
 
                     case GIMP_RGBA_IMAGE:
                       *format = gimp_babl_format (GIMP_RGB,
-                                                  GIMP_PRECISION_U8_GAMMA,
-                                                  TRUE);
+                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                                                  TRUE, NULL);
                       break;
 
                     case GIMP_GRAY_IMAGE:
                       *format = gimp_babl_format (GIMP_GRAY,
-                                                  GIMP_PRECISION_U8_GAMMA,
-                                                  FALSE);
+                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                                                  FALSE, NULL);
                       break;
 
                     case GIMP_GRAYA_IMAGE:
                       *format = gimp_babl_format (GIMP_GRAY,
-                                                  GIMP_PRECISION_U8_GAMMA,
-                                                  TRUE);
+                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                                                  TRUE, NULL);
                       break;
 
                     case GIMP_INDEXED_IMAGE:

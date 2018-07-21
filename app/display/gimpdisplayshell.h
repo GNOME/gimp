@@ -161,6 +161,7 @@ struct _GimpDisplayShell
 
   GimpColorTransform *filter_transform;
   const Babl         *filter_format;   /*  filter_buffer's format             */
+  GimpColorProfile   *filter_profile;  /*  filter_format's profile            */
   GeglBuffer         *filter_buffer;   /*  buffer for display filters         */
   guchar             *filter_data;     /*  filter_buffer's pixels             */
   gint                filter_stride;   /*  filter_buffer's stride             */

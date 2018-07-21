@@ -119,7 +119,7 @@ HELP
         code => <<'CODE'
 {
   image = gimp_create_image (gimp, width, height, type,
-                             GIMP_PRECISION_U8_GAMMA, FALSE);
+                             GIMP_PRECISION_U8_NON_LINEAR, FALSE);
 
   if (! image)
     success = FALSE;
@@ -132,9 +132,10 @@ sub image_new_with_precision {
     $blurb = 'Creates a new image with the specified width, height, type and precision.';
 
     $help = <<'HELP';
-Creates a new image, undisplayed with the specified extents, type
-and precision. Indexed images can only be created at GIMP_PRECISION_U8_GAMMA
-precision. See gimp_image_new() for further details.
+Creates a new image, undisplayed with the specified extents, type and
+precision. Indexed images can only be created at
+GIMP_PRECISION_U8_NON_LINEAR precision. See gimp_image_new() for
+further details.
 HELP
 
     &mitch_pdb_misc('2012', '2.10');
@@ -875,6 +876,10 @@ HELP
     {
       if (position == -1 && parent == NULL)
         parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+      /* see layer-new */
+      if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
+        gimp_layer_fix_format_space (layer, TRUE, FALSE);
 
       success = gimp_image_add_layer (image, layer,
                                       parent, MAX (position, -1), TRUE);

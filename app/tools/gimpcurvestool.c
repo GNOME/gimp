@@ -199,12 +199,12 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   config = GIMP_CURVES_CONFIG (filter_tool->config);
 
   gegl_node_set (filter_tool->operation,
-                 "linear", config->linear,
+                 "trc", config->trc,
                  NULL);
 
-  histogram = gimp_histogram_new (config->linear);
-  g_object_unref (gimp_drawable_calculate_histogram_async (
-    drawable, histogram, FALSE));
+  histogram = gimp_histogram_new (config->trc);
+  g_object_unref (gimp_drawable_calculate_histogram_async (drawable, histogram,
+                                                           FALSE));
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                       histogram);
   g_object_unref (histogram);
@@ -446,12 +446,9 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_widget_show (hbox2);
 
   /*  The linear/perceptual radio buttons  */
-  hbox2 = gimp_prop_boolean_icon_box_new (G_OBJECT (config),
-                                          "linear",
-                                          GIMP_ICON_COLOR_SPACE_LINEAR,
-                                          GIMP_ICON_COLOR_SPACE_PERCEPTUAL,
-                                          _("Adjust curves in linear light"),
-                                          _("Adjust curves perceptually"));
+  hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (config), "trc",
+                                       "gimp-color-space",
+                                       -1, -1);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
@@ -570,9 +567,9 @@ gimp_curves_tool_reset (GimpFilterTool *filter_tool)
   g_object_freeze_notify (G_OBJECT (config));
 
   if (default_config)
-    g_object_set (config, "linear", default_config->linear, NULL);
+    g_object_set (config, "trc", default_config->trc, NULL);
   else
-    gimp_config_reset_property (G_OBJECT (config), "linear");
+    gimp_config_reset_property (G_OBJECT (config), "trc");
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
@@ -619,17 +616,17 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
       ! curves_tool->graph)
     return;
 
-  if (! strcmp (pspec->name, "linear"))
+  if (! strcmp (pspec->name, "trc"))
     {
       GimpHistogram *histogram;
 
       gegl_node_set (filter_tool->operation,
-                     "linear", curves_config->linear,
+                     "trc", curves_config->trc,
                      NULL);
 
-      histogram = gimp_histogram_new (curves_config->linear);
-      g_object_unref (gimp_drawable_calculate_histogram_async (
-        GIMP_TOOL (filter_tool)->drawable, histogram, FALSE));
+      histogram = gimp_histogram_new (curves_config->trc);
+      g_object_unref (gimp_drawable_calculate_histogram_async
+                      (GIMP_TOOL (filter_tool)->drawable, histogram, FALSE));
       gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (curves_tool->graph),
                                           histogram);
       g_object_unref (histogram);
@@ -701,7 +698,7 @@ gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
   GimpDrawable     *drawable = GIMP_TOOL (tool)->drawable;
   GimpRGB           rgb      = *color;
 
-  if (config->linear)
+  if (config->trc == GIMP_TRC_LINEAR)
     babl_process (babl_fish (babl_format ("R'G'B'A double"),
                              babl_format ("RGBA double")),
                   &rgb, &rgb, 1);

@@ -349,7 +349,7 @@ gimp_projection_estimate_memsize (GimpImageBaseType type,
 
   format = gimp_babl_format (type,
                              gimp_babl_precision (component_type, FALSE),
-                             TRUE);
+                             TRUE, NULL);
   bytes  = babl_format_get_bytes_per_pixel (format);
 
   /* The pyramid levels constitute a geometric sum with a ratio of 1/4. */

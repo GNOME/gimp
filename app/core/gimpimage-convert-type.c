@@ -68,7 +68,8 @@ gimp_image_convert_type (GimpImage          *image,
 
   new_layer_format = gimp_babl_format (new_type,
                                        gimp_image_get_precision (image),
-                                       TRUE);
+                                       TRUE,
+                                       gimp_image_get_layer_space (image));
 
   if (dest_profile &&
       ! gimp_image_validate_color_profile_by_format (new_layer_format,
@@ -114,13 +115,14 @@ gimp_image_convert_type (GimpImage          *image,
 
   g_object_set (image, "base-type", new_type, NULL);
 
-  /*  When converting to/from GRAY, convert to the new type's builtin
-   *  profile if none was passed.
+  /*  When converting to/from GRAY, always convert to the new type's
+   *  builtin profile as a fallback, we need one for convert_type on
+   *  the same image
    */
   if (old_type == GIMP_GRAY ||
       new_type == GIMP_GRAY)
     {
-      if (! dest_profile && gimp_image_get_color_profile (image))
+      if (! dest_profile)
         dest_profile = gimp_image_get_builtin_color_profile (image);
     }
 
@@ -143,10 +145,7 @@ gimp_image_convert_type (GimpImage          *image,
   if (old_type == GIMP_GRAY ||
       new_type == GIMP_GRAY)
     {
-      if (gimp_image_get_color_profile (image))
-        gimp_image_set_color_profile (image, dest_profile, NULL);
-      else
-        gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+      gimp_image_set_color_profile (image, dest_profile, NULL);
     }
 
   gimp_image_undo_group_end (image);

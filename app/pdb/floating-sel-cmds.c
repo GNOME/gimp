@@ -162,7 +162,14 @@ floating_sel_attach_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        floating_sel_attach (layer, drawable);
+        {
+          /* see layer-new */
+          if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)) &&
+              GIMP_IS_LAYER (drawable))
+            gimp_layer_fix_format_space (layer, TRUE, FALSE);
+
+          floating_sel_attach (layer, drawable);
+        }
       else
         success = FALSE;
     }

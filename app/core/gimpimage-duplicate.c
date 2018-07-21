@@ -109,15 +109,15 @@ gimp_image_duplicate (GimpImage *image)
   /*  Store the source uri to be used by the save dialog  */
   gimp_image_duplicate_save_source_file (image, new_image);
 
-  /*  Copy the colormap if necessary  */
-  gimp_image_duplicate_colormap (image, new_image);
-
   /*  Copy resolution information  */
   gimp_image_duplicate_resolution (image, new_image);
 
   /*  Copy parasites first so we have a color profile  */
   gimp_image_duplicate_parasites (image, new_image);
   gimp_image_duplicate_color_profile (image, new_image);
+
+  /*  Copy the colormap if necessary  */
+  gimp_image_duplicate_colormap (image, new_image);
 
   /*  Copy the layers  */
   active_layer = gimp_image_duplicate_layers (image, new_image);

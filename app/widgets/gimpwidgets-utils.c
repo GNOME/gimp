@@ -1692,7 +1692,6 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
                                        GError                **error)
 {
   GimpColorProfile *profile;
-  const Babl       *format;
   gchar            *label;
   GError           *my_error = NULL;
 
@@ -1700,8 +1699,8 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  format  = gimp_babl_format (base_type, precision, TRUE);
-  profile = gimp_babl_format_get_color_profile (format);
+  profile = gimp_babl_get_builtin_color_profile (base_type,
+                                                 gimp_babl_trc (precision));
 
   if (base_type == GIMP_GRAY)
     {

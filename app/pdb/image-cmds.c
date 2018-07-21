@@ -156,7 +156,7 @@ image_new_invoker (GimpProcedure         *procedure,
   if (success)
     {
       image = gimp_create_image (gimp, width, height, type,
-                                 GIMP_PRECISION_U8_GAMMA, FALSE);
+                                 GIMP_PRECISION_U8_NON_LINEAR, FALSE);
 
       if (! image)
         success = FALSE;
@@ -802,6 +802,10 @@ image_insert_layer_invoker (GimpProcedure         *procedure,
         {
           if (position == -1 && parent == NULL)
             parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+          /* see layer-new */
+          if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
+            gimp_layer_fix_format_space (layer, TRUE, FALSE);
 
           success = gimp_image_add_layer (image, layer,
                                           parent, MAX (position, -1), TRUE);
@@ -2873,7 +2877,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-new-with-precision",
                                      "Creates a new image with the specified width, height, type and precision.",
-                                     "Creates a new image, undisplayed with the specified extents, type and precision. Indexed images can only be created at GIMP_PRECISION_U8_GAMMA precision. See 'gimp-image-new' for further details.",
+                                     "Creates a new image, undisplayed with the specified extents, type and precision. Indexed images can only be created at GIMP_PRECISION_U8_NON_LINEAR precision. See 'gimp-image-new' for further details.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2012",

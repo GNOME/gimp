@@ -331,6 +331,7 @@ gimp_drawable_finalize (GObject *object)
     gimp_drawable_end_paint (drawable);
 
   g_clear_object (&drawable->private->buffer);
+  g_clear_object (&drawable->private->format_profile);
 
   gimp_drawable_free_shadow_buffer (drawable);
 
@@ -686,9 +687,14 @@ gimp_drawable_get_icc_profile (GimpColorManaged *managed,
 static GimpColorProfile *
 gimp_drawable_get_color_profile (GimpColorManaged *managed)
 {
-  const Babl *format = gimp_drawable_get_format (GIMP_DRAWABLE (managed));
+  GimpDrawable *drawable = GIMP_DRAWABLE (managed);
+  const Babl   *format   = gimp_drawable_get_format (drawable);
 
-  return gimp_babl_format_get_color_profile (format);
+  if (! drawable->private->format_profile)
+    drawable->private->format_profile =
+      gimp_babl_format_get_color_profile (format);
+
+  return drawable->private->format_profile;
 }
 
 static void
@@ -746,14 +752,15 @@ gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
                                      gint               width,
                                      gint               height)
 {
-  GimpImage  *image  = gimp_item_get_image (GIMP_ITEM (drawable));
-  gboolean    linear = gimp_drawable_get_linear (drawable);
-  const Babl *format;
+  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpTRCType  trc   = gimp_drawable_get_trc (drawable);
+  const Babl  *format;
 
   format = gimp_image_get_format (image,
                                   gimp_drawable_get_base_type (drawable),
-                                  gimp_babl_precision (component_type, linear),
-                                  gimp_drawable_has_alpha (drawable));
+                                  gimp_babl_precision (component_type, trc),
+                                  gimp_drawable_has_alpha (drawable),
+                                  NULL);
 
   return (gint64) babl_format_get_bytes_per_pixel (format) * width * height;
 }
@@ -817,6 +824,7 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
     old_has_alpha = gimp_drawable_has_alpha (drawable);
 
   g_set_object (&drawable->private->buffer, buffer);
+  g_clear_object (&drawable->private->format_profile);
 
   if (drawable->private->buffer_source_node)
     gegl_node_set (drawable->private->buffer_source_node,
@@ -1124,7 +1132,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   new_format = gimp_image_get_format (dest_image,
                                       new_base_type,
                                       new_precision,
-                                      new_has_alpha);
+                                      new_has_alpha,
+                                      NULL /* handled by layer */);
 
   old_bits = (babl_format_get_bytes_per_pixel (old_format) * 8 /
               babl_format_get_n_components (old_format));
@@ -1429,6 +1438,14 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 }
 
 const Babl *
+gimp_drawable_get_space (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return babl_format_get_space (gimp_drawable_get_format (drawable));
+}
+
+const Babl *
 gimp_drawable_get_format (GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -1444,7 +1461,8 @@ gimp_drawable_get_format_with_alpha (GimpDrawable *drawable)
   return gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
                                 gimp_drawable_get_base_type (drawable),
                                 gimp_drawable_get_precision (drawable),
-                                TRUE);
+                                TRUE,
+                                gimp_drawable_get_space (drawable));
 }
 
 const Babl *
@@ -1455,11 +1473,12 @@ gimp_drawable_get_format_without_alpha (GimpDrawable *drawable)
   return gimp_image_get_format (gimp_item_get_image (GIMP_ITEM (drawable)),
                                 gimp_drawable_get_base_type (drawable),
                                 gimp_drawable_get_precision (drawable),
-                                FALSE);
+                                FALSE,
+                                gimp_drawable_get_space (drawable));
 }
 
-gboolean
-gimp_drawable_get_linear (GimpDrawable *drawable)
+GimpTRCType
+gimp_drawable_get_trc (GimpDrawable *drawable)
 {
   const Babl *format;
 
@@ -1467,7 +1486,7 @@ gimp_drawable_get_linear (GimpDrawable *drawable)
 
   format = gegl_buffer_get_format (drawable->private->buffer);
 
-  return gimp_babl_format_get_linear (format);
+  return gimp_babl_format_get_trc (format);
 }
 
 gboolean

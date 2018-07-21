@@ -366,7 +366,7 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
                                  gdk_pixbuf_get_width  (pixbuf),
                                  gdk_pixbuf_get_height (pixbuf),
                                  base_type,
-                                 GIMP_PRECISION_U8_GAMMA,
+                                 GIMP_PRECISION_U8_NON_LINEAR,
                                  FALSE);
 
   gimp_image_undo_disable (new_image);

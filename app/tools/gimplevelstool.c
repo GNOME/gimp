@@ -202,15 +202,15 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   config = GIMP_LEVELS_CONFIG (filter_tool->config);
 
   gegl_node_set (filter_tool->operation,
-                 "linear", config->linear,
+                 "trc", config->trc,
                  NULL);
 
   g_clear_object (&l_tool->histogram);
   g_clear_object (&l_tool->histogram_async);
-  l_tool->histogram = gimp_histogram_new (config->linear);
+  l_tool->histogram = gimp_histogram_new (config->trc);
 
-  l_tool->histogram_async = gimp_drawable_calculate_histogram_async (
-    drawable, l_tool->histogram, FALSE);
+  l_tool->histogram_async = gimp_drawable_calculate_histogram_async
+    (drawable, l_tool->histogram, FALSE);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->histogram_view),
                                      l_tool->histogram);
 
@@ -397,12 +397,9 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_widget_show (hbox2);
 
   /*  The linear/perceptual radio buttons  */
-  hbox2 = gimp_prop_boolean_icon_box_new (G_OBJECT (config),
-                                          "linear",
-                                          GIMP_ICON_COLOR_SPACE_LINEAR,
-                                          GIMP_ICON_COLOR_SPACE_PERCEPTUAL,
-                                          _("Adjust levels in linear light"),
-                                          _("Adjust levels perceptually"));
+  hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (config), "trc",
+                                       "gimp-color-space",
+                                       -1, -1);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
@@ -688,18 +685,18 @@ gimp_levels_tool_config_notify (GimpFilterTool   *filter_tool,
       ! levels_tool->histogram_view)
     return;
 
-  if (! strcmp (pspec->name, "linear"))
+  if (! strcmp (pspec->name, "trc"))
     {
       gegl_node_set (filter_tool->operation,
-                     "linear", levels_config->linear,
+                     "trc", levels_config->trc,
                      NULL);
 
       g_clear_object (&levels_tool->histogram);
       g_clear_object (&levels_tool->histogram_async);
-      levels_tool->histogram = gimp_histogram_new (levels_config->linear);
+      levels_tool->histogram = gimp_histogram_new (levels_config->trc);
 
-      levels_tool->histogram_async = gimp_drawable_calculate_histogram_async (
-        GIMP_TOOL (filter_tool)->drawable, levels_tool->histogram, FALSE);
+      levels_tool->histogram_async = gimp_drawable_calculate_histogram_async
+        (GIMP_TOOL (filter_tool)->drawable, levels_tool->histogram, FALSE);
       gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (levels_tool->histogram_view),
                                          levels_tool->histogram);
     }
@@ -815,7 +812,7 @@ gimp_levels_tool_color_picked (GimpFilterTool *color_tool,
   GimpRGB           rgb         = *color;
   guint             value       = GPOINTER_TO_UINT (identifier);
 
-  if (config->linear)
+  if (config->trc == GIMP_TRC_LINEAR)
     babl_process (babl_fish (babl_format ("R'G'B'A double"),
                              babl_format ("RGBA double")),
                   &rgb, &rgb, 1);

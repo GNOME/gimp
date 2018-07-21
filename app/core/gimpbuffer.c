@@ -139,6 +139,7 @@ gimp_buffer_get_memsize (GimpObject *object,
 
   memsize += gimp_gegl_buffer_get_memsize (buffer->buffer);
   memsize += gimp_g_object_get_memsize (G_OBJECT (buffer->color_profile));
+  memsize += gimp_g_object_get_memsize (G_OBJECT (buffer->format_profile));
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -229,13 +230,16 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
   GimpTempBuf *preview;
 
   if (babl_format_is_palette (format))
-    format = gimp_babl_format (GIMP_RGB, GIMP_PRECISION_U8_GAMMA,
-                               babl_format_has_alpha (format));
+    format = gimp_babl_format (GIMP_RGB,
+                               GIMP_PRECISION_U8_NON_LINEAR,
+                               babl_format_has_alpha (format),
+                               babl_format_get_space (format));
   else
     format = gimp_babl_format (gimp_babl_format_get_base_type (format),
                                gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
-                                                    gimp_babl_format_get_linear (format)),
-                               babl_format_has_alpha (format));
+                                                    gimp_babl_format_get_trc (format)),
+                               babl_format_has_alpha (format),
+                               babl_format_get_space (format));
 
   preview = gimp_temp_buf_new (width, height, format);
 
@@ -332,14 +336,17 @@ gimp_buffer_get_description (GimpViewable  *viewable,
 
 static const guint8 *
 gimp_buffer_color_managed_get_icc_profile (GimpColorManaged *managed,
-                             gsize            *len)
+                                           gsize            *len)
 {
   GimpBuffer *buffer = GIMP_BUFFER (managed);
 
   if (buffer->color_profile)
     return gimp_color_profile_get_icc_profile (buffer->color_profile, len);
 
-  return NULL;
+  /* creates buffer->format_profile */
+  gimp_color_managed_get_color_profile (managed);
+
+  return gimp_color_profile_get_icc_profile (buffer->format_profile, len);
 }
 
 static GimpColorProfile *
@@ -350,7 +357,11 @@ gimp_buffer_color_managed_get_color_profile (GimpColorManaged *managed)
   if (buffer->color_profile)
     return buffer->color_profile;
 
-  return gimp_babl_format_get_color_profile (gimp_buffer_get_format (buffer));
+  if (! buffer->format_profile)
+    buffer->format_profile =
+      gimp_babl_format_get_color_profile (gimp_buffer_get_format (buffer));
+
+  return buffer->format_profile;
 }
 
 static void
@@ -524,11 +535,10 @@ gimp_buffer_set_color_profile (GimpBuffer       *buffer,
 
   if (profile != buffer->color_profile)
     {
-      g_clear_object (&buffer->color_profile);
-
-      if (profile)
-        buffer->color_profile = g_object_ref (profile);
+      g_set_object (&buffer->color_profile, profile);
     }
+
+  g_clear_object (&buffer->format_profile);
 }
 
 GimpColorProfile *

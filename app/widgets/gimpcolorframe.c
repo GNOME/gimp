@@ -681,9 +681,13 @@ gimp_color_frame_update (GimpColorFrame *frame)
     {
     case GIMP_COLOR_PICK_MODE_PIXEL:
       {
-        GimpImageBaseType base_type;
+        GimpImageBaseType  base_type;
+        GimpTRCType        trc;
+        const Babl        *space;
 
         base_type = gimp_babl_format_get_base_type (frame->sample_format);
+        trc       = gimp_babl_format_get_trc (frame->sample_format);
+        space     = babl_format_get_space (frame->sample_format);
 
         if (frame->sample_valid)
           {
@@ -692,38 +696,30 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
             switch (gimp_babl_format_get_precision (frame->sample_format))
               {
-              case GIMP_PRECISION_U8_GAMMA:
+              case GIMP_PRECISION_U8_NON_LINEAR:
                 if (babl_format_is_palette (frame->sample_format))
                   {
                     print_format = gimp_babl_format (GIMP_RGB,
-                                                     GIMP_PRECISION_U8_GAMMA,
-                                                     has_alpha);
+                                                     GIMP_PRECISION_U8_NON_LINEAR,
+                                                     has_alpha,
+                                                     space);
                     break;
                   }
                 /* else fall thru */
 
-              case GIMP_PRECISION_U8_LINEAR:
-              case GIMP_PRECISION_U16_LINEAR:
-              case GIMP_PRECISION_U16_GAMMA:
-              case GIMP_PRECISION_U32_LINEAR:
-              case GIMP_PRECISION_U32_GAMMA:
-              case GIMP_PRECISION_FLOAT_LINEAR:
-              case GIMP_PRECISION_FLOAT_GAMMA:
-              case GIMP_PRECISION_DOUBLE_LINEAR:
-              case GIMP_PRECISION_DOUBLE_GAMMA:
+              default:
                 print_format = frame->sample_format;
                 break;
 
-              case GIMP_PRECISION_HALF_GAMMA:
-                print_format = gimp_babl_format (base_type,
-                                                 GIMP_PRECISION_FLOAT_GAMMA,
-                                                 has_alpha);
-                break;
-
               case GIMP_PRECISION_HALF_LINEAR:
-                print_format = gimp_babl_format (base_type,
-                                                 GIMP_PRECISION_FLOAT_LINEAR,
-                                                 has_alpha);
+              case GIMP_PRECISION_HALF_NON_LINEAR:
+              case GIMP_PRECISION_HALF_PERCEPTUAL:
+                print_format =
+                  gimp_babl_format (base_type,
+                                    gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
+                                                         trc),
+                                    has_alpha,
+                                    space);
                 break;
               }
 

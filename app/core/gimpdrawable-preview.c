@@ -139,33 +139,30 @@ gimp_drawable_get_new_pixbuf (GimpViewable *viewable,
 const Babl *
 gimp_drawable_get_preview_format (GimpDrawable *drawable)
 {
-  gboolean alpha;
-  gboolean linear;
+  const Babl  *space;
+  gboolean     alpha;
+  GimpTRCType  trc;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  alpha  = gimp_drawable_has_alpha (drawable);
-  linear = gimp_drawable_get_linear (drawable);
+  space = gimp_drawable_get_space (drawable);
+  alpha = gimp_drawable_has_alpha (drawable);
+  trc   = gimp_drawable_get_trc (drawable);
 
   switch (gimp_drawable_get_base_type (drawable))
     {
     case GIMP_GRAY:
       return gimp_babl_format (GIMP_GRAY,
                                gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
-                                                    linear),
-                               alpha);
+                                                    trc),
+                               alpha, space);
 
     case GIMP_RGB:
+    case GIMP_INDEXED:
       return gimp_babl_format (GIMP_RGB,
                                gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
-                                                    linear),
-                               alpha);
-
-    case GIMP_INDEXED:
-      if (alpha)
-        return babl_format ("R'G'B'A u8");
-      else
-        return babl_format ("R'G'B' u8");
+                                                    trc),
+                               alpha, space);
     }
 
   g_return_val_if_reached (NULL);

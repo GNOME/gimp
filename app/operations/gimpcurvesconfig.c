@@ -43,6 +43,7 @@
 enum
 {
   PROP_0,
+  PROP_TRC,
   PROP_LINEAR,
   PROP_CHANNEL,
   PROP_CURVE
@@ -99,6 +100,14 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
 
   viewable_class->default_icon_name = "gimp-tool-curves";
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TRC,
+                         "trc",
+                         _("Linear/Perceptual"),
+                         _("Work on linear or perceptual RGB"),
+                         GIMP_TYPE_TRC_TYPE,
+                         GIMP_TRC_NON_LINEAR, 0);
+
+  /* compat */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINEAR,
                             "linear",
                             _("Linear"),
@@ -176,8 +185,12 @@ gimp_curves_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_TRC:
+      g_value_set_enum (value, self->trc);
+      break;
+
     case PROP_LINEAR:
-      g_value_set_boolean (value, self->linear);
+      g_value_set_boolean (value, self->trc == GIMP_TRC_LINEAR ? TRUE : FALSE);
       break;
 
     case PROP_CHANNEL:
@@ -204,8 +217,14 @@ gimp_curves_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_TRC:
+      self->trc = g_value_get_enum (value);
+      break;
+
     case PROP_LINEAR:
-      self->linear = g_value_get_boolean (value);
+      self->trc = g_value_get_boolean (value) ?
+                  GIMP_TRC_LINEAR : GIMP_TRC_NON_LINEAR;
+      g_object_notify (object, "trc");
       break;
 
     case PROP_CHANNEL:
@@ -242,8 +261,8 @@ gimp_curves_config_serialize (GimpConfig       *config,
   GimpHistogramChannel  old_channel;
   gboolean              success = TRUE;
 
-  if (! gimp_config_serialize_property_by_name (config, "time",   writer) ||
-      ! gimp_config_serialize_property_by_name (config, "linear", writer))
+  if (! gimp_config_serialize_property_by_name (config, "time", writer) ||
+      ! gimp_config_serialize_property_by_name (config, "trc",  writer))
     return FALSE;
 
   old_channel = c_config->channel;
@@ -299,7 +318,7 @@ gimp_curves_config_equal (GimpConfig *a,
   GimpCurvesConfig     *config_b = GIMP_CURVES_CONFIG (b);
   GimpHistogramChannel  channel;
 
-  if (config_a->linear != config_b->linear)
+  if (config_a->trc != config_b->trc)
     return FALSE;
 
   for (channel = GIMP_HISTOGRAM_VALUE;
@@ -340,7 +359,7 @@ gimp_curves_config_reset (GimpConfig *config)
       gimp_curves_config_reset_channel (c_config);
     }
 
-  gimp_config_reset_property (G_OBJECT (config), "linear");
+  gimp_config_reset_property (G_OBJECT (config), "trc");
   gimp_config_reset_property (G_OBJECT (config), "channel");
 }
 
@@ -362,10 +381,10 @@ gimp_curves_config_copy (GimpConfig  *src,
                         flags);
     }
 
-  dest_config->linear  = src_config->linear;
+  dest_config->trc     = src_config->trc;
   dest_config->channel = src_config->channel;
 
-  g_object_notify (G_OBJECT (dest), "linear");
+  g_object_notify (G_OBJECT (dest), "trc");
   g_object_notify (G_OBJECT (dest), "channel");
 
   return TRUE;
@@ -615,9 +634,9 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
       gimp_data_thaw (GIMP_DATA (curve));
     }
 
-  config->linear = FALSE;
+  config->trc = GIMP_TRC_NON_LINEAR;
 
-  g_object_notify (G_OBJECT (config), "linear");
+  g_object_notify (G_OBJECT (config), "trc");
 
   g_object_thaw_notify (G_OBJECT (config));
 

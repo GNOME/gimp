@@ -1521,7 +1521,7 @@ gimp_color_profile_get_format (GimpColorProfile          *profile,
   if (! space)
     return NULL;
 
-  return babl_format_with_space (babl_get_name (format), space);
+  return babl_format_with_space (babl_format_get_encoding (format), space);
 }
 
 /**

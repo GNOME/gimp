@@ -353,7 +353,7 @@ load_image (const gchar  *filename,
       else
         image_type = GIMP_INDEXED_IMAGE;
 
-      precision = GIMP_PRECISION_U8_GAMMA;
+      precision = GIMP_PRECISION_U8_NON_LINEAR;
     }
   else
     {
@@ -407,15 +407,15 @@ load_image (const gchar  *filename,
       else
         {
           if (type == babl_type ("u8"))
-            precision = GIMP_PRECISION_U8_GAMMA;
+            precision = GIMP_PRECISION_U8_NON_LINEAR;
           else if (type == babl_type ("u16"))
-            precision = GIMP_PRECISION_U16_GAMMA;
+            precision = GIMP_PRECISION_U16_NON_LINEAR;
           else if (type == babl_type ("u32"))
-            precision = GIMP_PRECISION_U32_GAMMA;
+            precision = GIMP_PRECISION_U32_NON_LINEAR;
           else if (type == babl_type ("half"))
-            precision = GIMP_PRECISION_HALF_GAMMA;
+            precision = GIMP_PRECISION_HALF_NON_LINEAR;
           else
-            precision = GIMP_PRECISION_FLOAT_GAMMA;
+            precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
         }
     }
 

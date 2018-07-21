@@ -113,6 +113,8 @@ gimp_drawable_fill_buffer (GimpDrawable  *drawable,
                                        TRUE,
                                        NULL);
 
+      g_object_unref (src_profile);
+
       gegl_buffer_set_pattern (buffer, NULL, dest_buffer,
                                pattern_offset_x, pattern_offset_y);
 

@@ -36,7 +36,7 @@ struct _GimpHistogramEditor
 {
   GimpImageEditor       parent_instance;
 
-  gboolean              linear;
+  GimpTRCType           trc;
 
   GimpDrawable         *drawable;
   GimpHistogram        *histogram;

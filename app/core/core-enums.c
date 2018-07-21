@@ -924,6 +924,37 @@ gimp_thumbnail_size_get_type (void)
 }
 
 GType
+gimp_trc_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TRC_LINEAR, "GIMP_TRC_LINEAR", "linear" },
+    { GIMP_TRC_NON_LINEAR, "GIMP_TRC_NON_LINEAR", "non-linear" },
+    { GIMP_TRC_PERCEPTUAL, "GIMP_TRC_PERCEPTUAL", "perceptual" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TRC_LINEAR, NC_("trc-type", "Linear"), NULL },
+    { GIMP_TRC_NON_LINEAR, NC_("trc-type", "Non-Linear"), NULL },
+    { GIMP_TRC_PERCEPTUAL, NC_("trc-type", "Perceptual"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpTRCType", values);
+      gimp_type_set_translation_context (type, "trc-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_undo_event_get_type (void)
 {
   static const GEnumValue values[] =

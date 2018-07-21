@@ -112,6 +112,9 @@ sub image_set_color_profile {
     $help = <<'HELP';
 This procedure sets the image's color profile, or unsets it if NULL is
 passed as 'color_profile'. This procedure does no color conversion.
+However, it will change the pixel format of all layers to contain the
+babl space matching the profile. You must call this procedure before
+adding layers to the image.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -138,7 +141,8 @@ HELP
 
       if (profile)
         {
-          success = gimp_image_set_color_profile (image, profile, error);
+          success = gimp_image_assign_color_profile (image, profile,
+                                                     progress, error);
           g_object_unref (profile);
         }
       else
@@ -146,7 +150,8 @@ HELP
     }
   else
     {
-      success = gimp_image_set_color_profile (image, NULL, error);
+      success = gimp_image_assign_color_profile (image, NULL,
+                                                 progress, error);
     }
 }
 CODE
@@ -159,7 +164,10 @@ sub image_set_color_profile_from_file {
     $help = <<'HELP';
 This procedure sets the image's color profile from a file containing
 an ICC profile, or unsets it if NULL is passed as 'uri'. This
-procedure does no color conversion.
+procedure does no color conversion. However, it will change the pixel
+format of all layers to contain the babl space matching the
+profile. You must call this procedure before adding layers to the
+image.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -183,7 +191,8 @@ HELP
 
       if (profile)
         {
-          success = gimp_image_set_color_profile (image, profile, error);
+          success = gimp_image_assign_color_profile (image, profile,
+                                                     progress, error);
           g_object_unref (profile);
         }
       else
@@ -193,7 +202,8 @@ HELP
     }
   else
     {
-      success = gimp_image_set_color_profile (image, NULL, error);
+      success = gimp_image_assign_color_profile (image, NULL,
+                                                 progress, error);
     }
 }
 CODE

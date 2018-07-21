@@ -661,16 +661,16 @@ load_image (GFile   *file,
                        pnminfo->jmpbuf, _("Unsupported maximum value."));
       if (pnminfo->maxval < 256)
         {
-          precision = GIMP_PRECISION_U8_GAMMA;
+          precision = GIMP_PRECISION_U8_NON_LINEAR;
         }
       else
         {
-          precision = GIMP_PRECISION_U16_GAMMA;
+          precision = GIMP_PRECISION_U16_NON_LINEAR;
         }
     }
   else
     {
-      precision = GIMP_PRECISION_U8_GAMMA;
+      precision = GIMP_PRECISION_U8_NON_LINEAR;
     }
 
   /* Create a new image of the proper size and associate the filename
@@ -1263,7 +1263,8 @@ save_image (GFile     *file,
   switch (gimp_image_get_precision (image_ID))
     {
     case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U8_GAMMA:
+    case GIMP_PRECISION_U8_NON_LINEAR:
+    case GIMP_PRECISION_U8_PERCEPTUAL:
       rowinfo.bpc = 1;
       break;
     default:

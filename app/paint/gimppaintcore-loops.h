@@ -97,7 +97,8 @@ void mask_components_onto               (GeglBuffer                     *src_buf
                                          GeglBuffer                     *dst_buffer,
                                          const GeglRectangle            *roi,
                                          GimpComponentMask               mask,
-                                         gboolean                        linear_mode);
+                                         GimpTRCType                     trc,
+                                         const Babl                     *space);
 
 
 #endif /* __GIMP_PAINT_CORE_LOOPS_H__ */

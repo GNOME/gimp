@@ -107,7 +107,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 {
   GimpImage   *image = GIMP_IMAGE (viewable);
   const Babl  *format;
-  gboolean     linear;
+  GimpTRCType  trc;
   GimpTempBuf *buf;
   gdouble      scale_x;
   gdouble      scale_y;
@@ -116,12 +116,12 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   scale_y = (gdouble) height / (gdouble) gimp_image_get_height (image);
 
   format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
-  linear = gimp_babl_format_get_linear (format);
+  trc    = gimp_babl_format_get_trc (format);
 
   format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                             gimp_babl_precision (GIMP_COMPONENT_TYPE_U8,
-                                                  linear),
-                             babl_format_has_alpha (format));
+                             gimp_babl_precision (GIMP_COMPONENT_TYPE_U8, trc),
+                             babl_format_has_alpha (format),
+                             babl_format_get_space (format));
 
   buf = gimp_temp_buf_new (width, height, format);
 

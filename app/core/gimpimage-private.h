@@ -59,6 +59,7 @@ struct _GimpImagePrivate
 
   gboolean           is_color_managed;      /*  is this image color managed  */
   GimpColorProfile  *color_profile;         /*  image's color profile        */
+  const Babl        *layer_space;           /*  image's Babl layer space     */
 
   /*  Cached color transforms: from layer to sRGB u8 and double, and back    */
   gboolean            color_transforms_created;

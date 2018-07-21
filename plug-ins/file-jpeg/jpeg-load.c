@@ -219,7 +219,7 @@ load_image (const gchar  *filename,
       image_ID = gimp_image_new_with_precision (cinfo.output_width,
                                                 cinfo.output_height,
                                                 image_type,
-                                                GIMP_PRECISION_U8_GAMMA);
+                                                GIMP_PRECISION_U8_NON_LINEAR);
 
       gimp_image_undo_disable (image_ID);
       gimp_image_set_filename (image_ID, filename);

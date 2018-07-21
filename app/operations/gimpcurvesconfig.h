@@ -39,7 +39,7 @@ struct _GimpCurvesConfig
 {
   GimpSettings          parent_instance;
 
-  gboolean              linear;
+  GimpTRCType           trc;
 
   GimpHistogramChannel  channel;
 

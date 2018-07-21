@@ -165,8 +165,8 @@ gimp_image_new (gint              width,
  *
  * Creates a new image, undisplayed with the specified extents, type
  * and precision. Indexed images can only be created at
- * GIMP_PRECISION_U8_GAMMA precision. See gimp_image_new() for further
- * details.
+ * GIMP_PRECISION_U8_NON_LINEAR precision. See gimp_image_new() for
+ * further details.
  *
  * Returns: The ID of the newly created image.
  *

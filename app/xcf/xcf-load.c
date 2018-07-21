@@ -161,7 +161,7 @@ xcf_load_image (Gimp     *gimp,
   gint                width;
   gint                height;
   gint                image_type;
-  GimpPrecision       precision = GIMP_PRECISION_U8_GAMMA;
+  GimpPrecision       precision = GIMP_PRECISION_U8_NON_LINEAR;
   gint                num_successful_elements = 0;
   GList              *syms;
   GList              *iter;
@@ -184,11 +184,11 @@ xcf_load_image (Gimp     *gimp,
         {
           switch (p)
             {
-            case 0: precision = GIMP_PRECISION_U8_GAMMA;     break;
-            case 1: precision = GIMP_PRECISION_U16_GAMMA;    break;
-            case 2: precision = GIMP_PRECISION_U32_LINEAR;   break;
-            case 3: precision = GIMP_PRECISION_HALF_LINEAR;  break;
-            case 4: precision = GIMP_PRECISION_FLOAT_LINEAR; break;
+            case 0: precision = GIMP_PRECISION_U8_NON_LINEAR;  break;
+            case 1: precision = GIMP_PRECISION_U16_NON_LINEAR; break;
+            case 2: precision = GIMP_PRECISION_U32_LINEAR;     break;
+            case 3: precision = GIMP_PRECISION_HALF_LINEAR;    break;
+            case 4: precision = GIMP_PRECISION_FLOAT_LINEAR;   break;
             default:
               goto hard_error;
             }
@@ -198,16 +198,16 @@ xcf_load_image (Gimp     *gimp,
         {
           switch (p)
             {
-            case 100: precision = GIMP_PRECISION_U8_LINEAR; break;
-            case 150: precision = GIMP_PRECISION_U8_GAMMA; break;
-            case 200: precision = GIMP_PRECISION_U16_LINEAR; break;
-            case 250: precision = GIMP_PRECISION_U16_GAMMA; break;
-            case 300: precision = GIMP_PRECISION_U32_LINEAR; break;
-            case 350: precision = GIMP_PRECISION_U32_GAMMA; break;
-            case 400: precision = GIMP_PRECISION_HALF_LINEAR; break;
-            case 450: precision = GIMP_PRECISION_HALF_GAMMA; break;
-            case 500: precision = GIMP_PRECISION_FLOAT_LINEAR; break;
-            case 550: precision = GIMP_PRECISION_FLOAT_GAMMA; break;
+            case 100: precision = GIMP_PRECISION_U8_LINEAR;        break;
+            case 150: precision = GIMP_PRECISION_U8_NON_LINEAR;    break;
+            case 200: precision = GIMP_PRECISION_U16_LINEAR;       break;
+            case 250: precision = GIMP_PRECISION_U16_NON_LINEAR;   break;
+            case 300: precision = GIMP_PRECISION_U32_LINEAR;       break;
+            case 350: precision = GIMP_PRECISION_U32_NON_LINEAR;   break;
+            case 400: precision = GIMP_PRECISION_HALF_LINEAR;      break;
+            case 450: precision = GIMP_PRECISION_HALF_NON_LINEAR;  break;
+            case 500: precision = GIMP_PRECISION_FLOAT_LINEAR;     break;
+            case 550: precision = GIMP_PRECISION_FLOAT_NON_LINEAR; break;
             default:
               goto hard_error;
             }
@@ -571,7 +571,16 @@ xcf_load_image (Gimp     *gimp,
   xcf_load_add_masks (image);
 
   if (info->floating_sel && info->floating_sel_drawable)
-    floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
+    {
+      /* we didn't fix the loaded floating selection's format before
+       * because we didn't know if it needed the layer space
+       */
+      if (GIMP_IS_LAYER (info->floating_sel_drawable) &&
+          gimp_drawable_is_gray (GIMP_DRAWABLE (info->floating_sel)))
+        gimp_layer_fix_format_space (info->floating_sel, TRUE, FALSE);
+
+      floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
+    }
 
   if (info->active_layer)
     gimp_image_set_active_layer (image, info->active_layer);
@@ -1703,12 +1712,20 @@ xcf_load_layer (XcfInfo    *info,
   if (width <= 0 || height <= 0)
     return NULL;
 
-  /* do not use gimp_image_get_layer_format() because it might
-   * be the floating selection of a channel or mask
-   */
-  format = gimp_image_get_format (image, base_type,
-                                  gimp_image_get_precision (image),
-                                  has_alpha);
+  if (base_type == GIMP_GRAY)
+    {
+      /* do not use gimp_image_get_layer_format() because it might
+       * be the floating selection of a channel or mask
+       */
+      format = gimp_image_get_format (image, base_type,
+                                      gimp_image_get_precision (image),
+                                      has_alpha,
+                                      NULL /* we will fix the space later */);
+    }
+  else
+    {
+      format = gimp_image_get_layer_format (image, has_alpha);
+    }
 
   /* create a new layer */
   layer = gimp_layer_new (image, width, height,
@@ -1742,6 +1759,13 @@ xcf_load_layer (XcfInfo    *info,
       if (floating)
         info->floating_sel = layer;
     }
+
+  /* if this is not the floating selection, we can fix the layer's
+   * space already now, the function will do nothing if we already
+   * created the layer with the right format
+   */
+  if (! floating && base_type == GIMP_GRAY)
+    gimp_layer_fix_format_space (layer, FALSE, FALSE);
 
   /* read the hierarchy and layer mask offsets */
   xcf_read_offset (info, &hierarchy_offset,  1);

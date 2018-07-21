@@ -73,8 +73,8 @@ gimp_operation_point_filter_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case GIMP_OPERATION_POINT_FILTER_PROP_LINEAR:
-      g_value_set_boolean (value, self->linear);
+    case GIMP_OPERATION_POINT_FILTER_PROP_TRC:
+      g_value_set_enum (value, self->trc);
       break;
 
     case GIMP_OPERATION_POINT_FILTER_PROP_CONFIG:
@@ -97,8 +97,8 @@ gimp_operation_point_filter_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case GIMP_OPERATION_POINT_FILTER_PROP_LINEAR:
-      self->linear = g_value_get_boolean (value);
+    case GIMP_OPERATION_POINT_FILTER_PROP_TRC:
+      self->trc = g_value_get_enum (value);
       break;
 
     case GIMP_OPERATION_POINT_FILTER_PROP_CONFIG:
@@ -121,10 +121,21 @@ gimp_operation_point_filter_prepare (GeglOperation *operation)
                                                                      "input");
   const Babl               *format;
 
-  if (self->linear)
-    format = babl_format_with_space ("RGBA float", space);
-  else
-    format = babl_format_with_space ("R'G'B'A float", space);
+  switch (self->trc)
+    {
+    default:
+    case GIMP_TRC_LINEAR:
+      format = babl_format_with_space ("RGBA float", space);
+      break;
+
+    case GIMP_TRC_NON_LINEAR:
+      format = babl_format_with_space ("R'G'B'A float", space);
+      break;
+
+    case GIMP_TRC_PERCEPTUAL:
+      format = babl_format_with_space ("R~G~B~A float", space);
+      break;
+    }
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
