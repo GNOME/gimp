@@ -81,7 +81,7 @@ static void        cdisplay_aces_rrt_set_exposure    (CdisplayAcesRRT      *aces
 static const GimpModuleInfo cdisplay_aces_rrt_info =
 {
   GIMP_MODULE_ABI_VERSION,
-  N_("ACES RRT (RRT = Reference Rendering Transform) An HDR to SDR proof color display filter, usin a luminance-only approximation of the ACES RRT, a pre-defined filmic look to be used before ODT (display or output space ICC Profile)"),
+  N_("ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color display filter, using a luminance-only approximation of the ACES RRT, a pre-defined filmic look to be used before ODT (display or output space ICC profile)"),
   "Øyvind Kolås <pippin@gimp.org>",
   "v0.1",
   "(c) 2018, released under the LGPLv2+",
@@ -118,7 +118,7 @@ cdisplay_aces_rrt_class_init (CdisplayAcesRRTClass *klass)
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EXPOSURE,
                            "exposure",
-                           _("pre-transform change in stops"),
+                           _("Pre-transform change in stops"),
                            NULL,
                            -10.0, 10.0, DEFAULT_EXPOSURE,
                            1);
