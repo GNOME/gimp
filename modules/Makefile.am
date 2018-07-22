@@ -37,7 +37,7 @@ lib_LTLIBRARIES = \
 	libcolor-selector-wheel.la		\
 	libdisplay-filter-clip-warning.la	\
 	libdisplay-filter-color-blind.la	\
-	libdisplay-filter-filmic.la		\
+	libdisplay-filter-aces-rrt.la		\
 	libdisplay-filter-gamma.la		\
 	libdisplay-filter-high-contrast.la	\
 	$(controller_midi_module)		\
@@ -72,9 +72,9 @@ libdisplay_filter_color_blind_la_LDFLAGS = -avoid-version -module $(no_undefined
 libdisplay_filter_color_blind_la_LIBADD = $(display_filter_libadd)
 
 
-libdisplay_filter_filmic_la_SOURCES = display-filter-filmic.c
-libdisplay_filter_filmic_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libdisplay_filter_filmic_la_LIBADD = $(display_filter_libadd)
+libdisplay_filter_aces_rrt_la_SOURCES = display-filter-aces-rrt.c
+libdisplay_filter_aces_rrt_la_LDFLAGS = -avoid-version -module $(no_undefined)
+libdisplay_filter_aces_rrt_la_LIBADD = $(display_filter_libadd)
 
 libdisplay_filter_gamma_la_SOURCES = display-filter-gamma.c
 libdisplay_filter_gamma_la_LDFLAGS = -avoid-version -module $(no_undefined)
