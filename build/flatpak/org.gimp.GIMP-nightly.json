@@ -329,17 +329,19 @@
             ]
         },
         {
-            "name" : "fribidi",
-            "sources" : [
-                {
-                    "url" : "https://github.com/fribidi/fribidi/releases/download/0.19.7/fribidi-0.19.7.tar.bz2",
-                    "sha256" : "08222a6212bbc2276a2d55c3bf370109ae4a35b689acbc66571ad2a670595a8e",
-                    "type" : "archive"
-                }
-            ]
-        },
-        {
             "name" : "pango",
+            "modules": [
+                {
+                    "name" : "fribidi",
+                    "sources" : [
+                        {
+                            "url" : "https://github.com/fribidi/fribidi/releases/download/0.19.7/fribidi-0.19.7.tar.bz2",
+                            "sha256" : "08222a6212bbc2276a2d55c3bf370109ae4a35b689acbc66571ad2a670595a8e",
+                            "type" : "archive"
+                        }
+                    ]
+                }
+            ],
             "sources" : [
                 {
                     "url" : "https://download.gnome.org/sources/pango/1.42/pango-1.42.1.tar.xz",
