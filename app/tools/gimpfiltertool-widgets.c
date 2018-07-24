@@ -116,6 +116,7 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
   Controller       *controller;
 
   g_return_val_if_fail (GIMP_IS_FILTER_TOOL (filter_tool), NULL);
+  g_return_val_if_fail (filter_tool->config != NULL, NULL);
 
   tool = GIMP_TOOL (filter_tool);
 
@@ -244,8 +245,11 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
       break;
     }
 
-  g_object_set_data_full (G_OBJECT (controller->widget),
-                          "controller", controller,
+  g_object_add_weak_pointer (G_OBJECT (controller->widget),
+                             (gpointer) &controller->widget);
+
+  g_object_set_data_full (filter_tool->config,
+                          "gimp-filter-tool-controller", controller,
                           (GDestroyNotify) g_free);
 
   return controller->widget;
@@ -293,9 +297,10 @@ gimp_filter_tool_reset_widget (GimpFilterTool *filter_tool,
 
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (filter_tool->config != NULL);
 
-  controller = g_object_get_data (G_OBJECT (filter_tool->widget),
-                                  "controller");
+  controller = g_object_get_data (filter_tool->config,
+                                  "gimp-filter-tool-controller");
 
   g_return_if_fail (controller != NULL);
 
@@ -349,8 +354,14 @@ gimp_filter_tool_set_line (Controller    *controller,
                            gdouble        x2,
                            gdouble        y2)
 {
-  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
-  GimpDrawable *drawable = tool->drawable;
+  GimpTool     *tool;
+  GimpDrawable *drawable;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  drawable = tool->drawable;
 
   if (drawable)
     {
@@ -420,8 +431,14 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
                                   const GimpControllerSlider *sliders,
                                   gint                        n_sliders)
 {
-  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
-  GimpDrawable *drawable = tool->drawable;
+  GimpTool     *tool;
+  GimpDrawable *drawable;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  drawable = tool->drawable;
 
   if (drawable)
     {
@@ -495,13 +512,19 @@ gimp_filter_tool_set_transform_grid (Controller        *controller,
                                      GeglRectangle     *area,
                                      const GimpMatrix3 *transform)
 {
-  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
-  GimpDrawable *drawable = tool->drawable;
-  gdouble       x1       = area->x;
-  gdouble       y1       = area->y;
-  gdouble       x2       = area->x + area->width;
-  gdouble       y2       = area->y + area->height;
+  GimpTool     *tool;
+  GimpDrawable *drawable;
+  gdouble       x1 = area->x;
+  gdouble       y1 = area->y;
+  gdouble       x2 = area->x + area->width;
+  gdouble       y2 = area->y + area->height;
   GimpMatrix3   matrix;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  drawable = tool->drawable;
 
   if (drawable)
     {
@@ -574,17 +597,24 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
                                       const GimpMatrix3 *transforms,
                                       gint               n_transforms)
 {
-  GimpTool         *tool     = GIMP_TOOL (controller->filter_tool);
-  GimpDisplayShell *shell    = gimp_display_get_shell (tool->display);
-  GimpDrawable     *drawable = tool->drawable;
+  GimpTool         *tool;
+  GimpDisplayShell *shell;
+  GimpDrawable     *drawable;
   GimpContainer    *grids;
-  GimpToolWidget   *grid     = NULL;
-  gdouble           x1       = area->x;
-  gdouble           y1       = area->y;
-  gdouble           x2       = area->x + area->width;
-  gdouble           y2       = area->y + area->height;
+  GimpToolWidget   *grid = NULL;
+  gdouble           x1   = area->x;
+  gdouble           y1   = area->y;
+  gdouble           x2   = area->x + area->width;
+  gdouble           y2   = area->y + area->height;
   GimpMatrix3       matrix;
   gint              i;
+
+  if (! controller->widget)
+    return;
+
+  tool     = GIMP_TOOL (controller->filter_tool);
+  shell    = gimp_display_get_shell (tool->display);
+  drawable = tool->drawable;
 
   g_signal_handlers_block_by_func (controller->widget,
                                    gimp_filter_tool_transform_grids_changed,
@@ -737,6 +767,9 @@ gimp_filter_tool_set_gyroscope (Controller    *controller,
                                 gdouble        zoom,
                                 gboolean       invert)
 {
+  if (! controller->widget)
+    return;
+
   g_signal_handlers_block_by_func (controller->widget,
                                    gimp_filter_tool_gyroscope_changed,
                                    controller);
