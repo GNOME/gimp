@@ -1041,7 +1041,7 @@ gimp_prop_angle_range_dial_new (GObject     *config,
                                NULL, NULL);
 
   g_object_bind_property (config, clockwise_property_name,
-                          dial,   "clockwise",
+                          dial,   "clockwise-delta",
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
