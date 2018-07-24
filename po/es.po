@@ -13,22 +13,22 @@
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Luis Angel Gonzo <luisangelgonzo@gmail.com>, 2017.
 # Luis Ángel Gonzo <luisangelgonzo@gmail.com>, 2017, 2018.
-# Rodrigo <rodhos92@gmail.com>, 2018.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
+# Rodrigo <rodhos92@gmail.com>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-07-22 18:04+0000\n"
-"PO-Revision-Date: 2018-07-24 12:27+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: es <gnome-es-list@gnome.org>\n"
+"PO-Revision-Date: 2018-07-23 14:03+0200\n"
+"Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -382,8 +382,7 @@ msgstr "Gestión del color mejorada y más rápida"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
-"Soporte del selector de color y capturas de pantalla para Wayland en KDE "
-"Plasma"
+"Soporte del recoge-color y capturas de pantalla para Wayland en KDE Plasma"
 
 # La traducción de Photoshop es «Pegar en contexto»
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
@@ -581,7 +580,7 @@ msgstr "Depurar en caso de error (never|query|always)"
 
 #: ../app/main.c:254
 msgid "Enable non-fatal debugging signal handlers"
-msgstr "Activar los gestores de señales no fatales de depuración"
+msgstr "Activar los manejadores de señales no fatales de depuración"
 
 #: ../app/main.c:259
 msgid "Make all warnings fatal"
@@ -2793,8 +2792,7 @@ msgstr ""
 "La apertura de «%s» ha fallado:\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114
-#: ../app/actions/tool-options-commands.c:74
+#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1990
 #: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
@@ -3503,8 +3501,7 @@ msgstr "Vaciar el histórico del documento"
 #: ../app/actions/file-commands.c:416
 #: ../app/actions/gradient-editor-commands.c:401
 #: ../app/actions/gradient-editor-commands.c:510
-#: ../app/actions/gradients-commands.c:78
-#: ../app/actions/plug-in-commands.c:178
+#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:178
 #: ../app/actions/templates-commands.c:244
 #: ../app/actions/text-editor-commands.c:64
 #: ../app/actions/text-tool-commands.c:118
@@ -3543,9 +3540,9 @@ msgstr "Vaciar el histórico del documento"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:314
-#: ../app/tools/gimptexttool.c:1678 ../app/tools/gimptransformgridtool.c:919
-#: ../app/widgets/gimpactionview.c:669 ../app/widgets/gimpcolordialog.c:110
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1678
+#: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:512 ../app/widgets/gimpdnd-xds.c:228
@@ -4133,13 +4130,11 @@ msgstr "Copiar (con nombre)"
 msgid "Copy Visible Named "
 msgstr "Copiar visible con nombre"
 
-#: ../app/actions/edit-commands.c:572
-#: ../app/display/gimpdisplayshell-dnd.c:480
+#: ../app/actions/edit-commands.c:572 ../app/display/gimpdisplayshell-dnd.c:480
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Pegado como una nueva capa porque el objetivo es un grupo de capas"
 
-#: ../app/actions/edit-commands.c:579
-#: ../app/display/gimpdisplayshell-dnd.c:489
+#: ../app/actions/edit-commands.c:579 ../app/display/gimpdisplayshell-dnd.c:489
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr ""
 "Pegado como una nueva capa porque los píxeles del objetivo están bloqueados"
@@ -4246,8 +4241,7 @@ msgid "Save Error Log to File"
 msgstr "Guardar registro de errores en un archivo"
 
 #: ../app/actions/error-console-commands.c:97
-#: ../app/actions/gradients-commands.c:79
-#: ../app/dialogs/file-save-dialog.c:715
+#: ../app/actions/gradients-commands.c:79 ../app/dialogs/file-save-dialog.c:715
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -6207,15 +6201,13 @@ msgstr "Redimensionando"
 msgid "Set Image Print Resolution"
 msgstr "Establecer la resolución de impresión de la imagen"
 
-#: ../app/actions/image-commands.c:799
-#: ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:799 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:222 ../app/tools/gimpfliptool.c:133
 msgid "Flipping"
 msgstr "Volteando"
 
-#: ../app/actions/image-commands.c:823
-#: ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:823 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:121
@@ -7907,8 +7899,7 @@ msgid "Delete Template"
 msgstr "Eliminar la plantilla"
 
 #: ../app/actions/templates-commands.c:245
-#: ../app/dialogs/data-delete-dialog.c:87
-#: ../app/widgets/gimpdeviceeditor.c:513
+#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:513
 msgid "_Delete"
 msgstr "_Eliminar"
 
@@ -11336,7 +11327,6 @@ msgstr "Emplumado"
 
 # Debe ir en minúsculas por las reglas de estilo
 #: ../app/core/core-enums.c:149
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "Pixel"
 msgctxt "color-pick-mode"
@@ -11344,7 +11334,6 @@ msgid "Pixel"
 msgstr "Píxel"
 
 #: ../app/core/core-enums.c:150
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "RGB (%)"
 msgctxt "color-pick-mode"
@@ -11352,7 +11341,6 @@ msgid "RGB (%)"
 msgstr "RGB (%)"
 
 #: ../app/core/core-enums.c:151
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "RGB (0..255)"
 msgctxt "color-pick-mode"
@@ -11360,7 +11348,6 @@ msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
 #: ../app/core/core-enums.c:152
-#, fuzzy
 #| msgctxt "circle-background"
 #| msgid "HSV"
 msgctxt "color-pick-mode"
@@ -11368,7 +11355,6 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../app/core/core-enums.c:153
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "CIE LCh"
 msgctxt "color-pick-mode"
@@ -11376,7 +11362,6 @@ msgid "CIE LCh"
 msgstr "CIE LCh"
 
 #: ../app/core/core-enums.c:154
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "CIE LAB"
 msgctxt "color-pick-mode"
@@ -11384,7 +11369,6 @@ msgid "CIE LAB"
 msgstr "CIE LAB"
 
 #: ../app/core/core-enums.c:155
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "CMYK"
 msgctxt "color-pick-mode"
@@ -12969,8 +12953,7 @@ msgstr "Renderizar el trazo"
 
 # Estaba marcado como difuso pero en mi opinión está correcto
 #: ../app/core/gimpdrawable-gradient.c:125
-#: ../app/core/gimpdrawable-gradient.c:137
-#: ../app/tools/gimpgradienttool.c:1032
+#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1032
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Degradado"
@@ -13605,12 +13588,11 @@ msgid "Move Sample Point"
 msgstr "Mover punto de muestra"
 
 #: ../app/core/gimpimage-sample-points.c:146
-#, fuzzy
 #| msgctxt "sample-points-action"
 #| msgid "Sample Point Menu"
 msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
-msgstr "Menú del punto de muestra"
+msgstr "Establecer el modo de selección del punto de muestra"
 
 #: ../app/core/gimpimage-scale.c:79
 msgctxt "undo-type"
@@ -14185,8 +14167,7 @@ msgstr "Ordenada central"
 msgid "Number of points"
 msgstr "Número de puntos"
 
-#: ../app/core/gimpsymmetry-mandala.c:152
-#: ../app/core/gimpsymmetry-mirror.c:154
+#: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
 msgstr "Desactivar transformación del pincel"
 
@@ -14323,8 +14304,7 @@ msgid "Precision"
 msgstr "Precisión"
 
 #. gamma
-#: ../app/core/gimptemplate.c:205
-#: ../app/dialogs/convert-precision-dialog.c:195
+#: ../app/core/gimptemplate.c:205 ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:140
 #: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:509
 msgid "Gamma"
@@ -15132,13 +15112,11 @@ msgid "_Opacity:"
 msgstr "_Opacidad:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252
-#: ../app/tools/gimpmeasuretool.c:790
+#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:790
 msgid "Width:"
 msgstr "Anchura:"
 
-#: ../app/dialogs/layer-options-dialog.c:258
-#: ../app/tools/gimpmeasuretool.c:818
+#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:818
 msgid "Height:"
 msgstr "Altura:"
 
@@ -15153,8 +15131,8 @@ msgstr "Desplazamiento X:"
 msgid "Offset Y:"
 msgstr "Desplazamiento Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:396
-#: ../app/dialogs/resize-dialog.c:369 ../app/widgets/gimptemplateeditor.c:452
+#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
+#: ../app/widgets/gimptemplateeditor.c:452
 msgid "_Fill with:"
 msgstr "R_ellenar con:"
 
@@ -16028,8 +16006,7 @@ msgstr "Seleccionar un tema de iconos"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2050
-#: ../app/dialogs/preferences-dialog.c:2818
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2818 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Apariencia"
 
@@ -16420,19 +16397,18 @@ msgstr "Resolución de monitor"
 
 # Debe ir en minúsculas por las reglas de estilo
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2581
-#: ../app/display/gimpcursorview.c:215 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:234
+#: ../app/dialogs/preferences-dialog.c:2581 ../app/display/gimpcursorview.c:215
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "píxeles"
 
-#: ../app/dialogs/preferences-dialog.c:2599
-#: ../app/widgets/gimpgrideditor.c:195 ../app/widgets/gimpgrideditor.c:230
+#: ../app/dialogs/preferences-dialog.c:2599 ../app/widgets/gimpgrideditor.c:195
+#: ../app/widgets/gimpgrideditor.c:230
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: ../app/dialogs/preferences-dialog.c:2601
-#: ../app/widgets/gimpgrideditor.c:197 ../app/widgets/gimpgrideditor.c:232
+#: ../app/dialogs/preferences-dialog.c:2601 ../app/widgets/gimpgrideditor.c:197
+#: ../app/widgets/gimpgrideditor.c:232
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -16921,8 +16897,7 @@ msgstr "Pulse %s para descartar todos los cambios y salir."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Pulse %s para descartar todos los cambios y cerrar todas las imágenes."
 
-#: ../app/dialogs/quit-dialog.c:399
-#: ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "_Descartar cambios"
 
@@ -17126,21 +17101,18 @@ msgid "Lock path _position"
 msgstr "Bloquear _posición de la ruta"
 
 #: ../app/display/display-enums.c:88
-#, fuzzy
 #| msgid "Auto"
 msgctxt "compass-orientation"
 msgid "Auto"
 msgstr "Auto"
 
 #: ../app/display/display-enums.c:89
-#, fuzzy
 #| msgid "Horizontal"
 msgctxt "compass-orientation"
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: ../app/display/display-enums.c:90
-#, fuzzy
 #| msgid "Vertical"
 msgctxt "compass-orientation"
 msgid "Vertical"
@@ -17298,8 +17270,8 @@ msgstr "Activar máscara rápida"
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:791
-#: ../app/display/gimpdisplayshell.c:1447 ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:791 ../app/display/gimpdisplayshell.c:1447
+#: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
 
@@ -18758,8 +18730,7 @@ msgstr "Colorear la imagen"
 msgid "Color"
 msgstr "Color"
 
-#: ../app/operations/gimpoperationcurves.c:67
-#: ../app/tools/gimpcurvestool.c:143
+#: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:143
 msgid "Adjust color curves"
 msgstr "Ajustar las curvas de color"
 
@@ -18775,8 +18746,7 @@ msgstr "Seleccionar tono de gris basado en"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Ajustar el tono, la saturación y la luminosidad"
 
-#: ../app/operations/gimpoperationlevels.c:64
-#: ../app/tools/gimplevelstool.c:139
+#: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:139
 msgid "Adjust color levels"
 msgstr "Ajustar los niveles de color"
 
@@ -18969,8 +18939,7 @@ msgstr "Inclinación"
 
 #. Blob shape widgets
 #: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpgradientoptions.c:94
-#: ../app/tools/gimpgradientoptions.c:289
-#: ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/tools/gimpgradientoptions.c:289 ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Forma"
 
@@ -19039,8 +19008,7 @@ msgstr "Proporción de aspecto"
 
 #: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaciado"
 
@@ -20074,12 +20042,11 @@ msgid "Threshold Alpha"
 msgstr "Umbral alfa"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4018
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "Sharpen (_Unsharp Mask)..."
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
-msgstr "Afilar (_desafilar máscara)..."
+msgstr "Afilar (desafilar máscara)"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4064
 msgctxt "undo-type"
@@ -21123,16 +21090,14 @@ msgid "Color Picker Average Radius"
 msgstr "Radio promedio del recoge-color"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
-#, fuzzy
 #| msgid "Pick a path"
 msgid "Pick Target"
-msgstr "Escoger una ruta"
+msgstr "Escoger un objetivo"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
-#, fuzzy
 #| msgid "Choose what color picker will do"
 msgid "Choose what the color picker will do"
-msgstr "Elegir qué color hará el cuentagotas"
+msgstr "Elegir qué color hará el recoge-color"
 
 #: ../app/tools/gimpcolorpickeroptions.c:87
 #: ../app/tools/gimpmeasureoptions.c:79
@@ -21148,10 +21113,10 @@ msgstr ""
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:195
-#, fuzzy, c-format
+#, c-format
 #| msgid "Pick Mode  (%s)"
 msgid "Pick Target  (%s)"
-msgstr "Modo de selección  (%s)"
+msgstr "Seleccionar objetivo  (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:204
@@ -21555,14 +21520,12 @@ msgstr "%s: cambiar original y filtrado"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: cambiar horizontal y vertical"
 
-#: ../app/tools/gimpfiltertool.c:1300
-#: ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1300 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importar los ajustes «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1302
-#: ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1302 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportar los ajustes «%s»"
@@ -22241,14 +22204,13 @@ msgid "_Zoom"
 msgstr "_Ampliación"
 
 #: ../app/tools/gimpmeasureoptions.c:71
-#, fuzzy
 #| msgid "Indentation"
 msgid "Orientation"
-msgstr "Sangría"
+msgstr "Orientación"
 
 #: ../app/tools/gimpmeasureoptions.c:72
 msgid "Orientation against which the angle is measured"
-msgstr ""
+msgstr "Orientación respecto a qué ángulo se mide"
 
 #: ../app/tools/gimpmeasureoptions.c:80
 msgid "Open a floating dialog to view details about measurements"
@@ -22256,10 +22218,10 @@ msgstr "Abrir un diálogo flotante para ver detalles acerca de las medidas"
 
 #. the orientation frame
 #: ../app/tools/gimpmeasureoptions.c:148
-#, fuzzy, c-format
+#, c-format
 #| msgid "Direction  (%s)"
 msgid "Orientation  (%s)"
-msgstr "Dirección (%s)"
+msgstr "Orientación  (%s)"
 
 #. the straighten frame
 #. the straighten button
@@ -22706,8 +22668,7 @@ msgstr "Dibujar la máscara de la región seleccionada"
 msgid "Move the mouse to change threshold"
 msgstr "Mueva el ratón para cambiar el umbral"
 
-#: ../app/tools/gimprotatetool.c:94
-#: ../app/tools/gimptransformgridoptions.c:443
+#: ../app/tools/gimprotatetool.c:94 ../app/tools/gimptransformgridoptions.c:443
 msgid "Rotate"
 msgstr "Rotar"
 
@@ -22809,8 +22770,7 @@ msgstr "Permitir el difuminado de los límites de la selección"
 msgid "Radius of feathering"
 msgstr "Radio del difuminado"
 
-#: ../app/tools/gimpselectionoptions.c:222
-#: ../app/widgets/gimpbrushselect.c:188
+#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:188
 msgid "Mode:"
 msgstr "Modo:"
 
@@ -25880,7 +25840,6 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../app/widgets/widgets-enums.c:114
-#, fuzzy
 #| msgctxt "color-pick-mode"
 #| msgid "Pick only"
 msgctxt "color-pick-target"
@@ -25888,7 +25847,6 @@ msgid "Pick only"
 msgstr "Sólo seleccionar"
 
 #: ../app/widgets/widgets-enums.c:115
-#, fuzzy
 #| msgctxt "color-pick-mode"
 #| msgid "Set foreground color"
 msgctxt "color-pick-target"
@@ -25896,7 +25854,6 @@ msgid "Set foreground color"
 msgstr "Definir el color de frente"
 
 #: ../app/widgets/widgets-enums.c:116
-#, fuzzy
 #| msgctxt "color-pick-mode"
 #| msgid "Set background color"
 msgctxt "color-pick-target"
@@ -25904,7 +25861,6 @@ msgid "Set background color"
 msgstr "Definir el color de fondo"
 
 #: ../app/widgets/widgets-enums.c:117
-#, fuzzy
 #| msgctxt "color-pick-mode"
 #| msgid "Add to palette"
 msgctxt "color-pick-target"
