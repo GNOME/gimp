@@ -192,6 +192,11 @@ void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
 void            gimp_drawable_steal_buffer       (GimpDrawable       *drawable,
                                                   GimpDrawable       *src_drawable);
 
+void            gimp_drawable_set_format         (GimpDrawable       *drawable,
+                                                  const Babl         *format,
+                                                  gboolean            copy_buffer,
+                                                  gboolean            push_undo);
+
 GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
 GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
 

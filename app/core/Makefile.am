@@ -206,6 +206,8 @@ libappcore_a_sources = \
 	gimpdrawablefilter.h			\
 	gimpdrawablemodundo.c			\
 	gimpdrawablemodundo.h			\
+	gimpdrawablepropundo.c			\
+	gimpdrawablepropundo.h			\
 	gimpdrawablestack.c			\
 	gimpdrawablestack.h			\
 	gimpdrawableundo.c			\

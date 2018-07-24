@@ -72,6 +72,9 @@ GimpUndo * gimp_image_undo_push_drawable_mod        (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpDrawable  *drawable,
                                                      gboolean       copy_buffer);
+GimpUndo * gimp_image_undo_push_drawable_format     (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable);
 
 
 /*  mask undos  */

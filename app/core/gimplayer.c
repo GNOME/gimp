@@ -1807,27 +1807,7 @@ gimp_layer_fix_format_space (GimpLayer *layer,
 
   if (format != gimp_drawable_get_format (drawable))
     {
-      GeglBuffer *buffer;
-
-      buffer = gegl_buffer_new
-        (GEGL_RECTANGLE (0, 0,
-                         gimp_item_get_width  (GIMP_ITEM (layer)),
-                         gimp_item_get_height (GIMP_ITEM (layer))),
-         format);
-
-      if (copy_buffer)
-        {
-          gegl_buffer_set_format (buffer, gimp_drawable_get_format (drawable));
-
-          gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                                 NULL, GEGL_ABYSS_NONE,
-                                 buffer, NULL);
-
-          gegl_buffer_set_format (buffer, NULL);
-        }
-
-      gimp_drawable_set_buffer (drawable, push_undo, NULL, buffer);
-      g_object_unref (buffer);
+      gimp_drawable_set_format (drawable, format, copy_buffer, push_undo);
     }
 }
 

@@ -1314,6 +1314,55 @@ gimp_drawable_steal_buffer (GimpDrawable *drawable,
   g_object_unref (buffer);
 }
 
+void
+gimp_drawable_set_format (GimpDrawable *drawable,
+                          const Babl   *format,
+                          gboolean      copy_buffer,
+                          gboolean      push_undo)
+{
+  GimpItem   *item;
+  GeglBuffer *buffer;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (format != NULL);
+  g_return_if_fail (format != gimp_drawable_get_format (drawable));
+  g_return_if_fail (gimp_babl_format_get_base_type (format) ==
+                    gimp_drawable_get_base_type (drawable));
+  g_return_if_fail (gimp_babl_format_get_component_type (format) ==
+                    gimp_drawable_get_component_type (drawable));
+  g_return_if_fail (babl_format_has_alpha (format) ==
+                    gimp_drawable_has_alpha (drawable));
+  g_return_if_fail (push_undo == FALSE || copy_buffer == TRUE);
+
+  item = GIMP_ITEM (drawable);
+
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
+    gimp_image_undo_push_drawable_format (gimp_item_get_image (item),
+                                          NULL, drawable);
+
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                            gimp_item_get_width  (item),
+                                            gimp_item_get_height (item)),
+                            format);
+
+  if (copy_buffer)
+    {
+      gegl_buffer_set_format (buffer, gimp_drawable_get_format (drawable));
+
+      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                             NULL, GEGL_ABYSS_NONE,
+                             buffer, NULL);
+
+      gegl_buffer_set_format (buffer, NULL);
+    }
+
+  gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
+  g_object_unref (buffer);
+}
+
 GeglNode *
 gimp_drawable_get_source_node (GimpDrawable *drawable)
 {

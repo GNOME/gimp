@@ -515,6 +515,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_SAMPLE_POINT,                /*< desc="Sample Point"                   >*/
   GIMP_UNDO_DRAWABLE,                    /*< desc="Layer/Channel"                  >*/
   GIMP_UNDO_DRAWABLE_MOD,                /*< desc="Layer/Channel modification"     >*/
+  GIMP_UNDO_DRAWABLE_FORMAT,             /*< desc="Layer/Channel format"           >*/
   GIMP_UNDO_MASK,                        /*< desc="Selection mask"                 >*/
   GIMP_UNDO_ITEM_REORDER,                /*< desc="Reorder item"                   >*/
   GIMP_UNDO_ITEM_RENAME,                 /*< desc="Rename item"                    >*/

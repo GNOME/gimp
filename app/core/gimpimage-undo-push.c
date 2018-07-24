@@ -28,6 +28,7 @@
 #include "gimpchannelpropundo.h"
 #include "gimpchannelundo.h"
 #include "gimpdrawablemodundo.h"
+#include "gimpdrawablepropundo.h"
 #include "gimpdrawableundo.h"
 #include "gimpfloatingselectionundo.h"
 #include "gimpgrid.h"
@@ -285,6 +286,22 @@ gimp_image_undo_push_drawable_mod (GimpImage    *image,
                                GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
                                "item",        drawable,
                                "copy-buffer", copy_buffer,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_drawable_format (GimpImage    *image,
+                                      const gchar  *undo_desc,
+                                      GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_PROP_UNDO,
+                               GIMP_UNDO_DRAWABLE_FORMAT, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               "item", drawable,
                                NULL);
 }
 
