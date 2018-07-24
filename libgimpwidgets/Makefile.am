@@ -296,6 +296,8 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libm)			\
 	$(libgdi32)
 
+BUILT_SOURCES = \
+	$(libgimpwidgets_built_sources)
 
 EXTRA_DIST = \
 	gimpwidgets.def			\

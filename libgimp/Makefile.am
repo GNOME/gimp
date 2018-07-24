@@ -439,6 +439,10 @@ libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)
 
+BUILT_SOURCES = \
+	$(libgimp_built_sources) \
+	$(libgimpui_built_sources)
+
 EXTRA_DIST = \
 	COPYING				\
 	gimp.def			\

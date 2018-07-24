@@ -474,6 +474,9 @@ libappcore_a_extra_sources = \
 
 libappcore_a_SOURCES = $(libappcore_a_built_sources) $(libappcore_a_sources)
 
+BUILT_SOURCES = \
+	$(libappcore_a_built_sources)
+
 EXTRA_DIST = \
 	$(libappcore_a_extra_sources)
 
