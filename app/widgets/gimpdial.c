@@ -47,7 +47,8 @@ enum
   PROP_DRAW_BETA,
   PROP_ALPHA,
   PROP_BETA,
-  PROP_CLOCKWISE
+  PROP_CLOCKWISE_ANGLES,
+  PROP_CLOCKWISE_DELTA
 };
 
 typedef enum
@@ -63,7 +64,8 @@ struct _GimpDialPrivate
 {
   gdouble     alpha;
   gdouble     beta;
-  gboolean    clockwise;
+  gboolean    clockwise_angles;
+  gboolean    clockwise_delta;
   gboolean    draw_beta;
 
   DialTarget  target;
@@ -96,7 +98,7 @@ static void        gimp_dial_draw_arrows          (cairo_t            *cr,
                                                    gint                size,
                                                    gdouble             alpha,
                                                    gdouble             beta,
-                                                   gboolean            clockwise,
+                                                   gboolean            clockwise_delta,
                                                    DialTarget          highlight,
                                                    gboolean            draw_beta);
 
@@ -140,8 +142,15 @@ gimp_dial_class_init (GimpDialClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_CLOCKWISE,
-                                   g_param_spec_boolean ("clockwise",
+  g_object_class_install_property (object_class, PROP_CLOCKWISE_ANGLES,
+                                   g_param_spec_boolean ("clockwise-angles",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_CLOCKWISE_DELTA,
+                                   g_param_spec_boolean ("clockwise-delta",
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
@@ -185,8 +194,13 @@ gimp_dial_set_property (GObject      *object,
       gtk_widget_queue_draw (GTK_WIDGET (dial));
       break;
 
-    case PROP_CLOCKWISE:
-      dial->priv->clockwise = g_value_get_boolean (value);
+    case PROP_CLOCKWISE_ANGLES:
+      dial->priv->clockwise_angles = g_value_get_boolean (value);
+      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      break;
+
+    case PROP_CLOCKWISE_DELTA:
+      dial->priv->clockwise_delta = g_value_get_boolean (value);
       gtk_widget_queue_draw (GTK_WIDGET (dial));
       break;
 
@@ -219,8 +233,12 @@ gimp_dial_get_property (GObject    *object,
       g_value_set_double (value, dial->priv->beta);
       break;
 
-    case PROP_CLOCKWISE:
-      g_value_set_boolean (value, dial->priv->clockwise);
+    case PROP_CLOCKWISE_ANGLES:
+      g_value_set_boolean (value, dial->priv->clockwise_angles);
+      break;
+
+    case PROP_CLOCKWISE_DELTA:
+      g_value_set_boolean (value, dial->priv->clockwise_delta);
       break;
 
     case PROP_DRAW_BETA:
@@ -237,9 +255,11 @@ static gboolean
 gimp_dial_draw (GtkWidget *widget,
                 cairo_t   *cr)
 {
-  GimpDial      *dial = GIMP_DIAL (widget);
+  GimpDial      *dial  = GIMP_DIAL (widget);
   GtkAllocation  allocation;
   gint           size;
+  gdouble        alpha = dial->priv->alpha;
+  gdouble        beta  = dial->priv->beta;
 
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
@@ -249,6 +269,12 @@ gimp_dial_draw (GtkWidget *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
+  if (dial->priv->clockwise_angles)
+    {
+      alpha = -alpha;
+      beta  = -beta;
+    }
+
   cairo_save (cr);
 
   cairo_translate (cr,
@@ -256,8 +282,8 @@ gimp_dial_draw (GtkWidget *widget,
                    (allocation.height - size) / 2.0);
 
   gimp_dial_draw_arrows (cr, size,
-                         dial->priv->alpha, dial->priv->beta,
-                         dial->priv->clockwise,
+                         alpha, beta,
+                         dial->priv->clockwise_delta,
                          dial->priv->target,
                          dial->priv->draw_beta);
 
@@ -283,6 +309,10 @@ gimp_dial_button_press_event (GtkWidget      *widget,
       angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
                                                    bevent->x, bevent->y,
                                                    NULL);
+
+      if (dial->priv->clockwise_angles && angle)
+        angle = 2.0 * G_PI - angle;
+
       dial->priv->last_angle = angle;
 
       switch (dial->priv->target)
@@ -314,6 +344,9 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
   angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
                                                mevent->x, mevent->y,
                                                &distance);
+
+  if (dial->priv->clockwise_angles && angle)
+    angle = 2.0 * G_PI - angle;
 
   if (_gimp_circle_has_grab (GIMP_CIRCLE (dial)))
     {
@@ -443,9 +476,9 @@ gimp_dial_draw_segment (cairo_t  *cr,
                         gdouble   radius,
                         gdouble   alpha,
                         gdouble   beta,
-                        gboolean  clockwise)
+                        gboolean  clockwise_delta)
 {
-  gint    direction = clockwise ? -1 : 1;
+  gint    direction = clockwise_delta ? -1 : 1;
   gint    segment_dist;
   gint    tick;
   gdouble slice;
@@ -464,7 +497,7 @@ gimp_dial_draw_segment (cairo_t  *cr,
 
   cairo_new_sub_path (cr);
 
-  if (clockwise)
+  if (clockwise_delta)
     slice = -gimp_dial_normalize_angle (alpha - beta);
   else
     slice = gimp_dial_normalize_angle (beta - alpha);
@@ -478,7 +511,7 @@ gimp_dial_draw_arrows (cairo_t    *cr,
                        gint        size,
                        gdouble     alpha,
                        gdouble     beta,
-                       gboolean    clockwise,
+                       gboolean    clockwise_delta,
                        DialTarget  highlight,
                        gboolean    draw_beta)
 {
@@ -502,7 +535,7 @@ gimp_dial_draw_arrows (cairo_t    *cr,
             gimp_dial_draw_arrow (cr, radius, beta);
 
           if ((highlight & DIAL_TARGET_BOTH) != DIAL_TARGET_BOTH)
-            gimp_dial_draw_segment (cr, radius, alpha, beta, clockwise);
+            gimp_dial_draw_segment (cr, radius, alpha, beta, clockwise_delta);
         }
 
       cairo_set_line_width (cr, 3.0);
@@ -525,7 +558,7 @@ gimp_dial_draw_arrows (cairo_t    *cr,
             gimp_dial_draw_arrow (cr, radius, beta);
 
           if ((highlight & DIAL_TARGET_BOTH) == DIAL_TARGET_BOTH)
-            gimp_dial_draw_segment (cr, radius, alpha, beta, clockwise);
+            gimp_dial_draw_segment (cr, radius, alpha, beta, clockwise_delta);
         }
 
       cairo_set_line_width (cr, 3.0);
