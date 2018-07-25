@@ -60,6 +60,8 @@ struct _GimpFileDialog
 
   GSList               *file_procs;
   GSList               *file_procs_all_images;
+
+  gboolean              show_all_files;
 };
 
 struct _GimpFileDialogClass
