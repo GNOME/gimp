@@ -61,7 +61,8 @@ static void            gimp_file_proc_view_finalize               (GObject      
 static void            gimp_file_proc_view_selection_changed      (GtkTreeSelection    *selection,
                                                                    GimpFileProcView    *view);
 
-static GtkFileFilter * gimp_file_proc_view_process_procedure      (GimpPlugInProcedure *file_proc);
+static GtkFileFilter * gimp_file_proc_view_process_procedure      (GimpPlugInProcedure *file_proc,
+                                                                   GtkFileFilter       *all);
 static gchar         * gimp_file_proc_view_pattern_from_extension (const gchar         *extension);
 
 
@@ -116,6 +117,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
                          const gchar *automatic,
                          const gchar *automatic_help_id)
 {
+  GtkFileFilter     *all_filter;
   GtkTreeView       *view;
   GtkTreeViewColumn *column;
   GtkCellRenderer   *cell;
@@ -139,6 +141,8 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
   g_object_unref (store);
 
+  all_filter = gtk_file_filter_new ();
+
   for (list = procedures; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *proc = list->data;
@@ -153,7 +157,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
             {
               GtkFileFilter *filter;
 
-              filter = gimp_file_proc_view_process_procedure (proc);
+              filter = gimp_file_proc_view_process_procedure (proc, all_filter);
               gtk_list_store_append (store, &iter);
               gtk_list_store_set (store, &iter,
                                   COLUMN_PROC,       proc,
@@ -182,18 +186,12 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
   if (automatic)
     {
-      GtkFileFilter *filter = gtk_file_filter_new ();
-
       gtk_list_store_prepend (store, &iter);
-
-      gtk_file_filter_set_name (filter, _("All files"));
-      gtk_file_filter_add_pattern (filter, "*");
-
       gtk_list_store_set (store, &iter,
                           COLUMN_PROC,    NULL,
                           COLUMN_LABEL,   automatic,
                           COLUMN_HELP_ID, automatic_help_id,
-                          COLUMN_FILTER,  filter,
+                          COLUMN_FILTER,  all_filter,
                           -1);
     }
 
@@ -353,13 +351,16 @@ gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
 /**
  * gimp_file_proc_view_process_procedure:
  * @file_proc:
+ * @all:
  *
- * Creates a #GtkFileFilter of @file_proc.
+ * Creates a #GtkFileFilter of @file_proc and adds the extensions to
+ * the @all filter.
  * The returned #GtkFileFilter has a normal ref and must be unreffed
  * when used.
  **/
 static GtkFileFilter *
-gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc)
+gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc,
+                                       GtkFileFilter       *all)
 {
   GtkFileFilter *filter;
   GString       *str;
@@ -382,6 +383,7 @@ gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc)
       const gchar *mime_type = list->data;
 
       gtk_file_filter_add_mime_type (filter, mime_type);
+      gtk_file_filter_add_mime_type (all, mime_type);
     }
 
   for (list = file_proc->extensions_list, i = 0;
@@ -393,6 +395,7 @@ gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc)
 
       pattern = gimp_file_proc_view_pattern_from_extension (extension);
       gtk_file_filter_add_pattern (filter, pattern);
+      gtk_file_filter_add_pattern (all, pattern);
       g_free (pattern);
 
       if (i == 0)

@@ -743,15 +743,15 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
   GtkWidget *scrolled_window;
   GtkWidget *checkbox;
 
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
+  gimp_file_dialog_add_extra_widget (dialog, box, TRUE, TRUE, 0);
+  gtk_widget_show (box);
+
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
   gimp_file_dialog_add_extra_widget (dialog,
                                      dialog->proc_expander,
                                      TRUE, TRUE, 0);
   gtk_widget_show (dialog->proc_expander);
-
-  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
-  gtk_container_add (GTK_CONTAINER (dialog->proc_expander), box);
-  gtk_widget_show (box);
 
   /* The list of file formats. */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -759,7 +759,7 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (box), scrolled_window, TRUE, TRUE, 1);
+  gtk_container_add (GTK_CONTAINER (dialog->proc_expander), scrolled_window);
   gtk_widget_show (scrolled_window);
 
   gtk_widget_set_size_request (scrolled_window, -1, 200);
@@ -781,7 +781,7 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
   checkbox = gimp_prop_check_button_new (G_OBJECT (dialog),
                                          "show-all-files",
                                          _("Show All Files"));
-  gtk_box_pack_start (GTK_BOX (box), checkbox, FALSE, FALSE, 1);
+  gtk_box_pack_end (GTK_BOX (box), checkbox, FALSE, FALSE, 1);
   gtk_widget_show (checkbox);
 }
 
@@ -813,12 +813,7 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
 
   if (name)
     {
-      gchar *label;
-
-      if (dialog->show_all_files)
-        label = g_strdup_printf (_("Select File _Type (%s) - Show All Files"), name);
-      else
-        label = g_strdup_printf (_("Select File _Type (%s)"), name);
+      gchar *label = g_strdup_printf (_("Select File _Type (%s)"), name);
 
       gtk_expander_set_label (GTK_EXPANDER (dialog->proc_expander), label);
 
