@@ -14,10 +14,24 @@ Overview of Changes from GIMP 2.10.4 to GIMP 2.10.6
 Core:
 
   - Render drawable previews asynchronously.
+  - Merge the file view filter and file format lists in GimpFileDialog.
+    The presence of 2 lists was very confusing.
 
 Filters:
 
   - New "Little Planet" (gegl:stereographic-projection) filter.
+
+Tools:
+
+  - Halt the Measure tool after straightening.
+  - Add an "orientation" option to the measure tool, corresponding to
+    the "orientation" property of GimpToolCompass (i.e., it controls the
+    orientation against which the angle is measured, when not in 3-
+    point mode.)  The orientation is "auto" by default, so that the
+    angle is always <= 45 deg.  Note that the "orientation" option
+    affects the tool's "straighten" function, so that the layer is
+    rotated toward the current orientation.
+
 
 User Interface:
 
@@ -30,7 +44,8 @@ User Interface:
 Translations:
 
   - New language: Marathi
-  - 3 translations were updated: Italian, Spanish, Swedish.
+  - 9 translations were updated: Brazilian Portuguese, German, Greek,
+    Italian, Polish, Romanian, Slovenian, Spanish, Swedish.
 
 Overview of Changes from GIMP 2.10.2 to GIMP 2.10.4
 ===================================================
