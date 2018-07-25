@@ -718,6 +718,7 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
 
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
   gtk_expander_set_resize_toplevel (GTK_EXPANDER (dialog->proc_expander), TRUE);
+  gtk_widget_set_hexpand (GTK_WIDGET (dialog->proc_expander), TRUE);
   gimp_file_dialog_add_extra_widget (dialog,
                                      dialog->proc_expander,
                                      TRUE, TRUE, 0);
