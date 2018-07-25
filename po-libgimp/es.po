@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-19 09:03+0000\n"
-"PO-Revision-Date: 2018-07-19 13:10+0200\n"
+"POT-Creation-Date: 2018-07-24 11:54+0000\n"
+"PO-Revision-Date: 2018-07-25 14:25+0200\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1160,268 +1160,322 @@ msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Procedimiento temporal"
 
-#: ../libgimpbase/gimpbaseenums.c:1463
+#: ../libgimpbase/gimpbaseenums.c:1475
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "Entero lineal de 8 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1464
+#: ../libgimpbase/gimpbaseenums.c:1476
+#| msgctxt "precision"
+#| msgid "8-bit linear integer"
 msgctxt "precision"
-msgid "8-bit gamma integer"
-msgstr "Entero gamma de 8 bits"
+msgid "8-bit non-linear integer"
+msgstr "Entero no lineal de 8 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1465
+#: ../libgimpbase/gimpbaseenums.c:1477
+#| msgctxt "precision"
+#| msgid "8-bit linear integer"
+msgctxt "precision"
+msgid "8-bit perceptual integer"
+msgstr "Entero perceptual de 8 bits"
+
+#: ../libgimpbase/gimpbaseenums.c:1478
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "Entero lineal de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1466
+#: ../libgimpbase/gimpbaseenums.c:1479
+#| msgctxt "precision"
+#| msgid "16-bit linear integer"
 msgctxt "precision"
-msgid "16-bit gamma integer"
-msgstr "Entero gamma de 16 bits"
+msgid "16-bit non-linear integer"
+msgstr "Entero no lineal de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1467
+#: ../libgimpbase/gimpbaseenums.c:1480
+#| msgctxt "precision"
+#| msgid "16-bit linear integer"
+msgctxt "precision"
+msgid "16-bit perceptual integer"
+msgstr "Entero perceptual de 16 bits"
+
+#: ../libgimpbase/gimpbaseenums.c:1481
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "Entero lineal de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1468
+#: ../libgimpbase/gimpbaseenums.c:1482
+#| msgctxt "precision"
+#| msgid "32-bit linear integer"
 msgctxt "precision"
-msgid "32-bit gamma integer"
-msgstr "Entero gamma de 32 bits"
+msgid "32-bit non-linear integer"
+msgstr "Entero no lineal de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1469
+#: ../libgimpbase/gimpbaseenums.c:1483
+#| msgctxt "precision"
+#| msgid "32-bit linear integer"
+msgctxt "precision"
+msgid "32-bit perceptual integer"
+msgstr "Entero perceptual de 32 bits"
+
+#: ../libgimpbase/gimpbaseenums.c:1484
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "Coma flotante lineal de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1470
+#: ../libgimpbase/gimpbaseenums.c:1485
+#| msgctxt "precision"
+#| msgid "16-bit linear floating point"
 msgctxt "precision"
-msgid "16-bit gamma floating point"
-msgstr "Coma flotante gamma de 16 bits"
+msgid "16-bit non-linear floating point"
+msgstr "Coma flotante no lineal de 16 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1471
+#: ../libgimpbase/gimpbaseenums.c:1486
+#| msgctxt "precision"
+#| msgid "16-bit linear floating point"
+msgctxt "precision"
+msgid "16-bit perceptual floating point"
+msgstr "Coma flotante perceptual de 16 bits"
+
+#: ../libgimpbase/gimpbaseenums.c:1487
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "Coma flotante lineal de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1472
+#: ../libgimpbase/gimpbaseenums.c:1488
+#| msgctxt "precision"
+#| msgid "32-bit linear floating point"
 msgctxt "precision"
-msgid "32-bit gamma floating point"
-msgstr "Coma flotante gamma de 32 bits"
+msgid "32-bit non-linear floating point"
+msgstr "Coma flotante no lineal de 32 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1473
+#: ../libgimpbase/gimpbaseenums.c:1489
+#| msgctxt "precision"
+#| msgid "32-bit linear floating point"
+msgctxt "precision"
+msgid "32-bit perceptual floating point"
+msgstr "Coma flotante perceptual de 32 bits"
+
+#: ../libgimpbase/gimpbaseenums.c:1490
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "Coma flotante lineal de 64 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1474
+#: ../libgimpbase/gimpbaseenums.c:1491
+#| msgctxt "precision"
+#| msgid "64-bit linear floating point"
 msgctxt "precision"
-msgid "64-bit gamma floating point"
-msgstr "Coma flotante gamma de 64 bits"
+msgid "64-bit non-linear floating point"
+msgstr "Coma flotante no lineal de 64 bits"
 
-#: ../libgimpbase/gimpbaseenums.c:1543
+#: ../libgimpbase/gimpbaseenums.c:1492
+#| msgctxt "precision"
+#| msgid "64-bit linear floating point"
+msgctxt "precision"
+msgid "64-bit perceptual floating point"
+msgstr "Coma flotante perceptual de 64 bits"
+
+#: ../libgimpbase/gimpbaseenums.c:1567
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Ninguno (extendido)"
 
-#: ../libgimpbase/gimpbaseenums.c:1544
+#: ../libgimpbase/gimpbaseenums.c:1568
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Onda de diente de sierra"
 
-#: ../libgimpbase/gimpbaseenums.c:1545
+#: ../libgimpbase/gimpbaseenums.c:1569
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Onda triangular"
 
-#: ../libgimpbase/gimpbaseenums.c:1546
+#: ../libgimpbase/gimpbaseenums.c:1570
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Truncar"
 
-#: ../libgimpbase/gimpbaseenums.c:1608
+#: ../libgimpbase/gimpbaseenums.c:1632
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Ejecutar de forma interactiva"
 
-#: ../libgimpbase/gimpbaseenums.c:1609
+#: ../libgimpbase/gimpbaseenums.c:1633
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Ejecutar de forma no interactiva"
 
-#: ../libgimpbase/gimpbaseenums.c:1610
+#: ../libgimpbase/gimpbaseenums.c:1634
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Ejecutar con los últimos valores utilizados"
 
-#: ../libgimpbase/gimpbaseenums.c:1648
+#: ../libgimpbase/gimpbaseenums.c:1672
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Compuesto"
 
-#: ../libgimpbase/gimpbaseenums.c:1649
+#: ../libgimpbase/gimpbaseenums.c:1673
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Rojo"
 
-#: ../libgimpbase/gimpbaseenums.c:1650
+#: ../libgimpbase/gimpbaseenums.c:1674
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Verde"
 
-#: ../libgimpbase/gimpbaseenums.c:1651
+#: ../libgimpbase/gimpbaseenums.c:1675
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Azul"
 
-#: ../libgimpbase/gimpbaseenums.c:1652
+#: ../libgimpbase/gimpbaseenums.c:1676
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "Tono HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1653
+#: ../libgimpbase/gimpbaseenums.c:1677
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "Saturación HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1654
+#: ../libgimpbase/gimpbaseenums.c:1678
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "Valor HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1655
+#: ../libgimpbase/gimpbaseenums.c:1679
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:1656
+#: ../libgimpbase/gimpbaseenums.c:1680
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "Luminosidad LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1657
+#: ../libgimpbase/gimpbaseenums.c:1681
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "Chroma LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1658
+#: ../libgimpbase/gimpbaseenums.c:1682
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "Tono LCh"
 
 # Debe ir en minúsculas por las reglas de estilo
-#: ../libgimpbase/gimpbaseenums.c:1687
+#: ../libgimpbase/gimpbaseenums.c:1711
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "píxeles"
 
-#: ../libgimpbase/gimpbaseenums.c:1688
+#: ../libgimpbase/gimpbaseenums.c:1712
 msgctxt "size-type"
 msgid "Points"
 msgstr "Puntos"
 
-#: ../libgimpbase/gimpbaseenums.c:1749
+#: ../libgimpbase/gimpbaseenums.c:1773
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Trazar línea"
 
-#: ../libgimpbase/gimpbaseenums.c:1750
+#: ../libgimpbase/gimpbaseenums.c:1774
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Trazar con una herramienta de pintura"
 
-#: ../libgimpbase/gimpbaseenums.c:1779
+#: ../libgimpbase/gimpbaseenums.c:1803
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "De izquierda a derecha"
 
-#: ../libgimpbase/gimpbaseenums.c:1780
+#: ../libgimpbase/gimpbaseenums.c:1804
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "De derecha a izquierda"
 
-#: ../libgimpbase/gimpbaseenums.c:1811
+#: ../libgimpbase/gimpbaseenums.c:1835
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Ninguno"
 
-#: ../libgimpbase/gimpbaseenums.c:1812
+#: ../libgimpbase/gimpbaseenums.c:1836
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Ligero"
 
-#: ../libgimpbase/gimpbaseenums.c:1813
+#: ../libgimpbase/gimpbaseenums.c:1837
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Medio"
 
-#: ../libgimpbase/gimpbaseenums.c:1814
+#: ../libgimpbase/gimpbaseenums.c:1838
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Completo"
 
-#: ../libgimpbase/gimpbaseenums.c:1845
+#: ../libgimpbase/gimpbaseenums.c:1869
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Justificado por la izquierda"
 
-#: ../libgimpbase/gimpbaseenums.c:1846
+#: ../libgimpbase/gimpbaseenums.c:1870
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Justificado por la derecha"
 
-#: ../libgimpbase/gimpbaseenums.c:1847
+#: ../libgimpbase/gimpbaseenums.c:1871
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Centrado"
 
-#: ../libgimpbase/gimpbaseenums.c:1848
+#: ../libgimpbase/gimpbaseenums.c:1872
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Relleno"
 
-#: ../libgimpbase/gimpbaseenums.c:1878
+#: ../libgimpbase/gimpbaseenums.c:1902
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Sombras"
 
-#: ../libgimpbase/gimpbaseenums.c:1879
+#: ../libgimpbase/gimpbaseenums.c:1903
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Tonos medios"
 
-#: ../libgimpbase/gimpbaseenums.c:1880
+#: ../libgimpbase/gimpbaseenums.c:1904
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Puntos de luz"
 
-#: ../libgimpbase/gimpbaseenums.c:1909
+#: ../libgimpbase/gimpbaseenums.c:1933
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (hacia adelante)"
 
-#: ../libgimpbase/gimpbaseenums.c:1910
+#: ../libgimpbase/gimpbaseenums.c:1934
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Correctivo (hacia atrás)"
 
-#: ../libgimpbase/gimpbaseenums.c:1941
+#: ../libgimpbase/gimpbaseenums.c:1965
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ajustar"
 
-#: ../libgimpbase/gimpbaseenums.c:1942
+#: ../libgimpbase/gimpbaseenums.c:1966
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Recortar"
 
-#: ../libgimpbase/gimpbaseenums.c:1943
+#: ../libgimpbase/gimpbaseenums.c:1967
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Recortar al resultado"
 
-#: ../libgimpbase/gimpbaseenums.c:1944
+#: ../libgimpbase/gimpbaseenums.c:1968
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Recortar con aspecto"
@@ -2737,6 +2791,28 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "Controlador de entrada MIDI de GIMP"
 
+#: ../modules/display-filter-aces-rrt.c:84
+msgid ""
+"ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
+"display filter, using a luminance-only approximation of the ACES RRT, a pre-"
+"defined filmic look to be used before ODT (display or output space ICC "
+"profile)"
+msgstr ""
+"ACES RRT (RRT = transformación de renderizado de referencia). Un filtro de "
+"visualización de color de prueba de HDR a SDR, que utiliza una aproximación "
+"de solo luminancia del ACES RRT, un aspecto cinematográfico predefinido que "
+"se utilizará antes del ODT (muestra o produce el perfil ICC del espacio)."
+
+# Alternativa: la pretransformada cambia en las paradas
+#: ../modules/display-filter-aces-rrt.c:121
+#| msgid "pre-transform change in stops"
+msgid "Pre-transform change in stops"
+msgstr "Cambio de pretransformación en paradas"
+
+#: ../modules/display-filter-aces-rrt.c:126
+msgid "Aces RRT"
+msgstr "Aces RRT"
+
 #: ../modules/display-filter-clip-warning.c:120
 msgid "Clip warning color display filter"
 msgstr "Filtro de visualización de color de advertencia de recorte"
@@ -2839,24 +2915,6 @@ msgstr "Tipo de deficiencia de visión de color"
 msgid "Color Deficient Vision"
 msgstr "Color de visión deficiente"
 
-# avisar a los desarrolladores usin -> using
-#: ../modules/display-filter-filmic.c:84
-msgid ""
-"Filmic HDR to SDR proof color display filter, usin an approximation of the "
-"ACES filmic transform."
-msgstr ""
-"Filtro de prueba de exposición de color Filmic HDR a SDR, usando una "
-"aproximación de la transformada filmic ACES."
-
-# Alternativa: la pretransformada cambia en las paradas
-#: ../modules/display-filter-filmic.c:121
-msgid "pre-transform change in stops"
-msgstr "cambio de pretransformación en paradas"
-
-#: ../modules/display-filter-filmic.c:126
-msgid "Filmic"
-msgstr "Filmic"
-
 #: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
 msgstr "Filtro gamma de visualización del color "
@@ -2876,6 +2934,41 @@ msgstr "Ciclos de contraste"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contraste"
+
+#~ msgctxt "precision"
+#~ msgid "8-bit gamma integer"
+#~ msgstr "Entero gamma de 8 bits"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit gamma integer"
+#~ msgstr "Entero gamma de 16 bits"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit gamma integer"
+#~ msgstr "Entero gamma de 32 bits"
+
+#~ msgctxt "precision"
+#~ msgid "16-bit gamma floating point"
+#~ msgstr "Coma flotante gamma de 16 bits"
+
+#~ msgctxt "precision"
+#~ msgid "32-bit gamma floating point"
+#~ msgstr "Coma flotante gamma de 32 bits"
+
+#~ msgctxt "precision"
+#~ msgid "64-bit gamma floating point"
+#~ msgstr "Coma flotante gamma de 64 bits"
+
+# avisar a los desarrolladores usin -> using
+#~ msgid ""
+#~ "Filmic HDR to SDR proof color display filter, usin an approximation of "
+#~ "the ACES filmic transform."
+#~ msgstr ""
+#~ "Filtro de prueba de exposición de color Filmic HDR a SDR, usando una "
+#~ "aproximación de la transformada filmic ACES."
+
+#~ msgid "Filmic"
+#~ msgstr "Filmic"
 
 #~ msgid "_Help"
 #~ msgstr "A_yuda"
