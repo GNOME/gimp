@@ -57,7 +57,8 @@ enum
   PROP_AUTOMATIC_LABEL,
   PROP_FILE_FILTER_LABEL,
   PROP_FILE_PROCS,
-  PROP_FILE_PROCS_ALL_IMAGES
+  PROP_FILE_PROCS_ALL_IMAGES,
+  PROP_SHOW_ALL_FILES,
 };
 
 typedef struct _GimpFileDialogState GimpFileDialogState;
@@ -214,6 +215,11 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
                                                       GIMP_FILE_PROCEDURE_GROUP_NONE,
                                                       GIMP_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_SHOW_ALL_FILES,
+                                   g_param_spec_boolean ("show-all-files",
+                                                         NULL, NULL, FALSE,
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -272,6 +278,11 @@ gimp_file_dialog_set_property (GObject      *object,
         gimp_plug_in_manager_get_file_procedures (dialog->gimp->plug_in_manager,
                                                   g_value_get_enum (value));
       break;
+    case PROP_SHOW_ALL_FILES:
+      dialog->show_all_files = g_value_get_boolean (value);
+      gimp_file_dialog_proc_changed (GIMP_FILE_PROC_VIEW (dialog->proc_view),
+                                     dialog);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -294,6 +305,9 @@ gimp_file_dialog_get_property (GObject    *object,
       break;
     case PROP_HELP_ID:
       g_value_set_string (value, dialog->help_id);
+      break;
+    case PROP_SHOW_ALL_FILES:
+      g_value_set_boolean (value, dialog->show_all_files);
       break;
 
     default:
@@ -725,7 +739,9 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog)
 static void
 gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
 {
+  GtkWidget *box;
   GtkWidget *scrolled_window;
+  GtkWidget *checkbox;
 
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
   gimp_file_dialog_add_extra_widget (dialog,
@@ -733,12 +749,17 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
                                      TRUE, TRUE, 0);
   gtk_widget_show (dialog->proc_expander);
 
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
+  gtk_container_add (GTK_CONTAINER (dialog->proc_expander), box);
+  gtk_widget_show (box);
+
+  /* The list of file formats. */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (dialog->proc_expander), scrolled_window);
+  gtk_box_pack_start (GTK_BOX (box), scrolled_window, TRUE, TRUE, 1);
   gtk_widget_show (scrolled_window);
 
   gtk_widget_set_size_request (scrolled_window, -1, 200);
@@ -755,6 +776,13 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
                     dialog);
 
   gimp_file_proc_view_set_proc (GIMP_FILE_PROC_VIEW (dialog->proc_view), NULL);
+
+  /* Checkbox to show all files. */
+  checkbox = gimp_prop_check_button_new (G_OBJECT (dialog),
+                                         "show-all-files",
+                                         _("Show All Files"));
+  gtk_box_pack_start (GTK_BOX (box), checkbox, FALSE, FALSE, 1);
+  gtk_widget_show (checkbox);
 }
 
 static void
@@ -785,14 +813,27 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
 
   if (name)
     {
-      gchar *label = g_strdup_printf (_("Select File _Type (%s)"), name);
+      gchar *label;
+
+      if (dialog->show_all_files)
+        label = g_strdup_printf (_("Select File _Type (%s) - Show All Files"), name);
+      else
+        label = g_strdup_printf (_("Select File _Type (%s)"), name);
 
       gtk_expander_set_label (GTK_EXPANDER (dialog->proc_expander), label);
 
       g_free (label);
       g_free (name);
     }
+  if (dialog->show_all_files)
+    {
+      g_object_unref (filter);
+      filter = gtk_file_filter_new ();
+      gtk_file_filter_add_pattern (filter, "*");
+      g_object_ref_sink (filter);
+    }
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+  g_object_unref (filter);
 
   if (gtk_file_chooser_get_action (chooser) == GTK_FILE_CHOOSER_ACTION_SAVE)
     {
