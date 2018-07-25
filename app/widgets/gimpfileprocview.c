@@ -36,6 +36,8 @@
 
 #include "gimp-intl.h"
 
+/*  an arbitrary limit to keep the file dialog from becoming too wide  */
+#define MAX_EXTENSIONS  4
 
 enum
 {
@@ -43,6 +45,7 @@ enum
   COLUMN_LABEL,
   COLUMN_EXTENSIONS,
   COLUMN_HELP_ID,
+  COLUMN_FILTER,
   N_COLUMNS
 };
 
@@ -53,10 +56,13 @@ enum
 };
 
 
-static void  gimp_file_proc_view_finalize          (GObject          *object);
+static void            gimp_file_proc_view_finalize               (GObject             *object);
 
-static void  gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
-                                                    GimpFileProcView *view);
+static void            gimp_file_proc_view_selection_changed      (GtkTreeSelection    *selection,
+                                                                   GimpFileProcView    *view);
+
+static GtkFileFilter * gimp_file_proc_view_process_procedure      (GimpPlugInProcedure *file_proc);
+static gchar         * gimp_file_proc_view_pattern_from_extension (const gchar         *extension);
 
 
 G_DEFINE_TYPE (GimpFileProcView, gimp_file_proc_view, GTK_TYPE_TREE_VIEW)
@@ -120,10 +126,11 @@ gimp_file_proc_view_new (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   store = gtk_list_store_new (N_COLUMNS,
-                              GIMP_TYPE_PLUG_IN_PROCEDURE, /*  COLUMN_PROC   */
-                              G_TYPE_STRING,          /*  COLUMN_LABEL       */
-                              G_TYPE_STRING,          /*  COLUMN_EXTENSIONS  */
-                              G_TYPE_STRING);         /*  COLUMN_HELP_ID     */
+                              GIMP_TYPE_PLUG_IN_PROCEDURE, /*  COLUMN_PROC       */
+                              G_TYPE_STRING,               /*  COLUMN_LABEL      */
+                              G_TYPE_STRING,               /*  COLUMN_EXTENSIONS */
+                              G_TYPE_STRING,               /*  COLUMN_HELP_ID    */
+                              GTK_TYPE_FILE_FILTER);       /*  COLUMN_FILTER     */
 
   view = g_object_new (GIMP_TYPE_FILE_PROC_VIEW,
                        "model",      store,
@@ -144,12 +151,16 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
           if (label)
             {
+              GtkFileFilter *filter;
+
+              filter = gimp_file_proc_view_process_procedure (proc);
               gtk_list_store_append (store, &iter);
               gtk_list_store_set (store, &iter,
                                   COLUMN_PROC,       proc,
                                   COLUMN_LABEL,      label,
                                   COLUMN_EXTENSIONS, proc->extensions,
                                   COLUMN_HELP_ID,    help_id,
+                                  COLUMN_FILTER,     filter,
                                   -1);
             }
 
@@ -171,12 +182,18 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
   if (automatic)
     {
+      GtkFileFilter *filter = gtk_file_filter_new ();
+
       gtk_list_store_prepend (store, &iter);
+
+      gtk_file_filter_set_name (filter, _("All files"));
+      gtk_file_filter_add_pattern (filter, "*");
 
       gtk_list_store_set (store, &iter,
                           COLUMN_PROC,    NULL,
                           COLUMN_LABEL,   automatic,
                           COLUMN_HELP_ID, automatic_help_id,
+                          COLUMN_FILTER,  filter,
                           -1);
     }
 
@@ -212,7 +229,8 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
 GimpPlugInProcedure *
 gimp_file_proc_view_get_proc (GimpFileProcView  *view,
-                              gchar            **label)
+                              gchar            **label,
+                              GtkFileFilter    **filter)
 {
   GtkTreeModel     *model;
   GtkTreeSelection *selection;
@@ -226,14 +244,25 @@ gimp_file_proc_view_get_proc (GimpFileProcView  *view,
     {
       GimpPlugInProcedure *proc;
 
-      if (label)
+      if (label && filter)
         gtk_tree_model_get (model, &iter,
-                            COLUMN_PROC,  &proc,
-                            COLUMN_LABEL, label,
+                            COLUMN_PROC,   &proc,
+                            COLUMN_LABEL,  label,
+                            COLUMN_FILTER, filter,
+                            -1);
+      else if (label)
+        gtk_tree_model_get (model, &iter,
+                            COLUMN_PROC,   &proc,
+                            COLUMN_LABEL,  label,
+                            -1);
+      else if (filter)
+        gtk_tree_model_get (model, &iter,
+                            COLUMN_PROC,   &proc,
+                            COLUMN_FILTER, filter,
                             -1);
       else
         gtk_tree_model_get (model, &iter,
-                            COLUMN_PROC,  &proc,
+                            COLUMN_PROC,   &proc,
                             -1);
 
       if (proc)
@@ -319,4 +348,113 @@ gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
                                        GimpFileProcView *view)
 {
   g_signal_emit (view, view_signals[CHANGED], 0);
+}
+
+/**
+ * gimp_file_proc_view_process_procedure:
+ * @file_proc:
+ *
+ * Creates a #GtkFileFilter of @file_proc.
+ * The returned #GtkFileFilter has a normal ref and must be unreffed
+ * when used.
+ **/
+static GtkFileFilter *
+gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc)
+{
+  GtkFileFilter *filter;
+  GString       *str;
+  GSList        *list;
+  gint           i;
+
+  if (! file_proc->extensions_list)
+    return NULL;
+
+  filter = gtk_file_filter_new ();
+  str    = g_string_new (gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
+
+  /* Take ownership directly so we don't have to mess with a floating
+   * ref
+   */
+  g_object_ref_sink (filter);
+
+  for (list = file_proc->mime_types_list; list; list = g_slist_next (list))
+    {
+      const gchar *mime_type = list->data;
+
+      gtk_file_filter_add_mime_type (filter, mime_type);
+    }
+
+  for (list = file_proc->extensions_list, i = 0;
+       list;
+       list = g_slist_next (list), i++)
+    {
+      const gchar *extension = list->data;
+      gchar       *pattern;
+
+      pattern = gimp_file_proc_view_pattern_from_extension (extension);
+      gtk_file_filter_add_pattern (filter, pattern);
+      g_free (pattern);
+
+      if (i == 0)
+        {
+          g_string_append (str, " (");
+        }
+      else if (i <= MAX_EXTENSIONS)
+        {
+          g_string_append (str, ", ");
+        }
+
+      if (i < MAX_EXTENSIONS)
+        {
+          g_string_append (str, "*.");
+          g_string_append (str, extension);
+        }
+      else if (i == MAX_EXTENSIONS)
+        {
+          g_string_append (str, "...");
+        }
+
+      if (! list->next)
+        {
+          g_string_append (str, ")");
+        }
+    }
+
+  gtk_file_filter_set_name (filter, str->str);
+  g_string_free (str, TRUE);
+
+  return filter;
+}
+
+static gchar *
+gimp_file_proc_view_pattern_from_extension (const gchar *extension)
+{
+  gchar *pattern;
+  gchar *p;
+  gint   len, i;
+
+  g_return_val_if_fail (extension != NULL, NULL);
+
+  /* This function assumes that file extensions are 7bit ASCII.  It
+   * could certainly be rewritten to handle UTF-8 if this assumption
+   * turns out to be incorrect.
+   */
+
+  len = strlen (extension);
+
+  pattern = g_new (gchar, 4 + 4 * len);
+
+  strcpy (pattern, "*.");
+
+  for (i = 0, p = pattern + 2; i < len; i++, p+= 4)
+    {
+      p[0] = '[';
+      p[1] = g_ascii_tolower (extension[i]);
+      p[2] = g_ascii_toupper (extension[i]);
+      p[3] = ']';
+    }
+
+  *p = '\0';
+
+  return pattern;
 }
