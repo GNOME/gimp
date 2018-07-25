@@ -47,9 +47,6 @@
 #include "gimp-intl.h"
 
 
-/*  an arbitrary limit to keep the file dialog from becoming too wide  */
-#define MAX_EXTENSIONS  4
-
 enum
 {
   PROP_0,
@@ -111,11 +108,6 @@ static guint32  gimp_file_dialog_progress_get_window_id  (GimpProgress        *p
 static void     gimp_file_dialog_add_user_dir            (GimpFileDialog      *dialog,
                                                           GUserDirectory       directory);
 static void     gimp_file_dialog_add_preview             (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_add_filters             (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_process_procedure       (GimpPlugInProcedure *file_proc,
-                                                          GtkFileFilter      **filter_out,
-                                                          GtkFileFilter       *all,
-                                                          GtkFileFilter       *all_savable);
 static void     gimp_file_dialog_add_proc_selection      (GimpFileDialog      *dialog);
 
 static void     gimp_file_dialog_selection_changed       (GtkFileChooser      *chooser,
@@ -130,9 +122,6 @@ static void     gimp_file_dialog_help_func               (const gchar         *h
                                                           gpointer             help_data);
 static void     gimp_file_dialog_help_clicked            (GtkWidget           *widget,
                                                           gpointer             dialog);
-
-static gchar  * gimp_file_dialog_pattern_from_extension  (const gchar         *extension);
-
 
 static GimpFileDialogState
               * gimp_file_dialog_get_state               (GimpFileDialog      *dialog);
@@ -370,7 +359,6 @@ gimp_file_dialog_constructed (GObject *object)
   gimp_file_dialog_add_user_dir (dialog, G_USER_DIRECTORY_DOCUMENTS);
 
   gimp_file_dialog_add_preview (dialog);
-  gimp_file_dialog_add_filters (dialog);
 
   dialog->extra_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
@@ -734,166 +722,6 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog)
 #endif
 }
 
-/**
- * gimp_file_dialog_add_filters:
- * @dialog:
- * @gimp:
- * @action:
- * @file_procs:            The image types that can be chosen from
- *                         the file type list
- * @file_procs_all_images: The additional images types shown when
- *                         "All images" is selected
- *
- **/
-static void
-gimp_file_dialog_add_filters (GimpFileDialog *dialog)
-{
-  GtkFileFilter *all;
-  GtkFileFilter *all_savable = NULL;
-  GSList        *list;
-
-  all = gtk_file_filter_new ();
-  gtk_file_filter_set_name (all, _("All files"));
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
-  gtk_file_filter_add_pattern (all, "*");
-
-  all = gtk_file_filter_new ();
-  gtk_file_filter_set_name (all, _("All images"));
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
-
-  if (dialog->file_procs_all_images)
-    {
-      all_savable = gtk_file_filter_new ();
-      gtk_file_filter_set_name (all_savable, dialog->file_filter_label);
-      gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all_savable);
-    }
-
-  /* Add the normal file procs */
-  for (list = dialog->file_procs; list; list = g_slist_next (list))
-    {
-      GimpPlugInProcedure *file_proc = list->data;
-      GtkFileFilter       *filter    = NULL;
-
-      gimp_file_dialog_process_procedure (file_proc,
-                                          &filter,
-                                          all, all_savable);
-      if (filter)
-        {
-          gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog),
-                                       filter);
-          g_object_unref (filter);
-        }
-    }
-
-  /* Add the "rest" of the file procs only as filters to
-   * "All images"
-   */
-  for (list = dialog->file_procs_all_images; list; list = g_slist_next (list))
-    {
-      GimpPlugInProcedure *file_proc = list->data;
-
-      gimp_file_dialog_process_procedure (file_proc,
-                                          NULL,
-                                          all, NULL);
-    }
-
-  if (all_savable)
-    gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all_savable);
-  else
-    gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all);
-}
-
-/**
- * gimp_file_dialog_process_procedure:
- * @file_proc:
- * @filter_out:
- * @all:
- * @all_savable:
- *
- * Creates a #GtkFileFilter of @file_proc and adds the extensions to
- * the @all filter. The returned #GtkFileFilter has a normal ref and
- * must be unreffed when used.
- **/
-static void
-gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
-                                    GtkFileFilter       **filter_out,
-                                    GtkFileFilter        *all,
-                                    GtkFileFilter        *all_savable)
-{
-  GtkFileFilter *filter;
-  GString       *str;
-  GSList        *list;
-  gint           i;
-
-  if (! file_proc->extensions_list)
-    return;
-
-  filter = gtk_file_filter_new ();
-  str    = g_string_new (gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
-
-  /* Take ownership directly so we don't have to mess with a floating
-   * ref
-   */
-  g_object_ref_sink (filter);
-
-  for (list = file_proc->mime_types_list; list; list = g_slist_next (list))
-    {
-      const gchar *mime_type = list->data;
-
-      gtk_file_filter_add_mime_type (filter, mime_type);
-      gtk_file_filter_add_mime_type (all, mime_type);
-      if (all_savable)
-        gtk_file_filter_add_mime_type (all_savable, mime_type);
-    }
-
-  for (list = file_proc->extensions_list, i = 0;
-       list;
-       list = g_slist_next (list), i++)
-    {
-      const gchar *extension = list->data;
-      gchar       *pattern;
-
-      pattern = gimp_file_dialog_pattern_from_extension (extension);
-      gtk_file_filter_add_pattern (filter, pattern);
-      gtk_file_filter_add_pattern (all, pattern);
-      if (all_savable)
-        gtk_file_filter_add_pattern (all_savable, pattern);
-      g_free (pattern);
-
-      if (i == 0)
-        {
-          g_string_append (str, " (");
-        }
-      else if (i <= MAX_EXTENSIONS)
-        {
-          g_string_append (str, ", ");
-        }
-
-      if (i < MAX_EXTENSIONS)
-        {
-          g_string_append (str, "*.");
-          g_string_append (str, extension);
-        }
-      else if (i == MAX_EXTENSIONS)
-        {
-          g_string_append (str, "...");
-        }
-
-      if (! list->next)
-        {
-          g_string_append (str, ")");
-        }
-    }
-
-  gtk_file_filter_set_name (filter, str->str);
-  g_string_free (str, TRUE);
-
-  if (filter_out)
-    *filter_out = g_object_ref (filter);
-
-  g_object_unref (filter);
-}
-
 static void
 gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
 {
@@ -950,9 +778,10 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
                                GimpFileDialog   *dialog)
 {
   GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+  GtkFileFilter  *filter;
   gchar          *name;
 
-  dialog->file_proc = gimp_file_proc_view_get_proc (view, &name);
+  dialog->file_proc = gimp_file_proc_view_get_proc (view, &name, &filter);
 
   if (name)
     {
@@ -963,6 +792,7 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
       g_free (label);
       g_free (name);
     }
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
 
   if (gtk_file_chooser_get_action (chooser) == GTK_FILE_CHOOSER_ACTION_SAVE)
     {
@@ -1069,39 +899,6 @@ gimp_file_dialog_help_clicked (GtkWidget *widget,
 {
   gimp_standard_help_func (g_object_get_data (dialog, "gimp-dialog-help-id"),
                            NULL);
-}
-
-static gchar *
-gimp_file_dialog_pattern_from_extension (const gchar *extension)
-{
-  gchar *pattern;
-  gchar *p;
-  gint   len, i;
-
-  g_return_val_if_fail (extension != NULL, NULL);
-
-  /* This function assumes that file extensions are 7bit ASCII.  It
-   * could certainly be rewritten to handle UTF-8 if this assumption
-   * turns out to be incorrect.
-   */
-
-  len = strlen (extension);
-
-  pattern = g_new (gchar, 4 + 4 * len);
-
-  strcpy (pattern, "*.");
-
-  for (i = 0, p = pattern + 2; i < len; i++, p+= 4)
-    {
-      p[0] = '[';
-      p[1] = g_ascii_tolower (extension[i]);
-      p[2] = g_ascii_toupper (extension[i]);
-      p[3] = ']';
-    }
-
-  *p = '\0';
-
-  return pattern;
 }
 
 static GimpFileDialogState *
