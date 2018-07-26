@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-25 07:04+0000\n"
-"PO-Revision-Date: 2018-07-25 12:48+0200\n"
+"POT-Creation-Date: 2018-07-25 15:07+0000\n"
+"PO-Revision-Date: 2018-07-26 10:18+0200\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -3552,7 +3552,7 @@ msgstr "Vaciar el histórico del documento"
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimpcontrollerlist.c:562
 #: ../app/widgets/gimpdeviceeditor.c:493 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:447
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:487
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:714
 msgid "_Cancel"
@@ -10005,7 +10005,7 @@ msgstr "Mover esta ventana a la pantalla %s"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:186
 #: ../app/tools/gimpfiltertool.c:323 ../app/widgets/gimpcolordialog.c:126
 #: ../app/widgets/gimpcontrollereditor.c:662
-#: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:186
+#: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:176
 msgid "_OK"
 msgstr "_Aceptar"
 
@@ -14790,7 +14790,7 @@ msgstr "PP/SP"
 msgid "FG/BG Color"
 msgstr "Color PP/SP"
 
-#: ../app/dialogs/extensions-dialog.c:76 ../app/widgets/gimpfileprocview.c:196
+#: ../app/dialogs/extensions-dialog.c:76 ../app/widgets/gimpfileprocview.c:211
 msgid "Extensions"
 msgstr "Extensiones"
 
@@ -24941,24 +24941,21 @@ msgstr "Por extensión"
 msgid "All export images"
 msgstr "Todas las imágenes exportadas"
 
-#: ../app/widgets/gimpfiledialog.c:346
+#: ../app/widgets/gimpfiledialog.c:349
 msgid "_Help"
 msgstr "A_yuda"
 
-#: ../app/widgets/gimpfiledialog.c:745
-msgid "All files"
-msgstr "Todos los archivos"
+#: ../app/widgets/gimpfiledialog.c:772
+#| msgid "All files"
+msgid "Show All Files"
+msgstr "Mostrar todos los archivos"
 
-#: ../app/widgets/gimpfiledialog.c:750
-msgid "All images"
-msgstr "Todas las imágenes"
-
-#: ../app/widgets/gimpfiledialog.c:949
+#: ../app/widgets/gimpfiledialog.c:805
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleccione el _tipo de archivo (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:184
+#: ../app/widgets/gimpfileprocview.c:199
 msgid "File Type"
 msgstr "Tipo de archivo"
 
@@ -26087,6 +26084,9 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgid "All images"
+#~ msgstr "Todas las imágenes"
 
 #~ msgctxt "undo-type"
 #~ msgid "Convert Image to 8 bit linear integer"
