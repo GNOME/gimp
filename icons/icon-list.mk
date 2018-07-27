@@ -1,5 +1,8 @@
 color_scalable_images = \
+	scalable/dialog-error.svg				\
 	scalable/dialog-information.svg				\
+	scalable/dialog-question.svg				\
+	scalable/dialog-warning.svg				\
 	scalable/document-new.svg				\
 	scalable/document-open.svg				\
 	scalable/document-open-recent.svg			\
@@ -21,6 +24,8 @@ color_scalable_images = \
 	scalable/format-justify-center.svg			\
 	scalable/format-justify-left.svg			\
 	scalable/format-justify-right.svg			\
+	scalable/format-text-direction-ltr.svg			\
+	scalable/format-text-direction-rtl.svg			\
 	scalable/go-bottom.svg					\
 	scalable/go-down.svg					\
 	scalable/go-first.svg					\
@@ -40,6 +45,10 @@ color_scalable_images = \
 	scalable/media-seek-backward.svg			\
 	scalable/media-skip-backward.svg			\
 	scalable/media-skip-forward.svg				\
+	scalable/object-flip-horizontal.svg			\
+	scalable/object-flip-vertical.svg			\
+	scalable/object-rotate-left.svg				\
+	scalable/object-rotate-right.svg			\
 	scalable/preferences-system.svg				\
 	scalable/process-stop.svg				\
 	scalable/system-run.svg					\
@@ -115,10 +124,7 @@ color_scalable_images = \
 	scalable/gimp-display-filter.svg			\
 	scalable/gimp-duplicate.svg				\
 	scalable/gimp-dynamics.svg				\
-	scalable/gimp-error.svg					\
 	scalable/gimp-file-manager.svg				\
-	scalable/gimp-flip-horizontal.svg			\
-	scalable/gimp-flip-vertical.svg				\
 	scalable/gimp-floating-selection.svg			\
 	scalable/gimp-gegl.svg					\
 	scalable/gimp-gradient-bilinear.svg			\
@@ -153,7 +159,6 @@ color_scalable_images = \
 	scalable/gimp-image.svg					\
 	scalable/gimp-image-open.svg				\
 	scalable/gimp-image-reload.svg				\
-	scalable/gimp-info.svg					\
 	scalable/gimp-input-device.svg				\
 	scalable/gimp-invert.svg				\
 	scalable/gimp-join-bevel.svg				\
@@ -221,15 +226,12 @@ color_scalable_images = \
 	scalable/gimp-prefs-toolbox.svg				\
 	scalable/gimp-prefs-tool-options.svg			\
 	scalable/gimp-prefs-window-management.svg		\
-	scalable/gimp-question.svg				\
 	scalable/gimp-quick-mask-off.svg			\
 	scalable/gimp-quick-mask-on.svg				\
 	scalable/gimp-reset.svg					\
 	scalable/gimp-reshow-filter.svg				\
 	scalable/gimp-resize.svg				\
 	scalable/gimp-rotate-180.svg				\
-	scalable/gimp-rotate-270.svg				\
-	scalable/gimp-rotate-90.svg				\
 	scalable/gimp-sample-point.svg				\
 	scalable/gimp-scale.svg					\
 	scalable/gimp-selection.svg				\
@@ -253,8 +255,6 @@ color_scalable_images = \
 	scalable/gimp-swap-colors.svg				\
 	scalable/gimp-symmetry.svg				\
 	scalable/gimp-template.svg				\
-	scalable/gimp-text-dir-ltr.svg				\
-	scalable/gimp-text-dir-rtl.svg				\
 	scalable/gimp-text-layer.svg				\
 	scalable/gimp-toilet-paper.svg				\
 	scalable/gimp-tool-airbrush.svg				\
@@ -321,7 +321,6 @@ color_scalable_images = \
 	scalable/gimp-vfill.svg					\
 	scalable/gimp-video.svg					\
 	scalable/gimp-visible.svg				\
-	scalable/gimp-warning.svg				\
 	scalable/gimp-web.svg					\
 	scalable/gimp-wilber.svg				\
 	scalable/gimp-wilber-eek.svg				\
@@ -329,7 +328,10 @@ color_scalable_images = \
 	scalable/gimp-zoom-follow-window.svg
 
 color_vector24_images = \
+	24/dialog-error.svg					\
 	24/dialog-information.svg				\
+	24/dialog-question.svg					\
+	24/dialog-warning.svg					\
 	24/document-print.svg					\
 	24/media-floppy.svg 					\
 	24/media-optical.svg					\
@@ -367,14 +369,12 @@ color_vector24_images = \
 	24/gimp-display-filter-lcms.svg				\
 	24/gimp-display-filter-proof.svg			\
 	24/gimp-dynamics.svg					\
-	24/gimp-error.svg					\
 	24/gimp-floating-selection.svg				\
 	24/gimp-gegl.svg					\
 	24/gimp-grid.svg					\
 	24/gimp-histogram.svg					\
 	24/gimp-image.svg					\
 	24/gimp-images.svg					\
-	24/gimp-info.svg					\
 	24/gimp-landscape.svg					\
 	24/gimp-layer.svg					\
 	24/gimp-layer-mask.svg					\
@@ -426,7 +426,6 @@ color_vector24_images = \
 	24/gimp-prefs-toolbox.svg				\
 	24/gimp-prefs-tool-options.svg				\
 	24/gimp-prefs-window-management.svg			\
-	24/gimp-question.svg					\
 	24/gimp-resize.svg					\
 	24/gimp-sample-point.svg				\
 	24/gimp-scale.svg					\
@@ -492,12 +491,14 @@ color_vector24_images = \
 	24/gimp-undo-history.svg				\
 	24/gimp-user-manual.svg					\
 	24/gimp-video.svg					\
-	24/gimp-warning.svg					\
 	24/gimp-web.svg						\
 	24/gimp-wilber.svg
 
 symbolic_scalable_images = \
-	scalable/dialog-information-symbolic.svg				\
+	scalable/dialog-error-symbolic.svg				\
+	scalable/dialog-information-symbolic.svg			\
+	scalable/dialog-question-symbolic.svg				\
+	scalable/dialog-warning-symbolic.svg				\
 	scalable/document-new-symbolic.svg				\
 	scalable/document-open-symbolic.svg				\
 	scalable/document-open-recent-symbolic.svg			\
@@ -519,6 +520,8 @@ symbolic_scalable_images = \
 	scalable/format-justify-center-symbolic.svg			\
 	scalable/format-justify-left-symbolic.svg			\
 	scalable/format-justify-right-symbolic.svg			\
+	scalable/format-text-direction-ltr-symbolic.svg			\
+	scalable/format-text-direction-rtl-symbolic.svg			\
 	scalable/go-bottom-symbolic.svg					\
 	scalable/go-down-symbolic.svg					\
 	scalable/go-first-symbolic.svg					\
@@ -538,6 +541,10 @@ symbolic_scalable_images = \
 	scalable/media-seek-backward-symbolic.svg			\
 	scalable/media-skip-backward-symbolic.svg			\
 	scalable/media-skip-forward-symbolic.svg				\
+	scalable/object-flip-horizontal-symbolic.svg			\
+	scalable/object-flip-vertical-symbolic.svg			\
+	scalable/object-rotate-left-symbolic.svg			\
+	scalable/object-rotate-right-symbolic.svg			\
 	scalable/preferences-system-symbolic.svg				\
 	scalable/process-stop-symbolic.svg				\
 	scalable/system-run-symbolic.svg					\
@@ -613,10 +620,7 @@ symbolic_scalable_images = \
 	scalable/gimp-display-filter-symbolic.svg			\
 	scalable/gimp-duplicate-symbolic.svg				\
 	scalable/gimp-dynamics-symbolic.svg				\
-	scalable/gimp-error-symbolic.svg					\
 	scalable/gimp-file-manager-symbolic.svg				\
-	scalable/gimp-flip-horizontal-symbolic.svg			\
-	scalable/gimp-flip-vertical-symbolic.svg				\
 	scalable/gimp-floating-selection-symbolic.svg			\
 	scalable/gimp-gegl-symbolic.svg					\
 	scalable/gimp-gradient-bilinear-symbolic.svg			\
@@ -651,7 +655,6 @@ symbolic_scalable_images = \
 	scalable/gimp-image-symbolic.svg					\
 	scalable/gimp-image-open-symbolic.svg				\
 	scalable/gimp-image-reload-symbolic.svg				\
-	scalable/gimp-info-symbolic.svg					\
 	scalable/gimp-input-device-symbolic.svg				\
 	scalable/gimp-invert-symbolic.svg				\
 	scalable/gimp-join-bevel-symbolic.svg				\
@@ -719,15 +722,12 @@ symbolic_scalable_images = \
 	scalable/gimp-prefs-toolbox-symbolic.svg				\
 	scalable/gimp-prefs-tool-options-symbolic.svg			\
 	scalable/gimp-prefs-window-management-symbolic.svg		\
-	scalable/gimp-question-symbolic.svg				\
 	scalable/gimp-quick-mask-off-symbolic.svg			\
 	scalable/gimp-quick-mask-on-symbolic.svg				\
 	scalable/gimp-reset-symbolic.svg					\
 	scalable/gimp-reshow-filter-symbolic.svg				\
 	scalable/gimp-resize-symbolic.svg				\
 	scalable/gimp-rotate-180-symbolic.svg				\
-	scalable/gimp-rotate-270-symbolic.svg				\
-	scalable/gimp-rotate-90-symbolic.svg				\
 	scalable/gimp-sample-point-symbolic.svg				\
 	scalable/gimp-scale-symbolic.svg					\
 	scalable/gimp-selection-symbolic.svg				\
@@ -751,8 +751,6 @@ symbolic_scalable_images = \
 	scalable/gimp-swap-colors-symbolic.svg				\
 	scalable/gimp-symmetry-symbolic.svg				\
 	scalable/gimp-template-symbolic.svg				\
-	scalable/gimp-text-dir-ltr-symbolic.svg				\
-	scalable/gimp-text-dir-rtl-symbolic.svg				\
 	scalable/gimp-text-layer-symbolic.svg				\
 	scalable/gimp-toilet-paper-symbolic.svg				\
 	scalable/gimp-tool-airbrush-symbolic.svg				\
@@ -819,7 +817,6 @@ symbolic_scalable_images = \
 	scalable/gimp-vfill-symbolic.svg					\
 	scalable/gimp-video-symbolic.svg					\
 	scalable/gimp-visible-symbolic.svg				\
-	scalable/gimp-warning-symbolic.svg				\
 	scalable/gimp-web-symbolic.svg					\
 	scalable/gimp-wilber-symbolic.svg				\
 	scalable/gimp-wilber-eek-symbolic.svg				\
@@ -827,7 +824,10 @@ symbolic_scalable_images = \
 	scalable/gimp-zoom-follow-window-symbolic.svg
 
 symbolic_vector24_images = \
+	24/dialog-error-symbolic.svg					\
 	24/dialog-information-symbolic.svg				\
+	24/dialog-question-symbolic.svg					\
+	24/dialog-warning-symbolic.svg					\
 	24/document-print-symbolic.svg					\
 	24/media-floppy-symbolic.svg 					\
 	24/media-optical-symbolic.svg					\
@@ -865,14 +865,12 @@ symbolic_vector24_images = \
 	24/gimp-display-filter-lcms-symbolic.svg				\
 	24/gimp-display-filter-proof-symbolic.svg			\
 	24/gimp-dynamics-symbolic.svg					\
-	24/gimp-error-symbolic.svg					\
 	24/gimp-floating-selection-symbolic.svg				\
 	24/gimp-gegl-symbolic.svg					\
 	24/gimp-grid-symbolic.svg					\
 	24/gimp-histogram-symbolic.svg					\
 	24/gimp-image-symbolic.svg					\
 	24/gimp-images-symbolic.svg					\
-	24/gimp-info-symbolic.svg					\
 	24/gimp-landscape-symbolic.svg					\
 	24/gimp-layer-symbolic.svg					\
 	24/gimp-layer-mask-symbolic.svg					\
@@ -924,7 +922,6 @@ symbolic_vector24_images = \
 	24/gimp-prefs-toolbox-symbolic.svg				\
 	24/gimp-prefs-tool-options-symbolic.svg				\
 	24/gimp-prefs-window-management-symbolic.svg			\
-	24/gimp-question-symbolic.svg					\
 	24/gimp-resize-symbolic.svg					\
 	24/gimp-sample-point-symbolic.svg				\
 	24/gimp-scale-symbolic.svg					\
@@ -990,7 +987,6 @@ symbolic_vector24_images = \
 	24/gimp-undo-history-symbolic.svg				\
 	24/gimp-user-manual-symbolic.svg					\
 	24/gimp-video-symbolic.svg					\
-	24/gimp-warning-symbolic.svg					\
 	24/gimp-web-symbolic.svg						\
 	24/gimp-wilber-symbolic.svg
 
@@ -1009,7 +1005,10 @@ icons12_images = \
 	12/gimp-zoom-follow-window.png
 
 icons16_images = \
+	16/dialog-error.png					\
 	16/dialog-information.png				\
+	16/dialog-question.png					\
+	16/dialog-warning.png					\
 	16/document-new.png					\
 	16/document-open.png					\
 	16/document-open-recent.png				\
@@ -1045,6 +1044,10 @@ icons16_images = \
 	16/media-seek-backward.png				\
 	16/media-skip-backward.png				\
 	16/media-skip-forward.png				\
+	16/object-flip-horizontal.png				\
+	16/object-flip-vertical.png				\
+	16/object-rotate-left.png				\
+	16/object-rotate-right.png				\
 	16/preferences-system.png				\
 	16/process-stop.png					\
 	16/system-run.png					\
@@ -1114,10 +1117,7 @@ icons16_images = \
 	16/gimp-display-filter.png				\
 	16/gimp-duplicate.png					\
 	16/gimp-dynamics.png					\
-	16/gimp-error.png					\
 	16/gimp-file-manager.png				\
-	16/gimp-flip-horizontal.png				\
-	16/gimp-flip-vertical.png				\
 	16/gimp-floating-selection.png				\
 	16/gimp-gegl.png					\
 	16/gimp-gradient-bilinear.png				\
@@ -1140,7 +1140,6 @@ icons16_images = \
 	16/gimp-images.png					\
 	16/gimp-image-open.png					\
 	16/gimp-image-reload.png				\
-	16/gimp-info.png					\
 	16/gimp-input-device.png				\
 	16/gimp-invert.png					\
 	16/gimp-join-bevel.png					\
@@ -1187,13 +1186,10 @@ icons16_images = \
 	16/gimp-prefs-theme.png					\
 	16/gimp-prefs-toolbox.png				\
 	16/gimp-prefs-window-management.png			\
-	16/gimp-question.png					\
 	16/gimp-reset.png					\
 	16/gimp-reshow-filter.png				\
 	16/gimp-resize.png					\
 	16/gimp-rotate-180.png					\
-	16/gimp-rotate-270.png					\
-	16/gimp-rotate-90.png					\
 	16/gimp-sample-point.png				\
 	16/gimp-scale.png					\
 	16/gimp-selection-add.png				\
@@ -1276,7 +1272,6 @@ icons16_images = \
 	16/gimp-undo-history.png				\
 	16/gimp-user-manual.png					\
 	16/gimp-video.png					\
-	16/gimp-warning.png					\
 	16/gimp-web.png						\
 	16/gimp-wilber.png
 
@@ -1350,8 +1345,13 @@ icons22_images = \
 	22/gimp-wilber.png
 
 icons24_images = \
+	24/dialog-error.png					\
 	24/dialog-information.png				\
+	24/dialog-question.png					\
+	24/dialog-warning.png					\
 	24/document-print.png					\
+	24/format-text-direction-ltr.png			\
+	24/format-text-direction-rtl.png			\
 	24/media-floppy.png					\
 	24/media-optical.png 					\
 	\
@@ -1390,7 +1390,6 @@ icons24_images = \
 	24/gimp-display-filter-lcms.png				\
 	24/gimp-display-filter-proof.png			\
 	24/gimp-display-filter.png				\
-	24/gimp-error.png					\
 	24/gimp-floating-selection.png				\
 	24/gimp-gegl.png					\
 	24/gimp-grid.png					\
@@ -1408,13 +1407,11 @@ icons24_images = \
 	24/gimp-hfill.png					\
 	24/gimp-image.png					\
 	24/gimp-images.png					\
-	24/gimp-info.png					\
 	24/gimp-layer-mask.png					\
 	24/gimp-layer.png					\
 	24/gimp-layers.png					\
 	24/gimp-move-to-screen.png				\
 	24/gimp-navigation.png					\
-	24/gimp-question.png					\
 	24/gimp-resize.png					\
 	24/gimp-sample-point.png				\
 	24/gimp-scale.png					\
@@ -1422,8 +1419,6 @@ icons24_images = \
 	24/gimp-smartphone.png					\
 	24/gimp-symmetry.png					\
 	24/gimp-template.png					\
-	24/gimp-text-dir-ltr.png				\
-	24/gimp-text-dir-rtl.png				\
 	24/gimp-text-layer.png					\
 	24/gimp-toilet-paper.png				\
 	24/gimp-tool-airbrush.png				\
@@ -1488,7 +1483,6 @@ icons24_images = \
 	24/gimp-vchain.png					\
 	24/gimp-vfill.png					\
 	24/gimp-video.png					\
-	24/gimp-warning.png					\
 	24/gimp-web.png
 
 icons32_images = \
@@ -1565,7 +1559,6 @@ icons48_images = \
 	48/gimp-wilber.png
 
 icons64_images = \
-	64/dialog-information.png				\
 	64/gimp-frame.png					\
 	64/gimp-texture.png					\
 	64/gimp-user-manual.png					\
@@ -1574,10 +1567,10 @@ icons64_images = \
 	64/gimp-wilber-outline.png
 
 icons64_system_images = \
-	64/gimp-error.png					\
-	64/gimp-info.png					\
-	64/gimp-question.png					\
-	64/gimp-warning.png
+	64/dialog-error.png					\
+	64/dialog-information.png					\
+	64/dialog-question.png					\
+	64/dialog-warning.png
 
 icons96_images = \
 	96/gimp-wilber.png					\

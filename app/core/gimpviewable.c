@@ -187,7 +187,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   gimp_object_class->get_memsize = gimp_viewable_get_memsize;
 
-  klass->default_icon_name       = "gimp-question";
+  klass->default_icon_name       = "dialog-question";
   klass->name_changed_signal     = "name-changed";
   klass->name_editable           = FALSE;
 
@@ -1136,7 +1136,7 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  icon = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/gimp-question.png",
+  icon = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/dialog-question.png",
                                        &error);
   if (! icon)
     {

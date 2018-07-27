@@ -26,7 +26,7 @@ endif
 ## Compiled-in icons for both the core and libgimpwidgets
 
 CORE_IMAGES = \
-	64/gimp-question.png
+	64/dialog-question.png
 
 ICON_IMAGES = \
 	64/gimp-wilber-eek.png

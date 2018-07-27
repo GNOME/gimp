@@ -89,8 +89,9 @@ G_BEGIN_DECLS
  *  see also:
  *  https://specifications.freedesktop.org/icon-naming-spec/latest/ar01s04.html
  *
- *  some icons are marked with "use FDO", these shall be renamed in 3.0
- *  because we duplicated FDO standard icon names
+ *  When icons are available as standard Freedesktop icons, we use these
+ *  in priority. As a fallback, we use standard GTK+ icons. As last
+ *  fallback, we create our own icons under the "gimp-" namespace.
  */
 
 #define GIMP_ICON_APPLICATION_EXIT          "application-exit"
@@ -156,18 +157,18 @@ G_BEGIN_DECLS
 #define GIMP_ICON_DIALOG_CHANNELS           "gimp-channels"
 #define GIMP_ICON_DIALOG_DASHBOARD          "gimp-dashboard"
 #define GIMP_ICON_DIALOG_DEVICE_STATUS      "gimp-device-status"
-#define GIMP_ICON_DIALOG_ERROR              "gimp-error" /* use FDO */
+#define GIMP_ICON_DIALOG_ERROR              "dialog-error"
 #define GIMP_ICON_DIALOG_IMAGES             "gimp-images"
-#define GIMP_ICON_DIALOG_INFORMATION        "gimp-info" /* use FDO */
+#define GIMP_ICON_DIALOG_INFORMATION        "dialog-information"
 #define GIMP_ICON_DIALOG_LAYERS             "gimp-layers"
 #define GIMP_ICON_DIALOG_NAVIGATION         "gimp-navigation"
 #define GIMP_ICON_DIALOG_PATHS              "gimp-paths"
-#define GIMP_ICON_DIALOG_QUESTION           "gimp-question" /* use FDO */
+#define GIMP_ICON_DIALOG_QUESTION           "dialog-question"
 #define GIMP_ICON_DIALOG_RESHOW_FILTER      "gimp-reshow-filter"
 #define GIMP_ICON_DIALOG_TOOLS              "gimp-tools"
 #define GIMP_ICON_DIALOG_TOOL_OPTIONS       "gimp-tool-options"
 #define GIMP_ICON_DIALOG_UNDO_HISTORY       "gimp-undo-history"
-#define GIMP_ICON_DIALOG_WARNING            "gimp-warning" /* use FDO */
+#define GIMP_ICON_DIALOG_WARNING            "dialog-warning"
 
 #define GIMP_ICON_DISPLAY_FILTER              "gimp-display-filter"
 #define GIMP_ICON_DISPLAY_FILTER_CLIP_WARNING "gimp-display-filter-clip-warning"
@@ -215,8 +216,8 @@ G_BEGIN_DECLS
 #define GIMP_ICON_FORMAT_TEXT_ITALIC         "format-text-italic"
 #define GIMP_ICON_FORMAT_TEXT_STRIKETHROUGH  "format-text-strikethrough"
 #define GIMP_ICON_FORMAT_TEXT_UNDERLINE      "format-text-underline"
-#define GIMP_ICON_FORMAT_TEXT_DIRECTION_LTR  "gimp-text-dir-ltr" /* use FDO */
-#define GIMP_ICON_FORMAT_TEXT_DIRECTION_RTL  "gimp-text-dir-rtl" /* use FDO */
+#define GIMP_ICON_FORMAT_TEXT_DIRECTION_LTR  "format-text-direction-ltr"
+#define GIMP_ICON_FORMAT_TEXT_DIRECTION_RTL  "format-text-direction-rtl"
 #define GIMP_ICON_FORMAT_TEXT_SPACING_LETTER "gimp-letter-spacing"
 #define GIMP_ICON_FORMAT_TEXT_SPACING_LINE   "gimp-line-spacing"
 
@@ -283,12 +284,12 @@ G_BEGIN_DECLS
 #define GIMP_ICON_MENU_RIGHT                "gimp-menu-right"
 
 #define GIMP_ICON_OBJECT_DUPLICATE          "gimp-duplicate"
-#define GIMP_ICON_OBJECT_FLIP_HORIZONTAL    "gimp-flip-horizontal" /* use FDO */
-#define GIMP_ICON_OBJECT_FLIP_VERTICAL      "gimp-flip-vertical" /* use FDO */
+#define GIMP_ICON_OBJECT_FLIP_HORIZONTAL    "object-flip-horizontal"
+#define GIMP_ICON_OBJECT_FLIP_VERTICAL      "object-flip-vertical"
 #define GIMP_ICON_OBJECT_RESIZE             "gimp-resize"
 #define GIMP_ICON_OBJECT_ROTATE_180         "gimp-rotate-180"
-#define GIMP_ICON_OBJECT_ROTATE_270         "gimp-rotate-270" /* use FDO */
-#define GIMP_ICON_OBJECT_ROTATE_90          "gimp-rotate-90" /* use FDO */
+#define GIMP_ICON_OBJECT_ROTATE_270         "object-rotate-left"
+#define GIMP_ICON_OBJECT_ROTATE_90          "object-rotate-right"
 #define GIMP_ICON_OBJECT_SCALE              "gimp-scale"
 
 #define GIMP_ICON_PATH                      "gimp-path"

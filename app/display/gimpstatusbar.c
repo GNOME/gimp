@@ -269,7 +269,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->horizontal_flip_icon);
 
-  image = gtk_image_new_from_icon_name ("gimp-flip-horizontal",
+  image = gtk_image_new_from_icon_name ("object-flip-horizontal",
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (statusbar->horizontal_flip_icon), image);
   gtk_widget_show (image);
@@ -283,7 +283,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                       FALSE, FALSE, 1);
   gtk_widget_show (statusbar->vertical_flip_icon);
 
-  image = gtk_image_new_from_icon_name ("gimp-flip-vertical",
+  image = gtk_image_new_from_icon_name ("object-flip-vertical",
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (statusbar->vertical_flip_icon), image);
   gtk_widget_show (image);
