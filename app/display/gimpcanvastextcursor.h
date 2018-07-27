@@ -51,7 +51,8 @@ GType            gimp_canvas_text_cursor_get_type (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_text_cursor_new      (GimpDisplayShell *shell,
                                                    PangoRectangle   *cursor,
-                                                   gboolean          overwrite);
+                                                   gboolean          overwrite,
+                                                   GimpTextDirection direction);
 
 
 #endif /* __GIMP_CANVAS_RECTANGLE_H__ */

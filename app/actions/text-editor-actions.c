@@ -65,7 +65,31 @@ static const GimpRadioActionEntry text_editor_direction_actions[] =
     NC_("text-editor-action", "RTL"), NULL,
     NC_("text-editor-action", "From right to left"),
     GIMP_TEXT_DIRECTION_RTL,
-    NULL }
+    NULL },
+
+  { "text-editor-direction-ttb-rtl", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL,
+    NC_("text-editor-action", "TTB-RTL"), NULL,
+    NC_("text-editor-action", "Characters are from top to bottom, Lines are from right to left"),
+    GIMP_TEXT_DIRECTION_TTB_RTL,
+    NULL },
+
+  { "text-editor-direction-ttb-rtl-upright", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL_UPRIGHT,
+    NC_("text-editor-action", "TTB-RTL-UPRIGHT"), NULL,
+    NC_("text-editor-action", "Upright characters are from top to bottom, Lines are from right to left"),
+    GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,
+    NULL },
+
+  { "text-editor-direction-ttb-ltr", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR,
+    NC_("text-editor-action", "TTB-LTR"), NULL,
+    NC_("text-editor-action", "Characters are from top to bottom, Lines are from left to right"),
+    GIMP_TEXT_DIRECTION_TTB_LTR,
+    NULL },
+
+  { "text-editor-direction-ttb-ltr-upright", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR_UPRIGHT,
+    NC_("text-editor-action", "TTB-LTR-UPRIGHT"), NULL,
+    NC_("text-editor-action", "Upright characters are from top to bottom, Lines are from left to right"),
+    GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT,
+    NULL },
 };
 
 
@@ -101,6 +125,22 @@ text_editor_actions_update (GimpActionGroup *group,
 
     case GIMP_TEXT_DIRECTION_RTL:
       SET_ACTIVE ("text-editor-direction-rtl", TRUE);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+      SET_ACTIVE ("text-editor-direction-ttb-rtl", TRUE);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+      SET_ACTIVE ("text-editor-direction-ttb-rtl-upright", TRUE);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+      SET_ACTIVE ("text-editor-direction-ttb-ltr", TRUE);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      SET_ACTIVE ("text-editor-direction-ttb-ltr-upright", TRUE);
       break;
     }
 
