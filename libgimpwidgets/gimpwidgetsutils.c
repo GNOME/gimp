@@ -492,12 +492,14 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
     GdkAtom  type    = GDK_NONE;
     gint     format  = 0;
     gint     nitems  = 0;
+    gint     number;
     gchar   *atom_name;
     guchar  *data    = NULL;
 
-    if (monitor > 0)
-      atom_name = g_strdup_printf ("_ICC_PROFILE_%d",
-                                   monitor_number (monitor));
+    number = monitor_number (monitor);
+
+    if (number > 0)
+      atom_name = g_strdup_printf ("_ICC_PROFILE_%d", number);
     else
       atom_name = g_strdup ("_ICC_PROFILE");
 
@@ -520,7 +522,7 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
   {
     CGColorSpaceRef space = NULL;
 
-    space = CGDisplayCopyColorSpace (monitor);
+    space = CGDisplayCopyColorSpace (monitor_number (monitor));
 
     if (space)
       {
