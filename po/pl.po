@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-22 19:57+0200\n"
-"PO-Revision-Date: 2018-07-22 19:58+0200\n"
+"POT-Creation-Date: 2018-07-29 19:37+0200\n"
+"PO-Revision-Date: 2018-07-29 19:38+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3541,7 +3541,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:512 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:447
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:488
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
 msgid "_Cancel"
@@ -9966,7 +9966,7 @@ msgstr "Przenieś to okno na ekran %s"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
 #: ../app/tools/gimpfiltertool.c:324 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
-#: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:188
+#: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
 msgstr "_OK"
 
@@ -20486,11 +20486,11 @@ msgstr "Wybiera z listy często używanych temperatur kolorów"
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
-#: ../app/propgui/gimppropgui.c:376
+#: ../app/propgui/gimppropgui.c:379
 msgid "Pick color from the image"
 msgstr "Proszę wybrać kolor z obrazu"
 
-#: ../app/propgui/gimppropgui.c:520
+#: ../app/propgui/gimppropgui.c:523
 msgid "This operation has no editable properties"
 msgstr "To działanie nie ma modyfikowalnych właściwości"
 
@@ -24705,28 +24705,24 @@ msgstr "Według rozszerzenia"
 msgid "All export images"
 msgstr "Wszystkie eksportowane obrazy"
 
-#: ../app/widgets/gimpfiledialog.c:350
+#: ../app/widgets/gimpfiledialog.c:353
 msgid "_Help"
 msgstr "Pomo_c"
 
-#: ../app/widgets/gimpfiledialog.c:756
-msgid "All files"
-msgstr "Wszystkie pliki"
+#: ../app/widgets/gimpfiledialog.c:783
+msgid "Show All Files"
+msgstr "Wyświetlanie wszystkich plików"
 
-#: ../app/widgets/gimpfiledialog.c:761
-msgid "All images"
-msgstr "Wszystkie obrazy"
-
-#: ../app/widgets/gimpfiledialog.c:959
+#: ../app/widgets/gimpfiledialog.c:816
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Wybór _typu pliku (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:184
+#: ../app/widgets/gimpfileprocview.c:199
 msgid "File Type"
 msgstr "Typ pliku"
 
-#: ../app/widgets/gimpfileprocview.c:196
+#: ../app/widgets/gimpfileprocview.c:211
 msgid "Extensions"
 msgstr "Rozszerzenia"
 
