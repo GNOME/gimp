@@ -208,6 +208,10 @@ gimp_text_editor_new (const gchar     *title,
   switch (editor->base_dir)
     {
     case GIMP_TEXT_DIRECTION_LTR:
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
       gtk_widget_set_direction (editor->view, GTK_TEXT_DIR_LTR);
       break;
     case GIMP_TEXT_DIRECTION_RTL:
@@ -280,6 +284,10 @@ gimp_text_editor_set_direction (GimpTextEditor    *editor,
       switch (editor->base_dir)
         {
         case GIMP_TEXT_DIRECTION_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_RTL:
+        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+        case GIMP_TEXT_DIRECTION_TTB_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
           gtk_widget_set_direction (editor->view, GTK_TEXT_DIR_LTR);
           break;
         case GIMP_TEXT_DIRECTION_RTL:

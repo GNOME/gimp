@@ -119,6 +119,13 @@ static void     gimp_text_tool_im_delete_preedit  (GimpTextTool    *text_tool);
 static void     gimp_text_tool_editor_copy_selection_to_clipboard
                                                   (GimpTextTool    *text_tool);
 
+static void   gimp_text_tool_fix_position         (GimpTextTool    *text_tool,
+                                                   gdouble         *x,
+                                                   gdouble         *y);
+
+static void   gimp_text_tool_convert_gdkkeyevent  (GimpTextTool    *text_tool,
+                                                   GdkEventKey     *kevent);
+
 
 /*  public functions  */
 
@@ -466,6 +473,8 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
       return TRUE;
     }
 
+  gimp_text_tool_convert_gdkkeyevent (text_tool, kevent);
+
   gimp_text_tool_ensure_proxy (text_tool);
 
   if (gtk_bindings_activate_event (GTK_OBJECT (text_tool->proxy_text_view),
@@ -521,6 +530,8 @@ gimp_text_tool_editor_key_release (GimpTextTool *text_tool,
 
       return TRUE;
     }
+
+  gimp_text_tool_convert_gdkkeyevent (text_tool, kevent);
 
   gimp_text_tool_ensure_proxy (text_tool);
 
@@ -597,6 +608,7 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
   PangoLayout   *layout;
+  PangoContext  *context;
   gint           offset_x;
   gint           offset_y;
   GtkTextIter    cursor;
@@ -614,19 +626,66 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
+  context = pango_layout_get_context (layout);
+
   gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
 
   if (overwrite)
-    pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
-  else
+    {
+      pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
+
+      /* Avoid pango bug ? */
+      if (pango_context_get_base_gravity (context) == PANGO_GRAVITY_WEST &&
+          cursor_rect->width == 0)
+        pango_layout_get_cursor_pos (layout, cursor_index, cursor_rect, NULL);
+    }
+ else
     pango_layout_get_cursor_pos (layout, cursor_index, cursor_rect, NULL);
 
   gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
 
-  cursor_rect->x      = PANGO_PIXELS (cursor_rect->x) + offset_x;
-  cursor_rect->y      = PANGO_PIXELS (cursor_rect->y) + offset_y;
-  cursor_rect->width  = PANGO_PIXELS (cursor_rect->width);
-  cursor_rect->height = PANGO_PIXELS (cursor_rect->height);
+  switch (gimp_text_tool_get_direction (text_tool))
+    {
+    case GIMP_TEXT_DIRECTION_LTR:
+    case GIMP_TEXT_DIRECTION_RTL:
+      cursor_rect->x      = PANGO_PIXELS (cursor_rect->x) + offset_x;
+      cursor_rect->y      = PANGO_PIXELS (cursor_rect->y) + offset_y;
+      cursor_rect->width  = PANGO_PIXELS (cursor_rect->width);
+      cursor_rect->height = PANGO_PIXELS (cursor_rect->height);
+      break;
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+      {
+      gint temp, width, height;
+
+      gimp_text_layout_get_size (text_tool->layout, &width, &height);
+
+      temp                = cursor_rect->x;
+      cursor_rect->x      = width - PANGO_PIXELS (cursor_rect->y) + offset_x;
+      cursor_rect->y      = PANGO_PIXELS (temp) + offset_y;
+
+      temp                = cursor_rect->width;
+      cursor_rect->width  = PANGO_PIXELS (cursor_rect->height);
+      cursor_rect->height = PANGO_PIXELS (temp);
+      }
+      break;
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      {
+      gint temp, width, height;
+
+      gimp_text_layout_get_size (text_tool->layout, &width, &height);
+
+      temp                = cursor_rect->x;
+      cursor_rect->x      = PANGO_PIXELS (cursor_rect->y) + offset_x;
+      cursor_rect->y      = height - PANGO_PIXELS (temp) + offset_y;
+
+      temp                = cursor_rect->width;
+      cursor_rect->width  = PANGO_PIXELS (cursor_rect->height);
+      cursor_rect->height = PANGO_PIXELS (temp);
+      }
+      break;
+   }
 }
 
 void
@@ -1375,6 +1434,8 @@ gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
 
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
+  gimp_text_tool_fix_position (text_tool, &x, &y);
+
   pango_layout_xy_to_index (layout,
                             x * PANGO_SCALE,
                             y * PANGO_SCALE,
@@ -1659,5 +1720,134 @@ gimp_text_tool_editor_copy_selection_to_clipboard (GimpTextTool *text_tool)
                                             GDK_SELECTION_PRIMARY);
 
       gtk_text_buffer_copy_clipboard (buffer, clipboard);
+    }
+}
+
+static void
+gimp_text_tool_fix_position (GimpTextTool *text_tool,
+                             gdouble      *x,
+                             gdouble      *y)
+{
+  gint temp, width, height;
+
+  gimp_text_layout_get_size (text_tool->layout, &width, &height);
+  switch (gimp_text_tool_get_direction(text_tool))
+    {
+      case GIMP_TEXT_DIRECTION_RTL:
+      case GIMP_TEXT_DIRECTION_LTR:
+      break;
+      case GIMP_TEXT_DIRECTION_TTB_RTL:
+      case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+      temp = width - *x;
+      *x = *y;
+      *y = temp;
+      break;
+      case GIMP_TEXT_DIRECTION_TTB_LTR:
+      case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      temp = *x;
+      *x = height - *y;
+      *y = temp;
+      break;
+    }
+}
+
+static void
+gimp_text_tool_convert_gdkkeyevent (GimpTextTool *text_tool,
+                                    GdkEventKey  *kevent)
+{
+  switch (gimp_text_tool_get_direction (text_tool))
+    {
+    case GIMP_TEXT_DIRECTION_LTR:
+    case GIMP_TEXT_DIRECTION_RTL:
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+#ifdef _WIN32
+      switch (kevent->keyval)
+        {
+        case GDK_KEY_Up:
+          kevent->hardware_keycode = 0x25;/* VK_LEFT */
+          kevent->keyval = GDK_KEY_Left;
+          break;
+        case GDK_KEY_Down:
+          kevent->hardware_keycode = 0x27;/* VK_RIGHT */
+          kevent->keyval = GDK_KEY_Right;
+          break;
+        case GDK_KEY_Left:
+          kevent->hardware_keycode = 0x28;/* VK_DOWN */
+          kevent->keyval = GDK_KEY_Down;
+          break;
+        case GDK_KEY_Right:
+          kevent->hardware_keycode = 0x26;/* VK_UP */
+          kevent->keyval = GDK_KEY_Up;
+          break;
+        }
+#else
+      switch (kevent->keyval)
+        {
+        case GDK_KEY_Up:
+          kevent->hardware_keycode = 113;
+          kevent->keyval = GDK_KEY_Left;
+          break;
+        case GDK_KEY_Down:
+          kevent->hardware_keycode = 114;
+          kevent->keyval = GDK_KEY_Right;
+          break;
+        case GDK_KEY_Left:
+          kevent->hardware_keycode = 116;
+          kevent->keyval = GDK_KEY_Down;
+          break;
+        case GDK_KEY_Right:
+          kevent->hardware_keycode = 111;
+          kevent->keyval = GDK_KEY_Up;
+          break;
+        }
+#endif
+      break;
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+#ifdef _WIN32
+      switch (kevent->keyval)
+        {
+        case GDK_KEY_Up:
+          kevent->hardware_keycode = 0x26;/* VK_UP */
+          kevent->keyval = GDK_KEY_Up;
+          break;
+        case GDK_KEY_Down:
+          kevent->hardware_keycode = 0x28;/* VK_DOWN */
+          kevent->keyval = GDK_KEY_Down;
+          break;
+        case GDK_KEY_Left:
+          kevent->hardware_keycode = 0x25;/* VK_LEFT */
+          kevent->keyval = GDK_KEY_Left;
+          break;
+        case GDK_KEY_Right:
+          kevent->hardware_keycode = 0x27;/* VK_RIGHT */
+          kevent->keyval = GDK_KEY_Right;
+          break;
+        }
+#else
+      switch (kevent->keyval)
+        {
+        case GDK_KEY_Up:
+          kevent->hardware_keycode = 114;
+          kevent->keyval = GDK_KEY_Right;
+          break;
+        case GDK_KEY_Down:
+          kevent->hardware_keycode = 113;
+          kevent->keyval = GDK_KEY_Left;
+          break;
+        case GDK_KEY_Left:
+          kevent->hardware_keycode = 111;
+          kevent->keyval = GDK_KEY_Up;
+          break;
+        case GDK_KEY_Right:
+          kevent->hardware_keycode = 116;
+          kevent->keyval = GDK_KEY_Down;
+          break;
+        }
+#endif
+      break;
     }
 }

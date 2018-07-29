@@ -1147,16 +1147,17 @@ gimp_draw_tool_add_boundary (GimpDrawTool       *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_add_text_cursor (GimpDrawTool   *draw_tool,
-                                PangoRectangle *cursor,
-                                gboolean        overwrite)
+gimp_draw_tool_add_text_cursor (GimpDrawTool     *draw_tool,
+                                PangoRectangle   *cursor,
+                                gboolean          overwrite,
+                                GimpTextDirection direction)
 {
   GimpCanvasItem *item;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_text_cursor_new (gimp_display_get_shell (draw_tool->display),
-                                      cursor, overwrite);
+                                      cursor, overwrite, direction);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

@@ -663,10 +663,26 @@ gimp_text_layer_render (GimpTextLayer *layer)
        gimp_drawable_get_format (drawable)))
     {
       GeglBuffer *new_buffer;
+      GimpItem   *item;
+      gint        oldwidth;
+      gint        newwidth;
+
+      item = GIMP_ITEM (drawable);
+      oldwidth = gimp_item_get_width (item);
 
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                     gimp_text_layer_get_format (layer));
       gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
+
+      newwidth = gimp_item_get_width(item);
+      if (layer->text->box_mode == GIMP_TEXT_BOX_DYNAMIC &&
+          oldwidth != newwidth &&
+          (layer->text->base_dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
+           layer->text->base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT))
+        {
+          gimp_item_translate (item, oldwidth - newwidth, 0, FALSE);
+        }
+
       g_object_unref (new_buffer);
 
       if (gimp_layer_get_mask (GIMP_LAYER (layer)))

@@ -584,9 +584,17 @@ package Gimp::CodeGen::enums;
     GimpTextDirection =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_TEXT_DIRECTION_LTR GIMP_TEXT_DIRECTION_RTL) ],
+	  symbols => [ qw(GIMP_TEXT_DIRECTION_LTR GIMP_TEXT_DIRECTION_RTL
+			  GIMP_TEXT_DIRECTION_TTB_RTL
+			  GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT
+			  GIMP_TEXT_DIRECTION_TTB_LTR
+			  GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT) ],
 	  mapping => { GIMP_TEXT_DIRECTION_LTR => '0',
-		       GIMP_TEXT_DIRECTION_RTL => '1' }
+		       GIMP_TEXT_DIRECTION_RTL => '1',
+		       GIMP_TEXT_DIRECTION_TTB_RTL => '2',
+		       GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT => '3',
+		       GIMP_TEXT_DIRECTION_TTB_LTR => '4',
+		       GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT => '5' }
 	},
     GimpTextHintStyle =>
 	{ contig => 1,

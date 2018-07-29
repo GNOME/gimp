@@ -1340,6 +1340,10 @@ typedef enum
  * GimpTextDirection:
  * @GIMP_TEXT_DIRECTION_LTR: From left to right
  * @GIMP_TEXT_DIRECTION_RTL: From right to left
+ * @GIMP_TEXT_DIRECTION_TTB_RTL: Characters are from top to bottom, Lines are from right to left
+ * @GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT: Upright characters are from top to bottom, Lines are from right to left
+ * @GIMP_TEXT_DIRECTION_TTB_LTR: Characters are from top to bottom, Lines are from left to right
+ * @GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT: Upright characters are from top to bottom, Lines are from left to right
  *
  * Text directions.
  **/
@@ -1349,8 +1353,12 @@ GType gimp_text_direction_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_DIRECTION_LTR,   /*< desc="From left to right" >*/
-  GIMP_TEXT_DIRECTION_RTL    /*< desc="From right to left" >*/
+  GIMP_TEXT_DIRECTION_LTR,              /*< desc="From left to right" >*/
+  GIMP_TEXT_DIRECTION_RTL,              /*< desc="From right to left" >*/
+  GIMP_TEXT_DIRECTION_TTB_RTL,          /*< desc="Characters are from top to bottom, Lines are from right to left" >*/
+  GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,  /*< desc="Upright characters are from top to bottom, Lines are from right to left" >*/
+  GIMP_TEXT_DIRECTION_TTB_LTR,          /*< desc="Characters are from top to bottom, Lines are from left to right" >*/
+  GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT   /*< desc="Upright characters are from top to bottom, Lines are from left to right" >*/
 } GimpTextDirection;
 
 

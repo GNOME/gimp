@@ -255,6 +255,10 @@ scalable_images = \
 	scalable/gimp-template.svg				\
 	scalable/gimp-text-dir-ltr.svg				\
 	scalable/gimp-text-dir-rtl.svg				\
+	scalable/gimp-text-dir-ttb-rtl.svg			\
+	scalable/gimp-text-dir-ttb-rtl-upright.svg		\
+	scalable/gimp-text-dir-ttb-ltr.svg			\
+	scalable/gimp-text-dir-ttb-ltr-upright.svg		\
 	scalable/gimp-text-layer.svg				\
 	scalable/gimp-toilet-paper.svg				\
 	scalable/gimp-tool-airbrush.svg				\
@@ -926,6 +930,10 @@ icons24_images = \
 	24/gimp-template.png					\
 	24/gimp-text-dir-ltr.png				\
 	24/gimp-text-dir-rtl.png				\
+	24/gimp-text-dir-ttb-rtl.png				\
+	24/gimp-text-dir-ttb-rtl-upright.png			\
+	24/gimp-text-dir-ttb-ltr.png				\
+	24/gimp-text-dir-ttb-ltr-upright.png			\
 	24/gimp-text-layer.png					\
 	24/gimp-toilet-paper.png				\
 	24/gimp-tool-airbrush.png				\

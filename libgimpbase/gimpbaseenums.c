@@ -1771,6 +1771,10 @@ gimp_text_direction_get_type (void)
   {
     { GIMP_TEXT_DIRECTION_LTR, "GIMP_TEXT_DIRECTION_LTR", "ltr" },
     { GIMP_TEXT_DIRECTION_RTL, "GIMP_TEXT_DIRECTION_RTL", "rtl" },
+    { GIMP_TEXT_DIRECTION_TTB_RTL, "GIMP_TEXT_DIRECTION_TTB_RTL", "ttb-rtl" },
+    { GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT, "GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT", "ttb-rtl-upright" },
+    { GIMP_TEXT_DIRECTION_TTB_LTR, "GIMP_TEXT_DIRECTION_TTB_LTR", "ttb-ltr" },
+    { GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT, "GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT", "ttb-ltr-upright" },
     { 0, NULL, NULL }
   };
 
@@ -1778,6 +1782,10 @@ gimp_text_direction_get_type (void)
   {
     { GIMP_TEXT_DIRECTION_LTR, NC_("text-direction", "From left to right"), NULL },
     { GIMP_TEXT_DIRECTION_RTL, NC_("text-direction", "From right to left"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_RTL, NC_("text-direction", "Characters are from top to bottom, Lines are from right to left"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT, NC_("text-direction", "Upright characters are from top to bottom, Lines are from right to left"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_LTR, NC_("text-direction", "Characters are from top to bottom, Lines are from left to right"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT, NC_("text-direction", "Upright characters are from top to bottom, Lines are from left to right"), NULL },
     { 0, NULL, NULL }
   };
 

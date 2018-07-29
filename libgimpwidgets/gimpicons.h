@@ -217,6 +217,10 @@ G_BEGIN_DECLS
 #define GIMP_ICON_FORMAT_TEXT_UNDERLINE      "format-text-underline"
 #define GIMP_ICON_FORMAT_TEXT_DIRECTION_LTR  "gimp-text-dir-ltr" /* use FDO */
 #define GIMP_ICON_FORMAT_TEXT_DIRECTION_RTL  "gimp-text-dir-rtl" /* use FDO */
+#define GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL           "gimp-text-dir-ttb-rtl" /* use FDO */
+#define GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL_UPRIGHT   "gimp-text-dir-ttb-rtl-upright" /* use FDO */
+#define GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR           "gimp-text-dir-ttb-ltr" /* use FDO */
+#define GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR_UPRIGHT   "gimp-text-dir-ttb-ltr-upright" /* use FDO */
 #define GIMP_ICON_FORMAT_TEXT_SPACING_LETTER "gimp-letter-spacing"
 #define GIMP_ICON_FORMAT_TEXT_SPACING_LINE   "gimp-line-spacing"
 
