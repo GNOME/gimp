@@ -110,6 +110,26 @@ static const GimpRadioActionEntry text_tool_direction_actions[] =
   { "text-tool-direction-rtl", GIMP_ICON_FORMAT_TEXT_DIRECTION_RTL,
     NC_("text-tool-action", "From right to left"), NULL, NULL,
     GIMP_TEXT_DIRECTION_RTL,
+    NULL },
+
+  { "text-tool-direction-ttb-rtl", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL,
+    NC_("text-tool-action", "Characters are from top to bottom, Lines are from right to left"), NULL, NULL,
+    GIMP_TEXT_DIRECTION_TTB_RTL,
+    NULL },
+
+  { "text-tool-direction-ttb-rtl-upright", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL_UPRIGHT,
+    NC_("text-tool-action", "Upright characters are from top to bottom, Lines are from right to left"), NULL, NULL,
+    GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,
+    NULL },
+
+  { "text-tool-direction-ttb-ltr", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR,
+    NC_("text-tool-action", "Characters are from top to bottom, Lines are from left to right"), NULL, NULL,
+    GIMP_TEXT_DIRECTION_TTB_LTR,
+    NULL },
+
+  { "text-tool-direction-ttb-ltr-upright", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR_UPRIGHT,
+    NC_("text-tool-action", "Upright characters are from top to bottom, Lines are from left to right"), NULL, NULL,
+    GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT,
     NULL }
 };
 

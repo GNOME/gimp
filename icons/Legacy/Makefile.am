@@ -386,6 +386,10 @@ icons24_DATA = \
 	24/gimp-template.png			\
 	24/gimp-text-dir-ltr.png		\
 	24/gimp-text-dir-rtl.png		\
+	24/gimp-text-dir-ttb-rtl.png		\
+	24/gimp-text-dir-ttb-rtl-upright.png	\
+	24/gimp-text-dir-ttb-ltr.png		\
+	24/gimp-text-dir-ttb-ltr-upright.png	\
 	24/gimp-text-layer.png			\
 	24/gimp-toilet-paper.png		\
 	24/gimp-tool-options.png		\

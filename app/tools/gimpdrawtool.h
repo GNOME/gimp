@@ -188,7 +188,8 @@ GimpCanvasItem * gimp_draw_tool_add_boundary         (GimpDrawTool     *draw_too
 
 GimpCanvasItem * gimp_draw_tool_add_text_cursor      (GimpDrawTool     *draw_tool,
                                                       PangoRectangle   *cursor,
-                                                      gboolean          overwrite);
+                                                      gboolean          overwrite,
+                                                      GimpTextDirection direction);
 
 gboolean         gimp_draw_tool_on_handle            (GimpDrawTool     *draw_tool,
                                                       GimpDisplay      *display,
