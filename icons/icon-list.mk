@@ -255,6 +255,10 @@ color_scalable_images = \
 	scalable/gimp-swap-colors.svg				\
 	scalable/gimp-symmetry.svg				\
 	scalable/gimp-template.svg				\
+	scalable/gimp-text-dir-ttb-rtl.svg			\
+	scalable/gimp-text-dir-ttb-rtl-upright.svg		\
+	scalable/gimp-text-dir-ttb-ltr.svg			\
+	scalable/gimp-text-dir-ttb-ltr-upright.svg		\
 	scalable/gimp-text-layer.svg				\
 	scalable/gimp-toilet-paper.svg				\
 	scalable/gimp-tool-airbrush.svg				\
@@ -751,6 +755,10 @@ symbolic_scalable_images = \
 	scalable/gimp-swap-colors-symbolic.svg				\
 	scalable/gimp-symmetry-symbolic.svg				\
 	scalable/gimp-template-symbolic.svg				\
+	scalable/gimp-text-dir-ttb-rtl-symbolic.svg			\
+	scalable/gimp-text-dir-ttb-rtl-upright-symbolic.svg		\
+	scalable/gimp-text-dir-ttb-ltr-symbolic.svg			\
+	scalable/gimp-text-dir-ttb-ltr-upright-symbolic.svg		\
 	scalable/gimp-text-layer-symbolic.svg				\
 	scalable/gimp-toilet-paper-symbolic.svg				\
 	scalable/gimp-tool-airbrush-symbolic.svg				\
@@ -1419,6 +1427,10 @@ icons24_images = \
 	24/gimp-smartphone.png					\
 	24/gimp-symmetry.png					\
 	24/gimp-template.png					\
+	24/gimp-text-dir-ttb-rtl.png				\
+	24/gimp-text-dir-ttb-rtl-upright.png			\
+	24/gimp-text-dir-ttb-ltr.png				\
+	24/gimp-text-dir-ttb-ltr-upright.png			\
 	24/gimp-text-layer.png					\
 	24/gimp-toilet-paper.png				\
 	24/gimp-tool-airbrush.png				\

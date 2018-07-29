@@ -39,7 +39,8 @@ enum
   PROP_Y,
   PROP_WIDTH,
   PROP_HEIGHT,
-  PROP_OVERWRITE
+  PROP_OVERWRITE,
+  PROP_DIRECTION
 };
 
 
@@ -47,11 +48,12 @@ typedef struct _GimpCanvasTextCursorPrivate GimpCanvasTextCursorPrivate;
 
 struct _GimpCanvasTextCursorPrivate
 {
-  gint     x;
-  gint     y;
-  gint     width;
-  gint     height;
-  gboolean overwrite;
+  gint              x;
+  gint              y;
+  gint              width;
+  gint              height;
+  gboolean          overwrite;
+  GimpTextDirection direction;
 };
 
 #define GET_PRIVATE(text_cursor) \
@@ -122,6 +124,12 @@ gimp_canvas_text_cursor_class_init (GimpCanvasTextCursorClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_DIRECTION,
+                                   g_param_spec_enum ("direction", NULL, NULL,
+                                                     gimp_text_direction_get_type(),
+                                                     GIMP_TEXT_DIRECTION_LTR,
+                                                     GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (klass, sizeof (GimpCanvasTextCursorPrivate));
 }
 
@@ -155,6 +163,9 @@ gimp_canvas_text_cursor_set_property (GObject      *object,
     case PROP_OVERWRITE:
       private->overwrite = g_value_get_boolean (value);
       break;
+    case PROP_DIRECTION:
+      private->direction = g_value_get_enum (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -186,6 +197,9 @@ gimp_canvas_text_cursor_get_property (GObject    *object,
       break;
     case PROP_OVERWRITE:
       g_value_set_boolean (value, private->overwrite);
+      break;
+    case PROP_DIRECTION:
+      g_value_set_enum (value, private->direction);
       break;
 
     default:
@@ -221,6 +235,20 @@ gimp_canvas_text_cursor_transform (GimpCanvasItem *item,
 
   *x = floor (*x) + 0.5;
   *y = floor (*y) + 0.5;
+  switch (private->direction)
+    {
+    case GIMP_TEXT_DIRECTION_LTR:
+    case GIMP_TEXT_DIRECTION_RTL:
+      break;
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+      *x = *x - *w;
+      break;
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      *y = *y + *h;
+      break;
+    }
 
   if (private->overwrite)
     {
@@ -229,8 +257,24 @@ gimp_canvas_text_cursor_transform (GimpCanvasItem *item,
     }
   else
     {
-      *w = 0;
-      *h = ceil (*h) - 1.0;
+      switch (private->direction)
+        {
+        case GIMP_TEXT_DIRECTION_LTR:
+        case GIMP_TEXT_DIRECTION_RTL:
+          *w = 0;
+          *h = ceil (*h) - 1.0;
+           break;
+        case GIMP_TEXT_DIRECTION_TTB_RTL:
+        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+          *w = ceil (*w) - 1.0;
+          *h = 0;
+          break;
+        case GIMP_TEXT_DIRECTION_TTB_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+          *w = ceil (*w) - 1.0;
+          *h = 0;
+          break;
+        }
     }
 }
 
@@ -250,14 +294,33 @@ gimp_canvas_text_cursor_draw (GimpCanvasItem *item,
     }
   else
     {
-      cairo_move_to (cr, x, y);
-      cairo_line_to (cr, x, y + h);
+      switch (private->direction)
+        {
+        case GIMP_TEXT_DIRECTION_LTR:
+        case GIMP_TEXT_DIRECTION_RTL:
+          cairo_move_to (cr, x, y);
+          cairo_line_to (cr, x, y + h);
 
-      cairo_move_to (cr, x - 3.0, y);
-      cairo_line_to (cr, x + 3.0, y);
+          cairo_move_to (cr, x - 3.0, y);
+          cairo_line_to (cr, x + 3.0, y);
 
-      cairo_move_to (cr, x - 3.0, y + h);
-      cairo_line_to (cr, x + 3.0, y + h);
+          cairo_move_to (cr, x - 3.0, y + h);
+          cairo_line_to (cr, x + 3.0, y + h);
+          break;
+        case GIMP_TEXT_DIRECTION_TTB_RTL:
+        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+        case GIMP_TEXT_DIRECTION_TTB_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+          cairo_move_to (cr, x, y);
+          cairo_line_to (cr, x + w, y);
+
+          cairo_move_to (cr, x, y - 3.0);
+          cairo_line_to (cr, x, y + 3.0);
+
+          cairo_move_to (cr, x + w, y - 3.0);
+          cairo_line_to (cr, x + w, y + 3.0);
+          break;
+        }
     }
 
   _gimp_canvas_item_stroke (item, cr);
@@ -282,10 +345,25 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem *item)
     }
   else
     {
-      rectangle.x      = floor (x - 4.5);
-      rectangle.y      = floor (y - 1.5);
-      rectangle.width  = ceil (9.0);
-      rectangle.height = ceil (h + 3.0);
+      switch (private->direction)
+        {
+        case GIMP_TEXT_DIRECTION_LTR:
+        case GIMP_TEXT_DIRECTION_RTL:
+          rectangle.x      = floor (x - 4.5);
+          rectangle.y      = floor (y - 1.5);
+          rectangle.width  = ceil (9.0);
+          rectangle.height = ceil (h + 3.0);
+          break;
+        case GIMP_TEXT_DIRECTION_TTB_RTL:
+        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+        case GIMP_TEXT_DIRECTION_TTB_LTR:
+        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+          rectangle.x      = floor (x - 1.5);
+          rectangle.y      = floor (y - 4.5);
+          rectangle.width  = ceil (w + 3.0);
+          rectangle.height = ceil (9.0);
+          break;
+        }
     }
 
   return cairo_region_create_rectangle (&rectangle);
@@ -294,7 +372,8 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem *item)
 GimpCanvasItem *
 gimp_canvas_text_cursor_new (GimpDisplayShell *shell,
                              PangoRectangle   *cursor,
-                             gboolean          overwrite)
+                             gboolean          overwrite,
+                             GimpTextDirection direction)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (cursor != NULL, NULL);
@@ -306,5 +385,6 @@ gimp_canvas_text_cursor_new (GimpDisplayShell *shell,
                        "width",     cursor->width,
                        "height",    cursor->height,
                        "overwrite", overwrite,
+                       "direction", direction,
                        NULL);
 }

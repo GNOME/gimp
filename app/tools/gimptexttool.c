@@ -891,10 +891,11 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
     {
       /* If the text buffer has no selection, draw the text cursor */
 
-      GimpCanvasItem *item;
-      PangoRectangle  cursor_rect;
-      gint            off_x, off_y;
-      gboolean        overwrite;
+      GimpCanvasItem   *item;
+      PangoRectangle    cursor_rect;
+      gint              off_x, off_y;
+      gboolean          overwrite;
+      GimpTextDirection direction;
 
       gimp_text_tool_editor_get_cursor_rect (text_tool,
                                              text_tool->overwrite_mode,
@@ -906,8 +907,10 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       overwrite = text_tool->overwrite_mode && cursor_rect.width != 0;
 
+      direction = gimp_text_tool_get_direction (text_tool);
+
       item = gimp_draw_tool_add_text_cursor (draw_tool, &cursor_rect,
-                                             overwrite);
+                                             overwrite, direction);
       gimp_canvas_item_set_highlight (item, TRUE);
     }
 
@@ -917,17 +920,20 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 {
-  GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
-  GtkTextBuffer   *buffer    = GTK_TEXT_BUFFER (text_tool->buffer);
-  GimpCanvasGroup *group;
-  PangoLayout     *layout;
-  gint             offset_x;
-  gint             offset_y;
-  gint             off_x, off_y;
-  PangoLayoutIter *iter;
-  GtkTextIter      sel_start, sel_end;
-  gint             min, max;
-  gint             i;
+  GimpTextTool     *text_tool = GIMP_TEXT_TOOL (draw_tool);
+  GtkTextBuffer    *buffer    = GTK_TEXT_BUFFER (text_tool->buffer);
+  GimpCanvasGroup  *group;
+  PangoLayout      *layout;
+  gint              offset_x;
+  gint              offset_y;
+  gint              width;
+  gint              height;
+  gint              off_x, off_y;
+  PangoLayoutIter  *iter;
+  GtkTextIter       sel_start, sel_end;
+  gint              min, max;
+  gint              i;
+  GimpTextDirection direction;
 
   group = gimp_draw_tool_add_stroke_group (draw_tool);
   gimp_canvas_item_set_highlight (GIMP_CANVAS_ITEM (group), TRUE);
@@ -941,9 +947,13 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 
   gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
 
+  gimp_text_layout_get_size (text_tool->layout, &width, &height);
+
   gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &off_x, &off_y);
   offset_x += off_x;
   offset_y += off_y;
+
+  direction = gimp_text_tool_get_direction (text_tool);
 
   iter = pango_layout_get_iter (layout);
 
@@ -971,12 +981,33 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 
           gimp_text_layout_transform_rect (text_tool->layout, &rect);
 
-          rect.x += offset_x;
-          rect.y += offset_y;
-
-          gimp_draw_tool_add_rectangle (draw_tool, FALSE,
-                                        rect.x, rect.y,
-                                        rect.width, rect.height);
+          switch (direction)
+            {
+            case GIMP_TEXT_DIRECTION_LTR:
+            case GIMP_TEXT_DIRECTION_RTL:
+              rect.x += offset_x;
+              rect.y += offset_y;
+              gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+                                            rect.x, rect.y,
+                                            rect.width, rect.height);
+              break;
+            case GIMP_TEXT_DIRECTION_TTB_RTL:
+            case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+              rect.y = offset_x - rect.y + width;
+              rect.x = offset_y + rect.x;
+              gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+                                            rect.y, rect.x,
+                                            -rect.height, rect.width);
+              break;
+            case GIMP_TEXT_DIRECTION_TTB_LTR:
+            case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+              rect.y = offset_x + rect.y;
+              rect.x = offset_y - rect.x + height;
+              gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+                                            rect.y, rect.x,
+                                            rect.height, -rect.width);
+              break;
+            }
         }
     }
   while (pango_layout_iter_next_char (iter));
@@ -2263,4 +2294,11 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   gimp_image_flush (text_tool->image);
+}
+
+GimpTextDirection
+gimp_text_tool_get_direction  (GimpTextTool *text_tool)
+{
+  GimpTextOptions *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+  return options->base_dir;
 }
