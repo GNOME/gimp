@@ -54,9 +54,6 @@ typedef struct _GimpToolPalettePrivate GimpToolPalettePrivate;
 struct _GimpToolPalettePrivate
 {
   GimpToolbox *toolbox;
-
-  gint         tool_rows;
-  gint         tool_columns;
 };
 
 #define GET_PRIVATE(p) G_TYPE_INSTANCE_GET_PRIVATE (p, \
@@ -74,8 +71,8 @@ static void     gimp_tool_palette_get_preferred_height(GtkWidget       *widget,
                                                        gint            *pref_width);
 static void     gimp_tool_palette_height_for_width    (GtkWidget       *widget,
                                                        gint             width,
-                                                       gint            *min_width,
-                                                       gint            *pref_width);
+                                                       gint            *min_height,
+                                                       gint            *pref_height);
 static void     gimp_tool_palette_style_updated       (GtkWidget       *widget);
 static void     gimp_tool_palette_hierarchy_changed   (GtkWidget       *widget,
                                                        GtkWidget       *previous_toplevel);
@@ -140,6 +137,54 @@ gimp_tool_palette_get_request_mode (GtkWidget *widget)
   return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
 }
 
+static gint
+gimp_tool_palette_get_n_tools (GimpToolPalette *palette,
+                               gint            *button_width,
+                               gint            *button_height,
+                               gint            *min_columns,
+                               gint            *min_rows)
+{
+  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+  Gimp                   *gimp;
+  GList                  *list;
+  GdkMonitor             *monitor;
+  GdkRectangle            workarea;
+  gint                    n_tools;
+  gint                    max_rows;
+  gint                    max_columns;
+
+  if (! gimp_tool_palette_get_button_size (palette,
+                                           button_width, button_height))
+    {
+      /* arbitrary values, just to simplify our callers */
+      *button_width  = 24;
+      *button_height = 24;
+    }
+
+  gimp = gimp_toolbox_get_context (private->toolbox)->gimp;
+
+  for (list = gimp_get_tool_info_iter (gimp), n_tools = 0;
+       list;
+       list = list->next)
+    {
+      GimpToolInfo *tool_info = list->data;
+
+      if (tool_info->visible)
+        n_tools++;
+    }
+
+  monitor = gimp_widget_get_monitor (GTK_WIDGET (palette));
+  gdk_monitor_get_workarea (monitor, &workarea);
+
+  max_columns = (workarea.width  * 0.9) / *button_width;
+  max_rows    = (workarea.height * 0.7) / *button_height;
+
+  *min_columns = MAX (2, n_tools / max_rows);
+  *min_rows    = MAX (1, n_tools / max_columns);
+
+  return n_tools;
+}
+
 static void
 gimp_tool_palette_get_preferred_width (GtkWidget *widget,
                                        gint      *min_width,
@@ -147,12 +192,15 @@ gimp_tool_palette_get_preferred_width (GtkWidget *widget,
 {
   gint button_width;
   gint button_height;
+  gint min_columns;
+  gint min_rows;
 
-  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (widget),
-                                         &button_width, &button_height))
-    {
-      *min_width = *pref_width = button_width;
-    }
+  gimp_tool_palette_get_n_tools (GIMP_TOOL_PALETTE (widget),
+                                 &button_width, &button_height,
+                                 &min_columns, &min_rows);
+
+  *min_width  = min_columns * button_width;
+  *pref_width = min_columns * button_width;
 }
 
 static void
@@ -162,12 +210,15 @@ gimp_tool_palette_get_preferred_height (GtkWidget *widget,
 {
   gint button_width;
   gint button_height;
+  gint min_columns;
+  gint min_rows;
 
-  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (widget),
-                                         &button_width, &button_height))
-    {
-      *min_height = *pref_height = button_height;
-    }
+  gimp_tool_palette_get_n_tools (GIMP_TOOL_PALETTE (widget),
+                                 &button_width, &button_height,
+                                 &min_columns, &min_rows);
+
+  *min_height  = min_rows * button_height;
+  *pref_height = min_rows * button_height;
 }
 
 static void
@@ -176,40 +227,25 @@ gimp_tool_palette_height_for_width (GtkWidget *widget,
                                     gint      *min_height,
                                     gint      *pref_height)
 {
-  GimpToolPalettePrivate *private = GET_PRIVATE (widget);
-  gint                    button_width;
-  gint                    button_height;
+  gint n_tools;
+  gint button_width;
+  gint button_height;
+  gint min_columns;
+  gint min_rows;
+  gint tool_columns;
+  gint tool_rows;
 
-  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (widget),
-                                         &button_width, &button_height))
-    {
-      Gimp  *gimp = gimp_toolbox_get_context (private->toolbox)->gimp;
-      GList *list;
-      gint   n_tools;
-      gint   tool_rows;
-      gint   tool_columns;
+  n_tools = gimp_tool_palette_get_n_tools (GIMP_TOOL_PALETTE (widget),
+                                           &button_width, &button_height,
+                                           &min_columns, &min_rows);
 
-      for (list = gimp_get_tool_info_iter (gimp), n_tools = 0;
-           list;
-           list = list->next)
-        {
-          GimpToolInfo *tool_info = list->data;
+  tool_columns = MAX (min_columns, width / button_width);
+  tool_rows    = n_tools / tool_columns;
 
-          if (tool_info->visible)
-            n_tools++;
-        }
+  if (n_tools % tool_columns)
+    tool_rows++;
 
-      tool_columns = MAX (1, width / button_width);
-      tool_rows    = n_tools / tool_columns;
-
-      if (n_tools % tool_columns)
-        tool_rows++;
-
-      private->tool_rows    = tool_rows;
-      private->tool_columns = tool_columns;
-
-      *min_height = *pref_height = tool_rows * button_height;
-    }
+  *min_height = *pref_height = tool_rows * button_height;
 }
 
 static void
