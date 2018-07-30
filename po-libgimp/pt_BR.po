@@ -7,12 +7,13 @@
 # Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2007, 2008, 2012.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-10 18:15+0000\n"
-"PO-Revision-Date: 2018-07-11 09:13-0300\n"
+"POT-Creation-Date: 2018-07-22 17:02+0000\n"
+"PO-Revision-Date: 2018-07-18 21:24-0300\n"
 "Last-Translator: Bruno Lopes da Silva <brunolopesbldsb@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
@@ -149,10 +150,9 @@ msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "O plug-in %s só pode tratar imagens RGB ou em níveis de cinza"
 
 #: ../libgimp/gimpexport.c:361
-#, fuzzy, c-format
-#| msgid "%s plug-in  can only handle RGB or indexed images"
+#, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
-msgstr "O plug-in %s só pode tratar imagens RGB ou indexadas"
+msgstr "O plug-in %s só trabalha com imagens RGB ou imagens indexadas"
 
 #: ../libgimp/gimpexport.c:371
 #, c-format
@@ -336,7 +336,7 @@ msgstr "Nenhum resultado"
 
 #: ../libgimp/gimpprocbrowserdialog.c:398
 msgid "Search term invalid or incomplete"
-msgstr "Termo de busca inválido ou incompleto "
+msgstr "Termo de busca inválido ou incompleto"
 
 #: ../libgimp/gimpprocbrowserdialog.c:407
 msgid "Searching"
@@ -534,7 +534,7 @@ msgstr "Substituir a seleção atual"
 #: ../libgimpbase/gimpbaseenums.c:198
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr " Fazer intersecção com a seleção atual"
+msgstr "Fazer intersecção com a seleção atual"
 
 #: ../libgimpbase/gimpbaseenums.c:231
 msgctxt "channel-type"
@@ -988,7 +988,7 @@ msgstr "Nome do ícone"
 #: ../libgimpbase/gimpbaseenums.c:893
 msgctxt "icon-type"
 msgid "Inline pixbuf"
-msgstr "Pixbuf inline "
+msgstr "Pixbuf inline"
 
 #: ../libgimpbase/gimpbaseenums.c:894
 msgctxt "icon-type"
@@ -1398,7 +1398,7 @@ msgstr "Tons claros"
 #: ../libgimpbase/gimpbaseenums.c:1909
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
-msgstr "Normal (Para frente) "
+msgstr "Normal (Para frente)"
 
 #: ../libgimpbase/gimpbaseenums.c:1910
 msgctxt "transform-direction"
@@ -1471,8 +1471,7 @@ msgstr "O caminho do arquivo é NULL"
 
 #: ../libgimpbase/gimputils.c:411 ../libgimpbase/gimputils.c:422
 msgid "Error converting UTF-8 filename to wide char"
-msgstr ""
-"Erro ao converter o nome do arquivo UTF-8 para caracteres largos"
+msgstr "Erro ao converter o nome do arquivo UTF-8 para caracteres largos"
 
 #: ../libgimpbase/gimputils.c:430
 msgid "ILCreateFromPath() failed"
@@ -1481,7 +1480,7 @@ msgstr "ILCreateFromPath() falhou"
 #: ../libgimpbase/gimputils.c:467
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
-msgstr "Não foi possível converter '%s' em um NSURL válido."
+msgstr "Não foi possível converter \"%s\" em um NSURL válido."
 
 #: ../libgimpbase/gimputils.c:495
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
@@ -1589,23 +1588,32 @@ msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
+"O espaço de trabalho preferido com perfil de cores RGB. Ele será oferecido "
+"próximo ao perfil RGB embutido quando um perfil de cores possa ser escolhido."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
+"O espaço de trabalho preferido com perfil de cores em tons de cinza. Ele "
+"será oferecido próximo ao perfil de tons de cinza embutido quando um perfil "
+"de cores possa ser escolhido."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "O perfil de cores CMYK usado para converter entre RGB e CMYK."
 
+# "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
 #: ../libgimpconfig/gimpcolorconfig.c:74
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
+"O perfil de cores a ser utilizado na pré-visualização do espaço de cores de "
+"sua imagem para outro espaço de cores, incluindo a pré-visualização para uma "
+"impressora ou outro perfil de um dispositivo de exportação."
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1614,16 +1622,23 @@ msgid ""
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
+"Como as cores do espaço de cores de sua imagem são convertidas para seu "
+"dispositivo de exibição. A colorimetria relativa costuma ser a melhor "
+"escolha. A menos que você use um perfil LUT para o monitor (a maioria dos "
+"perfis para monitores são matrix), escolher o intento irá de fato lhe "
+"proporcionar uma colorimetria relativa."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr ""
+msgstr "Não usar compensação de ponto negro (a menos que você saiba que você tem uma razão para não)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
+"Quando desabilitado, a exibição de imagens pode ter uma qualidade melhor à "
+"custo de velocidade."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
@@ -1631,32 +1646,36 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
+"Como as cores são convertidas do espaço de cores da sua imagem para a "
+"simulação de um dispositivo de saída (geralmente seu monitor). Tente todas "
+"as opções e escolha a que ficar melhor."
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
+"Teste com e sem a compensação de ponto negro e escolha o que ficar melhor."
 
+# "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
+"Quando desabilitado, a pré-visualização pode ter uma qualidade melhor à custa "
+"de velocidade."
 
+# "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
 #: ../libgimpconfig/gimpcolorconfig.c:107
-#, fuzzy
-#| msgid ""
-#| "When enabled, the print simulation will mark colors which can not be "
-#| "represented in the target color space."
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Quando habilitada, a simulação de impressão irá marcar cores que não podem "
+"Quando habilitada, a pré-visualização irá marcar cores que não podem "
 "ser representadas no espaço de cores de destino."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "Cor a usar para marcar cores que ficarem fora do gamut."
+msgstr "A cor para usar ao marcar cores que ficarem fora de gama."
 
 #: ../libgimpconfig/gimpcolorconfig.c:199
 msgid "Mode of operation"
@@ -1682,13 +1701,14 @@ msgstr "Perfil do monitor"
 msgid "Use the system monitor profile"
 msgstr "Usar o perfil do sistema para monitor"
 
+# "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
 #: ../libgimpconfig/gimpcolorconfig.c:243
 msgid "Simulation profile for soft-proofing"
 msgstr "Perfil de simulação para pré-visualização"
 
 #: ../libgimpconfig/gimpcolorconfig.c:250
 msgid "Display rendering intent"
-msgstr ""
+msgstr "Exibir intenção de renderização"
 
 #: ../libgimpconfig/gimpcolorconfig.c:258
 msgid "Use black point compensation for the display"
@@ -1698,46 +1718,46 @@ msgstr "Usar compensação de ponto negro para a exibição"
 msgid "Optimize display color transformations"
 msgstr "Otimizar as transformações de cor na exibição"
 
+# "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
 #: ../libgimpconfig/gimpcolorconfig.c:272
 msgid "Soft-proofing rendering intent"
-msgstr ""
+msgstr "Pré-visualização de intenção da renderização"
 
+# "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
 #: ../libgimpconfig/gimpcolorconfig.c:280
 msgid "Use black point compensation for soft-proofing"
-msgstr ""
+msgstr "Usar compensação de ponto negro para pré-visualização"
 
+# "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
 #: ../libgimpconfig/gimpcolorconfig.c:287
 msgid "Optimize soft-proofing color transformations"
-msgstr ""
+msgstr "Otimizar pré-visualização de transformações de cor"
 
 #: ../libgimpconfig/gimpcolorconfig.c:294
 msgid "Mark out of gamut colors"
-msgstr ""
+msgstr "Marcar cores fora de gama"
 
 #: ../libgimpconfig/gimpcolorconfig.c:301
 msgid "Out of gamut warning color"
-msgstr ""
+msgstr "Cor do aviso ao estar fora de gama"
 
 #: ../libgimpconfig/gimpcolorconfig.c:660
 #: ../libgimpconfig/gimpcolorconfig.c:844
-#, fuzzy, c-format
-#| msgid "Color proof filter using ICC color profile"
+#, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr "Filtro de prova de cores usando perfil de cor ICC"
+msgstr "Perfil de cores \"%s\" não é do espaço de cores RGB."
 
 #: ../libgimpconfig/gimpcolorconfig.c:702
 #: ../libgimpconfig/gimpcolorconfig.c:894
-#, fuzzy, c-format
-#| msgid "Color proof filter using ICC color profile"
+#, c-format
 msgid "Color profile '%s' is not for GRAY color space."
-msgstr "Filtro de prova de cores usando perfil de cor ICC"
+msgstr "Perfil de cores \"%s\" não é do espaço de cores em tons de cinza."
 
 #: ../libgimpconfig/gimpcolorconfig.c:744
 #: ../libgimpconfig/gimpcolorconfig.c:944
-#, fuzzy, c-format
-#| msgid "Color proof filter using ICC color profile"
+#, c-format
 msgid "Color profile '%s' is not for CMYK color space."
-msgstr "Filtro de prova de cores usando perfil de cor ICC"
+msgstr "Perfil de cores \"%s\" não é do espaço de cores CMYK."
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
@@ -1749,12 +1769,12 @@ msgstr "valor para palavra-chave %s não é uma string UTF-8 válida"
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
-"esperava-se 'yes' ou 'no' como palavra-chave booleana %s, encontrado '%s'"
+"esperava-se 'yes' ou 'no' como palavra-chave booleana %s, encontrado \"%s\""
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:568
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "valor '%s' inválido para palavra-chave %s"
+msgstr "valor \"%s\" inválido para palavra-chave %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:583
 #, c-format
@@ -1764,11 +1784,11 @@ msgstr "valor '%ld' inválido para palavra-chave %s"
 #: ../libgimpconfig/gimpconfig-deserialize.c:652
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "ao analisar palavra-chave '%s': %s"
+msgstr "ao analisar palavra-chave \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:682
-#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:742
-#: ../libgimpconfig/gimpscanner.c:824
+#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:743
+#: ../libgimpconfig/gimpscanner.c:825
 #: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "erro fatal de análise"
@@ -1786,45 +1806,45 @@ msgstr "Não foi possível expandir ${%s}"
 #: ../libgimpconfig/gimpconfigwriter.c:673
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "Erro ao escrever em '%s': %s"
+msgstr "Erro ao escrever em \"%s\": %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:183
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr "Não foi possível criar o diretório '%s' para '%s':"
+msgstr "Não foi possível criar o diretório \"%s\" para \"%s\": "
 
 #: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
 msgid "Could not create temporary file for '%s': "
-msgstr "Não foi possível criar o arquivo temporário para '%s':"
+msgstr "Não foi possível criar o arquivo temporário para \"%s\": "
 
 #: ../libgimpconfig/gimpconfigwriter.c:776
 #, c-format
 msgid "Error writing '%s': %s"
-msgstr "Erro ao escrever '%s': %s"
+msgstr "Erro ao escrever \"%s\": %s"
 
-#: ../libgimpconfig/gimpscanner.c:408
+#: ../libgimpconfig/gimpscanner.c:409
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "string UTF-8 inválida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:617
+#: ../libgimpconfig/gimpscanner.c:618
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr "esperava-se 'yes' ou 'no' como palavra-chave booleana, encontrado '%s'"
+msgstr "esperava-se 'yes' ou 'no' como palavra-chave booleana, encontrado \"%s\""
 
-#: ../libgimpconfig/gimpscanner.c:851
+#: ../libgimpconfig/gimpscanner.c:852
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "Erro ao analisar '%s' na linha %d: %s"
+msgstr "Erro ao analisar \"%s\" na linha %d: %s"
 
 #: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
 #: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
 #: ../libgimpmodule/gimpmodule.c:442
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "Erro ao carregar módulo '%s': %s"
+msgstr "Erro ao carregar módulo \"%s\": %s"
 
 #: ../libgimpmodule/gimpmodule.c:384
 msgid "Module error"
@@ -1843,21 +1863,18 @@ msgid "Not loaded"
 msgstr "Não carregado"
 
 #: ../libgimpthumb/gimpthumb-utils.c:153
-#, fuzzy, c-format
-#| msgid ""
-#| "Cannot determine a valid home directory.\n"
-#| "Thumbnails will be stored in the folder for temporary files (%s) instead."
+#, c-format
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"Não foi possível determinar um diretório de miniaturas válidas.\n"
-"As miniaturas serão salvas na pasta para arquivos temporários (%s)."
+"Não foi possível determinar um diretório de miniaturas válido.\n"
+"As miniaturas serão salvas na pasta de arquivos temporários (%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Falha ao criar diretório de miniaturas '%s'."
+msgstr "Falha ao criar diretório de miniaturas \"%s\"."
 
 #: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
@@ -1867,7 +1884,7 @@ msgstr "A miniatura não contém uma tag Thumb::URI"
 #: ../libgimpthumb/gimpthumbnail.c:905
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Não foi possível criar miniatura para '%s': %s"
+msgstr "Não foi possível criar miniatura para \"%s\": %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:114
 msgid "_Search:"
@@ -2470,7 +2487,7 @@ msgstr "Dispositivo:"
 
 #: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
-msgstr "O dispositivo do qual ler eventos DirectInput"
+msgstr "O dispositivo do qual ler eventos DirectInput."
 
 #: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
@@ -2517,7 +2534,7 @@ msgstr "Movimento para baixo z"
 
 #: ../modules/controller-dx-dinput.c:469
 msgid "X Axis Tilt Away"
-msgstr "Inclinar eixo x para longe "
+msgstr "Inclinar eixo x para longe"
 
 #: ../modules/controller-dx-dinput.c:472
 msgid "X Axis Tilt Near"
@@ -2535,7 +2552,7 @@ msgstr "Inclinação para esquerda no eixo y"
 #: ../modules/controller-dx-dinput.c:487
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
-msgstr "Virar eixo z para esquerda "
+msgstr "Virar eixo z para esquerda"
 
 #: ../modules/controller-dx-dinput.c:490
 #: ../modules/controller-linux-input.c:102
@@ -2764,7 +2781,7 @@ msgid ""
 "channels."
 msgstr ""
 "O canal MIDI do qual ler eventos. Deixe em -1 para ler de todos os canais "
-"MIDI"
+"MIDI."
 
 #: ../modules/controller-midi.c:226
 msgid "MIDI"
@@ -2798,10 +2815,8 @@ msgid "GIMP MIDI Input Controller"
 msgstr "Controlador de entrada MIDI do GIMP"
 
 #: ../modules/display-filter-clip-warning.c:120
-#, fuzzy
-#| msgid "Gamma color display filter"
 msgid "Clip warning color display filter"
-msgstr "Filtro de cores na tela - Gama"
+msgstr "Filtro de exibição de cores de aviso de corte"
 
 #: ../modules/display-filter-clip-warning.c:157
 msgid "Show shadows"
@@ -2894,7 +2909,7 @@ msgstr "Tipo"
 
 #: ../modules/display-filter-color-blind.c:254
 msgid "Color vision deficiency type"
-msgstr "Tipo de deficiência de cor na visão:"
+msgstr "Tipo de deficiência de cor na visão"
 
 #: ../modules/display-filter-color-blind.c:259
 msgid "Color Deficient Vision"
