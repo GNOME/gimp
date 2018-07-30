@@ -634,7 +634,9 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
     {
       pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
 
-      /* Avoid pango bug ? */
+      /* pango_layout_index_to_pos() returns wrong position, if gravity is west
+       * and cursor is at end of line. Avoid this behavior. (pango 1.42.1)
+       */
       if (pango_context_get_base_gravity (context) == PANGO_GRAVITY_WEST &&
           cursor_rect->width == 0)
         pango_layout_get_cursor_pos (layout, cursor_index, cursor_rect, NULL);
