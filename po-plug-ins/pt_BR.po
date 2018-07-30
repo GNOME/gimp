@@ -5,7 +5,7 @@
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2002-2003.
 # Joao S. O. Bueno <gwidion@gmail.com>, 2004, 2007, 2008, 2012.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
-# Rafael Fontenelle <rafaelff@gmail.com>, 2013.
+# Rafael Fontenelle <rafaelff@gmail.com>, 2013, 2018.
 # Laudivan Freire de Almeida <laudivan@riseup.net>, 2016.
 # Caio Nascimento <caiocnwp@Hotmail.com>, 2017.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
@@ -13,16 +13,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-10 18:15+0000\n"
-"PO-Revision-Date: 2017-12-23 17:12-0200\n"
-"Last-Translator: Caio Nascimento <caiocnwp@Hotmail.com>\n"
+"POT-Creation-Date: 2018-07-22 17:02+0000\n"
+"PO-Revision-Date: 2018-07-19 08:57-0300\n"
+"Last-Translator: Bruno Lopes da Silva <brunolopesbldsb@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 2.0.5\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -72,10 +72,9 @@ msgstr "Alinhar camadas visíveis"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
-#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
+#: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -131,10 +130,9 @@ msgstr "_Cancelar"
 #: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:439
 #: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:355 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -294,7 +292,7 @@ msgstr "Re_produzir..."
 #: ../plug-ins/common/animation-play.c:865
 #, c-format
 msgid "%.1f %%"
-msgstr ""
+msgstr "%.1f %%"
 
 #: ../plug-ins/common/animation-play.c:592
 msgid "Step _back"
@@ -487,7 +485,7 @@ msgstr "Desfocagem simples, rápida mas não muito intensa"
 msgid "_Blur"
 msgstr "_Desfocar"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:592
+#: ../plug-ins/common/blur.c:175
 msgid "Blurring"
 msgstr "Desfocando"
 
@@ -543,10 +541,8 @@ msgid "Simulate a cartoon by enhancing edges"
 msgstr "Simula uma ilustração realçando as bordas dos objetos na imagem"
 
 #: ../plug-ins/common/cartoon.c:147
-#, fuzzy
-#| msgid "Ca_rtoon..."
 msgid "Ca_rtoon (legacy)..."
-msgstr "_Ilustração..."
+msgstr "_Ilustração (legado)..."
 
 #: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
 #: ../plug-ins/common/edge-neon.c:229 ../plug-ins/common/photocopy.c:244
@@ -1072,7 +1068,7 @@ msgstr "Salvar parâmetros do explorador CML"
 #: ../plug-ins/lighting/lighting-ui.c:1232
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Não foi possível abrir arquivo \"%s\" para gravação:%s"
+msgstr "Não foi possível abrir arquivo \"%s\" para gravação: %s"
 
 #: ../plug-ins/common/cml-explorer.c:2093
 #, c-format
@@ -1169,10 +1165,8 @@ msgid "Stretch color saturation to cover maximum possible range"
 msgstr "Aumenta a saturação de cores de forma a cobrir a maior faixa possível"
 
 #: ../plug-ins/common/color-enhance.c:80
-#, fuzzy
-#| msgid "_Color Enhance"
 msgid "_Color Enhance (legacy)"
-msgstr "Realce de _cor"
+msgstr "Realce de _cor (legado)"
 
 #: ../plug-ins/common/color-enhance.c:114
 msgid "Color Enhance"
@@ -2019,7 +2013,7 @@ msgid "R_ecursive"
 msgstr "R_ecursiva"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
+#: ../plug-ins/common/nl-filter.c:1092
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -2107,7 +2101,7 @@ msgstr "Neon"
 msgid "Neon Detection"
 msgstr "Detecção neon"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:888
+#: ../plug-ins/common/edge-neon.c:749
 msgid "_Amount:"
 msgstr "_Quantidade:"
 
@@ -2318,7 +2312,7 @@ msgstr "\"%s\": fim do arquivo ou erro ao ler os dados da paleta"
 #: ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
-msgstr "Exportando '%s'"
+msgstr "Exportando \"%s\""
 
 #: ../plug-ins/common/file-csource.c:111
 msgid "C source code"
@@ -2389,7 +2383,7 @@ msgstr "Extensão desconhecida, salvando como XCF comprimido."
 #: ../plug-ins/common/file-compressor.c:444
 #, c-format
 msgid "Compressing '%s'"
-msgstr "Comprimindo '%s'"
+msgstr "Comprimindo \"%s\""
 
 #: ../plug-ins/common/file-compressor.c:481
 msgid "No sensible file extension, attempting to load with file magic."
@@ -2538,23 +2532,17 @@ msgstr ""
 "animação pode não ser reproduzida, ou salva novamente, sem alterações."
 
 #: ../plug-ins/common/file-gif-save.c:541
-#, fuzzy
-#| msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
-msgstr ""
-"Simplesmente não foi possível reduzir mais as cores. Salvando como opaco."
+msgstr "Não foi possível reduzir mais as cores. Salvando como opaco."
 
 #: ../plug-ins/common/file-gif-save.c:660
-#, fuzzy, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The GIF file format does not support images that "
-#| "are more than %d pixels wide or tall."
+#, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Não é possível salvar \"%s\". O formato de arquivo GIF tem suporte a imagens "
-"que tenham mais de %d pixels de largura ou de altura."
+"Não é possível salvar \"%s\". O formato de arquivo GIF não oferece suporte a "
+"imagens que tenham mais de %d pixels de largura ou de altura."
 
 #: ../plug-ins/common/file-gif-save.c:773
 msgid ""
@@ -2565,14 +2553,11 @@ msgstr ""
 "comentário foi salvo."
 
 #: ../plug-ins/common/file-gif-save.c:838
-#, fuzzy
-#| msgid ""
-#| "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Não é possível salvar imagens RGB como GIF. Converta para cores indexadas ou "
-"tons de cinza antes."
+"Não foi possível exportar imagens de cores RGB. Primeiro converta para "
+"cores indexadas ou tons de cinza."
 
 #: ../plug-ins/common/file-gif-save.c:1035
 msgid "Delay inserted to prevent evil CPU-sucking animation."
@@ -2581,20 +2566,16 @@ msgstr ""
 "CPU do mal."
 
 #: ../plug-ins/common/file-gif-save.c:1084
-#, fuzzy
-#| msgid ""
-#| "The image you are trying to save as a GIF contains layers which extend "
-#| "beyond the actual borders of the image."
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"A imagem que você está tentando salvar como um GIF contém camadas que se "
+"A imagem que você está tentando exportar como um GIF contém camadas que se "
 "estendem além das bordas reais da imagem."
 
 #: ../plug-ins/common/file-gif-save.c:1090
 msgid "Cr_op"
-msgstr ""
+msgstr "C_ortar"
 
 #: ../plug-ins/common/file-gif-save.c:1101
 msgid ""
@@ -2709,6 +2690,8 @@ msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
 msgstr ""
+"Carrega imagens no formato HEIF (High Efficiency Image File Format). "
+"Normalmente os arquivos HEIF possuem extensões .heif, .heic."
 
 #: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:131
 msgid "HEIF/HEIC"
@@ -2918,7 +2901,7 @@ msgstr "Imagem JPEG 2000"
 #, fuzzy
 #| msgid "JPEG 2000 image"
 msgid "JPEG 2000 codestream"
-msgstr "Imagem JPEG 2000"
+msgstr "JPEG 2000 codestream"
 
 #. Can be RGB, YUV and YCC.
 #. Can be RGB, YUV and YCC with alpha or CMYK.
@@ -2940,7 +2923,7 @@ msgstr "xvYCC"
 #: ../plug-ins/common/file-jp2-load.c:991
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
-msgstr ""
+msgstr "Sem suorte a JPEG 2000%s \"%s\" com %d componentes."
 
 #: ../plug-ins/common/file-jp2-load.c:1000
 msgid "Color space:"
@@ -2952,61 +2935,55 @@ msgid "Could not open '%s' for reading"
 msgstr "Não é possível abrir o arquivo \"%s\" para leitura."
 
 #: ../plug-ins/common/file-jp2-load.c:1082
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
-msgstr "Não foi possível decodificar \"%s\"."
+msgstr "Não foi possível definir parâmetros do decodificador para \"%s\"."
 
 #: ../plug-ins/common/file-jp2-load.c:1090
-#, fuzzy, c-format
-#| msgid "Could not read header from '%s'"
+#, c-format
 msgid "Couldn't read JP2 header from '%s'."
-msgstr "Não foi possível ler o cabeçalho de \"%s\""
+msgstr "Não foi possível ler o cabeçalho JP2 do arquivo \"%s\"."
 
 #: ../plug-ins/common/file-jp2-load.c:1098
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decode JP2 image in '%s'."
-msgstr "Não foi possível decodificar \"%s\"."
+msgstr "Não foi possível decodificar a imagem JP2 em \"%s\"."
 
 #: ../plug-ins/common/file-jp2-load.c:1106
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
-msgstr "Não foi possível decodificar \"%s\"."
+msgstr "Não foi possível descomprimir a imagem JP2 em \"%s\"."
 
 #: ../plug-ins/common/file-jp2-load.c:1135
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
-msgstr "Não foi possível decodificar \"%s\"."
+msgstr "Não foi possível decodificar a imagem CIELAB JP2 em \"%s\"."
 
 #: ../plug-ins/common/file-jp2-load.c:1192
 #, fuzzy, c-format
 #| msgid "Unknown color model in PNG file '%s'."
 msgid "Unknown color space in JP2 codestream '%s'."
-msgstr "Modelo de cores desconhecido no arquivo PNG \"%s\"."
+msgstr "Espaço de cores desconhecido no JP2 codestream \"%s\"."
 
 #: ../plug-ins/common/file-jp2-load.c:1203
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
-msgstr ""
+msgstr "Não foi possível converter a imagem YCbCr JP2 \"%s\" para RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:1213
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
-msgstr ""
+msgstr "Não foi possível converter a imagem CMYK JP2 \"%s\" para RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:1223
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
-msgstr ""
+msgstr "Não foi possível converter a imagem xvYCC JP2 \"%s\" para RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:1250
-#, fuzzy, c-format
-#| msgid "Unsupported color mode: %s"
+#, c-format
 msgid "Unsupported color space in JP2 image '%s'."
-msgstr "Modo de cores não suportado: %s"
+msgstr "Espaço de cores sem suporte na imagem JP2 \"%s\"."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3136,11 +3113,10 @@ msgid "GIMP pattern"
 msgstr "Textura do GIMP"
 
 #: ../plug-ins/common/file-pat.c:373
-#, fuzzy, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+#, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr ""
-"Dados inválidos de cabeçalho em '%s: largura=%lu, altura=%lu, bytes=%lu"
+"Dados do cabeçalho inválidos em \"%s\": O nome da textura é muito grande: %lu"
 
 #: ../plug-ins/common/file-pat.c:392
 #, c-format
@@ -3195,10 +3171,8 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "Tipo de PCX incomum, desistindo"
 
 #: ../plug-ins/common/file-pcx.c:809 ../plug-ins/common/file-pnm.c:1242
-#, fuzzy
-#| msgid "Cannot save images with alpha channel."
 msgid "Cannot export images with alpha channel."
-msgstr "Não é possível salvar imagens com canal alfa."
+msgstr "Não é possível exportar imagens com canal alfa."
 
 #: ../plug-ins/common/file-pcx.c:827
 #, c-format
@@ -3320,21 +3294,16 @@ msgid "You must select a file to save!"
 msgstr "Você deve selecionar um arquivo para salvar!"
 
 #: ../plug-ins/common/file-pdf-save.c:479
-#, fuzzy, c-format
-#| msgid ""
-#| "An error occured while creating the PDF file:\n"
-#| "%s\n"
-#| "Make sure you entered a valid filename and that the selected location "
-#| "isn't read only!"
+#, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
 "%s\n"
 "Make sure you entered a valid filename and that the selected location isn't "
 "read only!"
 msgstr ""
-"Um erro ocorreu ao criar o arquivo PDF:\n"
+"Ocorreu um erro ao criar o arquivo PDF:\n"
 "%s\n"
-"Certifique-se de ter entrado um nome de arquivo válido e que você tem "
+"Certifique-se de ter inserido um nome de arquivo válido e que você tenha "
 "permissão de escrita na pasta de destino."
 
 #: ../plug-ins/common/file-pdf-save.c:907
@@ -3358,14 +3327,12 @@ msgid "Keeping the masks will not change the output"
 msgstr "Manter as máscaras não irá alterar a saída"
 
 #: ../plug-ins/common/file-pdf-save.c:923
-#, fuzzy
-#| msgid "Reverse Order"
 msgid "Reverse the pages order"
-msgstr "Inverter ordem"
+msgstr "Inverter ordem das páginas"
 
 #: ../plug-ins/common/file-pdf-save.c:928
 msgid "Layers as pages"
-msgstr ""
+msgstr "Camadas como páginas"
 
 #: ../plug-ins/common/file-pdf-save.c:1000
 msgid "Save to:"
@@ -3415,22 +3382,21 @@ msgid "PNG image"
 msgstr "Imagem PNG"
 
 #: ../plug-ins/common/file-png.c:768
-#, fuzzy, c-format
-#| msgid "Error loading PNG file: %s"
+#, c-format
 msgid "Error loading PNG file: %s\n"
-msgstr "Erro ao abrir arquivo PNG: %s"
+msgstr "Erro ao abrir arquivo PNG: %s\n"
 
 #: ../plug-ins/common/file-png.c:885
-#, fuzzy, c-format
-#| msgid "Error creating PNG read struct while saving '%s'."
+#, c-format
 msgid "Error creating PNG read struct while loading '%s'."
-msgstr "Erro ao criar a estrutura de leitura do PNG ao salvar \"%s\"."
+msgstr "Erro ao criar a estrutura de leitura do PNG ao carregar \"%s\"."
 
 #: ../plug-ins/common/file-png.c:894
-#, fuzzy, c-format
-#| msgid "Error while saving '%s'. Could not save image."
+#, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
-msgstr "Erro ao salvar \"%s\" . Não foi possível gravar a imagem."
+msgstr ""
+"Erro ao ler \"%s\". Não foi possível criar a estrutura de informações do "
+"cabeçalho PNG."
 
 #: ../plug-ins/common/file-png.c:902
 #, c-format
@@ -3477,22 +3443,19 @@ msgstr ""
 "%d). Você deseja aplicar este deslocamento à camada?"
 
 #: ../plug-ins/common/file-png.c:1541
-#, fuzzy, c-format
-#| msgid "Error creating PNG write struct while saving '%s'."
+#, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Erro ao criar a estrutura de escrita do PNG ao salvar \"%s\"."
+msgstr "Erro ao criar a estrutura de escrita do PNG ao exportar \"%s\"."
 
 #: ../plug-ins/common/file-png.c:1550
-#, fuzzy, c-format
-#| msgid "Error while saving '%s'. Could not save image."
+#, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "Erro ao salvar \"%s\" . Não foi possível gravar a imagem."
+msgstr "Erro ao exportar \"%s\". Não foi possível criar estrutura de informação de cabeçalho PNG."
 
 #: ../plug-ins/common/file-png.c:1558
-#, fuzzy, c-format
-#| msgid "Error while saving '%s'. Could not save image."
+#, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "Erro ao salvar \"%s\" . Não foi possível gravar a imagem."
+msgstr "Erro ao exportar \"%s\" . Não foi possível exportar a imagem."
 
 #: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
@@ -3794,21 +3757,19 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: ../plug-ins/common/file-psp.c:728
-#, fuzzy, c-format
-#| msgid "Error reading file"
+#, c-format
 msgid "Error reading block header"
-msgstr "Erro ao ler arquivo"
+msgstr "Erro ao ler blocos do cabeçalho"
 
 #: ../plug-ins/common/file-psp.c:735
 #, c-format
 msgid "Invalid block header at %ld"
-msgstr ""
+msgstr "Blocos do cabeçalho inválidos em %ld"
 
 #: ../plug-ins/common/file-psp.c:738
-#, fuzzy, c-format
-#| msgid "Invalid file."
+#, c-format
 msgid "Invalid block header"
-msgstr "Arquivo inválido."
+msgstr "Blocos do cabeçalho inválidos"
 
 #: ../plug-ins/common/file-psp.c:841
 #, c-format
@@ -3828,7 +3789,7 @@ msgstr ""
 #: ../plug-ins/common/file-psp.c:902 ../plug-ins/common/file-psp.c:934
 #, c-format
 msgid "Error reading creator keyword data"
-msgstr ""
+msgstr "Erro na leitura dos dados palavras-chave do criador"
 
 #: ../plug-ins/common/file-psp.c:909
 #, c-format
@@ -3846,16 +3807,14 @@ msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr ""
 
 #: ../plug-ins/common/file-psp.c:1397 ../plug-ins/common/file-psp.c:1428
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error reading layer information chunk"
-msgstr "Erro ao ler cabeçalho do arquivo BMP de \"%s\""
+msgstr "Erro ao ler bloco de informações de camada"
 
 #: ../plug-ins/common/file-psp.c:1462
-#, fuzzy, c-format
-#| msgid "Image dimensions: %d × %d"
+#, c-format
 msgid "Invalid layer dimensions: %dx%d"
-msgstr "Dimensões da imagem: %d x %d"
+msgstr "Dimensões da camada inválidas: %dx%d"
 
 #: ../plug-ins/common/file-psp.c:1515
 #, c-format
@@ -3865,28 +3824,27 @@ msgstr "Erro na criação de camada"
 #: ../plug-ins/common/file-psp.c:1566
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr ""
+msgstr "Sub-bloco de camada inválida %s, deve ser CHANNEL"
 
 #: ../plug-ins/common/file-psp.c:1582
 #, c-format
 msgid "Error reading channel information chunk"
-msgstr ""
+msgstr "Erro ao ler bloco de informações de canal"
 
 #: ../plug-ins/common/file-psp.c:1594
 #, c-format
 msgid "Invalid bitmap type %d in channel information chunk"
-msgstr ""
+msgstr "Tipo de bitmap inválido %d no bloco de informações de canal"
 
 #: ../plug-ins/common/file-psp.c:1602
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
-msgstr ""
+msgstr "Tipo de canal inválido %d no bloco de informações de canal"
 
 #: ../plug-ins/common/file-psp.c:1682
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error reading tube data chunk"
-msgstr "Erro ao ler cabeçalho do arquivo BMP de \"%s\""
+msgstr "Erro ao ler bloco de dados de tubo"
 
 #: ../plug-ins/common/file-psp.c:1783
 #, c-format
@@ -3934,10 +3892,9 @@ msgid "Digital Elevation Model data"
 msgstr ""
 
 #: ../plug-ins/common/file-raw-data.c:424
-#, fuzzy, c-format
-#| msgid "Could not open '%s' for writing: %s"
+#, c-format
 msgid "Could not open '%s' for size verification: %s"
-msgstr "Não foi possível abrir arquivo \"%s\" para gravação:%s"
+msgstr "Não foi possível abrir \"%s\" para verificação de tamanho: %s"
 
 #: ../plug-ins/common/file-raw-data.c:502
 #, c-format
@@ -3997,7 +3954,7 @@ msgstr "Espaçamento:"
 
 #: ../plug-ins/common/file-raw-data.c:1938
 msgid "RGB Alpha"
-msgstr "RGB alfa "
+msgstr "RGB alfa"
 
 #: ../plug-ins/common/file-raw-data.c:1939
 msgid "RGB565 Big Endian"
@@ -4020,10 +3977,8 @@ msgid "Planar RGB"
 msgstr "RGB por planos"
 
 #: ../plug-ins/common/file-raw-data.c:1944
-#, fuzzy
-#| msgid "16 bits"
 msgid "B&W 1 bit"
-msgstr "16 bits"
+msgstr "P&B 1 bit"
 
 #: ../plug-ins/common/file-raw-data.c:1945
 msgid "Gray 2 bit"
@@ -4039,11 +3994,11 @@ msgstr "8 bits cinza"
 
 #: ../plug-ins/common/file-raw-data.c:1948
 msgid "Indexed"
-msgstr "Indexada"
+msgstr "Indexado"
 
 #: ../plug-ins/common/file-raw-data.c:1949
 msgid "Indexed Alpha"
-msgstr "Alfa indexada"
+msgstr "Alfa indexado"
 
 #: ../plug-ins/common/file-raw-data.c:1950
 msgid "Gray unsigned 16 bit Big Endian"
@@ -4129,7 +4084,7 @@ msgid ""
 "'%s':\n"
 "No image width specified"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "Largura da imagem não especificada"
 
 #: ../plug-ins/common/file-sunras.c:510 ../plug-ins/common/file-xbm.c:841
@@ -4159,7 +4114,7 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "A altura da imagem é maior do que a que o GIMP consegue usar"
 
 #: ../plug-ins/common/file-sunras.c:562
@@ -4167,10 +4122,9 @@ msgid "This image depth is not supported"
 msgstr "Não há suporte a esta profundidade de imagem"
 
 #: ../plug-ins/common/file-sunras.c:586
-#, fuzzy, c-format
-#| msgid "SUNRAS save cannot handle images with alpha channels"
+#, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
-msgstr "Gravação SUNRAS não pode manipular imagens com canais alfa"
+msgstr "A exportação em SUNRAS não pode manipular imagens com canais alfa"
 
 #: ../plug-ins/common/file-sunras.c:597
 msgid "Can't operate on unknown image types"
@@ -4345,7 +4299,7 @@ msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "Não foi possível ler cabeçalho (ftell == %ld)"
 
 #: ../plug-ins/common/file-xbm.c:862
@@ -4731,10 +4685,9 @@ msgid "XPM file invalid"
 msgstr "Arquivo XPM inválido"
 
 #: ../plug-ins/common/file-xpm.c:653
-#, fuzzy, c-format
-#| msgid "Unsupported or invalid bitdepth."
+#, c-format
 msgid "Unsupported drawable type"
-msgstr "Profundidade de cores não suportada ou inválida."
+msgstr "Sem suporte ao tipo de desenho"
 
 #: ../plug-ins/common/file-xpm.c:832
 msgid "XPM"
@@ -4759,7 +4712,7 @@ msgid ""
 "'%s':\n"
 "Illegal number of colormap entries: %ld"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "Número ilegal de entradas de mapa de cores: %ld"
 
 #: ../plug-ins/common/file-xwd.c:495
@@ -4768,7 +4721,7 @@ msgid ""
 "'%s':\n"
 "Number of colormap entries < number of colors"
 msgstr ""
-"\"%s\":\n"
+"'%s':\n"
 "Número de entradas de mapa de cores < número de cores"
 
 #: ../plug-ins/common/file-xwd.c:518
@@ -4785,22 +4738,18 @@ msgstr ""
 "Atualmente isso não é suportado."
 
 #: ../plug-ins/common/file-xwd.c:636
-#, fuzzy
-#| msgid "Cannot save images with alpha channels."
 msgid "Cannot export images with alpha channels."
-msgstr "Não pode salvar imagens com canais alfa."
+msgstr "Não foi possível exportar imagens com canais alfa."
 
 #: ../plug-ins/common/file-xwd.c:659
-#, fuzzy, c-format
-#| msgid "Could not open '%s' for writing: %s"
+#, c-format
 msgid "Could not open '%s' for writing: "
-msgstr "Não foi possível abrir arquivo \"%s\" para gravação:%s"
+msgstr "Não foi possível abrir o arquivo \"%s\" para gravação: "
 
 #: ../plug-ins/common/file-xwd.c:686
-#, fuzzy, c-format
-#| msgid "Error while reading '%s': %s"
+#, c-format
 msgid "Error exporting '%s': "
-msgstr "Erro ao ler \"%s\": %s"
+msgstr "Erro ao exportar \"%s\": "
 
 #: ../plug-ins/common/file-xwd.c:1753 ../plug-ins/common/file-xwd.c:2151
 #, c-format
@@ -4833,10 +4782,8 @@ msgid "On film:"
 msgstr "No filme:"
 
 #: ../plug-ins/common/film.c:932 ../plug-ins/common/unit-editor.c:210
-#, fuzzy
-#| msgid "_Additive"
 msgid "_Add"
-msgstr "_Aditivo"
+msgstr "_Adicionar"
 
 #: ../plug-ins/common/film.c:932 ../plug-ins/imagemap/imap_polygon.c:530
 msgid "_Remove"
@@ -4936,7 +4883,7 @@ msgstr "Altura dos _números:"
 
 #: ../plug-ins/common/film.c:1247
 msgid "Re_set"
-msgstr ""
+msgstr "Re_definir"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
@@ -5118,10 +5065,8 @@ msgid "Transform image with the Mandelbrot Fractal"
 msgstr "Transforma uma imagem com o Fractal de Mandelbrot"
 
 #: ../plug-ins/common/fractal-trace.c:121
-#, fuzzy
-#| msgid "_Fractal Trace..."
 msgid "_Fractal Trace (legacy)..."
-msgstr "Traçar com _fractal..."
+msgstr "Traçar com _fractal (legado)..."
 
 #: ../plug-ins/common/fractal-trace.c:471
 #: ../plug-ins/common/fractal-trace.c:707
@@ -5205,10 +5150,8 @@ msgid "Draw a grid on the image"
 msgstr "Desenha listras horizontais e/ou verticais na imagem"
 
 #: ../plug-ins/common/grid.c:148
-#, fuzzy
-#| msgid "_Grid..."
 msgid "_Grid (legacy)..."
-msgstr "_Grade..."
+msgstr "_Grade (legado)..."
 
 #: ../plug-ins/common/grid.c:241
 msgid "Drawing grid"
@@ -5625,10 +5568,8 @@ msgid "Smear colors to simulate an oil painting"
 msgstr "Difunde as cores para simular uma pintura a óleo"
 
 #: ../plug-ins/common/oilify.c:125
-#, fuzzy
-#| msgid "Oili_fy..."
 msgid "Oili_fy (legacy)..."
-msgstr "Pint_ura a óleo..."
+msgstr "Pint_ura a óleo (legado)..."
 
 #: ../plug-ins/common/oilify.c:247
 msgid "Oil painting"
@@ -5672,10 +5613,8 @@ msgid "Simulate color distortion produced by a copy machine"
 msgstr "Simula distorção de cores produzida por uma fotocopiadora"
 
 #: ../plug-ins/common/photocopy.c:158
-#, fuzzy
-#| msgid "_Photocopy..."
 msgid "_Photocopy (legacy)..."
-msgstr "_Fotocópia..."
+msgstr "_Fotocópia (legado)..."
 
 #: ../plug-ins/common/photocopy.c:836
 msgid "Photocopy"
@@ -5699,8 +5638,6 @@ msgid "Display information about plug-ins"
 msgstr "Exibe informação sobre os plug-ins"
 
 #: ../plug-ins/common/plugin-browser.c:144
-#, fuzzy
-#| msgid "_Plug-In Browser"
 msgid "_Plug-in Browser"
 msgstr "Navegador de _plug-ins"
 
@@ -5731,8 +5668,6 @@ msgid "No matches"
 msgstr "Nenhum resultado"
 
 #: ../plug-ins/common/plugin-browser.c:546
-#, fuzzy
-#| msgid "Plug-In Browser"
 msgid "Plug-in Browser"
 msgstr "Navegador de plug-Ins"
 
@@ -6188,10 +6123,8 @@ msgstr "D_uplicar"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2929
 #: ../plug-ins/gradient-flare/gradient-flare.c:3210
 #: ../plug-ins/ifs-compose/ifs-compose.c:1031
-#, fuzzy
-#| msgid "Delete"
 msgid "_Delete"
-msgstr "Excluir"
+msgstr "_Excluir"
 
 #: ../plug-ins/common/sphere-designer.c:2690
 msgid "Properties"
@@ -6526,31 +6459,7 @@ msgstr "Editor de unidades"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1058
 #: ../plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
-msgstr ""
-
-#: ../plug-ins/common/unsharp-mask.c:132
-msgid "The most widely useful method for sharpening an image"
-msgstr "A forma mais usada para realçar uma imagem"
-
-#: ../plug-ins/common/unsharp-mask.c:142
-#, fuzzy
-#| msgid "_Unsharp Mask..."
-msgid "_Unsharp Mask (legacy)..."
-msgstr "Máscara de desag_uçar..."
-
-#: ../plug-ins/common/unsharp-mask.c:694
-msgid "Merging"
-msgstr "Combinando"
-
-#: ../plug-ins/common/unsharp-mask.c:838
-msgid "Unsharp Mask"
-msgstr "Máscara de desaguçar"
-
-#: ../plug-ins/common/unsharp-mask.c:901
-#: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:566
-msgid "_Threshold:"
-msgstr "Lim_iar:"
+msgstr "_Atualizar"
 
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
@@ -6773,20 +6682,17 @@ msgid "Decomposition"
 msgstr "Decompondo"
 
 #: ../plug-ins/common/wavelet-decompose.c:248
-#, fuzzy, c-format
-#| msgid "Scale X:"
+#, c-format
 msgid "Scale %d"
-msgstr "Escala X:"
+msgstr "Escala %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:272
 msgid "Residual"
 msgstr "Residual"
 
 #: ../plug-ins/common/wavelet-decompose.c:381
-#, fuzzy
-#| msgid "Scale:"
 msgid "Scales:"
-msgstr "Escala:"
+msgstr "Escalas:"
 
 #. create group layer
 #: ../plug-ins/common/wavelet-decompose.c:393
@@ -7032,10 +6938,9 @@ msgid "Windows BMP image"
 msgstr "Imagem BMP do Windows"
 
 #: ../plug-ins/file-exr/file-exr.c:193
-#, fuzzy, c-format
-#| msgid "Error opening file '%s'"
+#, c-format
 msgid "Error opening file '%s' for reading"
-msgstr "Erro ao abrir arquivo \"%s\""
+msgstr "Erro ao abrir o arquivo \"%s\" para leitura"
 
 #: ../plug-ins/file-exr/file-exr.c:204
 #, fuzzy, c-format
@@ -7079,10 +6984,8 @@ msgid "FITS file keeps no displayable images"
 msgstr "O arquivo FITS não mantém imagens que podem ser exibidas"
 
 #: ../plug-ins/file-fits/fits.c:457
-#, fuzzy
-#| msgid "FITS save cannot handle images with alpha channels"
 msgid "FITS export cannot handle images with alpha channels"
-msgstr "Gravação FITS não pode manipular imagens com canais alfa"
+msgstr "A exportação de FITS não pode manipular imagens com canais alfa"
 
 #: ../plug-ins/file-fits/fits.c:1146
 msgid "Load FITS File"
@@ -7124,10 +7027,10 @@ msgid "Frame (%i)"
 msgstr "Quadro (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:714
-#, fuzzy
-#| msgid "Sorry, I can save only INDEXED and GRAY images."
 msgid "Sorry, I can export only INDEXED and GRAY images."
-msgstr "FLI: Só se pode salvar imagens INDEXADAS e Escala de Cinzas."
+msgstr ""
+"Desculpe, só é possível exportar imagens INDEXADAS e imagens com TONS DE "
+"CINZA."
 
 #: ../plug-ins/file-fli/fli-gimp.c:866
 msgid "GFLI 1.3 - Load framestack"
@@ -7188,10 +7091,9 @@ msgid "Compressed (PNG)"
 msgstr "Comprimido (PNG)"
 
 #: ../plug-ins/file-ico/ico-load.c:221
-#, fuzzy, c-format
-#| msgid "Could not load '%s': %s"
+#, c-format
 msgid "Could not read '%lu' bytes"
-msgstr "Falha ao carregar arquivo \"%s\": %s"
+msgstr "Não foi possível ler \"%lu\" bytes"
 
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
@@ -7210,7 +7112,7 @@ msgstr "Ícone nº%i"
 #: ../plug-ins/file-raw/file-rawtherapee.c:430
 #, c-format
 msgid "Opening thumbnail for '%s'"
-msgstr "Abrindo miniatura de \"%s\""
+msgstr "Abrindo miniatura para \"%s\""
 
 #: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
 msgid "Microsoft Windows icon"
@@ -7277,6 +7179,8 @@ msgstr "Usar código _aritmético"
 #: ../plug-ins/file-jpeg/jpeg-save.c:919
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
+"Programas mais antigos podem ter problemas para abrir imagens codificadas "
+"aritmeticamente"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:942
 msgid "_Progressive"
@@ -7285,10 +7189,8 @@ msgstr "_Progressivo"
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
 #: ../plug-ins/file-webp/file-webp-dialog.c:383
-#, fuzzy
-#| msgid "Save _EXIF data"
 msgid "Save _Exif data"
-msgstr "Salvar dados de _EXIF"
+msgstr "Salvar dados _Exif"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:980
 msgid "Save _thumbnail"
@@ -7298,13 +7200,11 @@ msgstr "Salvar minia_tura"
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
 #: ../plug-ins/file-webp/file-webp-dialog.c:393
 msgid "Save _XMP data"
-msgstr "Salvar dados de _XMP"
+msgstr "Salvar dados _XMP"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1016
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save _IPTC data"
-msgstr "Salvar dados de _XMP"
+msgstr "Salvar dados _IPTC"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1035
 msgid "_Use quality settings from original image"
@@ -7473,10 +7373,9 @@ msgid "Unsupported or invalid channel size"
 msgstr "Canal da imagem com tamanho sem suporte ou inválido"
 
 #: ../plug-ins/file-psd/psd-load.c:2202
-#, fuzzy, c-format
-#| msgid "Failed to open '%s': %s"
+#, c-format
 msgid "Failed to decompress data"
-msgstr "Falha ao abrir \"%s\": %s"
+msgstr "Falha na descompressão de dados"
 
 #: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -7485,142 +7384,134 @@ msgstr ""
 "PSD"
 
 #: ../plug-ins/file-psd/psd-save.c:1563
-#, fuzzy, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images that "
-#| "are more than 30,000 pixels wide or tall."
+#, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Não é possível salvar \"%s\". O formato de arquivo PSD sem suporte imagens "
-"que tenham mais de 30000 pixels de largura ou de altura."
+"Não foi possível exportar \"%s\". O formato de arquivo PSD não oferece suporte "
+"a imagens que tenham mais de 30.000 pixels de largura ou de altura."
 
 #: ../plug-ins/file-psd/psd-save.c:1584
-#, fuzzy, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images with "
-#| "layers that are more than 30,000 pixels wide or tall."
+#, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Não é possível salvar \"%s\". O formato de arquivo PSD sem suporte imagens "
-"que tenham camadas com mais de 30000 pixels de largura ou de altura."
+"Não foi possível exportar \"%s\". O formato de arquivo PSD não oferece suporte "
+"a imagens que tenham camadas com mais de 30.000 pixels de largura ou de altura."
 
 #: ../plug-ins/file-psd/psd-util.c:179
 msgid "Unexpected end of file"
 msgstr "Fim prematuro do arquivo"
 
-#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:166
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:167
 msgid "Photoshop image"
 msgstr "Imagem do photoshop"
 
 #: ../plug-ins/file-psd/psd.c:130
-#, fuzzy
-#| msgid "Photoshop image"
 msgid "Photoshop image (merged)"
-msgstr "Imagem do photoshop"
+msgstr "Imagem do photoshop (misturada)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
-msgstr ""
+msgstr "Raw Canon"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:58
 msgid "Raw Nikon"
-msgstr ""
+msgstr "Raw Nikon"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:69
 msgid "Raw Hasselblad"
-msgstr ""
+msgstr "Raw Hasselblad"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:80
 msgid "Raw Sony"
-msgstr ""
+msgstr "Raw Sony"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:91
 msgid "Raw Casio BAY"
-msgstr ""
+msgstr "Raw Casio BAY"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:102
 msgid "Raw Phantom Software CINE"
-msgstr ""
+msgstr "Raw Phantom Software CINE"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:113
 msgid "Raw Sinar"
-msgstr ""
+msgstr "Raw Sinar"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:124
 msgid "Raw Kodak"
-msgstr ""
+msgstr "Raw Kodak"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:135
 msgid "Raw Adobe DNG Digital Negative"
-msgstr ""
+msgstr "Raw Adobe DNG Digital Negative"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:146
 msgid "Raw Epson ERF"
-msgstr ""
+msgstr "Raw Epson ERF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:157
 msgid "Raw Phase One"
-msgstr ""
+msgstr "Raw Phase One"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:168
 msgid "Raw Minolta"
-msgstr ""
+msgstr "Raw Minolta"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:179
 msgid "Raw Mamiya MEF"
-msgstr ""
+msgstr "Raw Mamiya MEF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:189
 msgid "Raw Leaf MOS"
-msgstr ""
+msgstr "Raw Leaf MOS"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:200
 msgid "Raw Olympus ORF"
-msgstr ""
+msgstr "Raw Olympus ORF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:211
 msgid "Raw Pentax PEF"
-msgstr ""
+msgstr "Raw Pentax PEF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:222
 msgid "Raw Logitech PXN"
-msgstr ""
+msgstr "Raw Logitech PXN"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:233
 msgid "Raw Apple QuickTake QTK"
-msgstr ""
+msgstr "Raw Apple QuickTake QTK"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:244
 msgid "Raw Fujifilm RAF"
-msgstr ""
+msgstr "Raw Fujifilm RAF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:255
 msgid "Raw Panasonic"
-msgstr ""
+msgstr "Raw Panasonic"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:266
 msgid "Raw Digital Foto Maker RDC"
-msgstr ""
+msgstr "Raw Digital Foto Maker RDC"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:277
 msgid "Raw Leica RWL"
-msgstr ""
+msgstr "Raw Leica RWL"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:288
 msgid "Raw Samsung SRW"
-msgstr ""
+msgstr "Raw Samsung SRW"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:299
 msgid "Raw Sigma X3F"
-msgstr ""
+msgstr "Raw Sigma X3F"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:310
 msgid "Raw Arriflex ARI"
-msgstr ""
+msgstr "Raw Arriflex ARI"
 
 #: ../plug-ins/file-raw/file-raw-placeholder.c:139
 #, c-format
@@ -7633,6 +7524,13 @@ msgid ""
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
+"Não há um carregador de arquivo RAW instalado para abrir \"%s\" arquivos.\n"
+"\n"
+"O GIMP atualmente oferece suporte aos seguintes carregadores RAW:\n"
+"- darktable (http://www.darktable.org/), versão 1.7 ou superior\n"
+"- RawTherapee (http://rawtherapee.com/), versão 5.2 ou superior\n"
+"\n"
+"Por favor, instale um deles para carregar arquivos RAW."
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -7711,16 +7609,17 @@ msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:605
-#, fuzzy, c-format
-#| msgid "FITS save cannot handle images with alpha channels"
+#, c-format
 msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr "Gravação FITS não pode manipular imagens com canais alfa"
+msgstr "A exportação em TIFF não oferece suporte a imagens indexadas com um canal alfa."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:618
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
 msgstr ""
+"Somente fotos monocromáticas podem ser comprimidas com \"CCITT Group 4\" ou "
+"\"CCITT Group 3\"."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:632
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
@@ -7731,8 +7630,8 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
-"O formato TIFF só suporta comentários em \n"
-"ASCII de 7 bits. O comentário não foi salvo."
+"O formato TIFF só possui suporte a comentários em\n"
+"ASCII de 7 bits. Nenhum comentário foi salvo."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:823
 #, c-format
@@ -7776,71 +7675,55 @@ msgid "CCITT Group _4 fax"
 msgstr "CCITT group _4 fax"
 
 #: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
-#, fuzzy
-#| msgid "PNG image"
 msgid "WebP image"
-msgstr "Imagem PNG"
+msgstr "Imagem WebP"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:70
 msgid "(no keyframes)"
-msgstr ""
+msgstr "(sem quadros-chave)"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:74
 msgid "(all frames are keyframes)"
-msgstr ""
+msgstr "(todos os quadros são quadros-chave)"
 
 #. Create the dialog
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
-msgstr ""
+msgstr "WebP"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
-#, fuzzy
-#| msgid "Image _title:"
 msgid "Image quality:"
-msgstr "_Título da imagem:"
+msgstr "Qualidade da imagem:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:148
-#, fuzzy
-#| msgid "Image _title:"
 msgid "Image quality"
-msgstr "_Título da imagem:"
+msgstr "Qualidade da imagem"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:159
-#, fuzzy
-#| msgid "Quality:"
 msgid "Alpha quality:"
-msgstr "Qualidade:"
+msgstr "Qualidade do canal alfa:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:167
-#, fuzzy
-#| msgid "Alpha Channels"
 msgid "Alpha channel quality"
-msgstr "Canais alfa"
+msgstr "Qualidade do canal alfa"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:192
-#, fuzzy
-#| msgid "Source 1:"
 msgid "Source type:"
-msgstr "Origem 1:"
+msgstr "Tipo da fonte:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:195
 msgid "WebP encoder \"preset\""
-msgstr ""
+msgstr "\"Predefinição\" do codificador WebP"
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:227
-#, fuzzy
-#| msgid "As _animation"
 msgid "As A_nimation"
-msgstr "Como _animação"
+msgstr "Como a_nimação"
 
 #. loop animation checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:256
-#, fuzzy
-#| msgid "_Loop forever"
 msgid "Loop forever"
-msgstr "Repetir _indefinidamente"
+msgstr "Repetir infinitamente"
 
 #. label for 'max key-frame distance' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:273
@@ -7887,33 +7770,28 @@ msgstr ""
 #, fuzzy, c-format
 #| msgid "Failed to read %s from '%s': %s"
 msgid "Failed to decode animated WebP frame from '%s'"
-msgstr "Falha ao ler %s de  '%s': %s"
+msgstr "Falha ao ler %s de  \"%s\": %s"
 
 #: ../plug-ins/file-webp/file-webp-load.c:216
-#, fuzzy, c-format
-#| msgid "Frame %d (%d%s)"
+#, c-format
 msgid "Frame %d (%dms)"
-msgstr "Quadro %d (%d%s)"
+msgstr "Quadro %d (%dms)"
 
 #: ../plug-ins/file-webp/file-webp-save.c:112
 msgid "out of memory"
-msgstr ""
+msgstr "sem memória"
 
 #: ../plug-ins/file-webp/file-webp-save.c:114
 msgid "not enough memory to flush bits"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:116
-#, fuzzy
-#| msgid "Parameters"
 msgid "NULL parameter"
-msgstr "Parâmetros"
+msgstr "Parâmetro NULO"
 
 #: ../plug-ins/file-webp/file-webp-save.c:118
-#, fuzzy
-#| msgid "Invalid X resolution."
 msgid "invalid configuration"
-msgstr "Resolução X inválida."
+msgstr "configuração inválida"
 
 #: ../plug-ins/file-webp/file-webp-save.c:120
 #, fuzzy
@@ -7923,11 +7801,11 @@ msgstr "Dimensões da imagem: %d x %d"
 
 #: ../plug-ins/file-webp/file-webp-save.c:122
 msgid "partition is bigger than 512K"
-msgstr ""
+msgstr "a partição é maior que 512K"
 
 #: ../plug-ins/file-webp/file-webp-save.c:124
 msgid "partition is bigger than 16M"
-msgstr ""
+msgstr "a partição é maior que 16M"
 
 #: ../plug-ins/file-webp/file-webp-save.c:126
 msgid "unable to flush bytes"
@@ -7935,38 +7813,30 @@ msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
-msgstr ""
+msgstr "o arquivo é maior que 4GB"
 
 #: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "user aborted encoding"
-msgstr ""
+msgstr "o usuário abortou a codificação"
 
 #: ../plug-ins/file-webp/file-webp-save.c:132
 msgid "list terminator"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:134
-#, fuzzy
-#| msgid "Unknown error"
 msgid "unknown error"
-msgstr "Erro desconhecido"
+msgstr "erro desconhecido"
 
 #: ../plug-ins/file-webp/file-webp-save.c:181
 #: ../plug-ins/file-webp/file-webp-save.c:515
-#, fuzzy, c-format
-#| msgid "Could not open '%s' for writing: %s"
+#, c-format
 msgid "Unable to open '%s' for writing: %s"
-msgstr "Não foi possível abrir arquivo \"%s\" para gravação:%s"
+msgstr "Não foi possível abrir \"%s\" para gravação: %s"
 
 #: ../plug-ins/file-webp/file-webp-save.c:254
-#, fuzzy, c-format
-#| msgid ""
-#| "Parse error in '%s':\n"
-#| "%s"
+#, c-format
 msgid "WebP error: '%s'"
-msgstr ""
-"Erro de análise em \"%s\":\n"
-"%s"
+msgstr "Erro no WebP: \"%s\""
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
@@ -8233,16 +8103,12 @@ msgid "R_edraw preview"
 msgstr "A_tualizar pré-visualização"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
-#, fuzzy
-#| msgid "Zoom in"
 msgid "Zoom _In"
-msgstr "Ampliar"
+msgstr "_Ampliar"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
-#, fuzzy
-#| msgid "Zoom out"
 msgid "Zoom _Out"
-msgstr "Reduzir"
+msgstr "_Reduzir"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
 msgid "Undo last zoom change"
@@ -8250,10 +8116,8 @@ msgstr "Desfaz último zoom"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
 #: ../plug-ins/ifs-compose/ifs-compose.c:1039
-#, fuzzy
-#| msgid "Redo"
 msgid "_Redo"
-msgstr "Refazer"
+msgstr "_Refazer"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:704
 msgid "Redo last zoom change"
@@ -8669,10 +8533,8 @@ msgid "_Grid"
 msgstr "_Grade"
 
 #: ../plug-ins/gfig/gfig-dialog.c:898
-#, fuzzy
-#| msgid "Preferences"
 msgid "_Preferences..."
-msgstr "Preferências"
+msgstr "_Preferências..."
 
 #: ../plug-ins/gfig/gfig-dialog.c:902
 msgid "_Raise"
@@ -8919,10 +8781,8 @@ msgid "Orientation:"
 msgstr "Orientação:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:580
-#, fuzzy
-#| msgid "Hey where has the object gone ?"
 msgid "Hey, where has the object gone?"
-msgstr "Ei, onde foi parar o objeto ?"
+msgstr "Ei, onde foi parar o objeto?"
 
 #: ../plug-ins/gfig/gfig-dobject.c:922
 msgid "Error reading file"
@@ -9004,10 +8864,8 @@ msgid "Select:"
 msgstr "Selecione:"
 
 #: ../plug-ins/gimpressionist/brush.c:586
-#, fuzzy
-#| msgid "Save _As..."
 msgid "Save _as"
-msgstr "S_alvar como..."
+msgstr "Salvar _como"
 
 #: ../plug-ins/gimpressionist/brush.c:599
 msgid "Aspect ratio:"
@@ -9700,28 +9558,20 @@ msgid "S_ave Defaults"
 msgstr "_Salvar conf. como padrão"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
-#, fuzzy
-#| msgid "Save _EXIF data"
 msgid "Save Exif data"
-msgstr "Salvar dados de _EXIF"
+msgstr "Salvar dados Exif"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:13
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save XMP data"
-msgstr "Salvar dados de _XMP"
+msgstr "Salvar dados XMP"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:14
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save IPTC data"
-msgstr "Salvar dados de _XMP"
+msgstr "Salvar dados IPTC"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:15
-#, fuzzy
-#| msgid "Save _thumbnail"
 msgid "Save thumbnail"
-msgstr "Salvar minia_tura"
+msgstr "Salvar miniatura"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:16
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
@@ -9733,44 +9583,40 @@ msgid "Co_mpression level:"
 msgstr "Ní_vel de compressão:"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:18
-#, fuzzy
-#| msgid "Automatic pre_view"
 msgid "automatic pixelformat"
-msgstr "Pré-_visualização automática"
+msgstr "pixelformat automático"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:19
 msgid "8bpc RGB"
-msgstr ""
+msgstr "8bpc RGB"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:20
 msgid "8bpc GRAY"
-msgstr ""
+msgstr "8bpc GRAY"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:21
-#, fuzzy
-#| msgid "RGBA"
 msgid "8bpc RGBA"
-msgstr "RGBA"
+msgstr "8bpc RGBA"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:22
 msgid "8bpc GRAYA"
-msgstr ""
+msgstr "8bpc GRAYA"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:23
 msgid "16bpc RGB"
-msgstr ""
+msgstr "16bpc RGB"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:24
 msgid "16bpc GRAY"
-msgstr ""
+msgstr "16bpc GRAY"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:25
 msgid "16bpc RGBA"
-msgstr ""
+msgstr "16bpc RGBA"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:26
 msgid "16bpc GRAYA"
-msgstr ""
+msgstr "16bpc GRAYA"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:1
 msgid "RGB Save Type"
@@ -9797,62 +9643,44 @@ msgid "<b>Comment</b>"
 msgstr "Comentário"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
-#, fuzzy
-#| msgid "Save _EXIF data"
 msgid "save Exif data"
-msgstr "Salvar dados de _EXIF"
+msgstr "salvar dados Exif"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "save XMP data"
-msgstr "Salvar dados de _XMP"
+msgstr "salvar dados XMP"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "save IPTC data"
-msgstr "Salvar dados de _XMP"
+msgstr "salvar dados IPTC"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
-#, fuzzy
-#| msgid "Save _thumbnail"
 msgid "save thumbnail"
-msgstr "Salvar minia_tura"
+msgstr "salvar miniatura"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
-#, fuzzy
-#| msgid "PDF document"
 msgid "Document Title"
-msgstr "Documento PDF"
+msgstr "Título do documento"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:2
-#, fuzzy
-#| msgid "_Author:"
 msgid "Author"
-msgstr "A_utor:"
+msgstr "Autor"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:3
-#, fuzzy
-#| msgid "_Author:"
 msgid "Author Title"
-msgstr "A_utor:"
+msgstr "Título do autor"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:4
 msgid "Description"
 msgstr "Descrição"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
-#, fuzzy
-#| msgid "Description"
 msgid "Description Writer\t"
-msgstr "Descrição"
+msgstr "Escritor da descrição\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
-#, fuzzy
-#| msgid "Rotating"
 msgid "Rating"
-msgstr "Rotacionando"
+msgstr "Avaliação"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
 msgid "Keywords"
@@ -9908,25 +9736,23 @@ msgstr "Data de criação"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:20
 msgid "Intellectual Genre"
-msgstr ""
+msgstr "Gênero intelectual"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:21
 msgid "IPTC Scene Code"
-msgstr ""
+msgstr "Código de cena IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
-#, fuzzy
-#| msgid "Curl Location"
 msgid "Sublocation\t"
-msgstr "Localização da dobra"
+msgstr "sublocalização\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:23
 msgid "ISO Country Code"
-msgstr ""
+msgstr "Código ISO de país"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:24
 msgid "IPTC Subject Code"
-msgstr ""
+msgstr "Código de assunto IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
 #, fuzzy
@@ -9953,16 +9779,12 @@ msgid "Credit Line"
 msgstr "Origem"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
-#, fuzzy
-#| msgid "C-Source"
 msgid "Source"
-msgstr "Fonte em C"
+msgstr "Origem"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
-#, fuzzy
-#| msgid "Image Types"
 msgid "Usage Terms"
-msgstr "Tipos de imagem"
+msgstr "Termos de Uso"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:32
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:7
@@ -9970,10 +9792,8 @@ msgid "IPTC"
 msgstr "IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
-#, fuzzy
-#| msgid "Curl Location"
 msgid "Sublocation"
-msgstr "Localização da dobra"
+msgstr "sublocalização"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:34
 msgid "Person Shown"
@@ -9981,17 +9801,15 @@ msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:35
 msgid "Country Name"
-msgstr ""
+msgstr "Nome do país"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:36
 msgid "Country ISO-Code"
-msgstr ""
+msgstr "Código ISO do país"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:37
-#, fuzzy
-#| msgid "Select Region"
 msgid "World Region"
-msgstr "Selecionar região"
+msgstr "Região do mundo"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:38
 msgid "Location Shown"
@@ -10006,16 +9824,12 @@ msgid "Event"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:42
-#, fuzzy
-#| msgid "Add a New Unit"
 msgid "Add an entry"
-msgstr "Adicionar uma nova unidade"
+msgstr "Adicionar entrada"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:43
-#, fuzzy
-#| msgid "Move an object"
 msgid "Remove an entry"
-msgstr "Mover um objeto"
+msgstr "Remover entrada"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:44
 msgid "Code"
@@ -10023,11 +9837,11 @@ msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:45
 msgid "Province / State"
-msgstr ""
+msgstr "Província / Estado"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:46
 msgid "Country ISO Code"
-msgstr ""
+msgstr "Código ISO do país"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
 #, fuzzy
@@ -10036,32 +9850,24 @@ msgid "Artwork or Object"
 msgstr "Mapear para objeto"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:48
-#, fuzzy
-#| msgid "_Title:"
 msgid "Title"
-msgstr "_Título:"
+msgstr "Título"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:49
-#, fuzzy
-#| msgid "Create"
 msgid "Date Created"
-msgstr "Criar"
+msgstr "Data de criação"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:50
-#, fuzzy
-#| msgid "Create"
 msgid "Creator"
-msgstr "Criar"
+msgstr "Criador"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:51
 msgid "Source Inventory ID"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:52
-#, fuzzy
-#| msgid "Mode _1"
 msgid "Model Age"
-msgstr "Modo _1"
+msgstr "Idade do(a) modelo(a)"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:53
 msgid "Minor Model Age Disclosure"
@@ -10103,13 +9909,11 @@ msgstr "Tamanho da imagem"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:61
 msgid "Max. Available Width"
-msgstr ""
+msgstr "Tamanho máximo disponível"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:62
-#, fuzzy
-#| msgid "Available images:"
 msgid "Max. Available Height"
-msgstr "Imagens disponíveis:"
+msgstr "Altura máxima disponível"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:63
 #, fuzzy
@@ -10126,56 +9930,48 @@ msgid "Item Identifier"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:66
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyright Owner"
-msgstr "Direitos autorais"
+msgstr "Detentor dos direitos autorais"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:67
-#, fuzzy
-#| msgid "_License:"
 msgid "Licensor"
-msgstr "_Licença:"
+msgstr "Licenciador"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:68
 msgid "Property Release Status"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
-#, fuzzy
-#| msgid "Raw image data"
 msgid "Image Creator"
-msgstr "Dados de Imagem Raw (Dados brutos)"
+msgstr "Criador da imagem"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:70
-#, fuzzy
-#| msgid "_Identifier prefix:"
 msgid "Identifier"
-msgstr "Prefixo _identificador:"
+msgstr "Identificador"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:71
 msgid "Phone Number 1"
-msgstr ""
+msgstr "Número de telefone 1"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:72
 msgid "Phone Type 1"
-msgstr ""
+msgstr "Tipo do telefone 1"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:73
 msgid "Phone Number 2"
-msgstr ""
+msgstr "Número de telefone 2"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:74
 msgid "Phone Type 2"
-msgstr ""
+msgstr "Tipo de telefone 2"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:75
 msgid "Email Address"
-msgstr ""
+msgstr "Endereço de e-mail"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:76
 msgid "Web Address"
-msgstr ""
+msgstr "Endereço web"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
 msgid "Property Release Identifier"
@@ -10183,11 +9979,11 @@ msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
 msgid "IPTC Extension"
-msgstr ""
+msgstr "Extensão IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:79
 msgid "Supplemental Category"
-msgstr ""
+msgstr "Categoria suplementar"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:80
 msgid "Category"
@@ -10199,103 +9995,87 @@ msgstr "Categorias"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:82
 msgid "Longitude Reference"
-msgstr ""
+msgstr "Referência da longitude"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:83
 msgid "Longitude"
-msgstr ""
+msgstr "Longitude"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:84
-#, fuzzy
-#| msgid "A_mplitude:"
 msgid "Altitude"
-msgstr "_Amplitude:"
+msgstr "Altitude"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:85
 msgid "Latitude"
-msgstr ""
+msgstr "Latitude"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:86
 msgid "Latitude Reference"
-msgstr ""
+msgstr "Referência da latitude"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:87
 msgid "Altitude Reference"
-msgstr ""
+msgstr "Referência da altitude"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:88
-#, fuzzy
-#| msgid "PSP"
 msgid "GPS"
-msgstr "PSP"
+msgstr "GPS"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:89
-#, fuzzy
-#| msgid "Gradient"
 msgid "Patient"
-msgstr "Degradê"
+msgstr "Paciente"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:90
 msgid "Patient ID"
-msgstr ""
+msgstr "ID do paciente"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:91
 msgid "Date of Birth"
-msgstr ""
+msgstr "Data de nascimento"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:92
 msgid "Patient Sex"
-msgstr ""
+msgstr "Sexo do paciente"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:93
 msgid "Study ID"
-msgstr ""
+msgstr "ID do estudo"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
-#, fuzzy
-#| msgid "Rendering wind"
 msgid "Referring Physician"
-msgstr "Renderizando vento"
+msgstr "Médico solicitante"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:95
 msgid "Study Date"
-msgstr ""
+msgstr "Data do exame"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:96
-#, fuzzy
-#| msgid "Description"
 msgid "Study Description"
-msgstr "Descrição"
+msgstr "Descrição do exame"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:97
-#, fuzzy
-#| msgid "Select Number Color"
 msgid "Series Number"
-msgstr "Selecione a cor dos números"
+msgstr "Número da série"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:98
-#, fuzzy
-#| msgid "Quality:"
 msgid "Modality"
-msgstr "Qualidade:"
+msgstr "Modalidade"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:99
 msgid "Series Date"
-msgstr ""
+msgstr "Data da série"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
-#, fuzzy
-#| msgid "Description"
 msgid "Series Description"
-msgstr "Descrição"
+msgstr "Descrição da série"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:101
 msgid "Equipment Institution"
-msgstr ""
+msgstr "Instituição do equipamento"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:102
 msgid "Equipment Manufacturer"
-msgstr ""
+msgstr "Fabricante do equipamento"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
 msgid "DICOM"
@@ -10319,7 +10099,7 @@ msgstr "XMP"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:6
 msgid "IPTC Tag"
-msgstr ""
+msgstr "Etiqueta IPTC"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -10383,8 +10163,6 @@ msgid "A_uto update preview"
 msgstr "Atualização a_utomática da pré-visualização"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
-#, fuzzy
-#| msgid "`Default' is created."
 msgid "'Default' is created."
 msgstr "O \"Padrão\" foi criado."
 
@@ -10481,10 +10259,8 @@ msgid "Gradient Flare Editor"
 msgstr "Editor de clarão em degradê"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
-#, fuzzy
-#| msgid "Rescan Gradients"
 msgid "_Rescan Gradients"
-msgstr "Reexaminar degradês"
+msgstr "_Reexaminar degradês"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3447
@@ -10680,11 +10456,9 @@ msgid "_Next"
 msgstr "_Próxima"
 
 #: ../plug-ins/help-browser/dialog.c:1188
-#, fuzzy
-#| msgid "Closed"
 msgctxt "search"
 msgid "_Close"
-msgstr "Fechado"
+msgstr "_Fechar"
 
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -10702,16 +10476,12 @@ msgstr "O manual do usuário do GIMP não está disponível."
 #. * Cf. bug 762282.
 #.
 #: ../plug-ins/help/gimphelpdomain.c:193
-#, fuzzy
-#| msgid ""
-#| "Please install the additional help package or use the online user manual "
-#| "at http://docs.gimp.org/."
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"http://docs.gimp.org/"
+"https://docs.gimp.org/"
 msgstr ""
-"Por favor, instale o pacote de ajuda adicional, ou use o manual online em "
-"http://docs.gimp.org."
+"Por favor, instale o pacote de ajuda adicional, ou use o manual de usuário "
+"online em https://docs.gimp.org"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -10914,10 +10684,8 @@ msgid "Open IFS Fractal file"
 msgstr "Abrir arquivo de fractal IFS"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-#, fuzzy
-#| msgid "Image Map Plug-In"
 msgid "Image Map Plug-in"
-msgstr "Plug-in imagemap"
+msgstr "Plug-in de mapeamento de imagem"
 
 #: ../plug-ins/imagemap/imap_about.c:46
 msgid "Copyright © 1999-2005 by Maurits Rijk"
@@ -11574,6 +11342,11 @@ msgstr "Interação:"
 msgid "Co_ntiguous Region"
 msgstr "Região co_ntígua"
 
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:566
+msgid "_Threshold:"
+msgstr "Lim_iar:"
+
 #: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
 msgstr "Converter _automaticamente"
@@ -12227,103 +12000,84 @@ msgid "Update preview _live"
 msgstr "_Recalcular imagem de pré-visualização em tempo real"
 
 #: ../plug-ins/metadata/metadata-editor.c:408
-#, fuzzy
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
-msgstr "Ver e editar metadados (EXIF, IPTC, XMP)"
+msgstr "Editar metadados (IPTC, EXIF, XMP)"
 
 #: ../plug-ins/metadata/metadata-editor.c:416
-#, fuzzy
-#| msgid "Raw image data"
 msgid "Edit Metadata"
-msgstr "Dados de Imagem Raw (Dados brutos)"
+msgstr "Editar metadados"
 
 #: ../plug-ins/metadata/metadata-editor.c:539
 #, c-format
 msgid "Metadata Editor: %s"
-msgstr ""
+msgstr "Editor de metadados: %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:548
-#, fuzzy
-#| msgid "Raw image data"
 msgid "Write Metadata"
-msgstr "Dados de Imagem Raw (Dados brutos)"
+msgstr "Escrever metadados"
 
 #: ../plug-ins/metadata/metadata-editor.c:572
-#, fuzzy
-#| msgid "Raw image data"
 msgid "Import metadata"
-msgstr "Dados de Imagem Raw (Dados brutos)"
+msgstr "Importar metadados"
 
 #: ../plug-ins/metadata/metadata-editor.c:574
 msgid "Export metadata"
-msgstr ""
+msgstr "Exportar metadados"
 
 #: ../plug-ins/metadata/metadata-editor.c:762
 msgid "Calendar Date:"
-msgstr ""
+msgstr "Data do calendário:"
 
 #: ../plug-ins/metadata/metadata-editor.c:766
 msgid "Set Date"
-msgstr ""
+msgstr "Definir data"
 
 #: ../plug-ins/metadata/metadata-editor.c:1620
 msgid "Unrated"
-msgstr ""
+msgstr "Sem avaliação"
 
 #: ../plug-ins/metadata/metadata-editor.c:5645
-#, fuzzy
-#| msgid "Import XMP from File"
 msgid "Import Metadata File"
-msgstr "Importar XMP do arquivo"
+msgstr "Importar arquivo de metadados"
 
 #: ../plug-ins/metadata/metadata-editor.c:5680
-#, fuzzy
-#| msgid "Export XMP to File"
 msgid "Export Metadata File"
-msgstr "Exportar XMP para arquivo"
+msgstr "Exportar arquivo de metadados"
 
 #: ../plug-ins/metadata/metadata-editor.c:5684
-#, fuzzy
-#| msgid "_Import"
 msgid "_Export"
-msgstr "_Importar"
+msgstr "_Exportar"
 
 #: ../plug-ins/metadata/metadata-tags.h:250
 msgid "Original digital capture of a real life scene"
-msgstr ""
+msgstr "Captura digital original de uma cena da vida real"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
 msgid "Digitised from a negative on film"
-msgstr ""
+msgstr "Digitalizado a partir de um negativo de filme"
 
 #: ../plug-ins/metadata/metadata-tags.h:252
 msgid "Digitised from a positive on film"
-msgstr ""
+msgstr "Digitalizado a partir de um positivo de filme"
 
 #: ../plug-ins/metadata/metadata-tags.h:253
 msgid "Digitised from a print on non-transparent medium"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:254
-#, fuzzy
-#| msgid "Create star"
 msgid "Created by software"
-msgstr "Criar estrela"
+msgstr "Criado por programa"
 
 #: ../plug-ins/metadata/metadata-tags.h:262
 #: ../plug-ins/metadata/metadata-tags.h:273
 #: ../plug-ins/metadata/metadata-tags.h:302
-#, fuzzy
-#| msgctxt "align-style"
-#| msgid "None"
 msgid "None"
 msgstr "Nenhum"
 
 #: ../plug-ins/metadata/metadata-tags.h:263
 #: ../plug-ins/metadata/metadata-tags.h:274
 msgid "Not Applicable"
-msgstr ""
+msgstr "Não aplicável"
 
 #: ../plug-ins/metadata/metadata-tags.h:264
 msgid "Unlimited Model Releases"
@@ -12343,187 +12097,172 @@ msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:284
 msgid "Age Unknown"
-msgstr ""
+msgstr "Idade desconhecida"
 
 #: ../plug-ins/metadata/metadata-tags.h:285
 msgid "Age 25 or Over"
-msgstr ""
+msgstr "25 anos ou mais"
 
 #: ../plug-ins/metadata/metadata-tags.h:286
 msgid "Age 24"
-msgstr ""
+msgstr "24 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:287
 msgid "Age 23"
-msgstr ""
+msgstr "23 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:288
 msgid "Age 22"
-msgstr ""
+msgstr "22 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:289
 msgid "Age 21"
-msgstr ""
+msgstr "21 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:290
 msgid "Age 20"
-msgstr ""
+msgstr "20 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:291
 msgid "Age 19"
-msgstr ""
+msgstr "19 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:292
 msgid "Age 18"
-msgstr ""
+msgstr "18 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:293
 msgid "Age 17"
-msgstr ""
+msgstr "17 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:294
 msgid "Age 16"
-msgstr ""
+msgstr "16 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:295
 msgid "Age 15"
-msgstr ""
+msgstr "15 anos"
 
 #: ../plug-ins/metadata/metadata-tags.h:296
 msgid "Age 14 or Under"
-msgstr ""
+msgstr "14 anos ou menos"
 
 #: ../plug-ins/metadata/metadata-tags.h:302
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: ../plug-ins/metadata/metadata-tags.h:302
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: ../plug-ins/metadata/metadata-tags.h:302
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../plug-ins/metadata/metadata-tags.h:302
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: ../plug-ins/metadata/metadata-tags.h:302
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: ../plug-ins/metadata/metadata-tags.h:308
 #: ../plug-ins/metadata/metadata-tags.h:341
 #: ../plug-ins/metadata/metadata-tags.h:347
 #: ../plug-ins/metadata/metadata-tags.h:353
-#, fuzzy
-#| msgid "Unknown error"
 msgid "Unknown"
-msgstr "Erro desconhecido"
+msgstr "Desconhecido"
 
 #. DO NOT SAVE
 #: ../plug-ins/metadata/metadata-tags.h:309
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyrighted"
-msgstr "Direitos autorais"
+msgstr "Protegido por direitos autorais"
 
 #. TRUE
 #: ../plug-ins/metadata/metadata-tags.h:310
 msgid "Public Domain"
-msgstr ""
+msgstr "Domínio público"
 
 #: ../plug-ins/metadata/metadata-tags.h:316
 #: ../plug-ins/metadata/metadata-tags.h:332
-#, fuzzy
-#| msgid "Select Image File"
 msgid "Select a value"
-msgstr "Selecione o arquivo de imagem"
+msgstr "Selecione um valor"
 
 #: ../plug-ins/metadata/metadata-tags.h:317
 msgid "Work"
-msgstr ""
+msgstr "Trabalho"
 
 #: ../plug-ins/metadata/metadata-tags.h:318
 msgid "Cell"
-msgstr ""
+msgstr "Célula"
 
 #: ../plug-ins/metadata/metadata-tags.h:319
-#, fuzzy
-#| msgid "Fan"
 msgid "Fax"
-msgstr "Ventilador"
+msgstr "Fax"
 
 #: ../plug-ins/metadata/metadata-tags.h:320
 msgid "Home"
-msgstr ""
+msgstr "Casa"
 
+# Não é paginador, é https://pt.wikipedia.org/wiki/Pager
 #: ../plug-ins/metadata/metadata-tags.h:321
-#, fuzzy
-#| msgid "Pages:"
 msgid "Pager"
-msgstr "Páginas:"
+msgstr "Pager"
 
 #: ../plug-ins/metadata/metadata-tags.h:333
 msgid "Male"
-msgstr ""
+msgstr "Masculino"
 
 #: ../plug-ins/metadata/metadata-tags.h:334
 msgid "Female"
-msgstr ""
+msgstr "Feminino"
 
 #: ../plug-ins/metadata/metadata-tags.h:335
-#, fuzzy
-#| msgid "_Other:"
 msgid "Other"
-msgstr "_Outros:"
+msgstr "Outro"
 
 #: ../plug-ins/metadata/metadata-tags.h:341
 msgid "Above Sea Level"
-msgstr ""
+msgstr "Acima do nível do mar"
 
 #: ../plug-ins/metadata/metadata-tags.h:341
 msgid "Below Sea Level"
-msgstr ""
+msgstr "Abaixo do nível do mar"
 
 #: ../plug-ins/metadata/metadata-tags.h:347
 msgid "North"
-msgstr ""
+msgstr "Norte"
 
 #: ../plug-ins/metadata/metadata-tags.h:347
 msgid "South"
-msgstr ""
+msgstr "Sul"
 
 #: ../plug-ins/metadata/metadata-tags.h:353
 msgid "East"
-msgstr ""
+msgstr "Leste"
 
 #: ../plug-ins/metadata/metadata-tags.h:353
 msgid "West"
-msgstr ""
+msgstr "Oeste"
 
 #: ../plug-ins/metadata/metadata-viewer.c:120
-#, fuzzy
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "View metadata (Exif, IPTC, XMP)"
-msgstr "Ver e editar metadados (EXIF, IPTC, XMP)"
+msgstr "Ver metadados (Exif, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:127
-#, fuzzy
-#| msgid "Raw image data"
 msgid "View Metadata"
-msgstr "Dados de Imagem Raw (Dados brutos)"
+msgstr "Ver metadados"
 
 #: ../plug-ins/metadata/metadata-viewer.c:220
 #, c-format
 msgid "Metadata Viewer: %s"
-msgstr ""
+msgstr "Visualizador de metadados: %s"
 
 #: ../plug-ins/metadata/metadata-viewer.c:360
 #, c-format
 msgid "(%lu more character(s))"
-msgstr ""
+msgstr "(%lu caracteres a mais(s))"
 
 #: ../plug-ins/metadata/metadata-viewer.c:392
 #, c-format
@@ -12717,10 +12456,8 @@ msgid "Delay"
 msgstr "Atraso"
 
 #: ../plug-ins/screenshot/screenshot.c:692
-#, fuzzy
-#| msgid "Se_lection only"
 msgid "Selection delay: "
-msgstr "Somente a se_leção"
+msgstr "Atraso da seleção: "
 
 #. translators: this is the unit label of a spinbutton
 #: ../plug-ins/screenshot/screenshot.c:711
@@ -12743,10 +12480,8 @@ msgid "At the end of the delay, click in a window to snap it."
 msgstr "Ao final do atraso, clique em uma janela para capturá-la."
 
 #: ../plug-ins/screenshot/screenshot.c:755
-#, fuzzy
-#| msgid "Screenshot"
 msgid "Screenshot delay: "
-msgstr "Captura de tela"
+msgstr "Atraso da captura: "
 
 #: ../plug-ins/screenshot/screenshot.c:786
 msgid "After the delay, the screenshot is taken."
@@ -12767,20 +12502,16 @@ msgid "After the delay, the active window will be captured."
 msgstr "Após o atraso, a tela é capturada."
 
 #: ../plug-ins/screenshot/screenshot.c:806
-#, fuzzy
-#| msgid "Color fill"
 msgid "Color Profile"
-msgstr "Preencher com cor"
+msgstr "Perfil de cores"
 
 #: ../plug-ins/screenshot/screenshot.c:811
 msgid "Tag image with _monitor profile"
 msgstr ""
 
 #: ../plug-ins/screenshot/screenshot.c:815
-#, fuzzy
-#| msgid "Environment image to use"
 msgid "Convert image to sR_GB"
-msgstr "Imagem de ambiente a ser usada"
+msgstr "Converter imagem para sR_GB"
 
 #: ../plug-ins/screenshot/screenshot-win32.c:299
 msgid "No data captured"
@@ -12816,10 +12547,8 @@ msgid "Selection to Path Advanced Settings"
 msgstr "Configurações avançadas de seleção para vetor"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:98
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Align Threshold:"
-msgstr "Limiar:"
+msgstr "Alinhamento do limiar: "
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:102
 msgid "If two endpoints are closer than this, they are made to be equal."
@@ -12855,10 +12584,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:139
-#, fuzzy
-#| msgid "Lower t_hreshold:"
 msgid "Corner Threshold:"
-msgstr "Limite de bai_xo:"
+msgstr "Limiar de canto:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:143
 msgid ""
@@ -12867,10 +12594,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:154
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Error Threshold:"
-msgstr "Limiar:"
+msgstr "Erro do limiar:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:158
 msgid ""
@@ -12914,10 +12639,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:214
-#, fuzzy
-#| msgid "_Filter length:"
 msgid "Filter Percent:"
-msgstr "_Comprimento do filtro:"
+msgstr "Percentual do filtro:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:218
 msgid ""
@@ -12952,10 +12675,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:269
-#, fuzzy
-#| msgid "Deviation threshold:"
 msgid "Line Reversion Threshold:"
-msgstr "Limiar de desvio:"
+msgstr "Limiar de reversão de linha:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:273
 msgid ""
@@ -12966,10 +12687,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:285
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Line Threshold:"
-msgstr "Limiar:"
+msgstr "Limiar de linha:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:289
 msgid ""
@@ -12979,7 +12698,7 @@ msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:299
 msgid "Reparametrize Improvement:"
-msgstr ""
+msgstr "Melhoria de reparametrização:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
 msgid ""
@@ -12988,10 +12707,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:313
-#, fuzzy
-#| msgid "Deviation threshold:"
 msgid "Reparametrize Threshold:"
-msgstr "Limiar de desvio:"
+msgstr "Limiar de reparametrização:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:317
 msgid ""
@@ -13003,10 +12720,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:330
-#, fuzzy
-#| msgid "Subdivide:"
 msgid "Subdivide Search:"
-msgstr "Subdividir:"
+msgstr "Procura de subdivisão:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:334
 msgid ""
@@ -13015,10 +12730,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:343
-#, fuzzy
-#| msgid "Subdivide:"
 msgid "Subdivide Surround:"
-msgstr "Subdividir:"
+msgstr "Rodeamento de subdivisão:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:347
 msgid ""
@@ -13027,10 +12740,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:357
-#, fuzzy
-#| msgid "Threshold:"
 msgid "Subdivide Threshold:"
-msgstr "Limiar:"
+msgstr "Limiar de subdivisão:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
 msgid ""
@@ -13039,10 +12750,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:371
-#, fuzzy
-#| msgid "Transparent background"
 msgid "Tangent Surround:"
-msgstr "Fundo transparente"
+msgstr "Rodeamento de tangente:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
 msgid ""
@@ -13061,7 +12770,21 @@ msgstr "_Scanner/Câmera..."
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
-msgstr "Transferindo dados do scanner ou câmera"
+msgstr "Transferindo dados do scanner ou da câmera"
+
+#~ msgid "The most widely useful method for sharpening an image"
+#~ msgstr "A forma mais usada para realçar uma imagem"
+
+#, fuzzy
+#~| msgid "_Unsharp Mask..."
+#~ msgid "_Unsharp Mask (legacy)..."
+#~ msgstr "Máscara de desag_uçar..."
+
+#~ msgid "Merging"
+#~ msgstr "Combinando"
+
+#~ msgid "Unsharp Mask"
+#~ msgstr "Máscara de desaguçar"
 
 #~ msgid "Original"
 #~ msgstr "Original"
