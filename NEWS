@@ -31,7 +31,12 @@ Tools:
     angle is always <= 45 deg.  Note that the "orientation" option
     affects the tool's "straighten" function, so that the layer is
     rotated toward the current orientation.
-
+  - Text layers can now represent vertical texts, with 4 variants:
+    left-to-right and right-to-left lines, and forcing all characters to
+    be upright or following Unicode's vertical orientation property.
+    See also:
+    * https://www.unicode.org/reports/tr50/
+    * http://www.unicode.org/Public/UCD/latest/ucd/VerticalOrientation.txt
 
 User Interface:
 
