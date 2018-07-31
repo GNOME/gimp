@@ -33,7 +33,8 @@
 #define GIMP_TEXT_LAYER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEXT_LAYER, GimpTextLayerClass))
 
 
-typedef struct _GimpTextLayerClass GimpTextLayerClass;
+typedef struct _GimpTextLayerClass   GimpTextLayerClass;
+typedef struct _GimpTextLayerPrivate GimpTextLayerPrivate;
 
 struct _GimpTextLayer
 {
@@ -48,6 +49,8 @@ struct _GimpTextLayer
   gboolean      modified;
 
   const Babl   *convert_format;
+
+  GimpTextLayerPrivate *private;
 };
 
 struct _GimpTextLayerClass
