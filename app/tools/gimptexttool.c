@@ -1609,6 +1609,15 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
                 "y2", &y2,
                 NULL);
 
+  if (text_tool->text_box_fixed == FALSE)
+    {
+      if (text_tool->text &&
+          (text_tool->text->base_dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
+           text_tool->text->base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT))
+        {
+          x1 -= gimp_item_get_width(GIMP_ITEM (layer));
+        }
+    }
   gimp_item_set_offset (GIMP_ITEM (layer), x1, y1);
 
   gimp_image_add_layer (image, layer,

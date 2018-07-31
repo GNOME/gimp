@@ -66,6 +66,10 @@ enum
   PROP_MODIFIED
 };
 
+struct _GimpTextLayerPrivate
+{
+  GimpTextDirection base_dir;
+};
 
 static void       gimp_text_layer_finalize       (GObject           *object);
 static void       gimp_text_layer_get_property   (GObject           *object,
@@ -180,6 +184,8 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
                             NULL, NULL,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+ g_type_class_add_private (klass, sizeof (GimpTextLayerPrivate));
 }
 
 static void
@@ -187,6 +193,9 @@ gimp_text_layer_init (GimpTextLayer *layer)
 {
   layer->text          = NULL;
   layer->text_parasite = NULL;
+  layer->private       = G_TYPE_INSTANCE_GET_PRIVATE (layer,
+                                                      GIMP_TYPE_TEXT_LAYER,
+                                                      GimpTextLayerPrivate);
 }
 
 static void
@@ -294,6 +303,8 @@ gimp_text_layer_duplicate (GimpItem *item,
       /*  this is just the parasite name, not a pointer to the parasite  */
       if (layer->text_parasite)
         new_layer->text_parasite = layer->text_parasite;
+
+      new_layer->private->base_dir = layer->private->base_dir;
     }
 
   return new_item;
@@ -448,6 +459,8 @@ gimp_text_layer_new (GimpImage *image,
                        FALSE);
 
   gimp_text_layer_set_text (layer, text);
+
+  layer->private->base_dir = text->base_dir;
 
   if (! gimp_text_layer_render (layer))
     {
@@ -610,7 +623,60 @@ gimp_text_layer_text_changed (GimpTextLayer *layer)
       layer->text_parasite = NULL;
     }
 
-  gimp_text_layer_render (layer);
+  if (layer->text->box_mode == GIMP_TEXT_BOX_DYNAMIC)
+    {
+      gint                old_width;
+      gint                new_width;
+      GimpItem           *item         = GIMP_ITEM (layer);
+      GimpTextDirection   old_base_dir = layer->private->base_dir;
+      GimpTextDirection   new_base_dir = layer->text->base_dir;
+
+      old_width = gimp_item_get_width(item);
+      gimp_text_layer_render (layer);
+      new_width = gimp_item_get_width(item);
+
+      if (old_base_dir != new_base_dir)
+        {
+          switch (old_base_dir)
+            {
+            case GIMP_TEXT_DIRECTION_RTL:
+            case GIMP_TEXT_DIRECTION_LTR:
+            case GIMP_TEXT_DIRECTION_TTB_LTR:
+            case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+              switch (new_base_dir)
+                {
+                case GIMP_TEXT_DIRECTION_TTB_RTL:
+                case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+                  gimp_item_translate (item, -new_width, 0, FALSE);
+                  break;
+                }
+              break;
+
+            case GIMP_TEXT_DIRECTION_TTB_RTL:
+            case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+              switch (new_base_dir)
+                {
+                case GIMP_TEXT_DIRECTION_RTL:
+                case GIMP_TEXT_DIRECTION_LTR:
+                case GIMP_TEXT_DIRECTION_TTB_LTR:
+                case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+                  gimp_item_translate (item, old_width, 0, FALSE);
+                  break;
+                }
+              break;
+            }
+        }
+      else if ((new_base_dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
+              new_base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT))
+        {
+          if (old_width != new_width)
+            gimp_item_translate (item, old_width - new_width, 0, FALSE);
+        }
+    }
+  else
+    gimp_text_layer_render (layer);
+
+  layer->private->base_dir = layer->text->base_dir;
 }
 
 static gboolean
@@ -663,26 +729,10 @@ gimp_text_layer_render (GimpTextLayer *layer)
        gimp_drawable_get_format (drawable)))
     {
       GeglBuffer *new_buffer;
-      GimpItem   *item;
-      gint        oldwidth;
-      gint        newwidth;
-
-      item = GIMP_ITEM (drawable);
-      oldwidth = gimp_item_get_width (item);
 
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                     gimp_text_layer_get_format (layer));
       gimp_drawable_set_buffer (drawable, FALSE, NULL, new_buffer);
-
-      newwidth = gimp_item_get_width(item);
-      if (layer->text->box_mode == GIMP_TEXT_BOX_DYNAMIC &&
-          oldwidth != newwidth &&
-          (layer->text->base_dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
-           layer->text->base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT))
-        {
-          gimp_item_translate (item, oldwidth - newwidth, 0, FALSE);
-        }
-
       g_object_unref (new_buffer);
 
       if (gimp_layer_get_mask (GIMP_LAYER (layer)))
