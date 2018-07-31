@@ -69,11 +69,9 @@ struct _GimpColorTransformPrivate
 {
   GimpColorProfile *src_profile;
   const Babl       *src_format;
-  const Babl       *src_space_format;
 
   GimpColorProfile *dest_profile;
   const Babl       *dest_format;
-  const Babl       *dest_space_format;
 
   cmsHTRANSFORM     transform;
   const Babl       *fish;
@@ -169,8 +167,20 @@ gimp_color_transform_finalize (GObject *object)
  *
  * This function creates an color transform.
  *
- * Return value: the #GimpColorTransform, or %NULL if no transform is needed
- *               to convert between pixels of @src_profile and @dest_profile.
+ * The color transform is determined exclusively by @src_profile and
+ * @dest_profile. The color spaces of @src_format and @dest_format are
+ * ignored, the formats are only used to decide between what pixel
+ * encodings to transform.
+ *
+ * Note: this function used to return %NULL if
+ * gimp_color_transform_can_gegl_copy() returned %TRUE for
+ * @src_profile and @dest_profile. This is no longer the case because
+ * special care has to be taken not to perform multiple implicit color
+ * transforms caused by babl formats with color spaces. Now, it always
+ * returns a non-%NULL transform and the code takes care of doing only
+ * exactly the requested color transform.
+ *
+ * Return value: the #GimpColorTransform, or %NULL if there was an error.
  *
  * Since: 2.10
  **/
@@ -195,29 +205,32 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile), NULL);
   g_return_val_if_fail (dest_format != NULL, NULL);
 
-  if (gimp_color_transform_can_gegl_copy (src_profile, dest_profile))
-    return NULL;
-
   transform = g_object_new (GIMP_TYPE_COLOR_TRANSFORM, NULL);
 
   priv = transform->priv;
 
-  priv->src_space_format = gimp_color_profile_get_format (src_profile,
-                                                          src_format,
-                                                          BABL_ICC_INTENT_RELATIVE_COLORIMETRIC,
-                                                          &error);
-  if (! priv->src_space_format)
+  /* only src_profile and dest_profile must determine the transform's
+   * color spaces, create formats with src_format's and dest_format's
+   * encoding, and the profiles' color spaces; see process_pixels()
+   * and process_buffer().
+   */
+
+  priv->src_format = gimp_color_profile_get_format (src_profile,
+                                                    src_format,
+                                                    BABL_ICC_INTENT_RELATIVE_COLORIMETRIC,
+                                                    &error);
+  if (! priv->src_format)
     {
       g_printerr ("%s: error making format: %s\n",
                   G_STRFUNC, error->message);
       g_clear_error (&error);
     }
 
-  priv->dest_space_format = gimp_color_profile_get_format (dest_profile,
-                                                           dest_format,
-                                                           rendering_intent,
-                                                           &error);
-  if (! priv->dest_space_format)
+  priv->dest_format = gimp_color_profile_get_format (dest_profile,
+                                                     dest_format,
+                                                     rendering_intent,
+                                                     &error);
+  if (! priv->dest_format)
     {
       g_printerr ("%s: error making format: %s\n",
                   G_STRFUNC, error->message);
@@ -225,12 +238,10 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
     }
 
   if (! g_getenv ("GIMP_COLOR_TRANSFORM_DISABLE_BABL") &&
-      priv->src_space_format && priv->dest_space_format)
+      priv->src_format && priv->dest_format)
     {
-      priv->src_format  = src_format;
-      priv->dest_format = dest_format;
-      priv->fish        = babl_fish (priv->src_space_format,
-                                     priv->dest_space_format);
+      priv->fish = babl_fish (priv->src_format,
+                              priv->dest_format);
 
       g_printerr ("%s: using babl for '%s' -> '%s'\n",
                   G_STRFUNC,
@@ -240,8 +251,14 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
       return transform;
     }
 
-  priv->src_space_format  = NULL;
-  priv->dest_space_format = NULL;
+  /* see above: when using lcms, don't mess with formats with color
+   * spaces, gimp_color_profile_get_lcms_format() might return the
+   * same format and it must be without space
+   */
+  src_format  = babl_format_with_space (babl_format_get_encoding (src_format),
+                                        NULL);
+  dest_format = babl_format_with_space (babl_format_get_encoding (dest_format),
+                                        NULL);
 
   priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
                                                           &lcms_src_format);
@@ -292,7 +309,10 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
  *
  * This function creates a simulation / proofing color transform.
  *
- * Return value: the #GimpColorTransform, or %NULL.
+ * See gimp_color_transform_new() about the color spaces to transform
+ * between.
+ *
+ * Return value: the #GimpColorTransform, or %NULL if there was an error.
  *
  * Since: 2.10
  **/
@@ -327,6 +347,14 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
   src_lcms   = gimp_color_profile_get_lcms_profile (src_profile);
   dest_lcms  = gimp_color_profile_get_lcms_profile (dest_profile);
   proof_lcms = gimp_color_profile_get_lcms_profile (proof_profile);
+
+  /* see gimp_color_transform_new(), we can't have color spaces
+   * on the formats
+   */
+  src_format  = babl_format_with_space (babl_format_get_encoding (src_format),
+                                        NULL);
+  dest_format = babl_format_with_space (babl_format_get_encoding (dest_format),
+                                        NULL);
 
   priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
                                                           &lcms_src_format);
@@ -375,6 +403,11 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
  *
  * This function transforms a contiguous line of pixels.
  *
+ * See gimp_color_transform_new(): only the pixel encoding of
+ * @src_format and @dest_format is honored, their color spaces are
+ * ignored. The transform always takes place between the color spaces
+ * determined by @transform's color profiles.
+ *
  * Since: 2.10
  **/
 void
@@ -396,6 +429,18 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
   g_return_if_fail (dest_pixels != NULL);
 
   priv = transform->priv;
+
+  /* we must not do any babl color transforms when reading from
+   * src_pixels or writing to dest_pixels, so construct formats with
+   * src_format's and dest_format's encoding, and the transform's
+   * input and output color spaces.
+   */
+  src_format =
+    babl_format_with_space (babl_format_get_encoding (src_format),
+                            babl_format_get_space (priv->src_format));
+  dest_format =
+    babl_format_with_space (babl_format_get_encoding (dest_format),
+                            babl_format_get_space (priv->dest_format));
 
   if (src_format != priv->src_format)
     {
@@ -453,6 +498,11 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
  *
  * This function transforms buffer into another buffer.
  *
+ * See gimp_color_transform_new(): only the pixel encoding of
+ * @src_buffer's and @dest_buffer's formats honored, their color
+ * spaces are ignored. The transform always takes place between the
+ * color spaces determined by @transform's color profiles.
+ *
  * Since: 2.10
  **/
 void
@@ -463,6 +513,8 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
                                      const GeglRectangle *dest_rect)
 {
   GimpColorTransformPrivate *priv;
+  const Babl                *src_format;
+  const Babl                *dest_format;
   GeglBufferIterator        *iter;
   gint                       total_pixels;
   gint                       done_pixels = 0;
@@ -483,8 +535,26 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
                       gegl_buffer_get_height (src_buffer));
     }
 
+  /* we must not do any babl color transforms when reading from
+   * src_buffer or writing to dest_buffer, so construct formats with
+   * src_buffers's and dest_buffers's encoding, and the transform's
+   * input and output color spaces.
+   */
+  src_format  = gegl_buffer_get_format (src_buffer);
+  dest_format = gegl_buffer_get_format (dest_buffer);
+
+  src_format =
+    babl_format_with_space (babl_format_get_encoding (src_format),
+                            babl_format_get_space (priv->src_format));
+  dest_format =
+    babl_format_with_space (babl_format_get_encoding (dest_format),
+                            babl_format_get_space (priv->dest_format));
+
   if (src_buffer != dest_buffer)
     {
+      gegl_buffer_set_format (src_buffer,  src_format);
+      gegl_buffer_set_format (dest_buffer, dest_format);
+
       iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
                                        priv->src_format,
                                        GEGL_ACCESS_READ,
@@ -514,9 +584,14 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
                          (gdouble) done_pixels /
                          (gdouble) total_pixels);
         }
+
+      gegl_buffer_set_format (src_buffer,  NULL);
+      gegl_buffer_set_format (dest_buffer, NULL);
     }
   else
     {
+      gegl_buffer_set_format (src_buffer, src_format);
+
       iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
                                        priv->src_format,
                                        GEGL_ACCESS_READWRITE,
@@ -541,6 +616,8 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
                          (gdouble) done_pixels /
                          (gdouble) total_pixels);
         }
+
+      gegl_buffer_set_format (src_buffer, NULL);
     }
 
   g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
