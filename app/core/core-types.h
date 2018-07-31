@@ -162,7 +162,7 @@ typedef struct _GimpLayer                       GimpLayer;
 typedef struct _GimpGroupLayer                  GimpGroupLayer;
 
 
-/*  auxillary image items  */
+/*  auxiliary image items  */
 
 typedef struct _GimpGuide                       GimpGuide;
 typedef struct _GimpSamplePoint                 GimpSamplePoint;

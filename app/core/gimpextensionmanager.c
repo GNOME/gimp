@@ -536,7 +536,7 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
       /* Unlike user-installed extensions, system extensions are loaded
        * by default if they were not set in the extensionrc (so that new
        * extensions installed with GIMP updates get loaded) and if they
-       * were not overrided by a user-installed extension (same ID).
+       * were not overridden by a user-installed extension (same ID).
        */
       if (! g_list_find_custom (processed_ids,
                                 gimp_object_get_name (list->data),
@@ -634,7 +634,7 @@ gboolean
 gimp_extension_manager_can_run (GimpExtensionManager *manager,
                                 GimpExtension        *extension)
 {
-  /* System extension overrided by another extension. */
+  /* System extension overridden by another extension. */
   if (g_list_find (manager->p->sys_extensions, extension) &&
       g_list_find_custom (manager->p->extensions, extension,
                           (GCompareFunc) gimp_extension_cmp))
