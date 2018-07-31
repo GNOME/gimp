@@ -10,17 +10,17 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007, 2008, 2009, 2011.
 #
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2015, 2016, 2018.
 # Rodrigo <rodhos92@gmail.com>, 2018.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2015, 2016, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-24 11:54+0000\n"
-"PO-Revision-Date: 2018-07-25 14:25+0200\n"
-"Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2018-07-30 23:15+0000\n"
+"PO-Revision-Date: 2018-07-31 12:02+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1166,15 +1166,11 @@ msgid "8-bit linear integer"
 msgstr "Entero lineal de 8 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1476
-#| msgctxt "precision"
-#| msgid "8-bit linear integer"
 msgctxt "precision"
 msgid "8-bit non-linear integer"
 msgstr "Entero no lineal de 8 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1477
-#| msgctxt "precision"
-#| msgid "8-bit linear integer"
 msgctxt "precision"
 msgid "8-bit perceptual integer"
 msgstr "Entero perceptual de 8 bits"
@@ -1185,15 +1181,11 @@ msgid "16-bit linear integer"
 msgstr "Entero lineal de 16 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1479
-#| msgctxt "precision"
-#| msgid "16-bit linear integer"
 msgctxt "precision"
 msgid "16-bit non-linear integer"
 msgstr "Entero no lineal de 16 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1480
-#| msgctxt "precision"
-#| msgid "16-bit linear integer"
 msgctxt "precision"
 msgid "16-bit perceptual integer"
 msgstr "Entero perceptual de 16 bits"
@@ -1204,15 +1196,11 @@ msgid "32-bit linear integer"
 msgstr "Entero lineal de 32 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1482
-#| msgctxt "precision"
-#| msgid "32-bit linear integer"
 msgctxt "precision"
 msgid "32-bit non-linear integer"
 msgstr "Entero no lineal de 32 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1483
-#| msgctxt "precision"
-#| msgid "32-bit linear integer"
 msgctxt "precision"
 msgid "32-bit perceptual integer"
 msgstr "Entero perceptual de 32 bits"
@@ -1223,15 +1211,11 @@ msgid "16-bit linear floating point"
 msgstr "Coma flotante lineal de 16 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1485
-#| msgctxt "precision"
-#| msgid "16-bit linear floating point"
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
 msgstr "Coma flotante no lineal de 16 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1486
-#| msgctxt "precision"
-#| msgid "16-bit linear floating point"
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
 msgstr "Coma flotante perceptual de 16 bits"
@@ -1242,15 +1226,11 @@ msgid "32-bit linear floating point"
 msgstr "Coma flotante lineal de 32 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1488
-#| msgctxt "precision"
-#| msgid "32-bit linear floating point"
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
 msgstr "Coma flotante no lineal de 32 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1489
-#| msgctxt "precision"
-#| msgid "32-bit linear floating point"
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
 msgstr "Coma flotante perceptual de 32 bits"
@@ -1261,15 +1241,11 @@ msgid "64-bit linear floating point"
 msgstr "Coma flotante lineal de 64 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1491
-#| msgctxt "precision"
-#| msgid "64-bit linear floating point"
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
 msgstr "Coma flotante no lineal de 64 bits"
 
 #: ../libgimpbase/gimpbaseenums.c:1492
-#| msgctxt "precision"
-#| msgid "64-bit linear floating point"
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "Coma flotante perceptual de 64 bits"
@@ -1385,97 +1361,123 @@ msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Trazar con una herramienta de pintura"
 
-#: ../libgimpbase/gimpbaseenums.c:1803
+#: ../libgimpbase/gimpbaseenums.c:1807
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "De izquierda a derecha"
 
-#: ../libgimpbase/gimpbaseenums.c:1804
+#: ../libgimpbase/gimpbaseenums.c:1808
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "De derecha a izquierda"
 
-#: ../libgimpbase/gimpbaseenums.c:1835
+#: ../libgimpbase/gimpbaseenums.c:1809
+msgctxt "text-direction"
+msgid "Characters are from top to bottom, Lines are from right to left"
+msgstr ""
+"Los caracteres están de arriba a abajo, las líneas de derecha a izquierda"
+
+#: ../libgimpbase/gimpbaseenums.c:1810
+msgctxt "text-direction"
+msgid "Upright characters are from top to bottom, Lines are from right to left"
+msgstr ""
+"Los caracteres verticales están de arriba a abajo, las líneas de derecha a "
+"izquierda"
+
+#: ../libgimpbase/gimpbaseenums.c:1811
+msgctxt "text-direction"
+msgid "Characters are from top to bottom, Lines are from left to right"
+msgstr ""
+"Los caracteres están de arriba a abajo, las líneas de izquierda a derecha"
+
+#: ../libgimpbase/gimpbaseenums.c:1812
+msgctxt "text-direction"
+msgid "Upright characters are from top to bottom, Lines are from left to right"
+msgstr ""
+"Los caracteres verticales están de arriba a abajo, las líneas de izquierda a "
+"derecha"
+
+#: ../libgimpbase/gimpbaseenums.c:1843
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Ninguno"
 
-#: ../libgimpbase/gimpbaseenums.c:1836
+#: ../libgimpbase/gimpbaseenums.c:1844
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Ligero"
 
-#: ../libgimpbase/gimpbaseenums.c:1837
+#: ../libgimpbase/gimpbaseenums.c:1845
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Medio"
 
-#: ../libgimpbase/gimpbaseenums.c:1838
+#: ../libgimpbase/gimpbaseenums.c:1846
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Completo"
 
-#: ../libgimpbase/gimpbaseenums.c:1869
+#: ../libgimpbase/gimpbaseenums.c:1877
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Justificado por la izquierda"
 
-#: ../libgimpbase/gimpbaseenums.c:1870
+#: ../libgimpbase/gimpbaseenums.c:1878
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Justificado por la derecha"
 
-#: ../libgimpbase/gimpbaseenums.c:1871
+#: ../libgimpbase/gimpbaseenums.c:1879
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Centrado"
 
-#: ../libgimpbase/gimpbaseenums.c:1872
+#: ../libgimpbase/gimpbaseenums.c:1880
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Relleno"
 
-#: ../libgimpbase/gimpbaseenums.c:1902
+#: ../libgimpbase/gimpbaseenums.c:1910
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Sombras"
 
-#: ../libgimpbase/gimpbaseenums.c:1903
+#: ../libgimpbase/gimpbaseenums.c:1911
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Tonos medios"
 
-#: ../libgimpbase/gimpbaseenums.c:1904
+#: ../libgimpbase/gimpbaseenums.c:1912
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Puntos de luz"
 
-#: ../libgimpbase/gimpbaseenums.c:1933
+#: ../libgimpbase/gimpbaseenums.c:1941
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (hacia adelante)"
 
-#: ../libgimpbase/gimpbaseenums.c:1934
+#: ../libgimpbase/gimpbaseenums.c:1942
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Correctivo (hacia atrás)"
 
-#: ../libgimpbase/gimpbaseenums.c:1965
+#: ../libgimpbase/gimpbaseenums.c:1973
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ajustar"
 
-#: ../libgimpbase/gimpbaseenums.c:1966
+#: ../libgimpbase/gimpbaseenums.c:1974
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Recortar"
 
-#: ../libgimpbase/gimpbaseenums.c:1967
+#: ../libgimpbase/gimpbaseenums.c:1975
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Recortar al resultado"
 
-#: ../libgimpbase/gimpbaseenums.c:1968
+#: ../libgimpbase/gimpbaseenums.c:1976
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Recortar con aspecto"
@@ -2805,7 +2807,6 @@ msgstr ""
 
 # Alternativa: la pretransformada cambia en las paradas
 #: ../modules/display-filter-aces-rrt.c:121
-#| msgid "pre-transform change in stops"
 msgid "Pre-transform change in stops"
 msgstr "Cambio de pretransformación en paradas"
 
