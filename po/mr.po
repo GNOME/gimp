@@ -3,22 +3,22 @@
 # This file is distributed under the same license as the GIMP package.
 # Snehalata B Shirude <snehalata.shirude@gmail.com>, 2018.
 # Manish R Joshi <joshmanish@gmail.com>, 2018.
-# Project Developed by School of Computer Sciences, North Maharashtra University, Jalgaon MS, India, 
+# Project Developed by School of Computer Sciences, North Maharashtra University, Jalgaon MS, India,
 # And Rajya Marathi Vikas Sanstha Mumbai, MS, India
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-07-06 18:52+0000\n"
-"PO-Revision-Date: 2018-07-07 14:57+0000\n"
+"PO-Revision-Date: 2018-08-01 15:05+0200\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
 "Language: mr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -379,7 +379,7 @@ msgstr "प्रतिमा संपादक"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../desktop/gimp.desktop.in.in.h:5
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr "गिम्पसाठी;ग्राफिक्स;रचना;उदाहरण;चित्रकला"
+msgstr "गिम्पसाठी;ग्राफिक्स;रचना;उदाहरण;चित्रकला;"
 
 #: ../app/about.h:23
 msgid "GIMP"
