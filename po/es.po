@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-22 18:04+0000\n"
-"PO-Revision-Date: 2018-07-23 14:03+0200\n"
+"POT-Creation-Date: 2018-07-29 18:02+0000\n"
+"PO-Revision-Date: 2018-07-30 13:04+0200\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -3546,7 +3546,7 @@ msgstr "Vaciar el histórico del documento"
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:512 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:447
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:488
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
 msgid "_Cancel"
@@ -10009,7 +10009,7 @@ msgstr "Mover esta ventana a la pantalla %s"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
 #: ../app/tools/gimpfiltertool.c:324 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
-#: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:188
+#: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
 msgstr "_Aceptar"
 
@@ -11327,50 +11327,36 @@ msgstr "Emplumado"
 
 # Debe ir en minúsculas por las reglas de estilo
 #: ../app/core/core-enums.c:149
-#| msgctxt "color-frame-mode"
-#| msgid "Pixel"
 msgctxt "color-pick-mode"
 msgid "Pixel"
 msgstr "Píxel"
 
 #: ../app/core/core-enums.c:150
-#| msgctxt "color-frame-mode"
-#| msgid "RGB (%)"
 msgctxt "color-pick-mode"
 msgid "RGB (%)"
 msgstr "RGB (%)"
 
 #: ../app/core/core-enums.c:151
-#| msgctxt "color-frame-mode"
-#| msgid "RGB (0..255)"
 msgctxt "color-pick-mode"
 msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
 #: ../app/core/core-enums.c:152
-#| msgctxt "circle-background"
-#| msgid "HSV"
 msgctxt "color-pick-mode"
 msgid "HSV"
 msgstr "HSV"
 
 #: ../app/core/core-enums.c:153
-#| msgctxt "color-frame-mode"
-#| msgid "CIE LCh"
 msgctxt "color-pick-mode"
 msgid "CIE LCh"
 msgstr "CIE LCh"
 
 #: ../app/core/core-enums.c:154
-#| msgctxt "color-frame-mode"
-#| msgid "CIE LAB"
 msgctxt "color-pick-mode"
 msgid "CIE LAB"
 msgstr "CIE LAB"
 
 #: ../app/core/core-enums.c:155
-#| msgctxt "color-frame-mode"
-#| msgid "CMYK"
 msgctxt "color-pick-mode"
 msgid "CMYK"
 msgstr "CMYK"
@@ -13588,8 +13574,6 @@ msgid "Move Sample Point"
 msgstr "Mover punto de muestra"
 
 #: ../app/core/gimpimage-sample-points.c:146
-#| msgctxt "sample-points-action"
-#| msgid "Sample Point Menu"
 msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
 msgstr "Establecer el modo de selección del punto de muestra"
@@ -17101,19 +17085,16 @@ msgid "Lock path _position"
 msgstr "Bloquear _posición de la ruta"
 
 #: ../app/display/display-enums.c:88
-#| msgid "Auto"
 msgctxt "compass-orientation"
 msgid "Auto"
 msgstr "Auto"
 
 #: ../app/display/display-enums.c:89
-#| msgid "Horizontal"
 msgctxt "compass-orientation"
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: ../app/display/display-enums.c:90
-#| msgid "Vertical"
 msgctxt "compass-orientation"
 msgid "Vertical"
 msgstr "Vertical"
@@ -20042,8 +20023,6 @@ msgid "Threshold Alpha"
 msgstr "Umbral alfa"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4018
-#| msgctxt "filters-action"
-#| msgid "Sharpen (_Unsharp Mask)..."
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "Afilar (desafilar máscara)"
@@ -20615,11 +20594,11 @@ msgstr "Elija de una lista de temperaturas de color comunes"
 msgid "New Seed"
 msgstr "Semilla nueva"
 
-#: ../app/propgui/gimppropgui.c:376
+#: ../app/propgui/gimppropgui.c:379
 msgid "Pick color from the image"
 msgstr "Recoger color de la imagen"
 
-#: ../app/propgui/gimppropgui.c:520
+#: ../app/propgui/gimppropgui.c:523
 msgid "This operation has no editable properties"
 msgstr "Esta operación no tiene propiedades editables"
 
@@ -21090,12 +21069,10 @@ msgid "Color Picker Average Radius"
 msgstr "Radio promedio del recoge-color"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
-#| msgid "Pick a path"
 msgid "Pick Target"
 msgstr "Escoger un objetivo"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
-#| msgid "Choose what color picker will do"
 msgid "Choose what the color picker will do"
 msgstr "Elegir qué color hará el recoge-color"
 
@@ -21114,7 +21091,6 @@ msgstr ""
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:195
 #, c-format
-#| msgid "Pick Mode  (%s)"
 msgid "Pick Target  (%s)"
 msgstr "Seleccionar objetivo  (%s)"
 
@@ -22204,7 +22180,6 @@ msgid "_Zoom"
 msgstr "_Ampliación"
 
 #: ../app/tools/gimpmeasureoptions.c:71
-#| msgid "Indentation"
 msgid "Orientation"
 msgstr "Orientación"
 
@@ -22219,7 +22194,6 @@ msgstr "Abrir un diálogo flotante para ver detalles acerca de las medidas"
 #. the orientation frame
 #: ../app/tools/gimpmeasureoptions.c:148
 #, c-format
-#| msgid "Direction  (%s)"
 msgid "Orientation  (%s)"
 msgstr "Orientación  (%s)"
 
@@ -24872,28 +24846,25 @@ msgstr "Por extensión"
 msgid "All export images"
 msgstr "Todas las imágenes exportadas"
 
-#: ../app/widgets/gimpfiledialog.c:350
+#: ../app/widgets/gimpfiledialog.c:353
 msgid "_Help"
 msgstr "A_yuda"
 
-#: ../app/widgets/gimpfiledialog.c:756
-msgid "All files"
-msgstr "Todos los archivos"
+#: ../app/widgets/gimpfiledialog.c:783
+#| msgid "All files"
+msgid "Show All Files"
+msgstr "Mostrar todos los archivos"
 
-#: ../app/widgets/gimpfiledialog.c:761
-msgid "All images"
-msgstr "Todas las imágenes"
-
-#: ../app/widgets/gimpfiledialog.c:959
+#: ../app/widgets/gimpfiledialog.c:816
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleccione el _tipo de archivo (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:184
+#: ../app/widgets/gimpfileprocview.c:199
 msgid "File Type"
 msgstr "Tipo de archivo"
 
-#: ../app/widgets/gimpfileprocview.c:196
+#: ../app/widgets/gimpfileprocview.c:211
 msgid "Extensions"
 msgstr "Extensiones"
 
@@ -25840,29 +25811,21 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../app/widgets/widgets-enums.c:114
-#| msgctxt "color-pick-mode"
-#| msgid "Pick only"
 msgctxt "color-pick-target"
 msgid "Pick only"
 msgstr "Sólo seleccionar"
 
 #: ../app/widgets/widgets-enums.c:115
-#| msgctxt "color-pick-mode"
-#| msgid "Set foreground color"
 msgctxt "color-pick-target"
 msgid "Set foreground color"
 msgstr "Definir el color de frente"
 
 #: ../app/widgets/widgets-enums.c:116
-#| msgctxt "color-pick-mode"
-#| msgid "Set background color"
 msgctxt "color-pick-target"
 msgid "Set background color"
 msgstr "Definir el color de fondo"
 
 #: ../app/widgets/widgets-enums.c:117
-#| msgctxt "color-pick-mode"
-#| msgid "Add to palette"
 msgctxt "color-pick-target"
 msgid "Add to palette"
 msgstr "Añadir a la paleta"
@@ -26051,6 +26014,9 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgid "All images"
+#~ msgstr "Todas las imágenes"
 
 #~ msgid "Pick Mode"
 #~ msgstr "Modo de selección"
