@@ -176,6 +176,8 @@ text_tool_actions_update (GimpActionGroup *group,
   gboolean          clip       = FALSE;   /* clipboard has text available */
   gboolean          input_method_menu;
   gboolean          unicode_menu;
+  GimpTextDirection direction;
+  gint              i;
 
   layer = gimp_image_get_active_layer (image);
 
@@ -212,6 +214,16 @@ text_tool_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("text-tool-load",            image);
   SET_SENSITIVE ("text-tool-text-to-path",    text_layer);
   SET_SENSITIVE ("text-tool-text-along-path", text_layer && vectors);
+
+  direction = gimp_text_tool_get_direction (text_tool);
+  for (i = 0; i < G_N_ELEMENTS (text_tool_direction_actions); i++)
+    {
+      if (direction == text_tool_direction_actions[i].value)
+        {
+          SET_ACTIVE (text_tool_direction_actions[i].name, TRUE);
+          break;
+        }
+    }
 
   SET_VISIBLE ("text-tool-input-methods-menu", input_method_menu);
 }
