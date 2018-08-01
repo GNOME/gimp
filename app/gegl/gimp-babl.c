@@ -290,7 +290,8 @@ gimp_babl_init_fishes (GimpInitStatusFunc status_callback)
     { "RaGaBaA float",  "R'G'B'A float" },
     { "RaGaBaA float",  "RGBA float"    },
     { "RGBA float",     "RaGaBaA float" },
-    { "R'G'B' u8",      "RaGaBaA float" }
+    { "R'G'B' u8",      "RaGaBaA float" },
+    { "cairo-ARGB32",   "R'G'B'A u8"    }
   };
 
   gint i;
