@@ -992,8 +992,14 @@ gimp_layer_convert (GimpItem  *item,
   if (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
       gimp_image_get_is_color_managed (dest_image))
     {
+      GimpColorProfile *src_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (item));
+
       dest_profile =
         gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
+
+      if (gimp_color_profile_is_equal (dest_profile, src_profile))
+        dest_profile = NULL;
     }
 
   if (old_base_type != new_base_type ||
