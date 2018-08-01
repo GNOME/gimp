@@ -524,7 +524,9 @@ static void
 gimp_image_duplicate_color_profile (GimpImage *image,
                                     GimpImage *new_image)
 {
-  GimpColorProfile *profile = gimp_image_get_color_profile (image);
+  GimpColorProfile *profile          = gimp_image_get_color_profile (image);
+  gboolean          is_color_managed = gimp_image_get_is_color_managed (image);
 
-  gimp_image_set_color_profile (new_image, profile, NULL);
+  gimp_image_set_color_profile    (new_image, profile, NULL);
+  gimp_image_set_is_color_managed (new_image, is_color_managed, FALSE);
 }
