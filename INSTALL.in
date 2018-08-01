@@ -1,6 +1,6 @@
---------------------------------------
+---------------------------------------
 Installation instructions for GIMP @GIMP_APP_VERSION@
---------------------------------------
+---------------------------------------
 
 There are some basic steps to building and installing GIMP.
 
@@ -35,7 +35,7 @@ header files installed.
   2. You need intltool (at least @INTLTOOL_REQUIRED_VERSION@, but preferably a newer version).
      Intltool can be downloaded from
      https://ftp.gnome.org/pub/gnome/sources/intltool/
-     You are recommended to install gettext version @XGETTEXT_RECOMMENDED_VERSION@ or over. Earlier gettext had
+     You also need gettext version @XGETTEXT_REQUIRED_VERSION@ or over. Earlier gettext had
      issues with script-fu localization, ending up in incomplete GIMP localization.
 
   3. You need to have GEGL version @GEGL_REQUIRED_VERSION@ or newer and babl version
