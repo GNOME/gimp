@@ -85,7 +85,7 @@ m4_define([libheif_required_version], [1.1.0])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
-m4_define([xgettext_recommended_version], [0.19])
+m4_define([xgettext_required_version], [0.19])
 
 AC_INIT([GIMP], [gimp_version],
         [https://gitlab.gnome.org/GNOME/gimp/issues/new],
@@ -175,7 +175,7 @@ PERL_REQUIRED_VERSION=perl_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
 LIBHEIF_REQUIRED_VERSION=libheif_required_version
-XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
+XGETTEXT_REQUIRED_VERSION=xgettext_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
@@ -206,7 +206,7 @@ AC_SUBST(PERL_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
 AC_SUBST(LIBHEIF_REQUIRED_VERSION)
-AC_SUBST(XGETTEXT_RECOMMENDED_VERSION)
+AC_SUBST(XGETTEXT_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -608,6 +608,20 @@ if test "$nl_ok" = "yes"; then
 	    [Define to 1 if _NL_MEASUREMENT_MEASUREMENT is available])
 fi
 
+# Macro to keep track of failed dependencies.
+
+required_deps=''
+
+# To add a required dependency error, call: add_deps_error([dependency]).
+# If details about the dependency are needed:
+# add_deps_error([dependency], [first line, second line])
+m4_define([add_deps_error], [
+  AC_MSG_NOTICE([Eeeeeeeeeeeeeeeeeeeeek! Missing dep: $1])
+  required_deps="$required_deps
+  - Error: missing dependency $1"
+  m4_foreach([more], [$2], [
+  required_deps="$required_deps
+      *** more"])])
 
 ######################
 # Internationalisation
@@ -617,35 +631,30 @@ IT_PROG_INTLTOOL(intltool_required_version)
 AM_GLIB_GNU_GETTEXT
 
 # Testing xgettext version since we had some problem with localizing script-fu. See bug 720052.
-AC_MSG_CHECKING([for recommended xgettext version (>= xgettext_recommended_version)])
-XGETTEXT_RECOMMENDED_VERSION_MAJOR=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 1; }'`
-XGETTEXT_RECOMMENDED_VERSION_MINOR_1=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 2; }'`
+AC_MSG_CHECKING([for xgettext version (>= xgettext_required_version)])
+XGETTEXT_REQUIRED_VERSION_MAJOR=`echo $XGETTEXT_REQUIRED_VERSION | awk -F. '{ print $ 1; }'`
+XGETTEXT_REQUIRED_VERSION_MINOR_1=`echo $XGETTEXT_REQUIRED_VERSION | awk -F. '{ print $ 2; }'`
 
 XGETTEXT_APPLIED_VERSION=`$XGETTEXT --version | head -1 | cut -d" " -f4`
 XGETTEXT_APPLIED_VERSION_MAJOR=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 1; }'`
 XGETTEXT_APPLIED_VERSION_MINOR_1=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 2; }'`
 
-have_recommended_xgettext="no"
+have_required_xgettext="no"
 if test -n "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-    if test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-        have_recommended_xgettext="yes"
-    elif test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+    if test "$XGETTEXT_REQUIRED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+        have_required_xgettext="yes"
+    elif test "$XGETTEXT_REQUIRED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
         if test -n "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
-            if test "$XGETTEXT_RECOMMENDED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
-                have_recommended_xgettext="yes"
+            if test "$XGETTEXT_REQUIRED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
+                have_required_xgettext="yes"
             fi
         fi
     fi
 fi
-AC_MSG_RESULT($have_recommended_xgettext)
+AC_MSG_RESULT($have_required_xgettext)
 
-if test "x$have_recommended_xgettext" = "xno"; then
-    have_recommended_xgettext="
-WARNING: Your gettext version is $XGETTEXT_APPLIED_VERSION.
-         The recommended gettext version is $XGETTEXT_RECOMMENDED_VERSION or over.
-         If you continue without updating gettext, your build will have partially broken localization."
-else
-    have_recommended_xgettext=""
+if test "x$have_required_xgettext" = "xno"; then
+    add_deps_error([xgettext], [xgettext >= xgettext_required_version])
 fi
 
 ###########
@@ -670,19 +679,6 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 ###############################
 # Checks for required libraries
 ###############################
-
-required_deps=''
-
-# To add a required dependency error, call: add_deps_error([dependency]).
-# If details about the dependency are needed:
-# add_deps_error([dependency], [first line, second line])
-m4_define([add_deps_error], [
-  AC_MSG_NOTICE([Eeeeeeeeeeeeeeeeeeeeek! Missing dep: $1])
-  required_deps="$required_deps
-  - Error: missing dependency $1"
-  m4_foreach([more], [$2], [
-  required_deps="$required_deps
-      *** more"])])
 
 PKG_CHECK_MODULES(BABL, [babl >= babl_required_version],,
                   [add_deps_error([babl >= babl_required_version])])
@@ -2895,7 +2891,7 @@ Tests:
   Test desktop file        $have_desktop_file_validate
 
 Bug report URL: $with_bug_report_url
-$override_bug_report_url$have_recommended_xgettext$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
+$override_bug_report_url$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
