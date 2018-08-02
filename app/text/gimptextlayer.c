@@ -631,9 +631,9 @@ gimp_text_layer_text_changed (GimpTextLayer *layer)
       GimpTextDirection   old_base_dir = layer->private->base_dir;
       GimpTextDirection   new_base_dir = layer->text->base_dir;
 
-      old_width = gimp_item_get_width(item);
+      old_width = gimp_item_get_width (item);
       gimp_text_layer_render (layer);
-      new_width = gimp_item_get_width(item);
+      new_width = gimp_item_get_width (item);
 
       if (old_base_dir != new_base_dir)
         {

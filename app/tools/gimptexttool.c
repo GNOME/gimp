@@ -1615,7 +1615,7 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
           (text_tool->text->base_dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
            text_tool->text->base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT))
         {
-          x1 -= gimp_item_get_width(GIMP_ITEM (layer));
+          x1 -= gimp_item_get_width (GIMP_ITEM (layer));
         }
     }
   gimp_item_set_offset (GIMP_ITEM (layer), x1, y1);
