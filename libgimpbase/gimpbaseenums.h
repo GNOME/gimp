@@ -1353,12 +1353,12 @@ GType gimp_text_direction_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_DIRECTION_LTR,              /*< desc="From left to right" >*/
-  GIMP_TEXT_DIRECTION_RTL,              /*< desc="From right to left" >*/
-  GIMP_TEXT_DIRECTION_TTB_RTL,          /*< desc="Characters are from top to bottom, Lines are from right to left" >*/
-  GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,  /*< desc="Upright characters are from top to bottom, Lines are from right to left" >*/
-  GIMP_TEXT_DIRECTION_TTB_LTR,          /*< desc="Characters are from top to bottom, Lines are from left to right" >*/
-  GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT   /*< desc="Upright characters are from top to bottom, Lines are from left to right" >*/
+  GIMP_TEXT_DIRECTION_LTR,              /*< desc="From left to right"                                     >*/
+  GIMP_TEXT_DIRECTION_RTL,              /*< desc="From right to left"                                     >*/
+  GIMP_TEXT_DIRECTION_TTB_RTL,          /*< desc="Vertical lines from right to left (mixed orientation)"  >*/
+  GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,  /*< desc="Vertical lines from right to left (upright characters)" >*/
+  GIMP_TEXT_DIRECTION_TTB_LTR,          /*< desc="Vertical lines from left to right (mixed orientation)"  >*/
+  GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT   /*< desc="Vertical lines from left to right (upright characters)" >*/
 } GimpTextDirection;
 
 
