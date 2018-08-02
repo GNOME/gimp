@@ -284,7 +284,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
           priv->transform = NULL;
         }
 
-      g_printerr ("%s\n", lcms_last_error);
+      g_printerr ("%s: %s\n", G_STRFUNC, lcms_last_error);
     }
 
   if (! priv->transform)
@@ -380,7 +380,7 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
           priv->transform = NULL;
         }
 
-      g_printerr ("%s\n", lcms_last_error);
+      g_printerr ("%s: %s\n", G_STRFUNC, lcms_last_error);
     }
 
   if (! priv->transform)
@@ -537,31 +537,28 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
   /* we must not do any babl color transforms when reading from
    * src_buffer or writing to dest_buffer, so construct formats with
-   * src_buffers's and dest_buffers's encoding, and the transform's
-   * input and output color spaces.
+   * the transform's expected input and output encoding and
+   * src_buffer's and dest_buffers's color spaces.
    */
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
 
   src_format =
-    babl_format_with_space (babl_format_get_encoding (src_format),
-                            babl_format_get_space (priv->src_format));
+    babl_format_with_space (babl_format_get_encoding (priv->src_format),
+                            babl_format_get_space (src_format));
   dest_format =
-    babl_format_with_space (babl_format_get_encoding (dest_format),
-                            babl_format_get_space (priv->dest_format));
+    babl_format_with_space (babl_format_get_encoding (priv->dest_format),
+                            babl_format_get_space (dest_format));
 
   if (src_buffer != dest_buffer)
     {
-      gegl_buffer_set_format (src_buffer,  src_format);
-      gegl_buffer_set_format (dest_buffer, dest_format);
-
       iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
-                                       priv->src_format,
+                                       src_format,
                                        GEGL_ACCESS_READ,
                                        GEGL_ABYSS_NONE);
 
       gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                                priv->dest_format,
+                                dest_format,
                                 GEGL_ACCESS_WRITE,
                                 GEGL_ABYSS_NONE);
 
@@ -584,16 +581,11 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
                          (gdouble) done_pixels /
                          (gdouble) total_pixels);
         }
-
-      gegl_buffer_set_format (src_buffer,  NULL);
-      gegl_buffer_set_format (dest_buffer, NULL);
     }
   else
     {
-      gegl_buffer_set_format (src_buffer, src_format);
-
       iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
-                                       priv->src_format,
+                                       src_format,
                                        GEGL_ACCESS_READWRITE,
                                        GEGL_ABYSS_NONE);
 
@@ -616,8 +608,6 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
                          (gdouble) done_pixels /
                          (gdouble) total_pixels);
         }
-
-      gegl_buffer_set_format (src_buffer, NULL);
     }
 
   g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
