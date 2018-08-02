@@ -1782,10 +1782,10 @@ gimp_text_direction_get_type (void)
   {
     { GIMP_TEXT_DIRECTION_LTR, NC_("text-direction", "From left to right"), NULL },
     { GIMP_TEXT_DIRECTION_RTL, NC_("text-direction", "From right to left"), NULL },
-    { GIMP_TEXT_DIRECTION_TTB_RTL, NC_("text-direction", "Vertical lines from right to left (mixed orientation)"), NULL },
-    { GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT, NC_("text-direction", "Vertical lines from right to left (upright characters)"), NULL },
-    { GIMP_TEXT_DIRECTION_TTB_LTR, NC_("text-direction", "Vertical lines from left to right (mixed orientation)"), NULL },
-    { GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT, NC_("text-direction", "Vertical lines from left to right (upright characters)"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_RTL, NC_("text-direction", "Vertical, right to left (mixed orientation)"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT, NC_("text-direction", "Vertical, right to left (upright orientation)"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_LTR, NC_("text-direction", "Vertical, left to right (mixed orientation)"), NULL },
+    { GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT, NC_("text-direction", "Vertical, left to right (upright orientation)"), NULL },
     { 0, NULL, NULL }
   };
 

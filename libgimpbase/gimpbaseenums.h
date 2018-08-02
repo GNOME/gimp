@@ -1355,10 +1355,10 @@ typedef enum
 {
   GIMP_TEXT_DIRECTION_LTR,              /*< desc="From left to right"                                     >*/
   GIMP_TEXT_DIRECTION_RTL,              /*< desc="From right to left"                                     >*/
-  GIMP_TEXT_DIRECTION_TTB_RTL,          /*< desc="Vertical lines from right to left (mixed orientation)"  >*/
-  GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,  /*< desc="Vertical lines from right to left (upright characters)" >*/
-  GIMP_TEXT_DIRECTION_TTB_LTR,          /*< desc="Vertical lines from left to right (mixed orientation)"  >*/
-  GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT   /*< desc="Vertical lines from left to right (upright characters)" >*/
+  GIMP_TEXT_DIRECTION_TTB_RTL,          /*< desc="Vertical, right to left (mixed orientation)"  >*/
+  GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,  /*< desc="Vertical, right to left (upright orientation)" >*/
+  GIMP_TEXT_DIRECTION_TTB_LTR,          /*< desc="Vertical, left to right (mixed orientation)"  >*/
+  GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT   /*< desc="Vertical, left to right (upright orientation)" >*/
 } GimpTextDirection;
 
 
