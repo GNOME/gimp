@@ -113,22 +113,22 @@ static const GimpRadioActionEntry text_tool_direction_actions[] =
     NULL },
 
   { "text-tool-direction-ttb-rtl", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL,
-    NC_("text-tool-action", "Vertical lines from right to left (mixed orientation)"), NULL, NULL,
+    NC_("text-tool-action", "Vertical, right to left (mixed orientation)"), NULL, NULL,
     GIMP_TEXT_DIRECTION_TTB_RTL,
     NULL },
 
   { "text-tool-direction-ttb-rtl-upright", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_RTL_UPRIGHT,
-    NC_("text-tool-action", "Vertical lines from right to left (upright characters)"), NULL, NULL,
+    NC_("text-tool-action", "Vertical, right to left (upright orientation)"), NULL, NULL,
     GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT,
     NULL },
 
   { "text-tool-direction-ttb-ltr", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR,
-    NC_("text-tool-action", "Vertical lines from left to right (mixed orientation)"), NULL, NULL,
+    NC_("text-tool-action", "Vertical, left to right (mixed orientation)"), NULL, NULL,
     GIMP_TEXT_DIRECTION_TTB_LTR,
     NULL },
 
   { "text-tool-direction-ttb-ltr-upright", GIMP_ICON_FORMAT_TEXT_DIRECTION_TTB_LTR_UPRIGHT,
-    NC_("text-tool-action", "Vertical lines from left to right (upright characters)"), NULL, NULL,
+    NC_("text-tool-action", "Vertical, left to right (upright orientation)"), NULL, NULL,
     GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT,
     NULL }
 };
