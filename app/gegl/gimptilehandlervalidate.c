@@ -207,8 +207,11 @@ gimp_tile_handler_validate_validate (GeglTileSource *source,
   GimpTileHandlerValidate *validate = GIMP_TILE_HANDLER_VALIDATE (source);
   cairo_rectangle_int_t    tile_rect;
 
-  if (cairo_region_is_empty (validate->dirty_region))
-    return tile;
+  if (validate->suspend_validate ||
+      cairo_region_is_empty (validate->dirty_region))
+    {
+      return tile;
+    }
 
   tile_rect.x      = x * validate->tile_width;
   tile_rect.y      = y * validate->tile_height;
@@ -410,4 +413,103 @@ gimp_tile_handler_validate_undo_invalidate (GimpTileHandlerValidate *validate,
 
   cairo_region_subtract_rectangle (validate->dirty_region,
                                    (cairo_rectangle_int_t *) rect);
+}
+
+void
+gimp_tile_handler_validate_buffer_copy (GeglBuffer          *src_buffer,
+                                        const GeglRectangle *src_rect,
+                                        GeglBuffer          *dst_buffer,
+                                        const GeglRectangle *dst_rect)
+{
+  GimpTileHandlerValidate *src_validate;
+  GimpTileHandlerValidate *dst_validate;
+  GeglRectangle            real_src_rect;
+  GeglRectangle            real_dst_rect;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (GEGL_IS_BUFFER (dst_buffer));
+  g_return_if_fail (src_rect != dst_rect);
+
+  src_validate = gimp_tile_handler_validate_get_assigned (src_buffer);
+  dst_validate = gimp_tile_handler_validate_get_assigned (dst_buffer);
+
+  g_return_if_fail (dst_validate != NULL);
+
+  if (! src_rect)
+    src_rect = gegl_buffer_get_extent (src_buffer);
+
+  if (! dst_rect)
+    dst_rect = src_rect;
+
+  real_src_rect = *src_rect;
+
+  gegl_rectangle_intersect (&real_dst_rect,
+                            dst_rect, gegl_buffer_get_extent (dst_buffer));
+
+  real_src_rect.x      += real_dst_rect.x - dst_rect->x;
+  real_src_rect.y      += real_dst_rect.y - dst_rect->y;
+  real_src_rect.width  -= real_dst_rect.x - dst_rect->x;
+  real_src_rect.height -= real_dst_rect.y - dst_rect->y;
+
+  real_src_rect.width  = CLAMP (real_src_rect.width,  0, real_dst_rect.width);
+  real_src_rect.height = CLAMP (real_src_rect.height, 0, real_dst_rect.height);
+
+  if (src_validate)
+    src_validate->suspend_validate++;
+  dst_validate->suspend_validate++;
+
+  gegl_buffer_copy (src_buffer, &real_src_rect, GEGL_ABYSS_NONE,
+                    dst_buffer, &real_dst_rect);
+
+  if (src_validate)
+    src_validate->suspend_validate--;
+  dst_validate->suspend_validate--;
+
+  cairo_region_subtract_rectangle (dst_validate->dirty_region,
+                                   (cairo_rectangle_int_t *) &real_dst_rect);
+
+  if (src_validate)
+    {
+      if (real_src_rect.x == real_dst_rect.x &&
+          real_src_rect.y == real_dst_rect.y &&
+          gegl_rectangle_equal (&real_src_rect,
+                                gegl_buffer_get_extent (src_buffer)))
+        {
+          cairo_region_union (dst_validate->dirty_region,
+                              src_validate->dirty_region);
+        }
+      else if (cairo_region_contains_rectangle (
+                 src_validate->dirty_region,
+                 (cairo_rectangle_int_t *) &real_src_rect) !=
+               CAIRO_REGION_OVERLAP_OUT)
+        {
+          cairo_region_t *region;
+
+          region = cairo_region_copy (src_validate->dirty_region);
+
+          if (! gegl_rectangle_equal (&real_src_rect,
+                                      gegl_buffer_get_extent (src_buffer)))
+            {
+              cairo_region_intersect_rectangle (
+                region, (cairo_rectangle_int_t *) &real_src_rect);
+            }
+
+          cairo_region_translate (region,
+                                  real_dst_rect.x - real_src_rect.x,
+                                  real_dst_rect.y - real_src_rect.y);
+
+          if (cairo_region_is_empty (dst_validate->dirty_region))
+            {
+              cairo_region_destroy (dst_validate->dirty_region);
+
+              dst_validate->dirty_region = region;
+            }
+          else
+            {
+              cairo_region_union (dst_validate->dirty_region, region);
+
+              cairo_region_destroy (region);
+            }
+        }
+    }
 }
