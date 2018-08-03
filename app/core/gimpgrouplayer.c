@@ -1000,7 +1000,8 @@ gimp_group_layer_convert_type (GimpLayer        *layer,
                                  FALSE, NULL,
                                  buffer,
                                  gimp_item_get_offset_x (GIMP_ITEM (group)),
-                                 gimp_item_get_offset_y (GIMP_ITEM (group)));
+                                 gimp_item_get_offset_y (GIMP_ITEM (group)),
+                                 TRUE);
 
   /*  reset, the actual format is right now  */
   private->convert_format = NULL;
@@ -1907,7 +1908,8 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
                                          FALSE, NULL,
                                          buffer,
-                                         x, y);
+                                         x, y,
+                                         TRUE);
 
           /*  reset, the actual size is correct now  */
           private->reallocate_width  = 0;
@@ -2020,7 +2022,8 @@ gimp_group_layer_update_mask_size (GimpGroupLayer *group)
 
   gimp_drawable_set_buffer_full (GIMP_DRAWABLE (mask),
                                  FALSE, NULL,
-                                 buffer, bounds.x, bounds.y);
+                                 buffer, bounds.x, bounds.y,
+                                 TRUE);
 
   g_object_unref (buffer);
 }

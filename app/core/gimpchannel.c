@@ -611,7 +611,8 @@ gimp_channel_convert (GimpItem  *item,
       gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
                                      new_buffer,
                                      gimp_item_get_offset_x (item),
-                                     gimp_item_get_offset_y (item));
+                                     gimp_item_get_offset_y (item),
+                                     TRUE);
       g_object_unref (new_buffer);
     }
 
@@ -741,7 +742,8 @@ gimp_channel_scale (GimpItem              *item,
       gimp_drawable_set_buffer_full (drawable,
                                      gimp_item_is_attached (item), NULL,
                                      new_buffer,
-                                     new_offset_x, new_offset_y);
+                                     new_offset_x, new_offset_y,
+                                     TRUE);
       g_object_unref (new_buffer);
 
       gimp_channel_clear (GIMP_CHANNEL (item), NULL, FALSE);

@@ -494,7 +494,8 @@ gimp_drawable_scale (GimpItem              *item,
 
   gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
                                  new_buffer,
-                                 new_offset_x, new_offset_y);
+                                 new_offset_x, new_offset_y,
+                                 TRUE);
   g_object_unref (new_buffer);
 }
 
@@ -572,7 +573,8 @@ gimp_drawable_resize (GimpItem     *item,
 
   gimp_drawable_set_buffer_full (drawable, gimp_item_is_attached (item), NULL,
                                  new_buffer,
-                                 new_offset_x, new_offset_y);
+                                 new_offset_x, new_offset_y,
+                                 TRUE);
   g_object_unref (new_buffer);
 }
 
@@ -1238,7 +1240,7 @@ gimp_drawable_set_buffer (GimpDrawable *drawable,
   gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
   gimp_drawable_set_buffer_full (drawable, push_undo, undo_desc, buffer,
-                                 offset_x, offset_y);
+                                 offset_x, offset_y, TRUE);
 }
 
 void
@@ -1247,7 +1249,8 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
                                const gchar  *undo_desc,
                                GeglBuffer   *buffer,
                                gint          offset_x,
-                               gint          offset_y)
+                               gint          offset_y,
+                               gboolean      update)
 {
   GimpItem *item;
 
@@ -1259,10 +1262,11 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
-  if (gimp_item_get_width  (item)   != gegl_buffer_get_width (buffer)  ||
-      gimp_item_get_height (item)   != gegl_buffer_get_height (buffer) ||
-      gimp_item_get_offset_x (item) != offset_x                        ||
-      gimp_item_get_offset_y (item) != offset_y)
+  if (update                                                            &&
+      (gimp_item_get_width  (item)   != gegl_buffer_get_width (buffer)  ||
+       gimp_item_get_height (item)   != gegl_buffer_get_height (buffer) ||
+       gimp_item_get_offset_x (item) != offset_x                        ||
+       gimp_item_get_offset_y (item) != offset_y))
     {
       gimp_drawable_update (drawable, 0, 0, -1, -1);
     }
@@ -1276,7 +1280,8 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
 
   g_object_thaw_notify (G_OBJECT (drawable));
 
-  gimp_drawable_update (drawable, 0, 0, -1, -1);
+  if (update)
+    gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 void
