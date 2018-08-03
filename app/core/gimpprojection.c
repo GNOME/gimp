@@ -672,8 +672,10 @@ gimp_projection_free_buffer (GimpProjection  *proj)
   if (proj->priv->buffer)
     {
       if (proj->priv->validate_handler)
-        gegl_buffer_remove_handler (proj->priv->buffer,
-                                    proj->priv->validate_handler);
+        {
+          gimp_tile_handler_validate_unassign (proj->priv->validate_handler,
+                                               proj->priv->buffer);
+        }
 
       g_clear_object (&proj->priv->buffer);
     }
