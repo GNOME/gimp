@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-15 18:02+0000\n"
-"PO-Revision-Date: 2018-07-24 23:57+0200\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"POT-Creation-Date: 2018-08-02 17:16+0000\n"
+"PO-Revision-Date: 2018-08-03 17:38+0200\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.1\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -3321,7 +3321,7 @@ msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "St_anje in besedilo"
 
-#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:261
+#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:222
 msgctxt "tab-style"
 msgid "Automatic"
 msgstr "Samodejno"
@@ -3504,13 +3504,13 @@ msgstr "Počisti zgodovino dokumenta"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1678
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1718
 #: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:512 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:447
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:488
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
 msgid "_Cancel"
@@ -7879,6 +7879,46 @@ msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Od desne proti levi"
 
+#: ../app/actions/text-editor-actions.c:71
+msgctxt "text-editor-action"
+msgid "TTB-RTL"
+msgstr ""
+
+#: ../app/actions/text-editor-actions.c:72
+msgctxt "text-editor-action"
+msgid "Vertical lines from right to left (mixed orientation)"
+msgstr ""
+
+#: ../app/actions/text-editor-actions.c:77
+msgctxt "text-editor-action"
+msgid "TTB-RTL-UPRIGHT"
+msgstr ""
+
+#: ../app/actions/text-editor-actions.c:78
+msgctxt "text-editor-action"
+msgid "Vertical lines from right to left (upright characters)"
+msgstr ""
+
+#: ../app/actions/text-editor-actions.c:83
+msgctxt "text-editor-action"
+msgid "TTB-LTR"
+msgstr ""
+
+#: ../app/actions/text-editor-actions.c:84
+msgctxt "text-editor-action"
+msgid "Vertical lines from left to right (mixed orientation)"
+msgstr ""
+
+#: ../app/actions/text-editor-actions.c:89
+msgctxt "text-editor-action"
+msgid "TTB-LTR-UPRIGHT"
+msgstr ""
+
+#: ../app/actions/text-editor-actions.c:90
+msgctxt "text-editor-action"
+msgid "Vertical lines from left to right (upright characters)"
+msgstr ""
+
 #: ../app/actions/text-editor-commands.c:60
 #: ../app/actions/text-tool-commands.c:114
 msgid "Open Text File (UTF-8)"
@@ -7977,6 +8017,26 @@ msgstr "Od leve proti desni"
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Od desne proti levi"
+
+#: ../app/actions/text-tool-actions.c:116
+msgctxt "text-tool-action"
+msgid "Vertical lines from right to left (mixed orientation)"
+msgstr ""
+
+#: ../app/actions/text-tool-actions.c:121
+msgctxt "text-tool-action"
+msgid "Vertical lines from right to left (upright characters)"
+msgstr ""
+
+#: ../app/actions/text-tool-actions.c:126
+msgctxt "text-tool-action"
+msgid "Vertical lines from left to right (mixed orientation)"
+msgstr ""
+
+#: ../app/actions/text-tool-actions.c:131
+msgctxt "text-tool-action"
+msgid "Vertical lines from left to right (upright characters)"
+msgstr ""
 
 #: ../app/actions/tool-options-actions.c:57
 msgctxt "tool-options-action"
@@ -9925,7 +9985,7 @@ msgstr "Pomakni okno na zaslon %s"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
 #: ../app/tools/gimpfiltertool.c:324 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
-#: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:188
+#: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
 msgstr "V _redu"
 
@@ -11103,7 +11163,7 @@ msgstr "Če je vključeno, uporabi OpenCL za določene operacije."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:131
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:293
-#: ../app/plug-in/plug-in-rc.c:246
+#: ../app/plug-in/plug-in-rc.c:251
 msgid "fatal parse error"
 msgstr "usodna razčlenitvena napaka"
 
@@ -11112,849 +11172,905 @@ msgstr "usodna razčlenitvena napaka"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "vrednost za žeton %s ni veljaven niz UTF-8"
 
-#: ../app/core/core-enums.c:89
-msgctxt "convert-dither-type"
-msgid "None"
-msgstr "brez"
-
-#: ../app/core/core-enums.c:90
-msgctxt "convert-dither-type"
-msgid "Floyd-Steinberg (normal)"
-msgstr "Floyd-Steinbergovo barvno razprševanje (navadno)"
-
-#: ../app/core/core-enums.c:91
-msgctxt "convert-dither-type"
-msgid "Floyd-Steinberg (reduced color bleeding)"
-msgstr "Floyd-Steinbergovo barvno razprševanje (zmanjšano mešanje barv)"
-
-#: ../app/core/core-enums.c:92
-msgctxt "convert-dither-type"
-msgid "Positioned"
-msgstr "Umeščeno"
-
-#: ../app/core/core-enums.c:151
-msgctxt "curve-type"
-msgid "Smooth"
-msgstr "Zgladi"
-
-#: ../app/core/core-enums.c:152
-msgctxt "curve-type"
-msgid "Freehand"
-msgstr "Skicirno"
-
-#: ../app/core/core-enums.c:265
-msgctxt "histogram-channel"
-msgid "Value"
-msgstr "Vrednost"
-
-#: ../app/core/core-enums.c:266
-msgctxt "histogram-channel"
-msgid "Red"
-msgstr "Rdeča"
-
-#: ../app/core/core-enums.c:267
-msgctxt "histogram-channel"
-msgid "Green"
-msgstr "Zelena"
-
-#: ../app/core/core-enums.c:268
-msgctxt "histogram-channel"
-msgid "Blue"
-msgstr "Modra"
-
-#: ../app/core/core-enums.c:269
-msgctxt "histogram-channel"
-msgid "Alpha"
-msgstr "Alfa"
-
-#: ../app/core/core-enums.c:270
-msgctxt "histogram-channel"
-msgid "Luminance"
-msgstr "Svetilnost"
-
-#: ../app/core/core-enums.c:271
-msgctxt "histogram-channel"
-msgid "RGB"
-msgstr "RGB"
-
-#: ../app/core/core-enums.c:299
-msgctxt "matting-engine"
-msgid "Matting Global"
-msgstr "Globalna obkrožna maska"
-
-#: ../app/core/core-enums.c:300
-msgctxt "matting-engine"
-msgid "Matting Levin"
-msgstr "Levinova obkrožna maska"
-
-#: ../app/core/core-enums.c:422
+#: ../app/core/core-enums.c:27
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Prvi predmet"
 
-#: ../app/core/core-enums.c:423
+#: ../app/core/core-enums.c:28
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Slika"
 
-#: ../app/core/core-enums.c:424
+#: ../app/core/core-enums.c:29
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Izbor"
 
-#: ../app/core/core-enums.c:425
+#: ../app/core/core-enums.c:30
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Aktivna plast"
 
-#: ../app/core/core-enums.c:426
+#: ../app/core/core-enums.c:31
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Aktivni kanal"
 
-#: ../app/core/core-enums.c:427
+#: ../app/core/core-enums.c:32
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Aktivna pot"
 
-#: ../app/core/core-enums.c:455
-msgctxt "fill-style"
-msgid "Solid color"
-msgstr "Enakomerna barva"
+#: ../app/core/core-enums.c:114
+msgctxt "channel-border-style"
+msgid "Hard"
+msgstr "Ostro"
 
-#: ../app/core/core-enums.c:456
-msgctxt "fill-style"
-msgid "Pattern"
-msgstr "Vzorec"
+#: ../app/core/core-enums.c:115
+msgctxt "channel-border-style"
+msgid "Smooth"
+msgstr "Gladko"
 
-#: ../app/core/core-enums.c:493
+#: ../app/core/core-enums.c:116
+msgctxt "channel-border-style"
+msgid "Feathered"
+msgstr "Operjeno"
+
+#: ../app/core/core-enums.c:149
+#, fuzzy
+#| msgctxt "color-frame-mode"
+#| msgid "Pixel"
+msgctxt "color-pick-mode"
+msgid "Pixel"
+msgstr "TOČKA"
+
+#: ../app/core/core-enums.c:150
+#, fuzzy
+#| msgctxt "color-frame-mode"
+#| msgid "RGB (%)"
+msgctxt "color-pick-mode"
+msgid "RGB (%)"
+msgstr "RGB (%)"
+
+#: ../app/core/core-enums.c:151
+#, fuzzy
+#| msgctxt "color-frame-mode"
+#| msgid "RGB (0..255)"
+msgctxt "color-pick-mode"
+msgid "RGB (0..255)"
+msgstr "RGB (0..255)"
+
+#: ../app/core/core-enums.c:152
+#, fuzzy
+#| msgctxt "circle-background"
+#| msgid "HSV"
+msgctxt "color-pick-mode"
+msgid "HSV"
+msgstr "HSV"
+
+#: ../app/core/core-enums.c:153
+#, fuzzy
+#| msgctxt "color-frame-mode"
+#| msgid "CIE LCh"
+msgctxt "color-pick-mode"
+msgid "CIE LCh"
+msgstr "CIE LCh"
+
+#: ../app/core/core-enums.c:154
+#, fuzzy
+#| msgctxt "color-frame-mode"
+#| msgid "CIE LAB"
+msgctxt "color-pick-mode"
+msgid "CIE LAB"
+msgstr "Lab. CIE"
+
+#: ../app/core/core-enums.c:155
+#, fuzzy
+#| msgctxt "color-frame-mode"
+#| msgid "CMYK"
+msgctxt "color-pick-mode"
+msgid "CMYK"
+msgstr "CMYK"
+
+#: ../app/core/core-enums.c:184
+msgctxt "color-profile-policy"
+msgid "Ask what to do"
+msgstr "Vprašaj za nadaljnje korake"
+
+#: ../app/core/core-enums.c:185
+msgctxt "color-profile-policy"
+msgid "Keep embedded profile"
+msgstr "Ohrani vdelan profil"
+
+#: ../app/core/core-enums.c:186
+msgctxt "color-profile-policy"
+msgid "Convert to preferred RGB color profile"
+msgstr "Pretvori v prednostni barvni profil RGB"
+
+#: ../app/core/core-enums.c:280
+msgctxt "convert-dither-type"
+msgid "None"
+msgstr "brez"
+
+#: ../app/core/core-enums.c:281
+msgctxt "convert-dither-type"
+msgid "Floyd-Steinberg (normal)"
+msgstr "Floyd-Steinbergovo barvno razprševanje (navadno)"
+
+#: ../app/core/core-enums.c:282
+msgctxt "convert-dither-type"
+msgid "Floyd-Steinberg (reduced color bleeding)"
+msgstr "Floyd-Steinbergovo barvno razprševanje (zmanjšano mešanje barv)"
+
+#: ../app/core/core-enums.c:283
+msgctxt "convert-dither-type"
+msgid "Positioned"
+msgstr "Umeščeno"
+
+#: ../app/core/core-enums.c:342
+msgctxt "curve-type"
+msgid "Smooth"
+msgstr "Zgladi"
+
+#: ../app/core/core-enums.c:343
+msgctxt "curve-type"
+msgid "Freehand"
+msgstr "Skicirno"
+
+#: ../app/core/core-enums.c:380
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Po meri ..."
 
-#: ../app/core/core-enums.c:494
+#: ../app/core/core-enums.c:381
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Črta"
 
-#: ../app/core/core-enums.c:495
+#: ../app/core/core-enums.c:382
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Črtkano – dolge črtice"
 
-#: ../app/core/core-enums.c:496
+#: ../app/core/core-enums.c:383
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Črtkano – srednje dolge črtice"
 
-#: ../app/core/core-enums.c:497
+#: ../app/core/core-enums.c:384
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Črtkano - kratke črtice"
 
-#: ../app/core/core-enums.c:498
+#: ../app/core/core-enums.c:385
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Redke pike"
 
-#: ../app/core/core-enums.c:499
+#: ../app/core/core-enums.c:386
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Navadne pike"
 
-#: ../app/core/core-enums.c:500
+#: ../app/core/core-enums.c:387
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Goste pike"
 
-#: ../app/core/core-enums.c:501
+#: ../app/core/core-enums.c:388
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Pikice"
 
-#: ../app/core/core-enums.c:502
+#: ../app/core/core-enums.c:389
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Črtica, pika"
 
-#: ../app/core/core-enums.c:503
+#: ../app/core/core-enums.c:390
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Pomišljaj, pika, pika"
 
-#: ../app/core/core-enums.c:534
-msgctxt "item-set"
-msgid "None"
-msgstr "brez"
-
-#: ../app/core/core-enums.c:535
-msgctxt "item-set"
-msgid "All layers"
-msgstr "Vse plasti"
-
-#: ../app/core/core-enums.c:536
-msgctxt "item-set"
-msgid "Image-sized layers"
-msgstr "Plasti v velikosti slike"
-
-#: ../app/core/core-enums.c:537
-msgctxt "item-set"
-msgid "All visible layers"
-msgstr "Vse vidne plasti"
-
-#: ../app/core/core-enums.c:538
-msgctxt "item-set"
-msgid "All linked layers"
-msgstr "Vse povezane plasti"
-
-#: ../app/core/core-enums.c:573
-msgctxt "view-size"
-msgid "Tiny"
-msgstr "droben"
-
-#: ../app/core/core-enums.c:574
-msgctxt "view-size"
-msgid "Very small"
-msgstr "zelo majhen"
-
-#: ../app/core/core-enums.c:575
-msgctxt "view-size"
-msgid "Small"
-msgstr "majhen"
-
-#: ../app/core/core-enums.c:576
-msgctxt "view-size"
-msgid "Medium"
-msgstr "srednji"
-
-#: ../app/core/core-enums.c:577
-msgctxt "view-size"
-msgid "Large"
-msgstr "velik"
-
-#: ../app/core/core-enums.c:578
-msgctxt "view-size"
-msgid "Very large"
-msgstr "izjemno velik"
-
-#: ../app/core/core-enums.c:579
-msgctxt "view-size"
-msgid "Huge"
-msgstr "velikanski"
-
-#: ../app/core/core-enums.c:580
-msgctxt "view-size"
-msgid "Enormous"
-msgstr "ogromen"
-
-#: ../app/core/core-enums.c:581
-msgctxt "view-size"
-msgid "Gigantic"
-msgstr "gigantski"
-
-#: ../app/core/core-enums.c:609
-msgctxt "view-type"
-msgid "View as list"
-msgstr "Pokaži kot seznam"
-
-#: ../app/core/core-enums.c:610
-msgctxt "view-type"
-msgid "View as grid"
-msgstr "Pokaži kot mrežo"
-
-#: ../app/core/core-enums.c:639
-msgctxt "thumbnail-size"
-msgid "No thumbnails"
-msgstr "Ni sličic za predogled"
-
-#: ../app/core/core-enums.c:640
-msgctxt "thumbnail-size"
-msgid "Normal (128x128)"
-msgstr "navadna (128x128)"
-
-#: ../app/core/core-enums.c:641
-msgctxt "thumbnail-size"
-msgid "Large (256x256)"
-msgstr "velika (256x256)"
-
-#: ../app/core/core-enums.c:671
+#: ../app/core/core-enums.c:420
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
 msgstr "Razhrošči opozorila, kritične napake in sesutja"
 
-#: ../app/core/core-enums.c:672
+#: ../app/core/core-enums.c:421
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
 msgstr "Razhrošči kritične napake in sesutja"
 
-#: ../app/core/core-enums.c:673
+#: ../app/core/core-enums.c:422
 msgctxt "debug-policy"
 msgid "Debug crashes only"
 msgstr "Razhrošči le sesutja"
 
-#: ../app/core/core-enums.c:674
+#: ../app/core/core-enums.c:423
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
 msgstr "Nikoli ne razhrošči GIMP-a"
 
-#: ../app/core/core-enums.c:863
-msgctxt "undo-type"
-msgid "<<invalid>>"
-msgstr "<<neveljaven>>"
-
-#: ../app/core/core-enums.c:864
-msgctxt "undo-type"
-msgid "Scale image"
-msgstr "Spremeni merilo slike"
-
-#: ../app/core/core-enums.c:865
-msgctxt "undo-type"
-msgid "Resize image"
-msgstr "Spremeni velikost slike"
-
-#: ../app/core/core-enums.c:866
-msgctxt "undo-type"
-msgid "Flip image"
-msgstr "Prezrcali sliko"
-
-#: ../app/core/core-enums.c:867
-msgctxt "undo-type"
-msgid "Rotate image"
-msgstr "Zasukaj sliko"
-
-#: ../app/core/core-enums.c:868
-msgctxt "undo-type"
-msgid "Crop image"
-msgstr "Obreži sliko"
-
-#: ../app/core/core-enums.c:869
-msgctxt "undo-type"
-msgid "Convert image"
-msgstr "Pretvori sliko"
-
-#: ../app/core/core-enums.c:870
-msgctxt "undo-type"
-msgid "Remove item"
-msgstr "Odstrani element"
-
-#: ../app/core/core-enums.c:871 ../app/core/core-enums.c:915
-msgctxt "undo-type"
-msgid "Reorder item"
-msgstr "Prerazvrsti element"
-
-#: ../app/core/core-enums.c:872
-msgctxt "undo-type"
-msgid "Merge layers"
-msgstr "Spoji plasti"
-
-#: ../app/core/core-enums.c:873
-msgctxt "undo-type"
-msgid "Merge paths"
-msgstr "Spoji poti"
-
-#: ../app/core/core-enums.c:874
-msgctxt "undo-type"
-msgid "Quick Mask"
-msgstr "Hitra maska"
-
-#: ../app/core/core-enums.c:875 ../app/core/core-enums.c:906
-#: ../app/core/gimpimage-grid.c:64
-msgctxt "undo-type"
-msgid "Grid"
-msgstr "Mreža"
-
-#: ../app/core/core-enums.c:876 ../app/core/core-enums.c:910
-msgctxt "undo-type"
-msgid "Guide"
-msgstr "Vodilo"
-
-#: ../app/core/core-enums.c:877 ../app/core/core-enums.c:911
-msgctxt "undo-type"
-msgid "Sample Point"
-msgstr "Vzorčna točka"
-
-#: ../app/core/core-enums.c:878 ../app/core/core-enums.c:912
-msgctxt "undo-type"
-msgid "Layer/Channel"
-msgstr "Plast/kanal"
-
-#: ../app/core/core-enums.c:879 ../app/core/core-enums.c:913
-msgctxt "undo-type"
-msgid "Layer/Channel modification"
-msgstr "Sprememba plasti/kanala"
-
-#: ../app/core/core-enums.c:880 ../app/core/core-enums.c:914
-msgctxt "undo-type"
-msgid "Selection mask"
-msgstr "Maska izbora"
-
-#: ../app/core/core-enums.c:881 ../app/core/core-enums.c:918
-msgctxt "undo-type"
-msgid "Item visibility"
-msgstr "Vidljivost predmeta"
-
-#: ../app/core/core-enums.c:882 ../app/core/core-enums.c:919
-msgctxt "undo-type"
-msgid "Link/Unlink item"
-msgstr "Poveži/Razveži element"
-
-#: ../app/core/core-enums.c:883
-msgctxt "undo-type"
-msgid "Item properties"
-msgstr "Lastnosti predmeta"
-
-#: ../app/core/core-enums.c:884 ../app/core/core-enums.c:917
-msgctxt "undo-type"
-msgid "Move item"
-msgstr "Premakni predmet"
-
-#: ../app/core/core-enums.c:885
-msgctxt "undo-type"
-msgid "Scale item"
-msgstr "Spremeni merilo elementa"
-
-#: ../app/core/core-enums.c:886
-msgctxt "undo-type"
-msgid "Resize item"
-msgstr "Spremeni velikost predmeta"
-
-#: ../app/core/core-enums.c:887
-msgctxt "undo-type"
-msgid "Add layer"
-msgstr "Dodaj plast"
-
-#: ../app/core/core-enums.c:888 ../app/core/core-enums.c:938
-msgctxt "undo-type"
-msgid "Add layer mask"
-msgstr "Dodaj masko plasti"
-
-#: ../app/core/core-enums.c:889 ../app/core/core-enums.c:940
-msgctxt "undo-type"
-msgid "Apply layer mask"
-msgstr "Uporabi masko plasti"
-
-#: ../app/core/core-enums.c:890 ../app/core/core-enums.c:948
-msgctxt "undo-type"
-msgid "Floating selection to layer"
-msgstr "Plavajoči izbor v plast"
-
-#: ../app/core/core-enums.c:891
-msgctxt "undo-type"
-msgid "Float selection"
-msgstr "Plavajoči izbor"
-
-#: ../app/core/core-enums.c:892
-msgctxt "undo-type"
-msgid "Anchor floating selection"
-msgstr "Zasidraj plavajoči izbor"
-
-#: ../app/core/core-enums.c:893 ../app/core/gimp-edit.c:492
-msgctxt "undo-type"
-msgid "Paste"
-msgstr "Prilepi"
-
-#: ../app/core/core-enums.c:894 ../app/core/gimp-edit.c:710
-msgctxt "undo-type"
-msgid "Cut"
-msgstr "Izreži"
-
-#: ../app/core/core-enums.c:895
-msgctxt "undo-type"
-msgid "Text"
-msgstr "Besedilo"
-
-#: ../app/core/core-enums.c:896 ../app/core/gimpdrawable-transform.c:736
-msgctxt "undo-type"
-msgid "Transform"
-msgstr "Preoblikuj"
-
-#: ../app/core/core-enums.c:897 ../app/core/core-enums.c:950
-msgctxt "undo-type"
-msgid "Paint"
-msgstr "Slikaj"
-
-#: ../app/core/core-enums.c:898 ../app/core/core-enums.c:953
-msgctxt "undo-type"
-msgid "Attach parasite"
-msgstr "Pripni zajedalca"
-
-#: ../app/core/core-enums.c:899 ../app/core/core-enums.c:954
-msgctxt "undo-type"
-msgid "Remove parasite"
-msgstr "Odstrani zajedalca"
-
-#: ../app/core/core-enums.c:900
-msgctxt "undo-type"
-msgid "Import paths"
-msgstr "Uvozi poti"
-
-#: ../app/core/core-enums.c:901
-msgctxt "undo-type"
-msgid "Plug-In"
-msgstr "Vtičnik"
-
-#: ../app/core/core-enums.c:902
-msgctxt "undo-type"
-msgid "Image type"
-msgstr "Vrsta slike"
-
-#: ../app/core/core-enums.c:903
-msgctxt "undo-type"
-msgid "Image precision"
-msgstr "Natančnost slike"
-
-#: ../app/core/core-enums.c:904
-msgctxt "undo-type"
-msgid "Image size"
-msgstr "Velikost slike"
-
-#: ../app/core/core-enums.c:905
-msgctxt "undo-type"
-msgid "Image resolution change"
-msgstr "Spremeni ločljivost slike"
-
-#: ../app/core/core-enums.c:907
-msgctxt "undo-type"
-msgid "Change metadata"
-msgstr "Spremeni metapodatke"
-
-#: ../app/core/core-enums.c:908
-msgctxt "undo-type"
-msgid "Change indexed palette"
-msgstr "Spremeni indeksirano paleto"
-
-#: ../app/core/core-enums.c:909
-msgctxt "undo-type"
-msgid "Change color managed state"
-msgstr "Spremeni stanje barvno upravljanega"
-
-#: ../app/core/core-enums.c:916
-msgctxt "undo-type"
-msgid "Rename item"
-msgstr "Preimenuj element"
-
-#: ../app/core/core-enums.c:920
-msgctxt "undo-type"
-msgid "Item color tag"
-msgstr "Oznaka barve elementa"
-
-#: ../app/core/core-enums.c:921
-msgctxt "undo-type"
-msgid "Lock/Unlock content"
-msgstr "Zakleni/odkleni vsebino"
-
-#: ../app/core/core-enums.c:922
-msgctxt "undo-type"
-msgid "Lock/Unlock position"
-msgstr "Zakleni/odkleni položaj"
-
-#: ../app/core/core-enums.c:923
-msgctxt "undo-type"
-msgid "New layer"
-msgstr "Nova plast"
-
-#: ../app/core/core-enums.c:924
-msgctxt "undo-type"
-msgid "Delete layer"
-msgstr "Izbriši plast"
-
-#: ../app/core/core-enums.c:925
-msgctxt "undo-type"
-msgid "Set layer mode"
-msgstr "Nastavi način plasti"
-
-#: ../app/core/core-enums.c:926
-msgctxt "undo-type"
-msgid "Set layer opacity"
-msgstr "Nastavi prekrivnost plasti"
-
-#: ../app/core/core-enums.c:927
-msgctxt "undo-type"
-msgid "Lock/Unlock alpha channel"
-msgstr "Zakleni/odkleni kanal alfa"
-
-#: ../app/core/core-enums.c:928
-msgctxt "undo-type"
-msgid "Suspend group layer resize"
-msgstr "Prekini s spreminjanjem velikosti skupine plasti"
-
-#: ../app/core/core-enums.c:929
-msgctxt "undo-type"
-msgid "Resume group layer resize"
-msgstr "Nadaljuj s spreminjanjem velikosti skupine plasti"
-
-#: ../app/core/core-enums.c:930
-msgctxt "undo-type"
-msgid "Suspend group layer mask"
-msgstr "Prekini s masko skupine plasti"
-
-#: ../app/core/core-enums.c:931
-msgctxt "undo-type"
-msgid "Resume group layer mask"
-msgstr "Nadaljuj z masko skupine plasti"
-
-#: ../app/core/core-enums.c:932
-msgctxt "undo-type"
-msgid "Start transforming group layer"
-msgstr "Začni preoblikovati skupinsko plast"
-
-#: ../app/core/core-enums.c:933
-msgctxt "undo-type"
-msgid "End transforming group layer"
-msgstr "Končaj preoblikovanje skupine plasti"
-
-#: ../app/core/core-enums.c:934
-msgctxt "undo-type"
-msgid "Convert group layer"
-msgstr "Pretvori skupinsko plast"
-
-#: ../app/core/core-enums.c:935
-msgctxt "undo-type"
-msgid "Text layer"
-msgstr "Plast besedila"
-
-#: ../app/core/core-enums.c:936
-msgctxt "undo-type"
-msgid "Text layer modification"
-msgstr "Sprememba besedilne plasti"
-
-#: ../app/core/core-enums.c:937
-msgctxt "undo-type"
-msgid "Convert text layer"
-msgstr "Pretvori plast besedila"
-
-#: ../app/core/core-enums.c:939
-msgctxt "undo-type"
-msgid "Delete layer mask"
-msgstr "Izbriši masko plasti"
-
-#: ../app/core/core-enums.c:941
-msgctxt "undo-type"
-msgid "Show layer mask"
-msgstr "Pokaži masko plasti"
-
-#: ../app/core/core-enums.c:942
-msgctxt "undo-type"
-msgid "New channel"
-msgstr "Nov kanal"
-
-#: ../app/core/core-enums.c:943
-msgctxt "undo-type"
-msgid "Delete channel"
-msgstr "Izbriši kanal"
-
-#: ../app/core/core-enums.c:944
-msgctxt "undo-type"
-msgid "Channel color"
-msgstr "Barva kanala"
-
-#: ../app/core/core-enums.c:945
-msgctxt "undo-type"
-msgid "New path"
-msgstr "Nova pot"
-
-#: ../app/core/core-enums.c:946
-msgctxt "undo-type"
-msgid "Delete path"
-msgstr "Izbriši pot"
-
-#: ../app/core/core-enums.c:947
-msgctxt "undo-type"
-msgid "Path modification"
-msgstr "Sprememba poti"
-
-#: ../app/core/core-enums.c:949
-msgctxt "undo-type"
-msgid "Transform grid"
-msgstr "Preoblikuj mrežo"
-
-#: ../app/core/core-enums.c:951
-msgctxt "undo-type"
-msgid "Ink"
-msgstr "Črnilo"
-
-#: ../app/core/core-enums.c:952
-msgctxt "undo-type"
-msgid "Select foreground"
-msgstr "Izberi ospredje"
-
-#: ../app/core/core-enums.c:955
-msgctxt "undo-type"
-msgid "Not undoable"
-msgstr "Ni mogoče razveljaviti"
-
-#: ../app/core/core-enums.c:1035
+#: ../app/core/core-enums.c:509
+msgctxt "dynamics-output-type"
+msgid "Opacity"
+msgstr "Prekrivnost"
+
+#: ../app/core/core-enums.c:510
+msgctxt "dynamics-output-type"
+msgid "Size"
+msgstr "Velikost"
+
+#: ../app/core/core-enums.c:511
+msgctxt "dynamics-output-type"
+msgid "Angle"
+msgstr "Kot"
+
+#: ../app/core/core-enums.c:512
+msgctxt "dynamics-output-type"
+msgid "Color"
+msgstr "Barva"
+
+#: ../app/core/core-enums.c:513
+msgctxt "dynamics-output-type"
+msgid "Hardness"
+msgstr "Trdota"
+
+#: ../app/core/core-enums.c:514
+msgctxt "dynamics-output-type"
+msgid "Force"
+msgstr "Sila"
+
+#: ../app/core/core-enums.c:515
+msgctxt "dynamics-output-type"
+msgid "Aspect ratio"
+msgstr "Razmerje stranic"
+
+#: ../app/core/core-enums.c:516
+msgctxt "dynamics-output-type"
+msgid "Spacing"
+msgstr "Razmik"
+
+#: ../app/core/core-enums.c:517
+msgctxt "dynamics-output-type"
+msgid "Rate"
+msgstr "Mera"
+
+#: ../app/core/core-enums.c:518
+msgctxt "dynamics-output-type"
+msgid "Flow"
+msgstr "Potek"
+
+#: ../app/core/core-enums.c:519
+msgctxt "dynamics-output-type"
+msgid "Jitter"
+msgstr "Razgibanost"
+
+#: ../app/core/core-enums.c:547
+msgctxt "fill-style"
+msgid "Solid color"
+msgstr "Enakomerna barva"
+
+#: ../app/core/core-enums.c:548
+msgctxt "fill-style"
+msgid "Pattern"
+msgstr "Vzorec"
+
+#: ../app/core/core-enums.c:576
+msgctxt "filter-region"
+msgid "Use the selection as input"
+msgstr "Uporabi izbor kot vhod"
+
+#: ../app/core/core-enums.c:577
+msgctxt "filter-region"
+msgid "Use the entire layer as input"
+msgstr "Uporabi celotno plast kot vhod"
+
+#: ../app/core/core-enums.c:608
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Nespremenljivo"
 
-#: ../app/core/core-enums.c:1036
+#: ../app/core/core-enums.c:609
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "Barva ospredja"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: ../app/core/core-enums.c:1039
+#: ../app/core/core-enums.c:612
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "FG"
 
-#: ../app/core/core-enums.c:1040
+#: ../app/core/core-enums.c:613
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "Barva os_predja (prosojna)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:1043
+#: ../app/core/core-enums.c:616
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "FG (t)"
 
-#: ../app/core/core-enums.c:1044
+#: ../app/core/core-enums.c:617
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "Barva ozadja"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: ../app/core/core-enums.c:1047
+#: ../app/core/core-enums.c:620
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "BG"
 
-#: ../app/core/core-enums.c:1048
+#: ../app/core/core-enums.c:621
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "Barva o_zadja (prosojna)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:1051
+#: ../app/core/core-enums.c:624
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "BG (t)"
 
-#: ../app/core/core-enums.c:1082
+#: ../app/core/core-enums.c:737
+msgctxt "histogram-channel"
+msgid "Value"
+msgstr "Vrednost"
+
+#: ../app/core/core-enums.c:738
+msgctxt "histogram-channel"
+msgid "Red"
+msgstr "Rdeča"
+
+#: ../app/core/core-enums.c:739
+msgctxt "histogram-channel"
+msgid "Green"
+msgstr "Zelena"
+
+#: ../app/core/core-enums.c:740
+msgctxt "histogram-channel"
+msgid "Blue"
+msgstr "Modra"
+
+#: ../app/core/core-enums.c:741
+msgctxt "histogram-channel"
+msgid "Alpha"
+msgstr "Alfa"
+
+#: ../app/core/core-enums.c:742
+msgctxt "histogram-channel"
+msgid "Luminance"
+msgstr "Svetilnost"
+
+#: ../app/core/core-enums.c:743
+msgctxt "histogram-channel"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../app/core/core-enums.c:774
+msgctxt "item-set"
+msgid "None"
+msgstr "brez"
+
+#: ../app/core/core-enums.c:775
+msgctxt "item-set"
+msgid "All layers"
+msgstr "Vse plasti"
+
+#: ../app/core/core-enums.c:776
+msgctxt "item-set"
+msgid "Image-sized layers"
+msgstr "Plasti v velikosti slike"
+
+#: ../app/core/core-enums.c:777
+msgctxt "item-set"
+msgid "All visible layers"
+msgstr "Vse vidne plasti"
+
+#: ../app/core/core-enums.c:778
+msgctxt "item-set"
+msgid "All linked layers"
+msgstr "Vse povezane plasti"
+
+#: ../app/core/core-enums.c:806
+msgctxt "matting-engine"
+msgid "Matting Global"
+msgstr "Globalna obkrožna maska"
+
+#: ../app/core/core-enums.c:807
+msgctxt "matting-engine"
+msgid "Matting Levin"
+msgstr "Levinova obkrožna maska"
+
+#: ../app/core/core-enums.c:838
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Sporočilo"
 
-#: ../app/core/core-enums.c:1083
+#: ../app/core/core-enums.c:839
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Opozorilo"
 
-#: ../app/core/core-enums.c:1084
+#: ../app/core/core-enums.c:840
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Napaka"
 
-#: ../app/core/core-enums.c:1085
+#: ../app/core/core-enums.c:841
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr "OPOZORILO"
 
-#: ../app/core/core-enums.c:1086
+#: ../app/core/core-enums.c:842
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "KRITIČNA NAPAKA"
 
-#: ../app/core/core-enums.c:1115
-msgctxt "color-profile-policy"
-msgid "Ask what to do"
-msgstr "Vprašaj za nadaljnje korake"
+#: ../app/core/core-enums.c:908
+msgctxt "thumbnail-size"
+msgid "No thumbnails"
+msgstr "Ni sličic za predogled"
 
-#: ../app/core/core-enums.c:1116
-msgctxt "color-profile-policy"
-msgid "Keep embedded profile"
-msgstr "Ohrani vdelan profil"
+#: ../app/core/core-enums.c:909
+msgctxt "thumbnail-size"
+msgid "Normal (128x128)"
+msgstr "navadna (128x128)"
 
-#: ../app/core/core-enums.c:1117
-msgctxt "color-profile-policy"
-msgid "Convert to preferred RGB color profile"
-msgstr "Pretvori v prednostni barvni profil RGB"
+#: ../app/core/core-enums.c:910
+msgctxt "thumbnail-size"
+msgid "Large (256x256)"
+msgstr "velika (256x256)"
 
-#: ../app/core/core-enums.c:1154
-msgctxt "dynamics-output-type"
-msgid "Opacity"
-msgstr "Prekrivnost"
+#: ../app/core/core-enums.c:1099
+msgctxt "undo-type"
+msgid "<<invalid>>"
+msgstr "<<neveljaven>>"
 
-#: ../app/core/core-enums.c:1155
-msgctxt "dynamics-output-type"
-msgid "Size"
-msgstr "Velikost"
+#: ../app/core/core-enums.c:1100
+msgctxt "undo-type"
+msgid "Scale image"
+msgstr "Spremeni merilo slike"
+
+#: ../app/core/core-enums.c:1101
+msgctxt "undo-type"
+msgid "Resize image"
+msgstr "Spremeni velikost slike"
+
+#: ../app/core/core-enums.c:1102
+msgctxt "undo-type"
+msgid "Flip image"
+msgstr "Prezrcali sliko"
+
+#: ../app/core/core-enums.c:1103
+msgctxt "undo-type"
+msgid "Rotate image"
+msgstr "Zasukaj sliko"
+
+#: ../app/core/core-enums.c:1104
+msgctxt "undo-type"
+msgid "Crop image"
+msgstr "Obreži sliko"
+
+#: ../app/core/core-enums.c:1105
+msgctxt "undo-type"
+msgid "Convert image"
+msgstr "Pretvori sliko"
+
+#: ../app/core/core-enums.c:1106
+msgctxt "undo-type"
+msgid "Remove item"
+msgstr "Odstrani element"
+
+#: ../app/core/core-enums.c:1107 ../app/core/core-enums.c:1151
+msgctxt "undo-type"
+msgid "Reorder item"
+msgstr "Prerazvrsti element"
+
+#: ../app/core/core-enums.c:1108
+msgctxt "undo-type"
+msgid "Merge layers"
+msgstr "Spoji plasti"
+
+#: ../app/core/core-enums.c:1109
+msgctxt "undo-type"
+msgid "Merge paths"
+msgstr "Spoji poti"
+
+#: ../app/core/core-enums.c:1110
+msgctxt "undo-type"
+msgid "Quick Mask"
+msgstr "Hitra maska"
+
+#: ../app/core/core-enums.c:1111 ../app/core/core-enums.c:1142
+#: ../app/core/gimpimage-grid.c:64
+msgctxt "undo-type"
+msgid "Grid"
+msgstr "Mreža"
+
+#: ../app/core/core-enums.c:1112 ../app/core/core-enums.c:1146
+msgctxt "undo-type"
+msgid "Guide"
+msgstr "Vodilo"
+
+#: ../app/core/core-enums.c:1113 ../app/core/core-enums.c:1147
+msgctxt "undo-type"
+msgid "Sample Point"
+msgstr "Vzorčna točka"
+
+#: ../app/core/core-enums.c:1114 ../app/core/core-enums.c:1148
+msgctxt "undo-type"
+msgid "Layer/Channel"
+msgstr "Plast/kanal"
+
+#: ../app/core/core-enums.c:1115 ../app/core/core-enums.c:1149
+msgctxt "undo-type"
+msgid "Layer/Channel modification"
+msgstr "Sprememba plasti/kanala"
+
+#: ../app/core/core-enums.c:1116 ../app/core/core-enums.c:1150
+msgctxt "undo-type"
+msgid "Selection mask"
+msgstr "Maska izbora"
+
+#: ../app/core/core-enums.c:1117 ../app/core/core-enums.c:1154
+msgctxt "undo-type"
+msgid "Item visibility"
+msgstr "Vidljivost predmeta"
+
+#: ../app/core/core-enums.c:1118 ../app/core/core-enums.c:1155
+msgctxt "undo-type"
+msgid "Link/Unlink item"
+msgstr "Poveži/Razveži element"
+
+#: ../app/core/core-enums.c:1119
+msgctxt "undo-type"
+msgid "Item properties"
+msgstr "Lastnosti predmeta"
+
+#: ../app/core/core-enums.c:1120 ../app/core/core-enums.c:1153
+msgctxt "undo-type"
+msgid "Move item"
+msgstr "Premakni predmet"
+
+#: ../app/core/core-enums.c:1121
+msgctxt "undo-type"
+msgid "Scale item"
+msgstr "Spremeni merilo elementa"
+
+#: ../app/core/core-enums.c:1122
+msgctxt "undo-type"
+msgid "Resize item"
+msgstr "Spremeni velikost predmeta"
+
+#: ../app/core/core-enums.c:1123
+msgctxt "undo-type"
+msgid "Add layer"
+msgstr "Dodaj plast"
+
+#: ../app/core/core-enums.c:1124 ../app/core/core-enums.c:1174
+msgctxt "undo-type"
+msgid "Add layer mask"
+msgstr "Dodaj masko plasti"
+
+#: ../app/core/core-enums.c:1125 ../app/core/core-enums.c:1176
+msgctxt "undo-type"
+msgid "Apply layer mask"
+msgstr "Uporabi masko plasti"
+
+#: ../app/core/core-enums.c:1126 ../app/core/core-enums.c:1184
+msgctxt "undo-type"
+msgid "Floating selection to layer"
+msgstr "Plavajoči izbor v plast"
+
+#: ../app/core/core-enums.c:1127
+msgctxt "undo-type"
+msgid "Float selection"
+msgstr "Plavajoči izbor"
+
+#: ../app/core/core-enums.c:1128
+msgctxt "undo-type"
+msgid "Anchor floating selection"
+msgstr "Zasidraj plavajoči izbor"
+
+#: ../app/core/core-enums.c:1129 ../app/core/gimp-edit.c:492
+msgctxt "undo-type"
+msgid "Paste"
+msgstr "Prilepi"
+
+#: ../app/core/core-enums.c:1130 ../app/core/gimp-edit.c:710
+msgctxt "undo-type"
+msgid "Cut"
+msgstr "Izreži"
+
+#: ../app/core/core-enums.c:1131
+msgctxt "undo-type"
+msgid "Text"
+msgstr "Besedilo"
+
+#: ../app/core/core-enums.c:1132 ../app/core/gimpdrawable-transform.c:736
+msgctxt "undo-type"
+msgid "Transform"
+msgstr "Preoblikuj"
+
+#: ../app/core/core-enums.c:1133 ../app/core/core-enums.c:1186
+msgctxt "undo-type"
+msgid "Paint"
+msgstr "Slikaj"
+
+#: ../app/core/core-enums.c:1134 ../app/core/core-enums.c:1189
+msgctxt "undo-type"
+msgid "Attach parasite"
+msgstr "Pripni zajedalca"
+
+#: ../app/core/core-enums.c:1135 ../app/core/core-enums.c:1190
+msgctxt "undo-type"
+msgid "Remove parasite"
+msgstr "Odstrani zajedalca"
+
+#: ../app/core/core-enums.c:1136
+msgctxt "undo-type"
+msgid "Import paths"
+msgstr "Uvozi poti"
+
+#: ../app/core/core-enums.c:1137
+msgctxt "undo-type"
+msgid "Plug-In"
+msgstr "Vtičnik"
+
+#: ../app/core/core-enums.c:1138
+msgctxt "undo-type"
+msgid "Image type"
+msgstr "Vrsta slike"
+
+#: ../app/core/core-enums.c:1139
+msgctxt "undo-type"
+msgid "Image precision"
+msgstr "Natančnost slike"
+
+#: ../app/core/core-enums.c:1140
+msgctxt "undo-type"
+msgid "Image size"
+msgstr "Velikost slike"
+
+#: ../app/core/core-enums.c:1141
+msgctxt "undo-type"
+msgid "Image resolution change"
+msgstr "Spremeni ločljivost slike"
+
+#: ../app/core/core-enums.c:1143
+msgctxt "undo-type"
+msgid "Change metadata"
+msgstr "Spremeni metapodatke"
+
+#: ../app/core/core-enums.c:1144
+msgctxt "undo-type"
+msgid "Change indexed palette"
+msgstr "Spremeni indeksirano paleto"
+
+#: ../app/core/core-enums.c:1145
+msgctxt "undo-type"
+msgid "Change color managed state"
+msgstr "Spremeni stanje barvno upravljanega"
+
+#: ../app/core/core-enums.c:1152
+msgctxt "undo-type"
+msgid "Rename item"
+msgstr "Preimenuj element"
 
 #: ../app/core/core-enums.c:1156
-msgctxt "dynamics-output-type"
-msgid "Angle"
-msgstr "Kot"
+msgctxt "undo-type"
+msgid "Item color tag"
+msgstr "Oznaka barve elementa"
 
 #: ../app/core/core-enums.c:1157
-msgctxt "dynamics-output-type"
-msgid "Color"
-msgstr "Barva"
+msgctxt "undo-type"
+msgid "Lock/Unlock content"
+msgstr "Zakleni/odkleni vsebino"
 
 #: ../app/core/core-enums.c:1158
-msgctxt "dynamics-output-type"
-msgid "Hardness"
-msgstr "Trdota"
+msgctxt "undo-type"
+msgid "Lock/Unlock position"
+msgstr "Zakleni/odkleni položaj"
 
 #: ../app/core/core-enums.c:1159
-msgctxt "dynamics-output-type"
-msgid "Force"
-msgstr "Sila"
+msgctxt "undo-type"
+msgid "New layer"
+msgstr "Nova plast"
 
 #: ../app/core/core-enums.c:1160
-msgctxt "dynamics-output-type"
-msgid "Aspect ratio"
-msgstr "Razmerje stranic"
+msgctxt "undo-type"
+msgid "Delete layer"
+msgstr "Izbriši plast"
 
 #: ../app/core/core-enums.c:1161
-msgctxt "dynamics-output-type"
-msgid "Spacing"
-msgstr "Razmik"
+msgctxt "undo-type"
+msgid "Set layer mode"
+msgstr "Nastavi način plasti"
 
 #: ../app/core/core-enums.c:1162
-msgctxt "dynamics-output-type"
-msgid "Rate"
-msgstr "Mera"
+msgctxt "undo-type"
+msgid "Set layer opacity"
+msgstr "Nastavi prekrivnost plasti"
 
 #: ../app/core/core-enums.c:1163
-msgctxt "dynamics-output-type"
-msgid "Flow"
-msgstr "Potek"
+msgctxt "undo-type"
+msgid "Lock/Unlock alpha channel"
+msgstr "Zakleni/odkleni kanal alfa"
 
 #: ../app/core/core-enums.c:1164
-msgctxt "dynamics-output-type"
-msgid "Jitter"
-msgstr "Razgibanost"
+msgctxt "undo-type"
+msgid "Suspend group layer resize"
+msgstr "Prekini s spreminjanjem velikosti skupine plasti"
 
-#: ../app/core/core-enums.c:1192
-msgctxt "filter-region"
-msgid "Use the selection as input"
-msgstr "Uporabi izbor kot vhod"
+#: ../app/core/core-enums.c:1165
+msgctxt "undo-type"
+msgid "Resume group layer resize"
+msgstr "Nadaljuj s spreminjanjem velikosti skupine plasti"
 
-#: ../app/core/core-enums.c:1193
-msgctxt "filter-region"
-msgid "Use the entire layer as input"
-msgstr "Uporabi celotno plast kot vhod"
+#: ../app/core/core-enums.c:1166
+msgctxt "undo-type"
+msgid "Suspend group layer mask"
+msgstr "Prekini s masko skupine plasti"
 
-#: ../app/core/core-enums.c:1222
-msgctxt "channel-border-style"
-msgid "Hard"
-msgstr "Ostro"
+#: ../app/core/core-enums.c:1167
+msgctxt "undo-type"
+msgid "Resume group layer mask"
+msgstr "Nadaljuj z masko skupine plasti"
 
-#: ../app/core/core-enums.c:1223
-msgctxt "channel-border-style"
-msgid "Smooth"
-msgstr "Gladko"
+#: ../app/core/core-enums.c:1168
+msgctxt "undo-type"
+msgid "Start transforming group layer"
+msgstr "Začni preoblikovati skupinsko plast"
 
-#: ../app/core/core-enums.c:1224
-msgctxt "channel-border-style"
-msgid "Feathered"
-msgstr "Operjeno"
+#: ../app/core/core-enums.c:1169
+msgctxt "undo-type"
+msgid "End transforming group layer"
+msgstr "Končaj preoblikovanje skupine plasti"
+
+#: ../app/core/core-enums.c:1170
+msgctxt "undo-type"
+msgid "Convert group layer"
+msgstr "Pretvori skupinsko plast"
+
+#: ../app/core/core-enums.c:1171
+msgctxt "undo-type"
+msgid "Text layer"
+msgstr "Plast besedila"
+
+#: ../app/core/core-enums.c:1172
+msgctxt "undo-type"
+msgid "Text layer modification"
+msgstr "Sprememba besedilne plasti"
+
+#: ../app/core/core-enums.c:1173
+msgctxt "undo-type"
+msgid "Convert text layer"
+msgstr "Pretvori plast besedila"
+
+#: ../app/core/core-enums.c:1175
+msgctxt "undo-type"
+msgid "Delete layer mask"
+msgstr "Izbriši masko plasti"
+
+#: ../app/core/core-enums.c:1177
+msgctxt "undo-type"
+msgid "Show layer mask"
+msgstr "Pokaži masko plasti"
+
+#: ../app/core/core-enums.c:1178
+msgctxt "undo-type"
+msgid "New channel"
+msgstr "Nov kanal"
+
+#: ../app/core/core-enums.c:1179
+msgctxt "undo-type"
+msgid "Delete channel"
+msgstr "Izbriši kanal"
+
+#: ../app/core/core-enums.c:1180
+msgctxt "undo-type"
+msgid "Channel color"
+msgstr "Barva kanala"
+
+#: ../app/core/core-enums.c:1181
+msgctxt "undo-type"
+msgid "New path"
+msgstr "Nova pot"
+
+#: ../app/core/core-enums.c:1182
+msgctxt "undo-type"
+msgid "Delete path"
+msgstr "Izbriši pot"
+
+#: ../app/core/core-enums.c:1183
+msgctxt "undo-type"
+msgid "Path modification"
+msgstr "Sprememba poti"
+
+#: ../app/core/core-enums.c:1185
+msgctxt "undo-type"
+msgid "Transform grid"
+msgstr "Preoblikuj mrežo"
+
+#: ../app/core/core-enums.c:1187
+msgctxt "undo-type"
+msgid "Ink"
+msgstr "Črnilo"
+
+#: ../app/core/core-enums.c:1188
+msgctxt "undo-type"
+msgid "Select foreground"
+msgstr "Izberi ospredje"
+
+#: ../app/core/core-enums.c:1191
+msgctxt "undo-type"
+msgid "Not undoable"
+msgstr "Ni mogoče razveljaviti"
+
+#: ../app/core/core-enums.c:1226
+msgctxt "view-size"
+msgid "Tiny"
+msgstr "droben"
+
+#: ../app/core/core-enums.c:1227
+msgctxt "view-size"
+msgid "Very small"
+msgstr "zelo majhen"
+
+#: ../app/core/core-enums.c:1228
+msgctxt "view-size"
+msgid "Small"
+msgstr "majhen"
+
+#: ../app/core/core-enums.c:1229
+msgctxt "view-size"
+msgid "Medium"
+msgstr "srednji"
+
+#: ../app/core/core-enums.c:1230
+msgctxt "view-size"
+msgid "Large"
+msgstr "velik"
+
+#: ../app/core/core-enums.c:1231
+msgctxt "view-size"
+msgid "Very large"
+msgstr "izjemno velik"
+
+#: ../app/core/core-enums.c:1232
+msgctxt "view-size"
+msgid "Huge"
+msgstr "velikanski"
+
+#: ../app/core/core-enums.c:1233
+msgctxt "view-size"
+msgid "Enormous"
+msgstr "ogromen"
+
+#: ../app/core/core-enums.c:1234
+msgctxt "view-size"
+msgid "Gigantic"
+msgstr "gigantski"
+
+#: ../app/core/core-enums.c:1262
+msgctxt "view-type"
+msgid "View as list"
+msgstr "Pokaži kot seznam"
+
+#: ../app/core/core-enums.c:1263
+msgctxt "view-type"
+msgid "View as grid"
+msgstr "Pokaži kot mrežo"
 
 #. initialize babl fishes
 #: ../app/core/gimp.c:502 ../app/core/gimp.c:532
@@ -13347,6 +13463,14 @@ msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Premakni vzorčno točko"
 
+#: ../app/core/gimpimage-sample-points.c:146
+#, fuzzy
+#| msgctxt "sample-points-action"
+#| msgid "Sample Point Menu"
+msgctxt "undo-type"
+msgid "Set Sample Point Pick Mode"
+msgstr "Meni vzorčne točke"
+
 #: ../app/core/gimpimage-scale.c:79
 msgctxt "undo-type"
 msgid "Scale Image"
@@ -13443,7 +13567,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1037
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1043
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -13519,7 +13643,7 @@ msgstr "Plasti ni mogoče dvigniti višje."
 msgid "Layer cannot be lowered more."
 msgstr "Plasti ni mogoče bolj spustiti."
 
-#: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1908
+#: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1914
 #: ../app/core/gimplayermask.c:228
 #, c-format
 msgid "%s mask"
@@ -13534,60 +13658,60 @@ msgstr ""
 "Plavajoči izbor\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1814
+#: ../app/core/gimplayer.c:1820
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Maske plasti ni mogoče dodati, ker jo plast že ima."
 
-#: ../app/core/gimplayer.c:1825
+#: ../app/core/gimplayer.c:1831
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Maske drugačnih mer, kot so mere plasti, ni mogoče dodati."
 
-#: ../app/core/gimplayer.c:1831
+#: ../app/core/gimplayer.c:1837
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodaj masko plasti"
 
-#: ../app/core/gimplayer.c:1949
+#: ../app/core/gimplayer.c:1955
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi alfo v masko"
 
-#: ../app/core/gimplayer.c:2111
+#: ../app/core/gimplayer.c:2117
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Uporabi masko plasti"
 
-#: ../app/core/gimplayer.c:2112
+#: ../app/core/gimplayer.c:2118
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Izbriši masko plasti"
 
-#: ../app/core/gimplayer.c:2214
+#: ../app/core/gimplayer.c:2220
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Omogoči masko plasti"
 
-#: ../app/core/gimplayer.c:2215
+#: ../app/core/gimplayer.c:2221
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Onemogoči masko plasti"
 
-#: ../app/core/gimplayer.c:2291
+#: ../app/core/gimplayer.c:2297
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Pokaži masko plasti"
 
-#: ../app/core/gimplayer.c:2365
+#: ../app/core/gimplayer.c:2371
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: ../app/core/gimplayer.c:2400
+#: ../app/core/gimplayer.c:2406
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Odstrani kanal alfa"
 
-#: ../app/core/gimplayer.c:2421
+#: ../app/core/gimplayer.c:2427
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Plast na velikost slike"
@@ -14711,7 +14835,7 @@ msgstr "Lastnosti slike"
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:351
 #: ../app/tools/gimpgradienttool-editor.c:1857
-#: ../app/tools/gimpmeasuretool.c:735 ../app/widgets/gimpcontrollerlist.c:640
+#: ../app/tools/gimpmeasuretool.c:715 ../app/widgets/gimpcontrollerlist.c:640
 #: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:163
 msgid "_Close"
@@ -14848,11 +14972,11 @@ msgid "_Opacity:"
 msgstr "_Prekrivnost:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:810
+#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:790
 msgid "Width:"
 msgstr "Širina:"
 
-#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:838
+#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:818
 msgid "Height:"
 msgstr "Višina:"
 
@@ -16822,92 +16946,113 @@ msgstr "Zakleni pote_ze poti"
 msgid "Lock path _position"
 msgstr "Zakleni polo_žaj poti"
 
-#: ../app/display/display-enums.c:124
+#: ../app/display/display-enums.c:88
+#, fuzzy
+#| msgid "Auto"
+msgctxt "compass-orientation"
+msgid "Auto"
+msgstr "Samodejno"
+
+#: ../app/display/display-enums.c:89
+#, fuzzy
+#| msgid "Horizontal"
+msgctxt "compass-orientation"
+msgid "Horizontal"
+msgstr "Vodoravno"
+
+#: ../app/display/display-enums.c:90
+#, fuzzy
+#| msgid "Vertical"
+msgctxt "compass-orientation"
+msgid "Vertical"
+msgstr "Navpično"
+
+#: ../app/display/display-enums.c:155
 msgctxt "guides-type"
 msgid "No guides"
 msgstr "Brez vodil"
 
-#: ../app/display/display-enums.c:125
+#: ../app/display/display-enums.c:156
 msgctxt "guides-type"
 msgid "Center lines"
 msgstr "Središči črte"
 
-#: ../app/display/display-enums.c:126
+#: ../app/display/display-enums.c:157
 msgctxt "guides-type"
 msgid "Rule of thirds"
 msgstr "Pravilo tretjin"
 
-#: ../app/display/display-enums.c:127
+#: ../app/display/display-enums.c:158
 msgctxt "guides-type"
 msgid "Rule of fifths"
 msgstr "Pravilo petin"
 
-#: ../app/display/display-enums.c:128
+#: ../app/display/display-enums.c:159
 msgctxt "guides-type"
 msgid "Golden sections"
 msgstr "Zlati rez"
 
-#: ../app/display/display-enums.c:129
+#: ../app/display/display-enums.c:160
 msgctxt "guides-type"
 msgid "Diagonal lines"
 msgstr "Diagonalne črte"
 
-#: ../app/display/display-enums.c:130
+#: ../app/display/display-enums.c:161
 msgctxt "guides-type"
 msgid "Number of lines"
 msgstr "Število črt"
 
-#: ../app/display/display-enums.c:131
+#: ../app/display/display-enums.c:162
 msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Razmik med črtami"
 
-#: ../app/display/display-enums.c:313
+#: ../app/display/display-enums.c:344
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Razmerje stranic"
 
-#: ../app/display/display-enums.c:314
+#: ../app/display/display-enums.c:345
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "Širina"
 
-#: ../app/display/display-enums.c:315
+#: ../app/display/display-enums.c:346
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "Višina"
 
-#: ../app/display/display-enums.c:316
+#: ../app/display/display-enums.c:347
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
 msgstr "Velikost"
 
-#: ../app/display/display-enums.c:409
+#: ../app/display/display-enums.c:440
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
 msgstr "Dodaj / preoblikuj"
 
-#: ../app/display/display-enums.c:410
+#: ../app/display/display-enums.c:441
 msgctxt "transform-handle-mode"
 msgid "Move"
 msgstr "Premakni"
 
-#: ../app/display/display-enums.c:411
+#: ../app/display/display-enums.c:442
 msgctxt "transform-handle-mode"
 msgid "Remove"
 msgstr "Odstrani"
 
-#: ../app/display/display-enums.c:440
+#: ../app/display/display-enums.c:471
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Oblikuj"
 
-#: ../app/display/display-enums.c:441
+#: ../app/display/display-enums.c:472
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Uredi"
 
-#: ../app/display/display-enums.c:442
+#: ../app/display/display-enums.c:473
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Premakni"
@@ -17141,7 +17286,7 @@ msgid "Select Rotation Angle"
 msgstr "Izberite kot sukanja po meri"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:782
+#: ../app/tools/gimpmeasuretool.c:762
 msgid "Angle:"
 msgstr "Kot:"
 
@@ -17185,9 +17330,9 @@ msgstr "(brez)"
 msgid "not color managed"
 msgstr "ni barvno upravljano"
 
-#: ../app/display/gimpdisplayshell-utils.c:149
-#: ../app/tools/gimpmeasuretool.c:612 ../app/tools/gimpmeasuretool.c:765
-#: ../app/tools/gimpmeasuretool.c:821 ../app/tools/gimpmeasuretool.c:849
+#: ../app/display/gimpdisplayshell-utils.c:174
+#: ../app/tools/gimpmeasuretool.c:592 ../app/tools/gimpmeasuretool.c:745
+#: ../app/tools/gimpmeasuretool.c:801 ../app/tools/gimpmeasuretool.c:829
 msgid "pixels"
 msgstr "slikovnih točk"
 
@@ -17196,27 +17341,27 @@ msgstr "slikovnih točk"
 msgid "Cancel <i>%s</i>"
 msgstr "Prekliči <i>%s</i>"
 
-#: ../app/display/gimptoolcompass.c:830
+#: ../app/display/gimptoolcompass.c:845
 msgid "Click to place vertical and horizontal guides"
 msgstr "Kliknite za postavitev navpičnih in vodoravnih vodil"
 
-#: ../app/display/gimptoolcompass.c:838
+#: ../app/display/gimptoolcompass.c:853
 msgid "Click to place a horizontal guide"
 msgstr "Kliknite za postavitev vodoravnega vodila"
 
-#: ../app/display/gimptoolcompass.c:846
+#: ../app/display/gimptoolcompass.c:861
 msgid "Click to place a vertical guide"
 msgstr "Kliknite za postavitev navpičnega vodnika"
 
-#: ../app/display/gimptoolcompass.c:854
+#: ../app/display/gimptoolcompass.c:869
 msgid "Click-Drag to add a new point"
 msgstr "Kliknite in povlecite za dodajanje nove točke"
 
-#: ../app/display/gimptoolcompass.c:865 ../app/tools/gimpiscissorstool.c:911
+#: ../app/display/gimptoolcompass.c:880 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Kliknite in povlecite, da premaknete točko."
 
-#: ../app/display/gimptoolcompass.c:882
+#: ../app/display/gimptoolcompass.c:897
 msgid "Click-Drag to move all points"
 msgstr "Kliknite in povlecite za premik vseh točk"
 
@@ -17235,7 +17380,7 @@ msgid "Click-Drag to rotate"
 msgstr "Kliknite-povlecite za vrtenje"
 
 #: ../app/display/gimptoolgyroscope.c:731 ../app/display/gimptoolline.c:1563
-#: ../app/tools/gimppainttool.c:582
+#: ../app/tools/gimppainttool.c:587
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s za nespremenljive kote"
@@ -17601,82 +17746,82 @@ msgstr "'%s:' ni veljaven zapis URI"
 msgid "Invalid character sequence in URI"
 msgstr "Neveljavno zaporedje znakov v naslovu URI"
 
-#: ../app/gegl/gimp-babl.c:316 ../app/gegl/gimp-babl.c:317
-#: ../app/gegl/gimp-babl.c:318 ../app/gegl/gimp-babl.c:319
-#: ../app/gegl/gimp-babl.c:320 ../app/gegl/gimp-babl.c:321
-#: ../app/gegl/gimp-babl.c:322 ../app/gegl/gimp-babl.c:323
-#: ../app/gegl/gimp-babl.c:324 ../app/gegl/gimp-babl.c:325
-#: ../app/gegl/gimp-babl.c:326 ../app/gegl/gimp-babl.c:327
+#: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
+#: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
+#: ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
+#: ../app/gegl/gimp-babl.c:323 ../app/gegl/gimp-babl.c:324
+#: ../app/gegl/gimp-babl.c:325 ../app/gegl/gimp-babl.c:326
+#: ../app/gegl/gimp-babl.c:327 ../app/gegl/gimp-babl.c:328
 #: ../app/plug-in/gimppluginprocedure.c:1013
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/gegl/gimp-babl.c:329 ../app/gegl/gimp-babl.c:330
-#: ../app/gegl/gimp-babl.c:331 ../app/gegl/gimp-babl.c:332
-#: ../app/gegl/gimp-babl.c:333 ../app/gegl/gimp-babl.c:334
-#: ../app/gegl/gimp-babl.c:335 ../app/gegl/gimp-babl.c:336
-#: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338
-#: ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340
+#: ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331
+#: ../app/gegl/gimp-babl.c:332 ../app/gegl/gimp-babl.c:333
+#: ../app/gegl/gimp-babl.c:334 ../app/gegl/gimp-babl.c:335
+#: ../app/gegl/gimp-babl.c:336 ../app/gegl/gimp-babl.c:337
+#: ../app/gegl/gimp-babl.c:338 ../app/gegl/gimp-babl.c:339
+#: ../app/gegl/gimp-babl.c:340 ../app/gegl/gimp-babl.c:341
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../app/gegl/gimp-babl.c:342 ../app/gegl/gimp-babl.c:343
-#: ../app/gegl/gimp-babl.c:344 ../app/gegl/gimp-babl.c:345
-#: ../app/gegl/gimp-babl.c:346 ../app/gegl/gimp-babl.c:347
-#: ../app/gegl/gimp-babl.c:348 ../app/gegl/gimp-babl.c:349
-#: ../app/gegl/gimp-babl.c:350 ../app/gegl/gimp-babl.c:351
-#: ../app/gegl/gimp-babl.c:352 ../app/gegl/gimp-babl.c:353
+#: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
+#: ../app/gegl/gimp-babl.c:345 ../app/gegl/gimp-babl.c:346
+#: ../app/gegl/gimp-babl.c:347 ../app/gegl/gimp-babl.c:348
+#: ../app/gegl/gimp-babl.c:349 ../app/gegl/gimp-babl.c:350
+#: ../app/gegl/gimp-babl.c:351 ../app/gegl/gimp-babl.c:352
+#: ../app/gegl/gimp-babl.c:353 ../app/gegl/gimp-babl.c:354
 #: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "Grayscale"
 msgstr "Sivinsko"
 
-#: ../app/gegl/gimp-babl.c:355 ../app/gegl/gimp-babl.c:356
-#: ../app/gegl/gimp-babl.c:357 ../app/gegl/gimp-babl.c:358
-#: ../app/gegl/gimp-babl.c:359 ../app/gegl/gimp-babl.c:360
-#: ../app/gegl/gimp-babl.c:361 ../app/gegl/gimp-babl.c:362
-#: ../app/gegl/gimp-babl.c:363 ../app/gegl/gimp-babl.c:364
-#: ../app/gegl/gimp-babl.c:365 ../app/gegl/gimp-babl.c:366
+#: ../app/gegl/gimp-babl.c:356 ../app/gegl/gimp-babl.c:357
+#: ../app/gegl/gimp-babl.c:358 ../app/gegl/gimp-babl.c:359
+#: ../app/gegl/gimp-babl.c:360 ../app/gegl/gimp-babl.c:361
+#: ../app/gegl/gimp-babl.c:362 ../app/gegl/gimp-babl.c:363
+#: ../app/gegl/gimp-babl.c:364 ../app/gegl/gimp-babl.c:365
+#: ../app/gegl/gimp-babl.c:366 ../app/gegl/gimp-babl.c:367
 msgid "Grayscale-alpha"
 msgstr "Sivinsko-alfa"
 
-#: ../app/gegl/gimp-babl.c:368 ../app/gegl/gimp-babl.c:369
-#: ../app/gegl/gimp-babl.c:370 ../app/gegl/gimp-babl.c:371
-#: ../app/gegl/gimp-babl.c:372 ../app/gegl/gimp-babl.c:373
-#: ../app/gegl/gimp-babl.c:374 ../app/gegl/gimp-babl.c:375
-#: ../app/gegl/gimp-babl.c:376 ../app/gegl/gimp-babl.c:377
-#: ../app/gegl/gimp-babl.c:378 ../app/gegl/gimp-babl.c:379
+#: ../app/gegl/gimp-babl.c:369 ../app/gegl/gimp-babl.c:370
+#: ../app/gegl/gimp-babl.c:371 ../app/gegl/gimp-babl.c:372
+#: ../app/gegl/gimp-babl.c:373 ../app/gegl/gimp-babl.c:374
+#: ../app/gegl/gimp-babl.c:375 ../app/gegl/gimp-babl.c:376
+#: ../app/gegl/gimp-babl.c:377 ../app/gegl/gimp-babl.c:378
+#: ../app/gegl/gimp-babl.c:379 ../app/gegl/gimp-babl.c:380
 msgid "Red component"
 msgstr "Rdeča komponenta"
 
-#: ../app/gegl/gimp-babl.c:381 ../app/gegl/gimp-babl.c:382
-#: ../app/gegl/gimp-babl.c:383 ../app/gegl/gimp-babl.c:384
-#: ../app/gegl/gimp-babl.c:385 ../app/gegl/gimp-babl.c:386
-#: ../app/gegl/gimp-babl.c:387 ../app/gegl/gimp-babl.c:388
-#: ../app/gegl/gimp-babl.c:389 ../app/gegl/gimp-babl.c:390
-#: ../app/gegl/gimp-babl.c:391 ../app/gegl/gimp-babl.c:392
+#: ../app/gegl/gimp-babl.c:382 ../app/gegl/gimp-babl.c:383
+#: ../app/gegl/gimp-babl.c:384 ../app/gegl/gimp-babl.c:385
+#: ../app/gegl/gimp-babl.c:386 ../app/gegl/gimp-babl.c:387
+#: ../app/gegl/gimp-babl.c:388 ../app/gegl/gimp-babl.c:389
+#: ../app/gegl/gimp-babl.c:390 ../app/gegl/gimp-babl.c:391
+#: ../app/gegl/gimp-babl.c:392 ../app/gegl/gimp-babl.c:393
 msgid "Green component"
 msgstr "Zelena komponenta"
 
-#: ../app/gegl/gimp-babl.c:394 ../app/gegl/gimp-babl.c:395
-#: ../app/gegl/gimp-babl.c:396 ../app/gegl/gimp-babl.c:397
-#: ../app/gegl/gimp-babl.c:398 ../app/gegl/gimp-babl.c:399
-#: ../app/gegl/gimp-babl.c:400 ../app/gegl/gimp-babl.c:401
-#: ../app/gegl/gimp-babl.c:402 ../app/gegl/gimp-babl.c:403
-#: ../app/gegl/gimp-babl.c:404 ../app/gegl/gimp-babl.c:405
+#: ../app/gegl/gimp-babl.c:395 ../app/gegl/gimp-babl.c:396
+#: ../app/gegl/gimp-babl.c:397 ../app/gegl/gimp-babl.c:398
+#: ../app/gegl/gimp-babl.c:399 ../app/gegl/gimp-babl.c:400
+#: ../app/gegl/gimp-babl.c:401 ../app/gegl/gimp-babl.c:402
+#: ../app/gegl/gimp-babl.c:403 ../app/gegl/gimp-babl.c:404
+#: ../app/gegl/gimp-babl.c:405 ../app/gegl/gimp-babl.c:406
 msgid "Blue component"
 msgstr "Modra komponenta"
 
-#: ../app/gegl/gimp-babl.c:407 ../app/gegl/gimp-babl.c:408
-#: ../app/gegl/gimp-babl.c:409 ../app/gegl/gimp-babl.c:410
-#: ../app/gegl/gimp-babl.c:411 ../app/gegl/gimp-babl.c:412
+#: ../app/gegl/gimp-babl.c:408 ../app/gegl/gimp-babl.c:409
+#: ../app/gegl/gimp-babl.c:410 ../app/gegl/gimp-babl.c:411
+#: ../app/gegl/gimp-babl.c:412 ../app/gegl/gimp-babl.c:413
 msgid "Alpha component"
 msgstr "Alfa komponenta"
 
-#: ../app/gegl/gimp-babl.c:440
+#: ../app/gegl/gimp-babl.c:441
 msgid "Indexed-alpha"
 msgstr "Indeksirana-alfa"
 
-#: ../app/gegl/gimp-babl.c:442 ../app/plug-in/gimppluginprocedure.c:1049
+#: ../app/gegl/gimp-babl.c:443 ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Indexed"
 msgstr "Indeksirana"
 
@@ -19875,11 +20020,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Preklicano"
 
-#: ../app/plug-in/gimppluginmanager.c:230
+#: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
 msgstr "Prevajalniki vstavkov"
 
-#: ../app/plug-in/gimppluginmanager.c:236
+#: ../app/plug-in/gimppluginmanager.c:246
 msgid "Plug-in Environment"
 msgstr "Okolje vstavkov"
 
@@ -19942,7 +20087,7 @@ msgstr "Indeksirano z alfo"
 msgid "This plug-in only works on the following layer types:"
 msgstr "Ta vstavek deluje le na naslednjih vrstah plasti:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1265
+#: ../app/plug-in/gimppluginprocedure.c:1274
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -19951,7 +20096,7 @@ msgstr ""
 "Napaka klica pri '%s':\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1277
+#: ../app/plug-in/gimppluginprocedure.c:1286
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -19960,22 +20105,22 @@ msgstr ""
 "Napaka pri izvajanju '%s':\n"
 "%s"
 
-#: ../app/plug-in/plug-in-rc.c:232
+#: ../app/plug-in/plug-in-rc.c:237
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Preskakovanje '%s': napačna različica protokola GIMP."
 
-#: ../app/plug-in/plug-in-rc.c:239
+#: ../app/plug-in/plug-in-rc.c:244
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Preskakovanje '%s': napačna različica zapisa datoteke pluginrc."
 
-#: ../app/plug-in/plug-in-rc.c:542
+#: ../app/plug-in/plug-in-rc.c:547
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "neveljavna vrednost '%s' za vrsto ikone"
 
-#: ../app/plug-in/plug-in-rc.c:557
+#: ../app/plug-in/plug-in-rc.c:562
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "neveljavna vrednost '%ld' za vrsto ikone"
@@ -20291,11 +20436,11 @@ msgstr "Izberite s seznama pogostih barvnih temperatur"
 msgid "New Seed"
 msgstr "Novo sejanje"
 
-#: ../app/propgui/gimppropgui.c:376
+#: ../app/propgui/gimppropgui.c:379
 msgid "Pick color from the image"
 msgstr "Izberite barvo s slike"
 
-#: ../app/propgui/gimppropgui.c:520
+#: ../app/propgui/gimppropgui.c:523
 msgid "This operation has no editable properties"
 msgstr "Ta operacija nima lastnosti, ki bi jih lahko spremenili"
 
@@ -20318,7 +20463,7 @@ msgstr ""
 "Nekaterih pisav ni mogoče naložiti: \n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1559
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1590
 msgid "Add Text Layer"
 msgstr "Dodaj plast besedila"
 
@@ -20326,51 +20471,51 @@ msgstr "Dodaj plast besedila"
 msgid "Empty text parasite"
 msgstr "Sprazni parazit besedila"
 
-#: ../app/text/gimptextlayer.c:152
+#: ../app/text/gimptextlayer.c:156
 msgid "Text Layer"
 msgstr "Plast besedila"
 
-#: ../app/text/gimptextlayer.c:153
+#: ../app/text/gimptextlayer.c:157
 msgid "Rename Text Layer"
 msgstr "Preimenuj plast besedila"
 
-#: ../app/text/gimptextlayer.c:154
+#: ../app/text/gimptextlayer.c:158
 msgid "Move Text Layer"
 msgstr "Premakni plast besedila"
 
-#: ../app/text/gimptextlayer.c:155
+#: ../app/text/gimptextlayer.c:159
 msgid "Scale Text Layer"
 msgstr "Spremeni merilo plasti besedila"
 
-#: ../app/text/gimptextlayer.c:156
+#: ../app/text/gimptextlayer.c:160
 msgid "Resize Text Layer"
 msgstr "Spremeni velikost plasti z besedilom"
 
-#: ../app/text/gimptextlayer.c:157
+#: ../app/text/gimptextlayer.c:161
 msgid "Flip Text Layer"
 msgstr "Prezrcali plast besedila"
 
-#: ../app/text/gimptextlayer.c:158
+#: ../app/text/gimptextlayer.c:162
 msgid "Rotate Text Layer"
 msgstr "Zasukaj plast besedila"
 
-#: ../app/text/gimptextlayer.c:159
+#: ../app/text/gimptextlayer.c:163
 msgid "Transform Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: ../app/text/gimptextlayer.c:571
+#: ../app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "Zavrži besedilne podatke"
 
-#: ../app/text/gimptextlayer.c:643
+#: ../app/text/gimptextlayer.c:709
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zaradi odsotnosti vseh pisav funkcionalnost besedila ni na voljo."
 
-#: ../app/text/gimptextlayer.c:706
+#: ../app/text/gimptextlayer.c:772
 msgid "Empty Text Layer"
 msgstr "Sprazni plast besedila"
 
-#: ../app/text/gimptextlayer.c:759
+#: ../app/text/gimptextlayer.c:825
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -20393,7 +20538,7 @@ msgstr ""
 "Nekatere lastnosti besedila so morda napačne. Če plasti z besedilom ne "
 "želite urejati, je skrb odveč."
 
-#: ../app/text/gimptextlayout.c:579
+#: ../app/text/gimptextlayout.c:585
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -20765,7 +20910,7 @@ msgid "Choose what the color picker will do"
 msgstr "Izberite, kaj bo počela kapalka"
 
 #: ../app/tools/gimpcolorpickeroptions.c:87
-#: ../app/tools/gimpmeasureoptions.c:68
+#: ../app/tools/gimpmeasureoptions.c:79
 msgid "Use info window"
 msgstr "Uporabi okno s podatki"
 
@@ -21851,50 +21996,67 @@ msgstr "Orodje Povečava: Prilagodi raven povečave"
 msgid "_Zoom"
 msgstr "_Povečava"
 
-#: ../app/tools/gimpmeasureoptions.c:69
+#: ../app/tools/gimpmeasureoptions.c:71
+#, fuzzy
+#| msgid "Indentation"
+msgid "Orientation"
+msgstr "Usmerjenost"
+
+#: ../app/tools/gimpmeasureoptions.c:72
+msgid "Orientation against which the angle is measured"
+msgstr ""
+
+#: ../app/tools/gimpmeasureoptions.c:80
 msgid "Open a floating dialog to view details about measurements"
 msgstr "Odpri plavajoče pogovorno okno za ogled podrobnosti o merah"
 
+#. the orientation frame
+#: ../app/tools/gimpmeasureoptions.c:148
+#, fuzzy, c-format
+#| msgid "Direction  (%s)"
+msgid "Orientation  (%s)"
+msgstr "Smer (%s)"
+
 #. the straighten frame
 #. the straighten button
-#: ../app/tools/gimpmeasureoptions.c:134 ../app/tools/gimpmeasureoptions.c:144
-#: ../app/tools/gimpmeasuretool.c:336
+#: ../app/tools/gimpmeasureoptions.c:161 ../app/tools/gimpmeasureoptions.c:171
+#: ../app/tools/gimpmeasuretool.c:349
 msgid "Straighten"
 msgstr "Poravnaj"
 
-#: ../app/tools/gimpmeasureoptions.c:148
+#: ../app/tools/gimpmeasureoptions.c:175
 msgid "Rotate the active layer, selection or path by the measured angle"
 msgstr "Zasukaj dejavno plast, izbor ali pot za izmerjeni kot"
 
-#: ../app/tools/gimpmeasuretool.c:129
+#: ../app/tools/gimpmeasuretool.c:130
 msgid "Measure"
 msgstr "Izmeri"
 
-#: ../app/tools/gimpmeasuretool.c:130
+#: ../app/tools/gimpmeasuretool.c:131
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Orodje Merilo: Izmeri razdalje in kote"
 
-#: ../app/tools/gimpmeasuretool.c:131
+#: ../app/tools/gimpmeasuretool.c:132
 msgid "_Measure"
 msgstr "_Izmeri"
 
-#: ../app/tools/gimpmeasuretool.c:151
+#: ../app/tools/gimpmeasuretool.c:153
 msgid "Straightening"
 msgstr "Ravnanje"
 
-#: ../app/tools/gimpmeasuretool.c:170
+#: ../app/tools/gimpmeasuretool.c:172
 msgid "Click-Drag to create a line"
 msgstr "Kliknite in povlecite za ustvarjanje črte."
 
-#: ../app/tools/gimpmeasuretool.c:406
+#: ../app/tools/gimpmeasuretool.c:422
 msgid "Add Guides"
 msgstr "Dodaj vodila"
 
-#: ../app/tools/gimpmeasuretool.c:729
+#: ../app/tools/gimpmeasuretool.c:709
 msgid "Measure Distances and Angles"
 msgstr "Izmeri razdalje in kote"
 
-#: ../app/tools/gimpmeasuretool.c:754
+#: ../app/tools/gimpmeasuretool.c:734
 msgid "Distance:"
 msgstr "Razdalja:"
 
@@ -22092,16 +22254,16 @@ msgstr "%s za izbor barve"
 msgid "Cannot paint on layer groups."
 msgstr "Na skupine plasti ni mogoče slikati."
 
-#: ../app/tools/gimppainttool.c:613
+#: ../app/tools/gimppainttool.c:618
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s za ravno črto"
 
-#: ../app/tools/gimppainttool.c:815
+#: ../app/tools/gimppainttool.c:820
 msgid "The active layer does not have an alpha channel."
 msgstr "Aktivna plast nima kanala alfa."
 
-#: ../app/tools/gimppainttool.c:825
+#: ../app/tools/gimppainttool.c:830
 msgid "The active layer's alpha channel is locked."
 msgstr "Kanal alfa aktivne plasti je zaklenjen."
 
@@ -22603,31 +22765,31 @@ msgstr "Orodje za besedilo: Ustvari ali uredi plasti besedila"
 msgid "Te_xt"
 msgstr "_Besedilo"
 
-#: ../app/tools/gimptexttool.c:1006
+#: ../app/tools/gimptexttool.c:1037
 msgid "Fonts are still loading"
 msgstr "Pisave so še vedno nalagajo"
 
-#: ../app/tools/gimptexttool.c:1017
+#: ../app/tools/gimptexttool.c:1048
 msgid "Text box: "
 msgstr "Besedilno polje: "
 
-#: ../app/tools/gimptexttool.c:1150
+#: ../app/tools/gimptexttool.c:1181
 msgid "Reshape Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: ../app/tools/gimptexttool.c:1670 ../app/tools/gimptexttool.c:1673
+#: ../app/tools/gimptexttool.c:1710 ../app/tools/gimptexttool.c:1713
 msgid "Confirm Text Editing"
 msgstr "Potrdi urejevanje besedila"
 
-#: ../app/tools/gimptexttool.c:1677
+#: ../app/tools/gimptexttool.c:1717
 msgid "Create _New Layer"
 msgstr "Ustvari _novo plast"
 
-#: ../app/tools/gimptexttool.c:1679
+#: ../app/tools/gimptexttool.c:1719
 msgid "_Edit"
 msgstr "Ur_edi"
 
-#: ../app/tools/gimptexttool.c:1701
+#: ../app/tools/gimptexttool.c:1741
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -22640,7 +22802,7 @@ msgstr ""
 "\n"
 "Lahko urejate plast ali pa iz lastnosti besedila ustvarite novo plast."
 
-#: ../app/tools/gimptexttool-editor.c:1296
+#: ../app/tools/gimptexttool-editor.c:1357
 msgid "GIMP Text Editor"
 msgstr "Urejevalnik besedila GIMP"
 
@@ -24335,7 +24497,7 @@ msgid "%s Curve"
 msgstr "Krivulja %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:477
-#: ../app/widgets/gimpdynamicsoutputeditor.c:209
+#: ../app/widgets/gimpdynamicsoutputeditor.c:211
 msgid "_Reset Curve"
 msgstr "Po_nastavi krivuljo"
 
@@ -24485,28 +24647,26 @@ msgstr "Po končnici"
 msgid "All export images"
 msgstr "Vse izvožene slike"
 
-#: ../app/widgets/gimpfiledialog.c:350
+#: ../app/widgets/gimpfiledialog.c:353
 msgid "_Help"
 msgstr "Po_moč"
 
-#: ../app/widgets/gimpfiledialog.c:756
-msgid "All files"
-msgstr "Vse datoteke"
+#: ../app/widgets/gimpfiledialog.c:783
+#, fuzzy
+#| msgid "All files"
+msgid "Show All Files"
+msgstr "Pokaži vse datoteke"
 
-#: ../app/widgets/gimpfiledialog.c:761
-msgid "All images"
-msgstr "Vse slike"
-
-#: ../app/widgets/gimpfiledialog.c:959
+#: ../app/widgets/gimpfiledialog.c:816
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Izberite vrsto datotek (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:184
+#: ../app/widgets/gimpfileprocview.c:199
 msgid "File Type"
 msgstr "Vrsta datoteke"
 
-#: ../app/widgets/gimpfileprocview.c:196
+#: ../app/widgets/gimpfileprocview.c:211
 msgid "Extensions"
 msgstr "Razširitve"
 
@@ -24929,7 +25089,7 @@ msgstr "Vtičnik"
 msgid "Progress"
 msgstr "Napredek"
 
-#: ../app/widgets/gimpsamplepointeditor.c:158
+#: ../app/widgets/gimpsamplepointeditor.c:161
 msgid ""
 "This image\n"
 "has no\n"
@@ -25169,7 +25329,7 @@ msgstr "Neveljavni podatki UTF-8 v datoteki '%s'."
 msgid "Writing text file '%s' failed: %s"
 msgstr "Zapisovanje besedilne datoteke »%s« ni uspelo: %s"
 
-#: ../app/widgets/gimptexteditor.c:221
+#: ../app/widgets/gimptexteditor.c:225
 msgid "_Use selected font"
 msgstr "_Uporabi izbrano pisavo"
 
@@ -25453,112 +25613,77 @@ msgctxt "circle-background"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:117
-msgctxt "color-frame-mode"
-msgid "Pixel"
-msgstr "Slikovna točka"
-
-#: ../app/widgets/widgets-enums.c:118
-msgctxt "color-frame-mode"
-msgid "RGB (%)"
-msgstr "RGB (%)"
-
-#: ../app/widgets/widgets-enums.c:119
-msgctxt "color-frame-mode"
-msgid "RGB (0..255)"
-msgstr "RGB (0..255)"
-
-#: ../app/widgets/widgets-enums.c:120
-msgctxt "color-frame-mode"
-msgid "HSV"
-msgstr "HSV"
-
-#: ../app/widgets/widgets-enums.c:121
-msgctxt "color-frame-mode"
-msgid "CIE LCh"
-msgstr "CIE LCh"
-
-#: ../app/widgets/widgets-enums.c:122
-msgctxt "color-frame-mode"
-msgid "CIE LAB"
-msgstr "Lab. CIE"
-
-#: ../app/widgets/widgets-enums.c:123
-msgctxt "color-frame-mode"
-msgid "CMYK"
-msgstr "CMYK"
-
-#: ../app/widgets/widgets-enums.c:153
+#: ../app/widgets/widgets-enums.c:114
 msgctxt "color-pick-target"
 msgid "Pick only"
 msgstr "Samo izberi"
 
-#: ../app/widgets/widgets-enums.c:154
+#: ../app/widgets/widgets-enums.c:115
 msgctxt "color-pick-target"
 msgid "Set foreground color"
 msgstr "Nastavi barvo ospredja"
 
-#: ../app/widgets/widgets-enums.c:155
+#: ../app/widgets/widgets-enums.c:116
 msgctxt "color-pick-target"
 msgid "Set background color"
 msgstr "Nastavi barvo ozadja"
 
-#: ../app/widgets/widgets-enums.c:156
+#: ../app/widgets/widgets-enums.c:117
 msgctxt "color-pick-target"
 msgid "Add to palette"
 msgstr "Dodaj na paleto"
 
-#: ../app/widgets/widgets-enums.c:215
+#: ../app/widgets/widgets-enums.c:176
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr "Linearni histogram"
 
-#: ../app/widgets/widgets-enums.c:216
+#: ../app/widgets/widgets-enums.c:177
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Logaritemski histogram"
 
-#: ../app/widgets/widgets-enums.c:252
+#: ../app/widgets/widgets-enums.c:213
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Ikona"
 
-#: ../app/widgets/widgets-enums.c:253
+#: ../app/widgets/widgets-enums.c:214
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Trenutno stanje"
 
-#: ../app/widgets/widgets-enums.c:254
+#: ../app/widgets/widgets-enums.c:215
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Besedilo"
 
-#: ../app/widgets/widgets-enums.c:255
+#: ../app/widgets/widgets-enums.c:216
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Opis"
 
-#: ../app/widgets/widgets-enums.c:256
+#: ../app/widgets/widgets-enums.c:217
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Ikona in besedilo"
 
-#: ../app/widgets/widgets-enums.c:257
+#: ../app/widgets/widgets-enums.c:218
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Ikona in opis"
 
-#: ../app/widgets/widgets-enums.c:258
+#: ../app/widgets/widgets-enums.c:219
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Stanje in besedilo"
 
-#: ../app/widgets/widgets-enums.c:259
+#: ../app/widgets/widgets-enums.c:220
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stanje in opis"
 
-#: ../app/widgets/widgets-enums.c:260
+#: ../app/widgets/widgets-enums.c:221
 msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Nedoločeno"
@@ -25692,3 +25817,10 @@ msgstr "zaobljeno"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "nejasno"
+
+#~ msgid "All images"
+#~ msgstr "Vse slike"
+
+#~ msgctxt "color-frame-mode"
+#~ msgid "HSV"
+#~ msgstr "HSV"
