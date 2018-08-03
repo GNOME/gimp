@@ -149,6 +149,7 @@ static void        gimp_projection_srgb_to_pixel         (GimpPickable    *picka
                                                           const Babl      *format,
                                                           gpointer         pixel);
 
+static void        gimp_projection_allocate_buffer       (GimpProjection  *proj);
 static void        gimp_projection_free_buffer           (GimpProjection  *proj);
 static void        gimp_projection_add_update_area       (GimpProjection  *proj,
                                                           gint             x,
@@ -179,7 +180,14 @@ static void        gimp_projection_projectable_invalidate(GimpProjectable *proje
 static void        gimp_projection_projectable_flush     (GimpProjectable *projectable,
                                                           gboolean         invalidate_preview,
                                                           GimpProjection  *proj);
-static void        gimp_projection_projectable_changed   (GimpProjectable *projectable,
+static void
+           gimp_projection_projectable_structure_changed (GimpProjectable *projectable,
+                                                          GimpProjection  *proj);
+static void   gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
+                                                          gint             old_x,
+                                                          gint             old_y,
+                                                          gint             old_w,
+                                                          gint             old_h,
                                                           GimpProjection  *proj);
 
 
@@ -402,22 +410,12 @@ gimp_projection_get_buffer (GimpPickable *pickable)
 
   if (! proj->priv->buffer)
     {
-      const Babl *format;
-      gint        width;
-      gint        height;
+      gint width;
+      gint height;
 
-      format = gimp_projection_get_format (GIMP_PICKABLE (proj));
       gimp_projectable_get_size (proj->priv->projectable, &width, &height);
 
-      proj->priv->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                            format);
-
-      proj->priv->validate_handler =
-        GIMP_TILE_HANDLER_VALIDATE (
-          gimp_tile_handler_projectable_new (proj->priv->projectable));
-
-      gimp_tile_handler_validate_assign (proj->priv->validate_handler,
-                                         proj->priv->buffer);
+      gimp_projection_allocate_buffer (proj);
 
       /*  This used to call gimp_tile_handler_validate_invalidate()
        *  which forced the entire projection to be constructed in one
@@ -429,8 +427,6 @@ gimp_projection_get_buffer (GimpPickable *pickable)
       gimp_projection_add_update_area (proj, 0, 0, width, height);
       proj->priv->invalidate_preview = TRUE;
       gimp_projection_flush (proj);
-
-      g_object_notify (G_OBJECT (pickable), "buffer");
     }
 
   return proj->priv->buffer;
@@ -522,7 +518,10 @@ gimp_projection_new (GimpProjectable *projectable)
                            G_CALLBACK (gimp_projection_projectable_flush),
                            proj, 0);
   g_signal_connect_object (projectable, "structure-changed",
-                           G_CALLBACK (gimp_projection_projectable_changed),
+                           G_CALLBACK (gimp_projection_projectable_structure_changed),
+                           proj, 0);
+  g_signal_connect_object (projectable, "bounds-changed",
+                           G_CALLBACK (gimp_projection_projectable_bounds_changed),
                            proj, 0);
 
   return proj;
@@ -659,6 +658,32 @@ gimp_projection_finish_draw (GimpProjection *proj)
 
 
 /*  private functions  */
+
+static void
+gimp_projection_allocate_buffer (GimpProjection *proj)
+{
+  const Babl *format;
+  gint        width;
+  gint        height;
+
+  if (proj->priv->buffer)
+    return;
+
+  format = gimp_projection_get_format (GIMP_PICKABLE (proj));
+  gimp_projectable_get_size (proj->priv->projectable, &width, &height);
+
+  proj->priv->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                        format);
+
+  proj->priv->validate_handler =
+    GIMP_TILE_HANDLER_VALIDATE (
+      gimp_tile_handler_projectable_new (proj->priv->projectable));
+
+  gimp_tile_handler_validate_assign (proj->priv->validate_handler,
+                                     proj->priv->buffer);
+
+  g_object_notify (G_OBJECT (proj), "buffer");
+}
 
 static void
 gimp_projection_free_buffer (GimpProjection  *proj)
@@ -1057,8 +1082,8 @@ gimp_projection_projectable_flush (GimpProjectable *projectable,
 }
 
 static void
-gimp_projection_projectable_changed (GimpProjectable *projectable,
-                                     GimpProjection  *proj)
+gimp_projection_projectable_structure_changed (GimpProjectable *projectable,
+                                               GimpProjection  *proj)
 {
   gint off_x, off_y;
   gint width, height;
@@ -1074,4 +1099,152 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
   proj->priv->priority_rect.y      = 0;
   proj->priv->priority_rect.width  = width;
   proj->priv->priority_rect.height = height;
+}
+
+static void
+gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
+                                            gint             old_x,
+                                            gint             old_y,
+                                            gint             old_w,
+                                            gint             old_h,
+                                            GimpProjection  *proj)
+{
+  GeglBuffer              *old_buffer = proj->priv->buffer;
+  GimpTileHandlerValidate *old_validate_handler;
+  gint                     x, y, w, h;
+  gint                     dx, dy;
+
+  if (! old_buffer)
+    {
+      gimp_projection_projectable_structure_changed (projectable, proj);
+
+      return;
+    }
+
+  gimp_projectable_get_offset (projectable, &x, &y);
+  gimp_projectable_get_size   (projectable, &w, &h);
+
+  if (x == old_x && y == old_y && w == old_w && h == old_h)
+    return;
+
+  dx = old_x - x;
+  dy = old_y - y;
+
+#if 1
+  /* FIXME:  when there's an offset between the new bounds and the old bounds,
+   * use gimp_projection_projectable_structure_changed(), instead of copying a
+   * shifted version of the old buffer, since the synchronous copy can take a
+   * notable amount of time for big buffers, when the offset is such that tiles
+   * are not COW-ed.  while gimp_projection_projectable_structure_changed()
+   * causes the projection to be re-rendered, which is overall slower, it's
+   * done asynchronously.
+   *
+   * this needs to be improved.
+   */
+  if (dx || dy)
+    {
+      gimp_projection_projectable_structure_changed (projectable, proj);
+
+      return;
+    }
+#endif
+
+  /* reallocate the buffer, and copy the old buffer to the corresponding
+   * region of the new buffer.  additionally, shift and clip all outstanding
+   * update regions as necessary.
+   */
+
+  old_validate_handler = proj->priv->validate_handler;
+
+  proj->priv->buffer           = NULL;
+  proj->priv->validate_handler = NULL;
+
+  gimp_projection_allocate_buffer (proj);
+
+  gimp_tile_handler_validate_buffer_copy (old_buffer,
+                                          GEGL_RECTANGLE (0, 0, old_w, old_h),
+                                          proj->priv->buffer,
+                                          GEGL_RECTANGLE (dx, dy, old_w, old_h));
+
+  if (old_validate_handler)
+    {
+      gimp_tile_handler_validate_unassign (old_validate_handler, old_buffer);
+
+      g_object_unref (old_validate_handler);
+    }
+
+  g_object_unref (old_buffer);
+
+  if (proj->priv->update_region)
+    {
+      const cairo_rectangle_int_t bounds = {0, 0, w, h};
+
+      cairo_region_translate           (proj->priv->update_region, dx, dy);
+      cairo_region_intersect_rectangle (proj->priv->update_region, &bounds);
+    }
+
+  if (proj->priv->chunk_render.idle_id)
+    {
+      const cairo_rectangle_int_t bounds = {0, 0, w, h};
+
+      proj->priv->chunk_render.x += dx;
+      proj->priv->chunk_render.y += dy;
+
+      proj->priv->chunk_render.work_x += dx;
+      proj->priv->chunk_render.work_y += dx;
+
+      if (proj->priv->chunk_render.update_region)
+        {
+          cairo_region_translate
+            (proj->priv->chunk_render.update_region, dx, dy);
+          cairo_region_intersect_rectangle
+            (proj->priv->chunk_render.update_region, &bounds);
+        }
+
+      if (! gimp_rectangle_intersect (proj->priv->chunk_render.x,
+                                      proj->priv->chunk_render.y,
+                                      proj->priv->chunk_render.width,
+                                      proj->priv->chunk_render.height,
+
+                                      0, 0, w, h,
+
+                                      &proj->priv->chunk_render.x,
+                                      &proj->priv->chunk_render.y,
+                                      &proj->priv->chunk_render.width,
+                                      &proj->priv->chunk_render.height))
+        {
+          if (! gimp_projection_chunk_render_next_area (proj))
+            gimp_projection_chunk_render_stop (proj);
+        }
+    }
+
+  if (proj->priv->priority_rect.width  > 0 &&
+      proj->priv->priority_rect.height > 0)
+    {
+      proj->priv->priority_rect.x += dx;
+      proj->priv->priority_rect.y += dy;
+
+      gimp_rectangle_intersect (proj->priv->priority_rect.x,
+                                proj->priv->priority_rect.y,
+                                proj->priv->priority_rect.width,
+                                proj->priv->priority_rect.height,
+
+                                0, 0, w, h,
+
+                                &proj->priv->priority_rect.x,
+                                &proj->priv->priority_rect.y,
+                                &proj->priv->priority_rect.width,
+                                &proj->priv->priority_rect.height);
+    }
+
+  if (proj->priv->chunk_render.idle_id)
+    {
+      proj->priv->invalidate_preview = TRUE;
+    }
+  else
+    {
+      proj->priv->invalidate_preview = FALSE;
+
+      gimp_projectable_invalidate_preview (projectable);
+    }
 }
