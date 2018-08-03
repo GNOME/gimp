@@ -63,6 +63,7 @@ struct _GimpGroupLayerPrivate
   GeglBuffer     *suspended_mask_buffer;
   GeglRectangle   suspended_mask_bounds;
   gint            transforming;
+  gint            direct_update;
   gboolean        expanded;
   gboolean        pass_through;
 
@@ -748,10 +749,35 @@ gimp_group_layer_translate (GimpLayer *layer,
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
   GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+  gint                   x, y;
   GList                 *list;
 
-  /*  don't push an undo here because undo will call us again  */
-  gimp_group_layer_suspend_resize (group, FALSE);
+  /*  don't use gimp_group_layer_suspend_resize(), but rather increment
+   *  private->suspend_resize directly, since we're translating the group layer
+   *  here, rather than relying on gimp_group_layer_update_size() to do it.
+   */
+  private->suspend_resize++;
+
+  /*  redirect stack updates to the drawable, rather than to the projection  */
+  private->direct_update++;
+
+  gimp_item_get_offset (GIMP_ITEM (group), &x, &y);
+
+  x += offset_x;
+  y += offset_y;
+
+  /*  update the offset node  */
+  if (private->offset_node)
+    gegl_node_set (private->offset_node,
+                   "x", (gdouble) -x,
+                   "y", (gdouble) -y,
+                   NULL);
+
+  /*  invalidate the selection boundary because of a layer modification  */
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
+
+  /*  update the group layer offset  */
+  gimp_item_set_offset (GIMP_ITEM (group), x, y);
 
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
        list;
@@ -763,8 +789,14 @@ gimp_group_layer_translate (GimpLayer *layer,
       gimp_item_translate (child, offset_x, offset_y, FALSE);
     }
 
-  /*  don't push an undo here because undo will call us again  */
-  gimp_group_layer_resume_resize (group, FALSE);
+  /*  redirect stack updates back to the projection  */
+  private->direct_update--;
+
+  /*  don't use gimp_group_layer_resume_resize(), but rather decrement
+   *  private->suspend_resize directly, so that gimp_group_layer_update_size()
+   *  isn't called.
+   */
+  private->suspend_resize--;
 }
 
 static void
@@ -2105,15 +2137,18 @@ gimp_group_layer_stack_update (GimpDrawableStack *stack,
               x, y, width, height);
 #endif
 
-  /*  the layer stack's update signal speaks in image coordinates,
-   *  pass to the projection as-is.
-   */
-  gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
-                               x, y, width, height);
+  if (! private->direct_update)
+    {
+      /*  the layer stack's update signal speaks in image coordinates,
+       *  pass to the projection as-is.
+       */
+      gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
+                                   x, y, width, height);
 
-  gimp_group_layer_flush (group);
+      gimp_group_layer_flush (group);
+    }
 
-  if (private->pass_through)
+  if (private->direct_update || private->pass_through)
     {
       /*  the layer stack's update signal speaks in image coordinates,
        *  transform to layer coordinates when emitting our own update signal.
