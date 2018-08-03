@@ -1878,6 +1878,9 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
 
   if (private->reallocate_projection || size_changed)
     {
+      GeglBuffer *buffer;
+      gboolean    update_drawable = FALSE;
+
       /* if the graph is already constructed, set the offset node's
        * coordinates first, so the graph is in the right state when
        * the projection is reallocated, see bug #730550.
@@ -1894,47 +1897,44 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
        */
       gimp_item_set_offset (item, x, y);
 
-      if (private->reallocate_projection ||
-          width  != old_width            ||
-          height != old_height)
-        {
-          GeglBuffer *buffer;
+      /*  temporarily change the return values of gimp_viewable_get_size()
+       *  so the projection allocates itself correctly
+       */
+      private->reallocate_width  = width;
+      private->reallocate_height = height;
 
+      if (private->reallocate_projection)
+        {
           private->reallocate_projection = FALSE;
 
-          /*  temporarily change the return values of gimp_viewable_get_size()
-           *  so the projection allocates itself correctly
-           */
-          private->reallocate_width  = width;
-          private->reallocate_height = height;
-
           gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
-          gimp_group_layer_flush (group);
 
-          buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
-
-          gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
-                                         FALSE, NULL,
-                                         buffer,
-                                         x, y,
-                                         TRUE);
-
-          /*  reset, the actual size is correct now  */
-          private->reallocate_width  = 0;
-          private->reallocate_height = 0;
+          update_drawable = TRUE;
         }
       else
         {
-          /*  invalidate the entire projection since the position of
-           *  the children relative to each other might have changed
-           *  in a way that happens to leave the group's width and
-           *  height the same
+          /* when there's no need to reallocate the projection, we call
+           * gimp_projectable_bounds_changed(), rather than structure_chaned(),
+           * so that the projection simply copies the old content over to the
+           * new buffer with an offset, rather than re-renders the graph.
            */
-          gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
-                                       x, y, width, height);
-
-          gimp_group_layer_flush (group);
+          gimp_projectable_bounds_changed (GIMP_PROJECTABLE (group),
+                                           old_x, old_y, old_width, old_height);
         }
+
+      gimp_group_layer_flush (group);
+
+      buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
+
+      gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
+                                     FALSE, NULL,
+                                     buffer,
+                                     x, y,
+                                     update_drawable);
+
+      /*  reset, the actual size is correct now  */
+      private->reallocate_width  = 0;
+      private->reallocate_height = 0;
     }
 
   /* resize the mask if not transforming (in which case, GimpLayer takes care
