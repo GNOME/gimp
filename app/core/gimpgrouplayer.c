@@ -62,8 +62,9 @@ struct _GimpGroupLayerPrivate
   gint            suspend_mask;
   GeglBuffer     *suspended_mask_buffer;
   GeglRectangle   suspended_mask_bounds;
-  gint            transforming;
   gint            direct_update;
+  gint            suspend_update;
+  gint            transforming;
   gboolean        expanded;
   gboolean        pass_through;
 
@@ -1954,7 +1955,15 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
                                            old_x, old_y, old_width, old_height);
         }
 
+      /* avoid updating the drawable in response to projection updates while
+       * flushing the projection, since we want to either update the entire
+       * drawable, or not update at all, when setting the drawable's buffer.
+       */
+      private->suspend_update++;
+
       gimp_group_layer_flush (group);
+
+      private->suspend_update--;
 
       buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
@@ -2170,6 +2179,9 @@ gimp_group_layer_proj_update (GimpProjection *proj,
                               GimpGroupLayer *group)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (group);
+
+  if (private->suspend_update)
+    return;
 
 #if 0
   g_printerr ("%s (%s) %d, %d (%d, %d)\n",
