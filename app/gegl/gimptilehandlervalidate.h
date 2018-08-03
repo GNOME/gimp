@@ -68,6 +68,8 @@ GeglTileHandler         * gimp_tile_handler_validate_new             (GeglNode  
 
 void                      gimp_tile_handler_validate_assign          (GimpTileHandlerValidate *validate,
                                                                       GeglBuffer              *buffer);
+void                      gimp_tile_handler_validate_unassign        (GimpTileHandlerValidate *validate,
+                                                                      GeglBuffer              *buffer);
 GimpTileHandlerValidate * gimp_tile_handler_validate_get_assigned    (GeglBuffer              *buffer);
 
 void                      gimp_tile_handler_validate_invalidate      (GimpTileHandlerValidate *validate,

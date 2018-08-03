@@ -365,6 +365,20 @@ gimp_tile_handler_validate_assign (GimpTileHandlerValidate *validate,
                      "gimp-tile-handler-validate", validate);
 }
 
+void
+gimp_tile_handler_validate_unassign (GimpTileHandlerValidate *validate,
+                                     GeglBuffer              *buffer)
+{
+  g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (gimp_tile_handler_validate_get_assigned (buffer) == validate);
+
+  g_object_set_data (G_OBJECT (buffer),
+                     "gimp-tile-handler-validate", NULL);
+
+  gegl_buffer_remove_handler (buffer, validate);
+}
+
 GimpTileHandlerValidate *
 gimp_tile_handler_validate_get_assigned (GeglBuffer *buffer)
 {
