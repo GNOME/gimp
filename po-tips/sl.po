@@ -1,3 +1,4 @@
+#'gimp/po-tips
 # Slovenian translation of gimp-tips.
 # Copyright (C) 2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
@@ -9,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp Tips\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-10 18:17+0000\n"
-"PO-Revision-Date: 2018-07-11 22:31+0200\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2018-07-22 13:06+0000\n"
+"PO-Revision-Date: 2018-07-22 16:03+0200\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +21,7 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.1\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -102,7 +103,7 @@ msgstr ""
 "s to kombinacijo premakne okno, vaš okenski upravitelj že uporablja tipko "
 "<tt>Alt</tt>. Večina okenskih upraviteljev je mogoče nastaviti tako, da "
 "prezrejo pritisnjeno tipko <tt>Alt</tt> ali da namesto nje uporabijo tipko "
-"<tt>Super</tt> (ali \"Logotip Windows\")."
+"<tt>Super</tt> (ali »Logotip Windows«)."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -169,10 +170,10 @@ msgid ""
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr ""
-"Pritisnite in držite pritisnjeno tipko <tt>Shift</tt>, da lahko pred "
-"izbiranjem s klikanjem leve tipke miške dodate novo področja k že "
-"obstoječemu izboru, namesto da ga nadomestite. Z uporabo tipke <tt>Ctrl</tt> "
-"pred začetkom izbiranja z miško od obstoječega izbora odštejete novi izbor."
+"Pritisnite in držite pritisnjeno <tt>dvigalko</tt>, da lahko pred izbiranjem "
+"s klikanjem leve tipke miške dodate novo področja k že obstoječemu izboru, "
+"namesto da ga nadomestite. Z uporabo <tt>krmilke</tt> pred začetkom "
+"izbiranja z miško od obstoječega izbora odštejete novi izbor."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
