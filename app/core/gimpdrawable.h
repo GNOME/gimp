@@ -187,7 +187,8 @@ void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,
                                                   GeglBuffer         *buffer,
                                                   gint                offset_x,
-                                                  gint                offset_y);
+                                                  gint                offset_y,
+                                                  gboolean            update);
 
 void            gimp_drawable_steal_buffer       (GimpDrawable       *drawable,
                                                   GimpDrawable       *src_drawable);

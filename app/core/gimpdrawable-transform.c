@@ -1080,7 +1080,8 @@ gimp_drawable_transform_paste (GimpDrawable     *drawable,
     {
       gimp_drawable_set_buffer_full (drawable, TRUE, NULL,
                                      buffer,
-                                     offset_x, offset_y);
+                                     offset_x, offset_y,
+                                     TRUE);
     }
 
   gimp_image_undo_group_end (image);

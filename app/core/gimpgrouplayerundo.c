@@ -159,7 +159,8 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
                                              FALSE, NULL,
                                              group_layer_undo->mask_buffer,
                                              group_layer_undo->mask_bounds.x,
-                                             group_layer_undo->mask_bounds.y);
+                                             group_layer_undo->mask_bounds.y,
+                                             TRUE);
             }
         }
       break;

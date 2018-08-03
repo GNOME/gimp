@@ -198,7 +198,7 @@ gimp_drawable_mod_undo_pop (GimpUndo            *undo,
                         &drawable_mod_undo->offset_y);
 
   gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
-                                 buffer, offset_x, offset_y);
+                                 buffer, offset_x, offset_y, TRUE);
   g_object_unref (buffer);
 }
 
