@@ -10,17 +10,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-24 19:49+0000\n"
-"PO-Revision-Date: 2018-06-25 16:34+0200\n"
+"POT-Creation-Date: 2018-07-15 18:04+0000\n"
+"PO-Revision-Date: 2018-07-22 13:13+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.1\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1264
@@ -1275,18 +1276,18 @@ msgstr "Modra"
 
 #: ../libgimpbase/gimpbaseenums.c:1652
 msgctxt "select-criterion"
-msgid "Hue (HSV)"
-msgstr "Obarvanost (HSV)"
+msgid "HSV Hue"
+msgstr "Obarvanost HSV"
 
 #: ../libgimpbase/gimpbaseenums.c:1653
 msgctxt "select-criterion"
-msgid "Saturation (HSV)"
-msgstr "Nasičenost (HSV)"
+msgid "HSV Saturation"
+msgstr "Nasičenost HSV"
 
 #: ../libgimpbase/gimpbaseenums.c:1654
 msgctxt "select-criterion"
-msgid "Value (HSV)"
-msgstr "Vrednost (HSV)"
+msgid "HSV Value"
+msgstr "Vrednost HSV"
 
 #: ../libgimpbase/gimpbaseenums.c:1655
 msgctxt "select-criterion"
@@ -1295,18 +1296,18 @@ msgstr "Alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:1656
 msgctxt "select-criterion"
-msgid "Lightness (LCH)"
-msgstr "Svetlost (LCH)"
+msgid "LCh Lightness"
+msgstr "Svetlost LCh"
 
 #: ../libgimpbase/gimpbaseenums.c:1657
 msgctxt "select-criterion"
-msgid "Chroma (LCH)"
-msgstr "Kroma (LCH)"
+msgid "LCh Chroma"
+msgstr "Kroma LCh"
 
 #: ../libgimpbase/gimpbaseenums.c:1658
 msgctxt "select-criterion"
-msgid "Hue (LCH)"
-msgstr "Obarvanost (LCH)"
+msgid "LCh Hue"
+msgstr "Obarvanost LCh"
 
 #: ../libgimpbase/gimpbaseenums.c:1687
 msgctxt "size-type"
@@ -1438,17 +1439,22 @@ msgstr "Pretvorba imena datoteke v kodno stran sistema ni uspela."
 msgid "Can save metadata only to local files"
 msgstr "Metapodatke je mogoče shraniti le v krajevne datoteke"
 
-#: ../libgimpbase/gimpmetadata.c:1002
+#: ../libgimpbase/gimpmetadata.c:978
+#, c-format
+msgid "Invalid Exif data size."
+msgstr "Neveljavna velikost podatkov Exif."
+
+#: ../libgimpbase/gimpmetadata.c:1007
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Razčlenjevanje podatkov Exif je spodletelo."
 
-#: ../libgimpbase/gimpmetadata.c:1053
+#: ../libgimpbase/gimpmetadata.c:1057
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Razčlenjevanje podatkov IPTC je spodletelo."
 
-#: ../libgimpbase/gimpmetadata.c:1102
+#: ../libgimpbase/gimpmetadata.c:1105
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Razčlenjevanje podatkov XMP je spodletelo."
@@ -1967,8 +1973,8 @@ msgid "0..255"
 msgstr "0..255"
 
 #: ../libgimpwidgets/gimpcolorscales.c:460
-msgid "LCH"
-msgstr "LCH"
+msgid "LCh"
+msgstr "LCh"
 
 #: ../libgimpwidgets/gimpcolorscales.c:462
 msgid "HSV"
@@ -2258,7 +2264,6 @@ msgid "Landscape"
 msgstr "ležeče"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
@@ -2327,8 +2332,8 @@ msgid "_L"
 msgstr "_L"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
-msgid "LCH Lightness"
-msgstr "Svetlost LCH"
+msgid "LCh Lightness"
+msgstr "Svetlost LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgctxt "color-selector-channel"
@@ -2336,12 +2341,17 @@ msgid "_C"
 msgstr "_C"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
-msgid "LCH Chroma"
-msgstr "Kroma LCH"
+msgid "LCh Chroma"
+msgstr "Kroma LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
-msgid "LCH Hue"
-msgstr "Obarvanost LCH"
+msgctxt "color-selector-channel"
+msgid "_h"
+msgstr "_h"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgid "LCh Hue"
+msgstr "Obarvanost LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:168
 msgctxt "color-selector-model"
@@ -2358,8 +2368,8 @@ msgid "LCH"
 msgstr "LCH"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
-msgid "CIELCh color model"
-msgstr "Barvni model CIELCh"
+msgid "CIE LCh color model"
+msgstr "Barvni model CIE LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
