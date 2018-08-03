@@ -48,6 +48,7 @@ struct _GimpTileHandlerValidate
   gint             tile_width;
   gint             tile_height;
   gboolean         whole_tile;
+  gint             suspend_validate;
 };
 
 struct _GimpTileHandlerValidateClass
@@ -76,6 +77,11 @@ void                      gimp_tile_handler_validate_invalidate      (GimpTileHa
                                                                       const GeglRectangle     *rect);
 void                      gimp_tile_handler_validate_undo_invalidate (GimpTileHandlerValidate *validate,
                                                                       const GeglRectangle     *rect);
+
+void                      gimp_tile_handler_validate_buffer_copy     (GeglBuffer              *src_buffer,
+                                                                      const GeglRectangle     *src_rect,
+                                                                      GeglBuffer              *dst_buffer,
+                                                                      const GeglRectangle     *dst_rect);
 
 
 G_END_DECLS
