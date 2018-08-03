@@ -260,14 +260,19 @@ gimp_tile_handler_validate_validate (GeglTileSource *source,
           gint n_rects;
           gint i;
 
-          if (! tile)
-            tile = gegl_tile_handler_create_tile (GEGL_TILE_HANDLER (source),
-                                                  x, y, 0);
-
           cairo_region_subtract_rectangle (validate->dirty_region, &tile_rect);
 
           tile_bpp    = babl_format_get_bytes_per_pixel (validate->format);
           tile_stride = tile_bpp * validate->tile_width;
+
+          if (! tile)
+            {
+              tile = gegl_tile_handler_create_tile (GEGL_TILE_HANDLER (source),
+                                                    x, y, 0);
+
+              memset (gegl_tile_get_data (tile),
+                      0, tile_stride * validate->tile_height);
+            }
 
           gegl_tile_lock (tile);
 
