@@ -43,6 +43,11 @@ struct _GimpProjectableInterface
   void         (* flush)              (GimpProjectable *projectable,
                                        gboolean         invalidate_preview);
   void         (* structure_changed)  (GimpProjectable *projectable);
+  void         (* bounds_changed)     (GimpProjectable *projectable,
+                                       gint             old_x,
+                                       gint             old_y,
+                                       gint             old_width,
+                                       gint             old_height);
 
   /*  virtual functions  */
   GimpImage  * (* get_image)          (GimpProjectable *projectable);
@@ -70,6 +75,11 @@ void         gimp_projectable_invalidate         (GimpProjectable *projectable,
 void         gimp_projectable_flush              (GimpProjectable *projectable,
                                                   gboolean         preview_invalidated);
 void         gimp_projectable_structure_changed  (GimpProjectable *projectable);
+void         gimp_projectable_bounds_changed     (GimpProjectable *projectable,
+                                                  gint             old_x,
+                                                  gint             old_y,
+                                                  gint             old_width,
+                                                  gint             old_height);
 
 GimpImage  * gimp_projectable_get_image          (GimpProjectable *projectable);
 const Babl * gimp_projectable_get_format         (GimpProjectable *projectable);
