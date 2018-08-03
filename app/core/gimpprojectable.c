@@ -35,6 +35,7 @@ enum
   INVALIDATE,
   FLUSH,
   STRUCTURE_CHANGED,
+  BOUNDS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -82,6 +83,19 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  projectable_signals[BOUNDS_CHANGED] =
+    g_signal_new ("bounds-changed",
+                  G_TYPE_FROM_CLASS (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpProjectableInterface, bounds_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  G_TYPE_NONE, 4,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 }
 
 
@@ -116,6 +130,19 @@ gimp_projectable_structure_changed (GimpProjectable *projectable)
   g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
 
   g_signal_emit (projectable, projectable_signals[STRUCTURE_CHANGED], 0);
+}
+
+void
+gimp_projectable_bounds_changed (GimpProjectable *projectable,
+                                 gint             old_x,
+                                 gint             old_y,
+                                 gint             old_width,
+                                 gint             old_height)
+{
+  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+
+  g_signal_emit (projectable, projectable_signals[BOUNDS_CHANGED], 0,
+                 old_x, old_y, old_width, old_height);
 }
 
 GimpImage *
