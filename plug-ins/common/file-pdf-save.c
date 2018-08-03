@@ -1490,6 +1490,7 @@ drawText (gint32    text_id,
   gchar                *text   = gimp_text_layer_get_text (text_id);
   gchar                *markup = gimp_text_layer_get_markup (text_id);
   gchar                *font_family;
+  gchar                *language;
   cairo_font_options_t *options;
   gint                  x;
   gint                  y;
@@ -1501,7 +1502,6 @@ drawText (gint32    text_id,
   gboolean              justify;
   PangoAlignment        align;
   GimpTextDirection     dir;
-  PangoDirection        pango_dir;
   PangoLayout          *layout;
   PangoContext         *context;
   PangoFontDescription *font_description;
@@ -1520,7 +1520,7 @@ drawText (gint32    text_id,
 
   /* Position */
   gimp_drawable_offsets (text_id, &x, &y);
-  cairo_move_to (cr, x, y);
+  cairo_translate (cr, x, y);
 
   /* Color */
   /* When dealing with a gray/indexed image, the viewed color of the text layer
@@ -1572,15 +1572,53 @@ drawText (gint32    text_id,
 
   pango_cairo_context_set_font_options (context, options);
 
+  /* Language */
+  language = gimp_text_layer_get_language (text_id);
+  if (language)
+    pango_context_set_language (context,
+                                pango_language_from_string(language));
+
   /* Text Direction */
   dir = gimp_text_layer_get_base_direction (text_id);
 
-  if (dir == GIMP_TEXT_DIRECTION_RTL)
-    pango_dir = PANGO_DIRECTION_RTL;
-  else
-    pango_dir = PANGO_DIRECTION_LTR;
+  switch (dir)
+    {
+    case GIMP_TEXT_DIRECTION_LTR:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
+      break;
 
-  pango_context_set_base_dir (context, pango_dir);
+    case GIMP_TEXT_DIRECTION_RTL:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_RTL);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
+      break;
+
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
+      pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
+      break;
+    }
 
   /* We are done with the context's settings. It's time to create the
    * layout
@@ -1604,26 +1642,33 @@ drawText (gint32    text_id,
   pango_layout_set_font_description (layout, font_description);
 
   /* Width */
-  pango_layout_set_width (layout, gimp_drawable_width (text_id) * PANGO_SCALE);
+  if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
+    pango_layout_set_width (layout, gimp_drawable_width (text_id) * PANGO_SCALE);
+  else
+    pango_layout_set_width (layout, gimp_drawable_height (text_id) * PANGO_SCALE);
 
   /* Justification, and Alignment */
   justify = FALSE;
   j = gimp_text_layer_get_justification (text_id);
-
-  if (j == GIMP_TEXT_JUSTIFY_CENTER)
-    align = PANGO_ALIGN_CENTER;
-  else if (j == GIMP_TEXT_JUSTIFY_LEFT)
-    align = PANGO_ALIGN_LEFT;
-  else if (j == GIMP_TEXT_JUSTIFY_RIGHT)
-    align = PANGO_ALIGN_RIGHT;
-  else /* We have GIMP_TEXT_JUSTIFY_FILL */
+  align = PANGO_ALIGN_LEFT;
+  switch (j)
     {
-      if (dir == GIMP_TEXT_DIRECTION_LTR)
-        align = PANGO_ALIGN_LEFT;
-      else
-        align = PANGO_ALIGN_RIGHT;
+    case GIMP_TEXT_JUSTIFY_LEFT:
+      align = PANGO_ALIGN_LEFT;
+      break;
+    case GIMP_TEXT_JUSTIFY_RIGHT:
+      align = PANGO_ALIGN_RIGHT;
+      break;
+    case GIMP_TEXT_JUSTIFY_CENTER:
+      align = PANGO_ALIGN_CENTER;
+      break;
+    case GIMP_TEXT_JUSTIFY_FILL:
+      align = PANGO_ALIGN_LEFT;
       justify = TRUE;
+      break;
     }
+  pango_layout_set_alignment (layout, align);
+  pango_layout_set_justify (layout, justify);
 
   /* Indentation */
   indent = gimp_text_layer_get_indent (text_id);
@@ -1638,8 +1683,6 @@ drawText (gint32    text_id,
   letter_spacing_at = pango_attr_letter_spacing_new ((int)(PANGO_SCALE * letter_spacing));
   pango_attr_list_insert (attr_list, letter_spacing_at);
 
-  pango_layout_set_justify (layout, justify);
-  pango_layout_set_alignment (layout, align);
 
   pango_layout_set_attributes (layout, attr_list);
 
@@ -1650,10 +1693,25 @@ drawText (gint32    text_id,
   else /* If we can't find a markup, then it has just text */
     pango_layout_set_text (layout, text, -1);
 
+  if (dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
+      dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT)
+    {
+      cairo_translate (cr, gimp_drawable_width (text_id), 0);
+      cairo_rotate (cr, G_PI_2);
+    }
+
+  if (dir == GIMP_TEXT_DIRECTION_TTB_LTR ||
+      dir == GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT)
+    {
+      cairo_translate (cr, 0, gimp_drawable_height (text_id));
+      cairo_rotate (cr, -G_PI_2);
+    }
+
   pango_cairo_show_layout (cr, layout);
 
   g_free (text);
   g_free (font_family);
+  g_free (language);
 
   g_object_unref (layout);
   pango_font_description_free (font_description);
