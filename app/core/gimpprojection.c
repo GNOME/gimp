@@ -1127,6 +1127,15 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
   if (x == old_x && y == old_y && w == old_w && h == old_h)
     return;
 
+  if (! gimp_rectangle_intersect (x,     y,     w,     h,
+                                  old_x, old_y, old_w, old_h,
+                                  NULL,  NULL,  NULL,  NULL))
+    {
+      gimp_projection_projectable_structure_changed (projectable, proj);
+
+      return;
+    }
+
   dx = old_x - x;
   dy = old_y - y;
 
