@@ -1237,14 +1237,14 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
                                 &proj->priv->priority_rect.height);
     }
 
-  if (proj->priv->chunk_render.idle_id)
-    {
-      proj->priv->invalidate_preview = TRUE;
-    }
-  else
-    {
-      proj->priv->invalidate_preview = FALSE;
+  if (dx > 0)
+    gimp_projection_add_update_area (proj, 0, 0, dx, h);
+  if (dy > 0)
+    gimp_projection_add_update_area (proj, 0, 0, w, dy);
+  if (dx + old_w < w)
+    gimp_projection_add_update_area (proj, dx + old_w, 0, w - (dx + old_w), h);
+  if (dy + old_h < h)
+    gimp_projection_add_update_area (proj, 0, dy + old_h, w, h - (dy + old_h));
 
-      gimp_projectable_invalidate_preview (projectable);
-    }
+  proj->priv->invalidate_preview = TRUE;
 }
