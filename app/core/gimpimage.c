@@ -2357,8 +2357,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     if (g_list_find_custom (reasons, tmp, (GCompareFunc) strcmp)) \
       g_free (tmp);                                               \
     else                                                          \
-      reasons = g_list_prepend (reasons, (_reason)); }            \
-  else g_free (_reason);
+      reasons = g_list_prepend (reasons, tmp); }
 
   /* need version 1 for colormaps */
   if (gimp_image_get_colormap (image))
