@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-29 19:37+0200\n"
-"PO-Revision-Date: 2018-07-29 19:38+0200\n"
+"POT-Creation-Date: 2018-08-05 19:09+0200\n"
+"PO-Revision-Date: 2018-08-05 19:10+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3535,7 +3535,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1678
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1718
 #: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -7917,6 +7917,46 @@ msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "Od prawej do lewej"
 
+#: ../app/actions/text-editor-actions.c:71
+msgctxt "text-editor-action"
+msgid "TTB-RTL"
+msgstr "TTB-RTL"
+
+#: ../app/actions/text-editor-actions.c:72
+msgctxt "text-editor-action"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Pionowy, od prawej do lewej (mieszana orientacja)"
+
+#: ../app/actions/text-editor-actions.c:77
+msgctxt "text-editor-action"
+msgid "TTB-RTL-UPRIGHT"
+msgstr "TTB-RTL-PIONOWO"
+
+#: ../app/actions/text-editor-actions.c:78
+msgctxt "text-editor-action"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Pionowy, od prawej do lewej (pionowa orientacja)"
+
+#: ../app/actions/text-editor-actions.c:83
+msgctxt "text-editor-action"
+msgid "TTB-LTR"
+msgstr "TTB-LTR"
+
+#: ../app/actions/text-editor-actions.c:84
+msgctxt "text-editor-action"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Pionowy, od lewej do prawej (mieszana orientacja)"
+
+#: ../app/actions/text-editor-actions.c:89
+msgctxt "text-editor-action"
+msgid "TTB-LTR-UPRIGHT"
+msgstr "TTB-LTR-PIONOWO"
+
+#: ../app/actions/text-editor-actions.c:90
+msgctxt "text-editor-action"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Pionowy, od lewej do prawej (pionowa orientacja)"
+
 #: ../app/actions/text-editor-commands.c:60
 #: ../app/actions/text-tool-commands.c:114
 msgid "Open Text File (UTF-8)"
@@ -8015,6 +8055,26 @@ msgstr "Od lewej do prawej"
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "Od prawej do lewej"
+
+#: ../app/actions/text-tool-actions.c:116
+msgctxt "text-tool-action"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Pionowy, od prawej do lewej (mieszana orientacja)"
+
+#: ../app/actions/text-tool-actions.c:121
+msgctxt "text-tool-action"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Pionowy, od prawej do lewej (pionowa orientacja)"
+
+#: ../app/actions/text-tool-actions.c:126
+msgctxt "text-tool-action"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Pionowy, od lewej do prawej (mieszana orientacja)"
+
+#: ../app/actions/text-tool-actions.c:131
+msgctxt "text-tool-action"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Pionowy, od lewej do prawej (pionowa orientacja)"
 
 #: ../app/actions/tool-options-actions.c:57
 msgctxt "tool-options-action"
@@ -12646,25 +12706,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Zalanie kanału"
 
-#: ../app/core/gimpchannel.c:843
+#: ../app/core/gimpchannel.c:845
 msgid "Cannot fill empty channel."
 msgstr "Nie można wypełniać na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:879
+#: ../app/core/gimpchannel.c:881
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1702
+#: ../app/core/gimpchannel.c:1704
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1753
+#: ../app/core/gimpchannel.c:1755
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1842 ../app/core/gimpselection.c:169
+#: ../app/core/gimpchannel.c:1844 ../app/core/gimpselection.c:169
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -13042,41 +13102,41 @@ msgstr "Pionowe przesunięcie pierwszej linii siatki. Może być liczbą ujemną
 msgid "Offset unit"
 msgstr "Jednostka przesunięcia"
 
-#: ../app/core/gimpgrouplayer.c:278
+#: ../app/core/gimpgrouplayer.c:280
 msgid "Layer Group"
 msgstr "Grupa warstw"
 
-#: ../app/core/gimpgrouplayer.c:279
+#: ../app/core/gimpgrouplayer.c:281
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Zmiana nazwy grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:280
+#: ../app/core/gimpgrouplayer.c:282
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Przesunięcie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:281
+#: ../app/core/gimpgrouplayer.c:283
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Skalowanie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:282
+#: ../app/core/gimpgrouplayer.c:284
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Zmiana wymiarów grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:283
+#: ../app/core/gimpgrouplayer.c:285
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Odbicie grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:284
+#: ../app/core/gimpgrouplayer.c:286
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Obrót grupy warstw"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:287
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Przekształcenie grupy warstw"
@@ -13584,7 +13644,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1037
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1043
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -13660,7 +13720,7 @@ msgstr "Nie można bardziej podnieść warstwy."
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1908
+#: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1914
 #: ../app/core/gimplayermask.c:228
 #, c-format
 msgid "%s mask"
@@ -13675,60 +13735,60 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1814
+#: ../app/core/gimplayer.c:1820
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1825
+#: ../app/core/gimplayer.c:1831
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1831
+#: ../app/core/gimplayer.c:1837
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1949
+#: ../app/core/gimplayer.c:1955
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: ../app/core/gimplayer.c:2111
+#: ../app/core/gimplayer.c:2117
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/gimplayer.c:2112
+#: ../app/core/gimplayer.c:2118
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/gimplayer.c:2214
+#: ../app/core/gimplayer.c:2220
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Włączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2215
+#: ../app/core/gimplayer.c:2221
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Wyłączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2291
+#: ../app/core/gimplayer.c:2297
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2365
+#: ../app/core/gimplayer.c:2371
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:2400
+#: ../app/core/gimplayer.c:2406
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:2421
+#: ../app/core/gimplayer.c:2427
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
@@ -17785,82 +17845,82 @@ msgstr "„%s:” nie jest prawidłowym schematem URI"
 msgid "Invalid character sequence in URI"
 msgstr "Nieprawidłowa sekwencja znaków w adresie URI"
 
-#: ../app/gegl/gimp-babl.c:316 ../app/gegl/gimp-babl.c:317
-#: ../app/gegl/gimp-babl.c:318 ../app/gegl/gimp-babl.c:319
-#: ../app/gegl/gimp-babl.c:320 ../app/gegl/gimp-babl.c:321
-#: ../app/gegl/gimp-babl.c:322 ../app/gegl/gimp-babl.c:323
-#: ../app/gegl/gimp-babl.c:324 ../app/gegl/gimp-babl.c:325
-#: ../app/gegl/gimp-babl.c:326 ../app/gegl/gimp-babl.c:327
+#: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
+#: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
+#: ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
+#: ../app/gegl/gimp-babl.c:323 ../app/gegl/gimp-babl.c:324
+#: ../app/gegl/gimp-babl.c:325 ../app/gegl/gimp-babl.c:326
+#: ../app/gegl/gimp-babl.c:327 ../app/gegl/gimp-babl.c:328
 #: ../app/plug-in/gimppluginprocedure.c:1013
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/gegl/gimp-babl.c:329 ../app/gegl/gimp-babl.c:330
-#: ../app/gegl/gimp-babl.c:331 ../app/gegl/gimp-babl.c:332
-#: ../app/gegl/gimp-babl.c:333 ../app/gegl/gimp-babl.c:334
-#: ../app/gegl/gimp-babl.c:335 ../app/gegl/gimp-babl.c:336
-#: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338
-#: ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340
+#: ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331
+#: ../app/gegl/gimp-babl.c:332 ../app/gegl/gimp-babl.c:333
+#: ../app/gegl/gimp-babl.c:334 ../app/gegl/gimp-babl.c:335
+#: ../app/gegl/gimp-babl.c:336 ../app/gegl/gimp-babl.c:337
+#: ../app/gegl/gimp-babl.c:338 ../app/gegl/gimp-babl.c:339
+#: ../app/gegl/gimp-babl.c:340 ../app/gegl/gimp-babl.c:341
 msgid "RGB-alpha"
 msgstr "RGB (alfa)"
 
-#: ../app/gegl/gimp-babl.c:342 ../app/gegl/gimp-babl.c:343
-#: ../app/gegl/gimp-babl.c:344 ../app/gegl/gimp-babl.c:345
-#: ../app/gegl/gimp-babl.c:346 ../app/gegl/gimp-babl.c:347
-#: ../app/gegl/gimp-babl.c:348 ../app/gegl/gimp-babl.c:349
-#: ../app/gegl/gimp-babl.c:350 ../app/gegl/gimp-babl.c:351
-#: ../app/gegl/gimp-babl.c:352 ../app/gegl/gimp-babl.c:353
+#: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
+#: ../app/gegl/gimp-babl.c:345 ../app/gegl/gimp-babl.c:346
+#: ../app/gegl/gimp-babl.c:347 ../app/gegl/gimp-babl.c:348
+#: ../app/gegl/gimp-babl.c:349 ../app/gegl/gimp-babl.c:350
+#: ../app/gegl/gimp-babl.c:351 ../app/gegl/gimp-babl.c:352
+#: ../app/gegl/gimp-babl.c:353 ../app/gegl/gimp-babl.c:354
 #: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "Grayscale"
 msgstr "Odcienie szarości"
 
-#: ../app/gegl/gimp-babl.c:355 ../app/gegl/gimp-babl.c:356
-#: ../app/gegl/gimp-babl.c:357 ../app/gegl/gimp-babl.c:358
-#: ../app/gegl/gimp-babl.c:359 ../app/gegl/gimp-babl.c:360
-#: ../app/gegl/gimp-babl.c:361 ../app/gegl/gimp-babl.c:362
-#: ../app/gegl/gimp-babl.c:363 ../app/gegl/gimp-babl.c:364
-#: ../app/gegl/gimp-babl.c:365 ../app/gegl/gimp-babl.c:366
+#: ../app/gegl/gimp-babl.c:356 ../app/gegl/gimp-babl.c:357
+#: ../app/gegl/gimp-babl.c:358 ../app/gegl/gimp-babl.c:359
+#: ../app/gegl/gimp-babl.c:360 ../app/gegl/gimp-babl.c:361
+#: ../app/gegl/gimp-babl.c:362 ../app/gegl/gimp-babl.c:363
+#: ../app/gegl/gimp-babl.c:364 ../app/gegl/gimp-babl.c:365
+#: ../app/gegl/gimp-babl.c:366 ../app/gegl/gimp-babl.c:367
 msgid "Grayscale-alpha"
 msgstr "Odcienie szarości (alfa)"
 
-#: ../app/gegl/gimp-babl.c:368 ../app/gegl/gimp-babl.c:369
-#: ../app/gegl/gimp-babl.c:370 ../app/gegl/gimp-babl.c:371
-#: ../app/gegl/gimp-babl.c:372 ../app/gegl/gimp-babl.c:373
-#: ../app/gegl/gimp-babl.c:374 ../app/gegl/gimp-babl.c:375
-#: ../app/gegl/gimp-babl.c:376 ../app/gegl/gimp-babl.c:377
-#: ../app/gegl/gimp-babl.c:378 ../app/gegl/gimp-babl.c:379
+#: ../app/gegl/gimp-babl.c:369 ../app/gegl/gimp-babl.c:370
+#: ../app/gegl/gimp-babl.c:371 ../app/gegl/gimp-babl.c:372
+#: ../app/gegl/gimp-babl.c:373 ../app/gegl/gimp-babl.c:374
+#: ../app/gegl/gimp-babl.c:375 ../app/gegl/gimp-babl.c:376
+#: ../app/gegl/gimp-babl.c:377 ../app/gegl/gimp-babl.c:378
+#: ../app/gegl/gimp-babl.c:379 ../app/gegl/gimp-babl.c:380
 msgid "Red component"
 msgstr "Czerwona składowa"
 
-#: ../app/gegl/gimp-babl.c:381 ../app/gegl/gimp-babl.c:382
-#: ../app/gegl/gimp-babl.c:383 ../app/gegl/gimp-babl.c:384
-#: ../app/gegl/gimp-babl.c:385 ../app/gegl/gimp-babl.c:386
-#: ../app/gegl/gimp-babl.c:387 ../app/gegl/gimp-babl.c:388
-#: ../app/gegl/gimp-babl.c:389 ../app/gegl/gimp-babl.c:390
-#: ../app/gegl/gimp-babl.c:391 ../app/gegl/gimp-babl.c:392
+#: ../app/gegl/gimp-babl.c:382 ../app/gegl/gimp-babl.c:383
+#: ../app/gegl/gimp-babl.c:384 ../app/gegl/gimp-babl.c:385
+#: ../app/gegl/gimp-babl.c:386 ../app/gegl/gimp-babl.c:387
+#: ../app/gegl/gimp-babl.c:388 ../app/gegl/gimp-babl.c:389
+#: ../app/gegl/gimp-babl.c:390 ../app/gegl/gimp-babl.c:391
+#: ../app/gegl/gimp-babl.c:392 ../app/gegl/gimp-babl.c:393
 msgid "Green component"
 msgstr "Zielona składowa"
 
-#: ../app/gegl/gimp-babl.c:394 ../app/gegl/gimp-babl.c:395
-#: ../app/gegl/gimp-babl.c:396 ../app/gegl/gimp-babl.c:397
-#: ../app/gegl/gimp-babl.c:398 ../app/gegl/gimp-babl.c:399
-#: ../app/gegl/gimp-babl.c:400 ../app/gegl/gimp-babl.c:401
-#: ../app/gegl/gimp-babl.c:402 ../app/gegl/gimp-babl.c:403
-#: ../app/gegl/gimp-babl.c:404 ../app/gegl/gimp-babl.c:405
+#: ../app/gegl/gimp-babl.c:395 ../app/gegl/gimp-babl.c:396
+#: ../app/gegl/gimp-babl.c:397 ../app/gegl/gimp-babl.c:398
+#: ../app/gegl/gimp-babl.c:399 ../app/gegl/gimp-babl.c:400
+#: ../app/gegl/gimp-babl.c:401 ../app/gegl/gimp-babl.c:402
+#: ../app/gegl/gimp-babl.c:403 ../app/gegl/gimp-babl.c:404
+#: ../app/gegl/gimp-babl.c:405 ../app/gegl/gimp-babl.c:406
 msgid "Blue component"
 msgstr "Niebieska składowa"
 
-#: ../app/gegl/gimp-babl.c:407 ../app/gegl/gimp-babl.c:408
-#: ../app/gegl/gimp-babl.c:409 ../app/gegl/gimp-babl.c:410
-#: ../app/gegl/gimp-babl.c:411 ../app/gegl/gimp-babl.c:412
+#: ../app/gegl/gimp-babl.c:408 ../app/gegl/gimp-babl.c:409
+#: ../app/gegl/gimp-babl.c:410 ../app/gegl/gimp-babl.c:411
+#: ../app/gegl/gimp-babl.c:412 ../app/gegl/gimp-babl.c:413
 msgid "Alpha component"
 msgstr "Składowa alfy"
 
-#: ../app/gegl/gimp-babl.c:440
+#: ../app/gegl/gimp-babl.c:441
 msgid "Indexed-alpha"
 msgstr "Indeksowane (alfa)"
 
-#: ../app/gegl/gimp-babl.c:442 ../app/plug-in/gimppluginprocedure.c:1049
+#: ../app/gegl/gimp-babl.c:443 ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Indexed"
 msgstr "Indeksowane"
 
@@ -20513,7 +20573,7 @@ msgstr ""
 "Wczytanie części czcionek się nie powiodło:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1559
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1590
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
@@ -20521,51 +20581,51 @@ msgstr "Dodanie warstwy tekstowej"
 msgid "Empty text parasite"
 msgstr "Puste dane pasożytnicze tekstu"
 
-#: ../app/text/gimptextlayer.c:152
+#: ../app/text/gimptextlayer.c:156
 msgid "Text Layer"
 msgstr "Warstwa tekstowa"
 
-#: ../app/text/gimptextlayer.c:153
+#: ../app/text/gimptextlayer.c:157
 msgid "Rename Text Layer"
 msgstr "Zmiana nazwy warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:154
+#: ../app/text/gimptextlayer.c:158
 msgid "Move Text Layer"
 msgstr "Przesunięcie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:155
+#: ../app/text/gimptextlayer.c:159
 msgid "Scale Text Layer"
 msgstr "Skalowanie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:156
+#: ../app/text/gimptextlayer.c:160
 msgid "Resize Text Layer"
 msgstr "Zmiana wymiarów warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:157
+#: ../app/text/gimptextlayer.c:161
 msgid "Flip Text Layer"
 msgstr "Odbicie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:158
+#: ../app/text/gimptextlayer.c:162
 msgid "Rotate Text Layer"
 msgstr "Obrót warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:159
+#: ../app/text/gimptextlayer.c:163
 msgid "Transform Text Layer"
 msgstr "Przekształcenie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:571
+#: ../app/text/gimptextlayer.c:584
 msgid "Discard Text Information"
 msgstr "Odrzucanie informacji o tekście"
 
-#: ../app/text/gimptextlayer.c:643
+#: ../app/text/gimptextlayer.c:709
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkcje tekstowe nie są dostępne z powodu braku czcionek."
 
-#: ../app/text/gimptextlayer.c:706
+#: ../app/text/gimptextlayer.c:772
 msgid "Empty Text Layer"
 msgstr "Pusta warstwa tekstowa"
 
-#: ../app/text/gimptextlayer.c:759
+#: ../app/text/gimptextlayer.c:825
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -20589,7 +20649,7 @@ msgstr ""
 "Niektóre właściwości tekstu mogą być błędne. Jeśli tekst nie będzie "
 "modyfikowany, to nie ma to większego znaczenia."
 
-#: ../app/text/gimptextlayout.c:579
+#: ../app/text/gimptextlayout.c:585
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -22821,31 +22881,31 @@ msgstr "Tekst: tworzy i modyfikuje warstwy tekstowe"
 msgid "Te_xt"
 msgstr "_Tekst"
 
-#: ../app/tools/gimptexttool.c:1006
+#: ../app/tools/gimptexttool.c:1037
 msgid "Fonts are still loading"
 msgstr "Czcionki są nadal wczytywane"
 
-#: ../app/tools/gimptexttool.c:1017
+#: ../app/tools/gimptexttool.c:1048
 msgid "Text box: "
 msgstr "Pole tekstowe: "
 
-#: ../app/tools/gimptexttool.c:1150
+#: ../app/tools/gimptexttool.c:1181
 msgid "Reshape Text Layer"
 msgstr "Zmiana kształtu warstwy tekstowej"
 
-#: ../app/tools/gimptexttool.c:1670 ../app/tools/gimptexttool.c:1673
+#: ../app/tools/gimptexttool.c:1710 ../app/tools/gimptexttool.c:1713
 msgid "Confirm Text Editing"
 msgstr "Potwierdzenie modyfikacji tekstu"
 
-#: ../app/tools/gimptexttool.c:1677
+#: ../app/tools/gimptexttool.c:1717
 msgid "Create _New Layer"
 msgstr "Utwórz _nową warstwę"
 
-#: ../app/tools/gimptexttool.c:1679
+#: ../app/tools/gimptexttool.c:1719
 msgid "_Edit"
 msgstr "_Modyfikuj"
 
-#: ../app/tools/gimptexttool.c:1701
+#: ../app/tools/gimptexttool.c:1741
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -22860,7 +22920,7 @@ msgstr ""
 "Możliwe jest zmodyfikowanie warstwy lub utworzenie nowej warstwy tekstowej "
 "na podstawie atrybutów obecnej."
 
-#: ../app/tools/gimptexttool-editor.c:1296
+#: ../app/tools/gimptexttool-editor.c:1357
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
@@ -24718,11 +24778,11 @@ msgstr "Wyświetlanie wszystkich plików"
 msgid "Select File _Type (%s)"
 msgstr "Wybór _typu pliku (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:199
+#: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
 msgstr "Typ pliku"
 
-#: ../app/widgets/gimpfileprocview.c:211
+#: ../app/widgets/gimpfileprocview.c:212
 msgid "Extensions"
 msgstr "Rozszerzenia"
 
@@ -25177,7 +25237,7 @@ msgstr ""
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "Metadane nie będą widoczne w programie GIMP starszym niż wersja 2.10."
 
-#: ../app/widgets/gimpsavedialog.c:343
+#: ../app/widgets/gimpsavedialog.c:344
 msgid "Save this XCF file with better but slower compression"
 msgstr "Zapisanie tego pliku XCF z lepszą, ale wolniejszą kompresją"
 
@@ -25382,7 +25442,7 @@ msgstr "Nieprawidłowe dane UTF-8 w pliku „%s”."
 msgid "Writing text file '%s' failed: %s"
 msgstr "Zapisanie pliku tekstowego „%s” się nie powiodło: %s"
 
-#: ../app/widgets/gimptexteditor.c:221
+#: ../app/widgets/gimptexteditor.c:225
 msgid "_Use selected font"
 msgstr "_Użycie wybranej czcionki"
 
