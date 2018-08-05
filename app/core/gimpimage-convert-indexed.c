@@ -764,6 +764,7 @@ gimp_image_convert_indexed (GimpImage               *image,
   GimpImageBaseType  old_type;
   GList             *all_layers;
   GList             *list;
+  GimpColorProfile  *src_profile  = NULL;
   GimpColorProfile  *dest_profile = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -800,6 +801,8 @@ gimp_image_convert_indexed (GimpImage               *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                C_("undo-type", "Convert Image to Indexed"));
+
+  src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
   /*  Push the image type to the stack  */
   gimp_image_undo_push_image_type (image, NULL);
@@ -1008,6 +1011,7 @@ gimp_image_convert_indexed (GimpImage               *image,
                                       GIMP_INDEXED,
                                       gimp_drawable_get_precision (GIMP_DRAWABLE (layer)),
                                       gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)),
+                                      src_profile,
                                       dest_profile,
                                       GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                       TRUE, sub_progress);

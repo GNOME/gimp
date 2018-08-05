@@ -48,6 +48,7 @@ gimp_image_convert_type (GimpImage          *image,
                          GimpProgress       *progress,
                          GError            **error)
 {
+  GimpColorProfile  *src_profile;
   GimpImageBaseType  old_type;
   const Babl        *new_layer_format;
   GimpObjectQueue   *queue;
@@ -107,6 +108,8 @@ gimp_image_convert_type (GimpImage          *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                undo_desc);
 
+  src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
   /*  Push the image type to the stack  */
   gimp_image_undo_push_image_type (image, NULL);
 
@@ -132,6 +135,7 @@ gimp_image_convert_type (GimpImage          *image,
                                   new_type,
                                   gimp_drawable_get_precision (drawable),
                                   gimp_drawable_has_alpha (drawable),
+                                  src_profile,
                                   dest_profile,
                                   GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   TRUE, progress);

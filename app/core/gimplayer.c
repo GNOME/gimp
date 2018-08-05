@@ -186,6 +186,7 @@ static gint64     gimp_layer_estimate_memsize   (GimpDrawable       *drawable,
 static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
+                                                 GimpColorProfile   *src_profile,
                                                  GimpColorProfile   *dest_profile,
                                                  GeglDitherMethod    layer_dither_type,
                                                  GeglDitherMethod    mask_dither_type,
@@ -256,6 +257,7 @@ static void       gimp_layer_real_transform     (GimpLayer          *layer,
 static void       gimp_layer_real_convert_type  (GimpLayer          *layer,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
+                                                 GimpColorProfile   *src_profile,
                                                  GimpColorProfile   *dest_profile,
                                                  GeglDitherMethod    layer_dither_type,
                                                  GeglDitherMethod    mask_dither_type,
@@ -981,6 +983,7 @@ gimp_layer_convert (GimpItem  *item,
   GimpImageBaseType  new_base_type;
   GimpPrecision      old_precision;
   GimpPrecision      new_precision;
+  GimpColorProfile  *src_profile  = NULL;
   GimpColorProfile  *dest_profile = NULL;
 
   old_base_type = gimp_drawable_get_base_type (drawable);
@@ -992,14 +995,17 @@ gimp_layer_convert (GimpItem  *item,
   if (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
       gimp_image_get_is_color_managed (dest_image))
     {
-      GimpColorProfile *src_profile =
+      src_profile =
         gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (item));
 
       dest_profile =
         gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
 
       if (gimp_color_profile_is_equal (dest_profile, src_profile))
-        dest_profile = NULL;
+        {
+          src_profile  = NULL;
+          dest_profile = NULL;
+        }
     }
 
   if (old_base_type != new_base_type ||
@@ -1010,6 +1016,7 @@ gimp_layer_convert (GimpItem  *item,
                                   new_base_type,
                                   new_precision,
                                   gimp_drawable_has_alpha (drawable),
+                                  src_profile,
                                   dest_profile,
                                   GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   FALSE, NULL);
@@ -1364,6 +1371,7 @@ static void
 gimp_layer_convert_type (GimpDrawable     *drawable,
                          GimpImage        *dest_image,
                          const Babl       *new_format,
+                         GimpColorProfile *src_profile,
                          GimpColorProfile *dest_profile,
                          GeglDitherMethod  layer_dither_type,
                          GeglDitherMethod  mask_dither_type,
@@ -1422,7 +1430,8 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
                                          dest_space);
 
   GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, space_format,
-                                              dest_profile, layer_dither_type,
+                                              src_profile, dest_profile,
+                                              layer_dither_type,
                                               mask_dither_type, push_undo,
                                               progress);
 
@@ -1435,7 +1444,7 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
                                   GIMP_GRAY,
                                   gimp_babl_format_get_precision (new_format),
                                   gimp_drawable_has_alpha (GIMP_DRAWABLE (layer->mask)),
-                                  NULL,
+                                  NULL, NULL,
                                   layer_dither_type, mask_dither_type,
                                   push_undo, progress);
     }
@@ -1692,6 +1701,7 @@ static void
 gimp_layer_real_convert_type (GimpLayer        *layer,
                               GimpImage        *dest_image,
                               const Babl       *new_format,
+                              GimpColorProfile *src_profile,
                               GimpColorProfile *dest_profile,
                               GeglDitherMethod  layer_dither_type,
                               GeglDitherMethod  mask_dither_type,
@@ -1732,8 +1742,9 @@ gimp_layer_real_convert_type (GimpLayer        *layer,
 
   if (dest_profile)
     {
-      GimpColorProfile *src_profile =
-        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+      if (! src_profile)
+        src_profile =
+          gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
 
       gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                        dest_buffer, NULL, dest_profile,

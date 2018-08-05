@@ -169,6 +169,7 @@ static gint64  gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
 static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
                                                     const Babl        *new_format,
+                                                    GimpColorProfile  *src_profile,
                                                     GimpColorProfile  *dest_profile,
                                                     GeglDitherMethod   layer_dither_type,
                                                     GeglDitherMethod   mask_dither_type,
@@ -775,6 +776,7 @@ static void
 gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImage         *dest_image,
                                  const Babl        *new_format,
+                                 GimpColorProfile  *src_profile,
                                  GimpColorProfile  *dest_profile,
                                  GeglDitherMethod   layer_dither_type,
                                  GeglDitherMethod   mask_dither_type,
@@ -789,9 +791,9 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
                      new_format);
 
-  gimp_gegl_buffer_copy (
-    gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
-    dest_buffer, NULL);
+  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                         GEGL_ABYSS_NONE,
+                         dest_buffer, NULL);
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
   g_object_unref (dest_buffer);
@@ -1107,6 +1109,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImageBaseType  new_base_type,
                             GimpPrecision      new_precision,
                             gboolean           new_has_alpha,
+                            GimpColorProfile  *src_profile,
                             GimpColorProfile  *dest_profile,
                             GeglDitherMethod   layer_dither_type,
                             GeglDitherMethod   mask_dither_type,
@@ -1124,6 +1127,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                     new_precision != gimp_drawable_get_precision (drawable) ||
                     new_has_alpha != gimp_drawable_has_alpha (drawable)     ||
                     dest_profile);
+  g_return_if_fail (src_profile == NULL || GIMP_IS_COLOR_PROFILE (src_profile));
   g_return_if_fail (dest_profile == NULL || GIMP_IS_COLOR_PROFILE (dest_profile));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
@@ -1154,6 +1158,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
                                                     new_format,
+                                                    src_profile,
                                                     dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,

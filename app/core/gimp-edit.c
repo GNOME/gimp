@@ -287,7 +287,7 @@ gimp_edit_paste_get_layer (GimpImage     *image,
                                           gimp_drawable_get_base_type (drawable),
                                           gimp_drawable_get_precision (drawable),
                                           TRUE,
-                                          NULL,
+                                          NULL, NULL,
                                           GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                           FALSE, NULL);
             }

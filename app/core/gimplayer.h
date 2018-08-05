@@ -125,6 +125,7 @@ struct _GimpLayerClass
   void     (* convert_type)              (GimpLayer              *layer,
                                           GimpImage              *dest_image,
                                           const Babl             *new_format,
+                                          GimpColorProfile       *src_profile,
                                           GimpColorProfile       *dest_profile,
                                           GeglDitherMethod        layer_dither_type,
                                           GeglDitherMethod        mask_dither_type,
