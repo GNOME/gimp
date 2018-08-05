@@ -329,6 +329,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
     }
 
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
+  g_free (basename);
 }
 
 
