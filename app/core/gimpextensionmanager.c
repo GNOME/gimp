@@ -481,6 +481,7 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
   /* List user-installed extensions. */
   path_str = gimp_config_build_writable_path ("extensions");
   path = gimp_config_path_expand_to_files (path_str, NULL);
+  g_free (path_str);
   for (list = path; list; list = g_list_next (list))
     gimp_extension_manager_search_directory (manager, list->data, FALSE);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
@@ -488,6 +489,7 @@ gimp_extension_manager_initialize (GimpExtensionManager *manager)
   /* List system extensions. */
   path_str = gimp_config_build_system_path ("extensions");
   path = gimp_config_path_expand_to_files (path_str, NULL);
+  g_free (path_str);
   for (list = path; list; list = g_list_next (list))
     gimp_extension_manager_search_directory (manager, list->data, TRUE);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
