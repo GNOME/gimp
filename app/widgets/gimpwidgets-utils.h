@@ -45,11 +45,6 @@ void              gimp_enum_radio_frame_add        (GtkFrame             *frame,
 GdkPixbuf       * gimp_widget_load_icon            (GtkWidget            *widget,
                                                     const gchar          *icon_name,
                                                     gint                  size);
-GtkIconSize       gimp_get_icon_size               (GtkWidget            *widget,
-                                                    const gchar          *icon_name,
-                                                    GtkIconSize           max_size,
-                                                    gint                  width,
-                                                    gint                  height);
 GimpTabStyle      gimp_preview_tab_style_to_icon   (GimpTabStyle          tab_style);
 
 const gchar     * gimp_get_mod_string              (GdkModifierType       modifiers);
