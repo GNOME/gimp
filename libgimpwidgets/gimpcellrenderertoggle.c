@@ -39,7 +39,7 @@
  **/
 
 
-#define DEFAULT_ICON_SIZE  GTK_ICON_SIZE_BUTTON
+#define DEFAULT_ICON_SIZE 16
 
 
 enum
@@ -52,7 +52,7 @@ enum
 {
   PROP_0,
   PROP_ICON_NAME,
-  PROP_STOCK_SIZE,
+  PROP_ICON_SIZE,
   PROP_OVERRIDE_BACKGROUND
 };
 
@@ -60,7 +60,7 @@ enum
 struct _GimpCellRendererTogglePrivate
 {
   gchar       *icon_name;
-  GtkIconSize  stock_size;
+  gint         icon_size;
   gboolean     override_background;
 
   GdkPixbuf   *pixbuf;
@@ -143,10 +143,10 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_STOCK_SIZE,
-                                   g_param_spec_int ("stock-size",
-                                                     "Stock Size",
-                                                     "The icon size to use",
+  g_object_class_install_property (object_class, PROP_ICON_SIZE,
+                                   g_param_spec_int ("icon-size",
+                                                     "Icon Size",
+                                                     "The desired icon size to use in pixel (before applying scaling factor)",
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,
                                                      GIMP_PARAM_READWRITE |
@@ -196,8 +196,8 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
       g_value_set_string (value, priv->icon_name);
       break;
 
-    case PROP_STOCK_SIZE:
-      g_value_set_int (value, priv->stock_size);
+    case PROP_ICON_SIZE:
+      g_value_set_int (value, priv->icon_size);
       break;
 
     case PROP_OVERRIDE_BACKGROUND:
@@ -226,8 +226,8 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
       priv->icon_name = g_value_dup_string (value);
       break;
 
-    case PROP_STOCK_SIZE:
-      priv->stock_size = g_value_get_int (value);
+    case PROP_ICON_SIZE:
+      priv->icon_size = g_value_get_int (value);
       break;
 
     case PROP_OVERRIDE_BACKGROUND:
@@ -499,10 +499,6 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
       GtkIconInfo  *icon_info;
       gchar        *icon_name;
       gint          scale_factor;
-      gint          width, height;
-
-      if (! gtk_icon_size_lookup (priv->stock_size, &width, &height))
-        gtk_icon_size_lookup (DEFAULT_ICON_SIZE, &width, &height);
 
       scale_factor = gtk_widget_get_scale_factor (widget);
       screen       = gtk_widget_get_screen (widget);
@@ -511,7 +507,7 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
       /* Look for symbolic and fallback to color icon. */
       icon_name = g_strdup_printf ("%s-symbolic", priv->icon_name);
       icon_info = gtk_icon_theme_lookup_icon_for_scale (icon_theme, icon_name,
-                                                        MIN (width, height), scale_factor,
+                                                        priv->icon_size, scale_factor,
                                                         GTK_ICON_LOOKUP_GENERIC_FALLBACK);
 
       g_free (icon_name);

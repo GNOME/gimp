@@ -959,8 +959,8 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
 
   for (list = tree_view->priv->toggle_cells; list; list = g_list_next (list))
     {
-      gchar       *icon_name;
-      GtkIconSize  icon_size;
+      gchar *icon_name;
+      gint   icon_size;
 
       g_object_get (list->data, "icon-name", &icon_name, NULL);
 
@@ -974,15 +974,10 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
           gtk_style_context_get_border (style, 0, &border);
           gtk_style_context_restore (style);
 
-          icon_size = gimp_get_icon_size (tree_widget,
-                                          icon_name,
-                                          GTK_ICON_SIZE_BUTTON,
-                                          view_size -
-                                          (border.left + border.right),
-                                          view_size -
-                                          (border.top + border.bottom));
-
-          g_object_set (list->data, "stock-size", icon_size, NULL);
+          g_object_get (list->data, "icon-size", &icon_size, NULL);
+          icon_size = MIN (icon_size, MAX (view_size - (border.left + border.right),
+                                           view_size - (border.top + border.bottom)));
+          g_object_set (list->data, "icon-size", icon_size, NULL);
 
           g_free (icon_name);
         }

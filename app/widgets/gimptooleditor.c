@@ -259,7 +259,7 @@ gimp_tool_editor_new (GimpContainer *container,
     GtkTreeViewColumn     *column;
     GtkCellRenderer       *eye_cell;
     GtkBorder              border;
-    GtkIconSize            icon_size;
+    gint                   icon_size;
 
     tree_style = gtk_widget_get_style_context (tree_widget);
     gtk_style_context_get_border (tree_style, 0, &border);
@@ -269,13 +269,11 @@ gimp_tool_editor_new (GimpContainer *container,
 
     eye_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_VISIBLE);
 
-    icon_size = gimp_get_icon_size (GTK_WIDGET (tool_editor),
-                                    GIMP_ICON_VISIBLE,
-                                    GTK_ICON_SIZE_BUTTON,
-                                    view_size - (border.left + border.right),
-                                    view_size - (border.top + border.bottom));
+    g_object_get (eye_cell, "icon-size", &icon_size, NULL);
+    icon_size = MIN (icon_size, MAX (view_size - (border.left + border.right),
+                                     view_size - (border.top + border.bottom)));
+    g_object_set (eye_cell, "icon-size", icon_size, NULL);
 
-    g_object_set (eye_cell, "stock-size", icon_size, NULL);
     gtk_tree_view_column_pack_start (column, eye_cell, FALSE);
     gtk_tree_view_column_set_cell_data_func  (column, eye_cell,
                                               gimp_tool_editor_eye_data_func,
