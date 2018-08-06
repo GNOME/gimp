@@ -10,17 +10,17 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007, 2008, 2009, 2011.
 #
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
-# Rodrigo <rodhos92@gmail.com>, 2018.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2015, 2016, 2018.
+# Rodrigo <rodhos92@gmail.com>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-30 23:15+0000\n"
-"PO-Revision-Date: 2018-07-31 12:02+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: es <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2018-08-04 07:44+0000\n"
+"PO-Revision-Date: 2018-08-05 12:34+0200\n"
+"Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1373,29 +1373,23 @@ msgstr "De derecha a izquierda"
 
 #: ../libgimpbase/gimpbaseenums.c:1809
 msgctxt "text-direction"
-msgid "Characters are from top to bottom, Lines are from right to left"
-msgstr ""
-"Los caracteres están de arriba a abajo, las líneas de derecha a izquierda"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Vertical, derecha a izquierda (orientación mixta)"
 
 #: ../libgimpbase/gimpbaseenums.c:1810
 msgctxt "text-direction"
-msgid "Upright characters are from top to bottom, Lines are from right to left"
-msgstr ""
-"Los caracteres verticales están de arriba a abajo, las líneas de derecha a "
-"izquierda"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Vertical, derecha a izquierda (orientación vertical)"
 
 #: ../libgimpbase/gimpbaseenums.c:1811
 msgctxt "text-direction"
-msgid "Characters are from top to bottom, Lines are from left to right"
-msgstr ""
-"Los caracteres están de arriba a abajo, las líneas de izquierda a derecha"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Vertical, izquierda a derecha (orientación mixta)"
 
 #: ../libgimpbase/gimpbaseenums.c:1812
 msgctxt "text-direction"
-msgid "Upright characters are from top to bottom, Lines are from left to right"
-msgstr ""
-"Los caracteres verticales están de arriba a abajo, las líneas de izquierda a "
-"derecha"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Vertical, izquierda a derecha (orientación vertical)"
 
 #: ../libgimpbase/gimpbaseenums.c:1843
 msgctxt "text-hint-style"
@@ -2935,6 +2929,30 @@ msgstr "Ciclos de contraste"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contraste"
+
+#~ msgctxt "text-direction"
+#~ msgid "Characters are from top to bottom, Lines are from right to left"
+#~ msgstr ""
+#~ "Los caracteres están de arriba a abajo, las líneas de derecha a izquierda"
+
+#~ msgctxt "text-direction"
+#~ msgid ""
+#~ "Upright characters are from top to bottom, Lines are from right to left"
+#~ msgstr ""
+#~ "Los caracteres verticales están de arriba a abajo, las líneas de derecha "
+#~ "a izquierda"
+
+#~ msgctxt "text-direction"
+#~ msgid "Characters are from top to bottom, Lines are from left to right"
+#~ msgstr ""
+#~ "Los caracteres están de arriba a abajo, las líneas de izquierda a derecha"
+
+#~ msgctxt "text-direction"
+#~ msgid ""
+#~ "Upright characters are from top to bottom, Lines are from left to right"
+#~ msgstr ""
+#~ "Los caracteres verticales están de arriba a abajo, las líneas de "
+#~ "izquierda a derecha"
 
 #~ msgctxt "precision"
 #~ msgid "8-bit gamma integer"
