@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-26 20:04+0000\n"
-"PO-Revision-Date: 2018-06-26 23:53+0200\n"
+"POT-Creation-Date: 2018-08-05 17:18+0000\n"
+"PO-Revision-Date: 2018-08-06 13:34+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.0.9\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -58,7 +58,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
 #: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
-#: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1270
+#: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1270
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:594
 #: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
@@ -71,10 +71,9 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
-#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
+#: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -120,7 +119,7 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
 #: ../plug-ins/common/file-heif.c:936 ../plug-ins/common/file-pdf-load.c:708
-#: ../plug-ins/common/file-svg.c:728 ../plug-ins/common/file-wmf.c:506
+#: ../plug-ins/common/file-svg.c:728 ../plug-ins/common/file-wmf.c:516
 #: ../plug-ins/common/film.c:1271 ../plug-ins/common/filter-pack.c:1207
 #: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:648
 #: ../plug-ins/common/hot.c:595 ../plug-ins/common/jigsaw.c:2398
@@ -130,10 +129,9 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:439
 #: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:355 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -485,7 +483,7 @@ msgstr "Enkel oskärpa, snabb men inte så kraftig"
 msgid "_Blur"
 msgstr "Gör _oskarp"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:592
+#: ../plug-ins/common/blur.c:175
 msgid "Blurring"
 msgstr "Gör suddig"
 
@@ -2009,7 +2007,7 @@ msgid "R_ecursive"
 msgstr "R_ekursivt"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
+#: ../plug-ins/common/nl-filter.c:1092
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -2097,7 +2095,7 @@ msgstr "Neon"
 msgid "Neon Detection"
 msgstr "Neonidentifiering"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:888
+#: ../plug-ins/common/edge-neon.c:749
 msgid "_Amount:"
 msgstr "_Mängd:"
 
@@ -2205,14 +2203,14 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
+#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
 #: ../plug-ins/common/file-heif.c:341 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
 #: ../plug-ins/common/file-png.c:919 ../plug-ins/common/file-pnm.c:566
 #: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
 #: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
-#: ../plug-ins/common/file-wmf.c:984 ../plug-ins/common/file-xbm.c:740
+#: ../plug-ins/common/file-wmf.c:1014 ../plug-ins/common/file-xbm.c:740
 #: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
 #: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
@@ -2294,10 +2292,10 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
+#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:711
+#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1316
 #: ../plug-ins/common/file-heif.c:622 ../plug-ins/common/file-html-table.c:237
-#: ../plug-ins/common/file-pat.c:535 ../plug-ins/common/file-pcx.c:743
+#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:743
 #: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1575
 #: ../plug-ins/common/file-pnm.c:1246 ../plug-ins/common/file-ps.c:1236
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
@@ -2423,44 +2421,49 @@ msgstr "Kan inte arbeta med okända bildtyper."
 msgid "GIMP brush"
 msgstr "GIMP-pensel"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:425
+#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr "Ogiltig huvuddata i ”%s”: bredd=%lu, höjd=%lu, byte=%lu"
 
-#: ../plug-ins/common/file-gbr.c:412 ../plug-ins/common/file-gbr.c:444
-#: ../plug-ins/common/file-gbr.c:455
+#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
+#: ../plug-ins/common/file-gbr.c:456
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Penselformat stöds inte"
 
-#: ../plug-ins/common/file-gbr.c:469
+#: ../plug-ins/common/file-gbr.c:468
+#, c-format
+msgid "Invalid header data in '%s': Brush name is too long: %lu"
+msgstr "Ogiltig huvuddata i ”%s”: Penselnamnet är för långt: %lu"
+
+#: ../plug-ins/common/file-gbr.c:482
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Fel i GIMP-penselfilen ”%s”"
 
-#: ../plug-ins/common/file-gbr.c:477
+#: ../plug-ins/common/file-gbr.c:490
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen ”%s”."
 
-#: ../plug-ins/common/file-gbr.c:483 ../plug-ins/common/file-gih.c:508
-#: ../plug-ins/common/file-gih.c:1207
+#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
+#: ../plug-ins/common/file-gih.c:1218 ../plug-ins/common/file-pat.c:398
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Namnlös"
 
-#: ../plug-ins/common/file-gbr.c:800
+#: ../plug-ins/common/file-gbr.c:813
 msgid "Brush"
 msgstr "Pensel"
 
-#: ../plug-ins/common/file-gbr.c:816 ../plug-ins/common/file-gih.c:933
-#: ../plug-ins/common/file-pat.c:624 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:829 ../plug-ins/common/file-gih.c:944
+#: ../plug-ins/common/file-pat.c:641 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Beskrivning:"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:828 ../plug-ins/common/grid.c:799
+#: ../plug-ins/common/file-gbr.c:841 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "Mellanrum:"
 
@@ -2608,55 +2611,60 @@ msgstr "Standardkommentaren är begränsad till %d tecken."
 msgid "GIMP brush (animated)"
 msgstr "GIMP-pensel (animerad)"
 
-#: ../plug-ins/common/file-gih.c:584
+#: ../plug-ins/common/file-gih.c:502
+#, c-format
+msgid "Brush name is too long: %lu"
+msgstr "Penselnamnet är för långt: %lu"
+
+#: ../plug-ins/common/file-gih.c:595
 msgid "GIMP brush file appears to be corrupted."
 msgstr "GIMP-penselfilen verkar vara skadad."
 
-#: ../plug-ins/common/file-gih.c:915
+#: ../plug-ins/common/file-gih.c:926
 msgid "Brush Pipe"
 msgstr "Penselrör"
 
-#: ../plug-ins/common/file-gih.c:948
+#: ../plug-ins/common/file-gih.c:959
 msgid "Spacing (percent):"
 msgstr "Mellanrum (procent):"
 
-#: ../plug-ins/common/file-gih.c:1003
+#: ../plug-ins/common/file-gih.c:1014
 msgid "Pixels"
 msgstr "Bildpunkter"
 
-#: ../plug-ins/common/file-gih.c:1008
+#: ../plug-ins/common/file-gih.c:1019
 msgid "Cell size:"
 msgstr "Cellstorlek:"
 
-#: ../plug-ins/common/file-gih.c:1021
+#: ../plug-ins/common/file-gih.c:1032
 msgid "Number of cells:"
 msgstr "Antal celler:"
 
-#: ../plug-ins/common/file-gih.c:1046
+#: ../plug-ins/common/file-gih.c:1057
 msgid " Rows of "
 msgstr " Rader med "
 
-#: ../plug-ins/common/file-gih.c:1058
+#: ../plug-ins/common/file-gih.c:1069
 msgid " Columns on each layer"
 msgstr " Kolumner på varje lager"
 
-#: ../plug-ins/common/file-gih.c:1062
+#: ../plug-ins/common/file-gih.c:1073
 msgid " (Width Mismatch!) "
 msgstr " (Fel bredd!) "
 
-#: ../plug-ins/common/file-gih.c:1066
+#: ../plug-ins/common/file-gih.c:1077
 msgid " (Height Mismatch!) "
 msgstr " (Fel höjd!) "
 
-#: ../plug-ins/common/file-gih.c:1071
+#: ../plug-ins/common/file-gih.c:1082
 msgid "Display as:"
 msgstr "Visa som:"
 
-#: ../plug-ins/common/file-gih.c:1082
+#: ../plug-ins/common/file-gih.c:1093
 msgid "Dimension:"
 msgstr "Dimension:"
 
-#: ../plug-ins/common/file-gih.c:1158
+#: ../plug-ins/common/file-gih.c:1169
 msgid "Ranks:"
 msgstr "Ranger:"
 
@@ -2697,8 +2705,7 @@ msgstr "Inläsning av HEIF-bild misslyckades: %s"
 #: ../plug-ins/common/file-heif.c:393
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
-"Inläsning av HEIF-bild misslyckades: Indatafil innehåller inga läsbara "
-"bilder "
+"Inläsning av HEIF-bild misslyckades: Indatafil innehåller inga läsbara bilder"
 
 #: ../plug-ins/common/file-heif.c:482
 msgid "image content"
@@ -2907,7 +2914,7 @@ msgstr "JPEG 2000%s ”%s” som ej stöds med %d komponenter."
 msgid "Color space:"
 msgstr "Färgrymd:"
 
-#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:965
+#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:995
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Kunde inte öppna ”%s” för läsning"
@@ -3091,12 +3098,17 @@ msgstr "MNG-animation"
 msgid "GIMP pattern"
 msgstr "GIMP-mönster"
 
-#: ../plug-ins/common/file-pat.c:380
+#: ../plug-ins/common/file-pat.c:373
+#, c-format
+msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+msgstr "Ogiltig huvuddata i ”%s”: Mönsternamnet är för långt: %lu"
+
+#: ../plug-ins/common/file-pat.c:392
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Ogiltig UTF-8-sträng i mönsterfilen ”%s”."
 
-#: ../plug-ins/common/file-pat.c:609
+#: ../plug-ins/common/file-pat.c:626
 msgid "Pattern"
 msgstr "Mönster"
 
@@ -3253,7 +3265,7 @@ msgstr "Använd _kantutjämning"
 
 #: ../plug-ins/common/file-pdf-load.c:1644
 #: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
-#: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
+#: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
@@ -3554,7 +3566,7 @@ msgstr "Rendering"
 
 #. Resolution
 #: ../plug-ins/common/file-ps.c:3451 ../plug-ins/common/file-svg.c:910
-#: ../plug-ins/common/file-wmf.c:694
+#: ../plug-ins/common/file-wmf.c:704
 msgid "Resolution:"
 msgstr "Upplösning:"
 
@@ -4145,7 +4157,7 @@ msgstr "Renderar SVG"
 msgid "Rendered SVG"
 msgstr "Renderad SVG"
 
-#: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:359
+#: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:369
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
@@ -4164,24 +4176,24 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Rendera Scalable Vector Graphics"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:571
+#: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:581
 #: ../plug-ins/common/grid.c:733
 msgid "Width:"
 msgstr "Bredd:"
 
-#: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:577
+#: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:587
 msgid "Height:"
 msgstr "Höjd:"
 
-#: ../plug-ins/common/file-svg.c:869 ../plug-ins/common/file-wmf.c:653
+#: ../plug-ins/common/file-svg.c:869 ../plug-ins/common/file-wmf.c:663
 msgid "_X ratio:"
 msgstr "_X-proportion:"
 
-#: ../plug-ins/common/file-svg.c:891 ../plug-ins/common/file-wmf.c:675
+#: ../plug-ins/common/file-svg.c:891 ../plug-ins/common/file-wmf.c:685
 msgid "_Y ratio:"
 msgstr "_Y-proportion:"
 
-#: ../plug-ins/common/file-svg.c:905 ../plug-ins/common/file-wmf.c:689
+#: ../plug-ins/common/file-svg.c:905 ../plug-ins/common/file-wmf.c:699
 msgid "Constrain aspect ratio"
 msgstr "Håll proportioner"
 
@@ -4243,7 +4255,7 @@ msgstr "Övre vänster"
 msgid "Microsoft WMF file"
 msgstr "Microsoft WMF-fil"
 
-#: ../plug-ins/common/file-wmf.c:353
+#: ../plug-ins/common/file-wmf.c:363
 msgid ""
 "WMF file does not\n"
 "specify a size!"
@@ -4251,11 +4263,11 @@ msgstr ""
 "WMF-filen anger\n"
 "inte en storlek!"
 
-#: ../plug-ins/common/file-wmf.c:501
+#: ../plug-ins/common/file-wmf.c:511
 msgid "Render Windows Metafile"
 msgstr "Rendera Windows-metafil"
 
-#: ../plug-ins/common/file-wmf.c:998
+#: ../plug-ins/common/file-wmf.c:1028
 msgid "Rendered WMF"
 msgstr "Renderad WMF"
 
@@ -6390,28 +6402,6 @@ msgstr "Enhetsredigerare"
 msgid "_Refresh"
 msgstr "_Uppdatera"
 
-#: ../plug-ins/common/unsharp-mask.c:132
-msgid "The most widely useful method for sharpening an image"
-msgstr "Den mest användbara metoden för att öka skärpan i en bild"
-
-#: ../plug-ins/common/unsharp-mask.c:142
-msgid "_Unsharp Mask (legacy)..."
-msgstr "_Oskarp mask (föråldrad)…"
-
-#: ../plug-ins/common/unsharp-mask.c:694
-msgid "Merging"
-msgstr "Sammanfogar"
-
-#: ../plug-ins/common/unsharp-mask.c:838
-msgid "Unsharp Mask"
-msgstr "Oskarp mask"
-
-#: ../plug-ins/common/unsharp-mask.c:901
-#: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:566
-msgid "_Threshold:"
-msgstr "_Tröskelvärde:"
-
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
@@ -7332,7 +7322,7 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "Oväntat slut på filen"
 
-#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:166
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:167
 msgid "Photoshop image"
 msgstr "Photoshop-bild"
 
@@ -10362,10 +10352,10 @@ msgstr "Användarhandboken för GIMP finns inte tillgänglig."
 #: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"http://docs.gimp.org/"
+"https://docs.gimp.org/"
 msgstr ""
 "Installera tilläggspaketet för hjälpdokumentation eller använd nätupplagan "
-"av användarhandboken på http://docs.gimp.org/"
+"av användarhandboken på https://docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -11230,6 +11220,11 @@ msgstr "Interaktion:"
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "Sa_mmanhängande region"
+
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:566
+msgid "_Threshold:"
+msgstr "_Tröskelvärde:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
@@ -12687,6 +12682,18 @@ msgstr "_Bildläsare/Kamera…"
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
+
+#~ msgid "The most widely useful method for sharpening an image"
+#~ msgstr "Den mest användbara metoden för att öka skärpan i en bild"
+
+#~ msgid "_Unsharp Mask (legacy)..."
+#~ msgstr "_Oskarp mask (föråldrad)…"
+
+#~ msgid "Merging"
+#~ msgstr "Sammanfogar"
+
+#~ msgid "Unsharp Mask"
+#~ msgstr "Oskarp mask"
 
 #~ msgid "Displace pixels in a ripple pattern"
 #~ msgstr "Förskjut bildpunkter i ett krusmönster"
