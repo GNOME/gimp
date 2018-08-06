@@ -72,6 +72,43 @@
   </provides>
 
   <releases>
+    <release version="2.10.6" date="2018-08-10">
+      <description>
+        <_p>
+          GIMP 2.10.6 comes with a lot of bug fixes, optimizations and
+          features. Most notable changes are:
+        </_p>
+        <ul>
+          <_li>
+          Text layers can now represent vertical texts (with various
+          character orientations and line directions)
+          </_li>
+          <_li>
+          New "Little Planet" (gegl:stereographic-projection) filter
+          </_li>
+          <_li>
+          The "Straighten" option of the Measure Tool now allows
+          vertical straightening
+          </_li>
+          <_li>
+          Drawable previews are now rendered asynchronously and layer
+          group previews can be disabled in Preferences
+          </_li>
+          <_li>
+          New "async" field in the Dashboard "misc" group, showing the
+          number of async operations currently running
+          </_li>
+          <_li>
+          File format filtering in Open/Save/Export dialogs made less
+          confusing
+          </_li>
+          <_li>
+          New language (having GIMP translated in 81 languages now):
+          Marathi
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.4" date="2018-07-04">
       <description>
         <_p>
