@@ -34,6 +34,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
+#include "core/gimplayer.h"
 #include "core/gimp-transform-utils.h"
 #include "core/gimp-utils.h"
 
@@ -70,6 +71,8 @@ struct _GimpCanvasTransformPreviewPrivate
   GeglNode      *node;
   GeglNode      *source_node;
   GeglNode      *convert_format_node;
+  GeglNode      *layer_mask_source_node;
+  GeglNode      *layer_mask_opacity_node;
   GeglNode      *mask_source_node;
   GeglNode      *mask_translate_node;
   GeglNode      *mask_crop_node;
@@ -78,10 +81,12 @@ struct _GimpCanvasTransformPreviewPrivate
   GeglNode      *transform_node;
 
   GimpDrawable  *node_drawable;
+  GimpDrawable  *node_layer_mask;
   GimpDrawable  *node_mask;
   GeglRectangle  node_rect;
   gdouble        node_opacity;
   GimpMatrix3    node_matrix;
+  GeglNode      *node_output;
 };
 
 #define GET_PRIVATE(transform_preview) \
@@ -92,21 +97,26 @@ struct _GimpCanvasTransformPreviewPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_transform_preview_dispose      (GObject        *object);
-static void             gimp_canvas_transform_preview_set_property (GObject        *object,
-                                                                    guint           property_id,
-                                                                    const GValue   *value,
-                                                                    GParamSpec     *pspec);
-static void             gimp_canvas_transform_preview_get_property (GObject        *object,
-                                                                    guint           property_id,
-                                                                    GValue         *value,
-                                                                    GParamSpec     *pspec);
+static void             gimp_canvas_transform_preview_dispose       (GObject                    *object);
+static void             gimp_canvas_transform_preview_set_property  (GObject                    *object,
+                                                                     guint                       property_id,
+                                                                     const GValue               *value,
+                                                                     GParamSpec                 *pspec);
+static void             gimp_canvas_transform_preview_get_property  (GObject                    *object,
+                                                                     guint                       property_id,
+                                                                     GValue                     *value,
+                                                                     GParamSpec                 *pspec);
 
-static void             gimp_canvas_transform_preview_draw         (GimpCanvasItem *item,
-                                                                    cairo_t        *cr);
-static cairo_region_t * gimp_canvas_transform_preview_get_extents  (GimpCanvasItem *item);
+static void             gimp_canvas_transform_preview_draw          (GimpCanvasItem             *item,
+                                                                     cairo_t                    *cr);
+static cairo_region_t * gimp_canvas_transform_preview_get_extents   (GimpCanvasItem             *item);
 
-static void             gimp_canvas_transform_preview_sync_node    (GimpCanvasItem *item);
+static void             gimp_canvas_transform_preview_layer_changed (GimpLayer                  *layer,
+                                                                     GimpCanvasTransformPreview *transform_preview);
+
+static void             gimp_canvas_transform_preview_set_drawable  (GimpCanvasTransformPreview *transform_preview,
+                                                                     GimpDrawable               *drawable);
+static void             gimp_canvas_transform_preview_sync_node     (GimpCanvasTransformPreview *transform_preview);
 
 
 G_DEFINE_TYPE (GimpCanvasTransformPreview, gimp_canvas_transform_preview,
@@ -192,9 +202,12 @@ gimp_canvas_transform_preview_init (GimpCanvasTransformPreview *transform_previe
 static void
 gimp_canvas_transform_preview_dispose (GObject *object)
 {
-  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (object);
+  GimpCanvasTransformPreview        *transform_preview = GIMP_CANVAS_TRANSFORM_PREVIEW (object);
+  GimpCanvasTransformPreviewPrivate *private           = GET_PRIVATE (object);
 
   g_clear_object (&private->node);
+
+  gimp_canvas_transform_preview_set_drawable (transform_preview, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -205,12 +218,14 @@ gimp_canvas_transform_preview_set_property (GObject      *object,
                                             const GValue *value,
                                             GParamSpec   *pspec)
 {
-  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (object);
+  GimpCanvasTransformPreview        *transform_preview = GIMP_CANVAS_TRANSFORM_PREVIEW (object);
+  GimpCanvasTransformPreviewPrivate *private           = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_DRAWABLE:
-      private->drawable = g_value_get_object (value); /* don't ref */
+      gimp_canvas_transform_preview_set_drawable (transform_preview,
+                                                  g_value_get_object (value));
       break;
 
     case PROP_TRANSFORM:
@@ -355,8 +370,9 @@ static void
 gimp_canvas_transform_preview_draw (GimpCanvasItem *item,
                                     cairo_t        *cr)
 {
-  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
-  GimpDisplayShell                  *shell   = gimp_canvas_item_get_shell (item);
+  GimpCanvasTransformPreview        *transform_preview = GIMP_CANVAS_TRANSFORM_PREVIEW (item);
+  GimpCanvasTransformPreviewPrivate *private           = GET_PRIVATE (item);
+  GimpDisplayShell                  *shell             = gimp_canvas_item_get_shell (item);
   cairo_rectangle_int_t              extents;
   gdouble                            clip_x1, clip_y1;
   gdouble                            clip_x2, clip_y2;
@@ -396,9 +412,9 @@ gimp_canvas_transform_preview_draw (GimpCanvasItem *item,
   surface_data   = cairo_image_surface_get_data (surface);
   surface_stride = cairo_image_surface_get_stride (surface);
 
-  gimp_canvas_transform_preview_sync_node (item);
+  gimp_canvas_transform_preview_sync_node (transform_preview);
 
-  gegl_node_blit (private->transform_node, 1.0,
+  gegl_node_blit (private->node_output, 1.0,
                   GEGL_RECTANGLE (bounds.x + shell->offset_x,
                                   bounds.y + shell->offset_y,
                                   bounds.width,
@@ -427,14 +443,61 @@ gimp_canvas_transform_preview_get_extents (GimpCanvasItem *item)
 }
 
 static void
-gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
+gimp_canvas_transform_preview_layer_changed (GimpLayer                  *layer,
+                                             GimpCanvasTransformPreview *transform_preview)
 {
-  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (item);
-  GimpDisplayShell                  *shell   = gimp_canvas_item_get_shell (item);
-  GimpImage                         *image   = gimp_canvas_item_get_image (item);
+  GimpCanvasItem *item = GIMP_CANVAS_ITEM (transform_preview);
+
+  gimp_canvas_item_begin_change (item);
+  gimp_canvas_item_end_change   (item);
+}
+
+static void
+gimp_canvas_transform_preview_set_drawable (GimpCanvasTransformPreview *transform_preview,
+                                            GimpDrawable               *drawable)
+{
+  GimpCanvasTransformPreviewPrivate *private = GET_PRIVATE (transform_preview);
+
+  if (private->drawable && GIMP_IS_LAYER (private->drawable))
+    {
+      g_signal_handlers_disconnect_by_func (
+        private->drawable,
+        gimp_canvas_transform_preview_layer_changed,
+        transform_preview);
+    }
+
+  g_set_object (&private->drawable, drawable);
+
+  if (drawable && GIMP_IS_LAYER (drawable))
+    {
+      g_signal_connect (drawable, "opacity-changed",
+                        G_CALLBACK (gimp_canvas_transform_preview_layer_changed),
+                        transform_preview);
+      g_signal_connect (drawable, "mask-changed",
+                        G_CALLBACK (gimp_canvas_transform_preview_layer_changed),
+                        transform_preview);
+      g_signal_connect (drawable, "apply-mask-changed",
+                        G_CALLBACK (gimp_canvas_transform_preview_layer_changed),
+                        transform_preview);
+      g_signal_connect (drawable, "show-mask-changed",
+                        G_CALLBACK (gimp_canvas_transform_preview_layer_changed),
+                        transform_preview);
+    }
+}
+
+static void
+gimp_canvas_transform_preview_sync_node (GimpCanvasTransformPreview *transform_preview)
+{
+  GimpCanvasTransformPreviewPrivate *private    = GET_PRIVATE (transform_preview);
+  GimpCanvasItem                    *item       = GIMP_CANVAS_ITEM (transform_preview);
+  GimpDisplayShell                  *shell      = gimp_canvas_item_get_shell (item);
+  GimpImage                         *image      = gimp_canvas_item_get_image (item);
+  GimpDrawable                      *drawable   = private->drawable;
+  GimpDrawable                      *layer_mask = NULL;
+  GimpDrawable                      *mask       = NULL;
+  gdouble                            opacity    = private->opacity;
   gint                               offset_x, offset_y;
   GimpMatrix3                        matrix;
-  gboolean                           has_mask;
 
   if (! private->node)
     {
@@ -448,6 +511,16 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
       private->convert_format_node =
         gegl_node_new_child (private->node,
                              "operation", "gegl:convert-format",
+                             NULL);
+
+      private->layer_mask_source_node =
+        gegl_node_new_child (private->node,
+                             "operation", "gimp:buffer-source-validate",
+                             NULL);
+
+      private->layer_mask_opacity_node =
+        gegl_node_new_child (private->node,
+                             "operation", "gegl:opacity",
                              NULL);
 
       private->mask_source_node =
@@ -489,16 +562,21 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
                            private->transform_node,
                            NULL);
 
+      gegl_node_connect_to (private->layer_mask_source_node,  "output",
+                            private->layer_mask_opacity_node, "aux");
+
       gegl_node_link_many (private->mask_source_node,
                            private->mask_translate_node,
                            private->mask_crop_node,
                            NULL);
 
-      private->node_drawable = NULL;
-      private->node_mask     = NULL;
-      private->node_rect     = *GEGL_RECTANGLE (0, 0, 0, 0);
-      private->node_opacity  = 1.0;
+      private->node_drawable   = NULL;
+      private->node_layer_mask = NULL;
+      private->node_mask       = NULL;
+      private->node_rect       = *GEGL_RECTANGLE (0, 0, 0, 0);
+      private->node_opacity    = 1.0;
       gimp_matrix3_identity (&private->node_matrix);
+      private->node_output     = private->transform_node;
     }
 
   gimp_item_get_offset (GIMP_ITEM (private->drawable), &offset_x, &offset_y);
@@ -508,48 +586,55 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
   gimp_matrix3_mult (&private->transform, &matrix);
   gimp_matrix3_scale (&matrix, shell->scale_x, shell->scale_y);
 
-  has_mask = gimp_item_mask_bounds (GIMP_ITEM (private->drawable),
-                                    NULL, NULL, NULL, NULL);
-
-  if (private->drawable != private->node_drawable)
+  if (gimp_item_mask_bounds (GIMP_ITEM (private->drawable),
+                             NULL, NULL, NULL, NULL))
     {
-      private->node_drawable = private->drawable;
+      mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
+    }
 
+  if (GIMP_IS_LAYER (drawable))
+    {
+      GimpLayer *layer = GIMP_LAYER (drawable);
+
+      opacity *= gimp_layer_get_opacity (layer);
+
+      layer_mask = GIMP_DRAWABLE (gimp_layer_get_mask (layer));
+
+      if (layer_mask)
+        {
+          if (gimp_layer_get_show_mask (layer) && ! mask)
+            {
+              drawable   = layer_mask;
+              layer_mask = NULL;
+            }
+          else if (! gimp_layer_get_apply_mask (layer))
+            {
+              layer_mask = NULL;
+            }
+        }
+    }
+
+  if (drawable != private->node_drawable)
+    {
       gegl_node_set (private->source_node,
-                     "buffer", gimp_drawable_get_buffer (private->drawable),
+                     "buffer", gimp_drawable_get_buffer (drawable),
                      NULL);
       gegl_node_set (private->convert_format_node,
-                     "format", gimp_drawable_get_format_with_alpha (private->drawable),
+                     "format", gimp_drawable_get_format_with_alpha (drawable),
                      NULL);
     }
 
-  if ((has_mask           || private->opacity      != 1.0) !=
-      (private->node_mask || private->node_opacity != 1.0))
+  if (layer_mask != private->node_layer_mask)
     {
-      if (has_mask || private->opacity != 1.0)
-        {
-          gegl_node_disconnect (private->convert_format_node, "input");
-
-          gegl_node_link_many (private->source_node,
-                               private->opacity_node,
-                               private->cache_node,
-                               private->transform_node,
-                               NULL);
-        }
-      else
-        {
-          gegl_node_disconnect (private->opacity_node, "input");
-
-          gegl_node_link_many (private->source_node,
-                               private->convert_format_node,
-                               private->transform_node,
-                               NULL);
-        }
+      gegl_node_set (private->layer_mask_source_node,
+                     "buffer", layer_mask ?
+                                 gimp_drawable_get_buffer (layer_mask) :
+                                 NULL,
+                     NULL);
     }
 
-  if (has_mask)
+  if (mask)
     {
-      GimpDrawable  *mask = GIMP_DRAWABLE (gimp_image_get_mask (image));
       GeglRectangle  rect;
 
       rect.x      = offset_x;
@@ -584,23 +669,70 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
           gegl_node_connect_to (private->mask_crop_node, "output",
                                 private->opacity_node,   "aux");
         }
-
-      private->node_mask = mask;
     }
   else if (private->node_mask)
     {
-      private->node_mask = NULL;
-
       gegl_node_disconnect (private->opacity_node, "aux");
     }
 
-  if (private->opacity != private->node_opacity)
+  if (opacity != private->node_opacity)
     {
-      private->node_opacity = private->opacity;
-
       gegl_node_set (private->opacity_node,
-                     "value", private->opacity,
+                     "value", opacity,
                      NULL);
+    }
+
+  if (layer_mask       != private->node_layer_mask ||
+      mask             != private->node_mask       ||
+      (opacity != 1.0) != (private->node_opacity != 1.0))
+    {
+      GeglNode *output = private->source_node;
+
+      if (layer_mask && ! mask)
+        {
+          gegl_node_link (output, private->layer_mask_opacity_node);
+          output = private->layer_mask_opacity_node;
+        }
+      else
+        {
+          gegl_node_disconnect (private->layer_mask_opacity_node, "input");
+        }
+
+      if (mask || (opacity != 1.0))
+        {
+          gegl_node_link (output, private->opacity_node);
+          output = private->opacity_node;
+        }
+      else
+        {
+          gegl_node_disconnect (private->opacity_node, "input");
+        }
+
+      if (output == private->source_node)
+        {
+          gegl_node_disconnect (private->cache_node, "input");
+
+          gegl_node_link (output, private->convert_format_node);
+          output = private->convert_format_node;
+        }
+      else
+        {
+          gegl_node_disconnect (private->convert_format_node, "input");
+
+          gegl_node_link (output, private->cache_node);
+          output = private->cache_node;
+        }
+
+      gegl_node_link (output, private->transform_node);
+      output = private->transform_node;
+
+      if (layer_mask && mask)
+        {
+          gegl_node_link (output, private->layer_mask_opacity_node);
+          output = private->layer_mask_opacity_node;
+        }
+
+      private->node_output = output;
     }
 
   if (memcmp (&matrix, &private->node_matrix, sizeof (matrix)))
@@ -609,6 +741,11 @@ gimp_canvas_transform_preview_sync_node (GimpCanvasItem *item)
 
       gimp_gegl_node_set_matrix (private->transform_node, &matrix);
     }
+
+  private->node_drawable   = drawable;
+  private->node_layer_mask = layer_mask;
+  private->node_mask       = mask;
+  private->node_opacity    = opacity;
 }
 
 
