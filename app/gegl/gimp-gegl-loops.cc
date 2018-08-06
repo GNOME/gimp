@@ -1024,15 +1024,18 @@ gimp_gegl_average_color (GeglBuffer          *buffer,
     gint   n;
   } Sum;
 
-  const Babl        *average_format = babl_format ("RaGaBaA float");
+  const Babl        *average_format;
   GeglRectangle      roi;
-  GSList * volatile  sums           = NULL;
+  GSList * volatile  sums    = NULL;
   GSList            *list;
-  Sum                average        = {};
+  Sum                average = {};
   gint               c;
 
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (color != NULL);
+
+  average_format = babl_format_with_space ("RaGaBaA float",
+                                           babl_format_get_space (format));
 
   if (! rect)
     rect = gegl_buffer_get_extent (buffer);
