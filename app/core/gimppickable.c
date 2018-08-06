@@ -74,12 +74,15 @@ gimp_pickable_real_get_pixel_average (GimpPickable        *pickable,
                                       const Babl          *format,
                                       gpointer             pixel)
 {
-  const Babl *average_format = babl_format ("RaGaBaA double");
-  gdouble     average[4]     = {};
-  gint        n              = 0;
+  const Babl *average_format;
+  gdouble     average[4] = { 0, };
+  gint        n          = 0;
   gint        x;
   gint        y;
   gint        c;
+
+  average_format = babl_format_with_space ("RaGaBaA double",
+                                           babl_format_get_space (format));
 
   for (y = rect->y; y < rect->y + rect->height; y++)
     {
@@ -362,7 +365,8 @@ gimp_pickable_pick_color (GimpPickable *pickable,
     {
       gint radius = floor (average_radius);
 
-      format = babl_format ("RaGaBaA double");
+      format = babl_format_with_space ("RaGaBaA double",
+                                       babl_format_get_space (format));
 
       gimp_pickable_get_pixel_average (pickable,
                                        GEGL_RECTANGLE (x - radius,
