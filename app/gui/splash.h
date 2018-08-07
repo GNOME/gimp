@@ -19,7 +19,8 @@
 #define __SPLASH_H__
 
 
-void   splash_create    (gboolean     be_verbose,
+void   splash_create    (Gimp        *gimp,
+                         gboolean     be_verbose,
                          GdkMonitor  *mointor);
 void   splash_destroy   (void);
 

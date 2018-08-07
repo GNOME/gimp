@@ -29,6 +29,8 @@
 
 #include "gui-types.h"
 
+#include "core/gimp.h"
+
 #include "widgets/gimpwidgets-utils.h"
 
 #include "splash.h"
@@ -83,7 +85,8 @@ static void        splash_average_text_area    (GimpSplash     *splash,
                                                 GdkRGBA        *rgba);
 
 static GdkPixbufAnimation *
-                   splash_image_load           (gint            max_width,
+                   splash_image_load           (Gimp           *gimp,
+                                                gint            max_width,
                                                 gint            max_height,
                                                 gboolean        be_verbose);
 static GdkPixbufAnimation *
@@ -108,7 +111,8 @@ static void        splash_timer_elapsed        (void);
 /*  public functions  */
 
 void
-splash_create (gboolean    be_verbose,
+splash_create (Gimp       *gimp,
+               gboolean    be_verbose,
                GdkMonitor *monitor)
 {
   GtkWidget          *frame;
@@ -126,7 +130,7 @@ splash_create (gboolean    be_verbose,
 
   max_width  = workarea.width  / 2;
   max_height = workarea.height / 2;
-  pixbuf = splash_image_load (max_width, max_height, be_verbose);
+  pixbuf = splash_image_load (gimp, max_width, max_height, be_verbose);
 
   if (! pixbuf)
     return;
@@ -475,7 +479,8 @@ splash_average_text_area (GimpSplash *splash,
 }
 
 static GdkPixbufAnimation *
-splash_image_load (gint      max_width,
+splash_image_load (Gimp     *gimp,
+                   gint      max_width,
                    gint      max_height,
                    gboolean  be_verbose)
 {
@@ -483,6 +488,16 @@ splash_image_load (gint      max_width,
   gchar              *filename;
   GFile              *file;
   GList              *list;
+
+  /* Random image in splash extensions. */
+  g_object_get (gimp->extension_manager,
+                "splash-paths", &list,
+                NULL);
+  animation = splash_image_pick_from_dirs (list,
+                                           max_width, max_height,
+                                           be_verbose);
+  if (animation)
+    return animation;
 
   /* File "gimp-splash.png" in personal configuration directory. */
   filename = gimp_personal_rc_file ("gimp-splash.png");

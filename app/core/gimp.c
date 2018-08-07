@@ -287,6 +287,11 @@ gimp_constructed (GObject *object)
 
   /*  create user and default context  */
   gimp_contexts_init (gimp);
+
+  /* Initialize the extension manager early as its contents may be used
+   * at the very start (e.g. the splash image).
+   */
+  gimp_extension_manager_initialize (gimp->extension_manager);
 }
 
 static void
@@ -517,7 +522,6 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_pdb_compat_procs_register (gimp->pdb, gimp->pdb_compat_mode);
 
   gimp_plug_in_manager_initialize (gimp->plug_in_manager, status_callback);
-  gimp_extension_manager_initialize (gimp->extension_manager);
 
   status_callback (NULL, "", 1.0);
 }

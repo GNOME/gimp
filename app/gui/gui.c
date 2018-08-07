@@ -266,7 +266,7 @@ gui_init (Gimp     *gimp,
 
   if (! no_splash)
     {
-      splash_create (gimp->be_verbose, initial_monitor);
+      splash_create (gimp, gimp->be_verbose, initial_monitor);
       status_callback = splash_update;
     }
 

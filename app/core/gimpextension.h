@@ -69,6 +69,7 @@ GList         * gimp_extension_get_pattern_paths       (GimpExtension  *extensio
 GList         * gimp_extension_get_gradient_paths      (GimpExtension  *extension);
 GList         * gimp_extension_get_palette_paths       (GimpExtension  *extension);
 GList         * gimp_extension_get_tool_preset_paths   (GimpExtension  *extension);
+GList         * gimp_extension_get_splash_paths        (GimpExtension  *extension);
 GList         * gimp_extension_get_plug_in_paths       (GimpExtension  *extension);
 
 gint            gimp_extension_cmp                     (GimpExtension  *extension1,
