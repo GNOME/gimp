@@ -2,20 +2,21 @@
 # Copyright (C) 2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2018.
+# Tim Sabsch <tim@sabsch.com>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-07 16:36+0000\n"
+"POT-Creation-Date: 2018-08-07 16:15+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Vinzenz Vietzke <vinz@vinzv.de>\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.9\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -42,9 +43,9 @@ msgid ""
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP bugzilla:"
-"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
-"continue with installation anyway?"
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
 msgstr ""
 "Dies ist eine Entwicklerversion von GIMP, in der einige Funktionsmerkmale "
 "nicht ausgereift oder noch instabil sind.%nDiese Version von GIMP ist nicht "
@@ -52,9 +53,8 @@ msgstr ""
 "Ihre Arbeit zerstört werden könnte.%nWenn Sie auf Probleme stoßen, stellen "
 "Sie zunächst sicher, dass diese nicht schon im GIT-Softwarebestand beseitigt "
 "wurden, bevor Sie die Entwickler kontaktieren oder einen Fehlerbericht im "
-"Fehlererfassungssystem von GIMP erstellen:%n_https://bugzilla.gnome.org/"
-"enter_bug.cgi?product=GIMP%n%nWollen Sie trotzdem mit der Installation "
-"fortfahren?"
+"Fehlererfassungssystem von GIMP erstellen:%n_https://gitlab.gnome.org/GNOME/"
+"gimp/issues%n%nWollen Sie trotzdem mit der Installation fortfahren?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
