@@ -87,12 +87,17 @@ static GdkPixbufAnimation *
                                                 gint            max_height,
                                                 gboolean        be_verbose);
 static GdkPixbufAnimation *
-                   splash_image_load_from_file (const gchar    *filename,
+                   splash_image_load_from_path (const gchar    *filename,
                                                 gint            max_width,
                                                 gint            max_height,
                                                 gboolean        be_verbose);
 static GdkPixbufAnimation *
-                   splash_image_pick_from_dir  (const gchar    *dirname,
+                   splash_image_load_from_file (GFile    *file,
+                                                gint      max_width,
+                                                gint      max_height,
+                                                gboolean  be_verbose);
+static GdkPixbufAnimation *
+                   splash_image_pick_from_dirs (GList          *dirs,
                                                 gint            max_width,
                                                 gint            max_height,
                                                 gboolean        be_verbose);
@@ -478,16 +483,18 @@ splash_average_text_area (GimpSplash *splash,
 }
 
 static GdkPixbufAnimation *
-splash_image_load (gint     max_width,
-                   gint     max_height,
-                   gboolean be_verbose)
+splash_image_load (gint      max_width,
+                   gint      max_height,
+                   gboolean  be_verbose)
 {
   GdkPixbufAnimation *animation = NULL;
   gchar              *filename;
+  GFile              *file;
+  GList              *list;
 
   /* File "gimp-splash.png" in personal configuration directory. */
   filename = gimp_personal_rc_file ("gimp-splash.png");
-  animation = splash_image_load_from_file (filename,
+  animation = splash_image_load_from_path (filename,
                                            max_width, max_height,
                                            be_verbose);
   g_free (filename);
@@ -496,17 +503,21 @@ splash_image_load (gint     max_width,
 
   /* Random image under splashes/ directory in personal config dir. */
   filename = gimp_personal_rc_file ("splashes");
-  animation = splash_image_pick_from_dir (filename,
-                                          max_width, max_height,
-                                          be_verbose);
+  file = g_file_new_for_path (filename);
   g_free (filename);
+  list = NULL;
+  list = g_list_prepend (list, file);
+  animation = splash_image_pick_from_dirs (list,
+                                           max_width, max_height,
+                                           be_verbose);
+  g_list_free_full (list, g_object_unref);
   if (animation)
     return animation;
 
   /* Release splash image. */
   filename = g_build_filename (gimp_data_directory (),
                                "images", "gimp-splash.png", NULL);
-  animation = splash_image_load_from_file (filename,
+  animation = splash_image_load_from_path (filename,
                                            max_width, max_height,
                                            be_verbose);
   g_free (filename);
@@ -515,29 +526,50 @@ splash_image_load (gint     max_width,
 
   /* Random release image in installed splashes/ directory. */
   filename = g_build_filename (gimp_data_directory (), "splashes", NULL);
-  animation = splash_image_pick_from_dir (filename,
-                                          max_width, max_height,
-                                          be_verbose);
+  file = g_file_new_for_path (filename);
   g_free (filename);
+  list = NULL;
+  list = g_list_prepend (list, file);
+  animation = splash_image_pick_from_dirs (list,
+                                           max_width, max_height,
+                                           be_verbose);
+  g_list_free_full (list, g_object_unref);
 
   return animation;
 }
 
 static GdkPixbufAnimation *
-splash_image_load_from_file (const gchar *filename,
+splash_image_load_from_path (const gchar *filename,
                              gint         max_width,
                              gint         max_height,
                              gboolean     be_verbose)
 {
   GdkPixbufAnimation *animation;
   GFile              *file;
+
+  file = g_file_new_for_path (filename);
+  animation = splash_image_load_from_file (file,
+                                           max_width, max_height,
+                                           be_verbose);
+  g_object_unref (file);
+
+  return animation;
+}
+
+static GdkPixbufAnimation *
+splash_image_load_from_file (GFile    *file,
+                             gint      max_width,
+                             gint      max_height,
+                             gboolean  be_verbose)
+{
+  GdkPixbufAnimation *animation = NULL;
   GFileInfo          *info;
+  GFileInputStream   *input;
   gboolean            is_svg = FALSE;
 
   if (be_verbose)
-    g_printerr ("Trying splash '%s' ... ", filename);
+    g_printerr ("Trying splash '%s' ... ", g_file_peek_path (file));
 
-  file = g_file_new_for_path (filename);
   info = g_file_query_info (file,
                             G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
                             G_FILE_QUERY_INFO_NONE, NULL, NULL);
@@ -569,9 +601,14 @@ splash_image_load_from_file (const gchar *filename,
         }
       g_object_unref (info);
     }
-  g_object_unref (file);
 
-  animation = gdk_pixbuf_animation_new_from_file (filename, NULL);
+  input = g_file_read (file, NULL, NULL);
+  if (input)
+    {
+      animation = gdk_pixbuf_animation_new_from_stream (G_INPUT_STREAM (input),
+                                                        NULL, NULL);
+      g_object_unref (input);
+    }
 
   /* FIXME Right now, we only try to scale static images.
    * Animated images may end up bigger than the expected max dimensions.
@@ -583,9 +620,11 @@ splash_image_load_from_file (const gchar *filename,
     {
       GdkPixbuf *pixbuf;
 
-      pixbuf = gdk_pixbuf_new_from_file_at_size (filename,
-                                                 max_width, max_height,
-                                                 NULL);
+      input = g_file_read (file, NULL, NULL);
+      pixbuf = gdk_pixbuf_new_from_stream_at_scale (G_INPUT_STREAM (input),
+                                                    max_width, max_height,
+                                                    TRUE, NULL, NULL);
+      g_object_unref (input);
       if (pixbuf)
         {
           GdkPixbufSimpleAnim *simple_anim = NULL;
@@ -611,37 +650,53 @@ splash_image_load_from_file (const gchar *filename,
 }
 
 static GdkPixbufAnimation *
-splash_image_pick_from_dir (const gchar *dirname,
-                            gint         max_width,
-                            gint         max_height,
-                            gboolean     be_verbose)
+splash_image_pick_from_dirs (GList    *dirs,
+                             gint      max_width,
+                             gint      max_height,
+                             gboolean  be_verbose)
 {
   GdkPixbufAnimation *animation = NULL;
-  GDir               *dir       = g_dir_open (dirname, 0, NULL);
+  GList              *splashes = NULL;
+  GList              *iter;
 
-  if (dir)
+  for (iter = dirs; iter; iter = iter->next)
     {
-      const gchar *entry;
-      GList       *splashes = NULL;
+      GFileEnumerator *enumerator;
 
-      while ((entry = g_dir_read_name (dir)))
-        splashes = g_list_prepend (splashes, g_strdup (entry));
-
-      g_dir_close (dir);
-
-      if (splashes)
+      enumerator = g_file_enumerate_children (iter->data,
+                                              G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                              G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                              G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                              G_FILE_QUERY_INFO_NONE,
+                                              NULL, NULL);
+      if (enumerator)
         {
-          gint32  i        = g_random_int_range (0, g_list_length (splashes));
-          gchar  *filename = g_build_filename (dirname,
-                                               g_list_nth_data (splashes, i),
-                                               NULL);
+          GFileInfo *info;
 
-          animation = splash_image_load_from_file (filename,
-                                                   max_width, max_height,
-                                                   be_verbose);
-          g_free (filename);
-          g_list_free_full (splashes, (GDestroyNotify) g_free);
+          while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+            {
+              GFile *child;
+
+              child = g_file_enumerator_get_child (enumerator, info);
+              if (g_file_query_file_type (child,
+                                          G_FILE_QUERY_INFO_NONE,
+                                          NULL) == G_FILE_TYPE_REGULAR)
+                splashes = g_list_prepend (splashes, child);
+              else
+                g_object_unref (child);
+              g_object_unref (info);
+            }
         }
+    }
+
+  if (splashes)
+    {
+      gint32 i = g_random_int_range (0, g_list_length (splashes));
+
+      animation = splash_image_load_from_file (g_list_nth_data (splashes, i),
+                                               max_width, max_height,
+                                               be_verbose);
+      g_list_free_full (splashes, (GDestroyNotify) g_object_unref);
     }
 
   return animation;
