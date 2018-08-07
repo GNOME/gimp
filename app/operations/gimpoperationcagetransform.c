@@ -288,6 +288,9 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
         }
     }
 
+  if (! aux_buf)
+    return TRUE;
+
   gegl_operation_progress (operation, 0.0, "");
 
   /* pre-allocate memory outside of the loop */

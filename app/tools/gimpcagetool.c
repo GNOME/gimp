@@ -1266,6 +1266,7 @@ gimp_cage_tool_create_filter (GimpCageTool *ct)
                                          _("Cage transform"),
                                          ct->render_node,
                                          GIMP_ICON_TOOL_CAGE);
+  gimp_drawable_filter_set_region (ct->filter, GIMP_FILTER_REGION_DRAWABLE);
 
   g_signal_connect (ct->filter, "flush",
                     G_CALLBACK (gimp_cage_tool_filter_flush),
