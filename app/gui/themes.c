@@ -48,6 +48,9 @@ static gint   themes_name_compare        (const void             *p1,
 static void   themes_theme_change_notify (GimpGuiConfig          *config,
                                           GParamSpec             *pspec,
                                           Gimp                   *gimp);
+static void   themes_theme_paths_notify  (GimpExtensionManager   *manager,
+                                          GParamSpec             *pspec,
+                                          Gimp                   *gimp);
 
 
 /*  private variables  */
@@ -67,66 +70,11 @@ themes_init (Gimp *gimp)
 
   config = GIMP_GUI_CONFIG (gimp->config);
 
-  themes_hash = g_hash_table_new_full (g_str_hash,
-                                       g_str_equal,
-                                       g_free,
-                                       g_object_unref);
-
-  if (config->theme_path)
-    {
-      GList *path;
-      GList *list;
-
-      path = gimp_config_path_expand_to_files (config->theme_path, NULL);
-
-      for (list = path; list; list = g_list_next (list))
-        {
-          GFile           *dir = list->data;
-          GFileEnumerator *enumerator;
-
-          enumerator =
-            g_file_enumerate_children (dir,
-                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
-                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-                                       G_FILE_ATTRIBUTE_STANDARD_TYPE,
-                                       G_FILE_QUERY_INFO_NONE,
-                                       NULL, NULL);
-
-          if (enumerator)
-            {
-              GFileInfo *info;
-
-              while ((info = g_file_enumerator_next_file (enumerator,
-                                                          NULL, NULL)))
-                {
-                  if (! g_file_info_get_is_hidden (info) &&
-                      g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
-                    {
-                      GFile       *file;
-                      const gchar *name;
-                      gchar       *basename;
-
-                      file = g_file_enumerator_get_child (enumerator, info);
-                      name = gimp_file_get_utf8_name (file);
-
-                      basename = g_path_get_basename (name);
-
-                      if (gimp->be_verbose)
-                        g_print ("Adding theme '%s' (%s)\n",
-                                 basename, name);
-
-                      g_hash_table_insert (themes_hash, basename, file);
-                    }
-
-                  g_object_unref (info);
-                }
-
-              g_object_unref (enumerator);
-            }
-        }
-
-      g_list_free_full (path, (GDestroyNotify) g_object_unref);
-    }
+  /* Check for theme extensions. */
+  themes_theme_paths_notify (gimp->extension_manager, NULL, gimp);
+  g_signal_connect (gimp->extension_manager, "notify::theme-paths",
+                    G_CALLBACK (themes_theme_paths_notify),
+                    gimp);
 
   themes_style_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
 
@@ -405,4 +353,83 @@ themes_theme_change_notify (GimpGuiConfig *config,
   g_object_unref (theme_css);
 
   gtk_style_context_reset_widgets (gdk_screen_get_default ());
+}
+
+static void
+themes_theme_paths_notify (GimpExtensionManager *manager,
+                           GParamSpec           *pspec,
+                           Gimp                 *gimp)
+{
+  GimpGuiConfig *config;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (themes_hash)
+    g_hash_table_remove_all (themes_hash);
+  else
+    themes_hash = g_hash_table_new_full (g_str_hash,
+                                         g_str_equal,
+                                         g_free,
+                                         g_object_unref);
+
+  config = GIMP_GUI_CONFIG (gimp->config);
+  if (config->theme_path)
+    {
+      GList *path;
+      GList *list;
+
+      g_object_get (gimp->extension_manager,
+                    "theme-paths", &path,
+                    NULL);
+      path = g_list_copy_deep (path, (GCopyFunc) g_object_ref, NULL);
+      path = g_list_concat (path, gimp_config_path_expand_to_files (config->theme_path, NULL));
+
+      for (list = path; list; list = g_list_next (list))
+        {
+          GFile           *dir = list->data;
+          GFileEnumerator *enumerator;
+
+          enumerator =
+            g_file_enumerate_children (dir,
+                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                       G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                       G_FILE_QUERY_INFO_NONE,
+                                       NULL, NULL);
+
+          if (enumerator)
+            {
+              GFileInfo *info;
+
+              while ((info = g_file_enumerator_next_file (enumerator,
+                                                          NULL, NULL)))
+                {
+                  if (! g_file_info_get_is_hidden (info) &&
+                      g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
+                    {
+                      GFile       *file;
+                      const gchar *name;
+                      gchar       *basename;
+
+                      file = g_file_enumerator_get_child (enumerator, info);
+                      name = gimp_file_get_utf8_name (file);
+
+                      basename = g_path_get_basename (name);
+
+                      if (gimp->be_verbose)
+                        g_print ("Adding theme '%s' (%s)\n",
+                                 basename, name);
+
+                      g_hash_table_insert (themes_hash, basename, file);
+                    }
+
+                  g_object_unref (info);
+                }
+
+              g_object_unref (enumerator);
+            }
+        }
+
+      g_list_free_full (path, (GDestroyNotify) g_object_unref);
+    }
 }

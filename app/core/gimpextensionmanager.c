@@ -54,6 +54,7 @@ enum
   PROP_PALETTE_PATHS,
   PROP_TOOL_PRESET_PATHS,
   PROP_SPLASH_PATHS,
+  PROP_THEME_PATHS,
   PROP_PLUG_IN_PATHS,
 };
 
@@ -78,6 +79,7 @@ struct _GimpExtensionManagerPrivate
   GList      *palette_paths;
   GList      *tool_preset_paths;
   GList      *splash_paths;
+  GList      *theme_paths;
   GList      *plug_in_paths;
 };
 
@@ -164,6 +166,10 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                                          GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_SPLASH_PATHS,
                                    g_param_spec_pointer ("splash-paths",
+                                                         NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_THEME_PATHS,
+                                   g_param_spec_pointer ("theme-paths",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_PLUG_IN_PATHS,
@@ -407,6 +413,9 @@ gimp_extension_manager_set_property (GObject      *object,
     case PROP_SPLASH_PATHS:
       manager->p->splash_paths = g_value_get_pointer (value);
       break;
+    case PROP_THEME_PATHS:
+      manager->p->theme_paths = g_value_get_pointer (value);
+      break;
     case PROP_PLUG_IN_PATHS:
       manager->p->plug_in_paths = g_value_get_pointer (value);
       break;
@@ -453,6 +462,9 @@ gimp_extension_manager_get_property (GObject      *object,
       break;
     case PROP_SPLASH_PATHS:
       g_value_set_pointer (value, manager->p->splash_paths);
+      break;
+    case PROP_THEME_PATHS:
+      g_value_set_pointer (value, manager->p->theme_paths);
       break;
     case PROP_PLUG_IN_PATHS:
       g_value_set_pointer (value, manager->p->plug_in_paths);
@@ -707,6 +719,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
   GList         *palette_paths       = NULL;
   GList         *tool_preset_paths   = NULL;
   GList         *splash_paths        = NULL;
+  GList         *theme_paths         = NULL;
   GList         *plug_in_paths       = NULL;
 
   g_hash_table_iter_init (&iter, manager->p->running_extensions);
@@ -747,6 +760,10 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
                                     (GCopyFunc) g_object_ref, NULL);
       splash_paths = g_list_concat (splash_paths, new_paths);
 
+      new_paths = g_list_copy_deep (gimp_extension_get_theme_paths (extension),
+                                    (GCopyFunc) g_object_ref, NULL);
+      theme_paths = g_list_concat (theme_paths, new_paths);
+
       new_paths = g_list_copy_deep (gimp_extension_get_plug_in_paths (extension),
                                     (GCopyFunc) g_object_ref, NULL);
       plug_in_paths = g_list_concat (plug_in_paths, new_paths);
@@ -762,6 +779,7 @@ gimp_extension_manager_refresh (GimpExtensionManager *manager)
                 "tool-preset-paths",   tool_preset_paths,
                 "plug-in-paths",       plug_in_paths,
                 "splash-paths",        splash_paths,
+                "theme-paths",         theme_paths,
                 NULL);
 }
 

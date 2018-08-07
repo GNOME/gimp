@@ -56,6 +56,7 @@ struct _GimpExtensionPrivate
   GList    *palette_paths;
   GList    *tool_preset_paths;
   GList    *splash_paths;
+  GList    *theme_paths;
 
   /* Extension metadata: plug-in entry points. */
   GList    *plug_in_paths;
@@ -444,6 +445,13 @@ gimp_extension_run (GimpExtension  *extension,
                                                                   value, TRUE,
                                                                   error);
     }
+  if (! (*error))
+    {
+      value = g_hash_table_lookup (metadata, "GIMP::theme-path");
+      extension->p->theme_paths = gimp_extension_validate_paths (extension,
+                                                                 value, TRUE,
+                                                                 error);
+    }
 
   if (*error)
     gimp_extension_clean (extension);
@@ -513,6 +521,12 @@ gimp_extension_get_splash_paths (GimpExtension *extension)
 }
 
 GList *
+gimp_extension_get_theme_paths (GimpExtension *extension)
+{
+  return extension->p->theme_paths;
+}
+
+GList *
 gimp_extension_get_plug_in_paths (GimpExtension *extension)
 {
   return extension->p->plug_in_paths;
@@ -574,6 +588,8 @@ gimp_extension_clean (GimpExtension  *extension)
   extension->p->plug_in_paths = NULL;
   g_list_free_full (extension->p->splash_paths, g_object_unref);
   extension->p->splash_paths = NULL;
+  g_list_free_full (extension->p->theme_paths, g_object_unref);
+  extension->p->theme_paths = NULL;
 }
 
 /**
