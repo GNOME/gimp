@@ -25,6 +25,9 @@
 
 #include "core-types.h"
 
+#include "config/gimpxmlparser.h"
+
+#include "gimperror.h"
 #include "gimpextension.h"
 #include "gimpextension-error.h"
 
@@ -62,6 +65,16 @@ struct _GimpExtensionPrivate
   GList    *plug_in_paths;
 };
 
+typedef struct
+{
+  GString  *text;
+  gint      level;
+
+  gboolean  numbered_list;
+  gint      list_num;
+  gboolean  unnumbered_list;
+} ParseState;
+
 
 static void         gimp_extension_finalize        (GObject        *object);
 static void         gimp_extension_set_property    (GObject        *object,
@@ -78,6 +91,22 @@ static GList      * gimp_extension_validate_paths  (GimpExtension  *extension,
                                                     const gchar    *paths,
                                                     gboolean        as_directories,
                                                     GError        **error);
+
+static void         appstream_text_start_element   (GMarkupParseContext  *context,
+                                                    const gchar          *element_name,
+                                                    const gchar         **attribute_names,
+                                                    const gchar         **attribute_values,
+                                                    gpointer              user_data,
+                                                    GError              **error);
+static void         appstream_text_end_element     (GMarkupParseContext  *context,
+                                                    const gchar          *element_name,
+                                                    gpointer              user_data,
+                                                    GError              **error);
+static void         appstream_text_characters      (GMarkupParseContext  *context,
+                                                    const gchar          *text,
+                                                    gsize                 text_len,
+                                                    gpointer              user_data,
+                                                    GError              **error);
 
 G_DEFINE_TYPE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
 
@@ -228,6 +257,42 @@ gimp_extension_get_description (GimpExtension *extension)
   return as_app_get_description (extension->p->app, g_getenv ("LANGUAGE")) ?
     as_app_get_description (extension->p->app, g_getenv ("LANGUAGE")) :
     as_app_get_description (extension->p->app, NULL);
+}
+
+gchar *
+gimp_extension_get_markup_description (GimpExtension *extension)
+{
+  static const GMarkupParser appstream_text_parser =
+    {
+      appstream_text_start_element,
+      appstream_text_end_element,
+      appstream_text_characters,
+      NULL, /*  passthrough */
+      NULL  /*  error       */
+    };
+
+  GimpXmlParser *xml_parser;
+  gchar         *markup = NULL;
+  GError        *error  = NULL;
+  ParseState     state;
+
+  state.level = 0;
+  state.text = g_string_new (NULL);
+  state.numbered_list   = FALSE;
+  state.unnumbered_list = FALSE;
+
+  xml_parser  = gimp_xml_parser_new (&appstream_text_parser, &state);
+  if (! gimp_xml_parser_parse_buffer (xml_parser,
+                                      gimp_extension_get_description (extension),
+                                      -1, &error))
+    {
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+      g_error_free (error);
+    }
+  markup = g_string_free (state.text, FALSE);
+  gimp_xml_parser_free (xml_parser);
+
+  return markup;
 }
 
 gboolean
@@ -724,4 +789,85 @@ gimp_extension_validate_paths (GimpExtension  *extension,
   list = g_list_reverse (list);
 
   return list;
+}
+
+static void
+appstream_text_start_element (GMarkupParseContext  *context,
+                              const gchar          *element_name,
+                              const gchar         **attribute_names,
+                              const gchar         **attribute_values,
+                              gpointer              user_data,
+                              GError              **error)
+{
+  ParseState *state = user_data;
+
+  state->level++;
+
+  if ((state->numbered_list || state->unnumbered_list) &&
+      (g_strcmp0 (element_name, "ul") == 0 ||
+       g_strcmp0 (element_name, "ol") == 0))
+    {
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("This parser does not support imbricated lists."));
+    }
+  else if (g_strcmp0 (element_name, "ul") == 0)
+    {
+      state->unnumbered_list = TRUE;
+    }
+  else if (g_strcmp0 (element_name, "ol") == 0)
+    {
+      state->numbered_list = TRUE;
+      state->list_num      = 0;
+    }
+  else if (g_strcmp0 (element_name, "li") == 0)
+    {
+      state->list_num++;
+      if (state->numbered_list)
+        g_string_append_printf (state->text, "\n %d. ",
+                                state->list_num);
+      else if (state->unnumbered_list)
+        g_string_append (state->text, "\n * ");
+      else
+        g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                     _("<li> must be inside <ol> or <ul> tags."));
+    }
+  else if (g_strcmp0 (element_name, "p") != 0)
+    {
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("Unknown tag <%s>."), element_name);
+    }
+}
+
+static void
+appstream_text_end_element (GMarkupParseContext  *context,
+                            const gchar          *element_name,
+                            gpointer              user_data,
+                            GError              **error)
+{
+  ParseState *state = user_data;
+
+  state->level--;
+
+  if (g_strcmp0 (element_name, "p") == 0)
+    {
+      g_string_append (state->text, "\n\n");
+    }
+  else if (g_strcmp0 (element_name, "ul") == 0 ||
+           g_strcmp0 (element_name, "ol") == 0)
+    {
+      state->numbered_list   = FALSE;
+      state->unnumbered_list = FALSE;
+    }
+}
+
+static void
+appstream_text_characters (GMarkupParseContext  *context,
+                           const gchar          *text,
+                           gsize                 text_len,
+                           gpointer              user_data,
+                           GError              **error)
+{
+  ParseState *state = user_data;
+
+  g_string_append (state->text, text);
 }

@@ -69,6 +69,10 @@ void
 gimp_extension_details_set (GimpExtensionDetails *details,
                             GimpExtension        *extension)
 {
+  GtkWidget     *box;
+  GtkWidget     *widget;
+  GtkTextBuffer *buffer;
+
   g_return_if_fail (GIMP_IS_EXTENSION (extension));
 
   if (details->p->extension)
@@ -81,4 +85,30 @@ gimp_extension_details_set (GimpExtensionDetails *details,
 
   gtk_frame_set_label (GTK_FRAME (details),
                        extension ? gimp_extension_get_name (extension) : NULL);
+
+  box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_add (GTK_CONTAINER (details), box);
+  gtk_widget_show (box);
+
+  if (extension)
+    {
+      gchar       *desc;
+      GtkTextIter  iter;
+
+      desc = gimp_extension_get_markup_description (extension);
+      widget = gtk_text_view_new ();
+      gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (widget), GTK_WRAP_WORD_CHAR);
+      gtk_text_view_set_editable (GTK_TEXT_VIEW (widget), FALSE);
+      gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (widget), FALSE);
+      gtk_text_view_set_justification (GTK_TEXT_VIEW (widget), GTK_JUSTIFY_FILL);
+      gtk_box_pack_start (GTK_BOX (box), widget, TRUE, TRUE, 0);
+      buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+      gtk_text_buffer_get_start_iter (buffer, &iter);
+      if (desc)
+        {
+          gtk_text_buffer_insert_markup (buffer, &iter, desc, -1);
+          g_free (desc);
+        }
+      gtk_widget_show (widget);
+    }
 }

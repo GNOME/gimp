@@ -52,9 +52,11 @@ GType           gimp_extension_get_type (void) G_GNUC_CONST;
 
 GimpExtension * gimp_extension_new                     (const gchar    *dir,
                                                         gboolean        writable);
-const gchar *   gimp_extension_get_name                (GimpExtension  *extension);
-const gchar *   gimp_extension_get_comment             (GimpExtension  *extension);
-const gchar *   gimp_extension_get_description         (GimpExtension  *extension);
+const gchar   * gimp_extension_get_name                (GimpExtension  *extension);
+const gchar   * gimp_extension_get_comment             (GimpExtension  *extension);
+const gchar   * gimp_extension_get_description         (GimpExtension  *extension);
+
+gchar         * gimp_extension_get_markup_description  (GimpExtension  *extension);
 
 gboolean        gimp_extension_load                    (GimpExtension  *extension,
                                                         GError        **error);
