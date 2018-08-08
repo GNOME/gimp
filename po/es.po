@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-06 13:40+0000\n"
-"PO-Revision-Date: 2018-08-07 11:43+0200\n"
+"POT-Creation-Date: 2018-08-07 18:11+0000\n"
+"PO-Revision-Date: 2018-08-08 11:32+0200\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -85,9 +85,6 @@ msgid "Photo editing in GIMP"
 msgstr "Edición de fotos en GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
-#| msgid ""
-#| "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
-#| "Most notable changes are:"
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -896,7 +893,7 @@ msgid "Select"
 msgstr "Seleccionar"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:795
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:799
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Plantillas"
@@ -10375,7 +10372,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Error al analizar «%%s»: la línea es más larga que %s caracteres."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:341
+#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:289
 #: ../app/tools/gimpfiltertool-settings.c:227
 #, c-format
 msgid "Error writing '%s': %s"
@@ -12262,26 +12259,26 @@ msgid "View as grid"
 msgstr "Ver como rejilla"
 
 #. initialize babl fishes
-#: ../app/core/gimp.c:505 ../app/core/gimp.c:536
+#: ../app/core/gimp.c:510 ../app/core/gimp.c:540
 msgid "Initialization"
 msgstr "Inicialización"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:515
+#: ../app/core/gimp.c:520
 msgid "Internal Procedures"
 msgstr "Procedimientos internos"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:788
+#: ../app/core/gimp.c:792
 msgid "Looking for data files"
 msgstr "Buscando archivos de datos"
 
-#: ../app/core/gimp.c:788
+#: ../app/core/gimp.c:792
 msgid "Parasites"
 msgstr "Parásitos"
 
 #. initialize the module list
-#: ../app/core/gimp.c:799 ../app/dialogs/preferences-dialog.c:3148
+#: ../app/core/gimp.c:803 ../app/dialogs/preferences-dialog.c:3148
 msgid "Modules"
 msgstr "Módulos"
 
@@ -12335,36 +12332,36 @@ msgstr "Capa pegada"
 msgid "Global Buffer"
 msgstr "Búfer global"
 
-#: ../app/core/gimpextension.c:266
+#: ../app/core/gimpextension.c:333
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
 "La extensión AppData debe ser de tipo «addon», pero en su lugar se encontró "
 "como «%s»."
 
-#: ../app/core/gimpextension.c:282
+#: ../app/core/gimpextension.c:349
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "La extensión AppData debe extender «org.gimp.GIMP»."
 
-#: ../app/core/gimpextension.c:296
+#: ../app/core/gimpextension.c:363
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr ""
 "El ID de la extensión AppData («%s») y la carpeta («%s») deben ser iguales."
 
-#: ../app/core/gimpextension.c:311
+#: ../app/core/gimpextension.c:378
 #, c-format
 msgid "Extension AppData must advertize a version in a <release> tag."
 msgstr ""
 "La extensión AppData debe anunciar una versión en una etiqueta <release>."
 
-#: ../app/core/gimpextension.c:345
+#: ../app/core/gimpextension.c:412
 #, c-format
 msgid "Unsupported <requires> \"%s\" (type %s)."
 msgstr "<requires> «%s» no soportado (tipo %s)."
 
-#: ../app/core/gimpextension.c:360
+#: ../app/core/gimpextension.c:427
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
@@ -12373,32 +12370,47 @@ msgstr ""
 "<requires><id>org.gimp.GIMP</id></requires> es obligatorio para la "
 "comparación entre versiones."
 
-#: ../app/core/gimpextension.c:611
+#: ../app/core/gimpextension.c:708
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "«%s» no es una ruta relativa."
 
-#: ../app/core/gimpextension.c:645
+#: ../app/core/gimpextension.c:742
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "«%s» no es un hijo de la extensión."
 
-#: ../app/core/gimpextension.c:659
+#: ../app/core/gimpextension.c:756
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "«%s» no es una carpeta."
 
-#: ../app/core/gimpextension.c:673
+#: ../app/core/gimpextension.c:770
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "«%s» no es un archivo válido."
 
-#: ../app/core/gimpextensionmanager.c:801
+#: ../app/core/gimpextension.c:811
+#, c-format
+msgid "This parser does not support imbricated lists."
+msgstr "Este analizador no admite listas solapadas."
+
+#: ../app/core/gimpextension.c:832
+#, c-format
+msgid "<li> must be inside <ol> or <ul> tags."
+msgstr "<li> debe estar dentro de las etiquetas <ol> o <ul>."
+
+#: ../app/core/gimpextension.c:837
+#, c-format
+msgid "Unknown tag <%s>."
+msgstr "Etiqueta desconocida <%s>."
+
+#: ../app/core/gimpextensionmanager.c:839
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "Omitiendo la extensión «%s» : %s\n"
 
-#: ../app/core/gimpextensionmanager.c:809
+#: ../app/core/gimpextensionmanager.c:847
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Omitiendo el archivo desconocido «%s» en la carpeta de extensiones.\n"
@@ -19001,7 +19013,7 @@ msgstr[1] ""
 msgid "Documents"
 msgstr "Documentos"
 
-#: ../app/gui/splash.c:135
+#: ../app/gui/splash.c:144
 msgid "GIMP Startup"
 msgstr "Inicio de GIMP"
 
