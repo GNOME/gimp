@@ -14,16 +14,16 @@
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007.
 # Laurent Monin <gimp@norz.org>, 2007.
-# Claude Paroz <claude@2xlibre.net>, 2008-2009, 2011, 2017.
+# Claude Paroz <claude@2xlibre.net>, 2008-2009, 2011, 2017-2018.
 # Julien Hardelin <jhardlin@orange.fr>, 2009, 2011, 2016-2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-04-30 20:24+0000\n"
-"PO-Revision-Date: 2018-04-19 07:59+0100\n"
-"Last-Translator: julien <jhardlin@orange.fr>\n"
+"POT-Creation-Date: 2018-08-07 17:06+0000\n"
+"PO-Revision-Date: 2018-08-07 09:43+0200\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -1284,18 +1284,18 @@ msgstr "Bleu"
 
 #: ../libgimpbase/gimpbaseenums.c:1652
 msgctxt "select-criterion"
-msgid "Hue (HSV)"
-msgstr "Teinte (TSV)"
+msgid "HSV Hue"
+msgstr "Teinte TSV"
 
 #: ../libgimpbase/gimpbaseenums.c:1653
 msgctxt "select-criterion"
-msgid "Saturation (HSV)"
-msgstr "Saturation (TSV)"
+msgid "HSV Saturation"
+msgstr "Saturation TSV"
 
 #: ../libgimpbase/gimpbaseenums.c:1654
 msgctxt "select-criterion"
-msgid "Value (HSV)"
-msgstr "Valeur (TSV)"
+msgid "HSV Value"
+msgstr "Valeur TSV"
 
 #: ../libgimpbase/gimpbaseenums.c:1655
 msgctxt "select-criterion"
@@ -1304,18 +1304,18 @@ msgstr "Alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:1656
 msgctxt "select-criterion"
-msgid "Lightness (LCH)"
-msgstr "Luminosité (LCT)"
+msgid "LCh Lightness"
+msgstr "Luminosité LCh"
 
 #: ../libgimpbase/gimpbaseenums.c:1657
 msgctxt "select-criterion"
-msgid "Chroma (LCH)"
-msgstr "Chroma (LCT)"
+msgid "LCh Chroma"
+msgstr "Chroma LCh"
 
 #: ../libgimpbase/gimpbaseenums.c:1658
 msgctxt "select-criterion"
-msgid "Hue (LCH)"
-msgstr "Teinte (LCT)"
+msgid "LCh Hue"
+msgstr "Teinte LCh"
 
 #: ../libgimpbase/gimpbaseenums.c:1687
 msgctxt "size-type"
@@ -1337,97 +1337,117 @@ msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Tracer avec un outil de peinture"
 
-#: ../libgimpbase/gimpbaseenums.c:1779
+#: ../libgimpbase/gimpbaseenums.c:1783
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "De gauche à droite"
 
-#: ../libgimpbase/gimpbaseenums.c:1780
+#: ../libgimpbase/gimpbaseenums.c:1784
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "De droite à gauche"
 
-#: ../libgimpbase/gimpbaseenums.c:1811
+#: ../libgimpbase/gimpbaseenums.c:1785
+msgctxt "text-direction"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Vertical, de droite à gauche (orientation mixte)"
+
+#: ../libgimpbase/gimpbaseenums.c:1786
+msgctxt "text-direction"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Vertical, de droite à gauche (orientation debout)"
+
+#: ../libgimpbase/gimpbaseenums.c:1787
+msgctxt "text-direction"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Vertical, de gauche à droite (orientation mixte)"
+
+#: ../libgimpbase/gimpbaseenums.c:1788
+msgctxt "text-direction"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Vertical, de gauche à droite (orientation debout)"
+
+#: ../libgimpbase/gimpbaseenums.c:1819
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Aucun"
 
-#: ../libgimpbase/gimpbaseenums.c:1812
+#: ../libgimpbase/gimpbaseenums.c:1820
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Léger"
 
-#: ../libgimpbase/gimpbaseenums.c:1813
+#: ../libgimpbase/gimpbaseenums.c:1821
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Moyen"
 
-#: ../libgimpbase/gimpbaseenums.c:1814
+#: ../libgimpbase/gimpbaseenums.c:1822
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Justifié"
 
-#: ../libgimpbase/gimpbaseenums.c:1845
+#: ../libgimpbase/gimpbaseenums.c:1853
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Aligné à gauche"
 
-#: ../libgimpbase/gimpbaseenums.c:1846
+#: ../libgimpbase/gimpbaseenums.c:1854
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Aligné à droite"
 
-#: ../libgimpbase/gimpbaseenums.c:1847
+#: ../libgimpbase/gimpbaseenums.c:1855
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Centré"
 
-#: ../libgimpbase/gimpbaseenums.c:1848
+#: ../libgimpbase/gimpbaseenums.c:1856
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Justifié"
 
-#: ../libgimpbase/gimpbaseenums.c:1878
+#: ../libgimpbase/gimpbaseenums.c:1886
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Tons sombres"
 
-#: ../libgimpbase/gimpbaseenums.c:1879
+#: ../libgimpbase/gimpbaseenums.c:1887
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Demi-teintes"
 
-#: ../libgimpbase/gimpbaseenums.c:1880
+#: ../libgimpbase/gimpbaseenums.c:1888
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Tons clairs"
 
-#: ../libgimpbase/gimpbaseenums.c:1909
+#: ../libgimpbase/gimpbaseenums.c:1917
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normale (en avant)"
 
-#: ../libgimpbase/gimpbaseenums.c:1910
+#: ../libgimpbase/gimpbaseenums.c:1918
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Corrective (en arrière)"
 
-#: ../libgimpbase/gimpbaseenums.c:1941
+#: ../libgimpbase/gimpbaseenums.c:1949
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ajuster"
 
-#: ../libgimpbase/gimpbaseenums.c:1942
+#: ../libgimpbase/gimpbaseenums.c:1950
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Rogner"
 
-#: ../libgimpbase/gimpbaseenums.c:1943
+#: ../libgimpbase/gimpbaseenums.c:1951
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Rogner suivant le résultat"
 
-#: ../libgimpbase/gimpbaseenums.c:1944
+#: ../libgimpbase/gimpbaseenums.c:1952
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Rogner selon le même rapport"
@@ -1449,17 +1469,22 @@ msgid "Can save metadata only to local files"
 msgstr ""
 "Les métadonnées ne peuvent être enregistrées que dans des fichiers locaux"
 
-#: ../libgimpbase/gimpmetadata.c:1002
+#: ../libgimpbase/gimpmetadata.c:978
+#, c-format
+msgid "Invalid Exif data size."
+msgstr "Taille de données Exif non valide."
+
+#: ../libgimpbase/gimpmetadata.c:1007
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "L’analyse des données Exif a échoué."
 
-#: ../libgimpbase/gimpmetadata.c:1053
+#: ../libgimpbase/gimpmetadata.c:1057
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "L’analyse des données IPTC a échoué."
 
-#: ../libgimpbase/gimpmetadata.c:1102
+#: ../libgimpbase/gimpmetadata.c:1105
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "L’analyse des données XMP a échoué."
@@ -1791,9 +1816,9 @@ msgstr "Valeur « %ld » non valide pour l’expression %s"
 msgid "while parsing token '%s': %s"
 msgstr "en interprétant l’expression « %s » : %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:662
-#: ../libgimpconfig/gimpconfig-iface.c:675 ../libgimpconfig/gimpscanner.c:742
-#: ../libgimpconfig/gimpscanner.c:824
+#: ../libgimpconfig/gimpconfig-iface.c:682
+#: ../libgimpconfig/gimpconfig-iface.c:695 ../libgimpconfig/gimpscanner.c:743
+#: ../libgimpconfig/gimpscanner.c:825
 #: ../libgimpwidgets/gimpcolorprofilestore.c:710
 msgid "fatal parse error"
 msgstr "erreur fatale d’interprétation"
@@ -1828,18 +1853,18 @@ msgstr "Impossible de créer un fichier temporaire pour « %s » : "
 msgid "Error writing '%s': %s"
 msgstr "Erreur lors de l’écriture de « %s » : %s"
 
-#: ../libgimpconfig/gimpscanner.c:408
+#: ../libgimpconfig/gimpscanner.c:409
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "Chaîne de caractères UTF-8 non valide."
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:617
+#: ../libgimpconfig/gimpscanner.c:618
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "« yes » ou « no » attendu pour l’expression booléenne, « %s » reçu"
 
-#: ../libgimpconfig/gimpscanner.c:851
+#: ../libgimpconfig/gimpscanner.c:852
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Erreur durant l’interprétation de « %s » à la ligne %d : %s"
@@ -1922,6 +1947,14 @@ msgstr "_Réinitialiser"
 msgid "_OK"
 msgstr "_Valider"
 
+#: ../libgimpwidgets/gimpcolorhexentry.c:118
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Notation hexadécimale de la couleur telle qu’utilisée en HTML et CSS. Cette "
+"entrée accepte également des noms CSS de couleurs."
+
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:101
 msgid "All files (*.*)"
 msgstr "Tous les fichiers (*.*)"
@@ -1956,11 +1989,11 @@ msgctxt "profile"
 msgid "None"
 msgstr "Aucun"
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:170
+#: ../libgimpwidgets/gimpcolorprofileview.c:163
 msgid "Manufacturer: "
 msgstr "Fabriquant : "
 
-#: ../libgimpwidgets/gimpcolorprofileview.c:182
+#: ../libgimpwidgets/gimpcolorprofileview.c:175
 msgid "Copyright: "
 msgstr "Copyright : "
 
@@ -1977,8 +2010,8 @@ msgid "0..255"
 msgstr "0…255"
 
 #: ../libgimpwidgets/gimpcolorscales.c:460
-msgid "LCH"
-msgstr "LCH"
+msgid "LCh"
+msgstr "LCh"
 
 #: ../libgimpwidgets/gimpcolorscales.c:462
 msgid "HSV"
@@ -1992,15 +2025,7 @@ msgstr "Actuelle :"
 msgid "Old:"
 msgstr "Précédente :"
 
-#: ../libgimpwidgets/gimpcolorselection.c:316
-msgid ""
-"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
-"CSS color names."
-msgstr ""
-"Notation hexadécimale de la couleur telle qu’utilisée en HTML et CSS. Cette "
-"entrée accepte également des noms CSS de couleurs."
-
-#: ../libgimpwidgets/gimpcolorselection.c:322
+#: ../libgimpwidgets/gimpcolorselection.c:318
 msgid "HTML _notation:"
 msgstr "_Notation HTML :"
 
@@ -2272,7 +2297,6 @@ msgid "Landscape"
 msgstr "Paysage"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_T"
@@ -2341,8 +2365,8 @@ msgid "_L"
 msgstr "_L"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
-msgid "LCH Lightness"
-msgstr "Luminosité LCT"
+msgid "LCh Lightness"
+msgstr "Luminosité LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgctxt "color-selector-channel"
@@ -2350,12 +2374,17 @@ msgid "_C"
 msgstr "_C"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
-msgid "LCH Chroma"
-msgstr "Chroma LCH"
+msgid "LCh Chroma"
+msgstr "Chroma LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
-msgid "LCH Hue"
-msgstr "Teinte LCH"
+msgctxt "color-selector-channel"
+msgid "_h"
+msgstr "_h"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
+msgid "LCh Hue"
+msgstr "Teinte LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:168
 msgctxt "color-selector-model"
@@ -2372,8 +2401,8 @@ msgid "LCH"
 msgstr "LCH"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
-msgid "CIELCh color model"
-msgstr "Modèle de couleurs CIELCh"
+msgid "CIE LCh color model"
+msgstr "Modèle de couleurs CIE LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
@@ -2448,11 +2477,11 @@ msgstr "Jaune"
 msgid "Black"
 msgstr "Noir"
 
-#: ../modules/color-selector-cmyk.c:380
+#: ../modules/color-selector-cmyk.c:374
 msgid "Profile: (none)"
 msgstr "Profil : (aucun)"
 
-#: ../modules/color-selector-cmyk.c:392
+#: ../modules/color-selector-cmyk.c:386
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil : %s"

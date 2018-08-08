@@ -19,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins HEAD fr\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-05-15 22:42+0000\n"
-"PO-Revision-Date: 2018-04-19 08:08+0100\n"
-"Last-Translator: julien <jhardlin@orange.fr>\n"
+"POT-Creation-Date: 2018-08-07 17:06+0000\n"
+"PO-Revision-Date: 2018-08-08 09:50+0200\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -46,8 +46,9 @@ msgid "Align Visible Layers"
 msgstr "Aligner les calques visibles"
 
 #: ../plug-ins/common/align-layers.c:630 ../plug-ins/common/blinds.c:225
-#: ../plug-ins/common/border-average.c:362 ../plug-ins/common/cartoon.c:813
-#: ../plug-ins/common/checkerboard.c:350 ../plug-ins/common/cml-explorer.c:1189
+#: ../plug-ins/common/border-average.c:362 ../plug-ins/common/busy-dialog.c:219
+#: ../plug-ins/common/cartoon.c:813 ../plug-ins/common/checkerboard.c:350
+#: ../plug-ins/common/cml-explorer.c:1189
 #: ../plug-ins/common/cml-explorer.c:1986
 #: ../plug-ins/common/cml-explorer.c:2119 ../plug-ins/common/colorify.c:257
 #: ../plug-ins/common/colormap-remap.c:621 ../plug-ins/common/compose.c:1076
@@ -58,12 +59,12 @@ msgstr "Aligner les calques visibles"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
-#: ../plug-ins/common/file-jp2-load.c:949
+#: ../plug-ins/common/file-heif.c:935 ../plug-ins/common/file-jp2-load.c:949
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
 #: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
-#: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1270
+#: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1270
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:594
 #: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
@@ -76,10 +77,9 @@ msgstr "Aligner les calques visibles"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
-#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
+#: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -110,7 +110,7 @@ msgstr "Aligner les calques visibles"
 #: ../plug-ins/metadata/metadata-editor.c:765
 #: ../plug-ins/metadata/metadata-editor.c:5648
 #: ../plug-ins/metadata/metadata-editor.c:5683
-#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:486
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:497
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "_Annuler"
@@ -124,18 +124,18 @@ msgstr "_Annuler"
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
-#: ../plug-ins/common/file-pdf-load.c:708 ../plug-ins/common/file-svg.c:728
-#: ../plug-ins/common/file-wmf.c:506 ../plug-ins/common/film.c:1271
-#: ../plug-ins/common/filter-pack.c:1207 ../plug-ins/common/fractal-trace.c:712
-#: ../plug-ins/common/grid.c:648 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
-#: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
-#: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/sharpen.c:477
-#: ../plug-ins/common/smooth-palette.c:439 ../plug-ins/common/softglow.c:633
-#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
-#: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
-#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/file-heif.c:936 ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-svg.c:728 ../plug-ins/common/file-wmf.c:516
+#: ../plug-ins/common/film.c:1271 ../plug-ins/common/filter-pack.c:1207
+#: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:648
+#: ../plug-ins/common/hot.c:595 ../plug-ins/common/jigsaw.c:2398
+#: ../plug-ins/common/max-rgb.c:262 ../plug-ins/common/newsprint.c:1184
+#: ../plug-ins/common/nl-filter.c:1022 ../plug-ins/common/oilify.c:786
+#: ../plug-ins/common/photocopy.c:841 ../plug-ins/common/qbist.c:817
+#: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:439
+#: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
+#: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
+#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/van-gogh-lic.c:648
 #: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
 #: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
@@ -460,8 +460,8 @@ msgstr "_Vertical"
 #: ../plug-ins/file-bmp/bmp-load.c:734 ../plug-ins/file-exr/file-exr.c:258
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
-#: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1833 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-image-res-load.c:1040
+#: ../plug-ins/file-psd/psd-load.c:1852 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -490,7 +490,7 @@ msgstr "Flou basique, rapide mais peu accentué"
 msgid "_Blur"
 msgstr "_Flou"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:592
+#: ../plug-ins/common/blur.c:175
 msgid "Blurring"
 msgstr "Flou en cours"
 
@@ -530,6 +530,19 @@ msgstr "Nombre de couleurs"
 #: ../plug-ins/common/border-average.c:434
 msgid "_Bucket size:"
 msgstr "Taille des po_ts de peinture :"
+
+#: ../plug-ins/common/busy-dialog.c:195 ../plug-ins/common/busy-dialog.c:211
+msgid "Please Wait"
+msgstr "Merci de patienter"
+
+#. the title label
+#: ../plug-ins/common/busy-dialog.c:239
+msgid "Please wait for the operation to complete"
+msgstr "Merci de patienter en attendant que l’opération se termine"
+
+#: ../plug-ins/common/busy-dialog.c:299
+msgid "Canceling..."
+msgstr "Annulation…"
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
@@ -1056,7 +1069,7 @@ msgstr "Enregistrez les paramètres de la fractale CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1608
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1599
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1091,7 +1104,7 @@ msgstr "Chargez les paramètres de la fractale CML"
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
-#: ../plug-ins/file-jpeg/jpeg-load.c:541 ../plug-ins/file-psd/psd-load.c:138
+#: ../plug-ins/file-jpeg/jpeg-load.c:541 ../plug-ins/file-psd/psd-load.c:139
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:924
@@ -2010,7 +2023,7 @@ msgid "R_ecursive"
 msgstr "Ré_cursif"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
+#: ../plug-ins/common/nl-filter.c:1092
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -2098,7 +2111,7 @@ msgstr "Néon"
 msgid "Neon Detection"
 msgstr "Détection néon"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:888
+#: ../plug-ins/common/edge-neon.c:749
 msgid "_Amount:"
 msgstr "_Quantité :"
 
@@ -2205,19 +2218,19 @@ msgstr "EOF ou erreur lors de la lecture de l’en-tête d’image"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
+#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
 #: ../plug-ins/common/file-heif.c:341 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
 #: ../plug-ins/common/file-png.c:919 ../plug-ins/common/file-pnm.c:566
 #: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
 #: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
-#: ../plug-ins/common/file-wmf.c:984 ../plug-ins/common/file-xbm.c:740
+#: ../plug-ins/common/file-wmf.c:1014 ../plug-ins/common/file-xbm.c:740
 #: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
 #: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
-#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:313 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2294,10 +2307,10 @@ msgstr "« %s » : EOF ou erreur lors de la lecture des données de palette"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
+#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:711
+#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1316
 #: ../plug-ins/common/file-heif.c:622 ../plug-ins/common/file-html-table.c:237
-#: ../plug-ins/common/file-pat.c:535 ../plug-ins/common/file-pcx.c:743
+#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:743
 #: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1575
 #: ../plug-ins/common/file-pnm.c:1246 ../plug-ins/common/file-ps.c:1236
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
@@ -2305,7 +2318,7 @@ msgstr "« %s » : EOF ou erreur lors de la lecture des données de palette"
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:310
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:285
-#: ../plug-ins/file-psd/psd-save.c:1579 ../plug-ins/file-sgi/sgi.c:579
+#: ../plug-ins/file-psd/psd-save.c:1570 ../plug-ins/file-sgi/sgi.c:579
 #: ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2423,47 +2436,54 @@ msgstr "Impossible d’opérer sur des types d’images inconnus."
 msgid "GIMP brush"
 msgstr "Brosse GIMP"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:425
+#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
 "Données d’en-tête non valides dans « %s » : largeur=%lu, hauteur=%lu, octets="
 "%lu"
 
-#: ../plug-ins/common/file-gbr.c:412 ../plug-ins/common/file-gbr.c:444
-#: ../plug-ins/common/file-gbr.c:455
+#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
+#: ../plug-ins/common/file-gbr.c:456
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Format de brosse non pris en charge"
 
-#: ../plug-ins/common/file-gbr.c:469
+#: ../plug-ins/common/file-gbr.c:468
+#, c-format
+msgid "Invalid header data in '%s': Brush name is too long: %lu"
+msgstr ""
+"Données d’en-tête non valides dans « %s » : nom de brosse trop long :"
+"%lu"
+
+#: ../plug-ins/common/file-gbr.c:482
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Erreur dans le fichier de brosse GIMP « %s »"
 
-#: ../plug-ins/common/file-gbr.c:477
+#: ../plug-ins/common/file-gbr.c:490
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr ""
 "Chaîne de caractères UTF-8 non valide dans le fichier de brosse « %s »."
 
-#: ../plug-ins/common/file-gbr.c:483 ../plug-ins/common/file-gih.c:508
-#: ../plug-ins/common/file-gih.c:1207
+#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
+#: ../plug-ins/common/file-gih.c:1218 ../plug-ins/common/file-pat.c:398
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Sans nom"
 
-#: ../plug-ins/common/file-gbr.c:800
+#: ../plug-ins/common/file-gbr.c:813
 msgid "Brush"
 msgstr "Brosse"
 
-#: ../plug-ins/common/file-gbr.c:816 ../plug-ins/common/file-gih.c:933
-#: ../plug-ins/common/file-pat.c:624 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:829 ../plug-ins/common/file-gih.c:944
+#: ../plug-ins/common/file-pat.c:641 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Description :"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:828 ../plug-ins/common/grid.c:799
+#: ../plug-ins/common/file-gbr.c:841 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "Espacement :"
 
@@ -2614,55 +2634,60 @@ msgstr "Le commentaire par défaut est limité à %d caractères."
 msgid "GIMP brush (animated)"
 msgstr "Brosse GIMP (animée)"
 
-#: ../plug-ins/common/file-gih.c:584
+#: ../plug-ins/common/file-gih.c:502
+#, c-format
+msgid "Brush name is too long: %lu"
+msgstr "Le nom de brosse est trop long : %lu"
+
+#: ../plug-ins/common/file-gih.c:595
 msgid "GIMP brush file appears to be corrupted."
 msgstr "Le fichier de brosse GIMP semble être endommagé."
 
-#: ../plug-ins/common/file-gih.c:915
+#: ../plug-ins/common/file-gih.c:926
 msgid "Brush Pipe"
 msgstr "Brosse animée"
 
-#: ../plug-ins/common/file-gih.c:948
+#: ../plug-ins/common/file-gih.c:959
 msgid "Spacing (percent):"
 msgstr "Espacement (pourcentage) :"
 
-#: ../plug-ins/common/file-gih.c:1003
+#: ../plug-ins/common/file-gih.c:1014
 msgid "Pixels"
 msgstr "Pixels"
 
-#: ../plug-ins/common/file-gih.c:1008
+#: ../plug-ins/common/file-gih.c:1019
 msgid "Cell size:"
 msgstr "Taille des cases :"
 
-#: ../plug-ins/common/file-gih.c:1021
+#: ../plug-ins/common/file-gih.c:1032
 msgid "Number of cells:"
 msgstr "Nombre de cases :"
 
-#: ../plug-ins/common/file-gih.c:1046
+#: ../plug-ins/common/file-gih.c:1057
 msgid " Rows of "
 msgstr " Rangées de "
 
-#: ../plug-ins/common/file-gih.c:1058
+#: ../plug-ins/common/file-gih.c:1069
 msgid " Columns on each layer"
 msgstr " Colonnes sur chaque calque"
 
-#: ../plug-ins/common/file-gih.c:1062
+#: ../plug-ins/common/file-gih.c:1073
 msgid " (Width Mismatch!) "
 msgstr " (hauteurs incohérentes !)"
 
-#: ../plug-ins/common/file-gih.c:1066
+#: ../plug-ins/common/file-gih.c:1077
 msgid " (Height Mismatch!) "
 msgstr " (largeurs incohérentes !)"
 
-#: ../plug-ins/common/file-gih.c:1071
+#: ../plug-ins/common/file-gih.c:1082
 msgid "Display as:"
 msgstr "Afficher comme :"
 
-#: ../plug-ins/common/file-gih.c:1082
+#: ../plug-ins/common/file-gih.c:1093
 msgid "Dimension:"
 msgstr "Dimension :"
 
-#: ../plug-ins/common/file-gih.c:1158
+#: ../plug-ins/common/file-gih.c:1169
 msgid "Ranks:"
 msgstr "Rangs :"
 
@@ -2721,29 +2746,29 @@ msgstr "Le codage de l’image HEIF a échoué : %s"
 msgid "Writing HEIF image failed: %s"
 msgstr "L’écriture de l’image HEIF a échoué : %s"
 
-#: ../plug-ins/common/file-heif.c:785
+#: ../plug-ins/common/file-heif.c:786
 msgid "primary"
 msgstr "primaire"
 
-#: ../plug-ins/common/file-heif.c:921
+#: ../plug-ins/common/file-heif.c:931
 msgid "Load HEIF Image"
 msgstr "Charger une image HEIF"
 
-#: ../plug-ins/common/file-heif.c:935
+#: ../plug-ins/common/file-heif.c:945
 msgid "Select Image"
 msgstr "Sélectionner l’image"
 
-#: ../plug-ins/common/file-heif.c:1048
+#: ../plug-ins/common/file-heif.c:1088
 msgid "HEIF"
 msgstr "HEIF"
 
 #. Create the lossless checkbox
-#: ../plug-ins/common/file-heif.c:1055
+#: ../plug-ins/common/file-heif.c:1095
 #: ../plug-ins/file-webp/file-webp-dialog.c:124
 msgid "Lossless"
 msgstr "Sans perte"
 
-#: ../plug-ins/common/file-heif.c:1059
+#: ../plug-ins/common/file-heif.c:1099
 msgid "Quality:"
 msgstr "Qualité :"
 
@@ -2919,7 +2944,7 @@ msgstr "JPEG 2000%s « %s » avec %d composants n’est pas accepté."
 msgid "Color space:"
 msgstr "Espace de couleurs :"
 
-#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:965
+#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:995
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Impossible d’ouvrir « %s » en lecture"
@@ -3103,12 +3128,19 @@ msgstr "Animation MNG"
 msgid "GIMP pattern"
 msgstr "Motif GIMP"
 
-#: ../plug-ins/common/file-pat.c:380
+#: ../plug-ins/common/file-pat.c:373
+#,c-format
+msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+msgstr ""
+"Données d’en-tête non valides dans « %s » : nom de motif trop long : "
+"%lu"
+
+#: ../plug-ins/common/file-pat.c:392
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Chaîne de caractères UTF-8 non valide dans le fichier de motif « %s »."
 
-#: ../plug-ins/common/file-pat.c:609
+#: ../plug-ins/common/file-pat.c:626
 msgid "Pattern"
 msgstr "Motif"
 
@@ -3127,13 +3159,13 @@ msgid "'%s' is not a PCX file"
 msgstr "« %s » n’est pas un fichier PCX"
 
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/file-bmp/bmp-load.c:723
-#: ../plug-ins/file-psd/psd-load.c:306
+#: ../plug-ins/file-psd/psd-load.c:309
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "La largeur de l’image est non valide ou non prise en charge : %d"
 
 #: ../plug-ins/common/file-pcx.c:416 ../plug-ins/file-bmp/bmp-load.c:729
-#: ../plug-ins/file-psd/psd-load.c:298
+#: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "La hauteur de l’image est non valide ou non prise en charge : %d"
@@ -3269,7 +3301,7 @@ msgstr "Utiliser le _lissage"
 
 #: ../plug-ins/common/file-pdf-load.c:1644
 #: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
-#: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
+#: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
@@ -3372,8 +3404,8 @@ msgstr "Image PNG"
 
 #: ../plug-ins/common/file-png.c:768
 #, c-format
-msgid "Error loading PNG file: %s"
-msgstr "Erreur lors du chargement du fichier PNG : %s"
+msgid "Error loading PNG file: %s\n"
+msgstr "Erreur lors du chargement du fichier PNG : %s\n"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
@@ -3578,7 +3610,7 @@ msgstr "Interprétation"
 
 #. Resolution
 #: ../plug-ins/common/file-ps.c:3451 ../plug-ins/common/file-svg.c:910
-#: ../plug-ins/common/file-wmf.c:694
+#: ../plug-ins/common/file-wmf.c:704
 msgid "Resolution:"
 msgstr "Résolution :"
 
@@ -4169,7 +4201,7 @@ msgstr "Rendu SVG en cours"
 msgid "Rendered SVG"
 msgstr "SVG rendu"
 
-#: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:359
+#: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:369
 #, c-format
 msgid "%d × %d"
 msgstr "%d x %d"
@@ -4188,24 +4220,24 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Rendre un Scalable Vector Graphics"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:571
+#: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:581
 #: ../plug-ins/common/grid.c:733
 msgid "Width:"
 msgstr "Largeur :"
 
-#: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:577
+#: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:587
 msgid "Height:"
 msgstr "Hauteur :"
 
-#: ../plug-ins/common/file-svg.c:869 ../plug-ins/common/file-wmf.c:653
+#: ../plug-ins/common/file-svg.c:869 ../plug-ins/common/file-wmf.c:663
 msgid "_X ratio:"
 msgstr "Ratio _X :"
 
-#: ../plug-ins/common/file-svg.c:891 ../plug-ins/common/file-wmf.c:675
+#: ../plug-ins/common/file-svg.c:891 ../plug-ins/common/file-wmf.c:685
 msgid "_Y ratio:"
 msgstr "Ratio _Y :"
 
-#: ../plug-ins/common/file-svg.c:905 ../plug-ins/common/file-wmf.c:689
+#: ../plug-ins/common/file-svg.c:905 ../plug-ins/common/file-wmf.c:699
 msgid "Constrain aspect ratio"
 msgstr "Conserver les proportions"
 
@@ -4269,7 +4301,7 @@ msgstr "En haut à gauche"
 msgid "Microsoft WMF file"
 msgstr "Fichier Microsoft WMF"
 
-#: ../plug-ins/common/file-wmf.c:353
+#: ../plug-ins/common/file-wmf.c:363
 msgid ""
 "WMF file does not\n"
 "specify a size!"
@@ -4277,11 +4309,11 @@ msgstr ""
 "Le fichier WMF ne\n"
 "spécifie pas de taille !"
 
-#: ../plug-ins/common/file-wmf.c:501
+#: ../plug-ins/common/file-wmf.c:511
 msgid "Render Windows Metafile"
 msgstr "Rendre Windows Metafile"
 
-#: ../plug-ins/common/file-wmf.c:998
+#: ../plug-ins/common/file-wmf.c:1028
 msgid "Rendered WMF"
 msgstr "Rendu WMF"
 
@@ -6424,29 +6456,6 @@ msgstr "Éditeur d’unité"
 msgid "_Refresh"
 msgstr "_Actualiser"
 
-#: ../plug-ins/common/unsharp-mask.c:132
-msgid "The most widely useful method for sharpening an image"
-msgstr ""
-"La méthode la plus largement utilisée pour améliorer la netteté d’une image"
-
-#: ../plug-ins/common/unsharp-mask.c:142
-msgid "_Unsharp Mask (legacy)..."
-msgstr "Renforcer la _netteté (ancien)…"
-
-#: ../plug-ins/common/unsharp-mask.c:694
-msgid "Merging"
-msgstr "Fusion en cours"
-
-#: ../plug-ins/common/unsharp-mask.c:838
-msgid "Unsharp Mask"
-msgstr "Renforcer la netteté"
-
-#: ../plug-ins/common/unsharp-mask.c:901
-#: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:566
-msgid "_Threshold:"
-msgstr "_Seuil :"
-
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
@@ -7252,98 +7261,98 @@ msgstr "Image JPEG"
 msgid "Export Preview"
 msgstr "Exporter l’aperçu"
 
-#: ../plug-ins/file-psd/psd-load.c:219
+#: ../plug-ins/file-psd/psd-load.c:222
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Erreur lors du chargement du fichier PSD : %s"
 
-#: ../plug-ins/file-psd/psd-load.c:274
+#: ../plug-ins/file-psd/psd-load.c:277
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Ce n’est pas un document Photoshop valide"
 
-#: ../plug-ins/file-psd/psd-load.c:281
+#: ../plug-ins/file-psd/psd-load.c:284
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Version de format de fichier non pris en charge : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:288
+#: ../plug-ins/file-psd/psd-load.c:291
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Trop de canaux dans le fichier : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:315
+#: ../plug-ins/file-psd/psd-load.c:318
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "La taille de l’image est non valide ou non prise en charge : %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:327
+#: ../plug-ins/file-psd/psd-load.c:330
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Mode couleur non pris en charge : %s"
 
-#: ../plug-ins/file-psd/psd-load.c:353
+#: ../plug-ins/file-psd/psd-load.c:356
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Profondeur de bit non prise en charge : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:387 ../plug-ins/file-psd/psd-load.c:397
-#: ../plug-ins/file-psd/psd-load.c:608 ../plug-ins/file-psd/psd-load.c:830
+#: ../plug-ins/file-psd/psd-load.c:390 ../plug-ins/file-psd/psd-load.c:400
+#: ../plug-ins/file-psd/psd-load.c:611 ../plug-ins/file-psd/psd-load.c:833
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Ce fichier est endommagé."
 
-#: ../plug-ins/file-psd/psd-load.c:536
+#: ../plug-ins/file-psd/psd-load.c:539
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Trop de canaux dans le calque : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:544
+#: ../plug-ins/file-psd/psd-load.c:547
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Hauteur de calque non valide ou non prise en charge : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:552
+#: ../plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Largeur de calque non valide ou non prise en charge : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:561
+#: ../plug-ins/file-psd/psd-load.c:564
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Taille de calque non valide ou non prise en charge : %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:747
+#: ../plug-ins/file-psd/psd-load.c:750
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Hauteur de masque de calque non valide ou non prise en charge : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:755
+#: ../plug-ins/file-psd/psd-load.c:758
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Largeur de masque de calque non valide ou non prise en charge : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:764
+#: ../plug-ins/file-psd/psd-load.c:767
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Taille de masque de calque non valide ou non prise en charge : %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1808
+#: ../plug-ins/file-psd/psd-load.c:1329 ../plug-ins/file-psd/psd-load.c:1826
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Mode de compression non pris en charge : %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1904
+#: ../plug-ins/file-psd/psd-load.c:1954
 msgid "Extra"
 msgstr "Supplémentaire"
 
-#: ../plug-ins/file-psd/psd-load.c:2083
+#: ../plug-ins/file-psd/psd-load.c:2133
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Taille de canal non valide ou non prise en charge"
 
-#: ../plug-ins/file-psd/psd-load.c:2152
+#: ../plug-ins/file-psd/psd-load.c:2202
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Échec de décompression des données"
@@ -7353,7 +7362,7 @@ msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Erreur : impossible de convertir le type d’image de base GIMP en mode PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1572
+#: ../plug-ins/file-psd/psd-save.c:1563
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7362,7 +7371,7 @@ msgstr ""
 "Impossible d’exporter « %s ». Le format PSD ne prend pas en charge les "
 "images de plus de 30 000 pixels de haut ou de large."
 
-#: ../plug-ins/file-psd/psd-save.c:1593
+#: ../plug-ins/file-psd/psd-save.c:1584
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7375,9 +7384,13 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "Fin de fichier prématurée"
 
-#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:145
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:167
 msgid "Photoshop image"
 msgstr "Image Photoshop"
+
+#: ../plug-ins/file-psd/psd.c:130
+msgid "Photoshop image (merged)"
+msgstr "Image Photoshop (fusionnée)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -10421,10 +10434,10 @@ msgstr "Le manuel d’utilisation de GIMP n’est pas disponible."
 #: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"http://docs.gimp.org/"
+"https://docs.gimp.org/"
 msgstr ""
 "Veuillez installer le paquet d’aide ou utilisez le manuel en ligne à "
-"l’adresse http://docs.gimp.org/fr."
+"l’adresse https://docs.gimp.org/fr"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -11285,6 +11298,11 @@ msgstr "Interaction :"
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "Région co_ntiguë"
+
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:566
+msgid "_Threshold:"
+msgstr "_Seuil :"
 
 #: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
@@ -12359,98 +12377,98 @@ msgstr "Crée une image depuis une région de l’écran"
 msgid "_Screenshot..."
 msgstr "_Capture d’écran…"
 
-#: ../plug-ins/screenshot/screenshot.c:482
+#: ../plug-ins/screenshot/screenshot.c:493
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Capture d’écran"
 
-#: ../plug-ins/screenshot/screenshot.c:487
+#: ../plug-ins/screenshot/screenshot.c:498
 msgid "S_nap"
 msgstr "_Capturer"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:514
+#: ../plug-ins/screenshot/screenshot.c:525
 msgid "Area"
 msgstr "Région"
 
-#: ../plug-ins/screenshot/screenshot.c:526
+#: ../plug-ins/screenshot/screenshot.c:537
 msgid "Take a screenshot of a single _window"
 msgstr "Prendre une capture d’écran d’une _fenêtre unique"
 
-#: ../plug-ins/screenshot/screenshot.c:549
+#: ../plug-ins/screenshot/screenshot.c:560
 msgid "Include window _decoration"
 msgstr "Inclure les _décorations de fenêtre"
 
-#: ../plug-ins/screenshot/screenshot.c:570
-#: ../plug-ins/screenshot/screenshot.c:615
+#: ../plug-ins/screenshot/screenshot.c:581
+#: ../plug-ins/screenshot/screenshot.c:626
 msgid "Include _mouse pointer"
 msgstr "Inclure le _pointeur de la souris"
 
-#: ../plug-ins/screenshot/screenshot.c:592
+#: ../plug-ins/screenshot/screenshot.c:603
 msgid "Take a screenshot of the entire _screen"
 msgstr "Prendre une capture d’écran de l’é_cran entier"
 
-#: ../plug-ins/screenshot/screenshot.c:643
+#: ../plug-ins/screenshot/screenshot.c:654
 msgid "Select a _region to grab"
 msgstr "Sélectionner une _région à capturer"
 
-#: ../plug-ins/screenshot/screenshot.c:661
+#: ../plug-ins/screenshot/screenshot.c:672
 msgid "Delay"
 msgstr "Délai"
 
-#: ../plug-ins/screenshot/screenshot.c:681
+#: ../plug-ins/screenshot/screenshot.c:692
 msgid "Selection delay: "
 msgstr "Délai de sélection : "
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:700
-#: ../plug-ins/screenshot/screenshot.c:763
+#: ../plug-ins/screenshot/screenshot.c:711
+#: ../plug-ins/screenshot/screenshot.c:774
 msgid "seconds"
 msgstr "secondes"
 
-#: ../plug-ins/screenshot/screenshot.c:714
+#: ../plug-ins/screenshot/screenshot.c:725
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Après le délai, déplacez votre souris pour sélectionner la région à capturer."
 
-#: ../plug-ins/screenshot/screenshot.c:718
+#: ../plug-ins/screenshot/screenshot.c:729
 msgid "Click in a window to snap it after delay."
 msgstr "Cliquez sur une fenêtre pour la capturer après un certain délai."
 
-#: ../plug-ins/screenshot/screenshot.c:723
+#: ../plug-ins/screenshot/screenshot.c:734
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "À la fin du délai, cliquez sur une fenêtre pour la capturer."
 
-#: ../plug-ins/screenshot/screenshot.c:744
+#: ../plug-ins/screenshot/screenshot.c:755
 msgid "Screenshot delay: "
 msgstr "Délai de capture d’écran : "
 
-#: ../plug-ins/screenshot/screenshot.c:775
+#: ../plug-ins/screenshot/screenshot.c:786
 msgid "After the delay, the screenshot is taken."
 msgstr "Après le délai, la capture est faite."
 
-#: ../plug-ins/screenshot/screenshot.c:777
+#: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr "Quand la région sera sélectionnée, elle sera capturée après ce délai."
 
-#: ../plug-ins/screenshot/screenshot.c:782
+#: ../plug-ins/screenshot/screenshot.c:793
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr "Quand la fenêtre sera sélectionnée, elle sera capturée après ce délai."
 
-#: ../plug-ins/screenshot/screenshot.c:788
+#: ../plug-ins/screenshot/screenshot.c:799
 msgid "After the delay, the active window will be captured."
 msgstr "Après le délai, la capture de la fenêtre active est effectuée."
 
-#: ../plug-ins/screenshot/screenshot.c:795
+#: ../plug-ins/screenshot/screenshot.c:806
 msgid "Color Profile"
 msgstr "Profil colorimétrique"
 
-#: ../plug-ins/screenshot/screenshot.c:800
+#: ../plug-ins/screenshot/screenshot.c:811
 msgid "Tag image with _monitor profile"
 msgstr "Étiqueter l’image avec le profil du _moniteur"
 
-#: ../plug-ins/screenshot/screenshot.c:804
+#: ../plug-ins/screenshot/screenshot.c:815
 msgid "Convert image to sR_GB"
 msgstr "Convertir l’image en sR_VB"
 
@@ -12748,45 +12766,3 @@ msgstr "_Scanneur/Appareil photo…"
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Transfert des données depuis le scanneur ou l’appareil photo"
-
-#~ msgid "Displace pixels in a ripple pattern"
-#~ msgstr "Déplacer les pixels sur une forme ondulée"
-
-#~ msgid "_Ripple..."
-#~ msgstr "Ond_uler…"
-
-#~ msgid "Rippling"
-#~ msgstr "Ondulation en cours"
-
-#~ msgid "Ripple"
-#~ msgstr "Onduler"
-
-#~ msgid "_Retain tilability"
-#~ msgstr "_Reste raccordable"
-
-#~ msgid "Edges"
-#~ msgstr "Bordures"
-
-#~ msgid "_Smear"
-#~ msgstr "É_taler"
-
-#~ msgid "_Blank"
-#~ msgstr "_Incolore"
-
-#~ msgid "Wave Type"
-#~ msgstr "Type d’onde"
-
-#~ msgid "Saw_tooth"
-#~ msgstr "_Dent de scie"
-
-#~ msgid "S_ine"
-#~ msgstr "S_inus"
-
-#~ msgid "_Period:"
-#~ msgstr "_Période :"
-
-#~ msgid "A_mplitude:"
-#~ msgstr "A_mplitude :"
-
-#~ msgid "Phase _shift:"
-#~ msgstr "Dép_hasage :"
