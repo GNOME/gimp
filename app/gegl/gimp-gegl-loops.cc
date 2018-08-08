@@ -955,6 +955,12 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
   const Babl         *src_format;
   const Babl         *dest_format;
 
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (GIMP_IS_COLOR_PROFILE (src_profile));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+  g_return_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
 
