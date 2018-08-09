@@ -442,7 +442,7 @@ gimp_image_convert_color_profile (GimpImage                *image,
 
   src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  if (! src_profile || gimp_color_profile_is_equal (src_profile, dest_profile))
+  if (gimp_color_profile_is_equal (src_profile, dest_profile))
     return TRUE;
 
   if (progress)
@@ -453,6 +453,9 @@ gimp_image_convert_color_profile (GimpImage                *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                _("Color profile conversion"));
+
+  /* retain src_profile across gimp_image_set_color_profile() */
+  g_object_ref (src_profile);
 
   gimp_image_set_is_color_managed (image, TRUE, TRUE);
   gimp_image_set_color_profile (image, dest_profile, NULL);
@@ -477,6 +480,8 @@ gimp_image_convert_color_profile (GimpImage                *image,
       gimp_image_fix_layer_format_spaces (image, progress);
       break;
     }
+
+  g_object_unref (src_profile);
 
   gimp_image_undo_group_end (image);
 
