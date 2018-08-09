@@ -418,6 +418,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:stereographic-projection",
     GIMP_HELP_FILTER_LITTLE_PLANET },
 
+  { "filters-long-shadow", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Long Shadow..."), NULL, NULL,
+    "gegl:long-shadow",
+    GIMP_HELP_FILTER_LONG_SHADOW },
+
   { "filters-mantiuk-2006", GIMP_ICON_GEGL,
     NC_("filters-action", "_Mantiuk 2006..."), NULL, NULL,
     "gegl:mantiuk06",
@@ -896,6 +901,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-lens-flare",              writable);
   SET_SENSITIVE ("filters-levels",                  writable);
   SET_SENSITIVE ("filters-little-planet",           writable);
+  SET_SENSITIVE ("filters-long-shadow",             writable && alpha);
   SET_SENSITIVE ("filters-mantiuk-2006",            writable);
   SET_SENSITIVE ("filters-maze",                    writable);
   SET_SENSITIVE ("filters-median-blur",             writable);

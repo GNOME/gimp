@@ -735,6 +735,7 @@
         <separator />
         <placeholder name="Shadow">
 	  <menuitem action="filters-dropshadow" />
+	  <menuitem action="filters-long-shadow" />
 	  <menuitem action="filters-vignette" />
 	</placeholder>
         <separator />
