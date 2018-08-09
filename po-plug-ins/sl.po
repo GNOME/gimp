@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-15 18:04+0000\n"
-"PO-Revision-Date: 2018-07-24 23:56+0200\n"
+"POT-Creation-Date: 2018-08-04 07:44+0000\n"
+"PO-Revision-Date: 2018-08-05 17:29+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 2.1\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -7317,7 +7317,7 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "Nepričakovan konec datoteke"
 
-#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:166
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:167
 msgid "Photoshop image"
 msgstr "Slika Photoshop"
 
@@ -9744,16 +9744,14 @@ msgid "Minor Model Age Disclosure"
 msgstr "Razkritje starosti mladoletnega modela"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:54
-#, fuzzy
 msgid "Model Release Status"
-msgstr "Status izdaje modela"
+msgstr "Stanje izdaje modela"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
 msgid "Additional Model Info"
 msgstr "Dodatne informacije modela"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:56
-#, fuzzy
 msgid "Model Release Identifier"
 msgstr "Identifikator izdaje modela"
 
@@ -9802,9 +9800,8 @@ msgid "Licensor"
 msgstr "Podeljevalec licence"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:68
-#, fuzzy
 msgid "Property Release Status"
-msgstr "Stanje izdaje lastnine"
+msgstr "Stanje izdaje lastnosti"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
 msgid "Image Creator"
@@ -9839,9 +9836,8 @@ msgid "Web Address"
 msgstr "Spletni naslov"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
-#, fuzzy
 msgid "Property Release Identifier"
-msgstr "Identifikator izdaje lastnine"
+msgstr "Identifikator izdaje lastnosti"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
 msgid "IPTC Extension"
@@ -11947,24 +11943,20 @@ msgid "Not Applicable"
 msgstr "Se ne uporabi"
 
 #: ../plug-ins/metadata/metadata-tags.h:264
-#, fuzzy
 msgid "Unlimited Model Releases"
 msgstr "Neomejeno izdajanje modelov"
 
 #: ../plug-ins/metadata/metadata-tags.h:265
-#, fuzzy
 msgid "Limited or Incomplete Model Releases"
 msgstr "Omejeno ali nepopolno izdajanje modelov"
 
 #: ../plug-ins/metadata/metadata-tags.h:275
-#, fuzzy
 msgid "Unlimited Property Releases"
-msgstr "Neomejeno izdajanje lastnine"
+msgstr "Neomejeno izdajanje lastnosti"
 
 #: ../plug-ins/metadata/metadata-tags.h:276
-#, fuzzy
 msgid "Limited or Incomplete Property Releases"
-msgstr "Omejeno ali nepopolno izdajanje lastnine"
+msgstr "Omejeno ali nepopolno izdajanje lastnosti"
 
 #: ../plug-ins/metadata/metadata-tags.h:284
 msgid "Age Unknown"
