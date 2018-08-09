@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-28 17:46+0000\n"
-"PO-Revision-Date: 2018-07-01 16:19+0200\n"
+"POT-Creation-Date: 2018-08-09 18:17+0000\n"
+"PO-Revision-Date: 2018-08-09 21:39+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -66,10 +66,9 @@ msgstr "Līdzināt redzamos slāņus"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
-#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
+#: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -125,10 +124,9 @@ msgstr "At_celt"
 #: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:439
 #: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:355 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -479,7 +477,7 @@ msgstr "Vienkārša aizmiglošana; ātra, bet ne ļoti spēcīga"
 msgid "_Blur"
 msgstr "_Aizmiglošana"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:592
+#: ../plug-ins/common/blur.c:175
 msgid "Blurring"
 msgstr "Aizmiglo"
 
@@ -527,7 +525,6 @@ msgid "Please wait for the operation to complete"
 msgstr "Lūdzu, uzgaidiet līdz beigsies darbība"
 
 #: ../plug-ins/common/busy-dialog.c:299
-#| msgid "_Cancel"
 msgid "Canceling..."
 msgstr "Atceļ..."
 
@@ -1999,7 +1996,7 @@ msgid "R_ecursive"
 msgstr "R_ekursīvā"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
+#: ../plug-ins/common/nl-filter.c:1092
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -2087,7 +2084,7 @@ msgstr "Neons"
 msgid "Neon Detection"
 msgstr "Neona noteikšana"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:888
+#: ../plug-ins/common/edge-neon.c:749
 msgid "_Amount:"
 msgstr "_Apjoms:"
 
@@ -2194,9 +2191,9 @@ msgstr "EOF (datnes beigas) kļūda, lasot attēla galveni"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:681
+#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
 #: ../plug-ins/common/file-heif.c:341 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
 #: ../plug-ins/common/file-png.c:919 ../plug-ins/common/file-pnm.c:566
 #: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
@@ -2283,10 +2280,10 @@ msgstr "“%s” — EOF (datnes beigas) kļūda, lasot paletes datus"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1307
+#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:711
+#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1316
 #: ../plug-ins/common/file-heif.c:622 ../plug-ins/common/file-html-table.c:237
-#: ../plug-ins/common/file-pat.c:535 ../plug-ins/common/file-pcx.c:743
+#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:743
 #: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1575
 #: ../plug-ins/common/file-pnm.c:1246 ../plug-ins/common/file-ps.c:1236
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
@@ -2411,44 +2408,50 @@ msgstr "Nevar darboties ar nezināmiem attēlu veidiem."
 msgid "GIMP brush"
 msgstr "GIMP ota"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:425
+#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr "“%s” ir nederīgi galveņu dati — platums=%lu, augstums=%lu, baiti=%lu"
 
-#: ../plug-ins/common/file-gbr.c:412 ../plug-ins/common/file-gbr.c:444
-#: ../plug-ins/common/file-gbr.c:455
+#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
+#: ../plug-ins/common/file-gbr.c:456
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Neatbalstīts otas formāts"
 
-#: ../plug-ins/common/file-gbr.c:469
+#: ../plug-ins/common/file-gbr.c:468
+#, c-format
+#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgid "Invalid header data in '%s': Brush name is too long: %lu"
+msgstr "“%s” ir nederīgi galveņu dati — otas nosaukums ir pārāk garš: %lu"
+
+#: ../plug-ins/common/file-gbr.c:482
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Kļūda GIMP otas datnē “%s”"
 
-#: ../plug-ins/common/file-gbr.c:477
+#: ../plug-ins/common/file-gbr.c:490
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nederīga UTF-8 rinda otas datnē “%s”."
 
-#: ../plug-ins/common/file-gbr.c:483 ../plug-ins/common/file-gih.c:510
-#: ../plug-ins/common/file-gih.c:1209
+#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
+#: ../plug-ins/common/file-gih.c:1218 ../plug-ins/common/file-pat.c:398
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Bez nosaukuma"
 
-#: ../plug-ins/common/file-gbr.c:800
+#: ../plug-ins/common/file-gbr.c:813
 msgid "Brush"
 msgstr "Ota"
 
-#: ../plug-ins/common/file-gbr.c:816 ../plug-ins/common/file-gih.c:935
-#: ../plug-ins/common/file-pat.c:624 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:829 ../plug-ins/common/file-gih.c:944
+#: ../plug-ins/common/file-pat.c:641 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Apraksts:"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:828 ../plug-ins/common/grid.c:799
+#: ../plug-ins/common/file-gbr.c:841 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "Atstatums:"
 
@@ -2595,55 +2598,60 @@ msgstr "Noklusējuma komentārs nevar pārsniegt %d rakstzīmes."
 msgid "GIMP brush (animated)"
 msgstr "GIMP ota (animēta)"
 
-#: ../plug-ins/common/file-gih.c:586
+#: ../plug-ins/common/file-gih.c:502
+#, c-format
+msgid "Brush name is too long: %lu"
+msgstr "Otas nosaukums ir pārāk garš: %lu"
+
+#: ../plug-ins/common/file-gih.c:595
 msgid "GIMP brush file appears to be corrupted."
 msgstr "Izskatās, ka GIMP otu datne ir bojāta."
 
-#: ../plug-ins/common/file-gih.c:917
+#: ../plug-ins/common/file-gih.c:926
 msgid "Brush Pipe"
 msgstr "Otu virtene"
 
-#: ../plug-ins/common/file-gih.c:950
+#: ../plug-ins/common/file-gih.c:959
 msgid "Spacing (percent):"
 msgstr "Atstatums (procenti):"
 
-#: ../plug-ins/common/file-gih.c:1005
+#: ../plug-ins/common/file-gih.c:1014
 msgid "Pixels"
 msgstr "Pikseļi"
 
-#: ../plug-ins/common/file-gih.c:1010
+#: ../plug-ins/common/file-gih.c:1019
 msgid "Cell size:"
 msgstr "Šūnas izmērs:"
 
-#: ../plug-ins/common/file-gih.c:1023
+#: ../plug-ins/common/file-gih.c:1032
 msgid "Number of cells:"
 msgstr "Šūnu skaits:"
 
-#: ../plug-ins/common/file-gih.c:1048
+#: ../plug-ins/common/file-gih.c:1057
 msgid " Rows of "
 msgstr " rindas no "
 
-#: ../plug-ins/common/file-gih.c:1060
+#: ../plug-ins/common/file-gih.c:1069
 msgid " Columns on each layer"
 msgstr " kolonnas katram slānim"
 
-#: ../plug-ins/common/file-gih.c:1064
+#: ../plug-ins/common/file-gih.c:1073
 msgid " (Width Mismatch!) "
 msgstr " (platumu neatbilstība!) "
 
-#: ../plug-ins/common/file-gih.c:1068
+#: ../plug-ins/common/file-gih.c:1077
 msgid " (Height Mismatch!) "
 msgstr " (augstumu neatbilstība!) "
 
-#: ../plug-ins/common/file-gih.c:1073
+#: ../plug-ins/common/file-gih.c:1082
 msgid "Display as:"
 msgstr "Rādīt kā:"
 
-#: ../plug-ins/common/file-gih.c:1084
+#: ../plug-ins/common/file-gih.c:1093
 msgid "Dimension:"
 msgstr "Dimensija:"
 
-#: ../plug-ins/common/file-gih.c:1160
+#: ../plug-ins/common/file-gih.c:1169
 msgid "Ranks:"
 msgstr "Pakāpes:"
 
@@ -3074,12 +3082,18 @@ msgstr "MNG animācija"
 msgid "GIMP pattern"
 msgstr "GIMP raksts"
 
-#: ../plug-ins/common/file-pat.c:380
+#: ../plug-ins/common/file-pat.c:373
+#, c-format
+#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+msgstr "“%s” ir nederīgi galveņu dati — raksta nosaukums ir pārāk garš: %lu"
+
+#: ../plug-ins/common/file-pat.c:392
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Nederīga UTF-8 rinda rakstu datnē “%s”."
 
-#: ../plug-ins/common/file-pat.c:609
+#: ../plug-ins/common/file-pat.c:626
 msgid "Pattern"
 msgstr "Raksts"
 
@@ -3340,7 +3354,6 @@ msgstr "PNG attēls"
 
 #: ../plug-ins/common/file-png.c:768
 #, c-format
-#| msgid "Error loading PNG file: %s"
 msgid "Error loading PNG file: %s\n"
 msgstr "Kļūda, ielādējot PNG datni — %s\n"
 
@@ -6369,28 +6382,6 @@ msgstr "Mērvienību redaktors"
 msgid "_Refresh"
 msgstr "_Atsvaidzināt"
 
-#: ../plug-ins/common/unsharp-mask.c:132
-msgid "The most widely useful method for sharpening an image"
-msgstr "Visnoderīgākā metode attēla asināšanai"
-
-#: ../plug-ins/common/unsharp-mask.c:142
-msgid "_Unsharp Mask (legacy)..."
-msgstr "I_zplūduma maska (mantojums)..."
-
-#: ../plug-ins/common/unsharp-mask.c:694
-msgid "Merging"
-msgstr "Apvieno"
-
-#: ../plug-ins/common/unsharp-mask.c:838
-msgid "Unsharp Mask"
-msgstr "Izplūduma maska"
-
-#: ../plug-ins/common/unsharp-mask.c:901
-#: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:566
-msgid "_Threshold:"
-msgstr "S_lieksnis:"
-
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogs (LIC)"
@@ -7309,12 +7300,11 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "Negaidītas datnes beigas"
 
-#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:166
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:167
 msgid "Photoshop image"
 msgstr "Photoshop attēls"
 
 #: ../plug-ins/file-psd/psd.c:130
-#| msgid "Photoshop image"
 msgid "Photoshop image (merged)"
 msgstr "Photoshop attēls (apvienots)"
 
@@ -10327,12 +10317,15 @@ msgstr "GIMP lietotāja rokasgrāmata nav pieejama."
 #. * Cf. bug 762282.
 #.
 #: ../plug-ins/help/gimphelpdomain.c:193
+#| msgid ""
+#| "Please install the additional help package or use the online user manual "
+#| "at: http://docs.gimp.org/"
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"http://docs.gimp.org/"
+"https://docs.gimp.org/"
 msgstr ""
 "Lūdzu, instalējiet papildu palīdzības pakotnes, vai izmantojiet tiešsaistes "
-"rokasgrāmatu adresē http://docs.gimp.org/"
+"rokasgrāmatu adresē https://docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -11192,6 +11185,11 @@ msgstr "Mijiedarbība:"
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "_Blakus esošie laukumi"
+
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:566
+msgid "_Threshold:"
+msgstr "S_lieksnis:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
@@ -12633,6 +12631,18 @@ msgstr "_Skeneris/kamera..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Pārsūta datus no skenera vai kameras"
+
+#~ msgid "The most widely useful method for sharpening an image"
+#~ msgstr "Visnoderīgākā metode attēla asināšanai"
+
+#~ msgid "_Unsharp Mask (legacy)..."
+#~ msgstr "I_zplūduma maska (mantojums)..."
+
+#~ msgid "Merging"
+#~ msgstr "Apvieno"
+
+#~ msgid "Unsharp Mask"
+#~ msgstr "Izplūduma maska"
 
 #~| msgid "Convert image to sR_GB"
 #~ msgid "Couldn't convert YUV JP2 image '%s' to RGB."
