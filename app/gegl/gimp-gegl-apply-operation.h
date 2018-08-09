@@ -61,6 +61,7 @@ void   gimp_gegl_apply_flatten         (GeglBuffer             *src_buffer,
                                         const gchar            *undo_desc,
                                         GeglBuffer             *dest_buffer,
                                         const GimpRGB          *background,
+                                        const Babl             *space,
                                         GimpLayerColorSpace     composite_space);
 
 void   gimp_gegl_apply_feather         (GeglBuffer             *src_buffer,

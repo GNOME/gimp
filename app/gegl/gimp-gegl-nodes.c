@@ -32,6 +32,7 @@
 
 GeglNode *
 gimp_gegl_create_flatten_node (const GimpRGB       *background,
+                               const Babl          *space,
                                GimpLayerColorSpace  composite_space)
 {
   GeglNode  *node;
@@ -51,7 +52,7 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  c = gimp_gegl_color_new (background);
+  c = gimp_gegl_color_new (background, space);
   color = gegl_node_new_child (node,
                                "operation", "gegl:color",
                                "value",     c,
@@ -217,14 +218,15 @@ gimp_gegl_node_set_matrix (GeglNode          *node,
 
 void
 gimp_gegl_node_set_color (GeglNode      *node,
-                          const GimpRGB *color)
+                          const GimpRGB *color,
+                          const Babl    *space)
 {
   GeglColor *gegl_color;
 
   g_return_if_fail (GEGL_IS_NODE (node));
   g_return_if_fail (color != NULL);
 
-  gegl_color = gimp_gegl_color_new (color);
+  gegl_color = gimp_gegl_color_new (color, space);
 
   gegl_node_set (node,
                  "value", gegl_color,

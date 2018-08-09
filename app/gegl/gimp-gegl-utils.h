@@ -25,7 +25,8 @@
 GType        gimp_gegl_get_op_enum_type   (const gchar   *operation,
                                            const gchar   *property);
 
-GeglColor  * gimp_gegl_color_new          (const GimpRGB *rgb);
+GeglColor  * gimp_gegl_color_new          (const GimpRGB *rgb,
+                                           const Babl    *space);
 
 void         gimp_gegl_progress_connect   (GeglNode      *node,
                                            GimpProgress  *progress,

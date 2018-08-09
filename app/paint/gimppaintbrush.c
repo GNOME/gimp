@@ -217,7 +217,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
           opacity *= gradient_color.a;
           gimp_rgb_set_alpha (&gradient_color, GIMP_OPACITY_OPAQUE);
 
-          color = gimp_gegl_color_new (&gradient_color);
+          color = gimp_gegl_color_new (&gradient_color,
+                                       NULL /* EEK SPACE? */);
 
           gegl_buffer_set_color (paint_buffer, NULL, color);
           g_object_unref (color);
@@ -248,7 +249,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
           gimp_context_get_foreground (context, &foreground);
           gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
                                              &foreground, &foreground);
-          color = gimp_gegl_color_new (&foreground);
+          color = gimp_gegl_color_new (&foreground,
+                                       gimp_drawable_get_space (drawable));
 
           gegl_buffer_set_color (paint_buffer, NULL, color);
           g_object_unref (color);

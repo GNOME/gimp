@@ -61,14 +61,17 @@ gimp_gegl_get_op_enum_type (const gchar *operation,
 }
 
 GeglColor *
-gimp_gegl_color_new (const GimpRGB *rgb)
+gimp_gegl_color_new (const GimpRGB *rgb,
+                     const Babl    *space)
 {
   GeglColor *color;
 
   g_return_val_if_fail (rgb != NULL, NULL);
 
   color = gegl_color_new (NULL);
-  gegl_color_set_pixel (color, babl_format ("R'G'B'A double"), rgb);
+  gegl_color_set_pixel (color,
+                        babl_format_with_space ("R'G'B'A double", space),
+                        rgb);
 
   return color;
 }

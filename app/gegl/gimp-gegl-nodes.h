@@ -23,6 +23,7 @@
 
 
 GeglNode * gimp_gegl_create_flatten_node       (const GimpRGB         *background,
+                                                const Babl            *space,
                                                 GimpLayerColorSpace    composite_space);
 GeglNode * gimp_gegl_create_apply_opacity_node (GeglBuffer            *mask,
                                                 gint                   mask_offset_x,
@@ -44,7 +45,8 @@ void       gimp_gegl_mode_node_set_opacity     (GeglNode               *node,
 void       gimp_gegl_node_set_matrix           (GeglNode               *node,
                                                 const GimpMatrix3      *matrix);
 void       gimp_gegl_node_set_color            (GeglNode               *node,
-                                                const GimpRGB          *color);
+                                                const GimpRGB          *color,
+                                                const Babl             *space);
 
 
 #endif /* __GIMP_GEGL_NODES_H__ */

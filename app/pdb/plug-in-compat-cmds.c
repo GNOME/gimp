@@ -535,7 +535,7 @@ plug_in_applylens_invoker (GimpProcedure         *procedure,
           else
             gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
 
-          gegl_color = gimp_gegl_color_new (&color);
+          gegl_color = gimp_gegl_color_new (&color, NULL);
 
           node = gegl_node_new_child (NULL,
                                      "operation",         "gegl:apply-lens",
@@ -972,7 +972,7 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
         {
           /* XXX: fixme disable for gray, and add alpha when needed */
 
-          GeglColor *gegl_color = gimp_gegl_color_new (&color);
+          GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
           GeglNode  *node =
             gegl_node_new_child (NULL,
                                  "operation", "gegl:color-to-alpha",
@@ -1158,7 +1158,7 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
               gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
             }
 
-          gegl_color = gimp_gegl_color_new (&color);
+          gegl_color = gimp_gegl_color_new (&color, NULL);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:cubism",
@@ -1553,8 +1553,8 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
           gimp_rgb_set_uchar (&from, from_red, from_green, from_blue);
           gimp_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
 
-          gegl_from = gimp_gegl_color_new (&from);
-          gegl_to   = gimp_gegl_color_new (&to);
+          gegl_from = gimp_gegl_color_new (&from, NULL);
+          gegl_to   = gimp_gegl_color_new (&to,   NULL);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:color-exchange",
@@ -1992,7 +1992,7 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
               gimp_rgb_set_alpha (&color, 1.0);
             }
 
-          gegl_color = gimp_gegl_color_new (&color);
+          gegl_color = gimp_gegl_color_new (&color, NULL);
 
           node =  gegl_node_new_child (NULL,
                                        "operation", "gegl:lens-distortion",
@@ -2097,10 +2097,10 @@ plug_in_maze_invoker (GimpProcedure         *procedure,
           GimpRGB    color;
 
           gimp_context_get_foreground (context, &color);
-          fg_color = gimp_gegl_color_new (&color);
+          fg_color = gimp_gegl_color_new (&color, NULL);
 
           gimp_context_get_background (context, &color);
-          bg_color = gimp_gegl_color_new (&color);
+          bg_color = gimp_gegl_color_new (&color, NULL);
 
           node =  gegl_node_new_child (NULL,
                                        "operation",      "gegl:maze",
@@ -2352,10 +2352,10 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
               GimpRGB fgcolor, bgcolor;
 
               gimp_context_get_background (context, &bgcolor);
-              bg_color = gimp_gegl_color_new (&bgcolor);
+              bg_color = gimp_gegl_color_new (&bgcolor, NULL);
 
               gimp_context_get_foreground (context, &fgcolor);
-              fg_color = gimp_gegl_color_new (&fgcolor);
+              fg_color = gimp_gegl_color_new (&fgcolor, NULL);
             }
           else
             {
@@ -2429,7 +2429,7 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GeglNode  *node;
-          GeglColor *gegl_color = gimp_gegl_color_new (&color);
+          GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
           gdouble    center_x   = (gdouble) xcenter / (gdouble) gimp_item_get_width (GIMP_ITEM (drawable));
           gdouble    center_y   = (gdouble) ycenter / (gdouble) gimp_item_get_height (GIMP_ITEM (drawable));
 
@@ -2520,7 +2520,7 @@ plug_in_papertile_invoker (GimpProcedure         *procedure,
               break;
             }
 
-          gegl_color = gimp_gegl_color_new (&color);
+          gegl_color = gimp_gegl_color_new (&color, NULL);
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:tile-paper",
@@ -3404,8 +3404,8 @@ plug_in_sinus_invoker (GimpProcedure         *procedure,
           gimp_rgb_set_alpha (&col1, alpha1);
           gimp_rgb_set_alpha (&col2, alpha2);
 
-          gegl_color1 = gimp_gegl_color_new (&col1);
-          gegl_color2 = gimp_gegl_color_new (&col2);
+          gegl_color1 = gimp_gegl_color_new (&col1, NULL);
+          gegl_color2 = gimp_gegl_color_new (&col2, NULL);
 
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
 
@@ -3827,7 +3827,7 @@ plug_in_vpropagate_invoker (GimpProcedure         *procedure,
               else
                 gimp_context_get_background (context, &color);
 
-              gegl_color = gimp_gegl_color_new (&color);
+              gegl_color = gimp_gegl_color_new (&color, NULL);
               break;
 
             case 6:

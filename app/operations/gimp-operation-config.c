@@ -540,7 +540,7 @@ gimp_operation_config_sync_node (GObject  *config,
               gimp_value_get_rgb (&value, &gimp_color);
               g_value_unset (&value);
 
-              gegl_color = gimp_gegl_color_new (&gimp_color);
+              gegl_color = gimp_gegl_color_new (&gimp_color, NULL);
 
               g_value_init (&value, gegl_pspec->value_type);
               g_value_take_object (&value, gegl_color);
@@ -699,7 +699,7 @@ gimp_operation_config_config_notify (GObject          *config,
           gimp_value_get_rgb (&value, &gimp_color);
           g_value_unset (&value);
 
-          gegl_color = gimp_gegl_color_new (&gimp_color);
+          gegl_color = gimp_gegl_color_new (&gimp_color, NULL);
 
           g_value_init (&value, gegl_pspec->value_type);
           g_value_take_object (&value, gegl_color);

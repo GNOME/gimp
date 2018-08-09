@@ -132,7 +132,8 @@ gimp_drawable_fill_buffer (GimpDrawable  *drawable,
       if (! gimp_drawable_has_alpha (drawable))
         gimp_rgb_set_alpha (&image_color, 1.0);
 
-      gegl_color = gimp_gegl_color_new (&image_color);
+      gegl_color = gimp_gegl_color_new (&image_color,
+                                        gimp_drawable_get_space (drawable));
       gegl_buffer_set_color (buffer, NULL, gegl_color);
       g_object_unref (gegl_color);
     }

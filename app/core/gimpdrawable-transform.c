@@ -235,7 +235,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
                                              &bg, &bg);
         }
 
-      color = gimp_gegl_color_new (&bg);
+      color = gimp_gegl_color_new (&bg, gimp_drawable_get_space (drawable));
       gegl_buffer_set_color (new_buffer, NULL, color);
       g_object_unref (color);
 
@@ -500,7 +500,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
                                              &bg, &bg);
         }
 
-      color = gimp_gegl_color_new (&bg);
+      color = gimp_gegl_color_new (&bg, gimp_drawable_get_space (drawable));
       gegl_buffer_set_color (new_buffer, NULL, color);
       g_object_unref (color);
 

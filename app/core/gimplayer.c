@@ -2110,7 +2110,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
             gimp_rgba_set (&background, 0.0, 0.0, 0.0, 0.0);
 
             gimp_gegl_apply_flatten (src_buffer, NULL, NULL,
-                                     dest_buffer, &background,
+                                     dest_buffer, &background, NULL,
                                      GIMP_LAYER_COLOR_SPACE_RGB_LINEAR);
           }
         else
@@ -2449,6 +2449,7 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
   gimp_gegl_apply_flatten (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                            NULL, NULL,
                            new_buffer, &background,
+                           gimp_drawable_get_space (GIMP_DRAWABLE (layer)),
                            gimp_layer_get_real_composite_space (layer));
 
   gimp_drawable_set_buffer (GIMP_DRAWABLE (layer),

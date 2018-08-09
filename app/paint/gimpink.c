@@ -392,7 +392,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   gimp_context_get_foreground (context, &foreground);
   gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
                                      &foreground, &foreground);
-  color = gimp_gegl_color_new (&foreground);
+  color = gimp_gegl_color_new (&foreground, gimp_drawable_get_space (drawable));
 
   for (i = 0; i < n_strokes; i++)
     {

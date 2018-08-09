@@ -419,7 +419,7 @@ gimp_channel_get_node (GimpFilter *filter)
                                              "format",    color_format,
                                              NULL);
   gimp_gegl_node_set_color (channel->color_node,
-                            &channel->color);
+                            &channel->color, NULL);
 
   g_warn_if_fail (channel->mask_node == NULL);
 
@@ -608,7 +608,7 @@ gimp_channel_convert (GimpItem  *item,
 
       gimp_gegl_apply_flatten (gimp_drawable_get_buffer (drawable),
                                NULL, NULL,
-                               new_buffer, &background,
+                               new_buffer, &background, NULL,
                                GIMP_LAYER_COLOR_SPACE_RGB_LINEAR);
 
       gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
@@ -1713,7 +1713,7 @@ gimp_channel_set_color (GimpChannel   *channel,
       if (gimp_filter_peek_node (GIMP_FILTER (channel)))
         {
           gimp_gegl_node_set_color (channel->color_node,
-                                    &channel->color);
+                                    &channel->color, NULL);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
@@ -1764,7 +1764,7 @@ gimp_channel_set_opacity (GimpChannel *channel,
       if (gimp_filter_peek_node (GIMP_FILTER (channel)))
         {
           gimp_gegl_node_set_color (channel->color_node,
-                                    &channel->color);
+                                    &channel->color, NULL);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
