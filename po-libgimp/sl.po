@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-22 01:21+0000\n"
-"PO-Revision-Date: 2018-07-22 17:58+0200\n"
+"POT-Creation-Date: 2018-08-04 07:44+0000\n"
+"PO-Revision-Date: 2018-08-05 17:27+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
-"X-Generator: Poedit 2.1\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1281
@@ -1351,97 +1351,117 @@ msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Vlečenje potez z orodjem za risanje"
 
-#: ../libgimpbase/gimpbaseenums.c:1803
+#: ../libgimpbase/gimpbaseenums.c:1807
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Od leve proti desni"
 
-#: ../libgimpbase/gimpbaseenums.c:1804
+#: ../libgimpbase/gimpbaseenums.c:1808
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Od desne proti levi"
 
-#: ../libgimpbase/gimpbaseenums.c:1835
+#: ../libgimpbase/gimpbaseenums.c:1809
+msgctxt "text-direction"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Navpična, desna proti levi (mešana usmerjenost)"
+
+#: ../libgimpbase/gimpbaseenums.c:1810
+msgctxt "text-direction"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Navpično, desna proti levi (pokončna usmerjenost)"
+
+#: ../libgimpbase/gimpbaseenums.c:1811
+msgctxt "text-direction"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Navpično, od leve proti desni (mešana usmerjenost)"
+
+#: ../libgimpbase/gimpbaseenums.c:1812
+msgctxt "text-direction"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Navpično, od leve proti desni (pokončna usmerjenost)"
+
+#: ../libgimpbase/gimpbaseenums.c:1843
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "brez"
 
-#: ../libgimpbase/gimpbaseenums.c:1836
+#: ../libgimpbase/gimpbaseenums.c:1844
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Rahlo"
 
-#: ../libgimpbase/gimpbaseenums.c:1837
+#: ../libgimpbase/gimpbaseenums.c:1845
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Srednje"
 
-#: ../libgimpbase/gimpbaseenums.c:1838
+#: ../libgimpbase/gimpbaseenums.c:1846
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Polno"
 
-#: ../libgimpbase/gimpbaseenums.c:1869
+#: ../libgimpbase/gimpbaseenums.c:1877
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Levo poravnano"
 
-#: ../libgimpbase/gimpbaseenums.c:1870
+#: ../libgimpbase/gimpbaseenums.c:1878
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Desno poravnano"
 
-#: ../libgimpbase/gimpbaseenums.c:1871
+#: ../libgimpbase/gimpbaseenums.c:1879
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Sredinsko"
 
-#: ../libgimpbase/gimpbaseenums.c:1872
+#: ../libgimpbase/gimpbaseenums.c:1880
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Zapolnjeno"
 
-#: ../libgimpbase/gimpbaseenums.c:1902
+#: ../libgimpbase/gimpbaseenums.c:1910
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Sence"
 
-#: ../libgimpbase/gimpbaseenums.c:1903
+#: ../libgimpbase/gimpbaseenums.c:1911
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Srednji toni"
 
-#: ../libgimpbase/gimpbaseenums.c:1904
+#: ../libgimpbase/gimpbaseenums.c:1912
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Svetli toni"
 
-#: ../libgimpbase/gimpbaseenums.c:1933
+#: ../libgimpbase/gimpbaseenums.c:1941
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Navadno (naprej)"
 
-#: ../libgimpbase/gimpbaseenums.c:1934
+#: ../libgimpbase/gimpbaseenums.c:1942
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Popravljalno (nazaj)"
 
-#: ../libgimpbase/gimpbaseenums.c:1965
+#: ../libgimpbase/gimpbaseenums.c:1973
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Prilagodi"
 
-#: ../libgimpbase/gimpbaseenums.c:1966
+#: ../libgimpbase/gimpbaseenums.c:1974
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Poreži"
 
-#: ../libgimpbase/gimpbaseenums.c:1967
+#: ../libgimpbase/gimpbaseenums.c:1975
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Obreži do rezultata"
 
-#: ../libgimpbase/gimpbaseenums.c:1968
+#: ../libgimpbase/gimpbaseenums.c:1976
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Obreži v razmerju stranic"
@@ -2755,6 +2775,22 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMPov kontrolnik vhoda MIDI"
 
+#: ../modules/display-filter-aces-rrt.c:84
+msgid ""
+"ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
+"display filter, using a luminance-only approximation of the ACES RRT, a pre-"
+"defined filmic look to be used before ODT (display or output space ICC "
+"profile)"
+msgstr ""
+
+#: ../modules/display-filter-aces-rrt.c:121
+msgid "Pre-transform change in stops"
+msgstr "Predpreoblikovalna sprememba v postankih"
+
+#: ../modules/display-filter-aces-rrt.c:126
+msgid "Aces RRT"
+msgstr "Aces RRT"
+
 #: ../modules/display-filter-clip-warning.c:120
 msgid "Clip warning color display filter"
 msgstr "Filter za prikaz barv opozorila porezave"
@@ -2856,22 +2892,6 @@ msgstr "Vrsta barvne slepote"
 #: ../modules/display-filter-color-blind.c:259
 msgid "Color Deficient Vision"
 msgstr "Pogled barvne slepote"
-
-#: ../modules/display-filter-filmic.c:84
-msgid ""
-"Filmic HDR to SDR proof color display filter, usin an approximation of the "
-"ACES filmic transform."
-msgstr ""
-"Filmski barvni prikazni filter HDR v SDR, ki uporablja približek filmske "
-"transformacije ACES."
-
-#: ../modules/display-filter-filmic.c:121
-msgid "pre-transform change in stops"
-msgstr "predpreoblikovalna sprememba v postankih"
-
-#: ../modules/display-filter-filmic.c:126
-msgid "Filmic"
-msgstr "Filmsko"
 
 #: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
