@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-02 17:16+0000\n"
-"PO-Revision-Date: 2018-08-03 17:38+0200\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2018-08-04 02:52+0000\n"
+"PO-Revision-Date: 2018-08-05 17:34+0200\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -7886,8 +7886,8 @@ msgstr ""
 
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
-msgid "Vertical lines from right to left (mixed orientation)"
-msgstr ""
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Navpična, desna proti levi (mešana usmerjenost)"
 
 #: ../app/actions/text-editor-actions.c:77
 msgctxt "text-editor-action"
@@ -7896,8 +7896,8 @@ msgstr ""
 
 #: ../app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
-msgid "Vertical lines from right to left (upright characters)"
-msgstr ""
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Navpična, desna proti levi (pokončna usmerjenost)"
 
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
@@ -7906,8 +7906,8 @@ msgstr ""
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
-msgid "Vertical lines from left to right (mixed orientation)"
-msgstr ""
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Navpična, od leve proti desni (mešana usmerjenost)"
 
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
@@ -7916,8 +7916,8 @@ msgstr ""
 
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
-msgid "Vertical lines from left to right (upright characters)"
-msgstr ""
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Navpična, od leve proti desni (pokončna usmerjenost)"
 
 #: ../app/actions/text-editor-commands.c:60
 #: ../app/actions/text-tool-commands.c:114
@@ -8020,23 +8020,23 @@ msgstr "Od desne proti levi"
 
 #: ../app/actions/text-tool-actions.c:116
 msgctxt "text-tool-action"
-msgid "Vertical lines from right to left (mixed orientation)"
-msgstr ""
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Navpična, desna proti levi (mešana usmerjenost)"
 
 #: ../app/actions/text-tool-actions.c:121
 msgctxt "text-tool-action"
-msgid "Vertical lines from right to left (upright characters)"
-msgstr ""
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Navpična, desna proti levi (pokončna usmerjenost)"
 
 #: ../app/actions/text-tool-actions.c:126
 msgctxt "text-tool-action"
-msgid "Vertical lines from left to right (mixed orientation)"
-msgstr ""
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Navpična, od leve proti desni (mešana usmerjenost)"
 
 #: ../app/actions/text-tool-actions.c:131
 msgctxt "text-tool-action"
-msgid "Vertical lines from left to right (upright characters)"
-msgstr ""
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Navpična, od leve proti desni (pokončna usmerjenost)"
 
 #: ../app/actions/tool-options-actions.c:57
 msgctxt "tool-options-action"
@@ -11218,57 +11218,36 @@ msgid "Feathered"
 msgstr "Operjeno"
 
 #: ../app/core/core-enums.c:149
-#, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "Pixel"
 msgctxt "color-pick-mode"
 msgid "Pixel"
-msgstr "TOČKA"
+msgstr "Slikovna točka"
 
 #: ../app/core/core-enums.c:150
-#, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "RGB (%)"
 msgctxt "color-pick-mode"
 msgid "RGB (%)"
 msgstr "RGB (%)"
 
 #: ../app/core/core-enums.c:151
-#, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "RGB (0..255)"
 msgctxt "color-pick-mode"
 msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
 #: ../app/core/core-enums.c:152
-#, fuzzy
-#| msgctxt "circle-background"
-#| msgid "HSV"
 msgctxt "color-pick-mode"
 msgid "HSV"
 msgstr "HSV"
 
 #: ../app/core/core-enums.c:153
-#, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "CIE LCh"
 msgctxt "color-pick-mode"
 msgid "CIE LCh"
 msgstr "CIE LCh"
 
 #: ../app/core/core-enums.c:154
-#, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "CIE LAB"
 msgctxt "color-pick-mode"
 msgid "CIE LAB"
-msgstr "Lab. CIE"
+msgstr "CIE LAB"
 
 #: ../app/core/core-enums.c:155
-#, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "CMYK"
 msgctxt "color-pick-mode"
 msgid "CMYK"
 msgstr "CMYK"
@@ -12634,25 +12613,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Kanal razlivanja"
 
-#: ../app/core/gimpchannel.c:843
+#: ../app/core/gimpchannel.c:845
 msgid "Cannot fill empty channel."
 msgstr "Praznega kanala ni mogoče zapolniti."
 
-#: ../app/core/gimpchannel.c:879
+#: ../app/core/gimpchannel.c:881
 msgid "Cannot stroke empty channel."
 msgstr "Risanje potez po praznem kanalu ni mogoče."
 
-#: ../app/core/gimpchannel.c:1702
+#: ../app/core/gimpchannel.c:1704
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Nastavi barvo kanala"
 
-#: ../app/core/gimpchannel.c:1753
+#: ../app/core/gimpchannel.c:1755
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Nastavi prekrivnost kanala"
 
-#: ../app/core/gimpchannel.c:1842 ../app/core/gimpselection.c:169
+#: ../app/core/gimpchannel.c:1844 ../app/core/gimpselection.c:169
 msgid "Selection Mask"
 msgstr "Maska izbora"
 
@@ -13028,41 +13007,41 @@ msgstr "Navpični zamik prve črte mreže. Lahko je tudi negativen."
 msgid "Offset unit"
 msgstr "Enota odmika"
 
-#: ../app/core/gimpgrouplayer.c:278
+#: ../app/core/gimpgrouplayer.c:280
 msgid "Layer Group"
 msgstr "Skupina plasti"
 
-#: ../app/core/gimpgrouplayer.c:279
+#: ../app/core/gimpgrouplayer.c:281
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Preimenuj skupino plasti"
 
-#: ../app/core/gimpgrouplayer.c:280
+#: ../app/core/gimpgrouplayer.c:282
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Premakni skupino plasti"
 
-#: ../app/core/gimpgrouplayer.c:281
+#: ../app/core/gimpgrouplayer.c:283
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Spremeni merilo skupine plasti"
 
-#: ../app/core/gimpgrouplayer.c:282
+#: ../app/core/gimpgrouplayer.c:284
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Spremeni velikost skupine plasti"
 
-#: ../app/core/gimpgrouplayer.c:283
+#: ../app/core/gimpgrouplayer.c:285
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Prezrcali skupino plasti"
 
-#: ../app/core/gimpgrouplayer.c:284
+#: ../app/core/gimpgrouplayer.c:286
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Zasukaj skupino plasti"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:287
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Preoblikuj skupino plasti"
@@ -13464,12 +13443,9 @@ msgid "Move Sample Point"
 msgstr "Premakni vzorčno točko"
 
 #: ../app/core/gimpimage-sample-points.c:146
-#, fuzzy
-#| msgctxt "sample-points-action"
-#| msgid "Sample Point Menu"
 msgctxt "undo-type"
 msgid "Set Sample Point Pick Mode"
-msgstr "Meni vzorčne točke"
+msgstr "Določite način izbora vzorčne točke"
 
 #: ../app/core/gimpimage-scale.c:79
 msgctxt "undo-type"
@@ -16947,22 +16923,16 @@ msgid "Lock path _position"
 msgstr "Zakleni polo_žaj poti"
 
 #: ../app/display/display-enums.c:88
-#, fuzzy
-#| msgid "Auto"
 msgctxt "compass-orientation"
 msgid "Auto"
 msgstr "Samodejno"
 
 #: ../app/display/display-enums.c:89
-#, fuzzy
-#| msgid "Horizontal"
 msgctxt "compass-orientation"
 msgid "Horizontal"
 msgstr "Vodoravno"
 
 #: ../app/display/display-enums.c:90
-#, fuzzy
-#| msgid "Vertical"
 msgctxt "compass-orientation"
 msgid "Vertical"
 msgstr "Navpično"
@@ -21997,14 +21967,12 @@ msgid "_Zoom"
 msgstr "_Povečava"
 
 #: ../app/tools/gimpmeasureoptions.c:71
-#, fuzzy
-#| msgid "Indentation"
 msgid "Orientation"
 msgstr "Usmerjenost"
 
 #: ../app/tools/gimpmeasureoptions.c:72
 msgid "Orientation against which the angle is measured"
-msgstr ""
+msgstr "Smer, v kateri se meri kot"
 
 #: ../app/tools/gimpmeasureoptions.c:80
 msgid "Open a floating dialog to view details about measurements"
@@ -22012,10 +21980,9 @@ msgstr "Odpri plavajoče pogovorno okno za ogled podrobnosti o merah"
 
 #. the orientation frame
 #: ../app/tools/gimpmeasureoptions.c:148
-#, fuzzy, c-format
-#| msgid "Direction  (%s)"
+#, c-format
 msgid "Orientation  (%s)"
-msgstr "Smer (%s)"
+msgstr "Usmerjenost ( %s)"
 
 #. the straighten frame
 #. the straighten button
@@ -24652,8 +24619,6 @@ msgid "_Help"
 msgstr "Po_moč"
 
 #: ../app/widgets/gimpfiledialog.c:783
-#, fuzzy
-#| msgid "All files"
 msgid "Show All Files"
 msgstr "Pokaži vse datoteke"
 
@@ -25817,10 +25782,3 @@ msgstr "zaobljeno"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "nejasno"
-
-#~ msgid "All images"
-#~ msgstr "Vse slike"
-
-#~ msgctxt "color-frame-mode"
-#~ msgid "HSV"
-#~ msgstr "HSV"
