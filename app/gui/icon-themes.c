@@ -40,6 +40,8 @@
 #include "gimp-intl.h"
 
 
+static void   icons_apply_theme         (Gimp          *gimp,
+                                         const gchar   *icon_theme_name);
 static void   icons_list_icons_foreach  (gpointer       key,
                                          gpointer       value,
                                          gpointer       data);
@@ -48,9 +50,6 @@ static gint   icons_name_compare        (const void    *p1,
 static void   icons_theme_change_notify (GimpGuiConfig *config,
                                          GParamSpec    *pspec,
                                          Gimp          *gimp);
-void          icons_set_icon_theme      (GtkIconTheme  *new_icon_theme);
-static void   icons_apply_theme         (Gimp          *gimp,
-                                         const gchar   *icon_theme_name);
 
 
 static GHashTable *icon_themes_hash = NULL;
