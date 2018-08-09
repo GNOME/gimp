@@ -652,6 +652,7 @@ sanity_check_gegl_ops (void)
     "gegl:invert-linear",
     "gegl:lens-distortion",
     "gegl:lens-flare",
+    "gegl:long-shadow",
     "gegl:mantiuk06",
     "gegl:map-absolute",
     "gegl:map-relative",
