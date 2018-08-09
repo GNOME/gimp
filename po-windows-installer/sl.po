@@ -3,13 +3,13 @@
 # Copyright (C) 2017 the gimp authors.
 # This file is distributed under the same license as the GIMP package.
 #
-# Martin Srebotnjak <miles@filmsi.net>, 2007–2013, translated from scratch, 2017.
+# Martin Srebotnjak <miles@filmsi.net>, 2007–2013, translated from scratch, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-24 19:52+0000\n"
+"POT-Creation-Date: 2018-08-04 02:57+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -44,17 +44,17 @@ msgid ""
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP bugzilla:"
-"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
-"continue with installation anyway?"
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
 msgstr ""
 "To je razvojna različica programa GIMP, ki še ni tako preizkušena kot "
 "običajna različica ali pa njegove funkcije niso dokončane ali so nestabilne."
 "%nTa izdaja GIMP-a ni namenjena vsakodnevnemu delu, ker je morda nestabilna "
 "in lahko povzroči izgubo vašega dela%nČe naletite na kakršne koli težave, "
 "najprej preverite, da že niso odpravljene v GIT-u, preden o njih poročate v "
-"Bugzilli za GIMP:%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n"
-"%nAli želite vseeno nadaljevati z namestitvijo?"
+"gitlab-u za GIMP:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nAli želite "
+"vseeno nadaljevati z namestitvijo?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
