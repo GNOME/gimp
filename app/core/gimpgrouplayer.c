@@ -63,7 +63,6 @@ struct _GimpGroupLayerPrivate
   GeglBuffer     *suspended_mask_buffer;
   GeglRectangle   suspended_mask_bounds;
   gint            direct_update;
-  gint            suspend_update;
   gint            transforming;
   gboolean        expanded;
   gboolean        pass_through;
@@ -1912,7 +1911,6 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
   if (private->reallocate_projection || size_changed)
     {
       GeglBuffer *buffer;
-      gboolean    update_drawable = FALSE;
 
       /* if the graph is already constructed, set the offset node's
        * coordinates first, so the graph is in the right state when
@@ -1941,8 +1939,6 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           private->reallocate_projection = FALSE;
 
           gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
-
-          update_drawable = TRUE;
         }
       else
         {
@@ -1955,23 +1951,18 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
                                            old_x, old_y, old_width, old_height);
         }
 
-      /* avoid updating the drawable in response to projection updates while
-       * flushing the projection, since we want to either update the entire
-       * drawable, or not update at all, when setting the drawable's buffer.
-       */
-      private->suspend_update++;
-
-      gimp_group_layer_flush (group);
-
-      private->suspend_update--;
-
       buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
       gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
                                      FALSE, NULL,
                                      buffer,
                                      x, y,
-                                     update_drawable);
+                                     FALSE /* don't update the drawable, the
+                                            * flush() below will take care of
+                                            * that.
+                                            */);
+
+      gimp_group_layer_flush (group);
 
       /*  reset, the actual size is correct now  */
       private->reallocate_width  = 0;
@@ -2179,9 +2170,6 @@ gimp_group_layer_proj_update (GimpProjection *proj,
                               GimpGroupLayer *group)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (group);
-
-  if (private->suspend_update)
-    return;
 
 #if 0
   g_printerr ("%s (%s) %d, %d (%d, %d)\n",
