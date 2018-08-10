@@ -10,14 +10,15 @@
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011, 2013.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011, 2016-2018.
 # Daniel Winzen <d@winzen4.de>, 2013.
+# Tim Sabsch <tim@sabsch.com>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-22 17:02+0000\n"
-"PO-Revision-Date: 2018-07-27 20:48+0200\n"
-"Last-Translator: Vinzenz Vietzke <vinz@vinzv.de>\n"
+"POT-Creation-Date: 2018-08-06 15:05+0000\n"
+"PO-Revision-Date: 2018-08-07 18:31+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1281,22 +1282,16 @@ msgid "Blue"
 msgstr "Blau"
 
 #: ../libgimpbase/gimpbaseenums.c:1652
-#, fuzzy
-#| msgid "HSV Hue"
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "HSV-Farbton"
 
 #: ../libgimpbase/gimpbaseenums.c:1653
-#, fuzzy
-#| msgid "HSV Saturation"
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "HSV-Sättigung"
 
 #: ../libgimpbase/gimpbaseenums.c:1654
-#, fuzzy
-#| msgid "HSV Value"
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "HSV-Wert"
@@ -1307,22 +1302,16 @@ msgid "Alpha"
 msgstr "Alpha"
 
 #: ../libgimpbase/gimpbaseenums.c:1656
-#, fuzzy
-#| msgid "LCH Lightness"
 msgctxt "select-criterion"
 msgid "LCh Lightness"
-msgstr "LCH-Helligkeit"
+msgstr "LCh-Helligkeit"
 
 #: ../libgimpbase/gimpbaseenums.c:1657
-#, fuzzy
-#| msgid "LCH Chroma"
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "LCH-Sättigung"
 
 #: ../libgimpbase/gimpbaseenums.c:1658
-#, fuzzy
-#| msgid "LCH Hue"
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "LCH-Farbton"
@@ -1347,97 +1336,117 @@ msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Strichlinie mit Malwerkzeug"
 
-#: ../libgimpbase/gimpbaseenums.c:1779
+#: ../libgimpbase/gimpbaseenums.c:1783
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Von links nach rechts"
 
-#: ../libgimpbase/gimpbaseenums.c:1780
+#: ../libgimpbase/gimpbaseenums.c:1784
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Von rechts nach links"
 
-#: ../libgimpbase/gimpbaseenums.c:1811
+#: ../libgimpbase/gimpbaseenums.c:1785
+msgctxt "text-direction"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Vertikal, rechts nach links (gemischte Ausrichtung)"
+
+#: ../libgimpbase/gimpbaseenums.c:1786
+msgctxt "text-direction"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Vertikal, rechts nach links (aufrechte Ausrichtung)"
+
+#: ../libgimpbase/gimpbaseenums.c:1787
+msgctxt "text-direction"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Vertikal, links nach rechts (gemischte Ausrichtung)"
+
+#: ../libgimpbase/gimpbaseenums.c:1788
+msgctxt "text-direction"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Vertikal, links nach rechts (aufrechte Ausrichtung)"
+
+#: ../libgimpbase/gimpbaseenums.c:1819
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Keine"
 
-#: ../libgimpbase/gimpbaseenums.c:1812
+#: ../libgimpbase/gimpbaseenums.c:1820
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Glanzlichter"
 
-#: ../libgimpbase/gimpbaseenums.c:1813
+#: ../libgimpbase/gimpbaseenums.c:1821
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Mittel"
 
-#: ../libgimpbase/gimpbaseenums.c:1814
+#: ../libgimpbase/gimpbaseenums.c:1822
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Blocksatz"
 
-#: ../libgimpbase/gimpbaseenums.c:1845
+#: ../libgimpbase/gimpbaseenums.c:1853
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Linksbündig"
 
-#: ../libgimpbase/gimpbaseenums.c:1846
+#: ../libgimpbase/gimpbaseenums.c:1854
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Rechtsbündig"
 
-#: ../libgimpbase/gimpbaseenums.c:1847
+#: ../libgimpbase/gimpbaseenums.c:1855
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Zentriert"
 
-#: ../libgimpbase/gimpbaseenums.c:1848
+#: ../libgimpbase/gimpbaseenums.c:1856
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Blocksatz"
 
-#: ../libgimpbase/gimpbaseenums.c:1878
+#: ../libgimpbase/gimpbaseenums.c:1886
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Schatten"
 
-#: ../libgimpbase/gimpbaseenums.c:1879
+#: ../libgimpbase/gimpbaseenums.c:1887
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Mitten"
 
-#: ../libgimpbase/gimpbaseenums.c:1880
+#: ../libgimpbase/gimpbaseenums.c:1888
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Glanzlichter"
 
-#: ../libgimpbase/gimpbaseenums.c:1909
+#: ../libgimpbase/gimpbaseenums.c:1917
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (vorwärts)"
 
-#: ../libgimpbase/gimpbaseenums.c:1910
+#: ../libgimpbase/gimpbaseenums.c:1918
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Korrigierend (rückwärts)"
 
-#: ../libgimpbase/gimpbaseenums.c:1941
+#: ../libgimpbase/gimpbaseenums.c:1949
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Anpassen"
 
-#: ../libgimpbase/gimpbaseenums.c:1942
+#: ../libgimpbase/gimpbaseenums.c:1950
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Beschneiden"
 
-#: ../libgimpbase/gimpbaseenums.c:1943
+#: ../libgimpbase/gimpbaseenums.c:1951
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Auf Ergebnis beschneiden"
 
-#: ../libgimpbase/gimpbaseenums.c:1944
+#: ../libgimpbase/gimpbaseenums.c:1952
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Auf Seitenverhältnis beschneiden"
@@ -1995,10 +2004,8 @@ msgid "0..255"
 msgstr "0..255"
 
 #: ../libgimpwidgets/gimpcolorscales.c:460
-#, fuzzy
-#| msgid "LCH"
 msgid "LCh"
-msgstr "LCH"
+msgstr "LCh"
 
 #: ../libgimpwidgets/gimpcolorscales.c:462
 msgid "HSV"
@@ -2286,7 +2293,7 @@ msgstr "Querformat"
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgctxt "color-selector-channel"
 msgid "_H"
-msgstr "_H"
+msgstr "_F"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "HSV Hue"
@@ -2304,7 +2311,7 @@ msgstr "HSV-Sättigung"
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_V"
-msgstr "_V"
+msgstr "_W"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgid "HSV Value"
@@ -2349,35 +2356,29 @@ msgstr "Deckkraft"
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_L"
-msgstr "_L"
+msgstr "_H"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
-#, fuzzy
-#| msgid "LCH Lightness"
 msgid "LCh Lightness"
-msgstr "LCH-Helligkeit"
+msgstr "LCh-Helligkeit"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgctxt "color-selector-channel"
 msgid "_C"
-msgstr "_C"
+msgstr "_S"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
-#, fuzzy
-#| msgid "LCH Chroma"
 msgid "LCh Chroma"
-msgstr "LCH-Sättigung"
+msgstr "LCh-Sättigung"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_h"
-msgstr ""
+msgstr "_f"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
-#, fuzzy
-#| msgid "LCH Hue"
 msgid "LCh Hue"
-msgstr "LCH-Farbton"
+msgstr "LCh-Farbton"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:168
 msgctxt "color-selector-model"
@@ -2394,10 +2395,8 @@ msgid "LCH"
 msgstr "LCH"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
-#, fuzzy
-#| msgid "CIELCh color model"
 msgid "CIE LCh color model"
-msgstr "CIELCh-Farbmodell"
+msgstr "CIE-LCh-Farbmodell"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
@@ -2840,10 +2839,10 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP-MIDI-Eingangssteuerung"
 
+# CHECK
 #: ../modules/display-filter-clip-warning.c:120
-#, fuzzy
 msgid "Clip warning color display filter"
-msgstr "Clip-Warnung Farbfilter"
+msgstr "Warnfarbe des Ansichtfilters beschneiden"
 
 #: ../modules/display-filter-clip-warning.c:157
 msgid "Show shadows"
