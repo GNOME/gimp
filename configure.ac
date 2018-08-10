@@ -908,6 +908,31 @@ PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version,,
 PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version,,
                  [add_deps_error([gexiv2 >= gexiv2_required_version])])
 
+#################################
+# Check for debug console (Win32)
+#################################
+
+AC_ARG_ENABLE(win32-debug-console,
+              [  --enable-win32-debug-console
+                          open a console when starting the program
+                          (default=auto)],,
+              enable_win32_debug_console=auto)
+
+AC_MSG_CHECKING([if GIMP should open a debug console at start])
+if test "x$platform_win32" != "xyes"; then
+   enable_win32_debug_console=no
+elif test "x$enable_win32_debug_console" != xno &&
+     test "x$enable_win32_debug_console" != xyes; then
+  # By default, we enable the debug console only for unstable builds.
+   enable_win32_debug_console=gimp_unstable
+fi
+
+if test "x$enable_win32_debug_console" = "xyes"; then
+  AC_DEFINE(ENABLE_WIN32_DEBUG_CONSOLE, 1,
+            [Define to 1 if GIMP should open a debug console at start])
+fi
+AC_MSG_RESULT([$enable_win32_debug_console])
+
 #####################
 # Check for Dr. Mingw
 #####################
@@ -2876,6 +2901,7 @@ Optional Features:
   Dr. Mingw (Win32):       $enable_drmingw
   Relocatable bundle:      $enable_relocatable_bundle
   Default ICC directory:   $with_icc_directory
+  Debug console (Win32):   $enable_win32_debug_console
 
 Optional Plug-Ins:
   Ascii Art:               $have_libaa
