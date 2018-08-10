@@ -395,7 +395,7 @@ main (int    argc,
   }
 #endif
 
-#ifdef GIMP_UNSTABLE
+#ifdef ENABLE_WIN32_DEBUG_CONSOLE
   gimp_open_console_window ();
 #endif
 
