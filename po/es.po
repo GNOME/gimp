@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-06 15:02+0000\n"
-"PO-Revision-Date: 2018-08-07 12:03+0200\n"
+"POT-Creation-Date: 2018-08-10 07:47+0000\n"
+"PO-Revision-Date: 2018-08-10 13:42+0200\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -85,9 +85,6 @@ msgid "Photo editing in GIMP"
 msgstr "Edición de fotos en GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
-#| msgid ""
-#| "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
-#| "Most notable changes are:"
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -4992,338 +4989,345 @@ msgid "_Little Planet..."
 msgstr "_Planeta pequeño..."
 
 #: ../app/actions/filters-actions.c:422
+#| msgctxt "filters-action"
+#| msgid "_Drop Shadow..."
+msgctxt "filters-action"
+msgid "_Long Shadow..."
+msgstr "_Sombra alargada…"
+
+#: ../app/actions/filters-actions.c:427
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006…"
 
-#: ../app/actions/filters-actions.c:427
+#: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Laberinto…"
 
-#: ../app/actions/filters-actions.c:432
+#: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "Desenfoque _medio…"
 
-#: ../app/actions/filters-actions.c:437
+#: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "Mezclador _mono…"
 
-#: ../app/actions/filters-actions.c:442
+#: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mosaico…"
 
-#: ../app/actions/filters-actions.c:447
+#: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Desenfoque de movimiento circular…"
 
-#: ../app/actions/filters-actions.c:452
+#: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Desenfoque de movimiento lineal…"
 
-#: ../app/actions/filters-actions.c:457
+#: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Ampliar desenfoque de movimiento…"
 
-#: ../app/actions/filters-actions.c:462
+#: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "Ruido _celular…"
 
-#: ../app/actions/filters-actions.c:467
+#: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Ruido CIE lch…"
 
-#: ../app/actions/filters-actions.c:472
+#: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Ruido HSV…"
 
-#: ../app/actions/filters-actions.c:477
+#: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "Des_ordenar…"
 
-#: ../app/actions/filters-actions.c:482
+#: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Ruido _Perlin…"
 
-#: ../app/actions/filters-actions.c:487
+#: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Escoger…"
 
-#: ../app/actions/filters-actions.c:492
+#: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Ruido _RGB…"
 
-#: ../app/actions/filters-actions.c:497
+#: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "_Reducción de ruido…"
 
-#: ../app/actions/filters-actions.c:502
+#: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "Ruido _simplex…"
 
-#: ../app/actions/filters-actions.c:507
+#: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Derretir…"
 
-#: ../app/actions/filters-actions.c:512
+#: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Ruido sólido…"
 
-#: ../app/actions/filters-actions.c:517
+#: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Esparcir…"
 
-#: ../app/actions/filters-actions.c:522
+#: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Pintura al ó_leo…"
 
-#: ../app/actions/filters-actions.c:527
+#: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Proyección de panorama…"
 
-#: ../app/actions/filters-actions.c:532
+#: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotocopia…"
 
-#: ../app/actions/filters-actions.c:537
+#: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pixelar…"
 
-#: ../app/actions/filters-actions.c:542
+#: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma…"
 
-#: ../app/actions/filters-actions.c:547
+#: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Coordenadas p_olares…"
 
-#: ../app/actions/filters-actions.c:552
+#: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterizar…"
 
 # Vease recursividad en matemáticas e informática.
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "Transformación _recursiva..."
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Eliminar ojos rojos..."
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005…"
 
-#: ../app/actions/filters-actions.c:572
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "_Recortar RGB…"
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Remolino…"
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Saturación…"
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Semiaplanar…"
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Sombras-Resaltados..."
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Desplazamiento…"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Seno…"
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "Agrupamiento iterativo lineal _simple…"
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "Vecino más cercano _simétrico…"
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "Brillo _suave…"
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "Esferifi_car..."
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "Es_piral…"
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Expansión del contraste…"
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Énfasis…"
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "_Supernova…"
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Umbral..."
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Umbral alfa…"
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Mosaico de _cristal…"
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "Mosaico de _papel…"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Mosaico sin costura…"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Afilar (_desafilar máscara)..."
 
-#: ../app/actions/filters-actions.c:682
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Propagar valor…"
 
 # Location lo traducimos por lugar (Serrador)
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradación del vídeo…"
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Viñeta…"
 
-#: ../app/actions/filters-actions.c:697
+#: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Ondas..."
 
-#: ../app/actions/filters-actions.c:702
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Ondas…"
 
-#: ../app/actions/filters-actions.c:707
+#: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Girar y comprimir..."
 
-#: ../app/actions/filters-actions.c:712
+#: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_V_iento…"
 
-#: ../app/actions/filters-actions.c:720
+#: ../app/actions/filters-actions.c:725
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "R_epetir el último"
 
-#: ../app/actions/filters-actions.c:722
+#: ../app/actions/filters-actions.c:727
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "Volver a ejecutar el último filtro utilizado con la misma configuración"
 
-#: ../app/actions/filters-actions.c:727
+#: ../app/actions/filters-actions.c:732
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Volver a mostrar el último"
 
-#: ../app/actions/filters-actions.c:728
+#: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostrar otra vez el diálogo del último filtro utilizado"
 
-#: ../app/actions/filters-actions.c:1057
+#: ../app/actions/filters-actions.c:1063
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Rep_etir «%s»"
 
-#: ../app/actions/filters-actions.c:1058
+#: ../app/actions/filters-actions.c:1064
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Volver a mostrar «%s»"
 
-#: ../app/actions/filters-actions.c:1096
+#: ../app/actions/filters-actions.c:1102
 msgid "Repeat Last"
 msgstr "Repetir el último"
 
-#: ../app/actions/filters-actions.c:1098
+#: ../app/actions/filters-actions.c:1104
 msgid "Re-Show Last"
 msgstr "Volver a mostrar el último"
 
@@ -13251,41 +13255,41 @@ msgstr ""
 msgid "Offset unit"
 msgstr "Unidad de desplazamiento"
 
-#: ../app/core/gimpgrouplayer.c:280
+#: ../app/core/gimpgrouplayer.c:279
 msgid "Layer Group"
 msgstr "Grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:281
+#: ../app/core/gimpgrouplayer.c:280
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Renombrar el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:282
+#: ../app/core/gimpgrouplayer.c:281
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Mover el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:283
+#: ../app/core/gimpgrouplayer.c:282
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Escalar el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:284
+#: ../app/core/gimpgrouplayer.c:283
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Redimensionar el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:284
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Voltear el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:286
+#: ../app/core/gimpgrouplayer.c:285
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Rotar el grupo de capas"
 
-#: ../app/core/gimpgrouplayer.c:287
+#: ../app/core/gimpgrouplayer.c:286
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformar el grupo de capas"
@@ -21840,8 +21844,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Selección difusa"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:542
-#: ../app/tools/gimpgegltool.c:543 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:543
+#: ../app/tools/gimpgegltool.c:544 ../app/tools/gimpoperationtool.c:134
 msgid "GEGL Operation"
 msgstr "Operación de GEGL"
 
@@ -21855,7 +21859,7 @@ msgid "_GEGL Operation..."
 msgstr "Operación _GEGL…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:487
+#: ../app/tools/gimpgegltool.c:488
 msgid "Select an operation from the list above"
 msgstr "Seleccionar una operación de la lista de arriba"
 
