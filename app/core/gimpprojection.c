@@ -715,19 +715,10 @@ gimp_projection_add_update_area (GimpProjection *proj,
                                  gint            w,
                                  gint            h)
 {
-  cairo_rectangle_int_t  rect;
-  gint                   off_x, off_y;
-  gint                   width, height;
+  cairo_rectangle_int_t rect;
+  gint                  width, height;
 
-  gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
   gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
-
-  /*  subtract the projectable's offsets because the list of update
-   *  areas is in tile-pyramid coordinates, but our external API is
-   *  always in terms of image coordinates.
-   */
-  x -= off_x;
-  y -= off_y;
 
   /*  align the rectangle to the UPDATE_CHUNK_WIDTH x UPDATE_CHUNK_HEIGHT grid,
    *  to decrease the complexity of the update area.
@@ -1067,6 +1058,17 @@ gimp_projection_projectable_invalidate (GimpProjectable *projectable,
                                         gint             h,
                                         GimpProjection  *proj)
 {
+  gint off_x, off_y;
+
+  gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
+
+  /*  subtract the projectable's offsets because the list of update
+   *  areas is in tile-pyramid coordinates, but our external API is
+   *  always in terms of image coordinates.
+   */
+  x -= off_x;
+  y -= off_y;
+
   gimp_projection_add_update_area (proj, x, y, w, h);
 }
 
@@ -1085,15 +1087,13 @@ static void
 gimp_projection_projectable_structure_changed (GimpProjectable *projectable,
                                                GimpProjection  *proj)
 {
-  gint off_x, off_y;
   gint width, height;
 
   gimp_projection_free_buffer (proj);
 
-  gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
-  gimp_projectable_get_size   (projectable, &width, &height);
+  gimp_projectable_get_size (projectable, &width, &height);
 
-  gimp_projection_add_update_area (proj, off_x, off_y, width, height);
+  gimp_projection_add_update_area (proj, 0, 0, width, height);
 
   proj->priv->priority_rect.x      = 0;
   proj->priv->priority_rect.y      = 0;
