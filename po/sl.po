@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-04 07:42+0000\n"
-"PO-Revision-Date: 2018-08-05 17:32+0200\n"
+"POT-Creation-Date: 2018-08-10 07:50+0000\n"
+"PO-Revision-Date: 2018-08-10 11:16+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -77,13 +77,65 @@ msgstr "Urejanje fotografij v GIMP-u"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
+"notable changes are:"
+msgstr ""
+"GIMP 2.10.6 prinaša številne popravke hroščev, različne optimizacije in "
+"novosti. Najpomembnejše spremembe so:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid ""
+"Text layers can now represent vertical texts (with various character "
+"orientations and line directions)"
+msgstr ""
+"Plasti besedila lahko zdaj predstavljajo navpična besedila (z različnimi "
+"usmeritvami znakov in smermi vrstic)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
+msgstr "Nov filter »Majhen planet« (gegl:stereographic-projection)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid ""
+"The \"Straighten\" option of the Measure Tool now allows vertical "
+"straightening"
+msgstr "Možnost »ravnanja« pri orodju merjenja zdaj omogoča navpično ravnanje"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid ""
+"Drawable previews are now rendered asynchronously and layer group previews "
+"can be disabled in Preferences"
+msgstr ""
+"Risane predoglede, ki so zdaj upodobljeni asinhrono, in skupinske predoglede "
+"lahko onemogočite v nastavitvah"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid ""
+"New \"async\" field in the Dashboard \"misc\" group, showing the number of "
+"async operations currently running"
+msgstr ""
+"Novo »asinhrono« polje na nadzorni plošči v skupini »razno«, ki prikazuje "
+"število asinhronih operacij, ki se trenutno izvajajo"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+msgid "File format filtering in Open/Save/Export dialogs made less confusing"
+msgstr ""
+"Predelano filtriranje vrst datotek v pogovornih oknih Odpri/Shrani/Izvozi "
+"uporabnika manj zmede"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "New language (having GIMP translated in 81 languages now): Marathi"
+msgstr "Nov jezik (ob prevodu GIMP-a v 81 jezikov): maratski"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
 "GIMP 2.10.4 vključuje številne popravke hroščev in različne optimizacije. "
 "Najpomembnejše spremembe so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -91,11 +143,11 @@ msgstr ""
 "Izravnavanje v orodju Mera: plasti je mogoče sukati z uporabo merske črte "
 "kot horizonta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Hiter zagon: nalaganje pisav ne blokira več zagona"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -103,11 +155,11 @@ msgstr ""
 "Označevanje pisav z enakim uporabniškim vmesnikom kot za čopiče, vzorce in "
 "prelive"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr "Podpora PSD: uvoziti je mogoče sliko PSD pred-skladane različice"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -115,7 +167,7 @@ msgstr ""
 "Posodobitev Nadzorne plošče: nova skupina »Pomnilnik« in izboljšana skupina "
 "»Izmenjalna datoteka« prikazujeta različne meritve"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -125,7 +177,7 @@ msgstr ""
 "posvečena odpravljanju napak po večji izdaji, z nekaj desetimi odpravljenimi "
 "hrošči."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -136,7 +188,7 @@ msgstr ""
 "tudi za dva nova filtra: »Kockaj« in »Rekurzivno preoblikovanje«. To so lepi "
 "primeri naše sproščene politike funkcionalnosti v stabilnih mikro izdajah."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -144,11 +196,11 @@ msgstr ""
 "Prva izdaja iz niza 2.10, ki ga v prvi vrsti krasi prehod na nov pogon za "
 "obdelavo slik, GEGL. Najpomembnejše spremembe so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Obdelava barv v visoki bitni globini (16/32-bitno na barvni kanal)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -156,32 +208,32 @@ msgstr ""
 "Upravljanje barv je zdaj temeljna funkcija, večina gradnikov in območij "
 "predogleda imajo barve upravljane"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Predogled učinkov na platnu z deljenim pogledom slikovnih točk pred/po "
 "obdelavi"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr "Večnitno in strojno pospešeno upodabljanje, obdelovanje in slikanje"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Most tools improved, several new transformation tools"
 msgstr "Večina orodij je izboljšanih, več novih orodij za preoblikovanje"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr "Izboljšana podpora za več formatov slik, zlasti izboljšan uvoz PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Novo podprti slikovni zapisi: OpenEXR, RGBE, WebP, HGT ..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -189,24 +241,24 @@ msgstr ""
 "Izboljšano digitalno slikanje: vrtenje in preslikovanje platna, simetrično "
 "slikanje, čopiči MyPaint ..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Ogled in urejanje metapodatkov za zapise Exif, XMP, IPTC in DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Osnovna podpora HiDPI: samodejna ali uporabniško določena velikost ikon"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Nove teme za GIMP: svetla, siva, temna in sistemska"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "And much, much more…"
 msgstr "In še veliko, veliko več …"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-"
 "released/"
@@ -214,7 +266,7 @@ msgstr ""
 "Če želite več informacij, glejte https://www.gimp.org/news/2018/04/27/"
 "gimp-2-10-0-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -224,7 +276,7 @@ msgstr ""
 "vedno glavni cilj, je bil nov poudarek na hitrosti in optimizaciji, da bi "
 "zagotovili bolj gladko izkušnjo slikanja. Večje spremembe so:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
@@ -232,13 +284,13 @@ msgstr ""
 "Občutne optimizacije jedra za barvanje in prikaz, vključno s kodo za "
 "vzporedno slikanje."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
 msgstr ""
 "V datotekah XCF so zdaj ohranjene simetrije (shranjene kot slikovni "
 "paraziti)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -246,7 +298,7 @@ msgstr ""
 "Temi »Svetla« in »Temna« napisani na novo, s tem sta odrešeni različnih "
 "težav uporabnosti. Temi »Svetlejša« in »Temnejša« sta odstranjeni."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -256,7 +308,7 @@ msgstr ""
 "panoramske projekcije. Gradnik omogoča interakcijo na platnu za 3D-vrtenje "
 "(angl. yaw, pitch, roll)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -267,7 +319,7 @@ msgstr ""
 "ampak tudi za opozorila in kritične napake, ko je nastavljen ključ "
 "razhroščevanja »fatal-warnings«."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-"
 "rc2-released/"
@@ -275,7 +327,7 @@ msgstr ""
 "Če želite več informacij, glejte https://www.gimp.org/news/2018/04/17/"
 "gimp-2-10-0-rc2-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -285,12 +337,12 @@ msgstr ""
 "s poudarkom na odpravljanju napak in stabilnosti. Ob številnih odpravljenih "
 "hroščih so najbolj opazne izboljšave:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Novo pomično okno nadzorne plošče za spremljanje rabe virov programa GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -298,34 +350,34 @@ msgstr ""
 "Novo okno razhroščevanja za izdelavo sledenja napakam in drugih podatkov "
 "razhroščevanja, ki spodbujajo poročanje o napakah"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Neshranjene slike je zdaj mogoče po sesutju obnoviti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "Layer masks on layer groups"
 msgstr "Maske plasti na skupinah plasti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Podpora za JPEG 2000 je izboljšana z visoko bitno globino in različnimi "
 "barvnimi prostori"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Posnetki zaslona in izbiranje barv so izboljšani na različnih platformah"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Metadata defaults preferences now available"
 msgstr "Na voljo so privzete nastavitve za metapodatke"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Various GUI polishing"
 msgstr "Različno poliranje uporabniškega vmesnika"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-"
 "rc1-released/"
@@ -333,7 +385,7 @@ msgstr ""
 "Če želite več informacij, glejte  https://www.gimp.org/news/2018/03/26/"
 "gimp-2-10-0-rc1-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -341,51 +393,51 @@ msgstr ""
 "GIMP 2.9.8 uvaja urejanje prelivov na platnu in razne izboljšave s poudarkom "
 "na odpravljanju hroščev in stabilnosti."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "On-canvas gradient editing"
 msgstr "Urejanje prelivov na platnu"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Notification when an image is over/underexposed"
 msgstr "Obvestilo, če je slika preveč/premalo osvetljena"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "Better and faster color management"
 msgstr "Boljše in hitrejše upravljanje z barvami"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Podpora za izbirnik barv in zaslonske slike v Wayland-u na KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Paste in place feature"
 msgstr "Funkcija lepljenja na mesto"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "Many usability improvements"
 msgstr "Številne izboljšave uporabnosti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Priročnik je mogoče prikazati v želenem jeziku uporabnika"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Izboljšave filtra Razstavi valček"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Izboljšana združljivost z datotekami Photoshop (.psd)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "New support for password-protected PDF"
 msgstr "Dodana podpora za dokumente PDF, zaščitene z gesli"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Dodana podpora za zapis HGT (podatki Digital Elevation Model)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
@@ -788,7 +840,7 @@ msgid "Plug-ins"
 msgstr "Vstavki"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:386
+#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:387
 #: ../app/dialogs/preferences-dialog.c:1688
 msgid "Quick Mask"
 msgstr "Hitra maska"
@@ -802,7 +854,7 @@ msgid "Select"
 msgstr "Izberi"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:795
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:799
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Predloge"
@@ -4890,334 +4942,339 @@ msgstr "_Majhen planet …"
 
 #: ../app/actions/filters-actions.c:422
 msgctxt "filters-action"
+msgid "_Long Shadow..."
+msgstr "Vrzi sen_co …"
+
+#: ../app/actions/filters-actions.c:427
+msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006 ..."
 
-#: ../app/actions/filters-actions.c:427
+#: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Blodnjak …"
 
-#: ../app/actions/filters-actions.c:432
+#: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "Zabrisanost _mediane ..."
 
-#: ../app/actions/filters-actions.c:437
+#: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Mono mešalec ..."
 
-#: ../app/actions/filters-actions.c:442
+#: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mozaik ..."
 
-#: ../app/actions/filters-actions.c:447
+#: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Krožna zabrisanost v gibanju …"
 
-#: ../app/actions/filters-actions.c:452
+#: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Linearna zabrisanost v gibanju …"
 
-#: ../app/actions/filters-actions.c:457
+#: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Zabrisanost v gibanju s približevanjem ..."
 
-#: ../app/actions/filters-actions.c:462
+#: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Celični šum …"
 
-#: ../app/actions/filters-actions.c:467
+#: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Šum CIE Ich …"
 
-#: ../app/actions/filters-actions.c:472
+#: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Šum HSV ..."
 
-#: ../app/actions/filters-actions.c:477
+#: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Vrženo ..."
 
-#: ../app/actions/filters-actions.c:482
+#: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Šum _Perlin …"
 
-#: ../app/actions/filters-actions.c:487
+#: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Naberi ..."
 
-#: ../app/actions/filters-actions.c:492
+#: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Šum R_GB ..."
 
-#: ../app/actions/filters-actions.c:497
+#: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "R_edukcija šuma ..."
 
-#: ../app/actions/filters-actions.c:502
+#: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "Šum _simpleks ..."
 
-#: ../app/actions/filters-actions.c:507
+#: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Nerazločno ..."
 
-#: ../app/actions/filters-actions.c:512
+#: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Enakomeren šum …"
 
-#: ../app/actions/filters-actions.c:517
+#: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Raz_širi …"
 
-#: ../app/actions/filters-actions.c:522
+#: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Na_olji …"
 
-#: ../app/actions/filters-actions.c:527
+#: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panoramska projekcija ..."
 
-#: ../app/actions/filters-actions.c:532
+#: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopiraj ..."
 
-#: ../app/actions/filters-actions.c:537
+#: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pikseliziraj ..."
 
-#: ../app/actions/filters-actions.c:542
+#: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plazma …"
 
-#: ../app/actions/filters-actions.c:547
+#: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "P_olarne koordinate ..."
 
-#: ../app/actions/filters-actions.c:552
+#: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posteriziraj …"
 
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Rekurzivno preoblikovanje …"
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Odstrani _rdeče oči …"
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005 ..."
 
-#: ../app/actions/filters-actions.c:572
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "Pore_ži RGB ..."
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Valovanje ..."
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "Nasi_čenost …"
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Napol splošči ..."
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepija …"
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "Sen_ce-svetli toni …"
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Zamakni …"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus …"
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_Enostavno linearno iterativno grozdenje ..."
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Simetrično najbližji sosed ..."
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Mehko žarenje ..."
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Kockaj ..."
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_pirala …"
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Raztegni kontrast ..."
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Stres ..."
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "_Super_nova …"
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Prag ..."
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Prag alfe ..."
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Tlakovanje s _steklom …"
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "Tlakuj kot _papir …"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Tlakuj neopazno …"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Izostri (maska ne_ostrine) ..."
 
-#: ../app/actions/filters-actions.c:682
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Raz_širi vrednost …"
 
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Degradacija _videa ..."
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vinjetiranje …"
 
-#: ../app/actions/filters-actions.c:697
+#: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Vodene slikovne točke ..."
 
-#: ../app/actions/filters-actions.c:702
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Valovanje …"
 
-#: ../app/actions/filters-actions.c:707
+#: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Vrtinči in odščipni …"
 
-#: ../app/actions/filters-actions.c:712
+#: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "V_eter …"
 
-#: ../app/actions/filters-actions.c:720
+#: ../app/actions/filters-actions.c:725
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Po_novi zadnje"
 
-#: ../app/actions/filters-actions.c:722
+#: ../app/actions/filters-actions.c:727
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Ponovno poženi nazadnje uporabljen filter z enakimi nastavitvami"
 
-#: ../app/actions/filters-actions.c:727
+#: ../app/actions/filters-actions.c:732
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Ponovno pokaži _zadnje"
 
-#: ../app/actions/filters-actions.c:728
+#: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Pokaži znova pogovorno okno nazadnje uporabljenega filtra"
 
-#: ../app/actions/filters-actions.c:1057
+#: ../app/actions/filters-actions.c:1063
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Ponovi \"%s\""
 
-#: ../app/actions/filters-actions.c:1058
+#: ../app/actions/filters-actions.c:1064
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Ponovno po_kaži \"%s\""
 
-#: ../app/actions/filters-actions.c:1096
+#: ../app/actions/filters-actions.c:1102
 msgid "Repeat Last"
 msgstr "Ponovi zadnjega"
 
-#: ../app/actions/filters-actions.c:1098
+#: ../app/actions/filters-actions.c:1104
 msgid "Re-Show Last"
 msgstr "Ponovno pokaži zadnjega"
 
@@ -10229,7 +10286,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Napaka pri razločevanju '%%s': vrstica daljša od %s znakov."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:341
+#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:289
 #: ../app/tools/gimpfiltertool-settings.c:227
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10251,11 +10308,11 @@ msgstr ""
 "Napaka pri razčlenjevanju datoteke '%s'. Uporabljene bodo privzete "
 "vrednosti. Varnostna kopija nastavitev je bila shranjena v '%s'."
 
-#: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:440
+#: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:442
 msgid "Layer"
 msgstr "Plast"
 
-#: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:272
+#: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:273
 #: ../app/operations/gimpcurvesconfig.c:119
 #: ../app/operations/gimplevelsconfig.c:124
 #: ../app/operations/gimpoperationthreshold.c:89
@@ -12031,26 +12088,26 @@ msgid "View as grid"
 msgstr "Pokaži kot mrežo"
 
 #. initialize babl fishes
-#: ../app/core/gimp.c:505 ../app/core/gimp.c:536
+#: ../app/core/gimp.c:510 ../app/core/gimp.c:540
 msgid "Initialization"
 msgstr "Inicializacija"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:515
+#: ../app/core/gimp.c:520
 msgid "Internal Procedures"
 msgstr "Notranje procedure"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:788
+#: ../app/core/gimp.c:792
 msgid "Looking for data files"
 msgstr "Iskanje podatkovnih datotek"
 
-#: ../app/core/gimp.c:788
+#: ../app/core/gimp.c:792
 msgid "Parasites"
 msgstr "Zajedalci"
 
 #. initialize the module list
-#: ../app/core/gimp.c:799 ../app/dialogs/preferences-dialog.c:3148
+#: ../app/core/gimp.c:803 ../app/dialogs/preferences-dialog.c:3148
 msgid "Modules"
 msgstr "Gradniki"
 
@@ -12102,33 +12159,33 @@ msgstr "Prilepljena plast"
 msgid "Global Buffer"
 msgstr "Splošni medpomnilnik"
 
-#: ../app/core/gimpextension.c:266
+#: ../app/core/gimpextension.c:333
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
 "AppData razširitve mora biti vrste »addon«, namesto tega je najden »%s«."
 
-#: ../app/core/gimpextension.c:282
+#: ../app/core/gimpextension.c:349
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
 msgstr "AppData razširitve mora razširiti »org.gimp.GIMP«."
 
-#: ../app/core/gimpextension.c:296
+#: ../app/core/gimpextension.c:363
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr "ID AppData razširitve (»%s«) in mapa (»%s«) morata biti enaka."
 
-#: ../app/core/gimpextension.c:311
+#: ../app/core/gimpextension.c:378
 #, c-format
 msgid "Extension AppData must advertize a version in a <release> tag."
 msgstr "AppData razširitve mora oglaševati različico v oznaki <release>."
 
-#: ../app/core/gimpextension.c:345
+#: ../app/core/gimpextension.c:412
 #, c-format
 msgid "Unsupported <requires> \"%s\" (type %s)."
 msgstr "Nepodprta <requires> »%s« (vrsta %s)."
 
-#: ../app/core/gimpextension.c:360
+#: ../app/core/gimpextension.c:427
 #, c-format
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
@@ -12137,32 +12194,47 @@ msgstr ""
 "<requires><id>org.gimp.GIMP </id></requires> za primerjavo različic je "
 "obvezna."
 
-#: ../app/core/gimpextension.c:611
+#: ../app/core/gimpextension.c:708
 #, c-format
 msgid "'%s' is not a relative path."
 msgstr "»%s« ni relativna pot."
 
-#: ../app/core/gimpextension.c:645
+#: ../app/core/gimpextension.c:742
 #, c-format
 msgid "'%s' is not a child of the extension."
 msgstr "»%s« ni veljaven podrejeni predmet razširitve."
 
-#: ../app/core/gimpextension.c:659
+#: ../app/core/gimpextension.c:756
 #, c-format
 msgid "'%s' is not a directory."
 msgstr "»%s« ni mapa."
 
-#: ../app/core/gimpextension.c:673
+#: ../app/core/gimpextension.c:770
 #, c-format
 msgid "'%s' is not a valid file."
 msgstr "»%s« ni veljavna datoteka."
 
-#: ../app/core/gimpextensionmanager.c:801
+#: ../app/core/gimpextension.c:811
+#, c-format
+msgid "This parser does not support imbricated lists."
+msgstr "Ta razčlenjevalnik ne podpira prekrivnih seznamov."
+
+#: ../app/core/gimpextension.c:832
+#, c-format
+msgid "<li> must be inside <ol> or <ul> tags."
+msgstr "<li> mora biti znotraj oznak <ol> ali <ul>."
+
+#: ../app/core/gimpextension.c:837
+#, c-format
+msgid "Unknown tag <%s>."
+msgstr "Neznana oznaka: <%s>."
+
+#: ../app/core/gimpextensionmanager.c:839
 #, c-format
 msgid "Skipping extension '%s': %s\n"
 msgstr "Preskočitev razširitve »%s«: %s\n"
 
-#: ../app/core/gimpextensionmanager.c:809
+#: ../app/core/gimpextensionmanager.c:847
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr "Preskakovanje neznane datoteke »%s« v mapi razširitev.\n"
@@ -12508,7 +12580,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Zaobljeni pravokotni izbor"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:448
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:450
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa v izbor"
@@ -12534,148 +12606,148 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Izbor po indeksirani barvi"
 
-#: ../app/core/gimpchannel.c:273
+#: ../app/core/gimpchannel.c:274
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Preimenuj kanal"
 
-#: ../app/core/gimpchannel.c:274
+#: ../app/core/gimpchannel.c:275
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Premakni kanal"
 
-#: ../app/core/gimpchannel.c:275
+#: ../app/core/gimpchannel.c:276
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Spremeni merilo kanala"
 
-#: ../app/core/gimpchannel.c:276
+#: ../app/core/gimpchannel.c:277
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Spremeni velikost kanala"
 
-#: ../app/core/gimpchannel.c:277
+#: ../app/core/gimpchannel.c:278
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Prezrcali kanal"
 
-#: ../app/core/gimpchannel.c:278
+#: ../app/core/gimpchannel.c:279
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Zasukaj kanal"
 
-#: ../app/core/gimpchannel.c:279 ../app/core/gimpdrawable-transform.c:1057
+#: ../app/core/gimpchannel.c:280 ../app/core/gimpdrawable-transform.c:1057
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Preoblikuj kanal"
 
-#: ../app/core/gimpchannel.c:280 ../app/core/gimpchannel.c:312
+#: ../app/core/gimpchannel.c:281 ../app/core/gimpchannel.c:313
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Napolni kanal"
 
-#: ../app/core/gimpchannel.c:281
+#: ../app/core/gimpchannel.c:282
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Vleci poteze po kanalu"
 
-#: ../app/core/gimpchannel.c:282
+#: ../app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Kanal v izbor"
 
-#: ../app/core/gimpchannel.c:283
+#: ../app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Prerazporedi kanal"
 
-#: ../app/core/gimpchannel.c:284
+#: ../app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Dvigni kanal"
 
-#: ../app/core/gimpchannel.c:285
+#: ../app/core/gimpchannel.c:286
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Dvigni kanal na vrh"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:287
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Spusti kanal"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:288
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Spusti kanal na dno"
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:289
 msgid "Channel cannot be raised higher."
 msgstr "Kanala ni mogoče dvigniti višje."
 
-#: ../app/core/gimpchannel.c:289
+#: ../app/core/gimpchannel.c:290
 msgid "Channel cannot be lowered more."
 msgstr "Kanala ni mogoče bolj spustiti."
 
-#: ../app/core/gimpchannel.c:309
+#: ../app/core/gimpchannel.c:310
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Operjeni kanal"
 
-#: ../app/core/gimpchannel.c:310
+#: ../app/core/gimpchannel.c:311
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Izostri kanal"
 
-#: ../app/core/gimpchannel.c:311
+#: ../app/core/gimpchannel.c:312
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Počisti kanal"
 
-#: ../app/core/gimpchannel.c:313
+#: ../app/core/gimpchannel.c:314
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Preobrni kanal"
 
-#: ../app/core/gimpchannel.c:314
+#: ../app/core/gimpchannel.c:315
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Obrobi kanal"
 
-#: ../app/core/gimpchannel.c:315
+#: ../app/core/gimpchannel.c:316
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Razširi kanal"
 
-#: ../app/core/gimpchannel.c:316
+#: ../app/core/gimpchannel.c:317
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Skrči kanal"
 
-#: ../app/core/gimpchannel.c:317
+#: ../app/core/gimpchannel.c:318
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Kanal razlivanja"
 
-#: ../app/core/gimpchannel.c:847
+#: ../app/core/gimpchannel.c:848
 msgid "Cannot fill empty channel."
 msgstr "Praznega kanala ni mogoče zapolniti."
 
-#: ../app/core/gimpchannel.c:883
+#: ../app/core/gimpchannel.c:884
 msgid "Cannot stroke empty channel."
 msgstr "Risanje potez po praznem kanalu ni mogoče."
 
-#: ../app/core/gimpchannel.c:1705
+#: ../app/core/gimpchannel.c:1707
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Nastavi barvo kanala"
 
-#: ../app/core/gimpchannel.c:1756
+#: ../app/core/gimpchannel.c:1758
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Nastavi prekrivnost kanala"
 
-#: ../app/core/gimpchannel.c:1845 ../app/core/gimpselection.c:169
+#: ../app/core/gimpchannel.c:1847 ../app/core/gimpselection.c:170
 msgid "Selection Mask"
 msgstr "Maska izbora"
 
@@ -12824,7 +12896,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:488
+#: ../app/core/gimpdrawable.c:489
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Spremeni merilo"
@@ -12852,11 +12924,11 @@ msgstr "Plavajoči izbor"
 msgid "Computing alpha of unknown pixels"
 msgstr "Izračunavanje alfe neznanih slikovnih točk"
 
-#: ../app/core/gimpdrawable-fill.c:206 ../app/vectors/gimpvectors.c:668
+#: ../app/core/gimpdrawable-fill.c:207 ../app/vectors/gimpvectors.c:668
 msgid "Not enough points to fill"
 msgstr "Ni dovolj točk za zapolnjevanje"
 
-#: ../app/core/gimpdrawable-fill.c:260
+#: ../app/core/gimpdrawable-fill.c:261
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Upodobi potezo"
@@ -12897,7 +12969,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Zasukaj"
 
-#: ../app/core/gimpdrawable-transform.c:1055 ../app/core/gimplayer.c:447
+#: ../app/core/gimpdrawable-transform.c:1055 ../app/core/gimplayer.c:449
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Preoblikuj plast"
@@ -13105,48 +13177,48 @@ msgstr " (prepisana)"
 msgid " (imported)"
 msgstr " (uvožena)"
 
-#: ../app/core/gimpimage.c:2421 ../app/core/gimpimage.c:2435
-#: ../app/core/gimpimage.c:2478
+#: ../app/core/gimpimage.c:2420 ../app/core/gimpimage.c:2434
+#: ../app/core/gimpimage.c:2477
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Način plasti »%s« je bil dodan v %s"
 
-#: ../app/core/gimpimage.c:2493
+#: ../app/core/gimpimage.c:2492
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Skupine plasti so bile dodane v %s"
 
-#: ../app/core/gimpimage.c:2500
+#: ../app/core/gimpimage.c:2499
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maske na skupinah plasti so bile dodane v %s"
 
-#: ../app/core/gimpimage.c:2516
+#: ../app/core/gimpimage.c:2515
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Slike z visoko bitno globino so dodane v %s"
 
-#: ../app/core/gimpimage.c:2524
+#: ../app/core/gimpimage.c:2523
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Kodiranje slik z visoko bitno globino je bilo popravljeno v %s"
 
-#: ../app/core/gimpimage.c:2545
+#: ../app/core/gimpimage.c:2544
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Podpora za slikovne datoteke, večje od 4 GB, je bila dodana v %s"
 
-#: ../app/core/gimpimage.c:2639
+#: ../app/core/gimpimage.c:2638
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Spremeni ločljivost slike"
 
-#: ../app/core/gimpimage.c:2691
+#: ../app/core/gimpimage.c:2690
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Spremeni enoto slike"
 
-#: ../app/core/gimpimage.c:3578
+#: ../app/core/gimpimage.c:3577
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13154,47 +13226,47 @@ msgstr ""
 "Preverjanje veljavnosti parazita »gimp-comment« ni uspelo: komentar vsebuje "
 "neveljaven UTF-8"
 
-#: ../app/core/gimpimage.c:3630
+#: ../app/core/gimpimage.c:3629
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Sliki dodaj zajedalca"
 
-#: ../app/core/gimpimage.c:3671
+#: ../app/core/gimpimage.c:3670
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstrani zajedalca s slike"
 
-#: ../app/core/gimpimage.c:4398
+#: ../app/core/gimpimage.c:4397
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: ../app/core/gimpimage.c:4440 ../app/core/gimpimage.c:4471
+#: ../app/core/gimpimage.c:4439 ../app/core/gimpimage.c:4470
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: ../app/core/gimpimage.c:4465
+#: ../app/core/gimpimage.c:4464
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: ../app/core/gimpimage.c:4632
+#: ../app/core/gimpimage.c:4631
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: ../app/core/gimpimage.c:4660 ../app/core/gimpimage.c:4684
+#: ../app/core/gimpimage.c:4659 ../app/core/gimpimage.c:4683
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: ../app/core/gimpimage.c:4740
+#: ../app/core/gimpimage.c:4739
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: ../app/core/gimpimage.c:4770 ../app/core/gimpimage.c:4777
+#: ../app/core/gimpimage.c:4769 ../app/core/gimpimage.c:4776
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -13282,20 +13354,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Dodaj barvo v katalog barv"
 
-#: ../app/core/gimpimage-convert-indexed.c:790
+#: ../app/core/gimpimage-convert-indexed.c:791
 msgid "Cannot convert image: palette is empty."
 msgstr "Slike ni mogoče pretvoriti: paleta je prazna."
 
-#: ../app/core/gimpimage-convert-indexed.c:802
+#: ../app/core/gimpimage-convert-indexed.c:803
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Pretvori sliko v indeksirano"
 
-#: ../app/core/gimpimage-convert-indexed.c:891
+#: ../app/core/gimpimage-convert-indexed.c:894
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Pretvarjanje slike v indeksirano (2. korak)"
 
-#: ../app/core/gimpimage-convert-indexed.c:940
+#: ../app/core/gimpimage-convert-indexed.c:943
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Pretvarjanje slike v indeksirano (3. korak)"
 
@@ -13306,20 +13378,20 @@ msgid "Convert Image to %s"
 msgstr "Pretvori sliko v %s"
 
 #. dithering
-#: ../app/core/gimpimage-convert-precision.c:245
-#: ../app/core/gimpimage-convert-precision.c:266
+#: ../app/core/gimpimage-convert-precision.c:238
+#: ../app/core/gimpimage-convert-precision.c:259
 #: ../app/dialogs/convert-indexed-dialog.c:240
 #: ../app/dialogs/convert-precision-dialog.c:228
 #: ../app/tools/gimpgradientoptions.c:128
 msgid "Dithering"
 msgstr "Stresanje"
 
-#: ../app/core/gimpimage-convert-type.c:85
+#: ../app/core/gimpimage-convert-type.c:86
 msgctxt "undo-type"
 msgid "Convert Image to RGB"
 msgstr "Pretvori sliko v RGB"
 
-#: ../app/core/gimpimage-convert-type.c:89
+#: ../app/core/gimpimage-convert-type.c:90
 msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Pretvori sliko v sivinsko"
@@ -13553,7 +13625,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1043
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1050
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -13566,76 +13638,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Plavajoči izbor v plast"
 
-#: ../app/core/gimplayer.c:441
+#: ../app/core/gimplayer.c:443
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Preimenuj plast"
 
-#: ../app/core/gimplayer.c:442
+#: ../app/core/gimplayer.c:444
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Premakni plast"
 
-#: ../app/core/gimplayer.c:443
+#: ../app/core/gimplayer.c:445
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Spremeni merilo plasti"
 
-#: ../app/core/gimplayer.c:444
+#: ../app/core/gimplayer.c:446
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Spremeni velikost plasti"
 
-#: ../app/core/gimplayer.c:445
+#: ../app/core/gimplayer.c:447
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Prezrcali plast"
 
-#: ../app/core/gimplayer.c:446
+#: ../app/core/gimplayer.c:448
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Zasukaj plast"
 
-#: ../app/core/gimplayer.c:449
+#: ../app/core/gimplayer.c:451
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Prerazvrsti plast"
 
-#: ../app/core/gimplayer.c:450
+#: ../app/core/gimplayer.c:452
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Dvigni plast"
 
-#: ../app/core/gimplayer.c:451
+#: ../app/core/gimplayer.c:453
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Dvigni plast na vrh"
 
-#: ../app/core/gimplayer.c:452
+#: ../app/core/gimplayer.c:454
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Spusti plast"
 
-#: ../app/core/gimplayer.c:453
+#: ../app/core/gimplayer.c:455
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Spusti plast na dno"
 
-#: ../app/core/gimplayer.c:454
+#: ../app/core/gimplayer.c:456
 msgid "Layer cannot be raised higher."
 msgstr "Plasti ni mogoče dvigniti višje."
 
-#: ../app/core/gimplayer.c:455
+#: ../app/core/gimplayer.c:457
 msgid "Layer cannot be lowered more."
 msgstr "Plasti ni mogoče bolj spustiti."
 
-#: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1952
-#: ../app/core/gimplayermask.c:228
+#: ../app/core/gimplayer.c:746 ../app/core/gimplayer.c:1963
+#: ../app/core/gimplayermask.c:231
 #, c-format
 msgid "%s mask"
 msgstr "Maska %s"
 
-#: ../app/core/gimplayer.c:783
+#: ../app/core/gimplayer.c:785
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -13644,75 +13716,75 @@ msgstr ""
 "Plavajoči izbor\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1858
+#: ../app/core/gimplayer.c:1869
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Maske plasti ni mogoče dodati, ker jo plast že ima."
 
-#: ../app/core/gimplayer.c:1869
+#: ../app/core/gimplayer.c:1880
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Maske drugačnih mer, kot so mere plasti, ni mogoče dodati."
 
-#: ../app/core/gimplayer.c:1875
+#: ../app/core/gimplayer.c:1886
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodaj masko plasti"
 
-#: ../app/core/gimplayer.c:1993
+#: ../app/core/gimplayer.c:2004
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi alfo v masko"
 
-#: ../app/core/gimplayer.c:2156
+#: ../app/core/gimplayer.c:2167
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Uporabi masko plasti"
 
-#: ../app/core/gimplayer.c:2157
+#: ../app/core/gimplayer.c:2168
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Izbriši masko plasti"
 
-#: ../app/core/gimplayer.c:2259
+#: ../app/core/gimplayer.c:2270
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Omogoči masko plasti"
 
-#: ../app/core/gimplayer.c:2260
+#: ../app/core/gimplayer.c:2271
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Onemogoči masko plasti"
 
-#: ../app/core/gimplayer.c:2336
+#: ../app/core/gimplayer.c:2347
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Pokaži masko plasti"
 
-#: ../app/core/gimplayer.c:2410
+#: ../app/core/gimplayer.c:2421
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: ../app/core/gimplayer.c:2445
+#: ../app/core/gimplayer.c:2457
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Odstrani kanal alfa"
 
-#: ../app/core/gimplayer.c:2466
+#: ../app/core/gimplayer.c:2478
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Plast na velikost slike"
 
-#: ../app/core/gimplayermask.c:76
+#: ../app/core/gimplayermask.c:77
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Premakni masko plasti"
 
-#: ../app/core/gimplayermask.c:77
+#: ../app/core/gimplayermask.c:78
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Maska plasti v izbor"
 
-#: ../app/core/gimplayermask.c:152
+#: ../app/core/gimplayermask.c:153
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Mask plasti ni mogoče preimenovati."
@@ -13862,88 +13934,88 @@ msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
 "Povratnega klica %s ni mogoče pognati. Ustrezni vtičnik se je morda sesul."
 
-#: ../app/core/gimpselection.c:170
+#: ../app/core/gimpselection.c:171
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Premakni izbor"
 
-#: ../app/core/gimpselection.c:171
+#: ../app/core/gimpselection.c:172
 msgctxt "undo-type"
 msgid "Fill Selection"
 msgstr "Zapolni izbor"
 
-#: ../app/core/gimpselection.c:172
+#: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Vleci poteze po izboru"
 
-#: ../app/core/gimpselection.c:189
+#: ../app/core/gimpselection.c:190
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Operjeni izbor"
 
-#: ../app/core/gimpselection.c:190
+#: ../app/core/gimpselection.c:191
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Izostri izbor"
 
-#: ../app/core/gimpselection.c:191
+#: ../app/core/gimpselection.c:192
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Ne izberi ničesar"
 
-#: ../app/core/gimpselection.c:192
+#: ../app/core/gimpselection.c:193
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Izberi vse"
 
-#: ../app/core/gimpselection.c:193
+#: ../app/core/gimpselection.c:194
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Preobrni izbor"
 
-#: ../app/core/gimpselection.c:194
+#: ../app/core/gimpselection.c:195
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Obrobi izbor"
 
-#: ../app/core/gimpselection.c:195
+#: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Razširi izbor"
 
-#: ../app/core/gimpselection.c:196
+#: ../app/core/gimpselection.c:197
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Zoži izbor"
 
-#: ../app/core/gimpselection.c:197
+#: ../app/core/gimpselection.c:198
 msgctxt "undo-type"
 msgid "Remove Holes"
 msgstr "Odstrani luknje"
 
-#: ../app/core/gimpselection.c:305
+#: ../app/core/gimpselection.c:306
 msgid "There is no selection to fill."
 msgstr "Ni izbora, da bi ga zapolnili."
 
-#: ../app/core/gimpselection.c:341
+#: ../app/core/gimpselection.c:342
 msgid "There is no selection to stroke."
 msgstr "Ni izbora, da bi po njem risali."
 
-#: ../app/core/gimpselection.c:697
+#: ../app/core/gimpselection.c:700
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Kopirati ali izrezovati ni mogoče, saj je izbrano območje prazno."
 
-#: ../app/core/gimpselection.c:816
+#: ../app/core/gimpselection.c:819
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Izbor ne more biti plavajoč, ker je izbrano območje prazno."
 
-#: ../app/core/gimpselection.c:823
+#: ../app/core/gimpselection.c:826
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Plavajoči izbor"
 
-#: ../app/core/gimpselection.c:841
+#: ../app/core/gimpselection.c:844
 msgid "Floated Layer"
 msgstr "Plavajoča plast"
 
@@ -14640,7 +14712,7 @@ msgstr "FG/BG"
 msgid "FG/BG Color"
 msgstr "Barva ospredja/ozadja"
 
-#: ../app/dialogs/extensions-dialog.c:76 ../app/widgets/gimpfileprocview.c:211
+#: ../app/dialogs/extensions-dialog.c:76 ../app/widgets/gimpfileprocview.c:212
 msgid "Extensions"
 msgstr "Razširitve"
 
@@ -18707,7 +18779,7 @@ msgstr[3] ""
 msgid "Documents"
 msgstr "Dokumenti"
 
-#: ../app/gui/splash.c:135
+#: ../app/gui/splash.c:144
 msgid "GIMP Startup"
 msgstr "Zagon GIMP-a"
 
@@ -20497,51 +20569,51 @@ msgstr "Dodaj plast besedila"
 msgid "Empty text parasite"
 msgstr "Sprazni parazit besedila"
 
-#: ../app/text/gimptextlayer.c:156
+#: ../app/text/gimptextlayer.c:157
 msgid "Text Layer"
 msgstr "Plast besedila"
 
-#: ../app/text/gimptextlayer.c:157
+#: ../app/text/gimptextlayer.c:158
 msgid "Rename Text Layer"
 msgstr "Preimenuj plast besedila"
 
-#: ../app/text/gimptextlayer.c:158
+#: ../app/text/gimptextlayer.c:159
 msgid "Move Text Layer"
 msgstr "Premakni plast besedila"
 
-#: ../app/text/gimptextlayer.c:159
+#: ../app/text/gimptextlayer.c:160
 msgid "Scale Text Layer"
 msgstr "Spremeni merilo plasti besedila"
 
-#: ../app/text/gimptextlayer.c:160
+#: ../app/text/gimptextlayer.c:161
 msgid "Resize Text Layer"
 msgstr "Spremeni velikost plasti z besedilom"
 
-#: ../app/text/gimptextlayer.c:161
+#: ../app/text/gimptextlayer.c:162
 msgid "Flip Text Layer"
 msgstr "Prezrcali plast besedila"
 
-#: ../app/text/gimptextlayer.c:162
+#: ../app/text/gimptextlayer.c:163
 msgid "Rotate Text Layer"
 msgstr "Zasukaj plast besedila"
 
-#: ../app/text/gimptextlayer.c:163
+#: ../app/text/gimptextlayer.c:164
 msgid "Transform Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: ../app/text/gimptextlayer.c:584
+#: ../app/text/gimptextlayer.c:587
 msgid "Discard Text Information"
 msgstr "Zavrži besedilne podatke"
 
-#: ../app/text/gimptextlayer.c:709
+#: ../app/text/gimptextlayer.c:712
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zaradi odsotnosti vseh pisav funkcionalnost besedila ni na voljo."
 
-#: ../app/text/gimptextlayer.c:772
+#: ../app/text/gimptextlayer.c:775
 msgid "Empty Text Layer"
 msgstr "Sprazni plast besedila"
 
-#: ../app/text/gimptextlayer.c:825
+#: ../app/text/gimptextlayer.c:828
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -21564,8 +21636,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Mehki izbor"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:545
-#: ../app/tools/gimpgegltool.c:546 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:546
+#: ../app/tools/gimpgegltool.c:547 ../app/tools/gimpoperationtool.c:134
 msgid "GEGL Operation"
 msgstr "Operacija GEGL"
 
@@ -21578,7 +21650,7 @@ msgid "_GEGL Operation..."
 msgstr "Operacija _GEGL ..."
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:487
+#: ../app/tools/gimpgegltool.c:488
 msgid "Select an operation from the list above"
 msgstr "Izberite dejanje z zgornjega seznama"
 
@@ -24337,13 +24409,11 @@ msgid "Physical memory size"
 msgstr "Velikost fizičnega pomnilnika"
 
 #: ../app/widgets/gimpdashboard.c:581
-#, fuzzy
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mip-zemljevideno"
 
 #: ../app/widgets/gimpdashboard.c:582
-#, fuzzy
 msgid "Total size of processed mipmapped data"
 msgstr "Skupna velikost obdelanih mip-zemljevidenih podatkov"
 
@@ -24717,7 +24787,7 @@ msgstr "Pokaži vse datoteke"
 msgid "Select File _Type (%s)"
 msgstr "Izberite vrsto datotek (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:199
+#: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
 msgstr "Vrsta datoteke"
 
@@ -25159,7 +25229,7 @@ msgstr ""
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "Metapodatki ne bodo vidni v GIMP-u, starejšem od različice 2.10."
 
-#: ../app/widgets/gimpsavedialog.c:343
+#: ../app/widgets/gimpsavedialog.c:344
 msgid "Save this XCF file with better but slower compression"
 msgstr "Shrani datoteko XCF z boljšim, a počasnejšim stiskanjem"
 
@@ -25498,23 +25568,23 @@ msgstr ""
 "Aktivni preliv.\n"
 "Kliknite za odprtje pogovornega okna preliva."
 
-#: ../app/widgets/gimptooleditor.c:299
+#: ../app/widgets/gimptooleditor.c:297
 msgid "Raise this tool"
 msgstr "Dvigni to orodje"
 
-#: ../app/widgets/gimptooleditor.c:300
+#: ../app/widgets/gimptooleditor.c:298
 msgid "Raise this tool to the top"
 msgstr "Dvigni to orodje na vrh"
 
-#: ../app/widgets/gimptooleditor.c:307
+#: ../app/widgets/gimptooleditor.c:305
 msgid "Lower this tool"
 msgstr "Spusti to orodje"
 
-#: ../app/widgets/gimptooleditor.c:308
+#: ../app/widgets/gimptooleditor.c:306
 msgid "Lower this tool to the bottom"
 msgstr "Spusti to orodje na dno"
 
-#: ../app/widgets/gimptooleditor.c:315
+#: ../app/widgets/gimptooleditor.c:313
 msgid "Reset tool order and visibility"
 msgstr "Ponastavi zaporedje orodij in vidnost"
 
@@ -25588,42 +25658,42 @@ msgstr "Odpri pogovorno okno za izbor palete"
 msgid "Open the font selection dialog"
 msgstr "Odpri pogovorno okno za izbor pisave"
 
-#: ../app/widgets/gimpwidgets-utils.c:667
+#: ../app/widgets/gimpwidgets-utils.c:602
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (poskusi %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:667
+#: ../app/widgets/gimpwidgets-utils.c:602
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:671
+#: ../app/widgets/gimpwidgets-utils.c:606
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (poskusi %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:675
+#: ../app/widgets/gimpwidgets-utils.c:610
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (poskusi %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1707
+#: ../app/widgets/gimpwidgets-utils.c:1642
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Vgrajena sivinska (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1714
+#: ../app/widgets/gimpwidgets-utils.c:1649
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Vgrajeni RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1734
+#: ../app/widgets/gimpwidgets-utils.c:1669
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Prednostna sivinska (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1743
+#: ../app/widgets/gimpwidgets-utils.c:1678
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Prednostni RGB (%s)"
