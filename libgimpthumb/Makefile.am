@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+
 if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
@@ -91,6 +93,7 @@ libgimpthumbinclude_HEADERS = \
 libgimpthumb_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
+	$(libgimpbase)				\
 	$(libgimpthumb_export_symbols)		\
 	$(framework_cocoa)			\
 	$(xnone)
