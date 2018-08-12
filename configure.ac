@@ -741,11 +741,27 @@ WARNING: Test for glib-networking cannot be performed while cross-compiling.
          optional anymore."
 fi
 
-AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources, no)
-if test "x$GLIB_COMPILE_RESOURCES" = xno; then
-  add_deps_error([glib-compile-resources],
-                 [Could not find glib-compile-resources in your PATH.])
+# AM_PATH_GLIB_2_0 already fills in the variable GLIB_COMPILE_RESOURCES.
+# Unfortunately it looks it up using $PKG_CONFIG, which search in
+# target-installed libraries, hence it would return a tool for the
+# target architecture in case of cross-compilation (which can't be run
+# during build, unless there is some compatibility layer in the OS).
+# Therefore we make our own check.
+AC_MSG_CHECKING([for native glib-compile-resources])
+if test -z "$HOST_GLIB_COMPILE_RESOURCES"; then
+  # Do not use $PKG_CONFIG as it will search target files.
+  HOST_GLIB_COMPILE_RESOURCES=`pkg-config --variable=glib_compile_resources gio-2.0`
+  if test -z "$HOST_GLIB_COMPILE_RESOURCES"; then
+    # As fallback, search in path.
+    AC_PATH_PROG(HOST_GLIB_COMPILE_RESOURCES, glib-compile-resources, no)
+    if test "x$HOST_GLIB_COMPILE_RESOURCES" = xno; then
+      add_deps_error([glib-compile-resources],
+                     [Could not find glib-compile-resources in your PATH.])
+    fi
+  fi
 fi
+AC_MSG_RESULT($HOST_GLIB_COMPILE_RESOURCES)
+AC_SUBST(HOST_GLIB_COMPILE_RESOURCES)
 
 AC_PATH_PROG(GDBUS_CODEGEN, gdbus-codegen, no)
 if test "x$GDBUS_CODEGEN" = xno; then

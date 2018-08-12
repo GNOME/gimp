@@ -363,22 +363,22 @@ gimpwidgetsmarshal.c: gimpwidgetsmarshal.h
 	&& rm -f xgen-wmc xgen-wmc~
 
 gimp-color-picker-cursors.h: $(top_builddir)/cursors/gimp-color-picker-cursors.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/cursors --generate-header \
 	  --target=$@ $(top_builddir)/cursors/gimp-color-picker-cursors.gresource.xml
 
 gimp-color-picker-cursors.c: gimp-color-picker-cursors.h
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/cursors --generate-source \
 	  --target=$@ $(top_builddir)/cursors/gimp-color-picker-cursors.gresource.xml
 
 gimp-icon-pixbufs.h: $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/icons/Color --generate-header \
 	  --target=$@ $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
 
 gimp-icon-pixbufs.c: gimp-icon-pixbufs.h
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/icons/Color --generate-source \
 	  --target=$@ $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
 

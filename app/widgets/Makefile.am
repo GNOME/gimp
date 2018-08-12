@@ -504,11 +504,11 @@ $(srcdir)/widgets-enums.c: xgen-wec
 
 
 gimp-tool-cursors.h: $(top_builddir)/cursors/gimp-tool-cursors.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/cursors --generate-header \
 	  --target=$@ $(top_builddir)/cursors/gimp-tool-cursors.gresource.xml
 
 gimp-tool-cursors.c: gimp-tool-cursors.h
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(top_srcdir)/cursors --generate-source \
 	  --target=$@ $(top_builddir)/cursors/gimp-tool-cursors.gresource.xml
