@@ -35,7 +35,9 @@ gimptool_@GIMP_TOOL_VERSION@_LDADD = \
 
 gimp_test_clipboard_@GIMP_TOOL_VERSION@_SOURCES = gimp-test-clipboard.c
 
-gimp_test_clipboard_@GIMP_TOOL_VERSION@_LDADD = $(GTK_LIBS)
+gimp_test_clipboard_@GIMP_TOOL_VERSION@_LDADD = \
+	$(libgimpbase)	\
+	$(GTK_LIBS)
 
 
 kernelgen_SOURCES = kernelgen.c
