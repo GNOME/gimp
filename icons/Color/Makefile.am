@@ -65,7 +65,7 @@ gimp-core-pixbufs.gresource.xml: $(CORE_IMAGES) Makefile.am
 	  echo '</gresources>' >> $@ )
 
 gimp-core-pixbufs.c: gimp-core-pixbufs.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ gimp-core-pixbufs.gresource.xml
 
@@ -82,6 +82,6 @@ gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
 	  echo '</gresources>' >> $@ )
 
 gimp-icon-pixbufs.c: gimp-icon-pixbufs.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ gimp-icon-pixbufs.gresource.xml

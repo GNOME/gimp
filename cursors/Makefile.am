@@ -109,7 +109,7 @@ gimp-tool-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	  echo '</gresources>' >> $@ )
 
 gimp-tool-cursors.c: gimp-tool-cursors.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ gimp-tool-cursors.gresource.xml
 
@@ -131,6 +131,6 @@ gimp-color-picker-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	  echo '</gresources>' >> $@ )
 
 gimp-color-picker-cursors.c: gimp-color-picker-cursors.gresource.xml
-	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
 	  --sourcedir=$(srcdir) --generate-source \
 	  --target=$@ gimp-color-picker-cursors.gresource.xml
