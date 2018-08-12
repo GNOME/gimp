@@ -329,7 +329,7 @@ run (const gchar      *name,
     g_Sdebug = TRUE;
 
   if (g_Sdebug)
-    printf ("sample colorize run\n");
+    g_printf ("sample colorize run\n");
   g_show_progress = FALSE;
 
   run_mode = param[0].data.d_int32;
@@ -892,8 +892,8 @@ update_preview (gint32 *id_ptr)
   t_GDRW        gdrw;
 
   if (g_Sdebug)
-    printf ("UPD PREVIEWS   ID:%d ENABLE_UPD:%d\n",
-            id_ptr ? (int) *id_ptr : -1, (int)g_di.enable_preview_update);
+    g_printf ("UPD PREVIEWS   ID:%d ENABLE_UPD:%d\n",
+              id_ptr ? (int) *id_ptr : -1, (int)g_di.enable_preview_update);
 
   if (id_ptr == NULL || !g_di.enable_preview_update)
     return;
@@ -977,7 +977,7 @@ levels_update (gint update)
   gint i;
 
   if (g_Sdebug)
-    printf ("levels_update: update reques %x\n", update);
+    g_printf ("levels_update: update reques %x\n", update);
 
   /*  Recalculate the transfer array  */
   calculate_level_transfers ();
@@ -1090,14 +1090,14 @@ level_in_events (GtkWidget *widget,
     {
     case GDK_EXPOSE:
       if (g_Sdebug)
-        printf ("EVENT: GDK_EXPOSE\n");
+        g_printf ("EVENT: GDK_EXPOSE\n");
       if (widget == g_di.in_lvl_drawarea)
         levels_update (INPUT_SLIDERS);
       break;
 
     case GDK_BUTTON_PRESS:
       if (g_Sdebug)
-        printf ("EVENT: GDK_BUTTON_PRESS\n");
+        g_printf ("EVENT: GDK_BUTTON_PRESS\n");
       gtk_grab_add (widget);
       bevent = (GdkEventButton *) event;
 
@@ -1116,7 +1116,7 @@ level_in_events (GtkWidget *widget,
 
     case GDK_BUTTON_RELEASE:
       if (g_Sdebug)
-        printf ("EVENT: GDK_BUTTON_RELEASE\n");
+        g_printf ("EVENT: GDK_BUTTON_RELEASE\n");
       gtk_grab_remove (widget);
       switch (g_di.active_slider)
         {
@@ -1138,7 +1138,7 @@ level_in_events (GtkWidget *widget,
 
     case GDK_MOTION_NOTIFY:
       if (g_Sdebug)
-        printf ("EVENT: GDK_MOTION_NOTIFY\n");
+        g_printf ("EVENT: GDK_MOTION_NOTIFY\n");
       mevent = (GdkEventMotion *) event;
       x = mevent->x;
       gdk_event_request_motions (mevent);
@@ -1147,14 +1147,14 @@ level_in_events (GtkWidget *widget,
 
     default:
       if (g_Sdebug)
-        printf ("EVENT: default\n");
+        g_printf ("EVENT: default\n");
       break;
     }
 
   if (update)
     {
       if (g_Sdebug)
-        printf ("EVENT: ** update **\n");
+        g_printf ("EVENT: ** update **\n");
       switch (g_di.active_slider)
         {
         case 0:  /*  low input  */
@@ -1203,14 +1203,14 @@ level_out_events (GtkWidget *widget,
     {
     case GDK_EXPOSE:
       if (g_Sdebug)
-        printf ("OUT_EVENT: GDK_EXPOSE\n");
+        g_printf ("OUT_EVENT: GDK_EXPOSE\n");
       if (widget == g_di.sample_drawarea)
         levels_update (OUTPUT_SLIDERS);
       break;
 
     case GDK_BUTTON_PRESS:
       if (g_Sdebug)
-        printf ("OUT_EVENT: GDK_BUTTON_PRESS\n");
+        g_printf ("OUT_EVENT: GDK_BUTTON_PRESS\n");
       bevent = (GdkEventButton *) event;
 
       distance = G_MAXINT;
@@ -1229,7 +1229,7 @@ level_out_events (GtkWidget *widget,
 
     case GDK_BUTTON_RELEASE:
       if (g_Sdebug)
-        printf ("OUT_EVENT: GDK_BUTTON_RELEASE\n");
+        g_printf ("OUT_EVENT: GDK_BUTTON_RELEASE\n");
       switch (g_di.active_slider)
         {
         case 3:  /*  low output  */
@@ -1246,7 +1246,7 @@ level_out_events (GtkWidget *widget,
 
     case GDK_MOTION_NOTIFY:
       if (g_Sdebug)
-        printf ("OUT_EVENT: GDK_MOTION_NOTIFY\n");
+        g_printf ("OUT_EVENT: GDK_MOTION_NOTIFY\n");
       mevent = (GdkEventMotion *) event;
       x = mevent->x;
       gdk_event_request_motions (mevent);
@@ -1255,14 +1255,14 @@ level_out_events (GtkWidget *widget,
 
     default:
       if (g_Sdebug)
-        printf ("OUT_EVENT: default\n");
+        g_printf ("OUT_EVENT: default\n");
       break;
     }
 
   if (update)
     {
       if (g_Sdebug)
-        printf ("OUT_EVENT: ** update **\n");
+        g_printf ("OUT_EVENT: ** update **\n");
       switch (g_di.active_slider)
         {
         case 3:  /*  low output  */
@@ -1874,7 +1874,7 @@ get_filevalues (void)
       fclose (fp);
     }
 
-  printf ("g_values.tol_col_err    :%f\n", g_values.tol_col_err);
+  g_printf ("g_values.tol_col_err    :%f\n", g_values.tol_col_err);
 }
 
 static gint32
@@ -1936,15 +1936,15 @@ provide_tile (t_GDRW *gdrw,
 
       /* debug start */
 
-      printf ("\np_provide_tile: row: %d col: %d data:", (int)row, (int)col);
+      g_printf ("\np_provide_tile: row: %d col: %d data:", (int)row, (int)col);
 
       ptr = gdrw->tile->data;
       for (i = 0; i < 16; i++)
         {
-          printf (" %d", (int)(*ptr));
+          g_printf (" %d", (int)(*ptr));
           ptr++;
         }
-      printf ("\n\n");
+      g_printf ("\n\n");
 
       /* debug stop */
     }
@@ -1988,9 +1988,9 @@ get_pixel (t_GDRW *gdrw,
 
   return;
 
-  printf ("get_pixel: x: %d  y: %d bpp:%d RGBA:%d %d %d %d\n",
-          (int)x, (int)y, (int)gdrw->bpp,
-          (int)pixel[0], (int)pixel[1], (int)pixel[2], (int)pixel[3]);
+  g_printf ("get_pixel: x: %d  y: %d bpp:%d RGBA:%d %d %d %d\n",
+            (int)x, (int)y, (int)gdrw->bpp,
+            (int)pixel[0], (int)pixel[1], (int)pixel[2], (int)pixel[3]);
 }
 
 /* clear table */
@@ -2503,8 +2503,8 @@ is_layer_alive (gint32 drawable_id)
 
   if (gimp_item_get_image (drawable_id) < 0)
     {
-      printf ("sample colorize: unknown layer_id %d (Image closed?)\n",
-              (int)drawable_id);
+      g_printf ("sample colorize: unknown layer_id %d (Image closed?)\n",
+                (int)drawable_id);
       return -1;
     }
 
@@ -2550,8 +2550,8 @@ init_gdrw (t_GDRW         *gdrw,
   gint32  non_empty;
 
   if (g_Sdebug)
-    printf ("\np_init_gdrw: drawable %p  ID: %d\n",
-            drawable, (int)drawable->drawable_id);
+    g_printf ("\np_init_gdrw: drawable %p  ID: %d\n",
+              drawable, (int)drawable->drawable_id);
 
   gdrw->drawable = drawable;
   gdrw->tile = NULL;
@@ -2590,12 +2590,12 @@ init_gdrw (t_GDRW         *gdrw,
 
   if (g_Sdebug)
     {
-      printf ("init_gdrw: image_id %d sel_channel_id: %d\n",
-              (int)image_id, (int)sel_channel_id);
-      printf ("init_gdrw: BOUNDS     x1: %d y1: %d x2:%d y2: %d\n",
-              (int)gdrw->x1,  (int)gdrw->y1, (int)gdrw->x2,(int)gdrw->y2);
-      printf ("init_gdrw: OFFS       x: %d y: %d\n",
-              (int)offsetx, (int)offsety );
+      g_printf ("init_gdrw: image_id %d sel_channel_id: %d\n",
+                (int)image_id, (int)sel_channel_id);
+      g_printf ("init_gdrw: BOUNDS     x1: %d y1: %d x2:%d y2: %d\n",
+                (int)gdrw->x1,  (int)gdrw->y1, (int)gdrw->x2,(int)gdrw->y2);
+      g_printf ("init_gdrw: OFFS       x: %d y: %d\n",
+                (int)offsetx, (int)offsety );
     }
 
   gimp_selection_bounds (image_id, &non_empty, &x1, &y1, &x2, &y2);
@@ -2633,13 +2633,13 @@ init_gdrw (t_GDRW         *gdrw,
 
       if (g_Sdebug)
         {
-          printf ("init_gdrw: SEL_BOUNDS x1: %d y1: %d x2:%d y2: %d\n",
-                  (int)sel_gdrw->x1, (int)sel_gdrw->y1,
-                  (int)sel_gdrw->x2, (int)sel_gdrw->y2);
-          printf ("init_gdrw: SEL_OFFS   x: %d y: %d\n",
-                  (int)sel_offsetx, (int)sel_offsety );
-          printf ("init_gdrw: SEL_DELTA  x: %d y: %d\n",
-                  (int)gdrw->seldeltax, (int)gdrw->seldeltay );
+          g_printf ("init_gdrw: SEL_BOUNDS x1: %d y1: %d x2:%d y2: %d\n",
+                    (int)sel_gdrw->x1, (int)sel_gdrw->y1,
+                    (int)sel_gdrw->x2, (int)sel_gdrw->y2);
+          g_printf ("init_gdrw: SEL_OFFS   x: %d y: %d\n",
+                    (int)sel_offsetx, (int)sel_offsety );
+          g_printf ("init_gdrw: SEL_DELTA  x: %d y: %d\n",
+                    (int)gdrw->seldeltax, (int)gdrw->seldeltay );
         }
     }
   else
@@ -2747,7 +2747,7 @@ sample_analyze (t_GDRW *sample_gdrw)
     gimp_progress_update (1.0);
 
   if (g_Sdebug)
-    printf ("ROWS: %d - %d  COLS: %d - %d\n",
+    g_printf ("ROWS: %d - %d  COLS: %d - %d\n",
             (int)first_row, (int)last_row,
             (int)first_col, (int)last_col);
 
@@ -2777,7 +2777,7 @@ sample_analyze (t_GDRW *sample_gdrw)
   /* check if there was at least one visible pixel */
   if (sample_pixels == 0)
     {
-      printf ("Error: Source sample has no visible Pixel\n");
+      g_printf ("Error: Source sample has no visible Pixel\n");
       return -1;
     }
   return 0;

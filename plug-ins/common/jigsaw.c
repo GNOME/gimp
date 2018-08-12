@@ -599,7 +599,7 @@ draw_jigsaw (guchar   *buffer,
     }
   else
     {
-      printf("draw_jigsaw: bad style\n");
+      g_printf ("draw_jigsaw: bad style\n");
       gimp_quit ();
     }
   gimp_progress_update (1.0);

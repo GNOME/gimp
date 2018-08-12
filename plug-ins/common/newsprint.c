@@ -787,7 +787,7 @@ newsprint_menu_callback (GtkWidget *widget,
    */
   if (in_progress)
     {
-      printf ("newsprint_menu_callback: unexpected recursion: can't happen\n");
+      g_printf ("newsprint_menu_callback: unexpected recursion: can't happen\n");
       return;
     }
 
@@ -1480,7 +1480,7 @@ newsprint_cspace_update (GtkWidget *widget,
   preview = g_object_get_data (G_OBJECT (widget), "preview");
 
   if (!st)
-    printf ("newsprint: cspace_update: no state, can't happen!\n");
+    g_printf ("newsprint: cspace_update: no state, can't happen!\n");
 
   if (st)
     {
@@ -1835,13 +1835,13 @@ newsprint (GimpDrawable *drawable,
       WGT (x, y) = BARTLETT (x, y);
 #endif /* 0 */
 
-#define ASRT(_x)                                                \
-do {                                                            \
-    if (!VALID_SPOTFN(_x))                                      \
-    {                                                           \
-        printf("newsprint: %d is not a valid spot type\n", _x); \
-        _x = SPOTFN_DOT;                                        \
-    }                                                           \
+#define ASRT(_x)                                                   \
+do {                                                               \
+    if (!VALID_SPOTFN(_x))                                         \
+    {                                                              \
+        g_printf ("newsprint: %d is not a valid spot type\n", _x); \
+        _x = SPOTFN_DOT;                                           \
+    }                                                              \
 } while(0)
 
   /* calculate the RGB / CMYK rotations and threshold matrices */

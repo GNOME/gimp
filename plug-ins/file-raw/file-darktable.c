@@ -401,10 +401,10 @@ load_image (const gchar  *filename,
 
   if (debug_prints)
     {
-      printf ("[%s] trying to call\n", __FILE__);
+      g_printf ("[%s] trying to call\n", __FILE__);
       for (gchar **iter = argv; *iter; iter++)
-        printf ("    %s\n", *iter);
-      printf("\n");
+        g_printf ("    %s\n", *iter);
+      g_printf ("\n");
     }
 
   if (g_spawn_sync (NULL,

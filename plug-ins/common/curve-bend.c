@@ -922,7 +922,7 @@ p_load_pointfile (BenderDialog *cd,
            }
            else
            {
-              printf("warning: BAD points[%d] in file %s are ignored\n", l_pi, filename);
+              g_printf("warning: BAD points[%d] in file %s are ignored\n", l_pi, filename);
            }
         }
         l_len = strlen(KEY_VAL_Y);
@@ -937,7 +937,7 @@ p_load_pointfile (BenderDialog *cd,
            }
            else
            {
-              printf("warning: BAD y_vals[%d] in file %s are ignored\n", l_ci, filename);
+              g_printf("warning: BAD y_vals[%d] in file %s are ignored\n", l_ci, filename);
            }
         }
 
@@ -1702,7 +1702,7 @@ bender_plot_curve (BenderDialog *cd,
   else
   {
     cd->curve_ptr[cd->outline][lastx] = lasty;
-    if(gb_debug) printf("bender_plot_curve xmax:%d ymax:%d\n", (int)xmax, (int)ymax);
+    if(gb_debug) g_printf("bender_plot_curve xmax:%d ymax:%d\n", (int)xmax, (int)ymax);
   }
 
   /* loop over the curve */
@@ -1734,7 +1734,7 @@ bender_plot_curve (BenderDialog *cd,
           /* use dynamic allocated curve_ptr (for the real curve) */
           cd->curve_ptr[cd->outline][newx] = newy;
 
-          if(gb_debug) printf("outline: %d  cX: %d cY: %d\n", (int)cd->outline, (int)newx, (int)newy);
+          if(gb_debug) g_printf("outline: %d  cX: %d cY: %d\n", (int)cd->outline, (int)newx, (int)newy);
         }
       }
 
@@ -2822,7 +2822,7 @@ p_bender_calculate_iter_curve (BenderDialog *cd,
        (cd->bval_to == NULL) ||
        (cd->bval_curr == NULL))
      {
-       if(gb_debug)  printf("p_bender_calculate_iter_curve NORMAL1\n");
+       if(gb_debug)  g_printf("p_bender_calculate_iter_curve NORMAL1\n");
        if (cd->curve_type == SMOOTH)
          {
            cd->outline = OUTLINE_UPPER;
@@ -2838,7 +2838,7 @@ p_bender_calculate_iter_curve (BenderDialog *cd,
    else
      {
        /* compose curves by iterating between FROM/TO values */
-       if(gb_debug)  printf ("p_bender_calculate_iter_curve ITERmode 1\n");
+       if(gb_debug)  g_printf ("p_bender_calculate_iter_curve ITERmode 1\n");
 
        /* init FROM curves */
        cd_from = g_new (BenderDialog, 1);
@@ -3237,11 +3237,11 @@ p_main_bend (BenderDialog *cd,
    gimp_item_set_visible (l_tmp_layer_id, FALSE);
    gimp_item_set_name (l_tmp_layer_id, "curve_bend_dummylayer");
 
-   if(gb_debug) printf("p_main_bend  l_tmp_layer_id %d\n", (int)l_tmp_layer_id);
+   if(gb_debug) g_printf("p_main_bend  l_tmp_layer_id %d\n", (int)l_tmp_layer_id);
 
    if (cd->rotation != 0.0)
      {
-       if(gb_debug) printf("p_main_bend rotate: %f\n", (float)cd->rotation);
+       if(gb_debug) g_printf("p_main_bend rotate: %f\n", (float)cd->rotation);
        p_gimp_rotate(l_image_id, l_tmp_layer_id, l_interpolation, cd->rotation);
      }
    src_drawable = gimp_drawable_get (l_tmp_layer_id);
@@ -3257,12 +3257,12 @@ p_main_bend (BenderDialog *cd,
                 + p_upper_curve_extend(cd, src_drawable->width, src_drawable->height)
                 + p_lower_curve_extend(cd, src_drawable->width, src_drawable->height);
 
-   if(gb_debug) printf("p_main_bend: l_dst_height:%d\n", (int)l_dst_height);
+   if(gb_debug) g_printf("p_main_bend: l_dst_height:%d\n", (int)l_dst_height);
 
    if(work_on_copy)
      {
        dst_drawable = p_add_layer(src_drawable->width, l_dst_height, src_drawable);
-       if(gb_debug) printf("p_main_bend: DONE add layer\n");
+       if(gb_debug) g_printf("p_main_bend: DONE add layer\n");
      }
    else
      {
@@ -3271,7 +3271,7 @@ p_main_bend (BenderDialog *cd,
                          src_drawable->width,
                          l_dst_height,
                          l_offset_x, l_offset_y);
-       if(gb_debug) printf("p_main_bend: DONE layer resize\n");
+       if(gb_debug) g_printf("p_main_bend: DONE layer resize\n");
        if(!gimp_drawable_has_alpha(original_drawable->drawable_id))
          {
            /* always add alpha channel */
@@ -3286,7 +3286,7 @@ p_main_bend (BenderDialog *cd,
 
    p_vertical_bend(cd, &l_src_gdrw, &l_dst_gdrw);
 
-   if(gb_debug) printf("p_main_bend: DONE vertical bend\n");
+   if(gb_debug) g_printf("p_main_bend: DONE vertical bend\n");
 
    p_end_gdrw(&l_src_gdrw);
    p_end_gdrw(&l_dst_gdrw);
@@ -3313,7 +3313,7 @@ p_main_bend (BenderDialog *cd,
    g_free (cd->curve_ptr[OUTLINE_UPPER]);
    g_free (cd->curve_ptr[OUTLINE_LOWER]);
 
-   if (gb_debug) printf("p_main_bend: DONE bend main\n");
+   if (gb_debug) g_printf("p_main_bend: DONE bend main\n");
 
    return dst_drawable->drawable_id;
 }
