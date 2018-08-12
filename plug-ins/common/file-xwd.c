@@ -504,12 +504,12 @@ load_image (const gchar  *filename,
 #ifdef XWD_COL_DEBUG
       {
         int j;
-        printf ("File %s\n",filename);
+        g_printf ("File %s\n",filename);
         for (j = 0; j < xwdhdr.l_colormap_entries; j++)
-          printf ("Entry 0x%08lx: 0x%04lx,  0x%04lx, 0x%04lx, %d\n",
-                  (long)xwdcolmap[j].l_pixel,(long)xwdcolmap[j].l_red,
-                  (long)xwdcolmap[j].l_green,(long)xwdcolmap[j].l_blue,
-                  (int)xwdcolmap[j].l_flags);
+          g_printf ("Entry 0x%08lx: 0x%04lx,  0x%04lx, 0x%04lx, %d\n",
+                    (long)xwdcolmap[j].l_pixel,(long)xwdcolmap[j].l_red,
+                    (long)xwdcolmap[j].l_green,(long)xwdcolmap[j].l_blue,
+                    (int)xwdcolmap[j].l_flags);
       }
 #endif
 
@@ -965,12 +965,12 @@ read_xwd_cols (FILE            *ifp,
 
   if (flag_is_bad || index_is_bad)
     {
-      printf ("xwd: Warning. Error in XWD-color-structure (");
+      g_printf ("xwd: Warning. Error in XWD-color-structure (");
 
-      if (flag_is_bad) printf ("flag");
-      if (index_is_bad) printf ("index");
+      if (flag_is_bad) g_printf ("flag");
+      if (index_is_bad) g_printf ("index");
 
-      printf (")\n");
+      g_printf (")\n");
     }
 
   if (err)
@@ -1078,14 +1078,14 @@ set_pixelmap (int         ncols,
     }
   pixelmap->npixel = maxcols;
 #ifdef XWD_COL_DEBUG
-  printf ("Colors in pixelmap: %d\n",pixelmap->npixel);
+  g_printf ("Colors in pixelmap: %d\n",pixelmap->npixel);
   for (j=0; j<pixelmap->npixel; j++)
-    printf ("Pixelvalue 0x%08lx, 0x%02x 0x%02x 0x%02x\n",
-            pixelmap->pmap[j].pixel_val,
-            pixelmap->pmap[j].red,pixelmap->pmap[j].green,
-            pixelmap->pmap[j].blue);
+    g_printf ("Pixelvalue 0x%08lx, 0x%02x 0x%02x 0x%02x\n",
+              pixelmap->pmap[j].pixel_val,
+              pixelmap->pmap[j].red,pixelmap->pmap[j].green,
+              pixelmap->pmap[j].blue);
   for (j=0; j<=MAPPERMASK; j++)
-    printf ("0x%08lx: %d\n",(long)j,pixelmap->pixel_in_map[j]);
+    g_printf ("0x%08lx: %d\n",(long)j,pixelmap->pixel_in_map[j]);
 #endif
 
   return pixelmap->npixel;
@@ -1140,7 +1140,7 @@ set_bw_color_table (gint32 image_ID)
   static guchar BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
 
 #ifdef XWD_COL_DEBUG
-  printf ("Set GIMP b/w-colortable:\n");
+  g_printf ("Set GIMP b/w-colortable:\n");
 #endif
 
   gimp_image_set_colormap (image_ID, BWColorMap, 2);
@@ -1243,10 +1243,10 @@ set_color_table (gint32           image_ID,
     }
 
 #ifdef XWD_COL_DEBUG
-  printf ("Set GIMP colortable:\n");
+  g_printf ("Set GIMP colortable:\n");
   for (j = 0; j < 256; j++)
-    printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
-            ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
+    g_printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
+              ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
 
   gimp_image_set_colormap (image_ID, ColorMap, 256);
@@ -1303,7 +1303,7 @@ load_xwd_f2_d1_b1 (const gchar     *filename,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  printf ("load_xwd_f2_d1_b1 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d1_b1 (%s)\n", filename);
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -1442,7 +1442,7 @@ load_xwd_f2_d8_b8 (const gchar     *filename,
   GeglBuffer *buffer;
 
 #ifdef XWD_DEBUG
-  printf ("load_xwd_f2_d8_b8 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d8_b8 (%s)\n", filename);
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -1550,7 +1550,7 @@ load_xwd_f2_d16_b16 (const gchar     *filename,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  printf ("load_xwd_f2_d16_b16 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d16_b16 (%s)\n", filename);
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -1712,7 +1712,7 @@ load_xwd_f2_d24_b32 (const gchar      *filename,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  printf ("load_xwd_f2_d24_b32 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d24_b32 (%s)\n", filename);
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -1925,7 +1925,7 @@ load_xwd_f2_d32_b32 (const gchar     *filename,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  printf ("load_xwd_f2_d32_b32 (%s)\n", filename);
+  g_printf ("load_xwd_f2_d32_b32 (%s)\n", filename);
 #endif
 
   width  = xwdhdr->l_pixmap_width;
@@ -2088,7 +2088,7 @@ load_xwd_f1_d24_b1 (const gchar      *filename,
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
-  printf ("load_xwd_f1_d24_b1 (%s)\n", filename);
+  g_printf ("load_xwd_f1_d24_b1 (%s)\n", filename);
 #endif
 
   xwddata = g_malloc (xwdhdr->l_bytes_per_line);
@@ -2344,7 +2344,7 @@ save_index (GOutputStream  *output,
   gboolean         success = TRUE;
 
 #ifdef XWD_DEBUG
-  printf ("save_index ()\n");
+  g_printf ("save_index ()\n");
 #endif
 
   buffer      = gimp_drawable_get_buffer (drawable_ID);
@@ -2487,7 +2487,7 @@ save_rgb (GOutputStream  *output,
   gboolean         success = TRUE;
 
 #ifdef XWD_DEBUG
-  printf ("save_rgb ()\n");
+  g_printf ("save_rgb ()\n");
 #endif
 
   buffer      = gimp_drawable_get_buffer (drawable_ID);
