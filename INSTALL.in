@@ -103,7 +103,7 @@ header files installed.
 
  12. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
-     to check that the following libraries are installed: libjasper,
+     to check that the following libraries are installed: openjpeg,
      webkit, libmng, librsvg, libwmf, libaa and libgs (Ghostscript).
 
  13. HEIF support depends on the libheif library. If you don't have
@@ -176,13 +176,13 @@ header files installed.
      gs                  -              ghostscript
      libaa               -              ASCII art
      libheif             @LIBHEIF_REQUIRED_VERSION@          HEIF
-     libjasper           -              JPEG 2000
      libmng              -              MNG
      libwebp             @WEBP_REQUIRED_VERSION@          WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
      libwmf              @WMF_REQUIRED_VERSION@          WMF
      libXcursor          -              X11 Mouse Cursor
      libxpm              -              XPM
      openexr             @OPENEXR_REQUIRED_VERSION@          OpenEXR
+     OpenJPEG            @OPENJPEG_REQUIRED_VERSION@          JPEG 2000
      python 2            @PYTHON2_REQUIRED_VERSION@          Python plug-ins
      webkit              @WEBKIT_REQUIRED_VERSION@          Help browser & webpage
 
