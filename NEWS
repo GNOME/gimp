@@ -16,6 +16,10 @@ Core:
   - Render drawable previews asynchronously.
   - Merge the file view filter and file format lists in GimpFileDialog.
     The presence of 2 lists was very confusing.
+  - DLL search priority is now updated before running a plug-in on
+    Windows, depending on the executable bitness. This gets rid of one
+    of the last remnant of DLL hell in GIMP, which was when running
+    32-bit plug-ins from a 64-bit build of GIMP.
 
 Filters:
 
@@ -52,6 +56,12 @@ Translations:
   - 12 translations were updated: Brazilian Portuguese, Dutch, French,
     German, Greek, Italian, Latvian, Polish, Romanian, Slovenian,
     Spanish, Swedish.
+
+Build:
+
+  - Add --with-win32-32bit-dll-folder configuration option to override
+    the folder where 32-bit versions of DLL will be installed (default:
+    32/bin/).
 
 Overview of Changes from GIMP 2.10.2 to GIMP 2.10.4
 ===================================================
