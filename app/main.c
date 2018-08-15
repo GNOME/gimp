@@ -310,6 +310,10 @@ main (int    argc,
   gchar          *backtrace_file     = NULL;
   gint            i;
 
+#ifdef ENABLE_WIN32_DEBUG_CONSOLE
+  gimp_open_console_window ();
+#endif
+
 #if defined (__GNUC__) && defined (_WIN64)
   /* mingw-w64, at least the unstable build from late July 2008,
    * starts subsystem:windows programs in main(), but passes them
@@ -393,10 +397,6 @@ main (int    argc,
     if (p_SetCurrentProcessExplicitAppUserModelID)
       (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
   }
-#endif
-
-#ifdef ENABLE_WIN32_DEBUG_CONSOLE
-  gimp_open_console_window ();
 #endif
 
   gimp_init_malloc ();
