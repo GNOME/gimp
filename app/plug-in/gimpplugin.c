@@ -98,6 +98,9 @@
 
 static void       gimp_plug_in_finalize      (GObject      *object);
 
+static gboolean   gimp_plug_in_recv_message  (GIOChannel   *channel,
+                                              GIOCondition  cond,
+                                              gpointer      data);
 static gboolean   gimp_plug_in_write         (GIOChannel   *channel,
                                               const guint8 *buf,
                                               gulong        count,
@@ -105,9 +108,6 @@ static gboolean   gimp_plug_in_write         (GIOChannel   *channel,
 static gboolean   gimp_plug_in_flush         (GIOChannel   *channel,
                                               gpointer      data);
 
-static gboolean   gimp_plug_in_recv_message  (GIOChannel   *channel,
-                                              GIOCondition  cond,
-                                              gpointer      data);
 #if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
 static void       gimp_plug_in_set_dll_directory (const gchar *path);
 #endif
@@ -173,6 +173,203 @@ gimp_plug_in_finalize (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
+
+static gboolean
+gimp_plug_in_recv_message (GIOChannel   *channel,
+                           GIOCondition  cond,
+                           gpointer      data)
+{
+  GimpPlugIn *plug_in     = data;
+  gboolean    got_message = FALSE;
+
+#ifdef G_OS_WIN32
+  /* Workaround for GLib bug #137968: sometimes we are called for no
+   * reason...
+   */
+  if (cond == 0)
+    return TRUE;
+#endif
+
+  if (plug_in->my_read == NULL)
+    return TRUE;
+
+  g_object_ref (plug_in);
+
+  if (cond & (G_IO_IN | G_IO_PRI))
+    {
+      GimpWireMessage msg;
+
+      memset (&msg, 0, sizeof (GimpWireMessage));
+
+      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
+        {
+          gimp_plug_in_close (plug_in, TRUE);
+        }
+      else
+        {
+          gimp_plug_in_handle_message (plug_in, &msg);
+          gimp_wire_destroy (&msg);
+          got_message = TRUE;
+        }
+    }
+
+  if (cond & (G_IO_ERR | G_IO_HUP))
+    {
+      if (cond & G_IO_HUP)
+        plug_in->hup = TRUE;
+
+      if (plug_in->open)
+        gimp_plug_in_close (plug_in, TRUE);
+    }
+
+  if (! got_message)
+    {
+      GimpPlugInProcFrame *frame    = gimp_plug_in_get_proc_frame (plug_in);
+      GimpProgress        *progress = frame ? frame->progress : NULL;
+
+      gimp_message (plug_in->manager->gimp, G_OBJECT (progress),
+                    GIMP_MESSAGE_ERROR,
+                    _("Plug-in crashed: \"%s\"\n(%s)\n\n"
+                      "The dying plug-in may have messed up GIMP's internal "
+                      "state. You may want to save your images and restart "
+                      "GIMP to be on the safe side."),
+                    gimp_object_get_name (plug_in),
+                    gimp_file_get_utf8_name (plug_in->file));
+    }
+
+  g_object_unref (plug_in);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_plug_in_write (GIOChannel   *channel,
+                    const guint8 *buf,
+                    gulong        count,
+                    gpointer      data)
+{
+  GimpPlugIn *plug_in = data;
+  gulong      bytes;
+
+  while (count > 0)
+    {
+      if ((plug_in->write_buffer_index + count) >= WRITE_BUFFER_SIZE)
+        {
+          bytes = WRITE_BUFFER_SIZE - plug_in->write_buffer_index;
+          memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
+                  buf, bytes);
+          plug_in->write_buffer_index += bytes;
+          if (! gimp_wire_flush (channel, plug_in))
+            return FALSE;
+        }
+      else
+        {
+          bytes = count;
+          memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
+                  buf, bytes);
+          plug_in->write_buffer_index += bytes;
+        }
+
+      buf += bytes;
+      count -= bytes;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_plug_in_flush (GIOChannel *channel,
+                    gpointer    data)
+{
+  GimpPlugIn *plug_in = data;
+
+  if (plug_in->write_buffer_index > 0)
+    {
+      GIOStatus  status;
+      GError    *error = NULL;
+      gint       count;
+      gsize      bytes;
+
+      count = 0;
+      while (count != plug_in->write_buffer_index)
+        {
+          do
+            {
+              bytes = 0;
+              status = g_io_channel_write_chars (channel,
+                                                 &plug_in->write_buffer[count],
+                                                 (plug_in->write_buffer_index - count),
+                                                 &bytes,
+                                                 &error);
+            }
+          while (status == G_IO_STATUS_AGAIN);
+
+          if (status != G_IO_STATUS_NORMAL)
+            {
+              if (error)
+                {
+                  g_warning ("%s: plug_in_flush(): error: %s",
+                             gimp_filename_to_utf8 (g_get_prgname ()),
+                             error->message);
+                  g_error_free (error);
+                }
+              else
+                {
+                  g_warning ("%s: plug_in_flush(): error",
+                             gimp_filename_to_utf8 (g_get_prgname ()));
+                }
+
+              return FALSE;
+            }
+
+          count += bytes;
+        }
+
+      plug_in->write_buffer_index = 0;
+    }
+
+  return TRUE;
+}
+
+#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
+static void
+gimp_plug_in_set_dll_directory (const gchar *path)
+{
+  const gchar *install_dir;
+  gchar       *bin_dir;
+  LPWSTR       w_bin_dir;
+  DWORD        BinaryType;
+  int          n;
+
+  w_bin_dir = NULL;
+  install_dir = gimp_installation_directory ();
+  if (path                               &&
+      GetBinaryTypeA (path, &BinaryType) &&
+      BinaryType == SCS_32BIT_BINARY)
+    bin_dir = g_build_filename (install_dir, WIN32_32BIT_DLL_FOLDER, NULL);
+  else
+    bin_dir = g_build_filename (install_dir, "bin", NULL);
+
+  n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
+                           bin_dir, -1, NULL, 0);
+  if (n == 0)
+    goto out;
+
+  w_bin_dir = g_malloc_n (n + 1, sizeof (wchar_t));
+  n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
+                           bin_dir, -1,
+                           w_bin_dir, (n + 1) * sizeof (wchar_t));
+  if (n == 0)
+    goto out;
+
+  SetDllDirectoryW (w_bin_dir);
+
+out:
+  if (w_bin_dir)
+    g_free ((void*) w_bin_dir);
+  g_free (bin_dir);
+}
+#endif
 
 
 /*  public functions  */
@@ -574,203 +771,6 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
   gimp_plug_in_manager_remove_open_plug_in (plug_in->manager, plug_in);
 }
 
-static gboolean
-gimp_plug_in_recv_message (GIOChannel   *channel,
-                           GIOCondition  cond,
-                           gpointer      data)
-{
-  GimpPlugIn *plug_in     = data;
-  gboolean    got_message = FALSE;
-
-#ifdef G_OS_WIN32
-  /* Workaround for GLib bug #137968: sometimes we are called for no
-   * reason...
-   */
-  if (cond == 0)
-    return TRUE;
-#endif
-
-  if (plug_in->my_read == NULL)
-    return TRUE;
-
-  g_object_ref (plug_in);
-
-  if (cond & (G_IO_IN | G_IO_PRI))
-    {
-      GimpWireMessage msg;
-
-      memset (&msg, 0, sizeof (GimpWireMessage));
-
-      if (! gimp_wire_read_msg (plug_in->my_read, &msg, plug_in))
-        {
-          gimp_plug_in_close (plug_in, TRUE);
-        }
-      else
-        {
-          gimp_plug_in_handle_message (plug_in, &msg);
-          gimp_wire_destroy (&msg);
-          got_message = TRUE;
-        }
-    }
-
-  if (cond & (G_IO_ERR | G_IO_HUP))
-    {
-      if (cond & G_IO_HUP)
-        plug_in->hup = TRUE;
-
-      if (plug_in->open)
-        gimp_plug_in_close (plug_in, TRUE);
-    }
-
-  if (! got_message)
-    {
-      GimpPlugInProcFrame *frame    = gimp_plug_in_get_proc_frame (plug_in);
-      GimpProgress        *progress = frame ? frame->progress : NULL;
-
-      gimp_message (plug_in->manager->gimp, G_OBJECT (progress),
-                    GIMP_MESSAGE_ERROR,
-                    _("Plug-in crashed: \"%s\"\n(%s)\n\n"
-                      "The dying plug-in may have messed up GIMP's internal "
-                      "state. You may want to save your images and restart "
-                      "GIMP to be on the safe side."),
-                    gimp_object_get_name (plug_in),
-                    gimp_file_get_utf8_name (plug_in->file));
-    }
-
-  g_object_unref (plug_in);
-
-  return TRUE;
-}
-
-static gboolean
-gimp_plug_in_write (GIOChannel   *channel,
-                    const guint8 *buf,
-                    gulong        count,
-                    gpointer      data)
-{
-  GimpPlugIn *plug_in = data;
-  gulong      bytes;
-
-  while (count > 0)
-    {
-      if ((plug_in->write_buffer_index + count) >= WRITE_BUFFER_SIZE)
-        {
-          bytes = WRITE_BUFFER_SIZE - plug_in->write_buffer_index;
-          memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
-                  buf, bytes);
-          plug_in->write_buffer_index += bytes;
-          if (! gimp_wire_flush (channel, plug_in))
-            return FALSE;
-        }
-      else
-        {
-          bytes = count;
-          memcpy (&plug_in->write_buffer[plug_in->write_buffer_index],
-                  buf, bytes);
-          plug_in->write_buffer_index += bytes;
-        }
-
-      buf += bytes;
-      count -= bytes;
-    }
-
-  return TRUE;
-}
-
-static gboolean
-gimp_plug_in_flush (GIOChannel *channel,
-                    gpointer    data)
-{
-  GimpPlugIn *plug_in = data;
-
-  if (plug_in->write_buffer_index > 0)
-    {
-      GIOStatus  status;
-      GError    *error = NULL;
-      gint       count;
-      gsize      bytes;
-
-      count = 0;
-      while (count != plug_in->write_buffer_index)
-        {
-          do
-            {
-              bytes = 0;
-              status = g_io_channel_write_chars (channel,
-                                                 &plug_in->write_buffer[count],
-                                                 (plug_in->write_buffer_index - count),
-                                                 &bytes,
-                                                 &error);
-            }
-          while (status == G_IO_STATUS_AGAIN);
-
-          if (status != G_IO_STATUS_NORMAL)
-            {
-              if (error)
-                {
-                  g_warning ("%s: plug_in_flush(): error: %s",
-                             gimp_filename_to_utf8 (g_get_prgname ()),
-                             error->message);
-                  g_error_free (error);
-                }
-              else
-                {
-                  g_warning ("%s: plug_in_flush(): error",
-                             gimp_filename_to_utf8 (g_get_prgname ()));
-                }
-
-              return FALSE;
-            }
-
-          count += bytes;
-        }
-
-      plug_in->write_buffer_index = 0;
-    }
-
-  return TRUE;
-}
-
-#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
-static void
-gimp_plug_in_set_dll_directory (const gchar *path)
-{
-  const gchar *install_dir;
-  gchar       *bin_dir;
-  LPWSTR       w_bin_dir;
-  DWORD        BinaryType;
-  int          n;
-
-  w_bin_dir = NULL;
-  install_dir = gimp_installation_directory ();
-  if (path                               &&
-      GetBinaryTypeA (path, &BinaryType) &&
-      BinaryType == SCS_32BIT_BINARY)
-    bin_dir = g_build_filename (install_dir, WIN32_32BIT_DLL_FOLDER, NULL);
-  else
-    bin_dir = g_build_filename (install_dir, "bin", NULL);
-
-  n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
-                           bin_dir, -1, NULL, 0);
-  if (n == 0)
-    goto out;
-
-  w_bin_dir = g_malloc_n (n + 1, sizeof (wchar_t));
-  n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
-                           bin_dir, -1,
-                           w_bin_dir, (n + 1) * sizeof (wchar_t));
-  if (n == 0)
-    goto out;
-
-  SetDllDirectoryW (w_bin_dir);
-
-out:
-  if (w_bin_dir)
-    g_free ((void*) w_bin_dir);
-  g_free (bin_dir);
-}
-#endif
-
 GimpPlugInProcFrame *
 gimp_plug_in_get_proc_frame (GimpPlugIn *plug_in)
 {
@@ -966,36 +966,6 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
 }
 
 void
-gimp_plug_in_set_error_handler (GimpPlugIn          *plug_in,
-                                GimpPDBErrorHandler  handler)
-{
-  GimpPlugInProcFrame *proc_frame;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-
-  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
-
-  if (proc_frame)
-    proc_frame->error_handler = handler;
-}
-
-GimpPDBErrorHandler
-gimp_plug_in_get_error_handler (GimpPlugIn *plug_in)
-{
-  GimpPlugInProcFrame *proc_frame;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in),
-                        GIMP_PDB_ERROR_HANDLER_INTERNAL);
-
-  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
-
-  if (proc_frame)
-    return proc_frame->error_handler;
-
-  return GIMP_PDB_ERROR_HANDLER_INTERNAL;
-}
-
-void
 gimp_plug_in_add_temp_proc (GimpPlugIn             *plug_in,
                             GimpTemporaryProcedure *proc)
 {
@@ -1041,6 +1011,36 @@ gimp_plug_in_remove_temp_proc (GimpPlugIn             *plug_in,
 
   gimp_plug_in_manager_remove_temp_proc (plug_in->manager, proc);
   g_object_unref (proc);
+}
+
+void
+gimp_plug_in_set_error_handler (GimpPlugIn          *plug_in,
+                                GimpPDBErrorHandler  handler)
+{
+  GimpPlugInProcFrame *proc_frame;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame)
+    proc_frame->error_handler = handler;
+}
+
+GimpPDBErrorHandler
+gimp_plug_in_get_error_handler (GimpPlugIn *plug_in)
+{
+  GimpPlugInProcFrame *proc_frame;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in),
+                        GIMP_PDB_ERROR_HANDLER_INTERNAL);
+
+  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame)
+    return proc_frame->error_handler;
+
+  return GIMP_PDB_ERROR_HANDLER_INTERNAL;
 }
 
 void
