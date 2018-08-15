@@ -108,6 +108,9 @@ static gboolean   gimp_plug_in_flush         (GIOChannel   *channel,
 static gboolean   gimp_plug_in_recv_message  (GIOChannel   *channel,
                                               GIOCondition  cond,
                                               gpointer      data);
+#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
+static void       gimp_plug_in_set_dll_directory (const gchar *path);
+#endif
 
 
 
@@ -360,6 +363,9 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   /* Fork another process. We'll remember the process id so that we
    * can later use it to kill the filter if necessary.
    */
+#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
+  gimp_plug_in_set_dll_directory (argv[0]);
+#endif
   if (! gimp_spawn_async (argv, envp, spawn_flags, &plug_in->pid, &error))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
@@ -397,6 +403,10 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   gimp_plug_in_manager_add_open_plug_in (plug_in->manager, plug_in);
 
  cleanup:
+
+#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
+  gimp_plug_in_set_dll_directory (NULL);
+#endif
 
   if (debug)
     g_free (argv);
@@ -720,6 +730,46 @@ gimp_plug_in_flush (GIOChannel *channel,
 
   return TRUE;
 }
+
+#if defined G_OS_WIN32 && defined WIN32_32BIT_DLL_FOLDER
+static void
+gimp_plug_in_set_dll_directory (const gchar *path)
+{
+  const gchar *install_dir;
+  gchar       *bin_dir;
+  LPWSTR       w_bin_dir;
+  DWORD        BinaryType;
+  int          n;
+
+  w_bin_dir = NULL;
+  install_dir = gimp_installation_directory ();
+  if (path                               &&
+      GetBinaryTypeA (path, &BinaryType) &&
+      BinaryType == SCS_32BIT_BINARY)
+    bin_dir = g_build_filename (install_dir, WIN32_32BIT_DLL_FOLDER, NULL);
+  else
+    bin_dir = g_build_filename (install_dir, "bin", NULL);
+
+  n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
+                           bin_dir, -1, NULL, 0);
+  if (n == 0)
+    goto out;
+
+  w_bin_dir = g_malloc_n (n + 1, sizeof (wchar_t));
+  n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
+                           bin_dir, -1,
+                           w_bin_dir, (n + 1) * sizeof (wchar_t));
+  if (n == 0)
+    goto out;
+
+  SetDllDirectoryW (w_bin_dir);
+
+out:
+  if (w_bin_dir)
+    g_free ((void*) w_bin_dir);
+  g_free (bin_dir);
+}
+#endif
 
 GimpPlugInProcFrame *
 gimp_plug_in_get_proc_frame (GimpPlugIn *plug_in)

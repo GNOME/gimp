@@ -935,6 +935,34 @@ if test "x$enable_win32_debug_console" = "xyes"; then
 fi
 AC_MSG_RESULT([$enable_win32_debug_console])
 
+######################################
+# Check for 32-bit DLLs (Win32 64-bit)
+######################################
+
+AC_ARG_WITH(win32-32bit-dll-folder,
+            [  --with-win32-32bit-dll-folder[=DIR]
+                          alternative folder with 32-bit versions of DLL libraries on Windows (default: 32/bin/)],,
+            with_win32_32bit_dll_folder="32/bin")
+
+AC_MSG_CHECKING([the alternative folder containing 32-bit DLLs on Windows])
+if test "x$platform_win32" = "xyes"; then
+  case "$host_cpu" in
+    x86_64)
+    ;;
+    *)
+    with_win32_32bit_dll_folder="no"
+    ;;
+  esac
+else
+    with_win32_32bit_dll_folder="no"
+fi
+
+if test "x$with_win32_32bit_dll_folder" != "xno"; then
+  AC_DEFINE_UNQUOTED(WIN32_32BIT_DLL_FOLDER, "$with_win32_32bit_dll_folder",
+                     [Define if 32-bit versions of libraries are packaged in an alternative folder])
+fi
+AC_MSG_RESULT([$with_win32_32bit_dll_folder])
+
 #####################
 # Check for Dr. Mingw
 #####################
@@ -2895,44 +2923,45 @@ generate_po_makefile([po-windows-installer])
 # Print a summary of features enabled/disabled:
 optional_deps="
 Extra Binaries:
-  gimp-console:            $enable_gimp_console
+  gimp-console:              $enable_gimp_console
 
 Optional Features:
-  Language selection:      $have_iso_codes
-  Vector icons:            $enable_vector_icons
-  Dr. Mingw (Win32):       $enable_drmingw
-  Relocatable bundle:      $enable_relocatable_bundle
-  Default ICC directory:   $with_icc_directory
-  Debug console (Win32):   $enable_win32_debug_console
+  Language selection:        $have_iso_codes
+  Vector icons:              $enable_vector_icons
+  Dr. Mingw (Win32):         $enable_drmingw
+  Relocatable bundle:        $enable_relocatable_bundle
+  Default ICC directory:     $with_icc_directory
+  Debug console (Win32):     $enable_win32_debug_console
+  32-bit DLL folder (Win32): $with_win32_32bit_dll_folder
 
 Optional Plug-Ins:
-  Ascii Art:               $have_libaa
-  Ghostscript:             $have_gs
-  Help Browser:            $have_webkit
-  JPEG 2000:               $have_openjpeg
-  MNG:                     $have_libmng
-  OpenEXR:                 $have_openexr
-  WebP:                    $have_webp
-  Heif:                    $have_libheif
-  PDF (export):            $have_cairo_pdf
-  Print:                   $enable_print
-  Python 2:                $enable_python
-  TWAIN (Win32):           $os_win32
-  Webpage:                 $have_webkit
-  WMF:                     $have_libwmf
-  X11 Mouse Cursor:        $have_xmc
-  XPM:                     $have_libxpm
-  Email:                   $have_email
+  Ascii Art:                 $have_libaa
+  Ghostscript:               $have_gs
+  Help Browser:              $have_webkit
+  JPEG 2000:                 $have_openjpeg
+  MNG:                       $have_libmng
+  OpenEXR:                   $have_openexr
+  WebP:                      $have_webp
+  Heif:                      $have_libheif
+  PDF (export):              $have_cairo_pdf
+  Print:                     $enable_print
+  Python 2:                  $enable_python
+  TWAIN (Win32):             $os_win32
+  Webpage:                   $have_webkit
+  WMF:                       $have_libwmf
+  X11 Mouse Cursor:          $have_xmc
+  XPM:                       $have_libxpm
+  Email:                     $have_email
 
 Optional Modules:
-  ALSA (MIDI Input):       $have_alsa
-  Linux Input:             $have_linux_input (GUdev support: $have_libgudev)
-  DirectInput (Win32):     $have_dx_dinput
+  ALSA (MIDI Input):         $have_alsa
+  Linux Input:               $have_linux_input (GUdev support: $have_libgudev)
+  DirectInput (Win32):       $have_dx_dinput
 
 Tests:
-  Use xvfb-run             $have_xvfb_run
-  Test appdata             $have_appstream_util
-  Test desktop file        $have_desktop_file_validate
+  Use xvfb-run               $have_xvfb_run
+  Test appdata               $have_appstream_util
+  Test desktop file          $have_desktop_file_validate
 
 Bug report URL: $with_bug_report_url
 $override_bug_report_url$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
