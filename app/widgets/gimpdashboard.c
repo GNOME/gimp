@@ -105,6 +105,8 @@ typedef enum
   VARIABLE_SWAP_WRITTEN,
   VARIABLE_SWAP_WRITING,
 
+  VARIABLE_SWAP_COMPRESSION,
+
 #ifdef HAVE_CPU_GROUP
   /* cpu */
   VARIABLE_CPU_USAGE,
@@ -517,6 +519,16 @@ static const VariableInfo variables[] =
     .data             = GINT_TO_POINTER (VARIABLE_SWAP_WRITTEN)
   },
 
+  [VARIABLE_SWAP_COMPRESSION] =
+  { .name             = "swap-compression",
+    .title            = NC_("dashboard-variable", "Compression"),
+    .description      = N_("Swap compression ratio"),
+    .type             = VARIABLE_TYPE_SIZE_RATIO,
+    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .data             = "swap-total\0"
+                        "swap-total-uncloned"
+  },
+
 
 #ifdef HAVE_CPU_GROUP
   /* cpu variables */
@@ -686,6 +698,12 @@ static const GroupInfo groups[] =
                             .show_in_header   = FALSE,
                             .meter_variable   = VARIABLE_SWAP_WRITING,
                             .meter_value      = 1
+                          },
+
+                          { VARIABLE_SEPARATOR },
+
+                          { .variable         = VARIABLE_SWAP_COMPRESSION,
+                            .default_active   = FALSE
                           },
 
                           {}
