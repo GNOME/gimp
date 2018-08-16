@@ -285,6 +285,12 @@
 # 
 # (layer-previews yes)
 
+# Sets whether GIMP should create previews of layer groups. Layer group
+# previews are more expensive than ordinary layer previews.  Possible values
+# are yes and no.
+# 
+# (group-layer-previews yes)
+
 # Sets the preview size used for layers and channel previews in newly created
 # dialogs.  Possible values are tiny, extra-small, small, medium, large,
 # extra-large, huge, enormous and gigantic.
@@ -776,7 +782,7 @@
 # The location of the online user manual. This is used if
 # 'user-manual-online' is enabled.  This is a string value.
 # 
-# (user-manual-online-uri "http://docs.gimp.org/2.10")
+# (user-manual-online-uri "https://docs.gimp.org/2.10")
 
 # The window type hint that is set on dock windows and the toolbox window.
 # This may affect the way your window manager decorates and handles these

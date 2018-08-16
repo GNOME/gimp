@@ -354,6 +354,13 @@ the layers and channels dialog are nice to have but they can slow things down
 when working with large images.  Possible values are yes and no.
 
 .TP
+(group-layer-previews yes)
+
+Sets whether GIMP should create previews of layer groups. Layer group previews
+are more expensive than ordinary layer previews.  Possible values are yes and
+no.
+
+.TP
 (layer-preview-size medium)
 
 Sets the preview size used for layers and channel previews in newly created
@@ -976,7 +983,7 @@ When enabled, the online user manual will be used by the help system.
 Otherwise the locally installed copy is used.  Possible values are yes and no.
 
 .TP
-(user-manual-online-uri "http://docs.gimp.org/2.10")
+(user-manual-online-uri "https://docs.gimp.org/2.10")
 
 The location of the online user manual. This is used if 'user-manual-online'
 is enabled.  This is a string value.
