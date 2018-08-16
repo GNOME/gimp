@@ -1,22 +1,22 @@
 # Brazilian Portuguese translation for gimp-windows-installer.
 # Copyright (C) 2018 the gimp authors.
 # This file is distributed under the same license as the gimp package.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2017.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2017, 2018.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-08 15:39+0000\n"
-"PO-Revision-Date: 2018-07-06 13:52-0300\n"
-"Last-Translator: Bruno Lopes da Silva <brunolopesbldsb@gmail.com>\n"
+"POT-Creation-Date: 2018-08-16 20:30+0000\n"
+"PO-Revision-Date: 2018-08-16 17:37-0200\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
 "X-Project-Style: gnome\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
@@ -38,23 +38,30 @@ msgstr "Versão de Desenvolvimento"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:6
 #, no-c-format
+#| msgid ""
+#| "This is a development version of GIMP where some features may not be "
+#| "finished, or it may be unstable.%nThis version of GIMP is not intended "
+#| "for day-to-day work as it may be unstable, and you could lose your work."
+#| "%nIf you encounter any problems, first verify that they haven't already "
+#| "been fixed in GIT before you contact the developers or report it in GIMP "
+#| "bugzilla:%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo "
+#| "you wish to continue with installation anyway?"
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP bugzilla:"
-"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
-"continue with installation anyway?"
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
 msgstr ""
 "Esta é uma versão de desenvolvimento do GIMP no qual alguns recursos podem "
 "estar inacabados ou instáveis.%nEsta versão do GIMP não é recomendada para "
 "uso diário devido a possibilidade de instabilidade, e de você perder seu "
 "trabalho.%nSe você encontrar qualquer problema, primeiramente verifique se "
 "ele não já foi corrigido no GIT antes de entrar em contato com os "
-"desenvolvedores ou reportar no GIMP bugzilla:%n_https://bugzilla.gnome.org/"
-"enter_bug.cgi?product=GIMP%n%nVocê deseja continuar com a instalação mesmo "
-"assim?"
+"desenvolvedores ou reportar no GitLab do GIMP:%n_https://gitlab.gnome.org/"
+"GNOME/gimp/issues%n%nVocê deseja continuar com a instalação mesmo assim?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
