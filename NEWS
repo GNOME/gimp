@@ -24,6 +24,7 @@ Core:
 Filters:
 
   - New "Little Planet" (gegl:stereographic-projection) filter.
+  - New "Long Shadow" (gegl:long-shadow) filter.
 
 Tools:
 
