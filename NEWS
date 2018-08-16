@@ -62,6 +62,10 @@ Build:
   - Add --with-win32-32bit-dll-folder configuration option to override
     the folder where 32-bit versions of DLL will be installed (default:
     32/bin/).
+  - Install all plug-ins in their own directories. Unlike on master,
+    this is not mandatory to do so, but it would protect our core
+    plug-ins against any DLL installed directly under plug-ins/ by
+    third-party plug-ins (cf. Windows DLL hell).
 
 Overview of Changes from GIMP 2.10.2 to GIMP 2.10.4
 ===================================================
