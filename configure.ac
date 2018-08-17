@@ -1827,6 +1827,11 @@ PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,,
 
 MIME_TYPES="$MIME_TYPES;image/svg+xml"
 
+AC_CHECK_PROGS(GTK_ENCODE_SYMBOLIC_SVG, gtk-encode-symbolic-svg, no)
+
+if test "x$GTK_ENCODE_SYMBOLIC_SVG" = xno; then
+  add_deps_error([gtk-encode-symbolic-svg])
+fi
 
 ####################################
 # Allow to disable the print plug-in

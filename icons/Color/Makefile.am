@@ -5,7 +5,7 @@ iconsdir = $(gimpdatadir)/icons/Color
 icons_DATA = \
 	index.theme
 
-include $(top_srcdir)/icons/icon-list.mk
+include $(top_srcdir)/icons/Color/icon-list.mk
 
 if ENABLE_VECTOR_ICONS
 icons24_DATA = \
@@ -47,8 +47,8 @@ EXTRA_DIST = \
 	$(icons128_images)		\
 	$(icons192_images)		\
 	$(icons256_images)		\
-	$(color_scalable_images)	\
-	$(color_vector24_images)	\
+	$(scalable_images)	\
+	$(vector24_images)	\
 	color-scalable.svg
 
 noinst_DATA = \
