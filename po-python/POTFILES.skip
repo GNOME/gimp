@@ -53,3 +53,12 @@ plug-ins/twain
 plug-ins/ui
 plug-ins/win-snap
 tools
+
+plug-ins/pygimp/plug-ins/colorxhtml/colorxhtml.py
+plug-ins/pygimp/plug-ins/foggify/foggify.py
+plug-ins/pygimp/plug-ins/gradients-save-as-css/gradients-save-as-css.py
+plug-ins/pygimp/plug-ins/histogram-export/histogram-export.py
+plug-ins/pygimp/plug-ins/palette-offset/palette-offset.py
+plug-ins/pygimp/plug-ins/palette-sort/palette-sort.py
+plug-ins/pygimp/plug-ins/palette-to-gradient/palette-to-gradient.py
+plug-ins/pygimp/plug-ins/py-slice/py-slice.py
