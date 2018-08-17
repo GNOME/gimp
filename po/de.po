@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-07 12:36+0000\n"
-"PO-Revision-Date: 2018-08-07 18:10+0200\n"
+"POT-Creation-Date: 2018-08-12 17:20+0000\n"
+"PO-Revision-Date: 2018-08-16 17:40+0200\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -133,7 +133,7 @@ msgstr ""
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "Die Dateiformat-Filter in den Öffnen/Speichern/Exportieren-Dialogen wurden "
-"verständlicher gestaltet. "
+"verständlicher gestaltet"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
@@ -4991,335 +4991,343 @@ msgid "_Little Planet..."
 msgstr "K_leiner Planet …"
 
 #: ../app/actions/filters-actions.c:422
+#, fuzzy
+#| msgctxt "filters-action"
+#| msgid "_Drop Shadow..."
+msgctxt "filters-action"
+msgid "_Long Shadow..."
+msgstr "_Schlagschatten …"
+
+#: ../app/actions/filters-actions.c:427
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: ../app/actions/filters-actions.c:427
+#: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Labyrinth …"
 
-#: ../app/actions/filters-actions.c:432
+#: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "_Median-Weichzeichner …"
 
-#: ../app/actions/filters-actions.c:437
+#: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Mono Mixer …"
 
-#: ../app/actions/filters-actions.c:442
+#: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mosaik …"
 
-#: ../app/actions/filters-actions.c:447
+#: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "Bewegungsunschärfe _kreisförmig …"
 
-#: ../app/actions/filters-actions.c:452
+#: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "Bewegungsunschärfe _linear …"
 
-#: ../app/actions/filters-actions.c:457
+#: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "Bewegungsunschärfe _radial …"
 
-#: ../app/actions/filters-actions.c:462
+#: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "_Zellrauschen …"
 
-#: ../app/actions/filters-actions.c:467
+#: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "CIE lch Rauschen …"
 
-#: ../app/actions/filters-actions.c:472
+#: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "HSV-Rauschen …"
 
-#: ../app/actions/filters-actions.c:477
+#: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Verwirbeln …"
 
-#: ../app/actions/filters-actions.c:482
+#: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "_Perlin-Rauschen …"
 
-#: ../app/actions/filters-actions.c:487
+#: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Nachbar …"
 
-#: ../app/actions/filters-actions.c:492
+#: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "_RGB-Rauschen …"
 
-#: ../app/actions/filters-actions.c:497
+#: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "_Rauschreduktion …"
 
-#: ../app/actions/filters-actions.c:502
+#: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Simplex-Rauschen …"
 
-#: ../app/actions/filters-actions.c:507
+#: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "Ver_schleifen …"
 
-#: ../app/actions/filters-actions.c:512
+#: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Plasma-Rauschen …"
 
-#: ../app/actions/filters-actions.c:517
+#: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Verstreuen …"
 
-#: ../app/actions/filters-actions.c:522
+#: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Öl_gemälde …"
 
-#: ../app/actions/filters-actions.c:527
+#: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Panoramaabbildung …"
 
-#: ../app/actions/filters-actions.c:532
+#: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopie …"
 
-#: ../app/actions/filters-actions.c:537
+#: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Verpixeln …"
 
-#: ../app/actions/filters-actions.c:542
+#: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma …"
 
-#: ../app/actions/filters-actions.c:547
+#: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "_Polarkoordinaten …"
 
-#: ../app/actions/filters-actions.c:552
+#: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterisieren …"
 
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Rekursive Transformation …"
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Rote Augen entfernen …"
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: ../app/actions/filters-actions.c:572
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "RGB bes_chneiden …"
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Wellen …"
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Sättigung …"
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Teil-Abflachen …"
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia …"
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "Sc_hatten-Glanzlichter …"
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Verschieben …"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus …"
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "Einfache_s lineares iteratives Clustering …"
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symmetrisch nächster Nachbar …"
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Sanftes Leuchten …"
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "Sphäri_sieren …"
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "_Verwirbeln …"
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Kontrastspreizung …"
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr ""
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova …"
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Schwellwert …"
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Alpha-Schwellwert …"
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Glasbaustein …"
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Papierschnipsel …"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "Nahtlos _kacheln …"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Schärfen (_Unscharf maskieren) …"
 
-#: ../app/actions/filters-actions.c:682
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Werte verteilen …"
 
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "V_ideo-Darstellung …"
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vignette …"
 
-#: ../app/actions/filters-actions.c:697
+#: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Wasserpixel …"
 
-#: ../app/actions/filters-actions.c:702
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Wellen …"
 
-#: ../app/actions/filters-actions.c:707
+#: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "Dre_hen und Drücken …"
 
-#: ../app/actions/filters-actions.c:712
+#: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_ind …"
 
-#: ../app/actions/filters-actions.c:720
+#: ../app/actions/filters-actions.c:725
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Le_tzten wiederholen"
 
-#: ../app/actions/filters-actions.c:722
+#: ../app/actions/filters-actions.c:727
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Letzen Filter wiederholen"
 
-#: ../app/actions/filters-actions.c:727
+#: ../app/actions/filters-actions.c:732
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "L_etzten erneut anzeigen"
 
-#: ../app/actions/filters-actions.c:728
+#: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Letzten Filterdialog anzeigen"
 
-#: ../app/actions/filters-actions.c:1057
+#: ../app/actions/filters-actions.c:1063
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "»%s« _wiederholen"
 
-#: ../app/actions/filters-actions.c:1058
+#: ../app/actions/filters-actions.c:1064
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "»%s« _erneut anzeigen"
 
-#: ../app/actions/filters-actions.c:1096
+#: ../app/actions/filters-actions.c:1102
 msgid "Repeat Last"
 msgstr "Letzte Aktion wiederholen"
 
-#: ../app/actions/filters-actions.c:1098
+#: ../app/actions/filters-actions.c:1104
 msgid "Re-Show Last"
 msgstr "Letzte Aktion erneut anzeigen"
 
@@ -10972,7 +10980,7 @@ msgstr "Das N-Punkt Verformungswerkzeug aktivieren."
 
 #: ../app/config/gimprc-blurbs.h:425
 msgid "Enable the Handle Transform tool."
-msgstr "Das Gitter Transformationswerkzeug aktivieren."
+msgstr "Das Ankertransformation-Werkzeug aktivieren."
 
 #: ../app/config/gimprc-blurbs.h:428
 msgid "Enable symmetry on painting."
@@ -13264,41 +13272,41 @@ msgstr ""
 msgid "Offset unit"
 msgstr "Einheit für Versatz"
 
-#: ../app/core/gimpgrouplayer.c:280
+#: ../app/core/gimpgrouplayer.c:279
 msgid "Layer Group"
 msgstr "Ebenengruppe"
 
-#: ../app/core/gimpgrouplayer.c:281
+#: ../app/core/gimpgrouplayer.c:280
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Ebenengruppe umbenennen"
 
-#: ../app/core/gimpgrouplayer.c:282
+#: ../app/core/gimpgrouplayer.c:281
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Ebenengruppe bewegen"
 
-#: ../app/core/gimpgrouplayer.c:283
+#: ../app/core/gimpgrouplayer.c:282
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Ebenengruppe skalieren"
 
-#: ../app/core/gimpgrouplayer.c:284
+#: ../app/core/gimpgrouplayer.c:283
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Größe der Ebenengruppe ändern"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:284
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Ebenengruppe spiegeln"
 
-#: ../app/core/gimpgrouplayer.c:286
+#: ../app/core/gimpgrouplayer.c:285
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Ebenengruppe drehen"
 
-#: ../app/core/gimpgrouplayer.c:287
+#: ../app/core/gimpgrouplayer.c:286
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Ebenengruppe transformieren"
@@ -17703,15 +17711,15 @@ msgstr "Klicken und ziehen Sie, um die Perspektive zu ändern"
 
 #: ../app/display/gimptoolhandlegrid.c:889
 msgid "Click to add a handle"
-msgstr "Klicken Sie, um einen Griffpunkt hinzuzufügen"
+msgstr "Klicken Sie, um einen Ankerpunkt hinzuzufügen"
 
 #: ../app/display/gimptoolhandlegrid.c:895
 msgid "Click-Drag to move this handle"
-msgstr "Klicken und ziehen Sie, um den Griffpunkt zu verschieben"
+msgstr "Klicken und ziehen Sie, um den Ankerpunkt zu verschieben"
 
 #: ../app/display/gimptoolhandlegrid.c:900
 msgid "Click-Drag to remove this handle"
-msgstr "Klicken und ziehen Sie, um den Griffpunkt zu entfernen"
+msgstr "Klicken und ziehen Sie, um den Ankerpunkt zu entfernen"
 
 #: ../app/display/gimptoolline.c:347 ../app/display/gimptoolline.c:510
 msgid "Line: "
@@ -18115,14 +18123,16 @@ msgstr "Indiziert"
 #: ../app/gegl/gimp-gegl-enums.c:24
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr "Den Käfig erstellen oder anpassen"
+msgstr "Käfig erstellen oder anpassen"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
 msgid ""
 "Deform the cage\n"
 "to deform the image"
-msgstr "Den Käfig zum Deformieren des Bilds deformieren"
+msgstr ""
+"Käfig verformen,\n"
+"um das Bild zu verformen"
 
 #: ../app/operations/operations-enums.c:25
 msgctxt "layer-color-space"
@@ -18860,7 +18870,7 @@ msgstr "Mit reiner Farbe füllen"
 
 #: ../app/operations/gimpoperationcagetransform.c:131
 msgid "Fill the original position of the cage with a plain color"
-msgstr "Die Originalposition des Käfigs mit einer reinen Farbe füllen"
+msgstr "Originalposition des Käfigs mit einer reinen Farbe füllen"
 
 #: ../app/operations/gimpoperationcolorbalance.c:65
 msgid "Adjust color distribution"
@@ -21174,19 +21184,21 @@ msgstr "Nach Farbe auswählen"
 msgid ""
 "Fill the original position\n"
 "of the cage with a color"
-msgstr "Die Originalposition des Käfigs mit einer Farbe füllen"
+msgstr ""
+"Die Originalposition\n"
+"des Käfigs mit einer Farbe füllen"
 
 #: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1223
 msgid "Cage Transform"
-msgstr "Käfig Transformation"
+msgstr "Käfigtransformation"
 
 #: ../app/tools/gimpcagetool.c:159
 msgid "Cage Transform: Deform a selection with a cage"
-msgstr "Käfig Transformation: Eine Auswahl mit einem Käfig verformen"
+msgstr "Käfigtransformation: Eine Auswahl mithilfe eines Käfigs verformen"
 
 #: ../app/tools/gimpcagetool.c:160
 msgid "_Cage Transform"
-msgstr "_Käfig Transformation"
+msgstr "_Käfigtransformation"
 
 #: ../app/tools/gimpcagetool.c:732 ../app/tools/gimpwarptool.c:329
 msgid "Press ENTER to commit the transform"
@@ -21194,11 +21206,11 @@ msgstr "Drücken Sie die Eingabetaste zur Ausführung der Transformation"
 
 #: ../app/tools/gimpcagetool.c:1133
 msgid "Computing Cage Coefficients"
-msgstr "Käfig Koeffizienten berechnen"
+msgstr "Käfig-Koeffizienten berechnen"
 
 #: ../app/tools/gimpcagetool.c:1266
 msgid "Cage transform"
-msgstr "Käfig Transformation"
+msgstr "Käfigtransformation"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -21885,8 +21897,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Zauberstab"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:542
-#: ../app/tools/gimpgegltool.c:543 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:543
+#: ../app/tools/gimpgegltool.c:544 ../app/tools/gimpoperationtool.c:134
 msgid "GEGL Operation"
 msgstr "GEGL-Operation"
 
@@ -21899,7 +21911,7 @@ msgid "_GEGL Operation..."
 msgstr "_GEGL-Operationen …"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:487
+#: ../app/tools/gimpgegltool.c:488
 msgid "Select an operation from the list above"
 msgstr "Wählen Sie eine Operation aus der obigen Liste"
 
@@ -22101,7 +22113,7 @@ msgstr "Hilfslinie hinzufügen: "
 #: ../app/tools/gimphandletransformoptions.c:73
 #: ../app/tools/gimphandletransformoptions.c:74
 msgid "Handle mode"
-msgstr "Ankerpunkt Modus"
+msgstr "Anker-Modus"
 
 #: ../app/tools/gimphandletransformoptions.c:167
 msgid "Add handles and transform the image"
@@ -22109,33 +22121,32 @@ msgstr "Füge Ankerpunkte hinzu und transformiere das Bild"
 
 #: ../app/tools/gimphandletransformoptions.c:172
 msgid "Move transform handles"
-msgstr "Transform Ankerpunkte verschieben"
+msgstr "Transformations-Ankerpunkte verschieben"
 
 #: ../app/tools/gimphandletransformoptions.c:177
 msgid "Remove transform handles"
-msgstr "Transform Ankerpunkte entfernen"
+msgstr "Transformations-Ankerpunkte entfernen"
 
 #: ../app/tools/gimphandletransformtool.c:111
 msgid "Handle Transform"
-msgstr "Gitter Transformation"
+msgstr "Ankertransformation"
 
 #: ../app/tools/gimphandletransformtool.c:112
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
-msgstr ""
-"Gitter Transformations Werkzeug: Ebene, Auswahl oder Pfad transformieren"
+msgstr "Ankertransformation-Werkzeug: Ebene, Auswahl oder Pfad transformieren"
 
 #: ../app/tools/gimphandletransformtool.c:114
 msgid "_Handle Transform"
-msgstr "_Gitter Transformation"
+msgstr "_Ankertransformation"
 
 #: ../app/tools/gimphandletransformtool.c:139
 msgid "Handle transformation"
-msgstr "Gitter Transformation"
+msgstr "Ankertransformation"
 
 #: ../app/tools/gimphandletransformtool.c:205
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "Gitter Transformation"
+msgstr "Ankertransformation"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
