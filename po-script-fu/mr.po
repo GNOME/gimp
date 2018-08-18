@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-07 09:45+0000\n"
+"POT-Creation-Date: 2018-08-17 22:10+0000\n"
 "PO-Revision-Date: 2018-07-07 14:57+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -216,8 +216,6 @@ msgid "Script-Fu Gradient Selection"
 msgstr "स्क्रिप्ट-फ्यू रंगछटा निवड"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:508
-#, fuzzy
-#| msgid "Script-Fu brush Selection"
 msgid "Script-Fu Brush Selection"
 msgstr "स्क्रिप्ट-फ्यू कुंचला निवड"
 
@@ -1018,8 +1016,6 @@ msgid "_Rectangular..."
 msgstr "_आयताकृती..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:64
-#, fuzzy
-#| msgid "Create a rectangular brush "
 msgid "Create a rectangular brush"
 msgstr "एक आयताकृती कुंचला तयार करा"
 
@@ -1044,8 +1040,6 @@ msgid "Re_ctangular, Feathered..."
 msgstr "आ_यताकृती, फिदर ..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:134
-#, fuzzy
-#| msgid "Create a rectangular brush  with feathered edges"
 msgid "Create a rectangular brush with feathered edges"
 msgstr "फिदर कडा असलेला आयताकृती कुंचला बनवा"
 
@@ -1059,20 +1053,16 @@ msgid "_Elliptical..."
 msgstr "_लंबवर्तूळकार..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:190
-#, fuzzy
-#| msgid "Create an elliptical brush "
 msgid "Create an elliptical brush"
-msgstr "एक लंबवर्तुळ कुंचला तयार करा"
+msgstr "एक लंबवर्तूळकार कुंचला तयार करा"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
 msgstr "लंब_वर्तुळ,फिदर ..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:259
-#, fuzzy
-#| msgid "Create an elliptical brush  with feathered edges"
 msgid "Create an elliptical brush with feathered edges"
-msgstr "पिशाच्च कडा असलेला एक लंबवर्तुळाकार कुंचला बनवा"
+msgstr "फिदर कडा असलेला एक लंबवर्तुळाकार कुंचला तयार करा"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
@@ -1152,8 +1142,6 @@ msgid "There is no image data in the clipboard to paste."
 msgstr "फलकमध्ये कोणताही प्रतिमा माहिती नाही."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
-#, fuzzy
-#| msgid "New _brush ..."
 msgid "New _Brush..."
 msgstr "नवीन  _कुंचला..."
 
@@ -1163,10 +1151,8 @@ msgstr "फलक सामग्री नवीन कुंचलामध्
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-#, fuzzy
-#| msgid "brush  name"
 msgid "Brush name"
-msgstr "कुंचलेचे नाव"
+msgstr "कुंचल्याचे नाव"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
@@ -1332,14 +1318,10 @@ msgid "Concave"
 msgstr "अंतर्गोल"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
-#, fuzzy
-#| msgid "To brush ..."
 msgid "To _Brush..."
-msgstr "कुंचला..."
+msgstr "_कुंचला करण्यासाठी..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
-#, fuzzy
-#| msgid "Convert a selection to a brush "
 msgid "Convert a selection to a brush"
 msgstr "निवड कुंचलामध्ये रूपांतरित करा"
 
@@ -1506,14 +1488,10 @@ msgstr "पेन्सिल"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
-#, fuzzy
-#| msgid "brush "
 msgid "Brush"
 msgstr "कुंचला"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
-#, fuzzy
-#| msgid "Airbrush "
 msgid "Airbrush"
 msgstr "फवारा"
 

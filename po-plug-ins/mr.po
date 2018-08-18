@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-07 09:45+0000\n"
+"POT-Creation-Date: 2018-08-17 22:10+0000\n"
 "PO-Revision-Date: 2018-07-07 14:57+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -67,10 +67,9 @@ msgstr "दृश्यमान स्तर संरेखित करा"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
-#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
+#: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -126,10 +125,9 @@ msgstr "_रद्द करा"
 #: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:439
 #: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:355 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -480,7 +478,7 @@ msgstr "अस्पष्ट साधा, जलद परंतु फार 
 msgid "_Blur"
 msgstr "_अस्पष्ट"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:592
+#: ../plug-ins/common/blur.c:175
 msgid "Blurring"
 msgstr "अस्पष्ट"
 
@@ -520,18 +518,16 @@ msgstr "_बादलीचा आकार:"
 
 #: ../plug-ins/common/busy-dialog.c:195 ../plug-ins/common/busy-dialog.c:211
 msgid "Please Wait"
-msgstr ""
+msgstr "कृपया प्रतीक्षा करा"
 
 #. the title label
 #: ../plug-ins/common/busy-dialog.c:239
 msgid "Please wait for the operation to complete"
-msgstr ""
+msgstr "क्रिया पूर्ण होण्याची प्रतीक्षा करा"
 
 #: ../plug-ins/common/busy-dialog.c:299
-#, fuzzy
-#| msgid "_Cancel"
 msgid "Canceling..."
-msgstr "_रद्द करा"
+msgstr "रद्द करीत आहे..."
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
@@ -808,15 +804,15 @@ msgstr "मिश्रित युग्मक-मंच लॅटीस न�
 
 #: ../plug-ins/common/cml-explorer.c:471
 msgid "CML _Explorer..."
-msgstr ""
+msgstr "CML _ एक्सप्लोरर.."
 
 #: ../plug-ins/common/cml-explorer.c:764
 msgid "CML Explorer: evoluting"
-msgstr ""
+msgstr "CML _ एक्सप्लोरर: उत्क्रांती "
 
 #: ../plug-ins/common/cml-explorer.c:1185
 msgid "Coupled-Map-Lattice Explorer"
-msgstr ""
+msgstr "जोडलेले-नकाशा-लॅटिस एक्सप्लोरर"
 
 #: ../plug-ins/common/cml-explorer.c:1232
 msgid "New Seed"
@@ -920,6 +916,10 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
+"\"निश्चित सीड\" बटण माझे उपनाव आहे.\n"
+"जर (1) प्रतिमांची रुंदी समान असेल (हेच कारण आहे की रेखाचित्रावरील प्रतिमा "
+"पूर्वावलोकनपेक्षा भिन्न आहे), आणि (2) सर्व बदल दर शून्य असतील, तर तीच सीड समान प्रतिमा "
+"निर्माण करते."
 
 #: ../plug-ins/common/cml-explorer.c:1413
 msgid "O_thers"
@@ -1945,7 +1945,7 @@ msgstr "खोली विलीनीकरण"
 
 #: ../plug-ins/common/depth-merge.c:703
 msgid "Source 1:"
-msgstr ""
+msgstr "स्त्रोत 1:"
 
 #: ../plug-ins/common/depth-merge.c:718 ../plug-ins/common/depth-merge.c:748
 msgid "Depth map:"
@@ -1996,7 +1996,7 @@ msgid "R_ecursive"
 msgstr "पु_नरावर्ती"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
+#: ../plug-ins/common/nl-filter.c:1092
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -2084,7 +2084,7 @@ msgstr "निऑन"
 msgid "Neon Detection"
 msgstr "निऑन शोध"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:888
+#: ../plug-ins/common/edge-neon.c:749
 msgid "_Amount:"
 msgstr "_प्रमाण"
 
@@ -2420,10 +2420,9 @@ msgid "Unsupported brush format"
 msgstr "असमर्थित कुंचला स्वरूप"
 
 #: ../plug-ins/common/file-gbr.c:468
-#, fuzzy, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+#, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
-msgstr "यामध्ये अवैध शीर्षलेख डेटा '%s': रूंदी=%lu, उंची=%lu, बाइट्स=%lu"
+msgstr "अवैध शीर्षलेख डेटा '%s'यामध्ये : कुंचल्याचे नाव खूप मोठे आहे: %lu"
 
 #: ../plug-ins/common/file-gbr.c:482
 #, c-format
@@ -2599,7 +2598,7 @@ msgstr "गिम्प कुंचला (चलाभासित)"
 #: ../plug-ins/common/file-gih.c:502
 #, c-format
 msgid "Brush name is too long: %lu"
-msgstr ""
+msgstr "कुंचल्याचे नाव खूप मोठे आहे: %lu"
 
 #: ../plug-ins/common/file-gih.c:595
 msgid "GIMP brush file appears to be corrupted."
@@ -2685,7 +2684,7 @@ msgstr "एचइआयएफ स्वरूपात प्रतिमा ज
 #: ../plug-ins/common/file-heif.c:443 ../plug-ins/common/file-heif.c:461
 #, c-format
 msgid "Loading HEIF image failed: %s"
-msgstr ""
+msgstr "HEIF प्रतिमा लोड करीत आहे अयशस्वी: %s"
 
 #: ../plug-ins/common/file-heif.c:393
 msgid "Loading HEIF image failed: Input file contains no readable images"
@@ -2789,18 +2788,13 @@ msgid "Co_mpress TD tags"
 msgstr "टीडी खुण संकलित करा"
 
 #: ../plug-ins/common/file-html-table.c:554
-#, fuzzy
-#| msgid ""
-#| "Checking this tag will cause GTM to leave no whitespace between the TD "
-#| "tags and the cellcontent. This is only necessary for pixel level "
-#| "positioning control."
 msgid ""
 "Checking this tag will cause GTM to leave no whitespace between the TD tags "
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
-"या खुण ची तपासणी केल्यामुळे जीटीएम ने टीडी खुण आणि लहान कप्पा सामग्री या मधील कोणतीही "
-"मोकळी जागा सूटणार नाही.दृश्यबिंदू पातळी हे केवळ स्थिती नियंत्रणासाठी आवश्यक आहे."
+"या खुण ची तपासणी केल्यामुळे जीटीएम ने टीडी खुण आणि लहान कप्पा सामग्री यामध्ये कोणतीही "
+"मोकळी जागा सूटणार नाही. हे केवळ दृश्यबिंदू पातळी स्थिती नियंत्रणासाठी आवश्यक आहे."
 
 #: ../plug-ins/common/file-html-table.c:564
 msgid "C_aption"
@@ -3084,10 +3078,9 @@ msgid "GIMP pattern"
 msgstr "गिम्प नमुने"
 
 #: ../plug-ins/common/file-pat.c:373
-#, fuzzy, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+#, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-msgstr "यामध्ये अवैध शीर्षलेख डेटा '%s': रूंदी=%lu, उंची=%lu, बाइट्स=%lu"
+msgstr "अवैध शीर्षलेख डेटा '%s' यामध्ये : नमुन्याचे नाव खूप मोठे आहे: %lu"
 
 #: ../plug-ins/common/file-pat.c:392
 #, c-format
@@ -3350,10 +3343,9 @@ msgid "PNG image"
 msgstr "पीएनजी प्रतिमा"
 
 #: ../plug-ins/common/file-png.c:768
-#, fuzzy, c-format
-#| msgid "Error loading PNG file: %s"
+#, c-format
 msgid "Error loading PNG file: %s\n"
-msgstr "पीएनजी धारिका लोड करताना त्रुटी: %s"
+msgstr "पीएनजी धारिका लोड करताना त्रुटी: %s\n"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
@@ -6358,28 +6350,6 @@ msgstr "एकक संपादक"
 msgid "_Refresh"
 msgstr "रिफ्रे_श करा"
 
-#: ../plug-ins/common/unsharp-mask.c:132
-msgid "The most widely useful method for sharpening an image"
-msgstr "एक प्रतिमा धार लावण्याची साठी सर्वात मोठ्या प्रमाणावर पद्धत उपयोगी आहे"
-
-#: ../plug-ins/common/unsharp-mask.c:142
-msgid "_Unsharp Mask (legacy)..."
-msgstr "आच्छादक _अस्पष्ट (वारसा)..."
-
-#: ../plug-ins/common/unsharp-mask.c:694
-msgid "Merging"
-msgstr "विलीन करत आहे"
-
-#: ../plug-ins/common/unsharp-mask.c:838
-msgid "Unsharp Mask"
-msgstr "आच्छादक अस्पष्ट"
-
-#: ../plug-ins/common/unsharp-mask.c:901
-#: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:566
-msgid "_Threshold:"
-msgstr "रं_ग मर्यादा:"
-
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
 msgstr "वॅन गॉग (एलआयसी)"
@@ -7298,15 +7268,13 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "धारिकाचा अनपेक्षित शेवट"
 
-#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:166
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:167
 msgid "Photoshop image"
 msgstr "फोटोशॉप प्रतिमा"
 
 #: ../plug-ins/file-psd/psd.c:130
-#, fuzzy
-#| msgid "Photoshop image"
 msgid "Photoshop image (merged)"
-msgstr "फोटोशॉप प्रतिमा"
+msgstr "फोटोशॉप प्रतिमा (विलीन करा)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -10310,8 +10278,10 @@ msgstr "गिम्प हस्तलिखित वापरकर्ता 
 #: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"http://docs.gimp.org/"
-msgstr "कृपया अतिरिक्त मदत पॅकेज स्थापित करा किंवा येथे ऑनलाइन वापरकर्ता पुस्तिका वापराः"
+"https://docs.gimp.org/"
+msgstr ""
+"कृपया अतिरिक्त मदत पॅकेज स्थापित करा किंवा https://docs.gimp.org/ येथे ऑनलाइन "
+"वापरकर्ता पुस्तिका वापरा:"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -11169,6 +11139,11 @@ msgstr "परस्परसंवाद:"
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "अवि_कसित क्षेत्र"
+
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:566
+msgid "_Threshold:"
+msgstr "रं_ग मर्यादा:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
@@ -12605,3 +12580,15 @@ msgstr "स्कॅन_र/कॅमेरा..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "स्कॅनर/कॅमेऱ्या पासून माहिती स्थानांतरित करणे"
+
+#~ msgid "The most widely useful method for sharpening an image"
+#~ msgstr "एक प्रतिमा धार लावण्याची साठी सर्वात मोठ्या प्रमाणावर पद्धत उपयोगी आहे"
+
+#~ msgid "_Unsharp Mask (legacy)..."
+#~ msgstr "आच्छादक _अस्पष्ट (वारसा)..."
+
+#~ msgid "Merging"
+#~ msgstr "विलीन करत आहे"
+
+#~ msgid "Unsharp Mask"
+#~ msgstr "आच्छादक अस्पष्ट"
