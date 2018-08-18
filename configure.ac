@@ -45,7 +45,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 # required versions of other packages
 m4_define([babl_required_version], [0.1.56])
 m4_define([gegl_major_minor_version], [0.4])
-m4_define([gegl_micro_version], [7])
+m4_define([gegl_micro_version], [8])
 m4_define([gegl_required_version],
           [gegl_major_minor_version.gegl_micro_version])
 m4_define([glib_required_version], [2.54.2])
