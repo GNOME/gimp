@@ -1109,8 +1109,8 @@ scalabledir = $(iconsdir)/scalable/apps
 
 icons64_DATA = \
 	$(icons64_system_images)						\
-	64/gimp-frame-symbolic.symbolic.png					\
-	64/gimp-texture-symbolic.symbolic.png
+	64/gimp-frame.png							\
+	64/gimp-texture.png
 
 else
 icons12dir  = $(iconsdir)/12x12/apps
