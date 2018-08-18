@@ -100,6 +100,10 @@ typedef enum
   VARIABLE_SWAP_SIZE,
   VARIABLE_SWAP_LIMIT,
 
+  VARIABLE_SWAP_QUEUED,
+  VARIABLE_SWAP_QUEUE_STALLS,
+  VARIABLE_SWAP_QUEUE_FULL,
+
   VARIABLE_SWAP_READ,
   VARIABLE_SWAP_READING,
   VARIABLE_SWAP_WRITTEN,
@@ -473,6 +477,35 @@ static const VariableInfo variables[] =
     .sample_func      = gimp_dashboard_sample_swap_limit,
   },
 
+  [VARIABLE_SWAP_QUEUED] =
+  { .name             = "swap-queued",
+    .title            = NC_("dashboard-variable", "Queued"),
+    .description      = N_("Size of data queued for writing to the swap"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .color            = {0.8, 0.8, 0.2, 0.5},
+    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .data             = "swap-queued-total"
+  },
+
+  [VARIABLE_SWAP_QUEUE_STALLS] =
+  { .name             = "swap-queue-stalls",
+    .title            = NC_("dashboard-variable", "Queue stalls"),
+    .description      = N_("Number of times the writing to the swap has been "
+                           "stalled, due to a full queue"),
+    .type             = VARIABLE_TYPE_INTEGER,
+    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .data             = "swap-queue-stalls"
+  },
+
+  [VARIABLE_SWAP_QUEUE_FULL] =
+  { .name             = "swap-queue-full",
+    .title            = NC_("dashboard-variable", "Queue full"),
+    .description      = N_("Whether the swap queue is full"),
+    .type             = VARIABLE_TYPE_BOOLEAN,
+    .sample_func      = gimp_dashboard_sample_variable_changed,
+    .data             = GINT_TO_POINTER (VARIABLE_SWAP_QUEUE_STALLS)
+  },
+
   [VARIABLE_SWAP_READ] =
   { .name             = "swap-read",
     /* Translators: this is the past participle form of "read",
@@ -664,6 +697,7 @@ static const GroupInfo groups[] =
     .meter_limit      = VARIABLE_SWAP_LIMIT,
     .meter_led        = (const Variable[])
                         {
+                          VARIABLE_SWAP_QUEUE_FULL,
                           VARIABLE_SWAP_READING,
                           VARIABLE_SWAP_WRITING,
 
@@ -674,11 +708,11 @@ static const GroupInfo groups[] =
                           { .variable         = VARIABLE_SWAP_OCCUPIED,
                             .default_active   = TRUE,
                             .show_in_header   = TRUE,
-                            .meter_value      = 4
+                            .meter_value      = 5
                           },
                           { .variable         = VARIABLE_SWAP_SIZE,
                             .default_active   = TRUE,
-                            .meter_value      = 3
+                            .meter_value      = 4
                           },
                           { .variable         = VARIABLE_SWAP_LIMIT,
                             .default_active   = TRUE
@@ -686,16 +720,22 @@ static const GroupInfo groups[] =
 
                           { VARIABLE_SEPARATOR },
 
+                          { .variable         = VARIABLE_SWAP_QUEUED,
+                            .default_active   = FALSE,
+                            .meter_variable   = VARIABLE_SWAP_QUEUE_FULL,
+                            .meter_value      = 3
+                          },
+
+                          { VARIABLE_SEPARATOR },
+
                           { .variable         = VARIABLE_SWAP_READ,
                             .default_active   = FALSE,
-                            .show_in_header   = FALSE,
                             .meter_variable   = VARIABLE_SWAP_READING,
                             .meter_value      = 2
                           },
 
                           { .variable         = VARIABLE_SWAP_WRITTEN,
                             .default_active   = FALSE,
-                            .show_in_header   = FALSE,
                             .meter_variable   = VARIABLE_SWAP_WRITING,
                             .meter_value      = 1
                           },
