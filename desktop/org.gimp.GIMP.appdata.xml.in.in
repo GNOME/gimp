@@ -390,4 +390,5 @@
     <release version="2.8.2"  date="2012-08-24"/>
     <release version="2.8.0"  date="2012-05-03"/>
   </releases>
+  <content_rating type="oars-1.1" />
 </component>
