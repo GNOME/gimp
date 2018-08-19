@@ -161,7 +161,8 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
       break;
 
     default:
-      /* g_assert (command < GEGL_TILE_LAST_COMMAND && command >= 0); */
+      result = gegl_tile_backend_command (GEGL_TILE_BACKEND (tile_store),
+                                          command, x, y, z, data);
       break;
     }
 
