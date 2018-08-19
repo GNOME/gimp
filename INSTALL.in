@@ -141,6 +141,7 @@ header files installed.
 
      Package Name         Version
 
+     appstream-glib       @APPSTREAM_GLIB_REQUIRED_VERSION@
      ATK                  @ATK_REQUIRED_VERSION@
      babl                 @BABL_REQUIRED_VERSION@
      cairo                @CAIRO_REQUIRED_VERSION@

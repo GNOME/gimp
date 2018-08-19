@@ -145,6 +145,7 @@ AC_DEFINE(GIMP_TOOL_VERSION, "gimp_tool_version",
           [GIMP tools version])
 
 # These are used in the .pc files
+APPSTREAM_GLIB_REQUIRED_VERSION=appstream_glib_required_version
 GLIB_REQUIRED_VERSION=glib_required_version
 GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
@@ -177,6 +178,7 @@ PYTHON2_REQUIRED_VERSION=python2_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
 LIBHEIF_REQUIRED_VERSION=libheif_required_version
 XGETTEXT_REQUIRED_VERSION=xgettext_required_version
+AC_SUBST(APPSTREAM_GLIB_REQUIRED_VERSION)
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
