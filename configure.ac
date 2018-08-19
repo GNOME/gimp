@@ -1830,7 +1830,8 @@ MIME_TYPES="$MIME_TYPES;image/svg+xml"
 AC_CHECK_PROGS(GTK_ENCODE_SYMBOLIC_SVG, gtk-encode-symbolic-svg, no)
 
 if test "x$GTK_ENCODE_SYMBOLIC_SVG" = xno; then
-  add_deps_error([gtk-encode-symbolic-svg])
+  add_deps_error([gtk-encode-symbolic-svg],
+                 [Could not find gtk-encode-symbolic-svg in your PATH.])
 fi
 
 ####################################
