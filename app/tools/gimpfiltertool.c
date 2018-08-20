@@ -938,9 +938,23 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 {
   GimpTool *tool = GIMP_TOOL (filter_tool);
 
-  g_clear_object (&filter_tool->gui);
-  filter_tool->settings_box = NULL;
-  filter_tool->region_combo = NULL;
+  if (filter_tool->gui)
+    {
+      /* explicitly clear the dialog contents first, since we might be called
+       * during the dialog's delete event, in which case the dialog will be
+       * externally reffed, and will only die *after* gimp_filter_tool_halt()
+       * returns, and, in particular, after filter_tool->config has been
+       * cleared.  we want to make sure the gui is destroyed while
+       * filter_tool->config is still alive, since the gui's destruction may
+       * fire signals whose handlers rely on it.
+       */
+      gimp_gtk_container_clear (
+        GTK_CONTAINER (gimp_filter_tool_dialog_get_vbox (filter_tool)));
+
+      g_clear_object (&filter_tool->gui);
+      filter_tool->settings_box = NULL;
+      filter_tool->region_combo = NULL;
+    }
 
   if (filter_tool->filter)
     {
