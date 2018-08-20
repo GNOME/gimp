@@ -100,6 +100,8 @@ gboolean          gimp_widget_get_fully_opaque     (GtkWidget            *widget
 void              gimp_widget_set_fully_opaque     (GtkWidget            *widget,
                                                     gboolean              fully_opaque);
 
+void              gimp_gtk_container_clear         (GtkContainer         *container);
+
 void              gimp_button_set_suggested        (GtkWidget            *button,
                                                     gboolean              suggested,
                                                     GtkReliefStyle        default_relief);

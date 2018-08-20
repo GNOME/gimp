@@ -1460,6 +1460,21 @@ gimp_widget_set_fully_opaque (GtkWidget *widget,
                             GINT_TO_POINTER (fully_opaque));
 }
 
+static void
+gimp_gtk_container_clear_callback (GtkWidget    *widget,
+                                   GtkContainer *container)
+{
+  gtk_container_remove (container, widget);
+}
+
+void
+gimp_gtk_container_clear (GtkContainer *container)
+{
+  gtk_container_foreach (container,
+                         (GtkCallback) gimp_gtk_container_clear_callback,
+                         container);
+}
+
 void
 gimp_button_set_suggested (GtkWidget      *button,
                            gboolean        suggested,
