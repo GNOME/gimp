@@ -2,7 +2,6 @@
 !GTK
 etc\fonts\
 lib\gtk-2.0\2.10.0\engines\*.dll
-lib\gtk-2.0\2.10.0\immodules\*.dll
 lib\gtk-2.0\2.10.0\loaders\*.dll
 lib\gtk-2.0\modules\*.dll
 lib\gdk-pixbuf-2.0\2.10.0\loaders\*.dll
