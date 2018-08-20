@@ -72,6 +72,15 @@ Make X calls synchronous so that your crashes happen immediately with:
 
 You can also break on `gdk_x_error()`.
 
+## Debugging on Windows ##
+
+Even when run from a `cmd`, the standard and error outputs are not
+displayed in the terminal. For this reason, unstable builds (i.e. with
+odd minor version) pop up a debug console at start.
+
+If you are building stable versions of GIMP for debugging and want this
+debug console as well, configure with `--enable-win32-debug-console`.
+
 ## Debugging icons ##
 
 See file `devel-docs/icons.txt` to learn more about our icons, and in
