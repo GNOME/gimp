@@ -517,13 +517,25 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       g_printerr ("%s: trying to set GdkDevice '%s' on GimpDeviceInfo "
                   "which already has a device\n",
                   G_STRFUNC, gdk_device_get_name (device));
-      return FALSE;
+
+      /*  don't bail out here, instead, simply continue and overwrite
+       *  the info's old device with the new one.
+       *
+       *  NOTE that this only happens if something is wrong on the USB
+       *  or udev or libinput or whatever side and the same device is
+       *  present multiple times. The only "safe" thing is to assume
+       *  that devices listed earlier are dead and dangling entities
+       *  and that the last registered device is the one actually
+       *  delivering events.
+       */
     }
   else if (! device && ! info->device)
     {
       g_printerr ("%s: trying to unset GdkDevice of GimpDeviceInfo '%s'"
                   "which has no device\n",
                   G_STRFUNC, gimp_object_get_name (info));
+
+      /*  bail out, unsetting twice makes no sense  */
       return FALSE;
     }
 
