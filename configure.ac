@@ -43,45 +43,45 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
+m4_define([alsa_required_version], [1.0.0])
+m4_define([appstream_glib_required_version], [0.7.7])
+m4_define([atk_required_version], [2.4.0])
 m4_define([babl_required_version], [0.1.56])
+m4_define([cairo_required_version], [1.14.0])
+m4_define([cairo_pdf_required_version], [1.12.2])
+m4_define([fontconfig_required_version], [2.12.4])
+m4_define([freetype2_required_version], [2.1.7])
+m4_define([gdk_pixbuf_required_version], [2.30.8])
 m4_define([gegl_major_minor_version], [0.4])
 m4_define([gegl_micro_version], [9])
 m4_define([gegl_required_version],
           [gegl_major_minor_version.gegl_micro_version])
-m4_define([glib_required_version], [2.56.0])
-m4_define([atk_required_version], [2.4.0])
-m4_define([gtk_required_version], [3.22.29])
-m4_define([gdk_pixbuf_required_version], [2.30.8])
-m4_define([cairo_required_version], [1.14.0])
-m4_define([cairo_pdf_required_version], [1.12.2])
-m4_define([pangocairo_required_version], [1.42.0])
-m4_define([fontconfig_required_version], [2.12.4])
-m4_define([freetype2_required_version], [2.1.7])
-m4_define([harfbuzz_required_version], [0.9.19])
-m4_define([gtkdoc_required_version], [1.0])
-m4_define([webkitgtk_required_version], [2.20.3])
-m4_define([alsa_required_version], [1.0.0])
-m4_define([rsvg_required_version], [2.40.6])
-m4_define([wmf_required_version], [0.2.8])
-m4_define([pygtk_required_version], [2.10.4])
-m4_define([pycairo_required_version], [1.0.2])
-m4_define([poppler_required_version], [0.44.0])
-m4_define([poppler_data_required_version], [0.4.7])
-m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.10.6])
-m4_define([libmypaint_required_version], [1.3.0])
+m4_define([glib_required_version], [2.56.0])
+m4_define([gtk_mac_integration_required_version], [2.0.0])
+m4_define([gtk_required_version], [3.22.29])
+m4_define([gtkdoc_required_version], [1.0])
+m4_define([harfbuzz_required_version], [0.9.19])
+m4_define([intltool_required_version], [0.40.1])
 m4_define([lcms_required_version], [2.8])
-m4_define([libpng_required_version], [1.6.25])
+m4_define([libgudev_required_version], [167])
+m4_define([libheif_required_version], [1.1.0])
 m4_define([liblzma_required_version], [5.0.0])
-m4_define([appstream_glib_required_version], [0.7.7])
+m4_define([libmypaint_required_version], [1.3.0])
+m4_define([libpng_required_version], [1.6.25])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([openjpeg_required_version], [2.1.0])
-m4_define([gtk_mac_integration_required_version], [2.0.0])
-m4_define([intltool_required_version], [0.40.1])
+m4_define([pangocairo_required_version], [1.42.0])
 m4_define([perl_required_version], [5.10.0])
+m4_define([poppler_required_version], [0.44.0])
+m4_define([poppler_data_required_version], [0.4.7])
+m4_define([pycairo_required_version], [1.0.2])
+m4_define([pygtk_required_version], [2.10.4])
 m4_define([python2_required_version], [2.5.0])
+m4_define([rsvg_required_version], [2.40.6])
+m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([webp_required_version], [0.6.0])
-m4_define([libheif_required_version], [1.1.0])
+m4_define([wmf_required_version], [0.2.8])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
@@ -144,72 +144,72 @@ AC_DEFINE(GIMP_PKGCONFIG_VERSION, "gimp_pkgconfig_version",
 AC_DEFINE(GIMP_TOOL_VERSION, "gimp_tool_version",
           [GIMP tools version])
 
-# These are used in the .pc files
+# These are used for substitution (.pc, INSTALL, etc.).
 APPSTREAM_GLIB_REQUIRED_VERSION=appstream_glib_required_version
-GLIB_REQUIRED_VERSION=glib_required_version
-GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
-GTK_REQUIRED_VERSION=gtk_required_version
-GTK_WIN32_RECOMMENDED_VERSION=gtk_win32_recommended_version
+ATK_REQUIRED_VERSION=atk_required_version
+BABL_REQUIRED_VERSION=babl_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
 CAIRO_PDF_REQUIRED_VERSION=cairo_pdf_required_version
+FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
+FREETYPE2_REQUIRED_VERSION=freetype2_required_version
+GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GEGL_MAJOR_MINOR_VERSION=gegl_major_minor_version
 GEGL_REQUIRED_VERSION=gegl_required_version
 GEXIV2_REQUIRED_VERSION=gexiv2_required_version
+GLIB_REQUIRED_VERSION=glib_required_version
+GTK_REQUIRED_VERSION=gtk_required_version
+GTK_WIN32_RECOMMENDED_VERSION=gtk_win32_recommended_version
+HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
+INTLTOOL_REQUIRED_VERSION=intltool_required_version
 LCMS_REQUIRED_VERSION=lcms_required_version
-LIBPNG_REQUIRED_VERSION=libpng_required_version
+LIBHEIF_REQUIRED_VERSION=libheif_required_version
 LIBLZMA_REQUIRED_VERSION=liblzma_required_version
 LIBMYPAINT_REQUIRED_VERSION=libmypaint_required_version
-PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
-BABL_REQUIRED_VERSION=babl_required_version
-FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
-FREETYPE2_REQUIRED_VERSION=freetype2_required_version
-HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
-WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
-ATK_REQUIRED_VERSION=atk_required_version
-RSVG_REQUIRED_VERSION=rsvg_required_version
-WMF_REQUIRED_VERSION=wmf_required_version
-POPPLER_REQUIRED_VERSION=poppler_required_version
-POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
+LIBPNG_REQUIRED_VERSION=libpng_required_version
 OPENEXR_REQUIRED_VERSION=openexr_required_version
 OPENJPEG_REQUIRED_VERSION=openjpeg_required_version
-INTLTOOL_REQUIRED_VERSION=intltool_required_version
+PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 PERL_REQUIRED_VERSION=perl_required_version
+POPPLER_REQUIRED_VERSION=poppler_required_version
+POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
+RSVG_REQUIRED_VERSION=rsvg_required_version
+WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
-LIBHEIF_REQUIRED_VERSION=libheif_required_version
+WMF_REQUIRED_VERSION=wmf_required_version
 XGETTEXT_REQUIRED_VERSION=xgettext_required_version
 AC_SUBST(APPSTREAM_GLIB_REQUIRED_VERSION)
-AC_SUBST(GLIB_REQUIRED_VERSION)
-AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
-AC_SUBST(GTK_REQUIRED_VERSION)
-AC_SUBST(GTK_WIN32_RECOMMENDED_VERSION)
+AC_SUBST(ATK_REQUIRED_VERSION)
+AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
 AC_SUBST(CAIRO_PDF_REQUIRED_VERSION)
+AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
+AC_SUBST(FREETYPE2_REQUIRED_VERSION)
+AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GEGL_MAJOR_MINOR_VERSION)
 AC_SUBST(GEGL_REQUIRED_VERSION)
 AC_SUBST(GEXIV2_REQUIRED_VERSION)
+AC_SUBST(GLIB_REQUIRED_VERSION)
+AC_SUBST(GTK_REQUIRED_VERSION)
+AC_SUBST(GTK_WIN32_RECOMMENDED_VERSION)
+AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
+AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(LCMS_REQUIRED_VERSION)
-AC_SUBST(LIBPNG_REQUIRED_VERSION)
+AC_SUBST(LIBHEIF_REQUIRED_VERSION)
 AC_SUBST(LIBLZMA_REQUIRED_VERSION)
 AC_SUBST(LIBMYPAINT_REQUIRED_VERSION)
-AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
-AC_SUBST(BABL_REQUIRED_VERSION)
-AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
-AC_SUBST(FREETYPE2_REQUIRED_VERSION)
-AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
-AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
-AC_SUBST(ATK_REQUIRED_VERSION)
-AC_SUBST(RSVG_REQUIRED_VERSION)
-AC_SUBST(WMF_REQUIRED_VERSION)
-AC_SUBST(POPPLER_REQUIRED_VERSION)
-AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
+AC_SUBST(LIBPNG_REQUIRED_VERSION)
 AC_SUBST(OPENEXR_REQUIRED_VERSION)
 AC_SUBST(OPENJPEG_REQUIRED_VERSION)
-AC_SUBST(INTLTOOL_REQUIRED_VERSION)
+AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
 AC_SUBST(PERL_REQUIRED_VERSION)
+AC_SUBST(POPPLER_REQUIRED_VERSION)
+AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
+AC_SUBST(RSVG_REQUIRED_VERSION)
+AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
-AC_SUBST(LIBHEIF_REQUIRED_VERSION)
+AC_SUBST(WMF_REQUIRED_VERSION)
 AC_SUBST(XGETTEXT_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
