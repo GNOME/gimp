@@ -544,6 +544,8 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\palette-sort.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\palette-to-gradient.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\py-slice.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-eval.py"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console\pyconsole.py"
+Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console\python-console.py"
 ;DLLs in plug-ins directory (see bug 796225)
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
 ;old icons
