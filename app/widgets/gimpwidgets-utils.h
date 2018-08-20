@@ -112,6 +112,8 @@ gboolean          gimp_widget_get_fully_opaque     (GtkWidget            *widget
 void              gimp_widget_set_fully_opaque     (GtkWidget            *widget,
                                                     gboolean              fully_opaque);
 
+void              gimp_gtk_container_clear         (GtkContainer         *container);
+
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
 
 gboolean          gimp_color_profile_store_add_defaults
