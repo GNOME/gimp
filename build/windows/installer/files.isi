@@ -34,5 +34,5 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\gio\*.dll"; DestDir: "{app}\lib\gio"; Component
 Source: "{#DEPS_DIR}\{#DDIR}\lib\gtk-2.0\*.dll"; DestDir: "{app}\lib\gtk-2.0"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 
 #if PLATFORM==64
-Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-mng.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp{#PLATFORM}; Flags: restartreplace ignoreversion uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-mng\file-mng.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\file-mng"; Components: gimp{#PLATFORM}; Flags: restartreplace ignoreversion uninsrestartdelete
 #endif
