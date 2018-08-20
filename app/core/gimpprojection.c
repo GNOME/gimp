@@ -46,9 +46,27 @@
 #include "gimp-priorities.h"
 
 
-/*  chunk size for one iteration of the chunk renderer  */
+/*  whether to use adaptive render-chunk size  */
+static gboolean GIMP_PROJECTION_ADAPTIVE_CHUNK_SIZE = TRUE;
+
+/*  chunk size for one iteration of the chunk renderer, when the use
+ *  of adaptive chunk size is disabled
+ */
 static gint GIMP_PROJECTION_CHUNK_WIDTH  = 256;
 static gint GIMP_PROJECTION_CHUNK_HEIGHT = 128;
+
+/*  the min/max adaptive chunk size  */
+#define GIMP_PROJECTION_CHUNK_MIN_WIDTH  128
+#define GIMP_PROJECTION_CHUNK_MIN_HEIGHT 128
+
+#define GIMP_PROJECTION_CHUNK_MAX_WIDTH  2048
+#define GIMP_PROJECTION_CHUNK_MAX_HEIGHT 2048
+
+/*  the minimal number of processed pixels on the current frame,
+ *  above which we calculate a new target pixel count to render
+ *  on the next frame
+ */
+#define GIMP_PROJECTION_MIN_PIXELS_PER_UPDATE 1024
 
 /*  chunk size for area updates  */
 static gint GIMP_PROJECTION_UPDATE_CHUNK_WIDTH  = 32;
@@ -86,6 +104,10 @@ struct _GimpProjectionChunkRender
 
   gint            work_x;
   gint            work_y;
+  gint            work_height;
+
+  gint            n_pixels;
+  gint            target_n_pixels;
 
   cairo_region_t *update_region;   /*  flushed update region */
 };
@@ -162,6 +184,7 @@ static void        gimp_projection_chunk_render_start    (GimpProjection  *proj)
 static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj);
 static gboolean    gimp_projection_chunk_render_callback (gpointer         data);
 static void        gimp_projection_chunk_render_init     (GimpProjection  *proj);
+static void        gimp_projection_chunk_render_reinit   (GimpProjection  *proj);
 static gboolean    gimp_projection_chunk_render_iteration(GimpProjection  *proj,
                                                           gboolean         chunk);
 static gboolean    gimp_projection_chunk_render_next_area(GimpProjection  *proj);
@@ -190,6 +213,11 @@ static void   gimp_projection_projectable_bounds_changed (GimpProjectable *proje
                                                           gint             old_w,
                                                           gint             old_h,
                                                           GimpProjection  *proj);
+
+static gint        gimp_projection_round_chunk_size      (gdouble          size,
+                                                          gboolean         toward_zero);
+static gint        gimp_projection_round_chunk_width     (gdouble          width);
+static gint        gimp_projection_round_chunk_height    (gdouble          height);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpProjection, gimp_projection, GIMP_TYPE_OBJECT,
@@ -231,6 +259,9 @@ gimp_projection_class_init (GimpProjectionClass *klass)
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
   g_type_class_add_private (klass, sizeof (GimpProjectionPrivate));
+
+  if (g_getenv ("GIMP_NO_ADAPTIVE_CHUNK_SIZE"))
+    GIMP_PROJECTION_ADAPTIVE_CHUNK_SIZE = FALSE;
 
   env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
   if (env)
@@ -575,7 +606,7 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
       proj->priv->priority_rect = rect;
 
       if (proj->priv->chunk_render.idle_id)
-        gimp_projection_chunk_render_init (proj);
+        gimp_projection_chunk_render_reinit (proj);
     }
 }
 
@@ -811,10 +842,16 @@ gimp_projection_chunk_render_stop (GimpProjection *proj)
 static gboolean
 gimp_projection_chunk_render_callback (gpointer data)
 {
-  GimpProjection *proj   = data;
-  GTimer         *timer  = g_timer_new ();
-  gint            chunks = 0;
-  gboolean        retval = TRUE;
+  GimpProjection            *proj         = data;
+  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
+  GTimer                    *timer        = g_timer_new ();
+  gint                       chunks       = 0;
+  gboolean                   retval       = TRUE;
+
+  /* reset the rendered pixel count, so that we count the number of pixels
+   * processed during this frame
+   */
+  chunk_render->n_pixels = 0;
 
   gimp_projectable_begin_render (proj->priv->projectable);
 
@@ -835,6 +872,17 @@ gimp_projection_chunk_render_callback (gpointer data)
 
   gimp_projectable_end_render (proj->priv->projectable);
 
+  /* adjust the target number of pixels to be processed on the next frame,
+   * according to the number of pixels processed during this frame and the
+   * elapsed time, in order to match the desired frame rate.
+   */
+  if (chunk_render->n_pixels >= GIMP_PROJECTION_MIN_PIXELS_PER_UPDATE)
+    {
+      chunk_render->target_n_pixels = floor (chunk_render->n_pixels     *
+                                             GIMP_PROJECTION_CHUNK_TIME /
+                                             g_timer_elapsed (timer, NULL));
+    }
+
   GIMP_LOG (PROJECTION, "%d chunks in %f seconds\n",
             chunks, g_timer_elapsed (timer, NULL));
   g_timer_destroy (timer);
@@ -844,6 +892,17 @@ gimp_projection_chunk_render_callback (gpointer data)
 
 static void
 gimp_projection_chunk_render_init (GimpProjection *proj)
+{
+  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
+
+  chunk_render->target_n_pixels = GIMP_PROJECTION_CHUNK_WIDTH *
+                                  GIMP_PROJECTION_CHUNK_HEIGHT;
+
+  gimp_projection_chunk_render_reinit (proj);
+}
+
+static void
+gimp_projection_chunk_render_reinit (GimpProjection *proj)
 {
   GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
 
@@ -872,12 +931,30 @@ gimp_projection_chunk_render_init (GimpProjection *proj)
   if (chunk_render->idle_id)
     {
       cairo_rectangle_int_t rect;
+      gint                  work_h = 0;
+
+      if (chunk_render->work_x != chunk_render->x)
+        {
+          work_h = MIN (chunk_render->work_height,
+                        chunk_render->y + chunk_render->height -
+                        chunk_render->work_y);
+
+          rect.x      = chunk_render->work_x;
+          rect.y      = chunk_render->work_y;
+          rect.width  = chunk_render->x + chunk_render->width -
+                        chunk_render->work_x;
+          rect.height = work_h;
+
+          if (chunk_render->update_region)
+            cairo_region_union_rectangle (chunk_render->update_region, &rect);
+          else
+            chunk_render->update_region = cairo_region_create_rectangle (&rect);
+        }
 
       rect.x      = chunk_render->x;
-      rect.y      = chunk_render->work_y;
+      rect.y      = chunk_render->work_y + work_h;
       rect.width  = chunk_render->width;
-      rect.height = (chunk_render->height -
-                     (chunk_render->work_y - chunk_render->y));
+      rect.height = chunk_render->y + chunk_render->height - rect.y;
 
       if (chunk_render->update_region)
         cairo_region_union_rectangle (chunk_render->update_region, &rect);
@@ -894,6 +971,9 @@ gimp_projection_chunk_render_init (GimpProjection *proj)
                      G_STRFUNC);
           return;
         }
+
+      proj->priv->chunk_render.target_n_pixels = GIMP_PROJECTION_CHUNK_WIDTH *
+                                                 GIMP_PROJECTION_CHUNK_HEIGHT;
 
       gimp_projection_chunk_render_next_area (proj);
 
@@ -921,13 +1001,50 @@ gimp_projection_chunk_render_iteration (GimpProjection *proj,
   work_h = chunk_render->y + chunk_render->height - work_y;
 
   if (chunk)
-    work_w = MIN (work_w, GIMP_PROJECTION_CHUNK_WIDTH);
+    {
+      if (GIMP_PROJECTION_ADAPTIVE_CHUNK_SIZE)
+        {
+          gint chunk_w;
+          gint chunk_h;
 
-  if (chunk || work_x != chunk_render->x)
-    work_h = MIN (work_h, GIMP_PROJECTION_CHUNK_HEIGHT);
+          /* try to render in square chunks */
+          chunk_h = gimp_projection_round_chunk_height (
+            sqrt (chunk_render->target_n_pixels));
+
+          work_h = MIN (work_h, chunk_h);
+
+          chunk_w = gimp_projection_round_chunk_width (
+            chunk_render->target_n_pixels / work_h);
+
+          work_w = MIN (work_w, chunk_w);
+        }
+      else
+        {
+          work_w = MIN (work_w, GIMP_PROJECTION_CHUNK_WIDTH);
+          work_h = MIN (work_h, GIMP_PROJECTION_CHUNK_HEIGHT);
+        }
+    }
+  else
+    {
+      if (work_x != chunk_render->x)
+        work_h = MIN (work_h, chunk_render->work_height);
+    }
+
+  if (work_h != chunk_render->work_height)
+    {
+      /* if the chunk height changed in the middle of a row, refetch the
+       * current area, so that we're back at the beginning of a row
+       */
+      if (work_x != chunk_render->x)
+        gimp_projection_chunk_render_reinit (proj);
+
+      chunk_render->work_height = work_h;
+    }
 
   gimp_projection_paint_area (proj, TRUE /* sic! */,
                               work_x, work_y, work_w, work_h);
+
+  chunk_render->n_pixels += work_w * work_h;
 
   chunk_render->work_x += work_w;
 
@@ -1261,4 +1378,55 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
     gimp_projection_add_update_area (proj, 0, dy + old_h, w, h - (dy + old_h));
 
   proj->priv->invalidate_preview = TRUE;
+}
+
+static gint
+gimp_projection_round_chunk_size (gdouble  size,
+                                  gboolean toward_zero)
+{
+  /* round 'size' (up or down, depending on 'toward_zero') to the closest power
+   * of 2
+   */
+
+  if (size < 0.0)
+    {
+      return -gimp_projection_round_chunk_size (-size, toward_zero);
+    }
+  else if (size == 0.0)
+    {
+      return 0;
+    }
+  else if (size < 1.0)
+    {
+      return toward_zero ? 0 : 1;
+    }
+  else
+    {
+      gdouble log2_size = log (size) / G_LN2;
+
+      if (toward_zero)
+        log2_size = floor (log2_size);
+      else
+        log2_size = ceil  (log2_size);
+
+      return 1 << (gint) log2_size;
+    }
+}
+
+static gint
+gimp_projection_round_chunk_width (gdouble width)
+{
+  gint w = gimp_projection_round_chunk_size (width, FALSE);
+
+  return CLAMP (w, GIMP_PROJECTION_CHUNK_MIN_WIDTH,
+                   GIMP_PROJECTION_CHUNK_MAX_WIDTH);
+}
+
+static gint
+gimp_projection_round_chunk_height (gdouble height)
+{
+  gint h = gimp_projection_round_chunk_size (height, TRUE);
+
+  return CLAMP (h, GIMP_PROJECTION_CHUNK_MIN_HEIGHT,
+                   GIMP_PROJECTION_CHUNK_MAX_HEIGHT);
 }
