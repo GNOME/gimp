@@ -459,10 +459,10 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      if (! gimp_viewable_get_children (GIMP_VIEWABLE (tool->drawable)) &&
+      if (! gimp_viewable_get_children (GIMP_VIEWABLE (active_item)) &&
           ! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
-          orig_buffer = gimp_drawable_transform_cut (tool->drawable,
+          orig_buffer = gimp_drawable_transform_cut (GIMP_DRAWABLE (active_item),
                                                      context,
                                                      &orig_offset_x,
                                                      &orig_offset_y,
@@ -500,7 +500,7 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
           /*  paste the new transformed image to the image...also implement
            *  undo...
            */
-          gimp_drawable_transform_paste (tool->drawable,
+          gimp_drawable_transform_paste (GIMP_DRAWABLE (active_item),
                                          new_buffer, buffer_profile,
                                          new_offset_x, new_offset_y,
                                          new_layer);
