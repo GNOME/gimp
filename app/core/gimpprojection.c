@@ -162,7 +162,8 @@ static void        gimp_projection_chunk_render_start    (GimpProjection  *proj)
 static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj);
 static gboolean    gimp_projection_chunk_render_callback (gpointer         data);
 static void        gimp_projection_chunk_render_init     (GimpProjection  *proj);
-static gboolean    gimp_projection_chunk_render_iteration(GimpProjection  *proj);
+static gboolean    gimp_projection_chunk_render_iteration(GimpProjection  *proj,
+                                                          gboolean         chunk);
 static gboolean    gimp_projection_chunk_render_next_area(GimpProjection  *proj);
 static void        gimp_projection_paint_area            (GimpProjection  *proj,
                                                           gboolean         now,
@@ -650,7 +651,7 @@ gimp_projection_finish_draw (GimpProjection *proj)
 
       gimp_projectable_begin_render (proj->priv->projectable);
 
-      while (gimp_projection_chunk_render_iteration (proj));
+      while (gimp_projection_chunk_render_iteration (proj, FALSE));
 
       gimp_projectable_end_render (proj->priv->projectable);
     }
@@ -819,7 +820,7 @@ gimp_projection_chunk_render_callback (gpointer data)
 
   do
     {
-      if (! gimp_projection_chunk_render_iteration (proj))
+      if (! gimp_projection_chunk_render_iteration (proj, TRUE))
         {
           gimp_projection_chunk_render_stop (proj);
 
@@ -907,7 +908,8 @@ gimp_projection_chunk_render_init (GimpProjection *proj)
  * operations.  -- Adam
  */
 static gboolean
-gimp_projection_chunk_render_iteration (GimpProjection *proj)
+gimp_projection_chunk_render_iteration (GimpProjection *proj,
+                                        gboolean        chunk)
 {
   GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
   gint                       work_x       = chunk_render->work_x;
@@ -915,11 +917,14 @@ gimp_projection_chunk_render_iteration (GimpProjection *proj)
   gint                       work_w;
   gint                       work_h;
 
-  work_w = MIN (GIMP_PROJECTION_CHUNK_WIDTH,
-                chunk_render->x + chunk_render->width - work_x);
+  work_w = chunk_render->x + chunk_render->width  - work_x;
+  work_h = chunk_render->y + chunk_render->height - work_y;
 
-  work_h = MIN (GIMP_PROJECTION_CHUNK_HEIGHT,
-                chunk_render->y + chunk_render->height - work_y);
+  if (chunk)
+    work_w = MIN (work_w, GIMP_PROJECTION_CHUNK_WIDTH);
+
+  if (chunk || work_x != chunk_render->x)
+    work_h = MIN (work_h, GIMP_PROJECTION_CHUNK_HEIGHT);
 
   gimp_projection_paint_area (proj, TRUE /* sic! */,
                               work_x, work_y, work_w, work_h);
