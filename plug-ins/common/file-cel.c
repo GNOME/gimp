@@ -361,6 +361,7 @@ load_image (const gchar  *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("EOF or error while reading image header"));
+      fclose (fp);
       return -1;
     }
 
@@ -381,6 +382,7 @@ load_image (const gchar  *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("EOF or error while reading image header"));
+          fclose (fp);
           return -1;
         }
 
@@ -389,6 +391,7 @@ load_image (const gchar  *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("is not a CEL image file"));
+          fclose (fp);
           return -1;
         }
 
@@ -403,6 +406,7 @@ load_image (const gchar  *file,
         default:
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("illegal bpp value in image: %hhu"), bpp);
+          fclose (fp);
           return -1;
         }
 
@@ -419,6 +423,7 @@ load_image (const gchar  *file,
                    _("illegal image dimensions: width: %d, horizontal offset: "
                      "%d, height: %d, vertical offset: %d"),
                    width, offx, height, offy);
+      fclose (fp);
       return -1;
     }
 
@@ -469,6 +474,7 @@ load_image (const gchar  *file,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("EOF or error while reading image data"));
+              fclose (fp);
               return -1;
             }
 
@@ -505,6 +511,7 @@ load_image (const gchar  *file,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("EOF or error while reading image data"));
+              fclose (fp);
               return -1;
             }
 
@@ -530,6 +537,7 @@ load_image (const gchar  *file,
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("EOF or error while reading image data"));
+              fclose (fp);
               return -1;
             }
 
@@ -547,6 +555,7 @@ load_image (const gchar  *file,
         default:
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unsupported bit depth (%d)!"), bpp);
+          fclose (fp);
           return -1;
         }
 

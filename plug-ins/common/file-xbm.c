@@ -826,6 +826,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nCould not read header (ftell == %ld)"),
                  gimp_filename_to_utf8 (filename), ftell (fp));
+      fclose (fp);
       return -1;
     }
 
@@ -833,6 +834,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nNo image width specified"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -840,6 +842,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nImage width is larger than GIMP can handle"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -847,6 +850,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nNo image height specified"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -854,6 +858,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nImage height is larger than GIMP can handle"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 
@@ -861,6 +866,7 @@ load_image (const gchar  *filename,
     {
       g_message (_("'%s':\nNo image data type specified"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return -1;
     }
 

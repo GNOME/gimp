@@ -125,7 +125,7 @@ def whirl_pinch(image, drawable, whirl, pinch, radius):
                                 if cx >= 0: ix = int(cx)
                                 else:       ix = -(int(-cx) + 1)
                                 if cy >= 0: iy = int(cy)
-                                else:       iy = -(int(-cx) + 1)
+                                else:       iy = -(int(-cy) + 1)
                                 pixel[0] = pft.get_pixel(ix, iy)
                                 pixel[1] = pft.get_pixel(ix+1, iy)
                                 pixel[2] = pft.get_pixel(ix, iy+1)
