@@ -505,9 +505,14 @@ load_image (const gchar  *filename,
 
   fli_read_header (file, &fli_header);
   if (fli_header.magic == NO_HEADER)
-    return -1;
+    {
+      fclose (file);
+      return -1;
+    }
   else
-    fseek (file, 128, SEEK_SET);
+    {
+      fseek (file, 128, SEEK_SET);
+    }
 
   /*
    * Fix parameters
@@ -528,11 +533,13 @@ load_image (const gchar  *filename,
   if (to_frame < 1)
     {
       /* nothing to do ... */
+      fclose (file);
       return -1;
     }
   if (from_frame >= fli_header.frames)
     {
       /* nothing to do ... */
+      fclose (file);
       return -1;
     }
   if (to_frame>fli_header.frames)
