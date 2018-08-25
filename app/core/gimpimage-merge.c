@@ -487,6 +487,14 @@ gimp_image_merge_layers (GimpImage     *image,
    */
   (void) gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
 
+  /*  Make sure the parent's graph is constructed, so that the top layer has a
+   *  parent node, even if it is the child of a group layer (in particular, of
+   *  an invisible group layer, whose graph may not have been constructed as a
+   *  result of the above call.  see issue #2095.)
+   */
+  if (parent)
+    (void) gimp_filter_get_node (GIMP_FILTER (parent));
+
   /*  Build our graph inside the top-layer's parent node  */
   source_node = gimp_filter_get_node (GIMP_FILTER (top_layer));
   node = gegl_node_get_parent (source_node);
