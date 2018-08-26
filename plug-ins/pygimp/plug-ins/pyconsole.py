@@ -410,7 +410,7 @@ class _ReadLine(object):
         self.__insert(iter, "\n")
 
         width = max(self.__get_width(), 4)
-        max_width = max([len(s) for s in completions])
+        max_width = max(len(s) for s in completions)
         n_columns = max(int(width / (max_width + 1)), 1)
         col_width = int(width / n_columns)
         total = len(completions)

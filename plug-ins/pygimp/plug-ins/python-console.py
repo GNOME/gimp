@@ -128,8 +128,8 @@ def do_console():
             cmd = ''
 
             if len(proc.return_vals) > 0:
-                cmd = ', '.join([x[1].replace('-', '_')
-                                for x in proc.return_vals]) + ' = '
+                cmd = ', '.join(x[1].replace('-', '_')
+                                for x in proc.return_vals) + ' = '
 
             cmd = cmd + 'pdb.%s' % proc.proc_name.replace('-', '_')
 
@@ -138,8 +138,8 @@ def do_console():
             else:
                 params = proc.params
 
-            cmd = cmd + '(%s)' % ', '.join([x[1].replace('-', '_')
-                                           for x in params])
+            cmd = cmd + '(%s)' % ', '.join(x[1].replace('-', '_')
+                                           for x in params)
 
             buffer = self.cons.buffer
 
