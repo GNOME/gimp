@@ -533,7 +533,7 @@ static const VariableInfo variables[] =
   [VARIABLE_SWAP_READ_THROUGHPUT] =
   { .name             = "swap-read-throughput",
     .title            = NC_("dashboard-variable", "Read throughput"),
-    .description      = N_("The rate at which data is written to the swap"),
+    .description      = N_("The rate at which data is read from the swap"),
     .type             = VARIABLE_TYPE_RATE_OF_CHANGE,
     .color            = {0.2, 0.4, 1.0, 1.0},
     .sample_func      = gimp_dashboard_sample_variable_rate_of_change,
@@ -3118,6 +3118,10 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
           break;
 
         case VARIABLE_TYPE_RATE_OF_CHANGE:
+          /* Translators:  This string reports the rate of change of a measured
+           * value.  The "%g" is replaced by a certain quantity, and the "/s"
+           * is an abbreviation for "per second".
+           */
           str        = g_strdup_printf (_("%g/s"),
                                         variable_data->value.rate_of_change);
           static_str = FALSE;
