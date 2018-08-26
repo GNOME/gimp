@@ -177,6 +177,9 @@
           New "Little Planet" (gegl:stereographic-projection) filter
           </_li>
           <_li>
+          New "Long Shadow" filter
+          </_li>
+          <_li>
           The "Straighten" option of the Measure Tool now allows
           vertical straightening
           </_li>
@@ -309,9 +312,9 @@
         </_p>
         <ul>
           <_li>Major core optimizations for painting and display,
-          including parallelized painting code.</_li>
+          including parallelized painting code</_li>
           <_li>Symmetries are now preserved in XCF files (saved as image
-          parasites).</_li>
+          parasites)</_li>
           <_li>"Light" and "Dark" themes rewritten from scratch to get
           rid of various usability issues. "Lighter" and "Darker" themes
           removed.</_li>
@@ -321,7 +324,7 @@
           <_li>Plug-in debugging improved to output stack traces from
           plug-ins with --stack-trace-mode command line option not only
           on receiving signals but also on warnings and critical errors
-          when "fatal-warnings" debug key is set.</_li>
+          when "fatal-warnings" debug key is set</_li>
         </ul>
         <_p>For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/</_p>
       </description>
