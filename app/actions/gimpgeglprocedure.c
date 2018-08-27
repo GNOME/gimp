@@ -367,7 +367,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 
   if (! strcmp (gimp_object_get_name (active_tool->tool_info), tool_name))
     {
-      /*  Remember the prodecure that created this tool, because
+      /*  Remember the procedure that created this tool, because
        *  we can't just switch to an operation tool using
        *  gimp_context_set_tool(), we also have to go through the
        *  initialization code below, otherwise we end up with a
