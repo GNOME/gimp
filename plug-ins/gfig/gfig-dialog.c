@@ -2104,7 +2104,7 @@ toggle_obj_type (GtkRadioAction *action,
 
 /* Given a number of float co-ords adjust for scaling back to org size */
 /* Size is number of PAIRS of points */
-/* FP + int varients */
+/* FP + int variants */
 
 static void
 scale_to_orginal_x (gdouble *list)
