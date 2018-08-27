@@ -471,7 +471,7 @@ _("Sets the folder for temporary storage. Files will appear here " \
 "The name of the icon theme to use."
 
 #define PREFER_SYMBOLIC_ICONS_BLURB \
-"When enabled, symbolic icons will be prefered if available."
+"When enabled, symbolic icons will be preferred if available."
 
 #define ICON_THEME_PATH_BLURB \
 "Sets the icon theme search path."
