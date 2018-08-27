@@ -700,7 +700,7 @@ delete_dialog_callback (GtkWidget *widget,
 
       gtk_tree_model_get (model, &iter, 1, &sel_obj, -1);
 
-      /* Delete the current  item + asssociated file */
+      /* Delete the current item + associated file */
       valid = gtk_list_store_remove (GTK_LIST_STORE(model), &iter);
 
       /* Try to select first item if last one was deleted */
