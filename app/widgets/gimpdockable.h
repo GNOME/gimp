@@ -39,7 +39,7 @@ typedef struct _GimpDockableClass   GimpDockableClass;
 /**
  * GimpDockable:
  *
- * A kind of adpater to make other widgets dockable. The widget to
+ * A kind of adapter to make other widgets dockable. The widget to
  * dock is put inside the GimpDockable, which is put in a
  * GimpDockbook.
  */
