@@ -139,7 +139,7 @@ gimp_guide_tool_button_release (GimpTool              *tool,
 
       if (guide_tool->guide_position == GIMP_GUIDE_POSITION_UNDEFINED ||
           guide_tool->guide_position <  0                             ||
-          guide_tool->guide_position >= max_position)
+          guide_tool->guide_position > max_position)
         {
           if (guide_tool->guide)
             {
@@ -248,7 +248,7 @@ gimp_guide_tool_motion (GimpTool         *tool,
         guide_tool->guide_position = RINT (coords->x);
 
       if (guide_tool->guide_position <  0 ||
-          guide_tool->guide_position >= max_position)
+          guide_tool->guide_position > max_position)
         {
           delete_guide = TRUE;
         }
