@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-26 18:07+0200\n"
-"PO-Revision-Date: 2018-08-26 18:08+0200\n"
+"POT-Creation-Date: 2018-08-28 19:47+0200\n"
+"PO-Revision-Date: 2018-08-28 19:48+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -24470,9 +24470,9 @@ msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Przepustowość odczytu"
 
-#: ../app/widgets/gimpdashboard.c:536 ../app/widgets/gimpdashboard.c:559
-msgid "The rate at which data is written to the swap"
-msgstr "Prędkość, z jaką dane są zapisywane w pamięci wymiany"
+#: ../app/widgets/gimpdashboard.c:536
+msgid "The rate at which data is read from the swap"
+msgstr "Prędkość, z jaką dane są odczytywane z pamięci wymiany"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
@@ -24490,6 +24490,10 @@ msgstr "Całkowita ilość danych zapisanych do pamięci wymiany"
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Przepustowość zapisu"
+
+#: ../app/widgets/gimpdashboard.c:559
+msgid "The rate at which data is written to the swap"
+msgstr "Prędkość, z jaką dane są zapisywane w pamięci wymiany"
 
 #: ../app/widgets/gimpdashboard.c:569
 msgid "Swap compression ratio"
@@ -24617,17 +24621,21 @@ msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:3040 ../app/widgets/gimpdashboard.c:3234
+#: ../app/widgets/gimpdashboard.c:3040 ../app/widgets/gimpdashboard.c:3238
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Tak"
 
-#: ../app/widgets/gimpdashboard.c:3041 ../app/widgets/gimpdashboard.c:3235
+#: ../app/widgets/gimpdashboard.c:3041 ../app/widgets/gimpdashboard.c:3239
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nie"
 
-#: ../app/widgets/gimpdashboard.c:3121
+#. Translators:  This string reports the rate of change of a measured
+#. * value.  The "%g" is replaced by a certain quantity, and the "/s"
+#. * is an abbreviation for "per second".
+#.
+#: ../app/widgets/gimpdashboard.c:3125
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -24638,12 +24646,12 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3224
+#: ../app/widgets/gimpdashboard.c:3228
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:3302
+#: ../app/widgets/gimpdashboard.c:3306
 msgid "N/A"
 msgstr "Niedostępne"
 
