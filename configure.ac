@@ -1499,28 +1499,8 @@ AC_SUBST(TIFF_LIBS)
 # Check for libjpeg
 ###################
 
-if test -z "$JPEG_LIBS"; then
-  AC_CHECK_LIB(jpeg, jpeg_destroy_decompress, ,
-    add_deps_error([libjpeg], [JPEG library not found]))
-  AC_MSG_CHECKING([for jpeglib.h])
-  AC_PREPROC_IFELSE(
-    [AC_LANG_SOURCE([[
-#include <stdio.h>
-#undef HAVE_STDDEF_H
-#undef HAVE_STDLIB_H
-#undef PACKAGE
-#undef VERSION
-#include <jpeglib.h>]])],
-    AC_MSG_RESULT([yes]),
-    add_deps_error([libjpeg], [JPEG header file not found]))
-  AC_CHECK_LIB(jpeg, jpeg_save_markers,
-    JPEG_LIBS='-ljpeg',
-    add_deps_error([libjpeg], [JPEG library is too old]))
-fi
-
+PKG_CHECK_MODULES(JPEG, [libjpeg],, [add_deps_error([libjpeg])])
 MIME_TYPES="$MIME_TYPES;image/jpeg"
-
-AC_SUBST(JPEG_LIBS)
 
 
 ################
