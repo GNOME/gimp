@@ -75,3 +75,6 @@ jpegqual_LDADD = \
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
+
+EXTRA_DIST = \
+	COPYING.ijg
