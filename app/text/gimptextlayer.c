@@ -460,8 +460,6 @@ gimp_text_layer_new (GimpImage *image,
 
   gimp_text_layer_set_text (layer, text);
 
-  layer->private->base_dir = text->base_dir;
-
   if (! gimp_text_layer_render (layer))
     {
       g_object_unref (layer);
@@ -493,6 +491,7 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
   if (text)
     {
       layer->text = g_object_ref (text);
+      layer->private->base_dir = layer->text->base_dir;
 
       g_signal_connect_object (text, "changed",
                                G_CALLBACK (gimp_text_layer_text_changed),
