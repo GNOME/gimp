@@ -71,7 +71,7 @@ header files installed.
   7. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
      be installed. All these libraries are required dependencies.
 
-  8. For metadata access GIMP requires the gexiv2 library. It is hosted
+  8. For metadata access GIMP requires the gexiv2 @GEXIV2_REQUIRED_VERSION@ or newer library. It is hosted
      at https://wiki.gnome.org/Projects/gexiv2 .
 
   9. libpng, libjpeg, libtiff and lcms are hard dependencies that can
