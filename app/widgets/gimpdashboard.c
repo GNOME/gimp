@@ -352,9 +352,6 @@ static void       gimp_dashboard_sample_object                  (GimpDashboard  
                                                                  GObject             *object,
                                                                  Variable             variable);
 
-static void       gimp_dashboard_container_remove               (GtkWidget           *widget,
-                                                                 GtkContainer        *container);
-
 static void       gimp_dashboard_group_menu_position            (GtkMenu             *menu,
                                                                  gint                *x,
                                                                  gint                *y,
@@ -2528,13 +2525,6 @@ gimp_dashboard_sample_object (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_container_remove (GtkWidget    *widget,
-                                 GtkContainer *container)
-{
-  gtk_container_remove (container, widget);
-}
-
-static void
 gimp_dashboard_group_menu_position (GtkMenu  *menu,
                                     gint     *x,
                                     gint     *y,
@@ -2605,9 +2595,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
         }
     }
 
-  gtk_container_foreach (GTK_CONTAINER (group_data->table),
-                         (GtkCallback) gimp_dashboard_container_remove,
-                         group_data->table);
+  gimp_gtk_container_clear (GTK_CONTAINER (group_data->table));
   gtk_table_resize (group_data->table, MAX (n_rows, 1), 3);
 
   n_rows        = 0;
