@@ -64,6 +64,7 @@
 #include "gimpmeter.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpuimanager.h"
+#include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
@@ -350,9 +351,6 @@ static void       gimp_dashboard_sample_memory_size             (GimpDashboard  
 static void       gimp_dashboard_sample_object                  (GimpDashboard       *dashboard,
                                                                  GObject             *object,
                                                                  Variable             variable);
-
-static void       gimp_dashboard_container_remove               (GtkWidget           *widget,
-                                                                 GtkContainer        *container);
 
 static void       gimp_dashboard_update_groups                  (GimpDashboard       *dashboard);
 static void       gimp_dashboard_update_group                   (GimpDashboard       *dashboard,
@@ -2520,13 +2518,6 @@ gimp_dashboard_sample_object (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_container_remove (GtkWidget    *widget,
-                                 GtkContainer *container)
-{
-  gtk_container_remove (container, widget);
-}
-
-static void
 gimp_dashboard_update_groups (GimpDashboard *dashboard)
 {
   Group group;
@@ -2587,9 +2578,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
         }
     }
 
-  gtk_container_foreach (GTK_CONTAINER (group_data->grid),
-                         (GtkCallback) gimp_dashboard_container_remove,
-                         group_data->grid);
+  gimp_gtk_container_clear (GTK_CONTAINER (group_data->grid));
 
   n_rows        = 0;
   add_separator = FALSE;
