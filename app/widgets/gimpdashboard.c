@@ -354,12 +354,6 @@ static void       gimp_dashboard_sample_object                  (GimpDashboard  
 static void       gimp_dashboard_container_remove               (GtkWidget           *widget,
                                                                  GtkContainer        *container);
 
-static void       gimp_dashboard_group_menu_position            (GtkMenu             *menu,
-                                                                 gint                *x,
-                                                                 gint                *y,
-                                                                 gboolean            *push_in,
-                                                                 gpointer             user_data);
-
 static void       gimp_dashboard_update_groups                  (GimpDashboard       *dashboard);
 static void       gimp_dashboard_update_group                   (GimpDashboard       *dashboard,
                                                                  Group                group);
