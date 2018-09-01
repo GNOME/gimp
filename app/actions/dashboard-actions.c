@@ -41,14 +41,14 @@ static const GimpActionEntry dashboard_actions[] =
     GIMP_HELP_DASHBOARD_DIALOG },
 
   { "dashboard-groups", NULL,
-    NC_("dashboard-action", "Groups") },
+    NC_("dashboard-action", "_Groups") },
   { "dashboard-update-interval", NULL,
-    NC_("dashboard-action", "Update Interval") },
+    NC_("dashboard-action", "_Update Interval") },
   { "dashboard-history-duration", NULL,
-    NC_("dashboard-action", "History Duration") },
+    NC_("dashboard-action", "_History Duration") },
 
   { "dashboard-reset", GIMP_ICON_RESET,
-    NC_("dashboard-action", "Reset"), NULL,
+    NC_("dashboard-action", "_Reset"), NULL,
     NC_("dashboard-action", "Reset cumulative data"),
     G_CALLBACK (dashboard_reset_cmd_callback),
     GIMP_HELP_DASHBOARD_RESET },
@@ -57,7 +57,7 @@ static const GimpActionEntry dashboard_actions[] =
 static const GimpToggleActionEntry dashboard_toggle_actions[] =
 {
   { "dashboard-low-swap-space-warning", NULL,
-    NC_("dashboard-action", "Low Swap Space Warning"), NULL,
+    NC_("dashboard-action", "_Low Swap Space Warning"), NULL,
     NC_("dashboard-action", "Raise the dashboard when "
                             "the swap size approaches its limit"),
     G_CALLBACK (dashboard_low_swap_space_warning_cmd_callback),
