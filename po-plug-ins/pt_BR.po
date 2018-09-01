@@ -9,20 +9,21 @@
 # Laudivan Freire de Almeida <laudivan@riseup.net>, 2016.
 # Caio Nascimento <caiocnwp@Hotmail.com>, 2017.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-07 13:02+0000\n"
-"PO-Revision-Date: 2017-12-23 17:12-0200\n"
-"Last-Translator: Caio Nascimento <caiocnwp@Hotmail.com>\n"
+"POT-Creation-Date: 2018-08-28 17:52+0000\n"
+"PO-Revision-Date: 2018-09-01 15:09-0200\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 2.0.5\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -2266,8 +2267,8 @@ msgstr ""
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Não é possível salvar imagens RGB como GIF. Converta para cores indexadas ou "
-"tons de cinza antes."
+"Não foi possível exportar imagens de cores RGB. Primeiro converta para cores "
+"indexadas ou tons de cinza."
 
 #: ../plug-ins/common/file-gif-save.c:1035
 msgid "Delay inserted to prevent evil CPU-sucking animation."
@@ -3189,7 +3190,9 @@ msgstr "Erro ao criar a estrutura de escrita do PNG ao salvar \"%s\"."
 #, fuzzy, c-format
 #| msgid "Error while saving '%s'. Could not save image."
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "Erro ao salvar \"%s\" . Não foi possível gravar a imagem."
+msgstr ""
+"Erro ao exportar \"%s\". Não foi possível criar estrutura de informação de "
+"cabeçalho PNG."
 
 #: ../plug-ins/common/file-png.c:1558
 #, fuzzy, c-format
@@ -7200,8 +7203,8 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Não é possível salvar \"%s\". O formato de arquivo PSD sem suporte imagens "
-"que tenham mais de 30000 pixels de largura ou de altura."
+"Não foi possível exportar \"%s\". O formato de arquivo PSD não oferece "
+"suporte a imagens que tenham mais de 30.000 pixels de largura ou de altura."
 
 #: ../plug-ins/file-psd/psd-save.c:1584
 #, fuzzy, c-format
@@ -7212,8 +7215,9 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Não é possível salvar \"%s\". O formato de arquivo PSD sem suporte imagens "
-"que tenham camadas com mais de 30000 pixels de largura ou de altura."
+"Não foi possível exportar \"%s\". O formato de arquivo PSD não oferece "
+"suporte a imagens que tenham camadas com mais de 30.000 pixels de largura ou "
+"de altura."
 
 #: ../plug-ins/file-psd/psd-util.c:179
 msgid "Unexpected end of file"
@@ -7421,7 +7425,9 @@ msgstr "Canal TIFF"
 #, fuzzy, c-format
 #| msgid "FITS save cannot handle images with alpha channels"
 msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr "Gravação FITS não pode manipular imagens com canais alfa"
+msgstr ""
+"A exportação em TIFF não oferece suporte a imagens indexadas com um canal "
+"alfa."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:618
 msgid ""
@@ -7642,7 +7648,7 @@ msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
-msgstr ""
+msgstr "o arquivo é maior que 4GiB"
 
 #: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "user aborted encoding"
