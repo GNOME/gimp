@@ -9,20 +9,21 @@
 # Laudivan Freire de Almeida <laudivan@riseup.net>, 2016.
 # Caio Nascimento <caiocnwp@Hotmail.com>, 2017.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-22 17:02+0000\n"
-"PO-Revision-Date: 2018-07-19 08:57-0300\n"
-"Last-Translator: Bruno Lopes da Silva <brunolopesbldsb@gmail.com>\n"
+"POT-Creation-Date: 2018-08-28 17:52+0000\n"
+"PO-Revision-Date: 2018-09-01 15:09-0200\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -2556,8 +2557,8 @@ msgstr ""
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Não foi possível exportar imagens de cores RGB. Primeiro converta para "
-"cores indexadas ou tons de cinza."
+"Não foi possível exportar imagens de cores RGB. Primeiro converta para cores "
+"indexadas ou tons de cinza."
 
 #: ../plug-ins/common/file-gif-save.c:1035
 msgid "Delay inserted to prevent evil CPU-sucking animation."
@@ -3450,7 +3451,9 @@ msgstr "Erro ao criar a estrutura de escrita do PNG ao exportar \"%s\"."
 #: ../plug-ins/common/file-png.c:1550
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "Erro ao exportar \"%s\". Não foi possível criar estrutura de informação de cabeçalho PNG."
+msgstr ""
+"Erro ao exportar \"%s\". Não foi possível criar estrutura de informação de "
+"cabeçalho PNG."
 
 #: ../plug-ins/common/file-png.c:1558
 #, c-format
@@ -7389,8 +7392,8 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Não foi possível exportar \"%s\". O formato de arquivo PSD não oferece suporte "
-"a imagens que tenham mais de 30.000 pixels de largura ou de altura."
+"Não foi possível exportar \"%s\". O formato de arquivo PSD não oferece "
+"suporte a imagens que tenham mais de 30.000 pixels de largura ou de altura."
 
 #: ../plug-ins/file-psd/psd-save.c:1584
 #, c-format
@@ -7398,8 +7401,9 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Não foi possível exportar \"%s\". O formato de arquivo PSD não oferece suporte "
-"a imagens que tenham camadas com mais de 30.000 pixels de largura ou de altura."
+"Não foi possível exportar \"%s\". O formato de arquivo PSD não oferece "
+"suporte a imagens que tenham camadas com mais de 30.000 pixels de largura ou "
+"de altura."
 
 #: ../plug-ins/file-psd/psd-util.c:179
 msgid "Unexpected end of file"
@@ -7611,7 +7615,9 @@ msgstr "Canal TIFF"
 #: ../plug-ins/file-tiff/file-tiff-save.c:605
 #, c-format
 msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr "A exportação em TIFF não oferece suporte a imagens indexadas com um canal alfa."
+msgstr ""
+"A exportação em TIFF não oferece suporte a imagens indexadas com um canal "
+"alfa."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:618
 msgid ""
@@ -7813,7 +7819,7 @@ msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
-msgstr "o arquivo é maior que 4GB"
+msgstr "o arquivo é maior que 4GiB"
 
 #: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "user aborted encoding"
