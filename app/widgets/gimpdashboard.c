@@ -3801,13 +3801,13 @@ static void
 gimp_dashboard_log_write_address_map (GimpAsync     *async,
                                       GimpDashboard *dashboard)
 {
-  GimpDashboardPrivate    *priv = dashboard->priv;
-  GimpBacktraceSymbolInfo  infos[2];
-  guintptr                *addresses;
-  gint                     n_addresses;
-  GList                   *iter;
-  gint                     i;
-  gint                     n;
+  GimpDashboardPrivate     *priv = dashboard->priv;
+  GimpBacktraceAddressInfo  infos[2];
+  guintptr                 *addresses;
+  gint                      n_addresses;
+  GList                    *iter;
+  gint                      i;
+  gint                      n;
 
   n_addresses = g_hash_table_size (priv->log_addresses);
 
@@ -3838,13 +3838,13 @@ gimp_dashboard_log_write_address_map (GimpAsync     *async,
 
   for (i = 0; i < n_addresses; i++)
     {
-      GimpBacktraceSymbolInfo       *info      = &infos[n       % 2];
-      const GimpBacktraceSymbolInfo *prev_info = &infos[(n + 1) % 2];
+      GimpBacktraceAddressInfo       *info      = &infos[n       % 2];
+      const GimpBacktraceAddressInfo *prev_info = &infos[(n + 1) % 2];
 
       if (gimp_async_is_canceled (async))
         break;
 
-      if (gimp_backtrace_get_symbol_info (addresses[i], info))
+      if (gimp_backtrace_get_address_info (addresses[i], info))
         {
           gboolean empty = TRUE;
 
