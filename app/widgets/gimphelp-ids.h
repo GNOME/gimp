@@ -674,6 +674,9 @@
 #define GIMP_HELP_DASHBOARD_GROUPS                "gimp-dashboard-groups"
 #define GIMP_HELP_DASHBOARD_UPDATE_INTERVAL       "gimp-dashboard-update-interval"
 #define GIMP_HELP_DASHBOARD_HISTORY_DURATION      "gimp-dashboard-history-duration"
+#define GIMP_HELP_DASHBOARD_LOG_RECORD            "gimp-dashboard-log-record"
+#define GIMP_HELP_DASHBOARD_LOG_ADD_MARKER        "gimp-dashboard-log-add-marker"
+#define GIMP_HELP_DASHBOARD_LOG_ADD_EMPTY_MARKER  "gimp-dashboard-log-add-empty-marker"
 #define GIMP_HELP_DASHBOARD_RESET                 "gimp-dashboard-reset"
 #define GIMP_HELP_DASHBOARD_LOW_SWAP_SPACE_WARNING "gimp-dashboard-low-swap-space-warning"
 

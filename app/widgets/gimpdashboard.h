@@ -51,25 +51,34 @@ struct _GimpDashboardClass
 
 GType                          gimp_dashboard_get_type                   (void) G_GNUC_CONST;
 
-GtkWidget                    * gimp_dashboard_new                        (Gimp                         *gimp,
-                                                                          GimpMenuFactory              *menu_factory);
+GtkWidget                    * gimp_dashboard_new                        (Gimp                          *gimp,
+                                                                          GimpMenuFactory               *menu_factory);
 
-void                           gimp_dashboard_reset                      (GimpDashboard                *dashboard);
+gboolean                       gimp_dashboard_log_start_recording        (GimpDashboard                 *dashboard,
+                                                                          GFile                         *file,
+                                                                          GError                       **error);
+gboolean                       gimp_dashboard_log_stop_recording         (GimpDashboard                 *dashboard,
+                                                                          GError                       **error);
+gboolean                       gimp_dashboard_log_is_recording           (GimpDashboard                 *dashboard);
+void                           gimp_dashboard_log_add_marker             (GimpDashboard                 *dashboard,
+                                                                          const gchar                   *description);
 
-void                           gimp_dashboard_set_update_interval        (GimpDashboard                *dashboard,
-                                                                          GimpDashboardUpdateInteval    update_interval);
-GimpDashboardUpdateInteval     gimp_dashboard_get_update_interval        (GimpDashboard                *dashboard);
+void                           gimp_dashboard_reset                      (GimpDashboard                 *dashboard);
 
-void                           gimp_dashboard_set_history_duration       (GimpDashboard                *dashboard,
-                                                                          GimpDashboardHistoryDuration  history_duration);
-GimpDashboardHistoryDuration   gimp_dashboard_get_history_duration       (GimpDashboard                *dashboard);
+void                           gimp_dashboard_set_update_interval        (GimpDashboard                 *dashboard,
+                                                                          GimpDashboardUpdateInteval     update_interval);
+GimpDashboardUpdateInteval     gimp_dashboard_get_update_interval        (GimpDashboard                 *dashboard);
 
-void                           gimp_dashboard_set_low_swap_space_warning (GimpDashboard                *dashboard,
-                                                                          gboolean                      low_swap_space_warning);
-gboolean                       gimp_dashboard_get_low_swap_space_warning (GimpDashboard                *dashboard);
+void                           gimp_dashboard_set_history_duration       (GimpDashboard                 *dashboard,
+                                                                          GimpDashboardHistoryDuration   history_duration);
+GimpDashboardHistoryDuration   gimp_dashboard_get_history_duration       (GimpDashboard                 *dashboard);
 
-void                           gimp_dashboard_menu_setup                 (GimpUIManager                *manager,
-                                                                          const gchar                  *ui_path);
+void                           gimp_dashboard_set_low_swap_space_warning (GimpDashboard                 *dashboard,
+                                                                          gboolean                       low_swap_space_warning);
+gboolean                       gimp_dashboard_get_low_swap_space_warning (GimpDashboard                 *dashboard);
+
+void                           gimp_dashboard_menu_setup                 (GimpUIManager                 *manager,
+                                                                          const gchar                   *ui_path);
 
 
 #endif  /*  __GIMP_DASHBOARD_H__  */

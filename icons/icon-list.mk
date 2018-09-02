@@ -37,6 +37,7 @@ scalable_images = \
 	scalable/media-optical.svg				\
 	scalable/media-playback-pause.svg			\
 	scalable/media-playback-start.svg			\
+	scalable/media-record.svg				\
 	scalable/media-seek-backward.svg			\
 	scalable/media-skip-backward.svg			\
 	scalable/media-skip-forward.svg				\
@@ -168,6 +169,7 @@ scalable_images = \
 	scalable/gimp-line-spacing.svg				\
 	scalable/gimp-linked.svg				\
 	scalable/gimp-list.svg					\
+	scalable/gimp-marker.svg				\
 	scalable/gimp-menu-left.svg				\
 	scalable/gimp-menu-right.svg				\
 	scalable/gimp-merge-down.svg				\
@@ -548,6 +550,7 @@ icons16_images = \
 	16/media-optical.png					\
 	16/media-playback-pause.png				\
 	16/media-playback-start.png				\
+	16/media-record.png					\
 	16/media-seek-backward.png				\
 	16/media-skip-backward.png				\
 	16/media-skip-forward.png				\
@@ -658,6 +661,7 @@ icons16_images = \
 	16/gimp-layer.png					\
 	16/gimp-layers.png					\
 	16/gimp-list.png					\
+	16/gimp-marker.png					\
 	16/gimp-merge-down.png					\
 	16/gimp-move-to-screen.png				\
 	16/gimp-navigation.png					\

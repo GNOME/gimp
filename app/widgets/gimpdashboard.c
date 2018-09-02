@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 
 #include <gegl.h>
 #include <gio/gio.h>
@@ -53,14 +54,19 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-gui.h"
 #include "core/gimp-utils.h"
+#include "core/gimp-parallel.h"
 #include "core/gimpasync.h"
+#include "core/gimpbacktrace.h"
+#include "core/gimpwaitable.h"
 
 #include "gimpactiongroup.h"
 #include "gimpdocked.h"
 #include "gimpdashboard.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
+#include "gimphighlightablebutton.h"
 #include "gimpmeter.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpuimanager.h"
@@ -68,6 +74,7 @@
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
+#include "gimp-version.h"
 
 
 #define DEFAULT_UPDATE_INTERVAL        GIMP_DASHBOARD_UPDATE_INTERVAL_0_25_SEC
@@ -79,6 +86,9 @@
 
 #define CPU_ACTIVE_ON                  /* individual cpu usage is above */ 0.75
 #define CPU_ACTIVE_OFF                 /* individual cpu usage is below */ 0.25
+
+#define LOG_VERSION                    1
+#define LOG_SAMPLE_FREQUENCY           10 /* samples per second */
 
 
 typedef enum
@@ -182,6 +192,7 @@ struct _VariableInfo
   const gchar   *title;
   const gchar   *description;
   VariableType   type;
+  gboolean       exclude_from_log;
   GimpRGB        color;
   VariableFunc   sample_func;
   VariableFunc   reset_func;
@@ -286,6 +297,20 @@ struct _GimpDashboardPrivate
   GimpDashboardUpdateInteval    update_interval;
   GimpDashboardHistoryDuration  history_duration;
   gboolean                      low_swap_space_warning;
+
+  GOutputStream                *log_output;
+  GError                       *log_error;
+  gint64                        log_start_time;
+  gint                          log_sample_frequency;
+  gint                          log_n_samples;
+  gint                          log_n_markers;
+  VariableData                  log_variables[N_VARIABLES];
+  gboolean                      log_include_backtrace;
+  GimpBacktrace                *log_backtrace;
+  GHashTable                   *log_addresses;
+
+  GimpHighlightableButton      *log_record_button;
+  GtkLabel                     *log_add_marker_label;
 };
 
 
@@ -372,6 +397,8 @@ static void       gimp_dashboard_field_set_active               (GimpDashboard  
                                                                  gint                 field,
                                                                  gboolean             active);
 
+static void       gimp_dashboard_reset_unlocked                 (GimpDashboard       *dashboard);
+
 static void       gimp_dashboard_reset_variables                (GimpDashboard       *dashboard);
 
 static gpointer   gimp_dashboard_variable_get_data              (GimpDashboard       *dashboard,
@@ -387,6 +414,20 @@ static gchar    * gimp_dashboard_field_to_string                (GimpDashboard  
                                                                  Group                group,
                                                                  gint                 field,
                                                                  gboolean             full);
+
+static gboolean   gimp_dashboard_log_printf                     (GimpDashboard       *dashboard,
+                                                                 const gchar         *format,
+                                                                 ...) G_GNUC_PRINTF (2, 3);
+static gboolean   gimp_dashboard_log_print_escaped              (GimpDashboard       *dashboard,
+                                                                 const gchar         *string);
+static gint64     gimp_dashboard_log_time                       (GimpDashboard       *dashboard);
+static void       gimp_dashboard_log_sample                     (GimpDashboard       *dashboard,
+                                                                 gboolean             variables_changed);
+static void       gimp_dashboard_log_update_highlight           (GimpDashboard       *dashboard);
+static void       gimp_dashboard_log_update_n_markers           (GimpDashboard       *dashboard);
+
+static void       gimp_dashboard_log_write_address_map          (GimpAsync           *async,
+                                                                 GimpDashboard       *dashboard);
 
 static gboolean   gimp_dashboard_field_use_meter_underlay       (Group                group,
                                                                  gint                 field);
@@ -1169,6 +1210,12 @@ gimp_dashboard_constructed (GObject *object)
   GimpDashboardPrivate *priv = dashboard->priv;
   GimpUIManager        *ui_manager;
   GimpActionGroup      *action_group;
+  GtkAction            *action;
+  GtkWidget            *button;
+  GtkWidget            *alignment;
+  GtkWidget            *box;
+  GtkWidget            *image;
+  GtkWidget            *label;
   Group                 group;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -1182,7 +1229,6 @@ gimp_dashboard_constructed (GObject *object)
       const GroupInfo       *group_info = &groups[group];
       GroupData             *group_data = &priv->groups[group];
       GimpToggleActionEntry  entry      = {};
-      GtkAction             *action;
 
       entry.name      = g_strdup_printf ("dashboard-group-%s", group_info->name);
       entry.label     = g_dpgettext2 (NULL, "dashboard-group", group_info->title);
@@ -1205,8 +1251,54 @@ gimp_dashboard_constructed (GObject *object)
       g_free ((gpointer) entry.name);
     }
 
-  gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
-                                 "dashboard-reset", NULL);
+  button = gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
+                                          "dashboard-log-record", NULL);
+  priv->log_record_button = GIMP_HIGHLIGHTABLE_BUTTON (button);
+  gimp_highlightable_button_set_highlight_color (
+    GIMP_HIGHLIGHTABLE_BUTTON (button),
+    GIMP_HIGHLIGHTABLE_BUTTON_COLOR_AFFIRMATIVE);
+
+  button = gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
+                                          "dashboard-log-add-marker",
+                                          "dashboard-log-add-empty-marker",
+                                          gimp_get_extend_selection_mask (),
+                                          NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (action_group),
+                                        "dashboard-log-add-marker");
+  g_object_bind_property (action, "sensitive",
+                          button, "visible",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  image = g_object_ref (gtk_bin_get_child (GTK_BIN (button)));
+  gtk_container_remove (GTK_CONTAINER (button), image);
+
+  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_add (GTK_CONTAINER (button), alignment);
+  gtk_widget_show (alignment);
+
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_container_add (GTK_CONTAINER (alignment), box);
+  gtk_widget_show (box);
+
+  gtk_box_pack_start (GTK_BOX (box), image, FALSE, FALSE, 0);
+  g_object_unref (image);
+
+  label = gtk_label_new (NULL);
+  priv->log_add_marker_label = GTK_LABEL (label);
+  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  button = gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
+                                          "dashboard-reset", NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (action_group),
+                                        "dashboard-reset");
+  g_object_bind_property (action, "sensitive",
+                          button, "visible",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  gimp_action_group_update (action_group, dashboard);
 }
 
 static void
@@ -1238,6 +1330,8 @@ gimp_dashboard_dispose (GObject *object)
       g_source_remove (priv->low_swap_space_idle_id);
       priv->low_swap_space_idle_id = 0;
     }
+
+  gimp_dashboard_log_stop_recording (dashboard, NULL);
 
   gimp_dashboard_reset_variables (dashboard);
 
@@ -1583,25 +1677,38 @@ gimp_dashboard_field_menu_item_toggled (GimpDashboard    *dashboard,
 static gpointer
 gimp_dashboard_sample (GimpDashboard *dashboard)
 {
-  GimpDashboardPrivate       *priv                = dashboard->priv;
-  GimpDashboardUpdateInteval  update_interval;
-  gint64                      end_time;
-  gboolean                    seen_low_swap_space = FALSE;
+  GimpDashboardPrivate *priv                = dashboard->priv;
+  gint64                last_sample_time    = 0;
+  gint64                last_update_time    = 0;
+  gboolean              seen_low_swap_space = FALSE;
 
   g_mutex_lock (&priv->mutex);
 
-  update_interval = priv->update_interval;
-  end_time        = g_get_monotonic_time ();
-
   while (! priv->quit)
     {
+      gint64 update_interval;
+      gint64 sample_interval;
+      gint64 end_time;
+
+      update_interval = priv->update_interval * G_TIME_SPAN_SECOND / 1000;
+
+      if (priv->log_output)
+        sample_interval = G_TIME_SPAN_SECOND / priv->log_sample_frequency;
+      else
+        sample_interval = update_interval;
+
+      end_time = last_sample_time + sample_interval;
+
       if (! g_cond_wait_until (&priv->cond, &priv->mutex, end_time) ||
           priv->update_now)
         {
+          gint64   time;
           gboolean variables_changed = FALSE;
           Variable variable;
           Group    group;
           gint     field;
+
+          time = g_get_monotonic_time ();
 
           /* sample all variables */
           for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
@@ -1617,119 +1724,123 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
                                           sizeof (VariableData));
             }
 
-          /* add samples to meters */
-          for (group = FIRST_GROUP; group < N_GROUPS; group++)
+          /* log sample */
+          if (priv->log_output)
+            gimp_dashboard_log_sample (dashboard, variables_changed);
+
+          /* update gui */
+          if (priv->update_now   ||
+              ! priv->log_output ||
+              time - last_update_time >= update_interval)
             {
-              const GroupInfo *group_info = &groups[group];
-              GroupData       *group_data = &priv->groups[group];
-              gdouble         *sample;
-              gdouble          total      = 0.0;
-
-              if (! group_info->has_meter)
-                continue;
-
-              sample = g_new (gdouble, group_data->n_meter_values);
-
-              for (field = 0; field < group_data->n_fields; field++)
+              /* add samples to meters */
+              for (group = FIRST_GROUP; group < N_GROUPS; group++)
                 {
-                  const FieldInfo *field_info = &group_info->fields[field];
+                  const GroupInfo *group_info = &groups[group];
+                  GroupData       *group_data = &priv->groups[group];
+                  gdouble         *sample;
+                  gdouble          total      = 0.0;
 
-                  if (field_info->meter_value)
+                  if (! group_info->has_meter)
+                    continue;
+
+                  sample = g_new (gdouble, group_data->n_meter_values);
+
+                  for (field = 0; field < group_data->n_fields; field++)
                     {
-                      gdouble value;
+                      const FieldInfo *field_info = &group_info->fields[field];
 
-                      if (field_info->meter_variable)
-                        variable = field_info->meter_variable;
-                      else
-                        variable = field_info->variable;
-
-                      value = gimp_dashboard_variable_to_double (dashboard,
-                                                                 variable);
-
-                      if (value &&
-                          gimp_dashboard_field_use_meter_underlay (group,
-                                                                   field))
+                      if (field_info->meter_value)
                         {
-                          value = G_MAXDOUBLE;
-                        }
+                          gdouble value;
 
-                      if (field_info->meter_cumulative)
+                          if (field_info->meter_variable)
+                            variable = field_info->meter_variable;
+                          else
+                            variable = field_info->variable;
+
+                          value = gimp_dashboard_variable_to_double (dashboard,
+                                                                     variable);
+
+                          if (value &&
+                              gimp_dashboard_field_use_meter_underlay (group,
+                                                                       field))
+                            {
+                              value = G_MAXDOUBLE;
+                            }
+
+                          if (field_info->meter_cumulative)
+                            {
+                              total += value;
+                              value  = total;
+                            }
+
+                          sample[field_info->meter_value - 1] = value;
+                        }
+                    }
+
+                  gimp_meter_add_sample (group_data->meter, sample);
+
+                  g_free (sample);
+                }
+
+              if (variables_changed)
+                {
+                  /* enqueue update source */
+                  if (! priv->update_idle_id &&
+                      gtk_widget_get_mapped (GTK_WIDGET (dashboard)))
+                    {
+                      priv->update_idle_id = g_idle_add_full (
+                        G_PRIORITY_DEFAULT,
+                        (GSourceFunc) gimp_dashboard_update,
+                        dashboard, NULL);
+                    }
+
+                  /* check for low swap space */
+                  if (priv->low_swap_space_warning                      &&
+                      priv->variables[VARIABLE_SWAP_OCCUPIED].available &&
+                      priv->variables[VARIABLE_SWAP_LIMIT].available)
+                    {
+                      guint64 swap_occupied;
+                      guint64 swap_limit;
+
+                      swap_occupied = priv->variables[VARIABLE_SWAP_OCCUPIED].value.size;
+                      swap_limit    = priv->variables[VARIABLE_SWAP_LIMIT].value.size;
+
+                      if (! seen_low_swap_space &&
+                          swap_occupied >= LOW_SWAP_SPACE_WARNING_ON * swap_limit)
                         {
-                          total += value;
-                          value  = total;
-                        }
+                          if (! priv->low_swap_space_idle_id)
+                            {
+                              priv->low_swap_space_idle_id =
+                                g_idle_add_full (G_PRIORITY_HIGH,
+                                                 (GSourceFunc) gimp_dashboard_low_swap_space,
+                                                 dashboard, NULL);
+                            }
 
-                      sample[field_info->meter_value - 1] = value;
+                          seen_low_swap_space = TRUE;
+                        }
+                      else if (seen_low_swap_space &&
+                               swap_occupied <= LOW_SWAP_SPACE_WARNING_OFF * swap_limit)
+                        {
+                          if (priv->low_swap_space_idle_id)
+                            {
+                              g_source_remove (priv->low_swap_space_idle_id);
+
+                              priv->low_swap_space_idle_id = 0;
+                            }
+
+                          seen_low_swap_space = FALSE;
+                        }
                     }
                 }
 
-              gimp_meter_add_sample (group_data->meter, sample);
+              priv->update_now = FALSE;
 
-              g_free (sample);
+              last_update_time = time;
             }
 
-          if (variables_changed)
-            {
-              /* enqueue update source */
-              if (! priv->update_idle_id &&
-                  gtk_widget_get_mapped (GTK_WIDGET (dashboard)))
-                {
-                  priv->update_idle_id = g_idle_add_full (
-                    G_PRIORITY_DEFAULT,
-                    (GSourceFunc) gimp_dashboard_update,
-                    dashboard, NULL);
-                }
-
-              /* check for low swap space */
-              if (priv->low_swap_space_warning                      &&
-                  priv->variables[VARIABLE_SWAP_OCCUPIED].available &&
-                  priv->variables[VARIABLE_SWAP_LIMIT].available)
-                {
-                  guint64 swap_occupied;
-                  guint64 swap_limit;
-
-                  swap_occupied = priv->variables[VARIABLE_SWAP_OCCUPIED].value.size;
-                  swap_limit    = priv->variables[VARIABLE_SWAP_LIMIT].value.size;
-
-                  if (! seen_low_swap_space &&
-                      swap_occupied >= LOW_SWAP_SPACE_WARNING_ON * swap_limit)
-                    {
-                      if (! priv->low_swap_space_idle_id)
-                        {
-                          priv->low_swap_space_idle_id =
-                            g_idle_add_full (G_PRIORITY_HIGH,
-                                             (GSourceFunc) gimp_dashboard_low_swap_space,
-                                             dashboard, NULL);
-                        }
-
-                      seen_low_swap_space = TRUE;
-                    }
-                  else if (seen_low_swap_space &&
-                           swap_occupied <= LOW_SWAP_SPACE_WARNING_OFF * swap_limit)
-                    {
-                      if (priv->low_swap_space_idle_id)
-                        {
-                          g_source_remove (priv->low_swap_space_idle_id);
-
-                          priv->low_swap_space_idle_id = 0;
-                        }
-
-                      seen_low_swap_space = FALSE;
-                    }
-                }
-            }
-
-          priv->update_now = FALSE;
-
-          end_time = g_get_monotonic_time () +
-                     update_interval * G_TIME_SPAN_SECOND / 1000;
-        }
-
-      if (priv->update_interval != update_interval)
-        {
-          update_interval = priv->update_interval;
-          end_time        = g_get_monotonic_time () +
-                            update_interval * G_TIME_SPAN_SECOND / 1000;
+          last_sample_time = time;
         }
     }
 
@@ -2867,6 +2978,27 @@ gimp_dashboard_field_set_active (GimpDashboard *dashboard,
 }
 
 static void
+gimp_dashboard_reset_unlocked (GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv;
+  Group                 group;
+
+  priv = dashboard->priv;
+
+  gegl_reset_stats ();
+
+  gimp_dashboard_reset_variables (dashboard);
+
+  for (group = FIRST_GROUP; group < N_GROUPS; group++)
+    {
+      GroupData *group_data = &priv->groups[group];
+
+      if (group_data->meter)
+        gimp_meter_clear_history (group_data->meter);
+    }
+}
+
+static void
 gimp_dashboard_reset_variables (GimpDashboard *dashboard)
 {
   GimpDashboardPrivate *priv = dashboard->priv;
@@ -3187,6 +3319,638 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
 }
 
 static gboolean
+gimp_dashboard_log_printf (GimpDashboard *dashboard,
+                           const gchar   *format,
+                           ...)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+  va_list               args;
+  gboolean              result;
+
+  if (priv->log_error)
+    return FALSE;
+
+  va_start (args, format);
+
+  result = g_output_stream_vprintf (priv->log_output,
+                                    NULL, NULL,
+                                    &priv->log_error,
+                                    format, args);
+
+  va_end (args);
+
+  return result;
+}
+
+static gboolean
+gimp_dashboard_log_print_escaped (GimpDashboard *dashboard,
+                                  const gchar   *string)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+  gchar                 buffer[1024];
+  const gchar          *s;
+  gint                  i;
+
+  if (priv->log_error)
+    return FALSE;
+
+  i = 0;
+
+  #define FLUSH()                                                 \
+    G_STMT_START                                                  \
+      {                                                           \
+        if (! g_output_stream_write_all (priv->log_output,        \
+                                         buffer, i, NULL,         \
+                                         NULL, &priv->log_error)) \
+          {                                                       \
+            return FALSE;                                         \
+          }                                                       \
+                                                                  \
+        i = 0;                                                    \
+      }                                                           \
+    G_STMT_END
+
+  #define RESERVE(n)                   \
+    G_STMT_START                       \
+      {                                \
+        if (i + (n) > sizeof (buffer)) \
+          FLUSH ();                    \
+      }                                \
+    G_STMT_END
+
+  for (s = string; *s; s++)
+    {
+      #define ESCAPE(from, to)                      \
+        case from:                                  \
+          RESERVE (sizeof (to) - 1);                \
+          memcpy (&buffer[i], to, sizeof (to) - 1); \
+          i += sizeof (to) - 1;                     \
+          break;
+
+      switch (*s)
+        {
+        ESCAPE ('"',  "&quot;")
+        ESCAPE ('\'', "&apos;")
+        ESCAPE ('<',  "&lt;")
+        ESCAPE ('>',  "&gt;")
+        ESCAPE ('&',  "&amp;")
+
+        default:
+          RESERVE (1);
+          buffer[i++] = *s;
+          break;
+        }
+
+      #undef ESCAPE
+    }
+
+  FLUSH ();
+
+  #undef FLUSH
+  #undef RESERVE
+
+  return TRUE;
+}
+
+static gint64
+gimp_dashboard_log_time (GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+
+  return g_get_monotonic_time () - priv->log_start_time;
+}
+
+static void
+gimp_dashboard_log_sample (GimpDashboard *dashboard,
+                           gboolean       variables_changed)
+{
+  GimpDashboardPrivate *priv      = dashboard->priv;
+  GimpBacktrace        *backtrace = NULL;
+  gboolean              empty     = TRUE;
+  Variable              variable;
+
+  #define NONEMPTY()                              \
+    G_STMT_START                                  \
+      {                                           \
+        if (empty)                                \
+          {                                       \
+            gimp_dashboard_log_printf (dashboard, \
+                                       ">\n");    \
+                                                  \
+            empty = FALSE;                        \
+          }                                       \
+      }                                           \
+    G_STMT_END
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<sample id=\"%d\" t=\"%lld\"",
+                             priv->log_n_samples,
+                             (long long) gimp_dashboard_log_time (dashboard));
+
+  if (priv->log_n_samples == 0 || variables_changed)
+    {
+      NONEMPTY ();
+
+      gimp_dashboard_log_printf (dashboard,
+                                 "<vars>\n");
+
+      for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
+        {
+          const VariableInfo *variable_info     = &variables[variable];
+          const VariableData *variable_data     = &priv->variables[variable];
+          VariableData       *log_variable_data = &priv->log_variables[variable];
+
+          if (variable_info->exclude_from_log)
+            continue;
+
+          if (priv->log_n_samples > 0 &&
+              ! memcmp (variable_data, log_variable_data,
+                        sizeof (VariableData)))
+            {
+              continue;
+            }
+
+          *log_variable_data = *variable_data;
+
+          if (variable_data->available)
+            {
+              #define LOG_VAR(format, ...)                          \
+                gimp_dashboard_log_printf (dashboard,               \
+                                           "<%s>" format "</%s>\n", \
+                                           variable_info->name,     \
+                                           __VA_ARGS__,             \
+                                           variable_info->name)
+
+              switch (variable_info->type)
+                {
+                case VARIABLE_TYPE_BOOLEAN:
+                  LOG_VAR (
+                    "%d",
+                    variable_data->value.boolean);
+                  break;
+
+                case VARIABLE_TYPE_INTEGER:
+                  LOG_VAR (
+                    "%d",
+                    variable_data->value.integer);
+                  break;
+
+                case VARIABLE_TYPE_SIZE:
+                  LOG_VAR (
+                    "%llu",
+                    (unsigned long long) variable_data->value.size);
+                  break;
+
+                case VARIABLE_TYPE_SIZE_RATIO:
+                  LOG_VAR (
+                    "%llu/%llu",
+                    (unsigned long long) variable_data->value.size_ratio.antecedent,
+                    (unsigned long long) variable_data->value.size_ratio.consequent);
+                  break;
+
+                case VARIABLE_TYPE_INT_RATIO:
+                  LOG_VAR (
+                    "%d:%d",
+                    variable_data->value.int_ratio.antecedent,
+                    variable_data->value.int_ratio.consequent);
+                  break;
+
+                case VARIABLE_TYPE_PERCENTAGE:
+                  LOG_VAR (
+                    "%.16g",
+                    variable_data->value.percentage);
+                  break;
+
+                case VARIABLE_TYPE_DURATION:
+                  LOG_VAR (
+                    "%.16g",
+                    variable_data->value.duration);
+                  break;
+
+                case VARIABLE_TYPE_RATE_OF_CHANGE:
+                  LOG_VAR (
+                    "%.16g",
+                    variable_data->value.rate_of_change);
+                  break;
+                }
+
+              #undef LOG_VAR
+            }
+          else
+            {
+              gimp_dashboard_log_printf (dashboard,
+                                         "<%s />\n",
+                                         variable_info->name);
+            }
+        }
+
+      gimp_dashboard_log_printf (dashboard,
+                                 "</vars>\n");
+    }
+
+  if (priv->log_include_backtrace)
+    backtrace = gimp_backtrace_new (FALSE);
+
+  if (backtrace)
+    {
+      gboolean backtrace_empty = TRUE;
+      gint     n_threads;
+      gint     thread;
+
+      #define BACKTRACE_NONEMPTY()                           \
+        G_STMT_START                                         \
+          {                                                  \
+            if (backtrace_empty)                             \
+              {                                              \
+                NONEMPTY ();                                 \
+                                                             \
+                gimp_dashboard_log_printf (dashboard,        \
+                                           "<backtrace>\n"); \
+                                                             \
+                backtrace_empty = FALSE;                     \
+              }                                              \
+          }                                                  \
+        G_STMT_END
+
+      if (priv->log_backtrace)
+        {
+          n_threads = gimp_backtrace_get_n_threads (priv->log_backtrace);
+
+          for (thread = 0; thread < n_threads; thread++)
+            {
+              guintptr thread_id;
+
+              thread_id = gimp_backtrace_get_thread_id (priv->log_backtrace,
+                                                        thread);
+
+              if (gimp_backtrace_find_thread_by_id (backtrace,
+                                                    thread_id, thread) < 0)
+                {
+                  const gchar *thread_name;
+
+                  BACKTRACE_NONEMPTY ();
+
+                  thread_name =
+                    gimp_backtrace_get_thread_name (priv->log_backtrace,
+                                                    thread);
+
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<thread id=\"%llu\"",
+                                             (unsigned long long) thread_id);
+
+                  if (thread_name)
+                    {
+                      gimp_dashboard_log_printf (dashboard,
+                                                 " name=\"");
+                      gimp_dashboard_log_print_escaped (dashboard, thread_name);
+                      gimp_dashboard_log_printf (dashboard,
+                                                 "\"");
+                    }
+
+                  gimp_dashboard_log_printf (dashboard,
+                                             " />\n");
+                }
+            }
+        }
+
+      n_threads = gimp_backtrace_get_n_threads (backtrace);
+
+      for (thread = 0; thread < n_threads; thread++)
+        {
+          guintptr     thread_id;
+          const gchar *thread_name;
+          gint         n_frames;
+          gint         n_head = 0;
+          gint         n_tail = 0;
+          gint         frame;
+
+          thread_id   = gimp_backtrace_get_thread_id   (backtrace, thread);
+          thread_name = gimp_backtrace_get_thread_name (backtrace, thread);
+
+          n_frames    = gimp_backtrace_get_n_frames    (backtrace, thread);
+
+          if (priv->log_backtrace)
+            {
+              gint other_thread = gimp_backtrace_find_thread_by_id (
+                priv->log_backtrace, thread_id, thread);
+
+              if (other_thread >= 0)
+                {
+                  gint n;
+                  gint i;
+
+                  n = gimp_backtrace_get_n_frames (priv->log_backtrace,
+                                                   other_thread);
+                  n = MIN (n, n_frames);
+
+                  for (i = 0; i < n; i++)
+                    {
+                      if (gimp_backtrace_get_frame_address (backtrace,
+                                                            thread, i) !=
+                          gimp_backtrace_get_frame_address (priv->log_backtrace,
+                                                            other_thread, i))
+                        {
+                          break;
+                        }
+                    }
+
+                  n_head  = i;
+                  n      -= i;
+
+                  for (i = 0; i < n; i++)
+                    {
+                      if (gimp_backtrace_get_frame_address (backtrace,
+                                                            thread, -i - 1) !=
+                          gimp_backtrace_get_frame_address (priv->log_backtrace,
+                                                            other_thread, -i - 1))
+                        {
+                          break;
+                        }
+                    }
+
+                  n_tail = i;
+                }
+            }
+
+          if (n_head + n_tail == n_frames)
+            continue;
+
+          BACKTRACE_NONEMPTY ();
+
+          gimp_dashboard_log_printf (dashboard,
+                                     "<thread id=\"%llu\"",
+                                     (unsigned long long) thread_id);
+
+          if (thread_name)
+            {
+              gimp_dashboard_log_printf (dashboard,
+                                         " name=\"");
+              gimp_dashboard_log_print_escaped (dashboard, thread_name);
+              gimp_dashboard_log_printf (dashboard,
+                                         "\"");
+            }
+
+          if (n_head > 0)
+            {
+              gimp_dashboard_log_printf (dashboard,
+                                         " head=\"%d\"",
+                                         n_head);
+            }
+
+          if (n_tail > 0)
+            {
+              gimp_dashboard_log_printf (dashboard,
+                                         " tail=\"%d\"",
+                                         n_tail);
+            }
+
+          gimp_dashboard_log_printf (dashboard,
+                                      ">\n");
+
+          for (frame = n_head; frame < n_frames - n_tail; frame++)
+            {
+              unsigned long long      address;
+
+              address = gimp_backtrace_get_frame_address (backtrace,
+                                                          thread, frame);
+
+              gimp_dashboard_log_printf (dashboard,
+                                         "<frame address=\"0x%llx\" />\n",
+                                         address);
+
+              g_hash_table_add (priv->log_addresses, (gpointer) address);
+            }
+
+          gimp_dashboard_log_printf (dashboard,
+                                     "</thread>\n");
+        }
+
+      if (! backtrace_empty)
+        {
+          gimp_dashboard_log_printf (dashboard,
+                                     "</backtrace>\n");
+        }
+
+      #undef BACKTRACE_NONEMPTY
+    }
+  else if (priv->log_backtrace)
+    {
+      NONEMPTY ();
+
+      gimp_dashboard_log_printf (dashboard,
+                                 "<backtrace />\n");
+    }
+
+  gimp_backtrace_free (priv->log_backtrace);
+  priv->log_backtrace = backtrace;
+
+  if (empty)
+    {
+      gimp_dashboard_log_printf (dashboard,
+                                 " />\n");
+    }
+  else
+    {
+      gimp_dashboard_log_printf (dashboard,
+                                 "</sample>\n");
+    }
+
+  #undef NONEMPTY
+
+  priv->log_n_samples++;
+}
+
+static void
+gimp_dashboard_log_update_highlight (GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+
+  gimp_highlightable_button_set_highlight (
+    priv->log_record_button,
+    gimp_dashboard_log_is_recording (dashboard));
+}
+
+static void
+gimp_dashboard_log_update_n_markers (GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv = dashboard->priv;
+  gchar                 buffer[32];
+
+  g_snprintf (buffer, sizeof (buffer), "%d", priv->log_n_markers + 1);
+
+  gtk_label_set_text (priv->log_add_marker_label, buffer);
+}
+
+static gint
+gimp_dashboard_log_compare_addresses (gconstpointer a1,
+                                      gconstpointer a2)
+{
+  guintptr address1 = *(const guintptr *) a1;
+  guintptr address2 = *(const guintptr *) a2;
+
+  if (address1 < address2)
+    return -1;
+  else if (address1 > address2)
+    return +1;
+  else
+    return 0;
+}
+
+static void
+gimp_dashboard_log_write_address_map (GimpAsync     *async,
+                                      GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate    *priv = dashboard->priv;
+  GimpBacktraceSymbolInfo  infos[2];
+  guintptr                *addresses;
+  gint                     n_addresses;
+  GList                   *iter;
+  gint                     i;
+  gint                     n;
+
+  n_addresses = g_hash_table_size (priv->log_addresses);
+
+  if (n_addresses == 0)
+    {
+      gimp_async_finish (async, NULL);
+
+      return;
+    }
+
+  addresses = g_new (guintptr, n_addresses);
+
+  for (iter = g_hash_table_get_keys (priv->log_addresses), i = 0;
+       iter;
+       iter = g_list_next (iter), i++)
+    {
+      addresses[i] = (guintptr) iter->data;
+    }
+
+  qsort (addresses, n_addresses, sizeof (guintptr),
+         gimp_dashboard_log_compare_addresses);
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<address-map>\n");
+
+  n = 0;
+
+  for (i = 0; i < n_addresses; i++)
+    {
+      GimpBacktraceSymbolInfo       *info      = &infos[n       % 2];
+      const GimpBacktraceSymbolInfo *prev_info = &infos[(n + 1) % 2];
+
+      if (gimp_async_is_canceled (async))
+        break;
+
+      if (gimp_backtrace_get_symbol_info (addresses[i], info))
+        {
+          gboolean empty = TRUE;
+
+          #define NONEMPTY()                              \
+            G_STMT_START                                  \
+              {                                           \
+                if (empty)                                \
+                  {                                       \
+                    gimp_dashboard_log_printf (dashboard, \
+                                               ">\n");    \
+                                                          \
+                    empty = FALSE;                        \
+                  }                                       \
+              }                                           \
+            G_STMT_END
+
+          gimp_dashboard_log_printf (dashboard,
+                                     "\n"
+                                     "<address value=\"0x%llx\"",
+                                     (unsigned long long) addresses[i]);
+
+          if (n == 0 || strcmp (info->object_name, prev_info->object_name))
+            {
+              NONEMPTY ();
+
+              if (info->object_name[0])
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<object>");
+                  gimp_dashboard_log_print_escaped (dashboard,
+                                                    info->object_name);
+                  gimp_dashboard_log_printf (dashboard,
+                                             "</object>\n");
+                }
+              else
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<object />\n");
+                }
+            }
+
+          if (n == 0 || strcmp (info->symbol_name, prev_info->symbol_name))
+            {
+              NONEMPTY ();
+
+              if (info->symbol_name[0])
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<symbol>");
+                  gimp_dashboard_log_print_escaped (dashboard,
+                                                    info->symbol_name);
+                  gimp_dashboard_log_printf (dashboard,
+                                             "</symbol>\n");
+                }
+              else
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<symbol />\n");
+                }
+            }
+
+          if (n == 0 || info->symbol_address != prev_info->symbol_address)
+            {
+              NONEMPTY ();
+
+              if (info->symbol_address)
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<base>0x%llx</base>\n",
+                                             (unsigned long long)
+                                               info->symbol_address);
+                }
+              else
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<base />\n");
+                }
+            }
+
+          if (empty)
+            {
+              gimp_dashboard_log_printf (dashboard,
+                                         " />\n");
+            }
+          else
+            {
+              gimp_dashboard_log_printf (dashboard,
+                                         "</address>\n");
+            }
+
+          #undef NONEMPTY
+
+          n++;
+        }
+    }
+
+  g_free (addresses);
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "</address-map>\n");
+
+  gimp_async_finish (async, NULL);
+}
+
+static gboolean
 gimp_dashboard_field_use_meter_underlay (Group group,
                                          gint  field)
 {
@@ -3326,11 +4090,291 @@ gimp_dashboard_new (Gimp            *gimp,
   return GTK_WIDGET (dashboard);
 }
 
+gboolean
+gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
+                                    GFile          *file,
+                                    GError        **error)
+{
+  GimpDashboardPrivate *priv;
+  GimpUIManager        *ui_manager;
+  GimpActionGroup      *action_group;
+  gchar                *version;
+  gboolean              has_backtrace;
+  Variable              variable;
+
+  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  priv = dashboard->priv;
+
+  g_return_val_if_fail (! gimp_dashboard_log_is_recording (dashboard), FALSE);
+
+  g_mutex_lock (&priv->mutex);
+
+  priv->log_output = G_OUTPUT_STREAM (g_file_replace (file,
+                                      NULL, FALSE, G_FILE_CREATE_NONE, NULL,
+                                      error));
+
+  if (! priv->log_output)
+    {
+      g_mutex_unlock (&priv->mutex);
+
+      return FALSE;
+    }
+
+  priv->log_error             = NULL;
+  priv->log_start_time        = g_get_monotonic_time ();
+  priv->log_sample_frequency  = LOG_SAMPLE_FREQUENCY;
+  priv->log_n_samples         = 0;
+  priv->log_n_markers         = 0;
+  priv->log_include_backtrace = TRUE;
+  priv->log_backtrace         = NULL;
+  priv->log_addresses         = g_hash_table_new (NULL, NULL);
+
+  if (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"))
+    {
+      priv->log_sample_frequency =
+        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"));
+
+      priv->log_sample_frequency = CLAMP (priv->log_sample_frequency,
+                                          1, 1000);
+    }
+
+  if (g_getenv ("GIMP_PERFORMANCE_LOG_NO_BACKTRACE"))
+    priv->log_include_backtrace = FALSE;
+
+  if (priv->log_include_backtrace)
+    has_backtrace = gimp_backtrace_init ();
+  else
+    has_backtrace = FALSE;
+
+  gimp_dashboard_log_printf (dashboard,
+                             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                             "<gimp-performance-log version=\"%d\">\n",
+                             LOG_VERSION);
+
+  version = gimp_version (TRUE, FALSE);
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<gimp-version>\n");
+  gimp_dashboard_log_print_escaped (dashboard, version);
+  gimp_dashboard_log_printf (dashboard,
+                             "</gimp-version>\n");
+
+  g_free (version);
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<params>\n"
+                             "<sample-frequency>%d</sample-frequency>\n"
+                             "<backtrace>%d</backtrace>\n"
+                             "</params>\n",
+                             priv->log_sample_frequency,
+                             has_backtrace);
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<var-defs>\n");
+
+  for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
+    {
+      const VariableInfo *variable_info = &variables[variable];
+      const gchar        *type          = "";
+
+      if (variable_info->exclude_from_log)
+        continue;
+
+      switch (variable_info->type)
+        {
+        case VARIABLE_TYPE_BOOLEAN:        type = "boolean";        break;
+        case VARIABLE_TYPE_INTEGER:        type = "integer";        break;
+        case VARIABLE_TYPE_SIZE:           type = "size";           break;
+        case VARIABLE_TYPE_SIZE_RATIO:     type = "size-ratio";     break;
+        case VARIABLE_TYPE_INT_RATIO:      type = "int-ratio";      break;
+        case VARIABLE_TYPE_PERCENTAGE:     type = "percentage";     break;
+        case VARIABLE_TYPE_DURATION:       type = "duration";       break;
+        case VARIABLE_TYPE_RATE_OF_CHANGE: type = "rate-of-change"; break;
+        }
+
+      gimp_dashboard_log_printf (dashboard,
+                                 "<var name=\"%s\" type=\"%s\" />\n",
+                                 variable_info->name,
+                                 type);
+    }
+
+  gimp_dashboard_log_printf (dashboard,
+                             "</var-defs>\n");
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<samples>\n");
+
+  if (priv->log_error)
+    {
+      gimp_backtrace_shutdown ();
+
+      g_clear_object (&priv->log_output);
+
+      g_propagate_error (error, priv->log_error);
+      priv->log_error = NULL;
+
+      g_mutex_unlock (&priv->mutex);
+
+      return FALSE;
+    }
+
+  gimp_dashboard_reset_unlocked (dashboard);
+
+  priv->update_now = TRUE;
+  g_cond_signal (&priv->cond);
+
+  g_mutex_unlock (&priv->mutex);
+
+  gimp_dashboard_log_update_n_markers (dashboard);
+
+  ui_manager   = gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard));
+  action_group = gimp_ui_manager_get_action_group (ui_manager, "dashboard");
+
+  gimp_action_group_update (action_group, dashboard);
+
+  gimp_dashboard_log_update_highlight (dashboard);
+
+  return TRUE;
+}
+
+gboolean
+gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
+                                   GError        **error)
+{
+  GimpDashboardPrivate *priv;
+  GimpUIManager        *ui_manager;
+  GimpActionGroup      *action_group;
+  gboolean              result = TRUE;
+
+  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  priv = dashboard->priv;
+
+  if (! gimp_dashboard_log_is_recording (dashboard))
+    return TRUE;
+
+  g_mutex_lock (&priv->mutex);
+
+  if (priv->log_include_backtrace)
+    gimp_backtrace_shutdown ();
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "</samples>\n");
+
+
+  if (g_hash_table_size (priv->log_addresses) > 0)
+    {
+      GimpAsync *async;
+
+      async = gimp_parallel_run_async_full (
+        -1,
+        (GimpParallelRunAsyncFunc) gimp_dashboard_log_write_address_map,
+        dashboard, NULL);
+
+      gimp_wait (priv->gimp, GIMP_WAITABLE (async),
+                 _("Resolving symbol information..."));
+
+      g_object_unref (async);
+    }
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "</gimp-performance-log>\n");
+
+  if (! priv->log_error)
+    g_output_stream_close (priv->log_output, NULL, &priv->log_error);
+
+  g_clear_object (&priv->log_output);
+
+  if (priv->log_error)
+    {
+      g_propagate_error (error, priv->log_error);
+      priv->log_error = NULL;
+
+      result = FALSE;
+    }
+
+  g_clear_pointer (&priv->log_backtrace, gimp_backtrace_free);
+  g_clear_pointer (&priv->log_addresses, g_hash_table_unref);
+
+  g_mutex_unlock (&priv->mutex);
+
+  ui_manager   = gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard));
+  action_group = gimp_ui_manager_get_action_group (ui_manager, "dashboard");
+
+  gimp_action_group_update (action_group, dashboard);
+
+  gimp_dashboard_log_update_highlight (dashboard);
+
+  return result;
+}
+
+gboolean
+gimp_dashboard_log_is_recording (GimpDashboard *dashboard)
+{
+  GimpDashboardPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), FALSE);
+
+  priv = dashboard->priv;
+
+  return priv->log_output != NULL;
+}
+
+void
+gimp_dashboard_log_add_marker (GimpDashboard *dashboard,
+                               const gchar   *description)
+{
+  GimpDashboardPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
+  g_return_if_fail (gimp_dashboard_log_is_recording (dashboard));
+
+  priv = dashboard->priv;
+
+  g_mutex_lock (&priv->mutex);
+
+  priv->log_n_markers++;
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<marker id=\"%d\" t=\"%lld\"",
+                             priv->log_n_markers,
+                             (long long) gimp_dashboard_log_time (dashboard));
+
+  if (description && description[0])
+    {
+      gimp_dashboard_log_printf (dashboard,
+                                 ">\n");
+      gimp_dashboard_log_print_escaped (dashboard, description);
+      gimp_dashboard_log_printf (dashboard,
+                                 "\n"
+                                 "</marker>\n");
+    }
+  else
+    {
+      gimp_dashboard_log_printf (dashboard,
+                                 " />\n");
+    }
+
+  g_mutex_unlock (&priv->mutex);
+
+  gimp_dashboard_log_update_n_markers (dashboard);
+}
+
 void
 gimp_dashboard_reset (GimpDashboard *dashboard)
 {
   GimpDashboardPrivate *priv;
-  Group                 group;
 
   g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
 
@@ -3338,17 +4382,7 @@ gimp_dashboard_reset (GimpDashboard *dashboard)
 
   g_mutex_lock (&priv->mutex);
 
-  gegl_reset_stats ();
-
-  gimp_dashboard_reset_variables (dashboard);
-
-  for (group = FIRST_GROUP; group < N_GROUPS; group++)
-    {
-      GroupData *group_data = &priv->groups[group];
-
-      if (group_data->meter)
-        gimp_meter_clear_history (group_data->meter);
-    }
+  gimp_dashboard_reset_unlocked (dashboard);
 
   priv->update_now = TRUE;
   g_cond_signal (&priv->cond);
