@@ -56,7 +56,6 @@
 #define MAX_N_THREADS        256
 #define MAX_N_FRAMES         256
 #define MAX_THREAD_NAME_SIZE 32
-#define MAX_SYMBOL_NAME_SIZE 128
 #define N_SKIPPED_FRAMES     2
 #define MAX_WAIT_TIME        (G_TIME_SPAN_SECOND / 2)
 #define BACKTRACE_SIGNAL     SIGUSR1
