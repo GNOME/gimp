@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "core/gimpchannel.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-item.h"
 #include "core/gimppickable.h"
@@ -41,20 +42,25 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_selection_tool_modifier_key  (GimpTool         *tool,
-                                                 GdkModifierType   key,
-                                                 gboolean          press,
-                                                 GdkModifierType   state,
-                                                 GimpDisplay      *display);
-static void   gimp_selection_tool_oper_update   (GimpTool         *tool,
-                                                 const GimpCoords *coords,
-                                                 GdkModifierType   state,
-                                                 gboolean          proximity,
-                                                 GimpDisplay      *display);
-static void   gimp_selection_tool_cursor_update (GimpTool         *tool,
-                                                 const GimpCoords *coords,
-                                                 GdkModifierType   state,
-                                                 GimpDisplay      *display);
+
+static void       gimp_selection_tool_modifier_key  (GimpTool           *tool,
+                                                     GdkModifierType     key,
+                                                     gboolean            press,
+                                                     GdkModifierType     state,
+                                                     GimpDisplay        *display);
+static void       gimp_selection_tool_oper_update   (GimpTool           *tool,
+                                                     const GimpCoords   *coords,
+                                                     GdkModifierType     state,
+                                                     gboolean            proximity,
+                                                     GimpDisplay        *display);
+static void       gimp_selection_tool_cursor_update (GimpTool           *tool,
+                                                     const GimpCoords   *coords,
+                                                     GdkModifierType     state,
+                                                     GimpDisplay        *display);
+
+static gboolean   gimp_selection_tool_check         (GimpSelectionTool  *sel_tool,
+                                                     GimpDisplay        *display,
+                                                     GError            **error);
 
 
 G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL)
@@ -373,12 +379,12 @@ gimp_selection_tool_cursor_update (GimpTool         *tool,
       break;
     }
 
-  /*  we don't set the bad modifier ourselves, so a subclass has set
-   *  it, always leave it there since it's more important than what we
-   *  have to say.
+  /*  our subclass might have set a BAD modifier, in which case we leave it
+   *  there, since it's more important than what we have to say.
    */
   if (gimp_tool_control_get_cursor_modifier (tool->control) ==
-      GIMP_CURSOR_MODIFIER_BAD)
+      GIMP_CURSOR_MODIFIER_BAD                              ||
+      ! gimp_selection_tool_check (selection_tool, display, NULL))
     {
       modifier = GIMP_CURSOR_MODIFIER_BAD;
     }
@@ -387,6 +393,73 @@ gimp_selection_tool_cursor_update (GimpTool         *tool,
                         gimp_tool_control_get_cursor (tool->control),
                         tool_cursor,
                         modifier);
+}
+
+static gboolean
+gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
+                           GimpDisplay        *display,
+                           GError            **error)
+{
+  GimpSelectionOptions *options  = GIMP_SELECTION_TOOL_GET_OPTIONS (sel_tool);
+  GimpImage            *image    = gimp_display_get_image (display);
+  GimpDrawable         *drawable = gimp_image_get_active_drawable (image);
+
+  switch (sel_tool->function)
+    {
+    case SELECTION_SELECT:
+      switch (options->operation)
+        {
+        case GIMP_CHANNEL_OP_ADD:
+        case GIMP_CHANNEL_OP_REPLACE:
+          break;
+
+        case GIMP_CHANNEL_OP_SUBTRACT:
+          if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                                  NULL, NULL, NULL, NULL))
+            {
+              g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                           _("Cannot subtract from an empty selection."));
+
+              return FALSE;
+            }
+          break;
+
+        case GIMP_CHANNEL_OP_INTERSECT:
+          if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                                  NULL, NULL, NULL, NULL))
+            {
+              g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                           _("Cannot intersect with an empty selection."));
+
+              return FALSE;
+            }
+          break;
+        }
+      break;
+
+    case SELECTION_MOVE:
+    case SELECTION_MOVE_COPY:
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        {
+          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                       _("Cannot modify the pixels of layer groups."));
+
+          return FALSE;
+        }
+      else if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+        {
+          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                       _("The active layer's pixels are locked."));
+
+          return FALSE;
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  return TRUE;
 }
 
 
@@ -398,6 +471,7 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
                                 const GimpCoords  *coords)
 {
   GimpTool *tool;
+  GError   *error = NULL;
 
   g_return_val_if_fail (GIMP_IS_SELECTION_TOOL (sel_tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
@@ -407,6 +481,15 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
 
   g_return_val_if_fail (gimp_tool_control_is_active (tool->control) == FALSE,
                         FALSE);
+
+  if (! gimp_selection_tool_check (sel_tool, display, &error))
+    {
+      gimp_tool_message_literal (tool, display, error->message);
+
+      g_clear_error (&error);
+
+      return TRUE;
+    }
 
   switch (sel_tool->function)
     {
@@ -418,31 +501,15 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
     case SELECTION_MOVE:
     case SELECTION_MOVE_COPY:
       {
-        GimpImage    *image    = gimp_display_get_image (display);
-        GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+        GimpTranslateMode edit_mode;
 
-        if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-          {
-            gimp_tool_message_literal (tool, display,
-                                       _("Cannot modify the pixels of layer groups."));
-          }
-        else if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
-          {
-            gimp_tool_message_literal (tool, display,
-                                       _("The active layer's pixels are locked."));
-          }
+        if (sel_tool->function == SELECTION_MOVE)
+          edit_mode = GIMP_TRANSLATE_MODE_MASK_TO_LAYER;
         else
-          {
-            GimpTranslateMode edit_mode;
+          edit_mode = GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER;
 
-            if (sel_tool->function == SELECTION_MOVE)
-              edit_mode = GIMP_TRANSLATE_MODE_MASK_TO_LAYER;
-            else
-              edit_mode = GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER;
-
-            gimp_edit_selection_tool_start (tool, display, coords,
-                                            edit_mode, FALSE);
-         }
+        gimp_edit_selection_tool_start (tool, display, coords,
+                                        edit_mode, FALSE);
 
         return TRUE;
       }
