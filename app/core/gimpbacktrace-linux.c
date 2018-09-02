@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * backtrace-linux.c
+ * gimpbacktrace-linux.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -63,7 +63,6 @@
 
 
 typedef struct _GimpBacktraceThread GimpBacktraceThread;
-typedef struct _GimpBacktraceFrame  GimpBacktraceFrame;
 
 
 struct _GimpBacktraceThread

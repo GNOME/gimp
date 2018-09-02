@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * backtrace-none.c
+ * gimpbacktrace-none.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
