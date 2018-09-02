@@ -47,6 +47,24 @@ static const GimpActionEntry dashboard_actions[] =
   { "dashboard-history-duration", NULL,
     NC_("dashboard-action", "_History Duration") },
 
+  { "dashboard-log-record", GIMP_ICON_RECORD,
+    NC_("dashboard-action", "_Start/Stop Recording..."), NULL,
+    NC_("dashboard-action", "Start/stop recording performance log"),
+    G_CALLBACK (dashboard_log_record_cmd_callback),
+    GIMP_HELP_DASHBOARD_LOG_RECORD },
+  { "dashboard-log-add-marker", GIMP_ICON_MARKER,
+    NC_("dashboard-action", "_Add Marker..."), NULL,
+    NC_("dashboard-action", "Add an event marker "
+                            "to the performance log"),
+    G_CALLBACK (dashboard_log_add_marker_cmd_callback),
+    GIMP_HELP_DASHBOARD_LOG_ADD_MARKER },
+  { "dashboard-log-add-empty-marker", GIMP_ICON_MARKER,
+    NC_("dashboard-action", "Add _Empty Marker"), NULL,
+    NC_("dashboard-action", "Add an empty event marker "
+                            "to the performance log"),
+    G_CALLBACK (dashboard_log_add_empty_marker_cmd_callback),
+    GIMP_HELP_DASHBOARD_LOG_ADD_EMPTY_MARKER },
+
   { "dashboard-reset", GIMP_ICON_RESET,
     NC_("dashboard-action", "_Reset"), NULL,
     NC_("dashboard-action", "Reset cumulative data"),
@@ -153,7 +171,12 @@ dashboard_actions_update (GimpActionGroup *group,
                           gpointer         data)
 {
   GimpDashboard *dashboard = GIMP_DASHBOARD (data);
+  gboolean       recording;
 
+  recording = gimp_dashboard_log_is_recording (dashboard);
+
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
@@ -195,8 +218,13 @@ dashboard_actions_update (GimpActionGroup *group,
       break;
     }
 
+  SET_SENSITIVE ("dashboard-log-add-marker",       recording);
+  SET_SENSITIVE ("dashboard-log-add-empty-marker", recording);
+  SET_SENSITIVE ("dashboard-reset",                !recording);
+
   SET_ACTIVE ("dashboard-low-swap-space-warning",
               gimp_dashboard_get_low_swap_space_warning (dashboard));
 
+#undef SET_SENSITIVE
 #undef SET_ACTIVE
 }

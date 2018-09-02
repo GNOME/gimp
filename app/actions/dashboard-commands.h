@@ -26,6 +26,13 @@ void   dashboard_history_duration_cmd_callback       (GtkAction *action,
                                                       GtkAction *current,
                                                       gpointer   data);
 
+void   dashboard_log_record_cmd_callback             (GtkAction *action,
+                                                      gpointer   data);
+void   dashboard_log_add_marker_cmd_callback         (GtkAction *action,
+                                                      gpointer   data);
+void   dashboard_log_add_empty_marker_cmd_callback   (GtkAction *action,
+                                                      gpointer   data);
+
 void   dashboard_reset_cmd_callback                  (GtkAction *action,
                                                       gpointer   data);
 

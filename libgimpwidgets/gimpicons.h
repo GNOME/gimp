@@ -36,6 +36,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_ATTACH                    "gimp-attach"
 #define GIMP_ICON_DETACH                    "gimp-detach"
 #define GIMP_ICON_INVERT                    "gimp-invert"
+#define GIMP_ICON_RECORD                    "media-record"
 #define GIMP_ICON_RESET                     "gimp-reset"
 #define GIMP_ICON_SHRED                     "gimp-shred"
 
@@ -48,6 +49,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_DISPLAY                   "gimp-display"
 #define GIMP_ICON_GEGL                      "gimp-gegl"
 #define GIMP_ICON_LINKED                    "gimp-linked"
+#define GIMP_ICON_MARKER                    "gimp-marker"
 #define GIMP_ICON_SMARTPHONE                "gimp-smartphone"
 #define GIMP_ICON_TRANSPARENCY              "gimp-transparency"
 #define GIMP_ICON_VIDEO                     "gimp-video"

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333332 4.2333335"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="gimp-marker.svg">
+  <title
+     id="title8619">GIMP Marker</title>
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="44.25"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:document-units="pc"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid815"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>GIMP Marker</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Ell</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-292.76665)"
+     style="display:inline">
+    <g
+       id="gimp-marker">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1551"
+         d="m 0.26458333,296.7354 0.79374997,-0.79375 v -2.91042 h 2.6458332 v 1.5875 H 1.5875 v 1.32292 l 0.79375,0.79375 z"
+         style="display:inline;fill:none;fill-rule:evenodd;stroke:#c1c1ff;stroke-width:0.5291667;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         id="g8601">
+        <g
+           id="g8587">
+          <path
+             sodipodi:nodetypes="cccc"
+             inkscape:connector-curvature="0"
+             id="path1431"
+             d="M 0.26454594,296.7354 H 2.3812127 l -1.0583334,-1.05833 z"
+             style="fill:#202020;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <rect
+             y="293.03122"
+             x="1.058296"
+             height="3.175"
+             width="0.5291667"
+             id="rect1433"
+             style="fill:#202020;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+        </g>
+        <g
+           id="g8583">
+          <rect
+             y="293.03122"
+             x="1.5874625"
+             height="1.5875138"
+             width="2.1166668"
+             id="rect1437"
+             style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+          <g
+             transform="translate(-0.26462073)"
+             style="fill:#2020ff;fill-opacity:1"
+             id="g1511">
+            <rect
+               style="fill:#2020ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               id="rect1439"
+               width="0.52916664"
+               height="0.52916664"
+               x="1.8520833"
+               y="293.03122" />
+            <rect
+               style="fill:#2020ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               id="rect1439-3"
+               width="0.52916664"
+               height="0.52916664"
+               x="2.9104166"
+               y="293.03122" />
+            <rect
+               style="fill:#2020ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               id="rect1439-6"
+               width="0.52916664"
+               height="0.52916664"
+               x="2.3812499"
+               y="293.56039" />
+            <rect
+               style="fill:#2020ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               id="rect1439-3-7"
+               width="0.52916664"
+               height="0.52916664"
+               x="3.4395833"
+               y="293.56039" />
+            <rect
+               style="fill:#2020ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               id="rect1439-5"
+               width="0.52916664"
+               height="0.52916664"
+               x="1.8520833"
+               y="294.08957" />
+            <rect
+               style="fill:#2020ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               id="rect1439-3-3"
+               width="0.52916664"
+               height="0.52916664"
+               x="2.9104166"
+               y="294.08957" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
