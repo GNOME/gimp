@@ -569,7 +569,7 @@ splash_image_load_from_file (GFile    *file,
 
   if (be_verbose)
     {
-      char *path;
+      gchar *path;
 
       path = g_file_get_path (file);
 
