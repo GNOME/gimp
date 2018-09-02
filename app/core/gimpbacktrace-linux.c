@@ -517,8 +517,8 @@ gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
 }
 
 gboolean
-gimp_backtrace_get_symbol_info (guintptr                 address,
-                                GimpBacktraceSymbolInfo *info)
+gimp_backtrace_get_address_info (guintptr                  address,
+                                 GimpBacktraceAddressInfo *info)
 {
   Dl_info dl_info;
 

@@ -22,10 +22,10 @@
 #define __GIMP_BACKTRACE_H__
 
 
-typedef struct _GimpBacktraceSymbolInfo GimpBacktraceSymbolInfo;
+typedef struct _GimpBacktraceAddressInfo GimpBacktraceAddressInfo;
 
 
-struct _GimpBacktraceSymbolInfo
+struct _GimpBacktraceAddressInfo
 {
   gchar    object_name[256];
   gchar    symbol_name[256];
@@ -36,27 +36,27 @@ struct _GimpBacktraceSymbolInfo
 gboolean        gimp_backtrace_init              (void);
 void            gimp_backtrace_shutdown          (void);
 
-GimpBacktrace * gimp_backtrace_new               (gboolean                include_current_thread);
-void            gimp_backtrace_free              (GimpBacktrace          *backtrace);
+GimpBacktrace * gimp_backtrace_new               (gboolean                 include_current_thread);
+void            gimp_backtrace_free              (GimpBacktrace           *backtrace);
 
-gint            gimp_backtrace_get_n_threads     (GimpBacktrace          *backtrace);
-guintptr        gimp_backtrace_get_thread_id     (GimpBacktrace          *backtrace,
-                                                  gint                    thread);
-const gchar   * gimp_backtrace_get_thread_name   (GimpBacktrace          *backtrace,
-                                                  gint                    thread);
+gint            gimp_backtrace_get_n_threads     (GimpBacktrace           *backtrace);
+guintptr        gimp_backtrace_get_thread_id     (GimpBacktrace           *backtrace,
+                                                  gint                     thread);
+const gchar   * gimp_backtrace_get_thread_name   (GimpBacktrace           *backtrace,
+                                                  gint                     thread);
 
-gint            gimp_backtrace_find_thread_by_id (GimpBacktrace          *backtrace,
-                                                  guintptr                thread_id,
-                                                  gint                    thread_hint);
+gint            gimp_backtrace_find_thread_by_id (GimpBacktrace           *backtrace,
+                                                  guintptr                 thread_id,
+                                                  gint                     thread_hint);
 
-gint            gimp_backtrace_get_n_frames      (GimpBacktrace          *backtrace,
-                                                  gint                    thread);
-guintptr        gimp_backtrace_get_frame_address (GimpBacktrace          *backtrace,
-                                                  gint                    thread,
-                                                  gint                    frame);
+gint            gimp_backtrace_get_n_frames      (GimpBacktrace           *backtrace,
+                                                  gint                     thread);
+guintptr        gimp_backtrace_get_frame_address (GimpBacktrace           *backtrace,
+                                                  gint                     thread,
+                                                  gint                     frame);
 
-gboolean        gimp_backtrace_get_symbol_info   (guintptr                 address,
-                                                  GimpBacktraceSymbolInfo *info);
+gboolean        gimp_backtrace_get_address_info  (guintptr                  address,
+                                                  GimpBacktraceAddressInfo *info);
 
 
 #endif  /*  __GIMP_BACKTRACE_H__  */
