@@ -30,6 +30,10 @@
 #define GIMP_HIGHLIGHTABLE_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HIGHLIGHTABLE_BUTTON, GimpHighlightableButtonClass))
 
 
+#define GIMP_HIGHLIGHTABLE_BUTTON_COLOR_AFFIRMATIVE (&(const GimpRGB) {0.20, 0.70, 0.20, 0.65})
+#define GIMP_HIGHLIGHTABLE_BUTTON_COLOR_NEGATIVE    (&(const GimpRGB) {0.80, 0.20, 0.20, 0.65})
+
+
 typedef struct _GimpHighlightableButtonPrivate GimpHighlightableButtonPrivate;
 typedef struct _GimpHighlightableButtonClass   GimpHighlightableButtonClass;
 

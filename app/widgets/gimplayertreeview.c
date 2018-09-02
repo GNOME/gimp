@@ -64,10 +64,6 @@
 #include "gimp-intl.h"
 
 
-#define HIGHLIGHT_COLOR_GREEN {0.20, 0.70, 0.20, 0.65}
-#define HIGHLIGHT_COLOR_RED   {0.80, 0.20, 0.20, 0.65}
-
-
 struct _GimpLayerTreeViewPriv
 {
   GtkWidget       *layer_mode_box;
@@ -352,10 +348,10 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   gimp_highlightable_button_set_highlight_color (
     GIMP_HIGHLIGHTABLE_BUTTON (gimp_item_tree_view_get_new_button (item_view)),
-    &(GimpRGB) HIGHLIGHT_COLOR_GREEN);
+    GIMP_HIGHLIGHTABLE_BUTTON_COLOR_AFFIRMATIVE);
   gimp_highlightable_button_set_highlight_color (
     GIMP_HIGHLIGHTABLE_BUTTON (gimp_item_tree_view_get_delete_button (item_view)),
-    &(GimpRGB) HIGHLIGHT_COLOR_RED);
+    GIMP_HIGHLIGHTABLE_BUTTON_COLOR_NEGATIVE);
 
   layer_view->priv->mask_cell = gimp_cell_renderer_viewable_new ();
   gtk_tree_view_column_pack_start (tree_view->main_column,
@@ -400,7 +396,7 @@ gimp_layer_tree_view_constructed (GObject *object)
   layer_view->priv->anchor_button = button;
   gimp_highlightable_button_set_highlight_color (
     GIMP_HIGHLIGHTABLE_BUTTON (button),
-    &(GimpRGB) HIGHLIGHT_COLOR_GREEN);
+    GIMP_HIGHLIGHTABLE_BUTTON_COLOR_AFFIRMATIVE);
   gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (layer_view),
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
