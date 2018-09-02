@@ -400,8 +400,6 @@ gimp_backtrace_new (gboolean include_current_thread)
             {
               if (n_blacklisted_threads < MAX_N_THREADS)
                 {
-                  g_printerr ("blacklisted %d\n", backtrace->threads[i].tid);
-
                   blacklisted_threads[n_blacklisted_threads++] =
                     backtrace->threads[i].tid;
                 }
