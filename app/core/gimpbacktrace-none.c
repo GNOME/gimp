@@ -97,12 +97,12 @@ gimp_backtrace_get_n_frames (GimpBacktrace *backtrace,
   g_return_val_if_reached (0);
 }
 
-gpointer
+guintptr
 gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
                                   gint           thread,
                                   gint           frame)
 {
-  g_return_val_if_reached (NULL);
+  g_return_val_if_reached (0);
 }
 
 gboolean
