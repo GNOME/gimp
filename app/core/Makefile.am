@@ -21,6 +21,7 @@ AM_CPPFLAGS = \
 	$(LIBMYPAINT_CFLAGS)				\
 	$(MYPAINT_BRUSHES_CFLAGS)			\
 	$(GEXIV2_CFLAGS)				\
+	$(LIBUNWIND_CFLAGS)				\
 	-I$(includedir)
 
 AM_CFLAGS = \
@@ -93,6 +94,10 @@ libappcore_a_sources = \
 	gimpauxitem.h				\
 	gimpauxitemundo.c			\
 	gimpauxitemundo.h			\
+	gimpbacktrace.h				\
+	gimpbacktrace-backend.h			\
+	gimpbacktrace-linux.c			\
+	gimpbacktrace-none.c			\
 	gimpbezierdesc.h			\
 	gimpbezierdesc.c			\
 	gimpboundary.c				\

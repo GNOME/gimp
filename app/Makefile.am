@@ -74,6 +74,10 @@ libapp_a_SOURCES = $(libapp_sources)
 gimp_@GIMP_APP_VERSION@_SOURCES = $(libapp_sources) main.c
 
 
+if PLATFORM_LINUX
+libdl = -ldl
+endif
+
 if PLATFORM_OSX
 framework_cocoa = -framework Cocoa
 endif
@@ -173,9 +177,11 @@ gimpconsoleldadd = \
 	$(Z_LIBS)						\
 	$(JSON_C_LIBS)						\
 	$(LIBMYPAINT_LIBS)					\
+	$(LIBUNWIND_LIBS)					\
 	$(INTLLIBS)						\
 	$(RT_LIBS)						\
-	$(libm)
+	$(libm)							\
+	$(libdl)
 
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)		\
