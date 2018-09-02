@@ -82,6 +82,7 @@ m4_define([rsvg_required_version], [2.40.6])
 m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([webp_required_version], [0.6.0])
 m4_define([wmf_required_version], [0.2.8])
+m4_define([libunwind_required_version], [1.1.0])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
@@ -177,6 +178,7 @@ RSVG_REQUIRED_VERSION=rsvg_required_version
 WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
 WMF_REQUIRED_VERSION=wmf_required_version
+LIBUNWIND_REQUIRED_VERSION=libunwind_required_version
 XGETTEXT_REQUIRED_VERSION=xgettext_required_version
 AC_SUBST(APPSTREAM_GLIB_REQUIRED_VERSION)
 AC_SUBST(ATK_REQUIRED_VERSION)
@@ -210,6 +212,7 @@ AC_SUBST(RSVG_REQUIRED_VERSION)
 AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
 AC_SUBST(WMF_REQUIRED_VERSION)
+AC_SUBST(LIBUNWIND_REQUIRED_VERSION)
 AC_SUBST(XGETTEXT_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
@@ -307,6 +310,23 @@ case "$host_cpu" in
     AC_MSG_RESULT([unknown])
     ;;
 esac
+
+
+#################
+# Check for Linux
+#################
+
+AC_MSG_CHECKING([if compiling for Linux])
+case "$host_os" in
+  linux*)
+    platform_linux=yes
+    ;;
+  *)
+    platform_linux=no
+    ;;
+esac
+AC_MSG_RESULT([$platform_linux])
+AM_CONDITIONAL(PLATFORM_LINUX, test "$platform_linux" = "yes")
 
 
 #################
@@ -1759,6 +1779,35 @@ AC_SUBST(FILE_HEIF)
 AM_CONDITIONAL(HAVE_LIBHEIF, test "x$have_libheif" = xyes)
 
 
+#######################################
+# Check for detailed backtraces support
+#######################################
+
+detailed_backtraces=no
+
+
+#####################
+# Check for libunwind
+#####################
+
+AC_ARG_WITH(libunwind, [  --without-libunwind       build without libunwind support])
+
+have_libunwind=no
+if test "x$with_libunwind" != xno; then
+  have_libunwind=yes
+  PKG_CHECK_MODULES(LIBUNWIND, libunwind >= libunwind_required_version,
+    [],
+    [have_libunwind="no (libunwind not found)"])
+fi
+
+if test "x$have_libunwind" = xyes; then
+  AC_DEFINE(HAVE_LIBUNWIND, 1,
+            [Define to 1 if libunwind is available])
+
+  detailed_backtraces=yes
+fi
+
+
 ######################
 # Check for libmypaint
 ######################
@@ -2889,6 +2938,7 @@ Optional Features:
   Default ICC directory:     $with_icc_directory
   Debug console (Win32):     $enable_win32_debug_console
   32-bit DLL folder (Win32): $with_win32_32bit_dll_folder
+  Detailed backtraces:       $detailed_backtraces
 
 Optional Plug-Ins:
   Ascii Art:                 $have_libaa
