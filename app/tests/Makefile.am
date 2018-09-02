@@ -53,6 +53,10 @@ libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
+if PLATFORM_LINUX
+libdl = -ldl
+endif
+
 if OS_WIN32
 else
 libm = -lm
@@ -132,9 +136,11 @@ LDADD = \
 	$(Z_LIBS)							\
 	$(JSON_C_LIBS)							\
 	$(LIBMYPAINT_LIBS)						\
+	$(LIBUNWIND_LIBS)						\
 	$(INTLLIBS)							\
 	$(RT_LIBS)							\
-	$(libm)
+	$(libm)								\
+	$(libdl)
 
 gimpdir-output:
 	mkdir -p gimpdir-output
