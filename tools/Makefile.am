@@ -96,6 +96,8 @@ AM_LDFLAGS = \
 	$(xnone)
 
 EXTRA_DIST = \
-	defcheck.py	\
-	gimp-mkenums	\
-	gimppath2svg.py
+	defcheck.py			\
+	gimp-mkenums			\
+	gimppath2svg.py			\
+	performance-log-expand.py	\
+	performance-log-resolve.py
