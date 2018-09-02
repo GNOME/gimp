@@ -568,7 +568,15 @@ splash_image_load_from_file (GFile    *file,
   gboolean            is_svg = FALSE;
 
   if (be_verbose)
-    g_printerr ("Trying splash '%s' ... ", g_file_peek_path (file));
+    {
+      char *path;
+
+      path = g_file_get_path (file);
+
+      g_printerr ("Trying splash '%s' ... ", path);
+
+      g_free (path);
+    }
 
   info = g_file_query_info (file,
                             G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
