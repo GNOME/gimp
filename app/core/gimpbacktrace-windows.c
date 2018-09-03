@@ -55,13 +55,20 @@ typedef struct _GimpBacktraceThread GimpBacktraceThread;
 struct _Thread
 {
   DWORD  tid;
-  gchar *name;
+
+  union
+  {
+    gchar   *name;
+    guint64  time;
+  };
 };
 
 struct _GimpBacktraceThread
 {
   DWORD        tid;
   const gchar *name;
+  guint64      time;
+  guint64      last_time;
 
   guintptr     frames[MAX_N_FRAMES];
   gint         n_frames;
@@ -96,6 +103,8 @@ gint64           last_thread_enumeration_time;
 Thread           thread_names[MAX_N_THREADS];
 gint             n_thread_names;
 gint             thread_names_spinlock;
+Thread           thread_times[MAX_N_THREADS];
+gint             n_thread_times;
 
 DWORD   WINAPI (* gimp_backtrace_SymSetOptions)        (DWORD            SymOptions);
 BOOL    WINAPI (* gimp_backtrace_SymInitialize)        (HANDLE           hProcess,
@@ -308,6 +317,7 @@ gimp_backtrace_start (void)
         {
           n_threads                    = 0;
           last_thread_enumeration_time = 0;
+          n_thread_times               = 0;
 
           initialized = TRUE;
         }
@@ -374,6 +384,10 @@ gimp_backtrace_new (gboolean include_current_thread)
       CONTEXT              context = {};
       STACKFRAME64         frame   = {};
       DWORD                machine_type;
+      FILETIME             creation_time;
+      FILETIME             exit_time;
+      FILETIME             kernel_time;
+      FILETIME             user_time;
 
       if (! include_current_thread && threads[i].tid == tid)
         continue;
@@ -426,8 +440,11 @@ gimp_backtrace_new (gboolean include_current_thread)
 #error unsupported architecture
 #endif
 
-      thread->tid      = threads[i].tid;
-      thread->name     = threads[i].name;
+      thread->tid       = threads[i].tid;
+      thread->name      = threads[i].name;
+      thread->last_time = 0;
+      thread->time      = 0;
+
       thread->n_frames = 0;
 
       while (thread->n_frames < MAX_N_FRAMES &&
@@ -443,6 +460,35 @@ gimp_backtrace_new (gboolean include_current_thread)
             break;
         }
 
+      if (GetThreadTimes (hThread,
+                          &creation_time, &exit_time,
+                          &kernel_time, &user_time))
+        {
+          thread->time = (((guint64) kernel_time.dwHighDateTime << 32) |
+                          ((guint64) kernel_time.dwLowDateTime))       +
+                         (((guint64) user_time.dwHighDateTime   << 32) |
+                          ((guint64) user_time.dwLowDateTime));
+
+          if (i < n_thread_times && thread->tid == thread_times[i].tid)
+            {
+              thread->last_time = thread_times[i].time;
+            }
+          else
+            {
+              gint j;
+
+              for (j = 0; j < n_thread_times; j++)
+                {
+                  if (thread->tid == thread_times[j].tid)
+                    {
+                      thread->last_time = thread_times[j].time;
+
+                      break;
+                    }
+                }
+            }
+        }
+
       if (threads[i].tid != tid)
         ResumeThread (hThread);
 
@@ -450,6 +496,14 @@ gimp_backtrace_new (gboolean include_current_thread)
 
       if (thread->n_frames > 0)
         backtrace->n_threads++;
+    }
+
+  n_thread_times = backtrace->n_threads;
+
+  for (i = 0; i < backtrace->n_threads; i++)
+    {
+      thread_times[i].tid  = backtrace->threads[i].tid;
+      thread_times[i].time = backtrace->threads[i].time;
     }
 
   g_mutex_unlock (&mutex);
@@ -501,6 +555,17 @@ gimp_backtrace_get_thread_name (GimpBacktrace *backtrace,
   g_return_val_if_fail (thread >= 0 && thread < backtrace->n_threads, NULL);
 
   return backtrace->threads[thread].name;
+}
+
+gboolean
+gimp_backtrace_is_thread_running (GimpBacktrace *backtrace,
+                                  gint           thread)
+{
+  g_return_val_if_fail (backtrace != NULL, FALSE);
+  g_return_val_if_fail (thread >= 0 && thread < backtrace->n_threads, FALSE);
+
+  return backtrace->threads[thread].time >
+         backtrace->threads[thread].last_time;
 }
 
 gint

@@ -42,6 +42,7 @@
 #include <execinfo.h>
 #include <dlfcn.h>
 #include <string.h>
+#include <stdio.h>
 
 #ifdef HAVE_LIBUNWIND
 #define UNW_LOCAL_ONLY
@@ -68,6 +69,7 @@ struct _GimpBacktraceThread
 {
   pid_t    tid;
   gchar    name[MAX_THREAD_NAME_SIZE];
+  gchar    state;
 
   guintptr frames[MAX_N_FRAMES];
   gint     n_frames;
@@ -93,6 +95,7 @@ static gint          gimp_backtrace_enumerate_threads (gboolean       include_cu
 static void          gimp_backtrace_read_thread_name  (pid_t          tid,
                                                        gchar         *name,
                                                        gint           size);
+static gchar         gimp_backtrace_read_thread_state (pid_t          tid);
 
 static void          gimp_backtrace_signal_handler    (gint           signum);
 
@@ -208,6 +211,34 @@ gimp_backtrace_read_thread_name (pid_t  tid,
 
       close (fd);
     }
+}
+
+static gchar
+gimp_backtrace_read_thread_state (pid_t tid)
+{
+  gchar buffer[64];
+  gint  fd;
+  gchar state = '\0';
+
+  g_snprintf (buffer, sizeof (buffer),
+              "/proc/self/task/%llu/stat",
+              (unsigned long long) tid);
+
+  fd = open (buffer, O_RDONLY);
+
+  if (fd >= 0)
+    {
+      gint n = read (fd, buffer, sizeof (buffer));
+
+      if (n > 0)
+        buffer[n - 1] = '\0';
+
+      sscanf (buffer, "%*d %*s %c", &state);
+
+      close (fd);
+    }
+
+  return state;
 }
 
 static void
@@ -367,6 +398,8 @@ gimp_backtrace_new (gboolean include_current_thread)
       gimp_backtrace_read_thread_name (thread->tid,
                                        thread->name, MAX_THREAD_NAME_SIZE);
 
+      thread->state = gimp_backtrace_read_thread_state (thread->tid);
+
       syscall (SYS_tgkill, pid, threads[i], BACKTRACE_SIGNAL);
     }
 
@@ -460,13 +493,23 @@ const gchar *
 gimp_backtrace_get_thread_name (GimpBacktrace *backtrace,
                                 gint           thread)
 {
-  g_return_val_if_fail (backtrace != NULL, 0);
+  g_return_val_if_fail (backtrace != NULL, NULL);
   g_return_val_if_fail (thread >= 0 && thread < backtrace->n_threads, NULL);
 
   if (backtrace->threads[thread].name[0])
     return backtrace->threads[thread].name;
   else
     return NULL;
+}
+
+gboolean
+gimp_backtrace_is_thread_running (GimpBacktrace *backtrace,
+                                  gint           thread)
+{
+  g_return_val_if_fail (backtrace != NULL, FALSE);
+  g_return_val_if_fail (thread >= 0 && thread < backtrace->n_threads, FALSE);
+
+  return backtrace->threads[thread].state == 'R';
 }
 
 gint
