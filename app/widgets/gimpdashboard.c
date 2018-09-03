@@ -3924,6 +3924,43 @@ gimp_dashboard_log_write_address_map (GimpAsync     *async,
                 }
             }
 
+          if (n == 0 || strcmp (info->source_file, prev_info->source_file))
+            {
+              NONEMPTY ();
+
+              if (info->source_file[0])
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<source>");
+                  gimp_dashboard_log_print_escaped (dashboard,
+                                                    info->source_file);
+                  gimp_dashboard_log_printf (dashboard,
+                                             "</source>\n");
+                }
+              else
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<source />\n");
+                }
+            }
+
+          if (n == 0 || info->source_line != prev_info->source_line)
+            {
+              NONEMPTY ();
+
+              if (info->source_line)
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<line>%d</line>\n",
+                                             info->source_line);
+                }
+              else
+                {
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<line />\n");
+                }
+            }
+
           if (empty)
             {
               gimp_dashboard_log_printf (dashboard,

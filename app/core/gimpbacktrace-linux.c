@@ -585,6 +585,9 @@ gimp_backtrace_get_address_info (guintptr                  address,
   info->symbol_address = (guintptr) dl_info.dli_saddr;
 #endif
 
+  info->source_file[0] = '\0';
+  info->source_line    = 0;
+
   return TRUE;
 }
 

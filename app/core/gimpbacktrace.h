@@ -31,6 +31,9 @@ struct _GimpBacktraceAddressInfo
 
   gchar    symbol_name[256];
   guintptr symbol_address;
+
+  gchar    source_file[256];
+  gint     source_line;
 };
 
 
