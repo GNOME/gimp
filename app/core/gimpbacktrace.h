@@ -28,13 +28,16 @@ typedef struct _GimpBacktraceAddressInfo GimpBacktraceAddressInfo;
 struct _GimpBacktraceAddressInfo
 {
   gchar    object_name[256];
+
   gchar    symbol_name[256];
   guintptr symbol_address;
 };
 
 
-gboolean        gimp_backtrace_init              (void);
-void            gimp_backtrace_shutdown          (void);
+void            gimp_backtrace_init              (void);
+
+gboolean        gimp_backtrace_start             (void);
+void            gimp_backtrace_stop              (void);
 
 GimpBacktrace * gimp_backtrace_new               (gboolean                 include_current_thread);
 void            gimp_backtrace_free              (GimpBacktrace           *backtrace);

@@ -21,15 +21,13 @@
 
 #include "config.h"
 
+#include <gio/gio.h>
+
 #include "gimpbacktrace-backend.h"
 
 
 #ifdef GIMP_BACKTRACE_BACKEND_NONE
 
-
-#include "config.h"
-
-#include <gio/gio.h>
 
 #include "core-types.h"
 
@@ -39,14 +37,19 @@
 /*  public functions  */
 
 
-gboolean
+void
 gimp_backtrace_init (void)
+{
+}
+
+gboolean
+gimp_backtrace_start (void)
 {
   return FALSE;
 }
 
 void
-gimp_backtrace_shutdown (void)
+gimp_backtrace_stop (void)
 {
 }
 
