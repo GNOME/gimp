@@ -100,6 +100,7 @@ libappcore_a_sources = \
 	gimpbacktrace-backend.h			\
 	gimpbacktrace-linux.c			\
 	gimpbacktrace-none.c			\
+	gimpbacktrace-windows.c			\
 	gimpbezierdesc.h			\
 	gimpbezierdesc.c			\
 	gimpboundary.c				\

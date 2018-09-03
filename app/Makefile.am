@@ -85,9 +85,12 @@ endif
 if OS_WIN32
 win32_ldflags = -mwindows -Wl,--tsaware $(WIN32_LARGE_ADDRESS_AWARE)
 
-# for GetProcessMemoryInfo() in the dashboard
+# for GimpDashboard and GimpBacktrace
 psapi_cflags = -DPSAPI_VERSION=1
 libpsapi = -lpsapi
+
+# for GimpBacktrace
+libdbghelp = -ldbghelp
 
 if HAVE_EXCHNDL
 exchndl = -lexchndl
@@ -182,7 +185,9 @@ gimpconsoleldadd = \
 	$(INTLLIBS)						\
 	$(RT_LIBS)						\
 	$(libm)							\
-	$(libdl)
+	$(libdl)						\
+	$(libpsapi)						\
+	$(libdbghelp)
 
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)						\
@@ -207,7 +212,6 @@ gimp_@GIMP_APP_VERSION@_LDADD = \
 	$(GTK_MAC_INTEGRATION_LIBS)	\
 	$(DBUS_GLIB_LIBS)		\
 	$(gimpconsoleldadd)		\
-	$(libpsapi)			\
 	$(exchndl)			\
 	$(GIMPRC)
 
