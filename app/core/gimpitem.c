@@ -1663,7 +1663,6 @@ gimp_item_rotate (GimpItem         *item,
   gboolean       push_undo;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   item_class = GIMP_ITEM_GET_CLASS (item);
