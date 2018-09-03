@@ -63,36 +63,37 @@ for sample in (log.find ("samples") or empty_element).iterfind ("sample"):
 
         for thread in backtrace:
             id     = thread.get ("id")
+            head   = thread.get ("head")
+            tail   = thread.get ("tail")
+            attrib = dict (thread.attrib)
             frames = list (thread)
 
+            last_thread = last_backtrace.setdefault (id, [{}, []])
+            last_frames = last_thread[1]
+
+            if head:
+                frames = last_frames[:int (head)] + frames
+
+                del attrib["head"]
+
+            if tail:
+                frames = frames + last_frames[-int (tail):]
+
+                del attrib["tail"]
+
+            last_thread[0] = attrib
+            last_thread[1] = frames
+
             if not frames:
-                last_backtrace.pop (id, None)
-            else:
-                last_thread = last_backtrace.setdefault (id, [None, []])
-                last_frames = last_thread[1]
-
-                name = thread.get ("name")
-                head = thread.get ("head")
-                tail = thread.get ("tail")
-
-                if head:
-                    frames = last_frames[:int (head)] + frames
-                if tail:
-                    frames = frames + last_frames[-int (tail):]
-
-                last_thread[0] = name
-                last_thread[1] = frames
+                del last_backtrace[id]
 
         for thread in list (backtrace):
             backtrace.remove (thread)
 
-        for id, (name, frames) in last_backtrace.items ():
-            thread = ElementTree.SubElement (backtrace, "thread", id=id)
+        for id, (attrib, frames) in last_backtrace.items ():
+            thread = ElementTree.SubElement (backtrace, "thread", attrib)
             thread.text = "\n"
             thread.tail = "\n"
-
-            if name:
-                thread.set ("name", name)
 
             thread.extend (frames)
 

@@ -3620,9 +3620,11 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
         {
           guintptr     thread_id;
           const gchar *thread_name;
+          gint         last_running = -1;
+          gint         running;
           gint         n_frames;
-          gint         n_head = 0;
-          gint         n_tail = 0;
+          gint         n_head       = 0;
+          gint         n_tail       = 0;
           gint         frame;
 
           thread_id   = gimp_backtrace_get_thread_id   (backtrace, thread);
@@ -3639,6 +3641,9 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                 {
                   gint n;
                   gint i;
+
+                  last_running = gimp_backtrace_is_thread_running (
+                    priv->log_backtrace, other_thread);
 
                   n = gimp_backtrace_get_n_frames (priv->log_backtrace,
                                                    other_thread);
@@ -3673,7 +3678,9 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                 }
             }
 
-          if (n_head + n_tail == n_frames)
+          running = gimp_backtrace_is_thread_running (backtrace, thread);
+
+          if (running == last_running && n_head + n_tail == n_frames)
             continue;
 
           BACKTRACE_NONEMPTY ();
@@ -3691,6 +3698,10 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                                          "\"");
             }
 
+          gimp_dashboard_log_printf (dashboard,
+                                     " running=\"%d\"",
+                                     running);
+
           if (n_head > 0)
             {
               gimp_dashboard_log_printf (dashboard,
@@ -3705,25 +3716,33 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                                          n_tail);
             }
 
-          gimp_dashboard_log_printf (dashboard,
-                                      ">\n");
-
-          for (frame = n_head; frame < n_frames - n_tail; frame++)
+          if (n_head + n_tail < n_frames)
             {
-              unsigned long long      address;
+              gimp_dashboard_log_printf (dashboard,
+                                          ">\n");
 
-              address = gimp_backtrace_get_frame_address (backtrace,
-                                                          thread, frame);
+              for (frame = n_head; frame < n_frames - n_tail; frame++)
+                {
+                  unsigned long long      address;
+
+                  address = gimp_backtrace_get_frame_address (backtrace,
+                                                              thread, frame);
+
+                  gimp_dashboard_log_printf (dashboard,
+                                             "<frame address=\"0x%llx\" />\n",
+                                             address);
+
+                  g_hash_table_add (priv->log_addresses, (gpointer) address);
+                }
 
               gimp_dashboard_log_printf (dashboard,
-                                         "<frame address=\"0x%llx\" />\n",
-                                         address);
-
-              g_hash_table_add (priv->log_addresses, (gpointer) address);
+                                         "</thread>\n");
             }
-
-          gimp_dashboard_log_printf (dashboard,
-                                     "</thread>\n");
+          else
+            {
+              gimp_dashboard_log_printf (dashboard,
+                                         " />\n");
+            }
         }
 
       if (! backtrace_empty)

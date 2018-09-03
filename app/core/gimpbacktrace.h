@@ -50,6 +50,8 @@ guintptr        gimp_backtrace_get_thread_id     (GimpBacktrace           *backt
                                                   gint                     thread);
 const gchar   * gimp_backtrace_get_thread_name   (GimpBacktrace           *backtrace,
                                                   gint                     thread);
+gboolean        gimp_backtrace_is_thread_running (GimpBacktrace           *backtrace,
+                                                  gint                     thread);
 
 gint            gimp_backtrace_find_thread_by_id (GimpBacktrace           *backtrace,
                                                   guintptr                 thread_id,
