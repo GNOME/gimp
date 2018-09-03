@@ -2278,15 +2278,19 @@ gimp_text_tool_create_vectors (GimpTextTool *text_tool)
 void
 gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
 {
-  GimpVectors *vectors0;
-  GimpVectors *vectors;
-  gdouble      box_height;
+  GimpVectors       *vectors0;
+  GimpVectors       *vectors;
+  gdouble            box_width;
+  gdouble            box_height;
+  GimpTextDirection  dir;
+  gdouble            offset;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
   if (! text_tool->text || ! text_tool->image || ! text_tool->layer)
     return;
 
+  box_width  = gimp_item_get_width  (GIMP_ITEM (text_tool->layer));
   box_height = gimp_item_get_height (GIMP_ITEM (text_tool->layer));
 
   vectors0 = gimp_image_get_active_vectors (text_tool->image);
@@ -2295,7 +2299,37 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
 
   vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
 
-  gimp_vectors_warp_vectors (vectors0, vectors, 0.5 * box_height);
+  dir = gimp_text_tool_get_direction (text_tool);
+  switch (dir)
+    {
+    case GIMP_TEXT_DIRECTION_LTR:
+    case GIMP_TEXT_DIRECTION_RTL:
+      offset = 0.5 * box_height;
+      break;
+    case GIMP_TEXT_DIRECTION_TTB_RTL:
+    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+    case GIMP_TEXT_DIRECTION_TTB_LTR:
+    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+      {
+        GimpContext *context;
+        context = GIMP_CONTEXT (gimp_tool_get_options (GIMP_TOOL (text_tool)));
+
+        gimp_item_rotate (GIMP_ITEM (vectors),
+                          context,
+                          GIMP_ROTATE_270,
+                          0,
+                          0,
+                          FALSE);
+        gimp_item_translate (GIMP_ITEM (vectors),
+                             0,
+                             box_width,
+                             FALSE);
+      }
+      offset = 0.5 * box_width;
+      break;
+    }
+
+  gimp_vectors_warp_vectors (vectors0, vectors, offset);
 
   gimp_item_set_visible (GIMP_ITEM (vectors), TRUE, FALSE);
 
