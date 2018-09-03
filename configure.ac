@@ -1819,13 +1819,6 @@ AC_SUBST(FILE_HEIF)
 AM_CONDITIONAL(HAVE_LIBHEIF, test "x$have_libheif" = xyes)
 
 
-#######################################
-# Check for detailed backtraces support
-#######################################
-
-detailed_backtraces=no
-
-
 #####################
 # Check for libunwind
 #####################
@@ -1843,8 +1836,18 @@ fi
 if test "x$have_libunwind" = xyes; then
   AC_DEFINE(HAVE_LIBUNWIND, 1,
             [Define to 1 if libunwind is available])
+fi
 
-  detailed_backtraces=yes
+
+#######################################
+# Check for detailed backtraces support
+#######################################
+
+detailed_backtraces=no
+if test "x$platform_linux" = xyes; then
+  detailed_backtraces=$have_libunwind
+elif test "x$platform_win32" = xyes; then
+  detailed_backtraces=$enable_drmingw
 fi
 
 
