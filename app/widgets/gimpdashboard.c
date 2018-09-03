@@ -4145,7 +4145,7 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
     priv->log_include_backtrace = FALSE;
 
   if (priv->log_include_backtrace)
-    has_backtrace = gimp_backtrace_init ();
+    has_backtrace = gimp_backtrace_start ();
   else
     has_backtrace = FALSE;
 
@@ -4213,7 +4213,7 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
 
   if (priv->log_error)
     {
-      gimp_backtrace_shutdown ();
+      gimp_backtrace_stop ();
 
       g_clear_object (&priv->log_output);
 
@@ -4263,9 +4263,6 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
 
   g_mutex_lock (&priv->mutex);
 
-  if (priv->log_include_backtrace)
-    gimp_backtrace_shutdown ();
-
   gimp_dashboard_log_printf (dashboard,
                              "\n"
                              "</samples>\n");
@@ -4289,6 +4286,9 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
   gimp_dashboard_log_printf (dashboard,
                              "\n"
                              "</gimp-performance-log>\n");
+
+  if (priv->log_include_backtrace)
+    gimp_backtrace_stop ();
 
   if (! priv->log_error)
     g_output_stream_close (priv->log_output, NULL, &priv->log_error);

@@ -24,6 +24,8 @@
 
 #include "config.h"
 
+#include <gio/gio.h>
+
 #include "gimpbacktrace-backend.h"
 
 
@@ -45,8 +47,6 @@
 #define UNW_LOCAL_ONLY
 #include <libunwind.h>
 #endif
-
-#include <gio/gio.h>
 
 #include "core-types.h"
 
@@ -237,8 +237,13 @@ gimp_backtrace_signal_handler (gint signum)
 /*  public functions  */
 
 
-gboolean
+void
 gimp_backtrace_init (void)
+{
+}
+
+gboolean
+gimp_backtrace_start (void)
 {
   g_mutex_lock (&mutex);
 
@@ -294,7 +299,7 @@ gimp_backtrace_init (void)
 }
 
 void
-gimp_backtrace_shutdown (void)
+gimp_backtrace_stop (void)
 {
   g_return_if_fail (n_initializations > 0);
 
