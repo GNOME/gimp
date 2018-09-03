@@ -582,9 +582,10 @@ gimp_vectors_rotate (GimpItem         *item,
 
   gimp_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
-                                    _("Rotate Path"),
-                                    vectors);
+  if (gimp_item_is_attached (item))
+    gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
+                                      _("Rotate Path"),
+                                      vectors);
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
