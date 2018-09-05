@@ -522,7 +522,8 @@ gimp_backtrace_find_thread_by_id (GimpBacktrace *backtrace,
 
   g_return_val_if_fail (backtrace != NULL, -1);
 
-  if (thread_hint < backtrace->n_threads &&
+  if (thread_hint >= 0                    &&
+      thread_hint <  backtrace->n_threads &&
       backtrace->threads[thread_hint].tid == tid)
     {
       return thread_hint;
