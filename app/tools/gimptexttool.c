@@ -52,6 +52,8 @@
 #include "text/gimptextlayout.h"
 #include "text/gimptextundo.h"
 
+#include "vectors/gimpstroke.h"
+#include "vectors/gimpvectors.h"
 #include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -2299,6 +2301,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
 
   vectors = gimp_text_vectors_new (text_tool->image, text_tool->text);
 
+  offset = 0;
   dir = gimp_text_tool_get_direction (text_tool);
   switch (dir)
     {
@@ -2311,19 +2314,13 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
     case GIMP_TEXT_DIRECTION_TTB_LTR:
     case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
       {
-        GimpContext *context;
-        context = GIMP_CONTEXT (gimp_tool_get_options (GIMP_TOOL (text_tool)));
+        GimpStroke *stroke = NULL;
 
-        gimp_item_rotate (GIMP_ITEM (vectors),
-                          context,
-                          GIMP_ROTATE_270,
-                          0,
-                          0,
-                          FALSE);
-        gimp_item_translate (GIMP_ITEM (vectors),
-                             0,
-                             box_width,
-                             FALSE);
+        while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+          {
+            gimp_stroke_rotate (stroke, 0, 0, 270);
+            gimp_stroke_translate (stroke, 0, box_width);
+          }
       }
       offset = 0.5 * box_width;
       break;
