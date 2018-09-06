@@ -1327,6 +1327,18 @@ gimp_text_tool_layer_notify (GimpTextLayer    *layer,
       if (! layer->text)
         gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
     }
+  else if (! strcmp (pspec->name, "offset-x") ||
+           ! strcmp (pspec->name, "offset-y"))
+    {
+      if (gimp_item_is_attached (GIMP_ITEM (layer)))
+        {
+          gimp_text_tool_block_drawing (text_tool);
+
+          gimp_text_tool_frame_item (text_tool);
+
+          gimp_text_tool_unblock_drawing (text_tool);
+        }
+    }
 }
 
 static gboolean
