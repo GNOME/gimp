@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-02 17:29+0200\n"
-"PO-Revision-Date: 2018-08-02 17:40+0200\n"
+"POT-Creation-Date: 2018-09-06 11:30+0200\n"
+"PO-Revision-Date: 2018-09-06 15:30+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -100,13 +100,66 @@ msgstr "Fotoritocco in GIMP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
+"notable changes are:"
+msgstr ""
+"GIMP 2.10.6 include molte correzioni e ottimizzazioni. I cambiamenti più "
+"importanti sono:"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid ""
+"Text layers can now represent vertical texts (with various character "
+"orientations and line directions)"
+msgstr ""
+"I livelli di testo possono ora gestire testi verticali (con diversi tipi di "
+"orientamento caratteri e righe)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
+msgstr "Nuovo filtro \"Piccolo pianeta\" (gegl:stereographic-projection)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid ""
+"The \"Straighten\" option of the Measure Tool now allows vertical "
+"straightening"
+msgstr ""
+"L'ozione \"Raddrizza\" dello strumento misurino ora permette di raddrizzare "
+"verticalmente"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid ""
+"Drawable previews are now rendered asynchronously and layer group previews "
+"can be disabled in Preferences"
+msgstr ""
+"Le anteprime dello spazio di disegno vengono ora aggiornate in modo "
+"asincrono e le anteprime dei gruppi di livelli possono essere disabilitate "
+"nelle preferenze"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid ""
+"New \"async\" field in the Dashboard \"misc\" group, showing the number of "
+"async operations currently running"
+msgstr "Il nuovo campo \"Asinc\" nel cruscotto del gruppo \"Varie\", mostra il numero delle operazioni asincrone attualmente attive"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+msgid "File format filtering in Open/Save/Export dialogs made less confusing"
+msgstr ""
+"I filtri dei formati di file per le finestre di dialogo di apertura/"
+"salvataggio/esportazione ora sono più ordinati"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "New language (having GIMP translated in 81 languages now): Marathi"
+msgstr "Nuova lingua (ora GIMP è tradotto in 81 lingue): il Marathi"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
 "GIMP 2.10.4 include molte correzioni di difetti come varie ottimizzazioni. I "
 "cambiamenti più importanti sono:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -114,11 +167,11 @@ msgstr ""
 "Allineamento allo strumento di misura: i livelli possono venire ruotati "
 "usanto la linea dello strumento di misura come orizzonte"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Avvio veloce: il caricamento dei font non blocca più la partenza"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -126,12 +179,12 @@ msgstr ""
 "Marcatura font con la stessa interfaccia utente dei pennelli, motivi e "
 "gradienti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 "Supporto PSD: si può importare la versione pre-composta di un'immagine PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -139,7 +192,7 @@ msgstr ""
 "Aggiornamento cruscotto: nuovo gruppo \"Memoria\" e migliorato gruppo "
 "\"Scambio\" mostrano diversi utili indicatori"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -149,7 +202,7 @@ msgstr ""
 "in gran parte costituito dalle solite correzioni rilevate dopo un cambio di "
 "versione importante, con diverse dozzine di bug corretti."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -161,7 +214,7 @@ msgstr ""
 "e \"Trasformazione ricorsiva\". Questi sono simpatici esempi della nostra "
 "politica rilassata di rilasci di micro versioni della serie stabile."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -170,11 +223,11 @@ msgstr ""
 "nuovo motore di elaborazione immagini, GEGL. I cambiamenti più di spicco "
 "sono:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Elaborazione ad alta profondità di colore (16/32 bit per canale)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -182,35 +235,35 @@ msgstr ""
 "Ora la gestione del colore è una funzionalità di base, il colore di buona "
 "parte delle finestre e delle aree di anteprima è gestito"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Anteprima automatica, con vista divisa prima/dopo dell'elaborazione dei pixel"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 "Elaborazione del disegno e del rendering multi thread e accelerato in "
 "hardware"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Most tools improved, several new transformation tools"
 msgstr "Molti strumenti migliorati, diversi nuovi strumenti di trasformazione"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Migliorato il supporto a molti formati immagine, in particolare "
 "l'importazione di PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Nuovi formati immagine supportati: OpenEXR, WebP, HGT..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -218,24 +271,24 @@ msgstr ""
 "Migliorato il disegno digitale: rotazione e ribaltamento immagini, disegno "
 "simmetrico, pennelli MyPaint..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Visualizzazione metadati per Exif, MXP, IPTC, e DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Supporto base HiDPI: dimensione icone automatica o selezionabile dall'utente"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Nuovi temi per GIMP: Light, Gray, Dark, e System"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "And much, much more…"
 msgstr "E molto, molto altro ancora..."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-"
 "released/"
@@ -243,7 +296,7 @@ msgstr ""
 "Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/04/27/"
 "gimp-2-10-0-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -254,7 +307,7 @@ msgstr ""
 "velocità e all'ottimizzazione in modo da fornire un'esperienza di disegno "
 "ancora migliore. I cambiamenti maggiori sono:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
@@ -262,13 +315,13 @@ msgstr ""
 "Grande ottimizzazione del nucleo nel disegno e nella visualizzazione, "
 "comprendente la parallelizzazione del codice di disegno."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
 msgstr ""
 "Le simmetrie ora vengono mantenute nei file XCF (salvate come parassiti "
 "dell'immagine)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -277,7 +330,7 @@ msgstr ""
 "diversi problemi di usabilità. I temi \"Lighter\" e \"Darker\" sono stati "
 "rimossi."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -288,7 +341,7 @@ msgstr ""
 "fornisce interazione sul disegno per la rotazione 3D (imbardata, beccheggio, "
 "rollio)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -299,7 +352,7 @@ msgstr ""
 "ricezione di segnali ma anche quando ci sono avvertimenti e errori critici, "
 "se viene impostata la chiave di debug \"fatal-warnings\"."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-"
 "rc2-released/"
@@ -307,7 +360,7 @@ msgstr ""
 "Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/04/17/"
 "gimp-2-10-rc2-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -317,12 +370,12 @@ msgstr ""
 "2.10.0, con l'obiettivo dell'assenza di difetti e stabilità. Oltre alle "
 "molte correzioni difetti, i miglioramenti più evidenti sono:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Nuovo cruscotto agganciabile per controllare l'uso delle risorse di GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -330,35 +383,35 @@ msgstr ""
 "Una nuova finestra di dialogo di debug per produrre back trace ed altri dati "
 "utili per il debug, che incoraggia a riportare i difetti"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "Le immagini non salvate ora possono essere recuperate dopo un crash"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "Layer masks on layer groups"
 msgstr "Maschere di livello sui gruppi di livelli."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Il supporto a JPEG 2000 è stato migliorato nella gestione della profondità e "
 "negli spazi di colore"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "La cattura schermate e il prelievo colore sono stati migliorati in molte "
 "piattaforme"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Metadata defaults preferences now available"
 msgstr "Le preferenze predefinite dei metadati sono ora disponibili"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Various GUI polishing"
 msgstr "Diversi miglioramenti all'interfaccia utente"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-"
 "rc1-released/"
@@ -366,7 +419,7 @@ msgstr ""
 "Per ulteriori informazioni, consultare https://www.gimp.org/news/2018/03/26/"
 "gimp-2-10-rc1-released/"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -374,53 +427,53 @@ msgstr ""
 "GIMP 2.9.8 introduce la modifica dei gradienti sul disegno e vari altri "
 "miglioramenti mantenendo l'obiettivo di correzione dei difetti e stabilità."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "On-canvas gradient editing"
 msgstr "Modifica del gradiente sul disegno"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Notification when an image is over/underexposed"
 msgstr "Notifica quando un'immagine è sovra o sotto esposta"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "Better and faster color management"
 msgstr "Gestione del colore migliorata e velocizzata"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 "Supporto per il prelievo colore e cattura schermate in Wayland su KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Paste in place feature"
 msgstr "Funzione di incolla sul posto"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "Many usability improvements"
 msgstr "Molti miglioramenti di usabilità"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Il manuale può essere mostrato nella lingua preferita dall'utente"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Miglioramenti nel filtro di decomposizione Wavelet"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Migliorata la compatibilità con i file .psd di Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "New support for password-protected PDF"
 msgstr "Nuovo supporto per i PDF protetti da password"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr ""
 "Nuovo supporto per il formato HGT (dati di elevazione del modello digitale)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
@@ -1394,7 +1447,7 @@ msgstr "Nuovo colore del canale"
 #: ../app/actions/channels-commands.c:274 ../app/core/gimpimage-new.c:278
 #: ../app/display/gimpdisplayshell-dnd.c:671
 #: ../app/widgets/gimpchanneltreeview.c:258
-#: ../app/widgets/gimplayertreeview.c:805
+#: ../app/widgets/gimplayertreeview.c:801
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Copia canale %s"
@@ -2696,89 +2749,196 @@ msgstr "Menu cruscotto"
 
 #: ../app/actions/dashboard-actions.c:44
 msgctxt "dashboard-action"
-msgid "Groups"
-msgstr "Gruppi"
+msgid "_Groups"
+msgstr "_Gruppi"
 
 #: ../app/actions/dashboard-actions.c:46
 msgctxt "dashboard-action"
-msgid "Update Interval"
-msgstr "Intervallo di aggiornamento"
+msgid "_Update Interval"
+msgstr "_Intervallo di aggiornamento"
 
 #: ../app/actions/dashboard-actions.c:48
 msgctxt "dashboard-action"
-msgid "History Duration"
-msgstr "Durata cronologia"
+msgid "_History Duration"
+msgstr "_Durata cronologia"
 
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
-msgid "Reset"
-msgstr "Reimposta"
+msgid "_Start/Stop Recording..."
+msgstr "Avvio/_stop registrazione..."
 
 #: ../app/actions/dashboard-actions.c:52
+msgctxt "dashboard-action"
+msgid "Start/stop recording performance log"
+msgstr "Avvio/stop registrazione del log della performance"
+
+#: ../app/actions/dashboard-actions.c:56
+msgctxt "dashboard-action"
+msgid "_Add Marker..."
+msgstr "_Aggiungi marcatore..."
+
+#: ../app/actions/dashboard-actions.c:57
+msgctxt "dashboard-action"
+msgid "Add an event marker to the performance log"
+msgstr "Aggiungi un marcatore evento al log della performance"
+
+#: ../app/actions/dashboard-actions.c:62
+msgctxt "dashboard-action"
+msgid "Add _Empty Marker"
+msgstr "Aggiungi marcator_e vuoto"
+
+#: ../app/actions/dashboard-actions.c:63
+msgctxt "dashboard-action"
+msgid "Add an empty event marker to the performance log"
+msgstr "Aggiungi un marcatore evento vuoto al log della performance"
+
+#: ../app/actions/dashboard-actions.c:69
+msgctxt "dashboard-action"
+msgid "_Reset"
+msgstr "_Reimposta"
+
+#: ../app/actions/dashboard-actions.c:70
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
 msgstr "Reimposta dati cumulativi"
 
-#: ../app/actions/dashboard-actions.c:60
+#: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-action"
-msgid "Low Swap Space Warning"
-msgstr "Avvertimento di poco spazio di scambio"
+msgid "_Low Swap Space Warning"
+msgstr "_Avvertimento di poco spazio di scambio"
 
-#: ../app/actions/dashboard-actions.c:61
+#: ../app/actions/dashboard-actions.c:79
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
 msgstr ""
 "Alza il cruscotto quando lo spazio di scambio si avvicina al suo limite"
 
-#: ../app/actions/dashboard-actions.c:71
+#: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
 msgstr "0.25 secondi"
 
-#: ../app/actions/dashboard-actions.c:76
+#: ../app/actions/dashboard-actions.c:94
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
 msgstr "0.5 secondi"
 
-#: ../app/actions/dashboard-actions.c:81
+#: ../app/actions/dashboard-actions.c:99
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
 msgstr "1 secondo"
 
-#: ../app/actions/dashboard-actions.c:86
+#: ../app/actions/dashboard-actions.c:104
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
 msgstr "2 secondi"
 
-#: ../app/actions/dashboard-actions.c:91
+#: ../app/actions/dashboard-actions.c:109
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
 msgstr "4 secondi"
 
-#: ../app/actions/dashboard-actions.c:99
+#: ../app/actions/dashboard-actions.c:117
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
 msgstr "15 secondi"
 
-#: ../app/actions/dashboard-actions.c:104
+#: ../app/actions/dashboard-actions.c:122
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
 msgstr "30 secondi"
 
-#: ../app/actions/dashboard-actions.c:109
+#: ../app/actions/dashboard-actions.c:127
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
 msgstr "60 secondi"
 
-#: ../app/actions/dashboard-actions.c:114
+#: ../app/actions/dashboard-actions.c:132
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
 msgstr "120 secondi"
 
-#: ../app/actions/dashboard-actions.c:119
+#: ../app/actions/dashboard-actions.c:137
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 secondi"
+
+#: ../app/actions/dashboard-commands.c:102
+#: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:161
+#: ../app/actions/error-console-commands.c:96
+#: ../app/actions/file-commands.c:416
+#: ../app/actions/gradient-editor-commands.c:401
+#: ../app/actions/gradient-editor-commands.c:510
+#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:178
+#: ../app/actions/templates-commands.c:244
+#: ../app/actions/text-editor-commands.c:64
+#: ../app/actions/text-tool-commands.c:118
+#: ../app/actions/tool-options-commands.c:195
+#: ../app/actions/window-commands.c:75
+#: ../app/dialogs/color-profile-dialog.c:136
+#: ../app/dialogs/color-profile-dialog.c:154
+#: ../app/dialogs/color-profile-dialog.c:172
+#: ../app/dialogs/color-profile-dialog.c:190
+#: ../app/dialogs/color-profile-dialog.c:208
+#: ../app/dialogs/convert-indexed-dialog.c:142
+#: ../app/dialogs/convert-precision-dialog.c:165
+#: ../app/dialogs/data-delete-dialog.c:86 ../app/dialogs/fade-dialog.c:120
+#: ../app/dialogs/file-open-location-dialog.c:80
+#: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/grid-dialog.c:102
+#: ../app/dialogs/image-merge-layers-dialog.c:100
+#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
+#: ../app/dialogs/image-scale-dialog.c:210
+#: ../app/dialogs/item-options-dialog.c:145
+#: ../app/dialogs/layer-add-mask-dialog.c:110
+#: ../app/dialogs/offset-dialog.c:136
+#: ../app/dialogs/palette-import-dialog.c:162
+#: ../app/dialogs/preferences-dialog.c:287
+#: ../app/dialogs/preferences-dialog.c:637
+#: ../app/dialogs/preferences-dialog.c:1095
+#: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
+#: ../app/dialogs/resize-dialog.c:186
+#: ../app/dialogs/resolution-calibrate-dialog.c:75
+#: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
+#: ../app/dialogs/template-options-dialog.c:118
+#: ../app/dialogs/vectors-export-dialog.c:83
+#: ../app/dialogs/vectors-import-dialog.c:88
+#: ../app/display/gimpdisplayshell-close.c:179
+#: ../app/display/gimpdisplayshell-filter-dialog.c:87
+#: ../app/display/gimpdisplayshell-rotate-dialog.c:122
+#: ../app/display/gimpdisplayshell-scale-dialog.c:122
+#: ../app/tools/gimpfiltertool.c:321
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1720
+#: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpcolordialog.c:110
+#: ../app/widgets/gimpcontrollereditor.c:660
+#: ../app/widgets/gimpcontrollerlist.c:564
+#: ../app/widgets/gimpdeviceeditor.c:512 ../app/widgets/gimpdnd-xds.c:228
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
+#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:488
+#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
+msgid "_Cancel"
+msgstr "A_nnulla"
+
+#: ../app/actions/dashboard-commands.c:103
+msgid "_Record"
+msgstr "_Registra"
+
+#: ../app/actions/dashboard-commands.c:125
+msgid "All Files"
+msgstr "Tutti i file"
+
+#: ../app/actions/dashboard-commands.c:130
+msgid "Log Files (*.log)"
+msgstr "File di log (*.*)"
+
+#: ../app/actions/dashboard-commands.c:197
+msgid "Add Marker"
+msgstr "Aggiungi marcatore"
+
+#: ../app/actions/dashboard-commands.c:199
+msgid "Enter a description for the marker"
+msgstr "Inserire una descrizione per il marcatore"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
 #: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:212
@@ -2786,7 +2946,7 @@ msgstr "240 secondi"
 #: ../app/dialogs/file-open-location-dialog.c:223
 #: ../app/dialogs/file-open-location-dialog.c:239
 #: ../app/display/gimpdisplayshell-dnd.c:615
-#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox.c:805
+#: ../app/widgets/gimplayertreeview.c:761 ../app/widgets/gimptoolbox.c:805
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
 msgid ""
@@ -3498,62 +3658,6 @@ msgstr "Rimuove le voci che corrispondono a file non disponibili"
 #: ../app/actions/documents-commands.c:223
 msgid "Clear Document History"
 msgstr "Cancella la cronologia documenti"
-
-#: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:161
-#: ../app/actions/error-console-commands.c:96
-#: ../app/actions/file-commands.c:416
-#: ../app/actions/gradient-editor-commands.c:401
-#: ../app/actions/gradient-editor-commands.c:510
-#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:178
-#: ../app/actions/templates-commands.c:244
-#: ../app/actions/text-editor-commands.c:64
-#: ../app/actions/text-tool-commands.c:118
-#: ../app/actions/tool-options-commands.c:195
-#: ../app/actions/window-commands.c:75
-#: ../app/dialogs/color-profile-dialog.c:136
-#: ../app/dialogs/color-profile-dialog.c:154
-#: ../app/dialogs/color-profile-dialog.c:172
-#: ../app/dialogs/color-profile-dialog.c:190
-#: ../app/dialogs/color-profile-dialog.c:208
-#: ../app/dialogs/convert-indexed-dialog.c:142
-#: ../app/dialogs/convert-precision-dialog.c:165
-#: ../app/dialogs/data-delete-dialog.c:86 ../app/dialogs/fade-dialog.c:120
-#: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
-#: ../app/dialogs/grid-dialog.c:102
-#: ../app/dialogs/image-merge-layers-dialog.c:100
-#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
-#: ../app/dialogs/image-scale-dialog.c:210
-#: ../app/dialogs/item-options-dialog.c:145
-#: ../app/dialogs/layer-add-mask-dialog.c:110
-#: ../app/dialogs/offset-dialog.c:136
-#: ../app/dialogs/palette-import-dialog.c:162
-#: ../app/dialogs/preferences-dialog.c:287
-#: ../app/dialogs/preferences-dialog.c:637
-#: ../app/dialogs/preferences-dialog.c:1095
-#: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:186
-#: ../app/dialogs/resolution-calibrate-dialog.c:75
-#: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
-#: ../app/dialogs/template-options-dialog.c:118
-#: ../app/dialogs/vectors-export-dialog.c:83
-#: ../app/dialogs/vectors-import-dialog.c:88
-#: ../app/display/gimpdisplayshell-close.c:179
-#: ../app/display/gimpdisplayshell-filter-dialog.c:87
-#: ../app/display/gimpdisplayshell-rotate-dialog.c:122
-#: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1718
-#: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
-#: ../app/widgets/gimpcolordialog.c:110
-#: ../app/widgets/gimpcontrollereditor.c:660
-#: ../app/widgets/gimpcontrollerlist.c:564
-#: ../app/widgets/gimpdeviceeditor.c:512 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
-#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:488
-#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
-msgid "_Cancel"
-msgstr "A_nnulla"
 
 #: ../app/actions/documents-commands.c:231 ../app/actions/edit-commands.c:162
 #: ../app/dialogs/preferences-dialog.c:638
@@ -4933,334 +5037,339 @@ msgstr "Picco_lo pianeta..."
 
 #: ../app/actions/filters-actions.c:422
 msgctxt "filters-action"
+msgid "_Long Shadow..."
+msgstr "Ombra _lunga..."
+
+#: ../app/actions/filters-actions.c:427
+msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006..."
 
-#: ../app/actions/filters-actions.c:427
+#: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Labirinto..."
 
-#: ../app/actions/filters-actions.c:432
+#: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "Sfocatura _mediana..."
 
-#: ../app/actions/filters-actions.c:437
+#: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Mixer mono..."
 
-#: ../app/actions/filters-actions.c:442
+#: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mosaico..."
 
-#: ../app/actions/filters-actions.c:447
+#: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Sfocatura di movimento _circolare..."
 
-#: ../app/actions/filters-actions.c:452
+#: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "Sfocatura di movimento _lineare..."
 
-#: ../app/actions/filters-actions.c:457
+#: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "Sfocatura di movimento _zoom..."
 
-#: ../app/actions/filters-actions.c:462
+#: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "Disturbo _cella..."
 
-#: ../app/actions/filters-actions.c:467
+#: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Disturbo CIE lch..."
 
-#: ../app/actions/filters-actions.c:472
+#: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Disturbo HSV..."
 
-#: ../app/actions/filters-actions.c:477
+#: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Casuale..."
 
-#: ../app/actions/filters-actions.c:482
+#: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Disturbo _Perlin..."
 
-#: ../app/actions/filters-actions.c:487
+#: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Prelievo..."
 
-#: ../app/actions/filters-actions.c:492
+#: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Disturbo _RGB..."
 
-#: ../app/actions/filters-actions.c:497
+#: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "_Riduzione disturbo..."
 
-#: ../app/actions/filters-actions.c:502
+#: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "Disturbo _simplex..."
 
-#: ../app/actions/filters-actions.c:507
+#: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Macchia..."
 
-#: ../app/actions/filters-actions.c:512
+#: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "Di_sturbo pieno..."
 
-#: ../app/actions/filters-actions.c:517
+#: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "Dispe_rsione..."
 
-#: ../app/actions/filters-actions.c:522
+#: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "A _olio..."
 
-#: ../app/actions/filters-actions.c:527
+#: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Proiezione panorama..."
 
-#: ../app/actions/filters-actions.c:532
+#: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotocopia..."
 
-#: ../app/actions/filters-actions.c:537
+#: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "Effetto _pixel..."
 
-#: ../app/actions/filters-actions.c:542
+#: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plasma..."
 
-#: ../app/actions/filters-actions.c:547
+#: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Coordinate p_olari..."
 
-#: ../app/actions/filters-actions.c:552
+#: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Posterizza..."
 
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "Trasformazione _ricorsiva..."
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "_Rimozione occhi rossi..."
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
-#: ../app/actions/filters-actions.c:572
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "_Clip RGB..."
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "Inc_respature..."
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "Sat_urazione..."
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "_Semi-appiattisci..."
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Seppia..."
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "Ombre-Alteluci..."
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Spostamento..."
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinusoide..."
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "Clustering iterativo lineare _semplice..."
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "Vicino più _simmetrico..."
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Chiarore sfumato..."
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "Sferici_zza..."
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_pirale..."
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "Ampliamento contra_sto..."
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Stress..."
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova..."
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "_Soglia..."
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Soglia alfa..."
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Piastrelle di vetro..."
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Piastrelle di carta..."
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "Pias_trella senza giunte..."
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Affila (masc_hera di contrasto)"
 
-#: ../app/actions/filters-actions.c:682
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Propagazione _valore..."
 
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "Degradazione Vi_deo... "
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vignettatura..."
 
-#: ../app/actions/filters-actions.c:697
+#: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "Pixelac_quarellati..."
 
-#: ../app/actions/filters-actions.c:702
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Onde..."
 
-#: ../app/actions/filters-actions.c:707
+#: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Vortice e pizzico..."
 
-#: ../app/actions/filters-actions.c:712
+#: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "V_ento..."
 
-#: ../app/actions/filters-actions.c:720
+#: ../app/actions/filters-actions.c:725
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Ri_peti l'ultimo"
 
-#: ../app/actions/filters-actions.c:722
+#: ../app/actions/filters-actions.c:727
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Riesegui l'ultimo filtro usato, con le stesse impostazioni"
 
-#: ../app/actions/filters-actions.c:727
+#: ../app/actions/filters-actions.c:732
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "R_i-mostra l'ultimo"
 
-#: ../app/actions/filters-actions.c:728
+#: ../app/actions/filters-actions.c:733
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostra ancora la finestra dell'ultimo filtro usato"
 
-#: ../app/actions/filters-actions.c:1057
+#: ../app/actions/filters-actions.c:1063
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Ri_peti \"%s\""
 
-#: ../app/actions/filters-actions.c:1058
+#: ../app/actions/filters-actions.c:1064
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "R_i-mostra \"%s\""
 
-#: ../app/actions/filters-actions.c:1096
+#: ../app/actions/filters-actions.c:1102
 msgid "Repeat Last"
 msgstr "Ripeti l'ultimo"
 
-#: ../app/actions/filters-actions.c:1098
+#: ../app/actions/filters-actions.c:1104
 msgid "Re-Show Last"
 msgstr "Ri-mostra l'ultimo"
 
@@ -7138,7 +7247,7 @@ msgstr "Modifica attributi livello"
 
 #: ../app/actions/layers-commands.c:336
 #: ../app/widgets/gimpdrawabletreeview.c:331
-#: ../app/widgets/gimplayertreeview.c:882
+#: ../app/widgets/gimplayertreeview.c:878
 msgid "New Layer"
 msgstr "Nuovo livello"
 
@@ -7527,7 +7636,7 @@ msgstr "Reimposta tutti i filtri"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformgridtool.c:918
+#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformgridtool.c:918
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -7950,18 +8059,18 @@ msgstr "DAB-DDS"
 
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
-msgid "Vertical lines from right to left (mixed orientation)"
-msgstr "Righe verticali da destra a sinistra (orientamento misto)"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Verticale, da destra a sinistra (orientamento misto)"
 
 #: ../app/actions/text-editor-actions.c:77
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
-msgstr "DAB-DDS-INPIEDI"
+msgstr "DAB-DDS-VERTIC"
 
 #: ../app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
-msgid "Vertical lines from right to left (upright characters)"
-msgstr "Righe verticali da destra a sinistra (caratteri verticali)"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Verticale, da destra a sinistra (orientamento verticale)"
 
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
@@ -7970,18 +8079,18 @@ msgstr "DAB-DSD"
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
-msgid "Vertical lines from left to right (mixed orientation)"
-msgstr "Righe verticali da sinistra a destra (orientamento misto)"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Verticale, da sinistra a destra (orientamento misto)"
 
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
-msgstr "DAB-DSD-INPIEDI"
+msgstr "DAB-DSD-VERTIC"
 
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
-msgid "Vertical lines from left to right (upright characters)"
-msgstr "Righe verticali da sinistra a destra (caratteri verticali)"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Verticale, da sinistra a destra (orientamento verticale)"
 
 #: ../app/actions/text-editor-commands.c:60
 #: ../app/actions/text-tool-commands.c:114
@@ -8084,23 +8193,23 @@ msgstr "Da destra a sinistra"
 
 #: ../app/actions/text-tool-actions.c:116
 msgctxt "text-tool-action"
-msgid "Vertical lines from right to left (mixed orientation)"
-msgstr "Righe verticali da destra a sinistra (orientamento misto)"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Verticale, da destra a sinistra (orientamento misto)"
 
 #: ../app/actions/text-tool-actions.c:121
 msgctxt "text-tool-action"
-msgid "Vertical lines from right to left (upright characters)"
-msgstr "Righe verticali da destra a sinistra (caratteri verticali)"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Verticale, da destra a sinistra (orientamento verticale)"
 
 #: ../app/actions/text-tool-actions.c:126
 msgctxt "text-tool-action"
-msgid "Vertical lines from left to right (mixed orientation)"
-msgstr "Righe verticali da sinistra a destra (orientamento misto)"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Verticale, da sinistra a destra (orientamento misto)"
 
 #: ../app/actions/text-tool-actions.c:131
 msgctxt "text-tool-action"
-msgid "Vertical lines from left to right (upright characters)"
-msgstr "Righe verticali da sinistra a destra (caratteri verticali)"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Verticale, da sinistra a destra (orientamento verticale)"
 
 #: ../app/actions/tool-options-actions.c:57
 msgctxt "tool-options-action"
@@ -10053,7 +10162,7 @@ msgstr "Sposta questa finestra sullo schermo %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
-#: ../app/tools/gimpfiltertool.c:324 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:322 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -12757,25 +12866,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Allaga canale"
 
-#: ../app/core/gimpchannel.c:843
+#: ../app/core/gimpchannel.c:845
 msgid "Cannot fill empty channel."
 msgstr "Impossibile riempire un canale vuoto."
 
-#: ../app/core/gimpchannel.c:879
+#: ../app/core/gimpchannel.c:881
 msgid "Cannot stroke empty channel."
 msgstr "Impossibile delineare un canale vuoto."
 
-#: ../app/core/gimpchannel.c:1702
+#: ../app/core/gimpchannel.c:1704
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Imposta il colore del canale"
 
-#: ../app/core/gimpchannel.c:1753
+#: ../app/core/gimpchannel.c:1755
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Imposta opacità canale"
 
-#: ../app/core/gimpchannel.c:1842 ../app/core/gimpselection.c:169
+#: ../app/core/gimpchannel.c:1844 ../app/core/gimpselection.c:169
 msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
@@ -12797,7 +12906,7 @@ msgstr "Colore di sfondo"
 
 #: ../app/core/gimpcontext.c:697 ../app/core/gimpcontext.c:698
 #: ../app/dialogs/fade-dialog.c:158 ../app/widgets/gimpbrushselect.c:175
-#: ../app/widgets/gimplayertreeview.c:295
+#: ../app/widgets/gimplayertreeview.c:291
 msgid "Opacity"
 msgstr "Opacità"
 
@@ -13158,41 +13267,41 @@ msgstr ""
 msgid "Offset unit"
 msgstr "Unità scostamento"
 
-#: ../app/core/gimpgrouplayer.c:278
+#: ../app/core/gimpgrouplayer.c:279
 msgid "Layer Group"
 msgstr "gruppo di livelli"
 
-#: ../app/core/gimpgrouplayer.c:279
+#: ../app/core/gimpgrouplayer.c:280
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Rinomina gruppo di livelli"
 
-#: ../app/core/gimpgrouplayer.c:280
+#: ../app/core/gimpgrouplayer.c:281
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Sposta gruppo di livelli"
 
-#: ../app/core/gimpgrouplayer.c:281
+#: ../app/core/gimpgrouplayer.c:282
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Scala gruppo di livelli"
 
-#: ../app/core/gimpgrouplayer.c:282
+#: ../app/core/gimpgrouplayer.c:283
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Ridimensiona gruppo di livelli"
 
-#: ../app/core/gimpgrouplayer.c:283
+#: ../app/core/gimpgrouplayer.c:284
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Rifletti gruppo di livelli"
 
-#: ../app/core/gimpgrouplayer.c:284
+#: ../app/core/gimpgrouplayer.c:285
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Ruota gruppo di livelli"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:286
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Trasforma gruppo di livelli"
@@ -14793,7 +14902,7 @@ msgstr "Dissol_venza"
 #: ../app/dialogs/fade-dialog.c:151
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/tools/gimppaintoptions-gui.c:111 ../app/widgets/gimpdeviceinfo.c:116
-#: ../app/widgets/gimplayertreeview.c:279
+#: ../app/widgets/gimplayertreeview.c:275
 msgid "Mode"
 msgstr "Modalità"
 
@@ -17354,18 +17463,20 @@ msgstr "Nuovo tracciato"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
-#: ../app/tools/gimpfiltertool.c:270 ../app/tools/gimpgradienttool.c:245
-#: ../app/tools/gimpselectiontool.c:427
+#: ../app/tools/gimpfiltertool.c:268 ../app/tools/gimpgradienttool.c:245
+#: ../app/tools/gimpselectiontool.c:445
+#, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Impossibile modificare i pixel dei gruppi livelli."
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1149
-#: ../app/tools/gimpfiltertool.c:277 ../app/tools/gimpgradienttool.c:252
+#: ../app/tools/gimpfiltertool.c:275 ../app/tools/gimpgradienttool.c:252
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:330
+#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:330
 #: ../app/tools/gimpwarptool.c:629
+#, c-format
 msgid "The active layer's pixels are locked."
 msgstr "I pixel del livello attivo sono bloccati."
 
@@ -17384,13 +17495,13 @@ msgid "Drop color to layer"
 msgstr "Rilascia il colore sul livello"
 
 #: ../app/display/gimpdisplayshell-dnd.c:570
-#: ../app/widgets/gimplayertreeview.c:756
+#: ../app/widgets/gimplayertreeview.c:752
 msgid "Drop layers"
 msgstr "Rilascia i livelli"
 
 #: ../app/display/gimpdisplayshell-dnd.c:707
 #: ../app/display/gimpdisplayshell-dnd.c:725
-#: ../app/widgets/gimplayertreeview.c:831 ../app/widgets/gimptoolbox-dnd.c:272
+#: ../app/widgets/gimplayertreeview.c:827 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Buffer rilasciato"
 
@@ -18807,7 +18918,7 @@ msgstr[1] ""
 msgid "Documents"
 msgstr "Documenti"
 
-#: ../app/gui/splash.c:133
+#: ../app/gui/splash.c:138
 msgid "GIMP Startup"
 msgstr "Avvio di GIMP"
 
@@ -20122,18 +20233,18 @@ msgstr "Nome variabile vuoto nel file di ambiente %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Nome variabile illegale nel file di ambiente %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:300
-#: ../app/plug-in/gimpinterpreterdb.c:396
+#: ../app/plug-in/gimpinterpreterdb.c:302
+#: ../app/plug-in/gimpinterpreterdb.c:399
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "Riferimento a interprete errato in file interprete %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:368
+#: ../app/plug-in/gimpinterpreterdb.c:371
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Stringa di formato binario errato in file interprete %s"
 
-#: ../app/plug-in/gimpplugin.c:622
+#: ../app/plug-in/gimpplugin.c:232
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -20614,7 +20725,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1590
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1592
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -20654,21 +20765,21 @@ msgstr "Ruota livello testo"
 msgid "Transform Text Layer"
 msgstr "Trasforma livello di testo"
 
-#: ../app/text/gimptextlayer.c:584
+#: ../app/text/gimptextlayer.c:583
 msgid "Discard Text Information"
 msgstr "Abbandona le informazioni sul testo"
 
-#: ../app/text/gimptextlayer.c:709
+#: ../app/text/gimptextlayer.c:708
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "A causa della mancanza di qualsiasi carattere, la funzionalità di testo non "
 "è disponibile."
 
-#: ../app/text/gimptextlayer.c:772
+#: ../app/text/gimptextlayer.c:771
 msgid "Empty Text Layer"
 msgstr "Livello testo vuoto"
 
-#: ../app/text/gimptextlayer.c:825
+#: ../app/text/gimptextlayer.c:824
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -20961,7 +21072,7 @@ msgid "_Bucket Fill"
 msgstr "_Riempimento colore"
 
 #: ../app/tools/gimpbucketfilltool.c:151 ../app/tools/gimpcagetool.c:234
-#: ../app/tools/gimpfiltertool.c:284
+#: ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppainttool.c:296
 #: ../app/tools/gimptransformtool.c:338 ../app/tools/gimpwarptool.c:640
@@ -21447,48 +21558,48 @@ msgid "Color _managed"
 msgstr "Colore _gestito"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:373
+#: ../app/tools/gimpfiltertool.c:371
 msgid "Advanced Color Options"
 msgstr "Opzioni colore avanzate"
 
-#: ../app/tools/gimpfiltertool.c:392
+#: ../app/tools/gimpfiltertool.c:390
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr "Converte i pixel in sRGB incorporato per applicare il filtro (lento)"
 
-#: ../app/tools/gimpfiltertool.c:393
+#: ../app/tools/gimpfiltertool.c:391
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Presume che i pixel siano in sRGB incorporato (ignora lo spazio colore "
 "immagine corrente)"
 
-#: ../app/tools/gimpfiltertool.c:628
+#: ../app/tools/gimpfiltertool.c:626
 msgid "Click to switch the original and filtered sides"
 msgstr "Fare clic per passare dal lato originale a quello filtrato o viceversa"
 
-#: ../app/tools/gimpfiltertool.c:632
+#: ../app/tools/gimpfiltertool.c:630
 msgid "Click to switch between vertical and horizontal"
 msgstr "Fare clic per passare da verticale a orizzontale o viceversa"
 
-#: ../app/tools/gimpfiltertool.c:636
+#: ../app/tools/gimpfiltertool.c:634
 msgid "Click to move the split guide"
 msgstr "Fare clic per spostare la separazione"
 
-#: ../app/tools/gimpfiltertool.c:638
+#: ../app/tools/gimpfiltertool.c:636
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: commuta originale e filtrato"
 
-#: ../app/tools/gimpfiltertool.c:639
+#: ../app/tools/gimpfiltertool.c:637
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: commuta orizzontale e verticale"
 
-#: ../app/tools/gimpfiltertool.c:1300 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1303 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importa le impostazioni \"%s\""
 
-#: ../app/tools/gimpfiltertool.c:1302 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1305 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Esporta le impostazioni \"%s\""
@@ -21709,8 +21820,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Selezione fuzzy"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:542
-#: ../app/tools/gimpgegltool.c:543 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:543
+#: ../app/tools/gimpgegltool.c:544 ../app/tools/gimpoperationtool.c:134
 msgid "GEGL Operation"
 msgstr "Operazione GEGL"
 
@@ -21723,7 +21834,7 @@ msgid "_GEGL Operation..."
 msgstr "Operazione _GEGL... "
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:487
+#: ../app/tools/gimpgegltool.c:488
 msgid "Select an operation from the list above"
 msgstr "Seleziona un'operazione dall'elenco sovrastante"
 
@@ -22738,41 +22849,51 @@ msgstr "Raggio di sfumatura"
 msgid "Mode:"
 msgstr "Modalità:"
 
-#: ../app/tools/gimpselectiontool.c:255
+#: ../app/tools/gimpselectiontool.c:261
 msgid "Click-Drag to replace the current selection"
 msgstr "Fare clic e trascinare per sostituire la selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:263
+#: ../app/tools/gimpselectiontool.c:269
 msgid "Click-Drag to create a new selection"
 msgstr "Fare clic e trascinare per creare una nuova selezione"
 
-#: ../app/tools/gimpselectiontool.c:268
+#: ../app/tools/gimpselectiontool.c:274
 msgid "Click-Drag to add to the current selection"
 msgstr "Fare clic e trascinare per aggiungere alla selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:277
+#: ../app/tools/gimpselectiontool.c:283
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Fare clic e trascinare per sottrarre dalla selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:286
+#: ../app/tools/gimpselectiontool.c:292
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Fare clic e trascinare per intersecare con la selezione corrente"
 
-#: ../app/tools/gimpselectiontool.c:296
+#: ../app/tools/gimpselectiontool.c:302
 msgid "Click-Drag to move the selection mask"
 msgstr "Fare clic e trascinare per spostare la maschera di selezione"
 
-#: ../app/tools/gimpselectiontool.c:304
+#: ../app/tools/gimpselectiontool.c:310
 msgid "Click-Drag to move the selected pixels"
 msgstr "Fare clic e trascinare per spostare i pixel selezionati"
 
-#: ../app/tools/gimpselectiontool.c:308
+#: ../app/tools/gimpselectiontool.c:314
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Fare clic e trascinare per spostare una copia dei pixel selezionati"
 
-#: ../app/tools/gimpselectiontool.c:312
+#: ../app/tools/gimpselectiontool.c:318
 msgid "Click to anchor the floating selection"
 msgstr "Fare clic per àncorare la selezione fluttuante"
+
+#: ../app/tools/gimpselectiontool.c:421
+#, c-format
+msgid "Cannot subtract from an empty selection."
+msgstr "Impossibile sottrarre da una selezione vuota."
+
+#: ../app/tools/gimpselectiontool.c:432
+#, c-format
+msgid "Cannot intersect with an empty selection."
+msgstr "Impossibile intersecare con una selezione vuota."
 
 #: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:445
 #: ../app/tools/gimptransformgridoptions.c:454
@@ -22932,43 +23053,43 @@ msgstr "Rettangolo:"
 msgid "Language:"
 msgstr "Lingua:"
 
-#: ../app/tools/gimptexttool.c:212
+#: ../app/tools/gimptexttool.c:214
 msgid "Text"
 msgstr "Testo"
 
-#: ../app/tools/gimptexttool.c:213
+#: ../app/tools/gimptexttool.c:215
 msgid "Text Tool: Create or edit text layers"
 msgstr "Strumento testo: crea o modifica livelli di testo"
 
-#: ../app/tools/gimptexttool.c:214
+#: ../app/tools/gimptexttool.c:216
 msgid "Te_xt"
 msgstr "_Testo"
 
-#: ../app/tools/gimptexttool.c:1037
+#: ../app/tools/gimptexttool.c:1039
 msgid "Fonts are still loading"
 msgstr "I font sono ancora in fase di caricamento"
 
-#: ../app/tools/gimptexttool.c:1048
+#: ../app/tools/gimptexttool.c:1050
 msgid "Text box: "
 msgstr "Riquadro di testo: "
 
-#: ../app/tools/gimptexttool.c:1181
+#: ../app/tools/gimptexttool.c:1183
 msgid "Reshape Text Layer"
 msgstr "Risagoma il livello di testo"
 
-#: ../app/tools/gimptexttool.c:1710 ../app/tools/gimptexttool.c:1713
+#: ../app/tools/gimptexttool.c:1712 ../app/tools/gimptexttool.c:1715
 msgid "Confirm Text Editing"
 msgstr "Conferma modifica del testo"
 
-#: ../app/tools/gimptexttool.c:1717
+#: ../app/tools/gimptexttool.c:1719
 msgid "Create _New Layer"
 msgstr "Crea un _nuovo livello"
 
-#: ../app/tools/gimptexttool.c:1719
+#: ../app/tools/gimptexttool.c:1721
 msgid "_Edit"
 msgstr "_Modifica"
 
-#: ../app/tools/gimptexttool.c:1741
+#: ../app/tools/gimptexttool.c:1743
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -24371,241 +24492,303 @@ msgstr "GIMP ha riscontrato diversi errori critici!"
 msgid "_Restart GIMP"
 msgstr "_Riavvia GIMP"
 
-#: ../app/widgets/gimpdashboard.c:396 ../app/widgets/gimpdashboard.c:448
+#: ../app/widgets/gimpdashboard.c:451 ../app/widgets/gimpdashboard.c:503
 msgctxt "dashboard-variable"
 msgid "Occupied"
-msgstr "Occupato"
+msgstr "Occupata"
 
-#: ../app/widgets/gimpdashboard.c:397
+#: ../app/widgets/gimpdashboard.c:452
 msgid "Tile cache occupied size"
 msgstr "Dimensione cache riquadri occupata"
 
-#: ../app/widgets/gimpdashboard.c:406
+#: ../app/widgets/gimpdashboard.c:461
 msgctxt "dashboard-variable"
 msgid "Maximum"
-msgstr "Massimo"
+msgstr "Massima"
 
-#: ../app/widgets/gimpdashboard.c:407
+#: ../app/widgets/gimpdashboard.c:462
 msgid "Maximal tile cache occupied size"
 msgstr "Dimensione massima cache riquadri occupata"
 
-#: ../app/widgets/gimpdashboard.c:416 ../app/widgets/gimpdashboard.c:468
+#: ../app/widgets/gimpdashboard.c:471 ../app/widgets/gimpdashboard.c:523
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Limite"
 
-#: ../app/widgets/gimpdashboard.c:417
+#: ../app/widgets/gimpdashboard.c:472
 msgid "Tile cache size limit"
 msgstr "Limite dimensione cache riquadri"
 
-#: ../app/widgets/gimpdashboard.c:425
+#: ../app/widgets/gimpdashboard.c:480 ../app/widgets/gimpdashboard.c:606
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Compressione"
 
-#: ../app/widgets/gimpdashboard.c:426
+#: ../app/widgets/gimpdashboard.c:481
 msgid "Tile cache compression ratio"
 msgstr "Rapporto di compressione cache riquadri"
 
-#: ../app/widgets/gimpdashboard.c:435
+#: ../app/widgets/gimpdashboard.c:490
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Hit/Miss"
 
-#: ../app/widgets/gimpdashboard.c:436
+#: ../app/widgets/gimpdashboard.c:491
 msgid "Tile cache hit/miss ratio"
 msgstr "Rapporto hit/miss cache riquadri"
 
-#: ../app/widgets/gimpdashboard.c:449
+#: ../app/widgets/gimpdashboard.c:504
 msgid "Swap file occupied size"
 msgstr "Dimensione occupazione file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:458 ../app/widgets/gimpdashboard.c:576
+#: ../app/widgets/gimpdashboard.c:513 ../app/widgets/gimpdashboard.c:670
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../app/widgets/gimpdashboard.c:459
+#: ../app/widgets/gimpdashboard.c:514
 msgid "Swap file size"
 msgstr "Dimensione file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:469
+#: ../app/widgets/gimpdashboard.c:524
 msgid "Swap file size limit"
 msgstr "Limite dimensione file di scambio"
+
+#: ../app/widgets/gimpdashboard.c:531
+msgctxt "dashboard-variable"
+msgid "Queued"
+msgstr "In coda"
+
+#: ../app/widgets/gimpdashboard.c:532
+msgid "Size of data queued for writing to the swap"
+msgstr "Totale dati in coda per la scrittura sul file di scambio"
+
+#: ../app/widgets/gimpdashboard.c:541
+msgctxt "dashboard-variable"
+msgid "Queue stalls"
+msgstr "Stalli in coda"
+
+#: ../app/widgets/gimpdashboard.c:542
+msgid ""
+"Number of times the writing to the swap has been stalled, due to a full queue"
+msgstr ""
+"Numero di volte che la scrittura sul file di scambio si è stallata, a causa "
+"della coda piena"
+
+#: ../app/widgets/gimpdashboard.c:551
+msgctxt "dashboard-variable"
+msgid "Queue full"
+msgstr "Coda piena"
+
+#: ../app/widgets/gimpdashboard.c:552
+msgid "Whether the swap queue is full"
+msgstr "Se la coda di scambio è piena"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:479
+#: ../app/widgets/gimpdashboard.c:563
 msgctxt "dashboard-variable"
 msgid "Read"
-msgstr "Leggi"
+msgstr "Lettura"
 
-#: ../app/widgets/gimpdashboard.c:480
+#: ../app/widgets/gimpdashboard.c:564
 msgid "Total amount of data read from the swap"
 msgstr "Totale dati letti dal file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:489
+#: ../app/widgets/gimpdashboard.c:573
 msgctxt "dashboard-variable"
-msgid "Reading"
-msgstr "Lettura"
+msgid "Read throughput"
+msgstr "Volume di lettura"
 
-#: ../app/widgets/gimpdashboard.c:490
-msgid "Whether data is being read from the swap"
-msgstr "Se i dati vengono letti dal file di scambio"
+#: ../app/widgets/gimpdashboard.c:574
+msgid "The rate at which data is read from the swap"
+msgstr "La velocità con cui i dati vengono letti dal file di scambio"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:502
+#: ../app/widgets/gimpdashboard.c:586
 msgctxt "dashboard-variable"
 msgid "Written"
-msgstr "Scritto"
+msgstr "Scrittura"
 
-#: ../app/widgets/gimpdashboard.c:503
+#: ../app/widgets/gimpdashboard.c:587
 msgid "Total amount of data written to the swap"
 msgstr "Totale dati scritti sul file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:512
+#: ../app/widgets/gimpdashboard.c:596
 msgctxt "dashboard-variable"
-msgid "Writing"
-msgstr "Scrittura"
+msgid "Write throughput"
+msgstr "Volume di scrittura"
 
-#: ../app/widgets/gimpdashboard.c:513
-msgid "Whether data is being written to the swap"
-msgstr "Se i dati vengono scritti sul file di scambio"
+#: ../app/widgets/gimpdashboard.c:597
+msgid "The rate at which data is written to the swap"
+msgstr "La velocità con cui i dati vengono scritti sul file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:526
+#: ../app/widgets/gimpdashboard.c:607
+msgid "Swap compression ratio"
+msgstr "Rapporto di compressione file di scambio"
+
+#: ../app/widgets/gimpdashboard.c:620
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Uso"
 
-#: ../app/widgets/gimpdashboard.c:527
+#: ../app/widgets/gimpdashboard.c:621
 msgid "Total CPU usage"
 msgstr "Uso totale CPU"
 
-#: ../app/widgets/gimpdashboard.c:535 ../app/widgets/gimpdashboard.c:544
+#: ../app/widgets/gimpdashboard.c:629 ../app/widgets/gimpdashboard.c:638
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Attiva"
 
-#: ../app/widgets/gimpdashboard.c:536
+#: ../app/widgets/gimpdashboard.c:630
 msgid "Whether the CPU is active"
 msgstr "Se la CPU è attiva"
 
-#: ../app/widgets/gimpdashboard.c:545
+#: ../app/widgets/gimpdashboard.c:639
 msgid "Total amount of time the CPU has been active"
 msgstr "Quantità totale di tempo durante il quale la CPU è stata attiva"
 
-#: ../app/widgets/gimpdashboard.c:558
+#: ../app/widgets/gimpdashboard.c:652
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Usata"
 
-#: ../app/widgets/gimpdashboard.c:559
+#: ../app/widgets/gimpdashboard.c:653
 msgid "Amount of memory used by the process"
 msgstr "Memoria usata dal processo"
 
-#: ../app/widgets/gimpdashboard.c:567
+#: ../app/widgets/gimpdashboard.c:661
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Disponibile"
 
-#: ../app/widgets/gimpdashboard.c:568
+#: ../app/widgets/gimpdashboard.c:662
 msgid "Amount of available physical memory"
 msgstr "Quantità di memoria fisica disponibile"
 
-#: ../app/widgets/gimpdashboard.c:577
+#: ../app/widgets/gimpdashboard.c:671
 msgid "Physical memory size"
 msgstr "Dimensione fisica della memoria"
 
-#: ../app/widgets/gimpdashboard.c:588
+#: ../app/widgets/gimpdashboard.c:682
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mipmap"
 
-#: ../app/widgets/gimpdashboard.c:589
+#: ../app/widgets/gimpdashboard.c:683
 msgid "Total size of processed mipmapped data"
 msgstr "Dimensione totale dei dati mipmap elaborati"
 
-#: ../app/widgets/gimpdashboard.c:597
+#: ../app/widgets/gimpdashboard.c:691
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Asinc"
 
-#: ../app/widgets/gimpdashboard.c:598
+#: ../app/widgets/gimpdashboard.c:692
 msgid "Number of ongoing asynchronous operations"
 msgstr "Numero di operazioni asincrone in corso"
 
-#: ../app/widgets/gimpdashboard.c:610
+#: ../app/widgets/gimpdashboard.c:704
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Cache"
 
-#: ../app/widgets/gimpdashboard.c:611
+#: ../app/widgets/gimpdashboard.c:705
 msgid "In-memory tile cache"
 msgstr "Cache riquadri in memoria"
 
-#: ../app/widgets/gimpdashboard.c:647
+#: ../app/widgets/gimpdashboard.c:741
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Scambio"
 
-#: ../app/widgets/gimpdashboard.c:648
+#: ../app/widgets/gimpdashboard.c:742
 msgid "On-disk tile swap"
 msgstr "Scambio riquadri su disco"
 
-#: ../app/widgets/gimpdashboard.c:699
+#: ../app/widgets/gimpdashboard.c:806
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "CPU"
 
-#: ../app/widgets/gimpdashboard.c:700
+#: ../app/widgets/gimpdashboard.c:807
 msgid "CPU usage"
 msgstr "Uso CPU"
 
-#: ../app/widgets/gimpdashboard.c:735
+#: ../app/widgets/gimpdashboard.c:842
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Memoria"
 
-#: ../app/widgets/gimpdashboard.c:736
+#: ../app/widgets/gimpdashboard.c:843
 msgid "Memory usage"
 msgstr "Uso memoria"
 
-#: ../app/widgets/gimpdashboard.c:744
+#: ../app/widgets/gimpdashboard.c:851
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Cache"
 
-#: ../app/widgets/gimpdashboard.c:774
+#: ../app/widgets/gimpdashboard.c:881
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Varie"
 
-#: ../app/widgets/gimpdashboard.c:775
+#: ../app/widgets/gimpdashboard.c:882
 msgid "Miscellaneous information"
 msgstr "Informazioni varie"
 
-#: ../app/widgets/gimpdashboard.c:956
+#: ../app/widgets/gimpdashboard.c:1063
 msgid "Select fields"
 msgstr "Seleziona campi"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:2898
+#: ../app/widgets/gimpdashboard.c:3151
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "n/d"
 
-#: ../app/widgets/gimpdashboard.c:2907
+#: ../app/widgets/gimpdashboard.c:3160 ../app/widgets/gimpdashboard.c:4046
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Sì"
 
-#: ../app/widgets/gimpdashboard.c:2908
+#: ../app/widgets/gimpdashboard.c:3161 ../app/widgets/gimpdashboard.c:4047
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "No"
+
+#. Translators:  This string reports the rate of change of a measured
+#. * value.  The "%g" is replaced by a certain quantity, and the "/s"
+#. * is an abbreviation for "per second".
+#.
+#: ../app/widgets/gimpdashboard.c:3245
+#, c-format
+msgid "%g/s"
+msgstr "%g/s"
+
+#. Translators:  This string reports the rate of change of a measured value.
+#. * The first "%s" is replaced by a certain quantity, usually followed by a
+#. * unit of measurement (e.g., "10 bytes"). and the final "/s" is an
+#. * abbreviation for "per second" (so the full string would read
+#. * "10 bytes/s", that is, "10 bytes per second".
+#.
+#: ../app/widgets/gimpdashboard.c:4036
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
+
+#: ../app/widgets/gimpdashboard.c:4114
+msgid "N/A"
+msgstr "n/d"
+
+#: ../app/widgets/gimpdashboard.c:4337
+msgid "Resolving symbol information..."
+msgstr "Risoluzione informazioni simboliche..."
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
@@ -24849,11 +25032,11 @@ msgstr "Mostra tutti i file"
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
 
-#: ../app/widgets/gimpfileprocview.c:199
+#: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
 msgstr "Tipo di file"
 
-#: ../app/widgets/gimpfileprocview.c:211
+#: ../app/widgets/gimpfileprocview.c:212
 msgid "Extensions"
 msgstr "Estensioni"
 
@@ -25222,7 +25405,7 @@ msgstr "Lingua di sistema"
 msgid "Switch to another group of modes"
 msgstr "Passa ad un altro gruppo di modalità"
 
-#: ../app/widgets/gimplayertreeview.c:319
+#: ../app/widgets/gimplayertreeview.c:315
 msgid "Lock alpha channel"
 msgstr "Blocca canale alfa"
 
@@ -25311,7 +25494,7 @@ msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr ""
 "I metadati non saranno visibili nelle versioni di GIMP inferiori alla 2.10."
 
-#: ../app/widgets/gimpsavedialog.c:343
+#: ../app/widgets/gimpsavedialog.c:344
 msgid "Save this XCF file with better but slower compression"
 msgstr "Salva questo file XCF con la migliore ma più lenta compressione"
 
@@ -25761,22 +25944,22 @@ msgstr "%s (provare %s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (provare %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1738
+#: ../app/widgets/gimpwidgets-utils.c:1753
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Scala di grigi incorporata (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1745
+#: ../app/widgets/gimpwidgets-utils.c:1760
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "RGB incorporato (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1762
+#: ../app/widgets/gimpwidgets-utils.c:1777
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Scala di grigi preferita (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1769
+#: ../app/widgets/gimpwidgets-utils.c:1784
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "RGB preferito (%s)"
@@ -26007,47 +26190,3 @@ msgstr "tondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "frastagliata"
-
-#~ msgctxt "text-editor-action"
-#~ msgid "Characters are from top to bottom, Lines are from right to left"
-#~ msgstr "I caratteri sono dall'alto in basso, le righe da destra a sinistra"
-
-#~ msgctxt "text-editor-action"
-#~ msgid ""
-#~ "Upright characters are from top to bottom, Lines are from right to left"
-#~ msgstr ""
-#~ "I caratteri in verticale vanno dall'alto in basso, le righe da destra a "
-#~ "sinistra"
-
-#~ msgctxt "text-editor-action"
-#~ msgid "Characters are from top to bottom, Lines are from left to right"
-#~ msgstr "I caratteri vanno dall'alto in basso, le righe da sinistra a destra"
-
-#~ msgctxt "text-editor-action"
-#~ msgid ""
-#~ "Upright characters are from top to bottom, Lines are from left to right"
-#~ msgstr ""
-#~ "I caratteri in verticale vanno dall'alto in basso, le righe da sinistra a "
-#~ "destra"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Characters are from top to bottom, Lines are from right to left"
-#~ msgstr "I caratteri vanno dall'alto in basso, le righe da destra a sinistra"
-
-#~ msgctxt "text-tool-action"
-#~ msgid ""
-#~ "Upright characters are from top to bottom, Lines are from right to left"
-#~ msgstr ""
-#~ "I caratteri in verticale e vanno dall'alto in basso, le righe da destra a "
-#~ "sinistra"
-
-#~ msgctxt "text-tool-action"
-#~ msgid "Characters are from top to bottom, Lines are from left to right"
-#~ msgstr "I caratteri vanno dall'alto in basso, le righe da sinistra a destra"
-
-#~ msgctxt "text-tool-action"
-#~ msgid ""
-#~ "Upright characters are from top to bottom, Lines are from left to right"
-#~ msgstr ""
-#~ "I caratteri in verticale e vanno dall'alto in basso, le righe da sinistra "
-#~ "a destra"

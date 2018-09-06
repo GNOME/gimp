@@ -31,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-02 17:35+0200\n"
-"PO-Revision-Date: 2018-08-02 17:39+0200\n"
+"POT-Creation-Date: 2018-09-06 15:25+0200\n"
+"PO-Revision-Date: 2018-09-06 15:29+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -1371,23 +1371,23 @@ msgstr "Da destra a sinistra"
 
 #: ../libgimpbase/gimpbaseenums.c:1785
 msgctxt "text-direction"
-msgid "Vertical lines from right to left (mixed orientation)"
-msgstr "Righe verticali da destra a sinistra (orientamento misto)"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Verticale, da destra a sinistra (orientamento misto)"
 
 #: ../libgimpbase/gimpbaseenums.c:1786
 msgctxt "text-direction"
-msgid "Vertical lines from right to left (upright characters)"
-msgstr "Righe verticali da destra a sinistra (caratteri verticali)"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Verticale, da destra a sinistra (orientamento verticale)"
 
 #: ../libgimpbase/gimpbaseenums.c:1787
 msgctxt "text-direction"
-msgid "Vertical lines from left to right (mixed orientation)"
-msgstr "Righe verticali da sinistra a destra (orientamento misto)"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Verticale, da sinistra a destra (orientamento misto)"
 
 #: ../libgimpbase/gimpbaseenums.c:1788
 msgctxt "text-direction"
-msgid "Vertical lines from left to right (upright characters)"
-msgstr "Righe verticali da sinistra a destra (caratteri verticali)"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Verticale, da sinistra a destra (orientamento verticale)"
 
 #: ../libgimpbase/gimpbaseenums.c:1819
 msgctxt "text-hint-style"
@@ -1509,32 +1509,32 @@ msgstr "Fallita l'analisi dei dati IPTC."
 msgid "Parsing XMP data failed."
 msgstr "Fallita l'analisi dei dati XMP."
 
-#: ../libgimpbase/gimputils.c:227 ../libgimpbase/gimputils.c:232
+#: ../libgimpbase/gimputils.c:225 ../libgimpbase/gimputils.c:230
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
-#: ../libgimpbase/gimputils.c:402
+#: ../libgimpbase/gimputils.c:400
 msgid "File path is NULL"
 msgstr "Il percorso file è NULL"
 
-#: ../libgimpbase/gimputils.c:411 ../libgimpbase/gimputils.c:422
+#: ../libgimpbase/gimputils.c:409 ../libgimpbase/gimputils.c:420
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Errore durante la conversione di un nome file UTF-8 in wide char"
 
-#: ../libgimpbase/gimputils.c:430
+#: ../libgimpbase/gimputils.c:428
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() è fallita"
 
-#: ../libgimpbase/gimputils.c:467
+#: ../libgimpbase/gimputils.c:465
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Impossibile convertire \"%s\" in un valido NSURL."
 
-#: ../libgimpbase/gimputils.c:495
+#: ../libgimpbase/gimputils.c:493
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Connessione a org.freedesktop.FileManager1 fallita: "
 
-#: ../libgimpbase/gimputils.c:519
+#: ../libgimpbase/gimputils.c:517
 msgid "Calling ShowItems failed: "
 msgstr "Chiamata a ShowItems fallita: "
 
