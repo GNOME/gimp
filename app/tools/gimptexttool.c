@@ -2285,7 +2285,7 @@ gimp_text_tool_create_vectors_warped (GimpTextTool *text_tool)
   gdouble            box_width;
   gdouble            box_height;
   GimpTextDirection  dir;
-  gdouble            offset;
+  gdouble            offset = 0.0;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
