@@ -62,7 +62,7 @@ struct _GimpTextTool
   gboolean        text_box_fixed;
 
   GimpTextLayout *layout;
-  gboolean        drawing_blocked;
+  gint            drawing_blocked;
 
   GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
@@ -125,7 +125,7 @@ GimpTextDirection
 /*  only for the text editor  */
 void       gimp_text_tool_clear_layout           (GimpTextTool *text_tool);
 gboolean   gimp_text_tool_ensure_layout          (GimpTextTool *text_tool);
-gboolean   gimp_text_tool_apply                  (GimpTextTool *text_tool,
+void       gimp_text_tool_apply                  (GimpTextTool *text_tool,
                                                   gboolean      push_undo);
 
 

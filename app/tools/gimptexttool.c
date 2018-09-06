@@ -1330,9 +1330,15 @@ gimp_text_tool_layer_notify (GimpTextLayer    *layer,
 }
 
 static gboolean
-gimp_text_tool_apply_idle (gpointer text_tool)
+gimp_text_tool_apply_idle (GimpTextTool *text_tool)
 {
-  return gimp_text_tool_apply (text_tool, TRUE);
+  text_tool->idle_id = 0;
+
+  gimp_text_tool_apply (text_tool, TRUE);
+
+  gimp_text_tool_unblock_drawing (text_tool);
+
+  return G_SOURCE_REMOVE;
 }
 
 static void
@@ -1366,6 +1372,7 @@ gimp_text_tool_proxy_notify (GimpText         *text,
             {
               gimp_text_tool_block_drawing (text_tool);
               gimp_text_tool_apply (text_tool, TRUE);
+              gimp_text_tool_unblock_drawing (text_tool);
             }
 
           gimp_text_tool_block_drawing (text_tool);
@@ -1386,18 +1393,19 @@ gimp_text_tool_proxy_notify (GimpText         *text,
            * including undo
            */
 
-          gimp_text_tool_block_drawing (text_tool);
-
           text_tool->pending = g_list_append (text_tool->pending,
                                               (gpointer) pspec);
 
-          if (text_tool->idle_id)
-            g_source_remove (text_tool->idle_id);
+          if (! text_tool->idle_id)
+            {
+              gimp_text_tool_block_drawing (text_tool);
 
-          text_tool->idle_id =
-            g_idle_add_full (G_PRIORITY_LOW,
-                             gimp_text_tool_apply_idle, text_tool,
-                             NULL);
+              text_tool->idle_id =
+                g_idle_add_full (G_PRIORITY_LOW,
+                                 (GSourceFunc) gimp_text_tool_apply_idle,
+                                 text_tool,
+                                 NULL);
+            }
         }
     }
 }
@@ -1461,12 +1469,16 @@ gimp_text_tool_text_notify (GimpText         *text,
                                          gimp_text_tool_buffer_begin_edit,
                                          text_tool);
     }
+
+  gimp_text_tool_unblock_drawing (text_tool);
 }
 
 static void
 gimp_text_tool_text_changed (GimpText     *text,
                              GimpTextTool *text_tool)
 {
+  gimp_text_tool_block_drawing (text_tool);
+
   /* we need to redraw the rectangle in any case because whatever
    * changes to the text can change its size
    */
@@ -1645,8 +1657,6 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
   else
     {
       gimp_text_tool_frame_item (text_tool);
-
-      gimp_text_tool_unblock_drawing (text_tool);
     }
 
   gimp_image_undo_group_end (image);
@@ -1654,6 +1664,8 @@ gimp_text_tool_create_layer (GimpTextTool *text_tool,
   gimp_image_flush (image);
 
   gimp_text_tool_set_drawable (text_tool, GIMP_DRAWABLE (layer), FALSE);
+
+  gimp_text_tool_unblock_drawing (text_tool);
 }
 
 #define  RESPONSE_NEW 1
@@ -1880,24 +1892,25 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
 static void
 gimp_text_tool_block_drawing (GimpTextTool *text_tool)
 {
-  if (! text_tool->drawing_blocked)
+  if (text_tool->drawing_blocked == 0)
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (text_tool));
 
       gimp_text_tool_clear_layout (text_tool);
-
-      text_tool->drawing_blocked = TRUE;
     }
+
+  text_tool->drawing_blocked++;
 }
 
 static void
 gimp_text_tool_unblock_drawing (GimpTextTool *text_tool)
 {
-  g_return_if_fail (text_tool->drawing_blocked == TRUE);
+  g_return_if_fail (text_tool->drawing_blocked > 0);
 
-  text_tool->drawing_blocked = FALSE;
+  text_tool->drawing_blocked--;
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
+  if (text_tool->drawing_blocked == 0)
+    gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
 
 static void
@@ -1938,6 +1951,8 @@ gimp_text_tool_buffer_end_edit (GimpTextBuffer *buffer,
     {
       gimp_text_tool_create_layer (text_tool, NULL);
     }
+
+  gimp_text_tool_unblock_drawing (text_tool);
 }
 
 static void
@@ -1982,7 +1997,7 @@ gimp_text_tool_ensure_layout (GimpTextTool *text_tool)
   return text_tool->layout != NULL;
 }
 
-gboolean
+void
 gimp_text_tool_apply (GimpTextTool *text_tool,
                       gboolean      push_undo)
 {
@@ -1996,15 +2011,17 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
     {
       g_source_remove (text_tool->idle_id);
       text_tool->idle_id = 0;
+
+      gimp_text_tool_unblock_drawing (text_tool);
     }
 
-  g_return_val_if_fail (text_tool->text != NULL, FALSE);
-  g_return_val_if_fail (text_tool->layer != NULL, FALSE);
+  g_return_if_fail (text_tool->text != NULL);
+  g_return_if_fail (text_tool->layer != NULL);
 
   layer = text_tool->layer;
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  g_return_val_if_fail (layer->text == text_tool->text, FALSE);
+  g_return_if_fail (layer->text == text_tool->text);
 
   /*  Walk over the list of changes and figure out if we are changing
    *  a single property or need to push a full text undo.
@@ -2083,10 +2100,6 @@ gimp_text_tool_apply (GimpTextTool *text_tool,
   gimp_text_tool_frame_item (text_tool);
 
   gimp_image_flush (image);
-
-  gimp_text_tool_unblock_drawing (text_tool);
-
-  return FALSE;
 }
 
 gboolean
