@@ -1148,9 +1148,7 @@ gimp_text_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
                     "y2", &y2,
                     NULL);
 
-      if (x1        != gimp_item_get_offset_x (item) ||
-          y1        != gimp_item_get_offset_y (item) ||
-          (x2 - x1) != gimp_item_get_width  (item)   ||
+      if ((x2 - x1) != gimp_item_get_width  (item) ||
           (y2 - y1) != gimp_item_get_height (item))
         {
           GimpUnit  box_unit = text_tool->proxy->box_unit;
@@ -1190,14 +1188,34 @@ gimp_text_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
                                    (gpointer) item);
             }
 
+          gimp_text_tool_block_drawing (text_tool);
+
           gimp_item_translate (item,
                                x1 - gimp_item_get_offset_x (item),
                                y1 - gimp_item_get_offset_y (item),
                                push_undo);
           gimp_text_tool_apply (text_tool, push_undo);
 
+          gimp_text_tool_unblock_drawing (text_tool);
+
           if (push_undo)
             gimp_image_undo_group_end (text_tool->image);
+        }
+      else if (x1 != gimp_item_get_offset_x (item) ||
+               y1 != gimp_item_get_offset_y (item))
+        {
+          gimp_text_tool_block_drawing (text_tool);
+
+          gimp_text_tool_apply (text_tool, TRUE);
+
+          gimp_item_translate (item,
+                               x1 - gimp_item_get_offset_x (item),
+                               y1 - gimp_item_get_offset_y (item),
+                               TRUE);
+
+          gimp_text_tool_unblock_drawing (text_tool);
+
+          gimp_image_flush (text_tool->image);
         }
     }
 }
