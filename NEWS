@@ -8,6 +8,63 @@ we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
 
+Overview of Changes from GIMP 2.10.6 to GIMP 2.10.8
+===================================================
+
+Core:
+
+  - Use adaptive chunk size in GimpProjection when rendering the
+    projection asynchronously, rather than using a fixed chunk size.
+    This provides a better trade-off between throughput and
+    responsiveness dynamically, based on how fast the processing is.
+
+Tools:
+
+  - In all selection tools, show error on attempt to
+    subtract-from/intersect-with empty selection.
+  - Fix text along path not working with vertical text.
+  - Fix Text tool's frame position when undoing a move operation.
+  - Streamline Text tool's drawing blocking/unblocking logic.
+  - When moving a text layer using the text tool (through alt+drag),
+    don't change the layer's box mode to "fixed", which is unnecessary,
+    since the layer's size isn't affected.
+
+CLI:
+
+  - New self-explanatory --enable-win32-debug-console CLI option
+
+
+Debugging:
+
+  - New GimpBacktrace API provides an interface for creating and
+    traversing multi-threaded backtraces, as well as querying symbol
+    information. Backends are available for Linux and Windows.
+  - Performance log recording now available in the Dashboard dock.
+    The log contains a series of samples of the dashboard variables,
+    as well as the full program backtrace, when available. As such,
+    it essentially acts as a built-in profiler, which allows us to
+    correlate program execution with the information available
+    through the dashboard.
+  - New performance-log-expand.py tool decodes a delta-encoded
+    performance log by expanding the deltas, producing a log where
+    each sample (and other relevant elements) contain complete
+    information. The structure of expanded logs is identical to that
+    of delta-encoded logs, the expanded log simply has no deltas.
+  - New performance-log-resolve.py tool resolves symbol information
+    in backtraces. The logs produced by GIMP only specify the program
+    counter at each stack frame, providing an address-map to map
+    program-counter addresses to actual symbols separately. This tool
+    looks up each program-counter address in the address map,
+    incorporating the relevant symbol information directly into the
+    backtrace.
+
+
+Translations:
+
+  - Updated translations: Finnish, German, Hungarian, Italian, Polish,
+    Portuguese (Brazil), Spanish.
+
+
 Overview of Changes from GIMP 2.10.4 to GIMP 2.10.6
 ===================================================
 
