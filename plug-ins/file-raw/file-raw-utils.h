@@ -27,6 +27,7 @@ gchar * file_raw_get_executable_path (const gchar *main_executable,
                                       const gchar *env_variable,
                                       const gchar *mac_bundle_id,
                                       const gchar *win32_registry_key_base,
+                                      gboolean     win32_use_hkcu,
                                       gboolean    *search_path);
 
 
