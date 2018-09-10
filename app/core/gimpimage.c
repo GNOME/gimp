@@ -2507,7 +2507,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
 
   /* need version 8 for zlib compression */
   if (zlib_compression)
-    version = MAX (8, version);
+    {
+      ADD_REASON (g_strdup_printf (_("Internal zlib compression was "
+                                     "added in %s"), "GIMP 2.10"));
+      version = MAX (8, version);
+    }
 
   /* if version is 10 (lots of new layer modes), go to version 11 with
    * 64 bit offsets right away
