@@ -28,6 +28,7 @@
 #include <lcms2.h>
 
 #include <gio/gio.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -488,7 +489,7 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
       iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
                                        priv->src_format,
                                        GEGL_ACCESS_READ,
-                                       GEGL_ABYSS_NONE);
+                                       GEGL_ABYSS_NONE, 2);
 
       gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
                                 priv->dest_format,
@@ -500,15 +501,15 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
           if (priv->transform)
             {
               cmsDoTransform (priv->transform,
-                              iter->data[0], iter->data[1], iter->length);
+                              iter->items[0].data, iter->items[1].data, iter->length);
             }
           else
             {
               babl_process (priv->fish,
-                            iter->data[0], iter->data[1], iter->length);
+                            iter->items[0].data, iter->items[1].data, iter->length);
             }
 
-          done_pixels += iter->roi[0].width * iter->roi[0].height;
+          done_pixels += iter->items[0].roi.width * iter->items[0].roi.height;
 
           g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
                          (gdouble) done_pixels /
@@ -520,22 +521,22 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
       iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
                                        priv->src_format,
                                        GEGL_ACCESS_READWRITE,
-                                       GEGL_ABYSS_NONE);
+                                       GEGL_ABYSS_NONE, 1);
 
       while (gegl_buffer_iterator_next (iter))
         {
           if (priv->transform)
             {
               cmsDoTransform (priv->transform,
-                              iter->data[0], iter->data[0], iter->length);
+                              iter->items[0].data, iter->items[0].data, iter->length);
             }
           else
             {
               babl_process (priv->fish,
-                            iter->data[0], iter->data[0], iter->length);
+                            iter->items[0].data, iter->items[0].data, iter->length);
             }
 
-          done_pixels += iter->roi[0].width * iter->roi[0].height;
+          done_pixels += iter->items[0].roi.width * iter->items[0].roi.height;
 
           g_signal_emit (transform, gimp_color_transform_signals[PROGRESS], 0,
                          (gdouble) done_pixels /
