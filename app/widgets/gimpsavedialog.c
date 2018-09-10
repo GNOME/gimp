@@ -57,8 +57,7 @@ static void     gimp_save_dialog_save_state        (GimpFileDialog      *dialog,
 static void     gimp_save_dialog_load_state        (GimpFileDialog      *dialog,
                                                     const gchar         *state_name);
 
-static void     gimp_save_dialog_add_compression_toggle
-                                                   (GimpSaveDialog      *dialog);
+static void     gimp_save_dialog_add_extra_widgets (GimpSaveDialog      *dialog);
 static void     gimp_save_dialog_compression_toggled
                                                    (GtkToggleButton     *button,
                                                     GimpSaveDialog      *dialog);
@@ -103,7 +102,7 @@ gimp_save_dialog_constructed (GObject *object)
    */
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_save_dialog_add_compression_toggle (dialog);
+  gimp_save_dialog_add_extra_widgets (dialog);
 }
 
 static void
@@ -160,6 +159,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
                             GimpObject     *display)
 {
   GimpFileDialog *file_dialog;
+  GtkWidget      *compression_toggle;
   GFile          *dir_file  = NULL;
   GFile          *name_file = NULL;
   GFile          *ext_file  = NULL;
@@ -167,10 +167,6 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   const gchar    *version_string;
   gint            rle_version;
   gint            zlib_version;
-  gchar          *rle_reason  = NULL;
-  gchar          *zlib_reason = NULL;
-  gchar          *compat_hint;
-  gchar          *compat_tooltip;
 
   g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -255,52 +251,35 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
     ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.xcf");
 
   gimp_image_get_xcf_version (image, FALSE, &rle_version,
-                              &version_string, &rle_reason);
+                              &version_string, NULL);
   gimp_image_get_xcf_version (image, TRUE,  &zlib_version,
-                              NULL, &zlib_reason);
+                              NULL, NULL);
+  if (rle_version != zlib_version)
+    {
+      GtkWidget *label;
+      gchar     *text;
 
-  if (rle_version == zlib_version)
-    {
-      compat_hint =
-        g_strdup_printf (_("The image uses features from %s, disabling "
-                           "compression won't make the XCF file "
-                           "readable by older GIMP versions."),
-                         version_string);
-      compat_tooltip = rle_reason;
-      g_free (zlib_reason);
-    }
-  else
-    {
-      compat_hint =
-        g_strdup_printf (_("Keep compression disabled to make the XCF "
-                           "file readable by %s and later."),
-                         version_string);
-      compat_tooltip = zlib_reason;
-      g_free (rle_reason);
+      text = g_strdup_printf (_("Keep compression disabled to make the XCF "
+                                "file readable by %s and later."),
+                              version_string);
+      label = gtk_label_new (text);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                                 -1);
+      gtk_container_add (GTK_CONTAINER (dialog->compression_frame),
+                         label);
+      gtk_widget_show (label);
+      g_free (text);
     }
 
-  if (gimp_image_get_metadata (image))
-    {
-      gchar *temp_hint;
-
-      temp_hint = g_strconcat (compat_hint, "\n",
-                               _("Metadata won't be visible in GIMP "
-                                 "older than version 2.10."), NULL);
-      g_free (compat_hint);
-      compat_hint = temp_hint;
-    }
-
-  gtk_label_set_text (GTK_LABEL (dialog->compat_info), compat_hint);
-  g_free (compat_hint);
-
-  gimp_help_set_help_data (dialog->compat_info, compat_tooltip, NULL);
-  g_free (compat_tooltip);
-
-  gtk_widget_show (dialog->compression_toggle);
-  gtk_widget_show (dialog->compat_info);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compression_toggle),
+  compression_toggle = gtk_frame_get_label_widget (GTK_FRAME (dialog->compression_frame));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (compression_toggle),
                                 gimp_image_get_xcf_compression (image));
+  /* Force a "toggled" signal since gtk_toggle_button_set_active() won't
+   * send it if the button status doesn't change.
+   */
+  gtk_toggle_button_toggled (GTK_TOGGLE_BUTTON (compression_toggle));
 
   if (ext_file)
     {
@@ -336,28 +315,42 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 /*  private functions  */
 
 static void
-gimp_save_dialog_add_compression_toggle (GimpSaveDialog *dialog)
+gimp_save_dialog_add_extra_widgets (GimpSaveDialog *dialog)
 {
-  GtkWidget *frame;
+  GtkWidget *label;
+  GtkWidget *reasons;
+  GtkWidget *compression_toggle;
 
-  dialog->compression_toggle =
+  /* Compression toggle. */
+  compression_toggle =
     gtk_check_button_new_with_label (_("Save this XCF file with better but slower compression"));
 
-  frame = gimp_frame_new (NULL);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), dialog->compression_toggle);
-  gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog), frame,
+  dialog->compression_frame = gimp_frame_new (NULL);
+  gtk_frame_set_label_widget (GTK_FRAME (dialog->compression_frame), compression_toggle);
+  gtk_widget_show (compression_toggle);
+  gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog), dialog->compression_frame,
                                      FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  gtk_widget_show (dialog->compression_frame);
 
   /* Additional information explaining file compatibility things */
-  dialog->compat_info = gtk_label_new ("");
-  gtk_label_set_xalign (GTK_LABEL (dialog->compat_info), 0.0);
-  gimp_label_set_attributes (GTK_LABEL (dialog->compat_info),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  gtk_container_add (GTK_CONTAINER (frame), dialog->compat_info);
+  dialog->compat_info = gtk_expander_new (NULL);
+  label = gtk_label_new ("");
+  gtk_expander_set_label_widget (GTK_EXPANDER (dialog->compat_info), label);
+  gtk_widget_show (label);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
 
-  g_signal_connect (dialog->compression_toggle, "toggled",
+  reasons = gtk_text_view_new ();
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (reasons), FALSE);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (reasons), FALSE);
+  gtk_container_add (GTK_CONTAINER (dialog->compat_info), reasons);
+  gtk_widget_show (reasons);
+
+  gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog),
+                                     dialog->compat_info,
+                                     FALSE, FALSE, 0);
+  gtk_widget_show (dialog->compat_info);
+
+  g_signal_connect (compression_toggle, "toggled",
                     G_CALLBACK (gimp_save_dialog_compression_toggled),
                     dialog);
 }
@@ -366,7 +359,64 @@ static void
 gimp_save_dialog_compression_toggled (GtkToggleButton *button,
                                       GimpSaveDialog  *dialog)
 {
+  const gchar    *version_string = NULL;
+  GimpFileDialog *file_dialog    = GIMP_FILE_DIALOG (dialog);
+  gchar          *compat_hint    = NULL;
+  gchar          *reason         = NULL;
+  GtkWidget      *widget;
+  GtkTextBuffer  *text_buffer;
+  gint            version;
+
+  if (! file_dialog->image)
+    return;
+
   dialog->compression = gtk_toggle_button_get_active (button);
+
+  if (dialog->compression)
+    gimp_image_get_xcf_version (file_dialog->image, TRUE,  &version,
+                                &version_string, &reason);
+  else
+    gimp_image_get_xcf_version (file_dialog->image, FALSE, &version,
+                                &version_string, &reason);
+
+  /* Only show compatibility information for GIMP over 2.6. The reason
+   * is mostly that we don't have details to make a compatibility list
+   * with this older version.
+   * It's anyway so prehistorical that we are not really caring about
+   * compatibility with older version.
+   */
+  if (version <= 206)
+    gtk_widget_hide (dialog->compat_info);
+  else
+    gtk_widget_show (dialog->compat_info);
+
+  /* Set the compatibility label. */
+  compat_hint =
+    g_strdup_printf (_("The image uses features from %s and "
+                       "won't be readable by older GIMP versions."),
+                     version_string);
+
+  if (gimp_image_get_metadata (file_dialog->image))
+    {
+      gchar *temp_hint;
+
+      temp_hint = g_strconcat (compat_hint, "\n",
+                               _("Metadata won't be visible in GIMP "
+                                 "older than version 2.10."), NULL);
+      g_free (compat_hint);
+      compat_hint = temp_hint;
+    }
+
+  widget = gtk_expander_get_label_widget (GTK_EXPANDER (dialog->compat_info));
+  gtk_label_set_text (GTK_LABEL (widget), compat_hint);
+  g_free (compat_hint);
+
+  /* Fill in the details (list of compatibility reasons). */
+  widget = gtk_bin_get_child (GTK_BIN (dialog->compat_info));
+  text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+  gtk_text_buffer_set_text (text_buffer, reason ? reason : "", -1);
+  if (reason)
+    g_free (reason);
 }
 
 static GimpSaveDialogState *

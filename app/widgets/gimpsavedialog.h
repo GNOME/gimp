@@ -43,7 +43,7 @@ struct _GimpSaveDialog
   gboolean             close_after_saving;
   GimpObject          *display_to_close;
 
-  GtkWidget           *compression_toggle;
+  GtkWidget           *compression_frame;
   GtkWidget           *compat_info;
   gboolean             compression;
 };
