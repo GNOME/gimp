@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -748,12 +749,12 @@ render_blob (GeglBuffer    *buffer,
   GeglRectangle      *roi;
 
   iter = gegl_buffer_iterator_new (buffer, rect, 0, babl_format ("Y float"),
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *d = iter->data[0];
+      gfloat *d = iter->items[0].data;
       gint    h = roi->height;
       gint    y;
 
