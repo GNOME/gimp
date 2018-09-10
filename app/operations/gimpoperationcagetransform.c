@@ -20,6 +20,7 @@
 #include "config.h"
 
 #include <cairo.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -234,7 +235,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
   /* pre-fill the out buffer with no-displacement coordinate */
   it      = gegl_buffer_iterator_new (out_buf, roi, 0, NULL,
-                                      GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                      GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
   cage_bb = gimp_cage_config_get_bounding_box (config);
 
   point = &(g_array_index (config->cage_points, GimpCagePoint, 0));
@@ -247,10 +248,10 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
     {
       /* iterate inside the roi */
       gint    n_pixels = it->length;
-      gfloat *output   = it->data[0];
+      gfloat *output   = it->items[0].data;
 
-      x = it->roi->x; /* initial x         */
-      y = it->roi->y; /* and y coordinates */
+      x = it->items[0].roi.x; /* initial x         */
+      y = it->items[0].roi.y; /* and y coordinates */
 
       while (n_pixels--)
         {
@@ -280,9 +281,9 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
           /* update x and y coordinates */
           x++;
-          if (x >= (it->roi->x + it->roi->width))
+          if (x >= (it->items[0].roi.x + it->items[0].roi.width))
             {
-              x = it->roi->x;
+              x = it->items[0].roi.x;
               y++;
             }
         }
