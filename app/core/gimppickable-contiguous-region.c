@@ -20,6 +20,7 @@
 #include <stdlib.h>
 
 #include <cairo.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -218,7 +219,7 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    NULL, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
   gegl_buffer_iterator_add (iter, mask_buffer,
                             NULL, 0, babl_format ("Y float"),
@@ -226,8 +227,8 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *src   = iter->data[0];
-      gfloat       *dest  = iter->data[1];
+      const gfloat *src   = iter->items[0].data;
+      gfloat       *dest  = iter->items[1].data;
       gint          count = iter->length;
 
       while (count--)
