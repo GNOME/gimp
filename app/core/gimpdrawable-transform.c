@@ -15,6 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define GEGL_ITERATOR2_API
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -271,33 +273,33 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
   dest_rect.height = new_height;
 
   iter = gegl_buffer_iterator_new (new_buffer, &dest_rect, 0, NULL,
-                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE, 1);
 
   switch (flip_type)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
       while (gegl_buffer_iterator_next (iter))
         {
-          gint stride = iter->roi[0].width * bpp;
+          gint stride = iter->items[0].roi.width * bpp;
 
-          src_rect = iter->roi[0];
+          src_rect = iter->items[0].roi;
 
           src_rect.x = (orig_x + orig_width)          -
-                       (iter->roi[0].x - dest_rect.x) -
-                       iter->roi[0].width;
+                       (iter->items[0].roi.x - dest_rect.x) -
+                       iter->items[0].roi.width;
 
-          gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, iter->data[0],
+          gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, iter->items[0].data,
                            stride, GEGL_ABYSS_NONE);
 
-          for (y = 0; y < iter->roi[0].height; y++)
+          for (y = 0; y < iter->items[0].roi.height; y++)
             {
-              guint8 *left  = iter->data[0];
-              guint8 *right = iter->data[0];
+              guint8 *left  = iter->items[0].data;
+              guint8 *right = iter->items[0].data;
 
               left  += y * stride;
-              right += y * stride + (iter->roi[0].width - 1) * bpp;
+              right += y * stride + (iter->items[0].roi.width - 1) * bpp;
 
-              for (x = 0; x < iter->roi[0].width / 2; x++)
+              for (x = 0; x < iter->items[0].roi.width / 2; x++)
                 {
                   guint8 temp[bpp];
 
@@ -315,26 +317,26 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
     case GIMP_ORIENTATION_VERTICAL:
       while (gegl_buffer_iterator_next (iter))
         {
-          gint stride = iter->roi[0].width * bpp;
+          gint stride = iter->items[0].roi.width * bpp;
 
-          src_rect = iter->roi[0];
+          src_rect = iter->items[0].roi;
 
           src_rect.y = (orig_y + orig_height)         -
-                       (iter->roi[0].y - dest_rect.y) -
-                       iter->roi[0].height;
+                       (iter->items[0].roi.y - dest_rect.y) -
+                       iter->items[0].roi.height;
 
-          gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, iter->data[0],
+          gegl_buffer_get (orig_buffer, &src_rect, 1.0, NULL, iter->items[0].data,
                            stride, GEGL_ABYSS_NONE);
 
-          for (x = 0; x < iter->roi[0].width; x++)
+          for (x = 0; x < iter->items[0].roi.width; x++)
             {
-              guint8 *top    = iter->data[0];
-              guint8 *bottom = iter->data[0];
+              guint8 *top    = iter->items[0].data;
+              guint8 *bottom = iter->items[0].data;
 
               top    += x * bpp;
-              bottom += x * bpp + (iter->roi[0].height - 1) * stride;
+              bottom += x * bpp + (iter->items[0].roi.height - 1) * stride;
 
-              for (y = 0; y < iter->roi[0].height / 2; y++)
+              for (y = 0; y < iter->items[0].roi.height / 2; y++)
                 {
                   guint8 temp[bpp];
 
