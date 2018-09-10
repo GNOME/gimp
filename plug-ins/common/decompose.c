@@ -25,7 +25,7 @@
  *  merged into the officical plug-in by Sven Neumann.
  */
 
-
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <string.h>
@@ -641,7 +641,7 @@ transfer_registration_color (GeglBuffer  *src,
   dst_bpp = babl_format_get_bytes_per_pixel (dst_format);
 
   gi = gegl_buffer_iterator_new (src, NULL, 0, NULL,
-                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 10);
 
   for (i = 0; i < count; i++)
     {
@@ -655,9 +655,9 @@ transfer_registration_color (GeglBuffer  *src,
       gpointer dst_data[MAX_EXTRACT_IMAGES];
       gint     j, k;
 
-      src_data = gi->data[0];
+      src_data = gi->items[0].data;
       for (j = 0; j < count; j++)
-        dst_data[j] = gi->data[j + 1];
+        dst_data[j] = gi->items[j + 1].data;
 
       for (k = 0; k < gi->length; k++)
         {
@@ -693,14 +693,14 @@ cpn_affine_transform_clamp (GeglBuffer *buffer,
   gegl_buffer_set_format (buffer, babl_format ("Y double"));
 
   gi = gegl_buffer_iterator_new (buffer, NULL, 0, NULL,
-                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (gi))
     {
       guint k;
       double *data;
 
-      data = (double*) gi->data[0];
+      data = (double*) gi->items[0].data;
 
       if (clamp)
         {
