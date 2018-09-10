@@ -18,6 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <cairo.h>
@@ -317,7 +318,7 @@ gimp_operation_buffer_source_validate_process (GeglOperation        *operation,
                                                                    rect.height),
                                                    level, NULL,
                                                    GEGL_BUFFER_READ,
-                                                   GEGL_ABYSS_NONE);
+                                                   GEGL_ABYSS_NONE, 1);
 
                   while (gegl_buffer_iterator_next (iter));
                 }
