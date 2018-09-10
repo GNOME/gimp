@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -193,11 +194,11 @@ cdisplay_gamma_convert_buffer (GimpColorDisplay *display,
 
   iter = gegl_buffer_iterator_new (buffer, area, 0,
                                    babl_format ("R'G'B'A float"),
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *data  = iter->data[0];
+      gfloat *data  = iter->items[0].data;
       gint    count = iter->length;
 
       while (count--)
