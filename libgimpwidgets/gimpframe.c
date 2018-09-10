@@ -168,8 +168,11 @@ gimp_frame_child_notify (GimpFrame *frame)
 {
   GtkWidget *child = gtk_bin_get_child (GTK_BIN (frame));
 
-  gtk_widget_set_margin_start (child, gimp_frame_get_indent (frame));
-  gtk_widget_set_margin_top (child, gimp_frame_get_label_spacing (frame));
+  if (child)
+    {
+      gtk_widget_set_margin_start (child, gimp_frame_get_indent (frame));
+      gtk_widget_set_margin_top (child, gimp_frame_get_label_spacing (frame));
+    }
 }
 
 static gint
