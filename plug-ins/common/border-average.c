@@ -17,6 +17,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <libgimp/gimp.h>
@@ -271,14 +272,14 @@ borderaverage (GeglBuffer   *buffer,
           GeglBufferIterator *gi;
 
           gi = gegl_buffer_iterator_new (buffer, &border[i], 0, babl_format ("R'G'B' u8"),
-                                         GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                         GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
           while (gegl_buffer_iterator_next (gi))
             {
               guint   k;
               guchar *data;
 
-              data = (guchar*) gi->data[0];
+              data = (guchar*) gi->items[0].data;
 
               for (k = 0; k < gi->length; k++)
                 {
