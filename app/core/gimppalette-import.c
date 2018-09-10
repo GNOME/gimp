@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <cairo.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -291,7 +292,7 @@ gimp_palette_import_extract (GimpImage     *image,
   format = babl_format ("R'G'B'A u8");
 
   iter = gegl_buffer_iterator_new (buffer, &rect, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
   bpp = babl_format_get_bytes_per_pixel (format);
 
   if (selection_only &&
@@ -307,18 +308,18 @@ gimp_palette_import_extract (GimpImage     *image,
 
       gegl_buffer_iterator_add (iter, buffer, &rect, 0, format,
                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-      mask_roi = &iter->roi[1];
+      mask_roi = &iter->items[1].roi;
       mask_bpp = babl_format_get_bytes_per_pixel (format);
     }
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data      = iter->data[0];
+      const guchar *data      = iter->items[0].data;
       const guchar *mask_data = NULL;
       gint          length    = iter->length;
 
       if (mask_roi)
-        mask_data = iter->data[1];
+        mask_data = iter->items[1].data;
 
       while (length--)
         {
