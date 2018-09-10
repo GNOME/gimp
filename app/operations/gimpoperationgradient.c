@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include <cairo.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -1130,15 +1131,15 @@ gimp_operation_gradient_process (GeglOperation       *operation,
 
       iter = gegl_buffer_iterator_new (output, result, 0,
                                        babl_format ("R'G'B'A float"),
-                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-      roi = &iter->roi[0];
+                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
+      roi = &iter->items[0].roi;
 
       if (self->dither)
         seed = g_rand_new ();
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *dest = iter->data[0];
+          gfloat *dest = iter->items[0].data;
           gint    endx = roi->x + roi->width;
           gint    endy = roi->y + roi->height;
           gint    x, y;
