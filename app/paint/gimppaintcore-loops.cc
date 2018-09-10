@@ -16,7 +16,7 @@
  */
 
 #include "config.h"
-
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -641,7 +641,7 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
     base_type::init_step (params, state, iter, roi, area);
 
     state->canvas_pixel =
-      (gfloat *) iter->data[base_type::canvas_buffer_iterator];
+      (gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -656,14 +656,14 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
     base_type::process_row (params, state, iter, roi, area, y);
 
     gint             mask_offset  = (y              - roi->y) * this->mask_stride +
-                                    (iter->roi[0].x - roi->x);
+                                    (iter->items[0].roi.x - roi->x);
     const mask_type *mask_pixel   = &this->mask_data[mask_offset];
     gint             paint_offset = (y              - roi->y) * this->paint_stride +
-                                    (iter->roi[0].x - roi->x) * 4;
+                                    (iter->items[0].roi.x - roi->x) * 4;
     gfloat          *paint_pixel  = &this->paint_data[paint_offset];
     gint             x;
 
-    for (x = 0; x < iter->roi[0].width; x++)
+    for (x = 0; x < iter->items[0].roi.width; x++)
       {
         if (base_type::stipple)
           {
@@ -738,7 +738,7 @@ struct CombinePaintMaskToCanvasMask :
     base_type::init_step (params, state, iter, roi, area);
 
     state->canvas_pixel =
-      (gfloat *) iter->data[base_type::canvas_buffer_iterator];
+      (gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -753,11 +753,11 @@ struct CombinePaintMaskToCanvasMask :
     base_type::process_row (params, state, iter, roi, area, y);
 
     gint             mask_offset = (y              - roi->y) * this->mask_stride +
-                                   (iter->roi[0].x - roi->x);
+                                   (iter->items[0].roi.x - roi->x);
     const mask_type *mask_pixel  = &this->mask_data[mask_offset];
     gint             x;
 
-    for (x = 0; x < iter->roi[0].width; x++)
+    for (x = 0; x < iter->items[0].roi.width; x++)
       {
         if (base_type::stipple)
           {
@@ -826,7 +826,7 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
     base_type::init_step (params, state, iter, roi, area);
 
     state->canvas_pixel =
-      (const gfloat *) iter->data[base_type::canvas_buffer_iterator];
+      (const gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -842,12 +842,12 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
 
     /* Copy the canvas buffer in rect to the paint buffer's alpha channel */
 
-    gint    paint_offset = (y              - roi->y) * this->paint_stride +
-                           (iter->roi[0].x - roi->x) * 4;
+    gint    paint_offset = (y                    - roi->y) * this->paint_stride +
+                           (iter->items[0].roi.x - roi->x) * 4;
     gfloat *paint_pixel  = &this->paint_data[paint_offset];
     gint    x;
 
-    for (x = 0; x < iter->roi[0].width; x++)
+    for (x = 0; x < iter->items[0].roi.width; x++)
       {
         paint_pixel[3] *= *state->canvas_pixel;
 
@@ -906,15 +906,15 @@ struct PaintMaskToPaintBuffer : Base
   {
     Base::process_row (params, state, iter, roi, area, y);
 
-    gint             paint_offset = (y              - roi->y) * this->paint_stride +
-                                    (iter->roi[0].x - roi->x) * 4;
+    gint             paint_offset = (y                    - roi->y) * this->paint_stride +
+                                    (iter->items[0].roi.x - roi->x) * 4;
     gfloat          *paint_pixel  = &this->paint_data[paint_offset];
-    gint             mask_offset  = (y              - roi->y) * this->mask_stride +
-                                    (iter->roi[0].x - roi->x);
+    gint             mask_offset  = (y                    - roi->y) * this->mask_stride +
+                                    (iter->items[0].roi.x - roi->x);
     const mask_type *mask_pixel   = &this->mask_data[mask_offset];
     gint             x;
 
-    for (x = 0; x < iter->roi[0].width; x++)
+    for (x = 0; x < iter->items[0].roi.width; x++)
       {
         paint_pixel[3] *= value_to_float (*mask_pixel) * params->paint_opacity;
 
@@ -1024,19 +1024,19 @@ struct DoLayerBlend : Base
   {
     Base::init_step (params, state, iter, roi, area);
 
-    state->out_pixel  = (gfloat *) iter->data[iterator_base + 0];
-    state->in_pixel   = (gfloat *) iter->data[iterator_base + 1];
+    state->out_pixel  = (gfloat *) iter->items[iterator_base + 0].data;
+    state->in_pixel   = (gfloat *) iter->items[iterator_base + 1].data;
     state->mask_pixel = NULL;
 
     state->paint_pixel = this->paint_data                               +
-                         (iter->roi[0].y - roi->y) * this->paint_stride +
-                         (iter->roi[0].x - roi->x) * 4;
+                         (iter->items[0].roi.y - roi->y) * this->paint_stride +
+                         (iter->items[0].roi.x - roi->x) * 4;
 
     if (params->mask_buffer)
-      state->mask_pixel = (gfloat *) iter->data[iterator_base + 2];
+      state->mask_pixel = (gfloat *) iter->items[iterator_base + 2].data;
 
-    state->process_roi.x      = iter->roi[0].x;
-    state->process_roi.width  = iter->roi[0].width;
+    state->process_roi.x      = iter->items[0].roi.x;
+    state->process_roi.width  = iter->items[0].roi.width;
     state->process_roi.height = 1;
   }
 
@@ -1058,14 +1058,14 @@ struct DoLayerBlend : Base
                          state->paint_pixel,
                          state->mask_pixel,
                          state->out_pixel,
-                         iter->roi[0].width,
+                         iter->items[0].roi.width,
                          &state->process_roi,
                          0);
 
-    state->in_pixel     += iter->roi[0].width * 4;
-    state->out_pixel    += iter->roi[0].width * 4;
+    state->in_pixel     += iter->items[0].roi.width * 4;
+    state->out_pixel    += iter->items[0].roi.width * 4;
     if (params->mask_buffer)
-      state->mask_pixel += iter->roi[0].width;
+      state->mask_pixel += iter->items[0].roi.width;
     state->paint_pixel  += this->paint_stride;
   }
 };
@@ -1130,7 +1130,7 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
             {
               GeglBufferIterator *iter;
 
-              iter = gegl_buffer_iterator_empty_new ();
+              iter = gegl_buffer_iterator_empty_new (4);
 
               algorithm.init (params, &state, iter, &roi, area);
 
@@ -1138,28 +1138,28 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
                 {
                   algorithm.init_step (params, &state, iter, &roi, area);
 
-                  for (y = 0; y < iter->roi[0].height; y++)
+                  for (y = 0; y < iter->items[0].roi.height; y++)
                     {
                       algorithm.process_row (params, &state,
                                              iter, &roi, area,
-                                             iter->roi[0].y + y);
+                                             iter->items[0].roi.y + y);
                     }
                 }
             }
           else
             {
-              GeglBufferIterator iter;
+              GeglBufferIterator iter[2];
 
-              iter.roi[0] = *area;
+              iter[0].items[0].roi = *area;
 
-              algorithm.init      (params, &state, &iter, &roi, area);
-              algorithm.init_step (params, &state, &iter, &roi, area);
+              algorithm.init      (params, &state, &iter[0], &roi, area);
+              algorithm.init_step (params, &state, &iter[0], &roi, area);
 
-              for (y = 0; y < iter.roi[0].height; y++)
+              for (y = 0; y < iter[0].items[0].roi.height; y++)
                 {
                   algorithm.process_row (params, &state,
-                                         &iter, &roi, area,
-                                         iter.roi[0].y + y);
+                                         &iter[0], &roi, area,
+                                         iter[0].items[0].roi.y + y);
                 }
             }
         });
@@ -1346,7 +1346,7 @@ mask_components_onto (GeglBuffer          *src_buffer,
 
       iter = gegl_buffer_iterator_new (dst_buffer, area, 0,
                                        iterator_format,
-                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 3);
 
       gegl_buffer_iterator_add (iter, src_buffer, area, 0,
                                 iterator_format,
@@ -1358,9 +1358,9 @@ mask_components_onto (GeglBuffer          *src_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat *dest    = (gfloat *)iter->data[0];
-          gfloat *src     = (gfloat *)iter->data[1];
-          gfloat *aux     = (gfloat *)iter->data[2];
+          gfloat *dest    = (gfloat *)iter->items[0].data;
+          gfloat *src     = (gfloat *)iter->items[1].data;
+          gfloat *aux     = (gfloat *)iter->items[2].data;
           glong   samples = iter->length;
 
           while (samples--)
