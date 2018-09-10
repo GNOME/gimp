@@ -81,7 +81,7 @@ gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *kla
                                  NULL);
 
   operation_class->prepare = gimp_operation_mask_components_prepare;
-  operation_class->process = gimp_operation_mask_components_parent_process;
+  //operation_class->process = gimp_operation_mask_components_parent_process;
 
   point_class->process     = gimp_operation_mask_components_process;
 
@@ -172,7 +172,7 @@ gimp_operation_mask_components_parent_process (GeglOperation        *operation,
                                                gint                  level)
 {
   GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
-
+#if 0
   if (self->mask == 0)
     {
       GObject *input = gegl_operation_context_get_object (context, "input");
@@ -189,7 +189,7 @@ gimp_operation_mask_components_parent_process (GeglOperation        *operation,
 
       return TRUE;
     }
-
+#endif
   return GEGL_OPERATION_CLASS (parent_class)->process (operation, context,
                                                        output_prop, result,
                                                        level);
@@ -211,10 +211,24 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
   GimpComponentMask            mask = self->mask;
   static const gfloat          nothing[] = { 0.0, 0.0, 0.0, 1.0 };
 
-  if (! aux)
-    aux = (gfloat *) nothing;
+#if 0
+  if (self->mask == 0)
+  {
+    if (in_buf != out_buf)
+      memcpy (out_buf, in_buf, sizeof (float) * 4 * samples);
+  }
+  else if (self->mask == GIMP_COMPONENT_MASK_ALL && aux_buf)
+  {
+    if (aux_buf != out_buf)
+      memcpy (out_buf, aux_buf, sizeof (float) * 4 * samples);
+  }
+  else
+#endif
+  {
+    if (! aux)
+      aux = (gfloat *) nothing;
 
-  while (samples--)
+    while (samples--)
     {
       dest[RED]   = (mask & GIMP_COMPONENT_MASK_RED)   ? aux[RED]   : src[RED];
       dest[GREEN] = (mask & GIMP_COMPONENT_MASK_GREEN) ? aux[GREEN] : src[GREEN];
@@ -228,6 +242,7 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
 
       dest += 4;
     }
+  }
 
   return TRUE;
 }
