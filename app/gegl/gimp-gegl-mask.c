@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "gimp-gegl-types.h"
@@ -48,12 +49,12 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
   ty2 = 0;
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("Y float"),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *data  = iter->data[0];
+      gfloat *data  = iter->items[0].data;
       gfloat *data1 = data;
       gint    ex    = roi->x + roi->width;
       gint    ey    = roi->y + roi->height;
@@ -138,11 +139,11 @@ gimp_gegl_mask_is_empty (GeglBuffer *buffer)
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), FALSE);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("Y float"),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *data = iter->data[0];
+      gfloat *data = iter->items[0].data;
       gint    i;
 
       for (i = 0; i < iter->length; i++)
