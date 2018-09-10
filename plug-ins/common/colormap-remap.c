@@ -27,6 +27,7 @@
  *
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <string.h>
@@ -363,19 +364,19 @@ remap (gint32  image_ID,
       iter = gegl_buffer_iterator_new (buffer,
                                        GEGL_RECTANGLE (0, 0, width, height), 0,
                                        format,
-                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-      src_roi = &iter->roi[0];
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+      src_roi = &iter->items[0].roi;
 
       gegl_buffer_iterator_add (iter, shadow,
                                 GEGL_RECTANGLE (0, 0, width, height), 0,
                                 format,
                                 GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-      dest_roi = &iter->roi[1];
+      dest_roi = &iter->items[1].roi;
 
       while (gegl_buffer_iterator_next (iter))
         {
-          const guchar *src_row  = iter->data[0];
-          guchar       *dest_row = iter->data[1];
+          const guchar *src_row  = iter->items[0].data;
+          guchar       *dest_row = iter->items[1].data;
           gint          y;
 
           for (y = 0; y < src_roi->height; y++)
