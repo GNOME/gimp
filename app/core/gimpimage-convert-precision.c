@@ -191,11 +191,14 @@ gimp_image_convert_precision (GimpImage        *image,
     }
 
   if (new_profile)
-    gimp_image_set_color_profile (image, new_profile, NULL);
+    {
+      gimp_image_set_color_profile (image, new_profile, NULL);
+      g_object_unref (new_profile);
+    }
   else
-    gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
-
-  g_object_unref (new_profile);
+    {
+      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+    }
 
   gimp_image_undo_group_end (image);
 
