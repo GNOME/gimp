@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include <gio/gio.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -205,12 +206,12 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
   iter = gegl_buffer_iterator_new (mask,
                                    GEGL_RECTANGLE (x0, y0, width, height), 0,
                                    babl_format ("Y float"),
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *data = iter->data[0];
+      gfloat *data = iter->items[0].data;
       gint    py;
 
       for (py = roi->y;
@@ -409,7 +410,7 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
 
   iter = gegl_buffer_iterator_new (mask, &rect, 0,
                                    mask_format,
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 2);
 
   rect.x -= off_x;
   rect.y -= off_y;
@@ -439,8 +440,8 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
     case GIMP_CHANNEL_OP_REPLACE:
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat       *mask_data   = iter->data[0];
-          const gfloat *add_on_data = iter->data[1];
+          gfloat       *mask_data   = iter->items[0].data;
+          const gfloat *add_on_data = iter->items[1].data;
           gint          count       = iter->length;
 
           while (count--)
@@ -458,8 +459,8 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
     case GIMP_CHANNEL_OP_SUBTRACT:
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat       *mask_data   = iter->data[0];
-          const gfloat *add_on_data = iter->data[1];
+          gfloat       *mask_data   = iter->items[0].data;
+          const gfloat *add_on_data = iter->items[1].data;
           gint          count       = iter->length;
 
           while (count--)
@@ -478,8 +479,8 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
     case GIMP_CHANNEL_OP_INTERSECT:
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat       *mask_data   = iter->data[0];
-          const gfloat *add_on_data = iter->data[1];
+          gfloat       *mask_data   = iter->items[0].data;
+          const gfloat *add_on_data = iter->items[1].data;
           gint          count       = iter->length;
 
           while (count--)
