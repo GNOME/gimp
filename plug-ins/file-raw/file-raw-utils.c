@@ -41,7 +41,6 @@ file_raw_get_executable_path (const gchar *main_executable,
                               const gchar *env_variable,
                               const gchar *mac_bundle_id,
                               const gchar *win32_registry_key_base,
-                              gboolean     win32_use_hkcu,
                               gboolean    *search_path)
 {
   /*
@@ -129,10 +128,11 @@ file_raw_get_executable_path (const gchar *main_executable,
       else
         registry_key = g_strconcat (win32_registry_key_base, ".exe", NULL);
 
-      if (win32_use_hkcu)
-        status = RegGetValue (HKEY_CURRENT_USER, registry_key, "", RRF_RT_ANY,
-                              NULL, (PVOID)&path, &buffer_size);
-      else
+      /* Check HKCU first in case there is a user specific installation. */
+      status = RegGetValue (HKEY_CURRENT_USER, registry_key, "", RRF_RT_ANY,
+                            NULL, (PVOID)&path, &buffer_size);
+
+      if (status != ERROR_SUCCESS)
         status = RegGetValue (HKEY_LOCAL_MACHINE, registry_key, "", RRF_RT_ANY,
                               NULL, (PVOID)&path, &buffer_size);
 

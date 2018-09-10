@@ -98,7 +98,6 @@ init (void)
                                                              "DARKTABLE_EXECUTABLE",
                                                              "org.darktable",
                                                              REGISTRY_KEY_BASE,
-                                                             FALSE,
                                                              &search_path);
   gchar    *argv[]           = { exec_path, "--version", NULL };
   gchar    *darktable_stdout = NULL;
@@ -380,7 +379,6 @@ load_image (const gchar  *filename,
                                                              "DARKTABLE_EXECUTABLE",
                                                              "org.darktable",
                                                              REGISTRY_KEY_BASE,
-                                                             FALSE,
                                                              &search_path);
   gchar    *argv[] =
     {
@@ -474,7 +472,6 @@ load_thumbnail_image (const gchar   *filename,
                                                              "DARKTABLE_EXECUTABLE",
                                                              "org.darktable",
                                                              REGISTRY_KEY_BASE,
-                                                             FALSE,
                                                              &search_path);
   gchar    *argv[] =
     {

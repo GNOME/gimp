@@ -96,7 +96,6 @@ init (void)
                                                              "RAWTHERAPEE_EXECUTABLE",
                                                              "com.rawtherapee.rawtherapee",
                                                              REGISTRY_KEY_BASE,
-                                                             TRUE,
                                                              &search_path);
   gchar    *argv[]             = { exec_path, "-v", NULL };
   gchar    *rawtherapee_stdout = NULL;
@@ -300,7 +299,6 @@ load_image (const gchar  *filename,
                                                                "RAWTHERAPEE_EXECUTABLE",
                                                                "com.rawtherapee.rawtherapee",
                                                                REGISTRY_KEY_BASE,
-                                                               TRUE,
                                                                &search_path);
 
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
@@ -407,7 +405,6 @@ load_thumbnail_image (const gchar   *filename,
                                                         "RAWTHERAPEE_EXECUTABLE",
                                                         "com.rawtherapee.rawtherapee",
                                                         REGISTRY_KEY_BASE,
-                                                        TRUE,
                                                         &search_path);
   gchar *argv[] =
     {
