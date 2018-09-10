@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include <cairo.h>
@@ -528,12 +529,12 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   bpp    = babl_format_get_bytes_per_pixel (format);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar     *data    = iter->data[0];
+      guchar     *data    = iter->items[0].data;
       guchar     *tmp_buf = NULL;
       const gint  stride  = cairo_format_stride_for_width (CAIRO_FORMAT_A8,
                                                            roi->width);
