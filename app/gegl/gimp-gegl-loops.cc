@@ -24,6 +24,7 @@
 
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 extern "C"
@@ -174,22 +175,22 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
 
       /* Set up dest iterator */
       dest_iter = gegl_buffer_iterator_new (dest_buffer, dest_area, 0, dest_format,
-                                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
 
       while (gegl_buffer_iterator_next (dest_iter))
         {
           /*  Convolve the src image using the convolution kernel, writing
            *  to dest Convolve is not tile-enabled--use accordingly
            */
-          gfloat     *dest    = (gfloat *) dest_iter->data[0];
+          gfloat     *dest    = (gfloat *) dest_iter->items[0].data;
           const gint  x1      = 0;
           const gint  y1      = 0;
           const gint  x2      = src_rect->width  - 1;
           const gint  y2      = src_rect->height - 1;
-          const gint  dest_x1 = dest_iter->roi[0].x;
-          const gint  dest_y1 = dest_iter->roi[0].y;
-          const gint  dest_x2 = dest_iter->roi[0].x + dest_iter->roi[0].width;
-          const gint  dest_y2 = dest_iter->roi[0].y + dest_iter->roi[0].height;
+          const gint  dest_x1 = dest_iter->items[0].roi.x;
+          const gint  dest_y1 = dest_iter->items[0].roi.y;
+          const gint  dest_x2 = dest_iter->items[0].roi.x + dest_iter->items[0].roi.width;
+          const gint  dest_y2 = dest_iter->items[0].roi.y + dest_iter->items[0].roi.height;
           gint        x, y;
 
           for (y = dest_y1; y < dest_y2; y++)
@@ -280,7 +281,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                     }
                 }
 
-              dest += dest_iter->roi[0].width * dest_components;
+              dest += dest_iter->items[0].roi.width * dest_components;
             }
         }
     });
@@ -325,7 +326,7 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
       iter = gegl_buffer_iterator_new (src_buffer, src_area, 0,
                                        babl_format ("R'G'B'A float"),
-                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
       gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
                                 babl_format ("R'G'B'A float"),
@@ -340,8 +341,8 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
           while (gegl_buffer_iterator_next (iter))
             {
-              gfloat *src   = (gfloat *) iter->data[0];
-              gfloat *dest  = (gfloat *) iter->data[1];
+              gfloat *src   = (gfloat *) iter->items[0].data;
+              gfloat *dest  = (gfloat *) iter->items[1].data;
               gint    count = iter->length;
 
               while (count--)
@@ -363,8 +364,8 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
           while (gegl_buffer_iterator_next (iter))
             {
-              gfloat *src   = (gfloat *) iter->data[0];
-              gfloat *dest  = (gfloat *) iter->data[1];
+              gfloat *src   = (gfloat *) iter->items[0].data;
+              gfloat *dest  = (gfloat *) iter->items[1].data;
               gint    count = iter->length;
 
               while (count--)
@@ -386,8 +387,8 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
           while (gegl_buffer_iterator_next (iter))
             {
-              gfloat *src   = (gfloat *) iter->data[0];
-              gfloat *dest  = (gfloat *) iter->data[1];
+              gfloat *src   = (gfloat *) iter->items[0].data;
+              gfloat *dest  = (gfloat *) iter->items[1].data;
               gint    count = iter->length;
 
               while (count--)
@@ -560,7 +561,7 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
 
       iter = gegl_buffer_iterator_new (accum_buffer, accum_area, 0,
                                        babl_format ("RGBA float"),
-                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 3);
 
       gegl_buffer_iterator_add (iter, canvas_buffer, canvas_area, 0,
                                 babl_format ("RGBA float"),
@@ -576,9 +577,9 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat       *accum  = (gfloat *)       iter->data[0];
-          const gfloat *canvas = (const gfloat *) iter->data[1];
-          gfloat       *paint  = (gfloat *)       iter->data[2];
+          gfloat       *accum  = (gfloat *)       iter->items[0].data;
+          const gfloat *canvas = (const gfloat *) iter->items[1].data;
+          gfloat       *paint  = (gfloat *)       iter->items[2].data;
           gint          count  = iter->length;
 
 #if COMPILE_SSE2_INTRINISICS
@@ -628,7 +629,7 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
 
       iter = gegl_buffer_iterator_new (mask_buffer, mask_area, 0,
                                        babl_format ("Y float"),
-                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
       gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
                                 babl_format ("RGBA float"),
@@ -636,8 +637,8 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          const gfloat *mask  = (const gfloat *) iter->data[0];
-          gfloat       *dest  = (gfloat *)       iter->data[1];
+          const gfloat *mask  = (const gfloat *) iter->items[0].data;
+          gfloat       *dest  = (gfloat *)       iter->items[1].data;
           gint          count = iter->length;
 
           while (count--)
@@ -673,7 +674,7 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
 
       iter = gegl_buffer_iterator_new (mask_buffer, mask_area, 0,
                                        babl_format ("Y float"),
-                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
       gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
                                 babl_format ("Y float"),
@@ -681,8 +682,8 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          const gfloat *mask  = (const gfloat *) iter->data[0];
-          gfloat       *dest  = (gfloat *)       iter->data[1];
+          const gfloat *mask  = (const gfloat *) iter->items[0].data;
+          gfloat       *dest  = (gfloat *)       iter->items[1].data;
           gint          count = iter->length;
 
           while (count--)
@@ -719,7 +720,7 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
 
       iter = gegl_buffer_iterator_new (mask_buffer, mask_area, 0,
                                        babl_format ("Y float"),
-                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
       gegl_buffer_iterator_add (iter, dest_buffer, dest_area, 0,
                                 babl_format ("Y float"),
@@ -727,8 +728,8 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          const gfloat *mask  = (const gfloat *) iter->data[0];
-          gfloat       *dest  = (gfloat *)       iter->data[1];
+          const gfloat *mask  = (const gfloat *) iter->items[0].data;
+          gfloat       *dest  = (gfloat *)       iter->items[1].data;
           gint          count = iter->length;
 
           if (stipple)
@@ -791,7 +792,7 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
 
       iter = gegl_buffer_iterator_new (top_buffer, top_area, 0,
                                        babl_format ("RGBA float"),
-                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 4);
 
       gegl_buffer_iterator_add (iter, bottom_buffer, bottom_area, 0,
                                 babl_format ("RGBA float"),
@@ -807,10 +808,10 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          const gfloat *top    = (const gfloat *) iter->data[0];
-          const gfloat *bottom = (const gfloat *) iter->data[1];
-          const gfloat *mask   = (const gfloat *) iter->data[2];
-          gfloat       *dest   = (gfloat *)       iter->data[3];
+          const gfloat *top    = (const gfloat *) iter->items[0].data;
+          const gfloat *bottom = (const gfloat *) iter->items[1].data;
+          const gfloat *mask   = (const gfloat *) iter->items[2].data;
+          gfloat       *dest   = (gfloat *)       iter->items[3].data;
           gint          count  = iter->length;
 
           while (count--)
@@ -905,7 +906,7 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
 
       iter = gegl_buffer_iterator_new (indexed_buffer, indexed_area, 0,
                                        indexed_format,
-                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
       gegl_buffer_iterator_add (iter, mask_buffer, mask_area, 0,
                                 babl_format ("Y float"),
@@ -913,8 +914,8 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          const guchar *indexed = (const guchar *) iter->data[0];
-          gfloat       *mask    = (gfloat *)       iter->data[1];
+          const guchar *indexed = (const guchar *) iter->items[0].data;
+          gfloat       *mask    = (gfloat *)       iter->items[1].data;
           gint          count   = iter->length;
 
           while (count--)
@@ -1063,11 +1064,11 @@ gimp_gegl_average_color (GeglBuffer          *buffer,
       gint                n        = 0;
 
       iter = gegl_buffer_iterator_new (buffer, area, 0, average_format,
-                                       GEGL_BUFFER_READ, abyss_policy);
+                                       GEGL_BUFFER_READ, abyss_policy, 1);
 
       while (gegl_buffer_iterator_next (iter))
         {
-          const gfloat *p = (const gfloat *) iter->data[0];
+          const gfloat *p = (const gfloat *) iter->items[0].data;
           gint          i;
 
           for (i = 0; i < iter->length; i++)
