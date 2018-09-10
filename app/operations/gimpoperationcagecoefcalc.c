@@ -20,6 +20,7 @@
 #include "config.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -212,17 +213,17 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
   n_cage_vertices   = gimp_cage_config_get_n_points (config);
 
   it = gegl_buffer_iterator_new (output, roi, 0, format,
-                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (it))
     {
       /* iterate inside the roi */
       gint  n_pixels = it->length;
-      gint  x = it->roi->x; /* initial x                   */
-      gint  y = it->roi->y; /*           and y coordinates */
+      gint  x = it->items[0].roi.x; /* initial x                   */
+      gint  y = it->items[0].roi.y; /*           and y coordinates */
       gint  j;
 
-      gfloat      *coef = it->data[0];
+      gfloat      *coef = it->items[0].data;
 
       while(n_pixels--)
         {
@@ -282,9 +283,9 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
 
           /* update x and y coordinates */
           x++;
-          if (x >= (it->roi->x + it->roi->width))
+          if (x >= (it->items[0].roi.x + it->items[0].roi.width))
             {
-              x = it->roi->x;
+              x = it->items[0].roi.x;
               y++;
             }
         }
