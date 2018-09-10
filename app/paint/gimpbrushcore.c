@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -1283,7 +1284,7 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   pixmap_format = gimp_temp_buf_get_format (pixmap_mask);
 
   iter = gegl_buffer_iterator_new (area, NULL, 0, area_format,
-                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
 
   if (mode == GIMP_BRUSH_SOFT && brush_mask)
     {
@@ -1304,11 +1305,11 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
       brush_mask = NULL;
     }
 
-  roi = &iter->roi[0];
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *d = iter->data[0];
+      gfloat *d = iter->items[0].data;
       gint    y;
 
       for (y = 0; y < roi->height; y++)
