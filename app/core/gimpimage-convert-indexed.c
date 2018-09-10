@@ -136,6 +136,7 @@
 
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -699,11 +700,11 @@ remap_indexed_layer (GimpLayer    *layer,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guchar *data   = iter->data[0];
+      guchar *data   = iter->items[0].data;
       gint    length = iter->length;
 
       if (has_alpha)
@@ -1125,11 +1126,11 @@ generate_histogram_gray (CFHistogram  histogram,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data   = iter->data[0];
+      const guchar *data   = iter->items[0].data;
       gint          length = iter->length;
 
       if (has_alpha)
@@ -1192,15 +1193,15 @@ generate_histogram_rgb (CFHistogram   histogram,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   if (progress)
     gimp_progress_set_value (progress, 0.0);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data   = iter->data[0];
+      const guchar *data   = iter->items[0].data;
       gint          length = iter->length;
 
       total_size += length;
@@ -2846,8 +2847,8 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  src_roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+  src_roi = &iter->items[0].roi;
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
@@ -2855,8 +2856,8 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src  = iter->data[0];
-      guchar       *dest = iter->data[1];
+      const guchar *src  = iter->items[0].data;
+      guchar       *dest = iter->items[1].data;
       gint          row;
 
       for (row = 0; row < src_roi->height; row++)
@@ -2952,8 +2953,8 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  src_roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+  src_roi = &iter->items[0].roi;
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
@@ -2961,8 +2962,8 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src  = iter->data[0];
-      guchar       *dest = iter->data[1];
+      const guchar *src  = iter->items[0].data;
+      guchar       *dest = iter->items[1].data;
       gint          row;
 
       for (row = 0; row < src_roi->height; row++)
@@ -3131,8 +3132,8 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  src_roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+  src_roi = &iter->items[0].roi;
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
@@ -3143,8 +3144,8 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src  = iter->data[0];
-      guchar       *dest = iter->data[1];
+      const guchar *src  = iter->items[0].data;
+      guchar       *dest = iter->items[1].data;
       gint          row;
 
       total_size += src_roi->height * src_roi->width;
@@ -3264,8 +3265,8 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  src_roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+  src_roi = &iter->items[0].roi;
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
@@ -3276,8 +3277,8 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src  = iter->data[0];
-      guchar       *dest = iter->data[1];
+      const guchar *src  = iter->items[0].data;
+      guchar       *dest = iter->items[1].data;
       gint          row;
 
       total_size += src_roi->height * src_roi->width;
@@ -3478,8 +3479,8 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  src_roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+  src_roi = &iter->items[0].roi;
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
@@ -3487,8 +3488,8 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src  = iter->data[0];
-      guchar       *dest = iter->data[1];
+      const guchar *src  = iter->items[0].data;
+      guchar       *dest = iter->items[1].data;
       gint          row;
 
       for (row = 0; row < src_roi->height; row++)
