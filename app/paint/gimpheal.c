@@ -25,6 +25,7 @@
 #include <string.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -205,7 +206,7 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
     g_return_if_reached ();
 
   iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
 
   gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0, format,
                             GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
@@ -216,9 +217,9 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *t      = iter->data[0];
-      gfloat *b      = iter->data[1];
-      gfloat *r      = iter->data[2];
+      gfloat *t      = iter->items[0].data;
+      gfloat *b      = iter->items[1].data;
+      gfloat *r      = iter->items[2].data;
       gint    length = iter->length * n_components;
 
       while (length--)
@@ -250,7 +251,7 @@ gimp_heal_add (GeglBuffer          *first_buffer,
   iter = gegl_buffer_iterator_new (first_buffer, first_rect, 0,
                                    babl_format_n (babl_type ("float"),
                                                   n_components),
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
 
   gegl_buffer_iterator_add (iter, second_buffer, second_rect, 0, format,
                             GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
@@ -260,9 +261,9 @@ gimp_heal_add (GeglBuffer          *first_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *f      = iter->data[0];
-      gfloat *s      = iter->data[1];
-      gfloat *r      = iter->data[2];
+      gfloat *f      = iter->items[0].data;
+      gfloat *s      = iter->items[1].data;
+      gfloat *r      = iter->items[2].data;
       gint    length = iter->length * n_components;
 
       while (length--)
