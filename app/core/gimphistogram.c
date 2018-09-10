@@ -17,6 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define GEGL_ITERATOR2_API
+
 #include "config.h"
 
 #include <string.h>
@@ -1018,7 +1020,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 
   iter = gegl_buffer_iterator_new (context->buffer, area, 0,
                                    data->format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
 
   if (context->mask)
     {
@@ -1054,7 +1056,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *data   = iter->data[0];
+      const gfloat *data   = iter->items[0].data;
       gint          length = iter->length;
       gfloat        max;
       gfloat        luminance;
@@ -1063,7 +1065,7 @@ gimp_histogram_calculate_area (const GeglRectangle *area,
 
       if (context->mask)
         {
-          const gfloat *mask_data = iter->data[1];
+          const gfloat *mask_data = iter->items[1].data;
 
           switch (n_components)
             {
