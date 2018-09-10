@@ -16,7 +16,7 @@
  */
 
 #include "config.h"
-
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include <mypaint-surface.h>
@@ -266,7 +266,7 @@ gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
     GeglBufferIterator *iter = gegl_buffer_iterator_new (surface->buffer, &dabRect, 0,
                                                          babl_format ("R'aG'aB'aA float"),
                                                          GEGL_BUFFER_READ,
-                                                         GEGL_ABYSS_CLAMP);
+                                                         GEGL_ABYSS_CLAMP, 2);
     if (surface->paint_mask)
       {
         GeglRectangle mask_roi = dabRect;
@@ -279,19 +279,19 @@ gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
 
     while (gegl_buffer_iterator_next (iter))
       {
-        float *pixel = (float *)iter->data[0];
+        float *pixel = (float *)iter->items[0].data;
         float *mask;
         int iy, ix;
 
         if (surface->paint_mask)
-          mask = iter->data[1];
+          mask = iter->items[1].data;
         else
           mask = NULL;
 
-        for (iy = iter->roi[0].y; iy < iter->roi[0].y + iter->roi[0].height; iy++)
+        for (iy = iter->items[0].roi.y; iy < iter->items[0].roi.y + iter->items[0].roi.height; iy++)
           {
             float yy = (iy + 0.5f - y);
-            for (ix = iter->roi[0].x; ix < iter->roi[0].x +  iter->roi[0].width; ix++)
+            for (ix = iter->items[0].roi.x; ix < iter->items[0].roi.x +  iter->items[0].roi.width; ix++)
               {
                 /* pixel_weight == a standard dab with hardness = 0.5, aspect_ratio = 1.0, and angle = 0.0 */
                 float xx = (ix + 0.5f - x);
@@ -390,7 +390,7 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
   iter = gegl_buffer_iterator_new (surface->buffer, &dabRect, 0,
                                    babl_format ("R'G'B'A float"),
                                    GEGL_BUFFER_READWRITE,
-                                   GEGL_ABYSS_NONE);
+                                   GEGL_ABYSS_NONE, 2);
   if (surface->paint_mask)
     {
       GeglRectangle mask_roi = dabRect;
@@ -403,18 +403,18 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      float *pixel = (float *)iter->data[0];
+      float *pixel = (float *)iter->items[0].data;
       float *mask;
       int iy, ix;
 
       if (surface->paint_mask)
-        mask = iter->data[1];
+        mask = iter->items[1].data;
       else
         mask = NULL;
 
-      for (iy = iter->roi[0].y; iy < iter->roi[0].y + iter->roi[0].height; iy++)
+      for (iy = iter->items[0].roi.y; iy < iter->items[0].roi.y + iter->items[0].roi.height; iy++)
         {
-          for (ix = iter->roi[0].x; ix < iter->roi[0].x +  iter->roi[0].width; ix++)
+          for (ix = iter->items[0].roi.x; ix < iter->items[0].roi.x +  iter->items[0].roi.width; ix++)
             {
               float rr, base_alpha, alpha, dst_alpha, r, g, b, a;
               if (radius < 3.0f)
