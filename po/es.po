@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-31 03:55+0000\n"
-"PO-Revision-Date: 2018-08-31 09:59+0200\n"
+"POT-Creation-Date: 2018-09-06 21:53+0000\n"
+"PO-Revision-Date: 2018-09-10 10:19+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -106,7 +106,7 @@ msgstr "Nuevo filtro «Pequeño planeta» (gegl:stereographic-projection)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "New \"Long Shadow\" filter"
-msgstr ""
+msgstr "Nuevo filtro «Sombra alargada»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
@@ -307,25 +307,18 @@ msgstr ""
 "de pintura más fluida. Los cambios más grandes son:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
-#, fuzzy
-#| msgid ""
-#| "Major core optimizations for painting and display, including parallelized "
-#| "painting code."
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
 msgstr ""
 "Grandes optimizaciones fundamentales para pintura y visualización, "
-"incluyendo el código de pintura en paralelo."
+"incluyendo el código de pintura en paralelo"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
-#, fuzzy
-#| msgid ""
-#| "Symmetries are now preserved in XCF files (saved as image parasites)."
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 "Las simetrías ahora se conservan en archivos XCF (guardados como parásitos "
-"de imágenes)."
+"de imágenes)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
@@ -348,12 +341,6 @@ msgstr ""
 "sobre lienzo para la rotación 3D (guiñada, cabeceo, alabeo)."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
-#, fuzzy
-#| msgid ""
-#| "Plug-in debugging improved to output stack traces from plug-ins with --"
-#| "stack-trace-mode command line option not only on receiving signals but "
-#| "also on warnings and critical errors when \"fatal-warnings\" debug key is "
-#| "set."
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -362,7 +349,7 @@ msgstr ""
 "Se ha mejorado la depuración de complementos para producir rastreos de pila "
 "desde los complementos con la opción de la línea de comandos --stack-trace-"
 "mode no solo para las señales recibidas sino también para advertencias y "
-"errores críticos cuando se establece la clave de depuración «fatal-warnings»."
+"errores críticos cuando se establece la clave de depuración «fatal-warnings»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
@@ -2765,88 +2752,195 @@ msgstr "Menú del panel"
 
 #: ../app/actions/dashboard-actions.c:44
 msgctxt "dashboard-action"
-msgid "Groups"
-msgstr "Grupos"
+msgid "_Groups"
+msgstr "_Grupos"
 
 #: ../app/actions/dashboard-actions.c:46
 msgctxt "dashboard-action"
-msgid "Update Interval"
-msgstr "Intervalo de actualización"
+msgid "_Update Interval"
+msgstr "_Intervalo de actualización"
 
 #: ../app/actions/dashboard-actions.c:48
 msgctxt "dashboard-action"
-msgid "History Duration"
-msgstr "Duración del histórico"
+msgid "_History Duration"
+msgstr "Duración del _histórico"
 
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
-msgid "Reset"
-msgstr "Restablecer"
+msgid "_Start/Stop Recording..."
+msgstr "_Comenzar/Detener grabación…"
 
 #: ../app/actions/dashboard-actions.c:52
+msgctxt "dashboard-action"
+msgid "Start/stop recording performance log"
+msgstr "Comenzar/Detener el registro de desempeño de la grabación"
+
+#: ../app/actions/dashboard-actions.c:56
+msgctxt "dashboard-action"
+msgid "_Add Marker..."
+msgstr "_Añadir marcador…"
+
+#: ../app/actions/dashboard-actions.c:57
+msgctxt "dashboard-action"
+msgid "Add an event marker to the performance log"
+msgstr "Añadir un marcador de evento al registro de desempeño"
+
+#: ../app/actions/dashboard-actions.c:62
+msgctxt "dashboard-action"
+msgid "Add _Empty Marker"
+msgstr "Añadir marcador _vacío"
+
+#: ../app/actions/dashboard-actions.c:63
+msgctxt "dashboard-action"
+msgid "Add an empty event marker to the performance log"
+msgstr "Añadir un marcador de evento vacío al registro de desempeño"
+
+#: ../app/actions/dashboard-actions.c:69
+msgctxt "dashboard-action"
+msgid "_Reset"
+msgstr "_Restablecer"
+
+#: ../app/actions/dashboard-actions.c:70
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
 msgstr "Restablecer datos acumulados"
 
-#: ../app/actions/dashboard-actions.c:60
+#: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-action"
-msgid "Low Swap Space Warning"
-msgstr "Advertencia de espacio de intercambio bajo"
+msgid "_Low Swap Space Warning"
+msgstr "Advertencia de espacio de intercambio _bajo"
 
-#: ../app/actions/dashboard-actions.c:61
+#: ../app/actions/dashboard-actions.c:79
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
 msgstr "Elevar el panel cuando el tamaño de intercambio se acerca a su límite"
 
-#: ../app/actions/dashboard-actions.c:71
+#: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
 msgstr "0.25 segundos"
 
-#: ../app/actions/dashboard-actions.c:76
+#: ../app/actions/dashboard-actions.c:94
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
 msgstr "0.5 segundos"
 
-#: ../app/actions/dashboard-actions.c:81
+#: ../app/actions/dashboard-actions.c:99
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
 msgstr "1 segundo"
 
-#: ../app/actions/dashboard-actions.c:86
+#: ../app/actions/dashboard-actions.c:104
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
 msgstr "2 segundos"
 
-#: ../app/actions/dashboard-actions.c:91
+#: ../app/actions/dashboard-actions.c:109
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
 msgstr "4 segundos"
 
-#: ../app/actions/dashboard-actions.c:99
+#: ../app/actions/dashboard-actions.c:117
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
 msgstr "15 segundos"
 
-#: ../app/actions/dashboard-actions.c:104
+#: ../app/actions/dashboard-actions.c:122
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
 msgstr "30 segundos"
 
-#: ../app/actions/dashboard-actions.c:109
+#: ../app/actions/dashboard-actions.c:127
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
 msgstr "60 segundos"
 
-#: ../app/actions/dashboard-actions.c:114
+#: ../app/actions/dashboard-actions.c:132
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
 msgstr "120 segundos"
 
-#: ../app/actions/dashboard-actions.c:119
+#: ../app/actions/dashboard-actions.c:137
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 segundos"
+
+#: ../app/actions/dashboard-commands.c:102
+#: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:161
+#: ../app/actions/error-console-commands.c:96
+#: ../app/actions/file-commands.c:415
+#: ../app/actions/gradient-editor-commands.c:401
+#: ../app/actions/gradient-editor-commands.c:510
+#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:178
+#: ../app/actions/templates-commands.c:243
+#: ../app/actions/text-editor-commands.c:64
+#: ../app/actions/text-tool-commands.c:118
+#: ../app/actions/tool-options-commands.c:195
+#: ../app/actions/window-commands.c:75
+#: ../app/dialogs/color-profile-dialog.c:136
+#: ../app/dialogs/color-profile-dialog.c:154
+#: ../app/dialogs/color-profile-dialog.c:172
+#: ../app/dialogs/color-profile-dialog.c:190
+#: ../app/dialogs/color-profile-dialog.c:208
+#: ../app/dialogs/convert-indexed-dialog.c:142
+#: ../app/dialogs/convert-precision-dialog.c:166
+#: ../app/dialogs/data-delete-dialog.c:86 ../app/dialogs/fade-dialog.c:120
+#: ../app/dialogs/file-open-location-dialog.c:80
+#: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/grid-dialog.c:102
+#: ../app/dialogs/image-merge-layers-dialog.c:100
+#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
+#: ../app/dialogs/image-scale-dialog.c:210
+#: ../app/dialogs/item-options-dialog.c:145
+#: ../app/dialogs/layer-add-mask-dialog.c:110
+#: ../app/dialogs/offset-dialog.c:136
+#: ../app/dialogs/palette-import-dialog.c:161
+#: ../app/dialogs/preferences-dialog.c:287
+#: ../app/dialogs/preferences-dialog.c:636
+#: ../app/dialogs/preferences-dialog.c:1094
+#: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
+#: ../app/dialogs/resize-dialog.c:185
+#: ../app/dialogs/resolution-calibrate-dialog.c:73
+#: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
+#: ../app/dialogs/template-options-dialog.c:118
+#: ../app/dialogs/vectors-export-dialog.c:83
+#: ../app/dialogs/vectors-import-dialog.c:88
+#: ../app/display/gimpdisplayshell-close.c:179
+#: ../app/display/gimpdisplayshell-filter-dialog.c:87
+#: ../app/display/gimpdisplayshell-rotate-dialog.c:122
+#: ../app/display/gimpdisplayshell-scale-dialog.c:122
+#: ../app/tools/gimpfiltertool.c:320
+#: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1762
+#: ../app/tools/gimptransformgridtool.c:918 ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpcolordialog.c:125
+#: ../app/widgets/gimpcontrollereditor.c:661
+#: ../app/widgets/gimpcontrollerlist.c:562
+#: ../app/widgets/gimpdeviceeditor.c:493 ../app/widgets/gimpdnd-xds.c:228
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
+#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:487
+#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:714
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: ../app/actions/dashboard-commands.c:103
+msgid "_Record"
+msgstr "_Grabar"
+
+#: ../app/actions/dashboard-commands.c:125
+msgid "All Files"
+msgstr "Todos los archivos"
+
+#: ../app/actions/dashboard-commands.c:130
+msgid "Log Files (*.log)"
+msgstr "Archivos de registro (*.log)"
+
+#: ../app/actions/dashboard-commands.c:197
+msgid "Add Marker"
+msgstr "Añadir marcador"
+
+#: ../app/actions/dashboard-commands.c:199
+msgid "Enter a description for the marker"
+msgstr "Introduzca una descripción para el marcador"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:382
 #: ../app/actions/file-commands.c:204 ../app/dialogs/file-open-dialog.c:211
@@ -3573,62 +3667,6 @@ msgstr ""
 #: ../app/actions/documents-commands.c:223
 msgid "Clear Document History"
 msgstr "Vaciar el histórico del documento"
-
-#: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:161
-#: ../app/actions/error-console-commands.c:96
-#: ../app/actions/file-commands.c:415
-#: ../app/actions/gradient-editor-commands.c:401
-#: ../app/actions/gradient-editor-commands.c:510
-#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:178
-#: ../app/actions/templates-commands.c:243
-#: ../app/actions/text-editor-commands.c:64
-#: ../app/actions/text-tool-commands.c:118
-#: ../app/actions/tool-options-commands.c:195
-#: ../app/actions/window-commands.c:75
-#: ../app/dialogs/color-profile-dialog.c:136
-#: ../app/dialogs/color-profile-dialog.c:154
-#: ../app/dialogs/color-profile-dialog.c:172
-#: ../app/dialogs/color-profile-dialog.c:190
-#: ../app/dialogs/color-profile-dialog.c:208
-#: ../app/dialogs/convert-indexed-dialog.c:142
-#: ../app/dialogs/convert-precision-dialog.c:166
-#: ../app/dialogs/data-delete-dialog.c:86 ../app/dialogs/fade-dialog.c:120
-#: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
-#: ../app/dialogs/grid-dialog.c:102
-#: ../app/dialogs/image-merge-layers-dialog.c:100
-#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
-#: ../app/dialogs/image-scale-dialog.c:210
-#: ../app/dialogs/item-options-dialog.c:145
-#: ../app/dialogs/layer-add-mask-dialog.c:110
-#: ../app/dialogs/offset-dialog.c:136
-#: ../app/dialogs/palette-import-dialog.c:161
-#: ../app/dialogs/preferences-dialog.c:287
-#: ../app/dialogs/preferences-dialog.c:636
-#: ../app/dialogs/preferences-dialog.c:1094
-#: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:185
-#: ../app/dialogs/resolution-calibrate-dialog.c:73
-#: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
-#: ../app/dialogs/template-options-dialog.c:118
-#: ../app/dialogs/vectors-export-dialog.c:83
-#: ../app/dialogs/vectors-import-dialog.c:88
-#: ../app/display/gimpdisplayshell-close.c:179
-#: ../app/display/gimpdisplayshell-filter-dialog.c:87
-#: ../app/display/gimpdisplayshell-rotate-dialog.c:122
-#: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:320
-#: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1718
-#: ../app/tools/gimptransformgridtool.c:918 ../app/widgets/gimpactionview.c:669
-#: ../app/widgets/gimpcolordialog.c:125
-#: ../app/widgets/gimpcontrollereditor.c:661
-#: ../app/widgets/gimpcontrollerlist.c:562
-#: ../app/widgets/gimpdeviceeditor.c:493 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
-#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:487
-#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:714
-msgid "_Cancel"
-msgstr "_Cancelar"
 
 #: ../app/actions/documents-commands.c:231 ../app/actions/edit-commands.c:162
 #: ../app/dialogs/preferences-dialog.c:637
@@ -4767,7 +4805,7 @@ msgstr "Mapa _alienígena…"
 #: ../app/actions/filters-actions.c:177
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
-msgstr "_Aplicar lienzo..."
+msgstr "_Aplicar lienzo…"
 
 #: ../app/actions/filters-actions.c:182
 msgctxt "filters-action"
@@ -5009,7 +5047,7 @@ msgstr "_Niveles…"
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr "_Pequeño planeta..."
+msgstr "_Pequeño planeta…"
 
 #: ../app/actions/filters-actions.c:422
 msgctxt "filters-action"
@@ -5155,12 +5193,12 @@ msgstr "_Posterizar…"
 #: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
-msgstr "Transformación _recursiva..."
+msgstr "Transformación _recursiva…"
 
 #: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr "_Eliminar ojos rojos..."
+msgstr "_Eliminar ojos rojos…"
 
 #: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
@@ -5195,7 +5233,7 @@ msgstr "_Sepia…"
 #: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "_Sombras-Resaltados..."
+msgstr "_Sombras-Resaltados…"
 
 #: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
@@ -5225,7 +5263,7 @@ msgstr "Brillo _suave…"
 #: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "Spheri_ze..."
-msgstr "Esferifi_car..."
+msgstr "Esferifi_car…"
 
 #: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
@@ -5250,7 +5288,7 @@ msgstr "_Supernova…"
 #: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Threshold..."
-msgstr "_Umbral..."
+msgstr "_Umbral…"
 
 #: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
@@ -5275,7 +5313,7 @@ msgstr "_Mosaico sin costura…"
 #: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr "Enfocar (_desenfocar máscara)..."
+msgstr "Enfocar (_desenfocar máscara)…"
 
 #: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
@@ -5296,7 +5334,7 @@ msgstr "_Viñeta…"
 #: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "_Ondas..."
+msgstr "_Ondas…"
 
 #: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
@@ -5306,7 +5344,7 @@ msgstr "_Ondas…"
 #: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
-msgstr "_Girar y comprimir..."
+msgstr "_Girar y comprimir…"
 
 #: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
@@ -9390,7 +9428,7 @@ msgstr "Recuperar el nivel de ampliación previo"
 #: ../app/actions/view-actions.c:130
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "_Otro ángulo de rotación..."
+msgstr "_Otro ángulo de rotación…"
 
 #: ../app/actions/view-actions.c:131
 msgctxt "view-action"
@@ -9431,7 +9469,7 @@ msgstr "Reiniciar gestión del color a lo establecido en las preferencias"
 #: ../app/actions/view-actions.c:155
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
-msgstr "Perfil de _prueba..."
+msgstr "Perfil de _prueba…"
 
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
@@ -9806,7 +9844,7 @@ msgstr "Ampliación 1:16"
 #: ../app/actions/view-actions.c:456
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr "_Otro factor de ampliación..."
+msgstr "_Otro factor de ampliación…"
 
 #: ../app/actions/view-actions.c:457
 msgctxt "view-zoom-action"
@@ -13046,7 +13084,7 @@ msgstr "Copia de %s"
 #: ../app/core/gimpdatafactory.c:600 ../app/tools/gimptextoptions.c:536
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
-msgstr "Cargando tipografías (esto puede tardar un rato...)"
+msgstr "Cargando tipografías (esto puede tardar un rato…)"
 
 #: ../app/core/gimpdatafactory.c:934
 #, c-format
@@ -17556,7 +17594,8 @@ msgstr "Descartar la ruta nueva"
 #: ../app/display/gimpdisplayshell-dnd.c:360
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
 #: ../app/tools/gimpfiltertool.c:268 ../app/tools/gimpgradienttool.c:245
-#: ../app/tools/gimpselectiontool.c:427
+#: ../app/tools/gimpselectiontool.c:445
+#, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "No se pueden modificar píxeles de los grupos de capas."
 
@@ -17565,8 +17604,9 @@ msgstr "No se pueden modificar píxeles de los grupos de capas."
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1150
 #: ../app/tools/gimpfiltertool.c:275 ../app/tools/gimpgradienttool.c:252
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:333
+#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:333
 #: ../app/tools/gimpwarptool.c:629
+#, c-format
 msgid "The active layer's pixels are locked."
 msgstr "Los píxeles de la capa activa están bloqueados."
 
@@ -20842,7 +20882,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1590
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1634
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
 
@@ -22350,7 +22390,7 @@ msgstr "Usar el formato antigu_o de archivo de niveles"
 
 #: ../app/tools/gimplevelstool.c:1009 ../app/tools/gimpthresholdtool.c:412
 msgid "Calculating histogram..."
-msgstr "Calculando histograma..."
+msgstr "Calculando histograma…"
 
 #: ../app/tools/gimpmagnifyoptions.c:83
 msgid "Auto-resize window"
@@ -22951,41 +22991,51 @@ msgstr "Radio del difuminado"
 msgid "Mode:"
 msgstr "Modo:"
 
-#: ../app/tools/gimpselectiontool.c:255
+#: ../app/tools/gimpselectiontool.c:261
 msgid "Click-Drag to replace the current selection"
 msgstr "Pulse y arrastre para sustituir la selección actual"
 
-#: ../app/tools/gimpselectiontool.c:263
+#: ../app/tools/gimpselectiontool.c:269
 msgid "Click-Drag to create a new selection"
 msgstr "Pulse y arrastre para crear una nueva selección"
 
-#: ../app/tools/gimpselectiontool.c:268
+#: ../app/tools/gimpselectiontool.c:274
 msgid "Click-Drag to add to the current selection"
 msgstr "Pulse y arrastre para añadir a la selección actual"
 
-#: ../app/tools/gimpselectiontool.c:277
+#: ../app/tools/gimpselectiontool.c:283
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Pulse y arrastre para sustraer de la selección actual"
 
-#: ../app/tools/gimpselectiontool.c:286
+#: ../app/tools/gimpselectiontool.c:292
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Pulse y arrastre para intersectar con la selección actual"
 
-#: ../app/tools/gimpselectiontool.c:296
+#: ../app/tools/gimpselectiontool.c:302
 msgid "Click-Drag to move the selection mask"
 msgstr "Pulse y arrastre para mover la máscara de selección"
 
-#: ../app/tools/gimpselectiontool.c:304
+#: ../app/tools/gimpselectiontool.c:310
 msgid "Click-Drag to move the selected pixels"
 msgstr "Pulse y arrastre para mover los píxeles seleccionados"
 
-#: ../app/tools/gimpselectiontool.c:308
+#: ../app/tools/gimpselectiontool.c:314
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Pulse y arrastre para mover una copia de los píxeles seleccionados"
 
-#: ../app/tools/gimpselectiontool.c:312
+#: ../app/tools/gimpselectiontool.c:318
 msgid "Click to anchor the floating selection"
 msgstr "Pulse para anclar la selección flotante"
+
+#: ../app/tools/gimpselectiontool.c:421
+#, c-format
+msgid "Cannot subtract from an empty selection."
+msgstr "No se puede quitar de una selección vacía."
+
+#: ../app/tools/gimpselectiontool.c:432
+#, c-format
+msgid "Cannot intersect with an empty selection."
+msgstr "No puede intersecarse con una selección vacía."
 
 # Viendo el programa, parece más bien "cizalla". FVD
 #: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:445
@@ -23146,23 +23196,23 @@ msgstr "Caja:"
 msgid "Language:"
 msgstr "Idioma:"
 
-#: ../app/tools/gimptexttool.c:212
+#: ../app/tools/gimptexttool.c:214
 msgid "Text"
 msgstr "Texto"
 
-#: ../app/tools/gimptexttool.c:213
+#: ../app/tools/gimptexttool.c:215
 msgid "Text Tool: Create or edit text layers"
 msgstr "Herramienta de texto: crear o editar capas de texto"
 
-#: ../app/tools/gimptexttool.c:214
+#: ../app/tools/gimptexttool.c:216
 msgid "Te_xt"
 msgstr "Te_xto"
 
-#: ../app/tools/gimptexttool.c:1037
+#: ../app/tools/gimptexttool.c:1039
 msgid "Fonts are still loading"
 msgstr "Las tipografías siguen cargando"
 
-#: ../app/tools/gimptexttool.c:1048
+#: ../app/tools/gimptexttool.c:1050
 msgid "Text box: "
 msgstr "Caja de texto: "
 
@@ -23170,19 +23220,19 @@ msgstr "Caja de texto: "
 msgid "Reshape Text Layer"
 msgstr "Cambiar forma de la capa de texto"
 
-#: ../app/tools/gimptexttool.c:1710 ../app/tools/gimptexttool.c:1713
+#: ../app/tools/gimptexttool.c:1754 ../app/tools/gimptexttool.c:1757
 msgid "Confirm Text Editing"
 msgstr "Confirmar la edición del texto"
 
-#: ../app/tools/gimptexttool.c:1717
+#: ../app/tools/gimptexttool.c:1761
 msgid "Create _New Layer"
 msgstr "Crear una capa _nueva"
 
-#: ../app/tools/gimptexttool.c:1719
+#: ../app/tools/gimptexttool.c:1763
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../app/tools/gimptexttool.c:1741
+#: ../app/tools/gimptexttool.c:1785
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -24581,274 +24631,272 @@ msgstr "GIMP ha encontrado varios errores críticos."
 msgid "_Restart GIMP"
 msgstr "_Reiniciar GIMP"
 
-#: ../app/widgets/gimpdashboard.c:404 ../app/widgets/gimpdashboard.c:456
+#: ../app/widgets/gimpdashboard.c:444 ../app/widgets/gimpdashboard.c:496
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Ocupado"
 
-#: ../app/widgets/gimpdashboard.c:405
+#: ../app/widgets/gimpdashboard.c:445
 msgid "Tile cache occupied size"
 msgstr "Tamaño ocupado de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:414
+#: ../app/widgets/gimpdashboard.c:454
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Máximo"
 
-#: ../app/widgets/gimpdashboard.c:415
+#: ../app/widgets/gimpdashboard.c:455
 msgid "Maximal tile cache occupied size"
 msgstr "Tamaño máximo ocupado de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:424 ../app/widgets/gimpdashboard.c:476
+#: ../app/widgets/gimpdashboard.c:464 ../app/widgets/gimpdashboard.c:516
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Límite"
 
-#: ../app/widgets/gimpdashboard.c:425
+#: ../app/widgets/gimpdashboard.c:465
 msgid "Tile cache size limit"
 msgstr "Tamaño límite de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:433 ../app/widgets/gimpdashboard.c:559
+#: ../app/widgets/gimpdashboard.c:473 ../app/widgets/gimpdashboard.c:599
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Compresión"
 
-#: ../app/widgets/gimpdashboard.c:434
+#: ../app/widgets/gimpdashboard.c:474
 msgid "Tile cache compression ratio"
 msgstr "Tasa de compresión de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:443
+#: ../app/widgets/gimpdashboard.c:483
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Acierto/Fallo"
 
-#: ../app/widgets/gimpdashboard.c:444
+#: ../app/widgets/gimpdashboard.c:484
 msgid "Tile cache hit/miss ratio"
 msgstr "Tasa de acierto/fallo de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:457
+#: ../app/widgets/gimpdashboard.c:497
 msgid "Swap file occupied size"
 msgstr "Tamaño ocupado del archivo de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:466 ../app/widgets/gimpdashboard.c:623
+#: ../app/widgets/gimpdashboard.c:506 ../app/widgets/gimpdashboard.c:663
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../app/widgets/gimpdashboard.c:467
+#: ../app/widgets/gimpdashboard.c:507
 msgid "Swap file size"
 msgstr "Tamaño de archivo de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:477
+#: ../app/widgets/gimpdashboard.c:517
 msgid "Swap file size limit"
 msgstr "Límite de tamaño del archivo de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:484
+#: ../app/widgets/gimpdashboard.c:524
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "En cola"
 
-#: ../app/widgets/gimpdashboard.c:485
+#: ../app/widgets/gimpdashboard.c:525
 msgid "Size of data queued for writing to the swap"
 msgstr "Tamaño de datos en cola para escribir en el área de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:494
+#: ../app/widgets/gimpdashboard.c:534
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Estancamiento de la cola"
 
-#: ../app/widgets/gimpdashboard.c:495
+#: ../app/widgets/gimpdashboard.c:535
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 "Número de veces que se ha parado la escritura en el área de intercambio, "
 "debido a que la cola estaba llena"
 
-#: ../app/widgets/gimpdashboard.c:504
+#: ../app/widgets/gimpdashboard.c:544
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Cola llena"
 
-#: ../app/widgets/gimpdashboard.c:505
+#: ../app/widgets/gimpdashboard.c:545
 msgid "Whether the swap queue is full"
 msgstr "Si la cola del área de intercambio está llena"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:516
+#: ../app/widgets/gimpdashboard.c:556
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Leer"
 
-#: ../app/widgets/gimpdashboard.c:517
+#: ../app/widgets/gimpdashboard.c:557
 msgid "Total amount of data read from the swap"
 msgstr "Cantidad total de datos leídos del intercambio"
 
-#: ../app/widgets/gimpdashboard.c:526
+#: ../app/widgets/gimpdashboard.c:566
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Rendimiento de lectura"
 
-#: ../app/widgets/gimpdashboard.c:527
-#, fuzzy
-#| msgid "The rate at which data is written to the swap"
+#: ../app/widgets/gimpdashboard.c:567
 msgid "The rate at which data is read from the swap"
-msgstr "La tasa a la cual se escriben datos en el área de intercambio"
+msgstr "La tasa a la que se leen los datos del área de intercambio"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:539
+#: ../app/widgets/gimpdashboard.c:579
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Escrito"
 
-#: ../app/widgets/gimpdashboard.c:540
+#: ../app/widgets/gimpdashboard.c:580
 msgid "Total amount of data written to the swap"
 msgstr "Cantidad total de datos escritos en el área de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:549
+#: ../app/widgets/gimpdashboard.c:589
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Rendimiento de escritura"
 
-#: ../app/widgets/gimpdashboard.c:550
+#: ../app/widgets/gimpdashboard.c:590
 msgid "The rate at which data is written to the swap"
 msgstr "La tasa a la cual se escriben datos en el área de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:560
+#: ../app/widgets/gimpdashboard.c:600
 msgid "Swap compression ratio"
 msgstr "Tasa de compresión del área de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:573
+#: ../app/widgets/gimpdashboard.c:613
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Uso"
 
-#: ../app/widgets/gimpdashboard.c:574
+#: ../app/widgets/gimpdashboard.c:614
 msgid "Total CPU usage"
 msgstr "Uso total de CPU"
 
-#: ../app/widgets/gimpdashboard.c:582 ../app/widgets/gimpdashboard.c:591
+#: ../app/widgets/gimpdashboard.c:622 ../app/widgets/gimpdashboard.c:631
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Activo"
 
-#: ../app/widgets/gimpdashboard.c:583
+#: ../app/widgets/gimpdashboard.c:623
 msgid "Whether the CPU is active"
 msgstr "Indica si la CPU está activa"
 
-#: ../app/widgets/gimpdashboard.c:592
+#: ../app/widgets/gimpdashboard.c:632
 msgid "Total amount of time the CPU has been active"
 msgstr "Cantidad total de tiempo que la CPU ha estado activa."
 
-#: ../app/widgets/gimpdashboard.c:605
+#: ../app/widgets/gimpdashboard.c:645
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Usado"
 
-#: ../app/widgets/gimpdashboard.c:606
+#: ../app/widgets/gimpdashboard.c:646
 msgid "Amount of memory used by the process"
 msgstr "Cantidad de memoria usada por el proceso"
 
-#: ../app/widgets/gimpdashboard.c:614
+#: ../app/widgets/gimpdashboard.c:654
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Disponible"
 
-#: ../app/widgets/gimpdashboard.c:615
+#: ../app/widgets/gimpdashboard.c:655
 msgid "Amount of available physical memory"
 msgstr "Cantidad de memoria física disponible"
 
-#: ../app/widgets/gimpdashboard.c:624
+#: ../app/widgets/gimpdashboard.c:664
 msgid "Physical memory size"
 msgstr "Tamaño de la memoria física"
 
-#: ../app/widgets/gimpdashboard.c:635
+#: ../app/widgets/gimpdashboard.c:675
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "En mapas MIP"
 
-#: ../app/widgets/gimpdashboard.c:636
+#: ../app/widgets/gimpdashboard.c:676
 msgid "Total size of processed mipmapped data"
 msgstr "Tamaño total de los datos en mapas MIP procesados"
 
-#: ../app/widgets/gimpdashboard.c:644
+#: ../app/widgets/gimpdashboard.c:684
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Asínc"
 
-#: ../app/widgets/gimpdashboard.c:645
+#: ../app/widgets/gimpdashboard.c:685
 msgid "Number of ongoing asynchronous operations"
 msgstr "Número de operaciones asíncronas en curso"
 
-#: ../app/widgets/gimpdashboard.c:657
+#: ../app/widgets/gimpdashboard.c:697
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Caché"
 
-#: ../app/widgets/gimpdashboard.c:658
+#: ../app/widgets/gimpdashboard.c:698
 msgid "In-memory tile cache"
 msgstr "Caché de mosaico en memoria"
 
-#: ../app/widgets/gimpdashboard.c:694
+#: ../app/widgets/gimpdashboard.c:734
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Intercambio"
 
-#: ../app/widgets/gimpdashboard.c:695
+#: ../app/widgets/gimpdashboard.c:735
 msgid "On-disk tile swap"
 msgstr "Intercambio de mosaico en disco"
 
-#: ../app/widgets/gimpdashboard.c:759
+#: ../app/widgets/gimpdashboard.c:799
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "CPU"
 
-#: ../app/widgets/gimpdashboard.c:760
+#: ../app/widgets/gimpdashboard.c:800
 msgid "CPU usage"
 msgstr "Uso de CPU"
 
-#: ../app/widgets/gimpdashboard.c:795
+#: ../app/widgets/gimpdashboard.c:835
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Memoria"
 
-#: ../app/widgets/gimpdashboard.c:796
+#: ../app/widgets/gimpdashboard.c:836
 msgid "Memory usage"
 msgstr "Uso de memoria"
 
-#: ../app/widgets/gimpdashboard.c:804
+#: ../app/widgets/gimpdashboard.c:844
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Caché"
 
-#: ../app/widgets/gimpdashboard.c:834
+#: ../app/widgets/gimpdashboard.c:874
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Varios"
 
-#: ../app/widgets/gimpdashboard.c:835
+#: ../app/widgets/gimpdashboard.c:875
 msgid "Miscellaneous information"
 msgstr "Información variada"
 
-#: ../app/widgets/gimpdashboard.c:1016
+#: ../app/widgets/gimpdashboard.c:1056
 msgid "Select fields"
 msgstr "Seleccionar campos"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:2996
+#: ../app/widgets/gimpdashboard.c:3121
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "N/D"
 
-#: ../app/widgets/gimpdashboard.c:3005 ../app/widgets/gimpdashboard.c:3203
+#: ../app/widgets/gimpdashboard.c:3130 ../app/widgets/gimpdashboard.c:4021
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Sí"
 
-#: ../app/widgets/gimpdashboard.c:3006 ../app/widgets/gimpdashboard.c:3204
+#: ../app/widgets/gimpdashboard.c:3131 ../app/widgets/gimpdashboard.c:4022
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "No"
@@ -24857,7 +24905,7 @@ msgstr "No"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3090
+#: ../app/widgets/gimpdashboard.c:3215
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -24868,14 +24916,18 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3193
+#: ../app/widgets/gimpdashboard.c:4011
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:3271
+#: ../app/widgets/gimpdashboard.c:4089
 msgid "N/A"
 msgstr "N/D"
+
+#: ../app/widgets/gimpdashboard.c:4312
+msgid "Resolving symbol information..."
+msgstr "Resolviendo información de símbolos…"
 
 #: ../app/widgets/gimpdataeditor.c:411
 #, c-format
@@ -25349,7 +25401,7 @@ msgstr "Leer el idioma se_leccionado"
 
 #: ../app/widgets/gimphelp.c:824
 msgid "Available manuals..."
-msgstr "Manuales disponibles..."
+msgstr "Manuales disponibles…"
 
 #: ../app/widgets/gimphelp.c:836
 msgid ""
@@ -25643,15 +25695,15 @@ msgstr "Gestionar ajustes"
 
 #: ../app/widgets/gimpsettingsbox.c:357
 msgid "_Import Current Settings from File..."
-msgstr "_Importar la configuración actual desde un archivo..."
+msgstr "_Importar la configuración actual desde un archivo…"
 
 #: ../app/widgets/gimpsettingsbox.c:362
 msgid "_Export Current Settings to File..."
-msgstr "_Exportar la configuración actual a un archivo..."
+msgstr "_Exportar la configuración actual a un archivo…"
 
 #: ../app/widgets/gimpsettingsbox.c:368
 msgid "_Manage Saved Presets..."
-msgstr "_Gestionar las opciones guardadas..."
+msgstr "_Gestionar las opciones guardadas…"
 
 #: ../app/widgets/gimpsettingsbox.c:593
 msgid "Save Settings as Named Preset"
@@ -26300,6 +26352,10 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgctxt "dashboard-action"
+#~ msgid "Reset"
+#~ msgstr "Restablecer"
 
 #~ msgctxt "dashboard-variable"
 #~ msgid "Reading"
