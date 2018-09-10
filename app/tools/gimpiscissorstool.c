@@ -46,6 +46,7 @@
 
 #include <stdlib.h>
 
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -1914,12 +1915,12 @@ find_max_gradient (GimpIscissorsTool *iscissors,
   iter = gegl_buffer_iterator_new (iscissors->gradient_map,
                                    GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                                    0, NULL,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  roi = &iter->roi[0];
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      guint8 *data = iter->data[0];
+      guint8 *data = iter->items[0].data;
       gint    endx = roi->x + roi->width;
       gint    endy = roi->y + roi->height;
       gint    i, j;
