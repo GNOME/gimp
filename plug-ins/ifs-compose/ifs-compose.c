@@ -27,6 +27,7 @@
  * 2. Figure out if we need multiple phases for supersampled brushes.
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <string.h>
@@ -1313,12 +1314,12 @@ ifs_compose (gint32 drawable_id)
                                        GEGL_RECTANGLE (0, band_y,
                                                        width, band_height), 0,
                                        format,
-                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-      roi = &iter->roi[0];
+                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
+      roi = &iter->items[0].roi;
 
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *destrow = iter->data[0];
+          guchar *destrow = iter->items[0].data;
 
           for (j = roi->y; j < (roi->y + roi->height); j++)
             {
