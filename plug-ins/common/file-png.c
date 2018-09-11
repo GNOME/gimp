@@ -38,6 +38,7 @@
  *   see ChangeLog
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <stdlib.h>
@@ -1360,13 +1361,13 @@ load_image (const gchar  *filename,
       file_format = gegl_buffer_get_format (buffer);
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, file_format,
-                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
       n_components = babl_format_get_n_components (file_format);
       g_warn_if_fail (n_components == 2);
 
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *data   = iter->data[0];
+          guchar *data   = iter->items[0].data;
           gint    length = iter->length;
 
           while (length--)
@@ -2121,13 +2122,13 @@ ia_has_transparent_pixels (GeglBuffer *buffer)
 
   format = gegl_buffer_get_format (buffer);
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
   n_components = babl_format_get_n_components (format);
   g_return_val_if_fail (n_components == 2, FALSE);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data   = iter->data[0];
+      const guchar *data   = iter->items[0].data;
       gint          length = iter->length;
 
       while (length--)
@@ -2164,13 +2165,13 @@ find_unused_ia_color (GeglBuffer *buffer,
 
   format = gegl_buffer_get_format (buffer);
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
   n_components = babl_format_get_n_components (format);
   g_return_val_if_fail (n_components == 2, FALSE);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *data   = iter->data[0];
+      const guchar *data   = iter->items[0].data;
       gint          length = iter->length;
 
       while (length--)
