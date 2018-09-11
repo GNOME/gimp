@@ -18,6 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 #include <string.h>
 
@@ -265,7 +266,7 @@ map (GeglBuffer   *buffer,
     }
 
   gi = gegl_buffer_iterator_new (shadow_buffer, NULL, 0, format_shadow,
-                                 GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 2);
 
   index_iter = gegl_buffer_iterator_add (gi, buffer, NULL,
                                          0, format_buffer,
@@ -277,8 +278,8 @@ map (GeglBuffer   *buffer,
       gfloat *data;
       gfloat *data2;
 
-      data  = (gfloat*) gi->data[0];
-      data2 = (gfloat*) gi->data[index_iter];
+      data  = (gfloat*) gi->items[0].data;
+      data2 = (gfloat*) gi->items[index_iter].data;
 
       if (interpolate)
         {
