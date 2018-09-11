@@ -42,6 +42,7 @@
  * other special, indirect and consequential damages.
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <errno.h>
@@ -1469,7 +1470,7 @@ load_contiguous (TIFF        *tif,
                                                GEGL_RECTANGLE (0, 0, cols, rows),
                                                0, NULL,
                                                GEGL_ACCESS_READ,
-                                               GEGL_ABYSS_NONE);
+                                               GEGL_ABYSS_NONE, 2);
               gegl_buffer_iterator_add (iter, channel[i].buffer,
                                         GEGL_RECTANGLE (x, y, cols, rows),
                                         0, channel[i].format,
@@ -1477,8 +1478,8 @@ load_contiguous (TIFF        *tif,
 
               while (gegl_buffer_iterator_next (iter))
                 {
-                  guchar *s      = iter->data[0];
-                  guchar *d      = iter->data[1];
+                  guchar *s      = iter->items[0].data;
+                  guchar *d      = iter->items[1].data;
                   gint    length = iter->length;
 
                   s += offset;
@@ -1619,7 +1620,7 @@ load_separate (TIFF        *tif,
                                                    GEGL_RECTANGLE (0, 0, cols, rows),
                                                    0, NULL,
                                                    GEGL_ACCESS_READ,
-                                                   GEGL_ABYSS_NONE);
+                                                   GEGL_ABYSS_NONE, 2);
                   gegl_buffer_iterator_add (iter, channel[i].buffer,
                                             GEGL_RECTANGLE (x, y, cols, rows),
                                             0, channel[i].format,
@@ -1628,8 +1629,8 @@ load_separate (TIFF        *tif,
 
                   while (gegl_buffer_iterator_next (iter))
                     {
-                      guchar *s      = iter->data[0];
-                      guchar *d      = iter->data[1];
+                      guchar *s      = iter->items[0].data;
+                      guchar *d      = iter->items[1].data;
                       gint    length = iter->length;
 
                       d += offset;
