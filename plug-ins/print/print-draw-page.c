@@ -15,6 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <string.h>
@@ -140,23 +141,23 @@ print_surface_from_drawable (gint32   drawable_ID,
   iter = gegl_buffer_iterator_new (buffer,
                                    GEGL_RECTANGLE (0, 0, width, height), 0,
                                    format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const guchar *src  = iter->data[0];
-      guchar       *dest = pixels + iter->roi->y * stride + iter->roi->x * 4;
+      const guchar *src  = iter->items[0].data;
+      guchar       *dest = pixels + iter->items[0].roi.y * stride + iter->items[0].roi.x * 4;
       gint          y;
 
-      for (y = 0; y < iter->roi->height; y++)
+      for (y = 0; y < iter->items[0].roi.height; y++)
         {
-          memcpy (dest, src, iter->roi->width * 4);
+          memcpy (dest, src, iter->items[0].roi.width * 4);
 
-          src  += iter->roi->width * 4;
+          src  += iter->items[0].roi.width * 4;
           dest += stride;
         }
 
-      done += iter->roi->height * iter->roi->width;
+      done += iter->items[0].roi.height * iter->items[0].roi.width;
 
       if (count++ % 16 == 0)
         gimp_progress_update ((gdouble) done / (width * height));
