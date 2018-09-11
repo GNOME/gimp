@@ -276,7 +276,8 @@ struct AlgorithmBase
    *
    * 'params' is the same parameter struct passed to the constructor.  'state'
    * is the state object.  'iter' is the iterator; each distinct state object
-   * uses a distinct iterator.  'roi' is the full region to be processed.
+   * uses a distinct iterator; if the algorithm hierarchy doesn't use any
+   * iterator, 'iter' may be NULL.  'roi' is the full region to be processed.
    * 'area' is the subregion to be processed by the current state object.
    *
    * An algorithm that overrides this function should call the 'init()'
@@ -296,7 +297,8 @@ struct AlgorithmBase
    * 'gegl_buffer_iterator_next()' call, and should perform any necessary
    * initialization required before processing the current chunk.
    *
-   * The parameters are the same as for 'init()'.
+   * The parameters are the same as for 'init()', with the addition of 'rect',
+   * which is the area of the current chunk.
    *
    * An algorithm that overrides this function should call the 'init_step()'
    * function of its base class first, using the same arguments.
@@ -307,15 +309,16 @@ struct AlgorithmBase
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
   }
 
   /* The 'process_row()' function is called for each row in the current chunk,
    * and should perform the actual processing.
    *
-   * The parameters are the same as for 'init()', with the addition of 'y',
-   * which is the current row.
+   * The parameters are the same as for 'init_step()', with the addition of
+   * 'y', which is the current row.
    *
    * An algorithm that overrides this function should call the 'process_row()'
    * function of its base class first, using the same arguments.
@@ -327,6 +330,7 @@ struct AlgorithmBase
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
   }
@@ -634,9 +638,10 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
-    base_type::init_step (params, state, iter, roi, area);
+    base_type::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
       (gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
@@ -649,19 +654,20 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    base_type::process_row (params, state, iter, roi, area, y);
+    base_type::process_row (params, state, iter, roi, area, rect, y);
 
-    gint             mask_offset  = (y              - roi->y) * this->mask_stride +
-                                    (iter->items[0].roi.x - roi->x);
+    gint             mask_offset  = (y       - roi->y) * this->mask_stride +
+                                    (rect->x - roi->x);
     const mask_type *mask_pixel   = &this->mask_data[mask_offset];
-    gint             paint_offset = (y              - roi->y) * this->paint_stride +
-                                    (iter->items[0].roi.x - roi->x) * 4;
+    gint             paint_offset = (y       - roi->y) * this->paint_stride +
+                                    (rect->x - roi->x) * 4;
     gfloat          *paint_pixel  = &this->paint_data[paint_offset];
     gint             x;
 
-    for (x = 0; x < iter->items[0].roi.width; x++)
+    for (x = 0; x < rect->width; x++)
       {
         if (base_type::stipple)
           {
@@ -731,9 +737,10 @@ struct CombinePaintMaskToCanvasMask :
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
-    base_type::init_step (params, state, iter, roi, area);
+    base_type::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
       (gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
@@ -746,16 +753,17 @@ struct CombinePaintMaskToCanvasMask :
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    base_type::process_row (params, state, iter, roi, area, y);
+    base_type::process_row (params, state, iter, roi, area, rect, y);
 
-    gint             mask_offset = (y              - roi->y) * this->mask_stride +
-                                   (iter->items[0].roi.x - roi->x);
+    gint             mask_offset = (y       - roi->y) * this->mask_stride +
+                                   (rect->x - roi->x);
     const mask_type *mask_pixel  = &this->mask_data[mask_offset];
     gint             x;
 
-    for (x = 0; x < iter->items[0].roi.width; x++)
+    for (x = 0; x < rect->width; x++)
       {
         if (base_type::stipple)
           {
@@ -819,9 +827,10 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
-    base_type::init_step (params, state, iter, roi, area);
+    base_type::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
       (const gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
@@ -834,18 +843,19 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    base_type::process_row (params, state, iter, roi, area, y);
+    base_type::process_row (params, state, iter, roi, area, rect, y);
 
     /* Copy the canvas buffer in rect to the paint buffer's alpha channel */
 
-    gint    paint_offset = (y                    - roi->y) * this->paint_stride +
-                           (iter->items[0].roi.x - roi->x) * 4;
+    gint    paint_offset = (y       - roi->y) * this->paint_stride +
+                           (rect->x - roi->x) * 4;
     gfloat *paint_pixel  = &this->paint_data[paint_offset];
     gint    x;
 
-    for (x = 0; x < iter->items[0].roi.width; x++)
+    for (x = 0; x < rect->width; x++)
       {
         paint_pixel[3] *= *state->canvas_pixel;
 
@@ -900,19 +910,20 @@ struct PaintMaskToPaintBuffer : Base
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    Base::process_row (params, state, iter, roi, area, y);
+    Base::process_row (params, state, iter, roi, area, rect, y);
 
-    gint             paint_offset = (y                    - roi->y) * this->paint_stride +
-                                    (iter->items[0].roi.x - roi->x) * 4;
+    gint             paint_offset = (y       - roi->y) * this->paint_stride +
+                                    (rect->x - roi->x) * 4;
     gfloat          *paint_pixel  = &this->paint_data[paint_offset];
-    gint             mask_offset  = (y                    - roi->y) * this->mask_stride +
-                                    (iter->items[0].roi.x - roi->x);
+    gint             mask_offset  = (y       - roi->y) * this->mask_stride +
+                                    (rect->x - roi->x);
     const mask_type *mask_pixel   = &this->mask_data[mask_offset];
     gint             x;
 
-    for (x = 0; x < iter->items[0].roi.width; x++)
+    for (x = 0; x < rect->width; x++)
       {
         paint_pixel[3] *= value_to_float (*mask_pixel) * params->paint_opacity;
 
@@ -1018,23 +1029,24 @@ struct DoLayerBlend : Base
              State<Derived>                 *state,
              GeglBufferIterator             *iter,
              const GeglRectangle            *roi,
-             const GeglRectangle            *area) const
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
   {
-    Base::init_step (params, state, iter, roi, area);
+    Base::init_step (params, state, iter, roi, area, rect);
 
     state->out_pixel  = (gfloat *) iter->items[iterator_base + 0].data;
     state->in_pixel   = (gfloat *) iter->items[iterator_base + 1].data;
     state->mask_pixel = NULL;
 
-    state->paint_pixel = this->paint_data                               +
-                         (iter->items[0].roi.y - roi->y) * this->paint_stride +
-                         (iter->items[0].roi.x - roi->x) * 4;
+    state->paint_pixel = this->paint_data                        +
+                         (rect->y - roi->y) * this->paint_stride +
+                         (rect->x - roi->x) * 4;
 
     if (params->mask_buffer)
       state->mask_pixel = (gfloat *) iter->items[iterator_base + 2].data;
 
-    state->process_roi.x      = iter->items[0].roi.x;
-    state->process_roi.width  = iter->items[0].roi.width;
+    state->process_roi.x      = rect->x;
+    state->process_roi.width  = rect->width;
     state->process_roi.height = 1;
   }
 
@@ -1045,9 +1057,10 @@ struct DoLayerBlend : Base
                GeglBufferIterator             *iter,
                const GeglRectangle            *roi,
                const GeglRectangle            *area,
+               const GeglRectangle            *rect,
                gint                            y) const
   {
-    Base::process_row (params, state, iter, roi, area, y);
+    Base::process_row (params, state, iter, roi, area, rect, y);
 
     state->process_roi.y = y;
 
@@ -1056,14 +1069,14 @@ struct DoLayerBlend : Base
                          state->paint_pixel,
                          state->mask_pixel,
                          state->out_pixel,
-                         iter->items[0].roi.width,
+                         rect->width,
                          &state->process_roi,
                          0);
 
-    state->in_pixel     += iter->items[0].roi.width * 4;
-    state->out_pixel    += iter->items[0].roi.width * 4;
+    state->in_pixel     += rect->width * 4;
+    state->out_pixel    += rect->width * 4;
     if (params->mask_buffer)
-      state->mask_pixel += iter->items[0].roi.width;
+      state->mask_pixel += rect->width;
     state->paint_pixel  += this->paint_stride;
   }
 };
@@ -1128,36 +1141,34 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
             {
               GeglBufferIterator *iter;
 
-              iter = gegl_buffer_iterator_empty_new (4);
+              iter = gegl_buffer_iterator_empty_new (Algorithm::n_iterators);
 
               algorithm.init (params, &state, iter, &roi, area);
 
               while (gegl_buffer_iterator_next (iter))
                 {
-                  algorithm.init_step (params, &state, iter, &roi, area);
+                  const GeglRectangle *rect = &iter->items[0].roi;
 
-                  for (y = 0; y < iter->items[0].roi.height; y++)
+                  algorithm.init_step (params, &state, iter, &roi, area, rect);
+
+                  for (y = 0; y < rect->height; y++)
                     {
                       algorithm.process_row (params, &state,
-                                             iter, &roi, area,
-                                             iter->items[0].roi.y + y);
+                                             iter, &roi, area, rect,
+                                             rect->y + y);
                     }
                 }
             }
           else
             {
-              GeglBufferIterator iter[2];
+              algorithm.init      (params, &state, NULL, &roi, area);
+              algorithm.init_step (params, &state, NULL, &roi, area, area);
 
-              iter[0].items[0].roi = *area;
-
-              algorithm.init      (params, &state, &iter[0], &roi, area);
-              algorithm.init_step (params, &state, &iter[0], &roi, area);
-
-              for (y = 0; y < iter[0].items[0].roi.height; y++)
+              for (y = 0; y < area->height; y++)
                 {
                   algorithm.process_row (params, &state,
-                                         &iter[0], &roi, area,
-                                         iter[0].items[0].roi.y + y);
+                                         NULL, &roi, area, area,
+                                         area->y + y);
                 }
             }
         });
