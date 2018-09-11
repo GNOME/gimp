@@ -18,6 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <string.h>
@@ -1872,11 +1873,11 @@ add_merged_image (gint32     image_id,
           iter = gegl_buffer_iterator_new (buffer, NULL, 0,
                                            babl_format ("R'G'B'A float"),
                                            GEGL_ACCESS_READWRITE,
-                                           GEGL_ABYSS_NONE);
+                                           GEGL_ABYSS_NONE, 1);
 
           while (gegl_buffer_iterator_next (iter))
             {
-              gfloat *data = iter->data[0];
+              gfloat *data = iter->items[0].data;
 
               for (i = 0; i < iter->length; i++)
                 {

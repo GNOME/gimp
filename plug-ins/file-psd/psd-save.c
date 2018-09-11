@@ -63,6 +63,7 @@
  * BUGS:
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <errno.h>
@@ -1467,11 +1468,11 @@ create_merged_image (gint32 image_id)
       GeglBufferIterator *iter;
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
 
       while (gegl_buffer_iterator_next (iter))
         {
-          guchar *d = iter->data[0];
+          guchar *d = iter->items[0].data;
           gint    i;
 
           for (i = 0; i < iter->length; i++)
