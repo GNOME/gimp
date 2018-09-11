@@ -39,7 +39,7 @@
  * 1.0: (July '04)
  *      - Code cleanup, added reverse gradient option.
  */
-
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <libgimp/gimp.h>
@@ -742,7 +742,7 @@ do_curl_effect (gint32 drawable_id)
   iter = gegl_buffer_iterator_new (curl_buffer,
                                    GEGL_RECTANGLE (0, 0, width, height), 0,
                                    format,
-                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
 
   /* Init shade_under */
   gimp_vector2_set (&dl, -sel_width, -sel_height);
@@ -774,8 +774,8 @@ do_curl_effect (gint32 drawable_id)
     {
       gfloat *dest;
 
-      roi = &iter->roi[0];
-      dest = (gfloat *) iter->data[0];
+      roi = &iter->items[0].roi;
+      dest = (gfloat *) iter->items[0].data;
 
       for (y1 = roi->y; y1 < roi->y + roi->height; y1++)
         {
@@ -909,16 +909,16 @@ clear_curled_region (gint32 drawable_id)
   iter = gegl_buffer_iterator_new (shadow_buf,
                                    GEGL_RECTANGLE (0, 0, width, height), 0,
                                    format,
-                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 2);
   buf_index = gegl_buffer_iterator_add (iter, buf, NULL, 0,
                                         format,
                                         GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      roi  = &iter->roi[0];
-      dest = iter->data[0];
-      src  = iter->data[buf_index];
+      roi  = &iter->items[0].roi;
+      dest = iter->items[0].data;
+      src  = iter->items[buf_index].data;
 
       memcpy (dest, src, roi->width * roi->height * bpp);
 
