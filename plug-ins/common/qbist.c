@@ -26,6 +26,7 @@
  *
  */
 
+#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <string.h>
@@ -501,7 +502,7 @@ run (const gchar      *name,
                                                            img_width, img_height),
                                            0, babl_format ("R'G'B'A float"),
                                            GEGL_ACCESS_READWRITE,
-                                           GEGL_ABYSS_NONE);
+                                           GEGL_ABYSS_NONE, 1);
 
           optimize (&qbist_info.info);
 
@@ -509,8 +510,8 @@ run (const gchar      *name,
 
           while (gegl_buffer_iterator_next (iter))
             {
-              gfloat        *data = iter->data[0];
-              GeglRectangle  roi  = iter->roi[0];
+              gfloat        *data = iter->items[0].data;
+              GeglRectangle  roi  = iter->items[0].roi;
               gint           row;
 
               for (row = 0; row < roi.height; row++)
