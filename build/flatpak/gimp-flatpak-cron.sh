@@ -32,7 +32,7 @@ BUILDBASE="$BUILDDIR/$date/"
 ARTIFACTDIR="$BUILDBASE/artifacts"
 BUILDDIR="$BUILDBASE/build/"
 
-flatpak update --user
+flatpak update --user --assumeyes
 
 # Jump to the source directory.
 # We assume readlink existence.
