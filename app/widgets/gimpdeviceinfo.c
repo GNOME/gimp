@@ -179,10 +179,6 @@ gimp_device_info_constructed (GObject *object)
                          info);
 
       gimp_object_set_name (GIMP_OBJECT (info), info->device->name);
-
-      info->mode    = info->device->mode;
-      info->n_axes  = info->device->num_axes;
-      info->n_keys  = info->device->num_keys;
     }
 }
 
@@ -549,27 +545,6 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       info->display = display;
 
       g_object_set_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY, info);
-
-      gimp_device_info_set_mode (info, info->mode);
-
-      if (info->n_axes != device->num_axes)
-        g_printerr ("%s: stored 'num-axes' for device '%s' doesn't match "
-                    "number of axes present in device\n",
-                    G_STRFUNC, device->name);
-
-      for (i = 0; i < MIN (info->n_axes, device->num_axes); i++)
-        gimp_device_info_set_axis_use (info, i,
-                                       info->axes[i]);
-
-      if (info->n_keys != device->num_keys)
-        g_printerr ("%s: stored 'num-keys' for device '%s' doesn't match "
-                    "number of keys present in device\n",
-                    G_STRFUNC, device->name);
-
-      for (i = 0; i < MIN (info->n_keys, device->num_keys); i++)
-        gimp_device_info_set_key (info, i,
-                                  info->keys[i].keyval,
-                                  info->keys[i].modifiers);
     }
   else
     {
@@ -864,7 +839,6 @@ gimp_device_info_get_curve (GimpDeviceInfo *info,
     {
     case GDK_AXIS_PRESSURE:
       return info->pressure_curve;
-      break;
 
     default:
       return NULL;
