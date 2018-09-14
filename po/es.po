@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-09-02 16:15+0000\n"
-"PO-Revision-Date: 2018-09-02 21:30+0200\n"
+"POT-Creation-Date: 2018-09-11 15:33+0000\n"
+"PO-Revision-Date: 2018-09-13 20:03+0200\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -2746,22 +2746,16 @@ msgid "Dashboard Menu"
 msgstr "Menú del panel"
 
 #: ../app/actions/dashboard-actions.c:44
-#| msgctxt "dashboard-action"
-#| msgid "Groups"
 msgctxt "dashboard-action"
 msgid "_Groups"
 msgstr "_Grupos"
 
 #: ../app/actions/dashboard-actions.c:46
-#| msgctxt "dashboard-action"
-#| msgid "Update Interval"
 msgctxt "dashboard-action"
 msgid "_Update Interval"
 msgstr "_Intervalo de actualización"
 
 #: ../app/actions/dashboard-actions.c:48
-#| msgctxt "dashboard-action"
-#| msgid "History Duration"
 msgctxt "dashboard-action"
 msgid "_History Duration"
 msgstr "Duración del _histórico"
@@ -2778,8 +2772,6 @@ msgid "Start/stop recording performance log"
 msgstr "Comenzar/Detener el registro de desempeño de la grabación"
 
 #: ../app/actions/dashboard-actions.c:56
-#| msgctxt "layers-action"
-#| msgid "Add La_yer Mask..."
 msgctxt "dashboard-action"
 msgid "_Add Marker..."
 msgstr "_Añadir marcador…"
@@ -2790,7 +2782,6 @@ msgid "Add an event marker to the performance log"
 msgstr "Añadir un marcador de evento al registro de desempeño"
 
 #: ../app/actions/dashboard-actions.c:62
-#| msgid "Add path stroke"
 msgctxt "dashboard-action"
 msgid "Add _Empty Marker"
 msgstr "Añadir marcador _vacío"
@@ -2801,7 +2792,6 @@ msgid "Add an empty event marker to the performance log"
 msgstr "Añadir un marcador de evento vacío al registro de desempeño"
 
 #: ../app/actions/dashboard-actions.c:69
-#| msgid "_Reset"
 msgctxt "dashboard-action"
 msgid "_Reset"
 msgstr "_Restablecer"
@@ -2812,8 +2802,6 @@ msgid "Reset cumulative data"
 msgstr "Restablecer datos acumulados"
 
 #: ../app/actions/dashboard-actions.c:78
-#| msgctxt "dashboard-action"
-#| msgid "Low Swap Space Warning"
 msgctxt "dashboard-action"
 msgid "_Low Swap Space Warning"
 msgstr "Advertencia de espacio de intercambio _bajo"
@@ -2918,7 +2906,7 @@ msgstr "240 segundos"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1718
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -2931,28 +2919,22 @@ msgid "_Cancel"
 msgstr "_Cancelar"
 
 #: ../app/actions/dashboard-commands.c:103
-#| msgid "_Recover"
 msgid "_Record"
 msgstr "_Grabar"
 
 #: ../app/actions/dashboard-commands.c:125
-#| msgid "Show All Files"
 msgid "All Files"
 msgstr "Todos los archivos"
 
 #: ../app/actions/dashboard-commands.c:130
-#| msgid "All files (*.*)"
 msgid "Log Files (*.log)"
 msgstr "Archivos de registro (*.log)"
 
 #: ../app/actions/dashboard-commands.c:197
-#| msgctxt "undo-type"
-#| msgid "Add layer"
 msgid "Add Marker"
 msgstr "Añadir marcador"
 
 #: ../app/actions/dashboard-commands.c:199
-#| msgid "Enter a name for the preset"
 msgid "Enter a description for the marker"
 msgstr "Introduzca una descripción para el marcador"
 
@@ -4370,7 +4352,7 @@ msgstr "Guardar registro de errores en un archivo"
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
-#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:736
+#: ../app/widgets/gimpsavedialog.c:142 ../app/widgets/gimpsettingsbox.c:736
 msgid "_Save"
 msgstr "_Guardar"
 
@@ -4594,7 +4576,7 @@ msgid "No changes need to be saved"
 msgstr "No es necesario guardar ningún cambio"
 
 #: ../app/actions/file-commands.c:284 ../app/actions/file-commands.c:751
-#: ../app/widgets/gimpsavedialog.c:140
+#: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Guardar imagen"
 
@@ -13399,22 +13381,28 @@ msgstr "Se añadieron máscaras en grupos de capas en %s"
 msgid "High bit-depth images were added in %s"
 msgstr "Se añadieron imágenes con profundidad de bit alta en %s"
 
-#: ../app/core/gimpimage.c:2524
+#: ../app/core/gimpimage.c:2511
+#, c-format
+#| msgid "Layer mode '%s' was added in %s"
+msgid "Internal zlib compression was added in %s"
+msgstr "Se añadió compresión zlib interna en %s"
+
+#: ../app/core/gimpimage.c:2528
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Se añadió soporte para archivos de imagen mayores que 4GB en %s"
 
-#: ../app/core/gimpimage.c:2618
+#: ../app/core/gimpimage.c:2622
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambiar la resolución de la imagen"
 
-#: ../app/core/gimpimage.c:2670
+#: ../app/core/gimpimage.c:2674
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambiar la unidad de medida"
 
-#: ../app/core/gimpimage.c:3557
+#: ../app/core/gimpimage.c:3561
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13422,47 +13410,47 @@ msgstr ""
 "La validación del parásito «gimp-comment» falló: el comentario contiene "
 "UTF-8 no válido"
 
-#: ../app/core/gimpimage.c:3609
+#: ../app/core/gimpimage.c:3613
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjuntar parásito a la imagen"
 
-#: ../app/core/gimpimage.c:3650
+#: ../app/core/gimpimage.c:3654
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Eliminar el parásito de la imagen"
 
-#: ../app/core/gimpimage.c:4377
+#: ../app/core/gimpimage.c:4381
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Añadir una capa"
 
-#: ../app/core/gimpimage.c:4419 ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4423 ../app/core/gimpimage.c:4454
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Eliminar una capa"
 
-#: ../app/core/gimpimage.c:4444
+#: ../app/core/gimpimage.c:4448
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Eliminar la selección flotante"
 
-#: ../app/core/gimpimage.c:4611
+#: ../app/core/gimpimage.c:4615
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: ../app/core/gimpimage.c:4639 ../app/core/gimpimage.c:4663
+#: ../app/core/gimpimage.c:4643 ../app/core/gimpimage.c:4667
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Eliminar un canal"
 
-#: ../app/core/gimpimage.c:4719
+#: ../app/core/gimpimage.c:4723
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: ../app/core/gimpimage.c:4749 ../app/core/gimpimage.c:4756
+#: ../app/core/gimpimage.c:4753 ../app/core/gimpimage.c:4760
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Eliminar una ruta"
@@ -20814,7 +20802,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1590
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1634
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
 
@@ -22978,7 +22966,6 @@ msgstr "Pulse para anclar la selección flotante"
 
 #: ../app/tools/gimpselectiontool.c:421
 #, c-format
-#| msgid "Click-Drag to subtract from the current selection"
 msgid "Cannot subtract from an empty selection."
 msgstr "No se puede quitar de una selección vacía."
 
@@ -22986,7 +22973,6 @@ msgstr "No se puede quitar de una selección vacía."
 # Otra opción es «cruzarse»
 #: ../app/tools/gimpselectiontool.c:432
 #, c-format
-#| msgid "Click-Drag to intersect with the current selection"
 msgid "Cannot intersect with an empty selection."
 msgstr "No puede intersecarse con una selección vacía."
 
@@ -23149,23 +23135,23 @@ msgstr "Caja:"
 msgid "Language:"
 msgstr "Idioma:"
 
-#: ../app/tools/gimptexttool.c:212
+#: ../app/tools/gimptexttool.c:214
 msgid "Text"
 msgstr "Texto"
 
-#: ../app/tools/gimptexttool.c:213
+#: ../app/tools/gimptexttool.c:215
 msgid "Text Tool: Create or edit text layers"
 msgstr "Herramienta de texto: crear o editar capas de texto"
 
-#: ../app/tools/gimptexttool.c:214
+#: ../app/tools/gimptexttool.c:216
 msgid "Te_xt"
 msgstr "Te_xto"
 
-#: ../app/tools/gimptexttool.c:1037
+#: ../app/tools/gimptexttool.c:1039
 msgid "Fonts are still loading"
 msgstr "Las tipografías siguen cargando"
 
-#: ../app/tools/gimptexttool.c:1048
+#: ../app/tools/gimptexttool.c:1050
 msgid "Text box: "
 msgstr "Caja de texto: "
 
@@ -23173,19 +23159,19 @@ msgstr "Caja de texto: "
 msgid "Reshape Text Layer"
 msgstr "Cambiar forma de la capa de texto"
 
-#: ../app/tools/gimptexttool.c:1710 ../app/tools/gimptexttool.c:1713
+#: ../app/tools/gimptexttool.c:1754 ../app/tools/gimptexttool.c:1757
 msgid "Confirm Text Editing"
 msgstr "Confirmar la edición del texto"
 
-#: ../app/tools/gimptexttool.c:1717
+#: ../app/tools/gimptexttool.c:1761
 msgid "Create _New Layer"
 msgstr "Crear una capa _nueva"
 
-#: ../app/tools/gimptexttool.c:1719
+#: ../app/tools/gimptexttool.c:1763
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../app/tools/gimptexttool.c:1741
+#: ../app/tools/gimptexttool.c:1785
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -24653,7 +24639,6 @@ msgid "Queued"
 msgstr "En cola"
 
 #: ../app/widgets/gimpdashboard.c:532
-#| msgid "Total amount of data written to the swap"
 msgid "Size of data queued for writing to the swap"
 msgstr "Cantidad de datos en cola que escribir en el área de intercambio"
 
@@ -24691,14 +24676,11 @@ msgid "Total amount of data read from the swap"
 msgstr "Cantidad total de datos leídos del intercambio"
 
 #: ../app/widgets/gimpdashboard.c:573
-#| msgctxt "layer-mode"
-#| msgid "Pass through"
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Rendimiento de escritura"
 
 #: ../app/widgets/gimpdashboard.c:574
-#| msgid "Whether data is being read from the swap"
 msgid "The rate at which data is read from the swap"
 msgstr "La tasa a la que se leen los datos del área de intercambio"
 
@@ -24715,18 +24697,15 @@ msgid "Total amount of data written to the swap"
 msgstr "Cantidad total de datos escritos en el área de intercambio"
 
 #: ../app/widgets/gimpdashboard.c:596
-#| msgid "Strikethrough"
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Rendimiento de escritura"
 
 #: ../app/widgets/gimpdashboard.c:597
-#| msgid "Whether data is being written to the swap"
 msgid "The rate at which data is written to the swap"
 msgstr "La tasa a la que se escriben datos en el área de intercambio"
 
 #: ../app/widgets/gimpdashboard.c:607
-#| msgid "Tile cache compression ratio"
 msgid "Swap compression ratio"
 msgstr "Tasa de compresión del área de intercambio"
 
@@ -24853,12 +24832,12 @@ msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "N/D"
 
-#: ../app/widgets/gimpdashboard.c:3160 ../app/widgets/gimpdashboard.c:3990
+#: ../app/widgets/gimpdashboard.c:3160 ../app/widgets/gimpdashboard.c:4046
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Sí"
 
-#: ../app/widgets/gimpdashboard.c:3161 ../app/widgets/gimpdashboard.c:3991
+#: ../app/widgets/gimpdashboard.c:3161 ../app/widgets/gimpdashboard.c:4047
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "No"
@@ -24878,18 +24857,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3980
+#: ../app/widgets/gimpdashboard.c:4036
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4058
-#| msgctxt "dashboard-value"
-#| msgid "N/A"
+#: ../app/widgets/gimpdashboard.c:4114
 msgid "N/A"
 msgstr "N/D"
 
-#: ../app/widgets/gimpdashboard.c:4284
+#: ../app/widgets/gimpdashboard.c:4337
 msgid "Resolving symbol information..."
 msgstr "Resolviendo información de símbolos..."
 
@@ -25115,7 +25092,7 @@ msgstr "Exportar la imagen"
 msgid "_Export"
 msgstr "_Exportar"
 
-#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:145
+#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:144
 msgid "By Extension"
 msgstr "Por extensión"
 
@@ -25570,34 +25547,36 @@ msgstr ""
 "no tiene\n"
 "puntos de muestreo"
 
-#: ../app/widgets/gimpsavedialog.c:151
+#: ../app/widgets/gimpsavedialog.c:150
 msgid "All XCF images"
 msgstr "Todas las imágenes XCF"
 
-#: ../app/widgets/gimpsavedialog.c:265
-#, c-format
-msgid ""
-"The image uses features from %s, disabling compression won't make the XCF "
-"file readable by older GIMP versions."
-msgstr ""
-"La imagen usa características de %s. Desactivar la compresión no hará que el "
-"archivo XCF lo puedan leer versiones antiguas de GIMP."
-
-#: ../app/widgets/gimpsavedialog.c:275
+#: ../app/widgets/gimpsavedialog.c:262
 #, c-format
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
 msgstr ""
 "Desactive la compresión para que %s y posterior pueda leer los archivos XCF."
 
-#: ../app/widgets/gimpsavedialog.c:287
+#: ../app/widgets/gimpsavedialog.c:326
+msgid "Save this XCF file with better but slower compression"
+msgstr "Guardar este archivo XCF con una compresión mejor pero más lenta"
+
+#: ../app/widgets/gimpsavedialog.c:395
+#, c-format
+#| msgid ""
+#| "The image uses features from %s, disabling compression won't make the XCF "
+#| "file readable by older GIMP versions."
+msgid ""
+"The image uses features from %s and won't be readable by older GIMP versions."
+msgstr ""
+"La imagen usa características de %s y no se podrá leer en versiones antiguas "
+"de GIMP."
+
+#: ../app/widgets/gimpsavedialog.c:404
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr ""
 "Los metadatos no serán visibles en versiones GIMP más antiguas que la 2.10."
-
-#: ../app/widgets/gimpsavedialog.c:344
-msgid "Save this XCF file with better but slower compression"
-msgstr "Guardar este archivo XCF con una compresión mejor pero más lenta"
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
