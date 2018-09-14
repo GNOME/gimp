@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-09-05 16:10+0000\n"
-"PO-Revision-Date: 2018-09-06 20:20+0200\n"
+"POT-Creation-Date: 2018-09-11 15:33+0000\n"
+"PO-Revision-Date: 2018-09-14 20:38+0200\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -330,6 +330,9 @@ msgid ""
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
 "(yaw, pitch, roll)."
 msgstr ""
+"Eine neue GimpToolGyroscope-Steuerung der Leinwand, die derzeit für den "
+"Panorama-Projektionsfilter verwendet wird. Das Widget bietet 3D-Drehung "
+"(Gieren, Neigung, Rollen) der Leinwand."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
@@ -2904,7 +2907,7 @@ msgstr "240 Sekunden"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1718
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -2917,35 +2920,24 @@ msgid "_Cancel"
 msgstr "Abbre_chen"
 
 #: ../app/actions/dashboard-commands.c:103
-#, fuzzy
-#| msgid "_Recover"
 msgid "_Record"
-msgstr "_Wiederherstellen"
+msgstr "_Aufzeichnen"
 
 #: ../app/actions/dashboard-commands.c:125
-#, fuzzy
-#| msgid "Show All Files"
 msgid "All Files"
-msgstr "Alle Dateien anzeigen"
+msgstr "Alle Dateien"
 
 #: ../app/actions/dashboard-commands.c:130
-#, fuzzy
-#| msgid "All files (*.*)"
 msgid "Log Files (*.log)"
-msgstr "Alle Dateien (*.*)"
+msgstr "Protokolldateien (*.log)"
 
 #: ../app/actions/dashboard-commands.c:197
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Add layer"
 msgid "Add Marker"
-msgstr "Ebene hinzufügen"
+msgstr "Markierung hinzufügen"
 
 #: ../app/actions/dashboard-commands.c:199
-#, fuzzy
-#| msgid "Enter a name for the preset"
 msgid "Enter a description for the marker"
-msgstr "Bitte benennen Sie diese Einstellungen"
+msgstr "Geben Sie eine Beschreibung für die Markierung ein"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
 #: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:212
@@ -4364,7 +4356,7 @@ msgstr "Fehlerprotokoll in Datei speichern"
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
-#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:736
+#: ../app/widgets/gimpsavedialog.c:142 ../app/widgets/gimpsettingsbox.c:736
 msgid "_Save"
 msgstr "_Speichern"
 
@@ -4587,7 +4579,7 @@ msgid "No changes need to be saved"
 msgstr "Keine Änderungen zu speichern"
 
 #: ../app/actions/file-commands.c:284 ../app/actions/file-commands.c:751
-#: ../app/widgets/gimpsavedialog.c:140
+#: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Bild speichern"
 
@@ -13127,7 +13119,7 @@ msgstr "Schwebende Auswahl"
 msgid "Computing alpha of unknown pixels"
 msgstr "Alpha wird von unbekannten Bildpunkten berechnet"
 
-#: ../app/core/gimpdrawable-fill.c:204 ../app/vectors/gimpvectors.c:669
+#: ../app/core/gimpdrawable-fill.c:204 ../app/vectors/gimpvectors.c:668
 msgid "Not enough points to fill"
 msgstr "Es sind nicht genügend Punkte vorhanden, um diese zu füllen"
 
@@ -13158,7 +13150,7 @@ msgid "Offset Drawable"
 msgstr "Ebene verschieben"
 
 #: ../app/core/gimpdrawable-stroke.c:111
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:691
+#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:690
 msgid "Not enough points to stroke"
 msgstr "Es sind nicht genügend Punkte vorhanden, um diese nachzuziehen."
 
@@ -13407,24 +13399,30 @@ msgstr "Masken auf Ebenengruppen wurden in %s hinzugefügt"
 msgid "High bit-depth images were added in %s"
 msgstr "Bilder mit hoher Bittiefe wurden in %s hinzugefügt"
 
-#: ../app/core/gimpimage.c:2524
+#: ../app/core/gimpimage.c:2511
+#, fuzzy, c-format
+#| msgid "Layer mode '%s' was added in %s"
+msgid "Internal zlib compression was added in %s"
+msgstr "Ebenenmodus %s wurde in %s hinzugefügt"
+
+#: ../app/core/gimpimage.c:2528
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Unterstützung für Bilddateien, die größer als 4 GB sind, wurde in %s "
 "hinzugefügt"
 
-#: ../app/core/gimpimage.c:2618
+#: ../app/core/gimpimage.c:2622
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Bildauflösung ändern"
 
-#: ../app/core/gimpimage.c:2670
+#: ../app/core/gimpimage.c:2674
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Bildeinheit ändern"
 
-#: ../app/core/gimpimage.c:3557
+#: ../app/core/gimpimage.c:3561
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13432,47 +13430,47 @@ msgstr ""
 "'gimp-comment' Parasiten-Validierung ist gescheitert: Der Kommentar enthält "
 "ungültiges UTF-8"
 
-#: ../app/core/gimpimage.c:3609
+#: ../app/core/gimpimage.c:3613
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Parasit an Bild anheften"
 
-#: ../app/core/gimpimage.c:3650
+#: ../app/core/gimpimage.c:3654
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Parasit von Bild entfernen"
 
-#: ../app/core/gimpimage.c:4377
+#: ../app/core/gimpimage.c:4381
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: ../app/core/gimpimage.c:4419 ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4423 ../app/core/gimpimage.c:4454
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: ../app/core/gimpimage.c:4444
+#: ../app/core/gimpimage.c:4448
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Schwebende Auswahl entfernen"
 
-#: ../app/core/gimpimage.c:4611
+#: ../app/core/gimpimage.c:4615
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: ../app/core/gimpimage.c:4639 ../app/core/gimpimage.c:4663
+#: ../app/core/gimpimage.c:4643 ../app/core/gimpimage.c:4667
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Kanal entfernen"
 
-#: ../app/core/gimpimage.c:4719
+#: ../app/core/gimpimage.c:4723
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: ../app/core/gimpimage.c:4749 ../app/core/gimpimage.c:4756
+#: ../app/core/gimpimage.c:4753 ../app/core/gimpimage.c:4760
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pfad entfernen"
@@ -13843,17 +13841,17 @@ msgstr[1] "%d Ebenen"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Vorschaudatei »%s« konnte nicht geöffnet werden: %s"
 
-#: ../app/core/gimpitem.c:2120
+#: ../app/core/gimpitem.c:2121
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Parasit anheften"
 
-#: ../app/core/gimpitem.c:2130
+#: ../app/core/gimpitem.c:2131
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Parasit an Objekt anheften"
 
-#: ../app/core/gimpitem.c:2181 ../app/core/gimpitem.c:2188
+#: ../app/core/gimpitem.c:2182 ../app/core/gimpitem.c:2189
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Parasit von Objekt entfernen"
@@ -18868,13 +18866,13 @@ msgid "High Input"
 msgstr "Hohe Eingabe"
 
 #: ../app/operations/gimplevelsconfig.c:134
-#, fuzzy
 msgid "Clamp Input"
-msgstr "Eingabe beschneiden"
+msgstr "Eingabe beschränken"
 
 #: ../app/operations/gimplevelsconfig.c:135
 msgid "Clamp input values before applying output mapping."
 msgstr ""
+"Die Eingangswerte beschränken, bevor auf die Ausgabewerte abgebildet wird."
 
 #: ../app/operations/gimplevelsconfig.c:146
 #: ../app/operations/gimplevelsconfig.c:147
@@ -18887,13 +18885,12 @@ msgid "High Output"
 msgstr "Hohe Ausgabe"
 
 #: ../app/operations/gimplevelsconfig.c:158
-#, fuzzy
 msgid "Clamp Output"
-msgstr "Ausgabe beschneiden"
+msgstr "Ausgabe beschränken"
 
 #: ../app/operations/gimplevelsconfig.c:159
 msgid "Clamp final output values."
-msgstr ""
+msgstr "Die endgültigen Ausgangswerte auf einen Bereich beschränken."
 
 #: ../app/operations/gimplevelsconfig.c:843
 msgid "not a GIMP Levels file"
@@ -20873,7 +20870,7 @@ msgstr ""
 "Einige Schriften konnten nicht geladen werden:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1590
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1634
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -22345,7 +22342,7 @@ msgstr "Quellwerte"
 
 #: ../app/tools/gimplevelstool.c:501
 msgid "Clamp _input"
-msgstr ""
+msgstr "_Eingabe beschränken"
 
 #. Output levels frame
 #: ../app/tools/gimplevelstool.c:544
@@ -22354,7 +22351,7 @@ msgstr "Zielwerte"
 
 #: ../app/tools/gimplevelstool.c:592
 msgid "Clamp outpu_t"
-msgstr ""
+msgstr "_Ausgabe beschränken"
 
 #. all channels frame
 #: ../app/tools/gimplevelstool.c:607
@@ -23016,17 +23013,14 @@ msgid "Click to anchor the floating selection"
 msgstr "Klicken Sie um die schwebende Auswahl zu verankern"
 
 #: ../app/tools/gimpselectiontool.c:421
-#, fuzzy, c-format
-#| msgid "Click-Drag to subtract from the current selection"
+#, c-format
 msgid "Cannot subtract from an empty selection."
-msgstr ""
-"Klicken und ziehen Sie, um etwas von der aktuellen Auswahl zu entfernen"
+msgstr "Es kann keine Teilmenge einer leeren Auswahl gebildet werden."
 
 #: ../app/tools/gimpselectiontool.c:432
-#, fuzzy, c-format
-#| msgid "Click-Drag to intersect with the current selection"
+#, c-format
 msgid "Cannot intersect with an empty selection."
-msgstr "Klicken und ziehen Sie, um die aktuelle Auswahl zu schneiden"
+msgstr "Es kann keine Schnittmenge mit einer leeren Auswahl gebildet werden."
 
 #: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:445
 #: ../app/tools/gimptransformgridoptions.c:454
@@ -23183,23 +23177,23 @@ msgstr "Box:"
 msgid "Language:"
 msgstr "Sprache:"
 
-#: ../app/tools/gimptexttool.c:212
+#: ../app/tools/gimptexttool.c:214
 msgid "Text"
 msgstr "Text"
 
-#: ../app/tools/gimptexttool.c:213
+#: ../app/tools/gimptexttool.c:215
 msgid "Text Tool: Create or edit text layers"
 msgstr "Text: Eine Ebene mit Text anlegen oder bearbeiten"
 
-#: ../app/tools/gimptexttool.c:214
+#: ../app/tools/gimptexttool.c:216
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:1037
+#: ../app/tools/gimptexttool.c:1039
 msgid "Fonts are still loading"
 msgstr "Schriften werden noch geladen"
 
-#: ../app/tools/gimptexttool.c:1048
+#: ../app/tools/gimptexttool.c:1050
 msgid "Text box: "
 msgstr "Textfeld: "
 
@@ -23207,19 +23201,19 @@ msgstr "Textfeld: "
 msgid "Reshape Text Layer"
 msgstr "Textebene umgestalten"
 
-#: ../app/tools/gimptexttool.c:1710 ../app/tools/gimptexttool.c:1713
+#: ../app/tools/gimptexttool.c:1754 ../app/tools/gimptexttool.c:1757
 msgid "Confirm Text Editing"
 msgstr "Textbearbeitung bestätigen"
 
-#: ../app/tools/gimptexttool.c:1717
+#: ../app/tools/gimptexttool.c:1761
 msgid "Create _New Layer"
 msgstr "_Neue Ebene"
 
-#: ../app/tools/gimptexttool.c:1719
+#: ../app/tools/gimptexttool.c:1763
 msgid "_Edit"
 msgstr "_Bearbeiten"
 
-#: ../app/tools/gimptexttool.c:1741
+#: ../app/tools/gimptexttool.c:1785
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -23817,11 +23811,11 @@ msgstr "Pfad verschieben"
 msgid "Flip Path"
 msgstr "Pfad spiegeln"
 
-#: ../app/vectors/gimpvectors.c:587
+#: ../app/vectors/gimpvectors.c:586
 msgid "Rotate Path"
 msgstr "Pfad drehen"
 
-#: ../app/vectors/gimpvectors.c:617
+#: ../app/vectors/gimpvectors.c:616
 msgid "Transform Path"
 msgstr "Pfad transformieren"
 
@@ -24940,7 +24934,7 @@ msgstr "N.V."
 
 #: ../app/widgets/gimpdashboard.c:4337
 msgid "Resolving symbol information..."
-msgstr ""
+msgstr "Symbolinformationen werden aufgelöst ..."
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
@@ -25164,7 +25158,7 @@ msgstr "Bild exportieren"
 msgid "_Export"
 msgstr "_Exportieren"
 
-#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:145
+#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:144
 msgid "By Extension"
 msgstr "Nach Endung"
 
@@ -25619,20 +25613,11 @@ msgstr ""
 "hat keine\n"
 "Prüfpunkte"
 
-#: ../app/widgets/gimpsavedialog.c:151
+#: ../app/widgets/gimpsavedialog.c:150
 msgid "All XCF images"
 msgstr "Alle XCF-Bilder"
 
-#: ../app/widgets/gimpsavedialog.c:265
-#, c-format
-msgid ""
-"The image uses features from %s, disabling compression won't make the XCF "
-"file readable by older GIMP versions."
-msgstr ""
-"Das Bild verwendet Funktionen aus %s, bei deaktivierter Kompression kann die "
-"XCF-Datei von älteren Versionen vom GIMP nicht gelesen werden."
-
-#: ../app/widgets/gimpsavedialog.c:275
+#: ../app/widgets/gimpsavedialog.c:262
 #, c-format
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
@@ -25640,15 +25625,26 @@ msgstr ""
 "Deaktiviert die Komprimierung, um die XCF-Datei von %s und neuer lesbar zu "
 "machen."
 
-#: ../app/widgets/gimpsavedialog.c:287
+#: ../app/widgets/gimpsavedialog.c:326
+msgid "Save this XCF file with better but slower compression"
+msgstr "Diese XCF-Datei mit besserer, aber langsamerer Kompression speichern"
+
+#: ../app/widgets/gimpsavedialog.c:395
+#, fuzzy, c-format
+#| msgid ""
+#| "The image uses features from %s, disabling compression won't make the XCF "
+#| "file readable by older GIMP versions."
+msgid ""
+"The image uses features from %s and won't be readable by older GIMP versions."
+msgstr ""
+"Das Bild verwendet Funktionen aus %s, bei deaktivierter Kompression kann die "
+"XCF-Datei von älteren Versionen vom GIMP nicht gelesen werden."
+
+#: ../app/widgets/gimpsavedialog.c:404
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr ""
 "Metadaten werden in GIMP-Versionen älter als Version 2.10 nicht sichtbar "
 "sein."
-
-#: ../app/widgets/gimpsavedialog.c:344
-msgid "Save this XCF file with better but slower compression"
-msgstr "Diese XCF-Datei mit besserer, aber langsamerer Kompression speichern"
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
