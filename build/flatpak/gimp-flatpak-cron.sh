@@ -57,6 +57,7 @@ if test "$?" -ne "0"; then
   print_log "Build directory '$BUILDBASE' already exists."
   exit 1
 fi
+mkdir "$ARTIFACTDIR"
 
 flatpak_build_branch() {
   ARCH=$1
@@ -96,6 +97,7 @@ flatpak_build_branch() {
       print_log "Flatpak $BRANCH/$ARCH successfully exported to ${REPO}"
     fi
   fi
+  mv ${STATEDIR}/build/ "${ARTIFACTDIR}/${ARCH}"
   print_log "Detailed build logs for $BRANCH/$ARCH: ${BUILDLOG}"
 
   return $ret
@@ -106,6 +108,5 @@ flatpak_build_branch() {
 for arch in "i386" "x86_64"; do
   flatpak_build_branch $arch nightly yes
 done
-mv ${STATEDIR}/build/ "${ARTIFACTDIR}"
 
-print_log "Cron file ending at `date --rfc-2822=minute`"
+print_log "Cron file ending at `date --rfc-2822`"
