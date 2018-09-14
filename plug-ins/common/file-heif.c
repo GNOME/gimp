@@ -120,6 +120,10 @@ query (void)
   gimp_register_load_handler (LOAD_PROC, "heic,heif", "");
   gimp_register_file_handler_mime (LOAD_PROC, "image/heif");
   gimp_register_file_handler_uri (LOAD_PROC);
+  gimp_register_magic_load_handler (LOAD_PROC,
+                                    "heif,heic",
+                                    "",
+                                    "4,string,ftyp");
 
   gimp_install_procedure (SAVE_PROC,
                           _("Exports HEIF images"),
