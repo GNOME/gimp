@@ -38,6 +38,7 @@ struct _GimpPaletteEditor
 
   GtkWidget        *view;
 
+  GtkWidget        *index_label;
   GtkWidget        *color_name;
   GtkAdjustment    *columns_adj;
 
@@ -45,7 +46,7 @@ struct _GimpPaletteEditor
 
   GimpPaletteEntry *color;
 
-  gfloat            zoom_factor;  /* range from 0.1 to 4.0 */
+  gdouble           zoom_factor;  /* range from 0.1 to 4.0 */
   gint              col_width;
   gint              last_width;
   gint              columns;
