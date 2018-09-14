@@ -557,19 +557,25 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
                     "number of axes present in device\n",
                     G_STRFUNC, device->name);
 
-      for (i = 0; i < MIN (info->n_axes, device->num_axes); i++)
-        gimp_device_info_set_axis_use (info, i,
-                                       info->axes[i]);
+      if (info->axes != NULL)
+      {
+        for (i = 0; i < MIN (info->n_axes, device->num_axes); i++)
+          gimp_device_info_set_axis_use (info, i,
+                                         info->axes[i]);
+      }
 
       if (info->n_keys != device->num_keys)
         g_printerr ("%s: stored 'num-keys' for device '%s' doesn't match "
                     "number of keys present in device\n",
                     G_STRFUNC, device->name);
 
-      for (i = 0; i < MIN (info->n_keys, device->num_keys); i++)
-        gimp_device_info_set_key (info, i,
-                                  info->keys[i].keyval,
-                                  info->keys[i].modifiers);
+      if (info->keys != NULL)
+      {
+        for (i = 0; i < MIN (info->n_keys, device->num_keys); i++)
+          gimp_device_info_set_key (info, i,
+                                    info->keys[i].keyval,
+                                    info->keys[i].modifiers);
+      }
     }
   else
     {
