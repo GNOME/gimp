@@ -17,9 +17,10 @@
      on, and how many changes to expect. An example message is:
      https://mail.gnome.org/archives/gnome-i18n/2016-October/msg00035.html
 
- ( ) Also notify the maintainers of the official builds for Windows,
-     macOS and flatpak of the upcoming release so they have some time to
-     sort out issues with their builds.
+ ( ) Also notify the maintainers of the official builds for Windows
+     (irc:ender/@jernejs), macOS (irc:Samm/@samm-git) and flatpak
+     (irc:Jehan/@Jehan) of the upcoming release so they have some time
+     to sort out issues with their builds.
 
  ( ) Make sure we have a <release> tag inside
      desktop/org.gimp.GIMP.appdata.xml.in.in for this upcoming
