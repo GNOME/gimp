@@ -4151,12 +4151,17 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
                                     GFile          *file,
                                     GError        **error)
 {
-  GimpDashboardPrivate *priv;
-  GimpUIManager        *ui_manager;
-  GimpActionGroup      *action_group;
-  gchar                *version;
-  gboolean              has_backtrace;
-  Variable              variable;
+  GimpDashboardPrivate  *priv;
+  GimpUIManager         *ui_manager;
+  GimpActionGroup       *action_group;
+  gchar                 *version;
+  gchar                **envp;
+  gchar                **env;
+  GParamSpec           **pspecs;
+  guint                  n_pspecs;
+  gboolean               has_backtrace;
+  Variable               variable;
+  guint                  i;
 
   g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
@@ -4210,6 +4215,19 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
                              "<gimp-performance-log version=\"%d\">\n",
                              LOG_VERSION);
 
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<params>\n"
+                             "<sample-frequency>%d</sample-frequency>\n"
+                             "<backtrace>%d</backtrace>\n"
+                             "</params>\n",
+                             priv->log_sample_frequency,
+                             has_backtrace);
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<info>\n");
+
   version = gimp_version (TRUE, FALSE);
 
   gimp_dashboard_log_printf (dashboard,
@@ -4223,12 +4241,88 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
 
   gimp_dashboard_log_printf (dashboard,
                              "\n"
-                             "<params>\n"
-                             "<sample-frequency>%d</sample-frequency>\n"
-                             "<backtrace>%d</backtrace>\n"
-                             "</params>\n",
-                             priv->log_sample_frequency,
-                             has_backtrace);
+                             "<env>\n");
+
+  envp = g_get_environ ();
+
+  for (env = envp; *env; env++)
+    {
+      if (g_str_has_prefix (*env, "BABL_") ||
+          g_str_has_prefix (*env, "GEGL_") ||
+          g_str_has_prefix (*env, "GIMP_"))
+        {
+          gchar       *delim = strchr (*env, '=');
+          const gchar *s;
+
+          if (! delim)
+            continue;
+
+          for (s = *env;
+               s != delim && (g_ascii_isalnum (*s) || *s == '_' || *s == '-');
+               s++);
+
+          if (s != delim)
+            continue;
+
+          *delim = '\0';
+
+          gimp_dashboard_log_printf (dashboard,
+                                     "<%s>",
+                                     *env);
+          gimp_dashboard_log_print_escaped (dashboard, delim + 1);
+          gimp_dashboard_log_printf (dashboard,
+                                     "</%s>\n",
+                                     *env);
+        }
+    }
+
+  g_strfreev (envp);
+
+  gimp_dashboard_log_printf (dashboard,
+                             "</env>\n");
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "<gegl-config>\n");
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (gegl_config ()),
+                                           &n_pspecs);
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      const GParamSpec *pspec     = pspecs[i];
+      GValue            value     = {};
+      GValue            str_value = {};
+
+      g_value_init (&value,     pspec->value_type);
+      g_value_init (&str_value, G_TYPE_STRING);
+
+      g_object_get_property (G_OBJECT (gegl_config ()), pspec->name, &value);
+
+      if (g_value_transform (&value, &str_value))
+        {
+          gimp_dashboard_log_printf (dashboard,
+                                     "<%s>",
+                                     pspec->name);
+          gimp_dashboard_log_print_escaped (dashboard,
+                                            g_value_get_string (&str_value));
+          gimp_dashboard_log_printf (dashboard,
+                                     "</%s>\n",
+                                     pspec->name);
+        }
+
+      g_value_unset (&str_value);
+      g_value_unset (&value);
+    }
+
+  g_free (pspecs);
+
+  gimp_dashboard_log_printf (dashboard,
+                             "</gegl-config>\n");
+
+  gimp_dashboard_log_printf (dashboard,
+                             "\n"
+                             "</info>\n");
 
   gimp_dashboard_log_printf (dashboard,
                              "\n"
