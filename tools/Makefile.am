@@ -101,4 +101,6 @@ EXTRA_DIST = \
 	gimppath2svg.py			\
 	performance-log-deduce.py	\
 	performance-log-expand.py	\
-	performance-log-resolve.py
+	performance-log-resolve.py	\
+	performance-log-viewer		\
+	performance-log-viewer.py
