@@ -283,6 +283,7 @@ gimp_backtrace_start (void)
       struct sigaction action = {};
 
       action.sa_handler = gimp_backtrace_signal_handler;
+      action.sa_flags   = SA_RESTART;
 
       sigemptyset (&action.sa_mask);
 
