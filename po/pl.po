@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-09 19:14+0200\n"
-"PO-Revision-Date: 2018-09-09 19:15+0200\n"
+"POT-Creation-Date: 2018-09-16 17:14+0200\n"
+"PO-Revision-Date: 2018-09-16 17:15+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -4336,7 +4336,7 @@ msgstr "Zapis dziennika błędów do pliku"
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
-#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:736
+#: ../app/widgets/gimpsavedialog.c:142 ../app/widgets/gimpsettingsbox.c:736
 msgid "_Save"
 msgstr "_Zapisz"
 
@@ -4558,7 +4558,7 @@ msgid "No changes need to be saved"
 msgstr "Brak niezapisanych zmian"
 
 #: ../app/actions/file-commands.c:284 ../app/actions/file-commands.c:751
-#: ../app/widgets/gimpsavedialog.c:140
+#: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Zapis obrazu"
 
@@ -13289,22 +13289,27 @@ msgstr "Maski na grupach warstw zostały dodane w %s"
 msgid "High bit-depth images were added in %s"
 msgstr "Obrazy o głębi wysokobitowej zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2524
+#: ../app/core/gimpimage.c:2511
+#, c-format
+msgid "Internal zlib compression was added in %s"
+msgstr "Wewnętrzna kompresja zlib została dodana w %s"
+
+#: ../app/core/gimpimage.c:2528
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Obsługa plików obrazów większych niż 4 GB została dodana w %s"
 
-#: ../app/core/gimpimage.c:2618
+#: ../app/core/gimpimage.c:2622
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2670
+#: ../app/core/gimpimage.c:2674
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3557
+#: ../app/core/gimpimage.c:3561
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13312,47 +13317,47 @@ msgstr ""
 "Sprawdzenie poprawności danych pasożytniczych „gimp-comment” się nie "
 "powiodło: komentarz zawiera nieprawidłowe UTF-8"
 
-#: ../app/core/gimpimage.c:3609
+#: ../app/core/gimpimage.c:3613
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3650
+#: ../app/core/gimpimage.c:3654
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4377
+#: ../app/core/gimpimage.c:4381
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4419 ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4423 ../app/core/gimpimage.c:4454
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4444
+#: ../app/core/gimpimage.c:4448
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4611
+#: ../app/core/gimpimage.c:4615
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4639 ../app/core/gimpimage.c:4663
+#: ../app/core/gimpimage.c:4643 ../app/core/gimpimage.c:4667
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4719
+#: ../app/core/gimpimage.c:4723
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:4749 ../app/core/gimpimage.c:4756
+#: ../app/core/gimpimage.c:4753 ../app/core/gimpimage.c:4760
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -24718,7 +24723,7 @@ msgstr "%s/s"
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:4337
+#: ../app/widgets/gimpdashboard.c:4431
 msgid "Resolving symbol information..."
 msgstr "Rozwiązywanie informacji o symbolach…"
 
@@ -24941,7 +24946,7 @@ msgstr "Eksport obrazu"
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
-#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:145
+#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:144
 msgid "By Extension"
 msgstr "Według rozszerzenia"
 
@@ -25396,20 +25401,11 @@ msgstr ""
 "nie ma\n"
 "punktów wzorcowych"
 
-#: ../app/widgets/gimpsavedialog.c:151
+#: ../app/widgets/gimpsavedialog.c:150
 msgid "All XCF images"
 msgstr "Wszystkie obrazy XCF"
 
-#: ../app/widgets/gimpsavedialog.c:265
-#, c-format
-msgid ""
-"The image uses features from %s, disabling compression won't make the XCF "
-"file readable by older GIMP versions."
-msgstr ""
-"Obraz używa funkcji z wersji %s, wyłączenie kompresji nie spowoduje, że plik "
-"XCF będzie mógł być otwierany w poprzednich wersjach programu GIMP."
-
-#: ../app/widgets/gimpsavedialog.c:275
+#: ../app/widgets/gimpsavedialog.c:262
 #, c-format
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
@@ -25417,13 +25413,21 @@ msgstr ""
 "Wyłączenie kompresji spowoduje, że plik XCF będzie mógł być odczytywany "
 "przez wersję %s i późniejsze."
 
-#: ../app/widgets/gimpsavedialog.c:287
-msgid "Metadata won't be visible in GIMP older than version 2.10."
-msgstr "Metadane nie będą widoczne w programie GIMP starszym niż wersja 2.10."
-
-#: ../app/widgets/gimpsavedialog.c:344
+#: ../app/widgets/gimpsavedialog.c:326
 msgid "Save this XCF file with better but slower compression"
 msgstr "Zapisanie tego pliku XCF z lepszą, ale wolniejszą kompresją"
+
+#: ../app/widgets/gimpsavedialog.c:395
+#, c-format
+msgid ""
+"The image uses features from %s and won't be readable by older GIMP versions."
+msgstr ""
+"Obraz używa funkcji z wersji %s i nie będzie mógł być otwierany "
+"w poprzednich wersjach programu GIMP."
+
+#: ../app/widgets/gimpsavedialog.c:404
+msgid "Metadata won't be visible in GIMP older than version 2.10."
+msgstr "Metadane nie będą widoczne w programie GIMP starszym niż wersja 2.10."
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
