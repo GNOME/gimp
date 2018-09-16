@@ -2014,6 +2014,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
             self.store.set_sort_column_id (*sort)
 
             self.tree.set_model (self.store)
+            self.tree.set_search_column (self.store.FUNCTION)
 
         def update_ui (self):
             if not self.id:
