@@ -106,4 +106,6 @@ EXTRA_DIST = \
 	invert-svg.c			\
 	performance-log-deduce.py	\
 	performance-log-expand.py	\
-	performance-log-resolve.py
+	performance-log-resolve.py	\
+	performance-log-viewer		\
+	performance-log-viewer.py
