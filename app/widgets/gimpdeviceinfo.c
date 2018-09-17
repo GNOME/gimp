@@ -896,7 +896,7 @@ gimp_device_info_get_vendor_id (GimpDeviceInfo  *info)
     {
       if (gdk_device_get_device_type (info->device) == GDK_DEVICE_TYPE_MASTER)
         {
-          id = _("(Virtual decvice)");
+          id = _("(Virtual device)");
         }
       else
         {
@@ -921,7 +921,7 @@ gimp_device_info_get_product_id (GimpDeviceInfo  *info)
     {
       if (gdk_device_get_device_type (info->device) == GDK_DEVICE_TYPE_MASTER)
         {
-          return _("(Virtual decvice)");
+          return _("(Virtual device)");
         }
       else
         {
