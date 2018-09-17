@@ -29,10 +29,24 @@ Tools:
     don't change the layer's box mode to "fixed", which is unnecessary,
     since the layer's size isn't affected.
 
+Plug-ins:
+
+  - Port all plug-ins to the new iterator API in GEGL.
+  - Improve automatic detection of HEIC/HEIF files.
+
+Usability:
+
+  - Compatibility information in the Save dialog is now more understandable.
+    The minimum GIMP version for the XCF file is always written down when it
+    is GIMP 2.8 or over. The list of features warranting the minimum version
+    is now listed in an expander container rather than as tooltip, which
+    makes it more discoverable. The warning on compression is now displayed
+    as its own text under the checkbox and not as additional text to the
+    minimum GIMP version label.
+
 CLI:
 
   - New self-explanatory --enable-win32-debug-console CLI option
-
 
 Debugging:
 
@@ -44,7 +58,7 @@ Debugging:
     as well as the full program backtrace, when available. As such,
     it essentially acts as a built-in profiler, which allows us to
     correlate program execution with the information available
-    through the dashboard.
+    through the Dashboard.
   - New performance-log-expand.py tool decodes a delta-encoded
     performance log by expanding the deltas, producing a log where
     each sample (and other relevant elements) contain complete
@@ -57,7 +71,17 @@ Debugging:
     looks up each program-counter address in the address map,
     incorporating the relevant symbol information directly into the
     backtrace.
-
+  - New performance-log-deduce.py tool that statistically deduces the
+    correct thread states based on backtrace address frequency, fixing
+    local inaccuracies.
+  - New performance-log-viewer.py tool that is a viewer for GIMP
+    performance logs, with a sample-selection area at the top and an
+    information area at the bottom. The sample-selection area visualizes
+    the sampled variables and markers using a simultaneous set of plots,
+    and displays the currently selected samples. The information area
+    shows global information stored in the log, as well as information
+    specific to the currently selected samples, including variable listing
+    and statistics, full backtrace, and profile/call-graph information.
 
 Translations:
 
