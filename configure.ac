@@ -1007,6 +1007,18 @@ AM_CONDITIONAL(HAVE_EXCHNDL, test "x$ac_cv_lib_exchndl_ExcHndlSetLogFileNameA" =
 
 AC_CHECK_HEADERS([execinfo.h])
 
+#########################
+# Check for Matting Levin
+#########################
+
+AC_MSG_CHECKING([for matting engine Levin])
+if $GEGL --exists "gegl:matting-levin"; then
+  have_matting_levin=yes
+else
+  have_matting_levin='no (missing GEGL operation "gegl:matting-levin")'
+fi
+AC_MSG_RESULT($have_matting_levin)
+
 ##########################################
 # Check for some special functions we need
 ##########################################
@@ -2978,6 +2990,7 @@ Extra Binaries:
   gimp-console:              $enable_gimp_console
 
 Optional Features:
+  Levin matting engine:      $have_matting_levin
   Language selection:        $have_iso_codes
   Vector icons:              $enable_vector_icons
   Dr. Mingw (Win32):         $enable_drmingw

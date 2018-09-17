@@ -193,6 +193,7 @@ header files installed.
      xdg-email for sending emails
      sendmail for sending emails if --with-sendmail enabled
      gdb or lldb for our new bug-reporting dialog
+     "gegl:matting-levin" GEGL operation for alternative matting engine
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
 lying around on your system, otherwise configure may fail to find the
