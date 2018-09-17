@@ -331,7 +331,7 @@ scalable_images = \
 	scalable/gimp-wilber-outline-symbolic.svg			\
 	scalable/gimp-zoom-follow-window-symbolic.svg
 
-symbolic_vector24_images = \
+vector24_images = \
 	24/dialog-error-symbolic.svg					\
 	24/dialog-information-symbolic.svg				\
 	24/dialog-question-symbolic.svg					\

@@ -9,10 +9,10 @@ include $(top_srcdir)/icons/Color/icon-list.mk
 
 if ENABLE_VECTOR_ICONS
 icons24_DATA = \
-	$(color_vector24_images)
+	$(vector24_images)
 
 scalable_DATA = \
-	$(color_scalable_images)
+	$(scalable_images)
 endif
 
 # Vector icons are now committed into the repository.
