@@ -86,8 +86,9 @@ def thumbnail_ora(filename, thumb_size):
 
     # create temp file
     tmp = os.path.join(tempdir, 'tmp.png')
-    with open(tmp, 'wb') as fid:
-        f.write(orafile.read('Thumbnails/thumbnail.png'))
+    f = open(tmp, 'wb')
+    f.write(orafile.read('Thumbnails/thumbnail.png'))
+    f.close()
 
     img = pdb['file-png-load'](tmp)
     # TODO: scaling
@@ -286,14 +287,15 @@ def load_ora(filename, raw_filename):
 
             # create temp file. Needed because gimp cannot load files from inside a zip file
             tmp = os.path.join(tempdir, 'tmp.png')
-            with open(tmp, 'wb') as fid:
-                try:
-                    data = orafile.read(path)
-                except KeyError:
-                    # support for bad zip files (saved by old versions of this plugin)
-                    data = orafile.read(path.encode('utf-8'))
-                    print 'WARNING: bad OpenRaster ZIP file. There is an utf-8 encoded filename that does not have the utf-8 flag set:', repr(path)
-                f.write(data)
+            f = open(tmp, 'wb')
+            try:
+                data = orafile.read(path)
+            except KeyError:
+                # support for bad zip files (saved by old versions of this plugin)
+                data = orafile.read(path.encode('utf-8'))
+                print 'WARNING: bad OpenRaster ZIP file. There is an utf-8 encoded filename that does not have the utf-8 flag set:', repr(path)
+            f.write(data)
+            f.close()
 
             # import layer, set attributes and add to image
             gimp_layer = pdb['gimp-file-load-layer'](img, tmp)
