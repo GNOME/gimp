@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-06 11:30+0200\n"
-"PO-Revision-Date: 2018-09-06 15:30+0200\n"
+"POT-Creation-Date: 2018-09-17 08:34+0200\n"
+"PO-Revision-Date: 2018-09-17 08:36+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -139,7 +139,9 @@ msgstr ""
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
-msgstr "Il nuovo campo \"Asinc\" nel cruscotto del gruppo \"Varie\", mostra il numero delle operazioni asincrone attualmente attive"
+msgstr ""
+"Il nuovo campo \"Asinc\" nel cruscotto del gruppo \"Varie\", mostra il "
+"numero delle operazioni asincrone attualmente attive"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
@@ -2908,7 +2910,7 @@ msgstr "240 secondi"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1720
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -4352,7 +4354,7 @@ msgstr "Salvare il log degli errori su file"
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
-#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:736
+#: ../app/widgets/gimpsavedialog.c:142 ../app/widgets/gimpsettingsbox.c:736
 msgid "_Save"
 msgstr "_Salva"
 
@@ -4574,7 +4576,7 @@ msgid "No changes need to be saved"
 msgstr "Nessuna modifica da salvare"
 
 #: ../app/actions/file-commands.c:284 ../app/actions/file-commands.c:751
-#: ../app/widgets/gimpsavedialog.c:140
+#: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Salva immagine"
 
@@ -13343,22 +13345,27 @@ msgstr "Le maschere sui gruppi livello sono state aggiunte in %s"
 msgid "High bit-depth images were added in %s"
 msgstr "Le immagini ad alta profondità di colore sono state aggiunte in %s"
 
-#: ../app/core/gimpimage.c:2524
+#: ../app/core/gimpimage.c:2511
+#, c-format
+msgid "Internal zlib compression was added in %s"
+msgstr "La compressione interna zlib è stata aggiunta in %s"
+
+#: ../app/core/gimpimage.c:2528
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Il supporto per file immagine più grandi di 4GB è stato aggiunto in %s"
 
-#: ../app/core/gimpimage.c:2618
+#: ../app/core/gimpimage.c:2622
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:2670
+#: ../app/core/gimpimage.c:2674
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:3557
+#: ../app/core/gimpimage.c:3561
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13366,47 +13373,47 @@ msgstr ""
 "validazione parassita 'gimp-comment' fallita: il commento contiene UTF-8 non "
 "valido"
 
-#: ../app/core/gimpimage.c:3609
+#: ../app/core/gimpimage.c:3613
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Allega parassita all'immagine"
 
-#: ../app/core/gimpimage.c:3650
+#: ../app/core/gimpimage.c:3654
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parassita dall'immagine"
 
-#: ../app/core/gimpimage.c:4377
+#: ../app/core/gimpimage.c:4381
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:4419 ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4423 ../app/core/gimpimage.c:4454
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:4444
+#: ../app/core/gimpimage.c:4448
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/gimpimage.c:4611
+#: ../app/core/gimpimage.c:4615
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:4639 ../app/core/gimpimage.c:4663
+#: ../app/core/gimpimage.c:4643 ../app/core/gimpimage.c:4667
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:4719
+#: ../app/core/gimpimage.c:4723
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:4749 ../app/core/gimpimage.c:4756
+#: ../app/core/gimpimage.c:4753 ../app/core/gimpimage.c:4760
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"
@@ -18728,7 +18735,7 @@ msgstr "Luminosità"
 #: ../app/operations/gimphuesaturationconfig.c:119
 #: ../app/operations/gimphuesaturationconfig.c:120
 msgid "Overlap"
-msgstr "Sovrapposta"
+msgstr "Sovrapponi"
 
 #: ../app/operations/gimplevelsconfig.c:122
 #: ../app/operations/gimplevelsconfig.c:123
@@ -20551,7 +20558,7 @@ msgstr "Seleziona colore primario da modificare"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:236
 msgid "_Overlap"
-msgstr "S_ovrapposta"
+msgstr "S_ovrapponi"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:241
 msgid "Adjust Selected Color"
@@ -20725,7 +20732,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1592
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1634
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -23073,23 +23080,23 @@ msgstr "I font sono ancora in fase di caricamento"
 msgid "Text box: "
 msgstr "Riquadro di testo: "
 
-#: ../app/tools/gimptexttool.c:1183
+#: ../app/tools/gimptexttool.c:1181
 msgid "Reshape Text Layer"
 msgstr "Risagoma il livello di testo"
 
-#: ../app/tools/gimptexttool.c:1712 ../app/tools/gimptexttool.c:1715
+#: ../app/tools/gimptexttool.c:1754 ../app/tools/gimptexttool.c:1757
 msgid "Confirm Text Editing"
 msgstr "Conferma modifica del testo"
 
-#: ../app/tools/gimptexttool.c:1719
+#: ../app/tools/gimptexttool.c:1761
 msgid "Create _New Layer"
 msgstr "Crea un _nuovo livello"
 
-#: ../app/tools/gimptexttool.c:1721
+#: ../app/tools/gimptexttool.c:1763
 msgid "_Edit"
 msgstr "_Modifica"
 
-#: ../app/tools/gimptexttool.c:1743
+#: ../app/tools/gimptexttool.c:1785
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -24786,7 +24793,7 @@ msgstr "%s/s"
 msgid "N/A"
 msgstr "n/d"
 
-#: ../app/widgets/gimpdashboard.c:4337
+#: ../app/widgets/gimpdashboard.c:4431
 msgid "Resolving symbol information..."
 msgstr "Risoluzione informazioni simboliche..."
 
@@ -25011,7 +25018,7 @@ msgstr "Esporta immagine"
 msgid "_Export"
 msgstr "_Esporta"
 
-#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:145
+#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:144
 msgid "By Extension"
 msgstr "Per estensione"
 
@@ -25468,20 +25475,11 @@ msgstr ""
 "non ha\n"
 "punti di campionamento"
 
-#: ../app/widgets/gimpsavedialog.c:151
+#: ../app/widgets/gimpsavedialog.c:150
 msgid "All XCF images"
 msgstr "Tutte le immagini XCF"
 
-#: ../app/widgets/gimpsavedialog.c:265
-#, c-format
-msgid ""
-"The image uses features from %s, disabling compression won't make the XCF "
-"file readable by older GIMP versions."
-msgstr ""
-"L'immagine usa caratteristiche della %s e non può essere salvata in XCF per "
-"versioni più vecchie di GIMP."
-
-#: ../app/widgets/gimpsavedialog.c:275
+#: ../app/widgets/gimpsavedialog.c:262
 #, c-format
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
@@ -25489,14 +25487,20 @@ msgstr ""
 "Disabilita la compressione per rendere il file XCF leggibile da %s e "
 "successive."
 
-#: ../app/widgets/gimpsavedialog.c:287
+#: ../app/widgets/gimpsavedialog.c:326
+msgid "Save this XCF file with better but slower compression"
+msgstr "Salva questo file XCF con la migliore ma più lenta compressione"
+
+#: ../app/widgets/gimpsavedialog.c:395
+#, c-format
+msgid ""
+"The image uses features from %s and won't be readable by older GIMP versions."
+msgstr "L'immagine usa caratteristiche dalla %s e non potrà essere letta da versioni più vecchie di GIMP."
+
+#: ../app/widgets/gimpsavedialog.c:404
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr ""
 "I metadati non saranno visibili nelle versioni di GIMP inferiori alla 2.10."
-
-#: ../app/widgets/gimpsavedialog.c:344
-msgid "Save this XCF file with better but slower compression"
-msgstr "Salva questo file XCF con la migliore ma più lenta compressione"
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
