@@ -94,10 +94,7 @@ def colorxhtml(img, drawable, filename, raw_filename,
 
     chars = chars.translate(allchars, badchars)
 
-    data = []
-
-    for c in chars:
-        data.append(escape_table.get(c, c))
+    data = [escape_table.get(c, c) for c in chars]
 
     if data:
         data.reverse()
