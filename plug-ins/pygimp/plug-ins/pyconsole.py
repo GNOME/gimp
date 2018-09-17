@@ -634,7 +634,7 @@ class _Console(_ReadLine, code.InteractiveInterpreter):
                     s = self.completer.complete(text, i)
                     if s:
                         completions.append(s)
-                        i = i + 1
+                        i += 1
                     else:
                         completions.sort()
                         return completions
