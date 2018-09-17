@@ -52,7 +52,7 @@ class pixel_fetcher:
                 row = y / self.tile_height
                 rowoff = y % self.tile_height
 
-                if col != self.col or row != self.row or self.tile == None:
+                if col != self.col or row != self.row or self.tile is None:
                         self.tile = self.drawable.get_tile(False, row, col)
                         self.col = col
                         self.row = row
