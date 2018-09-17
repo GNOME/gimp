@@ -90,14 +90,11 @@ def colorxhtml(img, drawable, filename, raw_filename,
     allchars = string.maketrans('', '')
 
     goodchars = string.digits + string.ascii_letters + string.punctuation
-    badchars = ''.join([c for c in allchars if c not in goodchars])
+    badchars = ''.join(c for c in allchars if c not in goodchars)
 
     chars = chars.translate(allchars, badchars)
 
-    data = []
-
-    for c in chars:
-        data.append(escape_table.get(c, c))
+    data = [escape_table.get(c, c) for c in chars]
 
     if data:
         data.reverse()
