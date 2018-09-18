@@ -314,8 +314,7 @@ style "gimp-dark-default-style"
     }
 }
 
-# class "GtkWidget" style "gimp-dark-default-style"
-class "*" style "gimp-dark-default-style"
+class "GtkWidget" style "gimp-dark-default-style"
 
 ###########################################################
 
