@@ -33,7 +33,7 @@
 #define GIMP_ID_TABLE_END_ID   G_MAXINT
 
 
-struct _GimpIdTablePriv
+struct _GimpIdTablePrivate
 {
   GHashTable *id_table;
   gint        next_id;
@@ -45,7 +45,7 @@ static gint64  gimp_id_table_get_memsize (GimpObject *object,
                                           gint64     *gui_size);
 
 
-G_DEFINE_TYPE (GimpIdTable, gimp_id_table, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpIdTable, gimp_id_table, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_id_table_parent_class
 
@@ -53,24 +53,18 @@ G_DEFINE_TYPE (GimpIdTable, gimp_id_table, GIMP_TYPE_OBJECT)
 static void
 gimp_id_table_class_init (GimpIdTableClass *klass)
 {
-  GObjectClass     *object_class        = G_OBJECT_CLASS (klass);
-  GimpObjectClass  *gimp_object_class   = GIMP_OBJECT_CLASS (klass);
-  GimpIdTableClass *gimp_id_table_class = GIMP_ID_TABLE_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   object_class->finalize         = gimp_id_table_finalize;
 
   gimp_object_class->get_memsize = gimp_id_table_get_memsize;
-
-  g_type_class_add_private (gimp_id_table_class,
-                            sizeof (GimpIdTablePriv));
 }
 
 static void
 gimp_id_table_init (GimpIdTable *id_table)
 {
-  id_table->priv = G_TYPE_INSTANCE_GET_PRIVATE (id_table,
-                                                GIMP_TYPE_ID_TABLE,
-                                                GimpIdTablePriv);
+  id_table->priv = gimp_id_table_get_instance_private (id_table);
 
   id_table->priv->id_table = g_hash_table_new (g_direct_hash, NULL);
   id_table->priv->next_id  = GIMP_ID_TABLE_START_ID;

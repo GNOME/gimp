@@ -160,7 +160,8 @@ static void       gimp_tool_gyroscope_rotate_vector   (GimpVector3            *v
                                                        const GimpVector3      *axis);
 
 
-G_DEFINE_TYPE (GimpToolGyroscope, gimp_tool_gyroscope, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolGyroscope, gimp_tool_gyroscope,
+                            GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_gyroscope_parent_class
 
@@ -244,16 +245,12 @@ gimp_tool_gyroscope_class_init (GimpToolGyroscopeClass *klass)
                                                         0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolGyroscopePrivate));
 }
 
 static void
 gimp_tool_gyroscope_init (GimpToolGyroscope *gyroscope)
 {
-  gyroscope->private = G_TYPE_INSTANCE_GET_PRIVATE (gyroscope,
-                                                    GIMP_TYPE_TOOL_GYROSCOPE,
-                                                    GimpToolGyroscopePrivate);
+  gyroscope->private = gimp_tool_gyroscope_get_instance_private (gyroscope);
 }
 
 static void

@@ -84,7 +84,7 @@ static void         gimp_module_db_module_modified     (GimpModule   *module,
                                                         GimpModuleDB *db);
 
 
-G_DEFINE_TYPE (GimpModuleDB, gimp_module_db, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpModuleDB, gimp_module_db, G_TYPE_OBJECT)
 
 #define parent_class gimp_module_db_parent_class
 
@@ -130,16 +130,12 @@ gimp_module_db_class_init (GimpModuleDBClass *klass)
 
   klass->add             = NULL;
   klass->remove          = NULL;
-
-  g_type_class_add_private (klass, sizeof (GimpModuleDBPrivate));
 }
 
 static void
 gimp_module_db_init (GimpModuleDB *db)
 {
-  db->priv = G_TYPE_INSTANCE_GET_PRIVATE (db,
-                                          GIMP_TYPE_MODULE_DB,
-                                          GimpModuleDBPrivate);
+  db->priv = gimp_module_db_get_instance_private (db);
 
   db->priv->modules      = NULL;
   db->priv->load_inhibit = NULL;

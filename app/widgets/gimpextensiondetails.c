@@ -39,7 +39,8 @@ struct _GimpExtensionDetailsPrivate
   GimpExtension *extension;
 };
 
-G_DEFINE_TYPE (GimpExtensionDetails, gimp_extension_details, GTK_TYPE_FRAME)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpExtensionDetails, gimp_extension_details,
+                            GTK_TYPE_FRAME)
 
 #define parent_class gimp_extension_details_parent_class
 
@@ -47,16 +48,13 @@ G_DEFINE_TYPE (GimpExtensionDetails, gimp_extension_details, GTK_TYPE_FRAME)
 static void
 gimp_extension_details_class_init (GimpExtensionDetailsClass *klass)
 {
-  g_type_class_add_private (klass, sizeof (GimpExtensionDetailsPrivate));
 }
 
 static void
 gimp_extension_details_init (GimpExtensionDetails *details)
 {
   gtk_frame_set_label_align (GTK_FRAME (details), 0.5, 1.0);
-  details->p = G_TYPE_INSTANCE_GET_PRIVATE (details,
-                                            GIMP_TYPE_EXTENSION_DETAILS,
-                                            GimpExtensionDetailsPrivate);
+  details->p = gimp_extension_details_get_instance_private (details);
 }
 
 GtkWidget *

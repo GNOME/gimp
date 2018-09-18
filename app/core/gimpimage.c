@@ -250,6 +250,7 @@ static void     gimp_image_active_vectors_notify (GimpItemTree      *tree,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
+                         G_ADD_PRIVATE (GimpImage)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
                                                 gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
@@ -650,8 +651,6 @@ gimp_image_class_init (GimpImageClass *klass)
                                                        GIMP_TYPE_SYMMETRY,
                                                        GIMP_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpImagePrivate));
 }
 
 static void
@@ -691,8 +690,10 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
 static void
 gimp_image_init (GimpImage *image)
 {
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpImagePrivate *private = gimp_image_get_instance_private (image);
   gint              i;
+
+  image->priv = private;
 
   private->ID                  = 0;
 

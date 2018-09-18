@@ -87,7 +87,8 @@ static void      gimp_mybrush_core_create_brushes (GimpMybrushCore   *mybrush,
                                                    GimpSymmetry      *sym);
 
 
-G_DEFINE_TYPE (GimpMybrushCore, gimp_mybrush_core, GIMP_TYPE_PAINT_CORE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMybrushCore, gimp_mybrush_core,
+                            GIMP_TYPE_PAINT_CORE)
 
 #define parent_class gimp_mybrush_core_parent_class
 
@@ -115,16 +116,12 @@ gimp_mybrush_core_class_init (GimpMybrushCoreClass *klass)
   paint_core_class->start       = gimp_mybrush_core_start;
   paint_core_class->paint       = gimp_mybrush_core_paint;
   paint_core_class->interpolate = gimp_mybrush_core_interpolate;
-
-  g_type_class_add_private (klass, sizeof (GimpMybrushCorePrivate));
 }
 
 static void
 gimp_mybrush_core_init (GimpMybrushCore *mybrush)
 {
-  mybrush->private = G_TYPE_INSTANCE_GET_PRIVATE (mybrush,
-                                                  GIMP_TYPE_MYBRUSH_CORE,
-                                                  GimpMybrushCorePrivate);
+  mybrush->private = gimp_mybrush_core_get_instance_private (mybrush);
 }
 
 static void

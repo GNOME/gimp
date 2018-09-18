@@ -83,7 +83,8 @@ static gboolean  gimp_color_hex_entry_matched     (GtkEntryCompletion *completio
                                                    GimpColorHexEntry  *entry);
 
 
-G_DEFINE_TYPE (GimpColorHexEntry, gimp_color_hex_entry, GTK_TYPE_ENTRY)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorHexEntry, gimp_color_hex_entry,
+                            GTK_TYPE_ENTRY)
 
 #define parent_class gimp_color_hex_entry_parent_class
 
@@ -107,8 +108,6 @@ gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
   object_class->constructed = gimp_color_hex_entry_constructed;
 
   klass->color_changed      = NULL;
-
-  g_type_class_add_private (object_class, sizeof (GimpColorHexEntryPrivate));
 }
 
 static void
@@ -123,9 +122,7 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
   gint                      num_colors;
   gint                      i;
 
-  entry->priv = G_TYPE_INSTANCE_GET_PRIVATE (entry,
-                                             GIMP_TYPE_COLOR_HEX_ENTRY,
-                                             GimpColorHexEntryPrivate);
+  entry->priv = gimp_color_hex_entry_get_instance_private (entry);
 
   private = GET_PRIVATE (entry);
 

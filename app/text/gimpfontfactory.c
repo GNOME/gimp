@@ -96,7 +96,8 @@ static void       gimp_font_factory_load_names      (GimpContainer   *container,
                                                      PangoContext    *context);
 
 
-G_DEFINE_TYPE (GimpFontFactory, gimp_font_factory, GIMP_TYPE_DATA_FACTORY)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpFontFactory, gimp_font_factory,
+                            GIMP_TYPE_DATA_FACTORY)
 
 #define parent_class gimp_font_factory_parent_class
 
@@ -114,16 +115,12 @@ gimp_font_factory_class_init (GimpFontFactoryClass *klass)
   factory_class->data_save      = gimp_font_factory_data_save;
   factory_class->data_duplicate = gimp_font_factory_data_duplicate;
   factory_class->data_delete    = gimp_font_factory_data_delete;
-
-  g_type_class_add_private (klass, sizeof (GimpFontFactoryPrivate));
 }
 
 static void
 gimp_font_factory_init (GimpFontFactory *factory)
 {
-  factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
-                                               GIMP_TYPE_FONT_FACTORY,
-                                               GimpFontFactoryPrivate);
+  factory->priv = gimp_font_factory_get_instance_private (factory);
 }
 
 static void

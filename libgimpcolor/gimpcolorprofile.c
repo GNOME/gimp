@@ -107,8 +107,7 @@ struct _GimpColorProfilePrivate
 static void   gimp_color_profile_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpColorProfile, gimp_color_profile,
-               G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfile, gimp_color_profile, G_TYPE_OBJECT)
 
 #define parent_class gimp_color_profile_parent_class
 
@@ -132,16 +131,12 @@ gimp_color_profile_class_init (GimpColorProfileClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_color_profile_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpColorProfilePrivate));
 }
 
 static void
 gimp_color_profile_init (GimpColorProfile *profile)
 {
-  profile->priv = G_TYPE_INSTANCE_GET_PRIVATE (profile,
-                                               GIMP_TYPE_COLOR_PROFILE,
-                                               GimpColorProfilePrivate);
+  profile->priv = gimp_color_profile_get_instance_private (profile);
 }
 
 static void

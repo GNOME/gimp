@@ -56,9 +56,7 @@ struct _GimpToolPalettePrivate
   GimpToolbox *toolbox;
 };
 
-#define GET_PRIVATE(p) G_TYPE_INSTANCE_GET_PRIVATE (p, \
-                                                    GIMP_TYPE_TOOL_PALETTE, \
-                                                    GimpToolPalettePrivate)
+#define GET_PRIVATE(p) ((GimpToolPalettePrivate *) gimp_tool_palette_get_instance_private ((GimpToolPalette *) (p)))
 
 
 static GtkSizeRequestMode
@@ -91,7 +89,8 @@ static gboolean gimp_tool_palette_tool_button_press   (GtkWidget       *widget,
                                                        GimpToolPalette *palette);
 
 
-G_DEFINE_TYPE (GimpToolPalette, gimp_tool_palette, GTK_TYPE_TOOL_PALETTE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolPalette, gimp_tool_palette,
+                            GTK_TYPE_TOOL_PALETTE)
 
 #define parent_class gimp_tool_palette_parent_class
 
@@ -121,8 +120,6 @@ gimp_tool_palette_class_init (GimpToolPaletteClass *klass)
                                                               GTK_TYPE_RELIEF_STYLE,
                                                               DEFAULT_BUTTON_RELIEF,
                                                               GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpToolPalettePrivate));
 }
 
 static void

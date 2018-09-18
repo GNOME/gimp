@@ -74,7 +74,8 @@ static gboolean  gimp_offset_area_draw          (GtkWidget      *widget,
                                                  cairo_t        *cr);
 
 
-G_DEFINE_TYPE (GimpOffsetArea, gimp_offset_area, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpOffsetArea, gimp_offset_area,
+                            GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_offset_area_parent_class
 
@@ -84,7 +85,6 @@ static guint gimp_offset_area_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   gimp_offset_area_signals[OFFSETS_CHANGED] =
@@ -102,8 +102,6 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
   widget_class->realize       = gimp_offset_area_realize;
   widget_class->event         = gimp_offset_area_event;
   widget_class->draw          = gimp_offset_area_draw;
-
-  g_type_class_add_private (object_class, sizeof (GimpOffsetAreaPrivate));
 }
 
 static void
@@ -111,9 +109,7 @@ gimp_offset_area_init (GimpOffsetArea *area)
 {
   GimpOffsetAreaPrivate *private;
 
-  area->priv = G_TYPE_INSTANCE_GET_PRIVATE (area,
-                                            GIMP_TYPE_OFFSET_AREA,
-                                            GimpOffsetAreaPrivate);
+  area->priv = gimp_offset_area_get_instance_private (area);
 
   private = GET_PRIVATE (area);
 

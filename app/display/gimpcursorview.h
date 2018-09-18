@@ -33,14 +33,14 @@
 #define GIMP_CURSOR_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CURSOR_VIEW, GimpCursorViewClass))
 
 
-typedef struct _GimpCursorViewClass GimpCursorViewClass;
-typedef struct _GimpCursorViewPriv  GimpCursorViewPriv;
+typedef struct _GimpCursorViewClass   GimpCursorViewClass;
+typedef struct _GimpCursorViewPrivate GimpCursorViewPrivate;
 
 struct _GimpCursorView
 {
-  GimpEditor          parent_instance;
+  GimpEditor             parent_instance;
 
-  GimpCursorViewPriv *priv;
+  GimpCursorViewPrivate *priv;
 };
 
 struct _GimpCursorViewClass

@@ -106,9 +106,7 @@ struct _GimpItemPrivate
   GList            *offset_nodes;                /*  offset nodes to manage      */
 };
 
-#define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
-                                                       GIMP_TYPE_ITEM, \
-                                                       GimpItemPrivate)
+#define GET_PRIVATE(item) ((GimpItemPrivate *) gimp_item_get_instance_private ((GimpItem *) (item)))
 
 
 /*  local function prototypes  */
@@ -168,7 +166,7 @@ static void       gimp_item_real_resize             (GimpItem       *item,
 
 
 
-G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_FILTER)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpItem, gimp_item, GIMP_TYPE_FILTER)
 
 #define parent_class gimp_item_parent_class
 
@@ -347,8 +345,6 @@ gimp_item_class_init (GimpItemClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpItemPrivate));
 }
 
 static void

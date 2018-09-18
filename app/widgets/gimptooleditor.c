@@ -105,13 +105,12 @@ static void   gimp_tool_editor_reset_clicked
                                             GimpToolEditor        *tool_editor);
 
 
-G_DEFINE_TYPE (GimpToolEditor, gimp_tool_editor, GIMP_TYPE_CONTAINER_TREE_VIEW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolEditor, gimp_tool_editor,
+                            GIMP_TYPE_CONTAINER_TREE_VIEW)
 
 #define parent_class gimp_tool_editor_parent_class
 
-#define GIMP_TOOL_EDITOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                           GIMP_TYPE_TOOL_EDITOR, \
-                                           GimpToolEditorPrivate))
+#define GIMP_TOOL_EDITOR_GET_PRIVATE(obj) ((GimpToolEditorPrivate *) gimp_tool_editor_get_instance_private ((GimpToolEditor *) (obj)))
 
 
 static void
@@ -121,8 +120,6 @@ gimp_tool_editor_class_init (GimpToolEditorClass *klass)
 
   object_class->dispose  = gimp_tool_editor_dispose;
   object_class->finalize = gimp_tool_editor_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpToolEditorPrivate));
 }
 
 static void

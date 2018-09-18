@@ -109,7 +109,7 @@ static void     gimp_color_scale_notify_config       (GimpColorConfig  *config,
                                                       GimpColorScale   *scale);
 
 
-G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
 
 #define parent_class gimp_color_scale_parent_class
 
@@ -149,8 +149,6 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
 
   gtk_widget_class_set_css_name (widget_class, "GimpColorScale");
 
-  g_type_class_add_private (object_class, sizeof (GimpColorScalePrivate));
-
   fish_rgb_to_lch = babl_fish (babl_format ("R'G'B'A double"),
                                babl_format ("CIE LCH(ab) double"));
   fish_lch_to_rgb = babl_fish (babl_format ("CIE LCH(ab) double"),
@@ -164,9 +162,7 @@ gimp_color_scale_init (GimpColorScale *scale)
   GtkRange              *range = GTK_RANGE (scale);
   GtkCssProvider        *css;
 
-  scale->priv = G_TYPE_INSTANCE_GET_PRIVATE (scale,
-                                             GIMP_TYPE_COLOR_SCALE,
-                                             GimpColorScalePrivate);
+  scale->priv = gimp_color_scale_get_instance_private (scale);
 
   priv = scale->priv;
 

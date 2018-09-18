@@ -208,7 +208,7 @@ static gboolean gimp_tool_line_handle_hit      (GimpCanvasItem        *handle,
                                                 gdouble               *min_dist);
 
 
-G_DEFINE_TYPE (GimpToolLine, gimp_tool_line, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolLine, gimp_tool_line, GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_line_parent_class
 
@@ -347,8 +347,6 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
                                                         _("Line: "),
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolLinePrivate));
 }
 
 static void
@@ -356,9 +354,7 @@ gimp_tool_line_init (GimpToolLine *line)
 {
   GimpToolLinePrivate *private;
 
-  private = line->private = G_TYPE_INSTANCE_GET_PRIVATE (line,
-                                                         GIMP_TYPE_TOOL_LINE,
-                                                         GimpToolLinePrivate);
+  private = line->private = gimp_tool_line_get_instance_private (line);
 
   private->sliders = g_array_new (FALSE, FALSE, sizeof (GimpControllerSlider));
 

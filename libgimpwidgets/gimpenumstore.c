@@ -68,7 +68,7 @@ static void   gimp_enum_store_add_value    (GtkListStore *store,
                                             GEnumValue   *value);
 
 
-G_DEFINE_TYPE (GimpEnumStore, gimp_enum_store, GIMP_TYPE_INT_STORE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpEnumStore, gimp_enum_store, GIMP_TYPE_INT_STORE)
 
 #define parent_class gimp_enum_store_parent_class
 
@@ -97,16 +97,12 @@ gimp_enum_store_class_init (GimpEnumStoreClass *klass)
                                                        G_TYPE_ENUM,
                                                        G_PARAM_CONSTRUCT_ONLY |
                                                        GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpEnumStorePrivate));
 }
 
 static void
 gimp_enum_store_init (GimpEnumStore *store)
 {
-  store->priv = G_TYPE_INSTANCE_GET_PRIVATE (store,
-                                             GIMP_TYPE_ENUM_STORE,
-                                             GimpEnumStorePrivate);
+  store->priv = gimp_enum_store_get_instance_private (store);
 }
 
 static void

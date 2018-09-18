@@ -92,8 +92,8 @@ static void  gimp_drawable_preview_set_drawable_id
                                                  gint32               drawable_ID);
 
 
-G_DEFINE_TYPE (GimpDrawablePreview, gimp_drawable_preview,
-               GIMP_TYPE_SCROLLED_PREVIEW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDrawablePreview, gimp_drawable_preview,
+                            GIMP_TYPE_SCROLLED_PREVIEW)
 
 #define parent_class gimp_drawable_preview_parent_class
 
@@ -118,8 +118,6 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   preview_class->draw_thumb   = gimp_drawable_preview_draw_thumb;
   preview_class->draw_buffer  = gimp_drawable_preview_draw_buffer;
 
-  g_type_class_add_private (object_class, sizeof (GimpDrawablePreviewPrivate));
-
   /**
    * GimpDrawablePreview:drawable-id:
    *
@@ -140,9 +138,7 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
 static void
 gimp_drawable_preview_init (GimpDrawablePreview *preview)
 {
-  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
-                                               GIMP_TYPE_DRAWABLE_PREVIEW,
-                                               GimpDrawablePreviewPrivate);
+  preview->priv = gimp_drawable_preview_get_instance_private (preview);
 
   g_object_set (gimp_preview_get_area (GIMP_PREVIEW (preview)),
                 "check-size", gimp_check_size (),

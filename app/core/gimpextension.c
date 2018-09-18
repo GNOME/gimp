@@ -108,7 +108,7 @@ static void         appstream_text_characters      (GMarkupParseContext  *contex
                                                     gpointer              user_data,
                                                     GError              **error);
 
-G_DEFINE_TYPE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_extension_parent_class
 
@@ -136,16 +136,12 @@ gimp_extension_class_init (GimpExtensionClass *klass)
                                    g_param_spec_boolean ("running",
                                                          NULL, NULL, FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpExtensionPrivate));
 }
 
 static void
 gimp_extension_init (GimpExtension *extension)
 {
-  extension->p = G_TYPE_INSTANCE_GET_PRIVATE (extension,
-                                              GIMP_TYPE_EXTENSION,
-                                              GimpExtensionPrivate);
+  extension->p = gimp_extension_get_instance_private (extension);
 }
 
 static void

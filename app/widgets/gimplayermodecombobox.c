@@ -78,8 +78,8 @@ static gboolean gimp_layer_mode_combo_box_separator_func   (GtkTreeModel        
                                                             gpointer               data);
 
 
-G_DEFINE_TYPE (GimpLayerModeComboBox, gimp_layer_mode_combo_box,
-               GIMP_TYPE_ENUM_COMBO_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpLayerModeComboBox, gimp_layer_mode_combo_box,
+                            GIMP_TYPE_ENUM_COMBO_BOX)
 
 #define parent_class gimp_layer_mode_combo_box_parent_class
 
@@ -119,16 +119,12 @@ gimp_layer_mode_combo_box_class_init (GimpLayerModeComboBoxClass *klass)
                                                       GIMP_LAYER_MODE_GROUP_DEFAULT,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpLayerModeComboBoxPrivate));
 }
 
 static void
 gimp_layer_mode_combo_box_init (GimpLayerModeComboBox *combo)
 {
-  combo->priv = G_TYPE_INSTANCE_GET_PRIVATE (combo,
-                                             GIMP_TYPE_LAYER_MODE_COMBO_BOX,
-                                             GimpLayerModeComboBoxPrivate);
+  combo->priv = gimp_layer_mode_combo_box_get_instance_private (combo);
 
   gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (combo),
                                         gimp_layer_mode_combo_box_separator_func,

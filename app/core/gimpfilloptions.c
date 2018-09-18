@@ -64,9 +64,7 @@ struct _GimpFillOptionsPrivate
 };
 
 #define GET_PRIVATE(options) \
-        G_TYPE_INSTANCE_GET_PRIVATE (options, \
-                                     GIMP_TYPE_FILL_OPTIONS, \
-                                     GimpFillOptionsPrivate)
+        ((GimpFillOptionsPrivate *) gimp_fill_options_get_instance_private ((GimpFillOptions *) (options)))
 
 
 static void     gimp_fill_options_config_init  (GimpConfigInterface *iface);
@@ -86,6 +84,7 @@ static gboolean gimp_fill_options_serialize    (GimpConfig          *config,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpFillOptions, gimp_fill_options, GIMP_TYPE_CONTEXT,
+                         G_ADD_PRIVATE (GimpFillOptions)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_fill_options_config_init))
 
@@ -129,8 +128,6 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                                                      GIMP_VIEW_SIZE_SMALL,
                                                      G_PARAM_CONSTRUCT |
                                                      GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpFillOptionsPrivate));
 }
 
 static void

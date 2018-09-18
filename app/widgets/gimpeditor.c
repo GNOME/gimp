@@ -101,6 +101,7 @@ static GtkIconSize     gimp_editor_ensure_button_box   (GimpEditor     *editor,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpEditor, gimp_editor, GTK_TYPE_BOX,
+                         G_ADD_PRIVATE (GimpEditor)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_editor_docked_iface_init))
 
@@ -189,8 +190,6 @@ gimp_editor_class_init (GimpEditorClass *klass)
                                                               GTK_TYPE_RELIEF_STYLE,
                                                               DEFAULT_BUTTON_RELIEF,
                                                               GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpEditorPrivate));
 }
 
 static void
@@ -208,9 +207,7 @@ gimp_editor_init (GimpEditor *editor)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
 
-  editor->priv = G_TYPE_INSTANCE_GET_PRIVATE (editor,
-                                              GIMP_TYPE_EDITOR,
-                                              GimpEditorPrivate);
+  editor->priv = gimp_editor_get_instance_private (editor);
 
   editor->priv->popup_data      = editor;
   editor->priv->show_button_bar = TRUE;

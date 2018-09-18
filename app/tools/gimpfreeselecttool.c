@@ -110,8 +110,8 @@ static void     gimp_free_select_tool_polygon_response    (GimpToolWidget       
                                                            GimpFreeSelectTool    *fst);
 
 
-G_DEFINE_TYPE (GimpFreeSelectTool, gimp_free_select_tool,
-               GIMP_TYPE_SELECTION_TOOL);
+G_DEFINE_TYPE_WITH_PRIVATE (GimpFreeSelectTool, gimp_free_select_tool,
+                            GIMP_TYPE_SELECTION_TOOL)
 
 #define parent_class gimp_free_select_tool_parent_class
 
@@ -167,8 +167,6 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
   tool_class->active_modifier_key = gimp_free_select_tool_active_modifier_key;
 
   klass->select                   = gimp_free_select_tool_real_select;
-
-  g_type_class_add_private (klass, sizeof (GimpFreeSelectToolPrivate));
 }
 
 static void
@@ -176,9 +174,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
 {
   GimpTool *tool = GIMP_TOOL (fst);
 
-  fst->private = G_TYPE_INSTANCE_GET_PRIVATE (fst,
-                                              GIMP_TYPE_FREE_SELECT_TOOL,
-                                              GimpFreeSelectToolPrivate);
+  fst->private = gimp_free_select_tool_get_instance_private (fst);
 
   gimp_tool_control_set_motion_mode        (tool->control,
                                             GIMP_MOTION_MODE_EXACT);

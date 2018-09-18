@@ -96,7 +96,7 @@ static GtkWidget * gimp_chain_line_new            (GimpChainPosition  position,
                                                    gint               which);
 
 
-G_DEFINE_TYPE (GimpChainButton, gimp_chain_button, GTK_TYPE_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpChainButton, gimp_chain_button, GTK_TYPE_GRID)
 
 #define parent_class gimp_chain_button_parent_class
 
@@ -146,8 +146,6 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
                                                       GIMP_CHAIN_TOP,
                                                       G_PARAM_CONSTRUCT_ONLY |
                                                       GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpChainButtonPrivate));
 }
 
 static void
@@ -155,9 +153,7 @@ gimp_chain_button_init (GimpChainButton *button)
 {
   GimpChainButtonPrivate *private = GET_PRIVATE (button);
 
-  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
-                                              GIMP_TYPE_CHAIN_BUTTON,
-                                              GimpChainButtonPrivate);
+  button->priv = gimp_chain_button_get_instance_private (button);
 
   private = GET_PRIVATE (button);
 

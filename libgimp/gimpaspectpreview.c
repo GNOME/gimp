@@ -94,7 +94,8 @@ static void  gimp_aspect_preview_set_drawable_id
                                                 gint32             drawable_ID);
 
 
-G_DEFINE_TYPE (GimpAspectPreview, gimp_aspect_preview, GIMP_TYPE_PREVIEW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpAspectPreview, gimp_aspect_preview,
+                            GIMP_TYPE_PREVIEW)
 
 #define parent_class gimp_aspect_preview_parent_class
 
@@ -120,8 +121,6 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
   preview_class->transform    = gimp_aspect_preview_transform;
   preview_class->untransform  = gimp_aspect_preview_untransform;
 
-  g_type_class_add_private (object_class, sizeof (GimpAspectPreviewPrivate));
-
   /**
    * GimpAspectPreview:drawable-id:
    *
@@ -141,9 +140,7 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
 static void
 gimp_aspect_preview_init (GimpAspectPreview *preview)
 {
-  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
-                                               GIMP_TYPE_ASPECT_PREVIEW,
-                                               GimpAspectPreviewPrivate);
+  preview->priv = gimp_aspect_preview_get_instance_private (preview);
 
   g_object_set (gimp_preview_get_area (GIMP_PREVIEW (preview)),
                 "check-size", gimp_check_size (),

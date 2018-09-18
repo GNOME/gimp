@@ -58,7 +58,7 @@ static void   gimp_guide_set_property (GObject      *object,
                                        GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpGuide, gimp_guide, GIMP_TYPE_AUX_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpGuide, gimp_guide, GIMP_TYPE_AUX_ITEM)
 
 
 static void
@@ -90,15 +90,12 @@ gimp_guide_class_init (GimpGuideClass *klass)
                          GIMP_TYPE_GUIDE_STYLE,
                          GIMP_GUIDE_STYLE_NONE,
                          0);
-
-  g_type_class_add_private (klass, sizeof (GimpGuidePrivate));
 }
 
 static void
 gimp_guide_init (GimpGuide *guide)
 {
-  guide->priv = G_TYPE_INSTANCE_GET_PRIVATE (guide, GIMP_TYPE_GUIDE,
-                                             GimpGuidePrivate);
+  guide->priv = gimp_guide_get_instance_private (guide);
 }
 
 static void

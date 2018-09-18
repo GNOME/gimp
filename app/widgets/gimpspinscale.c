@@ -81,9 +81,7 @@ struct _GimpSpinScalePrivate
   gint             pointer_warp_start_x;
 };
 
-#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                                       GIMP_TYPE_SPIN_SCALE, \
-                                                       GimpSpinScalePrivate))
+#define GET_PRIVATE(obj) ((GimpSpinScalePrivate *) gimp_spin_scale_get_instance_private ((GimpSpinScale *) (obj)))
 
 
 static void       gimp_spin_scale_dispose              (GObject          *object);
@@ -130,7 +128,8 @@ static void       gimp_spin_scale_setup_mnemonic       (GimpSpinScale    *scale,
                                                         guint             previous_keyval);
 
 
-G_DEFINE_TYPE (GimpSpinScale, gimp_spin_scale, GTK_TYPE_SPIN_BUTTON);
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSpinScale, gimp_spin_scale,
+                            GTK_TYPE_SPIN_BUTTON)
 
 #define parent_class gimp_spin_scale_parent_class
 
@@ -164,8 +163,6 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
                                    g_param_spec_string ("label", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpSpinScalePrivate));
 
   gtk_widget_class_set_css_name (widget_class, "spinbutton");
 }

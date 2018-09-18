@@ -145,9 +145,7 @@ typedef struct
 
 
 #define GIMP_IMAGE_WINDOW_GET_PRIVATE(window) \
-        G_TYPE_INSTANCE_GET_PRIVATE (window, \
-                                     GIMP_TYPE_IMAGE_WINDOW, \
-                                     GimpImageWindowPrivate)
+        ((GimpImageWindowPrivate *) gimp_image_window_get_instance_private ((GimpImageWindow *) (window)))
 
 
 /*  local function prototypes  */
@@ -263,6 +261,7 @@ static void      gimp_image_window_update_tab_labels   (GimpImageWindow     *win
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW,
+                         G_ADD_PRIVATE (GimpImageWindow)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCK_CONTAINER,
                                                 gimp_image_window_dock_container_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
@@ -312,8 +311,6 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         GDK_TYPE_MONITOR,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpImageWindowPrivate));
 }
 
 static void

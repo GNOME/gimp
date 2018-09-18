@@ -76,6 +76,7 @@ static void   gimp_tool_preset_editor_notify_data  (GimpToolPreset       *option
 
 G_DEFINE_TYPE_WITH_CODE (GimpToolPresetEditor, gimp_tool_preset_editor,
                          GIMP_TYPE_DATA_EDITOR,
+                         G_ADD_PRIVATE (GimpToolPresetEditor)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED, NULL))
 
 #define parent_class gimp_tool_preset_editor_parent_class
@@ -92,16 +93,12 @@ gimp_tool_preset_editor_class_init (GimpToolPresetEditorClass *klass)
 
   editor_class->set_data    = gimp_tool_preset_editor_set_data;
   editor_class->title       = _("Tool Preset Editor");
-
-  g_type_class_add_private (klass, sizeof (GimpToolPresetEditorPrivate));
 }
 
 static void
 gimp_tool_preset_editor_init (GimpToolPresetEditor *editor)
 {
-  editor->priv = G_TYPE_INSTANCE_GET_PRIVATE (editor,
-                                              GIMP_TYPE_TOOL_PRESET_EDITOR,
-                                              GimpToolPresetEditorPrivate);
+  editor->priv = gimp_tool_preset_editor_get_instance_private (editor);
 }
 
 static void

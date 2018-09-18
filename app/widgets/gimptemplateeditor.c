@@ -75,9 +75,7 @@ struct _GimpTemplateEditorPrivate
 };
 
 #define GET_PRIVATE(editor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (editor, \
-                                     GIMP_TYPE_TEMPLATE_EDITOR, \
-                                     GimpTemplateEditorPrivate)
+        ((GimpTemplateEditorPrivate *) gimp_template_editor_get_instance_private ((GimpTemplateEditor *) (editor)))
 
 
 static void    gimp_template_editor_constructed    (GObject            *object);
@@ -100,7 +98,8 @@ static void gimp_template_editor_template_notify   (GimpTemplate       *template
                                                     GimpTemplateEditor *editor);
 
 
-G_DEFINE_TYPE (GimpTemplateEditor, gimp_template_editor, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpTemplateEditor, gimp_template_editor,
+                            GTK_TYPE_BOX)
 
 #define parent_class gimp_template_editor_parent_class
 
@@ -126,8 +125,6 @@ gimp_template_editor_class_init (GimpTemplateEditorClass *klass)
                                                         GIMP_TYPE_TEMPLATE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (object_class, sizeof (GimpTemplateEditorPrivate));
 }
 
 static void

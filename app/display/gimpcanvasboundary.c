@@ -59,9 +59,7 @@ struct _GimpCanvasBoundaryPrivate
 };
 
 #define GET_PRIVATE(boundary) \
-        G_TYPE_INSTANCE_GET_PRIVATE (boundary, \
-                                     GIMP_TYPE_CANVAS_BOUNDARY, \
-                                     GimpCanvasBoundaryPrivate)
+        ((GimpCanvasBoundaryPrivate *) gimp_canvas_boundary_get_instance_private ((GimpCanvasBoundary *) (boundary)))
 
 
 /*  local function prototypes  */
@@ -80,8 +78,8 @@ static void             gimp_canvas_boundary_draw         (GimpCanvasItem *item,
 static cairo_region_t * gimp_canvas_boundary_get_extents  (GimpCanvasItem *item);
 
 
-G_DEFINE_TYPE (GimpCanvasBoundary, gimp_canvas_boundary,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasBoundary, gimp_canvas_boundary,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_boundary_parent_class
 
@@ -118,8 +116,6 @@ gimp_canvas_boundary_class_init (GimpCanvasBoundaryClass *klass)
                                                         -GIMP_MAX_IMAGE_SIZE,
                                                         GIMP_MAX_IMAGE_SIZE, 0,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasBoundaryPrivate));
 }
 
 static void

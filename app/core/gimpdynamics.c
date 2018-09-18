@@ -74,9 +74,7 @@ struct _GimpDynamicsPrivate
 };
 
 #define GET_PRIVATE(output) \
-        G_TYPE_INSTANCE_GET_PRIVATE (output, \
-                                     GIMP_TYPE_DYNAMICS, \
-                                     GimpDynamicsPrivate)
+        ((GimpDynamicsPrivate *) gimp_dynamics_get_instance_private ((GimpDynamics *) (output)))
 
 
 static void          gimp_dynamics_finalize      (GObject      *object);
@@ -106,8 +104,7 @@ static void          gimp_dynamics_output_notify (GObject          *output,
                                                   GimpDynamics     *dynamics);
 
 
-G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
-               GIMP_TYPE_DATA)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDynamics, gimp_dynamics, GIMP_TYPE_DATA)
 
 #define parent_class gimp_dynamics_parent_class
 
@@ -201,8 +198,6 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                            NULL, NULL,
                            GIMP_TYPE_DYNAMICS_OUTPUT,
                            GIMP_CONFIG_PARAM_AGGREGATE);
-
-  g_type_class_add_private (klass, sizeof (GimpDynamicsPrivate));
 }
 
 static void

@@ -133,7 +133,8 @@ static GimpToolWidget * gimp_tool_widget_group_get_hover_widget    (GimpToolWidg
                                                                     GimpHit               *hit);
 
 
-G_DEFINE_TYPE (GimpToolWidgetGroup, gimp_tool_widget_group, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolWidgetGroup, gimp_tool_widget_group,
+                            GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_widget_group_parent_class
 
@@ -161,8 +162,6 @@ gimp_tool_widget_group_class_init (GimpToolWidgetGroupClass *klass)
   widget_class->motion_modifier = gimp_tool_widget_group_motion_modifier;
   widget_class->hover_modifier  = gimp_tool_widget_group_hover_modifier;
   widget_class->get_cursor      = gimp_tool_widget_group_get_cursor;
-
-  g_type_class_add_private (klass, sizeof (GimpToolWidgetGroupPrivate));
 }
 
 static void
@@ -170,9 +169,7 @@ gimp_tool_widget_group_init (GimpToolWidgetGroup *group)
 {
   GimpToolWidgetGroupPrivate *priv;
 
-  priv = group->priv = G_TYPE_INSTANCE_GET_PRIVATE (group,
-                                                    GIMP_TYPE_TOOL_WIDGET_GROUP,
-                                                    GimpToolWidgetGroupPrivate);
+  priv = group->priv = gimp_tool_widget_group_get_instance_private (group);
 
   priv->children = g_object_new (GIMP_TYPE_LIST,
                                  "children-type", GIMP_TYPE_TOOL_WIDGET,

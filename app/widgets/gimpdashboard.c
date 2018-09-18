@@ -892,6 +892,7 @@ static const GroupInfo groups[] =
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDashboard, gimp_dashboard, GIMP_TYPE_EDITOR,
+                         G_ADD_PRIVATE (GimpDashboard)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_dashboard_docked_iface_init))
 
@@ -915,8 +916,6 @@ gimp_dashboard_class_init (GimpDashboardClass *klass)
 
   widget_class->map         = gimp_dashboard_map;
   widget_class->unmap       = gimp_dashboard_unmap;
-
-  g_type_class_add_private (klass, sizeof (GimpDashboardPrivate));
 }
 
 static void
@@ -942,9 +941,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
   Group                 group;
   gint                  field;
 
-  priv = dashboard->priv = G_TYPE_INSTANCE_GET_PRIVATE (dashboard,
-                                                        GIMP_TYPE_DASHBOARD,
-                                                        GimpDashboardPrivate);
+  priv = dashboard->priv = gimp_dashboard_get_instance_private (dashboard);
 
   g_mutex_init (&priv->mutex);
   g_cond_init (&priv->cond);

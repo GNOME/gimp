@@ -65,8 +65,9 @@ static void   gimp_view_renderer_drawable_render        (GimpViewRenderer       
 static void   gimp_view_renderer_drawable_cancel_render (GimpViewRendererDrawable *renderdrawable);
 
 
-G_DEFINE_TYPE (GimpViewRendererDrawable, gimp_view_renderer_drawable,
-               GIMP_TYPE_VIEW_RENDERER)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpViewRendererDrawable,
+                            gimp_view_renderer_drawable,
+                            GIMP_TYPE_VIEW_RENDERER)
 
 #define parent_class gimp_view_renderer_drawable_parent_class
 
@@ -84,17 +85,13 @@ gimp_view_renderer_drawable_class_init (GimpViewRendererDrawableClass *klass)
 
   renderer_class->invalidate = gimp_view_renderer_drawable_invalidate;
   renderer_class->render     = gimp_view_renderer_drawable_render;
-
-  g_type_class_add_private (klass, sizeof (GimpViewRendererDrawablePrivate));
 }
 
 static void
 gimp_view_renderer_drawable_init (GimpViewRendererDrawable *renderdrawable)
 {
   renderdrawable->priv =
-    G_TYPE_INSTANCE_GET_PRIVATE (renderdrawable,
-                                 GIMP_TYPE_VIEW_RENDERER_DRAWABLE,
-                                 GimpViewRendererDrawablePrivate);
+    gimp_view_renderer_drawable_get_instance_private (renderdrawable);
 }
 
 static void

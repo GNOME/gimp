@@ -56,7 +56,8 @@ static void gimp_extension_row_activated (GtkListBox        *box,
                                           GtkListBoxRow     *row,
                                           gpointer           user_data);
 
-G_DEFINE_TYPE (GimpExtensionList, gimp_extension_list, GTK_TYPE_LIST_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpExtensionList, gimp_extension_list,
+                            GTK_TYPE_LIST_BOX)
 
 #define parent_class gimp_extension_list_parent_class
 
@@ -74,8 +75,6 @@ gimp_extension_list_class_init (GimpExtensionListClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_OBJECT);
-
-  g_type_class_add_private (klass, sizeof (GimpExtensionListPrivate));
 }
 
 static void
@@ -85,9 +84,7 @@ gimp_extension_list_init (GimpExtensionList *list)
                                    GTK_SELECTION_SINGLE);
   gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (list),
                                              FALSE);
-  list->p = G_TYPE_INSTANCE_GET_PRIVATE (list,
-                                         GIMP_TYPE_EXTENSION_LIST,
-                                         GimpExtensionListPrivate);
+  list->p = gimp_extension_list_get_instance_private (list);
 }
 
 GtkWidget *

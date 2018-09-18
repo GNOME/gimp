@@ -146,8 +146,8 @@ static const GtkTargetEntry target = { "application/x-gimp-brush-name", 0 };
 static guint brush_button_signals[LAST_SIGNAL] = { 0 };
 
 
-G_DEFINE_TYPE (GimpBrushSelectButton, gimp_brush_select_button,
-               GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpBrushSelectButton, gimp_brush_select_button,
+                            GIMP_TYPE_SELECT_BUTTON)
 
 
 static void
@@ -268,9 +268,6 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
                   G_TYPE_INT,
                   G_TYPE_POINTER,
                   G_TYPE_BOOLEAN);
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpBrushSelectButtonPrivate));
 }
 
 static void
@@ -283,9 +280,7 @@ gimp_brush_select_button_init (GimpBrushSelectButton *button)
   gint                          color_data_size;
   guint8                       *color_data;
 
-  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
-                                              GIMP_TYPE_BRUSH_SELECT_BUTTON,
-                                              GimpBrushSelectButtonPrivate);
+  button->priv = gimp_brush_select_button_get_instance_private (button);
 
 
   priv = GET_PRIVATE (button);

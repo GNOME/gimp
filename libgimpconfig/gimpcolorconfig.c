@@ -185,6 +185,7 @@ static void  gimp_color_config_set_simulation_profile (GimpColorConfig  *config,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorConfig, gimp_color_config, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpColorConfig)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL)
                          gimp_type_set_translation_domain (g_define_type_id,
                                                            GETTEXT_PACKAGE "-libgimp"))
@@ -312,16 +313,12 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                         OUT_OF_GAMUT_COLOR_BLURB,
                         FALSE, &color,
                         GIMP_PARAM_STATIC_STRINGS);
-
-  g_type_class_add_private (object_class, sizeof (GimpColorConfigPrivate));
 }
 
 static void
 gimp_color_config_init (GimpColorConfig *config)
 {
-  config->priv = G_TYPE_INSTANCE_GET_PRIVATE (config,
-                                              GIMP_TYPE_COLOR_CONFIG,
-                                              GimpColorConfigPrivate);
+  config->priv = gimp_color_config_get_instance_private (config);
 }
 
 static void

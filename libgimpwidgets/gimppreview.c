@@ -126,7 +126,7 @@ static void      gimp_preview_real_untransform    (GimpPreview      *preview,
                                                    gint             *dest_y);
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpPreview, gimp_preview, GTK_TYPE_BOX)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpPreview, gimp_preview, GTK_TYPE_BOX)
 
 #define parent_class gimp_preview_parent_class
 
@@ -164,8 +164,6 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   klass->transform                = gimp_preview_real_transform;
   klass->untransform              = gimp_preview_real_untransform;
 
-  g_type_class_add_private (object_class, sizeof (GimpPreviewPrivate));
-
   g_object_class_install_property (object_class,
                                    PROP_UPDATE,
                                    g_param_spec_boolean ("update",
@@ -191,9 +189,7 @@ gimp_preview_init (GimpPreview *preview)
   GtkWidget          *frame;
   gdouble             xalign = 0.0;
 
-  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
-                                               GIMP_TYPE_PREVIEW,
-                                               GimpPreviewPrivate);
+  preview->priv = gimp_preview_get_instance_private (preview);
 
   priv = preview->priv;
 

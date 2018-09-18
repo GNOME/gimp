@@ -65,7 +65,7 @@ static void   gimp_busy_box_get_property (GObject      *object,
                                           GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpBusyBox, gimp_busy_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpBusyBox, gimp_busy_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_busy_box_parent_class
 
@@ -94,8 +94,6 @@ gimp_busy_box_class_init (GimpBusyBoxClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpBusyBoxPrivate));
 }
 
 static void
@@ -104,9 +102,7 @@ gimp_busy_box_init (GimpBusyBox *box)
   GtkWidget *spinner;
   GtkWidget *label;
 
-  box->priv = G_TYPE_INSTANCE_GET_PRIVATE (box,
-                                           GIMP_TYPE_BUSY_BOX,
-                                           GimpBusyBoxPrivate);
+  box->priv = gimp_busy_box_get_instance_private (box);
 
   gtk_widget_set_halign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
   gtk_widget_set_valign (GTK_WIDGET (box), GTK_ALIGN_CENTER);

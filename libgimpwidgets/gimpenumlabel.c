@@ -66,7 +66,7 @@ static void   gimp_enum_label_set_property (GObject      *object,
                                             GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL)
 
 #define parent_class gimp_enum_label_parent_class
 
@@ -109,16 +109,12 @@ gimp_enum_label_class_init (GimpEnumLabelClass *klass)
                                                      G_MININT, G_MAXINT, 0,
                                                      GIMP_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (object_class, sizeof (GimpEnumLabelPrivate));
 }
 
 static void
 gimp_enum_label_init (GimpEnumLabel *enum_label)
 {
-  enum_label->priv = G_TYPE_INSTANCE_GET_PRIVATE (enum_label,
-                                                  GIMP_TYPE_ENUM_LABEL,
-                                                  GimpEnumLabelPrivate);
+  enum_label->priv = gimp_enum_label_get_instance_private (enum_label);
 }
 
 static void

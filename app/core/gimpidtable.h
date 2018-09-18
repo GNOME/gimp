@@ -33,14 +33,14 @@
 #define GIMP_ID_TABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ID_TABLE, GimpIdTableClass))
 
 
-typedef struct _GimpIdTableClass  GimpIdTableClass;
-typedef struct _GimpIdTablePriv   GimpIdTablePriv;
+typedef struct _GimpIdTableClass   GimpIdTableClass;
+typedef struct _GimpIdTablePrivate GimpIdTablePrivate;
 
 struct _GimpIdTable
 {
-  GimpObject       parent_instance;
+  GimpObject          parent_instance;
 
-  GimpIdTablePriv *priv;
+  GimpIdTablePrivate *priv;
 };
 
 struct _GimpIdTableClass

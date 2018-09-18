@@ -53,7 +53,7 @@ static void   gimp_aux_item_set_property (GObject      *object,
                                           GParamSpec   *pspec);
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpAuxItem, gimp_aux_item, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpAuxItem, gimp_aux_item, G_TYPE_OBJECT)
 
 static guint gimp_aux_item_signals[LAST_SIGNAL] = { 0 };
 
@@ -82,16 +82,12 @@ gimp_aux_item_class_init (GimpAuxItemClass *klass)
                                                       0, G_MAXUINT32, 0,
                                                       G_PARAM_CONSTRUCT_ONLY |
                                                       GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpAuxItemPrivate));
 }
 
 static void
 gimp_aux_item_init (GimpAuxItem *aux_item)
 {
-  aux_item->priv = G_TYPE_INSTANCE_GET_PRIVATE (aux_item,
-                                                GIMP_TYPE_AUX_ITEM,
-                                                GimpAuxItemPrivate);
+  aux_item->priv = gimp_aux_item_get_instance_private (aux_item);
 }
 
 static void

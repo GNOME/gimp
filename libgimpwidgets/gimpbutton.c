@@ -59,7 +59,7 @@ static gboolean   gimp_button_button_press (GtkWidget      *widget,
 static void       gimp_button_clicked      (GtkButton      *button);
 
 
-G_DEFINE_TYPE (GimpButton, gimp_button, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpButton, gimp_button, GTK_TYPE_BUTTON)
 
 #define parent_class gimp_button_parent_class
 
@@ -69,7 +69,6 @@ static guint button_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_button_class_init (GimpButtonClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
@@ -94,16 +93,12 @@ gimp_button_class_init (GimpButtonClass *klass)
   widget_class->button_press_event = gimp_button_button_press;
 
   button_class->clicked            = gimp_button_clicked;
-
-  g_type_class_add_private (object_class, sizeof (GimpButtonPrivate));
 }
 
 static void
 gimp_button_init (GimpButton *button)
 {
-  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
-                                              GIMP_TYPE_BUTTON,
-                                              GimpButtonPrivate);
+  button->priv = gimp_button_get_instance_private (button);
 }
 
 /**

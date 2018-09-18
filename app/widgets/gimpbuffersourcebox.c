@@ -80,8 +80,8 @@ static void   gimp_buffer_source_box_enable_toggled  (GtkToggleButton     *butto
                                                       GimpBufferSourceBox *box);
 
 
-G_DEFINE_TYPE (GimpBufferSourceBox, gimp_buffer_source_box,
-               GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpBufferSourceBox, gimp_buffer_source_box,
+                            GTK_TYPE_BOX)
 
 #define parent_class gimp_buffer_source_box_parent_class
 
@@ -125,16 +125,12 @@ gimp_buffer_source_box_class_init (GimpBufferSourceBoxClass *klass)
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpBufferSourceBoxPrivate));
 }
 
 static void
 gimp_buffer_source_box_init (GimpBufferSourceBox *box)
 {
-  box->priv = G_TYPE_INSTANCE_GET_PRIVATE (box,
-                                           GIMP_TYPE_BUFFER_SOURCE_BOX,
-                                           GimpBufferSourceBoxPrivate);
+  box->priv = gimp_buffer_source_box_get_instance_private (box);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);

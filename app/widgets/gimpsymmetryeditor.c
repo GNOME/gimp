@@ -66,8 +66,8 @@ static void   gimp_symmetry_editor_set_options      (GimpSymmetryEditor *editor,
                                                      GimpSymmetry       *symmetry);
 
 
-G_DEFINE_TYPE (GimpSymmetryEditor, gimp_symmetry_editor,
-               GIMP_TYPE_IMAGE_EDITOR)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSymmetryEditor, gimp_symmetry_editor,
+                            GIMP_TYPE_IMAGE_EDITOR)
 
 #define parent_class gimp_symmetry_editor_parent_class
 
@@ -78,8 +78,6 @@ gimp_symmetry_editor_class_init (GimpSymmetryEditorClass *klass)
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   image_editor_class->set_image = gimp_symmetry_editor_set_image;
-
-  g_type_class_add_private (klass, sizeof (GimpSymmetryEditorPrivate));
 }
 
 static void
@@ -88,9 +86,7 @@ gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
   GtkWidget *scrolled_window;
   GtkWidget *viewport;
 
-  editor->p = G_TYPE_INSTANCE_GET_PRIVATE (editor,
-                                           GIMP_TYPE_SYMMETRY_EDITOR,
-                                           GimpSymmetryEditorPrivate);
+  editor->p = gimp_symmetry_editor_get_instance_private (editor);
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), -1, 200);
 

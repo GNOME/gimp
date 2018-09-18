@@ -42,7 +42,7 @@
 #include "gimpwidgets-utils.h"
 
 
-struct _GimpContainerIconViewPriv
+struct _GimpContainerIconViewPrivate
 {
   GimpViewRenderer *dnd_renderer;
 };
@@ -111,6 +111,7 @@ static gint          gimp_container_icon_view_get_selected        (GimpContainer
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerIconView, gimp_container_icon_view,
                          GIMP_TYPE_CONTAINER_BOX,
+                         G_ADD_PRIVATE (GimpContainerIconView)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_container_icon_view_view_iface_init))
 
@@ -130,8 +131,6 @@ gimp_container_icon_view_class_init (GimpContainerIconViewClass *klass)
 
   widget_class->unmap       = gimp_container_icon_view_unmap;
   widget_class->popup_menu  = gimp_container_icon_view_popup_menu;
-
-  g_type_class_add_private (klass, sizeof (GimpContainerIconViewPriv));
 }
 
 static void
@@ -162,9 +161,7 @@ gimp_container_icon_view_init (GimpContainerIconView *icon_view)
 {
   GimpContainerBox *box = GIMP_CONTAINER_BOX (icon_view);
 
-  icon_view->priv = G_TYPE_INSTANCE_GET_PRIVATE (icon_view,
-                                                 GIMP_TYPE_CONTAINER_ICON_VIEW,
-                                                 GimpContainerIconViewPriv);
+  icon_view->priv = gimp_container_icon_view_get_instance_private (icon_view);
 
   gimp_container_tree_store_columns_init (icon_view->model_columns,
                                           &icon_view->n_model_columns);

@@ -98,8 +98,8 @@ static gboolean  gimp_scrolled_preview_nav_popup_draw      (GtkWidget           
 static void      gimp_scrolled_preview_set_cursor          (GimpPreview              *preview);
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpScrolledPreview, gimp_scrolled_preview,
-                        GIMP_TYPE_PREVIEW)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpScrolledPreview, gimp_scrolled_preview,
+                                     GIMP_TYPE_PREVIEW)
 
 #define parent_class gimp_scrolled_preview_parent_class
 
@@ -115,8 +115,6 @@ gimp_scrolled_preview_class_init (GimpScrolledPreviewClass *klass)
   object_class->dispose     = gimp_scrolled_preview_dispose;
 
   preview_class->set_cursor = gimp_scrolled_preview_set_cursor;
-
-  g_type_class_add_private (object_class, sizeof (GimpScrolledPreviewPrivate));
 }
 
 static void
@@ -130,9 +128,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   gint                        width;
   gint                        height;
 
-  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
-                                               GIMP_TYPE_SCROLLED_PREVIEW,
-                                               GimpScrolledPreviewPrivate);
+  preview->priv = gimp_scrolled_preview_get_instance_private (preview);
 
   priv = GET_PRIVATE (preview);
 

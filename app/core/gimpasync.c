@@ -112,6 +112,7 @@ static void       gimp_async_run_callbacks         (GimpAsync             *async
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpAsync, gimp_async, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpAsync)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_WAITABLE,
                                                 gimp_async_waitable_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CANCELABLE,
@@ -134,8 +135,6 @@ gimp_async_class_init (GimpAsyncClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_async_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpAsyncPrivate));
 }
 
 static void
@@ -155,9 +154,7 @@ gimp_async_cancelable_iface_init (GimpCancelableInterface *iface)
 static void
 gimp_async_init (GimpAsync *async)
 {
-  async->priv = G_TYPE_INSTANCE_GET_PRIVATE (async,
-                                             GIMP_TYPE_ASYNC,
-                                             GimpAsyncPrivate);
+  async->priv = gimp_async_get_instance_private (async);
 
   g_mutex_init (&async->priv->mutex);
   g_cond_init  (&async->priv->cond);

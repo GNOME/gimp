@@ -74,7 +74,7 @@ static void  gimp_memsize_entry_unit_callback (GtkWidget        *widget,
                                                GimpMemsizeEntry *entry);
 
 
-G_DEFINE_TYPE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMemsizeEntry, gimp_memsize_entry, GTK_TYPE_BOX)
 
 #define parent_class gimp_memsize_entry_parent_class
 
@@ -84,9 +84,7 @@ static guint gimp_memsize_entry_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  klass->value_changed   = NULL;
+  klass->value_changed = NULL;
 
   gimp_memsize_entry_signals[VALUE_CHANGED] =
     g_signal_new ("value-changed",
@@ -96,16 +94,12 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
-
-  g_type_class_add_private (object_class, sizeof (GimpMemsizeEntryPrivate));
 }
 
 static void
 gimp_memsize_entry_init (GimpMemsizeEntry *entry)
 {
-  entry->priv = G_TYPE_INSTANCE_GET_PRIVATE (entry,
-                                             GIMP_TYPE_MEMSIZE_ENTRY,
-                                             GimpMemsizeEntryPrivate);
+  entry->priv = gimp_memsize_entry_get_instance_private (entry);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (entry),
                                   GTK_ORIENTATION_HORIZONTAL);

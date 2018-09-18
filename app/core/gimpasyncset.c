@@ -73,6 +73,7 @@ static void       gimp_async_set_async_callback        (GimpAsync               
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpAsyncSet, gimp_async_set, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpAsyncSet)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_WAITABLE,
                                                 gimp_async_set_waitable_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CANCELABLE,
@@ -99,8 +100,6 @@ gimp_async_set_class_init (GimpAsyncSetClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpAsyncSetPrivate));
 }
 
 static void
@@ -120,9 +119,7 @@ gimp_async_set_cancelable_iface_init (GimpCancelableInterface *iface)
 static void
 gimp_async_set_init (GimpAsyncSet *async_set)
 {
-  async_set->priv = G_TYPE_INSTANCE_GET_PRIVATE (async_set,
-                                                 GIMP_TYPE_ASYNC_SET,
-                                                 GimpAsyncSetPrivate);
+  async_set->priv = gimp_async_set_get_instance_private (async_set);
 
   async_set->priv->asyncs = g_hash_table_new (NULL, NULL);
 }

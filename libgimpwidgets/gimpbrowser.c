@@ -82,7 +82,7 @@ static void      gimp_browser_entry_icon_press (GtkEntry              *entry,
 static gboolean  gimp_browser_search_timeout   (gpointer               data);
 
 
-G_DEFINE_TYPE (GimpBrowser, gimp_browser, GTK_TYPE_PANED)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpBrowser, gimp_browser, GTK_TYPE_PANED)
 
 #define parent_class gimp_browser_parent_class
 
@@ -108,8 +108,6 @@ gimp_browser_class_init (GimpBrowserClass *klass)
   object_class->dispose = gimp_browser_dispose;
 
   klass->search         = NULL;
-
-  g_type_class_add_private (object_class, sizeof (GimpBrowserPrivate));
 }
 
 static void
@@ -121,9 +119,7 @@ gimp_browser_init (GimpBrowser *browser)
   GtkWidget          *scrolled_window;
   GtkWidget          *viewport;
 
-  browser->priv = G_TYPE_INSTANCE_GET_PRIVATE (browser,
-                                               GIMP_TYPE_BROWSER,
-                                               GimpBrowserPrivate);
+  browser->priv = gimp_browser_get_instance_private (browser);
 
   priv = GET_PRIVATE (browser);
 

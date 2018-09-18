@@ -198,7 +198,7 @@ static void     gimp_tool_path_delete_selected_anchors
                                                (GimpToolPath          *path);
 
 
-G_DEFINE_TYPE (GimpToolPath, gimp_tool_path, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolPath, gimp_tool_path, GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_path_parent_class
 
@@ -278,16 +278,12 @@ gimp_tool_path_class_init (GimpToolPathClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolPathPrivate));
 }
 
 static void
 gimp_tool_path_init (GimpToolPath *path)
 {
-  path->private = G_TYPE_INSTANCE_GET_PRIVATE (path,
-                                               GIMP_TYPE_TOOL_PATH,
-                                               GimpToolPathPrivate);
+  path->private = gimp_tool_path_get_instance_private (path);
 }
 
 static void

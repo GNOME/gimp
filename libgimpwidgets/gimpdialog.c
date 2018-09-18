@@ -83,7 +83,7 @@ static void       gimp_dialog_response     (GtkDialog    *dialog,
                                             gint          response_id);
 
 
-G_DEFINE_TYPE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
 
 #define parent_class gimp_dialog_parent_class
 
@@ -145,16 +145,12 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                                         GTK_TYPE_WIDGET,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpDialogPrivate));
 }
 
 static void
 gimp_dialog_init (GimpDialog *dialog)
 {
-  dialog->priv = G_TYPE_INSTANCE_GET_PRIVATE (dialog,
-                                              GIMP_TYPE_DIALOG,
-                                              GimpDialogPrivate);
+  dialog->priv = gimp_dialog_get_instance_private (dialog);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_dialog_response),

@@ -91,6 +91,8 @@ static void  gimp_color_display_set_color_managed (GimpColorDisplay *display,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorDisplay, gimp_color_display, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpColorDisplay)
+                         G_ADD_PRIVATE (GimpColorDisplay)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_color_display_parent_class
@@ -149,16 +151,12 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
   klass->configure       = NULL;
 
   klass->changed         = NULL;
-
-  g_type_class_add_private (object_class, sizeof (GimpColorDisplayPrivate));
 }
 
 static void
 gimp_color_display_init (GimpColorDisplay *display)
 {
-  display->priv = G_TYPE_INSTANCE_GET_PRIVATE (display,
-                                               GIMP_TYPE_COLOR_DISPLAY,
-                                               GimpColorDisplayPrivate);
+  display->priv = gimp_color_display_get_instance_private (display);
 }
 
 static void

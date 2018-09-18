@@ -44,7 +44,7 @@
  **/
 
 
-#define GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_PALETTE_SELECT_BUTTON, GimpPaletteSelectButtonPrivate))
+#define GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE(obj) ((GimpPaletteSelectButtonPrivate *) gimp_palette_select_button_get_instance_private ((GimpPaletteSelectButton *) (obj)))
 
 typedef struct _GimpPaletteSelectButtonPrivate GimpPaletteSelectButtonPrivate;
 
@@ -107,8 +107,8 @@ static const GtkTargetEntry target = { "application/x-gimp-palette-name", 0 };
 static guint palette_button_signals[LAST_SIGNAL] = { 0 };
 
 
-G_DEFINE_TYPE (GimpPaletteSelectButton, gimp_palette_select_button,
-               GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPaletteSelectButton, gimp_palette_select_button,
+                            GIMP_TYPE_SELECT_BUTTON)
 
 
 static void
@@ -174,9 +174,6 @@ gimp_palette_select_button_class_init (GimpPaletteSelectButtonClass *klass)
                   G_TYPE_NONE, 2,
                   G_TYPE_STRING,
                   G_TYPE_BOOLEAN);
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpPaletteSelectButtonPrivate));
 }
 
 static void

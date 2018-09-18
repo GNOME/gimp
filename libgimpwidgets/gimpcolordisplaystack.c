@@ -72,7 +72,8 @@ static void   gimp_color_display_stack_disconnect      (GimpColorDisplayStack *s
                                                         GimpColorDisplay      *display);
 
 
-G_DEFINE_TYPE (GimpColorDisplayStack, gimp_color_display_stack, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorDisplayStack, gimp_color_display_stack,
+                            G_TYPE_OBJECT)
 
 #define parent_class gimp_color_display_stack_parent_class
 
@@ -131,16 +132,12 @@ gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass)
   klass->added          = NULL;
   klass->removed        = NULL;
   klass->reordered      = NULL;
-
-  g_type_class_add_private (object_class, sizeof (GimpColorDisplayStackPrivate));
 }
 
 static void
 gimp_color_display_stack_init (GimpColorDisplayStack *stack)
 {
-  stack->priv = G_TYPE_INSTANCE_GET_PRIVATE (stack,
-                                             GIMP_TYPE_COLOR_DISPLAY_STACK,
-                                             GimpColorDisplayStackPrivate);
+  stack->priv = gimp_color_display_stack_get_instance_private (stack);
 }
 
 static void

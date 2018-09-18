@@ -74,8 +74,7 @@ static void   gimp_layer_mode_box_get_property (GObject      *object,
                                                 GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpLayerModeBox, gimp_layer_mode_box,
-               GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpLayerModeBox, gimp_layer_mode_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_layer_mode_box_parent_class
 
@@ -104,16 +103,12 @@ gimp_layer_mode_box_class_init (GimpLayerModeBoxClass *klass)
                                                       GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpLayerModeBoxPrivate));
 }
 
 static void
 gimp_layer_mode_box_init (GimpLayerModeBox *box)
 {
-  box->priv = G_TYPE_INSTANCE_GET_PRIVATE (box,
-                                           GIMP_TYPE_LAYER_MODE_BOX,
-                                           GimpLayerModeBoxPrivate);
+  box->priv = gimp_layer_mode_box_get_instance_private (box);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);

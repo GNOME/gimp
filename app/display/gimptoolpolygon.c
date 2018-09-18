@@ -192,7 +192,8 @@ static gint   gimp_tool_polygon_get_segment_index (GimpToolPolygon       *polygo
                                                    const GimpCoords      *coords);
 
 
-G_DEFINE_TYPE (GimpToolPolygon, gimp_tool_polygon, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolPolygon, gimp_tool_polygon,
+                            GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_polygon_parent_class
 
@@ -221,16 +222,12 @@ gimp_tool_polygon_class_init (GimpToolPolygonClass *klass)
   widget_class->motion_modifier = gimp_tool_polygon_motion_modifier;
   widget_class->hover_modifier  = gimp_tool_polygon_hover_modifier;
   widget_class->get_cursor      = gimp_tool_polygon_get_cursor;
-
-  g_type_class_add_private (klass, sizeof (GimpToolPolygonPrivate));
 }
 
 static void
 gimp_tool_polygon_init (GimpToolPolygon *polygon)
 {
-  polygon->private = G_TYPE_INSTANCE_GET_PRIVATE (polygon,
-                                                  GIMP_TYPE_TOOL_POLYGON,
-                                                  GimpToolPolygonPrivate);
+  polygon->private = gimp_tool_polygon_get_instance_private (polygon);
 
   polygon->private->grabbed_segment_index = INVALID_INDEX;
   polygon->private->last_click_time       = NO_CLICK_TIME_AVAILABLE;

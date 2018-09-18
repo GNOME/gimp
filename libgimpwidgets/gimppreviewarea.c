@@ -109,7 +109,8 @@ static void      gimp_preview_area_create_transform  (GimpPreviewArea  *area);
 static void      gimp_preview_area_destroy_transform (GimpPreviewArea  *area);
 
 
-G_DEFINE_TYPE (GimpPreviewArea, gimp_preview_area, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPreviewArea, gimp_preview_area,
+                            GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_preview_area_parent_class
 
@@ -143,8 +144,6 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
                                                       GIMP_TYPE_CHECK_TYPE,
                                                       DEFAULT_CHECK_TYPE,
                                                       GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpPreviewAreaPrivate));
 }
 
 static void
@@ -152,9 +151,7 @@ gimp_preview_area_init (GimpPreviewArea *area)
 {
   GimpPreviewAreaPrivate *priv;
 
-  area->priv = G_TYPE_INSTANCE_GET_PRIVATE (area,
-                                            GIMP_TYPE_PREVIEW_AREA,
-                                            GimpPreviewAreaPrivate);
+  area->priv = gimp_preview_area_get_instance_private (area);
 
   priv = area->priv;
 

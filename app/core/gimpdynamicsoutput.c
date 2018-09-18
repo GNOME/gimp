@@ -91,9 +91,7 @@ struct _GimpDynamicsOutputPrivate
 };
 
 #define GET_PRIVATE(output) \
-        G_TYPE_INSTANCE_GET_PRIVATE (output, \
-                                     GIMP_TYPE_DYNAMICS_OUTPUT, \
-                                     GimpDynamicsOutputPrivate)
+        ((GimpDynamicsOutputPrivate *) gimp_dynamics_output_get_instance_private ((GimpDynamicsOutput *) (output)))
 
 
 static void   gimp_dynamics_output_finalize     (GObject           *object);
@@ -117,6 +115,7 @@ static void   gimp_dynamics_output_curve_dirty  (GimpCurve          *curve,
 
 G_DEFINE_TYPE_WITH_CODE (GimpDynamicsOutput, gimp_dynamics_output,
                          GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpDynamicsOutput)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_dynamics_output_parent_class
@@ -222,8 +221,6 @@ gimp_dynamics_output_class_init (GimpDynamicsOutputClass *klass)
                             NULL, NULL,
                            GIMP_TYPE_CURVE,
                            GIMP_CONFIG_PARAM_AGGREGATE);
-
-  g_type_class_add_private (klass, sizeof (GimpDynamicsOutputPrivate));
 }
 
 static void

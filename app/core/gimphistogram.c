@@ -115,7 +115,7 @@ static void      gimp_histogram_calculate_async_callback (GimpAsync           *a
                                                           CalculateContext    *context);
 
 
-G_DEFINE_TYPE (GimpHistogram, gimp_histogram, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpHistogram, gimp_histogram, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_histogram_parent_class
 
@@ -147,16 +147,12 @@ gimp_histogram_class_init (GimpHistogramClass *klass)
                                    g_param_spec_boolean ("values", NULL, NULL,
                                                          FALSE,
                                                          G_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpHistogramPrivate));
 }
 
 static void
 gimp_histogram_init (GimpHistogram *histogram)
 {
-  histogram->priv = G_TYPE_INSTANCE_GET_PRIVATE (histogram,
-                                                 GIMP_TYPE_HISTOGRAM,
-                                                 GimpHistogramPrivate);
+  histogram->priv = gimp_histogram_get_instance_private (histogram);
 
   histogram->priv->n_bins = 256;
 }

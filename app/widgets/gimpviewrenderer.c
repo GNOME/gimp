@@ -114,7 +114,7 @@ static cairo_pattern_t *
                                                        GtkWidget          *widget);
 
 
-G_DEFINE_TYPE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
 
 #define parent_class gimp_view_renderer_parent_class
 
@@ -159,16 +159,12 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&green_color, 0.0, 0.94, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-
-  g_type_class_add_private (klass, sizeof (GimpViewRendererPrivate));
 }
 
 static void
 gimp_view_renderer_init (GimpViewRenderer *renderer)
 {
-  renderer->priv = G_TYPE_INSTANCE_GET_PRIVATE (renderer,
-                                                GIMP_TYPE_VIEW_RENDERER,
-                                                GimpViewRendererPrivate);
+  renderer->priv = gimp_view_renderer_get_instance_private (renderer);
 
   renderer->viewable = NULL;
 

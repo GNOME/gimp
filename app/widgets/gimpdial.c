@@ -107,7 +107,7 @@ static gdouble     gimp_dial_get_angle_distance   (gdouble             alpha,
                                                    gdouble             beta);
 
 
-G_DEFINE_TYPE (GimpDial, gimp_dial, GIMP_TYPE_CIRCLE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDial, gimp_dial, GIMP_TYPE_CIRCLE)
 
 #define parent_class gimp_dial_parent_class
 
@@ -162,16 +162,12 @@ gimp_dial_class_init (GimpDialClass *klass)
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpDialPrivate));
 }
 
 static void
 gimp_dial_init (GimpDial *dial)
 {
-  dial->priv = G_TYPE_INSTANCE_GET_PRIVATE (dial,
-                                            GIMP_TYPE_DIAL,
-                                            GimpDialPrivate);
+  dial->priv = gimp_dial_get_instance_private (dial);
 }
 
 static void

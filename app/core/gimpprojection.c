@@ -221,6 +221,7 @@ static gint        gimp_projection_round_chunk_height    (gdouble          heigh
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpProjection, gimp_projection, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpProjection)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
                                                 gimp_projection_pickable_iface_init))
 
@@ -258,8 +259,6 @@ gimp_projection_class_init (GimpProjectionClass *klass)
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
-  g_type_class_add_private (klass, sizeof (GimpProjectionPrivate));
-
   if (g_getenv ("GIMP_NO_ADAPTIVE_CHUNK_SIZE"))
     GIMP_PROJECTION_ADAPTIVE_CHUNK_SIZE = FALSE;
 
@@ -285,9 +284,7 @@ gimp_projection_class_init (GimpProjectionClass *klass)
 static void
 gimp_projection_init (GimpProjection *proj)
 {
-  proj->priv = G_TYPE_INSTANCE_GET_PRIVATE (proj,
-                                            GIMP_TYPE_PROJECTION,
-                                            GimpProjectionPrivate);
+  proj->priv = gimp_projection_get_instance_private (proj);
 }
 
 static void

@@ -115,7 +115,9 @@ static void     gimp_extension_manager_extension_running   (GimpExtension       
                                                             GParamSpec           *pspec,
                                                             GimpExtensionManager *manager);
 
-G_DEFINE_TYPE_WITH_CODE (GimpExtensionManager, gimp_extension_manager, GIMP_TYPE_OBJECT,
+G_DEFINE_TYPE_WITH_CODE (GimpExtensionManager, gimp_extension_manager,
+                         GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpExtensionManager)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_extension_manager_config_iface_init))
 
@@ -176,16 +178,12 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                    g_param_spec_pointer ("plug-in-paths",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpExtensionManagerPrivate));
 }
 
 static void
 gimp_extension_manager_init (GimpExtensionManager *manager)
 {
-  manager->p = G_TYPE_INSTANCE_GET_PRIVATE (manager,
-                                            GIMP_TYPE_EXTENSION_MANAGER,
-                                            GimpExtensionManagerPrivate);
+  manager->p = gimp_extension_manager_get_instance_private (manager);
   manager->p->extensions     = NULL;
   manager->p->sys_extensions = NULL;
 }

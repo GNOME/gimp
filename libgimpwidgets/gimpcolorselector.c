@@ -69,7 +69,8 @@ struct _GimpColorSelectorPrivate
 static void   gimp_color_selector_dispose (GObject *object);
 
 
-G_DEFINE_TYPE (GimpColorSelector, gimp_color_selector, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorSelector, gimp_color_selector,
+                            GTK_TYPE_BOX)
 
 #define parent_class gimp_color_selector_parent_class
 
@@ -129,8 +130,6 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
   klass->channel_changed       = NULL;
   klass->model_visible_changed = NULL;
   klass->set_config            = NULL;
-
-  g_type_class_add_private (object_class, sizeof (GimpColorSelectorPrivate));
 }
 
 static void
@@ -138,9 +137,7 @@ gimp_color_selector_init (GimpColorSelector *selector)
 {
   GimpColorSelectorPrivate *priv;
 
-  selector->priv = G_TYPE_INSTANCE_GET_PRIVATE (selector,
-                                                GIMP_TYPE_COLOR_SELECTOR,
-                                                GimpColorSelectorPrivate);
+  selector->priv = gimp_color_selector_get_instance_private (selector);
 
   priv = GET_PRIVATE (selector);
 

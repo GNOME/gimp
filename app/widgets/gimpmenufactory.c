@@ -47,7 +47,8 @@ struct _GimpMenuFactoryPrivate
 static void   gimp_menu_factory_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpMenuFactory, gimp_menu_factory, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMenuFactory, gimp_menu_factory,
+                            GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_menu_factory_parent_class
 
@@ -58,16 +59,12 @@ gimp_menu_factory_class_init (GimpMenuFactoryClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_menu_factory_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpMenuFactoryPrivate));
 }
 
 static void
 gimp_menu_factory_init (GimpMenuFactory *factory)
 {
-  factory->p = G_TYPE_INSTANCE_GET_PRIVATE (factory,
-                                            GIMP_TYPE_MENU_FACTORY,
-                                            GimpMenuFactoryPrivate);
+  factory->p = gimp_menu_factory_get_instance_private (factory);
 }
 
 static void

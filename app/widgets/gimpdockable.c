@@ -94,6 +94,7 @@ static void       gimp_dockable_set_aux_info  (GimpSessionManaged *managed,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDockable, gimp_dockable, GTK_TYPE_BIN,
+                         G_ADD_PRIVATE (GimpDockable)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
                                                 gimp_dockable_session_managed_iface_init))
 
@@ -132,16 +133,12 @@ gimp_dockable_class_init (GimpDockableClass *klass)
                                                              G_MAXINT,
                                                              0,
                                                              GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpDockablePrivate));
 }
 
 static void
 gimp_dockable_init (GimpDockable *dockable)
 {
-  dockable->p = G_TYPE_INSTANCE_GET_PRIVATE (dockable,
-                                             GIMP_TYPE_DOCKABLE,
-                                             GimpDockablePrivate);
+  dockable->p = gimp_dockable_get_instance_private (dockable);
 
   dockable->p->tab_style = GIMP_TAB_STYLE_PREVIEW;
 

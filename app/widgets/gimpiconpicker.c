@@ -73,9 +73,7 @@ struct _GimpIconPickerPrivate
 };
 
 #define GET_PRIVATE(picker) \
-        G_TYPE_INSTANCE_GET_PRIVATE (picker, \
-                                     GIMP_TYPE_ICON_PICKER, \
-                                     GimpIconPickerPrivate)
+        ((GimpIconPickerPrivate *) gimp_icon_picker_get_instance_private ((GimpIconPicker *) (picker)))
 
 
 static void    gimp_icon_picker_constructed     (GObject        *object);
@@ -110,7 +108,7 @@ static void    gimp_icon_picker_menu_copy       (GtkWidget      *widget,
                                                  gpointer        data);
 
 
-G_DEFINE_TYPE (GimpIconPicker, gimp_icon_picker, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpIconPicker, gimp_icon_picker, GTK_TYPE_BOX)
 
 #define parent_class gimp_icon_picker_parent_class
 
@@ -141,8 +139,6 @@ gimp_icon_picker_class_init (GimpIconPickerClass *klass)
                                    g_param_spec_object ("icon-pixbuf", NULL, NULL,
                                                         GDK_TYPE_PIXBUF,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpIconPickerPrivate));
 }
 
 static void

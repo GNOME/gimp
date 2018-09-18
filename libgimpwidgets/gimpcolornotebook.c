@@ -110,8 +110,8 @@ static void   gimp_color_notebook_remove_selector (GtkContainer      *container,
                                                    GimpColorNotebook *notebook);
 
 
-G_DEFINE_TYPE (GimpColorNotebook, gimp_color_notebook,
-               GIMP_TYPE_COLOR_SELECTOR)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorNotebook, gimp_color_notebook,
+                            GIMP_TYPE_COLOR_SELECTOR)
 
 #define parent_class gimp_color_notebook_parent_class
 
@@ -119,7 +119,6 @@ G_DEFINE_TYPE (GimpColorNotebook, gimp_color_notebook,
 static void
 gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
 {
-  GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
   GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
@@ -144,8 +143,6 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
                                                               G_PARAM_READABLE));
 
   gtk_widget_class_set_css_name (widget_class, "GimpColorNotebook");
-
-  g_type_class_add_private (object_class, sizeof (GimpColorNotebookPrivate));
 }
 
 static void
@@ -156,9 +153,7 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
   guint                     n_selector_types;
   guint                     i;
 
-  notebook->priv = G_TYPE_INSTANCE_GET_PRIVATE (notebook,
-                                                GIMP_TYPE_COLOR_NOTEBOOK,
-                                                GimpColorNotebookPrivate);
+  notebook->priv = gimp_color_notebook_get_instance_private (notebook);
 
   private = notebook->priv;
 

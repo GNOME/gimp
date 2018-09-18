@@ -33,13 +33,16 @@
 #define GIMP_IMAGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE, GimpImageClass))
 
 
-typedef struct _GimpImageClass GimpImageClass;
+typedef struct _GimpImageClass   GimpImageClass;
+typedef struct _GimpImagePrivate GimpImagePrivate;
 
 struct _GimpImage
 {
-  GimpViewable  parent_instance;
+  GimpViewable      parent_instance;
 
-  Gimp         *gimp;  /*  the GIMP the image belongs to  */
+  Gimp             *gimp;  /*  the GIMP the image belongs to  */
+
+  GimpImagePrivate *priv;
 };
 
 struct _GimpImageClass

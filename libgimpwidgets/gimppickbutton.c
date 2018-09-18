@@ -63,7 +63,7 @@ static void       gimp_pick_button_dispose         (GObject        *object);
 static void       gimp_pick_button_clicked         (GtkButton      *button);
 
 
-G_DEFINE_TYPE (GimpPickButton, gimp_pick_button, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPickButton, gimp_pick_button, GTK_TYPE_BUTTON)
 
 #define parent_class gimp_pick_button_parent_class
 
@@ -98,8 +98,6 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
   button_class->clicked = gimp_pick_button_clicked;
 
   klass->color_picked   = NULL;
-
-  g_type_class_add_private (object_class, sizeof (GimpPickButtonPrivate));
 }
 
 static void
@@ -107,9 +105,7 @@ gimp_pick_button_init (GimpPickButton *button)
 {
   GtkWidget *image;
 
-  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
-                                              GIMP_TYPE_PICK_BUTTON,
-                                              GimpPickButtonPrivate);
+  button->priv = gimp_pick_button_get_instance_private (button);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_COLOR_PICK_FROM_SCREEN,
                                         GTK_ICON_SIZE_BUTTON);

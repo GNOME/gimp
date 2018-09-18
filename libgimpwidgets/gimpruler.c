@@ -153,7 +153,7 @@ static const RulerMetric *
                      gimp_ruler_get_metric            (GimpUnit        unit);
 
 
-G_DEFINE_TYPE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_ruler_parent_class
 
@@ -238,8 +238,6 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                         GIMP_PARAM_READWRITE));
 
   gtk_widget_class_set_css_name (widget_class, "GimpRuler");
-
-  g_type_class_add_private (object_class, sizeof (GimpRulerPrivate));
 }
 
 static void
@@ -247,9 +245,7 @@ gimp_ruler_init (GimpRuler *ruler)
 {
   GimpRulerPrivate *priv;
 
-  ruler->priv = G_TYPE_INSTANCE_GET_PRIVATE (ruler,
-                                             GIMP_TYPE_RULER,
-                                             GimpRulerPrivate);
+  ruler->priv = gimp_ruler_get_instance_private (ruler);
 
   priv = ruler->priv;
 

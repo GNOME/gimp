@@ -135,7 +135,8 @@ static void   gimp_color_selection_update            (GimpColorSelection *select
                                                       UpdateType          update);
 
 
-G_DEFINE_TYPE (GimpColorSelection, gimp_color_selection, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorSelection, gimp_color_selection,
+                            GTK_TYPE_BOX)
 
 #define parent_class gimp_color_selection_parent_class
 
@@ -168,8 +169,6 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
                   G_TYPE_NONE, 0);
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelection");
-
-  g_type_class_add_private (object_class, sizeof (GimpColorSelectionPrivate));
 }
 
 static void
@@ -186,9 +185,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   GtkSizeGroup              *new_group;
   GtkSizeGroup              *old_group;
 
-  selection->priv = G_TYPE_INSTANCE_GET_PRIVATE (selection,
-                                                 GIMP_TYPE_COLOR_SELECTION,
-                                                 GimpColorSelectionPrivate);
+  selection->priv = gimp_color_selection_get_instance_private (selection);
 
   priv = selection->priv;
 

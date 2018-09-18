@@ -121,9 +121,7 @@ struct _GimpDialogConfigPrivate
 };
 
 #define GET_PRIVATE(config) \
-        G_TYPE_INSTANCE_GET_PRIVATE (config, \
-                                     GIMP_TYPE_DIALOG_CONFIG, \
-                                     GimpDialogConfigPrivate)
+        ((GimpDialogConfigPrivate *) gimp_dialog_config_get_instance_private ((GimpDialogConfig *) (config)))
 
 
 static void  gimp_dialog_config_constructed           (GObject      *object);
@@ -145,7 +143,8 @@ static void  gimp_dialog_config_stroke_options_notify (GObject      *object,
                                                        gpointer      data);
 
 
-G_DEFINE_TYPE (GimpDialogConfig, gimp_dialog_config, GIMP_TYPE_GUI_CONFIG)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDialogConfig, gimp_dialog_config,
+                            GIMP_TYPE_GUI_CONFIG)
 
 #define parent_class gimp_dialog_config_parent_class
 
@@ -524,8 +523,6 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            GIMP_TYPE_STROKE_OPTIONS,
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_CONFIG_PARAM_AGGREGATE);
-
-  g_type_class_add_private (klass, sizeof (GimpDialogConfigPrivate));
 }
 
 static void

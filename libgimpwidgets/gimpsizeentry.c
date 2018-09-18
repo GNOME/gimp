@@ -143,7 +143,7 @@ static gboolean  gimp_size_entry_eevl_unit_resolver  (const gchar        *ident,
                                                       gpointer            data);
 
 
-G_DEFINE_TYPE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSizeEntry, gimp_size_entry, GTK_TYPE_GRID)
 
 #define parent_class gimp_size_entry_parent_class
 
@@ -187,8 +187,6 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
   klass->value_changed   = NULL;
   klass->refval_changed  = NULL;
   klass->unit_changed    = NULL;
-
-  g_type_class_add_private (klass, sizeof (GimpSizeEntryPrivate));
 }
 
 static void
@@ -196,9 +194,7 @@ gimp_size_entry_init (GimpSizeEntry *gse)
 {
   GimpSizeEntryPrivate *priv;
 
-  gse->priv = G_TYPE_INSTANCE_GET_PRIVATE (gse,
-                                           GIMP_TYPE_SIZE_ENTRY,
-                                           GimpSizeEntryPrivate);
+  gse->priv = gimp_size_entry_get_instance_private (gse);
 
   priv = gse->priv;
 

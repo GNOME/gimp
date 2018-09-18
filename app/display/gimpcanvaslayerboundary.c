@@ -54,9 +54,7 @@ struct _GimpCanvasLayerBoundaryPrivate
 };
 
 #define GET_PRIVATE(layer_boundary) \
-        G_TYPE_INSTANCE_GET_PRIVATE (layer_boundary, \
-                                     GIMP_TYPE_CANVAS_LAYER_BOUNDARY, \
-                                     GimpCanvasLayerBoundaryPrivate)
+        ((GimpCanvasLayerBoundaryPrivate *) gimp_canvas_layer_boundary_get_instance_private ((GimpCanvasLayerBoundary *) (layer_boundary)))
 
 
 /*  local function prototypes  */
@@ -77,8 +75,8 @@ static void             gimp_canvas_layer_boundary_stroke       (GimpCanvasItem 
                                                                  cairo_t        *cr);
 
 
-G_DEFINE_TYPE (GimpCanvasLayerBoundary, gimp_canvas_layer_boundary,
-               GIMP_TYPE_CANVAS_RECTANGLE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasLayerBoundary, gimp_canvas_layer_boundary,
+                            GIMP_TYPE_CANVAS_RECTANGLE)
 
 #define parent_class gimp_canvas_layer_boundary_parent_class
 
@@ -106,8 +104,6 @@ gimp_canvas_layer_boundary_class_init (GimpCanvasLayerBoundaryClass *klass)
                                    g_param_spec_boolean ("edit-mask", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasLayerBoundaryPrivate));
 }
 
 static void

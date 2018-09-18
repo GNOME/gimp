@@ -68,7 +68,7 @@ typedef struct
   GimpTagCacheRecord  current_record;
 } GimpTagCacheParseData;
 
-struct _GimpTagCachePriv
+struct _GimpTagCachePrivate
 {
   GArray *records;
   GList  *containers;
@@ -110,7 +110,7 @@ static const gchar * gimp_tag_cache_attribute_name_to_value
 static GQuark        gimp_tag_cache_get_error_domain   (void);
 
 
-G_DEFINE_TYPE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_tag_cache_parent_class
 
@@ -118,24 +118,18 @@ G_DEFINE_TYPE (GimpTagCache, gimp_tag_cache, GIMP_TYPE_OBJECT)
 static void
 gimp_tag_cache_class_init (GimpTagCacheClass *klass)
 {
-  GObjectClass      *object_class         = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class    = GIMP_OBJECT_CLASS (klass);
-  GimpTagCacheClass *gimp_tag_cache_class = GIMP_TAG_CACHE_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   object_class->finalize         = gimp_tag_cache_finalize;
 
   gimp_object_class->get_memsize = gimp_tag_cache_get_memsize;
-
-  g_type_class_add_private (gimp_tag_cache_class,
-                            sizeof (GimpTagCachePriv));
 }
 
 static void
 gimp_tag_cache_init (GimpTagCache *cache)
 {
-  cache->priv = G_TYPE_INSTANCE_GET_PRIVATE (cache,
-                                             GIMP_TYPE_TAG_CACHE,
-                                             GimpTagCachePriv);
+  cache->priv = gimp_tag_cache_get_instance_private (cache);
 
   cache->priv->records    = g_array_new (FALSE, FALSE,
                                          sizeof (GimpTagCacheRecord));

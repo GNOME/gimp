@@ -90,8 +90,8 @@ static gboolean  gimp_color_profile_store_load           (GimpColorProfileStore 
                                                           GError                **error);
 
 
-G_DEFINE_TYPE (GimpColorProfileStore,
-               gimp_color_profile_store, GTK_TYPE_LIST_STORE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileStore, gimp_color_profile_store,
+                            GTK_TYPE_LIST_STORE)
 
 #define parent_class gimp_color_profile_store_parent_class
 
@@ -122,8 +122,6 @@ gimp_color_profile_store_class_init (GimpColorProfileStoreClass *klass)
                                                         NULL,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpColorProfileStorePrivate));
 }
 
 static void
@@ -137,9 +135,7 @@ gimp_color_profile_store_init (GimpColorProfileStore *store)
       G_TYPE_INT     /*  GIMP_COLOR_PROFILE_STORE_INDEX      */
     };
 
-  store->priv = G_TYPE_INSTANCE_GET_PRIVATE (store,
-                                             GIMP_TYPE_COLOR_PROFILE_STORE,
-                                             GimpColorProfileStorePrivate);
+  store->priv = gimp_color_profile_store_get_instance_private (store);
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    G_N_ELEMENTS (types), types);
