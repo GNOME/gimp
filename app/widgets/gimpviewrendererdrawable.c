@@ -379,7 +379,13 @@ gimp_view_renderer_drawable_cancel_render (GimpViewRendererDrawable *renderdrawa
    * after the drawable had died, and our completion callback is prepared to
    * handle cancelation.
    */
-  g_clear_pointer (&renderdrawable->priv->render_async, gimp_cancelable_cancel);
+  if (renderdrawable->priv->render_async)
+    {
+      gimp_cancelable_cancel (
+        GIMP_CANCELABLE (renderdrawable->priv->render_async));
+
+      renderdrawable->priv->render_async = NULL;
+    }
 
   g_clear_object (&renderdrawable->priv->render_widget);
 }
