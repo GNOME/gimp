@@ -333,7 +333,7 @@ style "gimp-dark-grid-view-style" = "gimp-dark-default-style"
   bg[NORMAL] = { 1.0, 1.0, 1.0 }
 }
 
-widget "*GimpContainerGridView*GtkViewport*" style "gimp-dark-grid-view-style"
+widget_class "*GimpContainerGridView*GtkViewport*" style "gimp-dark-grid-view-style"
 
 ###########################################################
 
@@ -344,7 +344,7 @@ style "gimp-dark-dockable-style" = "gimp-dark-default-style"
   GtkButton::focus-padding = 0
 }
 
-widget "*GimpDockable.*" style "gimp-dark-dockable-style"
+widget_class "*GimpDockable.*" style "gimp-dark-dockable-style"
 
 ###########################################################
 
@@ -359,7 +359,7 @@ style "gimp-dark-display-style" = "gimp-dark-default-style"
   GtkButton::focus-padding = 0
 }
 
-widget "*GimpDisplayShell.*" style "gimp-dark-display-style"
+widget_class "*GimpDisplayShell.*" style "gimp-dark-display-style"
 
 ###########################################################
 
@@ -2207,7 +2207,7 @@ style "ubuntu-fix-menu-item"
     }
 }
 
-widget "GtkMenuItem" style "ubuntu-fix-menu-item"
+class "GtkMenuItem" style "ubuntu-fix-menu-item"
 
 ###########################################################
 
