@@ -75,9 +75,7 @@ struct _GimpViewablePrivate
   GdkPixbuf    *preview_pixbuf;
 };
 
-#define GET_PRIVATE(viewable) G_TYPE_INSTANCE_GET_PRIVATE (viewable, \
-                                                           GIMP_TYPE_VIEWABLE, \
-                                                           GimpViewablePrivate)
+#define GET_PRIVATE(viewable) ((GimpViewablePrivate *) gimp_viewable_get_instance_private ((GimpViewable *) (viewable)))
 
 
 static void    gimp_viewable_config_iface_init (GimpConfigInterface *iface);
@@ -133,6 +131,7 @@ static gboolean gimp_viewable_deserialize_property   (GimpConfig       *config,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpViewable, gimp_viewable, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpViewable)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_viewable_config_iface_init))
 
@@ -234,8 +233,6 @@ gimp_viewable_class_init (GimpViewableClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpViewablePrivate));
 }
 
 static void

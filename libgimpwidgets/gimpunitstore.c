@@ -55,9 +55,7 @@ typedef struct
   GimpUnit  synced_unit;
 } GimpUnitStorePrivate;
 
-#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                                      GIMP_TYPE_UNIT_STORE, \
-                                                      GimpUnitStorePrivate)
+#define GET_PRIVATE(obj) ((GimpUnitStorePrivate *) gimp_unit_store_get_instance_private ((GimpUnitStore *) (obj)))
 
 
 static void         gimp_unit_store_tree_model_init (GtkTreeModelIface *iface);
@@ -104,6 +102,7 @@ static gboolean     gimp_unit_store_iter_parent     (GtkTreeModel *tree_model,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpUnitStore, gimp_unit_store, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpUnitStore)
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
                                                 gimp_unit_store_tree_model_init))
 
@@ -171,8 +170,6 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
                                                         "Format string for a long label",
                                                         "%p",
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpUnitStorePrivate));
 }
 
 static void

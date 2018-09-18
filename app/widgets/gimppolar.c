@@ -93,7 +93,7 @@ static gdouble     gimp_polar_get_angle_distance   (gdouble             alpha,
                                                     gdouble             beta);
 
 
-G_DEFINE_TYPE (GimpPolar, gimp_polar, GIMP_TYPE_CIRCLE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPolar, gimp_polar, GIMP_TYPE_CIRCLE)
 
 #define parent_class gimp_polar_parent_class
 
@@ -127,16 +127,12 @@ gimp_polar_class_init (GimpPolarClass *klass)
                                                         0.0, 1.0, 0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpPolarPrivate));
 }
 
 static void
 gimp_polar_init (GimpPolar *polar)
 {
-  polar->priv = G_TYPE_INSTANCE_GET_PRIVATE (polar,
-                                             GIMP_TYPE_POLAR,
-                                             GimpPolarPrivate);
+  polar->priv = gimp_polar_get_instance_private (polar);
 }
 
 static void

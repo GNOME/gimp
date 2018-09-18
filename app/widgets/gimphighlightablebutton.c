@@ -72,7 +72,8 @@ static gboolean   gimp_highlightable_button_expose_event (GtkWidget      *widget
                                                           GdkEventExpose *event);
 
 
-G_DEFINE_TYPE (GimpHighlightableButton, gimp_highlightable_button, GIMP_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpHighlightableButton, gimp_highlightable_button,
+                            GIMP_TYPE_BUTTON)
 
 #define parent_class gimp_highlightable_button_parent_class
 
@@ -102,16 +103,12 @@ gimp_highlightable_button_class_init (GimpHighlightableButtonClass *klass)
                                                         &(GimpRGB) DEFAULT_HIGHLIGHT_COLOR,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpHighlightableButtonPrivate));
 }
 
 static void
 gimp_highlightable_button_init (GimpHighlightableButton *button)
 {
-  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
-                                              GIMP_TYPE_HIGHLIGHTABLE_BUTTON,
-                                              GimpHighlightableButtonPrivate);
+  button->priv = gimp_highlightable_button_get_instance_private (button);
 }
 
 static void

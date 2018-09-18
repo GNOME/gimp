@@ -67,9 +67,7 @@ typedef struct
 
 
 #define GIMP_DRAWABLE_PREVIEW_GET_PRIVATE(obj) \
-  G_TYPE_INSTANCE_GET_PRIVATE (preview, \
-                               GIMP_TYPE_DRAWABLE_PREVIEW, \
-                               GimpDrawablePreviewPrivate)
+  ((GimpDrawablePreviewPrivate *) gimp_drawable_preview_get_instance_private ((GimpDrawablePreview *) (preview)))
 
 static void  gimp_drawable_preview_constructed   (GObject         *object);
 static void  gimp_drawable_preview_dispose       (GObject         *object);
@@ -101,8 +99,8 @@ static void  gimp_drawable_preview_set_drawable_id
                                                  gint32               drawable_ID);
 
 
-G_DEFINE_TYPE (GimpDrawablePreview, gimp_drawable_preview,
-               GIMP_TYPE_SCROLLED_PREVIEW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDrawablePreview, gimp_drawable_preview,
+                            GIMP_TYPE_SCROLLED_PREVIEW)
 
 #define parent_class gimp_drawable_preview_parent_class
 
@@ -126,8 +124,6 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   preview_class->draw        = gimp_drawable_preview_draw_original;
   preview_class->draw_thumb  = gimp_drawable_preview_draw_thumb;
   preview_class->draw_buffer = gimp_drawable_preview_draw_buffer;
-
-  g_type_class_add_private (object_class, sizeof (GimpDrawablePreviewPrivate));
 
   /**
    * GimpDrawablePreview:drawable:

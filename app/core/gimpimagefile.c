@@ -73,9 +73,7 @@ struct _GimpImagefilePrivate
   gboolean       static_desc;
 };
 
-#define GET_PRIVATE(imagefile) G_TYPE_INSTANCE_GET_PRIVATE (imagefile, \
-                                                            GIMP_TYPE_IMAGEFILE, \
-                                                            GimpImagefilePrivate)
+#define GET_PRIVATE(imagefile) ((GimpImagefilePrivate *) gimp_imagefile_get_instance_private ((GimpImagefile *) (imagefile)))
 
 
 static void        gimp_imagefile_dispose          (GObject        *object);
@@ -118,7 +116,7 @@ static void     gimp_thumbnail_set_info            (GimpThumbnail  *thumbnail,
                                                     gint            num_layers);
 
 
-G_DEFINE_TYPE (GimpImagefile, gimp_imagefile, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpImagefile, gimp_imagefile, GIMP_TYPE_VIEWABLE)
 
 #define parent_class gimp_imagefile_parent_class
 
@@ -159,8 +157,6 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   gimp_thumb_init (creator, NULL);
 
   g_free (creator);
-
-  g_type_class_add_private (klass, sizeof (GimpImagefilePrivate));
 }
 
 static void

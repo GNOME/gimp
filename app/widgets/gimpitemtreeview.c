@@ -65,7 +65,7 @@ enum
 };
 
 
-struct _GimpItemTreeViewPriv
+struct _GimpItemTreeViewPrivate
 {
   GimpImage       *image;
 
@@ -214,6 +214,7 @@ static void   gimp_item_tree_view_row_expanded      (GtkTreeView       *tree_vie
 
 G_DEFINE_TYPE_WITH_CODE (GimpItemTreeView, gimp_item_tree_view,
                          GIMP_TYPE_CONTAINER_TREE_VIEW,
+                         G_ADD_PRIVATE (GimpItemTreeView)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_item_tree_view_view_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
@@ -282,8 +283,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lock_position_icon_name  = NULL;
   klass->lock_position_tooltip    = NULL;
   klass->lock_position_help_id    = NULL;
-
-  g_type_class_add_private (klass, sizeof (GimpItemTreeViewPriv));
 }
 
 static void
@@ -311,9 +310,7 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
-  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
-                                            GIMP_TYPE_ITEM_TREE_VIEW,
-                                            GimpItemTreeViewPriv);
+  view->priv = gimp_item_tree_view_get_instance_private (view);
 
   view->priv->model_column_visible =
     gimp_container_tree_store_columns_add (tree_view->model_columns,

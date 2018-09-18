@@ -22,7 +22,7 @@
 #define __GIMP_CONTAINER_TREE_VIEW_PRIVATE_H__
 
 
-struct _GimpContainerTreeViewPriv
+struct _GimpContainerTreeViewPrivate
 {
   GtkTreeSelection   *selection;
 

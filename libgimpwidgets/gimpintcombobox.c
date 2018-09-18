@@ -90,7 +90,8 @@ static void  gimp_int_combo_box_data_func    (GtkCellLayout   *layout,
                                               gpointer         data);
 
 
-G_DEFINE_TYPE (GimpIntComboBox, gimp_int_combo_box, GTK_TYPE_COMBO_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpIntComboBox, gimp_int_combo_box,
+                            GTK_TYPE_COMBO_BOX)
 
 #define parent_class gimp_int_combo_box_parent_class
 
@@ -149,8 +150,6 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
                                                       GIMP_TYPE_INT_COMBO_BOX_LAYOUT,
                                                       GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
                                                       GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpIntComboBoxPrivate));
 }
 
 static void
@@ -159,9 +158,7 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
   GimpIntComboBoxPrivate *priv;
   GtkListStore           *store;
 
-  combo_box->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (combo_box,
-                                                        GIMP_TYPE_INT_COMBO_BOX,
-                                                        GimpIntComboBoxPrivate);
+  combo_box->priv = priv = gimp_int_combo_box_get_instance_private (combo_box);
 
   store = gimp_int_store_new ();
   gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));

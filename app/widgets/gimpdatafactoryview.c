@@ -63,7 +63,7 @@ enum
 };
 
 
-struct _GimpDataFactoryViewPriv
+struct _GimpDataFactoryViewPrivate
 {
   GimpDataFactory *factory;
   gchar           *action_group;
@@ -114,6 +114,7 @@ static void  gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
 
 G_DEFINE_TYPE_WITH_CODE (GimpDataFactoryView, gimp_data_factory_view,
                          GIMP_TYPE_CONTAINER_EDITOR,
+                         G_ADD_PRIVATE (GimpDataFactoryView)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_data_factory_view_docked_iface_init))
 
@@ -150,16 +151,12 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpDataFactoryViewPriv));
 }
 
 static void
 gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
-  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
-                                            GIMP_TYPE_DATA_FACTORY_VIEW,
-                                            GimpDataFactoryViewPriv);
+  view->priv = gimp_data_factory_view_get_instance_private (view);
 
   view->priv->tagged_container = NULL;
   view->priv->query_tag_entry  = NULL;
@@ -217,11 +214,11 @@ gimp_data_factory_view_constructor (GType                  type,
 static void
 gimp_data_factory_view_constructed (GObject *object)
 {
-  GimpDataFactoryView     *factory_view = GIMP_DATA_FACTORY_VIEW (object);
-  GimpDataFactoryViewPriv *priv         = factory_view->priv;
-  GimpContainerEditor     *editor       = GIMP_CONTAINER_EDITOR (object);
-  GimpUIManager           *manager;
-  gchar                   *str;
+  GimpDataFactoryView        *factory_view = GIMP_DATA_FACTORY_VIEW (object);
+  GimpDataFactoryViewPrivate *priv         = factory_view->priv;
+  GimpContainerEditor        *editor       = GIMP_CONTAINER_EDITOR (object);
+  GimpUIManager              *manager;
+  gchar                      *str;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 

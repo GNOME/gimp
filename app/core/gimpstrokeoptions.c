@@ -96,9 +96,7 @@ struct _GimpStrokeOptionsPrivate
 };
 
 #define GET_PRIVATE(options) \
-        G_TYPE_INSTANCE_GET_PRIVATE (options, \
-                                     GIMP_TYPE_STROKE_OPTIONS, \
-                                     GimpStrokeOptionsPrivate)
+        ((GimpStrokeOptionsPrivate *) gimp_stroke_options_get_instance_private ((GimpStrokeOptions *) (options)))
 
 
 static void   gimp_stroke_options_config_iface_init (gpointer      iface,
@@ -119,6 +117,7 @@ static GimpConfig * gimp_stroke_options_duplicate   (GimpConfig   *config);
 
 G_DEFINE_TYPE_WITH_CODE (GimpStrokeOptions, gimp_stroke_options,
                          GIMP_TYPE_FILL_OPTIONS,
+                         G_ADD_PRIVATE (GimpStrokeOptions)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_stroke_options_config_iface_init))
 
@@ -225,8 +224,6 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                             NULL,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
-
-  g_type_class_add_private (klass, sizeof (GimpStrokeOptionsPrivate));
 }
 
 static void

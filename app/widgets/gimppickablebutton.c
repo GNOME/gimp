@@ -85,7 +85,8 @@ static void     gimp_pickable_button_notify_buffer (GimpPickable       *pickable
                                                     GimpPickableButton *button);
 
 
-G_DEFINE_TYPE (GimpPickableButton, gimp_pickable_button, GIMP_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPickableButton, gimp_pickable_button,
+                            GIMP_TYPE_BUTTON)
 
 #define parent_class gimp_pickable_button_parent_class
 
@@ -116,16 +117,12 @@ gimp_pickable_button_class_init (GimpPickableButtonClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_PICKABLE,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpPickableButtonPrivate));
 }
 
 static void
 gimp_pickable_button_init (GimpPickableButton *button)
 {
-  button->private = G_TYPE_INSTANCE_GET_PRIVATE (button,
-                                                 GIMP_TYPE_PICKABLE_BUTTON,
-                                                 GimpPickableButtonPrivate);
+  button->private = gimp_pickable_button_get_instance_private (button);
 
   button->private->view_size         = GIMP_VIEW_SIZE_LARGE;
   button->private->view_border_width = 1;

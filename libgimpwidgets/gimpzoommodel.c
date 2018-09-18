@@ -85,7 +85,7 @@ static void  gimp_zoom_model_get_property (GObject      *object,
 
 static guint zoom_model_signals[LAST_SIGNAL] = { 0, };
 
-G_DEFINE_TYPE (GimpZoomModel, gimp_zoom_model, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpZoomModel, gimp_zoom_model, G_TYPE_OBJECT)
 
 #define parent_class gimp_zoom_model_parent_class
 
@@ -176,8 +176,6 @@ gimp_zoom_model_class_init (GimpZoomModelClass *klass)
                                                         "The zoom factor expressed as a percentage",
                                                         "100%",
                                                         GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (object_class, sizeof (GimpZoomModelPrivate));
 }
 
 static void
@@ -185,9 +183,7 @@ gimp_zoom_model_init (GimpZoomModel *model)
 {
   GimpZoomModelPrivate *priv;
 
-  model->priv = G_TYPE_INSTANCE_GET_PRIVATE (model,
-                                             GIMP_TYPE_ZOOM_MODEL,
-                                             GimpZoomModelPrivate);
+  model->priv = gimp_zoom_model_get_instance_private (model);
 
   priv = GIMP_ZOOM_MODEL_GET_PRIVATE (model);
 

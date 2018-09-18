@@ -69,9 +69,7 @@ struct _GimpCanvasHandlePrivate
 };
 
 #define GET_PRIVATE(handle) \
-        G_TYPE_INSTANCE_GET_PRIVATE (handle, \
-                                     GIMP_TYPE_CANVAS_HANDLE, \
-                                     GimpCanvasHandlePrivate)
+        ((GimpCanvasHandlePrivate *) gimp_canvas_handle_get_instance_private ((GimpCanvasHandle *) (handle)))
 
 
 /*  local function prototypes  */
@@ -92,8 +90,8 @@ static gboolean         gimp_canvas_handle_hit          (GimpCanvasItem *item,
                                                          gdouble         y);
 
 
-G_DEFINE_TYPE (GimpCanvasHandle, gimp_canvas_handle,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasHandle, gimp_canvas_handle,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_handle_parent_class
 
@@ -154,8 +152,6 @@ gimp_canvas_handle_class_init (GimpCanvasHandleClass *klass)
                                    g_param_spec_double ("slice-angle", NULL, NULL,
                                                         -1000, 1000, 2 * G_PI,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasHandlePrivate));
 }
 
 static void

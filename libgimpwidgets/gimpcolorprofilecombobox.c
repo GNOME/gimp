@@ -57,9 +57,7 @@ typedef struct
 } GimpColorProfileComboBoxPrivate;
 
 #define GIMP_COLOR_PROFILE_COMBO_BOX_GET_PRIVATE(obj) \
-  G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                               GIMP_TYPE_COLOR_PROFILE_COMBO_BOX, \
-                               GimpColorProfileComboBoxPrivate)
+  ((GimpColorProfileComboBoxPrivate *) gimp_color_profile_combo_box_get_instance_private ((GimpColorProfileComboBox *) (obj)))
 
 
 static void  gimp_color_profile_combo_box_finalize     (GObject      *object);
@@ -82,8 +80,8 @@ static void  gimp_color_profile_combo_dialog_response  (GimpColorProfileChooserD
                                                         GimpColorProfileComboBox      *combo);
 
 
-G_DEFINE_TYPE (GimpColorProfileComboBox,
-               gimp_color_profile_combo_box, GTK_TYPE_COMBO_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileComboBox,
+                            gimp_color_profile_combo_box, GTK_TYPE_COMBO_BOX)
 
 #define parent_class gimp_color_profile_combo_box_parent_class
 
@@ -132,9 +130,6 @@ gimp_color_profile_combo_box_class_init (GimpColorProfileComboBoxClass *klass)
                                                         "The profile store used for this combo box",
                                                         GIMP_TYPE_COLOR_PROFILE_STORE,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpColorProfileComboBoxPrivate));
 }
 
 static void

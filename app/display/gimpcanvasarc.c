@@ -61,9 +61,7 @@ struct _GimpCanvasArcPrivate
 };
 
 #define GET_PRIVATE(arc) \
-        G_TYPE_INSTANCE_GET_PRIVATE (arc, \
-                                     GIMP_TYPE_CANVAS_ARC, \
-                                     GimpCanvasArcPrivate)
+        ((GimpCanvasArcPrivate *) gimp_canvas_arc_get_instance_private ((GimpCanvasArc *) (arc)))
 
 
 /*  local function prototypes  */
@@ -81,8 +79,8 @@ static void             gimp_canvas_arc_draw         (GimpCanvasItem *item,
 static cairo_region_t * gimp_canvas_arc_get_extents  (GimpCanvasItem *item);
 
 
-G_DEFINE_TYPE (GimpCanvasArc, gimp_canvas_arc,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasArc, gimp_canvas_arc,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_arc_parent_class
 
@@ -135,8 +133,6 @@ gimp_canvas_arc_class_init (GimpCanvasArcClass *klass)
                                    g_param_spec_boolean ("filled", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasArcPrivate));
 }
 
 static void

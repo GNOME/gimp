@@ -47,7 +47,7 @@
 #define CELL_SIZE 20
 
 
-#define GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_PATTERN_SELECT_BUTTON, GimpPatternSelectButtonPrivate))
+#define GIMP_PATTERN_SELECT_BUTTON_GET_PRIVATE(obj) ((GimpPatternSelectButtonPrivate *) gimp_pattern_select_button_get_instance_private ((GimpPatternSelectButton *) (obj)))
 
 typedef struct _GimpPatternSelectButtonPrivate GimpPatternSelectButtonPrivate;
 
@@ -134,8 +134,8 @@ static const GtkTargetEntry target = { "application/x-gimp-pattern-name", 0 };
 static guint pattern_button_signals[LAST_SIGNAL] = { 0 };
 
 
-G_DEFINE_TYPE (GimpPatternSelectButton, gimp_pattern_select_button,
-               GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPatternSelectButton, gimp_pattern_select_button,
+                            GIMP_TYPE_SELECT_BUTTON)
 
 static void
 gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
@@ -208,9 +208,6 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
                   G_TYPE_INT,
                   G_TYPE_POINTER,
                   G_TYPE_BOOLEAN);
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpPatternSelectButtonPrivate));
 }
 
 static void

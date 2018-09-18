@@ -145,6 +145,7 @@ static void          gimp_container_tree_view_process_updates     (GimpContainer
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
                          GIMP_TYPE_CONTAINER_BOX,
+                         G_ADD_PRIVATE (GimpContainerTreeView)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_container_tree_view_view_iface_init))
 
@@ -191,8 +192,6 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 
   gtk_binding_entry_add_signal (binding_set, GDK_KEY_F2, 0,
                                 "edit-name", 0);
-
-  g_type_class_add_private (klass, sizeof (GimpContainerTreeViewPriv));
 }
 
 static void
@@ -224,9 +223,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 {
   GimpContainerBox *box = GIMP_CONTAINER_BOX (tree_view);
 
-  tree_view->priv = G_TYPE_INSTANCE_GET_PRIVATE (tree_view,
-                                                 GIMP_TYPE_CONTAINER_TREE_VIEW,
-                                                 GimpContainerTreeViewPriv);
+  tree_view->priv = gimp_container_tree_view_get_instance_private (tree_view);
 
   gimp_container_tree_store_columns_init (tree_view->model_columns,
                                           &tree_view->n_model_columns);

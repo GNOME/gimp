@@ -55,8 +55,9 @@ static void     gimp_color_profile_chooser_dialog_add_shortcut   (GimpColorProfi
 static void     gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog);
 
 
-G_DEFINE_TYPE (GimpColorProfileChooserDialog, gimp_color_profile_chooser_dialog,
-               GTK_TYPE_FILE_CHOOSER_DIALOG);
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileChooserDialog,
+                            gimp_color_profile_chooser_dialog,
+                            GTK_TYPE_FILE_CHOOSER_DIALOG)
 
 #define parent_class gimp_color_profile_chooser_dialog_parent_class
 
@@ -70,17 +71,13 @@ gimp_color_profile_chooser_dialog_class_init (GimpColorProfileChooserDialogClass
   object_class->constructed  = gimp_color_profile_chooser_dialog_constructed;
 
   widget_class->delete_event = gimp_color_profile_chooser_dialog_delete_event;
-
-  g_type_class_add_private (klass, sizeof (GimpColorProfileChooserDialogPrivate));
 }
 
 static void
 gimp_color_profile_chooser_dialog_init (GimpColorProfileChooserDialog *dialog)
 {
   dialog->priv =
-    G_TYPE_INSTANCE_GET_PRIVATE (dialog,
-                                 GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
-                                 GimpColorProfileChooserDialogPrivate);
+    gimp_color_profile_chooser_dialog_get_instance_private (dialog);
 }
 
 static void

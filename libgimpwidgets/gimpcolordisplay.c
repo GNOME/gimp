@@ -68,7 +68,7 @@ typedef struct
   GimpColorManaged *managed;
 } GimpColorDisplayPrivate;
 
-#define GIMP_COLOR_DISPLAY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_COLOR_DISPLAY, GimpColorDisplayPrivate))
+#define GIMP_COLOR_DISPLAY_GET_PRIVATE(obj) ((GimpColorDisplayPrivate *) gimp_color_display_get_instance_private ((GimpColorDisplay *) (obj)))
 
 
 static void       gimp_color_display_constructed (GObject       *object);
@@ -89,6 +89,7 @@ static void  gimp_color_display_set_color_managed (GimpColorDisplay *display,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorDisplay, gimp_color_display, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpColorDisplay)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_color_display_parent_class
@@ -105,8 +106,6 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
   object_class->dispose      = gimp_color_display_dispose;
   object_class->set_property = gimp_color_display_set_property;
   object_class->get_property = gimp_color_display_get_property;
-
-  g_type_class_add_private (object_class, sizeof (GimpColorDisplayPrivate));
 
   g_object_class_install_property (object_class, PROP_ENABLED,
                                    g_param_spec_boolean ("enabled",

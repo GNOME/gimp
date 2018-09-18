@@ -64,7 +64,7 @@
 #include "gimp-intl.h"
 
 
-struct _GimpLayerTreeViewPriv
+struct _GimpLayerTreeViewPrivate
 {
   GtkWidget       *layer_mode_box;
   GtkAdjustment   *opacity_adjustment;
@@ -176,6 +176,7 @@ static void       gimp_layer_tree_view_alpha_changed              (GimpLayer    
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayerTreeView, gimp_layer_tree_view,
                          GIMP_TYPE_DRAWABLE_TREE_VIEW,
+                         G_ADD_PRIVATE (GimpLayerTreeView)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_layer_tree_view_view_iface_init))
 
@@ -226,8 +227,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->delete_action         = "layers-delete";
   item_view_class->lock_content_help_id  = GIMP_HELP_LAYER_LOCK_PIXELS;
   item_view_class->lock_position_help_id = GIMP_HELP_LAYER_LOCK_POSITION;
-
-  g_type_class_add_private (klass, sizeof (GimpLayerTreeViewPriv));
 }
 
 static void
@@ -254,9 +253,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   GtkIconSize            icon_size;
   PangoAttribute        *attr;
 
-  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
-                                            GIMP_TYPE_LAYER_TREE_VIEW,
-                                            GimpLayerTreeViewPriv);
+  view->priv = gimp_layer_tree_view_get_instance_private (view);
 
   view->priv->model_column_mask =
     gimp_container_tree_store_columns_add (tree_view->model_columns,

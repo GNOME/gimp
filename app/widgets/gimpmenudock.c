@@ -55,7 +55,7 @@ static void   gimp_menu_dock_style_set               (GtkWidget      *widget,
                                                       GtkStyle       *prev_style);
 
 
-G_DEFINE_TYPE (GimpMenuDock, gimp_menu_dock, GIMP_TYPE_DOCK)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMenuDock, gimp_menu_dock, GIMP_TYPE_DOCK)
 
 #define parent_class gimp_menu_dock_parent_class
 
@@ -74,8 +74,6 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
                                                              G_MAXINT,
                                                              DEFAULT_MINIMAL_WIDTH,
                                                              GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpMenuDockPrivate));
 }
 
 static void

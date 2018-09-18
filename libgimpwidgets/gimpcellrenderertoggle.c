@@ -67,9 +67,7 @@ struct _GimpCellRendererTogglePrivate
 };
 
 #define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_CELL_RENDERER_TOGGLE, \
-                                     GimpCellRendererTogglePrivate)
+        ((GimpCellRendererTogglePrivate *) gimp_cell_renderer_toggle_get_instance_private ((GimpCellRendererToggle *) (obj)))
 
 
 static void gimp_cell_renderer_toggle_finalize     (GObject         *object);
@@ -106,8 +104,8 @@ static void gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *tog
                                                      GtkWidget              *widget);
 
 
-G_DEFINE_TYPE (GimpCellRendererToggle, gimp_cell_renderer_toggle,
-               GTK_TYPE_CELL_RENDERER_TOGGLE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCellRendererToggle, gimp_cell_renderer_toggle,
+                            GTK_TYPE_CELL_RENDERER_TOGGLE)
 
 #define parent_class gimp_cell_renderer_toggle_parent_class
 
@@ -171,8 +169,6 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (object_class, sizeof (GimpCellRendererTogglePrivate));
 }
 
 static void

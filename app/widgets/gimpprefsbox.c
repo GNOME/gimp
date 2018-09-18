@@ -75,7 +75,7 @@ static void   gimp_prefs_box_notebook_page_callback (GtkNotebook      *notebook,
                                                      GimpPrefsBox     *box);
 
 
-G_DEFINE_TYPE (GimpPrefsBox, gimp_prefs_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPrefsBox, gimp_prefs_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_prefs_box_parent_class
 
@@ -86,8 +86,6 @@ gimp_prefs_box_class_init (GimpPrefsBoxClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_prefs_box_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpPrefsBoxPrivate));
 }
 
 static void
@@ -102,9 +100,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   GtkWidget           *ebox;
   GtkWidget           *vbox;
 
-  box->priv = G_TYPE_INSTANCE_GET_PRIVATE (box,
-                                           GIMP_TYPE_PREFS_BOX,
-                                           GimpPrefsBoxPrivate);
+  box->priv = gimp_prefs_box_get_instance_private (box);
 
   private = box->priv;
 

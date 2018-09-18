@@ -119,7 +119,7 @@ static GdkPixbuf * gimp_page_selector_add_frame    (GtkWidget        *widget,
                                                     GdkPixbuf        *pixbuf);
 
 
-G_DEFINE_TYPE (GimpPageSelector, gimp_page_selector, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPageSelector, gimp_page_selector, GTK_TYPE_BOX)
 
 #define parent_class gimp_page_selector_parent_class
 
@@ -203,8 +203,6 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                                                       GIMP_TYPE_PAGE_SELECTOR_TARGET,
                                                       GIMP_PAGE_SELECTOR_TARGET_LAYERS,
                                                       GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpPageSelectorPrivate));
 }
 
 static void
@@ -219,9 +217,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   GtkWidget               *label;
   GtkWidget               *combo;
 
-  selector->priv = G_TYPE_INSTANCE_GET_PRIVATE (selector,
-                                                GIMP_TYPE_PAGE_SELECTOR,
-                                                GimpPageSelectorPrivate);
+  selector->priv = gimp_page_selector_get_instance_private (selector);
 
   priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (selector);
 

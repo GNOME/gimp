@@ -99,7 +99,7 @@ static void        gimp_circle_draw_background      (GimpCircle           *circl
                                                      GimpCircleBackground  background);
 
 
-G_DEFINE_TYPE (GimpCircle, gimp_circle, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCircle, gimp_circle, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_circle_parent_class
 
@@ -149,16 +149,12 @@ gimp_circle_class_init (GimpCircleClass *klass)
                                                       GIMP_CIRCLE_BACKGROUND_HSV,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpCirclePrivate));
 }
 
 static void
 gimp_circle_init (GimpCircle *circle)
 {
-  circle->priv = G_TYPE_INSTANCE_GET_PRIVATE (circle,
-                                              GIMP_TYPE_CIRCLE,
-                                              GimpCirclePrivate);
+  circle->priv = gimp_circle_get_instance_private (circle);
 
   gtk_widget_set_has_window (GTK_WIDGET (circle), FALSE);
   gtk_widget_add_events (GTK_WIDGET (circle),

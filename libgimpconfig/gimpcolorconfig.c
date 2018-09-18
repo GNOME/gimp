@@ -142,9 +142,7 @@ struct _GimpColorConfigPrivate
 };
 
 #define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_COLOR_CONFIG, \
-                                     GimpColorConfigPrivate)
+        ((GimpColorConfigPrivate *) gimp_color_config_get_instance_private ((GimpColorConfig *) (obj)))
 
 
 static void  gimp_color_config_finalize               (GObject          *object);
@@ -175,6 +173,7 @@ static void  gimp_color_config_set_simulation_profile (GimpColorConfig  *config,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorConfig, gimp_color_config, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpColorConfig)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL)
                          gimp_type_set_translation_domain (g_define_type_id,
                                                            GETTEXT_PACKAGE "-libgimp"))
@@ -309,8 +308,6 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                            "This property is deprecated and its value ignored",
                            "CdisplayLcms",
                            GIMP_PARAM_STATIC_STRINGS);
-
-  g_type_class_add_private (object_class, sizeof (GimpColorConfigPrivate));
 }
 
 static void

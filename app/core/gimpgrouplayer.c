@@ -74,9 +74,7 @@ struct _GimpGroupLayerPrivate
   gint            reallocate_height;
 };
 
-#define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
-                                                       GIMP_TYPE_GROUP_LAYER, \
-                                                       GimpGroupLayerPrivate)
+#define GET_PRIVATE(item) ((GimpGroupLayerPrivate *) gimp_group_layer_get_instance_private ((GimpGroupLayer *) (item)))
 
 
 static void            gimp_projectable_iface_init   (GimpProjectableInterface  *iface);
@@ -231,6 +229,7 @@ static void            gimp_group_layer_proj_update  (GimpProjection    *proj,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpGroupLayer, gimp_group_layer, GIMP_TYPE_LAYER,
+                         G_ADD_PRIVATE (GimpGroupLayer)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROJECTABLE,
                                                 gimp_projectable_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
@@ -300,8 +299,6 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   layer_class->convert_type              = gimp_group_layer_convert_type;
   layer_class->get_effective_mode        = gimp_group_layer_get_effective_mode;
   layer_class->get_excludes_backdrop     = gimp_group_layer_get_excludes_backdrop;
-
-  g_type_class_add_private (klass, sizeof (GimpGroupLayerPrivate));
 
   if (g_getenv ("GIMP_NO_PASS_THROUGH_STRENGTH_REDUCTION"))
     no_pass_through_strength_reduction = TRUE;

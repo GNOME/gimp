@@ -117,6 +117,7 @@ static gboolean  gimp_container_editor_get_show_button_bar (GimpDocked *docked);
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerEditor, gimp_container_editor,
                          GTK_TYPE_BOX,
+                         G_ADD_PRIVATE (GimpContainerEditor)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_container_editor_docked_iface_init))
 
@@ -196,8 +197,6 @@ gimp_container_editor_class_init (GimpContainerEditorClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpContainerEditorPrivate));
 }
 
 static void
@@ -217,9 +216,7 @@ gimp_container_editor_init (GimpContainerEditor *editor)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_VERTICAL);
 
-  editor->priv = G_TYPE_INSTANCE_GET_PRIVATE (editor,
-                                              GIMP_TYPE_CONTAINER_EDITOR,
-                                              GimpContainerEditorPrivate);
+  editor->priv = gimp_container_editor_get_instance_private (editor);
 }
 
 static void

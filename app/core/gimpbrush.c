@@ -96,6 +96,7 @@ static gchar       * gimp_brush_get_checksum          (GimpTagged           *tag
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpBrush, gimp_brush, GIMP_TYPE_DATA,
+                         G_ADD_PRIVATE (GimpBrush)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
                                                 gimp_brush_tagged_iface_init))
 
@@ -151,8 +152,6 @@ gimp_brush_class_init (GimpBrushClass *klass)
                                                         1.0, 5000.0, 20.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpBrushPrivate));
 }
 
 static void
@@ -164,9 +163,7 @@ gimp_brush_tagged_iface_init (GimpTaggedInterface *iface)
 static void
 gimp_brush_init (GimpBrush *brush)
 {
-  brush->priv = G_TYPE_INSTANCE_GET_PRIVATE (brush,
-                                             GIMP_TYPE_BRUSH,
-                                             GimpBrushPrivate);
+  brush->priv = gimp_brush_get_instance_private (brush);
 
   brush->priv->spacing  = 20;
   brush->priv->x_axis.x = 15.0;

@@ -59,6 +59,7 @@ static gchar       * gimp_mybrush_get_checksum          (GimpTagged           *t
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpMybrush, gimp_mybrush, GIMP_TYPE_DATA,
+                         G_ADD_PRIVATE (GimpMybrush)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
                                                 gimp_mybrush_tagged_iface_init))
 
@@ -84,8 +85,6 @@ gimp_mybrush_class_init (GimpMybrushClass *klass)
 
   data_class->dirty                 = gimp_mybrush_dirty;
   data_class->get_extension         = gimp_mybrush_get_extension;
-
-  g_type_class_add_private (klass, sizeof (GimpMybrushPrivate));
 }
 
 static void
@@ -97,9 +96,7 @@ gimp_mybrush_tagged_iface_init (GimpTaggedInterface *iface)
 static void
 gimp_mybrush_init (GimpMybrush *brush)
 {
-  brush->priv = G_TYPE_INSTANCE_GET_PRIVATE (brush,
-                                             GIMP_TYPE_MYBRUSH,
-                                             GimpMybrushPrivate);
+  brush->priv = gimp_mybrush_get_instance_private (brush);
 
   brush->priv->radius   = 1.0;
   brush->priv->opaque   = 1.0;

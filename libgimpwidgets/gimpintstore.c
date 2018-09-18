@@ -76,11 +76,12 @@ static void  gimp_int_store_add_empty       (GimpIntStore      *store);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpIntStore, gimp_int_store, GTK_TYPE_LIST_STORE,
+                         G_ADD_PRIVATE (GimpIntStore)
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
                                                 gimp_int_store_tree_model_init))
 
 #define GIMP_INT_STORE_GET_PRIVATE(obj) \
-  G_TYPE_INSTANCE_GET_PRIVATE (obj, GIMP_TYPE_INT_STORE, GimpIntStorePrivate)
+  ((GimpIntStorePrivate *) gimp_int_store_get_instance_private ((GimpIntStore *) (obj)))
 
 #define parent_class gimp_int_store_parent_class
 
@@ -116,8 +117,6 @@ gimp_int_store_class_init (GimpIntStoreClass *klass)
                                                        G_TYPE_NONE,
                                                        G_PARAM_CONSTRUCT_ONLY |
                                                        GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpIntStorePrivate));
 }
 
 static void

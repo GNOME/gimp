@@ -90,9 +90,7 @@ struct _GimpDeviceInfoEditorPrivate
 };
 
 #define GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE(editor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (editor, \
-                                     GIMP_TYPE_DEVICE_INFO_EDITOR, \
-                                     GimpDeviceInfoEditorPrivate)
+        ((GimpDeviceInfoEditorPrivate *) gimp_device_info_editor_get_instance_private ((GimpDeviceInfoEditor *) (editor)))
 
 
 static void   gimp_device_info_editor_constructed   (GObject              *object);
@@ -129,7 +127,8 @@ static void   gimp_device_info_editor_curve_reset   (GtkWidget            *butto
                                                      GimpCurve            *curve);
 
 
-G_DEFINE_TYPE (GimpDeviceInfoEditor, gimp_device_info_editor, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceInfoEditor, gimp_device_info_editor,
+                            GTK_TYPE_BOX)
 
 #define parent_class gimp_device_info_editor_parent_class
 
@@ -165,8 +164,6 @@ gimp_device_info_editor_class_init (GimpDeviceInfoEditorClass *klass)
                                                         GIMP_TYPE_DEVICE_INFO,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (object_class, sizeof (GimpDeviceInfoEditorPrivate));
 }
 
 static void

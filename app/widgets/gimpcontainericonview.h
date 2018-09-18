@@ -33,24 +33,24 @@
 #define GIMP_CONTAINER_ICON_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_ICON_VIEW, GimpContainerIconViewClass))
 
 
-typedef struct _GimpContainerIconViewClass GimpContainerIconViewClass;
-typedef struct _GimpContainerIconViewPriv  GimpContainerIconViewPriv;
+typedef struct _GimpContainerIconViewClass   GimpContainerIconViewClass;
+typedef struct _GimpContainerIconViewPrivate GimpContainerIconViewPrivate;
 
 struct _GimpContainerIconView
 {
-  GimpContainerBox           parent_instance;
+  GimpContainerBox              parent_instance;
 
-  GtkTreeModel              *model;
-  gint                       n_model_columns;
-  GType                      model_columns[16];
+  GtkTreeModel                 *model;
+  gint                          n_model_columns;
+  GType                         model_columns[16];
 
-  GtkIconView               *view;
+  GtkIconView                  *view;
 
-  GtkCellRenderer           *renderer_cell;
+  GtkCellRenderer              *renderer_cell;
 
-  Gimp                      *dnd_gimp; /* eek */
+  Gimp                         *dnd_gimp; /* eek */
 
-  GimpContainerIconViewPriv *priv;
+  GimpContainerIconViewPrivate *priv;
 };
 
 struct _GimpContainerIconViewClass

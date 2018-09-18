@@ -48,7 +48,7 @@
 #define CELL_WIDTH  84
 
 
-#define GIMP_GRADIENT_SELECT_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_GRADIENT_SELECT_BUTTON, GimpGradientSelectButtonPrivate))
+#define GIMP_GRADIENT_SELECT_BUTTON_GET_PRIVATE(obj) ((GimpGradientSelectButtonPrivate *) gimp_gradient_select_button_get_instance_private ((GimpGradientSelectButton *) (obj)))
 
 typedef struct _GimpGradientSelectButtonPrivate GimpGradientSelectButtonPrivate;
 
@@ -125,8 +125,9 @@ static const GtkTargetEntry target = { "application/x-gimp-gradient-name", 0 };
 static guint gradient_button_signals[LAST_SIGNAL] = { 0 };
 
 
-G_DEFINE_TYPE (GimpGradientSelectButton, gimp_gradient_select_button,
-               GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpGradientSelectButton,
+                            gimp_gradient_select_button,
+                            GIMP_TYPE_SELECT_BUTTON)
 
 
 static void
@@ -196,9 +197,6 @@ gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
                   G_TYPE_INT,
                   G_TYPE_POINTER,
                   G_TYPE_BOOLEAN);
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpGradientSelectButtonPrivate));
 }
 
 static void

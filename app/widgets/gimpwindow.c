@@ -61,7 +61,7 @@ static gboolean  gimp_window_key_press_event (GtkWidget         *widget,
                                               GdkEventKey       *kevent);
 
 
-G_DEFINE_TYPE (GimpWindow, gimp_window, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpWindow, gimp_window, GTK_TYPE_WINDOW)
 
 #define parent_class gimp_window_parent_class
 
@@ -90,16 +90,12 @@ gimp_window_class_init (GimpWindowClass *klass)
   widget_class->screen_changed  = gimp_window_screen_changed;
   widget_class->configure_event = gimp_window_configure_event;
   widget_class->key_press_event = gimp_window_key_press_event;
-
-  g_type_class_add_private (klass, sizeof (GimpWindowPrivate));
 }
 
 static void
 gimp_window_init (GimpWindow *window)
 {
-  window->private = G_TYPE_INSTANCE_GET_PRIVATE (window,
-                                                 GIMP_TYPE_WINDOW,
-                                                 GimpWindowPrivate);
+  window->private = gimp_window_get_instance_private (window);
 
   window->private->monitor = -1;
 }

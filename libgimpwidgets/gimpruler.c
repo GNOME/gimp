@@ -80,7 +80,7 @@ typedef struct
 } GimpRulerPrivate;
 
 #define GIMP_RULER_GET_PRIVATE(ruler) \
-  G_TYPE_INSTANCE_GET_PRIVATE (ruler, GIMP_TYPE_RULER, GimpRulerPrivate)
+  ((GimpRulerPrivate *) gimp_ruler_get_instance_private ((GimpRuler *) (ruler)))
 
 
 typedef struct
@@ -153,7 +153,7 @@ static const RulerMetric *
                      gimp_ruler_get_metric            (GimpUnit        unit);
 
 
-G_DEFINE_TYPE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpRuler, gimp_ruler, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_ruler_parent_class
 
@@ -177,8 +177,6 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   widget_class->style_set           = gimp_ruler_style_set;
   widget_class->motion_notify_event = gimp_ruler_motion_notify;
   widget_class->expose_event        = gimp_ruler_expose;
-
-  g_type_class_add_private (object_class, sizeof (GimpRulerPrivate));
 
   g_object_class_install_property (object_class,
                                    PROP_ORIENTATION,

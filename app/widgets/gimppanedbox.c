@@ -104,7 +104,7 @@ static void      gimp_paned_box_set_widget_drag_handler (GtkWidget      *widget,
 static gint      gimp_paned_box_get_drop_area_size      (GimpPanedBox   *paned_box);
 
 
-G_DEFINE_TYPE (GimpPanedBox, gimp_paned_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpPanedBox, gimp_paned_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_paned_box_parent_class
 
@@ -124,16 +124,12 @@ gimp_paned_box_class_init (GimpPanedBoxClass *klass)
   widget_class->drag_drop   = gimp_paned_box_drag_drop;
   widget_class->realize     = gimp_paned_box_realize;
   widget_class->unrealize   = gimp_paned_box_unrealize;
-
-  g_type_class_add_private (klass, sizeof (GimpPanedBoxPrivate));
 }
 
 static void
 gimp_paned_box_init (GimpPanedBox *paned_box)
 {
-  paned_box->p = G_TYPE_INSTANCE_GET_PRIVATE (paned_box,
-                                              GIMP_TYPE_PANED_BOX,
-                                              GimpPanedBoxPrivate);
+  paned_box->p = gimp_paned_box_get_instance_private (paned_box);
 
   /* Instructions label
    *

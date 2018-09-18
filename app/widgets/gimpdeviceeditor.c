@@ -72,9 +72,7 @@ struct _GimpDeviceEditorPrivate
 
 
 #define GIMP_DEVICE_EDITOR_GET_PRIVATE(editor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (editor, \
-                                     GIMP_TYPE_DEVICE_EDITOR, \
-                                     GimpDeviceEditorPrivate)
+        ((GimpDeviceEditorPrivate *) gimp_device_editor_get_instance_private ((GimpDeviceEditor *) (editor)))
 
 
 static void   gimp_device_editor_constructed    (GObject           *object);
@@ -110,7 +108,8 @@ static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
                                                  GimpDeviceEditor  *editor);
 
 
-G_DEFINE_TYPE (GimpDeviceEditor, gimp_device_editor, GTK_TYPE_PANED)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceEditor, gimp_device_editor,
+                            GTK_TYPE_PANED)
 
 #define parent_class gimp_device_editor_parent_class
 
@@ -131,8 +130,6 @@ gimp_device_editor_class_init (GimpDeviceEditorClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (object_class, sizeof (GimpDeviceEditorPrivate));
 }
 
 static void

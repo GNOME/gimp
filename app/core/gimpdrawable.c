@@ -198,6 +198,7 @@ static GeglNode * gimp_drawable_real_get_source_node (GimpDrawable    *drawable)
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
+                         G_ADD_PRIVATE (GimpDrawable)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
                                                 gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
@@ -276,16 +277,12 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->get_source_node          = gimp_drawable_real_get_source_node;
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
-
-  g_type_class_add_private (klass, sizeof (GimpDrawablePrivate));
 }
 
 static void
 gimp_drawable_init (GimpDrawable *drawable)
 {
-  drawable->private = G_TYPE_INSTANCE_GET_PRIVATE (drawable,
-                                                   GIMP_TYPE_DRAWABLE,
-                                                   GimpDrawablePrivate);
+  drawable->private = gimp_drawable_get_instance_private (drawable);
 
   drawable->private->filter_stack = gimp_filter_stack_new (GIMP_TYPE_FILTER);
 }

@@ -143,7 +143,7 @@ static void        toolbox_paste_received               (GtkClipboard   *clipboa
                                                          gpointer        data);
 
 
-G_DEFINE_TYPE (GimpToolbox, gimp_toolbox, GIMP_TYPE_DOCK)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolbox, gimp_toolbox, GIMP_TYPE_DOCK)
 
 #define parent_class gimp_toolbox_parent_class
 
@@ -174,16 +174,12 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolboxPrivate));
 }
 
 static void
 gimp_toolbox_init (GimpToolbox *toolbox)
 {
-  toolbox->p = G_TYPE_INSTANCE_GET_PRIVATE (toolbox,
-                                            GIMP_TYPE_TOOLBOX,
-                                            GimpToolboxPrivate);
+  toolbox->p = gimp_toolbox_get_instance_private (toolbox);
 
   gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
                      GIMP_HELP_TOOLBOX, NULL);

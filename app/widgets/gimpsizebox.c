@@ -53,8 +53,7 @@ enum
 };
 
 
-#define GIMP_SIZE_BOX_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
-                                        GIMP_TYPE_SIZE_BOX, GimpSizeBoxPrivate))
+#define GIMP_SIZE_BOX_GET_PRIVATE(obj) ((GimpSizeBoxPrivate *) gimp_size_box_get_instance_private ((GimpSizeBox *) (obj)))
 
 typedef struct _GimpSizeBoxPrivate GimpSizeBoxPrivate;
 
@@ -84,7 +83,7 @@ static void   gimp_size_box_chain_toggled     (GimpChainButton *button,
                                                GimpSizeBox     *box);
 
 
-G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSizeBox, gimp_size_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_size_box_parent_class
 
@@ -98,8 +97,6 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
   object_class->dispose      = gimp_size_box_dispose;
   object_class->set_property = gimp_size_box_set_property;
   object_class->get_property = gimp_size_box_get_property;
-
-  g_type_class_add_private (object_class, sizeof (GimpSizeBoxPrivate));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,

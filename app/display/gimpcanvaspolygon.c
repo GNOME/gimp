@@ -55,9 +55,7 @@ struct _GimpCanvasPolygonPrivate
 };
 
 #define GET_PRIVATE(polygon) \
-        G_TYPE_INSTANCE_GET_PRIVATE (polygon, \
-                                     GIMP_TYPE_CANVAS_POLYGON, \
-                                     GimpCanvasPolygonPrivate)
+        ((GimpCanvasPolygonPrivate *) gimp_canvas_polygon_get_instance_private ((GimpCanvasPolygon *) (polygon)))
 
 
 /*  local function prototypes  */
@@ -79,8 +77,8 @@ static gboolean         gimp_canvas_polygon_hit          (GimpCanvasItem *item,
                                                           gdouble         y);
 
 
-G_DEFINE_TYPE (GimpCanvasPolygon, gimp_canvas_polygon,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasPolygon, gimp_canvas_polygon,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_polygon_parent_class
 
@@ -111,8 +109,6 @@ gimp_canvas_polygon_class_init (GimpCanvasPolygonClass *klass)
                                    g_param_spec_boolean ("filled", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasPolygonPrivate));
 }
 
 static void

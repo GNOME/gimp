@@ -71,7 +71,8 @@ static void             gimp_canvas_group_child_update (GimpCanvasItem  *item,
                                                         GimpCanvasGroup *group);
 
 
-G_DEFINE_TYPE (GimpCanvasGroup, gimp_canvas_group, GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasGroup, gimp_canvas_group,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_group_parent_class
 
@@ -101,16 +102,12 @@ gimp_canvas_group_class_init (GimpCanvasGroupClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasGroupPrivate));
 }
 
 static void
 gimp_canvas_group_init (GimpCanvasGroup *group)
 {
-  group->priv = G_TYPE_INSTANCE_GET_PRIVATE (group,
-                                             GIMP_TYPE_CANVAS_GROUP,
-                                             GimpCanvasGroupPrivate);
+  group->priv = gimp_canvas_group_get_instance_private (group);
 
   group->priv->items = g_queue_new ();
 }

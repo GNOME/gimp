@@ -54,9 +54,7 @@ struct _GimpCanvasGridPrivate
 };
 
 #define GET_PRIVATE(grid) \
-        G_TYPE_INSTANCE_GET_PRIVATE (grid, \
-                                     GIMP_TYPE_CANVAS_GRID, \
-                                     GimpCanvasGridPrivate)
+        ((GimpCanvasGridPrivate *) gimp_canvas_grid_get_instance_private ((GimpCanvasGrid *) (grid)))
 
 
 /*  local function prototypes  */
@@ -77,7 +75,8 @@ static void             gimp_canvas_grid_stroke       (GimpCanvasItem *item,
                                                        cairo_t        *cr);
 
 
-G_DEFINE_TYPE (GimpCanvasGrid, gimp_canvas_grid, GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasGrid, gimp_canvas_grid,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_grid_parent_class
 
@@ -106,8 +105,6 @@ gimp_canvas_grid_class_init (GimpCanvasGridClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasGridPrivate));
 }
 
 static void

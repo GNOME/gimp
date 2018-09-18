@@ -186,7 +186,7 @@ static void         gimp_dockbook_config_size_changed         (GimpGuiConfig   *
                                                                GimpDockbook    *dockbook);
 
 
-G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
 
 #define parent_class gimp_dockbook_parent_class
 
@@ -257,8 +257,6 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_TAB_ICON_SIZE,
                                                               GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpDockbookPrivate));
 }
 
 static void
@@ -267,9 +265,7 @@ gimp_dockbook_init (GimpDockbook *dockbook)
   GtkNotebook *notebook = GTK_NOTEBOOK (dockbook);
   GtkWidget   *image    = NULL;
 
-  dockbook->p = G_TYPE_INSTANCE_GET_PRIVATE (dockbook,
-                                             GIMP_TYPE_DOCKBOOK,
-                                             GimpDockbookPrivate);
+  dockbook->p = gimp_dockbook_get_instance_private (dockbook);
 
   /* Various init */
   gtk_notebook_popup_enable (notebook);

@@ -78,8 +78,8 @@ static GeglTile * gimp_tile_read_mul (GimpTileBackendPlugin *backend_plugin,
                                       gint                   y);
 
 
-G_DEFINE_TYPE (GimpTileBackendPlugin, _gimp_tile_backend_plugin,
-               GEGL_TYPE_TILE_BACKEND)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpTileBackendPlugin, _gimp_tile_backend_plugin,
+                            GEGL_TYPE_TILE_BACKEND)
 
 #define parent_class _gimp_tile_backend_plugin_parent_class
 
@@ -94,8 +94,6 @@ _gimp_tile_backend_plugin_class_init (GimpTileBackendPluginClass *klass)
 
   object_class->finalize = gimp_tile_backend_plugin_finalize;
 
-  g_type_class_add_private (klass, sizeof (GimpTileBackendPluginPrivate));
-
   gimp_tile_cache_ntiles (64);
 }
 
@@ -104,9 +102,7 @@ _gimp_tile_backend_plugin_init (GimpTileBackendPlugin *backend)
 {
   GeglTileSource *source = GEGL_TILE_SOURCE (backend);
 
-  backend->priv = G_TYPE_INSTANCE_GET_PRIVATE (backend,
-                                               GIMP_TYPE_TILE_BACKEND_PLUGIN,
-                                               GimpTileBackendPluginPrivate);
+  backend->priv = _gimp_tile_backend_plugin_get_instance_private (backend);
 
   source->command = gimp_tile_backend_plugin_command;
 }

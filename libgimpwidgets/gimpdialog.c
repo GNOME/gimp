@@ -60,9 +60,7 @@ struct _GimpDialogPrivate
   GtkWidget    *help_button;
 };
 
-#define GET_PRIVATE(dialog) G_TYPE_INSTANCE_GET_PRIVATE (dialog, \
-                                                         GIMP_TYPE_DIALOG, \
-                                                         GimpDialogPrivate)
+#define GET_PRIVATE(dialog) ((GimpDialogPrivate *) gimp_dialog_get_instance_private ((GimpDialog *) (dialog)))
 
 
 static void       gimp_dialog_constructed  (GObject      *object);
@@ -88,7 +86,7 @@ static void       gimp_dialog_response     (GtkDialog    *dialog,
                                             gint          response_id);
 
 
-G_DEFINE_TYPE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
 
 #define parent_class gimp_dialog_parent_class
 
@@ -150,8 +148,6 @@ gimp_dialog_class_init (GimpDialogClass *klass)
                                                         GTK_TYPE_WIDGET,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpDialogPrivate));
 }
 
 static void

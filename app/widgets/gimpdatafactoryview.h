@@ -33,14 +33,14 @@
 #define GIMP_DATA_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))
 
 
-typedef struct _GimpDataFactoryViewClass  GimpDataFactoryViewClass;
-typedef struct _GimpDataFactoryViewPriv   GimpDataFactoryViewPriv;
+typedef struct _GimpDataFactoryViewClass   GimpDataFactoryViewClass;
+typedef struct _GimpDataFactoryViewPrivate GimpDataFactoryViewPrivate;
 
 struct _GimpDataFactoryView
 {
-  GimpContainerEditor      parent_instance;
+  GimpContainerEditor         parent_instance;
 
-  GimpDataFactoryViewPriv *priv;
+  GimpDataFactoryViewPrivate *priv;
 };
 
 struct _GimpDataFactoryViewClass

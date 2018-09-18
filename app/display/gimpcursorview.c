@@ -59,7 +59,7 @@ enum
 };
 
 
-struct _GimpCursorViewPriv
+struct _GimpCursorViewPrivate
 {
   GimpEditor        parent_instance;
 
@@ -139,6 +139,7 @@ static gboolean   gimp_cursor_view_cursor_idle           (GimpCursorView      *v
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCursorView, gimp_cursor_view, GIMP_TYPE_EDITOR,
+                         G_ADD_PRIVATE (GimpCursorView)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_cursor_view_docked_iface_init))
 
@@ -165,8 +166,6 @@ gimp_cursor_view_class_init (GimpCursorViewClass* klass)
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpCursorViewPriv));
 }
 
 static void
@@ -177,9 +176,7 @@ gimp_cursor_view_init (GimpCursorView *view)
   GtkWidget *toggle;
   gint       content_spacing;
 
-  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
-                                            GIMP_TYPE_CURSOR_VIEW,
-                                            GimpCursorViewPriv);
+  view->priv = gimp_cursor_view_get_instance_private (view);
 
   view->priv->sample_merged  = TRUE;
   view->priv->context        = NULL;

@@ -84,8 +84,8 @@ struct _GimpColorTransformPrivate
 static void   gimp_color_transform_finalize (GObject *object);
 
 
-G_DEFINE_TYPE (GimpColorTransform, gimp_color_transform,
-               G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorTransform, gimp_color_transform,
+                            G_TYPE_OBJECT)
 
 #define parent_class gimp_color_transform_parent_class
 
@@ -132,17 +132,13 @@ gimp_color_transform_class_init (GimpColorTransformClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_DOUBLE);
 
-  g_type_class_add_private (klass, sizeof (GimpColorTransformPrivate));
-
   cmsSetLogErrorHandler (lcms_error_handler);
 }
 
 static void
 gimp_color_transform_init (GimpColorTransform *transform)
 {
-  transform->priv = G_TYPE_INSTANCE_GET_PRIVATE (transform,
-                                                 GIMP_TYPE_COLOR_TRANSFORM,
-                                                 GimpColorTransformPrivate);
+  transform->priv = gimp_color_transform_get_instance_private (transform);
 }
 
 static void

@@ -90,9 +90,7 @@ struct _GimpCanvasTransformPreviewPrivate
 };
 
 #define GET_PRIVATE(transform_preview) \
-        G_TYPE_INSTANCE_GET_PRIVATE (transform_preview, \
-                                     GIMP_TYPE_CANVAS_TRANSFORM_PREVIEW, \
-                                     GimpCanvasTransformPreviewPrivate)
+        ((GimpCanvasTransformPreviewPrivate *) gimp_canvas_transform_preview_get_instance_private ((GimpCanvasTransformPreview *) (transform_preview)))
 
 
 /*  local function prototypes  */
@@ -119,8 +117,9 @@ static void             gimp_canvas_transform_preview_set_drawable  (GimpCanvasT
 static void             gimp_canvas_transform_preview_sync_node     (GimpCanvasTransformPreview *transform_preview);
 
 
-G_DEFINE_TYPE (GimpCanvasTransformPreview, gimp_canvas_transform_preview,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasTransformPreview,
+                            gimp_canvas_transform_preview,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_transform_preview_parent_class
 
@@ -190,8 +189,6 @@ gimp_canvas_transform_preview_class_init (GimpCanvasTransformPreviewClass *klass
                                                         NULL, NULL,
                                                         0.0, 1.0, 1.0,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasTransformPreviewPrivate));
 }
 
 static void

@@ -99,8 +99,8 @@ static GimpDataLoader * gimp_data_loader_new          (const gchar     *name,
 static void            gimp_data_loader_free          (GimpDataLoader  *loader);
 
 
-G_DEFINE_TYPE (GimpDataLoaderFactory, gimp_data_loader_factory,
-               GIMP_TYPE_DATA_FACTORY)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDataLoaderFactory, gimp_data_loader_factory,
+                            GIMP_TYPE_DATA_FACTORY)
 
 #define parent_class gimp_data_loader_factory_parent_class
 
@@ -115,16 +115,12 @@ gimp_data_loader_factory_class_init (GimpDataLoaderFactoryClass *klass)
 
   factory_class->data_init    = gimp_data_loader_factory_data_init;
   factory_class->data_refresh = gimp_data_loader_factory_data_refresh;
-
-  g_type_class_add_private (klass, sizeof (GimpDataLoaderFactoryPrivate));
 }
 
 static void
 gimp_data_loader_factory_init (GimpDataLoaderFactory *factory)
 {
-  factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
-                                               GIMP_TYPE_DATA_LOADER_FACTORY,
-                                               GimpDataLoaderFactoryPrivate);
+  factory->priv = gimp_data_loader_factory_get_instance_private (factory);
 }
 
 static void

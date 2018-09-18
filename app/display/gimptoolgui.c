@@ -81,9 +81,7 @@ struct _GimpToolGuiPrivate
   GtkWidget        *vbox;
 };
 
-#define GET_PRIVATE(gui) G_TYPE_INSTANCE_GET_PRIVATE (gui, \
-                                                      GIMP_TYPE_TOOL_GUI, \
-                                                      GimpToolGuiPrivate)
+#define GET_PRIVATE(gui) ((GimpToolGuiPrivate *) gimp_tool_gui_get_instance_private ((GimpToolGui *) (gui)))
 
 
 static void   gimp_tool_gui_dispose         (GObject       *object);
@@ -110,7 +108,7 @@ static ResponseEntry * response_entry_find  (GList         *entries,
                                              gint           response_id);
 
 
-G_DEFINE_TYPE (GimpToolGui, gimp_tool_gui, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolGui, gimp_tool_gui, GIMP_TYPE_OBJECT)
 
 static guint signals[LAST_SIGNAL] = { 0, };
 
@@ -134,8 +132,6 @@ gimp_tool_gui_class_init (GimpToolGuiClass *klass)
                   gimp_marshal_VOID__INT,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
-
-  g_type_class_add_private (klass, sizeof (GimpToolGuiPrivate));
 }
 
 static void

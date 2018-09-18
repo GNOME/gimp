@@ -58,9 +58,7 @@ struct _GimpCanvasSamplePointPrivate
 };
 
 #define GET_PRIVATE(sample_point) \
-        G_TYPE_INSTANCE_GET_PRIVATE (sample_point, \
-                                     GIMP_TYPE_CANVAS_SAMPLE_POINT, \
-                                     GimpCanvasSamplePointPrivate)
+        ((GimpCanvasSamplePointPrivate *) gimp_canvas_sample_point_get_instance_private ((GimpCanvasSamplePoint *) (sample_point)))
 
 
 /*  local function prototypes  */
@@ -82,8 +80,8 @@ static void             gimp_canvas_sample_point_fill         (GimpCanvasItem *i
                                                                cairo_t        *cr);
 
 
-G_DEFINE_TYPE (GimpCanvasSamplePoint, gimp_canvas_sample_point,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasSamplePoint, gimp_canvas_sample_point,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_sample_point_parent_class
 
@@ -124,8 +122,6 @@ gimp_canvas_sample_point_class_init (GimpCanvasSamplePointClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasSamplePointPrivate));
 }
 
 static void

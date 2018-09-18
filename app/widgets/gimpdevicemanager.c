@@ -97,7 +97,8 @@ static void   gimp_device_manager_connect_tool    (GimpDeviceManager *manager);
 static void   gimp_device_manager_disconnect_tool (GimpDeviceManager *manager);
 
 
-G_DEFINE_TYPE (GimpDeviceManager, gimp_device_manager, GIMP_TYPE_LIST)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceManager, gimp_device_manager,
+                            GIMP_TYPE_LIST)
 
 #define parent_class gimp_device_manager_parent_class
 
@@ -127,16 +128,12 @@ gimp_device_manager_class_init (GimpDeviceManagerClass *klass)
                                                         GIMP_TYPE_DEVICE_INFO,
                                                         GIMP_PARAM_STATIC_STRINGS |
                                                         G_PARAM_READABLE));
-
-  g_type_class_add_private (object_class, sizeof (GimpDeviceManagerPrivate));
 }
 
 static void
 gimp_device_manager_init (GimpDeviceManager *manager)
 {
-  manager->priv = G_TYPE_INSTANCE_GET_PRIVATE (manager,
-                                               GIMP_TYPE_DEVICE_MANAGER,
-                                               GimpDeviceManagerPrivate);
+  manager->priv = gimp_device_manager_get_instance_private (manager);
 
   manager->priv->displays = g_hash_table_new_full (g_str_hash,
                                                    g_str_equal,

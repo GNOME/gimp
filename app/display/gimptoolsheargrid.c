@@ -79,8 +79,8 @@ static void     gimp_tool_shear_grid_motion        (GimpToolWidget      *widget,
                                                     GdkModifierType      state);
 
 
-G_DEFINE_TYPE (GimpToolShearGrid, gimp_tool_shear_grid,
-               GIMP_TYPE_TOOL_TRANSFORM_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolShearGrid, gimp_tool_shear_grid,
+                            GIMP_TYPE_TOOL_TRANSFORM_GRID)
 
 #define parent_class gimp_tool_shear_grid_parent_class
 
@@ -122,16 +122,12 @@ gimp_tool_shear_grid_class_init (GimpToolShearGridClass *klass)
                                                         0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolShearGridPrivate));
 }
 
 static void
 gimp_tool_shear_grid_init (GimpToolShearGrid *grid)
 {
-  grid->private = G_TYPE_INSTANCE_GET_PRIVATE (grid,
-                                               GIMP_TYPE_TOOL_SHEAR_GRID,
-                                               GimpToolShearGridPrivate);
+  grid->private = gimp_tool_shear_grid_get_instance_private (grid);
 
   g_object_set (grid,
                 "inside-function",         GIMP_TRANSFORM_FUNCTION_SHEAR,

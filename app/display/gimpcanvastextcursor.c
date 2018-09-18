@@ -57,9 +57,7 @@ struct _GimpCanvasTextCursorPrivate
 };
 
 #define GET_PRIVATE(text_cursor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (text_cursor, \
-                                     GIMP_TYPE_CANVAS_TEXT_CURSOR, \
-                                     GimpCanvasTextCursorPrivate)
+        ((GimpCanvasTextCursorPrivate *) gimp_canvas_text_cursor_get_instance_private ((GimpCanvasTextCursor *) (text_cursor)))
 
 
 /*  local function prototypes  */
@@ -77,8 +75,8 @@ static void             gimp_canvas_text_cursor_draw         (GimpCanvasItem *it
 static cairo_region_t * gimp_canvas_text_cursor_get_extents  (GimpCanvasItem *item);
 
 
-G_DEFINE_TYPE (GimpCanvasTextCursor, gimp_canvas_text_cursor,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasTextCursor, gimp_canvas_text_cursor,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_text_cursor_parent_class
 
@@ -129,8 +127,6 @@ gimp_canvas_text_cursor_class_init (GimpCanvasTextCursorClass *klass)
                                                      gimp_text_direction_get_type(),
                                                      GIMP_TEXT_DIRECTION_LTR,
                                                      GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasTextCursorPrivate));
 }
 
 static void

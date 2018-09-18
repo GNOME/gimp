@@ -67,9 +67,7 @@ struct _GimpCanvasProgressPrivate
 };
 
 #define GET_PRIVATE(progress) \
-        G_TYPE_INSTANCE_GET_PRIVATE (progress, \
-                                     GIMP_TYPE_CANVAS_PROGRESS, \
-                                     GimpCanvasProgressPrivate)
+        ((GimpCanvasProgressPrivate *) gimp_canvas_progress_get_instance_private ((GimpCanvasProgress *) (progress)))
 
 
 /*  local function prototypes  */
@@ -112,6 +110,7 @@ static gboolean         gimp_canvas_progress_message      (GimpProgress         
 
 G_DEFINE_TYPE_WITH_CODE (GimpCanvasProgress, gimp_canvas_progress,
                          GIMP_TYPE_CANVAS_ITEM,
+                         G_ADD_PRIVATE (GimpCanvasProgress)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_canvas_progress_iface_init))
 
@@ -149,8 +148,6 @@ gimp_canvas_progress_class_init (GimpCanvasProgressClass *klass)
                                                         -GIMP_MAX_IMAGE_SIZE,
                                                         GIMP_MAX_IMAGE_SIZE, 0,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasProgressPrivate));
 }
 
 static void

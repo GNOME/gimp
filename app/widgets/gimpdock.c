@@ -86,7 +86,7 @@ static gboolean   gimp_dock_dropped_cb             (GtkWidget    *source,
                                                     gpointer      data);
 
 
-G_DEFINE_TYPE (GimpDock, gimp_dock, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDock, gimp_dock, GTK_TYPE_BOX)
 
 #define parent_class gimp_dock_parent_class
 
@@ -155,8 +155,6 @@ gimp_dock_class_init (GimpDockClass *klass)
                                                                 G_MAXDOUBLE,
                                                                 DEFAULT_DOCK_FONT_SCALE,
                                                                 GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpDockPrivate));
 }
 
 static void
@@ -168,9 +166,7 @@ gimp_dock_init (GimpDock *dock)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (dock),
                                   GTK_ORIENTATION_VERTICAL);
 
-  dock->p = G_TYPE_INSTANCE_GET_PRIVATE (dock,
-                                         GIMP_TYPE_DOCK,
-                                         GimpDockPrivate);
+  dock->p = gimp_dock_get_instance_private (dock);
   dock->p->ID             = dock_ID++;
 
   name = g_strdup_printf ("gimp-internal-dock-%d", dock->p->ID);

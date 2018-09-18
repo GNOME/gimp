@@ -433,8 +433,8 @@ static void     gimp_tool_rectangle_adjust_coord    (GimpToolRectangle     *rect
                                                      gdouble               *coord_y_output);
 
 
-G_DEFINE_TYPE (GimpToolRectangle, gimp_tool_rectangle,
-               GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolRectangle, gimp_tool_rectangle,
+                            GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_rectangle_parent_class
 
@@ -694,16 +694,12 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolRectanglePrivate));
 }
 
 static void
 gimp_tool_rectangle_init (GimpToolRectangle *rectangle)
 {
-  rectangle->private = G_TYPE_INSTANCE_GET_PRIVATE (rectangle,
-                                                    GIMP_TYPE_TOOL_RECTANGLE,
-                                                    GimpToolRectanglePrivate);
+  rectangle->private = gimp_tool_rectangle_get_instance_private (rectangle);
 
   rectangle->private->function = GIMP_TOOL_RECTANGLE_CREATING;
   rectangle->private->is_first = TRUE;

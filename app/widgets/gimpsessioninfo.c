@@ -95,6 +95,7 @@ static gboolean  gimp_session_info_restore_docks      (GimpRestoreDocksData *dat
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpSessionInfo, gimp_session_info, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpSessionInfo)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_session_info_config_iface_init))
 
@@ -110,16 +111,12 @@ gimp_session_info_class_init (GimpSessionInfoClass *klass)
   object_class->finalize         = gimp_session_info_finalize;
 
   gimp_object_class->get_memsize = gimp_session_info_get_memsize;
-
-  g_type_class_add_private (klass, sizeof (GimpSessionInfoPrivate));
 }
 
 static void
 gimp_session_info_init (GimpSessionInfo *info)
 {
-  info->p = G_TYPE_INSTANCE_GET_PRIVATE (info,
-                                         GIMP_TYPE_SESSION_INFO,
-                                         GimpSessionInfoPrivate);
+  info->p = gimp_session_info_get_instance_private (info);
 
   info->p->monitor = DEFAULT_MONITOR;
   info->p->screen  = DEFAULT_SCREEN;

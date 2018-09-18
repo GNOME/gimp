@@ -133,8 +133,8 @@ static void     gimp_rectangle_select_tool_update_option_defaults
 static void     gimp_rectangle_select_tool_auto_shrink    (GimpRectangleSelectTool *rect_tool);
 
 
-G_DEFINE_TYPE (GimpRectangleSelectTool, gimp_rectangle_select_tool,
-               GIMP_TYPE_SELECTION_TOOL)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpRectangleSelectTool, gimp_rectangle_select_tool,
+                            GIMP_TYPE_SELECTION_TOOL)
 
 #define parent_class gimp_rectangle_select_tool_parent_class
 
@@ -170,8 +170,6 @@ gimp_rectangle_select_tool_class_init (GimpRectangleSelectToolClass *klass)
   tool_class->cursor_update  = gimp_rectangle_select_tool_cursor_update;
 
   klass->select              = gimp_rectangle_select_tool_real_select;
-
-  g_type_class_add_private (klass, sizeof (GimpRectangleSelectToolPrivate));
 }
 
 static void
@@ -180,9 +178,7 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_tool)
   GimpTool *tool = GIMP_TOOL (rect_tool);
 
   rect_tool->private =
-    G_TYPE_INSTANCE_GET_PRIVATE (rect_tool,
-                                 GIMP_TYPE_RECTANGLE_SELECT_TOOL,
-                                 GimpRectangleSelectToolPrivate);
+    gimp_rectangle_select_tool_get_instance_private (rect_tool);
 
   gimp_tool_control_set_wants_click      (tool->control, TRUE);
   gimp_tool_control_set_active_modifiers (tool->control,

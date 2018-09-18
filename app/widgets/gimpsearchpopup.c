@@ -115,7 +115,7 @@ static gboolean   gimp_search_popup_view_accel_find_func (GtkAccelKey       *key
                                                           gpointer           data);
 
 
-G_DEFINE_TYPE (GimpSearchPopup, gimp_search_popup, GIMP_TYPE_POPUP)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSearchPopup, gimp_search_popup, GIMP_TYPE_POPUP)
 
 #define parent_class gimp_search_popup_parent_class
 
@@ -166,16 +166,12 @@ gimp_search_popup_class_init (GimpSearchPopupClass *klass)
                                    g_param_spec_pointer ("callback-data", NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpSearchPopupPrivate));
 }
 
 static void
 gimp_search_popup_init (GimpSearchPopup *search_popup)
 {
-  search_popup->priv = G_TYPE_INSTANCE_GET_PRIVATE (search_popup,
-                                                    GIMP_TYPE_SEARCH_POPUP,
-                                                    GimpSearchPopupPrivate);
+  search_popup->priv = gimp_search_popup_get_instance_private (search_popup);
 }
 
 /************ Public Functions ****************/

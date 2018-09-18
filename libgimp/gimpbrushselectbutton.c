@@ -47,7 +47,7 @@
 #define CELL_SIZE 20
 
 
-#define GIMP_BRUSH_SELECT_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_BRUSH_SELECT_BUTTON, GimpBrushSelectButtonPrivate))
+#define GIMP_BRUSH_SELECT_BUTTON_GET_PRIVATE(obj) ((GimpBrushSelectButtonPrivate *) gimp_brush_select_button_get_instance_private ((GimpBrushSelectButton *) (obj)))
 
 typedef struct _GimpBrushSelectButtonPrivate GimpBrushSelectButtonPrivate;
 
@@ -147,8 +147,8 @@ static const GtkTargetEntry target = { "application/x-gimp-brush-name", 0 };
 static guint brush_button_signals[LAST_SIGNAL] = { 0 };
 
 
-G_DEFINE_TYPE (GimpBrushSelectButton, gimp_brush_select_button,
-               GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpBrushSelectButton, gimp_brush_select_button,
+                            GIMP_TYPE_SELECT_BUTTON)
 
 
 static void
@@ -269,9 +269,6 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
                   G_TYPE_INT,
                   G_TYPE_POINTER,
                   G_TYPE_BOOLEAN);
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpBrushSelectButtonPrivate));
 }
 
 static void

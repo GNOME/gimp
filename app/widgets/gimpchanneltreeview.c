@@ -49,7 +49,7 @@
 #include "gimp-intl.h"
 
 
-struct _GimpChannelTreeViewPriv
+struct _GimpChannelTreeViewPrivate
 {
   GtkWidget *component_editor;
 
@@ -81,6 +81,7 @@ static void   gimp_channel_tree_view_set_view_size    (GimpContainerView       *
 
 G_DEFINE_TYPE_WITH_CODE (GimpChannelTreeView, gimp_channel_tree_view,
                          GIMP_TYPE_DRAWABLE_TREE_VIEW,
+                         G_ADD_PRIVATE (GimpChannelTreeView)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONTAINER_VIEW,
                                                 gimp_channel_tree_view_view_iface_init))
 
@@ -125,8 +126,6 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->delete_action         = "channels-delete";
   iv_class->lock_content_help_id  = GIMP_HELP_CHANNEL_LOCK_PIXELS;
   iv_class->lock_position_help_id = GIMP_HELP_CHANNEL_LOCK_POSITION;
-
-  g_type_class_add_private (klass, sizeof (GimpChannelTreeViewPriv));
 }
 
 static void
@@ -141,9 +140,7 @@ gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
 static void
 gimp_channel_tree_view_init (GimpChannelTreeView *view)
 {
-  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
-                                            GIMP_TYPE_CHANNEL_TREE_VIEW,
-                                            GimpChannelTreeViewPriv);
+  view->priv = gimp_channel_tree_view_get_instance_private (view);
 
   view->priv->component_editor   = NULL;
   view->priv->toselection_button = NULL;

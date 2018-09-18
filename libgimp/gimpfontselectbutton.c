@@ -44,7 +44,7 @@
  **/
 
 
-#define GIMP_FONT_SELECT_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_FONT_SELECT_BUTTON, GimpFontSelectButtonPrivate))
+#define GIMP_FONT_SELECT_BUTTON_GET_PRIVATE(obj) ((GimpFontSelectButtonPrivate *) gimp_font_select_button_get_instance_private ((GimpFontSelectButton *) (obj)))
 
 typedef struct _GimpFontSelectButtonPrivate GimpFontSelectButtonPrivate;
 
@@ -107,8 +107,8 @@ static const GtkTargetEntry target = { "application/x-gimp-font-name", 0 };
 static guint font_button_signals[LAST_SIGNAL] = { 0 };
 
 
-G_DEFINE_TYPE (GimpFontSelectButton, gimp_font_select_button,
-               GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpFontSelectButton, gimp_font_select_button,
+                            GIMP_TYPE_SELECT_BUTTON)
 
 
 static void
@@ -174,9 +174,6 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
                   G_TYPE_NONE, 2,
                   G_TYPE_STRING,
                   G_TYPE_BOOLEAN);
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpFontSelectButtonPrivate));
 }
 
 static void

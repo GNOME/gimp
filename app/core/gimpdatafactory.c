@@ -104,7 +104,8 @@ static GFile    * gimp_data_factory_get_save_dir        (GimpDataFactory     *fa
                                                          GError             **error);
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpDataFactory, gimp_data_factory,
+                                     GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_data_factory_parent_class
 
@@ -165,16 +166,12 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpDataFactoryPrivate));
 }
 
 static void
 gimp_data_factory_init (GimpDataFactory *factory)
 {
-  factory->priv = G_TYPE_INSTANCE_GET_PRIVATE (factory,
-                                               GIMP_TYPE_DATA_FACTORY,
-                                               GimpDataFactoryPrivate);
+  factory->priv = gimp_data_factory_get_instance_private (factory);
 
   factory->priv->async_set = gimp_async_set_new ();
 }

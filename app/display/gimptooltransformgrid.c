@@ -204,8 +204,8 @@ static void     gimp_tool_transform_grid_calc_handles   (GimpToolTransformGrid *
                                                          gint                  *handle_h);
 
 
-G_DEFINE_TYPE (GimpToolTransformGrid, gimp_tool_transform_grid,
-               GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolTransformGrid, gimp_tool_transform_grid,
+                            GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_transform_grid_parent_class
 
@@ -443,16 +443,12 @@ gimp_tool_transform_grid_class_init (GimpToolTransformGridClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolTransformGridPrivate));
 }
 
 static void
 gimp_tool_transform_grid_init (GimpToolTransformGrid *grid)
 {
-  grid->private = G_TYPE_INSTANCE_GET_PRIVATE (grid,
-                                               GIMP_TYPE_TOOL_TRANSFORM_GRID,
-                                               GimpToolTransformGridPrivate);
+  grid->private = gimp_tool_transform_grid_get_instance_private (grid);
 }
 
 static void

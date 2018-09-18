@@ -95,9 +95,7 @@ struct _GimpDynamicsOutputEditorPrivate
 };
 
 #define GET_PRIVATE(editor) \
-        G_TYPE_INSTANCE_GET_PRIVATE (editor, \
-                                     GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, \
-                                     GimpDynamicsOutputEditorPrivate)
+        ((GimpDynamicsOutputEditorPrivate *) gimp_dynamics_output_editor_get_instance_private ((GimpDynamicsOutputEditor *) (editor)))
 
 
 static void   gimp_dynamics_output_editor_constructed    (GObject                  *object);
@@ -129,8 +127,8 @@ static void   gimp_dynamics_output_editor_notify_output  (GimpDynamicsOutput    
                                                           GimpDynamicsOutputEditor *editor);
 
 
-G_DEFINE_TYPE (GimpDynamicsOutputEditor, gimp_dynamics_output_editor,
-               GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDynamicsOutputEditor,
+                            gimp_dynamics_output_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_dynamics_output_editor_parent_class
 
@@ -151,9 +149,6 @@ gimp_dynamics_output_editor_class_init (GimpDynamicsOutputEditorClass *klass)
                                                         GIMP_TYPE_DYNAMICS_OUTPUT,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (object_class,
-                            sizeof (GimpDynamicsOutputEditorPrivate));
 }
 
 static void

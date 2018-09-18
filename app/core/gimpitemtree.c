@@ -60,9 +60,7 @@ struct _GimpItemTreePrivate
 };
 
 #define GIMP_ITEM_TREE_GET_PRIVATE(object) \
-        G_TYPE_INSTANCE_GET_PRIVATE (object, \
-                                     GIMP_TYPE_ITEM_TREE, \
-                                     GimpItemTreePrivate)
+        ((GimpItemTreePrivate *) gimp_item_tree_get_instance_private ((GimpItemTree *) (object)))
 
 
 /*  local function prototypes  */
@@ -86,7 +84,7 @@ static void     gimp_item_tree_uniquefy_name (GimpItemTree *tree,
                                               const gchar  *new_name);
 
 
-G_DEFINE_TYPE (GimpItemTree, gimp_item_tree, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpItemTree, gimp_item_tree, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_item_tree_parent_class
 
@@ -130,8 +128,6 @@ gimp_item_tree_class_init (GimpItemTreeClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_ITEM,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpItemTreePrivate));
 }
 
 static void

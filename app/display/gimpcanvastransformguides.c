@@ -65,9 +65,7 @@ struct _GimpCanvasTransformGuidesPrivate
 };
 
 #define GET_PRIVATE(transform) \
-        G_TYPE_INSTANCE_GET_PRIVATE (transform, \
-                                     GIMP_TYPE_CANVAS_TRANSFORM_GUIDES, \
-                                     GimpCanvasTransformGuidesPrivate)
+        ((GimpCanvasTransformGuidesPrivate *) gimp_canvas_transform_guides_get_instance_private ((GimpCanvasTransformGuides *) (transform)))
 
 
 /*  local function prototypes  */
@@ -85,8 +83,8 @@ static void             gimp_canvas_transform_guides_draw         (GimpCanvasIte
 static cairo_region_t * gimp_canvas_transform_guides_get_extents  (GimpCanvasItem *item);
 
 
-G_DEFINE_TYPE (GimpCanvasTransformGuides, gimp_canvas_transform_guides,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasTransformGuides,
+                            gimp_canvas_transform_guides, GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_transform_guides_parent_class
 
@@ -156,8 +154,6 @@ gimp_canvas_transform_guides_class_init (GimpCanvasTransformGuidesClass *klass)
                                    g_param_spec_boolean ("clip", NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasTransformGuidesPrivate));
 }
 
 static void

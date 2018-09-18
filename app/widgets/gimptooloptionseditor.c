@@ -105,6 +105,7 @@ static void        gimp_tool_options_editor_presets_update    (GimpToolOptionsEd
 
 G_DEFINE_TYPE_WITH_CODE (GimpToolOptionsEditor, gimp_tool_options_editor,
                          GIMP_TYPE_EDITOR,
+                         G_ADD_PRIVATE (GimpToolOptionsEditor)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_tool_options_editor_docked_iface_init))
 
@@ -127,8 +128,6 @@ gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpToolOptionsEditorPrivate));
 }
 
 static void
@@ -145,9 +144,7 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
   GtkScrolledWindow *scrolled_window;
   GtkWidget         *viewport;
 
-  editor->p = G_TYPE_INSTANCE_GET_PRIVATE (editor,
-                                           GIMP_TYPE_TOOL_OPTIONS_EDITOR,
-                                           GimpToolOptionsEditorPrivate);
+  editor->p = gimp_tool_options_editor_get_instance_private (editor);
 
   gtk_widget_set_size_request (GTK_WIDGET (editor), -1, 200);
 

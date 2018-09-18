@@ -155,8 +155,8 @@ static inline gdouble calc_lineintersect_ratio (gdouble p1x,
                                                 gdouble q2y);
 
 
-G_DEFINE_TYPE (GimpToolHandleGrid, gimp_tool_handle_grid,
-               GIMP_TYPE_TOOL_TRANSFORM_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolHandleGrid, gimp_tool_handle_grid,
+                            GIMP_TYPE_TOOL_TRANSFORM_GRID)
 
 #define parent_class gimp_tool_handle_grid_parent_class
 
@@ -338,16 +338,12 @@ gimp_tool_handle_grid_class_init (GimpToolHandleGridClass *klass)
                                                         0.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpToolHandleGridPrivate));
 }
 
 static void
 gimp_tool_handle_grid_init (GimpToolHandleGrid *grid)
 {
-  grid->private = G_TYPE_INSTANCE_GET_PRIVATE (grid,
-                                               GIMP_TYPE_TOOL_HANDLE_GRID,
-                                               GimpToolHandleGridPrivate);
+  grid->private = gimp_tool_handle_grid_get_instance_private (grid);
 }
 
 static void

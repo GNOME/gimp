@@ -97,7 +97,8 @@ static void        gimp_dialog_factory_hide                 (GimpDialogFactory  
 static void        gimp_dialog_factory_show                 (GimpDialogFactory      *factory);
 
 
-G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDialogFactory, gimp_dialog_factory,
+                            GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_dialog_factory_parent_class
 
@@ -139,16 +140,12 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCK_WINDOW);
-
-  g_type_class_add_private (klass, sizeof (GimpDialogFactoryPrivate));
 }
 
 static void
 gimp_dialog_factory_init (GimpDialogFactory *factory)
 {
-  factory->p = G_TYPE_INSTANCE_GET_PRIVATE (factory,
-                                            GIMP_TYPE_DIALOG_FACTORY,
-                                            GimpDialogFactoryPrivate);
+  factory->p = gimp_dialog_factory_get_instance_private (factory);
   factory->p->dialog_state = GIMP_DIALOGS_SHOWN;
 }
 

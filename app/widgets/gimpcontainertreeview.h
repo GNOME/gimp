@@ -33,25 +33,25 @@
 #define GIMP_CONTAINER_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_TREE_VIEW, GimpContainerTreeViewClass))
 
 
-typedef struct _GimpContainerTreeViewClass GimpContainerTreeViewClass;
-typedef struct _GimpContainerTreeViewPriv  GimpContainerTreeViewPriv;
+typedef struct _GimpContainerTreeViewClass   GimpContainerTreeViewClass;
+typedef struct _GimpContainerTreeViewPrivate GimpContainerTreeViewPrivate;
 
 struct _GimpContainerTreeView
 {
-  GimpContainerBox           parent_instance;
+  GimpContainerBox              parent_instance;
 
-  GtkTreeModel              *model;
-  gint                       n_model_columns;
-  GType                      model_columns[16];
+  GtkTreeModel                 *model;
+  gint                          n_model_columns;
+  GType                         model_columns[16];
 
-  GtkTreeView               *view;
+  GtkTreeView                  *view;
 
-  GtkTreeViewColumn         *main_column;
-  GtkCellRenderer           *renderer_cell;
+  GtkTreeViewColumn            *main_column;
+  GtkCellRenderer              *renderer_cell;
 
-  Gimp                      *dnd_gimp; /* eek */
+  Gimp                         *dnd_gimp; /* eek */
 
-  GimpContainerTreeViewPriv *priv;
+  GimpContainerTreeViewPrivate *priv;
 };
 
 struct _GimpContainerTreeViewClass

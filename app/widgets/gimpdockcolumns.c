@@ -91,7 +91,7 @@ static void      gimp_dock_columns_dock_book_removed (GimpDockColumns *dock_colu
                                                       GimpDock        *dock);
 
 
-G_DEFINE_TYPE (GimpDockColumns, gimp_dock_columns, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpDockColumns, gimp_dock_columns, GTK_TYPE_BOX)
 
 #define parent_class gimp_dock_columns_parent_class
 
@@ -150,8 +150,6 @@ gimp_dock_columns_class_init (GimpDockColumnsClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DOCK);
-
-  g_type_class_add_private (klass, sizeof (GimpDockColumnsPrivate));
 }
 
 static void
@@ -160,9 +158,7 @@ gimp_dock_columns_init (GimpDockColumns *dock_columns)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (dock_columns),
                                   GTK_ORIENTATION_HORIZONTAL);
 
-  dock_columns->p = G_TYPE_INSTANCE_GET_PRIVATE (dock_columns,
-                                                 GIMP_TYPE_DOCK_COLUMNS,
-                                                 GimpDockColumnsPrivate);
+  dock_columns->p = gimp_dock_columns_get_instance_private (dock_columns);
 
   dock_columns->p->paned_hbox = gimp_paned_box_new (FALSE, 0,
                                                     GTK_ORIENTATION_HORIZONTAL);

@@ -54,9 +54,7 @@ struct _GimpContainerTreeStorePrivate
 };
 
 #define GET_PRIVATE(store) \
-        G_TYPE_INSTANCE_GET_PRIVATE (store, \
-                                     GIMP_TYPE_CONTAINER_TREE_STORE, \
-                                     GimpContainerTreeStorePrivate)
+        ((GimpContainerTreeStorePrivate *) gimp_container_tree_store_get_instance_private ((GimpContainerTreeStore *) (store)))
 
 
 static void   gimp_container_tree_store_constructed     (GObject                *object);
@@ -77,8 +75,8 @@ static void   gimp_container_tree_store_renderer_update (GimpViewRenderer       
                                                          GimpContainerTreeStore *store);
 
 
-G_DEFINE_TYPE (GimpContainerTreeStore, gimp_container_tree_store,
-               GTK_TYPE_TREE_STORE)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpContainerTreeStore, gimp_container_tree_store,
+                            GTK_TYPE_TREE_STORE)
 
 #define parent_class gimp_container_tree_store_parent_class
 
@@ -105,8 +103,6 @@ gimp_container_tree_store_class_init (GimpContainerTreeStoreClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpContainerTreeStorePrivate));
 }
 
 static void

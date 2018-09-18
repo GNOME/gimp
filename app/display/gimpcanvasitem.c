@@ -93,8 +93,7 @@ static gboolean         gimp_canvas_item_real_hit         (GimpCanvasItem  *item
                                                            gdouble          y);
 
 
-G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
-               GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasItem, gimp_canvas_item, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_canvas_item_parent_class
 
@@ -155,8 +154,6 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasItemPrivate));
 }
 
 static void
@@ -164,9 +161,7 @@ gimp_canvas_item_init (GimpCanvasItem *item)
 {
   GimpCanvasItemPrivate *private;
 
-  item->private = G_TYPE_INSTANCE_GET_PRIVATE (item,
-                                               GIMP_TYPE_CANVAS_ITEM,
-                                               GimpCanvasItemPrivate);
+  item->private = gimp_canvas_item_get_instance_private (item);
   private = item->private;
 
   private->shell            = NULL;

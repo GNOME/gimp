@@ -128,7 +128,7 @@ static void       gimp_meter_mask_sample            (GimpMeter      *meter,
                                                      gdouble        *result);
 
 
-G_DEFINE_TYPE (GimpMeter, gimp_meter, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMeter, gimp_meter, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_meter_parent_class
 
@@ -222,16 +222,12 @@ gimp_meter_class_init (GimpMeterClass *klass)
                                                         TRUE, &(GimpRGB) {},
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpMeterPrivate));
 }
 
 static void
 gimp_meter_init (GimpMeter *meter)
 {
-  meter->priv = G_TYPE_INSTANCE_GET_PRIVATE (meter,
-                                             GIMP_TYPE_METER,
-                                             GimpMeterPrivate);
+  meter->priv = gimp_meter_get_instance_private (meter);
 
   g_mutex_init (&meter->priv->mutex);
 

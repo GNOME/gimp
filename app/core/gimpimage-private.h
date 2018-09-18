@@ -30,8 +30,6 @@ struct _GimpImageFlushAccumulator
 };
 
 
-typedef struct _GimpImagePrivate GimpImagePrivate;
-
 struct _GimpImagePrivate
 {
   gint               ID;                    /*  provides a unique ID         */
@@ -131,10 +129,7 @@ struct _GimpImagePrivate
   GimpImageFlushAccumulator  flush_accum;
 };
 
-#define GIMP_IMAGE_GET_PRIVATE(image) \
-        G_TYPE_INSTANCE_GET_PRIVATE (image, \
-                                     GIMP_TYPE_IMAGE, \
-                                     GimpImagePrivate)
+#define GIMP_IMAGE_GET_PRIVATE(image) (((GimpImage *) (image))->priv)
 
 void   gimp_image_take_mask (GimpImage   *image,
                              GimpChannel *mask);

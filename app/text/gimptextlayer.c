@@ -120,7 +120,7 @@ static void       gimp_text_layer_render_layout  (GimpTextLayer     *layer,
                                                   GimpTextLayout    *layout);
 
 
-G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
 
 #define parent_class gimp_text_layer_parent_class
 
@@ -184,8 +184,6 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
                             NULL, NULL,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
-
- g_type_class_add_private (klass, sizeof (GimpTextLayerPrivate));
 }
 
 static void
@@ -193,9 +191,7 @@ gimp_text_layer_init (GimpTextLayer *layer)
 {
   layer->text          = NULL;
   layer->text_parasite = NULL;
-  layer->private       = G_TYPE_INSTANCE_GET_PRIVATE (layer,
-                                                      GIMP_TYPE_TEXT_LAYER,
-                                                      GimpTextLayerPrivate);
+  layer->private       = gimp_text_layer_get_instance_private (layer);
 }
 
 static void

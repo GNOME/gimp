@@ -91,9 +91,7 @@ struct _GimpTemplatePrivate
   guint64            initial_size;
 };
 
-#define GET_PRIVATE(template) G_TYPE_INSTANCE_GET_PRIVATE (template, \
-                                                           GIMP_TYPE_TEMPLATE, \
-                                                           GimpTemplatePrivate)
+#define GET_PRIVATE(template) ((GimpTemplatePrivate *) gimp_template_get_instance_private ((GimpTemplate *) (template)))
 
 
 static void      gimp_template_finalize     (GObject      *object);
@@ -110,6 +108,7 @@ static void      gimp_template_notify       (GObject      *object,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpTemplate, gimp_template, GIMP_TYPE_VIEWABLE,
+                         G_ADD_PRIVATE (GimpTemplate)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_template_parent_class
@@ -245,8 +244,6 @@ gimp_template_class_init (GimpTemplateClass *klass)
                            NULL,
                            NULL,
                            GIMP_PARAM_STATIC_STRINGS);
-
-  g_type_class_add_private (klass, sizeof (GimpTemplatePrivate));
 }
 
 static void

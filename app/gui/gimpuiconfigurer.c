@@ -84,7 +84,8 @@ static void              gimp_ui_configurer_configure_for_multi_window  (GimpUIC
 static GimpImageWindow * gimp_ui_configurer_get_uber_window             (GimpUIConfigurer  *ui_configurer);
 
 
-G_DEFINE_TYPE (GimpUIConfigurer, gimp_ui_configurer, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpUIConfigurer, gimp_ui_configurer,
+                            GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_ui_configurer_parent_class
 
@@ -102,16 +103,12 @@ gimp_ui_configurer_class_init (GimpUIConfigurerClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-  g_type_class_add_private (klass,
-                            sizeof (GimpUIConfigurerPrivate));
 }
 
 static void
 gimp_ui_configurer_init (GimpUIConfigurer *ui_configurer)
 {
-  ui_configurer->p = G_TYPE_INSTANCE_GET_PRIVATE (ui_configurer,
-                                                  GIMP_TYPE_UI_CONFIGURER,
-                                                  GimpUIConfigurerPrivate);
+  ui_configurer->p = gimp_ui_configurer_get_instance_private (ui_configurer);
 }
 
 static void

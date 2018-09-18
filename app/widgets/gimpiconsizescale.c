@@ -54,9 +54,7 @@ struct _GimpIconSizeScalePrivate
 };
 
 #define GET_PRIVATE(scale) \
-        G_TYPE_INSTANCE_GET_PRIVATE (scale, \
-                                     GIMP_TYPE_ICON_SIZE_SCALE, \
-                                     GimpIconSizeScalePrivate)
+        ((GimpIconSizeScalePrivate *) gimp_icon_size_scale_get_instance_private ((GimpIconSizeScale *) (scale)))
 
 
 static void   gimp_icon_size_scale_constructed    (GObject           *object);
@@ -90,7 +88,8 @@ static gboolean gimp_icon_size_scale_change_value    (GtkRange        *range,
                                                       GimpGuiConfig   *config);
 
 
-G_DEFINE_TYPE (GimpIconSizeScale, gimp_icon_size_scale, GIMP_TYPE_FRAME)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpIconSizeScale, gimp_icon_size_scale,
+                            GIMP_TYPE_FRAME)
 
 #define parent_class gimp_icon_size_scale_parent_class
 
@@ -111,8 +110,6 @@ gimp_icon_size_scale_class_init (GimpIconSizeScaleClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (object_class, sizeof (GimpIconSizeScalePrivate));
 }
 
 static void

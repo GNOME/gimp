@@ -169,7 +169,8 @@ static void     gimp_tool_compass_update_angle    (GimpToolCompass        *compa
                                                    gboolean                flip);
 
 
-G_DEFINE_TYPE (GimpToolCompass, gimp_tool_compass, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolCompass, gimp_tool_compass,
+                            GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_compass_parent_class
 
@@ -273,16 +274,12 @@ gimp_tool_compass_class_init (GimpToolCompassClass *klass)
                                    g_param_spec_double ("unit-angle", NULL, NULL,
                                                         -G_PI, G_PI, 0.0,
                                                         GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpToolCompassPrivate));
 }
 
 static void
 gimp_tool_compass_init (GimpToolCompass *compass)
 {
-  compass->private = G_TYPE_INSTANCE_GET_PRIVATE (compass,
-                                                  GIMP_TYPE_TOOL_COMPASS,
-                                                  GimpToolCompassPrivate);
+  compass->private = gimp_tool_compass_get_instance_private (compass);
 
   compass->private->point = -1;
 }

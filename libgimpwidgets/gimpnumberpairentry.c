@@ -161,7 +161,8 @@ static gchar *      gimp_number_pair_entry_strdup_number_pair_string
 
 
 
-G_DEFINE_TYPE (GimpNumberPairEntry, gimp_number_pair_entry, GTK_TYPE_ENTRY)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpNumberPairEntry, gimp_number_pair_entry,
+                            GTK_TYPE_ENTRY)
 
 
 #define parent_class gimp_number_pair_entry_parent_class
@@ -297,8 +298,6 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                       GIMP_TYPE_ASPECT_TYPE,
                                                       GIMP_ASPECT_SQUARE,
                                                       GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpNumberPairEntryPrivate));
 }
 
 static void
@@ -306,9 +305,7 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
 {
   GimpNumberPairEntryPrivate *priv;
 
-  entry->priv = G_TYPE_INSTANCE_GET_PRIVATE (entry,
-                                             GIMP_TYPE_NUMBER_PAIR_ENTRY,
-                                             GimpNumberPairEntryPrivate);
+  entry->priv = gimp_number_pair_entry_get_instance_private (entry);
 
   priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
 

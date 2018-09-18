@@ -96,7 +96,7 @@ static gboolean gimp_tool_widget_real_key_press     (GimpToolWidget  *widget,
                                                      GdkEventKey     *kevent);
 
 
-G_DEFINE_TYPE (GimpToolWidget, gimp_tool_widget, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpToolWidget, gimp_tool_widget, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_tool_widget_parent_class
 
@@ -194,16 +194,12 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_CANVAS_ITEM,
                                                         GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpToolWidgetPrivate));
 }
 
 static void
 gimp_tool_widget_init (GimpToolWidget *widget)
 {
-  widget->private = G_TYPE_INSTANCE_GET_PRIVATE (widget,
-                                                 GIMP_TYPE_TOOL_WIDGET,
-                                                 GimpToolWidgetPrivate);
+  widget->private = gimp_tool_widget_get_instance_private (widget);
 }
 
 static void

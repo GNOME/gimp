@@ -89,9 +89,7 @@ struct _GimpSettingsBoxPrivate
   GFile         *last_file;
 };
 
-#define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
-                                                       GIMP_TYPE_SETTINGS_BOX, \
-                                                       GimpSettingsBoxPrivate)
+#define GET_PRIVATE(item) ((GimpSettingsBoxPrivate *) gimp_settings_box_get_instance_private ((GimpSettingsBox *) (item)))
 
 
 static void      gimp_settings_box_constructed   (GObject           *object);
@@ -145,7 +143,7 @@ static void  gimp_settings_box_truncate_list     (GimpSettingsBox   *box,
                                                   gint               max_recent);
 
 
-G_DEFINE_TYPE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_settings_box_parent_class
 
@@ -263,8 +261,6 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
                                                         G_TYPE_FILE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-
-  g_type_class_add_private (klass, sizeof (GimpSettingsBoxPrivate));
 }
 
 static void

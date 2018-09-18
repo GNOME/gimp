@@ -44,8 +44,8 @@ static void   gimp_color_profile_view_constructed  (GObject *object);
 static void   gimp_color_profile_view_finalize     (GObject *object);
 
 
-G_DEFINE_TYPE (GimpColorProfileView, gimp_color_profile_view,
-               GTK_TYPE_TEXT_VIEW);
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorProfileView, gimp_color_profile_view,
+                            GTK_TYPE_TEXT_VIEW)
 
 #define parent_class gimp_color_profile_view_parent_class
 
@@ -57,16 +57,12 @@ gimp_color_profile_view_class_init (GimpColorProfileViewClass *klass)
 
   object_class->constructed = gimp_color_profile_view_constructed;
   object_class->finalize    = gimp_color_profile_view_finalize;
-
-  g_type_class_add_private (klass, sizeof (GimpColorProfileViewPrivate));
 }
 
 static void
 gimp_color_profile_view_init (GimpColorProfileView *view)
 {
-  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
-                                            GIMP_TYPE_COLOR_PROFILE_VIEW,
-                                            GimpColorProfileViewPrivate);
+  view->priv = gimp_color_profile_view_get_instance_private (view);
 }
 
 static void

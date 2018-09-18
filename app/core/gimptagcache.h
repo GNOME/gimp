@@ -33,14 +33,14 @@
 #define GIMP_TAG_CACHE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG_CACHE, GimpTagCacheClass))
 
 
-typedef struct _GimpTagCacheClass  GimpTagCacheClass;
-typedef struct _GimpTagCachePriv   GimpTagCachePriv;
+typedef struct _GimpTagCacheClass   GimpTagCacheClass;
+typedef struct _GimpTagCachePrivate GimpTagCachePrivate;
 
 struct _GimpTagCache
 {
-  GimpObject        parent_instance;
+  GimpObject           parent_instance;
 
-  GimpTagCachePriv *priv;
+  GimpTagCachePrivate *priv;
 };
 
 struct _GimpTagCacheClass

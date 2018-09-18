@@ -126,7 +126,9 @@ static void     gimp_color_wheel_destroy_transform (GimpColorWheel     *wheel);
 
 static guint wheel_signals[LAST_SIGNAL];
 
-G_DEFINE_DYNAMIC_TYPE (GimpColorWheel, gimp_color_wheel, GTK_TYPE_WIDGET)
+G_DEFINE_DYNAMIC_TYPE_EXTENDED (GimpColorWheel, gimp_color_wheel,
+                                GTK_TYPE_WIDGET, 0,
+                                G_ADD_PRIVATE_DYNAMIC (GimpColorWheel))
 
 #define parent_class gimp_color_wheel_parent_class
 
@@ -211,8 +213,6 @@ gimp_color_wheel_class_init (GimpColorWheelClass *class)
   gtk_binding_entry_add_signal (binding_set, GDK_KP_Left, 0,
                                 "move", 1,
                                 G_TYPE_ENUM, GTK_DIR_LEFT);
-
-  g_type_class_add_private (object_class, sizeof (GimpColorWheelPrivate));
 }
 
 static void
@@ -223,10 +223,7 @@ gimp_color_wheel_class_finalize (GimpColorWheelClass *klass)
 static void
 gimp_color_wheel_init (GimpColorWheel *wheel)
 {
-  GimpColorWheelPrivate *priv;
-
-  priv = G_TYPE_INSTANCE_GET_PRIVATE (wheel, GIMP_TYPE_COLOR_WHEEL,
-                                      GimpColorWheelPrivate);
+  GimpColorWheelPrivate *priv = gimp_color_wheel_get_instance_private (wheel);
 
   wheel->priv = priv;
 

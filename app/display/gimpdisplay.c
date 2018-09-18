@@ -83,9 +83,7 @@ struct _GimpDisplayPrivate
 };
 
 #define GIMP_DISPLAY_GET_PRIVATE(display) \
-        G_TYPE_INSTANCE_GET_PRIVATE (display, \
-                                     GIMP_TYPE_DISPLAY, \
-                                     GimpDisplayPrivate)
+        ((GimpDisplayPrivate *) gimp_display_get_instance_private ((GimpDisplay *) (display)))
 
 
 /*  local function prototypes  */
@@ -131,6 +129,7 @@ static void     gimp_display_paint_area             (GimpDisplay         *displa
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplay, gimp_display, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpDisplay)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_progress_iface_init))
 
@@ -169,8 +168,6 @@ gimp_display_class_init (GimpDisplayClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_DISPLAY_SHELL,
                                                         GIMP_PARAM_READABLE));
-
-  g_type_class_add_private (klass, sizeof (GimpDisplayPrivate));
 }
 
 static void

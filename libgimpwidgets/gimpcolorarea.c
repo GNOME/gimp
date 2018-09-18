@@ -74,9 +74,7 @@ struct _GimpColorAreaPrivate
 };
 
 #define GET_PRIVATE(obj) \
-        G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                                     GIMP_TYPE_COLOR_AREA, \
-                                     GimpColorAreaPrivate)
+        ((GimpColorAreaPrivate *) gimp_color_area_get_instance_private ((GimpColorArea *) (obj)))
 
 
 static void      gimp_color_area_dispose       (GObject            *object);
@@ -127,7 +125,8 @@ static void  gimp_color_area_create_transform   (GimpColorArea    *area);
 static void  gimp_color_area_destroy_transform  (GimpColorArea    *area);
 
 
-G_DEFINE_TYPE (GimpColorArea, gimp_color_area, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpColorArea, gimp_color_area,
+                            GTK_TYPE_DRAWING_AREA)
 
 #define parent_class gimp_color_area_parent_class
 
@@ -227,8 +226,6 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                                                          "Whether to draw a thin border in the foreground color around the area",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpColorAreaPrivate));
 }
 
 static void

@@ -129,7 +129,8 @@ static void     gimp_zoom_preview_get_source_area (GimpPreview     *preview,
                                                    gint            *h);
 
 
-G_DEFINE_TYPE (GimpZoomPreview, gimp_zoom_preview, GIMP_TYPE_SCROLLED_PREVIEW)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpZoomPreview, gimp_zoom_preview,
+                            GIMP_TYPE_SCROLLED_PREVIEW)
 
 #define parent_class gimp_zoom_preview_parent_class
 
@@ -157,8 +158,6 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
   preview_class->set_cursor  = gimp_zoom_preview_set_cursor;
   preview_class->transform   = gimp_zoom_preview_transform;
   preview_class->untransform = gimp_zoom_preview_untransform;
-
-  g_type_class_add_private (object_class, sizeof (GimpZoomPreviewPrivate));
 
   /**
    * GimpZoomPreview:drawable:
@@ -210,9 +209,7 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
 static void
 gimp_zoom_preview_init (GimpZoomPreview *preview)
 {
-  preview->priv = G_TYPE_INSTANCE_GET_PRIVATE (preview,
-                                               GIMP_TYPE_ZOOM_PREVIEW,
-                                               GimpZoomPreviewPrivate);
+  preview->priv = gimp_zoom_preview_get_instance_private (preview);
 
   g_signal_connect (GIMP_PREVIEW (preview)->area, "size-allocate",
                     G_CALLBACK (gimp_zoom_preview_size_allocate),

@@ -50,9 +50,7 @@ struct _GimpCanvasBufferPreviewPrivate
 
 
 #define GET_PRIVATE(transform_preview) \
-        G_TYPE_INSTANCE_GET_PRIVATE (transform_preview, \
-                                     GIMP_TYPE_CANVAS_BUFFER_PREVIEW, \
-                                     GimpCanvasBufferPreviewPrivate)
+        ((GimpCanvasBufferPreviewPrivate *) gimp_canvas_buffer_preview_get_instance_private ((GimpCanvasBufferPreview *) (transform_preview)))
 
 
 /*  local function prototypes  */
@@ -73,8 +71,8 @@ static void             gimp_canvas_buffer_preview_compute_bounds (GimpCanvasIte
                                                                    cairo_rectangle_int_t *bounds);
 
 
-G_DEFINE_TYPE (GimpCanvasBufferPreview, gimp_canvas_buffer_preview,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasBufferPreview, gimp_canvas_buffer_preview,
+                            GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_buffer_preview_parent_class
 
@@ -96,8 +94,6 @@ gimp_canvas_buffer_preview_class_init (GimpCanvasBufferPreviewClass *klass)
                                                         NULL, NULL,
                                                         GEGL_TYPE_BUFFER,
                                                         GIMP_PARAM_READWRITE));
-
-  g_type_class_add_private (klass, sizeof (GimpCanvasBufferPreviewPrivate));
 }
 
 static void

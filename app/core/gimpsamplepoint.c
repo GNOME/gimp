@@ -54,7 +54,8 @@ static void   gimp_sample_point_set_property (GObject      *object,
                                               GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpSamplePoint, gimp_sample_point, GIMP_TYPE_AUX_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpSamplePoint, gimp_sample_point,
+                            GIMP_TYPE_AUX_ITEM)
 
 
 static void
@@ -87,16 +88,12 @@ gimp_sample_point_class_init (GimpSamplePointClass *klass)
                          GIMP_TYPE_COLOR_PICK_MODE,
                          GIMP_COLOR_PICK_MODE_PIXEL,
                          0);
-
-  g_type_class_add_private (klass, sizeof (GimpSamplePointPrivate));
 }
 
 static void
 gimp_sample_point_init (GimpSamplePoint *sample_point)
 {
-  sample_point->priv = G_TYPE_INSTANCE_GET_PRIVATE (sample_point,
-                                                    GIMP_TYPE_SAMPLE_POINT,
-                                                    GimpSamplePointPrivate);
+  sample_point->priv = gimp_sample_point_get_instance_private (sample_point);
 }
 
 static void
