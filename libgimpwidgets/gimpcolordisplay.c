@@ -92,7 +92,6 @@ static void  gimp_color_display_set_color_managed (GimpColorDisplay *display,
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorDisplay, gimp_color_display, G_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpColorDisplay)
-                         G_ADD_PRIVATE (GimpColorDisplay)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
 
 #define parent_class gimp_color_display_parent_class
