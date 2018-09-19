@@ -33,6 +33,8 @@ Plug-ins:
 
   - Port all plug-ins to the new iterator API in GEGL.
   - Improve automatic detection of HEIC/HEIF files.
+  - Improve RawTherapee discovery by looking up registry key (should
+    become useful with RawTherapee 5.5 and more).
 
 Usability:
 
