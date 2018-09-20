@@ -2,3 +2,13 @@
 /Makefile.in
 /*.pyc
 /*.pyo
+/colorxhtml/colorxhtml.py
+/file-openraster/file-openraster.py
+/foggify/foggify.py
+/gradients-save-as-css/gradients-save-as-css.py
+/histogram-export/histogram-export.py
+/palette-offset/palette-offset.py
+/palette-sort/palette-sort.py
+/palette-to-gradient/palette-to-gradient.py
+/py-slice/py-slice.py
+/python-eval/python-eval.py
