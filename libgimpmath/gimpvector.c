@@ -346,7 +346,7 @@ gimp_vector2_sub_val (GimpVector2 vector1,
  * @vector2: a pointer to the second #GimpVector2.
  *
  * Computes the inner (dot) product of two 2D vectors.
- * This product is zero if and only if the two vectors are orthognal.
+ * This product is zero if and only if the two vectors are orthogonal.
  *
  * Returns: The inner product.
  **/
@@ -380,7 +380,7 @@ gimp_vector2_inner_product_val (GimpVector2 vector1,
  * @vector2: a pointer to the second #GimpVector2.
  *
  * Compute the cross product of two vectors. The result is a
- * #GimpVector2 which is orthognal to both @vector1 and @vector2. If
+ * #GimpVector2 which is orthogonal to both @vector1 and @vector2. If
  * @vector1 and @vector2 are parallel, the result will be the nul
  * vector.
  *
@@ -816,7 +816,7 @@ gimp_vector3_sub_val (GimpVector3 vector1,
  * @vector2: a pointer to the second #GimpVector3.
  *
  * Computes the inner (dot) product of two 3D vectors. This product
- * is zero if and only if the two vectors are orthognal.
+ * is zero if and only if the two vectors are orthogonal.
  *
  * Returns: The inner product.
  **/
@@ -854,7 +854,7 @@ gimp_vector3_inner_product_val (GimpVector3 vector1,
  * @vector2: a pointer to the second #GimpVector3.
  *
  * Compute the cross product of two vectors. The result is a
- * #GimpVector3 which is orthognal to both @vector1 and @vector2. If
+ * #GimpVector3 which is orthogonal to both @vector1 and @vector2. If
  * @vector1 and @vector2 and parallel, the result will be the nul
  * vector.
  *
