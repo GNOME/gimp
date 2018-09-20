@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-05-30 20:39+0000\n"
-"PO-Revision-Date: 2018-06-04 12:13+0300\n"
-"Last-Translator: Spingos Dimitris(Σπίγγος Δημήτρης) <dmtrs32@gmail.com>\n"
+"POT-Creation-Date: 2018-09-16 14:43+0000\n"
+"PO-Revision-Date: 2018-09-20 07:28+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -51,12 +51,12 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
-#: ../plug-ins/common/file-jp2-load.c:949
+#: ../plug-ins/common/file-heif.c:935 ../plug-ins/common/file-jp2-load.c:949
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
 #: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
-#: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1270
+#: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1270
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:594
 #: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
@@ -69,10 +69,9 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
-#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
+#: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -103,7 +102,7 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/metadata/metadata-editor.c:765
 #: ../plug-ins/metadata/metadata-editor.c:5648
 #: ../plug-ins/metadata/metadata-editor.c:5683
-#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:486
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:497
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "Α_κύρωση"
@@ -117,18 +116,18 @@ msgstr "Α_κύρωση"
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
-#: ../plug-ins/common/file-pdf-load.c:708 ../plug-ins/common/file-svg.c:728
-#: ../plug-ins/common/file-wmf.c:506 ../plug-ins/common/film.c:1271
-#: ../plug-ins/common/filter-pack.c:1207 ../plug-ins/common/fractal-trace.c:712
-#: ../plug-ins/common/grid.c:648 ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/jigsaw.c:2398 ../plug-ins/common/max-rgb.c:262
-#: ../plug-ins/common/newsprint.c:1184 ../plug-ins/common/nl-filter.c:1022
-#: ../plug-ins/common/oilify.c:786 ../plug-ins/common/photocopy.c:841
-#: ../plug-ins/common/qbist.c:817 ../plug-ins/common/sharpen.c:477
-#: ../plug-ins/common/smooth-palette.c:439 ../plug-ins/common/softglow.c:633
-#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
-#: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:374
-#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/file-heif.c:936 ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-svg.c:728 ../plug-ins/common/file-wmf.c:516
+#: ../plug-ins/common/film.c:1271 ../plug-ins/common/filter-pack.c:1207
+#: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:648
+#: ../plug-ins/common/hot.c:595 ../plug-ins/common/jigsaw.c:2398
+#: ../plug-ins/common/max-rgb.c:262 ../plug-ins/common/newsprint.c:1184
+#: ../plug-ins/common/nl-filter.c:1022 ../plug-ins/common/oilify.c:786
+#: ../plug-ins/common/photocopy.c:841 ../plug-ins/common/qbist.c:817
+#: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:439
+#: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
+#: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
+#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/van-gogh-lic.c:648
 #: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
 #: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
@@ -458,8 +457,8 @@ msgstr "Κά_θετος"
 #: ../plug-ins/file-bmp/bmp-load.c:734 ../plug-ins/file-exr/file-exr.c:258
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
-#: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1833 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-image-res-load.c:1040
+#: ../plug-ins/file-psd/psd-load.c:1852 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -489,7 +488,7 @@ msgstr "Απλή θόλωση, γρήγορη αλλά όχι πολύ ισχυ�
 msgid "_Blur"
 msgstr "_Θόλωση"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:592
+#: ../plug-ins/common/blur.c:175
 msgid "Blurring"
 msgstr "Θόλωση"
 
@@ -1082,7 +1081,7 @@ msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1608
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1599
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1117,7 +1116,7 @@ msgstr "Φόρτωση παραμέτρων περιηγητή CML"
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
-#: ../plug-ins/file-jpeg/jpeg-load.c:541 ../plug-ins/file-psd/psd-load.c:138
+#: ../plug-ins/file-jpeg/jpeg-load.c:541 ../plug-ins/file-psd/psd-load.c:139
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:924
@@ -2068,7 +2067,7 @@ msgid "R_ecursive"
 msgstr "Ανα_δρομικό"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
+#: ../plug-ins/common/nl-filter.c:1092
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -2157,7 +2156,7 @@ msgstr "Νέον"
 msgid "Neon Detection"
 msgstr "Ανίχνευση νέου"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:888
+#: ../plug-ins/common/edge-neon.c:749
 msgid "_Amount:"
 msgstr "Ποσότητ_α:"
 
@@ -2267,19 +2266,19 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
+#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
 #: ../plug-ins/common/file-heif.c:341 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
 #: ../plug-ins/common/file-png.c:919 ../plug-ins/common/file-pnm.c:566
 #: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
 #: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
-#: ../plug-ins/common/file-wmf.c:984 ../plug-ins/common/file-xbm.c:740
+#: ../plug-ins/common/file-wmf.c:1014 ../plug-ins/common/file-xbm.c:740
 #: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
 #: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
-#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:313 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2356,10 +2355,10 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
+#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:711
+#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1316
 #: ../plug-ins/common/file-heif.c:622 ../plug-ins/common/file-html-table.c:237
-#: ../plug-ins/common/file-pat.c:535 ../plug-ins/common/file-pcx.c:743
+#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:743
 #: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1575
 #: ../plug-ins/common/file-pnm.c:1246 ../plug-ins/common/file-ps.c:1236
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
@@ -2367,7 +2366,7 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:310
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:285
-#: ../plug-ins/file-psd/psd-save.c:1579 ../plug-ins/file-sgi/sgi.c:579
+#: ../plug-ins/file-psd/psd-save.c:1570 ../plug-ins/file-sgi/sgi.c:579
 #: ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2489,48 +2488,55 @@ msgstr "Αδυναμία λειτουργίας σε άγνωστους τύπο
 msgid "GIMP brush"
 msgstr "Πινέλο GIMP"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:425
+#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
 "Άκυρα δεδομένα κεφαλίδας σε '%s': πλάτος=%lu, ύψος=%lu, ψηφιολέξεις=%lu"
 
-#: ../plug-ins/common/file-gbr.c:412 ../plug-ins/common/file-gbr.c:444
-#: ../plug-ins/common/file-gbr.c:455
+#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
+#: ../plug-ins/common/file-gbr.c:456
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Μη υποστηριζόμενη μορφή πινέλου"
 
-#: ../plug-ins/common/file-gbr.c:469
+#: ../plug-ins/common/file-gbr.c:468
+#, c-format
+msgid "Invalid header data in '%s': Brush name is too long: %lu"
+msgstr ""
+"Άκυρα δεδομένα κεφαλίδας στο '%s': το όνομα του πινέλου είναι πολύ μεγάλο: "
+"%lu"
+
+#: ../plug-ins/common/file-gbr.c:482
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Σφάλμα στο αρχείο πινέλου GIMP '%s'"
 
-#: ../plug-ins/common/file-gbr.c:477
+#: ../plug-ins/common/file-gbr.c:490
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Άκυρο αλφαριθμητικό UTF-8 σε αρχείο πινέλου '%s'."
 
 #
-#: ../plug-ins/common/file-gbr.c:483 ../plug-ins/common/file-gih.c:508
-#: ../plug-ins/common/file-gih.c:1207
+#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
+#: ../plug-ins/common/file-gih.c:1218 ../plug-ins/common/file-pat.c:398
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Ανώνυμο"
 
-#: ../plug-ins/common/file-gbr.c:800
+#: ../plug-ins/common/file-gbr.c:813
 msgid "Brush"
 msgstr "Πινέλο"
 
 #
-#: ../plug-ins/common/file-gbr.c:816 ../plug-ins/common/file-gih.c:933
-#: ../plug-ins/common/file-pat.c:624 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:829 ../plug-ins/common/file-gih.c:944
+#: ../plug-ins/common/file-pat.c:641 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Περιγραφή:"
 
 #
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:828 ../plug-ins/common/grid.c:799
+#: ../plug-ins/common/file-gbr.c:841 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "Διάστιχο:"
 
@@ -2682,59 +2688,64 @@ msgstr "Το προεπιλεγμένο σχόλιο περιορίζεται σ
 msgid "GIMP brush (animated)"
 msgstr "Πινέλο GIMP (κινούμενο)"
 
-#: ../plug-ins/common/file-gih.c:584
+#: ../plug-ins/common/file-gih.c:502
+#, c-format
+msgid "Brush name is too long: %lu"
+msgstr "Το όνομα του πινέλου είναι υπερβολικά μεγάλο: %lu"
+
+#: ../plug-ins/common/file-gih.c:595
 msgid "GIMP brush file appears to be corrupted."
 msgstr "Το αρχείο πινέλου GIMP φαίνεται κατεστραμμένο."
 
-#: ../plug-ins/common/file-gih.c:915
+#: ../plug-ins/common/file-gih.c:926
 msgid "Brush Pipe"
 msgstr "Πινέλο GIMP"
 
 #
-#: ../plug-ins/common/file-gih.c:948
+#: ../plug-ins/common/file-gih.c:959
 msgid "Spacing (percent):"
 msgstr "Διάκενο (ποσοστό):"
 
 #
-#: ../plug-ins/common/file-gih.c:1003
+#: ../plug-ins/common/file-gih.c:1014
 msgid "Pixels"
 msgstr "Εικονοστοιχεία"
 
 #
-#: ../plug-ins/common/file-gih.c:1008
+#: ../plug-ins/common/file-gih.c:1019
 msgid "Cell size:"
 msgstr "Μέγεθος κελιού:"
 
-#: ../plug-ins/common/file-gih.c:1021
+#: ../plug-ins/common/file-gih.c:1032
 msgid "Number of cells:"
 msgstr "Αριθμός κελιών:"
 
-#: ../plug-ins/common/file-gih.c:1046
+#: ../plug-ins/common/file-gih.c:1057
 msgid " Rows of "
 msgstr "Γραμμές του"
 
-#: ../plug-ins/common/file-gih.c:1058
+#: ../plug-ins/common/file-gih.c:1069
 msgid " Columns on each layer"
 msgstr "Στήλες σε κάθε στρώση"
 
-#: ../plug-ins/common/file-gih.c:1062
+#: ../plug-ins/common/file-gih.c:1073
 msgid " (Width Mismatch!) "
 msgstr "(Παράταιρο πλάτος!)"
 
-#: ../plug-ins/common/file-gih.c:1066
+#: ../plug-ins/common/file-gih.c:1077
 msgid " (Height Mismatch!) "
 msgstr "(Παράταιρο ύψος!)"
 
 #
-#: ../plug-ins/common/file-gih.c:1071
+#: ../plug-ins/common/file-gih.c:1082
 msgid "Display as:"
 msgstr "Εμφάνιση ως:"
 
-#: ../plug-ins/common/file-gih.c:1082
+#: ../plug-ins/common/file-gih.c:1093
 msgid "Dimension:"
 msgstr "Διάσταση:"
 
-#: ../plug-ins/common/file-gih.c:1158
+#: ../plug-ins/common/file-gih.c:1169
 msgid "Ranks:"
 msgstr "Τάξεις:"
 
@@ -2795,30 +2806,30 @@ msgstr "Αποτυχία κωδικοποίησης εικόνας HEIF: %s"
 msgid "Writing HEIF image failed: %s"
 msgstr "Αποτυχία εγγραφής εικόνας HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:785
+#: ../plug-ins/common/file-heif.c:786
 msgid "primary"
 msgstr "κύριος"
 
-#: ../plug-ins/common/file-heif.c:921
+#: ../plug-ins/common/file-heif.c:931
 msgid "Load HEIF Image"
 msgstr "Φόρτωση εικόνας HEIF"
 
-#: ../plug-ins/common/file-heif.c:935
+#: ../plug-ins/common/file-heif.c:945
 msgid "Select Image"
 msgstr "Επιλογή εικόνας"
 
-#: ../plug-ins/common/file-heif.c:1048
+#: ../plug-ins/common/file-heif.c:1088
 msgid "HEIF"
 msgstr "HEIF"
 
 #. Create the lossless checkbox
-#: ../plug-ins/common/file-heif.c:1055
+#: ../plug-ins/common/file-heif.c:1095
 #: ../plug-ins/file-webp/file-webp-dialog.c:124
 msgid "Lossless"
 msgstr "Χωρίς απώλειες"
 
 #
-#: ../plug-ins/common/file-heif.c:1059
+#: ../plug-ins/common/file-heif.c:1099
 msgid "Quality:"
 msgstr "Ποιότητα:"
 
@@ -2998,7 +3009,7 @@ msgstr "Μη υποστηριζόμενο JPEG 2000%s '%s' με %d συστατ�
 msgid "Color space:"
 msgstr "Χρωματικός χώρος:"
 
-#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:965
+#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:995
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Αδυναμία ανοίγματος '%s' για ανάγνωση"
@@ -3188,12 +3199,19 @@ msgstr "Κίνηση MNG"
 msgid "GIMP pattern"
 msgstr "μοτίβο GIMP"
 
-#: ../plug-ins/common/file-pat.c:380
+#: ../plug-ins/common/file-pat.c:373
+#, c-format
+msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+msgstr ""
+"Άκυρα δεδομένα κεφαλίδας στο '%s': το όνομα του μοτίβου είναι πολύ μεγάλο: "
+"%lu"
+
+#: ../plug-ins/common/file-pat.c:392
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Άκυρο αλφαριθμητικό UTF-8 σε αρχείο μοτίβου '%s'."
 
-#: ../plug-ins/common/file-pat.c:609
+#: ../plug-ins/common/file-pat.c:626
 msgid "Pattern"
 msgstr "Μοτίβο"
 
@@ -3212,13 +3230,13 @@ msgid "'%s' is not a PCX file"
 msgstr "Το '%s' δεν είναι αρχείο PCX"
 
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/file-bmp/bmp-load.c:723
-#: ../plug-ins/file-psd/psd-load.c:306
+#: ../plug-ins/file-psd/psd-load.c:309
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Μη υποστηριζόμενη ή άκυρη εικόνα πλάτους: %d"
 
 #: ../plug-ins/common/file-pcx.c:416 ../plug-ins/file-bmp/bmp-load.c:729
-#: ../plug-ins/file-psd/psd-load.c:298
+#: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Μη υποστηριζόμενη ή άκυρη εικόνα ύψους: %d"
@@ -3354,7 +3372,7 @@ msgstr "Χρήση εξ_ομάλυνσης"
 #
 #: ../plug-ins/common/file-pdf-load.c:1644
 #: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
-#: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
+#: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
 msgstr "εικονοστοιχεία/%a"
@@ -3460,8 +3478,8 @@ msgstr "Εικόνα PNG"
 
 #: ../plug-ins/common/file-png.c:768
 #, c-format
-msgid "Error loading PNG file: %s"
-msgstr "Σφάλμα φόρτωσης αρχείου PNG: %s"
+msgid "Error loading PNG file: %s\n"
+msgstr "Σφάλμα κατά τη φόρτωση αρχείου PNG: %s\n"
 
 #: ../plug-ins/common/file-png.c:885
 #, c-format
@@ -3672,7 +3690,7 @@ msgstr "Απόδοση"
 
 #. Resolution
 #: ../plug-ins/common/file-ps.c:3451 ../plug-ins/common/file-svg.c:910
-#: ../plug-ins/common/file-wmf.c:694
+#: ../plug-ins/common/file-wmf.c:704
 msgid "Resolution:"
 msgstr "Ανάλυση:"
 
@@ -4276,7 +4294,7 @@ msgstr "Απόδοση SVG"
 msgid "Rendered SVG"
 msgstr "Απόδοση SVG"
 
-#: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:359
+#: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:369
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
@@ -4295,24 +4313,24 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Απόδοση κλιμακώσιμων διανυσματικών γραφικών"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:571
+#: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:581
 #: ../plug-ins/common/grid.c:733
 msgid "Width:"
 msgstr "Πλάτος:"
 
-#: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:577
+#: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:587
 msgid "Height:"
 msgstr "Ύψος:"
 
-#: ../plug-ins/common/file-svg.c:869 ../plug-ins/common/file-wmf.c:653
+#: ../plug-ins/common/file-svg.c:869 ../plug-ins/common/file-wmf.c:663
 msgid "_X ratio:"
 msgstr "Αναλογία _X:"
 
-#: ../plug-ins/common/file-svg.c:891 ../plug-ins/common/file-wmf.c:675
+#: ../plug-ins/common/file-svg.c:891 ../plug-ins/common/file-wmf.c:685
 msgid "_Y ratio:"
 msgstr "Αναλογία _Y:"
 
-#: ../plug-ins/common/file-svg.c:905 ../plug-ins/common/file-wmf.c:689
+#: ../plug-ins/common/file-svg.c:905 ../plug-ins/common/file-wmf.c:699
 msgid "Constrain aspect ratio"
 msgstr "Περιορισμός λόγου θέασης"
 
@@ -4377,7 +4395,7 @@ msgstr "Πάνω αριστερά"
 msgid "Microsoft WMF file"
 msgstr "Αρχείο Microsoft WMF"
 
-#: ../plug-ins/common/file-wmf.c:353
+#: ../plug-ins/common/file-wmf.c:363
 msgid ""
 "WMF file does not\n"
 "specify a size!"
@@ -4385,11 +4403,11 @@ msgstr ""
 "Το αρχείο WMF δεν\n"
 "καθορίζει μέγεθος!"
 
-#: ../plug-ins/common/file-wmf.c:501
+#: ../plug-ins/common/file-wmf.c:511
 msgid "Render Windows Metafile"
 msgstr "Απόδοση μετααρχείου Windows"
 
-#: ../plug-ins/common/file-wmf.c:998
+#: ../plug-ins/common/file-wmf.c:1028
 msgid "Rendered WMF"
 msgstr "Απόδοση WMF"
 
@@ -6609,28 +6627,6 @@ msgstr "Επεξεργαστής Μονάδων"
 msgid "_Refresh"
 msgstr "Ανανέ_ωση"
 
-#: ../plug-ins/common/unsharp-mask.c:132
-msgid "The most widely useful method for sharpening an image"
-msgstr "Η πιο πλατιά χρήσιμη μέθοδος για όξυνση μιας εικόνας"
-
-#: ../plug-ins/common/unsharp-mask.c:142
-msgid "_Unsharp Mask (legacy)..."
-msgstr "Μάσκα από_ξυνσης (παλιό)..."
-
-#: ../plug-ins/common/unsharp-mask.c:694
-msgid "Merging"
-msgstr "Συγχώνευση"
-
-#: ../plug-ins/common/unsharp-mask.c:838
-msgid "Unsharp Mask"
-msgstr "Μάσκα απόξυνσης"
-
-#: ../plug-ins/common/unsharp-mask.c:901
-#: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:566
-msgid "_Threshold:"
-msgstr "_Κατώφλι:"
-
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
 msgstr "Βαν Γκογκ (LIC)"
@@ -7458,98 +7454,98 @@ msgstr "Εικόνα JPEG"
 msgid "Export Preview"
 msgstr "Προεπισκόπηση εξαγωγής"
 
-#: ../plug-ins/file-psd/psd-load.c:219
+#: ../plug-ins/file-psd/psd-load.c:222
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Σφάλμα φόρτωσης αρχείου PSD: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:274
+#: ../plug-ins/file-psd/psd-load.c:277
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Το αρχείο εγγράφου photoshop δεν είναι ένα έγκυρο"
 
-#: ../plug-ins/file-psd/psd-load.c:281
+#: ../plug-ins/file-psd/psd-load.c:284
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Μη υποστηριζόμενη έκδοση τύπου αρχείου: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:288
+#: ../plug-ins/file-psd/psd-load.c:291
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Υπερβολικά κανάλια σε αρχείο: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:315
+#: ../plug-ins/file-psd/psd-load.c:318
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος εικόνας: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:327
+#: ../plug-ins/file-psd/psd-load.c:330
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Μη υποστηριζόμενη κατάσταση χρώματος: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:353
+#: ../plug-ins/file-psd/psd-load.c:356
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Μη υποστηριζόμενη βάθος δυαδικού: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:387 ../plug-ins/file-psd/psd-load.c:397
-#: ../plug-ins/file-psd/psd-load.c:608 ../plug-ins/file-psd/psd-load.c:830
+#: ../plug-ins/file-psd/psd-load.c:390 ../plug-ins/file-psd/psd-load.c:400
+#: ../plug-ins/file-psd/psd-load.c:611 ../plug-ins/file-psd/psd-load.c:833
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Το αρχείο είναι κατεστραμμένο!"
 
-#: ../plug-ins/file-psd/psd-load.c:536
+#: ../plug-ins/file-psd/psd-load.c:539
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Υπερβολικά κανάλια σε στρώση: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:544
+#: ../plug-ins/file-psd/psd-load.c:547
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Μη υποστηριζόμενο ή άκυρο ύψος στρώσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:552
+#: ../plug-ins/file-psd/psd-load.c:555
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Μη υποστηριζόμενο ή άκυρο πλάτος στρώσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:561
+#: ../plug-ins/file-psd/psd-load.c:564
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος στρώσης: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:747
+#: ../plug-ins/file-psd/psd-load.c:750
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Μη υποστηριζόμενο ή άκυρο ύψος μάσκας στρώσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:755
+#: ../plug-ins/file-psd/psd-load.c:758
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Μη υποστηριζόμενο ή άκυρο πλάτος μάσκας στρώσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:764
+#: ../plug-ins/file-psd/psd-load.c:767
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος μάσκας στρώσης: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1326 ../plug-ins/file-psd/psd-load.c:1808
+#: ../plug-ins/file-psd/psd-load.c:1329 ../plug-ins/file-psd/psd-load.c:1826
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Μη υποστηριζόμενη κατάσταση συμπίεσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1904
+#: ../plug-ins/file-psd/psd-load.c:1954
 msgid "Extra"
 msgstr "Πρόσθετο"
 
-#: ../plug-ins/file-psd/psd-load.c:2083
+#: ../plug-ins/file-psd/psd-load.c:2133
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος καναλιού"
 
-#: ../plug-ins/file-psd/psd-load.c:2152
+#: ../plug-ins/file-psd/psd-load.c:2202
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
@@ -7558,7 +7554,7 @@ msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Σφάλμα: Αδυναμία μετατροπής τύπου εικόνας βάσης GIMP σε κατάσταση PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1572
+#: ../plug-ins/file-psd/psd-save.c:1563
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7567,7 +7563,7 @@ msgstr ""
 "Αδυναμία εξαγωγής του '%s'. Η μορφή αρχείου PSD δεν υποστηρίζει εικόνες που "
 "είναι πιο πλατιές ή πιο ψηλές από 30.000 εικονοστοιχεία."
 
-#: ../plug-ins/file-psd/psd-save.c:1593
+#: ../plug-ins/file-psd/psd-save.c:1584
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7580,9 +7576,13 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "Αναπάντεχο τέλος αρχείου"
 
-#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:145
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:167
 msgid "Photoshop image"
 msgstr "Εικόνα Photoshop"
+
+#: ../plug-ins/file-psd/psd.c:130
+msgid "Photoshop image (merged)"
+msgstr "Εικόνα Photoshop (συγχωνευμένη)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -10723,10 +10723,10 @@ msgstr "Το εγχειρίδιο χρήστη του GIMP δεν είναι δ�
 #: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"http://docs.gimp.org/"
+"https://docs.gimp.org/"
 msgstr ""
-"Παρακαλώ εγκαταστήστε το πρόσθετο πακέτο βοήθειας ή χρησιμοποιήστε το "
-"δικτυακό εγχειρίδιο χρήστη στο http://docs.gimp.org/."
+"Παρακαλούμε, εγκαταστήστε το πρόσθετο πακέτο βοήθειας ή χρησιμοποιήστε το "
+"δικτυακό εγχειρίδιο χρήστη στο http://docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -11636,6 +11636,11 @@ msgstr "Αλληλεπίδραση:"
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "Γειτο_νική περιοχή"
+
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:566
+msgid "_Threshold:"
+msgstr "_Κατώφλι:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
@@ -12743,102 +12748,102 @@ msgstr "Δημιουργία εικόνας από μια περιοχή της 
 msgid "_Screenshot..."
 msgstr "_Στιγμιότυπο..."
 
-#: ../plug-ins/screenshot/screenshot.c:482
+#: ../plug-ins/screenshot/screenshot.c:493
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Στιγμιότυπο"
 
-#: ../plug-ins/screenshot/screenshot.c:487
+#: ../plug-ins/screenshot/screenshot.c:498
 msgid "S_nap"
 msgstr "Πρό_σδεση"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:514
+#: ../plug-ins/screenshot/screenshot.c:525
 msgid "Area"
 msgstr "Περιοχή"
 
-#: ../plug-ins/screenshot/screenshot.c:526
+#: ../plug-ins/screenshot/screenshot.c:537
 msgid "Take a screenshot of a single _window"
 msgstr "Λή_ψη στιγμιότυπου ενός μονού παραθύρου"
 
-#: ../plug-ins/screenshot/screenshot.c:549
+#: ../plug-ins/screenshot/screenshot.c:560
 msgid "Include window _decoration"
 msgstr "Συμπερίληψη _διακόσμησης παραθύρου"
 
-#: ../plug-ins/screenshot/screenshot.c:570
-#: ../plug-ins/screenshot/screenshot.c:615
+#: ../plug-ins/screenshot/screenshot.c:581
+#: ../plug-ins/screenshot/screenshot.c:626
 msgid "Include _mouse pointer"
 msgstr "Συ_μπερίληψη δείκτη ποντικιού"
 
-#: ../plug-ins/screenshot/screenshot.c:592
+#: ../plug-ins/screenshot/screenshot.c:603
 msgid "Take a screenshot of the entire _screen"
 msgstr "Λήψη _στιγμιότυπου της συνολικής οθόνης"
 
-#: ../plug-ins/screenshot/screenshot.c:643
+#: ../plug-ins/screenshot/screenshot.c:654
 msgid "Select a _region to grab"
 msgstr "Επιλογή πε_ριοχή σύλληψης"
 
-#: ../plug-ins/screenshot/screenshot.c:661
+#: ../plug-ins/screenshot/screenshot.c:672
 msgid "Delay"
 msgstr "Καθυστέρηση"
 
-#: ../plug-ins/screenshot/screenshot.c:681
+#: ../plug-ins/screenshot/screenshot.c:692
 msgid "Selection delay: "
 msgstr "Καθυστέρηση επιλογής:"
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:700
-#: ../plug-ins/screenshot/screenshot.c:763
+#: ../plug-ins/screenshot/screenshot.c:711
+#: ../plug-ins/screenshot/screenshot.c:774
 msgid "seconds"
 msgstr "δευτερόλεπτα"
 
-#: ../plug-ins/screenshot/screenshot.c:714
+#: ../plug-ins/screenshot/screenshot.c:725
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Μετά την καθυστέρηση, σύρσιμο του ποντικιού σας για επιλογή της περιοχής "
 "στιγμιότυπου."
 
-#: ../plug-ins/screenshot/screenshot.c:718
+#: ../plug-ins/screenshot/screenshot.c:729
 msgid "Click in a window to snap it after delay."
 msgstr "Πατήστε σε ένα παράθυρο για το φωτογραφίσετε μετά την καθυστέρηση."
 
-#: ../plug-ins/screenshot/screenshot.c:723
+#: ../plug-ins/screenshot/screenshot.c:734
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Στο τέλος της καθυστέρησης, κλικ σε παράθυρο για λήψη του."
 
-#: ../plug-ins/screenshot/screenshot.c:744
+#: ../plug-ins/screenshot/screenshot.c:755
 msgid "Screenshot delay: "
 msgstr "Καθυστέρηση λήψης στιγμιότυπου:"
 
-#: ../plug-ins/screenshot/screenshot.c:775
+#: ../plug-ins/screenshot/screenshot.c:786
 msgid "After the delay, the screenshot is taken."
 msgstr "Μετά την καθυστέρηση, το στιγμιότυπο ελήφθη."
 
-#: ../plug-ins/screenshot/screenshot.c:777
+#: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr ""
 "Μόλις επιλεγεί η περιοχή, θα καταγραφεί μετά από αυτήν την καθυστέρηση."
 
-#: ../plug-ins/screenshot/screenshot.c:782
+#: ../plug-ins/screenshot/screenshot.c:793
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 "Μόλις επιλεγεί το παράθυρο θα καταγραφεί μετά από αυτήν την καθυστέρηση."
 
-#: ../plug-ins/screenshot/screenshot.c:788
+#: ../plug-ins/screenshot/screenshot.c:799
 msgid "After the delay, the active window will be captured."
 msgstr "Μετά την καθυστέρηση, θα καταγραφεί το ενεργό παράθυρο."
 
 #
-#: ../plug-ins/screenshot/screenshot.c:795
+#: ../plug-ins/screenshot/screenshot.c:806
 msgid "Color Profile"
 msgstr "Κατατομή (προφίλ) χρώματος"
 
-#: ../plug-ins/screenshot/screenshot.c:800
+#: ../plug-ins/screenshot/screenshot.c:811
 msgid "Tag image with _monitor profile"
 msgstr "Εικόνα ετικέτας με κατατομή (προφίλ) ο_θόνης"
 
-#: ../plug-ins/screenshot/screenshot.c:804
+#: ../plug-ins/screenshot/screenshot.c:815
 msgid "Convert image to sR_GB"
 msgstr "Μετατροπή εικόνας σε sR_GB"
 
@@ -13143,6 +13148,18 @@ msgstr "_Σαρωτής/κάμερα..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
+
+#~ msgid "The most widely useful method for sharpening an image"
+#~ msgstr "Η πιο πλατιά χρήσιμη μέθοδος για όξυνση μιας εικόνας"
+
+#~ msgid "_Unsharp Mask (legacy)..."
+#~ msgstr "Μάσκα από_ξυνσης (παλιό)..."
+
+#~ msgid "Merging"
+#~ msgstr "Συγχώνευση"
+
+#~ msgid "Unsharp Mask"
+#~ msgstr "Μάσκα απόξυνσης"
 
 #~ msgid "Couldn't convert YUV JP2 image '%s' to RGB."
 #~ msgstr "Αδυναμία μετατροπής εικόνας σε YUV JP2 '%s' προς RGB."
