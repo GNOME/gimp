@@ -456,16 +456,6 @@ gimp_parallel_run_async_set_n_threads (gint n_threads)
 {
   gint i;
 
-  /* FIXME:  when the number of GEGL threads is 1, GEGL disables some thread-
-   * safety mechanisms, such that, in particular, concurrent access to the same
-   * buffer is not safe.  ultimately, it should be possible to configure GEGL
-   * to remain thread-safe independently of the number of threads it uses, but
-   * for now, we simply disable parallel asynchronous operations when the
-   * number of threads is 1.
-   */
-  if (n_threads == 1)
-    n_threads = 0;
-
   n_threads = CLAMP (n_threads, 0, GIMP_PARALLEL_RUN_ASYNC_MAX_THREADS);
 
   if (n_threads > gimp_parallel_run_async_n_threads) /* need more threads */
