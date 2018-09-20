@@ -2,3 +2,5 @@
 /Makefile.in
 /*.pyc
 /*.pyo
+/__init__.py
+/*/*.py
