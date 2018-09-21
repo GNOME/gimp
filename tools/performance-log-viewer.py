@@ -67,6 +67,11 @@ def format_color (color):
 def is_bright_color (color):
     return max (tuple (color)[0:3]) > 0.5
 
+def get_basename (path):
+    match = re.fullmatch (".*[\\\\/](.+?)[\\\\/]?", path)
+
+    return match[1] if match else path
+
 VariableType = namedtuple ("VariableType",
                            ("parse", "format", "format_numeric"))
 
@@ -1604,12 +1609,20 @@ class BacktraceViewer (Gtk.Box):
         store = self.FrameStore ()
         self.frame_store = store
 
-        tree = Gtk.TreeView (model = store)
+        tree = Gtk.TreeView (model = store, has_tooltip = True)
         scrolled.add (tree)
         tree.set_search_column (store.FUNCTION)
         tree.show ()
 
         tree.connect ("row-activated", self.frames_row_activated)
+        tree.connect ("query-tooltip", self.frames_query_tooltip)
+
+        def format_filename_col (tree_col, cell, model, iter, col):
+            object = model[iter][col]
+
+            cell.set_property ("text", get_basename (object) if object else "")
+
+        self.tooltip_columns = {}
 
         col = Gtk.TreeViewColumn (title = "#")
         tree.append_column (col)
@@ -1628,12 +1641,13 @@ class BacktraceViewer (Gtk.Box):
         col.add_attribute (cell, "text", self.FrameStore.ADDRESS)
 
         col = Gtk.TreeViewColumn (title = "Object")
+        self.tooltip_columns[col] = store.OBJECT
         tree.append_column (col)
         col.set_resizable (True)
 
         cell = Gtk.CellRendererText ()
         col.pack_start (cell, False)
-        col.add_attribute (cell, "text", self.FrameStore.OBJECT)
+        col.set_cell_data_func (cell, format_filename_col, store.OBJECT)
 
         col = Gtk.TreeViewColumn (title = "Function")
         tree.append_column (col)
@@ -1652,12 +1666,13 @@ class BacktraceViewer (Gtk.Box):
         col.add_attribute (cell, "text", self.FrameStore.OFFSET)
 
         col = Gtk.TreeViewColumn (title = "Source")
+        self.tooltip_columns[col] = store.SOURCE
         tree.append_column (col)
         col.set_resizable (True)
 
         cell = Gtk.CellRendererText ()
         col.pack_start (cell, False)
-        col.add_attribute (cell, "text", self.FrameStore.SOURCE)
+        col.set_cell_data_func (cell, format_filename_col, store.SOURCE)
 
         col = Gtk.TreeViewColumn (title = "Line")
         tree.append_column (col)
@@ -1666,6 +1681,9 @@ class BacktraceViewer (Gtk.Box):
         cell = Gtk.CellRendererText (xalign = 1)
         col.pack_start (cell, False)
         col.add_attribute (cell, "text", self.FrameStore.LINE)
+
+        col = Gtk.TreeViewColumn ()
+        tree.append_column (col)
 
         selection.connect ("change-complete", self.selection_change_complete)
 
@@ -1782,6 +1800,38 @@ class BacktraceViewer (Gtk.Box):
         selection.select (sel)
 
         selection.change_complete ()
+
+    def frames_query_tooltip (self, tree, x, y, keyboard_mode, tooltip):
+        hit, x, y, model, path, iter =  tree.get_tooltip_context (x, y,
+                                                                  keyboard_mode)
+
+        if hit:
+            column = -1
+
+            if keyboard_mode:
+                cursor_path, cursor_col = tree.get_cursor ()
+
+                if path.compare (cursor_path) == 0:
+                    column = self.tooltip_columns[cursor_col]
+            else:
+                for col in self.tooltip_columns:
+                    area = tree.get_cell_area (path, col)
+
+                    if x >= area.x and x < area.x + area.width and \
+                       y >= area.y and y < area.y + area.height:
+                        column = self.tooltip_columns[col]
+
+                        break
+
+            if column >= 0:
+                value = model[iter][column]
+
+                if value:
+                    tooltip.set_text (str (value))
+
+                    return True
+
+        return False
 
 class ProfileViewer (Gtk.ScrolledWindow):
     class Profile (Gtk.Box):
