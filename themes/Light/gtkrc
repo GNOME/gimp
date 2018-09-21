@@ -315,6 +315,7 @@ style "tlsog-default-style"
 }
 
 class "GtkWidget" style "tlsog-default-style"
+class "GtkMenuItem" style "tlsog-default-style"
 
 ###########################################################
 

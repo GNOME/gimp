@@ -315,6 +315,7 @@ style "gimp-dark-default-style"
 }
 
 class "GtkWidget" style "gimp-dark-default-style"
+class "GtkMenuItem" style "gimp-dark-default-style"
 
 ###########################################################
 

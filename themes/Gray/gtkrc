@@ -315,6 +315,7 @@ style "sogg-default-style"
 }
 
 class "GtkWidget" style "sogg-default-style"
+class "GtkMenuItem" style "sogg-default-style"
 
 ###########################################################
 
