@@ -1839,7 +1839,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
             header.show ()
 
             if not id:
-                button = Gtk.Button (tooltip_text = "Graph direction")
+                button = Gtk.Button (tooltip_text = "Call-graph direction")
                 header.pack_end (button)
                 button.show ()
 
@@ -2021,9 +2021,9 @@ class ProfileViewer (Gtk.ScrolledWindow):
         def update_ui (self):
             if not self.id:
                 if self.direction == self.Direction.CALLEES:
-                    icon_name = "go-up-symbolic"
+                    icon_name = "format-indent-more-symbolic"
                 else:
-                    icon_name = "go-down-symbolic"
+                    icon_name = "format-indent-less-symbolic"
 
                 self.direction_image.set_from_icon_name (icon_name,
                                                          Gtk.IconSize.BUTTON)
