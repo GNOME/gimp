@@ -425,28 +425,29 @@ class FindSamplesPopover (Gtk.Popover):
 
         self.radios = []
 
-        radio = Gtk.RadioButton.new_with_label (None, "Replace")
+        radio = Gtk.RadioButton.new_with_mnemonic (None, "_Replace")
         self.radios.append ((radio, SelectionOp.REPLACE))
         vbox2.pack_start (radio, False, False, 0)
         radio.show ()
 
-        radio = Gtk.RadioButton.new_with_label_from_widget (radio, "Add")
+        radio = Gtk.RadioButton.new_with_mnemonic_from_widget (radio, "_Add")
         self.radios.append ((radio, SelectionOp.ADD))
         vbox2.pack_start (radio, False, False, 0)
         radio.show ()
 
-        radio = Gtk.RadioButton.new_with_label_from_widget (radio, "Subtract")
+        radio = Gtk.RadioButton.new_with_mnemonic_from_widget (radio, "_Subtract")
         self.radios.append ((radio, SelectionOp.SUBTRACT))
         vbox2.pack_start (radio, False, False, 0)
         radio.show ()
 
-        radio = Gtk.RadioButton.new_with_label_from_widget (radio, "Intersect")
+        radio = Gtk.RadioButton.new_with_mnemonic_from_widget (radio, "_Intersect")
         self.radios.append ((radio, SelectionOp.INTERSECT))
         vbox2.pack_start (radio, False, False, 0)
         radio.show ()
 
-        button = Gtk.Button (label = "Find", halign = Gtk.Align.CENTER)
+        button = Gtk.Button.new_with_mnemonic ("_Find")
         vbox.pack_start (button, False, False, 0)
+        button.set_halign (Gtk.Align.CENTER)
         button.show ()
 
         button.connect ("clicked", self.find_samples)
@@ -477,7 +478,8 @@ class FindSamplesPopover (Gtk.Popover):
                 def thread (id, state = None):
                     for thread in samples[i].backtrace or []:
                         if (type (id) == int and id == thread.id) or \
-                           (type (id) == str and re.match (id, thread.name)):
+                           (type (id) == str and thread.name and \
+                            re.fullmatch (id, thread.name)):
                             if state is None or \
                                re.fullmatch (state, str (thread.state)):
                                 return True
@@ -2226,16 +2228,19 @@ class LogViewer (Gtk.Window):
         self.set_titlebar (header)
         header.show ()
 
-        button = Gtk.Button.new_from_icon_name ("edit-find-symbolic",
-                                                Gtk.IconSize.BUTTON)
+        button = Gtk.MenuButton ()
         header.pack_end (button)
         button.set_tooltip_text ("Find samples")
         button.show ()
 
+        image = Gtk.Image.new_from_icon_name ("edit-find-symbolic",
+                                              Gtk.IconSize.BUTTON)
+        button.add (image)
+        image.show ()
+
         popover = FindSamplesPopover (relative_to = button)
         self.find_popover = popover
-
-        button.connect ("clicked", lambda *args: self.find_popover.popup ())
+        button.set_popover (popover)
 
         paned = Gtk.Paned (orientation = Gtk.Orientation.VERTICAL)
         self.paned = paned
