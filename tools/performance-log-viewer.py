@@ -1899,6 +1899,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
             filter = Gtk.TreeModelFilter (child_model = store)
             filter.set_visible_column (store.VISIBLE)
             self.set_model (filter)
+            self.set_search_column (store.NAME)
 
             col = Gtk.TreeViewColumn (title = "ID")
             self.append_column (col)
