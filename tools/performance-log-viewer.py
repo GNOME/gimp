@@ -1859,6 +1859,144 @@ class BacktraceViewer (Gtk.Box):
         return False
 
 class ProfileViewer (Gtk.ScrolledWindow):
+    class ThreadFilter (Gtk.TreeView):
+        class Store (Gtk.ListStore):
+            VISIBLE = 0
+            ID      = 1
+            NAME    = 2
+            STATE   = {list (ThreadState)[i]: 3 + i
+                       for i in range (len (ThreadState))}
+
+            def __init__ (self):
+                Gtk.ListStore.__init__ (self,
+                                        bool, int, str,
+                                        *(len (self.STATE) * (bool,)))
+
+                threads = list ({thread.id
+                                 for sample in samples
+                                 for thread in sample.backtrace or ()})
+                threads.sort ()
+
+                states = [state == ThreadState.RUNNING for state in self.STATE]
+
+                for id in threads:
+                    self.append ((False, id, None, *states))
+
+            def get_filter (self):
+                return {row[self.ID]: {state
+                                       for state, column in self.STATE.items ()
+                                       if row[column]}
+                        for row in self}
+
+        def __init__ (self, *args, **kwargs):
+            Gtk.TreeView.__init__ (self, *args, **kwargs)
+
+            self.needs_update = True
+
+            store = self.Store ()
+            self.store = store
+
+            filter = Gtk.TreeModelFilter (child_model = store)
+            filter.set_visible_column (store.VISIBLE)
+            self.set_model (filter)
+
+            col = Gtk.TreeViewColumn (title = "ID")
+            self.append_column (col)
+
+            cell = Gtk.CellRendererText (xalign = 1)
+            col.pack_start (cell, False)
+            col.add_attribute (cell, "text", store.ID)
+
+            col = Gtk.TreeViewColumn (title = "Name")
+            self.append_column (col)
+
+            cell = Gtk.CellRendererText ()
+            col.pack_start (cell, False)
+            col.add_attribute (cell, "text", store.NAME)
+
+            for state in store.STATE:
+                col = Gtk.TreeViewColumn (title = str (state))
+                col.column = store.STATE[state]
+                self.append_column (col)
+                col.set_alignment (0.5)
+                col.set_clickable (True)
+
+                def col_clicked (col):
+                    active = not all (row[col.column] for row in filter)
+
+                    for row in filter:
+                        row[col.column] = active
+
+                col.connect ("clicked", col_clicked)
+
+                cell = Gtk.CellRendererToggle ()
+                cell.column = store.STATE[state]
+                col.pack_start (cell, False)
+                col.add_attribute (cell, "active", store.STATE[state])
+
+                def cell_toggled (cell, path):
+                    store[path][cell.column] = not cell.get_property ("active")
+
+                cell.connect ("toggled", cell_toggled)
+
+            selection.connect ("change-complete",
+                               self.selection_change_complete)
+
+        def update (self):
+            if not self.needs_update:
+                return
+
+            self.needs_update = False
+
+            sel = selection.get_effective_selection ()
+
+            threads = {thread.id: thread.name
+                       for i in sel
+                       for thread in samples[i].backtrace or ()}
+
+            for row in self.store:
+                id = row[self.store.ID]
+
+                if id in threads:
+                    row[self.store.VISIBLE] = True
+                    row[self.store.NAME]    = threads[id]
+                else:
+                    row[self.store.VISIBLE] = False
+                    row[self.store.NAME]    = None
+
+        def do_map (self):
+            self.update ()
+
+            Gtk.TreeView.do_map (self)
+
+        def selection_change_complete (self, selection):
+            self.needs_update = True
+
+            if self.get_mapped ():
+                self.update ()
+
+    class ThreadPopover (Gtk.Popover):
+        def __init__ (self, *args, **kwargs):
+            Gtk.Popover.__init__ (self, *args, border_width = 4, **kwargs)
+
+            frame = Gtk.Frame (shadow_type = Gtk.ShadowType.IN)
+            self.add (frame)
+            frame.show ()
+
+            scrolled = Gtk.ScrolledWindow (
+                hscrollbar_policy        = Gtk.PolicyType.NEVER,
+                vscrollbar_policy        = Gtk.PolicyType.AUTOMATIC,
+                propagate_natural_height = True,
+                max_content_height       = 400
+            )
+            frame.add (scrolled)
+            scrolled.show ()
+
+            thread_filter = ProfileViewer.ThreadFilter ()
+            self.thread_filter = thread_filter
+            scrolled.add (thread_filter)
+            thread_filter.show ()
+
     class Profile (Gtk.Box):
         ProfileFrame = namedtuple ("ProfileFrame", ("sample", "stack", "i"))
 
@@ -1914,6 +2052,33 @@ class ProfileViewer (Gtk.ScrolledWindow):
             header.show ()
 
             if not id:
+                popover = ProfileViewer.ThreadPopover ()
+
+                thread_filter_store = popover.thread_filter.store
+
+                self.thread_filter_store = thread_filter_store
+                self.thread_filter       = thread_filter_store.get_filter ()
+
+                button = Gtk.MenuButton (popover = popover)
+                header.pack_end (button)
+                button.show ()
+
+                button.connect ("toggled", self.thread_filter_button_toggled)
+
+                hbox = Gtk.Box (orientation = Gtk.Orientation.HORIZONTAL,
+                                spacing     = 4)
+                button.add (hbox)
+                hbox.show ()
+
+                label = Gtk.Label ("Threads")
+                hbox.pack_start (label, False, False, 0)
+                label.show ()
+
+                image = Gtk.Image.new_from_icon_name ("pan-down-symbolic",
+                                                      Gtk.IconSize.BUTTON)
+                hbox.pack_start (image, False, False, 0)
+                image.show ()
+
                 button = Gtk.Button (tooltip_text = "Call-graph direction")
                 header.pack_end (button)
                 button.show ()
@@ -2020,7 +2185,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
             for i in selection.get_effective_selection ():
                 for thread in samples[i].backtrace or []:
-                    if thread.state == ThreadState.RUNNING:
+                    if thread.state in self.thread_filter[thread.id]:
                         thread_frames = thread.frames
 
                         if self.direction == self.Direction.CALLERS:
@@ -2161,6 +2326,15 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 self.subprofile = None
 
                 self.emit ("subprofile-removed", subprofile)
+
+        def thread_filter_button_toggled (self, button):
+            if not button.get_active ():
+                thread_filter = self.thread_filter_store.get_filter ()
+
+                if thread_filter != self.thread_filter:
+                    self.thread_filter = thread_filter
+
+                    self.update ()
 
         def direction_button_clicked (self, button):
             if self.direction == self.Direction.CALLEES:
