@@ -1369,7 +1369,7 @@ class InformationViewer (Gtk.ScrolledWindow):
             for element in info:
                 add_element (element)
 
-class VariablesViewer (Gtk.Box):
+class VariablesViewer (Gtk.ScrolledWindow):
     class Store (Gtk.ListStore):
         NAME        = 0
         COLOR       = 1
@@ -1397,21 +1397,17 @@ class VariablesViewer (Gtk.Box):
     def __init__ (self, *args, **kwargs):
         Gtk.Box.__init__ (self,
                           *args,
-                          orientation = Gtk.Orientation.VERTICAL,
+                          hscrollbar_policy = Gtk.PolicyType.AUTOMATIC,
+                          vscrollbar_policy = Gtk.PolicyType.AUTOMATIC,
                           **kwargs)
 
-        scroll = Gtk.ScrolledWindow (
-            hscrollbar_policy = Gtk.PolicyType.AUTOMATIC,
-            vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
-        )
-        self.pack_start (scroll, True, True, 0)
-        scroll.show ()
+        self.needs_update = True
 
         store = self.Store ()
         self.store = store
 
         tree = Gtk.TreeView (model = store)
-        scroll.add (tree)
+        self.add (tree)
         tree.show ()
 
         self.single_sample_cols = []
@@ -1457,9 +1453,12 @@ class VariablesViewer (Gtk.Box):
 
         selection.connect ("change-complete", self.selection_change_complete)
 
-        self.selection_change_complete (selection)
+    def update (self):
+        if not self.needs_update:
+            return
 
-    def selection_change_complete (self, selection):
+        self.needs_update = False
+
         sel   = selection.get_effective_selection ()
         n_sel = len (sel)
 
@@ -1506,6 +1505,17 @@ class VariablesViewer (Gtk.Box):
         for col in self.single_sample_cols: col.set_visible (n_sel == 1)
         for col in self.multi_sample_cols:  col.set_visible (n_sel > 1)
 
+    def do_map (self):
+        self.update ()
+
+        Gtk.ScrolledWindow.do_map (self)
+
+    def selection_change_complete (self, selection):
+        self.needs_update = True
+
+        if self.get_mapped ():
+            self.update ()
+
 class BacktraceViewer (Gtk.Box):
     class ThreadStore (Gtk.ListStore):
         INDEX = 0
@@ -1533,6 +1543,8 @@ class BacktraceViewer (Gtk.Box):
                           *args,
                           orientation = Gtk.Orientation.HORIZONTAL,
                           **kwargs)
+
+        self.needs_update = True
 
         vbox = Gtk.Box (orientation = Gtk.Orientation.VERTICAL)
         self.pack_start (vbox, False, False, 0)
@@ -1687,8 +1699,6 @@ class BacktraceViewer (Gtk.Box):
 
         selection.connect ("change-complete", self.selection_change_complete)
 
-        self.selection_change_complete (selection)
-
     @GObject.Property (type = bool, default = False)
     def available (self):
         sel = selection.get_effective_selection ()
@@ -1700,7 +1710,12 @@ class BacktraceViewer (Gtk.Box):
 
         return False
 
-    def selection_change_complete (self, selection):
+    def update (self):
+        if not self.needs_update or not self.available:
+            return
+
+        self.needs_update = False
+
         tid = None
 
         sel_rows = self.thread_tree.get_selection ().get_selected_rows ()[1]
@@ -1708,20 +1723,30 @@ class BacktraceViewer (Gtk.Box):
         if sel_rows:
             tid = self.thread_store[sel_rows[0]][self.ThreadStore.ID]
 
-        if self.available:
-            i, = selection.get_effective_selection ()
+        i, = selection.get_effective_selection ()
 
-            self.thread_store.clear ()
+        self.thread_store.clear ()
 
-            for t in range (len (samples[i].backtrace)):
-                thread = samples[i].backtrace[t]
+        for t in range (len (samples[i].backtrace)):
+            thread = samples[i].backtrace[t]
 
-                iter = self.thread_store.append (
-                    (t, thread.id, thread.name, str (thread.state))
-                )
+            iter = self.thread_store.append (
+                (t, thread.id, thread.name, str (thread.state))
+            )
 
-                if thread.id == tid:
-                    self.thread_tree.get_selection ().select_iter (iter)
+            if thread.id == tid:
+                self.thread_tree.get_selection ().select_iter (iter)
+
+    def do_map (self):
+        self.update ()
+
+        Gtk.Box.do_map (self)
+
+    def selection_change_complete (self, selection):
+        self.needs_update = True
+
+        if self.get_mapped ():
+            self.update ()
 
         self.notify ("available")
 
@@ -1968,7 +1993,8 @@ class ProfileViewer (Gtk.ScrolledWindow):
             col.set_cell_data_func (cell,
                                     format_percentage_col, store.INCLUSIVE)
 
-            self.update ()
+            if id:
+                self.update ()
 
         def update (self):
             self.remove_subprofile ()
@@ -2217,13 +2243,14 @@ class ProfileViewer (Gtk.ScrolledWindow):
         )
 
         self.adjustment_changed_handler = None
+        self.needs_update               = True
 
         profile = self.Profile ()
         self.root_profile = profile
         self.add (profile)
         profile.show ()
 
-        selection.connect ("change-complete", lambda *args: self.update ())
+        selection.connect ("change-complete", self.selection_change_complete)
 
         profile.connect ("subprofile-added", self.subprofile_added)
 
@@ -2237,8 +2264,23 @@ class ProfileViewer (Gtk.ScrolledWindow):
         return False
 
     def update (self):
-        if self.available:
-            self.root_profile.update ()
+        if not self.needs_update or not self.available:
+            return
+
+        self.needs_update = False
+
+        self.root_profile.update ()
+
+    def do_map (self):
+        self.update ()
+
+        Gtk.ScrolledWindow.do_map (self)
+
+    def selection_change_complete (self, selection):
+        self.needs_update = True
+
+        if self.get_mapped ():
+            self.update ()
 
         self.notify ("available")
 
