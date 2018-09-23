@@ -38,6 +38,7 @@ struct _GimpMeasureOptions
   GimpTransformOptions    parent_instance;
 
   GimpCompassOrientation  orientation;
+  gboolean                perspective_correction;
   gboolean                use_info_window;
 
   /*  options gui  */

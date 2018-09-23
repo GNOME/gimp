@@ -42,11 +42,7 @@ struct _GimpMeasureTool
   GimpToolWidget    *widget;
   GimpToolWidget    *grab_widget;
 
-  gboolean           supress_guides;
-
-  gint               n_points;
-  gint               x[3];
-  gint               y[3];
+  gboolean           suppress_guides;
 
   GimpToolGui       *gui;
   GtkWidget         *distance_label[2];
