@@ -1839,6 +1839,8 @@ AC_ARG_WITH(libbacktrace, [  --without-libbacktrace       build without libbackt
 
 have_libbacktrace=no
 if test "x$with_libbacktrace" != xno; then
+  have_libbacktrace=yes
+
   gimp_save_LIBS=$LIBS
   LIBS="$LIBS -lbacktrace"
 
