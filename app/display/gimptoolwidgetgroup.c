@@ -492,7 +492,7 @@ gimp_tool_widget_group_children_remove (GimpContainer       *container,
   if (! priv->focus_widget)
     {
       priv->focus_widget =
-        GIMP_TOOL_WIDGET (gimp_container_get_first_child (container));
+        GIMP_TOOL_WIDGET (gimp_container_get_last_child (container));
 
       if (priv->focus_widget)
         gimp_tool_widget_set_focus (priv->focus_widget, TRUE);
