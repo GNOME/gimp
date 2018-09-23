@@ -447,6 +447,13 @@ gimp_tool_widget_group_children_add (GimpContainer       *container,
   gimp_canvas_group_add_item (canvas_group,
                               gimp_tool_widget_get_item (child));
 
+  if (gimp_tool_widget_get_focus (child) && priv->focus_widget)
+    {
+      gimp_tool_widget_set_focus (priv->focus_widget, FALSE);
+
+      priv->focus_widget = NULL;
+    }
+
   if (! priv->focus_widget)
     {
       priv->focus_widget = child;
@@ -480,6 +487,15 @@ gimp_tool_widget_group_children_remove (GimpContainer       *container,
       gimp_tool_widget_leave_notify (child);
 
       priv->hover_widget = NULL;
+    }
+
+  if (! priv->focus_widget)
+    {
+      priv->focus_widget =
+        GIMP_TOOL_WIDGET (gimp_container_get_first_child (container));
+
+      if (priv->focus_widget)
+        gimp_tool_widget_set_focus (priv->focus_widget, TRUE);
     }
 
   gimp_canvas_group_remove_item (canvas_group,
