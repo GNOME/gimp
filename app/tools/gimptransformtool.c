@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
@@ -28,15 +29,20 @@
 #include "core/gimpdrawable-transform.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-item-list.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpprogress.h"
+#include "core/gimp-transform-resize.h"
 
 #include "vectors/gimpvectors.h"
 
 #include "display/gimpdisplay.h"
+
+#include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpmessagebox.h"
 
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
@@ -44,6 +50,14 @@
 
 #include "gimp-intl.h"
 
+
+/* the minimal ratio between the transformed item size and the image size,
+ * above which confirmation is required.
+ */
+#define MIN_CONFIRMATION_RATIO 10
+
+
+/*  local function prototypes  */
 
 static GeglBuffer * gimp_transform_tool_real_transform (GimpTransformTool  *tr_tool,
                                                         GimpItem           *item,
@@ -54,10 +68,16 @@ static GeglBuffer * gimp_transform_tool_real_transform (GimpTransformTool  *tr_t
                                                         gint               *new_offset_x,
                                                         gint               *new_offset_y);
 
+static gboolean     gimp_transform_tool_confirm        (GimpTransformTool  *tr_tool,
+                                                        GimpDisplay        *display);
+
 
 G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_transform_tool_parent_class
+
+
+/*  private functions  */
 
 
 static void
@@ -159,6 +179,164 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
 
   return ret;
 }
+
+static gboolean
+gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
+                             GimpDisplay       *display)
+{
+  GimpTransformOptions *options   = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpDisplayShell     *shell     = gimp_display_get_shell (display);
+  GimpImage            *image     = gimp_display_get_image (display);
+  GimpItem             *active_item;
+  gdouble               max_ratio = 0.0;
+
+  active_item = gimp_transform_tool_get_active_item (tr_tool, display);
+
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
+    {
+      GimpMatrix3    transform;
+      GeglRectangle  selection_bounds;
+      gboolean       selection_empty = TRUE;
+      GList         *items;
+      GList         *iter;
+
+      transform = tr_tool->transform;
+
+      if (options->direction == GIMP_TRANSFORM_BACKWARD)
+        gimp_matrix3_invert (&transform);
+
+      if (options->type == GIMP_TRANSFORM_TYPE_LAYER &&
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (active_item)))
+        {
+          selection_empty = ! gimp_item_bounds (
+            GIMP_ITEM (gimp_image_get_mask (image)),
+            &selection_bounds.x,     &selection_bounds.y,
+            &selection_bounds.width, &selection_bounds.height);
+        }
+
+      if (selection_empty && gimp_item_get_linked (active_item))
+        {
+          items = gimp_image_item_list_get_list (image,
+                                                 GIMP_ITEM_TYPE_ALL,
+                                                 GIMP_ITEM_SET_LINKED);
+        }
+      else
+        {
+          items = g_list_append (NULL, active_item);
+        }
+
+      for (iter = items; iter; iter = g_list_next (iter))
+        {
+          GimpItem            *item = iter->data;
+          GimpTransformResize  clip = options->clip;
+          GeglRectangle        orig_bounds;
+          GeglRectangle        new_bounds;
+
+          if (GIMP_IS_DRAWABLE (item))
+            {
+              if (selection_empty)
+                {
+                  gimp_item_get_offset (item, &orig_bounds.x, &orig_bounds.y);
+
+                  orig_bounds.width  = gimp_item_get_width  (item);
+                  orig_bounds.height = gimp_item_get_height (item);
+                }
+              else
+                {
+                  orig_bounds = selection_bounds;
+                }
+
+              clip = gimp_drawable_transform_get_effective_clip (
+                GIMP_DRAWABLE (item), NULL, clip);
+            }
+          else
+            {
+              gimp_item_bounds (item,
+                                &orig_bounds.x,     &orig_bounds.y,
+                                &orig_bounds.width, &orig_bounds.height);
+
+              clip = GIMP_TRANSFORM_RESIZE_ADJUST;
+            }
+
+          gimp_transform_resize_boundary (&transform, clip,
+
+                                          orig_bounds.x,
+                                          orig_bounds.y,
+                                          orig_bounds.x + orig_bounds.width,
+                                          orig_bounds.y + orig_bounds.height,
+
+                                          &new_bounds.x,
+                                          &new_bounds.y,
+                                          &new_bounds.width,
+                                          &new_bounds.height);
+
+          new_bounds.width  -= new_bounds.x;
+          new_bounds.height -= new_bounds.y;
+
+          if (new_bounds.width > orig_bounds.width)
+            {
+              max_ratio = MAX (max_ratio,
+                               (gdouble) new_bounds.width /
+                               (gdouble) gimp_image_get_width (image));
+            }
+
+          if (new_bounds.height > orig_bounds.height)
+            {
+              max_ratio = MAX (max_ratio,
+                               (gdouble) new_bounds.height /
+                               (gdouble) gimp_image_get_height (image));
+            }
+        }
+
+      g_list_free (items);
+    }
+
+  if (max_ratio > MIN_CONFIRMATION_RATIO)
+    {
+      GtkWidget *dialog;
+      gint       response;
+
+      dialog = gimp_message_dialog_new (_("Confirm Transformation"),
+                                        GIMP_ICON_DIALOG_WARNING,
+                                        GTK_WIDGET (shell),
+                                        GTK_DIALOG_MODAL |
+                                        GTK_DIALOG_DESTROY_WITH_PARENT,
+                                        gimp_standard_help_func, NULL,
+
+                                        _("_Cancel"),    GTK_RESPONSE_CANCEL,
+                                        _("_Transform"), GTK_RESPONSE_OK,
+
+                                        NULL);
+
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
+      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                         _("Transformation creates "
+                                           "a very large item."));
+
+      gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                 _("Applying the transformation will result "
+                                   "in an item that is over %g times larger "
+                                   "than the image."),
+                                   floor (max_ratio));
+
+      response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+      gtk_widget_destroy (dialog);
+
+      if (response != GTK_RESPONSE_OK)
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
+
+/*  public functions  */
+
 
 gboolean
 gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
@@ -446,6 +624,9 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
       /* No need to commit an identity transformation! */
       return TRUE;
     }
+
+  if (! gimp_transform_tool_confirm (tr_tool, display))
+    return FALSE;
 
   gimp_set_busy (display->gimp);
 
