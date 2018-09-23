@@ -67,19 +67,19 @@
 /*  public functions  */
 
 GeglBuffer *
-gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
-                                       GimpContext            *context,
-                                       GeglBuffer             *orig_buffer,
-                                       gint                    orig_offset_x,
-                                       gint                    orig_offset_y,
-                                       const GimpMatrix3      *matrix,
-                                       GimpTransformDirection  direction,
-                                       GimpInterpolationType   interpolation_type,
-                                       GimpTransformResize     clip_result,
-                                       GimpColorProfile      **buffer_profile,
-                                       gint                   *new_offset_x,
-                                       gint                   *new_offset_y,
-                                       GimpProgress           *progress)
+gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
+                                       GimpContext             *context,
+                                       GeglBuffer              *orig_buffer,
+                                       gint                     orig_offset_x,
+                                       gint                     orig_offset_y,
+                                       const GimpMatrix3       *matrix,
+                                       GimpTransformDirection   direction,
+                                       GimpInterpolationType    interpolation_type,
+                                       GimpTransformResize      clip_result,
+                                       GimpColorProfile       **buffer_profile,
+                                       gint                    *new_offset_x,
+                                       gint                    *new_offset_y,
+                                       GimpProgress            *progress)
 {
   GeglBuffer  *new_buffer;
   GimpMatrix3  m;
@@ -144,17 +144,17 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
 }
 
 GeglBuffer *
-gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
-                                     GimpContext         *context,
-                                     GeglBuffer          *orig_buffer,
-                                     gint                 orig_offset_x,
-                                     gint                 orig_offset_y,
-                                     GimpOrientationType  flip_type,
-                                     gdouble              axis,
-                                     gboolean             clip_result,
-                                     GimpColorProfile   **buffer_profile,
-                                     gint                *new_offset_x,
-                                     gint                *new_offset_y)
+gimp_drawable_transform_buffer_flip (GimpDrawable         *drawable,
+                                     GimpContext          *context,
+                                     GeglBuffer           *orig_buffer,
+                                     gint                  orig_offset_x,
+                                     gint                  orig_offset_y,
+                                     GimpOrientationType   flip_type,
+                                     gdouble               axis,
+                                     gboolean              clip_result,
+                                     GimpColorProfile    **buffer_profile,
+                                     gint                 *new_offset_x,
+                                     gint                 *new_offset_y)
 {
   const Babl         *format;
   GeglBuffer         *new_buffer;
