@@ -44,6 +44,10 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifdef HAVE_LIBBACKTRACE
+#include <backtrace.h>
+#endif
+
 #ifdef HAVE_LIBUNWIND
 #define UNW_LOCAL_ONLY
 #include <libunwind.h>
@@ -109,6 +113,10 @@ static struct sigaction  orig_action;
 static pid_t             blacklisted_threads[MAX_N_THREADS];
 static gint              n_blacklisted_threads;
 static GimpBacktrace    *handler_backtrace;
+
+#ifdef HAVE_LIBBACKTRACE
+static struct backtrace_state *backtrace_state;
+#endif
 
 static const gchar *blacklisted_thread_names[] =
 {
@@ -271,6 +279,9 @@ gimp_backtrace_signal_handler (gint signum)
 void
 gimp_backtrace_init (void)
 {
+#ifdef HAVE_LIBBACKTRACE
+  backtrace_state = backtrace_create_state (NULL, 0, NULL, NULL);
+#endif
 }
 
 gboolean
@@ -565,75 +576,115 @@ gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
   return backtrace->threads[thread].frames[frame];
 }
 
+#ifdef HAVE_LIBBACKTRACE
+static void
+gimp_backtrace_syminfo_callback (GimpBacktraceAddressInfo *info,
+                                 guintptr                  pc,
+                                 const gchar              *symname,
+                                 guintptr                  symval,
+                                 guintptr                  symsize)
+{
+  if (symname)
+    g_strlcpy (info->symbol_name, symname, sizeof (info->symbol_name));
+
+  info->symbol_address = symval;
+}
+
+static gint
+gimp_backtrace_pcinfo_callback (GimpBacktraceAddressInfo *info,
+                                guintptr                  pc,
+                                const gchar              *filename,
+                                gint                      lineno,
+                                const gchar              *function)
+{
+  if (function)
+    g_strlcpy (info->symbol_name, function, sizeof (info->symbol_name));
+
+  if (filename)
+    g_strlcpy (info->source_file, filename, sizeof (info->source_file));
+
+  info->source_line = lineno;
+
+  return 0;
+}
+#endif /* HAVE_LIBBACKTRACE */
+
 gboolean
 gimp_backtrace_get_address_info (guintptr                  address,
                                  GimpBacktraceAddressInfo *info)
 {
-  Dl_info dl_info;
+  Dl_info  dl_info;
+  gboolean result = FALSE;
 
   g_return_val_if_fail (info != NULL, FALSE);
 
-#ifdef HAVE_LIBUNWIND
-  {
-    unw_context_t context = {};
-    unw_cursor_t  cursor;
-    unw_word_t    offset;
+  info->object_name[0] = '\0';
 
-    if (dladdr ((gpointer) address, &dl_info) && dl_info.dli_fname)
-      {
-        g_strlcpy (info->object_name, dl_info.dli_fname,
-                   sizeof (info->object_name));
-      }
-    else
-      {
-        info->object_name[0] = '\0';
-      }
-
-    if (unw_init_local (&cursor, &context)         == 0 &&
-        unw_set_reg (&cursor, UNW_REG_IP, address) == 0 &&
-        unw_get_proc_name (&cursor,
-                           info->symbol_name, sizeof (info->symbol_name),
-                           &offset)                == 0)
-      {
-        info->symbol_address = address - offset;
-      }
-    else
-      {
-        info->symbol_name[0] = '\0';
-        info->symbol_address = 0;
-      }
-  }
-#else
-  if (! dladdr ((gpointer) address, &dl_info))
-    return FALSE;
-
-  if (dl_info.dli_fname)
-    {
-      g_strlcpy (info->object_name, dl_info.dli_fname,
-                 sizeof (info->object_name));
-    }
-  else
-    {
-      info->object_name[0] = '\0';
-    }
-
-  if (dl_info.dli_sname)
-    {
-      g_strlcpy (info->symbol_name, dl_info.dli_sname,
-                 sizeof (info->symbol_name));
-    }
-  else
-    {
-      info->symbol_name[0] = '\0';
-    }
-
-  info->symbol_address = (guintptr) dl_info.dli_saddr;
-#endif
+  info->symbol_name[0] = '\0';
+  info->symbol_address = 0;
 
   info->source_file[0] = '\0';
   info->source_line    = 0;
 
-  return TRUE;
+  if (dladdr ((gpointer) address, &dl_info))
+    {
+      if (dl_info.dli_fname)
+        {
+          g_strlcpy (info->object_name, dl_info.dli_fname,
+                     sizeof (info->object_name));
+        }
+
+      if (dl_info.dli_sname)
+        {
+          g_strlcpy (info->symbol_name, dl_info.dli_sname,
+                     sizeof (info->symbol_name));
+        }
+
+      info->symbol_address = (guintptr) dl_info.dli_saddr;
+
+      result = TRUE;
+    }
+
+#ifdef HAVE_LIBBACKTRACE
+  if (backtrace_state)
+    {
+      backtrace_syminfo (
+        backtrace_state, address,
+        (backtrace_syminfo_callback) gimp_backtrace_syminfo_callback,
+        NULL,
+        info);
+
+      backtrace_pcinfo (
+        backtrace_state, address,
+        (backtrace_full_callback) gimp_backtrace_pcinfo_callback,
+        NULL,
+        info);
+
+      result = TRUE;
+    }
+#endif /* HAVE_LIBBACKTRACE */
+
+#ifdef HAVE_LIBUNWIND
+  if (! info->symbol_name[0])
+    {
+      unw_context_t context = {};
+      unw_cursor_t  cursor;
+      unw_word_t    offset;
+
+      if (unw_init_local (&cursor, &context)         == 0 &&
+          unw_set_reg (&cursor, UNW_REG_IP, address) == 0 &&
+          unw_get_proc_name (&cursor,
+                             info->symbol_name, sizeof (info->symbol_name),
+                             &offset)                == 0)
+        {
+          info->symbol_address = address - offset;
+
+          result = TRUE;
+        }
+    }
+#endif /* HAVE_LIBUNWIND */
+
+  return result;
 }
 
 

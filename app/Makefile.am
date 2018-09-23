@@ -180,6 +180,7 @@ gimpconsoleldadd = \
 	$(Z_LIBS)						\
 	$(JSON_C_LIBS)						\
 	$(LIBMYPAINT_LIBS)					\
+	$(LIBBACKTRACE_LIBS)					\
 	$(LIBUNWIND_LIBS)					\
 	$(INTLLIBS)						\
 	$(RT_LIBS)						\

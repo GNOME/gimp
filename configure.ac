@@ -1831,6 +1831,43 @@ AC_SUBST(FILE_HEIF)
 AM_CONDITIONAL(HAVE_LIBHEIF, test "x$have_libheif" = xyes)
 
 
+########################
+# Check for libbacktrace
+########################
+
+AC_ARG_WITH(libbacktrace, [  --without-libbacktrace       build without libbacktrace support])
+
+have_libbacktrace=no
+if test "x$with_libbacktrace" != xno; then
+  gimp_save_LIBS=$LIBS
+  LIBS="$LIBS -lbacktrace"
+
+  AC_MSG_CHECKING([for LIBBACKTRACE])
+  AC_LINK_IFELSE(
+    [AC_LANG_PROGRAM(
+      [[#include <stddef.h>
+        #include <backtrace.h>
+        #include <backtrace-supported.h>
+
+        #if ! BACKTRACE_SUPPORTED
+        #error ! BACKTRACE_SUPPORTED
+        #endif
+      ]],
+      [[(void) backtrace_create_state (NULL, 0, NULL, NULL);]])],
+    [AC_MSG_RESULT([yes]); LIBBACKTRACE_LIBS='-lbacktrace'],
+    [AC_MSG_RESULT([no]); have_libbacktrace='no (libbacktrace is not found or not supported)'])
+
+  LIBS=$gimp_save_LIBS
+
+  AC_SUBST(LIBBACKTRACE_LIBS)
+fi
+
+if test "x$have_libbacktrace" = xyes; then
+  AC_DEFINE(HAVE_LIBBACKTRACE, 1,
+            [Define to 1 if libbacktrace is available])
+fi
+
+
 #####################
 # Check for libunwind
 #####################
@@ -1857,7 +1894,11 @@ fi
 
 detailed_backtraces=no
 if test "x$platform_linux" = xyes; then
-  detailed_backtraces=$have_libunwind
+  if test "x$have_libbacktrace" = xyes -o "x$have_libunwind" = xyes; then
+    detailed_backtraces=yes
+  else
+    detailed_backtraces='no (libbacktrace and libunwind are not found or not supported)'
+  fi
 elif test "x$platform_win32" = xyes; then
   detailed_backtraces=$enable_drmingw
 fi
