@@ -227,6 +227,8 @@ gimp_tool_widget_group_button_press (GimpToolWidget      *widget,
   GimpToolWidgetGroup        *group = GIMP_TOOL_WIDGET_GROUP (widget);
   GimpToolWidgetGroupPrivate *priv  = group->priv;
 
+  gimp_tool_widget_group_hover (widget, coords, state, TRUE);
+
   if (priv->focus_widget != priv->hover_widget)
     {
       if (priv->hover_widget)
