@@ -1640,7 +1640,7 @@ class BacktraceViewer (Gtk.Box):
         tree.append_column (col)
         col.set_resizable (True)
 
-        cell = Gtk.CellRendererText ()
+        cell = Gtk.CellRendererText (xalign = 1)
         col.pack_start (cell, False)
         col.add_attribute (cell, "text", self.FrameStore.ID)
 
