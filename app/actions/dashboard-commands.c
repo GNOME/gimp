@@ -106,10 +106,10 @@ dashboard_log_record_cmd_callback (GtkAction *action,
 
           gtk_dialog_set_default_response (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK);
-          gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                                   GTK_RESPONSE_OK,
-                                                   GTK_RESPONSE_CANCEL,
-                                                   -1);
+          gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                                    GTK_RESPONSE_OK,
+                                                    GTK_RESPONSE_CANCEL,
+                                                    -1);
 
           gtk_window_set_screen (
             GTK_WINDOW (dialog),
