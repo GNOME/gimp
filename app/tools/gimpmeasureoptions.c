@@ -40,7 +40,6 @@ enum
 {
   PROP_0,
   PROP_ORIENTATION,
-  PROP_PERSPECTIVE_CORRECTION,
   PROP_USE_INFO_WINDOW
 };
 
@@ -75,14 +74,6 @@ gimp_measure_options_class_init (GimpMeasureOptionsClass *klass)
                          GIMP_COMPASS_ORIENTATION_AUTO,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PERSPECTIVE_CORRECTION,
-                            "perspective-correction",
-                            _("Perspective correction"),
-                            _("Perform perspective correction "
-                              "using two reference lines"),
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_INFO_WINDOW,
                             "use-info-window",
                             _("Use info window"),
@@ -110,9 +101,6 @@ gimp_measure_options_set_property (GObject      *object,
     case PROP_ORIENTATION:
       options->orientation = g_value_get_enum (value);
       break;
-    case PROP_PERSPECTIVE_CORRECTION:
-      options->perspective_correction = g_value_get_boolean (value);
-      break;
     case PROP_USE_INFO_WINDOW:
       options->use_info_window = g_value_get_boolean (value);
       break;
@@ -134,9 +122,6 @@ gimp_measure_options_get_property (GObject    *object,
     {
     case PROP_ORIENTATION:
       g_value_set_enum (value, options->orientation);
-      break;
-    case PROP_PERSPECTIVE_CORRECTION:
-      g_value_set_boolean (value, options->perspective_correction);
       break;
     case PROP_USE_INFO_WINDOW:
       g_value_set_boolean (value, options->use_info_window);
@@ -166,11 +151,6 @@ gimp_measure_options_gui (GimpToolOptions *tool_options)
   g_free (str);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
-
-  /*  the perspective-correction toggle button  */
-  button = gimp_prop_check_button_new (config, "perspective-correction", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   /*  the use_info_window toggle button  */
   button = gimp_prop_check_button_new (config, "use-info-window", NULL);

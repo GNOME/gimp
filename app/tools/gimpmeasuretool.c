@@ -30,7 +30,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
@@ -46,7 +45,6 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimptoolcompass.h"
 #include "display/gimptoolgui.h"
-#include "display/gimptoolwidgetgroup.h"
 
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
@@ -57,86 +55,63 @@
 
 /*  local function prototypes  */
 
-static void             gimp_measure_tool_control                   (GimpTool              *tool,
-                                                                     GimpToolAction         action,
-                                                                     GimpDisplay           *display);
-static void             gimp_measure_tool_modifier_key              (GimpTool              *tool,
-                                                                     GdkModifierType        key,
-                                                                     gboolean               press,
-                                                                     GdkModifierType        state,
-                                                                     GimpDisplay           *display);
-static void             gimp_measure_tool_button_press              (GimpTool              *tool,
-                                                                     const GimpCoords      *coords,
-                                                                     guint32                time,
-                                                                     GdkModifierType        state,
-                                                                     GimpButtonPressType    press_type,
-                                                                     GimpDisplay           *display);
-static void             gimp_measure_tool_button_release            (GimpTool              *tool,
-                                                                     const GimpCoords      *coords,
-                                                                     guint32                time,
-                                                                     GdkModifierType        state,
-                                                                     GimpButtonReleaseType  release_type,
-                                                                     GimpDisplay           *display);
-static void             gimp_measure_tool_motion                    (GimpTool              *tool,
-                                                                     const GimpCoords      *coords,
-                                                                     guint32                time,
-                                                                     GdkModifierType        state,
-                                                                     GimpDisplay           *display);
-static void             gimp_measure_tool_oper_update               (GimpTool              *tool,
-                                                                     const GimpCoords      *coords,
-                                                                     GdkModifierType        state,
-                                                                     gboolean               proximity,
-                                                                     GimpDisplay           *display);
-static void             gimp_measure_tool_cursor_update             (GimpTool              *tool,
-                                                                     const GimpCoords      *coords,
-                                                                     GdkModifierType        state,
-                                                                     GimpDisplay           *display);
-static void             gimp_measure_tool_options_notify            (GimpTool              *tool,
-                                                                     GimpToolOptions       *tool_options,
-                                                                     const GParamSpec      *pspec);
+static void     gimp_measure_tool_control         (GimpTool              *tool,
+                                                   GimpToolAction         action,
+                                                   GimpDisplay           *display);
+static void     gimp_measure_tool_modifier_key    (GimpTool              *tool,
+                                                   GdkModifierType        key,
+                                                   gboolean               press,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
+static void     gimp_measure_tool_button_press    (GimpTool              *tool,
+                                                   const GimpCoords      *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpButtonPressType    press_type,
+                                                   GimpDisplay           *display);
+static void     gimp_measure_tool_button_release  (GimpTool              *tool,
+                                                   const GimpCoords      *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpButtonReleaseType  release_type,
+                                                   GimpDisplay           *display);
+static void     gimp_measure_tool_motion          (GimpTool              *tool,
+                                                   const GimpCoords      *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
 
-static void             gimp_measure_tool_recalc_matrix             (GimpTransformTool     *tr_tool);
-static gchar  *         gimp_measure_tool_get_undo_desc             (GimpTransformTool     *tr_tool);
+static void     gimp_measure_tool_recalc_matrix   (GimpTransformTool     *tr_tool);
+static gchar  * gimp_measure_tool_get_undo_desc   (GimpTransformTool     *tr_tool);
 
-static void             gimp_measure_tool_group_changed             (GimpToolWidget        *widget,
-                                                                     GimpMeasureTool       *measure);
-static void             gimp_measure_tool_group_response            (GimpToolWidget        *widget,
-                                                                     gint                   response_id,
-                                                                     GimpMeasureTool       *measure);
-static void             gimp_measure_tool_group_status              (GimpToolWidget        *widget,
-                                                                     const gchar           *status,
-                                                                     GimpMeasureTool       *measure);
+static void     gimp_measure_tool_compass_changed (GimpToolWidget        *widget,
+                                                   GimpMeasureTool       *measure);
+static void     gimp_measure_tool_compass_response(GimpToolWidget        *widget,
+                                                   gint                   response_id,
+                                                   GimpMeasureTool       *measure);
+static void     gimp_measure_tool_compass_status  (GimpToolWidget        *widget,
+                                                   const gchar           *status,
+                                                   GimpMeasureTool       *measure);
+static void     gimp_measure_tool_compass_create_guides
+                                                  (GimpToolWidget        *widget,
+                                                   gint                   x,
+                                                   gint                   y,
+                                                   gboolean               horizontal,
+                                                   gboolean               vertical,
+                                                   GimpMeasureTool       *measure);
 
-static void             gimp_measure_tool_compass_create_guides     (GimpToolCompass       *compass,
-                                                                     gint                   x,
-                                                                     gint                   y,
-                                                                     gboolean               horizontal,
-                                                                     gboolean               vertical,
-                                                                     GimpMeasureTool       *measure);
+static void     gimp_measure_tool_start           (GimpMeasureTool       *measure,
+                                                   GimpDisplay           *display,
+                                                   const GimpCoords      *coords);
+static void     gimp_measure_tool_halt            (GimpMeasureTool       *measure);
 
-static void             gimp_measure_tool_start                     (GimpMeasureTool       *measure,
-                                                                     GimpDisplay           *display,
-                                                                     const GimpCoords      *coords);
-static void             gimp_measure_tool_halt                      (GimpMeasureTool       *measure);
+static GimpToolGui * gimp_measure_tool_dialog_new (GimpMeasureTool       *measure);
+static void     gimp_measure_tool_dialog_update   (GimpMeasureTool       *measure,
+                                                   GimpDisplay           *display);
 
-static gint             gimp_measure_tool_get_target_n_compasses    (GimpMeasureTool       *measure);
-static gboolean         gimp_measure_tool_should_add_compass        (GimpMeasureTool       *measure,
-                                                                     const GimpCoords      *coords,
-                                                                     GdkModifierType        state,
-                                                                     gboolean               proximity);
-static void             gimp_measure_tool_add_compass               (GimpMeasureTool       *measure,
-                                                                     GimpDisplay           *display,
-                                                                     const GimpCoords      *coords);
-static GimpToolWidget * gimp_measure_tool_get_active_compass        (GimpMeasureTool       *measure);
-
-static GimpToolGui    * gimp_measure_tool_dialog_new                (GimpMeasureTool       *measure);
-static void             gimp_measure_tool_dialog_update             (GimpMeasureTool       *measure,
-                                                                     GimpDisplay           *display);
-
-static void             gimp_measure_tool_straighten_button_update  (GimpMeasureTool       *measure);
-
-static void             gimp_measure_tool_straighten_button_clicked (GtkWidget             *button,
-                                                                     GimpMeasureTool       *measure);
+static void     gimp_measure_tool_straighten_button_clicked
+                                                  (GtkWidget             *button,
+                                                   GimpMeasureTool       *measure);
 
 G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_TRANSFORM_TOOL)
 
@@ -171,9 +146,6 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   tool_class->button_press   = gimp_measure_tool_button_press;
   tool_class->button_release = gimp_measure_tool_button_release;
   tool_class->motion         = gimp_measure_tool_motion;
-  tool_class->options_notify = gimp_measure_tool_options_notify;
-  tool_class->oper_update    = gimp_measure_tool_oper_update;
-  tool_class->cursor_update  = gimp_measure_tool_cursor_update;
 
   tr_class->recalc_matrix    = gimp_measure_tool_recalc_matrix;
   tr_class->get_undo_desc    = gimp_measure_tool_get_undo_desc;
@@ -272,13 +244,12 @@ gimp_measure_tool_button_press (GimpTool            *tool,
     gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
 
   if (! measure->widget)
-    gimp_measure_tool_start (measure, display, coords);
-
-  if (gimp_measure_tool_should_add_compass (measure, coords, state, TRUE))
     {
-      measure->suppress_guides = TRUE;
+      measure->supress_guides = TRUE;
 
-      gimp_measure_tool_add_compass (measure, display, coords);
+      gimp_measure_tool_start (measure, display, coords);
+
+      gimp_tool_widget_hover (measure->widget, coords, state, TRUE);
     }
 
   if (gimp_tool_widget_button_press (measure->widget, coords, time, state,
@@ -329,7 +300,7 @@ gimp_measure_tool_button_release (GimpTool              *tool,
       measure->grab_widget = NULL;
     }
 
-  measure->suppress_guides = FALSE;
+  measure->supress_guides = FALSE;
 }
 
 static void
@@ -348,173 +319,28 @@ gimp_measure_tool_motion (GimpTool         *tool,
 }
 
 static void
-gimp_measure_tool_oper_update (GimpTool         *tool,
-                               const GimpCoords *coords,
-                               GdkModifierType   state,
-                               gboolean          proximity,
-                               GimpDisplay      *display)
+gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
-  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
+  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tr_tool);
+  gdouble          angle;
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
-                                               proximity, display);
-
-  if (gimp_measure_tool_should_add_compass (measure, coords, state, proximity))
+  if (measure->n_points < 2)
     {
-      gimp_tool_replace_status (tool, display,
-                                _("Click-drag to add a line"));
-    }
-}
-
-static void
-gimp_measure_tool_cursor_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
-                                 GdkModifierType   state,
-                                 GimpDisplay      *display)
-{
-  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
-
-  if (gimp_measure_tool_should_add_compass (measure, coords, state, TRUE))
-    {
-      gimp_tool_set_cursor (
-        tool, display,
-        gimp_tool_control_get_cursor (tool->control),
-        gimp_tool_control_get_tool_cursor (tool->control),
-        GIMP_CURSOR_MODIFIER_PLUS);
+      tr_tool->transform_valid = FALSE;
 
       return;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
-}
+  g_object_get (measure->widget,
+                "pixel-angle", &angle,
+                NULL);
 
-static void
-gimp_measure_tool_options_notify (GimpTool         *tool,
-                                  GimpToolOptions  *tool_options,
-                                  const GParamSpec *pspec)
-{
-  GimpMeasureTool    *measure = GIMP_MEASURE_TOOL (tool);
-  GimpMeasureOptions *options = GIMP_MEASURE_OPTIONS (tool_options);
+  gimp_matrix3_identity (&tr_tool->transform);
+  gimp_transform_matrix_rotate_center (&tr_tool->transform,
+                                       measure->x[0], measure->y[0],
+                                       angle);
 
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, tool_options, pspec);
-
-  if (! strcmp (pspec->name, "perspective-correction"))
-    {
-      if (measure->widget && ! options->perspective_correction)
-        {
-          GimpToolWidgetGroup *group;
-          GimpContainer       *compasses;
-
-          group     = GIMP_TOOL_WIDGET_GROUP (measure->widget);
-          compasses = gimp_tool_widget_group_get_children (group);
-
-          if (gimp_container_get_n_children (compasses) > 1)
-            {
-              gimp_container_remove (
-                compasses,
-                GIMP_OBJECT (gimp_measure_tool_get_active_compass (measure)));
-            }
-        }
-
-      gimp_measure_tool_straighten_button_update (measure);
-    }
-}
-
-static void
-gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
-{
-  GimpMeasureTool    *measure = GIMP_MEASURE_TOOL (tr_tool);
-  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tr_tool);
-
-  tr_tool->transform_valid = FALSE;
-
-  if (! options->perspective_correction)
-    {
-      GimpToolWidget *compass = gimp_measure_tool_get_active_compass (measure);
-      gint            n_points;
-      gint            x1;
-      gint            y1;
-      gdouble         angle;
-
-      g_object_get (compass,
-                    "n-points",    &n_points,
-                    "pixel-angle", &angle,
-                    "x1",          &x1,
-                    "y1",          &y1,
-                    NULL);
-
-      if (n_points < 2)
-        return
-
-      gimp_matrix3_identity (&tr_tool->transform);
-      gimp_transform_matrix_rotate_center (&tr_tool->transform,
-                                           x1, y1,
-                                           angle);
-
-      tr_tool->transform_valid = TRUE;
-    }
-  else
-    {
-      GimpToolWidgetGroup *group;
-      GimpContainer       *compasses;
-      GimpVector2          input_points[4];
-      GimpVector2          output_points[4];
-      gint                 i;
-
-      group     = GIMP_TOOL_WIDGET_GROUP (measure->widget);
-      compasses = gimp_tool_widget_group_get_children (group);
-
-      if (gimp_container_get_n_children (compasses) < 2)
-        return;
-
-      for (i = 0; i < 2; i++)
-        {
-          GimpToolWidget *compass;
-          gint            n_points;
-          gint            x[2];
-          gint            y[2];
-          gdouble         angle;
-
-          compass =
-            GIMP_TOOL_WIDGET (gimp_container_get_child_by_index (compasses, i));
-
-          g_object_get (compass,
-                        "n-points",    &n_points,
-                        "x1",          &x[0],
-                        "y1",          &y[0],
-                        "x2",          &x[1],
-                        "y2",          &y[1],
-                        "pixel-angle", &angle,
-                        NULL);
-
-          if (n_points < 2)
-            return;
-
-          input_points[2 * i + 0].x  = x[0];
-          input_points[2 * i + 0].y  = y[0];
-
-          output_points[2 * i + 0].x = x[0];
-          output_points[2 * i + 0].y = y[0];
-
-          input_points[2 * i + 1].x  = x[1];
-          input_points[2 * i + 1].y  = y[1];
-
-          gimp_matrix3_identity (&tr_tool->transform);
-          gimp_transform_matrix_rotate_center (&tr_tool->transform,
-                                               x[0], y[0],
-                                               angle);
-
-          gimp_matrix3_transform_point (&tr_tool->transform,
-                                        x[1], y[1],
-                                        &output_points[2 * i + 1].x,
-                                        &output_points[2 * i + 1].y);
-        }
-
-      gimp_matrix3_identity (&tr_tool->transform);
-      tr_tool->transform_valid =
-        gimp_transform_matrix_generic (&tr_tool->transform,
-                                       input_points, output_points);
-    }
+  tr_tool->transform_valid = TRUE;
 }
 
 static gchar *
@@ -524,18 +350,29 @@ gimp_measure_tool_get_undo_desc (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_measure_tool_group_changed (GimpToolWidget  *widget,
-                                 GimpMeasureTool *measure)
+gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
+                                   GimpMeasureTool *measure)
 {
-  gimp_measure_tool_straighten_button_update (measure);
+  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
 
+  g_object_get (widget,
+                "n-points", &measure->n_points,
+                "x1",       &measure->x[0],
+                "y1",       &measure->y[0],
+                "x2",       &measure->x[1],
+                "y2",       &measure->y[1],
+                "x3",       &measure->x[2],
+                "y3",       &measure->y[2],
+                NULL);
+
+  gtk_widget_set_sensitive (options->straighten_button, measure->n_points >= 2);
   gimp_measure_tool_dialog_update (measure, GIMP_TOOL (measure)->display);
 }
 
 static void
-gimp_measure_tool_group_response (GimpToolWidget  *widget,
-                                  gint             response_id,
-                                  GimpMeasureTool *measure)
+gimp_measure_tool_compass_response (GimpToolWidget  *widget,
+                                    gint             response_id,
+                                    GimpMeasureTool *measure)
 {
   GimpTool *tool = GIMP_TOOL (measure);
 
@@ -544,9 +381,9 @@ gimp_measure_tool_group_response (GimpToolWidget  *widget,
 }
 
 static void
-gimp_measure_tool_group_status (GimpToolWidget  *widget,
-                                const gchar     *status,
-                                GimpMeasureTool *measure)
+gimp_measure_tool_compass_status (GimpToolWidget  *widget,
+                                  const gchar     *status,
+                                  GimpMeasureTool *measure)
 {
   GimpTool *tool = GIMP_TOOL (measure);
 
@@ -558,7 +395,7 @@ gimp_measure_tool_group_status (GimpToolWidget  *widget,
 }
 
 static void
-gimp_measure_tool_compass_create_guides (GimpToolCompass *compass,
+gimp_measure_tool_compass_create_guides (GimpToolWidget  *widget,
                                          gint             x,
                                          gint             y,
                                          gboolean         horizontal,
@@ -568,7 +405,7 @@ gimp_measure_tool_compass_create_guides (GimpToolCompass *compass,
   GimpDisplay *display = GIMP_TOOL (measure)->display;
   GimpImage   *image   = gimp_display_get_image (display);
 
-  if (measure->suppress_guides)
+  if (measure->supress_guides)
     return;
 
   if (x < 0 || x > gimp_image_get_width (image))
@@ -606,23 +443,42 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
   GimpDisplayShell   *shell   = gimp_display_get_shell (display);
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
 
-  measure->widget = gimp_tool_widget_group_new (shell);
+  measure->n_points = 1;
+  measure->x[0]     = coords->x;
+  measure->y[0]     = coords->y;
+  measure->x[1]     = 0;
+  measure->y[1]     = 0;
+  measure->x[2]     = 0;
+  measure->y[2]     = 0;
 
-  gimp_tool_widget_group_set_auto_raise (
-    GIMP_TOOL_WIDGET_GROUP (measure->widget), TRUE);
+  measure->widget = gimp_tool_compass_new (shell,
+                                           options->orientation,
+                                           measure->n_points,
+                                           measure->x[0],
+                                           measure->y[0],
+                                           measure->x[1],
+                                           measure->y[1],
+                                           measure->x[2],
+                                           measure->y[2]);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), measure->widget);
 
+  g_object_bind_property (options,         "orientation",
+                          measure->widget, "orientation",
+                          G_BINDING_DEFAULT);
+
   g_signal_connect (measure->widget, "changed",
-                    G_CALLBACK (gimp_measure_tool_group_changed),
+                    G_CALLBACK (gimp_measure_tool_compass_changed),
                     measure);
   g_signal_connect (measure->widget, "response",
-                    G_CALLBACK (gimp_measure_tool_group_response),
+                    G_CALLBACK (gimp_measure_tool_compass_response),
                     measure);
   g_signal_connect (measure->widget, "status",
-                    G_CALLBACK (gimp_measure_tool_group_status),
+                    G_CALLBACK (gimp_measure_tool_compass_status),
                     measure);
-
+  g_signal_connect (measure->widget, "create-guides",
+                    G_CALLBACK (gimp_measure_tool_compass_create_guides),
+                    measure);
   g_signal_connect (options->straighten_button, "clicked",
                     G_CALLBACK (gimp_measure_tool_straighten_button_clicked),
                     measure);
@@ -637,6 +493,8 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
 {
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
   GimpTool           *tool    = GIMP_TOOL (measure);
+
+  gtk_widget_set_sensitive (options->straighten_button, FALSE);
 
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
@@ -654,105 +512,15 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
 
   g_clear_object (&measure->gui);
 
-  gimp_measure_tool_straighten_button_update (measure);
-
   tool->display = NULL;
-}
-
-static gint
-gimp_measure_tool_get_target_n_compasses (GimpMeasureTool *measure)
-{
-  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
-
-  if (! options->perspective_correction)
-    return 1;
-  else
-    return 2;
-}
-
-static gboolean
-gimp_measure_tool_should_add_compass (GimpMeasureTool  *measure,
-                                      const GimpCoords *coords,
-                                      GdkModifierType   state,
-                                      gboolean          proximity)
-{
-  if (proximity && measure->widget)
-    {
-      GimpToolWidgetGroup *group;
-      GimpContainer       *compasses;
-
-      group     = GIMP_TOOL_WIDGET_GROUP (measure->widget);
-      compasses = gimp_tool_widget_group_get_children (group);
-
-      if (gimp_container_get_n_children (compasses) <
-          gimp_measure_tool_get_target_n_compasses (measure))
-        {
-          if (gimp_tool_widget_hit (measure->widget,
-                                    coords, state, proximity) !=
-              GIMP_HIT_DIRECT)
-            {
-              return TRUE;
-            }
-        }
-    }
-
-  return FALSE;
-}
-
-static void
-gimp_measure_tool_add_compass (GimpMeasureTool  *measure,
-                               GimpDisplay      *display,
-                               const GimpCoords *coords)
-{
-  GimpMeasureOptions  *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
-  GimpDisplayShell    *shell   = gimp_display_get_shell (display);
-  GimpToolWidgetGroup *group   = GIMP_TOOL_WIDGET_GROUP (measure->widget);
-  GimpToolWidget      *compass;
-
-  compass = gimp_tool_compass_new (shell,
-                                   options->orientation,
-                                   1,
-                                   coords->x,
-                                   coords->y,
-                                   0,
-                                   0,
-                                   0,
-                                   0);
-
-  gimp_container_add (gimp_tool_widget_group_get_children (group),
-                      GIMP_OBJECT (compass));
-
-  g_object_unref (compass);
-
-  gimp_tool_widget_set_focus (compass, TRUE);
-
-  g_object_bind_property (options, "orientation",
-                          compass, "orientation",
-                          G_BINDING_DEFAULT);
-
-  g_signal_connect (compass, "create-guides",
-                    G_CALLBACK (gimp_measure_tool_compass_create_guides),
-                    measure);
-}
-
-static GimpToolWidget *
-gimp_measure_tool_get_active_compass (GimpMeasureTool *measure)
-{
-  GimpToolWidgetGroup *group = GIMP_TOOL_WIDGET_GROUP (measure->widget);
-
-  return gimp_tool_widget_group_get_focus_widget (group);
 }
 
 static void
 gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
                                  GimpDisplay     *display)
 {
-  GimpDisplayShell *shell   = gimp_display_get_shell (display);
-  GimpImage        *image   = gimp_display_get_image (display);
-  GimpToolWidget   *compass = gimp_measure_tool_get_active_compass (measure);
-  gint              n_points;
-  gint              x[3];
-  gint              y[3];
+  GimpDisplayShell *shell = gimp_display_get_shell (display);
+  GimpImage        *image = gimp_display_get_image (display);
   gint              ax, ay;
   gint              bx, by;
   gint              pixel_width;
@@ -771,24 +539,14 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   gint              unit_width_digits;
   gint              unit_height_digits;
 
-  g_object_get (compass,
-                "n_points", &n_points,
-                "x1",       &x[0],
-                "y1",       &y[0],
-                "x2",       &x[1],
-                "y2",       &y[1],
-                "x3",       &x[2],
-                "y3",       &y[2],
-                NULL);
-
   /*  calculate distance and angle  */
-  ax = x[1] - x[0];
-  ay = y[1] - y[0];
+  ax = measure->x[1] - measure->x[0];
+  ay = measure->y[1] - measure->y[0];
 
-  if (n_points == 3)
+  if (measure->n_points == 3)
     {
-      bx = x[2] - x[0];
-      by = y[2] - y[0];
+      bx = measure->x[2] - measure->x[0];
+      by = measure->y[2] - measure->y[0];
     }
   else
     {
@@ -809,7 +567,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
                         SQR ((gdouble) (ay - by) / yres));
   unit_distance  = gimp_unit_get_factor (shell->unit) * inch_distance;
 
-  g_object_get (compass,
+  g_object_get (measure->widget,
                 "pixel-angle", &pixel_angle,
                 "unit-angle",  &unit_angle,
                 NULL);
@@ -1084,50 +842,6 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   return gui;
-}
-
-static void
-gimp_measure_tool_straighten_button_update (GimpMeasureTool *measure)
-{
-  GimpMeasureOptions  *options   = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
-  gboolean             sensitive = FALSE;
-
-  if (! options->straighten_button)
-    return;
-
-  if (measure->widget)
-    {
-      GimpToolWidgetGroup *group     = GIMP_TOOL_WIDGET_GROUP (measure->widget);
-      GimpContainer       *compasses = gimp_tool_widget_group_get_children (group);
-
-      if (gimp_container_get_n_children (compasses) ==
-          gimp_measure_tool_get_target_n_compasses (measure))
-        {
-          gint i;
-
-          sensitive = TRUE;
-
-          for (i = 0; i < gimp_container_get_n_children (compasses); i++)
-            {
-              GimpObject *compass = gimp_container_get_child_by_index (compasses,
-                                                                       i);
-              gint        n_points;
-
-              g_object_get (compass,
-                            "n-points", &n_points,
-                            NULL);
-
-              if (n_points < 2)
-                {
-                  sensitive = FALSE;
-
-                  break;
-                }
-            }
-        }
-    }
-
-  gtk_widget_set_sensitive (options->straighten_button, sensitive);
 }
 
 static void
