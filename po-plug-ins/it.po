@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-19 00:57+0200\n"
-"PO-Revision-Date: 2018-07-19 01:01+0200\n"
+"PO-Revision-Date: 2018-09-25 22:36+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -7185,15 +7185,15 @@ msgstr "4:4:4 (migliore qualità)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1077
 msgid "4:2:2 horizontal (chroma halved)"
-msgstr "4:2:2 orizzontale (cromatica dimezzata)"
+msgstr "4:2:2 orizzontale (crominanza dimezzata)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1079
 msgid "4:2:2 vertical (chroma halved)"
-msgstr "4:2:2 verticale (cromatica dimezzata)<"
+msgstr "4:2:2 verticale (crominanza dimezzata)<"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1081
 msgid "4:2:0 (chroma quartered)"
-msgstr "4:2:0 (cromatica ridotta ad un quarto)"
+msgstr "4:2:0 (crominanza ridotta ad un quarto)"
 
 #. DCT method
 #: ../plug-ins/file-jpeg/jpeg-save.c:1113

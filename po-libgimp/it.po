@@ -32,7 +32,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-06 15:25+0200\n"
-"PO-Revision-Date: 2018-09-06 15:29+0200\n"
+"PO-Revision-Date: 2018-09-25 22:35+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -1332,7 +1332,7 @@ msgstr "Luminosità LCh"
 #: ../libgimpbase/gimpbaseenums.c:1657
 msgctxt "select-criterion"
 msgid "LCh Chroma"
-msgstr "Croma LCh"
+msgstr "Crominanza LCh"
 
 #: ../libgimpbase/gimpbaseenums.c:1658
 msgctxt "select-criterion"
@@ -2393,7 +2393,7 @@ msgstr "_C"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Chroma"
-msgstr "Croma LCh"
+msgstr "Crominanza LCh"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
