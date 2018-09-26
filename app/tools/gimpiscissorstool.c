@@ -1075,14 +1075,35 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
       if (! iscissors->curve->closed &&
           g_queue_peek_tail (iscissors->curve->segments))
         {
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+          ISegment *segment = g_queue_peek_tail (iscissors->curve->segments);
 
-          gimp_iscissors_tool_push_undo (iscissors);
-          icurve_delete_segment (iscissors->curve,
-                                 g_queue_peek_tail (iscissors->curve->segments));
-          gimp_iscissors_tool_free_redo (iscissors);
+          if (g_queue_get_length (iscissors->curve->segments) > 1)
+            {
+              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+              gimp_iscissors_tool_push_undo (iscissors);
+              icurve_delete_segment (iscissors->curve, segment);
+              gimp_iscissors_tool_free_redo (iscissors);
+
+              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+            }
+          else if (segment->x2 != segment->x1 || segment->y2 != segment->y1)
+            {
+              gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+              gimp_iscissors_tool_push_undo (iscissors);
+              segment->x2 = segment->x1;
+              segment->y2 = segment->y1;
+              g_ptr_array_remove_range (segment->points,
+                                        0, segment->points->len);
+              gimp_iscissors_tool_free_redo (iscissors);
+
+              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+            }
+          else
+            {
+              gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+            }
           return TRUE;
         }
       return FALSE;
