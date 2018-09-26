@@ -49,28 +49,33 @@
 
 #undef cons
 
-static void     ts_init_constants                (scheme    *sc);
-static void     ts_init_enum                     (scheme    *sc,
-                                                  GType      enum_type);
-static void     ts_init_procedures               (scheme    *sc,
-                                                  gboolean   register_scipts);
-static void     convert_string                   (gchar     *str);
-static pointer  script_fu_marshal_procedure_call (scheme    *sc,
-                                                  pointer    a);
-static void     script_fu_marshal_destroy_args   (GimpParam *params,
-                                                  gint       n_params);
+static void     ts_init_constants                           (scheme    *sc);
+static void     ts_init_enum                                (scheme    *sc,
+                                                             GType      enum_type);
+static void     ts_init_procedures                          (scheme    *sc,
+                                                             gboolean   register_scipts);
+static void     convert_string                              (gchar     *str);
+static pointer  script_fu_marshal_procedure_call            (scheme    *sc,
+                                                             pointer    a,
+                                                             gboolean   permissive);
+static pointer  script_fu_marshal_procedure_call_strict     (scheme    *sc,
+                                                             pointer    a);
+static pointer  script_fu_marshal_procedure_call_permissive (scheme    *sc,
+                                                             pointer    a);
+static void     script_fu_marshal_destroy_args              (GimpParam *params,
+                                                             gint       n_params);
 
-static pointer  script_fu_register_call          (scheme    *sc,
-                                                  pointer    a);
-static pointer  script_fu_menu_register_call     (scheme    *sc,
-                                                  pointer    a);
-static pointer  script_fu_quit_call              (scheme    *sc,
-                                                  pointer    a);
-static pointer  script_fu_nil_call               (scheme    *sc,
-                                                  pointer    a);
+static pointer  script_fu_register_call                     (scheme    *sc,
+                                                             pointer    a);
+static pointer  script_fu_menu_register_call                (scheme    *sc,
+                                                             pointer    a);
+static pointer  script_fu_quit_call                         (scheme    *sc,
+                                                             pointer    a);
+static pointer  script_fu_nil_call                          (scheme    *sc,
+                                                             pointer    a);
 
-static gboolean ts_load_file                     (const gchar *dirname,
-                                                  const gchar *basename);
+static gboolean ts_load_file                                (const gchar *dirname,
+                                                             const gchar *basename);
 
 typedef struct
 {
@@ -433,7 +438,14 @@ ts_init_procedures (scheme   *sc,
   symbol = sc->vptr->mk_symbol (sc, "gimp-proc-db-call");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
                            sc->vptr->mk_foreign_func (sc,
-                                                      script_fu_marshal_procedure_call));
+                                                      script_fu_marshal_procedure_call_strict));
+  sc->vptr->setimmutable (symbol);
+
+  /*  register the internal database execution procedure; see comment below  */
+  symbol = sc->vptr->mk_symbol (sc, "-gimp-proc-db-call");
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_foreign_func (sc,
+                                                      script_fu_marshal_procedure_call_permissive));
   sc->vptr->setimmutable (symbol);
 
   gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
@@ -442,61 +454,24 @@ ts_init_procedures (scheme   *sc,
   /*  Register each procedure as a scheme func  */
   for (i = 0; i < num_procs; i++)
     {
-      gchar           *proc_blurb;
-      gchar           *proc_help;
-      gchar           *proc_author;
-      gchar           *proc_copyright;
-      gchar           *proc_date;
-      GimpPDBProcType  proc_type;
-      gint             n_params;
-      gint             n_return_vals;
-      GimpParamDef    *params;
-      GimpParamDef    *return_vals;
+      gchar *buff;
 
-      /*  lookup the procedure  */
-      if (gimp_procedural_db_proc_info (proc_list[i],
-                                        &proc_blurb,
-                                        &proc_help,
-                                        &proc_author,
-                                        &proc_copyright,
-                                        &proc_date,
-                                        &proc_type,
-                                        &n_params, &n_return_vals,
-                                        &params, &return_vals))
-        {
-          gchar *buff;
+      /* Build a define that will call the foreign function.
+       * The Scheme statement was suggested by Simon Budig.
+       *
+       * We call the procedure through -gimp-proc-db-call, which is a more
+       * permissive version of gimp-proc-db-call, that accepts (and ignores)
+       * any number of arguments for nullary procedures, for backward
+       * compatibility.
+       */
+      buff = g_strdup_printf (" (define (%s . args)"
+                              " (apply -gimp-proc-db-call \"%s\" args))",
+                              proc_list[i], proc_list[i]);
 
-          /* Build a define that will call the foreign function.
-           * The Scheme statement was suggested by Simon Budig.
-           */
-          if (n_params == 0)
-            {
-              buff = g_strdup_printf (" (define (%s)"
-                                      " (gimp-proc-db-call \"%s\"))",
-                                      proc_list[i], proc_list[i]);
-            }
-          else
-            {
-              buff = g_strdup_printf (" (define %s (lambda x"
-                                      " (apply gimp-proc-db-call (cons \"%s\" x))))",
-                                      proc_list[i], proc_list[i]);
-            }
+      /*  Execute the 'define'  */
+      sc->vptr->load_string (sc, buff);
 
-          /*  Execute the 'define'  */
-          sc->vptr->load_string (sc, buff);
-
-          g_free (buff);
-
-          /*  free the queried information  */
-          g_free (proc_blurb);
-          g_free (proc_help);
-          g_free (proc_author);
-          g_free (proc_copyright);
-          g_free (proc_date);
-
-          gimp_destroy_paramdefs (params, n_params);
-          gimp_destroy_paramdefs (return_vals, n_return_vals);
-        }
+      g_free (buff);
     }
 
   g_strfreev (proc_list);
@@ -538,8 +513,9 @@ convert_string (gchar *str)
 
 /* This is called by the Scheme interpreter to allow calls to GIMP functions */
 static pointer
-script_fu_marshal_procedure_call (scheme  *sc,
-                                  pointer  a)
+script_fu_marshal_procedure_call (scheme   *sc,
+                                  pointer   a,
+                                  gboolean  permissive)
 {
   GimpParam       *args;
   GimpParam       *values = NULL;
@@ -631,7 +607,8 @@ script_fu_marshal_procedure_call (scheme  *sc,
     }
 
   /*  Check the supplied number of arguments  */
-  if ((sc->vptr->list_length (sc, a) - 1) != nparams)
+  if ((nparams > 0 || ! permissive) &&
+      (sc->vptr->list_length (sc, a) - 1) != nparams)
     {
 #if DEBUG_MARSHALL
       g_printerr ("  Invalid number of arguments (expected %d but received %d)",
@@ -1585,6 +1562,20 @@ script_fu_marshal_procedure_call (scheme  *sc,
 #endif
 
   return return_val;
+}
+
+static pointer
+script_fu_marshal_procedure_call_strict (scheme  *sc,
+                                         pointer  a)
+{
+  return script_fu_marshal_procedure_call (sc, a, FALSE);
+}
+
+static pointer
+script_fu_marshal_procedure_call_permissive (scheme  *sc,
+                                             pointer  a)
+{
+  return script_fu_marshal_procedure_call (sc, a, TRUE);
 }
 
 static void
