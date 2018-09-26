@@ -12,16 +12,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-22 17:02+0000\n"
-"PO-Revision-Date: 2018-07-18 21:24-0300\n"
-"Last-Translator: Bruno Lopes da Silva <brunolopesbldsb@gmail.com>\n"
+"POT-Creation-Date: 2018-09-16 14:42+0000\n"
+"PO-Revision-Date: 2018-09-26 03:46-0200\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1264
@@ -998,7 +998,7 @@ msgstr "Arquivo de imagem"
 #: ../libgimpbase/gimpbaseenums.c:924
 msgctxt "image-base-type"
 msgid "RGB color"
-msgstr "cor RGB"
+msgstr "Cor RGB"
 
 #: ../libgimpbase/gimpbaseenums.c:925
 msgctxt "image-base-type"
@@ -1330,97 +1330,117 @@ msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Contornar com uma ferramente de pintura"
 
-#: ../libgimpbase/gimpbaseenums.c:1779
+#: ../libgimpbase/gimpbaseenums.c:1783
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Da esquerda pra direita"
 
-#: ../libgimpbase/gimpbaseenums.c:1780
+#: ../libgimpbase/gimpbaseenums.c:1784
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Da direita pra esquerda"
 
-#: ../libgimpbase/gimpbaseenums.c:1811
+#: ../libgimpbase/gimpbaseenums.c:1785
+msgctxt "text-direction"
+msgid "Vertical, right to left (mixed orientation)"
+msgstr "Vertical, direita para esquerda (orientação misturada)"
+
+#: ../libgimpbase/gimpbaseenums.c:1786
+msgctxt "text-direction"
+msgid "Vertical, right to left (upright orientation)"
+msgstr "Vertical, direita para esquerda (orientação vertical)"
+
+#: ../libgimpbase/gimpbaseenums.c:1787
+msgctxt "text-direction"
+msgid "Vertical, left to right (mixed orientation)"
+msgstr "Vertical, esquerda para direita (orientação misturada)"
+
+#: ../libgimpbase/gimpbaseenums.c:1788
+msgctxt "text-direction"
+msgid "Vertical, left to right (upright orientation)"
+msgstr "Vertical, esquerda para direita (orientação vertical)"
+
+#: ../libgimpbase/gimpbaseenums.c:1819
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Nenhum"
 
-#: ../libgimpbase/gimpbaseenums.c:1812
+#: ../libgimpbase/gimpbaseenums.c:1820
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Leve"
 
-#: ../libgimpbase/gimpbaseenums.c:1813
+#: ../libgimpbase/gimpbaseenums.c:1821
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Médio"
 
-#: ../libgimpbase/gimpbaseenums.c:1814
+#: ../libgimpbase/gimpbaseenums.c:1822
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Intenso"
 
-#: ../libgimpbase/gimpbaseenums.c:1845
+#: ../libgimpbase/gimpbaseenums.c:1853
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Justificado a esquerda"
 
-#: ../libgimpbase/gimpbaseenums.c:1846
+#: ../libgimpbase/gimpbaseenums.c:1854
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Justificado a direita"
 
-#: ../libgimpbase/gimpbaseenums.c:1847
+#: ../libgimpbase/gimpbaseenums.c:1855
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Centralizado"
 
-#: ../libgimpbase/gimpbaseenums.c:1848
+#: ../libgimpbase/gimpbaseenums.c:1856
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Preenchido"
 
-#: ../libgimpbase/gimpbaseenums.c:1878
+#: ../libgimpbase/gimpbaseenums.c:1886
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Sombras"
 
-#: ../libgimpbase/gimpbaseenums.c:1879
+#: ../libgimpbase/gimpbaseenums.c:1887
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Tons médios"
 
-#: ../libgimpbase/gimpbaseenums.c:1880
+#: ../libgimpbase/gimpbaseenums.c:1888
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Tons claros"
 
-#: ../libgimpbase/gimpbaseenums.c:1909
+#: ../libgimpbase/gimpbaseenums.c:1917
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normal (Para frente)"
 
-#: ../libgimpbase/gimpbaseenums.c:1910
+#: ../libgimpbase/gimpbaseenums.c:1918
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Corretivo (Para trás)"
 
-#: ../libgimpbase/gimpbaseenums.c:1941
+#: ../libgimpbase/gimpbaseenums.c:1949
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Ajustar"
 
-#: ../libgimpbase/gimpbaseenums.c:1942
+#: ../libgimpbase/gimpbaseenums.c:1950
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Cortar"
 
-#: ../libgimpbase/gimpbaseenums.c:1943
+#: ../libgimpbase/gimpbaseenums.c:1951
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Cortar para o resultado"
 
-#: ../libgimpbase/gimpbaseenums.c:1944
+#: ../libgimpbase/gimpbaseenums.c:1952
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Cortar com proporção"
@@ -1461,32 +1481,32 @@ msgstr "A análise dos dados do IPTC falhou."
 msgid "Parsing XMP data failed."
 msgstr "A análise dos dados XMP falhou."
 
-#: ../libgimpbase/gimputils.c:227 ../libgimpbase/gimputils.c:232
+#: ../libgimpbase/gimputils.c:225 ../libgimpbase/gimputils.c:230
 msgid "(invalid UTF-8 string)"
 msgstr "(string UTF-8 inválida)"
 
-#: ../libgimpbase/gimputils.c:402
+#: ../libgimpbase/gimputils.c:400
 msgid "File path is NULL"
 msgstr "O caminho do arquivo é NULL"
 
-#: ../libgimpbase/gimputils.c:411 ../libgimpbase/gimputils.c:422
+#: ../libgimpbase/gimputils.c:409 ../libgimpbase/gimputils.c:420
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Erro ao converter o nome do arquivo UTF-8 para caracteres largos"
 
-#: ../libgimpbase/gimputils.c:430
+#: ../libgimpbase/gimputils.c:428
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() falhou"
 
-#: ../libgimpbase/gimputils.c:467
+#: ../libgimpbase/gimputils.c:465
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Não foi possível converter \"%s\" em um NSURL válido."
 
-#: ../libgimpbase/gimputils.c:495
+#: ../libgimpbase/gimputils.c:493
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "A conexão com org.freedesktop.FileManager1 falhou: "
 
-#: ../libgimpbase/gimputils.c:519
+#: ../libgimpbase/gimputils.c:517
 msgid "Calling ShowItems failed: "
 msgstr "O chamamento de ShowItems falhou: "
 
@@ -1625,13 +1645,15 @@ msgstr ""
 "Como as cores do espaço de cores de sua imagem são convertidas para seu "
 "dispositivo de exibição. A colorimetria relativa costuma ser a melhor "
 "escolha. A menos que você use um perfil LUT para o monitor (a maioria dos "
-"perfis para monitores são matrix), escolher o intento irá de fato lhe "
+"perfis para monitores é uma matriz), escolher o intento irá de fato lhe "
 "proporcionar uma colorimetria relativa."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr "Não usar compensação de ponto negro (a menos que você saiba que você tem uma razão para não)."
+msgstr ""
+"Não usar compensação de ponto negro (a menos que você saiba que você tem uma "
+"razão para não)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
@@ -1661,8 +1683,8 @@ msgstr ""
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Quando desabilitado, a pré-visualização pode ter uma qualidade melhor à custa "
-"de velocidade."
+"Quando desabilitado, a pré-visualização pode ter uma qualidade melhor à "
+"custa de velocidade."
 
 # "Soft-proofing" é uma opção de pré-visualização das cores, como uma simulação
 #: ../libgimpconfig/gimpcolorconfig.c:107
@@ -1670,8 +1692,8 @@ msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Quando habilitada, a pré-visualização irá marcar cores que não podem "
-"ser representadas no espaço de cores de destino."
+"Quando habilitada, a pré-visualização irá marcar cores que não podem ser "
+"representadas no espaço de cores de destino."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1832,7 +1854,8 @@ msgstr "string UTF-8 inválida"
 #: ../libgimpconfig/gimpscanner.c:618
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr "esperava-se 'yes' ou 'no' como palavra-chave booleana, encontrado \"%s\""
+msgstr ""
+"esperava-se 'yes' ou 'no' como palavra-chave booleana, encontrado \"%s\""
 
 #: ../libgimpconfig/gimpscanner.c:852
 #, c-format
@@ -1896,7 +1919,7 @@ msgstr "Cor de _frente"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:156
 msgid "_Background Color"
-msgstr "Cor de F_undo"
+msgstr "Cor de f_undo"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:160
 msgid "Blac_k"
@@ -2753,7 +2776,7 @@ msgstr "Lendo de %s"
 #: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
-msgstr "Dispositvo não disponível: %s"
+msgstr "Dispositivo não disponível: %s"
 
 #: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
 msgid "End of file"
