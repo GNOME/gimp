@@ -103,9 +103,11 @@ var_types = {
     "int-ratio": VariableType (
         parse          = lambda x: div (*map (int, x.split (":"))),
         format         = lambda x: "%g:%g" % (
-                             (1, 0)                     if math.isinf (x) else
+                             (0, 0)                     if math.isnan (x) else
+                             (1, 0)                     if x == math.inf  else
+                             (-1, 0)                    if x == -math.inf else
                              (0, 1)                     if x == 0         else
-                             (round (100 * x) / 100, 1) if x >  1         else
+                             (round (100 * x) / 100, 1) if abs (x) >  1   else
                              (1, round (100 / x) / 100)
                          ),
         format_numeric = None
@@ -719,50 +721,49 @@ class SampleGraph (Gtk.DrawingArea):
     def do_button_press_event (self, event):
         self.grab_focus ()
 
-        if event.button != 1:
-            return False
+        if event.button == 1:
+            i = self.x_to_sample (event.x)
 
-        i = self.x_to_sample (event.x)
+            if i is None:
+                return False
 
-        if i is None:
-            return False
+            self.selection       = selection.copy ()
+            self.selection_i0    = i
+            self.selection_i1    = i
+            self.selection_op    = SelectionOp.REPLACE
+            self.selection_range = event.type != Gdk.EventType.BUTTON_PRESS
 
-        self.selection       = selection.copy ()
-        self.selection_i0    = i
-        self.selection_i1    = i
-        self.selection_op    = SelectionOp.REPLACE
-        self.selection_range = event.type != Gdk.EventType.BUTTON_PRESS
+            state = event.state & Gdk.ModifierType.MODIFIER_MASK
 
-        state = event.state & Gdk.ModifierType.MODIFIER_MASK
+            if state == Gdk.ModifierType.SHIFT_MASK:
+                self.selection_op = SelectionOp.ADD
+            elif state == Gdk.ModifierType.CONTROL_MASK:
+                self.selection_op = SelectionOp.SUBTRACT
+            elif state == (Gdk.ModifierType.SHIFT_MASK |
+                           Gdk.ModifierType.CONTROL_MASK):
+                self.selection_op = SelectionOp.INTERSECT
 
-        if state == Gdk.ModifierType.SHIFT_MASK:
-            self.selection_op = SelectionOp.ADD
-        elif state == Gdk.ModifierType.CONTROL_MASK:
-            self.selection_op = SelectionOp.SUBTRACT
-        elif state == (Gdk.ModifierType.SHIFT_MASK |
-                       Gdk.ModifierType.CONTROL_MASK):
-            self.selection_op = SelectionOp.INTERSECT
+            self.update_selection ()
 
-        self.update_selection ()
+            self.grab_add ()
+        elif event.button == 3:
+            selection.select (set ())
 
-        self.grab_add ()
+            self.grab_add ()
 
         return True
 
     def do_button_release_event (self, event):
-        if event.button != 1:
-            return False
+        if event.button == 1 or event.button == 3:
+            self.selection = None
 
-        if self.selection is None:
-            return False
+            selection.change_complete ()
 
-        self.selection = None
+            self.grab_remove ()
 
-        self.grab_remove ()
+            return True
 
-        selection.change_complete ()
-
-        return True
+        return False
 
     def do_motion_notify_event (self, event):
         i = self.x_to_sample (event.x)
@@ -846,8 +847,9 @@ class SampleGraph (Gtk.DrawingArea):
 
             selection.select_range (i0, cursor, op)
 
-            selection.cursor     = cursor
-            selection.cursor_dir = cursor_dir
+            if len (selection.selection) > 1:
+                selection.cursor     = cursor
+                selection.cursor_dir = cursor_dir
 
             return True
         elif event.keyval == Gdk.KEY_Escape:
