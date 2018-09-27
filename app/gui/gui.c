@@ -644,8 +644,7 @@ gui_restore_after_callback (Gimp               *gimp,
   gimp_devices_restore (gimp);
   gimp_controllers_restore (gimp, image_ui_manager);
 
-  if (status_callback == splash_update)
-    splash_destroy ();
+  splash_destroy ();
 
   if (gimp_get_show_gui (gimp))
     {
