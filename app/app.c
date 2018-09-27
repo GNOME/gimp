@@ -63,6 +63,15 @@
 #ifndef GIMP_CONSOLE_COMPILATION
 #include "dialogs/user-install-dialog.h"
 
+#include <gtk/gtk.h>
+
+#include "widgets/widgets-types.h"
+#include "widgets/gimpactionfactory.h"
+#include "widgets/gimpdashboard.h"
+#include "widgets/gimpmenufactory.h"
+
+#include "actions/dashboard-actions.h"
+
 #include "gui/gui.h"
 #endif
 
@@ -78,14 +87,17 @@
 
 /*  local prototypes  */
 
-static void       app_init_update_noop       (const gchar        *text1,
-                                              const gchar        *text2,
-                                              gdouble             percentage);
-static void       app_restore_after_callback (Gimp               *gimp,
-                                              GimpInitStatusFunc  status_callback);
-static gboolean   app_exit_after_callback    (Gimp               *gimp,
-                                              gboolean            kill_it,
-                                              GMainLoop         **loop);
+static void       app_init_update             (const gchar        *text1,
+                                               const gchar        *text2,
+                                               gdouble             percentage);
+#ifndef GIMP_CONSOLE_COMPILATION
+static gboolean   app_init_log_stop_recording (gpointer           data);
+#endif
+static void       app_restore_after_callback  (Gimp               *gimp,
+                                               GimpInitStatusFunc  status_callback);
+static gboolean   app_exit_after_callback     (Gimp               *gimp,
+                                               gboolean            kill_it,
+                                               GMainLoop         **loop);
 
 #if 0
 /*  left here as documentation how to do compat enums  */
@@ -95,7 +107,13 @@ GType gimp_convert_dither_type_compat_get_type (void); /* compat cruft */
 
 /*  local variables  */
 
-static GObject *initial_monitor = NULL;
+static GObject            *initial_monitor    = NULL;
+
+static GimpInitStatusFunc  update_status_func = NULL;
+
+#ifndef GIMP_CONSOLE_COMPILATION
+static GimpDashboard      *dashboard          = NULL;
+#endif
 
 
 /*  public functions  */
@@ -187,17 +205,19 @@ app_run (const gchar         *full_prog_name,
          GimpPDBCompatMode    pdb_compat_mode,
          const gchar         *backtrace_file)
 {
-  GimpInitStatusFunc  update_status_func = NULL;
-  Gimp               *gimp;
-  GMainLoop          *loop;
-  GMainLoop          *run_loop;
-  GFile              *default_folder = NULL;
-  GFile              *gimpdir;
-  const gchar        *abort_message;
-  GimpLangRc         *temprc;
-  gchar              *language   = NULL;
-  GError             *font_error = NULL;
-  gboolean            save_gimprc_at_exit = FALSE;
+  Gimp        *gimp;
+  GMainLoop   *loop;
+  GMainLoop   *run_loop;
+  GFile       *default_folder = NULL;
+  GFile       *gimpdir;
+  const gchar *abort_message;
+  GimpLangRc  *temprc;
+  gchar       *language   = NULL;
+  GError      *font_error = NULL;
+  gboolean     save_gimprc_at_exit = FALSE;
+  gint64       t;
+
+  t = g_get_monotonic_time ();
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -256,6 +276,53 @@ app_run (const gchar         *full_prog_name,
                    show_debug_menu,
                    stack_trace_mode,
                    pdb_compat_mode);
+
+#ifndef GIMP_CONSOLE_COMPILATION
+  if (g_getenv ("GIMP_INIT_PERFORMANCE_LOG"))
+    {
+      GimpActionFactory *action_factory;
+      GimpMenuFactory   *menu_factory;
+      GFile             *file;
+      GError            *error = NULL;
+
+      action_factory = gimp_action_factory_new (gimp);
+
+      gimp_action_factory_group_register (action_factory,
+                                          "dashboard",
+                                          "Dashboard", "gimp-dashboard",
+                                          dashboard_actions_setup,
+                                          dashboard_actions_update);
+
+      menu_factory = gimp_menu_factory_new (gimp, action_factory);
+
+      gimp_menu_factory_manager_register (menu_factory,
+                                          "<Dashboard>", "dashboard",
+                                          NULL,
+                                          "/dashboard-popup",
+                                          "dashboard-menu.xml",
+                                          gimp_dashboard_menu_setup,
+                                          NULL);
+
+      dashboard = GIMP_DASHBOARD (gimp_dashboard_new (gimp, menu_factory));
+      g_object_ref_sink (dashboard);
+
+      g_object_unref (menu_factory);
+      g_object_unref (action_factory);
+
+      file = g_file_new_for_path (g_getenv ("GIMP_INIT_PERFORMANCE_LOG"));
+
+      if (! gimp_dashboard_log_start_recording (dashboard, file, &error))
+        {
+          g_printerr ("%s\n", error->message);
+
+          g_clear_error (&error);
+
+          g_clear_object (&dashboard);
+        }
+
+      g_object_unref (file);
+    }
+#endif
 
   if (default_folder)
     g_object_unref (default_folder);
@@ -330,17 +397,14 @@ app_run (const gchar         *full_prog_name,
     update_status_func = gui_init (gimp, no_splash);
 #endif
 
-  if (! update_status_func)
-    update_status_func = app_init_update_noop;
-
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories
    */
-  gimp_initialize (gimp, update_status_func);
+  gimp_initialize (gimp, app_init_update);
 
   /*  Load all data files
    */
-  gimp_restore (gimp, update_status_func, &font_error);
+  gimp_restore (gimp, app_init_update, &font_error);
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()
@@ -438,6 +502,19 @@ app_run (const gchar         *full_prog_name,
   if (run_loop)
     gimp_batch_run (gimp, batch_interpreter, batch_commands);
 
+  t = g_get_monotonic_time () - t;
+
+  g_printerr ("%g sec.\n", (gdouble) t / G_TIME_SPAN_SECOND);
+
+#ifndef GIMP_CONSOLE_COMPILATION
+  if (dashboard)
+    {
+      gimp_dashboard_log_add_marker (dashboard, "Running main loop");
+
+      g_idle_add_full (G_PRIORITY_LOW, app_init_log_stop_recording, NULL, NULL);
+    }
+#endif
+
   if (run_loop)
     g_main_loop_run (loop);
 
@@ -464,12 +541,78 @@ app_run (const gchar         *full_prog_name,
 /*  private functions  */
 
 static void
-app_init_update_noop (const gchar *text1,
-                      const gchar *text2,
-                      gdouble      percentage)
+app_init_update (const gchar *text1,
+                 const gchar *text2,
+                 gdouble      percentage)
 {
-  /*  deliberately do nothing  */
+#ifndef GIMP_CONSOLE_COMPILATION
+  if (dashboard)
+    {
+      static gchar *last_text1 = NULL;
+      static gchar *last_text2 = NULL;
+
+      if ((text1 && g_strcmp0 (text1, last_text1)) ||
+          (text2 && g_strcmp0 (text2, last_text2)))
+        {
+          gchar *desc;
+
+          if (text1)
+            {
+              g_free (last_text1);
+
+              last_text1 = g_strdup (text1);
+            }
+
+          if (text2)
+            {
+              g_free (last_text2);
+
+              last_text2 = g_strdup (text2);
+            }
+
+          if (last_text2 && *last_text2)
+            desc = g_strdup_printf ("%s (%s)", last_text1, last_text2);
+          else
+            desc = g_strdup (last_text1);
+
+          gimp_dashboard_log_add_marker (dashboard, desc);
+
+          g_free (desc);
+        }
+    }
+#endif
+
+  if (update_status_func)
+    {
+      update_status_func (text1, text2, percentage);
+    }
+  else
+    {
+      /*  deliberately do nothing  */
+    }
 }
+
+#ifndef GIMP_CONSOLE_COMPILATION
+static gboolean
+app_init_log_stop_recording (gpointer data)
+{
+  if (dashboard)
+    {
+      GError *error = NULL;
+
+      if (! gimp_dashboard_log_stop_recording (dashboard, &error))
+        {
+          g_printerr ("%s\n", error->message);
+
+          g_clear_error (&error);
+        }
+
+      g_clear_object (&dashboard);
+    }
+
+  return G_SOURCE_REMOVE;
+}
+#endif
 
 static void
 app_restore_after_callback (Gimp               *gimp,
