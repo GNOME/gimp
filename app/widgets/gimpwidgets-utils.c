@@ -58,7 +58,8 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_TOOL_OPTIONS_GUI_KEY "gimp-tool-options-gui"
+#define GIMP_TOOL_OPTIONS_GUI_KEY      "gimp-tool-options-gui"
+#define GIMP_TOOL_OPTIONS_GUI_FUNC_KEY "gimp-tool-options-gui-func"
 
 
 /**
@@ -1565,18 +1566,57 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
 GtkWidget *
 gimp_tools_get_tool_options_gui (GimpToolOptions *tool_options)
 {
-  return g_object_get_data (G_OBJECT (tool_options),
-                            GIMP_TOOL_OPTIONS_GUI_KEY);
+  GtkWidget *widget;
+
+  widget = g_object_get_data (G_OBJECT (tool_options),
+                              GIMP_TOOL_OPTIONS_GUI_KEY);
+
+  if (! widget)
+    {
+      GimpToolOptionsGUIFunc func;
+
+      func = g_object_get_data (G_OBJECT (tool_options),
+                                GIMP_TOOL_OPTIONS_GUI_FUNC_KEY);
+
+      if (func)
+        {
+          widget = func (tool_options);
+
+          gimp_tools_set_tool_options_gui (tool_options, widget);
+        }
+    }
+
+  return widget;
 }
 
 void
-gimp_tools_set_tool_options_gui (GimpToolOptions   *tool_options,
-                                 GtkWidget         *widget)
+gimp_tools_set_tool_options_gui (GimpToolOptions *tool_options,
+                                 GtkWidget       *widget)
 {
+  GtkWidget *prev_widget;
+
+  prev_widget = g_object_get_data (G_OBJECT (tool_options),
+                                   GIMP_TOOL_OPTIONS_GUI_KEY);
+
+  if (widget == prev_widget)
+    return;
+
+  if (prev_widget)
+    gtk_widget_destroy (prev_widget);
+
   g_object_set_data_full (G_OBJECT (tool_options),
                           GIMP_TOOL_OPTIONS_GUI_KEY,
-                          widget,
+                          widget ? g_object_ref_sink (widget)      : NULL,
                           widget ? (GDestroyNotify) g_object_unref : NULL);
+}
+
+void
+gimp_tools_set_tool_options_gui_func (GimpToolOptions        *tool_options,
+                                      GimpToolOptionsGUIFunc  func)
+{
+  g_object_set_data (G_OBJECT (tool_options),
+                     GIMP_TOOL_OPTIONS_GUI_FUNC_KEY,
+                     func);
 }
 
 void

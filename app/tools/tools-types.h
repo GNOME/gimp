@@ -45,8 +45,6 @@ typedef struct _GimpFilterOptions            GimpFilterOptions;
 
 /*  functions  */
 
-typedef GtkWidget * (* GimpToolOptionsGUIFunc) (GimpToolOptions *tool_options);
-
 typedef void (* GimpToolRegisterCallback) (GType                     tool_type,
                                            GType                     tool_option_type,
                                            GimpToolOptionsGUIFunc    options_gui_func,

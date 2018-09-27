@@ -405,7 +405,6 @@ app/text/gimptextlayer-xcf.c
 app/text/gimptextlayout.c
 app/text/text-enums.c
 
-app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpalignoptions.c
 app/tools/gimpaligntool.c
@@ -489,6 +488,7 @@ app/tools/gimptexttool.c
 app/tools/gimptexttool-editor.c
 app/tools/gimpthresholdtool.c
 app/tools/gimptool.c
+app/tools/gimptooloptions-gui.c
 app/tools/gimptransformgridoptions.c
 app/tools/gimptransformgridtool.c
 app/tools/gimptransformoptions.c

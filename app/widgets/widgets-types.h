@@ -309,5 +309,7 @@ typedef gboolean    (* GimpPanedBoxDroppedFunc)      (GtkWidget         *source,
                                                       gint               insert_index,
                                                       gpointer           data);
 
+typedef GtkWidget * (* GimpToolOptionsGUIFunc)       (GimpToolOptions   *tool_options);
+
 
 #endif /* __WIDGETS_TYPES_H__ */
