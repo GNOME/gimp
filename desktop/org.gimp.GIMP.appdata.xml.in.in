@@ -72,6 +72,32 @@
   </provides>
 
   <releases>
+    <release version="2.10.8" date="2018-09-30">
+      <description>
+        <_p>
+          GIMP 2.10.8 is mostly a bug fix and optimization release. In
+          particular, it includes:
+        </_p>
+        <ul>
+          <_li>
+          Adaptative chunk size when rendering projections, improving
+          responsiveness dynamically
+          </_li>
+          <_li>
+          Detection of RawTherapee (version 5.5 and above) improved on
+          Windows
+          </_li>
+          <_li>
+          XCF compatibility information in the Save dialog more
+          understandable and discoverable
+          </_li>
+          <_li>
+          Various performance log tools added and log recording made
+          available in the Dashboard dock
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.6" date="2018-08-19">
       <description>
         <_p>
