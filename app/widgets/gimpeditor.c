@@ -254,10 +254,14 @@ gimp_editor_constructed (GObject *object)
                                        editor->priv->menu_identifier,
                                        editor->priv->popup_data,
                                        FALSE);
-      g_signal_connect (editor->priv->ui_manager->gimp->config,
-                        "size-changed",
-                        G_CALLBACK (gimp_editor_config_size_changed),
-                        editor);
+
+      if (editor->priv->ui_manager->gimp->config)
+        {
+          g_signal_connect (editor->priv->ui_manager->gimp->config,
+                            "size-changed",
+                            G_CALLBACK (gimp_editor_config_size_changed),
+                            editor);
+        }
     }
 }
 
@@ -272,9 +276,13 @@ gimp_editor_dispose (GObject *object)
 
   if (editor->priv->ui_manager)
     {
-      g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
-                                            G_CALLBACK (gimp_editor_config_size_changed),
-                                            editor);
+      if (editor->priv->ui_manager->gimp->config)
+        {
+          g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
+                                                G_CALLBACK (gimp_editor_config_size_changed),
+                                                editor);
+        }
+
       g_clear_object (&editor->priv->ui_manager);
     }
 
