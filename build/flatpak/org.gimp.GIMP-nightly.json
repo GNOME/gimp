@@ -183,6 +183,11 @@
             ]
         },
         {
+            /* These are dependencies which are already in the runtime, but in
+             * older versions. When we need newer versions of a dep, I add it
+             * here so that I can easily spot the duplicate and recheck when
+             * updating the runtime.
+             */
             "name": "duplicate-dependencies",
             "modules": [
                 {
@@ -205,6 +210,18 @@
                             "type": "archive",
                             "url": "https://src.fedoraproject.org/repo/pkgs/rpms/lcms2/lcms2-2.9.tar.gz/sha512/e30ad5a9a1ab9e7aaace9431434caa19a5ff6143db46644aba971a5ee37a265b26bf738e886d766405a7eb45a9d620d67c7ab3684ace86a107cf5a76642c04a5/lcms2-2.9.tar.gz",
                             "sha256": "a83cd711db57404e17bc943a4c9742d7a98560918ad3d0a4f511428f96d1ad5b"
+                        }
+                    ]
+                },
+                {
+                    "name": "libwebp",
+                    "config-opts": [ "--disable-static", "--enable-libwebpmux", "--enable-libwebpdemux" ],
+                    "cleanup": [ "/share", "/bin" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://downloads.webmproject.org/releases/webp/libwebp-1.0.0.tar.gz",
+                            "sha256": "84259c4388f18637af3c5a6361536d754a5394492f91be1abc2e981d4983225b"
                         }
                     ]
                 }
@@ -239,18 +256,6 @@
             ]
         },
         {
-            "name": "libwebp",
-            "config-opts": [ "--disable-static", "--enable-libwebpmux", "--enable-libwebpdemux" ],
-            "cleanup": [ "/share", "/bin" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://downloads.webmproject.org/releases/webp/libwebp-0.6.0.tar.gz",
-                    "sha256": "c928119229d4f8f35e20113ffb61f281eda267634a8dc2285af4b0ee27cf2b40"
-                }
-            ]
-        },
-        {
             "name": "libwmf",
             "config-opts": [ "--disable-static", "--disable-dependency-tracking" ],
             "cleanup": [ "/share/doc", "/bin" ],
@@ -271,12 +276,12 @@
             "config-opts": [ "--disable-cups" ],
             "make-args": [ "so" ],
             "make-install-args": [ "soinstall" ],
-            "cleanup": [ "/bin", "/share/man", "/share/ghostscript/9.20/doc/", "/share/ghostscript/9.20/examples" ],
+            "cleanup": [ "/bin", "/share/man", "/share/ghostscript/9.25/doc/", "/share/ghostscript/9.25/examples" ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs920/ghostscript-9.20.tar.xz",
-                    "sha256": "3c0f3dc5df6f784850fa4ce7dcc3d6c56ef543af1fbaedd1d9f8d9f8b66de0ab"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs925/ghostscript-9.25.tar.gz",
+                    "sha512": "6710bf00e6246bf07173d4012c7742dd2315b6888b883d63372c0dc2fef76e8be5672f10e4c529244ba153f4ae8ab713403209365a3f7a76c469d69d797761b1"
                 },
                 {
                     "type": "shell",
@@ -285,7 +290,7 @@
                                   "cp -p /usr/share/automake-*/config.{sub,guess} ijs/",
                                   "cp -p /usr/share/automake-*/config.{sub,guess} jpeg/",
                                   "cp -p /usr/share/automake-*/config.{sub,guess} libpng/",
-                                  "cp -p /usr/share/automake-*/config.{sub,guess} lcms2/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} lcms2mt/",
                                   "cp -p /usr/share/automake-*/config.{sub,guess} tiff/config/",
                                   "rm -rf libpng/pngread.c"
                                 ]
