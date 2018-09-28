@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-09-26 17:10+0000\n"
+"POT-Creation-Date: 2018-09-26 18:42+0000\n"
 "PO-Revision-Date: 2018-09-28 12:51+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
@@ -23371,12 +23371,10 @@ msgid "Transforming"
 msgstr "Transformando"
 
 #: ../app/tools/gimptransformtool.c:299
-#| msgid "Transformation"
 msgid "Confirm Transformation"
 msgstr "Confirmar transformación"
 
 #: ../app/tools/gimptransformtool.c:317
-#| msgid "Transformation Matrix"
 msgid "Transformation creates a very large item."
 msgstr "La transformación crear un elemento muy grande."
 
