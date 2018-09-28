@@ -286,6 +286,121 @@ if samples and markers:
 
 markers = None
 
+DELTA_SAME = __builtins__.object ()
+
+def delta_encode (dest, src):
+    if type (dest) == type (src):
+        if dest == src:
+            return DELTA_SAME
+        elif type (dest) == tuple:
+            return tuple (delta_encode (d, s) for d, s in zip (dest, src)) + \
+                   dest[len (src):]
+
+    return dest
+
+def delta_decode (dest, src):
+    if dest == DELTA_SAME:
+        return src
+    elif type (dest) == type (src):
+        if type (dest) == tuple:
+            return tuple (delta_decode (d, s) for d, s in zip (dest, src)) + \
+                   dest[len (src):]
+
+    return dest
+
+class History (GObject.GObject):
+    Source = namedtuple ("HistorySource", ("get", "set"))
+
+    def __init__ (self):
+        GObject.GObject.__init__ (self)
+
+        self.sources = []
+
+        self.state = None
+
+        self.undo_stack = []
+        self.redo_stack = []
+
+        self.n_groups        = 0
+        self.pending_record  = False
+        self.suppress_record = 0
+
+    @GObject.Property (type = bool, default = False)
+    def can_undo (self):
+        return bool (self.undo_stack)
+
+    @GObject.Property (type = bool, default = False)
+    def can_redo (self):
+        return bool (self.redo_stack)
+
+    def add_source (self, get, set):
+        self.sources.append (self.Source (get, set))
+
+    def start_group (self):
+        self.n_groups += 1
+
+    def end_group (self):
+        self.n_groups -= 1
+
+        if self.n_groups == 0 and self.pending_record:
+            self.record ()
+
+    def record (self):
+        if self.suppress_record:
+            return
+
+        if self.n_groups == 0:
+            state = tuple (source.get () for source in self.sources)
+
+            if self.state is None:
+                self.state = state
+            else:
+                self.pending_record = False
+
+                delta = delta_encode (self.state, state)
+
+                if delta == DELTA_SAME:
+                    return
+
+                self.undo_stack.append (delta_encode (self.state, state))
+                self.redo_stack = []
+
+                self.state = state
+
+                self.notify ("can-undo")
+                self.notify ("can-redo")
+        else:
+            self.pending_record = True
+
+    def move (self, src, dest):
+        self.suppress_record += 1
+
+        state = src.pop ()
+
+        for source, substate, prev_substate in \
+            zip (self.sources, self.state, state):
+            if prev_substate != DELTA_SAME:
+                source.set (delta_decode (prev_substate, substate))
+
+        state = delta_decode (state, self.state)
+
+        dest.append (delta_encode (self.state, state))
+
+        self.state = state
+
+        self.notify ("can-undo")
+        self.notify ("can-redo")
+
+        self.suppress_record -= 1
+
+    def undo (self):
+        self.move (self.undo_stack, self.redo_stack)
+
+    def redo (self):
+        self.move (self.redo_stack, self.undo_stack)
+
+history = History ()
+
 class SelectionOp (enum.Enum):
     REPLACE   = enum.auto ()
     ADD       = enum.auto ()
@@ -309,6 +424,12 @@ class Selection (GObject.GObject):
         self.cursor_dir = 0
 
         self.pending_change_completion = False
+
+    def __eq__ (self, other):
+        return type (self)     == type (other)     and \
+               self.selection  == other.selection  and \
+               self.cursor     == other.cursor     and \
+               self.cursor_dir == other.cursor_dir
 
     def __str__ (self):
         n_sel = len (self.selection)
@@ -386,14 +507,35 @@ class Selection (GObject.GObject):
         if self.pending_change_completion:
             self.pending_change_completion = False
 
+            history.start_group ()
+
+            history.record ()
+
             self.emit ("change-complete")
+
+            history.end_group ()
 
     def set_highlight (self, highlight):
         self.highlight = highlight
 
         self.emit ("highlight-changed")
 
+    def source_get (self):
+        return self.copy ()
+
+    def source_set (self, selection):
+        self.cursor     = selection.cursor
+        self.cursor_dir = selection.cursor_dir
+        self.selection  = selection.selection.copy ()
+
+        self.emit ("changed")
+        self.emit ("change-complete")
+
+    def add_history_source (self):
+        history.add_source (self.source_get, self.source_set)
+
 selection = Selection ()
+selection.add_history_source ()
 
 class FindSamplesPopover (Gtk.Popover):
     def __init__ (self, *args, **kwargs):
@@ -1890,6 +2032,13 @@ class ProfileViewer (Gtk.ScrolledWindow):
                                        if row[column]}
                         for row in self}
 
+            def set_filter (self, filter):
+                for row in self:
+                    states = filter[row[self.ID]]
+
+                    for state, column in self.STATE.items ():
+                        row[column] = state in states
+
         def __init__ (self, *args, **kwargs):
             Gtk.TreeView.__init__ (self, *args, **kwargs)
 
@@ -2062,6 +2211,9 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 self.thread_filter_store = thread_filter_store
                 self.thread_filter       = thread_filter_store.get_filter ()
 
+                history.add_source (self.thread_filter_source_get,
+                                    self.thread_filter_source_set)
+
                 button = Gtk.MenuButton (popover = popover)
                 header.pack_end (button)
                 button.show ()
@@ -2081,6 +2233,9 @@ class ProfileViewer (Gtk.ScrolledWindow):
                                                       Gtk.IconSize.BUTTON)
                 hbox.pack_start (image, False, False, 0)
                 image.show ()
+
+                history.add_source (self.direction_source_get,
+                                    self.direction_source_set)
 
                 button = Gtk.Button (tooltip_text = "Call-graph direction")
                 header.pack_end (button)
@@ -2298,7 +2453,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
             self.remove_subprofile ()
 
             box = Gtk.Box (orientation = Gtk.Orientation.HORIZONTAL)
-            self.subprofile = box
+            self.subprofile_box = box
             self.pack_start (box, True, True, 0)
             box.show ()
 
@@ -2306,6 +2461,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
             box.pack_start (separator, False, False, 0)
             separator.show ()
 
+            self.subprofile = subprofile
             box.pack_start (subprofile, True, True, 0)
             subprofile.show ()
 
@@ -2324,11 +2480,43 @@ class ProfileViewer (Gtk.ScrolledWindow):
             if self.subprofile:
                 subprofile = self.subprofile
 
-                self.remove (subprofile)
+                self.remove (self.subprofile_box)
 
-                self.subprofile = None
+                self.subprofile     = None
+                self.subprofile_box = None
 
                 self.emit ("subprofile-removed", subprofile)
+
+        def get_path (self):
+            tree_sel = self.tree.get_selection ()
+
+            sel_rows = tree_sel.get_selected_rows ()[1]
+
+            if not sel_rows:
+                return ()
+
+            id = self.store[sel_rows[0]][self.store.ID]
+
+            if self.subprofile:
+                return (id,) + self.subprofile.get_path ()
+            else:
+                return (id,)
+
+        def set_path (self, path):
+            self.select (path[0] if path else None)
+
+            if self.subprofile:
+                self.subprofile.set_path (path[1:])
+
+        def thread_filter_source_get (self):
+            return self.thread_filter_store.get_filter ()
+
+        def thread_filter_source_set (self, thread_filter):
+            self.thread_filter = thread_filter
+
+            self.thread_filter_store.set_filter (thread_filter)
+
+            self.update ()
 
         def thread_filter_button_toggled (self, button):
             if not button.get_active ():
@@ -2337,7 +2525,21 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 if thread_filter != self.thread_filter:
                     self.thread_filter = thread_filter
 
+                    history.start_group ()
+
+                    history.record ()
+
                     self.update ()
+
+                    history.end_group ()
+
+        def direction_source_get (self):
+            return self.direction
+
+        def direction_source_set (self, direction):
+            self.direction = direction
+
+            self.update ()
 
         def direction_button_clicked (self, button):
             if self.direction == self.Direction.CALLEES:
@@ -2345,9 +2547,17 @@ class ProfileViewer (Gtk.ScrolledWindow):
             else:
                 self.direction = self.Direction.CALLEES
 
+            history.start_group ()
+
+            history.record ()
+
             self.update ()
 
+            history.end_group ()
+
         def select_samples_clicked (self, button):
+            history.start_group ()
+
             self.root.select (self.id)
 
             sel = set ()
@@ -2356,8 +2566,9 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 sel.add (frame.sample)
 
             selection.select (sel)
-
             selection.change_complete ()
+
+            history.end_group ()
 
         def tree_selection_changed (self, tree_sel):
             self.remove_subprofile ()
@@ -2421,6 +2632,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
         self.adjustment_changed_handler = None
         self.needs_update               = True
+        self.pending_path               = None
 
         profile = self.Profile ()
         self.root_profile = profile
@@ -2429,7 +2641,10 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
         selection.connect ("change-complete", self.selection_change_complete)
 
-        profile.connect ("subprofile-added", self.subprofile_added)
+        profile.connect ("subprofile-added",   self.subprofile_added)
+        profile.connect ("subprofile-removed", self.subprofile_removed)
+
+        history.add_source (self.source_get, self.source_set)
 
     @GObject.Property (type = bool, default = False)
     def available (self):
@@ -2441,12 +2656,19 @@ class ProfileViewer (Gtk.ScrolledWindow):
         return False
 
     def update (self):
-        if not self.needs_update or not self.available:
+        if not (self.needs_update or self.pending_path is not None) or \
+           not self.available:
             return
 
-        self.needs_update = False
+        if self.needs_update:
+            self.root_profile.update ()
 
-        self.root_profile.update ()
+            self.needs_update = False
+
+        if self.pending_path is not None:
+            self.root_profile.set_path (self.pending_path)
+
+            self.pending_path = None
 
     def do_map (self):
         self.update ()
@@ -2462,6 +2684,8 @@ class ProfileViewer (Gtk.ScrolledWindow):
         self.notify ("available")
 
     def subprofile_added (self, profile, subprofile):
+        history.record ()
+
         if not self.adjustment_changed_handler:
             adjustment = self.get_hadjustment ()
 
@@ -2478,6 +2702,21 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 "changed",
                 adjustment_changed
             )
+
+    def subprofile_removed (self, profile, subprofile):
+        history.record ()
+
+    def source_get (self):
+        if self.pending_path:
+            return self.pending_path
+        else:
+            return self.root_profile.get_path ()
+
+    def source_set (self, path):
+        if self.get_mapped ():
+            self.root_profile.set_path (path)
+        else:
+            self.pending_path = path
 
 class LogViewer (Gtk.Window):
     def __init__ (self, *args, **kwargs):
@@ -2496,6 +2735,34 @@ class LogViewer (Gtk.Window):
         self.header = header
         self.set_titlebar (header)
         header.show ()
+
+        box = Gtk.Box (orientation = Gtk.Orientation.HORIZONTAL)
+        header.pack_start (box)
+        box.get_style_context ().add_class ("linked")
+        box.get_style_context ().add_class ("raised")
+        box.show ()
+
+        button = Gtk.Button.new_from_icon_name ("go-previous-symbolic",
+                                                Gtk.IconSize.BUTTON)
+        box.pack_start (button, False, True, 0)
+        button.show ()
+
+        history.bind_property ("can-undo",
+                               button, "sensitive",
+                               GObject.BindingFlags.SYNC_CREATE)
+
+        button.connect ("clicked", lambda *args: history.undo ())
+
+        button = Gtk.Button.new_from_icon_name ("go-next-symbolic",
+                                                Gtk.IconSize.BUTTON)
+        box.pack_end (button, False, True, 0)
+        button.show ()
+
+        history.bind_property ("can-redo",
+                               button, "sensitive",
+                               GObject.BindingFlags.SYNC_CREATE)
+
+        button.connect ("clicked", lambda *args: history.redo ())
 
         button = Gtk.MenuButton ()
         header.pack_end (button)
@@ -2597,5 +2864,7 @@ window = LogViewer ()
 window.show ()
 
 window.connect ("destroy", Gtk.main_quit)
+
+history.record ()
 
 Gtk.main ()
