@@ -791,8 +791,12 @@ tool_manager_image_clean_dirty (GimpImage       *image,
       GimpDisplay *display = gimp_tool_has_image (tool, image);
 
       if (display)
-        tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,
-                                     display);
+        {
+          tool_manager_control_active (
+            image->gimp,
+            gimp_tool_control_get_dirty_action (tool->control),
+            display);
+        }
     }
 }
 
