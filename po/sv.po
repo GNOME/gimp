@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-10 04:50+0000\n"
-"PO-Revision-Date: 2018-08-10 09:45+0200\n"
+"POT-Creation-Date: 2018-09-26 17:10+0000\n"
+"PO-Revision-Date: 2018-09-28 16:37+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -690,7 +690,7 @@ msgid "Buffers"
 msgstr "Buffertar"
 
 #: ../app/actions/actions.c:120 ../app/dialogs/dialogs.c:374
-#: ../app/widgets/gimppickablepopup.c:249
+#: ../app/widgets/gimppickablepopup.c:246
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -785,7 +785,7 @@ msgid "Tool Presets"
 msgstr "Verktygsförinställning"
 
 #: ../app/actions/actions.c:183 ../app/dialogs/dialogs.c:436
-#: ../app/widgets/gimptoolpreseteditor.c:94
+#: ../app/widgets/gimptoolpreseteditor.c:95
 msgid "Tool Preset Editor"
 msgstr "Verktygsförinställningsredigare"
 
@@ -798,12 +798,12 @@ msgid "Image"
 msgstr "Bild"
 
 #: ../app/actions/actions.c:192 ../app/dialogs/dialogs.c:332
-#: ../app/widgets/gimppickablepopup.c:179
+#: ../app/widgets/gimppickablepopup.c:176
 msgid "Images"
 msgstr "Bilder"
 
 #: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:370
-#: ../app/dialogs/resize-dialog.c:144 ../app/widgets/gimppickablepopup.c:230
+#: ../app/dialogs/resize-dialog.c:144 ../app/widgets/gimppickablepopup.c:227
 msgid "Layers"
 msgstr "Lager"
 
@@ -867,7 +867,7 @@ msgstr "Textredigerare"
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
-#: ../app/actions/actions.c:234 ../app/widgets/gimptoolpalette.c:329
+#: ../app/actions/actions.c:234 ../app/widgets/gimptoolpalette.c:326
 msgid "Tools"
 msgstr "Verktyg"
 
@@ -1388,7 +1388,7 @@ msgid "_Fill opacity:"
 msgstr "_Fyllnadsopacitet:"
 
 #: ../app/actions/channels-commands.c:156
-#: ../app/widgets/gimpchanneltreeview.c:327
+#: ../app/widgets/gimpchanneltreeview.c:324
 msgid "New Channel"
 msgstr "Ny kanal"
 
@@ -1402,8 +1402,8 @@ msgstr "Ny kanalfärg"
 
 #: ../app/actions/channels-commands.c:274 ../app/core/gimpimage-new.c:278
 #: ../app/display/gimpdisplayshell-dnd.c:671
-#: ../app/widgets/gimpchanneltreeview.c:258
-#: ../app/widgets/gimplayertreeview.c:805
+#: ../app/widgets/gimpchanneltreeview.c:255
+#: ../app/widgets/gimplayertreeview.c:798
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s kanalkopia"
@@ -2707,88 +2707,196 @@ msgstr "Panelmeny"
 
 #: ../app/actions/dashboard-actions.c:44
 msgctxt "dashboard-action"
-msgid "Groups"
-msgstr "Grupper"
+msgid "_Groups"
+msgstr "_Grupper"
 
 #: ../app/actions/dashboard-actions.c:46
 msgctxt "dashboard-action"
-msgid "Update Interval"
-msgstr "Uppdateringsintervall"
+msgid "_Update Interval"
+msgstr "_Uppdateringsintervall"
 
 #: ../app/actions/dashboard-actions.c:48
 msgctxt "dashboard-action"
-msgid "History Duration"
-msgstr "Historikvaraktighet"
+msgid "_History Duration"
+msgstr "_Historikvaraktighet"
 
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
-msgid "Reset"
-msgstr "Återställ"
+msgid "_Start/Stop Recording..."
+msgstr "_Starta/stoppa inspelning…"
 
 #: ../app/actions/dashboard-actions.c:52
+msgctxt "dashboard-action"
+msgid "Start/stop recording performance log"
+msgstr "Starta/stoppa inspelning av prestandalogg"
+
+#: ../app/actions/dashboard-actions.c:56
+msgctxt "dashboard-action"
+msgid "_Add Marker..."
+msgstr "_Lägg till markör…"
+
+#: ../app/actions/dashboard-actions.c:57
+msgctxt "dashboard-action"
+msgid "Add an event marker to the performance log"
+msgstr "Lägg till en händelsemarkör till prestandaloggen"
+
+#: ../app/actions/dashboard-actions.c:62
+msgctxt "dashboard-action"
+msgid "Add _Empty Marker"
+msgstr "Lägg till _tom markör"
+
+#: ../app/actions/dashboard-actions.c:63
+msgctxt "dashboard-action"
+msgid "Add an empty event marker to the performance log"
+msgstr "Lägg till en tom händelsemarkör till prestandaloggen"
+
+#: ../app/actions/dashboard-actions.c:69
+msgctxt "dashboard-action"
+msgid "_Reset"
+msgstr "_Återställ"
+
+#: ../app/actions/dashboard-actions.c:70
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
 msgstr "Återställ kumulativ data"
 
-#: ../app/actions/dashboard-actions.c:60
+#: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-action"
-msgid "Low Swap Space Warning"
-msgstr "Varning för lite växlingsutrymme"
+msgid "_Low Swap Space Warning"
+msgstr "Varning för _lite växlingsutrymme"
 
-#: ../app/actions/dashboard-actions.c:61
+#: ../app/actions/dashboard-actions.c:79
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
 msgstr "Höj panelen när storleken för växlingsutrymme når sin gräns"
 
-#: ../app/actions/dashboard-actions.c:71
+#: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
 msgstr "0,25 sekunder"
 
-#: ../app/actions/dashboard-actions.c:76
+#: ../app/actions/dashboard-actions.c:94
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
 msgstr "0,5 sekunder"
 
-#: ../app/actions/dashboard-actions.c:81
+#: ../app/actions/dashboard-actions.c:99
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
 msgstr "1 sekund"
 
-#: ../app/actions/dashboard-actions.c:86
+#: ../app/actions/dashboard-actions.c:104
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
 msgstr "2 sekunder"
 
-#: ../app/actions/dashboard-actions.c:91
+#: ../app/actions/dashboard-actions.c:109
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
 msgstr "4 sekunder"
 
-#: ../app/actions/dashboard-actions.c:99
+#: ../app/actions/dashboard-actions.c:117
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
 msgstr "15 sekunder"
 
-#: ../app/actions/dashboard-actions.c:104
+#: ../app/actions/dashboard-actions.c:122
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
 msgstr "30 sekunder"
 
-#: ../app/actions/dashboard-actions.c:109
+#: ../app/actions/dashboard-actions.c:127
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
 msgstr "60 sekunder"
 
-#: ../app/actions/dashboard-actions.c:114
+#: ../app/actions/dashboard-actions.c:132
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
 msgstr "120 sekunder"
 
-#: ../app/actions/dashboard-actions.c:119
+#: ../app/actions/dashboard-actions.c:137
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
 msgstr "240 sekunder"
+
+#: ../app/actions/dashboard-commands.c:102
+#: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:161
+#: ../app/actions/error-console-commands.c:96
+#: ../app/actions/file-commands.c:416
+#: ../app/actions/gradient-editor-commands.c:401
+#: ../app/actions/gradient-editor-commands.c:510
+#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:178
+#: ../app/actions/templates-commands.c:244
+#: ../app/actions/text-editor-commands.c:64
+#: ../app/actions/text-tool-commands.c:118
+#: ../app/actions/tool-options-commands.c:195
+#: ../app/actions/window-commands.c:75
+#: ../app/dialogs/color-profile-dialog.c:136
+#: ../app/dialogs/color-profile-dialog.c:154
+#: ../app/dialogs/color-profile-dialog.c:172
+#: ../app/dialogs/color-profile-dialog.c:190
+#: ../app/dialogs/color-profile-dialog.c:208
+#: ../app/dialogs/convert-indexed-dialog.c:142
+#: ../app/dialogs/convert-precision-dialog.c:165
+#: ../app/dialogs/data-delete-dialog.c:86 ../app/dialogs/fade-dialog.c:120
+#: ../app/dialogs/file-open-location-dialog.c:80
+#: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
+#: ../app/dialogs/grid-dialog.c:102
+#: ../app/dialogs/image-merge-layers-dialog.c:100
+#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
+#: ../app/dialogs/image-scale-dialog.c:210
+#: ../app/dialogs/item-options-dialog.c:145
+#: ../app/dialogs/layer-add-mask-dialog.c:110
+#: ../app/dialogs/offset-dialog.c:136
+#: ../app/dialogs/palette-import-dialog.c:162
+#: ../app/dialogs/preferences-dialog.c:287
+#: ../app/dialogs/preferences-dialog.c:637
+#: ../app/dialogs/preferences-dialog.c:1095
+#: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
+#: ../app/dialogs/resize-dialog.c:186
+#: ../app/dialogs/resolution-calibrate-dialog.c:75
+#: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
+#: ../app/dialogs/template-options-dialog.c:118
+#: ../app/dialogs/vectors-export-dialog.c:83
+#: ../app/dialogs/vectors-import-dialog.c:88
+#: ../app/display/gimpdisplayshell-close.c:179
+#: ../app/display/gimpdisplayshell-filter-dialog.c:87
+#: ../app/display/gimpdisplayshell-rotate-dialog.c:122
+#: ../app/display/gimpdisplayshell-scale-dialog.c:122
+#: ../app/tools/gimpfiltertool.c:321
+#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
+#: ../app/tools/gimptransformgridtool.c:919
+#: ../app/tools/gimptransformtool.c:306 ../app/widgets/gimpactionview.c:669
+#: ../app/widgets/gimpcolordialog.c:110
+#: ../app/widgets/gimpcontrollereditor.c:660
+#: ../app/widgets/gimpcontrollerlist.c:564
+#: ../app/widgets/gimpdeviceeditor.c:509 ../app/widgets/gimpdnd-xds.c:228
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
+#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:484
+#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:730
+msgid "_Cancel"
+msgstr "_Avbryt"
+
+#: ../app/actions/dashboard-commands.c:103
+msgid "_Record"
+msgstr "S_pela in"
+
+#: ../app/actions/dashboard-commands.c:125
+msgid "All Files"
+msgstr "Alla filer"
+
+#: ../app/actions/dashboard-commands.c:130
+msgid "Log Files (*.log)"
+msgstr "Loggfiler (*.log)"
+
+#: ../app/actions/dashboard-commands.c:197
+msgid "Add Marker"
+msgstr "Lägg till markör"
+
+#: ../app/actions/dashboard-commands.c:199
+msgid "Enter a description for the marker"
+msgstr "Ange en beskrivning för markören"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
 #: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:212
@@ -2796,7 +2904,7 @@ msgstr "240 sekunder"
 #: ../app/dialogs/file-open-location-dialog.c:223
 #: ../app/dialogs/file-open-location-dialog.c:239
 #: ../app/display/gimpdisplayshell-dnd.c:615
-#: ../app/widgets/gimplayertreeview.c:765 ../app/widgets/gimptoolbox.c:805
+#: ../app/widgets/gimplayertreeview.c:758 ../app/widgets/gimptoolbox.c:801
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
 msgid ""
@@ -2809,8 +2917,8 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1990
-#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:213
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1991
+#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:214
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
@@ -3224,7 +3332,7 @@ msgstr "Sök kommandon efter nyckelord och kör dem"
 
 #: ../app/actions/dialogs-actions.c:357
 #: ../app/dialogs/preferences-dialog.c:2041
-#: ../app/dialogs/preferences-dialog.c:2042 ../app/widgets/gimptoolbox.c:529
+#: ../app/dialogs/preferences-dialog.c:2042 ../app/widgets/gimptoolbox.c:525
 msgid "Toolbox"
 msgstr "Verktygslåda"
 
@@ -3509,62 +3617,6 @@ msgstr ""
 #: ../app/actions/documents-commands.c:223
 msgid "Clear Document History"
 msgstr "Töm dokumenthistorik"
-
-#: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:161
-#: ../app/actions/error-console-commands.c:96
-#: ../app/actions/file-commands.c:416
-#: ../app/actions/gradient-editor-commands.c:401
-#: ../app/actions/gradient-editor-commands.c:510
-#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:178
-#: ../app/actions/templates-commands.c:244
-#: ../app/actions/text-editor-commands.c:64
-#: ../app/actions/text-tool-commands.c:118
-#: ../app/actions/tool-options-commands.c:195
-#: ../app/actions/window-commands.c:75
-#: ../app/dialogs/color-profile-dialog.c:136
-#: ../app/dialogs/color-profile-dialog.c:154
-#: ../app/dialogs/color-profile-dialog.c:172
-#: ../app/dialogs/color-profile-dialog.c:190
-#: ../app/dialogs/color-profile-dialog.c:208
-#: ../app/dialogs/convert-indexed-dialog.c:142
-#: ../app/dialogs/convert-precision-dialog.c:165
-#: ../app/dialogs/data-delete-dialog.c:86 ../app/dialogs/fade-dialog.c:120
-#: ../app/dialogs/file-open-location-dialog.c:80
-#: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
-#: ../app/dialogs/grid-dialog.c:102
-#: ../app/dialogs/image-merge-layers-dialog.c:100
-#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
-#: ../app/dialogs/image-scale-dialog.c:210
-#: ../app/dialogs/item-options-dialog.c:145
-#: ../app/dialogs/layer-add-mask-dialog.c:110
-#: ../app/dialogs/offset-dialog.c:136
-#: ../app/dialogs/palette-import-dialog.c:162
-#: ../app/dialogs/preferences-dialog.c:287
-#: ../app/dialogs/preferences-dialog.c:637
-#: ../app/dialogs/preferences-dialog.c:1095
-#: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
-#: ../app/dialogs/resize-dialog.c:186
-#: ../app/dialogs/resolution-calibrate-dialog.c:75
-#: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
-#: ../app/dialogs/template-options-dialog.c:118
-#: ../app/dialogs/vectors-export-dialog.c:83
-#: ../app/dialogs/vectors-import-dialog.c:88
-#: ../app/display/gimpdisplayshell-close.c:179
-#: ../app/display/gimpdisplayshell-filter-dialog.c:87
-#: ../app/display/gimpdisplayshell-rotate-dialog.c:122
-#: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:323
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1718
-#: ../app/tools/gimptransformgridtool.c:919 ../app/widgets/gimpactionview.c:669
-#: ../app/widgets/gimpcolordialog.c:110
-#: ../app/widgets/gimpcontrollereditor.c:660
-#: ../app/widgets/gimpcontrollerlist.c:564
-#: ../app/widgets/gimpdeviceeditor.c:512 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
-#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:488
-#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
-msgid "_Cancel"
-msgstr "_Avbryt"
 
 #: ../app/actions/documents-commands.c:231 ../app/actions/edit-commands.c:162
 #: ../app/dialogs/preferences-dialog.c:638
@@ -4252,7 +4304,7 @@ msgstr "Spara fellogg till fil"
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
-#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:736
+#: ../app/widgets/gimpsavedialog.c:142 ../app/widgets/gimpsettingsbox.c:732
 msgid "_Save"
 msgstr "_Spara"
 
@@ -4473,7 +4525,7 @@ msgid "No changes need to be saved"
 msgstr "Inga ändringar behöver sparas"
 
 #: ../app/actions/file-commands.c:284 ../app/actions/file-commands.c:751
-#: ../app/widgets/gimpsavedialog.c:140
+#: ../app/widgets/gimpsavedialog.c:139
 msgid "Save Image"
 msgstr "Spara bild"
 
@@ -7138,7 +7190,7 @@ msgstr "Redigera lagerattribut"
 
 #: ../app/actions/layers-commands.c:336
 #: ../app/widgets/gimpdrawabletreeview.c:331
-#: ../app/widgets/gimplayertreeview.c:882
+#: ../app/widgets/gimplayertreeview.c:875
 msgid "New Layer"
 msgstr "Nytt lager"
 
@@ -7527,7 +7579,7 @@ msgstr "Återställ alla filter"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimptransformgridtool.c:918
+#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformgridtool.c:918
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -7894,7 +7946,7 @@ msgid "Delete Template"
 msgstr "Ta bort mall"
 
 #: ../app/actions/templates-commands.c:245
-#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:513
+#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:510
 msgid "_Delete"
 msgstr "_Ta bort"
 
@@ -7993,14 +8045,14 @@ msgstr "Öppna textfil (UTF-8)"
 #: ../app/actions/text-tool-commands.c:119
 #: ../app/dialogs/file-open-location-dialog.c:81
 #: ../app/dialogs/vectors-import-dialog.c:89
-#: ../app/widgets/gimpiconpicker.c:489 ../app/widgets/gimpopendialog.c:69
-#: ../app/widgets/gimpsettingsbox.c:736
+#: ../app/widgets/gimpiconpicker.c:485 ../app/widgets/gimpopendialog.c:69
+#: ../app/widgets/gimpsettingsbox.c:732
 msgid "_Open"
 msgstr "_Öppna"
 
 #: ../app/actions/text-editor-commands.c:139
 #: ../app/actions/text-tool-commands.c:209 ../app/config/gimpconfig-file.c:71
-#: ../app/core/gimppalette-import.c:512 ../app/plug-in/gimpenvirontable.c:289
+#: ../app/core/gimppalette-import.c:513 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:234
 #: ../app/tools/gimpfiltertool-settings.c:170
 #: ../app/widgets/gimptextbuffer.c:1674
@@ -10056,7 +10108,7 @@ msgstr "Flytta det här fönstret till skärmen %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
-#: ../app/tools/gimpfiltertool.c:324 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:322 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -10360,19 +10412,19 @@ msgstr ""
 "Ett fel uppstod vid tolkningen av filen ”%s”. Standardvärden kommer att "
 "användas. En säkerhetskopia av din konfiguration har skapats vid ”%s”."
 
-#: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:440
+#: ../app/config/gimpdialogconfig.c:306 ../app/core/gimplayer.c:440
 msgid "Layer"
 msgstr "Lager"
 
-#: ../app/config/gimpdialogconfig.c:407 ../app/core/gimpchannel.c:271
+#: ../app/config/gimpdialogconfig.c:406 ../app/core/gimpchannel.c:271
 #: ../app/operations/gimpcurvesconfig.c:110
 #: ../app/operations/gimplevelsconfig.c:115
 #: ../app/operations/gimpoperationthreshold.c:89
-#: ../app/widgets/gimpchanneltreeview.c:332
+#: ../app/widgets/gimpchanneltreeview.c:329
 msgid "Channel"
 msgstr "Kanal"
 
-#: ../app/config/gimpdialogconfig.c:422 ../app/vectors/gimpvectors.c:223
+#: ../app/config/gimpdialogconfig.c:421 ../app/vectors/gimpvectors.c:223
 #: ../app/widgets/gimpvectorstreeview.c:250
 msgid "Path"
 msgstr "Bana"
@@ -11853,7 +11905,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Text"
 
-#: ../app/core/core-enums.c:1132 ../app/core/gimpdrawable-transform.c:736
+#: ../app/core/core-enums.c:1132 ../app/core/gimpdrawable-transform.c:768
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformera"
@@ -12297,7 +12349,7 @@ msgstr "Skapar mappen ”%s”…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Kan inte skapa mappen ”%s”: %s"
 
-#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:330
+#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:327
 msgid "No patterns available for this operation."
 msgstr "Inga mönster tillgängliga för denna åtgärd."
 
@@ -12349,7 +12401,7 @@ msgstr "Ogiltig UTF-8-sträng i penselfilen ”%s”."
 
 #: ../app/core/gimpbrush-load.c:278 ../app/core/gimppattern-load.c:141
 #: ../app/dialogs/template-options-dialog.c:110
-#: ../app/display/gimptoolpath.c:566
+#: ../app/display/gimptoolpath.c:562
 msgid "Unnamed"
 msgstr "Namnlös"
 
@@ -12424,7 +12476,7 @@ msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
 "Ödesdigert tolkningsfel i penselfil: RLE-komprimerad penseldata är skadad."
 
-#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:225
+#: ../app/core/gimpbrush.c:151 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
 msgstr "Penselmellanrum"
 
@@ -12587,7 +12639,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Rotera kanal"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1057
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1088
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transformera kanal"
@@ -12720,7 +12772,7 @@ msgstr "Bakgrundsfärg"
 
 #: ../app/core/gimpcontext.c:697 ../app/core/gimpcontext.c:698
 #: ../app/dialogs/fade-dialog.c:158 ../app/widgets/gimpbrushselect.c:175
-#: ../app/widgets/gimplayertreeview.c:295
+#: ../app/widgets/gimplayertreeview.c:288
 msgid "Opacity"
 msgstr "Opacitet"
 
@@ -12768,8 +12820,8 @@ msgstr "Typsnitt"
 msgid "Tool Preset"
 msgstr "Verktygsförinställning"
 
-#: ../app/core/gimpdatafactory.c:351 ../app/core/gimpdatafactory.c:385
-#: ../app/core/gimpdatafactory.c:700 ../app/core/gimpdatafactory.c:731
+#: ../app/core/gimpdatafactory.c:348 ../app/core/gimpdatafactory.c:382
+#: ../app/core/gimpdatafactory.c:697 ../app/core/gimpdatafactory.c:728
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -12780,22 +12832,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:415 ../app/core/gimpdatafactory.c:418
-#: ../app/core/gimpitem.c:546 ../app/core/gimpitem.c:549
+#: ../app/core/gimpdatafactory.c:412 ../app/core/gimpdatafactory.c:415
+#: ../app/core/gimpitem.c:542 ../app/core/gimpitem.c:545
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:427 ../app/core/gimpitem.c:557
+#: ../app/core/gimpdatafactory.c:424 ../app/core/gimpitem.c:553
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopia"
 
-#: ../app/core/gimpdatafactory.c:576 ../app/tools/gimptextoptions.c:536
+#: ../app/core/gimpdatafactory.c:573 ../app/tools/gimptextoptions.c:536
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Läser in typsnitt (det här kan ta en stund…)"
 
-#: ../app/core/gimpdatafactory.c:895
+#: ../app/core/gimpdatafactory.c:892
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -12806,7 +12858,7 @@ msgstr ""
 "Skapa mappen eller justera din konfiguration i delen ”kataloger” i "
 "Inställningsdialogrutan."
 
-#: ../app/core/gimpdatafactory.c:914
+#: ../app/core/gimpdatafactory.c:911
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -12817,27 +12869,27 @@ msgstr ""
 "din datasökväg. Du redigerade förmodligen gimprc-filen manuellt, justera "
 "detta i delen ”kataloger” i Inställningsdialogrutan."
 
-#: ../app/core/gimpdatafactory.c:924
+#: ../app/core/gimpdatafactory.c:921
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Du har ingen skrivbar datamapp konfigurerad."
 
-#: ../app/core/gimpdataloaderfactory.c:462
+#: ../app/core/gimpdataloaderfactory.c:458
 #, c-format
 msgid "Error loading '%s': "
 msgstr "Fel vid inläsning av ”%s”: "
 
-#: ../app/core/gimpdataloaderfactory.c:468
+#: ../app/core/gimpdataloaderfactory.c:464
 #, c-format
 msgid "Error loading '%s'"
 msgstr "Fel vid inläsning av ”%s”"
 
-#: ../app/core/gimpdataloaderfactory.c:478 ../app/xcf/xcf.c:439
+#: ../app/core/gimpdataloaderfactory.c:474 ../app/xcf/xcf.c:439
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Kunde inte öppna ”%s” för läsning: "
 
-#: ../app/core/gimpdataloaderfactory.c:538
+#: ../app/core/gimpdataloaderfactory.c:534
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -12848,7 +12900,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:487
+#: ../app/core/gimpdrawable.c:484
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skala"
@@ -12911,65 +12963,65 @@ msgstr "Position för rityta"
 msgid "Not enough points to stroke"
 msgstr "Inte tillräckligt många punkter att stryka"
 
-#: ../app/core/gimpdrawable-transform.c:825
+#: ../app/core/gimpdrawable-transform.c:856
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Vänd"
 
-#: ../app/core/gimpdrawable-transform.c:910
+#: ../app/core/gimpdrawable-transform.c:941
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Rotera"
 
-#: ../app/core/gimpdrawable-transform.c:1055 ../app/core/gimplayer.c:447
+#: ../app/core/gimpdrawable-transform.c:1086 ../app/core/gimplayer.c:447
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transformera lager"
 
-#: ../app/core/gimpdrawable-transform.c:1068
+#: ../app/core/gimpdrawable-transform.c:1099
 msgid "Transformation"
 msgstr "Transformation"
 
-#: ../app/core/gimpdynamicsoutput.c:136
+#: ../app/core/gimpdynamicsoutput.c:135
 msgid "Output type"
 msgstr "Utmatningstyp"
 
-#: ../app/core/gimpfilloptions.c:103
+#: ../app/core/gimpfilloptions.c:102
 msgid "Style"
 msgstr "Stil"
 
-#: ../app/core/gimpfilloptions.c:111 ../app/pdb/gimppdbcontext.c:100
+#: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
 #: ../app/tools/gimpbucketfilloptions.c:132
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
-#: ../app/core/gimpfilloptions.c:303
+#: ../app/core/gimpfilloptions.c:300
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Fyll med förgrundsfärg"
 
-#: ../app/core/gimpfilloptions.c:308
+#: ../app/core/gimpfilloptions.c:305
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Fyll med bakgrundsfärg"
 
-#: ../app/core/gimpfilloptions.c:313
+#: ../app/core/gimpfilloptions.c:310
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Fyll med vitt"
 
-#: ../app/core/gimpfilloptions.c:320
+#: ../app/core/gimpfilloptions.c:317
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Fyll med transparent"
 
-#: ../app/core/gimpfilloptions.c:336 ../app/core/gimpfilloptions.c:404
+#: ../app/core/gimpfilloptions.c:333 ../app/core/gimpfilloptions.c:401
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Fyll med mönster"
 
-#: ../app/core/gimpfilloptions.c:401
+#: ../app/core/gimpfilloptions.c:398
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
 msgstr "Fyll med en enda färg"
@@ -13074,98 +13126,103 @@ msgstr "Vertikal början på första linjen; detta kan vara negativt."
 msgid "Offset unit"
 msgstr "Positionsenhet"
 
-#: ../app/core/gimpgrouplayer.c:280
+#: ../app/core/gimpgrouplayer.c:278
 msgid "Layer Group"
 msgstr "Lagergrupp"
 
-#: ../app/core/gimpgrouplayer.c:281
+#: ../app/core/gimpgrouplayer.c:279
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Byt namn på lagergrupp"
 
-#: ../app/core/gimpgrouplayer.c:282
+#: ../app/core/gimpgrouplayer.c:280
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Flytta lagergrupp"
 
-#: ../app/core/gimpgrouplayer.c:283
+#: ../app/core/gimpgrouplayer.c:281
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Skala lagergrupp"
 
-#: ../app/core/gimpgrouplayer.c:284
+#: ../app/core/gimpgrouplayer.c:282
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Ändra storlek på lagergrupp"
 
-#: ../app/core/gimpgrouplayer.c:285
+#: ../app/core/gimpgrouplayer.c:283
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Vänd lagergrupp"
 
-#: ../app/core/gimpgrouplayer.c:286
+#: ../app/core/gimpgrouplayer.c:284
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Rotera lagergrupp"
 
-#: ../app/core/gimpgrouplayer.c:287
+#: ../app/core/gimpgrouplayer.c:285
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformera lagergrupp"
 
-#: ../app/core/gimpimage.c:649 ../app/widgets/gimpsymmetryeditor.c:179
+#: ../app/core/gimpimage.c:650 ../app/widgets/gimpsymmetryeditor.c:175
 msgid "Symmetry"
 msgstr "Symmetri"
 
-#: ../app/core/gimpimage.c:2217
+#: ../app/core/gimpimage.c:2218
 msgid " (exported)"
 msgstr " (exporterad)"
 
-#: ../app/core/gimpimage.c:2221
+#: ../app/core/gimpimage.c:2222
 msgid " (overwritten)"
 msgstr " (överskriven)"
 
-#: ../app/core/gimpimage.c:2230
+#: ../app/core/gimpimage.c:2231
 msgid " (imported)"
 msgstr " (importerad)"
 
-#: ../app/core/gimpimage.c:2404 ../app/core/gimpimage.c:2418
-#: ../app/core/gimpimage.c:2461
+#: ../app/core/gimpimage.c:2405 ../app/core/gimpimage.c:2419
+#: ../app/core/gimpimage.c:2462
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Lagerläget ”%s” lades till i %s"
 
-#: ../app/core/gimpimage.c:2476
+#: ../app/core/gimpimage.c:2477
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Lagergrupper lades till i %s"
 
-#: ../app/core/gimpimage.c:2483
+#: ../app/core/gimpimage.c:2484
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Masker på lagergrupper lades till i %s"
 
-#: ../app/core/gimpimage.c:2499
+#: ../app/core/gimpimage.c:2500
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Bilder med högt bitdjup lades till i %s"
 
-#: ../app/core/gimpimage.c:2524
+#: ../app/core/gimpimage.c:2512
+#, c-format
+msgid "Internal zlib compression was added in %s"
+msgstr "Intern zlib-komprimering lades till i %s"
+
+#: ../app/core/gimpimage.c:2529
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Stöd för bildfiler större än 4GB lades till i %s"
 
-#: ../app/core/gimpimage.c:2618
+#: ../app/core/gimpimage.c:2623
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Ändra bildupplösning"
 
-#: ../app/core/gimpimage.c:2670
+#: ../app/core/gimpimage.c:2675
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Ändra bildenhet"
 
-#: ../app/core/gimpimage.c:3557
+#: ../app/core/gimpimage.c:3562
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13173,47 +13230,47 @@ msgstr ""
 "”gimp-comment”-parasitvalidering misslyckades: kommentar innehåller ogiltig "
 "UTF-8"
 
-#: ../app/core/gimpimage.c:3609
+#: ../app/core/gimpimage.c:3614
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Koppla parasit till bild"
 
-#: ../app/core/gimpimage.c:3650
+#: ../app/core/gimpimage.c:3655
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Ta bort parasit från bild"
 
-#: ../app/core/gimpimage.c:4377
+#: ../app/core/gimpimage.c:4382
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Lägg till lager"
 
-#: ../app/core/gimpimage.c:4419 ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4424 ../app/core/gimpimage.c:4455
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Ta bort lager"
 
-#: ../app/core/gimpimage.c:4444
+#: ../app/core/gimpimage.c:4449
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Ta bort flytande markering"
 
-#: ../app/core/gimpimage.c:4611
+#: ../app/core/gimpimage.c:4616
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Lägg till kanal"
 
-#: ../app/core/gimpimage.c:4639 ../app/core/gimpimage.c:4663
+#: ../app/core/gimpimage.c:4644 ../app/core/gimpimage.c:4668
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Ta bort kanal"
 
-#: ../app/core/gimpimage.c:4719
+#: ../app/core/gimpimage.c:4724
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Lägg till bana"
 
-#: ../app/core/gimpimage.c:4749 ../app/core/gimpimage.c:4756
+#: ../app/core/gimpimage.c:4754 ../app/core/gimpimage.c:4761
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Ta bort bana"
@@ -13286,20 +13343,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Lägg till färg till färgkarta"
 
-#: ../app/core/gimpimage-convert-indexed.c:790
+#: ../app/core/gimpimage-convert-indexed.c:791
 msgid "Cannot convert image: palette is empty."
 msgstr "Kan inte konvertera bild: paletten är tom."
 
-#: ../app/core/gimpimage-convert-indexed.c:802
+#: ../app/core/gimpimage-convert-indexed.c:803
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Konvertera bild till indexerade färger"
 
-#: ../app/core/gimpimage-convert-indexed.c:894
+#: ../app/core/gimpimage-convert-indexed.c:895
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Konverterar till indexerade färger (fas 2)"
 
-#: ../app/core/gimpimage-convert-indexed.c:943
+#: ../app/core/gimpimage-convert-indexed.c:944
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Konverterar till indexerade färger (fas 3)"
 
@@ -13530,71 +13587,71 @@ msgstr "Skala bild"
 msgid "Can't undo %s"
 msgstr "Kan inte ångra %s"
 
-#: ../app/core/gimpimagefile.c:750 ../app/dialogs/preferences-dialog.c:1861
+#: ../app/core/gimpimagefile.c:746 ../app/dialogs/preferences-dialog.c:1861
 #: ../app/dialogs/preferences-dialog.c:1967
 msgid "Folder"
 msgstr "Mapp"
 
-#: ../app/core/gimpimagefile.c:755
+#: ../app/core/gimpimagefile.c:751
 msgid "Special File"
 msgstr "Särskild fil"
 
-#: ../app/core/gimpimagefile.c:771
+#: ../app/core/gimpimagefile.c:767
 msgid "Remote File"
 msgstr "Fjärrfil"
 
-#: ../app/core/gimpimagefile.c:790
+#: ../app/core/gimpimagefile.c:786
 msgid "Click to create preview"
 msgstr "Klicka för att skapa förhandsvisning"
 
-#: ../app/core/gimpimagefile.c:796
+#: ../app/core/gimpimagefile.c:792
 msgid "Loading preview..."
 msgstr "Läser in förhandsvisning…"
 
-#: ../app/core/gimpimagefile.c:802
+#: ../app/core/gimpimagefile.c:798
 msgid "Preview is out of date"
 msgstr "Förhandsvisningen är för gammal"
 
-#: ../app/core/gimpimagefile.c:808
+#: ../app/core/gimpimagefile.c:804
 msgid "Cannot create preview"
 msgstr "Kan inte skapa förhandsvisning"
 
-#: ../app/core/gimpimagefile.c:818
+#: ../app/core/gimpimagefile.c:814
 msgid "(Preview may be out of date)"
 msgstr "(Förhandsvisningen kan vara för gammal)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:827 ../app/widgets/gimpimagepropview.c:429
-#: ../app/widgets/gimpsizebox.c:432 ../app/widgets/gimptemplateeditor.c:684
+#: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:429
+#: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:681
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d bildpunkt"
 msgstr[1] "%d × %d bildpunkter"
 
-#: ../app/core/gimpimagefile.c:850 ../app/display/gimpdisplayshell-title.c:325
+#: ../app/core/gimpimagefile.c:846 ../app/display/gimpdisplayshell-title.c:325
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d lager"
 msgstr[1] "%d lager"
 
-#: ../app/core/gimpimagefile.c:898
+#: ../app/core/gimpimagefile.c:894
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Kunde inte öppna miniatyrbild ”%s”: %s"
 
-#: ../app/core/gimpitem.c:2121
+#: ../app/core/gimpitem.c:2117
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Koppla parasit"
 
-#: ../app/core/gimpitem.c:2131
+#: ../app/core/gimpitem.c:2127
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Koppla parasit till objekt"
 
-#: ../app/core/gimpitem.c:2182 ../app/core/gimpitem.c:2189
+#: ../app/core/gimpitem.c:2178 ../app/core/gimpitem.c:2185
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Ta bort parasit från objekt"
@@ -13790,17 +13847,17 @@ msgstr "Misslyckades med att deserialisera MyPaint-pensel."
 # TODO: (%u occurrences) bättre grammatiskt i originalet?
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
-#: ../app/core/gimppalette-import.c:212
+#: ../app/core/gimppalette-import.c:213
 #, c-format
 msgid "%s (occurs %u)"
 msgstr "%s (%u förekomster)"
 
-#: ../app/core/gimppalette-import.c:425
+#: ../app/core/gimppalette-import.c:426
 #, c-format
 msgid "Index %d"
 msgstr "Index %d"
 
-#: ../app/core/gimppalette-import.c:547
+#: ../app/core/gimppalette-import.c:548
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Okänd typ av palettfil: %s"
@@ -14012,33 +14069,33 @@ msgstr "Flytande lager"
 msgid "Last used: %s"
 msgstr "Senast använd: %s"
 
-#: ../app/core/gimpstrokeoptions.c:156
+#: ../app/core/gimpstrokeoptions.c:155
 msgid "Method"
 msgstr "Metod"
 
-#: ../app/core/gimpstrokeoptions.c:164
+#: ../app/core/gimpstrokeoptions.c:163
 msgid "Line width"
 msgstr "Linjebredd"
 
-#: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:151
+#: ../app/core/gimpstrokeoptions.c:170 ../app/core/gimptemplate.c:150
 #: ../app/tools/gimptextoptions.c:123
 msgid "Unit"
 msgstr "Enhet"
 
-#: ../app/core/gimpstrokeoptions.c:178
+#: ../app/core/gimpstrokeoptions.c:177
 msgid "Cap style"
 msgstr "Ändpunktsstil"
 
-#: ../app/core/gimpstrokeoptions.c:185
+#: ../app/core/gimpstrokeoptions.c:184
 msgid "Join style"
 msgstr "Fogstil"
 
-#: ../app/core/gimpstrokeoptions.c:192
+#: ../app/core/gimpstrokeoptions.c:191
 msgid "Miter limit"
 msgstr "Geringsgräns"
 
 # FIXME: Inget bra det här
-#: ../app/core/gimpstrokeoptions.c:193
+#: ../app/core/gimpstrokeoptions.c:192
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -14046,17 +14103,17 @@ msgstr ""
 "Konvertera en geringsfog till en avfasad fogning om kanten skulle överstiga "
 "avståndet geringsgräns * linjebredd från den faktiska fogpunkten."
 
-#: ../app/core/gimpstrokeoptions.c:202
+#: ../app/core/gimpstrokeoptions.c:201
 msgid "Dash offset"
 msgstr "Streckposition"
 
-#: ../app/core/gimpstrokeoptions.c:224
+#: ../app/core/gimpstrokeoptions.c:223
 msgid "Emulate brush dynamics"
 msgstr "Emulera penseldynamik"
 
 #. no undo (or redo) steps available
 #: ../app/core/gimpsymmetry.c:134 ../app/widgets/gimpimagepropview.c:399
-#: ../app/widgets/gimpsymmetryeditor.c:169
+#: ../app/widgets/gimpsymmetryeditor.c:165
 msgid "None"
 msgstr "Ingen"
 
@@ -14176,61 +14233,61 @@ msgstr "Max antal Y-streck"
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Maximalt antal streck på Y-axeln"
 
-#: ../app/core/gimptagcache.c:442
+#: ../app/core/gimptagcache.c:436
 #, c-format
 msgid "Error writing '%s': %s\n"
 msgstr "Fel vid skrivning av ”%s”: %s\n"
 
-#: ../app/core/gimptemplate.c:135
+#: ../app/core/gimptemplate.c:134
 msgid "Width"
 msgstr "Bredd"
 
-#: ../app/core/gimptemplate.c:143
+#: ../app/core/gimptemplate.c:142
 msgid "Height"
 msgstr "Höjd"
 
-#: ../app/core/gimptemplate.c:152
+#: ../app/core/gimptemplate.c:151
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 "Enheten som används för koordinatvisning när man inte har punkt till punkt."
 
-#: ../app/core/gimptemplate.c:159 ../app/core/gimptemplate.c:167
+#: ../app/core/gimptemplate.c:158 ../app/core/gimptemplate.c:166
 msgid "Resolution X"
 msgstr "X-upplösning"
 
-#: ../app/core/gimptemplate.c:160
+#: ../app/core/gimptemplate.c:159
 msgid "The horizontal image resolution."
 msgstr "Horisontell bildupplösning."
 
-#: ../app/core/gimptemplate.c:168
+#: ../app/core/gimptemplate.c:167
 msgid "The vertical image resolution."
 msgstr "Vertikal bildupplösning."
 
-#: ../app/core/gimptemplate.c:175
+#: ../app/core/gimptemplate.c:174
 msgid "Resolution unit"
 msgstr "Upplösningsenhet"
 
 #. serialized name
-#: ../app/core/gimptemplate.c:182
+#: ../app/core/gimptemplate.c:181
 msgid "Image type"
 msgstr "Bildtyp"
 
-#: ../app/core/gimptemplate.c:189 ../app/core/gimptemplate.c:196
+#: ../app/core/gimptemplate.c:188 ../app/core/gimptemplate.c:195
 msgid "Precision"
 msgstr "Precision"
 
 #. gamma
-#: ../app/core/gimptemplate.c:205 ../app/dialogs/convert-precision-dialog.c:195
+#: ../app/core/gimptemplate.c:204 ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:140
 #: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:509
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../app/core/gimptemplate.c:213
+#: ../app/core/gimptemplate.c:212
 msgid "Color managed"
 msgstr "Färghanterad"
 
-#: ../app/core/gimptemplate.c:214
+#: ../app/core/gimptemplate.c:213
 msgid ""
 "Whether the image is color managed. Disabling color management is equivalent "
 "to choosing a built-in sRGB profile. Better leave color management enabled."
@@ -14239,19 +14296,19 @@ msgstr ""
 "med att välja den inbyggda sRGB-profilen. Det är bäst att lämna "
 "färghantering aktiverat."
 
-#: ../app/core/gimptemplate.c:223
+#: ../app/core/gimptemplate.c:222
 msgid "Color profile"
 msgstr "Färgprofil"
 
-#: ../app/core/gimptemplate.c:230 ../app/tools/gimpbucketfilloptions.c:94
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:94
 msgid "Fill type"
 msgstr "Fyllnadstyp"
 
-#: ../app/core/gimptemplate.c:237 ../app/dialogs/image-properties-dialog.c:94
+#: ../app/core/gimptemplate.c:236 ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
 msgstr "Kommentar"
 
-#: ../app/core/gimptemplate.c:244
+#: ../app/core/gimptemplate.c:243
 msgid "Filename"
 msgstr "Filnamn"
 
@@ -14594,12 +14651,12 @@ msgid "Precision Conversion"
 msgstr "Precisionskonvertering"
 
 #: ../app/dialogs/convert-precision-dialog.c:204
-#: ../app/widgets/gimptemplateeditor.c:425
+#: ../app/widgets/gimptemplateeditor.c:422
 msgid "Perceptual gamma (sRGB)"
 msgstr "Perceptuell gamma (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:205
-#: ../app/widgets/gimptemplateeditor.c:424
+#: ../app/widgets/gimptemplateeditor.c:421
 msgid "Linear light"
 msgstr "Linjärt ljus"
 
@@ -14669,7 +14726,7 @@ msgid "Histogram"
 msgstr "Histogram"
 
 #. Selection Bounding Box
-#: ../app/dialogs/dialogs.c:390 ../app/display/gimpcursorview.c:265
+#: ../app/dialogs/dialogs.c:390 ../app/display/gimpcursorview.c:262
 msgid "Selection"
 msgstr "Markering"
 
@@ -14717,7 +14774,7 @@ msgstr "_Tona ut"
 #: ../app/dialogs/fade-dialog.c:151
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/tools/gimppaintoptions-gui.c:111 ../app/widgets/gimpdeviceinfo.c:116
-#: ../app/widgets/gimplayertreeview.c:279
+#: ../app/widgets/gimplayertreeview.c:272
 msgid "Mode"
 msgstr "Läge"
 
@@ -14893,7 +14950,7 @@ msgstr "Bildegenskaper"
 #: ../app/tools/gimpgradienttool-editor.c:1857
 #: ../app/tools/gimpmeasuretool.c:715 ../app/widgets/gimpcontrollerlist.c:640
 #: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
-#: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:163
+#: ../app/widgets/gimpsettingsbox.c:659 ../app/widgets/gimptexteditor.c:163
 msgid "_Close"
 msgstr "_Stäng"
 
@@ -15006,7 +15063,7 @@ msgid "Layer _name:"
 msgstr "Lager_namn:"
 
 #: ../app/dialogs/layer-options-dialog.c:188
-#: ../app/widgets/gimpdeviceinfoeditor.c:349
+#: ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Läge:"
 
@@ -15047,7 +15104,7 @@ msgid "Offset Y:"
 msgstr "Y-position:"
 
 #: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
-#: ../app/widgets/gimptemplateeditor.c:452
+#: ../app/widgets/gimptemplateeditor.c:449
 msgid "_Fill with:"
 msgstr "_Fyll med:"
 
@@ -16300,7 +16357,7 @@ msgid "Monitor Resolution"
 msgstr "Bildskärmsupplösning"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2581 ../app/display/gimpcursorview.c:215
+#: ../app/dialogs/preferences-dialog.c:2581 ../app/display/gimpcursorview.c:212
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "Bildpunkter"
@@ -16716,28 +16773,28 @@ msgid "Print Size"
 msgstr "Utskriftsstorlek"
 
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:175 ../app/widgets/gimpsizebox.c:193
-#: ../app/widgets/gimptemplateeditor.c:198
+#: ../app/dialogs/print-size-dialog.c:175 ../app/widgets/gimpsizebox.c:190
+#: ../app/widgets/gimptemplateeditor.c:195
 msgid "_Width:"
 msgstr "_Bredd:"
 
-#: ../app/dialogs/print-size-dialog.c:182 ../app/widgets/gimpsizebox.c:197
-#: ../app/widgets/gimptemplateeditor.c:205
+#: ../app/dialogs/print-size-dialog.c:182 ../app/widgets/gimpsizebox.c:194
+#: ../app/widgets/gimptemplateeditor.c:202
 msgid "H_eight:"
 msgstr "H_öjd:"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:260
-#: ../app/widgets/gimptemplateeditor.c:327
+#: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:257
+#: ../app/widgets/gimptemplateeditor.c:324
 msgid "_X resolution:"
 msgstr "_X-upplösning:"
 
-#: ../app/dialogs/print-size-dialog.c:243 ../app/widgets/gimpsizebox.c:263
-#: ../app/widgets/gimptemplateeditor.c:334
+#: ../app/dialogs/print-size-dialog.c:243 ../app/widgets/gimpsizebox.c:260
+#: ../app/widgets/gimptemplateeditor.c:331
 msgid "_Y resolution:"
 msgstr "_Y-upplösning:"
 
-#: ../app/dialogs/print-size-dialog.c:254 ../app/widgets/gimpsizebox.c:256
+#: ../app/dialogs/print-size-dialog.c:254 ../app/widgets/gimpsizebox.c:253
 #, c-format
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
@@ -16866,7 +16923,7 @@ msgid "_Vertical:"
 msgstr "_Vertikal:"
 
 #. Image size frame
-#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:176
+#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:173
 msgid "Image Size"
 msgstr "Bildstorlek"
 
@@ -17103,49 +17160,49 @@ msgid "Move"
 msgstr "Flytta"
 
 # sebras: blir det bättre med "finns ej"?
-#: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:231
-#: ../app/display/gimpcursorview.c:250 ../app/display/gimpcursorview.c:256
-#: ../app/display/gimpcursorview.c:277 ../app/display/gimpcursorview.c:283
-#: ../app/display/gimpcursorview.c:299 ../app/display/gimpcursorview.c:306
-#: ../app/display/gimpcursorview.c:710 ../app/display/gimpcursorview.c:712
-#: ../app/display/gimpcursorview.c:714 ../app/display/gimpcursorview.c:716
-#: ../app/display/gimpcursorview.c:795 ../app/display/gimpcursorview.c:796
-#: ../app/display/gimpcursorview.c:797 ../app/display/gimpcursorview.c:798
+#: ../app/display/gimpcursorview.c:222 ../app/display/gimpcursorview.c:228
+#: ../app/display/gimpcursorview.c:247 ../app/display/gimpcursorview.c:253
+#: ../app/display/gimpcursorview.c:274 ../app/display/gimpcursorview.c:280
+#: ../app/display/gimpcursorview.c:296 ../app/display/gimpcursorview.c:303
+#: ../app/display/gimpcursorview.c:707 ../app/display/gimpcursorview.c:709
+#: ../app/display/gimpcursorview.c:711 ../app/display/gimpcursorview.c:713
+#: ../app/display/gimpcursorview.c:792 ../app/display/gimpcursorview.c:793
+#: ../app/display/gimpcursorview.c:794 ../app/display/gimpcursorview.c:795
 msgid "n/a"
 msgstr "-"
 
-#: ../app/display/gimpcursorview.c:228 ../app/display/gimpcursorview.c:253
-#: ../app/display/gimpcursorview.c:280
-#: ../app/widgets/gimpdeviceinfoeditor.c:139
+#: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:250
+#: ../app/display/gimpcursorview.c:277
+#: ../app/widgets/gimpdeviceinfoeditor.c:138
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:234 ../app/display/gimpcursorview.c:259
-#: ../app/display/gimpcursorview.c:286
-#: ../app/widgets/gimpdeviceinfoeditor.c:140
+#: ../app/display/gimpcursorview.c:231 ../app/display/gimpcursorview.c:256
+#: ../app/display/gimpcursorview.c:283
+#: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "Y"
 msgstr "Y"
 
 #. Units
-#: ../app/display/gimpcursorview.c:240
+#: ../app/display/gimpcursorview.c:237
 msgid "Units"
 msgstr "Enheter"
 
-#: ../app/display/gimpcursorview.c:269
+#: ../app/display/gimpcursorview.c:266
 msgid "The selection's bounding box"
 msgstr "Markeringens begränsningsyta"
 
 #. Width
-#: ../app/display/gimpcursorview.c:303
+#: ../app/display/gimpcursorview.c:300
 msgid "W"
 msgstr "B"
 
 #. Height
-#: ../app/display/gimpcursorview.c:310
+#: ../app/display/gimpcursorview.c:307
 msgid "H"
 msgstr "N"
 
-#: ../app/display/gimpcursorview.c:341
+#: ../app/display/gimpcursorview.c:338
 msgid "_Sample Merged"
 msgstr "Sa_mpla sammanfogade"
 
@@ -17166,7 +17223,7 @@ msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
 #: ../app/display/gimpdisplayshell.c:791 ../app/display/gimpdisplayshell.c:1447
-#: ../app/widgets/gimptoolbox.c:251
+#: ../app/widgets/gimptoolbox.c:247
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
 
@@ -17263,18 +17320,20 @@ msgstr "Släpp ny bana"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
-#: ../app/tools/gimpfiltertool.c:270 ../app/tools/gimpgradienttool.c:245
-#: ../app/tools/gimpselectiontool.c:427
+#: ../app/tools/gimpfiltertool.c:268 ../app/tools/gimpgradienttool.c:245
+#: ../app/tools/gimpselectiontool.c:445
+#, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Kan inte ändra bildpunkterna i lagergrupper."
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1149
-#: ../app/tools/gimpfiltertool.c:277 ../app/tools/gimpgradienttool.c:252
+#: ../app/tools/gimpfiltertool.c:275 ../app/tools/gimpgradienttool.c:252
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:330
+#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:508
 #: ../app/tools/gimpwarptool.c:629
+#, c-format
 msgid "The active layer's pixels are locked."
 msgstr "Det aktiva lagrets bildpunkter är låsta."
 
@@ -17293,13 +17352,13 @@ msgid "Drop color to layer"
 msgstr "Släpp färg till lager"
 
 #: ../app/display/gimpdisplayshell-dnd.c:570
-#: ../app/widgets/gimplayertreeview.c:756
+#: ../app/widgets/gimplayertreeview.c:749
 msgid "Drop layers"
 msgstr "Förkasta lager"
 
 #: ../app/display/gimpdisplayshell-dnd.c:707
 #: ../app/display/gimpdisplayshell-dnd.c:725
-#: ../app/widgets/gimplayertreeview.c:831 ../app/widgets/gimptoolbox-dnd.c:272
+#: ../app/widgets/gimplayertreeview.c:824 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Förkastad buffert"
 
@@ -17369,8 +17428,8 @@ msgstr "(ren)"
 #: ../app/display/gimpdisplayshell-title.c:341
 #: ../app/display/gimpdisplayshell-title.c:350
 #: ../app/widgets/gimpactiongroup.c:971
-#: ../app/widgets/gimpbuffersourcebox.c:171
-#: ../app/widgets/gimpbuffersourcebox.c:295
+#: ../app/widgets/gimpbuffersourcebox.c:167
+#: ../app/widgets/gimpbuffersourcebox.c:291
 msgid "(none)"
 msgstr "(ingen)"
 
@@ -17389,147 +17448,147 @@ msgstr "bildpunkter"
 msgid "Cancel <i>%s</i>"
 msgstr "Avbryt <i>%s</i>"
 
-#: ../app/display/gimptoolcompass.c:845
+#: ../app/display/gimptoolcompass.c:842
 msgid "Click to place vertical and horizontal guides"
 msgstr "Klicka för att placera vertikala och horisontella hjälplinjer"
 
-#: ../app/display/gimptoolcompass.c:853
+#: ../app/display/gimptoolcompass.c:850
 msgid "Click to place a horizontal guide"
 msgstr "Klicka för att placera ut en horisontell hjälplinje"
 
-#: ../app/display/gimptoolcompass.c:861
+#: ../app/display/gimptoolcompass.c:858
 msgid "Click to place a vertical guide"
 msgstr "Klicka för att placera ut en vertikal hjälplinje"
 
-#: ../app/display/gimptoolcompass.c:869
+#: ../app/display/gimptoolcompass.c:866
 msgid "Click-Drag to add a new point"
 msgstr "Klicka och dra för att lägga till en ny punkt"
 
-#: ../app/display/gimptoolcompass.c:880 ../app/tools/gimpiscissorstool.c:911
+#: ../app/display/gimptoolcompass.c:877 ../app/tools/gimpiscissorstool.c:912
 msgid "Click-Drag to move this point"
 msgstr "Klicka och dra för att flytta den här punkten"
 
-#: ../app/display/gimptoolcompass.c:897
+#: ../app/display/gimptoolcompass.c:894
 msgid "Click-Drag to move all points"
 msgstr "Klicka och dra för att flytta alla punkter"
 
-#: ../app/display/gimptoolgyroscope.c:716
+#: ../app/display/gimptoolgyroscope.c:713
 msgid "Click-Drag to zoom"
 msgstr "Klicka och dra för att zooma"
 
-#: ../app/display/gimptoolgyroscope.c:720
+#: ../app/display/gimptoolgyroscope.c:717
 #, c-format
 msgid "%s for constrained steps"
 msgstr "%s för begränsade steg"
 
-#: ../app/display/gimptoolgyroscope.c:727
-#: ../app/display/gimptooltransformgrid.c:1792
+#: ../app/display/gimptoolgyroscope.c:724
+#: ../app/display/gimptooltransformgrid.c:1788
 msgid "Click-Drag to rotate"
 msgstr "Klicka och dra för att rotera"
 
-#: ../app/display/gimptoolgyroscope.c:731 ../app/display/gimptoolline.c:1563
+#: ../app/display/gimptoolgyroscope.c:728 ../app/display/gimptoolline.c:1559
 #: ../app/tools/gimppainttool.c:587
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
 
-#: ../app/display/gimptoolgyroscope.c:736
+#: ../app/display/gimptoolgyroscope.c:733
 msgid "Click-Drag to pan"
 msgstr "Klicka och dra för att panorera"
 
-#: ../app/display/gimptoolgyroscope.c:742
+#: ../app/display/gimptoolgyroscope.c:739
 #, c-format
 msgid "%s to rotate"
 msgstr "%s för att rotera"
 
-#: ../app/display/gimptoolgyroscope.c:743
+#: ../app/display/gimptoolgyroscope.c:740
 #, c-format
 msgid "%s for a constrained axis"
 msgstr "%s för en begränsad axel"
 
-#: ../app/display/gimptoolgyroscope.c:744
+#: ../app/display/gimptoolgyroscope.c:741
 #, c-format
 msgid "%s to zoom"
 msgstr "%s för att zooma"
 
-#: ../app/display/gimptoolhandlegrid.c:869
-#: ../app/display/gimptooltransformgrid.c:1783
+#: ../app/display/gimptoolhandlegrid.c:865
+#: ../app/display/gimptooltransformgrid.c:1779
 msgid "Click-Drag to move"
 msgstr "Klicka och dra för att flytta"
 
-#: ../app/display/gimptoolhandlegrid.c:872
+#: ../app/display/gimptoolhandlegrid.c:868
 msgid "Click-Drag to rotate and scale"
 msgstr "Klicka och dra för att rotera och skala"
 
-#: ../app/display/gimptoolhandlegrid.c:875
+#: ../app/display/gimptoolhandlegrid.c:871
 msgid "Click-Drag to shear and scale"
 msgstr "Klicka och dra för att skeva och skala"
 
-#: ../app/display/gimptoolhandlegrid.c:878
-#: ../app/display/gimptooltransformgrid.c:1771
+#: ../app/display/gimptoolhandlegrid.c:874
+#: ../app/display/gimptooltransformgrid.c:1767
 msgid "Click-Drag to change perspective"
 msgstr "Klicka och dra för att ändra perspektiv"
 
-#: ../app/display/gimptoolhandlegrid.c:889
+#: ../app/display/gimptoolhandlegrid.c:885
 msgid "Click to add a handle"
 msgstr "Klicka för att lägga till handtag"
 
-#: ../app/display/gimptoolhandlegrid.c:895
+#: ../app/display/gimptoolhandlegrid.c:891
 msgid "Click-Drag to move this handle"
 msgstr "Klicka och dra för att flytta detta handtag"
 
-#: ../app/display/gimptoolhandlegrid.c:900
+#: ../app/display/gimptoolhandlegrid.c:896
 msgid "Click-Drag to remove this handle"
 msgstr "Klicka och dra för att ta bort detta handtag"
 
-#: ../app/display/gimptoolline.c:347 ../app/display/gimptoolline.c:510
+#: ../app/display/gimptoolline.c:347 ../app/display/gimptoolline.c:506
 msgid "Line: "
 msgstr "Linje: "
 
-#: ../app/display/gimptoolline.c:1557
+#: ../app/display/gimptoolline.c:1553
 msgid "Click-Drag to move the endpoint"
 msgstr "Klicka och dra för att flytta ändpunkten"
 
-#: ../app/display/gimptoolline.c:1570
+#: ../app/display/gimptoolline.c:1566
 msgid "Release to remove the slider"
 msgstr "Släpp för att ta bort skjutreglaget"
 
-#: ../app/display/gimptoolline.c:1574
+#: ../app/display/gimptoolline.c:1570
 #, c-format
 msgid "%s for constrained values"
 msgstr "%s för begränsade värden"
 
-#: ../app/display/gimptoolline.c:1584
+#: ../app/display/gimptoolline.c:1580
 msgid "Click-Drag to move the slider; drag away to remove the slider"
 msgstr ""
 "Klicka och dra för att flytta skjutreglaget; dra iväg för att ta bort "
 "skjutreglaget"
 
-#: ../app/display/gimptoolline.c:1589
+#: ../app/display/gimptoolline.c:1585
 msgid "Click-Drag to move or remove the slider"
 msgstr "Klicka och dra för att flytta eller ta bort skjutreglaget"
 
-#: ../app/display/gimptoolline.c:1594
+#: ../app/display/gimptoolline.c:1590
 msgid "Click-Drag to move the slider"
 msgstr "Klicka och dra för att flytta skjutreglaget"
 
-#: ../app/display/gimptoolline.c:1605
+#: ../app/display/gimptoolline.c:1601
 msgid "Click-Drag away to remove the slider"
 msgstr "Klicka och dra för att ta bort skjutreglaget"
 
-#: ../app/display/gimptoolline.c:1609
+#: ../app/display/gimptoolline.c:1605
 msgid "Click-Drag to remove the slider"
 msgstr "Klicka och dra för att ta bort skjutreglaget"
 
-#: ../app/display/gimptoolline.c:1620
+#: ../app/display/gimptoolline.c:1616
 msgid "Click or Click-Drag to add a new slider"
 msgstr "Klicka eller klicka och dra för att lägga till ett nytt skjutreglage"
 
-#: ../app/display/gimptoolline.c:1626
+#: ../app/display/gimptoolline.c:1622
 msgid "Click-Drag to move the line"
 msgstr "Klicka och dra för att flytta linjen"
 
-#: ../app/display/gimptoolline.c:1638
+#: ../app/display/gimptoolline.c:1634
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s för att flytta hela linjen"
@@ -17546,181 +17605,181 @@ msgstr "Polygont"
 msgid "Restrict editing to polygons"
 msgstr "Begränsa redigering till polygoner"
 
-#: ../app/display/gimptoolpath.c:504
+#: ../app/display/gimptoolpath.c:500
 msgid "The active path is locked."
 msgstr "Den aktiva banan är låst."
 
-#: ../app/display/gimptoolpath.c:588
+#: ../app/display/gimptoolpath.c:584
 msgid "Add Stroke"
 msgstr "Lägg till penseldrag"
 
-#: ../app/display/gimptoolpath.c:612
+#: ../app/display/gimptoolpath.c:608
 msgid "Add Anchor"
 msgstr "Lägg till ankare"
 
-#: ../app/display/gimptoolpath.c:636
+#: ../app/display/gimptoolpath.c:632
 msgid "Insert Anchor"
 msgstr "Lägg in ankare"
 
-#: ../app/display/gimptoolpath.c:665
+#: ../app/display/gimptoolpath.c:661
 msgid "Drag Handle"
 msgstr "Handtag"
 
-#: ../app/display/gimptoolpath.c:696
+#: ../app/display/gimptoolpath.c:692
 msgid "Drag Anchor"
 msgstr "Dra ankare"
 
-#: ../app/display/gimptoolpath.c:714
+#: ../app/display/gimptoolpath.c:710
 msgid "Drag Anchors"
 msgstr "Dra ankare"
 
-#: ../app/display/gimptoolpath.c:736
+#: ../app/display/gimptoolpath.c:732
 msgid "Drag Curve"
 msgstr "Dra kurva"
 
-#: ../app/display/gimptoolpath.c:765
+#: ../app/display/gimptoolpath.c:761
 msgid "Connect Strokes"
 msgstr "Koppla ihop penseldrag"
 
-#: ../app/display/gimptoolpath.c:797
+#: ../app/display/gimptoolpath.c:793
 msgid "Drag Path"
 msgstr "Dra bana"
 
-#: ../app/display/gimptoolpath.c:808
+#: ../app/display/gimptoolpath.c:804
 msgid "Convert Edge"
 msgstr "Konvertera kant"
 
-#: ../app/display/gimptoolpath.c:839
+#: ../app/display/gimptoolpath.c:835
 msgid "Delete Anchor"
 msgstr "Ta bort ankare"
 
-#: ../app/display/gimptoolpath.c:862
+#: ../app/display/gimptoolpath.c:858
 msgid "Delete Segment"
 msgstr "Ta bort segment"
 
-#: ../app/display/gimptoolpath.c:1114
+#: ../app/display/gimptoolpath.c:1110
 msgid "Move Anchors"
 msgstr "Flytta ankare"
 
-#: ../app/display/gimptoolpath.c:1501
+#: ../app/display/gimptoolpath.c:1497
 msgid "Click to pick path to edit"
 msgstr "Klicka för att välja bana att redigera"
 
-#: ../app/display/gimptoolpath.c:1505
+#: ../app/display/gimptoolpath.c:1501
 msgid "Click to create a new path"
 msgstr "Klicka för att skapa en ny bana"
 
-#: ../app/display/gimptoolpath.c:1509
+#: ../app/display/gimptoolpath.c:1505
 msgid "Click to create a new component of the path"
 msgstr "Klicka för att skapa ny komponent till banan"
 
-#: ../app/display/gimptoolpath.c:1513
+#: ../app/display/gimptoolpath.c:1509
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Klicka eller klicka och dra för att skapa ett nytt ankare"
 
-#: ../app/display/gimptoolpath.c:1523 ../app/display/gimptoolpath.c:1530
+#: ../app/display/gimptoolpath.c:1519 ../app/display/gimptoolpath.c:1526
 msgid "Click-Drag to move the anchor around"
 msgstr "Klicka och dra för att flytta runt ankaret"
 
-#: ../app/display/gimptoolpath.c:1534 ../app/display/gimptoolpath.c:1557
+#: ../app/display/gimptoolpath.c:1530 ../app/display/gimptoolpath.c:1553
 msgid "Click-Drag to move the anchors around"
 msgstr "Klicka och dra för att flytta runt ankarna"
 
-#: ../app/display/gimptoolpath.c:1540
+#: ../app/display/gimptoolpath.c:1536
 msgid "Click-Drag to move the handle around"
 msgstr "Klicka och dra för att flytta runt handtaget"
 
-#: ../app/display/gimptoolpath.c:1547
+#: ../app/display/gimptoolpath.c:1543
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Klicka och dra för att flytta handtagen symmetriskt"
 
-#: ../app/display/gimptoolpath.c:1562
+#: ../app/display/gimptoolpath.c:1558
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Klicka och dra för att ändra kurvans form"
 
-#: ../app/display/gimptoolpath.c:1565
+#: ../app/display/gimptoolpath.c:1561
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: symmetrisk"
 
-#: ../app/display/gimptoolpath.c:1570
+#: ../app/display/gimptoolpath.c:1566
 msgid "Click-Drag to move the component around"
 msgstr "Klicka och dra för att flytta runt komponenten"
 
-#: ../app/display/gimptoolpath.c:1578
+#: ../app/display/gimptoolpath.c:1574
 msgid "Click-Drag to move the path around"
 msgstr "Klicka och dra för att flytta runt banan"
 
-#: ../app/display/gimptoolpath.c:1582
+#: ../app/display/gimptoolpath.c:1578
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Klicka och dra för att infoga ett ankare i banan"
 
-#: ../app/display/gimptoolpath.c:1590
+#: ../app/display/gimptoolpath.c:1586
 msgid "Click to delete this anchor"
 msgstr "Klicka för att ta bort det här ankaret"
 
-#: ../app/display/gimptoolpath.c:1594
+#: ../app/display/gimptoolpath.c:1590
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Klicka för att koppla ihop ankaret med den valda ändpunkten"
 
-#: ../app/display/gimptoolpath.c:1599
+#: ../app/display/gimptoolpath.c:1595
 msgid "Click to open up the path"
 msgstr "Klicka för att öppna upp banan"
 
-#: ../app/display/gimptoolpath.c:1603
+#: ../app/display/gimptoolpath.c:1599
 msgid "Click to make this node angular"
 msgstr "Klicka för att göra noden vinkelformad"
 
-#: ../app/display/gimptoolpath.c:1607
+#: ../app/display/gimptoolpath.c:1603
 msgid "Clicking here does nothing, try clicking on path elements."
 msgstr "Att klicka här gör ingenting, prova att klicka på banelement."
 
-#: ../app/display/gimptoolpath.c:1815
+#: ../app/display/gimptoolpath.c:1811
 msgid "Delete Anchors"
 msgstr "Ta bort ankare"
 
-#: ../app/display/gimptoolpolygon.c:877
+#: ../app/display/gimptoolpolygon.c:874
 msgid "Click to close shape"
 msgstr "Klicka för att stänga form"
 
-#: ../app/display/gimptoolpolygon.c:881
+#: ../app/display/gimptoolpolygon.c:878
 msgid "Click-Drag to move segment vertex"
 msgstr "Klicka och dra för att flytta segmenthörnet"
 
-#: ../app/display/gimptoolpolygon.c:886
+#: ../app/display/gimptoolpolygon.c:883
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
 msgstr "Retur verkställer, Escape avbryter, Backsteg återöppnar form"
 
-#: ../app/display/gimptoolpolygon.c:890
+#: ../app/display/gimptoolpolygon.c:887
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "Return verkställer, Escape avbryter, Backsteg tar bort sista segmentet"
 
-#: ../app/display/gimptoolpolygon.c:894
+#: ../app/display/gimptoolpolygon.c:891
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Klicka och dra lägger till ett ledigt segment, Klick lägger till ett "
 "polygont segment"
 
 #: ../app/display/gimptoolrectangle.c:566
-#: ../app/display/gimptoolrectangle.c:886
-#: ../app/tools/gimprectangleselecttool.c:761
+#: ../app/display/gimptoolrectangle.c:882
+#: ../app/tools/gimprectangleselecttool.c:757
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
-#: ../app/display/gimptoolrectangle.c:2150
+#: ../app/display/gimptoolrectangle.c:2146
 msgid "Position: "
 msgstr "Position: "
 
-#: ../app/display/gimptooltransformgrid.c:1776
-#: ../app/display/gimptooltransformgrid.c:1781
+#: ../app/display/gimptooltransformgrid.c:1772
+#: ../app/display/gimptooltransformgrid.c:1777
 msgid "Click-Drag to scale"
 msgstr "Klicka och dra för att skala"
 
-#: ../app/display/gimptooltransformgrid.c:1785
+#: ../app/display/gimptooltransformgrid.c:1781
 msgid "Click-Drag to move the pivot point"
 msgstr "Klicka och dra för att flytta pivotpunkten"
 
-#: ../app/display/gimptooltransformgrid.c:1790
+#: ../app/display/gimptooltransformgrid.c:1786
 msgid "Click-Drag to shear"
 msgstr "Klicka och dra för att skeva"
 
@@ -18582,11 +18641,11 @@ msgstr "Skrivning av nivåfil misslyckades: "
 msgid "Adjust brightness and contrast"
 msgstr "Justera ljusstyrka och kontrast"
 
-#: ../app/operations/gimpoperationcagecoefcalc.c:69
+#: ../app/operations/gimpoperationcagecoefcalc.c:70
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr "Beräkna en uppsättning koefficientbuffertar för GIMP:s burverktyg"
 
-#: ../app/operations/gimpoperationcagetransform.c:104
+#: ../app/operations/gimpoperationcagetransform.c:105
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
@@ -18594,11 +18653,11 @@ msgstr ""
 "Konvertera en uppsättning koefficientbuffertar till en koordinatbuffert för "
 "GIMP:s burverktyg"
 
-#: ../app/operations/gimpoperationcagetransform.c:130
+#: ../app/operations/gimpoperationcagetransform.c:131
 msgid "Fill with plain color"
 msgstr "Fyll med vanlig färg"
 
-#: ../app/operations/gimpoperationcagetransform.c:131
+#: ../app/operations/gimpoperationcagetransform.c:132
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Fyll burens ursprungliga läge med en vanlig färg"
 
@@ -18715,7 +18774,7 @@ msgstr[1] "%d bilder räddades från kraschen. Vill du försöka återskapa dem?
 msgid "Documents"
 msgstr "Dokument"
 
-#: ../app/gui/splash.c:133
+#: ../app/gui/splash.c:138
 msgid "GIMP Startup"
 msgstr "Uppstart av GIMP"
 
@@ -18736,11 +18795,11 @@ msgstr "Bara rörelse"
 msgid "Flow"
 msgstr "Flöde"
 
-#: ../app/paint/gimpbrushcore.c:378
+#: ../app/paint/gimpbrushcore.c:379
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 
-#: ../app/paint/gimpbrushcore.c:385
+#: ../app/paint/gimpbrushcore.c:386
 msgid "No paint dynamics available for use with this tool."
 msgstr "Ingen målningsdynamik tillgänglig för detta verktyg."
 
@@ -18789,15 +18848,15 @@ msgstr "Suddgummi"
 msgid "Anti erase"
 msgstr "Antisudda"
 
-#: ../app/paint/gimpheal.c:117 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Läk"
 
-#: ../app/paint/gimpheal.c:157
+#: ../app/paint/gimpheal.c:158
 msgid "Healing does not operate on indexed layers."
 msgstr "Läkning fungerar inte på indexerade lager."
 
-#: ../app/paint/gimpink.c:107 ../app/tools/gimpinktool.c:65
+#: ../app/paint/gimpink.c:108 ../app/tools/gimpinktool.c:65
 msgid "Ink"
 msgstr "Bläck"
 
@@ -18838,11 +18897,11 @@ msgstr "Bildförhållande för bläckdroppe"
 msgid "Ink Blob Angle"
 msgstr "Vinkel för bläckdroppe"
 
-#: ../app/paint/gimpmybrushcore.c:103
+#: ../app/paint/gimpmybrushcore.c:104
 msgid "Mybrush"
 msgstr "Min-pensel"
 
-#: ../app/paint/gimpmybrushcore.c:160
+#: ../app/paint/gimpmybrushcore.c:157
 msgid "No MyPaint brushes available for use with this tool."
 msgstr ""
 "Det finns inga MyPaint-penslar tillgängliga för användning med detta verktyg."
@@ -20022,18 +20081,18 @@ msgstr "Tomt variabelnamn i miljöfilen %s"
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Otillåtet variabelnamn i miljöfilen %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:300
-#: ../app/plug-in/gimpinterpreterdb.c:396
+#: ../app/plug-in/gimpinterpreterdb.c:302
+#: ../app/plug-in/gimpinterpreterdb.c:399
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "Felaktig tolk refererad till i tolkfilen %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:368
+#: ../app/plug-in/gimpinterpreterdb.c:371
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Felaktig binär formatsträng i tolkfilen %s"
 
-#: ../app/plug-in/gimpplugin.c:622
+#: ../app/plug-in/gimpplugin.c:232
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -20505,7 +20564,7 @@ msgstr ""
 "Yxmördaren Julia Blomqvist\n"
 "på fäktning i Schweiz."
 
-#: ../app/text/gimpfontfactory.c:403
+#: ../app/text/gimpfontfactory.c:400
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -20514,7 +20573,7 @@ msgstr ""
 "Några typsnitt kunde inte läsas in:\n"
 "%s"
 
-#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1590
+#: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1634
 msgid "Add Text Layer"
 msgstr "Lägg till textlager"
 
@@ -20554,19 +20613,19 @@ msgstr "Rotera textlager"
 msgid "Transform Text Layer"
 msgstr "Transformera textlager"
 
-#: ../app/text/gimptextlayer.c:584
+#: ../app/text/gimptextlayer.c:579
 msgid "Discard Text Information"
 msgstr "Förkasta textinformation"
 
-#: ../app/text/gimptextlayer.c:709
+#: ../app/text/gimptextlayer.c:714
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "På grund av brist på typsnitt är textfunktioner inte tillgängliga."
 
-#: ../app/text/gimptextlayer.c:772
+#: ../app/text/gimptextlayer.c:777
 msgid "Empty Text Layer"
 msgstr "Tomt textlager"
 
-#: ../app/text/gimptextlayer.c:825
+#: ../app/text/gimptextlayer.c:830
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -20856,10 +20915,10 @@ msgid "_Bucket Fill"
 msgstr "_Fyll"
 
 #: ../app/tools/gimpbucketfilltool.c:151 ../app/tools/gimpcagetool.c:234
-#: ../app/tools/gimpfiltertool.c:284
+#: ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppainttool.c:296
-#: ../app/tools/gimptransformtool.c:338 ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimptransformtool.c:516 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Det aktiva lagret är inte synligt."
 
@@ -21183,7 +21242,7 @@ msgstr "Justera kurvor i linjärt ljus"
 msgid "Adjust curves perceptually"
 msgstr "Justera kurvor perceptuellt"
 
-#: ../app/tools/gimpcurvestool.c:544 ../app/widgets/gimpdeviceinfoeditor.c:464
+#: ../app/tools/gimpcurvestool.c:544 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "Kurv_typ:"
 
@@ -21260,7 +21319,7 @@ msgid "There is no path to move."
 msgstr "Det finns ingen bana att flytta."
 
 #: ../app/tools/gimpeditselectiontool.c:1126 ../app/tools/gimpmovetool.c:266
-#: ../app/tools/gimptransformtool.c:372
+#: ../app/tools/gimptransformtool.c:550
 msgid "The active path's position is locked."
 msgstr "Den aktiva banans position är låst."
 
@@ -21336,49 +21395,49 @@ msgid "Color _managed"
 msgstr "Färg_hanterad"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:373
+#: ../app/tools/gimpfiltertool.c:371
 msgid "Advanced Color Options"
 msgstr "Avancerade färgalternativ"
 
-#: ../app/tools/gimpfiltertool.c:392
+#: ../app/tools/gimpfiltertool.c:390
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 "Konvertera bildpunkter till inbyggd sRGB för att tillämpa filter (långsamt)"
 
-#: ../app/tools/gimpfiltertool.c:393
+#: ../app/tools/gimpfiltertool.c:391
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Antag att bildpunkter följer inbyggd sRGB (ignorera faktisk färgrymd för "
 "bilden)"
 
-#: ../app/tools/gimpfiltertool.c:628
+#: ../app/tools/gimpfiltertool.c:626
 msgid "Click to switch the original and filtered sides"
 msgstr "Klicka för att växla mellan original och filtrerade sidor"
 
-#: ../app/tools/gimpfiltertool.c:632
+#: ../app/tools/gimpfiltertool.c:630
 msgid "Click to switch between vertical and horizontal"
 msgstr "Klicka för att växla mellan vertikal och horisontell"
 
-#: ../app/tools/gimpfiltertool.c:636
+#: ../app/tools/gimpfiltertool.c:634
 msgid "Click to move the split guide"
 msgstr "Klicka för att flytta delningsguide"
 
-#: ../app/tools/gimpfiltertool.c:638
+#: ../app/tools/gimpfiltertool.c:636
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: växla original och filtrerad"
 
-#: ../app/tools/gimpfiltertool.c:639
+#: ../app/tools/gimpfiltertool.c:637
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: växla horisontell och vertikal"
 
-#: ../app/tools/gimpfiltertool.c:1300 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1303 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importera ”%s”-inställningar"
 
-#: ../app/tools/gimpfiltertool.c:1302 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1305 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportera ”%s”-inställningar"
@@ -21576,7 +21635,7 @@ msgstr ""
 msgid "_Free Select"
 msgstr "_Fri markering"
 
-#: ../app/tools/gimpfreeselecttool.c:508
+#: ../app/tools/gimpfreeselecttool.c:504
 msgctxt "command"
 msgid "Free Select"
 msgstr "Fri markering"
@@ -21890,53 +21949,53 @@ msgstr "Interaktiv gräns"
 msgid "Display future selection segment as you drag a control node"
 msgstr "Visa kommande markeringssegment medan du drar en kontrollnod"
 
-#: ../app/tools/gimpiscissorstool.c:292
+#: ../app/tools/gimpiscissorstool.c:293
 msgid "Scissors"
 msgstr "Saxar"
 
-#: ../app/tools/gimpiscissorstool.c:293
+#: ../app/tools/gimpiscissorstool.c:294
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr "Saxmarkeringsverktyg: Markerar figurer med intelligent kantpassning"
 
-#: ../app/tools/gimpiscissorstool.c:294
+#: ../app/tools/gimpiscissorstool.c:295
 msgid "Intelligent _Scissors"
 msgstr "_Intelligent sax"
 
-#: ../app/tools/gimpiscissorstool.c:905
+#: ../app/tools/gimpiscissorstool.c:906
 msgid "Click to remove this point"
 msgstr "Klicka för att ta bort denna punkt"
 
-#: ../app/tools/gimpiscissorstool.c:913 ../app/tools/gimpiscissorstool.c:982
+#: ../app/tools/gimpiscissorstool.c:914 ../app/tools/gimpiscissorstool.c:983
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: inaktivera automatisk fästning"
 
-#: ../app/tools/gimpiscissorstool.c:914
+#: ../app/tools/gimpiscissorstool.c:915
 #, c-format
 msgid "%s: remove this point"
 msgstr "%s: ta bort denna punkt"
 
-#: ../app/tools/gimpiscissorstool.c:934
+#: ../app/tools/gimpiscissorstool.c:935
 msgid "Click to close the curve"
 msgstr "Klicka för att sluta kurvan"
 
-#: ../app/tools/gimpiscissorstool.c:940
+#: ../app/tools/gimpiscissorstool.c:941
 msgid "Click to add a point on this segment"
 msgstr "Klicka för att lägga till en punkt på det här segmentet"
 
-#: ../app/tools/gimpiscissorstool.c:953
+#: ../app/tools/gimpiscissorstool.c:954
 msgid "Click or press Enter to convert to a selection"
 msgstr "Klicka eller tryck på Enter för att konvertera till en markering"
 
-#: ../app/tools/gimpiscissorstool.c:963
+#: ../app/tools/gimpiscissorstool.c:964
 msgid "Press Enter to convert to a selection"
 msgstr "Tryck på Enter för att konvertera till en markering"
 
-#: ../app/tools/gimpiscissorstool.c:979
+#: ../app/tools/gimpiscissorstool.c:980
 msgid "Click or Click-Drag to add a point"
 msgstr "Klicka eller klicka och dra för att lägga till en punkt"
 
-#: ../app/tools/gimpiscissorstool.c:1117 ../app/tools/gimpiscissorstool.c:1129
+#: ../app/tools/gimpiscissorstool.c:1139 ../app/tools/gimpiscissorstool.c:1151
 msgid "Modify Scissors Curve"
 msgstr "Modifiera saxkurva"
 
@@ -22471,7 +22530,7 @@ msgstr "Rektangelmarkeringsverktyg: Markera en rektangulär region"
 msgid "_Rectangle Select"
 msgstr "_Rekt. markering"
 
-#: ../app/tools/gimprectangleselecttool.c:761
+#: ../app/tools/gimprectangleselecttool.c:757
 msgid "Ellipse: "
 msgstr "Ellips: "
 
@@ -22613,41 +22672,51 @@ msgstr "Radie för ludd"
 msgid "Mode:"
 msgstr "Läge:"
 
-#: ../app/tools/gimpselectiontool.c:255
+#: ../app/tools/gimpselectiontool.c:261
 msgid "Click-Drag to replace the current selection"
 msgstr "Klicka och dra för att ersätta den aktuella markeringen"
 
-#: ../app/tools/gimpselectiontool.c:263
+#: ../app/tools/gimpselectiontool.c:269
 msgid "Click-Drag to create a new selection"
 msgstr "Klicka och dra för att skapa en ny markering"
 
-#: ../app/tools/gimpselectiontool.c:268
+#: ../app/tools/gimpselectiontool.c:274
 msgid "Click-Drag to add to the current selection"
 msgstr "Klicka och dra för att lägga till i aktuell markering"
 
-#: ../app/tools/gimpselectiontool.c:277
+#: ../app/tools/gimpselectiontool.c:283
 msgid "Click-Drag to subtract from the current selection"
 msgstr "Klicka och dra för att ta bort från aktuell markering"
 
-#: ../app/tools/gimpselectiontool.c:286
+#: ../app/tools/gimpselectiontool.c:292
 msgid "Click-Drag to intersect with the current selection"
 msgstr "Klicka och dra för att skära ut med aktuell markering"
 
-#: ../app/tools/gimpselectiontool.c:296
+#: ../app/tools/gimpselectiontool.c:302
 msgid "Click-Drag to move the selection mask"
 msgstr "Klicka och dra för att flytta markeringsmasken"
 
-#: ../app/tools/gimpselectiontool.c:304
+#: ../app/tools/gimpselectiontool.c:310
 msgid "Click-Drag to move the selected pixels"
 msgstr "Klicka och dra för att flytta markerade bildpunkter"
 
-#: ../app/tools/gimpselectiontool.c:308
+#: ../app/tools/gimpselectiontool.c:314
 msgid "Click-Drag to move a copy of the selected pixels"
 msgstr "Klicka och dra för att flytta en kopia av de markerade bildpunkterna"
 
-#: ../app/tools/gimpselectiontool.c:312
+#: ../app/tools/gimpselectiontool.c:318
 msgid "Click to anchor the floating selection"
 msgstr "Klicka för att förankra den flytande markeringen"
+
+#: ../app/tools/gimpselectiontool.c:421
+#, c-format
+msgid "Cannot subtract from an empty selection."
+msgstr "Kan inte subtrahera från en tom markering."
+
+#: ../app/tools/gimpselectiontool.c:432
+#, c-format
+msgid "Cannot intersect with an empty selection."
+msgstr "Kan inte ta snittet med en tom markering."
 
 #: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:445
 #: ../app/tools/gimptransformgridoptions.c:454
@@ -22804,23 +22873,23 @@ msgstr "Ruta:"
 msgid "Language:"
 msgstr "Språk:"
 
-#: ../app/tools/gimptexttool.c:212
+#: ../app/tools/gimptexttool.c:214
 msgid "Text"
 msgstr "Text"
 
-#: ../app/tools/gimptexttool.c:213
+#: ../app/tools/gimptexttool.c:215
 msgid "Text Tool: Create or edit text layers"
 msgstr "Textverktyg: Skapa eller redigera textlager"
 
-#: ../app/tools/gimptexttool.c:214
+#: ../app/tools/gimptexttool.c:216
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:1037
+#: ../app/tools/gimptexttool.c:1039
 msgid "Fonts are still loading"
 msgstr "Typsnitt läses fortfarande in"
 
-#: ../app/tools/gimptexttool.c:1048
+#: ../app/tools/gimptexttool.c:1050
 msgid "Text box: "
 msgstr "Textruta: "
 
@@ -22828,19 +22897,19 @@ msgstr "Textruta: "
 msgid "Reshape Text Layer"
 msgstr "Omforma textlager"
 
-#: ../app/tools/gimptexttool.c:1710 ../app/tools/gimptexttool.c:1713
+#: ../app/tools/gimptexttool.c:1754 ../app/tools/gimptexttool.c:1757
 msgid "Confirm Text Editing"
 msgstr "Bekräfta textredigering"
 
-#: ../app/tools/gimptexttool.c:1717
+#: ../app/tools/gimptexttool.c:1761
 msgid "Create _New Layer"
 msgstr "Skapa _nytt lager"
 
-#: ../app/tools/gimptexttool.c:1719
+#: ../app/tools/gimptexttool.c:1763
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: ../app/tools/gimptexttool.c:1741
+#: ../app/tools/gimptexttool.c:1785
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -23008,6 +23077,7 @@ msgid "Lock pivot position to canvas"
 msgstr "Lås pivotposition till rityta"
 
 #: ../app/tools/gimptransformgridtool.c:201
+#: ../app/tools/gimptransformtool.c:307
 msgid "_Transform"
 msgstr "_Transformera"
 
@@ -23032,39 +23102,56 @@ msgstr "Hur att klippa"
 msgid "Transform:"
 msgstr "Transformera:"
 
-#: ../app/tools/gimptransformtool.c:70
+#: ../app/tools/gimptransformtool.c:90
 msgid "Transforming"
 msgstr "Transformerar"
 
-#: ../app/tools/gimptransformtool.c:325
+#: ../app/tools/gimptransformtool.c:299
+msgid "Confirm Transformation"
+msgstr "Bekräfta transformation"
+
+#: ../app/tools/gimptransformtool.c:317
+msgid "Transformation creates a very large item."
+msgstr "Transformation skapar ett väldigt stort objekt."
+
+#: ../app/tools/gimptransformtool.c:321
+#, c-format
+msgid ""
+"Applying the transformation will result in an item that is over %g times "
+"larger than the image."
+msgstr ""
+"Att tillämpa transformationen kommer att resultera i ett objekt som är över "
+"%g gånger större än bilden."
+
+#: ../app/tools/gimptransformtool.c:503
 msgid "There is no layer to transform."
 msgstr "Det finns inget lager att transformera."
 
-#: ../app/tools/gimptransformtool.c:332
+#: ../app/tools/gimptransformtool.c:510
 msgid "The active layer's position and size are locked."
 msgstr "Det aktiva lagrets position och storlek är låst."
 
-#: ../app/tools/gimptransformtool.c:345
+#: ../app/tools/gimptransformtool.c:523
 msgid "The selection does not intersect with the layer."
 msgstr "Markeringen skär inte lagret."
 
-#: ../app/tools/gimptransformtool.c:352
+#: ../app/tools/gimptransformtool.c:530
 msgid "There is no selection to transform."
 msgstr "Det finns ingen markering att transformera."
 
-#: ../app/tools/gimptransformtool.c:365
+#: ../app/tools/gimptransformtool.c:543
 msgid "There is no path to transform."
 msgstr "Det finns ingen bana att transformera."
 
-#: ../app/tools/gimptransformtool.c:370
+#: ../app/tools/gimptransformtool.c:548
 msgid "The active path's strokes are locked."
 msgstr "Den aktiva banans streck är låsta."
 
-#: ../app/tools/gimptransformtool.c:374
+#: ../app/tools/gimptransformtool.c:552
 msgid "The active path has no strokes."
 msgstr "Den aktiva banan har inga streck."
 
-#: ../app/tools/gimptransformtool.c:439
+#: ../app/tools/gimptransformtool.c:617
 msgid "The current transform is invalid"
 msgstr "Den aktuella transformen är ogiltig"
 
@@ -23538,7 +23625,7 @@ msgid "Percentage of width of brush"
 msgstr "Procent av penselns bredd"
 
 #: ../app/widgets/gimpbufferview.c:189 ../app/widgets/gimpbufferview.c:290
-#: ../app/widgets/gimpeditor.c:759
+#: ../app/widgets/gimpeditor.c:756
 msgid "(None)"
 msgstr "(Ingen)"
 
@@ -24236,262 +24323,325 @@ msgstr "GIMP stötte på flera kritiska fel!"
 msgid "_Restart GIMP"
 msgstr "Sta_rta om GIMP"
 
-#: ../app/widgets/gimpdashboard.c:396 ../app/widgets/gimpdashboard.c:448
+#: ../app/widgets/gimpdashboard.c:451 ../app/widgets/gimpdashboard.c:503
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Upptaget"
 
-#: ../app/widgets/gimpdashboard.c:397
+#: ../app/widgets/gimpdashboard.c:452
 msgid "Tile cache occupied size"
 msgstr "Använd bildblockscachestorlek"
 
-#: ../app/widgets/gimpdashboard.c:406
+#: ../app/widgets/gimpdashboard.c:461
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Maximum"
 
-#: ../app/widgets/gimpdashboard.c:407
+#: ../app/widgets/gimpdashboard.c:462
 msgid "Maximal tile cache occupied size"
 msgstr "Maximal använd bildblockscachestorlek"
 
-#: ../app/widgets/gimpdashboard.c:416 ../app/widgets/gimpdashboard.c:468
+#: ../app/widgets/gimpdashboard.c:471 ../app/widgets/gimpdashboard.c:523
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Gräns"
 
-#: ../app/widgets/gimpdashboard.c:417
+#: ../app/widgets/gimpdashboard.c:472
 msgid "Tile cache size limit"
 msgstr "Gräns för bildblockscachestorlek"
 
-#: ../app/widgets/gimpdashboard.c:425
+#: ../app/widgets/gimpdashboard.c:480 ../app/widgets/gimpdashboard.c:606
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Komprimering"
 
-#: ../app/widgets/gimpdashboard.c:426
+#: ../app/widgets/gimpdashboard.c:481
 msgid "Tile cache compression ratio"
 msgstr "Komprimeringsförhållande för bildblockscache"
 
-#: ../app/widgets/gimpdashboard.c:435
+#: ../app/widgets/gimpdashboard.c:490
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Träff/miss"
 
-#: ../app/widgets/gimpdashboard.c:436
+#: ../app/widgets/gimpdashboard.c:491
 msgid "Tile cache hit/miss ratio"
 msgstr "Träff/miss-förhållande för bildblockscache"
 
-#: ../app/widgets/gimpdashboard.c:449
+#: ../app/widgets/gimpdashboard.c:504
 msgid "Swap file occupied size"
 msgstr "Använd växlingsfilsstorlek"
 
-#: ../app/widgets/gimpdashboard.c:458 ../app/widgets/gimpdashboard.c:576
+#: ../app/widgets/gimpdashboard.c:513 ../app/widgets/gimpdashboard.c:670
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Storlek"
 
-#: ../app/widgets/gimpdashboard.c:459
+#: ../app/widgets/gimpdashboard.c:514
 msgid "Swap file size"
 msgstr "Växlingsfilsstorlek"
 
-#: ../app/widgets/gimpdashboard.c:469
+#: ../app/widgets/gimpdashboard.c:524
 msgid "Swap file size limit"
 msgstr "Gräns för växlingsfilsstorlek"
+
+#: ../app/widgets/gimpdashboard.c:531
+msgctxt "dashboard-variable"
+msgid "Queued"
+msgstr "Köat"
+
+#: ../app/widgets/gimpdashboard.c:532
+msgid "Size of data queued for writing to the swap"
+msgstr "Storlek på data som köats för skrivning till växlingsfilen"
+
+#: ../app/widgets/gimpdashboard.c:541
+msgctxt "dashboard-variable"
+msgid "Queue stalls"
+msgstr "Köfördröjningar"
+
+#: ../app/widgets/gimpdashboard.c:542
+msgid ""
+"Number of times the writing to the swap has been stalled, due to a full queue"
+msgstr ""
+"Antal gånger skrivningen till växlingsfilen har fördröjts på grund av en "
+"full kö"
+
+#: ../app/widgets/gimpdashboard.c:551
+msgctxt "dashboard-variable"
+msgid "Queue full"
+msgstr "Full kö"
+
+#: ../app/widgets/gimpdashboard.c:552
+msgid "Whether the swap queue is full"
+msgstr "Huruvida växlingskön är full"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:479
+#: ../app/widgets/gimpdashboard.c:563
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Läst"
 
-#: ../app/widgets/gimpdashboard.c:480
+#: ../app/widgets/gimpdashboard.c:564
 msgid "Total amount of data read from the swap"
 msgstr "Total mängd data läst från växlingsfilen"
 
-#: ../app/widgets/gimpdashboard.c:489
+#: ../app/widgets/gimpdashboard.c:573
 msgctxt "dashboard-variable"
-msgid "Reading"
-msgstr "Läser"
+msgid "Read throughput"
+msgstr "Genomströmning för läsning"
 
-#: ../app/widgets/gimpdashboard.c:490
-msgid "Whether data is being read from the swap"
-msgstr "Huruvida data läses från växlingsfilen"
+#: ../app/widgets/gimpdashboard.c:574
+msgid "The rate at which data is read from the swap"
+msgstr "Hastigheten med vilken data läses från växlingsfilen"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:502
+#: ../app/widgets/gimpdashboard.c:586
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Skrivet"
 
-#: ../app/widgets/gimpdashboard.c:503
+#: ../app/widgets/gimpdashboard.c:587
 msgid "Total amount of data written to the swap"
 msgstr "Total mängd data skrivet till växlingsfilen"
 
-#: ../app/widgets/gimpdashboard.c:512
+#: ../app/widgets/gimpdashboard.c:596
 msgctxt "dashboard-variable"
-msgid "Writing"
-msgstr "Skriver"
+msgid "Write throughput"
+msgstr "Genomströmning för skrivning"
 
-#: ../app/widgets/gimpdashboard.c:513
-msgid "Whether data is being written to the swap"
-msgstr "Huruvida data skrivs till växlingsfilen"
+#: ../app/widgets/gimpdashboard.c:597
+msgid "The rate at which data is written to the swap"
+msgstr "Hastigheten med vilken data skrivs till växlingsfilen"
 
-#: ../app/widgets/gimpdashboard.c:526
+#: ../app/widgets/gimpdashboard.c:607
+msgid "Swap compression ratio"
+msgstr "Komprimeringsförhållande för växlingsfil"
+
+#: ../app/widgets/gimpdashboard.c:620
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Användning"
 
-#: ../app/widgets/gimpdashboard.c:527
+#: ../app/widgets/gimpdashboard.c:621
 msgid "Total CPU usage"
 msgstr "Total CPU-användning"
 
-#: ../app/widgets/gimpdashboard.c:535 ../app/widgets/gimpdashboard.c:544
+#: ../app/widgets/gimpdashboard.c:629 ../app/widgets/gimpdashboard.c:638
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Aktiv"
 
-#: ../app/widgets/gimpdashboard.c:536
+#: ../app/widgets/gimpdashboard.c:630
 msgid "Whether the CPU is active"
 msgstr "Huruvida CPU:n är aktiv"
 
-#: ../app/widgets/gimpdashboard.c:545
+#: ../app/widgets/gimpdashboard.c:639
 msgid "Total amount of time the CPU has been active"
 msgstr "Total mängd tid som CPU:n har varit aktiv"
 
-#: ../app/widgets/gimpdashboard.c:558
+#: ../app/widgets/gimpdashboard.c:652
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Använt"
 
-#: ../app/widgets/gimpdashboard.c:559
+#: ../app/widgets/gimpdashboard.c:653
 msgid "Amount of memory used by the process"
 msgstr "Mängden minne som används av processen"
 
-#: ../app/widgets/gimpdashboard.c:567
+#: ../app/widgets/gimpdashboard.c:661
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Tillgängligt"
 
-#: ../app/widgets/gimpdashboard.c:568
+#: ../app/widgets/gimpdashboard.c:662
 msgid "Amount of available physical memory"
 msgstr "Mängden tillgängligt fysiskt minne"
 
-#: ../app/widgets/gimpdashboard.c:577
+#: ../app/widgets/gimpdashboard.c:671
 msgid "Physical memory size"
 msgstr "Storleken på fysiskt minne"
 
-#: ../app/widgets/gimpdashboard.c:588
+#: ../app/widgets/gimpdashboard.c:682
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mipmappad"
 
-#: ../app/widgets/gimpdashboard.c:589
+#: ../app/widgets/gimpdashboard.c:683
 msgid "Total size of processed mipmapped data"
 msgstr "Total storlek för bearbetad mipmappad data"
 
-#: ../app/widgets/gimpdashboard.c:597
+#: ../app/widgets/gimpdashboard.c:691
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Asynkront"
 
-#: ../app/widgets/gimpdashboard.c:598
+#: ../app/widgets/gimpdashboard.c:692
 msgid "Number of ongoing asynchronous operations"
 msgstr "Antalet pågående asynkrona operationer"
 
-#: ../app/widgets/gimpdashboard.c:610
+#: ../app/widgets/gimpdashboard.c:704
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Cache"
 
-#: ../app/widgets/gimpdashboard.c:611
+#: ../app/widgets/gimpdashboard.c:705
 msgid "In-memory tile cache"
 msgstr "Bildblockscache i minne"
 
-#: ../app/widgets/gimpdashboard.c:647
+#: ../app/widgets/gimpdashboard.c:741
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Växling"
 
-#: ../app/widgets/gimpdashboard.c:648
+#: ../app/widgets/gimpdashboard.c:742
 msgid "On-disk tile swap"
 msgstr "Bildblocksväxlingsfil på disk"
 
-#: ../app/widgets/gimpdashboard.c:699
+#: ../app/widgets/gimpdashboard.c:806
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "CPU"
 
-#: ../app/widgets/gimpdashboard.c:700
+#: ../app/widgets/gimpdashboard.c:807
 msgid "CPU usage"
 msgstr "CPU-användning"
 
-#: ../app/widgets/gimpdashboard.c:735
+#: ../app/widgets/gimpdashboard.c:842
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Minne"
 
-#: ../app/widgets/gimpdashboard.c:736
+#: ../app/widgets/gimpdashboard.c:843
 msgid "Memory usage"
 msgstr "Minnesanvändning"
 
-#: ../app/widgets/gimpdashboard.c:744
+#: ../app/widgets/gimpdashboard.c:851
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Cache"
 
-#: ../app/widgets/gimpdashboard.c:774
+#: ../app/widgets/gimpdashboard.c:881
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Diverse"
 
-#: ../app/widgets/gimpdashboard.c:775
+#: ../app/widgets/gimpdashboard.c:882
 msgid "Miscellaneous information"
 msgstr "Diverse information"
 
-#: ../app/widgets/gimpdashboard.c:956
+#: ../app/widgets/gimpdashboard.c:1060
 msgid "Select fields"
 msgstr "Markerad fält"
 
 # sebras: blir det bättre med "Finns ej"?
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:2898
+#: ../app/widgets/gimpdashboard.c:3148
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "-"
 
-#: ../app/widgets/gimpdashboard.c:2907
+#: ../app/widgets/gimpdashboard.c:3157 ../app/widgets/gimpdashboard.c:4043
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../app/widgets/gimpdashboard.c:2908
+#: ../app/widgets/gimpdashboard.c:3158 ../app/widgets/gimpdashboard.c:4044
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nej"
+
+#. Translators:  This string reports the rate of change of a measured
+#. * value.  The "%g" is replaced by a certain quantity, and the "/s"
+#. * is an abbreviation for "per second".
+#.
+#: ../app/widgets/gimpdashboard.c:3242
+#, c-format
+msgid "%g/s"
+msgstr "%g/s"
+
+#. Translators:  This string reports the rate of change of a measured value.
+#. * The first "%s" is replaced by a certain quantity, usually followed by a
+#. * unit of measurement (e.g., "10 bytes"). and the final "/s" is an
+#. * abbreviation for "per second" (so the full string would read
+#. * "10 bytes/s", that is, "10 bytes per second".
+#.
+#: ../app/widgets/gimpdashboard.c:4033
+#, c-format
+msgid "%s/s"
+msgstr "%s/s"
+
+# sebras: blir det bättre med "Finns ej"?
+#: ../app/widgets/gimpdashboard.c:4111
+msgid "N/A"
+msgstr "-"
+
+#: ../app/widgets/gimpdashboard.c:4428
+msgid "Resolving symbol information..."
+msgstr "Slår upp symbolinformation…"
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (skrivskyddad)"
 
-#: ../app/widgets/gimpdeviceeditor.c:167
+#: ../app/widgets/gimpdeviceeditor.c:164
 msgid "Delete the selected device"
 msgstr "Ta bort markerad enhet"
 
-#: ../app/widgets/gimpdeviceeditor.c:506
+#: ../app/widgets/gimpdeviceeditor.c:503
 msgid "Delete Device Settings"
 msgstr "Ta bort enhetsinställningar"
 
-#: ../app/widgets/gimpdeviceeditor.c:527
+#: ../app/widgets/gimpdeviceeditor.c:524
 #, c-format
 msgid "Delete \"%s\"?"
 msgstr "Ta bort ”%s”?"
 
-#: ../app/widgets/gimpdeviceeditor.c:530
+#: ../app/widgets/gimpdeviceeditor.c:527
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
@@ -24504,17 +24654,17 @@ msgstr ""
 msgid "Pressure curve"
 msgstr "Tryckkurva"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:141
+#: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:161
 #: ../app/widgets/gimpdynamicsoutputeditor.c:70
 msgid "Pressure"
 msgstr "Tryck"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:142
+#: ../app/widgets/gimpdeviceinfoeditor.c:141
 msgid "X tilt"
 msgstr "X-lutning"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:143
+#: ../app/widgets/gimpdeviceinfoeditor.c:142
 msgid "Y tilt"
 msgstr "Y-lutning"
 
@@ -24522,40 +24672,40 @@ msgstr "Y-lutning"
 #. * Some pens use the same axis for their rotation feature.
 #. * See bug 791455.
 #.
-#: ../app/widgets/gimpdeviceinfoeditor.c:148
+#: ../app/widgets/gimpdeviceinfoeditor.c:147
 #: ../app/widgets/gimpdynamicseditor.c:165
 msgid "Wheel/Rotation"
 msgstr "Hjul/rotation"
 
 #. the axes
 #. The axes of an input device
-#: ../app/widgets/gimpdeviceinfoeditor.c:199
+#: ../app/widgets/gimpdeviceinfoeditor.c:196
 msgid "Axes"
 msgstr "Axlar"
 
 #. the keys
-#: ../app/widgets/gimpdeviceinfoeditor.c:273
+#: ../app/widgets/gimpdeviceinfoeditor.c:270
 msgid "Keys"
 msgstr "Tangenter"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:369
-#: ../app/widgets/gimpdeviceinfoeditor.c:584
+#: ../app/widgets/gimpdeviceinfoeditor.c:366
+#: ../app/widgets/gimpdeviceinfoeditor.c:581
 #, c-format
 msgid "none"
 msgstr "ingen"
 
 #. e.g. "Pressure Curve" for mapping input device axes
-#: ../app/widgets/gimpdeviceinfoeditor.c:418
+#: ../app/widgets/gimpdeviceinfoeditor.c:415
 #, c-format
 msgid "%s Curve"
 msgstr "%s-Kurva"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:477
-#: ../app/widgets/gimpdynamicsoutputeditor.c:211
+#: ../app/widgets/gimpdeviceinfoeditor.c:474
+#: ../app/widgets/gimpdynamicsoutputeditor.c:206
 msgid "_Reset Curve"
 msgstr "_Återställ kurva"
 
-#: ../app/widgets/gimpdeviceinfoeditor.c:490
+#: ../app/widgets/gimpdeviceinfoeditor.c:487
 #, c-format
 msgid "The axis '%s' has no curve"
 msgstr "Axeln ”%s” har ingen kurva"
@@ -24617,16 +24767,16 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: ../app/widgets/gimpdockbook.c:303
+#: ../app/widgets/gimpdockbook.c:299
 msgid "Configure this tab"
 msgstr "Konfigurera denna flik"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:387
+#: ../app/widgets/gimpdockwindow.c:384
 msgid "Auto"
 msgstr "Auto"
 
-#: ../app/widgets/gimpdockwindow.c:398
+#: ../app/widgets/gimpdockwindow.c:395
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr "När aktiverat följer dialogen automatiskt bilden du arbetar på."
@@ -24659,7 +24809,7 @@ msgid "Mapping matrix"
 msgstr "Kartläggningsmatris"
 
 #: ../app/widgets/gimpdynamicseditor.c:315
-#: ../app/widgets/gimptoolpreseteditor.c:149
+#: ../app/widgets/gimptoolpreseteditor.c:146
 msgid "Icon:"
 msgstr "Ikon:"
 
@@ -24692,7 +24842,7 @@ msgstr "Exportera bild"
 msgid "_Export"
 msgstr "_Exportera"
 
-#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:145
+#: ../app/widgets/gimpexportdialog.c:74 ../app/widgets/gimpsavedialog.c:144
 msgid "By Extension"
 msgstr "Via ändelse"
 
@@ -24951,35 +25101,35 @@ msgstr "Visa värden i linjär rymd"
 msgid "Show values in perceptual space"
 msgstr "Visa värden i perceptuell rymd"
 
-#: ../app/widgets/gimpiconpicker.c:245
+#: ../app/widgets/gimpiconpicker.c:241
 msgid "From File..."
 msgstr "Från fil…"
 
-#: ../app/widgets/gimpiconpicker.c:254
+#: ../app/widgets/gimpiconpicker.c:250
 msgid "From Named Icons..."
 msgstr "Från namngivna ikoner…"
 
-#: ../app/widgets/gimpiconpicker.c:263
+#: ../app/widgets/gimpiconpicker.c:259
 msgid "Copy Icon to Clipboard"
 msgstr "Kopiera ikon till urklipp"
 
-#: ../app/widgets/gimpiconpicker.c:272
+#: ../app/widgets/gimpiconpicker.c:268
 msgid "Paste Icon from Clipboard"
 msgstr "Klistra in ikon från urklipp"
 
-#: ../app/widgets/gimpiconpicker.c:484
+#: ../app/widgets/gimpiconpicker.c:480
 msgid "Load Icon Image"
 msgstr "Läs in ikonbild"
 
-#: ../app/widgets/gimpiconsizescale.c:126
+#: ../app/widgets/gimpiconsizescale.c:123
 msgid "Guess icon size from resolution"
 msgstr "Gissa ikonstorlek utifrån upplösning"
 
-#: ../app/widgets/gimpiconsizescale.c:127
+#: ../app/widgets/gimpiconsizescale.c:124
 msgid "Use icon size from the theme"
 msgstr "Använd ikonstorlek från temat"
 
-#: ../app/widgets/gimpiconsizescale.c:128
+#: ../app/widgets/gimpiconsizescale.c:125
 msgid "Custom icon size"
 msgstr "Anpassad ikonstorlek"
 
@@ -25057,7 +25207,7 @@ msgid "Number of paths:"
 msgstr "Antal banor:"
 
 #: ../app/widgets/gimpimagepropview.c:452
-#: ../app/widgets/gimptemplateeditor.c:349
+#: ../app/widgets/gimptemplateeditor.c:346
 #, c-format
 msgid "pixels/%s"
 msgstr "bildpunkter/%s"
@@ -25071,7 +25221,7 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "färger"
 
-#: ../app/widgets/gimpitemtreeview.c:757
+#: ../app/widgets/gimpitemtreeview.c:754
 msgid "Lock:"
 msgstr "Lås:"
 
@@ -25079,11 +25229,11 @@ msgstr "Lås:"
 msgid "System Language"
 msgstr "Systemspråk"
 
-#: ../app/widgets/gimplayermodebox.c:158
+#: ../app/widgets/gimplayermodebox.c:153
 msgid "Switch to another group of modes"
 msgstr "Växla till en annan grupp av lägen"
 
-#: ../app/widgets/gimplayertreeview.c:319
+#: ../app/widgets/gimplayertreeview.c:312
 msgid "Lock alpha channel"
 msgstr "Lås alfakanal"
 
@@ -25123,8 +25273,8 @@ msgstr "Redigera färgpalettpost"
 msgid "You can drop dockable dialogs here"
 msgstr "Du kan släppa dockningsbara dialoger här"
 
-#: ../app/widgets/gimppickablepopup.c:206
-#: ../app/widgets/gimppickablepopup.c:423
+#: ../app/widgets/gimppickablepopup.c:203
+#: ../app/widgets/gimppickablepopup.c:420
 msgid "Select an image in the left pane"
 msgstr "Välj en bild i den vänstra panelen"
 
@@ -25146,20 +25296,11 @@ msgstr ""
 "har inga\n"
 "samplingspunkter"
 
-#: ../app/widgets/gimpsavedialog.c:151
+#: ../app/widgets/gimpsavedialog.c:150
 msgid "All XCF images"
 msgstr "Alla XCF-bilder"
 
-#: ../app/widgets/gimpsavedialog.c:265
-#, c-format
-msgid ""
-"The image uses features from %s, disabling compression won't make the XCF "
-"file readable by older GIMP versions."
-msgstr ""
-"Bilden använder funktioner från %s, att inaktivera komprimering kommer inte "
-"att göra XCF-filen läsbar för äldre GIMP-versioner."
-
-#: ../app/widgets/gimpsavedialog.c:275
+#: ../app/widgets/gimpsavedialog.c:262
 #, c-format
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
@@ -25167,13 +25308,21 @@ msgstr ""
 "Behåll komprimering inaktiverat för att göra XCF-filen läsbar för %s och "
 "senare."
 
-#: ../app/widgets/gimpsavedialog.c:287
-msgid "Metadata won't be visible in GIMP older than version 2.10."
-msgstr "Metadata kommer inte att vara synligt i GIMP äldre än version 2.10."
-
-#: ../app/widgets/gimpsavedialog.c:344
+#: ../app/widgets/gimpsavedialog.c:326
 msgid "Save this XCF file with better but slower compression"
 msgstr "Spara denna XCF-fil med bättre men långsammare komprimering"
+
+#: ../app/widgets/gimpsavedialog.c:395
+#, c-format
+msgid ""
+"The image uses features from %s and won't be readable by older GIMP versions."
+msgstr ""
+"Bilden använder funktioner från %s och kommer inte att vara läsbar för äldre "
+"GIMP-versioner."
+
+#: ../app/widgets/gimpsavedialog.c:404
+msgid "Metadata won't be visible in GIMP older than version 2.10."
+msgstr "Metadata kommer inte att vara synligt i GIMP äldre än version 2.10."
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
@@ -25190,64 +25339,64 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Ogiltig UTF-8"
 
-#: ../app/widgets/gimpsettingsbox.c:304
+#: ../app/widgets/gimpsettingsbox.c:300
 msgid "Pick a preset from the list"
 msgstr "Välj en förinställning från listan"
 
-#: ../app/widgets/gimpsettingsbox.c:328
+#: ../app/widgets/gimpsettingsbox.c:324
 msgid "Save the current settings as named preset"
 msgstr "Spara aktuella inställningar som namngiven förinställning"
 
-#: ../app/widgets/gimpsettingsbox.c:346
+#: ../app/widgets/gimpsettingsbox.c:342
 msgid "Manage presets"
 msgstr "Hantera förinställningar"
 
-#: ../app/widgets/gimpsettingsbox.c:360
+#: ../app/widgets/gimpsettingsbox.c:356
 msgid "_Import Current Settings from File..."
 msgstr "_Importera aktuella inställningar från fil…"
 
-#: ../app/widgets/gimpsettingsbox.c:366
+#: ../app/widgets/gimpsettingsbox.c:362
 msgid "_Export Current Settings to File..."
 msgstr "_Exportera aktuella inställningar till fil…"
 
-#: ../app/widgets/gimpsettingsbox.c:373
+#: ../app/widgets/gimpsettingsbox.c:369
 msgid "_Manage Saved Presets..."
 msgstr "_Hantera sparade förinställningar…"
 
-#: ../app/widgets/gimpsettingsbox.c:613
+#: ../app/widgets/gimpsettingsbox.c:609
 msgid "Save Settings as Named Preset"
 msgstr "Spara inställningar som namngiven förinställning"
 
-#: ../app/widgets/gimpsettingsbox.c:616
+#: ../app/widgets/gimpsettingsbox.c:612
 msgid "Enter a name for the preset"
 msgstr "Ange ett namn för förinställningen"
 
-#: ../app/widgets/gimpsettingsbox.c:617
+#: ../app/widgets/gimpsettingsbox.c:613
 msgid "Saved Settings"
 msgstr "Sparade inställningar"
 
-#: ../app/widgets/gimpsettingsbox.c:658
+#: ../app/widgets/gimpsettingsbox.c:654
 msgid "Manage Saved Presets"
 msgstr "Hantera sparade förinställningar"
 
-#: ../app/widgets/gimpsettingseditor.c:195
+#: ../app/widgets/gimpsettingseditor.c:192
 msgid "Import presets from a file"
 msgstr "Importera förinställningar från en fil"
 
-#: ../app/widgets/gimpsettingseditor.c:204
+#: ../app/widgets/gimpsettingseditor.c:201
 msgid "Export the selected presets to a file"
 msgstr "Exportera de valda förinställningarna till en fil"
 
-#: ../app/widgets/gimpsettingseditor.c:213
+#: ../app/widgets/gimpsettingseditor.c:210
 msgid "Delete the selected preset"
 msgstr "Ta bort den markerade förinställningen"
 
-#: ../app/widgets/gimpsizebox.c:458
+#: ../app/widgets/gimpsizebox.c:455
 #, c-format
 msgid "%d × %d ppi"
 msgstr "%d × %d punkter/tum"
 
-#: ../app/widgets/gimpsizebox.c:460
+#: ../app/widgets/gimpsizebox.c:457
 #, c-format
 msgid "%d ppi"
 msgstr "%d punkter/tum"
@@ -25296,57 +25445,57 @@ msgstr "ange taggar"
 msgid ","
 msgstr ","
 
-#: ../app/widgets/gimptemplateeditor.c:219
+#: ../app/widgets/gimptemplateeditor.c:216
 #, c-format
 msgid "%p"
 msgstr "%p"
 
-#: ../app/widgets/gimptemplateeditor.c:294
+#: ../app/widgets/gimptemplateeditor.c:291
 msgid "_Advanced Options"
 msgstr "_Avancerade alternativ"
 
-#: ../app/widgets/gimptemplateeditor.c:407
+#: ../app/widgets/gimptemplateeditor.c:404
 msgid "Color _space:"
 msgstr "Färg_rum:"
 
-#: ../app/widgets/gimptemplateeditor.c:415
+#: ../app/widgets/gimptemplateeditor.c:412
 msgid "_Precision:"
 msgstr "_Precision:"
 
-#: ../app/widgets/gimptemplateeditor.c:427
+#: ../app/widgets/gimptemplateeditor.c:424
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../app/widgets/gimptemplateeditor.c:432
+#: ../app/widgets/gimptemplateeditor.c:429
 msgid "Color _manage this image"
 msgstr "Färg_hantera denna bild"
 
-#: ../app/widgets/gimptemplateeditor.c:441
+#: ../app/widgets/gimptemplateeditor.c:438
 msgid "Choose A Color Profile"
 msgstr "Välj en färgprofil"
 
-#: ../app/widgets/gimptemplateeditor.c:445
+#: ../app/widgets/gimptemplateeditor.c:442
 msgid "Co_lor profile:"
 msgstr "Färgprofi_l:"
 
-#: ../app/widgets/gimptemplateeditor.c:462
+#: ../app/widgets/gimptemplateeditor.c:459
 msgid "Comme_nt:"
 msgstr "Komme_ntar:"
 
-#: ../app/widgets/gimptemplateeditor.c:577
+#: ../app/widgets/gimptemplateeditor.c:574
 msgid "_Name:"
 msgstr "_Namn:"
 
-#: ../app/widgets/gimptemplateeditor.c:583
+#: ../app/widgets/gimptemplateeditor.c:580
 msgid "_Icon:"
 msgstr "_Ikon:"
 
-#: ../app/widgets/gimptemplateeditor.c:802
+#: ../app/widgets/gimptemplateeditor.c:799
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d × %d punkter/tum, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:804
+#: ../app/widgets/gimptemplateeditor.c:801
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d punkter/tum, %s"
@@ -25510,39 +25659,39 @@ msgstr ""
 "Den aktiva gradienten.\n"
 "Klicka för att öppna gradientdialogen."
 
-#: ../app/widgets/gimptooleditor.c:295
+#: ../app/widgets/gimptooleditor.c:292
 msgid "Raise this tool"
 msgstr "Höj detta verktyg"
 
-#: ../app/widgets/gimptooleditor.c:296
+#: ../app/widgets/gimptooleditor.c:293
 msgid "Raise this tool to the top"
 msgstr "Höj detta verktyg överst"
 
-#: ../app/widgets/gimptooleditor.c:303
+#: ../app/widgets/gimptooleditor.c:300
 msgid "Lower this tool"
 msgstr "Sänk detta verktyg"
 
-#: ../app/widgets/gimptooleditor.c:304
+#: ../app/widgets/gimptooleditor.c:301
 msgid "Lower this tool to the bottom"
 msgstr "Sänk detta verktyg till nederst"
 
-#: ../app/widgets/gimptooleditor.c:311
+#: ../app/widgets/gimptooleditor.c:308
 msgid "Reset tool order and visibility"
 msgstr "Återställ verktygsordning och synlighet"
 
-#: ../app/widgets/gimptooloptionseditor.c:203
+#: ../app/widgets/gimptooloptionseditor.c:200
 msgid "Save Tool Preset..."
 msgstr "Spara verktygsförinställning…"
 
-#: ../app/widgets/gimptooloptionseditor.c:212
+#: ../app/widgets/gimptooloptionseditor.c:209
 msgid "Restore Tool Preset..."
 msgstr "Återställ verktygsförinställning…"
 
-#: ../app/widgets/gimptooloptionseditor.c:221
+#: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Delete Tool Preset..."
 msgstr "Ta bort verktygsförinställning…"
 
-#: ../app/widgets/gimptoolpreseteditor.c:298
+#: ../app/widgets/gimptoolpreseteditor.c:295
 #, c-format
 msgid "%s Preset"
 msgstr "%s-förinställning"
@@ -25620,22 +25769,22 @@ msgstr "%s (prova %s, %s)"
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (prova %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1738
+#: ../app/widgets/gimpwidgets-utils.c:1753
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Inbyggd gråskala (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1745
+#: ../app/widgets/gimpwidgets-utils.c:1760
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Inbyggd RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1762
+#: ../app/widgets/gimpwidgets-utils.c:1777
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Föredragen gråskala (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1769
+#: ../app/widgets/gimpwidgets-utils.c:1784
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Föredragen RGB (%s)"
@@ -25865,6 +26014,18 @@ msgstr "rund"
 msgid "fuzzy"
 msgstr "luddig"
 
+#~ msgctxt "dashboard-action"
+#~ msgid "Reset"
+#~ msgstr "Återställ"
+
+#~ msgctxt "dashboard-variable"
+#~ msgid "Reading"
+#~ msgstr "Läser"
+
+#~ msgctxt "dashboard-variable"
+#~ msgid "Writing"
+#~ msgstr "Skriver"
+
 #~ msgctxt "layer-mode"
 #~ msgid "Hue (HSV) (legacy)"
 #~ msgstr "Nyans (NMI) (föråldrad)"
@@ -26007,9 +26168,6 @@ msgstr "luddig"
 #~ msgctxt "layer-composite-mode"
 #~ msgid "Source in"
 #~ msgstr "Källa in"
-
-#~ msgid "Transformation Matrix"
-#~ msgstr "Transformationsmatris"
 
 #~ msgid "Image Import"
 #~ msgstr "Bildimportering"
