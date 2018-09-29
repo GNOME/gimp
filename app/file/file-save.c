@@ -89,6 +89,8 @@ file_save (Gimp                *gimp,
   g_object_ref (image);
   g_object_ref (file);
 
+  gimp_image_saving (image);
+
   drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)

@@ -54,6 +54,7 @@ struct _GimpToolManager
 
   GQuark    image_clean_handler_id;
   GQuark    image_dirty_handler_id;
+  GQuark    image_saving_handler_id;
 };
 
 
@@ -71,6 +72,8 @@ static void   tool_manager_preset_changed     (GimpContext     *user_context,
                                                GimpToolManager *tool_manager);
 static void   tool_manager_image_clean_dirty  (GimpImage       *image,
                                                GimpDirtyMask    dirty_mask,
+                                               GimpToolManager *tool_manager);
+static void   tool_manager_image_saving       (GimpImage       *image,
                                                GimpToolManager *tool_manager);
 
 static void   tool_manager_cast_spell         (GimpToolInfo    *tool_info);
@@ -104,6 +107,11 @@ tool_manager_init (Gimp *gimp)
   tool_manager->image_dirty_handler_id =
     gimp_container_add_handler (gimp->images, "dirty",
                                 G_CALLBACK (tool_manager_image_clean_dirty),
+                                tool_manager);
+
+  tool_manager->image_saving_handler_id =
+    gimp_container_add_handler (gimp->images, "saving",
+                                G_CALLBACK (tool_manager_image_saving),
                                 tool_manager);
 
   user_context = gimp_get_user_context (gimp);
@@ -145,6 +153,8 @@ tool_manager_exit (Gimp *gimp)
                                  tool_manager->image_clean_handler_id);
   gimp_container_remove_handler (gimp->images,
                                  tool_manager->image_dirty_handler_id);
+  gimp_container_remove_handler (gimp->images,
+                                 tool_manager->image_saving_handler_id);
 
   g_clear_object (&tool_manager->active_tool);
 
@@ -767,6 +777,23 @@ tool_manager_image_clean_dirty (GimpImage       *image,
 
       if (display)
         tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,
+                                     display);
+    }
+}
+
+static void
+tool_manager_image_saving (GimpImage       *image,
+                           GimpToolManager *tool_manager)
+{
+  GimpTool *tool = tool_manager->active_tool;
+
+  if (tool &&
+      ! gimp_tool_control_get_preserve (tool->control))
+    {
+      GimpDisplay *display = gimp_tool_has_image (tool, image);
+
+      if (display)
+        tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_COMMIT,
                                      display);
     }
 }
