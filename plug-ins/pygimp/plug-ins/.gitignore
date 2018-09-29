@@ -2,6 +2,8 @@
 /Makefile.in
 /*.pyc
 /*.pyo
+/benchmark-foreground-extract/benchmark-foreground-extract.py
+/clothify/clothify.py
 /colorxhtml/colorxhtml.py
 /file-openraster/file-openraster.py
 /foggify/foggify.py
@@ -12,3 +14,6 @@
 /palette-to-gradient/palette-to-gradient.py
 /py-slice/py-slice.py
 /python-eval/python-eval.py
+/shadow_bevel/shadow_bevel.py
+/sphere/sphere.py
+/whirlpinch/whirlpinch.py
