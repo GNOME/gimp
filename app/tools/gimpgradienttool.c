@@ -198,6 +198,8 @@ gimp_gradient_tool_init (GimpGradientTool *gradient_tool)
                                             GIMP_DIRTY_IMAGE_STRUCTURE |
                                             GIMP_DIRTY_DRAWABLE        |
                                             GIMP_DIRTY_ACTIVE_DRAWABLE);
+  gimp_tool_control_set_dirty_action       (tool->control,
+                                            GIMP_TOOL_ACTION_COMMIT);
   gimp_tool_control_set_wants_click        (tool->control, TRUE);
   gimp_tool_control_set_wants_double_click (tool->control, TRUE);
   gimp_tool_control_set_active_modifiers   (tool->control,
