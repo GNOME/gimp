@@ -753,7 +753,8 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
 {
   GimpTool *tool = GIMP_TOOL (wt);
 
-  if (wt->filter)
+  /* don't commit a nop */
+  if (tool->display && gimp_tool_can_undo (tool, tool->display))
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
