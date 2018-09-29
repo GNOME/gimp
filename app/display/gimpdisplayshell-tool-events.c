@@ -1879,8 +1879,6 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
       (! gimp_image_is_empty (image) ||
        gimp_tool_control_get_handle_empty_image (active_tool->control)))
     {
-      initialized = TRUE;
-
       /*  initialize the current tool if it has no drawable  */
       if (! active_tool->drawable)
         {
@@ -1931,6 +1929,11 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
               gimp_filter_history_add (gimp, procedure);
               gimp_ui_manager_activate_action (manager, "filters",
                                                "filters-reshow");
+
+              /*  the procedure already initialized the tool; don't
+               *  reinitialize it below, since this can lead to errors.
+               */
+              initialized = TRUE;
             }
           else
             {
@@ -1941,7 +1944,12 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
           /*  make sure the newly created tool has the right state  */
           gimp_display_shell_update_focus (shell, TRUE, image_coords, state);
 
-          initialized = tool_manager_initialize_active (gimp, display);
+          if (! initialized)
+            initialized = tool_manager_initialize_active (gimp, display);
+        }
+      else
+        {
+          initialized = TRUE;
         }
     }
 
