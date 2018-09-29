@@ -813,10 +813,14 @@ class SampleGraph (Gtk.DrawingArea):
             var_active = row[self.model.ACTIVE]
 
             if var_active:
-                self.max_value = max (
-                    self.max_value,
-                    max (sample.vars[var_name].value or 0 for sample in samples)
-                )
+                values = (sample.vars[var_name].value for sample in samples)
+                values = filter (lambda x: x is not None, values)
+                values = filter (math.isfinite,           values)
+
+                try:
+                    self.max_value = max (self.max_value, max (values))
+                except:
+                    pass
 
         self.queue_draw ()
 
@@ -1030,7 +1034,8 @@ class SampleGraph (Gtk.DrawingArea):
         Gtk.render_background (style, cr, 0, 0, width, height)
 
         if self.model:
-            vscale = (height - 4) / self.max_value
+            max_value = self.max_value
+            vscale    = (height - 4) / max_value
 
             cr.save ()
 
@@ -1038,6 +1043,7 @@ class SampleGraph (Gtk.DrawingArea):
             cr.scale (1, -1)
 
             first_sample = True
+            has_infinite = False
 
             for row in self.model:
                 var_name   = row[self.model.NAME]
@@ -1051,8 +1057,15 @@ class SampleGraph (Gtk.DrawingArea):
                         value = samples[i].vars[var_name].value
 
                         if value is not None:
-                            if is_boolean:
-                                value *= self.max_value
+                            first_sample = False
+
+                            if math.isinf (value):
+                                first_sample = True
+                                has_infinite = True
+
+                                value = max_value
+                            elif is_boolean:
+                                value *= max_value
 
                             y = value * vscale
 
@@ -1072,8 +1085,6 @@ class SampleGraph (Gtk.DrawingArea):
                                     cr.line_to (x0, y)
 
                                 cr.line_to (x1, y)
-
-                            first_sample = False
                         else:
                             first_sample = True
 
@@ -1082,6 +1093,41 @@ class SampleGraph (Gtk.DrawingArea):
                     cr.set_source_rgb (r, g, b)
                     cr.set_line_width (2)
                     cr.stroke ()
+
+                    if has_infinite:
+                        cr.save ()
+
+                        for i in range (len (samples)):
+                            value = samples[i].vars[var_name].value
+
+                            if value is not None and math.isinf (value):
+                                first_sample = False
+
+                                y = max_value * vscale
+
+                                if is_continuous:
+                                    x = self.sample_to_x (i)
+
+                                    if first_sample:
+                                        cr.move_to (x, y)
+                                    else:
+                                        cr.line_to (x, y)
+                                else:
+                                    (x0, x1) = self.sample_to_range (i)
+
+                                    if first_sample:
+                                        cr.move_to (x0, y)
+                                    else:
+                                        cr.line_to (x0, y)
+
+                                    cr.line_to (x1, y)
+                            else:
+                                first_sample = True
+
+                        cr.set_dash ([6, 6], 0)
+                        cr.stroke ()
+
+                        cr.restore ()
 
             cr.restore ()
 
