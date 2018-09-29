@@ -176,10 +176,12 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
                                    gint                 dest_x,
                                    gint                 dest_y)
 {
-  GimpItem        *item  = GIMP_ITEM (drawable);
-  GimpImage       *image = gimp_item_get_image (item);
-  GimpChannel     *mask  = gimp_image_get_mask (image);
+  GimpItem        *item             = GIMP_ITEM (drawable);
+  GimpImage       *image            = gimp_item_get_image (item);
+  GimpChannel     *mask             = gimp_image_get_mask (image);
   GeglBuffer      *drawable_buffer;
+  GeglRectangle    buffer_rect      = *buffer_region;
+  GeglRectangle    mask_buffer_rect = *mask_buffer_region;
   gint             x, y, width, height;
   gint             offset_x, offset_y;
   gboolean         active_components[MAX_CHANNELS];
@@ -196,7 +198,7 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
 
   /*  make sure the image application coordinates are within drawable bounds  */
   gimp_rectangle_intersect (dest_x, dest_y,
-                            buffer_region->width, buffer_region->height,
+                            buffer_rect.width, buffer_rect.height,
                             0, 0,
                             gimp_item_get_width  (item),
                             gimp_item_get_height (item),
@@ -216,6 +218,19 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
                                 gimp_item_get_height (mask_item),
                                 &x, &y, &width, &height);
     }
+
+  /*  adjust the original regions according to the application
+   *  offset and size
+   */
+  buffer_rect.x           += x - dest_x;
+  buffer_rect.y           += y - dest_y;
+  buffer_rect.width        = width;
+  buffer_rect.height       = height;
+
+  mask_buffer_rect.x      += x - dest_x;
+  mask_buffer_rect.y      += y - dest_y;
+  mask_buffer_rect.width   = width;
+  mask_buffer_rect.height  = height;
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
@@ -241,11 +256,11 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
                              dest_buffer,
                              GEGL_RECTANGLE (0, 0, 0, 0));
 
-      gimp_gegl_combine_mask (mask_buffer, mask_buffer_region,
+      gimp_gegl_combine_mask (mask_buffer, &mask_buffer_rect,
                               dest_buffer, GEGL_RECTANGLE (0, 0, width, height),
                               1.0);
 
-      gimp_gegl_replace (buffer,          buffer_region,
+      gimp_gegl_replace (buffer,          &buffer_rect,
                          drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
                          dest_buffer,     GEGL_RECTANGLE (0, 0, width, height),
                          drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
@@ -256,9 +271,9 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
     }
   else
     {
-      gimp_gegl_replace (buffer,          buffer_region,
+      gimp_gegl_replace (buffer,          &buffer_rect,
                          drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
-                         mask_buffer,     mask_buffer_region,
+                         mask_buffer,     &mask_buffer_rect,
                          drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
                          opacity,
                          active_components);
