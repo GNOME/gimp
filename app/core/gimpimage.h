@@ -76,6 +76,7 @@ struct _GimpImageClass
                                          GimpDirtyMask         dirty_mask);
   void (* dirty)                        (GimpImage            *image,
                                          GimpDirtyMask         dirty_mask);
+  void (* saving)                       (GimpImage            *image);
   void (* saved)                        (GimpImage            *image,
                                          GFile                *file);
   void (* exported)                     (GimpImage            *image,
@@ -166,6 +167,7 @@ GimpPlugInProcedure * gimp_image_get_load_proc   (GimpImage          *image);
 void            gimp_image_set_save_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
 GimpPlugInProcedure * gimp_image_get_save_proc   (GimpImage          *image);
+void            gimp_image_saving                (GimpImage          *image);
 void            gimp_image_saved                 (GimpImage          *image,
                                                   GFile              *file);
 void            gimp_image_set_export_proc       (GimpImage          *image,

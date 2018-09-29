@@ -111,6 +111,7 @@ enum
   SELECTION_INVALIDATE,
   CLEAN,
   DIRTY,
+  SAVING,
   SAVED,
   EXPORTED,
   GUIDE_ADDED,
@@ -431,6 +432,15 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_DIRTY_MASK);
 
+  gimp_image_signals[SAVING] =
+    g_signal_new ("saving",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, saving),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   gimp_image_signals[SAVED] =
     g_signal_new ("saved",
                   G_TYPE_FROM_CLASS (klass),
@@ -588,6 +598,7 @@ gimp_image_class_init (GimpImageClass *klass)
 
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
+  klass->saving                       = NULL;
   klass->saved                        = NULL;
   klass->exported                     = NULL;
   klass->guide_added                  = NULL;
@@ -3391,6 +3402,21 @@ gimp_image_get_dirty_time (GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
 
   return GIMP_IMAGE_GET_PRIVATE (image)->dirty_time;
+}
+
+/**
+ * gimp_image_saving:
+ * @image:
+ *
+ * Emits the "saving" signal, indicating that @image is about to be saved,
+ * or exported.
+ */
+void
+gimp_image_saving (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_signal_emit (image, gimp_image_signals[SAVING], 0);
 }
 
 /**
