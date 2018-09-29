@@ -72,12 +72,15 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
-  gimp_rectangle_intersect (base_x, base_y,
-                            buffer_region->width, buffer_region->height,
-                            0, 0,
-                            gimp_item_get_width  (item),
-                            gimp_item_get_height (item),
-                            &x, &y, &width, &height);
+  if (! gimp_rectangle_intersect (base_x, base_y,
+                                  buffer_region->width, buffer_region->height,
+                                  0, 0,
+                                  gimp_item_get_width  (item),
+                                  gimp_item_get_height (item),
+                                  &x, &y, &width, &height))
+    {
+      return;
+    }
 
   if (mask)
     {
@@ -87,11 +90,14 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      gimp_rectangle_intersect (x, y, width, height,
-                                -offset_x, -offset_y,
-                                gimp_item_get_width  (mask_item),
-                                gimp_item_get_height (mask_item),
-                                &x, &y, &width, &height);
+      if (! gimp_rectangle_intersect (x, y, width, height,
+                                      -offset_x, -offset_y,
+                                      gimp_item_get_width  (mask_item),
+                                      gimp_item_get_height (mask_item),
+                                      &x, &y, &width, &height))
+        {
+          return;
+        }
     }
 
   if (push_undo)
@@ -197,12 +203,15 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within drawable bounds  */
-  gimp_rectangle_intersect (dest_x, dest_y,
-                            buffer_rect.width, buffer_rect.height,
-                            0, 0,
-                            gimp_item_get_width  (item),
-                            gimp_item_get_height (item),
-                            &x, &y, &width, &height);
+  if (! gimp_rectangle_intersect (dest_x, dest_y,
+                                  buffer_rect.width, buffer_rect.height,
+                                  0, 0,
+                                  gimp_item_get_width  (item),
+                                  gimp_item_get_height (item),
+                                  &x, &y, &width, &height))
+    {
+      return;
+    }
 
   if (mask)
     {
@@ -212,11 +221,14 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      gimp_rectangle_intersect (x, y, width, height,
-                                -offset_x, -offset_y,
-                                gimp_item_get_width  (mask_item),
-                                gimp_item_get_height (mask_item),
-                                &x, &y, &width, &height);
+      if (! gimp_rectangle_intersect (x, y, width, height,
+                                      -offset_x, -offset_y,
+                                      gimp_item_get_width  (mask_item),
+                                      gimp_item_get_height (mask_item),
+                                      &x, &y, &width, &height))
+        {
+          return;
+        }
     }
 
   /*  adjust the original regions according to the application
