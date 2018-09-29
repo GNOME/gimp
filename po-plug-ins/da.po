@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-26 20:04+0000\n"
-"PO-Revision-Date: 2018-06-28 13:56+0200\n"
+"POT-Creation-Date: 2018-09-26 17:12+0000\n"
+"PO-Revision-Date: 2018-09-28 21:17+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 "X-Project-Style: gnome\n"
@@ -50,12 +50,12 @@ msgid "Align Visible Layers"
 msgstr "Justér synlige lag"
 
 #: ../plug-ins/common/align-layers.c:630 ../plug-ins/common/blinds.c:225
-#: ../plug-ins/common/border-average.c:362 ../plug-ins/common/busy-dialog.c:219
+#: ../plug-ins/common/border-average.c:363 ../plug-ins/common/busy-dialog.c:219
 #: ../plug-ins/common/cartoon.c:813 ../plug-ins/common/checkerboard.c:350
 #: ../plug-ins/common/cml-explorer.c:1189
 #: ../plug-ins/common/cml-explorer.c:1986
 #: ../plug-ins/common/cml-explorer.c:2119 ../plug-ins/common/colorify.c:257
-#: ../plug-ins/common/colormap-remap.c:621 ../plug-ins/common/compose.c:1076
+#: ../plug-ins/common/colormap-remap.c:622 ../plug-ins/common/compose.c:1077
 #: ../plug-ins/common/contrast-retinex.c:289
 #: ../plug-ins/common/curve-bend.c:1227 ../plug-ins/common/curve-bend.c:2065
 #: ../plug-ins/common/curve-bend.c:2100 ../plug-ins/common/decompose.c:822
@@ -63,29 +63,28 @@ msgstr "Justér synlige lag"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
-#: ../plug-ins/common/file-heif.c:935 ../plug-ins/common/file-jp2-load.c:949
+#: ../plug-ins/common/file-heif.c:947 ../plug-ins/common/file-jp2-load.c:949
 #: ../plug-ins/common/file-pdf-load.c:707
 #: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3392
 #: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
-#: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1270
+#: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1270
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:594
 #: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
 #: ../plug-ins/common/max-rgb.c:261 ../plug-ins/common/newsprint.c:1183
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
-#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:720
-#: ../plug-ins/common/qbist.c:762 ../plug-ins/common/qbist.c:816
+#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:721
+#: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:817
 #: ../plug-ins/common/sharpen.c:476 ../plug-ins/common/smooth-palette.c:438
 #: ../plug-ins/common/softglow.c:632 ../plug-ins/common/sparkle.c:341
 #: ../plug-ins/common/sphere-designer.c:2207
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
-#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:354
-#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
-#: ../plug-ins/file-fli/fli-gimp.c:870
-#: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
+#: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
+#: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/file-tiff/file-tiff-load.c:148 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -101,9 +100,9 @@ msgstr "Justér synlige lag"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2360
 #: ../plug-ins/gradient-flare/gradient-flare.c:3210
 #: ../plug-ins/gradient-flare/gradient-flare.c:3323
-#: ../plug-ins/ifs-compose/ifs-compose.c:763
-#: ../plug-ins/ifs-compose/ifs-compose.c:2530
-#: ../plug-ins/ifs-compose/ifs-compose.c:2567
+#: ../plug-ins/ifs-compose/ifs-compose.c:764
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
 #: ../plug-ins/imagemap/imap_browse.c:80
 #: ../plug-ins/imagemap/imap_default_dialog.c:106
 #: ../plug-ins/imagemap/imap_file.c:71 ../plug-ins/imagemap/imap_file.c:124
@@ -121,29 +120,28 @@ msgid "_Cancel"
 msgstr "_Annullér"
 
 #: ../plug-ins/common/align-layers.c:631 ../plug-ins/common/blinds.c:226
-#: ../plug-ins/common/border-average.c:363 ../plug-ins/common/cartoon.c:814
+#: ../plug-ins/common/border-average.c:364 ../plug-ins/common/cartoon.c:814
 #: ../plug-ins/common/checkerboard.c:351 ../plug-ins/common/cml-explorer.c:1190
-#: ../plug-ins/common/colorify.c:258 ../plug-ins/common/colormap-remap.c:622
-#: ../plug-ins/common/compose.c:1077 ../plug-ins/common/contrast-retinex.c:290
+#: ../plug-ins/common/colorify.c:258 ../plug-ins/common/colormap-remap.c:623
+#: ../plug-ins/common/compose.c:1078 ../plug-ins/common/contrast-retinex.c:290
 #: ../plug-ins/common/curve-bend.c:1228 ../plug-ins/common/decompose.c:823
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
-#: ../plug-ins/common/file-heif.c:936 ../plug-ins/common/file-pdf-load.c:708
-#: ../plug-ins/common/file-svg.c:728 ../plug-ins/common/file-wmf.c:506
+#: ../plug-ins/common/file-heif.c:948 ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-svg.c:728 ../plug-ins/common/file-wmf.c:516
 #: ../plug-ins/common/film.c:1271 ../plug-ins/common/filter-pack.c:1207
 #: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:648
 #: ../plug-ins/common/hot.c:595 ../plug-ins/common/jigsaw.c:2398
 #: ../plug-ins/common/max-rgb.c:262 ../plug-ins/common/newsprint.c:1184
 #: ../plug-ins/common/nl-filter.c:1022 ../plug-ins/common/oilify.c:786
-#: ../plug-ins/common/photocopy.c:841 ../plug-ins/common/qbist.c:817
+#: ../plug-ins/common/photocopy.c:841 ../plug-ins/common/qbist.c:818
 #: ../plug-ins/common/sharpen.c:477 ../plug-ins/common/smooth-palette.c:439
 #: ../plug-ins/common/softglow.c:633 ../plug-ins/common/sparkle.c:342
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
-#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
-#: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:355 ../plug-ins/flame/flame.c:650
-#: ../plug-ins/flame/flame.c:972
+#: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:355
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
 #: ../plug-ins/gimpressionist/gimpressionist.c:143
@@ -152,7 +150,7 @@ msgstr "_Annullér"
 #: ../plug-ins/gimpressionist/sizemap.c:402
 #: ../plug-ins/gradient-flare/gradient-flare.c:2361
 #: ../plug-ins/gradient-flare/gradient-flare.c:3324
-#: ../plug-ins/ifs-compose/ifs-compose.c:764
+#: ../plug-ins/ifs-compose/ifs-compose.c:765
 #: ../plug-ins/imagemap/imap_default_dialog.c:109
 #: ../plug-ins/lighting/lighting-ui.c:1038
 #: ../plug-ins/map-object/map-object-ui.c:1334
@@ -455,13 +453,13 @@ msgstr "_Lodret"
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1022
+#: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1023
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:446 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:1275 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:453 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1079 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-png.c:1080 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -470,8 +468,8 @@ msgstr "_Lodret"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1040
-#: ../plug-ins/file-psd/psd-load.c:1852 ../plug-ins/file-sgi/sgi.c:411
-#: ../plug-ins/file-tiff/file-tiff-load.c:924
+#: ../plug-ins/file-psd/psd-load.c:1853 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-tiff/file-tiff-load.c:925
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
@@ -499,41 +497,41 @@ msgstr "Simpel sløring. Hurtig, men ikke særlig stærk"
 msgid "_Blur"
 msgstr "S_lør"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:592
+#: ../plug-ins/common/blur.c:175
 msgid "Blurring"
 msgstr "Slører"
 
-#: ../plug-ins/common/border-average.c:99
+#: ../plug-ins/common/border-average.c:100
 msgid "Set foreground to the average color of the image border"
 msgstr "Sæt forgrund til den gennemsnitlige farve af billedets kant"
 
-#: ../plug-ins/common/border-average.c:104
+#: ../plug-ins/common/border-average.c:105
 msgid "_Border Average..."
 msgstr "_Kantgennemsnit …"
 
-#: ../plug-ins/common/border-average.c:173
+#: ../plug-ins/common/border-average.c:174
 msgid "Border Average"
 msgstr "Kantgennemsnit"
 
-#: ../plug-ins/common/border-average.c:358
+#: ../plug-ins/common/border-average.c:359
 msgid "Borderaverage"
 msgstr "Kantgennemsnit"
 
-#: ../plug-ins/common/border-average.c:380
+#: ../plug-ins/common/border-average.c:381
 msgid "Border Size"
 msgstr "Kantstørrelse"
 
-#: ../plug-ins/common/border-average.c:388
+#: ../plug-ins/common/border-average.c:389
 msgid "_Thickness:"
 msgstr "_Tykkelse:"
 
 #. Number of Colors frame
-#: ../plug-ins/common/border-average.c:426
+#: ../plug-ins/common/border-average.c:427
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:910
 msgid "Number of Colors"
 msgstr "Antal farver"
 
-#: ../plug-ins/common/border-average.c:434
+#: ../plug-ins/common/border-average.c:435
 msgid "_Bucket size:"
 msgstr "_Spandstørrelse:"
 
@@ -864,15 +862,15 @@ msgstr "Tilfældigt basistal"
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:937
 #: ../plug-ins/common/file-jp2-load.c:950
-#: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:721
-#: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/common/file-raw-data.c:1834 ../plug-ins/common/qbist.c:722
+#: ../plug-ins/common/qbist.c:886 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:871 ../plug-ins/flame/flame.c:475
 #: ../plug-ins/flame/flame.c:1045
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:805
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1642
-#: ../plug-ins/gfig/gfig-dialog.c:640 ../plug-ins/ifs-compose/ifs-compose.c:760
-#: ../plug-ins/ifs-compose/ifs-compose.c:2568
+#: ../plug-ins/gfig/gfig-dialog.c:640 ../plug-ins/ifs-compose/ifs-compose.c:761
+#: ../plug-ins/ifs-compose/ifs-compose.c:2569
 #: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
 #: ../plug-ins/lighting/lighting-ui.c:600
 #: ../plug-ins/lighting/lighting-ui.c:1307
@@ -883,15 +881,15 @@ msgstr "_Åbn"
 #: ../plug-ins/common/cml-explorer.c:1277
 #: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:1500
 #: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:1008
-#: ../plug-ins/common/qbist.c:763 ../plug-ins/common/qbist.c:893
+#: ../plug-ins/common/qbist.c:764 ../plug-ins/common/qbist.c:894
 #: ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:475
 #: ../plug-ins/flame/flame.c:1053
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:822
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1680
 #: ../plug-ins/gfig/gfig-dialog.c:689 ../plug-ins/gimpressionist/brush.c:257
-#: ../plug-ins/ifs-compose/ifs-compose.c:761
-#: ../plug-ins/ifs-compose/ifs-compose.c:2531
+#: ../plug-ins/ifs-compose/ifs-compose.c:762
+#: ../plug-ins/ifs-compose/ifs-compose.c:2532
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:593
 #: ../plug-ins/lighting/lighting-ui.c:1163
 msgid "_Save"
@@ -1070,7 +1068,7 @@ msgstr "Graf med de nuværende indstillinger"
 #: ../plug-ins/common/unit-editor.c:417 ../plug-ins/gfig/gfig-dialog.c:292
 #: ../plug-ins/gfig/gfig-dialog.c:880 ../plug-ins/gfig/gfig-dialog.c:1246
 #: ../plug-ins/gfig/gfig-dialog.c:1394
-#: ../plug-ins/ifs-compose/ifs-compose.c:1165
+#: ../plug-ins/ifs-compose/ifs-compose.c:1166
 #: ../plug-ins/metadata/metadata-viewer.c:227
 msgid "_Close"
 msgstr "_Luk"
@@ -1086,17 +1084,17 @@ msgstr "Gem parametre til CML-værktøjet"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:854
-#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1582
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1583
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1490
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1599
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1600
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
-#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
+#: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2391
 #: ../plug-ins/lighting/lighting-ui.c:1232
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1115,7 +1113,7 @@ msgstr "Indlæs parametre til CML-værktøjet"
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:582 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:927
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:928
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3342
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
@@ -1128,7 +1126,7 @@ msgstr "Indlæs parametre til CML-værktøjet"
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
-#: ../plug-ins/file-jpeg/jpeg-load.c:541 ../plug-ins/file-psd/psd-load.c:139
+#: ../plug-ins/file-jpeg/jpeg-load.c:541 ../plug-ins/file-psd/psd-load.c:140
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:924
@@ -1228,71 +1226,71 @@ msgstr "Brugerdefineret farve:"
 msgid "Colorify Custom Color"
 msgstr "Brugerdefineret farve til farvefilteret"
 
-#: ../plug-ins/common/colormap-remap.c:97
+#: ../plug-ins/common/colormap-remap.c:98
 msgid "Rearrange the colormap"
 msgstr "Arrangér farvekortet"
 
-#: ../plug-ins/common/colormap-remap.c:104
+#: ../plug-ins/common/colormap-remap.c:105
 msgid "R_earrange Colormap..."
 msgstr "Arran_gér farvekort …"
 
-#: ../plug-ins/common/colormap-remap.c:116
+#: ../plug-ins/common/colormap-remap.c:117
 msgid "Swap two colors in the colormap"
 msgstr "Ombyt to farver i farvekortet"
 
-#: ../plug-ins/common/colormap-remap.c:123
+#: ../plug-ins/common/colormap-remap.c:124
 msgid "_Swap Colors"
 msgstr "_Ombyt farver"
 
-#: ../plug-ins/common/colormap-remap.c:287
-#: ../plug-ins/common/colormap-remap.c:298
-#: ../plug-ins/common/colormap-remap.c:309
+#: ../plug-ins/common/colormap-remap.c:288
+#: ../plug-ins/common/colormap-remap.c:299
+#: ../plug-ins/common/colormap-remap.c:310
 msgid "Invalid remap array was passed to remap function"
 msgstr "Ugyldig ombytningsmatrix blev givet til ombytningsfunktionen"
 
-#: ../plug-ins/common/colormap-remap.c:333
+#: ../plug-ins/common/colormap-remap.c:334
 msgid "Rearranging the colormap"
 msgstr "Arrangerer farverkortet"
 
-#: ../plug-ins/common/colormap-remap.c:501
+#: ../plug-ins/common/colormap-remap.c:502
 msgid "Sort on Hue"
 msgstr "Sortér efter farvetone"
 
-#: ../plug-ins/common/colormap-remap.c:505
+#: ../plug-ins/common/colormap-remap.c:506
 msgid "Sort on Saturation"
 msgstr "Sortér efter mætning"
 
-#: ../plug-ins/common/colormap-remap.c:509
+#: ../plug-ins/common/colormap-remap.c:510
 msgid "Sort on Value"
 msgstr "Sortér efter lyshed"
 
-#: ../plug-ins/common/colormap-remap.c:513
+#: ../plug-ins/common/colormap-remap.c:514
 msgid "Reverse Order"
 msgstr "Omvendt rækkefølge"
 
-#: ../plug-ins/common/colormap-remap.c:517
+#: ../plug-ins/common/colormap-remap.c:518
 msgid "Reset Order"
 msgstr "Nulstil rækkefølge"
 
-#: ../plug-ins/common/colormap-remap.c:616
+#: ../plug-ins/common/colormap-remap.c:617
 msgid "Rearrange Colormap"
 msgstr "Arrangér farvekort"
 
 # det drejer sig om forvalgte, gemte indstillinger
 #. The Reset button
-#: ../plug-ins/common/colormap-remap.c:620 ../plug-ins/common/curve-bend.c:1471
+#: ../plug-ins/common/colormap-remap.c:621 ../plug-ins/common/curve-bend.c:1471
 #: ../plug-ins/common/filter-pack.c:1205
 #: ../plug-ins/common/sample-colorize.c:1329
 #: ../plug-ins/common/sphere-designer.c:2560
 #: ../plug-ins/common/tile-small.c:452
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:813
 #: ../plug-ins/gimpressionist/preview.c:182
-#: ../plug-ins/ifs-compose/ifs-compose.c:762
+#: ../plug-ins/ifs-compose/ifs-compose.c:763
 #: ../plug-ins/selection-to-path/selection-to-path.c:308
 msgid "_Reset"
 msgstr "_Nulstil"
 
-#: ../plug-ins/common/colormap-remap.c:720
+#: ../plug-ins/common/colormap-remap.c:721
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -1304,172 +1302,172 @@ msgstr ""
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
 #.
-#: ../plug-ins/common/compose.c:153
+#: ../plug-ins/common/compose.c:154
 msgid "_Red:"
 msgstr "_Rød:"
 
-#: ../plug-ins/common/compose.c:154
+#: ../plug-ins/common/compose.c:155
 msgid "_Green:"
 msgstr "_Grøn:"
 
-#: ../plug-ins/common/compose.c:155
+#: ../plug-ins/common/compose.c:156
 msgid "_Blue:"
 msgstr "_Blå:"
 
-#: ../plug-ins/common/compose.c:156
+#: ../plug-ins/common/compose.c:157
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
-#: ../plug-ins/common/compose.c:158 ../plug-ins/common/compose.c:162
+#: ../plug-ins/common/compose.c:159 ../plug-ins/common/compose.c:163
 msgid "_Hue:"
 msgstr "_Farvetone:"
 
-#: ../plug-ins/common/compose.c:159 ../plug-ins/common/compose.c:163
+#: ../plug-ins/common/compose.c:160 ../plug-ins/common/compose.c:164
 msgid "_Saturation:"
 msgstr "_Mætning:"
 
-#: ../plug-ins/common/compose.c:160
+#: ../plug-ins/common/compose.c:161
 msgid "_Value:"
 msgstr "_Lyshed:"
 
-#: ../plug-ins/common/compose.c:164
+#: ../plug-ins/common/compose.c:165
 msgid "_Lightness:"
 msgstr "_Lyshed:"
 
-#: ../plug-ins/common/compose.c:166 ../plug-ins/common/compose.c:171
+#: ../plug-ins/common/compose.c:167 ../plug-ins/common/compose.c:172
 msgid "_Cyan:"
 msgstr "_Cyan:"
 
-#: ../plug-ins/common/compose.c:167 ../plug-ins/common/compose.c:172
+#: ../plug-ins/common/compose.c:168 ../plug-ins/common/compose.c:173
 msgid "_Magenta:"
 msgstr "_Magenta:"
 
-#: ../plug-ins/common/compose.c:168 ../plug-ins/common/compose.c:173
+#: ../plug-ins/common/compose.c:169 ../plug-ins/common/compose.c:174
 msgid "_Yellow:"
 msgstr "_Gul:"
 
-#: ../plug-ins/common/compose.c:169
+#: ../plug-ins/common/compose.c:170
 msgid "_Black:"
 msgstr "_Sort:"
 
-#: ../plug-ins/common/compose.c:175
+#: ../plug-ins/common/compose.c:176
 msgid "_L:"
 msgstr "_L:"
 
-#: ../plug-ins/common/compose.c:176
+#: ../plug-ins/common/compose.c:177
 msgid "_A:"
 msgstr "_A:"
 
-#: ../plug-ins/common/compose.c:177
+#: ../plug-ins/common/compose.c:178
 msgid "_B:"
 msgstr "_B:"
 
-#: ../plug-ins/common/compose.c:179
+#: ../plug-ins/common/compose.c:180
 msgid "_L"
 msgstr "_L"
 
-#: ../plug-ins/common/compose.c:180
+#: ../plug-ins/common/compose.c:181
 msgid "_C"
 msgstr "_C"
 
-#: ../plug-ins/common/compose.c:181
+#: ../plug-ins/common/compose.c:182
 msgid "_H"
 msgstr "_H"
 
-#: ../plug-ins/common/compose.c:183
+#: ../plug-ins/common/compose.c:184
 msgid "_Luma y470:"
 msgstr "_Luma y470:"
 
-#: ../plug-ins/common/compose.c:184
+#: ../plug-ins/common/compose.c:185
 msgid "_Blueness cb470:"
 msgstr "_Blåhed cb470:"
 
-#: ../plug-ins/common/compose.c:185
+#: ../plug-ins/common/compose.c:186
 msgid "_Redness cr470:"
 msgstr "_Rødhed cr470:"
 
-#: ../plug-ins/common/compose.c:187
+#: ../plug-ins/common/compose.c:188
 msgid "_Luma y709:"
 msgstr "_Luma y709:"
 
-#: ../plug-ins/common/compose.c:188
+#: ../plug-ins/common/compose.c:189
 msgid "_Blueness cb709:"
 msgstr "_Blåhed cb709:"
 
-#: ../plug-ins/common/compose.c:189
+#: ../plug-ins/common/compose.c:190
 msgid "_Redness cr709:"
 msgstr "_Rødhed cr709:"
 
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
 #.
-#: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
+#: ../plug-ins/common/compose.c:196 ../plug-ins/common/decompose.c:175
 #: ../plug-ins/common/file-raw-data.c:1937
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:202 ../plug-ins/common/decompose.c:176
+#: ../plug-ins/common/compose.c:203 ../plug-ins/common/decompose.c:176
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:210 ../plug-ins/common/decompose.c:183
+#: ../plug-ins/common/compose.c:211 ../plug-ins/common/decompose.c:183
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/common/compose.c:217 ../plug-ins/common/decompose.c:188
+#: ../plug-ins/common/compose.c:218 ../plug-ins/common/decompose.c:188
 msgid "HSL"
 msgstr "HSL"
 
-#: ../plug-ins/common/compose.c:224 ../plug-ins/common/decompose.c:193
+#: ../plug-ins/common/compose.c:225 ../plug-ins/common/decompose.c:193
 msgid "CMY"
 msgstr "CMY"
 
-#: ../plug-ins/common/compose.c:231 ../plug-ins/common/decompose.c:198
+#: ../plug-ins/common/compose.c:232 ../plug-ins/common/decompose.c:198
 #: ../plug-ins/common/file-jp2-load.c:985
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:239 ../plug-ins/common/decompose.c:203
+#: ../plug-ins/common/compose.c:240 ../plug-ins/common/decompose.c:203
 msgid "LAB"
 msgstr "Lab"
 
-#: ../plug-ins/common/compose.c:246 ../plug-ins/common/decompose.c:205
+#: ../plug-ins/common/compose.c:247 ../plug-ins/common/decompose.c:205
 msgid "LCH"
 msgstr "LCH"
 
-#: ../plug-ins/common/compose.c:253 ../plug-ins/common/decompose.c:207
+#: ../plug-ins/common/compose.c:254 ../plug-ins/common/decompose.c:207
 msgid "YCbCr_ITU_R470"
 msgstr "YCbCr_ITU_R470"
 
-#: ../plug-ins/common/compose.c:260 ../plug-ins/common/decompose.c:210
+#: ../plug-ins/common/compose.c:261 ../plug-ins/common/decompose.c:210
 msgid "YCbCr_ITU_R709"
 msgstr "YCbCr_ITU_R709"
 
-#: ../plug-ins/common/compose.c:267 ../plug-ins/common/decompose.c:208
+#: ../plug-ins/common/compose.c:268 ../plug-ins/common/decompose.c:208
 msgid "YCbCr_ITU_R470_256"
 msgstr "YCbCr_ITU_R470_256"
 
-#: ../plug-ins/common/compose.c:274 ../plug-ins/common/decompose.c:211
+#: ../plug-ins/common/compose.c:275 ../plug-ins/common/decompose.c:211
 msgid "YCbCr_ITU_R709_256"
 msgstr "YCbCr_ITU_R709_256"
 
-#: ../plug-ins/common/compose.c:400
+#: ../plug-ins/common/compose.c:401
 msgid "Create an image using multiple gray images as color channels"
 msgstr "Opret et billede ved brug af flere gråtonebilleder som farvekanaler"
 
-#: ../plug-ins/common/compose.c:406
+#: ../plug-ins/common/compose.c:407
 msgid "C_ompose..."
 msgstr "_Sammensæt …"
 
-#: ../plug-ins/common/compose.c:430
+#: ../plug-ins/common/compose.c:431
 msgid "Recompose an image that was previously decomposed"
 msgstr "Sammensæt et billede, der tidligere blev opsplittet, igen"
 
-#: ../plug-ins/common/compose.c:438
+#: ../plug-ins/common/compose.c:439
 msgid "R_ecompose"
 msgstr "S_æt sammen igen"
 
-#: ../plug-ins/common/compose.c:486
+#: ../plug-ins/common/compose.c:487
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -1477,65 +1475,65 @@ msgstr ""
 "Du kan kun køre \"Sæt sammen igen\", hvis det aktive billede oprindeligt "
 "blev lavet \"Opsplit\"."
 
-#: ../plug-ins/common/compose.c:510
+#: ../plug-ins/common/compose.c:511
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
 "Fejl ved skanning af \"decompose-data\"-parasit (opsplitning): for få lag "
 "fundet"
 
-#: ../plug-ins/common/compose.c:543
+#: ../plug-ins/common/compose.c:544
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Kunne ikke indhente lag for billede %d"
 
-#: ../plug-ins/common/compose.c:610
+#: ../plug-ins/common/compose.c:611
 msgid "Composing"
 msgstr "Sammensætter"
 
-#: ../plug-ins/common/compose.c:845 ../plug-ins/common/compose.c:1320
+#: ../plug-ins/common/compose.c:846 ../plug-ins/common/compose.c:1321
 msgid "At least one image is needed to compose"
 msgstr "Mindst et billede skal bruges for at sammensætte"
 
-#: ../plug-ins/common/compose.c:856 ../plug-ins/common/compose.c:872
+#: ../plug-ins/common/compose.c:857 ../plug-ins/common/compose.c:873
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Angivet lag %d ikke fundet"
 
-#: ../plug-ins/common/compose.c:880
+#: ../plug-ins/common/compose.c:881
 msgid "Drawables have different size"
 msgstr "Tegneobjekter har forskellige størrelser"
 
-#: ../plug-ins/common/compose.c:908
+#: ../plug-ins/common/compose.c:909
 msgid "Images have different size"
 msgstr "Billederne har forskellig størrelse"
 
-#: ../plug-ins/common/compose.c:926
+#: ../plug-ins/common/compose.c:927
 msgid "Error in getting layer IDs"
 msgstr "Fejl under indhentning af lag-id'er"
 
-#: ../plug-ins/common/compose.c:944
+#: ../plug-ins/common/compose.c:945
 msgid "Unable to recompose, source layer not found"
 msgstr "Kan ikke sætte sammen igen: kildelag ikke fundet"
 
-#: ../plug-ins/common/compose.c:1072
+#: ../plug-ins/common/compose.c:1073
 msgid "Compose"
 msgstr "Sammensæt"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1100
+#: ../plug-ins/common/compose.c:1101
 msgid "Compose Channels"
 msgstr "Sæt kanaler sammen"
 
-#: ../plug-ins/common/compose.c:1110 ../plug-ins/common/decompose.c:853
+#: ../plug-ins/common/compose.c:1111 ../plug-ins/common/decompose.c:853
 msgid "Color _model:"
 msgstr "Farve_model:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1142
+#: ../plug-ins/common/compose.c:1143
 msgid "Channel Representations"
 msgstr "Kanalrepræsentationer"
 
-#: ../plug-ins/common/compose.c:1205
+#: ../plug-ins/common/compose.c:1206
 msgid "Mask value"
 msgstr "Maskeværdi"
 
@@ -1684,7 +1682,7 @@ msgid "Smoo_thing"
 msgstr "Ud_glatning"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
+#: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:863
 msgid "_Antialiasing"
 msgstr "_Udjævning"
 
@@ -2046,7 +2044,7 @@ msgid "R_ecursive"
 msgstr "_Gentagende"
 
 #: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
-#: ../plug-ins/common/nl-filter.c:1092 ../plug-ins/common/unsharp-mask.c:875
+#: ../plug-ins/common/nl-filter.c:1092
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -2134,7 +2132,7 @@ msgstr "Neon"
 msgid "Neon Detection"
 msgstr "Neongenkendelse"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:888
+#: ../plug-ins/common/edge-neon.c:749
 msgid "_Amount:"
 msgstr "_Mængde:"
 
@@ -2244,22 +2242,22 @@ msgstr "EOF eller fejl ved læsning af billedheader"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
-#: ../plug-ins/common/file-heif.c:341 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
+#: ../plug-ins/common/file-heif.c:353 ../plug-ins/common/file-jp2-load.c:1064
+#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
-#: ../plug-ins/common/file-png.c:919 ../plug-ins/common/file-pnm.c:566
+#: ../plug-ins/common/file-png.c:920 ../plug-ins/common/file-pnm.c:566
 #: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
 #: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
-#: ../plug-ins/common/file-wmf.c:984 ../plug-ins/common/file-xbm.c:740
+#: ../plug-ins/common/file-wmf.c:1014 ../plug-ins/common/file-xbm.c:740
 #: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
 #: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
-#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:131
+#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:132
 #: ../plug-ins/file-raw/file-darktable.c:399
-#: ../plug-ins/file-raw/file-rawtherapee.c:313 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:236
+#: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-tiff/file-tiff-load.c:237
 #, c-format
 msgid "Opening '%s'"
 msgstr "Åbner '%s'"
@@ -2333,18 +2331,18 @@ msgstr "\"%s\": EOF eller fejl ved læsning af paletdata"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:698
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1305
-#: ../plug-ins/common/file-heif.c:622 ../plug-ins/common/file-html-table.c:237
-#: ../plug-ins/common/file-pat.c:535 ../plug-ins/common/file-pcx.c:743
-#: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1575
+#: ../plug-ins/common/file-cel.c:780 ../plug-ins/common/file-gbr.c:711
+#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1316
+#: ../plug-ins/common/file-heif.c:634 ../plug-ins/common/file-html-table.c:237
+#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:743
+#: ../plug-ins/common/file-pix.c:537 ../plug-ins/common/file-png.c:1576
 #: ../plug-ins/common/file-pnm.c:1246 ../plug-ins/common/file-ps.c:1236
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
 #: ../plug-ins/common/file-xbm.c:1033 ../plug-ins/common/file-xpm.c:663
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:310
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:285
-#: ../plug-ins/file-psd/psd-save.c:1570 ../plug-ins/file-sgi/sgi.c:579
+#: ../plug-ins/file-psd/psd-save.c:1571 ../plug-ins/file-sgi/sgi.c:579
 #: ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2464,44 +2462,49 @@ msgstr "Kan ikke arbejde med ukendte billedtyper."
 msgid "GIMP brush"
 msgstr "GIMP-pensel"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:425
+#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr "Ugyldige headerdata i \"%s\": bredde=%lu, højde=%lu, byte=%lu"
 
-#: ../plug-ins/common/file-gbr.c:412 ../plug-ins/common/file-gbr.c:444
-#: ../plug-ins/common/file-gbr.c:455
+#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
+#: ../plug-ins/common/file-gbr.c:456
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Ikke-understøttet pernselformat"
 
-#: ../plug-ins/common/file-gbr.c:469
+#: ../plug-ins/common/file-gbr.c:468
+#, c-format
+msgid "Invalid header data in '%s': Brush name is too long: %lu"
+msgstr "Ugyldige headerdata i \"%s\": Penselnavnet er for langt: %lu"
+
+#: ../plug-ins/common/file-gbr.c:482
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Fejl i GIMP-penselfilen \"%s\""
 
-#: ../plug-ins/common/file-gbr.c:477
+#: ../plug-ins/common/file-gbr.c:490
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ugyldig UTF-8-tekst i penselfilen \"%s\"."
 
-#: ../plug-ins/common/file-gbr.c:483 ../plug-ins/common/file-gih.c:508
-#: ../plug-ins/common/file-gih.c:1207
+#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
+#: ../plug-ins/common/file-gih.c:1218 ../plug-ins/common/file-pat.c:398
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Unavngivet"
 
-#: ../plug-ins/common/file-gbr.c:800
+#: ../plug-ins/common/file-gbr.c:813
 msgid "Brush"
 msgstr "Pensel"
 
-#: ../plug-ins/common/file-gbr.c:816 ../plug-ins/common/file-gih.c:933
-#: ../plug-ins/common/file-pat.c:624 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:829 ../plug-ins/common/file-gih.c:944
+#: ../plug-ins/common/file-pat.c:641 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Beskrivelse:"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:828 ../plug-ins/common/grid.c:799
+#: ../plug-ins/common/file-gbr.c:841 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "Mellemrum:"
 
@@ -2650,55 +2653,60 @@ msgstr "Standardkommentaren er begrænset til %d tegn."
 msgid "GIMP brush (animated)"
 msgstr "GIMP-pensel (animeret)"
 
-#: ../plug-ins/common/file-gih.c:584
+#: ../plug-ins/common/file-gih.c:502
+#, c-format
+msgid "Brush name is too long: %lu"
+msgstr "Penselnavnet er for langt: %lu"
+
+#: ../plug-ins/common/file-gih.c:595
 msgid "GIMP brush file appears to be corrupted."
 msgstr "GIMP-penselfil synes at være beskadiget."
 
-#: ../plug-ins/common/file-gih.c:915
+#: ../plug-ins/common/file-gih.c:926
 msgid "Brush Pipe"
 msgstr "Penselrørledning"
 
-#: ../plug-ins/common/file-gih.c:948
+#: ../plug-ins/common/file-gih.c:959
 msgid "Spacing (percent):"
 msgstr "Mellemrum (procent):"
 
-#: ../plug-ins/common/file-gih.c:1003
+#: ../plug-ins/common/file-gih.c:1014
 msgid "Pixels"
 msgstr "Pixels"
 
-#: ../plug-ins/common/file-gih.c:1008
+#: ../plug-ins/common/file-gih.c:1019
 msgid "Cell size:"
 msgstr "Cellestørrelse:"
 
-#: ../plug-ins/common/file-gih.c:1021
+#: ../plug-ins/common/file-gih.c:1032
 msgid "Number of cells:"
 msgstr "Antal celler:"
 
-#: ../plug-ins/common/file-gih.c:1046
+#: ../plug-ins/common/file-gih.c:1057
 msgid " Rows of "
 msgstr " Rækker med "
 
-#: ../plug-ins/common/file-gih.c:1058
+#: ../plug-ins/common/file-gih.c:1069
 msgid " Columns on each layer"
 msgstr " Kolonner i hvert lag"
 
-#: ../plug-ins/common/file-gih.c:1062
+#: ../plug-ins/common/file-gih.c:1073
 msgid " (Width Mismatch!) "
 msgstr " (bredde passer ikke!) "
 
-#: ../plug-ins/common/file-gih.c:1066
+#: ../plug-ins/common/file-gih.c:1077
 msgid " (Height Mismatch!) "
 msgstr " (højde passer ikke!) "
 
-#: ../plug-ins/common/file-gih.c:1071
+#: ../plug-ins/common/file-gih.c:1082
 msgid "Display as:"
 msgstr "Vis som:"
 
-#: ../plug-ins/common/file-gih.c:1082
+#: ../plug-ins/common/file-gih.c:1093
 msgid "Dimension:"
 msgstr "Dimension:"
 
-#: ../plug-ins/common/file-gih.c:1158
+#: ../plug-ins/common/file-gih.c:1169
 msgid "Ranks:"
 msgstr "Rang:"
 
@@ -2718,67 +2726,67 @@ msgstr ""
 "Indlæs billede gemt i HEIF-formatet (High Efficiency Image File). Typiske "
 "filendelser for HEIF-filer er .heif eller .heic."
 
-#: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:131
+#: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:143
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: ../plug-ins/common/file-heif.c:125
+#: ../plug-ins/common/file-heif.c:137
 msgid "Exports HEIF images"
 msgstr "Eksporterer HEIF-billeder"
 
-#: ../plug-ins/common/file-heif.c:126
+#: ../plug-ins/common/file-heif.c:138
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Gem billeder i HEIF-formatet (High Efficiency Image File)."
 
-#: ../plug-ins/common/file-heif.c:371 ../plug-ins/common/file-heif.c:404
-#: ../plug-ins/common/file-heif.c:443 ../plug-ins/common/file-heif.c:461
+#: ../plug-ins/common/file-heif.c:383 ../plug-ins/common/file-heif.c:416
+#: ../plug-ins/common/file-heif.c:455 ../plug-ins/common/file-heif.c:473
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Indlæsning af HEIF-billedet mislykkedes: %s"
 
-#: ../plug-ins/common/file-heif.c:393
+#: ../plug-ins/common/file-heif.c:405
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Indlæsning af HEIF-billedet mislykkedes: Inputfilen indeholder ikke nogen "
 "billeder, som kan læses"
 
-#: ../plug-ins/common/file-heif.c:482
+#: ../plug-ins/common/file-heif.c:494
 msgid "image content"
 msgstr "billedindhold"
 
-#: ../plug-ins/common/file-heif.c:677
+#: ../plug-ins/common/file-heif.c:689
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodning af HEIF-billedet mislykkedes: %s"
 
-#: ../plug-ins/common/file-heif.c:700
+#: ../plug-ins/common/file-heif.c:712
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Skrivning af HEIF-billedet mislykkedes: %s"
 
-#: ../plug-ins/common/file-heif.c:786
+#: ../plug-ins/common/file-heif.c:798
 msgid "primary"
 msgstr "primær"
 
-#: ../plug-ins/common/file-heif.c:931
+#: ../plug-ins/common/file-heif.c:943
 msgid "Load HEIF Image"
 msgstr "Indlæs HEIF-billede"
 
-#: ../plug-ins/common/file-heif.c:945
+#: ../plug-ins/common/file-heif.c:957
 msgid "Select Image"
 msgstr "Vælg billede"
 
-#: ../plug-ins/common/file-heif.c:1088
+#: ../plug-ins/common/file-heif.c:1100
 msgid "HEIF"
 msgstr "HEIF"
 
 #. Create the lossless checkbox
-#: ../plug-ins/common/file-heif.c:1095
+#: ../plug-ins/common/file-heif.c:1107
 #: ../plug-ins/file-webp/file-webp-dialog.c:124
 msgid "Lossless"
 msgstr "Tabsfri"
 
-#: ../plug-ins/common/file-heif.c:1099
+#: ../plug-ins/common/file-heif.c:1111
 msgid "Quality:"
 msgstr "Kvalitet:"
 
@@ -2950,7 +2958,7 @@ msgstr "Ikke-understøttet JPEG 2000%s \"%s\" med %d komponenter."
 msgid "Color space:"
 msgstr "Farverum:"
 
-#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:965
+#: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:995
 #, c-format
 msgid "Could not open '%s' for reading"
 msgstr "Kunne ikke åbne \"%s\" til læsning"
@@ -3007,7 +3015,7 @@ msgstr "Ikke-understøttet farverum i JP2-billedet \"%s\"."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2285
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2286
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kunne ikke gemme gennemsigtighed uden tab. Gemmer uigennemsigtighed i stedet."
@@ -3041,7 +3049,7 @@ msgid "Save creation time"
 msgstr "Gem oprettelsesdato"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2343
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2344
 msgid "PNG"
 msgstr "PNG"
 
@@ -3134,12 +3142,17 @@ msgstr "MNG-animation"
 msgid "GIMP pattern"
 msgstr "GIMP-mønster"
 
-#: ../plug-ins/common/file-pat.c:380
+#: ../plug-ins/common/file-pat.c:373
+#, c-format
+msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+msgstr "Ugyldige headerdata i \"%s\": Mønsternavnet er for langt: %lu"
+
+#: ../plug-ins/common/file-pat.c:392
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Ugyldig UTF-8-tekst i mønsterfilen \"%s\"."
 
-#: ../plug-ins/common/file-pat.c:609
+#: ../plug-ins/common/file-pat.c:626
 msgid "Pattern"
 msgstr "Mønster"
 
@@ -3158,13 +3171,13 @@ msgid "'%s' is not a PCX file"
 msgstr "\"%s\" er ikke en PCX-fil"
 
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/file-bmp/bmp-load.c:723
-#: ../plug-ins/file-psd/psd-load.c:309
+#: ../plug-ins/file-psd/psd-load.c:310
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ikke-understøttet eller ugyldig billedbredde: %d"
 
 #: ../plug-ins/common/file-pcx.c:416 ../plug-ins/file-bmp/bmp-load.c:729
-#: ../plug-ins/file-psd/psd-load.c:301
+#: ../plug-ins/file-psd/psd-load.c:302
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ikke-understøttet eller ugyldig billedhøjde: %d"
@@ -3269,7 +3282,7 @@ msgid "Import from PDF"
 msgstr "Importér fra PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3393
-#: ../plug-ins/file-tiff/file-tiff-load.c:148
+#: ../plug-ins/file-tiff/file-tiff-load.c:149
 #: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "_Importér"
@@ -3297,7 +3310,7 @@ msgstr "Brug _udjævning"
 
 #: ../plug-ins/common/file-pdf-load.c:1644
 #: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
-#: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
+#: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
@@ -3374,7 +3387,7 @@ msgstr "Tilføj dette billede"
 #: ../plug-ins/common/file-pdf-save.c:1159
 #: ../plug-ins/common/file-pdf-save.c:1227
 #: ../plug-ins/common/file-pdf-save.c:1325 ../plug-ins/common/file-ps.c:1886
-#: ../plug-ins/file-tiff/file-tiff-load.c:926
+#: ../plug-ins/file-tiff/file-tiff-load.c:927
 #, c-format
 msgid "Page %d"
 msgstr "Side %d"
@@ -3384,7 +3397,7 @@ msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Fejl! For at kunne gemme filen, skal mindst ét billede tilføjes!"
 
 #: ../plug-ins/common/file-pdf-save.c:1372
-#: ../plug-ins/print/print-draw-page.c:123
+#: ../plug-ins/print/print-draw-page.c:124
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Kan ikke håndtere billedets størrelse (enten højde eller bredde)."
 
@@ -3392,45 +3405,45 @@ msgstr "Kan ikke håndtere billedets størrelse (enten højde eller bredde)."
 msgid "Alias Pix image"
 msgstr "Alias Pix-billede"
 
-#: ../plug-ins/common/file-png.c:309 ../plug-ins/common/file-png.c:330
-#: ../plug-ins/common/file-png.c:350 ../plug-ins/common/file-png.c:367
+#: ../plug-ins/common/file-png.c:310 ../plug-ins/common/file-png.c:331
+#: ../plug-ins/common/file-png.c:351 ../plug-ins/common/file-png.c:368
 msgid "PNG image"
 msgstr "PNG-billede"
 
-#: ../plug-ins/common/file-png.c:768
+#: ../plug-ins/common/file-png.c:769
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Fejl ved åbning af PNG-filen: %s\n"
 
-#: ../plug-ins/common/file-png.c:885
+#: ../plug-ins/common/file-png.c:886
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr ""
 "Fejl ved oprettelse af struct til læsning af PNG under indlæsning af \"%s\"."
 
-#: ../plug-ins/common/file-png.c:894
+#: ../plug-ins/common/file-png.c:895
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Fejl under læsning af \"%s\". Kunne ikke oprette infostruktur for PNG-"
 "hovedet."
 
-#: ../plug-ins/common/file-png.c:902
+#: ../plug-ins/common/file-png.c:903
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fejl ved læsning af \"%s\". Er filen ødelagt?"
 
-#: ../plug-ins/common/file-png.c:1057
+#: ../plug-ins/common/file-png.c:1058
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Ukendt farvemodel i PNG-filen \"%s\"."
 
-#: ../plug-ins/common/file-png.c:1070 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1071 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Kunne ikke oprette nyt billede for \"%s\": %s"
 
-#: ../plug-ins/common/file-png.c:1126
+#: ../plug-ins/common/file-png.c:1127
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3438,19 +3451,19 @@ msgstr ""
 "PNG-filen angiver en forskydning, der forårsager, at laget bliver anbragt "
 "uden for billedet."
 
-#: ../plug-ins/common/file-png.c:1403
+#: ../plug-ins/common/file-png.c:1404
 msgid "Apply PNG Offset"
 msgstr "Påfør PNG-forskydning"
 
-#: ../plug-ins/common/file-png.c:1407
+#: ../plug-ins/common/file-png.c:1408
 msgid "Ignore PNG offset"
 msgstr "Ignorér PNG-forskydning"
 
-#: ../plug-ins/common/file-png.c:1408
+#: ../plug-ins/common/file-png.c:1409
 msgid "Apply PNG offset to layer"
 msgstr "Påfør PNG-forskydning til lag"
 
-#: ../plug-ins/common/file-png.c:1433
+#: ../plug-ins/common/file-png.c:1434
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3459,32 +3472,32 @@ msgstr ""
 "PNG-billedet, du er ved at importere, angiver en forskydning på %d, %d. Vil "
 "du påføre denne forskydning til laget?"
 
-#: ../plug-ins/common/file-png.c:1541
+#: ../plug-ins/common/file-png.c:1542
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "Fejl ved oprettelse af struct til skrivning af PNG mens \"%s\" blev "
 "eksporteret."
 
-#: ../plug-ins/common/file-png.c:1550
+#: ../plug-ins/common/file-png.c:1551
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Fejl mens \"%s\" blev eksporteret. Kunne ikke oprette infostruktur for PNG-"
 "hovedet."
 
-#: ../plug-ins/common/file-png.c:1558
+#: ../plug-ins/common/file-png.c:1559
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fejl mens \"%s\" blev eksporteret. Kunne ikke eksportere billedet."
 
-#: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/common/file-png.c:2361 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Fejl ved indlæsning af brugerfladefilen \"%s\": %s"
 
-#: ../plug-ins/common/file-png.c:2361 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/common/file-png.c:2362 ../plug-ins/common/file-raw-data.c:2130
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Ukendt fejl"
@@ -3604,7 +3617,7 @@ msgstr "Genererer"
 
 #. Resolution
 #: ../plug-ins/common/file-ps.c:3451 ../plug-ins/common/file-svg.c:910
-#: ../plug-ins/common/file-wmf.c:694
+#: ../plug-ins/common/file-wmf.c:704
 msgid "Resolution:"
 msgstr "Opløsning:"
 
@@ -4196,7 +4209,7 @@ msgstr "Genererer SVG"
 msgid "Rendered SVG"
 msgstr "Genereret SVG"
 
-#: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:359
+#: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:369
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
@@ -4215,25 +4228,25 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Generér Scalable Vector Graphics"
 
 #. Width and Height
-#: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:571
+#: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:581
 #: ../plug-ins/common/grid.c:733
 msgid "Width:"
 msgstr "Bredde:"
 
-#: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:577
+#: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:587
 msgid "Height:"
 msgstr "Højde:"
 
-#: ../plug-ins/common/file-svg.c:869 ../plug-ins/common/file-wmf.c:653
+#: ../plug-ins/common/file-svg.c:869 ../plug-ins/common/file-wmf.c:663
 msgid "_X ratio:"
 msgstr "_x-forhold:"
 
-#: ../plug-ins/common/file-svg.c:891 ../plug-ins/common/file-wmf.c:675
+#: ../plug-ins/common/file-svg.c:891 ../plug-ins/common/file-wmf.c:685
 msgid "_Y ratio:"
 msgstr "_y-forhold:"
 
 # "constrained" går på at de to forhold er låst fast til hinanden
-#: ../plug-ins/common/file-svg.c:905 ../plug-ins/common/file-wmf.c:689
+#: ../plug-ins/common/file-svg.c:905 ../plug-ins/common/file-wmf.c:699
 msgid "Constrain aspect ratio"
 msgstr "Fast højde-breddeforhold"
 
@@ -4297,7 +4310,7 @@ msgstr "Øverst til venstre"
 msgid "Microsoft WMF file"
 msgstr "Microsoft WMF-fil"
 
-#: ../plug-ins/common/file-wmf.c:353
+#: ../plug-ins/common/file-wmf.c:363
 msgid ""
 "WMF file does not\n"
 "specify a size!"
@@ -4305,11 +4318,11 @@ msgstr ""
 "WMF-fil angiver\n"
 "ikke en størrelse!"
 
-#: ../plug-ins/common/file-wmf.c:501
+#: ../plug-ins/common/file-wmf.c:511
 msgid "Render Windows Metafile"
 msgstr "Generér Windows-metafil"
 
-#: ../plug-ins/common/file-wmf.c:998
+#: ../plug-ins/common/file-wmf.c:1028
 msgid "Rendered WMF"
 msgstr "Gengivet WMF"
 
@@ -5118,27 +5131,27 @@ msgstr "Motionér en ged"
 msgid "Goat-exercise"
 msgstr "Gedemotion"
 
-#: ../plug-ins/common/gradient-map.c:77
+#: ../plug-ins/common/gradient-map.c:78
 msgid "Recolor the image using colors from the active gradient"
 msgstr "Genfarvelæg billedet med farver fra den aktive farveovergang"
 
-#: ../plug-ins/common/gradient-map.c:90
+#: ../plug-ins/common/gradient-map.c:91
 msgid "_Gradient Map"
 msgstr "_Farveovergangsafbildning"
 
-#: ../plug-ins/common/gradient-map.c:99
+#: ../plug-ins/common/gradient-map.c:100
 msgid "Recolor the image using colors from the active palette"
 msgstr "Genfarvelæg billedet med farver fra den aktive palet"
 
-#: ../plug-ins/common/gradient-map.c:112
+#: ../plug-ins/common/gradient-map.c:113
 msgid "_Palette Map"
 msgstr "_Paletafbildning"
 
-#: ../plug-ins/common/gradient-map.c:160
+#: ../plug-ins/common/gradient-map.c:161
 msgid "Gradient Map"
 msgstr "Farveovergangsafbildning"
 
-#: ../plug-ins/common/gradient-map.c:165
+#: ../plug-ins/common/gradient-map.c:166
 msgid "Palette Map"
 msgstr "Paletafbildning"
 
@@ -5710,34 +5723,34 @@ msgstr "_Procedurebrowser"
 msgid "Procedure Browser"
 msgstr "Procedurebrowser"
 
-#: ../plug-ins/common/qbist.c:387
+#: ../plug-ins/common/qbist.c:388
 msgid "Generate a huge variety of abstract patterns"
 msgstr "Generér en stor varation af abstrakte mønstre"
 
-#: ../plug-ins/common/qbist.c:395
+#: ../plug-ins/common/qbist.c:396
 msgid "_Qbist..."
 msgstr "_Qbist …"
 
-#: ../plug-ins/common/qbist.c:508
+#: ../plug-ins/common/qbist.c:509
 msgid "Qbist"
 msgstr "Qbist"
 
-#: ../plug-ins/common/qbist.c:716
+#: ../plug-ins/common/qbist.c:717
 msgid "Load QBE File"
 msgstr "Indlæs QBE-Fil"
 
-#: ../plug-ins/common/qbist.c:758
+#: ../plug-ins/common/qbist.c:759
 msgid "Save as QBE File"
 msgstr "Gem som QBE-fil"
 
-#: ../plug-ins/common/qbist.c:812
+#: ../plug-ins/common/qbist.c:813
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
-#: ../plug-ins/common/qbist.c:877
+#: ../plug-ins/common/qbist.c:878
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:690
 #: ../plug-ins/gfig/gfig-dialog.c:886
-#: ../plug-ins/ifs-compose/ifs-compose.c:1035
+#: ../plug-ins/ifs-compose/ifs-compose.c:1036
 msgid "_Undo"
 msgstr "_Fortryd"
 
@@ -6105,7 +6118,7 @@ msgstr "Kugledesigner"
 
 #: ../plug-ins/common/sphere-designer.c:2668
 #: ../plug-ins/gradient-flare/gradient-flare.c:2926
-#: ../plug-ins/ifs-compose/ifs-compose.c:1027
+#: ../plug-ins/ifs-compose/ifs-compose.c:1028
 msgid "_New"
 msgstr "_Ny"
 
@@ -6119,7 +6132,7 @@ msgstr "D_uplikér"
 #: ../plug-ins/gimpressionist/presets.c:1067
 #: ../plug-ins/gradient-flare/gradient-flare.c:2929
 #: ../plug-ins/gradient-flare/gradient-flare.c:3210
-#: ../plug-ins/ifs-compose/ifs-compose.c:1031
+#: ../plug-ins/ifs-compose/ifs-compose.c:1032
 msgid "_Delete"
 msgstr "_Slet"
 
@@ -6154,7 +6167,7 @@ msgstr "Farvevælger"
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2763
 #: ../plug-ins/gimpressionist/paper.c:193
-#: ../plug-ins/ifs-compose/ifs-compose.c:540
+#: ../plug-ins/ifs-compose/ifs-compose.c:541
 msgid "Scale:"
 msgstr "Skalering:"
 
@@ -6276,7 +6289,7 @@ msgstr "Små fliser"
 #. Area for buttons etc
 #. Flip
 #: ../plug-ins/common/tile-small.c:419
-#: ../plug-ins/ifs-compose/ifs-compose.c:596
+#: ../plug-ins/ifs-compose/ifs-compose.c:597
 msgid "Flip"
 msgstr "Spejling"
 
@@ -6458,35 +6471,6 @@ msgstr "Måleenheder"
 msgid "_Refresh"
 msgstr "_Opdatér"
 
-#: ../plug-ins/common/unsharp-mask.c:132
-msgid "The most widely useful method for sharpening an image"
-msgstr "Den mest brugte metode til at gøre et billede skarpere"
-
-# "The most widely useful method for sharpening an image"),
-# "The unsharp mask is a sharpening filter that works "
-# "by comparing using the difference of the image and "
-# "a blurred version of the image.  It is commonly "
-# "used on photographic images, and is provides a much "
-# "more pleasing result than the standard sharpen "
-# "filter.",
-#: ../plug-ins/common/unsharp-mask.c:142
-msgid "_Unsharp Mask (legacy)..."
-msgstr "Usk_arp maskering (forældet) …"
-
-#: ../plug-ins/common/unsharp-mask.c:694
-msgid "Merging"
-msgstr "Forener"
-
-#: ../plug-ins/common/unsharp-mask.c:838
-msgid "Unsharp Mask"
-msgstr "Uskarp maskering"
-
-#: ../plug-ins/common/unsharp-mask.c:901
-#: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:566
-msgid "_Threshold:"
-msgstr "_Tærskel:"
-
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
@@ -6578,7 +6562,7 @@ msgstr "Trinstørrelse:"
 
 #: ../plug-ins/common/warp.c:432
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:771
-#: ../plug-ins/ifs-compose/ifs-compose.c:1196
+#: ../plug-ins/ifs-compose/ifs-compose.c:1197
 msgid "Iterations:"
 msgstr "Gentagelser:"
 
@@ -6661,7 +6645,7 @@ msgid "Vector mag:"
 msgstr "Vektorafbildning:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:684 ../plug-ins/ifs-compose/ifs-compose.c:554
+#: ../plug-ins/common/warp.c:684 ../plug-ins/ifs-compose/ifs-compose.c:555
 msgid "Angle:"
 msgstr "Vinkel:"
 
@@ -7126,7 +7110,7 @@ msgstr "Ikon nr. %i"
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:527
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
 #: ../plug-ins/file-raw/file-darktable.c:494
-#: ../plug-ins/file-raw/file-rawtherapee.c:430
+#: ../plug-ins/file-raw/file-rawtherapee.c:431
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Åbner miniature for \"%s\""
@@ -7298,107 +7282,107 @@ msgstr "JPEG-billede"
 msgid "Export Preview"
 msgstr "Forhåndsvis eksport"
 
-#: ../plug-ins/file-psd/psd-load.c:222
+#: ../plug-ins/file-psd/psd-load.c:223
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Fejl ved indlæsning af PSD-filen: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:277
+#: ../plug-ins/file-psd/psd-load.c:278
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Ikke en gyldig Photoshop-dokumentfil"
 
-#: ../plug-ins/file-psd/psd-load.c:284
+#: ../plug-ins/file-psd/psd-load.c:285
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Ikke-understøttet version af filformat: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:291
+#: ../plug-ins/file-psd/psd-load.c:292
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "For mange kanaler i filen: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:318
+#: ../plug-ins/file-psd/psd-load.c:319
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Ikke-understøttet eller ugyldig billedstørrelse: %d×%d"
 
-#: ../plug-ins/file-psd/psd-load.c:330
+#: ../plug-ins/file-psd/psd-load.c:331
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Ikke-understøttet farvetilstand: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:356
+#: ../plug-ins/file-psd/psd-load.c:357
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Ikke-understøttet bitdybde: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:390 ../plug-ins/file-psd/psd-load.c:400
-#: ../plug-ins/file-psd/psd-load.c:611 ../plug-ins/file-psd/psd-load.c:833
+#: ../plug-ins/file-psd/psd-load.c:391 ../plug-ins/file-psd/psd-load.c:401
+#: ../plug-ins/file-psd/psd-load.c:612 ../plug-ins/file-psd/psd-load.c:834
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Filen er ødelagt!"
 
-#: ../plug-ins/file-psd/psd-load.c:539
+#: ../plug-ins/file-psd/psd-load.c:540
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "For mange kanaler i lag: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:547
+#: ../plug-ins/file-psd/psd-load.c:548
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Ikke-understøttet eller ugyldig højde på lag: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:555
+#: ../plug-ins/file-psd/psd-load.c:556
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Ikke-understøttet eller ugyldig bredde på lag: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:564
+#: ../plug-ins/file-psd/psd-load.c:565
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Ikke-understøttet eller ugyldig størrelse på lag: %d×%d"
 
-#: ../plug-ins/file-psd/psd-load.c:750
+#: ../plug-ins/file-psd/psd-load.c:751
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Ikke-understøttet eller ugyldig højde på lagmaske: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:758
+#: ../plug-ins/file-psd/psd-load.c:759
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Ikke-understøttet eller ugyldig bredde på lagmaske: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:767
+#: ../plug-ins/file-psd/psd-load.c:768
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Ikke-understøttet eller ugyldig størrelse på lagmaske: %d×%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1329 ../plug-ins/file-psd/psd-load.c:1826
+#: ../plug-ins/file-psd/psd-load.c:1330 ../plug-ins/file-psd/psd-load.c:1827
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Ikke-understøttet komprimeringstilstand: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1954
+#: ../plug-ins/file-psd/psd-load.c:1955
 msgid "Extra"
 msgstr "Ekstra"
 
-#: ../plug-ins/file-psd/psd-load.c:2133
+#: ../plug-ins/file-psd/psd-load.c:2134
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Ikke-understøttet eller ugyldig størrelse på kanal"
 
-#: ../plug-ins/file-psd/psd-load.c:2202
+#: ../plug-ins/file-psd/psd-load.c:2203
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Kunne ikke udpakke data"
 
-#: ../plug-ins/file-psd/psd-save.c:463
+#: ../plug-ins/file-psd/psd-save.c:464
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Fejl: Kan ikke konvertere GIMP-baseret billedtype til PSD-tilstand"
 
-#: ../plug-ins/file-psd/psd-save.c:1563
+#: ../plug-ins/file-psd/psd-save.c:1564
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7407,7 +7391,7 @@ msgstr ""
 "Kan ikke eksportere \"%s\". PSD-filformatet understøtter ikke billeder, der "
 "er mere end 30.000 pixels brede eller høje."
 
-#: ../plug-ins/file-psd/psd-save.c:1584
+#: ../plug-ins/file-psd/psd-save.c:1585
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7420,7 +7404,7 @@ msgstr ""
 msgid "Unexpected end of file"
 msgstr "Uventet slutning på fil"
 
-#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:166
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:167
 msgid "Photoshop image"
 msgstr "Photoshop-billede"
 
@@ -7610,16 +7594,16 @@ msgstr "TIFF-billede"
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF'en \"%s\" indeholder ingen kataloger"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:143
+#: ../plug-ins/file-tiff/file-tiff-load.c:144
 msgid "Import from TIFF"
 msgstr "Importér fra TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:718
+#: ../plug-ins/file-tiff/file-tiff-load.c:719
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-af-%d-sider"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:957
+#: ../plug-ins/file-tiff/file-tiff-load.c:958
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
@@ -8129,7 +8113,7 @@ msgid "Undo last zoom change"
 msgstr "Fortryd sidste zoomændring"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
-#: ../plug-ins/ifs-compose/ifs-compose.c:1039
+#: ../plug-ins/ifs-compose/ifs-compose.c:1040
 msgid "_Redo"
 msgstr "_Omgør"
 
@@ -10471,9 +10455,9 @@ msgstr "GIMPs brugermanual er ikke tilgængelig."
 #: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"http://docs.gimp.org/"
+"https://docs.gimp.org/"
 msgstr ""
-"Installér den ekstra hjælpepakke eller se brugermanualen online på http://"
+"Installér den ekstra hjælpepakke eller se brugermanualen online på https://"
 "docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
@@ -10499,16 +10483,16 @@ msgstr ""
 "Fortolkningsfejl i '%s':\n"
 "%s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:333
+#: ../plug-ins/ifs-compose/ifs-compose.c:334
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Opret en fraktal via itereret funktionssystem (IFS)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:345
+#: ../plug-ins/ifs-compose/ifs-compose.c:346
 msgid "_IFS Fractal..."
 msgstr "_IFS-fraktal …"
 
 #. X
-#: ../plug-ins/ifs-compose/ifs-compose.c:512
+#: ../plug-ins/ifs-compose/ifs-compose.c:513
 #: ../plug-ins/lighting/lighting-ui.c:539
 #: ../plug-ins/map-object/map-object-ui.c:656
 #: ../plug-ins/map-object/map-object-ui.c:710
@@ -10518,7 +10502,7 @@ msgid "X:"
 msgstr "x:"
 
 #. Y
-#: ../plug-ins/ifs-compose/ifs-compose.c:526
+#: ../plug-ins/ifs-compose/ifs-compose.c:527
 #: ../plug-ins/lighting/lighting-ui.c:553
 #: ../plug-ins/map-object/map-object-ui.c:670
 #: ../plug-ins/map-object/map-object-ui.c:723
@@ -10529,149 +10513,149 @@ msgid "Y:"
 msgstr "y:"
 
 #. Asym
-#: ../plug-ins/ifs-compose/ifs-compose.c:568
+#: ../plug-ins/ifs-compose/ifs-compose.c:569
 msgid "Asymmetry:"
 msgstr "Asymmetri:"
 
 #. Shear
-#: ../plug-ins/ifs-compose/ifs-compose.c:582
+#: ../plug-ins/ifs-compose/ifs-compose.c:583
 msgid "Shear:"
 msgstr "Vridning:"
 
 #. Simple color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:627
+#: ../plug-ins/ifs-compose/ifs-compose.c:628
 msgid "Simple"
 msgstr "Simpel"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:636
+#: ../plug-ins/ifs-compose/ifs-compose.c:637
 msgid "IFS Fractal: Target"
 msgstr "IFS-fraktal: Mål"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:642
+#: ../plug-ins/ifs-compose/ifs-compose.c:643
 msgid "Scale hue by:"
 msgstr "Skalér farvetone med:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:657
+#: ../plug-ins/ifs-compose/ifs-compose.c:658
 msgid "Scale value by:"
 msgstr "Skalér lyshed med:"
 
 #. Full color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:674
+#: ../plug-ins/ifs-compose/ifs-compose.c:675
 msgid "Full"
 msgstr "Fuld"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:682
+#: ../plug-ins/ifs-compose/ifs-compose.c:683
 msgid "IFS Fractal: Red"
 msgstr "IFS-fraktal: Rød"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:690
+#: ../plug-ins/ifs-compose/ifs-compose.c:691
 msgid "IFS Fractal: Green"
 msgstr "IFS-fraktal: Grøn"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:698
+#: ../plug-ins/ifs-compose/ifs-compose.c:699
 msgid "IFS Fractal: Blue"
 msgstr "IFS-fraktal: Blå"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:706
+#: ../plug-ins/ifs-compose/ifs-compose.c:707
 msgid "IFS Fractal: Black"
 msgstr "IFS-fraktal: Sort"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:756
+#: ../plug-ins/ifs-compose/ifs-compose.c:757
 msgid "IFS Fractal"
 msgstr "IFS-fraktal"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:854
+#: ../plug-ins/ifs-compose/ifs-compose.c:855
 msgid "Spatial Transformation"
 msgstr "Rumlig transformation"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:860
+#: ../plug-ins/ifs-compose/ifs-compose.c:861
 msgid "Color Transformation"
 msgstr "Farvetransformation"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:870
+#: ../plug-ins/ifs-compose/ifs-compose.c:871
 msgid "Relative probability:"
 msgstr "Relativ sandsynlighed:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1043
+#: ../plug-ins/ifs-compose/ifs-compose.c:1044
 #: ../plug-ins/imagemap/imap_menu.c:174
 msgid "Select _All"
 msgstr "Markér _alt"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1047
+#: ../plug-ins/ifs-compose/ifs-compose.c:1048
 msgid "Re_center"
 msgstr "_Gencentrér"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1047
+#: ../plug-ins/ifs-compose/ifs-compose.c:1048
 msgid "Recompute Center"
 msgstr "Genberegn center"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1051
+#: ../plug-ins/ifs-compose/ifs-compose.c:1052
 msgid "Render Options"
 msgstr "Indstillinger for gengivelse"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1057
+#: ../plug-ins/ifs-compose/ifs-compose.c:1058
 #: ../plug-ins/imagemap/imap_cmd_move.c:85
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Flyt"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1060
+#: ../plug-ins/ifs-compose/ifs-compose.c:1061
 msgid "Rotate"
 msgstr "Rotér"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1060
+#: ../plug-ins/ifs-compose/ifs-compose.c:1061
 msgid "Rotate / Scale"
 msgstr "Rotér/skalér"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1063
+#: ../plug-ins/ifs-compose/ifs-compose.c:1064
 msgid "Stretch"
 msgstr "Stræk"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1161
+#: ../plug-ins/ifs-compose/ifs-compose.c:1162
 msgid "IFS Fractal Render Options"
 msgstr "Gengivelsesindstillinger for IFS-fraktal"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1183
+#: ../plug-ins/ifs-compose/ifs-compose.c:1184
 msgid "Max. memory:"
 msgstr "Maks. hukommelse:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1210
+#: ../plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "Subdivide:"
 msgstr "Underinddelinger:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1223
+#: ../plug-ins/ifs-compose/ifs-compose.c:1224
 msgid "Spot radius:"
 msgstr "Punktradius:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1295
+#: ../plug-ins/ifs-compose/ifs-compose.c:1296
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Genererer IFS (%d/%d)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1447
+#: ../plug-ins/ifs-compose/ifs-compose.c:1448
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformation %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2395
+#: ../plug-ins/ifs-compose/ifs-compose.c:2396
 msgid "Save failed"
 msgstr "Kunne ikke gemme"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2478
-#: ../plug-ins/ifs-compose/ifs-compose.c:2491
+#: ../plug-ins/ifs-compose/ifs-compose.c:2479
+#: ../plug-ins/ifs-compose/ifs-compose.c:2492
 msgid "Open failed"
 msgstr "Åbn mislykkedes"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2486
+#: ../plug-ins/ifs-compose/ifs-compose.c:2487
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Filen \"%s\" ser ikke ud til at være en IFS-fraktal-fil."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2526
+#: ../plug-ins/ifs-compose/ifs-compose.c:2527
 msgid "Save as IFS Fractal file"
 msgstr "Gem som IFS-fraktal-fil"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2563
+#: ../plug-ins/ifs-compose/ifs-compose.c:2564
 msgid "Open IFS Fractal file"
 msgstr "Åbn IFS-fraktal-fil"
 
@@ -11336,6 +11320,11 @@ msgstr "Interaktion:"
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
 msgstr "Sammen_hængende område"
+
+#: ../plug-ins/imagemap/imap_preferences.c:455
+#: ../plug-ins/map-object/map-object-ui.c:566
+msgid "_Threshold:"
+msgstr "_Tærskel:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:457
 msgid "_Automatically convert"
@@ -12422,7 +12411,7 @@ msgid "_Screenshot..."
 msgstr "_Skærmbillede …"
 
 #: ../plug-ins/screenshot/screenshot.c:493
-#: ../plug-ins/screenshot/screenshot-x11.c:424
+#: ../plug-ins/screenshot/screenshot-x11.c:425
 msgid "Screenshot"
 msgstr "Skærmbillede"
 
@@ -12521,19 +12510,19 @@ msgstr "_Konvertér billedet til sRGB"
 msgid "No data captured"
 msgstr "Ingen data taget"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:95
+#: ../plug-ins/screenshot/screenshot-x11.c:96
 msgid "Error selecting the window"
 msgstr "Fejl ved valg af vinduet"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:412
+#: ../plug-ins/screenshot/screenshot-x11.c:413
 msgid "Importing screenshot"
 msgstr "Importerer skærmbillede"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:465
+#: ../plug-ins/screenshot/screenshot-x11.c:466
 msgid "Mouse Pointer"
 msgstr "Musemarkør"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:628
+#: ../plug-ins/screenshot/screenshot-x11.c:629
 msgid "Specified window not found"
 msgstr "Angivet vindue ikke fundet"
 
@@ -12808,6 +12797,25 @@ msgstr "_Skanner/kamera …"
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data fra skanner/kamera"
+
+#~ msgid "The most widely useful method for sharpening an image"
+#~ msgstr "Den mest brugte metode til at gøre et billede skarpere"
+
+# "The most widely useful method for sharpening an image"),
+# "The unsharp mask is a sharpening filter that works "
+# "by comparing using the difference of the image and "
+# "a blurred version of the image.  It is commonly "
+# "used on photographic images, and is provides a much "
+# "more pleasing result than the standard sharpen "
+# "filter.",
+#~ msgid "_Unsharp Mask (legacy)..."
+#~ msgstr "Usk_arp maskering (forældet) …"
+
+#~ msgid "Merging"
+#~ msgstr "Forener"
+
+#~ msgid "Unsharp Mask"
+#~ msgstr "Uskarp maskering"
 
 #~ msgid "Displace pixels in a ripple pattern"
 #~ msgstr "Forskyd pixels i et krusningsmønster"
