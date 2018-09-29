@@ -321,9 +321,9 @@ class History (GObject.GObject):
         self.undo_stack = []
         self.redo_stack = []
 
+        self.blocked         = 0
         self.n_groups        = 0
         self.pending_record  = False
-        self.suppress_record = 0
 
     @GObject.Property (type = bool, default = False)
     def can_undo (self):
@@ -336,6 +336,15 @@ class History (GObject.GObject):
     def add_source (self, get, set):
         self.sources.append (self.Source (get, set))
 
+    def block (self):
+        self.blocked += 1
+
+    def unblock (self):
+        self.blocked -= 1
+
+    def is_blocked (self):
+        return self.blocked > 0
+
     def start_group (self):
         self.n_groups += 1
 
@@ -346,7 +355,7 @@ class History (GObject.GObject):
             self.record ()
 
     def record (self):
-        if self.suppress_record:
+        if self.is_blocked ():
             return
 
         if self.n_groups == 0:
@@ -373,7 +382,7 @@ class History (GObject.GObject):
             self.pending_record = True
 
     def move (self, src, dest):
-        self.suppress_record += 1
+        self.block ()
 
         state = src.pop ()
 
@@ -391,7 +400,7 @@ class History (GObject.GObject):
         self.notify ("can-undo")
         self.notify ("can-redo")
 
-        self.suppress_record -= 1
+        self.unblock ()
 
     def undo (self):
         self.move (self.undo_stack, self.redo_stack)
@@ -2167,6 +2176,8 @@ class ProfileViewer (Gtk.ScrolledWindow):
                                         GObject.TYPE_UINT64, str, float, float)
 
         __gsignals__ = {
+            "needs-update":       (GObject.SIGNAL_RUN_FIRST,
+                                   None, (bool,)),
             "subprofile-added":   (GObject.SIGNAL_RUN_FIRST,
                                    None, (Gtk.Widget,)),
             "subprofile-removed": (GObject.SIGNAL_RUN_FIRST,
@@ -2322,19 +2333,10 @@ class ProfileViewer (Gtk.ScrolledWindow):
         def update (self):
             self.remove_subprofile ()
 
-            sel_id = None
-
-            sel_rows = self.tree.get_selection ().get_selected_rows ()[1]
-
-            if sel_rows:
-                sel_id = self.store[sel_rows[0]][self.store.ID]
-
             if not self.id:
                 self.update_frames ()
 
             self.update_store ()
-
-            self.select (sel_id)
 
             self.update_ui ()
 
@@ -2516,7 +2518,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
             self.thread_filter_store.set_filter (thread_filter)
 
-            self.update ()
+            self.emit ("needs-update", False)
 
         def thread_filter_button_toggled (self, button):
             if not button.get_active ():
@@ -2529,7 +2531,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
                     history.record ()
 
-                    self.update ()
+                    self.emit ("needs-update", True)
 
                     history.end_group ()
 
@@ -2539,7 +2541,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
         def direction_source_set (self, direction):
             self.direction = direction
 
-            self.update ()
+            self.emit ("needs-update", False)
 
         def direction_button_clicked (self, button):
             if self.direction == self.Direction.CALLEES:
@@ -2551,7 +2553,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
             history.record ()
 
-            self.update ()
+            self.emit ("needs-update", True)
 
             history.end_group ()
 
@@ -2632,7 +2634,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
         self.adjustment_changed_handler = None
         self.needs_update               = True
-        self.pending_path               = None
+        self.path                       = ()
 
         profile = self.Profile ()
         self.root_profile = profile
@@ -2641,8 +2643,9 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
         selection.connect ("change-complete", self.selection_change_complete)
 
-        profile.connect ("subprofile-added",   self.subprofile_added)
-        profile.connect ("subprofile-removed", self.subprofile_removed)
+        profile.connect ("needs-update",       self.profile_needs_update)
+        profile.connect ("subprofile-added",   self.profile_subprofile_added)
+        profile.connect ("subprofile-removed", self.profile_subprofile_removed)
 
         history.add_source (self.source_get, self.source_set)
 
@@ -2656,19 +2659,25 @@ class ProfileViewer (Gtk.ScrolledWindow):
         return False
 
     def update (self):
-        if not (self.needs_update or self.pending_path is not None) or \
-           not self.available:
+        if not self.available:
             return
+
+        history.block ()
 
         if self.needs_update:
             self.root_profile.update ()
 
             self.needs_update = False
 
-        if self.pending_path is not None:
-            self.root_profile.set_path (self.pending_path)
+        self.root_profile.set_path (self.path)
 
-            self.pending_path = None
+        history.unblock ()
+
+    def queue_update (self, now = False):
+        self.needs_update = True
+
+        if now or self.get_mapped ():
+            self.update ()
 
     def do_map (self):
         self.update ()
@@ -2676,14 +2685,17 @@ class ProfileViewer (Gtk.ScrolledWindow):
         Gtk.ScrolledWindow.do_map (self)
 
     def selection_change_complete (self, selection):
-        self.needs_update = True
-
-        if self.get_mapped ():
-            self.update ()
+        self.queue_update ()
 
         self.notify ("available")
 
-    def subprofile_added (self, profile, subprofile):
+    def profile_needs_update (self, profile, now):
+        self.queue_update (now)
+
+    def profile_subprofile_added (self, profile, subprofile):
+        if not history.is_blocked ():
+            self.path = profile.get_path ()
+
         history.record ()
 
         if not self.adjustment_changed_handler:
@@ -2703,20 +2715,20 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 adjustment_changed
             )
 
-    def subprofile_removed (self, profile, subprofile):
+    def profile_subprofile_removed (self, profile, subprofile):
+        if not history.is_blocked ():
+            self.path = profile.get_path ()
+
         history.record ()
 
     def source_get (self):
-        if self.pending_path:
-            return self.pending_path
-        else:
-            return self.root_profile.get_path ()
+        return self.path
 
     def source_set (self, path):
+        self.path = path
+
         if self.get_mapped ():
             self.root_profile.set_path (path)
-        else:
-            self.pending_path = path
 
 class LogViewer (Gtk.Window):
     def __init__ (self, *args, **kwargs):
