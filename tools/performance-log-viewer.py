@@ -82,28 +82,36 @@ editor_command  = os.environ.get ("PERFORMANCE_LOG_VIEWER_EDITOR",
 editor_command += " &"
 
 def find_file (filename):
-    filename = re.sub ("[\\\\/]", GLib.DIR_SEPARATOR_S, filename)
+    def lookup (filename):
+        filename = re.sub ("[\\\\/]", GLib.DIR_SEPARATOR_S, filename)
 
-    if GLib.path_is_absolute (filename):
-        file = Gio.File.new_for_path (filename)
-
-        if file.query_exists ():
-            return file
-
-    for path in search_path:
-        rest = filename
-
-        while rest:
-            file = Gio.File.new_for_path (GLib.build_filenamev ((path, rest)))
+        if GLib.path_is_absolute (filename):
+            file = Gio.File.new_for_path (filename)
 
             if file.query_exists ():
                 return file
 
-            sep = rest.find (GLib.DIR_SEPARATOR_S)
+        for path in search_path:
+            rest = filename
 
-            rest = rest[sep + 1:] if sep >= 0 else ""
+            while rest:
+                file = Gio.File.new_for_path (GLib.build_filenamev ((path, rest)))
 
-    return None
+                if file.query_exists ():
+                    return file
+
+                sep = rest.find (GLib.DIR_SEPARATOR_S)
+
+                rest = rest[sep + 1:] if sep >= 0 else ""
+
+        return None
+
+    if filename not in find_file.cache:
+        find_file.cache[filename] = lookup (filename)
+
+    return find_file.cache[filename]
+
+find_file.cache = {}
 
 VariableType = namedtuple ("VariableType",
                            ("parse", "format", "format_numeric"))
