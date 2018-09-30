@@ -2704,19 +2704,9 @@ class ProfileViewer (Gtk.ScrolledWindow):
             history.end_group ()
 
         def select_samples_clicked (self, button):
-            history.start_group ()
+            selection.select ({frame.sample for frame in self.frames})
 
-            self.root.select (self.id)
-
-            sel = set ()
-
-            for frame in self.frames:
-                sel.add (frame.sample)
-
-            selection.select (sel)
             selection.change_complete ()
-
-            history.end_group ()
 
         def tree_selection_changed (self, tree_sel):
             self.remove_subprofile ()
