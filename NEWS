@@ -28,6 +28,14 @@ Tools:
   - When moving a text layer using the text tool (through alt+drag),
     don't change the layer's box mode to "fixed", which is unnecessary,
     since the layer's size isn't affected.
+  - All transform tools now apply changes when you save or export/overwrite
+    an image without pressing Enter first to confirm changes.
+  - Heal, Dodge/Burn, Smudge, and Convolve tools now adjust the processed
+    buffer and mask_buffer regions according to the changes made to the
+    application region, as calculated by intersecting it with the
+    drawable and mask extents. This fixes wrong application position
+    when painting on a drawable whose origin is above/to the left of the
+    image's origin, and there's a selection active.
 
 Plug-ins:
 
@@ -87,8 +95,8 @@ Debugging:
 
 Translations:
 
-  - Updated translations: Finnish, German, Hungarian, Italian, Polish,
-    Portuguese (Brazil), Spanish.
+  - Updated translations: Danish, Finnish, German, Hungarian, Italian,
+    Polish, Portuguese (Brazil), Spanish, Swedish.
 
 
 Overview of Changes from GIMP 2.10.4 to GIMP 2.10.6
