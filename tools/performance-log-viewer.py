@@ -21,7 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 Usage: performance-log-viewer.py < infile
 """
 
-import builtins, sys, os, math, statistics, functools, enum, re, subprocess
+import builtins, sys, os, math, statistics, bisect, functools, enum, re, \
+       subprocess
 
 from collections import namedtuple
 from xml.etree   import ElementTree
@@ -112,6 +113,11 @@ def find_file (filename):
     return find_file.cache[filename]
 
 find_file.cache = {}
+
+def run_editor (file, line):
+    subprocess.call (editor_command.format (file = "\"%s\"" % file.get_path (),
+                                            line = line),
+                     shell = True)
 
 VariableType = namedtuple ("VariableType",
                            ("parse", "format", "format_numeric"))
@@ -419,6 +425,23 @@ class History (GObject.GObject):
 
                 self.notify ("can-undo")
                 self.notify ("can-redo")
+        else:
+            self.pending_record = True
+
+    def update (self):
+        if self.is_blocked ():
+            return
+
+        if self.n_groups == 0:
+            state = tuple (source.get () for source in self.sources)
+
+            for stack in self.undo_stack, self.redo_stack:
+                if stack:
+                    stack[-1] = delta_encode (delta_decode (stack[-1],
+                                                            self.state),
+                                              state)
+
+            self.state = state
         else:
             self.pending_record = True
 
@@ -1796,13 +1819,7 @@ class BacktraceViewer (Gtk.Box):
 
         def do_activate (self, event, widget, path, *args):
             if self.file:
-                subprocess.call (
-                    editor_command.format (
-                        file = "\"%s\"" % self.file.get_path (),
-                        line = self.line
-                    ),
-                    shell = True
-                )
+                run_editor (self.file, self.line)
 
                 return True
 
@@ -2327,7 +2344,9 @@ class ProfileViewer (Gtk.ScrolledWindow):
             "subprofile-added":   (GObject.SIGNAL_RUN_FIRST,
                                    None, (Gtk.Widget,)),
             "subprofile-removed": (GObject.SIGNAL_RUN_FIRST,
-                                   None, (Gtk.Widget,))
+                                   None, (Gtk.Widget,)),
+            "path-changed":       (GObject.SIGNAL_RUN_FIRST,
+                                   None, ())
         }
 
         def __init__ (self,
@@ -2621,6 +2640,8 @@ class ProfileViewer (Gtk.ScrolledWindow):
                                 lambda profile, subprofile:
                                     self.emit ("subprofile-removed",
                                                subprofile))
+            subprofile.connect ("path-changed",
+                                lambda profile: self.emit ("path-changed"))
 
             self.emit ("subprofile-added", subprofile)
 
@@ -2714,13 +2735,12 @@ class ProfileViewer (Gtk.ScrolledWindow):
             sel_rows = tree_sel.get_selected_rows ()[1]
 
             if not sel_rows:
+                self.emit ("path-changed")
+
                 return
 
             id    = self.store[sel_rows[0]][self.store.ID]
             title = self.store[sel_rows[0]][self.store.FUNCTION]
-
-            if id == self.id:
-                return
 
             frames = []
 
@@ -2728,19 +2748,36 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 if frame.stack[frame.i].info.id == id:
                     frames.append (frame)
 
-                    if frame.i > 0:
+                    if frame.i > 0 and id != self.id:
                         frames.append (self.ProfileFrame (sample = frame.sample,
                                                           stack  = frame.stack,
                                                           i      = frame.i - 1))
 
-            self.add_subprofile (ProfileViewer.Profile (
-                self.root,
-                id,
-                title,
-                frames,
-                self.direction,
-                self.store.get_sort_column_id ()
-            ))
+            if id != self.id:
+                self.add_subprofile (ProfileViewer.Profile (
+                    self.root,
+                    id,
+                    title,
+                    frames,
+                    self.direction,
+                    self.store.get_sort_column_id ()
+                ))
+            else:
+                filenames = {frame.stack[frame.i].info.source
+                             for frame in frames}
+                filenames = list (filter (bool, filenames))
+
+                if len (filenames) == 1:
+                    file = find_file (filenames[0])
+
+                    if file:
+                        self.add_subprofile (ProfileViewer.SourceProfile (
+                            file,
+                            frames[0].stack[frames[0].i].info.name,
+                            frames
+                        ))
+
+            self.emit ("path-changed")
 
         def tree_row_activated (self, tree, path, col):
             if self.root != self:
@@ -2758,6 +2795,320 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 return True
 
             return False
+
+    class SourceProfile (Gtk.Box):
+        class Store (Gtk.ListStore):
+            LINE      = 0
+            EXCLUSIVE = 1
+            INCLUSIVE = 2
+            TEXT      = 3
+
+            def __init__ (self):
+                Gtk.ListStore.__init__ (self, int, float, float, str)
+
+        __gsignals__ = {
+            "subprofile-added":   (GObject.SIGNAL_RUN_FIRST,
+                                   None, (Gtk.Widget,)),
+            "subprofile-removed": (GObject.SIGNAL_RUN_FIRST,
+                                   None, (Gtk.Widget,)),
+            "path-changed":       (GObject.SIGNAL_RUN_FIRST,
+                                   None, ())
+        }
+
+        def __init__ (self,
+                      file,
+                      function,
+                      frames,
+                      *args,
+                      **kwargs):
+            Gtk.Box.__init__ (self,
+                              *args,
+                              orientation = Gtk.Orientation.VERTICAL,
+                              **kwargs)
+
+            self.file   = file
+            self.frames = frames
+
+            header = Gtk.HeaderBar (title    = file.get_basename (),
+                                    subtitle = function)
+            self.header = header
+            self.pack_start (header, False, False, 0)
+            header.show ()
+
+            box = Gtk.Box (orientation = Gtk.Orientation.HORIZONTAL)
+            header.pack_start (box)
+            box.get_style_context ().add_class ("linked")
+            box.get_style_context ().add_class ("raised")
+            box.show ()
+
+            button = Gtk.Button.new_from_icon_name ("go-up-symbolic",
+                                                    Gtk.IconSize.BUTTON)
+            self.prev_button = button
+            box.pack_start (button, False, True, 0)
+            button.show ()
+
+            button.connect ("clicked", lambda *args: self.move (-1))
+
+            button = Gtk.Button.new_from_icon_name ("go-down-symbolic",
+                                                    Gtk.IconSize.BUTTON)
+            self.next_button = button
+            box.pack_end (button, False, True, 0)
+            button.show ()
+
+            button.connect ("clicked", lambda *args: self.move (+1))
+
+            button = Gtk.Button.new_from_icon_name ("edit-select-all-symbolic",
+                                                    Gtk.IconSize.BUTTON)
+            self.select_samples_button = button
+            header.pack_end (button)
+            button.show ()
+
+            button.connect ("clicked", self.select_samples_clicked)
+
+            button = Gtk.Button.new_from_icon_name ("text-x-generic-symbolic",
+                                                    Gtk.IconSize.BUTTON)
+            header.pack_end (button)
+            button.set_tooltip_text (file.get_path ())
+            button.show ()
+
+            button.connect ("clicked", self.view_source_clicked)
+
+            scrolled = Gtk.ScrolledWindow (
+                hscrollbar_policy = Gtk.PolicyType.NEVER,
+                vscrollbar_policy = Gtk.PolicyType.AUTOMATIC
+            )
+            self.pack_start (scrolled, True, True, 0)
+            scrolled.show ()
+
+            store = self.Store ()
+            self.store = store
+
+            tree = Gtk.TreeView (model = store)
+            self.tree = tree
+            scrolled.add (tree)
+            tree.set_search_column (store.LINE)
+            tree.show ()
+
+            tree.get_selection ().connect ("changed",
+                                           self.tree_selection_changed)
+
+            scale = 0.85
+
+            def format_percentage_col (tree_col, cell, model, iter, col):
+                value = model[iter][col]
+
+                if value >= 0:
+                    cell.set_property ("text", format_percentage (value, 2))
+                else:
+                    cell.set_property ("text", "")
+
+            col = Gtk.TreeViewColumn (title = "Self")
+            tree.append_column (col)
+            col.set_alignment (0.5)
+            col.set_sort_column_id (store.EXCLUSIVE)
+
+            cell = Gtk.CellRendererText (xalign = 1, scale = scale)
+            col.pack_start (cell, False)
+            col.set_cell_data_func (cell,
+                                    format_percentage_col, store.EXCLUSIVE)
+
+            col = Gtk.TreeViewColumn (title = "All")
+            tree.append_column (col)
+            col.set_alignment (0.5)
+            col.set_sort_column_id (store.INCLUSIVE)
+
+            cell = Gtk.CellRendererText (xalign = 1, scale = scale)
+            col.pack_start (cell, False)
+            col.set_cell_data_func (cell,
+                                    format_percentage_col, store.INCLUSIVE)
+
+            col = Gtk.TreeViewColumn ()
+            tree.append_column (col)
+
+            cell = Gtk.CellRendererText (xalign = 1,
+                                         xpad   = 8,
+                                         family = "Monospace",
+                                         weight = Pango.Weight.BOLD,
+                                         scale  =scale)
+            col.pack_start (cell, False)
+            col.add_attribute (cell, "text", store.LINE)
+
+            cell = Gtk.CellRendererText (family = "Monospace",
+                                         scale  = scale)
+            col.pack_start (cell, True)
+            col.add_attribute (cell, "text", store.TEXT)
+
+            self.update ()
+
+        def get_samples (self):
+            sel_rows = self.tree.get_selection ().get_selected_rows ()[1]
+
+            if sel_rows:
+                line = self.store[sel_rows[0]][self.store.LINE]
+
+                sel = {frame.sample for frame in self.frames
+                       if frame.stack[frame.i].info.line == line}
+
+                return sel
+            else:
+                return {}
+
+        def update (self):
+            self.update_store ()
+            self.update_ui ()
+
+        def update_store (self):
+            stacks = {}
+            lines  = {}
+
+            for frame in self.frames:
+                info     = frame.stack[frame.i].info
+                line_id  = info.line
+                stack_id = builtins.id (frame.stack)
+
+                line = lines.get (line_id, None)
+
+                if not line:
+                    line           = [0, 0]
+                    lines[line_id] = line
+
+                stack = stacks.get (stack_id, None)
+
+                if not stack:
+                    stack            = set ()
+                    stacks[stack_id] = stack
+
+                if frame.i == 0:
+                    line[0] += 1
+
+                if line_id not in stack:
+                    stack.add (line_id)
+
+                    line[1] += 1
+
+            self.lines = list (lines.keys ())
+            self.lines.sort ()
+
+            n_stacks = len (stacks)
+
+            self.store.clear ()
+
+            i = 1
+
+            for text in open (self.file.get_path (), "r"):
+                text = text.rstrip ("\n")
+
+                line = lines.get (i, [-1, -1])
+
+                self.store.append ((i,
+                                    line[0] / n_stacks,
+                                    line[1] / n_stacks,
+                                    text))
+
+                i += 1
+
+            self.select (max (lines.items (), key = lambda line: line[1][1])[0])
+
+        def update_ui (self):
+            sel_rows = self.tree.get_selection ().get_selected_rows ()[1]
+
+            if sel_rows:
+                line = self.store[sel_rows[0]][self.store.LINE]
+
+                i = bisect.bisect_left (self.lines, line)
+
+                self.prev_button.set_sensitive (i > 0)
+
+                if i < len (self.lines) and self.lines[i] == line:
+                    i += 1
+
+                self.next_button.set_sensitive (i < len (self.lines))
+            else:
+                self.prev_button.set_sensitive (False)
+                self.next_button.set_sensitive (False)
+
+            samples = self.get_samples ()
+
+            if samples:
+                self.select_samples_button.set_sensitive (True)
+                self.select_samples_button.set_tooltip_text (
+                    str (Selection (samples))
+                )
+            else:
+                self.select_samples_button.set_sensitive (False)
+                self.select_samples_button.set_tooltip_text (None)
+
+        def select (self, line):
+            if line is not None:
+                for row in self.store:
+                    if row[self.store.LINE] == line:
+                        iter = row.iter
+                        path = self.store.get_path (iter)
+
+                        self.tree.get_selection ().select_iter (iter)
+
+                        self.tree.scroll_to_cell (path, None, True, 0.5, 0)
+
+                        break
+            else:
+                self.tree.get_selection ().unselect_all ()
+
+
+        def move (self, dir):
+            if dir == 0:
+                return
+
+            sel_rows = self.tree.get_selection ().get_selected_rows ()[1]
+
+            if sel_rows:
+                line = self.store[sel_rows[0]][self.store.LINE]
+
+                i = bisect.bisect_left (self.lines, line)
+
+                if dir < 0:
+                    i -= 1
+                elif i < len (self.lines) and self.lines[i] == line:
+                    i += 1
+
+                if i >= 0 and i < len (self.lines):
+                    self.select (self.lines[i])
+                else:
+                    self.select (None)
+
+        def select_samples_clicked (self, button):
+            selection.select (self.get_samples ())
+
+            selection.change_complete ()
+
+        def view_source_clicked (self, button):
+            line = 0
+
+            sel_rows = self.tree.get_selection ().get_selected_rows ()[1]
+
+            if sel_rows:
+                line = self.store[sel_rows[0]][self.store.LINE]
+
+            run_editor (self.file, line)
+
+        def get_path (self):
+            tree_sel = self.tree.get_selection ()
+
+            sel_rows = tree_sel.get_selected_rows ()[1]
+
+            if not sel_rows:
+                return ()
+
+            line = self.store[sel_rows[0]][self.store.LINE]
+
+            return (line,)
+
+        def set_path (self, path):
+            self.select (path[0] if path else None)
+
+        def tree_selection_changed (self, tree_sel):
+            self.update_ui ()
+
+            self.emit ("path-changed")
 
     def __init__ (self, *args, **kwargs):
         Gtk.ScrolledWindow.__init__ (
@@ -2782,6 +3133,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
         profile.connect ("needs-update",       self.profile_needs_update)
         profile.connect ("subprofile-added",   self.profile_subprofile_added)
         profile.connect ("subprofile-removed", self.profile_subprofile_removed)
+        profile.connect ("path-changed",       self.profile_path_changed)
 
         history.add_source (self.source_get, self.source_set)
 
@@ -2856,6 +3208,13 @@ class ProfileViewer (Gtk.ScrolledWindow):
             self.path = profile.get_path ()
 
         history.record ()
+
+
+    def profile_path_changed (self, profile):
+        if not history.is_blocked ():
+            self.path = profile.get_path ()
+
+        history.update ()
 
     def source_get (self):
         return self.path
