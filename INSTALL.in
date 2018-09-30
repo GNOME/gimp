@@ -86,10 +86,9 @@ header files installed.
      Checkout the tag "v1.3.0" instead, or simply install from a tarball
      or from your favorite package manager.
 
- 11. We also need the mypaint-brushes data package with is currently
-     hosted by Jehan, until the MyPaint project takes care of it:
+ 11. We also need the mypaint-brushes data package:
 
-        https://github.com/Jehan/mypaint-brushes
+        https://github.com/mypaint/mypaint-brushes
 
      If installing from repository, install from branch "v1.3.x" or the
      particular tag "v1.3.0". In particular do not install from master
