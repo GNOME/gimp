@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 Usage: performance-log-viewer.py < infile
 """
 
-import builtins, sys, math, statistics, functools, enum, re
+import builtins, sys, os, math, statistics, functools, enum, re, subprocess
 
 from collections import namedtuple
 from xml.etree   import ElementTree
@@ -71,6 +71,39 @@ def get_basename (path):
     match = re.fullmatch (".*[\\\\/](.+?)[\\\\/]?", path)
 
     return match[1] if match else path
+
+search_path = list (filter (
+    bool,
+    os.environ.get ("PERFORMANCE_LOG_VIEWER_PATH", ".").split (":")
+))
+
+editor_command  = os.environ.get ("PERFORMANCE_LOG_VIEWER_EDITOR",
+                                  "xdg-open {file}")
+editor_command += " &"
+
+def find_file (filename):
+    filename = re.sub ("[\\\\/]", GLib.DIR_SEPARATOR_S, filename)
+
+    if GLib.path_is_absolute (filename):
+        file = Gio.File.new_for_path (filename)
+
+        if file.query_exists ():
+            return file
+
+    for path in search_path:
+        rest = filename
+
+        while rest:
+            file = Gio.File.new_for_path (GLib.build_filenamev ((path, rest)))
+
+            if file.query_exists ():
+                return file
+
+            sep = rest.find (GLib.DIR_SEPARATOR_S)
+
+            rest = rest[sep + 1:] if sep >= 0 else ""
+
+    return None
 
 VariableType = namedtuple ("VariableType",
                            ("parse", "format", "format_numeric"))
@@ -1737,6 +1770,36 @@ class BacktraceViewer (Gtk.Box):
         def __init__ (self):
             Gtk.ListStore.__init__ (self, int, str, str, str, str, str, str)
 
+    class CellRendererViewSource (Gtk.CellRendererPixbuf):
+        file = GObject.Property (type = Gio.File, default = None)
+        line = GObject.Property (type = int,      default = 0)
+
+        def __init__ (self, *args, **kwargs):
+            Gtk.CellRendererPixbuf.__init__ (
+                self,
+                *args,
+                icon_name = "text-x-generic-symbolic",
+                mode      = Gtk.CellRendererMode.ACTIVATABLE,
+                **kwargs)
+
+            self.connect ("notify::file",
+                          lambda *args:
+                              self.set_property ("visible", bool (self.file)))
+
+        def do_activate (self, event, widget, path, *args):
+            if self.file:
+                subprocess.call (
+                    editor_command.format (
+                        file = "\"%s\"" % self.file.get_path (),
+                        line = self.line
+                    ),
+                    shell = True
+                )
+
+                return True
+
+            return False
+
     def __init__ (self, *args, **kwargs):
         Gtk.Box.__init__ (self,
                           *args,
@@ -1893,8 +1956,32 @@ class BacktraceViewer (Gtk.Box):
         col.pack_start (cell, False)
         col.add_attribute (cell, "text", self.FrameStore.LINE)
 
+        def format_view_source_col (tree_col, cell, model, iter, cols):
+            filename = model[iter][cols[0]] or None
+            line     = model[iter][cols[1]] or "0"
+
+            cell.set_property ("file", filename and find_file (filename))
+            cell.set_property ("line", int (line))
+
+        def format_view_source_tooltip (row):
+            filename = row[store.SOURCE]
+
+            if filename:
+                file = find_file (filename)
+
+                if file:
+                    return file.get_path ()
+
+            return None
+
         col = Gtk.TreeViewColumn ()
+        self.tooltip_columns[col] = format_view_source_tooltip
         tree.append_column (col)
+
+        cell = self.CellRendererViewSource (xalign = 0)
+        col.pack_start (cell, False)
+        col.set_cell_data_func (cell, format_view_source_col, (store.SOURCE,
+                                                               store.LINE))
 
         selection.connect ("change-complete", self.selection_change_complete)
 
@@ -2030,7 +2117,7 @@ class BacktraceViewer (Gtk.Box):
                                                                   keyboard_mode)
 
         if hit:
-            column = -1
+            column = None
 
             if keyboard_mode:
                 cursor_path, cursor_col = tree.get_cursor ()
@@ -2047,8 +2134,13 @@ class BacktraceViewer (Gtk.Box):
 
                         break
 
-            if column >= 0:
-                value = model[iter][column]
+            if column is not None:
+                value = None
+
+                if type (column) == int:
+                    value = model[iter][column]
+                else:
+                    value = column (model[iter])
 
                 if value:
                     tooltip.set_text (str (value))
