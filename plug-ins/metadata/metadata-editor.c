@@ -1663,7 +1663,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   gtk_widget_set_size_request (combo_widget, 180, height);
 
   combo_widget = builder_get_widget (builder, "Xmp.iptcExt.DigitalSourceType");
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 5; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
                                       gettext (digitalsourcetype[i].display));
@@ -2997,7 +2997,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                 {
                   gint loop;
 
-                  for (loop = 0; loop < 4; loop++)
+                  for (loop = 0; loop < 5; loop++)
                     {
                       if (! strcmp (digitalsourcetype[loop].data, value))
                         {
