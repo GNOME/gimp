@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-17 22:10+0000\n"
+"POT-Creation-Date: 2018-09-26 18:42+0000\n"
 "PO-Revision-Date: 2018-07-07 14:57+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
-msgstr "स्क्रिप्ट-फ्यू विस्तारासाठी परस्परसंवादी आज्ञापटल"
+msgstr "स्क्रिप्ट-फू विस्तारासाठी परस्परसंवादी [इंटरअॅक्टीव] आज्ञापटल"
 
 #: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
@@ -29,7 +29,7 @@ msgstr "_आज्ञापटल"
 
 #: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
-msgstr "दूरस्थ स्क्रिप्ट-फू क्रीया सर्व्हर"
+msgstr "दूरस्थ स्क्रिप्ट-फू क्रिया सर्व्हर"
 
 #: ../plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
@@ -45,7 +45,7 @@ msgstr "_उपयोगकर्ता पुस्तिका"
 
 #: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Script-Fu"
-msgstr "_स्क्रिप्ट-फ्यू"
+msgstr "_स्क्रिप्ट-फू"
 
 #: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
@@ -69,7 +69,7 @@ msgstr "_वेब पृष्ठ देखावा"
 
 #: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Alien Glow"
-msgstr "_रंग अनियमितता"
+msgstr "_रंग अनियमितता [अलाईन ग्लो]"
 
 #: ../plug-ins/script-fu/script-fu.c:326
 msgid "_Beveled Pattern"
@@ -89,20 +89,20 @@ msgstr "सर्व उपलब्ध स्क्रिप्ट-फू ल�
 
 #: ../plug-ins/script-fu/script-fu.c:339
 msgid "_Refresh Scripts"
-msgstr "_पूर्ववत लिपी"
+msgstr "_पूर्ववत [रिफ्रेश] लिपी"
 
 #: ../plug-ins/script-fu/script-fu.c:362
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"स्क्रिप्ट-फ्यू संवाद पटल उघडलेला असताना आपण \"पूर्ववत लिपी\" वापरू शकत नाही. कृपया सर्व "
-"स्क्रिप्ट-फु पटल बंद करा आणि प्रयत्न करा."
+"स्क्रिप्ट-फू संवाद पटल उघडलेला असताना आपण \"पूर्ववत [रिफ्रेश] लिपी\" वापरू शकत नाही. "
+"कृपया सर्व स्क्रिप्ट-फू पटल बंद करा आणि प्रयत्न करा."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
 #: ../plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
-msgstr "स्क्रिप्ट-फ्यू आज्ञापटल"
+msgstr "स्क्रिप्ट-फू आज्ञापटल"
 
 #: ../plug-ins/script-fu/script-fu-console.c:132
 #: ../plug-ins/script-fu/script-fu-console.c:293
@@ -111,7 +111,7 @@ msgstr "_जतन"
 
 #: ../plug-ins/script-fu/script-fu-console.c:133
 msgid "C_lear"
-msgstr "_साफ करा"
+msgstr "सा_फ करा"
 
 #: ../plug-ins/script-fu/script-fu-console.c:134
 #: ../plug-ins/script-fu/script-fu-console.c:371
@@ -120,7 +120,7 @@ msgstr "_बंद"
 
 #: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
-msgstr "लघुशैली वर आपले स्वागत आहे"
+msgstr "लघुशैली [टायनी स्किम] वर आपले स्वागत आहे"
 
 #: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Interactive Scheme Development"
@@ -128,7 +128,7 @@ msgstr "परस्परसंवादी योजना विकास"
 
 #: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
-msgstr "_दर्शक..."
+msgstr "_दर्शक [पहा]..."
 
 #: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
@@ -147,7 +147,7 @@ msgstr "लेखनसाठी '%s' उघडू शकत नाही: %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:366
 msgid "Script-Fu Procedure Browser"
-msgstr "स्क्रिप्ट-फ्यू कार्यपद्धती ब्राउझर"
+msgstr "स्क्रिप्ट-फू कार्यपद्धती दर्शक [ब्राऊजर]"
 
 #: ../plug-ins/script-fu/script-fu-console.c:370
 msgid "_Apply"
@@ -155,7 +155,7 @@ msgstr "_लागू करा"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr "स्क्रिप्ट-फ्यू मूल्यमापन मोड केवळ अ-परस्पर संवाद साधण्याची परवानगी देतो"
+msgstr "स्क्रिप्ट-फू मूल्यमापन मोड केवळ अ-परस्पर संवाद [इन्व्होकेशन] साधण्याची परवानगी देतो"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:200
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -164,12 +164,12 @@ msgstr "स्क्रिप्ट-फू एकाच वेळी दोन �
 #: ../plug-ins/script-fu/script-fu-interface.c:202
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "आपण आधीपासून \"%s\" स्क्रिप्ट चालवत आहात."
+msgstr "आपण आधीपासून \"%s\" स्क्रिप्टवर काम करत आहात."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:228
 #, c-format
 msgid "Script-Fu: %s"
-msgstr "स्क्रिप्ट-फ्यू: %s"
+msgstr "स्क्रिप्ट-फू: %s"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:235
 msgid "_Reset"
@@ -189,7 +189,7 @@ msgstr "%s:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:341
 msgid "Script-Fu Color Selection"
-msgstr "स्क्रिप्ट-फ्यू रंग निवड"
+msgstr "स्क्रिप्ट-फू रंग निवड"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:457
 msgid "Script-Fu File Selection"
@@ -213,20 +213,20 @@ msgstr "स्क्रिप्ट-फू नमुना निवड"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:499
 msgid "Script-Fu Gradient Selection"
-msgstr "स्क्रिप्ट-फ्यू रंगछटा निवड"
+msgstr "स्क्रिप्ट-फू रंगछटा निवड"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:508
 msgid "Script-Fu Brush Selection"
-msgstr "स्क्रिप्ट-फ्यू कुंचला निवड"
+msgstr "स्क्रिप्ट-फू कुंचला निवड"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:877
 #, c-format
 msgid "Error while executing %s:"
-msgstr "%s चालविताना त्रुटी:"
+msgstr "%s काम करतांना त्रुटी:"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
-msgstr "'स्क्रिप्ट-फ्यू-रजिस्टर'संवादासाठी खूपच काही वितर्क"
+msgstr "'स्क्रिप्ट-फू-रजिस्टर' संवादासाठी खूपच कमी घटक [आर्ग्यूमेंट्स]"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
@@ -258,12 +258,12 @@ msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
-"127.0.0.1 (विशेषतः 0.0.0.0) पेक्षा इतर IP पत्त्यावर ऐकणे हे आक्रमणकर्त्यांना या मशीनवरुन "
-"अनियंत्रित कोड निष्प्रभित करण्याची परवानगी द्या."
+"127.0.0.1 (विशेषतः 0.0.0.0) पेक्षा इतर IP पत्त्यावर ऐकणे यामुळे आक्रमणकर्त्यांना या "
+"मशीनवरुन अनियंत्रित कोड द्वारे हानी करण्याची संधी उपलब्ध करून देते."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
-msgstr "बम्पमाप "
+msgstr "बम्पमॅप"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:183
 msgid "Add B_evel..."
@@ -271,7 +271,7 @@ msgstr "का_टकोनावर जोडा..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:184
 msgid "Add a beveled border to an image"
-msgstr "धारिका काटकोनी सीमांवर प्रतिमा जोडा"
+msgstr "काटकोनी सीमांवर प्रतिमा जोडा"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:191
 msgid "Thickness"
@@ -284,11 +284,11 @@ msgstr "जाडी"
 #: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
-msgstr "बनवलेल्या प्रतवर कार्य करा"
+msgstr "बनवलेल्या प्रतीवर कार्य करा"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:193
 msgid "Keep bump layer"
-msgstr "बम्प नकाशा ठेवा"
+msgstr "बम्प स्तर ठेवा"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:108
 msgid "Border Layer"
@@ -300,7 +300,7 @@ msgstr "_सीमा  जोडा ..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
-msgstr "एका प्रतिमेच्या आसपास सीमा जोडा"
+msgstr "प्रतिमेच्या आसपास सीमा जोडा"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:170
 msgid "Border X size"
@@ -325,7 +325,7 @@ msgstr "चौकट"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:222
 msgid "Blend Animation needs at least three source layers"
-msgstr "चलाभास जोडण्याकरता  किमान तीन स्रोत स्तरांची आवश्यकता आहे"
+msgstr "चलाभास जोडण्याकरता किमान तीन स्रोत स्तरांची आवश्यकता आहे"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:228
 msgid "_Blend..."
@@ -335,11 +335,12 @@ msgstr "_जोडणे..."
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
-msgstr "पृष्ठभागावर दोन किंवा अधिक स्तर मिश्रित करण्यासाठी मध्यस्ती स्तर तयार कराचलाभास"
+msgstr ""
+"पृष्ठभागावर दोन किंवा अधिक स्तर चलाभासासाठी मिश्रित करण्यासाठी मध्यस्थ स्तर तयार करा"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
-msgstr "माध्यमिक चौकट"
+msgstr "माध्यमिक [इंटरमेडिएट] चौकट"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
@@ -354,17 +355,19 @@ msgstr "फेरा"
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
-msgstr "ज्वलंत  लिपीला एकूण दोन स्तरांची आवश्यकता आहे.पारदर्शकता आणि पृष्ठभाग स्तर."
+msgstr ""
+"लिपीला ज्वलंत [बर्न इन] एकूण दोन स्तरांची आवश्यकता आहे.पारदर्शक अग्रभाग स्तर आणि पृष्ठभाग "
+"स्तर."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
 msgid "B_urn-In..."
-msgstr "_ज्वलंत..."
+msgstr "_ज्वलंत [बर्न इन]..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr "चलाभास 'ज्वलंत'संक्रमण निर्मितीसाठी दरम्यानचे लेयर्स तयार करादोन स्तरांदरम्यान"
+msgstr "दोन स्तरांदरम्यान चलाभास 'ज्वलंत' संक्रमण निर्मितीसाठी मध्यस्थ स्तर तयार करा"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
@@ -372,11 +375,11 @@ msgstr "रंग चमक"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
-msgstr "फिकट"
+msgstr "पुसट होणे"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
-msgstr "फिकट रूंदी"
+msgstr "पुसट रूंदी"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
@@ -404,7 +407,7 @@ msgstr "कोरलेला पृष्ठभाग"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:169
 msgid "Bevel Shadow"
-msgstr "काटकोनातील  सावली"
+msgstr "काटकोनातील सावली"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:170
 msgid "Bevel Highlight"
@@ -412,7 +415,7 @@ msgstr "काटकोनात प्रकाशमय"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:171
 msgid "Cast Shadow"
-msgstr "सावली  देणे"
+msgstr "सावली देणे"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:172
 msgid "Inset"
@@ -420,12 +423,13 @@ msgstr "इनसेट"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:182
 msgid "Stencil C_arve..."
-msgstr "कोरलेले स्टॅन्सिल..."
+msgstr "स्टेन्सिल को_रून काढा..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:183
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
-msgstr "निर्दिष्ट केलेल्या प्रतिमेवरून काढण्यासाठी विशिष्ट रेखाचित्र म्हणून स्टॅन्सिल वापरा."
+msgstr ""
+"निर्दिष्ट केलेल्या प्रतिमेवरून कोरून काढण्यासाठी हे विशिष्ट रेखाचित्र स्टेन्सिल म्हणून वापरा."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:190
 msgid "Image to carve"
@@ -433,7 +437,7 @@ msgstr "कोरलेली प्रतिमा"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:191
 msgid "Carve white areas"
-msgstr "पांढर्या भागात कोरणे"
+msgstr "पांढऱ्या भागात कोरणे"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:103
 msgid "Background"
@@ -453,7 +457,7 @@ msgstr "स्तर ३"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:107
 msgid "Drop Shadow"
-msgstr "सावली  टाका"
+msgstr "सावली काढून टाका"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:217
 msgid "Chrome"
@@ -462,17 +466,18 @@ msgstr "क्रोम"
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:218
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:68
 msgid "Highlight"
-msgstr "प्रकाशमय"
+msgstr "ठळक"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:230
 msgid "Stencil C_hrome..."
-msgstr "स्टॅन्सिल क्रोम..."
+msgstr "स्टेन्सिल क्रो_म..."
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:231
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
-msgstr "निर्दिष्ट केलेल्या क्षेत्र (किंवा अल्फा) वर एक क्रोम प्रभाव जोडा(ग्रेस्केल) स्टॅंसिल"
+msgstr ""
+"निर्दिष्ट केलेल्या क्षेत्र (किंवा अल्फा) वर विशिष्ट (ग्रेस्केल) स्टेन्सिल वापरून क्रोम प्रभाव जोडा"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:238
 msgid "Chrome saturation"
@@ -484,7 +489,7 @@ msgstr "हलका क्रोम "
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:240
 msgid "Chrome factor"
-msgstr "क्रोम विभाजक"
+msgstr "क्रोम घटक [फॅक्टर]"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:241
 msgid "Environment map"
@@ -492,7 +497,7 @@ msgstr "पर्यावरण नकाशा"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:244
 msgid "Highlight balance"
-msgstr "प्रकाशमय संतुलन"
+msgstr "प्रकाशमय [हायलाईट] संतुलन"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:245
 msgid "Chrome balance"
@@ -508,16 +513,16 @@ msgstr "प्रभाव स्तर"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:127
 msgid "_Circuit..."
-msgstr "_वर्तृळाकार..."
+msgstr "_विद्युत जोडणी [सर्किट]..."
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:128
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr "सर्किट बोर्डवरील त्याप्रमाणेच क्षेत्रफळ (किंवा अल्फा) भरा"
+msgstr "निर्दिष्ट केलेले क्षेत्रफळ (किंवा अल्फा) सर्किट बोर्डवरील ट्रेसेस प्रमाणे भरा"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:135
 msgid "Oilify mask size"
-msgstr "तेलनेट आच्छादक आकार"
+msgstr "तेलकट [ऑईलीफाय] आच्छादक आकार"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:136
 msgid "Circuit seed"
@@ -525,7 +530,7 @@ msgstr "सर्किट सीड"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:137
 msgid "No background (only for separate layer)"
-msgstr "पृष्ठभाग नाही (केवळ निवड स्तरासाठी)"
+msgstr "पृष्ठभाग नाही (केवळ स्वतंत्र स्तरासाठी)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:138
 #: ../plug-ins/script-fu/scripts/lava.scm:129
@@ -538,15 +543,15 @@ msgstr "निवड ठेवा"
 #: ../plug-ins/script-fu/scripts/lava.scm:130
 #: ../plug-ins/script-fu/scripts/predator.scm:133
 msgid "Separate layer"
-msgstr "निवड स्तर"
+msgstr "स्वतंत्र स्तर"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:52
 msgid "_Clothify..."
-msgstr "_कापडाप्रमाणे..."
+msgstr "_कापडाप्रमाणे [क्लोथिफाय]..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr "निवडलेल्या प्रांतामध्ये (किंवा अल्फा)कापडसारखे जोडा"
+msgstr "निवडलेल्या क्षेत्रामध्ये (किंवा अल्फा) कापडासारख पोत [टेक्श्चर] जोडा"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
@@ -578,7 +583,7 @@ msgstr "_कॉफी डाग ..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:83
 msgid "Add realistic looking coffee stains to the image"
-msgstr "प्रतिमेवर वास्तविक शोधत असलेले कॉफीचे डाग जोडा"
+msgstr "प्रतिमेवर खऱ्या खूऱ्या भासणाऱ्या कॉफीचे डाग जोडा"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:90
 msgid "Stains"
@@ -594,15 +599,15 @@ msgstr "ढगांतील फरक..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
-msgstr "फरक स्तर रीतसह घन ध्वनी लागू केले"
+msgstr "भिन्न स्तर रीत घन [सॉलिड] गोंधळासह लागू केले"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
-msgstr "_विकृत..."
+msgstr "_विकृत [डिस्टॉर्ट]..."
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
-msgstr "निवडीस त्रास देणे"
+msgstr "निवडीस त्रास [डिस्ट्रेस] देणे"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Threshold (bigger 1<-->254 smaller)"
@@ -614,7 +619,7 @@ msgstr "पसरवणे"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
 msgid "Granularity (1 is low)"
-msgstr "दाणेदार(१ कमी आहे)"
+msgstr "दाणेदार (१ कमी आहे)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
 msgid "Smooth"
@@ -630,19 +635,19 @@ msgstr "उभा गुळगुळीत"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
-msgstr "_सावली सोडा (वारसा)..."
+msgstr "_सावली टाका (इतिहास)..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr "निवडलेल्या क्षेत्रा (किंवा अल्फा) वर एक जोडलेली सावली सोडा"
+msgstr "निवडलेल्या क्षेत्रा (किंवा अल्फा) वर सावली सोडा"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset X"
-msgstr "Xचा संच"
+msgstr "ऑफसेट X"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
 msgid "Offset Y"
-msgstr "Yचा संच"
+msgstr "ऑफसेट Y"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
@@ -669,11 +674,11 @@ msgstr "आकार बदलण्याची परवानगी द्य
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:41
 msgid "_Erase Every Other Row..."
-msgstr "प्रत्येक अन्य पंक्ती _पुसून  करा ..."
+msgstr "अन्य सर्व पंक्ती _पुसा..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
 msgid "Erase every other row or column"
-msgstr "प्रत्येक इतर पंक्ती किंवा स्तंभ मिटवा"
+msgstr "इतर सर्व पंक्ती किंवा स्तंभ मिटवा"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
 msgid "Rows/cols"
@@ -713,12 +718,12 @@ msgstr "पृष्ठभाग भरा"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
-msgstr "नकाशावर _टंक लावा..."
+msgstr "_टंक आलेख तयार करा..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:153
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
-msgstr "टंक नाव चाळण गाळणाशी जुळणार्या टंक ची पूर्तता केलेली प्रतिमा तयार करा"
+msgstr "टंक नाव चाळण [फॉन्टनेम] गाळणीशी जुळणाऱ्या टंकाने परिपूर्ण प्रतिमा तयार करा"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:158
 msgid "_Text"
@@ -726,7 +731,7 @@ msgstr "_मजकूर"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:159
 msgid "Use font _name as text"
-msgstr "टंक _नाव चा वापर मजकूर म्हणून करा"
+msgstr "टंक _नाव मजकूर म्हणून वापर करा"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:160
 msgid "_Labels"
@@ -750,7 +755,7 @@ msgstr "_रंग योजना"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
-msgstr "पांढरा वर काळा"
+msgstr "पांढऱ्या वर काळा"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Active colors"
@@ -762,7 +767,7 @@ msgstr "_अस्पष्ट सीमा..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Add a jagged, fuzzy border to an image"
-msgstr "एका प्रतिमेतील दातेरी, अस्पष्ट सीमा जोडा"
+msgstr "प्रतिमेला दातेरी, अस्पष्ट सीमा जोडा"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
 #: ../plug-ins/script-fu/scripts/old-photo.scm:98
@@ -775,7 +780,7 @@ msgstr "अस्पष्ट सीमा"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
-msgstr "दाणेदार(1 ही कमी आहे)"
+msgstr "दाणेदार (१ ही कमी आहे)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
 msgid "Add shadow"
@@ -802,19 +807,19 @@ msgstr "_मार्ग वापरत आहे"
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:138
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
-msgstr "वापरकर्ता हस्तलिखितमध्ये खुण करा"
+msgstr "वापरकर्ता हस्तलिखितामध्ये [युझर मॅन्यूअल] खुण ठेवा"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
-msgstr "वेबसाठी आपल्या प्रतिमा _तयार करा"
+msgstr "वेबसाठी प्रतिमा _तयार करत आहे"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
-msgstr "डिजिटल कॅमेरा छायाचित्रांसह _काम करत आहे"
+msgstr "डिजिटल कॅमेरा छायाचित्रांवर _काम करत आहे"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:98
 msgid "Create, Open and Save _Files"
-msgstr "तयार करा, उघडा आणि जतन करा _धारिका"
+msgstr "_धारिका तयार करा, उघडा आणि जतन करा"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:111
 msgid "_Basic Concepts"
@@ -826,11 +831,11 @@ msgstr "_सुचना फलक कसे वापरावे"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:137
 msgid "Drawing _Simple Objects"
-msgstr "_मूळ घटक रेखांकित करा "
+msgstr "_साध्या सोप्या घटकांचे चित्र काढत आहे"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "Create and Use _Selections"
-msgstr "_निवडी तयार करा आणि वापरा"
+msgstr "_निवड तयार करा आणि वापरा"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:178
 msgid "_Main Web Site"
@@ -841,11 +846,11 @@ msgstr "_मुख्य वेब साइट"
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:205
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:218
 msgid "Bookmark to the GIMP web site"
-msgstr "गिम्प वेबसाईटला खुण करा"
+msgstr "गिम्प वेबसाईटमध्ये खुण करा"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:191
 msgid "_Developer Web Site"
-msgstr "_विकसक वेब साइट"
+msgstr "_विकासक [डेव्हलपर] वेब साइट"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:204
 msgid "_User Manual Web Site"
@@ -857,11 +862,11 @@ msgstr "जोडणी _रजिस्ट्री"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
-msgstr "सानुकूल _रंगछटा..."
+msgstr "सानुकूल [कस्टम] _रंगछटा..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:70
 msgid "Create an image filled with an example of the current gradient"
-msgstr "चालू  रंगछटेचे एक उदाहरण भरलेली एक प्रतिमा तयार करा"
+msgstr "चालू रंगछटांनी भरलेली एक प्रतिमा तयार करा"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:75
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:70
@@ -891,7 +896,7 @@ msgstr "_जाळी..."
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
-msgstr "जाळीला X आणि Y च्या सूचनेद्वारे निर्दिष्ट केलेला कुंचला"
+msgstr "निर्दिष्ट केलेल्या कुंचल्याने X आणि Y स्थानांनुसार जाळी काढा"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
@@ -903,19 +908,19 @@ msgstr "Y विभाग"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
-msgstr "_निवडलेले नवीन प्रतिमा विभाजक"
+msgstr "_निवडीतून नवीन गाईड"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "सद्य निवडाच्या कमालिंग बॉक्सभोवती चार मार्गदर्शक तयार करा"
+msgstr "सद्य निवडीच्या बाऊंडिंग बॉक्सभोवती चार गाईड तयार करा"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "नवीन प्रतिमा विभाजक (टक्केवारी)..."
+msgstr "नवीन गाईड (_टक्केवारीनुसार)..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr "प्रतिमा आकाराची टक्केवारी म्हणून निर्दिष्ट केलेल्या स्थितीत विभाजक जोडा"
+msgstr "प्रतिमा आकाराची टक्केवारी म्हणून निर्दिष्ट केलेल्या स्थितीत गाईड जोडा"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -930,7 +935,7 @@ msgstr "आडवा"
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Vertical"
-msgstr "उभा"
+msgstr "उभट"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
 msgid "Position (in %)"
@@ -938,11 +943,11 @@ msgstr "स्थिती (% मध्ये)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
-msgstr "नवीन प्रतिमा विभाजक..."
+msgstr "नवीन _गाईड..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "निर्दिष्ट केलेली विभाजक आणि स्थितीवर (दृश्यबिंदूमध्ये) एक मार्गदर्शक जोडा"
+msgstr "निर्दिष्ट केलेल्या विभाजक आणि स्थितीवर (दृश्यबिंदूमध्ये) एक गाईड जोडा"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "Position"
@@ -950,11 +955,11 @@ msgstr "स्थान"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
-msgstr "सर्व विभाजक _काढा"
+msgstr "सर्व गाईड _काढून टाका"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
-msgstr "सर्व आडवे आणि उभे विभाजक काढा"
+msgstr "सर्व आडवे आणि उभे गाईड काढून टाका"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:117
 msgid "_Lava..."
@@ -962,11 +967,11 @@ msgstr "_लावा ..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm:118
 msgid "Fill the current selection with lava"
-msgstr "चालू  निवड लावासह भरा"
+msgstr "चालू निवड लावाने भरा"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:125
 msgid "Seed"
-msgstr "मूळ"
+msgstr "बीज"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:126
 msgid "Size"
@@ -974,7 +979,7 @@ msgstr "आकार"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:127
 msgid "Roughness"
-msgstr "कडकपणा"
+msgstr "खडबडीत"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
@@ -987,13 +992,13 @@ msgstr "चालू  रंगछटा वापरा"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:108
 msgid "Line _Nova..."
-msgstr "_नवीन ओळ..."
+msgstr "लाईन _नोव्हा..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:109
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
-msgstr "वापरून त्याच्या केंद्रातून बाहेरून निघणा-या किरणांसह एक स्तर भराअग्रभागाचा रंग"
+msgstr "अग्रभागाच्या रंगांने स्तर भरा"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:116
 msgid "Number of lines"
@@ -1005,11 +1010,11 @@ msgstr "तीक्ष्णता (अंश)"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:118
 msgid "Offset radius"
-msgstr "त्रिज्येचा संच"
+msgstr "त्रिज्येचा ऑफसेट"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:119
 msgid "Randomness"
-msgstr "स्वैरपणे"
+msgstr "स्वैरपणे [रँडमनेस]"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
@@ -1037,16 +1042,16 @@ msgstr "अंतर"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Re_ctangular, Feathered..."
-msgstr "आ_यताकृती, फिदर ..."
+msgstr "आ_यताकृती, फिदरड्..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
-msgstr "फिदर कडा असलेला आयताकृती कुंचला बनवा"
+msgstr "पिसा सारखी [फिदर] कडा असलेला आयताकृती कुंचला बनवा"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:142
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:267
 msgid "Feathering"
-msgstr "फिदर "
+msgstr "फिदरींग "
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
@@ -1058,11 +1063,11 @@ msgstr "एक लंबवर्तूळकार कुंचला तया
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
-msgstr "लंब_वर्तुळ,फिदर ..."
+msgstr "लंब_वर्तुळ, फिदरड्..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
-msgstr "फिदर कडा असलेला एक लंबवर्तुळाकार कुंचला तयार करा"
+msgstr "पिसा सारखी [फिदर] कडा असलेला एक लंबवर्तुळाकार कुंचला तयार करा"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
@@ -1070,11 +1075,11 @@ msgstr "_जुने छायाचित्र..."
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:90
 msgid "Make an image look like an old photo"
-msgstr "प्रतिमा एक जुने छायाचित्र दिसत आहे"
+msgstr "प्रतिमा जुन्या छायाचित्रासारखी करा"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:97
 msgid "Defocus"
-msgstr "अंधुक"
+msgstr "अंधुक [डिफकस]"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
@@ -1085,7 +1090,7 @@ msgstr "सेपिया"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Mottle"
-msgstr "रंगांचे ठिपके"
+msgstr "रंगांचे ठिपके [मॉटल]"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
@@ -1096,7 +1101,8 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"धारिकेचे नाव (जर या नावाची एखादी धारिका आधीच अस्तित्वात असेल तर तीपुनर्स्थित केले जाईल)"
+"तयार करावयाच्या धारिकेचे नाव (जर या नावाची एखादी धारिका आधीच अस्तित्वात असेल तर ती "
+"पुनर्स्थित [रिप्लेस] केले जाईल)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
@@ -1106,31 +1112,31 @@ msgstr "आपण प्रविष्ट केलेले धारिके
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
-msgstr ""
-"या नावातील सर्व वर्णामधील अंतर किंवा वर्ण आहेत जे ते करू शकतातधारिकेमध्ये दिसत नाही."
+msgstr "या नावातील सर्व वर्ण धारिकेत येऊ शकत नाही."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
-"एक रंगीत सीएसएस पृष्ठशैली म्हणून सक्रिय रंगफळी हे रंग प्रविष्टी नावाने निर्यात करात्यांचे वर्ग "
-"नाव,आणि रंगगुणधर्म "
+"एक रंगीत सीएसएस पृष्ठशैली म्हणून सक्रिय रंगफळी हे रंग प्रविष्टी नावाने निर्यात करा त्यांचे "
+"वर्ग नाव, आणि रंगगुणधर्म "
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr "पीएचपी शब्दकोश सक्रिय पटल निर्यात करा (नाव =>रंग)"
+msgstr "सक्रिय रंगफळी पीएचपी शब्दकोश म्हणून निर्यात करा (नाव => रंग)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr "पायथॉन शब्दकोश म्हणून सक्रिय रंगफळी निर्यात करा (नाव: रंग)"
+msgstr "सक्रिय रंगफळी पायथॉन शब्दकोश म्हणून निर्यात करा (नाव: रंग)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
-"एक रंगफळीमध्ये सर्व रंग मजकूर धारिकामध्ये लिहा,एक हेक्साडेसिमल मूल्यप्रतिरेषा (नाव नाही)"
+"रंगफळीमधील सर्व रंग हेक्साडेसिमल मूल्य स्वरूपात मजकूर धारिकेमध्ये लिहा, एका ओळीवर एक रंग "
+"मूल्य (नाव नाही)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
@@ -1139,7 +1145,7 @@ msgstr "सक्रिय रंगफळी java.util.Hashtable <String, Color
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
 msgid "There is no image data in the clipboard to paste."
-msgstr "फलकमध्ये कोणताही प्रतिमा माहिती नाही."
+msgstr "फलक [क्लिपबोर्ड] वर कोणतीही प्रतिमा माहिती नाही."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
 msgid "New _Brush..."
@@ -1147,7 +1153,7 @@ msgstr "नवीन  _कुंचला..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste the clipboard contents into a new brush"
-msgstr "फलक सामग्री नवीन कुंचलामध्ये ठेवा"
+msgstr "फलक सामग्री नवीन कुंचल्यामध्ये ठेवा"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
@@ -1167,7 +1173,7 @@ msgstr "नवीन _नमुना ..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste the clipboard contents into a new pattern"
-msgstr "फलकमधील सामग्री नवीन प्रतिमधे पेस्ट करा"
+msgstr "फलक [क्लिपबोर्ड] वरील सामग्री नवीन नमुना म्हणून पेस्ट करा"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
@@ -1176,11 +1182,11 @@ msgstr "नमुना नाव"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
-msgstr "_दृष्टिकोन..."
+msgstr "_दृष्टिकोन [पर्स्पेक्टिव्ह]..."
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr "निवडलेल्या भागामध्ये  (किंवा अल्फा) दृष्टिकोन सावली जोडा"
+msgstr "निवडलेल्या भागामध्ये (किंवा अल्फा) दृष्टिकोन सावली जोडा"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
 msgid "Angle"
@@ -1188,7 +1194,7 @@ msgstr "कोन"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Relative distance of horizon"
-msgstr "आडवे सापेक्ष अंतर"
+msgstr "आडवे क्षितिज सापेक्ष अंतर [ऑफ होरायझन]"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
 msgid "Relative length of shadow"
@@ -1196,19 +1202,19 @@ msgstr "सावलीची सापेक्ष लांबी"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
 msgid "Interpolation"
-msgstr "प्रक्षिप्त"
+msgstr "प्रक्षिप्त [इंटरपोलेशन]"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:121
 msgid "_Predator..."
-msgstr "_अवलंबित..."
+msgstr "_प्रिडेटर..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "निवडलेल्या प्रदेशासाठी (किंवा अल्फा) एक 'अवलंबित' प्रभाव जोडा"
+msgstr "निवडलेल्या प्रदेशासाठी (किंवा अल्फा) 'प्रिडेटर' प्रभाव जोडा"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
 msgid "Edge amount"
-msgstr "कडेची प्रमाण"
+msgstr "कडेचे प्रमाण [अमाऊंट]"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:130
 msgid "Pixelize"
@@ -1220,7 +1226,7 @@ msgstr "दृश्यबिंदू प्रमाण"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer Order"
-msgstr "उलट स्तराची आज्ञा द्या"
+msgstr "स्तर उलटा करा"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
@@ -1228,21 +1234,22 @@ msgstr "प्रतिमेतील स्तरांचा क्रम उ
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
 msgid "_Rippling..."
-msgstr "_तरंगणे..."
+msgstr "_तरंगणे [रिपलिंग]..."
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
-msgstr "सध्याच्या स्तरावरील लहरीपणा प्रभाव जोडून एकापेक्षा अधिक-स्तर प्रतिमा तयार करा"
+msgstr ""
+"सध्याच्या स्तरावर लहरीपणा [रिपल] प्रभाव जोडून एकापेक्षा अधिक-स्तर प्रतिमा तयार करा"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
-msgstr "लहरी सामर्थ्य"
+msgstr "लहरी [रिपलिंग] सामर्थ्य"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:105
 msgid "Number of frames"
-msgstr "चौकटीची  संख्या"
+msgstr "चौकटींची  संख्या"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Edge behavior"
@@ -1267,7 +1274,7 @@ msgstr "_गोल कोपरे..."
 #: ../plug-ins/script-fu/scripts/round-corners.scm:130
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr "प्रतिमा कोप-यात गोल करा आणि वैकल्पिकपणे एक सावली सोडा आणि पृष्ठभाग जोडा"
+msgstr "प्रतिमेचे कोपरे गोल करा आणि वैकल्पिकपणे एक सावली सोडा आणि पृष्ठभाग जोडा"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:137
 msgid "Edge radius"
@@ -1275,15 +1282,15 @@ msgstr "कडेची त्रिज्या"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:138
 msgid "Add drop-shadow"
-msgstr "जोडलेली सावली सोडा"
+msgstr "सावली जोडा किंवा काढा"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Shadow X offset"
-msgstr "सावली  X चा संच"
+msgstr "सावली  X ऑफसेट"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Shadow Y offset"
-msgstr "सावली  Y चा संच"
+msgstr "सावली  Y ऑफसेट"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Add background"
@@ -1291,11 +1298,11 @@ msgstr "पृष्ठभाग जोडा"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "रंगमंच _ठेवा..."
+msgstr "रंगमंच ठ_रवा..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
-msgstr "एका विशिष्ट रंगफळीमध्ये प्रतिमेचा रंगीत रंग बदला."
+msgstr "प्रतिमेचा रंग आलेख एका विशिष्ट रंगफळीमधील रंगांनी बदला."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
 msgid "Palette"
@@ -1303,7 +1310,7 @@ msgstr "रंगफळी"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:139
 msgid "Rounded R_ectangle..."
-msgstr "आयताकृती गोल..."
+msgstr "गोल कोपऱ्यांचा आ_यत..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
@@ -1315,19 +1322,19 @@ msgstr "त्रिज्या (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
 msgid "Concave"
-msgstr "अंतर्गोल"
+msgstr "अंतर्गोल [कॉन्क्वेह]"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
-msgstr "_कुंचला करण्यासाठी..."
+msgstr "_कुंचल्याला..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
 msgid "Convert a selection to a brush"
-msgstr "निवड कुंचलामध्ये रूपांतरित करा"
+msgstr "निवड कुंचल्यामध्ये रूपांतरित करा"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:81
 msgid "To _Image"
-msgstr "_प्रतिमा"
+msgstr "_प्रतिमेला"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:82
 msgid "Convert a selection to an image"
@@ -1335,15 +1342,15 @@ msgstr "निवड प्रतिमेत रुपांतरित कर
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
 msgid "To _Pattern..."
-msgstr "_नमुना..."
+msgstr "_नमुन्याला..."
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
 msgid "Convert a selection to a pattern"
-msgstr "निवडीमध्ये नमुन्यावर रूपांतरित करा"
+msgstr "निवडीचे नमुन्यात रूपांतर करा"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
-msgstr "सरकपट्टी..."
+msgstr "_सरकपट्टी..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
@@ -1371,11 +1378,11 @@ msgstr "_गोलाकार फिरणे..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr "सध्याची प्रतिमा  एका गोला वर नकाशा करून चलाभास तयार करा"
+msgstr "सध्याची प्रतिमा एका फिरणाऱ्या गोलावर घेऊन चलाभास तयार करा"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
 msgid "Frames"
-msgstr "चौकट"
+msgstr "चौकट [फ्रेम्स]"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
 msgid "Turn from left to right"
@@ -1400,7 +1407,7 @@ msgstr "_स्पायरोगिम्प..."
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr "सध्याच्या स्तरवर स्पायरोगिम्प,एपिट्रोचुईड्स आणि लिसजेस वक्र जोडा"
+msgstr "सध्याच्या स्तरावर स्पायरोगिम्प, Epitrochoids आणि Lissajous वक्र [कर्व्हज] जोडा"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
@@ -1408,11 +1415,11 @@ msgstr "प्रकार"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
-msgstr "स्पिरोग्राफ"
+msgstr "स्पायरोग्राफ"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
 msgid "Epitrochoid"
-msgstr "एपिट्रोचॉइड"
+msgstr "Epitrochoid"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
 msgid "Lissajous"
@@ -1460,11 +1467,11 @@ msgstr "बहुभुज: १० बाजू"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
 msgid "Outer teeth"
-msgstr "बाह्य दातेरी"
+msgstr "बाह्य दाते"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
 msgid "Inner teeth"
-msgstr "आतील दातेरी"
+msgstr "आतील दाते"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
 msgid "Margin (pixels)"
@@ -1472,11 +1479,11 @@ msgstr "समास (दृश्यबिंदू)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
 msgid "Hole ratio"
-msgstr "पूर्ण प्रमाण"
+msgstr "छिद्र [होल] प्रमाण"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
 msgid "Start angle"
-msgstr "कोन प्रारंभ करा"
+msgstr "सुरवातीचा कोन"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
 msgid "Tool"
@@ -1493,7 +1500,7 @@ msgstr "कुंचला"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
 msgid "Airbrush"
-msgstr "फवारा"
+msgstr "फवारा कुंचला"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Color method"
@@ -1505,7 +1512,7 @@ msgstr "गडद रंग"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
 msgid "Gradient: Loop Sawtooth"
-msgstr "रंगछटा: फिरते सावोथ"
+msgstr "रंगछटा: फिरते करवत पात्याप्रमाणे दातेरी [सॉटूथ]"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
 msgid "Gradient: Loop Triangle"
@@ -1521,7 +1528,7 @@ msgstr "_पूर्णपणे अस्पष्ट..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr "प्रतिमाच्या कड अस्पष्ट करा जेणेकरून परिणाम अखंडपणे पूर्ण होतील"
+msgstr "प्रतिमेच्या कडा अस्पष्ट करा जेणेकरून परिणाम अखंडपणे पूर्ण होतील"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:76
 msgid "Radius"
@@ -1537,7 +1544,7 @@ msgstr "आडवा अस्पष्ट"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "Blur type"
-msgstr "अस्पष्ट  प्रकार"
+msgstr "अस्पष्ट प्रकार"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
@@ -1563,11 +1570,12 @@ msgstr "_तरंग..."
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr "एका पट्टीमध्ये ओढले गेल्यासारखे अनेक स्तर प्रतिमा तयार करा सध्याची प्रतिमा"
+msgstr ""
+"सध्याच्या प्रतिमेला दगड मारल्यासारखा परिणाम दर्शवणारी अनेक स्तर प्रतिमा तयार करा"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
-msgstr "विपुलता"
+msgstr "उंची [अॅम्प्लीट्युड]"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
@@ -1586,8 +1594,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"एक आच्छादक म्हणून वापरण्यासाठी विणण्याच्या प्रभावाने भरलेली नवीन स्तर तयार करा "
-"किंवाबम्पमॅप"
+"एक आच्छादक किंवा बम्प मॅप म्हणून वापरण्यासाठी विणण्याच्या प्रभावाने युक्त असा नवीन स्तर "
+"तयार करा "
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
@@ -1627,23 +1635,23 @@ msgstr "_Xach-परिणाम..."
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:122
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "निवडलेल्या क्षेत्रासह सूक्ष्म अर्धपारदर्शक 3D प्रभाव जोडा (किंवा अल्फा)"
+msgstr "निवडलेल्या क्षेत्रास सूक्ष्म अर्धपारदर्शक 3D प्रभाव जोडा (किंवा अल्फा)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
-msgstr "X चा संच प्रकाशमय करा"
+msgstr "X ऑफसेट प्रकाशमय करा"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight Y offset"
-msgstr "Y चा संच प्रकाशमय करा"
+msgstr "Y ऑफसेट प्रकाशमय करा"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight color"
-msgstr "रंग प्रकाशमय करा"
+msgstr "रंग ठळक करा"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
-msgstr "अस्पष्टता प्रकाशमय करा"
+msgstr "अस्पष्टता ठळक करा"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
@@ -1651,16 +1659,16 @@ msgstr "सावली रंग सोडा"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow opacity"
-msgstr "सावली अपारदर्शकता सोडा"
+msgstr "सावलीची अपारदर्शकता काढून टाका"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
-msgstr "सावली अस्पष्ट त्रिज्या सोडा"
+msgstr "सावलीची अस्पष्ट त्रिज्या काढून टाका"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow X offset"
-msgstr "सावली Xचा संच सोडा"
+msgstr "सावलीचा X ऑफसेट सोडा"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
-msgstr "सावली Y चा संच सोडा"
+msgstr "सावलीचा Y ऑफसेट सोडा"
