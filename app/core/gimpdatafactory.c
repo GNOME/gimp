@@ -747,17 +747,12 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
 
   list = GIMP_LIST (factory->priv->container)->queue->head;
 
-  if (skip_internal)
-    {
-      while (list && gimp_data_is_internal (GIMP_DATA (list->data)))
-        list = g_list_next (list);
-    }
-
   while (list)
     {
       GList *next = g_list_next (list);
 
-      callback (factory, list->data, user_data);
+      if (! (skip_internal && gimp_data_is_internal (list->data)))
+        callback (factory, list->data, user_data);
 
       list = next;
     }
