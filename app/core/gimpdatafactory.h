@@ -62,6 +62,8 @@ struct _GimpDataFactoryClass
                                      GimpContext     *context);
   void           (* data_save)      (GimpDataFactory *factory);
 
+  void           (* data_cancel)    (GimpDataFactory *factory);
+
   GimpData     * (* data_duplicate) (GimpDataFactory  *factory,
                                      GimpData         *data);
   gboolean       (* data_delete)    (GimpDataFactory  *factory,
@@ -84,6 +86,7 @@ void            gimp_data_factory_data_free         (GimpDataFactory  *factory);
 
 GimpAsyncSet  * gimp_data_factory_get_async_set     (GimpDataFactory  *factory);
 gboolean        gimp_data_factory_data_wait         (GimpDataFactory  *factory);
+void            gimp_data_factory_data_cancel       (GimpDataFactory  *factory);
 
 gboolean        gimp_data_factory_has_data_new_func (GimpDataFactory  *factory);
 GimpData      * gimp_data_factory_data_new          (GimpDataFactory  *factory,
