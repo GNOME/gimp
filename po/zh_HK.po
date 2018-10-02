@@ -11801,7 +11801,7 @@ msgid ""
 "%s"
 msgstr ""
 "程序「%s」的呼叫錯誤：\n"
-"\r%s"
+"%s"
 
 #: ../app/plug-in/gimpplugin-message.c:494
 #, c-format
@@ -11819,7 +11819,7 @@ msgid ""
 "%s"
 msgstr ""
 "「%s」的呼叫錯誤：\n"
-"\r%s"
+"%s"
 
 #: ../app/plug-in/gimppluginprocedure.c:999
 #, c-format
@@ -11828,7 +11828,7 @@ msgid ""
 "%s"
 msgstr ""
 "「%s」的執行錯誤：\n"
-"\r%s"
+"%s"
 
 #: ../app/plug-in/gimpplugin-progress.c:331
 msgid "Cancelled"
