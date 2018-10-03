@@ -61,9 +61,11 @@ static const gchar *env_libs;
 #ifdef G_OS_WIN32
 #define COPY win32_command ("copy")
 #define REMOVE win32_command ("del")
+#define REMOVE_DIR win32_command ("rd /s /q")
 #else
 #define COPY "cp"
 #define REMOVE "rm -f"
+#define REMOVE_DIR "rm -Rf"
 #endif
 
 static struct {
@@ -563,13 +565,22 @@ do_build_2 (const gchar *cflags,
   else
     q++;
 
-  tmp      = dest_exe;
-  dest_exe = g_strconcat (dest_dir, q, EXEEXT, NULL);
-  g_free (dest_dir);
-  g_free (tmp);
+  if (install_dir)
+  {
+    tmp = dest_dir;
+    dest_dir = g_strconcat (dest_dir, q, G_DIR_SEPARATOR_S, NULL);
+    g_free (tmp);
 
-  tmp      = dest_exe;
-  dest_exe = g_shell_quote (dest_exe);
+    g_mkdir_with_parents (dest_dir,
+                          S_IRUSR | S_IXUSR | S_IWUSR |
+                          S_IRGRP | S_IXGRP |
+                          S_IROTH | S_IXOTH);
+  }
+
+  tmp = g_strconcat (dest_dir, q, NULL);
+  g_free (dest_dir);
+
+  dest_exe = g_shell_quote (tmp);
   g_free (tmp);
 
   if (msvc_syntax)
@@ -642,6 +653,44 @@ get_user_plugin_dir (void)
   return g_build_filename (gimp_directory (),
                            "plug-ins",
                            NULL);
+}
+
+static gchar *
+get_plugin_dir (const gchar *base_dir, const gchar *what)
+{
+  gchar *separator, *dot, *plugin_name, *plugin_dir;
+  gchar *tmp = g_strdup (what);
+
+  separator = strrchr (tmp, G_DIR_SEPARATOR);
+#ifdef G_OS_WIN32
+  {
+    gchar *alt_separator = strrchr (tmp, '/');
+    if (alt_separator != NULL &&
+        (separator == NULL || alt_separator > separator))
+    {
+      separator = alt_separator;
+    }
+  }
+#endif
+
+  dot = strrchr (tmp, '.');
+
+  if (separator)
+    plugin_name = separator + 1;
+  else
+    plugin_name = tmp;
+
+  if (dot)
+    *dot = '\0';
+
+  plugin_dir = g_strconcat (base_dir,
+                           G_DIR_SEPARATOR_S,
+                           plugin_name,
+                           NULL);
+
+  g_free (tmp);
+
+  return plugin_dir;
 }
 
 static void
@@ -757,16 +806,18 @@ do_install_bin_2 (const gchar *dir,
   gchar *quoted_src;
   gchar *quoted_dir;
 
-  g_mkdir_with_parents (dir,
+  gchar *dest_dir = g_strconcat (dir, G_DIR_SEPARATOR_S, NULL);
+  g_mkdir_with_parents (dest_dir,
                         S_IRUSR | S_IXUSR | S_IWUSR |
                         S_IRGRP | S_IXGRP |
                         S_IROTH | S_IXOTH);
 
   quoted_src = g_shell_quote (what);
-  quoted_dir = g_shell_quote (dir);
+  quoted_dir = g_shell_quote (dest_dir);
   cmd = g_strconcat (COPY, " ", quoted_src, " ", quoted_dir, NULL);
   maybe_run (cmd);
 
+  g_free (dest_dir);
   g_free (cmd);
   g_free (quoted_src);
   g_free (quoted_dir);
@@ -776,8 +827,11 @@ static void
 do_install_bin (const gchar *what)
 {
   gchar *dir = get_user_plugin_dir ();
+  gchar *plugin_dir = get_plugin_dir (dir, what);
 
-  do_install_bin_2 (dir, what);
+  do_install_bin_2 (plugin_dir, what);
+
+  g_free (plugin_dir);
   g_free (dir);
 }
 
@@ -785,14 +839,31 @@ static void
 do_install_admin_bin (const gchar *what)
 {
   gchar *dir = get_sys_plugin_dir (FALSE);
+  gchar *plugin_dir = get_plugin_dir (dir, what);
 
   do_install_bin_2 (dir, what);
+
+  g_free (plugin_dir);
   g_free (dir);
 }
 
 static void
-do_uninstall (const gchar *dir,
-              const gchar *what)
+do_uninstall (const gchar *dir)
+{
+  gchar *cmd;
+  gchar *quoted_src;
+  quoted_src = g_shell_quote (dir);
+
+  cmd = g_strconcat (REMOVE_DIR, " ", quoted_src, NULL);
+  maybe_run (cmd);
+
+  g_free (cmd);
+  g_free (quoted_src);
+}
+
+static void
+do_uninstall_script_2 (const gchar *dir,
+                       const gchar *what)
 {
   gchar *cmd;
   gchar *quoted_src;
@@ -800,13 +871,13 @@ do_uninstall (const gchar *dir,
 
   src = g_strconcat (dir, G_DIR_SEPARATOR_S, what, NULL);
   quoted_src = g_shell_quote (src);
-  g_free (src);
 
   cmd = g_strconcat (REMOVE, " ", quoted_src, NULL);
   maybe_run (cmd);
 
   g_free (cmd);
   g_free (quoted_src);
+  g_free (src);
 }
 
 static gchar *
@@ -825,11 +896,13 @@ maybe_append_exe (const gchar *what)
 static void
 do_uninstall_bin (const gchar *what)
 {
-  gchar *dir = get_user_plugin_dir ();
-  gchar *exe = maybe_append_exe (what);
+  gchar *dir        = get_user_plugin_dir ();
+  gchar *exe        = maybe_append_exe (what);
+  gchar *plugin_dir = get_plugin_dir (dir, what);
 
-  do_uninstall (dir, exe);
+  do_uninstall (plugin_dir);
 
+  g_free (plugin_dir);
   g_free (dir);
   g_free (exe);
 }
@@ -837,11 +910,13 @@ do_uninstall_bin (const gchar *what)
 static void
 do_uninstall_admin_bin (const gchar *what)
 {
-  gchar *dir = get_sys_plugin_dir (FALSE);
-  gchar *exe = maybe_append_exe (what);
+  gchar *dir        = get_sys_plugin_dir (FALSE);
+  gchar *exe        = maybe_append_exe (what);
+  gchar *plugin_dir = get_plugin_dir (dir, what);
 
-  do_uninstall (dir, exe);
+  do_uninstall (plugin_dir);
 
+  g_free (plugin_dir);
   g_free (dir);
   g_free (exe);
 }
@@ -891,7 +966,7 @@ do_uninstall_script (const gchar *what)
 {
   gchar *dir = get_user_script_dir ();
 
-  do_uninstall (dir, what);
+  do_uninstall_script_2 (dir, what);
   g_free (dir);
 }
 
@@ -900,7 +975,7 @@ do_uninstall_admin_script (const gchar *what)
 {
   gchar *dir = get_sys_script_dir ();
 
-  do_uninstall (dir, what);
+  do_uninstall_script_2 (dir, what);
   g_free (dir);
 }
 
@@ -941,17 +1016,13 @@ main (int    argc,
         }
       else if (strcmp (argv[argi], "--msvc-syntax") == 0)
         {
+#ifdef G_OS_WIN32
           msvc_syntax = TRUE;
+#else
+          g_printerr ("Ignoring --msvc-syntax\n");
+#endif
         }
     }
-
-#ifndef G_OS_WIN32
-  if (msvc_syntax)
-    {
-      g_printerr ("Ignoring --msvc-syntax\n");
-      msvc_syntax = FALSE;
-    }
-#endif
 
   find_out_env_flags ();
 
@@ -963,13 +1034,15 @@ main (int    argc,
         {
           gchar *test = g_strconcat ("--", dirs[i].option, NULL);
 
-          if (strcmp (argv[argi],
-                      g_strconcat ("--", dirs[i].option, NULL)) == 0)
+          if (strcmp (argv[argi], test) == 0)
             {
               g_free (test);
               break;
             }
-          g_free (test);
+          else
+            {
+              g_free (test);
+            }
         }
 
       if (i < G_N_ELEMENTS (dirs))
