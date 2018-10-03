@@ -482,7 +482,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       GtkWidget *dock              = NULL;
       GtkWidget *dock_window       = NULL;
 
-      /* What follows is special-case code for some entires. At some
+      /* What follows is special-case code for some entries. At some
        * point we might want to abstract this block of code away.
        */
       if (create_containers)

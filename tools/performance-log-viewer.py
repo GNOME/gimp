@@ -1046,7 +1046,7 @@ class SampleGraph (Gtk.DrawingArea):
 
         return False
 
-    def do_leave_notify_event (self, evnet):
+    def do_leave_notify_event (self, event):
         selection.set_highlight (None)
 
         return False

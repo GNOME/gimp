@@ -228,7 +228,7 @@ PDB:
 
  - added new text layer API
  - added gimp-vectors-export-to-file and gimp-vectors-export-to-string
- - added procedure to test for existance of a procedure in the PDB
+ - added procedure to test for existence of a procedure in the PDB
  - improved error handling for procedures
 
 
