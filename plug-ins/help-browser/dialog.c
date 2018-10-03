@@ -1250,7 +1250,7 @@ search (const gchar *text)
       const char *prev_text =
         webkit_find_controller_get_search_text (find_controller);
 
-      /* The previous search, if any, may ned to be canceled. */
+      /* The previous search, if any, may need to be canceled. */
       if (prev_text && strcmp (text, prev_text) != 0)
         webkit_find_controller_search_finish (find_controller);
 

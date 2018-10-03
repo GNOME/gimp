@@ -145,7 +145,7 @@ Bugs fixed in GIMP 2.0pre3
 - 132162: Anchoring a floating selection on a channel (Mitch)
 - 132271: Mosaic filter on selections (Simon)
 - 132322: gimp-levels on grayscale images (Mitch)
-- 132329: Info window doesn't show inital values (Shlomi Fish)
+- 132329: Info window doesn't show initial values (Shlomi Fish)
 - 118084: Info window not updated in automatic mode (Shlomi Fish)
 - 132495: Positioning of glyphs that extend the logical rectangle (Sven)
 - 108659: Use g_spawn in postscript plug-in (Peter Kirchgessner)
@@ -473,7 +473,7 @@ Overview of Changes in GIMP 1.3.15
 - Load old paths as new vector objects [Mitch]
 - Apply transformations to linked items [Mitch]
 - Generalized item transformations [Mitch]
-- Improved session managment [Mitch]
+- Improved session management [Mitch]
 - Speed up fonts query [Yosh]
 - Backed out pluggable tools [Sven]
 - Lots of bug fixes
@@ -563,7 +563,7 @@ Overview of Changes in GIMP 1.3.11
 - Added PDB functions needed by GAP [Wolfgang Hofer, Sven]
 - Updated the Win32 build system [Tor Lillqvist, Hans Breuer]
 - Factored common code out of a number of plug-ins [Maurits]
-- Use g_rand* functions whereever random numbers are needed [Bolsh] 
+- Use g_rand* functions wherever random numbers are needed [Bolsh] 
 - GimpPressionist plug-in cleaned up [Maurits]
 - Finally landed the new gimprc code based on GimpConfig [Sven, Mitch]
 - Added widgets for views on object properties [Mitch]
@@ -795,7 +795,7 @@ Overview of Changes in GIMP 1.3.0
   to learn what libraries we require in detail.
 - Cleaned up the core a lot. The app directory is now broken up into
   subdirectories that define subsystems with defined dependencies.
-- Seperated GUI from core functionality in almost all places.
+- Separated GUI from core functionality in almost all places.
 - The core object system does not depend on GTK+ any more.
 - Rewrote large parts of the user interface in a more generic way.
 - Started to rewrite the text tool (completely broken at the moment)
