@@ -112,7 +112,7 @@ Overview of Changes in GIMP 2.2-pre1
 - Let lots of core dialogs remember their last values and add
   shortcuts to run with the last values w/o opening the dialog.
 
-- Added new PDB API for drawable tranformations.
+- Added new PDB API for drawable transformations.
 
 - Register all libgimp enums to allow language bindings such as
   Script-Fu to access them using GType introspection.

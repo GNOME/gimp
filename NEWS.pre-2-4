@@ -192,7 +192,7 @@ Changes in GIMP 2.3.12
 - show a thumbnail in the "Rotate JPEG?" query dialog
 - added file information to the Image Properties dialog
 - more work on the new selection tools
-- give immidiate feedback when tool modifier keys are pressed
+- give immediate feedback when tool modifier keys are pressed
 - added Lens Distortion plug-in
 - internationalize Python binding and Python plug-ins
 - improved internal message infrastructure, use the statusbar for warnings

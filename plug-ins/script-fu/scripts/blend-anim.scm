@@ -100,7 +100,7 @@
 			(set! offset-y (- (cadr (gimp-drawable-offsets bg-layer))
 					  min-offset-y)))
 
-		  ; create intermediate frames by merging copies of adjascent layers
+		  ; create intermediate frames by merging copies of adjacent layers
 		  ; with the background layer
 		  (let* ((layer-count slots))
 			(while (> layer-count 0)
