@@ -502,7 +502,7 @@ Core:
     more than 16 bits; don't offer dithering options in these cases.
   - Default to linear TRC when converting to 16-bit float.
   - Pre-initialize some babl-based pixel format conversion routines
-    at start-up to decrease the initial lazy intialization cost for
+    at start-up to decrease the initial lazy initialization cost for
     some interactions.
   - Remove max size limitation of 4GB for XCF files.
   - Support clipboard images in the clipboard brush and pattern.
