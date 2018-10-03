@@ -708,6 +708,7 @@ gimp_gradient_segment_type_get_type (void)
     { GIMP_GRADIENT_SEGMENT_SINE, "GIMP_GRADIENT_SEGMENT_SINE", "sine" },
     { GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING, "GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING", "sphere-increasing" },
     { GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING, "GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING", "sphere-decreasing" },
+    { GIMP_GRADIENT_SEGMENT_STEP, "GIMP_GRADIENT_SEGMENT_STEP", "step" },
     { 0, NULL, NULL }
   };
 
@@ -724,6 +725,7 @@ gimp_gradient_segment_type_get_type (void)
     /* Translators: this is an abbreviated version of "Spherical (decreasing)".
        Keep it short. */
     { GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING, NC_("gradient-segment-type", "Spherical (dec)"), NULL },
+    { GIMP_GRADIENT_SEGMENT_STEP, NC_("gradient-segment-type", "Step"), NULL },
     { 0, NULL, NULL }
   };
 
