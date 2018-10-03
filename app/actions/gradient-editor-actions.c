@@ -339,6 +339,11 @@ static const GimpRadioActionEntry gradient_editor_blending_actions[] =
     GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
+  { "gradient-editor-blending-step", NULL,
+    NC_("gradient-editor-blending", "S_tep"), NULL, NULL,
+    GIMP_GRADIENT_SEGMENT_STEP,
+    GIMP_HELP_GRADIENT_EDITOR_BLENDING },
+
   { "gradient-editor-blending-varies", NULL,
     NC_("gradient-editor-blending", "(Varies)"), NULL, NULL,
     -1,
@@ -826,6 +831,7 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("gradient-editor-blending-sine",              editable);
   SET_SENSITIVE ("gradient-editor-blending-sphere-increasing", editable);
   SET_SENSITIVE ("gradient-editor-blending-sphere-decreasing", editable);
+  SET_SENSITIVE ("gradient-editor-blending-step",              editable);
 
   if (blending_equal && gradient)
     {
@@ -845,6 +851,9 @@ gradient_editor_actions_update (GimpActionGroup *group,
           break;
         case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
           SET_ACTIVE ("gradient-editor-blending-sphere-decreasing", TRUE);
+          break;
+        case GIMP_GRADIENT_SEGMENT_STEP:
+          SET_ACTIVE ("gradient-editor-blending-step", TRUE);
           break;
         }
     }

@@ -616,7 +616,8 @@ typedef enum
   GIMP_GRADIENT_SEGMENT_CURVED,             /*< desc="Curved"                                           >*/
   GIMP_GRADIENT_SEGMENT_SINE,               /*< desc="Sinusoidal"                                       >*/
   GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,  /*< desc="Spherical (increasing)", abbrev="Spherical (inc)" >*/
-  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING   /*< desc="Spherical (decreasing)", abbrev="Spherical (dec)" >*/
+  GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING,  /*< desc="Spherical (decreasing)", abbrev="Spherical (dec)" >*/
+  GIMP_GRADIENT_SEGMENT_STEP                /*< desc="Step"                                             >*/
 } GimpGradientSegmentType;
 
 

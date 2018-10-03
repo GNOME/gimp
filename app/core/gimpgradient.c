@@ -90,6 +90,8 @@ static inline gdouble  gimp_gradient_calc_sphere_increasing_factor (gdouble  mid
                                                                     gdouble  pos);
 static inline gdouble  gimp_gradient_calc_sphere_decreasing_factor (gdouble  middle,
                                                                     gdouble  pos);
+static inline gdouble  gimp_gradient_calc_step_factor              (gdouble  middle,
+                                                                    gdouble  pos);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpGradient, gimp_gradient, GIMP_TYPE_DATA,
@@ -501,6 +503,10 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
     case GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING:
       factor = gimp_gradient_calc_sphere_decreasing_factor (middle, pos);
+      break;
+
+    case GIMP_GRADIENT_SEGMENT_STEP:
+      factor = gimp_gradient_calc_step_factor (middle, pos);
       break;
 
     default:
@@ -2272,4 +2278,11 @@ gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
 
   /* Works for convex decreasing and concave increasing */
   return 1.0 - sqrt(1.0 - pos * pos);
+}
+
+static inline gdouble
+gimp_gradient_calc_step_factor (gdouble middle,
+                                gdouble pos)
+{
+  return pos >= middle;
 }
