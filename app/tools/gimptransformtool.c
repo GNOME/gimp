@@ -458,6 +458,9 @@ gimp_transform_tool_get_active_item (GimpTransformTool  *tr_tool,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
+  if (tr_tool->item)
+    return tr_tool->item;
+
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
@@ -510,7 +513,7 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
             locked_message = _("The active layer's position and size are locked.");
 
           if (! gimp_item_is_visible (item) &&
-              GIMP_DRAWABLE (item) != tr_tool->drawable) /* see bug #759194 */
+              item != tr_tool->item) /* see bug #759194 */
             {
               g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                    _("The active layer is not visible."));

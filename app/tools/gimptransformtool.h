@@ -47,7 +47,7 @@ struct _GimpTransformTool
 {
   GimpDrawTool  parent_instance;
 
-  GimpDrawable *drawable;
+  GimpItem     *item;
 
   gint          x1, y1;             /*  upper left hand coordinate         */
   gint          x2, y2;             /*  lower right hand coords            */
