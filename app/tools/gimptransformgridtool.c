@@ -252,10 +252,10 @@ gimp_transform_grid_tool_initialize (GimpTool     *tool,
   if (! item)
     return FALSE;
 
-  tool->display     = display;
-  tool->drawable    = drawable;
+  tool->display  = display;
+  tool->drawable = drawable;
 
-  tr_tool->drawable = drawable;
+  tr_tool->item  = item;
 
   /*  Initialize the transform_grid tool dialog  */
   if (! tg_tool->gui)
@@ -873,10 +873,10 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 
   gimp_transform_grid_tool_show_active_item (tg_tool);
 
-  tool->display     = NULL;
-  tool->drawable    = NULL;
+  tool->display  = NULL;
+  tool->drawable = NULL;
 
-  tr_tool->drawable = NULL;
+  tr_tool->item  = NULL;
 }
 
 static void
