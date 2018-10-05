@@ -1415,6 +1415,7 @@ style "sogg-radio-button" = "sogg-default-style"
 
 class "GtkRadioButton"   style "sogg-radio-button"
 class "GtkRadioMenuItem"  style "sogg-radio-button"
+class "GtkTreeView"  style "sogg-radio-button"
 
 ###########################################################
 
@@ -1456,6 +1457,7 @@ style "sogg-check-button" = "sogg-default-style"
 
 class "GtkCheckButton"   style "sogg-check-button"
 class "GtkCheckMenuItem"   style "sogg-check-button"
+class "GtkTreeView"   style "sogg-check-button"
 
 ###########################################################
 

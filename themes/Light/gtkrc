@@ -1413,6 +1413,7 @@ style "tlsog-radio-button" = "tlsog-default-style"
 
 class "GtkRadioButton"   style "tlsog-radio-button"
 class "GtkRadioMenuItem"  style "tlsog-radio-button"
+class "GtkTreeView"  style "tlsog-radio-button"
 
 ###########################################################
 
@@ -1454,6 +1455,7 @@ style "tlsog-check-button" = "tlsog-default-style"
 
 class "GtkCheckButton"   style "tlsog-check-button"
 class "GtkCheckMenuItem"   style "tlsog-check-button"
+class "GtkTreeView"   style "tlsog-check-button"
 
 ###########################################################
 

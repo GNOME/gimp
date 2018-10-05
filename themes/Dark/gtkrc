@@ -1340,6 +1340,7 @@ style "gimp-dark-radio-button" = "gimp-dark-default-style"
 
 class "GtkRadioButton"   style "gimp-dark-radio-button"
 class "GtkRadioMenuItem"  style "gimp-dark-radio-button"
+class "GtkTreeView"  style "gimp-dark-radio-button"
 
 ###########################################################
 
@@ -1381,6 +1382,7 @@ style "gimp-dark-check-button" = "gimp-dark-default-style"
 
 class "GtkCheckButton"   style "gimp-dark-check-button"
 class "GtkCheckMenuItem"   style "gimp-dark-check-button"
+class "GtkTreeView"   style "gimp-dark-check-button"
 
 ###########################################################
 
