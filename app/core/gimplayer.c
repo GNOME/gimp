@@ -992,8 +992,7 @@ gimp_layer_convert (GimpItem  *item,
   old_precision = gimp_drawable_get_precision (drawable);
   new_precision = gimp_image_get_precision (dest_image);
 
-  if (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
-      gimp_image_get_is_color_managed (dest_image))
+  if (g_type_is_a (old_type, GIMP_TYPE_LAYER))
     {
       src_profile =
         gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (item));

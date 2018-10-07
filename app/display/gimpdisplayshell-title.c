@@ -457,21 +457,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'o': /* image's color profile name */
-              if (gimp_image_get_is_color_managed (image))
-                {
-                  GimpColorManaged *managed = GIMP_COLOR_MANAGED (image);
-                  GimpColorProfile *profile;
+              {
+                GimpColorManaged *managed = GIMP_COLOR_MANAGED (image);
+                GimpColorProfile *profile;
 
-                  profile = gimp_color_managed_get_color_profile (managed);
+                profile = gimp_color_managed_get_color_profile (managed);
 
-                  i += print (title, title_len, i, "%s",
-                              gimp_color_profile_get_label (profile));
-                }
-              else
-                {
-                  i += print (title, title_len, i, "%s",
-                              _("not color managed"));
-                }
+                i += print (title, title_len, i, "%s",
+                            gimp_color_profile_get_label (profile));
+              }
               break;
 
             case 'e': /* display's offsets in pixels */

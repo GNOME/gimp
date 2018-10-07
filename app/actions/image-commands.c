@@ -421,18 +421,18 @@ image_convert_trc_cmd_callback (GtkAction *action,
 }
 
 void
-image_color_management_enabled_cmd_callback (GtkAction *action,
-                                             gpointer   data)
+image_color_profile_use_srgb_cmd_callback (GtkAction *action,
+                                           gpointer   data)
 {
   GimpImage *image;
-  gboolean   enabled;
+  gboolean   use_srgb;
   return_if_no_image (image, data);
 
-  enabled = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  use_srgb = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  if (enabled != gimp_image_get_is_color_managed (image))
+  if (use_srgb != gimp_image_get_use_srgb_profile (image, NULL))
     {
-      gimp_image_set_is_color_managed (image, enabled, TRUE);
+      gimp_image_set_use_srgb_profile (image, use_srgb);
       gimp_image_flush (image);
     }
 }

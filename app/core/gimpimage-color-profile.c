@@ -77,34 +77,104 @@ static void   gimp_image_create_color_transforms  (GimpImage                *ima
 /*  public functions  */
 
 gboolean
-gimp_image_get_is_color_managed (GimpImage *image)
+gimp_image_get_use_srgb_profile (GimpImage *image,
+                                 gboolean  *hidden_profile)
 {
+  GimpImagePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->is_color_managed;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (hidden_profile)
+    *hidden_profile = (private->hidden_profile != NULL);
+
+  return private->color_profile == NULL;
 }
 
 void
-gimp_image_set_is_color_managed (GimpImage *image,
-                                 gboolean   is_color_managed,
-                                 gboolean   push_undo)
+gimp_image_set_use_srgb_profile (GimpImage *image,
+                                 gboolean   use_srgb)
 {
   GimpImagePrivate *private;
+  gboolean          old_use_srgb;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  is_color_managed = is_color_managed ? TRUE : FALSE;
+  old_use_srgb = (private->color_profile == NULL);
 
-  if (is_color_managed != private->is_color_managed)
+  use_srgb = use_srgb ? TRUE : FALSE;
+
+  if (use_srgb == old_use_srgb)
+    return;
+
+  if (use_srgb)
+    {
+      GimpColorProfile *profile = gimp_image_get_color_profile (image);
+
+      if (profile)
+        {
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+                                       _("Enable 'Use sRGB Profile'"));
+
+          g_object_ref (profile);
+          gimp_image_assign_color_profile (image, NULL, NULL, NULL);
+          _gimp_image_set_hidden_profile (image, profile, TRUE);
+          g_object_unref (profile);
+
+          gimp_image_undo_group_end (image);
+        }
+    }
+  else
+    {
+      GimpColorProfile *hidden = _gimp_image_get_hidden_profile (image);
+
+      if (hidden)
+        {
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
+                                       _("Disable 'Use sRGB Profile'"));
+
+          g_object_ref (hidden);
+          gimp_image_assign_color_profile (image, hidden, NULL, NULL);
+          g_object_unref (hidden);
+
+          gimp_image_undo_group_end (image);
+        }
+    }
+}
+
+GimpColorProfile *
+_gimp_image_get_hidden_profile (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return private->hidden_profile;
+}
+
+void
+_gimp_image_set_hidden_profile (GimpImage        *image,
+                                GimpColorProfile *profile,
+                                gboolean          push_undo)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (profile != private->hidden_profile)
     {
       if (push_undo)
-        gimp_image_undo_push_image_color_managed (image, NULL);
+        gimp_image_undo_push_image_hidden_profile (image, NULL);
 
-      private->is_color_managed = is_color_managed;
-
-      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+      g_set_object (&private->hidden_profile, profile);
     }
 }
 
@@ -408,8 +478,7 @@ gimp_image_assign_color_profile (GimpImage         *image,
                                _("Assign color profile") :
                                _("Discard color profile"));
 
-  if (dest_profile)
-    gimp_image_set_is_color_managed (image, TRUE, TRUE);
+  _gimp_image_set_hidden_profile (image, NULL, TRUE);
 
   gimp_image_set_color_profile (image, dest_profile, NULL);
   /*  omg...  */
@@ -457,7 +526,8 @@ gimp_image_convert_color_profile (GimpImage                *image,
   /* retain src_profile across gimp_image_set_color_profile() */
   g_object_ref (src_profile);
 
-  gimp_image_set_is_color_managed (image, TRUE, TRUE);
+  _gimp_image_set_hidden_profile (image, NULL, TRUE);
+
   gimp_image_set_color_profile (image, dest_profile, NULL);
   /*  omg...  */
   gimp_image_parasite_detach (image, "icc-profile-name");
@@ -501,8 +571,7 @@ gimp_image_import_color_profile (GimpImage    *image,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (gimp_image_get_is_color_managed (image) &&
-      gimp_image_get_color_profile (image))
+  if (gimp_image_get_color_profile (image))
     {
       GimpColorProfilePolicy     policy;
       GimpColorProfile          *dest_profile = NULL;
@@ -565,10 +634,7 @@ gimp_image_get_color_transform_to_srgb_u8 (GimpImage *image)
 
   gimp_image_create_color_transforms (image);
 
-  if (private->is_color_managed)
-    return private->transform_to_srgb_u8;
-
-  return NULL;
+  return private->transform_to_srgb_u8;
 }
 
 GimpColorTransform *
@@ -582,10 +648,7 @@ gimp_image_get_color_transform_from_srgb_u8 (GimpImage *image)
 
   gimp_image_create_color_transforms (image);
 
-  if (private->is_color_managed)
-    return private->transform_from_srgb_u8;
-
-  return NULL;
+  return private->transform_from_srgb_u8;
 }
 
 GimpColorTransform *
@@ -599,10 +662,7 @@ gimp_image_get_color_transform_to_srgb_double (GimpImage *image)
 
   gimp_image_create_color_transforms (image);
 
-  if (private->is_color_managed)
-    return private->transform_to_srgb_double;
-
-  return NULL;
+  return private->transform_to_srgb_double;
 }
 
 GimpColorTransform *
@@ -616,10 +676,7 @@ gimp_image_get_color_transform_from_srgb_double (GimpImage *image)
 
   gimp_image_create_color_transforms (image);
 
-  if (private->is_color_managed)
-    return private->transform_from_srgb_double;
-
-  return NULL;
+  return private->transform_from_srgb_double;
 }
 
 void
@@ -686,6 +743,8 @@ _gimp_image_free_color_profile (GimpImage *image)
 
   g_clear_object (&private->color_profile);
   private->layer_space = NULL;
+
+  g_clear_object (&private->hidden_profile);
 
   _gimp_image_free_color_transforms (image);
 }

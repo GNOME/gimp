@@ -724,8 +724,6 @@ gimp_image_init (GimpImage *image)
   private->n_colors            = 0;
   private->palette             = NULL;
 
-  private->is_color_managed    = TRUE;
-
   private->metadata            = NULL;
 
   private->dirty               = 1;
@@ -1057,8 +1055,7 @@ gimp_image_finalize (GObject *object)
   if (private->colormap)
     gimp_image_colormap_free (image);
 
-  if (private->color_profile)
-    _gimp_image_free_color_profile (image);
+  _gimp_image_free_color_profile (image);
 
   g_clear_object (&private->metadata);
   g_clear_object (&private->file);
@@ -1392,11 +1389,10 @@ gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
 static GimpColorProfile *
 gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
 {
-  GimpImage        *image   = GIMP_IMAGE (managed);
-  GimpColorProfile *profile = NULL;
+  GimpImage        *image = GIMP_IMAGE (managed);
+  GimpColorProfile *profile;
 
-  if (gimp_image_get_is_color_managed (image))
-    profile = gimp_image_get_color_profile (image);
+  profile = gimp_image_get_color_profile (image);
 
   if (! profile)
     profile = gimp_image_get_builtin_color_profile (image);

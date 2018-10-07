@@ -58,11 +58,13 @@ enum
   PROP_COMPONENT_TYPE,
   PROP_LINEAR,
   PROP_TRC,
-  PROP_COLOR_MANAGED,
   PROP_COLOR_PROFILE,
   PROP_FILL_TYPE,
   PROP_COMMENT,
-  PROP_FILENAME
+  PROP_FILENAME,
+
+  /* compat cruft */
+  PROP_COLOR_MANAGED
 };
 
 
@@ -81,7 +83,6 @@ struct _GimpTemplatePrivate
   GimpImageBaseType  base_type;
   GimpPrecision      precision;
 
-  gboolean           color_managed;
   GFile             *color_profile;
 
   GimpFillType       fill_type;
@@ -209,16 +210,6 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                                       G_PARAM_READWRITE |
                                                       GIMP_PARAM_STATIC_STRINGS));
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_MANAGED,
-                            "color-managed",
-                            _("Color managed"),
-                            _("Whether the image is color managed. "
-                              "Disabling color management is equivalent to "
-                              "choosing a built-in sRGB profile. Better "
-                              "leave color management enabled."),
-                            TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_OBJECT (object_class, PROP_COLOR_PROFILE,
                            "color-profile",
                            _("Color profile"),
@@ -246,6 +237,14 @@ gimp_template_class_init (GimpTemplateClass *klass)
                            NULL,
                            NULL,
                            GIMP_PARAM_STATIC_STRINGS);
+
+  /* compat cruft */
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_MANAGED,
+                            "color-managed",
+                            NULL, NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS |
+                            GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -313,9 +312,6 @@ gimp_template_set_property (GObject      *object,
                              g_value_get_enum (value));
       g_object_notify (object, "precision");
       break;
-    case PROP_COLOR_MANAGED:
-      private->color_managed = g_value_get_boolean (value);
-      break;
     case PROP_COLOR_PROFILE:
       if (private->color_profile)
         g_object_unref (private->color_profile);
@@ -334,6 +330,11 @@ gimp_template_set_property (GObject      *object,
         g_free (private->filename);
       private->filename = g_value_dup_string (value);
       break;
+
+    case PROP_COLOR_MANAGED:
+      /* ignored */
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -380,9 +381,6 @@ gimp_template_get_property (GObject    *object,
     case PROP_TRC:
       g_value_set_enum (value, gimp_babl_trc (private->precision));
       break;
-    case PROP_COLOR_MANAGED:
-      g_value_set_boolean (value, private->color_managed);
-      break;
     case PROP_COLOR_PROFILE:
       g_value_set_object (value, private->color_profile);
       break;
@@ -395,6 +393,11 @@ gimp_template_get_property (GObject    *object,
     case PROP_FILENAME:
       g_value_set_string (value, private->filename);
       break;
+
+    case PROP_COLOR_MANAGED:
+      /* ignored */
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -549,14 +552,6 @@ gimp_template_get_precision (GimpTemplate *template)
                         GIMP_PRECISION_U8_NON_LINEAR);
 
   return GET_PRIVATE (template)->precision;
-}
-
-gboolean
-gimp_template_get_color_managed (GimpTemplate *template)
-{
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
-
-  return GET_PRIVATE (template)->color_managed;
 }
 
 GimpColorProfile *

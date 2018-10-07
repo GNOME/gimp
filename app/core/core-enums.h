@@ -510,7 +510,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_GRID,                  /*< desc="Grid"                           >*/
   GIMP_UNDO_IMAGE_METADATA,              /*< desc="Change metadata"                >*/
   GIMP_UNDO_IMAGE_COLORMAP,              /*< desc="Change indexed palette"         >*/
-  GIMP_UNDO_IMAGE_COLOR_MANAGED,         /*< desc="Change color managed state"     >*/
+  GIMP_UNDO_IMAGE_HIDDEN_PROFILE,        /*< desc="Hide/Unhide color profile"      >*/
   GIMP_UNDO_GUIDE,                       /*< desc="Guide"                          >*/
   GIMP_UNDO_SAMPLE_POINT,                /*< desc="Sample Point"                   >*/
   GIMP_UNDO_DRAWABLE,                    /*< desc="Layer/Channel"                  >*/

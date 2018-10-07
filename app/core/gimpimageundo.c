@@ -188,8 +188,9 @@ gimp_image_undo_constructed (GObject *object)
                                          GIMP_IMAGE_COLORMAP_SIZE);
       break;
 
-    case GIMP_UNDO_IMAGE_COLOR_MANAGED:
-      image_undo->is_color_managed = gimp_image_get_is_color_managed (image);
+    case GIMP_UNDO_IMAGE_HIDDEN_PROFILE:
+      g_set_object (&image_undo->hidden_profile,
+                    _gimp_image_get_hidden_profile (image));
       break;
 
     case GIMP_UNDO_IMAGE_METADATA:
@@ -472,14 +473,14 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_IMAGE_COLOR_MANAGED:
+    case GIMP_UNDO_IMAGE_HIDDEN_PROFILE:
       {
-        gboolean is_color_managed;
+        GimpColorProfile *hidden_profile = NULL;
 
-        is_color_managed = gimp_image_get_is_color_managed (image);
-        gimp_image_set_is_color_managed (image, image_undo->is_color_managed,
-                                         FALSE);
-        image_undo->is_color_managed = is_color_managed;
+        g_set_object (&hidden_profile, _gimp_image_get_hidden_profile (image));
+        _gimp_image_set_hidden_profile (image, image_undo->hidden_profile,
+                                        FALSE);
+        image_undo->hidden_profile = hidden_profile;
       }
       break;
 
@@ -535,6 +536,7 @@ gimp_image_undo_free (GimpUndo     *undo,
 
   g_clear_object (&image_undo->grid);
   g_clear_pointer (&image_undo->colormap, g_free);
+  g_clear_object (&image_undo->hidden_profile);
   g_clear_object (&image_undo->metadata);
   g_clear_pointer (&image_undo->parasite_name, g_free);
   g_clear_pointer (&image_undo->parasite, gimp_parasite_free);

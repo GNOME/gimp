@@ -38,7 +38,7 @@ GimpUndo * gimp_image_undo_push_image_grid          (GimpImage     *image,
                                                      GimpGrid      *grid);
 GimpUndo * gimp_image_undo_push_image_colormap      (GimpImage     *image,
                                                      const gchar   *undo_desc);
-GimpUndo * gimp_image_undo_push_image_color_managed (GimpImage     *image,
+GimpUndo * gimp_image_undo_push_image_hidden_profile(GimpImage     *image,
                                                      const gchar   *undo_desc);
 GimpUndo * gimp_image_undo_push_image_metadata      (GimpImage     *image,
                                                      const gchar   *undo_desc);

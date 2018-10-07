@@ -154,7 +154,6 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *xres;
   GtkWidget                 *yres;
   GtkWidget                 *combo;
-  GtkWidget                 *toggle;
   GtkWidget                 *scrolled_window;
   GtkWidget                 *text_view;
   GtkTextBuffer             *text_buffer;
@@ -406,13 +405,6 @@ gimp_template_editor_constructed (GObject *object)
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Gamma:"), 0.0, 0.5,
                             combo, 1);
-
-  toggle = gimp_prop_check_button_new (G_OBJECT (template),
-                                       "color-managed",
-                                       _("Color _manage this image"));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
-                            NULL, 0.0, 0.5,
-                            toggle, 1);
 
   private->profile_combo =
     gimp_prop_profile_combo_box_new (G_OBJECT (template),

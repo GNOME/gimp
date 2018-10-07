@@ -129,9 +129,6 @@ gimp_image_new_from_template (Gimp         *gimp,
                              gimp_template_get_resolution_y (template));
   gimp_image_set_unit (image, gimp_template_get_resolution_unit (template));
 
-  gimp_image_set_is_color_managed (image,
-                                   gimp_template_get_color_managed (template),
-                                   FALSE);
   profile = gimp_template_get_color_profile (template);
   gimp_image_set_color_profile (image, profile, NULL);
   if (profile)
@@ -203,9 +200,6 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   gimp_image_set_resolution (new_image, xres, yres);
   gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
-  gimp_image_set_is_color_managed (new_image,
-                                   gimp_image_get_is_color_managed (image),
-                                   FALSE);
   profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
   gimp_image_set_color_profile (new_image, profile, NULL);
 

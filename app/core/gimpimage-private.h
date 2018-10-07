@@ -55,9 +55,9 @@ struct _GimpImagePrivate
   const Babl        *babl_palette_rgb;      /*  palette's RGB Babl format    */
   const Babl        *babl_palette_rgba;     /*  palette's RGBA Babl format   */
 
-  gboolean           is_color_managed;      /*  is this image color managed  */
   GimpColorProfile  *color_profile;         /*  image's color profile        */
   const Babl        *layer_space;           /*  image's Babl layer space     */
+  GimpColorProfile  *hidden_profile;        /*  hidden by "use sRGB"         */
 
   /*  Cached color transforms: from layer to sRGB u8 and double, and back    */
   gboolean            color_transforms_created;

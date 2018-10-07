@@ -383,7 +383,7 @@
         <separator />
       </menu>
       <menu action="image-color-management-menu" name="Color Management">
-        <menuitem action="image-color-management-enabled" />
+        <menuitem action="image-color-profile-use-srgb" />
         <separator />
         <menuitem action="image-color-profile-assign" />
         <menuitem action="image-color-profile-convert" />

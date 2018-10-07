@@ -177,14 +177,14 @@ static const GimpActionEntry image_actions[] =
 
 static const GimpToggleActionEntry image_toggle_actions[] =
 {
-  { "image-color-management-enabled", NULL,
-    NC_("image-action", "_Enable Color Management"), NULL,
-    NC_("image-action", "Whether the image is color managed. Disabling "
-        "color management is equivalent to assigning a built-in sRGB "
-        "color profile. Better leave color management enabled."),
-    G_CALLBACK (image_color_management_enabled_cmd_callback),
+  { "image-color-profile-use-srgb", NULL,
+    NC_("image-action", "Use _sRGB Profile"), NULL,
+    NC_("image-action", "Temporarily use an sRGB profile for the image. "
+        "This is the same as discarding the image's color profile, but "
+        "allows to easily restore the profile."),
+    G_CALLBACK (image_color_profile_use_srgb_cmd_callback),
     TRUE,
-    GIMP_HELP_IMAGE_COLOR_MANAGEMENT_ENABLED }
+    GIMP_HELP_IMAGE_COLOR_PROFILE_USE_SRGB }
 };
 
 static const GimpRadioActionEntry image_convert_base_type_actions[] =
@@ -349,16 +349,17 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image         = action_data_get_image (data);
-  gboolean   is_indexed    = FALSE;
-  gboolean   is_u8_gamma   = FALSE;
-  gboolean   is_double     = FALSE;
-  gboolean   aux           = FALSE;
-  gboolean   lp            = FALSE;
-  gboolean   sel           = FALSE;
-  gboolean   groups        = FALSE;
-  gboolean   color_managed = FALSE;
-  gboolean   profile       = FALSE;
+  GimpImage *image          = action_data_get_image (data);
+  gboolean   is_indexed     = FALSE;
+  gboolean   is_u8_gamma    = FALSE;
+  gboolean   is_double      = FALSE;
+  gboolean   aux            = FALSE;
+  gboolean   lp             = FALSE;
+  gboolean   sel            = FALSE;
+  gboolean   groups         = FALSE;
+  gboolean   profile_srgb   = FALSE;
+  gboolean   profile_hidden = FALSE;
+  gboolean   profile        = FALSE;
 
   if (image)
     {
@@ -417,8 +418,8 @@ image_actions_update (GimpActionGroup *group,
 
       groups = ! gimp_item_stack_is_flat (GIMP_ITEM_STACK (layers));
 
-      color_managed = gimp_image_get_is_color_managed (image);
-      profile       = (gimp_image_get_color_profile (image) != NULL);
+      profile_srgb = gimp_image_get_use_srgb_profile (image, &profile_hidden);
+      profile      = (gimp_image_get_color_profile (image) != NULL);
     }
 
 #define SET_LABEL(action,label) \
@@ -462,8 +463,8 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-gamma",  image);
   SET_SENSITIVE ("image-convert-linear", image && !is_indexed);
 
-  SET_SENSITIVE ("image-color-management-enabled", image);
-  SET_ACTIVE    ("image-color-management-enabled", image && color_managed);
+  SET_SENSITIVE ("image-color-profile-use-srgb", image && (profile || profile_hidden));
+  SET_ACTIVE    ("image-color-profile-use-srgb", image && profile_srgb);
 
   SET_SENSITIVE ("image-color-profile-assign",  image);
   SET_SENSITIVE ("image-color-profile-convert", image);

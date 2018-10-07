@@ -51,7 +51,7 @@ struct _GimpImageUndo
   GimpGrid          *grid;
   gint               num_colors;
   guchar            *colormap;
-  gboolean           is_color_managed;
+  GimpColorProfile  *hidden_profile;
   GimpMetadata      *metadata;
   gchar             *parasite_name;
   GimpParasite      *parasite;

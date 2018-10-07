@@ -25,9 +25,14 @@
 #define GIMP_ICC_PROFILE_PARASITE_NAME "icc-profile"
 
 
-gboolean             gimp_image_get_is_color_managed   (GimpImage           *image);
-void                 gimp_image_set_is_color_managed   (GimpImage           *image,
-                                                        gboolean             is_color_managed,
+gboolean             gimp_image_get_use_srgb_profile   (GimpImage           *image,
+                                                        gboolean            *hidden_profile);
+void                 gimp_image_set_use_srgb_profile   (GimpImage           *image,
+                                                        gboolean             use_srgb);
+
+GimpColorProfile   * _gimp_image_get_hidden_profile    (GimpImage           *image);
+void                 _gimp_image_set_hidden_profile    (GimpImage           *image,
+                                                        GimpColorProfile    *profile,
                                                         gboolean             push_undo);
 
 gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,

@@ -34,7 +34,7 @@ void   image_convert_trc_cmd_callback              (GtkAction *action,
                                                     GtkAction *current,
                                                     gpointer   data);
 
-void   image_color_management_enabled_cmd_callback (GtkAction *action,
+void   image_color_profile_use_srgb_cmd_callback   (GtkAction *action,
                                                     gpointer   data);
 void   image_color_profile_assign_cmd_callback     (GtkAction *action,
                                                     gpointer   data);
