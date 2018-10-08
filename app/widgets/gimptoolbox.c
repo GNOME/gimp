@@ -588,8 +588,6 @@ toolbox_create_color_area (GimpToolbox *toolbox,
                 "margin-bottom", 2,
                 NULL);
 
-  gimp_help_set_help_data (col_area, NULL, GIMP_HELP_TOOLBOX_COLOR_AREA);
-
   return col_area;
 }
 
@@ -609,8 +607,6 @@ toolbox_create_foo_area (GimpToolbox *toolbox,
                 "margin-bottom", 2,
                 NULL);
 
-  gimp_help_set_help_data (foo_area, NULL, GIMP_HELP_TOOLBOX_INDICATOR_AREA);
-
   return foo_area;
 }
 
@@ -629,8 +625,6 @@ toolbox_create_image_area (GimpToolbox *toolbox,
                 "margin-top",    2,
                 "margin-bottom", 2,
                 NULL);
-
-  gimp_help_set_help_data (image_area, NULL, GIMP_HELP_TOOLBOX_IMAGE_AREA);
 
   return image_area;
 }

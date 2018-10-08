@@ -32,9 +32,10 @@
 #include "core/gimpimage.h"
 
 #include "gimpdnd.h"
-#include "gimpview.h"
+#include "gimphelp-ids.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-image-area.h"
+#include "gimpview.h"
 #include "gimpwindowstrategy.h"
 #include "gimpwidgets-utils.h"
 
@@ -84,6 +85,7 @@ image_preview_set_viewable (GimpView     *view,
     }
 }
 
+
 /*  public functions  */
 
 GtkWidget *
@@ -124,7 +126,8 @@ gimp_toolbox_image_area_create (GimpToolbox *toolbox,
                         "Click to open the Image Dialog."));
 #endif
 
-  gimp_help_set_help_data (image_view, tooltip, NULL);
+  gimp_help_set_help_data (image_view, tooltip,
+                           GIMP_HELP_TOOLBOX_IMAGE_AREA);
   g_free (tooltip);
 
   g_signal_connect_object (context, "image-changed",

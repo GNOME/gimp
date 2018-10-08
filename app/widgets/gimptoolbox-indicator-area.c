@@ -34,9 +34,10 @@
 #include "core/gimppattern.h"
 
 #include "gimpdnd.h"
-#include "gimpview.h"
+#include "gimphelp-ids.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-indicator-area.h"
+#include "gimpview.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
@@ -134,7 +135,7 @@ GtkWidget *
 gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 {
   GimpContext *context;
-  GtkWidget   *indicator_grid;
+  GtkWidget   *grid;
   GtkWidget   *brush_view;
   GtkWidget   *pattern_view;
   GtkWidget   *gradient_view;
@@ -143,9 +144,11 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 
   context = gimp_toolbox_get_context (toolbox);
 
-  indicator_grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (indicator_grid), CELL_SPACING);
-  gtk_grid_set_column_spacing (GTK_GRID (indicator_grid), CELL_SPACING);
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), CELL_SPACING);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), CELL_SPACING);
+
+  gimp_help_set_help_data (grid, NULL, GIMP_HELP_TOOLBOX_INDICATOR_AREA);
 
   /*  brush view  */
 
@@ -156,7 +159,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                                  FALSE, TRUE, TRUE);
   gimp_view_set_viewable (GIMP_VIEW (brush_view),
                           GIMP_VIEWABLE (gimp_context_get_brush (context)));
-  gtk_grid_attach (GTK_GRID (indicator_grid), brush_view, 0, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), brush_view, 0, 0, 1, 1);
   gtk_widget_show (brush_view);
 
   gimp_help_set_help_data (brush_view,
@@ -187,7 +190,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   gimp_view_set_viewable (GIMP_VIEW (pattern_view),
                           GIMP_VIEWABLE (gimp_context_get_pattern (context)));
 
-  gtk_grid_attach (GTK_GRID (indicator_grid), pattern_view, 1, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), pattern_view, 1, 0, 1, 1);
   gtk_widget_show (pattern_view);
 
   gimp_help_set_help_data (pattern_view,
@@ -218,7 +221,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   gimp_view_set_viewable (GIMP_VIEW (gradient_view),
                           GIMP_VIEWABLE (gimp_context_get_gradient (context)));
 
-  gtk_grid_attach (GTK_GRID (indicator_grid), gradient_view, 0, 1, 2, 1);
+  gtk_grid_attach (GTK_GRID (grid), gradient_view, 0, 1, 2, 1);
   gtk_widget_show (gradient_view);
 
   gimp_help_set_help_data (gradient_view,
@@ -239,7 +242,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
                               gradient_preview_drop_gradient,
                               context);
 
-  gtk_widget_show (indicator_grid);
+  gtk_widget_show (grid);
 
-  return indicator_grid;
+  return grid;
 }

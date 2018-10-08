@@ -32,6 +32,7 @@
 #include "gimpcolordialog.h"
 #include "gimpdialogfactory.h"
 #include "gimpfgbgeditor.h"
+#include "gimphelp-ids.h"
 #include "gimpsessioninfo.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
@@ -83,15 +84,14 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 
   color_area = gimp_fg_bg_editor_new (context);
   gtk_widget_set_size_request (color_area, width, height);
-  gtk_widget_add_events (color_area,
-                         GDK_ENTER_NOTIFY_MASK |
-                         GDK_LEAVE_NOTIFY_MASK);
 
   gimp_help_set_help_data
-    (color_area, _("Foreground & background colors.\n"
-                   "The black and white squares reset colors.\n"
-                   "The arrows swap colors.\n"
-                   "Click to open the color selection dialog."), NULL);
+    (color_area,
+     _("Foreground & background colors.\n"
+       "The black and white squares reset colors.\n"
+       "The arrows swap colors.\n"
+       "Click to open the color selection dialog."),
+     GIMP_HELP_TOOLBOX_COLOR_AREA);
 
   g_signal_connect (color_area, "color-clicked",
                     G_CALLBACK (color_area_color_clicked),
