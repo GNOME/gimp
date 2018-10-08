@@ -1257,7 +1257,7 @@ typedef enum
  * @GIMP_SELECT_CRITERION_A:         Alpha
  * @GIMP_SELECT_CRITERION_LCH_L:     LCh Lightness
  * @GIMP_SELECT_CRITERION_LCH_C:     LCh Chroma
- * @GIMP_SELECT_CRITERION_LCH_H:     LCh Hue)
+ * @GIMP_SELECT_CRITERION_LCH_H:     LCh Hue
  *
  * Criterions for color similarity.
  **/
