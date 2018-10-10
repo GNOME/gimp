@@ -85,9 +85,12 @@ static inline gint   gimp_backtrace_normalize_frame   (GimpBacktrace       *back
                                                        gint                 thread,
                                                        gint                 frame);
 
+static void          gimp_backtrace_set_thread_name   (DWORD                tid,
+                                                       const gchar         *name);
+
 static gboolean      gimp_backtrace_enumerate_threads (void);
 
-static LONG          gimp_backtrace_exception_handler (PEXCEPTION_POINTERS info);
+static LONG          gimp_backtrace_exception_handler (PEXCEPTION_POINTERS  info);
 
 
 /*  static variables  */
@@ -131,6 +134,24 @@ gimp_backtrace_normalize_frame (GimpBacktrace *backtrace,
     return frame;
   else
     return backtrace->threads[thread].n_frames + frame;
+}
+
+static void
+gimp_backtrace_set_thread_name (DWORD        tid,
+                                const gchar *name)
+{
+  while (! g_atomic_int_compare_and_exchange (&thread_names_spinlock,
+                                              0, 1));
+
+  if (n_thread_names < MAX_N_THREADS)
+    {
+      Thread *thread = &thread_names[n_thread_names++];
+
+      thread->tid  = tid;
+      thread->name = g_strdup (name);
+    }
+
+  g_atomic_int_set (&thread_names_spinlock, 0);
 }
 
 static gboolean
@@ -231,18 +252,7 @@ gimp_backtrace_exception_handler (PEXCEPTION_POINTERS info)
           if (tid == -1)
             tid = GetCurrentThreadId ();
 
-          while (! g_atomic_int_compare_and_exchange (&thread_names_spinlock,
-                                                      0, 1));
-
-          if (n_thread_names < MAX_N_THREADS)
-            {
-              Thread *thread = &thread_names[n_thread_names++];
-
-              thread->tid  = tid;
-              thread->name = g_strdup (name_info.szName);
-            }
-
-          g_atomic_int_set (&thread_names_spinlock, 0);
+          gimp_backtrace_set_thread_name (tid, name_info.szName);
 
           return EXCEPTION_CONTINUE_EXECUTION;
         }
@@ -260,6 +270,8 @@ gimp_backtrace_exception_handler (PEXCEPTION_POINTERS info)
 void
 gimp_backtrace_init (void)
 {
+  gimp_backtrace_set_thread_name (GetCurrentThreadId (), g_get_prgname ());
+
   AddVectoredExceptionHandler (TRUE, gimp_backtrace_exception_handler);
 }
 
