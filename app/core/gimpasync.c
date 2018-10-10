@@ -43,15 +43,17 @@
  *
  * Similarly, upon creation, a GimpAsync object is said to be "unsynced".  It
  * becomes synced once the execution of any of the completion callbacks added
- * through 'gimp_async_add_callback()' had started, after a successful call to
- * one of the 'gimp_waitable_wait()' family of functions.
+ * through 'gimp_async_add_callback()' had started, or after a successful call
+ * to one of the 'gimp_waitable_wait()' family of functions.
  *
  * Note that certain GimpAsync functions may only be called during a certain
- * state, on a certain thread, or depending on whether or nor the object is
+ * state, on a certain thread, or depending on whether or not the object is
  * synced, as detailed for each function.  When referring to threads, the "main
- * thread" is the thread running the main loop, and the "async thread" is the
- * thread calling 'gimp_async_finish()' or 'gimp_async_abort()' (which may also
- * be the main thread).
+ * thread" is the thread running the main loop, or any thread whose execution
+ * is synchronized with the main thread, and the "async thread" is the thread
+ * calling 'gimp_async_finish()' or 'gimp_async_abort()' (which may also be the
+ * main thread), or any thread whose execution is synchronized with the async
+ * thread.
  */
 
 
