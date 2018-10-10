@@ -1258,6 +1258,7 @@ typedef enum
  * @GIMP_SELECT_CRITERION_LCH_L:     LCh Lightness
  * @GIMP_SELECT_CRITERION_LCH_C:     LCh Chroma
  * @GIMP_SELECT_CRITERION_LCH_H:     LCh Hue
+ * @GIMP_SELECT_CRITERION_LINE_ART:  Line Art
  *
  * Criterions for color similarity.
  **/
@@ -1278,6 +1279,7 @@ typedef enum
   GIMP_SELECT_CRITERION_LCH_L,      /*< desc="LCh Lightness"  >*/
   GIMP_SELECT_CRITERION_LCH_C,      /*< desc="LCh Chroma"     >*/
   GIMP_SELECT_CRITERION_LCH_H,      /*< desc="LCh Hue"        >*/
+  GIMP_SELECT_CRITERION_LINE_ART,   /*< desc="Line Art"       >*/
 } GimpSelectCriterion;
 
 

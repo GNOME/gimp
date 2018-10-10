@@ -31,6 +31,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "gimp-utils.h" /* GIMP_TIMER */
+#include "gimplineart.h"
 #include "gimppickable.h"
 #include "gimppickable-contiguous-region.h"
 
@@ -114,6 +115,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
   gint           n_components;
   gboolean       has_alpha;
   gfloat         start_col[MAX_CHANNELS];
+  gboolean       free_src_buffer = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
@@ -143,6 +145,58 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       select_transparent = FALSE;
     }
 
+  if (select_criterion == GIMP_SELECT_CRITERION_LINE_ART)
+    {
+      /* For smart selection, we generate a binarized image with close
+       * regions, then run a composite selection with no threshold on
+       * this intermediate buffer.
+       */
+      GIMP_TIMER_START();
+      src_buffer = gimp_lineart_close (src_buffer,
+                                       select_transparent,
+                                       /*contour_detection_level,*/
+                                       0.92,
+                                       /* erosion, */
+                                       -1,
+                                       /*minimal_lineart_area,*/
+                                       5,
+                                       /*normal_estimate_mask_size,*/
+                                       5,
+                                       /*end_point_rate,*/
+                                       0.85,
+                                       /*spline_max_length,*/
+                                       60,
+                                       /*spline_max_angle,*/
+                                       90.0,
+                                       /*end_point_connectivity,*/
+                                       2,
+                                       /*spline_roundness,*/
+                                       1.0,
+                                       /*allow_self_intersections,*/
+                                       TRUE,
+                                       /*created_regions_significant_area,*/
+                                       4,
+                                       /*created_regions_minimum_area,*/
+                                       100,
+                                       /*small_segments_from_spline_sources,*/
+                                       TRUE,
+                                       /*segments_max_length*/
+                                       20);
+      free_src_buffer    = TRUE;
+      antialias          = FALSE;
+      threshold          = 0.0;
+      select_transparent = FALSE;
+      select_criterion   = GIMP_SELECT_CRITERION_COMPOSITE;
+      diagonal_neighbors = FALSE;
+
+      format = choose_format (src_buffer, select_criterion,
+                              &n_components, &has_alpha);
+      gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
+      GIMP_TIMER_END("close line-art");
+    }
+
   extent = *gegl_buffer_get_extent (src_buffer);
 
   mask_buffer = gegl_buffer_new (&extent, babl_format ("Y float"));
@@ -160,6 +214,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
       GIMP_TIMER_END("foo");
     }
+  if (free_src_buffer)
+    g_object_unref (src_buffer);
 
   return mask_buffer;
 }
@@ -295,6 +351,10 @@ choose_format (GeglBuffer          *buffer,
       format = babl_format ("CIE LCH(ab) alpha float");
       break;
 
+    case GIMP_SELECT_CRITERION_LINE_ART:
+      format = babl_format ("Y'A u8");
+      break;
+
     default:
       g_return_val_if_reached (NULL);
       break;
@@ -385,6 +445,10 @@ pixel_difference (const gfloat        *col1,
           max = fabs (col1[2] - col2[2]) / 360.0;
           max = MIN (max, 1.0 - max);
           break;
+
+        case GIMP_SELECT_CRITERION_LINE_ART:
+          /* Smart selection is handled before. */
+          g_return_val_if_reached (0.0);
         }
     }
 
@@ -608,7 +672,7 @@ find_contiguous_region (GeglBuffer          *src_buffer,
   row = g_new (gfloat, gegl_buffer_get_width (src_buffer) * n_components);
 #endif
 
-  src_sampler  = gegl_buffer_sampler_new (src_buffer,
+  src_sampler = gegl_buffer_sampler_new (src_buffer,
                                           format, GEGL_SAMPLER_NEAREST);
 
   segment_queue = g_queue_new ();

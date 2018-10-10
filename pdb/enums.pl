@@ -547,7 +547,8 @@ package Gimp::CodeGen::enums;
 			  GIMP_SELECT_CRITERION_A
 			  GIMP_SELECT_CRITERION_LCH_L
 			  GIMP_SELECT_CRITERION_LCH_C
-			  GIMP_SELECT_CRITERION_LCH_H) ],
+			  GIMP_SELECT_CRITERION_LCH_H
+			  GIMP_SELECT_CRITERION_LINE_ART) ],
 	  mapping => { GIMP_SELECT_CRITERION_COMPOSITE => '0',
 		       GIMP_SELECT_CRITERION_R => '1',
 		       GIMP_SELECT_CRITERION_G => '2',
@@ -558,7 +559,8 @@ package Gimp::CodeGen::enums;
 		       GIMP_SELECT_CRITERION_A => '7',
 		       GIMP_SELECT_CRITERION_LCH_L => '8',
 		       GIMP_SELECT_CRITERION_LCH_C => '9',
-		       GIMP_SELECT_CRITERION_LCH_H => '10' }
+		       GIMP_SELECT_CRITERION_LCH_H => '10',
+		       GIMP_SELECT_CRITERION_LINE_ART => '11' }
 	},
     GimpSizeType =>
 	{ contig => 1,

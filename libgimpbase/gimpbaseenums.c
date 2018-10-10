@@ -1642,6 +1642,7 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_LCH_L, "GIMP_SELECT_CRITERION_LCH_L", "lch-l" },
     { GIMP_SELECT_CRITERION_LCH_C, "GIMP_SELECT_CRITERION_LCH_C", "lch-c" },
     { GIMP_SELECT_CRITERION_LCH_H, "GIMP_SELECT_CRITERION_LCH_H", "lch-h" },
+    { GIMP_SELECT_CRITERION_LINE_ART, "GIMP_SELECT_CRITERION_LINE_ART", "line-art" },
     { 0, NULL, NULL }
   };
 
@@ -1658,6 +1659,7 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_LCH_L, NC_("select-criterion", "LCh Lightness"), NULL },
     { GIMP_SELECT_CRITERION_LCH_C, NC_("select-criterion", "LCh Chroma"), NULL },
     { GIMP_SELECT_CRITERION_LCH_H, NC_("select-criterion", "LCh Hue"), NULL },
+    { GIMP_SELECT_CRITERION_LINE_ART, NC_("select-criterion", "Line Art"), NULL },
     { 0, NULL, NULL }
   };
 

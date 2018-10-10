@@ -355,6 +355,8 @@ libappcore_a_sources = \
 	gimplayerstack.h			\
 	gimplayerundo.c				\
 	gimplayerundo.h				\
+	gimplineart.c				\
+	gimplineart.h				\
 	gimplist.c				\
 	gimplist.h				\
 	gimpmaskundo.c				\

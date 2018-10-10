@@ -553,7 +553,7 @@ gimp_prop_enum_combo_box_new (GObject     *config,
     {
       /* ditto */
       store = gimp_enum_store_new_with_values (param_spec->value_type,
-                                               11,
+                                               12,
                                                GIMP_SELECT_CRITERION_COMPOSITE,
                                                GIMP_SELECT_CRITERION_R,
                                                GIMP_SELECT_CRITERION_G,
@@ -564,7 +564,8 @@ gimp_prop_enum_combo_box_new (GObject     *config,
                                                GIMP_SELECT_CRITERION_V,
                                                GIMP_SELECT_CRITERION_LCH_L,
                                                GIMP_SELECT_CRITERION_LCH_C,
-                                               GIMP_SELECT_CRITERION_LCH_H);
+                                               GIMP_SELECT_CRITERION_LCH_H,
+                                               GIMP_SELECT_CRITERION_LINE_ART);
     }
 
   if (store)
