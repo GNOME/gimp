@@ -668,7 +668,7 @@ gimp_backtrace_get_address_info (guintptr                  address,
       g_strlcpy (info->symbol_name, symbol_info->Name,
                  sizeof (info->symbol_name));
 
-      info->symbol_address = address - offset;
+      info->symbol_address = offset ? address - offset : 0;
 
       result = TRUE;
     }
