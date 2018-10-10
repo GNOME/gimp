@@ -30,7 +30,8 @@ file="$1"
 
 < "$file" || exit 1
 
-< "$file"                                \
-"$tools_dir/performance-log-expand.py" | \
-"$tools_dir/performance-log-deduce.py" | \
+< "$file"                                  \
+"$tools_dir/performance-log-expand.py"   | \
+"$tools_dir/performance-log-coalesce.py" | \
+"$tools_dir/performance-log-deduce.py"   | \
 "$tools_dir/performance-log-viewer.py"
