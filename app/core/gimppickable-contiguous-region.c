@@ -494,7 +494,7 @@ choose_format (GeglBuffer          *buffer,
       break;
 
     case GIMP_SELECT_CRITERION_LINE_ART:
-      format = babl_format ("Y'A u8");
+      format = babl_format ("Y'A float");
       break;
 
     default:
