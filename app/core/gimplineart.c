@@ -510,27 +510,35 @@ gimp_lineart_get_labels (GeglBuffer *line_art,
   /* For each neighbour-direction, label. */
   for (unsigned int n = 0; n < (is_high_connectivity ? 4 : 2); ++n)
     {
-      const int _dx = dx[n];
-      const int _dy = dy[n];
+      GeglBufferIterator *gi;
+      const gint          _dx       = dx[n];
+      const gint          _dy       = dy[n];
 
-      const int x1 = width - _dx;
-      const int y0 = (_dy < 0) ? -_dy : 0;
-      const int y1 = (_dy < 0) ? height : height - _dy;
-      const long offset = _dy * width + _dx;
+      const gint          y0        = (_dy < 0) ? -_dy : 0;
+      const gint          it_width  = width - _dx + 1;
+      const gint          it_height = (_dy < 0) ? height - y0 + 1: height - _dy - y0 + 1;
+      const glong         offset    = _dy * width + _dx;
 
-      for (long y = y0, ny = y0 + _dy, py = y0 * width; y < y1; ++y, ++ny, py += width)
+      gi = gegl_buffer_iterator_new (line_art, GEGL_RECTANGLE (0, y0, it_width, it_height),
+                                     0, babl_format ("Y u32"),
+                                     GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+      gegl_buffer_iterator_add (gi, line_art, GEGL_RECTANGLE (_dx, y0 + _dy, it_width, it_height),
+                                0, babl_format ("Y u32"),
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+      while (gegl_buffer_iterator_next (gi))
         {
-          for (long x = 0, nx = _dx, p = py; x < x1; ++x, ++nx, ++p)
-            {
-              guint32 pixel;
-              guint32 neighbour_pixel;
+          GeglRectangle *roi       = &gi->items[0].roi;
+          guint32       *pixel     = (guint32*) gi->items[0].data;
+          guint32       *neighbour = (guint32*) gi->items[1].data;
+          gint           k;
+          gint           x = roi->x;
+          gint           y = roi->y;
 
-              gegl_buffer_sample (line_art, x, y, NULL, &pixel,
-                                  babl_format ("Y u32"), GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              gegl_buffer_sample (line_art, nx, ny, NULL, &neighbour_pixel,
-                                  babl_format ("Y u32"), GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              if (pixel == neighbour_pixel)
+          for (k = 0; k < gi->length; k++)
+            {
+              if (pixel == neighbour)
                 {
+                  const glong p = width * y;
                   const guint32 q = p + offset;
                   guint32       i, j;
 
@@ -562,13 +570,22 @@ gimp_lineart_get_labels (GeglBuffer *line_art,
                       _q = h;
                     }
                 }
+              pixel++;
+              neighbour++;
+
+              x++;
+              if (x - roi->x >= roi->width)
+                {
+                  x = roi->x;
+                  y++;
+                }
             }
         }
     }
 
   /* Resolve equivalences. */
   p = 0;
-  for (guint32 i = 0; i < width*height; i++)
+  for (guint32 i = 0; i < width * height; i++)
     {
       data[i] = data[i] == p ? counter++ : data[data[i]];
       p++;
@@ -1698,21 +1715,25 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
 
   labels = gimp_lineart_get_labels (mask, TRUE);
 
-  for (int y = 0; y < gegl_buffer_get_height (mask); ++y)
-    for (int x = 0; x < gegl_buffer_get_width (mask); ++x)
-      {
-        guint8 val;
+  gi = gegl_buffer_iterator_new (mask, NULL, 0, NULL,
+                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+  gegl_buffer_iterator_add (gi, labels, NULL, 0,
+                            babl_format_n (babl_type ("u32"), 1),
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+  while (gegl_buffer_iterator_next (gi))
+    {
+      guint8  *m = (guint8*) gi->items[0].data;
+      guint32 *l = (guint32*) gi->items[1].data;
+      gint    k;
 
-        gegl_buffer_sample (mask, x, y, NULL, &val,
-                            NULL, GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-        if (! val)
-          {
-            guint32 label = 0;
-            gegl_buffer_set (labels, GEGL_RECTANGLE (x, y, 1, 1), 0,
-                             babl_format_n (babl_type ("u32"), 1),
-                             &label, GEGL_AUTO_ROWSTRIDE);
-          }
-      }
+      for (k = 0; k < gi->length; k++)
+        {
+          if (! *m)
+            *l = 0;
+          m++;
+          l++;
+        }
+    }
 
   /* Check biggest label. */
   gi = gegl_buffer_iterator_new (labels, NULL, 0, NULL,
@@ -1741,32 +1762,31 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
   g_array_set_size (dmax, label_max);
   dmax_data = (gfloat *) dmax->data;
   memset (dmax_data, 0, sizeof (gfloat) * label_max);
-  for (int y = 0; y < gegl_buffer_get_height (distmap); ++y)
-    for (int x = 0; x < gegl_buffer_get_width (distmap); ++x)
-      {
-        guint8 val;
 
-        gegl_buffer_sample (mask, x, y, NULL, &val,
-                            NULL, GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-        if (val)
-          {
-            guint32 label;
-            gfloat  d;
-            gfloat  v;
+  gi = gegl_buffer_iterator_new (mask, NULL, 0, NULL,
+                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
+  gegl_buffer_iterator_add (gi, labels, NULL, 0, NULL,
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+  gegl_buffer_iterator_add (gi, distmap, NULL, 0, NULL,
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+  while (gegl_buffer_iterator_next (gi))
+    {
+      guint8  *m = (guint8*) gi->items[0].data;
+      guint32 *l = (guint32*) gi->items[1].data;
+      gfloat  *d = (gfloat*) gi->items[2].data;
+      gint     k;
 
-            gegl_buffer_sample (labels, x, y, NULL, &label,
-                                NULL, GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-            gimp_assert (label);
-            v = dmax_data[label - 1];
-            gegl_buffer_sample (distmap, x, y, NULL, &d,
-                                babl_format ("Y float"),
-                                GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-            if (d > v)
-              {
-                dmax_data[label - 1] = d;
-              }
-          }
-      }
+      for (k = 0; k < gi->length; k++)
+        {
+          gimp_assert (*m == 0 || *l > 0);
+          if (*m && *d > dmax_data[*l - 1])
+            dmax_data[*l - 1] = *d;
+
+          m++;
+          l++;
+          d++;
+        }
+    }
 
   /* Sort and crop labels with distance 0. */
   g_array_sort (dmax, float_compare);
