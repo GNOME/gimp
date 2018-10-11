@@ -2259,7 +2259,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 col.add_attribute (cell, "active", store.STATE[state])
 
                 def cell_toggled (cell, path):
-                    store[path][cell.column] = not cell.get_property ("active")
+                    filter[path][cell.column] = not cell.get_property ("active")
 
                 cell.connect ("toggled", cell_toggled)
 
