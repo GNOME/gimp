@@ -115,7 +115,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
   gint           n_components;
   gboolean       has_alpha;
   gfloat         start_col[MAX_CHANNELS];
-  gboolean       free_src_buffer = FALSE;
+  gboolean       smart_line_art = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
@@ -182,7 +182,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                        TRUE,
                                        /*segments_max_length*/
                                        20);
-      free_src_buffer    = TRUE;
+      smart_line_art     = TRUE;
       antialias          = FALSE;
       threshold          = 0.0;
       select_transparent = FALSE;
@@ -214,8 +214,150 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
       GIMP_TIMER_END("foo");
     }
-  if (free_src_buffer)
-    g_object_unref (src_buffer);
+
+  if (smart_line_art)
+    {
+      /* The last step of the line art algorithm is to make sure that
+       * selections does not leave "holes" between its borders and the
+       * line arts, while not stepping over as well.
+       * To achieve this, I label differently the selection and the rest
+       * and leave the stroke pixels unlabelled, then I let these
+       * unknown pixels be labelled by flooding through watershed.
+       */
+      GeglBufferIterator *gi;
+      GeglBuffer         *labels;
+      GeglBuffer         *distmap;
+      GeglBuffer         *tmp;
+      GeglNode           *graph;
+      GeglNode           *input;
+      GeglNode           *aux;
+      GeglNode           *op;
+      GeglNode           *sink;
+
+      GIMP_TIMER_START();
+      labels = gegl_buffer_new (&extent, babl_format ("YA u32"));
+
+      gi = gegl_buffer_iterator_new (src_buffer, NULL, 0, NULL,
+                                     GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
+      gegl_buffer_iterator_add (gi, mask_buffer, NULL, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+      gegl_buffer_iterator_add (gi, labels, NULL, 0,
+                                babl_format ("YA u32"),
+                                GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (gi))
+        {
+          guchar  *lineart = (guchar*) gi->items[0].data;
+          gfloat  *mask    = (gfloat*) gi->items[1].data;
+          guint32 *label   = (guint32*) gi->items[2].data;
+          gint    k;
+
+          for (k = 0; k < gi->length; k++)
+            {
+              if (*mask)
+                {
+                  label[0] = G_MAXUINT32;
+                  label[1] = 1;
+                }
+              else if (*lineart)
+                {
+                  label[0] = 0;
+                  label[1] = 0;
+                }
+              else
+                {
+                  label[0] = 0;
+                  label[1] = 1;
+                }
+              lineart++;
+              mask++;
+              label += 2;
+            }
+        }
+      g_object_unref (src_buffer);
+
+      /* Compute a distance map for the labels. */
+      graph = gegl_node_new ();
+      input = gegl_node_new_child (graph,
+                                   "operation", "gegl:buffer-source",
+                                   "buffer", mask_buffer,
+                                   NULL);
+      op  = gegl_node_new_child (graph,
+                                 "operation", "gegl:distance-transform",
+                                 "metric", GEGL_DISTANCE_METRIC_EUCLIDEAN,
+                                 "normalize", FALSE,
+                                 NULL);
+      sink  = gegl_node_new_child (graph,
+                                   "operation", "gegl:buffer-sink",
+                                   "buffer", &distmap,
+                                   NULL);
+      gegl_node_connect_to (input, "output",
+                            op, "input");
+      gegl_node_connect_to (op, "output",
+                            sink, "input");
+      gegl_node_process (sink);
+      g_object_unref (graph);
+
+      /* gegl:distance-transform returns distances as float. I want them as
+       * unsigned ints without converting (i.e. not assuming pixel values).
+       * Let's just loop through the map).
+       */
+      tmp = gegl_buffer_new (gegl_buffer_get_extent (distmap),
+                             babl_format ("Y u8"));
+      gi = gegl_buffer_iterator_new (distmap, NULL, 0, NULL,
+                                     GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+      gegl_buffer_iterator_add (gi, tmp, NULL, 0, NULL,
+                                GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+      while (gegl_buffer_iterator_next (gi))
+        {
+          float  *data = (float*) gi->items[0].data;
+          guint8 *out = (guint8*) gi->items[1].data;
+          gint    k;
+
+          for (k = 0; k < gi->length; k++)
+            {
+              *out = (guint8) G_MAXUINT32 - MIN (round (*data), G_MAXUINT8);
+              data++;
+              out++;
+            }
+        }
+      g_object_unref (distmap);
+      distmap = tmp;
+
+      /* Watershed the labels. */
+      graph = gegl_node_new ();
+      input = gegl_node_new_child (graph,
+                                   "operation", "gegl:buffer-source",
+                                   "buffer", labels,
+                                   NULL);
+      aux = gegl_node_new_child (graph,
+                                 "operation", "gegl:buffer-source",
+                                 "buffer", distmap,
+                                 NULL);
+      op  = gegl_node_new_child (graph,
+                                 "operation", "gegl:watershed-transform",
+                                 NULL);
+      sink  = gegl_node_new_child (graph,
+                                   "operation", "gegl:buffer-sink",
+                                   "buffer", &tmp,
+                                   NULL);
+      gegl_node_connect_to (input, "output",
+                            op, "input");
+      gegl_node_connect_to (aux, "output",
+                            op, "aux");
+      gegl_node_connect_to (op, "output",
+                            sink, "input");
+      gegl_node_process (sink);
+      g_object_unref (graph);
+      g_object_unref (distmap);
+
+      gegl_buffer_copy (tmp, NULL, GEGL_ABYSS_NONE, mask_buffer, NULL);
+      g_object_unref (tmp);
+      g_object_unref (labels);
+
+      GIMP_TIMER_END("watershed line art");
+    }
 
   return mask_buffer;
 }
