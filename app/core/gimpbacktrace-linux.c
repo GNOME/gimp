@@ -665,7 +665,16 @@ gimp_backtrace_get_address_info (guintptr                  address,
 #endif /* HAVE_LIBBACKTRACE */
 
 #ifdef HAVE_LIBUNWIND
+/* we use libunwind to get the symbol name, when available, even if dladdr() or
+ * libbacktrace already found one, since it provides more descriptive names in
+ * some cases, and, in particular, full symbol names for C++ lambdas.
+ *
+ * note that, in some cases, this can result in a discrepancy between the
+ * symbol name, and the corresponding source location.
+ */
+#if 0
   if (! info->symbol_name[0])
+#endif
     {
       unw_context_t context = {};
       unw_cursor_t  cursor;
