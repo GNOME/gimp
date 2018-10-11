@@ -468,6 +468,8 @@ gui_wait_input_async (GimpAsync  *async,
 
   while (read (input_pipe[0], buffer, sizeof (buffer)) == -1 &&
          errno == EINTR);
+
+  gimp_async_finish (async, NULL);
 }
 
 static gboolean
