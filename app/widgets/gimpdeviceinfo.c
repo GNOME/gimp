@@ -175,14 +175,26 @@ gimp_device_info_constructed (GObject *object)
 
   if (info->device)
     {
+      gint i;
+
       g_object_set_data (G_OBJECT (info->device), GIMP_DEVICE_INFO_DATA_KEY,
                          info);
 
       gimp_object_set_name (GIMP_OBJECT (info), info->device->name);
 
-      info->mode    = info->device->mode;
-      info->n_axes  = info->device->num_axes;
-      info->n_keys  = info->device->num_keys;
+      info->mode = gdk_device_get_mode (info->device);
+
+      info->n_axes = gdk_device_get_n_axes (info->device);
+      info->axes = g_new0 (GdkAxisUse, info->n_axes);
+      for (i = 0; i < info->n_axes; i++)
+        info->axes[i] = gdk_device_get_axis_use (info->device, i);
+
+      info->n_keys = gdk_device_get_n_keys (info->device);
+      info->keys = g_new0 (GimpDeviceKey, info->n_keys);
+      for (i = 0; i < info->n_keys; i++)
+        gdk_device_get_key (info->device, i,
+                            &info->keys[i].keyval,
+                            &info->keys[i].modifiers);
     }
 }
 
@@ -231,21 +243,15 @@ gimp_device_info_set_property (GObject      *object,
         if (array)
           {
             gint i;
-            gint n_device_values;
+            gint n_device_values = gimp_value_array_length (array);
 
             if (device)
-              {
-                n_device_values = MIN (gimp_value_array_length (array),
-                                       device->num_axes);
-              }
-            else
-              {
-                n_device_values = gimp_value_array_length (array);
+              n_device_values = MIN (n_device_values,
+                                     gdk_device_get_n_axes (device));
 
-                info->n_axes = n_device_values;
-                info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
-                memset (info->axes, 0, info->n_axes * sizeof (GdkAxisUse));
-              }
+            info->n_axes = n_device_values;
+            info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
+            memset (info->axes, 0, info->n_axes * sizeof (GdkAxisUse));
 
             for (i = 0; i < n_device_values; i++)
               {
@@ -266,21 +272,15 @@ gimp_device_info_set_property (GObject      *object,
         if (array)
           {
             gint i;
-            gint n_device_values;
+            gint n_device_values = gimp_value_array_length (array);
 
             if (device)
-              {
-                n_device_values = MIN (gimp_value_array_length (array),
-                                       device->num_keys);
-              }
-            else
-              {
-                n_device_values = gimp_value_array_length (array);
+              n_device_values = MIN (n_device_values,
+                                     gdk_device_get_n_keys (device));
 
-                info->n_keys = n_device_values;
-                info->keys   = g_renew (GdkDeviceKey, info->keys, info->n_keys);
-                memset (info->keys, 0, info->n_keys * sizeof (GdkDeviceKey));
-              }
+            info->n_keys = n_device_values;
+            info->keys   = g_renew (GimpDeviceKey, info->keys, info->n_keys);
+            memset (info->keys, 0, info->n_keys * sizeof (GimpDeviceKey));
 
             for (i = 0; i < n_device_values; i++)
               {
@@ -587,7 +587,7 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
       memset (info->axes, 0, info->n_axes * sizeof (GdkAxisUse));
 
-      for (i = 0; i < device->num_axes; i++)
+      for (i = 0; i < info->n_axes; i++)
         gimp_device_info_set_axis_use (info, i,
                                        device->axes[i].use);
 
@@ -782,8 +782,8 @@ gimp_device_info_set_axis_use (GimpDeviceInfo *info,
     {
       if (info->device)
         gdk_device_set_axis_use (info->device, axis, use);
-      else
-        info->axes[axis] = use;
+
+      info->axes[axis] = use;
 
       g_object_notify (G_OBJECT (info), "axes");
     }
@@ -841,14 +841,10 @@ gimp_device_info_set_key (GimpDeviceInfo *info,
       modifiers != old_modifiers)
     {
       if (info->device)
-        {
-          gdk_device_set_key (info->device, key, keyval, modifiers);
-        }
-      else
-        {
-          info->keys[key].keyval    = keyval;
-          info->keys[key].modifiers = modifiers;
-        }
+        gdk_device_set_key (info->device, key, keyval, modifiers);
+
+      info->keys[key].keyval    = keyval;
+      info->keys[key].modifiers = modifiers;
 
       g_object_notify (G_OBJECT (info), "keys");
     }
