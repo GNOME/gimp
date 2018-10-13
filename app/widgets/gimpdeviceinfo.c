@@ -190,7 +190,7 @@ gimp_device_info_constructed (GObject *object)
         info->axes[i] = gdk_device_get_axis_use (info->device, i);
 
       info->n_keys = gdk_device_get_n_keys (info->device);
-      info->keys = g_new0 (GimpDeviceKey, info->n_keys);
+      info->keys = g_new0 (GdkDeviceKey, info->n_keys);
       for (i = 0; i < info->n_keys; i++)
         gdk_device_get_key (info->device, i,
                             &info->keys[i].keyval,
@@ -279,8 +279,8 @@ gimp_device_info_set_property (GObject      *object,
                                      gdk_device_get_n_keys (device));
 
             info->n_keys = n_device_values;
-            info->keys   = g_renew (GimpDeviceKey, info->keys, info->n_keys);
-            memset (info->keys, 0, info->n_keys * sizeof (GimpDeviceKey));
+            info->keys   = g_renew (GdkDeviceKey, info->keys, info->n_keys);
+            memset (info->keys, 0, info->n_keys * sizeof (GdkDeviceKey));
 
             for (i = 0; i < n_device_values; i++)
               {
