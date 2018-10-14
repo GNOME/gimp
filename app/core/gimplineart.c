@@ -1715,6 +1715,29 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
 
   labels = gimp_lineart_get_labels (mask, TRUE);
 
+  /* Check biggest label. */
+  gi = gegl_buffer_iterator_new (labels, NULL, 0, NULL,
+                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+  while (gegl_buffer_iterator_next (gi))
+    {
+      guint32 *data = (guint32*) gi->items[0].data;
+      gint     k;
+
+      for (k = 0; k < gi->length; k++)
+        {
+          label_max = MAX (*data, label_max);
+          data++;
+        }
+    }
+  if (label_max == 0)
+    {
+      g_object_unref (labels);
+      g_object_unref (distmap);
+      return 0.0;
+    }
+
+  /* Make sure that stroke pixels are label 0. */
+  label_max++;
   gi = gegl_buffer_iterator_new (mask, NULL, 0, NULL,
                                  GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
   gegl_buffer_iterator_add (gi, labels, NULL, 0,
@@ -1730,31 +1753,11 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
         {
           if (! *m)
             *l = 0;
+          else if (*l == 0)
+            *l = label_max;
           m++;
           l++;
         }
-    }
-
-  /* Check biggest label. */
-  gi = gegl_buffer_iterator_new (labels, NULL, 0, NULL,
-                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
-  while (gegl_buffer_iterator_next (gi))
-    {
-      guint32 *data = (guint32*) gi->items[0].data;
-      gint     k;
-
-      for (k = 0; k < gi->length; k++)
-        {
-          label_max = MAX (*data, label_max);
-          data++;
-        }
-    }
-
-  if (label_max == 0)
-    {
-      g_object_unref (labels);
-      g_object_unref (distmap);
-      return 0.0;
     }
 
   /* Create an array of max distance per label */
@@ -1778,7 +1781,8 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
 
       for (k = 0; k < gi->length; k++)
         {
-          gimp_assert (*m == 0 || *l > 0);
+          gimp_assert (*m == 0 || *l);
+
           if (*m && *d > dmax_data[*l - 1])
             dmax_data[*l - 1] = *d;
 
