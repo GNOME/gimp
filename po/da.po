@@ -55,7 +55,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-10-02 18:00+0000\n"
-"PO-Revision-Date: 2018-10-09 18:50+0200\n"
+"PO-Revision-Date: 2018-10-11 19:25+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -5096,16 +5096,15 @@ msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Niveauer …"
 
-# Genvejstasten bør efterses
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr "_Lille planet …"
+msgstr "Lill_e planet …"
 
 #: ../app/actions/filters-actions.c:422
 msgctxt "filters-action"
 msgid "_Long Shadow..."
-msgstr "Lang sk_ygge …"
+msgstr "L_ang skygge …"
 
 #: ../app/actions/filters-actions.c:427
 msgctxt "filters-action"
