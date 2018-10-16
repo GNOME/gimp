@@ -231,49 +231,61 @@ gimp_file_proc_view_get_proc (GimpFileProcView  *view,
                               gchar            **label,
                               GtkFileFilter    **filter)
 {
-  GtkTreeModel     *model;
-  GtkTreeSelection *selection;
-  GtkTreeIter       iter;
+  GtkTreeModel        *model;
+  GtkTreeSelection    *selection;
+  GimpPlugInProcedure *proc;
+  GtkTreeIter          iter;
+  gboolean             has_selection;
 
   g_return_val_if_fail (GIMP_IS_FILE_PROC_VIEW (view), NULL);
 
+  if (label)  *label  = NULL;
+  if (filter) *filter = NULL;
+
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+  has_selection = gtk_tree_selection_get_selected (selection, &model, &iter);
+
+  /* if there's no selected item, we return the "automatic" procedure, which,
+   * if exists, is the first item.
+   */
+  if (! has_selection)
     {
-      GimpPlugInProcedure *proc;
+      model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
 
-      if (label && filter)
-        gtk_tree_model_get (model, &iter,
-                            COLUMN_PROC,   &proc,
-                            COLUMN_LABEL,  label,
-                            COLUMN_FILTER, filter,
-                            -1);
-      else if (label)
-        gtk_tree_model_get (model, &iter,
-                            COLUMN_PROC,   &proc,
-                            COLUMN_LABEL,  label,
-                            -1);
-      else if (filter)
-        gtk_tree_model_get (model, &iter,
-                            COLUMN_PROC,   &proc,
-                            COLUMN_FILTER, filter,
-                            -1);
-      else
-        gtk_tree_model_get (model, &iter,
-                            COLUMN_PROC,   &proc,
-                            -1);
+      if (! gtk_tree_model_get_iter_first (model, &iter))
+        return NULL;
+    }
 
-      if (proc)
-        g_object_unref (proc);
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_PROC, &proc,
+                      -1);
 
-      return proc;
+  if (proc)
+    {
+      g_object_unref (proc);
+
+      /* there's no selected item, and no "automatic" procedure.  return NULL.
+       */
+      if (! has_selection)
+        return NULL;
     }
 
   if (label)
-    *label = NULL;
+    {
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_LABEL, label,
+                          -1);
+    }
 
-  return NULL;
+  if (filter)
+    {
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_FILTER, filter,
+                          -1);
+    }
+
+  return proc;
 }
 
 gboolean
