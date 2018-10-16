@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-28 00:04+0200\n"
-"PO-Revision-Date: 2018-09-28 00:05+0200\n"
+"POT-Creation-Date: 2018-10-16 21:04+0200\n"
+"PO-Revision-Date: 2018-10-16 21:05+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2988,7 +2988,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1991
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2002
 #: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:214
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -12940,8 +12940,8 @@ msgstr "Czcionka"
 msgid "Tool Preset"
 msgstr "Ustawienia narzędzia"
 
-#: ../app/core/gimpdatafactory.c:348 ../app/core/gimpdatafactory.c:382
-#: ../app/core/gimpdatafactory.c:697 ../app/core/gimpdatafactory.c:728
+#: ../app/core/gimpdatafactory.c:350 ../app/core/gimpdatafactory.c:384
+#: ../app/core/gimpdatafactory.c:718 ../app/core/gimpdatafactory.c:749
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -12952,22 +12952,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:412 ../app/core/gimpdatafactory.c:415
+#: ../app/core/gimpdatafactory.c:423 ../app/core/gimpdatafactory.c:426
 #: ../app/core/gimpitem.c:542 ../app/core/gimpitem.c:545
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:424 ../app/core/gimpitem.c:553
+#: ../app/core/gimpdatafactory.c:435 ../app/core/gimpitem.c:553
 #, c-format
 msgid "%s copy"
 msgstr "%s. kopia"
 
-#: ../app/core/gimpdatafactory.c:573 ../app/tools/gimptextoptions.c:536
+#: ../app/core/gimpdatafactory.c:586 ../app/tools/gimptextoptions.c:536
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Wczytywanie czcionek (może to chwilę zająć…)"
 
-#: ../app/core/gimpdatafactory.c:892
+#: ../app/core/gimpdatafactory.c:908
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -12978,7 +12978,7 @@ msgstr ""
 "utworzyć katalog lub naprawić konfigurację w sekcji „Katalogi” okna "
 "„Preferencji”."
 
-#: ../app/core/gimpdatafactory.c:911
+#: ../app/core/gimpdatafactory.c:927
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -12989,7 +12989,7 @@ msgstr ""
 "wyszukiwania. Prawdopodobnie ręcznie zmodyfikowano plik gimprc. Proszę "
 "naprawić konfigurację w sekcji „Katalogi” okna „Preferencji”."
 
-#: ../app/core/gimpdatafactory.c:921
+#: ../app/core/gimpdatafactory.c:937
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Nie skonfigurowano zapisywalnego katalogu danych."
@@ -13058,7 +13058,7 @@ msgid "Render Stroke"
 msgstr "Rysowanie pociągnięcia"
 
 #: ../app/core/gimpdrawable-gradient.c:125
-#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1032
+#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1034
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Gradient"
@@ -13287,64 +13287,64 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Przekształcenie grupy warstw"
 
-#: ../app/core/gimpimage.c:650 ../app/widgets/gimpsymmetryeditor.c:175
+#: ../app/core/gimpimage.c:661 ../app/widgets/gimpsymmetryeditor.c:175
 msgid "Symmetry"
 msgstr "Symetria"
 
-#: ../app/core/gimpimage.c:2218
+#: ../app/core/gimpimage.c:2229
 msgid " (exported)"
 msgstr " (wyeksportowany)"
 
-#: ../app/core/gimpimage.c:2222
+#: ../app/core/gimpimage.c:2233
 msgid " (overwritten)"
 msgstr " (zastąpiony)"
 
-#: ../app/core/gimpimage.c:2231
+#: ../app/core/gimpimage.c:2242
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:2405 ../app/core/gimpimage.c:2419
-#: ../app/core/gimpimage.c:2462
+#: ../app/core/gimpimage.c:2416 ../app/core/gimpimage.c:2430
+#: ../app/core/gimpimage.c:2473
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Tryb warstwy „%s” został dodany w %s"
 
-#: ../app/core/gimpimage.c:2477
+#: ../app/core/gimpimage.c:2488
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Grupy warstw zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2484
+#: ../app/core/gimpimage.c:2495
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maski na grupach warstw zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2500
+#: ../app/core/gimpimage.c:2511
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Obrazy o głębi wysokobitowej zostały dodane w %s"
 
-#: ../app/core/gimpimage.c:2512
+#: ../app/core/gimpimage.c:2523
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Wewnętrzna kompresja zlib została dodana w %s"
 
-#: ../app/core/gimpimage.c:2529
+#: ../app/core/gimpimage.c:2540
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Obsługa plików obrazów większych niż 4 GB została dodana w %s"
 
-#: ../app/core/gimpimage.c:2623
+#: ../app/core/gimpimage.c:2634
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2675
+#: ../app/core/gimpimage.c:2686
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3562
+#: ../app/core/gimpimage.c:3588
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13352,47 +13352,47 @@ msgstr ""
 "Sprawdzenie poprawności danych pasożytniczych „gimp-comment” się nie "
 "powiodło: komentarz zawiera nieprawidłowe UTF-8"
 
-#: ../app/core/gimpimage.c:3614
+#: ../app/core/gimpimage.c:3640
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3655
+#: ../app/core/gimpimage.c:3681
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4382
+#: ../app/core/gimpimage.c:4408
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4424 ../app/core/gimpimage.c:4455
+#: ../app/core/gimpimage.c:4450 ../app/core/gimpimage.c:4481
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4449
+#: ../app/core/gimpimage.c:4475
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4616
+#: ../app/core/gimpimage.c:4642
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4644 ../app/core/gimpimage.c:4668
+#: ../app/core/gimpimage.c:4670 ../app/core/gimpimage.c:4694
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4724
+#: ../app/core/gimpimage.c:4750
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:4754 ../app/core/gimpimage.c:4761
+#: ../app/core/gimpimage.c:4780 ../app/core/gimpimage.c:4787
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -17466,7 +17466,7 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
-#: ../app/tools/gimpfiltertool.c:268 ../app/tools/gimpgradienttool.c:245
+#: ../app/tools/gimpfiltertool.c:268 ../app/tools/gimpgradienttool.c:247
 #: ../app/tools/gimpselectiontool.c:445
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -17475,10 +17475,10 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/display/gimpdisplayshell-dnd.c:369
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1149
-#: ../app/tools/gimpfiltertool.c:275 ../app/tools/gimpgradienttool.c:252
+#: ../app/tools/gimpfiltertool.c:275 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
-#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:508
-#: ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:511
+#: ../app/tools/gimpwarptool.c:631
 #, c-format
 msgid "The active layer's pixels are locked."
 msgstr "Piksele aktywnej warstwy są zablokowane."
@@ -17929,11 +17929,11 @@ msgstr "Kliknięcie i przeciągnięcie przemieści punkt osi"
 msgid "Click-Drag to shear"
 msgstr "Kliknięcie i przeciągnięcie nachyli"
 
-#: ../app/file/file-open.c:116 ../app/file/file-save.c:114
+#: ../app/file/file-open.c:116 ../app/file/file-save.c:116
 msgid "Not a regular file"
 msgstr "To nie jest zwykły plik"
 
-#: ../app/file/file-open.c:125 ../app/file/file-save.c:123
+#: ../app/file/file-open.c:125 ../app/file/file-save.c:125
 msgid "Permission denied"
 msgstr "Brak uprawnień"
 
@@ -17984,7 +17984,7 @@ msgstr "Pobierano %s danych obrazu"
 msgid "Uploaded %s of image data"
 msgstr "Wysyłano %s danych obrazu"
 
-#: ../app/file/file-save.c:278
+#: ../app/file/file-save.c:280
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Wtyczka %s nie może zapisać obrazu"
@@ -20717,7 +20717,7 @@ msgstr ""
 "Pchnąć w tę łódź jeża\n"
 "lub ośm skrzyń fig."
 
-#: ../app/text/gimpfontfactory.c:400
+#: ../app/text/gimpfontfactory.c:395
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -21065,8 +21065,8 @@ msgstr "Wyp_ełnienie kubełkiem"
 #: ../app/tools/gimpbucketfilltool.c:151 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:289
-#: ../app/tools/gimpgradienttool.c:259 ../app/tools/gimppainttool.c:296
-#: ../app/tools/gimptransformtool.c:516 ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimpgradienttool.c:261 ../app/tools/gimppainttool.c:296
+#: ../app/tools/gimptransformtool.c:519 ../app/tools/gimpwarptool.c:642
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
@@ -21108,7 +21108,7 @@ msgstr ""
 msgid "_Cage Transform"
 msgstr "Przekształcenie za pomocą _klatki"
 
-#: ../app/tools/gimpcagetool.c:732 ../app/tools/gimpwarptool.c:329
+#: ../app/tools/gimpcagetool.c:732 ../app/tools/gimpwarptool.c:331
 msgid "Press ENTER to commit the transform"
 msgstr "Naciśnięcie klawisza Enter zatwierdzi przekształcenie"
 
@@ -21470,7 +21470,7 @@ msgid "There is no path to move."
 msgstr "Brak ścieżki do przeniesienia."
 
 #: ../app/tools/gimpeditselectiontool.c:1126 ../app/tools/gimpmovetool.c:266
-#: ../app/tools/gimptransformtool.c:550
+#: ../app/tools/gimptransformtool.c:553
 msgid "The active path's position is locked."
 msgstr "Położenie aktywnej ścieżki jest zablokowane."
 
@@ -21894,15 +21894,15 @@ msgstr "Gradient: wypełnia zaznaczony obszar kolorem z gradientu"
 msgid "Gra_dient"
 msgstr "Gra_dient"
 
-#: ../app/tools/gimpgradienttool.c:215
+#: ../app/tools/gimpgradienttool.c:217
 msgid "Click-Drag to draw a gradient"
 msgstr "Kliknięcie i przeciągnięcie rysuje gradient"
 
-#: ../app/tools/gimpgradienttool.c:266
+#: ../app/tools/gimpgradienttool.c:268
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpgradienttool.c:617
+#: ../app/tools/gimpgradienttool.c:619
 msgid "Gradient: "
 msgstr "Gradient: "
 
@@ -23282,35 +23282,35 @@ msgid ""
 msgstr ""
 "Zastosowanie przekształcenia utworzy element ponad %g razy większy niż obraz."
 
-#: ../app/tools/gimptransformtool.c:503
+#: ../app/tools/gimptransformtool.c:506
 msgid "There is no layer to transform."
 msgstr "Brak warstwy do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:510
+#: ../app/tools/gimptransformtool.c:513
 msgid "The active layer's position and size are locked."
 msgstr "Położenie i wymiary aktywnej warstwy są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:523
+#: ../app/tools/gimptransformtool.c:526
 msgid "The selection does not intersect with the layer."
 msgstr "Zaznaczenie nie przecina się z warstwą."
 
-#: ../app/tools/gimptransformtool.c:530
+#: ../app/tools/gimptransformtool.c:533
 msgid "There is no selection to transform."
 msgstr "Brak zaznaczenia do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:543
+#: ../app/tools/gimptransformtool.c:546
 msgid "There is no path to transform."
 msgstr "Brak ścieżki do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:548
+#: ../app/tools/gimptransformtool.c:551
 msgid "The active path's strokes are locked."
 msgstr "Krzywe aktywnej ścieżki są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:552
+#: ../app/tools/gimptransformtool.c:555
 msgid "The active path has no strokes."
 msgstr "Aktywna ścieżka nie ma krzywych."
 
-#: ../app/tools/gimptransformtool.c:617
+#: ../app/tools/gimptransformtool.c:620
 msgid "The current transform is invalid"
 msgstr "Bieżące przekształcenie jest nieprawidłowe"
 
@@ -23468,37 +23468,37 @@ msgstr "Odkształcanie: zniekształcanie za pomocą innych narzędzi"
 msgid "_Warp Transform"
 msgstr "_Odkształcanie"
 
-#: ../app/tools/gimpwarptool.c:484 ../app/tools/gimpwarptool.c:496
+#: ../app/tools/gimpwarptool.c:486 ../app/tools/gimpwarptool.c:498
 msgid "Warp Tool Stroke"
 msgstr "Krzywa odkształcania"
 
-#: ../app/tools/gimpwarptool.c:618
+#: ../app/tools/gimpwarptool.c:620
 msgid "Cannot warp layer groups."
 msgstr "Nie można odkształcać grup warstw."
 
-#: ../app/tools/gimpwarptool.c:652
+#: ../app/tools/gimpwarptool.c:654
 msgid "No stroke events selected."
 msgstr "Nie zaznaczono zdarzeń krzywych."
 
-#: ../app/tools/gimpwarptool.c:863
+#: ../app/tools/gimpwarptool.c:866
 msgid "Warp transform"
 msgstr "Odkształcanie"
 
-#: ../app/tools/gimpwarptool.c:1076
+#: ../app/tools/gimpwarptool.c:1079
 msgid "Please add some warp strokes first."
 msgstr "Proszę najpierw dodać krzywe odkształcania."
 
-#: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1127
+#: ../app/tools/gimpwarptool.c:1093 ../app/tools/gimpwarptool.c:1130
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Renderowanie %d. klatki"
 
-#: ../app/tools/gimpwarptool.c:1105 ../app/tools/gimpwarptool.c:1135
+#: ../app/tools/gimpwarptool.c:1108 ../app/tools/gimpwarptool.c:1138
 #, c-format
 msgid "Frame %d"
 msgstr "%d. klatka"
 
-#: ../app/tools/gimpwarptool.c:1144
+#: ../app/tools/gimpwarptool.c:1147
 msgid "Frame"
 msgstr "Klatka"
 
@@ -25018,6 +25018,10 @@ msgstr "Wyświetlanie wszystkich plików"
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Wybór _typu pliku (%s)"
+
+#: ../app/widgets/gimpfiledialog.c:818
+msgid "Select File _Type"
+msgstr "Wybór _typu pliku"
 
 #: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
