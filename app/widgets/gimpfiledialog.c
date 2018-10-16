@@ -808,26 +808,32 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
   GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
   GtkFileFilter  *filter;
   gchar          *name;
+  gchar          *label;
 
   dialog->file_proc = gimp_file_proc_view_get_proc (view, &name, &filter);
 
   if (name)
-    {
-      gchar *label = g_strdup_printf (_("Select File _Type (%s)"), name);
+    label = g_strdup_printf (_("Select File _Type (%s)"), name);
+  else
+    label = g_strdup (_("Select File _Type"));
 
-      gtk_expander_set_label (GTK_EXPANDER (dialog->proc_expander), label);
+  gtk_expander_set_label (GTK_EXPANDER (dialog->proc_expander), label);
 
-      g_free (label);
-      g_free (name);
-    }
+  g_free (label);
+  g_free (name);
+
   if (dialog->show_all_files)
+    g_clear_object (&filter);
+
+  if (! filter)
     {
-      g_object_unref (filter);
-      filter = gtk_file_filter_new ();
+      filter = g_object_ref_sink (gtk_file_filter_new ());
+
       gtk_file_filter_add_pattern (filter, "*");
-      g_object_ref_sink (filter);
     }
+
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+
   g_object_unref (filter);
 
   if (gtk_file_chooser_get_action (chooser) == GTK_FILE_CHOOSER_ACTION_SAVE)
