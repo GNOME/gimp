@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-10 13:09+0200\n"
-"PO-Revision-Date: 2018-10-10 13:16+0200\n"
+"POT-Creation-Date: 2018-10-16 16:01+0200\n"
+"PO-Revision-Date: 2018-10-16 16:06+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -102,29 +102,38 @@ msgstr "Fotoritocco in GIMP"
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
-msgstr "GIMP 2.10.8 è principalmente una versione di correzione e ottimizzazione. In particolare, essa include:"
+msgstr ""
+"GIMP 2.10.8 è principalmente una versione di correzione e ottimizzazione. In "
+"particolare, essa include:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
-msgstr "La dimensione adattiva dei blocchi durante il rendering delle proiezioni, migliora dinamicamente la reattività"
+msgstr ""
+"La dimensione adattiva dei blocchi durante il rendering delle proiezioni, "
+"migliora dinamicamente la reattività"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
-msgstr "Rilevamento di RawTherapee (versione 5.5 e successive) migliorato su Windows"
+msgstr ""
+"Rilevamento di RawTherapee (versione 5.5 e successive) migliorato su Windows"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
-msgstr "Le informazioni di compatibilità XCF nella finestra di dialogo di salvataggio sono più comprensibili ed accessibili"
+msgstr ""
+"Le informazioni di compatibilità XCF nella finestra di dialogo di "
+"salvataggio sono più comprensibili ed accessibili"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
-msgstr "Vari strumenti di misurazione di performance sono stati aggiunti e i risultati delle registrazioni sono stati resi disponibili nel pannello"
+msgstr ""
+"Vari strumenti di misurazione di performance sono stati aggiunti e i "
+"risultati delle registrazioni sono stati resi disponibili nel pannello"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
@@ -5329,7 +5338,7 @@ msgstr "Pias_trella senza giunte..."
 #: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr "Affila (masc_hera di contrasto)"
+msgstr "Nitidizza (maschera di sfocat_ura)"
 
 #: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
@@ -20167,7 +20176,7 @@ msgstr "Soglia alfa"
 #: ../app/pdb/plug-in-compat-cmds.c:4018
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
-msgstr "Affila (maschera di contrasto)"
+msgstr "Nitidizza (maschera di sfocatura)"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4064
 msgctxt "undo-type"
@@ -21262,17 +21271,15 @@ msgstr "Informazioni sul prelievo colore"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen"
-msgstr "Sfoca/contrasta"
+msgstr "Sfoca / nitidizza"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
-"Strumento sfoca o contrasta: sfoca o contrasta selettivamente usando un "
-"pennello"
+msgstr "Strumento sfoca o nitidizza: sfoca o rende nitida selettivamente usando un pennello"
 
 #: ../app/tools/gimpconvolvetool.c:76
 msgid "Bl_ur / Sharpen"
-msgstr "S_foca o contrasta"
+msgstr "S_foca / nitidizza"
 
 #: ../app/tools/gimpconvolvetool.c:181
 msgid "Click to blur"
@@ -21285,15 +21292,15 @@ msgstr "Fare clic per sfocare la riga"
 #: ../app/tools/gimpconvolvetool.c:183
 #, c-format
 msgid "%s to sharpen"
-msgstr "%s per aumentare il contrasto"
+msgstr "%s per rendere nitida"
 
 #: ../app/tools/gimpconvolvetool.c:187
 msgid "Click to sharpen"
-msgstr "Fare clic per aumentare il contrasto"
+msgstr "Fare clic per rendere nitida"
 
 #: ../app/tools/gimpconvolvetool.c:188
 msgid "Click to sharpen the line"
-msgstr "Fare clic per aumentare il contrasto della riga"
+msgstr "Fare clic per aumentare la nitidezza della riga"
 
 #: ../app/tools/gimpconvolvetool.c:189
 #, c-format
@@ -25085,6 +25092,10 @@ msgstr "Mostra tutti i file"
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
+
+#: ../app/widgets/gimpfiledialog.c:818
+msgid "Select File _Type"
+msgstr "Seleziona _tipo di file"
 
 #: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
