@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-10-01 11:33+0000\n"
-"PO-Revision-Date: 2018-10-01 21:16+0200\n"
+"POT-Creation-Date: 2018-10-17 15:23+0000\n"
+"PO-Revision-Date: 2018-10-17 19:21+0200\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -17611,7 +17611,7 @@ msgstr "Die Pixel von Ebenengruppen können nicht verändert werden."
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1149
 #: ../app/tools/gimpfiltertool.c:275 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
-#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:508
+#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:511
 #: ../app/tools/gimpwarptool.c:631
 #, c-format
 msgid "The active layer's pixels are locked."
@@ -21248,7 +21248,7 @@ msgstr "_Füllen"
 #: ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:261 ../app/tools/gimppainttool.c:296
-#: ../app/tools/gimptransformtool.c:516 ../app/tools/gimpwarptool.c:642
+#: ../app/tools/gimptransformtool.c:519 ../app/tools/gimpwarptool.c:642
 msgid "The active layer is not visible."
 msgstr "Die aktive Ebene ist nicht sichtbar."
 
@@ -21652,7 +21652,7 @@ msgid "There is no path to move."
 msgstr "Es gibt keinen Pfad, der verschoben werden kann."
 
 #: ../app/tools/gimpeditselectiontool.c:1126 ../app/tools/gimpmovetool.c:266
-#: ../app/tools/gimptransformtool.c:550
+#: ../app/tools/gimptransformtool.c:553
 msgid "The active path's position is locked."
 msgstr "Die aktive Pfadposition ist gesperrt."
 
@@ -22652,7 +22652,7 @@ msgstr "Winkel auf den nativen Winkel des Pinsels zurücksetzen"
 
 #: ../app/tools/gimppaintoptions-gui.c:190
 msgid "Reset spacing to brush's native spacing"
-msgstr "Abstand auf den native Abstand des Pinsels zurücksetzen"
+msgstr "Abstand auf den nativen Abstand des Pinsels zurücksetzen"
 
 #: ../app/tools/gimppaintoptions-gui.c:198
 msgid "Reset hardness to brush's native hardness"
@@ -23472,35 +23472,35 @@ msgid ""
 "larger than the image."
 msgstr ""
 
-#: ../app/tools/gimptransformtool.c:503
+#: ../app/tools/gimptransformtool.c:506
 msgid "There is no layer to transform."
 msgstr "Es gibt keine Ebene, die transformiert werden kann."
 
-#: ../app/tools/gimptransformtool.c:510
+#: ../app/tools/gimptransformtool.c:513
 msgid "The active layer's position and size are locked."
 msgstr "Die Position und Größe der aktiven Ebene sind gesperrt."
 
-#: ../app/tools/gimptransformtool.c:523
+#: ../app/tools/gimptransformtool.c:526
 msgid "The selection does not intersect with the layer."
 msgstr "Die Auswahl überschneidet sich nicht mit der Ebene."
 
-#: ../app/tools/gimptransformtool.c:530
+#: ../app/tools/gimptransformtool.c:533
 msgid "There is no selection to transform."
 msgstr "Keine Auswahl zum transformieren vorhanden."
 
-#: ../app/tools/gimptransformtool.c:543
+#: ../app/tools/gimptransformtool.c:546
 msgid "There is no path to transform."
 msgstr "Es gibt keinen Pfad, der transformiert werden kann."
 
-#: ../app/tools/gimptransformtool.c:548
+#: ../app/tools/gimptransformtool.c:551
 msgid "The active path's strokes are locked."
 msgstr "Aktive nachgezogene Pfade sind gesperrt."
 
-#: ../app/tools/gimptransformtool.c:552
+#: ../app/tools/gimptransformtool.c:555
 msgid "The active path has no strokes."
 msgstr "Der aktive Pfad hat keine Striche."
 
-#: ../app/tools/gimptransformtool.c:617
+#: ../app/tools/gimptransformtool.c:620
 msgid "The current transform is invalid"
 msgstr "Die aktuelle Transformation ist ungültig"
 
@@ -25234,6 +25234,12 @@ msgstr "Alle Dateien anzeigen"
 #: ../app/widgets/gimpfiledialog.c:816
 #, c-format
 msgid "Select File _Type (%s)"
+msgstr "Datei_typ: %s"
+
+#: ../app/widgets/gimpfiledialog.c:818
+#, fuzzy
+#| msgid "Select File _Type (%s)"
+msgid "Select File _Type"
 msgstr "Datei_typ: %s"
 
 #: ../app/widgets/gimpfileprocview.c:200
