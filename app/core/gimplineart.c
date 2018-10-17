@@ -304,7 +304,6 @@ gimp_lineart_close (GeglBuffer          *line_art,
       if (erode_size)
         gimp_lineart_erode (strokes, 2 * erode_size);
     }
-
   /* Denoise (remove small connected components) */
   gimp_lineart_denoise (strokes, minimal_lineart_area);
 
@@ -591,9 +590,16 @@ static void
 gimp_lineart_erode (GeglBuffer *buffer,
                     gint        s)
 {
-  const Babl *format;
-  gint        width;
-  gint        height;
+  /* Erode image by a rectangular structuring element of specified
+   * size.
+   */
+  const Babl         *format;
+  const gint          _s2 = s / 2 + 1;
+  const gint          _s1 = s - _s2;
+  GeglBufferIterator *gi;
+  guchar             *buf;
+  gint                width;
+  gint                height;
 
   if (s <= 1)
     return;
@@ -605,39 +611,43 @@ gimp_lineart_erode (GeglBuffer *buffer,
   if (width > 1)
     {
       /* Erosion along X-axis. */
-      GeglBuffer *buf;
-      const int   _s2 = s / 2 + 1;
-      const int   _s1 = s - _s2;
-      const int   s1 = _s1 > width ? width : _s1;
-      const int   s2 = _s2 > width ? width : _s2;
+      const gint s1  = _s1 > width ? width : _s1;
+      const gint s2  = _s2 > width ? width : _s2;
+      gint       y;
 
-      buf = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, 1), format);
-
-      for (int y = 0; y < height; ++y)
+      buf = g_new0 (guchar, width);
+      for (y = 0; y < height; ++y)
         {
           guchar   cur;
-          gint     xs  = 0;
+          gint     xs  = width;
           gint     xd  = 0;
           gboolean is_first = TRUE;
 
-          gegl_buffer_sample (buffer, xs, y, NULL, &cur, NULL,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-          xs++;
-          for (int p = s2 - 1; p > 0 && xs < width; --p)
+          gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (0, y, MIN (s2, width), 1),
+                                         0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+          while (gegl_buffer_iterator_next (gi))
             {
-              guchar val;
+              guint8 *val = (guint8*) gi->items[0].data;
+              gint    k   = 0;
 
-              gegl_buffer_sample (buffer, xs, y, NULL, &val, NULL,
-                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              xs++;
-              if (val <= cur)
+              if (gi->items[0].roi.x == 0)
                 {
-                  cur = val;
-                  is_first = FALSE;
+                  cur = *val;
+                  k   = 1;
+                  val++;
+                }
+              for (; k < gi->length; k++)
+                {
+                  if (*val <= cur)
+                    {
+                      xs = gi->items[0].roi.x + k + 1;
+                      cur = *val;
+                      is_first = FALSE;
+                    }
+                  val++;
                 }
             }
-          gegl_buffer_set (buf, GEGL_RECTANGLE (xd, 0, 1, 1), 0,
-                           format, &cur, GEGL_AUTO_ROWSTRIDE);
+          buf[xd] = cur;
           xd++;
 
           if (xs >= width - 1)
@@ -647,30 +657,42 @@ gimp_lineart_erode (GeglBuffer *buffer,
               gegl_buffer_sample (buffer, width - 1, y, NULL, &se, NULL,
                                   GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
               cur = MIN (cur, se);
-              for (int x = 0; x < width; ++x)
-                {
-                  gegl_buffer_set (buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
-                                   format, &cur, GEGL_AUTO_ROWSTRIDE);
-                }
+              gegl_buffer_set_color_from_pixel (buffer, GEGL_RECTANGLE (0, y, width, 1),
+                                                &cur, NULL);
             }
           else
             {
-              for (int p = s1; p > 0 && xd < width; --p)
-                {
-                  guchar val;
+              gint _width = MIN (width - xs - 1, s1);
+              gint p      = s1;
 
-                  gegl_buffer_sample (buffer, xs, y, NULL, &val, NULL,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                  if (xs < width - 1)
-                    xs++;
-                  if (val <= cur)
+              _width = MIN (_width, width - xd);
+              gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (xs, y, _width, 1),
+                                             0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+              while (gegl_buffer_iterator_next (gi))
+                {
+                  guint8 *val = (guint8*) gi->items[0].data;
+                  gint    k;
+
+                  for (k = 0; k < gi->length; k++)
                     {
-                      cur = val;
-                      is_first = FALSE;
+                      if (*val <= cur)
+                        {
+                          cur = *val;
+                          is_first = FALSE;
+                        }
+                      buf[xd] = cur;
+                      xd++;
+
+                      xs++;
+                      val++;
+                      p--;
                     }
-                  gegl_buffer_set (buf, GEGL_RECTANGLE (xd, 0, 1, 1), 0,
-                                   format, &cur, GEGL_AUTO_ROWSTRIDE);
+                }
+              while (p > 0)
+                {
+                  buf[xd] = cur;
                   xd++;
+                  --p;
                 }
               for (int p = width - s - 1; p > 0; --p)
                 {
@@ -720,8 +742,7 @@ gimp_lineart_erode (GeglBuffer *buffer,
                             is_first = TRUE;
                         }
                     }
-                  gegl_buffer_set (buf, GEGL_RECTANGLE (xd, 0, 1, 1), 0,
-                                   format, &cur, GEGL_AUTO_ROWSTRIDE);
+                  buf[xd] = cur;
                   xd++;
                 }
               xd = width - 1;
@@ -739,8 +760,7 @@ gimp_lineart_erode (GeglBuffer *buffer,
                   if (val < cur)
                     cur = val;
                 }
-              gegl_buffer_set (buf, GEGL_RECTANGLE (xd, 0, 1, 1), 0,
-                               format, &cur, GEGL_AUTO_ROWSTRIDE);
+              buf[xd] = cur;
               xd--;
               for (int p = s2 - 1; p > 0 && xd >= 0; --p)
                 {
@@ -752,29 +772,25 @@ gimp_lineart_erode (GeglBuffer *buffer,
                     xs--;
                   if (val < cur)
                     cur = val;
-                  gegl_buffer_set (buf, GEGL_RECTANGLE (xd, 0, 1, 1), 0,
-                                   format, &cur, GEGL_AUTO_ROWSTRIDE);
+                  buf[xd] = cur;
                   xd--;
                 }
-              gegl_buffer_copy (buf, GEGL_RECTANGLE (0, 0, width, 1),
-                                GEGL_ABYSS_NONE,
-                                buffer, GEGL_RECTANGLE (0, y, width, 1));
+              gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
+                               format, buf, GEGL_AUTO_ROWSTRIDE);
             }
         }
-      g_object_unref (buf);
+      g_free (buf);
     }
 
   if (height > 1)
     {
-      GeglBuffer *buf;
-      const int   _s2 = s / 2 + 1;
-      const int   _s1 = s - _s2;
-      const int   s1 = _s1 > height ? height : _s1;
-      const int   s2 = _s2 > height ? height : _s2;
+      /* Erosion along Y-axis. */
+      const gint s1  = _s1 > height ? height : _s1;
+      const gint s2  = _s2 > height ? height : _s2;
+      gint       x;
 
-      buf = gegl_buffer_new (GEGL_RECTANGLE (0, 0, 1, height), format);
-
-      for (int x = 0; x < width; ++x)
+      buf = g_new0 (guchar, height);
+      for (x = 0; x < width; ++x)
         {
           guchar   cur;
           gint     ys  = 0;
@@ -797,8 +813,7 @@ gimp_lineart_erode (GeglBuffer *buffer,
                   is_first = FALSE;
                 }
             }
-          gegl_buffer_set (buf, GEGL_RECTANGLE (0, ys, 1, 1), 0,
-                           format, &cur, GEGL_AUTO_ROWSTRIDE);
+          buf[yd] = cur;
           yd++;
 
           if (ys >= height - 1)
@@ -829,8 +844,7 @@ gimp_lineart_erode (GeglBuffer *buffer,
                       cur = val;
                       is_first = FALSE;
                     }
-                  gegl_buffer_set (buf, GEGL_RECTANGLE (0, yd, 1, 1), 0,
-                                   format, &cur, GEGL_AUTO_ROWSTRIDE);
+                  buf[yd] = cur;
                   yd++;
                 }
               for (int p = height - s - 1; p > 0; --p)
@@ -881,8 +895,7 @@ gimp_lineart_erode (GeglBuffer *buffer,
                             is_first = TRUE;
                         }
                     }
-                  gegl_buffer_set (buf, GEGL_RECTANGLE (0, yd, 1, 1), 0,
-                                   format, &cur, GEGL_AUTO_ROWSTRIDE);
+                  buf[yd] = cur;
                   yd++;
                 }
               yd = height - 1;
@@ -900,8 +913,7 @@ gimp_lineart_erode (GeglBuffer *buffer,
                   if (val < cur)
                     cur = val;
                 }
-              gegl_buffer_set (buf, GEGL_RECTANGLE (0, yd, 1, 1), 0,
-                               format, &cur, GEGL_AUTO_ROWSTRIDE);
+              buf[yd] = cur;
               yd--;
               for (int p = s2 - 1; p > 0 && yd >= 0; --p)
                 {
@@ -913,16 +925,14 @@ gimp_lineart_erode (GeglBuffer *buffer,
                     ys--;
                   if (val < cur)
                     cur = val;
-                  gegl_buffer_set (buf, GEGL_RECTANGLE (0, yd, 1, 1), 0,
-                                   format, &cur, GEGL_AUTO_ROWSTRIDE);
+                  buf[yd] = cur;
                   yd--;
                 }
-              gegl_buffer_copy (buf, GEGL_RECTANGLE (0, 0, 1, height),
-                                GEGL_ABYSS_NONE,
-                                buffer, GEGL_RECTANGLE (x, 0, 1, height));
+              gegl_buffer_set (buffer, GEGL_RECTANGLE (x, 0, 1, height), 0,
+                               format, buf, GEGL_AUTO_ROWSTRIDE);
             }
         }
-      g_object_unref (buf);
+      g_free (buf);
     }
 }
 
