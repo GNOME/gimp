@@ -459,6 +459,7 @@ gimp_lineart_close (GeglBuffer          *line_art,
       point++;
     }
 
+  g_hash_table_destroy (visited);
   g_array_free (keypoints, TRUE);
   g_object_unref (strokes);
   g_free (normals);
@@ -941,32 +942,32 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                       int         minimum_area)
 {
   /* Keep connected regions with significant area. */
-  GQueue   *q = g_queue_new ();
   GArray   *region;
-  gint      width  = gegl_buffer_get_width (buffer);
-  gint      height = gegl_buffer_get_height (buffer);
-  gboolean  visited[width][height];
+  GQueue   *q       = g_queue_new ();
+  gint      width   = gegl_buffer_get_width (buffer);
+  gint      height  = gegl_buffer_get_height (buffer);
+  gboolean *visited = g_new0 (gboolean, width * height);
+  gint      x, y;
 
-  memset (visited, 0, sizeof (gboolean) * width * height);
   region = g_array_sized_new (TRUE, TRUE, sizeof (Pixel *), minimum_area);
 
-  for (int y = 0; y < height; ++y)
-    for (int x = 0; x < width; ++x)
+  for (y = 0; y < height; ++y)
+    for (x = 0; x < width; ++x)
       {
         guchar has_stroke;
 
         gegl_buffer_sample (buffer, x, y, NULL, &has_stroke, NULL,
                             GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-        if (has_stroke && ! visited[x][y])
+        if (has_stroke && ! visited[x + y * width])
           {
             Pixel *p = g_new (Pixel, 1);
-            int    regionSize = 0;
+            gint   regionSize = 0;
 
             p->x = x;
             p->y = y;
 
             g_queue_push_tail (q, p);
-            visited[x][y] = TRUE;
+            visited[x + y * width] = TRUE;
 
             while (! g_queue_is_empty (q))
               {
@@ -980,14 +981,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                   {
                     gegl_buffer_sample (buffer, p2x, p2y, NULL, &has_stroke, NULL,
                                         GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                    if (has_stroke && ! visited[p2x][p2y])
+                    if (has_stroke && ! visited[p2x + p2y * width])
                       {
                         Pixel *p2 = g_new (Pixel, 1);
 
                         p2->x = p2x;
                         p2->y = p2y;
                         g_queue_push_tail (q, p2);
-                        visited[p2x][p2y] = TRUE;
+                        visited[p2x +p2y * width] = TRUE;
                       }
                   }
                 p2x = p->x - 1;
@@ -996,14 +997,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                   {
                     gegl_buffer_sample (buffer, p2x, p2y, NULL, &has_stroke, NULL,
                                         GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                    if (has_stroke && ! visited[p2x][p2y])
+                    if (has_stroke && ! visited[p2x + p2y * width])
                       {
                         Pixel *p2 = g_new (Pixel, 1);
 
                         p2->x = p2x;
                         p2->y = p2y;
                         g_queue_push_tail (q, p2);
-                        visited[p2x][p2y] = TRUE;
+                        visited[p2x + p2y * width] = TRUE;
                       }
                   }
                 p2x = p->x;
@@ -1012,14 +1013,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                   {
                     gegl_buffer_sample (buffer, p2x, p2y, NULL, &has_stroke, NULL,
                                         GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                    if (has_stroke && ! visited[p2x][p2y])
+                    if (has_stroke && ! visited[p2x + p2y * width])
                       {
                         Pixel *p2 = g_new (Pixel, 1);
 
                         p2->x = p2x;
                         p2->y = p2y;
                         g_queue_push_tail (q, p2);
-                        visited[p2x][p2y] = TRUE;
+                        visited[p2x + p2y * width] = TRUE;
                       }
                   }
                 p2x = p->x;
@@ -1028,14 +1029,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                   {
                     gegl_buffer_sample (buffer, p2x, p2y, NULL, &has_stroke, NULL,
                                         GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                    if (has_stroke && ! visited[p2x][p2y])
+                    if (has_stroke && ! visited[p2x + p2y * width])
                       {
                         Pixel *p2 = g_new (Pixel, 1);
 
                         p2->x = p2x;
                         p2->y = p2y;
                         g_queue_push_tail (q, p2);
-                        visited[p2x][p2y] = TRUE;
+                        visited[p2x + p2y * width] = TRUE;
                       }
                   }
                 p2x = p->x + 1;
@@ -1044,14 +1045,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                   {
                     gegl_buffer_sample (buffer, p2x, p2y, NULL, &has_stroke, NULL,
                                         GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                    if (has_stroke && ! visited[p2x][p2y])
+                    if (has_stroke && ! visited[p2x + p2y * width])
                       {
                         Pixel *p2 = g_new (Pixel, 1);
 
                         p2->x = p2x;
                         p2->y = p2y;
                         g_queue_push_tail (q, p2);
-                        visited[p2x][p2y] = TRUE;
+                        visited[p2x + p2y * width] = TRUE;
                       }
                   }
                 p2x = p->x - 1;
@@ -1060,14 +1061,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                   {
                     gegl_buffer_sample (buffer, p2x, p2y, NULL, &has_stroke, NULL,
                                         GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                    if (has_stroke && ! visited[p2x][p2y])
+                    if (has_stroke && ! visited[p2x + p2y * width])
                       {
                         Pixel *p2 = g_new (Pixel, 1);
 
                         p2->x = p2x;
                         p2->y = p2y;
                         g_queue_push_tail (q, p2);
-                        visited[p2x][p2y] = TRUE;
+                        visited[p2x + p2y * width] = TRUE;
                       }
                   }
                 p2x = p->x - 1;
@@ -1076,14 +1077,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                   {
                     gegl_buffer_sample (buffer, p2x, p2y, NULL, &has_stroke, NULL,
                                         GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                    if (has_stroke && ! visited[p2x][p2y])
+                    if (has_stroke && ! visited[p2x + p2y * width])
                       {
                         Pixel *p2 = g_new (Pixel, 1);
 
                         p2->x = p2x;
                         p2->y = p2y;
                         g_queue_push_tail (q, p2);
-                        visited[p2x][p2y] = TRUE;
+                        visited[p2x + p2y * width] = TRUE;
                       }
                   }
                 p2x = p->x + 1;
@@ -1092,14 +1093,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
                   {
                     gegl_buffer_sample (buffer, p2x, p2y, NULL, &has_stroke, NULL,
                                         GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                    if (has_stroke && ! visited[p2x][p2y])
+                    if (has_stroke && ! visited[p2x + p2y * width])
                       {
                         Pixel *p2 = g_new (Pixel, 1);
 
                         p2->x = p2x;
                         p2->y = p2y;
                         g_queue_push_tail (q, p2);
-                        visited[p2x][p2y] = TRUE;
+                        visited[p2x + p2y * width] = TRUE;
                       }
                   }
 
@@ -1126,6 +1127,7 @@ gimp_lineart_denoise (GeglBuffer *buffer,
       }
   g_array_free (region, TRUE);
   g_queue_free_full (q, g_free);
+  g_free (visited);
 }
 
 static void
@@ -1168,27 +1170,25 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                                   gint     width,
                                   gint     height)
 {
+  gboolean *visited = g_new0 (gboolean, width * height);
+  GQueue   *q       = g_queue_new ();
   GArray   *max_positions;
-  GQueue   *q = g_queue_new ();
-  gboolean  visited[width][height];
 
-  memset (visited, 0, sizeof (gboolean) * width * height);
   max_positions = g_array_new (FALSE, TRUE, sizeof (Pixel));
 
   for (int y = 0; y < height; ++y)
     for (int x = 0; x < width; ++x)
       {
-        if ((curvatures[x][y] > 0.0) && ! visited[x][y])
+        if ((curvatures[x][y] > 0.0) && ! visited[x + y * width])
           {
-            Pixel   *p = g_new (Pixel, 1);
-            Pixel    max_curvature_pixel = gimp_vector2_new (-1.0, -1.0);
-            gfloat   max_curvature = 0.0f;
-            size_t   count = 0;
+            Pixel  *p = g_new (Pixel, 1);
+            Pixel   max_curvature_pixel = gimp_vector2_new (-1.0, -1.0);
+            gfloat  max_curvature = 0.0f;
 
             p->x = x;
             p->y = y;
             g_queue_push_tail (q, p);
-            visited[x][y] = TRUE;
+            visited[x + y * width] = TRUE;
 
             while (! g_queue_is_empty (q))
               {
@@ -1199,7 +1199,6 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 p = (Pixel *) g_queue_pop_head (q);
                 c = curvatures[(gint) p->x][(gint) p->y];
 
-                ++count;
                 curvatures[(gint) p->x][(gint) p->y] = 0.0f;
 
                 p2x = (gint) p->x + 1;
@@ -1207,14 +1206,14 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
                     curvatures[p2x][p2y] > 0.0 &&
-                    ! visited[p2x][p2y])
+                    ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
 
                     p2->x = p2x;
                     p2->y = p2y;
                     g_queue_push_tail (q, p2);
-                    visited[p2x][p2y] = TRUE;
+                    visited[p2x + p2y * width] = TRUE;
                   }
 
                 p2x = p->x - 1;
@@ -1222,14 +1221,14 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
                     curvatures[p2x][p2y] > 0.0 &&
-                    ! visited[p2x][p2y])
+                    ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
 
                     p2->x = p2x;
                     p2->y = p2y;
                     g_queue_push_tail (q, p2);
-                    visited[p2x][p2y] = TRUE;
+                    visited[p2x + p2y * width] = TRUE;
                   }
 
                 p2x = p->x;
@@ -1237,14 +1236,14 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
                     curvatures[p2x][p2y] > 0.0 &&
-                    ! visited[p2x][p2y])
+                    ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
 
                     p2->x = p2x;
                     p2->y = p2y;
                     g_queue_push_tail (q, p2);
-                    visited[p2x][p2y] = TRUE;
+                    visited[p2x + p2y * width] = TRUE;
                   }
 
                 p2x = p->x;
@@ -1252,14 +1251,14 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
                     curvatures[p2x][p2y] > 0.0 &&
-                    ! visited[p2x][p2y])
+                    ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
 
                     p2->x = p2x;
                     p2->y = p2y;
                     g_queue_push_tail (q, p2);
-                    visited[p2x][p2y] = TRUE;
+                    visited[p2x + p2y * width] = TRUE;
                   }
 
                 p2x = p->x + 1;
@@ -1267,14 +1266,14 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
                     curvatures[p2x][p2y] > 0.0 &&
-                    ! visited[p2x][p2y])
+                    ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
 
                     p2->x = p2x;
                     p2->y = p2y;
                     g_queue_push_tail (q, p2);
-                    visited[p2x][p2y] = TRUE;
+                    visited[p2x + p2y * width] = TRUE;
                   }
 
                 p2x = p->x - 1;
@@ -1282,14 +1281,14 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
                     curvatures[p2x][p2y] > 0.0 &&
-                    ! visited[p2x][p2y])
+                    ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
 
                     p2->x = p2x;
                     p2->y = p2y;
                     g_queue_push_tail (q, p2);
-                    visited[p2x][p2y] = TRUE;
+                    visited[p2x + p2y * width] = TRUE;
                   }
 
                 p2x = p->x - 1;
@@ -1297,14 +1296,14 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
                     curvatures[p2x][p2y] > 0.0 &&
-                    ! visited[p2x][p2y])
+                    ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
 
                     p2->x = p2x;
                     p2->y = p2y;
                     g_queue_push_tail (q, p2);
-                    visited[p2x][p2y] = TRUE;
+                    visited[p2x + p2y * width] = TRUE;
                   }
 
                 p2x = p->x + 1;
@@ -1312,14 +1311,14 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
                     curvatures[p2x][p2y] > 0.0 &&
-                    ! visited[p2x][p2y])
+                    ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
 
                     p2->x = p2x;
                     p2->y = p2y;
                     g_queue_push_tail (q, p2);
-                    visited[p2x][p2y] = TRUE;
+                    visited[p2x + p2y * width] = TRUE;
                   }
 
                 if (c > max_curvature)
@@ -1334,6 +1333,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
           }
       }
   g_queue_free_full (q, g_free);
+  g_free (visited);
 
   return max_positions;
 }
