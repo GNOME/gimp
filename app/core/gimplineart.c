@@ -75,19 +75,20 @@ static void         gimp_lineart_erode                      (GeglBuffer         
 static void         gimp_lineart_denoise                    (GeglBuffer             *buffer,
                                                              int                     size);
 static void         gimp_lineart_compute_normals_curvatures (GeglBuffer             *mask,
-                                                             gfloat               ***normals,
-                                                             gfloat                **curvatures,
+                                                             gfloat                 *normals,
+                                                             gfloat                 *curvatures,
                                                              int                     normal_estimate_mask_size);
-static GArray     * gimp_lineart_curvature_extremums        (gfloat                **curvatures,
+static GArray     * gimp_lineart_curvature_extremums        (gfloat                 *curvatures,
                                                              gint                    curvatures_width,
                                                              gint                    curvatures_height);
 static gint         gimp_spline_candidate_cmp               (const SplineCandidate  *a,
                                                              const SplineCandidate  *b,
                                                              gpointer                user_data);
-static GList      * gimp_lineart_find_spline_candidates     (GArray                *max_positions,
-                                                              gfloat              ***normals,
-                                                              gint                   distance_threshold,
-                                                              gfloat                 max_angle_deg);
+static GList      * gimp_lineart_find_spline_candidates     (GArray                 *max_positions,
+                                                             gfloat                 *normals,
+                                                             gint                    width,
+                                                             gint                    distance_threshold,
+                                                             gfloat                  max_angle_deg);
 
 static GArray     * gimp_lineart_discrete_spline            (Pixel                   p0,
                                                              GimpVector2             n0,
@@ -119,7 +120,8 @@ static inline gboolean    border_in_direction (GeglBuffer *mask,
                                                Pixel       p,
                                                int         direction);
 static inline GimpVector2 pair2normal         (Pixel       p,
-                                               gfloat ***normals);
+                                               gfloat     *normals,
+                                               gint        width);
 
 /* Edgel */
 
@@ -216,38 +218,25 @@ gimp_lineart_close (GeglBuffer          *line_art,
                     gboolean             small_segments_from_spline_sources,
                     gint                 segments_max_length)
 {
-  const Babl           *gray_format;
-  gfloat             ***normals;
-  gfloat              **curvatures;
-  GeglBufferIterator   *gi;
-  GeglBuffer           *closed;
-  GeglBuffer           *strokes;
-  GHashTable           *visited;
-  GArray               *keypoints;
-  Pixel                *point;
-  GList                *candidates;
-  SplineCandidate      *candidate;
-  guchar                max_value = 0;
-  gfloat                threshold;
-  gint                  width  = gegl_buffer_get_width (line_art);
-  gint                  height = gegl_buffer_get_height (line_art);
-  gint                  i;
+  const Babl         *gray_format;
+  gfloat             *normals;
+  gfloat             *curvatures;
+  GeglBufferIterator *gi;
+  GeglBuffer         *closed;
+  GeglBuffer         *strokes;
+  GHashTable         *visited;
+  GArray             *keypoints;
+  Pixel              *point;
+  GList              *candidates;
+  SplineCandidate    *candidate;
+  guchar              max_value = 0;
+  gfloat              threshold;
+  gint                width  = gegl_buffer_get_width (line_art);
+  gint                height = gegl_buffer_get_height (line_art);
+  gint                i;
 
-  normals    = g_new (gfloat **, width);
-  curvatures = g_new (gfloat *, width);
-  for (i = 0; i < width; i++)
-    {
-      gint j;
-
-      normals[i] = g_new (gfloat *, height);
-      for (j = 0; j < height; j++)
-        {
-          normals[i][j] = g_new (gfloat, 2);
-          memset (normals[i][j], 0, sizeof (gfloat) * 2);
-        }
-      curvatures[i] = g_new (gfloat, height);
-      memset (curvatures[i], 0, sizeof (gfloat) * height);
-    }
+  normals    = g_new0 (gfloat, width * height * 2);
+  curvatures = g_new0 (gfloat, width * height);
 
   if (select_transparent)
     /* Keep alpha channel as gray levels */
@@ -329,15 +318,15 @@ gimp_lineart_close (GeglBuffer          *line_art,
       gint j;
       for (j = 0; j < height; j++)
         {
-          gfloat v = curvatures[i][j];
+          gfloat v = curvatures[i + j * width];
 
-          curvatures[i][j] = v >= threshold ? v - threshold :
-                                              (v <= -threshold ? v + threshold : 0.0f);
+          curvatures[i + j * width] = v >= threshold ? v - threshold :
+                                                       (v <= -threshold ? v + threshold : 0.0f);
         }
     }
 
   keypoints = gimp_lineart_curvature_extremums (curvatures, width, height);
-  candidates = gimp_lineart_find_spline_candidates (keypoints, normals,
+  candidates = gimp_lineart_find_spline_candidates (keypoints, normals, width,
                                                     spline_max_length,
                                                     spline_max_angle);
   closed = gegl_buffer_dup (strokes);
@@ -367,8 +356,8 @@ gimp_lineart_close (GeglBuffer          *line_art,
            GPOINTER_TO_INT (g_hash_table_lookup (visited, p2)) < end_point_connectivity))
         {
           GArray      *discrete_curve;
-          GimpVector2  vect1 = pair2normal (*p1, normals);
-          GimpVector2  vect2 = pair2normal (*p2, normals);
+          GimpVector2  vect1 = pair2normal (*p1, normals, width);
+          GimpVector2  vect2 = pair2normal (*p2, normals, width);
           gfloat       distance = gimp_vector2_length_val (gimp_vector2_sub_val (*p1, *p2));
           gint         transitions;
 
@@ -430,7 +419,7 @@ gimp_lineart_close (GeglBuffer          *line_art,
            GPOINTER_TO_INT (g_hash_table_lookup (visited, p)) < end_point_connectivity))
         {
           GArray *segment = gimp_lineart_line_segment_until_hit (closed, *point,
-                                                                 pair2normal (*point, normals),
+                                                                 pair2normal (*point, normals, width),
                                                                  segments_max_length);
 
           if (segment->len &&
@@ -1131,13 +1120,14 @@ gimp_lineart_denoise (GeglBuffer *buffer,
 }
 
 static void
-gimp_lineart_compute_normals_curvatures (GeglBuffer   *mask,
-                                         gfloat     ***normals,
-                                         gfloat      **curvatures,
-                                         int           normal_estimate_mask_size)
+gimp_lineart_compute_normals_curvatures (GeglBuffer *mask,
+                                         gfloat     *normals,
+                                         gfloat     *curvatures,
+                                         int         normal_estimate_mask_size)
 {
-  GArray  *es = gimp_edgelset_new (mask);
-  Edgel  **e  = (Edgel **) es->data;
+  GArray  *es    = gimp_edgelset_new (mask);
+  Edgel  **e     = (Edgel **) es->data;
+  gint     width = gegl_buffer_get_width (mask);
 
   gimp_edgelset_smooth_normals (es, normal_estimate_mask_size);
   gimp_edgelset_compute_curvature (es);
@@ -1146,18 +1136,19 @@ gimp_lineart_compute_normals_curvatures (GeglBuffer   *mask,
     {
       const float w = MAX (1e-8f, (*e)->curvature * (*e)->curvature);
 
-      normals[(*e)->x][(*e)->y][0] += w * (*e)->x_normal;
-      normals[(*e)->x][(*e)->y][1] += w * (*e)->y_normal;
-      curvatures[(*e)->x][(*e)->y] = MAX ((*e)->curvature,
-                                           curvatures[(*e)->x][(*e)->y]);
+      normals[((*e)->x + (*e)->y * width) * 2] += w * (*e)->x_normal;
+      normals[((*e)->x + (*e)->y * width) * 2 + 1] += w * (*e)->y_normal;
+      curvatures[(*e)->x + (*e)->y * width] = MAX ((*e)->curvature,
+                                                   curvatures[(*e)->x + (*e)->y * width]);
       e++;
     }
   for (int y = 0; y < gegl_buffer_get_height (mask); ++y)
     for (int x = 0; x < gegl_buffer_get_width (mask); ++x)
       {
-        const float _angle = atan2f (normals[x][y][1], normals[x][y][0]);
-        normals[x][y][0] = cosf (_angle);
-        normals[x][y][1] = sinf (_angle);
+        const float _angle = atan2f (normals[(x + y * width) * 2 + 1],
+                                     normals[(x + y * width) * 2]);
+        normals[(x + y * width) * 2] = cosf (_angle);
+        normals[(x + y * width) * 2 + 1] = sinf (_angle);
       }
   g_array_free (es, TRUE);
 }
@@ -1166,9 +1157,9 @@ gimp_lineart_compute_normals_curvatures (GeglBuffer   *mask,
  * Keep one pixel per connected component of curvature extremums.
  */
 static GArray *
-gimp_lineart_curvature_extremums (gfloat **curvatures,
-                                  gint     width,
-                                  gint     height)
+gimp_lineart_curvature_extremums (gfloat *curvatures,
+                                  gint    width,
+                                  gint    height)
 {
   gboolean *visited = g_new0 (gboolean, width * height);
   GQueue   *q       = g_queue_new ();
@@ -1179,7 +1170,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
   for (int y = 0; y < height; ++y)
     for (int x = 0; x < width; ++x)
       {
-        if ((curvatures[x][y] > 0.0) && ! visited[x + y * width])
+        if ((curvatures[x + y * width] > 0.0) && ! visited[x + y * width])
           {
             Pixel  *p = g_new (Pixel, 1);
             Pixel   max_curvature_pixel = gimp_vector2_new (-1.0, -1.0);
@@ -1197,15 +1188,15 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 gint   p2y;
 
                 p = (Pixel *) g_queue_pop_head (q);
-                c = curvatures[(gint) p->x][(gint) p->y];
+                c = curvatures[(gint) p->x + (gint) p->y * width];
 
-                curvatures[(gint) p->x][(gint) p->y] = 0.0f;
+                curvatures[(gint) p->x + (gint) p->y * width] = 0.0f;
 
                 p2x = (gint) p->x + 1;
                 p2y = (gint) p->y;
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
-                    curvatures[p2x][p2y] > 0.0 &&
+                    curvatures[p2x + p2y * width] > 0.0 &&
                     ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
@@ -1220,7 +1211,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 p2y = p->y;
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
-                    curvatures[p2x][p2y] > 0.0 &&
+                    curvatures[p2x + p2y * width] > 0.0 &&
                     ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
@@ -1235,7 +1226,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 p2y = p->y - 1;
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
-                    curvatures[p2x][p2y] > 0.0 &&
+                    curvatures[p2x + p2y * width] > 0.0 &&
                     ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
@@ -1250,7 +1241,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 p2y = p->y + 1;
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
-                    curvatures[p2x][p2y] > 0.0 &&
+                    curvatures[p2x + p2y * width] > 0.0 &&
                     ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
@@ -1265,7 +1256,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 p2y = p->y + 1;
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
-                    curvatures[p2x][p2y] > 0.0 &&
+                    curvatures[p2x + p2y * width] > 0.0 &&
                     ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
@@ -1280,7 +1271,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 p2y = p->y - 1;
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
-                    curvatures[p2x][p2y] > 0.0 &&
+                    curvatures[p2x + p2y * width] > 0.0 &&
                     ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
@@ -1295,7 +1286,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 p2y = p->y + 1;
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
-                    curvatures[p2x][p2y] > 0.0 &&
+                    curvatures[p2x + p2y * width] > 0.0 &&
                     ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
@@ -1310,7 +1301,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                 p2y = p->y - 1;
                 if (p2x >= 0 && p2x < width    &&
                     p2y >= 0 && p2y < height   &&
-                    curvatures[p2x][p2y] > 0.0 &&
+                    curvatures[p2x + p2y * width] > 0.0 &&
                     ! visited[p2x + p2y * width])
                   {
                     Pixel *p2 = g_new (Pixel, 1);
@@ -1328,7 +1319,7 @@ gimp_lineart_curvature_extremums (gfloat **curvatures,
                   }
                 g_free (p);
               }
-            curvatures[(gint) max_curvature_pixel.x][(gint) max_curvature_pixel.y] = max_curvature;
+            curvatures[(gint) max_curvature_pixel.x + (gint) max_curvature_pixel.y * width] = max_curvature;
             g_array_append_val (max_positions, max_curvature_pixel);
           }
       }
@@ -1356,10 +1347,11 @@ gimp_spline_candidate_cmp (const SplineCandidate *a,
 }
 
 static GList *
-gimp_lineart_find_spline_candidates (GArray   *max_positions,
-                                     gfloat ***normals,
-                                     gint      distance_threshold,
-                                     gfloat    max_angle_deg)
+gimp_lineart_find_spline_candidates (GArray *max_positions,
+                                     gfloat *normals,
+                                     gint    width,
+                                     gint    distance_threshold,
+                                     gfloat  max_angle_deg)
 {
   GList       *candidates = NULL;
   const float  CosMin     = cosf (M_PI * (max_angle_deg / 180.0));
@@ -1388,10 +1380,10 @@ gimp_lineart_find_spline_candidates (GArray   *max_positions,
               float       qualityC;
               float       quality;
 
-              normalP1 = gimp_vector2_new (normals[(gint) p1.x][(gint) p1.y][0],
-                                           normals[(gint) p1.x][(gint) p1.y][1]);
-              normalP2 = gimp_vector2_new (normals[(gint) p2.x][(gint) p2.y][0],
-                                           normals[(gint) p2.x][(gint) p2.y][1]);
+              normalP1 = gimp_vector2_new (normals[((gint) p1.x + (gint) p1.y * width) * 2],
+                                           normals[((gint) p1.x + (gint) p1.y * width) * 2 + 1]);
+              normalP2 = gimp_vector2_new (normals[((gint) p2.x + (gint) p2.y * width) * 2],
+                                           normals[((gint) p2.x + (gint) p2.y * width) * 2 + 1]);
               p1f = gimp_vector2_new (p1.x, p1.y);
               p2f = gimp_vector2_new (p2.x, p2.y);
               p1p2 = gimp_vector2_sub_val (p2f, p1f);
@@ -1853,11 +1845,12 @@ border_in_direction (GeglBuffer *mask,
 }
 
 static inline GimpVector2
-pair2normal (Pixel     p,
-             gfloat ***normals)
+pair2normal (Pixel   p,
+             gfloat *normals,
+             gint    width)
 {
-  return gimp_vector2_new (normals[(gint) p.x][(gint) p.y][0],
-                           normals[(gint) p.x][(gint) p.y][1]);
+  return gimp_vector2_new (normals[((gint) p.x + (gint) p.y * width) * 2],
+                           normals[((gint) p.x + (gint) p.y * width) * 2 + 1]);
 }
 /* Edgel functions */
 
