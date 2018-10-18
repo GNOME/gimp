@@ -1,3 +1,3 @@
 SUBDIRS = \
-	windows
+	windows \
 	osx
