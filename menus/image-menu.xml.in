@@ -840,6 +840,7 @@
       </placeholder>
       <separator />
       <menuitem action="windows-hide-docks" />
+      <menuitem action="windows-show-tabs" />
       <menu action="windows-tab-position" name="Position">
         <menuitem action="windows-tabs-position-top" />
         <menuitem action="windows-tabs-position-bottom" />

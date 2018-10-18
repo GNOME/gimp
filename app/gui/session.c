@@ -51,6 +51,7 @@ enum
   SESSION_INFO = 1,
   HIDE_DOCKS,
   SINGLE_WINDOW_MODE,
+  SHOW_TABS,
   TABS_POSITION,
   LAST_TIP_SHOWN
 };
@@ -106,6 +107,8 @@ session_init (Gimp *gimp)
                               GINT_TO_POINTER (HIDE_DOCKS));
   g_scanner_scope_add_symbol (scanner, 0,  "single-window-mode",
                               GINT_TO_POINTER (SINGLE_WINDOW_MODE));
+  g_scanner_scope_add_symbol (scanner, 0,  "show-tabs",
+                              GINT_TO_POINTER (SHOW_TABS));
   g_scanner_scope_add_symbol (scanner, 0,  "tabs-position",
                               GINT_TO_POINTER (TABS_POSITION));
   g_scanner_scope_add_symbol (scanner, 0,  "last-tip-shown",
@@ -246,6 +249,19 @@ session_init (Gimp *gimp)
                             "single-window-mode", single_window_mode,
                             NULL);
             }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (SHOW_TABS))
+          {
+            gboolean show_tabs;
+
+            token = G_TOKEN_IDENTIFIER;
+
+            if (! gimp_scanner_parse_boolean (scanner, &show_tabs))
+              break;
+
+            g_object_set (gimp->config,
+                          "show-tabs", show_tabs,
+                          NULL);
+          }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (TABS_POSITION))
             {
               gint tabs_position;
@@ -383,6 +399,12 @@ session_save (Gimp     *gimp,
   gimp_config_writer_identifier (writer,
                                  GIMP_GUI_CONFIG (gimp->config)->single_window_mode ?
                                  "yes" : "no");
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_open (writer, "show-tabs");
+  gimp_config_writer_printf (writer,
+                             GIMP_GUI_CONFIG (gimp->config)->show_tabs ?
+                             "yes" : "no");
   gimp_config_writer_close (writer);
 
   gimp_config_writer_open (writer, "tabs-position");

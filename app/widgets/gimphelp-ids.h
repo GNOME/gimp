@@ -718,6 +718,7 @@
 
 #define GIMP_HELP_WINDOWS_SHOW_DOCK               "gimp-windows-show-dock"
 #define GIMP_HELP_WINDOWS_HIDE_DOCKS              "gimp-windows-hide-docks"
+#define GIMP_HELP_WINDOWS_SHOW_TABS               "gimp-windows-show-tabs"
 #define GIMP_HELP_WINDOWS_TABS_POSITION           "gimp-windows-tabs-position"
 #define GIMP_HELP_WINDOWS_USE_SINGLE_WINDOW_MODE  "gimp-windows-use-single-window-mode"
 #define GIMP_HELP_WINDOWS_OPEN_RECENT_DOCK        "gimp-windows-open-recent-dock"

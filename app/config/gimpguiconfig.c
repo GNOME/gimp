@@ -95,6 +95,7 @@ enum
 
   PROP_HIDE_DOCKS,
   PROP_SINGLE_WINDOW_MODE,
+  PROP_SHOW_TABS,
   PROP_TABS_POSITION,
   PROP_LAST_TIP_SHOWN,
 
@@ -456,6 +457,15 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                          G_PARAM_CONSTRUCT |
                                                          GIMP_PARAM_STATIC_STRINGS));
 
+  g_object_class_install_property (object_class, PROP_SHOW_TABS,
+                                   g_param_spec_boolean ("show-tabs",
+                                                         NULL,
+                                                         SHOW_TABS_BLURB,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_STATIC_STRINGS));
+
   g_object_class_install_property (object_class, PROP_TABS_POSITION,
                                    g_param_spec_enum ("tabs-position", NULL, NULL,
                                                       GIMP_TYPE_POSITION,
@@ -721,6 +731,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SINGLE_WINDOW_MODE:
       gui_config->single_window_mode = g_value_get_boolean (value);
       break;
+    case PROP_SHOW_TABS:
+      gui_config->show_tabs = g_value_get_boolean (value);
+      break;
     case PROP_TABS_POSITION:
       gui_config->tabs_position = g_value_get_enum (value);
       break;
@@ -880,6 +893,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SINGLE_WINDOW_MODE:
       g_value_set_boolean (value, gui_config->single_window_mode);
+      break;
+    case PROP_SHOW_TABS:
+      g_value_set_boolean (value, gui_config->show_tabs);
       break;
     case PROP_TABS_POSITION:
       g_value_set_enum (value, gui_config->tabs_position);

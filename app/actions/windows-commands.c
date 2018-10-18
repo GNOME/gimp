@@ -66,6 +66,23 @@ windows_hide_docks_cmd_callback (GtkAction *action,
 }
 
 void
+windows_show_tabs_cmd_callback (GtkAction *action,
+                                gpointer data)
+{
+  Gimp     *gimp;
+  gboolean  active;
+  return_if_no_gimp (gimp, data);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (active != GIMP_GUI_CONFIG (gimp->config)->show_tabs)
+    g_object_set (gimp->config,
+                  "show-tabs", active,
+                  NULL);
+}
+
+
+void
 windows_set_tabs_position_cmd_callback (GtkAction *action,
                                         GtkAction *current,
                                         gpointer   data)

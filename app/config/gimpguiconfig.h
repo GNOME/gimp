@@ -86,6 +86,7 @@ struct _GimpGuiConfig
   /* saved in sessionrc */
   gboolean             hide_docks;
   gboolean             single_window_mode;
+  gboolean             show_tabs;
   GimpPosition         tabs_position;
   gint                 last_tip_shown;
 };
