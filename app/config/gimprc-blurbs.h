@@ -418,6 +418,9 @@ _("Use GIMP in a single-window mode.")
 #define HIDE_DOCKS_BLURB \
 _("Hide docks and other windows, leaving only image windows.")
 
+#define SHOW_TABS_BLURB \
+_("Show the image tabs bar in single window mode.")
+
 #define PLAYGROUND_NPD_TOOL_BLURB \
 _("Enable the N-Point Deformation tool.")
 

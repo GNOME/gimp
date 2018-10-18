@@ -21,6 +21,10 @@
 
 void  windows_hide_docks_cmd_callback             (GtkAction *action,
                                                    gpointer   data);
+
+void  windows_show_tabs_cmd_callback              (GtkAction *action,
+                                                   gpointer data);
+
 void  windows_set_tabs_position_cmd_callback      (GtkAction *action,
                                                    GtkAction *current,
                                                    gpointer   data);

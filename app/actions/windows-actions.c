@@ -126,6 +126,13 @@ static const GimpToggleActionEntry windows_toggle_actions[] =
     FALSE,
     GIMP_HELP_WINDOWS_HIDE_DOCKS },
 
+  { "windows-show-tabs", NULL,
+    NC_("windows-action", "Show Tabs"), NULL,
+    NC_("windows-action", "When enabled, the image tabs bar is shown."),
+    G_CALLBACK (windows_show_tabs_cmd_callback),
+    FALSE,
+    GIMP_HELP_WINDOWS_SHOW_TABS },
+
   { "windows-use-single-window-mode", NULL,
     NC_("windows-action", "Single-Window Mode"), NULL,
     NC_("windows-action", "When enabled, GIMP is in a single-window mode."),
@@ -249,6 +256,7 @@ windows_actions_update (GimpActionGroup *group,
 
   SET_ACTIVE ("windows-use-single-window-mode", config->single_window_mode);
   SET_ACTIVE ("windows-hide-docks", config->hide_docks);
+  SET_ACTIVE ("windows-show-tabs", config->show_tabs);
 
   switch (config->tabs_position)
     {
@@ -271,6 +279,7 @@ windows_actions_update (GimpActionGroup *group,
 
   gimp_action_group_set_action_active (group, action, TRUE);
   gimp_action_group_set_action_sensitive (group, "windows-tab-position", config->single_window_mode);
+  gimp_action_group_set_action_sensitive (group, "windows-show-tabs", config->single_window_mode);
 
 #undef SET_ACTIVE
 }

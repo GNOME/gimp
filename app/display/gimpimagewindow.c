@@ -477,6 +477,9 @@ gimp_image_window_constructed (GObject *object)
   g_signal_connect_object (config, "notify::single-window-mode",
                            G_CALLBACK (gimp_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
+  g_signal_connect_object (config, "notify::show-tabs",
+                           G_CALLBACK (gimp_image_window_config_notify),
+                           window, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::hide-docks",
                            G_CALLBACK (gimp_image_window_config_notify),
                            window, G_CONNECT_SWAPPED);
@@ -1722,6 +1725,7 @@ gimp_image_window_update_tabs (GimpImageWindow *window)
   /* Tab visibility. */
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook),
                               config->single_window_mode &&
+                              config->show_tabs          &&
                               ! config->hide_docks       &&
                               ((private->active_shell          &&
                                 private->active_shell->display &&
@@ -1782,6 +1786,7 @@ gimp_image_window_config_notify (GimpImageWindow *window,
   /* Dock column visibility */
   if (strcmp (pspec->name, "single-window-mode") == 0 ||
       strcmp (pspec->name, "hide-docks")         == 0 ||
+      strcmp (pspec->name, "show-tabs")          == 0 ||
       strcmp (pspec->name, "tabs-position")      == 0)
     {
       if (strcmp (pspec->name, "single-window-mode") == 0 ||
