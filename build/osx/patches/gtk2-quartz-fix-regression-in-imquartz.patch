@@ -1,0 +1,51 @@
+From c9d68d33c22c2f454dac3662bc20135422e0b762 Mon Sep 17 00:00:00 2001
+From: Kristian Rietveld <kris@loopnest.org>
+Date: Mon, 18 Jul 2016 22:00:48 +0200
+Subject: [PATCH 2/2] imquartz: fix regression introduced by commit 4ba1fb
+
+In the preceding fix, the checks involving GDK_IS_QUARTZ_WINDOW macros
+were left out. These checks are in fact crucial, because these functions
+are sometimes called with non-quartz functions as the original comments
+in the code do indicate. Therefore, reintroduce these checks. This
+fixes a crash in GIMP.
+---
+ modules/input/imquartz.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/modules/input/imquartz.c b/modules/input/imquartz.c
+index f6d8f0f..033b0dd 100644
+--- a/modules/input/imquartz.c
++++ b/modules/input/imquartz.c
+@@ -194,6 +194,9 @@ quartz_filter_keypress (GtkIMContext *context,
+   if (!qc->client_window)
+     return FALSE;
+ 
++  if (!gdk_quartz_window_is_quartz (qc->client_window))
++    return gtk_im_context_filter_keypress (qc->slave, event);
++
+   nsview = gdk_quartz_window_get_nsview (qc->client_window);
+   win = (GdkWindow *)[ (GdkQuartzView *)nsview gdkWindow];
+   GTK_NOTE (MISC, g_print ("client_window: %p, win: %p, nsview: %p\n",
+@@ -243,6 +246,9 @@ discard_preedit (GtkIMContext *context)
+   if (!qc->client_window)
+     return;
+ 
++  if (!gdk_quartz_window_is_quartz (qc->client_window))
++    return;
++
+   NSView *nsview = gdk_quartz_window_get_nsview (qc->client_window);
+   if (!nsview)
+     return;
+@@ -313,6 +319,9 @@ quartz_set_cursor_location (GtkIMContext *context, GdkRectangle *area)
+   if (!qc->client_window)
+     return;
+ 
++  if (!gdk_quartz_window_is_quartz (qc->client_window))
++    return;
++
+   if (!qc->focused)
+     return;
+ 
+-- 
+1.9.5 (Apple Git-50.3)
+

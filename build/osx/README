@@ -1,0 +1,162 @@
+Minimal quick start guide in order to get a working version of gimp on OS X.
+============================================================================ 
+
+Notation:
+The dollar sign precedes any terminal commands.
+
+Please note that this is not a flawless process, and there are a few issues that still
+need to be fixed. If you have any questions, please ask them in #gimp on irc.gimp.org
+or on the GIMP developer mailing list (see http://www.gimp.org/mail_lists.html)
+
+I. Preparations
+---------------
+1. Remove all traces of any previous Macports, Homebrew, or JHBuild installations.
+
+2. Backup "~/.profile" for a fresh start:
+$ if [ -f $HOME/.profile ]; \
+   then \
+     cp $HOME/.profile $HOME/.profile-bak \
+    fi
+
+3. Get XCode for your OS X version from the App Store.
+   Its installation takes some time. Use it to dig out some calming music. You will need it ;-)
+   Note that OS X doesn't provide XCode for many older platforms. 
+   Check the directory /Developer/SDKs to see the minimum target OS X version
+   you are able to build for. If you have XCode 4.3 installed (OS X 10.7 and
+   greater), then check /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs instead.
+   Apple requires you to get an Apple Developer Id to get XCode for older
+   platforms if needed.
+
+   For GIMP 2.8.x we build against the Mac OS X 10.6 SDK. If this is not
+   installed, you need to obtain XCode 4.3 (Apple Developer ID required).
+   The following steps install the 10.6 SDK from the XCode 4.3 image:
+   a) Mount the DMG.
+   b) $ cd /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
+   c) $ sudo rsync -a /Volumes/Xcode/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk .
+
+4. Most OS X installations come with preinstalled Git. If you do not have Git
+   installed, then download a prebuilt binary from http://git-scm.com/download.
+   If you are on OS X 10.6 "Snow Leopard", then download git 1.8.4.2 from the
+   legacy site: code.google.com/p/git-osx-installer/downloads
+
+5. Download and install the JHBuild build setup for OS X:
+$ cd $HOME
+$ curl -O https://git.gnome.org/browse/gtk-osx/plain/gtk-osx-build-setup.sh
+$ chmod +x gtk-osx-build-setup.sh
+$ sh gtk-osx-build-setup.sh
+
+6. Add the JHBuild install directory to your $PATH and ~/.profile
+$ export PATH=$HOME/.local/bin:$PATH
+$ echo 'export PATH=$HOME/.local/bin:$PATH' > $HOME/.profile
+
+7. Download a custom JHBuild files for gimp
+$ curl -o $HOME/.jhbuildrc-gimp https://git.gnome.org/browse/gimp/plain/build/osx/jhbuildrc-gimp?h=gimp-2-8 && 
+  curl --create-dirs -o $HOME/gimp/directory/gimp.modules https://git.gnome.org/browse/gimp/plain/build/osx/gimp.modules?h=gimp-2-8
+
+8. In order to create GIMP.app you'll need to download and install gtk-mac-bundler:
+$ JHB=gimp GIMP_SDK=10.6 jhbuild shell
+$ mkdir -p $HOME/gimp/10.6/source/
+$ cd $HOME/gimp/10.6/source/
+$ git clone https://github.com/jralls/gtk-mac-bundler.git
+$ cd gtk-mac-bundler/
+$ make install
+
+II. Download and build GIMP
+---------------------------
+1. Now you can download and install GIMP, where 'gimp' is the directory prefix, and
+'10.6' is the minimum version you are building GIMP for. As it stands, you should be
+able to leave the values as they are, except XCode on your computer doesn't let
+you build for older versions.
+$ JHB=gimp GIMP_SDK=10.6 jhbuild bootstrap
+
+This process requires some manual intervention, see the next steps.
+
+2. When the build fails on cmake, you can ignore this. GIMP and its dependencies
+don't need it.
+
+3. Get the patches for the GIMP build:
+curl --create-dirs -o $HOME/gimp/directory/patches/gmi2-improve-internationalization-of-App-menu-and-other-s.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gmi2-improve-internationalization-of-App-menu-and-other-s.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/gmi2-keep-separators-between-placeholders.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gmi2-keep-separators-between-placeholders.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/gtk2-quartz-fix-clipboard-crashes-with-clipboard-manager.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-fix-clipboard-crashes-with-clipboard-manager.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/gtk2-quartz-fix-dnd-timing-issue.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-fix-dnd-timing-issue.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/gtk2-quartz-fix-regression-in-imquartz.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-fix-regression-in-imquartz.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/gtk2-quartz-handle-didMove-and-didResize-in-the-same-way.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-handle-didMove-and-didResize-in-the-same-way.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/gmi2-keep-separators-between-placeholders.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-introduce-gdk_quartz_window_is_quartz-function.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/libgcrypt-build-without-docs.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/libgcrypt-build-without-docs.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/libsecret-fix-secret-dbus-generation.c.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/libsecret-fix-secret-dbus-generation.c.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/poppler-support-overriding-datadir-through-env-variable.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/poppler-support-overriding-datadir-through-env-variable.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/gettext-fix-English-fallback-for-macOS-Sierra.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gettext-fix-English-fallback-for-macOS-Sierra.patch?h=gimp-2-8
+
+Check https://git.gnome.org/browse/gimp/tree/build/osx/patches?h=gimp-2-8:
+If there are less patches than listed above, then you don't need to try to
+download the missing patches.
+If there are more patches, then download them with the according commands as above.
+It's important that the first curl download contains the --create-dirs parameter
+to initially create the patches directory.
+
+4. Now you can build GIMP.
+For GIMP 2.8 enter
+$ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-2.8
+
+5. In order to run GIMP with D-Bus support (required for GVFS and GIO)
+$ dbus-launch gimp-2.8
+
+This will generate a D-Bus session. If you repeatedly run GIMP using this method,
+you will end up with many D-Bus sessions being run. Kill them after all GIMP
+instances have been killed. 
+
+III. Create a GIMP installer
+----------------------------
+1. To create a bundle, we need some more files:
+
+for GIMP 2.8:
+$ curl -o $HOME/gimp/directory/gimp.bundle https://git.gnome.org/browse/gimp/plain/build/osx/gimp.bundle?h=gimp-2-8 &&
+  curl -o $HOME/gimp/directory/launcher.sh https://git.gnome.org/browse/gimp/plain/build/osx/launcher.sh?h=gimp-2-8 &&
+  chmod +x $HOME/gimp/directory/launcher.sh &&
+  curl -o $HOME/gimp/directory/gimp.icns https://git.gnome.org/browse/gimp/plain/build/osx/gimp.icns?h=gimp-2-8 &&
+  curl -o $HOME/gimp/directory/xcf.icns https://git.gnome.org/browse/gimp/plain/build/osx/xcf.icns?h=gimp-2-8 &&
+  curl --create-dirs -o $HOME/gimp/directory/custom/fonts.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/fonts.conf?h=gimp-2-8 &&
+  curl -o $HOME/gimp/directory/custom/gimprc https://git.gnome.org/browse/gimp/plain/build/osx/custom/gimprc?h=gimp-2-8 &&
+  curl -o $HOME/gimp/directory/custom/gtkrc https://git.gnome.org/browse/gimp/plain/build/osx/custom/gtkrc?h=gimp-2-8 &&
+  curl -o $HOME/gimp/directory/custom/mimeinfo.cache https://git.gnome.org/browse/gimp/plain/build/osx/custom/mimeinfo.cache?h=gimp-2-8 &&
+  curl -o $HOME/gimp/directory/custom/open.desktop https://git.gnome.org/browse/gimp/plain/build/osx/custom/open.desktop?h=gimp-2-8 &&
+  curl -o $HOME/gimp/directory/custom/session.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/session.conf?h=gimp-2-8
+
+$ cp -p $HOME/gimp/10.6/source/gimp-2.8/desktop/gimp.desktop $HOME/gimp/directory/gimp.desktop
+$ cp -p $HOME/gimp/10.6/source/gimp-2.8/build/osx/info.plist $HOME/gimp/directory/info.plist
+
+
+2. We also need to fix a few outstanding issues:
+$ cp $HOME/gimp/10.6/source/gettext-0.18.1.1/gettext-tools/intl/charset.alias ~/gimp/10.6/inst/lib
+$ chmod +w $HOME/gimp/10.6/inst/lib/libpython2.7.dylib
+$ mkdir $HOME/gimp/10.6/prefix/etc/dbus-1/session.d
+$ mkdir $HOME/gimp/10.6/prefix/etc/dbus-1/system.d
+
+3. Run the bundler:
+$ JHB=gimp GIMP_SDK=10.6 jhbuild shell
+$ cd $HOME/gimp/directory
+
+for GIMP 2.8:
+$ gtk-mac-bundler gimp.bundle
+
+4. Create DMG image. Create a directory "bundle/" that contains only the .app
+image. Run the following command in the directory above "bundle/".
+
+$ hdiutil create gimp-2.8.16-x86_64.dmg -volname "GIMP 2.8.16" \
+          -fs HFS+ -fsargs "-c c=64,a=16,e=16" \
+          -format UDBZ -srcfolder bundle/ \
+          -anyowners -nospotlight
+
+IV. Files
+----------
+The following files and subdirectories are in this folder:
+custom                      default application data
+README                      this file
+gimp.icns                   application icon
+gimp.svg                    application icon
+gimp.modules                configuration for jhbuild
+gimp.bundle                 configuration for gtk-mac-bundler
+info.plist.in               OS X application metadata (template)
+launcher.sh                 GIMP starter in the OS X application package
+patches                     Patches as long as they are not accepted upstream
+xcf.icns                    application icon

@@ -1,0 +1,50 @@
+# -*- mode: python -*-
+
+import sys
+
+_gsdk = os.environ.get('GIMP_SDK', None)
+
+if not _gsdk:
+    sys.stderr.write("No GIMP_SDK environment given. Please provide 10.x\n")
+    sys.exit(1)
+
+_sdkversion = _gsdk
+_architecture = _default_arch
+
+if _gsdk == '10.4':
+    _sdkversion = "10.4u"
+    os.environ["OBJC"] = "/usr/bin/gcc-4.0"
+    _architecture = "i386"
+    append_autogenargs('glib-gtk3', '--with-libiconv=gnu')
+else:
+    _architecture = "x86_64"
+    append_autogenargs('glib-gtk3', '--with-libiconv=native')
+
+checkoutroot = os.path.expanduser("~/gimp/" + _gsdk + "/source")
+prefix = os.path.expanduser("~/gimp/" + _gsdk + "/inst")
+tarballdir = os.path.expanduser("~/gimp/pkgs")
+
+# Main setup
+setup_sdk(target=_gsdk, sdk_version=_sdkversion, architectures=[_architecture])
+
+# set XCode path
+# fallback value:
+# _xcodepath = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX" + _sdkversion + ".sdk"
+# this works for OS X 10.9 (64 bit):
+_xcodepath = "/Applications/Xcode.app/Contents/Developer"
+
+# Set OBJCFLAGS
+_sdkdir = get_sdkdir(make_sdk_name(_sdkversion), _xcodepath, _sdkversion)
+
+environ_prepend("OBJCFLAGS", "-I" + _sdkdir + "/usr/include")
+environ_append("OBJCFLAGS", "-isysroot " + _sdkdir)
+environ_prepend("OBJCFLAGS", "-arch " + _architecture)
+environ_append("OBJCFLAGS", "-mmacosx-version-min=" + _gsdk)
+
+# Build with more than one core. Use # of cores +1.
+makeargs = '-j3'
+
+skip.append("libiconv")
+
+# Main module set
+moduleset = os.path.expanduser("~/gimp/directory/gimp.modules")

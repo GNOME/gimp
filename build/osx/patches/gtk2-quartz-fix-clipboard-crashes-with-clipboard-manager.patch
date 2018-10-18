@@ -1,0 +1,86 @@
+From dd740bfebd40e0ec4953d939484ed23a7e095ae4 Mon Sep 17 00:00:00 2001
+From: Kristian Rietveld <kris@loopnest.org>
+Date: Sun, 1 Jan 2017 21:04:04 +0100
+Subject: [PATCH] Bug 743717 - Crashes on clipboard operation, influence by
+ clipboard ...
+
+The problem here was that NSPasteboard would release the clipboard
+owner if all data items were transferred. When trying to re-use this
+owner at a later point, GTK+ would attempt a retain call on a released
+object and crash.
+
+Fix this by not immediately releasing the owner after declaring types,
+so by keeping our own reference around.
+---
+ gtk/gtkclipboard-quartz.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
+
+diff --git a/gtk/gtkclipboard-quartz.c b/gtk/gtkclipboard-quartz.c
+index 5a61838..0c0347c 100644
+--- a/gtk/gtkclipboard-quartz.c
++++ b/gtk/gtkclipboard-quartz.c
+@@ -333,7 +333,6 @@ gtk_clipboard_set_contents (GtkClipboard         *clipboard,
+ 			    gpointer              user_data,
+ 			    gboolean              have_owner)
+ {
+-  GtkClipboardOwner *owner;
+   NSSet *types;
+   NSAutoreleasePool *pool;
+ 
+@@ -369,26 +368,35 @@ gtk_clipboard_set_contents (GtkClipboard         *clipboard,
+    */
+   if (user_data && user_data == clipboard->user_data)
+     {
+-      owner = [clipboard->owner retain];
+-
+-      owner->setting_same_owner = TRUE;
++      clipboard->owner->setting_same_owner = TRUE;
+       clipboard->change_count = [clipboard->pasteboard declareTypes: [types allObjects]
+-                                                              owner: owner];
+-      owner->setting_same_owner = FALSE;
++                                                              owner: clipboard->owner];
++      clipboard->owner->setting_same_owner = FALSE;
+     }
+   else
+     {
+-      owner = [[GtkClipboardOwner alloc] initWithClipboard:clipboard];
++      GtkClipboardOwner *new_owner;
+ 
++      /* We do not set the new owner on clipboard->owner immediately,
++       * because declareTypes could (but not always does -- see also the
++       * comment at pasteboardChangedOwner above) cause clipboard_unset
++       * to be called, which releases clipboard->owner.
++       */
++      new_owner = [[GtkClipboardOwner alloc] initWithClipboard:clipboard];
+       clipboard->change_count = [clipboard->pasteboard declareTypes: [types allObjects]
+-                                                              owner: owner];
++                                                              owner: new_owner];
++
++      /* In case pasteboardChangedOwner was not triggered, check to see
++       * whether the previous owner still needs to be released.
++       */
++      if (clipboard->owner)
++        [clipboard->owner release];
++      clipboard->owner = new_owner;
+     }
+ 
+-  [owner release];
+   [types release];
+   [pool release];
+ 
+-  clipboard->owner = owner;
+   clipboard->user_data = user_data;
+   clipboard->have_owner = have_owner;
+   if (have_owner)
+@@ -478,6 +486,8 @@ clipboard_unset (GtkClipboard *clipboard)
+   g_free (clipboard->storable_targets);
+   clipboard->storable_targets = NULL;
+ 
++  if (clipboard->owner)
++    [clipboard->owner release];
+   clipboard->owner = NULL;
+   clipboard->get_func = NULL;
+   clipboard->clear_func = NULL;
+-- 
+1.9.5 (Apple Git-50.3)
+

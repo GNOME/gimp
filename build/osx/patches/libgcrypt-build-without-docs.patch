@@ -1,0 +1,35 @@
+diff -u a/Makefile.am b/Makefile.am
+--- a/Makefile.am	2014-01-12 12:19:50.000000000 +0100
++++ b/Makefile.am	2014-05-07 19:21:19.883687387 +0200
+@@ -25,11 +25,11 @@
+ # (A suitable gitlog-to-changelog script can be found in GnuPG master.)
+ GITLOG_TO_CHANGELOG=gitlog-to-changelog
+ 
+-DIST_SUBDIRS = m4 compat mpi cipher random src doc tests
+-SUBDIRS =         compat mpi cipher random src doc tests
++DIST_SUBDIRS = m4 compat mpi cipher random src tests
++SUBDIRS =         compat mpi cipher random src tests
+ 
+ EXTRA_DIST = autogen.sh autogen.rc README.GIT LICENSES      	           \
+-             ChangeLog-2011 build-aux/ChangeLog-2011 doc/ChangeLog-2011    \
++             ChangeLog-2011 build-aux/ChangeLog-2011 \
+              m4/ChangeLog-2011 cipher/ChangeLog-2011 src/ChangeLog-2011    \
+              random/ChangeLog-2011 tests/ChangeLog-2011 mpi/ChangeLog-2011 \
+              build-aux/git-log-footer build-aux/git-log-fix
+diff -u a/Makefile.in b/Makefile.in
+--- a/Makefile.in	2014-01-29 11:41:24.000000000 +0100
++++ b/Makefile.in	2014-05-07 19:21:19.903686743 +0200
+@@ -331,10 +331,10 @@
+ 
+ # (A suitable gitlog-to-changelog script can be found in GnuPG master.)
+ GITLOG_TO_CHANGELOG = gitlog-to-changelog
+-DIST_SUBDIRS = m4 compat mpi cipher random src doc tests
+-SUBDIRS = compat mpi cipher random src doc tests
++DIST_SUBDIRS = m4 compat mpi cipher random src tests
++SUBDIRS = compat mpi cipher random src tests
+ EXTRA_DIST = autogen.sh autogen.rc README.GIT LICENSES      	           \
+-             ChangeLog-2011 build-aux/ChangeLog-2011 doc/ChangeLog-2011    \
++             ChangeLog-2011 build-aux/ChangeLog-2011 \
+              m4/ChangeLog-2011 cipher/ChangeLog-2011 src/ChangeLog-2011    \
+              random/ChangeLog-2011 tests/ChangeLog-2011 mpi/ChangeLog-2011 \
+              build-aux/git-log-footer build-aux/git-log-fix
