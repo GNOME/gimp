@@ -28,6 +28,9 @@ Tools:
   - When moving a text layer using the text tool (through alt+drag),
     don't change the layer's box mode to "fixed", which is unnecessary,
     since the layer's size isn't affected.
+  - Transform and deformation operations now maintain color for fully
+    transparent pixels, making unerase and curves manipulation of alpha
+    channel more reliable.
   - All transform tools now apply changes when you save or export/overwrite
     an image without pressing Enter first to confirm changes.
   - Heal, Dodge/Burn, Smudge, and Convolve tools now adjust the processed
