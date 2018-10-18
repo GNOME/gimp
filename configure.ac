@@ -69,6 +69,7 @@ m4_define([libheif_required_version], [1.1.0])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([libmypaint_required_version], [1.3.0])
 m4_define([libpng_required_version], [1.6.25])
+m4_define([libunwind_required_version], [1.1.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([openjpeg_required_version], [2.1.0])
 m4_define([pangocairo_required_version], [1.42.0])
@@ -82,7 +83,6 @@ m4_define([rsvg_required_version], [2.40.6])
 m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([webp_required_version], [0.6.0])
 m4_define([wmf_required_version], [0.2.8])
-m4_define([libunwind_required_version], [1.1.0])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
