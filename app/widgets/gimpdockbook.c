@@ -143,8 +143,9 @@ static void         gimp_dockbook_tab_drag_source_setup       (GtkWidget      *w
 static void         gimp_dockbook_tab_drag_begin              (GtkWidget      *widget,
                                                                GdkDragContext *context,
                                                                GimpDockable   *dockable);
-static void         gimp_dockbook_tab_drag_end                (GtkWidget      *widget,
+static gboolean     gimp_dockbook_tab_drag_failed             (GtkWidget      *widget,
                                                                GdkDragContext *context,
+                                                               GtkDragResult   result,
                                                                GimpDockable   *dockable);
 static void         gimp_dockbook_tab_drag_leave              (GtkWidget      *widget,
                                                                GdkDragContext *context,
@@ -1031,6 +1032,10 @@ gimp_dockbook_add_from_dialog_factory (GimpDockbook *dockbook,
   if (dockable && ! gimp_dockable_get_dockbook (GIMP_DOCKABLE (dockable)))
     gimp_dockbook_add (dockbook, GIMP_DOCKABLE (dockable), position);
 
+  if (dockable)
+    gimp_dockable_set_drag_pos (GIMP_DOCKABLE (dockable),
+                                GIMP_DOCKABLE_DRAG_OFFSET,
+                                GIMP_DOCKABLE_DRAG_OFFSET);
   return dockable;
 }
 
@@ -1177,15 +1182,15 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
   g_signal_connect_object (tab_widget, "drag-begin",
                            G_CALLBACK (gimp_dockbook_tab_drag_begin),
                            dockable, 0);
-  g_signal_connect_object (tab_widget, "drag-end",
-                           G_CALLBACK (gimp_dockbook_tab_drag_end),
+  g_signal_connect_object (tab_widget, "drag-failed",
+                           G_CALLBACK (gimp_dockbook_tab_drag_failed),
                            dockable, 0);
 
   g_signal_connect_object (dockable, "drag-begin",
                            G_CALLBACK (gimp_dockbook_tab_drag_begin),
                            dockable, 0);
-  g_signal_connect_object (dockable, "drag-end",
-                           G_CALLBACK (gimp_dockbook_tab_drag_end),
+  g_signal_connect_object (dockable, "drag-failed",
+                           G_CALLBACK (gimp_dockbook_tab_drag_failed),
                            dockable, 0);
 
   gtk_drag_dest_set (tab_widget,
@@ -1395,37 +1400,49 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
 
   gimp_dockable_get_drag_pos (dockable, &drag_x, &drag_y);
   gtk_drag_set_icon_widget (context, window, drag_x, drag_y);
-
-  /*
-   * Set the source dockable insensitive to give a visual clue that
-   * it's the dockable that's being dragged around
-   */
-  gtk_widget_set_sensitive (GTK_WIDGET (dockable), FALSE);
 }
 
-static void
-gimp_dockbook_tab_drag_end (GtkWidget      *widget,
-                            GdkDragContext *context,
-                            GimpDockable   *dockable)
+static gboolean
+gimp_dockbook_tab_drag_failed (GtkWidget      *widget,
+                               GdkDragContext *context,
+                               GtkDragResult   result,
+                               GimpDockable   *dockable)
 {
+  /* XXX The proper way is to handle "drag-end" signal instead.
+   * Unfortunately this signal seems to be broken in various cases on
+   * macOS/GTK+2 (see #1924). As a consequence, we made sure we don't
+   * have anything to clean unconditionally (for instance we used to set
+   * the dockable unsensitive, which anyway was only a visual clue and
+   * is not really useful). Only thing left to handle is the dockable
+   * detachment when dropping in a non-droppable area.
+   */
   GtkWidget *drag_widget;
+  GtkWidget *window;
+
+  if (result == GTK_DRAG_RESULT_SUCCESS)
+    {
+      /* I don't think this should happen, considering we are in the
+       * "drag-failed" handler, but let's be complete as it is a
+       * possible GtkDragResult value. Just in case!
+       */
+      return FALSE;
+    }
 
   drag_widget = g_object_get_data (G_OBJECT (dockable),
                                    "gimp-dock-drag-widget");
 
-  /*  finding the drag_widget means the drop was not successful, so
-   *  pop up a new dock and move the dockable there
+  /* The drag_widget should be present if the drop was not successful,
+   * in which case, we pop up a new dock and move the dockable there.
    */
-  if (drag_widget)
-    {
-      g_object_set_data (G_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
-      gimp_dockable_detach (dockable);
-    }
+  g_return_val_if_fail (drag_widget, FALSE);
 
-  gimp_dockable_set_drag_pos (dockable,
-                              GIMP_DOCKABLE_DRAG_OFFSET,
-                              GIMP_DOCKABLE_DRAG_OFFSET);
-  gtk_widget_set_sensitive (GTK_WIDGET (dockable), TRUE);
+  g_object_set_data (G_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
+  gimp_dockable_detach (dockable);
+
+  window = gtk_widget_get_toplevel (GTK_WIDGET (dockable));
+  gtk_window_present (GTK_WINDOW (window));
+
+  return TRUE;
 }
 
 
