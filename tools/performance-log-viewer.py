@@ -47,9 +47,7 @@ def format_float (x):
     return "%g" % (round (100 * x) / 100)
 
 def format_percentage (x, digits = 0):
-    scale = 10 ** digits
-
-    return "%g%%" % (round (100 * scale * x) / scale)
+    return "%%.%df%%%%" % digits % (100 * x)
 
 def format_size (size):
     return GLib.format_size_full (size, GLib.FormatSizeFlags.IEC_UNITS)
@@ -67,6 +65,35 @@ def format_color (color):
 
 def is_bright_color (color):
     return max (tuple (color)[0:3]) > 0.5
+
+def blend_colors (color1, color2, amount):
+    color1 = tuple (color1)
+    color2 = tuple (color2)
+
+    a1 = color1[-1]
+    a2 = color2[-1]
+
+    a = (1 - amount) * a1 + amount * a2
+
+    return tuple (a and ((1 - amount) * a1 * c1 + amount * a2 * c2) / a
+                  for c1, c2 in zip (color1[:-1], color2[:-1])) + (a,)
+
+def rounded_rectangle (cr, x, y, width, height, radius):
+    radius = min (radius, width / 2, height / 2)
+
+    cr.arc (x + radius, y + radius, radius, -math.pi, -math.pi / 2)
+    cr.rel_line_to (width - 2 * radius, 0)
+
+    cr.arc (x + width - radius, y + radius, radius, -math.pi / 2, 0)
+    cr.rel_line_to (0, height - 2 * radius)
+
+    cr.arc (x + width - radius, y + height - radius, radius, 0, math.pi / 2)
+    cr.rel_line_to (-(width - 2 * radius), 0)
+
+    cr.arc (x + radius, y + height - radius, radius, math.pi / 2, math.pi)
+    cr.rel_line_to (0, -(height - 2 * radius))
+
+    cr.close_path ()
 
 def get_basename (path):
     match = re.fullmatch (".*[\\\\/](.+?)[\\\\/]?", path)
@@ -2174,6 +2201,90 @@ class BacktraceViewer (Gtk.Box):
 
         return False
 
+class CellRendererPercentage (Gtk.CellRendererText):
+    padding = 0
+
+    def __init__ (self, *args, **kwargs):
+        Gtk.CellRendererText.__init__ (self, *args, xalign = 1, **kwargs)
+
+        self.value = 0
+
+    @GObject.property (type = float)
+    def value (self):
+        return self.value_property
+
+    @value.setter
+    def value (self, value):
+        self.value_property = value
+
+        self.set_property ("text", format_percentage (value, 2))
+
+    def do_render (self, cr, widget, background_area, cell_area, flags):
+        full_width  = cell_area.width  - 2 * self.padding
+        full_height = cell_area.height - 2 * self.padding
+
+        if full_width <= 0 or full_height <= 0:
+            return
+
+        state    = widget.get_state ()
+        style    = widget.get_style_context ()
+        fg_color = style.get_color (state)
+
+        rounded_rectangle (cr,
+                           cell_area.x + self.padding,
+                           cell_area.y + self.padding,
+                           full_width,
+                           full_height,
+                           1)
+
+        cr.clip ()
+
+        cr.set_source_rgba (*blend_colors ((0, 0, 0, 0), fg_color, 0.2))
+        cr.paint ()
+
+        Gtk.CellRendererText.do_render (self,
+                                        cr, widget,
+                                        background_area, cell_area,
+                                        Gtk.CellRendererState (
+                                            flags |
+                                            Gtk.CellRendererState.SELECTED
+                                        ))
+
+        value  = min (max (self.value, 0), 1)
+        width  = round (full_width * value)
+        height = full_height
+
+        if width > 0 and height > 0:
+            state = Gtk.StateFlags (state | Gtk.StateFlags.SELECTED)
+
+            style.save ()
+            style.set_state (state)
+
+            fg_color = style.get_color (state)
+            bg_color = style.get_background_color (state)
+
+            x = round ((full_width - width) * self.get_property ("xalign"))
+
+            cr.rectangle (cell_area.x + self.padding + x,
+                          cell_area.y + self.padding,
+                          width,
+                          height)
+
+            cr.clip ()
+
+            cr.set_source_rgba (*blend_colors (bg_color, fg_color, -0.3))
+            cr.paint ()
+
+            Gtk.CellRendererText.do_render (self,
+                                            cr, widget,
+                                            background_area, cell_area,
+                                            Gtk.CellRendererState (
+                                                flags |
+                                                Gtk.CellRendererState.SELECTED
+                                            ))
+
+            style.restore ()
+
 class ProfileViewer (Gtk.ScrolledWindow):
     class ThreadFilter (Gtk.TreeView):
         class Store (Gtk.ListStore):
@@ -2468,29 +2579,23 @@ class ProfileViewer (Gtk.ScrolledWindow):
             col.add_attribute (cell, "text", store.FUNCTION)
             cell.set_property ("width-chars", 40)
 
-            def format_percentage_col (tree_col, cell, model, iter, col):
-                cell.set_property ("text",
-                                   format_percentage (model[iter][col], 2))
-
             col = Gtk.TreeViewColumn (title = "Self")
             tree.append_column (col)
             col.set_alignment (0.5)
             col.set_sort_column_id (store.EXCLUSIVE)
 
-            cell = Gtk.CellRendererText (xalign = 1)
+            cell = CellRendererPercentage ()
             col.pack_start (cell, False)
-            col.set_cell_data_func (cell,
-                                    format_percentage_col, store.EXCLUSIVE)
+            col.add_attribute (cell, "value", store.EXCLUSIVE)
 
             col = Gtk.TreeViewColumn (title = "All")
             tree.append_column (col)
             col.set_alignment (0.5)
             col.set_sort_column_id (store.INCLUSIVE)
 
-            cell = Gtk.CellRendererText (xalign = 1)
+            cell = CellRendererPercentage ()
             col.pack_start (cell, False)
-            col.set_cell_data_func (cell,
-                                    format_percentage_col, store.INCLUSIVE)
+            col.add_attribute (cell, "value", store.INCLUSIVE)
 
             if id:
                 self.update ()
@@ -2798,13 +2903,14 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
     class SourceProfile (Gtk.Box):
         class Store (Gtk.ListStore):
-            LINE      = 0
-            EXCLUSIVE = 1
-            INCLUSIVE = 2
-            TEXT      = 3
+            LINE       = 0
+            HAS_FRAMES = 1
+            EXCLUSIVE  = 2
+            INCLUSIVE  = 3
+            TEXT       = 4
 
             def __init__ (self):
-                Gtk.ListStore.__init__ (self, int, float, float, str)
+                Gtk.ListStore.__init__ (self, int, bool, float, float, str)
 
         __gsignals__ = {
             "subprofile-added":   (GObject.SIGNAL_RUN_FIRST,
@@ -2894,33 +3000,25 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
             scale = 0.85
 
-            def format_percentage_col (tree_col, cell, model, iter, col):
-                value = model[iter][col]
-
-                if value >= 0:
-                    cell.set_property ("text", format_percentage (value, 2))
-                else:
-                    cell.set_property ("text", "")
-
             col = Gtk.TreeViewColumn (title = "Self")
             tree.append_column (col)
             col.set_alignment (0.5)
             col.set_sort_column_id (store.EXCLUSIVE)
 
-            cell = Gtk.CellRendererText (xalign = 1, scale = scale)
+            cell = CellRendererPercentage (scale = scale)
             col.pack_start (cell, False)
-            col.set_cell_data_func (cell,
-                                    format_percentage_col, store.EXCLUSIVE)
+            col.add_attribute (cell, "visible", store.HAS_FRAMES)
+            col.add_attribute (cell, "value",   store.EXCLUSIVE)
 
             col = Gtk.TreeViewColumn (title = "All")
             tree.append_column (col)
             col.set_alignment (0.5)
             col.set_sort_column_id (store.INCLUSIVE)
 
-            cell = Gtk.CellRendererText (xalign = 1, scale = scale)
+            cell = CellRendererPercentage (scale = scale)
             col.pack_start (cell, False)
-            col.set_cell_data_func (cell,
-                                    format_percentage_col, store.INCLUSIVE)
+            col.add_attribute (cell, "visible", store.HAS_FRAMES)
+            col.add_attribute (cell, "value",   store.INCLUSIVE)
 
             col = Gtk.TreeViewColumn ()
             tree.append_column (col)
@@ -2998,12 +3096,20 @@ class ProfileViewer (Gtk.ScrolledWindow):
             for text in open (self.file.get_path (), "r"):
                 text = text.rstrip ("\n")
 
-                line = lines.get (i, [-1, -1])
+                line = lines.get (i, None)
 
-                self.store.append ((i,
-                                    line[0] / n_stacks,
-                                    line[1] / n_stacks,
-                                    text))
+                if line:
+                    self.store.append ((i,
+                                        True,
+                                        line[0] / n_stacks,
+                                        line[1] / n_stacks,
+                                        text))
+                else:
+                    self.store.append ((i,
+                                        False,
+                                        0,
+                                        0,
+                                        text))
 
                 i += 1
 
