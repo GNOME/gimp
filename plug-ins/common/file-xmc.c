@@ -1057,7 +1057,6 @@ save_dialog (const gint32   image_ID,
   GtkWidget      *grid;
   GtkWidget      *box;
   GtkAdjustment  *adjustment;
-  GtkWidget      *alignment;
   GtkWidget      *tmpwidget;
   GtkWidget      *label;
   GtkTextBuffer  *textbuffer;
@@ -1196,11 +1195,11 @@ save_dialog (const gint32   image_ID,
                                "is specified."),
                              TRUE,  NULL,
                              NULL);
-  alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_widget_show (alignment);
-  gtk_grid_attach (GTK_GRID (grid), alignment, 0, 3, 3, 1);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 20, 0); /*padding left*/
-  gtk_container_add (GTK_CONTAINER (alignment), tmpwidget);
+  g_object_set (tmpwidget,
+                "margin-start", 20,
+                "margin-bottom", 6,
+                NULL);
+  gtk_grid_attach (GTK_GRID (grid), tmpwidget, 0, 3, 3, 1);
   gtk_widget_show (tmpwidget);
 
   /*
@@ -1247,11 +1246,11 @@ save_dialog (const gint32   image_ID,
                                "is specified."),
                              TRUE,  NULL,
                              NULL);
-  alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_widget_show (alignment);
-  gtk_grid_attach (GTK_GRID (grid), alignment, 0, 5, 3, 1);
-  gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 0, 6, 20, 0); /*padding left*/
-  gtk_container_add (GTK_CONTAINER (alignment), tmpwidget);
+  g_object_set (tmpwidget,
+                "margin-start", 20,
+                "margin-bottom", 6,
+                NULL);
+  gtk_grid_attach (GTK_GRID (grid), tmpwidget, 0, 5, 3, 1);
   gtk_widget_show (tmpwidget);
 
   /*
