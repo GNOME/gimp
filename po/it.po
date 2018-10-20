@@ -36,7 +36,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-20 15:31+0200\n"
-"PO-Revision-Date: 2018-10-20 15:35+0200\n"
+"PO-Revision-Date: 2018-10-20 16:21+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -20896,27 +20896,27 @@ msgstr "Allinea"
 
 #: ../app/tools/gimpalignoptions.c:302
 msgid "Align left edge of target"
-msgstr "Allinea al bordo sinistro dell'obiettivo"
+msgstr "Allinea il bordo sinistro dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:306
 msgid "Align center of target"
-msgstr "Allinea al centro dell'obiettivo"
+msgstr "Allinea il centro dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:310
 msgid "Align right edge of target"
-msgstr "Allinea al bordo destro dell'obiettivo"
+msgstr "Allinea il bordo destro dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:318
 msgid "Align top edge of target"
-msgstr "Allinea alla cima dell'obiettivo"
+msgstr "Allinea la cima dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:322
 msgid "Align middle of target"
-msgstr "Allinea alla mediana dell'obiettivo"
+msgstr "Allinea la mediana dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:326
 msgid "Align bottom of target"
-msgstr "Allinea al fondo dell'obiettivo"
+msgstr "Allinea il fondo dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:328
 msgid "Distribute"
@@ -20924,15 +20924,15 @@ msgstr "Distribuisci"
 
 #: ../app/tools/gimpalignoptions.c:342
 msgid "Distribute left edges of targets"
-msgstr "Distribuisci il bordo sinistro degli obiettivi"
+msgstr "Distribuisci i bordi sinistri degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:346
 msgid "Distribute horizontal centers of targets"
-msgstr "Distribuisci orizzontalmente il centro degli obiettivi"
+msgstr "Distribuisci orizzontalmente i centri degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:350
 msgid "Distribute right edges of targets"
-msgstr "Distribuisci il bordo destro degli obiettivi"
+msgstr "Distribuisci i bordi destri degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:354
 msgid "Distribute targets evenly in the horizontal"
@@ -20940,15 +20940,15 @@ msgstr "Distribuisci gli obiettivi uniformemente in orizzontale"
 
 #: ../app/tools/gimpalignoptions.c:362
 msgid "Distribute top edges of targets"
-msgstr "Distribuisci il bordo in alto degli obiettivi"
+msgstr "Distribuisci i bordi alti degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:366
 msgid "Distribute vertical centers of targets"
-msgstr "Distribuisci verticalmente il centro degli obiettivi"
+msgstr "Distribuisci verticalmente i centri degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:370
 msgid "Distribute bottoms of targets"
-msgstr "Distribuisci il bordo in basso degli obiettivi"
+msgstr "Distribuisci i bordi bassi degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:374
 msgid "Distribute targets evenly in the vertical"
