@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-07 09:45+0000\n"
+"POT-Creation-Date: 2018-07-29 18:06+0000\n"
 "PO-Revision-Date: 2018-07-07 14:57+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -21,12 +21,12 @@ msgstr ""
 
 #: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
-msgstr "अपवाद माहिती गहाळ आहे"
+msgstr "अपवादात्मक माहिती गहाळ [मिसिंग] आहे"
 
 #: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
-msgstr "चालू करताना एक तृटी आली %s"
+msgstr "%s चालू करताना एक त्रूटी आली"
 
 #: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
@@ -52,7 +52,7 @@ msgstr "पायथॉन-फू संचयिका निवड"
 #: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "यासाठी अवैध इनपुट '%s'"
+msgstr "अवैध इनपुट '%s' साठी"
 
 #: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
@@ -60,7 +60,7 @@ msgstr "पायथॉन-फु रंग निवड"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
-msgstr "रंगीत एक्सएचटीएमएल म्हणून जतन करत आहे "
+msgstr "रंगीत एक्सएचटीएमएल [XHTML] म्हणून जतन [सेव्ह] करीत आहे"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
@@ -76,7 +76,7 @@ msgstr "वर्ण  _स्रोत"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
-msgstr "मूळ सांकेतिक शब्दकोश"
+msgstr "मूळ सांकेतिक शब्दकोश [सोर्स कोड]"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
@@ -88,7 +88,7 @@ msgstr "प्रवेश पेटी"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
-msgstr "_धारिका  वाचण्यासाठी किंवा वापरण्यासाठी अक्षर"
+msgstr "_धारिका वाचण्यासाठी किंवा अक्षर वापरण्यासाठी"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
@@ -100,7 +100,7 @@ msgstr "स्वतंत्र सीएसएस धारिका _लि�
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
-msgstr "वापरण्यासाठी रंगछटा"
+msgstr "रंगछटा वापरण्यासाठी"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
@@ -108,7 +108,7 @@ msgstr "धारिकेचे नाव"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
 msgid "Exports the image histogram to a text file (CSV)"
-msgstr "एका मजकूर धरिकेमध्ये प्रतिमा स्तंभालेख निर्यात  (सीएसव्ही)"
+msgstr "प्रतिमा स्तंभालेख एका मजकूर धरिकेमध्ये (सीएसव्ही) निर्यात करा"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
 msgid "_Export histogram..."
@@ -120,7 +120,7 @@ msgstr "_प्रतिमा"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Drawable"
-msgstr "_काढण्यायोग्य"
+msgstr "_चित्रीकरणायोग्य"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "Histogram _File"
@@ -128,7 +128,7 @@ msgstr "स्तंभालेख _धारिका"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "_Bucket Size"
-msgstr "_बादलीचे आकारमान "
+msgstr "_बादलीचे [बकेटचे] आकारमान "
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "Sample _Average"
@@ -152,11 +152,11 @@ msgstr "टक्के"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
-msgstr "एक धूसर स्तर जोडा "
+msgstr "एक धूसर [फॉग] स्तर जोडा "
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Fog..."
-msgstr "_धूसर ..."
+msgstr "_धूसर [फॉग]..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "_Layer name"
@@ -164,7 +164,7 @@ msgstr "_स्तराचे नाव"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Clouds"
-msgstr "ढगाळ"
+msgstr "ढगाळ [क्लाउड्स]"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
 msgid "_Fog color"
@@ -172,7 +172,7 @@ msgstr "_धूसर  रंग"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Turbulence"
-msgstr "_गोंधळ"
+msgstr "_गोंधळ [टर्ब्युलन्स]"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "Op_acity"
@@ -180,11 +180,11 @@ msgstr "अपा_रदर्शकता"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
-msgstr "रंगफळीमध्ये रंग संग्रह करा"
+msgstr "रंगफळीमध्ये प्रमाणबद्ध [ऑफसेट] रंग"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
-msgstr "रंगफळी _संग्रह..."
+msgstr "रंगफळी _प्रमाणबद्धता [ऑफसेट]..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
@@ -195,7 +195,7 @@ msgstr "रंगफळी"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 msgid "Off_set"
-msgstr "चा_संग्रह"
+msgstr "प्रमाण_बद्धता [ऑफसेट]"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
 msgid "Red"
@@ -219,7 +219,7 @@ msgstr "गडद रंगछटा"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Saturation"
-msgstr "संपृक्तता"
+msgstr "संपृक्तता [सॅच्यूरेशन]"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Value"
@@ -227,7 +227,7 @@ msgstr "मूल्य"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
 msgid "Saturation (HSL)"
-msgstr "संपृक्तता(एचएसएल)"
+msgstr "संपृक्तता (एचएसएल)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
 msgid "Lightness (HSL)"
@@ -235,15 +235,15 @@ msgstr "हलका (एचएसएल)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
 msgid "Index"
-msgstr "निर्देशांक"
+msgstr "अनुक्रमणिका [इंडेक्स]"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
 msgid "Random"
-msgstr "सहजगत्या"
+msgstr "स्वैर [रँडम]"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
 msgid "Lightness (LAB)"
-msgstr "हलका(एलएबी)"
+msgstr "फिकट (एलएबी)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
 msgid "A-color"
@@ -255,23 +255,23 @@ msgstr "बी-रंग"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
 msgid "Chroma (LCHab)"
-msgstr "क्रोमा (एलसीहब)"
+msgstr "क्रोमा (एलसीएचएबी)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
 msgid "Hue (LCHab)"
-msgstr "गडद रंगछटा (एलसीहब)"
+msgstr "गडद रंगछटा [ह्यू] (एलसीएचएबी)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
 msgid "Sort the colors in a palette"
-msgstr "रंगफळीत रंग वर्गीकरण"
+msgstr "रंगफळीतील रंगाची क्रमवारी [सॉर्ट]"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
 msgid "_Sort Palette..."
-msgstr "रंगफळी _प्रकार..."
+msgstr "रंगफळी _क्रमवारीकरण [सॉर्ट]..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 msgid "Se_lections"
-msgstr "नि_वडी"
+msgstr "नि_वड"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "All"
@@ -279,7 +279,7 @@ msgstr "सर्व"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Slice / Array"
-msgstr "तुकडे / अॅरे"
+msgstr "तुकडे [स्लाईस]/ अॅरे"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Autoslice (fg->bg)"
@@ -287,7 +287,7 @@ msgstr "ऑटोस्लाईस (अग्रभाग->पृष्ठभ�
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Partitioned"
-msgstr "विभाजन"
+msgstr "विभाजित केलेले [पार्टिशन्ड्]"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
 msgid "Slice _expression"
@@ -295,7 +295,7 @@ msgstr "तुकडे _अभिव्यक्ती"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
-msgstr "वाहिनीचा _प्रकार"
+msgstr "चॅनेल _क्रमवारीवर घेणे"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
@@ -304,11 +304,11 @@ msgstr "_चढत्या क्रमाने"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
 msgid "Secondary Channel to s_ort"
-msgstr "दुय्यम चॅनेलचा _प्रकार"
+msgstr "क्रमवारीकरणासाठी दुय्यम मार्ग"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
 msgid "_Quantization"
-msgstr "_परिमाणिती"
+msgstr "_मोजमाप [क्वांटायझेशन]"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
 msgid "_Partitioning channel"
@@ -316,7 +316,7 @@ msgstr "_चॅनेलचे  विभाजन"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
 msgid "Partition q_uantization"
-msgstr "विभाजन प_रिमाणिती"
+msgstr "विभाजन मो_जमाप [क्वांटायझेशन]"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -336,34 +336,34 @@ msgstr "रंगफळी ते _रंगछटा "
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
-msgstr "तुकडे"
+msgstr "तुकडे [स्लाईस]"
 
 #. table snippet means a small piece of HTML code here
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
-"त्याच्या विभाजकांसह एक प्रतिमा कापून ,प्रतिमा आणि लहान तुकड्यांची  एचटीएमएल तक्ता  "
+"त्याच्या विभाजकांसह एक प्रतिमा कापून, प्रतिमा आणि लहान तुकड्यांची एचटीएमएल तक्ता  "
 "बनवते "
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
-msgstr "_तुकडे..."
+msgstr "_तुकडे [स्लाईस]..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
-msgstr "एचटीएमएल निर्यातीसाठी मार्ग"
+msgstr "एचटीएमएल निर्यातीसाठी [एक्स्पोर्ट] मार्ग"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
-msgstr "निर्यात करण्यासाठी धारिके चे नाव"
+msgstr "निर्यात [एक्स्पोर्ट] करण्यासाठी धारिकेचे नाव"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
-msgstr "प्रतिमा नाव उपसर्ग"
+msgstr "प्रतिमा नाव पूर्वपद"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
-msgstr "प्रतिमा स्वरूप"
+msgstr "प्रतिमा स्वरूप [फॉरमॅट]"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
@@ -371,7 +371,7 @@ msgstr "स्वतंत्र प्रतिमा संचयिका"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
-msgstr "प्रतिमा  निर्यातीसाठी संचयिका"
+msgstr "प्रतिमा निर्यातीसाठी [एक्स्पोर्ट] संचयिका [फोल्डर]"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
@@ -379,20 +379,20 @@ msgstr "तक्त्यातील घटकांमधील जागा"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
-msgstr "जावास्क्रिप्ट साठी माउसओव्हर आणि क्लिक"
+msgstr "जावास्क्रिप्ट साठी ऑनमाउसओव्हर आणि क्लिक"
 
 #. table caps are table cells on the edge of the table
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
-msgstr " तक्ता कॅप्ससाठी चलाभास वगळा "
+msgstr "तक्ता शीर्षकासाठी [टेबल कॅप्स] चलाभास [अॅनिमेशन] वगळा"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
-msgstr "पायथॉन आज्ञापटल "
+msgstr "पायथॉन आज्ञापटल [कन्सोल]"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
-msgstr "_दर्शक..."
+msgstr "_दर्शक [ब्राऊज]..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
@@ -401,7 +401,7 @@ msgstr "पायथॉन प्रक्रिया ब्राउझर"
 #: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "लेखनसाठी '%s' उघडू शकत नाही: %s"
+msgstr "लेखनसाठी '%s' उघडू [ओपन] शकत नाही: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
@@ -410,40 +410,40 @@ msgstr "लिहू शकत नाही '%s': %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
-msgstr "पायथॉन-फू आज्ञापटल आउटपुट जतन करा"
+msgstr "पायथॉन-फू आज्ञापटल [कन्सोल] आउटपुट जतन [सेव्ह] करा"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
-msgstr "परस्परांवर क्रिया करू शकणारे गिम्प पायथॉन दुभाषा"
+msgstr "परस्परसंवादी [इंटरअॅक्टीव] गिम्प पायथॉन पडताळक [इंटरप्रिटर]"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
-msgstr "_आज्ञापटल"
+msgstr "_आज्ञापटल [कन्सोल]"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "एका स्तरावर  सावली जोडा, आणि वैकल्पिकरित्या ती वेगळी करा"
+msgstr "स्तरावर पडछाया [शॅडो] टाकून पर्यायी [ऑपशनली] काटकोनात [बेव्हेल] आणा"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "सावली _सोडा आणि वेगळी करा"
+msgstr "पडछाया [शॅडो] _टाका आणि काटकोनात [बेव्हेल] करा"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
-msgstr "अस्पष्ट _सावली"
+msgstr "अस्पष्ट [ब्लर] _पडछाया [शॅडो]"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
-msgstr "_काटकोनात असणे"
+msgstr "_काटकोनीकरण [बेव्हेल]"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
-msgstr "सावली _सोडा"
+msgstr "पडछाया [शॅडो] _टाका [ड्रॉप]"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
-msgstr "सावली_एक्स विस्थापन सोडा"
+msgstr "पडछाया [शॅडो] टाकून _एक्स विस्थापन [डिस्प्लेसमेंट]"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
-msgstr "सावली _वाय  विस्थापन सोडा"
+msgstr "पडछाया [शॅडो] टाकून _वाय विस्थापन [डिस्प्लेसमेंट]"
