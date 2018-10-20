@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-16 16:01+0200\n"
-"PO-Revision-Date: 2018-10-19 11:42+0200\n"
+"POT-Creation-Date: 2018-10-20 15:31+0200\n"
+"PO-Revision-Date: 2018-10-20 15:35+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -13808,7 +13808,7 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d pixel"
 msgstr[1] "%d × %d pixel"
 
-#: ../app/core/gimpimagefile.c:846 ../app/display/gimpdisplayshell-title.c:325
+#: ../app/core/gimpimagefile.c:846 ../app/display/gimpdisplayshell-title.c:349
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -17613,15 +17613,15 @@ msgstr "(modificato)"
 msgid "(clean)"
 msgstr "(pulito)"
 
-#: ../app/display/gimpdisplayshell-title.c:341
-#: ../app/display/gimpdisplayshell-title.c:350
+#: ../app/display/gimpdisplayshell-title.c:365
+#: ../app/display/gimpdisplayshell-title.c:374
 #: ../app/widgets/gimpactiongroup.c:971
 #: ../app/widgets/gimpbuffersourcebox.c:167
 #: ../app/widgets/gimpbuffersourcebox.c:291
 msgid "(none)"
 msgstr "(nessuna)"
 
-#: ../app/display/gimpdisplayshell-title.c:473
+#: ../app/display/gimpdisplayshell-title.c:497
 msgid "not color managed"
 msgstr "gestione del colore non attiva"
 
@@ -20896,27 +20896,27 @@ msgstr "Allinea"
 
 #: ../app/tools/gimpalignoptions.c:302
 msgid "Align left edge of target"
-msgstr "Allinea al bordo sinistro dell'oggetto"
+msgstr "Allinea al bordo sinistro dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:306
 msgid "Align center of target"
-msgstr "Allinea al centro dell'oggetto"
+msgstr "Allinea al centro dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:310
 msgid "Align right edge of target"
-msgstr "Allinea al bordo destro dell'oggetto"
+msgstr "Allinea al bordo destro dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:318
 msgid "Align top edge of target"
-msgstr "Allinea alla cima dell'oggetto"
+msgstr "Allinea alla cima dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:322
 msgid "Align middle of target"
-msgstr "Allinea alla mediana dell'oggetto"
+msgstr "Allinea alla mediana dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:326
 msgid "Align bottom of target"
-msgstr "Allinea al fondo dell'oggetto"
+msgstr "Allinea al fondo dell'obiettivo"
 
 #: ../app/tools/gimpalignoptions.c:328
 msgid "Distribute"
@@ -20924,35 +20924,35 @@ msgstr "Distribuisci"
 
 #: ../app/tools/gimpalignoptions.c:342
 msgid "Distribute left edges of targets"
-msgstr "Distribuisci il bordo sinistro degli oggetti"
+msgstr "Distribuisci il bordo sinistro degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:346
 msgid "Distribute horizontal centers of targets"
-msgstr "Distribuisci orizzontalmente il centro degli oggetti"
+msgstr "Distribuisci orizzontalmente il centro degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:350
 msgid "Distribute right edges of targets"
-msgstr "Distribuisci il bordo destro degli oggetti"
+msgstr "Distribuisci il bordo destro degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:354
 msgid "Distribute targets evenly in the horizontal"
-msgstr "Distribuisci gli oggetti uniformemente in orizzontale"
+msgstr "Distribuisci gli obiettivi uniformemente in orizzontale"
 
 #: ../app/tools/gimpalignoptions.c:362
 msgid "Distribute top edges of targets"
-msgstr "Distribuisci il bordo in alto degli oggetti"
+msgstr "Distribuisci il bordo in alto degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:366
 msgid "Distribute vertical centers of targets"
-msgstr "Distribuisci verticalmente il centro degli oggetti"
+msgstr "Distribuisci verticalmente il centro degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:370
 msgid "Distribute bottoms of targets"
-msgstr "Distribuisci il bordo in basso degli oggetti"
+msgstr "Distribuisci il bordo in basso degli obiettivi"
 
 #: ../app/tools/gimpalignoptions.c:374
 msgid "Distribute targets evenly in the vertical"
-msgstr "Distribuisci gli oggetti uniformemente in verticale"
+msgstr "Distribuisci gli obiettivi uniformemente in verticale"
 
 #: ../app/tools/gimpaligntool.c:124
 msgid "Alignment Tool: Align or arrange layers and other objects"
@@ -21275,7 +21275,9 @@ msgstr "Sfoca / nitidizza"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr "Strumento sfoca o nitidizza: sfoca o rende nitida selettivamente usando un pennello"
+msgstr ""
+"Strumento sfoca o nitidizza: sfoca o rende nitida selettivamente usando un "
+"pennello"
 
 #: ../app/tools/gimpconvolvetool.c:76
 msgid "Bl_ur / Sharpen"
@@ -24995,7 +24997,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: ../app/widgets/gimpdockbook.c:299
+#: ../app/widgets/gimpdockbook.c:300
 msgid "Configure this tab"
 msgstr "Configura questa scheda"
 
