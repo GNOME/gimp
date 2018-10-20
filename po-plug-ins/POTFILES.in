@@ -65,7 +65,6 @@ plug-ins/common/file-xpm.c
 plug-ins/common/file-xwd.c
 plug-ins/common/film.c
 plug-ins/common/filter-pack.c
-plug-ins/common/fractal-trace.c
 plug-ins/common/goat-exercise.c
 plug-ins/common/gradient-map.c
 plug-ins/common/grid.c

@@ -1452,6 +1452,77 @@ CODE
     );
 }
 
+sub plug_in_fractal_trace {
+    $blurb = 'Transform image with the Mandelbrot Fractal';
+
+    $help = <<'HELP';
+Transform image with the Mandelbrot Fractal
+HELP
+
+    &std_pdb_compat('gegl:fractal-trace');
+    $date = '2018';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'xmin', type => '-50.0 <= float <= 50.0',
+	  desc => 'xmin fractal image delimiter' },
+	{ name => 'xmax', type => '-50.0 <= float <= 50.0',
+	  desc => 'xmax fractal image delimiter' },
+	{ name => 'ymin', type => '-50.0 <= float <= 50.0',
+	  desc => 'ymin fractal image delimiter' },
+	{ name => 'ymax', type => '-50.0 <= float <= 50.0',
+	  desc => 'ymax fractal image delimiter' },
+	{ name => 'depth', type => '1 <= int32 <= 65536',
+	  desc => 'Trace depth' },
+	{ name => 'outside_type', type => '0 <= int32 <= 3',
+	  desc => 'Outside type { WRAP (0), TRANS (1), BLACK (2), WHITE (3) }' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode        *node;
+      GeglAbyssPolicy  abyss = GEGL_ABYSS_LOOP;
+
+      switch (outside_type)
+        {
+        case 0: abyss = GEGL_ABYSS_LOOP;  break;
+        case 1: abyss = GEGL_ABYSS_NONE;  break;
+        case 2: abyss = GEGL_ABYSS_BLACK; break;
+        case 3: abyss = GEGL_ABYSS_WHITE; break;
+        }
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",    "gegl:fractal-trace",
+                                  "X1",           xmin,
+                                  "X2",           xmax,
+                                  "Y1",           ymin,
+                                  "Y2",           ymax,
+                                  "depth",        depth,
+                                  "abyss-policy", abyss,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Fractal Trace"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_gauss {
     $blurb = 'Simplest, most commonly used way of blurring';
 
@@ -4668,6 +4739,7 @@ CODE
             plug_in_engrave
             plug_in_exchange
             plug_in_flarefx
+            plug_in_fractal_trace
             plug_in_gauss
             plug_in_gauss_iir
             plug_in_gauss_iir2

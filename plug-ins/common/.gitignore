@@ -6,8 +6,6 @@
 /align-layers.exe
 /animation-optimize
 /animation-optimize.exe
-/animation-play
-/animation-play.exe
 /blinds
 /blinds.exe
 /blur
@@ -36,8 +34,6 @@
 /contrast-retinex.exe
 /crop-zealous
 /crop-zealous.exe
-/curve-bend
-/curve-bend.exe
 /decompose
 /decompose.exe
 /depth-merge
@@ -126,8 +122,6 @@
 /film.exe
 /filter-pack
 /filter-pack.exe
-/fractal-trace
-/fractal-trace.exe
 /goat-exercise
 /goat-exercise.exe
 /gradient-map
