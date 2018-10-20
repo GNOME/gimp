@@ -295,6 +295,30 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 i += print (title, title_len, i, "%s", _("(clean)"));
               break;
 
+            case 'N': /* not-exported flag */
+              if (format[1] == 0)
+                {
+                  /* format string ends within %E-sequence, print literal '%E' */
+                  i += print (title, title_len, i, "%%N");
+                  break;
+                }
+              if (gimp_image_is_export_dirty (image))
+                title[i++] = format[1];
+              format++;
+              break;
+
+            case 'E': /* exported flag */
+              if (format[1] == 0)
+                {
+                  /* format string ends within %E-sequence, print literal '%E' */
+                  i += print (title, title_len, i, "%%E");
+                  break;
+                }
+              if (! gimp_image_is_export_dirty (image))
+                title[i++] = format[1];
+              format++;
+              break;
+
             case 'm': /* memory used by image */
               {
                 GimpObject *object = GIMP_OBJECT (image);
