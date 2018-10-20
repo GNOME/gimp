@@ -402,6 +402,8 @@ static const gchar display_format_description[] =
 "%Cx expands to x if the image is clean, the empty string otherwise\n"
 "%B  expands to (modified) if the image is dirty, the empty string otherwise\n"
 "%A  expands to (clean) if the image is clean, the empty string otherwise\n"
+"%Nx expands to x if the image is export-dirty, the empty string otherwise\n"
+"%Ex expands to x if the image is export-clean, the empty string otherwise\n"
 "%l  the number of layers\n"
 "%L  the number of layers (long form)\n"
 "%m  memory used by the image\n"
