@@ -461,6 +461,8 @@
 # %Cx expands to x if the image is clean, the empty string otherwise
 # %B  expands to (modified) if the image is dirty, the empty string otherwise
 # %A  expands to (clean) if the image is clean, the empty string otherwise
+# %Nx expands to x if the image is export-dirty, the empty string otherwise
+# %Ex expands to x if the image is export-clean, the empty string otherwise
 # %l  the number of layers
 # %L  the number of layers (long form)
 # %m  memory used by the image
@@ -499,6 +501,8 @@
 # %Cx expands to x if the image is clean, the empty string otherwise
 # %B  expands to (modified) if the image is dirty, the empty string otherwise
 # %A  expands to (clean) if the image is clean, the empty string otherwise
+# %Nx expands to x if the image is export-dirty, the empty string otherwise
+# %Ex expands to x if the image is export-clean, the empty string otherwise
 # %l  the number of layers
 # %L  the number of layers (long form)
 # %m  memory used by the image

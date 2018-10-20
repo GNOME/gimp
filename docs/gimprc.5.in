@@ -573,6 +573,10 @@ certain % character sequences are recognised and expanded as follows:
 .br
 %A  expands to (clean) if the image is clean, the empty string otherwise
 .br
+%Nx expands to x if the image is export-dirty, the empty string otherwise
+.br
+%Ex expands to x if the image is export-clean, the empty string otherwise
+.br
 %l  the number of layers
 .br
 %L  the number of layers (long form)
@@ -643,6 +647,10 @@ certain % character sequences are recognised and expanded as follows:
 %B  expands to (modified) if the image is dirty, the empty string otherwise
 .br
 %A  expands to (clean) if the image is clean, the empty string otherwise
+.br
+%Nx expands to x if the image is export-dirty, the empty string otherwise
+.br
+%Ex expands to x if the image is export-clean, the empty string otherwise
 .br
 %l  the number of layers
 .br
