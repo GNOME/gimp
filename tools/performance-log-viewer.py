@@ -2245,17 +2245,17 @@ class CellRendererPercentage (Gtk.CellRendererText):
         Gtk.CellRendererText.do_render (self,
                                         cr, widget,
                                         background_area, cell_area,
-                                        Gtk.CellRendererState (
-                                            flags |
-                                            Gtk.CellRendererState.SELECTED
-                                        ))
+                                        flags)
 
         value  = min (max (self.value, 0), 1)
         width  = round (full_width * value)
         height = full_height
 
         if width > 0 and height > 0:
-            state = Gtk.StateFlags (state | Gtk.StateFlags.SELECTED)
+            state = Gtk.StateFlags        (state |
+                                           Gtk.StateFlags.SELECTED)
+            flags = Gtk.CellRendererState (flags |
+                                           Gtk.CellRendererState.SELECTED)
 
             style.save ()
             style.set_state (state)
@@ -2278,10 +2278,7 @@ class CellRendererPercentage (Gtk.CellRendererText):
             Gtk.CellRendererText.do_render (self,
                                             cr, widget,
                                             background_area, cell_area,
-                                            Gtk.CellRendererState (
-                                                flags |
-                                                Gtk.CellRendererState.SELECTED
-                                            ))
+                                            flags)
 
             style.restore ()
 
