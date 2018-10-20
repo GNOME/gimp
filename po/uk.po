@@ -9,17 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-10-01 11:33+0000\n"
-"PO-Revision-Date: 2018-10-04 08:31+0300\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"POT-Creation-Date: 2018-10-17 15:23+0000\n"
+"PO-Revision-Date: 2018-10-18 16:57+0200\n"
+"Last-Translator: Olexandr Pylypchuk <pilipchukap@rambler.ru>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.6.4\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -79,16 +79,16 @@ msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr ""
-"GIMP 2.10.8 є здебільшого випуском із виправленням вад та оптимізаціями."
-" Зокрема, до цього випуску включено:"
+"GIMP 2.10.8 є здебільшого випуском із виправленням вад та оптимізаціями. "
+"Зокрема, до цього випуску включено:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
 msgstr ""
-"Адаптивний розмір фрагментів під час показу проекцій із динамічним"
-" поліпшенням реактивності комп'ютера"
+"Адаптивний розмір фрагментів під час показу проекцій із динамічним "
+"поліпшенням реактивності комп'ютера"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
@@ -100,16 +100,16 @@ msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
 msgstr ""
-"Зрозуміліші і помітніші дані щодо сумісності XCF у діалоговому вікні"
-" збереження даних"
+"Зрозуміліші і помітніші дані щодо сумісності XCF у діалоговому вікні "
+"збереження даних"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
 msgstr ""
-"Додано різноманітні засоби журналювання швидкодії. Доступ до записів журналів"
-" можна отримати за допомогою панелі приладів."
+"Додано різноманітні засоби журналювання швидкодії. Доступ до записів "
+"журналів можна отримати за допомогою панелі приладів."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
@@ -2766,22 +2766,16 @@ msgid "Dashboard Menu"
 msgstr "Меню панелі приладів"
 
 #: ../app/actions/dashboard-actions.c:44
-#| msgctxt "dashboard-action"
-#| msgid "Groups"
 msgctxt "dashboard-action"
 msgid "_Groups"
 msgstr "_Групи"
 
 #: ../app/actions/dashboard-actions.c:46
-#| msgctxt "dashboard-action"
-#| msgid "Update Interval"
 msgctxt "dashboard-action"
 msgid "_Update Interval"
 msgstr "Інтервал _оновлення"
 
 #: ../app/actions/dashboard-actions.c:48
-#| msgctxt "dashboard-action"
-#| msgid "History Duration"
 msgctxt "dashboard-action"
 msgid "_History Duration"
 msgstr "_Тривалість ведення журналу"
@@ -2797,8 +2791,6 @@ msgid "Start/stop recording performance log"
 msgstr "Почати або припинити записування журналу швидкодії"
 
 #: ../app/actions/dashboard-actions.c:56
-#| msgctxt "layers-action"
-#| msgid "Add La_yer Mask..."
 msgctxt "dashboard-action"
 msgid "_Add Marker..."
 msgstr "_Додати позначку…"
@@ -2809,7 +2801,6 @@ msgid "Add an event marker to the performance log"
 msgstr "Додати позначку події до журналу швидкодії"
 
 #: ../app/actions/dashboard-actions.c:62
-#| msgid "Add path stroke"
 msgctxt "dashboard-action"
 msgid "Add _Empty Marker"
 msgstr "Додати по_рожню позначку"
@@ -2820,7 +2811,6 @@ msgid "Add an empty event marker to the performance log"
 msgstr "Додати позначку порожньої події до журналу швидкодії"
 
 #: ../app/actions/dashboard-actions.c:69
-#| msgid "_Reset"
 msgctxt "dashboard-action"
 msgid "_Reset"
 msgstr "С_кинути"
@@ -2831,8 +2821,6 @@ msgid "Reset cumulative data"
 msgstr "Скинути накопичені дані"
 
 #: ../app/actions/dashboard-actions.c:78
-#| msgctxt "dashboard-action"
-#| msgid "Low Swap Space Warning"
 msgctxt "dashboard-action"
 msgid "_Low Swap Space Warning"
 msgstr "Попередження щодо малого об'_єму резервної пам'яті"
@@ -2900,7 +2888,8 @@ msgstr "240 секунд"
 #: ../app/actions/file-commands.c:416
 #: ../app/actions/gradient-editor-commands.c:401
 #: ../app/actions/gradient-editor-commands.c:510
-#: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:178
+#: ../app/actions/gradients-commands.c:78
+#: ../app/actions/plug-in-commands.c:178
 #: ../app/actions/templates-commands.c:244
 #: ../app/actions/text-editor-commands.c:64
 #: ../app/actions/text-tool-commands.c:118
@@ -2939,8 +2928,8 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
-#: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:919
+#: ../app/tools/gimpforegroundselecttool.c:314
+#: ../app/tools/gimptexttool.c:1762 ../app/tools/gimptransformgridtool.c:919
 #: ../app/tools/gimptransformtool.c:306 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -2953,28 +2942,22 @@ msgid "_Cancel"
 msgstr "_Скасувати"
 
 #: ../app/actions/dashboard-commands.c:103
-#| msgid "_Recover"
 msgid "_Record"
 msgstr "_Записати"
 
 #: ../app/actions/dashboard-commands.c:125
-#| msgid "Show All Files"
 msgid "All Files"
 msgstr "усі файли"
 
 #: ../app/actions/dashboard-commands.c:130
-#| msgid "All files (*.*)"
 msgid "Log Files (*.log)"
 msgstr "файли журналів (*.log)"
 
 #: ../app/actions/dashboard-commands.c:197
-#| msgctxt "undo-type"
-#| msgid "Add layer"
 msgid "Add Marker"
 msgstr "Додати позначку"
 
 #: ../app/actions/dashboard-commands.c:199
-#| msgid "Enter a name for the preset"
 msgid "Enter a description for the marker"
 msgstr "Введіть опис позначки"
 
@@ -2996,7 +2979,8 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
+#: ../app/actions/data-commands.c:114
+#: ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2002
 #: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:214
 #: ../app/core/gimppalette-load.c:194
@@ -4268,11 +4252,13 @@ msgstr "Копіювання з буфера з назвою"
 msgid "Copy Visible Named "
 msgstr "Копіювати видиме з назвою"
 
-#: ../app/actions/edit-commands.c:572 ../app/display/gimpdisplayshell-dnd.c:480
+#: ../app/actions/edit-commands.c:572
+#: ../app/display/gimpdisplayshell-dnd.c:480
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено як новий шар, тому що ціль є групою шарів."
 
-#: ../app/actions/edit-commands.c:579 ../app/display/gimpdisplayshell-dnd.c:489
+#: ../app/actions/edit-commands.c:579
+#: ../app/display/gimpdisplayshell-dnd.c:489
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
@@ -4378,7 +4364,8 @@ msgid "Save Error Log to File"
 msgstr "Збереження повідомлень про помилки у файлі"
 
 #: ../app/actions/error-console-commands.c:97
-#: ../app/actions/gradients-commands.c:79 ../app/dialogs/file-save-dialog.c:715
+#: ../app/actions/gradients-commands.c:79
+#: ../app/dialogs/file-save-dialog.c:715
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
@@ -6333,13 +6320,15 @@ msgstr "Зміна розміру"
 msgid "Set Image Print Resolution"
 msgstr "Зміна роздільності"
 
-#: ../app/actions/image-commands.c:799 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:799
+#: ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:222 ../app/tools/gimpfliptool.c:133
 msgid "Flipping"
 msgstr "Віддзеркалення"
 
-#: ../app/actions/image-commands.c:823 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:823
+#: ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:121
@@ -8020,7 +8009,8 @@ msgid "Delete Template"
 msgstr "Вилучити шаблон"
 
 #: ../app/actions/templates-commands.c:245
-#: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:510
+#: ../app/dialogs/data-delete-dialog.c:87
+#: ../app/widgets/gimpdeviceeditor.c:510
 msgid "_Delete"
 msgstr "Ви_лучити"
 
@@ -13013,7 +13003,8 @@ msgid "Render Stroke"
 msgstr "Відтворення мазків"
 
 #: ../app/core/gimpdrawable-gradient.c:125
-#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1034
+#: ../app/core/gimpdrawable-gradient.c:137
+#: ../app/tools/gimpgradienttool.c:1034
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Градієнтна"
@@ -13280,7 +13271,6 @@ msgstr ""
 
 #: ../app/core/gimpimage.c:2523
 #, c-format
-#| msgid "Layer mode '%s' was added in %s"
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
@@ -14217,7 +14207,8 @@ msgstr "Ордината центру"
 msgid "Number of points"
 msgstr "Кількість точок"
 
-#: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
+#: ../app/core/gimpsymmetry-mandala.c:152
+#: ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
 msgstr "Вимкнути перетворення пензля"
 
@@ -14352,7 +14343,8 @@ msgid "Precision"
 msgstr "Точність"
 
 #. gamma
-#: ../app/core/gimptemplate.c:204 ../app/dialogs/convert-precision-dialog.c:195
+#: ../app/core/gimptemplate.c:204
+#: ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:140
 #: ../app/operations/gimplevelsconfig.c:141 ../app/tools/gimplevelstool.c:509
 msgid "Gamma"
@@ -15152,11 +15144,13 @@ msgid "_Opacity:"
 msgstr "_Непрозорість:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:790
+#: ../app/dialogs/layer-options-dialog.c:252
+#: ../app/tools/gimpmeasuretool.c:790
 msgid "Width:"
 msgstr "Ширина:"
 
-#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:818
+#: ../app/dialogs/layer-options-dialog.c:258
+#: ../app/tools/gimpmeasuretool.c:818
 msgid "Height:"
 msgstr "Висота:"
 
@@ -15171,8 +15165,8 @@ msgstr "Зсув за X:"
 msgid "Offset Y:"
 msgstr "Зсув за Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
-#: ../app/widgets/gimptemplateeditor.c:449
+#: ../app/dialogs/layer-options-dialog.c:396
+#: ../app/dialogs/resize-dialog.c:369 ../app/widgets/gimptemplateeditor.c:449
 msgid "_Fill with:"
 msgstr "_Тло:"
 
@@ -16034,7 +16028,8 @@ msgstr "Виберіть тему піктограм"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2050
-#: ../app/dialogs/preferences-dialog.c:2818 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2818
+#: ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
@@ -16423,18 +16418,19 @@ msgid "Monitor Resolution"
 msgstr "Роздільність монітора"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2581 ../app/display/gimpcursorview.c:212
-#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
+#: ../app/dialogs/preferences-dialog.c:2581
+#: ../app/display/gimpcursorview.c:212 ../app/widgets/gimpgrideditor.c:199
+#: ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "Точок"
 
-#: ../app/dialogs/preferences-dialog.c:2599 ../app/widgets/gimpgrideditor.c:195
-#: ../app/widgets/gimpgrideditor.c:230
+#: ../app/dialogs/preferences-dialog.c:2599
+#: ../app/widgets/gimpgrideditor.c:195 ../app/widgets/gimpgrideditor.c:230
 msgid "Horizontal"
 msgstr "Горизонтальне"
 
-#: ../app/dialogs/preferences-dialog.c:2601 ../app/widgets/gimpgrideditor.c:197
-#: ../app/widgets/gimpgrideditor.c:232
+#: ../app/dialogs/preferences-dialog.c:2601
+#: ../app/widgets/gimpgrideditor.c:197 ../app/widgets/gimpgrideditor.c:232
 msgid "Vertical"
 msgstr "Вертикальне"
 
@@ -16920,7 +16916,8 @@ msgstr "Натисніть %s для відхилення усіх змін та
 msgid "Press %s to discard all changes and close all images."
 msgstr "Натисніть %s для відхилення усіх змін та закриття усіх зображень."
 
-#: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:399
+#: ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "_Відкинути зміни"
 
@@ -17293,8 +17290,8 @@ msgstr "Перемикнути швидку маску"
 msgid "Navigate the image display"
 msgstr "Навігація на зображенні"
 
-#: ../app/display/gimpdisplayshell.c:791 ../app/display/gimpdisplayshell.c:1447
-#: ../app/widgets/gimptoolbox.c:247
+#: ../app/display/gimpdisplayshell.c:791
+#: ../app/display/gimpdisplayshell.c:1447 ../app/widgets/gimptoolbox.c:247
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
 
@@ -17405,7 +17402,7 @@ msgstr "Неможливо змінити точки растру групи ш�
 #: ../app/tools/gimpcroptool.c:460 ../app/tools/gimpeditselectiontool.c:1149
 #: ../app/tools/gimpfiltertool.c:275 ../app/tools/gimpgradienttool.c:254
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:282
-#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:508
+#: ../app/tools/gimpselectiontool.c:452 ../app/tools/gimptransformtool.c:511
 #: ../app/tools/gimpwarptool.c:631
 #, c-format
 msgid "The active layer's pixels are locked."
@@ -18749,7 +18746,8 @@ msgstr "Розфарбувати зображення"
 msgid "Color"
 msgstr "Колір"
 
-#: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:143
+#: ../app/operations/gimpoperationcurves.c:67
+#: ../app/tools/gimpcurvestool.c:143
 msgid "Adjust color curves"
 msgstr "Коригування кривих кольорів"
 
@@ -18765,7 +18763,8 @@ msgstr "Виберіть основу відтінків сірого"
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Коригування відтінку, насиченості та освітленості"
 
-#: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:139
+#: ../app/operations/gimpoperationlevels.c:64
+#: ../app/tools/gimplevelstool.c:139
 msgid "Adjust color levels"
 msgstr "Коригування рівнів кольорів"
 
@@ -18960,7 +18959,8 @@ msgstr "Нахил"
 
 #. Blob shape widgets
 #: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpgradientoptions.c:94
-#: ../app/tools/gimpgradientoptions.c:289 ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/tools/gimpgradientoptions.c:289
+#: ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Форма"
 
@@ -19029,7 +19029,8 @@ msgstr "Співвідношення сторін"
 
 #: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:81
+#: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Проміжок"
 
@@ -20985,7 +20986,7 @@ msgstr "_Заповнення"
 #: ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:261 ../app/tools/gimppainttool.c:296
-#: ../app/tools/gimptransformtool.c:516 ../app/tools/gimpwarptool.c:642
+#: ../app/tools/gimptransformtool.c:519 ../app/tools/gimpwarptool.c:642
 msgid "The active layer is not visible."
 msgstr "Активний шар - невидимий."
 
@@ -21392,7 +21393,7 @@ msgid "There is no path to move."
 msgstr "Немає контуру для переміщення."
 
 #: ../app/tools/gimpeditselectiontool.c:1126 ../app/tools/gimpmovetool.c:266
-#: ../app/tools/gimptransformtool.c:550
+#: ../app/tools/gimptransformtool.c:553
 msgid "The active path's position is locked."
 msgstr "Позиція активного контура заблокована від змін"
 
@@ -21504,12 +21505,14 @@ msgstr "%s: перемикання оригінал/фільтрування"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: перемикання горизонталь/вертикаль"
 
-#: ../app/tools/gimpfiltertool.c:1303 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1303
+#: ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Імпортувати параметри «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1305 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1305
+#: ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Експортувати параметри «%s»"
@@ -22636,7 +22639,8 @@ msgstr "Намалюйте маску обраної ділянки"
 msgid "Move the mouse to change threshold"
 msgstr "Пересуньте мишу для зміни порога"
 
-#: ../app/tools/gimprotatetool.c:94 ../app/tools/gimptransformgridoptions.c:443
+#: ../app/tools/gimprotatetool.c:94
+#: ../app/tools/gimptransformgridoptions.c:443
 msgid "Rotate"
 msgstr "Обертання"
 
@@ -22738,7 +22742,8 @@ msgstr "Увімкнути розмазування країв позначен�
 msgid "Radius of feathering"
 msgstr "Радіус розмазування"
 
-#: ../app/tools/gimpselectionoptions.c:222 ../app/widgets/gimpbrushselect.c:188
+#: ../app/tools/gimpselectionoptions.c:222
+#: ../app/widgets/gimpbrushselect.c:188
 msgid "Mode:"
 msgstr "Режим:"
 
@@ -22780,13 +22785,11 @@ msgstr "Натисніть, щоб причепити рухоме вибира�
 
 #: ../app/tools/gimpselectiontool.c:421
 #, c-format
-#| msgid "Click-Drag to subtract from the current selection"
 msgid "Cannot subtract from an empty selection."
 msgstr "Неможливо відняти щось від порожнього позначення."
 
 #: ../app/tools/gimpselectiontool.c:432
 #, c-format
-#| msgid "Click-Drag to intersect with the current selection"
 msgid "Cannot intersect with an empty selection."
 msgstr "Перетин із порожнім позначенням неможливий."
 
@@ -23188,12 +23191,10 @@ msgid "Transforming"
 msgstr "Перетворення"
 
 #: ../app/tools/gimptransformtool.c:299
-#| msgid "Transformation"
 msgid "Confirm Transformation"
 msgstr "Підтвердження перетворення"
 
 #: ../app/tools/gimptransformtool.c:317
-#| msgid "Transformation Matrix"
 msgid "Transformation creates a very large item."
 msgstr "У результаті перетворення створюється дуже великий запис."
 
@@ -23203,38 +23204,38 @@ msgid ""
 "Applying the transformation will result in an item that is over %g times "
 "larger than the image."
 msgstr ""
-"Застосування перетворення призведе до створення запису, який буде більшим за"
-" запис зображення у понад %g разів."
+"Застосування перетворення призведе до створення запису, який буде більшим за "
+"запис зображення у понад %g разів."
 
-#: ../app/tools/gimptransformtool.c:503
+#: ../app/tools/gimptransformtool.c:506
 msgid "There is no layer to transform."
 msgstr "Немає шару для перетворення."
 
-#: ../app/tools/gimptransformtool.c:510
+#: ../app/tools/gimptransformtool.c:513
 msgid "The active layer's position and size are locked."
 msgstr "Позиція і розмір активного шару заблоковані від змін"
 
-#: ../app/tools/gimptransformtool.c:523
+#: ../app/tools/gimptransformtool.c:526
 msgid "The selection does not intersect with the layer."
 msgstr "Позначене не перетинається з шаром."
 
-#: ../app/tools/gimptransformtool.c:530
+#: ../app/tools/gimptransformtool.c:533
 msgid "There is no selection to transform."
 msgstr "Немає позначеної ділянки для перетворення."
 
-#: ../app/tools/gimptransformtool.c:543
+#: ../app/tools/gimptransformtool.c:546
 msgid "There is no path to transform."
 msgstr "Немає контуру для перетворення."
 
-#: ../app/tools/gimptransformtool.c:548
+#: ../app/tools/gimptransformtool.c:551
 msgid "The active path's strokes are locked."
 msgstr "Елементи активного контуру заблоковані від змін"
 
-#: ../app/tools/gimptransformtool.c:552
+#: ../app/tools/gimptransformtool.c:555
 msgid "The active path has no strokes."
 msgstr "Активний контур не має штрихів."
 
-#: ../app/tools/gimptransformtool.c:617
+#: ../app/tools/gimptransformtool.c:620
 msgid "The current transform is invalid"
 msgstr "Поточне перетворення є некоректним"
 
@@ -24514,7 +24515,6 @@ msgid "Read throughput"
 msgstr "Пропускання читання"
 
 #: ../app/widgets/gimpdashboard.c:574
-#| msgid "The rate at which data is written to the swap"
 msgid "The rate at which data is read from the swap"
 msgstr "Частота, із якою дані читаються з файла резервної пам'яті"
 
@@ -24944,6 +24944,11 @@ msgstr "Показати всі файли"
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Вибрати _тип файла (%s)"
+
+#: ../app/widgets/gimpfiledialog.c:818
+#| msgid "Select File _Type (%s)"
+msgid "Select File _Type"
+msgstr "Вибрати _тип файла"
 
 #: ../app/widgets/gimpfileprocview.c:200
 msgid "File Type"
@@ -25396,14 +25401,11 @@ msgstr "Зберегти цей XCF-файл повільніше, але з б�
 
 #: ../app/widgets/gimpsavedialog.c:395
 #, c-format
-#| msgid ""
-#| "The image uses features from %s, disabling compression won't make the XCF "
-#| "file readable by older GIMP versions."
 msgid ""
 "The image uses features from %s and won't be readable by older GIMP versions."
 msgstr ""
-"У зображенні використано можливості з %s. Його не можна буде прочитати у"
-" застарілих версіях GIMP."
+"У зображенні використано можливості з %s. Його не можна буде прочитати у "
+"застарілих версіях GIMP."
 
 #: ../app/widgets/gimpsavedialog.c:404
 msgid "Metadata won't be visible in GIMP older than version 2.10."
