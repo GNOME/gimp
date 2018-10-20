@@ -495,7 +495,6 @@ load_dialog (const gchar *filename)
   GtkWidget     *image;
   GtkWidget     *grid;
   GtkWidget     *grid2;
-  GtkWidget     *abox;
   GtkWidget     *res;
   GtkWidget     *label;
   GtkWidget     *spinbutton;
@@ -537,13 +536,9 @@ load_dialog (const gchar *filename)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   pixels = wmf_get_pixbuf (filename, &vals.width, &vals.height);
