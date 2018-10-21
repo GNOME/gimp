@@ -140,6 +140,7 @@ static void      gimp_display_shell_get_property   (GObject          *object,
                                                     GParamSpec       *pspec);
 
 static void      gimp_display_shell_unrealize      (GtkWidget        *widget);
+static void      gimp_display_shell_unmap          (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
                                                     GdkScreen        *previous);
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
@@ -244,6 +245,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   object_class->get_property       = gimp_display_shell_get_property;
 
   widget_class->unrealize          = gimp_display_shell_unrealize;
+  widget_class->unmap              = gimp_display_shell_unmap;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
 
@@ -976,6 +978,16 @@ gimp_display_shell_unrealize (GtkWidget *widget)
     gtk_widget_unrealize (shell->nav_popup);
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
+}
+
+static void
+gimp_display_shell_unmap (GtkWidget *widget)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
+
+  gimp_display_shell_selection_undraw (shell);
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 static void
