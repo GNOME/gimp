@@ -36,7 +36,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-20 15:31+0200\n"
-"PO-Revision-Date: 2018-10-20 16:21+0200\n"
+"PO-Revision-Date: 2018-10-21 02:42+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -13141,7 +13141,7 @@ msgstr "Non ci sono abbastanza punti da tracciare"
 #: ../app/core/gimpdrawable-transform.c:856
 msgctxt "undo-type"
 msgid "Flip"
-msgstr "Riflessione"
+msgstr "Rifletti"
 
 #: ../app/core/gimpdrawable-transform.c:941
 msgctxt "undo-type"
@@ -21671,7 +21671,7 @@ msgstr "Ritaglio"
 
 #: ../app/tools/gimpfliptool.c:107
 msgid "Flip"
-msgstr "Riflessione"
+msgstr "Rifletti"
 
 #: ../app/tools/gimpfliptool.c:108
 msgid ""
@@ -21700,7 +21700,7 @@ msgstr "Rifletti verticalmente"
 #: ../app/tools/gimpfliptool.c:308
 msgctxt "undo-desc"
 msgid "Flip"
-msgstr "Riflessione"
+msgstr "Rifletti"
 
 #: ../app/tools/gimpforegroundselectoptions.c:84
 msgid "Draw Mode"
