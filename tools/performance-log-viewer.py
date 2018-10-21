@@ -2570,6 +2570,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
             col = Gtk.TreeViewColumn (title = "Function")
             tree.append_column (col)
             col.set_resizable (True)
+            col.set_sort_column_id (store.FUNCTION)
 
             cell = Gtk.CellRendererText (ellipsize = Pango.EllipsizeMode.END)
             col.pack_start (cell, True)
