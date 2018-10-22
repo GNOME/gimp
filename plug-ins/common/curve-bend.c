@@ -132,7 +132,6 @@ struct _BenderDialog
   GtkWidget *pv_widget;
   GtkWidget *graph;
   GtkAdjustment *rotate_data;
-  GdkPixmap *pixmap;
   GtkWidget *filechooser;
 
   GdkCursor *cursor_busy;
@@ -260,6 +259,9 @@ static void            bender_load_callback           (GtkWidget *,
 static void            bender_save_callback           (GtkWidget *,
                                                        BenderDialog *);
 static gint            bender_graph_events            (GtkWidget *, GdkEvent *,
+                                                       BenderDialog *);
+static gint            bender_graph_draw              (GtkWidget *,
+                                                       cairo_t *,
                                                        BenderDialog *);
 static void            bender_CR_compose              (CRMatrix, CRMatrix,
                                                        CRMatrix);
@@ -1145,7 +1147,6 @@ do_dialog (GimpDrawable *drawable)
   bender_update (cd, UP_GRAPH | UP_DRAW | UP_PREVIEW_EXPOSE);
 
   gtk_main ();
-  gdk_display_flush (gtk_widget_get_display (cd->shell));
 
   gimp_image_delete(cd->preview_image_id);
   cd->preview_image_id = -1;
@@ -1167,7 +1168,6 @@ bender_new_dialog (GimpDrawable *drawable)
   GtkWidget    *vbox;
   GtkWidget    *hbox;
   GtkWidget    *vbox2;
-  GtkWidget    *abox;
   GtkWidget    *frame;
   GtkWidget    *upper, *lower;
   GtkWidget    *smooth, *freew;
@@ -1182,7 +1182,6 @@ bender_new_dialog (GimpDrawable *drawable)
 
   cd->preview = FALSE;
   cd->curve_type = SMOOTH;
-  cd->pixmap = NULL;
   cd->filechooser = NULL;
   cd->outline = OUTLINE_UPPER;
   cd->show_progress = FALSE;
@@ -1265,14 +1264,12 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   /*  The range drawing area  */
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_halign (frame, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (frame, GTK_ALIGN_CENTER);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   cd->pv_widget = gimp_preview_area_new ();
@@ -1376,20 +1373,21 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   cd->graph = gtk_drawing_area_new ();
+  gtk_widget_set_halign (cd->graph, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (cd->graph, GTK_ALIGN_CENTER);
   gtk_widget_set_size_request (cd->graph,
                                GRAPH_WIDTH + RADIUS * 2,
                                GRAPH_HEIGHT + RADIUS * 2);
   gtk_widget_set_events (cd->graph, GRAPH_MASK);
-  gtk_container_add (GTK_CONTAINER (abox), cd->graph);
+  gtk_box_pack_start (GTK_BOX (vbox), cd->graph, FALSE, FALSE, 0);
   gtk_widget_show (cd->graph);
 
   g_signal_connect (cd->graph, "event",
                     G_CALLBACK (bender_graph_events),
+                    cd);
+  g_signal_connect (cd->graph, "draw",
+                    G_CALLBACK (bender_graph_draw),
                     cd);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -1551,7 +1549,7 @@ bender_update (BenderDialog *cd,
       if (update & UP_DRAW)
         gtk_widget_queue_draw (cd->pv_widget);
     }
-  if ((update & UP_GRAPH) && (update & UP_DRAW) && cd->pixmap != NULL)
+  if ((update & UP_GRAPH) && (update & UP_DRAW))
     {
       cairo_t *cr;
 
@@ -2187,15 +2185,6 @@ bender_graph_events (GtkWidget    *widget,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      if (cd->pixmap == NULL)
-        cd->pixmap = gdk_pixmap_new (gtk_widget_get_window (cd->graph),
-                                     GRAPH_WIDTH + RADIUS * 2,
-                                     GRAPH_HEIGHT + RADIUS * 2, -1);
-
-      bender_update (cd, UP_GRAPH | UP_DRAW);
-      break;
-
     case GDK_BUTTON_PRESS:
       new_type = GDK_TCROSS;
 
@@ -2331,6 +2320,16 @@ bender_graph_events (GtkWidget    *widget,
     default:
       break;
     }
+
+  return FALSE;
+}
+
+static gboolean
+bender_graph_draw (GtkWidget    *widget,
+                   cairo_t      *cr,
+                   BenderDialog *cd)
+{
+  bender_update (cd, UP_GRAPH | UP_DRAW);
 
   return FALSE;
 }

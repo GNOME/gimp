@@ -20,7 +20,7 @@ plug-ins/common/compose.c
 plug-ins/common/contrast-normalize.c
 plug-ins/common/contrast-retinex.c
 plug-ins/common/crop-zealous.c
-#plug-ins/common/curve-bend.c
+plug-ins/common/curve-bend.c
 plug-ins/common/decompose.c
 plug-ins/common/depth-merge.c
 plug-ins/common/despeckle.c

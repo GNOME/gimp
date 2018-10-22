@@ -62,6 +62,7 @@ compose_libexecdir = $(gimpplugindir)/plug-ins/compose
 contrast_normalize_libexecdir = $(gimpplugindir)/plug-ins/contrast-normalize
 contrast_retinex_libexecdir = $(gimpplugindir)/plug-ins/contrast-retinex
 crop_zealous_libexecdir = $(gimpplugindir)/plug-ins/crop-zealous
+curve_bend_libexecdir = $(gimpplugindir)/plug-ins/curve-bend
 decompose_libexecdir = $(gimpplugindir)/plug-ins/decompose
 depth_merge_libexecdir = $(gimpplugindir)/plug-ins/depth-merge
 despeckle_libexecdir = $(gimpplugindir)/plug-ins/despeckle
@@ -153,6 +154,7 @@ compose_libexec_PROGRAMS = compose
 contrast_normalize_libexec_PROGRAMS = contrast-normalize
 contrast_retinex_libexec_PROGRAMS = contrast-retinex
 crop_zealous_libexec_PROGRAMS = crop-zealous
+curve_bend_libexec_PROGRAMS = curve-bend
 decompose_libexec_PROGRAMS = decompose
 depth_merge_libexec_PROGRAMS = depth-merge
 despeckle_libexec_PROGRAMS = despeckle
@@ -521,6 +523,23 @@ crop_zealous_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(crop_zealous_RC)
+
+curve_bend_SOURCES = \
+	curve-bend.c
+
+curve_bend_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(curve_bend_RC)
 
 decompose_SOURCES = \
 	decompose.c
