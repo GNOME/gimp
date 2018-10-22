@@ -548,19 +548,22 @@ cartoon (GimpDrawable *drawable,
               else
                 {
                   /*  Convert to HLS, set lightness and convert back  */
-                  gint r, g, b;
+                  GimpRGB rgb;
+                  GimpHSL hsl;
 
-                  r = src_ptr[col * src_rgn.bpp + 0];
-                  g = src_ptr[col * src_rgn.bpp + 1];
-                  b = src_ptr[col * src_rgn.bpp + 2];
+                  gimp_rgb_set_uchar (&rgb,
+                                      src_ptr[col * src_rgn.bpp + 0],
+                                      src_ptr[col * src_rgn.bpp + 1],
+                                      src_ptr[col * src_rgn.bpp + 2]);
 
-                  gimp_rgb_to_hsl_int (&r, &g, &b);
-                  b = lightness;
-                  gimp_hsl_to_rgb_int (&r, &g, &b);
+                  gimp_rgb_to_hsl (&rgb, &hsl);
+                  hsl.l = ROUND ((gdouble) lightness / 255.0);
+                  gimp_hsl_to_rgb (&hsl, &rgb);
 
-                  dest_ptr[col * bytes + 0] = r;
-                  dest_ptr[col * bytes + 1] = g;
-                  dest_ptr[col * bytes + 2] = b;
+                  gimp_rgb_get_uchar (&rgb,
+                                      dest_ptr + col * bytes + 0,
+                                      dest_ptr + col * bytes + 1,
+                                      dest_ptr + col * bytes + 2);
 
                   if (has_alpha)
                     dest_ptr[col * bytes + 3] = src_ptr[col * src_rgn.bpp + 3];
@@ -681,9 +684,21 @@ transfer_pixels (gdouble *src1,
 
       /*  Convert to lightness if RGB  */
       if (bytes > 2)
-        *dest = (guchar) gimp_rgb_to_l_int (sum[0], sum[1], sum[2]);
+        {
+          GimpRGB rgb;
+          GimpHSL hsl;
+
+          gimp_rgb_set_uchar (&rgb,
+                              ROUND (sum[0]),
+                              ROUND (sum[1]),
+                              ROUND (sum[2]));
+          gimp_rgb_to_hsl (&rgb, &hsl);
+          *dest = ROUND (hsl.l * 255.0);
+        }
       else
-        *dest = (guchar) sum[0];
+        {
+          *dest = (guchar) sum[0];
+        }
 
       src1 += bytes;
       src2 += bytes;
