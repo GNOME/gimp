@@ -415,6 +415,7 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
 
   /* get timezone and fix format */
   strftime (tzstr, 7, "%z", now_tm);
+  tzstr[6] = '\0';
   tzstr[5] = tzstr[4];
   tzstr[4] = tzstr[3];
   tzstr[3] = ':';
