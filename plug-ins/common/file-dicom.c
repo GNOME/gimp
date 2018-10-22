@@ -841,7 +841,8 @@ dicom_add_element (GSList      *elements,
 
   element->group_word     = group_word;
   element->element_word   = element_word;
-  strncpy (element->value_rep, value_rep, sizeof (element->value_rep));
+  strncpy (element->value_rep, value_rep, sizeof (element->value_rep) - 1);
+  element->value_rep[sizeof (element->value_rep) - 1] = '\0';
   element->element_length = element_length;
   element->value          = value;
 
@@ -1062,7 +1063,8 @@ dicom_get_elements_list (gint32 image_ID)
                   guint16 element_word = 0;
 
                   /* sacrificial buffer */
-                  strncpy (buf, parasites[i], sizeof (buf));
+                  strncpy (buf, parasites[i], sizeof (buf) - 1);
+                  buf[sizeof (buf) - 1] = '\0';
 
                   /* buf should now hold a string of the form
                    * dcm/XXXX-XXXX-AA where XXXX are Hex values for
@@ -1105,7 +1107,10 @@ dicom_get_elements_list (gint32 image_ID)
 
                   /* and lastly, the VR */
                   if (ptr1)
-                    strncpy (value_rep, ptr1, sizeof (value_rep));
+                    {
+                      strncpy (value_rep, ptr1, sizeof (value_rep) - 1);
+                      value_rep[sizeof (value_rep) - 1] = '\0';
+                    }
 
                   /*
                    * If all went according to plan, we should be able

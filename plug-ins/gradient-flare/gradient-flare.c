@@ -4986,6 +4986,7 @@ gradient_cache_lookup (const gchar *name,
         gradient_cache_zorch();
       ci = g_new (GradientCacheItem, 1);
       strncpy (ci->name, name, GRADIENT_NAME_MAX - 1);
+      ci->name[GRADIENT_NAME_MAX - 1] = '\0';
       ci->next = gradient_cache_head;
       ci->prev = NULL;
       if (gradient_cache_head)

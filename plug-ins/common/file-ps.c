@@ -3581,7 +3581,7 @@ load_dialog (const gchar *filename)
           range = gimp_page_selector_get_selected_range (GIMP_PAGE_SELECTOR (selector));
         }
 
-      strncpy (plvals.pages, range, sizeof (plvals.pages));
+      strncpy (plvals.pages, range, sizeof (plvals.pages) - 1);
       plvals.pages[strlen (range)] = '\0';
 
       ps_pagemode = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
@@ -3592,8 +3592,7 @@ load_dialog (const gchar *filename)
     }
   else
     {
-      strncpy (plvals.pages, "1", 1);
-      plvals.pages[1] = '\0';
+      strncpy (plvals.pages, "1", sizeof (plvals.pages) - 1);
       ps_pagemode = GIMP_PAGE_SELECTOR_TARGET_IMAGES;
     }
 
