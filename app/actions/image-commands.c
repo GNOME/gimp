@@ -1247,9 +1247,6 @@ image_profile_assign_callback (GtkWidget                *dialog,
                     "%s", error->message);
       g_clear_error (&error);
 
-      gimp_image_undo_group_end (image);
-      gimp_image_undo (image);
-
       return;
     }
 
