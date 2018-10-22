@@ -746,17 +746,19 @@ CML_main_function (gboolean preview_p)
            index < MIN (cell_num, width_by_pixel / VALS.scale);
            index++)
         {
-          guchar buffer[4];
-          int   rgbi[3];
-          int   i;
+          guchar  buffer[4];
+          GimpRGB rgb;
+          GimpHSV hsv;
 
           gimp_pixel_rgn_get_pixel (&src_rgn, buffer,
                                     x + (index * VALS.scale), y);
-          for (i = 0; i < 3; i++) rgbi[i] = buffer[i];
-          gimp_rgb_to_hsv_int (rgbi, rgbi + 1, rgbi + 2);
-          hues[index] = (gdouble) rgbi[0] / (gdouble) 255;
-          sats[index] = (gdouble) rgbi[1] / (gdouble) 255;
-          vals[index] = (gdouble) rgbi[2] / (gdouble) 255;
+
+          gimp_rgb_set_uchar (&rgb, buffer[0], buffer[1], buffer[2]);
+          gimp_rgb_to_hsv (&rgb, &hsv);
+
+          hues[index] = hsv.h;
+          sats[index] = hsv.s;
+          vals[index] = hsv.v;
         }
     }
 
@@ -795,7 +797,21 @@ CML_main_function (gboolean preview_p)
           v = b = CANNONIZE (VALS.val, vals[dx]);
 
           if (! dest_is_gray)
-            gimp_hsv_to_rgb_int (&r, &g, &b);
+            {
+              GimpHSV hsv;
+              GimpRGB rgb;
+
+              gimp_hsv_set (&hsv,
+                            (gdouble) h / 255.0,
+                            (gdouble) s / 255.0,
+                            (gdouble) v / 255.0);
+
+              gimp_hsv_to_rgb (&hsv, &rgb);
+
+              r = ROUND (rgb.r * 255.0);
+              g = ROUND (rgb.g * 255.0);
+              b = ROUND (rgb.b * 255.0);
+            }
 
           /* render destination */
           for (offset_y = 0;
@@ -821,12 +837,29 @@ CML_main_function (gboolean preview_p)
                       }
                     else
                       {
-                        gimp_rgb_to_hsv_int (rgbi, rgbi + 1, rgbi + 2);
+                        GimpRGB rgb;
+                        GimpHSV hsv;
 
-                        r = (VALS.hue.function == CML_KEEP_VALUES) ? rgbi[0] : h;
-                        g = (VALS.sat.function == CML_KEEP_VALUES) ? rgbi[1] : s;
-                        b = (VALS.val.function == CML_KEEP_VALUES) ? rgbi[2] : v;
-                        gimp_hsv_to_rgb_int (&r, &g, &b);
+                        rgb.r = (gdouble) rgbi[0] / 255.0;
+                        rgb.g = (gdouble) rgbi[1] / 255.0;
+                        rgb.b = (gdouble) rgbi[2] / 255.0;
+
+                        gimp_rgb_to_hsv (&rgb, &hsv);
+
+                        if (VALS.hue.function != CML_KEEP_VALUES)
+                          hsv.h = (gdouble) h / 255.0;
+
+                        if  (VALS.sat.function != CML_KEEP_VALUES)
+                          hsv.s = (gdouble) s / 255.0;
+
+                        if (VALS.val.function != CML_KEEP_VALUES)
+                          hsv.v = (gdouble) v / 255.0;
+
+                        gimp_hsv_to_rgb (&hsv, &rgb);
+
+                        r = ROUND (rgb.r * 255.0);
+                        g = ROUND (rgb.g * 255.0);
+                        b = ROUND (rgb.b * 255.0);
                       }
                   }
 
@@ -1175,7 +1208,6 @@ CML_explorer_dialog (void)
   GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *abox;
   GtkWidget *bbox;
   GtkWidget *button;
   gboolean   run;
@@ -1775,6 +1807,8 @@ function_graph_draw (GtkWidget *widget,
 {
   gint       x, y;
   gint       rgbi[3];
+  GimpHSV    hsv;
+  GimpRGB    rgb;
   gint       channel_id = GPOINTER_TO_INT (data[0]);
   CML_PARAM *param      = data[1];
 
@@ -1788,14 +1822,20 @@ function_graph_draw (GtkWidget *widget,
       rgbi[0] = rgbi[1] = rgbi[2] = 127;
       if ((0 <= channel_id) && (channel_id <= 2))
         rgbi[channel_id] = CANNONIZE ((*param), ((gdouble) x / (gdouble) 255));
-      gimp_hsv_to_rgb_int (rgbi, rgbi+1, rgbi+2);
+
+      hsv.h = (gdouble) rgbi[0] / 255.0;
+      hsv.s = (gdouble) rgbi[1] / 255.0;
+      hsv.v = (gdouble) rgbi[2] / 255.0;
+
+      gimp_hsv_to_rgb (&hsv, &rgb);
+
       for (y = 0; y < GRAPHSIZE; y++)
-      {
-        GIMP_CAIRO_RGB24_SET_PIXEL((img+(y*img_stride+x*4)),
-                                   rgbi[0],
-                                   rgbi[1],
-                                   rgbi[2]);
-      }
+        {
+          GIMP_CAIRO_RGB24_SET_PIXEL((img+(y*img_stride+x*4)),
+                                     ROUND (rgb.r * 255.0),
+                                     ROUND (rgb.g * 255.0),
+                                     ROUND (rgb.b * 255.0));
+        }
     }
 
   cairo_surface_mark_dirty (buffer);

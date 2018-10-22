@@ -1027,7 +1027,6 @@ fspike (GimpPixelRgn *src_rgn,
   gdouble        in;
   gdouble        theta;
   gdouble        sfac;
-  gint           r, g, b;
   GimpTile      *tile = NULL;
   gint           row, col;
   gint           i;
@@ -1090,30 +1089,32 @@ fspike (GimpPixelRgn *src_rgn,
 
       if (svals.random_hue > 0.0 || svals.random_saturation > 0.0)
         {
-          r = 255 - color[0];
-          g = 255 - color[1];
-          b = 255 - color[2];
+          GimpRGB rgb;
+          GimpHSV hsv;
 
-          gimp_rgb_to_hsv_int (&r, &g, &b);
+          rgb.r = (gdouble) (255 - color[0]) / 255.0;
+          rgb.g = (gdouble) (255 - color[1]) / 255.0;
+          rgb.b = (gdouble) (255 - color[2]) / 255.0;
 
-          r += svals.random_hue * g_rand_double_range (gr, -0.5, 0.5) * 255;
+          gimp_rgb_to_hsv (&rgb, &hsv);
 
-          if (r >= 255)
-            r -= 255;
-          else if (r < 0)
-            r += 255;
+          hsv.h += svals.random_hue * g_rand_double_range (gr, -0.5, 0.5);
 
-          b += (svals.random_saturation *
-                g_rand_double_range (gr, -1.0, 1.0)) * 255;
+          if (hsv.h >= 1.0)
+            hsv.h -= 1.0;
+          else if (hsv.h < 0.0)
+            hsv.h += 1.0;
 
-          if (b > 255)
-            b = 255;
+          hsv.v += (svals.random_saturation *
+                    g_rand_double_range (gr, -1.0, 1.0));
 
-          gimp_hsv_to_rgb_int (&r, &g, &b);
+          hsv.v = CLAMP (hsv.v, 0.0, 1.0);
 
-          color[0] = 255 - r;
-          color[1] = 255 - g;
-          color[2] = 255 - b;
+          gimp_hsv_to_rgb (&hsv, &rgb);
+
+          color[0] = 255 - ROUND (rgb.r * 255.0);
+          color[1] = 255 - ROUND (rgb.g * 255.0);
+          color[2] = 255 - ROUND (rgb.b * 255.0);
         }
 
       dx = 0.2 * cos (theta * G_PI / 180.0);

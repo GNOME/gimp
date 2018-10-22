@@ -1856,19 +1856,24 @@ calc_sample_one_gradient (void)
                 {
                   for (j = 0; j < GRADIENT_RESOLUTION; j++)
                     {
-                      gint      r, g, b;
+                      GimpRGB rgb;
+                      GimpHSV hsv;
 
-                      r = gradient[j*4];
-                      g = gradient[j*4+1];
-                      b = gradient[j*4+2];
+                      rgb.r = (gdouble) gradient[j*4]   / 255.0;
+                      rgb.g = (gdouble) gradient[j*4+1] / 255.0;
+                      rgb.b = (gdouble) gradient[j*4+2] / 255.0;
 
-                      gimp_rgb_to_hsv_int (&r, &g, &b);
-                      r = (r + hue) % 256;
-                      gimp_hsv_to_rgb_int (&r, &g, &b);
+                      gimp_rgb_to_hsv (&rgb, &hsv);
 
-                      gradient[j*4] = r;
-                      gradient[j*4+1] = g;
-                      gradient[j*4+2] = b;
+                      hsv.h = (hsv.h + ((gdouble) hue / 255.0));
+                      if (hsv.h > 1.0)
+                        hsv.h -= 1.0;
+
+                      gimp_hsv_to_rgb (&hsv, &rgb);
+
+                      gradient[j*4]   = ROUND (rgb.r * 255.0);
+                      gradient[j*4+1] = ROUND (rgb.g * 255.0);
+                      gradient[j*4+2] = ROUND (rgb.b * 255.0);
                     }
                 }
             }
