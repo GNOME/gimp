@@ -141,6 +141,7 @@ gimp_color_pick_mode_get_type (void)
     { GIMP_COLOR_PICK_MODE_LCH, "GIMP_COLOR_PICK_MODE_LCH", "lch" },
     { GIMP_COLOR_PICK_MODE_LAB, "GIMP_COLOR_PICK_MODE_LAB", "lab" },
     { GIMP_COLOR_PICK_MODE_CMYK, "GIMP_COLOR_PICK_MODE_CMYK", "cmyk" },
+    { GIMP_COLOR_PICK_MODE_XYY, "GIMP_COLOR_PICK_MODE_XYY", "xyy" },
     { 0, NULL, NULL }
   };
 
@@ -153,6 +154,7 @@ gimp_color_pick_mode_get_type (void)
     { GIMP_COLOR_PICK_MODE_LCH, NC_("color-pick-mode", "CIE LCh"), NULL },
     { GIMP_COLOR_PICK_MODE_LAB, NC_("color-pick-mode", "CIE LAB"), NULL },
     { GIMP_COLOR_PICK_MODE_CMYK, NC_("color-pick-mode", "CMYK"), NULL },
+    { GIMP_COLOR_PICK_MODE_XYY, NC_("color-pick-mode", "CIE xyY"), NULL },
     { 0, NULL, NULL }
   };
 
