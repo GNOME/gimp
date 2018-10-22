@@ -75,7 +75,8 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
 
   buffer = gimp_fill_options_create_buffer (options, drawable,
                                             GEGL_RECTANGLE (0, 0,
-                                                            width, height));
+                                                            width, height),
+                                            -x, -y);
 
   if (! undo_desc)
     undo_desc = gimp_fill_options_get_undo_desc (options);

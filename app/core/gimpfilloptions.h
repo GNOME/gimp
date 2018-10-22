@@ -73,7 +73,9 @@ const gchar     * gimp_fill_options_get_undo_desc    (GimpFillOptions     *optio
 
 GeglBuffer      * gimp_fill_options_create_buffer    (GimpFillOptions     *options,
                                                       GimpDrawable        *drawable,
-                                                      const GeglRectangle *rect);
+                                                      const GeglRectangle *rect,
+                                                      gint                 pattern_offset_x,
+                                                      gint                 pattern_offset_y);
 
 
 #endif /* __GIMP_FILL_OPTIONS_H__ */
