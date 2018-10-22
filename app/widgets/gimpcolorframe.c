@@ -135,17 +135,31 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
 static void
 gimp_color_frame_init (GimpColorFrame *frame)
 {
-  GtkWidget *vbox;
-  GtkWidget *vbox2;
-  GtkWidget *label;
-  gint       i;
+  GtkListStore *store;
+  GtkWidget    *vbox;
+  GtkWidget    *vbox2;
+  GtkWidget    *label;
+  gint          i;
 
   frame->sample_valid  = FALSE;
   frame->sample_format = babl_format ("R'G'B' u8");
 
   gimp_rgba_set (&frame->color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
-  frame->combo = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_PICK_MODE);
+  /* create the store manually so the values have a nice order */
+  store = gimp_enum_store_new_with_values (GIMP_TYPE_COLOR_PICK_MODE,
+                                           GIMP_COLOR_PICK_MODE_LAST + 1,
+                                           GIMP_COLOR_PICK_MODE_PIXEL,
+                                           GIMP_COLOR_PICK_MODE_RGB_PERCENT,
+                                           GIMP_COLOR_PICK_MODE_RGB_U8,
+                                           GIMP_COLOR_PICK_MODE_HSV,
+                                           GIMP_COLOR_PICK_MODE_LCH,
+                                           GIMP_COLOR_PICK_MODE_LAB,
+                                           GIMP_COLOR_PICK_MODE_XYY,
+                                           GIMP_COLOR_PICK_MODE_CMYK);
+  frame->combo = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
+  g_object_unref (store);
+
   gtk_frame_set_label_widget (GTK_FRAME (frame), frame->combo);
   gtk_widget_show (frame->combo);
 
@@ -916,10 +930,42 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
           values = g_new0 (gchar *, 5);
 
-          values[0] = g_strdup_printf ("%.01f  ",        lab[0]);
-          values[1] = g_strdup_printf ("%.01f  ",        lab[1]);
-          values[2] = g_strdup_printf ("%.01f  ",        lab[2]);
-          values[3] = g_strdup_printf ("%.01f %%",       lab[3] * 100.0);
+          values[0] = g_strdup_printf ("%.01f  ",  lab[0]);
+          values[1] = g_strdup_printf ("%.01f  ",  lab[1]);
+          values[2] = g_strdup_printf ("%.01f  ",  lab[2]);
+          values[3] = g_strdup_printf ("%.01f %%", lab[3] * 100.0);
+        }
+      break;
+
+    case GIMP_COLOR_PICK_MODE_XYY:
+      /* TRANSLATORS: x from xyY color space */
+      names[0] = C_("xyY color space", "x:");
+      /* TRANSLATORS: y from xyY color space */
+      names[1] = C_("xyY color space", "y:");
+      /* TRANSLATORS: Y from xyY color space */
+      names[2] = C_("xyY color space", "Y:");
+
+      if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
+        names[3] = C_("Alpha channel", "A:");
+
+      if (frame->sample_valid)
+        {
+          static const Babl *fish = NULL;
+          gfloat             xyY[4];
+
+          if (G_UNLIKELY (! fish))
+            fish = babl_fish (babl_format ("R'G'B'A double"),
+                              babl_format ("CIE xyY alpha float"));
+
+          babl_process (fish, &frame->color, xyY, 1);
+
+          values = g_new0 (gchar *, 5);
+
+          values[0] = g_strdup_printf ("%1.6f  ",  xyY[0]);
+          values[1] = g_strdup_printf ("%1.6f  ",  xyY[1]);
+          values[2] = g_strdup_printf ("%1.6f  ",  xyY[2]);
+          values[3] = g_strdup_printf ("%.01f %%", xyY[3] * 100.0);
         }
       break;
 

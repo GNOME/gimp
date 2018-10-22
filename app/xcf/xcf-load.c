@@ -820,6 +820,9 @@ xcf_load_image_props (XcfInfo   *info,
                 GIMP_LOG (XCF, "prop sample point x=%d y=%d mode=%d",
                           x, y, pick_mode);
 
+                if (pick_mode > GIMP_COLOR_PICK_MODE_LAST)
+                  pick_mode = GIMP_COLOR_PICK_MODE_PIXEL;
+
                 sample_point = gimp_image_add_sample_point_at_pos (image,
                                                                    x, y, FALSE);
                 gimp_image_set_sample_point_pick_mode (image, sample_point,

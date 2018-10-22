@@ -86,6 +86,10 @@ typedef enum  /*< pdb-skip >*/
 } GimpChannelBorderStyle;
 
 
+/*  Note: when appending values here, don't forget to update
+ *  GimpColorFrame and other places use this enum to create combo
+ *  boxes.
+ */
 #define GIMP_TYPE_COLOR_PICK_MODE (gimp_color_pick_mode_get_type ())
 
 GType gimp_color_pick_mode_get_type (void) G_GNUC_CONST;
@@ -98,7 +102,10 @@ typedef enum  /*< pdb-skip >*/
   GIMP_COLOR_PICK_MODE_HSV,         /*< desc="HSV"          >*/
   GIMP_COLOR_PICK_MODE_LCH,         /*< desc="CIE LCh"      >*/
   GIMP_COLOR_PICK_MODE_LAB,         /*< desc="CIE LAB"      >*/
-  GIMP_COLOR_PICK_MODE_CMYK         /*< desc="CMYK"         >*/
+  GIMP_COLOR_PICK_MODE_CMYK,        /*< desc="CMYK"         >*/
+  GIMP_COLOR_PICK_MODE_XYY,         /*< desc="CIE xyY"      >*/
+
+  GIMP_COLOR_PICK_MODE_LAST = GIMP_COLOR_PICK_MODE_XYY /*< skip >*/
 } GimpColorPickMode;
 
 
