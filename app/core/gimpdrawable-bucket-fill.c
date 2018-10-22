@@ -167,7 +167,8 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   buffer = gimp_fill_options_create_buffer (options, drawable,
                                             GEGL_RECTANGLE (0, 0,
-                                                            width, height));
+                                                            width, height),
+                                            -x, -y);
 
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
                            mask_buffer,

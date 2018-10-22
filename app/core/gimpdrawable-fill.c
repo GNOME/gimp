@@ -246,7 +246,8 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                             gimp_fill_options_get_antialias (options));
 
   buffer = gimp_fill_options_create_buffer (options, drawable,
-                                            GEGL_RECTANGLE (0, 0, w, h));
+                                            GEGL_RECTANGLE (0, 0, w, h),
+                                            -x, -y);
 
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
                            mask_buffer, 0, 0, 1.0);
