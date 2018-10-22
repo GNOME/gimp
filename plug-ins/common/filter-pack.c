@@ -1279,7 +1279,7 @@ fp_advanced_dialog (GtkWidget *parent)
   GtkWidget     *frame, *hbox;
   GtkAdjustment *smoothnessData;
   GtkWidget     *graphFrame, *scale;
-  GtkWidget     *vbox, *label, *labelGrid, *alignment;
+  GtkWidget     *vbox, *label, *labelGrid;
   GtkWidget     *inner_vbox, *innermost_vbox;
   gint           i;
 
@@ -1318,12 +1318,10 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_container_add (GTK_CONTAINER (graphFrame), inner_vbox);
   gtk_widget_show (inner_vbox);
 
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (inner_vbox), alignment, TRUE, TRUE, 0);
-  gtk_widget_show (alignment);
-
   innermost_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_container_add (GTK_CONTAINER (alignment), innermost_vbox);
+  gtk_widget_set_halign (innermost_vbox, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (innermost_vbox, GTK_ALIGN_CENTER);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), innermost_vbox, TRUE, TRUE, 0);
   gtk_widget_show (innermost_vbox);
 
   AW.aliasing_preview = gimp_preview_area_new ();

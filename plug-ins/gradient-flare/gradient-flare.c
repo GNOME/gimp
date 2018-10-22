@@ -1558,8 +1558,8 @@ static void
 gflare_name_copy (gchar       *dest,
                   const gchar *src)
 {
-  strncpy (dest, src, GFLARE_NAME_MAX);
-  dest[GFLARE_NAME_MAX-1] = '\0';
+  strncpy (dest, src, GFLARE_NAME_MAX - 1);
+  dest[GFLARE_NAME_MAX - 1] = '\0';
 }
 
 /*************************************************************************/
@@ -2332,7 +2332,6 @@ dlg_run (void)
   GtkWidget *hbox;
   GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *abox;
   GtkWidget *button;
   GtkWidget *notebook;
   gboolean   run = FALSE;
@@ -2390,13 +2389,10 @@ dlg_run (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   dlg->preview = preview_new (DLG_PREVIEW_WIDTH, DLG_PREVIEW_HEIGHT,
@@ -3304,7 +3300,6 @@ ed_run (GtkWindow            *parent,
   GtkWidget *shell;
   GtkWidget *hbox;
   GtkWidget *frame;
-  GtkWidget *abox;
   GtkWidget *notebook;
 
   if (!ed)
@@ -3357,13 +3352,10 @@ ed_run (GtkWindow            *parent,
    *    Preview
    */
 
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   ed->preview = preview_new (ED_PREVIEW_WIDTH, ED_PREVIEW_HEIGHT,
@@ -4638,8 +4630,8 @@ static void
 gradient_name_copy (gchar       *dest,
                     const gchar *src)
 {
-  strncpy (dest, src, GRADIENT_NAME_MAX);
-  dest[GRADIENT_NAME_MAX-1] = '\0';
+  strncpy (dest, src, GRADIENT_NAME_MAX - 1);
+  dest[GRADIENT_NAME_MAX - 1] = '\0';
 }
 
 /*

@@ -135,15 +135,10 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
 
   GtkWidget *hbox;
   GtkWidget *vbox;
-  GtkWidget *alignment;
   GtkWidget *combo;
   GtkWidget *checkbox;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-
-  alignment = gtk_alignment_new (1.0, 0.5, 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), alignment, FALSE, FALSE, 0);
-  gtk_widget_show (alignment);
 
   /* To make life easier for the callbacks, we store the
      layer's ID and stacking number with the hbox. */
@@ -154,13 +149,15 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
                      "icon_layer_num", GINT_TO_POINTER (layer_num));
 
   g_object_set_data (G_OBJECT (hbox), "icon_preview", icon_preview);
-  gtk_container_add (GTK_CONTAINER (alignment), icon_preview);
+  gtk_widget_set_halign (icon_preview, GTK_ALIGN_END);
+  gtk_widget_set_valign (icon_preview, GTK_ALIGN_CENTER);
+  gtk_box_pack_start (GTK_BOX (hbox), icon_preview, FALSE, FALSE, 0);
   gtk_widget_show (icon_preview);
 
   if (! size)
     size = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  gtk_size_group_add_widget (size, alignment);
+  gtk_size_group_add_widget (size, icon_preview);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);

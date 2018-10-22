@@ -958,7 +958,6 @@ flame_dialog (void)
   GtkWidget     *notebook;
   GtkWidget     *label;
   GtkWidget     *frame;
-  GtkWidget     *abox;
   GtkWidget     *button;
   GtkWidget     *grid;
   GtkWidget     *box;
@@ -993,13 +992,10 @@ flame_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
-  abox = gtk_alignment_new (0.0, 0.0, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (box), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
+  gtk_widget_set_valign (frame, GTK_ALIGN_START);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (box), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   flame_preview = gimp_preview_area_new ();
