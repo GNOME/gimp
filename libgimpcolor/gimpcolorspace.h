@@ -48,25 +48,6 @@ void   gimp_hsl_to_rgb          (const GimpHSL  *hsl,
 void   gimp_cmyk_to_rgb         (const GimpCMYK *cmyk,
                                  GimpRGB        *rgb);
 
-
-/*  gint functions  */
-
-GIMP_DEPRECATED_FOR (gimp_rgb_to_hsl)
-void    gimp_rgb_to_hsl_int     (gint    *red         /* returns hue        */,
-                                 gint    *green       /* returns saturation */,
-                                 gint    *blue        /* returns lightness  */);
-
-GIMP_DEPRECATED_FOR (gimp_rgb_to_hsl)
-gint    gimp_rgb_to_l_int       (gint     red,
-                                 gint     green,
-                                 gint     blue);
-
-GIMP_DEPRECATED_FOR (gimp_hsl_to_rgb)
-void    gimp_hsl_to_rgb_int     (gint    *hue         /* returns red        */,
-                                 gint    *saturation  /* returns green      */,
-                                 gint    *lightness   /* returns blue       */);
-
-
 G_END_DECLS
 
 #endif  /* __GIMP_COLOR_SPACE_H__ */

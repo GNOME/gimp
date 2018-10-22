@@ -62,7 +62,6 @@ EXPORTS
 	gimp_hsl_set
 	gimp_hsl_set_alpha
 	gimp_hsl_to_rgb
-	gimp_hsl_to_rgb_int
 	gimp_hsv_clamp
 	gimp_hsv_get_type
 	gimp_hsv_set
@@ -98,9 +97,7 @@ EXPORTS
 	gimp_rgb_subtract
 	gimp_rgb_to_cmyk
 	gimp_rgb_to_hsl
-	gimp_rgb_to_hsl_int
 	gimp_rgb_to_hsv
-	gimp_rgb_to_l_int
 	gimp_rgba_add
 	gimp_rgba_distance
 	gimp_rgba_get_pixel
