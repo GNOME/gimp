@@ -94,6 +94,10 @@
 /* Whether the window's maximized or not */
 #define GIMP_IMAGE_WINDOW_MAXIMIZED        "maximized"
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED < 1070
+#define NSWindowCollectionBehaviorFullScreenAuxiliary (1 << 8)
+#endif
+
 
 enum
 {
@@ -633,12 +637,7 @@ gimp_image_window_map (GtkWidget *widget)
    * as soon as GTK+ has proper support for this, we will migrate to the
    * new-style full screen mode.
    */
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
   ns_window.collectionBehavior |= NSWindowCollectionBehaviorFullScreenAuxiliary;
-#else
-  /* Hard code the define ... */
-  ns_window.collectionBehavior |= 1 << 8;
-#endif
 #endif /* !GDK_WINDOWING_QUARTZ */
 }
 

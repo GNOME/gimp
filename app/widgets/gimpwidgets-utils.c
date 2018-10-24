@@ -34,7 +34,7 @@
 #endif
 
 #ifdef PLATFORM_OSX
-#include <CoreGraphics/CoreGraphics.h>
+#include <ApplicationServices/ApplicationServices.h>
 #endif
 
 #include "libgimpbase/gimpbase.h"
