@@ -36,7 +36,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-24 12:31+0200\n"
-"PO-Revision-Date: 2018-10-24 12:37+0200\n"
+"PO-Revision-Date: 2018-10-24 12:44+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -5233,7 +5233,7 @@ msgstr "_Reinhard 2005..."
 #: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "RGB _Clip..."
-msgstr "_Clip RGB..."
+msgstr "Ri_taglio RGB..."
 
 #: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
