@@ -8,9 +8,9 @@
 
 #sub ProcessConfigFile
   #define FileName FindGetFileName(FindHandle)
-Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external recursesubdirs restartreplace; Check: CheckExternalConf('{#FileName}')
+Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
   #if BaseDir != GIMP_DIR32
-Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: gimp32on64; Flags: external recursesubdirs restartreplace; Check: CheckExternalConf('{#FileName}')
+Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: gimp32on64; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
   #endif
 #endsub
 
