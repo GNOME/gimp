@@ -35,6 +35,7 @@
 #include "gimpsessioninfo.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
@@ -56,6 +57,10 @@ static void   color_area_dialog_update      (GimpColorDialog      *dialog,
 static void   color_area_color_clicked      (GimpFgBgEditor       *editor,
                                              GimpActiveColor       active_color,
                                              GimpContext          *context);
+static void   color_area_tooltip            (GimpFgBgEditor       *editor,
+                                             GimpFgBgTarget        target,
+                                             GtkTooltip           *tooltip,
+                                             GimpToolbox          *toolbox);
 
 
 /*  local variables  */
@@ -87,15 +92,15 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
                          GDK_ENTER_NOTIFY_MASK |
                          GDK_LEAVE_NOTIFY_MASK);
 
-  gimp_help_set_help_data
-    (color_area, _("Foreground & background colors.\n"
-                   "The black and white squares reset colors.\n"
-                   "The arrows swap colors.\n"
-                   "Click to open the color selection dialog."), NULL);
+  g_object_set (color_area, "has-tooltip", TRUE, NULL);
 
   g_signal_connect (color_area, "color-clicked",
                     G_CALLBACK (color_area_color_clicked),
                     context);
+
+  g_signal_connect (color_area, "tooltip",
+                    G_CALLBACK (color_area_tooltip),
+                    toolbox);
 
   return color_area;
 }
@@ -281,4 +286,94 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
   gtk_window_present (GTK_WINDOW (color_dialog));
   color_dialog_active = TRUE;
+}
+
+static gboolean
+accel_find_func (GtkAccelKey *key,
+                 GClosure    *closure,
+                 gpointer     data)
+{
+  return (GClosure *) data == closure;
+}
+
+static void
+color_area_tooltip (GimpFgBgEditor *editor,
+                    GimpFgBgTarget  target,
+                    GtkTooltip     *tooltip,
+                    GimpToolbox    *toolbox)
+{
+  GimpUIManager *manager = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox));
+  GtkAction     *action  = NULL;
+  const gchar   *text    = NULL;
+
+  switch (target)
+    {
+    case GIMP_FG_BG_TARGET_FOREGROUND:
+      text = _("The active foreground color.\n"
+               "Click to open the color selection dialog.");
+      break;
+
+    case GIMP_FG_BG_TARGET_BACKGROUND:
+      text = _("The active background color.\n"
+               "Click to open the color selection dialog.");
+      break;
+
+    case GIMP_FG_BG_TARGET_SWAP:
+      action = gimp_ui_manager_find_action (manager, "context",
+                                            "context-colors-swap");
+      text = gtk_action_get_tooltip (action);
+      break;
+
+    case GIMP_FG_BG_TARGET_DEFAULT:
+      action = gimp_ui_manager_find_action (manager, "context",
+                                            "context-colors-default");
+      text = gtk_action_get_tooltip (action);
+      break;
+
+    default:
+      break;
+    }
+
+  if (text)
+    {
+      gchar *markup = NULL;
+
+      if (action)
+        {
+          GtkAccelGroup *accel_group;
+          GClosure      *accel_closure;
+          GtkAccelKey   *accel_key;
+
+          accel_closure = gtk_action_get_accel_closure (action);
+          accel_group   = gtk_accel_group_from_accel_closure (accel_closure);
+
+          accel_key = gtk_accel_group_find (accel_group,
+                                            accel_find_func,
+                                            accel_closure);
+
+          if (accel_key            &&
+              accel_key->accel_key &&
+              (accel_key->accel_flags & GTK_ACCEL_VISIBLE))
+            {
+              gchar *escaped = g_markup_escape_text (text, -1);
+              gchar *accel   = gtk_accelerator_get_label (accel_key->accel_key,
+                                                          accel_key->accel_mods);
+
+              markup = g_strdup_printf ("%s  <b>%s</b>", escaped, accel);
+
+              g_free (accel);
+              g_free (escaped);
+            }
+        }
+
+      if (markup)
+        {
+          gtk_tooltip_set_markup (tooltip, markup);
+          g_free (markup);
+        }
+      else
+        {
+          gtk_tooltip_set_text (tooltip, text);
+        }
+    }
 }
