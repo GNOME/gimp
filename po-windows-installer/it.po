@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: GIMP Windows Installer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-06 15:31+0200\n"
-"PO-Revision-Date: 2018-09-06 15:33+0200\n"
+"PO-Revision-Date: 2018-10-25 10:38+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <it@li.org>\n"
 "Language: it\n"
@@ -70,11 +70,7 @@ msgid ""
 "display mode. This has been known to cause stability problems with GIMP, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
-msgstr ""
-"L'installatore ha rilevato che Windows attualmente non è in funzione in "
-"modalità schermo a 32 bits-per-pixel. È risaputo che ciò può causare "
-"problemi di instabilità in GIMP, perciò si raccomanda di cambiare la "
-"profondità di colore dello schermo a 32BPP prima di continuare."
+msgstr "L'installatore ha rilevato che Windows attualmente non è in funzione in modalità schermo a 32 bit-per-pixel. È risaputo che ciò può causare problemi di instabilità in GIMP, perciò si raccomanda di cambiare la profondità di colore dello schermo a 32BPP prima di continuare."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:12
 msgid "E&xit"
@@ -120,7 +116,7 @@ msgstr "GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:21
 msgid "GIMP and all default plug-ins"
-msgstr "GIMP e tutti i plugin predefiniti."
+msgstr "GIMP e tutti i plugin predefiniti"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:22
 msgid "Run-time libraries"
@@ -128,7 +124,7 @@ msgstr "Librerie a run-time"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:23
 msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
-msgstr "Librerie a run-time usate da GIMP, incluso l'ambiente run-time GTK+."
+msgstr "Librerie a run-time usate da GIMP, incluso l'ambiente run-time GTK+"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:24
 msgid "Debug symbols"
@@ -144,7 +140,7 @@ msgstr "Motore GTK+ per MS-Windows"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:27
 msgid "Native Windows look for GIMP"
-msgstr "Aspetto nativo Windows per GIMP."
+msgstr "Aspetto nativo Windows per GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:28
 msgid "Support for old plug-ins"
@@ -152,8 +148,7 @@ msgstr "Supporto per i vecchi plugin"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:29
 msgid "Install libraries needed by old third-party plug-ins"
-msgstr ""
-"Installazione delle librerie necessarie per i vecchi plug-in di terze parti."
+msgstr "Installazione delle librerie necessarie per i vecchi plug-in di terze parti"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Translations"
@@ -355,7 +350,7 @@ msgstr "per aggiornarlo in libertà."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up file associations..."
-msgstr "Impostaione delle associazioni di file..."
+msgstr "Impostazione delle associazioni di file..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "Setting up environment for GIMP Python extension..."
