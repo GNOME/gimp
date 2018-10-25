@@ -22,6 +22,16 @@
 #define __GIMP_FG_BG_EDITOR_H__
 
 
+typedef enum
+{
+  GIMP_FG_BG_TARGET_INVALID,
+  GIMP_FG_BG_TARGET_FOREGROUND,
+  GIMP_FG_BG_TARGET_BACKGROUND,
+  GIMP_FG_BG_TARGET_SWAP,
+  GIMP_FG_BG_TARGET_DEFAULT
+} GimpFgBgTarget;
+
+
 #define GIMP_TYPE_FG_BG_EDITOR            (gimp_fg_bg_editor_get_type ())
 #define GIMP_FG_BG_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FG_BG_EDITOR, GimpFgBgEditor))
 #define GIMP_FG_BG_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FG_BG_EDITOR, GimpFgBgEditorClass))
@@ -58,6 +68,10 @@ struct _GimpFgBgEditorClass
 
   void (* color_clicked) (GimpFgBgEditor  *editor,
                           GimpActiveColor  color);
+
+  void (* tooltip)       (GimpFgBgEditor *editor,
+                          GimpFgBgTarget  target,
+                          GtkTooltip      tooltip);
 };
 
 
