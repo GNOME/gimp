@@ -14,9 +14,9 @@ msgstr ""
 "Project-Id-Version: GIMP plug-Ins 2.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-05 02:29+0300\n"
-"PO-Revision-Date: 2018-06-13 15:56MSK\n"
-"Last-Translator: Olesya Gerasimenko <gammaray@basealt.ru>\n"
-"Language-Team: Basealt Translation Team\n"
+"PO-Revision-Date: 2018-10-26 01:25MSK\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Language-Team: GIMP Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3439,7 +3439,7 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1541
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Ошибка при создании структуры записи PNG во время загрузки 's'."
+msgstr "Ошибка при создании структуры записи PNG во время загрузки '%s'."
 
 #: ../plug-ins/common/file-png.c:1550
 #, c-format
@@ -4738,7 +4738,7 @@ msgstr "Ошибка при экспорте '%s': "
 #: ../plug-ins/common/file-xwd.c:1753 ../plug-ins/common/file-xwd.c:2151
 #, c-format
 msgid "XWD-file %s is corrupt."
-msgstr "Файл XWD повреждён."
+msgstr "Файл %s в формате XWD повреждён."
 
 #: ../plug-ins/common/film.c:217
 msgid "Combine several images on a film strip"
@@ -7741,17 +7741,17 @@ msgstr "Некорректный файл WebP '%s'"
 #: ../plug-ins/file-webp/file-webp-load.c:184
 #, c-format
 msgid "Failed to decode animated WebP file '%s'"
-msgstr "Не удалось расшифровать анимированный файл WebP 's'"
+msgstr "Не удалось декодировать анимированный файл '%s' в формате WebP"
 
 #: ../plug-ins/file-webp/file-webp-load.c:192
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
-msgstr "Не удалось расшифровать информацию анимированного файла WebP из '%s'"
+msgstr "Не удалось декодировать информацию анимированного файла WebP из '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:211
 #, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
-msgstr "Не удалось расшифровать анимированный кадр WebP из '%s'"
+msgstr "Не удалось декодировать анимированный кадр WebP из '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:216
 #, c-format
