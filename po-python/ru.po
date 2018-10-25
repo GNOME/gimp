@@ -1,35 +1,36 @@
 # translation of gimp python to Russian
 # Copyright (C) 2000-2002,2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 #
+#
 # Valek Filippov <frob@df.ru>, 2000-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2011.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2009, 2016.
-#
+# Olesya Gerasimenko <gammaray@basealt.ru>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Python-Fu 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2016-05-09 02:14+0300\n"
-"PO-Revision-Date: 2016-05-09 02:19+0300\n"
-"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
-"Language-Team: русский <>\n"
+"PO-Revision-Date: 2018-06-13 11:57MSK\n"
+"Last-Translator: Olesya Gerasimenko <gammaray@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10"
+" || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
 msgstr "Отсутствует информация о прерывании"
 
 #: ../plug-ins/pygimp/gimpfu.py:403
-#, fuzzy, python-format
+#, python-format
 msgid "An error occurred running %s"
 msgstr "При запуске %s произошла ошибка"
 
@@ -105,7 +106,7 @@ msgstr "З_аписать отдельный файл CSS"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
-msgstr ""
+msgstr "Градиент, который следует использовать"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
@@ -113,7 +114,7 @@ msgstr "Имя файла"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
 msgid "Exports the image histogram to a text file (CSV)"
-msgstr ""
+msgstr "Экспортировать гистограмму изображения в текстовый файл (CSV)"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
 msgid "_Export histogram..."
@@ -121,11 +122,12 @@ msgstr "_Экспортировать гистограмму..."
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
 msgid "_Image"
-msgstr ""
+msgstr "_Изображение"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#, fuzzy
 msgid "_Drawable"
-msgstr ""
+msgstr "_Область рисования"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "Histogram _File"
@@ -133,27 +135,28 @@ msgstr "_Файл гистограммы"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "_Bucket Size"
-msgstr ""
+msgstr "_Размер ячейки"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "Sample _Average"
-msgstr ""
+msgstr "Выборочное _среднее"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Output format"
-msgstr ""
+msgstr "Выводной формат"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Pixel count"
-msgstr ""
+msgstr "Число пикселов"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Normalized"
-msgstr ""
+msgstr "Нормализованный"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#, fuzzy
 msgid "Percent"
-msgstr ""
+msgstr "Процентный"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -216,7 +219,7 @@ msgstr "Синий"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
 msgid "Luma (Y)"
-msgstr ""
+msgstr "Яркостный (Y)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Hue"
@@ -240,11 +243,11 @@ msgstr "Светлота (HSL)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
 msgid "Index"
-msgstr ""
+msgstr "Индекс"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
 msgid "Random"
-msgstr ""
+msgstr "Случайный"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
 msgid "Lightness (LAB)"
@@ -252,11 +255,11 @@ msgstr "Светлота (LAB)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
 msgid "A-color"
-msgstr ""
+msgstr "A-цвет"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
 msgid "B-color"
-msgstr ""
+msgstr "B-цвет"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
 msgid "Chroma (LCHab)"
@@ -276,27 +279,31 @@ msgstr "Отсортировать _палитру..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 msgid "Se_lections"
-msgstr ""
+msgstr "Вы_деления"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "All"
-msgstr ""
+msgstr "Все"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#, fuzzy
 msgid "Slice / Array"
-msgstr ""
+msgstr "Срез / Массив"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#, fuzzy
 msgid "Autoslice (fg->bg)"
-msgstr ""
+msgstr "Автонарезка (п. план -> фон)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+#, fuzzy
 msgid "Partitioned"
-msgstr ""
+msgstr "Разделённый"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+#, fuzzy
 msgid "Slice _expression"
-msgstr ""
+msgstr "Выражение _нарезки"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
@@ -308,21 +315,21 @@ msgid "_Ascending"
 msgstr "_Восходящий"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-#, fuzzy
 msgid "Secondary Channel to s_ort"
-msgstr "Сортируемые _каналы"
+msgstr "Сортируемые _дополнительные каналы"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
 msgid "_Quantization"
-msgstr ""
+msgstr "_Квантование"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#, fuzzy
 msgid "_Partitioning channel"
-msgstr ""
+msgstr "_Канал разделения"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
 msgid "Partition q_uantization"
-msgstr ""
+msgstr "Квантование _раздела"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"

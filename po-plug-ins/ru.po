@@ -1,28 +1,29 @@
 # translation of gimp-plug-ins.po to Russian
 # Copyright (C) 1999-2002, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 #
+#
 # Valek Filippov <frob@df.ru>, 1999-2002.
 # Grigory Bakunov <blackasp@yandex.ru>, 2003.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003-2005.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2005-2011, 2011, 2012.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2015, 2016, 2017, 2018.
-#
+# Olesya Gerasimenko <gammaray@basealt.ru>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-Ins 2.10\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-30 20:58+0300\n"
-"PO-Revision-Date: 2018-05-05 02:38+0300\n"
-"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
-"Language-Team: русский <>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-05 02:29+0300\n"
+"PO-Revision-Date: 2018-06-13 15:56MSK\n"
+"Last-Translator: Olesya Gerasimenko <gammaray@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10"
+" || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -302,7 +303,7 @@ msgstr "Шаг _назад"
 
 #: ../plug-ins/common/animation-play.c:592
 msgid "Step back to previous frame"
-msgstr "Перейти на предыдущий кадр"
+msgstr "Шаг назад к предыдущему кадру"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "_Step"
@@ -395,11 +396,11 @@ msgstr "Один кадр на слой (замена)"
 
 #: ../plug-ins/common/animation-play.c:1026
 msgid "Memory could not be allocated to the frame container."
-msgstr ""
+msgstr "Не удалось выделить память для контейнера кадров."
 
 #: ../plug-ins/common/animation-play.c:1098
 msgid "Invalid image. Did you close it?"
-msgstr ""
+msgstr "Недопустимое изображение. Оно было закрыто?"
 
 #: ../plug-ins/common/animation-play.c:1224
 #, c-format
@@ -831,7 +832,7 @@ msgstr "Новое зерно"
 
 #: ../plug-ins/common/cml-explorer.c:1243
 msgid "Fix Seed"
-msgstr "Фикс.зерно"
+msgstr "Фикс. зерно"
 
 #: ../plug-ins/common/cml-explorer.c:1254
 msgid "Random Seed"
@@ -1268,7 +1269,7 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Используйте функцию drag-n-drop чтобы перераспределить карту. Номерам "
+"Используйте функцию drag-n-drop, чтобы перераспределить карту. Номером "
 "обозначается оригинальный индекс цвета. Меню сортировки цветов вызывается "
 "правой кнопкой мыши."
 
@@ -1674,13 +1675,11 @@ msgid "Curve for Border"
 msgstr "Кривая для края:"
 
 #: ../plug-ins/common/curve-bend.c:1403
-#, fuzzy
 msgctxt "curve-border"
 msgid "_Upper"
 msgstr "В_ерхнего"
 
 #: ../plug-ins/common/curve-bend.c:1404
-#, fuzzy
 msgctxt "curve-border"
 msgid "_Lower"
 msgstr "_Нижнего"
@@ -2171,7 +2170,7 @@ msgstr "Загрузка палитры KISS"
 #: ../plug-ins/common/file-cel.c:383
 #, c-format
 msgid "EOF or error while reading image header"
-msgstr "Конец файла, либо ошибка при чтении заголовка изображения"
+msgstr "Конец файла или ошибка при чтении заголовка изображения"
 
 #. Read file pointer
 #. File header
@@ -2240,7 +2239,7 @@ msgstr "не является файлом CEL"
 #: ../plug-ins/common/file-cel.c:405
 #, c-format
 msgid "illegal bpp value in image: %hhu"
-msgstr ""
+msgstr "недопустимое значение bpp в изображении: %hhu"
 
 #: ../plug-ins/common/file-cel.c:419
 #, c-format
@@ -2248,6 +2247,8 @@ msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
 msgstr ""
+"недопустимые размеры изображения: ширина: %d, смещение по горизонтали: %d,"
+" высота: %d, смещение по вертикали: %d"
 
 #: ../plug-ins/common/file-cel.c:432
 #, c-format
@@ -2258,7 +2259,7 @@ msgstr "Невозможно создать новое изображение"
 #: ../plug-ins/common/file-cel.c:532
 #, c-format
 msgid "EOF or error while reading image data"
-msgstr "Конец файла, либо ошибка при чтении данных изображения"
+msgstr "Конец файла или ошибка при чтении данных изображения"
 
 #: ../plug-ins/common/file-cel.c:549
 #, c-format
@@ -2268,7 +2269,7 @@ msgstr "Неподдерживаемое число цветов (%d)!"
 #: ../plug-ins/common/file-cel.c:633 ../plug-ins/common/file-cel.c:645
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
-msgstr ""
+msgstr "'%s': конец файла или ошибка при чтении заголовка палитры"
 
 #: ../plug-ins/common/file-cel.c:654
 #, c-format
@@ -2278,7 +2279,7 @@ msgstr "'%s' не является файлом палитры KCF"
 #: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
-msgstr ""
+msgstr "'%s': недопустимое значение bpp в палитре: %hhu"
 
 #: ../plug-ins/common/file-cel.c:672
 #, c-format
@@ -2289,7 +2290,7 @@ msgstr "'%s': недопустимое число цветов: %u"
 #: ../plug-ins/common/file-cel.c:724
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
-msgstr "'%s': конец файла, либо ошибка при чтении данных палитры"
+msgstr "'%s': конец файла или ошибка при чтении данных палитры"
 
 #. init the progress meter
 #.
@@ -2360,7 +2361,7 @@ msgstr "Сохранить _альфа-канал (RGBA/RGB)"
 #.
 #: ../plug-ins/common/file-csource.c:983
 msgid "Save as _RGB565 (16-bit)"
-msgstr "Сохранить как _RGB565 (16-bit)"
+msgstr "Сохранить как _RGB565 (16-битное)"
 
 #: ../plug-ins/common/file-csource.c:1005
 msgid "Op_acity:"
@@ -2529,7 +2530,9 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:541
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
-msgstr "Невозможно дальнейшее уменьшение цветов. Сохраняется как непрозрачное."
+msgstr ""
+"Невозможно дальнейшее уменьшение количества цветов.\n"
+"Экспортируется как непрозрачное."
 
 #: ../plug-ins/common/file-gif-save.c:660
 #, c-format
@@ -2537,8 +2540,9 @@ msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"Невозможно экспортировать '%s'. Формат GIF не поддерживает изображения больше %d "
-"пикселей в длину или ширину."
+"Не удалось экспортировать '%s'. Формат GIF не поддерживает изображения больше"
+" %d "
+"пикселов в ширину или высоту."
 
 #: ../plug-ins/common/file-gif-save.c:773
 msgid ""
@@ -2680,8 +2684,8 @@ msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
 msgstr ""
-"Загрузить изображения в формате HEIF (High Efficiency Image File Format). "
-"Обычные расширения файлов HEIF — .heif, .heic."
+"Загрузить изображение в формате HEIF (High Efficiency Image File Format). "
+"Стандартные суффиксы для файлов HEIF: .heif, .heic."
 
 #: ../plug-ins/common/file-heif.c:113 ../plug-ins/common/file-heif.c:131
 msgid "HEIF/HEIC"
@@ -2696,41 +2700,43 @@ msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
 "Сохранить изображение в формате HEIF (High Efficiency Image File Format)."
 
-#: ../plug-ins/common/file-heif.c:371 ../plug-ins/common/file-heif.c:404
-#: ../plug-ins/common/file-heif.c:443 ../plug-ins/common/file-heif.c:461
+#: ../plug-ins/common/file-heif.c:312 ../plug-ins/common/file-heif.c:338
+#: ../plug-ins/common/file-heif.c:377 ../plug-ins/common/file-heif.c:395
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Не удалось загрузить изображение HEIF: %s"
 
 #: ../plug-ins/common/file-heif.c:393
 msgid "Loading HEIF image failed: Input file contains no readable images"
-msgstr "Не удалось загрузить изображение HEIF: в файле нет читаемых данных"
+msgstr ""
+"Не удалось загрузить изображение в формате HEIF: входной файл не содержит"
+" доступных для чтения изображений"
 
-#: ../plug-ins/common/file-heif.c:482
+#: ../plug-ins/common/file-heif.c:414
 msgid "image content"
-msgstr "Содержимое изображения"
+msgstr "содержимое изображения"
 
 #: ../plug-ins/common/file-heif.c:677
 #, c-format
 msgid "Encoding HEIF image failed: %s"
-msgstr "Не удалось сформировать изображение HEIF: %s"
+msgstr "Не удалось кодировать изображение в формате HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:700
+#: ../plug-ins/common/file-heif.c:559
 #, c-format
 msgid "Writing HEIF image failed: %s"
-msgstr "Ошибка при записи файла HEIF: %s"
+msgstr "Ошибка при записи изображения HEIF: %s"
 
 #: ../plug-ins/common/file-heif.c:786
 msgid "primary"
-msgstr ""
+msgstr "основное"
 
-#: ../plug-ins/common/file-heif.c:931
+#: ../plug-ins/common/file-heif.c:776
 msgid "Load HEIF Image"
 msgstr "Загрузить изображение HEIF"
 
-#: ../plug-ins/common/file-heif.c:945
+#: ../plug-ins/common/file-heif.c:790
 msgid "Select Image"
-msgstr "Выбрать файл изображения"
+msgstr "Выбрать изображение"
 
 #: ../plug-ins/common/file-heif.c:1088
 msgid "HEIF"
@@ -2888,36 +2894,34 @@ msgid "JPEG 2000 image"
 msgstr "Изображение JPEG 2000"
 
 #: ../plug-ins/common/file-jp2-load.c:185
-#, fuzzy
 msgid "JPEG 2000 codestream"
-msgstr "Изображение JPEG 2000"
+msgstr "Кодовый поток JPEG 2000"
 
 #. Can be RGB, YUV and YCC.
 #. Can be RGB, YUV and YCC with alpha or CMYK.
 #: ../plug-ins/common/file-jp2-load.c:974
 #: ../plug-ins/common/file-jp2-load.c:982
 msgid "sRGB"
-msgstr ""
+msgstr "sRGB"
 
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-jp2-load.c:983
 msgid "YCbCr"
-msgstr ""
+msgstr "YCbCr"
 
 #: ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-jp2-load.c:984
 msgid "xvYCC"
-msgstr ""
+msgstr "xvYCC"
 
 #: ../plug-ins/common/file-jp2-load.c:991
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
-msgstr ""
+msgstr "Неподдерживаемый формат JPEG 2000%s '%s', компонентов: %d."
 
 #: ../plug-ins/common/file-jp2-load.c:1000
-#, fuzzy
 msgid "Color space:"
-msgstr "Цвета:"
+msgstr "Цветовое пространство:"
 
 #: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:995
 #, c-format
@@ -2925,54 +2929,54 @@ msgid "Could not open '%s' for reading"
 msgstr "Не удалось открыть \"%s\" для чтения"
 
 #: ../plug-ins/common/file-jp2-load.c:1082
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
-msgstr "Не удалось декодировать '%s'."
+msgstr "Не удалось установить параметры декодера для '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1090
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't read JP2 header from '%s'."
-msgstr "Невозможно прочесть заголовок из '%s'"
+msgstr "Невозможно прочесть заголовок JP2 из '%s'"
 
 #: ../plug-ins/common/file-jp2-load.c:1098
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't decode JP2 image in '%s'."
-msgstr "Не удалось декодировать '%s'."
+msgstr "Не удалось расшифровать изображение JP2 в '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1106
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
-msgstr "Не удалось декодировать '%s'."
+msgstr "Не удалось распаковать изображение JP2 в '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1135
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
-msgstr "Не удалось декодировать '%s'."
+msgstr "Не удалось расшифровать изображение CIELAB JP2 в '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1192
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
-msgstr "Неизвестная цветовая модель в файле PNG '%s'."
+msgstr "Неизвестное цветовое пространство в кодовом потоке JP2 '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1203
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
-msgstr ""
+msgstr "Не удалось преобразовать изображение YCbCr JP2 '%s' в RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:1213
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
-msgstr ""
+msgstr "Не удалось преобразовать изображение CMYK JP2 '%s' в RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:1223
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
-msgstr ""
+msgstr "Не удалось преобразовать изображение xvYCC JP2 '%s' в RGB."
 
 #: ../plug-ins/common/file-jp2-load.c:1250
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported color space in JP2 image '%s'."
-msgstr "Неподдерживаемая цветовая модель: %s"
+msgstr "Неподдерживаемое цветовое пространство в изображении JP2 '%s'."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3143,7 +3147,7 @@ msgstr "Некорректное число байтов на строку в з
 
 #: ../plug-ins/common/file-pcx.c:429
 msgid "Resolution out of bounds in XCX header, using 72x72"
-msgstr ""
+msgstr "Недопустимое разрешение заголовка XCX, используется 72x72"
 
 #: ../plug-ins/common/file-pcx.c:437
 #, c-format
@@ -3250,7 +3254,7 @@ msgstr "_Импортировать"
 
 #: ../plug-ins/common/file-pdf-load.c:1306
 msgid "Error getting number of pages from the given PDF file."
-msgstr "Ошиюка при получении количества страниц из файла PDF."
+msgstr "Ошибка при получении количества страниц из файла PDF."
 
 #: ../plug-ins/common/file-pdf-load.c:1352
 msgid "_Width (pixels):"
@@ -3292,6 +3296,10 @@ msgid ""
 "Make sure you entered a valid filename and that the selected location isn't "
 "read only!"
 msgstr ""
+"Ошибка при создании файла PDF:\n"
+"%s\n"
+"Убедитесь, что введено корректное имя файла и выбранное расположение доступно"
+" для записи!"
 
 #: ../plug-ins/common/file-pdf-save.c:907
 #: ../plug-ins/common/file-pdf-save.c:1056
@@ -3314,9 +3322,8 @@ msgid "Keeping the masks will not change the output"
 msgstr "В случае сохранения масок вид документа не изменится"
 
 #: ../plug-ins/common/file-pdf-save.c:923
-#, fuzzy
 msgid "Reverse the pages order"
-msgstr "Обратный порядок"
+msgstr "Страницы в обратном порядке"
 
 #: ../plug-ins/common/file-pdf-save.c:928
 msgid "Layers as pages"
@@ -3376,12 +3383,14 @@ msgstr "Ошибка при открытии файла PNG: %s"
 #: ../plug-ins/common/file-png.c:885
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
-msgstr ""
+msgstr "Ошибка при создании структуры чтения PNG во время загрузки '%s'."
 
 #: ../plug-ins/common/file-png.c:894
-#, fuzzy, c-format
+#, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
-msgstr "Ошибка при сохранении '%s'. Невозможно сохранить изображение."
+msgstr ""
+"Ошибка при чтении '%s'. Не удалось создать структуру информации о заголовке"
+" PNG."
 
 #: ../plug-ins/common/file-png.c:902
 #, c-format
@@ -3394,9 +3403,9 @@ msgid "Unknown color model in PNG file '%s'."
 msgstr "Неизвестная цветовая модель в файле PNG '%s'."
 
 #: ../plug-ins/common/file-png.c:1070 ../plug-ins/file-exr/file-exr.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create new image for '%s': %s"
-msgstr "Невозможно создать рабочий каталог '%s': %s"
+msgstr "Не удалось создать новое изображение для '%s': %s"
 
 #: ../plug-ins/common/file-png.c:1126
 msgid ""
@@ -3430,17 +3439,19 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1541
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr ""
+msgstr "Ошибка при создании структуры записи PNG во время загрузки 's'."
 
 #: ../plug-ins/common/file-png.c:1550
-#, fuzzy, c-format
+#, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "Ошибка при сохранении '%s'. Невозможно сохранить изображение."
+msgstr ""
+"Ошибка при экспорте '%s'. Не удалось создать структуру информации о заголовке"
+" PNG."
 
 #: ../plug-ins/common/file-png.c:1558
-#, fuzzy, c-format
+#, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "Ошибка при сохранении '%s'. Невозможно сохранить изображение."
+msgstr "Ошибка при экспорте '%s'. Не удалось экспортировать изображение."
 
 #: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2129
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
@@ -3511,12 +3522,11 @@ msgstr "GIMP не справится с изображением такой вы
 
 #: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
-msgstr ""
+msgstr "Некорректный коэффициент масштабирования."
 
 #: ../plug-ins/common/file-pnm.c:650
-#, fuzzy
 msgid "Unsupported scale factor."
-msgstr "Неподдерживаемый формат кисти"
+msgstr "Неподдерживаемый коэффициент масштабирования."
 
 #: ../plug-ins/common/file-pnm.c:661
 msgid "Unsupported maximum value."
@@ -3548,14 +3558,16 @@ msgid "Encapsulated PostScript image"
 msgstr "Encapsulated PostScript"
 
 #: ../plug-ins/common/file-ps.c:1081
-#, fuzzy, c-format
+#, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Не удалось интерпретировать файл Postscript '%s'"
 
 #: ../plug-ins/common/file-ps.c:1218
-#, fuzzy, c-format
+#, c-format
 msgid "PostScript export cannot handle images with alpha channels"
-msgstr "Изображение с альфа-каналами невозможно сохранить как PostScript"
+msgstr ""
+"Экспорт в формат PostScript не поддерживает обработку изображений, содержащих"
+" альфа-каналы"
 
 #: ../plug-ins/common/file-ps.c:3388
 msgid "Import from PostScript"
@@ -3724,7 +3736,6 @@ msgid "Data Compression"
 msgstr "Сжатие данных"
 
 #: ../plug-ins/common/file-psp.c:647
-#, fuzzy
 msgctxt "compression"
 msgid "None"
 msgstr "Нет"
@@ -3738,132 +3749,128 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: ../plug-ins/common/file-psp.c:728
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading block header"
-msgstr "Ошибка при чтении файла"
+msgstr "Ошибка при чтении заголовка блока"
 
 #: ../plug-ins/common/file-psp.c:735
 #, c-format
 msgid "Invalid block header at %ld"
-msgstr ""
+msgstr "Некорректный заголовок блока в %ld"
 
 #: ../plug-ins/common/file-psp.c:738
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid block header"
-msgstr "Испорченный файл."
+msgstr "Некорректный заголовок блока"
 
 #: ../plug-ins/common/file-psp.c:841
-#, fuzzy, c-format
+#, c-format
 msgid "Seek error: %s"
-msgstr "Ошибка WebP \"%s\":"
+msgstr "Ошибка поиска: %s"
 
 #: ../plug-ins/common/file-psp.c:881
 #, c-format
 msgid "Error reading creator keyword chunk"
-msgstr ""
+msgstr "Ошибка при чтении блока ключевых слов создателя"
 
 #: ../plug-ins/common/file-psp.c:887
 #, c-format
 msgid "Invalid keyword chunk header"
-msgstr ""
+msgstr "Некорректный заголовок блока ключевых слов"
 
 #: ../plug-ins/common/file-psp.c:902 ../plug-ins/common/file-psp.c:934
 #, c-format
 msgid "Error reading creator keyword data"
-msgstr ""
+msgstr "Ошибка чтения данных ключевых слов создателя"
 
 #: ../plug-ins/common/file-psp.c:909
 #, c-format
 msgid "Creator keyword data not nul-terminated"
-msgstr ""
+msgstr "Данные ключевых слов создателя не имеют нулевого завершения"
 
 #: ../plug-ins/common/file-psp.c:1285 ../plug-ins/common/file-psp.c:1299
 #, c-format
 msgid "zlib error"
-msgstr ""
+msgstr "ошибка zlib"
 
 #: ../plug-ins/common/file-psp.c:1365
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
-msgstr ""
+msgstr "Некорретный вложенный блок слоя %s, должно быть LAYER"
 
 #: ../plug-ins/common/file-psp.c:1397 ../plug-ins/common/file-psp.c:1428
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading layer information chunk"
-msgstr ""
-"Ошибка считывания заголовка файла BMP\n"
-"из \"%s\""
+msgstr "Ошибка при чтении блока сведений о слоях"
 
 #: ../plug-ins/common/file-psp.c:1462
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid layer dimensions: %dx%d"
-msgstr "Размеры изображения: %d x %d"
+msgstr "Недопустимые размеры слоя: %d x %d"
 
 #: ../plug-ins/common/file-psp.c:1515
-#, fuzzy, c-format
+#, c-format
 msgid "Error creating layer"
-msgstr "Ошибка при чтении файла"
+msgstr "Ошибка при создании слоя"
 
 #: ../plug-ins/common/file-psp.c:1566
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr ""
+msgstr "Некорректный вложенный блок слоя %s, должно быть CHANNEL"
 
 #: ../plug-ins/common/file-psp.c:1582
 #, c-format
 msgid "Error reading channel information chunk"
-msgstr ""
+msgstr "Ошибка при чтении блока сведений о каналах"
 
 #: ../plug-ins/common/file-psp.c:1594
 #, c-format
 msgid "Invalid bitmap type %d in channel information chunk"
-msgstr ""
+msgstr "Недопустимый тип битовой карты %d в блоке сведений о каналах"
 
 #: ../plug-ins/common/file-psp.c:1602
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
-msgstr ""
+msgstr "Недопустимый тип канала %d в блоке сведений о каналах"
 
 #: ../plug-ins/common/file-psp.c:1682
 #, fuzzy, c-format
 msgid "Error reading tube data chunk"
-msgstr ""
-"Ошибка считывания заголовка файла BMP\n"
-"из \"%s\""
+msgstr "Ошибка при чтении блока данных трубки"
 
 #: ../plug-ins/common/file-psp.c:1783
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading file header."
-msgstr "Ошибка при чтении файла."
+msgstr "Ошибка при чтении заголовка файла."
 
 #: ../plug-ins/common/file-psp.c:1790
 #, c-format
 msgid "Incorrect file signature."
-msgstr ""
+msgstr "Некорректная подпись файла."
 
 #: ../plug-ins/common/file-psp.c:1808
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported PSP file format version %d.%d."
-msgstr "Неподдерживаемая версия формата файлов: %d"
+msgstr "Неподдерживаемая версия формата файлов PSP %d.%d."
 
 #: ../plug-ins/common/file-psp.c:1828
 msgid "invalid block size"
-msgstr ""
+msgstr "некорректный размер блока"
 
 #: ../plug-ins/common/file-psp.c:1837
 #, c-format
 msgid "Duplicate General Image Attributes block."
-msgstr ""
+msgstr "Блок «Дублировать общие атрибуты изображения»."
 
 #: ../plug-ins/common/file-psp.c:1867
 #, c-format
 msgid "Missing General Image Attributes block."
-msgstr ""
+msgstr "Отсутствует блок «Общие атрибуты изображения»."
 
 #: ../plug-ins/common/file-psp.c:1956
 #, c-format
 msgid "Exporting not implemented yet."
-msgstr ""
+msgstr "Экспорт ещё не реализован."
 
 #: ../plug-ins/common/file-raw-data.c:283
 #: ../plug-ins/common/file-raw-data.c:319
@@ -3874,18 +3881,20 @@ msgstr "Raw Image Data"
 #: ../plug-ins/common/file-raw-data.c:304
 #: ../plug-ins/common/file-raw-data.c:1882
 msgid "Digital Elevation Model data"
-msgstr ""
+msgstr "Данные цифровой модели рельефа (DEM)"
 
 #: ../plug-ins/common/file-raw-data.c:424
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open '%s' for size verification: %s"
-msgstr "Не удалось открыть '%s' для записи: %s"
+msgstr "Не удалось открыть '%s' для проверки размера: %s"
 
 #: ../plug-ins/common/file-raw-data.c:502
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
 msgstr ""
+"%d не является корректным шагом дискретизации. Корректные значения: 0"
+" (автоопределение), 1 и 3."
 
 #: ../plug-ins/common/file-raw-data.c:520
 #, c-format
@@ -3894,6 +3903,11 @@ msgid ""
 "valid HGT file or its variant is not supported yet. Supported HGT files are: "
 "SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
 msgstr ""
+"Не удалось выполнить автоопределение шага дискретизации. \"%s\" не является"
+" допустимым файлом HGT или имеет вариант формата, поддержка которого ещё не"
+" предусмотрена. Поддерживаются следующие варианты формата файлов HGT: "
+"SRTM-1 и SRTM-3. Если вариант формата известен, выполните с аргументом 1 или"
+" 3."
 
 #: ../plug-ins/common/file-raw-data.c:1829
 msgid "Load Image from Raw Data"
@@ -3905,11 +3919,11 @@ msgstr "Загрузка изображения из данных Raw"
 #.
 #: ../plug-ins/common/file-raw-data.c:1878
 msgid "Digital Elevation Model data (1 arc-second)"
-msgstr ""
+msgstr "Данные цифровой модели рельефа (1 секунда дуги)"
 
 #: ../plug-ins/common/file-raw-data.c:1880
 msgid "Digital Elevation Model data (3 arc-seconds)"
-msgstr ""
+msgstr "Данные цифровой модели рельефа (3 секунды дуги)"
 
 #: ../plug-ins/common/file-raw-data.c:1886
 msgid "Image"
@@ -3925,16 +3939,15 @@ msgstr "Изображение"
 #.
 #: ../plug-ins/common/file-raw-data.c:1916
 msgid "SRTM-1 (1 arc-second)"
-msgstr ""
+msgstr "SRTM-1 (1 секунда дуги)"
 
 #: ../plug-ins/common/file-raw-data.c:1917
 msgid "SRTM-3 (3 arc-seconds)"
-msgstr ""
+msgstr "SRTM-3 (3 секунды дуги)"
 
 #: ../plug-ins/common/file-raw-data.c:1920
-#, fuzzy
 msgid "_Sample Spacing:"
-msgstr "Интервал: "
+msgstr "_Шаг дискретизации: "
 
 #: ../plug-ins/common/file-raw-data.c:1938
 msgid "RGB Alpha"
@@ -3942,40 +3955,39 @@ msgstr "RGB с альфа-каналом"
 
 #: ../plug-ins/common/file-raw-data.c:1939
 msgid "RGB565 Big Endian"
-msgstr ""
+msgstr "RGB565 Big Endian (от старшего к младшему)"
 
 #: ../plug-ins/common/file-raw-data.c:1940
 msgid "RGB565 Little Endian"
-msgstr ""
+msgstr "RGB565 Little Endian (от младшего к старшему)"
 
 #: ../plug-ins/common/file-raw-data.c:1941
 msgid "BGR565 Big Endian"
-msgstr ""
+msgstr "BGR565 Big Endian (от старшего к младшему)"
 
 #: ../plug-ins/common/file-raw-data.c:1942
 msgid "BGR565 Little Endian"
-msgstr ""
+msgstr "BGR565 Little Endian (от младшего к старшему)"
 
 #: ../plug-ins/common/file-raw-data.c:1943
 msgid "Planar RGB"
 msgstr "Planar RGB"
 
 #: ../plug-ins/common/file-raw-data.c:1944
-#, fuzzy
 msgid "B&W 1 bit"
-msgstr "16 разрядов"
+msgstr "Ч/б 1 бит"
 
 #: ../plug-ins/common/file-raw-data.c:1945
 msgid "Gray 2 bit"
-msgstr ""
+msgstr "Грей 2 бит"
 
 #: ../plug-ins/common/file-raw-data.c:1946
 msgid "Gray 4 bit"
-msgstr ""
+msgstr "Грей 4 бит"
 
 #: ../plug-ins/common/file-raw-data.c:1947
 msgid "Gray 8 bit"
-msgstr ""
+msgstr "Грей 8 бит"
 
 #: ../plug-ins/common/file-raw-data.c:1948
 msgid "Indexed"
@@ -3987,19 +3999,19 @@ msgstr "Индексированное с альфа-каналом"
 
 #: ../plug-ins/common/file-raw-data.c:1950
 msgid "Gray unsigned 16 bit Big Endian"
-msgstr ""
+msgstr "Грей беззнаковое целое 16 бит Big Endian (от старшего к младшему)"
 
 #: ../plug-ins/common/file-raw-data.c:1951
 msgid "Gray unsigned 16 bit Little Endian"
-msgstr ""
+msgstr "Грей беззнаковое целое 16 бит Little Endian (от младшего к старшему)"
 
 #: ../plug-ins/common/file-raw-data.c:1952
 msgid "Gray 16 bit Big Endian"
-msgstr ""
+msgstr "Грей 16 бит Big Endian (от старшего к младшему)"
 
 #: ../plug-ins/common/file-raw-data.c:1953
 msgid "Gray 16 bit Little Endian"
-msgstr ""
+msgstr "Грей 16 бит Big Endian (от младшего к старшему)"
 
 #: ../plug-ins/common/file-raw-data.c:1958
 msgid "Image _Type:"
@@ -4107,9 +4119,11 @@ msgid "This image depth is not supported"
 msgstr "Глубина этого изображения не поддерживается"
 
 #: ../plug-ins/common/file-sunras.c:586
-#, fuzzy, c-format
+#, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
-msgstr "Невозможно сохранить как SUNRAS изображение с альфа-каналом"
+msgstr ""
+"Экспорт в формат SUNRAS не поддерживает обработку изображений, содержащих"
+" альфа-каналы"
 
 #: ../plug-ins/common/file-sunras.c:597
 msgid "Can't operate on unknown image types"
@@ -4298,18 +4312,17 @@ msgstr ""
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:997
-#, fuzzy
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
-"Изображение, которое вы пытаетесь сохранить как\n"
-"XBM, содержит больше чем два цвета.\n"
+"Изображение, которое экспортируется в формат XBM,\n"
+"содержит больше чем два цвета.\n"
 "\n"
 "Пожалуйста, преобразуйте его в черно-белое\n"
-"(1-бит) индексированное изображение и попробуйте снова."
+"(1-битное) индексированное изображение и попробуйте снова."
 
 #: ../plug-ins/common/file-xbm.c:1009
 msgid ""
@@ -4344,7 +4357,7 @@ msgstr "Комментарий:"
 #. hotspot toggle
 #: ../plug-ins/common/file-xbm.c:1293
 msgid "_Write hot spot values"
-msgstr "Записать значения \"горячих точек\""
+msgstr "Записать значения «горячих точек»"
 
 #: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1088
 msgid "Hot spot _X:"
@@ -4370,7 +4383,7 @@ msgstr "Расширение файла маски:"
 #: ../plug-ins/common/file-xmc.c:341 ../plug-ins/common/file-xmc.c:379
 #: ../plug-ins/common/file-xmc.c:1055
 msgid "X11 Mouse Cursor"
-msgstr "Указатель мыши X11"
+msgstr "Курсор мыши X11"
 
 #: ../plug-ins/common/file-xmc.c:485
 #, c-format
@@ -4387,29 +4400,29 @@ msgid "'%s' is not a valid X cursor."
 msgstr "'%s' не является корректным курсором X."
 
 #: ../plug-ins/common/file-xmc.c:684
-#, fuzzy, c-format
+#, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
-msgstr "Ширина '%s' слишком велика для указателя X."
+msgstr "Ширина кадра %d '%s' слишком велика для курсора X."
 
 #: ../plug-ins/common/file-xmc.c:691
-#, fuzzy, c-format
+#, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
-msgstr "Ширина '%s' слишком велика для указателя X."
+msgstr "Высота кадра %d '%s' слишком велика для курсора X."
 
 #: ../plug-ins/common/file-xmc.c:907
 #, c-format
 msgid "there is no image chunk in \"%s\"."
-msgstr ""
+msgstr "в \"%s\" отсутствует блок изображения."
 
 #: ../plug-ins/common/file-xmc.c:947
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is too wide for an X cursor."
-msgstr "Ширина '%s' слишком велика для указателя X."
+msgstr "Ширина '%s' слишком велика для курсора X."
 
 #: ../plug-ins/common/file-xmc.c:955
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is too high for an X cursor."
-msgstr "Ширина '%s' слишком велика для указателя X."
+msgstr "Высота '%s' слишком велика для курсора X."
 
 #: ../plug-ins/common/file-xmc.c:1018
 #, c-format
@@ -4426,10 +4439,14 @@ msgstr "Параметры XMC"
 #: ../plug-ins/common/file-xmc.c:1096
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
+"Введите координату «горячей точки» по оси X. Начало системы координат —"
+" верхний левый угол."
 
 #: ../plug-ins/common/file-xmc.c:1119
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
+"Введите координату «горячей точки» по оси Y. Начало системы координат —"
+" верхний левый угол."
 
 #: ../plug-ins/common/file-xmc.c:1128
 msgid "_Auto-Crop all frames."
@@ -4442,6 +4459,11 @@ msgid ""
 "disorder the screen.\n"
 "Uncheck if you plan to edit the exported cursor using other programs."
 msgstr ""
+"Удалить пустые края всех кадров.\n"
+"Это уменьшит размер файла и, возможно, исправит проблему искажения экрана"
+" некоторыми большими курсорами.\n"
+"Снимите флажок, если планируется редактировать экспортированный курсор с"
+" помощью других программ."
 
 #: ../plug-ins/common/file-xmc.c:1164
 msgid ""
@@ -4453,6 +4475,15 @@ msgid ""
 "sequence, and which sequence is used based on the value of \"gtk-cursor-"
 "theme-size\"."
 msgstr ""
+"Выберите условный размер кадров.\n"
+"Если не планируется создать многоразмерный курсор или неясно назначение этого"
+" параметра, "
+"рекомендуется оставить значение «32px».\n"
+"Условный размер не связан с реальным размером (шириной или высотой).\n"
+"Он используется, чтобы определить, какие кадры зависят от каких"
+" последовательностей анимации и какая последовательность используется на"
+" основе значения \"gtk-cursor-"
+"theme-size\"."
 
 #: ../plug-ins/common/file-xmc.c:1181
 msgid "_Use this value only for a frame which size is not specified."
@@ -4469,11 +4500,12 @@ msgstr "_Задержка:"
 #: ../plug-ins/common/file-xmc.c:1205
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr ""
+"Введите интервал времени для обработки каждого кадра (в миллисекундах)."
 
 #: ../plug-ins/common/file-xmc.c:1233
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr ""
-"И_спользовать это значение только для кадра, чья длительность не указана"
+"И_спользовать это значение только для кадра, длительность которого не указана"
 
 #: ../plug-ins/common/file-xmc.c:1236
 msgid "_Replace the delay of all frames even if it is specified."
@@ -4538,12 +4570,14 @@ msgstr "Сохранение \"%s\""
 #: ../plug-ins/common/file-xmc.c:1545
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
-msgstr "Кадр '%s' слишком широкий. Сократите ширину до не более чем %dpx."
+msgstr ""
+"Ширина кадра '%s' слишком велика. Сократите её, чтобы она не превышала %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1554
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
-msgstr "Кадр '%s' слишком высокий. Сократите высоту до не более чем %dpx."
+msgstr ""
+"Высота кадра '%s' слишком велика. Сократите её, чтобы она не превышала %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1563
 #, c-format
@@ -4570,20 +4604,23 @@ msgid ""
 "for X bitmap cursors.\n"
 "It might be unsupported by some environments."
 msgstr ""
+"Курсор успешно экспортирован, но содержит один или несколько кадров, ширина"
+" или высота которых превышает %ipx (исторически применяемый максимальный"
+" размер курсоров X bitmap).\n"
+"В некоторых средах может отсутствовать соответствующая поддержка."
 
 #: ../plug-ins/common/file-xmc.c:1773
-#, fuzzy
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Курсор был успешно сохранен, но размер некоторых его кадров не "
-"поддерживается апплетом gnome-appearance-properties.\n"
-"Вы можете исправить это, включив функцию «Заменить размер всех кадров...» в "
-"диалоге сохранения. В противном случае курсор не появится в апплете "
-"настройки внешнего вида рабочей среды."
+"Курсор был успешно экспортирован, но условный размер некоторых его кадров не "
+"поддерживается параметрами GNOME.\n"
+"Чтобы это исправить, установите флажок «Заменить размер всех кадров...» в "
+"диалоге экспорта. В противном случае курсор может не появиться в параметрах"
+" GNOME."
 
 #: ../plug-ins/common/file-xmc.c:2010
 #, c-format
@@ -4591,6 +4628,8 @@ msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
 "fit."
 msgstr ""
+"Паразит \"%s\" является слишком длинным для комментария курсора X. Он был"
+" обрезан."
 
 #: ../plug-ins/common/file-xmc.c:2125
 #, fuzzy, c-format
@@ -4599,11 +4638,9 @@ msgid ""
 "whose size is over 8 digits.\n"
 "We clamped it to %dpx. You should check the exported cursor."
 msgstr ""
-"Курсор был успешно сохранен, но размер некоторых его кадров не "
-"поддерживается апплетом gnome-appearance-properties.\n"
-"Вы можете исправить это, включив функцию «Заменить размер всех кадров...» в "
-"диалоге сохранения. В противном случае курсор не появится в апплете "
-"настройки внешнего вида рабочей среды."
+"Курсор был успешно экспортирован, но размер одного или нескольких его кадров"
+" превышает 8 бит.\n"
+"Они были обрезаны до %dpx. Рекомендуется проверить экспортированный курсор."
 
 #. translators: the %i is *always* 8 here
 #: ../plug-ins/common/file-xmc.c:2222
@@ -4629,9 +4666,9 @@ msgid "XPM file invalid"
 msgstr "Неверный файл XPM"
 
 #: ../plug-ins/common/file-xpm.c:653
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported drawable type"
-msgstr "Неподдерживаемая или некорректная разрядность цветового представления."
+msgstr "Неподдерживаемый тип изображения"
 
 #: ../plug-ins/common/file-xpm.c:832
 msgid "XPM"
@@ -4658,6 +4695,8 @@ msgid ""
 "'%s':\n"
 "Illegal number of colormap entries: %ld"
 msgstr ""
+"'%s':\n"
+"Недопустимое число записей в цветовой карте: %ld"
 
 #: ../plug-ins/common/file-xwd.c:495
 #, c-format
@@ -4697,9 +4736,9 @@ msgid "Error exporting '%s': "
 msgstr "Ошибка при экспорте '%s': "
 
 #: ../plug-ins/common/file-xwd.c:1753 ../plug-ins/common/file-xwd.c:2151
-#, fuzzy, c-format
+#, c-format
 msgid "XWD-file %s is corrupt."
-msgstr "Этот файл поврежден!"
+msgstr "Файл XWD повреждён."
 
 #: ../plug-ins/common/film.c:217
 msgid "Combine several images on a film strip"
@@ -6595,7 +6634,7 @@ msgstr "Угол:"
 
 #: ../plug-ins/common/warp.c:703
 msgid "Fixed-direction-vector map selection menu"
-msgstr "Меню выбора карты векторов с фикс.направлениями"
+msgstr "Меню выбора карты векторов с фикс. направлениями"
 
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1182
@@ -6672,6 +6711,8 @@ msgstr "Указанное расположение не обнаружено."
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
+"Недопустимый файл .exe (не является файлом Microsoft Win32 .exe или ошибка в"
+" образе файла)."
 
 #: ../plug-ins/common/web-browser.c:153
 msgid "The operating system denied access to the specified file."
@@ -6679,19 +6720,19 @@ msgstr "Операционная система отказала в доступ
 
 #: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
-msgstr ""
+msgstr "Неполная или недействительная ассоциация имени файла."
 
 #: ../plug-ins/common/web-browser.c:159
 msgid "DDE transaction busy"
-msgstr ""
+msgstr "DDE-транзакция занята"
 
 #: ../plug-ins/common/web-browser.c:162
 msgid "The DDE transaction failed."
-msgstr ""
+msgstr "Сбой DDE-транзакции."
 
 #: ../plug-ins/common/web-browser.c:165
 msgid "The DDE transaction timed out."
-msgstr ""
+msgstr "Время ожидания DDE-транзакции истекло."
 
 #: ../plug-ins/common/web-browser.c:168
 msgid "The specified DLL was not found."
@@ -6707,7 +6748,7 @@ msgstr "Недостаточно памяти для завершения опе
 
 #: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
-msgstr ""
+msgstr "Произошло нарушение общего доступа."
 
 #: ../plug-ins/common/web-browser.c:180
 msgid "Unknown Microsoft Windows error."
@@ -6810,9 +6851,9 @@ msgstr ""
 "из \"%s\""
 
 #: ../plug-ins/file-bmp/bmp-load.c:381
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported compression (%u) in BMP file from '%s'"
-msgstr "Неподдерживаемый режим сжатия: %d"
+msgstr "Неподдерживаемый режим сжатия (%u) в файле BMP из '%s'"
 
 #: ../plug-ins/file-bmp/bmp-load.c:675
 msgid "Unrecognized or invalid BMP compression format."
@@ -6887,37 +6928,29 @@ msgid "Windows BMP image"
 msgstr "Изображение Windows BMP"
 
 #: ../plug-ins/file-exr/file-exr.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening file '%s' for reading"
-msgstr "Ошибка при открытии файла %s"
+msgstr "Ошибка при открытии файла '%s' для чтения"
 
 #: ../plug-ins/file-exr/file-exr.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "Error querying image dimensions from '%s'"
-msgstr ""
-"Ошибка считывания заголовка файла BMP\n"
-"из \"%s\""
+msgstr "Ошибка при запросе размеров изображения из '%s'"
 
 #: ../plug-ins/file-exr/file-exr.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Error querying image precision from '%s'"
-msgstr ""
-"Ошибка считывания заголовка файла BMP\n"
-"из \"%s\""
+msgstr "Ошибка при запросе точности изображения из '%s'"
 
 #: ../plug-ins/file-exr/file-exr.c:241
-#, fuzzy, c-format
+#, c-format
 msgid "Error querying image type from '%s'"
-msgstr ""
-"Ошибка считывания заголовка файла BMP\n"
-"из \"%s\""
+msgstr "Ошибка при запросе типа изображения из '%s'"
 
 #: ../plug-ins/file-exr/file-exr.c:289
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading pixel data from '%s'"
-msgstr ""
-"Ошибка считывания заголовка файла BMP\n"
-"из \"%s\""
+msgstr "Ошибка при чтении данных пикселов из '%s'"
 
 #: ../plug-ins/file-faxg3/faxg3.c:104
 msgid "G3 fax image"
@@ -7042,14 +7075,14 @@ msgid "Compressed (PNG)"
 msgstr "Сжатый (PNG)"
 
 #: ../plug-ins/file-ico/ico-load.c:221
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read '%lu' bytes"
-msgstr "Не удалось загрузить '%s': %s"
+msgstr "Не удалось прочитать '%lu' байт"
 
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
 msgid "Icon #%d has zero width or height"
-msgstr ""
+msgstr "Ширина или высота значка #%d равна нулю"
 
 #. read successfully. add to image
 #: ../plug-ins/file-ico/ico-load.c:634
@@ -7125,11 +7158,13 @@ msgstr "О_птимизировать"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:917
 msgid "Use arithmetic _coding"
-msgstr ""
+msgstr "Использовать арифметическое _кодирование"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:919
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
+"Возможно, арифметически кодированные изображения не удастся открыть при"
+" помощи устаревших версий программы"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:942
 msgid "_Progressive"
@@ -7321,33 +7356,32 @@ msgstr "Дополнительно"
 msgid "Unsupported or invalid channel size"
 msgstr "Неподдерживаемый или некорректный размер канала"
 
-#: ../plug-ins/file-psd/psd-load.c:2202
-#, fuzzy, c-format
+#: ../plug-ins/file-psd/psd-load.c:2152
+#, c-format
 msgid "Failed to decompress data"
-msgstr "Не удалось открыть '%s': %s"
+msgstr "Не удалось распаковать данные"
 
 #: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr ""
-"Ошибка: Невозможно преобразовать основный тип изображения GIMP в режим PSD"
+msgstr "Ошибка: Невозможно преобразовать основный тип изображения GIMP в режим PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1563
-#, fuzzy, c-format
+#: ../plug-ins/file-psd/psd-save.c:1572
+#, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"Невозможно сохранить '%s'. Формат PSD не поддерживает изображения больше 30 "
-"000 пикселов в длину или ширину."
+"Не удалось экспортировать '%s'. Формат PSD не поддерживает изображения больше"
+" 30 000 пикселов в ширину или высоту."
 
-#: ../plug-ins/file-psd/psd-save.c:1584
-#, fuzzy, c-format
+#: ../plug-ins/file-psd/psd-save.c:1593
+#, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"Невозможно сохранить '%s'.  Формат PSD не поддерживает изображения со слоями "
-"больше, чем 30 000 пикселов в длину или ширину."
+"Не удалось экспортировать '%s'. Формат PSD не поддерживает изображения со"
+" слоями больше 30 000 пикселов в ширину или высоту."
 
 #: ../plug-ins/file-psd/psd-util.c:179
 msgid "Unexpected end of file"
@@ -7473,6 +7507,13 @@ msgid ""
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
+"Не установлен загрузчик RAW для открытия файлов '%s'.\n"
+"\n"
+"В текущей версии GIMP предусмотрена поддержка следующих загрузчиков RAW:\n"
+"- darktable (http://www.darktable.org/), версия не ниже 1.7\n"
+"- RawTherapee (http://rawtherapee.com/), версия не ниже 5.2\n"
+"\n"
+"Пожалуйста, установите один из них, чтобы загрузить файлы RAW."
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -7562,23 +7603,26 @@ msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
 msgstr ""
+"При помощи алгоритма «CCITT Group 4» или «CCITT Group 3» можно сжать только"
+" монохромные изображения."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:632
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr ""
+"Индексированные изображения нельзя сжать при помощи compressed with \"JPEG\"."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:731
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
-"Формат TIFF поддерживает только 7-разрядные\n"
-"комментарии ASCII. Комментарий не сохранён."
+"Формат TIFF поддерживает только в\n"
+"7-разрядном ASCII. Комментарий не сохранён."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:823
-#, c-format
+#, fuzzy, c-format
 msgid "Failed a scanline write on row %d"
-msgstr ""
+msgstr "Ошибка записи построчного сканирования на строке %d"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:948
 msgid "TIFF"
@@ -7623,11 +7667,11 @@ msgstr "Изображение WebP"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:70
 msgid "(no keyframes)"
-msgstr ""
+msgstr "(нет опорных кадров)"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:74
 msgid "(all frames are keyframes)"
-msgstr ""
+msgstr "(все кадры являются опорными)"
 
 #. Create the dialog
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
@@ -7647,51 +7691,47 @@ msgid "Alpha quality:"
 msgstr "Качество альфа-канала:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:167
-#, fuzzy
 msgid "Alpha channel quality"
-msgstr "Альфа-каналы"
+msgstr "Качество альфа-канала"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:192
 msgid "Source type:"
 msgstr "Тип источника:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:195
+#, fuzzy
 msgid "WebP encoder \"preset\""
-msgstr ""
+msgstr "«Профиль» («preset») кодировщика WebP"
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:227
-#, fuzzy
 msgid "As A_nimation"
-msgstr "Сохранить как _анимацию"
+msgstr "Как _анимацию"
 
 #. loop animation checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:256
-#, fuzzy
 msgid "Loop forever"
 msgstr "Бесконечный цикл"
 
 #. label for 'max key-frame distance' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:273
 msgid "Max distance between key-frames:"
-msgstr ""
+msgstr "Макс. расстояние между опорными кадрами:"
 
 #. minimize-size checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:308
 msgid "Minimize output size (slower)"
-msgstr ""
+msgstr "Минимизировать размер на выходе (медленнее)"
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:331
-#, fuzzy
 msgid "Delay between frames where unspecified:"
 msgstr "Если задержка между кадрами не указана, она равна:"
 
 #. Create the force-delay checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:354
-#, fuzzy
 msgid "Use delay entered above for all frames"
-msgstr "_Использовать указанную задержку в дальнейшем"
+msgstr "Использовать указанную задержку для всех кадров"
 
 #: ../plug-ins/file-webp/file-webp-load.c:106
 #, c-format
@@ -7699,26 +7739,24 @@ msgid "Invalid WebP file '%s'"
 msgstr "Некорректный файл WebP '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to decode animated WebP file '%s'"
-msgstr ""
-"Не удалось сохранить файл PPM \"%s\":\n"
-"%s"
+msgstr "Не удалось расшифровать анимированный файл WebP 's'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:192
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
-msgstr ""
+msgstr "Не удалось расшифровать информацию анимированного файла WebP из '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
-msgstr "Не удалось прочитать %s из \"%s\": %s"
+msgstr "Не удалось расшифровать анимированный кадр WebP из '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "Frame %d (%dms)"
-msgstr "Кадр %d (%d%s)"
+msgstr "Кадр %d (%dms)"
 
 #: ../plug-ins/file-webp/file-webp-save.c:112
 msgid "out of memory"
@@ -7726,12 +7764,11 @@ msgstr "не хватило памяти"
 
 #: ../plug-ins/file-webp/file-webp-save.c:114
 msgid "not enough memory to flush bits"
-msgstr ""
+msgstr "недостаточно памяти для сброса битов"
 
 #: ../plug-ins/file-webp/file-webp-save.c:116
-#, fuzzy
 msgid "NULL parameter"
-msgstr "Параметры"
+msgstr "Параметр NULL"
 
 #: ../plug-ins/file-webp/file-webp-save.c:118
 msgid "invalid configuration"
@@ -7750,8 +7787,9 @@ msgid "partition is bigger than 16M"
 msgstr "раздел больше 16МБ"
 
 #: ../plug-ins/file-webp/file-webp-save.c:126
+#, fuzzy
 msgid "unable to flush bytes"
-msgstr ""
+msgstr "не удалось записать байты"
 
 #: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
@@ -7759,11 +7797,11 @@ msgstr "размер файла больше 4ГиБ"
 
 #: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "user aborted encoding"
-msgstr ""
+msgstr "кодирование прервано пользователем"
 
 #: ../plug-ins/file-webp/file-webp-save.c:132
 msgid "list terminator"
-msgstr ""
+msgstr "терминатор списка"
 
 #: ../plug-ins/file-webp/file-webp-save.c:134
 msgid "unknown error"
@@ -7771,9 +7809,9 @@ msgstr "ошибка по неизвестной причине"
 
 #: ../plug-ins/file-webp/file-webp-save.c:181
 #: ../plug-ins/file-webp/file-webp-save.c:515
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open '%s' for writing: %s"
-msgstr "Невозможно открыть \"%s\" для записи"
+msgstr "Не удалось открыть '%s' для записи: %s"
 
 #: ../plug-ins/file-webp/file-webp-save.c:254
 #, c-format
@@ -8502,36 +8540,32 @@ msgid "Lower selected object"
 msgstr "Опустить выделенный объект"
 
 #: ../plug-ins/gfig/gfig-dialog.c:910
-#, fuzzy
 msgid "Raise to _top"
-msgstr "точек растра св_ерху"
+msgstr "Поднять _наверх"
 
 #: ../plug-ins/gfig/gfig-dialog.c:910
 msgid "Raise selected object to top"
 msgstr "Поднять выбранный объект на передний план"
 
 #: ../plug-ins/gfig/gfig-dialog.c:914
-#, fuzzy
 msgid "Lower to _bottom"
-msgstr "Вн_из"
+msgstr "Опустить _вниз"
 
 #: ../plug-ins/gfig/gfig-dialog.c:914
 msgid "Lower selected object to bottom"
 msgstr "Опустить выбранный объект до самого низа"
 
 #: ../plug-ins/gfig/gfig-dialog.c:918
-#, fuzzy
 msgid "_Previous"
-msgstr "_Предыдущее"
+msgstr "_Предыдущий"
 
 #: ../plug-ins/gfig/gfig-dialog.c:918
 msgid "Show previous object"
 msgstr "Показать предыдущий объект"
 
 #: ../plug-ins/gfig/gfig-dialog.c:922
-#, fuzzy
 msgid "_Next"
-msgstr "_Следующее"
+msgstr "_Следующий"
 
 #: ../plug-ins/gfig/gfig-dialog.c:922
 msgid "Show next object"
@@ -8987,7 +9021,7 @@ msgstr "Начальный угол:"
 
 #: ../plug-ins/gimpressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
-msgstr "Угол первой создаваемой кисти"
+msgstr "Начальный угол первой создаваемой кисти"
 
 #: ../plug-ins/gimpressionist/orientation.c:129
 msgid "Angle span:"
@@ -8995,7 +9029,7 @@ msgstr "Диапазон углов:"
 
 #: ../plug-ins/gimpressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
-msgstr "Угол первой создаваемой кисти"
+msgstr "Диапазон угла первой создаваемой кисти"
 
 #: ../plug-ins/gimpressionist/orientation.c:156
 msgid ""
@@ -9436,7 +9470,7 @@ msgstr "Параметры GIF"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
 msgid "_Loop forever"
-msgstr "Бесконечный цикл"
+msgstr "_Бесконечный цикл"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "_Delay between frames where unspecified:"
@@ -9526,55 +9560,51 @@ msgstr "Автовыбор формата пикселей"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:19
 msgid "8bpc RGB"
-msgstr ""
+msgstr "8 бит на канал RGB"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:20
 msgid "8bpc GRAY"
-msgstr ""
+msgstr "8 бит на канал GRAY"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:21
-#, fuzzy
 msgid "8bpc RGBA"
-msgstr "RGBA"
+msgstr "8 бит на канал RGBA"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:22
 msgid "8bpc GRAYA"
-msgstr ""
+msgstr "8 бит на канал GRAYA"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:23
 msgid "16bpc RGB"
-msgstr ""
+msgstr "16 бит на канал RGB"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:24
 msgid "16bpc GRAY"
-msgstr ""
+msgstr "16 бит на канал GRAY"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:25
 msgid "16bpc RGBA"
-msgstr ""
+msgstr "16 бит на канал RGBA"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:26
 msgid "16bpc GRAYA"
-msgstr ""
+msgstr "16 бит на канал GRAYA"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:1
 msgid "RGB Save Type"
 msgstr "Тип сохранения RGB"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:2
-#, fuzzy
 msgid "Standard (R,G,B)"
 msgstr "Стандартный (R,G,B)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:3
-#, fuzzy
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Planar (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
-#, fuzzy
 msgid "Save color values from transparent pixels"
-msgstr "Сохранить значения цвета _прозрачных точек"
+msgstr "Сохранить значения цвета прозрачных пикселов"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
 msgid "<b>Comment</b>"
@@ -9629,14 +9659,12 @@ msgid "Copyright Status"
 msgstr "Статус авторских прав"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:9
-#, fuzzy
 msgid "Copyright Notice"
-msgstr "Авторские права"
+msgstr "Сведения об авторских правах"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:10
-#, fuzzy
 msgid "Copyright URL"
-msgstr "Авторские права"
+msgstr "Ссылка на авторские права"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:11
 msgid "Address"
@@ -9683,9 +9711,8 @@ msgid "IPTC Scene Code"
 msgstr "Новостной код"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
-#, fuzzy
 msgid "Sublocation\t"
-msgstr "Местоположение"
+msgstr "Уточнённое местоположение\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:23
 msgid "ISO Country Code"
@@ -9705,20 +9732,19 @@ msgstr "Срочность"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:27
 msgid "Job Identifier\t"
-msgstr ""
+msgstr "Идентификатор задания\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
 msgid "Instructions"
 msgstr "Инструкции"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:29
-#, fuzzy
 msgid "Credit Line"
-msgstr "Авторы"
+msgstr "Выражение благодарности"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
 msgid "Source"
-msgstr "Источник"
+msgstr "Организация-регистратор"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
 msgid "Usage Terms"
@@ -9751,11 +9777,11 @@ msgstr "Часть света"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:38
 msgid "Location Shown"
-msgstr ""
+msgstr "Показываемое расположение"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:39
 msgid "Featured Organisation"
-msgstr ""
+msgstr "Представленная организация"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:40
 msgid "Event"
@@ -9782,9 +9808,8 @@ msgid "Country ISO Code"
 msgstr "ISO-код страны"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
-#, fuzzy
 msgid "Artwork or Object"
-msgstr "Проекция"
+msgstr "Произведение искусства или объект"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:48
 msgid "Title"
@@ -9800,28 +9825,27 @@ msgstr "Создатель"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:51
 msgid "Source Inventory ID"
-msgstr ""
+msgstr "Идентификатор от организации-регистратора"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:52
 msgid "Model Age"
-msgstr "Возраст модели"
+msgstr "Возраст моделей"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:53
 msgid "Minor Model Age Disclosure"
-msgstr ""
+msgstr "Возраст младшей из моделей на момент съёмки"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:54
 msgid "Model Release Status"
-msgstr "Статус модельного релиза"
+msgstr "Статус разрешений на использование фото от моделей"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
-#, fuzzy
 msgid "Additional Model Info"
-msgstr "Добавить дополнительные направляющие"
+msgstr "Дополнительные сведения о моделях"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:56
 msgid "Model Release Identifier"
-msgstr "Идентификатор модельного релиза"
+msgstr "Идентификатор разрешения на использование фото от моделей"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:57
 msgid "Image Supplier ID"
@@ -9829,7 +9853,7 @@ msgstr "ID поставщика изображения"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:58
 msgid "Supplier's Image ID"
-msgstr ""
+msgstr "Идентификатор изображения от поставщика"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:59
 msgid "Registry Entry"
@@ -9841,21 +9865,19 @@ msgstr "Имя поставщика изображения"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:61
 msgid "Max. Available Width"
-msgstr ""
+msgstr "Макс. доступная ширина"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:62
-#, fuzzy
 msgid "Max. Available Height"
-msgstr "Доступные:"
+msgstr "Макс. доступная высота"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:63
-#, fuzzy
 msgid "Digital Source Type"
-msgstr "Тип освещения:"
+msgstr "Тип источника цифрового изображения"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:64
 msgid "Organization Identifier"
-msgstr ""
+msgstr "Идентификатор организации"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:65
 msgid "Item Identifier"
@@ -9871,7 +9893,7 @@ msgstr "Лицензиар"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:68
 msgid "Property Release Status"
-msgstr ""
+msgstr "Состояние разрешения на использование фото объекта недвижимости"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
 msgid "Image Creator"
@@ -9883,19 +9905,19 @@ msgstr "Идентификатор"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:71
 msgid "Phone Number 1"
-msgstr ""
+msgstr "Номер телефона 1"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:72
 msgid "Phone Type 1"
-msgstr ""
+msgstr "Тип телефона 1"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:73
 msgid "Phone Number 2"
-msgstr ""
+msgstr "Номер телефона 2"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:74
 msgid "Phone Type 2"
-msgstr ""
+msgstr "Тип телефона 2"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:75
 msgid "Email Address"
@@ -9907,7 +9929,7 @@ msgstr "Веб-адрес"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
 msgid "Property Release Identifier"
-msgstr ""
+msgstr "Идентификатор разрешения на использование фото объекта недвижимости"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
 msgid "IPTC Extension"
@@ -10097,7 +10119,6 @@ msgid "A_uto update preview"
 msgstr "_Автообновление просмотра"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
-#, fuzzy
 msgid "'Default' is created."
 msgstr "«Исходная» создана."
 
@@ -10194,9 +10215,8 @@ msgid "Gradient Flare Editor"
 msgstr "Редактор град.вспышки"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
-#, fuzzy
 msgid "_Rescan Gradients"
-msgstr "Перечитать градиенты"
+msgstr "_Перечитать градиенты"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3447
@@ -10412,13 +10432,12 @@ msgstr "Руководство по GIMP недоступно"
 #. * Cf. bug 762282.
 #.
 #: ../plug-ins/help/gimphelpdomain.c:193
-#, fuzzy
 msgid ""
 "Please install the additional help package or use the online user manual at: "
 "http://docs.gimp.org/"
 msgstr ""
-"Установите пожалуйста дополнительный пакет, содержащий документацию, или "
-"воспользуйтесь сайтом http://docs.gimp.org/."
+"Пожалуйста, установите дополнительный пакет, содержащий документацию, или "
+"воспользуйтесь сайтом http://docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -10620,9 +10639,8 @@ msgid "Open IFS Fractal file"
 msgstr "Открыть файл IFS"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-#, fuzzy
 msgid "Image Map Plug-in"
-msgstr "Карта изображения"
+msgstr "Расширение «Карта изображения»"
 
 #: ../plug-ins/imagemap/imap_about.c:46
 msgid "Copyright © 1999-2005 by Maurits Rijk"
@@ -11986,7 +12004,7 @@ msgstr "_Экспортировать"
 
 #: ../plug-ins/metadata/metadata-tags.h:250
 msgid "Original digital capture of a real life scene"
-msgstr ""
+msgstr "Исходный цифровой снимок момента из реальной жизни"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
 msgid "Digitised from a negative on film"
@@ -12002,7 +12020,7 @@ msgstr "Оцифровано с отпечатка на непрозрачном
 
 #: ../plug-ins/metadata/metadata-tags.h:254
 msgid "Created by software"
-msgstr ""
+msgstr "Создано с помощью ПО"
 
 #: ../plug-ins/metadata/metadata-tags.h:262
 #: ../plug-ins/metadata/metadata-tags.h:273
@@ -12017,19 +12035,21 @@ msgstr "Неприменимо"
 
 #: ../plug-ins/metadata/metadata-tags.h:264
 msgid "Unlimited Model Releases"
-msgstr ""
+msgstr "Неограниченные разрешения на использование фото от моделей"
 
 #: ../plug-ins/metadata/metadata-tags.h:265
 msgid "Limited or Incomplete Model Releases"
-msgstr ""
+msgstr "Ограниченные или неполные разрешения на использование фото от моделей"
 
 #: ../plug-ins/metadata/metadata-tags.h:275
 msgid "Unlimited Property Releases"
-msgstr ""
+msgstr "Неограниченные разрешения на использование фото объектов недвижимости"
 
 #: ../plug-ins/metadata/metadata-tags.h:276
 msgid "Limited or Incomplete Property Releases"
 msgstr ""
+"Ограниченные или неполные разрешения на использование фото объектов"
+" недвижимости"
 
 #: ../plug-ins/metadata/metadata-tags.h:284
 msgid "Age Unknown"
@@ -12197,12 +12217,12 @@ msgstr "Просмотр метаданных: %s"
 #: ../plug-ins/metadata/metadata-viewer.c:360
 #, c-format
 msgid "(%lu more character(s))"
-msgstr ""
+msgstr "(%lu ещё символ(ы))"
 
 #: ../plug-ins/metadata/metadata-viewer.c:392
 #, c-format
 msgid "(%llu more byte(s))"
-msgstr ""
+msgstr "(%llu ещё байт(ы))"
 
 #: ../plug-ins/pagecurl/pagecurl.c:203
 msgid "Curl up one of the image corners"
@@ -12407,7 +12427,7 @@ msgstr "После задержки, переместите мышь для вы
 
 #: ../plug-ins/screenshot/screenshot.c:729
 msgid "Click in a window to snap it after delay."
-msgstr ""
+msgstr "После задержки щёлкните по окну для получения его снимка"
 
 #: ../plug-ins/screenshot/screenshot.c:734
 msgid "At the end of the delay, click in a window to snap it."
@@ -12423,11 +12443,11 @@ msgstr "После задержки делается снимок"
 
 #: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the region is selected, it will be captured after this delay."
-msgstr ""
+msgstr "После задержки будет сделан снимок выбранной области"
 
 #: ../plug-ins/screenshot/screenshot.c:793
 msgid "Once the window is selected, it will be captured after this delay."
-msgstr ""
+msgstr "После задержки будет сделан снимок выбранного окна"
 
 #: ../plug-ins/screenshot/screenshot.c:799
 msgid "After the delay, the active window will be captured."
@@ -12479,18 +12499,18 @@ msgid "Selection to Path Advanced Settings"
 msgstr "Расширенные параметры «Выделение → Контур»"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:98
-#, fuzzy
 msgid "Align Threshold:"
-msgstr "Порог:"
+msgstr "Порог выравнивания:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:102
 msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr ""
+"Если расстояние между двумя крайними точками меньше данного, они считаются"
+" равными."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
-#, fuzzy
 msgid "Corner Always Threshold:"
-msgstr "Порог серого"
+msgstr "Порог угла всегда:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:115
 msgid ""
@@ -12498,52 +12518,57 @@ msgid ""
 "smaller than this, it's a corner, even if it's within `corner_surround' "
 "pixels of a point with a smaller angle."
 msgstr ""
+"Если угол в градусах определён точкой, значение предков и потомков которой"
+" меньше данного, это угол изображения, даже если он находится внутри"
+" «окружающих угол» пикселов точки с меньшим углом в градусах."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:126
-#, fuzzy
 msgid "Corner Surround:"
-msgstr "Передний план"
+msgstr "Окружение угла:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:130
 msgid ""
 "Number of points to consider when determining if a point is a corner or not."
 msgstr ""
+"Число точек, которое учитывается при определении того, является ли точка"
+" углом."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:139
-#, fuzzy
 msgid "Corner Threshold:"
-msgstr "Порог серого"
+msgstr "Порог угла:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:143
 msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
 msgstr ""
+"Если точка, её предки и потомки определяют угол в градусах, значение которого"
+" меньше данного, это угол изображения."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:154
-#, fuzzy
 msgid "Error Threshold:"
-msgstr "Порог:"
+msgstr "Порог погрешности:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:158
 msgid ""
 "Amount of error at which a fitted spline is unacceptable.  If any pixel is "
 "further away than this from the fitted curve, we try again."
 msgstr ""
+"Величина погрешности, при которой кривая, описанная подогнанным сплайном, не"
+" является допустимой. Если какая-либо точка дальше от кривой, чем это"
+" значение, то алгоритм выполняется ещё раз."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:169
-#, fuzzy
 msgid "Filter Alternative Surround:"
-msgstr "_Насыщенность элемента:"
+msgstr "Фильтровать альтернативное окружение:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:173
 msgid "A second number of adjacent points to consider when filtering."
-msgstr ""
+msgstr "Второе число соседних точек, которые учитываются при фильтровании."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:183
-#, fuzzy
 msgid "Filter Epsilon:"
-msgstr "Длина фильтра:"
+msgstr "Эпсилон фильтра:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:187
 msgid ""
@@ -12551,11 +12576,14 @@ msgid ""
 "filter_alternative_surround points differ by more than this, use the one "
 "from filter_alternative_surround."
 msgstr ""
+"Если разница углов между векторами, образованными точками из «Фильтровать"
+" окружение» и «Фильтровать альтернативное окружение», больше, чем это"
+" значение,"
+" используется вариант из «Фильтровать альтернативное окружение»."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:198
-#, fuzzy
 msgid "Filter Iteration Count:"
-msgstr "_Насыщенность элемента:"
+msgstr "Число повторений фильтра:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:202
 msgid ""
@@ -12564,50 +12592,55 @@ msgid ""
 "any points that ``should'' be corners aren't found, the curve goes to hell "
 "around that point."
 msgstr ""
+"Число сглаживаний исходных точек данных. Значительное увеличение этого"
+" значения (например, до 50) позволяет получить лучшие результаты. Но если не"
+" удаётся найти некоторые точки, которые «должны» быть углами, кривая"
+" становится хаотической рядом с ними."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:214
-#, fuzzy
 msgid "Filter Percent:"
-msgstr "Длина фильтра:"
+msgstr "Процент фильтра:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:218
 msgid ""
 "To produce the new point, use the old point plus this times the neighbors."
 msgstr ""
+"Использовать старую точку плюс это число раз соседние точки, чтобы создать"
+" новую точку."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:227
-#, fuzzy
 msgid "Filter Secondary Surround:"
-msgstr "Передний план"
+msgstr "Фильтровать вторичное окружение:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:231
 msgid ""
 "Number of adjacent points to consider if `filter_surround' points defines a "
 "straight line."
 msgstr ""
+"Число соседних точек, которые учитываются, когда точки «Фильтровать окружение»"
+" определяют прямую линию."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:241
-#, fuzzy
 msgid "Filter Surround:"
-msgstr "Передний план"
+msgstr "Фильтровать окружение:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:245
 msgid "Number of adjacent points to consider when filtering."
-msgstr ""
+msgstr "Число соседних точек, которые учитываются при фильтровании."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:253
 msgid "Keep Knees"
-msgstr ""
+msgstr "Сохранять точки перегиба"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:258
 msgid ""
 "Says whether or not to remove ``knee'' points after finding the outline."
 msgstr ""
+"Устанавливает, следует ли удалять точки «перегиба» после нахождения контура."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:269
-#, fuzzy
 msgid "Line Reversion Threshold:"
-msgstr "Предел отклонения:"
+msgstr "Порог обращения линии:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:273
 msgid ""
@@ -12616,33 +12649,39 @@ msgid ""
 "weighted by the square of the curve length, to make shorter curves more "
 "likely to be reverted."
 msgstr ""
+"Если расстояние между сплайном и прямой линией меньше данного, линия"
+" останется прямой, хотя в ином случае была бы преобразована обратно в кривую."
+" Взвешивание выполняется с помощью квадрата длины кривой, чтобы с большей"
+" вероятностью преобразовывать обратно короткие кривые."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:285
-#, fuzzy
 msgid "Line Threshold:"
-msgstr "Порог:"
+msgstr "Порог линии:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:289
 msgid ""
 "How many pixels (on the average) a spline can diverge from the line "
 "determined by its endpoints before it is changed to a straight line."
 msgstr ""
+"На сколько пикселов (в среднем) сплайн может отойти от линии, определяемой"
+" его конечными точками, до того как будет преобразован в прямую линию."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:299
-#, fuzzy
 msgid "Reparametrize Improvement:"
-msgstr "Предел отклонения:"
+msgstr "Улучшение перепараметризации:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
 msgid ""
 "If reparameterization doesn't improve the fit by this much percent, stop "
 "doing it. Amount of error at which it is pointless to reparameterize."
 msgstr ""
+"Если репараметризация не улучшает подгонку на это значение в процентах, она"
+" прекращается. Величина погрешности, при которой перепараметризация не имеет"
+" смысла."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:313
-#, fuzzy
 msgid "Reparametrize Threshold:"
-msgstr "Предел отклонения:"
+msgstr "Порог перепараметризации:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:317
 msgid ""
@@ -12652,50 +12691,61 @@ msgid ""
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
+"Величина погрешности, при которой перепараметризация не имеет смысла. Это"
+" происходит, например, при попытке вместить контур внешней стороны «O» одним"
+" сплайном. Исходная подгонка не подходит для улучшения при помощи итерации"
+" Ньютона — Рафсона. Вероятно, было бы полезно выявлять случаи, в которых не"
+" удалось найти углы."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:330
-#, fuzzy
 msgid "Subdivide Search:"
-msgstr "Подразделять:"
+msgstr "Поиск разделения:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:334
 msgid ""
 "Percentage of the curve away from the worst point to look for a better place "
 "to subdivide."
 msgstr ""
+"Процент кривой от наихудшей точки, при котором будет выполняться поиск более"
+" подходящего места для подразделения. "
+"Разделить поиск: Процент кривой от наихудшей точки, чтобы искать лучшее место"
+" для разделения."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:343
-#, fuzzy
 msgid "Subdivide Surround:"
-msgstr "Подразделять:"
+msgstr "Окружение разделения:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:347
 msgid ""
 "Number of points to consider when deciding whether a given point is a better "
 "place to subdivide."
 msgstr ""
+"Число точек, которые учитываются при определении того, является ли заданная"
+" точка лучшим местом для разделения."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:357
-#, fuzzy
 msgid "Subdivide Threshold:"
-msgstr "Порог _синего:"
+msgstr "Порог разделения:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
 msgid ""
 "How many pixels a point can diverge from a straight line and still be "
 "considered a better place to subdivide."
 msgstr ""
+"На сколько пикселов точка может отойти от прямой линии и всё равно считаться"
+" лучшим местом для разделения."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:371
-#, fuzzy
 msgid "Tangent Surround:"
-msgstr "Прозрачный фон"
+msgstr "Окружение касательной:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
 msgid ""
 "Number of points to look at on either side of a point when computing the "
 "approximation to the tangent at that point."
 msgstr ""
+"Число точек, принимаемых в расчёт по обе стороны от данной точки при"
+" вычислении приближения к касательной в этой точке."
 
 #: ../plug-ins/twain/twain.c:86
 msgid "Capture an image from a TWAIN datasource"

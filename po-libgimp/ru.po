@@ -1,26 +1,27 @@
 # Translation of GIMP to Russian
 # Copyright (C) 1999-2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 #
+#
 # Valek Filippov <frob@df.ru>, 1999-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2018, 2018.
-#
+# Olesya Gerasimenko <gammaray@basealt.ru>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp 2.10\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-06-30 20:58+0300\n"
-"PO-Revision-Date: 2018-04-30 05:38+0300\n"
-"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
-"Language-Team: русский <>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-30 05:35+0300\n"
+"PO-Revision-Date: 2018-06-13 10:44MSK\n"
+"Last-Translator: Olesya Gerasimenko <gammaray@basealt.ru>\n"
+"Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10"
+" || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 2.0\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1264
@@ -158,7 +159,7 @@ msgstr ""
 "изображения в градациях серого или RGB"
 
 #: ../libgimp/gimpexport.c:361
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "Расширение %s может обрабатывать только\\n\n"
@@ -259,9 +260,8 @@ msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
 #: ../libgimp/gimpimagemetadata.c:487
-#, fuzzy
 msgid "GIMP 2.10"
-msgstr "GIMP 2.9/2.10"
+msgstr "GIMP 2.10"
 
 #: ../libgimp/gimpimagemetadata.c:671
 msgid "Background"
@@ -273,20 +273,23 @@ msgid "Rotate %s?"
 msgstr "Повернуть %s?"
 
 #: ../libgimp/gimpimagemetadata.c:866
+#, fuzzy
 msgid "_Keep Original"
-msgstr ""
+msgstr "_Сохранить оригинал"
 
 #: ../libgimp/gimpimagemetadata.c:867 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Повернуть"
 
 #: ../libgimp/gimpimagemetadata.c:908
+#, fuzzy
 msgid "Original"
-msgstr ""
+msgstr "Оригинал"
 
 #: ../libgimp/gimpimagemetadata.c:924
+#, fuzzy
 msgid "Rotated"
-msgstr ""
+msgstr "Повёрнуто"
 
 #: ../libgimp/gimpimagemetadata.c:942
 msgid "This image contains Exif orientation metadata."
@@ -853,9 +856,10 @@ msgid "Linear"
 msgstr "Линейное"
 
 #: ../libgimpbase/gimpbaseenums.c:717
+#, fuzzy
 msgctxt "gradient-segment-type"
 msgid "Curved"
-msgstr ""
+msgstr "Криволинейный"
 
 #: ../libgimpbase/gimpbaseenums.c:718
 msgctxt "gradient-segment-type"
@@ -863,32 +867,28 @@ msgid "Sinusoidal"
 msgstr "По синусоиде"
 
 #: ../libgimpbase/gimpbaseenums.c:719
-#, fuzzy
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
-msgstr "Спираль (CW)"
+msgstr "Cферический (расширение)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:722
-#, fuzzy
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
-msgstr "Спираль (CW)"
+msgstr "Cферический (расш.)"
 
 #: ../libgimpbase/gimpbaseenums.c:723
-#, fuzzy
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
-msgstr "Спираль (CW)"
+msgstr "Сферический (сжатие)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:726
-#, fuzzy
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
-msgstr "Спираль (CW)"
+msgstr "Cферический (сж.)"
 
 #: ../libgimpbase/gimpbaseenums.c:764
 msgctxt "gradient-type"
@@ -1129,10 +1129,9 @@ msgid "Clipped to bottom layer"
 msgstr "Обрезан до размера нижнего слоя"
 
 #: ../libgimpbase/gimpbaseenums.c:1128
-#, fuzzy
 msgctxt "merge-type"
 msgid "Flatten"
-msgstr "Текстура"
+msgstr "Сведение"
 
 #: ../libgimpbase/gimpbaseenums.c:1220
 msgctxt "orientation-type"
@@ -1145,9 +1144,10 @@ msgid "Vertical"
 msgstr "По вертикали"
 
 #: ../libgimpbase/gimpbaseenums.c:1222
+#, fuzzy
 msgctxt "orientation-type"
 msgid "Unknown"
-msgstr ""
+msgstr "Неизвестно"
 
 #: ../libgimpbase/gimpbaseenums.c:1251
 msgctxt "paint-application-mode"
@@ -1452,7 +1452,7 @@ msgstr "Загружать метаданные можно только из л�
 #: ../libgimpbase/gimpmetadata.c:859 ../libgimpbase/gimpmetadata.c:929
 #, c-format
 msgid "Conversion of the filename to system codepage failed."
-msgstr ""
+msgstr "Не удалось преобразовать имя файла в системную кодовую страницу. "
 
 #: ../libgimpbase/gimpmetadata.c:916
 #, c-format
@@ -1480,28 +1480,30 @@ msgstr "(некорректная строка в UTF-8)"
 
 #: ../libgimpbase/gimputils.c:402
 msgid "File path is NULL"
-msgstr ""
+msgstr "Путь к файлу имеет значение NULL"
 
 #: ../libgimpbase/gimputils.c:411 ../libgimpbase/gimputils.c:422
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
+"Ошибка преобразования имени файла в формате UTF-8 в имя, состоящее из знаков"
+" расширенного набора"
 
 #: ../libgimpbase/gimputils.c:430
 msgid "ILCreateFromPath() failed"
-msgstr ""
+msgstr "Ошибка выполнения ILCreateFromPath()"
 
 #: ../libgimpbase/gimputils.c:467
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
-msgstr ""
+msgstr "Не удалось преобразовать '%s' в действительный NSURL."
 
 #: ../libgimpbase/gimputils.c:495
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
-msgstr ""
+msgstr "Не удалось подключиться к org.freedesktop.FileManager1: "
 
 #: ../libgimpbase/gimputils.c:519
 msgid "Calling ShowItems failed: "
-msgstr ""
+msgstr "Не удалось вызвать ShowItems: "
 
 #: ../libgimpcolor/gimpcolorprofile.c:263
 #, c-format
@@ -1600,12 +1602,18 @@ msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
+"Предпочитаемый цветовой профиль рабочего пространства RGB. Он будет доступен"
+" для выбора рядом со встроенным профилем RGB (когда предоставляется"
+" возможность выбора цветового профиля)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
+"Предпочитаемый цветовой профиль рабочего пространства градаций серого. Он"
+" будет доступен для выбора рядом со встроенным профилем градаций серого"
+" (когда предоставляется возможность выбора цветового профиля)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1617,6 +1625,9 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
+"Цветовой профиль, который используется для программной проверки того, как"
+" изображение будет выглядеть в другом цветовом пространстве, включая проверку"
+" для профиля принтера или другого устройства вывода."
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1625,16 +1636,26 @@ msgid ""
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
 msgstr ""
+"Способ преобразования цветов из цветового пространства изображения при выводе"
+" на экран. Обычно рекомендуется выбирать относительную колориметрическую"
+" цветопередачу. За исключением тех случаев, когда используется профиль"
+" монитора LUT (большинство профилей мониторов — матричные), при выборе"
+" воспринимаемой цветопередачи на самом деле также выбирается относительная"
+" колориметрическая."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
 msgstr ""
+"Всегда используйте компенсацию чёрной точки (за исключением тех случаев,"
+" когда вы точно знаете, что она не нужна)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
+"Если отключено, выводимое на монитор изображение может быть лучшего качества,"
+" но отрисовка будет выполняться медленнее."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
@@ -1642,25 +1663,32 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
+"Способ преобразования цветов цветового пространства изображения для"
+" устройства имитации вывода (обычно это монитор). Попробуйте все и выберите"
+" тот, при использовании которого изображение выглядит лучше всего."
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
+"Попробуйте включить и отключить компенсацию чёрной точки; выберите тот"
+" вариант, при котором изображение выглядит лучше."
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
+"Если отключено, программная цветопроба может быть лучшего качества за счёт"
+" снижения скорости работы программы."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
-#, fuzzy
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Если включено, при экранной цветопробе все цвета, не попадающие в цветовой "
-"охват, будут заменены на указанный здесь цвет."
+"Если включено, при программной цветопробе помечаются цвета, выходящие за"
+" пределы "
+"цветового пространства"
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1780,7 +1808,7 @@ msgstr "критическая ошибка при синтаксическом 
 
 #: ../libgimpconfig/gimpconfig-path.c:483
 msgid "File has no path representation"
-msgstr ""
+msgstr "Отсутствует представление пути к файлу"
 
 #: ../libgimpconfig/gimpconfig-path.c:566
 #, c-format
@@ -1794,9 +1822,9 @@ msgid "Error writing to '%s': %s"
 msgstr "Ошибка записи в '%s': %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr "Не удалось создать временный файл для '%s':"
+msgstr "Не удалось создать каталог '%s' для '%s':"
 
 #: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
@@ -1850,12 +1878,12 @@ msgid "Not loaded"
 msgstr "Не загружен"
 
 #: ../libgimpthumb/gimpthumb-utils.c:153
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"Невозможно определить домашний каталог.\n"
+"Невозможно определить каталог файлов предварительного просмотра.\n"
 "Файлы предварительного просмотра будут храниться в каталоге для временных "
 "файлов (%s)."
 
@@ -2810,7 +2838,7 @@ msgstr "Помечать недоэкспонированные области"
 
 #: ../modules/display-filter-clip-warning.c:158
 msgid "Show warning for pixels with a negative component"
-msgstr "Показывать предупреждение для пикселей с отрицательным компонентом"
+msgstr "Показывать предупреждение для пикселов с отрицательным компонентом"
 
 #: ../modules/display-filter-clip-warning.c:164
 msgid "Shadows color"
@@ -2827,7 +2855,7 @@ msgstr "Помечать переэкспонированные области"
 #: ../modules/display-filter-clip-warning.c:178
 msgid "Show warning for pixels with a component greater than one"
 msgstr ""
-"Показывать предупреждение для пикселей с компонентом, значение которого "
+"Показывать предупреждение для пикселов с компонентом, значение которого "
 "больше единицы"
 
 #: ../modules/display-filter-clip-warning.c:184
@@ -2845,7 +2873,7 @@ msgstr "Помечать области с невозможным цветом"
 #: ../modules/display-filter-clip-warning.c:198
 msgid "Show warning for pixels with an infinite or NaN component"
 msgstr ""
-"Показывать предупреждение для пикселей с бесконечным или нечисловым "
+"Показывать предупреждение для пикселов с бесконечным или нечисловым "
 "компонентом"
 
 #: ../modules/display-filter-clip-warning.c:204
@@ -2866,11 +2894,11 @@ msgstr "Включить альфа-канал в предупреждение"
 
 #: ../modules/display-filter-clip-warning.c:224
 msgid "Include transparent pixels"
-msgstr "Включать прозрачные пиксели"
+msgstr "Включать прозрачные пикселы"
 
 #: ../modules/display-filter-clip-warning.c:225
 msgid "Include fully transparent pixels in the warning"
-msgstr ""
+msgstr "Включить полностью прозрачные пикселы в предупреждение"
 
 #: ../modules/display-filter-clip-warning.c:229
 msgid "Clip Warning"
@@ -2918,9 +2946,8 @@ msgid "High Contrast color display filter"
 msgstr "Фильтр повышенного контраста"
 
 #: ../modules/display-filter-high-contrast.c:123
-#, fuzzy
 msgid "Contrast cycles"
-msgstr "_Степень контраста:"
+msgstr "Циклы контраста"
 
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"

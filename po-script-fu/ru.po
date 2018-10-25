@@ -1,26 +1,28 @@
 # translation of gimp script-fu to Russian
 # Copyright (C) 2000-2002,2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 #
+#
 # Valek Filippov <frob@df.ru>, 2000-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2005-2011, 2011.
-#
+# Olesya Gerasimenko <gammaray@basealt.ru>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Script-Fu 2.8\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2014-05-03 22:00+1200\n"
-"PO-Revision-Date: 2011-12-04 23:00+0400\n"
-"Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
+"PO-Revision-Date: 2018-10-25 16:32MSK\n"
+"Last-Translator: Olesya Gerasimenko <gammaray@basealt.ru>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: UTF-8\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n"
-"%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n%100>=20) ? 1"
+" : 2);\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -214,7 +216,7 @@ msgstr "_Запустить сервер"
 
 #: ../plug-ins/script-fu/script-fu-server.c:865
 msgid "Listen on IP:"
-msgstr ""
+msgstr "Слушать на IP-адресе:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:872
 msgid "Server port:"
@@ -229,6 +231,9 @@ msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
+"Если установлено прослушивание IP-адреса, отличного от 127.0.0.1 (особенно"
+" 0.0.0.0), злоумышленники могут удалённо выполнить на этом"
+" компьютере произвольный код."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
@@ -262,7 +267,7 @@ msgstr "Отдельный слой для рельефа"
 #: ../plug-ins/script-fu/scripts/addborder.scm:108
 #, fuzzy
 msgid "Border Layer"
-msgstr "Размер рамки"
+msgstr "Слой с рамкой"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:160
 msgid "Add _Border..."
@@ -391,7 +396,7 @@ msgstr "Падающая тень"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:172
 msgid "Inset"
-msgstr ""
+msgstr "Вставка"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:182
 msgid "Stencil C_arve..."
@@ -401,6 +406,8 @@ msgstr "_Вырезать по трафарету..."
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
+"Использовать указанную область рисования как трафарет для вырезания из"
+" указанного изображения."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:190
 msgid "Image to carve"
@@ -482,7 +489,7 @@ msgstr "Белые участки хрома"
 #: ../plug-ins/script-fu/scripts/circuit.scm:81
 #, fuzzy
 msgid "Effect layer"
-msgstr "Отделить слой"
+msgstr "Слой с эффектом"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:134
 msgid "_Circuit..."
@@ -585,9 +592,8 @@ msgid "Distress the selection"
 msgstr "Сгладить выделение"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:110
-#, fuzzy
 msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr "Порог (От 1 до 255)"
+msgstr "Порог (больше 1, но меньше 254)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:111
 msgid "Spread"
@@ -670,7 +676,7 @@ msgstr "Столбцы"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Even/odd"
-msgstr "Четные/Нечетные"
+msgstr "Чётные/Нечётные"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Even"
@@ -678,7 +684,7 @@ msgstr "Четные"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Odd"
-msgstr "Нечетные"
+msgstr "Нечётные"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
 msgid "Erase/fill"
@@ -700,7 +706,7 @@ msgstr "Создать карту _шрифтов..."
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
-"Создать изображение заполненное образцами символов из шрифтов, подходящих "
+"Создать изображение, заполненное образцами символов из шрифтов, подходящих "
 "под условия поиска шрифта"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:158
@@ -741,7 +747,7 @@ msgstr "Текущие цвета пер.плана и фона"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
 msgid "_Fuzzy Border..."
-msgstr "_Нечеткая рамка..."
+msgstr "_Нечёткая рамка..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
 msgid "Add a jagged, fuzzy border to an image"
@@ -889,9 +895,8 @@ msgid "New Guides from _Selection"
 msgstr "Создать из _выделения"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
-#, fuzzy
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Закруглить углы активного выделения"
+msgstr "Создать четыре направляющие вокруг площадки (BB) текущего выделения"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
@@ -976,12 +981,11 @@ msgid "Line _Nova..."
 msgstr "Л_инейная сверхновая..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:107
-#, fuzzy
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr ""
-"Заполнить слой лучами, исходящими от центра, используя цвет переднего плана"
+"Используя цвет переднего плана, заполнить слой исходящими от центра лучами"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:114
 msgid "Number of lines"
@@ -1077,29 +1081,35 @@ msgstr "Крап"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "Folder for the output file"
-msgstr ""
+msgstr "Папка для выходного файла"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:236
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
+"Имя создаваемого файла (если файл с этим именем уже существует, он будет"
+" заменён)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:244
 msgid "The filename you entered is not a suitable name for a file."
-msgstr ""
+msgstr "Введено некорректное имя файла."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:246
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
 msgstr ""
+"Имя состоит из пробелов или символов, которые не могут использоваться в"
+" именах файлов."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:274
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
+"Экспортировать активную палитру как таблицу стилей CSS с именем цветовой"
+" записи в качестве имени класса и самим цветом в качестве атрибута цвета"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:300
 msgid "Export the active palette as a PHP dictionary (name => color)"
@@ -1114,6 +1124,8 @@ msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
+"Записать все цвета палитры в текстовый файл, одно шестнадцатеричное значение"
+" на строку (без имён)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:408
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
@@ -1245,7 +1257,7 @@ msgstr "Заполнять чёрным"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:129
 msgid "_Round Corners..."
-msgstr "С_кругленные уголы..."
+msgstr "С_круглённые углы..."
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:130
 msgid ""
@@ -1495,9 +1507,8 @@ msgid "Gradient: Loop Triangle"
 msgstr "Градиент: треугольный цикл"
 
 #: ../plug-ins/script-fu/scripts/test-sphere.scm:267
-#, fuzzy
 msgid "_Sphere..."
-msgstr "_Хромированный..."
+msgstr "_Сфера..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
@@ -1572,7 +1583,7 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Создать новый слой, заполненный волнами для использования в качестве "
+"Создать новый слой, заполненный волнами, для использования в качестве "
 "накладки или рельефа"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:397
