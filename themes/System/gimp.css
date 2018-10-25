@@ -57,6 +57,10 @@ tab GimpFgBgView {
     padding: 6px 6px 6px 6px;
 }
 
+GimpFgBgEditor:active {
+    border-width: 2px 2px 2px 2px;
+}
+
 GimpDock {
     font-size: smaller;
 }
