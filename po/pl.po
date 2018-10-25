@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 21:20+0200\n"
-"PO-Revision-Date: 2018-10-23 21:21+0200\n"
+"POT-Creation-Date: 2018-10-25 19:24+0200\n"
+"PO-Revision-Date: 2018-10-25 19:25+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -25805,25 +25805,29 @@ msgstr "%d. miniatura z %d"
 msgid "Creating preview..."
 msgstr "Tworzenie podglądu…"
 
-#: ../app/widgets/gimptoolbox-color-area.c:91
-msgid ""
-"Foreground & background colors.\n"
-"The black and white squares reset colors.\n"
-"The arrows swap colors.\n"
-"Click to open the color selection dialog."
-msgstr ""
-"Kolor pierwszoplanowy oraz tła.\n"
-"Czarny i biały kwadrat przywraca kolory.\n"
-"Strzałki zamieniają kolory.\n"
-"Kliknięcie otworzy okno wyboru koloru."
-
-#: ../app/widgets/gimptoolbox-color-area.c:214
+#: ../app/widgets/gimptoolbox-color-area.c:219
 msgid "Change Foreground Color"
 msgstr "Zmiana aktywnego koloru"
 
-#: ../app/widgets/gimptoolbox-color-area.c:219
+#: ../app/widgets/gimptoolbox-color-area.c:224
 msgid "Change Background Color"
 msgstr "Zmiana koloru tła"
+
+#: ../app/widgets/gimptoolbox-color-area.c:312
+msgid ""
+"The active foreground color.\n"
+"Click to open the color selection dialog."
+msgstr ""
+"Aktywny kolor pierwszoplanowy.\n"
+"Kliknięcie otworzy okno wyboru koloru."
+
+#: ../app/widgets/gimptoolbox-color-area.c:317
+msgid ""
+"The active background color.\n"
+"Click to open the color selection dialog."
+msgstr ""
+"Aktywny kolor tła.\n"
+"Kliknięcie otworzy okno wyboru koloru."
 
 #: ../app/widgets/gimptoolbox-image-area.c:119
 #: ../app/widgets/gimptoolbox-image-area.c:124
