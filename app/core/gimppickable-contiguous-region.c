@@ -116,6 +116,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
   gboolean       has_alpha;
   gfloat         start_col[MAX_CHANNELS];
   gboolean       smart_line_art = FALSE;
+  gfloat         flag = 2.0;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
@@ -225,7 +226,6 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
        * unknown pixels be labelled by flooding through watershed.
        */
       GeglBufferIterator *gi;
-      GeglBuffer         *labels;
       GeglBuffer         *distmap;
       GeglBuffer         *tmp;
       GeglNode           *graph;
@@ -235,47 +235,6 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       GeglNode           *sink;
 
       GIMP_TIMER_START();
-      labels = gegl_buffer_new (&extent, babl_format ("YA u32"));
-
-      gi = gegl_buffer_iterator_new (src_buffer, NULL, 0, NULL,
-                                     GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
-      gegl_buffer_iterator_add (gi, mask_buffer, NULL, 0,
-                                babl_format ("Y float"),
-                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-      gegl_buffer_iterator_add (gi, labels, NULL, 0,
-                                babl_format ("YA u32"),
-                                GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-      while (gegl_buffer_iterator_next (gi))
-        {
-          guchar  *lineart = (guchar*) gi->items[0].data;
-          gfloat  *mask    = (gfloat*) gi->items[1].data;
-          guint32 *label   = (guint32*) gi->items[2].data;
-          gint    k;
-
-          for (k = 0; k < gi->length; k++)
-            {
-              if (*mask)
-                {
-                  label[0] = G_MAXUINT32;
-                  label[1] = 1;
-                }
-              else if (*lineart)
-                {
-                  label[0] = 0;
-                  label[1] = 0;
-                }
-              else
-                {
-                  label[0] = 0;
-                  label[1] = 1;
-                }
-              lineart++;
-              mask++;
-              label += 2;
-            }
-        }
-      g_object_unref (src_buffer);
 
       /* Compute a distance map for the labels. */
       graph = gegl_node_new ();
@@ -325,11 +284,34 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       g_object_unref (distmap);
       distmap = tmp;
 
-      /* Watershed the labels. */
+      /* Flag the mask on the line art. */
+      gi = gegl_buffer_iterator_new (src_buffer, NULL, 0, NULL,
+                                     GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+      gegl_buffer_iterator_add (gi, mask_buffer, NULL, 0,
+                                babl_format ("Y float"),
+                                GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (gi))
+        {
+          guchar  *lineart = (guchar*) gi->items[0].data;
+          gfloat  *mask    = (gfloat*) gi->items[1].data;
+          gint    k;
+
+          for (k = 0; k < gi->length; k++)
+            {
+              if (*lineart && ! *mask)
+                *mask = flag;
+              lineart++;
+              mask++;
+            }
+        }
+      g_object_unref (src_buffer);
+
+      /* Watershed the line art. */
       graph = gegl_node_new ();
       input = gegl_node_new_child (graph,
                                    "operation", "gegl:buffer-source",
-                                   "buffer", labels,
+                                   "buffer", mask_buffer,
                                    NULL);
       aux = gegl_node_new_child (graph,
                                  "operation", "gegl:buffer-source",
@@ -337,6 +319,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                  NULL);
       op  = gegl_node_new_child (graph,
                                  "operation", "gegl:watershed-transform",
+                                 "flag-component", 0,
+                                 "flag", &flag,
                                  NULL);
       sink  = gegl_node_new_child (graph,
                                    "operation", "gegl:buffer-sink",
@@ -354,7 +338,6 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
       gegl_buffer_copy (tmp, NULL, GEGL_ABYSS_NONE, mask_buffer, NULL);
       g_object_unref (tmp);
-      g_object_unref (labels);
 
       GIMP_TIMER_END("watershed line art");
     }
