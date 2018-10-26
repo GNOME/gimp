@@ -227,12 +227,10 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
        */
       GeglBufferIterator *gi;
       GeglBuffer         *priomap;
-      GeglBuffer         *tmp;
       GeglNode           *graph;
       GeglNode           *input;
       GeglNode           *aux;
       GeglNode           *op;
-      GeglNode           *sink;
 
       GIMP_TIMER_START();
 
@@ -290,22 +288,13 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                  "flag-component", 0,
                                  "flag", &flag,
                                  NULL);
-      sink  = gegl_node_new_child (graph,
-                                   "operation", "gegl:buffer-sink",
-                                   "buffer", &tmp,
-                                   NULL);
       gegl_node_connect_to (input, "output",
                             op, "input");
       gegl_node_connect_to (aux, "output",
                             op, "aux");
-      gegl_node_connect_to (op, "output",
-                            sink, "input");
-      gegl_node_process (sink);
+      gegl_node_blit_buffer (op, mask_buffer, NULL, 0, GEGL_ABYSS_NONE);
       g_object_unref (graph);
       g_object_unref (priomap);
-
-      gegl_buffer_copy (tmp, NULL, GEGL_ABYSS_NONE, mask_buffer, NULL);
-      g_object_unref (tmp);
 
       GIMP_TIMER_END("watershed line art");
     }
