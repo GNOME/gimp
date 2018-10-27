@@ -115,6 +115,7 @@
 
 (hide-docks no)
 (single-window-mode no)
+(show-tabs yes)
 (tabs-position 0)
 (last-tip-shown 0)
 
