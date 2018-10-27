@@ -233,11 +233,11 @@ gimp_transform_resize_adjust (const GimpVector2 *points,
       bottom_right.y = MAX (bottom_right.y, points[i].y);
     }
 
-  *x1 = (gint) floor (top_left.x);
-  *y1 = (gint) floor (top_left.y);
+  *x1 = (gint) floor (top_left.x + EPSILON);
+  *y1 = (gint) floor (top_left.y + EPSILON);
 
-  *x2 = (gint) ceil (bottom_right.x);
-  *y2 = (gint) ceil (bottom_right.y);
+  *x2 = (gint) ceil (bottom_right.x - EPSILON);
+  *y2 = (gint) ceil (bottom_right.y - EPSILON);
 }
 
 static void
