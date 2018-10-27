@@ -9,7 +9,7 @@
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
     "finish-args": ["--share=ipc", "--share=network",
-                    "--socket=x11", "--socket=wayland",
+                    "--socket=x11",
                     "--filesystem=host", "--filesystem=xdg-config/GIMP",
                     "--filesystem=xdg-config/gtk-3.0", "--filesystem=/tmp",
                     "--talk-name=org.gtk.vfs", "--talk-name=org.gtk.vfs.*" ],
@@ -157,28 +157,46 @@
             ]
         },
         {
+            /* This is a GIMP direct dependency, but also for poppler. So make sure
+             * we build this before poppler.
+             */
+            "name": "openjpeg",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "cleanup": [ "/bin", "/lib/openjpeg-2.3" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz",
+                    "sha256": "3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a"
+                }
+            ]
+        },
+        {
             "name": "poppler",
             "modules": [
                 {
                     "name": "popplerdata",
-                    "no-autogen": true,
-                    "make-install-args": ["prefix=/app"],
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "http://poppler.freedesktop.org/poppler-data-0.4.7.tar.gz",
-                            "sha256": "e752b0d88a7aba54574152143e7bf76436a7ef51977c55d6bd9a48dccde3a7de"
+                            "url": "https://poppler.freedesktop.org/poppler-data-0.4.9.tar.gz",
+                            "sha256": "1f9c7e7de9ecd0db6ab287349e31bf815ca108a5a175cf906a90163bdbe32012"
                         }
                     ]
                 }
             ],
-            "config-opts": [ "--disable-libopenjpeg", "--disable-introspection" ],
-            "cleanup": [ "/bin" ],
+            "config-opts": [ "-DENABLE_GOBJECT_INTROSPECTION=OFF", "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3" ],
+            "cleanup": [ "/bin", "/share" ],
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-0.51.0.tar.xz",
-                    "sha256": "e997c9ad81a8372f2dd03a02b00692b8cc479c220340c8881edaca540f402c1f"
+                    "url": "https://poppler.freedesktop.org/poppler-0.69.0.tar.xz",
+                    "sha256": "637ff943f805f304ff1da77ba2e7f1cbd675f474941fd8ae1e0fc01a5b45a3f9"
                 }
             ]
         },
@@ -316,20 +334,6 @@
                     "url": "https://github.com/Jehan/mypaint-brushes.git",
                     "branch": "v1.3.0",
                     "commit": "fce9b5f23f658f15f8168ef5cb2fee69cf90addb"
-                }
-            ]
-        },
-        {
-            "name": "openjpeg",
-            "cmake": true,
-            "buildsystem": "cmake-ninja",
-            "builddir": true,
-            "cleanup": [ "/bin", "/lib/openjpeg-2.3" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz",
-                    "sha256": "3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a"
                 }
             ]
         },
