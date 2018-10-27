@@ -2015,192 +2015,15 @@ gimp_edgelset_new (GeglBuffer *buffer)
   edgel2index = g_hash_table_new ((GHashFunc) edgel2index_hash_fun,
                                   (GEqualFunc) edgel2index_equal_fun);
 
-  /* Top border */
-  gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (1, 0, width - 2, 1),
-                                 0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 4);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (0, 0, width - 2, 1),
-                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (2, 0, width - 2, 1),
-                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (1, 1, width - 2, 1),
-                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  while (gegl_buffer_iterator_next (gi))
-    {
-      guint8 *p      = (guint8*) gi->items[0].data;
-      guint8 *prevx  = (guint8*) gi->items[1].data;
-      guint8 *nextx  = (guint8*) gi->items[2].data;
-      guint8 *nexty  = (guint8*) gi->items[3].data;
-      gint    pwidth = gi->items[0].roi.width;
-      gint    x      = gi->items[0].roi.x;
-      gint    endx   = x + pwidth;
-
-      if (x == 1 && *(prevx))
-        gimp_edgelset_add (set, 0, 0, XMinusDirection, edgel2index);
-      else if (endx == width - 1 && nextx[pwidth - 1])
-        gimp_edgelset_add (set, width - 1, 0, XPlusDirection, edgel2index);
-
-      for (; x < endx; x++)
-        {
-          if (*(p++))
-            {
-              gimp_edgelset_add (set, x, 0, YMinusDirection, edgel2index);
-              if (! *prevx)
-                gimp_edgelset_add (set, x, 0, XMinusDirection, edgel2index);
-              if (! *nextx)
-                gimp_edgelset_add (set, x, 0, XPlusDirection, edgel2index);
-              if (! *nexty)
-                gimp_edgelset_add (set, x, 0, YPlusDirection, edgel2index);
-            }
-          prevx++;
-          nextx++;
-          nexty++;
-        }
-    }
-  /* Left border */
-  gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (0, 1, 1, height - 2),
-                                 0, NULL,
-                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 4);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (0, 0, 1, height - 2),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (0, 2, 1, height - 2),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (1, 1, 1, height - 2),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  while (gegl_buffer_iterator_next (gi))
-    {
-      guint8 *p       = (guint8*) gi->items[0].data;
-      guint8 *prevy   = (guint8*) gi->items[1].data;
-      guint8 *nexty   = (guint8*) gi->items[2].data;
-      guint8 *nextx   = (guint8*) gi->items[3].data;
-      gint    pheight = gi->items[0].roi.height;
-      gint    y       = gi->items[0].roi.y;
-      gint    endy    = y + pheight;
-
-      if (y == 1 && *(prevy))
-        gimp_edgelset_add (set, 0, 0, YMinusDirection, edgel2index);
-      else if (endy == height - 1 && nexty[pheight - 1])
-        gimp_edgelset_add (set, 0, height - 1, YPlusDirection, edgel2index);
-
-      for (; y < endy; y++)
-        {
-          if (*(p++))
-            {
-              gimp_edgelset_add (set, 0, y, XMinusDirection, edgel2index);
-              if (! *prevy)
-                gimp_edgelset_add (set, 0, y, YMinusDirection, edgel2index);
-              if (! *nexty)
-                gimp_edgelset_add (set, 0, y, YPlusDirection, edgel2index);
-              if (! *nextx)
-                gimp_edgelset_add (set, 0, y, XPlusDirection, edgel2index);
-            }
-          prevy++;
-          nexty++;
-          nextx++;
-        }
-    }
-  /* Bottom border */
-  gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (1, height - 1, width - 2, 1),
-                                 0, NULL,
-                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 4);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (0, height - 1, width - 2, 1),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (2, height - 1, width - 2, 1),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (1, height - 2, width - 2, 1),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  while (gegl_buffer_iterator_next (gi))
-    {
-      guint8 *p      = (guint8*) gi->items[0].data;
-      guint8 *prevx  = (guint8*) gi->items[1].data;
-      guint8 *nextx  = (guint8*) gi->items[2].data;
-      guint8 *prevy  = (guint8*) gi->items[3].data;
-      gint    pwidth = gi->items[0].roi.width;
-      gint    x      = gi->items[0].roi.x;
-      gint    endx   = x + pwidth;
-
-      if (x == 1 && *(prevx))
-        gimp_edgelset_add (set, 0, height - 1, XMinusDirection, edgel2index);
-      else if (endx == width - 1 && nextx[pwidth - 1])
-        gimp_edgelset_add (set, width - 1, height - 1, XPlusDirection, edgel2index);
-
-      for (; x < endx; x++)
-        {
-          if (*(p++))
-            {
-              gimp_edgelset_add (set, x, height - 1, YPlusDirection, edgel2index);
-              if (! *prevx)
-                gimp_edgelset_add (set, x, height - 1, XMinusDirection, edgel2index);
-              if (! *nextx)
-                gimp_edgelset_add (set, x, height - 1, XPlusDirection, edgel2index);
-              if (! *prevy)
-                gimp_edgelset_add (set, x, height - 1, YMinusDirection, edgel2index);
-            }
-          prevx++;
-          nextx++;
-          prevy++;
-        }
-    }
-  /* Right border */
-  gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (width - 1, 1, 1, height - 2),
-                                 0, NULL,
-                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 4);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (width - 1, 0, 1, height - 2),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (width - 1, 2, 1, height - 2),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (width - 2, 1, 1, height - 2),
-                            0, NULL,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  while (gegl_buffer_iterator_next (gi))
-    {
-      guint8 *p       = (guint8*) gi->items[0].data;
-      guint8 *prevy   = (guint8*) gi->items[1].data;
-      guint8 *nexty   = (guint8*) gi->items[2].data;
-      guint8 *prevx   = (guint8*) gi->items[3].data;
-      gint    pheight = gi->items[0].roi.height;
-      gint    y       = gi->items[0].roi.y;
-      gint    endy    = y + pheight;
-
-      if (y == 1 && *(prevy))
-        gimp_edgelset_add (set, width - 1, 0, YMinusDirection, edgel2index);
-      else if (endy == height - 1 && nexty[pheight - 1])
-        gimp_edgelset_add (set, width - 1, height - 1, YPlusDirection, edgel2index);
-
-      for (; y < endy; y++)
-        {
-          if (*(p++))
-            {
-              gimp_edgelset_add (set, width - 1, y, XPlusDirection, edgel2index);
-              if (! *prevy)
-                gimp_edgelset_add (set, width - 1, y, YMinusDirection, edgel2index);
-              if (! *nexty)
-                gimp_edgelset_add (set, width - 1, y, YPlusDirection, edgel2index);
-              if (! *prevx)
-                gimp_edgelset_add (set, width - 1, y, XMinusDirection, edgel2index);
-            }
-          prevy++;
-          nexty++;
-          prevx++;
-        }
-    }
-  /* The rest */
-  gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (1, 1, width - 2, height - 2),
+  gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (0, 0, width, height),
                                  0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 5);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (1, 0, width - 2, height - 2),
+  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (0, -1, width, height),
                             0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (1, 2, width - 2, height - 2),
+  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (0, 1, width, height),
                             0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (0, 1, width - 2, height - 2),
+  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (-1, 0, width, height),
                             0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (2, 1, width - 2, height - 2),
+  gegl_buffer_iterator_add (gi, buffer, GEGL_RECTANGLE (1, 0, width, height),
                             0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   while (gegl_buffer_iterator_next (gi))
     {
@@ -2221,13 +2044,13 @@ gimp_edgelset_new (GeglBuffer *buffer)
           {
             if (*(p++))
               {
-                if (! *prevy)
+                if (y == 0 || ! *prevy)
                   gimp_edgelset_add (set, x, y, YMinusDirection, edgel2index);
-                if (! *nexty)
+                if (y == height - 1 || ! *nexty)
                   gimp_edgelset_add (set, x, y, YPlusDirection, edgel2index);
-                if (! *prevx)
+                if (x == 0 || ! *prevx)
                   gimp_edgelset_add (set, x, y, XMinusDirection, edgel2index);
-                if (! *nextx)
+                if (x == width - 1 || ! *nextx)
                   gimp_edgelset_add (set, x, y, XPlusDirection, edgel2index);
               }
             prevy++;
