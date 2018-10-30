@@ -14,7 +14,8 @@ Blending function (enum; values are:
                    1 = "curved"
                    2 = "sinusoidal"
                    3 = "spherical (increasing)"
-                   4 = "spherical (decreasing)")
+                   4 = "spherical (decreasing)"
+                   5 = "step")
 Coloring type (enum; values are:
                0 = "RGB"
                1 = "HSV CCW"
