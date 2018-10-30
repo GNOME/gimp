@@ -1020,7 +1020,10 @@ pnm_load_rawpfm (PNMScanner *scan,
            * little vague about what the scale factor should be used
            * for */
           data[x] *= fabsf (info->scale_factor);
-          data[x] = fmaxf (0.0f, fminf (FLT_MAX, data[x]));
+          /* Keep values smaller than zero. That is in line with what the
+           * TIFF loader does. If the user doesn't want the negative numbers
+           * he has to get rid of them afterwards */
+          /* data[x] = fmaxf (0.0f, fminf (FLT_MAX, data[x])); */
         }
 
         gegl_buffer_set (buffer,
