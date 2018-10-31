@@ -68,8 +68,11 @@ typedef struct _Edgel
   guint     next, previous;
 } Edgel;
 
-static GeglBuffer * gimp_lineart_get_labels                 (GeglBuffer             *line_art,
-                                                             gboolean                 is_high_connectivity);
+static void         gimp_lineart_add_label_equivalency      (GHashTable             *equivalencies,
+                                                             guint                   label1,
+                                                             guint                   label2);
+static GeglBuffer * gimp_lineart_label                      (GeglBuffer             *line_art,
+                                                             guint32                *n_labels);
 static void         gimp_lineart_erode                      (GeglBuffer             *buffer,
                                                              gint                    s);
 static void         gimp_lineart_denoise                    (GeglBuffer             *buffer,
@@ -304,6 +307,7 @@ gimp_lineart_close (GeglBuffer          *line_art,
       if (erode_size)
         gimp_lineart_erode (strokes, 2 * erode_size);
     }
+
   /* Denoise (remove small connected components) */
   gimp_lineart_denoise (strokes, minimal_lineart_area);
 
@@ -459,128 +463,126 @@ gimp_lineart_close (GeglBuffer          *line_art,
 
 /* Private functions */
 
-static GeglBuffer *
-gimp_lineart_get_labels (GeglBuffer *line_art,
-                         gboolean    is_high_connectivity)
+static void
+gimp_lineart_add_label_equivalency (GHashTable *equivalencies,
+                                    guint       label1,
+                                    guint       label2)
 {
-  /*
-   * Converted from CImg.get_label() code, with tolerance = 0 (used to
-   * determine if two neighboring pixels belong to the same region).
-   * The algorithm of connected components computation has been primarily done
-   * by A. Meijster, according to the publication: 'W.H. Hesselink, A.
-   * Meijster, C. Bron, "Concurrent Determination of Connected Components.",
-   * In: Science of Computer Programming 41 (2001), pp. 173--194'.
-   * The submitted code has then been modified to fit CImg first, then GIMP.
-    */
-  guint32 *data;
-  gint     width   = gegl_buffer_get_width (line_art);
-  gint     height  = gegl_buffer_get_height (line_art);
-  guint32  counter = 0;
-  guint32  p       = 0;
+  gpointer key = GUINT_TO_POINTER (MAX (label1, label2));
+  gpointer eq  = GUINT_TO_POINTER (MIN (label1, label2));
+  gpointer old_eq = g_hash_table_lookup (equivalencies, key);
 
-  /* Create neighborhood tables. */
-  int dx[4], dy[4];
+  if (old_eq && old_eq != eq)
+    eq = MIN (old_eq, eq);
 
-  dx[0] = 1; dy[0] = 0;
-  dx[1] = 0; dy[1] = 1;
-  if (is_high_connectivity)
+  /* Check that the equivalent label has no equivalent itself. */
+  if ((old_eq = g_hash_table_lookup (equivalencies, eq)))
+    g_hash_table_insert (equivalencies, key, old_eq);
+  else
+    g_hash_table_insert (equivalencies, key, eq);
+}
+
+/**
+ * Label connected stroke pixels in regions, and leave all non-stroke
+ * pixels with label 0.
+ */
+static GeglBuffer *
+gimp_lineart_label (GeglBuffer *line_art,
+                    guint32    *n_labels)
+{
+  GeglBufferIterator *gi;
+  guint              *labels;
+  guint              *label;
+  GHashTable         *equivalencies;
+  gint                width  = gegl_buffer_get_width (line_art);
+  gint                height = gegl_buffer_get_height (line_art);
+  gint                x;
+  gint                y;
+
+  equivalencies = g_hash_table_new (NULL, NULL);
+
+  labels = g_new (guint, sizeof (guint) * width * height);
+
+  gi = gegl_buffer_iterator_new (line_art, gegl_buffer_get_extent (line_art),
+                                 0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
+
+  *n_labels = 0;
+  while (gegl_buffer_iterator_next (gi))
     {
-      dx[2] = 1; dy[2] = 1;
-      dx[3] = 1; dy[3] = -1;
+      guint8  *stroke = (guint8*) gi->items[0].data;
+      gint     startx = gi->items[0].roi.x;
+      gint     starty = gi->items[0].roi.y;
+      gint     endy   = starty + gi->items[0].roi.height;
+      gint     endx   = startx + gi->items[0].roi.width;
+
+      for (y = starty; y < endy; y++)
+        for (x = startx; x < endx; x++)
+          {
+            label  = labels + y * width + x;
+
+            *label = 0;
+            if (*stroke)
+              {
+                if (x > 0 && y > 0)
+                  {
+                    guint *pxy = label - width - 1;
+
+                    *label = *pxy;
+                  }
+                if (y > 0)
+                  {
+                    guint *py = label - width;
+
+                    if (! *label)
+                      *label = *py;
+                    else if (*py && *label != *py)
+                      gimp_lineart_add_label_equivalency (equivalencies,
+                                                          *label, *py);
+                  }
+                if (y > 0 && x < width - 1)
+                  {
+                    guint *py_nx  = label - width + 1;
+
+                    if (! *label)
+                      *label = *py_nx;
+                    else if (*py_nx && *label != *py_nx)
+                      gimp_lineart_add_label_equivalency (equivalencies,
+                                                          *label, *py_nx);
+                  }
+                if (x > 0)
+                  {
+                    guint *px = label - 1;
+
+                    if (! *label)
+                      *label = *px;
+                    else if (*px && *label != *px)
+                      gimp_lineart_add_label_equivalency (equivalencies,
+                                                          *label, *px);
+                  }
+                if (! *label)
+                  *label = ++(*n_labels);
+              }
+            stroke++;
+          }
     }
 
-  data = g_new (guint32,
-                babl_format_get_bytes_per_pixel (babl_format_n (babl_type ("u32"), 1)) * width * height);
+  label = labels;
+  for (y = 0; y < height; y++)
+    for (x = 0; x < width; x++)
+      {
+        if (*label > 1)
+          {
+            gpointer eq = g_hash_table_lookup (equivalencies,
+                                               GINT_TO_POINTER (*label));
 
-  /* Init label numbers. */
-  for (guint32 i = 0; i < width * height; i++)
-    data[i] = i;
+            if (eq)
+              *label = GPOINTER_TO_INT (eq);
+          }
+        label++;
+      }
+  g_hash_table_destroy (equivalencies);
 
-  /* For each neighbour-direction, label. */
-  for (unsigned int n = 0; n < (is_high_connectivity ? 4 : 2); ++n)
-    {
-      GeglBufferIterator *gi;
-      const gint          _dx       = dx[n];
-      const gint          _dy       = dy[n];
-
-      const gint          y0        = (_dy < 0) ? -_dy : 0;
-      const gint          it_width  = width - _dx + 1;
-      const gint          it_height = (_dy < 0) ? height - y0 + 1: height - _dy - y0 + 1;
-      const glong         offset    = _dy * width + _dx;
-
-      gi = gegl_buffer_iterator_new (line_art, GEGL_RECTANGLE (0, y0, it_width, it_height),
-                                     0, babl_format ("Y u32"),
-                                     GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
-      gegl_buffer_iterator_add (gi, line_art, GEGL_RECTANGLE (_dx, y0 + _dy, it_width, it_height),
-                                0, babl_format ("Y u32"),
-                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-      while (gegl_buffer_iterator_next (gi))
-        {
-          GeglRectangle *roi       = &gi->items[0].roi;
-          guint32       *pixel     = (guint32*) gi->items[0].data;
-          guint32       *neighbour = (guint32*) gi->items[1].data;
-          gint           k;
-          gint           x = roi->x;
-          gint           y = roi->y;
-
-          for (k = 0; k < gi->length; k++)
-            {
-              if (pixel == neighbour)
-                {
-                  const glong p = width * y;
-                  const guint32 q = p + offset;
-                  guint32       i, j;
-
-                  for (i = MAX (p, q), j = MIN (p, q); i != j && data[i] != i; )
-                    {
-                      i = (guint32) data[i];
-                      if (i < j)
-                        {
-                          /* Swap i and j. */
-                          guint32 temp = i;
-                          i = j;
-                          j = temp;
-                        }
-                    }
-                  if (i != j)
-                    data[i] = j;
-                  for (guint32 _p = (guint32) p; _p != j; )
-                    {
-                      const guint32 h = (guint32) data[_p];
-
-                      data[_p] = (guint32) j;
-                      _p = h;
-                    }
-                  for (guint32 _q = (guint32) q; _q != j; )
-                    {
-                      const guint32 h = (guint32) data[_q];
-
-                      data[_q] = (guint32) j;
-                      _q = h;
-                    }
-                }
-              pixel++;
-              neighbour++;
-
-              x++;
-              if (x - roi->x >= roi->width)
-                {
-                  x = roi->x;
-                  y++;
-                }
-            }
-        }
-    }
-
-  /* Resolve equivalences. */
-  p = 0;
-  for (guint32 i = 0; i < width * height; i++)
-    {
-      data[i] = data[i] == p ? counter++ : data[data[i]];
-      p++;
-    }
-
-  return gegl_buffer_linear_new_from_data (data,
+  return gegl_buffer_linear_new_from_data (labels,
                                            babl_format_n (babl_type ("u32"), 1),
                                            gegl_buffer_get_extent (line_art), 0,
                                            g_free, NULL);
@@ -1715,51 +1717,13 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
   gegl_node_process (sink);
   g_object_unref (graph);
 
-  labels = gimp_lineart_get_labels (mask, TRUE);
+  labels = gimp_lineart_label (mask, &label_max);
 
-  /* Check biggest label. */
-  gi = gegl_buffer_iterator_new (labels, NULL, 0, NULL,
-                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
-  while (gegl_buffer_iterator_next (gi))
-    {
-      guint32 *data = (guint32*) gi->items[0].data;
-      gint     k;
-
-      for (k = 0; k < gi->length; k++)
-        {
-          label_max = MAX (*data, label_max);
-          data++;
-        }
-    }
   if (label_max == 0)
     {
       g_object_unref (labels);
       g_object_unref (distmap);
       return 0.0;
-    }
-
-  /* Make sure that stroke pixels are label 0. */
-  label_max++;
-  gi = gegl_buffer_iterator_new (mask, NULL, 0, NULL,
-                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
-  gegl_buffer_iterator_add (gi, labels, NULL, 0,
-                            babl_format_n (babl_type ("u32"), 1),
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-  while (gegl_buffer_iterator_next (gi))
-    {
-      guint8  *m = (guint8*) gi->items[0].data;
-      guint32 *l = (guint32*) gi->items[1].data;
-      gint    k;
-
-      for (k = 0; k < gi->length; k++)
-        {
-          if (! *m)
-            *l = 0;
-          else if (*l == 0)
-            *l = label_max;
-          m++;
-          l++;
-        }
     }
 
   /* Create an array of max distance per label */
@@ -1807,7 +1771,7 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
   g_object_unref (labels);
   g_object_unref (distmap);
 
-  return 2.0 * res;
+  return 1.5 * res;
 }
 
 static guint
