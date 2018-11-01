@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-25 19:24+0200\n"
-"PO-Revision-Date: 2018-10-25 19:25+0200\n"
+"POT-Creation-Date: 2018-11-01 16:32+0100\n"
+"PO-Revision-Date: 2018-11-01 16:33+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -15019,6 +15019,10 @@ msgstr ""
 "\n"
 "%s"
 
+#: ../app/dialogs/file-save-dialog.c:802
+msgid "Unknown error"
+msgstr "Nieznany błąd"
+
 #: ../app/dialogs/fill-dialog.c:109
 msgid "Choose Fill Style"
 msgstr "Wybór stylu wypełniania"
@@ -17953,11 +17957,11 @@ msgstr "Kliknięcie i przeciągnięcie przemieści punkt osi"
 msgid "Click-Drag to shear"
 msgstr "Kliknięcie i przeciągnięcie nachyli"
 
-#: ../app/file/file-open.c:116 ../app/file/file-save.c:116
+#: ../app/file/file-open.c:116 ../app/file/file-save.c:126
 msgid "Not a regular file"
 msgstr "To nie jest zwykły plik"
 
-#: ../app/file/file-open.c:125 ../app/file/file-save.c:125
+#: ../app/file/file-open.c:125 ../app/file/file-save.c:135
 msgid "Permission denied"
 msgstr "Brak uprawnień"
 
@@ -18008,7 +18012,15 @@ msgstr "Pobierano %s danych obrazu"
 msgid "Uploaded %s of image data"
 msgstr "Wysyłano %s danych obrazu"
 
-#: ../app/file/file-save.c:280
+#: ../app/file/file-save.c:99
+msgid "There is no active layer to save"
+msgstr "Brak aktywnej warstwy do zapisania"
+
+#: ../app/file/file-save.c:119
+msgid "Failed to get file information"
+msgstr "Uzyskanie informacji o pliku się nie powiodło"
+
+#: ../app/file/file-save.c:290
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Wtyczka %s nie może zapisać obrazu"
