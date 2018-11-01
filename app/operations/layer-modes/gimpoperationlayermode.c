@@ -366,7 +366,7 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
   gegl_operation_set_format (operation, "aux",    format);
-  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
+  gegl_operation_set_format (operation, "aux2",   babl_format_with_space ("Y float", format));
 }
 
 static gboolean

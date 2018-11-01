@@ -1429,21 +1429,21 @@ gimp_layer_mode_get_format (GimpLayerMode        mode,
        */
       if (! preferred_format ||
           gimp_babl_format_get_trc (preferred_format) == GIMP_TRC_LINEAR)
-        return babl_format ("RGBA float");
+        return babl_format_with_space ("RGBA float", preferred_format);
       else
-        return babl_format ("R'G'B'A float");
+        return babl_format_with_space ("R'G'B'A float", preferred_format);
 
     case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
-      return babl_format ("RGBA float");
+      return babl_format_with_space ("RGBA float", preferred_format);
 
     case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
-      return babl_format ("R'G'B'A float");
+      return babl_format_with_space ("R'G'B'A float", preferred_format);
 
     case GIMP_LAYER_COLOR_SPACE_LAB:
-      return babl_format ("CIE Lab alpha float");
+      return babl_format_with_space ("CIE Lab alpha float", preferred_format);
     }
 
-  g_return_val_if_reached (babl_format ("RGBA float"));
+  g_return_val_if_reached (babl_format_with_space ("RGBA float", preferred_format));
 }
 
 GimpLayerCompositeRegion
