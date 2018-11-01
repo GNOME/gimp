@@ -89,15 +89,18 @@ static void   save_less_than_8 (FILE             *fp,
                                 gint              width,
                                 gint              height,
                                 const gint        bpp,
-                                const guchar       *buf);
+                                const guchar     *buf,
+                                gboolean          padding);
 static void   save_8           (FILE             *fp,
                                 gint              width,
                                 gint              height,
-                                const guchar     *buf);
+                                const guchar     *buf,
+                                gboolean          padding);
 static void   save_24          (FILE             *fp,
                                 gint              width,
                                 gint              height,
-                                const guchar     *buf);
+                                const guchar     *buf,
+                                gboolean          padding);
 static void   writeline        (FILE             *fp,
                                 const guchar     *buf,
                                 gint              bytes);
@@ -731,6 +734,7 @@ save_image (const gchar  *filename,
   gdouble        resolution_x, resolution_y;
   gint           colors, i;
   guint8         header_buf[128];
+  gboolean       padding = FALSE;
 
   drawable_type = gimp_drawable_type (layer);
   gimp_drawable_offsets (layer, &offset_x, &offset_y);
@@ -755,19 +759,19 @@ save_image (const gchar  *filename,
         {
           pcx_header.bpp            = 8;
           pcx_header.planes         = 1;
-          pcx_header.bytesperline   = GUINT16_TO_LE (width);
+          pcx_header.bytesperline   = width;
         }
       else if (colors > 2)
         {
           pcx_header.bpp            = 4;
           pcx_header.planes         = 1;
-          pcx_header.bytesperline   = GUINT16_TO_LE ((width + 1) / 2);
+          pcx_header.bytesperline   = (width + 1) / 2;
         }
       else
        {
           pcx_header.bpp            = 1;
           pcx_header.planes         = 1;
-          pcx_header.bytesperline   = GUINT16_TO_LE ((width + 7) / 8);
+          pcx_header.bytesperline   = (width + 7) / 8;
         }
       pcx_header.color        = GUINT16_TO_LE (1);
       format                  = NULL;
@@ -793,7 +797,7 @@ save_image (const gchar  *filename,
       pcx_header.bpp          = 8;
       pcx_header.planes       = 3;
       pcx_header.color        = GUINT16_TO_LE (1);
-      pcx_header.bytesperline = GUINT16_TO_LE (width);
+      pcx_header.bytesperline = width;
       format                  = babl_format ("R'G'B' u8");
       break;
 
@@ -801,7 +805,7 @@ save_image (const gchar  *filename,
       pcx_header.bpp          = 8;
       pcx_header.planes       = 1;
       pcx_header.color        = GUINT16_TO_LE (2);
-      pcx_header.bytesperline = GUINT16_TO_LE (width);
+      pcx_header.bytesperline = width;
       format                  = babl_format ("Y' u8");
       break;
 
@@ -814,7 +818,9 @@ save_image (const gchar  *filename,
   if (pcx_header.bytesperline % 2 != 0)
     {
       pcx_header.bytesperline++;
+      padding = TRUE;
     }
+  pcx_header.bytesperline = GUINT16_TO_LE (pcx_header.bytesperline);
 
   pixels = (guchar *) g_malloc (width * height * pcx_header.planes);
 
@@ -876,7 +882,7 @@ save_image (const gchar  *filename,
     case GIMP_INDEXED_IMAGE:
       if (colors > 16)
         {
-          save_8 (fp, width, height, pixels);
+          save_8 (fp, width, height, pixels, padding);
           fputc (0x0c, fp);
           fwrite (cmap, colors, 3, fp);
           for (i = colors; i < 256; i++)
@@ -888,16 +894,16 @@ save_image (const gchar  *filename,
         }
       else /* Covers 1 and 4 bpp */
         {
-          save_less_than_8 (fp, width, height, pcx_header.bpp, pixels);
+          save_less_than_8 (fp, width, height, pcx_header.bpp, pixels, padding);
         }
       break;
 
     case GIMP_RGB_IMAGE:
-      save_24 (fp, width, height, pixels);
+      save_24 (fp, width, height, pixels, padding);
       break;
 
     case GIMP_GRAY_IMAGE:
-      save_8 (fp, width, height, pixels);
+      save_8 (fp, width, height, pixels, padding);
       fputc (0x0c, fp);
       for (i = 0; i < 256; i++)
         {
@@ -930,7 +936,8 @@ save_less_than_8 (FILE         *fp,
                   gint          width,
                   gint          height,
                   const gint    bpp,
-                  const guchar *buf)
+                  const guchar *buf,
+                  gboolean      padding)
 {
   const gint  bit_limit     = (8 - bpp);
   const gint  buf_size      = width * height;
@@ -959,6 +966,8 @@ save_less_than_8 (FILE         *fp,
             {
               writeline (fp, line, count);
               count = 0;
+              if (padding)
+                fputc ('\0', fp);
               gimp_progress_update ((double) x / (double) buf_size);
             }
         }
@@ -970,7 +979,8 @@ static void
 save_8 (FILE         *fp,
         gint          width,
         gint          height,
-        const guchar *buf)
+        const guchar *buf,
+        gboolean      padding)
 {
   int row;
 
@@ -978,6 +988,8 @@ save_8 (FILE         *fp,
     {
       writeline (fp, buf, width);
       buf += width;
+      if (padding)
+        fputc ('\0', fp);
       gimp_progress_update ((double) row / (double) height);
     }
 }
@@ -986,7 +998,8 @@ static void
 save_24 (FILE         *fp,
          gint          width,
          gint          height,
-         const guchar *buf)
+         const guchar *buf,
+         gboolean      padding)
 {
   int     x, y, c;
   guchar *line;
@@ -1002,6 +1015,8 @@ save_24 (FILE         *fp,
               line[x] = buf[(3*x) + c];
             }
           writeline (fp, line, width);
+          if (padding)
+            fputc ('\0', fp);
         }
       buf += width * 3;
       gimp_progress_update ((double) y / (double) height);
