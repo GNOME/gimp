@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-10-25 19:24+0000\n"
-"PO-Revision-Date: 2018-10-27 11:35+0200\n"
+"POT-Creation-Date: 2018-11-01 15:36+0000\n"
+"PO-Revision-Date: 2018-11-02 10:46+0100\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -10281,13 +10281,11 @@ msgstr ""
 "ocultos, dejando sólo las ventanas de imagen."
 
 #: ../app/actions/windows-actions.c:130
-#| msgid "Re-Show Last"
 msgctxt "windows-action"
 msgid "Show Tabs"
 msgstr "Mostrar pestañas"
 
 #: ../app/actions/windows-actions.c:131
-#| msgid "When enabled, menus can be torn off."
 msgctxt "windows-action"
 msgid "When enabled, the image tabs bar is shown."
 msgstr "Cuando está activado, se muestra la barra de pestañas de imagen."
@@ -11033,8 +11031,6 @@ msgstr ""
 "imagen."
 
 #: ../app/config/gimprc-blurbs.h:422
-#| msgctxt "windows-action"
-#| msgid "When enabled, GIMP is in a single-window mode."
 msgid "Show the image tabs bar in single window mode."
 msgstr "Mostrar la barra de pestañas de imagen en modo de ventana única."
 
@@ -15183,6 +15179,12 @@ msgstr ""
 "\n"
 "%s"
 
+#: ../app/dialogs/file-save-dialog.c:802
+#| msgctxt "orientation-type"
+#| msgid "Unknown"
+msgid "Unknown error"
+msgstr "Error desconocido"
+
 #: ../app/dialogs/fill-dialog.c:109
 msgid "Choose Fill Style"
 msgstr "Seleccionar el estilo de relleno"
@@ -18124,11 +18126,11 @@ msgstr "Pulse y arrastre para mover el punto de pivote"
 msgid "Click-Drag to shear"
 msgstr "Pulse y arrastre para inclinar"
 
-#: ../app/file/file-open.c:116 ../app/file/file-save.c:116
+#: ../app/file/file-open.c:116 ../app/file/file-save.c:126
 msgid "Not a regular file"
 msgstr "No es un archivo regular"
 
-#: ../app/file/file-open.c:125 ../app/file/file-save.c:125
+#: ../app/file/file-open.c:125 ../app/file/file-save.c:135
 msgid "Permission denied"
 msgstr "Permiso denegado"
 
@@ -18180,7 +18182,16 @@ msgstr "Descargados %s de los datos de la imagen"
 msgid "Uploaded %s of image data"
 msgstr "Subidos %s de los datos de la imagen"
 
-#: ../app/file/file-save.c:280
+#: ../app/file/file-save.c:99
+#| msgid "There is no active layer to crop."
+msgid "There is no active layer to save"
+msgstr "No hay una capa activa que guardar"
+
+#: ../app/file/file-save.c:119
+msgid "Failed to get file information"
+msgstr "No se pudo obtener la información del archivo"
+
+#: ../app/file/file-save.c:290
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "El complemento %s no ha podido guardar la imagen"
@@ -24179,7 +24190,6 @@ msgstr "b*:"
 
 #. TRANSLATORS: x from xyY color space
 #: ../app/widgets/gimpcolorframe.c:939
-#| msgid "Box:"
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x:"
@@ -24192,7 +24202,6 @@ msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
 #: ../app/widgets/gimpcolorframe.c:943
-#| msgid "Y:"
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "Y:"
@@ -26057,9 +26066,6 @@ msgid "Change Background Color"
 msgstr "Cambiar el color de fondo"
 
 #: ../app/widgets/gimptoolbox-color-area.c:311
-#| msgid ""
-#| "The active brush.\n"
-#| "Click to open the Brush Dialog."
 msgid ""
 "The active foreground color.\n"
 "Click to open the color selection dialog."
@@ -26068,9 +26074,6 @@ msgstr ""
 "Pulse para abrir el diálogo de selección de color."
 
 #: ../app/widgets/gimptoolbox-color-area.c:316
-#| msgid ""
-#| "The active brush.\n"
-#| "Click to open the Brush Dialog."
 msgid ""
 "The active background color.\n"
 "Click to open the color selection dialog."
@@ -27639,10 +27642,6 @@ msgstr "borroso"
 #~ msgctxt "orientation-type"
 #~ msgid "Vertical"
 #~ msgstr "Vertical"
-
-#~ msgctxt "orientation-type"
-#~ msgid "Unknown"
-#~ msgstr "Desconocido"
 
 #, fuzzy
 #~| msgctxt "precision"
