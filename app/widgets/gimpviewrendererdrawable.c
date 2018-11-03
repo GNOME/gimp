@@ -234,8 +234,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
                                        &scaling_up);
     }
 
-  if ((view_width * view_height) <
-      (gimp_item_get_width (item) * gimp_item_get_height (item) * 4))
+  if (((gint64) view_width * (gint64) view_height) <
+      ((gint64) gimp_item_get_width  (item) *
+       (gint64) gimp_item_get_height (item) * 4))
     scaling_up = FALSE;
 
   if (scaling_up && image && ! renderer->is_popup)
