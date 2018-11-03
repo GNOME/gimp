@@ -163,15 +163,21 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
   GimpImage                *image;
   const gchar              *icon_name;
   GimpAsync                *async;
-  gint                      offset_x;
-  gint                      offset_y;
-  gint                      width;
-  gint                      height;
+  gint                      image_width;
+  gint                      image_height;
   gint                      view_width;
   gint                      view_height;
-  gdouble                   xres = 1.0;
-  gdouble                   yres = 1.0;
-  gboolean                  scaling_up;
+  gint                      src_x;
+  gint                      src_y;
+  gint                      src_width;
+  gint                      src_height;
+  gint                      dst_x;
+  gint                      dst_y;
+  gint                      dst_width;
+  gint                      dst_height;
+  gdouble                   xres  = 1.0;
+  gdouble                   yres  = 1.0;
+  gboolean                  empty = FALSE;
 
   /* render is already in progress */
   if (renderdrawable->priv->render_async)
@@ -192,147 +198,111 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       return;
     }
 
-  gimp_item_get_offset (item, &offset_x, &offset_y);
-
-  width  = renderer->width;
-  height = renderer->height;
-
   if (image)
     gimp_image_get_resolution (image, &xres, &yres);
 
-  if (image && ! renderer->is_popup)
-    {
-      width  = MAX (1, ROUND ((((gdouble) width /
-                                (gdouble) gimp_image_get_width (image)) *
-                               (gdouble) gimp_item_get_width (item))));
-      height = MAX (1, ROUND ((((gdouble) height /
-                                (gdouble) gimp_image_get_height (image)) *
-                               (gdouble) gimp_item_get_height (item))));
+  if (renderer->is_popup)
+    image = NULL;
 
-      gimp_viewable_calc_preview_size (gimp_item_get_width  (item),
-                                       gimp_item_get_height (item),
-                                       width,
-                                       height,
-                                       renderer->dot_for_dot,
-                                       xres,
-                                       yres,
-                                       &view_width,
-                                       &view_height,
-                                       &scaling_up);
+  if (image)
+    {
+      image_width  = gimp_image_get_width  (image);
+      image_height = gimp_image_get_height (image);
     }
   else
     {
-      gimp_viewable_calc_preview_size (gimp_item_get_width  (item),
-                                       gimp_item_get_height (item),
-                                       width,
-                                       height,
-                                       renderer->dot_for_dot,
-                                       xres,
-                                       yres,
-                                       &view_width,
-                                       &view_height,
-                                       &scaling_up);
+      image_width  = gimp_item_get_width  (item);
+      image_height = gimp_item_get_height (item);
     }
 
-  if (((gint64) view_width * (gint64) view_height) <
-      ((gint64) gimp_item_get_width  (item) *
-       (gint64) gimp_item_get_height (item) * 4))
-    scaling_up = FALSE;
+  gimp_viewable_calc_preview_size (image_width,
+                                   image_height,
+                                   renderer->width,
+                                   renderer->height,
+                                   renderer->dot_for_dot,
+                                   xres,
+                                   yres,
+                                   &view_width,
+                                   &view_height,
+                                   NULL);
 
-  if (scaling_up && image && ! renderer->is_popup)
+  src_x      = 0;
+  src_y      = 0;
+  src_width  = gimp_item_get_width  (item);
+  src_height = gimp_item_get_height (item);
+
+  if (image)
     {
-      gint src_x, src_y;
-      gint src_width, src_height;
+      gint offset_x;
+      gint offset_y;
 
-      if (gimp_rectangle_intersect (0, 0,
-                                    gimp_item_get_width  (item),
-                                    gimp_item_get_height (item),
+      gimp_item_get_offset (item, &offset_x, &offset_y);
+
+      if (gimp_rectangle_intersect (src_x, src_y,
+                                    src_width, src_height,
                                     -offset_x, -offset_y,
-                                    gimp_image_get_width  (image),
-                                    gimp_image_get_height (image),
+                                    image_width, image_height,
                                     &src_x, &src_y,
                                     &src_width, &src_height))
         {
-          gint dest_width;
-          gint dest_height;
+          offset_x += src_x;
+          offset_y += src_y;
 
-          dest_width  = ROUND (((gdouble) renderer->width /
-                                (gdouble) gimp_image_get_width (image)) *
-                               (gdouble) src_width);
-          dest_height = ROUND (((gdouble) renderer->height /
-                                (gdouble) gimp_image_get_height (image)) *
-                               (gdouble) src_height);
-
-          if (dest_width  < 1) dest_width  = 1;
-          if (dest_height < 1) dest_height = 1;
-
-          async = gimp_drawable_get_sub_preview_async (drawable,
-                                                       src_x, src_y,
-                                                       src_width, src_height,
-                                                       dest_width, dest_height);
+          dst_x      = ROUND (((gdouble) view_width  / image_width)  *
+                              offset_x);
+          dst_y      = ROUND (((gdouble) view_height / image_height) *
+                              offset_y);
+          dst_width  = ROUND (((gdouble) view_width  / image_width)  *
+                              src_width);
+          dst_height = ROUND (((gdouble) view_height / image_height) *
+                              src_height);
         }
       else
         {
-          const Babl  *format = gimp_drawable_get_preview_format (drawable);
-          GimpTempBuf *render_buf;
+          dst_x      = 0;
+          dst_y      = 0;
+          dst_width  = 1;
+          dst_height = 1;
 
-          render_buf = gimp_temp_buf_new (1, 1, format);
-          gimp_temp_buf_data_clear (render_buf);
-
-          async = gimp_async_new ();
-
-          gimp_async_finish_full (async,
-                                  render_buf,
-                                  (GDestroyNotify) gimp_temp_buf_unref);
+          empty = TRUE;
         }
     }
   else
     {
+      dst_x      = (renderer->width  - view_width)  / 2;
+      dst_y      = (renderer->height - view_height) / 2;
+      dst_width  = view_width;
+      dst_height = view_height;
+    }
+
+  if (! empty)
+    {
       async = gimp_drawable_get_sub_preview_async (drawable,
-                                                   0, 0,
-                                                   gimp_item_get_width  (item),
-                                                   gimp_item_get_height (item),
-                                                   view_width, view_height);
+                                                   src_x, src_y,
+                                                   src_width, src_height,
+                                                   dst_width, dst_height);
+    }
+  else
+    {
+      const Babl  *format = gimp_drawable_get_preview_format (drawable);
+      GimpTempBuf *render_buf;
+
+      async = gimp_async_new ();
+
+      render_buf = gimp_temp_buf_new (dst_width, dst_height, format);
+      gimp_temp_buf_data_clear (render_buf);
+
+      gimp_async_finish_full (async,
+                              render_buf,
+                              (GDestroyNotify) gimp_temp_buf_unref);
     }
 
   if (async)
     {
-      gint render_buf_x = 0;
-      gint render_buf_y = 0;
-
-      if (image && ! renderer->is_popup)
-        {
-          if (offset_x != 0)
-            render_buf_x =
-              ROUND ((((gdouble) renderer->width /
-                       (gdouble) gimp_image_get_width (image)) *
-                      (gdouble) offset_x));
-
-          if (offset_y != 0)
-            render_buf_y =
-              ROUND ((((gdouble) renderer->height /
-                       (gdouble) gimp_image_get_height (image)) *
-                      (gdouble) offset_y));
-
-          if (scaling_up)
-            {
-              if (render_buf_x < 0) render_buf_x = 0;
-              if (render_buf_y < 0) render_buf_y = 0;
-            }
-        }
-      else
-        {
-          if (view_width < width)
-            render_buf_x = (width - view_width) / 2;
-
-          if (view_height < height)
-            render_buf_y = (height - view_height) / 2;
-        }
-
       renderdrawable->priv->render_async  = async;
       renderdrawable->priv->render_widget = g_object_ref (widget);
-      renderdrawable->priv->render_buf_x  = render_buf_x;
-      renderdrawable->priv->render_buf_y  = render_buf_y;
+      renderdrawable->priv->render_buf_x  = dst_x;
+      renderdrawable->priv->render_buf_y  = dst_y;
       renderdrawable->priv->render_update = FALSE;
 
       gimp_async_add_callback (
@@ -348,15 +318,15 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
         {
           renderdrawable->priv->render_update = TRUE;
 
-          if (view_width  != renderdrawable->priv->prev_width ||
-              view_height != renderdrawable->priv->prev_height)
+          if (renderer->width  != renderdrawable->priv->prev_width ||
+              renderer->height != renderdrawable->priv->prev_height)
             {
               gimp_view_renderer_render_icon (renderer, widget, icon_name);
             }
         }
 
-      renderdrawable->priv->prev_width  = view_width;
-      renderdrawable->priv->prev_height = view_height;
+      renderdrawable->priv->prev_width  = renderer->width;
+      renderdrawable->priv->prev_height = renderer->height;
 
       g_object_unref (async);
     }
