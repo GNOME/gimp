@@ -219,7 +219,7 @@ var_types = {
 # Read performance log from STDIN
 log = ElementTree.fromstring (sys.stdin.buffer.read ())
 
-Variable = namedtuple ("Variable", ("type", "color"))
+Variable = namedtuple ("Variable", ("type", "desc", "color"))
 Value    = namedtuple ("Value",    ("value", "raw"))
 
 var_colors = [
@@ -238,7 +238,9 @@ var_defs = {}
 for var in log.find ("var-defs"):
     color = var_colors[len (var_defs) % len (var_colors)]
 
-    var_defs[var.get ("name")] = Variable (var.get ("type"), color)
+    var_defs[var.get ("name")] = Variable (var.get ("type"),
+                                           var.get ("desc"),
+                                           color)
 
 AddressInfo = namedtuple ("AddressInfo", ("id",
                                           "name",
@@ -805,14 +807,18 @@ class CellRendererColorToggle (Gtk.CellRendererToggle):
 class VariableSet (Gtk.TreeView):
     class Store (Gtk.ListStore):
         NAME   = 0
-        ACTIVE = 1
+        DESC   = 1
         COLOR  = 2
+        ACTIVE = 3
 
         def __init__ (self):
-            Gtk.ListStore.__init__ (self, str, bool, Gdk.RGBA)
+            Gtk.ListStore.__init__ (self, str, str, Gdk.RGBA, bool)
 
-            for var in var_defs:
-                i = self.append ((var, False, Gdk.RGBA (*var_defs[var].color)))
+            for var, var_def in var_defs.items ():
+                i = self.append ((var,
+                                  var_def.desc,
+                                  Gdk.RGBA (*var_def.color),
+                                  False))
 
     def __init__ (self, *args, **kwargs):
         Gtk.TreeView.__init__ (self, *args, headers_visible = False, **kwargs)
@@ -820,6 +826,7 @@ class VariableSet (Gtk.TreeView):
         store = self.Store ()
         self.store = store
         self.set_model (store)
+        self.set_tooltip_column (store.DESC)
 
         col = Gtk.TreeViewColumn ()
         self.append_column (col)
@@ -1661,27 +1668,29 @@ class InformationViewer (Gtk.ScrolledWindow):
 
 class VariablesViewer (Gtk.ScrolledWindow):
     class Store (Gtk.ListStore):
-        NAME        = 0
-        COLOR       = 1
-        VALUE       = 2
-        RAW         = 3
-        MIN         = 4
-        MAX         = 5
-        MEDIAN      = 6
-        MEAN        = 7
-        STDEV       = 8
-        LAST_COLUMN = 9
+        NAME        =  0
+        DESC        =  1
+        COLOR       =  2
+        VALUE       =  3
+        RAW         =  4
+        MIN         =  5
+        MAX         =  6
+        MEDIAN      =  7
+        MEAN        =  8
+        STDEV       =  9
+        LAST_COLUMN = 10
 
         def __init__ (self):
             n_stats = self.LAST_COLUMN - self.COLOR
 
             Gtk.ListStore.__init__ (self,
-                                    *((str, Gdk.RGBA) + n_stats * (str,)))
+                                    *((str, str, Gdk.RGBA) + n_stats * (str,)))
             enum.Enum.__init__ (self)
 
-            for var in var_defs:
+            for var, var_def in var_defs.items ():
                 i = self.append (((var,
-                                   Gdk.RGBA (*var_defs[var].color)) +
+                                   var_def.desc,
+                                   Gdk.RGBA (*var_def.color)) +
                                   n_stats * ("",)))
 
     def __init__ (self, *args, **kwargs):
@@ -1698,6 +1707,7 @@ class VariablesViewer (Gtk.ScrolledWindow):
 
         tree = Gtk.TreeView (model = store)
         self.add (tree)
+        tree.set_tooltip_column (store.DESC)
         tree.show ()
 
         self.single_sample_cols = []
