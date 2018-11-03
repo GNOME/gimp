@@ -275,6 +275,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       dst_height = view_height;
     }
 
+  dst_width  = MAX (dst_width,  1);
+  dst_height = MAX (dst_height, 1);
+
   if (! empty)
     {
       async = gimp_drawable_get_sub_preview_async (drawable,
