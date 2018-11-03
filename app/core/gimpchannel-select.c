@@ -516,6 +516,7 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
     pickable = GIMP_PICKABLE (drawable);
 
   add_on = gimp_pickable_contiguous_region_by_seed (pickable,
+                                                    NULL,
                                                     antialias,
                                                     threshold,
                                                     select_transparent,

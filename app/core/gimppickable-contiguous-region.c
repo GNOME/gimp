@@ -99,7 +99,102 @@ static void     find_contiguous_region    (GeglBuffer          *src_buffer,
 /*  public functions  */
 
 GeglBuffer *
+gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
+                                                  gboolean      select_transparent)
+{
+  GeglBuffer *lineart;
+  gboolean    has_alpha;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+
+  gimp_pickable_flush (pickable);
+
+  lineart = gimp_pickable_get_buffer (pickable);
+  has_alpha = babl_format_has_alpha (gegl_buffer_get_format (lineart));
+
+  if (! has_alpha)
+    {
+      if (select_transparent)
+        {
+          /*  don't select transparent regions if there are no fully
+           *  transparent pixels.
+           */
+          GeglBufferIterator *gi;
+
+          select_transparent = FALSE;
+          gi = gegl_buffer_iterator_new (lineart, NULL, 0, babl_format ("A u8"),
+                                         GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
+          while (gegl_buffer_iterator_next (gi))
+            {
+              guint8 *p = (guint8*) gi->items[0].data;
+              gint    k;
+
+              for (k = 0; k < gi->length; k++)
+                {
+                  if (! *p)
+                    {
+                      select_transparent = TRUE;
+                      break;
+                    }
+                  p++;
+                }
+              if (select_transparent)
+                break;
+            }
+          if (select_transparent)
+            gegl_buffer_iterator_stop (gi);
+        }
+    }
+  else
+    {
+      select_transparent = FALSE;
+    }
+
+  /* For smart selection, we generate a binarized image with close
+   * regions, then run a composite selection with no threshold on
+   * this intermediate buffer.
+   */
+  GIMP_TIMER_START();
+
+  lineart = gimp_lineart_close (lineart,
+                                select_transparent,
+                                /*contour_detection_level,*/
+                                0.92,
+                                /* erosion, */
+                                -1,
+                                /*minimal_lineart_area,*/
+                                5,
+                                /*normal_estimate_mask_size,*/
+                                5,
+                                /*end_point_rate,*/
+                                0.85,
+                                /*spline_max_length,*/
+                                60,
+                                /*spline_max_angle,*/
+                                90.0,
+                                /*end_point_connectivity,*/
+                                2,
+                                /*spline_roundness,*/
+                                1.0,
+                                /*allow_self_intersections,*/
+                                TRUE,
+                                /*created_regions_significant_area,*/
+                                4,
+                                /*created_regions_minimum_area,*/
+                                100,
+                                /*small_segments_from_spline_sources,*/
+                                TRUE,
+                                /*segments_max_length*/
+                                20);
+
+  GIMP_TIMER_END("close line-art");
+
+  return lineart;
+}
+
+GeglBuffer *
 gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
+                                         GeglBuffer          *line_art,
                                          gboolean             antialias,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
@@ -115,88 +210,60 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
   gint           n_components;
   gboolean       has_alpha;
   gfloat         start_col[MAX_CHANNELS];
+  gfloat         flag           = 2.0;
   gboolean       smart_line_art = FALSE;
-  gfloat         flag = 2.0;
+  gboolean       free_line_art  = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
-  gimp_pickable_flush (pickable);
-
-  src_buffer = gimp_pickable_get_buffer (pickable);
-
-  format = choose_format (src_buffer, select_criterion,
-                          &n_components, &has_alpha);
-
-  gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
-                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-
-  if (has_alpha)
-    {
-      if (select_transparent)
-        {
-          /*  don't select transparent regions if the start pixel isn't
-           *  fully transparent
-           */
-          if (start_col[n_components - 1] > 0)
-            select_transparent = FALSE;
-        }
-    }
-  else
-    {
-      select_transparent = FALSE;
-    }
-
   if (select_criterion == GIMP_SELECT_CRITERION_LINE_ART)
     {
-      /* For smart selection, we generate a binarized image with close
-       * regions, then run a composite selection with no threshold on
-       * this intermediate buffer.
-       */
-      GIMP_TIMER_START();
-      src_buffer = gimp_lineart_close (src_buffer,
-                                       select_transparent,
-                                       /*contour_detection_level,*/
-                                       0.92,
-                                       /* erosion, */
-                                       -1,
-                                       /*minimal_lineart_area,*/
-                                       5,
-                                       /*normal_estimate_mask_size,*/
-                                       5,
-                                       /*end_point_rate,*/
-                                       0.85,
-                                       /*spline_max_length,*/
-                                       60,
-                                       /*spline_max_angle,*/
-                                       90.0,
-                                       /*end_point_connectivity,*/
-                                       2,
-                                       /*spline_roundness,*/
-                                       1.0,
-                                       /*allow_self_intersections,*/
-                                       TRUE,
-                                       /*created_regions_significant_area,*/
-                                       4,
-                                       /*created_regions_minimum_area,*/
-                                       100,
-                                       /*small_segments_from_spline_sources,*/
-                                       TRUE,
-                                       /*segments_max_length*/
-                                       20);
+      if (line_art == NULL)
+        {
+          /* It is much better experience to pre-compute the line art,
+           * but it may not be always possible (for instance when
+           * selecting/filling through a PDB call).
+           */
+          line_art      = gimp_pickable_contiguous_region_prepare_line_art (pickable, select_transparent);
+          free_line_art = TRUE;
+        }
+
+      src_buffer = line_art;
+
       smart_line_art     = TRUE;
       antialias          = FALSE;
       threshold          = 0.0;
       select_transparent = FALSE;
       select_criterion   = GIMP_SELECT_CRITERION_COMPOSITE;
       diagonal_neighbors = FALSE;
-
-      format = choose_format (src_buffer, select_criterion,
-                              &n_components, &has_alpha);
-      gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-
-      GIMP_TIMER_END("close line-art");
     }
+  else
+    {
+      gimp_pickable_flush (pickable);
+      src_buffer = gimp_pickable_get_buffer (pickable);
+
+      if (has_alpha)
+        {
+          if (select_transparent)
+            {
+              /*  don't select transparent regions if the start pixel isn't
+               *  fully transparent
+               */
+              if (start_col[n_components - 1] > 0)
+                select_transparent = FALSE;
+            }
+        }
+      else
+        {
+          select_transparent = FALSE;
+        }
+    }
+
+  format = choose_format (src_buffer, select_criterion,
+                          &n_components, &has_alpha);
+
+  gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   extent = *gegl_buffer_get_extent (src_buffer);
 
@@ -271,7 +338,6 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
               prio++;
             }
         }
-      g_object_unref (src_buffer);
 
       /* Watershed the line art. */
       graph = gegl_node_new ();
@@ -297,6 +363,9 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       g_object_unref (priomap);
 
       GIMP_TIMER_END("watershed line art");
+
+      if (free_line_art)
+        g_object_unref (src_buffer);
     }
 
   return mask_buffer;

@@ -20,6 +20,7 @@
 
 
 void   gimp_drawable_bucket_fill (GimpDrawable        *drawable,
+                                  GeglBuffer          *line_art,
                                   GimpFillOptions     *options,
                                   gboolean             fill_transparent,
                                   GimpSelectCriterion  fill_criterion,

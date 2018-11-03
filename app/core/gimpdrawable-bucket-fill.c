@@ -49,6 +49,7 @@
 
 void
 gimp_drawable_bucket_fill (GimpDrawable         *drawable,
+                           GeglBuffer           *line_art,
                            GimpFillOptions      *options,
                            gboolean              fill_transparent,
                            GimpSelectCriterion   fill_criterion,
@@ -91,6 +92,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
    *  contiguous region.
    */
   mask_buffer = gimp_pickable_contiguous_region_by_seed (pickable,
+                                                         line_art,
                                                          antialias,
                                                          threshold,
                                                          fill_transparent,
