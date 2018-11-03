@@ -19,21 +19,24 @@
 #define __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
 
 
-GeglBuffer * gimp_pickable_contiguous_region_by_seed  (GimpPickable        *pickable,
-                                                       gboolean             antialias,
-                                                       gfloat               threshold,
-                                                       gboolean             select_transparent,
-                                                       GimpSelectCriterion  select_criterion,
-                                                       gboolean             diagonal_neighbors,
-                                                       gint                 x,
-                                                       gint                 y);
+GeglBuffer * gimp_pickable_contiguous_region_prepare_line_art (GimpPickable        *pickable,
+                                                               gboolean             select_transparent);
+GeglBuffer * gimp_pickable_contiguous_region_by_seed          (GimpPickable        *pickable,
+                                                               GeglBuffer          *line_art,
+                                                               gboolean             antialias,
+                                                               gfloat               threshold,
+                                                               gboolean             select_transparent,
+                                                               GimpSelectCriterion  select_criterion,
+                                                               gboolean             diagonal_neighbors,
+                                                               gint                 x,
+                                                               gint                 y);
 
-GeglBuffer * gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
-                                                       gboolean             antialias,
-                                                       gfloat               threshold,
-                                                       gboolean             select_transparent,
-                                                       GimpSelectCriterion  select_criterion,
-                                                       const GimpRGB       *color);
+GeglBuffer * gimp_pickable_contiguous_region_by_color         (GimpPickable        *pickable,
+                                                               gboolean             antialias,
+                                                               gfloat               threshold,
+                                                               gboolean             select_transparent,
+                                                               GimpSelectCriterion  select_criterion,
+                                                               const GimpRGB       *color);
 
 
 #endif  /*  __GIMP_PICKABLE_CONTIGUOUS_REGION_H__ */
