@@ -4346,9 +4346,14 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
         }
 
       gimp_dashboard_log_printf (dashboard,
-                                 "<var name=\"%s\" type=\"%s\" />\n",
+                                 "<var name=\"%s\" type=\"%s\" desc=\"",
                                  variable_info->name,
                                  type);
+      gimp_dashboard_log_print_escaped (dashboard,
+                                        /* intentionally untranslated */
+                                        variable_info->description);
+      gimp_dashboard_log_printf (dashboard,
+                                 "\" />");
     }
 
   gimp_dashboard_log_printf (dashboard,
