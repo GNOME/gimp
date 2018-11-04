@@ -54,8 +54,9 @@ You may encounter this kind of warning upon exiting GIMP:
 
 > EEEEeEeek! 2 GeglBuffers leaked
 
-To debug GeglBuffer leaks, set the environment variable GEGL_DEBUG to
-"buffer-alloc".
+To debug GeglBuffer leaks, make sure you built GEGL with --enable-debug
+and set the environment variable GEGL_DEBUG to "buffer-alloc".
+Your system also needs to have the header "execinfo.h".
 
 ## Debugging babl ##
 
