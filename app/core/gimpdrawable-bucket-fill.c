@@ -59,28 +59,129 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gdouble               seed_x,
                            gdouble               seed_y)
 {
-  GimpImage    *image;
-  GimpPickable *pickable;
-  GeglBuffer   *buffer;
-  GeglBuffer   *mask_buffer;
-  gboolean      antialias;
-  gint          x, y, width, height;
-  gint          mask_offset_x = 0;
-  gint          mask_offset_y = 0;
-  gint          sel_x, sel_y, sel_width, sel_height;
+  GimpImage  *image;
+  GeglBuffer *buffer;
+  gdouble     mask_x;
+  gdouble     mask_y;
+  gint        width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
+  gimp_set_busy (image->gimp);
+  buffer = gimp_drawable_get_bucket_fill_buffer (drawable, line_art, options,
+                                                 fill_transparent, fill_criterion,
+                                                 threshold, sample_merged,
+                                                 diagonal_neighbors,
+                                                 seed_x, seed_y, NULL,
+                                                 &mask_x, &mask_y, &width, &height);
+
+  if (buffer)
+    {
+      /*  Apply it to the image  */
+      gimp_drawable_apply_buffer (drawable, buffer,
+                                  GEGL_RECTANGLE (0, 0, width, height),
+                                  TRUE, C_("undo-type", "Bucket Fill"),
+                                  gimp_context_get_opacity (GIMP_CONTEXT (options)),
+                                  gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
+                                  GIMP_LAYER_COLOR_SPACE_AUTO,
+                                  GIMP_LAYER_COLOR_SPACE_AUTO,
+                                  gimp_layer_mode_get_paint_composite_mode (
+                                                                            gimp_context_get_paint_mode (GIMP_CONTEXT (options))),
+                                  NULL, (gint) mask_x, mask_y);
+      g_object_unref (buffer);
+
+      gimp_drawable_update (drawable, mask_x, mask_y, width, height);
+    }
+  gimp_unset_busy (image->gimp);
+}
+
+/**
+ * gimp_drawable_get_bucket_fill_buffer:
+ * @drawable: the @GimpDrawable to edit.
+ * @line_art: optional pre-computed line art if @fill_criterion is
+ *            GIMP_SELECT_CRITERION_LINE_ART.
+ * @options:
+ * @fill_transparent:
+ * @fill_criterion:
+ * @threshold:
+ * @sample_merged:
+ * @diagonal_neighbors:
+ * @seed_x: X coordinate to start the fill.
+ * @seed_y: Y coordinate to start the fill.
+ * @mask_buffer: mask of the fill in-progress when in an interactive
+ *               filling process. Set to NULL if you need a one-time
+ *               fill.
+ * @mask_x: returned x bound of @mask_buffer.
+ * @mask_y: returned x bound of @mask_buffer.
+ * @mask_width: returned width bound of @mask_buffer.
+ * @mask_height: returned height bound of @mask_buffer.
+ *
+ * Creates the fill buffer for a bucket fill operation on @drawable,
+ * without actually applying it (if you want to apply it directly as a
+ * one-time operation, use gimp_drawable_bucket_fill() instead). If
+ * @mask_buffer is not NULL, the intermediate fill mask will also be
+ * returned. This fill mask can later be reused in successive calls to
+ * gimp_drawable_get_bucket_fill_buffer() for interactive filling.
+ *
+ * Returns: a fill buffer which can be directly applied to @drawable, or
+ *          used in a drawable filter as preview.
+ */
+GeglBuffer *
+gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
+                                      GeglBuffer           *line_art,
+                                      GimpFillOptions      *options,
+                                      gboolean              fill_transparent,
+                                      GimpSelectCriterion   fill_criterion,
+                                      gdouble               threshold,
+                                      gboolean              sample_merged,
+                                      gboolean              diagonal_neighbors,
+                                      gdouble               seed_x,
+                                      gdouble               seed_y,
+                                      GeglBuffer          **mask_buffer,
+                                      gdouble              *mask_x,
+                                      gdouble              *mask_y,
+                                      gint                 *mask_width,
+                                      gint                 *mask_height)
+{
+  GimpImage    *image;
+  GimpPickable *pickable;
+  GeglBuffer   *buffer;
+  GeglBuffer   *new_mask;
+  gboolean      antialias;
+  gint          x, y, width, height;
+  gint          mask_offset_x = 0;
+  gint          mask_offset_y = 0;
+  gint          sel_x, sel_y, sel_width, sel_height;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
+
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
                                   &sel_x, &sel_y, &sel_width, &sel_height))
-    return;
+    return NULL;
+
+  if (mask_buffer && *mask_buffer &&
+      (fill_criterion == GIMP_SELECT_CRITERION_LINE_ART ||
+       threshold      == 0.0))
+    {
+      gfloat pixel;
+
+      gegl_buffer_sample (*mask_buffer, seed_x, seed_y, NULL, &pixel,
+                          babl_format ("Y float"),
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
+      if (pixel != 0.0)
+        /* Already selected. This seed won't change the selection. */
+        return NULL;
+    }
 
   gimp_set_busy (image->gimp);
-
   if (sample_merged)
     pickable = GIMP_PICKABLE (image);
   else
@@ -91,21 +192,29 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   /*  Do a seed bucket fill...To do this, calculate a new
    *  contiguous region.
    */
-  mask_buffer = gimp_pickable_contiguous_region_by_seed (pickable,
-                                                         line_art,
-                                                         antialias,
-                                                         threshold,
-                                                         fill_transparent,
-                                                         fill_criterion,
-                                                         diagonal_neighbors,
-                                                         (gint) seed_x,
-                                                         (gint) seed_y);
+  new_mask = gimp_pickable_contiguous_region_by_seed (pickable,
+                                                      line_art,
+                                                      antialias,
+                                                      threshold,
+                                                      fill_transparent,
+                                                      fill_criterion,
+                                                      diagonal_neighbors,
+                                                      (gint) seed_x,
+                                                      (gint) seed_y);
+  if (mask_buffer && *mask_buffer)
+    {
+      gimp_gegl_mask_combine_buffer (new_mask, *mask_buffer,
+                                     GIMP_CHANNEL_OP_ADD, 0, 0);
+      g_object_unref (*mask_buffer);
+    }
+  if (mask_buffer)
+    *mask_buffer = new_mask;
 
-  gimp_gegl_mask_bounds (mask_buffer, &x, &y, &width, &height);
+  gimp_gegl_mask_bounds (new_mask, &x, &y, &width, &height);
   width  -= x;
   height -= y;
 
-  /*  If there is a selection, inersect the region bounds
+  /*  If there is a selection, intersect the region bounds
    *  with the selection bounds, to avoid processing areas
    *  that are going to be masked out anyway.  The actual
    *  intersection of the fill region with the mask data
@@ -127,13 +236,12 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
                                       &x, &y, &width, &height))
         {
+          if (! mask_buffer)
+            g_object_unref (new_mask);
           /*  The fill region and the selection are disjoint; bail.  */
-
-          g_object_unref (mask_buffer);
-
           gimp_unset_busy (image->gimp);
 
-          return;
+          return NULL;
         }
     }
 
@@ -172,28 +280,22 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                                                             width, height),
                                             -x, -y);
 
-  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
-                           mask_buffer,
-                           -mask_offset_x,
-                           -mask_offset_y,
-                           1.0);
-  g_object_unref (mask_buffer);
+  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, new_mask,
+                           -mask_offset_x, -mask_offset_y, 1.0);
 
-  /*  Apply it to the image  */
-  gimp_drawable_apply_buffer (drawable, buffer,
-                              GEGL_RECTANGLE (0, 0, width, height),
-                              TRUE, C_("undo-type", "Bucket Fill"),
-                              gimp_context_get_opacity (GIMP_CONTEXT (options)),
-                              gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
-                              GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COLOR_SPACE_AUTO,
-                              gimp_layer_mode_get_paint_composite_mode (
-                                gimp_context_get_paint_mode (GIMP_CONTEXT (options))),
-                              NULL, x, y);
+  if (mask_x)
+    *mask_x = x;
+  if (mask_y)
+    *mask_y = y;
+  if (mask_width)
+    *mask_width = width;
+  if (mask_height)
+    *mask_height = height;
 
-  g_object_unref (buffer);
-
-  gimp_drawable_update (drawable, x, y, width, height);
+  if (! mask_buffer)
+    g_object_unref (new_mask);
 
   gimp_unset_busy (image->gimp);
+
+  return buffer;
 }

@@ -269,7 +269,18 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
   mask_buffer = gegl_buffer_new (&extent, babl_format ("Y float"));
 
-  if (x >= extent.x && x < (extent.x + extent.width) &&
+  if (smart_line_art && start_col[0])
+    {
+      /* As a special exception, if you fill over a line art pixel, only
+       * fill the pixel and exit
+       */
+      start_col[0] = 1.0;
+      gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (x, y, 1, 1),
+                       0, babl_format ("Y float"), start_col,
+                       GEGL_AUTO_ROWSTRIDE);
+      smart_line_art = FALSE;
+    }
+  else if (x >= extent.x && x < (extent.x + extent.width) &&
       y >= extent.y && y < (extent.y + extent.height))
     {
       GIMP_TIMER_START();
@@ -363,10 +374,9 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       g_object_unref (priomap);
 
       GIMP_TIMER_END("watershed line art");
-
-      if (free_line_art)
-        g_object_unref (src_buffer);
     }
+  if (free_line_art)
+    g_object_unref (src_buffer);
 
   return mask_buffer;
 }
