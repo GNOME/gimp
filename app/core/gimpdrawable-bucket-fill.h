@@ -19,16 +19,31 @@
 #define  __GIMP_DRAWABLE_BUCKET_FILL_H__
 
 
-void   gimp_drawable_bucket_fill (GimpDrawable        *drawable,
-                                  GeglBuffer          *line_art,
-                                  GimpFillOptions     *options,
-                                  gboolean             fill_transparent,
-                                  GimpSelectCriterion  fill_criterion,
-                                  gdouble              threshold,
-                                  gboolean             sample_merged,
-                                  gboolean             diagonal_neighbors,
-                                  gdouble              x,
-                                  gdouble              y);
+void         gimp_drawable_bucket_fill            (GimpDrawable         *drawable,
+                                                   GeglBuffer           *line_art,
+                                                   GimpFillOptions      *options,
+                                                   gboolean              fill_transparent,
+                                                   GimpSelectCriterion   fill_criterion,
+                                                   gdouble               threshold,
+                                                   gboolean              sample_merged,
+                                                   gboolean              diagonal_neighbors,
+                                                   gdouble               x,
+                                                   gdouble               y);
+GeglBuffer * gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
+                                                   GeglBuffer           *line_art,
+                                                   GimpFillOptions      *options,
+                                                   gboolean              fill_transparent,
+                                                   GimpSelectCriterion   fill_criterion,
+                                                   gdouble               threshold,
+                                                   gboolean              sample_merged,
+                                                   gboolean              diagonal_neighbors,
+                                                   gdouble               seed_x,
+                                                   gdouble               seed_y,
+                                                   GeglBuffer          **mask_buffer,
+                                                   gdouble              *mask_x,
+                                                   gdouble              *mask_y,
+                                                   gint                 *mask_width,
+                                                   gint                 *mask_height);
 
 
 #endif  /*  __GIMP_DRAWABLE_BUCKET_FILL_H__  */
