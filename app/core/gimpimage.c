@@ -1563,14 +1563,6 @@ gimp_image_get_graph (GimpProjectable *projectable)
 
   gegl_node_add_child (private->graph, layers_node);
 
-  channels_node =
-    gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->channels->container));
-
-  gegl_node_add_child (private->graph, channels_node);
-
-  gegl_node_connect_to (layers_node,   "output",
-                        channels_node, "input");
-
   mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
 
   private->visible_mask =
@@ -1579,13 +1571,21 @@ gimp_image_get_graph (GimpProjectable *projectable)
                          "mask",      mask,
                          NULL);
 
-  gegl_node_connect_to (channels_node,         "output",
+  gegl_node_connect_to (layers_node,           "output",
                         private->visible_mask, "input");
+
+  channels_node =
+    gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->channels->container));
+
+  gegl_node_add_child (private->graph, channels_node);
+
+  gegl_node_connect_to (private->visible_mask, "output",
+                        channels_node,         "input");
 
   output = gegl_node_get_output_proxy (private->graph, "output");
 
-  gegl_node_connect_to (private->visible_mask, "output",
-                        output,                "input");
+  gegl_node_connect_to (channels_node, "output",
+                        output,        "input");
 
   return private->graph;
 }
