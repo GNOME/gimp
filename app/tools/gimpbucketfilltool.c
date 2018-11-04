@@ -25,6 +25,8 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpasync.h"
+#include "core/gimpcancelable.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable-edit.h"
 #include "core/gimperror.h"
@@ -32,8 +34,10 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplineart.h"
+#include "core/gimp-parallel.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-contiguous-region.h"
+#include "core/gimpwaitable.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -50,6 +54,7 @@
 
 struct _GimpBucketFillToolPrivate
 {
+  GimpAsync  *async;
   GeglBuffer *line_art;
   GWeakRef    cached_image;
   GWeakRef    cached_drawable;
@@ -263,8 +268,9 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                       GimpButtonReleaseType  release_type,
                                       GimpDisplay           *display)
 {
-  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-  GimpImage             *image   = gimp_display_get_image (display);
+  GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
+  GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpImage             *image       = gimp_display_get_image (display);
 
   if ((release_type == GIMP_BUTTON_RELEASE_CLICK ||
        release_type == GIMP_BUTTON_RELEASE_NO_MOTION) &&
@@ -295,8 +301,9 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
             }
           else
             {
-              gint x = coords->x;
-              gint y = coords->y;
+              GeglBuffer *line_art;
+              gint        x = coords->x;
+              gint        y = coords->y;
 
               if (! options->sample_merged)
                 {
@@ -308,9 +315,13 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                   y -= off_y;
                 }
 
+              gimp_waitable_wait (GIMP_WAITABLE (bucket_tool->priv->async));
+              line_art = g_object_ref (bucket_tool->priv->line_art);
+              g_object_unref (bucket_tool->priv->async);
+              bucket_tool->priv->async = NULL;
 
               gimp_drawable_bucket_fill (drawable,
-                                         GIMP_BUCKET_FILL_TOOL (tool)->priv->line_art,
+                                         line_art,
                                          fill_options,
                                          options->fill_transparent,
                                          options->fill_criterion,
@@ -318,6 +329,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                          options->sample_merged,
                                          options->diagonal_neighbors,
                                          x, y);
+              g_object_unref (line_art);
             }
 
           gimp_image_flush (image);
@@ -411,6 +423,50 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
+typedef struct
+{
+  GimpBucketFillTool *tool;
+  GimpPickable       *pickable;
+  gboolean            fill_transparent;
+} PrecomputeData;
+
+static void
+precompute_data_free (PrecomputeData *data)
+{
+  g_object_unref (data->pickable);
+  g_object_unref (data->tool);
+  g_slice_free (PrecomputeData, data);
+}
+
+static void
+gimp_bucket_fill_compute_line_art_async  (GimpAsync      *async,
+                                          PrecomputeData *data)
+{
+  GeglBuffer *line_art;
+
+  line_art = gimp_pickable_contiguous_region_prepare_line_art (data->pickable,
+                                                               data->fill_transparent);
+  precompute_data_free (data);
+  if (gimp_async_is_canceled (async))
+    {
+      g_object_unref (line_art);
+      gimp_async_abort (async);
+      return;
+    }
+  gimp_async_finish (async, line_art);
+}
+
+static void
+gimp_bucket_fill_compute_line_art_cb (GimpAsync                *async,
+                                      GimpBucketFillTool *tool)
+{
+  if (gimp_async_is_canceled (async))
+    return;
+
+  if (gimp_async_is_finished (async))
+    tool->priv->line_art = gimp_async_get_result (async);
+}
+
 static void
 gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
 {
@@ -424,17 +480,43 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
       GimpDrawable *drawable = g_weak_ref_get (&tool->priv->cached_drawable);
 
       if (image && options->sample_merged)
-        pickable = GIMP_PICKABLE (image);
+        {
+          pickable = GIMP_PICKABLE (image);
+          g_object_unref (drawable);
+        }
       else if (drawable && ! options->sample_merged)
-        pickable = GIMP_PICKABLE (drawable);
+        {
+          pickable = GIMP_PICKABLE (drawable);
+          g_object_unref (image);
+        }
+      else
+        {
+          g_object_unref (image);
+          g_object_unref (drawable);
+        }
 
       if (pickable)
-        tool->priv->line_art = gimp_pickable_contiguous_region_prepare_line_art (pickable,
-                                                                                 options->fill_transparent);
-      if (image)
-        g_object_unref (image);
-      if (drawable)
-        g_object_unref (drawable);
+        {
+          PrecomputeData *data = g_slice_new (PrecomputeData);
+
+          data->tool             = g_object_ref (tool);
+          data->pickable         = pickable;
+          data->fill_transparent = options->fill_transparent;
+
+          if (tool->priv->async)
+            {
+              gimp_cancelable_cancel (GIMP_CANCELABLE (tool->priv->async));
+              g_object_unref (tool->priv->async);
+            }
+          tool->priv->async = gimp_parallel_run_async_full (1,
+                                                            (GimpParallelRunAsyncFunc) gimp_bucket_fill_compute_line_art_async,
+                                                            data, (GDestroyNotify) precompute_data_free);
+          gimp_async_add_callback (tool->priv->async,
+                                   (GimpAsyncCallback) gimp_bucket_fill_compute_line_art_cb,
+                                   tool);
+        }
+      else
+        g_object_unref (pickable);
     }
 }
 
