@@ -3617,17 +3617,19 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
         {
           guintptr     thread_id;
           const gchar *thread_name;
-          gint         last_running = -1;
+          gint         last_running  = -1;
           gint         running;
+          gint         last_n_frames = -1;
           gint         n_frames;
-          gint         n_head       = 0;
-          gint         n_tail       = 0;
+          gint         n_head        = 0;
+          gint         n_tail        = 0;
           gint         frame;
 
-          thread_id   = gimp_backtrace_get_thread_id   (backtrace, thread);
-          thread_name = gimp_backtrace_get_thread_name (backtrace, thread);
+          thread_id   = gimp_backtrace_get_thread_id     (backtrace, thread);
+          thread_name = gimp_backtrace_get_thread_name   (backtrace, thread);
 
-          n_frames    = gimp_backtrace_get_n_frames    (backtrace, thread);
+          running     = gimp_backtrace_is_thread_running (backtrace, thread);
+          n_frames    = gimp_backtrace_get_n_frames      (backtrace, thread);
 
           if (priv->log_backtrace)
             {
@@ -3639,12 +3641,12 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                   gint n;
                   gint i;
 
-                  last_running = gimp_backtrace_is_thread_running (
+                  last_running  = gimp_backtrace_is_thread_running (
+                    priv->log_backtrace, other_thread);
+                  last_n_frames = gimp_backtrace_get_n_frames (
                     priv->log_backtrace, other_thread);
 
-                  n = gimp_backtrace_get_n_frames (priv->log_backtrace,
-                                                   other_thread);
-                  n = MIN (n, n_frames);
+                  n = MIN (n_frames, last_n_frames);
 
                   for (i = 0; i < n; i++)
                     {
@@ -3675,10 +3677,12 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                 }
             }
 
-          running = gimp_backtrace_is_thread_running (backtrace, thread);
-
-          if (running == last_running && n_head + n_tail == n_frames)
-            continue;
+          if (running         == last_running  &&
+              n_frames        == last_n_frames &&
+              n_head + n_tail == n_frames)
+            {
+              continue;
+            }
 
           BACKTRACE_NONEMPTY ();
 
@@ -3713,7 +3717,7 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                                          n_tail);
             }
 
-          if (n_head + n_tail < n_frames)
+          if (n_frames == 0 || n_head + n_tail < n_frames)
             {
               gimp_dashboard_log_printf (dashboard,
                                           ">\n");
