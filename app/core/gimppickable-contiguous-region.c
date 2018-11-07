@@ -100,7 +100,9 @@ static void     find_contiguous_region    (GeglBuffer          *src_buffer,
 
 GeglBuffer *
 gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
-                                                  gboolean      select_transparent)
+                                                  gboolean      select_transparent,
+                                                  gfloat        stroke_threshold,
+                                                  gint          erosion)
 {
   GeglBuffer *lineart;
   gboolean    has_alpha;
@@ -158,10 +160,8 @@ gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
 
   lineart = gimp_lineart_close (lineart,
                                 select_transparent,
-                                /*contour_detection_level,*/
-                                0.92,
-                                /* erosion, */
-                                -1,
+                                stroke_threshold,
+                                erosion,
                                 /*minimal_lineart_area,*/
                                 5,
                                 /*normal_estimate_mask_size,*/
@@ -200,6 +200,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                          gboolean             select_transparent,
                                          GimpSelectCriterion  select_criterion,
                                          gboolean             diagonal_neighbors,
+                                         gfloat               stroke_threshold,
+                                         gint                 erosion,
                                          gint                 x,
                                          gint                 y)
 {
@@ -224,7 +226,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
            * but it may not be always possible (for instance when
            * selecting/filling through a PDB call).
            */
-          line_art      = gimp_pickable_contiguous_region_prepare_line_art (pickable, select_transparent);
+          line_art      = gimp_pickable_contiguous_region_prepare_line_art (pickable, select_transparent,
+                                                                            stroke_threshold, erosion);
           free_line_art = TRUE;
         }
 
