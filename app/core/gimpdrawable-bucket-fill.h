@@ -27,6 +27,8 @@ void         gimp_drawable_bucket_fill            (GimpDrawable         *drawabl
                                                    gdouble               threshold,
                                                    gboolean              sample_merged,
                                                    gboolean              diagonal_neighbors,
+                                                   gfloat                stroke_threshold,
+                                                   gint                  erosion,
                                                    gdouble               x,
                                                    gdouble               y);
 GeglBuffer * gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
@@ -37,6 +39,8 @@ GeglBuffer * gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawabl
                                                    gdouble               threshold,
                                                    gboolean              sample_merged,
                                                    gboolean              diagonal_neighbors,
+                                                   gfloat                stroke_threshold,
+                                                   gint                  erosion,
                                                    gdouble               seed_x,
                                                    gdouble               seed_y,
                                                    GeglBuffer          **mask_buffer,

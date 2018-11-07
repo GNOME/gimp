@@ -169,24 +169,34 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
 
 /**
  * gimp_lineart_close:
- * @line_art: the input #GeglBuffer
+ * @line_art: the input #GeglBuffer.
  * @select_transparent: whether we binarize the alpha channel or the
  *                      luminosity.
  * @stroke_threshold: [0-1] threshold value for detecting stroke pixels
  *                    (higher values will detect more stroke pixels).
- * @erosion:
- * @minimal_lineart_area:
+ * @erosion: size (in pixels) of the rectangular structure used to erode
+ *           the stroke pixels. 0 means no erosion will be done, and a
+ *           negative value will compute a median approximation of the
+ *           stroke width, for base of erosion.
+ * @minimal_lineart_area: the minimum size in number pixels for area to
+ *                        be considered as line art.
  * @normal_estimate_mask_size:
- * @end_point_rate: [0-1] range value.
- * @spline_max_length:
- * @spline_max_angle:
+ * @end_point_rate: threshold to estimate if a curvature is an end-point
+ *                  in [0-1] range value.
+ * @spline_max_length: the maximum length for creating splines between
+ *                     end points.
+ * @spline_max_angle: the maximum angle between end point normals for
+ *                    creating splines between them.
  * @end_point_connectivity:
  * @spline_roundness:
- * @allow_self_intersections:
+ * @allow_self_intersections: whether to allow created splines and
+ *                            segments to intersect.
  * @created_regions_significant_area:
  * @created_regions_minimum_area:
  * @small_segments_from_spline_sources:
- * @segments_max_length:
+ * @segments_max_length: the maximum length for creating segments
+ *                       between end points. Unlike splines, segments
+ *                       are straight lines.
  *
  * Creates a binarized version of the strokes of @line_art, detected either
  * with luminosity (light means background) or alpha values depending on
@@ -299,7 +309,7 @@ gimp_lineart_close (GeglBuffer          *line_art,
     {
       gimp_lineart_erode (strokes, erosion);
     }
-  else if (erosion == -1)
+  else if (erosion < 0)
     {
       const gfloat stroke_width = gimp_lineart_estimate_stroke_width (strokes);
       const gint   erode_size   = (gint) roundf (stroke_width / 5);

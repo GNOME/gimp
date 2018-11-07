@@ -20,7 +20,9 @@
 
 
 GeglBuffer * gimp_pickable_contiguous_region_prepare_line_art (GimpPickable        *pickable,
-                                                               gboolean             select_transparent);
+                                                               gboolean             select_transparent,
+                                                               gfloat               stroke_threshold,
+                                                               gint                 erosion);
 GeglBuffer * gimp_pickable_contiguous_region_by_seed          (GimpPickable        *pickable,
                                                                GeglBuffer          *line_art,
                                                                gboolean             antialias,
@@ -28,6 +30,8 @@ GeglBuffer * gimp_pickable_contiguous_region_by_seed          (GimpPickable     
                                                                gboolean             select_transparent,
                                                                GimpSelectCriterion  select_criterion,
                                                                gboolean             diagonal_neighbors,
+                                                               gfloat               stroke_threshold,
+                                                               gint                 erosion,
                                                                gint                 x,
                                                                gint                 y);
 

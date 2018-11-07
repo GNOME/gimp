@@ -30,21 +30,28 @@
 #define GIMP_BUCKET_FILL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUCKET_FILL_OPTIONS, GimpBucketFillOptionsClass))
 
 
-typedef struct _GimpBucketFillOptions GimpBucketFillOptions;
-typedef struct _GimpPaintOptionsClass GimpBucketFillOptionsClass;
+typedef struct _GimpBucketFillOptions        GimpBucketFillOptions;
+typedef struct _GimpBucketFillOptionsPrivate GimpBucketFillOptionsPrivate;
+typedef struct _GimpPaintOptionsClass        GimpBucketFillOptionsClass;
 
 struct _GimpBucketFillOptions
 {
-  GimpPaintOptions    paint_options;
+  GimpPaintOptions              paint_options;
 
-  GimpBucketFillMode  fill_mode;
-  gboolean            fill_selection;
-  gboolean            fill_transparent;
-  gboolean            sample_merged;
-  gboolean            diagonal_neighbors;
-  gboolean            antialias;
-  gdouble             threshold;
-  GimpSelectCriterion fill_criterion;
+  GimpBucketFillMode            fill_mode;
+  gboolean                      fill_selection;
+  gboolean                      fill_transparent;
+  gboolean                      sample_merged;
+  gboolean                      diagonal_neighbors;
+  gboolean                      antialias;
+  gdouble                       threshold;
+
+  gdouble                       line_art_threshold;
+  gint                          line_art_erosion;
+
+  GimpSelectCriterion           fill_criterion;
+
+  GimpBucketFillOptionsPrivate *priv;
 };
 
 

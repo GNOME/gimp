@@ -53,26 +53,39 @@ enum
   PROP_DIAGONAL_NEIGHBORS,
   PROP_ANTIALIAS,
   PROP_THRESHOLD,
+  PROP_LINE_ART_THRESHOLD,
+  PROP_LINE_ART_EROSION,
   PROP_FILL_CRITERION
 };
 
+struct _GimpBucketFillOptionsPrivate
+{
+  GtkWidget *diagonal_neighbors_checkbox;
+  GtkWidget *antialias_checkbox;
+  GtkWidget *threshold_scale;
+
+  GtkWidget *line_art_threshold_scale;
+  GtkWidget *line_art_erosion_scale;
+};
 
 static void   gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface);
 
-static void   gimp_bucket_fill_options_set_property (GObject         *object,
-                                                     guint            property_id,
-                                                     const GValue    *value,
-                                                     GParamSpec      *pspec);
-static void   gimp_bucket_fill_options_get_property (GObject         *object,
-                                                     guint            property_id,
-                                                     GValue          *value,
-                                                     GParamSpec      *pspec);
+static void   gimp_bucket_fill_options_set_property      (GObject               *object,
+                                                          guint                  property_id,
+                                                          const GValue          *value,
+                                                          GParamSpec            *pspec);
+static void   gimp_bucket_fill_options_get_property      (GObject               *object,
+                                                          guint                  property_id,
+                                                          GValue                *value,
+                                                          GParamSpec            *pspec);
 
-static void   gimp_bucket_fill_options_reset        (GimpConfig      *config);
+static void   gimp_bucket_fill_options_reset             (GimpConfig            *config);
+static void   gimp_bucket_fill_options_update_criterion  (GimpBucketFillOptions *options);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpBucketFillOptions, gimp_bucket_fill_options,
                          GIMP_TYPE_PAINT_OPTIONS,
+                         G_ADD_PRIVATE (GimpBucketFillOptions)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_bucket_fill_options_config_iface_init))
 
@@ -144,6 +157,20 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                            0.0, 255.0, 15.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LINE_ART_THRESHOLD,
+                           "line-art-threshold",
+                           _("Line art detection threshold"),
+                           _("Threshold to detect contour (higher values will include more pixels)"),
+                           0.0, 1.0, 0.92,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_LINE_ART_EROSION,
+                        "line-art-erosion",
+                        _("Line art erosion"),
+                        _("Size in pixel to erode the line art"),
+                        -1, 200, -1,
+                        GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_CRITERION,
                          "fill-criterion",
                          _("Fill by"),
@@ -164,6 +191,7 @@ gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface)
 static void
 gimp_bucket_fill_options_init (GimpBucketFillOptions *options)
 {
+  options->priv = gimp_bucket_fill_options_get_instance_private (options);
 }
 
 static void
@@ -197,8 +225,15 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
+    case PROP_LINE_ART_THRESHOLD:
+      options->line_art_threshold = g_value_get_double (value);
+      break;
+    case PROP_LINE_ART_EROSION:
+      options->line_art_erosion = g_value_get_int (value);
+      break;
     case PROP_FILL_CRITERION:
       options->fill_criterion = g_value_get_enum (value);
+      gimp_bucket_fill_options_update_criterion (options);
       break;
 
     default:
@@ -238,6 +273,12 @@ gimp_bucket_fill_options_get_property (GObject    *object,
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
       break;
+    case PROP_LINE_ART_THRESHOLD:
+      g_value_set_double (value, options->line_art_threshold);
+      break;
+    case PROP_LINE_ART_EROSION:
+      g_value_set_int (value, options->line_art_erosion);
+      break;
     case PROP_FILL_CRITERION:
       g_value_set_enum (value, options->fill_criterion);
       break;
@@ -264,20 +305,49 @@ gimp_bucket_fill_options_reset (GimpConfig *config)
   parent_config_iface->reset (config);
 }
 
+static void
+gimp_bucket_fill_options_update_criterion (GimpBucketFillOptions *options)
+{
+  /* GUI not created yet. */
+  if (! options->priv->antialias_checkbox)
+    return;
+
+  switch (options->fill_criterion)
+    {
+    case GIMP_SELECT_CRITERION_LINE_ART:
+      gtk_widget_hide (options->priv->antialias_checkbox);
+      gtk_widget_hide (options->priv->diagonal_neighbors_checkbox);
+      gtk_widget_hide (options->priv->threshold_scale);
+
+      gtk_widget_show (options->priv->line_art_erosion_scale);
+      gtk_widget_show (options->priv->line_art_threshold_scale);
+      break;
+    default:
+      gtk_widget_hide (options->priv->line_art_erosion_scale);
+      gtk_widget_hide (options->priv->line_art_threshold_scale);
+
+      gtk_widget_show (options->priv->antialias_checkbox);
+      gtk_widget_show (options->priv->diagonal_neighbors_checkbox);
+      gtk_widget_show (options->priv->threshold_scale);
+      break;
+    }
+}
+
 GtkWidget *
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
-  GObject         *config = G_OBJECT (tool_options);
-  GtkWidget       *vbox   = gimp_paint_options_gui (tool_options);
-  GtkWidget       *vbox2;
-  GtkWidget       *frame;
-  GtkWidget       *hbox;
-  GtkWidget       *button;
-  GtkWidget       *scale;
-  GtkWidget       *combo;
-  gchar           *str;
-  GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
-  GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_OPTIONS (tool_options);
+  GObject               *config = G_OBJECT (tool_options);
+  GtkWidget             *vbox   = gimp_paint_options_gui (tool_options);
+  GtkWidget             *vbox2;
+  GtkWidget             *frame;
+  GtkWidget             *hbox;
+  GtkWidget             *button;
+  GtkWidget             *scale;
+  GtkWidget             *combo;
+  gchar                 *str;
+  GdkModifierType        extend_mask = gimp_get_extend_selection_mask ();
+  GdkModifierType        toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  fill type  */
   str = g_strdup_printf (_("Fill Type  (%s)"),
@@ -335,17 +405,34 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   /*  the diagonal neighbors toggle  */
   button = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  options->priv->diagonal_neighbors_checkbox = button;
   gtk_widget_show (button);
 
   /*  the antialias toggle  */
   button = gimp_prop_check_button_new (config, "antialias", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  options->priv->antialias_checkbox = button;
   gtk_widget_show (button);
 
   /*  the threshold scale  */
   scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  options->priv->threshold_scale = scale;
+  gtk_widget_show (scale);
+
+  /*  Line Art: erosion */
+  scale = gimp_prop_spin_scale_new (config, "line-art-erosion", NULL,
+                                    1, 10, 1);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  options->priv->line_art_erosion_scale = scale;
+  gtk_widget_show (scale);
+
+  /*  Line Art: stroke threshold */
+  scale = gimp_prop_spin_scale_new (config, "line-art-threshold", NULL,
+                                    0.05, 0.1, 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  options->priv->line_art_threshold_scale = scale;
   gtk_widget_show (scale);
 
   /*  the fill criterion combo  */
@@ -353,6 +440,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fill by"));
   gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
+
+  gimp_bucket_fill_options_update_criterion (options);
 
   return vbox;
 }
