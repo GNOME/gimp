@@ -72,7 +72,7 @@
   </provides>
 
   <releases>
-    <release version="2.10.8" date="2018-09-30">
+    <release version="2.10.8" date="2018-11-07">
       <description>
         <_p>
           GIMP 2.10.8 is mostly a bug fix and optimization release. In
