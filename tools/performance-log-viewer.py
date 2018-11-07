@@ -726,23 +726,22 @@ class FindSamplesPopover (Gtk.Popover):
 
         for i in range (len (samples)):
             try:
+                def match_thread (thread, id, state = None):
+                    return (type (id) == int                and \
+                            id == thread.id)                or  \
+                           (type (id) == str                and \
+                            thread.name                     and \
+                            re.fullmatch (id, thread.name)) and \
+                           (state is None                   or  \
+                            re.fullmatch (state, str (thread.state)))
+
                 def thread (id, state = None):
-                    for thread in samples[i].backtrace or []:
-                        if (type (id) == int and id == thread.id) or \
-                           (type (id) == str and thread.name and \
-                            re.fullmatch (id, thread.name)):
-                            if state is None or \
-                               re.fullmatch (state, str (thread.state)):
-                                return True
+                    return any (match_thread (thread, id, state)
+                                for thread in samples[i].backtrace or [])
 
-                    return False
-
-                def function (name, exclusive = False):
+                def function (name, id = None, state = None):
                     for thread in samples[i].backtrace or []:
-                        if exclusive:
-                            if re.fullmatch (name, thread.frames[0].info.name):
-                                return True
-                        else:
+                        if match_thread (thread, id, state):
                             for frame in thread.frames:
                                 if re.fullmatch (name, frame.info.name):
                                     return True
@@ -1887,6 +1886,7 @@ class BacktraceViewer (Gtk.Box):
 
         store = self.ThreadStore ()
         self.thread_store = store
+        store.set_sort_column_id (store.ID, Gtk.SortType.ASCENDING)
 
         tree = Gtk.TreeView (model = store)
         self.thread_tree = tree
