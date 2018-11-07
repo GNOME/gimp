@@ -84,7 +84,7 @@ for sample in (log.find ("samples") or empty_element).iterfind ("sample"):
             last_thread[0] = attrib
             last_thread[1] = frames
 
-            if not frames:
+            if not frames and thread.text is None:
                 del last_backtrace[id]
 
         for thread in list (backtrace):
