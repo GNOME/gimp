@@ -62,7 +62,7 @@
 #define MAX_N_FRAMES         256
 #define MAX_THREAD_NAME_SIZE 32
 #define N_SKIPPED_FRAMES     2
-#define MAX_WAIT_TIME        (G_TIME_SPAN_SECOND / 2)
+#define MAX_WAIT_TIME        (G_TIME_SPAN_SECOND / 20)
 #define BACKTRACE_SIGNAL     SIGUSR1
 
 
@@ -113,6 +113,7 @@ static struct sigaction  orig_action;
 static pid_t             blacklisted_threads[MAX_N_THREADS];
 static gint              n_blacklisted_threads;
 static GimpBacktrace    *handler_backtrace;
+static gint              handler_lock;
 
 #ifdef HAVE_LIBBACKTRACE
 static struct backtrace_state *backtrace_state;
@@ -120,7 +121,8 @@ static struct backtrace_state *backtrace_state;
 
 static const gchar *blacklisted_thread_names[] =
 {
-  "gmain"
+  "gmain",
+  "threaded-ml"
 };
 
 
@@ -252,24 +254,42 @@ gimp_backtrace_read_thread_state (pid_t tid)
 static void
 gimp_backtrace_signal_handler (gint signum)
 {
-  GimpBacktrace *curr_backtrace = g_atomic_pointer_get (&handler_backtrace);
-  pid_t          tid            = syscall (SYS_gettid);
-  gint           i;
+  GimpBacktrace *curr_backtrace;
+  gint           lock;
 
-  for (i = 0; i < curr_backtrace->n_threads; i++)
+  do
     {
-      GimpBacktraceThread *thread = &curr_backtrace->threads[i];
+      lock = g_atomic_int_get (&handler_lock);
 
-      if (thread->tid == tid)
+      if (lock < 0)
+        continue;
+    }
+  while (! g_atomic_int_compare_and_exchange (&handler_lock, lock, lock + 1));
+
+  curr_backtrace = g_atomic_pointer_get (&handler_backtrace);
+
+  if (curr_backtrace)
+    {
+      pid_t tid = syscall (SYS_gettid);
+      gint  i;
+
+      for (i = 0; i < curr_backtrace->n_threads; i++)
         {
-          thread->n_frames = backtrace ((gpointer *) thread->frames,
-                                        MAX_N_FRAMES);
+          GimpBacktraceThread *thread = &curr_backtrace->threads[i];
 
-          g_atomic_int_dec_and_test (&curr_backtrace->n_remaining_threads);
+          if (thread->tid == tid)
+            {
+              thread->n_frames = backtrace ((gpointer *) thread->frames,
+                                            MAX_N_FRAMES);
 
-          break;
+              g_atomic_int_dec_and_test (&curr_backtrace->n_remaining_threads);
+
+              break;
+            }
         }
     }
+
+  g_atomic_int_dec_and_test (&handler_lock);
 }
 
 
@@ -368,8 +388,6 @@ gimp_backtrace_new (gboolean include_current_thread)
   pid_t          pid;
   pid_t         *threads;
   gint           n_threads;
-  gint           n_remaining_threads;
-  gint           prev_n_remaining_threads;
   gint64         start_time;
   gint           i;
 
@@ -398,7 +416,11 @@ gimp_backtrace_new (gboolean include_current_thread)
   backtrace->n_threads           = n_threads;
   backtrace->n_remaining_threads = n_threads;
 
+  while (! g_atomic_int_compare_and_exchange (&handler_lock, 0, -1));
+
   g_atomic_pointer_set (&handler_backtrace, backtrace);
+
+  g_atomic_int_set (&handler_lock, 0);
 
   for (i = 0; i < n_threads; i++)
     {
@@ -419,30 +441,27 @@ gimp_backtrace_new (gboolean include_current_thread)
 
   start_time = g_get_monotonic_time ();
 
-  prev_n_remaining_threads =
-    g_atomic_int_get (&backtrace->n_remaining_threads);
-
-  while ((n_remaining_threads =
-            g_atomic_int_get (&backtrace->n_remaining_threads) > 0))
+  while (g_atomic_int_get (&backtrace->n_remaining_threads) > 0)
     {
       gint64 time = g_get_monotonic_time ();
 
-      if (n_remaining_threads < prev_n_remaining_threads)
-        {
-          prev_n_remaining_threads = n_remaining_threads;
+      if (time - start_time > MAX_WAIT_TIME)
+        break;
 
-          start_time = time;
-        }
-      else if (time - start_time > MAX_WAIT_TIME)
-        {
-          break;
-        }
+      g_usleep (1000);
     }
 
-  handler_backtrace = NULL;
+  while (! g_atomic_int_compare_and_exchange (&handler_lock, 0, -1));
 
-  if (n_remaining_threads > 0)
+  g_atomic_pointer_set (&handler_backtrace, NULL);
+
+  g_atomic_int_set (&handler_lock, 0);
+
+#if 0
+  if (backtrace->n_remaining_threads > 0)
     {
+      gint j = 0;
+
       for (i = 0; i < n_threads; i++)
         {
           if (backtrace->threads[i].n_frames == 0)
@@ -452,13 +471,19 @@ gimp_backtrace_new (gboolean include_current_thread)
                   blacklisted_threads[n_blacklisted_threads++] =
                     backtrace->threads[i].tid;
                 }
+            }
+          else
+            {
+              if (j < i)
+                backtrace->threads[j] = backtrace->threads[i];
 
-              g_mutex_unlock (&mutex);
-
-              return NULL;
+              j++;
             }
         }
+
+      n_threads = j;
     }
+#endif
 
   g_mutex_unlock (&mutex);
 
@@ -557,7 +582,7 @@ gimp_backtrace_get_n_frames (GimpBacktrace *backtrace,
   g_return_val_if_fail (backtrace != NULL, 0);
   g_return_val_if_fail (thread >= 0 && thread < backtrace->n_threads, 0);
 
-  return backtrace->threads[thread].n_frames - N_SKIPPED_FRAMES;
+  return MAX (backtrace->threads[thread].n_frames - N_SKIPPED_FRAMES, 0);
 }
 
 guintptr
