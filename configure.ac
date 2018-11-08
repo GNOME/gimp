@@ -2875,6 +2875,7 @@ dnl devel-docs/libgimpthumb/Makefile
 dnl devel-docs/libgimpthumb/version
 dnl devel-docs/libgimpwidgets/Makefile
 dnl devel-docs/libgimpwidgets/version
+dnl devel-docs/performance-logs/Makefile
 dnl devel-docs/tools/Makefile
 [
 docs/Makefile
