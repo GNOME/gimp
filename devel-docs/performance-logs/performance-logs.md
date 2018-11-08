@@ -18,7 +18,7 @@ report performance-related issues.
       - [4.1.1. Selecting Samples](#411-selecting-samples)
     - [4.2. Information Area](#42-information-area)
       - [4.2.1. Information Page](#421-information-page)
-      - [4.2.1. Variables Page](#421-variables-page)
+      - [4.2.2. Variables Page](#422-variables-page)
       - [4.2.3. Backtrace Page](#423-backtrace-page)
         - [4.2.3.1. Threads Pane](#4231-threads-pane)
         - [4.2.3.2. Stack Pane](#4232-stack-pane)
