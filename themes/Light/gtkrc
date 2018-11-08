@@ -1009,6 +1009,7 @@ style "tlsog-entry" = "tlsog-default-style"
 
 class "GtkEntry" style "tlsog-entry"
 class "GtkOldEditable" style "tlsog-entry"
+widget_class "*GtkTree*GtkEntry" style "tlsog-entry"
 
 ###########################################################
 

@@ -1011,6 +1011,7 @@ style "sogg-entry" = "sogg-default-style"
 
 class "GtkEntry" style "sogg-entry"
 class "GtkOldEditable" style "sogg-entry"
+widget_class "*GtkTree*GtkEntry" style "sogg-entry"
 
 ###########################################################
 

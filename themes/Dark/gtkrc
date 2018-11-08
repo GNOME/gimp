@@ -936,6 +936,7 @@ style "gimp-dark-entry" = "gimp-dark-default-style"
 
 class "GtkEntry" style "gimp-dark-entry"
 class "GtkOldEditable" style "gimp-dark-entry"
+widget_class "*GtkTree*GtkEntry" style "gimp-dark-entry"
 
 ###########################################################
 
