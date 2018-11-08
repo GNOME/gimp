@@ -2025,7 +2025,10 @@ if test "x$with_wmf" != xno; then
       WMF_LIBS=`$WMF_CONFIG --libs`
       WMF_CFLAGS=`$WMF_CONFIG --cflags`
     else
-      have_libwmf="no (libwmf is too old)"
+      have_libwmf=yes
+      PKG_CHECK_MODULES(WMF, libwmf >= wmf_required_version,
+                        FILE_WMF='file-wmf$(EXEEXT)',
+                        have_libwmf="no (libwmf not found)")
    fi
   else
     have_libwmf="no (libwmf not found)"
