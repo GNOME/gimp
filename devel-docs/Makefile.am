@@ -14,7 +14,9 @@ SUBDIRS = \
 	libgimpthumb	\
 	libgimpwidgets	\
 	libgimp		\
-	$(app)
+	$(app)		\
+	\
+	performance-logs
 
 EXTRA_DIST = \
 	README				\
