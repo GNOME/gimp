@@ -93,3 +93,8 @@ variable GIMP_PLUGIN_DEBUG.
 
 The CLI option --stack-trace-mode also applies to plug-ins, in order to
 output a back trace on terminal.
+
+## Performance logs ##
+
+See file `devel-docs/performance-logs/performance-logs.md` for information
+about GIMP performance logs, which can help during optimization.

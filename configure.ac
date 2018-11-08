@@ -2917,6 +2917,7 @@ devel-docs/libgimpthumb/Makefile
 devel-docs/libgimpthumb/version
 devel-docs/libgimpwidgets/Makefile
 devel-docs/libgimpwidgets/version
+devel-docs/performance-logs/Makefile
 devel-docs/tools/Makefile
 docs/Makefile
 menus/Makefile
