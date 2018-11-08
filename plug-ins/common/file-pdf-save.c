@@ -502,7 +502,6 @@ run (const gchar      *name,
   for (i = 0; i < multi_page.image_count; i++)
     {
       gint32    image_ID = multi_page.images[i];
-      gboolean  exported;
       gint32   *layers;
       gint32    n_layers;
       gdouble   x_res, y_res;
@@ -519,15 +518,18 @@ run (const gchar      *name,
        */
       cairo_save (cr);
 
-      if (gimp_export_image (&image_ID, &temp, NULL,
-                             capabilities) == GIMP_EXPORT_EXPORT)
+      if (! (gimp_export_image (&image_ID, &temp, NULL,
+                                capabilities) == GIMP_EXPORT_EXPORT))
         {
-          exported = TRUE;
+          /* gimp_drawable_histogram() only works within the bounds of
+           * the selection, which is a problem (see issue #2431).
+           * Instead of saving the selection, unselecting to later
+           * reselect, let's just always work on a duplicate of the
+           * image.
+           */
+          image_ID = gimp_image_duplicate (image_ID);
         }
-      else
-        {
-          exported = FALSE;
-        }
+      gimp_selection_none (image_ID);
 
       gimp_image_get_resolution (image_ID, &x_res, &y_res);
       x_scale = 72.0 / x_res;
@@ -701,8 +703,7 @@ run (const gchar      *name,
         cairo_show_page (cr);
       cairo_restore (cr);
 
-      if (exported)
-        gimp_image_delete (image_ID);
+      gimp_image_delete (image_ID);
     }
 
   /* We are done with all the images - time to free the resources */
