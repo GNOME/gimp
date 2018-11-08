@@ -10,7 +10,7 @@ report performance-related issues.
 ## Table of Contents
 
   - [1. Recording Performance Logs](#1-recording-performance-logs)
-    - [1.1. Events Markers](#11-event-markers)
+    - [1.1. Event Markers](#11-event-markers)
   - [2. Reporting Performance-Related Issues](#2-reporting-performance-related-issues)
   - [3. What Information is Contained in the Log?](#3-what-information-is-contained-in-the-log)
   - [4. Viewing Performance Logs](#4-viewing-performance-logs)
