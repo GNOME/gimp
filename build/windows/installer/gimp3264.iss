@@ -135,10 +135,10 @@ MinVersion=6.1
 ArchitecturesInstallIn64BitMode=x64
 
 #ifdef NOCOMPRESSION
-UseSetupLdr=no
+;UseSetupLdr=no
 OutputDir=_Output\unc
 Compression=none
-InternalCompressLevel=0
+;InternalCompressLevel=0
 #else
 OutputDir=_Output
 Compression=lzma2/ultra64
@@ -266,7 +266,7 @@ Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: g
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;ghostscript TODO: detect version automatically
-Source: "{#DEPS_DIR32}\share\ghostscript\9.23\lib\*.*"; DestDir: "{app}\share\ghostscript\9.23\lib"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\ghostscript\9.25\lib\*.*"; DestDir: "{app}\share\ghostscript\9.25\lib"; Components: gs and (gimp32 or gimp64); Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;32-on-64bit
 #include "32on64.isi"

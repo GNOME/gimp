@@ -22,6 +22,9 @@ Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps\file-ps.exe"; DestDir:
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\*.dll"; DestDir: "{app}\bin"; Excludes: "\bin\libgs*.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs*.dll"; DestDir: "{app}\bin"; Components: gs and deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+#ifdef DEBUG_SYMBOLS
+Source: "{#DEPS_DIR}\{#DDIR}\bin\.debug\*.dll.debug"; DestDir: "{app}\bin\.debug"; Components: deps{#PLATFORM} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+#endif
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\gdk-pixbuf-query-loaders.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
