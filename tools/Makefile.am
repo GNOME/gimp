@@ -99,6 +99,7 @@ EXTRA_DIST = \
 	defcheck.py			\
 	gimp-mkenums			\
 	gimppath2svg.py			\
+	performance-log-coalesce.py	\
 	performance-log-deduce.py	\
 	performance-log-expand.py	\
 	performance-log-resolve.py	\
