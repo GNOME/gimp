@@ -554,6 +554,9 @@ Type: files; Name: "{commondesktop}\GIMP 2.lnk"
 ;get previous GIMP icon name from uninstall name in Registry
 Type: files; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
 Type: files; Name: "{commondesktop}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
+;temporary: thai locale causes a crash on Windows 7 (https://p.0au.de/4cd14fde/)
+Type: filesandordirs; Name: "{app}\share\locale\th\*"
+Type: dirifempty; Name: "{app}\share\locale\th"
 
 [Registry]
 ;fix broken toolbox icons
