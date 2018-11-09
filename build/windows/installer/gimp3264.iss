@@ -110,6 +110,7 @@ DisableProgramGroupPage=yes
 DisableWelcomePage=no
 DisableDirPage=auto
 AlwaysShowDirOnReadyPage=yes
+ChangesEnvironment=yes
 
 #if Defined(DEVEL) && DEVEL != ""
 DefaultDirName={pf}\GIMP {#MAJOR}.{#MINOR}
@@ -253,6 +254,7 @@ Source: "{#DEPS_DIR32}\share\themes\*"; DestDir: "{app}\share\themes"; Component
 Source: "{#DEPS_DIR32}\share\xml\*"; DestDir: "{app}\share\xml"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 Source: "{#DEPS_DIR32}\share\poppler\*.*"; DestDir: "{app}\share\poppler"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR32}\share\libthai\*"; DestDir: "{app}\share\libthai"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 Source: "{#DEPS_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Components: loc; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
@@ -554,13 +556,12 @@ Type: files; Name: "{commondesktop}\GIMP 2.lnk"
 ;get previous GIMP icon name from uninstall name in Registry
 Type: files; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
 Type: files; Name: "{commondesktop}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
-;temporary: thai locale causes a crash on Windows 7 (https://p.0au.de/4cd14fde/)
-Type: filesandordirs; Name: "{app}\share\locale\th\*"
-Type: dirifempty; Name: "{app}\share\locale\th"
 
 [Registry]
 ;fix broken toolbox icons
 Root: HKLM; Subkey: "Software\Classes\.svg"; ValueType: string; ValueName: "Content Type"; ValueData: "image/svg+xml"; Flags: noerror createvalueifdoesntexist
+;libthai crashes without this
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "LIBTHAI_DICTDIR"; ValueData: "{app}\share\libthai"; Flags: createvalueifdoesntexist preservestringtype uninsdeletevalue
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
