@@ -104,6 +104,7 @@ EXTRA_DIST = \
 	gimp-mkenums			\
 	gimppath2svg.py			\
 	invert-svg.c			\
+	performance-log-coalesce.py	\
 	performance-log-deduce.py	\
 	performance-log-expand.py	\
 	performance-log-resolve.py	\
