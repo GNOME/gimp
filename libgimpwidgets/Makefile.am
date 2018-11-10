@@ -176,6 +176,8 @@ libgimpwidgets_sources = \
 	gimpscrolledpreview.h		\
 	gimpsizeentry.c			\
 	gimpsizeentry.h			\
+	gimpspinbutton.c		\
+	gimpspinbutton.h		\
 	gimpstringcombobox.c		\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.c		\
