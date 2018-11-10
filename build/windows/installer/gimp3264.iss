@@ -550,6 +550,8 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console\pyconsole.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console\python-console.py"
 ;DLLs in plug-ins directory (see bug 796225)
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
+;gegl 0.2
+Type: filesandordirs; Name: "{app}\lib\gegl-0.2"
 ;old icons
 Type: files; Name: "{commonprograms}\GIMP 2.lnk"
 Type: files; Name: "{commondesktop}\GIMP 2.lnk"
