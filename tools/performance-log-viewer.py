@@ -727,12 +727,13 @@ class FindSamplesPopover (Gtk.Popover):
         for i in range (len (samples)):
             try:
                 def match_thread (thread, id, state = None):
-                    return (type (id) == int                and \
-                            id == thread.id)                or  \
-                           (type (id) == str                and \
-                            thread.name                     and \
-                            re.fullmatch (id, thread.name)) and \
-                           (state is None                   or  \
+                    return (id is None or                         \
+                            (type (id) == int                 and \
+                             id == thread.id)                 or  \
+                            (type (id) == str                 and \
+                             thread.name                      and \
+                             re.fullmatch (id, thread.name))) and \
+                           (state is None                     or  \
                             re.fullmatch (state, str (thread.state)))
 
                 def thread (id, state = None):
