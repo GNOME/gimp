@@ -28,6 +28,7 @@
 #  maydin95 https://launchpad.net/~mma-95
 #  sagirbas https://launchpad.net/~soner-agirbas2
 #  servetummetoglu https://launchpad.net/~servetummetoglu-hotmail
+#  Serdar Sağlam https://launchpad.net/~serdarsaglam
 # ------------------------------------------------------------
 # Muhammet Kara <muhammetk@gmail.com>, 2011, 2012, 2014, 2017.
 #
@@ -36,7 +37,7 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2017-12-26 15:37+0000\n"
-"PO-Revision-Date: 2017-12-27 00:03+0300\n"
+"PO-Revision-Date: 2018-11-10 00:03+0300\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -93,19 +94,19 @@ msgstr ""
 
 #: ../desktop/gimp.appdata.xml.in.h:6
 msgid "Painting in GIMP"
-msgstr ""
+msgstr "GIMP'de Resim"
 
 #: ../desktop/gimp.appdata.xml.in.h:7
 msgid "Photo editing in GIMP"
-msgstr ""
+msgstr "GIMP'de fotoğraf düzenleme"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.h:1
 msgid "Extra files for GIMP"
-msgstr ""
+msgstr "GIMP için ekstra dosyalar"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.h:2
 msgid "Patterns, gradients, and other extra files for GIMP"
-msgstr ""
+msgstr "GIMP için desenler, degradeler ve diğer ekstra dosyalar"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -114,7 +115,7 @@ msgstr "Görüntü Düzenleyici"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../desktop/gimp.desktop.in.in.h:5
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr ""
+msgstr "GIMP;grafik;tasarım;tasvir;boyama;"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -376,7 +377,7 @@ msgstr "İşaretçi Bilgisi"
 
 #: ../app/actions/actions.c:132 ../app/dialogs/dialogs.c:324
 msgid "Dashboard"
-msgstr ""
+msgstr "Pano"
 
 #: ../app/actions/actions.c:135
 msgid "Debug"
@@ -742,12 +743,11 @@ msgid "Paste the selected buffer into the selection at its original position"
 msgstr "Seçili arabelleği seçimin içine yapıştır"
 
 #: ../app/actions/buffers-actions.c:86
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste Buffer as _New"
 msgctxt "buffers-action"
 msgid "Paste Buffer as New _Layer"
-msgstr "Arabelleği _Yeni olarak Yapıştır"
+msgstr "Önbelleği Yeni _Katman olarak Yapıştır"
 
 #: ../app/actions/buffers-actions.c:87
 #, fuzzy
@@ -758,20 +758,18 @@ msgid "Paste the selected buffer as a new layer"
 msgstr "Seçili arabelleği yeni görüntü olarak yapıştır"
 
 #: ../app/actions/buffers-actions.c:92
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste Buffer as _New"
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "Arabelleği _Yeni olarak Yapıştır"
+msgstr "Önbelleği _Yeni olarak Yapıştır"
 
 #: ../app/actions/buffers-actions.c:94
-#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer as a new image"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr "Seçili arabelleği yeni görüntü olarak yapıştır"
+msgstr "Seçili önbelleği yeni görüntü olarak yapıştır"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -900,7 +898,6 @@ msgid "L_ock Pixels of Channel"
 msgstr "Kanal k_onumunu kilitle"
 
 #: ../app/actions/channels-actions.c:131
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "L_ock position of channel"
 msgctxt "channels-action"
@@ -994,7 +991,7 @@ msgstr "Kırmızı"
 #: ../app/actions/channels-actions.c:177
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Red"
-msgstr ""
+msgstr "Kanal Rengi Etiketi: Kırmızı Ayarla"
 
 #: ../app/actions/channels-actions.c:182
 msgctxt "channels-action"
@@ -1004,7 +1001,7 @@ msgstr "Mor"
 #: ../app/actions/channels-actions.c:183
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Violet"
-msgstr ""
+msgstr "Kanal Rengi Etiketi: Menekşe'ye Ayarla"
 
 #: ../app/actions/channels-actions.c:188
 #| msgctxt "image-convert-action"
@@ -1062,7 +1059,6 @@ msgid "Intersect this channel with the current selection"
 msgstr "Mevcut seçimle bu kanalı kesiştir"
 
 #: ../app/actions/channels-actions.c:224
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Top Layer"
 msgctxt "channels-action"
@@ -1070,7 +1066,6 @@ msgid "Select _Top Channel"
 msgstr "Üs_tteki Katmanı Seç"
 
 #: ../app/actions/channels-actions.c:225
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the topmost layer"
 msgctxt "channels-action"
@@ -1078,7 +1073,6 @@ msgid "Select the topmost channel"
 msgstr "En üstteki katmanı seç"
 
 #: ../app/actions/channels-actions.c:230
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
 msgctxt "channels-action"
@@ -1086,7 +1080,6 @@ msgid "Select _Bottom Channel"
 msgstr "En _Alttaki Katmanı Seç"
 
 #: ../app/actions/channels-actions.c:231
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the bottommost layer"
 msgctxt "channels-action"
@@ -1094,7 +1087,6 @@ msgid "Select the bottommost channel"
 msgstr "En alttaki katmanı seç"
 
 #: ../app/actions/channels-actions.c:236
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Previous Layer"
 msgctxt "channels-action"
@@ -1102,7 +1094,6 @@ msgid "Select _Previous Channel"
 msgstr "Önceki Katmanı _Seç"
 
 #: ../app/actions/channels-actions.c:237
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer above the current layer"
 msgctxt "channels-action"
@@ -1110,7 +1101,6 @@ msgid "Select the channel above the current channel"
 msgstr "Şimdiki katmanın üstündeki katmanı seç"
 
 #: ../app/actions/channels-actions.c:242
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Next Layer"
 msgctxt "channels-action"
@@ -1118,7 +1108,6 @@ msgid "Select _Next Channel"
 msgstr "Sonraki _Katmanı Seç"
 
 #: ../app/actions/channels-actions.c:243
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer below the current layer"
 msgctxt "channels-action"
@@ -1150,7 +1139,6 @@ msgid "New Channel"
 msgstr "Yeni Kanal"
 
 #: ../app/actions/channels-commands.c:159
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Create a new channel"
 msgid "Create a New Channel"
@@ -1204,22 +1192,19 @@ msgid "Add current background color"
 msgstr "Mevcut artalan rengini ekle"
 
 #: ../app/actions/colormap-actions.c:73
-#, fuzzy
 #| msgid "Select Color"
 msgctxt "colormap-action"
 msgid "_Select this Color"
 msgstr "Renk Seç"
 
 #: ../app/actions/colormap-actions.c:74
-#, fuzzy
 #| msgctxt "tools-action"
 #| msgid "Select regions with similar colors"
 msgctxt "colormap-action"
 msgid "Select all pixels with this color"
-msgstr "Benzer renkli bölgeleri seç"
+msgstr "Bu renk ile tüm benekleri seçin"
 
 #: ../app/actions/colormap-actions.c:79
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "_Add to Selection"
 msgctxt "colormap-action"
@@ -1448,7 +1433,7 @@ msgstr "_Artalan Rengi"
 #: ../app/actions/context-actions.c:141
 msgctxt "context-action"
 msgid "Background: Use Previous Palette Color"
-msgstr ""
+msgstr "Artalan: Önceki Palet Rengi Kullanın"
 
 #: ../app/actions/context-actions.c:145
 #, fuzzy
@@ -1469,7 +1454,7 @@ msgstr "Artalan rengi"
 #: ../app/actions/context-actions.c:153
 msgctxt "context-action"
 msgid "Background: Skip Forward Palette Color"
-msgstr ""
+msgstr "Artalan: İleri Panel Rengini Atla"
 
 #: ../app/actions/context-actions.c:161
 #, fuzzy
@@ -1496,7 +1481,7 @@ msgstr "Kullanılmayan renkleri renk haritasından _kaldır"
 #: ../app/actions/context-actions.c:173
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr ""
+msgstr "Ön plan: ColorMap'den önceki rengi kullan"
 
 #: ../app/actions/context-actions.c:177
 #, fuzzy
@@ -2215,12 +2200,12 @@ msgstr "Seçimden yola"
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr ""
+msgstr "Araç Seçimi: Önceki"
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Next"
-msgstr ""
+msgstr "Araç Seçimi: Sonraki"
 
 #: ../app/actions/context-actions.c:749
 msgctxt "context-action"
@@ -2626,32 +2611,32 @@ msgstr "Fırça Düzenleyicisi Menüsü"
 #: ../app/actions/context-actions.c:1065
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Make Horizontal"
-msgstr ""
+msgstr "Fırça Açısı (Editör): Yatay Yap"
 
 #: ../app/actions/context-actions.c:1069
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Make Vertical"
-msgstr ""
+msgstr "Fırça Açısı (Editör): Dikey Yap"
 
 #: ../app/actions/context-actions.c:1073
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Right by 1°"
-msgstr ""
+msgstr "Fırça Açısı (Editör): 1° Sağa Döndürün"
 
 #: ../app/actions/context-actions.c:1077
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 1°"
-msgstr ""
+msgstr "Fırça Açısı (Editör): 1° Sola Döndürün"
 
 #: ../app/actions/context-actions.c:1081
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Right by 15°"
-msgstr ""
+msgstr "Fırça Açısı (Editör): 15°'ye kadar Sağa Döndür"
 
 #: ../app/actions/context-actions.c:1085
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 15°"
-msgstr ""
+msgstr "Fırça Açısı (Editör): 15°'ye kadar Sola Döndür"
 
 #: ../app/actions/context-commands.c:411
 #, c-format
@@ -2713,62 +2698,62 @@ msgstr "Renk Geçmişi"
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
 msgid "Low Swap Space Warning"
-msgstr ""
+msgstr "Düşük Takas Alanı Uyarısı"
 
 #: ../app/actions/dashboard-actions.c:53
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
-msgstr ""
+msgstr "Takas boyutu sınırına yaklaştığında panoyu kaldırın."
 
 #: ../app/actions/dashboard-actions.c:63
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
-msgstr ""
+msgstr "0.25 Saniye"
 
 #: ../app/actions/dashboard-actions.c:68
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
-msgstr ""
+msgstr "0.5 Saniye"
 
 #: ../app/actions/dashboard-actions.c:73
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
-msgstr ""
+msgstr "1 Saniye"
 
 #: ../app/actions/dashboard-actions.c:78
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
-msgstr ""
+msgstr "2 Saniye"
 
 #: ../app/actions/dashboard-actions.c:83
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
-msgstr ""
+msgstr "4 Saniye"
 
 #: ../app/actions/dashboard-actions.c:91
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
-msgstr ""
+msgstr "15 Saniye"
 
 #: ../app/actions/dashboard-actions.c:96
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
-msgstr ""
+msgstr "30 Saniye"
 
 #: ../app/actions/dashboard-actions.c:101
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
-msgstr ""
+msgstr "60 Saniye"
 
 #: ../app/actions/dashboard-actions.c:106
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
-msgstr ""
+msgstr "120 Saniye"
 
 #: ../app/actions/dashboard-actions.c:111
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
-msgstr ""
+msgstr "240 Saniye"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
 #: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:212
@@ -2830,15 +2815,14 @@ msgstr "Aygıt durumu kutusunu aç"
 #: ../app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
-msgstr ""
+msgstr "_Simetrik Boyama"
 
 #: ../app/actions/dialogs-actions.c:66
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the layers dialog"
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
-msgstr "Katmanlar kutusunu aç"
+msgstr "Simetri iletişim kutusunu açın"
 
 #: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
@@ -2991,19 +2975,17 @@ msgid "Open the paint dynamics editor"
 msgstr "Boyama hareketleri düzenleyicisini aç"
 
 #: ../app/actions/dialogs-actions.c:161
-#, fuzzy
 #| msgid "MyPaint Brushes"
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
 msgstr "MyPaint Fırçaları"
 
 #: ../app/actions/dialogs-actions.c:162
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the brushes dialog"
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
-msgstr "Fırçalar kutusunu aç"
+msgstr "MyPaint fırçalar iletişim kutusunu açın"
 
 #: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
@@ -3204,7 +3186,6 @@ msgid "_About"
 msgstr "_Hakkında"
 
 #: ../app/actions/dialogs-actions.c:293
-#, fuzzy
 #| msgctxt "help-action"
 #| msgid "_Search and Run a Command"
 msgctxt "dialogs-action"
@@ -3212,7 +3193,6 @@ msgid "_Search and Run a Command"
 msgstr "Bir Komut _Ara ve Çalıştır"
 
 #: ../app/actions/dialogs-actions.c:294
-#, fuzzy
 #| msgctxt "help-action"
 #| msgid "Search commands by keyword, and run them"
 msgctxt "dialogs-action"
@@ -3559,14 +3539,12 @@ msgstr "Belge Geçmişini Temizle"
 #: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:488
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
-#, fuzzy
 #| msgid "Cancelled"
 msgid "_Cancel"
-msgstr "Vazgeçildi"
+msgstr "Vazgeç"
 
 #: ../app/actions/documents-commands.c:231 ../app/actions/edit-commands.c:161
 #: ../app/dialogs/preferences-dialog.c:633
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Cl_ear"
 msgid "Cl_ear"
@@ -3615,7 +3593,6 @@ msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Benekleri öteleyin, isteğe bağlı olarak sınırlarda kaydırın"
 
 #: ../app/actions/drawable-actions.c:67
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle visibility"
 msgctxt "drawable-action"
@@ -3645,7 +3622,6 @@ msgid "Keep the pixels on this drawable from being modified"
 msgstr "Bu çizilebilirdeki benekleri değiştirilmekten koru"
 
 #: ../app/actions/drawable-actions.c:87
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "L_ock position of channel"
 msgctxt "drawable-action"
@@ -3663,7 +3639,6 @@ msgid "Flip _Horizontally"
 msgstr "_Yatay Çevir"
 
 #: ../app/actions/drawable-actions.c:99
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image horizontally"
 msgctxt "drawable-action"
@@ -3676,7 +3651,6 @@ msgid "Flip _Vertically"
 msgstr "_Dikey Çevir"
 
 #: ../app/actions/drawable-actions.c:105
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image vertically"
 msgctxt "drawable-action"
@@ -3689,7 +3663,6 @@ msgid "Rotate 90° _clockwise"
 msgstr "_Saat yönünde 90° döndür"
 
 #: ../app/actions/drawable-actions.c:114
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Rotate 90 degrees to the right"
 msgctxt "drawable-action"
@@ -3702,7 +3675,6 @@ msgid "Rotate _180°"
 msgstr "_180° döndür"
 
 #: ../app/actions/drawable-actions.c:120
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Turn upside-down"
 msgctxt "drawable-action"
@@ -3715,7 +3687,6 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "Saat _yönünün tersine 90° döndür"
 
 #: ../app/actions/drawable-actions.c:126
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Rotate 90 degrees to the left"
 msgctxt "drawable-action"
@@ -3797,7 +3768,6 @@ msgid "_Edit Dynamics..."
 msgstr "Hareketi _Düzenle..."
 
 #: ../app/actions/dynamics-actions.c:87
-#, fuzzy
 #| msgctxt "dynamics-action"
 #| msgid "Edit dynamics"
 msgctxt "dynamics-action"
@@ -4002,7 +3972,6 @@ msgid "Paste the content of the clipboard"
 msgstr "Pano içeriğini yapıştır"
 
 #: ../app/actions/edit-actions.c:182
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste _Into"
 msgctxt "edit-action"
@@ -4059,11 +4028,10 @@ msgid "Create a new layer from the content of the clipboard"
 msgstr "Pano içeriğinden yeni bir katman oluştur"
 
 #: ../app/actions/edit-actions.c:210
-#, fuzzy
 #| msgid "New Layer"
 msgctxt "edit-action"
 msgid "New Layer In _Place"
-msgstr "Yeni Katman"
+msgstr "Yeni Katman Yeri"
 
 #: ../app/actions/edit-actions.c:212
 #, fuzzy
@@ -4240,7 +4208,6 @@ msgid "Select all error messages"
 msgstr "Tüm hata iletilerini seç"
 
 #: ../app/actions/error-console-actions.c:56
-#, fuzzy
 #| msgid "Highlight"
 msgctxt "error-console-action"
 msgid "_Highlight"
@@ -4267,7 +4234,6 @@ msgid "Write the selected error messages to a file"
 msgstr "Seçilen hata iletilerini bir dosyaya yaz"
 
 #: ../app/actions/error-console-actions.c:78
-#, fuzzy
 #| msgid "Errors"
 msgctxt "error-console-action"
 msgid "_Errors"
@@ -4276,10 +4242,9 @@ msgstr "Hatalar"
 #: ../app/actions/error-console-actions.c:79
 msgctxt "error-console-action"
 msgid "Highlight error console on errors"
-msgstr ""
+msgstr "Hatalarda hata konsolunu vurgulayın"
 
 #: ../app/actions/error-console-actions.c:85
-#, fuzzy
 #| msgctxt "message-severity"
 #| msgid "Warning"
 msgctxt "error-console-action"
@@ -4289,10 +4254,9 @@ msgstr "Uyarı"
 #: ../app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
 msgid "Highlight error console on warnings"
-msgstr ""
+msgstr "Uyarılarda hata konsolunu vurgulayın"
 
 #: ../app/actions/error-console-actions.c:92
-#, fuzzy
 #| msgctxt "message-severity"
 #| msgid "Message"
 msgctxt "error-console-action"
@@ -4318,7 +4282,6 @@ msgstr "Hata Günlüğünü Dosyaya Kaydet"
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
 #: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:736
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "_Save"
 msgid "_Save"
@@ -4483,7 +4446,6 @@ msgid "Save this image and close its window"
 msgstr "Bu görüntüyü kaydet ve penceresini kapat"
 
 #: ../app/actions/file-actions.c:159 ../app/actions/file-actions.c:333
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Export As..."
 msgctxt "file-action"
@@ -4491,12 +4453,11 @@ msgid "Export..."
 msgstr "Dışa Aktar..."
 
 #: ../app/actions/file-actions.c:160
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Export the image again"
 msgctxt "file-action"
 msgid "Export the image"
-msgstr "Görüntüyü tekrar dışa aktar"
+msgstr "Görüntüyü dışa aktar"
 
 #: ../app/actions/file-actions.c:165
 msgctxt "file-action"
@@ -4520,7 +4481,6 @@ msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Görüntüyü PNG ya da JPEG gibi çeşitli dosya biçimlerinde dışa aktar"
 
 #: ../app/actions/file-actions.c:314
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "_Save"
 msgctxt "file-action"
@@ -4577,7 +4537,6 @@ msgid "Revert Image"
 msgstr "Görüntüyü Geri Döndür"
 
 #: ../app/actions/file-commands.c:417
-#, fuzzy
 #| msgid "Revert"
 msgid "_Revert"
 msgstr "Dön"
@@ -4611,7 +4570,6 @@ msgstr ""
 "%s"
 
 #: ../app/actions/filters-actions.c:58
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "Filte_rs"
 msgctxt "filters-action"
@@ -4619,7 +4577,6 @@ msgid "Filte_rs"
 msgstr "Süzgeçle_r"
 
 #: ../app/actions/filters-actions.c:60
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "Recently Used"
 msgctxt "filters-action"
@@ -4627,7 +4584,6 @@ msgid "Recently Used"
 msgstr "Son Kullanılan"
 
 #: ../app/actions/filters-actions.c:62
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Blur"
 msgctxt "filters-action"
@@ -4635,7 +4591,6 @@ msgid "_Blur"
 msgstr "B_ulanıklaştır"
 
 #: ../app/actions/filters-actions.c:64
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
 msgctxt "filters-action"
@@ -4643,7 +4598,6 @@ msgid "_Noise"
 msgstr "_Gürültü"
 
 #: ../app/actions/filters-actions.c:66
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "Edge-De_tect"
 msgctxt "filters-action"
@@ -4651,7 +4605,6 @@ msgid "Edge-De_tect"
 msgstr "Kenar Tanı_ma"
 
 #: ../app/actions/filters-actions.c:68
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "En_hance"
 msgctxt "filters-action"
@@ -4659,7 +4612,6 @@ msgid "En_hance"
 msgstr "Ar_ttır"
 
 #: ../app/actions/filters-actions.c:70
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "C_ombine"
 msgctxt "filters-action"
@@ -4667,7 +4619,6 @@ msgid "C_ombine"
 msgstr "B_irleştir"
 
 #: ../app/actions/filters-actions.c:72
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Generic"
 msgctxt "filters-action"
@@ -23280,7 +23231,6 @@ msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
 msgstr ""
 
 #: ../app/tools/gimpnpointdeformationtool.c:161
-#, fuzzy
 #| msgid "Pointer Information"
 msgid "_N-Point Deformation"
 msgstr "İşaretçi Bilgisi"
@@ -23291,7 +23241,6 @@ msgstr "İşleme Aracı: İsteğe bağlı bir GEGL işlemi kullan"
 
 #. don't translate "Aux"
 #: ../app/tools/gimpoperationtool.c:536
-#, fuzzy, c-format
 #| msgid "Low Input"
 msgid "Aux Input"
 msgstr "Düşük Girdi"
@@ -23312,7 +23261,6 @@ msgid "_Paintbrush"
 msgstr "_Boya Fırçası"
 
 #: ../app/tools/gimppaintoptions-gui.c:165
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "Edit this brush"
 msgid "Edit this brush"
@@ -23332,14 +23280,13 @@ msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:197
 msgid "Reset spacing to brush's native spacing"
-msgstr ""
+msgstr "Boşluğu fırçanın yerel aralığına sıfırla"
 
 #: ../app/tools/gimppaintoptions-gui.c:205
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgid "Reset hardness to brush's native hardness"
-msgstr "Öntanımlı değerlerine geri al"
+msgstr "Sertliği fırçanın doğal sertliğine sıfırlayın"
 
 #: ../app/tools/gimppaintoptions-gui.c:213
 msgid "Reset force to default"
@@ -23542,10 +23489,9 @@ msgid "_Rectangle Select"
 msgstr "D_ikdörtgen Seçimi"
 
 #: ../app/tools/gimprectangleselecttool.c:727
-#, fuzzy
 #| msgid "Ellipse Select"
 msgid "Ellipse: "
-msgstr "Elips Seçimi"
+msgstr "Elips:"
 
 #: ../app/tools/gimpregionselectoptions.c:89
 msgid "Select transparent areas"
@@ -23569,7 +23515,6 @@ msgid "Selection criterion"
 msgstr "Seçim ölçütü"
 
 #: ../app/tools/gimpregionselectoptions.c:127
-#, fuzzy
 #| msgid "_Preview mask"
 msgid "Draw mask"
 msgstr "Maske _Önizle"
@@ -23595,7 +23540,6 @@ msgid "_Rotate"
 msgstr "_Döndür"
 
 #: ../app/tools/gimprotatetool.c:118
-#, fuzzy
 #| msgid "Rotate"
 msgid "R_otate"
 msgstr "Döndür"
@@ -23647,24 +23591,24 @@ msgid "Scale to %d x %d"
 msgstr "%d x %d'ye ölçekle"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:72
-#, fuzzy
 #| msgid "Re-_center Segment's Midpoint"
 msgid "Refinement scale"
-msgstr "Kesimin Orta Noktasını Yeniden O_rtala"
+msgstr "İyileştirme ölçeği"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:73
 msgid ""
 "Maximal scale of refinement points to be used for the interpolation mesh"
 msgstr ""
+"Enterpolasyon mesh için kullanılacak arıtma noktalarının azami ölçeği"
 
 #: ../app/tools/gimpseamlessclonetool.c:190
 #: ../app/tools/gimpseamlessclonetool.c:751
 msgid "Seamless Clone"
-msgstr ""
+msgstr "Kesintisiz Çoğalt"
 
 #: ../app/tools/gimpseamlessclonetool.c:191
 msgid "Seamless Clone: Seamlessly paste one image into another"
-msgstr ""
+msgstr "Kesintisiz Çoğalt: Bir resmi diğerine sıkıca yapıştırın"
 
 #: ../app/tools/gimpseamlessclonetool.c:192
 msgid "_Seamless Clone"
@@ -24249,7 +24193,7 @@ msgstr "Uzunluk:"
 
 #: ../app/tools/gimpwarpoptions.c:106
 msgid "Effect Strength"
-msgstr ""
+msgstr "Efekt Uzunluğu"
 
 #: ../app/tools/gimpwarpoptions.c:113
 #, fuzzy
@@ -24267,7 +24211,7 @@ msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:135
 msgid "High quality preview"
-msgstr ""
+msgstr "Yüksek kalite önizleme"
 
 #: ../app/tools/gimpwarpoptions.c:136
 #, fuzzy
@@ -24277,11 +24221,11 @@ msgstr "Başka bir kullanıcının gimprc dosyasını kullan"
 
 #: ../app/tools/gimpwarpoptions.c:142
 msgid "During motion"
-msgstr ""
+msgstr "Hareket sırasında"
 
 #: ../app/tools/gimpwarpoptions.c:143
 msgid "Apply effect during motion"
-msgstr ""
+msgstr "Hareket sırasında efekt uygulayın"
 
 #: ../app/tools/gimpwarpoptions.c:149
 #, fuzzy
@@ -24291,7 +24235,7 @@ msgstr "Dikey"
 
 #: ../app/tools/gimpwarpoptions.c:150
 msgid "Apply effect periodically"
-msgstr ""
+msgstr "Düzenli olarak efekt uygulayın"
 
 #: ../app/tools/gimpwarpoptions.c:156
 #, fuzzy
@@ -24302,7 +24246,7 @@ msgstr "Oran"
 
 #: ../app/tools/gimpwarpoptions.c:157
 msgid "Periodic stroke rate"
-msgstr ""
+msgstr "Düzenli inme oranı"
 
 #: ../app/tools/gimpwarpoptions.c:163
 msgid "Frames"
@@ -24345,7 +24289,7 @@ msgstr "Kafes Döndürme"
 
 #: ../app/tools/gimpwarptool.c:156
 msgid "Warp Transform: Deform with different tools"
-msgstr ""
+msgstr "Çözgü Dönüşümü: Farklı aletlerle deforme"
 
 #: ../app/tools/gimpwarptool.c:157
 #, fuzzy
@@ -24355,7 +24299,7 @@ msgstr "_Kafes Döndürme"
 
 #: ../app/tools/gimpwarptool.c:484 ../app/tools/gimpwarptool.c:496
 msgid "Warp Tool Stroke"
-msgstr ""
+msgstr "Çözgü Takım İnme"
 
 #: ../app/tools/gimpwarptool.c:618
 #, fuzzy
@@ -24377,7 +24321,7 @@ msgstr "Kafes döndürme"
 
 #: ../app/tools/gimpwarptool.c:1076
 msgid "Please add some warp strokes first."
-msgstr ""
+msgstr "Lütfen önce bazı çözgü vuruşları ekleyin."
 
 #: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1127
 #, c-format
@@ -24672,7 +24616,7 @@ msgstr "Yol daha fazla alçaltılamaz."
 #: ../app/widgets/gimpactionview.c:800
 #, c-format
 msgid "Alt+%d is used to switch to display %d and cannot be remapped."
-msgstr ""
+msgstr "Alt+%d, %d göstergesine geçmek için kullanılır ve yeniden eşleştirilemez."
 
 #: ../app/widgets/gimpactionview.c:904
 msgid "Removing shortcut failed."
@@ -25187,13 +25131,13 @@ msgstr "Fare Tekeri Olayları"
 
 #: ../app/widgets/gimpdashboard.c:155
 msgid "Cache"
-msgstr ""
+msgstr "Önbellek"
 
 #. cache occupied field
 #. swap occupied field
 #: ../app/widgets/gimpdashboard.c:184 ../app/widgets/gimpdashboard.c:254
 msgid "Occupied:"
-msgstr ""
+msgstr "Doluluk"
 
 #: ../app/widgets/gimpdashboard.c:190 ../app/widgets/gimpdashboard.c:203
 #: ../app/widgets/gimpdashboard.c:260 ../app/widgets/gimpdashboard.c:273
