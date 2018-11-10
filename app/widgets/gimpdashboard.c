@@ -4332,7 +4332,7 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
                                         /* intentionally untranslated */
                                         variable_info->description);
       gimp_dashboard_log_printf (dashboard,
-                                 "\" />");
+                                 "\" />\n");
     }
 
   gimp_dashboard_log_printf (dashboard,
