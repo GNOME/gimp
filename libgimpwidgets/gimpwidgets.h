@@ -75,6 +75,7 @@
 #include <libgimpwidgets/gimpscaleentry.h>
 #include <libgimpwidgets/gimpscrolledpreview.h>
 #include <libgimpwidgets/gimpsizeentry.h>
+#include <libgimpwidgets/gimpspinbutton.h>
 #include <libgimpwidgets/gimpstringcombobox.h>
 #include <libgimpwidgets/gimpunitcombobox.h>
 #include <libgimpwidgets/gimpunitmenu.h>

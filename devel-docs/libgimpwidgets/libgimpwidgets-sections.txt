@@ -531,6 +531,23 @@ gimp_int_combo_box_layout_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gimpspinbutton</FILE>
+<TITLE>GimpSpinButton</TITLE>
+GimpSpinButton
+gimp_spin_button_new
+gimp_spin_button_new_with_range
+<SUBSECTION Standard>
+GIMP_SPIN_BUTTON
+GIMP_IS_SPIN_BUTTON
+GIMP_TYPE_SPIN_BUTTON
+gimp_spin_button_get_type
+GimpSpinButtonClass
+GIMP_SPIN_BUTTON_CLASS
+GIMP_IS_SPIN_BUTTON_CLASS
+GIMP_SPIN_BUTTON_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpstringcombobox</FILE>
 <TITLE>GimpStringComboBox</TITLE>
 GimpStringComboBox

@@ -402,7 +402,10 @@ EXPORTS
 	gimp_size_entry_set_value_boundaries
 	gimp_size_entry_show_unit_menu
 	gimp_size_entry_update_policy_get_type
+        gimp_spin_button_get_type
 	gimp_spin_button_new
+        gimp_spin_button_new_
+        gimp_spin_button_new_with_range
 	gimp_standard_help_func
 	gimp_stock_init
 	gimp_string_combo_box_get_active
