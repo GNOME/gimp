@@ -144,9 +144,16 @@ gimp_drawable_transform_buffer_affine (GimpDrawable            *drawable,
   u2 = u1 + gegl_buffer_get_width  (orig_buffer);
   v2 = v1 + gegl_buffer_get_height (orig_buffer);
 
-  clip_result = gimp_drawable_transform_get_effective_clip (drawable,
-                                                            orig_buffer,
-                                                            clip_result);
+  /*  Don't modify the clipping mode of layer masks here, so that,
+   *  when transformed together with their layer, they match the
+   *  layer's clipping mode.
+   */
+  if (G_TYPE_FROM_INSTANCE (drawable) == GIMP_TYPE_CHANNEL)
+    {
+      clip_result = gimp_drawable_transform_get_effective_clip (drawable,
+                                                                orig_buffer,
+                                                                clip_result);
+    }
 
   /*  Find the bounding coordinates of target */
   gimp_transform_resize_boundary (&m, clip_result,
