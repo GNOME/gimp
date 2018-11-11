@@ -578,21 +578,23 @@ WARNING: GCC 7.2.0 has a serious bug affecting GEGL/GIMP. We advise
          See https://bugzilla.gnome.org/show_bug.cgi?id=787222"
   fi
   # For GCC, use -v which has more information than --version.
-  CC_VERSION="\\\\t`$CC -v 2>&1 | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'`"
+  CC_VERSION="`$CC -v 2>&1`"
 else
   # This is the list of common options used by autotools to check
   # versions for various compilers.
-  CC_VERSION="\\\\t`$CC --version 2>&1 | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'`"
+  CC_VERSION="`$CC --version 2>&1`"
   if test $? != 0; then
-    CC_VERSION="\\\\t`$CC -v 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
+    CC_VERSION="`$CC -v 2>&1`"
     if test $? != 0; then
-      CC_VERSION="\\\\t`$CC -V 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
+      CC_VERSION="`$CC -V 2>&1`"
       if test $? != 0; then
-        CC_VERSION="\\\\t`$CC -qversion 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
+        CC_VERSION="`$CC -qversion 2>&1`"
       fi
     fi
   fi
 fi
+# Format and escape CC_VERSION
+CC_VERSION="\\t`echo "$CC_VERSION" | sed -e 's/\\\\/\\\\\\\\/g;s/$/\\\\n\\\\t/g' | tr -d '\n'`"
 AC_SUBST(CC_VERSION)
 
 AC_HEADER_STDC
