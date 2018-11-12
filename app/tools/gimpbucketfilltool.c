@@ -407,14 +407,13 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
 static void
 gimp_bucket_fill_tool_commit (GimpBucketFillTool *tool)
 {
+  tool->priv->fill_in_progress = FALSE;
+
   if (tool->priv->filter)
     {
       gimp_drawable_filter_commit (tool->priv->filter,
                                    GIMP_PROGRESS (tool), FALSE);
       gimp_image_flush (gimp_display_get_image (GIMP_TOOL (tool)->display));
-
-      if (tool->priv->compute_line_art_after_fill)
-        gimp_bucket_fill_compute_line_art (tool);
     }
 }
 
