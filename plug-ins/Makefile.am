@@ -29,6 +29,7 @@ SUBDIRS = \
 	$(pygimp)		\
 	file-bmp		\
 	$(file_darktable)	\
+	file-dds		\
 	$(file_exr)		\
 	file-faxg3		\
 	file-fits		\

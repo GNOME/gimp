@@ -2856,6 +2856,7 @@ build/windows/installer/Makefile
 build/windows/installer/lang/Makefile
 plug-ins/Makefile
 plug-ins/file-bmp/Makefile
+plug-ins/file-dds/Makefile
 plug-ins/file-exr/Makefile
 plug-ins/file-faxg3/Makefile
 plug-ins/file-fits/Makefile

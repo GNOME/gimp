@@ -1,0 +1,7 @@
+TODO list for future releases of gimp-dds:
+
+* Add support for DX10 DDS extensions
+* BC6H and BC7 compression support
+* Volume map compression support (VTC)
+* Add support for GIMP 2.6.x GEGL for reading and writing higher precision
+pixel formats

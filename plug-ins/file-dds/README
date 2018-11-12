@@ -1,0 +1,29 @@
+DDS plugin for The GIMP
+(C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
+with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
+==========================================
+
+This is a plugin for GIMP version 2.4.x. It allows you to load and save
+images in Direct Draw Surface (DDS) format.
+
+Features
+==========================================
+* Load/Save DDS files using DXT texture compression
+* Automatic mipmap generation on save
+* Load mipmaps into separate layers
+* Load cube map faces and volume map slices into separate layers
+* Cube and volume map saving
+* Pixel conversion selection for custom formats (RGBA4, R5G6B5, RGB10A2, etc.)
+* Load/save DDS files, optionally using DirectX texture compression (DXT)
+* Optional automatic mipmap generation when saving
+* Load mipmaps into separate layers
+* Load cube map faces and volume map slices into separate layers
+* Save cube maps and volume maps with automatic mipmap generation support
+* Save image with a custom pixel format
+* Non-power-of-two image loading and saving support with automatic mipmap generation support
+* Compliant with DirectX 10 compressed formats
+    
+
+Installation
+==========================================
+See the file INSTALL for installation instructions
