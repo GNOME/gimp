@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-10-25 16:49+0000\n"
-"PO-Revision-Date: 2018-10-27 11:06+0200\n"
+"POT-Creation-Date: 2018-11-07 20:35+0000\n"
+"PO-Revision-Date: 2018-11-10 00:15+0200\n"
 "Last-Translator: Olexandr Pylypchuk <pilipchukap@rambler.ru>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -10231,13 +10231,11 @@ msgstr ""
 "вікна із зображеннями"
 
 #: ../app/actions/windows-actions.c:130
-#| msgid "Re-Show Last"
 msgctxt "windows-action"
 msgid "Show Tabs"
 msgstr "Показати вкладки"
 
 #: ../app/actions/windows-actions.c:131
-#| msgid "When enabled, menus can be torn off."
 msgctxt "windows-action"
 msgid "When enabled, the image tabs bar is shown."
 msgstr "Якщо ввімкнено, то буде видимою панель вкладок зображень."
@@ -10974,8 +10972,6 @@ msgid "Hide docks and other windows, leaving only image windows."
 msgstr "Сховати всі діалоги у панелі, залишити лише вікна зображень"
 
 #: ../app/config/gimprc-blurbs.h:422
-#| msgctxt "windows-action"
-#| msgid "When enabled, GIMP is in a single-window mode."
 msgid "Show the image tabs bar in single window mode."
 msgstr "Показувати панель вкладок зображень у одновіконному режимі."
 
@@ -14955,6 +14951,11 @@ msgstr ""
 "\n"
 "%s"
 
+#: ../app/dialogs/file-save-dialog.c:802
+#| msgid "Unknown file type"
+msgid "Unknown error"
+msgstr "Невідома помилка"
+
 #: ../app/dialogs/fill-dialog.c:109
 msgid "Choose Fill Style"
 msgstr "Виберіть стиль заповнення"
@@ -17883,11 +17884,11 @@ msgstr "Натисніть і перетягніть, щоб пересунут�
 msgid "Click-Drag to shear"
 msgstr "Натисніть і перетягніть для нахиляння"
 
-#: ../app/file/file-open.c:116 ../app/file/file-save.c:116
+#: ../app/file/file-open.c:116 ../app/file/file-save.c:126
 msgid "Not a regular file"
 msgstr "Не є звичайним файлом"
 
-#: ../app/file/file-open.c:125 ../app/file/file-save.c:125
+#: ../app/file/file-open.c:125 ../app/file/file-save.c:135
 msgid "Permission denied"
 msgstr "Доступ заборонений"
 
@@ -17938,7 +17939,16 @@ msgstr "Завантажено %s даних зображення"
 msgid "Uploaded %s of image data"
 msgstr "Вивантажено %s даних зображення"
 
-#: ../app/file/file-save.c:280
+#: ../app/file/file-save.c:99
+#| msgid "There is no active layer to crop."
+msgid "There is no active layer to save"
+msgstr "Немає активного шару для збереження"
+
+#: ../app/file/file-save.c:119
+msgid "Failed to get file information"
+msgstr "Не вдалось отримати інформацію про файл"
+
+#: ../app/file/file-save.c:290
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Доповненню %s не вдалось зберегти зображення"
@@ -23899,7 +23909,6 @@ msgstr "b*:"
 
 #. TRANSLATORS: x from xyY color space
 #: ../app/widgets/gimpcolorframe.c:942
-#| msgid "Box:"
 msgctxt "xyY color space"
 msgid "x:"
 msgstr "x:"
@@ -23912,7 +23921,6 @@ msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
 #: ../app/widgets/gimpcolorframe.c:946
-#| msgid "Y:"
 msgctxt "xyY color space"
 msgid "Y:"
 msgstr "Y:"
@@ -24713,12 +24721,12 @@ msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "н/д"
 
-#: ../app/widgets/gimpdashboard.c:3157 ../app/widgets/gimpdashboard.c:4043
+#: ../app/widgets/gimpdashboard.c:3157 ../app/widgets/gimpdashboard.c:4047
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Так"
 
-#: ../app/widgets/gimpdashboard.c:3158 ../app/widgets/gimpdashboard.c:4044
+#: ../app/widgets/gimpdashboard.c:3158 ../app/widgets/gimpdashboard.c:4048
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Ні"
@@ -24738,16 +24746,16 @@ msgstr "%g/с"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4033
+#: ../app/widgets/gimpdashboard.c:4037
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
 
-#: ../app/widgets/gimpdashboard.c:4111
+#: ../app/widgets/gimpdashboard.c:4115
 msgid "N/A"
 msgstr "н/д"
 
-#: ../app/widgets/gimpdashboard.c:4428
+#: ../app/widgets/gimpdashboard.c:4437
 msgid "Resolving symbol information..."
 msgstr "Визначаємо дані щодо символу…"
 
@@ -25745,9 +25753,6 @@ msgid "Change Background Color"
 msgstr "Зміна кольору тла"
 
 #: ../app/widgets/gimptoolbox-color-area.c:312
-#| msgid ""
-#| "The active brush.\n"
-#| "Click to open the Brush Dialog."
 msgid ""
 "The active foreground color.\n"
 "Click to open the color selection dialog."
@@ -25756,9 +25761,6 @@ msgstr ""
 "Клацніть, щоб відкрити діалогове вікно зміни кольору."
 
 #: ../app/widgets/gimptoolbox-color-area.c:317
-#| msgid ""
-#| "The active brush.\n"
-#| "Click to open the Brush Dialog."
 msgid ""
 "The active background color.\n"
 "Click to open the color selection dialog."
