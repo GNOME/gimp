@@ -440,6 +440,7 @@ GimpPDBStatusType read_dds(gchar *filename, gint32 *imageID)
    }
 
    gimp_image_set_active_layer(image, layers[0]);
+   g_free (layers);
 
    *imageID = image;
 
@@ -541,7 +542,9 @@ static int validate_header(dds_header_t *hdr)
 
    if((hdr->pixelfmt.flags & DDPF_FOURCC) &&
       fourcc != FOURCC('D','X','T','1') &&
+      fourcc != FOURCC('D','X','T','2') &&
       fourcc != FOURCC('D','X','T','3') &&
+      fourcc != FOURCC('D','X','T','4') &&
       fourcc != FOURCC('D','X','T','5') &&
       fourcc != FOURCC('R','X','G','B') &&
       fourcc != FOURCC('A','T','I','1') &&
@@ -597,7 +600,9 @@ static int validate_header(dds_header_t *hdr)
       switch(fourcc)
       {
          case FOURCC('D','X','T','1'):
+         case FOURCC('D','X','T','2'):
          case FOURCC('D','X','T','3'):
+         case FOURCC('D','X','T','4'):
          case FOURCC('D','X','T','5'):
          case FOURCC('R','X','G','B'):
          case FOURCC('A','T','I','1'):
@@ -796,6 +801,17 @@ static int setup_dxgi_format(dds_header_t *hdr, dds_header_dx10_t *dx10hdr)
    return(1);
 }
 
+
+static const Babl*
+premultiplied_variant (const Babl* format)
+{
+  if (format == babl_format ("R'G'B'A u8"))
+    return babl_format ("R'aG'aB'aA u8");
+  else
+    g_printerr ("Add format %s to premultiplied_variant() %s: %d\n", babl_get_name (format), __FILE__, __LINE__);
+  return format;
+}
+
 static int load_layer(FILE *fp, dds_header_t *hdr, dds_load_info_t *d,
                       gint32 image, unsigned int level, char *prefix,
                       unsigned int *l, guchar *pixels, unsigned char *buf)
@@ -888,7 +904,9 @@ static int load_layer(FILE *fp, dds_header_t *hdr, dds_load_info_t *d,
       switch(GETL32(hdr->pixelfmt.fourcc))
       {
          case FOURCC('D','X','T','1'): format = DDS_COMPRESS_BC1; break;
+         case FOURCC('D','X','T','2'): bablfmt = premultiplied_variant (bablfmt);
          case FOURCC('D','X','T','3'): format = DDS_COMPRESS_BC2; break;
+         case FOURCC('D','X','T','4'): bablfmt = premultiplied_variant (bablfmt);
          case FOURCC('D','X','T','5'): format = DDS_COMPRESS_BC3; break;
          case FOURCC('R','X','G','B'): format = DDS_COMPRESS_BC3; break;
          case FOURCC('A','T','I','1'):
@@ -920,7 +938,7 @@ static int load_layer(FILE *fp, dds_header_t *hdr, dds_load_info_t *d,
       {
          if(n >= d->tile_height)
          {
-            gegl_buffer_set(buffer, GEGL_RECTANGLE(0, y - n, layerw, n), 1.0,
+            gegl_buffer_set(buffer, GEGL_RECTANGLE(0, y - n, layerw, n), 0,
                             bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
             n = 0;
             gimp_progress_update((double)y / (double)hdr->height);
@@ -1036,7 +1054,7 @@ static int load_layer(FILE *fp, dds_header_t *hdr, dds_load_info_t *d,
          }
       }
 
-      gegl_buffer_set(buffer, GEGL_RECTANGLE(0, y - n, layerw, n), 1.0,
+      gegl_buffer_set(buffer, GEGL_RECTANGLE(0, y - n, layerw, n), 0,
                       bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
    }
    else if(hdr->pixelfmt.flags & DDPF_FOURCC)
@@ -1067,7 +1085,7 @@ static int load_layer(FILE *fp, dds_header_t *hdr, dds_load_info_t *d,
       {
          if(n >= d->tile_height)
          {
-            gegl_buffer_set(buffer, GEGL_RECTANGLE(0, y - n, layerw, n), 1.0,
+            gegl_buffer_set(buffer, GEGL_RECTANGLE(0, y - n, layerw, n), 0,
                             bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
             n = 0;
             gimp_progress_update((double)y / (double)hdr->height);
@@ -1078,7 +1096,7 @@ static int load_layer(FILE *fp, dds_header_t *hdr, dds_load_info_t *d,
                 width * d->gimp_bpp);
       }
 
-      gegl_buffer_set(buffer, GEGL_RECTANGLE(0, y - n, layerw, n), 1.0,
+      gegl_buffer_set(buffer, GEGL_RECTANGLE(0, y - n, layerw, n), 0,
                       bablfmt, pixels, GEGL_AUTO_ROWSTRIDE);
       
       g_free(dst);

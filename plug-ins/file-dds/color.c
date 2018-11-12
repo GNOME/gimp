@@ -21,6 +21,7 @@
 */
 
 #include <math.h>
+#include "color.h"
 
 int linear_to_sRGB(int c)
 {

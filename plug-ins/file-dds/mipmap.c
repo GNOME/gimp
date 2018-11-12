@@ -765,7 +765,7 @@ static struct
  *   if (texel_alpha < alpha_test_threshold)
  *      discard;
  */
-float calc_alpha_test_coverage(unsigned char *src,
+static float calc_alpha_test_coverage(unsigned char *src,
                                unsigned int width, unsigned int height, int bpp,
                                float alpha_test_threshold,
                                float alpha_scale)
@@ -796,7 +796,7 @@ float calc_alpha_test_coverage(unsigned char *src,
    return (float)coverage / (width * height);
 }
 
-void scale_alpha_to_coverage(unsigned char *img,
+static void scale_alpha_to_coverage(unsigned char *img,
                              unsigned int width, unsigned int height, int bpp,
                              float desired_coverage,
                              float alpha_test_threshold)

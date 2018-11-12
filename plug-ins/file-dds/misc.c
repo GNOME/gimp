@@ -21,6 +21,7 @@
 */
 
 #include <libgimp/gimp.h>
+#include "misc.h"
 
 static inline float saturate(float a)
 {
@@ -44,7 +45,7 @@ void decode_ycocg_image(gint32 drawableID, gboolean shadow)
    if(shadow)
    {
       sbuffer = gimp_drawable_get_shadow_buffer(drawableID);
-      gegl_buffer_copy(buffer, NULL, sbuffer, NULL);
+      gegl_buffer_copy(buffer, NULL, GEGL_ABYSS_NONE, sbuffer, NULL);
       g_object_unref(buffer);
       buffer = sbuffer;
    }
@@ -87,7 +88,7 @@ void decode_ycocg_image(gint32 drawableID, gboolean shadow)
          gimp_progress_update((float)i / (float)num_pixels);
    }
 
-   gegl_buffer_set(buffer, GEGL_RECTANGLE(0, 0, w, h), 1.0, format, data,
+   gegl_buffer_set(buffer, GEGL_RECTANGLE(0, 0, w, h), 0, format, data,
                    GEGL_AUTO_ROWSTRIDE);
 
    gimp_progress_update(1.0);
@@ -119,7 +120,7 @@ void decode_ycocg_scaled_image(gint32 drawableID, gboolean shadow)
    if(shadow)
    {
       sbuffer = gimp_drawable_get_shadow_buffer(drawableID);
-      gegl_buffer_copy(buffer, NULL, sbuffer, NULL);
+      gegl_buffer_copy(buffer, NULL, GEGL_ABYSS_NONE, sbuffer, NULL);
       g_object_unref(buffer);
       buffer = sbuffer;
    }
@@ -165,7 +166,7 @@ void decode_ycocg_scaled_image(gint32 drawableID, gboolean shadow)
          gimp_progress_update((float)i / (float)num_pixels);
    }
 
-   gegl_buffer_set(buffer, GEGL_RECTANGLE(0, 0, w, h), 1.0, format, data,
+   gegl_buffer_set(buffer, GEGL_RECTANGLE(0, 0, w, h), 0, format, data,
                    GEGL_AUTO_ROWSTRIDE);
    
    gimp_progress_update(1.0);
@@ -195,7 +196,7 @@ void decode_alpha_exp_image(gint32 drawableID, gboolean shadow)
    if(shadow)
    {
       sbuffer = gimp_drawable_get_shadow_buffer(drawableID);
-      gegl_buffer_copy(buffer, NULL, sbuffer, NULL);
+      gegl_buffer_copy(buffer, NULL, GEGL_ABYSS_NONE, sbuffer, NULL);
       g_object_unref(buffer);
       buffer = sbuffer;
    }
@@ -234,7 +235,7 @@ void decode_alpha_exp_image(gint32 drawableID, gboolean shadow)
          gimp_progress_update((float)i / (float)num_pixels);
    }
 
-   gegl_buffer_set(buffer, GEGL_RECTANGLE(0, 0, w, h), 1.0, format, data,
+   gegl_buffer_set(buffer, GEGL_RECTANGLE(0, 0, w, h), 0, format, data,
                    GEGL_AUTO_ROWSTRIDE);
    
    gimp_progress_update(1.0);
