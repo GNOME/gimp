@@ -1816,7 +1816,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_table_set_row_spacings(GTK_TABLE(table), 4);
    gtk_table_set_col_spacings(GTK_TABLE(table), 8);
 
-   label = gtk_label_new("Compression:");
+   label = gtk_label_new(_("Compression:"));
    gtk_widget_show(label);
    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
                     (GtkAttachOptions)(GTK_FILL),
@@ -1835,7 +1835,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    compress_opt = opt;
 
-   label = gtk_label_new("Format:");
+   label = gtk_label_new(_("Format:"));
    gtk_widget_show(label);
    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
                     (GtkAttachOptions)(GTK_FILL),
@@ -1856,7 +1856,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    format_opt = opt;
 
-   label = gtk_label_new("Save:");
+   label = gtk_label_new(_("Save:"));
    gtk_widget_show(label);
    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
                     (GtkAttachOptions)(GTK_FILL),
@@ -1876,7 +1876,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    string_value_combo_set_item_sensitive(opt, DDS_SAVE_VOLUMEMAP, is_volume);
    string_value_combo_set_item_sensitive(opt, DDS_SAVE_ARRAY, is_array);
 
-   label = gtk_label_new("Mipmaps:");
+   label = gtk_label_new(_("Mipmaps:"));
    gtk_widget_show(label);
    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
                     (GtkAttachOptions)(GTK_FILL),
@@ -1907,7 +1907,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_box_pack_start(GTK_BOX(vbox), hbox, 1, 1, 0);
    gtk_widget_show(hbox);
 
-   check = gtk_check_button_new_with_label("Transparent index:");
+   check = gtk_check_button_new_with_label(_("Transparent index:"));
    gtk_box_pack_start(GTK_BOX(hbox), check, 0, 0, 0);
    gtk_signal_connect(GTK_OBJECT(check), "clicked",
                       GTK_SIGNAL_FUNC(transindex_clicked), 0);
@@ -1945,7 +1945,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
       gtk_widget_set_sensitive(compress_opt, 0);
    }
 
-   expander = gtk_expander_new("<b>Advanced Options</b>");
+   expander = gtk_expander_new(_("<b>Advanced Options</b>"));
    gtk_expander_set_use_markup(GTK_EXPANDER(expander), 1);
    gtk_expander_set_expanded(GTK_EXPANDER(expander), dds_write_vals.show_adv_opt);
    gtk_expander_set_spacing(GTK_EXPANDER(expander), 8);
@@ -1959,7 +1959,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_container_add(GTK_CONTAINER(expander), vbox2);
    gtk_widget_show(vbox2);
 
-   frame = gtk_frame_new("Compression");
+   frame = gtk_frame_new(_("Compression"));
    gtk_box_pack_start(GTK_BOX(vbox2), frame, 1, 1, 0);
    gtk_widget_show(frame);
 
@@ -1970,7 +1970,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_container_add(GTK_CONTAINER(frame), table);
    gtk_widget_show(table);
 
-   check = gtk_check_button_new_with_label("Use perceptual error metric");
+   check = gtk_check_button_new_with_label(_("Use perceptual error metric"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_write_vals.perceptual_metric);
    gtk_table_attach(GTK_TABLE(table), check, 0, 2, 0, 1,
                     (GtkAttachOptions)(GTK_FILL),
@@ -1981,7 +1981,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    pm_chk = check;
 
-   frame = gtk_frame_new("Mipmaps");
+   frame = gtk_frame_new(_("Mipmaps"));
    gtk_box_pack_start(GTK_BOX(vbox2), frame, 1, 1, 0);
    gtk_widget_show(frame);
 
@@ -1992,7 +1992,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_container_add(GTK_CONTAINER(frame), table);
    gtk_widget_show(table);
 
-   label = gtk_label_new("Filter:");
+   label = gtk_label_new(_("Filter:"));
    gtk_widget_show(label);
    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
                     (GtkAttachOptions)(GTK_FILL),
@@ -2012,7 +2012,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    mipmap_filter_opt = opt;
 
-   label = gtk_label_new("Wrap mode:");
+   label = gtk_label_new(_("Wrap mode:"));
    gtk_widget_show(label);
    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
                     (GtkAttachOptions)(GTK_FILL),
@@ -2032,7 +2032,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    mipmap_wrap_opt = opt;
 
-   check = gtk_check_button_new_with_label("Apply gamma correction");
+   check = gtk_check_button_new_with_label(_("Apply gamma correction"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_write_vals.gamma_correct && dds_write_vals.mipmaps);
    gtk_table_attach(GTK_TABLE(table), check, 1, 2, 2, 3,
                     (GtkAttachOptions)(GTK_FILL),
@@ -2043,7 +2043,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    gamma_chk = check;
 
-   check = gtk_check_button_new_with_label("Use sRGB colorspace");
+   check = gtk_check_button_new_with_label(_("Use sRGB colorspace"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_write_vals.gamma_correct && dds_write_vals.srgb);
    gtk_table_attach(GTK_TABLE(table), check, 1, 2, 3, 4,
                     (GtkAttachOptions)(GTK_FILL),
@@ -2054,7 +2054,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    srgb_chk = check;
 
-   label = gtk_label_new("Gamma:");
+   label = gtk_label_new(_("Gamma:"));
    gtk_widget_show(label);
    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 4, 5,
                     (GtkAttachOptions)(GTK_FILL),
@@ -2072,7 +2072,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    gamma_spin = spin;
 
-   check = gtk_check_button_new_with_label("Preserve alpha test coverage");
+   check = gtk_check_button_new_with_label(_("Preserve alpha test coverage"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_write_vals.preserve_alpha_coverage && dds_write_vals.mipmaps);
    gtk_table_attach(GTK_TABLE(table), check, 1, 2, 5, 6,
                     (GtkAttachOptions)(GTK_FILL),
@@ -2083,7 +2083,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    alpha_coverage_chk = check;
 
-   label = gtk_label_new("Alpha test threshold:");
+   label = gtk_label_new(_("Alpha test threshold:"));
    gtk_widget_show(label);
    gtk_table_attach(GTK_TABLE(table), label, 0, 1, 6, 7,
                     (GtkAttachOptions)(GTK_FILL),

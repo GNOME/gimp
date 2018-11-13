@@ -99,6 +99,8 @@ plug-ins/common/web-page.c
 plug-ins/file-bmp/bmp-load.c
 plug-ins/file-bmp/bmp-save.c
 plug-ins/file-bmp/bmp.c
+plug-ins/file-dds/ddsread.c
+plug-ins/file-dds/ddswrite.c
 plug-ins/file-exr/file-exr.c
 plug-ins/file-faxg3/faxg3.c
 plug-ins/file-fits/fits.c
