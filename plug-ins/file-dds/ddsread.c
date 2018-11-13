@@ -1204,7 +1204,7 @@ static int load_dialog(void)
    GtkWidget *vbox;
    GtkWidget *check;
 
-   dlg = gimp_dialog_new("Load DDS", "dds", NULL, GTK_WIN_POS_MOUSE,
+   dlg = gimp_dialog_new(_("Load DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
                          gimp_standard_help_func, LOAD_PROC,
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK, GTK_RESPONSE_OK,
@@ -1222,21 +1222,21 @@ static int load_dialog(void)
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), vbox, 1, 1, 0);
    gtk_widget_show(vbox);
 
-   check = gtk_check_button_new_with_label("Load mipmaps");
+   check = gtk_check_button_new_with_label(_("Load mipmaps"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_read_vals.mipmaps);
    gtk_signal_connect(GTK_OBJECT(check), "clicked",
                       GTK_SIGNAL_FUNC(toggle_clicked), &dds_read_vals.mipmaps);
    gtk_box_pack_start(GTK_BOX(vbox), check, 1, 1, 0);
    gtk_widget_show(check);
 
-   check = gtk_check_button_new_with_label("Automatically decode YCoCg/AExp images when detected");
+   check = gtk_check_button_new_with_label(_("Automatically decode YCoCg/AExp images when detected"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_read_vals.decode_images);
    gtk_signal_connect(GTK_OBJECT(check), "clicked",
                       GTK_SIGNAL_FUNC(toggle_clicked), &dds_read_vals.decode_images);
    gtk_box_pack_start(GTK_BOX(vbox), check, 1, 1, 0);
    gtk_widget_show(check);
 
-   check = gtk_check_button_new_with_label("Show this dialog");
+   check = gtk_check_button_new_with_label(_("Show this dialog"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_read_vals.show_dialog);
    gtk_signal_connect(GTK_OBJECT(check), "clicked",
                       GTK_SIGNAL_FUNC(toggle_clicked), &dds_read_vals.show_dialog);
