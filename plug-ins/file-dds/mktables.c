@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int mul8bit(int a, int b)
+static int mul8bit(int a, int b)
 {
    int t = a * b + 128;
    return((t + (t >> 8)) >> 8);
 }
 
-int lerp13(int a, int b)
+static int lerp13(int a, int b)
 {
 #if 0
    return(a + mul8bit(b - a, 0x55));
@@ -46,6 +46,7 @@ static void prepare_opt_table(unsigned char *tab,
    }
 }
 
+#if 0
 int main(void)
 {
    FILE *fp;
@@ -126,3 +127,4 @@ int main(void)
    
    return(0);
 }
+#endif
