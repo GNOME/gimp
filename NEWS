@@ -21,6 +21,11 @@ Core:
     during layer transforms, leading to discrepencies between the
     transformed layer and the transformed mask.
 
+Plug-ins:
+
+  - file-pdf-save GUI now clearly indicates the order the layers will be
+    used to make multi-page PDFs.
+
 Installers:
 
   - Windows: proper fix for libthai to stop GIMP from crashing in the
