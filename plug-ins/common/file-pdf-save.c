@@ -228,6 +228,9 @@ static gboolean          gui_single                 (void);
 
 static gboolean          gui_multi                  (void);
 
+static void              reverse_order_toggled      (GtkToggleButton *reverse_order,
+                                                     GtkButton       *layers_as_pages);
+
 static void              choose_file_call           (GtkWidget       *browse_button,
                                                      gpointer         file_entry);
 
@@ -310,8 +313,8 @@ query (void)
     { GIMP_PDB_INT32,    "vectorize",       "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
     { GIMP_PDB_INT32,    "ignore-hidden",   "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
     { GIMP_PDB_INT32,    "apply-masks",     "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
-    { GIMP_PDB_INT32,    "layers-as-pages", "Layers as pages. TRUE or FALSE" },
-    { GIMP_PDB_INT32,    "reverse-order",   "Reverse the pages order. TRUE or FALSE" }
+    { GIMP_PDB_INT32,    "layers-as-pages", "Layers as pages (bottom layers first). TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "reverse-order",   "Reverse the pages order (top layers first). TRUE or FALSE" }
   };
 
   static GimpParamDef save_multi_args[] =
@@ -892,6 +895,8 @@ gui_single (void)
   GtkWidget *apply_c;
   GtkWidget *layers_as_pages_c;
   GtkWidget *reverse_order_c;
+  GtkWidget *frame;
+  gchar     *text;
   gboolean   run;
   gint32     n_layers;
 
@@ -921,27 +926,38 @@ gui_single (void)
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
   gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
 
+  /* Frame for multi-page from layers. */
+  frame = gtk_frame_new (NULL);
+  gtk_box_pack_end (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+
+  text = g_strdup_printf (_("Layers as pages (%s)"),
+                          optimize.reverse_order ?
+                          _("top layers first") : _("bottom layers first"));
+  layers_as_pages_c = gtk_check_button_new_with_label (text);
+  g_free (text);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
+                                optimize.layers_as_pages);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), layers_as_pages_c);
+  gimp_image_get_layers (multi_page.images[0], &n_layers);
+
   reverse_order_c = gtk_check_button_new_with_label (_("Reverse the pages order"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (reverse_order_c),
                                 optimize.reverse_order);
-  gtk_box_pack_end (GTK_BOX (vbox), reverse_order_c, TRUE, TRUE, 0);
-
-  layers_as_pages_c = gtk_check_button_new_with_label (_("Layers as pages"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
-                                optimize.layers_as_pages);
-  gimp_image_get_layers (multi_page.images[0], &n_layers);
-  gtk_box_pack_end (GTK_BOX (vbox), layers_as_pages_c, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), reverse_order_c);
 
   if (n_layers <= 1)
-  {
-    gtk_widget_set_sensitive(layers_as_pages_c, FALSE);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
-                                  FALSE);
-  }
+    {
+      gtk_widget_set_sensitive (layers_as_pages_c, FALSE);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
+                                    FALSE);
+    }
 
   g_object_bind_property (layers_as_pages_c, "active",
                           reverse_order_c,  "sensitive",
                           G_BINDING_SYNC_CREATE);
+  g_signal_connect (G_OBJECT (reverse_order_c), "toggled",
+                    G_CALLBACK (reverse_order_toggled),
+                    layers_as_pages_c);
 
   gtk_widget_show_all (window);
 
@@ -1105,6 +1121,19 @@ gui_multi (void)
   gtk_widget_destroy (window);
 
   return run;
+}
+
+static void
+reverse_order_toggled (GtkToggleButton *reverse_order,
+                       GtkButton       *layers_as_pages)
+{
+  gchar *text;
+
+  text = g_strdup_printf (_("Layers as pages (%s)"),
+                          gtk_toggle_button_get_active (reverse_order) ?
+                          _("top layers first") : _("bottom layers first"));
+  gtk_button_set_label (layers_as_pages, text);
+  g_free (text);
 }
 
 /* A function that is called when the button for browsing for file
