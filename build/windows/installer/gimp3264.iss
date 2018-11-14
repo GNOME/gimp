@@ -562,8 +562,6 @@ Type: files; Name: "{commondesktop}\{reg:HKLM\SOFTWARE\Microsoft\Windows\Current
 [Registry]
 ;fix broken toolbox icons
 Root: HKLM; Subkey: "Software\Classes\.svg"; ValueType: string; ValueName: "Content Type"; ValueData: "image/svg+xml"; Flags: noerror createvalueifdoesntexist
-;libthai crashes without this
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "LIBTHAI_DICTDIR"; ValueData: "{app}\share\libthai"; Flags: createvalueifdoesntexist preservestringtype uninsdeletevalue
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
