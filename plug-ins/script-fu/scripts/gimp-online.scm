@@ -169,9 +169,21 @@
   (plug-in-web-browser "https://developer.gimp.org/")
 )
 
-(define (gimp-online-plug-in-web-site)
-  (plug-in-web-browser "https://registry.gimp.org/")
+(define (gimp-online-roadmap)
+  (plug-in-web-browser "https://wiki.gimp.org/wiki/Roadmap")
 )
+
+(define (gimp-online-wiki)
+  (plug-in-web-browser "https://wiki.gimp.org/wiki/Main_Page")
+)
+
+(define (gimp-online-bugs-features)
+  (plug-in-web-browser "https://gitlab.gnome.org/GNOME/gimp/issues")
+)
+
+; (define (gimp-online-plug-in-web-site)
+;   (plug-in-web-browser "https://registry.gimp.org/")
+; )
 
 
 (script-fu-register "gimp-online-main-web-site"
@@ -200,6 +212,45 @@
                          "<Image>/Help/GIMP Online")
 
 
+(script-fu-register "gimp-online-roadmap"
+   _"_Roadmap"
+   _"Bookmark to the roadmap of GIMP"
+    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
+    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
+    "2018"
+    ""
+)
+
+(script-fu-menu-register "gimp-online-roadmap"
+                         "<Image>/Help/GIMP Online")
+
+
+(script-fu-register "gimp-online-wiki"
+   _"_Wiki"
+   _"Bookmark to the wiki of GIMP"
+    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
+    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
+    "2018"
+    ""
+)
+
+(script-fu-menu-register "gimp-online-wiki"
+                         "<Image>/Help/GIMP Online")
+
+
+(script-fu-register "gimp-online-bugs-features"
+   _"_Bug Reports and Feature Requests"
+   _"Bookmark to the bug tracker of GIMP"
+    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
+    "Alexandre Prokoudine <alexandre.prokoudine@gmail.com>"
+    "2018"
+    ""
+)
+
+(script-fu-menu-register "gimp-online-bugs-features"
+                         "<Image>/Help")
+
+
 (script-fu-register "gimp-online-docs-web-site"
    _"_User Manual Web Site"
    _"Bookmark to the GIMP web site"
@@ -213,14 +264,14 @@
                          "<Image>/Help/GIMP Online")
 
 
-(script-fu-register "gimp-online-plug-in-web-site"
-   _"Plug-in _Registry"
-   _"Bookmark to the GIMP web site"
-    "Henrik Brix Andersen <brix@gimp.org>"
-    "Henrik Brix Andersen <brix@gimp.org>"
-    "2003"
-    ""
-)
+; (script-fu-register "gimp-online-plug-in-web-site"
+;    _"Plug-in _Registry"
+;    _"Bookmark to the GIMP web site"
+;     "Henrik Brix Andersen <brix@gimp.org>"
+;     "Henrik Brix Andersen <brix@gimp.org>"
+;     "2003"
+;     ""
+; )
 
-(script-fu-menu-register "gimp-online-plug-in-web-site"
-                         "<Image>/Help/GIMP Online")
+; (script-fu-menu-register "gimp-online-plug-in-web-site"
+;                          "<Image>/Help/GIMP Online")
