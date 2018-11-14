@@ -45,7 +45,7 @@ extern "C"
 #include "gimpcancelable.h"
 
 
-#define GIMP_PARALLEL_MAX_THREADS            64
+#define GIMP_PARALLEL_MAX_THREADS           64
 #define GIMP_PARALLEL_RUN_ASYNC_MAX_THREADS  1
 
 
