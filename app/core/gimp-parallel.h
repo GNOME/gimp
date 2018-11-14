@@ -22,30 +22,21 @@
 #define __GIMP_PARALLEL_H__
 
 
-typedef void (* GimpParallelRunAsyncFunc)        (GimpAsync            *async,
-                                                  gpointer              user_data);
-
-typedef void (* GimpParallelDistributeFunc)      (gint                 i,
-                                                  gint                 n,
-                                                  gpointer             user_data);
-typedef void (* GimpParallelDistributeRangeFunc) (gsize                offset,
-                                                  gsize                size,
-                                                  gpointer             user_data);
-typedef void (* GimpParallelDistributeAreaFunc)  (const GeglRectangle *area,
-                                                  gpointer             user_data);
+typedef void (* GimpParallelRunAsyncFunc) (GimpAsync *async,
+                                           gpointer   user_data);
 
 
-void        gimp_parallel_init                  (Gimp                            *gimp);
-void        gimp_parallel_exit                  (Gimp                            *gimp);
+void        gimp_parallel_init                  (Gimp                     *gimp);
+void        gimp_parallel_exit                  (Gimp                     *gimp);
 
-GimpAsync * gimp_parallel_run_async             (GimpParallelRunAsyncFunc         func,
-                                                 gpointer                         user_data);
-GimpAsync * gimp_parallel_run_async_full        (gint                             priority,
-                                                 GimpParallelRunAsyncFunc         func,
-                                                 gpointer                         user_data,
-                                                 GDestroyNotify                   user_data_destroy_func);
-GimpAsync * gimp_parallel_run_async_independent (GimpParallelRunAsyncFunc         func,
-                                                 gpointer                         user_data);
+GimpAsync * gimp_parallel_run_async             (GimpParallelRunAsyncFunc  func,
+                                                 gpointer                  user_data);
+GimpAsync * gimp_parallel_run_async_full        (gint                      priority,
+                                                 GimpParallelRunAsyncFunc  func,
+                                                 gpointer                  user_data,
+                                                 GDestroyNotify            user_data_destroy_func);
+GimpAsync * gimp_parallel_run_async_independent (GimpParallelRunAsyncFunc  func,
+                                                 gpointer                  user_data);
 
 
 #ifdef __cplusplus

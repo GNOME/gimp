@@ -948,7 +948,7 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
 
   gegl_parallel_distribute_area (
     &context->buffer_rect, PIXELS_PER_THREAD, GEGL_SPLIT_STRATEGY_AUTO,
-    (GimpParallelDistributeAreaFunc) gimp_histogram_calculate_area,
+    (GeglParallelDistributeAreaFunc) gimp_histogram_calculate_area,
     &data);
 
   if (! async || ! gimp_async_is_canceled (async))
