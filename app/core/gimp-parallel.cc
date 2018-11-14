@@ -70,29 +70,29 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void                       gimp_parallel_notify_num_processors    (GimpGeglConfig               *config);
+static void                       gimp_parallel_notify_num_processors   (GimpGeglConfig             *config);
 
-static void                       gimp_parallel_set_n_threads            (gint                          n_threads,
-                                                                          gboolean                      finish_tasks);
+static void                       gimp_parallel_set_n_threads           (gint                        n_threads,
+                                                                         gboolean                    finish_tasks);
 
-static void                       gimp_parallel_run_async_set_n_threads  (gint                          n_threads,
-                                                                          gboolean                      finish_tasks);
-static gpointer                   gimp_parallel_run_async_thread_func    (GimpParallelRunAsyncThread   *thread);
-static void                       gimp_parallel_run_async_enqueue_task   (GimpParallelRunAsyncTask     *task);
-static GimpParallelRunAsyncTask * gimp_parallel_run_async_dequeue_task   (void);
-static gboolean                   gimp_parallel_run_async_execute_task   (GimpParallelRunAsyncTask     *task);
-static void                       gimp_parallel_run_async_abort_task     (GimpParallelRunAsyncTask     *task);
-static void                       gimp_parallel_run_async_cancel         (GimpAsync                    *async);
+static void                       gimp_parallel_run_async_set_n_threads (gint                        n_threads,
+                                                                         gboolean                    finish_tasks);
+static gpointer                   gimp_parallel_run_async_thread_func   (GimpParallelRunAsyncThread *thread);
+static void                       gimp_parallel_run_async_enqueue_task  (GimpParallelRunAsyncTask   *task);
+static GimpParallelRunAsyncTask * gimp_parallel_run_async_dequeue_task  (void);
+static gboolean                   gimp_parallel_run_async_execute_task  (GimpParallelRunAsyncTask   *task);
+static void                       gimp_parallel_run_async_abort_task    (GimpParallelRunAsyncTask   *task);
+static void                       gimp_parallel_run_async_cancel        (GimpAsync                  *async);
 
 
 /*  local variables  */
 
-static gint                         gimp_parallel_run_async_n_threads = 0;
-static GimpParallelRunAsyncThread   gimp_parallel_run_async_threads[GIMP_PARALLEL_RUN_ASYNC_MAX_THREADS];
+static gint                       gimp_parallel_run_async_n_threads = 0;
+static GimpParallelRunAsyncThread gimp_parallel_run_async_threads[GIMP_PARALLEL_RUN_ASYNC_MAX_THREADS];
 
-static GMutex                       gimp_parallel_run_async_mutex;
-static GCond                        gimp_parallel_run_async_cond;
-static GQueue                       gimp_parallel_run_async_queue = G_QUEUE_INIT;
+static GMutex                     gimp_parallel_run_async_mutex;
+static GCond                      gimp_parallel_run_async_cond;
+static GQueue                     gimp_parallel_run_async_queue = G_QUEUE_INIT;
 
 
 /*  public functions  */
