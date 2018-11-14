@@ -41,13 +41,12 @@ extern "C"
 #include "gimp-gegl-loops-sse2.h"
 
 #include "core/gimp-atomic.h"
-#include "core/gimp-parallel.h"
 #include "core/gimp-utils.h"
 #include "core/gimpprogress.h"
 
 
-#define MIN_PARALLEL_SUB_SIZE 64
-#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
 #define SHIFTED_AREA(dest, src)                                                \
   const GeglRectangle dest##_area_ = {                                         \
@@ -82,8 +81,9 @@ gimp_gegl_buffer_copy (GeglBuffer          *src_buffer,
       if (! dest_rect)
         dest_rect = src_rect;
 
-      gimp_parallel_distribute_area (src_rect, MIN_PARALLEL_SUB_AREA,
-                                     [=] (const GeglRectangle *src_area)
+      gegl_parallel_distribute_area (
+        src_rect, PIXELS_PER_THREAD,
+        [=] (const GeglRectangle *src_area)
         {
           SHIFTED_AREA (dest, src);
 
@@ -165,8 +165,9 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
       offset = 0.0;
     }
 
-  gimp_parallel_distribute_area (dest_rect, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *dest_area)
+  gegl_parallel_distribute_area (
+    dest_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *dest_area)
     {
       const gint          components  = src_components;
       const gint          a_component = components - 1;
@@ -317,8 +318,9 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
   if (! dest_rect)
     dest_rect = gegl_buffer_get_extent (dest_buffer);
 
-  gimp_parallel_distribute_area (src_rect, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *src_area)
+  gegl_parallel_distribute_area (
+    src_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *src_area)
     {
       GeglBufferIterator *iter;
 
@@ -552,8 +554,9 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
       brush_a *= brush_color_ptr[3];
     }
 
-  gimp_parallel_distribute_area (accum_rect, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *accum_area)
+  gegl_parallel_distribute_area (
+    accum_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *accum_area)
     {
       GeglBufferIterator *iter;
 
@@ -620,8 +623,9 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
   if (! dest_rect)
     dest_rect = gegl_buffer_get_extent (dest_buffer);
 
-  gimp_parallel_distribute_area (mask_rect, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *mask_area)
+  gegl_parallel_distribute_area (
+    mask_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *mask_area)
     {
       GeglBufferIterator *iter;
 
@@ -665,8 +669,9 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
   if (! dest_rect)
     dest_rect = gegl_buffer_get_extent (dest_buffer);
 
-  gimp_parallel_distribute_area (mask_rect, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *mask_area)
+  gegl_parallel_distribute_area (
+    mask_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *mask_area)
     {
       GeglBufferIterator *iter;
 
@@ -711,8 +716,9 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
   if (! dest_rect)
     dest_rect = gegl_buffer_get_extent (dest_buffer);
 
-  gimp_parallel_distribute_area (mask_rect, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *mask_area)
+  gegl_parallel_distribute_area (
+    mask_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *mask_area)
     {
       GeglBufferIterator *iter;
 
@@ -781,8 +787,9 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
   if (! dest_rect)
     dest_rect = gegl_buffer_get_extent (dest_buffer);
 
-  gimp_parallel_distribute_area (top_rect, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *top_area)
+  gegl_parallel_distribute_area (
+    top_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *top_area)
     {
       GeglBufferIterator *iter;
 
@@ -897,8 +904,9 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
   if (! mask_rect)
     mask_rect = gegl_buffer_get_extent (mask_buffer);
 
-  gimp_parallel_distribute_area (indexed_rect, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *indexed_area)
+  gegl_parallel_distribute_area (
+    indexed_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *indexed_area)
     {
       GeglBufferIterator *iter;
 
@@ -993,8 +1001,9 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
 
       GIMP_TIMER_START ();
 
-      gimp_parallel_distribute_area (src_rect, MIN_PARALLEL_SUB_AREA,
-                                     [=] (const GeglRectangle *src_area)
+      gegl_parallel_distribute_area (
+        src_rect, PIXELS_PER_THREAD,
+        [=] (const GeglRectangle *src_area)
         {
           SHIFTED_AREA (dest, src);
 
@@ -1055,8 +1064,9 @@ gimp_gegl_average_color (GeglBuffer          *buffer,
   else
     roi = *rect;
 
-  gimp_parallel_distribute_area (&roi, MIN_PARALLEL_SUB_AREA,
-                                 [&] (const GeglRectangle *area)
+  gegl_parallel_distribute_area (
+    &roi, PIXELS_PER_THREAD,
+    [&] (const GeglRectangle *area)
     {
       Sum                *sum;
       GeglBufferIterator *iter;

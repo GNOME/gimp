@@ -29,7 +29,6 @@ extern "C"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
-#include "core/gimp-parallel.h"
 #include "core/gimptempbuf.h"
 
 #include "operations/layer-modes/gimpoperationlayermode.h"
@@ -39,8 +38,8 @@ extern "C"
 } /* extern "C" */
 
 
-#define MIN_PARALLEL_SUB_SIZE 64
-#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
 
 /* In order to avoid iterating over the same region of the same buffers
@@ -1133,8 +1132,9 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
 
       Algorithm algorithm (params);
 
-      gimp_parallel_distribute_area (&roi, MIN_PARALLEL_SUB_AREA,
-                                     [=] (const GeglRectangle *area)
+      gegl_parallel_distribute_area (
+        &roi, PIXELS_PER_THREAD,
+        [=] (const GeglRectangle *area)
         {
           State state;
           gint  y;
@@ -1350,8 +1350,9 @@ mask_components_onto (GeglBuffer          *src_buffer,
                       gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT, trc),
                       TRUE, space);
 
-  gimp_parallel_distribute_area (roi, MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *area)
+  gegl_parallel_distribute_area (
+    roi, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *area)
     {
       GeglBufferIterator *iter;
 

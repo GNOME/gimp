@@ -33,14 +33,13 @@ extern "C"
 
 #include "gegl/gimp-gegl-loops.h"
 
-#include "gimp-parallel.h"
 #include "gimpbrush.h"
 #include "gimpbrush-transform.h"
 #include "gimptempbuf.h"
 
 
-#define MIN_PARALLEL_SUB_SIZE 64
-#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
 
 /*  local function prototypes  */
@@ -256,9 +255,9 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   src_walk_vx_i = (gint) ((src_tl_to_bl_delta_x / dest_height) * int_multiple);
   src_walk_vy_i = (gint) ((src_tl_to_bl_delta_y / dest_height) * int_multiple);
 
-  gimp_parallel_distribute_area (GEGL_RECTANGLE (0, 0, dest_width, dest_height),
-                                 MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *area)
+  gegl_parallel_distribute_area (
+    GEGL_RECTANGLE (0, 0, dest_width, dest_height), PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *area)
     {
       guchar       *dest;
       gint          src_space_cur_pos_x;
@@ -556,9 +555,9 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   src_walk_vx_i = (gint) ((src_tl_to_bl_delta_x / dest_height) * int_multiple);
   src_walk_vy_i = (gint) ((src_tl_to_bl_delta_y / dest_height) * int_multiple);
 
-  gimp_parallel_distribute_area (GEGL_RECTANGLE (0, 0, dest_width, dest_height),
-                                 MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *area)
+  gegl_parallel_distribute_area (
+    GEGL_RECTANGLE (0, 0, dest_width, dest_height), PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *area)
     {
       guchar       *dest;
       gint          src_space_cur_pos_x;
@@ -808,8 +807,9 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
 
   sums = g_new (Sums, width * height * components);
 
-  gimp_parallel_distribute_range (height, MIN_PARALLEL_SUB_SIZE,
-                                  [=] (gint y0, gint height)
+  gegl_parallel_distribute_range (
+    height, PIXELS_PER_THREAD / width,
+    [=] (gint y0, gint height)
     {
       gint          x;
       gint          y;
@@ -885,8 +885,9 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
         }
     });
 
-  gimp_parallel_distribute_range (width, MIN_PARALLEL_SUB_SIZE,
-                                  [=] (gint x0, gint width)
+  gegl_parallel_distribute_range (
+    width, PIXELS_PER_THREAD / height,
+    [=] (gint x0, gint width)
     {
       gint        x;
       gint        y;

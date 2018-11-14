@@ -47,7 +47,6 @@ extern "C"
 
 #define GIMP_PARALLEL_MAX_THREADS            64
 #define GIMP_PARALLEL_RUN_ASYNC_MAX_THREADS  1
-#define GIMP_PARALLEL_DISTRIBUTE_MAX_THREADS GIMP_PARALLEL_MAX_THREADS
 
 
 typedef struct
@@ -68,25 +67,6 @@ typedef struct
   GimpAsync *current_async;
 } GimpParallelRunAsyncThread;
 
-typedef struct
-{
-  GimpParallelDistributeFunc func;
-  gint                       n;
-  gpointer                   user_data;
-} GimpParallelDistributeTask;
-
-typedef struct
-{
-  GThread                    *thread;
-  GMutex                      mutex;
-  GCond                       cond;
-
-  gboolean                    quit;
-
-  GimpParallelDistributeTask *volatile task;
-  volatile gint               i;
-} GimpParallelDistributeThread;
-
 
 /*  local function prototypes  */
 
@@ -104,9 +84,6 @@ static gboolean                   gimp_parallel_run_async_execute_task   (GimpPa
 static void                       gimp_parallel_run_async_abort_task     (GimpParallelRunAsyncTask     *task);
 static void                       gimp_parallel_run_async_cancel         (GimpAsync                    *async);
 
-static void                       gimp_parallel_distribute_set_n_threads (gint                          n_threads);
-static gpointer                   gimp_parallel_distribute_thread_func   (GimpParallelDistributeThread *thread);
-
 
 /*  local variables  */
 
@@ -116,14 +93,6 @@ static GimpParallelRunAsyncThread   gimp_parallel_run_async_threads[GIMP_PARALLE
 static GMutex                       gimp_parallel_run_async_mutex;
 static GCond                        gimp_parallel_run_async_cond;
 static GQueue                       gimp_parallel_run_async_queue = G_QUEUE_INIT;
-
-static gint                         gimp_parallel_distribute_n_threads = 1;
-static GimpParallelDistributeThread gimp_parallel_distribute_threads[GIMP_PARALLEL_DISTRIBUTE_MAX_THREADS - 1];
-
-static GMutex                       gimp_parallel_distribute_completion_mutex;
-static GCond                        gimp_parallel_distribute_completion_cond;
-static volatile gint                gimp_parallel_distribute_completion_counter;
-static volatile gint                gimp_parallel_distribute_busy;
 
 
 /*  public functions  */
@@ -257,154 +226,6 @@ gimp_parallel_run_async_independent (GimpParallelRunAsyncFunc func,
   return async;
 }
 
-void
-gimp_parallel_distribute (gint                       max_n,
-                          GimpParallelDistributeFunc func,
-                          gpointer                   user_data)
-{
-  GimpParallelDistributeTask task;
-  gint                       i;
-
-  g_return_if_fail (func != NULL);
-
-  if (max_n == 0)
-    return;
-
-  if (max_n < 0)
-    max_n = gimp_parallel_distribute_n_threads;
-  else
-    max_n = MIN (max_n, gimp_parallel_distribute_n_threads);
-
-  if (max_n == 1 ||
-      ! g_atomic_int_compare_and_exchange (&gimp_parallel_distribute_busy,
-                                           0, 1))
-    {
-      func (0, 1, user_data);
-
-      return;
-    }
-
-  task.n         = max_n;
-  task.func      = func;
-  task.user_data = user_data;
-
-  g_atomic_int_set (&gimp_parallel_distribute_completion_counter, task.n - 1);
-
-  for (i = 0; i < task.n - 1; i++)
-    {
-      GimpParallelDistributeThread *thread =
-        &gimp_parallel_distribute_threads[i];
-
-      g_mutex_lock (&thread->mutex);
-
-      thread->task = &task;
-      thread->i    = i;
-
-      g_cond_signal (&thread->cond);
-
-      g_mutex_unlock (&thread->mutex);
-    }
-
-  func (i, task.n, user_data);
-
-  if (g_atomic_int_get (&gimp_parallel_distribute_completion_counter))
-    {
-      g_mutex_lock (&gimp_parallel_distribute_completion_mutex);
-
-      while (g_atomic_int_get (&gimp_parallel_distribute_completion_counter))
-        {
-          g_cond_wait (&gimp_parallel_distribute_completion_cond,
-                       &gimp_parallel_distribute_completion_mutex);
-        }
-
-      g_mutex_unlock (&gimp_parallel_distribute_completion_mutex);
-    }
-
-  g_atomic_int_set (&gimp_parallel_distribute_busy, 0);
-}
-
-void
-gimp_parallel_distribute_range (gsize                           size,
-                                gsize                           min_sub_size,
-                                GimpParallelDistributeRangeFunc func,
-                                gpointer                        user_data)
-{
-  gsize n = size;
-
-  g_return_if_fail (func != NULL);
-
-  if (size == 0)
-    return;
-
-  if (min_sub_size > 1)
-    n /= min_sub_size;
-
-  n = CLAMP (n, 1, gimp_parallel_distribute_n_threads);
-
-  gimp_parallel_distribute (n, [=] (gint i, gint n)
-    {
-      gsize offset;
-      gsize sub_size;
-
-      offset   = (2 * i       * size + n) / (2 * n);
-      sub_size = (2 * (i + 1) * size + n) / (2 * n) - offset;
-
-      func (offset, sub_size, user_data);
-    });
-}
-
-void
-gimp_parallel_distribute_area (const GeglRectangle            *area,
-                               gsize                           min_sub_area,
-                               GimpParallelDistributeAreaFunc  func,
-                               gpointer                        user_data)
-{
-  gsize n;
-
-  g_return_if_fail (area != NULL);
-  g_return_if_fail (func != NULL);
-
-  if (area->width <= 0 || area->height <= 0)
-    return;
-
-  n = (gsize) area->width * (gsize) area->height;
-
-  if (min_sub_area > 1)
-    n /= min_sub_area;
-
-  n = CLAMP (n, 1, gimp_parallel_distribute_n_threads);
-
-  gimp_parallel_distribute (n, [=] (gint i, gint n)
-    {
-      GeglRectangle sub_area;
-
-      if (area->width <= area->height)
-        {
-          sub_area.x       = area->x;
-          sub_area.width   = area->width;
-
-          sub_area.y       = (2 * i       * area->height + n) / (2 * n);
-          sub_area.height  = (2 * (i + 1) * area->height + n) / (2 * n);
-
-          sub_area.height -= sub_area.y;
-          sub_area.y      += area->y;
-        }
-      else
-        {
-          sub_area.y       = area->y;
-          sub_area.height  = area->height;
-
-          sub_area.x       = (2 * i       * area->width + n) / (2 * n);
-          sub_area.width   = (2 * (i + 1) * area->width + n) / (2 * n);
-
-          sub_area.width  -= sub_area.x;
-          sub_area.x      += area->x;
-        }
-
-      func (&sub_area, user_data);
-    });
-}
-
 
 /*  private functions  */
 
@@ -421,7 +242,6 @@ gimp_parallel_set_n_threads (gint     n_threads,
                              gboolean finish_tasks)
 {
   gimp_parallel_run_async_set_n_threads (n_threads, finish_tasks);
-  gimp_parallel_distribute_set_n_threads (n_threads);
 }
 
 static void
@@ -676,98 +496,6 @@ gimp_parallel_run_async_cancel (GimpAsync *async)
 
   if (task)
     gimp_parallel_run_async_abort_task (task);
-}
-
-static void
-gimp_parallel_distribute_set_n_threads (gint n_threads)
-{
-  gint i;
-
-  while (! g_atomic_int_compare_and_exchange (&gimp_parallel_distribute_busy,
-                                              0, 1));
-
-  n_threads = CLAMP (n_threads, 1, GIMP_PARALLEL_DISTRIBUTE_MAX_THREADS);
-
-  if (n_threads > gimp_parallel_distribute_n_threads) /* need more threads */
-    {
-      for (i = gimp_parallel_distribute_n_threads - 1; i < n_threads - 1; i++)
-        {
-          GimpParallelDistributeThread *thread =
-            &gimp_parallel_distribute_threads[i];
-
-          thread->quit = FALSE;
-          thread->task = NULL;
-
-          thread->thread = g_thread_new (
-            "worker",
-            (GThreadFunc) gimp_parallel_distribute_thread_func,
-            thread);
-        }
-    }
-  else if (n_threads < gimp_parallel_distribute_n_threads) /* need less threads */
-    {
-      for (i = n_threads - 1; i < gimp_parallel_distribute_n_threads - 1; i++)
-        {
-          GimpParallelDistributeThread *thread =
-            &gimp_parallel_distribute_threads[i];
-
-          g_mutex_lock (&thread->mutex);
-
-          thread->quit = TRUE;
-          g_cond_signal (&thread->cond);
-
-          g_mutex_unlock (&thread->mutex);
-        }
-
-      for (i = n_threads - 1; i < gimp_parallel_distribute_n_threads - 1; i++)
-        {
-          GimpParallelDistributeThread *thread =
-            &gimp_parallel_distribute_threads[i];
-
-          g_thread_join (thread->thread);
-        }
-    }
-
-  gimp_parallel_distribute_n_threads = n_threads;
-
-  g_atomic_int_set (&gimp_parallel_distribute_busy, 0);
-}
-
-static gpointer
-gimp_parallel_distribute_thread_func (GimpParallelDistributeThread *thread)
-{
-  g_mutex_lock (&thread->mutex);
-
-  while (TRUE)
-    {
-      if (thread->quit)
-        {
-          break;
-        }
-      else if (thread->task)
-        {
-          thread->task->func (thread->i, thread->task->n,
-                              thread->task->user_data);
-
-          if (g_atomic_int_dec_and_test (
-                &gimp_parallel_distribute_completion_counter))
-            {
-              g_mutex_lock (&gimp_parallel_distribute_completion_mutex);
-
-              g_cond_signal (&gimp_parallel_distribute_completion_cond);
-
-              g_mutex_unlock (&gimp_parallel_distribute_completion_mutex);
-            }
-
-          thread->task = NULL;
-        }
-
-      g_cond_wait (&thread->cond, &thread->mutex);
-    }
-
-  g_mutex_unlock (&thread->mutex);
-
-  return NULL;
 }
 
 } /* extern "C" */
