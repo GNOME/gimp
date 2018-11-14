@@ -1794,11 +1794,11 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    basetype = gimp_image_base_type(image_id);
 
-   dlg = gimp_dialog_new("Save as DDS", "dds", NULL, GTK_WIN_POS_MOUSE,
-                         gimp_standard_help_func, SAVE_PROC,
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK, GTK_RESPONSE_OK,
-                         NULL);
+   dlg = gimp_dialog_new ("Save as DDS", "dds", NULL, GTK_WIN_POS_MOUSE,
+                          gimp_standard_help_func, SAVE_PROC,
+                         _("Cancel"), GTK_RESPONSE_CANCEL,
+                         _("OK"),     GTK_RESPONSE_OK,
+                          NULL);
 
    g_signal_connect(dlg, "response",
                       G_CALLBACK(save_dialog_response),
@@ -1809,7 +1809,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    gtk_window_set_resizable(GTK_WINDOW(dlg), 0);
 
-   vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
+   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
    gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
    gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area (GTK_DIALOG(dlg))),
                       vbox, 1, 1, 0);
@@ -1897,7 +1897,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    g_signal_connect(opt, "changed",
                       G_CALLBACK(mipmaps_selected), &image_id);
-   
+
    string_value_combo_set_item_sensitive(opt, DDS_MIPMAP_EXISTING,
                                          check_mipmaps(image_id, dds_write_vals.savetype));
 
@@ -1908,7 +1908,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                                          is_mipmap_chain_valid);
 
 
-   hbox = gtk_hbox_new(0, 8);
+   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
    gtk_box_pack_start(GTK_BOX(vbox), hbox, 1, 1, 0);
    gtk_widget_show(hbox);
 
@@ -1960,7 +1960,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_widget_show(expander);
 
 
-   vbox2 = gtk_vbox_new(0, 4);
+   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
    gtk_container_add(GTK_CONTAINER(expander), vbox2);
    gtk_widget_show(vbox2);
 
