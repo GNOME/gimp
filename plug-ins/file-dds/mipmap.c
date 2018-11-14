@@ -391,6 +391,7 @@ static void scale_image(unsigned char *dst, int dw, int dh,
    float yscale = MIN(yfactor, 1.0f) / blur;
    float xsupport = support / xscale;
    float ysupport = support / yscale;
+   unsigned char *tmp;
 
    if(xsupport <= 0.5f)
    {
@@ -402,8 +403,6 @@ static void scale_image(unsigned char *dst, int dw, int dh,
       ysupport = 0.5f + 1e-10f;
       yscale = 1.0f;
    }
-
-   unsigned char *tmp;
 
 #ifdef _OPENMP
    tmp = g_malloc(sw * bpp * omp_get_max_threads());
@@ -543,13 +542,6 @@ static void scale_volume_image(unsigned char *dst, int dw, int dh, int dd,
                                wrapfunc_t wrap,
                                int gc, float gamma)
 {
-   /* down to a 2D image, use the faster 2D image resampler */
-   if(dd == 1 && sd == 1)
-   {
-      scale_image(dst, dw, dh, src, sw, sh, bpp, filter, support, wrap, gc, gamma);
-      return;
-   }
-
    const float blur = 1.0f;
    const float xfactor = (float)dw / (float)sw;
    const float yfactor = (float)dh / (float)sh;
@@ -568,6 +560,14 @@ static void scale_volume_image(unsigned char *dst, int dw, int dh, int dd,
    float xsupport = support / xscale;
    float ysupport = support / yscale;
    float zsupport = support / zscale;
+   unsigned char *tmp1, *tmp2;
+
+   /* down to a 2D image, use the faster 2D image resampler */
+   if(dd == 1 && sd == 1)
+   {
+      scale_image(dst, dw, dh, src, sw, sh, bpp, filter, support, wrap, gc, gamma);
+      return;
+   }
 
    if(xsupport <= 0.5f)
    {
@@ -584,8 +584,6 @@ static void scale_volume_image(unsigned char *dst, int dw, int dh, int dd,
       zsupport = 0.5f + 1e-10f;
       zscale = 1.0f;
    }
-
-   unsigned char *tmp1, *tmp2;
 
    tmp1 = g_malloc(sh * sw * bpp);
    tmp2 = g_malloc(dh * sw * bpp);
