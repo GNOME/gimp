@@ -28,6 +28,8 @@
 **
 */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,6 +39,8 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include <libgimp/stdplugins-intl.h>
 
 #include "ddsplugin.h"
 #include "dds.h"
@@ -885,7 +889,7 @@ static int load_layer(FILE *fp, dds_header_t *hdr, dds_load_info_t *d,
                           g_strdup_printf("main surface %s", prefix);
 
    layer = gimp_layer_new(image, layer_name, width, height, type, 100,
-                          GIMP_NORMAL_MODE);
+                          GIMP_LAYER_MODE_NORMAL);
    g_free(layer_name);
 
    gimp_image_insert_layer(image, layer, 0, *l);
@@ -1206,40 +1210,41 @@ static int load_dialog(void)
 
    dlg = gimp_dialog_new(_("Load DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
                          gimp_standard_help_func, LOAD_PROC,
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK, GTK_RESPONSE_OK,
+                         _("Cancel"), GTK_RESPONSE_CANCEL,
+                         _("OK"),     GTK_RESPONSE_OK,
                          NULL);
 
-   gtk_signal_connect(GTK_OBJECT(dlg), "response",
-                      GTK_SIGNAL_FUNC(load_dialog_response),
-                      0);
-   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-                      GTK_SIGNAL_FUNC(gtk_main_quit),
-                      0);
+   g_signal_connect(dlg, "response",
+                    G_CALLBACK (load_dialog_response),
+                    0);
+   g_signal_connect(dlg, "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    0);
 
-   vbox = gtk_vbox_new(0, 8);
+   vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 8);
    gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), vbox, 1, 1, 0);
+   gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area (GTK_DIALOG(dlg))),
+                      vbox, 1, 1, 0);
    gtk_widget_show(vbox);
 
    check = gtk_check_button_new_with_label(_("Load mipmaps"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_read_vals.mipmaps);
-   gtk_signal_connect(GTK_OBJECT(check), "clicked",
-                      GTK_SIGNAL_FUNC(toggle_clicked), &dds_read_vals.mipmaps);
+   g_signal_connect(check, "clicked",
+                    G_CALLBACK (toggle_clicked), &dds_read_vals.mipmaps);
    gtk_box_pack_start(GTK_BOX(vbox), check, 1, 1, 0);
    gtk_widget_show(check);
 
    check = gtk_check_button_new_with_label(_("Automatically decode YCoCg/AExp images when detected"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_read_vals.decode_images);
-   gtk_signal_connect(GTK_OBJECT(check), "clicked",
-                      GTK_SIGNAL_FUNC(toggle_clicked), &dds_read_vals.decode_images);
+   g_signal_connect(check, "clicked",
+                    G_CALLBACK (toggle_clicked), &dds_read_vals.decode_images);
    gtk_box_pack_start(GTK_BOX(vbox), check, 1, 1, 0);
    gtk_widget_show(check);
 
    check = gtk_check_button_new_with_label(_("Show this dialog"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_read_vals.show_dialog);
-   gtk_signal_connect(GTK_OBJECT(check), "clicked",
-                      GTK_SIGNAL_FUNC(toggle_clicked), &dds_read_vals.show_dialog);
+   g_signal_connect(check, "clicked",
+                    G_CALLBACK (toggle_clicked), &dds_read_vals.show_dialog);
    gtk_box_pack_start(GTK_BOX(vbox), check, 1, 1, 0);
    gtk_widget_show(check);
 

@@ -20,6 +20,8 @@
 	Boston, MA 02110-1301, USA.
 */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +32,8 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include <libgimp/stdplugins-intl.h>
 
 #include "ddsplugin.h"
 #include "dds.h"
@@ -1796,18 +1800,19 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                          GTK_STOCK_OK, GTK_RESPONSE_OK,
                          NULL);
 
-   gtk_signal_connect(GTK_OBJECT(dlg), "response",
-                      GTK_SIGNAL_FUNC(save_dialog_response),
+   g_signal_connect(dlg, "response",
+                      G_CALLBACK(save_dialog_response),
                       0);
-   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-                      GTK_SIGNAL_FUNC(gtk_main_quit),
+   g_signal_connect(dlg, "destroy",
+                      G_CALLBACK(gtk_main_quit),
                       0);
 
    gtk_window_set_resizable(GTK_WINDOW(dlg), 0);
 
-   vbox = gtk_vbox_new(0, 4);
+   vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 4);
    gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), vbox, 1, 1, 0);
+   gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area (GTK_DIALOG(dlg))),
+                      vbox, 1, 1, 0);
    gtk_widget_show(vbox);
 
    table = gtk_table_new(4, 2, 0);
@@ -1830,8 +1835,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
 
-   gtk_signal_connect(GTK_OBJECT(opt), "changed",
-                      GTK_SIGNAL_FUNC(compression_selected), 0);
+   g_signal_connect(opt, "changed",
+                      G_CALLBACK(compression_selected), 0);
 
    compress_opt = opt;
 
@@ -1848,8 +1853,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
 
-   gtk_signal_connect(GTK_OBJECT(opt), "changed",
-                      GTK_SIGNAL_FUNC(string_value_combo_selected),
+   g_signal_connect(opt, "changed",
+                      G_CALLBACK(string_value_combo_selected),
                       &dds_write_vals.format);
 
    gtk_widget_set_sensitive(opt, dds_write_vals.compression == DDS_COMPRESS_NONE);
@@ -1869,8 +1874,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
 
-   gtk_signal_connect(GTK_OBJECT(opt), "changed",
-                      GTK_SIGNAL_FUNC(savetype_selected), &image_id);
+   g_signal_connect(opt, "changed",
+                      G_CALLBACK(savetype_selected), &image_id);
 
    string_value_combo_set_item_sensitive(opt, DDS_SAVE_CUBEMAP, is_cubemap);
    string_value_combo_set_item_sensitive(opt, DDS_SAVE_VOLUMEMAP, is_volume);
@@ -1890,8 +1895,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
 
-   gtk_signal_connect(GTK_OBJECT(opt), "changed",
-                      GTK_SIGNAL_FUNC(mipmaps_selected), &image_id);
+   g_signal_connect(opt, "changed",
+                      G_CALLBACK(mipmaps_selected), &image_id);
    
    string_value_combo_set_item_sensitive(opt, DDS_MIPMAP_EXISTING,
                                          check_mipmaps(image_id, dds_write_vals.savetype));
@@ -1909,16 +1914,16 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    check = gtk_check_button_new_with_label(_("Transparent index:"));
    gtk_box_pack_start(GTK_BOX(hbox), check, 0, 0, 0);
-   gtk_signal_connect(GTK_OBJECT(check), "clicked",
-                      GTK_SIGNAL_FUNC(transindex_clicked), 0);
+   g_signal_connect(check, "clicked",
+                      G_CALLBACK(transindex_clicked), 0);
    gtk_widget_show(check);
 
    spin = gtk_spin_button_new(GTK_ADJUSTMENT(gtk_adjustment_new(0, 0, 255, 1, 1, 0)), 1, 0);
    gtk_box_pack_start(GTK_BOX(hbox), spin, 1, 1, 0);
    gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(spin),
                                      GTK_UPDATE_IF_VALID);
-   gtk_signal_connect(GTK_OBJECT(spin), "value_changed",
-                      GTK_SIGNAL_FUNC(transindex_changed), 0);
+   g_signal_connect(spin, "value_changed",
+                      G_CALLBACK(transindex_changed), 0);
    gtk_widget_show(spin);
 
    g_object_set_data(G_OBJECT(check), "spin", spin);
@@ -1949,8 +1954,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_expander_set_use_markup(GTK_EXPANDER(expander), 1);
    gtk_expander_set_expanded(GTK_EXPANDER(expander), dds_write_vals.show_adv_opt);
    gtk_expander_set_spacing(GTK_EXPANDER(expander), 8);
-   gtk_signal_connect(GTK_OBJECT(expander), "activate",
-                      GTK_SIGNAL_FUNC(adv_opt_expanded), 0);
+   g_signal_connect(expander, "activate",
+                      G_CALLBACK(adv_opt_expanded), 0);
    gtk_box_pack_start(GTK_BOX(vbox), expander, 1, 1, 0);
    gtk_widget_show(expander);
 
@@ -1975,8 +1980,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_table_attach(GTK_TABLE(table), check, 0, 2, 0, 1,
                     (GtkAttachOptions)(GTK_FILL),
                     (GtkAttachOptions)(0), 0, 0);
-   gtk_signal_connect(GTK_OBJECT(check), "clicked",
-                      GTK_SIGNAL_FUNC(toggle_clicked), &dds_write_vals.perceptual_metric);
+   g_signal_connect(check, "clicked",
+                      G_CALLBACK(toggle_clicked), &dds_write_vals.perceptual_metric);
    gtk_widget_show(check);
 
    pm_chk = check;
@@ -2006,8 +2011,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
 
-   gtk_signal_connect(GTK_OBJECT(opt), "changed",
-                      GTK_SIGNAL_FUNC(string_value_combo_selected),
+   g_signal_connect(opt, "changed",
+                      G_CALLBACK(string_value_combo_selected),
                       &dds_write_vals.mipmap_filter);
 
    mipmap_filter_opt = opt;
@@ -2026,8 +2031,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
 
-   gtk_signal_connect(GTK_OBJECT(opt), "changed",
-                      GTK_SIGNAL_FUNC(string_value_combo_selected),
+   g_signal_connect(opt, "changed",
+                      G_CALLBACK(string_value_combo_selected),
                       &dds_write_vals.mipmap_wrap);
 
    mipmap_wrap_opt = opt;
@@ -2037,8 +2042,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_table_attach(GTK_TABLE(table), check, 1, 2, 2, 3,
                     (GtkAttachOptions)(GTK_FILL),
                     (GtkAttachOptions)(0), 0, 0);
-   gtk_signal_connect(GTK_OBJECT(check), "clicked",
-                      GTK_SIGNAL_FUNC(gamma_correct_clicked), NULL);
+   g_signal_connect(check, "clicked",
+                      G_CALLBACK(gamma_correct_clicked), NULL);
    gtk_widget_show(check);
 
    gamma_chk = check;
@@ -2048,8 +2053,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_table_attach(GTK_TABLE(table), check, 1, 2, 3, 4,
                     (GtkAttachOptions)(GTK_FILL),
                     (GtkAttachOptions)(0), 0, 0);
-   gtk_signal_connect(GTK_OBJECT(check), "clicked",
-                      GTK_SIGNAL_FUNC(srgb_clicked), NULL);
+   g_signal_connect(check, "clicked",
+                      G_CALLBACK(srgb_clicked), NULL);
    gtk_widget_show(check);
 
    srgb_chk = check;
@@ -2066,8 +2071,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
    gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(spin), GTK_UPDATE_IF_VALID);
-   gtk_signal_connect(GTK_OBJECT(spin), "value_changed",
-                      GTK_SIGNAL_FUNC(gamma_changed), 0);
+   g_signal_connect(spin, "value_changed",
+                      G_CALLBACK(gamma_changed), 0);
    gtk_widget_show(spin);
 
    gamma_spin = spin;
@@ -2077,8 +2082,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
    gtk_table_attach(GTK_TABLE(table), check, 1, 2, 5, 6,
                     (GtkAttachOptions)(GTK_FILL),
                     (GtkAttachOptions)(0), 0, 0);
-   gtk_signal_connect(GTK_OBJECT(check), "clicked",
-                      GTK_SIGNAL_FUNC(alpha_coverage_clicked), NULL);
+   g_signal_connect(check, "clicked",
+                      G_CALLBACK(alpha_coverage_clicked), NULL);
    gtk_widget_show(check);
 
    alpha_coverage_chk = check;
@@ -2095,8 +2100,8 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
    gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(spin), GTK_UPDATE_IF_VALID);
-   gtk_signal_connect(GTK_OBJECT(spin), "value_changed",
-                      GTK_SIGNAL_FUNC(alpha_test_threshold_changed), 0);
+   g_signal_connect(spin, "value_changed",
+                      G_CALLBACK(alpha_test_threshold_changed), 0);
    gtk_widget_show(spin);
 
    alpha_test_threshold_spin = spin;

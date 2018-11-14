@@ -20,6 +20,8 @@
 	Boston, MA 02110-1301, USA.
 */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,6 +30,8 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+
+#include <libgimp/stdplugins-intl.h>
 
 #include "ddsplugin.h"
 #include "dds.h"
@@ -317,7 +321,11 @@ static void run(const gchar *name, gint nparams, const GimpParam *param,
 		}
 
       if(dds_write_vals.gamma < 1e-04f)
-         dds_write_vals.gamma = gimp_gamma();
+        /* gimp_gamma() got removed and was always returning 2.2 anyway.
+         * XXX Review this piece of code if we expect gamma value could
+         * be parameterized.
+         */
+         dds_write_vals.gamma = 2.2;
 
 		if(status == GIMP_PDB_SUCCESS)
 		{
