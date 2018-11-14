@@ -41,8 +41,8 @@
 #include "gimpwaitable.h"
 
 
-#define MIN_PARALLEL_SUB_SIZE 64
-#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
 
 enum
@@ -946,8 +946,8 @@ gimp_histogram_calculate_internal (GimpAsync        *async,
   data.format      = format;
   data.values_list = NULL;
 
-  gimp_parallel_distribute_area (
-    &context->buffer_rect, MIN_PARALLEL_SUB_AREA,
+  gegl_parallel_distribute_area (
+    &context->buffer_rect, PIXELS_PER_THREAD, GEGL_SPLIT_STRATEGY_AUTO,
     (GimpParallelDistributeAreaFunc) gimp_histogram_calculate_area,
     &data);
 

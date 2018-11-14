@@ -29,7 +29,6 @@ extern "C"
 
 #include "paint-types.h"
 
-#include "core/gimp-parallel.h"
 #include "core/gimptempbuf.h"
 
 #include "gimpbrushcore.h"
@@ -37,8 +36,8 @@ extern "C"
 #include "gimpbrushcore-kernels.h"
 
 
-#define MIN_PARALLEL_SUB_SIZE 64
-#define MIN_PARALLEL_SUB_AREA (MIN_PARALLEL_SUB_SIZE * MIN_PARALLEL_SUB_SIZE)
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
 
 static inline void
@@ -133,8 +132,9 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
 
   core->subsample_brushes[index2][index1] = dest;
 
-  gimp_parallel_distribute_range (mask_height, MIN_PARALLEL_SUB_SIZE,
-                                  [=] (gint y, gint height)
+  gegl_parallel_distribute_range (
+    mask_height, PIXELS_PER_THREAD / mask_width,
+    [=] (gint y, gint height)
     {
       const guchar *m;
       guchar       *d;
@@ -322,10 +322,11 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
 
   /* Now convert the brush */
 
-  gimp_parallel_distribute_range (gimp_temp_buf_get_width  (subsample_mask) *
-                                  gimp_temp_buf_get_height (subsample_mask),
-                                  MIN_PARALLEL_SUB_AREA,
-                                  [=] (gint offset, gint size)
+  gegl_parallel_distribute_range (
+    gimp_temp_buf_get_width  (subsample_mask) *
+    gimp_temp_buf_get_height (subsample_mask),
+    PIXELS_PER_THREAD,
+    [=] (gint offset, gint size)
     {
       const guchar *source;
       guchar       *dest;
@@ -396,12 +397,10 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
 
-  gimp_parallel_distribute_area (GEGL_RECTANGLE (0,
-                                                 0,
-                                                 brush_mask_width,
-                                                 brush_mask_height),
-                                 MIN_PARALLEL_SUB_AREA,
-                                 [=] (const GeglRectangle *area)
+  gegl_parallel_distribute_area (
+    GEGL_RECTANGLE (0, 0, brush_mask_width, brush_mask_height),
+    PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *area)
     {
       const guchar *m;
       gfloat       *d;
