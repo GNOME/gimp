@@ -7,6 +7,28 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+Overview of Changes from GIMP 2.10.8 to GIMP 2.10.10
+===================================================
+
+Core:
+
+  - In gimp_drawable_transform_buffer_affine(), avoid modifying the
+    clipping mode when transforming layer masks, since this function
+    is used (among other things) to transform layer masks together with
+    their layer, in which case they should use the same clipping mode
+    as the layer. This fixes a regression introduced by commit 2ae823ba,
+    causing layer masks to be transformed with a mismatched clipping mode
+    during layer transforms, leading to discrepencies between the
+    transformed layer and the transformed mask.
+
+Installers:
+
+  - Windows: proper fix for libthai to stop GIMP from crashing in the
+    Thai locale.
+
+Translations:
+
+  - Czech, Ukrainian.
 
 Overview of Changes from GIMP 2.10.6 to GIMP 2.10.8
 ===================================================
@@ -17,6 +39,7 @@ Core:
     projection asynchronously, rather than using a fixed chunk size.
     This provides a better trade-off between throughput and
     responsiveness dynamically, based on how fast the processing is.
+  - Add xyY color space to the color spaces for sampling colors.
 
 Tools:
 
@@ -39,6 +62,8 @@ Tools:
     drawable and mask extents. This fixes wrong application position
     when painting on a drawable whose origin is above/to the left of the
     image's origin, and there's a selection active.
+  - New type of gradient interpolation called 'Step' for making multi-color
+    hard-edge gradient fills.
 
 Plug-ins:
 
@@ -47,7 +72,7 @@ Plug-ins:
   - Improve RawTherapee discovery by looking up registry key (should
     become useful with RawTherapee 5.5 and more).
 
-Usability:
+Usability and UI:
 
   - Compatibility information in the Save dialog is now more understandable.
     The minimum GIMP version for the XCF file is always written down when it
@@ -56,6 +81,12 @@ Usability:
     makes it more discoverable. The warning on compression is now displayed
     as its own text under the checkbox and not as additional text to the
     minimum GIMP version label.
+  - In all themes, fix the color of selected text, while editing a tree-view's
+    item text (such as when renaming a layer), by overriding tree-view
+    specific styling with the global text-entry style, for nested text entries
+    inside tree-views. The text would previously use the same color as the
+    selection background, making it unreadable.
+  - Add option in the Windows menu to hide the image tab bar.
 
 CLI:
 
@@ -99,7 +130,8 @@ Debugging:
 Translations:
 
   - Updated translations: Danish, Dutch, Finnish, German, Hungarian,
-    Italian, Polish, Portuguese (Brazil), Spanish, Swedish, Ukrainian.
+    Italian, Marathi, Polish, Portuguese (Brazil), Russian, Spanish,
+    Swedish, Ukrainian.
 
 
 Overview of Changes from GIMP 2.10.4 to GIMP 2.10.6
