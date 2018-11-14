@@ -111,78 +111,80 @@ MAIN()
 
 static void query(void)
 {
-	gimp_install_procedure(LOAD_PROC,
-								  "Loads files in DDS image format",
-								  "Loads files in DDS image format",
-								  "Shawn Kirst",
-								  "Shawn Kirst",
-								  "2008",
-								  "<Load>/DDS image",
-								  0,
-								  GIMP_PLUGIN,
-								  G_N_ELEMENTS(load_args),
+  gimp_install_procedure (LOAD_PROC,
+                          "Loads files in DDS image format",
+                          "Loads files in DDS image format",
+                          "Shawn Kirst",
+                          "Shawn Kirst",
+                          "2008",
+                          N_("DDS image"),
+                          0,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS(load_args),
                           G_N_ELEMENTS(load_return_vals),
-								  load_args, load_return_vals);
+                          load_args, load_return_vals);
 
-   gimp_register_file_handler_mime(LOAD_PROC, "image/dds");
-	gimp_register_magic_load_handler(LOAD_PROC,
-												"dds",
-												"",
-												"0,string,DDS");
+  gimp_register_file_handler_mime (LOAD_PROC, "image/dds");
+  gimp_register_magic_load_handler (LOAD_PROC,
+                                    "dds",
+                                    "",
+                                    "0,string,DDS");
 
-	gimp_install_procedure(SAVE_PROC,
-								  "Saves files in DDS image format",
-								  "Saves files in DDS image format",
-								  "Shawn Kirst",
-								  "Shawn Kirst",
-								  "2008",
-								  "<Save>/DDS image",
-								  "INDEXED, GRAY, RGB",
-								  GIMP_PLUGIN,
-								  G_N_ELEMENTS(save_args), 0,
-								  save_args, 0);
+  gimp_install_procedure (SAVE_PROC,
+                          "Saves files in DDS image format",
+                          "Saves files in DDS image format",
+                          "Shawn Kirst",
+                          "Shawn Kirst",
+                          "2008",
+                          N_("DDS image"),
+                          "INDEXED, GRAY, RGB",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS(save_args), 0,
+                          save_args, 0);
 
-   gimp_register_file_handler_mime(SAVE_PROC, "image/dds");
-	gimp_register_save_handler(SAVE_PROC,
-										"dds",
-										"");
+  gimp_register_file_handler_mime (SAVE_PROC, "image/dds");
+  gimp_register_save_handler (SAVE_PROC,
+                              "dds",
+                              "");
 
-   gimp_install_procedure(DECODE_YCOCG_PROC,
+  gimp_install_procedure (DECODE_YCOCG_PROC,
                           "Converts YCoCg encoded pixels to RGB",
                           "Converts YCoCg encoded pixels to RGB",
                           "Shawn Kirst",
                           "Shawn Kirst",
                           "2008",
-                          "<Image>/Filters/Colors/Decode YCoCg",
+                          N_("Decode YCoCg"),
                           "RGBA",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS(decode_args), 0,
                           decode_args, 0);
+  /*gimp_plugin_menu_register (DECODE_YCOCG_PROC, "<Image>/Filters/Colors");*/
 
-   gimp_install_procedure(DECODE_YCOCG_SCALED_PROC,
+  gimp_install_procedure (DECODE_YCOCG_SCALED_PROC,
                           "Converts YCoCg (scaled) encoded pixels to RGB",
                           "Converts YCoCg (scaled) encoded pixels to RGB",
                           "Shawn Kirst",
                           "Shawn Kirst",
                           "2008",
-                          "<Image>/Filters/Colors/Decode YCoCg (scaled)",
+                          N_("Decode YCoCg (scaled)"),
                           "RGBA",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS(decode_args), 0,
                           decode_args, 0);
+  /*gimp_plugin_menu_register (DECODE_YCOCG_SCALED_PROC, "<Image>/Filters/Colors");*/
 
-   gimp_install_procedure(DECODE_ALPHA_EXP_PROC,
+  gimp_install_procedure (DECODE_ALPHA_EXP_PROC,
                           "Converts alpha exponent encoded pixels to RGB",
                           "Converts alpha exponent encoded pixels to RGB",
                           "Shawn Kirst",
                           "Shawn Kirst",
                           "2008",
-                          "<Image>/Filters/Colors/Decode Alpha exponent",
+                          N_("Decode Alpha exponent"),
                           "RGBA",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS(decode_args), 0,
                           decode_args, 0);
-
+  /*gimp_plugin_menu_register (DECODE_ALPHA_EXP_PROC, "<Image>/Filters/Colors");*/
 }
 
 static void run(const gchar *name, gint nparams, const GimpParam *param,
