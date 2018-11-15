@@ -371,8 +371,26 @@ gimp_scale_tool_size_notify (GtkWidget             *box,
           GimpTool          *tool    = GIMP_TOOL (tg_tool);
           GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
-          tg_tool->trans_info[X1] = tg_tool->trans_info[X0] + width;
-          tg_tool->trans_info[Y1] = tg_tool->trans_info[Y0] + height;
+          if (options->frompivot_scale)
+            {
+              gdouble center_x;
+              gdouble center_y;
+
+              center_x = (tg_tool->trans_info[X0] +
+                          tg_tool->trans_info[X1]) / 2.0;
+              center_y = (tg_tool->trans_info[Y0] +
+                          tg_tool->trans_info[Y1]) / 2.0;
+
+              tg_tool->trans_info[X0] = center_x - width  / 2.0;
+              tg_tool->trans_info[Y0] = center_y - height / 2.0;
+              tg_tool->trans_info[X1] = center_x + width  / 2.0;
+              tg_tool->trans_info[Y1] = center_y + height / 2.0;
+            }
+          else
+            {
+              tg_tool->trans_info[X1] = tg_tool->trans_info[X0] + width;
+              tg_tool->trans_info[Y1] = tg_tool->trans_info[Y0] + height;
+            }
 
           gimp_transform_grid_tool_push_internal_undo (tg_tool);
 
