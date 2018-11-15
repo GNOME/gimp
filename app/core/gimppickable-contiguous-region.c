@@ -239,11 +239,21 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       select_transparent = FALSE;
       select_criterion   = GIMP_SELECT_CRITERION_COMPOSITE;
       diagonal_neighbors = FALSE;
+
+      format = choose_format (src_buffer, select_criterion,
+                              &n_components, &has_alpha);
+      gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
     }
   else
     {
       gimp_pickable_flush (pickable);
       src_buffer = gimp_pickable_get_buffer (pickable);
+
+      format = choose_format (src_buffer, select_criterion,
+                              &n_components, &has_alpha);
+      gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
       if (has_alpha)
         {
@@ -261,12 +271,6 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
           select_transparent = FALSE;
         }
     }
-
-  format = choose_format (src_buffer, select_criterion,
-                          &n_components, &has_alpha);
-
-  gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
-                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   extent = *gegl_buffer_get_extent (src_buffer);
 
