@@ -21,10 +21,20 @@ Core:
     during layer transforms, leading to discrepencies between the
     transformed layer and the transformed mask.
 
+Tools:
+
+  - In scale tool, scale around center even when using numeric input.
+
 Plug-ins:
 
   - file-pdf-save GUI now clearly indicates the order the layers will be
     used to make multi-page PDFs.
+
+Help:
+
+  - Link to the bugtracker directly from the Help menu, also link to the
+    wiki and the roadmap. Remove the link to currently disabled
+    registry.gimp.org.
 
 Installers:
 
