@@ -11,21 +11,22 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2011, 2012, 2015.
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2017, 2018.
+# Rodrigo <rodhos92@gmail.com>, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-06 07:34+0000\n"
-"PO-Revision-Date: 2018-07-06 09:40+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: es <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2018-11-14 09:18+0000\n"
+"PO-Revision-Date: 2018-11-16 12:52+0100\n"
+"Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
@@ -655,7 +656,6 @@ msgid "Smooth vertically"
 msgstr "Suavizado vertical"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
-#| msgid "_Drop Shadow..."
 msgid "_Drop Shadow (legacy)..."
 msgstr "_Sombra arrojada (heredado)…"
 
@@ -862,28 +862,50 @@ msgstr "Dibujar objetos _sencillos"
 msgid "Create and Use _Selections"
 msgstr "Crear y usar las _selecciones"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
 msgid "_Main Web Site"
 msgstr "Sitio web _principal"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
 msgid "Bookmark to the GIMP web site"
 msgstr "Marcador al sitio web de GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
 msgid "_Developer Web Site"
 msgstr "Sitio web del _desarrollador"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-msgid "_User Manual Web Site"
-msgstr "Sitio web del _manual de usuario"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+msgid "_Roadmap"
+msgstr "Hoja de _ruta"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Plug-in _Registry"
-msgstr "_Registro de complementos"
+#| msgid "Bookmark to the GIMP web site"
+msgid "Bookmark to the roadmap of GIMP"
+msgstr "Marcador a la hoja de ruta de GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+msgid "_Wiki"
+msgstr "_Wiki"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+#| msgid "Bookmark to the GIMP web site"
+msgid "Bookmark to the wiki of GIMP"
+msgstr "Marcador a la wiki de GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+msgid "_Bug Reports and Feature Requests"
+msgstr "_Informes de error y solicitudes de características"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#| msgid "Bookmark to the user manual"
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "Marcador al seguimiento de errores de GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+msgid "_User Manual Web Site"
+msgstr "Sitio web del _manual de usuario"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
@@ -1724,6 +1746,9 @@ msgstr "Desplazamiento X de la sombra base"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Desplazamiento Y de la sombra base"
+
+#~ msgid "Plug-in _Registry"
+#~ msgstr "_Registro de complementos"
 
 #~ msgid "3D _Outline..."
 #~ msgstr "_Contorno 3D…"
