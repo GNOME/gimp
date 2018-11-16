@@ -514,6 +514,7 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
           if (options->fill_selection)
             {
               gimp_drawable_edit_fill (drawable, fill_options, NULL);
+              gimp_image_flush (image);
             }
           else
             {
