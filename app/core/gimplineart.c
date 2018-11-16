@@ -68,20 +68,16 @@ typedef struct _Edgel
   guint     next, previous;
 } Edgel;
 
-static void         gimp_lineart_add_label_equivalency      (GHashTable             *equivalencies,
-                                                             guint                   label1,
-                                                             guint                   label2);
-static GeglBuffer * gimp_lineart_label                      (GeglBuffer             *line_art,
-                                                             guint32                *n_labels);
-static void         gimp_lineart_erode                      (GeglBuffer             *buffer,
-                                                             gint                    s);
 static void         gimp_lineart_denoise                    (GeglBuffer             *buffer,
                                                              int                     size);
 static void         gimp_lineart_compute_normals_curvatures (GeglBuffer             *mask,
                                                              gfloat                 *normals,
                                                              gfloat                 *curvatures,
+                                                             gfloat                 *smoothed_curvatures,
                                                              int                     normal_estimate_mask_size);
+static gfloat *     gimp_lineart_get_smooth_curvatures      (GArray                 *edgelset);
 static GArray     * gimp_lineart_curvature_extremums        (gfloat                 *curvatures,
+                                                             gfloat                 *smoothed_curvatures,
                                                              gint                    curvatures_width,
                                                              gint                    curvatures_height);
 static gint         gimp_spline_candidate_cmp               (const SplineCandidate  *a,
@@ -109,15 +105,13 @@ static GArray     * gimp_lineart_line_segment_until_hit      (const GeglBuffer  
                                                               Pixel                   start,
                                                               GimpVector2             direction,
                                                               int                     size);
-static gfloat       gimp_lineart_estimate_stroke_width       (GeglBuffer             *mask);
+static gfloat     * gimp_lineart_estimate_strokes_radii      (GeglBuffer             *mask);
 
 /* Some callback-type functions. */
 
 static guint        visited_hash_fun                         (Pixel                  *key);
 static gboolean     visited_equal_fun                        (Pixel                  *e1,
                                                               Pixel                  *e2);
-static gint         float_compare                            (gconstpointer           p1,
-                                                              gconstpointer           p2);
 
 static inline gboolean    border_in_direction (GeglBuffer *mask,
                                                Pixel       p,
@@ -234,6 +228,8 @@ gimp_lineart_close (GeglBuffer          *line_art,
   const Babl         *gray_format;
   gfloat             *normals;
   gfloat             *curvatures;
+  gfloat             *smoothed_curvatures;
+  gfloat             *radii;
   GeglBufferIterator *gi;
   GeglBuffer         *closed;
   GeglBuffer         *strokes;
@@ -248,8 +244,9 @@ gimp_lineart_close (GeglBuffer          *line_art,
   gint                height = gegl_buffer_get_height (line_art);
   gint                i;
 
-  normals    = g_new0 (gfloat, width * height * 2);
-  curvatures = g_new0 (gfloat, width * height);
+  normals             = g_new0 (gfloat, width * height * 2);
+  curvatures          = g_new0 (gfloat, width * height);
+  smoothed_curvatures = g_new0 (gfloat, width * height);
 
   if (select_transparent)
     /* Keep alpha channel as gray levels */
@@ -305,40 +302,32 @@ gimp_lineart_close (GeglBuffer          *line_art,
         }
     }
 
-  if (erosion > 0)
-    {
-      gimp_lineart_erode (strokes, erosion);
-    }
-  else if (erosion < 0)
-    {
-      const gfloat stroke_width = gimp_lineart_estimate_stroke_width (strokes);
-      const gint   erode_size   = (gint) roundf (stroke_width / 5);
-
-      if (erode_size)
-        gimp_lineart_erode (strokes, 2 * erode_size);
-    }
-
   /* Denoise (remove small connected components) */
   gimp_lineart_denoise (strokes, minimal_lineart_area);
 
   /* Estimate normals & curvature */
   gimp_lineart_compute_normals_curvatures (strokes, normals, curvatures,
+                                           smoothed_curvatures,
                                            normal_estimate_mask_size);
 
-  threshold = 1.0f - end_point_rate;
+  radii = gimp_lineart_estimate_strokes_radii (strokes);
+  threshold = MAX (0.25f, 1.0f - end_point_rate);
   for (i = 0; i < width; i++)
     {
       gint j;
       for (j = 0; j < height; j++)
         {
-          gfloat v = curvatures[i + j * width];
-
-          curvatures[i + j * width] = v >= threshold ? v - threshold :
-                                                       (v <= -threshold ? v + threshold : 0.0f);
+          if (smoothed_curvatures[i + j * width] >= (threshold / MAX (1.0f, radii[i + j * width])) ||
+              curvatures[i + j * width] >= threshold)
+            curvatures[i + j * width] = 1.0;
+          else
+            curvatures[i + j * width] = 0.0;
         }
     }
+  g_free (radii);
 
-  keypoints = gimp_lineart_curvature_extremums (curvatures, width, height);
+  keypoints = gimp_lineart_curvature_extremums (curvatures, smoothed_curvatures,
+                                                width, height);
   candidates = gimp_lineart_find_spline_candidates (keypoints, normals, width,
                                                     spline_max_length,
                                                     spline_max_angle);
@@ -466,487 +455,13 @@ gimp_lineart_close (GeglBuffer          *line_art,
   g_object_unref (strokes);
   g_free (normals);
   g_free (curvatures);
+  g_free (smoothed_curvatures);
   g_list_free_full (candidates, g_free);
 
   return closed;
 }
 
 /* Private functions */
-
-static void
-gimp_lineart_add_label_equivalency (GHashTable *equivalencies,
-                                    guint       label1,
-                                    guint       label2)
-{
-  gpointer key = GUINT_TO_POINTER (MAX (label1, label2));
-  gpointer eq  = GUINT_TO_POINTER (MIN (label1, label2));
-  gpointer old_eq = g_hash_table_lookup (equivalencies, key);
-
-  if (old_eq && old_eq != eq)
-    eq = MIN (old_eq, eq);
-
-  /* Check that the equivalent label has no equivalent itself. */
-  if ((old_eq = g_hash_table_lookup (equivalencies, eq)))
-    g_hash_table_insert (equivalencies, key, old_eq);
-  else
-    g_hash_table_insert (equivalencies, key, eq);
-}
-
-/**
- * Label connected stroke pixels in regions, and leave all non-stroke
- * pixels with label 0.
- */
-static GeglBuffer *
-gimp_lineart_label (GeglBuffer *line_art,
-                    guint32    *n_labels)
-{
-  GeglBufferIterator *gi;
-  guint              *labels;
-  guint              *label;
-  GHashTable         *equivalencies;
-  gint                width  = gegl_buffer_get_width (line_art);
-  gint                height = gegl_buffer_get_height (line_art);
-  gint                x;
-  gint                y;
-
-  equivalencies = g_hash_table_new (NULL, NULL);
-
-  labels = g_new (guint, sizeof (guint) * width * height);
-
-  gi = gegl_buffer_iterator_new (line_art, gegl_buffer_get_extent (line_art),
-                                 0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
-
-  *n_labels = 0;
-  while (gegl_buffer_iterator_next (gi))
-    {
-      guint8  *stroke = (guint8*) gi->items[0].data;
-      gint     startx = gi->items[0].roi.x;
-      gint     starty = gi->items[0].roi.y;
-      gint     endy   = starty + gi->items[0].roi.height;
-      gint     endx   = startx + gi->items[0].roi.width;
-
-      for (y = starty; y < endy; y++)
-        for (x = startx; x < endx; x++)
-          {
-            label  = labels + y * width + x;
-
-            *label = 0;
-            if (*stroke)
-              {
-                if (x > 0 && y > 0)
-                  {
-                    guint *pxy = label - width - 1;
-
-                    *label = *pxy;
-                  }
-                if (y > 0)
-                  {
-                    guint *py = label - width;
-
-                    if (! *label)
-                      *label = *py;
-                    else if (*py && *label != *py)
-                      gimp_lineart_add_label_equivalency (equivalencies,
-                                                          *label, *py);
-                  }
-                if (y > 0 && x < width - 1)
-                  {
-                    guint *py_nx  = label - width + 1;
-
-                    if (! *label)
-                      *label = *py_nx;
-                    else if (*py_nx && *label != *py_nx)
-                      gimp_lineart_add_label_equivalency (equivalencies,
-                                                          *label, *py_nx);
-                  }
-                if (x > 0)
-                  {
-                    guint *px = label - 1;
-
-                    if (! *label)
-                      *label = *px;
-                    else if (*px && *label != *px)
-                      gimp_lineart_add_label_equivalency (equivalencies,
-                                                          *label, *px);
-                  }
-                if (! *label)
-                  *label = ++(*n_labels);
-              }
-            stroke++;
-          }
-    }
-
-  label = labels;
-  for (y = 0; y < height; y++)
-    for (x = 0; x < width; x++)
-      {
-        if (*label > 1)
-          {
-            gpointer eq = g_hash_table_lookup (equivalencies,
-                                               GINT_TO_POINTER (*label));
-
-            if (eq)
-              *label = GPOINTER_TO_INT (eq);
-          }
-        label++;
-      }
-  g_hash_table_destroy (equivalencies);
-
-  return gegl_buffer_linear_new_from_data (labels,
-                                           babl_format_n (babl_type ("u32"), 1),
-                                           gegl_buffer_get_extent (line_art), 0,
-                                           g_free, NULL);
-}
-
-static void
-gimp_lineart_erode (GeglBuffer *buffer,
-                    gint        s)
-{
-  /* Erode image by a rectangular structuring element of specified
-   * size.
-   */
-  const Babl         *format;
-  const gint          _s2 = s / 2 + 1;
-  const gint          _s1 = s - _s2;
-  GeglBufferIterator *gi;
-  guchar             *buf;
-  gint                width;
-  gint                height;
-
-  if (s <= 1)
-    return;
-
-  format = gegl_buffer_get_format (buffer);
-  width  = gegl_buffer_get_width (buffer);
-  height = gegl_buffer_get_height (buffer);
-
-  if (width > 1)
-    {
-      /* Erosion along X-axis. */
-      const gint s1  = _s1 > width ? width : _s1;
-      const gint s2  = _s2 > width ? width : _s2;
-      gint       y;
-
-      buf = g_new0 (guchar, width);
-      for (y = 0; y < height; ++y)
-        {
-          guchar   cur;
-          gint     xs  = width;
-          gint     xd  = 0;
-          gboolean is_first = TRUE;
-
-          gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (0, y, MIN (s2, width), 1),
-                                         0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
-          while (gegl_buffer_iterator_next (gi))
-            {
-              guint8 *val = (guint8*) gi->items[0].data;
-              gint    k   = 0;
-
-              if (gi->items[0].roi.x == 0)
-                {
-                  cur = *val;
-                  k   = 1;
-                  val++;
-                }
-              for (; k < gi->length; k++)
-                {
-                  if (*val <= cur)
-                    {
-                      xs = gi->items[0].roi.x + k + 1;
-                      cur = *val;
-                      is_first = FALSE;
-                    }
-                  val++;
-                }
-            }
-          buf[xd] = cur;
-          xd++;
-
-          if (xs >= width - 1)
-            {
-              guchar se;
-
-              gegl_buffer_sample (buffer, width - 1, y, NULL, &se, NULL,
-                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              cur = MIN (cur, se);
-              gegl_buffer_set_color_from_pixel (buffer, GEGL_RECTANGLE (0, y, width, 1),
-                                                &cur, NULL);
-            }
-          else
-            {
-              gint _width = MIN (width - xs - 1, s1);
-              gint p      = s1;
-
-              _width = MIN (_width, width - xd);
-              gi = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (xs, y, _width, 1),
-                                             0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
-              while (gegl_buffer_iterator_next (gi))
-                {
-                  guint8 *val = (guint8*) gi->items[0].data;
-                  gint    k;
-
-                  for (k = 0; k < gi->length; k++)
-                    {
-                      if (*val <= cur)
-                        {
-                          cur = *val;
-                          is_first = FALSE;
-                        }
-                      buf[xd] = cur;
-                      xd++;
-
-                      xs++;
-                      val++;
-                      p--;
-                    }
-                }
-              while (p > 0)
-                {
-                  buf[xd] = cur;
-                  xd++;
-                  --p;
-                }
-              for (int p = width - s - 1; p > 0; --p)
-                {
-                  guchar val;
-
-                  gegl_buffer_sample (buffer, xs, y, NULL, &val, NULL,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                  xs++;
-                  if (is_first)
-                    {
-                      guchar nval;
-                      gint   nxs = xs - 1;
-
-                      cur = val;
-                      for (int q = s - 2; q > 0; --q)
-                        {
-                          nxs--;
-                          gegl_buffer_sample (buffer, nxs, y, NULL, &nval, NULL,
-                                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-
-                          if (nval < cur)
-                            cur = nval;
-                        }
-                      nxs--;
-
-                      gegl_buffer_sample (buffer, nxs, y, NULL, &nval, NULL,
-                                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-
-                      if (nval < cur)
-                        {
-                          cur = nval;
-                          is_first = TRUE;
-                        }
-                      else
-                        is_first = FALSE;
-                    }
-                  else
-                    {
-                      if (val <= cur)
-                        cur = val;
-                      else
-                        {
-                          guchar tmp;
-                          gegl_buffer_sample (buffer, xs - s, y, NULL, &tmp, NULL,
-                                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                          if (cur == tmp)
-                            is_first = TRUE;
-                        }
-                    }
-                  buf[xd] = cur;
-                  xd++;
-                }
-              xd = width - 1;
-              xs = width - 1;
-              gegl_buffer_sample (buffer, xs, y, NULL, &cur, NULL,
-                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              xs--;
-              for (int p = s1; p > 0 && xs >= 0; --p)
-                {
-                  guchar val;
-
-                  gegl_buffer_sample (buffer, xs, y, NULL, &val, NULL,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                  xs--;
-                  if (val < cur)
-                    cur = val;
-                }
-              buf[xd] = cur;
-              xd--;
-              for (int p = s2 - 1; p > 0 && xd >= 0; --p)
-                {
-                  guchar val;
-
-                  gegl_buffer_sample (buffer, xs, y, NULL, &val, NULL,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                  if (xs > 0)
-                    xs--;
-                  if (val < cur)
-                    cur = val;
-                  buf[xd] = cur;
-                  xd--;
-                }
-              gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y, width, 1), 0,
-                               format, buf, GEGL_AUTO_ROWSTRIDE);
-            }
-        }
-      g_free (buf);
-    }
-
-  if (height > 1)
-    {
-      /* Erosion along Y-axis. */
-      const gint s1  = _s1 > height ? height : _s1;
-      const gint s2  = _s2 > height ? height : _s2;
-      gint       x;
-
-      buf = g_new0 (guchar, height);
-      for (x = 0; x < width; ++x)
-        {
-          guchar   cur;
-          gint     ys  = 0;
-          gint     yd  = 0;
-          gboolean is_first = TRUE;
-
-          gegl_buffer_sample (buffer, x, ys, NULL, &cur, NULL,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-          ys++;
-          for (int p = s2 - 1; p > 0 && ys < height; --p)
-            {
-              guchar val;
-
-              gegl_buffer_sample (buffer, x, ys, NULL, &val, NULL,
-                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              ys++;
-              if (val <= cur)
-                {
-                  cur = val;
-                  is_first = FALSE;
-                }
-            }
-          buf[yd] = cur;
-          yd++;
-
-          if (ys >= height - 1)
-            {
-              guchar se;
-
-              gegl_buffer_sample (buffer, x, height - 1, NULL, &se, NULL,
-                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              cur = MIN (cur, se);
-              for (int y = 0; y < height; ++y)
-                {
-                  gegl_buffer_set (buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
-                                   format, &cur, GEGL_AUTO_ROWSTRIDE);
-                }
-            }
-          else
-            {
-              for (int p = s1; p > 0 && yd < height; --p)
-                {
-                  guchar val;
-
-                  gegl_buffer_sample (buffer, x, ys, NULL, &val, NULL,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                  if (ys < height - 1)
-                    ys++;
-                  if (val <= cur)
-                    {
-                      cur = val;
-                      is_first = FALSE;
-                    }
-                  buf[yd] = cur;
-                  yd++;
-                }
-              for (int p = height - s - 1; p > 0; --p)
-                {
-                  guchar val;
-
-                  gegl_buffer_sample (buffer, x, ys, NULL, &val, NULL,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                  ys++;
-                  if (is_first)
-                    {
-                      guchar nval;
-                      gint   nys = ys - 1;
-
-                      cur = val;
-                      for (int q = s - 2; q > 0; --q)
-                        {
-                          nys--;
-                          gegl_buffer_sample (buffer, x, nys, NULL, &nval, NULL,
-                                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-
-                          if (nval < cur)
-                            cur = nval;
-                        }
-                      nys--;
-
-                      gegl_buffer_sample (buffer, x, nys, NULL, &nval, NULL,
-                                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-
-                      if (nval < cur)
-                        {
-                          cur = nval;
-                          is_first = TRUE;
-                        }
-                      else
-                        is_first = FALSE;
-                    }
-                  else
-                    {
-                      if (val <= cur)
-                        cur = val;
-                      else
-                        {
-                          guchar tmp;
-                          gegl_buffer_sample (buffer, x, ys - s, NULL, &tmp, NULL,
-                                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                          if (cur == tmp)
-                            is_first = TRUE;
-                        }
-                    }
-                  buf[yd] = cur;
-                  yd++;
-                }
-              yd = height - 1;
-              ys = height - 1;
-              gegl_buffer_sample (buffer, x, ys, NULL, &cur, NULL,
-                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              ys--;
-              for (int p = s1; p > 0 && ys >= 0; --p)
-                {
-                  guchar val;
-
-                  gegl_buffer_sample (buffer, x, ys, NULL, &val, NULL,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                  ys--;
-                  if (val < cur)
-                    cur = val;
-                }
-              buf[yd] = cur;
-              yd--;
-              for (int p = s2 - 1; p > 0 && yd >= 0; --p)
-                {
-                  guchar val;
-
-                  gegl_buffer_sample (buffer, x, ys, NULL, &val, NULL,
-                                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                  if (ys > 0)
-                    ys--;
-                  if (val < cur)
-                    cur = val;
-                  buf[yd] = cur;
-                  yd--;
-                }
-              gegl_buffer_set (buffer, GEGL_RECTANGLE (x, 0, 1, height), 0,
-                               format, buf, GEGL_AUTO_ROWSTRIDE);
-            }
-        }
-      g_free (buf);
-    }
-}
 
 static void
 gimp_lineart_denoise (GeglBuffer *buffer,
@@ -1145,8 +660,11 @@ static void
 gimp_lineart_compute_normals_curvatures (GeglBuffer *mask,
                                          gfloat     *normals,
                                          gfloat     *curvatures,
+                                         gfloat     *smoothed_curvatures,
                                          int         normal_estimate_mask_size)
 {
+  gfloat  *edgels_curvatures;
+  gfloat  *smoothed_curvature;
   GArray  *es    = gimp_edgelset_new (mask);
   Edgel  **e     = (Edgel **) es->data;
   gint     width = gegl_buffer_get_width (mask);
@@ -1156,11 +674,12 @@ gimp_lineart_compute_normals_curvatures (GeglBuffer *mask,
 
   while (*e)
     {
-      const float w = MAX (1e-8f, (*e)->curvature * (*e)->curvature);
+      const float curvature = ((*e)->curvature > 0.0f) ? (*e)->curvature : 0.0f;
+      const float w         = MAX (1e-8f, curvature * curvature);
 
       normals[((*e)->x + (*e)->y * width) * 2] += w * (*e)->x_normal;
       normals[((*e)->x + (*e)->y * width) * 2 + 1] += w * (*e)->y_normal;
-      curvatures[(*e)->x + (*e)->y * width] = MAX ((*e)->curvature,
+      curvatures[(*e)->x + (*e)->y * width] = MAX (curvature,
                                                    curvatures[(*e)->x + (*e)->y * width]);
       e++;
     }
@@ -1172,7 +691,67 @@ gimp_lineart_compute_normals_curvatures (GeglBuffer *mask,
         normals[(x + y * width) * 2] = cosf (_angle);
         normals[(x + y * width) * 2 + 1] = sinf (_angle);
       }
+
+  /* Smooth curvatures on edgels, then take maximum on each pixel. */
+  edgels_curvatures = gimp_lineart_get_smooth_curvatures (es);
+  smoothed_curvature = edgels_curvatures;
+
+  e = (Edgel **) es->data;
+  while (*e)
+    {
+      gfloat *pixel_curvature = &smoothed_curvatures[(*e)->x + (*e)->y * width];
+
+      if (*pixel_curvature < *smoothed_curvature)
+        *pixel_curvature = *smoothed_curvature;
+
+      ++smoothed_curvature;
+      e++;
+    }
+  g_free (edgels_curvatures);
+
   g_array_free (es, TRUE);
+}
+
+static gfloat *
+gimp_lineart_get_smooth_curvatures (GArray *edgelset)
+{
+  Edgel  **e;
+  gfloat  *smoothed_curvatures = g_new0 (gfloat, edgelset->len);
+  gfloat   weights[9];
+  gfloat   smoothed_curvature;
+  gfloat   weights_sum;
+  gint     idx = 0;
+
+  weights[0] = 1.0f;
+  for (int i = 1; i <= 8; ++i)
+    weights[i] = expf (-(i * i) / 30.0f);
+
+  e = (Edgel **) edgelset->data;
+  while (*e)
+    {
+      Edgel *edgel_before = g_array_index (edgelset, Edgel*, (*e)->previous);
+      Edgel *edgel_after  = g_array_index (edgelset, Edgel*, (*e)->next);
+      int    n = 5;
+      int    i = 1;
+
+      smoothed_curvature = (*e)->curvature;
+      weights_sum = weights[0];
+      while (n-- && (edgel_after != edgel_before))
+        {
+          smoothed_curvature += weights[i] * edgel_before->curvature;
+          smoothed_curvature += weights[i] * edgel_after->curvature;
+          edgel_before = g_array_index (edgelset, Edgel*, edgel_before->previous);
+          edgel_after  = g_array_index (edgelset, Edgel*, edgel_after->next);
+          weights_sum += 2 * weights[i];
+          i++;
+        }
+      smoothed_curvature /= weights_sum;
+      smoothed_curvatures[idx++] = smoothed_curvature;
+
+      e++;
+    }
+
+  return smoothed_curvatures;
 }
 
 /**
@@ -1180,6 +759,7 @@ gimp_lineart_compute_normals_curvatures (GeglBuffer *mask,
  */
 static GArray *
 gimp_lineart_curvature_extremums (gfloat *curvatures,
+                                  gfloat *smoothed_curvatures,
                                   gint    width,
                                   gint    height)
 {
@@ -1210,7 +790,7 @@ gimp_lineart_curvature_extremums (gfloat *curvatures,
                 gint   p2y;
 
                 p = (Pixel *) g_queue_pop_head (q);
-                c = curvatures[(gint) p->x + (gint) p->y * width];
+                c = smoothed_curvatures[(gint) p->x + (gint) p->y * width];
 
                 curvatures[(gint) p->x + (gint) p->y * width] = 0.0f;
 
@@ -1688,22 +1268,19 @@ gimp_lineart_line_segment_until_hit (const GeglBuffer *mask,
   return g_array_new (FALSE, TRUE, sizeof (Pixel));
 }
 
-static gfloat
-gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
+static gfloat *
+gimp_lineart_estimate_strokes_radii (GeglBuffer *mask)
 {
-  /* Return the median distance maximum per connected component. */
   GeglBufferIterator *gi;
+  gfloat             *dist;
+  gfloat             *thickness;
   GeglBuffer         *distmap;
-  GeglBuffer         *labels;
   GeglNode           *graph;
   GeglNode           *input;
   GeglNode           *op;
   GeglNode           *sink;
-  guint32             label_max = 0;
-  GArray             *dmax;
-  gfloat             *dmax_data;
-  gfloat              res;
-  gint                i;
+  gint                width  = gegl_buffer_get_width (mask);
+  gint                height = gegl_buffer_get_height (mask);
 
   /* Compute a distance map for the line art. */
   graph = gegl_node_new ();
@@ -1713,7 +1290,7 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
                                NULL);
   op  = gegl_node_new_child (graph,
                              "operation", "gegl:distance-transform",
-                             "metric", GEGL_DISTANCE_METRIC_EUCLIDEAN,
+                             "metric",    GEGL_DISTANCE_METRIC_EUCLIDEAN,
                              "normalize", FALSE,
                              NULL);
   sink  = gegl_node_new_child (graph,
@@ -1727,61 +1304,120 @@ gimp_lineart_estimate_stroke_width (GeglBuffer* mask)
   gegl_node_process (sink);
   g_object_unref (graph);
 
-  labels = gimp_lineart_label (mask, &label_max);
+  dist = g_new (gfloat, width * height);
+  gegl_buffer_get (distmap, NULL, 1.0, NULL, dist,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  if (label_max == 0)
-    {
-      g_object_unref (labels);
-      g_object_unref (distmap);
-      return 0.0;
-    }
-
-  /* Create an array of max distance per label */
-  dmax = g_array_sized_new (FALSE, TRUE, sizeof (gfloat), label_max);
-  g_array_set_size (dmax, label_max);
-  dmax_data = (gfloat *) dmax->data;
-  memset (dmax_data, 0, sizeof (gfloat) * label_max);
+  thickness = g_new0 (gfloat, width * height);
 
   gi = gegl_buffer_iterator_new (mask, NULL, 0, NULL,
-                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
-  gegl_buffer_iterator_add (gi, labels, NULL, 0, NULL,
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-  gegl_buffer_iterator_add (gi, distmap, NULL, 0, NULL,
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
   while (gegl_buffer_iterator_next (gi))
     {
-      guint8  *m = (guint8*) gi->items[0].data;
-      guint32 *l = (guint32*) gi->items[1].data;
-      gfloat  *d = (gfloat*) gi->items[2].data;
-      gint     k;
+      guint8 *m = (guint8*) gi->items[0].data;
+      gint    startx = gi->items[0].roi.x;
+      gint    starty = gi->items[0].roi.y;
+      gint    endy   = starty + gi->items[0].roi.height;
+      gint    endx   = startx + gi->items[0].roi.width;
+      gint    x;
+      gint    y;
 
-      for (k = 0; k < gi->length; k++)
-        {
-          gimp_assert (*m == 0 || *l);
+      for (y = starty; y < endy; y++)
+        for (x = startx; x < endx; x++)
+          {
+            if (*m && dist[x + y * width] == 1.0)
+              {
+                gint     dx = x;
+                gint     dy = y;
+                gfloat   d  = 1.0;
+                gfloat   nd;
+                gboolean neighbour_thicker = TRUE;
 
-          if (*m && *d > dmax_data[*l - 1])
-            dmax_data[*l - 1] = *d;
+                while (neighbour_thicker)
+                  {
+                    gint px = dx - 1;
+                    gint py = dy - 1;
+                    gint nx = dx + 1;
+                    gint ny = dy + 1;
 
-          m++;
-          l++;
-          d++;
-        }
+                    neighbour_thicker = FALSE;
+                    if (px >= 0)
+                      {
+                        if ((nd = dist[px + dy * width]) > d)
+                          {
+                            d = nd;
+                            dx = px;
+                            neighbour_thicker = TRUE;
+                            continue;
+                          }
+                        if (py >= 0 && (nd = dist[px + py * width]) > d)
+                          {
+                            d = nd;
+                            dx = px;
+                            dy = py;
+                            neighbour_thicker = TRUE;
+                            continue;
+                          }
+                        if (ny < height && (nd = dist[px + ny * width]) > d)
+                          {
+                            d = nd;
+                            dx = px;
+                            dy = ny;
+                            neighbour_thicker = TRUE;
+                            continue;
+                          }
+                      }
+                    if (nx < width)
+                      {
+                        if ((nd = dist[nx + dy * width]) > d)
+                          {
+                            d = nd;
+                            dx = nx;
+                            neighbour_thicker = TRUE;
+                            continue;
+                          }
+                        if (py >= 0 && (nd = dist[nx + py * width]) > d)
+                          {
+                            d = nd;
+                            dx = nx;
+                            dy = py;
+                            neighbour_thicker = TRUE;
+                            continue;
+                          }
+                        if (ny < height && (nd = dist[nx + ny * width]) > d)
+                          {
+                            d = nd;
+                            dx = nx;
+                            dy = ny;
+                            neighbour_thicker = TRUE;
+                            continue;
+                          }
+                      }
+                    if (py > 0 && (nd = dist[dx + py * width]) > d)
+                      {
+                        d = nd;
+                        dy = py;
+                        neighbour_thicker = TRUE;
+                        continue;
+                      }
+                    if (ny < height && (nd = dist[dx + ny * width]) > d)
+                      {
+                        d = nd;
+                        dy = ny;
+                        neighbour_thicker = TRUE;
+                        continue;
+                      }
+                  }
+                thickness[(gint) x + (gint) y * width] = d;
+              }
+            m++;
+          }
     }
 
-  /* Sort and crop labels with distance 0. */
-  g_array_sort (dmax, float_compare);
-  for (i = 0; i < label_max; i++)
-    {
-      if (dmax_data[i] != 0.0)
-        break;
-    }
-
-  res = dmax_data[i + (label_max - i) / 2];
-  g_array_unref (dmax);
-  g_object_unref (labels);
+  g_free (dist);
   g_object_unref (distmap);
 
-  return 1.5 * res;
+  return thickness;
 }
 
 static guint
@@ -1796,16 +1432,6 @@ visited_equal_fun (Pixel *e1,
                    Pixel *e2)
 {
   return (e1->x == e2->x && e1->y == e2->y);
-}
-
-static gint
-float_compare (gconstpointer p1,
-               gconstpointer p2)
-{
-  const gfloat *i1 = (gfloat *) p1;
-  const gfloat *i2 = (gfloat *) p2;
-
-  return (*i1 > *i2) ? 1: (*i1 < *i2) ? -1 : 0;
 }
 
 static inline gboolean
@@ -2128,7 +1754,7 @@ gimp_edgelset_compute_curvature (GArray *set)
       const float  c         = gimp_vector2_length_val (diff);
       const float  crossp    = n_prev.x * n_next.y - n_prev.y * n_next.x;
 
-      it->curvature = (crossp > 0.0f) ? c : 0.0f;
+      it->curvature = (crossp > 0.0f) ? c : -c;
       ++it;
     }
 }
