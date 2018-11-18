@@ -128,6 +128,6 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
                                                   options->select_transparent,
                                                   options->select_criterion,
                                                   options->diagonal_neighbors,
-                                                  0.92, -1, /* TODO */
+                                                  0.92, /* TODO */
                                                   x, y);
 }

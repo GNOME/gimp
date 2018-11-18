@@ -383,7 +383,6 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                    options->sample_merged,
                                                    options->diagonal_neighbors,
                                                    options->line_art_threshold,
-                                                   options->line_art_erosion,
                                                    x, y, &tool->priv->fill_mask,
                                                    &x, &y, NULL, NULL);
       if (line_art)
@@ -686,7 +685,6 @@ typedef struct
   GimpPickable       *pickable;
   gboolean            fill_transparent;
   gdouble             line_art_threshold;
-  gint                line_art_erosion;
 } PrecomputeData;
 
 static void
@@ -705,8 +703,7 @@ gimp_bucket_fill_compute_line_art_async  (GimpAsync      *async,
 
   line_art = gimp_pickable_contiguous_region_prepare_line_art (data->pickable,
                                                                data->fill_transparent,
-                                                               data->line_art_threshold,
-                                                               data->line_art_erosion);
+                                                               data->line_art_threshold);
   precompute_data_free (data);
   if (gimp_async_is_canceled (async))
     {
@@ -770,7 +767,6 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
           data->pickable           = pickable;
           data->fill_transparent   = options->fill_transparent;
           data->line_art_threshold = options->line_art_threshold;
-          data->line_art_erosion   = options->line_art_erosion;
 
           if (tool->priv->async)
             {
@@ -810,9 +806,6 @@ gimp_bucket_fill_tool_connect_handlers (gpointer data)
       g_signal_connect (options, "notify::fill-transparent",
                         G_CALLBACK (gimp_bucket_fill_tool_options_notified),
                         tool);
-      g_signal_connect (options, "notify::line-art-erosion",
-                        G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                        tool);
       g_signal_connect (options, "notify::line-art-threshold",
                         G_CALLBACK (gimp_bucket_fill_tool_options_notified),
                         tool);
@@ -834,8 +827,6 @@ gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
 {
   if ((! strcmp (pspec->name, "fill-criterion")     ||
        ! strcmp (pspec->name, "fill-transparent")   ||
-       ! strcmp (pspec->name, "line-art-erosion")   ||
-       ! strcmp (pspec->name, "line-art-erosion")   ||
        ! strcmp (pspec->name, "line-art-threshold") ||
        ! strcmp (pspec->name, "sample-merged")) &&
       options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)

@@ -47,7 +47,6 @@ struct _GimpBucketFillOptions
   gdouble                       threshold;
 
   gdouble                       line_art_threshold;
-  gint                          line_art_erosion;
 
   GimpSelectCriterion           fill_criterion;
 
