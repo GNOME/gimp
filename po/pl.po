@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-01 16:32+0100\n"
-"PO-Revision-Date: 2018-11-01 16:33+0100\n"
+"POT-Creation-Date: 2018-11-18 13:19+0100\n"
+"PO-Revision-Date: 2018-11-18 13:20+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -5916,7 +5916,7 @@ msgstr "Meta_dane"
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_Colors"
-msgstr "K_olory"
+msgstr "_Kolory"
 
 #: ../app/actions/image-actions.c:68
 msgctxt "image-action"
@@ -6341,7 +6341,7 @@ msgstr "Odbijanie"
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:796
+#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:828
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
@@ -6391,7 +6391,7 @@ msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1586
+#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1618
 #: ../app/dialogs/preferences-dialog.c:1617
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -7253,49 +7253,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Do _nowej warstwy"
 
-#: ../app/actions/layers-commands.c:260 ../app/actions/layers-commands.c:1435
+#: ../app/actions/layers-commands.c:262 ../app/actions/layers-commands.c:1467
 msgid "Layer Attributes"
 msgstr "Atrybuty warstwy"
 
-#: ../app/actions/layers-commands.c:263
+#: ../app/actions/layers-commands.c:265
 msgid "Edit Layer Attributes"
 msgstr "Modyfikacja atrybutów warstwy"
 
-#: ../app/actions/layers-commands.c:336
+#: ../app/actions/layers-commands.c:338
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:875
 msgid "New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:339
+#: ../app/actions/layers-commands.c:341
 msgid "Create a New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:437 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:439 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../app/actions/layers-commands.c:702
+#: ../app/actions/layers-commands.c:734
 msgid "Set Layer Boundary Size"
 msgstr "Ustawienie wymiarów granic warstwy"
 
-#: ../app/actions/layers-commands.c:764
+#: ../app/actions/layers-commands.c:796
 msgid "Scale Layer"
 msgstr "Skalowanie warstwy"
 
-#: ../app/actions/layers-commands.c:806
+#: ../app/actions/layers-commands.c:838
 msgid "Crop Layer to Selection"
 msgstr "Kadruj warstwę według zaznaczenia"
 
-#: ../app/actions/layers-commands.c:836
+#: ../app/actions/layers-commands.c:868
 msgid "Crop Layer to Content"
 msgstr "Kadruj warstwę do zawartości"
 
-#: ../app/actions/layers-commands.c:849
+#: ../app/actions/layers-commands.c:881
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nie można wykadrować, ponieważ aktywna warstwa nie ma zawartości."
 
-#: ../app/actions/layers-commands.c:856
+#: ../app/actions/layers-commands.c:888
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ aktywna warstwa jest już wykadrowana do "
@@ -12031,7 +12031,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/core/core-enums.c:1134 ../app/core/gimpdrawable-transform.c:768
+#: ../app/core/core-enums.c:1134 ../app/core/gimpdrawable-transform.c:775
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -12783,7 +12783,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Obrót kanału"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1088
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1095
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Przekształcenie kanału"
@@ -13107,22 +13107,22 @@ msgstr "Przesunięcie obszaru rysowania"
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
 
-#: ../app/core/gimpdrawable-transform.c:856
+#: ../app/core/gimpdrawable-transform.c:863
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/core/gimpdrawable-transform.c:941
+#: ../app/core/gimpdrawable-transform.c:948
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:1086 ../app/core/gimplayer.c:447
+#: ../app/core/gimpdrawable-transform.c:1093 ../app/core/gimplayer.c:447
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
 
-#: ../app/core/gimpdrawable-transform.c:1099
+#: ../app/core/gimpdrawable-transform.c:1106
 msgid "Transformation"
 msgstr "Przekształcenie"
 
@@ -24795,12 +24795,12 @@ msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:3157 ../app/widgets/gimpdashboard.c:4043
+#: ../app/widgets/gimpdashboard.c:3157 ../app/widgets/gimpdashboard.c:4047
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Tak"
 
-#: ../app/widgets/gimpdashboard.c:3158 ../app/widgets/gimpdashboard.c:4044
+#: ../app/widgets/gimpdashboard.c:3158 ../app/widgets/gimpdashboard.c:4048
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nie"
@@ -24820,16 +24820,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4033
+#: ../app/widgets/gimpdashboard.c:4037
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4111
+#: ../app/widgets/gimpdashboard.c:4115
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:4428
+#: ../app/widgets/gimpdashboard.c:4437
 msgid "Resolving symbol information..."
 msgstr "Rozwiązywanie informacji o symbolach…"
 
