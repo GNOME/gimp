@@ -57,7 +57,6 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gboolean              sample_merged,
                            gboolean              diagonal_neighbors,
                            gfloat                stroke_threshold,
-                           gint                  erosion,
                            gdouble               seed_x,
                            gdouble               seed_y)
 {
@@ -77,7 +76,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                                                  fill_transparent, fill_criterion,
                                                  threshold, sample_merged,
                                                  diagonal_neighbors,
-                                                 stroke_threshold, erosion,
+                                                 stroke_threshold,
                                                  seed_x, seed_y, NULL,
                                                  &mask_x, &mask_y, &width, &height);
 
@@ -142,7 +141,6 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
                                       gboolean              sample_merged,
                                       gboolean              diagonal_neighbors,
                                       gfloat                stroke_threshold,
-                                      gint                  erosion,
                                       gdouble               seed_x,
                                       gdouble               seed_y,
                                       GeglBuffer          **mask_buffer,
@@ -205,7 +203,6 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
                                                       fill_criterion,
                                                       diagonal_neighbors,
                                                       stroke_threshold,
-                                                      erosion,
                                                       (gint) seed_x,
                                                       (gint) seed_y);
   if (mask_buffer && *mask_buffer)

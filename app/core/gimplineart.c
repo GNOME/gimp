@@ -168,10 +168,6 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
  *                      luminosity.
  * @stroke_threshold: [0-1] threshold value for detecting stroke pixels
  *                    (higher values will detect more stroke pixels).
- * @erosion: size (in pixels) of the rectangular structure used to erode
- *           the stroke pixels. 0 means no erosion will be done, and a
- *           negative value will compute a median approximation of the
- *           stroke width, for base of erosion.
  * @minimal_lineart_area: the minimum size in number pixels for area to
  *                        be considered as line art.
  * @normal_estimate_mask_size:
@@ -211,7 +207,6 @@ GeglBuffer *
 gimp_lineart_close (GeglBuffer          *line_art,
                     gboolean             select_transparent,
                     gfloat               stroke_threshold,
-                    gint                 erosion,
                     gint                 minimal_lineart_area,
                     gint                 normal_estimate_mask_size,
                     gfloat               end_point_rate,

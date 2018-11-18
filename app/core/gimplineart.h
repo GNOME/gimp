@@ -25,7 +25,6 @@
 GeglBuffer * gimp_lineart_close (GeglBuffer          *line_art,
                                  gboolean             select_transparent,
                                  gfloat               stroke_threshold,
-                                 gint                 erosion,
                                  gint                 minimal_lineart_area,
                                  gint                 normal_estimate_mask_size,
                                  gfloat               end_point_rate,
