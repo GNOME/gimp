@@ -23,6 +23,8 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "gimp-gegl-types.h"
 
 #include "config/gimpgeglconfig.h"
@@ -35,12 +37,17 @@
 #include "gimp-babl.h"
 #include "gimp-gegl.h"
 
+#include <operation/gegl-operation.h>
 
+
+static void  gimp_gegl_notify_swap_path       (GimpGeglConfig *config);
+static void  gimp_gegl_notify_temp_path       (GimpGeglConfig *config);
 static void  gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config);
 static void  gimp_gegl_notify_num_processors  (GimpGeglConfig *config);
 static void  gimp_gegl_notify_use_opencl      (GimpGeglConfig *config);
 
-#include <operation/gegl-operation.h>
+
+/*  public functions  */
 
 void
 gimp_gegl_init (Gimp *gimp)
@@ -51,6 +58,10 @@ gimp_gegl_init (Gimp *gimp)
 
   config = GIMP_GEGL_CONFIG (gimp->config);
 
+  /* make sure swap and temp directories exist */
+  gimp_gegl_notify_swap_path (config);
+  gimp_gegl_notify_temp_path (config);
+
   g_object_set (gegl_config (),
                 "tile-cache-size", (guint64) config->tile_cache_size,
                 "threads",         config->num_processors,
@@ -59,6 +70,15 @@ gimp_gegl_init (Gimp *gimp)
 
   gimp_parallel_init (gimp);
 
+  g_signal_connect (config, "notify::swap-path",
+                    G_CALLBACK (gimp_gegl_notify_swap_path),
+                    NULL);
+  g_signal_connect (config, "notify::temp-path",
+                    G_CALLBACK (gimp_gegl_notify_temp_path),
+                    NULL);
+  g_signal_connect (config, "notify::num-processors",
+                    G_CALLBACK (gimp_gegl_notify_num_processors),
+                    NULL);
   g_signal_connect (config, "notify::tile-cache-size",
                     G_CALLBACK (gimp_gegl_notify_tile_cache_size),
                     NULL);
@@ -80,6 +100,37 @@ gimp_gegl_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_parallel_exit (gimp);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_gegl_notify_swap_path (GimpGeglConfig *config)
+{
+  GFile *file = gimp_file_new_for_config_path (config->swap_path, NULL);
+  gchar *path = g_file_get_path (file);
+
+  if (! g_file_query_exists (file, NULL))
+    g_file_make_directory_with_parents (file, NULL, NULL);
+
+  g_object_set (gegl_config (),
+                "swap", path,
+                NULL);
+
+  g_free (path);
+  g_object_unref (file);
+}
+
+static void
+gimp_gegl_notify_temp_path (GimpGeglConfig *config)
+{
+  GFile *file = gimp_file_new_for_config_path (config->temp_path, NULL);
+
+  if (! g_file_query_exists (file, NULL))
+    g_file_make_directory_with_parents (file, NULL, NULL);
+
+  g_object_unref (file);
 }
 
 static void
