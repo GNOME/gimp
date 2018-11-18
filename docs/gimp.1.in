@@ -171,6 +171,14 @@ to get the base location for plug-ins and modules. If unset
 .B GIMP2_SYSCONFDIR
 to get the location of configuration files. If unset @gimpsysconfdir@
 is used.
+.TP 8
+.B GIMP2_CACHEDIR
+to get the location for caches files. If unset the system default for
+per-user cached files is used.
+.TP 8
+.B GIMP2_TEMPDIR
+to get the location of temporary files. If unset the system default for
+temporary files is used.
 
 On Linux GIMP can be compiled with support for binary relocatibility.
 This will cause data, plug-ins and configuration files to be searched

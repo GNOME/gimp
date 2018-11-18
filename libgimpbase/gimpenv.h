@@ -53,6 +53,8 @@ const gchar * gimp_data_directory             (void) G_GNUC_CONST;
 const gchar * gimp_locale_directory           (void) G_GNUC_CONST;
 const gchar * gimp_sysconf_directory          (void) G_GNUC_CONST;
 const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
+const gchar * gimp_cache_directory            (void) G_GNUC_CONST;
+const gchar * gimp_temp_directory             (void) G_GNUC_CONST;
 
 GFile       * gimp_directory_file             (const gchar *first_element,
                                                ...) G_GNUC_MALLOC;

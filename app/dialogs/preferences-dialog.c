@@ -98,6 +98,10 @@ static void   prefs_color_management_reset         (GtkWidget    *widget,
                                                     GObject      *config);
 static void   prefs_dialog_defaults_reset          (GtkWidget    *widget,
                                                     GObject      *config);
+static void   prefs_folders_reset                  (GtkWidget    *widget,
+                                                    GObject      *config);
+static void   prefs_path_reset                     (GtkWidget    *widget,
+                                                    GObject      *config);
 
 static void   prefs_import_raw_procedure_callback  (GtkWidget    *widget,
                                                     GObject      *config);
@@ -483,6 +487,30 @@ prefs_dialog_defaults_reset (GtkWidget *widget,
   g_object_thaw_notify (config);
 
   g_free (pspecs);
+}
+
+static void
+prefs_folders_reset (GtkWidget *widget,
+                     GObject   *config)
+{
+  gimp_config_reset_property (config, "temp-path");
+  gimp_config_reset_property (config, "swap-path");
+}
+
+static void
+prefs_path_reset (GtkWidget *widget,
+                  GObject   *config)
+{
+  const gchar *path_property;
+  const gchar *writable_property;
+
+  path_property     = g_object_get_data (G_OBJECT (widget), "path");
+  writable_property = g_object_get_data (G_OBJECT (widget), "path-writable");
+
+  gimp_config_reset_property (config, path_property);
+
+  if (writable_property)
+    gimp_config_reset_property (config, writable_property);
 }
 
 static void
@@ -3059,6 +3087,13 @@ prefs_dialog_new (Gimp       *gimp,
                                   NULL,
                                   &top_iter);
 
+  button = gimp_prefs_box_set_page_resettable (GIMP_PREFS_BOX (prefs_box),
+                                               vbox,
+                                               _("Reset Folders"));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_folders_reset),
+                    config);
+
   {
     static const struct
     {
@@ -3102,70 +3137,101 @@ prefs_dialog_new (Gimp       *gimp,
       const gchar *label;
       const gchar *icon;
       const gchar *help_data;
+      const gchar *reset_label;
       const gchar *fs_label;
       const gchar *path_property_name;
       const gchar *writable_property_name;
     }
     paths[] =
     {
-      { N_("Brushes"), N_("Brush Folders"), "folders-brushes",
+      { N_("Brushes"), N_("Brush Folders"),
+        "folders-brushes",
         GIMP_HELP_PREFS_FOLDERS_BRUSHES,
+        N_("Reset Brush Folders"),
         N_("Select Brush Folders"),
         "brush-path", "brush-path-writable" },
-      { N_("Dynamics"), N_("Dynamics Folders"), "folders-dynamics",
+      { N_("Dynamics"), N_("Dynamics Folders"),
+        "folders-dynamics",
         GIMP_HELP_PREFS_FOLDERS_DYNAMICS,
+        N_("Reset Dynamics Folders"),
         N_("Select Dynamics Folders"),
         "dynamics-path", "dynamics-path-writable" },
-      { N_("Patterns"), N_("Pattern Folders"), "folders-patterns",
+      { N_("Patterns"), N_("Pattern Folders"),
+        "folders-patterns",
         GIMP_HELP_PREFS_FOLDERS_PATTERNS,
+        N_("Reset Pattern Folders"),
         N_("Select Pattern Folders"),
         "pattern-path", "pattern-path-writable" },
-      { N_("Palettes"), N_("Palette Folders"), "folders-palettes",
+      { N_("Palettes"), N_("Palette Folders"),
+        "folders-palettes",
         GIMP_HELP_PREFS_FOLDERS_PALETTES,
+        N_("Reset Palette Folders"),
         N_("Select Palette Folders"),
         "palette-path", "palette-path-writable" },
-      { N_("Gradients"), N_("Gradient Folders"), "folders-gradients",
+      { N_("Gradients"), N_("Gradient Folders"),
+        "folders-gradients",
         GIMP_HELP_PREFS_FOLDERS_GRADIENTS,
+        N_("Reset Gradient Folders"),
         N_("Select Gradient Folders"),
         "gradient-path", "gradient-path-writable" },
-      { N_("Fonts"), N_("Font Folders"), "folders-fonts",
+      { N_("Fonts"), N_("Font Folders"),
+        "folders-fonts",
         GIMP_HELP_PREFS_FOLDERS_FONTS,
+        N_("Reset Font Folders"),
         N_("Select Font Folders"),
         "font-path", NULL },
-      { N_("Tool Presets"), N_("Tool Preset Folders"), "folders-tool-presets",
+      { N_("Tool Presets"), N_("Tool Preset Folders"),
+        "folders-tool-presets",
         GIMP_HELP_PREFS_FOLDERS_TOOL_PRESETS,
+        N_("Reset Tool Preset Folders"),
         N_("Select Tool Preset Folders"),
         "tool-preset-path", "tool-preset-path-writable" },
-      { N_("MyPaint Brushes"), N_("MyPaint Brush Folders"), "folders-mypaint-brushes",
+      { N_("MyPaint Brushes"), N_("MyPaint Brush Folders"),
+        "folders-mypaint-brushes",
         GIMP_HELP_PREFS_FOLDERS_MYPAINT_BRUSHES,
+        N_("Reset MyPaint Brush Folders"),
         N_("Select MyPaint Brush Folders"),
         "mypaint-brush-path", "mypaint-brush-path-writable" },
-      { N_("Plug-ins"), N_("Plug-in Folders"), "folders-plug-ins",
+      { N_("Plug-ins"), N_("Plug-in Folders"),
+        "folders-plug-ins",
         GIMP_HELP_PREFS_FOLDERS_PLUG_INS,
+        N_("Reset plug-in Folders"),
         N_("Select plug-in Folders"),
         "plug-in-path", NULL },
-      { N_("Scripts"), N_("Script-Fu Folders"), "folders-scripts",
+      { N_("Scripts"), N_("Script-Fu Folders"),
+        "folders-scripts",
         GIMP_HELP_PREFS_FOLDERS_SCRIPTS,
+        N_("Reset Script-Fu Folders"),
         N_("Select Script-Fu Folders"),
         "script-fu-path", NULL },
-      { N_("Modules"), N_("Module Folders"), "folders-modules",
+      { N_("Modules"), N_("Module Folders"),
+        "folders-modules",
         GIMP_HELP_PREFS_FOLDERS_MODULES,
+        N_("Reset Module Folders"),
         N_("Select Module Folders"),
         "module-path", NULL },
-      { N_("Interpreters"), N_("Interpreter Folders"), "folders-interp",
+      { N_("Interpreters"), N_("Interpreter Folders"),
+        "folders-interp",
         GIMP_HELP_PREFS_FOLDERS_INTERPRETERS,
+        N_("Reset Interpreter Folders"),
         N_("Select Interpreter Folders"),
         "interpreter-path", NULL },
-      { N_("Environment"), N_("Environment Folders"), "folders-environ",
+      { N_("Environment"), N_("Environment Folders"),
+        "folders-environ",
         GIMP_HELP_PREFS_FOLDERS_ENVIRONMENT,
+        N_("Reset Environment Folders"),
         N_("Select Environment Folders"),
         "environ-path", NULL },
-      { N_("Themes"), N_("Theme Folders"), "folders-themes",
+      { N_("Themes"), N_("Theme Folders"),
+        "folders-themes",
         GIMP_HELP_PREFS_FOLDERS_THEMES,
+        N_("Reset Theme Folders"),
         N_("Select Theme Folders"),
         "theme-path", NULL },
-      { N_("Icon Themes"), N_("Icon Theme Folders"), "folders-icon-themes",
+      { N_("Icon Themes"), N_("Icon Theme Folders"),
+        "folders-icon-themes",
         GIMP_HELP_PREFS_FOLDERS_ICON_THEMES,
+        N_("Reset Icon Theme Folders"),
         N_("Select Icon Theme Folders"),
         "icon-theme-path", NULL }
     };
@@ -3184,6 +3250,17 @@ prefs_dialog_new (Gimp       *gimp,
                                         &top_iter,
                                         &child_iter);
         g_free (icon_name);
+
+        button = gimp_prefs_box_set_page_resettable (GIMP_PREFS_BOX (prefs_box),
+                                                     vbox,
+                                                     gettext (paths[i].reset_label));
+        g_object_set_data (G_OBJECT (button), "path",
+                           (gpointer) paths[i].path_property_name);
+        g_object_set_data (G_OBJECT (button), "path-writable",
+                           (gpointer) paths[i].writable_property_name);
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (prefs_path_reset),
+                          config);
 
         editor = gimp_prop_path_editor_new (object,
                                             paths[i].path_property_name,

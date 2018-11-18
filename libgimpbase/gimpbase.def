@@ -9,6 +9,7 @@ EXPORTS
 	gimp_brush_generated_shape_get_type
 	gimp_bucket_fill_mode_compat_get_type
 	gimp_bucket_fill_mode_get_type
+	gimp_cache_directory
 	gimp_canonicalize_identifier
 	gimp_cap_style_get_type
 	gimp_channel_ops_get_type
@@ -168,6 +169,7 @@ EXPORTS
 	gimp_stroke_method_get_type
 	gimp_sysconf_directory
 	gimp_sysconf_directory_file
+	gimp_temp_directory
 	gimp_text_direction_get_type
 	gimp_text_hint_style_get_type
 	gimp_text_justification_get_type

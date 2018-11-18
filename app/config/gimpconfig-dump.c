@@ -271,6 +271,14 @@ static const gchar *man_page_path =
 "Path to configuration files, which is set to the value of the environment\n"
 "variable GIMP2_SYSCONFDIR or to the compiled-in default value \n"
 "@gimpsysconfdir@.\n"
+".TP\n"
+".I gimp_cache_dir\n"
+"Path to cached files, which is set to the value of the environment\n"
+"variable GIMP2_CACHEDIR or to the system default for per-user cached files.\n"
+".TP\n"
+".I gimp_temp_dir\n"
+"Path to temporary files, which is set to the value of the environment\n"
+"variable GIMP2_TEMPDIR or to the system default for temporary files.\n"
 "\n";
 
 static const gchar man_page_footer[] =

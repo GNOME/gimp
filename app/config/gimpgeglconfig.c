@@ -119,7 +119,7 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                          "Temp path",
                          TEMP_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR,
-                         "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
+                         "${gimp_temp_dir}",
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 
@@ -128,7 +128,7 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                          "Swap path",
                          SWAP_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR,
-                         "${gimp_dir}",
+                         "${gimp_cache_dir}",
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 
