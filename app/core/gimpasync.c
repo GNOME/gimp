@@ -27,6 +27,7 @@
 
 #include "gimpasync.h"
 #include "gimpcancelable.h"
+#include "gimpmarshal.h"
 #include "gimpwaitable.h"
 
 
@@ -58,6 +59,13 @@
 
 
 /* #define TIME_ASYNC_OPS */
+
+
+enum
+{
+  WAITING,
+  LAST_SIGNAL
+};
 
 
 typedef struct _GimpAsyncCallbackInfo GimpAsyncCallbackInfo;
@@ -122,6 +130,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpAsync, gimp_async, G_TYPE_OBJECT,
 
 #define parent_class gimp_async_parent_class
 
+static guint async_signals[LAST_SIGNAL] = { 0 };
+
 
 /*  local variables  */
 
@@ -135,6 +145,15 @@ static void
 gimp_async_class_init (GimpAsyncClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  async_signals[WAITING] =
+    g_signal_new ("waiting",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpAsyncClass, waiting),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize = gimp_async_finalize;
 }
@@ -209,8 +228,13 @@ gimp_async_wait (GimpWaitable *waitable)
 
   g_mutex_lock (&async->priv->mutex);
 
-  while (! async->priv->stopped)
-    g_cond_wait (&async->priv->cond, &async->priv->mutex);
+  if (! async->priv->stopped)
+    {
+      g_signal_emit (async, async_signals[WAITING], 0);
+
+      while (! async->priv->stopped)
+        g_cond_wait (&async->priv->cond, &async->priv->mutex);
+    }
 
   g_mutex_unlock (&async->priv->mutex);
 
@@ -259,14 +283,19 @@ gimp_async_wait_until (GimpWaitable *waitable,
 
   g_mutex_lock (&async->priv->mutex);
 
-  while (! async->priv->stopped)
+  if (! async->priv->stopped)
     {
-      if (! g_cond_wait_until (&async->priv->cond, &async->priv->mutex,
-                               end_time))
-        {
-          g_mutex_unlock (&async->priv->mutex);
+      g_signal_emit (async, async_signals[WAITING], 0);
 
-          return FALSE;
+      while (! async->priv->stopped)
+        {
+          if (! g_cond_wait_until (&async->priv->cond, &async->priv->mutex,
+                                   end_time))
+            {
+              g_mutex_unlock (&async->priv->mutex);
+
+              return FALSE;
+            }
         }
     }
 
