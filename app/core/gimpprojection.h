@@ -44,12 +44,13 @@ struct _GimpProjectionClass
 {
   GimpObjectClass  parent_class;
 
-  void (* update) (GimpProjection *proj,
-                   gboolean        now,
-                   gint            x,
-                   gint            y,
-                   gint            width,
-                   gint            height);
+  void (* update)   (GimpProjection *proj,
+                     gboolean        now,
+                     gint            x,
+                     gint            y,
+                     gint            width,
+                     gint            height);
+  void (* rendered) (GimpProjection *proj);
 };
 
 

@@ -138,11 +138,9 @@ static void     gimp_bucket_fill_tool_image_changed    (GimpContext           *c
                                                         GimpBucketFillTool    *tool);
 static void     gimp_bucket_fill_tool_drawable_changed (GimpImage            *image,
                                                         GimpBucketFillTool   *tool);
-static void     gimp_bucket_fill_tool_drawable_update  (GimpDrawable         *drawable,
-                                                        gint                  x,
-                                                        gint                  y,
-                                                        gint                  width,
-                                                        gint                  height,
+static void  gimp_bucket_fill_tool_projection_rendered (GimpProjection     *proj,
+                                                        GimpBucketFillTool *tool);
+static void     gimp_bucket_fill_tool_drawable_painted (GimpDrawable         *drawable,
                                                         GimpBucketFillTool   *tool);
 
 
@@ -240,6 +238,8 @@ gimp_bucket_fill_tool_finalize (GObject *object)
   if (image)
     {
       g_signal_handlers_disconnect_by_data (image, tool);
+      g_signal_handlers_disconnect_by_data (gimp_image_get_projection (image),
+                                            tool);
       g_object_unref (image);
     }
   if (drawable)
@@ -406,10 +406,14 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
 static void
 gimp_bucket_fill_tool_commit (GimpBucketFillTool *tool)
 {
-  tool->priv->fill_in_progress = FALSE;
-
   if (tool->priv->filter)
     {
+      GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+
+      /* Make sure the drawable will signal being painted. */
+      if (! options->sample_merged)
+        tool->priv->fill_in_progress = FALSE;
+
       gimp_drawable_filter_commit (tool->priv->filter,
                                    GIMP_PROGRESS (tool), FALSE);
       gimp_image_flush (gimp_display_get_image (GIMP_TOOL (tool)->display));
@@ -849,7 +853,11 @@ gimp_bucket_fill_tool_image_changed (GimpContext        *context,
       g_clear_object (&tool->priv->line_art);
 
       if (prev_image)
-        g_signal_handlers_disconnect_by_data (prev_image, tool);
+        {
+          g_signal_handlers_disconnect_by_data (prev_image, tool);
+          g_signal_handlers_disconnect_by_data (gimp_image_get_projection (prev_image),
+                                                tool);
+        }
       if (prev_drawable)
         {
           g_signal_handlers_disconnect_by_data (prev_drawable, tool);
@@ -865,6 +873,9 @@ gimp_bucket_fill_tool_image_changed (GimpContext        *context,
                             tool);
           g_signal_connect (image, "active-channel-changed",
                             G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
+                            tool);
+          g_signal_connect (gimp_image_get_projection (image), "rendered",
+                            G_CALLBACK (gimp_bucket_fill_tool_projection_rendered),
                             tool);
           gimp_bucket_fill_tool_drawable_changed (image, tool);
         }
@@ -887,8 +898,8 @@ gimp_bucket_fill_tool_drawable_changed (GimpImage          *image,
 
       g_weak_ref_set (&tool->priv->cached_drawable, drawable ? drawable : NULL);
       if (drawable)
-        g_signal_connect (drawable, "update",
-                          G_CALLBACK (gimp_bucket_fill_tool_drawable_update),
+        g_signal_connect (drawable, "painted",
+                          G_CALLBACK (gimp_bucket_fill_tool_drawable_painted),
                           tool);
 
       gimp_bucket_fill_compute_line_art (tool);
@@ -898,12 +909,21 @@ gimp_bucket_fill_tool_drawable_changed (GimpImage          *image,
 }
 
 static void
-gimp_bucket_fill_tool_drawable_update (GimpDrawable       *drawable,
-                                       gint                x,
-                                       gint                y,
-                                       gint                width,
-                                       gint                height,
-                                       GimpBucketFillTool *tool)
+gimp_bucket_fill_tool_projection_rendered (GimpProjection     *proj,
+                                           GimpBucketFillTool *tool)
 {
-  gimp_bucket_fill_compute_line_art (tool);
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+
+  if (options->sample_merged)
+    gimp_bucket_fill_compute_line_art (tool);
+}
+
+static void
+gimp_bucket_fill_tool_drawable_painted (GimpDrawable       *drawable,
+                                        GimpBucketFillTool *tool)
+{
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+
+  if (! options->sample_merged)
+    gimp_bucket_fill_compute_line_art (tool);
 }

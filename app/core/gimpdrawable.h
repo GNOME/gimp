@@ -50,6 +50,7 @@ struct _GimpDrawableClass
                                            gint                  y,
                                            gint                  width,
                                            gint                  height);
+  void          (* painted)               (GimpDrawable         *drawable);
   void          (* alpha_changed)         (GimpDrawable         *drawable);
 
   /*  virtual functions  */
