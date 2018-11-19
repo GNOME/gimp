@@ -233,6 +233,17 @@ gimp_bucket_fill_tool_finalize (GObject *object)
   GimpImage             *image    = g_weak_ref_get (&tool->priv->cached_image);
   GimpDrawable          *drawable = g_weak_ref_get (&tool->priv->cached_drawable);
 
+  if (tool->priv->async)
+    {
+      /* we cancel the async, but don't wait for it to finish, since
+       * it can't actually be interrupted.  instead
+       * gimp_bucket_fill_compute_line_art_cb() bails if the async has
+       * been canceled, to avoid accessing the dead tool.
+       */
+      gimp_cancelable_cancel (GIMP_CANCELABLE (tool->priv->async));
+      g_clear_object (&tool->priv->async);
+    }
+
   g_clear_object (&tool->priv->line_art);
 
   if (image)
@@ -683,17 +694,15 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
 
 typedef struct
 {
-  GimpBucketFillTool *tool;
-  GimpPickable       *pickable;
-  gboolean            fill_transparent;
-  gdouble             line_art_threshold;
+  GimpPickable *pickable;
+  gboolean      fill_transparent;
+  gdouble       line_art_threshold;
 } PrecomputeData;
 
 static void
 precompute_data_free (PrecomputeData *data)
 {
   g_object_unref (data->pickable);
-  g_object_unref (data->tool);
   g_slice_free (PrecomputeData, data);
 }
 
@@ -734,6 +743,12 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
       return;
     }
 
+  if (tool->priv->async)
+    {
+      gimp_cancelable_cancel (GIMP_CANCELABLE (tool->priv->async));
+      g_clear_object (&tool->priv->async);
+    }
+
   g_clear_object (&tool->priv->line_art);
   if (options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
     {
@@ -761,16 +776,10 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
         {
           PrecomputeData *data = g_slice_new (PrecomputeData);
 
-          data->tool               = g_object_ref (tool);
           data->pickable           = pickable;
           data->fill_transparent   = options->fill_transparent;
           data->line_art_threshold = options->line_art_threshold;
 
-          if (tool->priv->async)
-            {
-              gimp_cancelable_cancel (GIMP_CANCELABLE (tool->priv->async));
-              g_object_unref (tool->priv->async);
-            }
           tool->priv->async = gimp_parallel_run_async_full (1,
                                                             (GimpParallelRunAsyncFunc) gimp_bucket_fill_compute_line_art_async,
                                                             data, (GDestroyNotify) precompute_data_free);
