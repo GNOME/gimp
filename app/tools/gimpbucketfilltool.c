@@ -35,7 +35,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplineart.h"
-#include "core/gimp-parallel.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-contiguous-region.h"
 #include "core/gimpprogress.h"
@@ -692,33 +691,6 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
-typedef struct
-{
-  GimpPickable *pickable;
-  gboolean      fill_transparent;
-  gdouble       line_art_threshold;
-} PrecomputeData;
-
-static void
-precompute_data_free (PrecomputeData *data)
-{
-  g_object_unref (data->pickable);
-  g_slice_free (PrecomputeData, data);
-}
-
-static void
-gimp_bucket_fill_compute_line_art_async  (GimpAsync      *async,
-                                          PrecomputeData *data)
-{
-  GeglBuffer *line_art;
-
-  line_art = gimp_pickable_contiguous_region_prepare_line_art (data->pickable,
-                                                               data->fill_transparent,
-                                                               data->line_art_threshold);
-  precompute_data_free (data);
-  gimp_async_finish_full (async, line_art, g_object_unref);
-}
-
 static void
 gimp_bucket_fill_compute_line_art_cb (GimpAsync          *async,
                                       GimpBucketFillTool *tool)
@@ -757,36 +729,26 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
       GimpDrawable *drawable = g_weak_ref_get (&tool->priv->cached_drawable);
 
       if (image && options->sample_merged)
-        {
-          pickable = GIMP_PICKABLE (image);
-          g_clear_object (&drawable);
-        }
+        pickable = GIMP_PICKABLE (image);
       else if (drawable && ! options->sample_merged)
-        {
-          pickable = GIMP_PICKABLE (drawable);
-          g_clear_object (&image);
-        }
-      else
-        {
-          g_clear_object (&image);
-          g_clear_object (&drawable);
-        }
+        pickable = GIMP_PICKABLE (drawable);
 
       if (pickable)
         {
-          PrecomputeData *data = g_slice_new (PrecomputeData);
+          tool->priv->async =
+            gimp_pickable_contiguous_region_prepare_line_art_async (
+              pickable,
+              options->fill_transparent,
+              options->line_art_threshold,
+              +1);
 
-          data->pickable           = pickable;
-          data->fill_transparent   = options->fill_transparent;
-          data->line_art_threshold = options->line_art_threshold;
-
-          tool->priv->async = gimp_parallel_run_async_full (1,
-                                                            (GimpParallelRunAsyncFunc) gimp_bucket_fill_compute_line_art_async,
-                                                            data, (GDestroyNotify) precompute_data_free);
           gimp_async_add_callback (tool->priv->async,
                                    (GimpAsyncCallback) gimp_bucket_fill_compute_line_art_cb,
                                    tool);
         }
+
+      g_clear_object (&image);
+      g_clear_object (&drawable);
     }
 }
 

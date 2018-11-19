@@ -30,10 +30,20 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "gimp-parallel.h"
 #include "gimp-utils.h" /* GIMP_TIMER */
+#include "gimpasync.h"
 #include "gimplineart.h"
 #include "gimppickable.h"
 #include "gimppickable-contiguous-region.h"
+
+
+typedef struct
+{
+  GeglBuffer *buffer;
+  gboolean    select_transparent;
+  gfloat      stroke_threshold;
+} LineArtData;
 
 
 /*  local function prototypes  */
@@ -95,40 +105,51 @@ static void     find_contiguous_region    (GeglBuffer          *src_buffer,
                                            gint                 y,
                                            const gfloat        *col);
 
+static LineArtData * line_art_data_new    (GeglBuffer          *buffer,
+                                           gboolean             select_transparent,
+                                           gfloat               stroke_threshold);
+static void          line_art_data_free   (LineArtData         *data);
+
 
 /*  public functions  */
 
-GeglBuffer *
-gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
-                                                  gboolean      select_transparent,
-                                                  gfloat        stroke_threshold)
+static void
+gimp_pickable_contiguous_region_prepare_line_art_async_func (GimpAsync   *async,
+                                                             LineArtData *data)
 {
   GeglBuffer *lineart;
   gboolean    has_alpha;
+  gboolean    select_transparent = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  has_alpha = babl_format_has_alpha (gegl_buffer_get_format (data->buffer));
 
-  gimp_pickable_flush (pickable);
-
-  lineart = gimp_pickable_get_buffer (pickable);
-  has_alpha = babl_format_has_alpha (gegl_buffer_get_format (lineart));
-
-  if (! has_alpha)
+  if (has_alpha)
     {
-      if (select_transparent)
+      if (data->select_transparent)
         {
           /*  don't select transparent regions if there are no fully
            *  transparent pixels.
            */
           GeglBufferIterator *gi;
 
-          select_transparent = FALSE;
-          gi = gegl_buffer_iterator_new (lineart, NULL, 0, babl_format ("A u8"),
+          gi = gegl_buffer_iterator_new (data->buffer, NULL, 0,
+                                         babl_format ("A u8"),
                                          GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
           while (gegl_buffer_iterator_next (gi))
             {
               guint8 *p = (guint8*) gi->items[0].data;
               gint    k;
+
+              if (gimp_async_is_canceled (async))
+                {
+                  gegl_buffer_iterator_stop (gi);
+
+                  gimp_async_abort (async);
+
+                  line_art_data_free (data);
+
+                  return;
+                }
 
               for (k = 0; k < gi->length; k++)
                 {
@@ -146,10 +167,6 @@ gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
             gegl_buffer_iterator_stop (gi);
         }
     }
-  else
-    {
-      select_transparent = FALSE;
-    }
 
   /* For smart selection, we generate a binarized image with close
    * regions, then run a composite selection with no threshold on
@@ -157,9 +174,9 @@ gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
    */
   GIMP_TIMER_START();
 
-  lineart = gimp_lineart_close (lineart,
+  lineart = gimp_lineart_close (data->buffer,
                                 select_transparent,
-                                stroke_threshold,
+                                data->stroke_threshold,
                                 /*minimal_lineart_area,*/
                                 5,
                                 /*normal_estimate_mask_size,*/
@@ -187,7 +204,68 @@ gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
 
   GIMP_TIMER_END("close line-art");
 
+  gimp_async_finish_full (async, lineart, g_object_unref);
+
+  line_art_data_free (data);
+}
+
+GeglBuffer *
+gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
+                                                  gboolean      select_transparent,
+                                                  gfloat        stroke_threshold)
+{
+  GimpAsync   *async;
+  LineArtData *data;
+  GeglBuffer  *lineart;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+
+  gimp_pickable_flush (pickable);
+
+  async = gimp_async_new ();
+  data  = line_art_data_new (gimp_pickable_get_buffer (pickable),
+                             select_transparent,
+                             stroke_threshold);
+
+  gimp_pickable_contiguous_region_prepare_line_art_async_func (async, data);
+
+  lineart = g_object_ref (gimp_async_get_result (async));
+
+  g_object_unref (async);
+
   return lineart;
+}
+
+GimpAsync *
+gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickable *pickable,
+                                                        gboolean      select_transparent,
+                                                        gfloat        stroke_threshold,
+                                                        gint          priority)
+{
+  GeglBuffer  *buffer;
+  GimpAsync   *async;
+  LineArtData *data;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+
+  gimp_pickable_flush (pickable);
+
+  buffer = gegl_buffer_dup (gimp_pickable_get_buffer (pickable));
+
+  data  = line_art_data_new (buffer,
+                             select_transparent,
+                             stroke_threshold);
+
+  g_object_unref (buffer);
+
+  async = gimp_parallel_run_async_full (
+    priority,
+    (GimpParallelRunAsyncFunc)
+      gimp_pickable_contiguous_region_prepare_line_art_async_func,
+    data,
+    (GDestroyNotify) line_art_data_free);
+
+  return async;
 }
 
 GeglBuffer *
@@ -923,4 +1001,26 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 #ifdef FETCH_ROW
   g_free (row);
 #endif
+}
+
+static LineArtData *
+line_art_data_new (GeglBuffer *buffer,
+                   gboolean    select_transparent,
+                   gfloat      stroke_threshold)
+{
+  LineArtData *data = g_slice_new (LineArtData);
+
+  data->buffer             = g_object_ref (buffer);
+  data->select_transparent = select_transparent;
+  data->stroke_threshold   = stroke_threshold;
+
+  return data;
+}
+
+static void
+line_art_data_free (LineArtData *data)
+{
+  g_object_unref (data->buffer);
+
+  g_slice_free (LineArtData, data);
 }
