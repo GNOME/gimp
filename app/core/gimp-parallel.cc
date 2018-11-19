@@ -83,6 +83,7 @@ static GimpParallelRunAsyncTask * gimp_parallel_run_async_dequeue_task  (void);
 static gboolean                   gimp_parallel_run_async_execute_task  (GimpParallelRunAsyncTask   *task);
 static void                       gimp_parallel_run_async_abort_task    (GimpParallelRunAsyncTask   *task);
 static void                       gimp_parallel_run_async_cancel        (GimpAsync                  *async);
+static void                       gimp_parallel_run_async_waiting       (GimpAsync                  *async);
 
 
 /*  local variables  */
@@ -159,6 +160,9 @@ gimp_parallel_run_async_full (gint                     priority,
     {
       g_signal_connect_after (async, "cancel",
                               G_CALLBACK (gimp_parallel_run_async_cancel),
+                              NULL);
+      g_signal_connect_after (async, "waiting",
+                              G_CALLBACK (gimp_parallel_run_async_waiting),
                               NULL);
 
       g_mutex_lock (&gimp_parallel_run_async_mutex);
@@ -496,6 +500,35 @@ gimp_parallel_run_async_cancel (GimpAsync *async)
 
   if (task)
     gimp_parallel_run_async_abort_task (task);
+}
+
+static void
+gimp_parallel_run_async_waiting (GimpAsync *async)
+{
+  GList *link;
+
+  link = (GList *) g_object_get_data (G_OBJECT (async),
+                                      "gimp-parallel-run-async-link");
+
+  if (! link)
+    return;
+
+  g_mutex_lock (&gimp_parallel_run_async_mutex);
+
+  link = (GList *) g_object_get_data (G_OBJECT (async),
+                                      "gimp-parallel-run-async-link");
+
+  if (link)
+    {
+      GimpParallelRunAsyncTask *task = (GimpParallelRunAsyncTask *) link->data;
+
+      task->priority = G_MININT;
+
+      g_queue_unlink         (&gimp_parallel_run_async_queue, link);
+      g_queue_push_head_link (&gimp_parallel_run_async_queue, link);
+    }
+
+  g_mutex_unlock (&gimp_parallel_run_async_mutex);
 }
 
 } /* extern "C" */
