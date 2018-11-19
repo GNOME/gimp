@@ -669,6 +669,7 @@ _gp_config_destroy (GimpWireMessage *msg)
       g_free (config->app_name);
       g_free (config->wm_class);
       g_free (config->display_name);
+      g_free (config->icon_theme_dir);
       g_slice_free (GPConfig, config);
     }
 }
