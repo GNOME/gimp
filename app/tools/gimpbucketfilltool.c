@@ -750,17 +750,17 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
       if (image && options->sample_merged)
         {
           pickable = GIMP_PICKABLE (image);
-          g_object_unref (drawable);
+          g_clear_object (&drawable);
         }
       else if (drawable && ! options->sample_merged)
         {
           pickable = GIMP_PICKABLE (drawable);
-          g_object_unref (image);
+          g_clear_object (&image);
         }
       else
         {
-          g_object_unref (image);
-          g_object_unref (drawable);
+          g_clear_object (&image);
+          g_clear_object (&drawable);
         }
 
       if (pickable)
@@ -784,8 +784,6 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
                                    (GimpAsyncCallback) gimp_bucket_fill_compute_line_art_cb,
                                    tool);
         }
-      else
-        g_object_unref (pickable);
     }
 }
 
