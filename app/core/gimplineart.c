@@ -235,6 +235,7 @@ gimp_lineart_close (GeglBuffer          *line_art,
   SplineCandidate    *candidate;
   guchar              max_value = 0;
   gfloat              threshold;
+  gfloat              clamped_threshold;
   gint                width  = gegl_buffer_get_width (line_art);
   gint                height = gegl_buffer_get_height (line_art);
   gint                i;
@@ -306,14 +307,15 @@ gimp_lineart_close (GeglBuffer          *line_art,
                                            normal_estimate_mask_size);
 
   radii = gimp_lineart_estimate_strokes_radii (strokes);
-  threshold = MAX (0.25f, 1.0f - end_point_rate);
+  threshold = 1.0f - end_point_rate;
+  clamped_threshold = MAX (0.25f, threshold);
   for (i = 0; i < width; i++)
     {
       gint j;
       for (j = 0; j < height; j++)
         {
           if (smoothed_curvatures[i + j * width] >= (threshold / MAX (1.0f, radii[i + j * width])) ||
-              curvatures[i + j * width] >= threshold)
+              curvatures[i + j * width] >= clamped_threshold)
             curvatures[i + j * width] = 1.0;
           else
             curvatures[i + j * width] = 0.0;
