@@ -262,6 +262,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpscaleentry.h		\
 	gimpscrolledpreview.h		\
 	gimpsizeentry.h			\
+	gimpspinbutton.h		\
 	gimpstringcombobox.h		\
 	gimpunitcombobox.h		\
 	gimpunitstore.h			\
