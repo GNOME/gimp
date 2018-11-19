@@ -2338,6 +2338,9 @@ gimp_config (GPConfig *config)
   gimp_cpu_accel_set_use (config->use_cpu_accel);
 
   g_object_set (gegl_config (),
+                "tile-cache-size",     config->tile_cache_size,
+                "swap",                config->swap_path,
+                "threads",             (gint) config->num_processors,
                 "use-opencl",          config->use_opencl,
                 "application-license", "GPL3",
                 NULL);

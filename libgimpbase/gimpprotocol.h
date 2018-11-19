@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0018
+#define GIMP_PROTOCOL_VERSION  0x0019
 
 
 enum
@@ -85,6 +85,11 @@ struct _GPConfig
 
   /* since protocol version 0x0017: */
   gchar   *icon_theme_dir;
+
+  /* since protocol version 0x0019: */
+  guint64  tile_cache_size;
+  gchar   *swap_path;
+  gint32   num_processors;
 };
 
 struct _GPTileReq

@@ -226,6 +226,9 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.icon_theme_dir   = icon_theme_dir ?
                                   g_file_get_path (icon_theme_dir) :
                                   NULL;
+      config.tile_cache_size  = gegl_config->tile_cache_size;
+      config.swap_path        = gegl_config->swap_path;
+      config.num_processors   = gegl_config->num_processors;
 
       proc_run.name    = GIMP_PROCEDURE (procedure)->original_name;
       proc_run.nparams = gimp_value_array_length (args);

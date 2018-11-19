@@ -553,6 +553,20 @@ _gp_config_read (GIOChannel      *channel,
                                 &config->icon_theme_dir, 1, user_data))
     goto cleanup;
 
+  if (config->version < 0x0019)
+    goto end;
+
+  if (! _gimp_wire_read_int64 (channel,
+                               &config->tile_cache_size, 1, user_data))
+    goto cleanup;
+  if (! _gimp_wire_read_string (channel,
+                                &config->swap_path, 1, user_data))
+    goto cleanup;
+  if (! _gimp_wire_read_int32 (channel,
+                               (guint32 *) &config->num_processors, 1,
+                               user_data))
+    goto cleanup;
+
  end:
   msg->data = config;
   return;
@@ -562,6 +576,7 @@ _gp_config_read (GIOChannel      *channel,
   g_free (config->wm_class);
   g_free (config->display_name);
   g_free (config->icon_theme_dir);
+  g_free (config->swap_path);
   g_slice_free (GPConfig, config);
 }
 
@@ -657,6 +672,20 @@ _gp_config_write (GIOChannel      *channel,
   if (! _gimp_wire_write_string (channel,
                                  &config->icon_theme_dir, 1, user_data))
     return;
+
+  if (config->version < 0x0019)
+    return;
+
+  if (! _gimp_wire_write_int64 (channel,
+                                &config->tile_cache_size, 1, user_data))
+    return;
+  if (! _gimp_wire_write_string (channel,
+                                 &config->swap_path, 1, user_data))
+    return;
+  if (! _gimp_wire_write_int32 (channel,
+                                (const guint32 *) &config->num_processors, 1,
+                                user_data))
+    return;
 }
 
 static void
@@ -670,6 +699,7 @@ _gp_config_destroy (GimpWireMessage *msg)
       g_free (config->wm_class);
       g_free (config->display_name);
       g_free (config->icon_theme_dir);
+      g_free (config->swap_path);
       g_slice_free (GPConfig, config);
     }
 }
