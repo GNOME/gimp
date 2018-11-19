@@ -339,8 +339,6 @@ gimp_bucket_fill_tool_start (GimpBucketFillTool *tool,
       tool->priv->async)
     {
       gimp_waitable_wait (GIMP_WAITABLE (tool->priv->async));
-      g_object_unref (tool->priv->async);
-      tool->priv->async = NULL;
     }
 }
 
@@ -709,13 +707,7 @@ gimp_bucket_fill_compute_line_art_async  (GimpAsync      *async,
                                                                data->fill_transparent,
                                                                data->line_art_threshold);
   precompute_data_free (data);
-  if (gimp_async_is_canceled (async))
-    {
-      g_object_unref (line_art);
-      gimp_async_abort (async);
-      return;
-    }
-  gimp_async_finish (async, line_art);
+  gimp_async_finish_full (async, line_art, g_object_unref);
 }
 
 static void
@@ -726,7 +718,9 @@ gimp_bucket_fill_compute_line_art_cb (GimpAsync          *async,
     return;
 
   if (gimp_async_is_finished (async))
-    tool->priv->line_art = gimp_async_get_result (async);
+    tool->priv->line_art = g_object_ref (gimp_async_get_result (async));
+
+  g_clear_object (&tool->priv->async);
 }
 
 static void
