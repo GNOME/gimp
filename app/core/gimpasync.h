@@ -47,6 +47,9 @@ struct _GimpAsync
 struct _GimpAsyncClass
 {
   GObjectClass  parent_class;
+
+  /*  signals  */
+  void   (* waiting) (GimpAsync *async);
 };
 
 
