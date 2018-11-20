@@ -735,12 +735,23 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
 
       if (pickable)
         {
+          /* gimp_pickable_contiguous_region_prepare_line_art_async()
+           * will flush the pickable, which may trigger this signal
+           * handler, and will leak a line art (as tool->priv->async has
+           * not been set yet.
+           */
+          g_signal_handlers_block_by_func (gimp_image_get_projection (GIMP_IMAGE (image)),
+                                           G_CALLBACK (gimp_bucket_fill_tool_projection_rendered),
+                                           tool);
           tool->priv->async =
             gimp_pickable_contiguous_region_prepare_line_art_async (
               pickable,
               options->fill_transparent,
               options->line_art_threshold,
               +1);
+          g_signal_handlers_unblock_by_func (gimp_image_get_projection (GIMP_IMAGE (image)),
+                                           G_CALLBACK (gimp_bucket_fill_tool_projection_rendered),
+                                           tool);
 
           gimp_async_add_callback (tool->priv->async,
                                    (GimpAsyncCallback) gimp_bucket_fill_compute_line_art_cb,
