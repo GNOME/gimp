@@ -368,6 +368,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
       /*  The Color Options expander  */
       expander = gtk_expander_new (_("Advanced Color Options"));
+      gtk_expander_set_resize_toplevel (GTK_EXPANDER (expander), TRUE);
       gtk_box_pack_end (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
 
       g_object_bind_property (G_OBJECT (image->gimp->config),
