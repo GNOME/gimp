@@ -21,6 +21,8 @@
 
 void         gimp_drawable_bucket_fill            (GimpDrawable         *drawable,
                                                    GeglBuffer           *line_art,
+                                                   gfloat               *distmap,
+                                                   gfloat               *thickmap,
                                                    GimpFillOptions      *options,
                                                    gboolean              fill_transparent,
                                                    GimpSelectCriterion   fill_criterion,
@@ -32,6 +34,8 @@ void         gimp_drawable_bucket_fill            (GimpDrawable         *drawabl
                                                    gdouble               y);
 GeglBuffer * gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
                                                    GeglBuffer           *line_art,
+                                                   gfloat               *distmap,
+                                                   gfloat               *thickmap,
                                                    GimpFillOptions      *options,
                                                    gboolean              fill_transparent,
                                                    GimpSelectCriterion   fill_criterion,

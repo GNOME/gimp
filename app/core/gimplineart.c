@@ -105,7 +105,8 @@ static GArray     * gimp_lineart_line_segment_until_hit      (const GeglBuffer  
                                                               Pixel                   start,
                                                               GimpVector2             direction,
                                                               int                     size);
-static gfloat     * gimp_lineart_estimate_strokes_radii      (GeglBuffer             *mask);
+static gfloat     * gimp_lineart_estimate_strokes_radii      (GeglBuffer             *mask,
+                                                              gfloat                **lineart_distmap);
 
 /* Some callback-type functions. */
 
@@ -163,7 +164,7 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
 
 /**
  * gimp_lineart_close:
- * @line_art: the input #GeglBuffer.
+ * @buffer: the input #GeglBuffer.
  * @select_transparent: whether we binarize the alpha channel or the
  *                      luminosity.
  * @stroke_threshold: [0-1] threshold value for detecting stroke pixels
@@ -187,8 +188,10 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
  * @segments_max_length: the maximum length for creating segments
  *                       between end points. Unlike splines, segments
  *                       are straight lines.
+ * @lineart_distmap: a distance map of the line art pixels.
+ * @lineart_radii: a map of estimated radii of line art border pixels.
  *
- * Creates a binarized version of the strokes of @line_art, detected either
+ * Creates a binarized version of the strokes of @buffer, detected either
  * with luminosity (light means background) or alpha values depending on
  * @select_transparent. This binary version of the strokes will have closed
  * regions allowing adequate selection of "nearly closed regions".
@@ -201,24 +204,28 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
  * Fourey, David Tschumperlé, David Revoy.
  *
  * Returns: a new #GeglBuffer of format "Y u8" representing the
- *          binarized @line_art. A value of
+ *          binarized @line_art. If @lineart_radii and @lineart_distmap
+ *          are not #NULL, newly allocated float buffer are returned,
+ *          which can be used for overflowing created masks later.
  */
 GeglBuffer *
-gimp_lineart_close (GeglBuffer          *line_art,
-                    gboolean             select_transparent,
-                    gfloat               stroke_threshold,
-                    gint                 minimal_lineart_area,
-                    gint                 normal_estimate_mask_size,
-                    gfloat               end_point_rate,
-                    gint                 spline_max_length,
-                    gfloat               spline_max_angle,
-                    gint                 end_point_connectivity,
-                    gfloat               spline_roundness,
-                    gboolean             allow_self_intersections,
-                    gint                 created_regions_significant_area,
-                    gint                 created_regions_minimum_area,
-                    gboolean             small_segments_from_spline_sources,
-                    gint                 segments_max_length)
+gimp_lineart_close (GeglBuffer  *buffer,
+                    gboolean     select_transparent,
+                    gfloat       stroke_threshold,
+                    gint         minimal_lineart_area,
+                    gint         normal_estimate_mask_size,
+                    gfloat       end_point_rate,
+                    gint         spline_max_length,
+                    gfloat       spline_max_angle,
+                    gint         end_point_connectivity,
+                    gfloat       spline_roundness,
+                    gboolean     allow_self_intersections,
+                    gint         created_regions_significant_area,
+                    gint         created_regions_minimum_area,
+                    gboolean     small_segments_from_spline_sources,
+                    gint         segments_max_length,
+                    gfloat     **lineart_distmap,
+                    gfloat     **lineart_radii)
 {
   const Babl         *gray_format;
   gfloat             *normals;
@@ -236,8 +243,8 @@ gimp_lineart_close (GeglBuffer          *line_art,
   guchar              max_value = 0;
   gfloat              threshold;
   gfloat              clamped_threshold;
-  gint                width  = gegl_buffer_get_width (line_art);
-  gint                height = gegl_buffer_get_height (line_art);
+  gint                width  = gegl_buffer_get_width (buffer);
+  gint                height = gegl_buffer_get_height (buffer);
   gint                i;
 
   normals             = g_new0 (gfloat, width * height * 2);
@@ -252,9 +259,9 @@ gimp_lineart_close (GeglBuffer          *line_art,
     gray_format = babl_format ("Y' u8");
 
   /* Transform the line art from any format to gray. */
-  strokes = gegl_buffer_new (gegl_buffer_get_extent (line_art),
+  strokes = gegl_buffer_new (gegl_buffer_get_extent (buffer),
                              gray_format);
-  gegl_buffer_copy (line_art, NULL, GEGL_ABYSS_NONE, strokes, NULL);
+  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, strokes, NULL);
   gegl_buffer_set_format (strokes, babl_format ("Y' u8"));
 
   if (! select_transparent)
@@ -306,7 +313,7 @@ gimp_lineart_close (GeglBuffer          *line_art,
                                            smoothed_curvatures,
                                            normal_estimate_mask_size);
 
-  radii = gimp_lineart_estimate_strokes_radii (strokes);
+  radii = gimp_lineart_estimate_strokes_radii (strokes, lineart_distmap);
   threshold = 1.0f - end_point_rate;
   clamped_threshold = MAX (0.25f, threshold);
   for (i = 0; i < width; i++)
@@ -321,7 +328,10 @@ gimp_lineart_close (GeglBuffer          *line_art,
             curvatures[i + j * width] = 0.0;
         }
     }
-  g_free (radii);
+  if (lineart_radii)
+    *lineart_radii = radii;
+  else
+    g_free (radii);
 
   keypoints = gimp_lineart_curvature_extremums (curvatures, smoothed_curvatures,
                                                 width, height);
@@ -1266,7 +1276,8 @@ gimp_lineart_line_segment_until_hit (const GeglBuffer *mask,
 }
 
 static gfloat *
-gimp_lineart_estimate_strokes_radii (GeglBuffer *mask)
+gimp_lineart_estimate_strokes_radii (GeglBuffer  *mask,
+                                     gfloat     **lineart_distmap)
 {
   GeglBufferIterator *gi;
   gfloat             *dist;
@@ -1411,7 +1422,10 @@ gimp_lineart_estimate_strokes_radii (GeglBuffer *mask)
           }
     }
 
-  g_free (dist);
+  if (lineart_distmap)
+    *lineart_distmap = dist;
+  else
+    g_free (dist);
   g_object_unref (distmap);
 
   return thickness;
