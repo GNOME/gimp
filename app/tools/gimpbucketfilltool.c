@@ -62,6 +62,8 @@ struct _GimpBucketFillToolPrivate
 {
   GimpAsync          *async;
   GeglBuffer         *line_art;
+  gfloat             *distmap;
+  gfloat             *thickmap;
   GWeakRef            cached_image;
   GWeakRef            cached_drawable;
 
@@ -244,6 +246,8 @@ gimp_bucket_fill_tool_finalize (GObject *object)
     }
 
   g_clear_object (&tool->priv->line_art);
+  g_clear_pointer (&tool->priv->distmap, g_free);
+  g_clear_pointer (&tool->priv->thickmap, g_free);
 
   if (image)
     {
@@ -366,6 +370,8 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
     {
       GeglBuffer *fill     = NULL;
       GeglBuffer *line_art = NULL;
+      gfloat     *distmap  = NULL;
+      gfloat     *thickmap = NULL;
       gdouble     x        = coords->x;
       gdouble     y        = coords->y;
 
@@ -380,10 +386,14 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
         }
 
       if (options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
-        line_art = g_object_ref (tool->priv->line_art);
+        {
+          line_art = g_object_ref (tool->priv->line_art);
+          distmap  = tool->priv->distmap;
+          thickmap = tool->priv->thickmap;
+        }
 
       fill = gimp_drawable_get_bucket_fill_buffer (drawable,
-                                                   line_art,
+                                                   line_art, distmap, thickmap,
                                                    fill_options,
                                                    options->fill_transparent,
                                                    options->fill_criterion,
@@ -699,7 +709,17 @@ gimp_bucket_fill_compute_line_art_cb (GimpAsync          *async,
     return;
 
   if (gimp_async_is_finished (async))
-    tool->priv->line_art = g_object_ref (gimp_async_get_result (async));
+    {
+      GimpPickableLineArtAsyncResult *result;
+
+      result = gimp_async_get_result (async);
+
+      tool->priv->line_art = g_object_ref (result->line_art);
+      tool->priv->distmap  = result->distmap;
+      tool->priv->thickmap = result->thickmap;
+      result->distmap  = NULL;
+      result->thickmap = NULL;
+    }
 
   g_clear_object (&tool->priv->async);
 }
@@ -722,6 +742,9 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
     }
 
   g_clear_object (&tool->priv->line_art);
+  g_clear_pointer (&tool->priv->distmap, g_free);
+  g_clear_pointer (&tool->priv->thickmap, g_free);
+
   if (options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
     {
       GimpPickable *pickable = NULL;
@@ -825,6 +848,8 @@ gimp_bucket_fill_tool_image_changed (GimpContext        *context,
       GimpImage *prev_drawable = g_weak_ref_get (&tool->priv->cached_drawable);
 
       g_clear_object (&tool->priv->line_art);
+      g_clear_pointer (&tool->priv->distmap, g_free);
+      g_clear_pointer (&tool->priv->thickmap, g_free);
 
       if (prev_image)
         {

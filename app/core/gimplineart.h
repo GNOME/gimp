@@ -22,21 +22,23 @@
 #define __GIMP_LINEART__
 
 
-GeglBuffer * gimp_lineart_close (GeglBuffer          *line_art,
-                                 gboolean             select_transparent,
-                                 gfloat               stroke_threshold,
-                                 gint                 minimal_lineart_area,
-                                 gint                 normal_estimate_mask_size,
-                                 gfloat               end_point_rate,
-                                 gint                 spline_max_length,
-                                 gfloat               spline_max_angle,
-                                 gint                 end_point_connectivity,
-                                 gfloat               spline_roundness,
-                                 gboolean             allow_self_intersections,
-                                 gint                 created_regions_significant_area,
-                                 gint                 created_regions_minimum_area,
-                                 gboolean             small_segments_from_spline_sources,
-                                 gint                 segments_max_length);
+GeglBuffer * gimp_lineart_close (GeglBuffer  *buffer,
+                                 gboolean     select_transparent,
+                                 gfloat       stroke_threshold,
+                                 gint         minimal_lineart_area,
+                                 gint         normal_estimate_mask_size,
+                                 gfloat       end_point_rate,
+                                 gint         spline_max_length,
+                                 gfloat       spline_max_angle,
+                                 gint         end_point_connectivity,
+                                 gfloat       spline_roundness,
+                                 gboolean     allow_self_intersections,
+                                 gint         created_regions_significant_area,
+                                 gint         created_regions_minimum_area,
+                                 gboolean     small_segments_from_spline_sources,
+                                 gint         segments_max_length,
+                                 gfloat     **lineart_distmap,
+                                 gfloat     **lineart_radii);
 
 
 #endif /* __GIMP_LINEART__ */

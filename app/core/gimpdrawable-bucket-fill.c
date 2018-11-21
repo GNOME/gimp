@@ -50,6 +50,8 @@
 void
 gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            GeglBuffer           *line_art,
+                           gfloat               *distmap,
+                           gfloat               *thickmap,
                            GimpFillOptions      *options,
                            gboolean              fill_transparent,
                            GimpSelectCriterion   fill_criterion,
@@ -72,7 +74,8 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
   gimp_set_busy (image->gimp);
-  buffer = gimp_drawable_get_bucket_fill_buffer (drawable, line_art, options,
+  buffer = gimp_drawable_get_bucket_fill_buffer (drawable, line_art,
+                                                 distmap, thickmap, options,
                                                  fill_transparent, fill_criterion,
                                                  threshold, sample_merged,
                                                  diagonal_neighbors,
@@ -134,6 +137,8 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 GeglBuffer *
 gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
                                       GeglBuffer           *line_art,
+                                      gfloat               *distmap,
+                                      gfloat               *thickmap,
                                       GimpFillOptions      *options,
                                       gboolean              fill_transparent,
                                       GimpSelectCriterion   fill_criterion,
@@ -196,7 +201,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
    *  contiguous region.
    */
   new_mask = gimp_pickable_contiguous_region_by_seed (pickable,
-                                                      line_art,
+                                                      line_art, distmap, thickmap,
                                                       antialias,
                                                       threshold,
                                                       fill_transparent,

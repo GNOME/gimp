@@ -45,6 +45,13 @@ typedef struct
   gfloat      stroke_threshold;
 } LineArtData;
 
+typedef struct
+{
+  gint   x;
+  gint   y;
+  gfloat dist;
+} BorderPixel;
+
 
 /*  local function prototypes  */
 
@@ -105,10 +112,20 @@ static void     find_contiguous_region    (GeglBuffer          *src_buffer,
                                            gint                 y,
                                            const gfloat        *col);
 
-static LineArtData * line_art_data_new    (GeglBuffer          *buffer,
-                                           gboolean             select_transparent,
-                                           gfloat               stroke_threshold);
-static void          line_art_data_free   (LineArtData         *data);
+static LineArtData   * line_art_data_new    (GeglBuffer          *buffer,
+                                             gboolean             select_transparent,
+                                             gfloat               stroke_threshold);
+static void            line_art_data_free   (LineArtData         *data);
+static GimpPickableLineArtAsyncResult *
+                       line_art_result_new  (GeglBuffer          *line_art,
+                                             gfloat              *distmap,
+                                             gfloat              *thickmap);
+static void            line_art_result_free (GimpPickableLineArtAsyncResult
+                                                                 *data);
+static void            line_art_queue_pixel (GQueue              *queue,
+                                             gint                 x,
+                                             gint                 y,
+                                             gfloat               dist);
 
 
 /*  public functions  */
@@ -118,6 +135,8 @@ gimp_pickable_contiguous_region_prepare_line_art_async_func (GimpAsync   *async,
                                                              LineArtData *data)
 {
   GeglBuffer *lineart;
+  gfloat     *distmap;
+  gfloat     *thickmap;
   gboolean    has_alpha;
   gboolean    select_transparent = FALSE;
 
@@ -200,23 +219,29 @@ gimp_pickable_contiguous_region_prepare_line_art_async_func (GimpAsync   *async,
                                 /*small_segments_from_spline_sources,*/
                                 TRUE,
                                 /*segments_max_length*/
-                                20);
+                                20,
+                                &distmap, &thickmap);
 
   GIMP_TIMER_END("close line-art");
 
-  gimp_async_finish_full (async, lineart, g_object_unref);
+  gimp_async_finish_full (async,
+                          line_art_result_new (lineart, distmap, thickmap),
+                          (GDestroyNotify) line_art_result_free);
 
   line_art_data_free (data);
 }
 
 GeglBuffer *
-gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
-                                                  gboolean      select_transparent,
-                                                  gfloat        stroke_threshold)
+gimp_pickable_contiguous_region_prepare_line_art (GimpPickable  *pickable,
+                                                  gboolean       select_transparent,
+                                                  gfloat         stroke_threshold,
+                                                  gfloat       **distmap,
+                                                  gfloat       **thickmap)
 {
-  GimpAsync   *async;
-  LineArtData *data;
-  GeglBuffer  *lineart;
+  GimpAsync                      *async;
+  LineArtData                    *data;
+  GimpPickableLineArtAsyncResult *result;
+  GeglBuffer                     *lineart;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
@@ -229,7 +254,13 @@ gimp_pickable_contiguous_region_prepare_line_art (GimpPickable *pickable,
 
   gimp_pickable_contiguous_region_prepare_line_art_async_func (async, data);
 
-  lineart = g_object_ref (gimp_async_get_result (async));
+  result = gimp_async_get_result (async);
+
+  lineart   = g_object_ref (result->line_art);
+  *distmap  = result->distmap;
+  *thickmap = result->thickmap;
+  result->distmap  = NULL;
+  result->thickmap = NULL;
 
   g_object_unref (async);
 
@@ -271,6 +302,8 @@ gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickable *pickable,
 GeglBuffer *
 gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                          GeglBuffer          *line_art,
+                                         gfloat              *distmap,
+                                         gfloat              *thickmap,
                                          gboolean             antialias,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
@@ -287,7 +320,6 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
   gint           n_components;
   gboolean       has_alpha;
   gfloat         start_col[MAX_CHANNELS];
-  gfloat         flag           = 2.0;
   gboolean       smart_line_art = FALSE;
   gboolean       free_line_art  = FALSE;
 
@@ -295,6 +327,9 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
   if (select_criterion == GIMP_SELECT_CRITERION_LINE_ART)
     {
+      g_return_val_if_fail ((line_art && distmap && thickmap) ||
+                            (! line_art && ! distmap && ! thickmap),
+                            NULL);
       if (line_art == NULL)
         {
           /* It is much better experience to pre-compute the line art,
@@ -302,7 +337,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
            * selecting/filling through a PDB call).
            */
           line_art      = gimp_pickable_contiguous_region_prepare_line_art (pickable, select_transparent,
-                                                                            stroke_threshold);
+                                                                            stroke_threshold,
+                                                                            &distmap, &thickmap);
           free_line_art = TRUE;
         }
 
@@ -381,59 +417,198 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       /* The last step of the line art algorithm is to make sure that
        * selections does not leave "holes" between its borders and the
        * line arts, while not stepping over as well.
-       * To achieve this, I label differently the selection and the rest
-       * and leave the stroke pixels unlabelled, then I let these
-       * unknown pixels be labelled by flooding through watershed.
+       * I used to run the "gegl:watershed-transform" operation to flood
+       * the stroke pixels, but for such simple need, this simple code
+       * is so much faster while producing better results.
        */
-      GeglBufferIterator *gi;
-      GeglNode           *graph;
-      GeglNode           *input;
-      GeglNode           *op;
+      gfloat *mask;
+      GQueue *queue  = g_queue_new ();
+      gint    width  = gegl_buffer_get_width (line_art);
+      gint    height = gegl_buffer_get_height (line_art);
+      gint    nx, ny;
 
       GIMP_TIMER_START();
 
-      /* Flag the unselected line art pixels. */
-      gi = gegl_buffer_iterator_new (src_buffer, NULL, 0, NULL,
-                                     GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
-      gegl_buffer_iterator_add (gi, mask_buffer, NULL, 0,
-                                babl_format ("Y float"),
-                                GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+      mask = g_new (gfloat, width * height);
+      gegl_buffer_get (mask_buffer, NULL, 1.0, NULL,
+                       mask, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      while (gegl_buffer_iterator_next (gi))
+      for (y = 0; y < height; y++)
+        for (x = 0; x < width; x++)
+          {
+            gfloat thickness = thickmap[x + y * width];
+
+            if (thickness > 0.0)
+              {
+                if (x > 0)
+                  {
+                    nx = x - 1;
+                    if (y > 0)
+                      {
+                        ny = y - 1;
+                        if (mask[nx + ny * width] != 0.0)
+                          {
+                            line_art_queue_pixel (queue, x, y, thickness);
+                            continue;
+                          }
+                      }
+                    ny = y;
+                    if (mask[nx + ny * width] != 0.0)
+                      {
+                        line_art_queue_pixel (queue, x, y, thickness);
+                        continue;
+                      }
+                    if (y < height - 1)
+                      {
+                        ny = y + 1;
+                        if (mask[nx + ny * width] != 0.0)
+                          {
+                            line_art_queue_pixel (queue, x, y, thickness);
+                            continue;
+                          }
+                      }
+                  }
+                if (x < width - 1)
+                  {
+                    nx = x + 1;
+                    if (y > 0)
+                      {
+                        ny = y - 1;
+                        if (mask[nx + ny * width] != 0.0)
+                          {
+                            line_art_queue_pixel (queue, x, y, thickness);
+                            continue;
+                          }
+                      }
+                    ny = y;
+                    if (mask[nx + ny * width] != 0.0)
+                      {
+                        line_art_queue_pixel (queue, x, y, thickness);
+                        continue;
+                      }
+                    if (y < height - 1)
+                      {
+                        ny = y + 1;
+                        if (mask[nx + ny * width] != 0.0)
+                          {
+                            line_art_queue_pixel (queue, x, y, thickness);
+                            continue;
+                          }
+                      }
+                  }
+                nx = x;
+                if (y > 0)
+                  {
+                    ny = y - 1;
+                    if (mask[nx + ny * width] != 0.0)
+                      {
+                        line_art_queue_pixel (queue, x, y, thickness);
+                        continue;
+                      }
+                  }
+                if (y < height - 1)
+                  {
+                    ny = y + 1;
+                    if (mask[nx + ny * width] != 0.0)
+                      {
+                        line_art_queue_pixel (queue, x, y, thickness);
+                        continue;
+                      }
+                  }
+              }
+          }
+
+      while (! g_queue_is_empty (queue))
         {
-          guchar *lineart = (guchar*) gi->items[0].data;
-          gfloat *mask    = (gfloat*) gi->items[1].data;
-          gint    k;
+          BorderPixel *c = g_queue_pop_head (queue);
 
-          for (k = 0; k < gi->length; k++)
+          if (mask[c->x + c->y * width] != 1.0)
             {
-              if (*lineart && ! *mask)
-                *mask = flag;
-              lineart++;
-              mask++;
+              mask[c->x + c->y * width] = 1.0;
+              if (c->x > 0)
+                {
+                  nx = c->x - 1;
+                  if (c->y > 0)
+                    {
+                      ny = c->y - 1;
+                      if (mask[nx + ny * width] == 0.0 &&
+                          distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
+                          distmap[nx + ny * width] < c->dist)
+                        line_art_queue_pixel (queue, nx, ny, c->dist);
+                    }
+                  ny = c->y;
+                  if (mask[nx + ny * width] == 0.0 &&
+                      distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
+                      distmap[nx + ny * width] < c->dist)
+                    line_art_queue_pixel (queue, nx, ny, c->dist);
+                  if (c->y < height - 1)
+                    {
+                      ny = c->y - 1;
+                      if (mask[nx + ny * width] == 0.0 &&
+                          distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
+                          distmap[nx + ny * width] < c->dist)
+                        line_art_queue_pixel (queue, nx, ny, c->dist);
+                    }
+                }
+              if (c->x < width - 1)
+                {
+                  nx = c->x + 1;
+                  if (c->y > 0)
+                    {
+                      ny = c->y - 1;
+                      if (mask[nx + ny * width] == 0.0 &&
+                          distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
+                          distmap[nx + ny * width] < c->dist)
+                        line_art_queue_pixel (queue, nx, ny, c->dist);
+                    }
+                  ny = c->y;
+                  if (mask[nx + ny * width] == 0.0 &&
+                      distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
+                      distmap[nx + ny * width] < c->dist)
+                    line_art_queue_pixel (queue, nx, ny, c->dist);
+                  if (c->y < height - 1)
+                    {
+                      ny = c->y - 1;
+                      if (mask[nx + ny * width] == 0.0 &&
+                          distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
+                          distmap[nx + ny * width] < c->dist)
+                        line_art_queue_pixel (queue, nx, ny, c->dist);
+                    }
+                }
+              nx = c->x;
+              if (c->y > 0)
+                {
+                  ny = c->y - 1;
+                  if (mask[nx + ny * width] == 0.0 &&
+                      distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
+                      distmap[nx + ny * width] < c->dist)
+                    line_art_queue_pixel (queue, nx, ny, c->dist);
+                }
+              if (c->y < height - 1)
+                {
+                  ny = c->y + 1;
+                  if (mask[nx + ny * width] == 0.0 &&
+                      distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
+                      distmap[nx + ny * width] < c->dist)
+                    line_art_queue_pixel (queue, nx, ny, c->dist);
+                }
             }
+          g_free (c);
         }
-
-      /* Watershed the line art. */
-      graph = gegl_node_new ();
-      input = gegl_node_new_child (graph,
-                                   "operation", "gegl:buffer-source",
-                                   "buffer", mask_buffer,
-                                   NULL);
-      op  = gegl_node_new_child (graph,
-                                 "operation", "gegl:watershed-transform",
-                                 "flag-component", 0,
-                                 "flag", &flag,
-                                 NULL);
-      gegl_node_connect_to (input, "output",
-                            op, "input");
-      gegl_node_blit_buffer (op, mask_buffer, NULL, 0, GEGL_ABYSS_NONE);
-      g_object_unref (graph);
+      g_queue_free (queue);
+      gegl_buffer_set (mask_buffer, gegl_buffer_get_extent (mask_buffer),
+                       0, NULL, mask, GEGL_AUTO_ROWSTRIDE);
+      g_free (mask);
 
       GIMP_TIMER_END("watershed line art");
+
+      if (free_line_art)
+        {
+          g_object_unref (src_buffer);
+          g_free (distmap);
+          g_free (thickmap);
+        }
     }
-  if (free_line_art)
-    g_object_unref (src_buffer);
 
   return mask_buffer;
 }
@@ -998,4 +1173,44 @@ line_art_data_free (LineArtData *data)
   g_object_unref (data->buffer);
 
   g_slice_free (LineArtData, data);
+}
+
+static GimpPickableLineArtAsyncResult *
+line_art_result_new (GeglBuffer *line_art,
+                     gfloat     *distmap,
+                     gfloat     *thickmap)
+{
+  GimpPickableLineArtAsyncResult *data;
+
+  data = g_slice_new (GimpPickableLineArtAsyncResult);
+  data->line_art = line_art;
+  data->distmap  = distmap;
+  data->thickmap = thickmap;
+
+  return data;
+}
+
+static void
+line_art_result_free (GimpPickableLineArtAsyncResult *data)
+{
+  g_object_unref (data->line_art);
+  g_clear_pointer (&data->distmap, g_free);
+  g_clear_pointer (&data->thickmap, g_free);
+
+  g_slice_free (GimpPickableLineArtAsyncResult, data);
+}
+
+static void
+line_art_queue_pixel (GQueue *queue,
+                      gint    x,
+                      gint    y,
+                      gfloat  dist)
+{
+  BorderPixel *p = g_new (BorderPixel, 1);
+
+  p->x = x;
+  p->y = y;
+  p->dist = dist;
+
+  g_queue_push_head (queue, p);
 }

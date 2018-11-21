@@ -18,10 +18,18 @@
 #ifndef __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
 #define __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
 
+typedef struct
+{
+  GeglBuffer *line_art;
+  gfloat     *distmap;
+  gfloat     *thickmap;
+} GimpPickableLineArtAsyncResult;
 
 GeglBuffer * gimp_pickable_contiguous_region_prepare_line_art       (GimpPickable        *pickable,
                                                                      gboolean             select_transparent,
-                                                                     gfloat               stroke_threshold);
+                                                                     gfloat               stroke_threshold,
+                                                                     gfloat             **distmap,
+                                                                     gfloat             **thickmap);
 GimpAsync  * gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickable        *pickable,
                                                                      gboolean             select_transparent,
                                                                      gfloat               stroke_threshold,
@@ -29,6 +37,8 @@ GimpAsync  * gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickabl
 
 GeglBuffer * gimp_pickable_contiguous_region_by_seed                (GimpPickable        *pickable,
                                                                      GeglBuffer          *line_art,
+                                                                     gfloat              *distmap,
+                                                                     gfloat              *thickmap,
                                                                      gboolean             antialias,
                                                                      gfloat               threshold,
                                                                      gboolean             select_transparent,
