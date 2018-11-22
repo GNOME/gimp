@@ -436,10 +436,10 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       for (y = 0; y < height; y++)
         for (x = 0; x < width; x++)
           {
-            gfloat thickness = thickmap[x + y * width];
-
-            if (thickness > 0.0)
+            if (distmap[x + y * width] == 1.0)
               {
+                gfloat thickness = thickmap[x + y * width];
+
                 if (x > 0)
                   {
                     nx = x - 1;
