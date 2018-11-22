@@ -105,8 +105,7 @@ static GArray     * gimp_lineart_line_segment_until_hit      (const GeglBuffer  
                                                               Pixel                   start,
                                                               GimpVector2             direction,
                                                               int                     size);
-static gfloat     * gimp_lineart_estimate_strokes_radii      (GeglBuffer             *mask,
-                                                              gfloat                **lineart_distmap);
+static gfloat     * gimp_lineart_estimate_strokes_radii      (GeglBuffer             *mask);
 
 /* Some callback-type functions. */
 
@@ -188,7 +187,7 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
  * @segments_max_length: the maximum length for creating segments
  *                       between end points. Unlike splines, segments
  *                       are straight lines.
- * @lineart_distmap: a distance map of the line art pixels.
+ * @closed_distmap: a distance map of the closed line art pixels.
  * @lineart_radii: a map of estimated radii of line art border pixels.
  *
  * Creates a binarized version of the strokes of @buffer, detected either
@@ -224,7 +223,7 @@ gimp_lineart_close (GeglBuffer  *buffer,
                     gint         created_regions_minimum_area,
                     gboolean     small_segments_from_spline_sources,
                     gint         segments_max_length,
-                    gfloat     **lineart_distmap,
+                    gfloat     **closed_distmap,
                     gfloat     **lineart_radii)
 {
   const Babl         *gray_format;
@@ -313,7 +312,7 @@ gimp_lineart_close (GeglBuffer  *buffer,
                                            smoothed_curvatures,
                                            normal_estimate_mask_size);
 
-  radii = gimp_lineart_estimate_strokes_radii (strokes, lineart_distmap);
+  radii = gimp_lineart_estimate_strokes_radii (strokes);
   threshold = 1.0f - end_point_rate;
   clamped_threshold = MAX (0.25f, threshold);
   for (i = 0; i < width; i++)
@@ -455,6 +454,33 @@ gimp_lineart_close (GeglBuffer  *buffer,
       if (! inserted)
         g_free (p);
       point++;
+    }
+
+  if (closed_distmap)
+    {
+      GeglNode   *graph;
+      GeglNode   *input;
+      GeglNode   *op;
+
+      /* Flooding needs a distance map for closed line art. */
+      *closed_distmap = g_new (gfloat, width * height);
+
+      graph = gegl_node_new ();
+      input = gegl_node_new_child (graph,
+                                   "operation", "gegl:buffer-source",
+                                   "buffer", closed,
+                                   NULL);
+      op  = gegl_node_new_child (graph,
+                                 "operation", "gegl:distance-transform",
+                                 "metric",    GEGL_DISTANCE_METRIC_EUCLIDEAN,
+                                 "normalize", FALSE,
+                                 NULL);
+      gegl_node_connect_to (input, "output",
+                            op, "input");
+      gegl_node_blit (op, 1.0, gegl_buffer_get_extent (closed),
+                      NULL, *closed_distmap,
+                      GEGL_AUTO_ROWSTRIDE, GEGL_BLIT_DEFAULT);
+      g_object_unref (graph);
     }
 
   g_hash_table_destroy (visited);
@@ -1276,8 +1302,7 @@ gimp_lineart_line_segment_until_hit (const GeglBuffer *mask,
 }
 
 static gfloat *
-gimp_lineart_estimate_strokes_radii (GeglBuffer  *mask,
-                                     gfloat     **lineart_distmap)
+gimp_lineart_estimate_strokes_radii (GeglBuffer *mask)
 {
   GeglBufferIterator *gi;
   gfloat             *dist;
@@ -1422,10 +1447,7 @@ gimp_lineart_estimate_strokes_radii (GeglBuffer  *mask,
           }
     }
 
-  if (lineart_distmap)
-    *lineart_distmap = dist;
-  else
-    g_free (dist);
+  g_free (dist);
   g_object_unref (distmap);
 
   return thickness;
