@@ -41,6 +41,9 @@
 #include "gimpdisplayshell-transform.h"
 #include "gimpdisplayxfer.h"
 
+#ifdef GDK_WINDOWING_QUARTZ
+#import <AppKit/AppKit.h>
+#endif
 
 /* #define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1 */
 
