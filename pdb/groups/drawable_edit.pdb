@@ -175,7 +175,7 @@ HELP
                                      GIMP_PDB_CONTEXT (context)->sample_threshold,
                                      GIMP_PDB_CONTEXT (context)->sample_merged,
                                      GIMP_PDB_CONTEXT (context)->diagonal_neighbors,
-                                     0.92, /* TODO */
+                                     0.92, 3, /* TODO */
                                      x, y);
         }
       else

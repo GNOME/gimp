@@ -37,14 +37,15 @@ GimpAsync  * gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickabl
 
 GeglBuffer * gimp_pickable_contiguous_region_by_seed                (GimpPickable        *pickable,
                                                                      GeglBuffer          *line_art,
-                                                                     gfloat              *distmap,
-                                                                     gfloat              *thickmap,
+                                                                     gfloat              *line_art_distmap,
+                                                                     gfloat              *line_art_thickmap,
                                                                      gboolean             antialias,
                                                                      gfloat               threshold,
                                                                      gboolean             select_transparent,
                                                                      GimpSelectCriterion  select_criterion,
                                                                      gboolean             diagonal_neighbors,
-                                                                     gfloat               stroke_threshold,
+                                                                     gfloat               line_art_stroke_threshold,
+                                                                     gint                 line_art_max_grow,
                                                                      gint                 x,
                                                                      gint                 y);
 
