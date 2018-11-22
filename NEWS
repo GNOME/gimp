@@ -20,6 +20,16 @@ Core:
     causing layer masks to be transformed with a mismatched clipping mode
     during layer transforms, leading to discrepencies between the
     transformed layer and the transformed mask.
+  - Moved swap/cache and temporary files out the GIMP user config dir and
+    added new config file substitutions ${gimp_cache_dir} and
+    ${gimp_temp_dir}.
+  - Pass the GEGL tile-cache size, swap path, and thread-count to plug-ins
+    as part of their config, and have libgimp set the plug-in's GeglConfig
+    accordingly upon initialization.
+
+User interface:
+
+  - Enabled HiDPI/Retina support for the GTK2/OSX build, fixes blurry icons. 
 
 Tools:
 
@@ -39,11 +49,11 @@ Help:
 Installers:
 
   - Windows: proper fix for libthai to stop GIMP from crashing in the
-    Thai locale.
+    Thai locale. 
 
 Translations:
 
-  - Czech, Ukrainian.
+  - Czech, Polish, Ukrainian.
 
 Overview of Changes from GIMP 2.10.6 to GIMP 2.10.8
 ===================================================
