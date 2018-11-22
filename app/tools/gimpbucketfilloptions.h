@@ -47,6 +47,7 @@ struct _GimpBucketFillOptions
   gdouble                       threshold;
 
   gdouble                       line_art_threshold;
+  gint                          line_art_max_grow;
 
   GimpSelectCriterion           fill_criterion;
 

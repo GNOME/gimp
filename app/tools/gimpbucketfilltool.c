@@ -401,6 +401,7 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                    options->sample_merged,
                                                    options->diagonal_neighbors,
                                                    options->line_art_threshold,
+                                                   options->line_art_max_grow,
                                                    x, y, &tool->priv->fill_mask,
                                                    &x, &y, NULL, NULL);
       if (line_art)
