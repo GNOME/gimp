@@ -41,6 +41,9 @@
 #include "gimpdisplayshell-transform.h"
 #include "gimpdisplayxfer.h"
 
+#ifdef GDK_WINDOWING_QUARTZ
+#import <AppKit/AppKit.h>
+#endif
 
 /* #define GIMP_DISPLAY_RENDER_ENABLE_SCALING 1 */
 
@@ -147,6 +150,17 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
   scale *=
     gdk_window_get_scale_factor (
       gtk_widget_get_window (gtk_widget_get_toplevel (GTK_WIDGET (shell))));
+#elif defined(GDK_WINDOWING_QUARTZ)
+  /* gtk2/osx retina support */
+  if ([
+      [NSScreen mainScreen]
+      respondsToSelector: @selector(backingScaleFactor)
+    ]) {
+    for (NSScreen * screen in [NSScreen screens]) {
+      float s = [screen backingScaleFactor];
+      if (s > scale) scale = s;
+    }
+  }
 #endif
 
   scale  = MIN (scale, GIMP_DISPLAY_RENDER_MAX_SCALE);
