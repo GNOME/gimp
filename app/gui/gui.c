@@ -45,6 +45,8 @@
 #include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"
+#include "tools/gimptool.h"
+#include "tools/tool_manager.h"
 
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpclipboard.h"
@@ -735,7 +737,8 @@ static gboolean
 gui_exit_callback (Gimp     *gimp,
                    gboolean  force)
 {
-  GimpGuiConfig  *gui_config = GIMP_GUI_CONFIG (gimp->config);
+  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (gimp->config);
+  GimpTool      *active_tool;
 
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
@@ -757,6 +760,15 @@ gui_exit_callback (Gimp     *gimp,
   gimp->message_handler = GIMP_CONSOLE;
 
   gui_unique_exit ();
+
+  /* If any modifier is set when quitting (typically when exiting with
+   * Ctrl-q for instance!), when serializing the tool options, it will
+   * save any alternate value instead of the main one. Make sure that
+   * any modifier is reset before saving options.
+   */
+  active_tool = tool_manager_get_active (gimp);
+  if  (active_tool && active_tool->focus_display)
+    gimp_tool_set_modifier_state  (active_tool, 0, active_tool->focus_display);
 
   if (gui_config->save_session_info)
     session_save (gimp, FALSE);
