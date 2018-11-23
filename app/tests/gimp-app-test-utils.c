@@ -49,6 +49,12 @@
 #include <windows.h>
 #endif /* G_OS_WIN32 */
 
+#ifdef GDK_WINDOWING_QUARTZ
+// only to get keycode definitions from HIToolbox/Events.h
+#include <Carbon/Carbon.h>
+#include <Cocoa/Cocoa.h>
+#endif /* GDK_WINDOWING_QUARTZ */
+
 void
 gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
                                    const gchar *subdir,
@@ -279,7 +285,76 @@ gimp_test_utils_synthesize_key_event (GtkWidget *widget,
     {
       g_warning ("%s: no win32 key mapping found for keyval %d.", G_STRFUNC, keyval);
     }
-#else /* G_OS_WIN32  && ! GTK_CHECK_VERSION (2, 24, 25) */
+#elif defined(GDK_WINDOWING_QUARTZ)
+
+GdkKeymapKey *keys   = NULL;
+gint          n_keys = 0;
+gint          i;
+CGEventRef    keyUp, keyDown;
+
+if (gdk_keymap_get_entries_for_keyval (gdk_keymap_get_for_display (gdk_display_get_default ()), keyval, &keys, &n_keys))
+  {
+    /* XXX not in use yet */
+    CGEventRef commandDown	=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Command, true);
+    CGEventRef commandUp	=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Command, false);
+
+    CGEventRef shiftDown	=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Shift, true);
+    CGEventRef shiftUp		=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Shift, false);
+
+    CGEventRef optionDown	=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Option, true);
+    CGEventRef optionUp		=	CGEventCreateKeyboardEvent (NULL, (CGKeyCode)kVK_Option, false);
+
+    for (i = 0; i < n_keys; i++)
+      {
+        /* Option press. */
+        if (keys[i].group)
+          {
+            CGEventPost (kCGHIDEventTap, optionDown);
+          }
+        /* Shift press. */
+        if (keys[i].level)
+          {
+            CGEventPost(kCGHIDEventTap, shiftDown);
+          }
+        keyDown = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keys[i].keycode, true);
+        keyUp = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keys[i].keycode, false);
+        /* Key pressed. */
+        CGEventPost (kCGHIDEventTap, keyDown);
+        CFRelease (keyDown);
+        usleep (100);
+        /* key released */
+        CGEventPost (kCGHIDEventTap, keyUp);
+        CFRelease (keyUp);
+
+        /* Shift release. */
+        if (keys[i].level)
+          {
+            CGEventPost (kCGHIDEventTap, shiftDown);
+          }
+
+        /* Option release. */
+        if (keys[i].group)
+          {
+            CGEventPost (kCGHIDEventTap, optionUp);
+          }
+        /* No need to loop for alternative keycodes. We want only one
+         * key generated. */
+        break;
+      }
+    CFRelease (commandDown);
+    CFRelease (commandUp);
+    CFRelease (shiftDown);
+    CFRelease (shiftUp);
+    CFRelease (optionDown);
+    CFRelease (optionUp);
+    g_free (keys);
+  }
+else
+  {
+    g_warning ("%s: no macOS key mapping found for keyval %d.", G_STRFUNC, keyval);
+  }
+
+#else /* G_OS_WIN32  && ! GTK_CHECK_VERSION (2, 24, 25) && ! GDK_WINDOWING_QUARTZ */
   gdk_test_simulate_key (gtk_widget_get_window (widget),
                          -1, -1, /*x, y*/
                          keyval,

@@ -2,6 +2,12 @@
 # The tests must not be run in parallel or in a different order as specified
 .NOTPARALLEL: check
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
+endif
+
 SUBDIRS = \
 	files		\
 	gimpdir		\
@@ -69,6 +75,7 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS)		\
 	$(DBUS_GLIB_CFLAGS)	\
 	$(GEGL_CFLAGS)		\
+	$(xobjective_c)		\
 	-I$(includedir)
 
 # We need this due to circular dependencies
