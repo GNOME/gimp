@@ -55,6 +55,19 @@
 #include "gimp-intl.h"
 
 
+#define COORDS_INIT   \
+  {                   \
+    .x         = 0.0, \
+    .y         = 0.0, \
+    .pressure  = 1.0, \
+    .xtilt     = 0.0, \
+    .ytilt     = 0.0, \
+    .wheel     = 0.5, \
+    .velocity  = 0.0, \
+    .direction = 0.0  \
+  }
+
+
 typedef struct
 {
   GQueue       *stack;
@@ -743,7 +756,7 @@ svg_handler_rect_start (SvgHandler   *handler,
   if (width > 0.0 && height > 0.0 && rx >= 0.0 && ry >= 0.0)
     {
       GimpStroke *stroke;
-      GimpCoords  point = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+      GimpCoords  point = COORDS_INIT;
 
       if (rx == 0.0)
         rx = ry;
@@ -759,7 +772,7 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       if (rx)
         {
-          GimpCoords  end = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords  end = COORDS_INIT;
 
           end.x = x + width;
           end.y = y + ry;
@@ -773,7 +786,7 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       if (rx)
         {
-          GimpCoords  end = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords  end = COORDS_INIT;
 
           end.x = x + width - rx;
           end.y = y + height;
@@ -787,7 +800,7 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       if (rx)
         {
-          GimpCoords  end = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords  end = COORDS_INIT;
 
           end.x = x;
           end.y = y + height - ry;
@@ -801,7 +814,7 @@ svg_handler_rect_start (SvgHandler   *handler,
 
       if (rx)
         {
-          GimpCoords  end = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords  end = COORDS_INIT;
 
           end.x = x + rx;
           end.y = y;
@@ -825,7 +838,7 @@ svg_handler_ellipse_start (SvgHandler   *handler,
                            SvgParser    *parser)
 {
   SvgPath    *path   = g_slice_new0 (SvgPath);
-  GimpCoords  center = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+  GimpCoords  center = COORDS_INIT;
   gdouble     rx     = 0.0;
   gdouble     ry     = 0.0;
   gdouble     xres;
@@ -898,8 +911,8 @@ svg_handler_line_start (SvgHandler   *handler,
                         SvgParser    *parser)
 {
   SvgPath    *path  = g_slice_new0 (SvgPath);
-  GimpCoords  start = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
-  GimpCoords  end   = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+  GimpCoords  start = COORDS_INIT;
+  GimpCoords  end   = COORDS_INIT;
   GimpStroke *stroke;
   gdouble     xres;
   gdouble     yres;
@@ -1574,7 +1587,7 @@ static void
 parse_path_do_cmd (ParsePathContext *ctx,
                    gboolean          final)
 {
-  GimpCoords coords = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+  GimpCoords coords = COORDS_INIT;
 
   switch (ctx->cmd)
     {
@@ -1618,8 +1631,8 @@ parse_path_do_cmd (ParsePathContext *ctx,
       /* curveto */
       if (ctx->param == 6 || final)
         {
-          GimpCoords ctrl1 = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
-          GimpCoords ctrl2 = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords ctrl1 = COORDS_INIT;
+          GimpCoords ctrl2 = COORDS_INIT;
 
           parse_path_default_xy (ctx, 6);
 
@@ -1640,8 +1653,8 @@ parse_path_do_cmd (ParsePathContext *ctx,
       /* smooth curveto */
       if (ctx->param == 4 || final)
         {
-          GimpCoords ctrl1 = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
-          GimpCoords ctrl2 = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords ctrl1 = COORDS_INIT;
+          GimpCoords ctrl2 = COORDS_INIT;
 
           parse_path_default_xy (ctx, 4);
 
@@ -1688,7 +1701,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
       /* quadratic bezier curveto */
       if (ctx->param == 4 || final)
         {
-          GimpCoords ctrl = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords ctrl = COORDS_INIT;
 
           parse_path_default_xy (ctx, 4);
 
@@ -1707,7 +1720,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
       /* truetype quadratic bezier curveto */
       if (ctx->param == 2 || final)
         {
-          GimpCoords ctrl = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+          GimpCoords ctrl = COORDS_INIT;
 
           parse_path_default_xy (ctx, 2);
 
@@ -1724,7 +1737,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
         {
           if (ctx->param > 2)
             {
-              GimpCoords ctrl = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+              GimpCoords ctrl = COORDS_INIT;
 
               parse_path_default_xy (ctx, 4);
 
