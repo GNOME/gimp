@@ -640,7 +640,10 @@ gui_restore_after_callback (Gimp               *gimp,
     if (GTK_IS_MENU_ITEM (menu))
       menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-    gtkosx_application_set_menu_bar (osx_app, GTK_MENU_SHELL (menu));
+    /* do not activate OSX menu if tests are running */
+    if (!getenv("GIMP_TESTING_ABS_TOP_SRCDIR"))
+      gtkosx_application_set_menu_bar (osx_app, GTK_MENU_SHELL (menu));
+
     gtkosx_application_set_use_quartz_accelerators (osx_app, FALSE);
 
     gui_add_to_app_menu (image_ui_manager, osx_app,
