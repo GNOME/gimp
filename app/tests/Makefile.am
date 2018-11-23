@@ -123,6 +123,7 @@ LDADD = \
 	$(libgimpbase)							\
 	$(GIMPICONRC)							\
 	$(GTK_LIBS)							\
+	$(GTK_MAC_INTEGRATION_LIBS)					\
 	$(DBUS_GLIB_LIBS)						\
 	$(GDK_PIXBUF_LIBS)						\
 	$(FREETYPE_LIBS)						\
