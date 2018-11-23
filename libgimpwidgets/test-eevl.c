@@ -40,42 +40,6 @@ typedef struct
   gboolean          should_succeed;
 } TestCase;
 
-static TestCase cases[] =
-{
-  /* "Default" test case */
-  { "2in + 3in",                 { 2 + 3, 1},               TRUE },
-
-  /* Whitespace variations */
-  { "2in+3in",                   { 2 + 3, 1},               TRUE },
-  { "   2in + 3in",              { 2 + 3, 1},               TRUE },
-  { "2in + 3in   ",              { 2 + 3, 1},               TRUE },
-  { "2 in + 3 in",               { 2 + 3, 1},               TRUE },
-  { "   2   in   +   3   in   ", { 2 + 3, 1},               TRUE },
-
-  /* Make sure the default unit is applied as it should */
-  { "2 + 3in",                   { 2 + 3, 1 },              TRUE },
-  { "3",                         { 3, 1 },                  TRUE },
-
-  /* Somewhat complicated input */
-  { "(2 + 3)in",                 { 2 + 3, 1},               TRUE },
-//  { "2 / 3 in",                  { 2 / 3., 1},              TRUE },
-  { "(2 + 2/3)in",               { 2 + 2 / 3., 1},          TRUE },
-  { "1/2 + 1/2",                 { 1, 1},                   TRUE },
-  { "2 ^ 3 ^ 4",                 { pow (2, pow (3, 4)), 1}, TRUE },
-
-  /* Mixing of units */
-  { "2mm + 3in",                 { 2 / 25.4 + 3, 1},        TRUE },
-
-  /* 'odd' behavior */
-  { "2 ++ 1",                    { 3, 1},                   TRUE },
-  { "2 +- 1",                    { 1, 1},                   TRUE },
-  { "2 -- 1",                    { 3, 1},                   TRUE },
-
-  /* End of test cases */
-  { NULL, { 0, 0 }, TRUE }
-};
-
-
 static gboolean
 test_units (const gchar      *ident,
             GimpEevlQuantity *result,
@@ -110,6 +74,41 @@ main(void)
   gint i;
   gint failed    = 0;
   gint succeeded = 0;
+
+  TestCase cases[] =
+  {
+    /* "Default" test case */
+    { "2in + 3in",                 { 2 + 3, 1},               TRUE },
+
+    /* Whitespace variations */
+    { "2in+3in",                   { 2 + 3, 1},               TRUE },
+    { "   2in + 3in",              { 2 + 3, 1},               TRUE },
+    { "2in + 3in   ",              { 2 + 3, 1},               TRUE },
+    { "2 in + 3 in",               { 2 + 3, 1},               TRUE },
+    { "   2   in   +   3   in   ", { 2 + 3, 1},               TRUE },
+
+    /* Make sure the default unit is applied as it should */
+    { "2 + 3in",                   { 2 + 3, 1 },              TRUE },
+    { "3",                         { 3, 1 },                  TRUE },
+
+    /* Somewhat complicated input */
+    { "(2 + 3)in",                 { 2 + 3, 1},               TRUE },
+  //  { "2 / 3 in",                  { 2 / 3., 1},              TRUE },
+    { "(2 + 2/3)in",               { 2 + 2 / 3., 1},          TRUE },
+    { "1/2 + 1/2",                 { 1, 1},                   TRUE },
+    { "2 ^ 3 ^ 4",                 { pow (2, pow (3, 4)), 1}, TRUE },
+
+    /* Mixing of units */
+    { "2mm + 3in",                 { 2 / 25.4 + 3, 1},        TRUE },
+
+    /* 'odd' behavior */
+    { "2 ++ 1",                    { 3, 1},                   TRUE },
+    { "2 +- 1",                    { 1, 1},                   TRUE },
+    { "2 -- 1",                    { 3, 1},                   TRUE },
+
+    /* End of test cases */
+    { NULL, { 0, 0 }, TRUE }
+  };
 
   g_print ("Testing Eevl Eva, the Evaluator\n\n");
 
