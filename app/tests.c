@@ -42,6 +42,10 @@
 #include "gimp-log.h"
 #include "tests.h"
 
+#ifdef GDK_WINDOWING_QUARTZ
+#include <Cocoa/Cocoa.h>
+#endif
+
 
 static void
 gimp_status_func_dummy (const gchar *text1,
@@ -92,6 +96,14 @@ gimp_init_icon_theme_for_testing (void)
   return;
 }
 
+#ifdef GDK_WINDOWING_QUARTZ
+static void
+gimp_osx_focus_window (void)
+{
+  [NSApp activateIgnoringOtherApps:YES];
+}
+#endif
+
 static Gimp *
 gimp_init_for_gui_testing_internal (gboolean  show_gui,
                                     GFile    *gimprc)
@@ -129,6 +141,9 @@ gimp_init_for_gui_testing_internal (gboolean  show_gui,
   gimp_init_icon_theme_for_testing ();
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy, NULL);
+#ifdef GDK_WINDOWING_QUARTZ
+  g_idle_add ((GSourceFunc) gimp_osx_focus_window, NULL);
+#endif
 
   return gimp;
 }

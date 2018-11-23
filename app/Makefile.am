@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
+endif
+
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
@@ -125,6 +131,7 @@ AM_CPPFLAGS = \
 	$(LCMS_CFLAGS)					\
 	$(GEXIV2_CFLAGS)				\
 	$(psapi_cflags)					\
+	$(xobjective_c)					\
 	-I$(includedir)					\
 	-I$(builddir)/gui
 
