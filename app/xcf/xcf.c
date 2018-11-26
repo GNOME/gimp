@@ -342,10 +342,11 @@ xcf_save_stream (Gimp           *gimp,
                  GimpProgress   *progress,
                  GError        **error)
 {
-  XcfInfo      info     = { 0, };
-  const gchar *filename;
-  gboolean     success  = FALSE;
-  GError      *my_error = NULL;
+  XcfInfo       info     = { 0, };
+  const gchar  *filename;
+  gboolean      success  = FALSE;
+  GError       *my_error = NULL;
+  GCancellable *cancellable;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -384,13 +385,25 @@ xcf_save_stream (Gimp           *gimp,
 
   success = xcf_save_image (&info, image, &my_error);
 
+  cancellable = g_cancellable_new ();
   if (success)
     {
       if (progress)
         gimp_progress_set_text (progress, _("Closing '%s'"), filename);
-
-      success = g_output_stream_close (info.output, NULL, &my_error);
     }
+  else
+    {
+      /* When closing the stream, the image will be actually saved,
+       * unless we properly cancel it with a GCancellable.
+       * Not closing the stream is not an option either, as this will
+       * happen anyway when finalizing the output.
+       * So let's make sure now that we don't overwrite the XCF file
+       * when an error occurred.
+       */
+      g_cancellable_cancel (cancellable);
+    }
+  success = g_output_stream_close (info.output, cancellable, &my_error);
+  g_object_unref (cancellable);
 
   if (! success && my_error)
     g_propagate_prefixed_error (error, my_error,
