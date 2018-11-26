@@ -221,6 +221,8 @@ gimp_filter_tool_settings_export (GimpSettingsBox *box,
 
   if (! tool_class->settings_export (filter_tool, output, &error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
       gimp_message (GIMP_TOOL (filter_tool)->tool_info->gimp,
                     G_OBJECT (gimp_tool_gui_get_dialog (filter_tool->gui)),
                     GIMP_MESSAGE_ERROR,
@@ -228,7 +230,13 @@ gimp_filter_tool_settings_export (GimpSettingsBox *box,
                     gimp_file_get_utf8_name (file),
                     error->message);
       g_clear_error (&error);
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
       g_object_unref (output);
+
       return FALSE;
     }
 

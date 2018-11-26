@@ -4383,7 +4383,14 @@ gimp_dashboard_log_start_recording (GimpDashboard  *dashboard,
 
   if (priv->log_error)
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
       gimp_backtrace_stop ();
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (priv->log_output, cancellable, NULL);
+      g_object_unref (cancellable);
 
       g_clear_object (&priv->log_output);
 
@@ -4461,7 +4468,18 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
     gimp_backtrace_stop ();
 
   if (! priv->log_error)
-    g_output_stream_close (priv->log_output, NULL, &priv->log_error);
+    {
+      g_output_stream_close (priv->log_output, NULL, &priv->log_error);
+    }
+  else
+    {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (priv->log_output, cancellable, NULL);
+      g_object_unref (cancellable);
+    }
 
   g_clear_object (&priv->log_output);
 

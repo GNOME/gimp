@@ -337,11 +337,24 @@ themes_apply_theme (Gimp        *gimp,
              "# end of themerc\n",
              gimp_file_get_utf8_name (gtkrc_user),
              esc_gtkrc_theme,
-             esc_gtkrc_user) ||
-          ! g_output_stream_close (output, NULL, &error))
+             esc_gtkrc_user))
         {
+          GCancellable *cancellable = g_cancellable_new ();
+
           gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
                         _("Error writing '%s': %s"),
+                        gimp_file_get_utf8_name (themerc), error->message);
+          g_clear_error (&error);
+
+          /* Cancel the overwrite initiated by g_file_replace(). */
+          g_cancellable_cancel (cancellable);
+          g_output_stream_close (output, cancellable, NULL);
+          g_object_unref (cancellable);
+        }
+      else if (! g_output_stream_close (output, NULL, &error))
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Error closing '%s': %s"),
                         gimp_file_get_utf8_name (themerc), error->message);
           g_clear_error (&error);
         }

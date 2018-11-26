@@ -136,10 +136,17 @@ gimp_pdb_dump (GimpPDB  *pdb,
 
   if (pdb_dump.error)
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
       g_set_error (error, pdb_dump.error->domain, pdb_dump.error->code,
                    _("Writing PDB file '%s' failed: %s"),
                    gimp_file_get_utf8_name (file), pdb_dump.error->message);
       g_clear_error (&pdb_dump.error);
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (pdb_dump.output, cancellable, NULL);
+      g_object_unref (cancellable);
       g_object_unref (pdb_dump.output);
 
       return FALSE;

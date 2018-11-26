@@ -83,12 +83,20 @@ gimp_vectors_export_file (GimpImage    *image,
   if (! g_output_stream_write_all (output, string->str, string->len,
                                    NULL, NULL, &my_error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
       g_set_error (error, my_error->domain, my_error->code,
                    _("Writing SVG file '%s' failed: %s"),
                    gimp_file_get_utf8_name (file), my_error->message);
       g_clear_error (&my_error);
       g_string_free (string, TRUE);
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
       g_object_unref (output);
+
       return FALSE;
     }
 

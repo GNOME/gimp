@@ -288,17 +288,25 @@ gimp_internal_data_save_data_file (Gimp                        *gimp,
           success = FALSE;
         }
     }
-  else if (error && *error)
-    {
-      g_prefix_error (error,
-                      _("Error saving '%s': "),
-                      gimp_file_get_utf8_name (file));
-    }
   else
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
-                   _("Error saving '%s'"),
-                   gimp_file_get_utf8_name (file));
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      if (error && *error)
+        {
+          g_prefix_error (error,
+                          _("Error saving '%s': "),
+                          gimp_file_get_utf8_name (file));
+        }
+      else
+        {
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+                       _("Error saving '%s'"),
+                       gimp_file_get_utf8_name (file));
+        }
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
     }
 
   g_object_unref (output);
