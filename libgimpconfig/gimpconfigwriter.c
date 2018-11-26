@@ -760,6 +760,13 @@ gimp_config_writer_close_output (GimpConfigWriter  *writer,
 
   if (writer->error)
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (writer->output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_object_unref (writer->output);
       writer->output = NULL;
 

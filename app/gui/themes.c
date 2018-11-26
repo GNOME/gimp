@@ -285,11 +285,24 @@ themes_apply_theme (Gimp        *gimp,
              "/* end of theme.css */\n",
              gimp_file_get_utf8_name (css_user),
              esc_css_theme,
-             esc_css_user) ||
-          ! g_output_stream_close (output, NULL, &error))
+             esc_css_user))
         {
+          GCancellable *cancellable = g_cancellable_new ();
+
           gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
                         _("Error writing '%s': %s"),
+                        gimp_file_get_utf8_name (theme_css), error->message);
+          g_clear_error (&error);
+
+          /* Cancel the overwrite initiated by g_file_replace(). */
+          g_cancellable_cancel (cancellable);
+          g_output_stream_close (output, cancellable, NULL);
+          g_object_unref (cancellable);
+        }
+      else if (! g_output_stream_close (output, NULL, &error))
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Error closing '%s': %s"),
                         gimp_file_get_utf8_name (theme_css), error->message);
           g_clear_error (&error);
         }

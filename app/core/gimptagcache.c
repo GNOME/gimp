@@ -430,10 +430,21 @@ gimp_tag_cache_save (GimpTagCache *cache)
       g_printerr ("%s\n", error->message);
     }
   else if (! g_output_stream_write_all (output, buf->str, buf->len,
-                                        NULL, NULL, &error) ||
-           ! g_output_stream_close (output, NULL, &error))
+                                        NULL, NULL, &error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
       g_printerr (_("Error writing '%s': %s\n"),
+                  gimp_file_get_utf8_name (file), error->message);
+
+      /* Cancel the overwrite initiated by g_file_replace(). */
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+    }
+  else if (! g_output_stream_close (output, NULL, &error))
+    {
+      g_printerr (_("Error closing '%s': %s\n"),
                   gimp_file_get_utf8_name (file), error->message);
     }
 
