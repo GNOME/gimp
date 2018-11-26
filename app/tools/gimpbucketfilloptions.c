@@ -61,7 +61,6 @@ enum
 struct _GimpBucketFillOptionsPrivate
 {
   GtkWidget *diagonal_neighbors_checkbox;
-  GtkWidget *antialias_checkbox;
   GtkWidget *threshold_scale;
 
   GtkWidget *line_art_threshold_scale;
@@ -144,9 +143,9 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                             "antialias",
                             _("Antialiasing"),
                             _("Base fill opacity on color difference from "
-                              "the clicked pixel (see threshold). Disable "
-                              "antialiasing to fill the entire area "
-                              "uniformly."),
+                              "the clicked pixel (see threshold) or on line "
+                              " art borders. Disable antialiasing to fill "
+                              "the entire area uniformly."),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -309,13 +308,12 @@ static void
 gimp_bucket_fill_options_update_criterion (GimpBucketFillOptions *options)
 {
   /* GUI not created yet. */
-  if (! options->priv->antialias_checkbox)
+  if (! options->priv->threshold_scale)
     return;
 
   switch (options->fill_criterion)
     {
     case GIMP_SELECT_CRITERION_LINE_ART:
-      gtk_widget_hide (options->priv->antialias_checkbox);
       gtk_widget_hide (options->priv->diagonal_neighbors_checkbox);
       gtk_widget_hide (options->priv->threshold_scale);
 
@@ -326,7 +324,6 @@ gimp_bucket_fill_options_update_criterion (GimpBucketFillOptions *options)
       gtk_widget_hide (options->priv->line_art_threshold_scale);
       gtk_widget_hide (options->priv->line_art_grow_scale);
 
-      gtk_widget_show (options->priv->antialias_checkbox);
       gtk_widget_show (options->priv->diagonal_neighbors_checkbox);
       gtk_widget_show (options->priv->threshold_scale);
       break;
@@ -411,7 +408,6 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   /*  the antialias toggle  */
   button = gimp_prop_check_button_new (config, "antialias", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  options->priv->antialias_checkbox = button;
   gtk_widget_show (button);
 
   /*  the threshold scale  */
