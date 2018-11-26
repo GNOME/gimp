@@ -1307,15 +1307,15 @@ gimp_lineart_estimate_strokes_radii (GeglBuffer *mask)
   GeglBufferIterator *gi;
   gfloat             *dist;
   gfloat             *thickness;
-  GeglBuffer         *distmap;
   GeglNode           *graph;
   GeglNode           *input;
   GeglNode           *op;
-  GeglNode           *sink;
   gint                width  = gegl_buffer_get_width (mask);
   gint                height = gegl_buffer_get_height (mask);
 
   /* Compute a distance map for the line art. */
+  dist = g_new (gfloat, width * height);
+
   graph = gegl_node_new ();
   input = gegl_node_new_child (graph,
                                "operation", "gegl:buffer-source",
@@ -1326,23 +1326,12 @@ gimp_lineart_estimate_strokes_radii (GeglBuffer *mask)
                              "metric",    GEGL_DISTANCE_METRIC_EUCLIDEAN,
                              "normalize", FALSE,
                              NULL);
-  sink  = gegl_node_new_child (graph,
-                               "operation", "gegl:buffer-sink",
-                               "buffer", &distmap,
-                               NULL);
-  gegl_node_connect_to (input, "output",
-                        op, "input");
-  gegl_node_connect_to (op, "output",
-                        sink, "input");
-  gegl_node_process (sink);
+  gegl_node_connect_to (input, "output", op, "input");
+  gegl_node_blit (op, 1.0, gegl_buffer_get_extent (mask),
+                  NULL, dist, GEGL_AUTO_ROWSTRIDE, GEGL_BLIT_DEFAULT);
   g_object_unref (graph);
 
-  dist = g_new (gfloat, width * height);
-  gegl_buffer_get (distmap, NULL, 1.0, NULL, dist,
-                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-
   thickness = g_new0 (gfloat, width * height);
-
   gi = gegl_buffer_iterator_new (mask, NULL, 0, NULL,
                                  GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
   while (gegl_buffer_iterator_next (gi))
@@ -1448,7 +1437,6 @@ gimp_lineart_estimate_strokes_radii (GeglBuffer *mask)
     }
 
   g_free (dist);
-  g_object_unref (distmap);
 
   return thickness;
 }
