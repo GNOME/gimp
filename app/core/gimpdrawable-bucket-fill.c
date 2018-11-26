@@ -296,6 +296,34 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, new_mask,
                            -mask_offset_x, -mask_offset_y, 1.0);
 
+  if (fill_criterion == GIMP_SELECT_CRITERION_LINE_ART && antialias)
+    {
+      /* Antialias for the line art algorithm is not applied during mask
+       * creation because it is not based on individual pixel colors.
+       * Instead we just want to apply it on the borders of the mask at
+       * the end (since the mask can evolve, we don't want to actually
+       * touch it, but only the intermediate results).
+       */
+      GeglNode   *graph;
+      GeglNode   *input;
+      GeglNode   *op;
+
+      graph = gegl_node_new ();
+      input = gegl_node_new_child (graph,
+                                   "operation", "gegl:buffer-source",
+                                   "buffer", buffer,
+                                   NULL);
+      op  = gegl_node_new_child (graph,
+                                 "operation", "gegl:gaussian-blur",
+                                 "std-dev-x", 0.5,
+                                 "std-dev-y", 0.5,
+                                 NULL);
+      gegl_node_connect_to (input, "output", op, "input");
+      gegl_node_blit_buffer (op, buffer, NULL, 0,
+                             GEGL_ABYSS_NONE);
+      g_object_unref (graph);
+    }
+
   if (mask_x)
     *mask_x = x;
   if (mask_y)
