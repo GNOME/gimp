@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <cairo.h>
+#define GEGL_ITERATOR2_API
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -284,6 +285,52 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
     {
       mask_offset_x = x;
       mask_offset_y = y;
+    }
+
+  if (fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
+    {
+      /* The smart colorization leaves some very irritating unselected
+       * pixels in some edge cases. Just flood any isolated pixel inside
+       * the final mask.
+       */
+      GeglBufferIterator *gi;
+
+      gi = gegl_buffer_iterator_new (new_mask, GEGL_RECTANGLE (x, y, width, height),
+                                     0, NULL, GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 5);
+      gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x, y - 1, width, height),
+                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
+      gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x, y + 1, width, height),
+                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
+      gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x - 1, y, width, height),
+                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
+      gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x + 1, y, width, height),
+                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
+      while (gegl_buffer_iterator_next (gi))
+        {
+          gfloat *m      = (gfloat*) gi->items[0].data;
+          gfloat *py     = (gfloat*) gi->items[1].data;
+          gfloat *ny     = (gfloat*) gi->items[2].data;
+          gfloat *px     = (gfloat*) gi->items[3].data;
+          gfloat *nx     = (gfloat*) gi->items[4].data;
+          gint    startx = gi->items[0].roi.x;
+          gint    starty = gi->items[0].roi.y;
+          gint    endy   = starty + gi->items[0].roi.height;
+          gint    endx   = startx + gi->items[0].roi.width;
+          gint    i;
+          gint    j;
+
+          for (j = starty; j < endy; j++)
+            for (i = startx; i < endx; i++)
+              {
+                if (! *m && *py && *ny && *px && *nx)
+                  *m = 1.0;
+                m++;
+                py++;
+                ny++;
+                px++;
+                nx++;
+              }
+        }
     }
 
   buffer = gimp_fill_options_create_buffer (options, drawable,
