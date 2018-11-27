@@ -39,6 +39,7 @@
 #include "core/gimppickable-contiguous-region.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
+#include "core/gimptoolinfo.h"
 #include "core/gimpwaitable.h"
 
 #include "gegl/gimp-gegl-nodes.h"
@@ -52,6 +53,7 @@
 
 #include "gimpbucketfilloptions.h"
 #include "gimpbucketfilltool.h"
+#include "gimpcoloroptions.h"
 #include "gimptoolcontrol.h"
 #include "gimptools-utils.h"
 
@@ -144,7 +146,7 @@ static void     gimp_bucket_fill_tool_drawable_painted (GimpDrawable         *dr
                                                         GimpBucketFillTool   *tool);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpBucketFillTool, gimp_bucket_fill_tool, GIMP_TYPE_TOOL)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpBucketFillTool, gimp_bucket_fill_tool, GIMP_TYPE_COLOR_TOOL)
 
 #define parent_class gimp_bucket_fill_tool_parent_class
 
@@ -221,6 +223,9 @@ gimp_bucket_fill_tool_constructed (GObject *object)
     gimp_bucket_fill_tool_connect_handlers (tool);
   else
     g_idle_add (gimp_bucket_fill_tool_connect_handlers, tool);
+
+  GIMP_COLOR_TOOL (tool)->pick_target = (options->fill_mode == GIMP_BUCKET_FILL_BG) ?
+                                           GIMP_COLOR_PICK_TARGET_BACKGROUND : GIMP_COLOR_PICK_TARGET_FOREGROUND;
 }
 
 static void
@@ -507,6 +512,13 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpImage             *image       = gimp_display_get_image (display);
 
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                    press_type, display);
+      return;
+    }
+
   if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
       gimp_image_coords_in_active_pickable (image, coords,
                                             options->sample_merged, TRUE))
@@ -567,6 +579,9 @@ gimp_bucket_fill_tool_motion (GimpTool         *tool,
 
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    return;
+
   if (gimp_image_coords_in_active_pickable (image, coords,
                                             options->sample_merged, TRUE) &&
       /* Fill selection only needs to happen once. */
@@ -615,6 +630,14 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
   GimpBucketFillTool *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
   gboolean            commit;
 
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time,
+                                                      state, release_type,
+                                                      display);
+      return;
+    }
+
   commit = (release_type != GIMP_BUTTON_RELEASE_CANCEL);
 
   if (commit)
@@ -635,7 +658,7 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
 {
   GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
-  if (key == gimp_get_toggle_behavior_mask ())
+  if (key == GDK_MOD1_MASK)
     {
       switch (options->fill_mode)
         {
@@ -649,6 +672,38 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
 
         default:
           break;
+        }
+    }
+  else if (key == gimp_get_toggle_behavior_mask ())
+    {
+      GimpToolInfo *info = gimp_get_tool_info (display->gimp,
+                                               "gimp-color-picker-tool");
+      if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+        {
+          switch (GIMP_COLOR_TOOL (tool)->pick_target)
+            {
+            case GIMP_COLOR_PICK_TARGET_BACKGROUND:
+              gimp_tool_push_status (tool, display,
+                                     _("Click in any image to pick the "
+                                       "background color"));
+              break;
+
+            case GIMP_COLOR_PICK_TARGET_FOREGROUND:
+            default:
+              gimp_tool_push_status (tool, display,
+                                     _("Click in any image to pick the "
+                                       "foreground color"));
+              break;
+            }
+          GIMP_TOOL (tool)->display = display;
+          gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
+                                  GIMP_COLOR_OPTIONS (info->tool_options));
+        }
+      else
+        {
+          gimp_tool_pop_status (tool, display);
+          gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
+          GIMP_TOOL (tool)->display = NULL;
         }
     }
   else if (key == gimp_get_extend_selection_mask ())
@@ -805,6 +860,10 @@ gimp_bucket_fill_tool_connect_handlers (gpointer data)
                         G_CALLBACK (gimp_bucket_fill_tool_options_notified),
                         tool);
 
+      g_signal_connect (options, "notify::fill-mode",
+                        G_CALLBACK (gimp_bucket_fill_tool_options_notified),
+                        tool);
+
       g_signal_connect (context, "image-changed",
                         G_CALLBACK (gimp_bucket_fill_tool_image_changed),
                         tool);
@@ -827,6 +886,31 @@ gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
       options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
     {
       gimp_bucket_fill_compute_line_art (tool);
+    }
+  else if (! strcmp (pspec->name, "fill-mode"))
+    {
+      if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+        gimp_tool_pop_status (GIMP_TOOL (tool), GIMP_TOOL (tool)->display);
+
+      switch (options->fill_mode)
+        {
+        case GIMP_BUCKET_FILL_BG:
+          GIMP_COLOR_TOOL (tool)->pick_target = GIMP_COLOR_PICK_TARGET_BACKGROUND;
+          if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+            gimp_tool_push_status (GIMP_TOOL (tool), GIMP_TOOL (tool)->display,
+                                   _("Click in any image to pick the "
+                                     "background color"));
+          break;
+
+        case GIMP_BUCKET_FILL_FG:
+        default:
+          GIMP_COLOR_TOOL (tool)->pick_target = GIMP_COLOR_PICK_TARGET_FOREGROUND;
+          if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+            gimp_tool_push_status (GIMP_TOOL (tool), GIMP_TOOL (tool)->display,
+                                   _("Click in any image to pick the "
+                                     "foreground color"));
+          break;
+        }
     }
 }
 
