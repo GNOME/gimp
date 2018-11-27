@@ -678,11 +678,11 @@ gimp_projection_finish_draw (GimpProjection *proj)
     {
       gimp_projection_chunk_render_stop (proj);
 
-      gimp_projectable_begin_render (proj->priv->projectable);
+      gimp_tile_handler_validate_begin_validate (proj->priv->validate_handler);
 
       while (gimp_projection_chunk_render_iteration (proj, FALSE));
 
-      gimp_projectable_end_render (proj->priv->projectable);
+      gimp_tile_handler_validate_end_validate (proj->priv->validate_handler);
     }
 }
 
@@ -854,7 +854,7 @@ gimp_projection_chunk_render_callback (gpointer data)
    */
   chunk_render->n_pixels = 0;
 
-  gimp_projectable_begin_render (proj->priv->projectable);
+  gimp_tile_handler_validate_begin_validate (proj->priv->validate_handler);
 
   do
     {
@@ -871,7 +871,7 @@ gimp_projection_chunk_render_callback (gpointer data)
     }
   while (g_timer_elapsed (timer, NULL) < GIMP_PROJECTION_CHUNK_TIME);
 
-  gimp_projectable_end_render (proj->priv->projectable);
+  gimp_tile_handler_validate_end_validate (proj->priv->validate_handler);
 
   /* adjust the target number of pixels to be processed on the next frame,
    * according to the number of pixels processed during this frame and the

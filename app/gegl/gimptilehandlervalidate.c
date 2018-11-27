@@ -35,28 +35,30 @@ enum
 };
 
 
-static void     gimp_tile_handler_validate_finalize      (GObject         *object);
-static void     gimp_tile_handler_validate_set_property  (GObject         *object,
-                                                          guint            property_id,
-                                                          const GValue    *value,
-                                                          GParamSpec      *pspec);
-static void     gimp_tile_handler_validate_get_property  (GObject         *object,
-                                                          guint            property_id,
-                                                          GValue          *value,
-                                                          GParamSpec      *pspec);
+static void     gimp_tile_handler_validate_finalize            (GObject         *object);
+static void     gimp_tile_handler_validate_set_property        (GObject         *object,
+                                                                guint            property_id,
+                                                                const GValue    *value,
+                                                                GParamSpec      *pspec);
+static void     gimp_tile_handler_validate_get_property        (GObject         *object,
+                                                                guint            property_id,
+                                                                GValue          *value,
+                                                                GParamSpec      *pspec);
 
-static void     gimp_tile_handler_validate_real_validate (GimpTileHandlerValidate *validate,
-                                                          const GeglRectangle     *rect,
-                                                          const Babl              *format,
-                                                          gpointer                 dest_buf,
-                                                          gint                     dest_stride);
+static void     gimp_tile_handler_validate_real_begin_validate (GimpTileHandlerValidate *validate);
+static void     gimp_tile_handler_validate_real_end_validate   (GimpTileHandlerValidate *validate);
+static void     gimp_tile_handler_validate_real_validate       (GimpTileHandlerValidate *validate,
+                                                                const GeglRectangle     *rect,
+                                                                const Babl              *format,
+                                                                gpointer                 dest_buf,
+                                                                gint                     dest_stride);
 
-static gpointer gimp_tile_handler_validate_command       (GeglTileSource  *source,
-                                                          GeglTileCommand  command,
-                                                          gint             x,
-                                                          gint             y,
-                                                          gint             z,
-                                                          gpointer         data);
+static gpointer gimp_tile_handler_validate_command             (GeglTileSource  *source,
+                                                                GeglTileCommand  command,
+                                                                gint             x,
+                                                                gint             y,
+                                                                gint             z,
+                                                                gpointer         data);
 
 
 G_DEFINE_TYPE (GimpTileHandlerValidate, gimp_tile_handler_validate,
@@ -74,6 +76,8 @@ gimp_tile_handler_validate_class_init (GimpTileHandlerValidateClass *klass)
   object_class->set_property = gimp_tile_handler_validate_set_property;
   object_class->get_property = gimp_tile_handler_validate_get_property;
 
+  klass->begin_validate      = gimp_tile_handler_validate_real_begin_validate;
+  klass->end_validate        = gimp_tile_handler_validate_real_end_validate;
   klass->validate            = gimp_tile_handler_validate_real_validate;
 
   g_object_class_install_property (object_class, PROP_FORMAT,
@@ -179,6 +183,18 @@ gimp_tile_handler_validate_get_property (GObject    *object,
 }
 
 static void
+gimp_tile_handler_validate_real_begin_validate (GimpTileHandlerValidate *validate)
+{
+  validate->suspend_validate++;
+}
+
+static void
+gimp_tile_handler_validate_real_end_validate (GimpTileHandlerValidate *validate)
+{
+  validate->suspend_validate--;
+}
+
+static void
 gimp_tile_handler_validate_real_validate (GimpTileHandlerValidate *validate,
                                           const GeglRectangle     *rect,
                                           const Babl              *format,
@@ -235,6 +251,8 @@ gimp_tile_handler_validate_validate (GeglTileSource *source,
           tile_bpp    = babl_format_get_bytes_per_pixel (validate->format);
           tile_stride = tile_bpp * validate->tile_width;
 
+          gimp_tile_handler_validate_begin_validate (validate);
+
           gegl_tile_lock (tile);
 
           GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->validate
@@ -248,6 +266,8 @@ gimp_tile_handler_validate_validate (GeglTileSource *source,
              tile_stride);
 
           gegl_tile_unlock (tile);
+
+          gimp_tile_handler_validate_end_validate (validate);
         }
     }
   else
@@ -277,6 +297,8 @@ gimp_tile_handler_validate_validate (GeglTileSource *source,
                       0, tile_stride * validate->tile_height);
             }
 
+          gimp_tile_handler_validate_begin_validate (validate);
+
           gegl_tile_lock (tile);
 
           n_rects = cairo_region_num_rectangles (tile_region);
@@ -305,6 +327,8 @@ gimp_tile_handler_validate_validate (GeglTileSource *source,
             }
 
           gegl_tile_unlock (tile);
+
+          gimp_tile_handler_validate_end_validate (validate);
         }
 
       cairo_region_destroy (tile_region);
@@ -413,6 +437,25 @@ gimp_tile_handler_validate_undo_invalidate (GimpTileHandlerValidate *validate,
 
   cairo_region_subtract_rectangle (validate->dirty_region,
                                    (cairo_rectangle_int_t *) rect);
+}
+
+void
+gimp_tile_handler_validate_begin_validate (GimpTileHandlerValidate *validate)
+{
+  g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
+
+  if (validate->validating++ == 0)
+    GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->begin_validate (validate);
+}
+
+void
+gimp_tile_handler_validate_end_validate (GimpTileHandlerValidate *validate)
+{
+  g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
+  g_return_if_fail (validate->validating > 0);
+
+  if (--validate->validating == 0)
+    GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->end_validate (validate);
 }
 
 void
