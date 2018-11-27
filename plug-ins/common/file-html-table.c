@@ -221,6 +221,7 @@ save_image (GFile       *file,
 {
   const Babl    *format = babl_format ("R'G'B'A u8");
   GeglSampler   *sampler;
+  GCancellable  *cancellable;
   GOutputStream *output;
   gint           row, col;
   gint           cols, rows;
@@ -437,6 +438,11 @@ save_image (GFile       *file,
   return TRUE;
 
  fail:
+
+  cancellable = g_cancellable_new ();
+  g_cancellable_cancel (cancellable);
+  g_output_stream_close (output, cancellable, NULL);
+  g_object_unref (cancellable);
 
   g_object_unref (output);
   g_object_unref (sampler);

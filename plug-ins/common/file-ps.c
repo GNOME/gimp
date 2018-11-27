@@ -1207,6 +1207,7 @@ save_image (GFile   *file,
             GError **error)
 {
   GOutputStream *output;
+  GCancellable  *cancellable;
   GimpImageType  drawable_type;
 
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -1289,7 +1290,12 @@ save_image (GFile   *file,
 
  fail:
 
+  cancellable = g_cancellable_new ();
+  g_cancellable_cancel (cancellable);
+  g_output_stream_close (output, cancellable, NULL);
+
   g_object_unref (output);
+  g_object_unref (cancellable);
 
   return FALSE;
 }

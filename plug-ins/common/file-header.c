@@ -185,6 +185,7 @@ save_image (GFile   *file,
   guchar        *d         = NULL;
   guchar        *data      = NULL;
   guchar        *cmap;
+  GCancellable  *cancellable;
   gint           colors;
   gint           width;
   gint           height;
@@ -408,9 +409,14 @@ save_image (GFile   *file,
 
  fail:
 
+  cancellable = g_cancellable_new ();
+  g_cancellable_cancel (cancellable);
+  g_output_stream_close (output, cancellable, NULL);
+
   g_free (data);
   g_object_unref (output);
   g_object_unref (buffer);
+  g_object_unref (cancellable);
 
   return FALSE;
 }

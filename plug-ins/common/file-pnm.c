@@ -1585,6 +1585,15 @@ save_image (GFile     *file,
   status = TRUE;
 
  out:
+  if (! status)
+    {
+      GCancellable  *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+    }
+
   if (comment)
     g_free (comment);
   if (buffer)

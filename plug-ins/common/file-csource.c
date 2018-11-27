@@ -455,6 +455,7 @@ save_image (GFile   *file,
 {
   GOutputStream *output;
   GeglBuffer    *buffer;
+  GCancellable  *cancellable;
   GimpImageType  drawable_type = gimp_drawable_type (drawable_ID);
   gchar         *s_uint_8, *s_uint, *s_char, *s_null;
   guint          c;
@@ -849,6 +850,11 @@ save_image (GFile   *file,
   return TRUE;
 
  fail:
+
+  cancellable = g_cancellable_new ();
+  g_cancellable_cancel (cancellable);
+  g_output_stream_close (output, cancellable, NULL);
+  g_object_unref (cancellable);
 
   g_object_unref (output);
   g_object_unref (buffer);

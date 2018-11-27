@@ -527,6 +527,7 @@ save_image (GFile   *file,
   GOutputStream *output;
   GeglBuffer    *buffer;
   const Babl    *format;
+  GCancellable  *cancellable;
   gint           width;
   gint           height;
   gint           depth, i, j, row, tile_height, rectHeight;
@@ -567,6 +568,11 @@ save_image (GFile   *file,
       ! put_short (output, 0,      error) ||
       ! put_short (output, 0,      error))
     {
+      cancellable = g_cancellable_new ();
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_object_unref (output);
       g_object_unref (buffer);
       return FALSE;
@@ -716,6 +722,11 @@ save_image (GFile   *file,
   return TRUE;
 
  fail:
+
+  cancellable = g_cancellable_new ();
+  g_cancellable_cancel (cancellable);
+  g_output_stream_close (output, cancellable, NULL);
+  g_object_unref (cancellable);
 
   g_free (src_base);
   g_object_unref (output);

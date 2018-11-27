@@ -573,6 +573,12 @@ save_image (GFile   *file,
   if (! g_output_stream_write_all (output, &ph, sizeof (GimpPatternHeader),
                                    NULL, NULL, error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_object_unref (output);
       return FALSE;
     }
@@ -581,6 +587,12 @@ save_image (GFile   *file,
                                    description, strlen (description) + 1,
                                    NULL, NULL, error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_object_unref (output);
       return FALSE;
     }
@@ -599,6 +611,12 @@ save_image (GFile   *file,
       if (! g_output_stream_write_all (output, buf, line_size,
                                        NULL, NULL, error))
         {
+          GCancellable *cancellable = g_cancellable_new ();
+
+          g_cancellable_cancel (cancellable);
+          g_output_stream_close (output, cancellable, NULL);
+          g_object_unref (cancellable);
+
           g_object_unref (buffer);
           g_object_unref (output);
           return FALSE;

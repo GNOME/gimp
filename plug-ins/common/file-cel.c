@@ -753,6 +753,7 @@ save_image (GFile   *file,
   GOutputStream *output;
   GeglBuffer    *buffer;
   const Babl    *format;
+  GCancellable  *cancellable;
   gint           width;
   gint           height;
   guchar         header[32];    /* File header */
@@ -923,6 +924,11 @@ save_image (GFile   *file,
   return TRUE;
 
  fail:
+
+  cancellable = g_cancellable_new ();
+  g_cancellable_cancel (cancellable);
+  g_output_stream_close (output, cancellable, NULL);
+  g_object_unref (cancellable);
 
   g_free (buf);
   g_free (line);
