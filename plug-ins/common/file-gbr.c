@@ -734,6 +734,12 @@ save_image (GFile   *file,
   if (! g_output_stream_write_all (output, &bh, sizeof (GimpBrushHeader),
                                    NULL, NULL, error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_object_unref (output);
       return FALSE;
     }
@@ -743,6 +749,12 @@ save_image (GFile   *file,
                                    strlen (info.description) + 1,
                                    NULL, NULL, error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_object_unref (output);
       return FALSE;
     }
@@ -783,6 +795,12 @@ save_image (GFile   *file,
       if (! g_output_stream_write_all (output, brush_buf, width * file_bpp,
                                        NULL, NULL, error))
         {
+          GCancellable *cancellable = g_cancellable_new ();
+
+          g_cancellable_cancel (cancellable);
+          g_output_stream_close (output, cancellable, NULL);
+          g_object_unref (cancellable);
+
           g_free (brush_buf);
           g_object_unref (output);
           return FALSE;

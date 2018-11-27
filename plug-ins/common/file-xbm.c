@@ -979,6 +979,7 @@ save_image (GFile        *file,
 {
   GOutputStream *output;
   GeglBuffer    *buffer;
+  GCancellable  *cancellable;
   gint           width, height, colors, dark;
   gint           intbits, lineints, need_comma, nints, rowoffset, tileheight;
   gint           c, i, j, k, thisbit;
@@ -1220,6 +1221,11 @@ save_image (GFile        *file,
   return TRUE;
 
  fail:
+
+  cancellable = g_cancellable_new ();
+  g_cancellable_cancel (cancellable);
+  g_output_stream_close (output, cancellable, NULL);
+  g_object_unref (cancellable);
 
   g_free (data);
   g_object_unref (buffer);

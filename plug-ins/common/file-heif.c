@@ -708,6 +708,12 @@ save_image (GFile             *file,
 
   if (err.code != 0)
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Writing HEIF image failed: %s"),
                    err.message);

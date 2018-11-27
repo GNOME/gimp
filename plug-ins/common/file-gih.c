@@ -1323,6 +1323,12 @@ gih_save_image (GFile    *file,
   if (! g_output_stream_write_all (output, header, strlen (header),
                                    NULL, NULL, error))
     {
+      GCancellable *cancellable = g_cancellable_new ();
+
+      g_cancellable_cancel (cancellable);
+      g_output_stream_close (output, cancellable, NULL);
+      g_object_unref (cancellable);
+
       g_free (parstring);
       g_free (header);
       g_object_unref (output);
@@ -1389,6 +1395,12 @@ gih_save_image (GFile    *file,
                                                         thisw, thish),
                                         name, error))
                 {
+                  GCancellable *cancellable = g_cancellable_new ();
+
+                  g_cancellable_cancel (cancellable);
+                  g_output_stream_close (output, cancellable, NULL);
+                  g_object_unref (cancellable);
+
                   g_object_unref (output);
                   return FALSE;
                 }
