@@ -56,13 +56,16 @@ struct _GimpTileHandlerValidateClass
 {
   GeglTileHandlerClass  parent_class;
 
-  void (* begin_validate) (GimpTileHandlerValidate *validate);
-  void (* end_validate)   (GimpTileHandlerValidate *validate);
-  void (* validate)       (GimpTileHandlerValidate *validate,
-                           const GeglRectangle     *rect,
-                           const Babl              *format,
-                           gpointer                 dest_buf,
-                           gint                     dest_stride);
+  void (* begin_validate)  (GimpTileHandlerValidate *validate);
+  void (* end_validate)    (GimpTileHandlerValidate *validate);
+  void (* validate)        (GimpTileHandlerValidate *validate,
+                            const GeglRectangle     *rect,
+                            const Babl              *format,
+                            gpointer                 dest_buf,
+                            gint                     dest_stride);
+  void (* validate_buffer) (GimpTileHandlerValidate *validate,
+                            const GeglRectangle     *rect,
+                            GeglBuffer              *buffer);
 };
 
 

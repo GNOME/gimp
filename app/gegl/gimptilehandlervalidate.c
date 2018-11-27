@@ -35,30 +35,33 @@ enum
 };
 
 
-static void     gimp_tile_handler_validate_finalize            (GObject         *object);
-static void     gimp_tile_handler_validate_set_property        (GObject         *object,
-                                                                guint            property_id,
-                                                                const GValue    *value,
-                                                                GParamSpec      *pspec);
-static void     gimp_tile_handler_validate_get_property        (GObject         *object,
-                                                                guint            property_id,
-                                                                GValue          *value,
-                                                                GParamSpec      *pspec);
+static void     gimp_tile_handler_validate_finalize             (GObject         *object);
+static void     gimp_tile_handler_validate_set_property         (GObject         *object,
+                                                                 guint            property_id,
+                                                                 const GValue    *value,
+                                                                 GParamSpec      *pspec);
+static void     gimp_tile_handler_validate_get_property         (GObject         *object,
+                                                                 guint            property_id,
+                                                                 GValue          *value,
+                                                                 GParamSpec      *pspec);
 
-static void     gimp_tile_handler_validate_real_begin_validate (GimpTileHandlerValidate *validate);
-static void     gimp_tile_handler_validate_real_end_validate   (GimpTileHandlerValidate *validate);
-static void     gimp_tile_handler_validate_real_validate       (GimpTileHandlerValidate *validate,
-                                                                const GeglRectangle     *rect,
-                                                                const Babl              *format,
-                                                                gpointer                 dest_buf,
-                                                                gint                     dest_stride);
+static void     gimp_tile_handler_validate_real_begin_validate  (GimpTileHandlerValidate *validate);
+static void     gimp_tile_handler_validate_real_end_validate    (GimpTileHandlerValidate *validate);
+static void     gimp_tile_handler_validate_real_validate        (GimpTileHandlerValidate *validate,
+                                                                 const GeglRectangle     *rect,
+                                                                 const Babl              *format,
+                                                                 gpointer                 dest_buf,
+                                                                 gint                     dest_stride);
+static void     gimp_tile_handler_validate_real_validate_buffer (GimpTileHandlerValidate *validate,
+                                                                 const GeglRectangle     *rect,
+                                                                 GeglBuffer              *buffer);
 
-static gpointer gimp_tile_handler_validate_command             (GeglTileSource  *source,
-                                                                GeglTileCommand  command,
-                                                                gint             x,
-                                                                gint             y,
-                                                                gint             z,
-                                                                gpointer         data);
+static gpointer gimp_tile_handler_validate_command              (GeglTileSource  *source,
+                                                                 GeglTileCommand  command,
+                                                                 gint             x,
+                                                                 gint             y,
+                                                                 gint             z,
+                                                                 gpointer         data);
 
 
 G_DEFINE_TYPE (GimpTileHandlerValidate, gimp_tile_handler_validate,
@@ -79,6 +82,7 @@ gimp_tile_handler_validate_class_init (GimpTileHandlerValidateClass *klass)
   klass->begin_validate      = gimp_tile_handler_validate_real_begin_validate;
   klass->end_validate        = gimp_tile_handler_validate_real_end_validate;
   klass->validate            = gimp_tile_handler_validate_real_validate;
+  klass->validate_buffer     = gimp_tile_handler_validate_real_validate_buffer;
 
   g_object_class_install_property (object_class, PROP_FORMAT,
                                    g_param_spec_pointer ("format", NULL, NULL,
@@ -212,6 +216,34 @@ gimp_tile_handler_validate_real_validate (GimpTileHandlerValidate *validate,
   gegl_node_blit (validate->graph, 1.0, rect, format,
                   dest_buf, dest_stride,
                   GEGL_BLIT_DEFAULT);
+}
+
+static void
+gimp_tile_handler_validate_real_validate_buffer (GimpTileHandlerValidate *validate,
+                                                 const GeglRectangle     *rect,
+                                                 GeglBuffer              *buffer)
+{
+  GimpTileHandlerValidateClass *klass;
+
+  klass = GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate);
+
+  if (klass->validate == gimp_tile_handler_validate_real_validate)
+    {
+      gegl_node_blit_buffer (validate->graph, buffer, rect, 0,
+                             GEGL_ABYSS_NONE);
+    }
+  else
+    {
+      const Babl *format = gegl_buffer_get_format (buffer);
+      gpointer    data;
+      gint        stride;
+
+      data = gegl_buffer_linear_open (buffer, rect, &stride, format);
+
+      klass->validate (validate, rect, format, data, stride);
+
+      gegl_buffer_linear_close (buffer, data);
+    }
 }
 
 static GeglTile *
