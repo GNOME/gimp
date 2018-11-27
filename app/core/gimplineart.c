@@ -188,7 +188,6 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
  *                       between end points. Unlike splines, segments
  *                       are straight lines.
  * @closed_distmap: a distance map of the closed line art pixels.
- * @lineart_radii: a map of estimated radii of line art border pixels.
  *
  * Creates a binarized version of the strokes of @buffer, detected either
  * with luminosity (light means background) or alpha values depending on
@@ -203,9 +202,9 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
  * Fourey, David Tschumperlé, David Revoy.
  *
  * Returns: a new #GeglBuffer of format "Y u8" representing the
- *          binarized @line_art. If @lineart_radii and @lineart_distmap
- *          are not #NULL, newly allocated float buffer are returned,
- *          which can be used for overflowing created masks later.
+ *          binarized @line_art. If @lineart_distmap is not #NULL, a
+ *          newly allocated float buffer is returned, which can be used
+ *          for overflowing created masks later.
  */
 GeglBuffer *
 gimp_lineart_close (GeglBuffer  *buffer,
@@ -223,8 +222,7 @@ gimp_lineart_close (GeglBuffer  *buffer,
                     gint         created_regions_minimum_area,
                     gboolean     small_segments_from_spline_sources,
                     gint         segments_max_length,
-                    gfloat     **closed_distmap,
-                    gfloat     **lineart_radii)
+                    gfloat     **closed_distmap)
 {
   const Babl         *gray_format;
   gfloat             *normals;
@@ -327,10 +325,7 @@ gimp_lineart_close (GeglBuffer  *buffer,
             curvatures[i + j * width] = 0.0;
         }
     }
-  if (lineart_radii)
-    *lineart_radii = radii;
-  else
-    g_free (radii);
+  g_free (radii);
 
   keypoints = gimp_lineart_curvature_extremums (curvatures, smoothed_curvatures,
                                                 width, height);
