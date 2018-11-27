@@ -22,14 +22,12 @@ typedef struct
 {
   GeglBuffer *line_art;
   gfloat     *distmap;
-  gfloat     *thickmap;
 } GimpPickableLineArtAsyncResult;
 
 GeglBuffer * gimp_pickable_contiguous_region_prepare_line_art       (GimpPickable        *pickable,
                                                                      gboolean             select_transparent,
                                                                      gfloat               stroke_threshold,
-                                                                     gfloat             **distmap,
-                                                                     gfloat             **thickmap);
+                                                                     gfloat             **distmap);
 GimpAsync  * gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickable        *pickable,
                                                                      gboolean             select_transparent,
                                                                      gfloat               stroke_threshold,
@@ -38,7 +36,6 @@ GimpAsync  * gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickabl
 GeglBuffer * gimp_pickable_contiguous_region_by_seed                (GimpPickable        *pickable,
                                                                      GeglBuffer          *line_art,
                                                                      gfloat              *line_art_distmap,
-                                                                     gfloat              *line_art_thickmap,
                                                                      gboolean             antialias,
                                                                      gfloat               threshold,
                                                                      gboolean             select_transparent,

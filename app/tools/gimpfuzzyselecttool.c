@@ -122,7 +122,7 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
       pickable = GIMP_PICKABLE (image);
     }
 
-  return gimp_pickable_contiguous_region_by_seed (pickable, NULL, NULL, NULL,
+  return gimp_pickable_contiguous_region_by_seed (pickable, NULL, NULL,
                                                   sel_options->antialias,
                                                   options->threshold / 255.0,
                                                   options->select_transparent,

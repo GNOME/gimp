@@ -49,7 +49,6 @@ typedef struct
 {
   gint   x;
   gint   y;
-  gfloat radius;
   gint   level;
 } BorderPixel;
 
@@ -119,14 +118,12 @@ static LineArtData   * line_art_data_new    (GeglBuffer          *buffer,
 static void            line_art_data_free   (LineArtData         *data);
 static GimpPickableLineArtAsyncResult *
                        line_art_result_new  (GeglBuffer          *line_art,
-                                             gfloat              *distmap,
-                                             gfloat              *thickmap);
+                                             gfloat              *distmap);
 static void            line_art_result_free (GimpPickableLineArtAsyncResult
                                                                  *data);
 static void            line_art_queue_pixel (GQueue              *queue,
                                              gint                 x,
                                              gint                 y,
-                                             gfloat               radius,
                                              gint                 level);
 
 
@@ -138,7 +135,6 @@ gimp_pickable_contiguous_region_prepare_line_art_async_func (GimpAsync   *async,
 {
   GeglBuffer *lineart;
   gfloat     *distmap;
-  gfloat     *thickmap;
   gboolean    has_alpha;
   gboolean    select_transparent = FALSE;
 
@@ -222,12 +218,12 @@ gimp_pickable_contiguous_region_prepare_line_art_async_func (GimpAsync   *async,
                                 TRUE,
                                 /*segments_max_length*/
                                 20,
-                                &distmap, &thickmap);
+                                &distmap);
 
   GIMP_TIMER_END("close line-art");
 
   gimp_async_finish_full (async,
-                          line_art_result_new (lineart, distmap, thickmap),
+                          line_art_result_new (lineart, distmap),
                           (GDestroyNotify) line_art_result_free);
 
   line_art_data_free (data);
@@ -237,8 +233,7 @@ GeglBuffer *
 gimp_pickable_contiguous_region_prepare_line_art (GimpPickable  *pickable,
                                                   gboolean       select_transparent,
                                                   gfloat         stroke_threshold,
-                                                  gfloat       **distmap,
-                                                  gfloat       **thickmap)
+                                                  gfloat       **distmap)
 {
   GimpAsync                      *async;
   LineArtData                    *data;
@@ -260,9 +255,7 @@ gimp_pickable_contiguous_region_prepare_line_art (GimpPickable  *pickable,
 
   lineart   = g_object_ref (result->line_art);
   *distmap  = result->distmap;
-  *thickmap = result->thickmap;
   result->distmap  = NULL;
-  result->thickmap = NULL;
 
   g_object_unref (async);
 
@@ -305,7 +298,6 @@ GeglBuffer *
 gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                          GeglBuffer          *line_art,
                                          gfloat              *distmap,
-                                         gfloat              *thickmap,
                                          gboolean             antialias,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
@@ -330,8 +322,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
   if (select_criterion == GIMP_SELECT_CRITERION_LINE_ART)
     {
-      g_return_val_if_fail ((line_art && distmap && thickmap) ||
-                            (! line_art && ! distmap && ! thickmap),
+      g_return_val_if_fail ((line_art && distmap) ||
+                            (! line_art && ! distmap),
                             NULL);
       if (line_art == NULL)
         {
@@ -341,7 +333,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
            */
           line_art      = gimp_pickable_contiguous_region_prepare_line_art (pickable, select_transparent,
                                                                             stroke_threshold,
-                                                                            &distmap, &thickmap);
+                                                                            &distmap);
           free_line_art = TRUE;
         }
 
@@ -441,8 +433,6 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
           {
             if (distmap[x + y * width] == 1.0)
               {
-                gfloat thickness = thickmap[x + y * width];
-
                 if (x > 0)
                   {
                     nx = x - 1;
@@ -451,14 +441,14 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                         ny = y - 1;
                         if (mask[nx + ny * width] != 0.0)
                           {
-                            line_art_queue_pixel (queue, x, y, thickness, 1);
+                            line_art_queue_pixel (queue, x, y, 1);
                             continue;
                           }
                       }
                     ny = y;
                     if (mask[nx + ny * width] != 0.0)
                       {
-                        line_art_queue_pixel (queue, x, y, thickness, 1);
+                        line_art_queue_pixel (queue, x, y, 1);
                         continue;
                       }
                     if (y < height - 1)
@@ -466,7 +456,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                         ny = y + 1;
                         if (mask[nx + ny * width] != 0.0)
                           {
-                            line_art_queue_pixel (queue, x, y, thickness, 1);
+                            line_art_queue_pixel (queue, x, y, 1);
                             continue;
                           }
                       }
@@ -479,14 +469,14 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                         ny = y - 1;
                         if (mask[nx + ny * width] != 0.0)
                           {
-                            line_art_queue_pixel (queue, x, y, thickness, 1);
+                            line_art_queue_pixel (queue, x, y, 1);
                             continue;
                           }
                       }
                     ny = y;
                     if (mask[nx + ny * width] != 0.0)
                       {
-                        line_art_queue_pixel (queue, x, y, thickness, 1);
+                        line_art_queue_pixel (queue, x, y, 1);
                         continue;
                       }
                     if (y < height - 1)
@@ -494,7 +484,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                         ny = y + 1;
                         if (mask[nx + ny * width] != 0.0)
                           {
-                            line_art_queue_pixel (queue, x, y, thickness, 1);
+                            line_art_queue_pixel (queue, x, y, 1);
                             continue;
                           }
                       }
@@ -505,7 +495,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                     ny = y - 1;
                     if (mask[nx + ny * width] != 0.0)
                       {
-                        line_art_queue_pixel (queue, x, y, thickness, 1);
+                        line_art_queue_pixel (queue, x, y, 1);
                         continue;
                       }
                   }
@@ -514,7 +504,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                     ny = y + 1;
                     if (mask[nx + ny * width] != 0.0)
                       {
-                        line_art_queue_pixel (queue, x, y, thickness, 1);
+                        line_art_queue_pixel (queue, x, y, 1);
                         continue;
                       }
                   }
@@ -538,22 +528,19 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                     {
                       ny = c->y - 1;
                       if (mask[nx + ny * width] == 0.0 &&
-                          distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
-                          distmap[nx + ny * width] < c->radius)
-                        line_art_queue_pixel (queue, nx, ny, c->radius, c->level + 1);
+                          distmap[nx + ny * width] > distmap[c->x + c->y * width])
+                        line_art_queue_pixel (queue, nx, ny, c->level + 1);
                     }
                   ny = c->y;
                   if (mask[nx + ny * width] == 0.0 &&
-                      distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
-                      distmap[nx + ny * width] < c->radius)
-                    line_art_queue_pixel (queue, nx, ny, c->radius, c->level + 1);
+                      distmap[nx + ny * width] > distmap[c->x + c->y * width])
+                    line_art_queue_pixel (queue, nx, ny, c->level + 1);
                   if (c->y < height - 1)
                     {
                       ny = c->y - 1;
                       if (mask[nx + ny * width] == 0.0 &&
-                          distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
-                          distmap[nx + ny * width] < c->radius)
-                        line_art_queue_pixel (queue, nx, ny, c->radius, c->level + 1);
+                          distmap[nx + ny * width] > distmap[c->x + c->y * width])
+                        line_art_queue_pixel (queue, nx, ny, c->level + 1);
                     }
                 }
               if (c->x < width - 1)
@@ -563,22 +550,19 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                     {
                       ny = c->y - 1;
                       if (mask[nx + ny * width] == 0.0 &&
-                          distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
-                          distmap[nx + ny * width] < c->radius)
-                        line_art_queue_pixel (queue, nx, ny, c->radius, c->level + 1);
+                          distmap[nx + ny * width] > distmap[c->x + c->y * width])
+                        line_art_queue_pixel (queue, nx, ny, c->level + 1);
                     }
                   ny = c->y;
                   if (mask[nx + ny * width] == 0.0 &&
-                      distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
-                      distmap[nx + ny * width] < c->radius)
-                    line_art_queue_pixel (queue, nx, ny, c->radius, c->level + 1);
+                      distmap[nx + ny * width] > distmap[c->x + c->y * width])
+                    line_art_queue_pixel (queue, nx, ny, c->level + 1);
                   if (c->y < height - 1)
                     {
                       ny = c->y - 1;
                       if (mask[nx + ny * width] == 0.0 &&
-                          distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
-                          distmap[nx + ny * width] < c->radius)
-                        line_art_queue_pixel (queue, nx, ny, c->radius, c->level + 1);
+                          distmap[nx + ny * width] > distmap[c->x + c->y * width])
+                        line_art_queue_pixel (queue, nx, ny, c->level + 1);
                     }
                 }
               nx = c->x;
@@ -586,17 +570,15 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                 {
                   ny = c->y - 1;
                   if (mask[nx + ny * width] == 0.0 &&
-                      distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
-                      distmap[nx + ny * width] < c->radius)
-                    line_art_queue_pixel (queue, nx, ny, c->radius, c->level + 1);
+                      distmap[nx + ny * width] > distmap[c->x + c->y * width])
+                    line_art_queue_pixel (queue, nx, ny, c->level + 1);
                 }
               if (c->y < height - 1)
                 {
                   ny = c->y + 1;
                   if (mask[nx + ny * width] == 0.0 &&
-                      distmap[nx + ny * width] > distmap[c->x + c->y * width] &&
-                      distmap[nx + ny * width] < c->radius)
-                    line_art_queue_pixel (queue, nx, ny, c->radius, c->level + 1);
+                      distmap[nx + ny * width] > distmap[c->x + c->y * width])
+                    line_art_queue_pixel (queue, nx, ny, c->level + 1);
                 }
             }
           g_free (c);
@@ -612,7 +594,6 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
         {
           g_object_unref (src_buffer);
           g_free (distmap);
-          g_free (thickmap);
         }
     }
 
@@ -1183,15 +1164,13 @@ line_art_data_free (LineArtData *data)
 
 static GimpPickableLineArtAsyncResult *
 line_art_result_new (GeglBuffer *line_art,
-                     gfloat     *distmap,
-                     gfloat     *thickmap)
+                     gfloat     *distmap)
 {
   GimpPickableLineArtAsyncResult *data;
 
   data = g_slice_new (GimpPickableLineArtAsyncResult);
   data->line_art = line_art;
   data->distmap  = distmap;
-  data->thickmap = thickmap;
 
   return data;
 }
@@ -1201,7 +1180,6 @@ line_art_result_free (GimpPickableLineArtAsyncResult *data)
 {
   g_object_unref (data->line_art);
   g_clear_pointer (&data->distmap, g_free);
-  g_clear_pointer (&data->thickmap, g_free);
 
   g_slice_free (GimpPickableLineArtAsyncResult, data);
 }
@@ -1210,14 +1188,12 @@ static void
 line_art_queue_pixel (GQueue *queue,
                       gint    x,
                       gint    y,
-                      gfloat  radius,
                       gint    level)
 {
   BorderPixel *p = g_new (BorderPixel, 1);
 
   p->x      = x;
   p->y      = y;
-  p->radius = radius;
   p->level  = level;
 
   g_queue_push_head (queue, p);

@@ -37,8 +37,7 @@ GeglBuffer * gimp_lineart_close (GeglBuffer  *buffer,
                                  gint         created_regions_minimum_area,
                                  gboolean     small_segments_from_spline_sources,
                                  gint         segments_max_length,
-                                 gfloat     **lineart_distmap,
-                                 gfloat     **lineart_radii);
+                                 gfloat     **lineart_distmap);
 
 
 #endif /* __GIMP_LINEART__ */
