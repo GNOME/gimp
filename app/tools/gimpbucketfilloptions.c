@@ -344,7 +344,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   GtkWidget             *combo;
   gchar                 *str;
   GdkModifierType        extend_mask = gimp_get_extend_selection_mask ();
-  GdkModifierType        toggle_mask = gimp_get_toggle_behavior_mask ();
+  GdkModifierType        toggle_mask = GDK_MOD1_MASK;
 
   /*  fill type  */
   str = g_strdup_printf (_("Fill Type  (%s)"),
