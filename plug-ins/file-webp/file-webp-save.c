@@ -316,6 +316,8 @@ save_layer (const gchar    *filename,
                   rewind (outfile);
                   webp_anim_file_writer (outfile, wp_data.bytes, wp_data.size);
                 }
+
+              WebPMuxDelete (mux);
             }
           else
             {
