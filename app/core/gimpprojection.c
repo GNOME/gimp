@@ -775,6 +775,9 @@ static void
 gimp_projection_flush_whenever (GimpProjection *proj,
                                 gboolean        now)
 {
+  if (! proj->priv->buffer)
+    return;
+
   if (proj->priv->update_region)
     {
       if (now)  /* Synchronous */
