@@ -726,16 +726,12 @@ gimp_projection_free_buffer (GimpProjection  *proj)
 
   if (proj->priv->buffer)
     {
-      if (proj->priv->validate_handler)
-        {
-          gimp_tile_handler_validate_unassign (proj->priv->validate_handler,
-                                               proj->priv->buffer);
-        }
+      gimp_tile_handler_validate_unassign (proj->priv->validate_handler,
+                                           proj->priv->buffer);
 
       g_clear_object (&proj->priv->buffer);
+      g_clear_object (&proj->priv->validate_handler);
     }
-
-  g_clear_object (&proj->priv->validate_handler);
 }
 
 static void
@@ -1143,19 +1139,19 @@ gimp_projection_paint_area (GimpProjection *proj,
                                 0, 0, width, height,
                                 &x, &y, &w, &h))
     {
-      if (proj->priv->validate_handler)
-        gimp_tile_handler_validate_invalidate (proj->priv->validate_handler,
-                                               GEGL_RECTANGLE (x, y, w, h));
       if (now)
         {
-          GeglNode *graph = gimp_projectable_get_graph (proj->priv->projectable);
-
-          if (proj->priv->validate_handler)
-            gimp_tile_handler_validate_undo_invalidate (proj->priv->validate_handler,
-                                                        GEGL_RECTANGLE (x, y, w, h));
-
-          gegl_node_blit_buffer (graph, proj->priv->buffer,
-                                 GEGL_RECTANGLE (x, y, w, h), 0, GEGL_ABYSS_NONE);
+          gimp_tile_handler_validate_validate (
+            proj->priv->validate_handler,
+            proj->priv->buffer,
+            GEGL_RECTANGLE (x, y, w, h),
+            FALSE);
+        }
+      else
+        {
+          gimp_tile_handler_validate_invalidate (
+            proj->priv->validate_handler,
+            GEGL_RECTANGLE (x, y, w, h));
         }
 
       /*  add the projectable's offsets because the list of update areas
