@@ -184,7 +184,8 @@ static void        gimp_projection_chunk_render_start    (GimpProjection  *proj)
 static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj);
 static gboolean    gimp_projection_chunk_render_callback (gpointer         data);
 static void        gimp_projection_chunk_render_init     (GimpProjection  *proj);
-static void        gimp_projection_chunk_render_reinit   (GimpProjection  *proj);
+static void        gimp_projection_chunk_render_reinit   (GimpProjection  *proj,
+                                                          gboolean         assume_running);
 static gboolean    gimp_projection_chunk_render_iteration(GimpProjection  *proj,
                                                           gboolean         chunk);
 static gboolean    gimp_projection_chunk_render_next_area(GimpProjection  *proj);
@@ -603,7 +604,7 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
       proj->priv->priority_rect = rect;
 
       if (proj->priv->chunk_render.idle_id)
-        gimp_projection_chunk_render_reinit (proj);
+        gimp_projection_chunk_render_reinit (proj, FALSE);
     }
 }
 
@@ -898,11 +899,12 @@ gimp_projection_chunk_render_init (GimpProjection *proj)
   chunk_render->target_n_pixels = GIMP_PROJECTION_CHUNK_WIDTH *
                                   GIMP_PROJECTION_CHUNK_HEIGHT;
 
-  gimp_projection_chunk_render_reinit (proj);
+  gimp_projection_chunk_render_reinit (proj, FALSE);
 }
 
 static void
-gimp_projection_chunk_render_reinit (GimpProjection *proj)
+gimp_projection_chunk_render_reinit (GimpProjection *proj,
+                                     gboolean        assume_running)
 {
   GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
 
@@ -928,7 +930,7 @@ gimp_projection_chunk_render_reinit (GimpProjection *proj)
    * its unrendered area with the update_areas list, and make it start
    * work on the next unrendered area in the list.
    */
-  if (chunk_render->idle_id)
+  if (chunk_render->idle_id || assume_running)
     {
       cairo_rectangle_int_t rect;
       gint                  work_h = 0;
@@ -1036,7 +1038,7 @@ gimp_projection_chunk_render_iteration (GimpProjection *proj,
        * current area, so that we're back at the beginning of a row
        */
       if (work_x != chunk_render->x)
-        gimp_projection_chunk_render_reinit (proj);
+        gimp_projection_chunk_render_reinit (proj, TRUE);
 
       chunk_render->work_height = work_h;
     }
