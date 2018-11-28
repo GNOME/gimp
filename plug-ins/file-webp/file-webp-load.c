@@ -144,7 +144,10 @@ load_image (const gchar *filename,
 
       /* Check to ensure the image data was loaded correctly */
       if (! outdata)
-        return -1;
+        {
+          WebPMuxDelete (mux);
+          return -1;
+        }
 
       create_layer (image_ID, outdata, 0, _("Background"),
                     width, height);
@@ -173,6 +176,7 @@ load_image (const gchar *filename,
               WebPDemuxDelete (demux);
             }
 
+          WebPMuxDelete (mux);
           return -1;
         }
 
@@ -276,6 +280,8 @@ load_image (const gchar *filename,
 
       g_object_unref (file);
     }
+
+  WebPMuxDelete (mux);
 
   gimp_image_set_filename (image_ID, filename);
 
