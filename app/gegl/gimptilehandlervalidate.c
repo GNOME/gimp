@@ -247,10 +247,10 @@ gimp_tile_handler_validate_real_validate_buffer (GimpTileHandlerValidate *valida
 }
 
 static GeglTile *
-gimp_tile_handler_validate_validate (GeglTileSource *source,
-                                     GeglTile       *tile,
-                                     gint            x,
-                                     gint            y)
+gimp_tile_handler_validate_validate_tile (GeglTileSource *source,
+                                          GeglTile       *tile,
+                                          gint            x,
+                                          gint            y)
 {
   GimpTileHandlerValidate *validate = GIMP_TILE_HANDLER_VALIDATE (source);
   cairo_rectangle_int_t    tile_rect;
@@ -382,7 +382,7 @@ gimp_tile_handler_validate_command (GeglTileSource  *source,
   retval = gegl_tile_handler_source_command (source, command, x, y, z, data);
 
   if (command == GEGL_TILE_GET && z == 0)
-    retval = gimp_tile_handler_validate_validate (source, retval, x, y);
+    retval = gimp_tile_handler_validate_validate_tile (source, retval, x, y);
 
   return retval;
 }
@@ -488,6 +488,70 @@ gimp_tile_handler_validate_end_validate (GimpTileHandlerValidate *validate)
 
   if (--validate->validating == 0)
     GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->end_validate (validate);
+}
+
+void
+gimp_tile_handler_validate_validate (GimpTileHandlerValidate *validate,
+                                     GeglBuffer              *buffer,
+                                     const GeglRectangle     *rect,
+                                     gboolean                 intersect)
+{
+  GimpTileHandlerValidateClass *klass;
+
+  g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
+  g_return_if_fail (gimp_tile_handler_validate_get_assigned (buffer) ==
+                    validate);
+
+  klass = GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate);
+
+  if (intersect)
+    {
+      cairo_region_t *region = cairo_region_copy (validate->dirty_region);
+
+      cairo_region_intersect_rectangle (region,
+                                        (const cairo_rectangle_int_t *) rect);
+
+      if (! cairo_region_is_empty (region))
+        {
+          gint n_rects;
+          gint i;
+
+          gimp_tile_handler_validate_begin_validate (validate);
+
+          n_rects = cairo_region_num_rectangles (region);
+
+          for (i = 0; i < n_rects; i++)
+            {
+              cairo_rectangle_int_t blit_rect;
+
+              cairo_region_get_rectangle (region, i, &blit_rect);
+
+              klass->validate_buffer (validate,
+                                      (const GeglRectangle *) &blit_rect,
+                                      buffer);
+            }
+
+          gimp_tile_handler_validate_end_validate (validate);
+
+          cairo_region_subtract_rectangle (
+            validate->dirty_region,
+            (const cairo_rectangle_int_t *) rect);
+        }
+
+      cairo_region_destroy (region);
+    }
+  else
+    {
+      gimp_tile_handler_validate_begin_validate (validate);
+
+      klass->validate_buffer (validate, rect, buffer);
+
+      gimp_tile_handler_validate_end_validate (validate);
+
+      cairo_region_subtract_rectangle (
+            validate->dirty_region,
+            (const cairo_rectangle_int_t *) rect);
+    }
 }
 
 void

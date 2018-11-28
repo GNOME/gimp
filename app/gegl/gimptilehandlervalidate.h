@@ -87,6 +87,11 @@ void                      gimp_tile_handler_validate_undo_invalidate (GimpTileHa
 void                      gimp_tile_handler_validate_begin_validate  (GimpTileHandlerValidate *validate);
 void                      gimp_tile_handler_validate_end_validate    (GimpTileHandlerValidate *validate);
 
+void                      gimp_tile_handler_validate_validate        (GimpTileHandlerValidate *validate,
+                                                                      GeglBuffer              *buffer,
+                                                                      const GeglRectangle     *rect,
+                                                                      gboolean                 intersect);
+
 void                      gimp_tile_handler_validate_buffer_copy     (GeglBuffer              *src_buffer,
                                                                       const GeglRectangle     *src_rect,
                                                                       GeglBuffer              *dst_buffer,
