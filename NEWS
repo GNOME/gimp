@@ -26,6 +26,9 @@ Core:
   - Pass the GEGL tile-cache size, swap path, and thread-count to plug-ins
     as part of their config, and have libgimp set the plug-in's GeglConfig
     accordingly upon initialization.
+  - Layer groups are now rendered in bigger chunks rather than tile-by-tile
+    (which used to pretty much eliminate multithreading for groups), which
+    improves the rendering speed.
 
 User interface:
 
@@ -53,7 +56,7 @@ Installers:
 
 Translations:
 
-  - Czech, Polish, Ukrainian.
+  - Czech, Italian, Polish, Spanish, Ukrainian.
 
 Overview of Changes from GIMP 2.10.6 to GIMP 2.10.8
 ===================================================
