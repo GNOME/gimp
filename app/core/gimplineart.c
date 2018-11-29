@@ -95,8 +95,7 @@ static GArray     * gimp_lineart_discrete_spline            (Pixel              
                                                              GimpVector2             n1);
 
 static gint         gimp_number_of_transitions               (GArray                 *pixels,
-                                                              GeglBuffer             *buffer,
-                                                              gboolean                border_value);
+                                                              GeglBuffer             *buffer);
 static gboolean     gimp_lineart_curve_creates_region        (GeglBuffer             *mask,
                                                               GArray                 *pixels,
                                                               int                     lower_size_limit,
@@ -372,8 +371,8 @@ gimp_lineart_close (GeglBuffer  *buffer,
           discrete_curve = gimp_lineart_discrete_spline (*p1, vect1, *p2, vect2);
 
           transitions = allow_self_intersections ?
-                          gimp_number_of_transitions (discrete_curve, strokes, FALSE) :
-                          gimp_number_of_transitions (discrete_curve, closed, FALSE);
+                          gimp_number_of_transitions (discrete_curve, strokes) :
+                          gimp_number_of_transitions (discrete_curve, closed);
 
           if (transitions == 2 &&
               ! gimp_lineart_curve_creates_region (closed, discrete_curve,
@@ -1094,8 +1093,7 @@ gimp_lineart_discrete_spline (Pixel       p0,
 
 static gint
 gimp_number_of_transitions (GArray     *pixels,
-                            GeglBuffer *buffer,
-                            gboolean    border_value)
+                            GeglBuffer *buffer)
 {
   int result = 0;
 
@@ -1113,24 +1111,12 @@ gimp_number_of_transitions (GArray     *pixels,
       /* Starts at the second element. */
       for (i = 1; i < pixels->len; i++)
         {
-          gboolean val;
-
           it = g_array_index (pixels, Pixel, i);
-          if (it.x >= 0 && it.x < gegl_buffer_get_width (buffer) &&
-              it.y >= 0 && it.y < gegl_buffer_get_height (buffer))
-            {
-              guchar value;
 
-              gegl_buffer_sample (buffer, (gint) it.x, (gint) it.y, NULL, &value, NULL,
-                                  GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-              val = (gboolean) value;
-            }
-          else
-            {
-              val = border_value;
-            }
-          result += (val != previous);
-          previous = val;
+          gegl_buffer_sample (buffer, (gint) it.x, (gint) it.y, NULL, &value, NULL,
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+          result += ((gboolean) value != previous);
+          previous = (gboolean) value;
         }
     }
 
@@ -1660,13 +1646,13 @@ gimp_edgelset_new (GeglBuffer *buffer)
           {
             if (*(p++))
               {
-                if (y == 0 || ! *prevy)
+                if (! *prevy)
                   gimp_edgelset_add (set, x, y, YMinusDirection, edgel2index);
-                if (y == height - 1 || ! *nexty)
+                if (! *nexty)
                   gimp_edgelset_add (set, x, y, YPlusDirection, edgel2index);
-                if (x == 0 || ! *prevx)
+                if (! *prevx)
                   gimp_edgelset_add (set, x, y, XMinusDirection, edgel2index);
-                if (x == width - 1 || ! *nextx)
+                if (! *nextx)
                   gimp_edgelset_add (set, x, y, XPlusDirection, edgel2index);
               }
             prevy++;
@@ -1760,18 +1746,17 @@ gimp_edgelset_compute_curvature (GArray *set)
 
   for (i = 0; i < set->len; i++)
     {
-      Edgel       *it        = g_array_index (set, Edgel*, i);
-      Edgel       *previous  = g_array_index (set, Edgel *, it->previous);
-      Edgel       *next      = g_array_index (set, Edgel *, it->next);
-      GimpVector2  n_prev    = gimp_vector2_new (previous->x_normal, previous->y_normal);
-      GimpVector2  n_next    = gimp_vector2_new (next->x_normal, next->y_normal);
-      GimpVector2  diff      = gimp_vector2_mul_val (gimp_vector2_sub_val (n_next, n_prev),
-                                                     0.5);
-      const float  c         = gimp_vector2_length_val (diff);
-      const float  crossp    = n_prev.x * n_next.y - n_prev.y * n_next.x;
+      Edgel       *it       = g_array_index (set, Edgel*, i);
+      Edgel       *previous = g_array_index (set, Edgel *, it->previous);
+      Edgel       *next     = g_array_index (set, Edgel *, it->next);
+      GimpVector2  n_prev   = gimp_vector2_new (previous->x_normal, previous->y_normal);
+      GimpVector2  n_next   = gimp_vector2_new (next->x_normal, next->y_normal);
+      GimpVector2  diff     = gimp_vector2_mul_val (gimp_vector2_sub_val (n_next, n_prev),
+                                                    0.5);
+      const float  c        = gimp_vector2_length_val (diff);
+      const float  crossp   = n_prev.x * n_next.y - n_prev.y * n_next.x;
 
       it->curvature = (crossp > 0.0f) ? c : -c;
-      ++it;
     }
 }
 
@@ -1804,109 +1789,84 @@ gimp_edgelset_next8 (const GeglBuffer *buffer,
                      Edgel            *it,
                      Edgel            *n)
 {
-  const int lx = gegl_buffer_get_width ((GeglBuffer *) buffer) - 1;
-  const int ly = gegl_buffer_get_height ((GeglBuffer *) buffer) - 1;
-  guchar    has_stroke;
+  guint8 pixels[9];
 
   n->x         = it->x;
   n->y         = it->y;
   n->direction = it->direction;
+
+  gegl_buffer_get ((GeglBuffer *) buffer,
+                   GEGL_RECTANGLE (n->x - 1, n->y - 1, 3, 3),
+                   1.0, NULL, pixels, GEGL_AUTO_ROWSTRIDE,
+                   GEGL_ABYSS_NONE);
   switch (n->direction)
     {
     case XPlusDirection:
-      gegl_buffer_sample ((GeglBuffer *) buffer, n->x + 1, n->y + 1, NULL, &has_stroke, NULL,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-      if ((n->x != lx) && (n->y != ly) && has_stroke)
+      if (pixels[8])
         {
           ++(n->y);
           ++(n->x);
           n->direction = YMinusDirection;
         }
+      else if (pixels[7])
+        {
+          ++(n->y);
+        }
       else
         {
-          gegl_buffer_sample ((GeglBuffer *) buffer, n->x, n->y + 1, NULL, &has_stroke, NULL,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-          if ((n->y != ly) && has_stroke)
-            {
-              ++(n->y);
-            }
-          else
-            {
-              n->direction = YPlusDirection;
-            }
+          n->direction = YPlusDirection;
         }
       break;
     case YMinusDirection:
-      gegl_buffer_sample ((GeglBuffer *) buffer, n->x + 1, n->y - 1, NULL, &has_stroke, NULL,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-      if ((n->x != lx) && n->y && has_stroke)
+      if (pixels[2])
         {
           ++(n->x);
           --(n->y);
           n->direction = XMinusDirection;
         }
+      else if (pixels[5])
+        {
+          ++(n->x);
+        }
       else
         {
-          gegl_buffer_sample ((GeglBuffer *) buffer, n->x + 1, n->y, NULL, &has_stroke, NULL,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-          if ((n->x != lx) && has_stroke)
-            {
-              ++(n->x);
-            }
-          else
-            {
-              n->direction = XPlusDirection;
-            }
+          n->direction = XPlusDirection;
         }
       break;
     case XMinusDirection:
-      gegl_buffer_sample ((GeglBuffer *) buffer, n->x - 1, n->y - 1, NULL, &has_stroke, NULL,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-      if (n->x && n->y && has_stroke)
+      if (pixels[0])
         {
           --(n->x);
           --(n->y);
           n->direction = YPlusDirection;
         }
+      else if (pixels[1])
+        {
+          --(n->y);
+        }
       else
         {
-          gegl_buffer_sample ((GeglBuffer *) buffer, n->x, n->y - 1, NULL, &has_stroke, NULL,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-          if (n->y && has_stroke)
-            {
-              --(n->y);
-            }
-          else
-            {
-              n->direction = YMinusDirection;
-            }
+          n->direction = YMinusDirection;
         }
       break;
     case YPlusDirection:
-      gegl_buffer_sample ((GeglBuffer *) buffer, n->x - 1, n->y + 1, NULL, &has_stroke, NULL,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-      if (n->x && (n->y != ly) && has_stroke)
+      if (pixels[6])
         {
           --(n->x);
           ++(n->y);
           n->direction = XPlusDirection;
         }
+      else if (pixels[3])
+        {
+          --(n->x);
+        }
       else
         {
-          gegl_buffer_sample ((GeglBuffer *) buffer, n->x - 1, n->y, NULL, &has_stroke, NULL,
-                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-          if (n->x && has_stroke)
-            {
-              --(n->x);
-            }
-          else
-            {
-              n->direction = XMinusDirection;
-            }
+          n->direction = XMinusDirection;
         }
       break;
     default:
-      gimp_assert (FALSE);
+      g_return_if_reached ();
       break;
     }
 }
