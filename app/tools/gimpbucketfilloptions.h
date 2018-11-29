@@ -48,6 +48,8 @@ struct _GimpBucketFillOptions
 
   gdouble                       line_art_threshold;
   gint                          line_art_max_grow;
+  gint                          line_art_segment_max_len;
+  gint                          line_art_spline_max_len;
 
   GimpSelectCriterion           fill_criterion;
 

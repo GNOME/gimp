@@ -55,6 +55,8 @@ enum
   PROP_THRESHOLD,
   PROP_LINE_ART_THRESHOLD,
   PROP_LINE_ART_MAX_GROW,
+  PROP_LINE_ART_SPLINE_MAX_LEN,
+  PROP_LINE_ART_SEGMENT_MAX_LEN,
   PROP_FILL_CRITERION
 };
 
@@ -65,6 +67,8 @@ struct _GimpBucketFillOptionsPrivate
 
   GtkWidget *line_art_threshold_scale;
   GtkWidget *line_art_grow_scale;
+  GtkWidget *line_art_segment_max_len_scale;
+  GtkWidget *line_art_spline_max_len_scale;
 };
 
 static void   gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface);
@@ -170,6 +174,20 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                         1, 100, 3,
                         GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_INT (object_class, PROP_LINE_ART_SPLINE_MAX_LEN,
+                        "line-art-spline-max-len",
+                        _("Maximum curved closing length"),
+                        _("Maximum curved length (in pixels) to close the line art"),
+                        1, 1000, 60,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class, PROP_LINE_ART_SEGMENT_MAX_LEN,
+                        "line-art-segment-max-len",
+                        _("Maximum straight closing length"),
+                        _("Maximum straight length (in pixels) to close the line art"),
+                        1, 1000, 20,
+                        GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_CRITERION,
                          "fill-criterion",
                          _("Fill by"),
@@ -230,6 +248,12 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_LINE_ART_MAX_GROW:
       options->line_art_max_grow = g_value_get_int (value);
       break;
+    case PROP_LINE_ART_SEGMENT_MAX_LEN:
+      options->line_art_segment_max_len = g_value_get_int (value);
+      break;
+    case PROP_LINE_ART_SPLINE_MAX_LEN:
+      options->line_art_spline_max_len = g_value_get_int (value);
+      break;
     case PROP_FILL_CRITERION:
       options->fill_criterion = g_value_get_enum (value);
       gimp_bucket_fill_options_update_criterion (options);
@@ -278,6 +302,12 @@ gimp_bucket_fill_options_get_property (GObject    *object,
     case PROP_LINE_ART_MAX_GROW:
       g_value_set_int (value, options->line_art_max_grow);
       break;
+    case PROP_LINE_ART_SEGMENT_MAX_LEN:
+      g_value_set_int (value, options->line_art_segment_max_len);
+      break;
+    case PROP_LINE_ART_SPLINE_MAX_LEN:
+      g_value_set_int (value, options->line_art_spline_max_len);
+      break;
     case PROP_FILL_CRITERION:
       g_value_set_enum (value, options->fill_criterion);
       break;
@@ -319,10 +349,14 @@ gimp_bucket_fill_options_update_criterion (GimpBucketFillOptions *options)
 
       gtk_widget_show (options->priv->line_art_threshold_scale);
       gtk_widget_show (options->priv->line_art_grow_scale);
+      gtk_widget_show (options->priv->line_art_segment_max_len_scale);
+      gtk_widget_show (options->priv->line_art_spline_max_len_scale);
       break;
     default:
       gtk_widget_hide (options->priv->line_art_threshold_scale);
       gtk_widget_hide (options->priv->line_art_grow_scale);
+      gtk_widget_hide (options->priv->line_art_segment_max_len_scale);
+      gtk_widget_hide (options->priv->line_art_spline_max_len_scale);
 
       gtk_widget_show (options->priv->diagonal_neighbors_checkbox);
       gtk_widget_show (options->priv->threshold_scale);
@@ -429,6 +463,20 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                                     0.05, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   options->priv->line_art_threshold_scale = scale;
+  gtk_widget_show (scale);
+
+  /*  Line Art: segment max len */
+  scale = gimp_prop_spin_scale_new (config, "line-art-segment-max-len", NULL,
+                                    1, 5, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  options->priv->line_art_segment_max_len_scale = scale;
+  gtk_widget_show (scale);
+
+  /*  Line Art: spline max len */
+  scale = gimp_prop_spin_scale_new (config, "line-art-spline-max-len", NULL,
+                                    1, 5, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  options->priv->line_art_spline_max_len_scale = scale;
   gtk_widget_show (scale);
 
   /*  the fill criterion combo  */
