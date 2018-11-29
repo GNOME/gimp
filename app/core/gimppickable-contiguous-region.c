@@ -43,6 +43,8 @@ typedef struct
   GeglBuffer *buffer;
   gboolean    select_transparent;
   gfloat      stroke_threshold;
+  gint        segment_max_length;
+  gint        spline_max_length;
 } LineArtData;
 
 typedef struct
@@ -114,7 +116,9 @@ static void     find_contiguous_region    (GeglBuffer          *src_buffer,
 
 static LineArtData   * line_art_data_new    (GeglBuffer          *buffer,
                                              gboolean             select_transparent,
-                                             gfloat               stroke_threshold);
+                                             gfloat               stroke_threshold,
+                                             gint                 segment_max_length,
+                                             gint                 spline_max_length);
 static void            line_art_data_free   (LineArtData         *data);
 static GimpPickableLineArtAsyncResult *
                        line_art_result_new  (GeglBuffer          *line_art,
@@ -200,8 +204,7 @@ gimp_pickable_contiguous_region_prepare_line_art_async_func (GimpAsync   *async,
                                 5,
                                 /*end_point_rate,*/
                                 0.85,
-                                /*spline_max_length,*/
-                                60,
+                                data->spline_max_length,
                                 /*spline_max_angle,*/
                                 90.0,
                                 /*end_point_connectivity,*/
@@ -216,8 +219,7 @@ gimp_pickable_contiguous_region_prepare_line_art_async_func (GimpAsync   *async,
                                 100,
                                 /*small_segments_from_spline_sources,*/
                                 TRUE,
-                                /*segments_max_length*/
-                                20,
+                                data->segment_max_length,
                                 &distmap);
 
   GIMP_TIMER_END("close line-art");
@@ -233,6 +235,8 @@ GeglBuffer *
 gimp_pickable_contiguous_region_prepare_line_art (GimpPickable  *pickable,
                                                   gboolean       select_transparent,
                                                   gfloat         stroke_threshold,
+                                                  gint           segment_max_length,
+                                                  gint           spline_max_length,
                                                   gfloat       **distmap)
 {
   GimpAsync                      *async;
@@ -246,8 +250,8 @@ gimp_pickable_contiguous_region_prepare_line_art (GimpPickable  *pickable,
 
   async = gimp_async_new ();
   data  = line_art_data_new (gimp_pickable_get_buffer (pickable),
-                             select_transparent,
-                             stroke_threshold);
+                             select_transparent, stroke_threshold,
+                             segment_max_length, spline_max_length);
 
   gimp_pickable_contiguous_region_prepare_line_art_async_func (async, data);
 
@@ -266,6 +270,8 @@ GimpAsync *
 gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickable *pickable,
                                                         gboolean      select_transparent,
                                                         gfloat        stroke_threshold,
+                                                        gint          segment_max_length,
+                                                        gint          spline_max_length,
                                                         gint          priority)
 {
   GeglBuffer  *buffer;
@@ -278,9 +284,8 @@ gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickable *pickable,
 
   buffer = gegl_buffer_dup (gimp_pickable_get_buffer (pickable));
 
-  data  = line_art_data_new (buffer,
-                             select_transparent,
-                             stroke_threshold);
+  data  = line_art_data_new (buffer, select_transparent, stroke_threshold,
+                             segment_max_length, spline_max_length);
 
   g_object_unref (buffer);
 
@@ -305,6 +310,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                          gboolean             diagonal_neighbors,
                                          gfloat               stroke_threshold,
                                          gint                 flooding_max,
+                                         gint                 segment_max_length,
+                                         gint                 spline_max_length,
                                          gint                 x,
                                          gint                 y)
 {
@@ -333,6 +340,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
            */
           line_art      = gimp_pickable_contiguous_region_prepare_line_art (pickable, select_transparent,
                                                                             stroke_threshold,
+                                                                            segment_max_length,
+                                                                            spline_max_length,
                                                                             &distmap);
           free_line_art = TRUE;
         }
@@ -1143,13 +1152,17 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 static LineArtData *
 line_art_data_new (GeglBuffer *buffer,
                    gboolean    select_transparent,
-                   gfloat      stroke_threshold)
+                   gfloat      stroke_threshold,
+                   gint        segment_max_length,
+                   gint        spline_max_length)
 {
   LineArtData *data = g_slice_new (LineArtData);
 
   data->buffer             = g_object_ref (buffer);
   data->select_transparent = select_transparent;
   data->stroke_threshold   = stroke_threshold;
+  data->segment_max_length = segment_max_length;
+  data->spline_max_length  = spline_max_length;
 
   return data;
 }

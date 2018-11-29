@@ -30,6 +30,8 @@ void         gimp_drawable_bucket_fill            (GimpDrawable         *drawabl
                                                    gboolean              diagonal_neighbors,
                                                    gfloat                line_art_stroke_threshold,
                                                    gint                  line_art_max_grow,
+                                                   gint                  line_art_segment_max_length,
+                                                   gint                  line_art_spline_max_length,
                                                    gdouble               x,
                                                    gdouble               y);
 GeglBuffer * gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
@@ -43,6 +45,8 @@ GeglBuffer * gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawabl
                                                    gboolean              diagonal_neighbors,
                                                    gfloat                line_art_stroke_threshold,
                                                    gint                  line_art_max_grow,
+                                                   gint                  line_art_segment_max_length,
+                                                   gint                  line_art_spline_max_length,
                                                    gdouble               seed_x,
                                                    gdouble               seed_y,
                                                    GeglBuffer          **mask_buffer,

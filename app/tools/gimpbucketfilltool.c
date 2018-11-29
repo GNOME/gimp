@@ -403,6 +403,8 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                    options->diagonal_neighbors,
                                                    options->line_art_threshold,
                                                    options->line_art_max_grow,
+                                                   options->line_art_segment_max_len,
+                                                   options->line_art_spline_max_len,
                                                    x, y, &tool->priv->fill_mask,
                                                    &x, &y, NULL, NULL);
       if (line_art)
@@ -820,6 +822,8 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
               pickable,
               options->fill_transparent,
               options->line_art_threshold,
+              options->line_art_segment_max_len,
+              options->line_art_spline_max_len,
               +1);
           g_signal_handlers_unblock_by_func (gimp_image_get_projection (GIMP_IMAGE (image)),
                                            G_CALLBACK (gimp_bucket_fill_tool_projection_rendered),
