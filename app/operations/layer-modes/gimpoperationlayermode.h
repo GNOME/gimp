@@ -44,6 +44,8 @@ struct _GimpOperationLayerMode
   GimpLayerColorSpace          blend_space;
   GimpLayerColorSpace          composite_space;
   GimpLayerCompositeMode       composite_mode;
+  const Babl                  *cached_fish_format;
+  const Babl                  *space_fish[3 /* from */][3 /* to */];
 
   GimpLayerCompositeMode       real_composite_mode;
   GimpLayerModeFunc            function;
