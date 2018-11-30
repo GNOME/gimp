@@ -829,9 +829,11 @@ gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
                                            G_CALLBACK (gimp_bucket_fill_tool_projection_rendered),
                                            tool);
 
-          gimp_async_add_callback (tool->priv->async,
-                                   (GimpAsyncCallback) gimp_bucket_fill_compute_line_art_cb,
-                                   tool);
+          gimp_async_add_callback_for_object (
+            tool->priv->async,
+            (GimpAsyncCallback) gimp_bucket_fill_compute_line_art_cb,
+            tool,
+            tool);
         }
 
       g_clear_object (&image);
