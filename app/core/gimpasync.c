@@ -467,7 +467,8 @@ gimp_async_remove_callback (GimpAsync         *async,
                             GimpAsyncCallback  callback,
                             gpointer           data)
 {
-  GList *iter;
+  GList    *iter;
+  gboolean  unref_async = FALSE;
 
   g_return_if_fail (GIMP_IS_ASYNC (async));
   g_return_if_fail (callback != NULL);
@@ -492,7 +493,18 @@ gimp_async_remove_callback (GimpAsync         *async,
       iter = next;
     }
 
+  if (g_queue_is_empty (&async->priv->callbacks) && async->priv->idle_id)
+    {
+      g_source_remove (async->priv->idle_id);
+      async->priv->idle_id = 0;
+
+      unref_async = TRUE;
+    }
+
   g_mutex_unlock (&async->priv->mutex);
+
+  if (unref_async)
+    g_object_unref (async);
 }
 
 /* checks if 'async' is in the "stopped" state.
