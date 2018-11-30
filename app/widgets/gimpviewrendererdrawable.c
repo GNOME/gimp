@@ -308,9 +308,10 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       renderdrawable->priv->render_buf_y  = dst_y;
       renderdrawable->priv->render_update = FALSE;
 
-      gimp_async_add_callback (
+      gimp_async_add_callback_for_object (
         async,
         (GimpAsyncCallback) gimp_view_renderer_drawable_render_async_callback,
+        renderdrawable,
         renderdrawable);
 
       /* if rendering isn't done yet, update the render-view once it is, and
