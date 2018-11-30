@@ -53,39 +53,43 @@ struct _GimpAsyncClass
 };
 
 
-GType       gimp_async_get_type        (void) G_GNUC_CONST;
+GType       gimp_async_get_type                (void) G_GNUC_CONST;
 
-GimpAsync * gimp_async_new             (void);
+GimpAsync * gimp_async_new                     (void);
 
-gboolean    gimp_async_is_synced       (GimpAsync         *async);
+gboolean    gimp_async_is_synced               (GimpAsync         *async);
 
-void        gimp_async_add_callback    (GimpAsync         *async,
-                                        GimpAsyncCallback  callback,
-                                        gpointer           data);
-void        gimp_async_remove_callback (GimpAsync         *async,
-                                        GimpAsyncCallback  callback,
-                                        gpointer           data);
+void        gimp_async_add_callback            (GimpAsync         *async,
+                                                GimpAsyncCallback  callback,
+                                                gpointer           data);
+void        gimp_async_add_callback_for_object (GimpAsync         *async,
+                                                GimpAsyncCallback  callback,
+                                                gpointer           data,
+                                                gpointer           gobject);
+void        gimp_async_remove_callback         (GimpAsync         *async,
+                                                GimpAsyncCallback  callback,
+                                                gpointer           data);
 
-gboolean    gimp_async_is_stopped      (GimpAsync         *async);
+gboolean    gimp_async_is_stopped              (GimpAsync         *async);
 
-void        gimp_async_finish          (GimpAsync         *async,
-                                        gpointer           result);
-void        gimp_async_finish_full     (GimpAsync         *async,
-                                        gpointer           result,
-                                        GDestroyNotify     result_destroy_func);
-gboolean    gimp_async_is_finished     (GimpAsync         *async);
-gpointer    gimp_async_get_result      (GimpAsync         *async);
+void        gimp_async_finish                  (GimpAsync         *async,
+                                                gpointer           result);
+void        gimp_async_finish_full             (GimpAsync         *async,
+                                                gpointer           result,
+                                                GDestroyNotify     result_destroy_func);
+gboolean    gimp_async_is_finished             (GimpAsync         *async);
+gpointer    gimp_async_get_result              (GimpAsync         *async);
 
-void        gimp_async_abort           (GimpAsync         *async);
+void        gimp_async_abort                   (GimpAsync         *async);
 
-gboolean    gimp_async_is_canceled     (GimpAsync         *async);
+gboolean    gimp_async_is_canceled             (GimpAsync         *async);
 
-void        gimp_async_cancel_and_wait (GimpAsync         *async);
+void        gimp_async_cancel_and_wait         (GimpAsync         *async);
 
 
 /*  stats  */
 
-gint        gimp_async_get_n_running   (void);
+gint        gimp_async_get_n_running           (void);
 
 
 #endif /* __GIMP_ASYNC_H__ */
