@@ -93,7 +93,7 @@ gimp_scratch_context_free (GimpScratchContext *context)
 /*   public functions (stats)  */
 
 
-gsize
+guint64
 gimp_scratch_get_total (void)
 {
   return gimp_scratch_total;
