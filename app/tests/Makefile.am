@@ -90,7 +90,8 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
 	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
 	-Wl,-u,$(SYMPREFIX)gui_init				\
-	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog
+	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog			\
+	-Wl,-u,$(SYMPREFIX)gimp_scratch_block_new
 
 # Note that we have some duplicate entries here too to work around
 # circular dependencies and systems on the same architectural layer as
