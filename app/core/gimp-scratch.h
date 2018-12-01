@@ -161,4 +161,9 @@ gimp_scratch_free (gpointer ptr)
   ((type *) (gimp_scratch_alloc0 (sizeof (type) * (n))))
 
 
+/*  stats  */
+
+guint64    gimp_scratch_get_total (void);
+
+
 #endif /* __GIMP_SCRATCH_H__ */

@@ -57,6 +57,7 @@
 #include "core/gimp-gui.h"
 #include "core/gimp-utils.h"
 #include "core/gimp-parallel.h"
+#include "core/gimp-scratch.h"
 #include "core/gimpasync.h"
 #include "core/gimpbacktrace.h"
 #include "core/gimpwaitable.h"
@@ -138,6 +139,7 @@ typedef enum
   /* misc */
   VARIABLE_MIPMAPED,
   VARIABLE_ASYNC_RUNNING,
+  VARIABLE_SCRATCH_TOTAL,
 
 
   N_VARIABLES,
@@ -693,6 +695,15 @@ static const VariableInfo variables[] =
     .type             = VARIABLE_TYPE_INTEGER,
     .sample_func      = gimp_dashboard_sample_function,
     .data             = gimp_async_get_n_running
+  },
+
+  [VARIABLE_SCRATCH_TOTAL] =
+  { .name             = "scratch-total",
+    .title            = NC_("dashboard-variable", "Scratch"),
+    .description      = N_("Total size of scratch memory"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .sample_func      = gimp_dashboard_sample_function,
+    .data             = gimp_scratch_get_total
   }
 };
 
@@ -889,6 +900,9 @@ static const GroupInfo groups[] =
                             .default_active = TRUE
                           },
                           { .variable       = VARIABLE_ASYNC_RUNNING,
+                            .default_active = TRUE
+                          },
+                          { .variable       = VARIABLE_SCRATCH_TOTAL,
                             .default_active = TRUE
                           },
 
