@@ -32,6 +32,8 @@
 
 #include "../operations-types.h"
 
+#include "core/gimp-scratch.h"
+
 #include "gimpoperationlayermode-blend.h"
 
 
@@ -866,20 +868,23 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
                                            gfloat       *comp,
                                            gint          samples)
 {
-  gfloat layer_Y[samples], *layer_Y_p;
-  gfloat in_Y[samples],    *in_Y_p;
+  gfloat *scratch;
+  gfloat *in_Y;
+  gfloat *layer_Y;
 
-  babl_process (babl_fish ("RGBA float", "Y float"), layer, layer_Y, samples);
+  scratch = gimp_scratch_new (gfloat, 2 * samples);
+
+  in_Y    = scratch;
+  layer_Y = scratch + samples;
+
   babl_process (babl_fish ("RGBA float", "Y float"), in,    in_Y,    samples);
-
-  layer_Y_p = &layer_Y[0];
-  in_Y_p    = &in_Y[0];
+  babl_process (babl_fish ("RGBA float", "Y float"), layer, layer_Y, samples);
 
   while (samples--)
     {
       if (layer[ALPHA] != 0.0f && in[ALPHA] != 0.0f)
         {
-          gfloat ratio = safe_div (layer_Y_p[0], in_Y_p[0]);
+          gfloat ratio = safe_div (layer_Y[0], in_Y[0]);
           gint   c;
 
           for (c = 0; c < 3; c ++)
@@ -888,12 +893,14 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
 
       comp[ALPHA] = layer[ALPHA];
 
-      comp      += 4;
-      in        += 4;
-      layer     += 4;
-      in_Y_p    ++;
-      layer_Y_p ++;
+      comp    += 4;
+      in      += 4;
+      layer   += 4;
+      in_Y    ++;
+      layer_Y ++;
     }
+
+  gimp_scratch_free (scratch);
 }
 
 void
