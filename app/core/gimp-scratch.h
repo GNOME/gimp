@@ -70,10 +70,10 @@ gimp_scratch_alloc (gsize size)
   GimpScratchContext *context;
   GimpScratchBlock   *block;
 
-  if (! size)
+  if (G_UNLIKELY (! size))
     return NULL;
 
-  if (size > GIMP_SCRATCH_MAX_BLOCK_SIZE)
+  if (G_UNLIKELY (size > GIMP_SCRATCH_MAX_BLOCK_SIZE))
     {
       block       = gimp_scratch_block_new (size);
       block->size = 0;
@@ -83,30 +83,24 @@ gimp_scratch_alloc (gsize size)
 
   context = g_private_get (&gimp_scratch_context);
 
-  if (! context)
+  if (G_UNLIKELY (! context))
     {
       context = gimp_scratch_context_new ();
 
       g_private_set (&gimp_scratch_context, context);
     }
 
-  if (context->n_available_blocks)
+  if (G_LIKELY (context->n_available_blocks))
     {
       block = context->blocks[--context->n_available_blocks];
 
-      if (block->size < size)
-        {
-          gimp_scratch_block_free (block);
+      if (G_LIKELY (size <= block->size))
+        return block->data;
 
-          block = gimp_scratch_block_new (size);
+      gimp_scratch_block_free (block);
+    }
 
-          context->blocks[context->n_available_blocks] = block;
-        }
-    }
-  else
-    {
-      block = gimp_scratch_block_new (size);
-    }
+  block = gimp_scratch_block_new (size);
 
   return block->data;
 }
@@ -116,7 +110,7 @@ gimp_scratch_alloc0 (gsize size)
 {
   gpointer ptr;
 
-  if (! size)
+  if (G_UNLIKELY (! size))
     return NULL;
 
   ptr = gimp_scratch_alloc (size);
@@ -132,12 +126,12 @@ gimp_scratch_free (gpointer ptr)
   GimpScratchContext *context;
   GimpScratchBlock   *block;
 
-  if (! ptr)
+  if (G_UNLIKELY (! ptr))
     return;
 
   block = (GimpScratchBlock *) ((guint8 *) ptr - GIMP_SCRATCH_ALIGNMENT);
 
-  if (! block->size)
+  if (G_UNLIKELY (! block->size))
     {
       gimp_scratch_block_free (block);
 
@@ -146,7 +140,7 @@ gimp_scratch_free (gpointer ptr)
 
   context = g_private_get (&gimp_scratch_context);
 
-  if (context->n_available_blocks == context->n_blocks)
+  if (G_UNLIKELY (context->n_available_blocks == context->n_blocks))
     {
       context->n_blocks = MAX (2 * context->n_blocks, 1);
       context->blocks   = g_renew (GimpScratchBlock *, context->blocks,
