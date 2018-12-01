@@ -119,7 +119,7 @@ static gint              handler_lock;
 static struct backtrace_state *backtrace_state;
 #endif
 
-static const gchar *blacklisted_thread_names[] =
+static const gchar * const blacklisted_thread_names[] =
 {
   "gmain",
   "threaded-ml"
