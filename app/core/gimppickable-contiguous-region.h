@@ -18,37 +18,14 @@
 #ifndef __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
 #define __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
 
-typedef struct
-{
-  GeglBuffer *line_art;
-  gfloat     *distmap;
-} GimpPickableLineArtAsyncResult;
-
-GeglBuffer * gimp_pickable_contiguous_region_prepare_line_art       (GimpPickable        *pickable,
-                                                                     gboolean             select_transparent,
-                                                                     gfloat               stroke_threshold,
-                                                                     gint                 segment_max_length,
-                                                                     gint                 spline_max_length,
-                                                                     gfloat             **distmap);
-GimpAsync  * gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickable        *pickable,
-                                                                     gboolean             select_transparent,
-                                                                     gfloat               stroke_threshold,
-                                                                     gint                 segment_max_length,
-                                                                     gint                 spline_max_length,
-                                                                     gint                 priority);
 
 GeglBuffer * gimp_pickable_contiguous_region_by_seed                (GimpPickable        *pickable,
-                                                                     GeglBuffer          *line_art,
-                                                                     gfloat              *line_art_distmap,
+                                                                     GimpLineArt         *line_art,
                                                                      gboolean             antialias,
                                                                      gfloat               threshold,
                                                                      gboolean             select_transparent,
                                                                      GimpSelectCriterion  select_criterion,
                                                                      gboolean             diagonal_neighbors,
-                                                                     gfloat               line_art_stroke_threshold,
-                                                                     gint                 line_art_max_grow,
-                                                                     gint                 line_art_segment_max_length,
-                                                                     gint                 line_art_spline_max_length,
                                                                      gint                 x,
                                                                      gint                 y);
 

@@ -165,13 +165,12 @@ drawable_edit_bucket_fill_invoker (GimpProcedure         *procedure,
           if (gimp_fill_options_set_by_fill_type (options, context,
                                                   fill_type, error))
             {
-              gimp_drawable_bucket_fill (drawable, NULL, NULL, options,
+              gimp_drawable_bucket_fill (drawable, NULL, options,
                                          GIMP_PDB_CONTEXT (context)->sample_transparent,
                                          GIMP_PDB_CONTEXT (context)->sample_criterion,
                                          GIMP_PDB_CONTEXT (context)->sample_threshold,
                                          GIMP_PDB_CONTEXT (context)->sample_merged,
                                          GIMP_PDB_CONTEXT (context)->diagonal_neighbors,
-                                         0.92, 3, 20, 60, /* TODO */
                                          x, y);
             }
           else

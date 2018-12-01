@@ -49,18 +49,13 @@
 
 void
 gimp_drawable_bucket_fill (GimpDrawable         *drawable,
-                           GeglBuffer           *line_art,
-                           gfloat               *distmap,
+                           GimpLineArt          *line_art,
                            GimpFillOptions      *options,
                            gboolean              fill_transparent,
                            GimpSelectCriterion   fill_criterion,
                            gdouble               threshold,
                            gboolean              sample_merged,
                            gboolean              diagonal_neighbors,
-                           gfloat                line_art_stroke_threshold,
-                           gint                  line_art_max_grow,
-                           gint                  line_art_segment_max_length,
-                           gint                  line_art_spline_max_length,
                            gdouble               seed_x,
                            gdouble               seed_y)
 {
@@ -76,15 +71,10 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
   gimp_set_busy (image->gimp);
-  buffer = gimp_drawable_get_bucket_fill_buffer (drawable, line_art,
-                                                 distmap, options,
+  buffer = gimp_drawable_get_bucket_fill_buffer (drawable, line_art, options,
                                                  fill_transparent, fill_criterion,
                                                  threshold, sample_merged,
                                                  diagonal_neighbors,
-                                                 line_art_stroke_threshold,
-                                                 line_art_max_grow,
-                                                 line_art_segment_max_length,
-                                                 line_art_spline_max_length,
                                                  seed_x, seed_y, NULL,
                                                  &mask_x, &mask_y, &width, &height);
 
@@ -141,18 +131,13 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
  */
 GeglBuffer *
 gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
-                                      GeglBuffer           *line_art,
-                                      gfloat               *distmap,
+                                      GimpLineArt          *line_art,
                                       GimpFillOptions      *options,
                                       gboolean              fill_transparent,
                                       GimpSelectCriterion   fill_criterion,
                                       gdouble               threshold,
                                       gboolean              sample_merged,
                                       gboolean              diagonal_neighbors,
-                                      gfloat                stroke_threshold,
-                                      gint                  max_grow,
-                                      gint                  segment_max_length,
-                                      gint                  spline_max_length,
                                       gdouble               seed_x,
                                       gdouble               seed_y,
                                       GeglBuffer          **mask_buffer,
@@ -208,16 +193,12 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
    *  contiguous region.
    */
   new_mask = gimp_pickable_contiguous_region_by_seed (pickable,
-                                                      line_art, distmap,
+                                                      line_art,
                                                       antialias,
                                                       threshold,
                                                       fill_transparent,
                                                       fill_criterion,
                                                       diagonal_neighbors,
-                                                      stroke_threshold,
-                                                      max_grow,
-                                                      segment_max_length,
-                                                      spline_max_length,
                                                       (gint) seed_x,
                                                       (gint) seed_y);
   if (mask_buffer && *mask_buffer)

@@ -516,13 +516,12 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
     pickable = GIMP_PICKABLE (drawable);
 
   add_on = gimp_pickable_contiguous_region_by_seed (pickable,
-                                                    NULL, NULL,
+                                                    NULL,
                                                     antialias,
                                                     threshold,
                                                     select_transparent,
                                                     select_criterion,
                                                     diagonal_neighbors,
-                                                    0.92, 3, 20, 60, /* TODO */
                                                     x, y);
 
   if (! sample_merged)
