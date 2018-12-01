@@ -83,7 +83,6 @@ struct _GimpBacktrace
 {
   GimpBacktraceThread *threads;
   gint                 n_threads;
-  gint                 n_remaining_threads;
 };
 
 
@@ -113,6 +112,7 @@ static struct sigaction  orig_action;
 static pid_t             blacklisted_threads[MAX_N_THREADS];
 static gint              n_blacklisted_threads;
 static GimpBacktrace    *handler_backtrace;
+static gint              handler_n_remaining_threads;
 static gint              handler_lock;
 
 #ifdef HAVE_LIBBACKTRACE
@@ -282,7 +282,7 @@ gimp_backtrace_signal_handler (gint signum)
               thread->n_frames = backtrace ((gpointer *) thread->frames,
                                             MAX_N_FRAMES);
 
-              g_atomic_int_dec_and_test (&curr_backtrace->n_remaining_threads);
+              g_atomic_int_dec_and_test (&handler_n_remaining_threads);
 
               break;
             }
@@ -412,13 +412,13 @@ gimp_backtrace_new (gboolean include_current_thread)
 
   backtrace = g_slice_new (GimpBacktrace);
 
-  backtrace->threads             = g_new (GimpBacktraceThread, n_threads);
-  backtrace->n_threads           = n_threads;
-  backtrace->n_remaining_threads = n_threads;
+  backtrace->threads   = g_new (GimpBacktraceThread, n_threads);
+  backtrace->n_threads = n_threads;
 
   while (! g_atomic_int_compare_and_exchange (&handler_lock, 0, -1));
 
-  g_atomic_pointer_set (&handler_backtrace, backtrace);
+  g_atomic_pointer_set (&handler_backtrace,           backtrace);
+  g_atomic_int_set     (&handler_n_remaining_threads, n_threads);
 
   g_atomic_int_set (&handler_lock, 0);
 
@@ -441,7 +441,7 @@ gimp_backtrace_new (gboolean include_current_thread)
 
   start_time = g_get_monotonic_time ();
 
-  while (g_atomic_int_get (&backtrace->n_remaining_threads) > 0)
+  while (g_atomic_int_get (&handler_n_remaining_threads) > 0)
     {
       gint64 time = g_get_monotonic_time ();
 
@@ -458,7 +458,7 @@ gimp_backtrace_new (gboolean include_current_thread)
   g_atomic_int_set (&handler_lock, 0);
 
 #if 0
-  if (backtrace->n_remaining_threads > 0)
+  if (handler_n_remaining_threads > 0)
     {
       gint j = 0;
 
@@ -500,7 +500,7 @@ gimp_backtrace_new (gboolean include_current_thread)
 void
 gimp_backtrace_free (GimpBacktrace *backtrace)
 {
-  if (! backtrace || backtrace->n_remaining_threads > 0)
+  if (! backtrace)
     return;
 
   g_free (backtrace->threads);
