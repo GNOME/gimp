@@ -88,3 +88,13 @@ gimp_scratch_context_free (GimpScratchContext *context)
 
   g_slice_free (GimpScratchContext, context);
 }
+
+
+/*   public functions (stats)  */
+
+
+gsize
+gimp_scratch_get_total (void)
+{
+  return gimp_scratch_total;
+}
