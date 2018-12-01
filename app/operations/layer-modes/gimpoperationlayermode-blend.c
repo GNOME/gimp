@@ -868,17 +868,21 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
                                            gfloat       *comp,
                                            gint          samples)
 {
-  gfloat *scratch;
-  gfloat *in_Y;
-  gfloat *layer_Y;
+  static const Babl *fish;
+  gfloat            *scratch;
+  gfloat            *in_Y;
+  gfloat            *layer_Y;
+
+  if (! fish)
+    fish = babl_fish ("RGBA float", "Y float");
 
   scratch = gimp_scratch_new (gfloat, 2 * samples);
 
   in_Y    = scratch;
   layer_Y = scratch + samples;
 
-  babl_process (babl_fish ("RGBA float", "Y float"), in,    in_Y,    samples);
-  babl_process (babl_fish ("RGBA float", "Y float"), layer, layer_Y, samples);
+  babl_process (fish, in,    in_Y,    samples);
+  babl_process (fish, layer, layer_Y, samples);
 
   while (samples--)
     {
