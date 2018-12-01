@@ -22,6 +22,9 @@
 #define __GIMP_SCRATCH_H__
 
 
+#include <string.h>
+
+
 #define GIMP_SCRATCH_ALIGNMENT      16
 #define GIMP_SCRATCH_MAX_BLOCK_SIZE (1 << 20)
 
