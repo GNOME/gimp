@@ -22,22 +22,42 @@
 #define __GIMP_LINEART__
 
 
-GeglBuffer * gimp_lineart_close (GeglBuffer  *buffer,
-                                 gboolean     select_transparent,
-                                 gfloat       stroke_threshold,
-                                 gint         minimal_lineart_area,
-                                 gint         normal_estimate_mask_size,
-                                 gfloat       end_point_rate,
-                                 gint         spline_max_length,
-                                 gfloat       spline_max_angle,
-                                 gint         end_point_connectivity,
-                                 gfloat       spline_roundness,
-                                 gboolean     allow_self_intersections,
-                                 gint         created_regions_significant_area,
-                                 gint         created_regions_minimum_area,
-                                 gboolean     small_segments_from_spline_sources,
-                                 gint         segments_max_length,
-                                 gfloat     **lineart_distmap);
+#include "gimpobject.h"
 
+#define GIMP_TYPE_LINE_ART            (gimp_line_art_get_type ())
+#define GIMP_LINE_ART(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LINE_ART, GimpLineArt))
+#define GIMP_LINE_ART_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LINE_ART, GimpLineArtClass))
+#define GIMP_IS_LINE_ART(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LINE_ART))
+#define GIMP_IS_LINE_ART_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LINE_ART))
+#define GIMP_LINE_ART_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LINE_ART, GimpLineArtClass))
+
+
+typedef struct _GimpLineArtClass   GimpLineArtClass;
+typedef struct _GimpLineArtPrivate GimpLineArtPrivate;
+
+struct _GimpLineArt
+{
+  GimpObject          parent_instance;
+
+  GimpLineArtPrivate *priv;
+};
+
+struct _GimpLineArtClass
+{
+  GimpObjectClass     parent_class;
+};
+
+
+GType                gimp_line_art_get_type         (void) G_GNUC_CONST;
+
+GimpLineArt *        gimp_line_art_new              (void);
+
+void                 gimp_line_art_set_input        (GimpLineArt  *line_art,
+                                                     GimpPickable *pickable);
+void                 gimp_line_art_freeze           (GimpLineArt  *line_art);
+void                 gimp_line_art_thaw             (GimpLineArt  *line_art);
+
+GeglBuffer *         gimp_line_art_get              (GimpLineArt  *line_art,
+                                                     gfloat      **distmap);
 
 #endif /* __GIMP_LINEART__ */

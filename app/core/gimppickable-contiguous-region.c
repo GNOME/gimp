@@ -40,15 +40,6 @@
 
 typedef struct
 {
-  GeglBuffer *buffer;
-  gboolean    select_transparent;
-  gfloat      stroke_threshold;
-  gint        segment_max_length;
-  gint        spline_max_length;
-} LineArtData;
-
-typedef struct
-{
   gint   x;
   gint   y;
   gint   level;
@@ -114,17 +105,6 @@ static void     find_contiguous_region    (GeglBuffer          *src_buffer,
                                            gint                 y,
                                            const gfloat        *col);
 
-static LineArtData   * line_art_data_new    (GeglBuffer          *buffer,
-                                             gboolean             select_transparent,
-                                             gfloat               stroke_threshold,
-                                             gint                 segment_max_length,
-                                             gint                 spline_max_length);
-static void            line_art_data_free   (LineArtData         *data);
-static GimpPickableLineArtAsyncResult *
-                       line_art_result_new  (GeglBuffer          *line_art,
-                                             gfloat              *distmap);
-static void            line_art_result_free (GimpPickableLineArtAsyncResult
-                                                                 *data);
 static void            line_art_queue_pixel (GQueue              *queue,
                                              gint                 x,
                                              gint                 y,
@@ -133,220 +113,46 @@ static void            line_art_queue_pixel (GQueue              *queue,
 
 /*  public functions  */
 
-static void
-gimp_pickable_contiguous_region_prepare_line_art_async_func (GimpAsync   *async,
-                                                             LineArtData *data)
-{
-  GeglBuffer *lineart;
-  gfloat     *distmap;
-  gboolean    has_alpha;
-  gboolean    select_transparent = FALSE;
-
-  has_alpha = babl_format_has_alpha (gegl_buffer_get_format (data->buffer));
-
-  if (has_alpha)
-    {
-      if (data->select_transparent)
-        {
-          /*  don't select transparent regions if there are no fully
-           *  transparent pixels.
-           */
-          GeglBufferIterator *gi;
-
-          gi = gegl_buffer_iterator_new (data->buffer, NULL, 0,
-                                         babl_format ("A u8"),
-                                         GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
-          while (gegl_buffer_iterator_next (gi))
-            {
-              guint8 *p = (guint8*) gi->items[0].data;
-              gint    k;
-
-              if (gimp_async_is_canceled (async))
-                {
-                  gegl_buffer_iterator_stop (gi);
-
-                  gimp_async_abort (async);
-
-                  line_art_data_free (data);
-
-                  return;
-                }
-
-              for (k = 0; k < gi->length; k++)
-                {
-                  if (! *p)
-                    {
-                      select_transparent = TRUE;
-                      break;
-                    }
-                  p++;
-                }
-              if (select_transparent)
-                break;
-            }
-          if (select_transparent)
-            gegl_buffer_iterator_stop (gi);
-        }
-    }
-
-  /* For smart selection, we generate a binarized image with close
-   * regions, then run a composite selection with no threshold on
-   * this intermediate buffer.
-   */
-  GIMP_TIMER_START();
-
-  lineart = gimp_lineart_close (data->buffer,
-                                select_transparent,
-                                data->stroke_threshold,
-                                /*minimal_lineart_area,*/
-                                5,
-                                /*normal_estimate_mask_size,*/
-                                5,
-                                /*end_point_rate,*/
-                                0.85,
-                                data->spline_max_length,
-                                /*spline_max_angle,*/
-                                90.0,
-                                /*end_point_connectivity,*/
-                                2,
-                                /*spline_roundness,*/
-                                1.0,
-                                /*allow_self_intersections,*/
-                                TRUE,
-                                /*created_regions_significant_area,*/
-                                4,
-                                /*created_regions_minimum_area,*/
-                                100,
-                                /*small_segments_from_spline_sources,*/
-                                TRUE,
-                                data->segment_max_length,
-                                &distmap);
-
-  GIMP_TIMER_END("close line-art");
-
-  gimp_async_finish_full (async,
-                          line_art_result_new (lineart, distmap),
-                          (GDestroyNotify) line_art_result_free);
-
-  line_art_data_free (data);
-}
-
-GeglBuffer *
-gimp_pickable_contiguous_region_prepare_line_art (GimpPickable  *pickable,
-                                                  gboolean       select_transparent,
-                                                  gfloat         stroke_threshold,
-                                                  gint           segment_max_length,
-                                                  gint           spline_max_length,
-                                                  gfloat       **distmap)
-{
-  GimpAsync                      *async;
-  LineArtData                    *data;
-  GimpPickableLineArtAsyncResult *result;
-  GeglBuffer                     *lineart;
-
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
-
-  gimp_pickable_flush (pickable);
-
-  async = gimp_async_new ();
-  data  = line_art_data_new (gimp_pickable_get_buffer (pickable),
-                             select_transparent, stroke_threshold,
-                             segment_max_length, spline_max_length);
-
-  gimp_pickable_contiguous_region_prepare_line_art_async_func (async, data);
-
-  result = gimp_async_get_result (async);
-
-  lineart   = g_object_ref (result->line_art);
-  *distmap  = result->distmap;
-  result->distmap  = NULL;
-
-  g_object_unref (async);
-
-  return lineart;
-}
-
-GimpAsync *
-gimp_pickable_contiguous_region_prepare_line_art_async (GimpPickable *pickable,
-                                                        gboolean      select_transparent,
-                                                        gfloat        stroke_threshold,
-                                                        gint          segment_max_length,
-                                                        gint          spline_max_length,
-                                                        gint          priority)
-{
-  GeglBuffer  *buffer;
-  GimpAsync   *async;
-  LineArtData *data;
-
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
-
-  gimp_pickable_flush (pickable);
-
-  buffer = gegl_buffer_dup (gimp_pickable_get_buffer (pickable));
-
-  data  = line_art_data_new (buffer, select_transparent, stroke_threshold,
-                             segment_max_length, spline_max_length);
-
-  g_object_unref (buffer);
-
-  async = gimp_parallel_run_async_full (
-    priority,
-    (GimpParallelRunAsyncFunc)
-      gimp_pickable_contiguous_region_prepare_line_art_async_func,
-    data,
-    (GDestroyNotify) line_art_data_free);
-
-  return async;
-}
-
 GeglBuffer *
 gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
-                                         GeglBuffer          *line_art,
-                                         gfloat              *distmap,
+                                         GimpLineArt         *line_art,
                                          gboolean             antialias,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
                                          GimpSelectCriterion  select_criterion,
                                          gboolean             diagonal_neighbors,
-                                         gfloat               stroke_threshold,
-                                         gint                 flooding_max,
-                                         gint                 segment_max_length,
-                                         gint                 spline_max_length,
                                          gint                 x,
                                          gint                 y)
 {
   GeglBuffer    *src_buffer;
   GeglBuffer    *mask_buffer;
   const Babl    *format;
+  gfloat        *distmap = NULL;
   GeglRectangle  extent;
   gint           n_components;
   gboolean       has_alpha;
   gfloat         start_col[MAX_CHANNELS];
   gboolean       smart_line_art = FALSE;
   gboolean       free_line_art  = FALSE;
+  gint           line_art_max_grow;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
   if (select_criterion == GIMP_SELECT_CRITERION_LINE_ART)
     {
-      g_return_val_if_fail ((line_art && distmap) ||
-                            (! line_art && ! distmap),
-                            NULL);
-      if (line_art == NULL)
+      if (! line_art)
         {
           /* It is much better experience to pre-compute the line art,
            * but it may not be always possible (for instance when
            * selecting/filling through a PDB call).
            */
-          line_art      = gimp_pickable_contiguous_region_prepare_line_art (pickable, select_transparent,
-                                                                            stroke_threshold,
-                                                                            segment_max_length,
-                                                                            spline_max_length,
-                                                                            &distmap);
+          line_art = gimp_line_art_new ();
+          gimp_line_art_set_input (line_art, pickable);
           free_line_art = TRUE;
         }
 
-      src_buffer = line_art;
+      src_buffer = gimp_line_art_get (line_art, &distmap);
+      g_return_val_if_fail (src_buffer && distmap, NULL);
 
       smart_line_art     = TRUE;
       antialias          = FALSE;
@@ -427,8 +233,8 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
        */
       gfloat *mask;
       GQueue *queue  = g_queue_new ();
-      gint    width  = gegl_buffer_get_width (line_art);
-      gint    height = gegl_buffer_get_height (line_art);
+      gint    width  = gegl_buffer_get_width (src_buffer);
+      gint    height = gegl_buffer_get_height (src_buffer);
       gint    nx, ny;
 
       GIMP_TIMER_START();
@@ -520,6 +326,9 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
               }
           }
 
+      g_object_get (line_art,
+                    "max-grow", &line_art_max_grow,
+                    NULL);
       while (! g_queue_is_empty (queue))
         {
           BorderPixel *c = g_queue_pop_head (queue);
@@ -527,7 +336,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
           if (mask[c->x + c->y * width] != 1.0)
             {
               mask[c->x + c->y * width] = 1.0;
-              if (c->level >= flooding_max)
+              if (c->level >= line_art_max_grow)
                 /* Do not overflood under line arts. */
                 continue;
               if (c->x > 0)
@@ -600,10 +409,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       GIMP_TIMER_END("watershed line art");
 
       if (free_line_art)
-        {
-          g_object_unref (src_buffer);
-          g_free (distmap);
-        }
+        g_clear_object (&line_art);
     }
 
   return mask_buffer;
@@ -1147,54 +953,6 @@ find_contiguous_region (GeglBuffer          *src_buffer,
 #ifdef FETCH_ROW
   g_free (row);
 #endif
-}
-
-static LineArtData *
-line_art_data_new (GeglBuffer *buffer,
-                   gboolean    select_transparent,
-                   gfloat      stroke_threshold,
-                   gint        segment_max_length,
-                   gint        spline_max_length)
-{
-  LineArtData *data = g_slice_new (LineArtData);
-
-  data->buffer             = g_object_ref (buffer);
-  data->select_transparent = select_transparent;
-  data->stroke_threshold   = stroke_threshold;
-  data->segment_max_length = segment_max_length;
-  data->spline_max_length  = spline_max_length;
-
-  return data;
-}
-
-static void
-line_art_data_free (LineArtData *data)
-{
-  g_object_unref (data->buffer);
-
-  g_slice_free (LineArtData, data);
-}
-
-static GimpPickableLineArtAsyncResult *
-line_art_result_new (GeglBuffer *line_art,
-                     gfloat     *distmap)
-{
-  GimpPickableLineArtAsyncResult *data;
-
-  data = g_slice_new (GimpPickableLineArtAsyncResult);
-  data->line_art = line_art;
-  data->distmap  = distmap;
-
-  return data;
-}
-
-static void
-line_art_result_free (GimpPickableLineArtAsyncResult *data)
-{
-  g_object_unref (data->line_art);
-  g_clear_pointer (&data->distmap, g_free);
-
-  g_slice_free (GimpPickableLineArtAsyncResult, data);
 }
 
 static void

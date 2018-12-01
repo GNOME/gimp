@@ -20,14 +20,74 @@
 
 #include "config.h"
 
-#define GEGL_ITERATOR2_API
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
+#include "gimp-parallel.h"
+#include "gimp-utils.h" /* GIMP_TIMER */
+#include "gimpasync.h"
+#include "gimpcancelable.h"
+#include "gimpdrawable.h"
+#include "gimpimage.h"
 #include "gimplineart.h"
+#include "gimppickable.h"
+#include "gimpprojection.h"
+#include "gimpwaitable.h"
+
+#include "gimp-intl.h"
+
+enum
+{
+  PROP_0,
+  PROP_SELECT_TRANSPARENT,
+  PROP_MAX_GROW,
+  PROP_THRESHOLD,
+  PROP_SPLINE_MAX_LEN,
+  PROP_SEGMENT_MAX_LEN,
+};
+
+typedef struct _GimpLineArtPrivate GimpLineArtPrivate;
+
+struct _GimpLineArtPrivate
+{
+  gboolean      frozen;
+  gboolean      compute_after_thaw;
+
+  GimpAsync    *async;
+
+  GimpPickable *input;
+  GeglBuffer   *closed;
+  gfloat       *distmap;
+
+  /* Used in the closing step. */
+  gboolean      select_transparent;
+  gdouble       threshold;
+  gint          spline_max_len;
+  gint          segment_max_len;
+
+  /* Used in the grow step. */
+  gint          max_grow;
+};
+
+typedef struct
+{
+  GeglBuffer  *buffer;
+
+  gboolean     select_transparent;
+  gdouble      threshold;
+  gint         spline_max_len;
+  gint         segment_max_len;
+} LineArtData;
+
+typedef struct
+{
+  GeglBuffer *closed;
+  gfloat     *distmap;
+} LineArtResult;
 
 static int DeltaX[4] = {+1, -1, 0, 0};
 static int DeltaY[4] = {0, 0, +1, -1};
@@ -68,56 +128,109 @@ typedef struct _Edgel
   guint     next, previous;
 } Edgel;
 
-static void         gimp_lineart_denoise                    (GeglBuffer             *buffer,
-                                                             int                     size);
-static void         gimp_lineart_compute_normals_curvatures (GeglBuffer             *mask,
-                                                             gfloat                 *normals,
-                                                             gfloat                 *curvatures,
-                                                             gfloat                 *smoothed_curvatures,
-                                                             int                     normal_estimate_mask_size);
-static gfloat *     gimp_lineart_get_smooth_curvatures      (GArray                 *edgelset);
-static GArray     * gimp_lineart_curvature_extremums        (gfloat                 *curvatures,
-                                                             gfloat                 *smoothed_curvatures,
-                                                             gint                    curvatures_width,
-                                                             gint                    curvatures_height);
-static gint         gimp_spline_candidate_cmp               (const SplineCandidate  *a,
-                                                             const SplineCandidate  *b,
-                                                             gpointer                user_data);
-static GList      * gimp_lineart_find_spline_candidates     (GArray                 *max_positions,
-                                                             gfloat                 *normals,
-                                                             gint                    width,
-                                                             gint                    distance_threshold,
-                                                             gfloat                  max_angle_deg);
 
-static GArray     * gimp_lineart_discrete_spline            (Pixel                   p0,
-                                                             GimpVector2             n0,
-                                                             Pixel                   p1,
-                                                             GimpVector2             n1);
+static void            gimp_line_art_finalize                  (GObject               *object);
+static void            gimp_line_art_set_property              (GObject                *object,
+                                                                guint                   property_id,
+                                                                const GValue           *value,
+                                                                GParamSpec             *pspec);
+static void            gimp_line_art_get_property              (GObject                *object,
+                                                                guint                   property_id,
+                                                                GValue                 *value,
+                                                                GParamSpec             *pspec);
 
-static gint         gimp_number_of_transitions               (GArray                 *pixels,
-                                                              GeglBuffer             *buffer);
-static gboolean     gimp_lineart_curve_creates_region        (GeglBuffer             *mask,
-                                                              GArray                 *pixels,
-                                                              int                     lower_size_limit,
-                                                              int                     upper_size_limit);
-static GArray     * gimp_lineart_line_segment_until_hit      (const GeglBuffer       *buffer,
-                                                              Pixel                   start,
-                                                              GimpVector2             direction,
-                                                              int                     size);
-static gfloat     * gimp_lineart_estimate_strokes_radii      (GeglBuffer             *mask);
+/* Functions for asynchronous computation. */
+
+static void            gimp_line_art_compute                   (GimpLineArt            *line_art);
+static void            gimp_line_art_compute_cb                (GimpAsync              *async,
+                                                                GimpLineArt            *line_art);
+
+static GimpAsync     * gimp_line_art_prepare_async             (GimpLineArt            *line_art,
+                                                                gint                    priority);
+static void            gimp_line_art_prepare_async_func        (GimpAsync              *async,
+                                                                LineArtData            *data);
+static LineArtData   * line_art_data_new                       (GeglBuffer             *buffer,
+                                                                GimpLineArt            *line_art);
+static void            line_art_data_free                      (LineArtData            *data);
+static LineArtResult * line_art_result_new                     (GeglBuffer             *line_art,
+                                                                gfloat                 *distmap);
+static void            line_art_result_free                    (LineArtResult          *result);
+
+static void            gimp_line_art_projection_rendered       (GimpProjection         *proj,
+                                                                GimpLineArt            *line_art);
+static void            gimp_line_art_drawable_painted          (GimpDrawable           *drawable,
+                                                                GimpLineArt            *line_art);
+
+
+/* All actual computation functions. */
+
+static GeglBuffer    * gimp_line_art_close                     (GeglBuffer             *buffer,
+                                                                gboolean                select_transparent,
+                                                                gdouble                 stroke_threshold,
+                                                                gint                    spline_max_length,
+                                                                gint                    segment_max_length,
+                                                                gint                    minimal_lineart_area,
+                                                                gint                    normal_estimate_mask_size,
+                                                                gfloat                  end_point_rate,
+                                                                gfloat                  spline_max_angle,
+                                                                gint                    end_point_connectivity,
+                                                                gfloat                  spline_roundness,
+                                                                gboolean                allow_self_intersections,
+                                                                gint                    created_regions_significant_area,
+                                                                gint                    created_regions_minimum_area,
+                                                                gboolean                small_segments_from_spline_sources,
+                                                                gfloat                **lineart_distmap);
+
+static void            gimp_lineart_denoise                    (GeglBuffer             *buffer,
+                                                                int                     size);
+static void            gimp_lineart_compute_normals_curvatures (GeglBuffer             *mask,
+                                                                gfloat                 *normals,
+                                                                gfloat                 *curvatures,
+                                                                gfloat                 *smoothed_curvatures,
+                                                                int                     normal_estimate_mask_size);
+static gfloat        * gimp_lineart_get_smooth_curvatures      (GArray                 *edgelset);
+static GArray        * gimp_lineart_curvature_extremums        (gfloat                 *curvatures,
+                                                                gfloat                 *smoothed_curvatures,
+                                                                gint                    curvatures_width,
+                                                                gint                    curvatures_height);
+static gint            gimp_spline_candidate_cmp               (const SplineCandidate  *a,
+                                                                const SplineCandidate  *b,
+                                                                gpointer                user_data);
+static GList         * gimp_lineart_find_spline_candidates     (GArray                 *max_positions,
+                                                                gfloat                 *normals,
+                                                                gint                    width,
+                                                                gint                    distance_threshold,
+                                                                gfloat                  max_angle_deg);
+
+static GArray        * gimp_lineart_discrete_spline            (Pixel                   p0,
+                                                                GimpVector2             n0,
+                                                                Pixel                   p1,
+                                                                GimpVector2             n1);
+
+static gint            gimp_number_of_transitions               (GArray                 *pixels,
+                                                                 GeglBuffer             *buffer);
+static gboolean        gimp_lineart_curve_creates_region        (GeglBuffer             *mask,
+                                                                 GArray                 *pixels,
+                                                                 int                     lower_size_limit,
+                                                                 int                     upper_size_limit);
+static GArray        * gimp_lineart_line_segment_until_hit      (const GeglBuffer       *buffer,
+                                                                 Pixel                   start,
+                                                                 GimpVector2             direction,
+                                                                 int                     size);
+static gfloat        * gimp_lineart_estimate_strokes_radii      (GeglBuffer             *mask);
 
 /* Some callback-type functions. */
 
-static guint        visited_hash_fun                         (Pixel                  *key);
-static gboolean     visited_equal_fun                        (Pixel                  *e1,
-                                                              Pixel                  *e2);
+static guint           visited_hash_fun                         (Pixel                  *key);
+static gboolean        visited_equal_fun                        (Pixel                  *e1,
+                                                                 Pixel                  *e2);
 
-static inline gboolean    border_in_direction (GeglBuffer *mask,
-                                               Pixel       p,
-                                               int         direction);
-static inline GimpVector2 pair2normal         (Pixel       p,
-                                               gfloat     *normals,
-                                               gint        width);
+static inline gboolean border_in_direction                      (GeglBuffer             *mask,
+                                                                 Pixel                   p,
+                                                                 int                     direction);
+static inline GimpVector2 pair2normal                           (Pixel                   p,
+                                                                 gfloat                 *normals,
+                                                                 gint                    width);
 
 /* Edgel */
 
@@ -158,22 +271,518 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
                                                    Edgel             *it,
                                                    Edgel             *n);
 
+G_DEFINE_TYPE_WITH_CODE (GimpLineArt, gimp_line_art, GIMP_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpLineArt))
+
+static void
+gimp_line_art_class_init (GimpLineArtClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->finalize     = gimp_line_art_finalize;
+  object_class->set_property = gimp_line_art_set_property;
+  object_class->get_property = gimp_line_art_get_property;
+
+  g_object_class_install_property (object_class, PROP_SELECT_TRANSPARENT,
+                                   g_param_spec_boolean ("select-transparent",
+                                                         _("Select transparent pixels instead of gray ones"),
+                                                         _("Select transparent pixels instead of gray ones"),
+                                                         TRUE,
+                                                         G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_THRESHOLD,
+                                   g_param_spec_double ("threshold",
+                                                        _("Line art detection threshold"),
+                                                        _("Threshold to detect contour (higher values will include more pixels)"),
+                                                        0.0, 1.0, 0.92,
+                                                        G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_MAX_GROW,
+                                   g_param_spec_int ("max-grow",
+                                                     _("Maximum growing size"),
+                                                     _("Maximum number of pixels grown under the line art"),
+                                                     1, 100, 3,
+                                                     G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_SPLINE_MAX_LEN,
+                                   g_param_spec_int ("spline-max-length",
+                                                     _("Maximum curved closing length"),
+                                                     _("Maximum curved length (in pixels) to close the line art"),
+                                                     1, 1000, 60,
+                                                     G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_SEGMENT_MAX_LEN,
+                                   g_param_spec_int ("segment-max-length",
+                                                     _("Maximum straight closing length"),
+                                                     _("Maximum straight length (in pixels) to close the line art"),
+                                                     1, 1000, 20,
+                                                     G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
+}
+
+static void
+gimp_line_art_init (GimpLineArt *line_art)
+{
+  line_art->priv = gimp_line_art_get_instance_private (line_art);
+}
+
+static void
+gimp_line_art_finalize (GObject *object)
+{
+  GimpLineArt *line_art = GIMP_LINE_ART (object);
+
+  if (line_art->priv->input)
+    {
+      if (GIMP_IS_IMAGE (line_art->priv->input))
+        g_signal_handlers_disconnect_by_data (gimp_image_get_projection (GIMP_IMAGE (line_art->priv->input)),
+                                              line_art);
+      else
+        g_signal_handlers_disconnect_by_data (line_art->priv->input,
+                                              line_art);
+    }
+  if (line_art->priv->async)
+    {
+      /* we cancel the async, but don't wait for it to finish, since
+       * it can't actually be interrupted.  instead
+       * gimp_bucket_fill_compute_line_art_cb() bails if the async has
+       * been canceled, to avoid accessing the dead tool.
+       */
+      gimp_cancelable_cancel (GIMP_CANCELABLE (line_art->priv->async));
+      g_clear_object (&line_art->priv->async);
+    }
+
+  g_clear_object (&line_art->priv->closed);
+  g_clear_pointer (&line_art->priv->distmap, g_free);
+}
+
+static void
+gimp_line_art_set_property (GObject      *object,
+                            guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
+{
+  GimpLineArt *line_art = GIMP_LINE_ART (object);
+
+  switch (property_id)
+    {
+    case PROP_SELECT_TRANSPARENT:
+      line_art->priv->select_transparent = g_value_get_boolean (value);
+      gimp_line_art_compute (line_art);
+      break;
+    case PROP_MAX_GROW:
+      line_art->priv->max_grow = g_value_get_int (value);
+      break;
+    case PROP_THRESHOLD:
+      line_art->priv->threshold = g_value_get_double (value);
+      gimp_line_art_compute (line_art);
+      break;
+    case PROP_SPLINE_MAX_LEN:
+      line_art->priv->spline_max_len = g_value_get_int (value);
+      gimp_line_art_compute (line_art);
+      break;
+    case PROP_SEGMENT_MAX_LEN:
+      line_art->priv->segment_max_len = g_value_get_int (value);
+      gimp_line_art_compute (line_art);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_line_art_get_property (GObject    *object,
+                            guint       property_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
+{
+  GimpLineArt *line_art = GIMP_LINE_ART (object);
+
+  switch (property_id)
+    {
+    case PROP_SELECT_TRANSPARENT:
+      g_value_set_boolean (value, line_art->priv->select_transparent);
+      break;
+    case PROP_MAX_GROW:
+      g_value_set_int (value, line_art->priv->max_grow);
+      break;
+    case PROP_THRESHOLD:
+      g_value_set_double (value, line_art->priv->threshold);
+      break;
+    case PROP_SPLINE_MAX_LEN:
+      g_value_set_int (value, line_art->priv->spline_max_len);
+      break;
+    case PROP_SEGMENT_MAX_LEN:
+      g_value_set_int (value, line_art->priv->segment_max_len);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
 /* Public functions */
 
+GimpLineArt *
+gimp_line_art_new (void)
+{
+  return g_object_new (GIMP_TYPE_LINE_ART,
+                       NULL);
+}
+
+void
+gimp_line_art_set_input (GimpLineArt  *line_art,
+                         GimpPickable *pickable)
+{
+  if (line_art->priv->input)
+    {
+      if (GIMP_IS_IMAGE (line_art->priv->input))
+        g_signal_handlers_disconnect_by_data (gimp_image_get_projection (GIMP_IMAGE (line_art->priv->input)),
+                                              line_art);
+      else
+        g_signal_handlers_disconnect_by_data (line_art->priv->input,
+                                              line_art);
+    }
+
+  line_art->priv->input = pickable;
+
+  gimp_line_art_compute (line_art);
+  if (pickable)
+    {
+      if (GIMP_IS_IMAGE (pickable))
+        g_signal_connect (gimp_image_get_projection (GIMP_IMAGE (pickable)), "rendered",
+                          G_CALLBACK (gimp_line_art_projection_rendered),
+                          line_art);
+      else if (GIMP_IS_DRAWABLE (pickable))
+        g_signal_connect (pickable, "painted",
+                          G_CALLBACK (gimp_line_art_drawable_painted),
+                          line_art);
+      else
+        g_return_if_reached ();
+    }
+}
+
+void
+gimp_line_art_freeze (GimpLineArt *line_art)
+{
+  g_return_if_fail (! line_art->priv->frozen);
+
+  line_art->priv->frozen             = TRUE;
+  line_art->priv->compute_after_thaw = FALSE;
+}
+
+void
+gimp_line_art_thaw (GimpLineArt *line_art)
+{
+  g_return_if_fail (line_art->priv->frozen);
+
+  line_art->priv->frozen = FALSE;
+  if (line_art->priv->compute_after_thaw)
+    {
+      gimp_line_art_compute (line_art);
+      line_art->priv->compute_after_thaw = FALSE;
+    }
+}
+
+GeglBuffer *
+gimp_line_art_get (GimpLineArt  *line_art,
+                   gfloat      **distmap)
+{
+  g_return_val_if_fail (line_art->priv->input, NULL);
+
+  if (line_art->priv->async)
+    {
+      gimp_waitable_wait (GIMP_WAITABLE (line_art->priv->async));
+    }
+  else if (! line_art->priv->closed)
+    {
+      gimp_line_art_compute (line_art);
+      if (line_art->priv->async)
+        gimp_waitable_wait (GIMP_WAITABLE (line_art->priv->async));
+    }
+
+  g_return_val_if_fail (line_art->priv->closed, NULL);
+
+  if (distmap)
+    *distmap = line_art->priv->distmap;
+
+  return line_art->priv->closed;
+}
+
+/* Functions for asynchronous computation. */
+
+static void
+gimp_line_art_compute (GimpLineArt *line_art)
+{
+  if (line_art->priv->frozen)
+    {
+      line_art->priv->compute_after_thaw = TRUE;
+      return;
+    }
+
+  if (line_art->priv->async)
+    {
+      gimp_cancelable_cancel (GIMP_CANCELABLE (line_art->priv->async));
+      g_clear_object (&line_art->priv->async);
+    }
+
+  g_clear_object (&line_art->priv->closed);
+  g_clear_pointer (&line_art->priv->distmap, g_free);
+
+  if (line_art->priv->input)
+    {
+      /* gimp_line_art_prepare_async() will flush the pickable, which
+       * may trigger this signal handler, and will leak a line art (as
+       * line_art->priv->async has not been set yet).
+       */
+      if (GIMP_IS_IMAGE (line_art->priv->input))
+        g_signal_handlers_block_by_func (gimp_image_get_projection (GIMP_IMAGE (line_art->priv->input)),
+                                         G_CALLBACK (gimp_line_art_projection_rendered),
+                                         line_art);
+      else
+        g_signal_handlers_block_by_func (line_art->priv->input,
+                                         G_CALLBACK (gimp_line_art_drawable_painted),
+                                         line_art);
+      line_art->priv->async = gimp_line_art_prepare_async (line_art, +1);
+      if (GIMP_IS_IMAGE (line_art->priv->input))
+        g_signal_handlers_unblock_by_func (gimp_image_get_projection (GIMP_IMAGE (line_art->priv->input)),
+                                           G_CALLBACK (gimp_line_art_projection_rendered),
+                                           line_art);
+      else
+        g_signal_handlers_unblock_by_func (line_art->priv->input,
+                                           G_CALLBACK (gimp_line_art_drawable_painted),
+                                           line_art);
+
+      gimp_async_add_callback_for_object (line_art->priv->async,
+                                          (GimpAsyncCallback) gimp_line_art_compute_cb,
+                                          line_art, line_art);
+    }
+}
+
+static void
+gimp_line_art_compute_cb (GimpAsync   *async,
+                          GimpLineArt *line_art)
+{
+  if (gimp_async_is_canceled (async))
+    return;
+
+  if (gimp_async_is_finished (async))
+    {
+      LineArtResult *result;
+
+      result = gimp_async_get_result (async);
+
+      line_art->priv->closed  = g_object_ref (result->closed);
+      line_art->priv->distmap = result->distmap;
+      result->distmap  = NULL;
+    }
+
+  g_clear_object (&line_art->priv->async);
+}
+
+static GimpAsync *
+gimp_line_art_prepare_async (GimpLineArt *line_art,
+                             gint         priority)
+{
+  GeglBuffer  *buffer;
+  GimpAsync   *async;
+  LineArtData *data;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (line_art->priv->input), NULL);
+
+  gimp_pickable_flush (line_art->priv->input);
+
+  buffer = gegl_buffer_dup (gimp_pickable_get_buffer (line_art->priv->input));
+
+  data  = line_art_data_new (buffer, line_art);
+
+  g_object_unref (buffer);
+
+  async = gimp_parallel_run_async_full (
+    priority,
+    (GimpParallelRunAsyncFunc) gimp_line_art_prepare_async_func,
+    data, (GDestroyNotify) line_art_data_free);
+
+  return async;
+}
+
+static void
+gimp_line_art_prepare_async_func (GimpAsync   *async,
+                                  LineArtData *data)
+{
+  GeglBuffer *closed;
+  gfloat     *distmap;
+  gboolean    has_alpha;
+  gboolean    select_transparent = FALSE;
+
+  has_alpha = babl_format_has_alpha (gegl_buffer_get_format (data->buffer));
+
+  if (has_alpha)
+    {
+      if (data->select_transparent)
+        {
+          /*  don't select transparent regions if there are no fully
+           *  transparent pixels.
+           */
+          GeglBufferIterator *gi;
+
+          gi = gegl_buffer_iterator_new (data->buffer, NULL, 0,
+                                         babl_format ("A u8"),
+                                         GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 3);
+          while (gegl_buffer_iterator_next (gi))
+            {
+              guint8 *p = (guint8*) gi->items[0].data;
+              gint    k;
+
+              if (gimp_async_is_canceled (async))
+                {
+                  gegl_buffer_iterator_stop (gi);
+
+                  gimp_async_abort (async);
+
+                  line_art_data_free (data);
+
+                  return;
+                }
+
+              for (k = 0; k < gi->length; k++)
+                {
+                  if (! *p)
+                    {
+                      select_transparent = TRUE;
+                      break;
+                    }
+                  p++;
+                }
+              if (select_transparent)
+                break;
+            }
+          if (select_transparent)
+            gegl_buffer_iterator_stop (gi);
+        }
+    }
+
+  /* For smart selection, we generate a binarized image with close
+   * regions, then run a composite selection with no threshold on
+   * this intermediate buffer.
+   */
+  GIMP_TIMER_START();
+
+  closed = gimp_line_art_close (data->buffer,
+                                select_transparent,
+                                data->threshold,
+                                data->spline_max_len,
+                                data->segment_max_len,
+                                /*minimal_lineart_area,*/
+                                5,
+                                /*normal_estimate_mask_size,*/
+                                5,
+                                /*end_point_rate,*/
+                                0.85,
+                                /*spline_max_angle,*/
+                                90.0,
+                                /*end_point_connectivity,*/
+                                2,
+                                /*spline_roundness,*/
+                                1.0,
+                                /*allow_self_intersections,*/
+                                TRUE,
+                                /*created_regions_significant_area,*/
+                                4,
+                                /*created_regions_minimum_area,*/
+                                100,
+                                /*small_segments_from_spline_sources,*/
+                                TRUE,
+                                &distmap);
+
+  GIMP_TIMER_END("close line-art");
+
+  gimp_async_finish_full (async,
+                          line_art_result_new (closed, distmap),
+                          (GDestroyNotify) line_art_result_free);
+
+  line_art_data_free (data);
+}
+
+static LineArtData *
+line_art_data_new (GeglBuffer  *buffer,
+                   GimpLineArt *line_art)
+{
+  LineArtData *data = g_slice_new (LineArtData);
+
+  data->buffer             = g_object_ref (buffer);
+  data->select_transparent = line_art->priv->select_transparent;
+  data->threshold          = line_art->priv->threshold;
+  data->spline_max_len     = line_art->priv->spline_max_len;
+  data->segment_max_len    = line_art->priv->segment_max_len;
+
+  return data;
+}
+
+static void
+line_art_data_free (LineArtData *data)
+{
+  g_object_unref (data->buffer);
+
+  g_slice_free (LineArtData, data);
+}
+
+static LineArtResult *
+line_art_result_new (GeglBuffer *closed,
+                     gfloat     *distmap)
+{
+  LineArtResult *data;
+
+  data = g_slice_new (LineArtResult);
+  data->closed  = closed;
+  data->distmap = distmap;
+
+  return data;
+}
+
+static void
+line_art_result_free (LineArtResult *data)
+{
+  g_object_unref (data->closed);
+  g_clear_pointer (&data->distmap, g_free);
+
+  g_slice_free (LineArtResult, data);
+}
+
+static void
+gimp_line_art_projection_rendered (GimpProjection *proj,
+                                   GimpLineArt    *line_art)
+{
+  gimp_line_art_compute (line_art);
+}
+
+static void
+gimp_line_art_drawable_painted (GimpDrawable *drawable,
+                                GimpLineArt  *line_art)
+{
+  gimp_line_art_compute (line_art);
+}
+
+/* All actual computation functions. */
+
 /**
- * gimp_lineart_close:
+ * gimp_line_art_close:
  * @buffer: the input #GeglBuffer.
  * @select_transparent: whether we binarize the alpha channel or the
  *                      luminosity.
  * @stroke_threshold: [0-1] threshold value for detecting stroke pixels
  *                    (higher values will detect more stroke pixels).
+ * @spline_max_length: the maximum length for creating splines between
+ *                     end points.
+ * @segment_max_length: the maximum length for creating segments
+ *                      between end points. Unlike splines, segments
+ *                      are straight lines.
  * @minimal_lineart_area: the minimum size in number pixels for area to
  *                        be considered as line art.
  * @normal_estimate_mask_size:
  * @end_point_rate: threshold to estimate if a curvature is an end-point
  *                  in [0-1] range value.
- * @spline_max_length: the maximum length for creating splines between
- *                     end points.
  * @spline_max_angle: the maximum angle between end point normals for
  *                    creating splines between them.
  * @end_point_connectivity:
@@ -183,9 +792,6 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
  * @created_regions_significant_area:
  * @created_regions_minimum_area:
  * @small_segments_from_spline_sources:
- * @segments_max_length: the maximum length for creating segments
- *                       between end points. Unlike splines, segments
- *                       are straight lines.
  * @closed_distmap: a distance map of the closed line art pixels.
  *
  * Creates a binarized version of the strokes of @buffer, detected either
@@ -205,23 +811,23 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
  *          newly allocated float buffer is returned, which can be used
  *          for overflowing created masks later.
  */
-GeglBuffer *
-gimp_lineart_close (GeglBuffer  *buffer,
-                    gboolean     select_transparent,
-                    gfloat       stroke_threshold,
-                    gint         minimal_lineart_area,
-                    gint         normal_estimate_mask_size,
-                    gfloat       end_point_rate,
-                    gint         spline_max_length,
-                    gfloat       spline_max_angle,
-                    gint         end_point_connectivity,
-                    gfloat       spline_roundness,
-                    gboolean     allow_self_intersections,
-                    gint         created_regions_significant_area,
-                    gint         created_regions_minimum_area,
-                    gboolean     small_segments_from_spline_sources,
-                    gint         segments_max_length,
-                    gfloat     **closed_distmap)
+static GeglBuffer *
+gimp_line_art_close (GeglBuffer  *buffer,
+                     gboolean     select_transparent,
+                     gdouble      stroke_threshold,
+                     gint         spline_max_length,
+                     gint         segment_max_length,
+                     gint         minimal_lineart_area,
+                     gint         normal_estimate_mask_size,
+                     gfloat       end_point_rate,
+                     gfloat       spline_max_angle,
+                     gint         end_point_connectivity,
+                     gfloat       spline_roundness,
+                     gboolean     allow_self_intersections,
+                     gint         created_regions_significant_area,
+                     gint         created_regions_minimum_area,
+                     gboolean     small_segments_from_spline_sources,
+                     gfloat     **closed_distmap)
 {
   const Babl         *gray_format;
   gfloat             *normals;
@@ -422,7 +1028,7 @@ gimp_lineart_close (GeglBuffer  *buffer,
         {
           GArray *segment = gimp_lineart_line_segment_until_hit (closed, *point,
                                                                  pair2normal (*point, normals, width),
-                                                                 segments_max_length);
+                                                                 segment_max_length);
 
           if (segment->len &&
               ! gimp_lineart_curve_creates_region (closed, segment,
@@ -487,8 +1093,6 @@ gimp_lineart_close (GeglBuffer  *buffer,
 
   return closed;
 }
-
-/* Private functions */
 
 static void
 gimp_lineart_denoise (GeglBuffer *buffer,

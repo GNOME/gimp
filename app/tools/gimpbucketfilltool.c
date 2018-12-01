@@ -62,15 +62,10 @@
 
 struct _GimpBucketFillToolPrivate
 {
-  GimpAsync          *async;
-  GeglBuffer         *line_art;
-  gfloat             *distmap;
+  GimpLineArt        *line_art;
   GWeakRef            cached_image;
   GWeakRef            cached_drawable;
 
-  gboolean            fill_in_progress;
-  gboolean            compute_line_art_after_fill;
-  GeglBuffer         *fill_buffer;
   GeglBuffer         *fill_mask;
 
   /* For preview */
@@ -130,19 +125,16 @@ static void     gimp_bucket_fill_tool_cursor_update    (GimpTool              *t
                                                         GdkModifierType        state,
                                                         GimpDisplay           *display);
 
-static void     gimp_bucket_fill_compute_line_art      (GimpBucketFillTool    *tool);
 static gboolean gimp_bucket_fill_tool_connect_handlers (gpointer               data);
 static void     gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
                                                         GParamSpec            *pspec,
                                                         GimpBucketFillTool    *tool);
+static void     gimp_bucket_fill_reset_line_art        (GimpBucketFillTool    *tool,
+                                                        GimpBucketFillOptions *options);
 static void     gimp_bucket_fill_tool_image_changed    (GimpContext           *context,
                                                         GimpImage             *image,
                                                         GimpBucketFillTool    *tool);
 static void     gimp_bucket_fill_tool_drawable_changed (GimpImage            *image,
-                                                        GimpBucketFillTool   *tool);
-static void  gimp_bucket_fill_tool_projection_rendered (GimpProjection     *proj,
-                                                        GimpBucketFillTool *tool);
-static void     gimp_bucket_fill_tool_drawable_painted (GimpDrawable         *drawable,
                                                         GimpBucketFillTool   *tool);
 
 
@@ -212,8 +204,27 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   GimpTool              *tool    = GIMP_TOOL (object);
   GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (object);
   Gimp                  *gimp    = GIMP_CONTEXT (options)->gimp;
+  GimpLineArt           *line_art;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  line_art = gimp_line_art_new ();
+  g_object_bind_property (options,  "fill-transparent",
+                          line_art, "select-transparent",
+                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  g_object_bind_property (options,  "line-art-threshold",
+                          line_art, "threshold",
+                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  g_object_bind_property (options,  "line-art-max-grow",
+                          line_art, "max-grow",
+                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  g_object_bind_property (options,  "line-art-spline-max-len",
+                          line_art, "spline-max-length",
+                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  g_object_bind_property (options,  "line-art-segment-max-len",
+                          line_art, "segment-max-length",
+                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  GIMP_BUCKET_FILL_TOOL (tool)->priv->line_art = line_art;
 
   /* Avoid computing initial line art several times (for every option
    * property as it gets deserialized) if tool is selected when starting
@@ -236,38 +247,16 @@ gimp_bucket_fill_tool_finalize (GObject *object)
   Gimp                  *gimp     = GIMP_CONTEXT (options)->gimp;
   GimpContext           *context  = gimp_get_user_context (gimp);
   GimpImage             *image    = g_weak_ref_get (&tool->priv->cached_image);
-  GimpDrawable          *drawable = g_weak_ref_get (&tool->priv->cached_drawable);
-
-  if (tool->priv->async)
-    {
-      /* we cancel the async, but don't wait for it to finish, since
-       * it can't actually be interrupted.  instead
-       * gimp_bucket_fill_compute_line_art_cb() bails if the async has
-       * been canceled, to avoid accessing the dead tool.
-       */
-      gimp_cancelable_cancel (GIMP_CANCELABLE (tool->priv->async));
-      g_clear_object (&tool->priv->async);
-    }
 
   g_clear_object (&tool->priv->line_art);
-  g_clear_pointer (&tool->priv->distmap, g_free);
 
   if (image)
     {
       g_signal_handlers_disconnect_by_data (image, tool);
-      g_signal_handlers_disconnect_by_data (gimp_image_get_projection (image),
-                                            tool);
       g_object_unref (image);
     }
-  if (drawable)
-    {
-      g_signal_handlers_disconnect_by_data (drawable, tool);
-      g_object_unref (drawable);
-    }
 
-  g_signal_handlers_disconnect_by_func (options,
-                                        G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                                        tool);
+  g_signal_handlers_disconnect_by_data (options, tool);
   g_signal_handlers_disconnect_by_data (context, tool);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -324,7 +313,7 @@ gimp_bucket_fill_tool_start (GimpBucketFillTool *tool,
 
   g_return_if_fail (! tool->priv->filter);
 
-  tool->priv->fill_in_progress = TRUE;
+  gimp_line_art_freeze (tool->priv->line_art);
 
   GIMP_TOOL (tool)->display  = display;
   GIMP_TOOL (tool)->drawable = drawable;
@@ -351,12 +340,6 @@ gimp_bucket_fill_tool_start (GimpBucketFillTool *tool,
   g_signal_connect (tool->priv->filter, "flush",
                     G_CALLBACK (gimp_bucket_fill_tool_filter_flush),
                     tool);
-
-  if (options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART &&
-      tool->priv->async)
-    {
-      gimp_waitable_wait (GIMP_WAITABLE (tool->priv->async));
-    }
 }
 
 static void
@@ -372,8 +355,6 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
   if (tool->priv->filter)
     {
       GeglBuffer *fill     = NULL;
-      GeglBuffer *line_art = NULL;
-      gfloat     *distmap  = NULL;
       gdouble     x        = coords->x;
       gdouble     y        = coords->y;
 
@@ -387,29 +368,16 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
           y -= (gdouble) off_y;
         }
 
-      if (options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
-        {
-          line_art = g_object_ref (tool->priv->line_art);
-          distmap  = tool->priv->distmap;
-        }
-
       fill = gimp_drawable_get_bucket_fill_buffer (drawable,
-                                                   line_art, distmap,
+                                                   tool->priv->line_art,
                                                    fill_options,
                                                    options->fill_transparent,
                                                    options->fill_criterion,
                                                    options->threshold / 255.0,
                                                    options->sample_merged,
                                                    options->diagonal_neighbors,
-                                                   options->line_art_threshold,
-                                                   options->line_art_max_grow,
-                                                   options->line_art_segment_max_len,
-                                                   options->line_art_spline_max_len,
                                                    x, y, &tool->priv->fill_mask,
                                                    &x, &y, NULL, NULL);
-      if (line_art)
-        g_object_unref (line_art);
-
       if (fill)
         {
           gegl_node_set (tool->priv->fill_node,
@@ -430,12 +398,6 @@ gimp_bucket_fill_tool_commit (GimpBucketFillTool *tool)
 {
   if (tool->priv->filter)
     {
-      GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-
-      /* Make sure the drawable will signal being painted. */
-      if (! options->sample_merged)
-        tool->priv->fill_in_progress = FALSE;
-
       gimp_drawable_filter_commit (tool->priv->filter,
                                    GIMP_PROGRESS (tool), FALSE);
       gimp_image_flush (gimp_display_get_image (GIMP_TOOL (tool)->display));
@@ -458,8 +420,7 @@ gimp_bucket_fill_tool_halt (GimpBucketFillTool *tool)
     }
   g_clear_object (&tool->priv->fill_mask);
 
-  tool->priv->fill_in_progress            = FALSE;
-  tool->priv->compute_line_art_after_fill = FALSE;
+  gimp_line_art_thaw (tool->priv->line_art);
 
   GIMP_TOOL (tool)->display  = NULL;
   GIMP_TOOL (tool)->drawable = NULL;
@@ -592,8 +553,6 @@ gimp_bucket_fill_tool_motion (GimpTool         *tool,
       GimpContext     *context  = GIMP_CONTEXT (options);
       GimpFillOptions *fill_options;
       GError          *error = NULL;
-
-      g_return_if_fail (bucket_tool->priv->fill_in_progress);
 
       fill_options = gimp_fill_options_new (image->gimp, NULL, FALSE);
 
@@ -755,92 +714,6 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
-static void
-gimp_bucket_fill_compute_line_art_cb (GimpAsync          *async,
-                                      GimpBucketFillTool *tool)
-{
-  if (gimp_async_is_canceled (async))
-    return;
-
-  if (gimp_async_is_finished (async))
-    {
-      GimpPickableLineArtAsyncResult *result;
-
-      result = gimp_async_get_result (async);
-
-      tool->priv->line_art = g_object_ref (result->line_art);
-      tool->priv->distmap  = result->distmap;
-      result->distmap  = NULL;
-    }
-
-  g_clear_object (&tool->priv->async);
-}
-
-static void
-gimp_bucket_fill_compute_line_art (GimpBucketFillTool *tool)
-{
-  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-
-  if (tool->priv->fill_in_progress)
-    {
-      tool->priv->compute_line_art_after_fill = TRUE;
-      return;
-    }
-
-  if (tool->priv->async)
-    {
-      gimp_cancelable_cancel (GIMP_CANCELABLE (tool->priv->async));
-      g_clear_object (&tool->priv->async);
-    }
-
-  g_clear_object (&tool->priv->line_art);
-  g_clear_pointer (&tool->priv->distmap, g_free);
-
-  if (options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
-    {
-      GimpPickable *pickable = NULL;
-      GimpDrawable *image    = g_weak_ref_get (&tool->priv->cached_image);
-      GimpDrawable *drawable = g_weak_ref_get (&tool->priv->cached_drawable);
-
-      if (image && options->sample_merged)
-        pickable = GIMP_PICKABLE (image);
-      else if (drawable && ! options->sample_merged)
-        pickable = GIMP_PICKABLE (drawable);
-
-      if (pickable)
-        {
-          /* gimp_pickable_contiguous_region_prepare_line_art_async()
-           * will flush the pickable, which may trigger this signal
-           * handler, and will leak a line art (as tool->priv->async has
-           * not been set yet.
-           */
-          g_signal_handlers_block_by_func (gimp_image_get_projection (GIMP_IMAGE (image)),
-                                           G_CALLBACK (gimp_bucket_fill_tool_projection_rendered),
-                                           tool);
-          tool->priv->async =
-            gimp_pickable_contiguous_region_prepare_line_art_async (
-              pickable,
-              options->fill_transparent,
-              options->line_art_threshold,
-              options->line_art_segment_max_len,
-              options->line_art_spline_max_len,
-              +1);
-          g_signal_handlers_unblock_by_func (gimp_image_get_projection (GIMP_IMAGE (image)),
-                                           G_CALLBACK (gimp_bucket_fill_tool_projection_rendered),
-                                           tool);
-
-          gimp_async_add_callback_for_object (
-            tool->priv->async,
-            (GimpAsyncCallback) gimp_bucket_fill_compute_line_art_cb,
-            tool,
-            tool);
-        }
-
-      g_clear_object (&image);
-      g_clear_object (&drawable);
-    }
-}
-
 static gboolean
 gimp_bucket_fill_tool_connect_handlers (gpointer data)
 {
@@ -859,13 +732,6 @@ gimp_bucket_fill_tool_connect_handlers (gpointer data)
       g_signal_connect (options, "notify::sample-merged",
                         G_CALLBACK (gimp_bucket_fill_tool_options_notified),
                         tool);
-      g_signal_connect (options, "notify::fill-transparent",
-                        G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                        tool);
-      g_signal_connect (options, "notify::line-art-threshold",
-                        G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                        tool);
-
       g_signal_connect (options, "notify::fill-mode",
                         G_CALLBACK (gimp_bucket_fill_tool_options_notified),
                         tool);
@@ -885,13 +751,10 @@ gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
                                         GParamSpec            *pspec,
                                         GimpBucketFillTool    *tool)
 {
-  if ((! strcmp (pspec->name, "fill-criterion")     ||
-       ! strcmp (pspec->name, "fill-transparent")   ||
-       ! strcmp (pspec->name, "line-art-threshold") ||
-       ! strcmp (pspec->name, "sample-merged")) &&
-      options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
+  if (! strcmp (pspec->name, "fill-criterion") ||
+      ! strcmp (pspec->name, "sample-merged"))
     {
-      gimp_bucket_fill_compute_line_art (tool);
+      gimp_bucket_fill_reset_line_art (tool, options);
     }
   else if (! strcmp (pspec->name, "fill-mode"))
     {
@@ -921,6 +784,49 @@ gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
 }
 
 static void
+gimp_bucket_fill_reset_line_art (GimpBucketFillTool    *tool,
+                                 GimpBucketFillOptions *options)
+{
+  GimpImage   *prev_image = g_weak_ref_get (&tool->priv->cached_image);
+  GimpContext *context    = gimp_get_user_context (GIMP_CONTEXT (options)->gimp);
+  GimpImage   *image      = gimp_context_get_image (context);
+
+  if (prev_image)
+    {
+      g_signal_handlers_disconnect_by_data (prev_image, tool);
+      g_object_unref (prev_image);
+    }
+  g_weak_ref_set (&tool->priv->cached_image, image ? image : NULL);
+  g_weak_ref_set (&tool->priv->cached_drawable, NULL);
+
+  if (image && options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
+    {
+      GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+      GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
+
+      g_signal_connect (image, "active-layer-changed",
+                        G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
+                        tool);
+      g_signal_connect (image, "active-channel-changed",
+                        G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
+                        tool);
+
+      g_weak_ref_set (&tool->priv->cached_drawable, drawable ? drawable : NULL);
+
+      if (options->sample_merged)
+        gimp_line_art_set_input (tool->priv->line_art, GIMP_PICKABLE (image));
+      else if (drawable)
+        gimp_line_art_set_input (tool->priv->line_art, GIMP_PICKABLE (drawable));
+      else
+        gimp_line_art_set_input (tool->priv->line_art, NULL);
+    }
+  else
+    {
+      gimp_line_art_set_input (tool->priv->line_art, NULL);
+    }
+}
+
+static void
 gimp_bucket_fill_tool_image_changed (GimpContext        *context,
                                      GimpImage          *image,
                                      GimpBucketFillTool *tool)
@@ -929,37 +835,32 @@ gimp_bucket_fill_tool_image_changed (GimpContext        *context,
 
   if (image != prev_image)
     {
-      GimpImage *prev_drawable = g_weak_ref_get (&tool->priv->cached_drawable);
-
-      g_clear_object (&tool->priv->line_art);
-      g_clear_pointer (&tool->priv->distmap, g_free);
-
       if (prev_image)
         {
           g_signal_handlers_disconnect_by_data (prev_image, tool);
-          g_signal_handlers_disconnect_by_data (gimp_image_get_projection (prev_image),
-                                                tool);
-        }
-      if (prev_drawable)
-        {
-          g_signal_handlers_disconnect_by_data (prev_drawable, tool);
-          g_object_unref (prev_drawable);
         }
 
       g_weak_ref_set (&tool->priv->cached_image, image ? image : NULL);
       g_weak_ref_set (&tool->priv->cached_drawable, NULL);
       if (image)
         {
+          GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+
           g_signal_connect (image, "active-layer-changed",
                             G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
                             tool);
           g_signal_connect (image, "active-channel-changed",
                             G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
                             tool);
-          g_signal_connect (gimp_image_get_projection (image), "rendered",
-                            G_CALLBACK (gimp_bucket_fill_tool_projection_rendered),
-                            tool);
           gimp_bucket_fill_tool_drawable_changed (image, tool);
+
+          if (options->sample_merged)
+            gimp_line_art_set_input (tool->priv->line_art,
+                                     GIMP_PICKABLE (image));
+        }
+      else
+        {
+          gimp_line_art_set_input (tool->priv->line_art, NULL);
         }
     }
   if (prev_image)
@@ -975,37 +876,13 @@ gimp_bucket_fill_tool_drawable_changed (GimpImage          *image,
 
   if (drawable != prev_drawable)
     {
-      if (prev_drawable)
-        g_signal_handlers_disconnect_by_data (prev_drawable, tool);
+      GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
       g_weak_ref_set (&tool->priv->cached_drawable, drawable ? drawable : NULL);
-      if (drawable)
-        g_signal_connect (drawable, "painted",
-                          G_CALLBACK (gimp_bucket_fill_tool_drawable_painted),
-                          tool);
-
-      gimp_bucket_fill_compute_line_art (tool);
+      if (! options->sample_merged)
+        gimp_line_art_set_input (tool->priv->line_art,
+                                 drawable ? GIMP_PICKABLE (drawable) : NULL);
     }
   if (prev_drawable)
     g_object_unref (prev_drawable);
-}
-
-static void
-gimp_bucket_fill_tool_projection_rendered (GimpProjection     *proj,
-                                           GimpBucketFillTool *tool)
-{
-  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-
-  if (options->sample_merged)
-    gimp_bucket_fill_compute_line_art (tool);
-}
-
-static void
-gimp_bucket_fill_tool_drawable_painted (GimpDrawable       *drawable,
-                                        GimpBucketFillTool *tool)
-{
-  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-
-  if (! options->sample_merged)
-    gimp_bucket_fill_compute_line_art (tool);
 }

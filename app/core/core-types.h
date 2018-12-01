@@ -187,6 +187,7 @@ typedef struct _GimpHistogram                   GimpHistogram;
 typedef struct _GimpIdTable                     GimpIdTable;
 typedef struct _GimpImagefile                   GimpImagefile;
 typedef struct _GimpInterpreterDB               GimpInterpreterDB;
+typedef struct _GimpLineArt                     GimpLineArt;
 typedef struct _GimpObjectQueue                 GimpObjectQueue;
 typedef struct _GimpParasiteList                GimpParasiteList;
 typedef struct _GimpPdbProgress                 GimpPdbProgress;
