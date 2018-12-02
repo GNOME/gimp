@@ -523,32 +523,34 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
   if (push_undo)
     {
-      GeglBuffer *buffer;
-      gint        x, y, width, height;
+      GeglBuffer    *buffer;
+      GeglRectangle  rect;
 
       gimp_rectangle_intersect (core->x1, core->y1,
                                 core->x2 - core->x1, core->y2 - core->y1,
                                 0, 0,
                                 gimp_item_get_width  (GIMP_ITEM (drawable)),
                                 gimp_item_get_height (GIMP_ITEM (drawable)),
-                                &x, &y, &width, &height);
+                                &rect.x, &rect.y, &rect.width, &rect.height);
+
+      gimp_gegl_rectangle_align_to_tile_grid (&rect, &rect, core->undo_buffer);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
                                    core->undo_desc);
 
       GIMP_PAINT_CORE_GET_CLASS (core)->push_undo (core, image, NULL);
 
-      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect.width, rect.height),
                                 gimp_drawable_get_format (drawable));
 
       gimp_gegl_buffer_copy (core->undo_buffer,
-                             GEGL_RECTANGLE (x, y, width, height),
+                             &rect,
                              GEGL_ABYSS_NONE,
                              buffer,
                              GEGL_RECTANGLE (0, 0, 0, 0));
 
       gimp_drawable_push_undo (drawable, NULL,
-                               buffer, x, y, width, height);
+                               buffer, rect.x, rect.y, rect.width, rect.height);
 
       g_object_unref (buffer);
 
