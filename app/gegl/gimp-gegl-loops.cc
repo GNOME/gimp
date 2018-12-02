@@ -124,7 +124,7 @@ gimp_gegl_clear (GeglBuffer          *buffer,
     {
       GeglBufferIterator *iter;
 
-      iter = gegl_buffer_iterator_new (buffer, rect, 0, format,
+      iter = gegl_buffer_iterator_new (buffer, area, 0, format,
                                        GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE,
                                        1);
 
