@@ -76,6 +76,11 @@ GeglBuffer      * gimp_fill_options_create_buffer    (GimpFillOptions     *optio
                                                       const GeglRectangle *rect,
                                                       gint                 pattern_offset_x,
                                                       gint                 pattern_offset_y);
+void              gimp_fill_options_fill_buffer      (GimpFillOptions     *options,
+                                                      GimpDrawable        *drawable,
+                                                      GeglBuffer          *buffer,
+                                                      gint                 pattern_offset_x,
+                                                      gint                 pattern_offset_y);
 
 
 #endif /* __GIMP_FILL_OPTIONS_H__ */
