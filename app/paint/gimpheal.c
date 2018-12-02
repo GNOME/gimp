@@ -25,7 +25,6 @@
 #include <string.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"

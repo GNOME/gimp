@@ -17,7 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <libgimp/gimp.h>

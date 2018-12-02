@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#define GEGL_ITERATOR2_API
 #include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
