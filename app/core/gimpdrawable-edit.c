@@ -75,21 +75,24 @@ gimp_drawable_edit_can_fill_direct (GimpDrawable    *drawable,
       (! gimp_layer_mode_is_subtractive (mode)            ^
        ! (composite_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE)))
     {
-      gboolean source_has_alpha = FALSE;
-
-      if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_PATTERN &&
-          ! gimp_layer_mode_is_subtractive (mode))
+      switch (gimp_fill_options_get_style (options))
         {
-          GimpPattern *pattern;
-          const Babl  *format;
+        case GIMP_FILL_STYLE_SOLID:
+          return TRUE;
 
-          pattern = gimp_context_get_pattern (context);
-          format  = gimp_temp_buf_get_format (gimp_pattern_get_mask (pattern));
+        case GIMP_FILL_STYLE_PATTERN:
+          {
+            GimpPattern *pattern;
+            GimpTempBuf *mask;
+            const Babl  *format;
 
-          source_has_alpha = babl_format_has_alpha (format);
+            pattern = gimp_context_get_pattern (context);
+            mask    = gimp_pattern_get_mask (pattern);
+            format  = gimp_temp_buf_get_format (mask);
+
+            return ! babl_format_has_alpha (format);
+          }
         }
-
-      return ! source_has_alpha;
     }
 
   return FALSE;
