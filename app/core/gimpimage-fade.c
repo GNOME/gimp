@@ -58,9 +58,7 @@ gimp_image_fade (GimpImage   *image,
       gimp_image_undo (image);
 
       gimp_drawable_apply_buffer (drawable, buffer,
-                                  GEGL_RECTANGLE (0, 0,
-                                                  gegl_buffer_get_width (undo->buffer),
-                                                  gegl_buffer_get_height (undo->buffer)),
+                                  gegl_buffer_get_extent (buffer),
                                   TRUE,
                                   gimp_object_get_name (undo),
                                   gimp_context_get_opacity (context),
@@ -69,7 +67,7 @@ gimp_image_fade (GimpImage   *image,
                                   GIMP_LAYER_COLOR_SPACE_AUTO,
                                   gimp_layer_mode_get_paint_composite_mode (
                                     gimp_context_get_paint_mode (context)),
-                                  NULL, undo->x, undo->y);
+                                  NULL, undo->applied_x, undo->applied_y);
 
       g_object_unref (buffer);
       g_object_unref (undo);

@@ -43,9 +43,11 @@
 #include "gimpdrawable-private.h"
 #include "gimpdrawable-shadow.h"
 #include "gimpdrawable-transform.h"
+#include "gimpdrawableundo.h"
 #include "gimpfilterstack.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
+#include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"
@@ -859,14 +861,32 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
                               gint          width,
                               gint          height)
 {
+  GimpImage        *image;
+  GimpDrawableUndo *undo;
+  gint              applied_x = x;
+  gint              applied_y = y;
+
   if (! buffer)
     {
+      GeglBuffer    *drawable_buffer = gimp_drawable_get_buffer (drawable);
+      GeglRectangle  drawable_rect;
+
+      gimp_gegl_rectangle_align_to_tile_grid (
+        &drawable_rect,
+        GEGL_RECTANGLE (x, y, width, height),
+        drawable_buffer);
+
+      x      = drawable_rect.x;
+      y      = drawable_rect.y;
+      width  = drawable_rect.width;
+      height = drawable_rect.height;
+
       buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                 gimp_drawable_get_format (drawable));
 
       gimp_gegl_buffer_copy (
-        gimp_drawable_get_buffer (drawable),
-        GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
+        drawable_buffer,
+        &drawable_rect, GEGL_ABYSS_NONE,
         buffer,
         GEGL_RECTANGLE (0, 0, 0, 0));
     }
@@ -875,9 +895,19 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
       g_object_ref (buffer);
     }
 
-  gimp_image_undo_push_drawable (gimp_item_get_image (GIMP_ITEM (drawable)),
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  gimp_image_undo_push_drawable (image,
                                  undo_desc, drawable,
                                  buffer, x, y);
+
+  undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
+
+  if (undo)
+    {
+      undo->applied_x = applied_x;
+      undo->applied_y = applied_y;
+    }
 
   g_object_unref (buffer);
 }

@@ -43,6 +43,8 @@ struct _GimpDrawableUndo
 
   /* stuff for "Fade" */
   GeglBuffer             *applied_buffer;
+  gint                    applied_x;
+  gint                    applied_y;
   GimpLayerMode           paint_mode;
   GimpLayerColorSpace     blend_space;
   GimpLayerColorSpace     composite_space;
