@@ -25,6 +25,8 @@
 #include <gegl.h>
 #include <gegl-plugin.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimp-gegl-types.h"
 
 #include "core/gimpprogress.h"
@@ -150,4 +152,38 @@ gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
     return TRUE;
 
   return FALSE;
+}
+
+void
+gimp_gegl_rectangle_align_to_tile_grid (GeglRectangle       *dest,
+                                        const GeglRectangle *src,
+                                        GeglBuffer          *buffer)
+{
+  gint          shift_x;
+  gint          shift_y;
+  gint          tile_width;
+  gint          tile_height;
+  GeglRectangle rect;
+
+  g_return_if_fail (dest != NULL);
+  g_return_if_fail (src != NULL);
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  g_object_get (buffer,
+                "shift-x",     &shift_x,
+                "shift-y",     &shift_y,
+                "tile-width",  &tile_width,
+                "tile-height", &tile_height,
+                NULL);
+
+  rect.x      = (gint) floor ((gdouble) (src->x               + shift_x) /
+                              tile_width)  * tile_width;
+  rect.y      = (gint) floor ((gdouble) (src->y               + shift_y) /
+                              tile_height) * tile_height;
+  rect.width  = (gint) ceil  ((gdouble) (src->x + src->width  + shift_x) /
+                              tile_width)  * tile_width  - rect.x;
+  rect.height = (gint) ceil  ((gdouble) (src->y + src->height + shift_y) /
+                              tile_height) * tile_height - rect.y;
+
+  *dest = rect;
 }

@@ -22,21 +22,25 @@
 #define __GIMP_GEGL_UTILS_H__
 
 
-GType        gimp_gegl_get_op_enum_type   (const gchar   *operation,
-                                           const gchar   *property);
+GType        gimp_gegl_get_op_enum_type             (const gchar         *operation,
+                                                     const gchar         *property);
 
-GeglColor  * gimp_gegl_color_new          (const GimpRGB *rgb);
+GeglColor  * gimp_gegl_color_new                    (const GimpRGB       *rgb);
 
-void         gimp_gegl_progress_connect   (GeglNode      *node,
-                                           GimpProgress  *progress,
-                                           const gchar   *text);
+void         gimp_gegl_progress_connect             (GeglNode            *node,
+                                                     GimpProgress        *progress,
+                                                     const gchar         *text);
 
-const Babl * gimp_gegl_node_get_format    (GeglNode      *node,
-                                           const gchar   *pad_name);
+const Babl * gimp_gegl_node_get_format              (GeglNode            *node,
+                                                     const gchar         *pad_name);
 
-gboolean     gimp_gegl_param_spec_has_key (GParamSpec    *pspec,
-                                           const gchar   *key,
-                                           const gchar   *value);
+gboolean     gimp_gegl_param_spec_has_key           (GParamSpec          *pspec,
+                                                     const gchar         *key,
+                                                     const gchar         *value);
+
+void         gimp_gegl_rectangle_align_to_tile_grid (GeglRectangle       *dest,
+                                                     const GeglRectangle *src,
+                                                     GeglBuffer          *buffer);
 
 
 #endif /* __GIMP_GEGL_UTILS_H__ */
