@@ -94,6 +94,58 @@ gimp_gegl_buffer_copy (GeglBuffer          *src_buffer,
 }
 
 void
+gimp_gegl_clear (GeglBuffer          *buffer,
+                 const GeglRectangle *rect)
+{
+  const Babl *format;
+  gint        bpp;
+  gint        n_components;
+  gint        bpc;
+  gint        alpha_offset;
+
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+
+  if (! rect)
+    rect = gegl_buffer_get_extent (buffer);
+
+  format = gegl_buffer_get_format (buffer);
+
+  if (! babl_format_has_alpha (format))
+    return;
+
+  bpp          = babl_format_get_bytes_per_pixel (format);
+  n_components = babl_format_get_n_components (format);
+  bpc          = bpp / n_components;
+  alpha_offset = (n_components - 1) * bpc;
+
+  gegl_parallel_distribute_area (
+    rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *area)
+    {
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (buffer, rect, 0, format,
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE,
+                                       1);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          guint8 *data = (guint8 *) iter->items[0].data;
+          gint    i;
+
+          data += alpha_offset;
+
+          for (i = 0; i < iter->length; i++)
+            {
+              memset (data, 0, bpc);
+
+              data += bpp;
+            }
+        }
+    });
+}
+
+void
 gimp_gegl_convolve (GeglBuffer          *src_buffer,
                     const GeglRectangle *src_rect,
                     GeglBuffer          *dest_buffer,
