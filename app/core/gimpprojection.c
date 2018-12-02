@@ -179,7 +179,8 @@ static void        gimp_projection_add_update_area       (GimpProjection  *proj,
                                                           gint             w,
                                                           gint             h);
 static void        gimp_projection_flush_whenever        (GimpProjection  *proj,
-                                                          gboolean         now);
+                                                          gboolean         now,
+                                                          gboolean         direct);
 static void        gimp_projection_chunk_render_start    (GimpProjection  *proj);
 static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj);
 static gboolean    gimp_projection_chunk_render_callback (gpointer         data);
@@ -404,7 +405,7 @@ gimp_projection_pickable_flush (GimpPickable *pickable)
   gimp_projection_get_buffer (pickable);
 
   gimp_projection_finish_draw (proj);
-  gimp_projection_flush_now (proj);
+  gimp_projection_flush_now (proj, FALSE);
 
   if (proj->priv->invalidate_preview)
     {
@@ -657,16 +658,17 @@ gimp_projection_flush (GimpProjection *proj)
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
   /* Construct in chunks */
-  gimp_projection_flush_whenever (proj, FALSE);
+  gimp_projection_flush_whenever (proj, FALSE, FALSE);
 }
 
 void
-gimp_projection_flush_now (GimpProjection *proj)
+gimp_projection_flush_now (GimpProjection *proj,
+                           gboolean        direct)
 {
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
   /* Construct NOW */
-  gimp_projection_flush_whenever (proj, TRUE);
+  gimp_projection_flush_whenever (proj, TRUE, direct);
 }
 
 void
@@ -770,7 +772,8 @@ gimp_projection_add_update_area (GimpProjection *proj,
 
 static void
 gimp_projection_flush_whenever (GimpProjection *proj,
-                                gboolean        now)
+                                gboolean        now,
+                                gboolean        direct)
 {
   if (! proj->priv->buffer)
     return;
@@ -790,7 +793,7 @@ gimp_projection_flush_whenever (GimpProjection *proj,
                                           i, &rect);
 
               gimp_projection_paint_area (proj,
-                                          FALSE, /* sic! */
+                                          direct,
                                           rect.x,
                                           rect.y,
                                           rect.width,
@@ -1039,7 +1042,7 @@ gimp_projection_chunk_render_iteration (GimpProjection *proj,
       chunk_render->work_height = work_h;
     }
 
-  gimp_projection_paint_area (proj, TRUE /* sic! */,
+  gimp_projection_paint_area (proj, TRUE,
                               work_x, work_y, work_w, work_h);
 
   chunk_render->n_pixels += work_w * work_h;

@@ -187,7 +187,7 @@ gimp_paint_tool_paint_timeout (GimpPaintTool *paint_tool)
 
       gimp_draw_tool_pause (draw_tool);
 
-      gimp_projection_flush_now (gimp_image_get_projection (image));
+      gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
       gimp_display_flush_now (display);
 
       gimp_draw_tool_resume (draw_tool);
@@ -326,7 +326,7 @@ gimp_paint_tool_paint_start (GimpPaintTool     *paint_tool,
                              GIMP_PAINT_STATE_MOTION, time);
     }
 
-  gimp_projection_flush_now (gimp_image_get_projection (image));
+  gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
   gimp_display_flush_now (display);
 
   /*  Start the display update timeout  */
@@ -475,7 +475,7 @@ gimp_paint_tool_paint_push (GimpPaintTool          *paint_tool,
 
       func (paint_tool, data);
 
-      gimp_projection_flush_now (gimp_image_get_projection (image));
+      gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
       gimp_display_flush_now (display);
 
       gimp_draw_tool_resume (draw_tool);
