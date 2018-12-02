@@ -25,7 +25,6 @@
  *  merged into the officical plug-in by Sven Neumann.
  */
 
-#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <string.h>

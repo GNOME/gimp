@@ -39,7 +39,6 @@
  * 1.0: (July '04)
  *      - Code cleanup, added reverse gradient option.
  */
-#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <libgimp/gimp.h>

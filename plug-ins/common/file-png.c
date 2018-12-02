@@ -38,7 +38,6 @@
  *   see ChangeLog
  */
 
-#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <stdlib.h>

@@ -27,7 +27,6 @@
  * 2. Figure out if we need multiple phases for supersampled brushes.
  */
 
-#define GEGL_ITERATOR2_API
 #include "config.h"
 
 #include <string.h>
