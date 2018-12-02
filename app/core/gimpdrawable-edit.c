@@ -55,24 +55,25 @@ static gboolean
 gimp_drawable_edit_can_fill_direct (GimpDrawable    *drawable,
                                     GimpFillOptions *options)
 {
-  GimpImage              *image;
-  GimpContext            *context;
-  gdouble                 opacity;
-  GimpLayerMode           mode;
-  GimpLayerCompositeMode  composite_mode;
+  GimpImage                *image;
+  GimpContext              *context;
+  gdouble                   opacity;
+  GimpLayerMode             mode;
+  GimpLayerCompositeMode    composite_mode;
+  GimpLayerCompositeRegion  composite_region;
 
-  image          = gimp_item_get_image (GIMP_ITEM (drawable));
-  context        = GIMP_CONTEXT (options);
-  opacity        = gimp_context_get_opacity (context);
-  mode           = gimp_context_get_paint_mode (context);
-  composite_mode = gimp_layer_mode_get_paint_composite_mode (mode);
+  image            = gimp_item_get_image (GIMP_ITEM (drawable));
+  context          = GIMP_CONTEXT (options);
+  opacity          = gimp_context_get_opacity (context);
+  mode             = gimp_context_get_paint_mode (context);
+  composite_mode   = gimp_layer_mode_get_paint_composite_mode (mode);
+  composite_region = gimp_layer_mode_get_included_region (mode, composite_mode);
 
   if (gimp_channel_is_empty (gimp_image_get_mask (image)) &&
       opacity == GIMP_OPACITY_OPAQUE                      &&
       gimp_layer_mode_is_trivial (mode)                   &&
-      (gimp_layer_mode_is_subtractive (mode)              ||
-       (gimp_layer_mode_get_included_region (mode, composite_mode) &
-        GIMP_LAYER_COMPOSITE_REGION_SOURCE)))
+      (! gimp_layer_mode_is_subtractive (mode)            ^
+       ! (composite_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE)))
     {
       gboolean source_has_alpha = FALSE;
 
