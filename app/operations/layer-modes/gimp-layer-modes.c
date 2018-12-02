@@ -60,7 +60,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE  |
+                            GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION,
@@ -70,8 +71,9 @@ static const GimpLayerModeInfo layer_mode_infos[] =
   { GIMP_LAYER_MODE_DISSOLVE,
 
     .op_name              = "gimp:dissolve",
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
-                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION
@@ -436,7 +438,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
   { GIMP_LAYER_MODE_NORMAL,
 
     .op_name              = "gimp:normal",
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION,
@@ -775,7 +778,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:erase",
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_SUBTRACTIVE           |
-                            GIMP_LAYER_MODE_FLAG_ALPHA_ONLY,
+                            GIMP_LAYER_MODE_FLAG_ALPHA_ONLY            |
+                            GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
@@ -785,7 +789,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
   { GIMP_LAYER_MODE_MERGE,
 
     .op_name              = "gimp:merge",
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION,
@@ -798,7 +803,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_SUBTRACTIVE               |
-                            GIMP_LAYER_MODE_FLAG_ALPHA_ONLY,
+                            GIMP_LAYER_MODE_FLAG_ALPHA_ONLY                |
+                            GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP
@@ -1187,6 +1193,17 @@ gimp_layer_mode_is_alpha_only (GimpLayerMode mode)
     return FALSE;
 
   return (info->flags & GIMP_LAYER_MODE_FLAG_ALPHA_ONLY) != 0;
+}
+
+gboolean
+gimp_layer_mode_is_trivial (GimpLayerMode mode)
+{
+  const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
+
+  if (! info)
+    return FALSE;
+
+  return (info->flags & GIMP_LAYER_MODE_FLAG_TRIVIAL) != 0;
 }
 
 GimpLayerColorSpace
