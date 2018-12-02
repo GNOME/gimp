@@ -28,6 +28,9 @@ void   gimp_gegl_buffer_copy           (GeglBuffer               *src_buffer,
                                         GeglBuffer               *dest_buffer,
                                         const GeglRectangle      *dest_rect);
 
+void   gimp_gegl_clear                 (GeglBuffer               *buffer,
+                                        const GeglRectangle      *rect);
+
 /*  this is a pretty stupid port of concolve_region() that only works
  *  on a linear source buffer
  */
