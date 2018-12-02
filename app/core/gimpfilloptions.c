@@ -411,7 +411,7 @@ gimp_fill_options_create_buffer (GimpFillOptions     *options,
                                  gint                 pattern_offset_x,
                                  gint                 pattern_offset_y)
 {
-  GeglBuffer  *buffer;
+  GeglBuffer *buffer;
 
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
   g_return_val_if_fail (gimp_fill_options_get_style (options) !=
@@ -423,6 +423,26 @@ gimp_fill_options_create_buffer (GimpFillOptions     *options,
 
   buffer = gegl_buffer_new (rect,
                             gimp_drawable_get_format_with_alpha (drawable));
+
+  gimp_fill_options_fill_buffer (options, drawable, buffer,
+                                 pattern_offset_x, pattern_offset_y);
+
+  return buffer;
+}
+
+void
+gimp_fill_options_fill_buffer (GimpFillOptions *options,
+                               GimpDrawable    *drawable,
+                               GeglBuffer      *buffer,
+                               gint             pattern_offset_x,
+                               gint             pattern_offset_y)
+{
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+  g_return_if_fail (gimp_fill_options_get_style (options) !=
+                    GIMP_FILL_STYLE_PATTERN ||
+                    gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
   switch (gimp_fill_options_get_style (options))
     {
@@ -451,6 +471,4 @@ gimp_fill_options_create_buffer (GimpFillOptions     *options,
       }
       break;
     }
-
-  return buffer;
 }
