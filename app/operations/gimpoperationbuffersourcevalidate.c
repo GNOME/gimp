@@ -24,12 +24,9 @@
 #include <gegl-plugin.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-
 #include "operations-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimptilehandlervalidate.h"
 
 #include "gimpoperationbuffersourcevalidate.h"
@@ -239,24 +236,11 @@ gimp_operation_buffer_source_validate_process (GeglOperation        *operation,
 
       if (validate_handler)
         {
-          gint          shift_x;
-          gint          shift_y;
-          gint          tile_width;
-          gint          tile_height;
           GeglRectangle rect;
 
-          g_object_get (buffer_source_validate->buffer,
-                        "shift-x",     &shift_x,
-                        "shift-y",     &shift_y,
-                        "tile-width",  &tile_width,
-                        "tile-height", &tile_height,
-                        NULL);
-
           /* align the rectangle to the tile grid */
-          rect.x      = (gint) floor ((gdouble) (result->x                  + shift_x) / tile_width)  * tile_width;
-          rect.y      = (gint) floor ((gdouble) (result->y                  + shift_y) / tile_height) * tile_height;
-          rect.width  = (gint) ceil  ((gdouble) (result->x + result->width  + shift_x) / tile_width)  * tile_width  - rect.x;
-          rect.height = (gint) ceil  ((gdouble) (result->y + result->height + shift_y) / tile_height) * tile_height - rect.y;
+          gimp_gegl_rectangle_align_to_tile_grid (
+            &rect, result, buffer_source_validate->buffer);
 
           gimp_tile_handler_validate_validate (validate_handler,
                                                buffer_source_validate->buffer,
