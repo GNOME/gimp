@@ -89,7 +89,8 @@ static TiffSaveVals tsvals =
   FALSE,               /*  save exif           */
   FALSE,               /*  save xmp            */
   FALSE,               /*  save iptc           */
-  TRUE                 /*  save thumbnail      */
+  TRUE,                /*  save thumbnail      */
+  TRUE                 /*  save profile        */
 };
 
 static gchar *image_comment = NULL;
@@ -366,6 +367,7 @@ run (const gchar      *name,
       tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
       tsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
       tsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
+      tsvals.save_profile   = gimp_export_color_profile ();
 
       parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
       if (parasite)
