@@ -347,6 +347,7 @@ run (const gchar      *name,
       jsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
       jsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
       jsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
+      jsvals.save_profile   = gimp_export_color_profile ();
 
       parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
       if (parasite)

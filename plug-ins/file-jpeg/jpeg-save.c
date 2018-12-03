@@ -65,9 +65,10 @@ static gboolean arithc_supported = FALSE;
 #define DEFAULT_DCT              0
 #define DEFAULT_PREVIEW          FALSE
 #define DEFAULT_EXIF             FALSE
-#define DEFAULT_THUMBNAIL        FALSE
 #define DEFAULT_XMP              FALSE
 #define DEFAULT_IPTC             FALSE
+#define DEFAULT_THUMBNAIL        FALSE
+#define DEFAULT_PROFILE          TRUE
 #define DEFAULT_USE_ORIG_QUALITY FALSE
 
 #define JPEG_DEFAULTS_PARASITE  "jpeg-save-defaults"
@@ -109,9 +110,10 @@ typedef struct
   GtkWidget     *dct;                   /*DCT side select*/
   GtkWidget     *preview;               /*show preview toggle checkbox*/
   GtkWidget     *save_exif;
-  GtkWidget     *save_thumbnail;
   GtkWidget     *save_xmp;
   GtkWidget     *save_iptc;
+  GtkWidget     *save_thumbnail;
+  GtkWidget     *save_profile;
   GtkWidget     *use_orig_quality;      /*quant tables toggle*/
 } JpegSaveGui;
 
@@ -540,21 +542,24 @@ save_image (const gchar  *filename,
     }
 
   /* Step 4.2: store the color profile if there is one */
-  {
-    GimpColorProfile *profile = gimp_image_get_color_profile (orig_image_ID);
+  if (jsvals.save_profile)
+    {
+      GimpColorProfile *profile;
 
-    if (profile)
-      {
-        const guint8 *icc_data;
-        gsize         icc_length;
+      profile = gimp_image_get_effective_color_profile (orig_image_ID);
 
-        icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      if (profile)
+        {
+          const guint8 *icc_data;
+          gsize         icc_length;
 
-        jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
+          icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
 
-        g_object_unref (profile);
+          jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
+
+          g_object_unref (profile);
+        }
     }
-  }
 
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
@@ -731,6 +736,7 @@ save_dialog (void)
   JpegSaveGui    pg;
   GtkWidget     *dialog;
   GtkWidget     *vbox;
+  GtkWidget     *vbox2;
   GtkAdjustment *entry;
   GtkWidget     *table;
   GtkWidget     *table2;
@@ -765,9 +771,13 @@ save_dialog (void)
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_show (vbox2);
+
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   pg.quality = entry = (GtkAdjustment *)
@@ -786,13 +796,51 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
+  /* custom quantization tables - now used also for original quality */
+  pg.use_orig_quality = toggle =
+    gtk_check_button_new_with_mnemonic (_("_Use quality settings from original "
+                                          "image"));
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  gimp_help_set_help_data (toggle,
+                           _("If the original image was loaded from a JPEG "
+                             "file using non-standard quality settings "
+                             "(quantization tables), enable this option to "
+                             "get almost the same quality and file size."),
+                           NULL);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.use_orig_quality);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                jsvals.use_orig_quality
+                                && (orig_quality > 0)
+                                && (orig_subsmp == jsvals.subsmp)
+                               );
+  gtk_widget_set_sensitive (toggle, (orig_quality > 0));
+
+  /* changing quality disables custom quantization tables, and vice-versa */
+  g_signal_connect (pg.quality, "value-changed",
+                    G_CALLBACK (quality_changed),
+                    pg.use_orig_quality);
+  g_signal_connect (pg.use_orig_quality, "toggled",
+                    G_CALLBACK (use_orig_qual_changed),
+                    pg.quality);
+
+  /* File size */
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_show (vbox2);
+
   preview_size = gtk_label_new (_("File size: unknown"));
   gtk_label_set_xalign (GTK_LABEL (preview_size), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (preview_size), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (preview_size),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_box_pack_start (GTK_BOX (vbox), preview_size, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), preview_size, FALSE, FALSE, 0);
   gtk_widget_show (preview_size);
 
   gimp_help_set_help_data (preview_size,
@@ -801,7 +849,7 @@ save_dialog (void)
   pg.preview = toggle =
     gtk_check_button_new_with_mnemonic (_("Sho_w preview in image window"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.preview);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -811,6 +859,108 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+  gtk_widget_show (vbox2);
+
+  /* Save EXIF data */
+  pg.save_exif = toggle =
+    gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_exif);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_exif);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+  /* Save XMP metadata */
+  pg.save_xmp = toggle =
+    gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_xmp);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_xmp);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+  /* Save IPTC metadata */
+  pg.save_iptc = toggle =
+    gtk_check_button_new_with_mnemonic (_("Save _IPTC data"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_iptc);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_iptc);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+  /* Save thumbnail */
+  pg.save_thumbnail = toggle =
+    gtk_check_button_new_with_mnemonic (_("Save _thumbnail"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_thumbnail);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_thumbnail);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+  /* Save color profile */
+  pg.save_profile = toggle =
+    gtk_check_button_new_with_mnemonic (_("Save color profile"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_profile);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &jsvals.save_profile);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (make_preview),
+                    NULL);
+
+  /* Comment */
+  frame = gimp_frame_new (_("Comment"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_IN);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_widget_set_size_request (scrolled_window, 250, 50);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  pg.text_buffer = text_buffer = gtk_text_buffer_new (NULL);
+  if (image_comment)
+    gtk_text_buffer_set_text (text_buffer, image_comment, -1);
+
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
+
+  g_object_unref (text_buffer);
+
+  /* Advanced expander */
   text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
   expander = gtk_expander_new_with_mnemonic (text);
   gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
@@ -832,6 +982,7 @@ save_dialog (void)
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
   gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   table2 = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
@@ -956,114 +1107,6 @@ save_dialog (void)
 
   row++;
 
-  /* Save EXIF data */
-  pg.save_exif = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_exif);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &jsvals.save_exif);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (make_preview),
-                    NULL);
-
-  gtk_widget_set_sensitive (toggle, TRUE);
-
-  row++;
-
-  /* Save thumbnail */
-  pg.save_thumbnail = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save _thumbnail"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_thumbnail);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &jsvals.save_thumbnail);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (make_preview),
-                    NULL);
-
-  row++;
-
-  /* XMP metadata */
-  pg.save_xmp = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_xmp);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &jsvals.save_xmp);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (make_preview),
-                    NULL);
-
-  gtk_widget_set_sensitive (toggle, TRUE);
-
-  row++;
-
-  /* IPTC metadata */
-  pg.save_iptc = toggle =
-    gtk_check_button_new_with_mnemonic (_("Save _IPTC data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_iptc);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &jsvals.save_iptc);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (make_preview),
-                    NULL);
-
-  gtk_widget_set_sensitive (toggle, TRUE);
-
-  row++;
-
-  /* custom quantization tables - now used also for original quality */
-  pg.use_orig_quality = toggle =
-    gtk_check_button_new_with_mnemonic (_("_Use quality settings from original "
-                                          "image"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (toggle);
-
-  gimp_help_set_help_data (toggle,
-                           _("If the original image was loaded from a JPEG "
-                             "file using non-standard quality settings "
-                             "(quantization tables), enable this option to "
-                             "get almost the same quality and file size."),
-                           NULL);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &jsvals.use_orig_quality);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                jsvals.use_orig_quality
-                                && (orig_quality > 0)
-                                && (orig_subsmp == jsvals.subsmp)
-                               );
-  gtk_widget_set_sensitive (toggle, (orig_quality > 0));
-
-  /* changing quality disables custom quantization tables, and vice-versa */
-  g_signal_connect (pg.quality, "value-changed",
-                    G_CALLBACK (quality_changed),
-                    pg.use_orig_quality);
-  g_signal_connect (pg.use_orig_quality, "toggled",
-                    G_CALLBACK (use_orig_qual_changed),
-                    pg.quality);
-
   /* Subsampling */
   label = gtk_label_new_with_mnemonic (_("Su_bsampling:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -1134,41 +1177,12 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
-  frame = gimp_frame_new (_("Comment"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                       GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_widget_set_size_request (scrolled_window, 250, 50);
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
-
-  pg.text_buffer = text_buffer = gtk_text_buffer_new (NULL);
-  if (image_comment)
-    gtk_text_buffer_set_text (text_buffer, image_comment, -1);
-
-  text_view = gtk_text_view_new_with_buffer (text_buffer);
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-
-  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-  gtk_widget_show (text_view);
-
-  g_object_unref (text_buffer);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
+  /* Load/Save defaults */
   tabledefaults = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (tabledefaults), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), tabledefaults, FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (tabledefaults), 12);
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+                      tabledefaults, FALSE, FALSE, 0);
   gtk_widget_show (tabledefaults);
 
   button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
@@ -1188,9 +1202,7 @@ save_dialog (void)
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (save_defaults),
                             &pg);
-  gtk_widget_show (frame);
 
-  gtk_widget_show (table);
   gtk_widget_show (dialog);
 
   make_preview ();
@@ -1242,9 +1254,10 @@ load_defaults (void)
   jsvals.dct              = DEFAULT_DCT;
   jsvals.preview          = DEFAULT_PREVIEW;
   jsvals.save_exif        = DEFAULT_EXIF;
-  jsvals.save_thumbnail   = DEFAULT_THUMBNAIL;
   jsvals.save_xmp         = DEFAULT_XMP;
   jsvals.save_iptc        = DEFAULT_IPTC;
+  jsvals.save_thumbnail   = DEFAULT_THUMBNAIL;
+  jsvals.save_profile     = DEFAULT_PROFILE;
   jsvals.use_orig_quality = DEFAULT_USE_ORIG_QUALITY;
 }
 
@@ -1272,7 +1285,7 @@ load_parasite (void)
   memcpy(&tmpvals, &jsvals, sizeof jsvals);
 
   num_fields = sscanf (def_str,
-                       "%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d %d",
+                       "%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
                        &tmpvals.quality,
                        &tmpvals.smoothing,
                        &tmpvals.optimize,
@@ -1287,11 +1300,12 @@ load_parasite (void)
                        &tmpvals.save_xmp,
                        &tmpvals.use_orig_quality,
                        &tmpvals.save_iptc,
-                       &tmpvals.arithmetic_coding);
+                       &tmpvals.arithmetic_coding,
+                       &tmpvals.save_profile);
 
   tmpvals.subsmp = subsampling;
 
-  if (num_fields == 13 || num_fields == 15)
+  if (num_fields == 13 || num_fields == 15 || num_fields == 16)
     {
       memcpy (&jsvals, &tmpvals, sizeof (tmpvals));
     }
@@ -1305,7 +1319,7 @@ save_defaults (void)
   GimpParasite *parasite;
   gchar        *def_str;
 
-  def_str = g_strdup_printf ("%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d %d",
+  def_str = g_strdup_printf ("%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
                              jsvals.quality,
                              jsvals.smoothing,
                              jsvals.optimize,
@@ -1320,7 +1334,8 @@ save_defaults (void)
                              jsvals.save_xmp,
                              jsvals.use_orig_quality,
                              jsvals.save_iptc,
-                             jsvals.arithmetic_coding);
+                             jsvals.arithmetic_coding,
+                             jsvals.save_profile);
   parasite = gimp_parasite_new (JPEG_DEFAULTS_PARASITE,
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (def_str), def_str);
@@ -1347,9 +1362,10 @@ load_gui_defaults (JpegSaveGui *pg)
   SET_ACTIVE_BTTN (use_orig_quality);
   SET_ACTIVE_BTTN (preview);
   SET_ACTIVE_BTTN (save_exif);
-  SET_ACTIVE_BTTN (save_thumbnail);
   SET_ACTIVE_BTTN (save_xmp);
   SET_ACTIVE_BTTN (save_iptc);
+  SET_ACTIVE_BTTN (save_thumbnail);
+  SET_ACTIVE_BTTN (save_profile);
 
 #undef SET_ACTIVE_BTTN
 
