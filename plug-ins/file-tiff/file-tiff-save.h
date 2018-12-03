@@ -32,6 +32,7 @@ typedef struct
   gboolean  save_xmp;
   gboolean  save_iptc;
   gboolean  save_thumbnail;
+  gboolean  save_profile;
 } TiffSaveVals;
 
 

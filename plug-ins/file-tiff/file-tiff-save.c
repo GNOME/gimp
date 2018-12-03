@@ -318,7 +318,8 @@ save_image (GFile        *file,
                              gimp_file_get_utf8_name (file));
 
 #ifdef TIFFTAG_ICCPROFILE
-  profile = gimp_image_get_color_profile (orig_image);
+  if (tsvals->save_profile)
+    profile = gimp_image_get_effective_color_profile (orig_image);
 #endif
 
   drawable_type = gimp_drawable_type (layer);
@@ -1008,7 +1009,7 @@ save_dialog (TiffSaveVals  *tsvals,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_alpha"));
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-alpha"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 has_alpha && tsvals->save_transp_pixels);
   gtk_widget_set_sensitive (toggle, has_alpha);
@@ -1023,33 +1024,44 @@ save_dialog (TiffSaveVals  *tsvals,
                     G_CALLBACK (comment_entry_callback),
                     image_comment);
 
-  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_exif"));
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-exif"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 tsvals->save_exif);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_exif);
 
-  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_xmp"));
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-xmp"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 tsvals->save_xmp);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_xmp);
 
-  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_iptc"));
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-iptc"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 tsvals->save_iptc);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_iptc);
 
-  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "sv_thumbnail"));
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-thumbnail"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 tsvals->save_thumbnail);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_thumbnail);
+
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-color-profile"));
+#ifdef TIFFTAG_ICCPROFILE
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals->save_profile);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals->save_profile);
+#else
+  gtk_widget_hide (toggle);
+#endif
 
   gtk_widget_show (dialog);
 
