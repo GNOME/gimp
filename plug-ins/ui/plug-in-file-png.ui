@@ -27,7 +27,7 @@
       <packing>
         <property name="left_attach">0</property>
         <property name="top_attach">0</property>
-        <property name="width">3</property>
+        <property name="width">2</property>
       </packing>
     </child>
     <child>
@@ -43,7 +43,7 @@
       <packing>
         <property name="left_attach">0</property>
         <property name="top_attach">1</property>
-        <property name="width">3</property>
+        <property name="width">2</property>
       </packing>
     </child>
     <child>
@@ -58,7 +58,7 @@
       <packing>
         <property name="left_attach">0</property>
         <property name="top_attach">2</property>
-        <property name="width">3</property>
+        <property name="width">2</property>
       </packing>
     </child>
     <child>
@@ -74,7 +74,7 @@
       <packing>
         <property name="left_attach">0</property>
         <property name="top_attach">3</property>
-        <property name="width">3</property>
+        <property name="width">2</property>
       </packing>
     </child>
     <child>
@@ -90,7 +90,7 @@
       <packing>
         <property name="left_attach">0</property>
         <property name="top_attach">4</property>
-        <property name="width">3</property>
+        <property name="width">2</property>
       </packing>
     </child>
     <child>
@@ -106,7 +106,87 @@
       <packing>
         <property name="left_attach">0</property>
         <property name="top_attach">5</property>
-        <property name="width">3</property>
+        <property name="width">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-exif">
+        <property name="label" translatable="yes">Save Exif data</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="halign">start</property>
+        <property name="active">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="left_attach">2</property>
+        <property name="top_attach">1</property>
+        <property name="width">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-xmp">
+        <property name="label" translatable="yes">Save XMP data</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="halign">start</property>
+        <property name="active">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="left_attach">2</property>
+        <property name="top_attach">2</property>
+        <property name="width">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-iptc">
+        <property name="label" translatable="yes">Save IPTC data</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="halign">start</property>
+        <property name="active">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="left_attach">2</property>
+        <property name="top_attach">3</property>
+        <property name="width">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-thumbnail">
+        <property name="label" translatable="yes">Save thumbnail</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="halign">start</property>
+        <property name="active">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="left_attach">2</property>
+        <property name="top_attach">4</property>
+        <property name="width">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="save-color-profile">
+        <property name="label" translatable="yes">Save color profile</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">False</property>
+        <property name="halign">start</property>
+        <property name="active">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="left_attach">2</property>
+        <property name="top_attach">5</property>
+        <property name="width">2</property>
       </packing>
     </child>
     <child>
@@ -120,9 +200,9 @@
         <property name="draw_indicator">True</property>
       </object>
       <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">6</property>
-        <property name="width">3</property>
+        <property name="left_attach">2</property>
+        <property name="top_attach">0</property>
+        <property name="width">2</property>
       </packing>
     </child>
     <child>
@@ -138,12 +218,49 @@
       </object>
       <packing>
         <property name="left_attach">0</property>
+        <property name="top_attach">6</property>
+        <property name="width">4</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkComboBoxText" id="pixelformat-combo">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <items>
+          <item translatable="yes">automatic pixelformat</item>
+          <item translatable="yes">8bpc RGB</item>
+          <item translatable="yes">8bpc GRAY</item>
+          <item translatable="yes">8bpc RGBA</item>
+          <item translatable="yes">8bpc GRAYA</item>
+          <item translatable="yes">16bpc RGB</item>
+          <item translatable="yes">16bpc GRAY</item>
+          <item translatable="yes">16bpc RGBA</item>
+          <item translatable="yes">16bpc GRAYA</item>
+        </items>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
         <property name="top_attach">7</property>
-        <property name="width">3</property>
+        <property name="width">4</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="compression-level-label">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="halign">start</property>
+        <property name="label" translatable="yes">Co_mpression level:</property>
+        <property name="use_underline">True</property>
+        <property name="xalign">0</property>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="top_attach">8</property>
       </packing>
     </child>
     <child>
       <object class="GtkScale" id="compression-level-scale">
+        <property name="width_request">100</property>
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="hexpand">True</property>
@@ -152,7 +269,8 @@
       </object>
       <packing>
         <property name="left_attach">1</property>
-        <property name="top_attach">9</property>
+        <property name="top_attach">8</property>
+        <property name="width">2</property>
       </packing>
     </child>
     <child>
@@ -168,8 +286,8 @@
         <property name="numeric">True</property>
       </object>
       <packing>
-        <property name="left_attach">2</property>
-        <property name="top_attach">9</property>
+        <property name="left_attach">3</property>
+        <property name="top_attach">8</property>
       </packing>
     </child>
     <child>
@@ -209,134 +327,8 @@
       </object>
       <packing>
         <property name="left_attach">0</property>
-        <property name="top_attach">11</property>
-        <property name="width">3</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkExpander" id="expander1">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <child>
-          <object class="GtkBox" id="box1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkCheckButton" id="sv_exif">
-                <property name="label" translatable="yes">Save Exif data</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="halign">start</property>
-                <property name="active">True</property>
-                <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkCheckButton" id="sv_xmp">
-                <property name="label" translatable="yes">Save XMP data</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="halign">start</property>
-                <property name="active">True</property>
-                <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkCheckButton" id="sv_iptc">
-                <property name="label" translatable="yes">Save IPTC data</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="halign">start</property>
-                <property name="active">True</property>
-                <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkCheckButton" id="sv_thumbnail">
-                <property name="label" translatable="yes">Save thumbnail</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">False</property>
-                <property name="halign">start</property>
-                <property name="active">True</property>
-                <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
-            </child>
-          </object>
-        </child>
-        <child type="label">
-          <object class="GtkLabel" id="label1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Advanced</property>
-          </object>
-        </child>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">10</property>
-        <property name="width">3</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel" id="compression-level-label">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">start</property>
-        <property name="label" translatable="yes">Co_mpression level:</property>
-        <property name="use_underline">True</property>
-        <property name="mnemonic_widget">compression-level-spin</property>
-        <property name="xalign">0</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
         <property name="top_attach">9</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkComboBoxText" id="pixelformat-combo">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <items>
-          <item translatable="yes">automatic pixelformat</item>
-          <item translatable="yes">8bpc RGB</item>
-          <item translatable="yes">8bpc GRAY</item>
-          <item translatable="yes">8bpc RGBA</item>
-          <item translatable="yes">8bpc GRAYA</item>
-          <item translatable="yes">16bpc RGB</item>
-          <item translatable="yes">16bpc GRAY</item>
-          <item translatable="yes">16bpc RGBA</item>
-          <item translatable="yes">16bpc GRAYA</item>
-        </items>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">8</property>
-        <property name="width">3</property>
+        <property name="width">4</property>
       </packing>
     </child>
   </object>
