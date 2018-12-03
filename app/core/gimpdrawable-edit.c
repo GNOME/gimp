@@ -58,6 +58,7 @@ gimp_drawable_edit_can_fill_direct (GimpDrawable    *drawable,
   GimpImage                *image;
   GimpContext              *context;
   gdouble                   opacity;
+  GimpComponentMask         affect;
   GimpLayerMode             mode;
   GimpLayerCompositeMode    composite_mode;
   GimpLayerCompositeRegion  composite_region;
@@ -65,12 +66,14 @@ gimp_drawable_edit_can_fill_direct (GimpDrawable    *drawable,
   image            = gimp_item_get_image (GIMP_ITEM (drawable));
   context          = GIMP_CONTEXT (options);
   opacity          = gimp_context_get_opacity (context);
+  affect           = gimp_drawable_get_active_mask (drawable);
   mode             = gimp_context_get_paint_mode (context);
   composite_mode   = gimp_layer_mode_get_paint_composite_mode (mode);
   composite_region = gimp_layer_mode_get_included_region (mode, composite_mode);
 
   if (gimp_channel_is_empty (gimp_image_get_mask (image)) &&
       opacity == GIMP_OPACITY_OPAQUE                      &&
+      affect  == GIMP_COMPONENT_MASK_ALL                  &&
       gimp_layer_mode_is_trivial (mode)                   &&
       (! gimp_layer_mode_is_subtractive (mode)            ^
        ! (composite_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE)))
