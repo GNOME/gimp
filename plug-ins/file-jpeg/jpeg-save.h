@@ -31,9 +31,10 @@ typedef struct
   gint             dct;
   gboolean         preview;
   gboolean         save_exif;
-  gboolean         save_thumbnail;
   gboolean         save_xmp;
   gboolean         save_iptc;
+  gboolean         save_thumbnail;
+  gboolean         save_profile;
   gboolean         use_orig_quality;
 } JpegSaveVals;
 
