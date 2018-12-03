@@ -813,8 +813,9 @@ static const GimpLayerModeInfo layer_mode_infos[] =
   { GIMP_LAYER_MODE_PASS_THROUGH,
 
     .op_name              = "gimp:pass-through",
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
-                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE    |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_GROUP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -823,7 +824,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
   { GIMP_LAYER_MODE_REPLACE,
 
     .op_name              = "gimp:replace",
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_TRIVIAL,
     .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION,
