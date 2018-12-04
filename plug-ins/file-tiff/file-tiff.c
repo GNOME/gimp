@@ -367,7 +367,7 @@ run (const gchar      *name,
       tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
       tsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
       tsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
-      tsvals.save_profile   = gimp_export_color_profile ();
+      tsvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
 
       parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
       if (parasite)
@@ -499,6 +499,11 @@ run (const gchar      *name,
 
                   /* never save metadata thumbnails for TIFF, see bug #729952 */
                   metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+
+                  if (tsvals.save_profile)
+                    metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
                   gimp_image_metadata_save_finish (image,
                                                    "image/tiff",

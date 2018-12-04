@@ -364,11 +364,17 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       g_date_time_unref (datetime);
 
-      /* Thumbnail */
-
-      if (FALSE /* FIXME if (original image had a thumbnail) */)
-        *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
     }
+
+  /* Thumbnail */
+
+  if (FALSE /* FIXME if (original image had a thumbnail) */)
+    *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+
+  /* Color profile */
+
+  if (! gimp_export_color_profile ())
+    *suggested_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
   return metadata;
 }
@@ -618,6 +624,14 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
         }
 
       g_object_unref (thumb_pixbuf);
+    }
+
+  if (flags & GIMP_METADATA_SAVE_COLOR_PROFILE)
+    {
+      /* nothing to do, but if we ever need to modify metadata based
+       * on the exported color profile, this is probably the place to
+       * add it
+       */
     }
 
   success = gimp_metadata_save_to_file (new_metadata, file, error);

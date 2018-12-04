@@ -553,7 +553,7 @@ run (const gchar      *name,
       pngvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
       pngvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
       pngvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
-      pngvals.save_profile   = gimp_export_color_profile ();
+      pngvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
 
       /* Override preferences from PNG export defaults (if saved). */
       load_parasite ();
@@ -658,6 +658,11 @@ run (const gchar      *name,
                     metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
                   else
                     metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+
+                  if (pngvals.save_profile)
+                    metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (orig_image_ID,
