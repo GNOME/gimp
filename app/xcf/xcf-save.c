@@ -1553,6 +1553,15 @@ xcf_save_buffer (XcfInfo     *info,
           height /= 2;
           xcf_write_int32_check_error (info, (guint32 *) &width,  1);
           xcf_write_int32_check_error (info, (guint32 *) &height, 1);
+
+          /* NOTE:  this should be an offset, not an int32!  however...
+           * since there are already 64-bit-offsets XCFs out there in
+           * which this field is 32-bit, and since it's not actually
+           * being used, we're going to keep this field 32-bit for the
+           * dummy levels, to remain consistent.  if we ever make use
+           * of levels above the first, we should turn this field into
+           * an offset, and bump the xcf version.
+           */
           xcf_write_int32_check_error (info, (guint32 *) &tmp1,   1);
         }
 

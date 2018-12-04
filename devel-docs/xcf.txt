@@ -1456,7 +1456,7 @@ checked when GIMP reads the XCF file.
 Levels
 ------
 
-The level structure is laid out as follows:
+The level structure for the first level is laid out as follows:
 
   uint32      width  Width of the pixel array
   uint32      height Height of the pixel array
@@ -1465,8 +1465,11 @@ The level structure is laid out as follows:
   `--
   pointer     0      Zero marks the end of the array of tile pointers.
 
+Due to oversight, in the level structures for the aforementioned
+dummy levels, the "pointer" fields are "uint32" instead.
+
 The width and height must be the same as the ones recorded in the
-hierarchy structure (except for the aforementioned dummy levels).
+hierarchy structure (except for the dummy levels).
 
 Ceil(x) is the smallest integer not smaller than x.
 
