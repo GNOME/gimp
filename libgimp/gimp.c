@@ -2141,6 +2141,9 @@ gimp_loop (void)
 static void
 gimp_config (GPConfig *config)
 {
+  GFile *file;
+  gchar *path;
+
   _tile_width       = config->tile_width;
   _tile_height      = config->tile_height;
   _shm_ID           = config->shm_ID;
@@ -2163,6 +2166,9 @@ gimp_config (GPConfig *config)
 
   gimp_cpu_accel_set_use (config->use_cpu_accel);
 
+  file = gimp_file_new_for_config_path (config->swap_path, NULL);
+  path = g_file_get_path (file);
+
   g_object_set (gegl_config (),
                 "tile-cache-size",     config->tile_cache_size,
                 "swap",                config->swap_path,
@@ -2170,6 +2176,9 @@ gimp_config (GPConfig *config)
                 "use-opencl",          config->use_opencl,
                 "application-license", "GPL3",
                 NULL);
+
+  g_free (path);
+  g_object_unref (file);
 
   if (_shm_ID != -1)
     {
