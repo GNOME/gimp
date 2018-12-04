@@ -2345,7 +2345,7 @@ gimp_config (GPConfig *config)
 
   g_object_set (gegl_config (),
                 "tile-cache-size",     config->tile_cache_size,
-                "swap",                config->swap_path,
+                "swap",                path,
                 "threads",             (gint) config->num_processors,
                 "use-opencl",          config->use_opencl,
                 "application-license", "GPL3",
