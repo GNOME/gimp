@@ -53,7 +53,6 @@
 #include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
-#include "gimpimage-grid.h"
 #include "gimpimage-item-list.h"
 #include "gimpimage-metadata.h"
 #include "gimpimage-sample-points.h"
@@ -2512,25 +2511,6 @@ gimp_image_get_xcf_version (GimpImage    *image,
       ADD_REASON (g_strdup_printf (_("High bit-depth images were added "
                                      "in %s"), "GIMP 2.10"));
       version = MAX (7, version);
-    }
-
-  /* need version 10 for fractional grid coordinates */
-  if (gimp_image_get_grid (image))
-    {
-      GimpGrid *grid = gimp_image_get_grid (image);
-      gdouble   xspacing, yspacing;
-      gdouble   xoffset,  yoffset;
-
-      gimp_grid_get_spacing (grid, &xspacing, &yspacing);
-      gimp_grid_get_offset  (grid, &xoffset,  &yoffset);
-
-      if (xspacing != floor (xspacing) || yspacing != floor (yspacing) ||
-          xoffset  != floor (xoffset)  || yoffset  != floor (yoffset))
-        {
-          ADD_REASON (g_strdup_printf (_("Fractional grid coordinates were "
-                                         "added in %s"), "GIMP 2.10"));
-          version = MAX (10, version);
-        }
     }
 
   /* need version 12 for > 8-bit images for proper endian swapping */
