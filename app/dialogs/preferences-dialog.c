@@ -1476,6 +1476,10 @@ prefs_dialog_new (Gimp       *gimp,
                                   NULL,
                                   &top_iter);
 
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /*  Import Policies  */
   vbox2 = prefs_frame_new (_("Import Policies"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1501,7 +1505,7 @@ prefs_dialog_new (Gimp       *gimp,
   grid = prefs_grid_new (GTK_CONTAINER (vbox2));
   button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                      _("Color profile policy:"),
-                                     GTK_GRID (grid), 0, NULL);
+                                     GTK_GRID (grid), 0, size_group);
 
   /*  Export Policies  */
   vbox2 = prefs_frame_new (_("Export Policies"),
@@ -1511,20 +1515,26 @@ prefs_dialog_new (Gimp       *gimp,
                                    _("Export the image's color profile by default"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-exif",
-                                   /* Translators: label for configuration option (checkbox).
-                                    * It determines how file export plug-ins handle Exif by default.
+                                   /* Translators: label for
+                                    * configuration option (checkbox).
+                                    * It determines how file export
+                                    * plug-ins handle Exif by default.
                                     */
                                    _("Export Exif metadata by default when available"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-xmp",
-                                   /* Translators: label for configuration option (checkbox).
-                                    * It determines how file export plug-ins handle XMP by default.
+                                   /* Translators: label for
+                                    * configuration option (checkbox).
+                                    * It determines how file export
+                                    * plug-ins handle XMP by default.
                                     */
                                    _("Export XMP metadata by default when available"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "export-metadata-iptc",
-                                   /* Translators: label for configuration option (checkbox).
-                                    * It determines how file export plug-ins handle IPTC by default.
+                                   /* Translators: label for
+                                    * configuration option (checkbox).
+                                    * It determines how file export
+                                    * plug-ins handle IPTC by default.
                                     */
                                    _("Export IPTC metadata by default when available"),
                                    GTK_BOX (vbox2));
@@ -1532,6 +1542,13 @@ prefs_dialog_new (Gimp       *gimp,
                              _("Metadata can contain sensitive information."));
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
 
+  /*  Export File Type  */
+  vbox2 = prefs_frame_new (_("Export File Type"), GTK_CONTAINER (vbox), FALSE);
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "export-file-type", 0, 0,
+                            _("Default export file type:"),
+                            GTK_GRID (grid), 0, size_group);
 
   /*  Raw Image Importer  */
   vbox2 = prefs_frame_new (_("Raw Image Importer"),
@@ -1559,6 +1576,8 @@ prefs_dialog_new (Gimp       *gimp,
                       G_CALLBACK (prefs_import_raw_procedure_callback),
                       config);
   }
+
+  g_object_unref (size_group);
 
   /****************/
   /*  Playground  */

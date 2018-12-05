@@ -102,6 +102,47 @@ gimp_cursor_mode_get_type (void)
 }
 
 GType
+gimp_export_file_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_EXPORT_FILE_PNG, "GIMP_EXPORT_FILE_PNG", "png" },
+    { GIMP_EXPORT_FILE_JPG, "GIMP_EXPORT_FILE_JPG", "jpg" },
+    { GIMP_EXPORT_FILE_ORA, "GIMP_EXPORT_FILE_ORA", "ora" },
+    { GIMP_EXPORT_FILE_PSD, "GIMP_EXPORT_FILE_PSD", "psd" },
+    { GIMP_EXPORT_FILE_PDF, "GIMP_EXPORT_FILE_PDF", "pdf" },
+    { GIMP_EXPORT_FILE_TIF, "GIMP_EXPORT_FILE_TIF", "tif" },
+    { GIMP_EXPORT_FILE_BMP, "GIMP_EXPORT_FILE_BMP", "bmp" },
+    { GIMP_EXPORT_FILE_WEBP, "GIMP_EXPORT_FILE_WEBP", "webp" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_EXPORT_FILE_PNG, NC_("export-file-type", "PNG Image"), NULL },
+    { GIMP_EXPORT_FILE_JPG, NC_("export-file-type", "JPEG Image"), NULL },
+    { GIMP_EXPORT_FILE_ORA, NC_("export-file-type", "OpenRaster Image"), NULL },
+    { GIMP_EXPORT_FILE_PSD, NC_("export-file-type", "Photoshop Image"), NULL },
+    { GIMP_EXPORT_FILE_PDF, NC_("export-file-type", "Portable Document Format"), NULL },
+    { GIMP_EXPORT_FILE_TIF, NC_("export-file-type", "TIFF Image"), NULL },
+    { GIMP_EXPORT_FILE_BMP, NC_("export-file-type", "Windows BMP Image"), NULL },
+    { GIMP_EXPORT_FILE_WEBP, NC_("export-file-type", "WebP Image"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpExportFileType", values);
+      gimp_type_set_translation_context (type, "export-file-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_handedness_get_type (void)
 {
   static const GEnumValue values[] =

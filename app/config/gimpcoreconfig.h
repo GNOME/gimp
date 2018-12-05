@@ -96,6 +96,7 @@ struct _GimpCoreConfig
   gboolean                import_promote_dither;
   gboolean                import_add_alpha;
   gchar                  *import_raw_plug_in;
+  GimpExportFileType      export_file_type;
   gboolean                export_color_profile;
   gboolean                export_metadata_exif;
   gboolean                export_metadata_xmp;
