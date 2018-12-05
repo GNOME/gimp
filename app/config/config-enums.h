@@ -56,6 +56,23 @@ typedef enum
 } GimpCursorMode;
 
 
+#define GIMP_TYPE_EXPORT_FILE_TYPE (gimp_export_file_type_get_type ())
+
+GType gimp_export_file_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_EXPORT_FILE_PNG,  /*< desc="PNG Image"                >*/
+  GIMP_EXPORT_FILE_JPG,  /*< desc="JPEG Image"               >*/
+  GIMP_EXPORT_FILE_ORA,  /*< desc="OpenRaster Image"         >*/
+  GIMP_EXPORT_FILE_PSD,  /*< desc="Photoshop Image"          >*/
+  GIMP_EXPORT_FILE_PDF,  /*< desc="Portable Document Format" >*/
+  GIMP_EXPORT_FILE_TIF,  /*< desc="TIFF Image"               >*/
+  GIMP_EXPORT_FILE_BMP,  /*< desc="Windows BMP Image"        >*/
+  GIMP_EXPORT_FILE_WEBP, /*< desc="WebP Image"               >*/
+} GimpExportFileType;
+
+
 #define GIMP_TYPE_HANDEDNESS (gimp_handedness_get_type ())
 
 GType gimp_handedness_get_type (void) G_GNUC_CONST;

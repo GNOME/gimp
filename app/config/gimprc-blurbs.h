@@ -204,6 +204,9 @@ _("Add an alpha channel to all layers of imported images.")
 #define IMPORT_RAW_PLUG_IN_BLURB \
 _("Which plug-in to use for importing raw digital camera files.")
 
+#define EXPORT_FILE_TYPE_BLURB \
+_("Export file type used by default.")
+
 #define EXPORT_COLOR_PROFILE_BLURB \
 _("Export the image's color profile by default.")
 
