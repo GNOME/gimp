@@ -518,16 +518,19 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
                   "which already has a device\n",
                   G_STRFUNC, gdk_device_get_name (device));
 
-      /*  don't bail out here, instead, simply continue and overwrite
-       *  the info's old device with the new one.
+      /*  We tried to simply continue and overwrite the info's old
+       *  device (assuming it to be dead) with the new one but this
+       *  broke a lot of devices. See the regression bug #2495.
        *
        *  NOTE that this only happens if something is wrong on the USB
        *  or udev or libinput or whatever side and the same device is
-       *  present multiple times. The only "safe" thing is to assume
-       *  that devices listed earlier are dead and dangling entities
-       *  and that the last registered device is the one actually
-       *  delivering events.
+       *  present multiple times. Therefore there doesn't seem to be an
+       *  absolute single "solution" to this problem (well there is, but
+       *  probably not in GIMP, where we can only react). Nevertheless
+       *  experience taught us that bailing out may break less devices
+       *  (at the very least on Windows).
        */
+      return FALSE;
     }
   else if (! device && ! info->device)
     {
