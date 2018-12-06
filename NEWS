@@ -29,6 +29,12 @@ Core:
   - Layer groups are now rendered in bigger chunks rather than tile-by-tile
     (which used to pretty much eliminate multithreading for groups), which
     improves the rendering speed.
+  - Make saving/exporting files more robust to errors. In particular if
+    an error occurs during the process (be it a bug, a memory error, or
+    anything else), GIMP won't overwrite anymore any existing file with
+    incomplete contents, so that you won't end up with no valid files at
+    all.
+  - Fix a regression on support of various graphics tablet.
 
 User interface:
 
