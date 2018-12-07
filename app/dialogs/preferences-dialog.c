@@ -1207,15 +1207,14 @@ prefs_dialog_new (Gimp       *gimp,
                            _("Maximum _filesize for thumbnailing:"),
                            GTK_TABLE (table), 1, size_group);
 
-  g_object_unref (size_group);
-  size_group = NULL;
-
   /*  Document History  */
   vbox2 = prefs_frame_new (_("Document History"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "save-document-history",
                           _("Keep record of used files in the Recent Documents list"),
                           GTK_BOX (vbox2));
+
+  g_clear_object (&size_group);
 
 
   /***************/
@@ -1249,12 +1248,11 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Bug Reporting"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   button = prefs_enum_combo_box_add (object, "debug-policy", 0, 0,
                                      _("Debug _policy:"),
-                                     GTK_TABLE (table), 0, size_group);
+                                     GTK_TABLE (table), 0, NULL);
 
   /* Check existence of gdb or lldb to activate the preference, as a
    * good hint of its prerequisite, unless backtrace() API exists, in
@@ -1467,7 +1465,7 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Show advanced color options"),
                                      GTK_BOX (vbox2));
 
-    g_object_unref (size_group);
+    g_clear_object (&size_group);
 
     g_object_unref (store);
   }
@@ -1585,7 +1583,8 @@ prefs_dialog_new (Gimp       *gimp,
                       config);
   }
 
-  g_object_unref (size_group);
+  g_clear_object (&size_group);
+
 
   /****************/
   /*  Playground  */
@@ -1669,6 +1668,7 @@ prefs_dialog_new (Gimp       *gimp,
                             GTK_TABLE (table), 0, size_group);
 
   g_object_unref (size_group);
+
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /*  Global Brush, Pattern, ...  */
@@ -1697,8 +1697,7 @@ prefs_dialog_new (Gimp       *gimp,
                                     GIMP_ICON_TOOL_MOVE,
                                     GTK_BOX (vbox2), size_group);
 
-  g_object_unref (size_group);
-  size_group = NULL;
+  g_clear_object (&size_group);
 
 
   /*******************/
@@ -1808,13 +1807,13 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_enum_combo_box_add (object, "layer-preview-size", 0, 0,
                             _("_Default layer & channel preview size:"),
-                            GTK_TABLE (table), 0, size_group);
+                            GTK_TABLE (table), 0, NULL);
   prefs_enum_combo_box_add (object, "undo-preview-size", 0, 0,
                             _("_Undo preview size:"),
-                            GTK_TABLE (table), 1, size_group);
+                            GTK_TABLE (table), 1, NULL);
   prefs_enum_combo_box_add (object, "navigation-preview-size", 0, 0,
                             _("Na_vigation preview size:"),
-                            GTK_TABLE (table), 2, size_group);
+                            GTK_TABLE (table), 2, NULL);
 
   /* Keyboard Shortcuts */
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
@@ -2080,6 +2079,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_widget_show (icon_size_scale);
   }
 
+
   /*************************/
   /*  Interface / Toolbox  */
   /*************************/
@@ -2114,8 +2114,7 @@ prefs_dialog_new (Gimp       *gimp,
                                     GIMP_ICON_IMAGE,
                                     GTK_BOX (vbox2), size_group);
 
-  g_object_unref (size_group);
-  size_group = NULL;
+  g_clear_object (&size_group);
 
   /* Tool Editor */
   vbox2 = prefs_frame_new (_("Tools Configuration"),
@@ -2446,7 +2445,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  g_object_unref (size_group);
+  g_clear_object (&size_group);
 
 
   /*****************************/
@@ -2593,8 +2592,7 @@ prefs_dialog_new (Gimp       *gimp,
                     G_CALLBACK (prefs_search_clear_callback),
                     gimp);
 
-  g_object_unref (size_group);
-  size_group = NULL;
+  g_clear_object (&size_group);
 
 
   /*************************/
@@ -2718,8 +2716,7 @@ prefs_dialog_new (Gimp       *gimp,
                     G_CALLBACK (prefs_resolution_calibrate_callback),
                     entry);
 
-  g_object_unref (size_group);
-  size_group = NULL;
+  g_clear_object (&size_group);
 
 
   /***********************************/
@@ -2740,7 +2737,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_enum_combo_box_add (object, "dock-window-hint", 0, 0,
                             _("Hint for _docks and toolbox:"),
-                            GTK_TABLE (table), 1, size_group);
+                            GTK_TABLE (table), 1, NULL);
 
   vbox2 = prefs_frame_new (_("Focus"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -2852,8 +2849,7 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Pointer _handedness:"),
                             GTK_TABLE (table), 1, NULL);
 
-  g_object_unref (size_group);
-  size_group = NULL;
+  g_clear_object (&size_group);
 
 
   /********************************/
@@ -3001,6 +2997,7 @@ prefs_dialog_new (Gimp       *gimp,
       }
   }
 
+
   /******************************/
   /*  Image Windows / Snapping  */
   /******************************/
@@ -3028,7 +3025,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_spin_button_add (object, "snap-distance", 1.0, 5.0, 0,
                          _("_Snapping distance:"),
-                         GTK_TABLE (table), 0, size_group);
+                         GTK_TABLE (table), 0, NULL);
 
 
   /*******************/
