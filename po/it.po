@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-24 18:22+0100\n"
-"PO-Revision-Date: 2018-11-24 18:31+0100\n"
+"POT-Creation-Date: 2018-12-07 10:11+0100\n"
+"PO-Revision-Date: 2018-12-07 10:13+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -3000,7 +3000,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2002
-#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:214
+#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
@@ -8153,7 +8153,7 @@ msgstr "_Apri"
 
 #: ../app/actions/text-editor-commands.c:139
 #: ../app/actions/text-tool-commands.c:209 ../app/config/gimpconfig-file.c:71
-#: ../app/core/gimppalette-import.c:513 ../app/plug-in/gimpenvirontable.c:289
+#: ../app/core/gimppalette-import.c:512 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:234
 #: ../app/tools/gimpfiltertool-settings.c:170
 #: ../app/widgets/gimptextbuffer.c:1674
@@ -10500,8 +10500,8 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Errore durante l'analisi di \"%%s\": riga più lunga di %s caratteri."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:344
-#: ../app/tools/gimpfiltertool-settings.c:227
+#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:345
+#: ../app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Errore durante la scrittura di \"%s\": %s"
@@ -12096,7 +12096,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Testo"
 
-#: ../app/core/core-enums.c:1134 ../app/core/gimpdrawable-transform.c:775
+#: ../app/core/core-enums.c:1134 ../app/core/gimpdrawable-transform.c:773
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Trasforma"
@@ -12406,7 +12406,7 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "L'interprete batch \"%s\" non è disponibile. Modalità batch disabilitata."
 
-#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:330
+#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:338
 #: ../app/core/gimptooloptions.c:361 ../app/gui/session.c:450
 #: ../app/menus/menus.c:476 ../app/widgets/gimpdevices.c:225
 #, c-format
@@ -12476,13 +12476,13 @@ msgstr "Da pp a trasparente"
 msgid "Please wait: %s\n"
 msgstr "Attendere: %s\n"
 
-#: ../app/core/gimp-internal-data.c:286 ../app/core/gimp-internal-data.c:294
-#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:598
+#: ../app/core/gimp-internal-data.c:286 ../app/core/gimp-internal-data.c:299
+#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:603
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Errore durante il salvataggio di \"%s\": "
 
-#: ../app/core/gimp-internal-data.c:300 ../app/core/gimpdata.c:604
+#: ../app/core/gimp-internal-data.c:305 ../app/core/gimpdata.c:609
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Errore durante il salvataggio di \"%s\""
@@ -12506,6 +12506,11 @@ msgstr "Fallita l'esecuzione di un processo figlio “%s” (%s)"
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
 msgstr "tags-locale:it"
+
+#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:357
+#, c-format
+msgid "Error closing '%s': %s"
+msgstr "Errore durante la chiusura di \"%s\": %s"
 
 #: ../app/core/gimp-user-install.c:216
 #, c-format
@@ -12837,7 +12842,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Ruota canale"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1095
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1093
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Trasforma canale"
@@ -13083,7 +13088,7 @@ msgstr "Errore durante il caricamento di \"%s\": "
 msgid "Error loading '%s'"
 msgstr "Errore durante il caricamento di \"%s\""
 
-#: ../app/core/gimpdataloaderfactory.c:474 ../app/xcf/xcf.c:439
+#: ../app/core/gimpdataloaderfactory.c:474 ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Impossibile aprire \"%s\" in lettura: "
@@ -13099,7 +13104,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:484
+#: ../app/core/gimpdrawable.c:486
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scala"
@@ -13109,7 +13114,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Riempimento colore"
 
-#: ../app/core/gimpdrawable-edit.c:56
+#: ../app/core/gimpdrawable-edit.c:180
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Cancella"
@@ -13162,22 +13167,22 @@ msgstr "Spostamento area disegnabile"
 msgid "Not enough points to stroke"
 msgstr "Non ci sono abbastanza punti da tracciare"
 
-#: ../app/core/gimpdrawable-transform.c:863
+#: ../app/core/gimpdrawable-transform.c:861
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Rifletti"
 
-#: ../app/core/gimpdrawable-transform.c:948
+#: ../app/core/gimpdrawable-transform.c:946
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Ruota"
 
-#: ../app/core/gimpdrawable-transform.c:1093 ../app/core/gimplayer.c:447
+#: ../app/core/gimpdrawable-transform.c:1091 ../app/core/gimplayer.c:447
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Trasforma livello"
 
-#: ../app/core/gimpdrawable-transform.c:1106
+#: ../app/core/gimpdrawable-transform.c:1104
 msgid "Transformation"
 msgstr "Trasformazione"
 
@@ -13262,7 +13267,7 @@ msgstr "Alla riga %d del file gradiente: "
 msgid "No linear gradients found."
 msgstr "Non è stato trovato nessun gradiente lineare."
 
-#: ../app/core/gimpgradient-save.c:211
+#: ../app/core/gimpgradient-save.c:213
 #, c-format
 msgid "Writing POV file '%s' failed: %s"
 msgstr "La scrittura del file POV \"%s\" è fallita: %s"
@@ -13549,20 +13554,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Aggiungi colore alla mappa colore"
 
-#: ../app/core/gimpimage-convert-indexed.c:791
+#: ../app/core/gimpimage-convert-indexed.c:790
 msgid "Cannot convert image: palette is empty."
 msgstr "Impossibile convertire l'immagine: la tavolozza è vuota."
 
-#: ../app/core/gimpimage-convert-indexed.c:803
+#: ../app/core/gimpimage-convert-indexed.c:802
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Converti immagine in indicizzata"
 
-#: ../app/core/gimpimage-convert-indexed.c:895
+#: ../app/core/gimpimage-convert-indexed.c:894
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Conversione in colori indicizzati (fase 2)"
 
-#: ../app/core/gimpimage-convert-indexed.c:944
+#: ../app/core/gimpimage-convert-indexed.c:943
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Conversione in colori indicizzati (fase 3)"
 
@@ -14052,17 +14057,17 @@ msgstr "Fallita deserializzazione pennello MyPaint."
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
-#: ../app/core/gimppalette-import.c:213
+#: ../app/core/gimppalette-import.c:212
 #, c-format
 msgid "%s (occurs %u)"
 msgstr "%s (%u ricorrenze)"
 
-#: ../app/core/gimppalette-import.c:426
+#: ../app/core/gimppalette-import.c:425
 #, c-format
 msgid "Index %d"
 msgstr "Indice %d"
 
-#: ../app/core/gimppalette-import.c:548
+#: ../app/core/gimppalette-import.c:547
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Tipo file tavolozza sconosciuto: %s"
@@ -14439,10 +14444,15 @@ msgstr "Tratti massimi Y"
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Numero massimo di tratteggi sull'asse Y"
 
-#: ../app/core/gimptagcache.c:436
+#: ../app/core/gimptagcache.c:437
 #, c-format
 msgid "Error writing '%s': %s\n"
 msgstr "Errore durante la scrittura di \"%s\": %s\n"
+
+#: ../app/core/gimptagcache.c:447
+#, c-format
+msgid "Error closing '%s': %s\n"
+msgstr "Errore durante la chiusura di \"%s\": %s\n"
 
 #: ../app/core/gimptemplate.c:134
 msgid "Width"
@@ -17744,7 +17754,7 @@ msgstr "Fare clic per piazzare una guida verticale"
 msgid "Click-Drag to add a new point"
 msgstr "Fare clic e trascinare per aggiungere un nuovo punto"
 
-#: ../app/display/gimptoolcompass.c:877 ../app/tools/gimpiscissorstool.c:912
+#: ../app/display/gimptoolcompass.c:877 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Fare clic e trascinare per spostare questo punto"
 
@@ -18928,12 +18938,12 @@ msgstr "Scrittura file livelli fallita: "
 msgid "Adjust brightness and contrast"
 msgstr "Regola luminosità e contrasto"
 
-#: ../app/operations/gimpoperationcagecoefcalc.c:70
+#: ../app/operations/gimpoperationcagecoefcalc.c:69
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr ""
 "Calcola un insieme di coefficienti di buffer per lo strumento GIMP gabbia"
 
-#: ../app/operations/gimpoperationcagetransform.c:105
+#: ../app/operations/gimpoperationcagetransform.c:104
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
@@ -18941,11 +18951,11 @@ msgstr ""
 "Converte un insieme di buffer di coefficienti in un buffer di coordinate per "
 "lo strumento GIMP gabbia"
 
-#: ../app/operations/gimpoperationcagetransform.c:131
+#: ../app/operations/gimpoperationcagetransform.c:130
 msgid "Fill with plain color"
 msgstr "Riempi con tinta unita"
 
-#: ../app/operations/gimpoperationcagetransform.c:132
+#: ../app/operations/gimpoperationcagetransform.c:131
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Riempie la posizione di origine della gabbia con tinta unita"
 
@@ -19084,11 +19094,11 @@ msgstr "Solo movimento"
 msgid "Flow"
 msgstr "Flusso"
 
-#: ../app/paint/gimpbrushcore.c:379
+#: ../app/paint/gimpbrushcore.c:378
 msgid "No brushes available for use with this tool."
 msgstr "Nessun pennello disponibile da usare con questo strumento."
 
-#: ../app/paint/gimpbrushcore.c:386
+#: ../app/paint/gimpbrushcore.c:385
 msgid "No paint dynamics available for use with this tool."
 msgstr "Nessuna dinamica di disegno disponibile per questo strumento."
 
@@ -19137,15 +19147,15 @@ msgstr "Gomma"
 msgid "Anti erase"
 msgstr "Anti cancella"
 
-#: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:117 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Cerotto"
 
-#: ../app/paint/gimpheal.c:158
+#: ../app/paint/gimpheal.c:157
 msgid "Healing does not operate on indexed layers."
 msgstr "Il cerotto non agisce su livelli indicizzati."
 
-#: ../app/paint/gimpink.c:108 ../app/tools/gimpinktool.c:65
+#: ../app/paint/gimpink.c:107 ../app/tools/gimpinktool.c:65
 msgid "Ink"
 msgstr "Stilo"
 
@@ -19590,12 +19600,12 @@ msgstr ""
 "Non posso convertire questo livello in un livello normale perchè non è una "
 "selezione fluttuante."
 
-#: ../app/pdb/gimppdb-query.c:140
+#: ../app/pdb/gimppdb-query.c:142
 #, c-format
 msgid "Writing PDB file '%s' failed: %s"
 msgstr "Scrittura file PDB \"%s\" fallita: %s"
 
-#: ../app/pdb/gimppdb-query.c:315 ../app/pdb/gimppdb.c:306
+#: ../app/pdb/gimppdb-query.c:322 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:377
 #, c-format
 msgid "Procedure '%s' not found"
@@ -20860,7 +20870,7 @@ msgstr ""
 "Mai posto quiz vaghi\n"
 "o indecifrabili."
 
-#: ../app/text/gimpfontfactory.c:395
+#: ../app/text/gimpfontfactory.c:397
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -21745,7 +21755,7 @@ msgstr "Esporta le impostazioni \"%s\""
 msgid "Pre_sets:"
 msgstr "Preimpo_stazioni:"
 
-#: ../app/tools/gimpfiltertool-settings.c:240
+#: ../app/tools/gimpfiltertool-settings.c:248
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Impostazioni salvate su \"%s\""
@@ -22252,55 +22262,55 @@ msgstr ""
 "Mostra il segmento di selezione possibile appena si trascina un nodo di "
 "controllo"
 
-#: ../app/tools/gimpiscissorstool.c:293
+#: ../app/tools/gimpiscissorstool.c:292
 msgid "Scissors"
 msgstr "Forbici"
 
-#: ../app/tools/gimpiscissorstool.c:294
+#: ../app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr ""
 "Strumento forbici intelligenti: seleziona aree usando un intelligente "
 "algoritmo di rilevamento bordi"
 
-#: ../app/tools/gimpiscissorstool.c:295
+#: ../app/tools/gimpiscissorstool.c:294
 msgid "Intelligent _Scissors"
 msgstr "Forbici _intelligenti"
 
-#: ../app/tools/gimpiscissorstool.c:906
+#: ../app/tools/gimpiscissorstool.c:905
 msgid "Click to remove this point"
 msgstr "Fare clic per rimuovere questo punto"
 
-#: ../app/tools/gimpiscissorstool.c:914 ../app/tools/gimpiscissorstool.c:983
+#: ../app/tools/gimpiscissorstool.c:913 ../app/tools/gimpiscissorstool.c:982
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: disabilita magnetismo"
 
-#: ../app/tools/gimpiscissorstool.c:915
+#: ../app/tools/gimpiscissorstool.c:914
 #, c-format
 msgid "%s: remove this point"
 msgstr "%s: rimuovere questo punto"
 
-#: ../app/tools/gimpiscissorstool.c:935
+#: ../app/tools/gimpiscissorstool.c:934
 msgid "Click to close the curve"
 msgstr "Fare clic per chiudere la curva"
 
-#: ../app/tools/gimpiscissorstool.c:941
+#: ../app/tools/gimpiscissorstool.c:940
 msgid "Click to add a point on this segment"
 msgstr "Fare clic per aggiungere un punto a questo segmento"
 
-#: ../app/tools/gimpiscissorstool.c:954
+#: ../app/tools/gimpiscissorstool.c:953
 msgid "Click or press Enter to convert to a selection"
 msgstr "Fare clic o premere invio per convertire in una selezione"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:963
 msgid "Press Enter to convert to a selection"
 msgstr "Premere invio per convertire in una selezione"
 
-#: ../app/tools/gimpiscissorstool.c:980
+#: ../app/tools/gimpiscissorstool.c:979
 msgid "Click or Click-Drag to add a point"
 msgstr "Fare clic e trascinare per aggiungere un punto"
 
-#: ../app/tools/gimpiscissorstool.c:1139 ../app/tools/gimpiscissorstool.c:1151
+#: ../app/tools/gimpiscissorstool.c:1138 ../app/tools/gimpiscissorstool.c:1150
 msgid "Modify Scissors Curve"
 msgstr "Modifica curva forbici"
 
@@ -23853,7 +23863,7 @@ msgstr "Ruota tracciato"
 msgid "Transform Path"
 msgstr "Trasforma tracciato"
 
-#: ../app/vectors/gimpvectors-export.c:87
+#: ../app/vectors/gimpvectors-export.c:89
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Scrittura file SVG \"%s\" fallita: %s"
@@ -24673,272 +24683,281 @@ msgstr "GIMP ha riscontrato diversi errori critici!"
 msgid "_Restart GIMP"
 msgstr "_Riavvia GIMP"
 
-#: ../app/widgets/gimpdashboard.c:451 ../app/widgets/gimpdashboard.c:503
+#: ../app/widgets/gimpdashboard.c:453 ../app/widgets/gimpdashboard.c:505
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Occupata"
 
-#: ../app/widgets/gimpdashboard.c:452
+#: ../app/widgets/gimpdashboard.c:454
 msgid "Tile cache occupied size"
 msgstr "Dimensione cache riquadri occupata"
 
-#: ../app/widgets/gimpdashboard.c:461
+#: ../app/widgets/gimpdashboard.c:463
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Massima"
 
-#: ../app/widgets/gimpdashboard.c:462
+#: ../app/widgets/gimpdashboard.c:464
 msgid "Maximal tile cache occupied size"
 msgstr "Dimensione massima cache riquadri occupata"
 
-#: ../app/widgets/gimpdashboard.c:471 ../app/widgets/gimpdashboard.c:523
+#: ../app/widgets/gimpdashboard.c:473 ../app/widgets/gimpdashboard.c:525
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Limite"
 
-#: ../app/widgets/gimpdashboard.c:472
+#: ../app/widgets/gimpdashboard.c:474
 msgid "Tile cache size limit"
 msgstr "Limite dimensione cache riquadri"
 
-#: ../app/widgets/gimpdashboard.c:480 ../app/widgets/gimpdashboard.c:606
+#: ../app/widgets/gimpdashboard.c:482 ../app/widgets/gimpdashboard.c:608
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Compressione"
 
-#: ../app/widgets/gimpdashboard.c:481
+#: ../app/widgets/gimpdashboard.c:483
 msgid "Tile cache compression ratio"
 msgstr "Rapporto di compressione cache riquadri"
 
-#: ../app/widgets/gimpdashboard.c:490
+#: ../app/widgets/gimpdashboard.c:492
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Hit/Miss"
 
-#: ../app/widgets/gimpdashboard.c:491
+#: ../app/widgets/gimpdashboard.c:493
 msgid "Tile cache hit/miss ratio"
 msgstr "Rapporto hit/miss cache riquadri"
 
-#: ../app/widgets/gimpdashboard.c:504
+#: ../app/widgets/gimpdashboard.c:506
 msgid "Swap file occupied size"
 msgstr "Dimensione occupazione file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:513 ../app/widgets/gimpdashboard.c:670
+#: ../app/widgets/gimpdashboard.c:515 ../app/widgets/gimpdashboard.c:672
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../app/widgets/gimpdashboard.c:514
+#: ../app/widgets/gimpdashboard.c:516
 msgid "Swap file size"
 msgstr "Dimensione file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:524
+#: ../app/widgets/gimpdashboard.c:526
 msgid "Swap file size limit"
 msgstr "Limite dimensione file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:531
+#: ../app/widgets/gimpdashboard.c:533
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "In coda"
 
-#: ../app/widgets/gimpdashboard.c:532
+#: ../app/widgets/gimpdashboard.c:534
 msgid "Size of data queued for writing to the swap"
 msgstr "Totale dati in coda per la scrittura sul file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:541
+#: ../app/widgets/gimpdashboard.c:543
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Stalli in coda"
 
-#: ../app/widgets/gimpdashboard.c:542
+#: ../app/widgets/gimpdashboard.c:544
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 "Numero di volte che la scrittura sul file di scambio si è stallata, a causa "
 "della coda piena"
 
-#: ../app/widgets/gimpdashboard.c:551
+#: ../app/widgets/gimpdashboard.c:553
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Coda piena"
 
-#: ../app/widgets/gimpdashboard.c:552
+#: ../app/widgets/gimpdashboard.c:554
 msgid "Whether the swap queue is full"
 msgstr "Se la coda di scambio è piena"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:563
+#: ../app/widgets/gimpdashboard.c:565
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Lettura"
 
-#: ../app/widgets/gimpdashboard.c:564
+#: ../app/widgets/gimpdashboard.c:566
 msgid "Total amount of data read from the swap"
 msgstr "Totale dati letti dal file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:573
+#: ../app/widgets/gimpdashboard.c:575
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Volume di lettura"
 
-#: ../app/widgets/gimpdashboard.c:574
+#: ../app/widgets/gimpdashboard.c:576
 msgid "The rate at which data is read from the swap"
 msgstr "La velocità con cui i dati vengono letti dal file di scambio"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:586
+#: ../app/widgets/gimpdashboard.c:588
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Scrittura"
 
-#: ../app/widgets/gimpdashboard.c:587
+#: ../app/widgets/gimpdashboard.c:589
 msgid "Total amount of data written to the swap"
 msgstr "Totale dati scritti sul file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:596
+#: ../app/widgets/gimpdashboard.c:598
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Volume di scrittura"
 
-#: ../app/widgets/gimpdashboard.c:597
+#: ../app/widgets/gimpdashboard.c:599
 msgid "The rate at which data is written to the swap"
 msgstr "La velocità con cui i dati vengono scritti sul file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:607
+#: ../app/widgets/gimpdashboard.c:609
 msgid "Swap compression ratio"
 msgstr "Rapporto di compressione file di scambio"
 
-#: ../app/widgets/gimpdashboard.c:620
+#: ../app/widgets/gimpdashboard.c:622
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Uso"
 
-#: ../app/widgets/gimpdashboard.c:621
+#: ../app/widgets/gimpdashboard.c:623
 msgid "Total CPU usage"
 msgstr "Uso totale CPU"
 
-#: ../app/widgets/gimpdashboard.c:629 ../app/widgets/gimpdashboard.c:638
+#: ../app/widgets/gimpdashboard.c:631 ../app/widgets/gimpdashboard.c:640
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Attiva"
 
-#: ../app/widgets/gimpdashboard.c:630
+#: ../app/widgets/gimpdashboard.c:632
 msgid "Whether the CPU is active"
 msgstr "Se la CPU è attiva"
 
-#: ../app/widgets/gimpdashboard.c:639
+#: ../app/widgets/gimpdashboard.c:641
 msgid "Total amount of time the CPU has been active"
 msgstr "Quantità totale di tempo durante il quale la CPU è stata attiva"
 
-#: ../app/widgets/gimpdashboard.c:652
+#: ../app/widgets/gimpdashboard.c:654
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Usata"
 
-#: ../app/widgets/gimpdashboard.c:653
+#: ../app/widgets/gimpdashboard.c:655
 msgid "Amount of memory used by the process"
 msgstr "Memoria usata dal processo"
 
-#: ../app/widgets/gimpdashboard.c:661
+#: ../app/widgets/gimpdashboard.c:663
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Disponibile"
 
-#: ../app/widgets/gimpdashboard.c:662
+#: ../app/widgets/gimpdashboard.c:664
 msgid "Amount of available physical memory"
 msgstr "Quantità di memoria fisica disponibile"
 
-#: ../app/widgets/gimpdashboard.c:671
+#: ../app/widgets/gimpdashboard.c:673
 msgid "Physical memory size"
 msgstr "Dimensione fisica della memoria"
 
-#: ../app/widgets/gimpdashboard.c:682
+#: ../app/widgets/gimpdashboard.c:684
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mipmap"
 
-#: ../app/widgets/gimpdashboard.c:683
+#: ../app/widgets/gimpdashboard.c:685
 msgid "Total size of processed mipmapped data"
 msgstr "Dimensione totale dei dati mipmap elaborati"
 
-#: ../app/widgets/gimpdashboard.c:691
+#: ../app/widgets/gimpdashboard.c:693
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Asinc"
 
-#: ../app/widgets/gimpdashboard.c:692
+#: ../app/widgets/gimpdashboard.c:694
 msgid "Number of ongoing asynchronous operations"
 msgstr "Numero di operazioni asincrone in corso"
 
-#: ../app/widgets/gimpdashboard.c:704
+#: ../app/widgets/gimpdashboard.c:702
+msgctxt "dashboard-variable"
+msgid "Scratch"
+msgstr "Scratch"
+
+#: ../app/widgets/gimpdashboard.c:703
+msgid "Total size of scratch memory"
+msgstr "Dimensione totale memoria scratch"
+
+#: ../app/widgets/gimpdashboard.c:715
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Cache"
 
-#: ../app/widgets/gimpdashboard.c:705
+#: ../app/widgets/gimpdashboard.c:716
 msgid "In-memory tile cache"
 msgstr "Cache riquadri in memoria"
 
-#: ../app/widgets/gimpdashboard.c:741
+#: ../app/widgets/gimpdashboard.c:752
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Scambio"
 
-#: ../app/widgets/gimpdashboard.c:742
+#: ../app/widgets/gimpdashboard.c:753
 msgid "On-disk tile swap"
 msgstr "Scambio riquadri su disco"
 
-#: ../app/widgets/gimpdashboard.c:806
+#: ../app/widgets/gimpdashboard.c:817
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "CPU"
 
-#: ../app/widgets/gimpdashboard.c:807
+#: ../app/widgets/gimpdashboard.c:818
 msgid "CPU usage"
 msgstr "Uso CPU"
 
-#: ../app/widgets/gimpdashboard.c:842
+#: ../app/widgets/gimpdashboard.c:853
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Memoria"
 
-#: ../app/widgets/gimpdashboard.c:843
+#: ../app/widgets/gimpdashboard.c:854
 msgid "Memory usage"
 msgstr "Uso memoria"
 
-#: ../app/widgets/gimpdashboard.c:851
+#: ../app/widgets/gimpdashboard.c:862
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Cache"
 
-#: ../app/widgets/gimpdashboard.c:881
+#: ../app/widgets/gimpdashboard.c:892
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Varie"
 
-#: ../app/widgets/gimpdashboard.c:882
+#: ../app/widgets/gimpdashboard.c:893
 msgid "Miscellaneous information"
 msgstr "Informazioni varie"
 
-#: ../app/widgets/gimpdashboard.c:1060
+#: ../app/widgets/gimpdashboard.c:1074
 msgid "Select fields"
 msgstr "Seleziona campi"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3148
+#: ../app/widgets/gimpdashboard.c:3162
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "n/d"
 
-#: ../app/widgets/gimpdashboard.c:3157 ../app/widgets/gimpdashboard.c:4047
+#: ../app/widgets/gimpdashboard.c:3171 ../app/widgets/gimpdashboard.c:4061
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Sì"
 
-#: ../app/widgets/gimpdashboard.c:3158 ../app/widgets/gimpdashboard.c:4048
+#: ../app/widgets/gimpdashboard.c:3172 ../app/widgets/gimpdashboard.c:4062
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "No"
@@ -24947,7 +24966,7 @@ msgstr "No"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3242
+#: ../app/widgets/gimpdashboard.c:3256
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -24958,16 +24977,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4037
+#: ../app/widgets/gimpdashboard.c:4051
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4115
+#: ../app/widgets/gimpdashboard.c:4129
 msgid "N/A"
 msgstr "n/d"
 
-#: ../app/widgets/gimpdashboard.c:4437
+#: ../app/widgets/gimpdashboard.c:4458
 msgid "Resolving symbol information..."
 msgstr "Risoluzione informazioni simboliche..."
 
@@ -25878,7 +25897,7 @@ msgstr "Il file in ingresso \"%s\" sembra troncato: %s"
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Dato UTF-8 non valido nel file '%s'"
 
-#: ../app/widgets/gimptextbuffer.c:1778
+#: ../app/widgets/gimptextbuffer.c:1780
 #, c-format
 msgid "Writing text file '%s' failed: %s"
 msgstr "Scrittura file testo \"%s\" fallita: %s"
@@ -26251,7 +26270,7 @@ msgstr "Indefinito"
 msgid "GIMP XCF image"
 msgstr "Immagine GIMP XCF"
 
-#: ../app/xcf/xcf.c:272 ../app/xcf/xcf.c:360
+#: ../app/xcf/xcf.c:272 ../app/xcf/xcf.c:361
 msgid "Memory Stream"
 msgstr "Flusso di memoria"
 
@@ -26265,22 +26284,22 @@ msgstr "Apertura di \"%s\""
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Errore XCF: riscontrata versione file XCF %d non supportata"
 
-#: ../app/xcf/xcf.c:383
+#: ../app/xcf/xcf.c:384
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvataggio di \"%s\""
 
-#: ../app/xcf/xcf.c:390
+#: ../app/xcf/xcf.c:392
 #, c-format
 msgid "Closing '%s'"
 msgstr "Chiusura \"%s\""
 
-#: ../app/xcf/xcf.c:397
+#: ../app/xcf/xcf.c:410
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Errore durante la scrittura di \"%s\": "
 
-#: ../app/xcf/xcf.c:491
+#: ../app/xcf/xcf.c:504
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Errore durante la creazione di \"%s\":"
