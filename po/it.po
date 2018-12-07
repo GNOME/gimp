@@ -4,7 +4,7 @@
 # Marco Ciampa <ciampix@posteo.net>, 2003-2018
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
-# Convenzioni adottate per GIMP:
+# Convenzioni adottate per GIMP (per lo più derivate dal mondo della grafica e della fotografia italiano):
 #
 # brush = pennello
 # brush pipe = pennello animato
@@ -30,13 +30,14 @@
 # smooth = smussa, smussatura
 # lightness = luminosità (viene chiamata anche chiarezza, tono, tonalità, valore ... si decidessero...)
 # hue = tonalità
+# unsharp mask = maschera di contrasto
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-07 10:11+0100\n"
-"PO-Revision-Date: 2018-12-07 10:13+0100\n"
+"PO-Revision-Date: 2018-12-07 12:11+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -5338,7 +5339,7 @@ msgstr "Pias_trella senza giunte..."
 #: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr "Nitidizza (maschera di sfocat_ura)"
+msgstr "Nitidizza (_Maschera di contrasto)"
 
 #: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
@@ -20286,7 +20287,7 @@ msgstr "Soglia alfa"
 #: ../app/pdb/plug-in-compat-cmds.c:4018
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
-msgstr "Nitidizza (maschera di sfocatura)"
+msgstr "Nitidizza (maschera di contrasto)"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4064
 msgctxt "undo-type"
