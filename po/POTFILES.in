@@ -173,6 +173,7 @@ app/core/gimpitem-linked.c
 app/core/gimplayer-floating-selection.c
 app/core/gimplayer.c
 app/core/gimplayermask.c
+app/core/gimplineart.c
 app/core/gimpmybrush-load.c
 app/core/gimppalette.c
 app/core/gimppalette-import.c
