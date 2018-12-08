@@ -66,14 +66,17 @@ struct _GimpBucketFillToolPrivate
   GWeakRef            cached_image;
   GWeakRef            cached_drawable;
 
-  GeglBuffer         *fill_mask;
-
   /* For preview */
   GeglNode           *graph;
   GeglNode           *fill_node;
   GeglNode           *offset_node;
 
+  GeglBuffer         *fill_mask;
+
   GimpDrawableFilter *filter;
+
+  /* Temp property save */
+  GimpBucketFillMode  fill_mode;
 };
 
 /*  local function prototypes  */
@@ -621,18 +624,27 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
 
   if (key == GDK_MOD1_MASK)
     {
-      switch (options->fill_mode)
+      if (press)
         {
-        case GIMP_BUCKET_FILL_FG:
-          g_object_set (options, "fill-mode", GIMP_BUCKET_FILL_BG, NULL);
-          break;
+          GIMP_BUCKET_FILL_TOOL (tool)->priv->fill_mode = options->fill_mode;
+          switch (options->fill_mode)
+            {
+            case GIMP_BUCKET_FILL_FG:
+              g_object_set (options, "fill-mode", GIMP_BUCKET_FILL_BG, NULL);
+              break;
 
-        case GIMP_BUCKET_FILL_BG:
-          g_object_set (options, "fill-mode", GIMP_BUCKET_FILL_FG, NULL);
-          break;
+            default: /* GIMP_BUCKET_FILL_BG && GIMP_BUCKET_FILL_PATTERN */
+              g_object_set (options, "fill-mode", GIMP_BUCKET_FILL_FG, NULL);
+              break;
 
-        default:
-          break;
+              break;
+            }
+        }
+      else /* release */
+        {
+          g_object_set (options, "fill-mode",
+                        GIMP_BUCKET_FILL_TOOL (tool)->priv->fill_mode,
+                        NULL);
         }
     }
   else if (key == gimp_get_toggle_behavior_mask ())
