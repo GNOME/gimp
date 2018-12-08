@@ -1155,14 +1155,14 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
         }
     }
 
-  if (pixel_angle != private->pixel_angle)
+  if (fabs (pixel_angle - private->pixel_angle) > EPSILON)
     {
       private->pixel_angle = pixel_angle;
 
       g_object_notify (G_OBJECT (compass), "pixel-angle");
     }
 
-  if (unit_angle != private->unit_angle)
+  if (fabs (unit_angle - private->unit_angle) > EPSILON)
     {
       private->unit_angle = unit_angle;
 
