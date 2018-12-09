@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-02 12:38+0100\n"
-"PO-Revision-Date: 2018-12-02 12:39+0100\n"
+"POT-Creation-Date: 2018-12-09 12:20+0100\n"
+"PO-Revision-Date: 2018-12-09 12:22+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2989,7 +2989,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2002
-#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:214
+#: ../app/core/gimppalette.c:461 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
@@ -8124,7 +8124,7 @@ msgstr "_Otwórz"
 
 #: ../app/actions/text-editor-commands.c:139
 #: ../app/actions/text-tool-commands.c:209 ../app/config/gimpconfig-file.c:71
-#: ../app/core/gimppalette-import.c:513 ../app/plug-in/gimpenvirontable.c:289
+#: ../app/core/gimppalette-import.c:512 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:234
 #: ../app/tools/gimpfiltertool-settings.c:170
 #: ../app/widgets/gimptextbuffer.c:1674
@@ -10467,8 +10467,8 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Błąd podczas przetwarzania „%%s”: wiersz jest dłuższy niż %s znaków."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:344
-#: ../app/tools/gimpfiltertool-settings.c:227
+#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:345
+#: ../app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Błąd podczas zapisywania „%s”: %s"
@@ -12031,7 +12031,7 @@ msgctxt "undo-type"
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/core/core-enums.c:1134 ../app/core/gimpdrawable-transform.c:775
+#: ../app/core/core-enums.c:1134 ../app/core/gimpdrawable-transform.c:773
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -12342,7 +12342,7 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "Interpreter poleceń wsadowych „%s” jest niedostępny. Wyłączono tryb wsadowy."
 
-#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:330
+#: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:338
 #: ../app/core/gimptooloptions.c:361 ../app/gui/session.c:450
 #: ../app/menus/menus.c:476 ../app/widgets/gimpdevices.c:225
 #, c-format
@@ -12412,13 +12412,13 @@ msgstr "Kolor pierwszoplanowy na przezroczystość"
 msgid "Please wait: %s\n"
 msgstr "Proszę czekać: %s\n"
 
-#: ../app/core/gimp-internal-data.c:286 ../app/core/gimp-internal-data.c:294
-#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:598
+#: ../app/core/gimp-internal-data.c:286 ../app/core/gimp-internal-data.c:299
+#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:603
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/core/gimp-internal-data.c:300 ../app/core/gimpdata.c:604
+#: ../app/core/gimp-internal-data.c:305 ../app/core/gimpdata.c:609
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Błąd podczas zapisywania „%s”"
@@ -12442,6 +12442,11 @@ msgstr "Wykonanie procesu potomnego „%s” się nie powiodło (%s)"
 #: ../app/core/gimp-tags.c:87
 msgid "tags-locale:C"
 msgstr "tags-locale:pl"
+
+#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:357
+#, c-format
+msgid "Error closing '%s': %s"
+msgstr "Błąd podczas zamykania „%s”: %s"
 
 #: ../app/core/gimp-user-install.c:216
 #, c-format
@@ -12783,7 +12788,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Obrót kanału"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1095
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:1093
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Przekształcenie kanału"
@@ -13028,7 +13033,7 @@ msgstr "Błąd podczas wczytywania „%s”: "
 msgid "Error loading '%s'"
 msgstr "Błąd podczas wczytywania „%s”"
 
-#: ../app/core/gimpdataloaderfactory.c:474 ../app/xcf/xcf.c:439
+#: ../app/core/gimpdataloaderfactory.c:474 ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Nie można otworzyć „%s” do odczytania: "
@@ -13054,7 +13059,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Wypełnienie kubełkiem"
 
-#: ../app/core/gimpdrawable-edit.c:177
+#: ../app/core/gimpdrawable-edit.c:180
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Wyczyszczenie"
@@ -13107,22 +13112,22 @@ msgstr "Przesunięcie obszaru rysowania"
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
 
-#: ../app/core/gimpdrawable-transform.c:863
+#: ../app/core/gimpdrawable-transform.c:861
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/core/gimpdrawable-transform.c:948
+#: ../app/core/gimpdrawable-transform.c:946
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:1093 ../app/core/gimplayer.c:447
+#: ../app/core/gimpdrawable-transform.c:1091 ../app/core/gimplayer.c:447
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
 
-#: ../app/core/gimpdrawable-transform.c:1106
+#: ../app/core/gimpdrawable-transform.c:1104
 msgid "Transformation"
 msgstr "Przekształcenie"
 
@@ -13207,7 +13212,7 @@ msgstr "W %d. wierszu pliku z gradientem: "
 msgid "No linear gradients found."
 msgstr "Nie odnaleziono gradientów liniowych."
 
-#: ../app/core/gimpgradient-save.c:211
+#: ../app/core/gimpgradient-save.c:213
 #, c-format
 msgid "Writing POV file '%s' failed: %s"
 msgstr "Zapisanie pliku POV „%s” się nie powiodło: %s"
@@ -13491,20 +13496,20 @@ msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Dodanie koloru do palety kolorów"
 
-#: ../app/core/gimpimage-convert-indexed.c:791
+#: ../app/core/gimpimage-convert-indexed.c:790
 msgid "Cannot convert image: palette is empty."
 msgstr "Nie można konwertować obrazu: paleta jest pusta."
 
-#: ../app/core/gimpimage-convert-indexed.c:803
+#: ../app/core/gimpimage-convert-indexed.c:802
 msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Konwersja obrazu do trybu indeksowanego"
 
-#: ../app/core/gimpimage-convert-indexed.c:895
+#: ../app/core/gimpimage-convert-indexed.c:894
 msgid "Converting to indexed colors (stage 2)"
 msgstr "Konwertowanie do kolorów indeksowanych (2. poziom)"
 
-#: ../app/core/gimpimage-convert-indexed.c:944
+#: ../app/core/gimpimage-convert-indexed.c:943
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Konwertowanie do kolorów indeksowanych (3. poziom)"
 
@@ -13995,17 +14000,17 @@ msgstr "Deserializacja pędzla programu MyPaint się nie powiodła."
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
-#: ../app/core/gimppalette-import.c:213
+#: ../app/core/gimppalette-import.c:212
 #, c-format
 msgid "%s (occurs %u)"
 msgstr "%s (wystąpienia: %u)"
 
-#: ../app/core/gimppalette-import.c:426
+#: ../app/core/gimppalette-import.c:425
 #, c-format
 msgid "Index %d"
 msgstr "%d. indeks"
 
-#: ../app/core/gimppalette-import.c:548
+#: ../app/core/gimppalette-import.c:547
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Nieznany typ pliku palety: %s"
@@ -14387,10 +14392,15 @@ msgstr "Maksymalna liczba pionowych krzywych"
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Maksymalna liczba krzywych na osi Y"
 
-#: ../app/core/gimptagcache.c:436
+#: ../app/core/gimptagcache.c:437
 #, c-format
 msgid "Error writing '%s': %s\n"
 msgstr "Błąd podczas zapisywania „%s”: %s\n"
+
+#: ../app/core/gimptagcache.c:447
+#, c-format
+msgid "Error closing '%s': %s\n"
+msgstr "Błąd podczas zamykania „%s”: %s\n"
 
 #: ../app/core/gimptemplate.c:134
 msgid "Width"
@@ -17702,7 +17712,7 @@ msgstr "Kliknięcie doda pionowe prowadnice"
 msgid "Click-Drag to add a new point"
 msgstr "Kliknięcie i przeciągnięcie doda nowy punkt"
 
-#: ../app/display/gimptoolcompass.c:877 ../app/tools/gimpiscissorstool.c:912
+#: ../app/display/gimptoolcompass.c:877 ../app/tools/gimpiscissorstool.c:911
 msgid "Click-Drag to move this point"
 msgstr "Kliknięcie i przeciągnięcie przemieści ten punkt"
 
@@ -18888,11 +18898,11 @@ msgstr "Zapisanie pliku poziomów się nie powiodło: "
 msgid "Adjust brightness and contrast"
 msgstr "Modyfikacja jasności i kontrastu"
 
-#: ../app/operations/gimpoperationcagecoefcalc.c:70
+#: ../app/operations/gimpoperationcagecoefcalc.c:69
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
 msgstr "Oblicza zestaw współczynnika bufora dla narzędzia klatki programu GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:105
+#: ../app/operations/gimpoperationcagetransform.c:104
 msgid ""
 "Convert a set of coefficient buffer to a coordinate buffer for the GIMP cage "
 "tool"
@@ -18900,11 +18910,11 @@ msgstr ""
 "Konwertuje zestaw współczynnika bufora na współczynnik bufora dla narzędzia "
 "klatki programu GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:131
+#: ../app/operations/gimpoperationcagetransform.c:130
 msgid "Fill with plain color"
 msgstr "Wypełnij zwykłym kolorem"
 
-#: ../app/operations/gimpoperationcagetransform.c:132
+#: ../app/operations/gimpoperationcagetransform.c:131
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Wypełnienie pierwotnego położenia klatki prostym kolorem"
 
@@ -19043,11 +19053,11 @@ msgstr "Tylko ruch"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/paint/gimpbrushcore.c:379
+#: ../app/paint/gimpbrushcore.c:378
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
 
-#: ../app/paint/gimpbrushcore.c:386
+#: ../app/paint/gimpbrushcore.c:385
 msgid "No paint dynamics available for use with this tool."
 msgstr "Brak dostępnych dynamik rysowania dla tego narzędzia."
 
@@ -19096,15 +19106,15 @@ msgstr "Gumka"
 msgid "Anti erase"
 msgstr "Cofanie wycierania"
 
-#: ../app/paint/gimpheal.c:118 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:117 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Łatka"
 
-#: ../app/paint/gimpheal.c:158
+#: ../app/paint/gimpheal.c:157
 msgid "Healing does not operate on indexed layers."
 msgstr "Łatanie nie jest możliwe na warstwach indeksowanych."
 
-#: ../app/paint/gimpink.c:108 ../app/tools/gimpinktool.c:65
+#: ../app/paint/gimpink.c:107 ../app/tools/gimpinktool.c:65
 msgid "Ink"
 msgstr "Stalówka"
 
@@ -19550,12 +19560,12 @@ msgstr ""
 "Nie można konwertować warstwy na zwykłą, ponieważ nie jest ona oderwanym "
 "zaznaczeniem."
 
-#: ../app/pdb/gimppdb-query.c:140
+#: ../app/pdb/gimppdb-query.c:142
 #, c-format
 msgid "Writing PDB file '%s' failed: %s"
 msgstr "Zapisanie pliku PDB „%s” się nie powiodło: %s"
 
-#: ../app/pdb/gimppdb-query.c:315 ../app/pdb/gimppdb.c:306
+#: ../app/pdb/gimppdb-query.c:322 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:377
 #, c-format
 msgid "Procedure '%s' not found"
@@ -21697,7 +21707,7 @@ msgstr "Eksportowanie ustawień „%s”"
 msgid "Pre_sets:"
 msgstr "_Ustawienia:"
 
-#: ../app/tools/gimpfiltertool-settings.c:240
+#: ../app/tools/gimpfiltertool-settings.c:248
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Zapisano ustawienia do „%s”"
@@ -22201,54 +22211,54 @@ msgstr ""
 "Wyświetlanie przyszłego segmentu zaznaczenia podczas przeciągania węzła "
 "kontrolnego"
 
-#: ../app/tools/gimpiscissorstool.c:293
+#: ../app/tools/gimpiscissorstool.c:292
 msgid "Scissors"
 msgstr "Nożyce"
 
-#: ../app/tools/gimpiscissorstool.c:294
+#: ../app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr ""
 "Inteligentne nożyce: zaznacza obszary za pomocą dopasowania do krawędzi"
 
-#: ../app/tools/gimpiscissorstool.c:295
+#: ../app/tools/gimpiscissorstool.c:294
 msgid "Intelligent _Scissors"
 msgstr "Inteligentne _nożyce"
 
-#: ../app/tools/gimpiscissorstool.c:906
+#: ../app/tools/gimpiscissorstool.c:905
 msgid "Click to remove this point"
 msgstr "Kliknięcie usunie ten punkt"
 
-#: ../app/tools/gimpiscissorstool.c:914 ../app/tools/gimpiscissorstool.c:983
+#: ../app/tools/gimpiscissorstool.c:913 ../app/tools/gimpiscissorstool.c:982
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: wyłącza automatyczne przyciąganie"
 
-#: ../app/tools/gimpiscissorstool.c:915
+#: ../app/tools/gimpiscissorstool.c:914
 #, c-format
 msgid "%s: remove this point"
 msgstr "%s: usuwa ten punkt"
 
-#: ../app/tools/gimpiscissorstool.c:935
+#: ../app/tools/gimpiscissorstool.c:934
 msgid "Click to close the curve"
 msgstr "Kliknięcie zamknie krzywą"
 
-#: ../app/tools/gimpiscissorstool.c:941
+#: ../app/tools/gimpiscissorstool.c:940
 msgid "Click to add a point on this segment"
 msgstr "Kliknięcie doda punkt w tym segmencie"
 
-#: ../app/tools/gimpiscissorstool.c:954
+#: ../app/tools/gimpiscissorstool.c:953
 msgid "Click or press Enter to convert to a selection"
 msgstr "Kliknięcie lub naciśnięcie klawisza Enter konwertuje do zaznaczenia"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:963
 msgid "Press Enter to convert to a selection"
 msgstr "Naciśnięcie klawisza Enter konwertuje do zaznaczenia"
 
-#: ../app/tools/gimpiscissorstool.c:980
+#: ../app/tools/gimpiscissorstool.c:979
 msgid "Click or Click-Drag to add a point"
 msgstr "Kliknięcie lub kliknięcie i przeciągnięcie doda punkt"
 
-#: ../app/tools/gimpiscissorstool.c:1139 ../app/tools/gimpiscissorstool.c:1151
+#: ../app/tools/gimpiscissorstool.c:1138 ../app/tools/gimpiscissorstool.c:1150
 msgid "Modify Scissors Curve"
 msgstr "Modyfikacja krzywej nożyc"
 
@@ -23781,7 +23791,7 @@ msgstr "Obrót ścieżki"
 msgid "Transform Path"
 msgstr "Przekształcenie ścieżki"
 
-#: ../app/vectors/gimpvectors-export.c:87
+#: ../app/vectors/gimpvectors-export.c:89
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Zapisanie pliku SVG „%s” się nie powiodło: %s"
@@ -24902,7 +24912,7 @@ msgstr "%s/s"
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:4451
+#: ../app/widgets/gimpdashboard.c:4458
 msgid "Resolving symbol information..."
 msgstr "Rozwiązywanie informacji o symbolach…"
 
@@ -25808,7 +25818,7 @@ msgstr "Plik wejściowy „%s” jest ucięty: %s"
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Nieprawidłowe dane UTF-8 w pliku „%s”."
 
-#: ../app/widgets/gimptextbuffer.c:1778
+#: ../app/widgets/gimptextbuffer.c:1780
 #, c-format
 msgid "Writing text file '%s' failed: %s"
 msgstr "Zapisanie pliku tekstowego „%s” się nie powiodło: %s"
@@ -26181,7 +26191,7 @@ msgstr "Nieokreślone"
 msgid "GIMP XCF image"
 msgstr "Obraz XCF programu GIMP"
 
-#: ../app/xcf/xcf.c:272 ../app/xcf/xcf.c:360
+#: ../app/xcf/xcf.c:272 ../app/xcf/xcf.c:361
 msgid "Memory Stream"
 msgstr "Strumień pamięci"
 
@@ -26195,22 +26205,22 @@ msgstr "Otwieranie „%s”"
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Błąd XCF: nieobsługiwana wersja pliku XCF %d"
 
-#: ../app/xcf/xcf.c:383
+#: ../app/xcf/xcf.c:384
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
 
-#: ../app/xcf/xcf.c:390
+#: ../app/xcf/xcf.c:392
 #, c-format
 msgid "Closing '%s'"
 msgstr "Zamykanie „%s”"
 
-#: ../app/xcf/xcf.c:397
+#: ../app/xcf/xcf.c:410
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/xcf/xcf.c:491
+#: ../app/xcf/xcf.c:504
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Błąd podczas tworzenia „%s”: "
