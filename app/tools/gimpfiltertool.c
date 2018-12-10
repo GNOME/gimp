@@ -72,6 +72,7 @@
 #include "gimpfiltertool-widgets.h"
 #include "gimpguidetool.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 #include "tool_manager.h"
 
 #include "gimp-intl.h"
@@ -273,6 +274,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("The active layer's pixels are locked."));
+      if (error)
+        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
       return FALSE;
     }
 

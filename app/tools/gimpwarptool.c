@@ -48,6 +48,7 @@
 #include "gimpwarptool.h"
 #include "gimpwarpoptions.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -629,6 +630,8 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
         {
           gimp_tool_message_literal (tool, display,
                                      _("The active layer's pixels are locked."));
+
+          gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
         }
 
       return FALSE;

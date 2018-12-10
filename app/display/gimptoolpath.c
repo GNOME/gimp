@@ -37,6 +37,8 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "tools/gimptools-utils.h"
+
 #include "gimpcanvashandle.h"
 #include "gimpcanvasitem-utils.h"
 #include "gimpcanvasline.h"
@@ -492,12 +494,18 @@ static gboolean
 gimp_tool_path_check_writable (GimpToolPath *path)
 {
   GimpToolPathPrivate *private = path->private;
+  GimpToolWidget      *widget  = GIMP_TOOL_WIDGET (path);
+  GimpDisplayShell    *shell   = gimp_tool_widget_get_shell (widget);
 
   if (gimp_item_is_content_locked (GIMP_ITEM (private->vectors)) ||
       gimp_item_is_position_locked (GIMP_ITEM (private->vectors)))
     {
       gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (path),
                                    _("The active path is locked."));
+
+      /* FIXME: this should really be done by the tool */
+      gimp_tools_blink_lock_box (shell->display->gimp,
+                                 GIMP_ITEM (private->vectors));
 
       private->function = VECTORS_FINISHED;
 
