@@ -35,12 +35,15 @@ typedef struct _GimpTransformOptionsClass GimpTransformOptionsClass;
 
 struct _GimpTransformOptions
 {
-  GimpToolOptions        parent_instance;
+  GimpToolOptions         parent_instance;
 
-  GimpTransformType      type;
-  GimpTransformDirection direction;
-  GimpInterpolationType  interpolation;
-  GimpTransformResize    clip;
+  GimpTransformType       type;
+  GimpTransformDirection  direction;
+  GimpInterpolationType   interpolation;
+  GimpTransformResize     clip;
+
+  /*  options gui  */
+  GtkWidget              *type_box;
 };
 
 struct _GimpTransformOptionsClass

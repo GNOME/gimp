@@ -43,6 +43,7 @@
 
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpmessagebox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
@@ -560,6 +561,8 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
   if (! item)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, null_message);
+      if (error)
+        gimp_widget_blink (options->type_box);
       return NULL;
     }
 
