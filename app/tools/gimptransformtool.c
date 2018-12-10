@@ -46,6 +46,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 #include "gimptransformoptions.h"
 #include "gimptransformtool.h"
 
@@ -569,6 +570,8 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
   if (locked_message)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, locked_message);
+      if (error)
+        gimp_tools_blink_lock_box (display->gimp, item);
       return NULL;
     }
 

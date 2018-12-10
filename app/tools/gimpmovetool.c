@@ -56,6 +56,7 @@
 #include "gimpmoveoptions.h"
 #include "gimpmovetool.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -336,6 +337,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
   else if (locked_message)
     {
       gimp_tool_message_literal (tool, display, locked_message);
+      gimp_tools_blink_lock_box (display->gimp, active_item);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return;
     }

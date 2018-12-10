@@ -56,6 +56,7 @@
 #include "gimpdrawtool.h"
 #include "gimpeditselectiontool.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 #include "tool_manager.h"
 
 #include "gimp-intl.h"
@@ -1195,6 +1196,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   else if (locked_message)
     {
       gimp_tool_message_literal (tool, display, locked_message);
+      gimp_tools_blink_lock_box (display->gimp, item);
       return TRUE;
     }
 

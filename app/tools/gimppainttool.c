@@ -53,6 +53,7 @@
 #include "gimppainttool.h"
 #include "gimppainttool-paint.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -105,6 +106,7 @@ static GimpCanvasItem *
 
 static gboolean  gimp_paint_tool_check_alpha (GimpPaintTool         *paint_tool,
                                               GimpDrawable          *drawable,
+                                              GimpDisplay           *display,
                                               GError               **error);
 
 static void   gimp_paint_tool_hard_notify    (GimpPaintOptions      *options,
@@ -282,10 +284,11 @@ gimp_paint_tool_button_press (GimpTool            *tool,
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer's pixels are locked."));
+      gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
       return;
     }
 
-  if (! gimp_paint_tool_check_alpha (paint_tool, drawable, &error))
+  if (! gimp_paint_tool_check_alpha (paint_tool, drawable, display, &error))
     {
       GtkWidget *options_gui;
       GtkWidget *mode_box;
@@ -485,9 +488,9 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
       GimpImage    *image    = gimp_display_get_image (display);
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))      ||
-          gimp_item_is_content_locked (GIMP_ITEM (drawable))         ||
-          ! gimp_paint_tool_check_alpha (paint_tool, drawable, NULL) ||
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
+          gimp_item_is_content_locked (GIMP_ITEM (drawable))                  ||
+          ! gimp_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
           ! gimp_item_is_visible (GIMP_ITEM (drawable)))
         {
           modifier        = GIMP_CURSOR_MODIFIER_BAD;
@@ -821,6 +824,7 @@ gimp_paint_tool_get_outline (GimpPaintTool *paint_tool,
 static gboolean
 gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
                              GimpDrawable   *drawable,
+                             GimpDisplay    *display,
                              GError        **error)
 {
   GimpPaintToolClass *klass = GIMP_PAINT_TOOL_GET_CLASS (paint_tool);
@@ -842,6 +846,9 @@ gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
           g_set_error_literal (
             error, GIMP_ERROR, GIMP_FAILED,
             _("The active layer's alpha channel is locked."));
+
+          if (error)
+            gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
 
           return FALSE;
         }

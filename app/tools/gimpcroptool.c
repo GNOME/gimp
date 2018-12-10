@@ -40,6 +40,7 @@
 #include "gimpcroptool.h"
 #include "gimprectangleoptions.h"
 #include "gimptoolcontrol.h"
+#include "gimptools-utils.h"
 
 #include "gimp-intl.h"
 
@@ -458,6 +459,8 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
                 {
                   gimp_tool_message_literal (tool, tool->display,
                                              _("The active layer's pixels are locked."));
+                  gimp_tools_blink_lock_box (tool->display->gimp,
+                                             GIMP_ITEM (layer));
                   return;
                 }
 
