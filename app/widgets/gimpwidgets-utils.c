@@ -1505,9 +1505,12 @@ void gimp_widget_blink_cancel (GtkWidget *widget)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  gimp_highlight_widget (widget, FALSE);
+  if (g_object_get_data (G_OBJECT (widget), "gimp-widget-blink"))
+    {
+      gimp_highlight_widget (widget, FALSE);
 
-  g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+      g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+    }
 }
 
 /**
