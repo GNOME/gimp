@@ -19,7 +19,9 @@
 #define __GIMP_PAINT_OPTIONS_GUI_H__
 
 
-GtkWidget * gimp_paint_options_gui (GimpToolOptions *tool_options);
+GtkWidget * gimp_paint_options_gui                    (GimpToolOptions *tool_options);
+
+GtkWidget * gimp_paint_options_gui_get_paint_mode_box (GtkWidget       *options_gui);
 
 
 #endif /* __GIMP_PAINT_OPTIONS_GUI_H__ */

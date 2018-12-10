@@ -49,6 +49,7 @@
 #include "display/gimpdisplayshell-utils.h"
 
 #include "gimpcoloroptions.h"
+#include "gimppaintoptions-gui.h"
 #include "gimppainttool.h"
 #include "gimppainttool-paint.h"
 #include "gimptoolcontrol.h"
@@ -256,6 +257,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 {
   GimpDrawTool     *draw_tool  = GIMP_DRAW_TOOL (tool);
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpPaintOptions *options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell *shell      = gimp_display_get_shell (display);
   GimpImage        *image      = gimp_display_get_image (display);
   GimpDrawable     *drawable   = gimp_image_get_active_drawable (image);
@@ -285,8 +287,20 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
   if (! gimp_paint_tool_check_alpha (paint_tool, drawable, &error))
     {
+      GtkWidget *options_gui;
+      GtkWidget *mode_box;
+
       gimp_tool_message_literal (tool, display, error->message);
+
+      options_gui = gimp_tools_get_tool_options_gui (
+                      GIMP_TOOL_OPTIONS (options));
+      mode_box    = gimp_paint_options_gui_get_paint_mode_box (options_gui);
+
+      if (gtk_widget_is_sensitive (mode_box))
+        gimp_widget_blink (mode_box);
+
       g_clear_error (&error);
+
       return;
     }
 
