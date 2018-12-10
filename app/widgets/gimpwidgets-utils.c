@@ -1496,6 +1496,9 @@ gimp_widget_blink (GtkWidget *widget)
                                      widget);
 
   gimp_highlight_widget (widget, TRUE);
+
+  while ((widget = gtk_widget_get_parent (widget)))
+    gimp_widget_blink_cancel (widget);
 }
 
 void gimp_widget_blink_cancel (GtkWidget *widget)
