@@ -219,6 +219,8 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
+    options->mode_box = hbox;
+
     label = gtk_label_new (_("Mode:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);

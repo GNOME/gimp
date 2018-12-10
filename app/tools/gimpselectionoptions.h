@@ -43,6 +43,7 @@ struct _GimpSelectionOptions
   gdouble          feather_radius;
 
   /*  options gui  */
+  GtkWidget       *mode_box;
   GtkWidget       *antialias_toggle;
 };
 
