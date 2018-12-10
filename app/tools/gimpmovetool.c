@@ -272,6 +272,9 @@ gimp_move_tool_button_press (GimpTool            *tool,
       {
         active_item = GIMP_ITEM (gimp_image_get_mask (image));
 
+        if (gimp_channel_is_empty (GIMP_CHANNEL (active_item)))
+          active_item = NULL;
+
         translate_mode = GIMP_TRANSLATE_MODE_MASK;
 
         if (! active_item)
@@ -282,10 +285,6 @@ gimp_move_tool_button_press (GimpTool            *tool,
         else if (gimp_item_is_position_locked (active_item))
           {
             locked_message = "The selection's position is locked.";
-          }
-        else if (gimp_channel_is_empty (GIMP_CHANNEL (active_item)))
-          {
-            locked_message = _("The selection is empty.");
           }
       }
       break;
@@ -330,6 +329,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
   if (! active_item)
     {
       gimp_tool_message_literal (tool, display, null_message);
+      gimp_widget_blink (options->type_box);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return;
     }
@@ -405,7 +405,8 @@ gimp_move_tool_key_press (GimpTool    *tool,
 
   return gimp_edit_selection_tool_translate (tool, kevent,
                                              options->move_type,
-                                             display);
+                                             display,
+                                             options->type_box);
 }
 
 static void

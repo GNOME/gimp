@@ -1007,14 +1007,15 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
     }
 
   return gimp_edit_selection_tool_translate (tool, kevent, translate_type,
-                                             display);
+                                             display, NULL);
 }
 
 gboolean
 gimp_edit_selection_tool_translate (GimpTool          *tool,
                                     GdkEventKey       *kevent,
                                     GimpTransformType  translate_type,
-                                    GimpDisplay       *display)
+                                    GimpDisplay       *display,
+                                    GtkWidget         *type_box)
 {
   gint               inc_x          = 0;
   gint               inc_y          = 0;
@@ -1092,6 +1093,9 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
         case GIMP_TRANSFORM_TYPE_SELECTION:
           item = GIMP_ITEM (gimp_image_get_mask (image));
 
+          if (gimp_channel_is_empty (GIMP_CHANNEL (item)))
+            item = NULL;
+
           edit_mode = GIMP_TRANSLATE_MODE_MASK;
           undo_type = GIMP_UNDO_GROUP_MASK;
 
@@ -1104,10 +1108,6 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
             {
               /* cannot happen, don't translate this message */
               locked_message = "The selection's position is locked.";
-            }
-          else if (gimp_channel_is_empty (GIMP_CHANNEL (item)))
-            {
-              locked_message = _("The selection is empty.");
             }
           break;
 
@@ -1188,6 +1188,8 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   if (! item)
     {
       gimp_tool_message_literal (tool, display, null_message);
+      if (type_box)
+        gimp_widget_blink (type_box);
       return TRUE;
     }
   else if (locked_message)

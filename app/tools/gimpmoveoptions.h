@@ -39,6 +39,9 @@ struct _GimpMoveOptions
 
   GimpTransformType  move_type;
   gboolean           move_current;
+
+  /*  options gui  */
+  GtkWidget         *type_box;
 };
 
 
