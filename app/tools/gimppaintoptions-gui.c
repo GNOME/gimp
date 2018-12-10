@@ -114,6 +114,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
+  g_object_set_data (G_OBJECT (vbox),
+                     "gimp-paint-options-gui-paint-mode-box", menu);
+
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
@@ -284,6 +287,13 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   return vbox;
+}
+
+GtkWidget *
+gimp_paint_options_gui_get_paint_mode_box (GtkWidget *options_gui)
+{
+  return g_object_get_data (G_OBJECT (options_gui),
+                            "gimp-paint-options-gui-paint-mode-box");
 }
 
 
