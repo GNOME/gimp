@@ -179,17 +179,20 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
 GtkWidget *
 gimp_move_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *hbox;
-  GtkWidget *box;
-  GtkWidget *label;
-  GtkWidget *frame;
-  gchar     *title;
+  GObject         *config  = G_OBJECT (tool_options);
+  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (tool_options);
+  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
+  GtkWidget       *hbox;
+  GtkWidget       *box;
+  GtkWidget       *label;
+  GtkWidget       *frame;
+  gchar           *title;
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
+
+  options->type_box = hbox;
 
   label = gtk_label_new (_("Move:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
