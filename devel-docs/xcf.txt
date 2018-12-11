@@ -749,11 +749,11 @@ The image structure always starts at offset 0 in the XCF file.
   ,-----------------   Repeat once for each layer, topmost layer first:
   | pointer lptr       Pointer to the layer structure.
   `--
-  uint32   0           Zero marks the end of the array of layer pointers.
+  pointer   0           Zero marks the end of the array of layer pointers.
   ,------------------  Repeat once for each channel, in no particular order:
   | pointer cptr       Pointer to the channel structure.
   `--
-  uint32   0           Zero marks the end of the array of channel pointers.
+  pointer   0           Zero marks the end of the array of channel pointers.
 
 The last 4 characters of the initial 13-character identification string are
 a version indicator. The version will be higher than 3 if the correct
