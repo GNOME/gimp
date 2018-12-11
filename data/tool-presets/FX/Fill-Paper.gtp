@@ -10,7 +10,7 @@
     (pattern "Paper")
     (brush-size 80.000000)
     (fill-mode pattern)
-    (fill-selection yes)
+    (fill-area selection)
     (sample-merged yes))
 (use-fg-bg no)
 (use-brush no)

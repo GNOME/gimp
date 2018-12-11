@@ -47,7 +47,7 @@ enum
 {
   PROP_0,
   PROP_FILL_MODE,
-  PROP_FILL_SELECTION,
+  PROP_FILL_AREA,
   PROP_FILL_TRANSPARENT,
   PROP_SAMPLE_MERGED,
   PROP_DIAGONAL_NEIGHBORS,
@@ -65,10 +65,8 @@ struct _GimpBucketFillOptionsPrivate
   GtkWidget *diagonal_neighbors_checkbox;
   GtkWidget *threshold_scale;
 
-  GtkWidget *line_art_threshold_scale;
-  GtkWidget *line_art_grow_scale;
-  GtkWidget *line_art_segment_max_len_scale;
-  GtkWidget *line_art_spline_max_len_scale;
+  GtkWidget *similar_color_frame;
+  GtkWidget *line_art_frame;
 };
 
 static void   gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface);
@@ -83,7 +81,7 @@ static void   gimp_bucket_fill_options_get_property      (GObject               
                                                           GParamSpec            *pspec);
 
 static void   gimp_bucket_fill_options_reset             (GimpConfig            *config);
-static void   gimp_bucket_fill_options_update_criterion  (GimpBucketFillOptions *options);
+static void   gimp_bucket_fill_options_update_area       (GimpBucketFillOptions *options);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpBucketFillOptions, gimp_bucket_fill_options,
@@ -113,12 +111,13 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                          GIMP_BUCKET_FILL_FG,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
-                            "fill-selection",
-                            _("Fill selection"),
-                            _("Which area will be filled"),
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_AREA,
+                         "fill-area",
+                         _("Fill selection"),
+                         _("Which area will be filled"),
+                         GIMP_TYPE_BUCKET_FILL_AREA,
+                         GIMP_BUCKET_FILL_SIMILAR_COLORS,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
                             "fill-transparent",
@@ -224,8 +223,9 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_FILL_MODE:
       options->fill_mode = g_value_get_enum (value);
       break;
-    case PROP_FILL_SELECTION:
-      options->fill_selection = g_value_get_boolean (value);
+    case PROP_FILL_AREA:
+      options->fill_area = g_value_get_enum (value);
+      gimp_bucket_fill_options_update_area (options);
       break;
     case PROP_FILL_TRANSPARENT:
       options->fill_transparent = g_value_get_boolean (value);
@@ -256,7 +256,6 @@ gimp_bucket_fill_options_set_property (GObject      *object,
       break;
     case PROP_FILL_CRITERION:
       options->fill_criterion = g_value_get_enum (value);
-      gimp_bucket_fill_options_update_criterion (options);
       break;
 
     default:
@@ -278,8 +277,8 @@ gimp_bucket_fill_options_get_property (GObject    *object,
     case PROP_FILL_MODE:
       g_value_set_enum (value, options->fill_mode);
       break;
-    case PROP_FILL_SELECTION:
-      g_value_set_boolean (value, options->fill_selection);
+    case PROP_FILL_AREA:
+      g_value_set_enum (value, options->fill_area);
       break;
     case PROP_FILL_TRANSPARENT:
       g_value_set_boolean (value, options->fill_transparent);
@@ -335,31 +334,25 @@ gimp_bucket_fill_options_reset (GimpConfig *config)
 }
 
 static void
-gimp_bucket_fill_options_update_criterion (GimpBucketFillOptions *options)
+gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
 {
   /* GUI not created yet. */
   if (! options->priv->threshold_scale)
     return;
 
-  switch (options->fill_criterion)
+  switch (options->fill_area)
     {
-    case GIMP_SELECT_CRITERION_LINE_ART:
-      gtk_widget_hide (options->priv->diagonal_neighbors_checkbox);
-      gtk_widget_hide (options->priv->threshold_scale);
-
-      gtk_widget_show (options->priv->line_art_threshold_scale);
-      gtk_widget_show (options->priv->line_art_grow_scale);
-      gtk_widget_show (options->priv->line_art_segment_max_len_scale);
-      gtk_widget_show (options->priv->line_art_spline_max_len_scale);
+    case GIMP_BUCKET_FILL_LINE_ART:
+      gtk_widget_hide (options->priv->similar_color_frame);
+      gtk_widget_show (options->priv->line_art_frame);
+      break;
+    case GIMP_BUCKET_FILL_SIMILAR_COLORS:
+      gtk_widget_show (options->priv->similar_color_frame);
+      gtk_widget_hide (options->priv->line_art_frame);
       break;
     default:
-      gtk_widget_hide (options->priv->line_art_threshold_scale);
-      gtk_widget_hide (options->priv->line_art_grow_scale);
-      gtk_widget_hide (options->priv->line_art_segment_max_len_scale);
-      gtk_widget_hide (options->priv->line_art_spline_max_len_scale);
-
-      gtk_widget_show (options->priv->diagonal_neighbors_checkbox);
-      gtk_widget_show (options->priv->threshold_scale);
+      gtk_widget_hide (options->priv->similar_color_frame);
+      gtk_widget_hide (options->priv->line_art_frame);
       break;
     }
 }
@@ -398,26 +391,17 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   /*  fill selection  */
   str = g_strdup_printf (_("Affected Area  (%s)"),
                          gimp_get_mod_string (extend_mask));
-  frame = gimp_prop_boolean_radio_frame_new (config, "fill-selection",
-                                             str,
-                                             _("Fill whole selection"),
-                                             _("Fill similar colors"));
+  frame = gimp_prop_enum_radio_frame_new (config, "fill-area", str, 0, 0);
   g_free (str);
-  gtk_box_reorder_child (GTK_BOX (gtk_bin_get_child (GTK_BIN (frame))),
-                         g_object_get_data (G_OBJECT (frame), "radio-button"),
-                         1);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  /* Similar color frame */
   frame = gimp_frame_new (_("Finding Similar Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  options->priv->similar_color_frame = frame;
   gtk_widget_show (frame);
-
-  g_object_bind_property (config, "fill-selection",
-                          frame,  "sensitive",
-                          G_BINDING_SYNC_CREATE |
-                          G_BINDING_INVERT_BOOLEAN);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
@@ -451,41 +435,62 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   options->priv->threshold_scale = scale;
   gtk_widget_show (scale);
 
-  /*  Line Art: max growing size */
-  scale = gimp_prop_spin_scale_new (config, "line-art-max-grow", NULL,
-                                    1, 5, 0);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  options->priv->line_art_grow_scale = scale;
-  gtk_widget_show (scale);
-
-  /*  Line Art: stroke threshold */
-  scale = gimp_prop_spin_scale_new (config, "line-art-threshold", NULL,
-                                    0.05, 0.1, 2);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  options->priv->line_art_threshold_scale = scale;
-  gtk_widget_show (scale);
-
-  /*  Line Art: segment max len */
-  scale = gimp_prop_spin_scale_new (config, "line-art-segment-max-len", NULL,
-                                    1, 5, 0);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  options->priv->line_art_segment_max_len_scale = scale;
-  gtk_widget_show (scale);
-
-  /*  Line Art: spline max len */
-  scale = gimp_prop_spin_scale_new (config, "line-art-spline-max-len", NULL,
-                                    1, 5, 0);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
-  options->priv->line_art_spline_max_len_scale = scale;
-  gtk_widget_show (scale);
-
   /*  the fill criterion combo  */
   combo = gimp_prop_enum_combo_box_new (config, "fill-criterion", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fill by"));
   gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
-  gimp_bucket_fill_options_update_criterion (options);
+  /* Line art frame */
+  frame = gimp_frame_new (_("Line art detection"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  options->priv->line_art_frame = frame;
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  /*  the fill transparent areas toggle  */
+  button = gimp_prop_check_button_new (config, "fill-transparent", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /*  the sample merged toggle  */
+  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /*  the antialias toggle  */
+  button = gimp_prop_check_button_new (config, "antialias", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /*  Line Art: max growing size */
+  scale = gimp_prop_spin_scale_new (config, "line-art-max-grow", NULL,
+                                    1, 5, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  /*  Line Art: stroke threshold */
+  scale = gimp_prop_spin_scale_new (config, "line-art-threshold", NULL,
+                                    0.05, 0.1, 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  /*  Line Art: segment max len */
+  scale = gimp_prop_spin_scale_new (config, "line-art-segment-max-len", NULL,
+                                    1, 5, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  /*  Line Art: spline max len */
+  scale = gimp_prop_spin_scale_new (config, "line-art-spline-max-len", NULL,
+                                    1, 5, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  gimp_bucket_fill_options_update_area (options);
 
   return vbox;
 }
