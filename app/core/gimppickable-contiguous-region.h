@@ -20,7 +20,6 @@
 
 
 GeglBuffer * gimp_pickable_contiguous_region_by_seed                (GimpPickable        *pickable,
-                                                                     GimpLineArt         *line_art,
                                                                      gboolean             antialias,
                                                                      gfloat               threshold,
                                                                      gboolean             select_transparent,
@@ -36,5 +35,9 @@ GeglBuffer * gimp_pickable_contiguous_region_by_color               (GimpPickabl
                                                                      GimpSelectCriterion  select_criterion,
                                                                      const GimpRGB       *color);
 
+GeglBuffer * gimp_pickable_contiguous_region_by_line_art            (GimpPickable        *pickable,
+                                                                     GimpLineArt         *line_art,
+                                                                     gint                 x,
+                                                                     gint                 y);
 
 #endif  /*  __GIMP_PICKABLE_CONTIGUOUS_REGION_H__ */

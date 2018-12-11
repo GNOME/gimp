@@ -64,6 +64,16 @@ package Gimp::CodeGen::enums;
 		       GIMP_BRUSH_GENERATED_SQUARE => '1',
 		       GIMP_BRUSH_GENERATED_DIAMOND => '2' }
 	},
+    GimpBucketFillArea =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_BUCKET_FILL_SELECTION
+			  GIMP_BUCKET_FILL_SIMILAR_COLORS
+			  GIMP_BUCKET_FILL_LINE_ART) ],
+	  mapping => { GIMP_BUCKET_FILL_SELECTION => '0',
+		       GIMP_BUCKET_FILL_SIMILAR_COLORS => '1',
+		       GIMP_BUCKET_FILL_LINE_ART => '2' }
+	},
     GimpBucketFillMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -547,8 +557,7 @@ package Gimp::CodeGen::enums;
 			  GIMP_SELECT_CRITERION_A
 			  GIMP_SELECT_CRITERION_LCH_L
 			  GIMP_SELECT_CRITERION_LCH_C
-			  GIMP_SELECT_CRITERION_LCH_H
-			  GIMP_SELECT_CRITERION_LINE_ART) ],
+			  GIMP_SELECT_CRITERION_LCH_H) ],
 	  mapping => { GIMP_SELECT_CRITERION_COMPOSITE => '0',
 		       GIMP_SELECT_CRITERION_R => '1',
 		       GIMP_SELECT_CRITERION_G => '2',
@@ -559,8 +568,7 @@ package Gimp::CodeGen::enums;
 		       GIMP_SELECT_CRITERION_A => '7',
 		       GIMP_SELECT_CRITERION_LCH_L => '8',
 		       GIMP_SELECT_CRITERION_LCH_C => '9',
-		       GIMP_SELECT_CRITERION_LCH_H => '10',
-		       GIMP_SELECT_CRITERION_LINE_ART => '11' }
+		       GIMP_SELECT_CRITERION_LCH_H => '10' }
 	},
     GimpSizeType =>
 	{ contig => 1,

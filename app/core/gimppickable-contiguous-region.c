@@ -115,7 +115,6 @@ static void            line_art_queue_pixel (GQueue              *queue,
 
 GeglBuffer *
 gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
-                                         GimpLineArt         *line_art,
                                          gboolean             antialias,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
@@ -127,88 +126,42 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
   GeglBuffer    *src_buffer;
   GeglBuffer    *mask_buffer;
   const Babl    *format;
-  gfloat        *distmap = NULL;
   GeglRectangle  extent;
   gint           n_components;
   gboolean       has_alpha;
   gfloat         start_col[MAX_CHANNELS];
-  gboolean       smart_line_art = FALSE;
-  gboolean       free_line_art  = FALSE;
-  gint           line_art_max_grow;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
-  if (select_criterion == GIMP_SELECT_CRITERION_LINE_ART)
+  gimp_pickable_flush (pickable);
+  src_buffer = gimp_pickable_get_buffer (pickable);
+
+  format = choose_format (src_buffer, select_criterion,
+                          &n_components, &has_alpha);
+  gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
+  if (has_alpha)
     {
-      if (! line_art)
+      if (select_transparent)
         {
-          /* It is much better experience to pre-compute the line art,
-           * but it may not be always possible (for instance when
-           * selecting/filling through a PDB call).
+          /*  don't select transparent regions if the start pixel isn't
+           *  fully transparent
            */
-          line_art = gimp_line_art_new ();
-          gimp_line_art_set_input (line_art, pickable);
-          free_line_art = TRUE;
+          if (start_col[n_components - 1] > 0)
+            select_transparent = FALSE;
         }
-
-      src_buffer = gimp_line_art_get (line_art, &distmap);
-      g_return_val_if_fail (src_buffer && distmap, NULL);
-
-      smart_line_art     = TRUE;
-      antialias          = FALSE;
-      threshold          = 0.0;
-      select_transparent = FALSE;
-      select_criterion   = GIMP_SELECT_CRITERION_COMPOSITE;
-      diagonal_neighbors = FALSE;
-
-      format = choose_format (src_buffer, select_criterion,
-                              &n_components, &has_alpha);
-      gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
     }
   else
     {
-      gimp_pickable_flush (pickable);
-      src_buffer = gimp_pickable_get_buffer (pickable);
-
-      format = choose_format (src_buffer, select_criterion,
-                              &n_components, &has_alpha);
-      gegl_buffer_sample (src_buffer, x, y, NULL, start_col, format,
-                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-
-      if (has_alpha)
-        {
-          if (select_transparent)
-            {
-              /*  don't select transparent regions if the start pixel isn't
-               *  fully transparent
-               */
-              if (start_col[n_components - 1] > 0)
-                select_transparent = FALSE;
-            }
-        }
-      else
-        {
-          select_transparent = FALSE;
-        }
+      select_transparent = FALSE;
     }
 
   extent = *gegl_buffer_get_extent (src_buffer);
 
   mask_buffer = gegl_buffer_new (&extent, babl_format ("Y float"));
 
-  if (smart_line_art && start_col[0])
-    {
-      /* As a special exception, if you fill over a line art pixel, only
-       * fill the pixel and exit
-       */
-      start_col[0] = 1.0;
-      gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (x, y, 1, 1),
-                       0, babl_format ("Y float"), start_col,
-                       GEGL_AUTO_ROWSTRIDE);
-      smart_line_art = FALSE;
-    }
-  else if (x >= extent.x && x < (extent.x + extent.width) &&
+  if (x >= extent.x && x < (extent.x + extent.width) &&
       y >= extent.y && y < (extent.y + extent.height))
     {
       GIMP_TIMER_START();
@@ -222,15 +175,145 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       GIMP_TIMER_END("foo");
     }
 
-  if (smart_line_art)
+  return mask_buffer;
+}
+
+GeglBuffer *
+gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
+                                          gboolean             antialias,
+                                          gfloat               threshold,
+                                          gboolean             select_transparent,
+                                          GimpSelectCriterion  select_criterion,
+                                          const GimpRGB       *color)
+{
+  /*  Scan over the pickable's active layer, finding pixels within the
+   *  specified threshold from the given R, G, & B values.  If
+   *  antialiasing is on, use the same antialiasing scheme as in
+   *  fuzzy_select.  Modify the pickable's mask to reflect the
+   *  additional selection
+   */
+  GeglBufferIterator *iter;
+  GeglBuffer         *src_buffer;
+  GeglBuffer         *mask_buffer;
+  const Babl         *format;
+  gint                n_components;
+  gboolean            has_alpha;
+  gfloat              start_col[MAX_CHANNELS];
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  g_return_val_if_fail (color != NULL, NULL);
+
+  gimp_pickable_flush (pickable);
+
+  src_buffer = gimp_pickable_get_buffer (pickable);
+
+  format = choose_format (src_buffer, select_criterion,
+                          &n_components, &has_alpha);
+
+  gimp_rgba_get_pixel (color, format, start_col);
+
+  if (has_alpha)
     {
-      /* The last step of the line art algorithm is to make sure that
-       * selections does not leave "holes" between its borders and the
-       * line arts, while not stepping over as well.
-       * I used to run the "gegl:watershed-transform" operation to flood
-       * the stroke pixels, but for such simple need, this simple code
-       * is so much faster while producing better results.
+      if (select_transparent)
+        {
+          /*  don't select transparency if "color" isn't fully transparent
+           */
+          if (start_col[n_components - 1] > 0.0)
+            select_transparent = FALSE;
+        }
+    }
+  else
+    {
+      select_transparent = FALSE;
+    }
+
+  mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                 babl_format ("Y float"));
+
+  iter = gegl_buffer_iterator_new (src_buffer,
+                                   NULL, 0, format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+
+  gegl_buffer_iterator_add (iter, mask_buffer,
+                            NULL, 0, babl_format ("Y float"),
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const gfloat *src   = iter->items[0].data;
+      gfloat       *dest  = iter->items[1].data;
+      gint          count = iter->length;
+
+      while (count--)
+        {
+          /*  Find how closely the colors match  */
+          *dest = pixel_difference (start_col, src,
+                                    antialias,
+                                    threshold,
+                                    n_components,
+                                    has_alpha,
+                                    select_transparent,
+                                    select_criterion);
+
+          src  += n_components;
+          dest += 1;
+        }
+    }
+
+  return mask_buffer;
+}
+
+GeglBuffer *
+gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
+                                             GimpLineArt  *line_art,
+                                             gint          x,
+                                             gint          y)
+{
+  GeglBuffer    *src_buffer;
+  GeglBuffer    *mask_buffer;
+  const Babl    *format  = babl_format ("Y float");
+  gfloat        *distmap = NULL;
+  GeglRectangle  extent;
+  gfloat         start_col;
+  gboolean       free_line_art  = FALSE;
+  gint           line_art_max_grow;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable) || GIMP_IS_LINE_ART (line_art), NULL);
+
+  if (! line_art)
+    {
+      /* It is much better experience to pre-compute the line art,
+       * but it may not be always possible (for instance when
+       * selecting/filling through a PDB call).
        */
+      line_art = gimp_line_art_new ();
+      gimp_line_art_set_input (line_art, pickable);
+      free_line_art = TRUE;
+    }
+
+  src_buffer = gimp_line_art_get (line_art, &distmap);
+  g_return_val_if_fail (src_buffer && distmap, NULL);
+
+  gegl_buffer_sample (src_buffer, x, y, NULL, &start_col, format,
+                      GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
+  extent = *gegl_buffer_get_extent (src_buffer);
+
+  mask_buffer = gegl_buffer_new (&extent, babl_format ("Y float"));
+
+  if (start_col)
+    {
+      /* As a special exception, if you fill over a line art pixel, only
+       * fill the pixel and exit
+       */
+      start_col = 1.0;
+      gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (x, y, 1, 1),
+                       0, babl_format ("Y float"), &start_col,
+                       GEGL_AUTO_ROWSTRIDE);
+    }
+  else if (x >= extent.x && x < (extent.x + extent.width) &&
+           y >= extent.y && y < (extent.y + extent.height))
+    {
       gfloat *mask;
       GQueue *queue  = g_queue_new ();
       gint    width  = gegl_buffer_get_width (src_buffer);
@@ -239,6 +322,19 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
 
       GIMP_TIMER_START();
 
+      find_contiguous_region (src_buffer, mask_buffer,
+                              format, 1, FALSE,
+                              FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                              FALSE, 0.0, FALSE,
+                              x, y, &start_col);
+
+      /* The last step of the line art algorithm is to make sure that
+       * selections does not leave "holes" between its borders and the
+       * line arts, while not stepping over as well.
+       * I used to run the "gegl:watershed-transform" operation to flood
+       * the stroke pixels, but for such simple need, this simple code
+       * is so much faster while producing better results.
+       */
       mask = g_new (gfloat, width * height);
       gegl_buffer_get (mask_buffer, NULL, 1.0, NULL,
                        mask, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -407,99 +503,12 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       g_free (mask);
 
       GIMP_TIMER_END("watershed line art");
-
-      if (free_line_art)
-        g_clear_object (&line_art);
     }
+  if (free_line_art)
+    g_clear_object (&line_art);
 
   return mask_buffer;
 }
-
-GeglBuffer *
-gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
-                                          gboolean             antialias,
-                                          gfloat               threshold,
-                                          gboolean             select_transparent,
-                                          GimpSelectCriterion  select_criterion,
-                                          const GimpRGB       *color)
-{
-  /*  Scan over the pickable's active layer, finding pixels within the
-   *  specified threshold from the given R, G, & B values.  If
-   *  antialiasing is on, use the same antialiasing scheme as in
-   *  fuzzy_select.  Modify the pickable's mask to reflect the
-   *  additional selection
-   */
-  GeglBufferIterator *iter;
-  GeglBuffer         *src_buffer;
-  GeglBuffer         *mask_buffer;
-  const Babl         *format;
-  gint                n_components;
-  gboolean            has_alpha;
-  gfloat              start_col[MAX_CHANNELS];
-
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
-
-  gimp_pickable_flush (pickable);
-
-  src_buffer = gimp_pickable_get_buffer (pickable);
-
-  format = choose_format (src_buffer, select_criterion,
-                          &n_components, &has_alpha);
-
-  gimp_rgba_get_pixel (color, format, start_col);
-
-  if (has_alpha)
-    {
-      if (select_transparent)
-        {
-          /*  don't select transparency if "color" isn't fully transparent
-           */
-          if (start_col[n_components - 1] > 0.0)
-            select_transparent = FALSE;
-        }
-    }
-  else
-    {
-      select_transparent = FALSE;
-    }
-
-  mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
-                                 babl_format ("Y float"));
-
-  iter = gegl_buffer_iterator_new (src_buffer,
-                                   NULL, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
-
-  gegl_buffer_iterator_add (iter, mask_buffer,
-                            NULL, 0, babl_format ("Y float"),
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
-    {
-      const gfloat *src   = iter->items[0].data;
-      gfloat       *dest  = iter->items[1].data;
-      gint          count = iter->length;
-
-      while (count--)
-        {
-          /*  Find how closely the colors match  */
-          *dest = pixel_difference (start_col, src,
-                                    antialias,
-                                    threshold,
-                                    n_components,
-                                    has_alpha,
-                                    select_transparent,
-                                    select_criterion);
-
-          src  += n_components;
-          dest += 1;
-        }
-    }
-
-  return mask_buffer;
-}
-
 
 /*  private functions  */
 
@@ -544,10 +553,6 @@ choose_format (GeglBuffer          *buffer,
     case GIMP_SELECT_CRITERION_LCH_C:
     case GIMP_SELECT_CRITERION_LCH_H:
       format = babl_format ("CIE LCH(ab) alpha float");
-      break;
-
-    case GIMP_SELECT_CRITERION_LINE_ART:
-      format = babl_format ("Y'A float");
       break;
 
     default:
@@ -640,10 +645,6 @@ pixel_difference (const gfloat        *col1,
           max = fabs (col1[2] - col2[2]) / 360.0;
           max = MIN (max, 1.0 - max);
           break;
-
-        case GIMP_SELECT_CRITERION_LINE_ART:
-          /* Smart selection is handled before. */
-          g_return_val_if_reached (0.0);
         }
     }
 

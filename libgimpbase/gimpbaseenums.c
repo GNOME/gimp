@@ -115,6 +115,38 @@ gimp_brush_generated_shape_get_type (void)
 }
 
 GType
+gimp_bucket_fill_area_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_BUCKET_FILL_SELECTION, "GIMP_BUCKET_FILL_SELECTION", "selection" },
+    { GIMP_BUCKET_FILL_SIMILAR_COLORS, "GIMP_BUCKET_FILL_SIMILAR_COLORS", "similar-colors" },
+    { GIMP_BUCKET_FILL_LINE_ART, "GIMP_BUCKET_FILL_LINE_ART", "line-art" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_BUCKET_FILL_SELECTION, NC_("bucket-fill-area", "Fill whole selection"), NULL },
+    { GIMP_BUCKET_FILL_SIMILAR_COLORS, NC_("bucket-fill-area", "Fill similar colors"), NULL },
+    { GIMP_BUCKET_FILL_LINE_ART, NC_("bucket-fill-area", "Fill by line art detection"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpBucketFillArea", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "bucket-fill-area");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_bucket_fill_mode_get_type (void)
 {
   static const GEnumValue values[] =
@@ -1642,7 +1674,6 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_LCH_L, "GIMP_SELECT_CRITERION_LCH_L", "lch-l" },
     { GIMP_SELECT_CRITERION_LCH_C, "GIMP_SELECT_CRITERION_LCH_C", "lch-c" },
     { GIMP_SELECT_CRITERION_LCH_H, "GIMP_SELECT_CRITERION_LCH_H", "lch-h" },
-    { GIMP_SELECT_CRITERION_LINE_ART, "GIMP_SELECT_CRITERION_LINE_ART", "line-art" },
     { 0, NULL, NULL }
   };
 
@@ -1659,7 +1690,6 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_LCH_L, NC_("select-criterion", "LCh Lightness"), NULL },
     { GIMP_SELECT_CRITERION_LCH_C, NC_("select-criterion", "LCh Chroma"), NULL },
     { GIMP_SELECT_CRITERION_LCH_H, NC_("select-criterion", "LCh Hue"), NULL },
-    { GIMP_SELECT_CRITERION_LINE_ART, NC_("select-criterion", "Line Art"), NULL },
     { 0, NULL, NULL }
   };
 

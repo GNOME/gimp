@@ -50,7 +50,6 @@
 
 void
 gimp_drawable_bucket_fill (GimpDrawable         *drawable,
-                           GimpLineArt          *line_art,
                            GimpFillOptions      *options,
                            gboolean              fill_transparent,
                            GimpSelectCriterion   fill_criterion,
@@ -72,7 +71,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
   gimp_set_busy (image->gimp);
-  buffer = gimp_drawable_get_bucket_fill_buffer (drawable, line_art, options,
+  buffer = gimp_drawable_get_bucket_fill_buffer (drawable, options,
                                                  fill_transparent, fill_criterion,
                                                  threshold, sample_merged,
                                                  diagonal_neighbors,
@@ -101,9 +100,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
 /**
  * gimp_drawable_get_bucket_fill_buffer:
- * @drawable: the @GimpDrawable to edit.
- * @line_art: optional pre-computed line art if @fill_criterion is
- *            GIMP_SELECT_CRITERION_LINE_ART.
+ * @drawable: the #GimpDrawable to edit.
  * @options:
  * @fill_transparent:
  * @fill_criterion:
@@ -132,7 +129,6 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
  */
 GeglBuffer *
 gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
-                                      GimpLineArt          *line_art,
                                       GimpFillOptions      *options,
                                       gboolean              fill_transparent,
                                       GimpSelectCriterion   fill_criterion,
@@ -167,9 +163,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
                                   &sel_x, &sel_y, &sel_width, &sel_height))
     return NULL;
 
-  if (mask_buffer && *mask_buffer &&
-      (fill_criterion == GIMP_SELECT_CRITERION_LINE_ART ||
-       threshold      == 0.0))
+  if (mask_buffer && *mask_buffer && threshold == 0.0)
     {
       gfloat pixel;
 
@@ -194,7 +188,6 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
    *  contiguous region.
    */
   new_mask = gimp_pickable_contiguous_region_by_seed (pickable,
-                                                      line_art,
                                                       antialias,
                                                       threshold,
                                                       fill_transparent,
@@ -276,50 +269,222 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
       mask_offset_y = y;
     }
 
-  if (fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
+  buffer = gimp_fill_options_create_buffer (options, drawable,
+                                            GEGL_RECTANGLE (0, 0,
+                                                            width, height),
+                                            -x, -y);
+
+  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, new_mask,
+                           -mask_offset_x, -mask_offset_y, 1.0);
+
+  if (mask_x)
+    *mask_x = x;
+  if (mask_y)
+    *mask_y = y;
+  if (mask_width)
+    *mask_width = width;
+  if (mask_height)
+    *mask_height = height;
+
+  if (! mask_buffer)
+    g_object_unref (new_mask);
+
+  gimp_unset_busy (image->gimp);
+
+  return buffer;
+}
+
+/**
+ * gimp_drawable_get_line_art_fill_buffer:
+ * @drawable: the #GimpDrawable to edit.
+ * @line_art: the #GimpLineArt computed as fill source.
+ * @options: the #GimpFillOptions.
+ * @sample_merged:
+ * @seed_x: X coordinate to start the fill.
+ * @seed_y: Y coordinate to start the fill.
+ * @mask_buffer: mask of the fill in-progress when in an interactive
+ *               filling process. Set to NULL if you need a one-time
+ *               fill.
+ * @mask_x: returned x bound of @mask_buffer.
+ * @mask_y: returned x bound of @mask_buffer.
+ * @mask_width: returned width bound of @mask_buffer.
+ * @mask_height: returned height bound of @mask_buffer.
+ *
+ * Creates the fill buffer for a bucket fill operation on @drawable
+ * based on @line_art and @options, without actually applying it.
+ * If @mask_buffer is not NULL, the intermediate fill mask will also be
+ * returned. This fill mask can later be reused in successive calls to
+ * gimp_drawable_get_bucket_fill_buffer() for interactive filling.
+ *
+ * Returns: a fill buffer which can be directly applied to @drawable, or
+ *          used in a drawable filter as preview.
+ */
+GeglBuffer *
+gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
+                                        GimpLineArt      *line_art,
+                                        GimpFillOptions  *options,
+                                        gboolean          sample_merged,
+                                        gdouble           seed_x,
+                                        gdouble           seed_y,
+                                        GeglBuffer      **mask_buffer,
+                                        gdouble          *mask_x,
+                                        gdouble          *mask_y,
+                                        gint             *mask_width,
+                                        gint             *mask_height)
+{
+  GeglBufferIterator *gi;
+  GimpImage    *image;
+  GeglBuffer   *buffer;
+  GeglBuffer   *new_mask;
+  gint          x, y, width, height;
+  gint          mask_offset_x = 0;
+  gint          mask_offset_y = 0;
+  gint          sel_x, sel_y, sel_width, sel_height;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
+
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                  &sel_x, &sel_y, &sel_width, &sel_height))
+    return NULL;
+
+  if (mask_buffer && *mask_buffer)
     {
-      /* The smart colorization leaves some very irritating unselected
-       * pixels in some edge cases. Just flood any isolated pixel inside
-       * the final mask.
-       */
-      GeglBufferIterator *gi;
+      gfloat pixel;
 
-      gi = gegl_buffer_iterator_new (new_mask, GEGL_RECTANGLE (x, y, width, height),
-                                     0, NULL, GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 5);
-      gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x, y - 1, width, height),
-                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
-      gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x, y + 1, width, height),
-                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
-      gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x - 1, y, width, height),
-                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
-      gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x + 1, y, width, height),
-                                0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
-      while (gegl_buffer_iterator_next (gi))
+      gegl_buffer_sample (*mask_buffer, seed_x, seed_y, NULL, &pixel,
+                          babl_format ("Y float"),
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
+      if (pixel != 0.0)
+        /* Already selected. This seed won't change the selection. */
+        return NULL;
+    }
+
+  gimp_set_busy (image->gimp);
+
+  /*  Do a seed bucket fill...To do this, calculate a new
+   *  contiguous region.
+   */
+  new_mask = gimp_pickable_contiguous_region_by_line_art (NULL, line_art,
+                                                          (gint) seed_x,
+                                                          (gint) seed_y);
+  if (mask_buffer && *mask_buffer)
+    {
+      gimp_gegl_mask_combine_buffer (new_mask, *mask_buffer,
+                                     GIMP_CHANNEL_OP_ADD, 0, 0);
+      g_object_unref (*mask_buffer);
+    }
+  if (mask_buffer)
+    *mask_buffer = new_mask;
+
+  gimp_gegl_mask_bounds (new_mask, &x, &y, &width, &height);
+  width  -= x;
+  height -= y;
+
+  /*  If there is a selection, intersect the region bounds
+   *  with the selection bounds, to avoid processing areas
+   *  that are going to be masked out anyway.  The actual
+   *  intersection of the fill region with the mask data
+   *  happens when combining the fill buffer, in
+   *  gimp_drawable_apply_buffer().
+   */
+  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+    {
+      gint off_x = 0;
+      gint off_y = 0;
+
+      if (sample_merged)
+        gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      if (! gimp_rectangle_intersect (x, y, width, height,
+
+                                      sel_x + off_x, sel_y + off_y,
+                                      sel_width,     sel_height,
+
+                                      &x, &y, &width, &height))
         {
-          gfloat *m      = (gfloat*) gi->items[0].data;
-          gfloat *py     = (gfloat*) gi->items[1].data;
-          gfloat *ny     = (gfloat*) gi->items[2].data;
-          gfloat *px     = (gfloat*) gi->items[3].data;
-          gfloat *nx     = (gfloat*) gi->items[4].data;
-          gint    startx = gi->items[0].roi.x;
-          gint    starty = gi->items[0].roi.y;
-          gint    endy   = starty + gi->items[0].roi.height;
-          gint    endx   = startx + gi->items[0].roi.width;
-          gint    i;
-          gint    j;
+          if (! mask_buffer)
+            g_object_unref (new_mask);
+          /*  The fill region and the selection are disjoint; bail.  */
+          gimp_unset_busy (image->gimp);
 
-          for (j = starty; j < endy; j++)
-            for (i = startx; i < endx; i++)
-              {
-                if (! *m && *py && *ny && *px && *nx)
-                  *m = 1.0;
-                m++;
-                py++;
-                ny++;
-                px++;
-                nx++;
-              }
+          return NULL;
         }
+    }
+
+  /*  make sure we handle the mask correctly if it was sample-merged  */
+  if (sample_merged)
+    {
+      GimpItem *item = GIMP_ITEM (drawable);
+      gint      off_x, off_y;
+
+      /*  Limit the channel bounds to the drawable's extents  */
+      gimp_item_get_offset (item, &off_x, &off_y);
+
+      gimp_rectangle_intersect (x, y, width, height,
+
+                                off_x, off_y,
+                                gimp_item_get_width (item),
+                                gimp_item_get_height (item),
+
+                                &x, &y, &width, &height);
+
+      mask_offset_x = x;
+      mask_offset_y = y;
+
+     /*  translate mask bounds to drawable coords  */
+      x -= off_x;
+      y -= off_y;
+    }
+  else
+    {
+      mask_offset_x = x;
+      mask_offset_y = y;
+    }
+
+  /* The smart colorization leaves some very irritating unselected
+   * pixels in some edge cases. Just flood any isolated pixel inside
+   * the final mask.
+   */
+  gi = gegl_buffer_iterator_new (new_mask, GEGL_RECTANGLE (x, y, width, height),
+                                 0, NULL, GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 5);
+  gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x, y - 1, width, height),
+                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
+  gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x, y + 1, width, height),
+                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
+  gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x - 1, y, width, height),
+                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
+  gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x + 1, y, width, height),
+                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
+  while (gegl_buffer_iterator_next (gi))
+    {
+      gfloat *m      = (gfloat*) gi->items[0].data;
+      gfloat *py     = (gfloat*) gi->items[1].data;
+      gfloat *ny     = (gfloat*) gi->items[2].data;
+      gfloat *px     = (gfloat*) gi->items[3].data;
+      gfloat *nx     = (gfloat*) gi->items[4].data;
+      gint    startx = gi->items[0].roi.x;
+      gint    starty = gi->items[0].roi.y;
+      gint    endy   = starty + gi->items[0].roi.height;
+      gint    endx   = startx + gi->items[0].roi.width;
+      gint    i;
+      gint    j;
+
+      for (j = starty; j < endy; j++)
+        for (i = startx; i < endx; i++)
+          {
+            if (! *m && *py && *ny && *px && *nx)
+              *m = 1.0;
+            m++;
+            py++;
+            ny++;
+            px++;
+            nx++;
+          }
     }
 
   buffer = gimp_fill_options_create_buffer (options, drawable,
@@ -330,7 +495,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, new_mask,
                            -mask_offset_x, -mask_offset_y, 1.0);
 
-  if (fill_criterion == GIMP_SELECT_CRITERION_LINE_ART && antialias)
+  if (gimp_fill_options_get_antialias (options))
     {
       /* Antialias for the line art algorithm is not applied during mask
        * creation because it is not based on individual pixel colors.

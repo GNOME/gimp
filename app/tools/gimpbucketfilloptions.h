@@ -39,7 +39,7 @@ struct _GimpBucketFillOptions
   GimpPaintOptions              paint_options;
 
   GimpBucketFillMode            fill_mode;
-  gboolean                      fill_selection;
+  GimpBucketFillArea            fill_area;
   gboolean                      fill_transparent;
   gboolean                      sample_merged;
   gboolean                      diagonal_neighbors;

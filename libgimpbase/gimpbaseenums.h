@@ -134,6 +134,26 @@ typedef enum
 
 
 /**
+ * GimpBucketFillArea:
+ * @GIMP_BUCKET_FILL_SELECTION:      Fill whole selection
+ * @GIMP_BUCKET_FILL_SIMILAR_COLORS: Fill similar colors
+ * @GIMP_BUCKET_FILL_LINE_ART:       Fill by line art detection
+ *
+ * Bucket fill area.
+ */
+#define GIMP_TYPE_BUCKET_FILL_AREA (gimp_bucket_fill_area_get_type ())
+
+GType gimp_bucket_fill_area_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_BUCKET_FILL_SELECTION,       /*< desc="Fill whole selection" >*/
+  GIMP_BUCKET_FILL_SIMILAR_COLORS,  /*< desc="Fill similar colors" >*/
+  GIMP_BUCKET_FILL_LINE_ART         /*< desc="Fill by line art detection" >*/
+} GimpBucketFillArea;
+
+
+/**
  * GimpBucketFillMode:
  * @GIMP_BUCKET_FILL_FG:      FG color fill
  * @GIMP_BUCKET_FILL_BG:      BG color fill
@@ -1258,7 +1278,6 @@ typedef enum
  * @GIMP_SELECT_CRITERION_LCH_L:     LCh Lightness
  * @GIMP_SELECT_CRITERION_LCH_C:     LCh Chroma
  * @GIMP_SELECT_CRITERION_LCH_H:     LCh Hue
- * @GIMP_SELECT_CRITERION_LINE_ART:  Line Art
  *
  * Criterions for color similarity.
  **/
@@ -1279,7 +1298,6 @@ typedef enum
   GIMP_SELECT_CRITERION_LCH_L,      /*< desc="LCh Lightness"  >*/
   GIMP_SELECT_CRITERION_LCH_C,      /*< desc="LCh Chroma"     >*/
   GIMP_SELECT_CRITERION_LCH_H,      /*< desc="LCh Hue"        >*/
-  GIMP_SELECT_CRITERION_LINE_ART,   /*< desc="Line Art"       >*/
 } GimpSelectCriterion;
 
 

@@ -77,6 +77,7 @@ struct _GimpBucketFillToolPrivate
 
   /* Temp property save */
   GimpBucketFillMode  fill_mode;
+  GimpBucketFillArea  fill_area;
 };
 
 /*  local function prototypes  */
@@ -128,7 +129,6 @@ static void     gimp_bucket_fill_tool_cursor_update    (GimpTool              *t
                                                         GdkModifierType        state,
                                                         GimpDisplay           *display);
 
-static gboolean gimp_bucket_fill_tool_connect_handlers (gpointer               data);
 static void     gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
                                                         GParamSpec            *pspec,
                                                         GimpBucketFillTool    *tool);
@@ -207,6 +207,8 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   GimpTool              *tool    = GIMP_TOOL (object);
   GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (object);
   Gimp                  *gimp    = GIMP_CONTEXT (options)->gimp;
+  GimpContext           *context = gimp_get_user_context (gimp);
+  GimpImage             *image   = gimp_context_get_image (context);
   GimpLineArt           *line_art;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -229,14 +231,20 @@ gimp_bucket_fill_tool_constructed (GObject *object)
                           G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
   GIMP_BUCKET_FILL_TOOL (tool)->priv->line_art = line_art;
 
-  /* Avoid computing initial line art several times (for every option
-   * property as it gets deserialized) if tool is selected when starting
-   * GIMP with an image.
-   */
-  if (gimp_is_restored (gimp))
-    gimp_bucket_fill_tool_connect_handlers (tool);
-  else
-    g_idle_add (gimp_bucket_fill_tool_connect_handlers, tool);
+  g_signal_connect (options, "notify::fill-criterion",
+                    G_CALLBACK (gimp_bucket_fill_tool_options_notified),
+                    tool);
+  g_signal_connect (options, "notify::sample-merged",
+                    G_CALLBACK (gimp_bucket_fill_tool_options_notified),
+                    tool);
+  g_signal_connect (options, "notify::fill-mode",
+                    G_CALLBACK (gimp_bucket_fill_tool_options_notified),
+                    tool);
+
+  g_signal_connect (context, "image-changed",
+                    G_CALLBACK (gimp_bucket_fill_tool_image_changed),
+                    tool);
+  gimp_bucket_fill_tool_image_changed (context, image, GIMP_BUCKET_FILL_TOOL (tool));
 
   GIMP_COLOR_TOOL (tool)->pick_target = (options->fill_mode == GIMP_BUCKET_FILL_BG) ?
                                            GIMP_COLOR_PICK_TARGET_BACKGROUND : GIMP_COLOR_PICK_TARGET_FOREGROUND;
@@ -371,16 +379,27 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
           y -= (gdouble) off_y;
         }
 
-      fill = gimp_drawable_get_bucket_fill_buffer (drawable,
-                                                   tool->priv->line_art,
-                                                   fill_options,
-                                                   options->fill_transparent,
-                                                   options->fill_criterion,
-                                                   options->threshold / 255.0,
-                                                   options->sample_merged,
-                                                   options->diagonal_neighbors,
-                                                   x, y, &tool->priv->fill_mask,
-                                                   &x, &y, NULL, NULL);
+      if (options->fill_area == GIMP_BUCKET_FILL_SIMILAR_COLORS)
+        {
+          fill = gimp_drawable_get_bucket_fill_buffer (drawable,
+                                                       fill_options,
+                                                       options->fill_transparent,
+                                                       options->fill_criterion,
+                                                       options->threshold / 255.0,
+                                                       options->sample_merged,
+                                                       options->diagonal_neighbors,
+                                                       x, y, &tool->priv->fill_mask,
+                                                       &x, &y, NULL, NULL);
+        }
+      else
+        {
+          fill = gimp_drawable_get_line_art_fill_buffer (drawable,
+                                                         tool->priv->line_art,
+                                                         fill_options,
+                                                         options->sample_merged,
+                                                         x, y, &tool->priv->fill_mask,
+                                                         &x, &y, NULL, NULL);
+        }
       if (fill)
         {
           gegl_node_set (tool->priv->fill_node,
@@ -507,12 +526,12 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
           gimp_context_set_paint_mode (GIMP_CONTEXT (fill_options),
                                        gimp_context_get_paint_mode (context));
 
-          if (options->fill_selection)
+          if (options->fill_area == GIMP_BUCKET_FILL_SELECTION)
             {
               gimp_drawable_edit_fill (drawable, fill_options, NULL);
               gimp_image_flush (image);
             }
-          else
+          else /* GIMP_BUCKET_FILL_SIMILAR_COLORS or GIMP_BUCKET_FILL_LINE_ART */
             {
               gimp_bucket_fill_tool_start (bucket_tool, coords, display);
               gimp_bucket_fill_tool_preview (bucket_tool, coords, display, fill_options);
@@ -551,7 +570,7 @@ gimp_bucket_fill_tool_motion (GimpTool         *tool,
   if (gimp_image_coords_in_active_pickable (image, coords,
                                             options->sample_merged, TRUE) &&
       /* Fill selection only needs to happen once. */
-      ! options->fill_selection)
+      options->fill_area != GIMP_BUCKET_FILL_SELECTION)
     {
       GimpContext     *context  = GIMP_CONTEXT (options);
       GimpFillOptions *fill_options;
@@ -591,8 +610,8 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                       GimpButtonReleaseType  release_type,
                                       GimpDisplay           *display)
 {
-  GimpBucketFillTool *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
-  gboolean            commit;
+  GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -602,12 +621,11 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
       return;
     }
 
-  commit = (release_type != GIMP_BUTTON_RELEASE_CANCEL);
-
-  if (commit)
+  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     gimp_bucket_fill_tool_commit (bucket_tool);
 
-  gimp_bucket_fill_tool_halt (bucket_tool);
+  if (options->fill_area != GIMP_BUCKET_FILL_SELECTION)
+    gimp_bucket_fill_tool_halt (bucket_tool);
 
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
                                                   release_type, display);
@@ -681,7 +699,28 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
     }
   else if (key == gimp_get_extend_selection_mask ())
     {
-      g_object_set (options, "fill-selection", ! options->fill_selection, NULL);
+      if (press)
+        {
+          GIMP_BUCKET_FILL_TOOL (tool)->priv->fill_area = options->fill_area;
+          switch (options->fill_area)
+            {
+            case GIMP_BUCKET_FILL_SIMILAR_COLORS:
+              g_object_set (options, "fill-area", GIMP_BUCKET_FILL_SELECTION, NULL);
+              break;
+
+            default: /* GIMP_BUCKET_FILL_SELECTION && GIMP_BUCKET_FILL_LINE_ART */
+              g_object_set (options, "fill-area", GIMP_BUCKET_FILL_SIMILAR_COLORS, NULL);
+              break;
+
+              break;
+            }
+        }
+      else /* release */
+        {
+          g_object_set (options, "fill-area",
+                        GIMP_BUCKET_FILL_TOOL (tool)->priv->fill_area,
+                        NULL);
+        }
     }
 }
 
@@ -724,38 +763,6 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
-}
-
-static gboolean
-gimp_bucket_fill_tool_connect_handlers (gpointer data)
-{
-  GimpBucketFillTool    *tool    = GIMP_BUCKET_FILL_TOOL (data);
-  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-  Gimp                  *gimp    = GIMP_CONTEXT (options)->gimp;
-
-  if (gimp_is_restored (gimp))
-    {
-      GimpContext *context = gimp_get_user_context (gimp);
-      GimpImage   *image   = gimp_context_get_image (context);
-
-      g_signal_connect (options, "notify::fill-criterion",
-                        G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                        tool);
-      g_signal_connect (options, "notify::sample-merged",
-                        G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                        tool);
-      g_signal_connect (options, "notify::fill-mode",
-                        G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                        tool);
-
-      g_signal_connect (context, "image-changed",
-                        G_CALLBACK (gimp_bucket_fill_tool_image_changed),
-                        tool);
-      gimp_bucket_fill_tool_image_changed (context, image, GIMP_BUCKET_FILL_TOOL (tool));
-
-      return G_SOURCE_REMOVE;
-    }
-  return G_SOURCE_CONTINUE;
 }
 
 static void
@@ -811,7 +818,7 @@ gimp_bucket_fill_reset_line_art (GimpBucketFillTool    *tool,
   g_weak_ref_set (&tool->priv->cached_image, image ? image : NULL);
   g_weak_ref_set (&tool->priv->cached_drawable, NULL);
 
-  if (image && options->fill_criterion == GIMP_SELECT_CRITERION_LINE_ART)
+  if (image && options->fill_area == GIMP_BUCKET_FILL_LINE_ART)
     {
       GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
       GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
