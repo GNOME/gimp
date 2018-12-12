@@ -655,6 +655,8 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
         {
           gimp_tool_message_literal (tool, display,
                                      _("No stroke events selected."));
+
+          gimp_widget_blink (options->stroke_frame);
         }
 
       return FALSE;
