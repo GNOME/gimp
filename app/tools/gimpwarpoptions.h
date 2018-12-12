@@ -55,6 +55,7 @@ struct _GimpWarpOptions
   gint                   n_animation_frames;
 
   /*  options gui  */
+  GtkWidget             *stroke_frame;
   GtkWidget             *animate_button;
 };
 
