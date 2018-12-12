@@ -448,12 +448,12 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
       switch (options->behavior)
         {
         case GIMP_WARP_BEHAVIOR_MOVE:
-        case GEGL_WARP_BEHAVIOR_GROW:
-        case GEGL_WARP_BEHAVIOR_SHRINK:
-        case GEGL_WARP_BEHAVIOR_SWIRL_CW:
-        case GEGL_WARP_BEHAVIOR_SWIRL_CCW:
-        case GEGL_WARP_BEHAVIOR_ERASE:
-        case GEGL_WARP_BEHAVIOR_SMOOTH:
+        case GIMP_WARP_BEHAVIOR_GROW:
+        case GIMP_WARP_BEHAVIOR_SHRINK:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CW:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CCW:
+        case GIMP_WARP_BEHAVIOR_ERASE:
+        case GIMP_WARP_BEHAVIOR_SMOOTH:
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
         }

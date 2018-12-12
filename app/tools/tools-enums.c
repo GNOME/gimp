@@ -171,25 +171,25 @@ gimp_warp_behavior_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_WARP_BEHAVIOR_MOVE, "GIMP_WARP_BEHAVIOR_MOVE", "imp-warp-behavior-move" },
-    { GEGL_WARP_BEHAVIOR_GROW, "GEGL_WARP_BEHAVIOR_GROW", "egl-warp-behavior-grow" },
-    { GEGL_WARP_BEHAVIOR_SHRINK, "GEGL_WARP_BEHAVIOR_SHRINK", "egl-warp-behavior-shrink" },
-    { GEGL_WARP_BEHAVIOR_SWIRL_CW, "GEGL_WARP_BEHAVIOR_SWIRL_CW", "egl-warp-behavior-swirl-cw" },
-    { GEGL_WARP_BEHAVIOR_SWIRL_CCW, "GEGL_WARP_BEHAVIOR_SWIRL_CCW", "egl-warp-behavior-swirl-ccw" },
-    { GEGL_WARP_BEHAVIOR_ERASE, "GEGL_WARP_BEHAVIOR_ERASE", "egl-warp-behavior-erase" },
-    { GEGL_WARP_BEHAVIOR_SMOOTH, "GEGL_WARP_BEHAVIOR_SMOOTH", "egl-warp-behavior-smooth" },
+    { GIMP_WARP_BEHAVIOR_MOVE, "GIMP_WARP_BEHAVIOR_MOVE", "move" },
+    { GIMP_WARP_BEHAVIOR_GROW, "GIMP_WARP_BEHAVIOR_GROW", "grow" },
+    { GIMP_WARP_BEHAVIOR_SHRINK, "GIMP_WARP_BEHAVIOR_SHRINK", "shrink" },
+    { GIMP_WARP_BEHAVIOR_SWIRL_CW, "GIMP_WARP_BEHAVIOR_SWIRL_CW", "swirl-cw" },
+    { GIMP_WARP_BEHAVIOR_SWIRL_CCW, "GIMP_WARP_BEHAVIOR_SWIRL_CCW", "swirl-ccw" },
+    { GIMP_WARP_BEHAVIOR_ERASE, "GIMP_WARP_BEHAVIOR_ERASE", "erase" },
+    { GIMP_WARP_BEHAVIOR_SMOOTH, "GIMP_WARP_BEHAVIOR_SMOOTH", "smooth" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
     { GIMP_WARP_BEHAVIOR_MOVE, NC_("warp-behavior", "Move pixels"), NULL },
-    { GEGL_WARP_BEHAVIOR_GROW, NC_("warp-behavior", "Grow area"), NULL },
-    { GEGL_WARP_BEHAVIOR_SHRINK, NC_("warp-behavior", "Shrink area"), NULL },
-    { GEGL_WARP_BEHAVIOR_SWIRL_CW, NC_("warp-behavior", "Swirl clockwise"), NULL },
-    { GEGL_WARP_BEHAVIOR_SWIRL_CCW, NC_("warp-behavior", "Swirl counter-clockwise"), NULL },
-    { GEGL_WARP_BEHAVIOR_ERASE, NC_("warp-behavior", "Erase warping"), NULL },
-    { GEGL_WARP_BEHAVIOR_SMOOTH, NC_("warp-behavior", "Smooth warping"), NULL },
+    { GIMP_WARP_BEHAVIOR_GROW, NC_("warp-behavior", "Grow area"), NULL },
+    { GIMP_WARP_BEHAVIOR_SHRINK, NC_("warp-behavior", "Shrink area"), NULL },
+    { GIMP_WARP_BEHAVIOR_SWIRL_CW, NC_("warp-behavior", "Swirl clockwise"), NULL },
+    { GIMP_WARP_BEHAVIOR_SWIRL_CCW, NC_("warp-behavior", "Swirl counter-clockwise"), NULL },
+    { GIMP_WARP_BEHAVIOR_ERASE, NC_("warp-behavior", "Erase warping"), NULL },
+    { GIMP_WARP_BEHAVIOR_SMOOTH, NC_("warp-behavior", "Smooth warping"), NULL },
     { 0, NULL, NULL }
   };
 
