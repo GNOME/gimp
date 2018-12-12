@@ -294,6 +294,8 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
+  options->behavior_combo = combo;
+
   scale = gimp_prop_spin_scale_new (config, "effect-size", NULL,
                                     0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
