@@ -7,6 +7,7 @@ EXPORTS
 	gimp_blend_mode_compat_get_type
 	gimp_blend_mode_get_type
 	gimp_brush_generated_shape_get_type
+	gimp_bucket_fill_area_get_type
 	gimp_bucket_fill_mode_compat_get_type
 	gimp_bucket_fill_mode_get_type
 	gimp_cache_directory
