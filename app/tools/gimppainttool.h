@@ -45,6 +45,7 @@ struct _GimpPaintTool
   gboolean       draw_line;
 
   gboolean       picking_layer; /*  pick layer in progress (alt pressed)  */
+  GimpLayer     *picked_layer;
 
   gboolean       show_cursor;
   gboolean       draw_brush;

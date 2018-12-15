@@ -180,7 +180,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
   image        = gimp_display_get_image (display);
   selection    = gimp_image_get_mask (image);
   drawable     = gimp_image_get_active_drawable (image);
-  layer        = gimp_image_pick_layer (image, coords->x, coords->y);
+  layer        = gimp_image_pick_layer (image, coords->x, coords->y, NULL);
   floating_sel = gimp_image_get_floating_selection (image);
 
   extend_mask = gimp_get_extend_selection_mask ();

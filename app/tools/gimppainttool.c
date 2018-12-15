@@ -273,9 +273,17 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
       layer = gimp_image_pick_layer (image,
                                      (gint) coords->x,
-                                     (gint) coords->y);
-      if (layer && layer != gimp_image_get_active_layer (image))
-        gimp_image_set_active_layer (image, layer);
+                                     (gint) coords->y,
+                                     paint_tool->picked_layer);
+      if (layer)
+        {
+          if (layer != gimp_image_get_active_layer (image))
+            {
+              paint_tool->picked_layer = layer;
+              gimp_image_set_active_layer (image, layer);
+            }
+          paint_tool->picked_layer = layer;
+        }
       return;
     }
   else if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
@@ -478,6 +486,7 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
       ! paint_tool->draw_line)
     {
+      paint_tool->picked_layer  = NULL;
       if ((state & gimp_get_all_modifiers_mask ()) == GDK_MOD1_MASK)
         paint_tool->picking_layer = TRUE;
       else
@@ -514,7 +523,8 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
 
       layer = gimp_image_pick_layer (image,
                                      (gint) coords->x,
-                                     (gint) coords->y);
+                                     (gint) coords->y,
+                                     paint_tool->picked_layer);
 
       modifier = GIMP_CURSOR_MODIFIER_NONE;
       if (gimp_image_get_floating_selection (image))

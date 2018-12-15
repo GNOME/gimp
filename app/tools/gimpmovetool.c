@@ -219,7 +219,8 @@ gimp_move_tool_button_press (GimpTool            *tool,
             }
           else if ((layer = gimp_image_pick_layer (image,
                                                    coords->x,
-                                                   coords->y)))
+                                                   coords->y,
+                                                   NULL)))
             {
               if (gimp_image_get_floating_selection (image) &&
                   ! gimp_layer_is_floating_sel (layer))
@@ -582,7 +583,8 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
           modifier    = GIMP_CURSOR_MODIFIER_MOVE;
         }
       else if ((layer = gimp_image_pick_layer (image,
-                                               coords->x, coords->y)))
+                                               coords->x, coords->y,
+                                               NULL)))
         {
           /*  if there is a floating selection, and this aint it...  */
           if (gimp_image_get_floating_selection (image) &&
