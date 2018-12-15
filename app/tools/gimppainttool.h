@@ -44,6 +44,8 @@ struct _GimpPaintTool
   gboolean       pick_colors;  /*  pick color if ctrl is pressed   */
   gboolean       draw_line;
 
+  gboolean       picking_layer; /*  pick layer in progress (alt pressed)  */
+
   gboolean       show_cursor;
   gboolean       draw_brush;
   gboolean       draw_fallback;

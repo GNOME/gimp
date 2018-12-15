@@ -32,6 +32,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimplayer.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpprojection.h"
@@ -266,7 +267,18 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   gboolean          constrain;
   GError           *error = NULL;
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (paint_tool->picking_layer)
+    {
+      GimpLayer *layer;
+
+      layer = gimp_image_pick_layer (image,
+                                     (gint) coords->x,
+                                     (gint) coords->y);
+      if (layer && layer != gimp_image_get_active_layer (image))
+        gimp_image_set_active_layer (image, layer);
+      return;
+    }
+  else if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
       GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
                                                     press_type, display);
@@ -365,7 +377,7 @@ gimp_paint_tool_button_release (GimpTool              *tool,
   GimpImage        *image      = gimp_display_get_image (display);
   gboolean          cancel;
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) || paint_tool->picking_layer)
     {
       GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time,
                                                       state, release_type,
@@ -400,7 +412,7 @@ gimp_paint_tool_motion (GimpTool         *tool,
 
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) || paint_tool->picking_layer)
     return;
 
   gimp_paint_tool_paint_motion (paint_tool, coords, time);
@@ -463,6 +475,14 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
             }
         }
     }
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) &&
+      ! paint_tool->draw_line)
+    {
+      if ((state & gimp_get_all_modifiers_mask ()) == GDK_MOD1_MASK)
+        paint_tool->picking_layer = TRUE;
+      else
+        paint_tool->picking_layer = FALSE;
+    }
 }
 
 static void
@@ -472,18 +492,40 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
                                GimpDisplay      *display)
 {
   GimpPaintTool      *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpToolCursorType  tool_cursor;
   GimpCursorModifier  modifier;
   GimpCursorModifier  toggle_modifier;
+  GimpToolCursorType  old_tool_cursor;
   GimpCursorModifier  old_modifier;
   GimpCursorModifier  old_toggle_modifier;
 
+  tool_cursor     = tool->control->tool_cursor;
   modifier        = tool->control->cursor_modifier;
   toggle_modifier = tool->control->toggle_cursor_modifier;
 
+  old_tool_cursor     = tool_cursor;
   old_modifier        = modifier;
   old_toggle_modifier = toggle_modifier;
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (paint_tool->picking_layer)
+    {
+      GimpImage *image = gimp_display_get_image (display);
+      GimpLayer *layer;
+
+      layer = gimp_image_pick_layer (image,
+                                     (gint) coords->x,
+                                     (gint) coords->y);
+
+      modifier = GIMP_CURSOR_MODIFIER_NONE;
+      if (gimp_image_get_floating_selection (image))
+        modifier = GIMP_CURSOR_MODIFIER_BAD;
+      else if (layer && layer != gimp_image_get_active_layer (image))
+        modifier = GIMP_CURSOR_MODIFIER_SELECT;
+
+      gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_HAND);
+      gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+    }
+  else if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
       GimpImage    *image    = gimp_display_get_image (display);
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
@@ -519,6 +561,8 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
   /*  reset old stuff here so we are not interfering with the modifiers
    *  set by our subclasses
    */
+  gimp_tool_control_set_tool_cursor            (tool->control,
+                                                old_tool_cursor);
   gimp_tool_control_set_cursor_modifier        (tool->control,
                                                 old_modifier);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
@@ -540,7 +584,8 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
   GimpImage        *image         = gimp_display_get_image (display);
   GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
 
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)) ||
+      paint_tool->picking_layer)
     {
       GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                    proximity, display);
@@ -657,9 +702,11 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 static void
 gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
+
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)) &&
+      ! paint_tool->picking_layer)
     {
-      GimpPaintTool  *paint_tool = GIMP_PAINT_TOOL (draw_tool);
       GimpPaintCore  *core       = paint_tool->core;
       GimpImage      *image      = gimp_display_get_image (draw_tool->display);
       GimpDrawable   *drawable   = gimp_image_get_active_drawable (image);
