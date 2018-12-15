@@ -776,7 +776,7 @@ image_pick_correlate_layer_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      layer = gimp_image_pick_layer (image, x, y);
+      layer = gimp_image_pick_layer (image, x, y, NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

@@ -41,29 +41,55 @@
 GimpLayer *
 gimp_image_pick_layer (GimpImage *image,
                        gint       x,
-                       gint       y)
+                       gint       y,
+                       GimpLayer *previously_picked)
 {
   GList *all_layers;
   GList *list;
+  gint   off_x, off_y;
+  gint   tries = 1;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   all_layers = gimp_image_get_layer_list (image);
 
-  for (list = all_layers; list; list = g_list_next (list))
+  if (previously_picked)
     {
-      GimpLayer *layer = list->data;
-      gint       off_x, off_y;
+      gimp_item_get_offset (GIMP_ITEM (previously_picked), &off_x, &off_y);
+      if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (previously_picked),
+                                        x - off_x, y - off_y) <= 0.25)
+        previously_picked = NULL;
+      else
+        tries++;
+    }
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-
-      if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
-                                        x - off_x, y - off_y) > 0.25)
+  while (tries)
+    {
+      for (list = all_layers; list; list = g_list_next (list))
         {
-          g_list_free (all_layers);
+          GimpLayer *layer = list->data;
 
-          return layer;
+          if (previously_picked)
+            {
+              /* Take the first layer with a pixel at given coordinates
+               * after the previously picked one.
+               */
+              if (layer == previously_picked)
+                previously_picked = NULL;
+              continue;
+            }
+
+          gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+
+          if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (layer),
+                                            x - off_x, y - off_y) > 0.25)
+            {
+              g_list_free (all_layers);
+
+              return layer;
+            }
         }
+      tries--;
     }
 
   g_list_free (all_layers);

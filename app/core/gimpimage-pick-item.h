@@ -21,7 +21,8 @@
 
 GimpLayer       * gimp_image_pick_layer           (GimpImage *image,
                                                    gint       x,
-                                                   gint       y);
+                                                   gint       y,
+                                                   GimpLayer *previously_picked);
 GimpLayer       * gimp_image_pick_layer_by_bounds (GimpImage *image,
                                                    gint       x,
                                                    gint       y);
