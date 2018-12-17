@@ -308,14 +308,14 @@ gimp_line_art_class_init (GimpLineArtClass *klass)
                                    g_param_spec_int ("spline-max-length",
                                                      _("Maximum curved closing length"),
                                                      _("Maximum curved length (in pixels) to close the line art"),
-                                                     1, 1000, 60,
+                                                     0, 1000, 60,
                                                      G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SEGMENT_MAX_LEN,
                                    g_param_spec_int ("segment-max-length",
                                                      _("Maximum straight closing length"),
                                                      _("Maximum straight length (in pixels) to close the line art"),
-                                                     1, 1000, 20,
+                                                     0, 1000, 20,
                                                      G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
 }
 
@@ -830,28 +830,13 @@ gimp_line_art_close (GeglBuffer  *buffer,
                      gfloat     **closed_distmap)
 {
   const Babl         *gray_format;
-  gfloat             *normals;
-  gfloat             *curvatures;
-  gfloat             *smoothed_curvatures;
-  gfloat             *radii;
   GeglBufferIterator *gi;
   GeglBuffer         *closed;
   GeglBuffer         *strokes;
-  GHashTable         *visited;
-  GArray             *keypoints;
-  Pixel              *point;
-  GList              *candidates;
-  SplineCandidate    *candidate;
   guchar              max_value = 0;
-  gfloat              threshold;
-  gfloat              clamped_threshold;
   gint                width  = gegl_buffer_get_width (buffer);
   gint                height = gegl_buffer_get_height (buffer);
   gint                i;
-
-  normals             = g_new0 (gfloat, width * height * 2);
-  curvatures          = g_new0 (gfloat, width * height);
-  smoothed_curvatures = g_new0 (gfloat, width * height);
 
   if (select_transparent)
     /* Keep alpha channel as gray levels */
@@ -910,150 +895,189 @@ gimp_line_art_close (GeglBuffer  *buffer,
   /* Denoise (remove small connected components) */
   gimp_lineart_denoise (strokes, minimal_lineart_area);
 
-  /* Estimate normals & curvature */
-  gimp_lineart_compute_normals_curvatures (strokes, normals, curvatures,
-                                           smoothed_curvatures,
-                                           normal_estimate_mask_size);
+  closed = strokes;
 
-  radii = gimp_lineart_estimate_strokes_radii (strokes);
-  threshold = 1.0f - end_point_rate;
-  clamped_threshold = MAX (0.25f, threshold);
-  for (i = 0; i < width; i++)
+  if (spline_max_length > 0 || segment_max_length > 0)
     {
-      gint j;
-      for (j = 0; j < height; j++)
+      GArray     *keypoints;
+      GHashTable *visited;
+      gfloat     *radii;
+      gfloat     *normals;
+      gfloat     *curvatures;
+      gfloat     *smoothed_curvatures;
+      gfloat      threshold;
+      gfloat      clamped_threshold;
+
+      normals             = g_new0 (gfloat, width * height * 2);
+      curvatures          = g_new0 (gfloat, width * height);
+      smoothed_curvatures = g_new0 (gfloat, width * height);
+
+      /* Estimate normals & curvature */
+      gimp_lineart_compute_normals_curvatures (strokes, normals, curvatures,
+                                               smoothed_curvatures,
+                                               normal_estimate_mask_size);
+
+      radii = gimp_lineart_estimate_strokes_radii (strokes);
+      threshold = 1.0f - end_point_rate;
+      clamped_threshold = MAX (0.25f, threshold);
+      for (i = 0; i < width; i++)
         {
-          if (smoothed_curvatures[i + j * width] >= (threshold / MAX (1.0f, radii[i + j * width])) ||
-              curvatures[i + j * width] >= clamped_threshold)
-            curvatures[i + j * width] = 1.0;
-          else
-            curvatures[i + j * width] = 0.0;
-        }
-    }
-  g_free (radii);
-
-  keypoints = gimp_lineart_curvature_extremums (curvatures, smoothed_curvatures,
-                                                width, height);
-  candidates = gimp_lineart_find_spline_candidates (keypoints, normals, width,
-                                                    spline_max_length,
-                                                    spline_max_angle);
-  closed = gegl_buffer_dup (strokes);
-
-  /* Draw splines */
-  visited = g_hash_table_new_full ((GHashFunc) visited_hash_fun,
-                                   (GEqualFunc) visited_equal_fun,
-                                   (GDestroyNotify) g_free, NULL);
-  while (candidates)
-    {
-      Pixel    *p1 = g_new (Pixel, 1);
-      Pixel    *p2 = g_new (Pixel, 1);
-      gboolean  inserted = FALSE;
-
-      candidate = (SplineCandidate *) candidates->data;
-      p1->x = candidate->p1.x;
-      p1->y = candidate->p1.y;
-      p2->x = candidate->p2.x;
-      p2->y = candidate->p2.y;
-
-      g_free (candidate);
-      candidates = g_list_delete_link (candidates, candidates);
-
-      if ((! g_hash_table_contains (visited, p1) ||
-           GPOINTER_TO_INT (g_hash_table_lookup (visited, p1)) < end_point_connectivity) &&
-          (! g_hash_table_contains (visited, p2) ||
-           GPOINTER_TO_INT (g_hash_table_lookup (visited, p2)) < end_point_connectivity))
-        {
-          GArray      *discrete_curve;
-          GimpVector2  vect1 = pair2normal (*p1, normals, width);
-          GimpVector2  vect2 = pair2normal (*p2, normals, width);
-          gfloat       distance = gimp_vector2_length_val (gimp_vector2_sub_val (*p1, *p2));
-          gint         transitions;
-
-          gimp_vector2_mul (&vect1, distance);
-          gimp_vector2_mul (&vect1, spline_roundness);
-          gimp_vector2_mul (&vect2, distance);
-          gimp_vector2_mul (&vect2, spline_roundness);
-
-          discrete_curve = gimp_lineart_discrete_spline (*p1, vect1, *p2, vect2);
-
-          transitions = allow_self_intersections ?
-                          gimp_number_of_transitions (discrete_curve, strokes) :
-                          gimp_number_of_transitions (discrete_curve, closed);
-
-          if (transitions == 2 &&
-              ! gimp_lineart_curve_creates_region (closed, discrete_curve,
-                                                   created_regions_significant_area,
-                                                   created_regions_minimum_area - 1))
+          gint j;
+          for (j = 0; j < height; j++)
             {
-              for (i = 0; i < discrete_curve->len; i++)
-                {
-                  Pixel p = g_array_index (discrete_curve, Pixel, i);
+              if (smoothed_curvatures[i + j * width] >= (threshold / MAX (1.0f, radii[i + j * width])) ||
+                  curvatures[i + j * width] >= clamped_threshold)
+                curvatures[i + j * width] = 1.0;
+              else
+                curvatures[i + j * width] = 0.0;
+            }
+        }
+      g_free (radii);
 
-                  if (p.x >= 0 && p.x < gegl_buffer_get_width (closed) &&
-                      p.y >= 0 && p.y < gegl_buffer_get_height (closed))
+      keypoints = gimp_lineart_curvature_extremums (curvatures, smoothed_curvatures,
+                                                    width, height);
+      visited = g_hash_table_new_full ((GHashFunc) visited_hash_fun,
+                                       (GEqualFunc) visited_equal_fun,
+                                       (GDestroyNotify) g_free, NULL);
+
+      if (spline_max_length > 0)
+        {
+          GList           *candidates;
+          SplineCandidate *candidate;
+
+          candidates = gimp_lineart_find_spline_candidates (keypoints, normals, width,
+                                                            spline_max_length,
+                                                            spline_max_angle);
+          closed = gegl_buffer_dup (strokes);
+
+          /* Draw splines */
+          while (candidates)
+            {
+              Pixel    *p1 = g_new (Pixel, 1);
+              Pixel    *p2 = g_new (Pixel, 1);
+              gboolean  inserted = FALSE;
+
+              candidate = (SplineCandidate *) candidates->data;
+              p1->x = candidate->p1.x;
+              p1->y = candidate->p1.y;
+              p2->x = candidate->p2.x;
+              p2->y = candidate->p2.y;
+
+              g_free (candidate);
+              candidates = g_list_delete_link (candidates, candidates);
+
+              if ((! g_hash_table_contains (visited, p1) ||
+                   GPOINTER_TO_INT (g_hash_table_lookup (visited, p1)) < end_point_connectivity) &&
+                  (! g_hash_table_contains (visited, p2) ||
+                   GPOINTER_TO_INT (g_hash_table_lookup (visited, p2)) < end_point_connectivity))
+                {
+                  GArray      *discrete_curve;
+                  GimpVector2  vect1 = pair2normal (*p1, normals, width);
+                  GimpVector2  vect2 = pair2normal (*p2, normals, width);
+                  gfloat       distance = gimp_vector2_length_val (gimp_vector2_sub_val (*p1, *p2));
+                  gint         transitions;
+
+                  gimp_vector2_mul (&vect1, distance);
+                  gimp_vector2_mul (&vect1, spline_roundness);
+                  gimp_vector2_mul (&vect2, distance);
+                  gimp_vector2_mul (&vect2, spline_roundness);
+
+                  discrete_curve = gimp_lineart_discrete_spline (*p1, vect1, *p2, vect2);
+
+                  transitions = allow_self_intersections ?
+                    gimp_number_of_transitions (discrete_curve, strokes) :
+                    gimp_number_of_transitions (discrete_curve, closed);
+
+                  if (transitions == 2 &&
+                      ! gimp_lineart_curve_creates_region (closed, discrete_curve,
+                                                           created_regions_significant_area,
+                                                           created_regions_minimum_area - 1))
                     {
-                      guchar val = 1;
+                      for (i = 0; i < discrete_curve->len; i++)
+                        {
+                          Pixel p = g_array_index (discrete_curve, Pixel, i);
 
-                      gegl_buffer_set (closed, GEGL_RECTANGLE ((gint) p.x, (gint) p.y, 1, 1), 0,
-                                       NULL, &val, GEGL_AUTO_ROWSTRIDE);
+                          if (p.x >= 0 && p.x < gegl_buffer_get_width (closed) &&
+                              p.y >= 0 && p.y < gegl_buffer_get_height (closed))
+                            {
+                              guchar val = 1;
+
+                              gegl_buffer_set (closed, GEGL_RECTANGLE ((gint) p.x, (gint) p.y, 1, 1), 0,
+                                               NULL, &val, GEGL_AUTO_ROWSTRIDE);
+                            }
+                        }
+                      g_hash_table_replace (visited, p1,
+                                            GINT_TO_POINTER (GPOINTER_TO_INT (g_hash_table_lookup (visited, p1)) + 1));
+                      g_hash_table_replace (visited, p2,
+                                            GINT_TO_POINTER (GPOINTER_TO_INT (g_hash_table_lookup (visited, p2)) + 1));
+                      inserted = TRUE;
                     }
+                  g_array_free (discrete_curve, TRUE);
                 }
-              g_hash_table_replace (visited, p1,
-                                    GINT_TO_POINTER (GPOINTER_TO_INT (g_hash_table_lookup (visited, p1)) + 1));
-              g_hash_table_replace (visited, p2,
-                                    GINT_TO_POINTER (GPOINTER_TO_INT (g_hash_table_lookup (visited, p2)) + 1));
-              inserted = TRUE;
-            }
-          g_array_free (discrete_curve, TRUE);
-        }
-      if (! inserted)
-        {
-          g_free (p1);
-          g_free (p2);
-        }
-    }
-
-  /* Draw straight line segments */
-  point = (Pixel *) keypoints->data;
-  for (i = 0; i < keypoints->len; i++)
-    {
-      Pixel    *p = g_new (Pixel, 1);
-      gboolean  inserted = FALSE;
-
-      *p = *point;
-
-      if (! g_hash_table_contains (visited, p) ||
-          (small_segments_from_spline_sources &&
-           GPOINTER_TO_INT (g_hash_table_lookup (visited, p)) < end_point_connectivity))
-        {
-          GArray *segment = gimp_lineart_line_segment_until_hit (closed, *point,
-                                                                 pair2normal (*point, normals, width),
-                                                                 segment_max_length);
-
-          if (segment->len &&
-              ! gimp_lineart_curve_creates_region (closed, segment,
-                                                   created_regions_significant_area,
-                                                   created_regions_minimum_area - 1))
-            {
-              gint j;
-
-              for (j = 0; j < segment->len; j++)
+              if (! inserted)
                 {
-                  Pixel  p2 = g_array_index (segment, Pixel, j);
-                  guchar val = 1;
-
-                  gegl_buffer_set (closed, GEGL_RECTANGLE ((gint) p2.x, (gint) p2.y, 1, 1), 0,
-                                   NULL, &val, GEGL_AUTO_ROWSTRIDE);
+                  g_free (p1);
+                  g_free (p2);
                 }
-              g_hash_table_replace (visited, p,
-                                    GINT_TO_POINTER (GPOINTER_TO_INT (g_hash_table_lookup (visited, p)) + 1));
-              inserted = TRUE;
             }
-          g_array_free (segment, TRUE);
+
+          g_list_free_full (candidates, g_free);
+          g_object_unref (strokes);
         }
-      if (! inserted)
-        g_free (p);
-      point++;
+
+      /* Draw straight line segments */
+      if (segment_max_length > 0)
+        {
+          Pixel *point;
+
+          point = (Pixel *) keypoints->data;
+          for (i = 0; i < keypoints->len; i++)
+            {
+              Pixel    *p = g_new (Pixel, 1);
+              gboolean  inserted = FALSE;
+
+              *p = *point;
+
+              if (! g_hash_table_contains (visited, p) ||
+                  (small_segments_from_spline_sources &&
+                   GPOINTER_TO_INT (g_hash_table_lookup (visited, p)) < end_point_connectivity))
+                {
+                  GArray *segment = gimp_lineart_line_segment_until_hit (closed, *point,
+                                                                         pair2normal (*point, normals, width),
+                                                                         segment_max_length);
+
+                  if (segment->len &&
+                      ! gimp_lineart_curve_creates_region (closed, segment,
+                                                           created_regions_significant_area,
+                                                           created_regions_minimum_area - 1))
+                    {
+                      gint j;
+
+                      for (j = 0; j < segment->len; j++)
+                        {
+                          Pixel  p2 = g_array_index (segment, Pixel, j);
+                          guchar val = 1;
+
+                          gegl_buffer_set (closed, GEGL_RECTANGLE ((gint) p2.x, (gint) p2.y, 1, 1), 0,
+                                           NULL, &val, GEGL_AUTO_ROWSTRIDE);
+                        }
+                      g_hash_table_replace (visited, p,
+                                            GINT_TO_POINTER (GPOINTER_TO_INT (g_hash_table_lookup (visited, p)) + 1));
+                      inserted = TRUE;
+                    }
+                  g_array_free (segment, TRUE);
+                }
+              if (! inserted)
+                g_free (p);
+              point++;
+            }
+        }
+
+      g_free (normals);
+      g_free (curvatures);
+      g_free (smoothed_curvatures);
+      g_array_free (keypoints, TRUE);
+      g_hash_table_destroy (visited);
     }
 
   if (closed_distmap)
@@ -1082,14 +1106,6 @@ gimp_line_art_close (GeglBuffer  *buffer,
                       GEGL_AUTO_ROWSTRIDE, GEGL_BLIT_DEFAULT);
       g_object_unref (graph);
     }
-
-  g_hash_table_destroy (visited);
-  g_array_free (keypoints, TRUE);
-  g_object_unref (strokes);
-  g_free (normals);
-  g_free (curvatures);
-  g_free (smoothed_curvatures);
-  g_list_free_full (candidates, g_free);
 
   return closed;
 }
