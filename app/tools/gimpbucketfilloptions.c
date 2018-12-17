@@ -177,14 +177,14 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                         "line-art-spline-max-len",
                         _("Maximum curved closing length"),
                         _("Maximum curved length (in pixels) to close the line art"),
-                        1, 1000, 60,
+                        0, 1000, 60,
                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_LINE_ART_SEGMENT_MAX_LEN,
                         "line-art-segment-max-len",
                         _("Maximum straight closing length"),
                         _("Maximum straight length (in pixels) to close the line art"),
-                        1, 1000, 20,
+                        0, 1000, 20,
                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_CRITERION,
