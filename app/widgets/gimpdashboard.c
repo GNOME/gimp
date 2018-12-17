@@ -484,7 +484,7 @@ static const VariableInfo variables[] =
     .type             = VARIABLE_TYPE_SIZE_RATIO,
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "tile-cache-total\0"
-                        "tile-cache-total-uncloned"
+                        "tile-cache-total-uncompressed"
   },
 
   [VARIABLE_CACHE_HIT_MISS] =
@@ -610,7 +610,7 @@ static const VariableInfo variables[] =
     .type             = VARIABLE_TYPE_SIZE_RATIO,
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "swap-total\0"
-                        "swap-total-uncloned"
+                        "swap-total-uncompressed"
   },
 
 
