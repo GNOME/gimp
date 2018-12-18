@@ -448,12 +448,12 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
       switch (options->behavior)
         {
         case GIMP_WARP_BEHAVIOR_MOVE:
-        case GEGL_WARP_BEHAVIOR_GROW:
-        case GEGL_WARP_BEHAVIOR_SHRINK:
-        case GEGL_WARP_BEHAVIOR_SWIRL_CW:
-        case GEGL_WARP_BEHAVIOR_SWIRL_CCW:
-        case GEGL_WARP_BEHAVIOR_ERASE:
-        case GEGL_WARP_BEHAVIOR_SMOOTH:
+        case GIMP_WARP_BEHAVIOR_GROW:
+        case GIMP_WARP_BEHAVIOR_SHRINK:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CW:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CCW:
+        case GIMP_WARP_BEHAVIOR_ERASE:
+        case GIMP_WARP_BEHAVIOR_SMOOTH:
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
         }
@@ -655,9 +655,46 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
         {
           gimp_tool_message_literal (tool, display,
                                      _("No stroke events selected."));
+
+          gimp_widget_blink (options->stroke_frame);
         }
 
       return FALSE;
+    }
+
+  if (! wt->filter || ! gimp_tool_can_undo (tool, display))
+    {
+      const gchar *message = NULL;
+
+      switch (options->behavior)
+        {
+        case GIMP_WARP_BEHAVIOR_MOVE:
+        case GIMP_WARP_BEHAVIOR_GROW:
+        case GIMP_WARP_BEHAVIOR_SHRINK:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CW:
+        case GIMP_WARP_BEHAVIOR_SWIRL_CCW:
+          break;
+
+        case GIMP_WARP_BEHAVIOR_ERASE:
+          message = _("No warp to erase.");
+          break;
+
+        case GIMP_WARP_BEHAVIOR_SMOOTH:
+          message = _("No warp to smooth.");
+          break;
+        }
+
+      if (message)
+        {
+          if (show_message)
+            {
+              gimp_tool_message_literal (tool, display, message);
+
+              gimp_widget_blink (options->behavior_combo);
+            }
+
+          return FALSE;
+        }
     }
 
   return TRUE;

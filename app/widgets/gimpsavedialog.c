@@ -324,6 +324,9 @@ gimp_save_dialog_add_extra_widgets (GimpSaveDialog *dialog)
   /* Compression toggle. */
   compression_toggle =
     gtk_check_button_new_with_label (_("Save this XCF file with better but slower compression"));
+  gtk_widget_set_tooltip_text (compression_toggle,
+                               _("On edge cases, better compression algorithms might still "
+                                 "end up on bigger file size; manual check recommended"));
 
   dialog->compression_frame = gimp_frame_new (NULL);
   gtk_frame_set_label_widget (GTK_FRAME (dialog->compression_frame), compression_toggle);
