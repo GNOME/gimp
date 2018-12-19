@@ -627,13 +627,12 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
                 }
               else
                 {
-                  gimp_drawable_bucket_fill (drawable, NULL, NULL, options,
+                  gimp_drawable_bucket_fill (drawable, options,
                                              FALSE /* don't fill transparent */,
                                              GIMP_SELECT_CRITERION_COMPOSITE,
                                              threshold / 255.0,
                                              sample_merged,
                                              FALSE /* no diagonal neighbors */,
-                                             0.92, 3, /* TODO */
                                              x, y);
                }
             }
@@ -705,13 +704,12 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
                 }
               else
                 {
-                  gimp_drawable_bucket_fill (drawable, NULL, NULL, options,
+                  gimp_drawable_bucket_fill (drawable, options,
                                              fill_transparent,
                                              select_criterion,
                                              threshold / 255.0,
                                              sample_merged,
                                              FALSE /* no diagonal neighbors */,
-                                             0.92, 3, /* TODO */
                                              x, y);
                }
             }
