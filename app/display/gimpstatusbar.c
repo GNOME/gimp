@@ -234,7 +234,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   store = gimp_unit_store_new (2);
   statusbar->unit_combo = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
-  gtk_combo_box_set_wrap_width (statusbar->unit_combo, 1);
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (statusbar->unit_combo), 1);
 
   gtk_widget_set_can_focus (statusbar->unit_combo, FALSE);
   g_object_set (statusbar->unit_combo, "focus-on-click", FALSE, NULL);
