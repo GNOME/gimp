@@ -143,6 +143,10 @@ gimp_layer_mode_combo_box_constructed (GObject *object)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  combo->priv->layer_mode);
+  /* Sure why this is needed to have the dropdown display properly.
+   * Probably some weird side effect. See issue #2642.
+   */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (combo), 1);
 }
 
 static void
