@@ -39,10 +39,37 @@ Core:
 User interface:
 
   - Enabled HiDPI/Retina support for the GTK2/OSX build, fixes blurry icons. 
+  - Add a tooltip to the "better compression" checkbox in save dialog to
+    make it clearer it does not mean that the file size is necessarily
+    smaller in every cases. In particular some best/worst case are
+    possible when an algorithm less efficient in general may end up
+    better on a particular image.
 
 Tools:
 
   - In scale tool, scale around center even when using numeric input.
+  - New algorithm in the Bucket Fill tool when selecting the affected
+    area "Fill by line art detection", based off the G'Mic algorithm for
+    "smart colorization": https://hal.archives-ouvertes.fr/hal-01891876
+    In a few words, it identifies painted pixels (either based on
+    grayscale or opacity values) and tries to close line arts to allow
+    filling even with not perfectly closed zones; the second step of the
+    algorithm will flood the colors under line art pixels to prevent
+    "holes" in the filling.
+    It is possible to control a max size (in pixels) for the flooding,
+    as well as max length of closing segments and splines.
+  - The Bucket Fill tool got new interaction allowing to hold the click
+    and move the mouse to fill based on several seed zones (for "Fill
+    by line art detection" as well as "Fill similar colors"). You can
+    now cancel the fill in progress with right click as in other tools.
+  - The Bucket Fill tool now allows color picking with ctrl-click, same
+    as every painting tool. It will pick either the foreground or
+    background color depending on the selected Fill Type. The ctrl-alt
+    modifier combination is also possible to pick the non-Fill Type
+    color.
+  - In the Bucket Fill tool, the Alt modifier will now switch to
+    "FG color fill" when "Pattern fill" was set (instead of doing
+    nothing).
 
 Plug-ins:
 
