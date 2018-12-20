@@ -70,7 +70,7 @@ static gint          gimp_gradient_compare           (GimpData            *data1
 
 static gchar       * gimp_gradient_get_checksum      (GimpTagged          *tagged);
 
-static GimpGradientSegment *
+static inline GimpGradientSegment *
               gimp_gradient_get_segment_at_internal  (GimpGradient        *gradient,
                                                       GimpGradientSegment *seg,
                                                       gdouble              pos);
@@ -460,7 +460,8 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
   GimpRGB  right_color;
   GimpRGB  rgb;
 
-  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
+  /* type-check disabled to improve speed */
+  /* g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL); */
   g_return_val_if_fail (color != NULL, NULL);
 
   pos = CLAMP (pos, 0.0, 1.0);
@@ -516,11 +517,19 @@ gimp_gradient_get_color_at (GimpGradient                *gradient,
 
   /* Get left/right colors */
 
-  gimp_gradient_segment_get_left_flat_color (gradient,
-                                             context, seg, &left_color);
+  if (context)
+    {
+      gimp_gradient_segment_get_left_flat_color (gradient,
+                                                 context, seg, &left_color);
 
-  gimp_gradient_segment_get_right_flat_color (gradient,
-                                              context, seg, &right_color);
+      gimp_gradient_segment_get_right_flat_color (gradient,
+                                                  context, seg, &right_color);
+    }
+  else
+    {
+      left_color  = seg->left_color;
+      right_color = seg->right_color;
+    }
 
   /* Calculate color components */
 
@@ -2160,7 +2169,7 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
 
 /*  private functions  */
 
-static GimpGradientSegment *
+static inline GimpGradientSegment *
 gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
                                        GimpGradientSegment *seg,
                                        gdouble              pos)
