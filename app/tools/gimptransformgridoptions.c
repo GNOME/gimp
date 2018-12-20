@@ -133,7 +133,7 @@ gimp_transform_grid_options_class_init (GimpTransformGridOptionsClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_SCALE,
                             "constrain-scale",
                             NULL, NULL,
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_ROTATE,
