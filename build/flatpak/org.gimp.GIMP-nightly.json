@@ -294,12 +294,12 @@
             "config-opts": [ "--disable-cups" ],
             "make-args": [ "so" ],
             "make-install-args": [ "soinstall" ],
-            "cleanup": [ "/bin", "/share/man", "/share/ghostscript/9.25/doc/", "/share/ghostscript/9.25/examples" ],
+            "cleanup": [ "/bin", "/share/man", "/share/ghostscript/9.26/doc/", "/share/ghostscript/9.26/examples" ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs925/ghostscript-9.25.tar.gz",
-                    "sha512": "6710bf00e6246bf07173d4012c7742dd2315b6888b883d63372c0dc2fef76e8be5672f10e4c529244ba153f4ae8ab713403209365a3f7a76c469d69d797761b1"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs926/ghostscript-9.26.tar.gz",
+                    "sha512": "670159c23618ffafa85c671642bf182a107a82c053a1fd8c3f45f73f203524077be1b212d2ddbabae7892c7713922877e03b020f78bd2aab1ae582c4fc7d820a"
                 },
                 {
                     "type": "shell",
@@ -421,7 +421,7 @@
                 "rm -fr /app/include /app/lib/pkgconfig /app/share/pkgconfig",
                 "rm -fr /app/share/gtk-doc/ /app/share/man/",
                 "rm -fr /app/lib/*.la /app/lib/*.a",
-                "rm -fr /app/share/ghostscript/9.20/doc/",
+                "rm -fr /app/share/ghostscript/9.26/doc/",
                 "rm -fr /app/bin/wmf* /app/bin/libwmf-*",
                 "rm -fr /app/bin/pygtk* /app/bin/pygobject* /app/bin/pygobject-codegen-2.0"
             ]
