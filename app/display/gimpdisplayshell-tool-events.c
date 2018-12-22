@@ -32,6 +32,7 @@
 #include "core/gimp-filter-history.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimpitem.h"
 
 #include "widgets/gimpcontrollers.h"
@@ -1239,6 +1240,12 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
                 return FALSE;
               }
 
+            if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK)
+              /* We reset the picked layer only when hitting the Alt
+               * key.
+               */
+              shell->picked_layer = NULL;
+
             switch (kevent->keyval)
               {
               case GDK_KEY_Left:
@@ -1537,13 +1544,47 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
   shell->rotating          = (state & gimp_get_extend_selection_mask ()) ? TRUE : FALSE;
   shell->rotate_drag_angle = shell->rotate_angle;
   shell->scaling           = (state & gimp_get_toggle_behavior_mask ()) ? TRUE : FALSE;
+  shell->layer_picking     = (state & GDK_MOD1_MASK) ? TRUE : FALSE;
 
   if (shell->rotating)
-    gimp_display_shell_set_override_cursor (shell,
-                                            (GimpCursorType) GDK_EXCHANGE);
+    {
+      gimp_display_shell_set_override_cursor (shell,
+                                              (GimpCursorType) GDK_EXCHANGE);
+    }
   else if (shell->scaling)
-    gimp_display_shell_set_override_cursor (shell,
-                                            (GimpCursorType) GIMP_CURSOR_ZOOM);
+    {
+      gimp_display_shell_set_override_cursor (shell,
+                                              (GimpCursorType) GIMP_CURSOR_ZOOM);
+    }
+  else if (shell->layer_picking)
+    {
+      GimpImage  *image   = gimp_display_get_image (shell->display);
+      GimpLayer  *layer;
+      GimpCoords  image_coords;
+      GimpCoords  display_coords;
+      guint32     time;
+
+      gimp_display_shell_set_override_cursor (shell,
+                                              (GimpCursorType) GIMP_CURSOR_CROSSHAIR);
+
+      gimp_display_shell_get_event_coords (shell, event,
+                                           &display_coords,
+                                           &state, &time);
+      gimp_display_shell_untransform_event_coords (shell,
+                                                   &display_coords, &image_coords,
+                                                   NULL);
+      layer = gimp_image_pick_layer (image,
+                                     (gint) image_coords.x,
+                                     (gint) image_coords.y,
+                                     shell->picked_layer);
+
+      if (layer && ! gimp_image_get_floating_selection (image))
+        {
+          if (layer != gimp_image_get_active_layer (image))
+            gimp_image_set_active_layer (image, layer);
+          shell->picked_layer = layer;
+        }
+    }
   else
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GDK_FLEUR);
@@ -1565,6 +1606,7 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   shell->rotating          = FALSE;
   shell->rotate_drag_angle = 0.0;
   shell->scaling           = FALSE;
+  shell->layer_picking     = FALSE;
 
   /* We may have ungrabbed the pointer when space was released while
    * mouse was down, to be able to catch a GDK_BUTTON_RELEASE event.
@@ -1599,6 +1641,10 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
                                      shell->scroll_start_y,
                                      shell->scroll_last_x - x,
                                      shell->scroll_last_y - y);
+    }
+  else if (shell->layer_picking)
+    {
+      /* Do nothing. We only pick the layer on click. */
     }
   else
     {
