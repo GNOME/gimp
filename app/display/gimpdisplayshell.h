@@ -208,6 +208,8 @@ struct _GimpDisplayShell
   gdouble            rotate_drag_angle;
   gboolean           scaling;
   gpointer           scroll_info;
+  gboolean           layer_picking;
+  GimpLayer         *picked_layer;
 
   GeglBuffer        *mask;
   gint               mask_offset_x;
