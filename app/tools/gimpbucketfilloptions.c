@@ -442,7 +442,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /* Line art frame */
-  frame = gimp_frame_new (_("Line art detection"));
+  frame = gimp_frame_new (_("Line Art Detection"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   options->priv->line_art_frame = frame;
   gtk_widget_show (frame);
