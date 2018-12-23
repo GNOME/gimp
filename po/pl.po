@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 12:11+0100\n"
-"PO-Revision-Date: 2018-12-16 12:12+0100\n"
+"POT-Creation-Date: 2018-12-23 13:51+0100\n"
+"PO-Revision-Date: 2018-12-23 13:52+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -936,7 +936,7 @@ msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
 #: ../app/actions/actions.c:231 ../app/dialogs/dialogs.c:310
-#: ../app/gui/gui.c:550
+#: ../app/gui/gui.c:552
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
@@ -10174,7 +10174,7 @@ msgstr "Przenieś to okno na ekran %s"
 #: ../app/dialogs/template-options-dialog.c:119
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
-#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:193
+#: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:195
 #: ../app/tools/gimpfiltertool.c:325 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
@@ -13093,12 +13093,12 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:486
+#: ../app/core/gimpdrawable.c:515
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:183
+#: ../app/core/gimpdrawable-bucket-fill.c:86
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Wypełnienie kubełkiem"
@@ -13184,7 +13184,7 @@ msgid "Style"
 msgstr "Styl"
 
 #: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
-#: ../app/tools/gimpbucketfilloptions.c:132
+#: ../app/tools/gimpbucketfilloptions.c:147
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Wygładzanie"
@@ -14032,6 +14032,43 @@ msgstr "Maska warstwy na zaznaczenie"
 msgid "Cannot rename layer masks."
 msgstr "Nie można zmienić nazwy maski warstwy."
 
+#: ../app/core/gimplineart.c:288 ../app/core/gimplineart.c:289
+msgid "Select transparent pixels instead of gray ones"
+msgstr "Zaznaczenie przezroczystych pikseli zamiast szarych"
+
+#: ../app/core/gimplineart.c:295 ../app/tools/gimpbucketfilloptions.c:164
+msgid "Line art detection threshold"
+msgstr "Próg wykrycia kresek rysunku"
+
+#: ../app/core/gimplineart.c:296 ../app/tools/gimpbucketfilloptions.c:165
+msgid "Threshold to detect contour (higher values will include more pixels)"
+msgstr ""
+"Próg do wykrycia konturu (wyższe wartości będą zawierały więcej pikseli)"
+
+#: ../app/core/gimplineart.c:302 ../app/tools/gimpbucketfilloptions.c:171
+msgid "Maximum growing size"
+msgstr "Maksymalny rozmiar powiększenia"
+
+#: ../app/core/gimplineart.c:303 ../app/tools/gimpbucketfilloptions.c:172
+msgid "Maximum number of pixels grown under the line art"
+msgstr "Maksymalna liczba pikseli dodanych pod kreskami rysunku"
+
+#: ../app/core/gimplineart.c:309 ../app/tools/gimpbucketfilloptions.c:178
+msgid "Maximum curved closing length"
+msgstr "Maksymalna długość zamykania krzywej"
+
+#: ../app/core/gimplineart.c:310 ../app/tools/gimpbucketfilloptions.c:179
+msgid "Maximum curved length (in pixels) to close the line art"
+msgstr "Maksymalna długość krzywej (w pikselach) do zamknięcia kresek rysunku"
+
+#: ../app/core/gimplineart.c:316 ../app/tools/gimpbucketfilloptions.c:185
+msgid "Maximum straight closing length"
+msgstr "Maksymalna długość zamykania prostej"
+
+#: ../app/core/gimplineart.c:317 ../app/tools/gimpbucketfilloptions.c:186
+msgid "Maximum straight length (in pixels) to close the line art"
+msgstr "Maksymalna długość prostej (w pikselach) do zamknięcia kresek rysunku"
+
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
 msgid "MyPaint brush file is unreasonably large, skipping."
@@ -14509,7 +14546,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "Profil kolorów"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:94
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:108
 msgid "Fill type"
 msgstr "Typ wypełnienia"
 
@@ -14892,7 +14929,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 
-#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:190
+#: ../app/dialogs/dialogs-constructors.c:216 ../app/gui/gui.c:192
 #: ../app/gui/gui-message.c:271
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
@@ -17626,7 +17663,7 @@ msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
-#: ../app/tools/gimpbucketfilltool.c:138 ../app/tools/gimpcagetool.c:221
+#: ../app/tools/gimpbucketfilltool.c:292 ../app/tools/gimpcagetool.c:221
 #: ../app/tools/gimpfiltertool.c:269 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
@@ -17634,7 +17671,7 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
-#: ../app/tools/gimpbucketfilltool.c:145 ../app/tools/gimpcagetool.c:228
+#: ../app/tools/gimpbucketfilltool.c:306 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1150
 #: ../app/tools/gimpfiltertool.c:276 ../app/tools/gimpgradienttool.c:255
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:286
@@ -17750,7 +17787,7 @@ msgstr "bez zarządzania kolorami"
 msgid "pixels"
 msgstr "piksele"
 
-#: ../app/display/gimpstatusbar.c:469
+#: ../app/display/gimpstatusbar.c:470
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Anuluj <i>%s</i>"
@@ -19048,23 +19085,23 @@ msgstr ""
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:236
+#: ../app/gui/gui.c:238
 msgid "default:LTR"
 msgstr "default:LTR"
 
-#: ../app/gui/gui.c:326
+#: ../app/gui/gui.c:328
 msgid "Image Recovery"
 msgstr "Odzyskiwanie obrazu"
 
-#: ../app/gui/gui.c:328
+#: ../app/gui/gui.c:330
 msgid "_Discard"
 msgstr "_Odrzuć"
 
-#: ../app/gui/gui.c:329
+#: ../app/gui/gui.c:331
 msgid "_Recover"
 msgstr "O_dzyskaj"
 
-#: ../app/gui/gui.c:340
+#: ../app/gui/gui.c:342
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "GIMP został otwarty po awarii."
 
@@ -19074,7 +19111,7 @@ msgstr "GIMP został otwarty po awarii."
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: ../app/gui/gui.c:349
+#: ../app/gui/gui.c:351
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -19087,7 +19124,7 @@ msgstr[2] "%d obrazów zostało uratowanych z awarii. Spróbować je odzyskać?
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:594
+#: ../app/gui/gui.c:596
 msgid "Documents"
 msgstr "Dokumenty"
 
@@ -19465,7 +19502,7 @@ msgid "Alignment"
 msgstr "Wyrównanie"
 
 #: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:128
-#: ../app/tools/gimpbucketfilloptions.c:117 ../app/tools/gimpcoloroptions.c:69
+#: ../app/tools/gimpbucketfilloptions.c:132 ../app/tools/gimpcoloroptions.c:69
 #: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
 msgstr "Próbkowanie wszystkich warstw"
@@ -19923,7 +19960,7 @@ msgstr "Progowanie próbki"
 msgid "Sample transparent"
 msgstr "Przezroczysta próbka"
 
-#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Sąsiedzi po przekątnej"
@@ -21139,105 +21176,119 @@ msgstr "_Kontrast"
 msgid "Edit these Settings as Levels"
 msgstr "Modyfikacja tych ustawień jako poziomy"
 
-#: ../app/tools/gimpbucketfilloptions.c:102
+#: ../app/tools/gimpbucketfilloptions.c:116
 msgid "Fill selection"
 msgstr "Wypełnienie zaznaczenia"
 
-#: ../app/tools/gimpbucketfilloptions.c:103
+#: ../app/tools/gimpbucketfilloptions.c:117
 msgid "Which area will be filled"
 msgstr "Który obszar ma zostać wypełniony"
 
-#: ../app/tools/gimpbucketfilloptions.c:109
+#: ../app/tools/gimpbucketfilloptions.c:124
 msgid "Fill transparent areas"
 msgstr "Z obszarami przezroczystymi"
 
-#: ../app/tools/gimpbucketfilloptions.c:110
+#: ../app/tools/gimpbucketfilloptions.c:125
 msgid "Allow completely transparent regions to be filled"
 msgstr "Umożliwia wypełnianie całkowicie przezroczystych obszarów"
 
-#: ../app/tools/gimpbucketfilloptions.c:118
+#: ../app/tools/gimpbucketfilloptions.c:133
 msgid "Base filled area on all visible layers"
 msgstr ""
 "Powoduje ustalanie wypełnianego obszaru na podstawie wszystkich widocznych "
 "warstw"
 
-#: ../app/tools/gimpbucketfilloptions.c:125
+#: ../app/tools/gimpbucketfilloptions.c:140
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Traktuje piksele sąsiadujące po przekątnej jako połączone"
 
-#: ../app/tools/gimpbucketfilloptions.c:133
+#: ../app/tools/gimpbucketfilloptions.c:148
 msgid ""
-"Base fill opacity on color difference from the clicked pixel (see "
-"threshold). Disable antialiasing to fill the entire area uniformly."
+"Base fill opacity on color difference from the clicked pixel (see threshold) "
+"or on line  art borders. Disable antialiasing to fill the entire area "
+"uniformly."
 msgstr ""
 "Opiera krycie wypełnienia na różnicy kolorów z klikniętego piksela (proszę "
-"zobaczyć próg). Wyłączenie wygładzania wypełni cały obszar równomiernie."
+"zobaczyć próg) lub na granicach kresek rysunku. Wyłączenie wygładzania "
+"wypełni cały obszar równomiernie."
 
-#: ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/tools/gimpbucketfilloptions.c:157
 #: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpbucketfilloptions.c:143
+#: ../app/tools/gimpbucketfilloptions.c:158
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "Maksymalna różnica kolorów"
 
-#: ../app/tools/gimpbucketfilloptions.c:149
-#: ../app/tools/gimpbucketfilloptions.c:353
+#: ../app/tools/gimpbucketfilloptions.c:192
+#: ../app/tools/gimpbucketfilloptions.c:440
 msgid "Fill by"
 msgstr "Wypełnienie"
 
-#: ../app/tools/gimpbucketfilloptions.c:150
+#: ../app/tools/gimpbucketfilloptions.c:193
 msgid "Criterion used for determining color similarity"
 msgstr "Kryterium używane do ustalania podobieństwa kolorów"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:283
+#: ../app/tools/gimpbucketfilloptions.c:377
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Typ wypełnienia  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:298
+#: ../app/tools/gimpbucketfilloptions.c:392
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Uwzględniany obszar  (%s)"
 
-#: ../app/tools/gimpbucketfilloptions.c:302
-msgid "Fill whole selection"
-msgstr "Całe zaznaczenie"
-
-#: ../app/tools/gimpbucketfilloptions.c:303
-msgid "Fill similar colors"
-msgstr "Podobne kolory"
-
-#: ../app/tools/gimpbucketfilloptions.c:312
+#. Similar color frame
+#: ../app/tools/gimpbucketfilloptions.c:401
 msgid "Finding Similar Colors"
 msgstr "Wyszukiwanie podobnych kolorów"
 
-#: ../app/tools/gimpbucketfilltool.c:88
+#. Line art frame
+#: ../app/tools/gimpbucketfilloptions.c:445
+msgid "Line Art Detection"
+msgstr "Wykrywanie kresek rysunku"
+
+#: ../app/tools/gimpbucketfilltool.c:162
 msgid "Bucket Fill"
 msgstr "Wypełnienie kubełkiem"
 
-#: ../app/tools/gimpbucketfilltool.c:89
+#: ../app/tools/gimpbucketfilltool.c:163
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr "Wypełnienie kubełkiem: wypełnia zaznaczony obszar kolorem lub deseniem"
 
-#: ../app/tools/gimpbucketfilltool.c:90
+#: ../app/tools/gimpbucketfilltool.c:164
 msgid "_Bucket Fill"
 msgstr "Wyp_ełnienie kubełkiem"
 
-#: ../app/tools/gimpbucketfilltool.c:154 ../app/tools/gimpcagetool.c:237
+#: ../app/tools/gimpbucketfilltool.c:299 ../app/tools/gimpcagetool.c:237
 #: ../app/tools/gimpfiltertool.c:285
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:313
 #: ../app/tools/gimptransformtool.c:521 ../app/tools/gimpwarptool.c:645
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
+
+#: ../app/tools/gimpbucketfilltool.c:334
+msgid "Bucket fill"
+msgstr "Wypełnienie kubełkiem"
+
+#: ../app/tools/gimpbucketfilltool.c:678 ../app/tools/gimpbucketfilltool.c:789
+#: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:447
+msgid "Click in any image to pick the background color"
+msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor tła"
+
+#: ../app/tools/gimpbucketfilltool.c:685 ../app/tools/gimpbucketfilltool.c:798
+#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:441
+msgid "Click in any image to pick the foreground color"
+msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor pierwszoplanowy"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
@@ -21375,14 +21426,6 @@ msgstr "Po_branie koloru"
 #: ../app/tools/gimpcolorpickertool.c:255
 msgid "Click in any image to view its color"
 msgstr "Kliknięcie w dowolnym obrazie wyświetli jego kolor"
-
-#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:441
-msgid "Click in any image to pick the foreground color"
-msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor pierwszoplanowy"
-
-#: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:447
-msgid "Click in any image to pick the background color"
-msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor tła"
 
 #: ../app/tools/gimpcolorpickertool.c:278
 msgid "Click in any image to add the color to the palette"
@@ -25673,7 +25716,15 @@ msgstr ""
 msgid "Save this XCF file with better but slower compression"
 msgstr "Zapisanie tego pliku XCF z lepszą, ale wolniejszą kompresją"
 
-#: ../app/widgets/gimpsavedialog.c:395
+#: ../app/widgets/gimpsavedialog.c:328
+msgid ""
+"On edge cases, better compression algorithms might still end up on bigger "
+"file size; manual check recommended"
+msgstr ""
+"W rzadkich przypadkach plik z lepszym algorytmem kompresji może być większy. "
+"Zalecane jest ręczne sprawdzenie."
+
+#: ../app/widgets/gimpsavedialog.c:398
 #, c-format
 msgid ""
 "The image uses features from %s and won't be readable by older GIMP versions."
@@ -25681,7 +25732,7 @@ msgstr ""
 "Obraz używa funkcji z wersji %s i nie będzie mógł być otwierany "
 "w poprzednich wersjach programu GIMP."
 
-#: ../app/widgets/gimpsavedialog.c:404
+#: ../app/widgets/gimpsavedialog.c:407
 msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "Metadane nie będą widoczne w programie GIMP starszym niż wersja 2.10."
 
