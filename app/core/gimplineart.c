@@ -308,14 +308,14 @@ gimp_line_art_class_init (GimpLineArtClass *klass)
                                    g_param_spec_int ("spline-max-length",
                                                      _("Maximum curved closing length"),
                                                      _("Maximum curved length (in pixels) to close the line art"),
-                                                     0, 1000, 60,
+                                                     0, 1000, 100,
                                                      G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SEGMENT_MAX_LEN,
                                    g_param_spec_int ("segment-max-length",
                                                      _("Maximum straight closing length"),
                                                      _("Maximum straight length (in pixels) to close the line art"),
-                                                     0, 1000, 20,
+                                                     0, 1000, 100,
                                                      G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
 }
 
