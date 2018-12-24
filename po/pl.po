@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-23 13:51+0100\n"
-"PO-Revision-Date: 2018-12-23 13:52+0100\n"
+"POT-Creation-Date: 2018-12-24 14:40+0100\n"
+"PO-Revision-Date: 2018-12-24 14:41+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -13184,7 +13184,7 @@ msgid "Style"
 msgstr "Styl"
 
 #: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
-#: ../app/tools/gimpbucketfilloptions.c:147
+#: ../app/tools/gimpbucketfilloptions.c:146
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Wygładzanie"
@@ -14036,36 +14036,36 @@ msgstr "Nie można zmienić nazwy maski warstwy."
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Zaznaczenie przezroczystych pikseli zamiast szarych"
 
-#: ../app/core/gimplineart.c:295 ../app/tools/gimpbucketfilloptions.c:164
+#: ../app/core/gimplineart.c:295 ../app/tools/gimpbucketfilloptions.c:163
 msgid "Line art detection threshold"
 msgstr "Próg wykrycia kresek rysunku"
 
-#: ../app/core/gimplineart.c:296 ../app/tools/gimpbucketfilloptions.c:165
+#: ../app/core/gimplineart.c:296 ../app/tools/gimpbucketfilloptions.c:164
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Próg do wykrycia konturu (wyższe wartości będą zawierały więcej pikseli)"
 
-#: ../app/core/gimplineart.c:302 ../app/tools/gimpbucketfilloptions.c:171
+#: ../app/core/gimplineart.c:302 ../app/tools/gimpbucketfilloptions.c:170
 msgid "Maximum growing size"
 msgstr "Maksymalny rozmiar powiększenia"
 
-#: ../app/core/gimplineart.c:303 ../app/tools/gimpbucketfilloptions.c:172
+#: ../app/core/gimplineart.c:303 ../app/tools/gimpbucketfilloptions.c:171
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Maksymalna liczba pikseli dodanych pod kreskami rysunku"
 
-#: ../app/core/gimplineart.c:309 ../app/tools/gimpbucketfilloptions.c:178
+#: ../app/core/gimplineart.c:309
 msgid "Maximum curved closing length"
 msgstr "Maksymalna długość zamykania krzywej"
 
-#: ../app/core/gimplineart.c:310 ../app/tools/gimpbucketfilloptions.c:179
+#: ../app/core/gimplineart.c:310
 msgid "Maximum curved length (in pixels) to close the line art"
 msgstr "Maksymalna długość krzywej (w pikselach) do zamknięcia kresek rysunku"
 
-#: ../app/core/gimplineart.c:316 ../app/tools/gimpbucketfilloptions.c:185
+#: ../app/core/gimplineart.c:316
 msgid "Maximum straight closing length"
 msgstr "Maksymalna długość zamykania prostej"
 
-#: ../app/core/gimplineart.c:317 ../app/tools/gimpbucketfilloptions.c:186
+#: ../app/core/gimplineart.c:317
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Maksymalna długość prostej (w pikselach) do zamknięcia kresek rysunku"
 
@@ -14546,7 +14546,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "Profil kolorów"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:108
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:107
 msgid "Fill type"
 msgstr "Typ wypełnienia"
 
@@ -19502,7 +19502,7 @@ msgid "Alignment"
 msgstr "Wyrównanie"
 
 #: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:128
-#: ../app/tools/gimpbucketfilloptions.c:132 ../app/tools/gimpcoloroptions.c:69
+#: ../app/tools/gimpbucketfilloptions.c:131 ../app/tools/gimpcoloroptions.c:69
 #: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
 msgstr "Próbkowanie wszystkich warstw"
@@ -19960,7 +19960,7 @@ msgstr "Progowanie próbki"
 msgid "Sample transparent"
 msgstr "Przezroczysta próbka"
 
-#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:138
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Sąsiedzi po przekątnej"
@@ -21176,34 +21176,34 @@ msgstr "_Kontrast"
 msgid "Edit these Settings as Levels"
 msgstr "Modyfikacja tych ustawień jako poziomy"
 
-#: ../app/tools/gimpbucketfilloptions.c:116
+#: ../app/tools/gimpbucketfilloptions.c:115
 msgid "Fill selection"
 msgstr "Wypełnienie zaznaczenia"
 
-#: ../app/tools/gimpbucketfilloptions.c:117
+#: ../app/tools/gimpbucketfilloptions.c:116
 msgid "Which area will be filled"
 msgstr "Który obszar ma zostać wypełniony"
 
-#: ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/tools/gimpbucketfilloptions.c:123
 msgid "Fill transparent areas"
 msgstr "Z obszarami przezroczystymi"
 
-#: ../app/tools/gimpbucketfilloptions.c:125
+#: ../app/tools/gimpbucketfilloptions.c:124
 msgid "Allow completely transparent regions to be filled"
 msgstr "Umożliwia wypełnianie całkowicie przezroczystych obszarów"
 
-#: ../app/tools/gimpbucketfilloptions.c:133
+#: ../app/tools/gimpbucketfilloptions.c:132
 msgid "Base filled area on all visible layers"
 msgstr ""
 "Powoduje ustalanie wypełnianego obszaru na podstawie wszystkich widocznych "
 "warstw"
 
-#: ../app/tools/gimpbucketfilloptions.c:140
+#: ../app/tools/gimpbucketfilloptions.c:139
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Traktuje piksele sąsiadujące po przekątnej jako połączone"
 
-#: ../app/tools/gimpbucketfilloptions.c:148
+#: ../app/tools/gimpbucketfilloptions.c:147
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
@@ -21213,46 +21213,54 @@ msgstr ""
 "zobaczyć próg) lub na granicach kresek rysunku. Wyłączenie wygładzania "
 "wypełni cały obszar równomiernie."
 
-#: ../app/tools/gimpbucketfilloptions.c:157
+#: ../app/tools/gimpbucketfilloptions.c:156
 #: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpbucketfilloptions.c:158
+#: ../app/tools/gimpbucketfilloptions.c:157
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "Maksymalna różnica kolorów"
 
-#: ../app/tools/gimpbucketfilloptions.c:192
-#: ../app/tools/gimpbucketfilloptions.c:440
+#: ../app/tools/gimpbucketfilloptions.c:177
+msgid "Maximum gap length"
+msgstr "Maksymalna długość luki"
+
+#: ../app/tools/gimpbucketfilloptions.c:178
+msgid "Maximum gap (in pixels) in line art which can be closed"
+msgstr "Maksymalna luka (w pikselach) w kreskach rysunku, jaką można zamknąć"
+
+#: ../app/tools/gimpbucketfilloptions.c:184
+#: ../app/tools/gimpbucketfilloptions.c:426
 msgid "Fill by"
 msgstr "Wypełnienie"
 
-#: ../app/tools/gimpbucketfilloptions.c:193
+#: ../app/tools/gimpbucketfilloptions.c:185
 msgid "Criterion used for determining color similarity"
 msgstr "Kryterium używane do ustalania podobieństwa kolorów"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:377
+#: ../app/tools/gimpbucketfilloptions.c:363
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Typ wypełnienia  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:392
+#: ../app/tools/gimpbucketfilloptions.c:378
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Uwzględniany obszar  (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:401
+#: ../app/tools/gimpbucketfilloptions.c:387
 msgid "Finding Similar Colors"
 msgstr "Wyszukiwanie podobnych kolorów"
 
 #. Line art frame
-#: ../app/tools/gimpbucketfilloptions.c:445
+#: ../app/tools/gimpbucketfilloptions.c:431
 msgid "Line Art Detection"
 msgstr "Wykrywanie kresek rysunku"
 
