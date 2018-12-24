@@ -223,12 +223,12 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   g_object_bind_property (options,  "line-art-max-grow",
                           line_art, "max-grow",
                           G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
-  g_object_bind_property (options,  "line-art-spline-max-len",
+  g_object_bind_property (options,  "line-art-max-gap-length",
                           line_art, "spline-max-length",
-                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
-  g_object_bind_property (options,  "line-art-segment-max-len",
+                          G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);
+  g_object_bind_property (options,  "line-art-max-gap-length",
                           line_art, "segment-max-length",
-                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+                          G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);
   GIMP_BUCKET_FILL_TOOL (tool)->priv->line_art = line_art;
 
   g_signal_connect (options, "notify::fill-criterion",
