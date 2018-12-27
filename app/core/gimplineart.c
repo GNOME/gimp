@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gimp-parallel.h"
+#include "gimp-priorities.h"
 #include "gimp-utils.h" /* GIMP_TIMER */
 #include "gimpasync.h"
 #include "gimpcancelable.h"
@@ -36,6 +37,7 @@
 #include "gimplineart.h"
 #include "gimppickable.h"
 #include "gimpprojection.h"
+#include "gimpviewable.h"
 #include "gimpwaitable.h"
 
 #include "gimp-intl.h"
@@ -58,6 +60,8 @@ struct _GimpLineArtPrivate
   gboolean      compute_after_thaw;
 
   GimpAsync    *async;
+
+  gint          idle_id;
 
   GimpPickable *input;
   GeglBuffer   *closed;
@@ -156,9 +160,8 @@ static LineArtResult * line_art_result_new                     (GeglBuffer      
                                                                 gfloat                 *distmap);
 static void            line_art_result_free                    (LineArtResult          *result);
 
-static void            gimp_line_art_projection_rendered       (GimpProjection         *proj,
-                                                                GimpLineArt            *line_art);
-static void            gimp_line_art_drawable_painted          (GimpDrawable           *drawable,
+static gboolean        gimp_line_art_idle                      (GimpLineArt            *line_art);
+static void            gimp_line_art_input_invalidate_preview  (GimpViewable           *viewable,
                                                                 GimpLineArt            *line_art);
 
 
@@ -330,28 +333,9 @@ gimp_line_art_finalize (GObject *object)
 {
   GimpLineArt *line_art = GIMP_LINE_ART (object);
 
-  if (line_art->priv->input)
-    {
-      if (GIMP_IS_IMAGE (line_art->priv->input))
-        g_signal_handlers_disconnect_by_data (gimp_image_get_projection (GIMP_IMAGE (line_art->priv->input)),
-                                              line_art);
-      else
-        g_signal_handlers_disconnect_by_data (line_art->priv->input,
-                                              line_art);
-    }
-  if (line_art->priv->async)
-    {
-      /* we cancel the async, but don't wait for it to finish, since
-       * it can't actually be interrupted.  instead
-       * gimp_bucket_fill_compute_line_art_cb() bails if the async has
-       * been canceled, to avoid accessing the dead tool.
-       */
-      gimp_cancelable_cancel (GIMP_CANCELABLE (line_art->priv->async));
-      g_clear_object (&line_art->priv->async);
-    }
+  line_art->priv->frozen = FALSE;
 
-  g_clear_object (&line_art->priv->closed);
-  g_clear_pointer (&line_art->priv->distmap, g_free);
+  gimp_line_art_set_input (line_art, NULL);
 }
 
 static void
@@ -435,31 +419,20 @@ void
 gimp_line_art_set_input (GimpLineArt  *line_art,
                          GimpPickable *pickable)
 {
+  g_return_if_fail (pickable == NULL || GIMP_IS_VIEWABLE (pickable));
+
   if (line_art->priv->input)
-    {
-      if (GIMP_IS_IMAGE (line_art->priv->input))
-        g_signal_handlers_disconnect_by_data (gimp_image_get_projection (GIMP_IMAGE (line_art->priv->input)),
-                                              line_art);
-      else
-        g_signal_handlers_disconnect_by_data (line_art->priv->input,
-                                              line_art);
-    }
+    g_signal_handlers_disconnect_by_data (line_art->priv->input, line_art);
 
   line_art->priv->input = pickable;
 
   gimp_line_art_compute (line_art);
+
   if (pickable)
     {
-      if (GIMP_IS_IMAGE (pickable))
-        g_signal_connect (gimp_image_get_projection (GIMP_IMAGE (pickable)), "rendered",
-                          G_CALLBACK (gimp_line_art_projection_rendered),
-                          line_art);
-      else if (GIMP_IS_DRAWABLE (pickable))
-        g_signal_connect (pickable, "painted",
-                          G_CALLBACK (gimp_line_art_drawable_painted),
-                          line_art);
-      else
-        g_return_if_reached ();
+      g_signal_connect (pickable, "invalidate-preview",
+                        G_CALLBACK (gimp_line_art_input_invalidate_preview),
+                        line_art);
     }
 }
 
@@ -523,8 +496,18 @@ gimp_line_art_compute (GimpLineArt *line_art)
 
   if (line_art->priv->async)
     {
+      /* we cancel the async, but don't wait for it to finish, since
+       * it can't actually be interrupted.  instead gimp_line_art_compute_cb()
+       * bails if the async has been canceled, to avoid accessing the line art.
+       */
       gimp_cancelable_cancel (GIMP_CANCELABLE (line_art->priv->async));
       g_clear_object (&line_art->priv->async);
+    }
+
+  if (line_art->priv->idle_id)
+    {
+      g_source_remove (line_art->priv->idle_id);
+      line_art->priv->idle_id = 0;
     }
 
   g_clear_object (&line_art->priv->closed);
@@ -536,23 +519,15 @@ gimp_line_art_compute (GimpLineArt *line_art)
        * may trigger this signal handler, and will leak a line art (as
        * line_art->priv->async has not been set yet).
        */
-      if (GIMP_IS_IMAGE (line_art->priv->input))
-        g_signal_handlers_block_by_func (gimp_image_get_projection (GIMP_IMAGE (line_art->priv->input)),
-                                         G_CALLBACK (gimp_line_art_projection_rendered),
-                                         line_art);
-      else
-        g_signal_handlers_block_by_func (line_art->priv->input,
-                                         G_CALLBACK (gimp_line_art_drawable_painted),
-                                         line_art);
+      g_signal_handlers_block_by_func (
+        line_art->priv->input,
+        G_CALLBACK (gimp_line_art_input_invalidate_preview),
+        line_art);
       line_art->priv->async = gimp_line_art_prepare_async (line_art, +1);
-      if (GIMP_IS_IMAGE (line_art->priv->input))
-        g_signal_handlers_unblock_by_func (gimp_image_get_projection (GIMP_IMAGE (line_art->priv->input)),
-                                           G_CALLBACK (gimp_line_art_projection_rendered),
-                                           line_art);
-      else
-        g_signal_handlers_unblock_by_func (line_art->priv->input,
-                                           G_CALLBACK (gimp_line_art_drawable_painted),
-                                           line_art);
+      g_signal_handlers_unblock_by_func (
+        line_art->priv->input,
+        G_CALLBACK (gimp_line_art_input_invalidate_preview),
+        line_art);
 
       gimp_async_add_callback_for_object (line_art->priv->async,
                                           (GimpAsyncCallback) gimp_line_art_compute_cb,
@@ -750,18 +725,27 @@ line_art_result_free (LineArtResult *data)
   g_slice_free (LineArtResult, data);
 }
 
-static void
-gimp_line_art_projection_rendered (GimpProjection *proj,
-                                   GimpLineArt    *line_art)
+static gboolean
+gimp_line_art_idle (GimpLineArt *line_art)
 {
+  line_art->priv->idle_id = 0;
+
   gimp_line_art_compute (line_art);
+
+  return G_SOURCE_REMOVE;
 }
 
 static void
-gimp_line_art_drawable_painted (GimpDrawable *drawable,
-                                GimpLineArt  *line_art)
+gimp_line_art_input_invalidate_preview (GimpViewable *viewable,
+                                        GimpLineArt  *line_art)
 {
-  gimp_line_art_compute (line_art);
+  if (! line_art->priv->idle_id)
+    {
+      line_art->priv->idle_id = g_idle_add_full (
+        GIMP_PRIORITY_VIEWABLE_IDLE,
+        (GSourceFunc) gimp_line_art_idle,
+        line_art, NULL);
+    }
 }
 
 /* All actual computation functions. */
