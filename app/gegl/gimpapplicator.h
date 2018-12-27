@@ -48,8 +48,6 @@ struct _GimpApplicator
   gint                    apply_offset_y;
   GeglNode               *apply_offset_node;
 
-  GeglNode               *dup_apply_buffer_node;
-
   gboolean                preview_enabled;
   GeglRectangle           preview_rect;
   GeglNode               *preview_cache_node;
@@ -127,8 +125,6 @@ void         gimp_applicator_set_preview      (GimpApplicator       *applicator,
 void         gimp_applicator_blit             (GimpApplicator       *applicator,
                                                const GeglRectangle  *rect);
 
-GeglBuffer * gimp_applicator_dup_apply_buffer (GimpApplicator       *applicator,
-                                               const GeglRectangle  *rect);
 GeglBuffer * gimp_applicator_get_cache_buffer (GimpApplicator       *applicator,
                                                GeglRectangle       **rectangles,
                                                gint                 *n_rectangles);
