@@ -1336,7 +1336,6 @@
       <xi:include href="xml/channel-options-dialog.xml" />
       <xi:include href="xml/convert-dialog.xml" />
       <xi:include href="xml/data-delete-dialog.xml" />
-      <xi:include href="xml/fade-dialog.xml" />
       <xi:include href="xml/file-open-dialog.xml" />
       <xi:include href="xml/file-open-location-dialog.xml" />
       <xi:include href="xml/file-save-dialog.xml" />

@@ -27,7 +27,6 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
-#include "core/gimpdrawableundo.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
@@ -100,13 +99,6 @@ static const GimpActionEntry edit_actions[] =
     NC_("edit-action", "Remove all operations from the undo history"),
     G_CALLBACK (edit_undo_clear_cmd_callback),
     GIMP_HELP_EDIT_UNDO_CLEAR },
-
-  { "edit-fade", GIMP_ICON_EDIT_UNDO,
-    NC_("edit-action", "_Fade..."), NULL,
-    NC_("edit-action",
-        "Modify paint mode and opacity of the last pixel manipulation"),
-    G_CALLBACK (edit_fade_cmd_callback),
-    GIMP_HELP_EDIT_FADE },
 
   { "edit-cut", GIMP_ICON_EDIT_CUT,
     NC_("edit-action", "Cu_t"), "<primary>X",
@@ -305,11 +297,9 @@ edit_actions_update (GimpActionGroup *group,
   GimpDrawable *drawable     = NULL;
   gchar        *undo_name    = NULL;
   gchar        *redo_name    = NULL;
-  gchar        *fade_name    = NULL;
   gboolean      writable     = FALSE;
   gboolean      children     = FALSE;
   gboolean      undo_enabled = FALSE;
-  gboolean      fade_enabled = FALSE;
 
   if (image)
     {
@@ -351,21 +341,6 @@ edit_actions_update (GimpActionGroup *group,
           else if (redo)
             redo_name = g_strdup_printf (_("_Redo %s"),
                                          gimp_object_get_name (redo));
-
-          undo = gimp_image_undo_get_fadeable (image);
-
-          if (GIMP_IS_DRAWABLE_UNDO (undo) &&
-              GIMP_DRAWABLE_UNDO (undo)->applied_buffer)
-            {
-              fade_enabled = TRUE;
-            }
-
-          if (fade_enabled)
-            {
-              fade_name =
-                g_strdup_printf (_("_Fade %s..."),
-                                 gimp_object_get_name (undo));
-            }
         }
     }
 
@@ -377,18 +352,15 @@ edit_actions_update (GimpActionGroup *group,
 
   SET_LABEL ("edit-undo", undo_name ? undo_name : _("_Undo"));
   SET_LABEL ("edit-redo", redo_name ? redo_name : _("_Redo"));
-  SET_LABEL ("edit-fade", fade_name ? fade_name : _("_Fade..."));
 
   SET_SENSITIVE ("edit-undo",        undo_enabled && undo_name);
   SET_SENSITIVE ("edit-redo",        undo_enabled && redo_name);
   SET_SENSITIVE ("edit-strong-undo", undo_enabled && undo_name);
   SET_SENSITIVE ("edit-strong-redo", undo_enabled && redo_name);
   SET_SENSITIVE ("edit-undo-clear",  undo_enabled && (undo_name || redo_name));
-  SET_SENSITIVE ("edit-fade",        fade_enabled && fade_name);
 
   g_free (undo_name);
   g_free (redo_name);
-  g_free (fade_name);
 
   SET_SENSITIVE ("edit-cut",                         writable && !children);
   SET_SENSITIVE ("edit-copy",                        drawable);

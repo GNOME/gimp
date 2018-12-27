@@ -210,7 +210,6 @@ app/dialogs/convert-precision-dialog.c
 app/dialogs/data-delete-dialog.c
 app/dialogs/dialogs-constructors.c
 app/dialogs/dialogs.c
-app/dialogs/fade-dialog.c
 app/dialogs/file-open-dialog.c
 app/dialogs/file-open-location-dialog.c
 app/dialogs/file-save-dialog.c

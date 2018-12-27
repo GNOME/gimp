@@ -276,8 +276,6 @@ libappcore_a_sources = \
 	gimpimage-crop.h			\
 	gimpimage-duplicate.c			\
 	gimpimage-duplicate.h			\
-	gimpimage-fade.c			\
-	gimpimage-fade.h			\
 	gimpimage-flip.c			\
 	gimpimage-flip.h			\
 	gimpimage-grid.h                	\

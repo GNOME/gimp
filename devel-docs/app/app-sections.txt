@@ -1068,7 +1068,6 @@ gimp_edit_named_copy
 gimp_edit_named_copy_visible
 gimp_edit_clear
 gimp_edit_fill
-gimp_edit_fade
 </SECTION>
 
 <SECTION>
@@ -11379,7 +11378,6 @@ gimp_image_undo_group_start
 gimp_image_undo_group_end
 gimp_image_undo_push
 gimp_image_undo_can_compress
-gimp_image_undo_get_fadeable
 </SECTION>
 
 <SECTION>
@@ -11777,11 +11775,6 @@ dialogs_get_toolbox
 <SECTION>
 <FILE>about-dialog</FILE>
 about_dialog_create
-</SECTION>
-
-<SECTION>
-<FILE>fade-dialog</FILE>
-fade_dialog_new
 </SECTION>
 
 <SECTION>
@@ -13613,7 +13606,6 @@ edit_redo_cmd_callback
 edit_strong_redo_cmd_callback
 edit_strong_undo_cmd_callback
 edit_undo_clear_cmd_callback
-edit_fade_cmd_callback
 </SECTION>
 
 <SECTION>

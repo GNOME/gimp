@@ -53,7 +53,5 @@ GimpUndo      * gimp_image_undo_can_compress    (GimpImage     *image,
                                                  GType          object_type,
                                                  GimpUndoType   undo_type);
 
-GimpUndo      * gimp_image_undo_get_fadeable    (GimpImage     *image);
-
 
 #endif /* __GIMP_IMAGE__UNDO_H__ */
