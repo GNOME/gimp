@@ -148,14 +148,8 @@ gimp_applicator_new (GeglNode *parent,
                          "operation", "gegl:translate",
                          NULL);
 
-  applicator->dup_apply_buffer_node =
-    gegl_node_new_child (applicator->node,
-                         "operation", "gegl:copy-buffer",
-                         NULL);
-
   gegl_node_link_many (applicator->aux_node,
                        applicator->apply_offset_node,
-                       applicator->dup_apply_buffer_node,
                        NULL);
 
   if (use_split_preview)
@@ -170,7 +164,7 @@ gimp_applicator_new (GeglNode *parent,
                              "operation", "gegl:nop",
                              NULL);
 
-      gegl_node_link_many (applicator->dup_apply_buffer_node,
+      gegl_node_link_many (applicator->apply_offset_node,
                            applicator->preview_cache_node,
                            applicator->preview_crop_node,
                            NULL);
@@ -179,8 +173,8 @@ gimp_applicator_new (GeglNode *parent,
     }
   else
     {
-      gegl_node_connect_to (applicator->dup_apply_buffer_node, "output",
-                            applicator->mode_node,             "aux");
+      gegl_node_connect_to (applicator->apply_offset_node, "output",
+                            applicator->mode_node,         "aux");
     }
 
   applicator->mask_node =
@@ -585,34 +579,6 @@ gimp_applicator_blit (GimpApplicator      *applicator,
 
   gegl_node_blit (applicator->dest_node, 1.0, rect,
                   NULL, NULL, 0, GEGL_BLIT_DEFAULT);
-}
-
-GeglBuffer *
-gimp_applicator_dup_apply_buffer (GimpApplicator      *applicator,
-                                  const GeglRectangle *rect)
-{
-  GeglBuffer *buffer;
-  GeglBuffer *shifted;
-
-  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
-  g_return_val_if_fail (rect != NULL, NULL);
-
-  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect->width, rect->height),
-                            babl_format ("RGBA float"));
-
-  shifted = g_object_new (GEGL_TYPE_BUFFER,
-                          "source",  buffer,
-                          "shift-x", -rect->x,
-                          "shift-y", -rect->y,
-                          NULL);
-
-  gegl_node_set (applicator->dup_apply_buffer_node,
-                 "buffer", shifted,
-                 NULL);
-
-  g_object_unref (shifted);
-
-  return buffer;
 }
 
 GeglBuffer *
