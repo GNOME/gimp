@@ -81,7 +81,6 @@ static gdouble GIMP_PROJECTION_CHUNK_TIME = 0.0666;
 enum
 {
   UPDATE,
-  RENDERED,
   LAST_SIGNAL
 };
 
@@ -258,15 +257,6 @@ gimp_projection_class_init (GimpProjectionClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT,
                   G_TYPE_INT);
-
-  projection_signals[RENDERED] =
-    g_signal_new ("rendered",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpProjectionClass, rendered),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
 
   object_class->finalize         = gimp_projection_finalize;
   object_class->set_property     = gimp_projection_set_property;
@@ -852,7 +842,6 @@ gimp_projection_chunk_render_stop (GimpProjection *proj)
 
   g_source_remove (proj->priv->chunk_render.idle_id);
   proj->priv->chunk_render.idle_id = 0;
-  g_signal_emit (proj, projection_signals[RENDERED], 0);
 }
 
 static gboolean

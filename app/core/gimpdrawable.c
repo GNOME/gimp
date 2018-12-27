@@ -66,7 +66,6 @@
 enum
 {
   UPDATE,
-  PAINTED,
   ALPHA_CHANGED,
   LAST_SIGNAL
 };
@@ -219,16 +218,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   GimpFilterClass   *filter_class      = GIMP_FILTER_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
 
-  /**
-   * GimpDrawable::update:
-   * @drawable: the object which received the signal.
-   * @x:
-   * @y:
-   * @width:
-   * @height:
-   *
-   * This signal is emitted when a region of the drawable is updated.
-   **/
   gimp_drawable_signals[UPDATE] =
     g_signal_new ("update",
                   G_TYPE_FROM_CLASS (klass),
@@ -241,24 +230,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT,
                   G_TYPE_INT);
-
-  /**
-   * GimpDrawable::painted:
-   * @drawable: the object which received the signal.
-   *
-   * This signal is emitted when the drawable has been painted. Unlike
-   * the "update" signal, it will be emitted once for a single paint
-   * event (whereas several "update" signals could be emitted
-   * sequentially for various regions of the drawable).
-   **/
-  gimp_drawable_signals[PAINTED] =
-    g_signal_new ("painted",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpDrawableClass, painted),
-                  NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
 
   gimp_drawable_signals[ALPHA_CHANGED] =
     g_signal_new ("alpha-changed",
@@ -1034,7 +1005,6 @@ gimp_drawable_update (GimpDrawable *drawable,
     {
       g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
                      x, y, width, height);
-      g_signal_emit (drawable, gimp_drawable_signals[PAINTED], 0);
     }
   else
     {
