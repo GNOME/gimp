@@ -43,11 +43,9 @@
 #include "gimpdrawable-private.h"
 #include "gimpdrawable-shadow.h"
 #include "gimpdrawable-transform.h"
-#include "gimpdrawableundo.h"
 #include "gimpfilterstack.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
-#include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"
@@ -900,10 +898,7 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
                               gint          width,
                               gint          height)
 {
-  GimpImage        *image;
-  GimpDrawableUndo *undo;
-  gint              applied_x = x;
-  gint              applied_y = y;
+  GimpImage *image;
 
   if (! buffer)
     {
@@ -939,14 +934,6 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
   gimp_image_undo_push_drawable (image,
                                  undo_desc, drawable,
                                  buffer, x, y);
-
-  undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
-
-  if (undo)
-    {
-      undo->applied_x = applied_x;
-      undo->applied_y = applied_y;
-    }
 
   g_object_unref (buffer);
 }

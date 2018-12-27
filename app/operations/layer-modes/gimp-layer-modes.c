@@ -86,8 +86,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
-                            GIMP_LAYER_MODE_CONTEXT_FADE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
@@ -368,8 +367,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE  |
                             GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
-    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
-                            GIMP_LAYER_MODE_CONTEXT_FADE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -450,8 +448,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
     .op_name              = "gimp:behind",
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
-                            GIMP_LAYER_MODE_CONTEXT_FADE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -826,7 +823,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:replace",
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_TRIVIAL,
-    .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -838,7 +834,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_ALPHA_ONLY,
-    .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_UNION,
     .composite_mode       = GIMP_LAYER_COMPOSITE_UNION
   }

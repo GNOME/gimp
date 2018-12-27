@@ -33,9 +33,7 @@
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpdrawable-combine.h"
-#include "gimpdrawableundo.h"
 #include "gimpimage.h"
-#include "gimpimage-undo.h"
 #include "gimptempbuf.h"
 
 
@@ -102,34 +100,8 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
 
   if (push_undo)
     {
-      GimpDrawableUndo *undo;
-
       gimp_drawable_push_undo (drawable, undo_desc,
                                NULL, x, y, width, height);
-
-      undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
-
-      if (undo)
-        {
-          undo->paint_mode      = mode;
-          undo->blend_space     = blend_space;
-          undo->composite_space = composite_space;
-          undo->composite_mode  = composite_mode;
-          undo->opacity         = opacity;
-
-          undo->applied_buffer =
-            gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                             gegl_buffer_get_format (buffer));
-
-          gimp_gegl_buffer_copy (
-            buffer,
-            GEGL_RECTANGLE (buffer_region->x + (x - base_x),
-                            buffer_region->y + (y - base_y),
-                            width, height),
-            GEGL_ABYSS_NONE,
-            undo->applied_buffer,
-            GEGL_RECTANGLE (0, 0, width, height));
-        }
     }
 
   applicator = gimp_applicator_new (NULL, FALSE, FALSE);

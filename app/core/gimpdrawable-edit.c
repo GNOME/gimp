@@ -29,11 +29,9 @@
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-edit.h"
-#include "gimpdrawableundo.h"
 #include "gimpcontext.h"
 #include "gimpfilloptions.h"
 #include "gimpimage.h"
-#include "gimpimage-undo.h"
 #include "gimppattern.h"
 #include "gimptempbuf.h"
 
@@ -106,24 +104,17 @@ gimp_drawable_edit_fill_direct (GimpDrawable    *drawable,
                                 GimpFillOptions *options,
                                 const gchar     *undo_desc)
 {
-  GeglBuffer       *buffer;
-  GimpImage        *image;
-  GimpContext      *context;
-  GimpDrawableUndo *undo;
-  gdouble           opacity;
-  GimpLayerMode     mode;
-  GimpLayerMode     composite_mode;
-  gint              width;
-  gint              height;
+  GeglBuffer    *buffer;
+  GimpContext   *context;
+  GimpLayerMode  mode;
+  gint           width;
+  gint           height;
 
-  buffer         = gimp_drawable_get_buffer (drawable);
-  image          = gimp_item_get_image (GIMP_ITEM (drawable));
-  context        = GIMP_CONTEXT (options);
-  opacity        = gimp_context_get_opacity (context);
-  mode           = gimp_context_get_paint_mode (context);
-  composite_mode = gimp_layer_mode_get_paint_composite_mode (mode);
-  width          = gimp_item_get_width  (GIMP_ITEM (drawable));
-  height         = gimp_item_get_height (GIMP_ITEM (drawable));
+  buffer  = gimp_drawable_get_buffer (drawable);
+  context = GIMP_CONTEXT (options);
+  mode    = gimp_context_get_paint_mode (context);
+  width   = gimp_item_get_width  (GIMP_ITEM (drawable));
+  height  = gimp_item_get_height (GIMP_ITEM (drawable));
 
   gimp_drawable_push_undo (drawable, undo_desc,
                            NULL, 0, 0, width, height);
@@ -132,27 +123,6 @@ gimp_drawable_edit_fill_direct (GimpDrawable    *drawable,
     gimp_fill_options_fill_buffer (options, drawable, buffer, 0, 0);
   else
     gimp_gegl_clear (buffer, NULL);
-
-  undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
-
-  if (undo)
-    {
-      undo->paint_mode      = mode;
-      undo->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
-      undo->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
-      undo->composite_mode  = composite_mode;
-      undo->opacity         = opacity;
-
-      if (! gimp_layer_mode_is_subtractive (mode))
-        {
-          undo->applied_buffer = gegl_buffer_dup (buffer);
-        }
-      else
-        {
-          undo->applied_buffer = gimp_fill_options_create_buffer (
-            options, drawable, GEGL_RECTANGLE (0, 0, width, height), 0, 0);
-        }
-    }
 }
 
 

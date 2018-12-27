@@ -30,9 +30,6 @@ void   edit_strong_redo_cmd_callback        (GtkAction *action,
 void   edit_undo_clear_cmd_callback         (GtkAction *action,
                                              gpointer   data);
 
-void   edit_fade_cmd_callback               (GtkAction *action,
-                                             gpointer   data);
-
 void   edit_cut_cmd_callback                (GtkAction *action,
                                              gpointer   data);
 void   edit_copy_cmd_callback               (GtkAction *action,

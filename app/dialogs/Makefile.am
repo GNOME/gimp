@@ -37,8 +37,6 @@ libappdialogs_a_sources = \
 	data-delete-dialog.h		\
 	extensions-dialog.c		\
 	extensions-dialog.h		\
-	fade-dialog.c			\
-	fade-dialog.h			\
 	file-open-dialog.c		\
 	file-open-dialog.h		\
 	file-open-location-dialog.c	\

@@ -26,7 +26,6 @@
 
 #include "gimp.h"
 #include "gimp-utils.h"
-#include "gimpdrawableundo.h"
 #include "gimpimage.h"
 #include "gimpimage-private.h"
 #include "gimpimage-undo.h"
@@ -457,34 +456,6 @@ gimp_image_undo_can_compress (GimpImage    *image,
           return undo;
         }
     }
-
-  return NULL;
-}
-
-GimpUndo *
-gimp_image_undo_get_fadeable (GimpImage *image)
-{
-  GimpImagePrivate *private;
-  GimpUndo         *undo;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  undo = gimp_undo_stack_peek (private->undo_stack);
-
-  if (GIMP_IS_UNDO_STACK (undo) && undo->undo_type == GIMP_UNDO_GROUP_PAINT)
-    {
-      GimpUndoStack *stack = GIMP_UNDO_STACK (undo);
-
-      if (gimp_undo_stack_get_depth (stack) == 2)
-        {
-          undo = gimp_undo_stack_peek (stack);
-        }
-    }
-
-  if (GIMP_IS_DRAWABLE_UNDO (undo))
-    return undo;
 
   return NULL;
 }
