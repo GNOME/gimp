@@ -197,6 +197,11 @@ gimp_applicator_new (GeglNode *parent,
                          "mask",      applicator->affect,
                          NULL);
 
+  applicator->output_convert_format_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gegl:nop",
+                         NULL);
+
   if (use_result_cache)
     {
       applicator->output_cache_node =
@@ -206,6 +211,7 @@ gimp_applicator_new (GeglNode *parent,
 
       gegl_node_link_many (applicator->input_node,
                            applicator->affect_node,
+                           applicator->output_convert_format_node,
                            applicator->output_cache_node,
                            applicator->output_node,
                            NULL);
@@ -214,6 +220,7 @@ gimp_applicator_new (GeglNode *parent,
     {
       gegl_node_link_many (applicator->input_node,
                            applicator->affect_node,
+                           applicator->output_convert_format_node,
                            applicator->output_node,
                            NULL);
     }
@@ -478,6 +485,32 @@ gimp_applicator_set_affect (GimpApplicator    *applicator,
       gegl_node_set (applicator->affect_node,
                      "mask", affect,
                      NULL);
+    }
+}
+
+void
+gimp_applicator_set_output_format (GimpApplicator *applicator,
+                                   const Babl     *format)
+{
+  g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
+
+  if (applicator->output_format != format)
+    {
+      applicator->output_format = format;
+
+      if (format)
+        {
+          gegl_node_set (applicator->output_convert_format_node,
+                         "operation", "gegl:convert-format",
+                         "format",    format,
+                         NULL);
+        }
+      else
+        {
+          gegl_node_set (applicator->output_convert_format_node,
+                         "operation", "gegl:nop",
+                         NULL);
+        }
     }
 }
 
