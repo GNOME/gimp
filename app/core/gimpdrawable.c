@@ -66,6 +66,7 @@
 enum
 {
   UPDATE,
+  FORMAT_CHANGED,
   ALPHA_CHANGED,
   LAST_SIGNAL
 };
@@ -196,6 +197,9 @@ static void       gimp_drawable_real_swap_pixels   (GimpDrawable      *drawable,
                                                     gint               y);
 static GeglNode * gimp_drawable_real_get_source_node (GimpDrawable    *drawable);
 
+static void       gimp_drawable_format_changed     (GimpDrawable      *drawable);
+static void       gimp_drawable_alpha_changed      (GimpDrawable      *drawable);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM,
                          G_ADD_PRIVATE (GimpDrawable)
@@ -231,6 +235,15 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
 
+  gimp_drawable_signals[FORMAT_CHANGED] =
+    g_signal_new ("format-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDrawableClass, format_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   gimp_drawable_signals[ALPHA_CHANGED] =
     g_signal_new ("alpha-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -262,6 +275,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   item_class->transform           = gimp_drawable_transform;
 
   klass->update                   = gimp_drawable_real_update;
+  klass->format_changed           = NULL;
   klass->alpha_changed            = NULL;
   klass->estimate_memsize         = gimp_drawable_real_estimate_memsize;
   klass->invalidate_boundary      = NULL;
@@ -801,8 +815,9 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                                gint          offset_x,
                                gint          offset_y)
 {
-  GimpItem *item          = GIMP_ITEM (drawable);
-  gint      old_has_alpha = -1;
+  GimpItem   *item          = GIMP_ITEM (drawable);
+  const Babl *old_format    = NULL;
+  gint        old_has_alpha = -1;
 
   g_object_freeze_notify (G_OBJECT (drawable));
 
@@ -813,7 +828,10 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
                                        drawable, FALSE);
 
   if (drawable->private->buffer)
-    old_has_alpha = gimp_drawable_has_alpha (drawable);
+    {
+      old_format    = gimp_drawable_get_format (drawable);
+      old_has_alpha = gimp_drawable_has_alpha (drawable);
+    }
 
   g_set_object (&drawable->private->buffer, buffer);
 
@@ -841,6 +859,9 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
   gimp_item_set_size (item,
                       gegl_buffer_get_width  (buffer),
                       gegl_buffer_get_height (buffer));
+
+  if (gimp_drawable_get_format (drawable) != old_format)
+    gimp_drawable_format_changed (drawable);
 
   if (gimp_drawable_has_alpha (drawable) != old_has_alpha)
     gimp_drawable_alpha_changed (drawable);
@@ -937,6 +958,18 @@ gimp_drawable_real_get_source_node (GimpDrawable *drawable)
                          NULL);
 
   return g_object_ref (drawable->private->buffer_source_node);
+}
+
+static void
+gimp_drawable_format_changed (GimpDrawable *drawable)
+{
+  g_signal_emit (drawable, gimp_drawable_signals[FORMAT_CHANGED], 0);
+}
+
+static void
+gimp_drawable_alpha_changed (GimpDrawable *drawable)
+{
+  g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
 }
 
 
@@ -1054,14 +1087,6 @@ gimp_drawable_update (GimpDrawable *drawable,
               }
         }
     }
-}
-
-void
-gimp_drawable_alpha_changed (GimpDrawable *drawable)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  g_signal_emit (drawable, gimp_drawable_signals[ALPHA_CHANGED], 0);
 }
 
 void

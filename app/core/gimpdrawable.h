@@ -50,6 +50,7 @@ struct _GimpDrawableClass
                                            gint                  y,
                                            gint                  width,
                                            gint                  height);
+  void          (* format_changed)        (GimpDrawable         *drawable);
   void          (* alpha_changed)         (GimpDrawable         *drawable);
 
   /*  virtual functions  */
@@ -135,7 +136,6 @@ void            gimp_drawable_update             (GimpDrawable       *drawable,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height);
-void            gimp_drawable_alpha_changed      (GimpDrawable       *drawable);
 
 void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
 void         gimp_drawable_get_active_components (GimpDrawable       *drawable,
