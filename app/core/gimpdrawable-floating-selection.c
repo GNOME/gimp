@@ -47,6 +47,8 @@ static void    gimp_drawable_sync_fs_filter               (GimpDrawable      *dr
 static void    gimp_drawable_fs_notify                    (GimpLayer         *fs,
                                                            const GParamSpec  *pspec,
                                                            GimpDrawable      *drawable);
+static void    gimp_drawable_fs_format_changed            (GimpDrawable      *signal_drawable,
+                                                           GimpDrawable      *drawable);
 static void    gimp_drawable_fs_affect_changed            (GimpImage         *image,
                                                            GimpChannelType    channel,
                                                            GimpDrawable      *drawable);
@@ -223,6 +225,9 @@ _gimp_drawable_add_floating_sel_filter (GimpDrawable *drawable)
   g_signal_connect (fs, "notify",
                     G_CALLBACK (gimp_drawable_fs_notify),
                     drawable);
+  g_signal_connect (drawable, "format-changed",
+                    G_CALLBACK (gimp_drawable_fs_format_changed),
+                    drawable);
   g_signal_connect (image, "component-active-changed",
                     G_CALLBACK (gimp_drawable_fs_affect_changed),
                     drawable);
@@ -250,6 +255,9 @@ gimp_drawable_remove_fs_filter (GimpDrawable *drawable)
 
       g_signal_handlers_disconnect_by_func (fs,
                                             gimp_drawable_fs_notify,
+                                            drawable);
+      g_signal_handlers_disconnect_by_func (drawable,
+                                            gimp_drawable_fs_format_changed,
                                             drawable);
       g_signal_handlers_disconnect_by_func (image,
                                             gimp_drawable_fs_affect_changed,
@@ -289,8 +297,8 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable)
   GimpImage           *image   = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpChannel         *mask    = gimp_image_get_mask (image);
   GimpLayer           *fs      = gimp_drawable_get_floating_sel (drawable);
-  gint                off_x, off_y;
-  gint                fs_off_x, fs_off_y;
+  gint                 off_x, off_y;
+  gint                 fs_off_x, fs_off_y;
 
   gimp_filter_set_active (private->fs_filter,
                           gimp_item_get_visible (GIMP_ITEM (fs)));
@@ -331,6 +339,8 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable)
                             gimp_layer_get_composite_mode (fs));
   gimp_applicator_set_affect (private->fs_applicator,
                               gimp_drawable_get_active_mask (drawable));
+  gimp_applicator_set_output_format (private->fs_applicator,
+                                     gimp_drawable_get_format (drawable));
 }
 
 static void
@@ -349,6 +359,17 @@ gimp_drawable_fs_notify (GimpLayer        *fs,
     {
       gimp_drawable_sync_fs_filter (drawable);
     }
+}
+
+static void
+gimp_drawable_fs_format_changed (GimpDrawable *signal_drawable,
+                                 GimpDrawable *drawable)
+{
+  GimpLayer *fs = gimp_drawable_get_floating_sel (drawable);
+
+  gimp_drawable_sync_fs_filter (drawable);
+
+  gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
