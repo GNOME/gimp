@@ -132,19 +132,12 @@ floating_sel_anchor (GimpLayer *layer)
                                 NULL, NULL, NULL, NULL))
     {
       filter = gimp_drawable_get_floating_sel_filter (drawable);
-      g_object_ref (filter);
     }
-
-  /*  first remove the filter, then merge it, or we will get warnings
-   *  about already connected nodes
-   */
-  gimp_image_remove_layer (image, layer, TRUE, NULL);
 
   if (filter)
-    {
-      gimp_drawable_merge_filter (drawable, filter, NULL, NULL, FALSE);
-      g_object_unref (filter);
-    }
+    gimp_drawable_merge_filter (drawable, filter, NULL, NULL, FALSE);
+
+  gimp_image_remove_layer (image, layer, TRUE, NULL);
 
   gimp_image_undo_group_end (image);
 
