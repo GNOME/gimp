@@ -28,6 +28,7 @@
 #include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
 #include "gimpdrawable.h"
@@ -123,18 +124,24 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
     {
       GimpImage      *image = gimp_item_get_image (GIMP_ITEM (drawable));
       GeglBuffer     *undo_buffer;
+      GeglRectangle   undo_rect;
       GimpApplicator *applicator;
       GeglBuffer     *cache        = NULL;
       GeglRectangle  *rects        = NULL;
       gint            n_rects      = 0;
 
+      gimp_gegl_rectangle_align_to_tile_grid (
+        &undo_rect,
+        &rect,
+        gimp_drawable_get_buffer (drawable));
+
       undo_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                     rect.width, rect.height),
+                                                     undo_rect.width,
+                                                     undo_rect.height),
                                      gimp_drawable_get_format (drawable));
 
       gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                             GEGL_RECTANGLE (rect.x, rect.y,
-                                             rect.width, rect.height),
+                             &undo_rect,
                              GEGL_ABYSS_NONE,
                              undo_buffer,
                              GEGL_RECTANGLE (0, 0, 0, 0));
@@ -170,18 +177,20 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
           /*  finished successfully  */
 
           gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
-                                   rect.x, rect.y,
-                                   rect.width, rect.height);
+                                   undo_rect.x, undo_rect.y,
+                                   undo_rect.width, undo_rect.height);
         }
       else
         {
           /*  canceled by the user  */
 
           gimp_gegl_buffer_copy (undo_buffer,
-                                 GEGL_RECTANGLE (0, 0, rect.width, rect.height),
+                                 GEGL_RECTANGLE (0, 0,
+                                                 undo_rect.width,
+                                                 undo_rect.height),
                                  GEGL_ABYSS_NONE,
                                  gimp_drawable_get_buffer (drawable),
-                                 GEGL_RECTANGLE (rect.x, rect.y, 0, 0));
+                                 &undo_rect);
 
           success = FALSE;
         }
