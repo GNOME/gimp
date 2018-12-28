@@ -100,6 +100,7 @@ static void       gimp_drawable_filter_sync_preview     (GimpDrawableFilter  *fi
 static void       gimp_drawable_filter_sync_opacity     (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_mode        (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_affect      (GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_sync_format      (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_mask        (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_transform   (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_gamma_hack  (GimpDrawableFilter  *filter);
@@ -117,6 +118,8 @@ static void       gimp_drawable_filter_affect_changed   (GimpImage           *im
 static void       gimp_drawable_filter_mask_changed     (GimpImage           *image,
                                                          GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_profile_changed  (GimpColorManaged    *managed,
+                                                         GimpDrawableFilter  *filter);
+static void       gimp_drawable_filter_format_changed   (GimpDrawable        *drawable,
                                                          GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_drawable_removed (GimpDrawable        *drawable,
                                                          GimpDrawableFilter  *filter);
@@ -652,6 +655,14 @@ gimp_drawable_filter_sync_affect (GimpDrawableFilter *filter)
 }
 
 static void
+gimp_drawable_filter_sync_format (GimpDrawableFilter *filter)
+{
+  gimp_applicator_set_output_format (
+    filter->applicator,
+    gimp_drawable_get_format (filter->drawable));
+}
+
+static void
 gimp_drawable_filter_sync_mask (GimpDrawableFilter *filter)
 {
   GimpImage   *image = gimp_item_get_image (GIMP_ITEM (filter->drawable));
@@ -854,6 +865,7 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
       gimp_drawable_filter_sync_opacity (filter);
       gimp_drawable_filter_sync_mode (filter);
       gimp_drawable_filter_sync_affect (filter);
+      gimp_drawable_filter_sync_format (filter);
       gimp_drawable_filter_sync_transform (filter);
       gimp_drawable_filter_sync_gamma_hack (filter);
 
@@ -868,6 +880,9 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
                         filter);
       g_signal_connect (image, "profile-changed",
                         G_CALLBACK (gimp_drawable_filter_profile_changed),
+                        filter);
+      g_signal_connect (filter->drawable, "format-changed",
+                        G_CALLBACK (gimp_drawable_filter_format_changed),
                         filter);
       g_signal_connect (filter->drawable, "removed",
                         G_CALLBACK (gimp_drawable_filter_drawable_removed),
@@ -888,6 +903,9 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
 
       g_signal_handlers_disconnect_by_func (filter->drawable,
                                             gimp_drawable_filter_drawable_removed,
+                                            filter);
+      g_signal_handlers_disconnect_by_func (filter->drawable,
+                                            gimp_drawable_filter_format_changed,
                                             filter);
       g_signal_handlers_disconnect_by_func (image,
                                             gimp_drawable_filter_profile_changed,
@@ -978,6 +996,14 @@ gimp_drawable_filter_profile_changed (GimpColorManaged   *managed,
                                       GimpDrawableFilter *filter)
 {
   gimp_drawable_filter_sync_transform (filter);
+  gimp_drawable_filter_update_drawable (filter, NULL);
+}
+
+static void
+gimp_drawable_filter_format_changed (GimpDrawable       *drawable,
+                                     GimpDrawableFilter *filter)
+{
+  gimp_drawable_filter_sync_format (filter);
   gimp_drawable_filter_update_drawable (filter, NULL);
 }
 
