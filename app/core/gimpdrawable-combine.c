@@ -104,7 +104,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
                                NULL, x, y, width, height);
     }
 
-  applicator = gimp_applicator_new (NULL, FALSE, FALSE);
+  applicator = gimp_applicator_new (NULL);
 
   if (mask)
     {
