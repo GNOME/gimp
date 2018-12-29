@@ -150,10 +150,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
       if (applicator)
         {
-          /*  disable the preview crop, this will force-process the
-           *  cached result from the preview cache into the result
-           *  cache, involving only the layer and affect nodes
-           */
+          /*  disable the preview crop  */
           gimp_applicator_set_preview (applicator, FALSE,
                                        GEGL_RECTANGLE (0, 0, 0, 0));
 

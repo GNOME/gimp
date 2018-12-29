@@ -208,9 +208,11 @@ _gimp_drawable_add_floating_sel_filter (GimpDrawable *drawable)
 
   gegl_node_add_child (node, fs_source);
 
-  private->fs_applicator = gimp_applicator_new (node, FALSE, TRUE);
+  private->fs_applicator = gimp_applicator_new (node);
 
   gimp_filter_set_applicator (private->fs_filter, private->fs_applicator);
+
+  gimp_applicator_set_cache (private->fs_applicator, TRUE);
 
   private->fs_crop_node =
     gegl_node_new_child (node,

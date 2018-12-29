@@ -212,9 +212,11 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
 
   gegl_node_add_child (node, operation);
 
-  filter->applicator = gimp_applicator_new (node, TRUE, TRUE);
+  filter->applicator = gimp_applicator_new (node);
 
   gimp_filter_set_applicator (GIMP_FILTER (filter), filter->applicator);
+
+  gimp_applicator_set_cache (filter->applicator, TRUE);
 
   filter->has_input = gegl_node_has_pad (filter->operation, "input");
 
