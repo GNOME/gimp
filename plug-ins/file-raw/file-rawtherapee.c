@@ -97,7 +97,12 @@ init (void)
                                                              "com.rawtherapee.rawtherapee",
                                                              REGISTRY_KEY_BASE,
                                                              &search_path);
+#ifdef G_OS_WIN32
+  /* Issue #2716 - Prevent RT from opening a console window */
+  gchar    *argv[]             = { exec_path, "-v", "-w", NULL };
+#else
   gchar    *argv[]             = { exec_path, "-v", NULL };
+#endif
   gchar    *rawtherapee_stdout = NULL;
   gboolean  have_rawtherapee   = FALSE;
   gint      i;
