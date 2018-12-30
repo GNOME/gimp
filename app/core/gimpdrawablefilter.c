@@ -65,6 +65,8 @@ struct _GimpDrawableFilter
   gboolean                has_input;
 
   GimpFilterRegion        region;
+  gboolean                crop_enabled;
+  GeglRectangle           crop_rect;
   gboolean                preview_enabled;
   GimpAlignmentType       preview_alignment;
   gdouble                 preview_position;
@@ -93,10 +95,13 @@ static void       gimp_drawable_filter_dispose          (GObject             *ob
 static void       gimp_drawable_filter_finalize         (GObject             *object);
 
 static void       gimp_drawable_filter_sync_region      (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_preview     (GimpDrawableFilter  *filter,
-                                                         gboolean             old_enabled,
-                                                         GimpAlignmentType    old_alignment,
-                                                         gdouble              old_position);
+static void       gimp_drawable_filter_sync_crop        (GimpDrawableFilter  *filter,
+                                                         gboolean             old_crop_enabled,
+                                                         const GeglRectangle *old_crop_rect,
+                                                         gboolean             old_preview_enabled,
+                                                         GimpAlignmentType    old_preview_alignment,
+                                                         gdouble              old_preview_position,
+                                                         gboolean             update);
 static void       gimp_drawable_filter_sync_opacity     (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_mode        (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_affect      (GimpDrawableFilter  *filter);
@@ -293,6 +298,39 @@ gimp_drawable_filter_set_region (GimpDrawableFilter *filter,
 }
 
 void
+gimp_drawable_filter_set_crop (GimpDrawableFilter  *filter,
+                               const GeglRectangle *rect,
+                               gboolean             update)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
+
+  if ((rect != NULL) != filter->crop_enabled ||
+      (rect && ! gegl_rectangle_equal (rect, &filter->crop_rect)))
+    {
+      gboolean      old_enabled = filter->crop_enabled;
+      GeglRectangle old_rect    = filter->crop_rect;
+
+      if (rect)
+        {
+          filter->crop_enabled = TRUE;
+          filter->crop_rect    = *rect;
+        }
+      else
+        {
+          filter->crop_enabled = FALSE;
+        }
+
+      gimp_drawable_filter_sync_crop (filter,
+                                      old_enabled,
+                                      &old_rect,
+                                      filter->preview_enabled,
+                                      filter->preview_alignment,
+                                      filter->preview_position,
+                                      update);
+    }
+}
+
+void
 gimp_drawable_filter_set_preview (GimpDrawableFilter  *filter,
                                   gboolean             enabled,
                                   GimpAlignmentType    alignment,
@@ -318,9 +356,13 @@ gimp_drawable_filter_set_preview (GimpDrawableFilter  *filter,
       filter->preview_alignment = alignment;
       filter->preview_position  = position;
 
-      gimp_drawable_filter_sync_preview (filter,
-                                         old_enabled,
-                                         old_alignment, old_position);
+      gimp_drawable_filter_sync_crop (filter,
+                                      filter->crop_enabled,
+                                      &filter->crop_rect,
+                                      old_enabled,
+                                      old_alignment,
+                                      old_position,
+                                      TRUE);
     }
 }
 
@@ -427,6 +469,10 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
 
   if (gimp_drawable_filter_is_filtering (filter))
     {
+      gimp_drawable_filter_set_preview (filter, FALSE,
+                                        filter->preview_alignment,
+                                        filter->preview_position);
+
       success = gimp_drawable_merge_filter (filter->drawable,
                                             GIMP_FILTER (filter),
                                             progress,
@@ -510,12 +556,14 @@ gimp_drawable_filter_sync_region (GimpDrawableFilter *filter)
     }
 }
 
-static void
-gimp_drawable_filter_get_preview_rect (GimpDrawableFilter *filter,
-                                       gboolean            enabled,
-                                       GimpAlignmentType   alignment,
-                                       gdouble             position,
-                                       GeglRectangle      *rect)
+static gboolean
+gimp_drawable_filter_get_crop_rect (GimpDrawableFilter  *filter,
+                                    gboolean             crop_enabled,
+                                    const GeglRectangle *crop_rect,
+                                    gboolean             preview_enabled,
+                                    GimpAlignmentType    preview_alignment,
+                                    gdouble              preview_position,
+                                    GeglRectangle       *rect)
 {
   gint width;
   gint height;
@@ -528,62 +576,71 @@ gimp_drawable_filter_get_preview_rect (GimpDrawableFilter *filter,
   width  = rect->width;
   height = rect->height;
 
-  if (enabled)
+  if (preview_enabled)
     {
-      switch (alignment)
+      switch (preview_alignment)
         {
         case GIMP_ALIGN_LEFT:
-          rect->width *= position;
+          rect->width *= preview_position;
           break;
 
         case GIMP_ALIGN_RIGHT:
-          rect->width *= (1.0 - position);
+          rect->width *= (1.0 - preview_position);
           rect->x = width - rect->width;
           break;
 
         case GIMP_ALIGN_TOP:
-          rect->height *= position;
+          rect->height *= preview_position;
           break;
 
         case GIMP_ALIGN_BOTTOM:
-          rect->height *= (1.0 - position);
+          rect->height *= (1.0 - preview_position);
           rect->y = height - rect->height;
           break;
 
         default:
-          g_return_if_reached ();
+          g_return_val_if_reached (FALSE);
         }
     }
+
+  if (crop_enabled)
+    gegl_rectangle_intersect (rect, rect, crop_rect);
+
+  return ! gegl_rectangle_equal_coords (rect, 0, 0, width, height);
 }
 
 static void
-gimp_drawable_filter_sync_preview (GimpDrawableFilter *filter,
-                                   gboolean            old_enabled,
-                                   GimpAlignmentType   old_alignment,
-                                   gdouble             old_position)
+gimp_drawable_filter_sync_crop (GimpDrawableFilter  *filter,
+                                gboolean             old_crop_enabled,
+                                const GeglRectangle *old_crop_rect,
+                                gboolean             old_preview_enabled,
+                                GimpAlignmentType    old_preview_alignment,
+                                gdouble              old_preview_position,
+                                gboolean             update)
 {
   GeglRectangle old_rect;
   GeglRectangle new_rect;
+  gboolean      enabled;
 
-  gimp_drawable_filter_get_preview_rect (filter,
-                                         old_enabled,
-                                         old_alignment,
-                                         old_position,
-                                         &old_rect);
+  gimp_drawable_filter_get_crop_rect (filter,
+                                      old_crop_enabled,
+                                      old_crop_rect,
+                                      old_preview_enabled,
+                                      old_preview_alignment,
+                                      old_preview_position,
+                                      &old_rect);
 
-  gimp_drawable_filter_get_preview_rect (filter,
-                                         filter->preview_enabled,
-                                         filter->preview_alignment,
-                                         filter->preview_position,
-                                         &new_rect);
+  enabled = gimp_drawable_filter_get_crop_rect (filter,
+                                                filter->crop_enabled,
+                                                &filter->crop_rect,
+                                                filter->preview_enabled,
+                                                filter->preview_alignment,
+                                                filter->preview_position,
+                                                &new_rect);
 
-  gimp_applicator_set_crop (filter->applicator,
-                            filter->preview_enabled ? &new_rect : NULL);
+  gimp_applicator_set_crop (filter->applicator, enabled ? &new_rect : NULL);
 
-  if (old_rect.x      != new_rect.x     ||
-      old_rect.y      != new_rect.y     ||
-      old_rect.width  != new_rect.width ||
-      old_rect.height != new_rect.height)
+  if (update && ! gegl_rectangle_equal (&old_rect, &new_rect))
     {
       cairo_region_t *region;
       gint            n_rects;
@@ -859,10 +916,13 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
 
       gimp_drawable_filter_sync_mask (filter);
       gimp_drawable_filter_sync_region (filter);
-      gimp_drawable_filter_sync_preview (filter,
-                                         filter->preview_enabled,
-                                         filter->preview_alignment,
-                                         filter->preview_position);
+      gimp_drawable_filter_sync_crop (filter,
+                                      filter->crop_enabled,
+                                      &filter->crop_rect,
+                                      filter->preview_enabled,
+                                      filter->preview_alignment,
+                                      filter->preview_position,
+                                      TRUE);
       gimp_drawable_filter_sync_opacity (filter);
       gimp_drawable_filter_sync_mode (filter);
       gimp_drawable_filter_sync_affect (filter);
