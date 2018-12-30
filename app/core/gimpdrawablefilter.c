@@ -997,25 +997,27 @@ gimp_drawable_filter_update_drawable (GimpDrawableFilter  *filter,
 
   if (area)
     {
-      if (! gimp_rectangle_intersect (area->x,
-                                      area->y,
-                                      area->width,
-                                      area->height,
-                                      filter->filter_area.x,
-                                      filter->filter_area.y,
-                                      filter->filter_area.width,
-                                      filter->filter_area.height,
-                                      &update_area.x,
-                                      &update_area.y,
-                                      &update_area.width,
-                                      &update_area.height))
+      if (! gegl_rectangle_intersect (&update_area,
+                                      area, &filter->filter_area))
         {
           return;
         }
     }
   else
     {
-      update_area = filter->filter_area;
+      gimp_drawable_filter_get_crop_rect (filter,
+                                          filter->crop_enabled,
+                                          &filter->crop_rect,
+                                          filter->preview_enabled,
+                                          filter->preview_alignment,
+                                          filter->preview_position,
+                                          &update_area);
+
+      if (! gegl_rectangle_intersect (&update_area,
+                                      &update_area, &filter->filter_area))
+        {
+          return;
+        }
     }
 
   if (update_area.width  > 0 &&
