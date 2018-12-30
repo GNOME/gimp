@@ -123,6 +123,10 @@ static void       gimp_warp_tool_set_sampler        (GimpWarpTool          *wt,
                                                      gboolean               commit);
 static GeglRectangle
                   gimp_warp_tool_get_stroke_bounds  (GeglNode              *node);
+static GeglRectangle
+                  gimp_warp_tool_get_node_bounds    (GeglNode              *node);
+static void       gimp_warp_tool_clear_node_bounds  (GeglNode              *node);
+static void       gimp_warp_tool_update_bounds      (GimpWarpTool          *wt);
 static void       gimp_warp_tool_update_stroke      (GimpWarpTool          *wt,
                                                      GeglNode              *node);
 static void       gimp_warp_tool_stroke_changed     (GeglPath              *stroke,
@@ -521,6 +525,7 @@ gimp_warp_tool_undo (GimpTool    *tool,
   gegl_node_connect_to (prev_node,       "output",
                         wt->render_node, "aux");
 
+  gimp_warp_tool_update_bounds (wt);
   gimp_warp_tool_update_stroke (wt, to_delete);
 
   return TRUE;
@@ -540,6 +545,7 @@ gimp_warp_tool_redo (GimpTool    *tool,
 
   wt->redo_stack = g_list_remove_link (wt->redo_stack, wt->redo_stack);
 
+  gimp_warp_tool_update_bounds (wt);
   gimp_warp_tool_update_stroke (wt, to_add);
 
   return TRUE;
@@ -977,11 +983,69 @@ gimp_warp_tool_get_stroke_bounds (GeglNode *node)
   return bbox;
 }
 
+static GeglRectangle
+gimp_warp_tool_get_node_bounds (GeglNode *node)
+{
+  GeglRectangle *bounds;
+
+  if (! node || strcmp (gegl_node_get_operation (node), "gegl:warp"))
+    return *GEGL_RECTANGLE (0, 0, 0, 0);
+
+  bounds = g_object_get_data (G_OBJECT (node), "gimp-warp-tool-bounds");
+
+  if (! bounds)
+    {
+      GeglNode      *input_node;
+      GeglRectangle  input_bounds;
+      GeglRectangle  stroke_bounds;
+
+      input_node   = gegl_node_get_producer (node, "input", NULL);
+      input_bounds = gimp_warp_tool_get_node_bounds (input_node);
+
+      stroke_bounds = gimp_warp_tool_get_stroke_bounds (node);
+
+      gegl_rectangle_bounding_box (&input_bounds,
+                                   &input_bounds, &stroke_bounds);
+
+      bounds = gegl_rectangle_dup (&input_bounds);
+
+      g_object_set_data_full (G_OBJECT (node), "gimp-warp-tool-bounds",
+                              bounds, g_free);
+    }
+
+  return *bounds;
+}
+
+static void
+gimp_warp_tool_clear_node_bounds (GeglNode *node)
+{
+  if (node && ! strcmp (gegl_node_get_operation (node), "gegl:warp"))
+    g_object_set_data (G_OBJECT (node), "gimp-warp-tool-bounds", NULL);
+}
+
+static void
+gimp_warp_tool_update_bounds (GimpWarpTool *wt)
+{
+  GeglRectangle bounds = {0, 0, 0, 0};
+
+  if (! wt->filter)
+    return;
+
+  if (wt->render_node)
+    {
+      GeglNode *node = gegl_node_get_producer (wt->render_node, "aux", NULL);
+
+      bounds = gimp_warp_tool_get_node_bounds (node);
+    }
+
+  gimp_drawable_filter_set_crop (wt->filter, &bounds, FALSE);
+}
+
 static void
 gimp_warp_tool_update_stroke (GimpWarpTool *wt,
                               GeglNode     *node)
 {
-  GeglRectangle bbox = {0, 0, 0, 0};
+  GeglRectangle bounds = {0, 0, 0, 0};
 
   if (! wt->filter)
     return;
@@ -989,32 +1053,24 @@ gimp_warp_tool_update_stroke (GimpWarpTool *wt,
   if (node)
     {
       /* update just this stroke */
-      bbox = gimp_warp_tool_get_stroke_bounds (node);
+      bounds = gimp_warp_tool_get_stroke_bounds (node);
     }
   else if (wt->render_node)
     {
-      /* update all strokes */
-      for (node = gegl_node_get_producer (wt->render_node, "aux", NULL);
-           ! strcmp (gegl_node_get_operation (node), "gegl:warp");
-           node = gegl_node_get_producer (node, "input", NULL))
-        {
-          GeglRectangle node_bbox;
+      node = gegl_node_get_producer (wt->render_node, "aux", NULL);
 
-          node_bbox = gimp_warp_tool_get_stroke_bounds (node);
-
-          gegl_rectangle_bounding_box (&bbox, &bbox, &node_bbox);
-        }
+      bounds = gimp_warp_tool_get_node_bounds (node);
     }
 
-  if (! gegl_rectangle_is_empty (&bbox))
+  if (! gegl_rectangle_is_empty (&bounds))
     {
 #ifdef WARP_DEBUG
   g_printerr ("update stroke: (%d,%d), %dx%d\n",
-              bbox.x, bbox.y,
-              bbox.width, bbox.height);
+              bounds.x, bounds.y,
+              bounds.width, bounds.height);
 #endif
 
-      gimp_drawable_filter_apply (wt->filter, &bbox);
+      gimp_drawable_filter_apply (wt->filter, &bounds);
     }
 }
 
@@ -1038,6 +1094,15 @@ gimp_warp_tool_stroke_changed (GeglPath            *path,
               update_region.x, update_region.y,
               update_region.width, update_region.height);
 #endif
+
+  if (wt->render_node)
+    {
+      GeglNode *node = gegl_node_get_producer (wt->render_node, "aux", NULL);
+
+      gimp_warp_tool_clear_node_bounds (node);
+
+      gimp_warp_tool_update_bounds (wt);
+    }
 
   gimp_drawable_filter_apply (wt->filter, &update_region);
 }
