@@ -25,6 +25,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -298,14 +299,15 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
   if (! filter_tool->gui)
     {
-      GtkWidget *vbox;
-      GtkWidget *hbox;
-      GtkWidget *toggle;
-      GtkWidget *expander;
-      GtkWidget *frame;
-      GtkWidget *vbox2;
-      GtkWidget *combo;
-      gchar     *operation_name;
+      GtkWidget     *vbox;
+      GtkWidget     *hbox;
+      GtkWidget     *toggle;
+      GtkWidget     *expander;
+      GtkWidget     *frame;
+      GtkWidget     *vbox2;
+      GtkWidget     *combo;
+      GeglOperation *operation;
+      const gchar   *operation_name = NULL;
 
       /*  disabled for at least GIMP 2.8  */
       filter_tool->overlay = FALSE;
@@ -403,9 +405,10 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       gtk_widget_show (toggle);
 
       /*  The area combo  */
-      gegl_node_get (filter_tool->operation,
-                     "operation", &operation_name,
-                     NULL);
+      operation = gegl_node_get_gegl_operation (filter_tool->operation);
+
+      if (operation)
+        operation_name = gegl_operation_get_name (operation);
 
       filter_tool->region_combo =
         gimp_prop_enum_combo_box_new (G_OBJECT (tool_info->tool_options),
@@ -414,13 +417,15 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       gtk_box_pack_end (GTK_BOX (vbox), filter_tool->region_combo,
                         FALSE, FALSE, 0);
 
-      if (operation_name &&
-          gegl_operation_get_key (operation_name, "position-dependent"))
+      if (! (GEGL_IS_OPERATION_POINT_RENDER    (operation)  ||
+             GEGL_IS_OPERATION_POINT_FILTER    (operation)  ||
+             GEGL_IS_OPERATION_POINT_COMPOSER  (operation)  ||
+             GEGL_IS_OPERATION_POINT_COMPOSER3 (operation)) ||
+            (operation_name &&
+             gegl_operation_get_key (operation_name, "position-dependent")))
         {
           gtk_widget_show (filter_tool->region_combo);
         }
-
-      g_free (operation_name);
 
       /*  Fill in subclass widgets  */
       gimp_filter_tool_dialog (filter_tool);
