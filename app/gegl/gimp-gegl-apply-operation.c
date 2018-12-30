@@ -212,14 +212,22 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
       for (i = 0; i < n_valid_rects; i++)
         {
-          gimp_gegl_buffer_copy (cache,       valid_rects + i, GEGL_ABYSS_NONE,
-                                 dest_buffer, valid_rects + i);
+          GeglRectangle valid_rect;
+
+          if (! gegl_rectangle_intersect (&valid_rect,
+                                          &valid_rects[i], &rect))
+            {
+              continue;
+            }
+
+          gimp_gegl_buffer_copy (cache,       &valid_rect, GEGL_ABYSS_NONE,
+                                 dest_buffer, &valid_rect);
 
           cairo_region_subtract_rectangle (region,
                                            (cairo_rectangle_int_t *)
-                                           valid_rects + i);
+                                           &valid_rect);
 
-          done_pixels += valid_rects[i].width * valid_rects[i].height;
+          done_pixels += valid_rect.width * valid_rect.height;
 
           if (progress)
             gimp_progress_set_value (progress,
