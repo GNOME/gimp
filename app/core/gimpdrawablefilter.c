@@ -577,9 +577,8 @@ gimp_drawable_filter_sync_preview (GimpDrawableFilter *filter,
                                          filter->preview_position,
                                          &new_rect);
 
-  gimp_applicator_set_preview (filter->applicator,
-                               filter->preview_enabled,
-                               &new_rect);
+  gimp_applicator_set_crop (filter->applicator,
+                            filter->preview_enabled ? &new_rect : NULL);
 
   if (old_rect.x      != new_rect.x     ||
       old_rect.y      != new_rect.y     ||
