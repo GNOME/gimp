@@ -43,6 +43,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawablefilter.h"
 #include "core/gimperror.h"
@@ -159,6 +160,8 @@ static void      gimp_filter_tool_flush          (GimpDrawableFilter  *filter,
                                                   GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_config_notify  (GObject             *object,
                                                   const GParamSpec    *pspec,
+                                                  GimpFilterTool      *filter_tool);
+static void      gimp_filter_tool_mask_changed   (GimpImage           *image,
                                                   GimpFilterTool      *filter_tool);
 
 static void      gimp_filter_tool_add_guide      (GimpFilterTool      *filter_tool);
@@ -447,6 +450,12 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   gimp_tool_gui_show (filter_tool->gui);
 
   gimp_filter_tool_create_filter (filter_tool);
+
+  g_signal_connect_object (image, "mask-changed",
+                           G_CALLBACK (gimp_filter_tool_mask_changed),
+                           filter_tool, 0);
+
+  gimp_filter_tool_mask_changed (image, filter_tool);
 
   return TRUE;
 }
@@ -946,6 +955,15 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 
   gimp_filter_tool_disable_color_picking (filter_tool);
 
+  if (tool->display)
+    {
+      GimpImage *image = gimp_display_get_image (tool->display);
+
+      g_signal_handlers_disconnect_by_func (image,
+                                            gimp_filter_tool_mask_changed,
+                                            filter_tool);
+    }
+
   if (filter_tool->gui)
     {
       /* explicitly clear the dialog contents first, since we might be called
@@ -1108,6 +1126,19 @@ gimp_filter_tool_config_notify (GObject          *object,
   GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->config_notify (filter_tool,
                                                            GIMP_CONFIG (object),
                                                            pspec);
+}
+
+static void
+gimp_filter_tool_mask_changed (GimpImage      *image,
+                               GimpFilterTool *filter_tool)
+{
+  if (filter_tool->gui)
+    {
+      GimpChannel *mask = gimp_image_get_mask (image);
+
+      gtk_widget_set_sensitive (filter_tool->region_combo,
+                                ! gimp_channel_is_empty (mask));
+    }
 }
 
 static void
