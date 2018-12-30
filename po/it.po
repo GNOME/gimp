@@ -31,13 +31,14 @@
 # lightness = luminosità (viene chiamata anche chiarezza, tono, tonalità, valore ... si decidessero...)
 # hue = tonalità
 # unsharp mask = maschera di contrasto
+# line art = tratteggio
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-19 21:53+0100\n"
-"PO-Revision-Date: 2018-12-19 21:54+0100\n"
+"POT-Creation-Date: 2018-12-30 18:56+0100\n"
+"PO-Revision-Date: 2018-12-30 19:00+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -2904,7 +2905,7 @@ msgid "240 Seconds"
 msgstr "240 secondi"
 
 #: ../app/actions/dashboard-commands.c:102
-#: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:161
+#: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:159
 #: ../app/actions/error-console-commands.c:96
 #: ../app/actions/file-commands.c:416
 #: ../app/actions/gradient-editor-commands.c:401
@@ -2922,7 +2923,7 @@ msgstr "240 secondi"
 #: ../app/dialogs/color-profile-dialog.c:208
 #: ../app/dialogs/convert-indexed-dialog.c:142
 #: ../app/dialogs/convert-precision-dialog.c:165
-#: ../app/dialogs/data-delete-dialog.c:86 ../app/dialogs/fade-dialog.c:120
+#: ../app/dialogs/data-delete-dialog.c:86
 #: ../app/dialogs/file-open-location-dialog.c:80
 #: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
@@ -2947,7 +2948,7 @@ msgstr "240 secondi"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:324
+#: ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:919
 #: ../app/tools/gimptransformtool.c:308 ../app/widgets/gimpactionview.c:669
@@ -3700,7 +3701,7 @@ msgstr "Rimuove le voci che corrispondono a file non disponibili"
 msgid "Clear Document History"
 msgstr "Cancella la cronologia documenti"
 
-#: ../app/actions/documents-commands.c:231 ../app/actions/edit-commands.c:162
+#: ../app/actions/documents-commands.c:231 ../app/actions/edit-commands.c:160
 #: ../app/dialogs/preferences-dialog.c:666
 msgid "Cl_ear"
 msgstr "Canc_ella"
@@ -3918,222 +3919,211 @@ msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
 msgstr "Modifica le dinamiche attive"
 
-#: ../app/actions/edit-actions.c:65
+#: ../app/actions/edit-actions.c:64
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "_Modifica"
 
-#: ../app/actions/edit-actions.c:66
+#: ../app/actions/edit-actions.c:65
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "Incoll_a come"
 
-#: ../app/actions/edit-actions.c:67
+#: ../app/actions/edit-actions.c:66
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "_Buffer"
 
-#: ../app/actions/edit-actions.c:70
+#: ../app/actions/edit-actions.c:69
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "Menu cronologia annullamenti"
 
-#: ../app/actions/edit-actions.c:74
+#: ../app/actions/edit-actions.c:73
 msgctxt "edit-action"
 msgid "_Undo"
 msgstr "Ann_ulla"
 
-#: ../app/actions/edit-actions.c:75
+#: ../app/actions/edit-actions.c:74
 msgctxt "edit-action"
 msgid "Undo the last operation"
 msgstr "Annulla l'ultima operazione"
 
-#: ../app/actions/edit-actions.c:80
+#: ../app/actions/edit-actions.c:79
 msgctxt "edit-action"
 msgid "_Redo"
 msgstr "_Ripeti"
 
-#: ../app/actions/edit-actions.c:81
+#: ../app/actions/edit-actions.c:80
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone"
 msgstr "Ripeti l'ultima operazione annullata"
 
-#: ../app/actions/edit-actions.c:86
+#: ../app/actions/edit-actions.c:85
 msgctxt "edit-action"
 msgid "Strong Undo"
 msgstr "Annullamento forte"
 
-#: ../app/actions/edit-actions.c:87
+#: ../app/actions/edit-actions.c:86
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
 msgstr "Annulla l'ultima operazione, saltando i cambiamenti di visualizzazione"
 
-#: ../app/actions/edit-actions.c:92
+#: ../app/actions/edit-actions.c:91
 msgctxt "edit-action"
 msgid "Strong Redo"
 msgstr "Ripetizione forte"
 
-#: ../app/actions/edit-actions.c:94
+#: ../app/actions/edit-actions.c:93
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr ""
 "Ripeti l'ultima operazione annullata, saltando i cambiamenti di "
 "visualizzazione"
 
-#: ../app/actions/edit-actions.c:99
+#: ../app/actions/edit-actions.c:98
 msgctxt "edit-action"
 msgid "_Clear Undo History"
 msgstr "_Cancella la cronologia annullamenti"
 
-#: ../app/actions/edit-actions.c:100
+#: ../app/actions/edit-actions.c:99
 msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
 msgstr "Rimuovi tutte le operazioni dalla cronologia"
 
-#: ../app/actions/edit-actions.c:105
-msgctxt "edit-action"
-msgid "_Fade..."
-msgstr "Dissol_venza..."
-
-#: ../app/actions/edit-actions.c:107
-msgctxt "edit-action"
-msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr ""
-"Modifica modalità di disegno e opacità dell'ultima elaborazione sui pixel"
-
-#: ../app/actions/edit-actions.c:112
+#: ../app/actions/edit-actions.c:104
 msgctxt "edit-action"
 msgid "Cu_t"
 msgstr "_Taglia"
 
-#: ../app/actions/edit-actions.c:113
+#: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
 msgid "Move the selected pixels to the clipboard"
 msgstr "Sposta i pixel selezionati negli appunti"
 
-#: ../app/actions/edit-actions.c:118
+#: ../app/actions/edit-actions.c:110
 msgctxt "edit-action"
 msgid "_Copy"
 msgstr "_Copia"
 
-#: ../app/actions/edit-actions.c:119
+#: ../app/actions/edit-actions.c:111
 msgctxt "edit-action"
 msgid "Copy the selected pixels to the clipboard"
 msgstr "Copia i pixel selezionati negli appunti"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:124
+#: ../app/actions/edit-actions.c:116
 msgctxt "edit-action"
 msgid "Copy _Visible"
 msgstr "Copia il _visibile"
 
-#: ../app/actions/edit-actions.c:125
+#: ../app/actions/edit-actions.c:117
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
 msgstr "Copia il visibile nella regione selezionata"
 
-#: ../app/actions/edit-actions.c:130
+#: ../app/actions/edit-actions.c:122
 msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "Dagli a_ppunti"
 
-#: ../app/actions/edit-actions.c:131 ../app/actions/edit-actions.c:137
+#: ../app/actions/edit-actions.c:123 ../app/actions/edit-actions.c:129
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "Crea una nuova immagine dal contenuto degli appunti"
 
-#: ../app/actions/edit-actions.c:136
+#: ../app/actions/edit-actions.c:128
 msgctxt "edit-action"
 msgid "_New Image"
 msgstr "_Nuova immagine"
 
-#: ../app/actions/edit-actions.c:142
+#: ../app/actions/edit-actions.c:134
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "_Taglia con nome..."
 
-#: ../app/actions/edit-actions.c:143
+#: ../app/actions/edit-actions.c:135
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr "Sposta i pixel selezionati in un buffer con nome"
 
-#: ../app/actions/edit-actions.c:148
+#: ../app/actions/edit-actions.c:140
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "_Copia con nome..."
 
-#: ../app/actions/edit-actions.c:149
+#: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "Copia i pixel selezionati in un buffer con nome"
 
 #. GIMP_ICON_COPY_VISIBLE,
-#: ../app/actions/edit-actions.c:154
+#: ../app/actions/edit-actions.c:146
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "Copia _visibile con nome..."
 
-#: ../app/actions/edit-actions.c:156
+#: ../app/actions/edit-actions.c:148
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr "Copia il visibile nella regione selezionata in un buffer con nome"
 
-#: ../app/actions/edit-actions.c:161
+#: ../app/actions/edit-actions.c:153
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "_Incolla con nome..."
 
-#: ../app/actions/edit-actions.c:162
+#: ../app/actions/edit-actions.c:154
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "Incolla il contenuto di un buffer con nome"
 
-#: ../app/actions/edit-actions.c:167
+#: ../app/actions/edit-actions.c:159
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "Canc_ella"
 
-#: ../app/actions/edit-actions.c:168
+#: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "Cancella i pixel selezionati"
 
-#: ../app/actions/edit-actions.c:176
+#: ../app/actions/edit-actions.c:168
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "_Incolla"
 
-#: ../app/actions/edit-actions.c:177
+#: ../app/actions/edit-actions.c:169
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
 msgstr "Incolla il contenuto degli appunti"
 
-#: ../app/actions/edit-actions.c:182
+#: ../app/actions/edit-actions.c:174
 msgctxt "edit-action"
 msgid "Paste In Place"
 msgstr "Incolla sul posto"
 
-#: ../app/actions/edit-actions.c:184
+#: ../app/actions/edit-actions.c:176
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
 msgstr "Incolla il contenuto degli appunti nella sua posizione originale"
 
-#: ../app/actions/edit-actions.c:189
+#: ../app/actions/edit-actions.c:181
 msgctxt "edit-action"
 msgid "Paste _Into Selection"
 msgstr "Incolla nella selez_ione"
 
-#: ../app/actions/edit-actions.c:191
+#: ../app/actions/edit-actions.c:183
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Incolla il contenuto degli appunti nella selezione corrente"
 
-#: ../app/actions/edit-actions.c:196
+#: ../app/actions/edit-actions.c:188
 msgctxt "edit-action"
 msgid "Paste Into Selection In Place"
 msgstr "Incolla nella selezione sul posto"
 
-#: ../app/actions/edit-actions.c:198
+#: ../app/actions/edit-actions.c:190
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
@@ -4142,22 +4132,22 @@ msgstr ""
 "Incolla il contenuto degli appunti nella selezione corrente alla sua "
 "posizione originale"
 
-#: ../app/actions/edit-actions.c:204
+#: ../app/actions/edit-actions.c:196
 msgctxt "edit-action"
 msgid "New _Layer"
 msgstr "Nuovo _livello"
 
-#: ../app/actions/edit-actions.c:205
+#: ../app/actions/edit-actions.c:197
 msgctxt "edit-action"
 msgid "Create a new layer from the content of the clipboard"
 msgstr "Crea un nuovo livello dal contenuto degli appunti"
 
-#: ../app/actions/edit-actions.c:210
+#: ../app/actions/edit-actions.c:202
 msgctxt "edit-action"
 msgid "New Layer In _Place"
 msgstr "Nuovo livello sul _posto"
 
-#: ../app/actions/edit-actions.c:212
+#: ../app/actions/edit-actions.c:204
 msgctxt "edit-action"
 msgid ""
 "Create a new layer from the content of the clipboard and place it at its "
@@ -4166,137 +4156,128 @@ msgstr ""
 "Crea un nuovo livello dal contenuto degli appunti e lo piazza nella sua "
 "posizione originale"
 
-#: ../app/actions/edit-actions.c:221
+#: ../app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Riempi con il colore di _PP"
 
-#: ../app/actions/edit-actions.c:222
+#: ../app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Riempi la selezione usando il colore di primo piano"
 
-#: ../app/actions/edit-actions.c:227
+#: ../app/actions/edit-actions.c:219
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Riempi con il colore di _SF"
 
-#: ../app/actions/edit-actions.c:228
+#: ../app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Riempi la selezione con il colore dello sfondo"
 
-#: ../app/actions/edit-actions.c:233
+#: ../app/actions/edit-actions.c:225
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Riempi con il _motivo"
 
-#: ../app/actions/edit-actions.c:234
+#: ../app/actions/edit-actions.c:226
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Riempi la selezione usando il motivo attivo"
 
-#: ../app/actions/edit-actions.c:344 ../app/actions/edit-actions.c:346
+#: ../app/actions/edit-actions.c:334 ../app/actions/edit-actions.c:336
 #, c-format
 msgid "_Undo %s"
 msgstr "Ann_ulla %s"
 
-#: ../app/actions/edit-actions.c:350 ../app/actions/edit-actions.c:352
+#: ../app/actions/edit-actions.c:340 ../app/actions/edit-actions.c:342
 #, c-format
 msgid "_Redo %s"
 msgstr "_Ripeti %s"
 
-#: ../app/actions/edit-actions.c:366
-#, c-format
-msgid "_Fade %s..."
-msgstr "Dissol_venza %s..."
-
-#: ../app/actions/edit-actions.c:378
+#: ../app/actions/edit-actions.c:353
 msgid "_Undo"
 msgstr "Ann_ulla"
 
-#: ../app/actions/edit-actions.c:379
+#: ../app/actions/edit-actions.c:354
 msgid "_Redo"
 msgstr "_Ripeti"
 
-#: ../app/actions/edit-actions.c:380
-msgid "_Fade..."
-msgstr "Dissol_venza..."
-
-#: ../app/actions/edit-commands.c:153
+#: ../app/actions/edit-commands.c:151
 msgid "Clear Undo History"
 msgstr "Cancella cronologia annullamenti"
 
-#: ../app/actions/edit-commands.c:180
+#: ../app/actions/edit-commands.c:178
 msgid "Really clear image's undo history?"
 msgstr "Cancellare la cronologia annullamenti?"
 
-#: ../app/actions/edit-commands.c:193
+#: ../app/actions/edit-commands.c:191
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "La cancellazione della cronologia degli annullamenti di quest'immagine "
 "libererà %s di memoria."
 
-#: ../app/actions/edit-commands.c:249
+#: ../app/actions/edit-commands.c:226
 msgid "Cut layer to the clipboard."
 msgstr "Taglia il livello negli appunti."
 
-#: ../app/actions/edit-commands.c:250
+#: ../app/actions/edit-commands.c:227
 msgid "Cut pixels to the clipboard."
 msgstr "Taglia i pixel negli appunti."
 
-#: ../app/actions/edit-commands.c:285
+#: ../app/actions/edit-commands.c:262
 msgid "Copied layer to the clipboard."
 msgstr "Copia livello negli appunti."
 
-#: ../app/actions/edit-commands.c:286 ../app/actions/edit-commands.c:315
+#: ../app/actions/edit-commands.c:263 ../app/actions/edit-commands.c:292
 msgid "Copied pixels to the clipboard."
 msgstr "Pixel copiati negli appunti."
 
-#: ../app/actions/edit-commands.c:394 ../app/actions/edit-commands.c:600
+#: ../app/actions/edit-commands.c:371 ../app/actions/edit-commands.c:577
 #: ../app/tools/gimpseamlessclonetool.c:295
 msgid "There is no image data in the clipboard to paste."
 msgstr "Negli appunti non ci sono dati di tipo immagine da incollare."
 
-#: ../app/actions/edit-commands.c:409
+#: ../app/actions/edit-commands.c:386
 msgid "Cut Named"
 msgstr "Taglia con nome"
 
-#: ../app/actions/edit-commands.c:412 ../app/actions/edit-commands.c:432
-#: ../app/actions/edit-commands.c:452
+#: ../app/actions/edit-commands.c:389 ../app/actions/edit-commands.c:409
+#: ../app/actions/edit-commands.c:429
 msgid "Enter a name for this buffer"
 msgstr "Inserisci un nome per questo buffer"
 
-#: ../app/actions/edit-commands.c:429
+#: ../app/actions/edit-commands.c:406
 msgid "Copy Named"
 msgstr "Copia con nome"
 
-#: ../app/actions/edit-commands.c:449
+#: ../app/actions/edit-commands.c:426
 msgid "Copy Visible Named "
 msgstr "Copia visibile con nome "
 
-#: ../app/actions/edit-commands.c:572 ../app/display/gimpdisplayshell-dnd.c:480
+#: ../app/actions/edit-commands.c:549 ../app/display/gimpdisplayshell-dnd.c:480
 msgid "Pasted as new layer because the target is a layer group."
 msgstr ""
 "Incollato come nuovo livello dato che l'obiettivo è un gruppo di livelli."
 
-#: ../app/actions/edit-commands.c:579 ../app/display/gimpdisplayshell-dnd.c:489
+#: ../app/actions/edit-commands.c:556 ../app/display/gimpdisplayshell-dnd.c:489
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr ""
 "Incollato come nuovo livello perché i pixel del livello obiettivo sono "
 "bloccati."
 
-#: ../app/actions/edit-commands.c:617
+#: ../app/actions/edit-commands.c:594
 msgid "There is no active layer or channel to cut from."
 msgstr "Non c'è un livello o un canale attivo da cui tagliare."
 
-#: ../app/actions/edit-commands.c:622 ../app/actions/edit-commands.c:654
-#: ../app/actions/edit-commands.c:678
+#: ../app/actions/edit-commands.c:599 ../app/actions/edit-commands.c:631
+#: ../app/actions/edit-commands.c:655
 msgid "(Unnamed Buffer)"
 msgstr "(buffer senza nome)"
 
-#: ../app/actions/edit-commands.c:649
+#: ../app/actions/edit-commands.c:626
 msgid "There is no active layer or channel to copy from."
 msgstr "Non c'è un livello o un canale attivo da cui copiare"
 
@@ -7682,7 +7663,7 @@ msgstr "Reimposta tutti i filtri"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:323 ../app/tools/gimptransformgridtool.c:918
+#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:918
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -10208,7 +10189,7 @@ msgstr "Sposta questa finestra sullo schermo %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:195
-#: ../app/tools/gimpfiltertool.c:325 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:330 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -13019,8 +13000,7 @@ msgid "Background color"
 msgstr "Colore di sfondo"
 
 #: ../app/core/gimpcontext.c:697 ../app/core/gimpcontext.c:698
-#: ../app/dialogs/fade-dialog.c:158 ../app/widgets/gimpbrushselect.c:175
-#: ../app/widgets/gimplayertreeview.c:288
+#: ../app/widgets/gimpbrushselect.c:175 ../app/widgets/gimplayertreeview.c:288
 msgid "Opacity"
 msgstr "Opacità"
 
@@ -13149,7 +13129,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:515
+#: ../app/core/gimpdrawable.c:498
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scala"
@@ -13159,7 +13139,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Riempimento colore"
 
-#: ../app/core/gimpdrawable-edit.c:180
+#: ../app/core/gimpdrawable-edit.c:150
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Cancella"
@@ -13169,7 +13149,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Equalizza"
 
-#: ../app/core/gimpdrawable-floating-selection.c:191
+#: ../app/core/gimpdrawable-floating-selection.c:193
 msgid "Floating Selection"
 msgstr "Selezione fluttuante"
 
@@ -13240,7 +13220,7 @@ msgid "Style"
 msgstr "Stile"
 
 #: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
-#: ../app/tools/gimpbucketfilloptions.c:147
+#: ../app/tools/gimpbucketfilloptions.c:146
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Antialiasing"
@@ -13922,7 +13902,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Àncora selezione fluttuante"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1043
+#: ../app/core/gimplayer-floating-selection.c:168 ../app/core/gimplayer.c:1043
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -13930,7 +13910,7 @@ msgstr ""
 "Impossibile creare un nuovo livello da una selezione fluttuante perché "
 "appartiene ad una maschera di livello o canale."
 
-#: ../app/core/gimplayer-floating-selection.c:182
+#: ../app/core/gimplayer-floating-selection.c:175
 msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Selezione fluttuante al livello"
@@ -14090,41 +14070,41 @@ msgstr "Maschera di livello a selezione"
 msgid "Cannot rename layer masks."
 msgstr "Impossibile rinominare le maschere di livello."
 
-#: ../app/core/gimplineart.c:288 ../app/core/gimplineart.c:289
+#: ../app/core/gimplineart.c:291 ../app/core/gimplineart.c:292
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Seleziona i pixel trasparenti invece di quelli grigi"
 
-#: ../app/core/gimplineart.c:295 ../app/tools/gimpbucketfilloptions.c:164
+#: ../app/core/gimplineart.c:298 ../app/tools/gimpbucketfilloptions.c:163
 msgid "Line art detection threshold"
-msgstr "Soglia rilevamento tratti"
+msgstr "Soglia rilevamento tratteggio"
 
-#: ../app/core/gimplineart.c:296 ../app/tools/gimpbucketfilloptions.c:165
+#: ../app/core/gimplineart.c:299 ../app/tools/gimpbucketfilloptions.c:164
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr "Soglia di rilevamento contorno (valori alti includeranno più pixel)"
 
-#: ../app/core/gimplineart.c:302 ../app/tools/gimpbucketfilloptions.c:171
+#: ../app/core/gimplineart.c:305 ../app/tools/gimpbucketfilloptions.c:170
 msgid "Maximum growing size"
 msgstr "Massima dimensione massima crescita"
 
-#: ../app/core/gimplineart.c:303 ../app/tools/gimpbucketfilloptions.c:172
+#: ../app/core/gimplineart.c:306 ../app/tools/gimpbucketfilloptions.c:171
 msgid "Maximum number of pixels grown under the line art"
-msgstr "Numero massimo di crescita pixel sotto il tratto"
+msgstr "Numero massimo di crescita pixel sotto il tratteggio"
 
-#: ../app/core/gimplineart.c:309 ../app/tools/gimpbucketfilloptions.c:178
+#: ../app/core/gimplineart.c:312
 msgid "Maximum curved closing length"
 msgstr "Lunghezza massima chiusura curva"
 
-#: ../app/core/gimplineart.c:310 ../app/tools/gimpbucketfilloptions.c:179
+#: ../app/core/gimplineart.c:313
 msgid "Maximum curved length (in pixels) to close the line art"
-msgstr "Lunghezza massima curva (in pixel) per chiudere il tratto"
+msgstr "Lunghezza massima curva (in pixel) per chiudere il tratteggio"
 
-#: ../app/core/gimplineart.c:316 ../app/tools/gimpbucketfilloptions.c:185
+#: ../app/core/gimplineart.c:319
 msgid "Maximum straight closing length"
 msgstr "Lunghezza massima chiusura diritta"
 
-#: ../app/core/gimplineart.c:317 ../app/tools/gimpbucketfilloptions.c:186
+#: ../app/core/gimplineart.c:320
 msgid "Maximum straight length (in pixels) to close the line art"
-msgstr "Lunghezza massima retta (in pixel) per chiudere il tratto"
+msgstr "Lunghezza massima retta (in pixel) per chiudere il tratteggio"
 
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
@@ -14598,7 +14578,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "Profilo colore"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:108
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:107
 msgid "Fill type"
 msgstr "Tipo riempimento"
 
@@ -15049,22 +15029,6 @@ msgstr "PP/SF"
 #: ../app/dialogs/dialogs.c:414
 msgid "FG/BG Color"
 msgstr "Colore PP/SF"
-
-#: ../app/dialogs/fade-dialog.c:110
-#, c-format
-msgid "Fade %s"
-msgstr "Dissolvenza %s"
-
-#: ../app/dialogs/fade-dialog.c:121
-msgid "_Fade"
-msgstr "Dissol_venza"
-
-#: ../app/dialogs/fade-dialog.c:151
-#: ../app/operations/gimpoperationdesaturate.c:90
-#: ../app/tools/gimppaintoptions-gui.c:111 ../app/widgets/gimpdeviceinfo.c:116
-#: ../app/widgets/gimplayertreeview.c:272
-msgid "Mode"
-msgstr "Modalità"
 
 #: ../app/dialogs/file-open-dialog.c:244
 msgid "Open layers"
@@ -17706,7 +17670,7 @@ msgstr "Nuovo tracciato"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
 #: ../app/tools/gimpbucketfilltool.c:292 ../app/tools/gimpcagetool.c:221
-#: ../app/tools/gimpfiltertool.c:269 ../app/tools/gimpgradienttool.c:248
+#: ../app/tools/gimpfiltertool.c:273 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -17715,10 +17679,10 @@ msgstr "Impossibile modificare i pixel dei gruppi livelli."
 #: ../app/display/gimpdisplayshell-dnd.c:369
 #: ../app/tools/gimpbucketfilltool.c:306 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1150
-#: ../app/tools/gimpfiltertool.c:276 ../app/tools/gimpgradienttool.c:255
+#: ../app/tools/gimpfiltertool.c:280 ../app/tools/gimpgradienttool.c:255
 #: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:286
 #: ../app/tools/gimpselectiontool.c:453 ../app/tools/gimptransformtool.c:513
-#: ../app/tools/gimpwarptool.c:632
+#: ../app/tools/gimpwarptool.c:638
 #, c-format
 msgid "The active layer's pixels are locked."
 msgstr "I pixel del livello attivo sono bloccati."
@@ -19076,6 +19040,12 @@ msgstr "Regola le curve di colore"
 msgid "Turn colors into shades of gray"
 msgstr "Trasforma i colori in scala di grigi"
 
+#: ../app/operations/gimpoperationdesaturate.c:90
+#: ../app/tools/gimppaintoptions-gui.c:111 ../app/widgets/gimpdeviceinfo.c:116
+#: ../app/widgets/gimplayertreeview.c:272
+msgid "Mode"
+msgstr "Modalità"
+
 #: ../app/operations/gimpoperationdesaturate.c:91
 msgid "Choose shade of gray based on"
 msgstr "Scegliere le sfumature i grigio basate su"
@@ -19542,7 +19512,7 @@ msgid "Alignment"
 msgstr "Allineamento"
 
 #: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:128
-#: ../app/tools/gimpbucketfilloptions.c:132 ../app/tools/gimpcoloroptions.c:69
+#: ../app/tools/gimpbucketfilloptions.c:131 ../app/tools/gimpcoloroptions.c:69
 #: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
 msgstr "Campionamento diffuso"
@@ -20001,7 +19971,7 @@ msgstr "Soglia campionamento"
 msgid "Sample transparent"
 msgstr "Campione trasparente"
 
-#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:138
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Vicini diagonali"
@@ -21222,83 +21192,88 @@ msgstr "Con_trasto"
 msgid "Edit these Settings as Levels"
 msgstr "Modifica queste impostazioni come livelli"
 
-#: ../app/tools/gimpbucketfilloptions.c:116
+#: ../app/tools/gimpbucketfilloptions.c:115
 msgid "Fill selection"
 msgstr "Riempimento selezione"
 
-#: ../app/tools/gimpbucketfilloptions.c:117
+#: ../app/tools/gimpbucketfilloptions.c:116
 msgid "Which area will be filled"
 msgstr "Quale area da riempire"
 
-#: ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/tools/gimpbucketfilloptions.c:123
 msgid "Fill transparent areas"
 msgstr "Riempi aree trasparenti"
 
-#: ../app/tools/gimpbucketfilloptions.c:125
+#: ../app/tools/gimpbucketfilloptions.c:124
 msgid "Allow completely transparent regions to be filled"
 msgstr "Permetti che le regioni completamente trasparenti vengano riempite"
 
-#: ../app/tools/gimpbucketfilloptions.c:133
+#: ../app/tools/gimpbucketfilloptions.c:132
 msgid "Base filled area on all visible layers"
 msgstr "Basa l'area da riempire su tutti i livelli visibili"
 
-#: ../app/tools/gimpbucketfilloptions.c:140
+#: ../app/tools/gimpbucketfilloptions.c:139
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Tratta i pixel vicini diagonalmente come connessi"
 
-#: ../app/tools/gimpbucketfilloptions.c:148
+#: ../app/tools/gimpbucketfilloptions.c:147
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
 "uniformly."
-msgstr ""
-"Basa l'opacità riempimento sulla differenza di colore dal pixel cliccato "
-"(vedere soglia) o sui bordi dei tratti. Disabilita l'antialiasing per "
-"riempire l'intera area uniformemente."
+msgstr "Basa l'opacità del riempimento sulla differenza di colore dal pixel cliccato (vedere soglia) o sui bordi del tratteggio. Disabilita l'antialiasing per riempire l'intera area uniformemente."
 
-#: ../app/tools/gimpbucketfilloptions.c:157
+#: ../app/tools/gimpbucketfilloptions.c:156
 #: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Soglia"
 
-#: ../app/tools/gimpbucketfilloptions.c:158
+#: ../app/tools/gimpbucketfilloptions.c:157
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "Massima differenza di colore"
 
-#: ../app/tools/gimpbucketfilloptions.c:192
-#: ../app/tools/gimpbucketfilloptions.c:440
+#: ../app/tools/gimpbucketfilloptions.c:177
+msgid "Maximum gap length"
+msgstr "Lunghezza massima apertura"
+
+#: ../app/tools/gimpbucketfilloptions.c:178
+msgid "Maximum gap (in pixels) in line art which can be closed"
+msgstr "Massima apertura (in pixel) nel tratteggio che può essere chiusa"
+
+#: ../app/tools/gimpbucketfilloptions.c:184
+#: ../app/tools/gimpbucketfilloptions.c:426
 msgid "Fill by"
 msgstr "Riempimento per"
 
-#: ../app/tools/gimpbucketfilloptions.c:193
+#: ../app/tools/gimpbucketfilloptions.c:185
 msgid "Criterion used for determining color similarity"
 msgstr "Criterio usato per determinare la somiglianza di colore"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:377
+#: ../app/tools/gimpbucketfilloptions.c:363
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Tipo di riempimento (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:392
+#: ../app/tools/gimpbucketfilloptions.c:378
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Area coinvolta  (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:401
+#: ../app/tools/gimpbucketfilloptions.c:387
 msgid "Finding Similar Colors"
 msgstr "Trova colori simili"
 
 #. Line art frame
-#: ../app/tools/gimpbucketfilloptions.c:445
-msgid "Line art detection"
-msgstr "Rilevamento tratto"
+#: ../app/tools/gimpbucketfilloptions.c:431
+msgid "Line Art Detection"
+msgstr "Rilevamento tratteggio"
 
 #: ../app/tools/gimpbucketfilltool.c:162
 msgid "Bucket Fill"
@@ -21314,10 +21289,10 @@ msgid "_Bucket Fill"
 msgstr "_Riempimento di colore"
 
 #: ../app/tools/gimpbucketfilltool.c:299 ../app/tools/gimpcagetool.c:237
-#: ../app/tools/gimpfiltertool.c:285
+#: ../app/tools/gimpfiltertool.c:289
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:313
-#: ../app/tools/gimptransformtool.c:521 ../app/tools/gimpwarptool.c:645
+#: ../app/tools/gimptransformtool.c:521 ../app/tools/gimpwarptool.c:651
 msgid "The active layer is not visible."
 msgstr "Il livello attivo non è visibile."
 
@@ -21372,7 +21347,7 @@ msgstr "Trasformazione gabbia: deforma una selezione all'interno di una gabbia"
 msgid "_Cage Transform"
 msgstr "_Trasformazione gabbia"
 
-#: ../app/tools/gimpcagetool.c:735 ../app/tools/gimpwarptool.c:332
+#: ../app/tools/gimpcagetool.c:735 ../app/tools/gimpwarptool.c:336
 msgid "Press ENTER to commit the transform"
 msgstr "Premere INVIO per confermare la trasformazione"
 
@@ -21802,48 +21777,48 @@ msgid "Color _managed"
 msgstr "Colore _gestito"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:374
+#: ../app/tools/gimpfiltertool.c:379
 msgid "Advanced Color Options"
 msgstr "Opzioni colore avanzate"
 
-#: ../app/tools/gimpfiltertool.c:393
+#: ../app/tools/gimpfiltertool.c:398
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr "Converte i pixel in sRGB incorporato per applicare il filtro (lento)"
 
-#: ../app/tools/gimpfiltertool.c:394
+#: ../app/tools/gimpfiltertool.c:399
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Presume che i pixel siano in sRGB incorporato (ignora lo spazio colore "
 "immagine corrente)"
 
-#: ../app/tools/gimpfiltertool.c:629
+#: ../app/tools/gimpfiltertool.c:643
 msgid "Click to switch the original and filtered sides"
 msgstr "Fare clic per passare dal lato originale a quello filtrato o viceversa"
 
-#: ../app/tools/gimpfiltertool.c:633
+#: ../app/tools/gimpfiltertool.c:647
 msgid "Click to switch between vertical and horizontal"
 msgstr "Fare clic per passare da verticale a orizzontale o viceversa"
 
-#: ../app/tools/gimpfiltertool.c:637
+#: ../app/tools/gimpfiltertool.c:651
 msgid "Click to move the split guide"
 msgstr "Fare clic per spostare la separazione"
 
-#: ../app/tools/gimpfiltertool.c:639
+#: ../app/tools/gimpfiltertool.c:653
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: commuta originale e filtrato"
 
-#: ../app/tools/gimpfiltertool.c:640
+#: ../app/tools/gimpfiltertool.c:654
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: commuta orizzontale e verticale"
 
-#: ../app/tools/gimpfiltertool.c:1306 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1342 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importa le impostazioni \"%s\""
 
-#: ../app/tools/gimpfiltertool.c:1308 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1344 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Esporta le impostazioni \"%s\""
@@ -23735,57 +23710,57 @@ msgstr "Anima"
 msgid "Create Animation"
 msgstr "Crea animazione"
 
-#: ../app/tools/gimpwarptool.c:156
+#: ../app/tools/gimpwarptool.c:160
 msgid "Warp Transform"
 msgstr "Trasformazione Warp"
 
-#: ../app/tools/gimpwarptool.c:157
+#: ../app/tools/gimpwarptool.c:161
 msgid "Warp Transform: Deform with different tools"
 msgstr "Trasformazione warp: deforma con diversi strumenti"
 
-#: ../app/tools/gimpwarptool.c:158
+#: ../app/tools/gimpwarptool.c:162
 msgid "_Warp Transform"
 msgstr "Trasformazione _warp"
 
-#: ../app/tools/gimpwarptool.c:487 ../app/tools/gimpwarptool.c:499
+#: ../app/tools/gimpwarptool.c:491 ../app/tools/gimpwarptool.c:503
 msgid "Warp Tool Stroke"
 msgstr "Tratteggio con lo strumento Warp"
 
-#: ../app/tools/gimpwarptool.c:621
+#: ../app/tools/gimpwarptool.c:627
 msgid "Cannot warp layer groups."
 msgstr "Impossibile fare warp sui gruppi di livelli."
 
-#: ../app/tools/gimpwarptool.c:657
+#: ../app/tools/gimpwarptool.c:663
 msgid "No stroke events selected."
 msgstr "Nessun evento tratto selezionato."
 
-#: ../app/tools/gimpwarptool.c:679
+#: ../app/tools/gimpwarptool.c:685
 msgid "No warp to erase."
 msgstr "Nessuna warp da cancellare."
 
-#: ../app/tools/gimpwarptool.c:683
+#: ../app/tools/gimpwarptool.c:689
 msgid "No warp to smooth."
 msgstr "Nessuna warp da smussare."
 
-#: ../app/tools/gimpwarptool.c:906
+#: ../app/tools/gimpwarptool.c:912
 msgid "Warp transform"
 msgstr "Trasformazione warp"
 
-#: ../app/tools/gimpwarptool.c:1119
+#: ../app/tools/gimpwarptool.c:1184
 msgid "Please add some warp strokes first."
 msgstr "Aggiungere prima alcuni colpi di warp."
 
-#: ../app/tools/gimpwarptool.c:1133 ../app/tools/gimpwarptool.c:1170
+#: ../app/tools/gimpwarptool.c:1198 ../app/tools/gimpwarptool.c:1235
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Rendering quadro %d"
 
-#: ../app/tools/gimpwarptool.c:1148 ../app/tools/gimpwarptool.c:1178
+#: ../app/tools/gimpwarptool.c:1213 ../app/tools/gimpwarptool.c:1243
 #, c-format
 msgid "Frame %d"
 msgstr "Quadro %d"
 
-#: ../app/tools/gimpwarptool.c:1187
+#: ../app/tools/gimpwarptool.c:1252
 msgid "Frame"
 msgstr "Quadro"
 
