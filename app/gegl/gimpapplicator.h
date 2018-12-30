@@ -64,9 +64,9 @@ struct _GimpApplicator
   gboolean                cache_enabled;
   GeglNode               *cache_node;
 
-  gboolean                preview_enabled;
-  GeglRectangle           preview_rect;
-  GeglNode               *preview_crop_node;
+  gboolean                crop_enabled;
+  GeglRectangle           crop_rect;
+  GeglNode               *crop_node;
 
   GeglBuffer             *src_buffer;
   GeglNode               *src_node;
@@ -128,9 +128,9 @@ GeglBuffer * gimp_applicator_get_cache_buffer  (GimpApplicator       *applicator
                                                 GeglRectangle       **rectangles,
                                                 gint                 *n_rectangles);
 
-void         gimp_applicator_set_preview       (GimpApplicator       *applicator,
-                                                gboolean              enable,
+void         gimp_applicator_set_crop          (GimpApplicator       *applicator,
                                                 const GeglRectangle  *rect);
+const GeglRectangle * gimp_applicator_get_crop (GimpApplicator       *applicator);
 
 void         gimp_applicator_blit              (GimpApplicator       *applicator,
                                                 const GeglRectangle  *rect);

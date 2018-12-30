@@ -183,7 +183,7 @@ gimp_applicator_new (GeglNode *parent)
                          "operation", "gegl:nop",
                          NULL);
 
-  applicator->preview_crop_node =
+  applicator->crop_node =
     gegl_node_new_child (applicator->node,
                          "operation", "gegl:nop",
                          NULL);
@@ -192,7 +192,7 @@ gimp_applicator_new (GeglNode *parent)
                        applicator->affect_node,
                        applicator->convert_format_node,
                        applicator->cache_node,
-                       applicator->preview_crop_node,
+                       applicator->crop_node,
                        applicator->output_node,
                        NULL);
 
@@ -556,24 +556,19 @@ gimp_applicator_get_cache_buffer (GimpApplicator  *applicator,
 }
 
 void
-gimp_applicator_set_preview (GimpApplicator      *applicator,
-                             gboolean             enable,
-                             const GeglRectangle *rect)
+gimp_applicator_set_crop (GimpApplicator      *applicator,
+                          const GeglRectangle *rect)
 {
   g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
-  g_return_if_fail (rect != NULL);
 
-  if (applicator->preview_enabled     != enable      ||
-      applicator->preview_rect.x      != rect->x     ||
-      applicator->preview_rect.y      != rect->y     ||
-      applicator->preview_rect.width  != rect->width ||
-      applicator->preview_rect.height != rect->height)
+  if (applicator->crop_enabled != (rect != NULL) ||
+      (rect && ! gegl_rectangle_equal (&applicator->crop_rect, rect)))
     {
-      if (enable)
+      if (rect)
         {
-          if (! applicator->preview_enabled)
+          if (! applicator->crop_enabled)
             {
-              gegl_node_set (applicator->preview_crop_node,
+              gegl_node_set (applicator->crop_node,
                              "operation", "gimp:compose-crop",
                              "x",         rect->x,
                              "y",         rect->y,
@@ -581,30 +576,43 @@ gimp_applicator_set_preview (GimpApplicator      *applicator,
                              "height",    rect->height,
                              NULL);
 
-              gegl_node_connect_to (applicator->input_node,        "output",
-                                    applicator->preview_crop_node, "aux");
+              gegl_node_connect_to (applicator->input_node, "output",
+                                    applicator->crop_node,  "aux");
             }
           else
             {
-              gegl_node_set (applicator->preview_crop_node,
+              gegl_node_set (applicator->crop_node,
                              "x",      rect->x,
                              "y",      rect->y,
                              "width",  rect->width,
                              "height", rect->height,
                              NULL);
             }
+
+          applicator->crop_enabled = TRUE;
+          applicator->crop_rect    = *rect;
         }
-      else if (applicator->preview_enabled)
+      else
         {
-          gegl_node_disconnect (applicator->preview_crop_node, "aux");
-          gegl_node_set (applicator->preview_crop_node,
+          gegl_node_disconnect (applicator->crop_node, "aux");
+          gegl_node_set (applicator->crop_node,
                          "operation", "gegl:nop",
                          NULL);
-        }
 
-      applicator->preview_enabled = enable;
-      applicator->preview_rect    = *rect;
+          applicator->crop_enabled = FALSE;
+        }
     }
+}
+
+const GeglRectangle *
+gimp_applicator_get_crop (GimpApplicator *applicator)
+{
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+
+  if (applicator->crop_enabled)
+    return &applicator->crop_rect;
+
+  return NULL;
 }
 
 void

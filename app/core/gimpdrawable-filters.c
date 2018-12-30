@@ -150,9 +150,8 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
       if (applicator)
         {
-          /*  disable the preview crop  */
-          gimp_applicator_set_preview (applicator, FALSE,
-                                       GEGL_RECTANGLE (0, 0, 0, 0));
+          /*  disable the output crop  */
+          gimp_applicator_set_crop (applicator, NULL);
 
           /*  the cache and its valid rectangles are the region that
            *  has already been processed by this applicator.
