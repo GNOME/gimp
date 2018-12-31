@@ -157,7 +157,7 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
                          GimpFillOptions *options,
                          const gchar     *undo_desc)
 {
-  GimpContext *context = GIMP_CONTEXT (options);
+  GimpContext *context;
   gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -169,6 +169,8 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
     {
       return;  /*  nothing to do, but the fill succeeded  */
     }
+
+  context = GIMP_CONTEXT (options);
 
   if (gimp_layer_mode_is_alpha_only (gimp_context_get_paint_mode (context)))
     {
