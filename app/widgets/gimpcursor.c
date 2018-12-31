@@ -259,7 +259,7 @@ get_cursor_pixbuf (GimpCursor *cursor,
         {
           /* no critical here until we actually have the cursor files */
           g_printerr ("Failed to create scaled cursor image '%s' "
-                      "falling back to upscaling default cursor: %s",
+                      "falling back to upscaling default cursor: %s\n",
                       resource_path, error->message);
           g_clear_error (&error);
 
