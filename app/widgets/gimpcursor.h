@@ -19,7 +19,7 @@
 #define __GIMP_CURSOR_H__
 
 
-GdkCursor      * gimp_cursor_new    (GdkDisplay         *display,
+GdkCursor      * gimp_cursor_new    (GdkWindow          *window,
                                      GimpHandedness      cursor_handedness,
                                      GimpCursorType      cursor_type,
                                      GimpToolCursorType  tool_cursor,
