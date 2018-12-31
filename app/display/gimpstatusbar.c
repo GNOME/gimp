@@ -620,10 +620,12 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
           if (icon_name)
             {
               GdkPixbuf *pixbuf;
+              gint       scale_factor;
 
               pixbuf = gimp_statusbar_load_icon (statusbar, icon_name);
 
-              width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf);
+              scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
+              width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf) / scale_factor;
 
               g_object_unref (pixbuf);
 
@@ -675,14 +677,18 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
           PangoAttribute *attr;
           PangoRectangle  rect;
           gchar          *tmp;
+          gint            scale_factor;
 
           tmp = g_strconcat (" ", text, NULL);
           gtk_label_set_text (GTK_LABEL (statusbar->label), tmp);
           g_free (tmp);
 
+          scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
+
           rect.x      = 0;
           rect.y      = 0;
-          rect.width  = PANGO_SCALE * (gdk_pixbuf_get_width (statusbar->icon) +
+          rect.width  = PANGO_SCALE * (gdk_pixbuf_get_width (statusbar->icon) /
+                                       scale_factor +
                                        ICON_SPACING);
           rect.height = 0;
 
@@ -1273,9 +1279,11 @@ gimp_statusbar_label_draw (GtkWidget     *widget,
 {
   if (statusbar->icon)
     {
-      PangoRectangle  rect;
-      GtkAllocation   allocation;
-      gint            x, y;
+      cairo_surface_t *surface;
+      PangoRectangle   rect;
+      GtkAllocation    allocation;
+      gint             scale_factor;
+      gint             x, y;
 
       gtk_label_get_layout_offsets (GTK_LABEL (widget), &x, &y);
 
@@ -1291,7 +1299,12 @@ gimp_statusbar_label_draw (GtkWidget     *widget,
                                     PANGO_PIXELS (rect.width) : 0);
       y += PANGO_PIXELS (rect.y);
 
-      gdk_cairo_set_source_pixbuf (cr, statusbar->icon, x, y);
+      scale_factor = gtk_widget_get_scale_factor (widget);
+      surface = gdk_cairo_surface_create_from_pixbuf (statusbar->icon,
+                                                      scale_factor, NULL);
+      cairo_set_source_surface (cr, surface, x, y);
+      cairo_surface_destroy (surface);
+
       cairo_paint (cr);
     }
 

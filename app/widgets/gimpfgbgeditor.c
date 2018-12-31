@@ -259,6 +259,7 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   GtkBorder        border;
   GtkBorder        padding;
   GdkRectangle     rect;
+  gint             scale_factor;
   gint             width, height;
   gint             default_w, default_h;
   gint             swap_w, swap_h;
@@ -280,19 +281,27 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   border.top    += padding.top;
   border.bottom += padding.bottom;
 
+  scale_factor = gtk_widget_get_scale_factor (widget);
+
   /*  draw the default colors pixbuf  */
   if (! editor->default_icon)
     editor->default_icon = gimp_widget_load_icon (widget,
                                                   GIMP_ICON_COLORS_DEFAULT, 12);
 
-  default_w = gdk_pixbuf_get_width  (editor->default_icon);
-  default_h = gdk_pixbuf_get_height (editor->default_icon);
+  default_w = gdk_pixbuf_get_width  (editor->default_icon) / scale_factor;
+  default_h = gdk_pixbuf_get_height (editor->default_icon) / scale_factor;
 
   if (default_w < width / 2 && default_h < height / 2)
     {
-      gdk_cairo_set_source_pixbuf (cr, editor->default_icon,
-                                   border.left,
-                                   height - border.bottom - default_h);
+      cairo_surface_t *surface;
+
+      surface = gdk_cairo_surface_create_from_pixbuf (editor->default_icon,
+                                                      scale_factor, NULL);
+      cairo_set_source_surface (cr, surface,
+                                border.left,
+                                height - border.bottom - default_h);
+      cairo_surface_destroy (surface);
+
       cairo_paint (cr);
     }
   else
@@ -305,14 +314,20 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
     editor->swap_icon = gimp_widget_load_icon (widget,
                                                GIMP_ICON_COLORS_SWAP, 12);
 
-  swap_w = gdk_pixbuf_get_width  (editor->swap_icon);
-  swap_h = gdk_pixbuf_get_height (editor->swap_icon);
+  swap_w = gdk_pixbuf_get_width  (editor->swap_icon) / scale_factor;
+  swap_h = gdk_pixbuf_get_height (editor->swap_icon) / scale_factor;
 
   if (swap_w < width / 2 && swap_h < height / 2)
     {
-      gdk_cairo_set_source_pixbuf (cr, editor->swap_icon,
-                                   width - border.right - swap_w,
-                                   border.top);
+      cairo_surface_t *surface;
+
+      surface = gdk_cairo_surface_create_from_pixbuf (editor->swap_icon,
+                                                      scale_factor, NULL);
+      cairo_set_source_surface (cr, surface,
+                                width - border.right - swap_w,
+                                border.top);
+      cairo_surface_destroy (surface);
+
       cairo_paint (cr);
     }
   else
