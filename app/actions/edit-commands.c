@@ -53,6 +53,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
+#include "tools/gimptools-utils.h"
 #include "tools/tool_manager.h"
 
 #include "actions.h"
@@ -63,18 +64,20 @@
 
 /*  local function prototypes  */
 
-static void   edit_paste                         (GimpDisplay   *display,
-                                                  GimpPasteType  paste_type,
-                                                  gboolean       try_svg);
-static void   cut_named_buffer_callback          (GtkWidget     *widget,
-                                                  const gchar   *name,
-                                                  gpointer       data);
-static void   copy_named_buffer_callback         (GtkWidget     *widget,
-                                                  const gchar   *name,
-                                                  gpointer       data);
-static void   copy_named_visible_buffer_callback (GtkWidget     *widget,
-                                                  const gchar   *name,
-                                                  gpointer       data);
+static gboolean   check_drawable_alpha               (GimpDrawable  *drawable,
+                                                      gpointer       data);
+static void       edit_paste                         (GimpDisplay   *display,
+                                                      GimpPasteType  paste_type,
+                                                      gboolean       try_svg);
+static void       cut_named_buffer_callback          (GtkWidget     *widget,
+                                                      const gchar   *name,
+                                                      gpointer       data);
+static void       copy_named_buffer_callback         (GtkWidget     *widget,
+                                                      const gchar   *name,
+                                                      gpointer       data);
+static void       copy_named_visible_buffer_callback (GtkWidget     *widget,
+                                                      const gchar   *name,
+                                                      gpointer       data);
 
 
 /*  public functions  */
@@ -211,6 +214,9 @@ edit_cut_cmd_callback (GtkAction *action,
   GimpObject   *cut;
   GError       *error = NULL;
   return_if_no_drawable (image, drawable, data);
+
+  if (! check_drawable_alpha (drawable, data))
+    return;
 
   cut = gimp_edit_cut (image, drawable, action_data_get_context (data),
                        &error);
@@ -458,6 +464,9 @@ edit_clear_cmd_callback (GtkAction *action,
   GimpDrawable *drawable;
   return_if_no_drawable (image, drawable, data);
 
+  if (! check_drawable_alpha (drawable, data))
+    return;
+
   gimp_drawable_edit_clear (drawable, action_data_get_context (data));
   gimp_image_flush (image);
 }
@@ -497,6 +506,32 @@ edit_fill_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static gboolean
+check_drawable_alpha (GimpDrawable *drawable,
+                      gpointer      data)
+{
+  if (gimp_drawable_has_alpha (drawable) &&
+      GIMP_IS_LAYER (drawable)           &&
+      gimp_layer_get_lock_alpha (GIMP_LAYER (drawable)))
+    {
+      Gimp        *gimp    = action_data_get_gimp    (data);
+      GimpDisplay *display = action_data_get_display (data);
+
+      if (gimp && display)
+        {
+          gimp_message_literal (
+            gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
+            _("The active layer's alpha channel is locked."));
+
+          gimp_tools_blink_lock_box (gimp, GIMP_ITEM (drawable));
+        }
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
 
 static void
 edit_paste (GimpDisplay   *display,
