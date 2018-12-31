@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-09-26 18:42+0000\n"
-"PO-Revision-Date: 2018-07-07 14:57+0000\n"
+"POT-Creation-Date: 2018-07-29 18:06+0000\n"
+"PO-Revision-Date: 2018-12-31 14:57+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
 "Language: mr\n"
@@ -96,8 +96,8 @@ msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"स्क्रिप्ट-फू संवाद पटल उघडलेला असताना आपण \"पूर्ववत [रिफ्रेश] लिपी\" वापरू शकत नाही. "
-"कृपया सर्व स्क्रिप्ट-फू पटल बंद करा आणि प्रयत्न करा."
+"स्क्रिप्ट-फू संवाद पटल उघडलेला असताना आपण \"पूर्ववत [रिफ्रेश] लिपी\" वापरू शकत नाही. कृपया सर्व "
+"स्क्रिप्ट-फू पटल बंद करा आणि प्रयत्न करा."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
 #: ../plug-ins/script-fu/script-fu-console.c:194
@@ -215,7 +215,8 @@ msgstr "स्क्रिप्ट-फू नमुना निवड"
 msgid "Script-Fu Gradient Selection"
 msgstr "स्क्रिप्ट-फू रंगछटा निवड"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:508
+#: ../plug-ins/script-fu/script-fu-interface.c:508f
+#| msgid "Script-Fu brush Selection"
 msgid "Script-Fu Brush Selection"
 msgstr "स्क्रिप्ट-फू कुंचला निवड"
 
@@ -258,8 +259,8 @@ msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
-"127.0.0.1 (विशेषतः 0.0.0.0) पेक्षा इतर IP पत्त्यावर ऐकणे यामुळे आक्रमणकर्त्यांना या "
-"मशीनवरुन अनियंत्रित कोड द्वारे हानी करण्याची संधी उपलब्ध करून देते."
+"127.0.0.1 (विशेषतः 0.0.0.0) पेक्षा इतर IP पत्त्यावर ऐकणे यामुळे आक्रमणकर्त्यांना या मशीनवरुन "
+"अनियंत्रित कोड द्वारे हानी करण्याची संधी उपलब्ध करून देते."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
@@ -335,8 +336,7 @@ msgstr "_जोडणे..."
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
-msgstr ""
-"पृष्ठभागावर दोन किंवा अधिक स्तर चलाभासासाठी मिश्रित करण्यासाठी मध्यस्थ स्तर तयार करा"
+msgstr "पृष्ठभागावर दोन किंवा अधिक स्तर चलाभासासाठी मिश्रित करण्यासाठी मध्यस्थ स्तर तयार करा"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
@@ -355,9 +355,7 @@ msgstr "फेरा"
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
-msgstr ""
-"लिपीला ज्वलंत [बर्न इन] एकूण दोन स्तरांची आवश्यकता आहे.पारदर्शक अग्रभाग स्तर आणि पृष्ठभाग "
-"स्तर."
+msgstr "लिपीला ज्वलंत [बर्न इन] एकूण दोन स्तरांची आवश्यकता आहे.पारदर्शक अग्रभाग स्तर आणि पृष्ठभाग स्तर."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
 msgid "B_urn-In..."
@@ -428,8 +426,7 @@ msgstr "स्टेन्सिल को_रून काढा..."
 #: ../plug-ins/script-fu/scripts/carve-it.scm:183
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
-msgstr ""
-"निर्दिष्ट केलेल्या प्रतिमेवरून कोरून काढण्यासाठी हे विशिष्ट रेखाचित्र स्टेन्सिल म्हणून वापरा."
+msgstr "निर्दिष्ट केलेल्या प्रतिमेवरून कोरून काढण्यासाठी हे विशिष्ट रेखाचित्र स्टेन्सिल म्हणून वापरा."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:190
 msgid "Image to carve"
@@ -476,8 +473,7 @@ msgstr "स्टेन्सिल क्रो_म..."
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
-msgstr ""
-"निर्दिष्ट केलेल्या क्षेत्र (किंवा अल्फा) वर विशिष्ट (ग्रेस्केल) स्टेन्सिल वापरून क्रोम प्रभाव जोडा"
+msgstr "निर्दिष्ट केलेल्या क्षेत्र (किंवा अल्फा) वर विशिष्ट (ग्रेस्केल) स्टेन्सिल वापरून क्रोम प्रभाव जोडा"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:238
 msgid "Chrome saturation"
@@ -837,28 +833,47 @@ msgstr "_साध्या सोप्या घटकांचे चित�
 msgid "Create and Use _Selections"
 msgstr "_निवड तयार करा आणि वापरा"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
 msgid "_Main Web Site"
 msgstr "_मुख्य वेब साइट"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
 msgid "Bookmark to the GIMP web site"
 msgstr "गिम्प वेबसाईटमध्ये खुण करा"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
 msgid "_Developer Web Site"
 msgstr "_विकासक [डेव्हलपर] वेब साइट"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-msgid "_User Manual Web Site"
-msgstr "_वापरकर्ता हस्तलिखित वेब साइट"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+msgid "_Roadmap"
+msgstr "_नकाशा"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Plug-in _Registry"
-msgstr "जोडणी _रजिस्ट्री"
+msgid "Bookmark to the roadmap of GIMP"
+msgstr "गिम्पच्या नकाशावर खुण ठेवा"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+msgid "_Wiki"
+msgstr "_विकी "
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+msgid "Bookmark to the wiki of GIMP"
+msgstr "गिम्पच्या विकीवर खुण ठेवा"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+msgid "_Bug Reports and Feature Requests"
+msgstr "_दोष अहवाल आणि वैशिष्ट्य विनंत्या [बग रिपोर्ट्स  आणि  फिचर रिक्वेस्ट्स]"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "गिम्पच्या बग ट्रॅकरवर खुण ठेवा"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+msgid "_User Manual Web Site"
+msgstr "_वापरकर्ता हस्तलिखित वेब साइट"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
@@ -1021,6 +1036,7 @@ msgid "_Rectangular..."
 msgstr "_आयताकृती..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+#| msgid "Create a rectangular brush "
 msgid "Create a rectangular brush"
 msgstr "एक आयताकृती कुंचला तयार करा"
 
@@ -1045,6 +1061,7 @@ msgid "Re_ctangular, Feathered..."
 msgstr "आ_यताकृती, फिदरड्..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:134
+#| msgid "Create a rectangular brush  with feathered edges"
 msgid "Create a rectangular brush with feathered edges"
 msgstr "पिसा सारखी [फिदर] कडा असलेला आयताकृती कुंचला बनवा"
 
@@ -1058,6 +1075,7 @@ msgid "_Elliptical..."
 msgstr "_लंबवर्तूळकार..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:190
+#| msgid "Create an elliptical brush "
 msgid "Create an elliptical brush"
 msgstr "एक लंबवर्तूळकार कुंचला तयार करा"
 
@@ -1066,6 +1084,7 @@ msgid "Elli_ptical, Feathered..."
 msgstr "लंब_वर्तुळ, फिदरड्..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:259
+#| msgid "Create an elliptical brush  with feathered edges"
 msgid "Create an elliptical brush with feathered edges"
 msgstr "पिसा सारखी [फिदर] कडा असलेला एक लंबवर्तुळाकार कुंचला तयार करा"
 
@@ -1101,8 +1120,7 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"तयार करावयाच्या धारिकेचे नाव (जर या नावाची एखादी धारिका आधीच अस्तित्वात असेल तर ती "
-"पुनर्स्थित [रिप्लेस] केले जाईल)"
+"तयार करावयाच्या धारिकेचे नाव (जर या नावाची एखादी धारिका आधीच अस्तित्वात असेल तर ती पुनर्स्थित [रिप्लेस] केले जाईल)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
@@ -1112,15 +1130,16 @@ msgstr "आपण प्रविष्ट केलेले धारिके
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
-msgstr "या नावातील सर्व वर्ण धारिकेत येऊ शकत नाही."
+msgstr ""
+"या नावातील सर्व वर्ण धारिकेत येऊ शकत नाही."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
-"एक रंगीत सीएसएस पृष्ठशैली म्हणून सक्रिय रंगफळी हे रंग प्रविष्टी नावाने निर्यात करा त्यांचे "
-"वर्ग नाव, आणि रंगगुणधर्म "
+"एक रंगीत सीएसएस पृष्ठशैली म्हणून सक्रिय रंगफळी हे रंग प्रविष्टी नावाने निर्यात करा त्यांचे वर्ग "
+"नाव, आणि रंगगुणधर्म "
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
@@ -1135,8 +1154,7 @@ msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
-"रंगफळीमधील सर्व रंग हेक्साडेसिमल मूल्य स्वरूपात मजकूर धारिकेमध्ये लिहा, एका ओळीवर एक रंग "
-"मूल्य (नाव नाही)"
+"रंगफळीमधील सर्व रंग हेक्साडेसिमल मूल्य स्वरूपात मजकूर धारिकेमध्ये लिहा, एका ओळीवर एक रंग मूल्य (नाव नाही)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
@@ -1148,6 +1166,7 @@ msgid "There is no image data in the clipboard to paste."
 msgstr "फलक [क्लिपबोर्ड] वर कोणतीही प्रतिमा माहिती नाही."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+#| msgid "New _brush ..."
 msgid "New _Brush..."
 msgstr "नवीन  _कुंचला..."
 
@@ -1157,6 +1176,7 @@ msgstr "फलक सामग्री नवीन कुंचल्याम
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+#| msgid "brush  name"
 msgid "Brush name"
 msgstr "कुंचल्याचे नाव"
 
@@ -1239,8 +1259,7 @@ msgstr "_तरंगणे [रिपलिंग]..."
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
-msgstr ""
-"सध्याच्या स्तरावर लहरीपणा [रिपल] प्रभाव जोडून एकापेक्षा अधिक-स्तर प्रतिमा तयार करा"
+msgstr "सध्याच्या स्तरावर लहरीपणा [रिपल] प्रभाव जोडून एकापेक्षा अधिक-स्तर प्रतिमा तयार करा"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
@@ -1325,10 +1344,12 @@ msgid "Concave"
 msgstr "अंतर्गोल [कॉन्क्वेह]"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+#| msgid "To brush ..."
 msgid "To _Brush..."
 msgstr "_कुंचल्याला..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+#| msgid "Convert a selection to a brush "
 msgid "Convert a selection to a brush"
 msgstr "निवड कुंचल्यामध्ये रूपांतरित करा"
 
@@ -1495,10 +1516,12 @@ msgstr "पेन्सिल"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#| msgid "brush "
 msgid "Brush"
 msgstr "कुंचला"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+#| msgid "Airbrush "
 msgid "Airbrush"
 msgstr "फवारा कुंचला"
 
@@ -1570,8 +1593,7 @@ msgstr "_तरंग..."
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr ""
-"सध्याच्या प्रतिमेला दगड मारल्यासारखा परिणाम दर्शवणारी अनेक स्तर प्रतिमा तयार करा"
+msgstr "सध्याच्या प्रतिमेला दगड मारल्यासारखा परिणाम दर्शवणारी अनेक स्तर प्रतिमा तयार करा"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
@@ -1594,8 +1616,7 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"एक आच्छादक किंवा बम्प मॅप म्हणून वापरण्यासाठी विणण्याच्या प्रभावाने युक्त असा नवीन स्तर "
-"तयार करा "
+"एक आच्छादक किंवा बम्प मॅप म्हणून वापरण्यासाठी विणण्याच्या प्रभावाने युक्त असा नवीन स्तर तयार करा "
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
@@ -1672,3 +1693,7 @@ msgstr "सावलीचा X ऑफसेट सोडा"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "सावलीचा Y ऑफसेट सोडा"
+
+#~ #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#~ msgid "Plug-in _Registry"
+#~ msgstr "जोडणी _रजिस्ट्री"
