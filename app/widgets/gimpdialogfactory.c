@@ -1544,9 +1544,7 @@ gimp_dialog_factory_show (GimpDialogFactory *factory)
 void
 gimp_dialog_factory_set_busy (GimpDialogFactory *factory)
 {
-  GdkDisplay *display = NULL;
-  GdkCursor  *cursor  = NULL;
-  GList      *list;
+  GList *list;
 
   if (! factory)
     return;
@@ -1557,27 +1555,20 @@ gimp_dialog_factory_set_busy (GimpDialogFactory *factory)
 
       if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
-          if (!display || display != gtk_widget_get_display (widget))
+          GdkWindow *window = gtk_widget_get_window (widget);
+
+          if (window)
             {
-              display = gtk_widget_get_display (widget);
-
-              if (cursor)
-                gdk_cursor_unref (cursor);
-
-              cursor = gimp_cursor_new (display,
-                                        GIMP_HANDEDNESS_RIGHT,
-                                        (GimpCursorType) GDK_WATCH,
-                                        GIMP_TOOL_CURSOR_NONE,
-                                        GIMP_CURSOR_MODIFIER_NONE);
+              GdkCursor *cursor = gimp_cursor_new (window,
+                                                   GIMP_HANDEDNESS_RIGHT,
+                                                   (GimpCursorType) GDK_WATCH,
+                                                   GIMP_TOOL_CURSOR_NONE,
+                                                   GIMP_CURSOR_MODIFIER_NONE);
+              gdk_window_set_cursor (window, cursor);
+              gdk_cursor_unref (cursor);
             }
-
-          if (gtk_widget_get_window (widget))
-            gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
         }
     }
-
-  if (cursor)
-    gdk_cursor_unref (cursor);
 }
 
 void
@@ -1594,8 +1585,10 @@ gimp_dialog_factory_unset_busy (GimpDialogFactory *factory)
 
       if (GTK_IS_WIDGET (widget) && gtk_widget_is_toplevel (widget))
         {
-          if (gtk_widget_get_window (widget))
-            gdk_window_set_cursor (gtk_widget_get_window (widget), NULL);
+          GdkWindow *window = gtk_widget_get_window (widget);
+
+          if (window)
+            gdk_window_set_cursor (window, NULL);
         }
     }
 }
