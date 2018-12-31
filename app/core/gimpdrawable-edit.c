@@ -157,7 +157,8 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
                          GimpFillOptions *options,
                          const gchar     *undo_desc)
 {
-  gint x, y, width, height;
+  GimpContext *context = GIMP_CONTEXT (options);
+  gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -167,6 +168,16 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
                                   &x, &y, &width, &height))
     {
       return;  /*  nothing to do, but the fill succeeded  */
+    }
+
+  if (gimp_layer_mode_is_alpha_only (gimp_context_get_paint_mode (context)))
+    {
+      if (! gimp_drawable_has_alpha (drawable) ||
+          ! (gimp_drawable_get_active_mask (drawable) &
+             GIMP_COMPONENT_MASK_ALPHA))
+        {
+          return;  /*  nothing to do, but the fill succeeded  */
+        }
     }
 
   if (! undo_desc)
@@ -180,12 +191,10 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
   else
     {
       GeglBuffer    *buffer;
-      GimpContext   *context;
       gdouble        opacity;
       GimpLayerMode  mode;
       GimpLayerMode  composite_mode;
 
-      context        = GIMP_CONTEXT (options);
       opacity        = gimp_context_get_opacity (context);
       mode           = gimp_context_get_paint_mode (context);
       composite_mode = gimp_layer_mode_get_paint_composite_mode (mode);
