@@ -251,10 +251,8 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
    * spaces, gimp_color_profile_get_lcms_format() might return the
    * same format and it must be without space
    */
-  src_format  = babl_format_with_space (babl_format_get_encoding (src_format),
-                                        NULL);
-  dest_format = babl_format_with_space (babl_format_get_encoding (dest_format),
-                                        NULL);
+  src_format  = babl_format_with_space ((const gchar *) src_format,  NULL);
+  dest_format = babl_format_with_space ((const gchar *) dest_format, NULL);
 
   priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
                                                           &lcms_src_format);
@@ -347,10 +345,8 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
   /* see gimp_color_transform_new(), we can't have color spaces
    * on the formats
    */
-  src_format  = babl_format_with_space (babl_format_get_encoding (src_format),
-                                        NULL);
-  dest_format = babl_format_with_space (babl_format_get_encoding (dest_format),
-                                        NULL);
+  src_format  = babl_format_with_space ((const gchar *) src_format,  NULL);
+  dest_format = babl_format_with_space ((const gchar *) dest_format, NULL);
 
   priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
                                                           &lcms_src_format);
@@ -432,10 +428,10 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
    * input and output color spaces.
    */
   src_format =
-    babl_format_with_space (babl_format_get_encoding (src_format),
+    babl_format_with_space ((const gchar *) src_format,
                             babl_format_get_space (priv->src_format));
   dest_format =
-    babl_format_with_space (babl_format_get_encoding (dest_format),
+    babl_format_with_space ((const gchar *) dest_format,
                             babl_format_get_space (priv->dest_format));
 
   if (src_format != priv->src_format)
@@ -540,10 +536,10 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
   dest_format = gegl_buffer_get_format (dest_buffer);
 
   src_format =
-    babl_format_with_space (babl_format_get_encoding (priv->src_format),
+    babl_format_with_space ((const gchar *) priv->src_format,
                             babl_format_get_space (src_format));
   dest_format =
-    babl_format_with_space (babl_format_get_encoding (priv->dest_format),
+    babl_format_with_space ((const gchar *) priv->dest_format,
                             babl_format_get_space (dest_format));
 
   if (src_buffer != dest_buffer)

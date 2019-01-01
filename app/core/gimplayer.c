@@ -1425,7 +1425,7 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
       dest_space = gimp_image_get_layer_space (dest_image);
     }
 
-  space_format = babl_format_with_space (babl_format_get_encoding (new_format),
+  space_format = babl_format_with_space ((const gchar *) new_format,
                                          dest_space);
 
   GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, space_format,
