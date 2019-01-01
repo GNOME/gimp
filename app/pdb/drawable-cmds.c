@@ -74,8 +74,9 @@ drawable_get_format_invoker (GimpProcedure         *procedure,
       if (gimp->plug_in_manager->current_plug_in)
         gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
 
-      /* EEK SPACE: this needs more code on the libgimp side, we currently
-       * lose the space
+      /* this only transfers the encoding, losing the space, see the
+       * code in libgimp/gimpdrawable.c which reconstructs the actual
+       * format in the plug-in process
        */
       format = g_strdup (babl_format_get_encoding (gimp_drawable_get_format (drawable)));
     }
@@ -971,7 +972,8 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-format",
                                      "Returns the drawable's Babl format",
-                                     "This procedure returns the drawable's Babl format.",
+                                     "This procedure returns the drawable's Babl format.\n"
+                                     "Note that the actual PDB procedure only transfers the format's encoding. In order to get to the real format, the libbgimp C wrapper must be used.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2012",

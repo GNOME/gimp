@@ -43,6 +43,9 @@
  * Returns the drawable's Babl format
  *
  * This procedure returns the drawable's Babl format.
+ * Note that the actual PDB procedure only transfers the format's
+ * encoding. In order to get to the real format, the libbgimp C wrapper
+ * must be used.
  *
  * Returns: The drawable's Babl format.
  *

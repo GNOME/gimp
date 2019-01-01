@@ -270,7 +270,14 @@ CODE
 
 sub drawable_get_format {
     $blurb = "Returns the drawable's Babl format";
-    $help  = "This procedure returns the drawable's Babl format.";
+
+    $help = <<'HELP';
+This procedure returns the drawable's Babl format.
+
+Note that the actual PDB procedure only transfers the format's
+encoding. In order to get to the real format, the libbgimp C wrapper
+must be used.
+HELP
 
     &mitch_pdb_misc('2012', '2.10');
 
@@ -290,8 +297,9 @@ sub drawable_get_format {
   if (gimp->plug_in_manager->current_plug_in)
     gimp_plug_in_enable_precision (gimp->plug_in_manager->current_plug_in);
 
-  /* EEK SPACE: this needs more code on the libgimp side, we currently
-   * lose the space
+  /* this only transfers the encoding, losing the space, see the
+   * code in libgimp/gimpdrawable.c which reconstructs the actual
+   * format in the plug-in process
    */
   format = g_strdup (babl_format_get_encoding (gimp_drawable_get_format (drawable)));
 }
