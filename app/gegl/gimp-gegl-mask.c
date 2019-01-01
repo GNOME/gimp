@@ -134,25 +134,24 @@ gboolean
 gimp_gegl_mask_is_empty (GeglBuffer *buffer)
 {
   GeglBufferIterator *iter;
+  const Babl         *format;
+  gint                bpp;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), FALSE);
 
-  iter = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("Y float"),
+  format = gegl_buffer_get_format (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *data = iter->items[0].data;
-      gint    i;
-
-      for (i = 0; i < iter->length; i++)
+      if (! gegl_memeq_zero (iter->items[0].data, bpp * iter->length))
         {
-          if (data[i])
-            {
-              gegl_buffer_iterator_stop (iter);
+          gegl_buffer_iterator_stop (iter);
 
-              return FALSE;
-            }
+          return FALSE;
         }
     }
 
