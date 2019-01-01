@@ -33,6 +33,8 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
 {
   GeglBufferIterator *iter;
   GeglRectangle      *roi;
+  const Babl         *format;
+  gint                bpp;
   gint                tx1, tx2, ty1, ty2;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), FALSE);
@@ -47,17 +49,18 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
   tx2 = 0;
   ty2 = 0;
 
-  iter = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("Y float"),
+  format = gegl_buffer_get_format (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+
+  iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
                                    GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 1);
   roi = &iter->items[0].roi;
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *data  = iter->items[0].data;
-      gfloat *data1 = data;
-      gint    ex    = roi->x + roi->width;
-      gint    ey    = roi->y + roi->height;
-      gint    x, y;
+      const guint8 *data_u8 = iter->items[0].data;
+      gint          ex      = roi->x + roi->width;
+      gint          ey      = roi->y + roi->height;
 
       /*  only check the pixels if this tile is not fully within the
        *  currently computed bounds
@@ -68,7 +71,8 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
           /* Check upper left and lower right corners to see if we can
            * avoid checking the rest of the pixels in this tile
            */
-          if (data[0] && data[iter->length - 1])
+          if (! gegl_memeq_zero (data_u8,                            bpp) &&
+              ! gegl_memeq_zero (data_u8 + (iter->length - 1) * bpp, bpp))
             {
               /*  "ex/ey - 1" because the internal variables are the
                *  right/bottom pixel of the mask's contents, not one
@@ -83,27 +87,107 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
             }
           else
             {
-              for (y = roi->y; y < ey; y++, data1 += roi->width)
+              #define FIND_BOUNDS(bpp, type)                             \
+                G_STMT_START                                             \
+                  {                                                      \
+                    const type *data;                                    \
+                    gint        y;                                       \
+                                                                         \
+                    if ((guintptr) data_u8 % bpp)                        \
+                      goto generic;                                      \
+                                                                         \
+                    data = (const type *) data_u8;                       \
+                                                                         \
+                    for (y = roi->y; y < ey; y++)                        \
+                      {                                                  \
+                        gint x1;                                         \
+                                                                         \
+                        for (x1 = 0; x1 < roi->width; x1++)              \
+                          {                                              \
+                            if (data[x1])                                \
+                              {                                          \
+                                gint x2;                                 \
+                                                                         \
+                                for (x2 = roi->width - 1; x2 > x1; x2--) \
+                                  {                                      \
+                                    if (data[x2])                        \
+                                      break;                             \
+                                  }                                      \
+                                                                         \
+                                x1 += roi->x;                            \
+                                x2 += roi->x;                            \
+                                                                         \
+                                if (x1 < tx1) tx1 = x1;                  \
+                                if (x2 > tx2) tx2 = x2;                  \
+                                                                         \
+                                if (y < ty1) ty1 = y;                    \
+                                if (y > ty2) ty2 = y;                    \
+                              }                                          \
+                          }                                              \
+                                                                         \
+                        data += roi->width;                              \
+                      }                                                  \
+                  }                                                      \
+                G_STMT_END
+
+              switch (bpp)
                 {
-                  for (x = roi->x, data = data1; x < ex; x++, data++)
-                    {
-                      if (*data)
-                        {
-                          gint minx = x;
-                          gint maxx = x;
+                case 1:
+                  FIND_BOUNDS (1, guint8);
+                  break;
 
-                          for (; x < ex; x++, data++)
-                            if (*data)
-                              maxx = x;
+                case 2:
+                  FIND_BOUNDS (2, guint16);
+                  break;
 
-                          if (minx < tx1) tx1 = minx;
-                          if (maxx > tx2) tx2 = maxx;
+                case 4:
+                  FIND_BOUNDS (4, guint32);
+                  break;
 
-                          if (y < ty1) ty1 = y;
-                          if (y > ty2) ty2 = y;
-                        }
-                    }
+                case 8:
+                  FIND_BOUNDS (8, guint64);
+                  break;
+
+                default:
+                generic:
+                  {
+                    const guint8 *data = data_u8;
+                    gint          y;
+
+                    for (y = roi->y; y < ey; y++)
+                      {
+                        gint x1;
+
+                        for (x1 = 0; x1 < roi->width; x1++)
+                          {
+                            if (! gegl_memeq_zero (data + x1 * bpp, bpp))
+                              {
+                                gint x2;
+
+                                for (x2 = roi->width - 1; x2 > x1; x2--)
+                                  {
+                                    if (! gegl_memeq_zero (data + x2 * bpp, bpp))
+                                      break;
+                                  }
+
+                                x1 += roi->x;
+                                x2 += roi->x;
+
+                                if (x1 < tx1) tx1 = x1;
+                                if (x2 > tx2) tx2 = x2;
+
+                                if (y < ty1) ty1 = y;
+                                if (y > ty2) ty2 = y;
+                              }
+                          }
+
+                        data += roi->width * bpp;
+                      }
+                  }
+                  break;
                 }
+
+              #undef FIND_BOUNDS
             }
         }
     }
