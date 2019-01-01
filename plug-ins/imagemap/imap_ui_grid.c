@@ -47,7 +47,7 @@ create_spin_button_in_grid (GtkWidget *grid,
                             gint       min,
                             gint       max)
 {
-   GtkAdjustment *adj = gtk_adjustment_new (value, min, max, 1, 1, 1);
+   GtkAdjustment *adj = gtk_adjustment_new (value, min, max, 1, 10, 0);
    GtkWidget *button = gtk_spin_button_new (adj, 1, 0);
 
    gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (button), TRUE);
