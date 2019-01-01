@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-edit.h"
 #include "core/gimpfilloptions.h"
@@ -167,16 +168,27 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
                                      gpointer           insert_data)
 {
   GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpImage        *image     = gimp_item_tree_view_get_image (item_view);
   gboolean          success   = TRUE;
 
-  if (gimp_item_tree_view_get_image (item_view))
+  if (image)
     {
-      GimpLayer *floating_sel =
-        gimp_image_get_floating_selection (gimp_item_tree_view_get_image (item_view));
+      GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
       success = (item         == NULL ||
                  floating_sel == NULL ||
                  item         == GIMP_VIEWABLE (floating_sel));
+
+      if (! success)
+        {
+          Gimp        *gimp    = image->gimp;
+          GimpContext *context = gimp_get_user_context (gimp);
+          GObject     *display = gimp_context_get_display (context);
+
+          gimp_message_literal (gimp, display, GIMP_MESSAGE_WARNING,
+                                _("Cannot select item while a floating "
+                                  "selection is active."));
+        }
     }
 
   if (success)
