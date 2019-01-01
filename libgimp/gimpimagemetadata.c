@@ -503,21 +503,22 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
       gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                       "Xmp.GIMP.Platform",
 #if defined(_WIN32) || defined(__CYGWIN__) || defined(__MINGW32__)
-                                      "Windows");
+                                      "Windows"
 #elif defined(__linux__)
-                                      "Linux");
+                                      "Linux"
 #elif defined(__APPLE__) && defined(__MACH__)
-                                      "Mac OS");
+                                      "Mac OS"
 #elif defined(unix) || defined(__unix__) || defined(__unix)
-                                      "Unix");
+                                      "Unix"
 #else
-                                      "Unknown");
+                                      "Unknown"
 #endif
+                                      );
 
       xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
 
       /* Patch necessary structures */
-      for (i = 0; i < 9; i++)
+      for (i = 0; i < G_N_ELEMENTS (structlist); i++)
         {
           gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (new_g2metadata),
                                               structlist[i].tag,
