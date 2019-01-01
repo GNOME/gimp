@@ -27,6 +27,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpdatafactory.h"
@@ -72,17 +74,7 @@ gimp_image_colormap_init (GimpImage *image)
   private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
   private->palette  = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
 
-  if (! private->babl_palette_rgb)
-    {
-      gchar *format_name = g_strdup_printf ("-gimp-indexed-format-%d",
-                                            gimp_image_get_ID (image));
-
-      babl_new_palette (format_name,
-                        &private->babl_palette_rgb,
-                        &private->babl_palette_rgba);
-
-      g_free (format_name);
-    }
+  gimp_image_colormap_update_formats (image);
 
   gimp_palette_set_columns (private->palette, 16);
 
@@ -133,6 +125,45 @@ gimp_image_colormap_free (GimpImage *image)
    * buffers with that palette on the undo stack, and on undoing the
    * image back to indexed, we must have exactly these palettes around
    */
+}
+
+void
+gimp_image_colormap_update_formats (GimpImage *image)
+{
+  GimpImagePrivate *private;
+  const Babl       *space;
+  gchar            *format_name;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  space = gimp_image_get_layer_space (image);
+
+  format_name = g_strdup_printf ("-gimp-indexed-format-%d",
+                                 gimp_image_get_ID (image));
+
+  babl_new_palette_with_space (format_name, space,
+                               &private->babl_palette_rgb,
+                               &private->babl_palette_rgba);
+
+  g_free (format_name);
+
+  if (private->colormap && private->n_colors > 0)
+    {
+      babl_palette_set_palette (private->babl_palette_rgb,
+                                gimp_babl_format (GIMP_RGB,
+                                                  private->precision, FALSE,
+                                                  space),
+                                private->colormap,
+                                private->n_colors);
+      babl_palette_set_palette (private->babl_palette_rgba,
+                                gimp_babl_format (GIMP_RGB,
+                                                  private->precision, FALSE,
+                                                  space),
+                                private->colormap,
+                                private->n_colors);
+    }
 }
 
 const Babl *

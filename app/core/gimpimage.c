@@ -1349,23 +1349,7 @@ gimp_image_real_colormap_changed (GimpImage *image,
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->colormap && private->n_colors > 0)
-    {
-      const Babl *space = gimp_image_get_layer_space (image);
-
-      babl_palette_set_palette (private->babl_palette_rgb,
-                                gimp_babl_format (GIMP_RGB,
-                                                  private->precision, FALSE,
-                                                  space),
-                                private->colormap,
-                                private->n_colors);
-      babl_palette_set_palette (private->babl_palette_rgba,
-                                gimp_babl_format (GIMP_RGB,
-                                                  private->precision, FALSE,
-                                                  space),
-                                private->colormap,
-                                private->n_colors);
-    }
+  gimp_image_colormap_update_formats (image);
 
   if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     {

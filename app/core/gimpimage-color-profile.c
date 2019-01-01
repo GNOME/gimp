@@ -484,6 +484,9 @@ gimp_image_assign_color_profile (GimpImage         *image,
   /*  omg...  */
   gimp_image_parasite_detach (image, "icc-profile-name");
 
+  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+    gimp_image_colormap_update_formats (image);
+
   gimp_image_fix_layer_format_spaces (image, progress);
 
   gimp_image_undo_group_end (image);
@@ -784,8 +787,11 @@ _gimp_image_update_color_profile (GimpImage          *image,
                                       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                       &error);
       if (! private->layer_space)
-        g_printerr ("%s: failed to create Babl space from profile: %s\n",
-                    G_STRFUNC, error->message);
+        {
+          g_printerr ("%s: failed to create Babl space from profile: %s\n",
+                      G_STRFUNC, error->message);
+          g_clear_error (&error);
+        }
     }
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
@@ -858,6 +864,8 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
                                      GimpProgress             *progress)
 {
   GimpColorTransform      *transform;
+  const Babl              *src_format;
+  const Babl              *dest_format;
   GimpColorTransformFlags  flags = 0;
   guchar                  *cmap;
   gint                     n_colors;
@@ -868,12 +876,17 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
   if (bpc)
     flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-  transform = gimp_color_transform_new (src_profile,
-                                        /* EEK SPACE */
-                                        babl_format ("R'G'B' u8"),
-                                        dest_profile,
-                                        /* EEK SPACE */
-                                        babl_format ("R'G'B' u8"),
+  src_format  = gimp_color_profile_get_format (src_profile,
+                                               babl_format ("R'G'B' u8"),
+                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                               NULL);
+  dest_format = gimp_color_profile_get_format (dest_profile,
+                                               babl_format ("R'G'B' u8"),
+                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                               NULL);
+
+  transform = gimp_color_transform_new (src_profile,  src_format,
+                                        dest_profile, dest_format,
                                         intent, flags);
 
   if (transform)
@@ -888,7 +901,7 @@ gimp_image_convert_profile_colormap (GimpImage                *image,
     }
   else
     {
-      g_warning ("cmsCreateTransform() failed!");
+      g_warning ("gimp_color_transform_new() failed!");
     }
 
   g_free (cmap);
