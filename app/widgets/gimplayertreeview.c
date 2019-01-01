@@ -591,6 +591,16 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
         }
     }
 
+  if (! success)
+    {
+      GimpEditor *editor = GIMP_EDITOR (view);
+
+      /* currently, select_item() only ever fails when there is a floating
+       * selection, which can be committed/canceled through the editor buttons.
+       */
+      gimp_widget_blink (GTK_WIDGET (gimp_editor_get_button_box (editor)));
+    }
+
   return success;
 }
 
