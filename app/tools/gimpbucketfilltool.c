@@ -80,6 +80,7 @@ struct _GimpBucketFillToolPrivate
   GimpBucketFillArea  fill_area;
 };
 
+
 /*  local function prototypes  */
 
 static void     gimp_bucket_fill_tool_constructed      (GObject               *object);
@@ -141,7 +142,8 @@ static void     gimp_bucket_fill_tool_drawable_changed (GimpImage            *im
                                                         GimpBucketFillTool   *tool);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpBucketFillTool, gimp_bucket_fill_tool, GIMP_TYPE_COLOR_TOOL)
+G_DEFINE_TYPE_WITH_PRIVATE (GimpBucketFillTool, gimp_bucket_fill_tool,
+                            GIMP_TYPE_COLOR_TOOL)
 
 #define parent_class gimp_bucket_fill_tool_parent_class
 
@@ -198,7 +200,8 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-pattern-select-set");
 
-  bucket_fill_tool->priv = gimp_bucket_fill_tool_get_instance_private (bucket_fill_tool);
+  bucket_fill_tool->priv =
+    gimp_bucket_fill_tool_get_instance_private (bucket_fill_tool);
 }
 
 static void
@@ -244,10 +247,12 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   g_signal_connect (context, "image-changed",
                     G_CALLBACK (gimp_bucket_fill_tool_image_changed),
                     tool);
-  gimp_bucket_fill_tool_image_changed (context, image, GIMP_BUCKET_FILL_TOOL (tool));
+  gimp_bucket_fill_tool_image_changed (context, image,
+                                       GIMP_BUCKET_FILL_TOOL (tool));
 
-  GIMP_COLOR_TOOL (tool)->pick_target = (options->fill_mode == GIMP_BUCKET_FILL_BG) ?
-                                           GIMP_COLOR_PICK_TARGET_BACKGROUND : GIMP_COLOR_PICK_TARGET_FOREGROUND;
+  GIMP_COLOR_TOOL (tool)->pick_target =
+    (options->fill_mode == GIMP_BUCKET_FILL_BG) ?
+    GIMP_COLOR_PICK_TARGET_BACKGROUND : GIMP_COLOR_PICK_TARGET_FOREGROUND;
 }
 
 static void
@@ -335,7 +340,8 @@ gimp_bucket_fill_tool_start (GimpBucketFillTool *tool,
                                                  tool->priv->graph,
                                                  GIMP_ICON_TOOL_BUCKET_FILL);
 
-  gimp_drawable_filter_set_region (tool->priv->filter, GIMP_FILTER_REGION_DRAWABLE);
+  gimp_drawable_filter_set_region (tool->priv->filter,
+                                   GIMP_FILTER_REGION_DRAWABLE);
 
   /* We only set these here, and don't need to update it since we assume
    * the settings can't change while the fill started.
@@ -388,7 +394,8 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                        options->threshold / 255.0,
                                                        options->sample_merged,
                                                        options->diagonal_neighbors,
-                                                       x, y, &tool->priv->fill_mask,
+                                                       x, y,
+                                                       &tool->priv->fill_mask,
                                                        &x, &y, NULL, NULL);
         }
       else
@@ -397,7 +404,8 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                          tool->priv->line_art,
                                                          fill_options,
                                                          options->sample_merged,
-                                                         x, y, &tool->priv->fill_mask,
+                                                         x, y,
+                                                         &tool->priv->fill_mask,
                                                          &x, &y, NULL, NULL);
         }
       if (fill)
@@ -432,14 +440,16 @@ gimp_bucket_fill_tool_halt (GimpBucketFillTool *tool)
   if (tool->priv->graph)
     {
       g_clear_object (&tool->priv->graph);
-      tool->priv->fill_node      = NULL;
-      tool->priv->offset_node    = NULL;
+      tool->priv->fill_node   = NULL;
+      tool->priv->offset_node = NULL;
     }
+
   if (tool->priv->filter)
     {
       gimp_drawable_filter_abort (tool->priv->filter);
       g_clear_object (&tool->priv->filter);
     }
+
   g_clear_object (&tool->priv->fill_mask);
 
   gimp_line_art_thaw (tool->priv->line_art);
@@ -531,10 +541,11 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
               gimp_drawable_edit_fill (drawable, fill_options, NULL);
               gimp_image_flush (image);
             }
-          else /* GIMP_BUCKET_FILL_SIMILAR_COLORS or GIMP_BUCKET_FILL_LINE_ART */
+          else /* GIMP_BUCKET_FILL_SIMILAR_COLORS || GIMP_BUCKET_FILL_LINE_ART */
             {
               gimp_bucket_fill_tool_start (bucket_tool, coords, display);
-              gimp_bucket_fill_tool_preview (bucket_tool, coords, display, fill_options);
+              gimp_bucket_fill_tool_preview (bucket_tool, coords, display,
+                                             fill_options);
             }
         }
       else
@@ -589,7 +600,8 @@ gimp_bucket_fill_tool_motion (GimpTool         *tool,
           gimp_context_set_paint_mode (GIMP_CONTEXT (fill_options),
                                        gimp_context_get_paint_mode (context));
 
-          gimp_bucket_fill_tool_preview (bucket_tool, coords, display, fill_options);
+          gimp_bucket_fill_tool_preview (bucket_tool, coords, display,
+                                         fill_options);
         }
       else
         {
@@ -645,13 +657,15 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
       if (press)
         {
           GIMP_BUCKET_FILL_TOOL (tool)->priv->fill_mode = options->fill_mode;
+
           switch (options->fill_mode)
             {
             case GIMP_BUCKET_FILL_FG:
               g_object_set (options, "fill-mode", GIMP_BUCKET_FILL_BG, NULL);
               break;
 
-            default: /* GIMP_BUCKET_FILL_BG && GIMP_BUCKET_FILL_PATTERN */
+            default:
+              /* GIMP_BUCKET_FILL_BG || GIMP_BUCKET_FILL_PATTERN */
               g_object_set (options, "fill-mode", GIMP_BUCKET_FILL_FG, NULL);
               break;
 
@@ -669,6 +683,7 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
     {
       GimpToolInfo *info = gimp_get_tool_info (display->gimp,
                                                "gimp-color-picker-tool");
+
       if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
         {
           switch (GIMP_COLOR_TOOL (tool)->pick_target)
@@ -686,6 +701,7 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
                                        "foreground color"));
               break;
             }
+
           GIMP_TOOL (tool)->display = display;
           gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
                                   GIMP_COLOR_OPTIONS (info->tool_options));
@@ -702,16 +718,20 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
       if (press)
         {
           GIMP_BUCKET_FILL_TOOL (tool)->priv->fill_area = options->fill_area;
+
           switch (options->fill_area)
             {
             case GIMP_BUCKET_FILL_SIMILAR_COLORS:
-              g_object_set (options, "fill-area", GIMP_BUCKET_FILL_SELECTION, NULL);
+              g_object_set (options,
+                            "fill-area", GIMP_BUCKET_FILL_SELECTION,
+                            NULL);
               break;
 
-            default: /* GIMP_BUCKET_FILL_SELECTION && GIMP_BUCKET_FILL_LINE_ART */
-              g_object_set (options, "fill-area", GIMP_BUCKET_FILL_SIMILAR_COLORS, NULL);
-              break;
-
+            default:
+              /* GIMP_BUCKET_FILL_SELECTION || GIMP_BUCKET_FILL_LINE_ART */
+              g_object_set (options,
+                            "fill-area", GIMP_BUCKET_FILL_SIMILAR_COLORS,
+                            NULL);
               break;
             }
         }
@@ -861,6 +881,7 @@ gimp_bucket_fill_tool_image_changed (GimpContext        *context,
 
       g_weak_ref_set (&tool->priv->cached_image, image ? image : NULL);
       g_weak_ref_set (&tool->priv->cached_drawable, NULL);
+
       if (image)
         {
           GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
@@ -882,6 +903,7 @@ gimp_bucket_fill_tool_image_changed (GimpContext        *context,
           gimp_line_art_set_input (tool->priv->line_art, NULL);
         }
     }
+
   if (prev_image)
     g_object_unref (prev_image);
 }
@@ -898,10 +920,12 @@ gimp_bucket_fill_tool_drawable_changed (GimpImage          *image,
       GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
       g_weak_ref_set (&tool->priv->cached_drawable, drawable ? drawable : NULL);
+
       if (! options->sample_merged)
         gimp_line_art_set_input (tool->priv->line_art,
                                  drawable ? GIMP_PICKABLE (drawable) : NULL);
     }
+
   if (prev_drawable)
     g_object_unref (prev_drawable);
 }
