@@ -86,7 +86,7 @@ typedef enum  /*< pdb-skip >*/
 
 GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum
+typedef enum  /*< pdb-skip >*/
 {
   GIMP_BUCKET_FILL_FG,      /*< desc="FG color fill" >*/
   GIMP_BUCKET_FILL_BG,      /*< desc="BG color fill" >*/

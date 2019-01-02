@@ -843,15 +843,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_LAYER_MODE_SPLIT => '60',
 		       GIMP_LAYER_MODE_PASS_THROUGH => '61' }
 	},
-    GimpBucketFillMode =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_BUCKET_FILL_FG GIMP_BUCKET_FILL_BG
-			  GIMP_BUCKET_FILL_PATTERN) ],
-	  mapping => { GIMP_BUCKET_FILL_FG => '0',
-		       GIMP_BUCKET_FILL_BG => '1',
-		       GIMP_BUCKET_FILL_PATTERN => '2' }
-	},
     GimpConvertDitherType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
