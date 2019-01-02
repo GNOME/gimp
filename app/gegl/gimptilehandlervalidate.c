@@ -248,17 +248,19 @@ gimp_tile_handler_validate_real_validate_buffer (GimpTileHandlerValidate *valida
 
 static GeglTile *
 gimp_tile_handler_validate_validate_tile (GeglTileSource *source,
-                                          GeglTile       *tile,
                                           gint            x,
                                           gint            y)
 {
   GimpTileHandlerValidate *validate = GIMP_TILE_HANDLER_VALIDATE (source);
+  GeglTile                *tile;
   cairo_rectangle_int_t    tile_rect;
+  cairo_region_overlap_t   overlap;
 
   if (validate->suspend_validate ||
       cairo_region_is_empty (validate->dirty_region))
     {
-      return tile;
+      return gegl_tile_handler_source_command (source,
+                                               GEGL_TILE_GET, x, y, 0, NULL);
     }
 
   tile_rect.x      = x * validate->tile_width;
@@ -266,102 +268,106 @@ gimp_tile_handler_validate_validate_tile (GeglTileSource *source,
   tile_rect.width  = validate->tile_width;
   tile_rect.height = validate->tile_height;
 
-  if (validate->whole_tile)
+  overlap = cairo_region_contains_rectangle (validate->dirty_region,
+                                             &tile_rect);
+
+  if (overlap == CAIRO_REGION_OVERLAP_OUT)
     {
-      if (cairo_region_contains_rectangle (validate->dirty_region, &tile_rect)
-          != CAIRO_REGION_OVERLAP_OUT)
-        {
-          gint tile_bpp;
-          gint tile_stride;
+      return gegl_tile_handler_source_command (source,
+                                               GEGL_TILE_GET, x, y, 0, NULL);
+    }
 
-          if (! tile)
-            tile = gegl_tile_handler_create_tile (GEGL_TILE_HANDLER (source),
-                                                  x, y, 0);
+  if (overlap == CAIRO_REGION_OVERLAP_IN || validate->whole_tile)
+    {
+      gint tile_bpp;
+      gint tile_stride;
 
-          cairo_region_subtract_rectangle (validate->dirty_region, &tile_rect);
+      cairo_region_subtract_rectangle (validate->dirty_region, &tile_rect);
 
-          tile_bpp    = babl_format_get_bytes_per_pixel (validate->format);
-          tile_stride = tile_bpp * validate->tile_width;
+      tile_bpp    = babl_format_get_bytes_per_pixel (validate->format);
+      tile_stride = tile_bpp * validate->tile_width;
 
-          gimp_tile_handler_validate_begin_validate (validate);
+      tile = gegl_tile_handler_get_source_tile (GEGL_TILE_HANDLER (source),
+                                                x, y, 0, FALSE);
 
-          gegl_tile_lock (tile);
+      gimp_tile_handler_validate_begin_validate (validate);
 
-          GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->validate
-            (validate,
-             GEGL_RECTANGLE (tile_rect.x,
-                             tile_rect.y,
-                             tile_rect.width,
-                             tile_rect.height),
-             validate->format,
-             gegl_tile_get_data (tile),
-             tile_stride);
+      gegl_tile_lock (tile);
 
-          gegl_tile_unlock (tile);
+      GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->validate
+        (validate,
+         GEGL_RECTANGLE (tile_rect.x,
+                         tile_rect.y,
+                         tile_rect.width,
+                         tile_rect.height),
+         validate->format,
+         gegl_tile_get_data (tile),
+         tile_stride);
 
-          gimp_tile_handler_validate_end_validate (validate);
-        }
+      gegl_tile_unlock (tile);
+
+      gimp_tile_handler_validate_end_validate (validate);
     }
   else
     {
-      cairo_region_t *tile_region = cairo_region_copy (validate->dirty_region);
+      cairo_region_t *tile_region;
+      gint            tile_bpp;
+      gint            tile_stride;
+      gint            n_rects;
+      gint            i;
 
+      tile_region = cairo_region_copy (validate->dirty_region);
       cairo_region_intersect_rectangle (tile_region, &tile_rect);
 
-      if (! cairo_region_is_empty (tile_region))
+      cairo_region_subtract_rectangle (validate->dirty_region, &tile_rect);
+
+      tile_bpp    = babl_format_get_bytes_per_pixel (validate->format);
+      tile_stride = tile_bpp * validate->tile_width;
+
+      tile = gegl_tile_handler_source_command (source,
+                                               GEGL_TILE_GET, x, y, 0, NULL);
+
+      if (! tile)
         {
-          gint tile_bpp;
-          gint tile_stride;
-          gint n_rects;
-          gint i;
+          tile = gegl_tile_handler_create_tile (GEGL_TILE_HANDLER (source),
+                                                x, y, 0);
 
-          cairo_region_subtract_rectangle (validate->dirty_region, &tile_rect);
+          memset (gegl_tile_get_data (tile),
+                  0, tile_stride * validate->tile_height);
+        }
 
-          tile_bpp    = babl_format_get_bytes_per_pixel (validate->format);
-          tile_stride = tile_bpp * validate->tile_width;
+      gimp_tile_handler_validate_begin_validate (validate);
 
-          if (! tile)
-            {
-              tile = gegl_tile_handler_create_tile (GEGL_TILE_HANDLER (source),
-                                                    x, y, 0);
+      gegl_tile_lock (tile);
 
-              memset (gegl_tile_get_data (tile),
-                      0, tile_stride * validate->tile_height);
-            }
-
-          gimp_tile_handler_validate_begin_validate (validate);
-
-          gegl_tile_lock (tile);
-
-          n_rects = cairo_region_num_rectangles (tile_region);
+      n_rects = cairo_region_num_rectangles (tile_region);
 
 #if 0
-          g_printerr ("%d chunks\n", n_rects);
+      g_printerr ("%d chunks\n", n_rects);
 #endif
 
-          for (i = 0; i < n_rects; i++)
-            {
-              cairo_rectangle_int_t blit_rect;
+      for (i = 0; i < n_rects; i++)
+        {
+          cairo_rectangle_int_t blit_rect;
 
-              cairo_region_get_rectangle (tile_region, i, &blit_rect);
+          cairo_region_get_rectangle (tile_region, i, &blit_rect);
 
-              GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->validate
-                (validate,
-                 GEGL_RECTANGLE (blit_rect.x,
-                                 blit_rect.y,
-                                 blit_rect.width,
-                                 blit_rect.height),
-                 validate->format,
-                 gegl_tile_get_data (tile) +
-                 (blit_rect.y % validate->tile_height) * tile_stride +
-                 (blit_rect.x % validate->tile_width)  * tile_bpp,
-                 tile_stride);
-            }
-
-          gegl_tile_unlock (tile);
-
-          gimp_tile_handler_validate_end_validate (validate);
+          GIMP_TILE_HANDLER_VALIDATE_GET_CLASS (validate)->validate
+            (validate,
+             GEGL_RECTANGLE (blit_rect.x,
+                             blit_rect.y,
+                             blit_rect.width,
+                             blit_rect.height),
+             validate->format,
+             gegl_tile_get_data (tile) +
+             (blit_rect.y % validate->tile_height) * tile_stride +
+             (blit_rect.x % validate->tile_width)  * tile_bpp,
+             tile_stride);
         }
+
+      gegl_tile_unlock (tile);
+
+      gimp_tile_handler_validate_end_validate (validate);
 
       cairo_region_destroy (tile_region);
     }
@@ -377,14 +383,10 @@ gimp_tile_handler_validate_command (GeglTileSource  *source,
                                     gint             z,
                                     gpointer         data)
 {
-  gpointer retval;
-
-  retval = gegl_tile_handler_source_command (source, command, x, y, z, data);
-
   if (command == GEGL_TILE_GET && z == 0)
-    retval = gimp_tile_handler_validate_validate_tile (source, retval, x, y);
+    return gimp_tile_handler_validate_validate_tile (source, x, y);
 
-  return retval;
+  return gegl_tile_handler_source_command (source, command, x, y, z, data);
 }
 
 
