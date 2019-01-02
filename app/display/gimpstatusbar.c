@@ -295,7 +295,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   statusbar->label = gtk_label_new ("");
   gtk_label_set_ellipsize (GTK_LABEL (statusbar->label), PANGO_ELLIPSIZE_END);
-  gtk_widget_set_halign (GTK_WIDGET (statusbar->label), GTK_ALIGN_START);
+  gtk_label_set_justify (GTK_LABEL (statusbar->label), GTK_JUSTIFY_LEFT);
+  gtk_widget_set_halign (statusbar->label, GTK_ALIGN_START);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, TRUE, TRUE, 1);
   gtk_widget_show (statusbar->label);
 
@@ -388,10 +389,15 @@ static void
 gimp_statusbar_style_updated (GtkWidget *widget)
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (widget);
+  PangoLayout   *layout;
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   g_clear_pointer (&statusbar->icon_hash, g_hash_table_unref);
 
-  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+  layout = gtk_widget_create_pango_layout (widget, " ");
+  pango_layout_get_pixel_size (layout, &statusbar->icon_space_width, NULL);
+  g_object_unref (layout);
 }
 
 static GimpProgress *
@@ -673,39 +679,25 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
 
       if (statusbar->icon)
         {
-          PangoAttrList  *attrs;
-          PangoAttribute *attr;
-          PangoRectangle  rect;
-          gchar          *tmp;
-          gint            scale_factor;
-
-          tmp = g_strconcat (" ", text, NULL);
-          gtk_label_set_text (GTK_LABEL (statusbar->label), tmp);
-          g_free (tmp);
+          gchar *tmp;
+          gint   scale_factor;
+          gint   n_spaces;
+          gchar  spaces[] = "                                 ";
 
           scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
 
-          rect.x      = 0;
-          rect.y      = 0;
-          rect.width  = PANGO_SCALE * (gdk_pixbuf_get_width (statusbar->icon) /
-                                       scale_factor +
-                                       ICON_SPACING);
-          rect.height = 0;
+          /* prepend enough spaces for the icon plus one space */
+          n_spaces = (gdk_pixbuf_get_width (statusbar->icon) / scale_factor +
+                      ICON_SPACING) / statusbar->icon_space_width;
+          n_spaces++;
 
-          attrs = pango_attr_list_new ();
-
-          attr = pango_attr_shape_new (&rect, &rect);
-          attr->start_index = 0;
-          attr->end_index   = 1;
-          pango_attr_list_insert (attrs, attr);
-
-          gtk_label_set_attributes (GTK_LABEL (statusbar->label), attrs);
-          pango_attr_list_unref (attrs);
+          tmp = g_strconcat (spaces + strlen (spaces) - n_spaces, text, NULL);
+          gtk_label_set_text (GTK_LABEL (statusbar->label), tmp);
+          g_free (tmp);
         }
       else
         {
           gtk_label_set_text (GTK_LABEL (statusbar->label), text);
-          gtk_label_set_attributes (GTK_LABEL (statusbar->label), NULL);
         }
     }
 }

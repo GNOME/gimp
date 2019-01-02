@@ -46,6 +46,7 @@ struct _GimpStatusbar
 
   GdkPixbuf           *icon;
   GHashTable          *icon_hash;
+  gint                 icon_space_width;
 
   guint                temp_context_id;
   guint                temp_timeout_id;
