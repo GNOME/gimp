@@ -57,9 +57,10 @@
 #include "gimp-intl.h"
 
 
+#define RGBA_EPSILON 1e-10
+
 typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
                                           GimpContext *dest);
-
 
 #define context_find_defined(context, prop)                              \
   while (!(((context)->defined_props) & (1 << (prop))) && (context)->parent) \
@@ -2319,7 +2320,7 @@ static void
 gimp_context_real_set_foreground (GimpContext   *context,
                                   const GimpRGB *color)
 {
-  if (gimp_rgba_distance (&context->foreground, color) < 0.0001)
+  if (gimp_rgba_distance (&context->foreground, color) < RGBA_EPSILON)
     return;
 
   context->foreground = *color;
@@ -2370,7 +2371,7 @@ static void
 gimp_context_real_set_background (GimpContext   *context,
                                   const GimpRGB *color)
 {
-  if (gimp_rgba_distance (&context->background, color) < 0.0001)
+  if (gimp_rgba_distance (&context->background, color) < RGBA_EPSILON)
     return;
 
   context->background = *color;

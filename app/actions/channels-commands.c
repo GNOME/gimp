@@ -54,6 +54,9 @@
 #include "gimp-intl.h"
 
 
+#define RGBA_EPSILON 1e-6
+
+
 /*  local function prototypes  */
 
 static void   channels_new_callback             (GtkWidget     *dialog,
@@ -504,12 +507,12 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
 {
   GimpItem *item = GIMP_ITEM (channel);
 
-  if (strcmp (channel_name, gimp_object_get_name (channel))        ||
-      gimp_rgba_distance (channel_color, &channel->color) > 0.0001 ||
-      channel_visible       != gimp_item_get_visible (item)        ||
-      channel_linked        != gimp_item_get_linked (item)         ||
-      channel_color_tag     != gimp_item_get_color_tag (item)      ||
-      channel_lock_content  != gimp_item_get_lock_content (item)   ||
+  if (strcmp (channel_name, gimp_object_get_name (channel))              ||
+      gimp_rgba_distance (channel_color, &channel->color) > RGBA_EPSILON ||
+      channel_visible       != gimp_item_get_visible (item)              ||
+      channel_linked        != gimp_item_get_linked (item)               ||
+      channel_color_tag     != gimp_item_get_color_tag (item)            ||
+      channel_lock_content  != gimp_item_get_lock_content (item)         ||
       channel_lock_position != gimp_item_get_lock_position (item))
     {
       gimp_image_undo_group_start (image,
@@ -519,7 +522,7 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
       if (strcmp (channel_name, gimp_object_get_name (channel)))
         gimp_item_rename (GIMP_ITEM (channel), channel_name, NULL);
 
-      if (gimp_rgba_distance (channel_color, &channel->color) > 0.0001)
+      if (gimp_rgba_distance (channel_color, &channel->color) > RGBA_EPSILON)
         gimp_channel_set_color (channel, channel_color, TRUE);
 
       if (channel_visible != gimp_item_get_visible (item))

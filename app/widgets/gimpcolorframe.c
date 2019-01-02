@@ -36,6 +36,8 @@
 #include "gimp-intl.h"
 
 
+#define RGBA_EPSILON 1e-6
+
 enum
 {
   PROP_0,
@@ -565,7 +567,7 @@ gimp_color_frame_set_color (GimpColorFrame *frame,
       frame->sample_format  == sample_format  &&
       frame->x              == x              &&
       frame->y              == y              &&
-      gimp_rgba_distance (&frame->color, color) < 0.0001)
+      gimp_rgba_distance (&frame->color, color) < RGBA_EPSILON)
     {
       frame->color = *color;
       return;

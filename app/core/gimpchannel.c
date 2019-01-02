@@ -59,6 +59,8 @@
 #include "gimp-intl.h"
 
 
+#define RGBA_EPSILON 1e-6
+
 enum
 {
   COLOR_CHANGED,
@@ -1695,7 +1697,7 @@ gimp_channel_set_color (GimpChannel   *channel,
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (color != NULL);
 
-  if (gimp_rgba_distance (&channel->color, color) > 0.0001)
+  if (gimp_rgba_distance (&channel->color, color) > RGBA_EPSILON)
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (channel)))
         {

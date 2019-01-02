@@ -34,6 +34,8 @@
 #include "gimp-intl.h"
 
 
+#define RGBA_EPSILON 1e-4
+
 enum
 {
   COLOR_HISTORY = 1
@@ -205,7 +207,7 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
     {
       GimpPaletteEntry *entry = list->data;
 
-      if (gimp_rgba_distance (&entry->color, color) < 0.0001)
+      if (gimp_rgba_distance (&entry->color, color) < RGBA_EPSILON)
         {
           found = entry;
 
@@ -228,7 +230,7 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
               GimpPaletteEntry *entry2 = list2->data;
 
               if (gimp_rgba_distance (&entry->color,
-                                      &entry2->color) < 0.0001)
+                                      &entry2->color) < RGBA_EPSILON)
                 {
                   found = entry2;
 
