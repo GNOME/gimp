@@ -93,7 +93,7 @@ GimpPDBStatusType read_dds(gchar *filename, gint32 *imageID)
    GimpImageBaseType type;
    int i, j;
 
-   if(interactive_dds && dds_read_vals.show_dialog)
+   if (interactive_dds)
    {
       if(!load_dialog())
          return(GIMP_PDB_CANCEL);
@@ -1238,13 +1238,6 @@ static int load_dialog(void)
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_read_vals.decode_images);
    g_signal_connect(check, "clicked",
                     G_CALLBACK (toggle_clicked), &dds_read_vals.decode_images);
-   gtk_box_pack_start(GTK_BOX(vbox), check, 1, 1, 0);
-   gtk_widget_show(check);
-
-   check = gtk_check_button_new_with_label(_("Show this dialog"));
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check), dds_read_vals.show_dialog);
-   g_signal_connect(check, "clicked",
-                    G_CALLBACK (toggle_clicked), &dds_read_vals.show_dialog);
    gtk_box_pack_start(GTK_BOX(vbox), check, 1, 1, 0);
    gtk_widget_show(check);
 
