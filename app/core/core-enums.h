@@ -74,6 +74,26 @@ typedef enum  /*< pdb-skip >*/
 } GimpAlignmentType;
 
 
+/**
+ * GimpBucketFillMode:
+ * @GIMP_BUCKET_FILL_FG:      FG color fill
+ * @GIMP_BUCKET_FILL_BG:      BG color fill
+ * @GIMP_BUCKET_FILL_PATTERN: Pattern fill
+ *
+ * Bucket fill modes.
+ */
+#define GIMP_TYPE_BUCKET_FILL_MODE (gimp_bucket_fill_mode_get_type ())
+
+GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_BUCKET_FILL_FG,      /*< desc="FG color fill" >*/
+  GIMP_BUCKET_FILL_BG,      /*< desc="BG color fill" >*/
+  GIMP_BUCKET_FILL_PATTERN  /*< desc="Pattern fill"  >*/
+} GimpBucketFillMode;
+
+
 #define GIMP_TYPE_CHANNEL_BORDER_STYLE (gimp_channel_border_style_get_type ())
 
 GType gimp_channel_border_style_get_type (void) G_GNUC_CONST;

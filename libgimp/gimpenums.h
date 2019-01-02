@@ -35,6 +35,18 @@ typedef enum
 } GimpBrushApplicationMode;
 
 
+#define GIMP_TYPE_BUCKET_FILL_MODE (gimp_bucket_fill_mode_get_type ())
+
+GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_BUCKET_FILL_FG,
+  GIMP_BUCKET_FILL_BG,
+  GIMP_BUCKET_FILL_PATTERN
+} GimpBucketFillMode;
+
+
 #define GIMP_TYPE_CONVERT_DITHER_TYPE (gimp_convert_dither_type_get_type ())
 
 GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
