@@ -1,24 +1,24 @@
 /*
-	DDS GIMP plugin
-
-	Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
-   with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
-
-	This program is free software; you can redistribute it and/or
-	modify it under the terms of the GNU General Public
-	License as published by the Free Software Foundation; either
-	version 2 of the License, or (at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; see the file COPYING.  If not, write to
-	the Free Software Foundation, 51 Franklin Street, Fifth Floor
-	Boston, MA 02110-1301, USA.
-*/
+ * DDS GIMP plugin
+ *
+ * Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
+ * with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; see the file COPYING.  If not, write to
+ * the Free Software Foundation, 51 Franklin Street, Fifth Floor
+ * Boston, MA 02110-1301, USA.
+ */
 
 #include "config.h"
 
@@ -37,32 +37,44 @@
 #include "dds.h"
 #include "misc.h"
 
-FILE *errFile;
-gchar *prog_name = "dds";
-gchar *filename;
-gint interactive_dds;
-
-static void query(void);
-static void run(const gchar *name, gint nparams, const GimpParam *param,
-					 gint *nreturn_vals, GimpParam **return_vals);
+static void query (void);
+static void run   (const gchar     *name,
+                   gint             nparams,
+                   const GimpParam *param,
+                   gint            *nreturn_vals,
+                   GimpParam      **return_vals);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
-	0, 0, query, run
+  0,
+  0,
+  query,
+  run
 };
 
 
 DDSWriteVals dds_write_vals =
 {
-	DDS_COMPRESS_NONE, DDS_MIPMAP_NONE, DDS_SAVE_SELECTED_LAYER,
-   DDS_FORMAT_DEFAULT, -1, DDS_MIPMAP_FILTER_DEFAULT, DDS_MIPMAP_WRAP_DEFAULT,
-   0, 0, 0.0, 0, 0,
-   0, 0.5
+  DDS_COMPRESS_NONE,
+  DDS_MIPMAP_NONE,
+  DDS_SAVE_SELECTED_LAYER,
+  DDS_FORMAT_DEFAULT,
+  -1,
+  DDS_MIPMAP_FILTER_DEFAULT,
+  DDS_MIPMAP_WRAP_DEFAULT,
+  0,
+  0,
+  0.0,
+  0,
+  0,
+  0,
+  0.5
 };
 
 DDSReadVals dds_read_vals =
 {
-   1, 1
+   1,
+   1
 };
 
 static GimpParamDef load_args[] =
@@ -73,6 +85,7 @@ static GimpParamDef load_args[] =
    {GIMP_PDB_INT32, "load_mipmaps", "Load mipmaps if present"},
    {GIMP_PDB_INT32, "decode_images", "Decode YCoCg/AExp images when detected"}
 };
+
 static GimpParamDef load_return_vals[] =
 {
    {GIMP_PDB_IMAGE, "image", "Output image"}
@@ -107,9 +120,10 @@ static GimpParamDef decode_args[] =
    {GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"}
 };
 
-MAIN()
+MAIN ()
 
-static void query(void)
+static void
+query (void)
 {
   gimp_install_procedure (LOAD_PROC,
                           "Loads files in DDS image format",
@@ -120,8 +134,8 @@ static void query(void)
                           N_("DDS image"),
                           0,
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS(load_args),
-                          G_N_ELEMENTS(load_return_vals),
+                          G_N_ELEMENTS (load_args),
+                          G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/dds");
@@ -139,7 +153,7 @@ static void query(void)
                           N_("DDS image"),
                           "INDEXED, GRAY, RGB",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS(save_args), 0,
+                          G_N_ELEMENTS (save_args), 0,
                           save_args, 0);
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/dds");
@@ -156,7 +170,7 @@ static void query(void)
                           N_("Decode YCoCg"),
                           "RGBA",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS(decode_args), 0,
+                          G_N_ELEMENTS (decode_args), 0,
                           decode_args, 0);
   /*gimp_plugin_menu_register (DECODE_YCOCG_PROC, "<Image>/Filters/Colors");*/
 
@@ -169,7 +183,7 @@ static void query(void)
                           N_("Decode YCoCg (scaled)"),
                           "RGBA",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS(decode_args), 0,
+                          G_N_ELEMENTS (decode_args), 0,
                           decode_args, 0);
   /*gimp_plugin_menu_register (DECODE_YCOCG_SCALED_PROC, "<Image>/Filters/Colors");*/
 
@@ -182,201 +196,201 @@ static void query(void)
                           N_("Decode Alpha exponent"),
                           "RGBA",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS(decode_args), 0,
+                          G_N_ELEMENTS (decode_args), 0,
                           decode_args, 0);
   /*gimp_plugin_menu_register (DECODE_ALPHA_EXP_PROC, "<Image>/Filters/Colors");*/
 }
 
-static void run(const gchar *name, gint nparams, const GimpParam *param,
-					 gint *nreturn_vals, GimpParam **return_vals)
+static void
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-	static GimpParam values[2];
-	GimpRunMode run_mode;
-	GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-	gint32 imageID;
-	gint32 drawableID;
-	GimpExportReturn export = GIMP_EXPORT_CANCEL;
-   
-   gegl_init(NULL, NULL);
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            imageID;
+  gint32            drawableID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
-	run_mode = param[0].data.d_int32;
+  gegl_init (NULL, NULL);
 
-	*nreturn_vals = 1;
-	*return_vals = values;
+  run_mode = param[0].data.d_int32;
 
-	values[0].type = GIMP_PDB_STATUS;
-	values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+  *nreturn_vals = 1;
+  *return_vals = values;
 
-	if(!strcmp(name, LOAD_PROC))
-	{
-		switch(run_mode)
-		{
-			case GIMP_RUN_INTERACTIVE:
-			   gimp_ui_init("dds", 0);
-			   interactive_dds = 1;
-            gimp_get_data(LOAD_PROC, &dds_read_vals);
-			   break;
-			case GIMP_RUN_NONINTERACTIVE:
-			   interactive_dds = 0;
-            dds_read_vals.mipmaps = param[3].data.d_int32;
-            dds_read_vals.decode_images = param[4].data.d_int32;
-			   if(nparams != G_N_ELEMENTS(load_args))
-				   status = GIMP_PDB_CALLING_ERROR;
-			   break;
-			default:
-			   break;
-		}
+  values[0].type = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-		if(status == GIMP_PDB_SUCCESS)
-		{
-			status = read_dds(param[1].data.d_string, &imageID);
-			if(status == GIMP_PDB_SUCCESS && imageID != -1)
-			{
-				*nreturn_vals = 2;
-				values[1].type = GIMP_PDB_IMAGE;
-				values[1].data.d_image = imageID;
-            if(interactive_dds)
-               gimp_set_data(LOAD_PROC, &dds_read_vals, sizeof(dds_read_vals));
-			}
-			else if(status != GIMP_PDB_CANCEL)
-				status = GIMP_PDB_EXECUTION_ERROR;
-		}
-	}
-	else if(!strcmp(name, SAVE_PROC))
-	{
-		imageID = param[1].data.d_int32;
-		drawableID = param[2].data.d_int32;
+  if (!strcmp (name, LOAD_PROC))
+    {
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+          gimp_ui_init ("dds", 0);
+          gimp_get_data (LOAD_PROC, &dds_read_vals);
+          break;
+        case GIMP_RUN_NONINTERACTIVE:
+          dds_read_vals.mipmaps = param[3].data.d_int32;
+          dds_read_vals.decode_images = param[4].data.d_int32;
+          if (nparams != G_N_ELEMENTS (load_args))
+            status = GIMP_PDB_CALLING_ERROR;
+          break;
+        default:
+          break;
+        }
 
-		switch(run_mode)
-		{
-			case GIMP_RUN_INTERACTIVE:
-			case GIMP_RUN_WITH_LAST_VALS:
-			   gimp_ui_init("dds", 0);
-			   export = gimp_export_image(&imageID, &drawableID, "DDS",
-                                       (GIMP_EXPORT_CAN_HANDLE_RGB |
-                                        GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                        GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                        GIMP_EXPORT_CAN_HANDLE_ALPHA |
-                                        GIMP_EXPORT_CAN_HANDLE_LAYERS));
-			   if(export == GIMP_EXPORT_CANCEL)
-			   {
-					values[0].data.d_status = GIMP_PDB_CANCEL;
-					return;
-				}
-			default:
-			   break;
-		}
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          status = read_dds (param[1].data.d_string, &imageID,
+                             run_mode == GIMP_RUN_INTERACTIVE);
+          if (status == GIMP_PDB_SUCCESS && imageID != -1)
+            {
+              *nreturn_vals = 2;
+              values[1].type = GIMP_PDB_IMAGE;
+              values[1].data.d_image = imageID;
+              if (run_mode == GIMP_RUN_INTERACTIVE)
+                gimp_set_data (LOAD_PROC, &dds_read_vals, sizeof (dds_read_vals));
+            }
+          else if (status != GIMP_PDB_CANCEL)
+            status = GIMP_PDB_EXECUTION_ERROR;
+        }
+    }
+  else if (!strcmp (name, SAVE_PROC))
+    {
+      imageID = param[1].data.d_int32;
+      drawableID = param[2].data.d_int32;
 
-		switch(run_mode)
-		{
-			case GIMP_RUN_INTERACTIVE:
-			   gimp_get_data(SAVE_PROC, &dds_write_vals);
-			   interactive_dds = 1;
-			   break;
-			case GIMP_RUN_NONINTERACTIVE:
-			   interactive_dds = 0;
-			   if(nparams != G_N_ELEMENTS(save_args))
-				   status = GIMP_PDB_CALLING_ERROR;
-			   else
-			   {
-					dds_write_vals.compression = param[5].data.d_int32;
-					dds_write_vals.mipmaps = param[6].data.d_int32;
-               dds_write_vals.savetype = param[7].data.d_int32;
-               dds_write_vals.format = param[8].data.d_int32;
-               dds_write_vals.transindex = param[9].data.d_int32;
-               dds_write_vals.mipmap_filter = param[10].data.d_int32;
-               dds_write_vals.mipmap_wrap = param[11].data.d_int32;
-               dds_write_vals.gamma_correct = param[12].data.d_int32;
-               dds_write_vals.srgb = param[13].data.d_int32;
-               dds_write_vals.gamma = param[14].data.d_float;
-               dds_write_vals.perceptual_metric = param[15].data.d_int32;
-               dds_write_vals.preserve_alpha_coverage = param[16].data.d_int32;
-               dds_write_vals.alpha_test_threshold = param[17].data.d_float;
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init ("dds", 0);
+          export = gimp_export_image (&imageID, &drawableID, "DDS",
+                                     (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                      GIMP_EXPORT_CAN_HANDLE_LAYERS));
+          if (export == GIMP_EXPORT_CANCEL)
+            {
+              values[0].data.d_status = GIMP_PDB_CANCEL;
+              return;
+            }
+        default:
+          break;
+        }
 
-					if((dds_write_vals.compression <  DDS_COMPRESS_NONE) ||
-						(dds_write_vals.compression >= DDS_COMPRESS_MAX))
-						status = GIMP_PDB_CALLING_ERROR;
-               if((dds_write_vals.mipmaps <  DDS_MIPMAP_NONE) ||
-                  (dds_write_vals.mipmaps >= DDS_MIPMAP_MAX))
-                  status = GIMP_PDB_CALLING_ERROR;
-               if((dds_write_vals.savetype <  DDS_SAVE_SELECTED_LAYER) ||
-                  (dds_write_vals.savetype >= DDS_SAVE_MAX))
-                  status = GIMP_PDB_CALLING_ERROR;
-               if((dds_write_vals.format <  DDS_FORMAT_DEFAULT) ||
-                  (dds_write_vals.format >= DDS_FORMAT_MAX))
-                  status = GIMP_PDB_CALLING_ERROR;
-               if((dds_write_vals.mipmap_filter <  DDS_MIPMAP_FILTER_DEFAULT) ||
-                  (dds_write_vals.mipmap_filter >= DDS_MIPMAP_FILTER_MAX))
-                  status = GIMP_PDB_CALLING_ERROR;
-               if((dds_write_vals.mipmap_wrap <  DDS_MIPMAP_WRAP_DEFAULT) ||
-                  (dds_write_vals.mipmap_wrap >= DDS_MIPMAP_WRAP_MAX))
-                  status = GIMP_PDB_CALLING_ERROR;
-				}
-			   break;
-			case GIMP_RUN_WITH_LAST_VALS:
-			   gimp_get_data(SAVE_PROC, &dds_write_vals);
-			   interactive_dds = 0;
-			   break;
-			default:
-			   break;
-		}
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+          gimp_get_data (SAVE_PROC, &dds_write_vals);
+          break;
+        case GIMP_RUN_NONINTERACTIVE:
+          if (nparams != G_N_ELEMENTS (save_args))
+            status = GIMP_PDB_CALLING_ERROR;
+          else
+            {
+              dds_write_vals.compression = param[5].data.d_int32;
+              dds_write_vals.mipmaps = param[6].data.d_int32;
+              dds_write_vals.savetype = param[7].data.d_int32;
+              dds_write_vals.format = param[8].data.d_int32;
+              dds_write_vals.transindex = param[9].data.d_int32;
+              dds_write_vals.mipmap_filter = param[10].data.d_int32;
+              dds_write_vals.mipmap_wrap = param[11].data.d_int32;
+              dds_write_vals.gamma_correct = param[12].data.d_int32;
+              dds_write_vals.srgb = param[13].data.d_int32;
+              dds_write_vals.gamma = param[14].data.d_float;
+              dds_write_vals.perceptual_metric = param[15].data.d_int32;
+              dds_write_vals.preserve_alpha_coverage = param[16].data.d_int32;
+              dds_write_vals.alpha_test_threshold = param[17].data.d_float;
 
-      if(dds_write_vals.gamma < 1e-04f)
-        /* gimp_gamma() got removed and was always returning 2.2 anyway.
+              if ((dds_write_vals.compression <  DDS_COMPRESS_NONE) ||
+                 (dds_write_vals.compression >= DDS_COMPRESS_MAX))
+                status = GIMP_PDB_CALLING_ERROR;
+              if ((dds_write_vals.mipmaps <  DDS_MIPMAP_NONE) ||
+                 (dds_write_vals.mipmaps >= DDS_MIPMAP_MAX))
+                status = GIMP_PDB_CALLING_ERROR;
+              if ((dds_write_vals.savetype <  DDS_SAVE_SELECTED_LAYER) ||
+                 (dds_write_vals.savetype >= DDS_SAVE_MAX))
+                status = GIMP_PDB_CALLING_ERROR;
+              if ((dds_write_vals.format <  DDS_FORMAT_DEFAULT) ||
+                 (dds_write_vals.format >= DDS_FORMAT_MAX))
+                status = GIMP_PDB_CALLING_ERROR;
+              if ((dds_write_vals.mipmap_filter <  DDS_MIPMAP_FILTER_DEFAULT) ||
+                 (dds_write_vals.mipmap_filter >= DDS_MIPMAP_FILTER_MAX))
+                status = GIMP_PDB_CALLING_ERROR;
+              if ((dds_write_vals.mipmap_wrap <  DDS_MIPMAP_WRAP_DEFAULT) ||
+                 (dds_write_vals.mipmap_wrap >= DDS_MIPMAP_WRAP_MAX))
+                status = GIMP_PDB_CALLING_ERROR;
+            }
+          break;
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_get_data (SAVE_PROC, &dds_write_vals);
+          break;
+        default:
+          break;
+        }
+
+      if (dds_write_vals.gamma < 1e-04f)
+        /* gimp_gamma () got removed and was always returning 2.2 anyway.
          * XXX Review this piece of code if we expect gamma value could
          * be parameterized.
          */
-         dds_write_vals.gamma = 2.2;
+        dds_write_vals.gamma = 2.2;
 
-		if(status == GIMP_PDB_SUCCESS)
-		{
-			status = write_dds(param[3].data.d_string, imageID, drawableID);
-			if(status == GIMP_PDB_SUCCESS)
-				gimp_set_data(SAVE_PROC, &dds_write_vals, sizeof(dds_write_vals));
-		}
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          status = write_dds (param[3].data.d_string, imageID, drawableID,
+                              run_mode == GIMP_RUN_INTERACTIVE);
+          if (status == GIMP_PDB_SUCCESS)
+            gimp_set_data (SAVE_PROC, &dds_write_vals, sizeof (dds_write_vals));
+        }
 
-		if(export == GIMP_EXPORT_EXPORT)
-			gimp_image_delete(imageID);
-   }
-   else if(!strcmp(name, DECODE_YCOCG_PROC))
-   {
-		imageID = param[1].data.d_int32;
-		drawableID = param[2].data.d_int32;
+      if (export == GIMP_EXPORT_EXPORT)
+        gimp_image_delete (imageID);
+    }
+  else if (!strcmp (name, DECODE_YCOCG_PROC))
+    {
+      imageID = param[1].data.d_int32;
+      drawableID = param[2].data.d_int32;
 
-      decode_ycocg_image(drawableID, TRUE);
-
-      status = GIMP_PDB_SUCCESS;
-
-      if(run_mode != GIMP_RUN_NONINTERACTIVE)
-         gimp_displays_flush();
-   }
-   else if(!strcmp(name, DECODE_YCOCG_SCALED_PROC))
-   {
-		imageID = param[1].data.d_int32;
-		drawableID = param[2].data.d_int32;
-
-      decode_ycocg_scaled_image(drawableID, TRUE);
+      decode_ycocg_image (drawableID, TRUE);
 
       status = GIMP_PDB_SUCCESS;
 
-      if(run_mode != GIMP_RUN_NONINTERACTIVE)
-         gimp_displays_flush();
-   }
-   else if(!strcmp(name, DECODE_ALPHA_EXP_PROC))
-   {
-		imageID = param[1].data.d_int32;
-		drawableID = param[2].data.d_int32;
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
+    }
+  else if (!strcmp (name, DECODE_YCOCG_SCALED_PROC))
+    {
+      imageID = param[1].data.d_int32;
+      drawableID = param[2].data.d_int32;
 
-      decode_alpha_exp_image(drawableID, TRUE);
+      decode_ycocg_scaled_image (drawableID, TRUE);
 
       status = GIMP_PDB_SUCCESS;
 
-      if(run_mode != GIMP_RUN_NONINTERACTIVE)
-         gimp_displays_flush();
-   }
-	else
-		status = GIMP_PDB_CALLING_ERROR;
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
+    }
+  else if (!strcmp (name, DECODE_ALPHA_EXP_PROC))
+    {
+      imageID = param[1].data.d_int32;
+      drawableID = param[2].data.d_int32;
 
-	values[0].data.d_status = status;
+      decode_alpha_exp_image (drawableID, TRUE);
+
+      status = GIMP_PDB_SUCCESS;
+
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
+    }
+  else
+    status = GIMP_PDB_CALLING_ERROR;
+
+  values[0].data.d_status = status;
 }
-
