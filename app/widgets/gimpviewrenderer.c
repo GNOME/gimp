@@ -53,6 +53,8 @@
 #include "gimp-priorities.h"
 
 
+#define RGB_EPSILON 1e-6
+
 enum
 {
   UPDATE,
@@ -502,7 +504,7 @@ gimp_view_renderer_set_border_color (GimpViewRenderer *renderer,
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (color != NULL);
 
-  if (gimp_rgb_distance (&renderer->border_color, color))
+  if (gimp_rgb_distance (&renderer->border_color, color) > RGB_EPSILON)
     {
       renderer->border_color = *color;
 

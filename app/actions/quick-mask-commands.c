@@ -42,6 +42,9 @@
 #include "gimp-intl.h"
 
 
+#define RGBA_EPSILON 1e-6
+
+
 /*  local function prototypes  */
 
 static void   quick_mask_configure_callback (GtkWidget     *dialog,
@@ -167,7 +170,7 @@ quick_mask_configure_callback (GtkWidget     *dialog,
 
   gimp_image_get_quick_mask_color (image, &old_color);
 
-  if (gimp_rgba_distance (&old_color, channel_color) > 0.0001)
+  if (gimp_rgba_distance (&old_color, channel_color) > RGBA_EPSILON)
     {
       gimp_image_set_quick_mask_color (image, channel_color);
       gimp_image_flush (image);

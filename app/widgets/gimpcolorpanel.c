@@ -36,6 +36,8 @@
 #include "gimpcolorpanel.h"
 
 
+#define RGBA_EPSILON 1e-6
+
 enum
 {
   RESPONSE,
@@ -255,7 +257,7 @@ gimp_color_panel_color_changed (GimpColorButton *button)
       gimp_color_dialog_get_color (GIMP_COLOR_DIALOG (panel->color_dialog),
                                    &dialog_color);
 
-      if (gimp_rgba_distance (&color, &dialog_color) > 0.00001 ||
+      if (gimp_rgba_distance (&color, &dialog_color) > RGBA_EPSILON ||
           color.a != dialog_color.a)
         {
           gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),

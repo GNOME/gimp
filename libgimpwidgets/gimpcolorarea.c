@@ -45,6 +45,7 @@
  **/
 
 
+#define RGBA_EPSILON        1e-6
 #define DRAG_PREVIEW_SIZE   32
 #define DRAG_ICON_OFFSET    -8
 
@@ -535,7 +536,7 @@ gimp_color_area_set_color (GimpColorArea *area,
 
   priv = GET_PRIVATE (area);
 
-  if (gimp_rgba_distance (&priv->color, color) < 0.000001)
+  if (gimp_rgba_distance (&priv->color, color) < RGBA_EPSILON)
     return;
 
   priv->color = *color;

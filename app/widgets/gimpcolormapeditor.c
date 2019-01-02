@@ -48,8 +48,8 @@
 #include "gimp-intl.h"
 
 
-#define BORDER  6
-#define EPSILON 1e-10
+#define BORDER      6
+#define RGB_EPSILON 1e-6
 
 #define HAVE_COLORMAP(image) \
         (image != NULL && \
@@ -458,7 +458,7 @@ gimp_colormap_editor_get_index (GimpColormapEditor *editor,
 
       gimp_image_get_colormap_entry (image, index, &temp);
 
-      if (gimp_rgb_distance (&temp, search) > EPSILON)
+      if (gimp_rgb_distance (&temp, search) > RGB_EPSILON)
         {
           gint n_colors = gimp_image_get_colormap_size (image);
           gint i;
@@ -467,7 +467,7 @@ gimp_colormap_editor_get_index (GimpColormapEditor *editor,
             {
               gimp_image_get_colormap_entry (image, i, &temp);
 
-              if (gimp_rgb_distance (&temp, search) < EPSILON)
+              if (gimp_rgb_distance (&temp, search) < RGB_EPSILON)
                 {
                   index = i;
                   break;
