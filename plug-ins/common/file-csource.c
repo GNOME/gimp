@@ -109,7 +109,7 @@ query (void)
                           "Tim Janik",
                           "1999",
                           N_("C source code"),
-                          "RGB*",
+                          "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -466,6 +466,7 @@ save_image (GFile   *file,
   gint           width;
   gint           height;
   gint           x, y, pad, n_bytes, bpp;
+  const Babl    *drawable_format;
   gint           drawable_bpp;
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
@@ -490,11 +491,16 @@ save_image (GFile   *file,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  drawable_bpp = gimp_drawable_bpp (drawable_ID);
+  if (gimp_drawable_has_alpha (drawable_ID))
+    drawable_format = babl_format ("R'G'B'A u8");
+  else
+    drawable_format = babl_format ("R'G'B' u8");
+
+  drawable_bpp = babl_format_get_bytes_per_pixel (drawable_format);
 
   bpp = config->rgb565 ? 2 : (config->alpha ? 4 : 3);
   n_bytes = width * height * bpp;
-  pad = width * bpp;
+  pad = width * drawable_bpp;
   if (config->use_rle)
     pad = MAX (pad, 130 + n_bytes / 127);
 
@@ -504,7 +510,7 @@ save_image (GFile   *file,
   for (y = 0; y < height; y++)
     {
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, 1), 1.0,
-                       NULL, data,
+                       drawable_format, data,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       if (bpp == 2)
