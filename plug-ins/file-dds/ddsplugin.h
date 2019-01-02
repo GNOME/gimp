@@ -52,7 +52,6 @@ typedef struct
 
 typedef struct
 {
-   int show_dialog;
    int mipmaps;
    int decode_images;
 } DDSReadVals;
