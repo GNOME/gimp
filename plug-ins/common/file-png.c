@@ -163,6 +163,7 @@ static gboolean  save_image                (const gchar      *filename,
                                             gint32            image_ID,
                                             gint32            drawable_ID,
                                             gint32            orig_image_ID,
+                                            gboolean         *profile_saved,
                                             GError          **error);
 
 static int       respin_cmap               (png_structp       pp,
@@ -630,8 +631,11 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
+          gboolean profile_saved = FALSE;
+
           if (save_image (param[3].data.d_string,
-                          image_ID, drawable_ID, orig_image_ID, &error))
+                          image_ID, drawable_ID, orig_image_ID,
+                          &profile_saved, &error))
             {
               if (metadata)
                 {
@@ -659,7 +663,10 @@ run (const gchar      *name,
                   else
                     metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
-                  if (pngvals.save_profile)
+                  /* check if the profile was actually saved, not only
+                   * if we wanted to save it
+                   */
+                  if (profile_saved)
                     metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
                   else
                     metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
@@ -1466,6 +1473,7 @@ save_image (const gchar  *filename,
             gint32        image_ID,
             gint32        drawable_ID,
             gint32        orig_image_ID,
+            gboolean     *profile_saved,
             GError      **error)
 {
   gint              i, k;             /* Looping vars */
@@ -1864,6 +1872,8 @@ save_image (const gchar  *filename,
       g_free (profile_name);
 
       g_object_unref (profile);
+
+      *profile_saved = TRUE;
     }
 #endif
 
