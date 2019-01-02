@@ -1794,7 +1794,7 @@ static gint save_dialog(gint32 image_id, gint32 drawable_id)
 
    basetype = gimp_image_base_type(image_id);
 
-   dlg = gimp_dialog_new ("Save as DDS", "dds", NULL, GTK_WIN_POS_MOUSE,
+   dlg = gimp_dialog_new ("Export as DDS", "dds", NULL, GTK_WIN_POS_MOUSE,
                           gimp_standard_help_func, SAVE_PROC,
                          _("Cancel"), GTK_RESPONSE_CANCEL,
                          _("OK"),     GTK_RESPONSE_OK,
