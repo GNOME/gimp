@@ -64,16 +64,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_BRUSH_GENERATED_SQUARE => '1',
 		       GIMP_BRUSH_GENERATED_DIAMOND => '2' }
 	},
-    GimpBucketFillArea =>
-	{ contig => 1,
-	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_BUCKET_FILL_SELECTION
-			  GIMP_BUCKET_FILL_SIMILAR_COLORS
-			  GIMP_BUCKET_FILL_LINE_ART) ],
-	  mapping => { GIMP_BUCKET_FILL_SELECTION => '0',
-		       GIMP_BUCKET_FILL_SIMILAR_COLORS => '1',
-		       GIMP_BUCKET_FILL_LINE_ART => '2' }
-	},
     GimpBucketFillMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
