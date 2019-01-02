@@ -134,26 +134,6 @@ typedef enum
 
 
 /**
- * GimpBucketFillArea:
- * @GIMP_BUCKET_FILL_SELECTION:      Fill whole selection
- * @GIMP_BUCKET_FILL_SIMILAR_COLORS: Fill similar colors
- * @GIMP_BUCKET_FILL_LINE_ART:       Fill by line art detection
- *
- * Bucket fill area.
- */
-#define GIMP_TYPE_BUCKET_FILL_AREA (gimp_bucket_fill_area_get_type ())
-
-GType gimp_bucket_fill_area_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_BUCKET_FILL_SELECTION,       /*< desc="Fill whole selection" >*/
-  GIMP_BUCKET_FILL_SIMILAR_COLORS,  /*< desc="Fill similar colors" >*/
-  GIMP_BUCKET_FILL_LINE_ART         /*< desc="Fill by line art detection" >*/
-} GimpBucketFillArea;
-
-
-/**
  * GimpBucketFillMode:
  * @GIMP_BUCKET_FILL_FG:      FG color fill
  * @GIMP_BUCKET_FILL_BG:      BG color fill

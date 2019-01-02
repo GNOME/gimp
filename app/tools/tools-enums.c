@@ -10,6 +10,37 @@
 
 /* enumerations from "tools-enums.h" */
 GType
+gimp_bucket_fill_area_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_BUCKET_FILL_SELECTION, "GIMP_BUCKET_FILL_SELECTION", "selection" },
+    { GIMP_BUCKET_FILL_SIMILAR_COLORS, "GIMP_BUCKET_FILL_SIMILAR_COLORS", "similar-colors" },
+    { GIMP_BUCKET_FILL_LINE_ART, "GIMP_BUCKET_FILL_LINE_ART", "line-art" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_BUCKET_FILL_SELECTION, NC_("bucket-fill-area", "Fill whole selection"), NULL },
+    { GIMP_BUCKET_FILL_SIMILAR_COLORS, NC_("bucket-fill-area", "Fill similar colors"), NULL },
+    { GIMP_BUCKET_FILL_LINE_ART, NC_("bucket-fill-area", "Fill by line art detection"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpBucketFillArea", values);
+      gimp_type_set_translation_context (type, "bucket-fill-area");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_rect_select_mode_get_type (void)
 {
   static const GEnumValue values[] =
