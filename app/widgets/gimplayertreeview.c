@@ -735,6 +735,8 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
                                               drop_pos,
                                               (GimpViewable **) &parent);
 
+  g_object_ref (image);
+
   for (list = uri_list; list; list = g_list_next (list))
     {
       const gchar       *uri   = list->data;
@@ -774,6 +776,8 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
     }
 
   gimp_image_flush (image);
+
+  g_object_unref (image);
 }
 
 static void
