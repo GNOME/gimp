@@ -128,6 +128,9 @@ file_open_dialog_response (GtkWidget *dialog,
   if (! open_dialog->open_as_layers)
     gtk_window_set_transient_for (GTK_WINDOW (dialog), NULL);
 
+  if (file_dialog->image)
+    g_object_ref (file_dialog->image);
+
   for (list = files; list; list = g_slist_next (list))
     {
       GFile *file = list->data;
@@ -142,7 +145,10 @@ file_open_dialog_response (GtkWidget *dialog,
                                                                 file_dialog->file_proc);
 
               if (file_dialog->image)
-                success = TRUE;
+                {
+                  g_object_ref (file_dialog->image);
+                  success = TRUE;
+                }
             }
           else if (file_open_dialog_open_layers (dialog,
                                                  file_dialog->image,
@@ -174,13 +180,21 @@ file_open_dialog_response (GtkWidget *dialog,
 
   if (success)
     {
-      if (open_dialog->open_as_layers && file_dialog->image)
-        gimp_image_flush (file_dialog->image);
+      if (file_dialog->image)
+        {
+          if (open_dialog->open_as_layers)
+            gimp_image_flush (file_dialog->image);
+
+          g_object_unref (file_dialog->image);
+        }
 
       gtk_widget_destroy (dialog);
     }
   else
     {
+      if (file_dialog->image)
+        g_object_unref (file_dialog->image);
+
       gimp_file_dialog_set_sensitive (file_dialog, TRUE);
     }
 
