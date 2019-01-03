@@ -1174,11 +1174,27 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_OFFSETS:
           {
-            guint32 offset_x;
-            guint32 offset_y;
+            gint32 offset_x;
+            gint32 offset_y;
 
-            xcf_read_int32 (info, &offset_x, 1);
-            xcf_read_int32 (info, &offset_y, 1);
+            xcf_read_int32 (info, (guint32 *) &offset_x, 1);
+            xcf_read_int32 (info, (guint32 *) &offset_y, 1);
+
+            if (offset_x < -GIMP_MAX_IMAGE_SIZE ||
+                offset_x > GIMP_MAX_IMAGE_SIZE)
+              {
+                g_printerr ("unexpected item offset_x (%d) in XCF, "
+                            "setting to 0\n", offset_x);
+                offset_x = 0;
+              }
+
+            if (offset_y < -GIMP_MAX_IMAGE_SIZE ||
+                offset_y > GIMP_MAX_IMAGE_SIZE)
+              {
+                g_printerr ("unexpected item offset_y (%d) in XCF, "
+                            "setting to 0\n", offset_y);
+                offset_y = 0;
+              }
 
             gimp_item_set_offset (GIMP_ITEM (*layer), offset_x, offset_y);
           }
