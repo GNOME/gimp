@@ -263,7 +263,7 @@ while (<>) {
     next if /^\s*typedef\s+enum.*;/;
 
     if (m@^\s*typedef\s+enum\s*
-           ({)?\s*
+           (\{)?\s*
            (?:/\*<
              (([^*]|\*(?!/))*)
             >\s*\*/)?
