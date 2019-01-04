@@ -481,7 +481,7 @@ gimp_histogram_editor_calculate_async_callback (GimpAsync           *async,
 
   editor->bg_pending = FALSE;
 
-  if (update_pending)
+  if (editor->update_pending)
     gimp_histogram_editor_update (editor);
 }
 
