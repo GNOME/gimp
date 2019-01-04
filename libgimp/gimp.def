@@ -279,7 +279,6 @@ EXPORTS
 	gimp_get_color_configuration
 	gimp_get_default_comment
 	gimp_get_default_unit
-	gimp_get_icon_theme_dir
 	gimp_get_module_load_inhibit
 	gimp_get_monitor_resolution
 	gimp_get_parasite
@@ -287,7 +286,6 @@ EXPORTS
 	gimp_get_pdb_error
 	gimp_get_pdb_status
 	gimp_get_progname
-	gimp_get_theme_dir
 	gimp_getpid
 	gimp_gimprc_query
 	gimp_gimprc_set
