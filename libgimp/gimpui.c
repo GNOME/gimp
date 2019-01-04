@@ -55,13 +55,18 @@
 
 /*  local function prototypes  */
 
-static void      gimp_ui_help_func              (const gchar   *help_id,
-                                                 gpointer       help_data);
+static void      gimp_ui_help_func              (const gchar       *help_id,
+                                                 gpointer           help_data);
+static void      gimp_ui_theme_changed          (GFileMonitor      *monitor,
+                                                 GFile             *file,
+                                                 GFile             *other_file,
+                                                 GFileMonitorEvent  event_type,
+                                                 GtkCssProvider    *css_provider);
 static void      gimp_ensure_modules            (void);
-static void      gimp_window_transient_realized (GtkWidget     *window,
-                                                 GdkWindow     *parent);
-static gboolean  gimp_window_set_transient_for  (GtkWindow     *window,
-                                                 GdkWindow     *parent);
+static void      gimp_window_transient_realized (GtkWidget         *window,
+                                                 GdkWindow         *parent);
+static gboolean  gimp_window_set_transient_for  (GtkWindow         *window,
+                                                 GdkWindow         *parent);
 
 #ifdef GDK_WINDOWING_QUARTZ
 static void      gimp_osx_focus_window          (void);
@@ -97,10 +102,8 @@ gimp_ui_init (const gchar *prog_name,
 {
   const gchar    *display_name;
   GtkCssProvider *css_provider;
-  gchar          *theme_css;
   GFileMonitor   *css_monitor;
   GFile          *file;
-  GError         *error = NULL;
 
   g_return_if_fail (prog_name != NULL);
 
@@ -134,35 +137,22 @@ gimp_ui_init (const gchar *prog_name,
   gtk_init (NULL, NULL);
 
   css_provider = gtk_css_provider_new ();
-
   gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
                                              GTK_STYLE_PROVIDER (css_provider),
                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-  g_object_unref (css_provider);
-
-  theme_css = gimp_personal_rc_file ("theme.css");
-
-  if (! gtk_css_provider_load_from_path (css_provider,
-                                         theme_css, &error))
-    {
-      g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
-                  gimp_filename_to_utf8 (theme_css), error->message);
-      g_clear_error (&error);
-    }
-
-  file = g_file_new_for_path (theme_css);
-  g_free (theme_css);
-
+  file = gimp_directory_file ("theme.css", NULL);
   css_monitor = g_file_monitor (file, G_FILE_MONITOR_NONE, NULL, NULL);
   g_object_unref (file);
 
-#if 0
-  /* FIXME CSS: do we still need such code on gtk3? */
+  gimp_ui_theme_changed (css_monitor, NULL, NULL, G_FILE_MONITOR_NONE,
+                         css_provider);
+
   g_signal_connect (css_monitor, "changed",
-                    G_CALLBACK (gtk_rc_reparse_all),
-                    NULL);
-#endif
+                    G_CALLBACK (gimp_ui_theme_changed),
+                    css_provider);
+
+  g_object_unref (css_provider);
 
   gdk_set_program_class (gimp_wm_class ());
 
@@ -350,6 +340,35 @@ gimp_ui_help_func (const gchar *help_id,
                    gpointer     help_data)
 {
   gimp_help (NULL, help_id);
+}
+
+static void
+gimp_ui_theme_changed (GFileMonitor      *monitor,
+                       GFile             *file,
+                       GFile             *other_file,
+                       GFileMonitorEvent  event_type,
+                       GtkCssProvider    *css_provider)
+{
+  gchar    *dark    = gimp_gimprc_query ("prefer-dark-theme");
+  gboolean  setting = dark && ! strcmp (dark, "yes");
+  GError   *error   = NULL;
+
+  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
+                "gtk-application-prefer-dark-theme", setting,
+                NULL);
+
+  g_free (dark);
+
+  file = gimp_directory_file ("theme.css", NULL);
+
+  if (! gtk_css_provider_load_from_file (css_provider, file, &error))
+    {
+      g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
+                  gimp_file_get_utf8_name (file), error->message);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (file);
 }
 
 static void
