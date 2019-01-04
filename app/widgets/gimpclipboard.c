@@ -22,6 +22,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "widgets-types.h"
 
 #include "core/gimp.h"
@@ -1167,6 +1169,18 @@ gimp_clipboard_send_image (GtkClipboard     *clipboard,
 
       if (pixbuf)
         {
+          gdouble res_x;
+          gdouble res_y;
+          gchar   str[16];
+
+          gimp_image_get_resolution (gimp_clip->image, &res_x, &res_y);
+
+          g_snprintf (str, sizeof (str), "%d", ROUND (res_x));
+          gdk_pixbuf_set_option (pixbuf, "x-dpi", str);
+
+          g_snprintf (str, sizeof (str), "%d", ROUND (res_y));
+          gdk_pixbuf_set_option (pixbuf, "y-dpi", str);
+
           if (gimp->be_verbose)
             g_printerr ("clipboard: sending image data as '%s'\n",
                         gimp_clip->image_target_entries[info].target);
@@ -1200,6 +1214,18 @@ gimp_clipboard_send_buffer (GtkClipboard     *clipboard,
 
   if (pixbuf)
     {
+      gdouble res_x;
+      gdouble res_y;
+      gchar   str[16];
+
+      gimp_buffer_get_resolution (gimp_clip->buffer, &res_x, &res_y);
+
+      g_snprintf (str, sizeof (str), "%d", ROUND (res_x));
+      gdk_pixbuf_set_option (pixbuf, "x-dpi", str);
+
+      g_snprintf (str, sizeof (str), "%d", ROUND (res_y));
+      gdk_pixbuf_set_option (pixbuf, "y-dpi", str);
+
       if (gimp->be_verbose)
         g_printerr ("clipboard: sending pixbuf data as '%s'\n",
                     gimp_clip->buffer_target_entries[info].target);
