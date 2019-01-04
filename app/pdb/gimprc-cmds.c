@@ -409,11 +409,13 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-theme-dir",
                                      "Get the directory of the current GUI theme.",
-                                     "Returns a copy of the current GUI theme dir.",
+                                     "Returns a copy of the current GUI theme dir.\n"
+                                     "\n"
+                                     "Deprecated: There is no replacement for this procedure.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
-                                     NULL);
+                                     "NONE");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("theme-dir",
                                                            "theme dir",
@@ -433,11 +435,13 @@ register_gimprc_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-icon-theme-dir",
                                      "Get the directory of the current icon theme.",
-                                     "Returns a copy of the current icon theme dir.",
+                                     "Returns a copy of the current icon theme dir.\n"
+                                     "\n"
+                                     "Deprecated: There is no replacement for this procedure.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",
-                                     NULL);
+                                     "NONE");
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("icon-theme-dir",
                                                            "icon theme dir",

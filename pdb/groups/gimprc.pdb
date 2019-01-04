@@ -175,6 +175,7 @@ sub get_theme_dir {
     $help  = 'Returns a copy of the current GUI theme dir.';
 
     &std_pdb_misc;
+    $deprecated = 'NONE';
 
     @outargs = (
 	{  name => 'theme_dir', type => 'string',
@@ -198,6 +199,7 @@ sub get_icon_theme_dir {
     $help  = 'Returns a copy of the current icon theme dir.';
 
     &mitch_pdb_misc('2015', '2.10');
+    $deprecated = 'NONE';
 
     @outargs = (
 	{  name => 'icon_theme_dir', type => 'string',

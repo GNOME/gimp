@@ -39,7 +39,9 @@ gchar*                 gimp_get_default_comment      (void);
 GimpUnit               gimp_get_default_unit         (void);
 gboolean               gimp_get_monitor_resolution   (gdouble     *xres,
                                                       gdouble     *yres);
+GIMP_DEPRECATED
 gchar*                 gimp_get_theme_dir            (void);
+GIMP_DEPRECATED
 gchar*                 gimp_get_icon_theme_dir       (void);
 G_GNUC_INTERNAL gchar* _gimp_get_color_configuration (void);
 gchar*                 gimp_get_module_load_inhibit  (void);

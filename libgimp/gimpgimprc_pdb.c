@@ -215,6 +215,8 @@ gimp_get_monitor_resolution (gdouble *xres,
  *
  * Returns a copy of the current GUI theme dir.
  *
+ * Deprecated: There is no replacement for this procedure.
+ *
  * Returns: The GUI theme dir.
  **/
 gchar *
@@ -242,6 +244,8 @@ gimp_get_theme_dir (void)
  * Get the directory of the current icon theme.
  *
  * Returns a copy of the current icon theme dir.
+ *
+ * Deprecated: There is no replacement for this procedure.
  *
  * Returns: The icon theme dir.
  *
