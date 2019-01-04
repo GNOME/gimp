@@ -337,6 +337,8 @@ gimp_histogram_editor_set_image (GimpImageEditor *image_editor,
           editor->idle_id = 0;
         }
 
+      editor->update_pending = FALSE;
+
       g_signal_handlers_disconnect_by_func (image_editor->image,
                                             gimp_histogram_editor_update,
                                             editor);
@@ -463,8 +465,24 @@ gimp_histogram_editor_calculate_async_callback (GimpAsync           *async,
 {
   editor->calculate_async = NULL;
 
-  if (gimp_async_is_finished (async))
-    gimp_histogram_editor_info_update (editor);
+  if (gimp_async_is_finished (async) && editor->histogram)
+    {
+      if (editor->bg_pending)
+        {
+          GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+
+          editor->bg_histogram = gimp_histogram_duplicate (editor->histogram);
+
+          gimp_histogram_view_set_background (view, editor->bg_histogram);
+        }
+
+      gimp_histogram_editor_info_update (editor);
+    }
+
+  editor->bg_pending = FALSE;
+
+  if (update_pending)
+    gimp_histogram_editor_update (editor);
 }
 
 static gboolean
@@ -544,16 +562,42 @@ gimp_histogram_editor_frozen_update (GimpHistogramEditor *editor,
       if (! editor->bg_histogram &&
           gtk_widget_is_drawable (GTK_WIDGET (editor)))
         {
-          if (gimp_histogram_editor_validate (editor))
-            editor->bg_histogram = gimp_histogram_duplicate (editor->histogram);
+          if (editor->idle_id)
+            {
+              g_source_remove (editor->idle_id);
 
-          gimp_histogram_view_set_background (view, editor->bg_histogram);
+              gimp_histogram_editor_idle_update (editor);
+            }
+
+          if (gimp_histogram_editor_validate (editor))
+            {
+              if (editor->calculate_async)
+                {
+                  editor->bg_pending = TRUE;
+                }
+              else
+                {
+                  editor->bg_histogram = gimp_histogram_duplicate (
+                    editor->histogram);
+
+                  gimp_histogram_view_set_background (view,
+                                                      editor->bg_histogram);
+                }
+            }
         }
     }
-  else if (editor->bg_histogram)
+  else
     {
-      g_clear_object (&editor->bg_histogram);
-      gimp_histogram_view_set_background (view, NULL);
+      if (editor->bg_histogram)
+        {
+          g_clear_object (&editor->bg_histogram);
+          gimp_histogram_view_set_background (view, NULL);
+        }
+
+      editor->bg_pending = FALSE;
+
+      if (editor->update_pending)
+        gimp_async_cancel_and_wait (editor->calculate_async);
     }
 }
 
@@ -569,6 +613,15 @@ gimp_histogram_editor_buffer_update (GimpHistogramEditor *editor,
 static void
 gimp_histogram_editor_update (GimpHistogramEditor *editor)
 {
+  if (editor->bg_pending)
+    {
+      editor->update_pending = TRUE;
+
+      return;
+    }
+
+  editor->update_pending = FALSE;
+
   if (editor->calculate_async)
     gimp_async_cancel_and_wait (editor->calculate_async);
 
