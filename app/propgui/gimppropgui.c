@@ -54,6 +54,9 @@
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
+#include "gimppropgui-motion-blur-circular.h"
+#include "gimppropgui-motion-blur-linear.h"
+#include "gimppropgui-motion-blur-zoom.h"
 #include "gimppropgui-panorama-projection.h"
 #include "gimppropgui-recursive-transform.h"
 #include "gimppropgui-shadows-highlights.h"
@@ -463,6 +466,12 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_channel_mixer },
   { "GimpGegl-gegl-diffraction-patterns-config",
     _gimp_prop_gui_new_diffraction_patterns },
+  { "GimpGegl-gegl-motion-blur-circular-config",
+    _gimp_prop_gui_new_motion_blur_circular },
+  { "GimpGegl-gegl-motion-blur-linear-config",
+    _gimp_prop_gui_new_motion_blur_linear },
+  { "GimpGegl-gegl-motion-blur-zoom-config",
+    _gimp_prop_gui_new_motion_blur_zoom },
   { "GimpGegl-gegl-panorama-projection-config",
     _gimp_prop_gui_new_panorama_projection },
   { "GimpGegl-gegl-recursive-transform-config",

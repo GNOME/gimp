@@ -387,6 +387,9 @@ app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffraction-patterns.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
+app/propgui/gimppropgui-motion-blur-circular.c
+app/propgui/gimppropgui-motion-blur-linear.c
+app/propgui/gimppropgui-motion-blur-zoom.c
 app/propgui/gimppropgui-panorama-projection.c
 app/propgui/gimppropgui-recursive-transform.c
 app/propgui/gimppropgui-shadows-highlights.c
