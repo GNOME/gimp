@@ -39,7 +39,7 @@
 /*  local function prototypes  */
 
 static void   themes_apply_theme         (Gimp                   *gimp,
-                                          const gchar            *theme_name);
+                                          GimpGuiConfig          *config);
 static void   themes_list_themes_foreach (gpointer                key,
                                           gpointer                value,
                                           gpointer                data);
@@ -216,14 +216,15 @@ themes_get_theme_file (Gimp        *gimp,
 /*  private functions  */
 
 static void
-themes_apply_theme (Gimp        *gimp,
-                    const gchar *theme_name)
+themes_apply_theme (Gimp          *gimp,
+                    GimpGuiConfig *config)
 {
   GFile         *theme_css;
   GOutputStream *output;
   GError        *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_GUI_CONFIG (config));
 
   theme_css = gimp_directory_file ("theme.css", NULL);
 
@@ -240,7 +241,7 @@ themes_apply_theme (Gimp        *gimp,
     }
   else
     {
-      GFile *theme_dir = themes_get_theme_dir (gimp, theme_name);
+      GFile *theme_dir = themes_get_theme_dir (gimp, config->theme);
       GFile *css_theme;
       GFile *css_user;
       gchar *esc_css_theme;
@@ -282,10 +283,13 @@ themes_apply_theme (Gimp        *gimp,
              "@import url(\"%s\");\n"
              "@import url(\"%s\");\n"
              "\n"
+             "* { -gtk-icon-style: %s; }\n"
+             "\n"
              "/* end of theme.css */\n",
              gimp_file_get_utf8_name (css_user),
              esc_css_theme,
-             esc_css_user))
+             esc_css_user,
+             config->prefer_symbolic_icons ? "symbolic" : "regular"))
         {
           GCancellable *cancellable = g_cancellable_new ();
 
@@ -341,18 +345,14 @@ themes_theme_change_notify (GimpGuiConfig *config,
                             GParamSpec    *pspec,
                             Gimp          *gimp)
 {
-  GFile    *theme_css;
-  GError   *error = NULL;
-  gchar    *css;
-  gboolean  prefer_dark_theme;
-  gboolean  prefer_symbolic_icons;
+  GFile  *theme_css;
+  GError *error = NULL;
 
-  g_object_get (config, "prefer-dark-theme", &prefer_dark_theme, NULL);
   g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
-                "gtk-application-prefer-dark-theme", prefer_dark_theme,
+                "gtk-application-prefer-dark-theme", config->prefer_dark_theme,
                 NULL);
 
-  themes_apply_theme (gimp, config->theme);
+  themes_apply_theme (gimp, config);
 
   theme_css = gimp_directory_file ("theme.css", NULL);
 
@@ -360,31 +360,10 @@ themes_theme_change_notify (GimpGuiConfig *config,
     g_print ("Parsing '%s'\n",
              gimp_file_get_utf8_name (theme_css));
 
-  g_object_get (config, "prefer-symbolic-icons", &prefer_symbolic_icons, NULL);
-  if (g_file_load_contents (theme_css, NULL, &css, NULL, NULL, &error))
+  if (! gtk_css_provider_load_from_file (GTK_CSS_PROVIDER (themes_style_provider),
+                                         theme_css, &error))
     {
-      gchar *css2;
-
-      if (prefer_symbolic_icons)
-        css2 = g_strdup_printf ("%s\n%s", css,
-                                "* { -gtk-icon-style: symbolic; } ");
-      else
-        css2 = g_strdup_printf ("%s\n%s", css,
-                                "* { -gtk-icon-style: regular; } ");
-      if (! gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (themes_style_provider),
-                                             css2, -1, &error))
-        {
-          g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
-                      gimp_file_get_utf8_name (theme_css), error->message);
-          g_clear_error (&error);
-        }
-
-      g_free (css2);
-      g_free (css);
-    }
-  else
-    {
-      g_printerr ("%s: error loading %s: %s\n", G_STRFUNC,
+      g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
                   gimp_file_get_utf8_name (theme_css), error->message);
       g_clear_error (&error);
     }
