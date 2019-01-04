@@ -461,6 +461,8 @@ static void
 gimp_histogram_editor_calculate_async_callback (GimpAsync           *async,
                                                 GimpHistogramEditor *editor)
 {
+  editor->calculate_async = NULL;
+
   if (gimp_async_is_finished (async))
     gimp_histogram_editor_info_update (editor);
 }
@@ -496,6 +498,8 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
           async = gimp_drawable_calculate_histogram_async (editor->drawable,
                                                            editor->histogram,
                                                            TRUE);
+
+          editor->calculate_async = async;
 
           gimp_async_add_callback (
             async,
@@ -565,6 +569,9 @@ gimp_histogram_editor_buffer_update (GimpHistogramEditor *editor,
 static void
 gimp_histogram_editor_update (GimpHistogramEditor *editor)
 {
+  if (editor->calculate_async)
+    gimp_async_cancel_and_wait (editor->calculate_async);
+
   if (editor->idle_id)
     g_source_remove (editor->idle_id);
 

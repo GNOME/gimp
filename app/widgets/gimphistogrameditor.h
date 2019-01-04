@@ -41,6 +41,7 @@ struct _GimpHistogramEditor
   GimpDrawable         *drawable;
   GimpHistogram        *histogram;
   GimpHistogram        *bg_histogram;
+  GimpAsync            *calculate_async;
 
   guint                 idle_id;
   gboolean              recompute;
