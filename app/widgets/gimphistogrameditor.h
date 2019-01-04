@@ -41,10 +41,13 @@ struct _GimpHistogramEditor
   GimpDrawable         *drawable;
   GimpHistogram        *histogram;
   GimpHistogram        *bg_histogram;
-  GimpAsync            *calculate_async;
 
   guint                 idle_id;
   gboolean              recompute;
+
+  GimpAsync            *calculate_async;
+  gboolean              bg_pending;
+  gboolean              update_pending;
 
   GtkWidget            *menu;
   GtkWidget            *box;
