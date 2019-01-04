@@ -3493,6 +3493,16 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                                            __VA_ARGS__,             \
                                            variable_info->name)
 
+              #define LOG_VAR_FLOAT(value)                                  \
+                G_STMT_START                                                \
+                  {                                                         \
+                    gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];                  \
+                                                                            \
+                    LOG_VAR ("%s", g_ascii_dtostr (buffer, sizeof (buffer), \
+                                                   value));                 \
+                  }                                                         \
+                G_STMT_END
+
               switch (variable_info->type)
                 {
                 case VARIABLE_TYPE_BOOLEAN:
@@ -3528,25 +3538,23 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                   break;
 
                 case VARIABLE_TYPE_PERCENTAGE:
-                  LOG_VAR (
-                    "%.16g",
+                  LOG_VAR_FLOAT (
                     variable_data->value.percentage);
                   break;
 
                 case VARIABLE_TYPE_DURATION:
-                  LOG_VAR (
-                    "%.16g",
+                  LOG_VAR_FLOAT (
                     variable_data->value.duration);
                   break;
 
                 case VARIABLE_TYPE_RATE_OF_CHANGE:
-                  LOG_VAR (
-                    "%.16g",
+                  LOG_VAR_FLOAT (
                     variable_data->value.rate_of_change);
                   break;
                 }
 
               #undef LOG_VAR
+              #undef LOG_VAR_FLOAT
             }
           else
             {
