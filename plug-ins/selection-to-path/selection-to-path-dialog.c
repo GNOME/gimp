@@ -84,14 +84,32 @@ def_val (gdouble default_value)
 GtkWidget *
 dialog_create_selection_area (SELVALS *sels)
 {
+  GtkWidget *scrolled_win;
+  GtkWidget *viewport;
   GtkWidget *table;
   GtkWidget *check;
   GtkObject *adj;
   gint       row;
 
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (scrolled_win, -1, 400);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                       GTK_SHADOW_NONE);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_ALWAYS);
+
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), viewport);
+  gtk_widget_show (viewport);
+
   table = gtk_table_new (20, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_container_add (GTK_CONTAINER (viewport), table);
+  gtk_widget_show (table);
+
   row = 0;
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
@@ -381,5 +399,5 @@ dialog_create_selection_area (SELVALS *sels)
   adjust_widgets = g_slist_append (adjust_widgets, adj);
   g_object_set_data (G_OBJECT (adj), "default_value", def_val (3.0));
 
-  return table;
+  return scrolled_win;
 }
