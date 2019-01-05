@@ -456,6 +456,7 @@ unit_editor_dialog (void)
   gtk_widget_show (toolbar);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (scrolled_win, -1, 200);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
