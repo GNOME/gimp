@@ -63,8 +63,7 @@
 struct _GimpBucketFillToolPrivate
 {
   GimpLineArt        *line_art;
-  GWeakRef            cached_image;
-  GWeakRef            cached_drawable;
+  GimpImage          *line_art_image;
 
   /* For preview */
   GeglNode           *graph;
@@ -89,20 +88,6 @@ static void     gimp_bucket_fill_tool_finalize         (GObject               *o
 static gboolean gimp_bucket_fill_tool_initialize       (GimpTool              *tool,
                                                         GimpDisplay           *display,
                                                         GError               **error);
-
-static void     gimp_bucket_fill_tool_start            (GimpBucketFillTool    *tool,
-                                                        const GimpCoords      *coords,
-                                                        GimpDisplay           *display);
-static void     gimp_bucket_fill_tool_preview          (GimpBucketFillTool    *tool,
-                                                        const GimpCoords      *coords,
-                                                        GimpDisplay           *display,
-                                                        GimpFillOptions       *fill_options);
-static void     gimp_bucket_fill_tool_commit           (GimpBucketFillTool    *tool);
-static void     gimp_bucket_fill_tool_halt             (GimpBucketFillTool    *tool);
-static void     gimp_bucket_fill_tool_filter_flush     (GimpDrawableFilter    *filter,
-                                                        GimpTool              *tool);
-static void     gimp_bucket_fill_tool_create_graph     (GimpBucketFillTool    *tool);
-
 static void     gimp_bucket_fill_tool_button_press     (GimpTool              *tool,
                                                         const GimpCoords      *coords,
                                                         guint32                time,
@@ -129,11 +114,24 @@ static void     gimp_bucket_fill_tool_cursor_update    (GimpTool              *t
                                                         const GimpCoords      *coords,
                                                         GdkModifierType        state,
                                                         GimpDisplay           *display);
+static void     gimp_bucket_fill_tool_options_notify   (GimpTool              *tool,
+                                                        GimpToolOptions       *options,
+                                                        const GParamSpec      *pspec);
 
-static void     gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
-                                                        GParamSpec            *pspec,
-                                                        GimpBucketFillTool    *tool);
-static void     gimp_bucket_fill_reset_line_art        (GimpBucketFillTool    *tool,
+static void     gimp_bucket_fill_tool_start            (GimpBucketFillTool    *tool,
+                                                        const GimpCoords      *coords,
+                                                        GimpDisplay           *display);
+static void     gimp_bucket_fill_tool_preview          (GimpBucketFillTool    *tool,
+                                                        const GimpCoords      *coords,
+                                                        GimpDisplay           *display,
+                                                        GimpFillOptions       *fill_options);
+static void     gimp_bucket_fill_tool_commit           (GimpBucketFillTool    *tool);
+static void     gimp_bucket_fill_tool_halt             (GimpBucketFillTool    *tool);
+static void     gimp_bucket_fill_tool_filter_flush     (GimpDrawableFilter    *filter,
+                                                        GimpTool              *tool);
+static void     gimp_bucket_fill_tool_create_graph     (GimpBucketFillTool    *tool);
+
+static void     gimp_bucket_fill_tool_reset_line_art   (GimpBucketFillTool    *tool,
                                                         GimpBucketFillOptions *options);
 static void     gimp_bucket_fill_tool_image_changed    (GimpContext           *context,
                                                         GimpImage             *image,
@@ -184,6 +182,7 @@ gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
   tool_class->button_release = gimp_bucket_fill_tool_button_release;
   tool_class->modifier_key   = gimp_bucket_fill_tool_modifier_key;
   tool_class->cursor_update  = gimp_bucket_fill_tool_cursor_update;
+  tool_class->options_notify = gimp_bucket_fill_tool_options_notify;
 }
 
 static void
@@ -207,11 +206,11 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
 static void
 gimp_bucket_fill_tool_constructed (GObject *object)
 {
-  GimpTool              *tool    = GIMP_TOOL (object);
-  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (object);
-  Gimp                  *gimp    = GIMP_CONTEXT (options)->gimp;
-  GimpContext           *context = gimp_get_user_context (gimp);
-  GimpImage             *image   = gimp_context_get_image (context);
+  GimpTool              *tool        = GIMP_TOOL (object);
+  GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (object);
+  GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  Gimp                  *gimp        = GIMP_CONTEXT (options)->gimp;
+  GimpContext           *context     = gimp_get_user_context (gimp);
   GimpLineArt           *line_art;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -232,23 +231,13 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   g_object_bind_property (options,  "line-art-max-gap-length",
                           line_art, "segment-max-length",
                           G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);
-  GIMP_BUCKET_FILL_TOOL (tool)->priv->line_art = line_art;
+  bucket_tool->priv->line_art = line_art;
 
-  g_signal_connect (options, "notify::fill-criterion",
-                    G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                    tool);
-  g_signal_connect (options, "notify::sample-merged",
-                    G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                    tool);
-  g_signal_connect (options, "notify::fill-mode",
-                    G_CALLBACK (gimp_bucket_fill_tool_options_notified),
-                    tool);
+  gimp_bucket_fill_tool_reset_line_art (bucket_tool, options);
 
   g_signal_connect (context, "image-changed",
                     G_CALLBACK (gimp_bucket_fill_tool_image_changed),
                     tool);
-  gimp_bucket_fill_tool_image_changed (context, image,
-                                       GIMP_BUCKET_FILL_TOOL (tool));
 
   GIMP_COLOR_TOOL (tool)->pick_target =
     (options->fill_mode == GIMP_BUCKET_FILL_BG) ?
@@ -262,17 +251,11 @@ gimp_bucket_fill_tool_finalize (GObject *object)
   GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   Gimp                  *gimp     = GIMP_CONTEXT (options)->gimp;
   GimpContext           *context  = gimp_get_user_context (gimp);
-  GimpImage             *image    = g_weak_ref_get (&tool->priv->cached_image);
+
+  gimp_bucket_fill_tool_reset_line_art (tool, NULL);
 
   g_clear_object (&tool->priv->line_art);
 
-  if (image)
-    {
-      g_signal_handlers_disconnect_by_data (image, tool);
-      g_object_unref (image);
-    }
-
-  g_signal_handlers_disconnect_by_data (options, tool);
   g_signal_handlers_disconnect_by_data (context, tool);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -786,26 +769,31 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
 }
 
 static void
-gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
-                                        GParamSpec            *pspec,
-                                        GimpBucketFillTool    *tool)
+gimp_bucket_fill_tool_options_notify (GimpTool         *tool,
+                                      GimpToolOptions  *options,
+                                      const GParamSpec *pspec)
 {
-  if (! strcmp (pspec->name, "fill-criterion") ||
+  GimpBucketFillTool    *bucket_tool    = GIMP_BUCKET_FILL_TOOL (tool);
+  GimpBucketFillOptions *bucket_options = GIMP_BUCKET_FILL_OPTIONS (options);
+
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+
+  if (! strcmp (pspec->name, "fill-area") ||
       ! strcmp (pspec->name, "sample-merged"))
     {
-      gimp_bucket_fill_reset_line_art (tool, options);
+      gimp_bucket_fill_tool_reset_line_art (bucket_tool, bucket_options);
     }
   else if (! strcmp (pspec->name, "fill-mode"))
     {
       if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-        gimp_tool_pop_status (GIMP_TOOL (tool), GIMP_TOOL (tool)->display);
+        gimp_tool_pop_status (tool, tool->display);
 
-      switch (options->fill_mode)
+      switch (bucket_options->fill_mode)
         {
         case GIMP_BUCKET_FILL_BG:
           GIMP_COLOR_TOOL (tool)->pick_target = GIMP_COLOR_PICK_TARGET_BACKGROUND;
           if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-            gimp_tool_push_status (GIMP_TOOL (tool), GIMP_TOOL (tool)->display,
+            gimp_tool_push_status (tool, tool->display,
                                    _("Click in any image to pick the "
                                      "background color"));
           break;
@@ -814,7 +802,7 @@ gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
         default:
           GIMP_COLOR_TOOL (tool)->pick_target = GIMP_COLOR_PICK_TARGET_FOREGROUND;
           if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-            gimp_tool_push_status (GIMP_TOOL (tool), GIMP_TOOL (tool)->display,
+            gimp_tool_push_status (tool, tool->display,
                                    _("Click in any image to pick the "
                                      "foreground color"));
           break;
@@ -823,45 +811,52 @@ gimp_bucket_fill_tool_options_notified (GimpBucketFillOptions *options,
 }
 
 static void
-gimp_bucket_fill_reset_line_art (GimpBucketFillTool    *tool,
-                                 GimpBucketFillOptions *options)
+gimp_bucket_fill_tool_reset_line_art (GimpBucketFillTool    *tool,
+                                      GimpBucketFillOptions *options)
 {
-  GimpImage   *prev_image = g_weak_ref_get (&tool->priv->cached_image);
-  GimpContext *context    = gimp_get_user_context (GIMP_CONTEXT (options)->gimp);
-  GimpImage   *image      = gimp_context_get_image (context);
+  GimpLineArt *line_art = tool->priv->line_art;
+  GimpImage   *image    = NULL;
 
-  if (prev_image)
+  if (options && options->fill_area == GIMP_BUCKET_FILL_LINE_ART)
     {
-      g_signal_handlers_disconnect_by_data (prev_image, tool);
-      g_object_unref (prev_image);
+      GimpContext *context;
+
+      context = gimp_get_user_context (GIMP_CONTEXT (options)->gimp);
+      image   = gimp_context_get_image (context);
     }
-  g_weak_ref_set (&tool->priv->cached_image, image ? image : NULL);
-  g_weak_ref_set (&tool->priv->cached_drawable, NULL);
 
-  if (image && options->fill_area == GIMP_BUCKET_FILL_LINE_ART)
+  if (image != tool->priv->line_art_image)
     {
-      GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-      GimpDrawable          *drawable = gimp_image_get_active_drawable (image);
+      if (tool->priv->line_art_image)
+        g_signal_handlers_disconnect_by_data (tool->priv->line_art_image, tool);
 
-      g_signal_connect (image, "active-layer-changed",
-                        G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
-                        tool);
-      g_signal_connect (image, "active-channel-changed",
-                        G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
-                        tool);
+      tool->priv->line_art_image = image;
 
-      g_weak_ref_set (&tool->priv->cached_drawable, drawable ? drawable : NULL);
+      if (image)
+        {
+          g_signal_connect (image, "active-layer-changed",
+                            G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
+                            tool);
+          g_signal_connect (image, "active-channel-changed",
+                            G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
+                            tool);
+        }
+    }
+
+  if (image)
+    {
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (options->sample_merged)
-        gimp_line_art_set_input (tool->priv->line_art, GIMP_PICKABLE (image));
+        gimp_line_art_set_input (line_art, GIMP_PICKABLE (image));
       else if (drawable)
-        gimp_line_art_set_input (tool->priv->line_art, GIMP_PICKABLE (drawable));
+        gimp_line_art_set_input (line_art, GIMP_PICKABLE (drawable));
       else
-        gimp_line_art_set_input (tool->priv->line_art, NULL);
+        gimp_line_art_set_input (line_art, NULL);
     }
   else
     {
-      gimp_line_art_set_input (tool->priv->line_art, NULL);
+      gimp_line_art_set_input (line_art, NULL);
     }
 }
 
@@ -870,62 +865,16 @@ gimp_bucket_fill_tool_image_changed (GimpContext        *context,
                                      GimpImage          *image,
                                      GimpBucketFillTool *tool)
 {
-  GimpImage *prev_image = g_weak_ref_get (&tool->priv->cached_image);
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
-  if (image != prev_image)
-    {
-      if (prev_image)
-        {
-          g_signal_handlers_disconnect_by_data (prev_image, tool);
-        }
-
-      g_weak_ref_set (&tool->priv->cached_image, image ? image : NULL);
-      g_weak_ref_set (&tool->priv->cached_drawable, NULL);
-
-      if (image)
-        {
-          GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-
-          g_signal_connect (image, "active-layer-changed",
-                            G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
-                            tool);
-          g_signal_connect (image, "active-channel-changed",
-                            G_CALLBACK (gimp_bucket_fill_tool_drawable_changed),
-                            tool);
-          gimp_bucket_fill_tool_drawable_changed (image, tool);
-
-          if (options->sample_merged)
-            gimp_line_art_set_input (tool->priv->line_art,
-                                     GIMP_PICKABLE (image));
-        }
-      else
-        {
-          gimp_line_art_set_input (tool->priv->line_art, NULL);
-        }
-    }
-
-  if (prev_image)
-    g_object_unref (prev_image);
+  gimp_bucket_fill_tool_reset_line_art (tool, options);
 }
 
 static void
 gimp_bucket_fill_tool_drawable_changed (GimpImage          *image,
                                         GimpBucketFillTool *tool)
 {
-  GimpDrawable *drawable      = gimp_image_get_active_drawable (image);
-  GimpDrawable *prev_drawable = g_weak_ref_get (&tool->priv->cached_drawable);
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
-  if (drawable != prev_drawable)
-    {
-      GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-
-      g_weak_ref_set (&tool->priv->cached_drawable, drawable ? drawable : NULL);
-
-      if (! options->sample_merged)
-        gimp_line_art_set_input (tool->priv->line_art,
-                                 drawable ? GIMP_PICKABLE (drawable) : NULL);
-    }
-
-  if (prev_drawable)
-    g_object_unref (prev_drawable);
+  gimp_bucket_fill_tool_reset_line_art (tool, options);
 }
