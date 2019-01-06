@@ -12,6 +12,11 @@ Overview of Changes from GIMP 2.10.8 to GIMP 2.10.10
 
 Core:
 
+  - Add gimp-scratch allocator, a fast memory allocator (on the order of
+    magnitude of alloca()), suitable for small (up to a few megabytes),
+    short-lived (usually, bound to the current stack-frame) allocations.
+    Unlike alloca(), gimp-scratch doesn't use the stack, and is therefore
+    safer, and will also serve bigger requests, by falling-back to malloc().
   - In gimp_drawable_transform_buffer_affine(), avoid modifying the
     clipping mode when transforming layer masks, since this function
     is used (among other things) to transform layer masks together with
@@ -35,6 +40,9 @@ Core:
     incomplete contents, so that you won't end up with no valid files at
     all.
   - Fix a regression on support of various graphics tablet.
+  - Remove the "Edit -> Fade..." feature: it makes GIMP use two buffers
+    instead of one (east into system resources), it's broken in 2.10, and
+    we can make the UX better for filters.
 
 User interface:
 
@@ -44,6 +52,19 @@ User interface:
     smaller in every cases. In particular some best/worst case are
     possible when an algorithm less efficient in general may end up
     better on a particular image.
+  - Add basic support for cursors with a scale factor of 2 for HiDPI
+    (artwork to be updated).
+
+Usability:
+
+  - Attempting to transform locked layers or paint on them now results in
+    blinking around the status bar (where the warning message is displayed)
+    and around the toolbar where lock toggles are. The same applies to
+    attempting to move a selection where there is none — GIMP will blink
+    around the toolbar where the moving target (layer, selection, path)
+    is chosen.
+  - GIMP now allows selecting default export file type for new projects.
+    The choice is limited to PNG, JPEG, WebP, PSD, ORA, TIFF, BMP.
 
 Tools:
 
@@ -70,11 +91,24 @@ Tools:
   - In the Bucket Fill tool, the Alt modifier will now switch to
     "FG color fill" when "Pattern fill" was set (instead of doing
     nothing).
+  - In the Unified Transform tool, default to preserving aspect ratio
+    when scaling up or down.
 
 Plug-ins:
 
   - file-pdf-save GUI now clearly indicates the order the layers will be
     used to make multi-page PDFs.
+  - Add DDS loading/exporting plug-in originally developed by Shawn Kirst
+    and Arne Reuter.
+  - Rename the Guillotine plug-in to Slice Using Guides.
+  - Add a new option saving a color profile when exporting PNG, JPEG, TIFF.
+    Always save it when exporting to PSD.
+  - Remove the "Advanced" expanders from the PNG and TIFF export dialogs.
+
+Filters:
+
+  - Add on-canvas GUI (simple lines) for circular, linear, and zoom motion
+    blur.
 
 Help:
 
@@ -89,7 +123,8 @@ Installers:
 
 Translations:
 
-  - Czech, Italian, Polish, Spanish, Ukrainian.
+  - Czech, French, Italian, Japanese, Marathi, Polish, Russian, Spanish,
+    Swedish, Ukrainian.
 
 Overview of Changes from GIMP 2.10.6 to GIMP 2.10.8
 ===================================================
