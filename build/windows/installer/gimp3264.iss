@@ -562,6 +562,8 @@ Type: files; Name: "{commondesktop}\{reg:HKLM\SOFTWARE\Microsoft\Windows\Current
 [Registry]
 ;fix broken toolbox icons
 Root: HKLM; Subkey: "Software\Classes\.svg"; ValueType: string; ValueName: "Content Type"; ValueData: "image/svg+xml"; Flags: noerror createvalueifdoesntexist
+;remove LIBTHAI_DICTDIR variable set by original 2.10.8 installer
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: none; ValueName: "LIBTHAI_DICTDIR"; Flags: deletevalue uninsdeletevalue
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
@@ -864,40 +866,6 @@ begin
 end;
 
 
-#if 0
-procedure PrepareGimpRC();
-var GimpRC,GimpRCText: String;
-	GimpRCTextA: AnsiString;
-begin
-	if IsComponentSelected('gimp32on64') then
-	begin
-		StatusLabel(CustomMessage('SettingUpGimpRC'),'');
-
-		GimpRC := ExpandConstant('{app}\etc\gimp\2.0\gimprc');
-        DebugMsg('PrepareGimpRC','Updating gimprc: ' + GimpRC);
-
-        if not LoadStringFromFile(GimpRC,GimpRCTextA) then
-        begin
-			DebugMsg('PrepareGimpRC','Problem loading');
-			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorReadingGimpRC'),[GimpRC]),mbInformation,mb_ok,IDOK);
-        end;
-
-        GimpRCText := GimpRCTextA;
-        
-        StringChangeEx(GimpRCText,'# (plug-in-path', //add (relative) path to 32-bit plugin dir
-                       '(plug-in-path "${gimp_dir}\\plug-ins;${gimp_plug_in_dir}\\plug-ins;${gimp_plug_in_dir}\\..\\..\\..\\32\\lib\\gimp\\2.0\\plug-ins")'#10'# (plug-in-path',
-                       False);
-
-        if not SaveStringToUTF8File(GimpRC,GimpRCText,False) then
-        begin
-			DebugMsg('PrepareGimpRC','Problem saving');
-			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorUpdatingGimpRC'),[GimpRC]),mbInformation,mb_ok,IDOK);
-        end;
-	end;
-end;
-#endif
-
-
 procedure CleanUpCustomWelcome();
 begin
 	WizardForm.NextButton.Visible := True;
@@ -1057,23 +1025,6 @@ begin
 	end;
 
 	DebugMsg('InitCustomPages','wpLicense');
-
-	(*pgSimple := CreateCustomPage(wpInfoBefore,SetupMessage(msgWizardReady),
-	             Replace('[name]','{#SetupSetting("AppName")}',SetupMessage(msgReadyLabel1)));
-
-	lblInfo := TNewStaticText.Create(pgSimple);
-	with lblInfo do
-	begin
-		Parent := pgSimple.Surface;
-		Left := 0;
-		Top := 0;
-
-		WordWrap := True;
-		AutoSize := True;
-		Width := pgSimple.SurfaceWidth;
-
-		Caption := CustomMessage('InstallOrCustomize');
-	end;*)
 
 	btnInstall := TNewButton.Create(WizardForm);
 	with btnInstall do
@@ -1393,8 +1344,6 @@ begin
 		sText := Copy(sText, 1, Length(sText) - 2) + '\par \pard';
 
 	end;
-	
-	//sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoGroupInfo);
 
 	If pMemoTasksInfo<>'' then
 		sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoTasksInfo);
@@ -1404,54 +1353,6 @@ begin
 	Result := 'If you see this, something went wrong';
 end;
 
-
-#if 0 && (Defined(DEVEL) && DEVEL != "")
-procedure chkTesting_onClick(Sender: TObject);
-begin
-	if TCheckBox(Sender).Checked then
-		WizardForm.NextButton.Enabled := True
-	else
-		WizardForm.NextButton.Enabled := False;
-end;
-
-
-procedure WarnTestingVersion();
-var lblTesting: TNewStaticText;
-	chkTesting: TCheckBox;
-begin
-	if not (WizardSilent or (InstallMode = imRebootContinue)) then
-		WizardForm.NextButton.Enabled := False;
-
-	chkTesting := TCheckBox.Create(WizardForm.WelcomePage);
-	with chkTesting do
-	begin
-		Parent := WizardForm.WelcomePage;
-		Caption := CustomMessage('TestingCheckBox');
-
-		Left := WizardForm.WelcomeLabel2.Left;
-		Width := WizardForm.WelcomeLabel2.Width;
-		Height := ScaleY(32);
-		Top := WizardForm.WelcomePage.ClientHeight - Height - ScaleY(8);
-
-		OnClick := @chkTesting_onClick;
-	end;
-
-	lblTesting := TNewStaticText.Create(WizardForm.WelcomePage);
-	with lblTesting do
-	begin
-		Parent := WizardForm.WelcomePage;
-		Left := WizardForm.WelcomeLabel2.Left;
-		Font.Color := $ff; //red
-		AutoSize := True;
-		WordWrap := True;
-		Width := WizardForm.WelcomeLabel2.Width;
-
-		Caption := CustomMessage('TestingWarning');
-		
-		Top := chkTesting.Top - Height - ScaleY(8);
-	end;
-end;
-#endif //(Defined(DEVEL) && DEVEL != "")
 
 
 procedure UpdateWizardImages();
@@ -1586,58 +1487,48 @@ begin
 	if ExpandConstant('{param:debugresume|0}') = '1' then
 		Result := rogRestartRequired; //for testing
 
-	(*if DirExists(ExpandConstant('{app}')) then
+	if Is64BitInstallMode() then
+		RootKey := HKLM32
+	else
+		RootKey := HKLM;
+
+	if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+	                  'Inno Setup: App Path') then
 	begin
-		DebugMsg('RemoveOldGIMPVersions',ExpandConstant('{app}') + ' exists, checking if old GIMP version is in it');*)
-
-		if Is64BitInstallMode() then
-			RootKey := HKLM32
-		else
-			RootKey := HKLM;
-
-		if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-		                  'Inno Setup: App Path') then
+		if RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+		                       'Inno Setup: App Path',OldPath) then
 		begin
-			if RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-			                       'Inno Setup: App Path',OldPath) then
+			DebugMsg('RemoveOldGIMPVersions','Found legacy GIMP install, removing');
+
+			if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+			                  'QuietUninstallString') then
+				WhichStr := 'QuietUninstallString'
+			else if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+			                       'UninstallString') then
+				WhichStr := 'UninstallString'
+			else
 			begin
-				(*if LowerCase(RemoveBackslashUnlessRoot(OldPath)) = LowerCase(RemoveBackslashUnlessRoot(ExpandConstant('{app}'))) then
-				begin //directory contains previous version of GIMP, run it's uninstaller*)
-					DebugMsg('RemoveOldGIMPVersions','Found legacy GIMP install, removing');
-
-					if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-					                  'QuietUninstallString') then
-						WhichStr := 'QuietUninstallString'
-					else if RegValueExists(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-					                       'UninstallString') then
-						WhichStr := 'UninstallString'
-					else
-					begin
-						Result := rogCantUninstall;
-						exit;
-					end;
-
-					if not RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
-					                           WhichStr,UninstallString) then
-					begin
-						Result := rogCantUninstall;
-						exit;
-					end;
-
-					if WhichStr = 'UninstallString' then
-						UninstallString := UninstallString + ' /SILENT';
-
-					UninstallString := UninstallString + ' /NORESTART';
-
-					DoUninstall(UninstallString, OldPath, lblInfo2, Result);
-					
-				//end;
+				Result := rogCantUninstall;
+				exit;
 			end;
-			
-			
+
+			if not RegQueryStringValue(RootKey,'Software\Microsoft\Windows\CurrentVersion\Uninstall\WinGimp-2.0_is1',
+			                           WhichStr,UninstallString) then
+			begin
+				Result := rogCantUninstall;
+				exit;
+			end;
+
+			if WhichStr = 'UninstallString' then
+				UninstallString := UninstallString + ' /SILENT';
+
+			UninstallString := UninstallString + ' /NORESTART';
+
+			DoUninstall(UninstallString, OldPath, lblInfo2, Result);
+					
 		end;
 
-	//end;
+	end;
 
 	lblInfo1.Free;
 	lblInfo2.Free;
@@ -1675,10 +1566,6 @@ procedure CurPageChanged(pCurPageID: Integer);
 begin
 	DebugMsg('CurPageChanged','ID: '+IntToStr(pCurPageID));
 	case pCurPageID of
-#if 0 && (Defined(DEVEL) && DEVEL != "")
-		wpWelcome:
-			WarnTestingVersion();
-#endif
 		wpWelcome:
 			PrepareWelcomePage();
 		wpInfoBefore:
@@ -1700,11 +1587,6 @@ begin
 	Result := ((InstallMode = imSimple) or (InstallMode = imRebootContinue)) and (pPageID <> wpFinished);
 	                                                               //skip all pages except for the finished one if using simple
 	                                                               //install mode
-	(*case pPageID of
-	pgSimple.ID:
-		Result := InstallMode <> imNone; //only display the Install/Customize page once
-	end;*)
-
 	if Result then
 		DebugMsg('ShouldSkipPage','Yes')
 	else
