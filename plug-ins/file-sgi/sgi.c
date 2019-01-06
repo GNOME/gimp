@@ -458,8 +458,8 @@ load_image (const gchar  *filename,
 
       for (i = 0; i < sgip->zsize; i ++)
         if (sgiGetRow (sgip, rows[i], sgip->ysize - 1 - y, i) < 0)
-          g_printf ("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
-                    sgip->ysize - 1 - y, i);
+          g_printerr ("sgiGetRow(sgip, rows[i], %d, %d) failed!\n",
+                      sgip->ysize - 1 - y, i);
 
       if (sgip->bpp == 1)
         {
