@@ -1416,7 +1416,6 @@ var InResult: TRemoveOldGIMPResult;
 	ResultCode, i: Integer;
 begin
 	InResult := oResult;
-	InstallDir := '';
 
 	DebugMsg('DoUninstall','Uninstall string: ' + UninstStr);
 
@@ -1424,14 +1423,23 @@ begin
 	if LowerCase(RemoveBackslashUnlessRoot(InstallDir)) = LowerCase(RemoveBackslashUnlessRoot(ExpandConstant('{app}'))) then
 		oResult := rogRestartRequired
 	else
-		oResult := rogContinue;
+		oResult := InResult;
 
 	pInfoLabel.Caption := InstallDir;
 
 	if not Exec('>',UninstStr,'',SW_SHOW,ewWaitUntilTerminated,ResultCode) then
 	begin
-		DebugMsg('DoUninstall','Exec failed: ' + IntToStr(ResultCode));
-		oResult := rogUninstallFailed;
+		DebugMsg('DoUninstall','Exec('+UninstStr+') failed: ' + IntToStr(ResultCode));
+
+		if not DirExists(InstallDir) then //old install directory doesn't exist, assume it was deleted, and Registry info is orphaned
+		begin
+			DebugMsg('DoUninstall','Install directory doesn'#39't exist: ' + InstallDir + ', resuming install');
+			oResult := InResult
+		end else
+		begin	
+			oResult := rogUninstallFailed;
+		end;
+
 		exit;
 	end;
 
@@ -1441,13 +1449,13 @@ begin
 	i := 0;
 	while i < (UNINSTALL_MAX_WAIT_TIME / UNINSTALL_CHECK_TIME) do
 	begin
-		DebugMsg('DoUninstall','Waiting for ' + ExpandConstant('{app}') + ' to disappear [' + IntToStr(i) + ']');
 		if not DirExists(ExpandConstant('{app}')) then
 		begin
 			DebugMsg('DoUninstall','Existing GIMP directory removed, restoring previous restart requirement');
 			oResult := InResult; //restore previous result
 			break;
 		end;
+		DebugMsg('DoUninstall','Waiting for ' + ExpandConstant('{app}') + ' to disappear [' + IntToStr(i) + ']');
 		Sleep(UNINSTALL_CHECK_TIME); //it may take a few seconds for the uninstaller to remove the directory after it's exited
 		Inc(i);
 	end;
