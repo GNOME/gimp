@@ -57,7 +57,6 @@
 #include "core/gimp-gui.h"
 #include "core/gimp-utils.h"
 #include "core/gimp-parallel.h"
-#include "core/gimp-scratch.h"
 #include "core/gimpasync.h"
 #include "core/gimpbacktrace.h"
 #include "core/gimpwaitable.h"
@@ -702,8 +701,8 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Scratch"),
     .description      = N_("Total size of scratch memory"),
     .type             = VARIABLE_TYPE_SIZE,
-    .sample_func      = gimp_dashboard_sample_function,
-    .data             = gimp_scratch_get_total
+    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .data             = "scratch-total"
   }
 };
 

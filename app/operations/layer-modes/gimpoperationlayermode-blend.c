@@ -32,8 +32,6 @@
 
 #include "../operations-types.h"
 
-#include "core/gimp-scratch.h"
-
 #include "gimpoperationlayermode-blend.h"
 
 
@@ -876,7 +874,7 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
   if (! fish)
     fish = babl_fish ("RGBA float", "Y float");
 
-  scratch = gimp_scratch_new (gfloat, 2 * samples);
+  scratch = gegl_scratch_new (gfloat, 2 * samples);
 
   in_Y    = scratch;
   layer_Y = scratch + samples;
@@ -904,7 +902,7 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
       layer_Y ++;
     }
 
-  gimp_scratch_free (scratch);
+  gegl_scratch_free (scratch);
 }
 
 void

@@ -70,8 +70,6 @@ libappcore_a_sources = \
 	gimp-parallel.h				\
 	gimp-parasites.c			\
 	gimp-parasites.h			\
-	gimp-scratch.c				\
-	gimp-scratch.h				\
 	gimp-spawn.c				\
 	gimp-spawn.h				\
 	gimp-tags.c				\
