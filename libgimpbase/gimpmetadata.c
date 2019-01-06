@@ -616,20 +616,46 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
           decoded = g_base64_decode (value, &len);
 
           if (decoded[len - 1] == '\0')
-            gexiv2_metadata_set_tag_string (GEXIV2_METADATA (parse_data->metadata),
-                                            parse_data->name,
-                                            (const gchar *) decoded);
-
-          g_free (decoded);
+            {
+              g_free (value);
+              value = (gchar *) decoded;
+            }
+          else
+            {
+              g_clear_pointer (&value,   g_free);
+              g_clear_pointer (&decoded, g_free);
+            }
         }
-      else
+
+      if (value)
         {
-          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (parse_data->metadata),
-                                          parse_data->name,
-                                          value);
-        }
+          GExiv2Metadata  *g2_metadata = GEXIV2_METADATA (parse_data->metadata);
+          gchar          **values;
 
-      g_free (value);
+          values = gexiv2_metadata_get_tag_multiple (g2_metadata,
+                                                     parse_data->name);
+
+          if (values)
+            {
+              guint length = g_strv_length (values);
+
+              values = g_renew (gchar *, values, length + 2);
+              values[length]     = value;
+              values[length + 1] = NULL;
+
+              gexiv2_metadata_set_tag_multiple (g2_metadata,
+                                                parse_data->name,
+                                                (const gchar **) values);
+              g_strfreev (values);
+            }
+          else
+            {
+              gexiv2_metadata_set_tag_string (GEXIV2_METADATA (parse_data->metadata),
+                                              parse_data->name,
+                                              value);
+              g_free (value);
+            }
+        }
     }
 }
 

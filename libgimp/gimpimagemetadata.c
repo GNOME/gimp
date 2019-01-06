@@ -380,6 +380,30 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 }
 
 
+static void
+gimp_image_metadata_copy_tag (GExiv2Metadata *src,
+                              GExiv2Metadata *dest,
+                              const gchar    *tag)
+{
+  gchar **values = gexiv2_metadata_get_tag_multiple (src, tag);
+
+  if (values)
+    {
+      gexiv2_metadata_set_tag_multiple (dest, tag, (const gchar **) values);
+      g_strfreev (values);
+    }
+  else
+    {
+      gchar *value = gexiv2_metadata_get_tag_string (src, tag);
+
+      if (value)
+        {
+          gexiv2_metadata_set_tag_string (dest, tag, value);
+          g_free (value);
+        }
+    }
+}
+
 /**
  * gimp_image_metadata_save_finish:
  * @image_ID:  The image
@@ -410,7 +434,6 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
   gboolean        support_exif;
   gboolean        support_xmp;
   gboolean        support_iptc;
-  gchar          *value;
   gboolean        success = FALSE;
   gint            i;
 
@@ -446,11 +469,9 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
           if (! gexiv2_metadata_has_tag (new_g2metadata, exif_data[i]) &&
               gimp_metadata_is_tag_supported (exif_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
-                                                      exif_data[i]);
-              gexiv2_metadata_set_tag_string (new_g2metadata, exif_data[i],
-                                              value);
-              g_free (value);
+              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+                                            new_g2metadata,
+                                            exif_data[i]);
             }
         }
 
@@ -530,11 +551,9 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
           if (! gexiv2_metadata_has_tag (new_g2metadata, xmp_data[i]) &&
               gimp_metadata_is_tag_supported (xmp_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
-                                                      xmp_data[i]);
-              gexiv2_metadata_set_tag_string (new_g2metadata, xmp_data[i],
-                                              value);
-              g_free (value);
+              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+                                            new_g2metadata,
+                                            xmp_data[i]);
             }
         }
 
@@ -550,11 +569,9 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
           if (! gexiv2_metadata_has_tag (new_g2metadata, iptc_data[i]) &&
               gimp_metadata_is_tag_supported (iptc_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
-                                                      iptc_data[i]);
-              gexiv2_metadata_set_tag_string (new_g2metadata, iptc_data[i],
-                                              value);
-              g_free (value);
+              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+                                            new_g2metadata,
+                                            iptc_data[i]);
             }
         }
 
