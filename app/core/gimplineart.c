@@ -421,18 +421,21 @@ gimp_line_art_set_input (GimpLineArt  *line_art,
 {
   g_return_if_fail (pickable == NULL || GIMP_IS_VIEWABLE (pickable));
 
-  if (line_art->priv->input)
-    g_signal_handlers_disconnect_by_data (line_art->priv->input, line_art);
-
-  line_art->priv->input = pickable;
-
-  gimp_line_art_compute (line_art);
-
-  if (pickable)
+  if (pickable != line_art->priv->input)
     {
-      g_signal_connect (pickable, "invalidate-preview",
-                        G_CALLBACK (gimp_line_art_input_invalidate_preview),
-                        line_art);
+      if (line_art->priv->input)
+        g_signal_handlers_disconnect_by_data (line_art->priv->input, line_art);
+
+      line_art->priv->input = pickable;
+
+      gimp_line_art_compute (line_art);
+
+      if (pickable)
+        {
+          g_signal_connect (pickable, "invalidate-preview",
+                            G_CALLBACK (gimp_line_art_input_invalidate_preview),
+                            line_art);
+        }
     }
 }
 
