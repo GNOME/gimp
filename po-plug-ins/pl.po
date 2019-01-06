@@ -1,18 +1,18 @@
 # Polish translation for gimp-plug-ins.
-# Copyright © 1999-2018 the gimp authors.
+# Copyright © 1999-2019 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2018.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2018.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2019.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-09 12:20+0100\n"
-"PO-Revision-Date: 2018-12-09 12:22+0100\n"
+"POT-Creation-Date: 2019-01-06 19:11+0100\n"
+"PO-Revision-Date: 2019-01-06 19:20+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -53,8 +53,8 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:951 ../plug-ins/common/file-gif-save.c:1089
 #: ../plug-ins/common/file-heif.c:953 ../plug-ins/common/file-jp2-load.c:949
-#: ../plug-ins/common/file-pdf-load.c:707
-#: ../plug-ins/common/file-pdf-load.c:1272
+#: ../plug-ins/common/file-pdf-load.c:694
+#: ../plug-ins/common/file-pdf-load.c:1259
 #: ../plug-ins/common/file-pdf-save.c:1026 ../plug-ins/common/file-ps.c:3398
 #: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1270
@@ -117,7 +117,7 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
-#: ../plug-ins/common/file-heif.c:954 ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-heif.c:954 ../plug-ins/common/file-pdf-load.c:695
 #: ../plug-ins/common/file-svg.c:728 ../plug-ins/common/file-wmf.c:516
 #: ../plug-ins/common/film.c:1271 ../plug-ins/common/filter-pack.c:1207
 #: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:648
@@ -2205,7 +2205,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
 #: ../plug-ins/common/file-heif.c:353 ../plug-ins/common/file-jp2-load.c:1064
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:370
-#: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
+#: ../plug-ins/common/file-pdf-load.c:1030 ../plug-ins/common/file-pix.c:357
 #: ../plug-ins/common/file-png.c:927 ../plug-ins/common/file-pnm.c:566
 #: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
 #: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
@@ -2216,7 +2216,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
 #: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-raw/file-darktable.c:399
-#: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
@@ -2312,49 +2312,49 @@ msgstr "Eksportowanie „%s”"
 msgid "C source code"
 msgstr "Kod źródłowy języka C"
 
-#: ../plug-ins/common/file-csource.c:892
+#: ../plug-ins/common/file-csource.c:898
 msgid "C-Source"
 msgstr "Kod źródłowy języka C"
 
-#: ../plug-ins/common/file-csource.c:910
+#: ../plug-ins/common/file-csource.c:916
 msgid "_Prefixed name:"
 msgstr "_Przedrostek nazw:"
 
-#: ../plug-ins/common/file-csource.c:919
+#: ../plug-ins/common/file-csource.c:925
 msgid "Co_mment:"
 msgstr "Kom_entarz:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:926
+#: ../plug-ins/common/file-csource.c:932
 msgid "_Save comment to file"
 msgstr "Zapisanie ko_mentarza w pliku"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:938
+#: ../plug-ins/common/file-csource.c:944
 msgid "_Use GLib types (guint8*)"
 msgstr "Użycie typów z _biblioteki GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:951
+#: ../plug-ins/common/file-csource.c:957
 msgid "Us_e macros instead of struct"
 msgstr "_Makra zamiast struktur"
 
-#: ../plug-ins/common/file-csource.c:964
+#: ../plug-ins/common/file-csource.c:970
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "_1-bajtowe kodowanie RLE (Run-Length-Encoding)"
 
-#: ../plug-ins/common/file-csource.c:977
+#: ../plug-ins/common/file-csource.c:983
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Zapisanie ka_nału alfa (RGBA/RGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:989
+#: ../plug-ins/common/file-csource.c:995
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Zapisanie jako _RGB565 (16-bitowy)"
 
-#: ../plug-ins/common/file-csource.c:1011
+#: ../plug-ins/common/file-csource.c:1017
 msgid "Op_acity:"
 msgstr "_Krycie:"
 
@@ -3206,67 +3206,66 @@ msgstr[1] ""
 "Dokument PDF „%1$s” ma %3$d strony. %2$d. strona jest spoza zakresu."
 msgstr[2] "Dokument PDF „%1$s” ma %3$d stron. %2$d. strona jest spoza zakresu."
 
-#: ../plug-ins/common/file-pdf-load.c:679
-#: ../plug-ins/common/file-pdf-load.c:749
+#: ../plug-ins/common/file-pdf-load.c:681
+msgid "PDF is password protected, please input the password:"
+msgstr "Plik PDF jest chroniony hasłem, proszę je wpisać:"
+
+#: ../plug-ins/common/file-pdf-load.c:691
+msgid "Encrypted PDF"
+msgstr "Zaszyfrowany plik PDF"
+
+#: ../plug-ins/common/file-pdf-load.c:718
+msgid "Wrong password! Please input the right one:"
+msgstr "Błędne hasło. Proszę wpisać właściwe:"
+
+#: ../plug-ins/common/file-pdf-load.c:736
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Nie można wczytać „%s”: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:694
-msgid "PDF is password protected, please input the password:"
-msgstr "Plik PDF jest chroniony hasłem, proszę je wpisać:"
-
-#: ../plug-ins/common/file-pdf-load.c:704
-msgid "Encrypted PDF"
-msgstr "Zaszyfrowany plik PDF"
-
-#: ../plug-ins/common/file-pdf-load.c:732
-msgid "Wrong password! Please input the right one:"
-msgstr "Błędne hasło. Proszę wpisać właściwe:"
-
-#: ../plug-ins/common/file-pdf-load.c:1077
+#: ../plug-ins/common/file-pdf-load.c:1064
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1156
+#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:1156
 #, c-format
 msgid "%s-pages"
 msgstr "%s-stron"
 
-#: ../plug-ins/common/file-pdf-load.c:1268
+#: ../plug-ins/common/file-pdf-load.c:1255
 msgid "Import from PDF"
 msgstr "Import z PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3399
+#: ../plug-ins/common/file-pdf-load.c:1260 ../plug-ins/common/file-ps.c:3399
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
 #: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "Zai_mportuj"
 
-#: ../plug-ins/common/file-pdf-load.c:1306
+#: ../plug-ins/common/file-pdf-load.c:1293
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Błąd podczas uzyskiwania liczby stron z podanego pliku PDF."
 
-#: ../plug-ins/common/file-pdf-load.c:1352
+#: ../plug-ins/common/file-pdf-load.c:1339
 msgid "_Width (pixels):"
 msgstr "_Szerokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1353
+#: ../plug-ins/common/file-pdf-load.c:1340
 msgid "_Height (pixels):"
 msgstr "_Wysokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1355
+#: ../plug-ins/common/file-pdf-load.c:1342
 msgid "_Resolution:"
 msgstr "_Rozdzielczość:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1366
+#: ../plug-ins/common/file-pdf-load.c:1353
 msgid "Use _Anti-aliasing"
 msgstr "Użycie _wygładzania"
 
-#: ../plug-ins/common/file-pdf-load.c:1644
-#: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
+#: ../plug-ins/common/file-pdf-load.c:1631
+#: ../plug-ins/common/file-pdf-load.c:1632 ../plug-ins/common/file-svg.c:916
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -5181,8 +5180,8 @@ msgid "Slice the image into subimages using guides"
 msgstr "Dzieli obraz na podobrazy za pomocą prowadnic"
 
 #: ../plug-ins/common/guillotine.c:81
-msgid "_Guillotine"
-msgstr "_Gilotyna"
+msgid "Slice Using G_uides"
+msgstr "P_odziel za pomocą prowadnic"
 
 #: ../plug-ins/common/guillotine.c:119
 msgid "Guillotine"
@@ -6893,6 +6892,111 @@ msgstr "32 bity"
 msgid "Windows BMP image"
 msgstr "Obraz BMP systemu Windows"
 
+#: ../plug-ins/file-dds/dds.c:134 ../plug-ins/file-dds/dds.c:153
+msgid "DDS image"
+msgstr "Obraz DDS"
+
+#: ../plug-ins/file-dds/dds.c:170
+msgid "Decode YCoCg"
+msgstr "Dekodowanie YCoCg"
+
+#: ../plug-ins/file-dds/dds.c:183
+msgid "Decode YCoCg (scaled)"
+msgstr "Dekodowanie YCoCg (przeskalowane)"
+
+#: ../plug-ins/file-dds/dds.c:196
+msgid "Decode Alpha exponent"
+msgstr "Dekodowanie wykładnika alfy"
+
+#: ../plug-ins/file-dds/ddsread.c:1266
+msgid "Load DDS"
+msgstr "Wczytanie pliku DDS"
+
+#: ../plug-ins/file-dds/ddsread.c:1268 ../plug-ins/file-dds/ddswrite.c:1887
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: ../plug-ins/file-dds/ddsread.c:1269 ../plug-ins/file-dds/ddswrite.c:1888
+msgid "OK"
+msgstr "OK"
+
+#: ../plug-ins/file-dds/ddsread.c:1285
+msgid "Load mipmaps"
+msgstr "Wczytanie mipmap"
+
+#: ../plug-ins/file-dds/ddsread.c:1292
+msgid "Automatically decode YCoCg/AExp images when detected"
+msgstr "Automatyczne dekodowanie obrazów YCoCg/AExp po wykryciu"
+
+#: ../plug-ins/file-dds/ddswrite.c:1885
+msgid "Export as DDS"
+msgstr "Eksport jako DDS"
+
+#: ../plug-ins/file-dds/ddswrite.c:1912
+msgid "Compression:"
+msgstr "Kompresja:"
+
+#: ../plug-ins/file-dds/ddswrite.c:1931
+msgid "Format:"
+msgstr "Format:"
+
+#: ../plug-ins/file-dds/ddswrite.c:1952
+msgid "Save:"
+msgstr "Zapis:"
+
+#: ../plug-ins/file-dds/ddswrite.c:1972
+msgid "Mipmaps:"
+msgstr "Mipmapy:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2003
+msgid "Transparent index:"
+msgstr "Przezroczysty indeks:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2041
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Opcje zaawansowane</b>"
+
+#: ../plug-ins/file-dds/ddswrite.c:2055
+#: ../plug-ins/file-tiff/file-tiff-save.c:975
+msgid "Compression"
+msgstr "Kompresja"
+
+#: ../plug-ins/file-dds/ddswrite.c:2066
+msgid "Use perceptual error metric"
+msgstr "Percepcyjne parametry błędu"
+
+#: ../plug-ins/file-dds/ddswrite.c:2077
+msgid "Mipmaps"
+msgstr "Mipmapy"
+
+#: ../plug-ins/file-dds/ddswrite.c:2088
+msgid "Filter:"
+msgstr "Filtr:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2108
+msgid "Wrap mode:"
+msgstr "Tryb zawijania:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2128
+msgid "Apply gamma correction"
+msgstr "Korekcja gammy"
+
+#: ../plug-ins/file-dds/ddswrite.c:2139
+msgid "Use sRGB colorspace"
+msgstr "Przestrzeń kolorów sRGB"
+
+#: ../plug-ins/file-dds/ddswrite.c:2150 ../plug-ins/gimpressionist/brush.c:544
+msgid "Gamma:"
+msgstr "Gamma:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2168
+msgid "Preserve alpha test coverage"
+msgstr "Zachowanie pokrycia testów alfy"
+
+#: ../plug-ins/file-dds/ddswrite.c:2179
+msgid "Alpha test threshold:"
+msgstr "Próg testu alfy:"
+
 #: ../plug-ins/file-exr/file-exr.c:193
 #, c-format
 msgid "Error opening file '%s' for reading"
@@ -7060,7 +7164,7 @@ msgstr "%i. ikona"
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:527
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
 #: ../plug-ins/file-raw/file-darktable.c:494
-#: ../plug-ins/file-raw/file-rawtherapee.c:431
+#: ../plug-ins/file-raw/file-rawtherapee.c:436
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Otwieranie miniatury dla „%s”"
@@ -7601,10 +7705,6 @@ msgstr "Zapisanie scanline w rzędzie %d się nie powiodło"
 #: ../plug-ins/file-tiff/file-tiff-save.c:949
 msgid "TIFF"
 msgstr "TIFF"
-
-#: ../plug-ins/file-tiff/file-tiff-save.c:975
-msgid "Compression"
-msgstr "Kompresja"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:979
 msgid "_None"
@@ -8788,10 +8888,6 @@ msgstr "Zapis pędzla"
 #: ../plug-ins/gimpressionist/brush.c:507
 msgid "_Brush"
 msgstr "_Pędzel"
-
-#: ../plug-ins/gimpressionist/brush.c:544
-msgid "Gamma:"
-msgstr "Gamma:"
 
 #: ../plug-ins/gimpressionist/brush.c:562
 msgid "Changes the gamma (brightness) of the selected brush"
@@ -12454,20 +12550,20 @@ msgstr "Brak zaznaczenia do konwersji"
 msgid "Selection to Path Advanced Settings"
 msgstr "Zaznaczenie na ścieżkę — ustawienia zaawansowane"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:98
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:116
 msgid "Align Threshold:"
 msgstr "Próg wyrównania:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:102
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:120
 msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr ""
 "Jeśli dwa punkty końcowe są bliższe niż podana wartość, to stają się równe."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:129
 msgid "Corner Always Threshold:"
 msgstr "Próg stałych rogów:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:115
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:133
 msgid ""
 "If the angle defined by a point and its predecessors and successors is "
 "smaller than this, it's a corner, even if it's within `corner_surround' "
@@ -12477,21 +12573,21 @@ msgstr ""
 "jest mniejszy niż ta wartość, to jest rogiem, nawet jeśli znajduje się "
 "w pikselach „corner_surround” punktu z mniejszym kątem."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:126
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:144
 msgid "Corner Surround:"
 msgstr "Otoczenie rogu:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:130
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:148
 msgid ""
 "Number of points to consider when determining if a point is a corner or not."
 msgstr ""
 "Liczba uwzględnianych punktów podczas ustalania, czy punkt jest rogiem."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:139
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:157
 msgid "Corner Threshold:"
 msgstr "Próg rogu:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:143
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:161
 msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
@@ -12499,11 +12595,11 @@ msgstr ""
 "Jeśli punkt, jego punkty poprzedzające i jego punkty następujące określają "
 "kąt mniejszy niż ta wartość, to jest rogiem."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:154
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:172
 msgid "Error Threshold:"
 msgstr "Próg błędów:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:158
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:176
 msgid ""
 "Amount of error at which a fitted spline is unacceptable.  If any pixel is "
 "further away than this from the fitted curve, we try again."
@@ -12512,19 +12608,19 @@ msgstr ""
 "Jeśli jakikolwiek piksel jest dalej od krzywej niż ta wartość, to "
 "podejmowana jest następna próba."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:169
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:187
 msgid "Filter Alternative Surround:"
 msgstr "Alternatywne otoczenie filtru:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:173
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "A second number of adjacent points to consider when filtering."
 msgstr "Druga liczba sąsiednich punktów uwzględnianych podczas filtrowania."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:183
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:201
 msgid "Filter Epsilon:"
 msgstr "Epsilon filtru:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:187
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:205
 msgid ""
 "If the angles between the vectors produced by filter_surround and "
 "filter_alternative_surround points differ by more than this, use the one "
@@ -12534,11 +12630,11 @@ msgstr ""
 "i „filter_alternative_surround” różnią się więcej niż ta wartość, to używany "
 "jest ten z „filter_alternative_surround”."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:198
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:216
 msgid "Filter Iteration Count:"
 msgstr "Liczba iteracji filtru:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:202
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:220
 msgid ""
 "Number of times to smooth original data points.  Increasing this number "
 "dramatically --- to 50 or so --- can produce vastly better results.  But if "
@@ -12550,21 +12646,21 @@ msgstr ""
 "punkt, który „powinien” być rogiem, nie zostanie odnaleziony, to krzywa "
 "zepsuje się w tym miejscu."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:214
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
 msgid "Filter Percent:"
 msgstr "Procent filtru:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:218
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:236
 msgid ""
 "To produce the new point, use the old point plus this times the neighbors."
 msgstr ""
 "Aby utworzyć nowy punkt, należy użyć poprzedniego plus tyle sąsiednich."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:227
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:245
 msgid "Filter Secondary Surround:"
 msgstr "Drugie otoczenie filtru:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:231
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:249
 msgid ""
 "Number of adjacent points to consider if `filter_surround' points defines a "
 "straight line."
@@ -12572,28 +12668,28 @@ msgstr ""
 "Liczba uwzględnionych sąsiednich punktów, jeśli punkty „filter_surround” "
 "określają prostą linię."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:241
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:259
 msgid "Filter Surround:"
 msgstr "Otoczenie filtru:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:245
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:263
 msgid "Number of adjacent points to consider when filtering."
 msgstr "Liczba uwzględnionych sąsiednich punktów podczas filtrowania."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:253
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:271
 msgid "Keep Knees"
 msgstr "Utrzymywanie kolan"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:258
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:276
 msgid ""
 "Says whether or not to remove ``knee'' points after finding the outline."
 msgstr "Czy usuwać punkty „kolan” po odnalezieniu obrysu."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:269
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:287
 msgid "Line Reversion Threshold:"
 msgstr "Próg odwrócenia linii:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:273
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:291
 msgid ""
 "If a spline is closer to a straight line than this, it remains a straight "
 "line, even if it would otherwise be changed back to a curve. This is "
@@ -12605,11 +12701,11 @@ msgstr ""
 "przywrócona do krzywej. Wartość jest ważona przez pierwiastek kwadratowy "
 "długości krzywej, aby krótsze krzywe były częściej przywracane."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:285
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
 msgid "Line Threshold:"
 msgstr "Próg linii:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:289
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:307
 msgid ""
 "How many pixels (on the average) a spline can diverge from the line "
 "determined by its endpoints before it is changed to a straight line."
@@ -12617,11 +12713,11 @@ msgstr ""
 "O ile pikseli (średnio) krzywa składana może się różnić od linii określonej "
 "przez swoje punkty końcowe, zanim zostanie przywrócona do prostej linii."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:299
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:317
 msgid "Reparametrize Improvement:"
 msgstr "Ulepszenie reparametryzacji:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:321
 msgid ""
 "If reparameterization doesn't improve the fit by this much percent, stop "
 "doing it. Amount of error at which it is pointless to reparameterize."
@@ -12629,11 +12725,11 @@ msgstr ""
 "Jeśli reparametryzacja nie ulepsza dopasowania o tyle procent, to zostaje "
 "zatrzymana. Liczba błędów, po których reparametryzacja nie ma sensu."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:313
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:331
 msgid "Reparametrize Threshold:"
 msgstr "Próg reparametryzacji:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:317
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:335
 msgid ""
 "Amount of error at which it is pointless to reparameterize.  This happens, "
 "for example, when we are trying to fit the outline of the outside of an `O' "
@@ -12647,11 +12743,11 @@ msgstr ""
 "dla ulepszenia iteracją Newtona-Raphsona. Możliwe, że lepiej byłoby wykryć "
 "przypadki, gdzie nie odnaleziono żadnych rogów."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:330
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:348
 msgid "Subdivide Search:"
 msgstr "Wyszukiwanie podpodziałów:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:334
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:352
 msgid ""
 "Percentage of the curve away from the worst point to look for a better place "
 "to subdivide."
@@ -12659,11 +12755,11 @@ msgstr ""
 "Procent krzywej od najgorszego punktu do wyszukiwania lepszego miejsca na "
 "podpodział."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:343
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
 msgid "Subdivide Surround:"
 msgstr "Otoczenie podpodziału:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:347
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:365
 msgid ""
 "Number of points to consider when deciding whether a given point is a better "
 "place to subdivide."
@@ -12671,11 +12767,11 @@ msgstr ""
 "Liczba uwzględnionych punktów podczas decydowania, czy dany punkt jest "
 "lepszym miejscem na podpodział."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:357
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
 msgid "Subdivide Threshold:"
 msgstr "Próg podpodziału:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:379
 msgid ""
 "How many pixels a point can diverge from a straight line and still be "
 "considered a better place to subdivide."
@@ -12683,11 +12779,11 @@ msgstr ""
 "O ile pikseli punkt może się różnić od prostej linii, aby nadal był lepszym "
 "miejscem do podpodziału."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:371
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:389
 msgid "Tangent Surround:"
 msgstr "Otoczenie stycznej:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:393
 msgid ""
 "Number of points to look at on either side of a point when computing the "
 "approximation to the tangent at that point."
