@@ -122,69 +122,6 @@ gimp_action_view_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gboolean
-idle_start_editing (GtkTreeView *tree_view)
-{
-  GtkTreePath *path;
-
-  path = g_object_get_data (G_OBJECT (tree_view), "start-editing-path");
-
-  if (path)
-    {
-      gtk_widget_grab_focus (GTK_WIDGET (tree_view));
-
-      gtk_tree_view_set_cursor (tree_view, path,
-                                gtk_tree_view_get_column (tree_view, 1),
-                                TRUE);
-
-      g_object_set_data (G_OBJECT (tree_view), "start-editing-path", NULL);
-    }
-
-  return FALSE;
-}
-
-static gboolean
-gimp_action_view_button_press (GtkWidget      *widget,
-                               GdkEventButton *event)
-{
-  GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
-  GtkTreePath *path;
-
-  if (event->window != gtk_tree_view_get_bin_window (tree_view))
-    return FALSE;
-
-  if (gtk_tree_view_get_path_at_pos (tree_view,
-                                     (gint) event->x,
-                                     (gint) event->y,
-                                     &path, NULL,
-                                     NULL, NULL))
-    {
-      GClosure *closure;
-      GSource  *source;
-
-      if (gtk_tree_path_get_depth (path) == 1)
-        {
-          gtk_tree_path_free (path);
-          return FALSE;
-        }
-
-      g_object_set_data_full (G_OBJECT (tree_view), "start-editing-path",
-                              path, (GDestroyNotify) gtk_tree_path_free);
-
-      g_signal_stop_emission_by_name (tree_view, "button-press-event");
-
-      closure = g_cclosure_new_object (G_CALLBACK (idle_start_editing),
-                                       G_OBJECT (tree_view));
-
-      source = g_idle_source_new ();
-      g_source_set_closure (source, closure);
-      g_source_attach (source, NULL);
-      g_source_unref (source);
-    }
-
-  return TRUE;
-}
-
 GtkWidget *
 gimp_action_view_new (GimpUIManager *manager,
                       const gchar   *select_action,
@@ -349,10 +286,6 @@ gimp_action_view_new (GimpUIManager *manager,
 
   if (show_shortcuts)
     {
-      g_signal_connect (view, "button-press-event",
-                        G_CALLBACK (gimp_action_view_button_press),
-                        NULL);
-
       g_signal_connect (accel_group, "accel-changed",
                         G_CALLBACK (gimp_action_view_accel_changed),
                         view);
