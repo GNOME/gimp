@@ -847,6 +847,9 @@ gimp_bucket_fill_tool_reset_line_art (GimpBucketFillTool    *tool,
     {
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+        drawable = NULL;
+
       if (options->sample_merged)
         gimp_line_art_set_input (line_art, GIMP_PICKABLE (image));
       else if (drawable)
