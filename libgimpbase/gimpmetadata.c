@@ -83,8 +83,14 @@ struct _GimpMetadataClass
 #define GIMP_METADATA_ERROR gimp_metadata_error_quark ()
 
 static GQuark   gimp_metadata_error_quark (void);
-static void     gimp_metadata_add         (GimpMetadata *src,
-                                           GimpMetadata *dest);
+static void     gimp_metadata_copy_tag    (GExiv2Metadata  *src,
+                                           GExiv2Metadata  *dest,
+                                           const gchar     *tag);
+static void     gimp_metadata_copy_tags   (GExiv2Metadata  *src,
+                                           GExiv2Metadata  *dest,
+                                           const gchar    **tags);
+static void     gimp_metadata_add         (GimpMetadata    *src,
+                                           GimpMetadata    *dest);
 
 
 static const gchar *tiff_tags[] =
@@ -650,7 +656,7 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
             }
           else
             {
-              gexiv2_metadata_set_tag_string (GEXIV2_METADATA (parse_data->metadata),
+              gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g2_metadata),
                                               parse_data->name,
                                               value);
               g_free (value);
@@ -1579,65 +1585,89 @@ gimp_metadata_error_quark (void)
 }
 
 static void
+gimp_metadata_copy_tag (GExiv2Metadata *src,
+                        GExiv2Metadata *dest,
+                        const gchar    *tag)
+{
+  gchar **values = gexiv2_metadata_get_tag_multiple (src, tag);
+
+  if (values)
+    {
+      gexiv2_metadata_set_tag_multiple (dest, tag, (const gchar **) values);
+      g_strfreev (values);
+    }
+  else
+    {
+      gchar *value = gexiv2_metadata_get_tag_string (src, tag);
+
+      if (value)
+        {
+          gexiv2_metadata_set_tag_string (dest, tag, value);
+          g_free (value);
+        }
+    }
+}
+
+static void
+gimp_metadata_copy_tags (GExiv2Metadata  *src,
+                         GExiv2Metadata  *dest,
+                         const gchar    **tags)
+{
+  gint i;
+
+  for (i = 0; tags[i] != NULL; i++)
+    {
+      /* don't copy the same tag multile times */
+      if (i > 0 && ! strcmp (tags[i], tags[i - 1]))
+        continue;
+
+      gimp_metadata_copy_tag (src, dest, tags[i]);
+    }
+ }
+
+static void
 gimp_metadata_add (GimpMetadata *src,
                    GimpMetadata *dest)
 {
   GExiv2Metadata *g2src  = GEXIV2_METADATA (src);
   GExiv2Metadata *g2dest = GEXIV2_METADATA (dest);
-  gchar *value;
-  gint   i;
 
   if (gexiv2_metadata_get_supports_exif (g2src) &&
       gexiv2_metadata_get_supports_exif (g2dest))
     {
-      gchar **exif_data = gexiv2_metadata_get_exif_tags (g2src);
+      gchar **exif_tags = gexiv2_metadata_get_exif_tags (g2src);
 
-      if (exif_data)
+      if (exif_tags)
         {
-          for (i = 0; exif_data[i] != NULL; i++)
-            {
-              value = gexiv2_metadata_get_tag_string (g2src, exif_data[i]);
-              gexiv2_metadata_set_tag_string (g2dest, exif_data[i], value);
-              g_free (value);
-            }
-
-          g_strfreev (exif_data);
+          gimp_metadata_copy_tags (g2src, g2dest,
+                                   (const gchar **) exif_tags);
+          g_strfreev (exif_tags);
         }
     }
 
   if (gexiv2_metadata_get_supports_xmp (g2src) &&
       gexiv2_metadata_get_supports_xmp (g2dest))
     {
-      gchar **xmp_data = gexiv2_metadata_get_xmp_tags (g2src);
+      gchar **xmp_tags = gexiv2_metadata_get_xmp_tags (g2src);
 
-      if (xmp_data)
+      if (xmp_tags)
         {
-          for (i = 0; xmp_data[i] != NULL; i++)
-            {
-              value = gexiv2_metadata_get_tag_string (g2src, xmp_data[i]);
-              gexiv2_metadata_set_tag_string (g2dest, xmp_data[i], value);
-              g_free (value);
-            }
-
-          g_strfreev (xmp_data);
+          gimp_metadata_copy_tags (g2src, g2dest,
+                                   (const gchar **) xmp_tags);
+          g_strfreev (xmp_tags);
         }
     }
 
   if (gexiv2_metadata_get_supports_iptc (g2src) &&
       gexiv2_metadata_get_supports_iptc (g2dest))
     {
-      gchar **iptc_data = gexiv2_metadata_get_iptc_tags (g2src);
+      gchar **iptc_tags = gexiv2_metadata_get_iptc_tags (g2src);
 
-      if (iptc_data)
+      if (iptc_tags)
         {
-          for (i = 0; iptc_data[i] != NULL; i++)
-            {
-              value = gexiv2_metadata_get_tag_string (g2src, iptc_data[i]);
-              gexiv2_metadata_set_tag_string (g2dest, iptc_data[i], value);
-              g_free (value);
-            }
-
-          g_strfreev (iptc_data);
+          gimp_metadata_copy_tags (g2src, g2dest,
+                                   (const gchar **) iptc_tags);
+          g_strfreev (iptc_tags);
         }
     }
 }
