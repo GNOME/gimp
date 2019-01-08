@@ -725,12 +725,21 @@ void
 gimp_display_empty (GimpDisplay *display)
 {
   GimpDisplayPrivate *private;
+  GList              *iter;
 
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   private = GIMP_DISPLAY_GET_PRIVATE (display);
 
   g_return_if_fail (GIMP_IS_IMAGE (private->image));
+
+  for (iter = display->gimp->context_list; iter; iter = g_list_next (iter))
+    {
+      GimpContext *context = iter->data;
+
+      if (gimp_context_get_display (context) == display)
+        gimp_context_set_image (context, NULL);
+    }
 
   gimp_display_set_image (display, NULL);
 
