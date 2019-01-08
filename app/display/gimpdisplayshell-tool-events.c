@@ -67,7 +67,9 @@
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 #include "gimpmotionbuffer.h"
+#include "gimpstatusbar.h"
 
+#include "gimp-intl.h"
 #include "gimp-log.h"
 
 
@@ -1241,9 +1243,7 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
               }
 
             if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK)
-              /* We reset the picked layer only when hitting the Alt
-               * key.
-               */
+              /* Make sure the picked layer is reset. */
               shell->picked_layer = NULL;
 
             switch (kevent->keyval)
@@ -1326,6 +1326,17 @@ gimp_display_shell_canvas_tool_events_internal (GtkWidget         *canvas,
         GimpTool    *active_tool;
 
         active_tool = tool_manager_get_active (gimp);
+
+        if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK &&
+            shell->picked_layer)
+          {
+            GimpStatusbar *statusbar;
+
+            statusbar = gimp_display_shell_get_statusbar (shell);
+            gimp_statusbar_pop_temp (statusbar);
+
+            shell->picked_layer = NULL;
+          }
 
         if ((state & GDK_BUTTON1_MASK)      &&
             (! shell->space_release_pending ||
@@ -1581,7 +1592,17 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
       if (layer && ! gimp_image_get_floating_selection (image))
         {
           if (layer != gimp_image_get_active_layer (image))
-            gimp_image_set_active_layer (image, layer);
+            {
+              GimpStatusbar *statusbar;
+
+              gimp_image_set_active_layer (image, layer);
+
+              statusbar = gimp_display_shell_get_statusbar (shell);
+              gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                                        GIMP_ICON_LAYER,
+                                        _("Layer picked: '%s'"),
+                                        gimp_object_get_name (layer));
+            }
           shell->picked_layer = layer;
         }
     }
