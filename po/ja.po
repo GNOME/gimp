@@ -10252,7 +10252,7 @@ msgstr "画像を中央に表示"
 #: ../app/actions/view-actions.c:102
 msgctxt "view-action"
 msgid "Scroll the image so that it is centered in the window"
-msgstr "ウィンドウの中央に画像が表示されるようにスクロールします"
+msgstr "ウィンドウ内の中央に画像が表示されるようにスクロールします"
 
 #: ../app/actions/view-actions.c:107
 msgctxt "view-action"
