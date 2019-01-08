@@ -39,7 +39,7 @@ gimp_device_info_get_event_coords (GimpDeviceInfo *info,
 {
   gdouble x;
 
-  if (gdk_event_get_axis (event, GDK_AXIS_X, &x))
+  if (event && gdk_event_get_axis (event, GDK_AXIS_X, &x))
     {
       *coords = default_coords;
 
