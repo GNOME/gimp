@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-04 18:45+0000\n"
+"POT-Creation-Date: 2019-01-06 18:25+0000\n"
 "PO-Revision-Date: 2019-01-05 06:20+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -5021,9 +5021,6 @@ msgid "Filte_rs"
 msgstr "フィルター(_R)"
 
 #: ../app/actions/filters-actions.c:60
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "Recently Used"
 msgctxt "filters-action"
 msgid "Recently Used"
 msgstr "最近使ったフィルター"
@@ -5136,7 +5133,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:114
 msgctxt "filters-action"
 msgid "_Linear Invert"
-msgstr ""
+msgstr "色の反転(_L)"
 
 # 直訳は「反転(_I)」だが、他にも「反転」が使われている箇所があるので機能を明確にするために「階調を」を補足した。(GIMP2.2 改良版日本語ローカライズより)
 #: ../app/actions/filters-actions.c:119
@@ -5195,8 +5192,6 @@ msgid "Apply _Lens..."
 msgstr "ディスプレイフィルター(_F)..."
 
 #: ../app/actions/filters-actions.c:187
-#, fuzzy
-#| msgid "B_rightness-Contrast..."
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "明るさ-コントラスト(_R)..."
@@ -5270,11 +5265,9 @@ msgid "Color T_emperature..."
 msgstr "色温度(_E)..."
 
 #: ../app/actions/filters-actions.c:247
-#, fuzzy
-#| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
-msgstr "カラーバランス(_B)..."
+msgstr "色を透明度に(_A)..."
 
 #: ../app/actions/filters-actions.c:252
 msgctxt "filters-action"
@@ -8375,10 +8368,8 @@ msgstr "全フィルターのリセット"
 #: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:918
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
-#, fuzzy
-#| msgid "_Reset Curve"
 msgid "_Reset"
-msgstr "カーブのリセット(_R)"
+msgstr "リセット(_R)"
 
 #: ../app/actions/plug-in-commands.c:193
 msgid "Do you really want to reset all filters to default values?"
@@ -8868,11 +8859,8 @@ msgstr "テキストファイル (UTF-8) を開く"
 #: ../app/dialogs/vectors-import-dialog.c:89
 #: ../app/widgets/gimpiconpicker.c:485 ../app/widgets/gimpopendialog.c:69
 #: ../app/widgets/gimpsettingsbox.c:732
-#, fuzzy
-#| msgctxt "text-editor-action"
-#| msgid "Open"
 msgid "_Open"
-msgstr "テキストを開く"
+msgstr "開く(_O)"
 
 #: ../app/actions/text-editor-commands.c:139
 #: ../app/actions/text-tool-commands.c:209 ../app/config/gimpconfig-file.c:71
@@ -10262,12 +10250,9 @@ msgid "Center Image in Window"
 msgstr "画像を中央に表示"
 
 #: ../app/actions/view-actions.c:102
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Crop the image to the extents of the selection"
 msgctxt "view-action"
 msgid "Scroll the image so that it is centered in the window"
-msgstr "選択範囲の大きさで画像を切り抜きます"
+msgstr "ウィンドウの中央に画像が表示されるようにスクロールします"
 
 #: ../app/actions/view-actions.c:107
 msgctxt "view-action"
@@ -10290,20 +10275,14 @@ msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "ウィンドウ内に画像が最大限表示されるように表示倍率を調整します"
 
 #: ../app/actions/view-actions.c:119
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_Crop to Selection"
 msgctxt "view-action"
 msgid "Zoom to _Selection"
-msgstr "選択範囲で切り抜き(_C)"
+msgstr "選択範囲を拡大表示(_S)"
 
 #: ../app/actions/view-actions.c:120
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Adjust the zoom ratio so that the entire window is used"
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
-msgstr "ウィンドウ内に画像が最大限表示されるように表示倍率を調整します"
+msgstr "ウィンドウ内に選択範囲が最大限表示されるように表示倍率を調整します"
 
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
@@ -10316,20 +10295,14 @@ msgid "Restore the previous zoom level"
 msgstr "前回の表示倍率に戻します"
 
 #: ../app/actions/view-actions.c:131
-#, fuzzy
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "表示倍率を指定します"
+msgstr "その他の回転角度(_R)..."
 
 #: ../app/actions/view-actions.c:132
-#, fuzzy
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
-msgstr "表示倍率を指定します"
+msgstr "回転角度を指定します"
 
 #: ../app/actions/view-actions.c:137
 msgctxt "view-action"
@@ -10775,12 +10748,9 @@ msgid "Flip Horizontally"
 msgstr "水平反転"
 
 #: ../app/actions/view-actions.c:467
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Flip image horizontally"
 msgctxt "view-action"
 msgid "Flip the view horizontally"
-msgstr "画像の左右を反転します (すべてのレイヤーが反転します)"
+msgstr "表示を左右反転します (すべてのレイヤーが反転します)"
 
 #: ../app/actions/view-actions.c:473
 msgctxt "view-action"
@@ -10788,12 +10758,9 @@ msgid "Flip Vertically"
 msgstr "垂直反転"
 
 #: ../app/actions/view-actions.c:474
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Flip image vertically"
 msgctxt "view-action"
 msgid "Flip the view vertically"
-msgstr "画像の上下を反転します (すべてのレイヤーが反転します)"
+msgstr "表示を上下反転します (すべてのレイヤーが反転します)"
 
 #: ../app/actions/view-actions.c:488
 msgctxt "view-action"
@@ -10801,11 +10768,9 @@ msgid "_Reset Flip & Rotate"
 msgstr "反転と回転をリセット(_R)"
 
 #: ../app/actions/view-actions.c:490
-#, fuzzy
-#| msgid "Reset angle to zero"
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
-msgstr "角度を 0 度に戻します"
+msgstr "反転した状態を元に戻し、回転した角度も 0 度に戻します"
 
 #: ../app/actions/view-actions.c:498
 msgctxt "view-action"
@@ -10969,9 +10934,6 @@ msgid "Use the dark check color"
 msgstr "キャンバス周りの色に暗い市松模様を使います"
 
 #: ../app/actions/view-actions.c:603
-#, fuzzy
-#| msgctxt "view-padding-color"
-#| msgid "Select _Custom Color..."
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "その他の色(_C)..."
@@ -11105,23 +11067,22 @@ msgstr "表示倍率 (%s)(_Z)"
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:1136
 msgid "(H+V) "
-msgstr ""
+msgstr " (水平+垂直) "
 
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:1141
 msgid "(H) "
-msgstr ""
+msgstr " (水平) "
 
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:1146
 msgid "(V) "
-msgstr ""
+msgstr " (垂直) "
 
 #: ../app/actions/view-actions.c:1153
-#, fuzzy, c-format
-#| msgid "_Rotate"
+#, c-format
 msgid "_Flip %s& Rotate (%d°)"
-msgstr "回転(_R)"
+msgstr "反転%sと回転 (%d°)"
 
 #: ../app/actions/view-commands.c:1016
 msgid "Set Canvas Padding Color"
@@ -18051,10 +18012,8 @@ msgid "Show _unavailable actions"
 msgstr "選択範囲の境界線(_E)"
 
 #: ../app/dialogs/preferences-dialog.c:2585
-#, fuzzy
-#| msgid "Maximum _new image size:"
 msgid "Maximum History Size:"
-msgstr "新しい画像の最大サイズ(_N):"
+msgstr "履歴の最大サイズ:"
 
 #: ../app/dialogs/preferences-dialog.c:2589
 #, fuzzy
@@ -21547,8 +21506,7 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:529
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
-msgstr ""
-"アイテム '%s' (ID: %d) は、アイテム '%s' (ID: %d) の原型ではありません"
+msgstr "アイテム '%s' (ID: %d) は、アイテム '%s' (ID: %d) の原型ではありません"
 
 #: ../app/pdb/gimppdb-utils.c:553
 #, c-format
@@ -21563,16 +21521,14 @@ msgstr "アイテム '%s' (ID: %d) を誤った画像に加えようとしてい
 #: ../app/pdb/gimppdb-utils.c:588
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
-msgstr ""
-"アイテム '%s' (ID: %d) は保護されているので、変更することができません"
+msgstr "アイテム '%s' (ID: %d) は保護されているので、変更することができません"
 
 #: ../app/pdb/gimppdb-utils.c:598
 #, fuzzy, c-format
 #| msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
-msgstr ""
-"アイテム '%s' (ID: %d) は保護されているので、変更することができません"
+msgstr "アイテム '%s' (ID: %d) は保護されているので、変更することができません"
 
 #: ../app/pdb/gimppdb-utils.c:618
 #, c-format
@@ -21587,8 +21543,7 @@ msgstr "アイテム '%s' (ID: %d) はグループアイテムなので変更で
 #: ../app/pdb/gimppdb-utils.c:659
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
-msgstr ""
-"レイヤー '%s' (ID: %d) は、テキストレイヤーではないので使用されません"
+msgstr "レイヤー '%s' (ID: %d) は、テキストレイヤーではないので使用されません"
 
 #: ../app/pdb/gimppdb-utils.c:700
 #, c-format
@@ -21890,12 +21845,9 @@ msgid "Channel Mixer"
 msgstr "チャンネルのメニュー"
 
 #: ../app/pdb/plug-in-compat-cmds.c:984
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Add Color to Colormap"
 msgctxt "undo-type"
 msgid "Color to Alpha"
-msgstr "カラーマップに色を追加"
+msgstr "色を透明度に"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1030
 #, c-format
@@ -27094,135 +27046,135 @@ msgstr ""
 msgid "_Restart GIMP"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:453 ../app/widgets/gimpdashboard.c:505
+#: ../app/widgets/gimpdashboard.c:452 ../app/widgets/gimpdashboard.c:504
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:454
+#: ../app/widgets/gimpdashboard.c:453
 #, fuzzy
 #| msgid "Tile cache _size:"
 msgid "Tile cache occupied size"
 msgstr "タイルキャッシュサイズ(_S):"
 
-#: ../app/widgets/gimpdashboard.c:463
+#: ../app/widgets/gimpdashboard.c:462
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:464
+#: ../app/widgets/gimpdashboard.c:463
 msgid "Maximal tile cache occupied size"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:473 ../app/widgets/gimpdashboard.c:525
+#: ../app/widgets/gimpdashboard.c:472 ../app/widgets/gimpdashboard.c:524
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:474
+#: ../app/widgets/gimpdashboard.c:473
 #, fuzzy
 #| msgid "Tile cache _size:"
 msgid "Tile cache size limit"
 msgstr "タイルキャッシュサイズ(_S):"
 
-#: ../app/widgets/gimpdashboard.c:482 ../app/widgets/gimpdashboard.c:608
+#: ../app/widgets/gimpdashboard.c:481 ../app/widgets/gimpdashboard.c:607
 #, fuzzy
 #| msgid "Image Properties"
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "画像の情報"
 
-#: ../app/widgets/gimpdashboard.c:483
+#: ../app/widgets/gimpdashboard.c:482
 msgid "Tile cache compression ratio"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:492
+#: ../app/widgets/gimpdashboard.c:491
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:493
+#: ../app/widgets/gimpdashboard.c:492
 #, fuzzy
 #| msgid "Tile cache _size:"
 msgid "Tile cache hit/miss ratio"
 msgstr "タイルキャッシュサイズ(_S):"
 
-#: ../app/widgets/gimpdashboard.c:506
+#: ../app/widgets/gimpdashboard.c:505
 #, fuzzy
 #| msgid "Tile cache _size:"
 msgid "Swap file occupied size"
 msgstr "タイルキャッシュサイズ(_S):"
 
-#: ../app/widgets/gimpdashboard.c:515 ../app/widgets/gimpdashboard.c:672
+#: ../app/widgets/gimpdashboard.c:514 ../app/widgets/gimpdashboard.c:671
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "サイズ"
 
-#: ../app/widgets/gimpdashboard.c:516
+#: ../app/widgets/gimpdashboard.c:515
 #, fuzzy
 #| msgid "Show image size"
 msgid "Swap file size"
 msgstr "キャンバスサイズを表示"
 
-#: ../app/widgets/gimpdashboard.c:526
+#: ../app/widgets/gimpdashboard.c:525
 msgid "Swap file size limit"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:533
+#: ../app/widgets/gimpdashboard.c:532
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:534
+#: ../app/widgets/gimpdashboard.c:533
 msgid "Size of data queued for writing to the swap"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:543
+#: ../app/widgets/gimpdashboard.c:542
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:544
+#: ../app/widgets/gimpdashboard.c:543
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:553
+#: ../app/widgets/gimpdashboard.c:552
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:554
+#: ../app/widgets/gimpdashboard.c:553
 msgid "Whether the swap queue is full"
 msgstr ""
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:565
+#: ../app/widgets/gimpdashboard.c:564
 #, fuzzy
 #| msgid "Ready"
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "準備済み"
 
-#: ../app/widgets/gimpdashboard.c:566
+#: ../app/widgets/gimpdashboard.c:565
 msgid "Total amount of data read from the swap"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:575
+#: ../app/widgets/gimpdashboard.c:574
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:576
+#: ../app/widgets/gimpdashboard.c:575
 msgid "The rate at which data is read from the swap"
 msgstr ""
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:588
+#: ../app/widgets/gimpdashboard.c:587
 #, fuzzy
 #| msgctxt "dynamics-output-type"
 #| msgid "Jitter"
@@ -27230,28 +27182,28 @@ msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "散布"
 
-#: ../app/widgets/gimpdashboard.c:589
+#: ../app/widgets/gimpdashboard.c:588
 msgid "Total amount of data written to the swap"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:598
+#: ../app/widgets/gimpdashboard.c:597
 #, fuzzy
 #| msgid "Strikethrough"
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "取り消し線"
 
-#: ../app/widgets/gimpdashboard.c:599
+#: ../app/widgets/gimpdashboard.c:598
 msgid "The rate at which data is written to the swap"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:609
+#: ../app/widgets/gimpdashboard.c:608
 #, fuzzy
 #| msgid "Image Properties"
 msgid "Swap compression ratio"
 msgstr "画像の情報"
 
-#: ../app/widgets/gimpdashboard.c:622
+#: ../app/widgets/gimpdashboard.c:621
 #, fuzzy
 #| msgctxt "message-severity"
 #| msgid "Message"
@@ -27259,132 +27211,132 @@ msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "メッセージ"
 
-#: ../app/widgets/gimpdashboard.c:623
+#: ../app/widgets/gimpdashboard.c:622
 msgid "Total CPU usage"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:631 ../app/widgets/gimpdashboard.c:640
+#: ../app/widgets/gimpdashboard.c:630 ../app/widgets/gimpdashboard.c:639
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "アクティブ"
 
-#: ../app/widgets/gimpdashboard.c:632
+#: ../app/widgets/gimpdashboard.c:631
 #, fuzzy
 #| msgid "Set layer or path as active"
 msgid "Whether the CPU is active"
 msgstr "つかんだレイヤーやパスをアクティブにする"
 
-#: ../app/widgets/gimpdashboard.c:641
+#: ../app/widgets/gimpdashboard.c:640
 msgid "Total amount of time the CPU has been active"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:654
+#: ../app/widgets/gimpdashboard.c:653
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:655
+#: ../app/widgets/gimpdashboard.c:654
 msgid "Amount of memory used by the process"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:663
+#: ../app/widgets/gimpdashboard.c:662
 #, fuzzy
 #| msgid "Available types:"
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "利用可能な種類:"
 
-#: ../app/widgets/gimpdashboard.c:664
+#: ../app/widgets/gimpdashboard.c:663
 msgid "Amount of available physical memory"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:673
+#: ../app/widgets/gimpdashboard.c:672
 msgid "Physical memory size"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:684
+#: ../app/widgets/gimpdashboard.c:683
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:685
+#: ../app/widgets/gimpdashboard.c:684
 msgid "Total size of processed mipmapped data"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:693
+#: ../app/widgets/gimpdashboard.c:692
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:694
+#: ../app/widgets/gimpdashboard.c:693
 msgid "Number of ongoing asynchronous operations"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:702
+#: ../app/widgets/gimpdashboard.c:701
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:703
+#: ../app/widgets/gimpdashboard.c:702
 msgid "Total size of scratch memory"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:715
+#: ../app/widgets/gimpdashboard.c:714
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "キャッシュ"
 
-#: ../app/widgets/gimpdashboard.c:716
+#: ../app/widgets/gimpdashboard.c:715
 msgid "In-memory tile cache"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:752
+#: ../app/widgets/gimpdashboard.c:751
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:753
+#: ../app/widgets/gimpdashboard.c:752
 msgid "On-disk tile swap"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:817
+#: ../app/widgets/gimpdashboard.c:816
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:818
+#: ../app/widgets/gimpdashboard.c:817
 msgid "CPU usage"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:853
+#: ../app/widgets/gimpdashboard.c:852
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "メモリー"
 
-#: ../app/widgets/gimpdashboard.c:854
+#: ../app/widgets/gimpdashboard.c:853
 #, fuzzy
 #| msgctxt "message-severity"
 #| msgid "Message"
 msgid "Memory usage"
 msgstr "メッセージ"
 
-#: ../app/widgets/gimpdashboard.c:862
+#: ../app/widgets/gimpdashboard.c:861
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "キャッシュ"
 
-#: ../app/widgets/gimpdashboard.c:892
+#: ../app/widgets/gimpdashboard.c:891
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:893
+#: ../app/widgets/gimpdashboard.c:892
 #, fuzzy
 #| msgid "Discard Text Information"
 msgid "Miscellaneous information"
 msgstr "テキストレイヤーから文字情報を破棄する"
 
-#: ../app/widgets/gimpdashboard.c:1074
+#: ../app/widgets/gimpdashboard.c:1073
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Select All"
@@ -27392,17 +27344,17 @@ msgid "Select fields"
 msgstr "すべて選択"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3162
+#: ../app/widgets/gimpdashboard.c:3161
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "N/A"
 
-#: ../app/widgets/gimpdashboard.c:3171 ../app/widgets/gimpdashboard.c:4069
+#: ../app/widgets/gimpdashboard.c:3170 ../app/widgets/gimpdashboard.c:4068
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "はい"
 
-#: ../app/widgets/gimpdashboard.c:3172 ../app/widgets/gimpdashboard.c:4070
+#: ../app/widgets/gimpdashboard.c:3171 ../app/widgets/gimpdashboard.c:4069
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "いいえ"
@@ -27411,7 +27363,7 @@ msgstr "いいえ"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3256
+#: ../app/widgets/gimpdashboard.c:3255
 #, c-format
 msgid "%g/s"
 msgstr ""
@@ -27422,16 +27374,16 @@ msgstr ""
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4059
+#: ../app/widgets/gimpdashboard.c:4058
 #, c-format
 msgid "%s/s"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:4137
+#: ../app/widgets/gimpdashboard.c:4136
 msgid "N/A"
 msgstr "N/A"
 
-#: ../app/widgets/gimpdashboard.c:4466
+#: ../app/widgets/gimpdashboard.c:4465
 msgid "Resolving symbol information..."
 msgstr ""
 
@@ -28367,10 +28319,8 @@ msgid "Choose A Color Profile"
 msgstr "カラープロファイル"
 
 #: ../app/widgets/gimptemplateeditor.c:442
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Co_lor profile:"
-msgstr "カラープロファイル"
+msgstr "カラープロファイル(_L):"
 
 #: ../app/widgets/gimptemplateeditor.c:459
 msgid "Comme_nt:"
