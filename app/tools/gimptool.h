@@ -60,6 +60,12 @@ struct _GimpTool
   GdkModifierType  button_press_state;
   GdkModifierType  active_modifier_state;
 
+  /*  private state for synthesizing button_release() events
+   */
+  GimpCoords       last_pointer_coords;
+  guint32          last_pointer_time;
+  GdkModifierType  last_pointer_state;
+
   /*  private state for click detection
    */
   gboolean         in_click_distance;

@@ -138,6 +138,7 @@ static void            gimp_tool_options_notify      (GimpToolOptions  *options,
                                                       const GParamSpec *pspec,
                                                       GimpTool         *tool);
 static void            gimp_tool_clear_status        (GimpTool         *tool);
+static void            gimp_tool_release             (GimpTool         *tool);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpTool, gimp_tool, GIMP_TYPE_OBJECT,
@@ -649,6 +650,8 @@ gimp_tool_control (GimpTool       *tool,
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
+  g_object_ref (tool);
+
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
@@ -674,6 +677,8 @@ gimp_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
+      gimp_tool_release (tool);
+
       GIMP_TOOL_GET_CLASS (tool)->control (tool, action, display);
 
       /*  always HALT after COMMIT here and not in each tool individually;
@@ -685,6 +690,8 @@ gimp_tool_control (GimpTool       *tool,
 
       /* pass through */
     case GIMP_TOOL_ACTION_HALT:
+      gimp_tool_release (tool);
+
       GIMP_TOOL_GET_CLASS (tool)->control (tool, action, display);
 
       if (gimp_tool_control_is_active (tool->control))
@@ -693,6 +700,8 @@ gimp_tool_control (GimpTool       *tool,
       gimp_tool_clear_status (tool);
       break;
     }
+
+  g_object_unref (tool);
 }
 
 void
@@ -715,6 +724,10 @@ gimp_tool_button_press (GimpTool            *tool,
     {
       tool->button_press_state    = state;
       tool->active_modifier_state = state;
+
+      tool->last_pointer_coords = *coords;
+      tool->last_pointer_time   = time - g_get_monotonic_time () / 1000;
+      tool->last_pointer_state  = state;
 
       if (gimp_tool_control_get_wants_click (tool->control))
         {
@@ -789,6 +802,8 @@ gimp_tool_button_release (GimpTool         *tool,
 
   g_object_ref (tool);
 
+  tool->last_pointer_state = 0;
+
   my_coords = *coords;
 
   if (state & GDK_BUTTON3_MASK)
@@ -854,6 +869,10 @@ gimp_tool_motion (GimpTool         *tool,
   g_return_if_fail (gimp_tool_control_is_active (tool->control) == TRUE);
 
   tool->got_motion_event = TRUE;
+
+  tool->last_pointer_coords = *coords;
+  tool->last_pointer_time   = time - g_get_monotonic_time () / 1000;
+  tool->last_pointer_state  = state;
 
   GIMP_TOOL_GET_CLASS (tool)->motion (tool, coords, time, state, display);
 }
@@ -1475,4 +1494,19 @@ gimp_tool_clear_status (GimpTool *tool)
 
   while (tool->status_displays)
     gimp_tool_pop_status (tool, tool->status_displays->data);
+}
+
+static void
+gimp_tool_release (GimpTool *tool)
+{
+  if (tool->last_pointer_state &&
+      gimp_tool_control_is_active (tool->control))
+    {
+      gimp_tool_button_release (
+        tool,
+        &tool->last_pointer_coords,
+        tool->last_pointer_time + g_get_monotonic_time () / 1000,
+        tool->last_pointer_state,
+        tool->display);
+    }
 }
