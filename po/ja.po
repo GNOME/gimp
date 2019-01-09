@@ -21336,7 +21336,7 @@ msgstr "'%s' は編集可能なブラシではありません"
 #: ../app/pdb/gimppdb-utils.c:108
 #, c-format
 msgid "Brush '%s' is not renamable"
-msgstr "'%s' は名前の変更が可能ななブラシではありません"
+msgstr "'%s' は名前の変更が可能なブラシではありません"
 
 #: ../app/pdb/gimppdb-utils.c:134
 #, c-format
@@ -21379,7 +21379,7 @@ msgstr "'%s' は編集可能な MyPaint ブラシではありません"
 #: ../app/pdb/gimppdb-utils.c:220
 #, c-format
 msgid "MyPaint brush '%s' is not renamable"
-msgstr "'%s' は名前の変更が可能なな MyPaint ブラシではありません"
+msgstr "'%s' は名前の変更が可能な MyPaint ブラシではありません"
 
 #: ../app/pdb/gimppdb-utils.c:240
 msgid "Invalid empty pattern name"
@@ -21407,7 +21407,7 @@ msgstr "'%s' は編集可能なグラデーションではありません"
 #: ../app/pdb/gimppdb-utils.c:291
 #, c-format
 msgid "Gradient '%s' is not renamable"
-msgstr "'%s' は名前の変更が可能ななグラデーションではありません"
+msgstr "'%s' は名前の変更が可能なグラデーションではありません"
 
 #: ../app/pdb/gimppdb-utils.c:312
 msgid "Invalid empty palette name"
@@ -21426,7 +21426,7 @@ msgstr "'%s' は編集可能なパレットではありません"
 #: ../app/pdb/gimppdb-utils.c:334
 #, c-format
 msgid "Palette '%s' is not renamable"
-msgstr "'%s' は名前の変更が可能ななパレットではありません"
+msgstr "'%s' は名前の変更が可能なパレットではありません"
 
 #: ../app/pdb/gimppdb-utils.c:354
 msgid "Invalid empty font name"
