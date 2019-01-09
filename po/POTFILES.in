@@ -257,6 +257,7 @@ app/display/gimpdisplayshell-layer-select.c
 app/display/gimpdisplayshell-rotate-dialog.c
 app/display/gimpdisplayshell-scale-dialog.c
 app/display/gimpdisplayshell-title.c
+app/display/gimpdisplayshell-tool-events.c
 app/display/gimpdisplayshell-utils.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
