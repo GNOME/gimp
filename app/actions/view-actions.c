@@ -1120,16 +1120,19 @@ view_actions_set_rotate (GimpActionGroup  *group,
       shell->flip_vertically)
     {
       /* please preserve the trailing space */
+      /* H: Horizontal, V: Vertical */
       flip = _("(H+V) ");
     }
   else if (shell->flip_horizontally)
     {
       /* please preserve the trailing space */
+      /* H: Horizontal */
       flip = _("(H) ");
     }
   else if (shell->flip_vertically)
     {
       /* please preserve the trailing space */
+      /* V: Vertical */
       flip = _("(V) ");
     }
   else
