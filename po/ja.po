@@ -8550,7 +8550,7 @@ msgstr "選択範囲の境界線で塗りつぶします"
 #: ../app/actions/select-actions.c:123
 msgctxt "select-action"
 msgid "_Fill Selection Outline"
-msgstr "選択範囲の境界線で塗りつぶす"
+msgstr "選択範囲の境界線で塗りつぶす(_F)"
 
 #: ../app/actions/select-actions.c:124
 #, fuzzy
