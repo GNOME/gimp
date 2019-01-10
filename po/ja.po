@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-09 18:53+0000\n"
-"PO-Revision-Date: 2019-01-05 06:20+0900\n"
+"POT-Creation-Date: 2019-01-10 13:53+0000\n"
+"PO-Revision-Date: 2019-01-11 02:15+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -5124,7 +5124,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:114
 msgctxt "filters-action"
 msgid "_Linear Invert"
-msgstr "色の反転(_L)"
+msgstr "階調の反転 (リニア)(_L)"
 
 # 直訳は「反転(_I)」だが、他にも「反転」が使われている箇所があるので機能を明確にするために「階調を」を補足した。(GIMP2.2 改良版日本語ローカライズより)
 #: ../app/actions/filters-actions.c:119
@@ -5766,11 +5766,9 @@ msgid "_Threshold..."
 msgstr "しきい値(_T)..."
 
 #: ../app/actions/filters-actions.c:662
-#, fuzzy
-#| msgid "_Threshold..."
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
-msgstr "しきい値(_T)..."
+msgstr "アルファチャンネルのしきい値(_T)..."
 
 #: ../app/actions/filters-actions.c:667
 #, fuzzy
@@ -7965,7 +7963,8 @@ msgstr "何も選択されてないので切り抜けません。"
 
 #: ../app/actions/layers-commands.c:888
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr "アクティブレイヤーはすでにコンテンツで切り抜きされているので切り抜けません。"
+msgstr ""
+"アクティブレイヤーはすでにコンテンツで切り抜きされているので切り抜けません。"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -8539,28 +8538,19 @@ msgid "Save the selection to a channel"
 msgstr "選択範囲をチャンネルに保存します"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the selection outline"
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
-msgstr "選択範囲の境界線を表示します"
+msgstr "選択範囲の境界線で塗りつぶす(_F)..."
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the selection outline"
 msgctxt "select-action"
 msgid "Fill the selection outline"
-msgstr "選択範囲の境界線を表示します"
+msgstr "選択範囲の境界線で塗りつぶします"
 
 #: ../app/actions/select-actions.c:123
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the selection outline"
 msgctxt "select-action"
 msgid "_Fill Selection Outline"
-msgstr "選択範囲の境界線を表示します"
+msgstr "選択範囲の境界線で塗りつぶす"
 
 #: ../app/actions/select-actions.c:124
 #, fuzzy
@@ -10270,7 +10260,7 @@ msgstr "前回の表示倍率に戻します"
 #: ../app/actions/view-actions.c:130
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "その他の回転角度(_R)..."
+msgstr "他の回転角度(_R)..."
 
 #: ../app/actions/view-actions.c:131
 msgctxt "view-action"
@@ -11038,21 +11028,24 @@ msgid "_Zoom (%s)"
 msgstr "表示倍率 (%s)(_Z)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1123
+#. H: Horizontal, V: Vertical
+#: ../app/actions/view-actions.c:1124
 msgid "(H+V) "
 msgstr " (水平+垂直) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1128
+#. H: Horizontal
+#: ../app/actions/view-actions.c:1130
 msgid "(H) "
 msgstr " (水平) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1133
+#. V: Vertical
+#: ../app/actions/view-actions.c:1136
 msgid "(V) "
 msgstr " (垂直) "
 
-#: ../app/actions/view-actions.c:1140
+#: ../app/actions/view-actions.c:1143
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "反転%sと回転 (%d°)"
@@ -19423,7 +19416,7 @@ msgstr "直線: "
 
 #: ../app/display/gimptoolline.c:1553
 msgid "Click-Drag to move the endpoint"
-msgstr "クリック-ドラッグ: 終端まで移動します"
+msgstr "クリック-ドラッグ: 終端点を移動します"
 
 #: ../app/display/gimptoolline.c:1566
 #, fuzzy
@@ -22150,11 +22143,9 @@ msgstr ""
 
 # 「閾（しきい）」の漢字が読めない、またはディスプレイ上で識別できない人がいる可能性があるので、「しきい値」とした
 #: ../app/pdb/plug-in-compat-cmds.c:3691
-#, fuzzy
-#| msgid "Threshold"
 msgctxt "undo-type"
 msgid "Threshold Alpha"
-msgstr "しきい値"
+msgstr "アルファチャンネルのしきい値"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3737
 msgctxt "undo-type"
@@ -23767,10 +23758,8 @@ msgid "_Preview"
 msgstr "プレビュー(_P)"
 
 #: ../app/tools/gimpfilteroptions.c:78
-#, fuzzy
-#| msgid "Split"
 msgid "Split _view"
-msgstr "分割"
+msgstr "分割表示(_V)"
 
 #: ../app/tools/gimpfilteroptions.c:109
 #, fuzzy
@@ -24206,7 +24195,7 @@ msgstr "グラデーション(_D)"
 
 #: ../app/tools/gimpgradienttool.c:218
 msgid "Click-Drag to draw a gradient"
-msgstr "クリック-ドラッグ: グラデーションを描きます"
+msgstr "クリック-ドラッグ: グラデーションを描画します"
 
 #: ../app/tools/gimpgradienttool.c:271
 msgid "No gradient available for use with this tool."
