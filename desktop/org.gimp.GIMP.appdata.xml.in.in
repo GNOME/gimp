@@ -72,6 +72,70 @@
   </provides>
 
   <releases>
+    <release version="2.10.10" date="TODO">
+      <description>
+        <_p>
+          GIMP 2.10.10 is quite a big update with many new features and
+          bug fixes. Notable improvements include:
+        </_p>
+        <ul>
+          <_li>
+          Bucket Fill tool: new "Fill by line art detection" for not
+          perfectly closed line art zones
+          </_li>
+          <_li>
+          Bucket Fill tool can now quickly color-pick with Ctrl+click
+          </_li>
+          <_li>
+          Bucket Fill tool allows holding the mouse when filling
+          "similar colors" and "by line art detection"
+          </_li>
+          <_li>
+          Scale tool scales around center even when using numeric input
+          </_li>
+          <_li>
+          Unified Transform tool now defaults to preserving aspect ratio
+          when scaling up or down
+          </_li>
+          <_li>
+          New generic canvas modifier 'Alt + middle click' to pick
+          layers
+          </_li>
+          <_li>
+          Failure to edit locked layers will blink to shift attention to
+          the cause of the error
+          </_li>
+          <_li>
+          New on-canvas GUI (simple lines) for circular, linear, and
+          zoom motion blur
+          </_li>
+          <_li>
+          Several optimizations including faster layer group rendering
+          </_li>
+          <_li>
+          Swap and cache files are not saved in the configuration
+          directory anymore
+          </_li>
+          <_li>
+          Various file saving/exporting made more robust to error by not
+          saving partial files
+          </_li>
+          <_li>
+          HiDPI support improvements
+          </_li>
+          <_li>
+          New preference to choose the default export file type
+          </_li>
+          <_li>
+          New option to export PNG, JPEG and TIFF with a color profile;
+          always export PSD with a color profile
+          </_li>
+          <_li>
+          New DDS format loading/exporting plug-in
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.8" date="2018-11-07">
       <description>
         <_p>
