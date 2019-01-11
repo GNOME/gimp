@@ -43,6 +43,10 @@ Core:
   - Remove the "Edit -> Fade..." feature: it makes GIMP use two buffers
     instead of one (east into system resources), it's broken in 2.10, and
     we can make the UX better for filters.
+  - New generic canvas modifier 'Alt + middle click' allowing to pick
+    layers by clicking on pixels. The available layers will be looped
+    through (starting from the upper one) while Alt key is hold and the
+    picked layer name will be temporarily displayed in the status bar.
 
 User interface:
 
@@ -125,6 +129,12 @@ Translations:
 
   - Czech, French, Italian, Japanese, Marathi, Polish, Russian, Spanish,
     Swedish, Ukrainian.
+
+Build:
+
+  - Bumping GTK+ dependency to the micro update GTK+ 2.24.32 to handle
+    several bugs on Windows (broken shortcuts on non-latin layouts and
+    broken vector icons).
 
 Overview of Changes from GIMP 2.10.6 to GIMP 2.10.8
 ===================================================
