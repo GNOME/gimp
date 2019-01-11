@@ -792,6 +792,7 @@ gimp_line_art_input_invalidate_preview (GimpViewable *viewable,
  * The algorithm is the first step from the research paper "A Fast and
  * Efficient Semi-guided Algorithm for Flat Coloring Line-arts", by Sébastian
  * Fourey, David Tschumperlé, David Revoy.
+ * https://hal.archives-ouvertes.fr/hal-01891876
  *
  * Returns: a new #GeglBuffer of format "Y u8" representing the
  *          binarized @line_art. If @lineart_distmap is not #NULL, a
