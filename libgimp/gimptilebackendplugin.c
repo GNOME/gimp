@@ -132,20 +132,31 @@ gimp_tile_backend_plugin_command (GeglTileSource  *tile_store,
   switch (command)
     {
     case GEGL_TILE_GET:
-      g_mutex_lock (&backend_plugin_mutex);
+      /* TODO: fetch mipmapped tiles directly from gimp, instead of returning
+       * NULL to render them locally
+       */
+      if (z == 0)
+        {
+          g_mutex_lock (&backend_plugin_mutex);
 
-      result = gimp_tile_read_mul (backend_plugin, x, y);
+          result = gimp_tile_read_mul (backend_plugin, x, y);
 
-      g_mutex_unlock (&backend_plugin_mutex);
+          g_mutex_unlock (&backend_plugin_mutex);
+        }
       break;
 
     case GEGL_TILE_SET:
-      g_mutex_lock (&backend_plugin_mutex);
+      /* TODO: actually store mipmapped tiles */
+      if (z == 0)
+        {
+          g_mutex_lock (&backend_plugin_mutex);
 
-      gimp_tile_write_mul (backend_plugin, x, y, gegl_tile_get_data (data));
+          gimp_tile_write_mul (backend_plugin, x, y, gegl_tile_get_data (data));
+
+          g_mutex_unlock (&backend_plugin_mutex);
+        }
+
       gegl_tile_mark_as_stored (data);
-
-      g_mutex_unlock (&backend_plugin_mutex);
       break;
 
     case GEGL_TILE_FLUSH:
