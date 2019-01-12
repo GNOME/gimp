@@ -248,9 +248,9 @@ static const metadata_tag equivalent_metadata_tags[] =
 static const combobox_str_tag digitalsourcetype[] =
 {
   { "http://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture", N_("Original digital capture of a real life scene")    },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/negativeFilm",   N_("Digitised from a negative on film")                },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/positiveFilm",   N_("Digitised from a positive on film")                },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/print",          N_("Digitised from a print on non-transparent medium") },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/negativeFilm",   N_("Digitized from a negative on film")                },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/positiveFilm",   N_("Digitized from a positive on film")                },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/print",          N_("Digitized from a print on non-transparent medium") },
   { "http://cv.iptc.org/newscodes/digitalsourcetype/softwareImage",  N_("Created by software")                              }
 };
 
