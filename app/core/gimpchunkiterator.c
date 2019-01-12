@@ -270,7 +270,8 @@ gimp_chunk_iterator_set_priority_rect (GimpChunkIterator   *iter,
     {
       iter->priority_rect = *rect;
 
-      gimp_chunk_iterator_merge (iter);
+      if (gimp_chunk_iterator_prepare (iter))
+        gimp_chunk_iterator_merge (iter);
     }
 }
 
