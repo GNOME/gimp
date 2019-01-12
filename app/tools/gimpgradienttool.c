@@ -725,6 +725,12 @@ gimp_gradient_tool_commit (GimpGradientTool *gradient_tool)
 
   if (gradient_tool->filter)
     {
+      /* halt the editor before committing the filter so that the image-flush
+       * idle source is removed, to avoid flushing the image, and hence
+       * restarting the projection rendering, while applying the filter.
+       */
+      gimp_gradient_tool_editor_halt (gradient_tool);
+
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
       gimp_drawable_filter_commit (gradient_tool->filter,
