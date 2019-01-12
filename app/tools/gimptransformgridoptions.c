@@ -97,7 +97,7 @@ gimp_transform_grid_options_class_init (GimpTransformGridOptionsClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_PREVIEW,
                             "show-preview",
                             _("Show image preview"),
-                            _("Show a preview of the transform_grided image"),
+                            _("Show a preview of the transformed image"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
