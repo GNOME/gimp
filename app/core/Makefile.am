@@ -141,6 +141,8 @@ libappcore_a_sources = \
 	gimpchannelpropundo.h			\
 	gimpchannelundo.c			\
 	gimpchannelundo.h			\
+	gimpchunkiterator.c			\
+	gimpchunkiterator.h			\
 	gimpcontainer.c				\
 	gimpcontainer.h				\
 	gimpcontainer-filter.c			\

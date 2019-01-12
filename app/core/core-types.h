@@ -214,6 +214,7 @@ typedef struct _GimpWaitable                    GimpWaitable;    /* dummy typede
 
 typedef struct _GimpBacktrace                   GimpBacktrace;
 typedef struct _GimpBoundSeg                    GimpBoundSeg;
+typedef struct _GimpChunkIterator               GimpChunkIterator;
 typedef struct _GimpCoords                      GimpCoords;
 typedef struct _GimpGradientSegment             GimpGradientSegment;
 typedef struct _GimpPaletteEntry                GimpPaletteEntry;
