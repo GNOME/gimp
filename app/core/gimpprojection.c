@@ -35,6 +35,7 @@
 
 #include "gimp.h"
 #include "gimp-memsize.h"
+#include "gimpchunkiterator.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"
@@ -46,36 +47,9 @@
 #include "gimp-priorities.h"
 
 
-/*  whether to use adaptive render-chunk size  */
-static gboolean GIMP_PROJECTION_ADAPTIVE_CHUNK_SIZE = TRUE;
-
-/*  chunk size for one iteration of the chunk renderer, when the use
- *  of adaptive chunk size is disabled
- */
-static gint GIMP_PROJECTION_CHUNK_WIDTH  = 256;
-static gint GIMP_PROJECTION_CHUNK_HEIGHT = 128;
-
-/*  the min/max adaptive chunk size  */
-#define GIMP_PROJECTION_CHUNK_MIN_WIDTH  128
-#define GIMP_PROJECTION_CHUNK_MIN_HEIGHT 128
-
-#define GIMP_PROJECTION_CHUNK_MAX_WIDTH  2048
-#define GIMP_PROJECTION_CHUNK_MAX_HEIGHT 2048
-
-/*  the minimal number of processed pixels on the current frame,
- *  above which we calculate a new target pixel count to render
- *  on the next frame
- */
-#define GIMP_PROJECTION_MIN_PIXELS_PER_UPDATE 1024
-
 /*  chunk size for area updates  */
-static gint GIMP_PROJECTION_UPDATE_CHUNK_WIDTH  = 32;
-static gint GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT = 32;
-
-/*  how much time, in seconds, do we allow chunk rendering to take,
- *  aiming for 15fps
- */
-static gdouble GIMP_PROJECTION_CHUNK_TIME = 0.0666;
+#define GIMP_PROJECTION_UPDATE_CHUNK_WIDTH  32
+#define GIMP_PROJECTION_UPDATE_CHUNK_HEIGHT 32
 
 
 enum
@@ -91,27 +65,6 @@ enum
 };
 
 
-typedef struct _GimpProjectionChunkRender GimpProjectionChunkRender;
-
-struct _GimpProjectionChunkRender
-{
-  guint           idle_id;
-
-  gint            x;
-  gint            y;
-  gint            width;
-  gint            height;
-
-  gint            work_x;
-  gint            work_y;
-  gint            work_height;
-
-  gint            n_pixels;
-  gint            target_n_pixels;
-
-  cairo_region_t *update_region;   /*  flushed update region */
-};
-
 struct _GimpProjectionPrivate
 {
   GimpProjectable           *projectable;
@@ -122,8 +75,9 @@ struct _GimpProjectionPrivate
   gint                       priority;
 
   cairo_region_t            *update_region;
-  GimpProjectionChunkRender  chunk_render;
-  cairo_rectangle_int_t      priority_rect;
+  GeglRectangle              priority_rect;
+  GimpChunkIterator         *iter;
+  guint                      idle_id;
 
   gboolean                   invalidate_preview;
 };
@@ -182,19 +136,10 @@ static void        gimp_projection_flush_whenever        (GimpProjection  *proj,
                                                           gboolean         now,
                                                           gboolean         direct);
 static void        gimp_projection_chunk_render_start    (GimpProjection  *proj);
-static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj);
-static gboolean    gimp_projection_chunk_render_callback (gpointer         data);
-static void        gimp_projection_chunk_render_init     (GimpProjection  *proj);
-static void        gimp_projection_chunk_render_reinit   (GimpProjection  *proj);
-static void        gimp_projection_chunk_render_merge    (GimpProjection  *proj);
-static gboolean    gimp_projection_chunk_render_iteration(GimpProjection  *proj,
-                                                          gboolean         chunk);
-static gboolean    gimp_projection_chunk_render_next_area(GimpProjection  *proj);
-static void        gimp_projection_chunk_render_set_area (GimpProjection  *proj,
-                                                          gint             x,
-                                                          gint             y,
-                                                          gint             w,
-                                                          gint             h);
+static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj,
+                                                          gboolean         merge);
+static gboolean    gimp_projection_chunk_render_callback (GimpProjection  *proj);
+static gboolean    gimp_projection_chunk_render_iteration(GimpProjection  *proj);
 static void        gimp_projection_paint_area            (GimpProjection  *proj,
                                                           gboolean         now,
                                                           gint             x,
@@ -221,11 +166,6 @@ static void   gimp_projection_projectable_bounds_changed (GimpProjectable *proje
                                                           gint             old_h,
                                                           GimpProjection  *proj);
 
-static gint        gimp_projection_round_chunk_size      (gdouble          size,
-                                                          gboolean         toward_zero);
-static gint        gimp_projection_round_chunk_width     (gdouble          width);
-static gint        gimp_projection_round_chunk_height    (gdouble          height);
-
 
 G_DEFINE_TYPE_WITH_CODE (GimpProjection, gimp_projection, GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpProjection)
@@ -242,7 +182,6 @@ gimp_projection_class_init (GimpProjectionClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  const gchar     *env;
 
   projection_signals[UPDATE] =
     g_signal_new ("update",
@@ -265,27 +204,6 @@ gimp_projection_class_init (GimpProjectionClass *klass)
   gimp_object_class->get_memsize = gimp_projection_get_memsize;
 
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
-
-  if (g_getenv ("GIMP_NO_ADAPTIVE_CHUNK_SIZE"))
-    GIMP_PROJECTION_ADAPTIVE_CHUNK_SIZE = FALSE;
-
-  env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
-  if (env)
-    {
-      gint width  = atoi (env);
-      gint height = width;
-
-      env = strchr (env, 'x');
-      if (env)
-        height = atoi (env + 1);
-
-      if (width  > 0 && width  <= 8192 &&
-          height > 0 && height <= 8192)
-        {
-          GIMP_PROJECTION_CHUNK_WIDTH  = width;
-          GIMP_PROJECTION_CHUNK_HEIGHT = height;
-        }
-    }
 }
 
 static void
@@ -587,9 +505,8 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
                                    gint            w,
                                    gint            h)
 {
-  cairo_rectangle_int_t rect;
-  gint                  off_x, off_y;
-  gint                  width, height;
+  gint off_x, off_y;
+  gint width, height;
 
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
@@ -603,58 +520,23 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
   x -= off_x;
   y -= off_y;
 
-  if (gimp_rectangle_intersect (x, y, w, h,
-                                0, 0, width, height,
-                                &rect.x, &rect.y, &rect.width, &rect.height))
-    {
-      proj->priv->priority_rect = rect;
+  gegl_rectangle_intersect (&proj->priv->priority_rect,
+                            GEGL_RECTANGLE (x, y, w, h),
+                            GEGL_RECTANGLE (0, 0, width, height));
 
-      if (proj->priv->chunk_render.idle_id)
-        gimp_projection_chunk_render_reinit (proj);
+  if (proj->priv->iter)
+    {
+      gimp_chunk_iterator_set_priority_rect (proj->priv->iter,
+                                             &proj->priv->priority_rect);
     }
 }
 
 void
 gimp_projection_stop_rendering (GimpProjection *proj)
 {
-  GimpProjectionChunkRender *chunk_render;
-  cairo_rectangle_int_t      rect;
-
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-  chunk_render = &proj->priv->chunk_render;
-
-  if (! chunk_render->idle_id)
-    return;
-
-  if (chunk_render->update_region)
-    {
-      if (proj->priv->update_region)
-        {
-          cairo_region_union (proj->priv->update_region,
-                              chunk_render->update_region);
-        }
-      else
-        {
-          proj->priv->update_region =
-            cairo_region_copy (chunk_render->update_region);
-        }
-
-      g_clear_pointer (&chunk_render->update_region, cairo_region_destroy);
-    }
-
-  rect.x      = chunk_render->x;
-  rect.y      = chunk_render->work_y;
-  rect.width  = chunk_render->width;
-  rect.height = chunk_render->height - (chunk_render->work_y - chunk_render->y);
-
-  /* FIXME this is too much, the entire current row */
-  if (proj->priv->update_region)
-    cairo_region_union_rectangle (proj->priv->update_region, &rect);
-  else
-    proj->priv->update_region = cairo_region_create_rectangle (&rect);
-
-  gimp_projection_chunk_render_stop (proj);
+  gimp_projection_chunk_render_stop (proj, TRUE);
 }
 
 void
@@ -681,15 +563,15 @@ gimp_projection_finish_draw (GimpProjection *proj)
 {
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-  if (proj->priv->chunk_render.idle_id)
+  if (proj->priv->iter)
     {
-      gimp_projection_chunk_render_stop (proj);
-
       gimp_tile_handler_validate_begin_validate (proj->priv->validate_handler);
 
-      while (gimp_projection_chunk_render_iteration (proj, FALSE));
+      while (gimp_projection_chunk_render_iteration (proj));
 
       gimp_tile_handler_validate_end_validate (proj->priv->validate_handler);
+
+      gimp_projection_chunk_render_stop (proj, FALSE);
     }
 }
 
@@ -725,11 +607,9 @@ gimp_projection_allocate_buffer (GimpProjection *proj)
 static void
 gimp_projection_free_buffer (GimpProjection  *proj)
 {
-  if (proj->priv->chunk_render.idle_id)
-    gimp_projection_chunk_render_stop (proj);
+  gimp_projection_chunk_render_stop (proj, FALSE);
 
   g_clear_pointer (&proj->priv->update_region, cairo_region_destroy);
-  g_clear_pointer (&proj->priv->chunk_render.update_region, cairo_region_destroy);
 
   if (proj->priv->buffer)
     {
@@ -804,14 +684,15 @@ gimp_projection_flush_whenever (GimpProjection *proj,
                                           rect.width,
                                           rect.height);
             }
+
+          /*  Free the update region  */
+          g_clear_pointer (&proj->priv->update_region, cairo_region_destroy);
         }
       else  /* Asynchronous */
         {
-          gimp_projection_chunk_render_init (proj);
+          /*  Consumes the update region  */
+          gimp_projection_chunk_render_start (proj);
         }
-
-      /*  Free the update region  */
-      g_clear_pointer (&proj->priv->update_region, cairo_region_destroy);
     }
   else if (! now && proj->priv->invalidate_preview)
     {
@@ -827,343 +708,131 @@ gimp_projection_flush_whenever (GimpProjection *proj,
 static void
 gimp_projection_chunk_render_start (GimpProjection *proj)
 {
-  g_return_if_fail (proj->priv->chunk_render.idle_id == 0);
+  cairo_region_t *region = proj->priv->update_region;
 
-  proj->priv->chunk_render.idle_id =
-    g_idle_add_full (GIMP_PRIORITY_PROJECTION_IDLE + proj->priv->priority,
-                     gimp_projection_chunk_render_callback, proj,
-                     NULL);
-}
-
-static void
-gimp_projection_chunk_render_stop (GimpProjection *proj)
-{
-  g_return_if_fail (proj->priv->chunk_render.idle_id != 0);
-
-  g_source_remove (proj->priv->chunk_render.idle_id);
-  proj->priv->chunk_render.idle_id = 0;
-}
-
-static gboolean
-gimp_projection_chunk_render_callback (gpointer data)
-{
-  GimpProjection            *proj         = data;
-  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
-  GTimer                    *timer        = g_timer_new ();
-  gint                       chunks       = 0;
-  gboolean                   retval       = TRUE;
-
-  /* reset the rendered pixel count, so that we count the number of pixels
-   * processed during this frame
-   */
-  chunk_render->n_pixels = 0;
-
-  gimp_tile_handler_validate_begin_validate (proj->priv->validate_handler);
-
-  do
+  if (proj->priv->iter)
     {
-      if (! gimp_projection_chunk_render_iteration (proj, TRUE))
+      region = gimp_chunk_iterator_stop (proj->priv->iter, FALSE);
+
+      proj->priv->iter = NULL;
+
+      if (proj->priv->update_region)
         {
-          gimp_projection_chunk_render_stop (proj);
+          cairo_region_union (region, proj->priv->update_region);
 
-          retval = FALSE;
-
-          break;
-        }
-
-      chunks++;
-    }
-  while (g_timer_elapsed (timer, NULL) < GIMP_PROJECTION_CHUNK_TIME);
-
-  gimp_tile_handler_validate_end_validate (proj->priv->validate_handler);
-
-  /* adjust the target number of pixels to be processed on the next frame,
-   * according to the number of pixels processed during this frame and the
-   * elapsed time, in order to match the desired frame rate.
-   */
-  if (chunk_render->n_pixels >= GIMP_PROJECTION_MIN_PIXELS_PER_UPDATE)
-    {
-      chunk_render->target_n_pixels = floor (chunk_render->n_pixels     *
-                                             GIMP_PROJECTION_CHUNK_TIME /
-                                             g_timer_elapsed (timer, NULL));
-    }
-
-  GIMP_LOG (PROJECTION, "%d chunks in %f seconds\n",
-            chunks, g_timer_elapsed (timer, NULL));
-  g_timer_destroy (timer);
-
-  return retval;
-}
-
-static void
-gimp_projection_chunk_render_init (GimpProjection *proj)
-{
-  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
-
-  chunk_render->target_n_pixels = GIMP_PROJECTION_CHUNK_WIDTH *
-                                  GIMP_PROJECTION_CHUNK_HEIGHT;
-
-  gimp_projection_chunk_render_reinit (proj);
-}
-
-static void
-gimp_projection_chunk_render_reinit (GimpProjection *proj)
-{
-  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
-
-  /* We need to merge the ChunkRender's and the GimpProjection's
-   * update_regions list to keep track of which of the updates have
-   * been flushed and hence need to be drawn.
-   */
-  if (proj->priv->update_region)
-    {
-      if (chunk_render->update_region)
-        {
-          cairo_region_union (chunk_render->update_region,
-                              proj->priv->update_region);
-        }
-      else
-        {
-          chunk_render->update_region =
-            cairo_region_copy (proj->priv->update_region);
+          cairo_region_destroy (proj->priv->update_region);
         }
     }
 
-  /* If a chunk renderer was already running, merge the remainder of
-   * its unrendered area with the update_areas list, and make it start
-   * work on the next unrendered area in the list.
-   */
-  if (chunk_render->idle_id)
-    {
-      gimp_projection_chunk_render_merge (proj);
+  proj->priv->update_region = NULL;
 
-      gimp_projection_chunk_render_next_area (proj);
-    }
-  else
+  if (region && ! cairo_region_is_empty (region))
     {
-      if (chunk_render->update_region == NULL)
+      proj->priv->iter = gimp_chunk_iterator_new (region);
+
+      gimp_chunk_iterator_set_priority_rect (proj->priv->iter,
+                                             &proj->priv->priority_rect);
+
+      if (! proj->priv->idle_id)
         {
-          g_warning ("%s: wanted to start chunk render with no update_region",
-                     G_STRFUNC);
-          return;
+          proj->priv->idle_id = g_idle_add_full (
+            GIMP_PRIORITY_PROJECTION_IDLE + proj->priv->priority,
+            (GSourceFunc) gimp_projection_chunk_render_callback,
+            proj, NULL);
         }
-
-      proj->priv->chunk_render.target_n_pixels = GIMP_PROJECTION_CHUNK_WIDTH *
-                                                 GIMP_PROJECTION_CHUNK_HEIGHT;
-
-      gimp_projection_chunk_render_next_area (proj);
-
-      gimp_projection_chunk_render_start (proj);
     }
 }
 
 static void
-gimp_projection_chunk_render_merge (GimpProjection *proj)
+gimp_projection_chunk_render_stop (GimpProjection *proj,
+                                   gboolean        merge)
 {
-  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
-  cairo_rectangle_int_t      rect;
-  gint                       work_h = 0;
-
-  if (chunk_render->work_x != chunk_render->x)
+  if (proj->priv->idle_id)
     {
-      work_h = MIN (chunk_render->work_height,
-                    chunk_render->y + chunk_render->height -
-                    chunk_render->work_y);
-
-      rect.x      = chunk_render->work_x;
-      rect.y      = chunk_render->work_y;
-      rect.width  = chunk_render->x + chunk_render->width -
-                    chunk_render->work_x;
-      rect.height = work_h;
-
-      if (chunk_render->update_region)
-        cairo_region_union_rectangle (chunk_render->update_region, &rect);
-      else
-        chunk_render->update_region = cairo_region_create_rectangle (&rect);
+      g_source_remove (proj->priv->idle_id);
+      proj->priv->idle_id = 0;
     }
 
-  rect.x      = chunk_render->x;
-  rect.y      = chunk_render->work_y + work_h;
-  rect.width  = chunk_render->width;
-  rect.height = chunk_render->y + chunk_render->height - rect.y;
-
-  if (chunk_render->update_region)
-    cairo_region_union_rectangle (chunk_render->update_region, &rect);
-  else
-    chunk_render->update_region = cairo_region_create_rectangle (&rect);
-}
-
-/* Unless specified otherwise, projection re-rendering is organised by
- * ChunkRender, which amalgamates areas to be re-rendered and breaks
- * them into bite-sized chunks which are chewed on in an idle
- * function. This greatly improves responsiveness for many GIMP
- * operations.  -- Adam
- */
-static gboolean
-gimp_projection_chunk_render_iteration (GimpProjection *proj,
-                                        gboolean        chunk)
-{
-  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
-  gint                       work_x       = chunk_render->work_x;
-  gint                       work_y       = chunk_render->work_y;
-  gint                       work_w;
-  gint                       work_h;
-
-  work_w = chunk_render->x + chunk_render->width  - work_x;
-  work_h = chunk_render->y + chunk_render->height - work_y;
-
-  if (chunk)
+  if (proj->priv->iter)
     {
-      if (GIMP_PROJECTION_ADAPTIVE_CHUNK_SIZE)
+      if (merge)
         {
-          gint chunk_w;
-          gint chunk_h;
+          cairo_region_t *region;
 
-          /* try to render in square chunks */
-          chunk_h = gimp_projection_round_chunk_height (
-            sqrt (chunk_render->target_n_pixels));
+          region = gimp_chunk_iterator_stop (proj->priv->iter, FALSE);
 
-          work_h = MIN (work_h, chunk_h);
-
-          chunk_w = gimp_projection_round_chunk_width (
-            chunk_render->target_n_pixels / work_h);
-
-          work_w = MIN (work_w, chunk_w);
-        }
-      else
-        {
-          work_w = MIN (work_w, GIMP_PROJECTION_CHUNK_WIDTH);
-          work_h = MIN (work_h, GIMP_PROJECTION_CHUNK_HEIGHT);
-        }
-    }
-  else
-    {
-      if (work_x != chunk_render->x)
-        work_h = MIN (work_h, chunk_render->work_height);
-    }
-
-  if (work_h != chunk_render->work_height)
-    {
-      /* if the chunk height changed in the middle of a row, merge the
-       * remaining area back into the update region, and reset the current area
-       * to the remainder of the row, using the new chunk height
-       */
-      if (work_x != chunk_render->x)
-        {
-          gimp_projection_chunk_render_merge (proj);
-
-          gimp_projection_chunk_render_set_area (
-            proj,
-            work_x,
-            work_y,
-            chunk_render->x + chunk_render->width - work_x,
-            work_h);
-        }
-
-      chunk_render->work_height = work_h;
-    }
-
-  gimp_projection_paint_area (proj, TRUE,
-                              work_x, work_y, work_w, work_h);
-
-  chunk_render->n_pixels += work_w * work_h;
-
-  chunk_render->work_x += work_w;
-
-  if (chunk_render->work_x >= chunk_render->x + chunk_render->width)
-    {
-      chunk_render->work_x = chunk_render->x;
-
-      chunk_render->work_y += work_h;
-
-      if (chunk_render->work_y >= chunk_render->y + chunk_render->height)
-        {
-          if (! gimp_projection_chunk_render_next_area (proj))
+          if (proj->priv->update_region)
             {
-              if (proj->priv->invalidate_preview)
-                {
-                  /* invalidate the preview here since it is constructed from
-                   * the projection
-                   */
-                  proj->priv->invalidate_preview = FALSE;
+              cairo_region_union (proj->priv->update_region, region);
 
-                  gimp_projectable_invalidate_preview (proj->priv->projectable);
-                }
-
-              /* FINISHED */
-              return FALSE;
+              cairo_region_destroy (region);
+            }
+          else
+            {
+              proj->priv->update_region = region;
             }
         }
-    }
+      else
+        {
+          gimp_chunk_iterator_stop (proj->priv->iter, TRUE);
+        }
 
-  /* Still work to do. */
-  return TRUE;
+      proj->priv->iter = NULL;
+    }
 }
 
 static gboolean
-gimp_projection_chunk_render_next_area (GimpProjection *proj)
+gimp_projection_chunk_render_callback (GimpProjection *proj)
 {
-  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
-  cairo_region_t            *next_region;
-  cairo_rectangle_int_t      rect;
-
-  if (! chunk_render->update_region)
-    return FALSE;
-
-  if (cairo_region_is_empty (chunk_render->update_region))
+  if (gimp_projection_chunk_render_iteration (proj))
     {
-      g_clear_pointer (&chunk_render->update_region, cairo_region_destroy);
-
-      return FALSE;
+      return G_SOURCE_CONTINUE;
     }
-
-  next_region = cairo_region_copy (chunk_render->update_region);
-  cairo_region_intersect_rectangle (next_region, &proj->priv->priority_rect);
-
-  if (cairo_region_is_empty (next_region))
-    cairo_region_get_rectangle (chunk_render->update_region, 0, &rect);
   else
-    cairo_region_get_rectangle (next_region, 0, &rect);
+    {
+      proj->priv->idle_id = 0;
 
-  cairo_region_destroy (next_region);
-
-  gimp_projection_chunk_render_set_area (proj,
-                                         rect.x,     rect.y,
-                                         rect.width, rect.height);
-
-  return TRUE;
+      return G_SOURCE_REMOVE;
+    }
 }
 
-static void
-gimp_projection_chunk_render_set_area (GimpProjection *proj,
-                                       gint            x,
-                                       gint            y,
-                                       gint            w,
-                                       gint            h)
+static gboolean
+gimp_projection_chunk_render_iteration (GimpProjection *proj)
 {
-  GimpProjectionChunkRender *chunk_render = &proj->priv->chunk_render;
-  cairo_rectangle_int_t      rect;
-
-  rect.x      = x;
-  rect.y      = y;
-  rect.width  = w;
-  rect.height = h;
-
-  if (chunk_render->update_region)
+  if (gimp_chunk_iterator_next (proj->priv->iter))
     {
-      cairo_region_subtract_rectangle (chunk_render->update_region, &rect);
+      GeglRectangle rect;
 
-      if (cairo_region_is_empty (chunk_render->update_region))
-        g_clear_pointer (&chunk_render->update_region, cairo_region_destroy);
+      gimp_tile_handler_validate_begin_validate (proj->priv->validate_handler);
+
+      while (gimp_chunk_iterator_get_rect (proj->priv->iter, &rect))
+        {
+          gimp_projection_paint_area (proj, TRUE,
+                                      rect.x, rect.y, rect.width, rect.height);
+        }
+
+      gimp_tile_handler_validate_end_validate (proj->priv->validate_handler);
+
+      /* Still work to do. */
+      return TRUE;
     }
+  else
+    {
+      proj->priv->iter = NULL;
 
-  chunk_render->x      = rect.x;
-  chunk_render->y      = rect.y;
-  chunk_render->width  = rect.width;
-  chunk_render->height = rect.height;
+      if (proj->priv->invalidate_preview)
+        {
+          /* invalidate the preview here since it is constructed from
+           * the projection
+           */
+          proj->priv->invalidate_preview = FALSE;
 
-  chunk_render->work_x = chunk_render->x;
-  chunk_render->work_y = chunk_render->y;
+          gimp_projectable_invalidate_preview (proj->priv->projectable);
+        }
+
+      /* FINISHED */
+      return FALSE;
+    }
 }
 
 static void
@@ -1324,9 +993,10 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 #endif
 
   /* reallocate the buffer, and copy the old buffer to the corresponding
-   * region of the new buffer.  additionally, shift and clip all outstanding
-   * update regions as necessary.
+   * region of the new buffer.
    */
+
+  gimp_projection_chunk_render_stop (proj, TRUE);
 
   old_validate_handler = proj->priv->validate_handler;
 
@@ -1355,41 +1025,6 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 
       cairo_region_translate           (proj->priv->update_region, dx, dy);
       cairo_region_intersect_rectangle (proj->priv->update_region, &bounds);
-    }
-
-  if (proj->priv->chunk_render.idle_id)
-    {
-      const cairo_rectangle_int_t bounds = {0, 0, w, h};
-
-      proj->priv->chunk_render.x += dx;
-      proj->priv->chunk_render.y += dy;
-
-      proj->priv->chunk_render.work_x += dx;
-      proj->priv->chunk_render.work_y += dx;
-
-      if (proj->priv->chunk_render.update_region)
-        {
-          cairo_region_translate
-            (proj->priv->chunk_render.update_region, dx, dy);
-          cairo_region_intersect_rectangle
-            (proj->priv->chunk_render.update_region, &bounds);
-        }
-
-      if (! gimp_rectangle_intersect (proj->priv->chunk_render.x,
-                                      proj->priv->chunk_render.y,
-                                      proj->priv->chunk_render.width,
-                                      proj->priv->chunk_render.height,
-
-                                      0, 0, w, h,
-
-                                      &proj->priv->chunk_render.x,
-                                      &proj->priv->chunk_render.y,
-                                      &proj->priv->chunk_render.width,
-                                      &proj->priv->chunk_render.height))
-        {
-          if (! gimp_projection_chunk_render_next_area (proj))
-            gimp_projection_chunk_render_stop (proj);
-        }
     }
 
   if (proj->priv->priority_rect.width  > 0 &&
@@ -1421,55 +1056,4 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
     gimp_projection_add_update_area (proj, 0, dy + old_h, w, h - (dy + old_h));
 
   proj->priv->invalidate_preview = TRUE;
-}
-
-static gint
-gimp_projection_round_chunk_size (gdouble  size,
-                                  gboolean toward_zero)
-{
-  /* round 'size' (up or down, depending on 'toward_zero') to the closest power
-   * of 2
-   */
-
-  if (size < 0.0)
-    {
-      return -gimp_projection_round_chunk_size (-size, toward_zero);
-    }
-  else if (size == 0.0)
-    {
-      return 0;
-    }
-  else if (size < 1.0)
-    {
-      return toward_zero ? 0 : 1;
-    }
-  else
-    {
-      gdouble log2_size = log (size) / G_LN2;
-
-      if (toward_zero)
-        log2_size = floor (log2_size);
-      else
-        log2_size = ceil  (log2_size);
-
-      return 1 << (gint) log2_size;
-    }
-}
-
-static gint
-gimp_projection_round_chunk_width (gdouble width)
-{
-  gint w = gimp_projection_round_chunk_size (width, FALSE);
-
-  return CLAMP (w, GIMP_PROJECTION_CHUNK_MIN_WIDTH,
-                   GIMP_PROJECTION_CHUNK_MAX_WIDTH);
-}
-
-static gint
-gimp_projection_round_chunk_height (gdouble height)
-{
-  gint h = gimp_projection_round_chunk_size (height, TRUE);
-
-  return CLAMP (h, GIMP_PROJECTION_CHUNK_MIN_HEIGHT,
-                   GIMP_PROJECTION_CHUNK_MAX_HEIGHT);
 }
