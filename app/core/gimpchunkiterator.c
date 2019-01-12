@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
