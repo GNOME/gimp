@@ -595,16 +595,31 @@ gimp_tile_handler_validate_buffer_copy (GeglBuffer          *src_buffer,
   real_src_rect.width  = CLAMP (real_src_rect.width,  0, real_dst_rect.width);
   real_src_rect.height = CLAMP (real_src_rect.height, 0, real_dst_rect.height);
 
+  /* temporarily remove the source buffer's validate handler, so that
+   * gegl_buffer_copy() can use fast tile copying, using the TILE_COPY command.
+   * currently, gegl only uses TILE_COPY when the source buffer has no user-
+   * provided tile handlers.
+   */
   if (src_validate)
-    src_validate->suspend_validate++;
+    {
+      g_object_ref (src_validate);
+
+      gimp_tile_handler_validate_unassign (src_validate, src_buffer);
+    }
+
   dst_validate->suspend_validate++;
 
   gegl_buffer_copy (src_buffer, &real_src_rect, GEGL_ABYSS_NONE,
                     dst_buffer, &real_dst_rect);
 
-  if (src_validate)
-    src_validate->suspend_validate--;
   dst_validate->suspend_validate--;
+
+  if (src_validate)
+    {
+      gimp_tile_handler_validate_assign (src_validate, src_buffer);
+
+      g_object_unref (src_validate);
+    }
 
   cairo_region_subtract_rectangle (dst_validate->dirty_region,
                                    (cairo_rectangle_int_t *) &real_dst_rect);
