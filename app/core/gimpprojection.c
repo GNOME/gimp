@@ -708,13 +708,17 @@ gimp_projection_flush_whenever (GimpProjection *proj,
 static void
 gimp_projection_chunk_render_start (GimpProjection *proj)
 {
-  cairo_region_t *region = proj->priv->update_region;
+  cairo_region_t *region             = proj->priv->update_region;
+  gboolean        invalidate_preview = FALSE;
 
   if (proj->priv->iter)
     {
       region = gimp_chunk_iterator_stop (proj->priv->iter, FALSE);
 
       proj->priv->iter = NULL;
+
+      if (cairo_region_is_empty (region))
+        invalidate_preview = proj->priv->invalidate_preview;
 
       if (proj->priv->update_region)
         {
@@ -750,6 +754,16 @@ gimp_projection_chunk_render_start (GimpProjection *proj)
         {
           g_source_remove (proj->priv->idle_id);
           proj->priv->idle_id = 0;
+        }
+
+      if (invalidate_preview)
+        {
+          /* invalidate the preview here since it is constructed from
+           * the projection
+           */
+          proj->priv->invalidate_preview = FALSE;
+
+          gimp_projectable_invalidate_preview (proj->priv->projectable);
         }
     }
 }
