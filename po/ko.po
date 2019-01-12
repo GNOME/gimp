@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-12 08:17+0900\n"
+"PO-Revision-Date: 2019-01-12 19:16+0900\n"
 "Last-Translator: Aryeom Han <aryeom@girinstud.io>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -1460,10 +1460,9 @@ msgid "Exchange foreground and background colors"
 msgstr "전경색과 배경색을 서로 바꿉니다"
 
 #: ../app/actions/context-actions.c:97
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Set Color From Palette"
-msgstr "전경색 지정:"
+msgstr "전경색: 팔레트의 색에서 설정"
 
 #: ../app/actions/context-actions.c:101
 #, fuzzy
@@ -1500,10 +1499,9 @@ msgid "Foreground: Skip Forward Palette Color"
 msgstr ""
 
 #: ../app/actions/context-actions.c:129
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Set Color From Palette"
-msgstr "배경색 지정:"
+msgstr "배경색: 팔레트의 색에서 설정"
 
 #: ../app/actions/context-actions.c:133
 #, fuzzy
@@ -1642,10 +1640,9 @@ msgid "Foreground: Use Next Color From Swatch"
 msgstr ""
 
 #: ../app/actions/context-actions.c:245
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Swatch"
-msgstr "전경색 지정:"
+msgstr "전경색 지정: 스와치로부터의 배경색 건너뛰기"
 
 #: ../app/actions/context-actions.c:249
 msgctxt "context-action"
@@ -1695,16 +1692,14 @@ msgid "Foreground Red: Set"
 msgstr "전경 선택"
 
 #: ../app/actions/context-actions.c:293
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "전경색 지정:"
+msgstr "전경색 빨강: 최소로 설정"
 
 #: ../app/actions/context-actions.c:297
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "전경색 지정:"
+msgstr "전경색 빨강: 최대로 설정"
 
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
@@ -1733,16 +1728,14 @@ msgid "Foreground Green: Set"
 msgstr "전경 선택"
 
 #: ../app/actions/context-actions.c:325
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "전경색 지정:"
+msgstr "전경색 초록: 최소로 설정"
 
 #: ../app/actions/context-actions.c:329
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "전경색 지정:"
+msgstr "전경색 초록: 최대로 설정"
 
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
@@ -1771,16 +1764,14 @@ msgid "Foreground Blue: Set"
 msgstr "전경 선택"
 
 #: ../app/actions/context-actions.c:357
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "전경색 지정:"
+msgstr "전경색 파랑: 최소로 설정"
 
 #: ../app/actions/context-actions.c:361
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "전경색 지정:"
+msgstr "전경색 파랑: 최대로 설정"
 
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
@@ -1809,16 +1800,14 @@ msgid "Background Red: Set"
 msgstr "배경"
 
 #: ../app/actions/context-actions.c:389
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "배경색 지정:"
+msgstr "배경색 빨강: 최소로 설정"
 
 #: ../app/actions/context-actions.c:393
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "배경색 지정:"
+msgstr "배경색 빨강: 최대로 설정"
 
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
@@ -1841,22 +1830,19 @@ msgid "Background Red: Increase by 10%"
 msgstr "배경 빨강: 10% 증가"
 
 #: ../app/actions/context-actions.c:417
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "배경색 지정:"
+msgstr "배경색 초록: 설정"
 
 #: ../app/actions/context-actions.c:421
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "배경색 지정:"
+msgstr "배경색 초록: 최소로 설정"
 
 #: ../app/actions/context-actions.c:425
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "배경색 지정:"
+msgstr "배경색 초록: 최대로 설정"
 
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
@@ -1884,16 +1870,14 @@ msgid "Background Blue: Set"
 msgstr "배경색: 설정"
 
 #: ../app/actions/context-actions.c:453
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "배경색 지정:"
+msgstr "배경색 파랑: 최소값으로 설정"
 
 #: ../app/actions/context-actions.c:457
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "배경색 지정:"
+msgstr "배경색 파랑: 최대로 설정"
 
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
@@ -1922,16 +1906,14 @@ msgid "Foreground Hue: Set"
 msgstr "전경 선택"
 
 #: ../app/actions/context-actions.c:485
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "전경색 지정:"
+msgstr "전경색 색조: 최소로 설정"
 
 #: ../app/actions/context-actions.c:489
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "전경색 지정:"
+msgstr "전경색 색조: 최대로 설정"
 
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
@@ -1972,28 +1954,24 @@ msgid "Foreground Saturation: Set to Maximum"
 msgstr "전경색 추출"
 
 #: ../app/actions/context-actions.c:525
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "전경색 추출"
+msgstr "전경색 채도: 1% 감소"
 
 #: ../app/actions/context-actions.c:529
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "전경색 추출"
+msgstr "전경색 채도: 1% 증가"
 
 #: ../app/actions/context-actions.c:533
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "전경색 추출"
+msgstr "전경색 채도: 10% 감소"
 
 #: ../app/actions/context-actions.c:537
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "전경색 추출"
+msgstr "전경색 채도: 10% 증가"
 
 #: ../app/actions/context-actions.c:545
 #, fuzzy
@@ -2002,16 +1980,14 @@ msgid "Foreground Value: Set"
 msgstr "전경 선택"
 
 #: ../app/actions/context-actions.c:549
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "전경색 지정:"
+msgstr "전경색 값: 최소로 설정"
 
 #: ../app/actions/context-actions.c:553
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "전경색 지정:"
+msgstr "전경색 값: 최대로 설정"
 
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
@@ -2040,16 +2016,14 @@ msgid "Background Hue: Set"
 msgstr "배경"
 
 #: ../app/actions/context-actions.c:581
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "배경색 지정:"
+msgstr "배경색 색조: 최소값으로 설정"
 
 #: ../app/actions/context-actions.c:585
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "배경색 지정:"
+msgstr "배경색 색조: 최대로 설정"
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
@@ -2072,10 +2046,9 @@ msgid "Background Hue: Increase by 10%"
 msgstr "배경 색조: 10% 증가"
 
 #: ../app/actions/context-actions.c:609
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "배경색 지정:"
+msgstr "배경색 채도: 설정"
 
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
@@ -2108,22 +2081,19 @@ msgid "Background Saturation: Increase by 10%"
 msgstr "배경 채도: 10% 증가"
 
 #: ../app/actions/context-actions.c:641
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "배경색 지정:"
+msgstr "배경색 값: 설정"
 
 #: ../app/actions/context-actions.c:645
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "배경색 지정:"
+msgstr "배경색 값: 최소로 설정"
 
 #: ../app/actions/context-actions.c:649
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "배경색 지정:"
+msgstr "배경색 값: 최대로 설정"
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
@@ -2668,10 +2638,9 @@ msgid "Groups"
 msgstr ""
 
 #: ../app/actions/dashboard-actions.c:46
-#, fuzzy
 msgctxt "dashboard-action"
 msgid "Update Interval"
-msgstr "간격(_N):"
+msgstr "간격 업데이트"
 
 #: ../app/actions/dashboard-actions.c:48
 #, fuzzy
@@ -2688,7 +2657,7 @@ msgstr ""
 #, fuzzy
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
-msgstr "상대 좌표:"
+msgstr "쌓이는 자료 재설정"
 
 #: ../app/actions/dashboard-actions.c:60
 msgctxt "dashboard-action"
@@ -4798,10 +4767,9 @@ msgid "Diffraction Patterns..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:292
-#, fuzzy
 msgctxt "filters-action"
 msgid "Displace..."
-msgstr "화면"
+msgstr "변위..."
 
 #: ../app/actions/filters-actions.c:297
 msgctxt "filters-action"
@@ -6342,10 +6310,9 @@ msgid "Layers Menu"
 msgstr "레이어 메뉴"
 
 #: ../app/actions/layers-actions.c:56
-#, fuzzy
 msgctxt "layers-action"
 msgid "Blend Space"
-msgstr "혼합: "
+msgstr "혼합 공간"
 
 #: ../app/actions/layers-actions.c:60
 #, fuzzy
@@ -6406,10 +6373,9 @@ msgid "Layer _Mode"
 msgstr "레이어 모드(_M)"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
 msgctxt "layers-action"
 msgid "Default Edit Action"
-msgstr "기본 보간법(_I):"
+msgstr "기본 편집 동작"
 
 #: ../app/actions/layers-actions.c:90
 #, fuzzy
@@ -6838,7 +6804,7 @@ msgstr ""
 #, fuzzy
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
-msgstr "선명하게 하려면 클릭하십시오."
+msgstr "배경으로 클립"
 
 #: ../app/actions/layers-actions.c:396
 msgctxt "layers-action"
@@ -8192,10 +8158,9 @@ msgid "_Save Tool Options to Preset"
 msgstr "마칠 때 도구 옵션 저장(_S)"
 
 #: ../app/actions/tool-preset-editor-actions.c:49
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
-msgstr "김프를 마칠 때 도구 옵션의 내용을 저장합니다."
+msgstr "활성 도구 옵션을 이 도구 프리셋에 저장"
 
 #: ../app/actions/tool-preset-editor-actions.c:55
 #, fuzzy
@@ -8274,10 +8239,9 @@ msgid "_Save Tool Options to Preset"
 msgstr "마칠 때 도구 옵션 저장(_S)"
 
 #: ../app/actions/tool-presets-actions.c:75
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Save the active tool options to this tool preset"
-msgstr "김프를 마칠 때 도구 옵션의 내용을 저장합니다."
+msgstr "활성 도구 옵션을 이 도구 프리셋에 저장"
 
 #: ../app/actions/tool-presets-actions.c:81
 #, fuzzy
@@ -9279,16 +9243,15 @@ msgid "_Color Management"
 msgstr "색상 관리"
 
 #: ../app/actions/view-actions.c:79
-#, fuzzy
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
-msgstr "화면 표현 방식(_D):"
+msgstr "디스플레이 렌더링 의도(_R)"
 
 #: ../app/actions/view-actions.c:82
 #, fuzzy
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "_Softproof 렌더링 계획:"
+msgstr "소프트푸르핑렌더링 의도(_N)"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -9891,10 +9854,9 @@ msgid "_Perceptual"
 msgstr ""
 
 #: ../app/actions/view-actions.c:526
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "화면 표현 방식(_D):"
+msgstr "디스플레이 렌더링 의도가 지각적임"
 
 #: ../app/actions/view-actions.c:531 ../app/actions/view-actions.c:558
 #, fuzzy
@@ -9903,10 +9865,9 @@ msgid "_Relative Colorimetric"
 msgstr "색 삭제(_D)"
 
 #: ../app/actions/view-actions.c:532
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
-msgstr "화면 표현 방식(_D):"
+msgstr "디스플레이 렌더링 의도가 상대적 비색계임"
 
 #: ../app/actions/view-actions.c:537 ../app/actions/view-actions.c:564
 msgctxt "view-action"
@@ -9914,10 +9875,9 @@ msgid "_Saturation"
 msgstr "채도(_S)"
 
 #: ../app/actions/view-actions.c:538
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
-msgstr "화면 표현 방식(_D):"
+msgstr "디스플레이 렌더일 의도가 채도임"
 
 #: ../app/actions/view-actions.c:543 ../app/actions/view-actions.c:570
 msgctxt "view-action"
@@ -9930,28 +9890,24 @@ msgid "Display rendering intent is absolute colorimetric"
 msgstr ""
 
 #: ../app/actions/view-actions.c:553
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "_Softproof 렌더링 계획:"
+msgstr "소프트프루핑 렌더링 의도가 지각적임"
 
 #: ../app/actions/view-actions.c:559
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "_Softproof 렌더링 계획:"
+msgstr "소프트프루핑 렌더링 의도가 상대적 비색계임"
 
 #: ../app/actions/view-actions.c:565
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "_Softproof 렌더링 계획:"
+msgstr "소프트프루핑 렌더링 의도가 채도임"
 
 #: ../app/actions/view-actions.c:571
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "_Softproof 렌더링 계획:"
+msgstr "소프트프루핑 렌더링 의도가 절대적 비색계임"
 
 #: ../app/actions/view-actions.c:579
 msgctxt "view-padding-color"
@@ -13371,9 +13327,8 @@ msgid "Cannot flatten an image without any visible layer."
 msgstr ""
 
 #: ../app/core/gimpimage-merge.c:245
-#, fuzzy
 msgid "Cannot merge down a floating selection."
-msgstr "떠있는 선택 영역을 만듭니다"
+msgstr "떠있는 선택 영역을 아래로 병합할 수 없음"
 
 #: ../app/core/gimpimage-merge.c:252
 #, fuzzy
@@ -13932,9 +13887,8 @@ msgid "Unit"
 msgstr "단위"
 
 #: ../app/core/gimpstrokeoptions.c:178
-#, fuzzy
 msgid "Cap style"
-msgstr "선 끝 스타일(_C):"
+msgstr "선 끝 스타일"
 
 #: ../app/core/gimpstrokeoptions.c:185
 #, fuzzy
@@ -15956,9 +15910,8 @@ msgid "Rendering intent:"
 msgstr "화면 표현 방식(_D):"
 
 #: ../app/dialogs/preferences-dialog.c:2128
-#, fuzzy
 msgid "Black point compensation"
-msgstr "선택을 완료하려면 클릭하십시오."
+msgstr "검은 점 보상"
 
 #. Convert Precision Dialog
 #: ../app/dialogs/preferences-dialog.c:2132
@@ -16224,9 +16177,8 @@ msgid "Border Selection Dialog"
 msgstr "테두리 선택"
 
 #: ../app/dialogs/preferences-dialog.c:2358
-#, fuzzy
 msgid "Border radius:"
-msgstr "붓 반경"
+msgstr "테두리 반지름:"
 
 #: ../app/dialogs/preferences-dialog.c:2362
 #, fuzzy
@@ -17513,9 +17465,8 @@ msgid "Click-Drag to change perspective"
 msgstr "곡선의 모양을 바꾸려면 클릭후 드래그하십시오"
 
 #: ../app/display/gimptoolhandlegrid.c:857
-#, fuzzy
 msgid "Click to add a handle"
-msgstr "이미지를 복원하려면 클릭하십시오."
+msgstr "클릭해서 핸들 더하기"
 
 #: ../app/display/gimptoolhandlegrid.c:863
 #, fuzzy
@@ -17573,9 +17524,8 @@ msgid "Click-Drag to remove the slider"
 msgstr "선택한 픽셀을 이동시키려면 클릭후 드래그하십시오"
 
 #: ../app/display/gimptoolline.c:1547
-#, fuzzy
 msgid "Click or Click-Drag to add a new slider"
-msgstr "지점을 추가하려면 클릭하거나 클릭 후 드래그하십시오."
+msgstr "새 슬라이더를 추가하려면 클릭 또는 클릭-끌기"
 
 #: ../app/display/gimptoolline.c:1553
 #, fuzzy
@@ -17733,9 +17683,8 @@ msgid "Delete Anchors"
 msgstr "고정점 삭제"
 
 #: ../app/display/gimptoolpolygon.c:866
-#, fuzzy
 msgid "Click to close shape"
-msgstr "선명하게 하려면 클릭하십시오."
+msgstr "클릭해서 모양을 선명하게"
 
 #: ../app/display/gimptoolpolygon.c:870
 msgid "Click-Drag to move segment vertex"
@@ -18569,9 +18518,8 @@ msgstr ""
 
 #: ../app/operations/gimpbrightnesscontrastconfig.c:82
 #: ../app/operations/gimpbrightnesscontrastconfig.c:83
-#, fuzzy
 msgid "Brightness"
-msgstr "명도(_B):"
+msgstr "명도"
 
 #: ../app/operations/gimpbrightnesscontrastconfig.c:88
 #: ../app/operations/gimpbrightnesscontrastconfig.c:89
@@ -18754,9 +18702,8 @@ msgid "Fill the original position of the cage with a plain color"
 msgstr "골조의 원래 위치를 단색으로 채우기"
 
 #: ../app/operations/gimpoperationcolorbalance.c:65
-#, fuzzy
 msgid "Adjust color distribution"
-msgstr "색상 균형 도구: 색상 분포를 조절합니다."
+msgstr "색 분포 조정"
 
 #: ../app/operations/gimpoperationcolorize.c:85
 #, fuzzy
@@ -18780,14 +18727,12 @@ msgid "Turn colors into shades of gray"
 msgstr "무채화 도구: 색상을 회색계조로 바꿉니다."
 
 #: ../app/operations/gimpoperationdesaturate.c:91
-#, fuzzy
 msgid "Choose shade of gray based on"
-msgstr "기본으로 사용할 회색 계조를 선택하십시오.:"
+msgstr "회색 계조 선택 기준은"
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
-#, fuzzy
 msgid "Adjust hue, saturation, and lightness"
-msgstr "색상-채도 도구: 색상, 채도, 밝기를 조절합니다."
+msgstr "색조, 채도, 밝기를 조정"
 
 #: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:133
 #, fuzzy
@@ -19198,9 +19143,8 @@ msgstr "칠할 때 사라짐이 반복되는 방법"
 
 #: ../app/paint/gimppaintoptions.c:342 ../app/tools/gimpgradientoptions.c:298
 #: ../app/tools/gimppaintoptions-gui.c:393
-#, fuzzy
 msgid "Blend Color Space"
-msgstr "색상 공간:"
+msgstr "혼합 색 공간"
 
 #: ../app/paint/gimppaintoptions.c:343
 msgid "Which color space to use when blending RGB gradient segments"
@@ -19271,9 +19215,8 @@ msgstr "먼저 원본 이미지를 설정하십시오."
 
 #: ../app/paint/gimpsourceoptions.c:63 ../app/tools/gimpcloneoptions-gui.c:102
 #: ../app/tools/gimphealtool.c:105
-#, fuzzy
 msgid "Alignment"
-msgstr "정렬:"
+msgstr "정렬"
 
 #: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:128
 #: ../app/tools/gimpbucketfilloptions.c:117 ../app/tools/gimpcoloroptions.c:69
@@ -19459,9 +19402,9 @@ msgid "Brush '%s' is not editable"
 msgstr "붓 '%s'을(를) 수정할 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "Brush '%s' is not renamable"
-msgstr "붓 '%s'을(를) 수정할 수 없습니다."
+msgstr "붓 '%s'의 이름 변경 불가"
 
 #: ../app/pdb/gimppdb-utils.c:125
 #, c-format
@@ -19903,10 +19846,9 @@ msgid "Stretch Contrast HSV"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:861
-#, fuzzy
 msgctxt "undo-type"
 msgid "Stretch Contrast"
-msgstr "대비(_T):"
+msgstr "대비 늘이기"
 
 #: ../app/pdb/plug-in-compat-cmds.c:940
 #, fuzzy
@@ -20007,10 +19949,9 @@ msgid "Lens Distortion"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:2399
-#, fuzzy
 msgctxt "undo-type"
 msgid "Tile Seamless"
-msgstr "파일명:"
+msgstr "이믐새 없이 타일링"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2466
 msgctxt "undo-type"
@@ -21342,9 +21283,8 @@ msgid "Click to add control points to all channels"
 msgstr "모든 채널에 조절점을 추가하려면 클릭하십시오"
 
 #: ../app/tools/gimpcurvestool.c:335
-#, fuzzy
 msgid "Click to locate on curve"
-msgstr "곡선을 닫으려면 클릭하십시오."
+msgstr ""
 
 #: ../app/tools/gimpcurvestool.c:337
 #, c-format
@@ -21559,14 +21499,12 @@ msgid "Click to switch the original and filtered sides"
 msgstr "이 안내선를 첫번째 항목으로 선택하려면 클릭하십시오."
 
 #: ../app/tools/gimpfiltertool.c:632
-#, fuzzy
 msgid "Click to switch between vertical and horizontal"
-msgstr "수직 및 수평 안내선을 위치시키려면 클릭하십시오."
+msgstr ""
 
 #: ../app/tools/gimpfiltertool.c:636
-#, fuzzy
 msgid "Click to move the split guide"
-msgstr "선을 닷징(Dodge)하려면 클릭하십시오."
+msgstr "클릭해서 분할 안내선을 이동"
 
 #: ../app/tools/gimpfiltertool.c:638
 #, c-format
@@ -21972,9 +21910,8 @@ msgstr "경로 삭제"
 
 #. the type label
 #: ../app/tools/gimpgradienttool-editor.c:1533
-#, fuzzy
 msgid "Blending:"
-msgstr "혼합"
+msgstr "혼합하기:"
 
 #. the color label
 #: ../app/tools/gimpgradienttool-editor.c:1555
@@ -22144,9 +22081,8 @@ msgid "Intelligent _Scissors"
 msgstr "똑똑한 가위(_S)"
 
 #: ../app/tools/gimpiscissorstool.c:905
-#, fuzzy
 msgid "Click to remove this point"
-msgstr "이 점을 이동시키려면 클릭 후 드래그하십시오."
+msgstr "클릭해서 이 점을 제거"
 
 #: ../app/tools/gimpiscissorstool.c:913 ../app/tools/gimpiscissorstool.c:982
 #, c-format
@@ -22997,9 +22933,8 @@ msgid "Adjust letter spacing"
 msgstr "글자 간격 조정"
 
 #: ../app/tools/gimptextoptions.c:198
-#, fuzzy
 msgid "Box"
-msgstr "상자:"
+msgstr "상자"
 
 #: ../app/tools/gimptextoptions.c:199
 msgid ""
@@ -23593,10 +23528,9 @@ msgid "Erase warping"
 msgstr "지우개"
 
 #: ../app/tools/tools-enums.c:192
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Smooth warping"
-msgstr "부드럽게:"
+msgstr "매끄러운 뒤틀기"
 
 #: ../app/vectors/gimpvectors.c:224
 msgctxt "undo-type"
@@ -25086,9 +25020,8 @@ msgid "Read Selected _Language"
 msgstr "시스템 언어"
 
 #: ../app/widgets/gimphelp.c:824
-#, fuzzy
 msgid "Available manuals..."
-msgstr "가용 필터"
+msgstr "가용한 매뉴얼..."
 
 #: ../app/widgets/gimphelp.c:836
 #, fuzzy
