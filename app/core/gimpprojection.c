@@ -741,6 +741,17 @@ gimp_projection_chunk_render_start (GimpProjection *proj)
             proj, NULL);
         }
     }
+  else
+    {
+      if (region)
+        cairo_region_destroy (region);
+
+      if (proj->priv->idle_id)
+        {
+          g_source_remove (proj->priv->idle_id);
+          proj->priv->idle_id = 0;
+        }
+    }
 }
 
 static void
