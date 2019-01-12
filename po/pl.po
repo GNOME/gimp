@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-06 19:11+0100\n"
-"PO-Revision-Date: 2019-01-06 19:20+0100\n"
+"POT-Creation-Date: 2019-01-12 13:08+0100\n"
+"PO-Revision-Date: 2019-01-12 13:09+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -10112,21 +10112,24 @@ msgid "_Zoom (%s)"
 msgstr "_Powiększenie (%s)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1136
+#. H: Horizontal, V: Vertical
+#: ../app/actions/view-actions.c:1137
 msgid "(H+V) "
-msgstr "(H+V) "
+msgstr "(Poz.+Pion.) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1141
+#. H: Horizontal
+#: ../app/actions/view-actions.c:1143
 msgid "(H) "
-msgstr "(H) "
+msgstr "(Poz.) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1146
+#. V: Vertical
+#: ../app/actions/view-actions.c:1149
 msgid "(V) "
-msgstr "(V) "
+msgstr "(Pion.) "
 
-#: ../app/actions/view-actions.c:1153
+#: ../app/actions/view-actions.c:1156
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Odbij %si obróć (%d°)"
@@ -13115,7 +13118,7 @@ msgid "Render Stroke"
 msgstr "Rysowanie pociągnięcia"
 
 #: ../app/core/gimpdrawable-gradient.c:125
-#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1037
+#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1043
 msgctxt "undo-type"
 msgid "Gradient"
 msgstr "Gradient"
@@ -17631,7 +17634,7 @@ msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
-#: ../app/tools/gimpbucketfilltool.c:297 ../app/tools/gimpcagetool.c:221
+#: ../app/tools/gimpbucketfilltool.c:280 ../app/tools/gimpcagetool.c:221
 #: ../app/tools/gimpfiltertool.c:273 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
@@ -17639,10 +17642,10 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
-#: ../app/tools/gimpbucketfilltool.c:311 ../app/tools/gimpcagetool.c:228
+#: ../app/tools/gimpbucketfilltool.c:294 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1150
 #: ../app/tools/gimpfiltertool.c:280 ../app/tools/gimpgradienttool.c:255
-#: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:286
+#: ../app/tools/gimpmovetool.c:309 ../app/tools/gimppainttool.c:286
 #: ../app/tools/gimpselectiontool.c:453 ../app/tools/gimptransformtool.c:513
 #: ../app/tools/gimpwarptool.c:638
 #, c-format
@@ -17748,6 +17751,11 @@ msgstr "(brak)"
 #: ../app/display/gimpdisplayshell-title.c:497
 msgid "not color managed"
 msgstr "bez zarządzania kolorami"
+
+#: ../app/display/gimpdisplayshell-tool-events.c:1603
+#, c-format
+msgid "Layer picked: '%s'"
+msgstr "Wybrana warstwa: „%s”"
 
 #: ../app/display/gimpdisplayshell-utils.c:174
 #: ../app/tools/gimpmeasuretool.c:592 ../app/tools/gimpmeasuretool.c:745
@@ -21250,19 +21258,19 @@ msgstr "Wyszukiwanie podobnych kolorów"
 msgid "Line Art Detection"
 msgstr "Wykrywanie kresek rysunku"
 
-#: ../app/tools/gimpbucketfilltool.c:164
+#: ../app/tools/gimpbucketfilltool.c:162
 msgid "Bucket Fill"
 msgstr "Wypełnienie kubełkiem"
 
-#: ../app/tools/gimpbucketfilltool.c:165
+#: ../app/tools/gimpbucketfilltool.c:163
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr "Wypełnienie kubełkiem: wypełnia zaznaczony obszar kolorem lub deseniem"
 
-#: ../app/tools/gimpbucketfilltool.c:166
+#: ../app/tools/gimpbucketfilltool.c:164
 msgid "_Bucket Fill"
 msgstr "Wyp_ełnienie kubełkiem"
 
-#: ../app/tools/gimpbucketfilltool.c:304 ../app/tools/gimpcagetool.c:237
+#: ../app/tools/gimpbucketfilltool.c:287 ../app/tools/gimpcagetool.c:237
 #: ../app/tools/gimpfiltertool.c:289
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:313
@@ -21270,16 +21278,16 @@ msgstr "Wyp_ełnienie kubełkiem"
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
-#: ../app/tools/gimpbucketfilltool.c:339
+#: ../app/tools/gimpbucketfilltool.c:322
 msgid "Bucket fill"
 msgstr "Wypełnienie kubełkiem"
 
-#: ../app/tools/gimpbucketfilltool.c:693 ../app/tools/gimpbucketfilltool.c:809
+#: ../app/tools/gimpbucketfilltool.c:676 ../app/tools/gimpbucketfilltool.c:797
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:447
 msgid "Click in any image to pick the background color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor tła"
 
-#: ../app/tools/gimpbucketfilltool.c:700 ../app/tools/gimpbucketfilltool.c:818
+#: ../app/tools/gimpbucketfilltool.c:683 ../app/tools/gimpbucketfilltool.c:806
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:441
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor pierwszoplanowy"
@@ -21667,31 +21675,31 @@ msgstr "Przesunięcie: "
 msgid "Move Floating Selection"
 msgstr "Przesunięcie oderwanego zaznaczenia"
 
-#: ../app/tools/gimpeditselectiontool.c:1123 ../app/tools/gimpmovetool.c:263
+#: ../app/tools/gimpeditselectiontool.c:1123 ../app/tools/gimpmovetool.c:264
 msgid "There is no path to move."
 msgstr "Brak ścieżki do przeniesienia."
 
-#: ../app/tools/gimpeditselectiontool.c:1127 ../app/tools/gimpmovetool.c:267
+#: ../app/tools/gimpeditselectiontool.c:1127 ../app/tools/gimpmovetool.c:268
 #: ../app/tools/gimptransformtool.c:555
 msgid "The active path's position is locked."
 msgstr "Położenie aktywnej ścieżki jest zablokowane."
 
-#: ../app/tools/gimpeditselectiontool.c:1138 ../app/tools/gimpmovetool.c:299
+#: ../app/tools/gimpeditselectiontool.c:1138 ../app/tools/gimpmovetool.c:300
 msgid "There is no layer to move."
 msgstr "Brak warstwy do przeniesienia."
 
 #: ../app/tools/gimpeditselectiontool.c:1146
 #: ../app/tools/gimpeditselectiontool.c:1172
-#: ../app/tools/gimpeditselectiontool.c:1181 ../app/tools/gimpmovetool.c:306
-#: ../app/tools/gimpmovetool.c:324
+#: ../app/tools/gimpeditselectiontool.c:1181 ../app/tools/gimpmovetool.c:307
+#: ../app/tools/gimpmovetool.c:325
 msgid "The active layer's position is locked."
 msgstr "Położenie aktywnej warstwy jest zablokowane."
 
-#: ../app/tools/gimpeditselectiontool.c:1159 ../app/tools/gimpmovetool.c:315
+#: ../app/tools/gimpeditselectiontool.c:1159 ../app/tools/gimpmovetool.c:316
 msgid "The active channel's position is locked."
 msgstr "Położenie aktywnego kanału jest zablokowane."
 
-#: ../app/tools/gimpeditselectiontool.c:1163 ../app/tools/gimpmovetool.c:317
+#: ../app/tools/gimpeditselectiontool.c:1163 ../app/tools/gimpmovetool.c:318
 msgid "The active channel's pixels are locked."
 msgstr "Piksele aktywnego kanału są zablokowane."
 
@@ -23293,7 +23301,7 @@ msgstr "_Automatycznie"
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automatyczne dopasowanie optymalnego progu binaryzacji"
 
-#: ../app/tools/gimptool.c:1194
+#: ../app/tools/gimptool.c:1213
 msgid "Can't work on an empty image, add a layer first"
 msgstr "Nie można pracować na pustym obrazie, należy najpierw dodać warstwę"
 
