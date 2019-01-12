@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-12 22:49+0900\n"
+"PO-Revision-Date: 2019-01-13 04:16+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -195,9 +195,8 @@ msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
-#, fuzzy
 msgid "Layer masks on layer groups"
-msgstr "레이어 그룹을 칠할 수 없습니다."
+msgstr "레이어 그룹에 레이어 마스크"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
@@ -12892,9 +12891,9 @@ msgstr ""
 "다."
 
 #: ../app/core/gimpgradient-load.c:273
-#, fuzzy, c-format
+#, c-format
 msgid "In line %d of gradient file: "
-msgstr "빈 문자열은 그라디언트 이름으로 부적절합니다"
+msgstr "그레이디언트 파일 %d번째 줄에서: "
 
 #: ../app/core/gimpgradient-load.c:349
 #, fuzzy, c-format
@@ -12907,9 +12906,8 @@ msgid "Writing POV file '%s' failed: %s"
 msgstr "'%s' 열기 실패: %s"
 
 #: ../app/core/gimpgrid.c:86
-#, fuzzy
 msgid "Line style"
-msgstr "선 모양(_S):"
+msgstr "선 스타일"
 
 #: ../app/core/gimpgrid.c:87
 msgid "Line style used for the grid."
@@ -13702,14 +13700,14 @@ msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "팔레트 파일 '%s' 읽는 중: %d번째 줄의 RGB값이 범위를 벗어났습니다."
 
 #: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:456
-#, fuzzy, c-format
+#, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
-msgstr "팔레트 파일 '%s' 읽는 중: %d번째 줄의 RGB값이 범위를 벗어났습니다."
+msgstr "팔레트 파일 '%s' 읽던 중: 잘린 파일에서 %d개의 색을 읽음: %s"
 
 #: ../app/core/gimppalette-load.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "In line %d of palette file: "
-msgstr "알 수 없는 형식의 팔레트 파일입니다.: %s"
+msgstr "팔레트 파일의 %d번째 줄에서: "
 
 #: ../app/core/gimppalette-load.c:429
 #, c-format
@@ -13865,9 +13863,8 @@ msgid "Method"
 msgstr ""
 
 #: ../app/core/gimpstrokeoptions.c:164
-#, fuzzy
 msgid "Line width"
-msgstr "선 너비:"
+msgstr "선 너비"
 
 #: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:151
 #: ../app/tools/gimptextoptions.c:121
@@ -13880,14 +13877,13 @@ msgid "Cap style"
 msgstr "선 끝 스타일"
 
 #: ../app/core/gimpstrokeoptions.c:185
-#, fuzzy
 msgid "Join style"
-msgstr "선 결합 스타일(_J):"
+msgstr "결합 스타일"
 
 #: ../app/core/gimpstrokeoptions.c:192
 #, fuzzy
 msgid "Miter limit"
-msgstr "뾰족한 선 결합 제한(_M):"
+msgstr "뾰족한 결합 제한"
 
 # 연귀 : 두 재를 맞추기 위하여 나무 마무리가 보이지 않게 귀를 45도 각도로 비스듬히 잘라 맞춘 곳. ≒제비촉.
 #: ../app/core/gimpstrokeoptions.c:193
@@ -14003,18 +13999,16 @@ msgid "Tiling"
 msgstr "비율 조정"
 
 #: ../app/core/gimpsymmetry-tiling.c:108
-#, fuzzy
 msgid "Interval X"
-msgstr "간격(_N):"
+msgstr "간격 X"
 
 #: ../app/core/gimpsymmetry-tiling.c:109
 msgid "Interval on the X axis (pixels)"
 msgstr ""
 
 #: ../app/core/gimpsymmetry-tiling.c:120
-#, fuzzy
 msgid "Interval Y"
-msgstr "간격(_N):"
+msgstr "간격 Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:121
 msgid "Interval on the Y axis (pixels)"
@@ -14034,9 +14028,8 @@ msgid "Max strokes X"
 msgstr "스트로크 잠그기(_O)"
 
 #: ../app/core/gimpsymmetry-tiling.c:145
-#, fuzzy
 msgid "Maximum number of strokes on the X axis"
-msgstr "최대 색상 수(_M):"
+msgstr "X 축에서 획의 최대 개수"
 
 #: ../app/core/gimpsymmetry-tiling.c:152
 #, fuzzy
@@ -14044,9 +14037,8 @@ msgid "Max strokes Y"
 msgstr "스트로크 잠그기(_O)"
 
 #: ../app/core/gimpsymmetry-tiling.c:153
-#, fuzzy
 msgid "Maximum number of strokes on the Y axis"
-msgstr "최대 색상 수(_M):"
+msgstr "Y 축에서 획의 최대 개수"
 
 #: ../app/core/gimptagcache.c:442
 #, c-format
@@ -14066,9 +14058,8 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "점대점 모드가 아닐때 좌표 출력에 사용할 단위."
 
 #: ../app/core/gimptemplate.c:159 ../app/core/gimptemplate.c:167
-#, fuzzy
 msgid "Resolution X"
-msgstr "해상도:"
+msgstr "X축 해상도:"
 
 #: ../app/core/gimptemplate.c:160
 msgid "The horizontal image resolution."
@@ -14079,9 +14070,8 @@ msgid "The vertical image resolution."
 msgstr "이미지 세로 해상도입니다."
 
 #: ../app/core/gimptemplate.c:175
-#, fuzzy
 msgid "Resolution unit"
-msgstr "해상도:"
+msgstr "해상도 단위"
 
 #. serialized name
 #: ../app/core/gimptemplate.c:182
@@ -14117,9 +14107,8 @@ msgid "Color profile"
 msgstr "색상 프로필"
 
 #: ../app/core/gimptemplate.c:230 ../app/tools/gimpbucketfilloptions.c:94
-#, fuzzy
 msgid "Fill type"
-msgstr "채우기:"
+msgstr "채우기 유형"
 
 #: ../app/core/gimptemplate.c:237 ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
@@ -14163,9 +14152,8 @@ msgid "Apply stored font"
 msgstr "저장된 글꼴 적용"
 
 #: ../app/core/gimptoolpreset-load.c:64
-#, fuzzy
 msgid "Tool preset file is corrupt."
-msgstr "도구 프리셋 편집기"
+msgstr "도구 프리셋 파일이 손상되었습니다."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -14252,11 +14240,13 @@ msgid "GIMP is brought to you by"
 msgstr "GIMP를 만들어준 사람들"
 
 #: ../app/dialogs/about-dialog.c:605
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This is an unstable development release\n"
 "commit %s"
-msgstr "이 버전은 불안정한 개발 버전입니다."
+msgstr ""
+"이 버전은 불안정한 개발 버전입니다.\n"
+"%s 커밋"
 
 #: ../app/dialogs/action-search-dialog.c:67
 #, fuzzy
@@ -14409,7 +14399,7 @@ msgstr "이미지를 그레이스케일 작업 공간으로 변환할까요?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert to RGB Working Space?"
-msgstr " RGB 작업 공간으로 변환할까요?"
+msgstr "RGB 작업 공간으로 변환할까요?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:91
 msgid "Convert the image to the RGB working space?"
@@ -14635,9 +14625,8 @@ msgstr ""
 "의 형식에 맞는 파일 확장자를 입력하거나 아예 파일 확장자를 입력하지 마십시오."
 
 #: ../app/dialogs/file-save-dialog.c:618
-#, fuzzy
 msgid "The given filename cannot be used for exporting"
-msgstr "파일 확장자명이 올바르지 않습니다."
+msgstr "지정한 파일명은 내보내기에 사용할 수 없습니다."
 
 #: ../app/dialogs/file-save-dialog.c:619
 msgid ""
@@ -14653,9 +14642,8 @@ msgid "Take me to the Save dialog"
 msgstr "레이어 대화상자를 엽니다"
 
 #: ../app/dialogs/file-save-dialog.c:626
-#, fuzzy
 msgid "The given filename cannot be used for saving"
-msgstr "파일 확장자명이 올바르지 않습니다."
+msgstr "지정한 파일명은 저장용으로 사용할 수 없습니다."
 
 #: ../app/dialogs/file-save-dialog.c:627
 msgid ""
@@ -15871,9 +15859,8 @@ msgid "Color Profile File Dialogs"
 msgstr "색상 프로필"
 
 #: ../app/dialogs/preferences-dialog.c:2114
-#, fuzzy
 msgid "Profile folder:"
-msgstr "모듈 폴더"
+msgstr "프로필 폴더"
 
 #: ../app/dialogs/preferences-dialog.c:2115
 #, fuzzy
@@ -15946,9 +15933,8 @@ msgid "Enable dithering of transparency"
 msgstr "투명도의 디더링 활성화(_T)"
 
 #: ../app/dialogs/preferences-dialog.c:2187
-#, fuzzy
 msgid "Keep recent settings:"
-msgstr "장치 설정 삭제하기"
+msgstr "최근 설정 유지:"
 
 #: ../app/dialogs/preferences-dialog.c:2191
 #, fuzzy
@@ -16006,9 +15992,8 @@ msgid "Add Layer Mask Dialog"
 msgstr "레이어 마스크 추가"
 
 #: ../app/dialogs/preferences-dialog.c:2241
-#, fuzzy
 msgid "Layer mask type:"
-msgstr "레이어 채우기 유형"
+msgstr "레이어 마스크 유형:"
 
 #: ../app/dialogs/preferences-dialog.c:2245
 #, fuzzy
@@ -16022,9 +16007,8 @@ msgid "Merge Layers Dialog"
 msgstr "레이어 합치기"
 
 #: ../app/dialogs/preferences-dialog.c:2256
-#, fuzzy
 msgid "Merged layer size:"
-msgstr "레이어 합침"
+msgstr "합친 레이어 크기:"
 
 #: ../app/dialogs/preferences-dialog.c:2260
 #, fuzzy
@@ -16806,9 +16790,8 @@ msgid "Layer Size"
 msgstr "레이어 크기"
 
 #: ../app/dialogs/resize-dialog.c:156
-#, fuzzy
 msgid "Fill With"
-msgstr "채우기(_F):"
+msgstr "채우기"
 
 #: ../app/dialogs/resize-dialog.c:185
 msgid "Re_set"
@@ -17457,9 +17440,8 @@ msgid "Click-Drag to remove this handle"
 msgstr "조절점을 이동하려면 클릭후 드래그하십시오"
 
 #: ../app/display/gimptoolline.c:335 ../app/display/gimptoolline.c:498
-#, fuzzy
 msgid "Line: "
-msgstr "선"
+msgstr "선: "
 
 #: ../app/display/gimptoolline.c:1484
 msgid "Click-Drag to move the endpoint"
@@ -17668,7 +17650,7 @@ msgstr "구획의 꼭지점을 이동하려면 클릭후 드래그하십시오"
 #: ../app/display/gimptoolpolygon.c:875
 #, fuzzy
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
-msgstr "엔터는 입력, ESC 키는 취소, 백스페이스는 마지막 부분을 제거합니다."
+msgstr "엔터는 입력, ESC 키는 취소, 백스페이스는 모양을 다시 열기"
 
 #: ../app/display/gimptoolpolygon.c:879
 msgid "Return commits, Escape cancels, Backspace removes last segment"
@@ -17686,9 +17668,8 @@ msgid "Rectangle: "
 msgstr "사각형: "
 
 #: ../app/display/gimptoolrectangle.c:2151
-#, fuzzy
 msgid "Position: "
-msgstr "위치:"
+msgstr "위치: "
 
 #: ../app/display/gimptooltransformgrid.c:1766
 #: ../app/display/gimptooltransformgrid.c:1771
@@ -18591,15 +18572,13 @@ msgstr "채도"
 #: ../app/operations/gimphuesaturationconfig.c:114
 #: ../app/operations/gimpoperationcolorize.c:104
 #: ../app/operations/gimpoperationcolorize.c:105
-#, fuzzy
 msgid "Lightness"
-msgstr "밝기(_L):"
+msgstr "밝기"
 
 #: ../app/operations/gimphuesaturationconfig.c:119
 #: ../app/operations/gimphuesaturationconfig.c:120
-#, fuzzy
 msgid "Overlap"
-msgstr "덧씌우기(_O):"
+msgstr "덧씌우기"
 
 #: ../app/operations/gimplevelsconfig.c:121
 #: ../app/operations/gimplevelsconfig.c:122
@@ -18695,9 +18674,8 @@ msgid "Adjust color curves"
 msgstr "색상 커브 조절"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
-#, fuzzy
 msgid "Turn colors into shades of gray"
-msgstr "무채화 도구: 색상을 회색계조로 바꿉니다."
+msgstr "색을 회색 계조로 바꾸기"
 
 #: ../app/operations/gimpoperationdesaturate.c:91
 msgid "Choose shade of gray based on"
@@ -18713,14 +18691,12 @@ msgid "Adjust color levels"
 msgstr "색상 레벨 조절"
 
 #: ../app/operations/gimpoperationposterize.c:82
-#, fuzzy
 msgid "Reduce to a limited set of colors"
-msgstr "포스터화 도구: 색상의 수를 줄입니다."
+msgstr "제한된 색상 세트로 줄이기"
 
 #: ../app/operations/gimpoperationposterize.c:87
-#, fuzzy
 msgid "Posterize levels"
-msgstr "포스터화 단계(_L):"
+msgstr "포스터화 단계"
 
 #: ../app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
@@ -18996,9 +18972,8 @@ msgid "Brush Force"
 msgstr "붓 폴더"
 
 #: ../app/paint/gimppaintoptions.c:235
-#, fuzzy
 msgid "Link Size"
-msgstr "인쇄 크기:"
+msgstr "링크 크기"
 
 #: ../app/paint/gimppaintoptions.c:236
 #, fuzzy
@@ -19106,9 +19081,8 @@ msgstr "사라지는 방향 반전"
 #: ../app/paint/gimppaintoptions.c:329 ../app/tools/gimpgradientoptions.c:109
 #: ../app/tools/gimpgradientoptions.c:326
 #: ../app/tools/gimppaintoptions-gui.c:357
-#, fuzzy
 msgid "Repeat"
-msgstr "반복:"
+msgstr "반복"
 
 #: ../app/paint/gimppaintoptions.c:330
 msgid "How fade is repeated as you paint"
@@ -19399,29 +19373,28 @@ msgid "Paint dynamics '%s' is not editable"
 msgstr "페인트 동적 요소 '%s'은(는) 수정할 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:168
-#, fuzzy, c-format
+#, c-format
 msgid "Paint dynamics '%s' is not renamable"
-msgstr "페인트 동적 요소 '%s'은(는) 수정할 수 없습니다."
+msgstr "페인트 동적 요소 '%s'은(는) 이름 변경 불가"
 
 #: ../app/pdb/gimppdb-utils.c:189
-#, fuzzy
 msgid "Invalid empty MyPaint brush name"
-msgstr "빈 문자열은 붓 이름으로 부적절합니다."
+msgstr "잘못된 빈 마이페인트 붓 이름"
 
 #: ../app/pdb/gimppdb-utils.c:198
-#, fuzzy, c-format
+#, c-format
 msgid "MyPaint brush '%s' not found"
-msgstr "붓 '%s'이(가) 없습니다."
+msgstr "마이페인트 붓 '%s'이(가) 없음"
 
 #: ../app/pdb/gimppdb-utils.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "MyPaint brush '%s' is not editable"
-msgstr "붓 '%s'을(를) 수정할 수 없습니다."
+msgstr "마이페인트 붓 '%s'을(를) 수정할 수 없음"
 
 #: ../app/pdb/gimppdb-utils.c:211
-#, fuzzy, c-format
+#, c-format
 msgid "MyPaint brush '%s' is not renamable"
-msgstr "붓 '%s'을(를) 수정할 수 없습니다."
+msgstr "마이페인트 붓 '%s'은(는) 이름 변경 불가"
 
 #: ../app/pdb/gimppdb-utils.c:231
 msgid "Invalid empty pattern name"
@@ -19447,9 +19420,9 @@ msgid "Gradient '%s' is not editable"
 msgstr "그라디언트 '%s'은(는) 수정할 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "Gradient '%s' is not renamable"
-msgstr "그라디언트 '%s'은(는) 수정할 수 없습니다."
+msgstr "그레이디언트 '%s'은(는) 이름 수정 불가"
 
 #: ../app/pdb/gimppdb-utils.c:303
 msgid "Invalid empty palette name"
@@ -19466,9 +19439,9 @@ msgid "Palette '%s' is not editable"
 msgstr "팔레트 '%s'은(는) 수정할 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:325
-#, fuzzy, c-format
+#, c-format
 msgid "Palette '%s' is not renamable"
-msgstr "팔레트 '%s'은(는) 수정할 수 없습니다."
+msgstr "팔레트 '%s'은(는) 이름 수정 불가"
 
 #: ../app/pdb/gimppdb-utils.c:345
 msgid "Invalid empty font name"
@@ -19545,10 +19518,10 @@ msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr "'%s' (%d) 항목은 내용이 잠겼으므로 사용할 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:590
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
-msgstr "'%s' (%d) 항목은 내용이 잠겼으므로 사용할 수 없습니다."
+msgstr "'%s' (%d) 항목은 위치와 크기를 잠갔으므로 수정할 수 없음"
 
 #: ../app/pdb/gimppdb-utils.c:610
 #, c-format
