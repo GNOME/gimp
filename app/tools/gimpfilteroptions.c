@@ -36,6 +36,7 @@ enum
   PROP_PREVIEW_SPLIT,
   PROP_PREVIEW_ALIGNMENT,
   PROP_PREVIEW_POSITION,
+  PROP_CONTROLLER,
   PROP_REGION,
   PROP_COLOR_MANAGED,
   PROP_GAMMA_HACK
@@ -96,6 +97,13 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONTROLLER,
+                            "controller",
+                            _("On-canvas con_trols"),
+                            _("Show on-canvas filter controls"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   g_object_class_install_property (object_class, PROP_REGION,
                                    g_param_spec_enum ("region",
                                                       NULL, NULL,
@@ -152,6 +160,10 @@ gimp_filter_options_set_property (GObject      *object,
       options->preview_position = g_value_get_double (value);
       break;
 
+    case PROP_CONTROLLER:
+      options->controller = g_value_get_boolean (value);
+      break;
+
     case PROP_REGION:
       options->region = g_value_get_enum (value);
       break;
@@ -194,6 +206,10 @@ gimp_filter_options_get_property (GObject    *object,
 
     case PROP_PREVIEW_POSITION:
       g_value_set_double (value, options->preview_position);
+      break;
+
+    case PROP_CONTROLLER:
+      g_value_set_boolean (value, options->controller);
       break;
 
     case PROP_REGION:

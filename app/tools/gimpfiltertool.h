@@ -58,6 +58,7 @@ struct _GimpFilterTool
   gboolean            overlay;
   GimpToolGui        *gui;
   GtkWidget          *settings_box;
+  GtkWidget          *controller_toggle;
   GtkWidget          *region_combo;
   GtkWidget          *active_picker;
 
