@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-13 11:43+0900\n"
+"PO-Revision-Date: 2019-01-14 02:00+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -593,9 +593,8 @@ msgid "File"
 msgstr "파일"
 
 #: ../app/actions/actions.c:168
-#, fuzzy
 msgid "Filters"
-msgstr "필터(_R)"
+msgstr "필터"
 
 #: ../app/actions/actions.c:171 ../app/dialogs/dialogs.c:353
 #: ../app/dialogs/preferences-dialog.c:3123
@@ -644,9 +643,8 @@ msgstr "레이어"
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:327
 #: ../app/dialogs/dialogs.c:341 ../app/dialogs/preferences-dialog.c:3131
-#, fuzzy
 msgid "MyPaint Brushes"
-msgstr "붓"
+msgstr "마이페인트 붓"
 
 #: ../app/actions/actions.c:201 ../app/dialogs/dialogs.c:432
 #: ../app/widgets/gimppaletteeditor.c:149
@@ -666,7 +664,6 @@ msgid "Patterns"
 msgstr "무늬"
 
 #: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3135
-#, fuzzy
 msgid "Plug-ins"
 msgstr "플러그인"
 
@@ -1227,9 +1224,8 @@ msgid "New Channel"
 msgstr "새 채널"
 
 #: ../app/actions/channels-commands.c:159
-#, fuzzy
 msgid "Create a New Channel"
-msgstr "새 채널을 만듭니다"
+msgstr "새 채널 만들기"
 
 #: ../app/actions/channels-commands.c:161
 msgid "New Channel Color"
@@ -2093,28 +2089,24 @@ msgid "Tool Opacity: Make 10% More Opaque"
 msgstr "도구 불투명도: 10% 더 불투명하게 만들기"
 
 #: ../app/actions/context-actions.c:705
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select First"
-msgstr "칠하기 모드: %s"
+msgstr "도구 칠하기 모드: 첫째 항목 선택"
 
 #: ../app/actions/context-actions.c:709
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Last"
-msgstr "칠하기 모드: %s"
+msgstr "도구 칠하기 모드: 마지막 항목 선택"
 
 #: ../app/actions/context-actions.c:713
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Previous"
-msgstr "도구 칠 모드: 이전 모드 선택"
+msgstr "도구 칠하기 모드: 이전 항목 선택"
 
 #: ../app/actions/context-actions.c:717
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Next"
-msgstr "도구 칠 모드: 다음 모드 선택"
+msgstr "도구 칠하기 모드: 다음 항목 선택"
 
 #: ../app/actions/context-actions.c:725
 msgctxt "context-action"
@@ -2122,26 +2114,24 @@ msgid "Tool Selection: Choose by Index"
 msgstr "도구 선택: 인덱스로 선택"
 
 #: ../app/actions/context-actions.c:729
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Selection: Switch to First"
-msgstr "십자선과 도구 아이콘"
+msgstr "도구 선택: 첫째 항목으로 전환"
 
 #: ../app/actions/context-actions.c:733
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Last"
-msgstr "선택 영역을 경로로 변환합니다"
+msgstr "도구 선택: 마지막 항목으로 전환"
 
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr "도구 선택: 이전 도구로 전환"
+msgstr "도구 선택: 이전 항목으로 전환"
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Next"
-msgstr "도구 선택: 다음 도구로 전환"
+msgstr "도구 선택: 다음 항목으로 전환"
 
 #: ../app/actions/context-actions.c:749
 msgctxt "context-action"
@@ -2151,23 +2141,22 @@ msgstr "붓 선택: 인덱스로 선택"
 #: ../app/actions/context-actions.c:753
 msgctxt "context-action"
 msgid "Brush Selection: Switch to First"
-msgstr "붓 선택: 처음 붓로 전환"
+msgstr "붓 선택: 처음 항목으로 전환"
 
 #: ../app/actions/context-actions.c:757
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Last"
-msgstr "선택 영역을 경로로 변환합니다"
+msgstr "붓 선택: 마지막 항목으로 전환"
 
 #: ../app/actions/context-actions.c:761
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Previous"
-msgstr "붓 선택: 이전 붓으로 전환"
+msgstr "붓 선택: 이전 항목으로 전환"
 
 #: ../app/actions/context-actions.c:765
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Next"
-msgstr "붓 선택: 다음 붓으로 전환"
+msgstr "붓 선택: 다음 항목전환"
 
 #: ../app/actions/context-actions.c:773
 msgctxt "context-action"
@@ -2180,21 +2169,19 @@ msgid "Pattern Selection: Switch to First"
 msgstr "패턴 선택: 처음 패턴으로 전환"
 
 #: ../app/actions/context-actions.c:781
-#, fuzzy
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Last"
-msgstr "떠있는 선택을 레이어로"
+msgstr "패턴 선택: 마지막 항목으로 전환"
 
 #: ../app/actions/context-actions.c:785
-#, fuzzy
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Previous"
-msgstr "마지막에 사용한 값으로 선택 영역을 따라 그립니다"
+msgstr "패턴 선택: 이전 항목으로 전환"
 
 #: ../app/actions/context-actions.c:789
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Next"
-msgstr "패턴 선택: 다음 패턴으로 전환"
+msgstr "패턴 선택: 다음 항목으로 전환"
 
 #: ../app/actions/context-actions.c:797
 msgctxt "context-action"
@@ -2202,28 +2189,24 @@ msgid "Palette Selection: Select by Index"
 msgstr "패턴 선택: 인덱스로 선택"
 
 #: ../app/actions/context-actions.c:801
-#, fuzzy
 msgctxt "context-action"
 msgid "Palette Selection: Switch to First"
-msgstr "선택을 레이어 마스크로 교체합니다"
+msgstr "패턴 선택: 처음 항목으로 전환"
 
 #: ../app/actions/context-actions.c:805
-#, fuzzy
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Last"
-msgstr "선택을 경로로 교체"
+msgstr "패턴 선택: 마지막 항목으로 전환"
 
 #: ../app/actions/context-actions.c:809
-#, fuzzy
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Previous"
-msgstr "마지막에 사용한 값으로 선택 영역을 따라 그립니다"
+msgstr "패턴 선택: 이전 항목으로 전환"
 
 #: ../app/actions/context-actions.c:813
-#, fuzzy
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Next"
-msgstr "선택을 이 채널로 바꿉니다"
+msgstr "패턴 선택: 다음 항목으로 전환"
 
 #: ../app/actions/context-actions.c:821
 msgctxt "context-action"
@@ -2233,59 +2216,52 @@ msgstr "그레이디언트 선택: 인덱스로 선택"
 #: ../app/actions/context-actions.c:825
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to First"
-msgstr "그레이디언트 선택: 처음 그레이디언트로 전환"
+msgstr "그레이디언트 선택: 처음 항목으로 전환"
 
 #: ../app/actions/context-actions.c:829
-#, fuzzy
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Last"
-msgstr "떠있는 선택을 레이어로"
+msgstr "그레이디언트 선택: 마지막 항목으로 전환"
 
 #: ../app/actions/context-actions.c:833
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Previous"
-msgstr "그레이디언트 선택: 이전 그레이디언트로 전환"
+msgstr "그레이디언트 선택: 이전 항목으로 전환"
 
 #: ../app/actions/context-actions.c:837
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Next"
-msgstr "그레이디언트 선택: 다음 그레이디언트로 전환"
+msgstr "그레이디언트 선택: 다음 항목으로 전환"
 
 #: ../app/actions/context-actions.c:845
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Select by Index"
-msgstr "떠있는 선택을 레이어로"
+msgstr "글꼴 선택: 인덱스로 선택"
 
 #: ../app/actions/context-actions.c:849
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Switch to First"
-msgstr "떠있는 선택을 레이어로"
+msgstr "글꼴 선택: 첫째 항목으로 전환"
 
 #: ../app/actions/context-actions.c:853
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Switch to Last"
-msgstr "떠있는 선택을 레이어로"
+msgstr "글꼴 선택: 마지막 항목으로 전환"
 
 #: ../app/actions/context-actions.c:857
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Switch to Previous"
-msgstr "마지막에 사용한 값으로 선택 영역을 따라 그립니다"
+msgstr "글꼴 선택: 이전 항목으로 전환"
 
 #: ../app/actions/context-actions.c:861
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Switch to Next"
-msgstr "떠있는 선택을 레이어로"
+msgstr "글꼴 선택: 다음 항목으로 전환"
 
 #: ../app/actions/context-actions.c:869
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set"
-msgstr "붓 간격"
+msgstr "붓 간격(편집기): 설정"
 
 #: ../app/actions/context-actions.c:873
 msgctxt "context-action"
@@ -2323,10 +2299,9 @@ msgid "Brush Shape (Editor): Use Circular"
 msgstr "붓 모양(편집기): 원형 사용"
 
 #: ../app/actions/context-actions.c:905
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Square"
-msgstr "붓 편집기 메뉴"
+msgstr "붓 모양(편집기): 정사각형 사용"
 
 #: ../app/actions/context-actions.c:909
 msgctxt "context-action"
@@ -2334,10 +2309,9 @@ msgid "Brush Shape (Editor): Use Diamond"
 msgstr "붓 모양(편집기): 마름모 사용"
 
 #: ../app/actions/context-actions.c:917
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set"
-msgstr "붓 편집기 메뉴"
+msgstr "붓 반지름(편집기): 설정"
 
 #: ../app/actions/context-actions.c:921
 msgctxt "context-action"
@@ -2390,10 +2364,9 @@ msgid "Brush Radius (Editor): Increase Relative"
 msgstr "붓 반지름(편집기): 상재적으로 늘리기"
 
 #: ../app/actions/context-actions.c:965
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set"
-msgstr "붓 편집기 메뉴"
+msgstr "붓 스파이크(편집기): 설정"
 
 #: ../app/actions/context-actions.c:969
 msgctxt "context-action"
@@ -2426,10 +2399,9 @@ msgid "Brush Spikes (Editor): Increase by 4"
 msgstr "붓 스파이크(편집기): 4만큼 늘리기"
 
 #: ../app/actions/context-actions.c:997
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set"
-msgstr "붓 경도"
+msgstr "붓 경도(편집기): 설정"
 
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
@@ -2462,10 +2434,9 @@ msgid "Brush Hardness (Editor): Increase by 0.1"
 msgstr "붓 경도(편집기): 0.1만큼 늘리기"
 
 #: ../app/actions/context-actions.c:1029
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set"
-msgstr "붓 종횡비"
+msgstr "붓 종횡비(편집기): 설정"
 
 #: ../app/actions/context-actions.c:1033
 msgctxt "context-action"
@@ -2488,22 +2459,19 @@ msgid "Brush Aspect Ratio (Editor): Increase by 0.1"
 msgstr "붓 종횡비(편집기): 0.1만큼 늘리기"
 
 #: ../app/actions/context-actions.c:1049
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 1"
-msgstr "붓 종횡비"
+msgstr "붓 종횡비(편집기): 1만큼 줄이기"
 
 #: ../app/actions/context-actions.c:1053
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 1"
-msgstr "붓 종횡비"
+msgstr "붓 종횡비(편집기): 1만큼 늘리기"
 
 #: ../app/actions/context-actions.c:1061
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Set"
-msgstr "붓 편집기 메뉴"
+msgstr "붓 각도(편집기): 설정"
 
 #: ../app/actions/context-actions.c:1065
 msgctxt "context-action"
@@ -2571,10 +2539,9 @@ msgid "Use the composite color of all visible layers"
 msgstr "모든 보이는 레이어의 합성색을 사용합니다"
 
 #: ../app/actions/dashboard-actions.c:40
-#, fuzzy
 msgctxt "dashboard-action"
 msgid "Dashboard Menu"
-msgstr "대화 메뉴"
+msgstr "대시보드 메뉴"
 
 #: ../app/actions/dashboard-actions.c:44
 msgctxt "dashboard-action"
@@ -2587,10 +2554,9 @@ msgid "Update Interval"
 msgstr "간격 업데이트"
 
 #: ../app/actions/dashboard-actions.c:48
-#, fuzzy
 msgctxt "dashboard-action"
 msgid "History Duration"
-msgstr "채도"
+msgstr "이력 지속 기간"
 
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
@@ -2598,10 +2564,9 @@ msgid "Reset"
 msgstr "초기화"
 
 #: ../app/actions/dashboard-actions.c:52
-#, fuzzy
 msgctxt "dashboard-action"
 msgid "Reset cumulative data"
-msgstr "쌓이는 자료 재설정"
+msgstr "축적되는 자료 재설정"
 
 #: ../app/actions/dashboard-actions.c:60
 msgctxt "dashboard-action"
@@ -2726,10 +2691,9 @@ msgid "_Symmetry Painting"
 msgstr "대칭 페인팅(_S)"
 
 #: ../app/actions/dialogs-actions.c:66
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
-msgstr "레이어 대화상자를 엽니다"
+msgstr "대칭 대화상자 열기"
 
 #: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
@@ -2882,16 +2846,14 @@ msgid "Open the paint dynamics editor"
 msgstr "페인트 동적 요소스 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:161
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
-msgstr "붓(_P)"
+msgstr "마이페인트 붓(_M)"
 
 #: ../app/actions/dialogs-actions.c:162
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
-msgstr "붓 대화상자를 엽니다"
+msgstr "마이페인트 붓 대화상자를 열기"
 
 #: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
@@ -3019,10 +2981,9 @@ msgid "_Dashboard"
 msgstr "대시보드(_D)"
 
 #: ../app/actions/dialogs-actions.c:240
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the dashboard"
-msgstr "붓 편집기를 엽니다"
+msgstr "대시보드 열기"
 
 #: ../app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
@@ -3080,10 +3041,9 @@ msgid "About GIMP"
 msgstr "김프 정보입니다"
 
 #: ../app/actions/dialogs-actions.c:283
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "About"
-msgstr "정보(_A)"
+msgstr "정보"
 
 #: ../app/actions/dialogs-actions.c:285
 msgctxt "dialogs-action"
@@ -3329,10 +3289,9 @@ msgid "Show in _File Manager"
 msgstr ""
 
 #: ../app/actions/documents-actions.c:71
-#, fuzzy
 msgctxt "documents-action"
 msgid "Show image location in the file manager"
-msgstr "이미지 위치를 클립보드에 복사합니다"
+msgstr "파일 관리자에서 이미지 위치를 표시"
 
 #: ../app/actions/documents-actions.c:76
 msgctxt "documents-action"
@@ -3441,13 +3400,11 @@ msgstr "문서 이력 지우기"
 #: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:488
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
-#, fuzzy
 msgid "_Cancel"
-msgstr "취소됨"
+msgstr "취소(_C)"
 
 #: ../app/actions/documents-commands.c:231 ../app/actions/edit-commands.c:162
 #: ../app/dialogs/preferences-dialog.c:638
-#, fuzzy
 msgid "Cl_ear"
 msgstr "지우기(_E)"
 
@@ -3494,23 +3451,20 @@ msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "테두리로 둘러싼 픽셀을 이동합니다"
 
 #: ../app/actions/drawable-actions.c:67
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Visibility"
-msgstr "보임 여부를 전환합니다"
+msgstr "드로어블 보임 여부 전환"
 
 #: ../app/actions/drawable-actions.c:73
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Linked State"
-msgstr "연결 상태을 전환합니다"
+msgstr "드로어블의 연결 상태 전환하기"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/drawable-actions.c:79
-#, fuzzy
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawable"
-msgstr "픽셀 잠금(_O)"
+msgstr "드로어블의 픽셀 잠그기"
 
 #: ../app/actions/drawable-actions.c:81
 msgctxt "drawable-action"
@@ -3520,13 +3474,12 @@ msgstr "수정 행위로부터 그릴 수 있는 이 상태의 픽샐을 유지�
 #: ../app/actions/drawable-actions.c:87
 msgctxt "drawable-action"
 msgid "L_ock Position of Drawable"
-msgstr ""
+msgstr "드로어블의 위치 잠그기(_O)"
 
 #: ../app/actions/drawable-actions.c:89
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Keep the position on this drawable from being modified"
-msgstr "수정 행위로부터 그릴 수 있는 이 상태의 픽샐을 유지합니다"
+msgstr "이 드로어블에서의 위치가 수정되는 것을 막음"
 
 #: ../app/actions/drawable-actions.c:98
 msgctxt "drawable-action"
@@ -3534,10 +3487,9 @@ msgid "Flip _Horizontally"
 msgstr "수평 뒤집기(_H)"
 
 #: ../app/actions/drawable-actions.c:99
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
-msgstr "수평으로 뒤집습니다"
+msgstr "드로어블을 수평으로 뒤집기"
 
 #: ../app/actions/drawable-actions.c:104
 msgctxt "drawable-action"
@@ -3545,10 +3497,9 @@ msgid "Flip _Vertically"
 msgstr "수직 뒤집기(_V)"
 
 #: ../app/actions/drawable-actions.c:105
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
-msgstr "수직으로 뒤집습니다"
+msgstr "드로어블을 수직으로 뒤집기"
 
 #: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
@@ -3556,10 +3507,9 @@ msgid "Rotate 90° _clockwise"
 msgstr "시계방향으로 90도 회전(_C)"
 
 #: ../app/actions/drawable-actions.c:114
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
-msgstr "오른쪽으로 90도 회전합니다"
+msgstr "드로어블을 오른쪽으로 90도 회전하기"
 
 #: ../app/actions/drawable-actions.c:119
 msgctxt "drawable-action"
@@ -3567,10 +3517,9 @@ msgid "Rotate _180°"
 msgstr "_180도 회전"
 
 #: ../app/actions/drawable-actions.c:120
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
-msgstr "위 아래를 뒤집습니다"
+msgstr "드로어블의 위 아래를 뒤집기"
 
 #: ../app/actions/drawable-actions.c:125
 msgctxt "drawable-action"
@@ -3578,10 +3527,9 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "시계 반대방향으로 90° 회전(_W)"
 
 #: ../app/actions/drawable-actions.c:126
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
-msgstr "왼쪽으로 90도 회전합니다"
+msgstr "드로어블을 왼쪽으로 90도 회전하기"
 
 #: ../app/actions/drawable-commands.c:89
 msgid "White Balance operates only on RGB color layers."
@@ -3623,16 +3571,14 @@ msgid "Copy dynamics file location to clipboard"
 msgstr "동적 파일 위치를 클립보드에 복사합니다"
 
 #: ../app/actions/dynamics-actions.c:65
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Show in _File Manager"
-msgstr "모듈 관리기"
+msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/dynamics-actions.c:66
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Show dynamics file location in the file manager"
-msgstr "동적 파일 위치를 클립보드에 복사합니다"
+msgstr "파일 관리자에서 동적요소 파일 위치를 보이기"
 
 #: ../app/actions/dynamics-actions.c:71
 msgctxt "dynamics-action"
@@ -3660,10 +3606,9 @@ msgid "_Edit Dynamics..."
 msgstr "동적 요소 편집(_E)..."
 
 #: ../app/actions/dynamics-actions.c:87
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Edit this dynamics"
-msgstr "동적 요소를 편집합니다"
+msgstr "동적 요소를 편집하기"
 
 #: ../app/actions/dynamics-editor-actions.c:43
 msgctxt "dynamics-editor-action"
@@ -11995,7 +11940,7 @@ msgstr "부드럽게"
 #: ../app/core/core-enums.c:1224
 msgctxt "channel-border-style"
 msgid "Feathered"
-msgstr ""
+msgstr "페더 처리됨"
 
 #. initialize babl fishes
 #: ../app/core/gimp.c:508 ../app/core/gimp.c:540
@@ -18765,10 +18710,9 @@ msgid "Convolve Type"
 msgstr "컨발브 유형 (%s)"
 
 #: ../app/paint/gimpconvolveoptions.c:76
-#, fuzzy
 msgctxt "convolve-tool"
 msgid "Rate"
-msgstr "비율"
+msgstr "속도"
 
 #: ../app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
@@ -23649,7 +23593,6 @@ msgstr "Y:"
 
 #. TRANSLATORS: n/a for Not Available.
 #: ../app/widgets/gimpcolorframe.c:674 ../app/widgets/gimpcolorframe.c:676
-#, fuzzy
 msgctxt "Coordinates"
 msgid "n/a"
 msgstr "n/a"
@@ -24332,7 +24275,6 @@ msgid "Swap file occupied size"
 msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:408
-#, fuzzy
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "크기"
@@ -24356,20 +24298,18 @@ msgid "Whether there is work queued for the swap file"
 msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:440
-#, fuzzy
 msgctxt "dashboard-variable"
 msgid "Usage"
-msgstr "메시지"
+msgstr "사용"
 
 #: ../app/widgets/gimpdashboard.c:441
 msgid "Total CPU usage"
 msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:449 ../app/widgets/gimpdashboard.c:459
-#, fuzzy
 msgctxt "dashboard-variable"
 msgid "Active"
-msgstr "활성 경로"
+msgstr "활성"
 
 #: ../app/widgets/gimpdashboard.c:450
 #, fuzzy
@@ -24443,10 +24383,9 @@ msgid "Yes"
 msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:2333
-#, fuzzy
 msgctxt "dashboard-value"
 msgid "No"
-msgstr "없음"
+msgstr "아니요"
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
