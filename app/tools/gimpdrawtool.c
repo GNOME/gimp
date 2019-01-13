@@ -354,7 +354,7 @@ gimp_draw_tool_cursor_update (GimpTool         *tool,
 }
 
 static void
-gimp_draw_tool_widget_status (GimpToolWidget *rectangle,
+gimp_draw_tool_widget_status (GimpToolWidget *widget,
                               const gchar    *status,
                               GimpTool       *tool)
 {
@@ -371,7 +371,7 @@ gimp_draw_tool_widget_status (GimpToolWidget *rectangle,
 }
 
 static void
-gimp_draw_tool_widget_status_coords (GimpToolWidget *rectangle,
+gimp_draw_tool_widget_status_coords (GimpToolWidget *widget,
                                      const gchar    *title,
                                      gdouble         x,
                                      const gchar    *separator,
