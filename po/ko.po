@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-14 02:00+0900\n"
+"PO-Revision-Date: 2019-01-14 05:36+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -60,75 +60,85 @@ msgid ""
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and OS X."
 msgstr ""
+"김프는 확충 및 확장 가능합니다. 그것은 거의 어느 것이라도 할 수 있게 플러그"
+"인 및 확장 기능으로 증강될 수 있도록 설계되었습니다. 고급 스크립팅 인터페이스"
+"를 사용하면 가장 간단한 작업부터 가장 복잡 한 이미지 조작 절차까지 모든 것을 "
+"쉽게 스크립팅 할 수 있습니다. 김프는 리눅스, 마이크로 소프트 윈도우와 OS X에 "
+"사용할 수 있습니다."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:6
 msgid "Painting in GIMP"
-msgstr ""
+msgstr "김프에서 페인팅하기"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:7
 msgid "Photo editing in GIMP"
-msgstr ""
+msgstr "김프에서 사진 편집하기"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
+"2.10 시리즈의 첫 번째 릴리스는 새로운 이미지 프로세싱 엔진인 GEGL로의 이식(포"
+"팅)이 두드러진 특징입니다. 가장 두드러진 변화:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "High bit depth color processing (16/32-bit per color channel)"
-msgstr ""
+msgstr "높은 비트 심도 색 처리 (색 채널당 16/32 비트)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
 msgstr ""
+"색 관리는 이제 핵심 기능이며, 대부분의 위젯 및 미리 보기 영역은 색 관리 됩니"
+"다"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
-msgstr ""
+msgstr "캔버스 내 효과 미리 보기, 픽셀 처리 전후로 보기 분할"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
-msgstr ""
+msgstr "멀티스레드 및 하드웨어 가속 렌더링, 프로세싱 및 페인팅"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Most tools improved, several new transformation tools"
-msgstr ""
+msgstr "대부분의 도구를 개선, 몇 가지 새로운 변환 도구"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
-msgstr ""
+msgstr "많은 이미지 형식에 대한 향상된 지원, 특히 더 나은 PSD 가져 오기"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
-msgstr ""
+msgstr "새로 지원 되는 이미지 형식: OpenEXR, RGBE, WebP, HGT…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
 msgstr ""
+"향상된 디지털 페인팅: 캔버스 회전 및 뒤집기, 대칭 페인팅, 마이페인트 붓 …"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
-msgstr ""
+msgstr "Exif, XMP, IPTC 및 DICOM에서 메타데이터 보기 및 편집"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Basic HiDPI support: automatically or user-selected icon size"
-msgstr ""
+msgstr "기본적인 HiDPI 지원: 자동 선택되는 또는 사용자가 선택하는 아이콘 크기"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
-msgstr ""
+msgstr "김프의 새로운 테마: 빛, 회색, 어두움, 시스템"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "And much, much more…"
-msgstr ""
+msgstr "그리고 훨씬, 훨씬 더 많은 …"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
@@ -227,9 +237,8 @@ msgid ""
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
-#, fuzzy
 msgid "On-canvas gradient editing"
-msgstr "그라디언트 편집기를 엽니다"
+msgstr "캔버스 내 그레이디언트 편집하기"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Notification when an image is over/underexposed"
