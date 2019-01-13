@@ -74,6 +74,7 @@ struct _GimpToolWidgetPrivate
   gint              snap_width;
   gint              snap_height;
 
+  gboolean          visible;
   gboolean          focus;
 };
 
@@ -213,6 +214,8 @@ static void
 gimp_tool_widget_init (GimpToolWidget *widget)
 {
   widget->private = gimp_tool_widget_get_instance_private (widget);
+
+  widget->private->visible = TRUE;
 }
 
 static void
@@ -226,6 +229,8 @@ gimp_tool_widget_constructed (GObject *object)
   gimp_assert (GIMP_IS_DISPLAY_SHELL (private->shell));
 
   private->item = gimp_canvas_group_new (private->shell);
+
+  gimp_canvas_item_set_visible (private->item, private->visible);
 }
 
 static void
@@ -349,6 +354,32 @@ gimp_tool_widget_get_item (GimpToolWidget *widget)
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
   return widget->private->item;
+}
+
+void
+gimp_tool_widget_set_visible (GimpToolWidget *widget,
+                              gboolean        visible)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  if (visible != widget->private->visible)
+    {
+      widget->private->visible = visible;
+
+      if (widget->private->item)
+        gimp_canvas_item_set_visible (widget->private->item, visible);
+
+      if (! visible)
+        gimp_tool_widget_set_status (widget, NULL);
+    }
+}
+
+gboolean
+gimp_tool_widget_get_visible (GimpToolWidget *widget)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+
+  return widget->private->visible;
 }
 
 void
@@ -818,10 +849,14 @@ gimp_tool_widget_button_press (GimpToolWidget      *widget,
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), 0);
   g_return_val_if_fail (coords != NULL, 0);
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_press)
-    return GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_press (widget,
-                                                              coords, time, state,
-                                                              press_type);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_press)
+    {
+      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_press (widget,
+                                                                coords, time,
+                                                                state,
+                                                                press_type);
+    }
 
   return 0;
 }
@@ -836,10 +871,13 @@ gimp_tool_widget_button_release (GimpToolWidget        *widget,
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
   g_return_if_fail (coords != NULL);
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_release)
-    GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_release (widget,
-                                                         coords, time, state,
-                                                         release_type);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_release)
+    {
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_release (widget,
+                                                           coords, time, state,
+                                                           release_type);
+    }
 }
 
 void
@@ -851,9 +889,12 @@ gimp_tool_widget_motion (GimpToolWidget   *widget,
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
   g_return_if_fail (coords != NULL);
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion)
-    GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion (widget,
-                                                 coords, time, state);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion)
+    {
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion (widget,
+                                                   coords, time, state);
+    }
 }
 
 GimpHit
@@ -865,9 +906,13 @@ gimp_tool_widget_hit (GimpToolWidget   *widget,
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), GIMP_HIT_NONE);
   g_return_val_if_fail (coords != NULL, GIMP_HIT_NONE);
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->hit)
-    return GIMP_TOOL_WIDGET_GET_CLASS (widget)->hit (widget,
-                                                     coords, state, proximity);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hit)
+    {
+      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->hit (widget,
+                                                       coords, state,
+                                                       proximity);
+    }
 
   return GIMP_HIT_NONE;
 }
@@ -881,9 +926,12 @@ gimp_tool_widget_hover (GimpToolWidget   *widget,
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
   g_return_if_fail (coords != NULL);
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover)
-    GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover (widget,
-                                                coords, state, proximity);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover)
+    {
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover (widget,
+                                                  coords, state, proximity);
+    }
 }
 
 void
@@ -891,8 +939,11 @@ gimp_tool_widget_leave_notify (GimpToolWidget *widget)
 {
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->leave_notify)
-    GIMP_TOOL_WIDGET_GET_CLASS (widget)->leave_notify (widget);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->leave_notify)
+    {
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->leave_notify (widget);
+    }
 }
 
 gboolean
@@ -902,8 +953,11 @@ gimp_tool_widget_key_press (GimpToolWidget *widget,
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
   g_return_val_if_fail (kevent != NULL, FALSE);
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_press)
-    return GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_press (widget, kevent);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_press)
+    {
+      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_press (widget, kevent);
+    }
 
   return FALSE;
 }
@@ -915,8 +969,11 @@ gimp_tool_widget_key_release (GimpToolWidget *widget,
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
   g_return_val_if_fail (kevent != NULL, FALSE);
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_release)
-    return GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_release (widget, kevent);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_release)
+    {
+      return GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_release (widget, kevent);
+    }
 
   return FALSE;
 }
@@ -929,9 +986,12 @@ gimp_tool_widget_motion_modifier (GimpToolWidget  *widget,
 {
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier)
-    GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier (widget,
-                                                          key, press, state);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier)
+    {
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier (widget,
+                                                            key, press, state);
+    }
 }
 
 void
@@ -942,9 +1002,12 @@ gimp_tool_widget_hover_modifier (GimpToolWidget  *widget,
 {
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier)
-    GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier (widget,
-                                                         key, press, state);
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier)
+    {
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier (widget,
+                                                           key, press, state);
+    }
 }
 
 gboolean
@@ -959,7 +1022,8 @@ gimp_tool_widget_get_cursor (GimpToolWidget      *widget,
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_cursor)
+  if (widget->private->visible &&
+      GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_cursor)
     {
       GimpCursorType     my_cursor;
       GimpToolCursorType my_tool_cursor;
