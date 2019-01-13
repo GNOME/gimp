@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-13 08:29+0900\n"
+"PO-Revision-Date: 2019-01-13 09:37+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -861,7 +861,7 @@ msgstr "버퍼 붙이기(_P)"
 #: ../app/actions/buffers-actions.c:62
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "선택한 버퍼를 붙여넣습니다"
+msgstr "선택한 버퍼를 붙여넣기"
 
 #: ../app/actions/buffers-actions.c:67
 msgctxt "buffers-action"
@@ -869,10 +869,9 @@ msgid "Paste Buffer In Pl_ace"
 msgstr "버퍼를 제자리에 붙이기(_A)"
 
 #: ../app/actions/buffers-actions.c:68
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer at its original position"
-msgstr "선택한 버퍼를 선택 영역안으로 붙여넣습니다"
+msgstr "선택한 버퍼를 원래 위치에 붙여 넣기"
 
 #: ../app/actions/buffers-actions.c:73
 msgctxt "buffers-action"
@@ -882,19 +881,17 @@ msgstr "버퍼를 선택 영역 안에 붙이기(_I)"
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "선택한 버퍼를 선택 영역안으로 붙여넣습니다"
+msgstr "선택한 버퍼를 선택 영역안으로 붙여넣기"
 
 #: ../app/actions/buffers-actions.c:79
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer Into The Selection In Place"
-msgstr "선택한 버퍼를 선택 영역안으로 붙여넣습니다"
+msgstr "선택한 버퍼를 선택 영역안으로 붙여넣기"
 
 #: ../app/actions/buffers-actions.c:81
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
-msgstr "선택한 버퍼를 선택 영역안으로 붙여넣습니다"
+msgstr "선택한 버퍼를 선택 영역안으로 붙여넣기"
 
 #: ../app/actions/buffers-actions.c:86
 msgctxt "buffers-action"
@@ -902,21 +899,19 @@ msgid "Paste Buffer as New _Layer"
 msgstr "버퍼를 새 레이어로 붙이기(_L)"
 
 #: ../app/actions/buffers-actions.c:87
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer"
-msgstr "선택한 버퍼를 새 이미지로 붙여넣습니다"
+msgstr "선택한 버퍼를 새 레이어로 붙여넣기"
 
 #: ../app/actions/buffers-actions.c:92
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "버퍼를 새 레이어로 제자리에 붙임"
+msgstr "버퍼를 새 레이어로 제자리에 붙여 넣기"
 
 #: ../app/actions/buffers-actions.c:94
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr "선택한 버퍼를 새 이미지로 붙여넣습니다"
+msgstr "선택한 버퍼를 새 레이어로 제자리에 붙여넣기"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -924,10 +919,9 @@ msgid "Channels Menu"
 msgstr "채널 메뉴"
 
 #: ../app/actions/channels-actions.c:49
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag"
-msgstr "색"
+msgstr "색 태그"
 
 #: ../app/actions/channels-actions.c:53
 msgctxt "channels-action"
@@ -1020,10 +1014,9 @@ msgid "Lower this channel to the bottom of the channel stack"
 msgstr "채널을 채널 스택의 바닥으로 내립니다"
 
 #: ../app/actions/channels-actions.c:113
-#, fuzzy
 msgctxt "channels-action"
 msgid "Toggle Channel _Visibility"
-msgstr "보임 여부를 전환합니다"
+msgstr "채널 보임 여부를 전환(_V)"
 
 #: ../app/actions/channels-actions.c:119
 msgctxt "channels-action"
@@ -1042,19 +1035,16 @@ msgid "L_ock Position of Channel"
 msgstr "채널 위치 잠그기(_O)"
 
 #: ../app/actions/channels-actions.c:140
-#, fuzzy
 msgctxt "channels-action"
 msgid "None"
 msgstr "없음"
 
 #: ../app/actions/channels-actions.c:141
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Clear"
-msgstr "색상표 항목 바꾸기"
+msgstr "채널 색 태그: 제거하기"
 
 #: ../app/actions/channels-actions.c:146
-#, fuzzy
 msgctxt "channels-action"
 msgid "Blue"
 msgstr "파랑"
@@ -1065,22 +1055,19 @@ msgid "Channel Color Tag: Set to Blue"
 msgstr "채널 색 태그: 파랑으로 설정"
 
 #: ../app/actions/channels-actions.c:152
-#, fuzzy
 msgctxt "channels-action"
 msgid "Green"
 msgstr "초록"
 
 #: ../app/actions/channels-actions.c:153
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Green"
-msgstr "색상표 항목 바꾸기"
+msgstr "채널 색 태그: 초록으로 설정"
 
 #: ../app/actions/channels-actions.c:158
-#, fuzzy
 msgctxt "channels-action"
 msgid "Yellow"
-msgstr "노란색"
+msgstr "노랑"
 
 #: ../app/actions/channels-actions.c:159
 msgctxt "channels-action"
@@ -1088,16 +1075,14 @@ msgid "Channel Color Tag: Set to Yellow"
 msgstr "채널 색 태그: 노랑으로 설정"
 
 #: ../app/actions/channels-actions.c:164
-#, fuzzy
 msgctxt "channels-action"
 msgid "Orange"
-msgstr "범위"
+msgstr "오렌지"
 
 #: ../app/actions/channels-actions.c:165
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Orange"
-msgstr "색상표 항목 바꾸기"
+msgstr "채널 색 태그: 오렌지로 설정"
 
 #: ../app/actions/channels-actions.c:170
 msgctxt "channels-action"
@@ -1105,13 +1090,11 @@ msgid "Brown"
 msgstr "갈색"
 
 #: ../app/actions/channels-actions.c:171
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Brown"
-msgstr "색상표 항목 바꾸기"
+msgstr "채널 색 태그: 갈색으로 설정"
 
 #: ../app/actions/channels-actions.c:176
-#, fuzzy
 msgctxt "channels-action"
 msgid "Red"
 msgstr "빨강"
@@ -1137,10 +1120,9 @@ msgid "Gray"
 msgstr "회색"
 
 #: ../app/actions/channels-actions.c:189
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Gray"
-msgstr "색상표 항목 바꾸기"
+msgstr "채널 색 태그: 회색으로 설정"
 
 #: ../app/actions/channels-actions.c:197
 msgctxt "channels-action"
@@ -1188,10 +1170,9 @@ msgid "Select _Top Channel"
 msgstr "맨 위 채널 선택(_T)"
 
 #: ../app/actions/channels-actions.c:225
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the topmost channel"
-msgstr "맨 위 레이어를 선택합니다"
+msgstr "맨 위 채널을 선택"
 
 #: ../app/actions/channels-actions.c:230
 msgctxt "channels-action"
@@ -1199,10 +1180,9 @@ msgid "Select _Bottom Channel"
 msgstr "바닥 채널 선택(_B)"
 
 #: ../app/actions/channels-actions.c:231
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the bottommost channel"
-msgstr "최하위 레이어를 선택합니다"
+msgstr "맨 아래 레이어를 선택"
 
 #: ../app/actions/channels-actions.c:236
 msgctxt "channels-action"
@@ -1210,10 +1190,9 @@ msgid "Select _Previous Channel"
 msgstr "이전 채널 선택(_P)"
 
 #: ../app/actions/channels-actions.c:237
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the channel above the current channel"
-msgstr "현재 레이어 위 레이어를 선택합니다"
+msgstr "현재 채널 위의 채널을 선택합니다"
 
 #: ../app/actions/channels-actions.c:242
 msgctxt "channels-action"
@@ -1221,10 +1200,9 @@ msgid "Select _Next Channel"
 msgstr "다음 채널 선택(_N)"
 
 #: ../app/actions/channels-actions.c:243
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the channel below the current channel"
-msgstr "현재 레이어 아래 레이어를 선택합니다"
+msgstr "현재 채널 아래의 채널을 선택합니다"
 
 #: ../app/actions/channels-commands.c:111
 #: ../app/actions/channels-commands.c:517
@@ -1279,7 +1257,7 @@ msgstr "색 편집(_E)..."
 #: ../app/actions/colormap-actions.c:50
 msgctxt "colormap-action"
 msgid "Edit this color"
-msgstr "이 색을 편집합니다"
+msgstr "이 색을 편집"
 
 #: ../app/actions/colormap-actions.c:58
 msgctxt "colormap-action"
@@ -1299,7 +1277,7 @@ msgstr "배경에서 색 추가(_A)"
 #: ../app/actions/colormap-actions.c:65
 msgctxt "colormap-action"
 msgid "Add current background color"
-msgstr "현재 배경색을 추가합니다"
+msgstr "현재 배경색을 추가"
 
 #: ../app/actions/colormap-actions.c:73
 #, fuzzy
@@ -9238,13 +9216,12 @@ msgstr "색상 관리"
 #: ../app/actions/view-actions.c:79
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
-msgstr "디스플레이 렌더링 의도(_R)"
+msgstr "디스플레이 렌더링 목적(_R)"
 
 #: ../app/actions/view-actions.c:82
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "소프트푸르핑렌더링 의도(_N)"
+msgstr "소프트푸르핑 렌더링 목적(_N)"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -9849,18 +9826,17 @@ msgstr ""
 #: ../app/actions/view-actions.c:526
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "디스플레이 렌더링 의도가 지각적임"
+msgstr "디스플레이 렌더링 목적이 지각적임"
 
 #: ../app/actions/view-actions.c:531 ../app/actions/view-actions.c:558
-#, fuzzy
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
-msgstr "색 삭제(_D)"
+msgstr "상대 색도계(_R)"
 
 #: ../app/actions/view-actions.c:532
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
-msgstr "디스플레이 렌더링 의도가 상대적 비색계임"
+msgstr "디스플레이 렌더링 목적이 상대 색도계임"
 
 #: ../app/actions/view-actions.c:537 ../app/actions/view-actions.c:564
 msgctxt "view-action"
@@ -9870,37 +9846,37 @@ msgstr "채도(_S)"
 #: ../app/actions/view-actions.c:538
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
-msgstr "디스플레이 렌더일 의도가 채도임"
+msgstr "디스플레이 렌더링 목적이 채도임"
 
 #: ../app/actions/view-actions.c:543 ../app/actions/view-actions.c:570
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
-msgstr ""
+msgstr "절대 색도계(_A)"
 
 #: ../app/actions/view-actions.c:544
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
-msgstr ""
+msgstr "디스플레이 렌더링 목적이 상대 색도계임"
 
 #: ../app/actions/view-actions.c:553
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "소프트프루핑 렌더링 의도가 지각적임"
+msgstr "소프트프루핑 렌더링 목적이 지각적임"
 
 #: ../app/actions/view-actions.c:559
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "소프트프루핑 렌더링 의도가 상대적 비색계임"
+msgstr "소프트프루핑 렌더링 목적이 상대 색도계임"
 
 #: ../app/actions/view-actions.c:565
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "소프트프루핑 렌더링 의도가 채도임"
+msgstr "소프트프루핑 렌더링 목적이 채도임"
 
 #: ../app/actions/view-actions.c:571
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "소프트프루핑 렌더링 의도가 절대적 비색계임"
+msgstr "소프트프루핑 렌더링 목적이 절대 색도계임"
 
 #: ../app/actions/view-actions.c:579
 msgctxt "view-padding-color"
@@ -11967,10 +11943,9 @@ msgid "Keep embedded profile"
 msgstr "끼어든 프로필 유지"
 
 #: ../app/core/core-enums.c:1117
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
-msgstr "이미지를 RGB 색공간으로 변환합니다"
+msgstr "기본 설정에서 정한 RGB 색 프로필로 변환"
 
 #: ../app/core/core-enums.c:1154
 msgctxt "dynamics-output-type"
@@ -12040,22 +12015,19 @@ msgid "Use the entire layer as input"
 msgstr "온라인 버전 사용"
 
 #: ../app/core/core-enums.c:1222
-#, fuzzy
 msgctxt "channel-border-style"
 msgid "Hard"
-msgstr "경도"
+msgstr "딱딱하게"
 
 #: ../app/core/core-enums.c:1223
-#, fuzzy
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "부드럽게"
 
 #: ../app/core/core-enums.c:1224
-#, fuzzy
 msgctxt "channel-border-style"
 msgid "Feathered"
-msgstr "가장자리 페더"
+msgstr ""
 
 #. initialize babl fishes
 #: ../app/core/gimp.c:508 ../app/core/gimp.c:540
@@ -17849,12 +17821,13 @@ msgid "Create or adjust the cage"
 msgstr "골조 만들기 또는 조정하기"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
-#, fuzzy
 msgctxt "cage-mode"
 msgid ""
 "Deform the cage\n"
 "to deform the image"
-msgstr "이미지 변형을 위해 골조 변형하기"
+msgstr ""
+"골조를 변형해서\n"
+"이미지를 변형"
 
 #: ../app/operations/operations-enums.c:25
 #, fuzzy
@@ -23758,10 +23731,9 @@ msgstr "색인:"
 
 #. TRANSLATORS: Hex for Hexadecimal (representation of a color)
 #: ../app/widgets/gimpcolorframe.c:805
-#, fuzzy
 msgctxt "Color representation"
 msgid "Hex:"
-msgstr "16진수:"
+msgstr "16진수"
 
 #. TRANSLATORS: H for Hue (HSV color space)
 #: ../app/widgets/gimpcolorframe.c:836
@@ -23842,7 +23814,6 @@ msgid "K:"
 msgstr "K:"
 
 #: ../app/widgets/gimpcolorframe.c:996
-#, fuzzy
 msgctxt "Color value"
 msgid "n/a"
 msgstr "n/a"
@@ -25701,7 +25672,6 @@ msgid "Plain"
 msgstr "단순"
 
 #: ../app/widgets/widgets-enums.c:53
-#, fuzzy
 msgctxt "circle-background"
 msgid "HSV"
 msgstr "HSV"
@@ -25712,10 +25682,9 @@ msgid "Pixel"
 msgstr "픽셀"
 
 #: ../app/widgets/widgets-enums.c:118
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "RGB (%)"
-msgstr "RGB (%d, %d, %d)"
+msgstr "RGB (%)"
 
 #: ../app/widgets/widgets-enums.c:119
 msgctxt "color-frame-mode"
