@@ -565,6 +565,8 @@ gimp_projection_finish_draw (GimpProjection *proj)
 
   if (proj->priv->iter)
     {
+      gimp_chunk_iterator_set_priority_rect (proj->priv->iter, NULL);
+
       gimp_tile_handler_validate_begin_validate (proj->priv->validate_handler);
 
       while (gimp_projection_chunk_render_iteration (proj));
