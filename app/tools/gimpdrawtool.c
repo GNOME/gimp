@@ -105,6 +105,10 @@ static void          gimp_draw_tool_widget_status_coords
                                                    gdouble           y,
                                                    const gchar      *help,
                                                    GimpTool         *tool);
+static void          gimp_draw_tool_widget_message
+                                                  (GimpToolWidget   *widget,
+                                                   const gchar      *message,
+                                                   GimpTool         *tool);
 static void          gimp_draw_tool_widget_snap_offsets
                                                   (GimpToolWidget   *widget,
                                                    gint              offset_x,
@@ -385,6 +389,16 @@ gimp_draw_tool_widget_status_coords (GimpToolWidget *widget,
   gimp_tool_push_status_coords (tool, draw_tool->display,
                                 gimp_tool_control_get_precision (tool->control),
                                 title, x, separator, y, help);
+}
+
+static void
+gimp_draw_tool_widget_message (GimpToolWidget *widget,
+                               const gchar    *message,
+                               GimpTool       *tool)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  gimp_tool_message_literal (tool, draw_tool->display, message);
 }
 
 static void
@@ -675,6 +689,9 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
                                             gimp_draw_tool_widget_status_coords,
                                             draw_tool);
       g_signal_handlers_disconnect_by_func (draw_tool->widget,
+                                            gimp_draw_tool_widget_message,
+                                            draw_tool);
+      g_signal_handlers_disconnect_by_func (draw_tool->widget,
                                             gimp_draw_tool_widget_snap_offsets,
                                             draw_tool);
 
@@ -706,6 +723,9 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
                         draw_tool);
       g_signal_connect (draw_tool->widget, "status-coords",
                         G_CALLBACK (gimp_draw_tool_widget_status_coords),
+                        draw_tool);
+      g_signal_connect (draw_tool->widget, "message",
+                        G_CALLBACK (gimp_draw_tool_widget_message),
                         draw_tool);
       g_signal_connect (draw_tool->widget, "snap-offsets",
                         G_CALLBACK (gimp_draw_tool_widget_snap_offsets),
