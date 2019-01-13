@@ -245,8 +245,9 @@ gimp_filter_tool_finalize (GObject *object)
   g_clear_object (&filter_tool->settings);
   g_clear_pointer (&filter_tool->description, g_free);
   g_clear_object (&filter_tool->gui);
-  filter_tool->settings_box = NULL;
-  filter_tool->region_combo = NULL;
+  filter_tool->settings_box      = NULL;
+  filter_tool->controller_toggle = NULL;
+  filter_tool->region_combo      = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -374,6 +375,15 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       g_object_bind_property (G_OBJECT (tool_info->tool_options), "preview",
                               toggle,                             "sensitive",
                               G_BINDING_SYNC_CREATE);
+
+      /*  The show-controller toggle  */
+      filter_tool->controller_toggle =
+        gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
+                                    "controller", NULL);
+      gtk_box_pack_end (GTK_BOX (vbox), filter_tool->controller_toggle,
+                        FALSE, FALSE, 0);
+      if (filter_tool->widget)
+        gtk_widget_show (filter_tool->controller_toggle);
 
       /*  The Color Options expander  */
       expander = gtk_expander_new (_("Advanced Color Options"));
@@ -788,6 +798,12 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       if (filter_options->preview_split)
         gimp_filter_tool_move_guide (filter_tool);
     }
+  else if (! strcmp (pspec->name, "controller") &&
+           filter_tool->widget)
+    {
+      gimp_tool_widget_set_visible (filter_tool->widget,
+                                    filter_options->controller);
+    }
   else if (! strcmp (pspec->name, "region") &&
            filter_tool->filter)
     {
@@ -978,8 +994,9 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
         GTK_CONTAINER (gimp_filter_tool_dialog_get_vbox (filter_tool)));
 
       g_clear_object (&filter_tool->gui);
-      filter_tool->settings_box = NULL;
-      filter_tool->region_combo = NULL;
+      filter_tool->settings_box      = NULL;
+      filter_tool->controller_toggle = NULL;
+      filter_tool->region_combo      = NULL;
     }
 
   if (filter_tool->filter)
@@ -1745,11 +1762,22 @@ gimp_filter_tool_set_widget (GimpFilterTool *filter_tool,
 
   if (filter_tool->widget)
     {
+      GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+
       g_object_ref (filter_tool->widget);
+
+      gimp_tool_widget_set_visible (filter_tool->widget,
+                                    options->controller);
 
       if (GIMP_TOOL (filter_tool)->display)
         gimp_draw_tool_start (GIMP_DRAW_TOOL (filter_tool),
                               GIMP_TOOL (filter_tool)->display);
+    }
+
+  if (filter_tool->controller_toggle)
+    {
+      gtk_widget_set_visible (filter_tool->controller_toggle,
+                              filter_tool->widget != NULL);
     }
 }
 

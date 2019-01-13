@@ -40,6 +40,7 @@ struct _GimpFilterOptions
   gboolean            preview_split;
   GimpAlignmentType   preview_alignment;
   gdouble             preview_position;
+  gboolean            controller;
   GimpFilterRegion    region;
   gboolean            color_managed;
   gboolean            gamma_hack;
