@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-10 11:38+0100\n"
-"PO-Revision-Date: 2019-01-10 11:43+0100\n"
+"POT-Creation-Date: 2019-01-14 00:49+0100\n"
+"PO-Revision-Date: 2019-01-14 00:52+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -9846,8 +9846,8 @@ msgid "Location Shown"
 msgstr "Posizione mostrata"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:39
-msgid "Featured Organisation"
-msgstr "Organizzazione presentata"
+msgid "Featured Organization"
+msgstr "Organizzazione mostrata"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:40
 msgid "Event"
@@ -12074,15 +12074,15 @@ msgid "Original digital capture of a real life scene"
 msgstr "Istantanea digitale originale di una scena di vita reale"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
-msgid "Digitised from a negative on film"
+msgid "Digitized from a negative on film"
 msgstr "Digitalizzata da un negativo su pellicola"
 
 #: ../plug-ins/metadata/metadata-tags.h:252
-msgid "Digitised from a positive on film"
+msgid "Digitized from a positive on film"
 msgstr "Digitalizzata da un positivo su pellicola"
 
 #: ../plug-ins/metadata/metadata-tags.h:253
-msgid "Digitised from a print on non-transparent medium"
+msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitalizzata da una stampa su supporto non trasparente"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
