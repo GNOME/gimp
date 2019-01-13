@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <stdarg.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -56,6 +58,7 @@ enum
   SNAP_OFFSETS,
   STATUS,
   STATUS_COORDS,
+  MESSAGE,
   FOCUS_CHANGED,
   LAST_SIGNAL
 };
@@ -171,6 +174,16 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
                   G_TYPE_DOUBLE,
                   G_TYPE_STRING,
                   G_TYPE_DOUBLE,
+                  G_TYPE_STRING);
+
+  widget_signals[MESSAGE] =
+    g_signal_new ("message",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolWidgetClass, message),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
   widget_signals[FOCUS_CHANGED] =
@@ -447,6 +460,39 @@ gimp_tool_widget_set_status_coords (GimpToolWidget *widget,
 
   g_signal_emit (widget, widget_signals[STATUS_COORDS], 0,
                  title, x, separator, y, help);
+}
+
+void
+gimp_tool_widget_message (GimpToolWidget *widget,
+                          const gchar    *format,
+                          ...)
+{
+  va_list  args;
+  gchar   *message;
+
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (format != NULL);
+
+  va_start (args, format);
+
+  message = g_strdup_vprintf (format, args);
+
+  va_end (args);
+
+  gimp_tool_widget_message_literal (widget, message);
+
+  g_free (message);
+}
+
+void
+gimp_tool_widget_message_literal (GimpToolWidget *widget,
+                                  const gchar    *message)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (message != NULL);
+
+  g_signal_emit (widget, widget_signals[MESSAGE], 0,
+                 message);
 }
 
 void
