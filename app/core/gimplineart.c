@@ -1562,8 +1562,11 @@ gimp_lineart_curvature_extremums (gfloat *curvatures,
                   }
                 g_free (p);
               }
-            curvatures[(gint) max_curvature_pixel.x + (gint) max_curvature_pixel.y * width] = max_curvature;
-            g_array_append_val (max_positions, max_curvature_pixel);
+            if (max_curvature > 0.0)
+              {
+                curvatures[(gint) max_curvature_pixel.x + (gint) max_curvature_pixel.y * width] = max_curvature;
+                g_array_append_val (max_positions, max_curvature_pixel);
+              }
           }
       }
   g_queue_free_full (q, g_free);
