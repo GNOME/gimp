@@ -364,13 +364,12 @@ gimp_draw_tool_widget_status (GimpToolWidget *widget,
 {
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (status)
+  if (gimp_draw_tool_is_active (draw_tool))
     {
-      gimp_tool_replace_status (tool, draw_tool->display, "%s", status);
-    }
-  else
-    {
-      gimp_tool_pop_status (tool, draw_tool->display);
+      if (status)
+        gimp_tool_replace_status (tool, draw_tool->display, "%s", status);
+      else
+        gimp_tool_pop_status (tool, draw_tool->display);
     }
 }
 
@@ -385,10 +384,14 @@ gimp_draw_tool_widget_status_coords (GimpToolWidget *widget,
 {
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  gimp_tool_pop_status (tool, draw_tool->display);
-  gimp_tool_push_status_coords (tool, draw_tool->display,
-                                gimp_tool_control_get_precision (tool->control),
-                                title, x, separator, y, help);
+  if (gimp_draw_tool_is_active (draw_tool))
+    {
+      gimp_tool_pop_status (tool, draw_tool->display);
+      gimp_tool_push_status_coords (tool, draw_tool->display,
+                                    gimp_tool_control_get_precision (
+                                      tool->control),
+                                    title, x, separator, y, help);
+    }
 }
 
 static void
@@ -398,7 +401,8 @@ gimp_draw_tool_widget_message (GimpToolWidget *widget,
 {
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  gimp_tool_message_literal (tool, draw_tool->display, message);
+  if (gimp_draw_tool_is_active (draw_tool))
+    gimp_tool_message_literal (tool, draw_tool->display, message);
 }
 
 static void
