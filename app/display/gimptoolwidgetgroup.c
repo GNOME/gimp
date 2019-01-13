@@ -123,6 +123,9 @@ static void             gimp_tool_widget_group_child_status_coords (GimpToolWidg
                                                                     gdouble                y,
                                                                     const gchar           *help,
                                                                     GimpToolWidgetGroup   *group);
+static void             gimp_tool_widget_group_child_message       (GimpToolWidget        *child,
+                                                                    const gchar           *message,
+                                                                    GimpToolWidgetGroup   *group);
 static void             gimp_tool_widget_group_child_focus_changed (GimpToolWidget        *child,
                                                                     GimpToolWidgetGroup   *group);
 
@@ -200,6 +203,9 @@ gimp_tool_widget_group_init (GimpToolWidgetGroup *group)
                               group);
   gimp_container_add_handler (priv->children, "status-coords",
                               G_CALLBACK (gimp_tool_widget_group_child_status_coords),
+                              group);
+  gimp_container_add_handler (priv->children, "message",
+                              G_CALLBACK (gimp_tool_widget_group_child_message),
                               group);
   gimp_container_add_handler (priv->children, "focus-changed",
                               G_CALLBACK (gimp_tool_widget_group_child_focus_changed),
@@ -594,6 +600,18 @@ gimp_tool_widget_group_child_status_coords (GimpToolWidget      *child,
 
   if (priv->hover_widget == child)
     gimp_tool_widget_set_status_coords (widget, title, x, separator, y, help);
+}
+
+static void
+gimp_tool_widget_group_child_message (GimpToolWidget      *child,
+                                      const gchar         *message,
+                                      GimpToolWidgetGroup *group)
+{
+  GimpToolWidgetGroupPrivate *priv   = group->priv;
+  GimpToolWidget             *widget = GIMP_TOOL_WIDGET (group);
+
+  if (priv->focus_widget == child)
+    gimp_tool_widget_message_literal (widget, message);
 }
 
 static void
