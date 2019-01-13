@@ -69,6 +69,8 @@ struct _GimpToolWidgetClass
                                 const gchar           *separator,
                                 gdouble                y,
                                 const gchar           *help);
+  void     (* message)         (GimpToolWidget        *widget,
+                                const gchar           *message);
   void     (* focus_changed)   (GimpToolWidget        *widget);
 
   /*  virtual functions  */
@@ -155,6 +157,12 @@ void               gimp_tool_widget_set_status_coords (GimpToolWidget  *widget,
                                                        const gchar     *separator,
                                                        gdouble          y,
                                                        const gchar     *help);
+
+void               gimp_tool_widget_message           (GimpToolWidget  *widget,
+                                                       const gchar     *format,
+                                                       ...) G_GNUC_PRINTF (2, 3);
+void               gimp_tool_widget_message_literal   (GimpToolWidget  *widget,
+                                                       const gchar     *message);
 
 /*  for subclasses, to add and manage their items
  */
