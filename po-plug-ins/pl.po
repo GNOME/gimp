@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-06 19:11+0100\n"
-"PO-Revision-Date: 2019-01-06 19:20+0100\n"
+"POT-Creation-Date: 2019-01-13 12:22+0100\n"
+"PO-Revision-Date: 2019-01-13 12:23+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -9824,7 +9824,7 @@ msgid "Location Shown"
 msgstr "Widoczne położenie"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:39
-msgid "Featured Organisation"
+msgid "Featured Organization"
 msgstr "Widoczna organizacja"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:40
@@ -12059,15 +12059,15 @@ msgid "Original digital capture of a real life scene"
 msgstr "Oryginalne zdjęcie cyfrowe prawdziwej sceny"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
-msgid "Digitised from a negative on film"
+msgid "Digitized from a negative on film"
 msgstr "Cyfryzacja z negatywu filmowego"
 
 #: ../plug-ins/metadata/metadata-tags.h:252
-msgid "Digitised from a positive on film"
+msgid "Digitized from a positive on film"
 msgstr "Cyfryzacja z pozytywu filmowego"
 
 #: ../plug-ins/metadata/metadata-tags.h:253
-msgid "Digitised from a print on non-transparent medium"
+msgid "Digitized from a print on non-transparent medium"
 msgstr "Cyfryzacja z odbitki na nieprzezroczystym nośniku"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
