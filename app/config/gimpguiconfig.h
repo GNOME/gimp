@@ -93,11 +93,10 @@ struct _GimpGuiConfig
 struct _GimpGuiConfigClass
 {
   GimpDisplayConfigClass  parent_class;
-
-  void (* size_changed) (GimpGuiConfig *config);
 };
 
 
 GType  gimp_gui_config_get_type (void) G_GNUC_CONST;
+
 
 #endif /* GIMP_GUI_CONFIG_H__ */
