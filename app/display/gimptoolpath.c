@@ -500,8 +500,8 @@ gimp_tool_path_check_writable (GimpToolPath *path)
   if (gimp_item_is_content_locked (GIMP_ITEM (private->vectors)) ||
       gimp_item_is_position_locked (GIMP_ITEM (private->vectors)))
     {
-      gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (path),
-                                   _("The active path is locked."));
+      gimp_tool_widget_message_literal (GIMP_TOOL_WIDGET (path),
+                                        _("The active path is locked."));
 
       /* FIXME: this should really be done by the tool */
       gimp_tools_blink_lock_box (shell->display->gimp,
