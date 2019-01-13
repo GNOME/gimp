@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-13 09:37+0900\n"
+"PO-Revision-Date: 2019-01-13 11:43+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -385,9 +385,8 @@ msgid "Do not show a splash screen"
 msgstr "시작 화면 보이지 않기"
 
 #: ../app/main.c:202
-#, fuzzy
 msgid "Do not use shared memory between GIMP and plug-ins"
-msgstr "김프와 플러그인 간 공유 메모리를 사용하지 않습니다"
+msgstr "김프와 플러그인 간에 공유 메모리를 사용하면 안 됨"
 
 #: ../app/main.c:207
 msgid "Do not use special CPU acceleration functions"
@@ -411,7 +410,7 @@ msgstr "실행할 명령어 모음(여러번 실행 가능)"
 
 #: ../app/main.c:232
 msgid "The procedure to process batch commands with"
-msgstr "일괄처리 명령을 수행하기 위한 프로시저"
+msgstr "일괄처리 명령을 수행하기 위한 프러시저"
 
 #: ../app/main.c:237
 msgid "Send messages to console instead of using a dialog"
@@ -786,7 +785,7 @@ msgstr "붓 위치 복사(_L)"
 #: ../app/actions/brushes-actions.c:66
 msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
-msgstr "붓 파일 위치를 클립보드에 저장합니다"
+msgstr "붓 파일 위치를 클립보드에 저장"
 
 #: ../app/actions/brushes-actions.c:71
 msgctxt "brushes-action"
@@ -806,7 +805,7 @@ msgstr "붓 삭제(_D)"
 #: ../app/actions/brushes-actions.c:78
 msgctxt "brushes-action"
 msgid "Delete this brush"
-msgstr "이 붓을 삭제합니다"
+msgstr "이 붓을 삭제하기"
 
 #: ../app/actions/brushes-actions.c:83
 msgctxt "brushes-action"
@@ -816,7 +815,7 @@ msgstr "붓 새로 고침(_R)"
 #: ../app/actions/brushes-actions.c:84
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr "붓을 새로 고칩니다"
+msgstr "붓을 새로 고치기"
 
 #: ../app/actions/brushes-actions.c:92
 msgctxt "brushes-action"
@@ -826,7 +825,7 @@ msgstr "붓 편집(_E)..."
 #: ../app/actions/brushes-actions.c:93
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr "붓을 편집합니다"
+msgstr "붓을 편집하기"
 
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
@@ -841,7 +840,7 @@ msgstr "버퍼를 새 이미지로 붙이기(_N)"
 #: ../app/actions/buffers-actions.c:47
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new image"
-msgstr "선택한 버퍼를 새 이미지로 붙여넣습니다"
+msgstr "선택한 버퍼를 새 이미지로 붙여넣기"
 
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
@@ -851,7 +850,7 @@ msgstr "버퍼 삭제(_D)"
 #: ../app/actions/buffers-actions.c:53
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "선택한 버퍼를 삭제합니다"
+msgstr "선택한 버퍼를 삭제하기"
 
 #: ../app/actions/buffers-actions.c:61
 msgctxt "buffers-action"
@@ -1280,16 +1279,14 @@ msgid "Add current background color"
 msgstr "현재 배경색을 추가"
 
 #: ../app/actions/colormap-actions.c:73
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Select this Color"
-msgstr "색상 선택"
+msgstr "이 색상 선택(_S)"
 
 #: ../app/actions/colormap-actions.c:74
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Select all pixels with this color"
-msgstr "비슷한 색상 영역을 선택합니다"
+msgstr "이 색상을 가진 픽셀을 선택하기"
 
 #: ../app/actions/colormap-actions.c:79
 msgctxt "colormap-action"
@@ -1297,10 +1294,9 @@ msgid "_Add to Selection"
 msgstr "선택 영역에 추가(_A)"
 
 #: ../app/actions/colormap-actions.c:80
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
-msgstr "이 채널을 현재 선택 영역에 추가합니다"
+msgstr "현재 선택 영역에 이 색을 가진 모든 픽셀을 더하기"
 
 #: ../app/actions/colormap-actions.c:85
 msgctxt "colormap-action"
@@ -1308,10 +1304,9 @@ msgid "_Subtract from Selection"
 msgstr "선택 영역에서 빼기(_S)"
 
 #: ../app/actions/colormap-actions.c:86
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Subtract all pixels with this color from the current selection"
-msgstr "현재 선택에서 이 채널을 뺍니다"
+msgstr "현재 선택에서 이 색상을 가진 모든 픽셀을 빼기"
 
 #: ../app/actions/colormap-actions.c:91
 msgctxt "colormap-action"
@@ -1319,10 +1314,9 @@ msgid "_Intersect with Selection"
 msgstr "선택 영역과 겹치기(_I)"
 
 #: ../app/actions/colormap-actions.c:92
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
-msgstr "현재 선택 영역과 이 채널의 겹칩니다"
+msgstr "현재 선택 영역과 이 색상은 가진 모든 픽셀을 겹칩니다"
 
 #: ../app/actions/colormap-commands.c:74
 #, c-format
@@ -1439,112 +1433,99 @@ msgid "Foreground: Set Color From Palette"
 msgstr "전경색: 팔레트의 색에서 설정"
 
 #: ../app/actions/context-actions.c:101
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use First Palette Color"
-msgstr "팔레트 색상 편집"
+msgstr "전경: 첫 번째 팔레트 색 사용"
 
 #: ../app/actions/context-actions.c:105
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use Last Palette Color"
-msgstr "전경색(_F)"
+msgstr "전경: 마지막 팔레트 색 사용"
 
 #: ../app/actions/context-actions.c:109
 msgctxt "context-action"
 msgid "Foreground: Use Previous Palette Color"
-msgstr "전경색: 이전 팔레트 색 사용"
+msgstr "전경: 이전 팔레트 색 사용"
 
 #: ../app/actions/context-actions.c:113
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use Next Palette Color"
-msgstr "전경색(_F)"
+msgstr "전경: 다음 팔레트 색 사용"
 
 #: ../app/actions/context-actions.c:117
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Skip Back Palette Color"
-msgstr "전경 색"
+msgstr "전경: 팔레트 색을 뒤로 건너뛰기"
 
 #: ../app/actions/context-actions.c:121
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Palette Color"
-msgstr "전경색: 팔레트 색 앞으로 건너뛰기"
+msgstr "전경: 팔레트 색을 앞으로 건너뛰기"
 
 #: ../app/actions/context-actions.c:129
 msgctxt "context-action"
 msgid "Background: Set Color From Palette"
-msgstr "배경색: 팔레트의 색에서 설정"
+msgstr "배경: 팔레트의 색에서 설정"
 
 #: ../app/actions/context-actions.c:133
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Use First Palette Color"
-msgstr "팔레트 색상 편집"
+msgstr "배경: 첫 번째 팔레트 색 사용"
 
 #: ../app/actions/context-actions.c:137
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Use Last Palette Color"
-msgstr "배경색(_B)"
+msgstr "배경: 마지막 팔레트 색 사용"
 
 #: ../app/actions/context-actions.c:141
 msgctxt "context-action"
 msgid "Background: Use Previous Palette Color"
-msgstr "배경색: 이전 팔레트 색 사용"
+msgstr "배경: 이전 팔레트 색 사용"
 
 #: ../app/actions/context-actions.c:145
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Use Next Palette Color"
-msgstr "배경색(_B)"
+msgstr "배경: 다음 팔레트 색 사용"
 
 #: ../app/actions/context-actions.c:149
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Skip Back Palette Color"
-msgstr "배경 색"
+msgstr "배경: 팔레트 색을 뒤로 건너뛰기"
 
 #: ../app/actions/context-actions.c:153
 msgctxt "context-action"
 msgid "Background: Skip Forward Palette Color"
-msgstr "배경색: 팔레트 색 앞으로 건너뛰기"
+msgstr "배경: 팔레트 색을 앞으로 건너뛰기"
 
 #: ../app/actions/context-actions.c:161
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Set Color From Colormap"
-msgstr "색상표로 색상 추가"
+msgstr "전경: 색상표의 색을 앞으로 건너뛰기"
 
 #: ../app/actions/context-actions.c:165
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Colormap"
-msgstr "쓰지 않은 색을 색상표에서 없애기(_R)"
+msgstr "전경: 색상표의 첫 번째 색 사용"
 
 #: ../app/actions/context-actions.c:169
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Colormap"
-msgstr "쓰지 않은 색을 색상표에서 없애기(_R)"
+msgstr "전경: 색상표의 마지막 색 사용"
 
 #: ../app/actions/context-actions.c:173
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr "전경색: 색상표의 이전 색 사용"
+msgstr "전경: 색상표의 이전 색 사용"
 
 #: ../app/actions/context-actions.c:177
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Colormap"
-msgstr "쓰지 않은 색을 색상표에서 없애기(_R)"
+msgstr "전경: 색상표의 다음 색 사용"
 
 #: ../app/actions/context-actions.c:181
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr "쓰지 않은 색을 색상표에서 없애기(_R)"
+msgstr "전경: 색상표의 색을 뒤로 건너뛰기"
 
 #: ../app/actions/context-actions.c:185
 msgctxt "context-action"
@@ -1552,10 +1533,9 @@ msgid "Foreground: Skip Forward Color From Colormap"
 msgstr "전경색: 색상표의 색 앞으로 건너뛰기"
 
 #: ../app/actions/context-actions.c:193
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Set Color From Colormap"
-msgstr "색상표로 색상 추가"
+msgstr "전경: 색상표의 색을 설정"
 
 #: ../app/actions/context-actions.c:197
 msgctxt "context-action"
@@ -1588,92 +1568,89 @@ msgid "Background: Skip Forward Color From Colormap"
 msgstr "배경색: 색상표의 색 앞으로 건너뛰기"
 
 #: ../app/actions/context-actions.c:225
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Set Color From Swatch"
-msgstr "전경색(_F)"
+msgstr "전경: 스와치의 색 설정"
 
 #: ../app/actions/context-actions.c:229
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Swatch"
-msgstr "배경색: 스와치의 첫 번째 색 사용"
+msgstr "배경: 스와치의 첫 번째 색 사용"
 
 #: ../app/actions/context-actions.c:233
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Swatch"
-msgstr "전경색: 스와치의 마지막 색 사용"
+msgstr "전경: 스와치의 마지막 색 사용"
 
 #: ../app/actions/context-actions.c:237
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Swatch"
-msgstr "전경색: 스와치의 이전 색 사용"
+msgstr "전경: 스와치의 이전 색 사용"
 
 #: ../app/actions/context-actions.c:241
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Swatch"
-msgstr "전경색: 스와치의 다음 색 사용"
+msgstr "전경: 스와치의 다음 색 사용"
 
 #: ../app/actions/context-actions.c:245
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Swatch"
-msgstr "전경색 지정: 스와치로부터의 배경색 건너뛰기"
+msgstr "전경: 스와치의 배경색 건너뛰기"
 
 #: ../app/actions/context-actions.c:249
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Swatch"
-msgstr "전경색 지정: 스와치의 색 건너뛰기"
+msgstr "전경: 스와치의 색 건너뛰기"
 
 #: ../app/actions/context-actions.c:257
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Set Color From Swatch"
-msgstr "배경색(_B)"
+msgstr "배경: 스와치의 색 설정"
 
 #: ../app/actions/context-actions.c:261
 msgctxt "context-action"
 msgid "Background: Use First Color From Swatch"
-msgstr "배경색: 스와치의 첫 번째 색 사용"
+msgstr "배경: 스와치의 첫 번째 색 사용"
 
 #: ../app/actions/context-actions.c:265
 msgctxt "context-action"
 msgid "Background: Use Last Color From Swatch"
-msgstr "배경색: 스와치의 마지막 색 사용"
+msgstr "배경: 스와치의 마지막 색 사용"
 
 #: ../app/actions/context-actions.c:269
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Swatch"
-msgstr "배경색: 스와치의 이전 색 사용"
+msgstr "배경: 스와치의 이전 색 사용"
 
 #: ../app/actions/context-actions.c:273
 msgctxt "context-action"
 msgid "Background: Use Next Color From Swatch"
-msgstr "배경색: 스와치의 다음 색 사용"
+msgstr "배경: 스와치의 다음 색 사용"
 
 #: ../app/actions/context-actions.c:277
 msgctxt "context-action"
 msgid "Background: Skip Color Back From Swatch"
-msgstr "배경색: 스와치의 색 뒤로 건너뛰기"
+msgstr "배경: 스와치의 색을 뒤로 건너뛰기"
 
 #: ../app/actions/context-actions.c:281
 msgctxt "context-action"
 msgid "Background: Skip Color Forward From Swatch"
-msgstr "배경색 지정: 스와치의 색 앞으로 건너뛰기"
+msgstr "배경 지정: 스와치의 색 앞으로 건너뛰기"
 
 #: ../app/actions/context-actions.c:289
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Red: Set"
-msgstr "전경 선택"
+msgstr "전경 빨강: 설정"
 
 #: ../app/actions/context-actions.c:293
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "전경색 빨강: 최소로 설정"
+msgstr "전경 빨강: 최소로 설정"
 
 #: ../app/actions/context-actions.c:297
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "전경색 빨강: 최대로 설정"
+msgstr "전경 빨강: 최대로 설정"
 
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
@@ -1696,20 +1673,19 @@ msgid "Foreground Red: Increase by 10%"
 msgstr "전경색 빨강: 10% 증가"
 
 #: ../app/actions/context-actions.c:321
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Green: Set"
-msgstr "전경 선택"
+msgstr "전경 초록: 설정"
 
 #: ../app/actions/context-actions.c:325
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "전경색 초록: 최소로 설정"
+msgstr "전경 초록: 최소로 설정"
 
 #: ../app/actions/context-actions.c:329
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "전경색 초록: 최대로 설정"
+msgstr "전경 초록: 최대로 설정"
 
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
@@ -1732,20 +1708,19 @@ msgid "Foreground Green: Increase by 10%"
 msgstr "전경색 초록: 10% 증가"
 
 #: ../app/actions/context-actions.c:353
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
-msgstr "전경 선택"
+msgstr "전경 파랑: 설정"
 
 #: ../app/actions/context-actions.c:357
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "전경색 파랑: 최소로 설정"
+msgstr "전경 파랑: 최소로 설정"
 
 #: ../app/actions/context-actions.c:361
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "전경색 파랑: 최대로 설정"
+msgstr "전경 파랑: 최대로 설정"
 
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
@@ -1768,20 +1743,19 @@ msgid "Foreground Blue: Increase by 10%"
 msgstr "전경색 파랑: 10% 증가"
 
 #: ../app/actions/context-actions.c:385
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "배경"
+msgstr "배경 빨강: 설정"
 
 #: ../app/actions/context-actions.c:389
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "배경색 빨강: 최소로 설정"
+msgstr "배경 빨강: 최소로 설정"
 
 #: ../app/actions/context-actions.c:393
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "배경색 빨강: 최대로 설정"
+msgstr "배경 빨강: 최대로 설정"
 
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
@@ -1806,17 +1780,17 @@ msgstr "배경 빨강: 10% 증가"
 #: ../app/actions/context-actions.c:417
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "배경색 초록: 설정"
+msgstr "배경 초록: 설정"
 
 #: ../app/actions/context-actions.c:421
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "배경색 초록: 최소로 설정"
+msgstr "배경 초록: 최소로 설정"
 
 #: ../app/actions/context-actions.c:425
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "배경색 초록: 최대로 설정"
+msgstr "배경 초록: 최대로 설정"
 
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
@@ -1841,17 +1815,17 @@ msgstr "배경 초록: 10% 증가"
 #: ../app/actions/context-actions.c:449
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "배경색: 설정"
+msgstr "배경 파랑: 설정"
 
 #: ../app/actions/context-actions.c:453
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "배경색 파랑: 최소값으로 설정"
+msgstr "배경 파랑: 최소값으로 설정"
 
 #: ../app/actions/context-actions.c:457
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "배경색 파랑: 최대로 설정"
+msgstr "배경 파랑: 최대로 설정"
 
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
@@ -1874,20 +1848,19 @@ msgid "Background Blue: Increase by 10%"
 msgstr "배경 파랑: 10% 증가"
 
 #: ../app/actions/context-actions.c:481
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "전경 선택"
+msgstr "전경 색조: 설정"
 
 #: ../app/actions/context-actions.c:485
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "전경색 색조: 최소로 설정"
+msgstr "전경 색조: 최소로 설정"
 
 #: ../app/actions/context-actions.c:489
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "전경색 색조: 최대로 설정"
+msgstr "전경 색조: 최대로 설정"
 
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
@@ -1910,22 +1883,19 @@ msgid "Foreground Hue: Increase by 10%"
 msgstr "전경색 색조: 10% 증가"
 
 #: ../app/actions/context-actions.c:513
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "전경색 추출"
+msgstr "배경 채도: 설정"
 
 #: ../app/actions/context-actions.c:517
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "전경색 추출"
+msgstr "전경 채도: 최소로 설정"
 
 #: ../app/actions/context-actions.c:521
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "전경색 추출"
+msgstr "전경 채도: 최대로 설정"
 
 #: ../app/actions/context-actions.c:525
 msgctxt "context-action"
@@ -1948,20 +1918,19 @@ msgid "Foreground Saturation: Increase by 10%"
 msgstr "전경색 채도: 10% 증가"
 
 #: ../app/actions/context-actions.c:545
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "전경 선택"
+msgstr "전경 값: 최소로 설정"
 
 #: ../app/actions/context-actions.c:549
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "전경색 값: 최소로 설정"
+msgstr "전경 값: 최소로 설정"
 
 #: ../app/actions/context-actions.c:553
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "전경색 값: 최대로 설정"
+msgstr "전경 값: 최대로 설정"
 
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
@@ -1984,20 +1953,19 @@ msgid "Foreground Value: Increase by 10%"
 msgstr "전경색 값: 10% 증가"
 
 #: ../app/actions/context-actions.c:577
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "배경"
+msgstr "배경 색조: 설정"
 
 #: ../app/actions/context-actions.c:581
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "배경색 색조: 최소값으로 설정"
+msgstr "배경 색조: 최소로 설정"
 
 #: ../app/actions/context-actions.c:585
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "배경색 색조: 최대로 설정"
+msgstr "배경 색조: 최대로 설정"
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
@@ -2022,7 +1990,7 @@ msgstr "배경 색조: 10% 증가"
 #: ../app/actions/context-actions.c:609
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "배경색 채도: 설정"
+msgstr "배경 채도: 설정"
 
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
@@ -2057,17 +2025,17 @@ msgstr "배경 채도: 10% 증가"
 #: ../app/actions/context-actions.c:641
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "배경색 값: 설정"
+msgstr "배경 값: 설정"
 
 #: ../app/actions/context-actions.c:645
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "배경색 값: 최소로 설정"
+msgstr "배경 값: 최소로 설정"
 
 #: ../app/actions/context-actions.c:649
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "배경색 값: 최대로 설정"
+msgstr "배경 값: 최대로 설정"
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
@@ -9216,12 +9184,12 @@ msgstr "색상 관리"
 #: ../app/actions/view-actions.c:79
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
-msgstr "디스플레이 렌더링 목적(_R)"
+msgstr "디스플레이 렌더링 의도(_R)"
 
 #: ../app/actions/view-actions.c:82
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "소프트푸르핑 렌더링 목적(_N)"
+msgstr "소프트푸르핑 렌더링 의도(_N)"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -9826,7 +9794,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:526
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "디스플레이 렌더링 목적이 지각적임"
+msgstr "디스플레이 렌더링 의도가 지각적임"
 
 #: ../app/actions/view-actions.c:531 ../app/actions/view-actions.c:558
 msgctxt "view-action"
@@ -9836,7 +9804,7 @@ msgstr "상대 색도계(_R)"
 #: ../app/actions/view-actions.c:532
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
-msgstr "디스플레이 렌더링 목적이 상대 색도계임"
+msgstr "디스플레이 렌더링 의도가 상대 색도계임"
 
 #: ../app/actions/view-actions.c:537 ../app/actions/view-actions.c:564
 msgctxt "view-action"
@@ -9846,7 +9814,7 @@ msgstr "채도(_S)"
 #: ../app/actions/view-actions.c:538
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
-msgstr "디스플레이 렌더링 목적이 채도임"
+msgstr "디스플레이 렌더링 의도가 채도임"
 
 #: ../app/actions/view-actions.c:543 ../app/actions/view-actions.c:570
 msgctxt "view-action"
@@ -9856,27 +9824,27 @@ msgstr "절대 색도계(_A)"
 #: ../app/actions/view-actions.c:544
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
-msgstr "디스플레이 렌더링 목적이 상대 색도계임"
+msgstr "디스플레이 렌더링 의도가 상대 색도계임"
 
 #: ../app/actions/view-actions.c:553
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "소프트프루핑 렌더링 목적이 지각적임"
+msgstr "소프트프루핑 렌더링 의도가 지각적임"
 
 #: ../app/actions/view-actions.c:559
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "소프트프루핑 렌더링 목적이 상대 색도계임"
+msgstr "소프트프루핑 렌더링 의도가 상대 색도계임"
 
 #: ../app/actions/view-actions.c:565
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "소프트프루핑 렌더링 목적이 채도임"
+msgstr "소프트프루핑 렌더링 의도가 채도임"
 
 #: ../app/actions/view-actions.c:571
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "소프트프루핑 렌더링 목적이 절대 색도계임"
+msgstr "소프트프루핑 렌더링 의도가 절대 색도계임"
 
 #: ../app/actions/view-actions.c:579
 msgctxt "view-padding-color"
@@ -12037,7 +12005,7 @@ msgstr "초기화"
 #. register all internal procedures
 #: ../app/core/gimp.c:520
 msgid "Internal Procedures"
-msgstr "내부 프로시져"
+msgstr "내부 프러시저"
 
 #. initialize  the global parasite table
 #: ../app/core/gimp.c:783
@@ -19233,14 +19201,13 @@ msgid "Threshold"
 msgstr "임계값"
 
 #: ../app/pdb/drawable-cmds.c:524
-#, fuzzy
 msgid "Plug-in"
 msgstr "플러그인"
 
 #: ../app/pdb/drawable-cmds.c:963 ../app/tools/gimpforegroundselecttool.c:993
 msgctxt "command"
 msgid "Foreground Select"
-msgstr "물체 선택"
+msgstr "전경 선택"
 
 #: ../app/pdb/drawable-color-cmds.c:507
 #, fuzzy
@@ -19297,15 +19264,15 @@ msgid ""
 msgstr "떠있는 선택이 아니므로, 레이어를 일반 레이어로 변환할 수 없습니다."
 
 #: ../app/pdb/gimppdb-query.c:140
-#, fuzzy, c-format
+#, c-format
 msgid "Writing PDB file '%s' failed: %s"
-msgstr "'%s' 열기 실패: %s"
+msgstr "PDB 파일 '%s' 쓰기 실패: %s"
 
 #: ../app/pdb/gimppdb-query.c:315 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:377
 #, c-format
 msgid "Procedure '%s' not found"
-msgstr "프로시져 '%s'을(를) 찾을 수 없습니다"
+msgstr "프러시저 '%s'을(를) 찾을 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:77
 msgid "Invalid empty brush name"
@@ -23733,7 +23700,7 @@ msgstr "색인:"
 #: ../app/widgets/gimpcolorframe.c:805
 msgctxt "Color representation"
 msgid "Hex:"
-msgstr "16진수"
+msgstr "16진수:"
 
 #. TRANSLATORS: H for Hue (HSV color space)
 #: ../app/widgets/gimpcolorframe.c:836
