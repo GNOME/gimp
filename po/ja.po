@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-10 13:53+0000\n"
-"PO-Revision-Date: 2019-01-11 02:15+0900\n"
+"PO-Revision-Date: 2019-01-15 01:43+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -10215,7 +10215,7 @@ msgstr "画像を中央に表示"
 #: ../app/actions/view-actions.c:101
 msgctxt "view-action"
 msgid "Scroll the image so that it is centered in the window"
-msgstr "ウィンドウの中央に画像が表示されるようにスクロールします"
+msgstr "ウィンドウ内の中央に画像が表示されるようにスクロールします"
 
 #: ../app/actions/view-actions.c:106
 msgctxt "view-action"
@@ -11132,11 +11132,6 @@ msgid "Hide Docks"
 msgstr "ドックを隠す"
 
 #: ../app/actions/windows-actions.c:124
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid ""
-#| "When enabled docks and other dialogs are hidden, leaving only image "
-#| "windows."
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
@@ -11160,9 +11155,6 @@ msgid "Single-Window Mode"
 msgstr "シングルウィンドウモード"
 
 #: ../app/actions/windows-actions.c:138
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid "When enabled GIMP is in a single-window mode."
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
 msgstr "この設定がオンのときは、シングルウィンドウモードで表示します"
@@ -11350,24 +11342,22 @@ msgstr "ウェブブラウザー"
 #: ../app/config/config-enums.c:217
 msgctxt "position"
 msgid "Top"
-msgstr ""
+msgstr "上"
 
 #: ../app/config/config-enums.c:218
 msgctxt "position"
 msgid "Bottom"
-msgstr ""
+msgstr "下"
 
 #: ../app/config/config-enums.c:219
 msgctxt "position"
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 #: ../app/config/config-enums.c:220
-#, fuzzy
-#| msgid "Weight"
 msgctxt "position"
 msgid "Right"
-msgstr "ウエイト"
+msgstr "右"
 
 #: ../app/config/config-enums.c:249
 msgctxt "space-bar-action"
@@ -20286,27 +20276,22 @@ msgstr "オーバーレイ"
 #: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
 msgid "LCh Hue"
-msgstr ""
+msgstr "LCh 色相"
 
 #: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
 msgid "LCh Chroma"
-msgstr ""
+msgstr "LCh クロマ"
 
 #: ../app/operations/operations-enums.c:245
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layer-mode"
 msgid "LCh Color"
-msgstr "色"
+msgstr "LCh 色"
 
 #: ../app/operations/operations-enums.c:246
-#, fuzzy
-#| msgid "_Lightness:"
 msgctxt "layer-mode"
 msgid "LCh Lightness"
-msgstr "輝度(_L):"
+msgstr "LCh 輝度"
 
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
