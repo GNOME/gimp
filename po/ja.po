@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-06 18:25+0000\n"
-"PO-Revision-Date: 2019-01-05 06:20+0900\n"
+"PO-Revision-Date: 2019-01-15 01:30+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -4402,12 +4402,12 @@ msgstr "クリップボードの内容を貼り付けます"
 #: ../app/actions/edit-actions.c:174
 msgctxt "edit-action"
 msgid "Paste In Place"
-msgstr "所定位置に貼り付け"
+msgstr "同じ位置に貼り付け"
 
 #: ../app/actions/edit-actions.c:176
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard at its original position"
-msgstr "クリップボードの内容を原点に貼り付けます"
+msgstr "クリップボードの内容をコピー元と同じ位置に貼り付けます"
 
 #: ../app/actions/edit-actions.c:181
 msgctxt "edit-action"
@@ -4422,14 +4422,14 @@ msgstr "クリップボードの内容を選択範囲の中に貼り付けます
 #: ../app/actions/edit-actions.c:188
 msgctxt "edit-action"
 msgid "Paste Into Selection In Place"
-msgstr "選択範囲の所定位置に貼り付け"
+msgstr "選択範囲内の同じ位置に貼り付け"
 
 #: ../app/actions/edit-actions.c:190
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
 "original position"
-msgstr "クリップボードの内容を選択範囲の中の原点に貼り付けます"
+msgstr "クリップボードの内容を選択範囲の中のコピー元と同じ位置に貼り付けます"
 
 #: ../app/actions/edit-actions.c:196
 msgctxt "edit-action"
@@ -4444,14 +4444,14 @@ msgstr "クリップボードの内容でレイヤーを生成します"
 #: ../app/actions/edit-actions.c:202
 msgctxt "edit-action"
 msgid "New Layer In _Place"
-msgstr "レイヤー (原点)(_P)"
+msgstr "レイヤー (同じ位置)(_P)"
 
 #: ../app/actions/edit-actions.c:204
 msgctxt "edit-action"
 msgid ""
 "Create a new layer from the content of the clipboard and place it at its "
 "original position"
-msgstr "クリップボードの内容で原点にレイヤーを生成します"
+msgstr "クリップボードの内容でコピー元と同じ位置にレイヤーを生成します"
 
 #: ../app/actions/edit-actions.c:213
 msgctxt "edit-action"
@@ -5113,7 +5113,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:114
 msgctxt "filters-action"
 msgid "_Linear Invert"
-msgstr "色の反転(_L)"
+msgstr "階調の反転 (リニア)(_L)"
 
 # 直訳は「反転(_I)」だが、他にも「反転」が使われている箇所があるので機能を明確にするために「階調を」を補足した。(GIMP2.2 改良版日本語ローカライズより)
 #: ../app/actions/filters-actions.c:119
@@ -5755,11 +5755,9 @@ msgid "_Threshold..."
 msgstr "しきい値(_T)..."
 
 #: ../app/actions/filters-actions.c:662
-#, fuzzy
-#| msgid "_Threshold..."
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
-msgstr "しきい値(_T)..."
+msgstr "アルファチャンネルのしきい値(_T)..."
 
 #: ../app/actions/filters-actions.c:667
 #, fuzzy
@@ -6595,14 +6593,11 @@ msgid "Crop to C_ontent"
 msgstr "コンテンツで切り抜き(_O)"
 
 #: ../app/actions/image-actions.c:149
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Crop the image to the extents of the selection"
 msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
 "image)"
-msgstr "選択範囲の大きさで画像を切り抜きます"
+msgstr "内容の大きさで画像を切り抜きます (周りの何もない部分を削除します)"
 
 #: ../app/actions/image-actions.c:154
 msgctxt "image-action"
@@ -7368,7 +7363,7 @@ msgstr "選択範囲の大きさでレイヤーを切り抜きます"
 #: ../app/actions/layers-actions.c:241
 msgctxt "layers-action"
 msgid "Crop to C_ontent"
-msgstr ""
+msgstr "コンテンツで切り抜き(_O)"
 
 #: ../app/actions/layers-actions.c:242
 #, fuzzy
@@ -7969,10 +7964,9 @@ msgid "Cannot crop because the active layer has no content."
 msgstr "何も選択されてないので切り抜けません。"
 
 #: ../app/actions/layers-commands.c:888
-#, fuzzy
-#| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr "何も選択されてないので切り抜けません。"
+msgstr ""
+"アクティブレイヤーはすでにコンテンツで切り抜きされているので切り抜けません。"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -8546,28 +8540,19 @@ msgid "Save the selection to a channel"
 msgstr "選択範囲をチャンネルに保存します"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the selection outline"
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
-msgstr "選択範囲の境界線を表示します"
+msgstr "選択範囲の境界線で塗りつぶす(_F)..."
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the selection outline"
 msgctxt "select-action"
 msgid "Fill the selection outline"
-msgstr "選択範囲の境界線を表示します"
+msgstr "選択範囲の境界線で塗りつぶします"
 
 #: ../app/actions/select-actions.c:123
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the selection outline"
 msgctxt "select-action"
 msgid "_Fill Selection Outline"
-msgstr "選択範囲の境界線を表示します"
+msgstr "選択範囲の境界線で塗りつぶす(_F)"
 
 #: ../app/actions/select-actions.c:124
 #, fuzzy
@@ -10277,7 +10262,7 @@ msgstr "前回の表示倍率に戻します"
 #: ../app/actions/view-actions.c:131
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr "その他の回転角度(_R)..."
+msgstr "他の回転角度(_R)..."
 
 #: ../app/actions/view-actions.c:132
 msgctxt "view-action"
@@ -10805,7 +10790,7 @@ msgstr "表示を反時計回りに 15 度回転します (すべてのレイヤ
 #: ../app/actions/view-actions.c:531 ../app/actions/view-actions.c:558
 msgctxt "view-action"
 msgid "_Perceptual"
-msgstr "パーセンタイル(_P)"
+msgstr ""
 
 #: ../app/actions/view-actions.c:532
 #, fuzzy
@@ -11146,11 +11131,6 @@ msgid "Hide Docks"
 msgstr "ドックを隠す"
 
 #: ../app/actions/windows-actions.c:124
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid ""
-#| "When enabled docks and other dialogs are hidden, leaving only image "
-#| "windows."
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
@@ -11174,9 +11154,6 @@ msgid "Single-Window Mode"
 msgstr "シングルウィンドウモード"
 
 #: ../app/actions/windows-actions.c:138
-#, fuzzy
-#| msgctxt "windows-action"
-#| msgid "When enabled GIMP is in a single-window mode."
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
 msgstr "この設定がオンのときは、シングルウィンドウモードで表示します"
@@ -11410,24 +11387,22 @@ msgstr "キャンバスサイズ"
 #: ../app/config/config-enums.c:254
 msgctxt "position"
 msgid "Top"
-msgstr ""
+msgstr "上"
 
 #: ../app/config/config-enums.c:255
 msgctxt "position"
 msgid "Bottom"
-msgstr ""
+msgstr "下"
 
 #: ../app/config/config-enums.c:256
 msgctxt "position"
 msgid "Left"
-msgstr ""
+msgstr "左"
 
 #: ../app/config/config-enums.c:257
-#, fuzzy
-#| msgid "Weight"
 msgctxt "position"
 msgid "Right"
-msgstr "ウエイト"
+msgstr "右"
 
 #: ../app/config/config-enums.c:286
 msgctxt "space-bar-action"
@@ -19342,10 +19317,8 @@ msgid "Line: "
 msgstr "直線: "
 
 #: ../app/display/gimptoolline.c:1553
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the endpoint"
-msgstr "クリック-ドラッグ: このポイントを移動します"
+msgstr "クリック-ドラッグ: 終端点を移動します"
 
 #: ../app/display/gimptoolline.c:1566
 #, fuzzy
@@ -20194,27 +20167,22 @@ msgstr "オーバーレイ"
 #: ../app/operations/operations-enums.c:243
 msgctxt "layer-mode"
 msgid "LCh Hue"
-msgstr ""
+msgstr "LCh 色相"
 
 #: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
 msgid "LCh Chroma"
-msgstr ""
+msgstr "LCh クロマ"
 
 #: ../app/operations/operations-enums.c:245
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layer-mode"
 msgid "LCh Color"
-msgstr "色"
+msgstr "LCh 色"
 
 #: ../app/operations/operations-enums.c:246
-#, fuzzy
-#| msgid "_Lightness:"
 msgctxt "layer-mode"
 msgid "LCh Lightness"
-msgstr "輝度(_L):"
+msgstr "LCh 輝度"
 
 #: ../app/operations/operations-enums.c:247
 msgctxt "layer-mode"
@@ -22072,11 +22040,9 @@ msgstr ""
 
 # 「閾（しきい）」の漢字が読めない、またはディスプレイ上で識別できない人がいる可能性があるので、「しきい値」とした
 #: ../app/pdb/plug-in-compat-cmds.c:3972
-#, fuzzy
-#| msgid "Threshold"
 msgctxt "undo-type"
 msgid "Threshold Alpha"
-msgstr "しきい値"
+msgstr "アルファチャンネルのしきい値"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4018
 msgctxt "undo-type"
@@ -23157,10 +23123,8 @@ msgstr "塗りつぶし(_B)"
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:313
 #: ../app/tools/gimptransformtool.c:521 ../app/tools/gimpwarptool.c:651
-#, fuzzy
-#| msgid "The active layer's pixels are locked."
 msgid "The active layer is not visible."
-msgstr "アクティブレイヤー中のすべてのピクセルが保護されています。"
+msgstr "アクティブレイヤーは非表示になっています。"
 
 #: ../app/tools/gimpbucketfilltool.c:339
 #, fuzzy
@@ -23686,10 +23650,8 @@ msgid "_Preview"
 msgstr "プレビュー(_P)"
 
 #: ../app/tools/gimpfilteroptions.c:78
-#, fuzzy
-#| msgid "Split"
 msgid "Split _view"
-msgstr "分割"
+msgstr "分割表示(_V)"
 
 #: ../app/tools/gimpfilteroptions.c:109
 #, fuzzy
@@ -24120,26 +24082,20 @@ msgstr ""
 "対象の範囲をグラデーションで塗りつぶします"
 
 #: ../app/tools/gimpgradienttool.c:161
-#, fuzzy
-#| msgid "Gradient"
 msgid "Gra_dient"
-msgstr "グラデーション"
+msgstr "グラデーション(_D)"
 
 #: ../app/tools/gimpgradienttool.c:218
-#, fuzzy
-#| msgid "Click-Drag to add a new point"
 msgid "Click-Drag to draw a gradient"
-msgstr "クリック-ドラッグ: 新たなポイントを追加します"
+msgstr "クリック-ドラッグ: グラデーションを描画します"
 
 #: ../app/tools/gimpgradienttool.c:271
 msgid "No gradient available for use with this tool."
-msgstr "このツールで利用できるグラデーションはありません"
+msgstr "このツールで利用できるグラデーションはありません。"
 
 #: ../app/tools/gimpgradienttool.c:622
-#, fuzzy
-#| msgid "Gradient:"
 msgid "Gradient: "
-msgstr "グラデーション:"
+msgstr "グラデーション: "
 
 #. the position labels
 #: ../app/tools/gimpgradienttool-editor.c:1286
@@ -25617,7 +25573,7 @@ msgstr ""
 
 #: ../app/tools/gimptransformgridoptions.c:463
 msgid "Lock"
-msgstr "保護"
+msgstr ""
 
 #: ../app/tools/gimptransformgridoptions.c:464
 #, fuzzy
