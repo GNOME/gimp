@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-14 22:33+0900\n"
+"PO-Revision-Date: 2019-01-15 08:30+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -267,11 +267,11 @@ msgstr "이미지가 노출 과다/부족인 경우 알림"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Better and faster color management"
-msgstr ""
+msgstr "더 낫고 더 빠른 색 관리"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
-msgstr ""
+msgstr "KDE Plasma의 Wayland에서 색 추출기와 스크린샷 지원"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Paste in place feature"
@@ -279,27 +279,27 @@ msgstr "제자리에 붙여넣기 기능"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Many usability improvements"
-msgstr ""
+msgstr "많은 사용성 개선"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Manual can be displayed in the user's preferred language"
-msgstr ""
+msgstr "매뉴얼은 사용자가 기본 설정한 언어로 표시할 수 있음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Improvements for the Wavelet Decompose filter"
-msgstr ""
+msgstr "잔물결 분해 필터의 개선"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "Improved compatibility with Photoshop .psd files"
-msgstr ""
+msgstr "포토샵 .psd 파일과의 호환성 개선"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "New support for password-protected PDF"
-msgstr ""
+msgstr "암호로 보호된 PDF를 새로 지원"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "New support for HGT format (Digital Elevation Model data)"
-msgstr ""
+msgstr "HGT 형식을 새로 지원 (Digital Elevation Model 데이터)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
@@ -311,11 +311,11 @@ msgstr ""
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.h:1
 msgid "Extra files for GIMP"
-msgstr ""
+msgstr "김프용 추가 파일"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.h:2
 msgid "Patterns, gradients, and other extra files for GIMP"
-msgstr ""
+msgstr "김프용 무늬, 그레이디언트, 그리고 다른 부가 파일"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -324,7 +324,7 @@ msgstr "이미지 편집기"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../desktop/gimp.desktop.in.in.h:5
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr ""
+msgstr "김프;그래픽;디자인;일러스트레이션;페인팅;"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -478,11 +478,11 @@ msgstr "PDB에 중지된 절차 목록을 정렬하여 출력"
 
 #: ../app/main.c:285
 msgid "Show a preferences page with experimental features"
-msgstr ""
+msgstr "실험적 기능이 있는 기본 설정 페이지 보이기"
 
 #: ../app/main.c:290
 msgid "Show an image submenu with debug actions"
-msgstr ""
+msgstr "디버그 동작이 있는 이미지 하위 메뉴 보이기"
 
 #: ../app/main.c:466
 msgid "[FILE|URI...]"
@@ -2603,62 +2603,62 @@ msgstr "축적되는 자료 재설정"
 #: ../app/actions/dashboard-actions.c:60
 msgctxt "dashboard-action"
 msgid "Low Swap Space Warning"
-msgstr ""
+msgstr "스왑 공간 작음 경고"
 
 #: ../app/actions/dashboard-actions.c:61
 msgctxt "dashboard-action"
 msgid "Raise the dashboard when the swap size approaches its limit"
-msgstr ""
+msgstr "스왑 크기가 한계에 다다르면 대시보드를 위로 올리기"
 
 #: ../app/actions/dashboard-actions.c:71
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
-msgstr ""
+msgstr "0.25 초"
 
 #: ../app/actions/dashboard-actions.c:76
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
-msgstr ""
+msgstr "0.5 초"
 
 #: ../app/actions/dashboard-actions.c:81
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
-msgstr ""
+msgstr "1 초"
 
 #: ../app/actions/dashboard-actions.c:86
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
-msgstr ""
+msgstr "2 초"
 
 #: ../app/actions/dashboard-actions.c:91
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
-msgstr ""
+msgstr "4 초"
 
 #: ../app/actions/dashboard-actions.c:99
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
-msgstr ""
+msgstr "15 초"
 
 #: ../app/actions/dashboard-actions.c:104
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
-msgstr ""
+msgstr "30 초"
 
 #: ../app/actions/dashboard-actions.c:109
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
-msgstr ""
+msgstr "60 초"
 
 #: ../app/actions/dashboard-actions.c:114
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
-msgstr ""
+msgstr "120 초"
 
 #: ../app/actions/dashboard-actions.c:119
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
-msgstr ""
+msgstr "240 초"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
 #: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:212
@@ -2690,7 +2690,7 @@ msgstr "제목없음"
 #: ../app/actions/file-commands.c:519
 #, c-format
 msgid "Can't show file in file manager: %s"
-msgstr ""
+msgstr "파일 관리자에서 파일을 표시할 수 없음: %s"
 
 #: ../app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
@@ -3090,7 +3090,7 @@ msgstr "명령 검색 및 실행(_S)"
 #: ../app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
-msgstr ""
+msgstr "핵심어로 명령 검색 후 실행"
 
 #: ../app/actions/dialogs-actions.c:357
 #: ../app/dialogs/preferences-dialog.c:2033
@@ -3318,7 +3318,7 @@ msgstr "이미지 위치를 클립보드에 복사합니다"
 #: ../app/actions/documents-actions.c:70
 msgctxt "documents-action"
 msgid "Show in _File Manager"
-msgstr ""
+msgstr "파일 관리자에서 보이기(_F)"
 
 #: ../app/actions/documents-actions.c:71
 msgctxt "documents-action"
@@ -3863,7 +3863,7 @@ msgstr "클립보드의 내용을 현재 선택 영역에 붙여넣습니다"
 #: ../app/actions/edit-actions.c:196
 msgctxt "edit-action"
 msgid "Paste Into Selection In Place"
-msgstr ""
+msgstr "선택 영역안으로 제자리에 붙여넣기"
 
 #: ../app/actions/edit-actions.c:198
 #, fuzzy
@@ -4003,11 +4003,11 @@ msgstr "이름붙여 복사하기"
 
 #: ../app/actions/edit-commands.c:449
 msgid "Copy Visible Named "
-msgstr ""
+msgstr "이름 붙여 보이는 부분 복사 "
 
 #: ../app/actions/edit-commands.c:572 ../app/display/gimpdisplayshell-dnd.c:480
 msgid "Pasted as new layer because the target is a layer group."
-msgstr ""
+msgstr "목표가 레이어 그룹이므로 새 레이어로 붙였음"
 
 #: ../app/actions/edit-commands.c:579 ../app/display/gimpdisplayshell-dnd.c:489
 #, fuzzy
@@ -4085,7 +4085,7 @@ msgstr "오류(_E)"
 #: ../app/actions/error-console-actions.c:79
 msgctxt "error-console-action"
 msgid "Highlight error console on errors"
-msgstr ""
+msgstr "오류가 발생하면 오류 콘솔을 강조"
 
 #: ../app/actions/error-console-actions.c:85
 msgctxt "error-console-action"
@@ -4095,7 +4095,7 @@ msgstr "경고(_W)"
 #: ../app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
 msgid "Highlight error console on warnings"
-msgstr ""
+msgstr "경고가 출력되면 오류 콘솔을 강조"
 
 #: ../app/actions/error-console-actions.c:92
 msgctxt "error-console-action"
@@ -4105,7 +4105,7 @@ msgstr "메시지(_M)"
 #: ../app/actions/error-console-actions.c:93
 msgctxt "error-console-action"
 msgid "Highlight error console on messages"
-msgstr ""
+msgstr "메시지가 출력되면 오류 콘솔을 강조"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
@@ -4223,12 +4223,12 @@ msgstr "이미지 위치를 클립보드에 복사합니다"
 #: ../app/actions/file-actions.c:118
 msgctxt "file-action"
 msgid "Show in _File Manager"
-msgstr ""
+msgstr "파일 관리자에서 보이기(_F)"
 
 #: ../app/actions/file-actions.c:119
 msgctxt "file-action"
 msgid "Show image file location in the file manager"
-msgstr ""
+msgstr "파일 관리자에서 이미지 파일 위치를 표시"
 
 #: ../app/actions/file-actions.c:124
 msgctxt "file-action"
@@ -4480,7 +4480,7 @@ msgstr "구름(_C)"
 #: ../app/actions/filters-actions.c:88
 msgctxt "filters-action"
 msgid "_Fractals"
-msgstr ""
+msgstr "프랙탈"
 
 #: ../app/actions/filters-actions.c:90
 msgctxt "filters-action"
@@ -4522,7 +4522,7 @@ msgstr "색상 균형"
 #: ../app/actions/filters-actions.c:114
 msgctxt "filters-action"
 msgid "_Linear Invert"
-msgstr ""
+msgstr "선형 반전(_L)"
 
 #: ../app/actions/filters-actions.c:119
 msgctxt "filters-action"
@@ -4532,17 +4532,17 @@ msgstr "반전(_V)"
 #: ../app/actions/filters-actions.c:124
 msgctxt "filters-action"
 msgid "_Value Invert"
-msgstr ""
+msgstr "값 반전(_V)"
 
 #: ../app/actions/filters-actions.c:129
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
-msgstr ""
+msgstr "HSV 대비 늘이기 (_S)"
 
 #: ../app/actions/filters-actions.c:137
 msgctxt "filters-action"
 msgid "_Dilate"
-msgstr ""
+msgstr "팽창(_D)"
 
 #: ../app/actions/filters-actions.c:138
 #, fuzzy
@@ -4553,22 +4553,22 @@ msgstr "이미지 변형을 위해 골조 변형하기"
 #: ../app/actions/filters-actions.c:153
 msgctxt "filters-action"
 msgid "_Erode"
-msgstr ""
+msgstr "침식(_E)"
 
 #: ../app/actions/filters-actions.c:154
 msgctxt "drawable-action"
 msgid "Grow darker areas of the image"
-msgstr ""
+msgstr "이미지의 어두운 영역을 확장"
 
 #: ../app/actions/filters-actions.c:172
 msgctxt "filters-action"
 msgid "_Alien Map..."
-msgstr ""
+msgstr "외계의 지도(_A)"
 
 #: ../app/actions/filters-actions.c:177
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
-msgstr ""
+msgstr "캔버스 적용(_A)..."
 
 #: ../app/actions/filters-actions.c:182
 msgctxt "filters-action"
@@ -4583,17 +4583,17 @@ msgstr "명도-대비(_R)..."
 #: ../app/actions/filters-actions.c:192
 msgctxt "filters-action"
 msgid "_Bump Map..."
-msgstr ""
+msgstr "범프 맵(_B)..."
 
 #: ../app/actions/filters-actions.c:197
 msgctxt "filters-action"
 msgid "_Color to Gray..."
-msgstr ""
+msgstr "색을 회색으로(_C)..."
 
 #: ../app/actions/filters-actions.c:202
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
-msgstr ""
+msgstr "만화(_R)..."
 
 #: ../app/actions/filters-actions.c:207
 msgctxt "filters-action"
@@ -4603,7 +4603,7 @@ msgstr "채널 믹서(_C)..."
 #: ../app/actions/filters-actions.c:212
 msgctxt "filters-action"
 msgid "_Checkerboard..."
-msgstr ""
+msgstr "체커보드(_C)..."
 
 #: ../app/actions/filters-actions.c:217
 msgctxt "filters-action"
@@ -4623,7 +4623,7 @@ msgstr "색상화(_Z)..."
 #: ../app/actions/filters-actions.c:232
 msgctxt "filters-action"
 msgid "Dithe_r..."
-msgstr ""
+msgstr "디더링(_R)..."
 
 #: ../app/actions/filters-actions.c:237
 msgctxt "filters-action"
@@ -4643,7 +4643,7 @@ msgstr "색을 알파로(_A)..."
 #: ../app/actions/filters-actions.c:252
 msgctxt "filters-action"
 msgid "_Extract Component..."
-msgstr ""
+msgstr "구성 요소 추출(E)..."
 
 #: ../app/actions/filters-actions.c:257
 msgctxt "filters-action"
@@ -4653,7 +4653,7 @@ msgstr "합성곱 행렬(_C)..."
 #: ../app/actions/filters-actions.c:262
 msgctxt "filters-action"
 msgid "_Cubism..."
-msgstr ""
+msgstr "입체파(_C)..."
 
 #: ../app/actions/filters-actions.c:267
 msgctxt "filters-action"
@@ -4663,7 +4663,7 @@ msgstr "커브(_C)..."
 #: ../app/actions/filters-actions.c:272
 msgctxt "filters-action"
 msgid "_Deinterlace..."
-msgstr ""
+msgstr "인터레이스 제거(_D)..."
 
 #: ../app/actions/filters-actions.c:277
 msgctxt "filters-action"
@@ -4673,12 +4673,12 @@ msgstr "무채화(_D)..."
 #: ../app/actions/filters-actions.c:282
 msgctxt "filters-action"
 msgid "Difference of Gaussians..."
-msgstr ""
+msgstr "가우시안의 차이..."
 
 #: ../app/actions/filters-actions.c:287
 msgctxt "filters-action"
 msgid "Diffraction Patterns..."
-msgstr ""
+msgstr "회절 무늬..."
 
 #: ../app/actions/filters-actions.c:292
 msgctxt "filters-action"
@@ -4693,7 +4693,7 @@ msgstr "거리 지도..."
 #: ../app/actions/filters-actions.c:302
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
-msgstr ""
+msgstr "물방울 그림자(_D)..."
 
 #: ../app/actions/filters-actions.c:307
 msgctxt "filters-action"
@@ -4703,7 +4703,7 @@ msgstr "경계선..."
 #: ../app/actions/filters-actions.c:312
 msgctxt "filters-action"
 msgid "_Laplace"
-msgstr ""
+msgstr "라플라스(_L)"
 
 #: ../app/actions/filters-actions.c:317
 msgctxt "filters-action"
@@ -4713,17 +4713,17 @@ msgstr "네온(_N)..."
 #: ../app/actions/filters-actions.c:322
 msgctxt "filters-action"
 msgid "_Sobel..."
-msgstr ""
+msgstr "소벨(_S)..."
 
 #: ../app/actions/filters-actions.c:327
 msgctxt "filters-action"
 msgid "_Emboss..."
-msgstr ""
+msgstr "엠보싱(_E)..."
 
 #: ../app/actions/filters-actions.c:332
 msgctxt "filters-action"
 msgid "En_grave..."
-msgstr ""
+msgstr "인그레이빙(_G)..."
 
 #: ../app/actions/filters-actions.c:337
 msgctxt "filters-action"
@@ -4738,22 +4738,22 @@ msgstr ""
 #: ../app/actions/filters-actions.c:347
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
-msgstr ""
+msgstr "프랙탈 트레이싱(_F)..."
 
 #: ../app/actions/filters-actions.c:352
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
-msgstr ""
+msgstr "가우시안 블러(_G)..."
 
 #: ../app/actions/filters-actions.c:357
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
-msgstr ""
+msgstr "선택적 가우시안 블러..."
 
 #: ../app/actions/filters-actions.c:362
 msgctxt "filters-action"
 msgid "_GEGL graph..."
-msgstr ""
+msgstr "GEGL 그래프(_G)..."
 
 #: ../app/actions/filters-actions.c:367
 msgctxt "filters-action"
@@ -4763,7 +4763,7 @@ msgstr "격자(_G)..."
 #: ../app/actions/filters-actions.c:372
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr ""
+msgstr "하이 패스(_G)..."
 
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
@@ -19534,7 +19534,7 @@ msgstr "인터페이스"
 #: ../app/pdb/plug-in-compat-cmds.c:1296
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
-msgstr "회절 무느"
+msgstr "회절 무늬"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1455
 msgctxt "undo-type"
