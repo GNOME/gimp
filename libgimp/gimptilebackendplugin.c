@@ -261,7 +261,7 @@ gimp_tile_write_mul (GimpTileBackendPlugin *backend_plugin,
           gimp_tile = gimp_drawable_get_tile (priv->drawable,
                                               priv->shadow,
                                               y+v, x+u);
-          gimp_tile_ref (gimp_tile);
+          _gimp_tile_ref_noinit (gimp_tile);
 
           {
             gint ewidth           = gimp_tile->ewidth;
