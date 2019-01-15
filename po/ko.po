@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-15 18:15+0900\n"
+"PO-Revision-Date: 2019-01-15 23:58+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -4658,7 +4658,7 @@ msgstr "입체파(_C)..."
 #: ../app/actions/filters-actions.c:267
 msgctxt "filters-action"
 msgid "_Curves..."
-msgstr "커브(_C)..."
+msgstr "곡선(_C)..."
 
 #: ../app/actions/filters-actions.c:272
 msgctxt "filters-action"
@@ -5280,7 +5280,7 @@ msgstr "선형(_L)"
 #: ../app/actions/gradient-editor-actions.c:323
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
-msgstr "커브(_C)"
+msgstr "곡선(_C)"
 
 #: ../app/actions/gradient-editor-actions.c:328
 msgctxt "gradient-editor-blending"
@@ -7116,10 +7116,9 @@ msgid "Copy MyPaint Brush _Location"
 msgstr "마이페인트 위치 복사(_L)"
 
 #: ../app/actions/mypaint-brushes-actions.c:60
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint brush file location to clipboard"
-msgstr "붓 파일 위치를 클립보드에 저장합니다"
+msgstr "마이페인트 붓 파일 위치를 클립보드로 복사"
 
 #: ../app/actions/mypaint-brushes-actions.c:65
 msgctxt "mypaint-brushes-action"
@@ -7127,10 +7126,9 @@ msgid "Show in _File Manager"
 msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/mypaint-brushes-actions.c:66
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "Show MyPaint brush file location in the file manager"
-msgstr "붓 파일 위치를 클립보드에 저장합니다"
+msgstr "마이페인트 붓 파일 위치를 파일 관리자에서 표시"
 
 #: ../app/actions/mypaint-brushes-actions.c:71
 msgctxt "mypaint-brushes-action"
@@ -8061,7 +8059,7 @@ msgstr "활성 도구 프리셋을 편집합니다"
 #: ../app/actions/tool-presets-commands.c:67
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
-msgstr ""
+msgstr "기존 '%2$s' 도구 프리셋에 '%1$s' 도구 옵션을 저장할 수 없습니다."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
@@ -8841,7 +8839,7 @@ msgstr "없음"
 #: ../app/actions/vectors-actions.c:194
 msgctxt "vectors-action"
 msgid "Path Color Tag: Clear"
-msgstr ""
+msgstr "경로 색 태그: 제거하기"
 
 #: ../app/actions/vectors-actions.c:199
 #, fuzzy
@@ -8852,7 +8850,7 @@ msgstr "파랑"
 #: ../app/actions/vectors-actions.c:200
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Blue"
-msgstr ""
+msgstr "경로 색 태그: 파랑으로 설정"
 
 #: ../app/actions/vectors-actions.c:205
 #, fuzzy
@@ -8863,7 +8861,7 @@ msgstr "초록"
 #: ../app/actions/vectors-actions.c:206
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Green"
-msgstr ""
+msgstr "경로 색 태그: 초록으로 설정"
 
 #: ../app/actions/vectors-actions.c:211
 msgctxt "vectors-action"
@@ -8873,7 +8871,7 @@ msgstr "노랑"
 #: ../app/actions/vectors-actions.c:212
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Yellow"
-msgstr ""
+msgstr "경로 색 태그: 노랑으로 설정"
 
 #: ../app/actions/vectors-actions.c:217
 msgctxt "vectors-action"
@@ -8883,17 +8881,17 @@ msgstr "오렌지"
 #: ../app/actions/vectors-actions.c:218
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Orange"
-msgstr ""
+msgstr "경로 색 태그: 오렌지로 설정"
 
 #: ../app/actions/vectors-actions.c:223
 msgctxt "vectors-action"
 msgid "Brown"
-msgstr ""
+msgstr "갈색"
 
 #: ../app/actions/vectors-actions.c:224
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Brown"
-msgstr ""
+msgstr "경로 색 태그: 갈색으로 설정"
 
 #: ../app/actions/vectors-actions.c:229
 #, fuzzy
@@ -8904,27 +8902,27 @@ msgstr "빨강"
 #: ../app/actions/vectors-actions.c:230
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Red"
-msgstr ""
+msgstr "경로 색 태그: 빨강으로 설정"
 
 #: ../app/actions/vectors-actions.c:235
 msgctxt "vectors-action"
 msgid "Violet"
-msgstr ""
+msgstr "바이올렛"
 
 #: ../app/actions/vectors-actions.c:236
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Violet"
-msgstr ""
+msgstr "경로 색 태그: 바이올렛으로 설정"
 
 #: ../app/actions/vectors-actions.c:241
 msgctxt "vectors-action"
 msgid "Gray"
-msgstr ""
+msgstr "회색"
 
 #: ../app/actions/vectors-actions.c:242
 msgctxt "vectors-action"
 msgid "Path Color Tag: Set to Gray"
-msgstr ""
+msgstr "경로 색 태그: 회색으로 설정"
 
 #: ../app/actions/vectors-actions.c:250
 msgctxt "vectors-action"
@@ -9179,7 +9177,7 @@ msgstr "이전 확대 수준으로 복원합니다"
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
-msgstr ""
+msgstr "기타 회전 각도(_R)..."
 
 #: ../app/actions/view-actions.c:126
 #, fuzzy
@@ -9222,12 +9220,12 @@ msgstr "환경 설정에서 설정한 색으로 여백 색을 재설정합니다
 #: ../app/actions/view-actions.c:150
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
-msgstr ""
+msgstr "소프트-푸르핑 프로필...(_P)"
 
 #: ../app/actions/view-actions.c:151
 msgctxt "view-action"
 msgid "Set the soft-proofing profile"
-msgstr ""
+msgstr "소프트-푸르핑 프로필 설정"
 
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
@@ -9279,22 +9277,22 @@ msgstr "색(_C)"
 #: ../app/actions/view-actions.c:186
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
-msgstr ""
+msgstr "이 보기를 소프트-푸르핑에 사용"
 
 #: ../app/actions/view-actions.c:192 ../app/actions/view-actions.c:199
 msgctxt "view-action"
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "검은 점 보상(_B)"
 
 #: ../app/actions/view-actions.c:193
 msgctxt "view-action"
 msgid "Use black point compensation for image display"
-msgstr ""
+msgstr "이미지 디스플레이에 검정 점 보상 사용"
 
 #: ../app/actions/view-actions.c:200
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
-msgstr ""
+msgstr "소프트-프루핑에 검정 점 보상 사용"
 
 #: ../app/actions/view-actions.c:206
 msgctxt "view-action"
@@ -9306,7 +9304,7 @@ msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
 "color space"
-msgstr ""
+msgstr "소프트 프루핑할 때, 목표 색 공간에서 표시할 수 없은 색에 표시"
 
 #: ../app/actions/view-actions.c:214
 msgctxt "view-action"
@@ -9457,12 +9455,12 @@ msgstr "사용자 확대 비율 설정"
 #: ../app/actions/view-actions.c:320
 msgctxt "view-action"
 msgid "Zoom out as far as possible"
-msgstr ""
+msgstr "최대한 축소 보기"
 
 #: ../app/actions/view-actions.c:325
 msgctxt "view-action"
 msgid "Zoom in as far as possible"
-msgstr ""
+msgstr "최대한 확대 보기"
 
 #: ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
@@ -9599,7 +9597,7 @@ msgstr "1:16으로 축소"
 #: ../app/actions/view-actions.c:451
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
-msgstr ""
+msgstr "다른 확대 배율(_R)..."
 
 #: ../app/actions/view-actions.c:452
 msgctxt "view-zoom-action"
@@ -9633,12 +9631,12 @@ msgstr "수직으로 뒤집습니다"
 #: ../app/actions/view-actions.c:482
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
-msgstr ""
+msgstr "뒤집기 및 회전 초기화(_R)"
 
 #: ../app/actions/view-actions.c:484
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
-msgstr ""
+msgstr "뒤집지 않은 상태 및 각도 0°로 초기화"
 
 #: ../app/actions/view-actions.c:492
 #, fuzzy
@@ -9702,7 +9700,7 @@ msgstr "이미지를 왼쪽으로 90도 회전합니다"
 #: ../app/actions/view-actions.c:525 ../app/actions/view-actions.c:552
 msgctxt "view-action"
 msgid "_Perceptual"
-msgstr ""
+msgstr "지각적(_P)"
 
 #: ../app/actions/view-actions.c:526
 msgctxt "view-action"
@@ -9813,7 +9811,7 @@ msgstr "환경 설정에서 설정한 색으로 여백 색을 재설정합니다
 #: ../app/actions/view-actions.c:613
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
-msgstr ""
+msgstr "수평 스크롤 오프셋 설정"
 
 #: ../app/actions/view-actions.c:618
 #, fuzzy
@@ -9854,17 +9852,17 @@ msgstr "오른쪽으로 스크롤"
 #: ../app/actions/view-actions.c:651
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
-msgstr ""
+msgstr "수직 스크롤 오프셋 설정"
 
 #: ../app/actions/view-actions.c:656
 msgctxt "view-action"
 msgid "Scroll to top border"
-msgstr ""
+msgstr "상단 테두리까지 스크롤"
 
 #: ../app/actions/view-actions.c:661
 msgctxt "view-action"
 msgid "Scroll to bottom border"
-msgstr ""
+msgstr "하단 테두리까지 스크롤"
 
 #: ../app/actions/view-actions.c:666
 #, fuzzy
@@ -9912,22 +9910,22 @@ msgstr "확대(_Z) (%s)"
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:1128
 msgid "(H+V) "
-msgstr ""
+msgstr "(H+V) "
 
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:1133
 msgid "(H) "
-msgstr ""
+msgstr "(H) "
 
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:1138
 msgid "(V) "
-msgstr ""
+msgstr "(V) "
 
 #: ../app/actions/view-actions.c:1145
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
-msgstr ""
+msgstr "%s 뒤집기및 회전(%d°) (_F)"
 
 #: ../app/actions/view-commands.c:1005
 msgid "Set Canvas Padding Color"
@@ -10031,12 +10029,12 @@ msgstr "활성화하면 김프는 단일창 모드로 들어갑니다."
 #: ../app/actions/windows-actions.c:140
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
-msgstr ""
+msgstr "상단(_T)"
 
 #: ../app/actions/windows-actions.c:141
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
-msgstr ""
+msgstr "탭을 상단에 배치"
 
 #: ../app/actions/windows-actions.c:145
 msgctxt "windows-tabs-position-action"
@@ -10046,7 +10044,7 @@ msgstr "바닥(_B)"
 #: ../app/actions/windows-actions.c:146
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
-msgstr ""
+msgstr "탭을 하단에 배치"
 
 #: ../app/actions/windows-actions.c:150
 msgctxt "windows-tabs-position-action"
@@ -10056,7 +10054,7 @@ msgstr "왼쪽(_L)"
 #: ../app/actions/windows-actions.c:151
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
-msgstr ""
+msgstr "탭을 왼쪽에 배치"
 
 #: ../app/actions/windows-actions.c:155
 msgctxt "windows-tabs-position-action"
@@ -10066,13 +10064,15 @@ msgstr "오른쪽(_R)"
 #: ../app/actions/windows-actions.c:156
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
-msgstr ""
+msgstr "탭을 오른쪽에 배치"
 
 #: ../app/actions/windows-commands.c:183
 msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
 "toolbox and try again."
 msgstr ""
+"선택한 최근 독 안에 도구상자가 있습니다. 현재 열린 도구상자를 닫고 다시 시도"
+"하십시오."
 
 #: ../app/config/config-enums.c:25
 msgctxt "canvas-padding-mode"
@@ -10142,7 +10142,7 @@ msgstr "웹 탐색기"
 #: ../app/config/config-enums.c:178
 msgctxt "icon-size"
 msgid "Guess ideal size"
-msgstr ""
+msgstr "이상적 크기 추측"
 
 #: ../app/config/config-enums.c:179
 #, fuzzy
@@ -10177,17 +10177,17 @@ msgstr "이미지 크기"
 #: ../app/config/config-enums.c:213
 msgctxt "position"
 msgid "Top"
-msgstr ""
+msgstr "상단"
 
 #: ../app/config/config-enums.c:214
 msgctxt "position"
 msgid "Bottom"
-msgstr ""
+msgstr "하단"
 
 #: ../app/config/config-enums.c:215
 msgctxt "position"
 msgid "Left"
-msgstr ""
+msgstr "왼쪽"
 
 #: ../app/config/config-enums.c:216
 msgctxt "position"
@@ -10239,6 +10239,7 @@ msgstr "높음"
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
 
+# 원문에 구문 오류. '%%s'
 #: ../app/config/gimpconfig-file.c:116
 #, c-format
 msgid "Error parsing '%%s': line longer than %s characters."
@@ -12057,14 +12058,14 @@ msgid "No patterns available for this operation."
 msgstr "이 작업을 할 수 있는 무늬가 없습니다."
 
 #: ../app/core/gimpbrush-load.c:174
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file: Width = 0."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: Width = 0."
+msgstr "붓 파일에 치명적인 해석 오류: Width = 0."
 
 #: ../app/core/gimpbrush-load.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file: Height = 0."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: Height = 0."
+msgstr "붓 파일에 치명적인 해석 오류: Height = 0."
 
 #: ../app/core/gimpbrush-load.c:188
 #, c-format
@@ -12072,9 +12073,9 @@ msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "붓 파일에 치명적 구문해석 오류: Bytes = 0."
 
 #: ../app/core/gimpbrush-load.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: 알 수 없는 깊이 %d."
+msgstr "붓 파일에서 치명적인 구문 해석 오류: 알 수 없는 심도 %d."
 
 #: ../app/core/gimpbrush-load.c:225
 #, c-format
@@ -12099,7 +12100,7 @@ msgid "Unnamed"
 msgstr "이름없음"
 
 #: ../app/core/gimpbrush-load.c:331
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
 "Unsupported brush depth %d\n"
@@ -12107,39 +12108,41 @@ msgid ""
 "This might be an obsolete GIMP brush file, try loading it as image and save "
 "it again."
 msgstr ""
-"붓 파일 '%s'에 치명적인 해석 오류: 지원되지 않는 심도 %d\n"
-"김프 붓은 GRAY나 RGBA여야 합니다."
+"붓 파일에 치명적 구문 해석 오류:\n"
+"지원되지 않는 심도 %d\n"
+"김프 붓은 GRAY나 RGBA여야 합니다.\n"
+"폐기된 방식의 김프 붓 파일일 수 있음. 이미지로 불러와서 다시 저장해 보십시오."
 
 #: ../app/core/gimpbrush-load.c:378
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
 "Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"붓 파일 '%s'에 치명적인 해석 오류: 지원되지 않는 심도 %d\n"
+"붓 파일에서 치명적인 해석 오류:\n"
+"지원되지 않는 심도 %d\n"
 "김프 붓은 GRAY나 RGBA여야 합니다."
 
 #: ../app/core/gimpbrush-load.c:454
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to decode abr format version %d."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: 알 수 없는 버전 %d."
+msgstr "ABR 형식 버전 %d(을)를 디코딩 할 수 없습니다."
 
 #: ../app/core/gimpbrush-load.c:572 ../app/core/gimpbrush-load.c:791
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: 파일이 손상되었습니다."
+msgstr "붓 파일에 치명적인 해석 오류: 붓 크기 값이 손상되었습니다."
 
 #: ../app/core/gimpbrush-load.c:659 ../app/core/gimpbrush-load.c:849
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: 파일이 손상되었습니다."
+msgstr "붓 파일에 치명적인 해석 오류: 붓 치수가 범위를 벗어났습니다."
 
 #: ../app/core/gimpbrush-load.c:671
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
-msgstr ""
-"붓 파일 '%s'에 치명적인 해석 오류: 와이드 비율의 붓은 지원하지 않습니다."
+msgstr "붓 파일에 치명적 구문 해석 오류: 와이드 비율의 붓은 지원하지 않습니다."
 
 #: ../app/core/gimpbrush-load.c:820
 msgid "Fatal parse error in brush file: File appears truncated: "
@@ -12151,15 +12154,16 @@ msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr "붓 파일에 쳐명적 구문해석 오류: 알 수 없는 압축 방식."
 
 #: ../app/core/gimpbrush-load.c:993
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: 알 수 없는 버전 %d."
+msgstr ""
+"붓 파일에 치명적 구문 해석 오류: 형식 버전 %d(을)를 디코딩할 수 없습니다."
 
 #: ../app/core/gimpbrush-load.c:1114 ../app/core/gimpbrush-load.c:1132
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
-msgstr "붓 파일 '%s'에 치명적인 해석 오류: 파일이 손상되었습니다."
+msgstr "붓 파일에 치명적인 해석 오류: RLE 압축 붓 데이터가 손상되었습니다."
 
 #: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:215
 msgid "Brush Spacing"
@@ -12866,7 +12870,7 @@ msgstr "이미지 단위 바꾸기"
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
-msgstr ""
+msgstr "'gimp-comment' 기생물 검증 실패: 주석에 잘못된 UTF-8 문자가 있음."
 
 #: ../app/core/gimpimage.c:3552
 msgctxt "undo-type"
@@ -14778,7 +14782,7 @@ msgstr ""
 #: ../app/dialogs/lebl-dialog.c:129
 #, c-format
 msgid "%1$s   %2$s   %3$s"
-msgstr ""
+msgstr "%1$s   %2$s   %3$s"
 
 #: ../app/dialogs/lebl-dialog.c:130
 msgid "Press 'q' to quit"
@@ -14793,7 +14797,7 @@ msgstr ""
 #: ../app/dialogs/lebl-dialog.c:138 ../app/dialogs/lebl-dialog.c:149
 #, c-format
 msgid "%1$s\t%2$s"
-msgstr ""
+msgstr "%1$s\t%2$s"
 
 #: ../app/dialogs/lebl-dialog.c:139
 msgid "Press 'p' to unpause"
@@ -18260,13 +18264,12 @@ msgstr "채널 삭제"
 
 #: ../app/operations/gimpcurvesconfig.c:118
 #: ../app/operations/gimpcurvesconfig.c:119
-#, fuzzy
 msgid "Curve"
-msgstr "커브"
+msgstr "곡선"
 
 #: ../app/operations/gimpcurvesconfig.c:548
 msgid "not a GIMP Curves file"
-msgstr "김프 커브 파일이 아닙니다"
+msgstr "김프 곡선 파일이 아닙니다"
 
 #: ../app/operations/gimpcurvesconfig.c:579
 msgid "Parse error, didn't find 2 integers"
@@ -18392,9 +18395,8 @@ msgid "Color"
 msgstr "색"
 
 #: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:143
-#, fuzzy
 msgid "Adjust color curves"
-msgstr "색상 커브 조절"
+msgstr "색상 곡선 조절"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
@@ -18951,7 +18953,7 @@ msgstr "반전"
 #: ../app/pdb/drawable-color-cmds.c:235 ../app/pdb/drawable-color-cmds.c:283
 msgctxt "undo-type"
 msgid "Curves"
-msgstr "커브"
+msgstr "곡선"
 
 #: ../app/pdb/color-cmds.c:538 ../app/pdb/drawable-color-cmds.c:139
 msgctxt "undo-type"
@@ -20897,11 +20899,11 @@ msgstr "잘라낼 활성 레이어가 없습니다."
 
 #: ../app/tools/gimpcurvestool.c:142
 msgid "Curves"
-msgstr "커브"
+msgstr "곡선"
 
 #: ../app/tools/gimpcurvestool.c:144
 msgid "_Curves..."
-msgstr "커브(_C)..."
+msgstr "곡선(_C)..."
 
 #: ../app/tools/gimpcurvestool.c:325
 msgid "Click to add a control point"
@@ -20927,7 +20929,7 @@ msgstr "%s: 모든 채널에 조절점을 추가"
 
 #: ../app/tools/gimpcurvestool.c:355
 msgid "Adjust Color Curves"
-msgstr "색상 커브 조절"
+msgstr "색상 곡선 조절"
 
 #: ../app/tools/gimpcurvestool.c:400 ../app/tools/gimplevelstool.c:345
 #: ../app/tools/gimpthresholdtool.c:194
@@ -20948,7 +20950,7 @@ msgstr ""
 
 #: ../app/tools/gimpcurvestool.c:543 ../app/widgets/gimpdeviceinfoeditor.c:464
 msgid "Curve _type:"
-msgstr "커브 유형(_T):"
+msgstr "곡선 유형(_T):"
 
 #: ../app/tools/gimpcurvestool.c:661 ../app/tools/gimplevelstool.c:744
 msgid "Could not read header: "
@@ -21788,7 +21790,7 @@ msgstr ""
 
 #: ../app/tools/gimplevelstool.c:640
 msgid "Edit these Settings as Curves"
-msgstr "커브로 설정 편집하기"
+msgstr "곡선으로 설정 편집하기"
 
 #: ../app/tools/gimplevelstool.c:860
 msgid "Use _old levels file format"
@@ -24225,7 +24227,7 @@ msgstr "없음"
 #: ../app/widgets/gimpdeviceinfoeditor.c:418
 #, c-format
 msgid "%s Curve"
-msgstr "%s 커브"
+msgstr "%s 곡선"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:477
 #: ../app/widgets/gimpdynamicsoutputeditor.c:209
