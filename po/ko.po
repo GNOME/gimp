@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-15 23:58+0900\n"
+"PO-Revision-Date: 2019-01-16 00:38+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -1324,7 +1324,7 @@ msgstr "선택 영역에 추가(_A)"
 #: ../app/actions/colormap-actions.c:80
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
-msgstr "현재 선택 영역에 이 색을 가진 모든 픽셀을 더하기"
+msgstr "현재 선택 영역에 이 색을 가진 모든 픽셀을 추가"
 
 #: ../app/actions/colormap-actions.c:85
 msgctxt "colormap-action"
@@ -6281,10 +6281,9 @@ msgid "Default Edit Action"
 msgstr "기본 편집 동작"
 
 #: ../app/actions/layers-actions.c:90
-#, fuzzy
 msgctxt "layers-action"
 msgid "Activate the default edit action for this type of layer"
-msgstr "이 텍스트 레이어에서 텍스트 도구를 활성화합니다"
+msgstr "이 유형의 레이어에서 기본 편집 동작을 활성화"
 
 #: ../app/actions/layers-actions.c:95
 msgctxt "layers-action"
@@ -6556,10 +6555,9 @@ msgid "Add La_yer Mask"
 msgstr "레이어 마스크 추가(_Y)"
 
 #: ../app/actions/layers-actions.c:266
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add a mask with last used values"
-msgstr "최근 사용 값으로 새 경로를 만듭니다"
+msgstr "최근 사용한 값으로 마스크 추가"
 
 #: ../app/actions/layers-actions.c:271
 msgctxt "layers-action"
@@ -10425,7 +10423,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid "Add an alpha channel to all layers of imported images."
-msgstr ""
+msgstr "가져온 이미지의 모든 레이어에 알파 채널 추가합니다."
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid "Which plug-in to use for importing raw digital camera files."
@@ -12870,7 +12868,7 @@ msgstr "이미지 단위 바꾸기"
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
-msgstr "'gimp-comment' 기생물 검증 실패: 주석에 잘못된 UTF-8 문자가 있음."
+msgstr "'gimp-comment' 기생물 검증 실패: 주석에 잘못된 UTF-8 문자가 있음"
 
 #: ../app/core/gimpimage.c:3552
 msgctxt "undo-type"
@@ -13737,13 +13735,12 @@ msgid "None"
 msgstr "없음"
 
 #: ../app/core/gimpsymmetry.c:148
-#, fuzzy
 msgid "Active"
-msgstr "활성 경로"
+msgstr "활성"
 
 #: ../app/core/gimpsymmetry.c:149
 msgid "Activate symmetry painting"
-msgstr ""
+msgstr "대칭 페인팅 활성화"
 
 #: ../app/core/gimpsymmetry-mandala.c:113
 msgid "Mandala"
@@ -14687,9 +14684,8 @@ msgid "Add a Mask to the Layer"
 msgstr "레이어에 마스크 추가"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:111
-#, fuzzy
 msgid "_Add"
-msgstr "탭 추가(_A)"
+msgstr "추가(_A)"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:137
 msgid "Initialize Layer Mask to:"
@@ -14773,7 +14769,7 @@ msgstr "텍스트에서 이름 설정(_T)"
 #: ../app/dialogs/lebl-dialog.c:122
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
-msgstr ""
+msgstr "레벨 %d에서 <b>게임 오버</b>!"
 
 #. Translators: the first and third strings are similar to a
 #. * title, and the second string is a small information text.
@@ -15370,9 +15366,8 @@ msgid "Dither images when promoting to floating point"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1490
-#, fuzzy
 msgid "Add an alpha channel to imported images"
-msgstr "현재 선택에 레이어 알파 채널 추가"
+msgstr "가져온 이미지에 알파 채널 추가"
 
 #: ../app/dialogs/preferences-dialog.c:1495
 #: ../app/dialogs/preferences-dialog.c:2105
@@ -16084,7 +16079,7 @@ msgstr "포커스"
 
 #: ../app/dialogs/preferences-dialog.c:2694
 msgid "Activate the _focused image"
-msgstr "포커스된 이미지 활성화(_F)"
+msgstr "포커스 받은 이미지 활성화(_F)"
 
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2698
@@ -16803,7 +16798,7 @@ msgstr "크기"
 #: ../app/display/display-enums.c:409
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
-msgstr "더하기/변환"
+msgstr "추가/변환"
 
 #: ../app/display/display-enums.c:410
 #, fuzzy
@@ -16913,6 +16908,12 @@ msgid ""
 "<small>Please test bugs against latest git master branch\n"
 "before reporting them.</small>"
 msgstr ""
+"<big>불안정한 개발 버전</big>\n"
+"\n"
+"<small>커밋<tt>%s</tt></small>\n"
+"\n"
+"<small>버그를 보고하기 전에 마스터 브랜치에 맞추어\n"
+"버그를 테스트 해주세요.</small>"
 
 #: ../app/display/gimpdisplayshell-close.c:168
 #: ../app/display/gimpdisplayshell-close.c:266
@@ -17191,7 +17192,7 @@ msgstr "클릭-끌기 해서 원근 바꾸기"
 
 #: ../app/display/gimptoolhandlegrid.c:857
 msgid "Click to add a handle"
-msgstr "클릭해서 핸들 더하기"
+msgstr "클릭해서 핸들 추가"
 
 #: ../app/display/gimptoolhandlegrid.c:863
 #, fuzzy
@@ -17749,18 +17750,16 @@ msgid "Difference (l)"
 msgstr "차이"
 
 #: ../app/operations/operations-enums.c:178
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
-msgstr "추가"
+msgstr "추가 (레거시)"
 
 #. Translators: this is an abbreviated version of "Addition (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:181
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Addition (l)"
-msgstr "추가"
+msgstr "추가 (L)"
 
 #: ../app/operations/operations-enums.c:182
 #, fuzzy
@@ -18008,10 +18007,9 @@ msgid "Difference"
 msgstr "차이"
 
 #: ../app/operations/operations-enums.c:252
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Addition"
-msgstr "추가"
+msgstr "Addition"
 
 #: ../app/operations/operations-enums.c:253
 #, fuzzy
@@ -18396,7 +18394,7 @@ msgstr "색"
 
 #: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:143
 msgid "Adjust color curves"
-msgstr "색상 곡선 조절"
+msgstr "색상 곡선 조정"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
@@ -18411,9 +18409,8 @@ msgid "Adjust hue, saturation, and lightness"
 msgstr "색조, 채도, 밝기를 조정"
 
 #: ../app/operations/gimpoperationlevels.c:64 ../app/tools/gimplevelstool.c:133
-#, fuzzy
 msgid "Adjust color levels"
-msgstr "색상 레벨 조절"
+msgstr "색상 레벨 조정"
 
 #: ../app/operations/gimpoperationposterize.c:82
 msgid "Reduce to a limited set of colors"
@@ -19972,7 +19969,7 @@ msgstr "변경할 범위를 선택하십시오"
 #: ../app/propgui/gimppropgui-color-balance.c:103
 #: ../app/tools/gimplevelstool.c:247
 msgid "Adjust Color Levels"
-msgstr "색상 레벨 조절"
+msgstr "색상 레벨 조정"
 
 #: ../app/propgui/gimppropgui-color-balance.c:119
 #: ../app/propgui/gimppropgui-hue-saturation.c:138
@@ -20181,79 +20178,79 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-utils.c:70
 msgid "1,700 K – Match flame"
-msgstr ""
+msgstr "1,850 K – 성냥불"
 
 #: ../app/propgui/gimppropgui-utils.c:71
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr ""
+msgstr "1,850 K – 촛불, 해넘이/해돋이"
 
 #: ../app/propgui/gimppropgui-utils.c:72
 msgid "2,700 K - Soft (or warm) LED lamps"
-msgstr ""
+msgstr "2,700 K - 부드러운(또는 따뜻한) LED 램프"
 
 #: ../app/propgui/gimppropgui-utils.c:73
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
-msgstr ""
+msgstr "3,000 K – 부드러운 (또는 따뜻한) 흰색 소형 형광등"
 
 #: ../app/propgui/gimppropgui-utils.c:74
 msgid "3,200 K – Studio lamps, photofloods, etc."
-msgstr ""
+msgstr "3,200 K – 스튜디오 조명, 포토 플러드 등등."
 
 #: ../app/propgui/gimppropgui-utils.c:75
 msgid "3,300 K – Incandescent lamps"
-msgstr ""
+msgstr "3,300 K – 백열등"
 
 #: ../app/propgui/gimppropgui-utils.c:76
 msgid "3,350 K – Studio \"CP\" light"
-msgstr ""
+msgstr "3,350 K – 스튜디도 “CP” 조명"
 
 #: ../app/propgui/gimppropgui-utils.c:77
 msgid "4,000 K - Cold (daylight) LED lamps"
-msgstr ""
+msgstr "4,000 K - 차가운 (일광) LED 램프"
 
 #: ../app/propgui/gimppropgui-utils.c:78
 msgid "4,100 K – Moonlight"
-msgstr ""
+msgstr "4,100 K – 달빛"
 
 #: ../app/propgui/gimppropgui-utils.c:79
 msgid "5,000 K – D50"
-msgstr ""
+msgstr "5,000 K – D50"
 
 #: ../app/propgui/gimppropgui-utils.c:80
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
-msgstr ""
+msgstr "5,000 K – 시원한 흰/일광 소형 형광등"
 
 #: ../app/propgui/gimppropgui-utils.c:81
 msgid "5,000 K – Horizon daylight"
-msgstr ""
+msgstr "5,000 K – 수평 일광"
 
 #: ../app/propgui/gimppropgui-utils.c:82
 msgid "5,500 K – D55"
-msgstr ""
+msgstr "5,500 K – D55"
 
 #: ../app/propgui/gimppropgui-utils.c:83
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr ""
+msgstr "5,500 K – 수직 일광, 전자 플래시"
 
 #: ../app/propgui/gimppropgui-utils.c:84
 msgid "6,200 K – Xenon short-arc lamp"
-msgstr ""
+msgstr "6,200 K – 제논 쇼트 아크등"
 
 #: ../app/propgui/gimppropgui-utils.c:85
 msgid "6,500 K – D65"
-msgstr ""
+msgstr "6,500 K – D65"
 
 #: ../app/propgui/gimppropgui-utils.c:86
 msgid "6,500 K – Daylight, overcast"
-msgstr ""
+msgstr "6,500 K – 일광, 구름 낌"
 
 #: ../app/propgui/gimppropgui-utils.c:87
 msgid "7,500 K – D75"
-msgstr ""
+msgstr "7,500 K – D75"
 
 #: ../app/propgui/gimppropgui-utils.c:88
 msgid "9,300 K"
-msgstr ""
+msgstr "9,300 K"
 
 #: ../app/propgui/gimppropgui-utils.c:103
 msgid "Choose from a list of common color temperatures"
@@ -20929,7 +20926,7 @@ msgstr "%s: 모든 채널에 조절점을 추가"
 
 #: ../app/tools/gimpcurvestool.c:355
 msgid "Adjust Color Curves"
-msgstr "색상 곡선 조절"
+msgstr "색상 곡선 조정"
 
 #: ../app/tools/gimpcurvestool.c:400 ../app/tools/gimplevelstool.c:345
 #: ../app/tools/gimpthresholdtool.c:194
@@ -20942,11 +20939,11 @@ msgstr "채널 초기화(_E)"
 
 #: ../app/tools/gimpcurvestool.c:452
 msgid "Adjust curves in linear light"
-msgstr ""
+msgstr "선형 조명으로 곡선을 조정"
 
 #: ../app/tools/gimpcurvestool.c:453
 msgid "Adjust curves perceptually"
-msgstr ""
+msgstr "지각적으로 곡선을 조정"
 
 #: ../app/tools/gimpcurvestool.c:543 ../app/widgets/gimpdeviceinfoeditor.c:464
 msgid "Curve _type:"
@@ -21132,12 +21129,12 @@ msgstr "클릭해서 분할 안내선을 이동"
 #: ../app/tools/gimpfiltertool.c:638
 #, c-format
 msgid "%s: switch original and filtered"
-msgstr ""
+msgstr "%s: 원본과 필터된 항목 전환"
 
 #: ../app/tools/gimpfiltertool.c:639
 #, c-format
 msgid "%s: switch horizontal and vertical"
-msgstr ""
+msgstr "%s: 수평과 수직 전환"
 
 #: ../app/tools/gimpfiltertool.c:1300 ../app/tools/gimpfiltertool-settings.c:71
 #, fuzzy, c-format
@@ -21254,9 +21251,8 @@ msgid "Number of downsampled levels to use"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:123
-#, fuzzy
 msgid "Active levels"
-msgstr "활성 필터"
+msgstr "활성 레벨"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Number of levels to perform solving"
@@ -21400,7 +21396,6 @@ msgid "Metric to use for the distance calculation"
 msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:117
-#, fuzzy
 msgid "Adaptive Supersampling"
 msgstr "적응형 슈퍼샘플링"
 
@@ -21578,7 +21573,7 @@ msgstr ""
 
 #: ../app/tools/gimphandletransformoptions.c:167
 msgid "Add handles and transform the image"
-msgstr ""
+msgstr "핸들을 추가하고 이미지를 변형"
 
 #: ../app/tools/gimphandletransformoptions.c:172
 #, fuzzy
@@ -21691,7 +21686,7 @@ msgstr "%s: 자동으로 당겨맞추기 사용안함"
 #: ../app/tools/gimpiscissorstool.c:914
 #, c-format
 msgid "%s: remove this point"
-msgstr ""
+msgstr "%s: 이 점 제거"
 
 #: ../app/tools/gimpiscissorstool.c:934
 msgid "Click to close the curve"
@@ -23459,7 +23454,7 @@ msgstr ""
 #: ../app/widgets/gimpcolorframe.c:898
 msgctxt "Lab color space"
 msgid "a*:"
-msgstr ""
+msgstr "a*:"
 
 #. TRANSLATORS: b* color channel in Lab color space
 #: ../app/widgets/gimpcolorframe.c:900
@@ -23956,7 +23951,7 @@ msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:262
 msgid "A sharing violation occurred."
-msgstr ""
+msgstr "공유 위반이 발생했습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:265
 msgid "Unknown Microsoft Windows error."
