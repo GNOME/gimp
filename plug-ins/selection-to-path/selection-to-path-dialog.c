@@ -127,7 +127,7 @@ dialog_create_selection_area (SELVALS *sels)
                               TRUE, 0, 0,
                               _("If the angle defined by a point and its predecessors "
                                 "and successors is smaller than this, it's a corner, "
-                                "even if it's within `corner_surround' pixels of a "
+                                "even if it's within 'corner_surround' pixels of a "
                                 "point with a smaller angle."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -169,7 +169,7 @@ dialog_create_selection_area (SELVALS *sels)
                               0.2, 10, 0.1, 0.1, 2,
                               TRUE, 0, 0,
                               _("Amount of error at which a fitted spline is "
-                                "unacceptable.  If any pixel is further away "
+                                "unacceptable. If any pixel is further away "
                                 "than this from the fitted curve, we try again."),
                               NULL);
   g_signal_connect (adj, "value-changed",
@@ -214,8 +214,8 @@ dialog_create_selection_area (SELVALS *sels)
                               TRUE, 0, 0,
                               _("Number of times to smooth original data points.  "
                                 "Increasing this number dramatically --- to 50 or "
-                                "so --- can produce vastly better results.  But if "
-                                "any points that ``should'' be corners aren't found, "
+                                "so --- can produce vastly better results. But if "
+                                "any points that 'should' be corners aren't found, "
                                 "the curve goes to hell around that point."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -242,7 +242,7 @@ dialog_create_selection_area (SELVALS *sels)
                               3, 10, 1, 1, 0,
                               TRUE, 0, 0,
                               _("Number of adjacent points to consider if "
-                                "`filter_surround' points defines a straight line."),
+                                "'filter_surround' points defines a straight line."),
                               NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -267,7 +267,7 @@ dialog_create_selection_area (SELVALS *sels)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), sels->keep_knees);
   gtk_grid_attach (GTK_GRID (grid), check, 1, row, 2, 1);
   gimp_help_set_help_data (GTK_WIDGET (check),
-                           _("Says whether or not to remove ``knee'' "
+                           _("Says whether or not to remove 'knee' "
                              "points after finding the outline."), NULL);
   g_signal_connect (check, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -328,7 +328,7 @@ dialog_create_selection_area (SELVALS *sels)
                               TRUE, 0, 0,
                               _("Amount of error at which it is pointless to reparameterize.  "
                                 "This happens, for example, when we are trying to fit the "
-                                "outline of the outside of an `O' with a single spline.  "
+                                "outline of the outside of an 'O' with a single spline. "
                                      "The initial fit is not good enough for the Newton-Raphson "
                                      "iteration to improve it.  It may be that it would be better "
                                      "to detect the cases where we didn't find any corners."), NULL);
