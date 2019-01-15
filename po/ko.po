@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-15 08:30+0900\n"
+"PO-Revision-Date: 2019-01-15 10:25+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -4007,7 +4007,7 @@ msgstr "이름 붙여 보이는 부분 복사 "
 
 #: ../app/actions/edit-commands.c:572 ../app/display/gimpdisplayshell-dnd.c:480
 msgid "Pasted as new layer because the target is a layer group."
-msgstr "목표가 레이어 그룹이므로 새 레이어로 붙였음"
+msgstr "목표가 레이어 그룹이므로 새 레이어로 붙였음."
 
 #: ../app/actions/edit-commands.c:579 ../app/display/gimpdisplayshell-dnd.c:489
 #, fuzzy
@@ -4778,7 +4778,7 @@ msgstr "색조-채도(_S)..."
 #: ../app/actions/filters-actions.c:387
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr ""
+msgstr "환상(_I)..."
 
 #: ../app/actions/filters-actions.c:392
 msgctxt "filters-action"
@@ -4788,17 +4788,17 @@ msgstr "이미지 그레이디언트_I)..."
 #: ../app/actions/filters-actions.c:397
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
-msgstr ""
+msgstr "만화경(_K)..."
 
 #: ../app/actions/filters-actions.c:402
 msgctxt "filters-action"
 msgid "Lens Distortion..."
-msgstr ""
+msgstr "렌즈 왜곡..."
 
 #: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
 msgid "Lens Flare..."
-msgstr ""
+msgstr "렌즈 플레어..."
 
 #: ../app/actions/filters-actions.c:412
 msgctxt "filters-action"
@@ -4813,22 +4813,22 @@ msgstr ""
 #: ../app/actions/filters-actions.c:422
 msgctxt "filters-action"
 msgid "_Maze..."
-msgstr ""
+msgstr "미로(_M)..."
 
 #: ../app/actions/filters-actions.c:427
 msgctxt "filters-action"
 msgid "_Median Blur..."
-msgstr ""
+msgstr "미디언 블러(_B)..."
 
 #: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
-msgstr ""
+msgstr "모노 믹서(_M)..."
 
 #: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Mosaic..."
-msgstr ""
+msgstr "모자이크(_M)..."
 
 #: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
@@ -4838,12 +4838,12 @@ msgstr "원형 모션 블러(_C)..."
 #: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
-msgstr ""
+msgstr "선형 모션 블러(_L)..."
 
 #: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr ""
+msgstr "줌 모션 블러(_Z)..."
 
 #: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
@@ -4858,22 +4858,22 @@ msgstr ""
 #: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "HSV Noise..."
-msgstr ""
+msgstr "HSV 노이즈(_N)..."
 
 #: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "_Hurl..."
-msgstr ""
+msgstr "헐(_H)..."
 
 #: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
-msgstr ""
+msgstr "펄린 노이즈(_P)..."
 
 #: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Pick..."
-msgstr ""
+msgstr "추출(_P)..."
 
 #: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
@@ -4888,52 +4888,52 @@ msgstr "노이즈 감소(_E)..."
 #: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
-msgstr ""
+msgstr "심플렉스 노이즈(_S)..."
 
 #: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "_Slur..."
-msgstr ""
+msgstr "슬러(_S)..."
 
 #: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Solid Noise..."
-msgstr ""
+msgstr "솔리드 노이즈(_S)..."
 
 #: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "Sp_read..."
-msgstr ""
+msgstr "퍼트리기(_R)..."
 
 #: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "Oili_fy..."
-msgstr ""
+msgstr "유화(_F)..."
 
 #: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr ""
+msgstr "파노라마 프로젝션(_P)..."
 
 #: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "_Photocopy..."
-msgstr ""
+msgstr "사진 복사(_P)..."
 
 #: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Pixelize..."
-msgstr ""
+msgstr "픽셀화(_P)..."
 
 #: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Plasma..."
-msgstr ""
+msgstr "플라스마(_P)..."
 
 #: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
-msgstr ""
+msgstr "극좌표(_O)..."
 
 #: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
@@ -4943,7 +4943,7 @@ msgstr "포스터화(_P)..."
 #: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr ""
+msgstr "적목 현상 제거(_R)..."
 
 #: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
@@ -4958,7 +4958,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Ripple..."
-msgstr ""
+msgstr "잔물결(_R)..."
 
 #: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
@@ -4973,17 +4973,17 @@ msgstr ""
 #: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Sepia..."
-msgstr ""
+msgstr "세피아(_S)..."
 
 #: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr ""
+msgstr "그림자-강조(_H)..."
 
 #: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Shift..."
-msgstr ""
+msgstr "시프트(_S)..."
 
 #: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
@@ -4998,22 +4998,22 @@ msgstr ""
 #: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
-msgstr ""
+msgstr "대칭 최근접 이웃(_S)..."
 
 #: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Softglow..."
-msgstr ""
+msgstr "소프트글로우(_S)..."
 
 #: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "S_piral..."
-msgstr ""
+msgstr "나선(_P)..."
 
 #: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
-msgstr ""
+msgstr "대비 늘이기(_S)..."
 
 #: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
@@ -5023,7 +5023,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "Super_nova..."
-msgstr ""
+msgstr "초신성(_N)..."
 
 #: ../app/actions/filters-actions.c:637
 #, fuzzy
@@ -5039,12 +5039,12 @@ msgstr ""
 #: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Glass Tile..."
-msgstr ""
+msgstr "유리 타일(_G)..."
 
 #: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "_Paper Tile..."
-msgstr ""
+msgstr "종이 타일(_P)..."
 
 #: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
@@ -5054,12 +5054,12 @@ msgstr ""
 #: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
-msgstr ""
+msgstr "언샤픈 마스크(_U)..."
 
 #: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "_Value Propagate..."
-msgstr ""
+msgstr "값 전파(_V)..."
 
 #: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
@@ -5069,7 +5069,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Vignette..."
-msgstr ""
+msgstr "비네트(_V)..."
 
 #: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
@@ -5089,7 +5089,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "W_ind..."
-msgstr ""
+msgstr "바람(_I)..."
 
 #: ../app/actions/filters-actions.c:705
 msgctxt "filters-action"
@@ -5547,12 +5547,12 @@ msgstr "그라디언트 파일 위치를 클립보드에 복사합니다"
 #: ../app/actions/gradients-actions.c:66
 msgctxt "gradients-action"
 msgid "Show in _File Manager"
-msgstr ""
+msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/gradients-actions.c:67
 msgctxt "gradients-action"
 msgid "Show gradient file location in the file manager"
-msgstr ""
+msgstr "파일 관리자에서 그레이디언트 파일 위치 보이기"
 
 #: ../app/actions/gradients-actions.c:72
 msgctxt "gradients-action"
@@ -5657,7 +5657,7 @@ msgstr "안내선(_G)"
 #: ../app/actions/image-actions.c:65
 msgctxt "image-action"
 msgid "Meta_data"
-msgstr ""
+msgstr "메타데이터(_M)"
 
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
@@ -5733,7 +5733,7 @@ msgstr "색 프로필로 변환(_C)"
 #: ../app/actions/image-actions.c:95
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
-msgstr ""
+msgstr "색 프로필을 이미지에 적용"
 
 #: ../app/actions/image-actions.c:100
 #, fuzzy
@@ -5821,7 +5821,7 @@ msgstr "선택 영역의 크기대로 이미지 잘라냅니다"
 #: ../app/actions/image-actions.c:148
 msgctxt "image-action"
 msgid "Crop to C_ontent"
-msgstr ""
+msgstr "내용에 맞추어 자르기(_O)"
 
 #: ../app/actions/image-actions.c:149
 #, fuzzy
@@ -5917,7 +5917,7 @@ msgstr "이미지를 색인한 색으로 변환합니다"
 #: ../app/actions/image-actions.c:211
 msgctxt "image-convert-action"
 msgid "8 bit integer"
-msgstr ""
+msgstr "8 비트 정수"
 
 #: ../app/actions/image-actions.c:213
 #, fuzzy
@@ -5928,7 +5928,7 @@ msgstr "이미지를 색인한 색으로 변환합니다"
 #: ../app/actions/image-actions.c:217
 msgctxt "image-convert-action"
 msgid "16 bit integer"
-msgstr ""
+msgstr "16 비트 정수"
 
 #: ../app/actions/image-actions.c:219
 #, fuzzy
@@ -5939,7 +5939,7 @@ msgstr "이미지를 색인한 색으로 변환합니다"
 #: ../app/actions/image-actions.c:223
 msgctxt "image-convert-action"
 msgid "32 bit integer"
-msgstr ""
+msgstr "32 비트 정수"
 
 #: ../app/actions/image-actions.c:225
 #, fuzzy
@@ -5950,7 +5950,7 @@ msgstr "이미지를 색인한 색으로 변환합니다"
 #: ../app/actions/image-actions.c:229
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
-msgstr ""
+msgstr "16 비트 부동 소수점"
 
 #: ../app/actions/image-actions.c:231
 #, fuzzy
@@ -5961,7 +5961,7 @@ msgstr "이미지를 색인한 색으로 변환합니다"
 #: ../app/actions/image-actions.c:235
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
-msgstr ""
+msgstr "32비트 부동 소수점"
 
 #: ../app/actions/image-actions.c:237
 #, fuzzy
@@ -5972,7 +5972,7 @@ msgstr "이미지를 색인한 색으로 변환합니다"
 #: ../app/actions/image-actions.c:241
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
-msgstr ""
+msgstr "64비트 부동 소수점"
 
 #: ../app/actions/image-actions.c:243
 #, fuzzy
@@ -5983,7 +5983,7 @@ msgstr "이미지를 색인한 색으로 변환합니다"
 #: ../app/actions/image-actions.c:250
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr ""
+msgstr "지각적 감마 (sRGB)"
 
 #: ../app/actions/image-actions.c:252
 #, fuzzy
@@ -6065,7 +6065,7 @@ msgstr "그레이스케일(_G)..."
 #: ../app/actions/image-commands.c:559
 #, c-format
 msgid "Saving color profile failed: %s"
-msgstr ""
+msgstr "색 프로필 저장 실패: %s"
 
 #: ../app/actions/image-commands.c:598
 #, fuzzy
@@ -6287,7 +6287,7 @@ msgstr "이 텍스트 레이어에서 텍스트 도구를 활성화합니다"
 #: ../app/actions/layers-actions.c:95
 msgctxt "layers-action"
 msgid "Edit Te_xt on canvas"
-msgstr ""
+msgstr "캔버스 내 텍스트 편집(_X)"
 
 #: ../app/actions/layers-actions.c:96
 #, fuzzy
@@ -6647,57 +6647,57 @@ msgstr "자동"
 #: ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
-msgstr ""
+msgstr "레이어 혼합 공간: 자동"
 
 #: ../app/actions/layers-actions.c:347 ../app/actions/layers-actions.c:368
 msgctxt "layers-action"
 msgid "RGB (linear)"
-msgstr ""
+msgstr "RGB (선형)"
 
 #: ../app/actions/layers-actions.c:348
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (linear)"
-msgstr ""
+msgstr "레이어 혼합 공간: RGB (선형)"
 
 #: ../app/actions/layers-actions.c:353 ../app/actions/layers-actions.c:374
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
-msgstr ""
+msgstr "RGB (지각적)"
 
 #: ../app/actions/layers-actions.c:354
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
-msgstr ""
+msgstr "레이어 혼합 공간: RGB (지각적)"
 
 #: ../app/actions/layers-actions.c:363
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
-msgstr ""
+msgstr "레이어 합성 공간: 자동"
 
 #: ../app/actions/layers-actions.c:369
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
-msgstr ""
+msgstr "레이어 합성 공간: RGB (선형)"
 
 #: ../app/actions/layers-actions.c:375
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
-msgstr ""
+msgstr "레이어 합성 공간: RGB (지각적)"
 
 #: ../app/actions/layers-actions.c:384
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
-msgstr ""
+msgstr "레이어 합성 모드: 자동"
 
 #: ../app/actions/layers-actions.c:389
 msgctxt "layers-action"
 msgid "Union"
-msgstr ""
+msgstr "합"
 
 #: ../app/actions/layers-actions.c:390
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Union"
-msgstr ""
+msgstr "레이어 합성 모드: 합"
 
 #: ../app/actions/layers-actions.c:395
 msgctxt "layers-action"
@@ -6707,7 +6707,7 @@ msgstr "배경에 맞게 오리기"
 #: ../app/actions/layers-actions.c:396
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Backdrop"
-msgstr ""
+msgstr "레이어 합성 모드: 배경에 맞추어 오리기"
 
 #: ../app/actions/layers-actions.c:401
 #, fuzzy
@@ -6718,7 +6718,7 @@ msgstr "텍스트 레이어 뒤집기"
 #: ../app/actions/layers-actions.c:402
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Clip to Layer"
-msgstr ""
+msgstr "레이어 합성 모드: 레이어에 맞추어 오리기"
 
 #: ../app/actions/layers-actions.c:407
 #, fuzzy
@@ -6729,7 +6729,7 @@ msgstr "선택 영역 반전"
 #: ../app/actions/layers-actions.c:408
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Intersection"
-msgstr ""
+msgstr "레이어 합성 모드: 교차"
 
 #: ../app/actions/layers-actions.c:416
 #, fuzzy
@@ -6740,7 +6740,7 @@ msgstr "없음"
 #: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
-msgstr ""
+msgstr "레이어 색 태그: 제거하기"
 
 #: ../app/actions/layers-actions.c:422
 #, fuzzy
@@ -6752,6 +6752,8 @@ msgstr "파랑"
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
 msgstr ""
+"레이어\n"
+"색 태그: 파랑으로 설정"
 
 #: ../app/actions/layers-actions.c:428
 #, fuzzy
@@ -6762,7 +6764,7 @@ msgstr "초록"
 #: ../app/actions/layers-actions.c:429
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
-msgstr ""
+msgstr "레이어 색 태그: 초록으로 설정"
 
 #: ../app/actions/layers-actions.c:434
 msgctxt "layers-action"
@@ -6772,7 +6774,7 @@ msgstr "노랑"
 #: ../app/actions/layers-actions.c:435
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
-msgstr ""
+msgstr "레이어 색 태그: 노랑으로 설정"
 
 #: ../app/actions/layers-actions.c:440
 msgctxt "layers-action"
@@ -6782,17 +6784,17 @@ msgstr "오렌지"
 #: ../app/actions/layers-actions.c:441
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
-msgstr ""
+msgstr "레이어 색 태그: 오렌지로 설정"
 
 #: ../app/actions/layers-actions.c:446
 msgctxt "layers-action"
 msgid "Brown"
-msgstr ""
+msgstr "갈색"
 
 #: ../app/actions/layers-actions.c:447
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
-msgstr ""
+msgstr "레이어 색 태그: 갈색으로 설정"
 
 #: ../app/actions/layers-actions.c:452
 #, fuzzy
@@ -6803,27 +6805,27 @@ msgstr "빨강"
 #: ../app/actions/layers-actions.c:453
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
-msgstr ""
+msgstr "레이어 색 태그: 빨강으로 설정"
 
 #: ../app/actions/layers-actions.c:458
 msgctxt "layers-action"
 msgid "Violet"
-msgstr ""
+msgstr "바이올렛"
 
 #: ../app/actions/layers-actions.c:459
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
-msgstr ""
+msgstr "레이어 색 태그: 바이올렛으로 설정"
 
 #: ../app/actions/layers-actions.c:464
 msgctxt "layers-action"
 msgid "Gray"
-msgstr ""
+msgstr "회색"
 
 #: ../app/actions/layers-actions.c:465
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
-msgstr ""
+msgstr "레이어 색 태그: 회색으로 설정"
 
 #: ../app/actions/layers-actions.c:473
 msgctxt "layers-action"
@@ -6963,32 +6965,32 @@ msgstr "레이어 불투명도: 설정"
 #: ../app/actions/layers-actions.c:577
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Transparent"
-msgstr ""
+msgstr "레이어 불투명도: 완전히 투명하게 만들기"
 
 #: ../app/actions/layers-actions.c:581
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Opaque"
-msgstr ""
+msgstr "레이어 불투명도: 완전히 불투명하게 만들기"
 
 #: ../app/actions/layers-actions.c:585
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Transparent"
-msgstr ""
+msgstr "레이어 불투명도: 더 투명하게 만들기"
 
 #: ../app/actions/layers-actions.c:589
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Opaque"
-msgstr ""
+msgstr "레이어 불투명도: 더 불투명하게 만들기"
 
 #: ../app/actions/layers-actions.c:593
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Transparent"
-msgstr ""
+msgstr "레이어 불투명도: 10% 더 투명하게 만들기"
 
 #: ../app/actions/layers-actions.c:597
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Opaque"
-msgstr ""
+msgstr "레이어 불투명도: 10% 더 불투명하게 만들기"
 
 #: ../app/actions/layers-actions.c:605
 msgctxt "layers-action"
@@ -7120,7 +7122,7 @@ msgstr "붓 파일 위치를 클립보드에 저장합니다"
 #: ../app/actions/mypaint-brushes-actions.c:65
 msgctxt "mypaint-brushes-action"
 msgid "Show in _File Manager"
-msgstr ""
+msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/mypaint-brushes-actions.c:66
 #, fuzzy
@@ -7287,7 +7289,7 @@ msgstr "팔레트 파일 위치를 클립보드를 복사합니다"
 #: ../app/actions/palettes-actions.c:78
 msgctxt "palettes-action"
 msgid "Show in _File Manager"
-msgstr ""
+msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/palettes-actions.c:79
 #, fuzzy
@@ -7337,7 +7339,7 @@ msgstr "합친 팔레트의 이름을 입력하십시오"
 
 #: ../app/actions/palettes-commands.c:123
 msgid "There must be at least two palettes selected to merge."
-msgstr ""
+msgstr "합치려면 두 개 이상의 보이는 팔레트를 선택해야 합니다."
 
 #: ../app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -7387,12 +7389,12 @@ msgstr "무늬 파일 위치를 클립보드로 복사합니다"
 #: ../app/actions/patterns-actions.c:71
 msgctxt "patterns-action"
 msgid "Show in _File Manager"
-msgstr ""
+msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/patterns-actions.c:72
 msgctxt "patterns-action"
 msgid "Show pattern file location in the file manager"
-msgstr ""
+msgstr "파일 관리자에서 무늬 파일 위치 보이기"
 
 #: ../app/actions/patterns-actions.c:77
 msgctxt "patterns-action"
@@ -8096,7 +8098,7 @@ msgstr "팔레트 파일 위치를 클립보드에 복사합니다"
 #: ../app/actions/tool-presets-actions.c:68
 msgctxt "tool-presets-action"
 msgid "Show in _File Manager"
-msgstr ""
+msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/tool-presets-actions.c:69
 #, fuzzy
@@ -8208,32 +8210,32 @@ msgstr "에어브러시"
 #: ../app/actions/tools-actions.c:155
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Minimum"
-msgstr ""
+msgstr "에어브러시 속도: 최소로 설정"
 
 #: ../app/actions/tools-actions.c:159
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Maximum"
-msgstr ""
+msgstr "에어브러시 속도: 최대로 설정"
 
 #: ../app/actions/tools-actions.c:163
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 1"
-msgstr ""
+msgstr "에어브러시 속도: 1만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:167
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
-msgstr ""
+msgstr "에어브러시 속도: 1만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:171
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 10"
-msgstr ""
+msgstr "에어브러시 속도: 10만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:175
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
-msgstr ""
+msgstr "에어브러시 속도: 10만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:183
 #, fuzzy
@@ -8244,37 +8246,37 @@ msgstr "에어브러시"
 #: ../app/actions/tools-actions.c:187
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Minimum"
-msgstr ""
+msgstr "에어브러시 플로: 최소로 설정"
 
 #: ../app/actions/tools-actions.c:191
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Maximum"
-msgstr ""
+msgstr "에어브러시 플로: 최대로 설정"
 
 #: ../app/actions/tools-actions.c:195
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 1"
-msgstr ""
+msgstr "에어브러시 플로: 1만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:199
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
-msgstr ""
+msgstr "에어브러시 플로: 1만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:203
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 10"
-msgstr ""
+msgstr "에어브러시 플로: 10만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:207
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
-msgstr ""
+msgstr "에어브러시 플로: 10만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:264
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
-msgstr ""
+msgstr "도구 불투명도: 설정"
 
 #: ../app/actions/tools-actions.c:268
 #, fuzzy
@@ -8285,47 +8287,47 @@ msgstr "저장된 도구 옵션을 기본값으로 초기화(_R)"
 #: ../app/actions/tools-actions.c:272
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
-msgstr ""
+msgstr "도구 불투명도: 최소화"
 
 #: ../app/actions/tools-actions.c:276
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
-msgstr ""
+msgstr "도구 불투명도: 최대화"
 
 #: ../app/actions/tools-actions.c:280
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
-msgstr ""
+msgstr "도구 불투명도: 1만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:284
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
-msgstr ""
+msgstr "도구 불투명도: 1만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:288
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
-msgstr ""
+msgstr "도구 불투명도: 10만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:292
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
-msgstr ""
+msgstr "도구 불투명도: 10만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:296
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease Relative"
-msgstr ""
+msgstr "도구 불투명도: 상대적으로 줄이기"
 
 #: ../app/actions/tools-actions.c:300
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
-msgstr ""
+msgstr "도구 불투명도: 상대적으로 늘이기"
 
 #: ../app/actions/tools-actions.c:308
 msgctxt "tools-action"
 msgid "Tool's Size: Set"
-msgstr ""
+msgstr "도구 크기: 설정"
 
 #: ../app/actions/tools-actions.c:312
 msgctxt "tools-action"
@@ -8335,42 +8337,42 @@ msgstr "도구 크기: 기본값으로 초기화"
 #: ../app/actions/tools-actions.c:316
 msgctxt "tools-action"
 msgid "Tool's Size: Minimize"
-msgstr ""
+msgstr "도구 크기: 최소화"
 
 #: ../app/actions/tools-actions.c:320
 msgctxt "tools-action"
 msgid "Tool's Size: Maximize"
-msgstr ""
+msgstr "도구 크기: 최대화"
 
 #: ../app/actions/tools-actions.c:324
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 1"
-msgstr ""
+msgstr "도구 크기: 1만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:328
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 1"
-msgstr ""
+msgstr "도구 크기: 1만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:332
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 10"
-msgstr ""
+msgstr "도구 크기도: 10만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:336
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 10"
-msgstr ""
+msgstr "도구 크기: 10만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:340
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease Relative"
-msgstr ""
+msgstr "도구 크기: 상대적으로 줄이기"
 
 #: ../app/actions/tools-actions.c:344
 msgctxt "tools-action"
 msgid "Tool's Size: Increase Relative"
-msgstr ""
+msgstr "도구 크기: 상대적으로 늘이기"
 
 #: ../app/actions/tools-actions.c:352
 msgctxt "tools-action"
@@ -8386,57 +8388,57 @@ msgstr "저장된 도구 옵션을 기본값으로 초기화(_R)"
 #: ../app/actions/tools-actions.c:360
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Minimize"
-msgstr ""
+msgstr "도구 종횡비: 최소화"
 
 #: ../app/actions/tools-actions.c:364
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Maximize"
-msgstr ""
+msgstr "도구 종횡비: 최대화"
 
 #: ../app/actions/tools-actions.c:368
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 0.1"
-msgstr ""
+msgstr "도구 종횡비: 0.1만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:372
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 0.1"
-msgstr ""
+msgstr "도구 종횡비: 0.1만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:376
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 1"
-msgstr ""
+msgstr "도구 종횡비: 1만큼 줄이기"
 
 #: ../app/actions/tools-actions.c:380
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 1"
-msgstr ""
+msgstr "도구 종횡비: 1만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:384
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease Relative"
-msgstr ""
+msgstr "도구 종횡비: 상대적으로 줄이기"
 
 #: ../app/actions/tools-actions.c:388
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase Relative"
-msgstr ""
+msgstr "도구 종횡비: 상대적으로 늘이기"
 
 #: ../app/actions/tools-actions.c:396
 msgctxt "tools-action"
 msgid "Tool's Angle: Set"
-msgstr ""
+msgstr "도구 각도: 설정"
 
 #: ../app/actions/tools-actions.c:400
 msgctxt "tools-action"
 msgid "Tool's Angle: Set Angle To Default Value"
-msgstr ""
+msgstr "도구 각도: 각도를 기본값으로 초기화"
 
 #: ../app/actions/tools-actions.c:404
 msgctxt "tools-action"
 msgid "Tool's Angle: Minimize"
-msgstr ""
+msgstr "도구 각도: 최소화"
 
 #: ../app/actions/tools-actions.c:408
 msgctxt "tools-action"
