@@ -46,6 +46,7 @@ struct _GimpBucketFillOptions
   gboolean                      antialias;
   gdouble                       threshold;
 
+  GimpLineArtSource             line_art_source;
   gdouble                       line_art_threshold;
   gint                          line_art_max_grow;
   gint                          line_art_max_gap_length;

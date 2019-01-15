@@ -50,14 +50,15 @@ struct _GimpLineArtClass
 
 GType                gimp_line_art_get_type         (void) G_GNUC_CONST;
 
-GimpLineArt *        gimp_line_art_new              (void);
+GimpLineArt        * gimp_line_art_new              (void);
 
 void                 gimp_line_art_set_input        (GimpLineArt  *line_art,
                                                      GimpPickable *pickable);
+GimpPickable       * gimp_line_art_get_input        (GimpLineArt  *line_art);
 void                 gimp_line_art_freeze           (GimpLineArt  *line_art);
 void                 gimp_line_art_thaw             (GimpLineArt  *line_art);
 
-GeglBuffer *         gimp_line_art_get              (GimpLineArt  *line_art,
+GeglBuffer         * gimp_line_art_get              (GimpLineArt  *line_art,
                                                      gfloat      **distmap);
 
 #endif /* __GIMP_LINEART__ */
