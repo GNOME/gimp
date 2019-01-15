@@ -43,7 +43,7 @@ struct _GimpTileBackendPluginPrivate
 static gint
 gimp_gegl_tile_mul (void)
 {
-  static gint     mul    = 2;
+  static gint     mul    = 1;
   static gboolean inited = FALSE;
 
   if (G_LIKELY (inited))
