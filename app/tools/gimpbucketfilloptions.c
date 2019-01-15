@@ -53,6 +53,7 @@ enum
   PROP_DIAGONAL_NEIGHBORS,
   PROP_ANTIALIAS,
   PROP_THRESHOLD,
+  PROP_LINE_ART_SOURCE,
   PROP_LINE_ART_THRESHOLD,
   PROP_LINE_ART_MAX_GROW,
   PROP_LINE_ART_MAX_GAP_LENGTH,
@@ -158,6 +159,14 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                            0.0, 255.0, 15.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LINE_ART_SOURCE,
+                         "line-art-source",
+                         _("Source"),
+                         _("Source image for line art computation"),
+                         GIMP_TYPE_LINE_ART_SOURCE,
+                         GIMP_LINE_ART_SOURCE_SAMPLE_MERGED,
+                         GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LINE_ART_THRESHOLD,
                            "line-art-threshold",
                            _("Line art detection threshold"),
@@ -234,6 +243,9 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
+    case PROP_LINE_ART_SOURCE:
+      options->line_art_source = g_value_get_enum (value);
+      break;
     case PROP_LINE_ART_THRESHOLD:
       options->line_art_threshold = g_value_get_double (value);
       break;
@@ -283,6 +295,9 @@ gimp_bucket_fill_options_get_property (GObject    *object,
       break;
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
+      break;
+    case PROP_LINE_ART_SOURCE:
+      g_value_set_enum (value, options->line_art_source);
       break;
     case PROP_LINE_ART_THRESHOLD:
       g_value_set_double (value, options->line_art_threshold);
@@ -437,13 +452,14 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
+  /*  Line Art: source combo (replace sample merged!) */
+  combo = gimp_prop_enum_combo_box_new (config, "line-art-source", 0, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Source"));
+  gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
   /*  the fill transparent areas toggle  */
   button = gimp_prop_check_button_new (config, "fill-transparent", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  /*  the sample merged toggle  */
-  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

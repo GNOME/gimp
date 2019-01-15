@@ -41,6 +41,39 @@ gimp_bucket_fill_area_get_type (void)
 }
 
 GType
+gimp_line_art_source_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_LINE_ART_SOURCE_SAMPLE_MERGED, "GIMP_LINE_ART_SOURCE_SAMPLE_MERGED", "sample-merged" },
+    { GIMP_LINE_ART_SOURCE_ACTIVE_LAYER, "GIMP_LINE_ART_SOURCE_ACTIVE_LAYER", "active-layer" },
+    { GIMP_LINE_ART_SOURCE_LOWER_LAYER, "GIMP_LINE_ART_SOURCE_LOWER_LAYER", "lower-layer" },
+    { GIMP_LINE_ART_SOURCE_UPPER_LAYER, "GIMP_LINE_ART_SOURCE_UPPER_LAYER", "upper-layer" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_LINE_ART_SOURCE_SAMPLE_MERGED, NC_("line-art-source", "All visible layers"), NULL },
+    { GIMP_LINE_ART_SOURCE_ACTIVE_LAYER, NC_("line-art-source", "Active layer"), NULL },
+    { GIMP_LINE_ART_SOURCE_LOWER_LAYER, NC_("line-art-source", "Layer below the active one"), NULL },
+    { GIMP_LINE_ART_SOURCE_UPPER_LAYER, NC_("line-art-source", "Layer above the active one"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpLineArtSource", values);
+      gimp_type_set_translation_context (type, "line-art-source");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_rect_select_mode_get_type (void)
 {
   static const GEnumValue values[] =

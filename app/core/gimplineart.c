@@ -439,6 +439,12 @@ gimp_line_art_set_input (GimpLineArt  *line_art,
     }
 }
 
+GimpPickable *
+gimp_line_art_get_input (GimpLineArt *line_art)
+{
+  return line_art->priv->input;
+}
+
 void
 gimp_line_art_freeze (GimpLineArt *line_art)
 {
