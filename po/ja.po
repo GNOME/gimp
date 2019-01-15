@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-06 18:25+0000\n"
-"PO-Revision-Date: 2019-01-15 01:30+0900\n"
+"PO-Revision-Date: 2019-01-16 01:30+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -6341,12 +6341,9 @@ msgid "_Edit Gradient..."
 msgstr "グラデーションの編集(_E)..."
 
 #: ../app/actions/gradients-actions.c:94
-#, fuzzy
-#| msgctxt "gradients-action"
-#| msgid "Edit gradient"
 msgctxt "gradients-action"
 msgid "Edit this gradient"
-msgstr "グラデーションエディターで編集します"
+msgstr "このグラデーションを編集します"
 
 #: ../app/actions/gradients-commands.c:72
 #, c-format
@@ -11161,53 +11158,42 @@ msgstr "この設定がオンのときは、シングルウィンドウモード
 #: ../app/actions/windows-actions.c:147
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
-msgstr ""
+msgstr "上(_T)"
 
 #: ../app/actions/windows-actions.c:148
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Raise this path to the top"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
-msgstr "このパスを最前面に移動します"
+msgstr "タブを上に配置します"
 
 #: ../app/actions/windows-actions.c:152
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Layer to _Bottom"
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
-msgstr "レイヤーを最背面へ(_B)"
+msgstr "下(_B)"
 
 #: ../app/actions/windows-actions.c:153
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Lower this path to the bottom"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
-msgstr "このパスを最背面に移動します"
+msgstr "タブを下に配置します"
 
 #: ../app/actions/windows-actions.c:157
 msgctxt "windows-tabs-position-action"
 msgid "_Left"
-msgstr ""
+msgstr "左(_L)"
 
 #: ../app/actions/windows-actions.c:158
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
-msgstr ""
+msgstr "タブを左に配置します"
 
 #: ../app/actions/windows-actions.c:162
-#, fuzzy
-#| msgid "H_eight:"
 msgctxt "windows-tabs-position-action"
 msgid "_Right"
-msgstr "高さ(_E):"
+msgstr "右(_R)"
 
 #: ../app/actions/windows-actions.c:163
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
-msgstr ""
+msgstr "タブを右に配置します"
 
 #: ../app/actions/windows-commands.c:200
 msgid ""
@@ -13419,9 +13405,6 @@ msgid "Global Buffer"
 msgstr "クリップボード"
 
 #: ../app/core/gimp-gradients.c:64
-#, fuzzy
-#| msgctxt "dash-preset"
-#| msgid "Custom"
 msgid "Custom"
 msgstr "カスタム"
 
@@ -23112,7 +23095,7 @@ msgstr "塗りつぶし"
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
 "[塗りつぶし]\n"
-"対象範囲を色やパターンで塗りつぶします"
+"対象の範囲を色やパターンで塗りつぶします"
 
 #: ../app/tools/gimpbucketfilltool.c:166
 msgid "_Bucket Fill"
@@ -24054,11 +24037,8 @@ msgstr "アクティブなグラデーションの編集"
 
 #: ../app/tools/gimpgradientoptions.c:274
 #: ../app/tools/gimppaintoptions-gui.c:383
-#, fuzzy
-#| msgctxt "gradients-action"
-#| msgid "Edit gradient"
 msgid "Edit this gradient"
-msgstr "グラデーションエディターで編集します"
+msgstr "このグラデーションを編集します"
 
 #. the instant toggle
 #: ../app/tools/gimpgradientoptions.c:351
@@ -24074,11 +24054,9 @@ msgid ""
 msgstr ""
 
 #: ../app/tools/gimpgradienttool.c:160
-#, fuzzy
-#| msgid "Blend Tool: Fill selected area with a color gradient"
 msgid "Gradient Tool: Fill selected area with a color gradient"
 msgstr ""
-"[ブレンド]\n"
+"[グラデーション]\n"
 "対象の範囲をグラデーションで塗りつぶします"
 
 #: ../app/tools/gimpgradienttool.c:161
