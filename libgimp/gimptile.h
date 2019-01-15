@@ -62,6 +62,8 @@ void    gimp_tile_cache_ntiles (gulong     ntiles);
 
 /*  private function  */
 
+G_GNUC_INTERNAL void _gimp_tile_ref_noinit           (GimpTile     *tile);
+
 G_GNUC_INTERNAL void _gimp_tile_cache_flush_drawable (GimpDrawable *drawable);
 
 
