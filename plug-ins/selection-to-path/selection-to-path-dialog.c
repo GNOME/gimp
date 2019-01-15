@@ -131,9 +131,9 @@ dialog_create_selection_area (SELVALS *sels)
                               30, 180, 1, 1, 2,
                               TRUE, 0, 0,
                               _("If the angle defined by a point and its predecessors "
-				"and successors is smaller than this, it's a corner, "
-				"even if it's within `corner_surround' pixels of a "
-				"point with a smaller angle."), NULL);
+                                "and successors is smaller than this, it's a corner, "
+                                "even if it's within 'corner_surround' pixels of a "
+                                "point with a smaller angle."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->corner_always_threshold);
@@ -174,8 +174,8 @@ dialog_create_selection_area (SELVALS *sels)
                               0.2, 10, 0.1, 0.1, 2,
                               TRUE, 0, 0,
                               _("Amount of error at which a fitted spline is "
-				"unacceptable.  If any pixel is further away "
-				"than this from the fitted curve, we try again."),
+                                "unacceptable. If any pixel is further away "
+                                "than this from the fitted curve, we try again."),
                               NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -218,10 +218,10 @@ dialog_create_selection_area (SELVALS *sels)
                               4, 70, 1, 1, 0,
                               TRUE, 0, 0,
                               _("Number of times to smooth original data points.  "
-				"Increasing this number dramatically --- to 50 or "
-				"so --- can produce vastly better results.  But if "
-				"any points that ``should'' be corners aren't found, "
-				"the curve goes to hell around that point."), NULL);
+                                "Increasing this number dramatically --- to 50 or "
+                                "so --- can produce vastly better results. But if "
+                                "any points that 'should' be corners aren't found, "
+                                "the curve goes to hell around that point."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->filter_iteration_count);
@@ -247,7 +247,7 @@ dialog_create_selection_area (SELVALS *sels)
                               3, 10, 1, 1, 0,
                               TRUE, 0, 0,
                               _("Number of adjacent points to consider if "
-				"`filter_surround' points defines a straight line."),
+                                "'filter_surround' points defines a straight line."),
                               NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -273,8 +273,8 @@ dialog_create_selection_area (SELVALS *sels)
   gtk_table_attach (GTK_TABLE (table), check, 1, 3, row, row + 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gimp_help_set_help_data (GTK_WIDGET (check),
-                           _("Says whether or not to remove ``knee'' "
-			     "points after finding the outline."), NULL);
+                           _("Says whether or not to remove 'knee' "
+                             "points after finding the outline."), NULL);
   g_signal_connect (check, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &sels->keep_knees);
@@ -333,11 +333,11 @@ dialog_create_selection_area (SELVALS *sels)
                               1, 50, 0.5, 0.5, 2,
                               TRUE, 0, 0,
                               _("Amount of error at which it is pointless to reparameterize.  "
-				"This happens, for example, when we are trying to fit the "
-				"outline of the outside of an `O' with a single spline.  "
-				"The initial fit is not good enough for the Newton-Raphson "
-				"iteration to improve it.  It may be that it would be better "
-				"to detect the cases where we didn't find any corners."), NULL);
+                                "This happens, for example, when we are trying to fit the "
+                                "outline of the outside of an 'O' with a single spline. "
+                                "The initial fit is not good enough for the Newton-Raphson "
+                                "iteration to improve it.  It may be that it would be better "
+                                "to detect the cases where we didn't find any corners."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->reparameterize_threshold);
