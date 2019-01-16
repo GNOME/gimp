@@ -2544,7 +2544,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 image.show ()
             else:
                 button = Gtk.Button.new_from_icon_name (
-                    "edit-select-all-symbolic",
+                    "edit-select-symbolic",
                     Gtk.IconSize.BUTTON
                 )
                 header.pack_end (button)
@@ -2972,7 +2972,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
 
             button.connect ("clicked", lambda *args: self.move (+1))
 
-            button = Gtk.Button.new_from_icon_name ("edit-select-all-symbolic",
+            button = Gtk.Button.new_from_icon_name ("edit-select-symbolic",
                                                     Gtk.IconSize.BUTTON)
             self.select_samples_button = button
             header.pack_end (button)
