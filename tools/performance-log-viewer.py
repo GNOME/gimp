@@ -605,6 +605,12 @@ class Selection (GObject.GObject):
         else:
             self.select (set (), op)
 
+    def clear (self):
+        self.select (set ())
+
+    def invert (self):
+        self.select_range (0, len (samples), SelectionOp.XOR)
+
     def change_complete (self):
         if self.pending_change_completion:
             self.pending_change_completion = False
@@ -972,6 +978,8 @@ class SampleGraph (Gtk.DrawingArea):
         selection.cursor_dir = i1 - i0
 
     def do_button_press_event (self, event):
+        state = event.state & Gdk.ModifierType.MODIFIER_MASK
+
         self.grab_focus ()
 
         if event.button == 1:
@@ -986,8 +994,6 @@ class SampleGraph (Gtk.DrawingArea):
             self.selection_op    = SelectionOp.REPLACE
             self.selection_range = event.type != Gdk.EventType.BUTTON_PRESS
 
-            state = event.state & Gdk.ModifierType.MODIFIER_MASK
-
             if state == Gdk.ModifierType.SHIFT_MASK:
                 self.selection_op = SelectionOp.ADD
             elif state == Gdk.ModifierType.CONTROL_MASK:
@@ -1000,7 +1006,10 @@ class SampleGraph (Gtk.DrawingArea):
 
             self.grab_add ()
         elif event.button == 3:
-            selection.select (set ())
+            if state == 0:
+                selection.clear ()
+            elif state == Gdk.ModifierType.CONTROL_MASK:
+                selection.invert ()
 
             self.grab_add ()
 
@@ -3400,6 +3409,34 @@ class LogViewer (Gtk.Window):
         self.find_popover = popover
         button.set_popover (popover)
 
+        def selection_action (action):
+            def f (*args):
+                action (selection)
+                selection.change_complete ()
+
+            return f
+
+        button = Gtk.Button.new_from_icon_name (
+            "object-flip-horizontal-symbolic",
+            Gtk.IconSize.BUTTON
+        )
+        header.pack_end (button)
+        button.set_tooltip_text ("Invert selection")
+        button.show ()
+
+        button.connect ("clicked", selection_action (Selection.invert))
+
+        button = Gtk.Button.new_from_icon_name (
+            "edit-clear-symbolic",
+            Gtk.IconSize.BUTTON
+        )
+        self.clear_selection_button = button
+        header.pack_end (button)
+        button.set_tooltip_text ("Clear selection")
+        button.show ()
+
+        button.connect ("clicked", selection_action (Selection.clear))
+
         paned = Gtk.Paned (orientation = Gtk.Orientation.VERTICAL)
         self.paned = paned
         self.add (paned)
@@ -3468,6 +3505,7 @@ class LogViewer (Gtk.Window):
 
     def selection_change_complete (self, selection):
         self.header.set_subtitle (str (selection))
+        self.clear_selection_button.set_sensitive (selection.selection)
 
     def cflow_notify_available (self, *args):
         if self.backtrace_viewer.available:

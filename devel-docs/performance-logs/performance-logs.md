@@ -28,7 +28,8 @@ report performance-related issues.
           - [4.2.4.1.2. Call-Graph Direction](#42412-call-graph-direction)
         - [4.2.4.2. Function Columns](#4242-function-columns)
         - [4.2.4.3. Source Columns](#4243-source-columns)
-    - [4.3. Searching Samples](#43-searching-samples)
+    - [4.3. Selection Modifiers](#43-selection-modifiers)
+      - [4.3.1. Searching Samples](#431-searching-samples)
     - [4.4. History Navigation](#44-history-navigation)
     - [4.5. Environment Variables](#45-environment-variables)
   - [5. Performance-Log Parameters](#5-performance-log-parameters)
@@ -212,10 +213,12 @@ add-to, subtract-from, and intersect-with the current selection, respectively.
 Samples can also be selected using the keyboard, with the arrow, *Home*/*End*,
 and *Shift* keys, while any of the graphs has focus.
 
-Right clicking on any of the graphs, or pressing *Escape* while they have
+Right-clicking on any of the graphs, or pressing *Escape* while they have
 focus, clears the selection.
 The behavior when the selection is empty is equivalent to selecting all
 samples.
+
+*Ctrl*-right-clicking on any of the graphs inverts the selection.
 
 ### 4.2. Information Area
 
@@ -497,10 +500,18 @@ the selected line, if possible (see
 [section *4.5*](#45-environment-variables)).
 The button's tooltip shows the full path to the file.
 
-### 4.3. Searching Samples
+### 4.3. Selection Modifiers
 
-The *Find Samples* button on the right side of the window's titlebar allows
-searching for samples matching a user-defined condition.
+The buttons on the right side of the window's titlebar allow modifying the
+selection in various ways:
+The *Clear Selection* and *Invert Selection* buttons clear and invert the
+selection, respectively.
+The *Find Samples* button allows searching for samples, as explained below.
+
+#### 4.3.1. Searching Samples
+
+The *Find Samples* button opens a popover allowing searching for all samples
+matching a user-defined condition.
 The condition should be a Python expression, evaluating to a boolean value.
 The selected samples are those for which the expression evaluates to `True`.
 
