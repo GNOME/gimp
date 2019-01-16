@@ -37,8 +37,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 00:31+0100\n"
-"PO-Revision-Date: 2019-01-14 00:49+0100\n"
+"POT-Creation-Date: 2019-01-16 09:35+0100\n"
+"PO-Revision-Date: 2019-01-16 09:38+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -104,63 +104,86 @@ msgstr "Fotoritocco in GIMP"
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
-msgstr "GIMP 2.10.10 è un aggiornamento discretamente grande contenente molte nuove caratteristiche e correzioni di bachi. I miglioramenti notevoli includono:"
+msgstr ""
+"GIMP 2.10.10 è un aggiornamento discretamente grande contenente molte nuove "
+"caratteristiche e correzioni di bachi. I miglioramenti notevoli includono:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
-msgstr "Strumento riempimento colore: nuovo \"Riempimento per rilevamento tratto\" per aree di tratteggio non perfettamente chiuse"
+msgstr ""
+"Strumento riempimento colore: nuovo \"Riempimento per rilevamento tratto\" "
+"per aree di tratteggio non perfettamente chiuse"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
-msgstr "Ora lo strumento colore può prelevare velocemente il colore con un Ctrl-clic"
+msgstr ""
+"Ora lo strumento colore può prelevare velocemente il colore con un Ctrl-clic"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
-msgstr "Lo strumento di riempimento colore permette di mantenere il mouse durante lo riempimento a \"colori simili\" e \"rilevamento tratteggio\""
+msgstr ""
+"Lo strumento di riempimento colore permette di mantenere il mouse durante lo "
+"riempimento a \"colori simili\" e \"rilevamento tratteggio\""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "Scale tool scales around center even when using numeric input"
-msgstr "Lo strumento scala, scala attorno ad un centro anche quando si usa l'ingresso numerico"
+msgstr ""
+"Lo strumento scala, scala attorno ad un centro anche quando si usa "
+"l'ingresso numerico"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
-msgstr "Lo strumento di trasformazione unificata ora ha come impostazione predefinita il mantenimento del rapporto proporzioni quando si effettua una scalatura in su o in giù"
+msgstr ""
+"Lo strumento di trasformazione unificata ora ha come impostazione "
+"predefinita il mantenimento del rapporto proporzioni quando si effettua una "
+"scalatura in su o in giù"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
-msgstr "Nuovo modificatore generico dell'area di disegno \"Alt + clic tasto centrale\" per prelevare i livelli"
+msgstr ""
+"Nuovo modificatore generico dell'area di disegno \"Alt + clic tasto centrale"
+"\" per prelevare i livelli"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
-msgstr "La mancata modifica di livelli bloccati produce un lampeggio per portare l'attenzione sulla causa dell'errore"
+msgstr ""
+"La mancata modifica di livelli bloccati produce un lampeggio per portare "
+"l'attenzione sulla causa dell'errore"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
-msgstr "Nuova GUI sull'area di disegno (linee semplici) per la sfocatura movimento circolare, lineare e zoom"
+msgstr ""
+"Nuova GUI sull'area di disegno (linee semplici) per la sfocatura movimento "
+"circolare, lineare e zoom"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Several optimizations including faster layer group rendering"
-msgstr "Diverse ottimizzazioni incluso un più veloce render dei gruppi di livello"
+msgstr ""
+"Diverse ottimizzazioni incluso un più veloce render dei gruppi di livello"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
-msgstr "Ora i file di scambio e di cache non vengono più salvati nella cartella di configurazione"
+msgstr ""
+"Ora i file di scambio e di cache non vengono più salvati nella cartella di "
+"configurazione"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
-msgstr "Varie procedure di salvataggio/esportazione file sono state rese più resistenti agli errori non salvando file parziali"
+msgstr ""
+"Varie procedure di salvataggio/esportazione file sono state rese più "
+"resistenti agli errori non salvando file parziali"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "HiDPI support improvements"
@@ -174,7 +197,9 @@ msgstr "Nuove preferenze da scegliere per il tipo di esportazione predefinito"
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
-msgstr "Nuova opzione per esportare in PNG, JPEG e TIFF con un profilo colore; esporta sempre in PSD con un profilo colore"
+msgstr ""
+"Nuova opzione per esportare in PNG, JPEG e TIFF con un profilo colore; "
+"esporta sempre in PSD con un profilo colore"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "New DDS format loading/exporting plug-in"
@@ -13307,7 +13332,7 @@ msgid "Style"
 msgstr "Stile"
 
 #: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
-#: ../app/tools/gimpbucketfilloptions.c:146
+#: ../app/tools/gimpbucketfilloptions.c:147
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Antialiasing"
@@ -14161,19 +14186,19 @@ msgstr "Impossibile rinominare le maschere di livello."
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Seleziona i pixel trasparenti invece di quelli grigi"
 
-#: ../app/core/gimplineart.c:298 ../app/tools/gimpbucketfilloptions.c:163
+#: ../app/core/gimplineart.c:298 ../app/tools/gimpbucketfilloptions.c:172
 msgid "Line art detection threshold"
 msgstr "Soglia rilevamento tratteggio"
 
-#: ../app/core/gimplineart.c:299 ../app/tools/gimpbucketfilloptions.c:164
+#: ../app/core/gimplineart.c:299 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr "Soglia di rilevamento contorno (valori alti includeranno più pixel)"
 
-#: ../app/core/gimplineart.c:305 ../app/tools/gimpbucketfilloptions.c:170
+#: ../app/core/gimplineart.c:305 ../app/tools/gimpbucketfilloptions.c:179
 msgid "Maximum growing size"
 msgstr "Massima dimensione massima crescita"
 
-#: ../app/core/gimplineart.c:306 ../app/tools/gimpbucketfilloptions.c:171
+#: ../app/core/gimplineart.c:306 ../app/tools/gimpbucketfilloptions.c:180
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Numero massimo di crescita pixel sotto il tratteggio"
 
@@ -14665,7 +14690,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "Profilo colore"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:107
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:108
 msgid "Fill type"
 msgstr "Tipo riempimento"
 
@@ -17756,7 +17781,7 @@ msgid "Drop New Path"
 msgstr "Nuovo tracciato"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
-#: ../app/tools/gimpbucketfilltool.c:280 ../app/tools/gimpcagetool.c:221
+#: ../app/tools/gimpbucketfilltool.c:284 ../app/tools/gimpcagetool.c:221
 #: ../app/tools/gimpfiltertool.c:274 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
@@ -17764,7 +17789,7 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "Impossibile modificare i pixel dei gruppi livelli."
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
-#: ../app/tools/gimpbucketfilltool.c:294 ../app/tools/gimpcagetool.c:228
+#: ../app/tools/gimpbucketfilltool.c:298 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1150
 #: ../app/tools/gimpfiltertool.c:281 ../app/tools/gimpgradienttool.c:255
 #: ../app/tools/gimpmovetool.c:309 ../app/tools/gimppainttool.c:286
@@ -19268,7 +19293,9 @@ msgstr "Duplica"
 msgid "No patterns available for use with this tool."
 msgstr "Nessun motivo disponibile con questo strumento."
 
-#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpcloneoptions-gui.c:70
+#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:164
+#: ../app/tools/gimpbucketfilloptions.c:457
+#: ../app/tools/gimpcloneoptions-gui.c:70
 msgid "Source"
 msgstr "Sorgente"
 
@@ -19604,7 +19631,7 @@ msgid "Alignment"
 msgstr "Allineamento"
 
 #: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:128
-#: ../app/tools/gimpbucketfilloptions.c:131 ../app/tools/gimpcoloroptions.c:69
+#: ../app/tools/gimpbucketfilloptions.c:132 ../app/tools/gimpcoloroptions.c:69
 #: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
 msgstr "Campionamento diffuso"
@@ -20063,7 +20090,7 @@ msgstr "Soglia campionamento"
 msgid "Sample transparent"
 msgstr "Campione trasparente"
 
-#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:138
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Vicini diagonali"
@@ -21296,32 +21323,32 @@ msgstr "Con_trasto"
 msgid "Edit these Settings as Levels"
 msgstr "Modifica queste impostazioni come livelli"
 
-#: ../app/tools/gimpbucketfilloptions.c:115
+#: ../app/tools/gimpbucketfilloptions.c:116
 msgid "Fill selection"
 msgstr "Riempimento selezione"
 
-#: ../app/tools/gimpbucketfilloptions.c:116
+#: ../app/tools/gimpbucketfilloptions.c:117
 msgid "Which area will be filled"
 msgstr "Quale area da riempire"
 
-#: ../app/tools/gimpbucketfilloptions.c:123
+#: ../app/tools/gimpbucketfilloptions.c:124
 msgid "Fill transparent areas"
 msgstr "Riempi aree trasparenti"
 
-#: ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/tools/gimpbucketfilloptions.c:125
 msgid "Allow completely transparent regions to be filled"
 msgstr "Permetti che le regioni completamente trasparenti vengano riempite"
 
-#: ../app/tools/gimpbucketfilloptions.c:132
+#: ../app/tools/gimpbucketfilloptions.c:133
 msgid "Base filled area on all visible layers"
 msgstr "Basa l'area da riempire su tutti i livelli visibili"
 
-#: ../app/tools/gimpbucketfilloptions.c:139
+#: ../app/tools/gimpbucketfilloptions.c:140
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Tratta i pixel vicini diagonalmente come connessi"
 
-#: ../app/tools/gimpbucketfilloptions.c:147
+#: ../app/tools/gimpbucketfilloptions.c:148
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
@@ -21331,71 +21358,75 @@ msgstr ""
 "(vedere soglia) o sui bordi del tratteggio. Disabilita l'antialiasing per "
 "riempire l'intera area uniformemente."
 
-#: ../app/tools/gimpbucketfilloptions.c:156
+#: ../app/tools/gimpbucketfilloptions.c:157
 #: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Soglia"
 
-#: ../app/tools/gimpbucketfilloptions.c:157
+#: ../app/tools/gimpbucketfilloptions.c:158
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "Massima differenza di colore"
 
-#: ../app/tools/gimpbucketfilloptions.c:177
+#: ../app/tools/gimpbucketfilloptions.c:165
+msgid "Source image for line art computation"
+msgstr "Immagine sorgente per l'elaborazione tratteggio"
+
+#: ../app/tools/gimpbucketfilloptions.c:186
 msgid "Maximum gap length"
 msgstr "Lunghezza massima apertura"
 
-#: ../app/tools/gimpbucketfilloptions.c:178
+#: ../app/tools/gimpbucketfilloptions.c:187
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "Massima apertura (in pixel) nel tratteggio che può essere chiusa"
 
-#: ../app/tools/gimpbucketfilloptions.c:184
-#: ../app/tools/gimpbucketfilloptions.c:426
+#: ../app/tools/gimpbucketfilloptions.c:193
+#: ../app/tools/gimpbucketfilloptions.c:441
 msgid "Fill by"
 msgstr "Riempimento per"
 
-#: ../app/tools/gimpbucketfilloptions.c:185
+#: ../app/tools/gimpbucketfilloptions.c:194
 msgid "Criterion used for determining color similarity"
 msgstr "Criterio usato per determinare la somiglianza di colore"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:363
+#: ../app/tools/gimpbucketfilloptions.c:378
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Tipo di riempimento (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:378
+#: ../app/tools/gimpbucketfilloptions.c:393
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Area coinvolta  (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:387
+#: ../app/tools/gimpbucketfilloptions.c:402
 msgid "Finding Similar Colors"
 msgstr "Trova colori simili"
 
 #. Line art frame
-#: ../app/tools/gimpbucketfilloptions.c:431
+#: ../app/tools/gimpbucketfilloptions.c:446
 msgid "Line Art Detection"
 msgstr "Rilevamento tratteggio"
 
-#: ../app/tools/gimpbucketfilltool.c:162
+#: ../app/tools/gimpbucketfilltool.c:157
 msgid "Bucket Fill"
 msgstr "Riempimento colore"
 
-#: ../app/tools/gimpbucketfilltool.c:163
+#: ../app/tools/gimpbucketfilltool.c:158
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
 "Riempimento di colore: riempie con un colore o un motivo l'area selezionata"
 
-#: ../app/tools/gimpbucketfilltool.c:164
+#: ../app/tools/gimpbucketfilltool.c:159
 msgid "_Bucket Fill"
 msgstr "_Riempimento di colore"
 
-#: ../app/tools/gimpbucketfilltool.c:287 ../app/tools/gimpcagetool.c:237
+#: ../app/tools/gimpbucketfilltool.c:291 ../app/tools/gimpcagetool.c:237
 #: ../app/tools/gimpfiltertool.c:290
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:313
@@ -21403,16 +21434,20 @@ msgstr "_Riempimento di colore"
 msgid "The active layer is not visible."
 msgstr "Il livello attivo non è visibile."
 
-#: ../app/tools/gimpbucketfilltool.c:322
+#: ../app/tools/gimpbucketfilltool.c:308
+msgid "No valid line art source selected."
+msgstr "Nessuna valida sorgente tratteggio selezionata."
+
+#: ../app/tools/gimpbucketfilltool.c:336
 msgid "Bucket fill"
 msgstr "Riempimento di colore"
 
-#: ../app/tools/gimpbucketfilltool.c:676 ../app/tools/gimpbucketfilltool.c:797
+#: ../app/tools/gimpbucketfilltool.c:705 ../app/tools/gimpbucketfilltool.c:829
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:447
 msgid "Click in any image to pick the background color"
 msgstr "Fare clic sull'immagine per prelevare il colore di sfondo"
 
-#: ../app/tools/gimpbucketfilltool.c:683 ../app/tools/gimpbucketfilltool.c:806
+#: ../app/tools/gimpbucketfilltool.c:712 ../app/tools/gimpbucketfilltool.c:838
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:441
 msgid "Click in any image to pick the foreground color"
 msgstr "Fare clic sull'immagine per prelevare il colore di primo piano"
@@ -23890,82 +23925,102 @@ msgctxt "bucket-fill-area"
 msgid "Fill by line art detection"
 msgstr "Riempi con rilevamento tratteggio"
 
-#: ../app/tools/tools-enums.c:56
+#: ../app/tools/tools-enums.c:57
+msgctxt "line-art-source"
+msgid "All visible layers"
+msgstr "Tutti i livelli visibili"
+
+#: ../app/tools/tools-enums.c:58
+msgctxt "line-art-source"
+msgid "Active layer"
+msgstr "Livello attivo"
+
+#: ../app/tools/tools-enums.c:59
+msgctxt "line-art-source"
+msgid "Layer below the active one"
+msgstr "Il livello sotto quello attivo"
+
+#: ../app/tools/tools-enums.c:60
+msgctxt "line-art-source"
+msgid "Layer above the active one"
+msgstr "Il livello sopra quello attivo"
+
+#: ../app/tools/tools-enums.c:89
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "Selezione libera"
 
-#: ../app/tools/tools-enums.c:57
+#: ../app/tools/tools-enums.c:90
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "Ampiezza fissa"
 
-#: ../app/tools/tools-enums.c:58
+#: ../app/tools/tools-enums.c:91
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "Rapporto dimensioni fisso"
 
-#: ../app/tools/tools-enums.c:87
+#: ../app/tools/tools-enums.c:120
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "Livello"
 
-#: ../app/tools/tools-enums.c:88
+#: ../app/tools/tools-enums.c:121
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "Selezione"
 
-#: ../app/tools/tools-enums.c:89
+#: ../app/tools/tools-enums.c:122
 msgctxt "transform-type"
 msgid "Path"
 msgstr "Tracciato"
 
-#: ../app/tools/tools-enums.c:182
+#: ../app/tools/tools-enums.c:215
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
 msgstr "Disegna il primo piano"
 
-#: ../app/tools/tools-enums.c:183
+#: ../app/tools/tools-enums.c:216
 msgctxt "matting-draw-mode"
 msgid "Draw background"
 msgstr "Disegna lo sfondo"
 
-#: ../app/tools/tools-enums.c:184
+#: ../app/tools/tools-enums.c:217
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
 msgstr "Disegna lo sconosciuto"
 
-#: ../app/tools/tools-enums.c:217
+#: ../app/tools/tools-enums.c:250
 msgctxt "warp-behavior"
 msgid "Move pixels"
 msgstr "Sposta i pixel"
 
-#: ../app/tools/tools-enums.c:218
+#: ../app/tools/tools-enums.c:251
 msgctxt "warp-behavior"
 msgid "Grow area"
 msgstr "Area di crescita"
 
-#: ../app/tools/tools-enums.c:219
+#: ../app/tools/tools-enums.c:252
 msgctxt "warp-behavior"
 msgid "Shrink area"
 msgstr "Area di restringimento"
 
-#: ../app/tools/tools-enums.c:220
+#: ../app/tools/tools-enums.c:253
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
 msgstr "Torci in senso orario"
 
-#: ../app/tools/tools-enums.c:221
+#: ../app/tools/tools-enums.c:254
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
 msgstr "Torci in senso antiorario"
 
-#: ../app/tools/tools-enums.c:222
+#: ../app/tools/tools-enums.c:255
 msgctxt "warp-behavior"
 msgid "Erase warping"
 msgstr "Cancella il warping"
 
-#: ../app/tools/tools-enums.c:223
+#: ../app/tools/tools-enums.c:256
 msgctxt "warp-behavior"
 msgid "Smooth warping"
 msgstr "Smussa warping"
