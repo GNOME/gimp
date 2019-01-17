@@ -401,7 +401,7 @@ libappcore_a_sources = \
 	gimppickable.h				\
 	gimppickable-auto-shrink.c		\
 	gimppickable-auto-shrink.h		\
-	gimppickable-contiguous-region.c	\
+	gimppickable-contiguous-region.cc	\
 	gimppickable-contiguous-region.h	\
 	gimpprogress.c				\
 	gimpprogress.h				\

@@ -26,6 +26,9 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
+extern "C"
+{
+
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
@@ -240,8 +243,8 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      const gfloat *src   = iter->items[0].data;
-      gfloat       *dest  = iter->items[1].data;
+      const gfloat *src   = (const gfloat *) iter->items[0].data;
+      gfloat       *dest  = (      gfloat *) iter->items[1].data;
       gint          count = iter->length;
 
       while (count--)
@@ -427,7 +430,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                     NULL);
       while (! g_queue_is_empty (queue))
         {
-          BorderPixel *c = g_queue_pop_head (queue);
+          BorderPixel *c = (BorderPixel *) g_queue_pop_head (queue);
 
           if (mask[c->x + c->y * width] != 1.0)
             {
@@ -765,7 +768,7 @@ find_contiguous_segment (const gfloat        *col,
                    row, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
   s = row + initial_x * n_components;
 #else
-  s = g_alloca (n_components * sizeof (gfloat));
+  s = (gfloat *) g_alloca (n_components * sizeof (gfloat));
 
   gegl_sampler_get (src_sampler,
                     initial_x, initial_y, NULL, s, GEGL_ABYSS_NONE);
@@ -970,3 +973,5 @@ line_art_queue_pixel (GQueue *queue,
 
   g_queue_push_head (queue, p);
 }
+
+} /* extern "C" */
