@@ -36,6 +36,7 @@
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
 #include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
@@ -1255,6 +1256,13 @@ gimp_channel_real_clear (GimpChannel *channel,
                          const gchar *undo_desc,
                          gboolean     push_undo)
 {
+  GeglBuffer    *buffer;
+  GeglRectangle  rect;
+  GeglRectangle  aligned_rect;
+
+  if (channel->bounds_known && channel->empty)
+    return;
+
   if (push_undo)
     {
       if (! undo_desc)
@@ -1263,18 +1271,26 @@ gimp_channel_real_clear (GimpChannel *channel,
       gimp_channel_push_undo (channel, undo_desc);
     }
 
-  if (channel->bounds_known && ! channel->empty)
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+
+  if (channel->bounds_known)
     {
-      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                         GEGL_RECTANGLE (channel->x1, channel->y1,
-                                         channel->x2 - channel->x1,
-                                         channel->y2 - channel->y1));
+      rect.x      = channel->x1;
+      rect.y      = channel->y1;
+      rect.width  = channel->x2 - channel->x1;
+      rect.height = channel->y2 - channel->y1;
     }
   else
     {
-      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
-                         NULL);
+      rect.x      = 0;
+      rect.y      = 0;
+      rect.width  = gimp_item_get_width  (GIMP_ITEM (channel));
+      rect.height = gimp_item_get_height (GIMP_ITEM (channel));
     }
+
+  gimp_gegl_rectangle_align_to_tile_grid (&aligned_rect, &rect, buffer);
+
+  gegl_buffer_clear (buffer, &aligned_rect);
 
   /*  we know the bounds  */
   channel->bounds_known = TRUE;
@@ -1284,7 +1300,8 @@ gimp_channel_real_clear (GimpChannel *channel,
   channel->x2           = gimp_item_get_width  (GIMP_ITEM (channel));
   channel->y2           = gimp_item_get_height (GIMP_ITEM (channel));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
+  gimp_drawable_update (GIMP_DRAWABLE (channel),
+                        rect.x, rect.y, rect.width, rect.height);
 }
 
 static void
