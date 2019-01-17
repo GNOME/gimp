@@ -329,9 +329,9 @@ dialog_create_selection_area (SELVALS *sels)
                               _("Amount of error at which it is pointless to reparameterize.  "
                                 "This happens, for example, when we are trying to fit the "
                                 "outline of the outside of an 'O' with a single spline. "
-                                     "The initial fit is not good enough for the Newton-Raphson "
-                                     "iteration to improve it.  It may be that it would be better "
-                                     "to detect the cases where we didn't find any corners."), NULL);
+                                "The initial fit is not good enough for the Newton-Raphson "
+                                "iteration to improve it.  It may be that it would be better "
+                                "to detect the cases where we didn't find any corners."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->reparameterize_threshold);
