@@ -258,6 +258,7 @@ gimp_bucket_fill_tool_finalize (GObject *object)
     }
   g_clear_object (&tool->priv->line_art);
 
+  g_signal_handlers_disconnect_by_data (options, tool);
   g_signal_handlers_disconnect_by_data (context, tool);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
