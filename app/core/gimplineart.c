@@ -1416,8 +1416,16 @@ gimp_lineart_curvature_extremums (gfloat *curvatures,
         if ((curvatures[x + y * width] > 0.0) && ! visited[x + y * width])
           {
             Pixel  *p = g_new (Pixel, 1);
-            Pixel   max_curvature_pixel = gimp_vector2_new (-1.0, -1.0);
-            gfloat  max_curvature = 0.0f;
+            Pixel   max_smoothed_curvature_pixel;
+            Pixel   max_raw_curvature_pixel;
+            gfloat  max_smoothed_curvature;
+            gfloat  max_raw_curvature;
+
+            max_smoothed_curvature_pixel = gimp_vector2_new (-1.0, -1.0);
+            max_smoothed_curvature       = 0.0f;
+
+            max_raw_curvature_pixel = gimp_vector2_new (x, y);
+            max_raw_curvature       = curvatures[x + y * width];
 
             p->x = x;
             p->y = y;
@@ -1426,12 +1434,14 @@ gimp_lineart_curvature_extremums (gfloat *curvatures,
 
             while (! g_queue_is_empty (q))
               {
+                gfloat sc;
                 gfloat c;
                 gint   p2x;
                 gint   p2y;
 
-                p = (Pixel *) g_queue_pop_head (q);
-                c = smoothed_curvatures[(gint) p->x + (gint) p->y * width];
+                p  = (Pixel *) g_queue_pop_head (q);
+                sc = smoothed_curvatures[(gint) p->x + (gint) p->y * width];
+                c  = curvatures[(gint) p->x + (gint) p->y * width];
 
                 curvatures[(gint) p->x + (gint) p->y * width] = 0.0f;
 
@@ -1555,17 +1565,27 @@ gimp_lineart_curvature_extremums (gfloat *curvatures,
                     visited[p2x + p2y * width] = TRUE;
                   }
 
-                if (c > max_curvature)
+                if (sc > max_smoothed_curvature)
                   {
-                    max_curvature_pixel = *p;
-                    max_curvature = c;
+                    max_smoothed_curvature_pixel = *p;
+                    max_smoothed_curvature = sc;
+                  }
+                if (c > max_raw_curvature)
+                  {
+                    max_raw_curvature_pixel = *p;
+                    max_raw_curvature = c;
                   }
                 g_free (p);
               }
-            if (max_curvature > 0.0)
+            if (max_smoothed_curvature > 0.0f)
               {
-                curvatures[(gint) max_curvature_pixel.x + (gint) max_curvature_pixel.y * width] = max_curvature;
-                g_array_append_val (max_positions, max_curvature_pixel);
+                curvatures[(gint) max_smoothed_curvature_pixel.x + (gint) max_smoothed_curvature_pixel.y * width] = max_smoothed_curvature;
+                g_array_append_val (max_positions, max_smoothed_curvature_pixel);
+              }
+            else
+              {
+                curvatures[(gint) max_raw_curvature_pixel.x + (gint) max_raw_curvature_pixel.y * width] = max_raw_curvature;
+                g_array_append_val (max_positions, max_raw_curvature_pixel);
               }
           }
       }
