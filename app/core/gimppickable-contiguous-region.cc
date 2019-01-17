@@ -41,6 +41,10 @@ extern "C"
 #include "gimppickable-contiguous-region.h"
 
 
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
+
+
 typedef struct
 {
   gint   x;
@@ -195,13 +199,12 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
    *  fuzzy_select.  Modify the pickable's mask to reflect the
    *  additional selection
    */
-  GeglBufferIterator *iter;
-  GeglBuffer         *src_buffer;
-  GeglBuffer         *mask_buffer;
-  const Babl         *format;
-  gint                n_components;
-  gboolean            has_alpha;
-  gfloat              start_col[MAX_CHANNELS];
+  GeglBuffer *src_buffer;
+  GeglBuffer *mask_buffer;
+  const Babl *format;
+  gint        n_components;
+  gboolean    has_alpha;
+  gfloat      start_col[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (color != NULL, NULL);
@@ -233,35 +236,42 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
   mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
                                  babl_format ("Y float"));
 
-  iter = gegl_buffer_iterator_new (src_buffer,
-                                   NULL, 0, format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
-
-  gegl_buffer_iterator_add (iter, mask_buffer,
-                            NULL, 0, babl_format ("Y float"),
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-  while (gegl_buffer_iterator_next (iter))
+  gegl_parallel_distribute_area (
+    gegl_buffer_get_extent (src_buffer), PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *area)
     {
-      const gfloat *src   = (const gfloat *) iter->items[0].data;
-      gfloat       *dest  = (      gfloat *) iter->items[1].data;
-      gint          count = iter->length;
+      GeglBufferIterator *iter;
 
-      while (count--)
+      iter = gegl_buffer_iterator_new (src_buffer,
+                                       area, 0, format,
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE, 2);
+
+      gegl_buffer_iterator_add (iter, mask_buffer,
+                                area, 0, babl_format ("Y float"),
+                                GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          /*  Find how closely the colors match  */
-          *dest = pixel_difference (start_col, src,
-                                    antialias,
-                                    threshold,
-                                    n_components,
-                                    has_alpha,
-                                    select_transparent,
-                                    select_criterion);
+          const gfloat *src   = (const gfloat *) iter->items[0].data;
+          gfloat       *dest  = (      gfloat *) iter->items[1].data;
+          gint          count = iter->length;
 
-          src  += n_components;
-          dest += 1;
+          while (count--)
+            {
+              /*  Find how closely the colors match  */
+              *dest = pixel_difference (start_col, src,
+                                        antialias,
+                                        threshold,
+                                        n_components,
+                                        has_alpha,
+                                        select_transparent,
+                                        select_criterion);
+
+              src  += n_components;
+              dest += 1;
+            }
         }
-    }
+    });
 
   return mask_buffer;
 }
