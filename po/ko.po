@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-17 06:58+0900\n"
+"PO-Revision-Date: 2019-01-17 18:50+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -3869,7 +3869,7 @@ msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
 "original position"
-msgstr ""
+msgstr "클립보드의 내용을 현재 선택 영역 안에 그 내용의 원래 위치에 붙여 넣기"
 
 #: ../app/actions/edit-actions.c:204
 msgctxt "edit-action"
@@ -3884,14 +3884,14 @@ msgstr "클립보드 내용으로 새 레이어에 붙여넣습니다"
 #: ../app/actions/edit-actions.c:210
 msgctxt "edit-action"
 msgid "New Layer In _Place"
-msgstr ""
+msgstr "새 레이어를 제자리에(_P)"
 
 #: ../app/actions/edit-actions.c:212
 msgctxt "edit-action"
 msgid ""
 "Create a new layer from the content of the clipboard and place it at its "
 "original position"
-msgstr ""
+msgstr "클립보드의 내용으로 새 레이어를 만들고 그 내용의 원래 위치에 놓기"
 
 #: ../app/actions/edit-actions.c:221
 msgctxt "edit-action"
@@ -4501,10 +4501,9 @@ msgid "An_imation"
 msgstr "애니메이션(_I)"
 
 #: ../app/actions/filters-actions.c:104
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Antialias"
-msgstr "부드럽게 하기(_A)"
+msgstr "계단현상 제거(__A)"
 
 #: ../app/actions/filters-actions.c:109
 msgctxt "filters-action"
@@ -4539,7 +4538,7 @@ msgstr "팽창(_D)"
 #: ../app/actions/filters-actions.c:138
 msgctxt "drawable-action"
 msgid "Grow lighter areas of the image"
-msgstr ""
+msgstr "이미지의 더 밝은 영역을 확장"
 
 #: ../app/actions/filters-actions.c:153
 msgctxt "filters-action"
@@ -4549,7 +4548,7 @@ msgstr "침식(_E)"
 #: ../app/actions/filters-actions.c:154
 msgctxt "drawable-action"
 msgid "Grow darker areas of the image"
-msgstr "이미지의 어두운 영역을 확장"
+msgstr "이미지의 더 어두운 영역을 확장"
 
 #: ../app/actions/filters-actions.c:172
 msgctxt "filters-action"
@@ -5711,7 +5710,7 @@ msgstr "색상 프로필 할당(_A)..."
 #: ../app/actions/image-actions.c:89
 msgctxt "image-action"
 msgid "Set a color profile on the image"
-msgstr ""
+msgstr "이미지에 색 프로필 설정"
 
 #: ../app/actions/image-actions.c:94
 msgctxt "image-action"
@@ -5726,12 +5725,12 @@ msgstr "색 프로필을 이미지에 적용"
 #: ../app/actions/image-actions.c:100
 msgctxt "image-action"
 msgid "_Discard Color Profile"
-msgstr ""
+msgstr "색 프로필 버리기(_D)"
 
 #: ../app/actions/image-actions.c:101
 msgctxt "image-action"
 msgid "Remove the image's color profile"
-msgstr ""
+msgstr "이미지의 색 프로필을 제거"
 
 #: ../app/actions/image-actions.c:106
 msgctxt "image-action"
@@ -5741,7 +5740,7 @@ msgstr "색 프로필을 파일로 저장(_S)..."
 #: ../app/actions/image-actions.c:107
 msgctxt "image-action"
 msgid "Save the image's color profile to an ICC file"
-msgstr ""
+msgstr "이미지의 색 프로필을 ICC 파일에 저장"
 
 #: ../app/actions/image-actions.c:112
 msgctxt "image-action"
@@ -5813,7 +5812,7 @@ msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
 "image)"
-msgstr ""
+msgstr "이미지를 내용의 크기에 맞추어 자르기 (이미지의 테두리 여백을 제거)"
 
 #: ../app/actions/image-actions.c:154
 msgctxt "image-action"
@@ -5906,10 +5905,9 @@ msgid "8 bit integer"
 msgstr "8 비트 정수"
 
 #: ../app/actions/image-actions.c:213
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
-msgstr "이미지를 색인한 색으로 변환합니다"
+msgstr "이미지를 8비트 정수로 변환"
 
 #: ../app/actions/image-actions.c:217
 msgctxt "image-convert-action"
@@ -5917,10 +5915,9 @@ msgid "16 bit integer"
 msgstr "16 비트 정수"
 
 #: ../app/actions/image-actions.c:219
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
-msgstr "이미지를 색인한 색으로 변환합니다"
+msgstr "이미지를 16비트 정수로 변환"
 
 #: ../app/actions/image-actions.c:223
 msgctxt "image-convert-action"
@@ -5928,10 +5925,9 @@ msgid "32 bit integer"
 msgstr "32 비트 정수"
 
 #: ../app/actions/image-actions.c:225
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
-msgstr "이미지를 색인한 색으로 변환합니다"
+msgstr "이미지를 32비트 정수로 변환"
 
 #: ../app/actions/image-actions.c:229
 msgctxt "image-convert-action"
@@ -5941,7 +5937,7 @@ msgstr "16 비트 부동 소수점"
 #: ../app/actions/image-actions.c:231
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr ""
+msgstr "이미지를 16비트 부동 소수점으로 변환"
 
 #: ../app/actions/image-actions.c:235
 msgctxt "image-convert-action"
@@ -5949,10 +5945,9 @@ msgid "32 bit floating point"
 msgstr "32비트 부동 소수점"
 
 #: ../app/actions/image-actions.c:237
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr "이미지를 색인한 색으로 변환합니다"
+msgstr "이미지를 32비트 감마 부동 소수점으로 변환"
 
 #: ../app/actions/image-actions.c:241
 msgctxt "image-convert-action"
@@ -5960,10 +5955,9 @@ msgid "64 bit floating point"
 msgstr "64비트 부동 소수점"
 
 #: ../app/actions/image-actions.c:243
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
-msgstr "이미지를 색인한 색으로 변환합니다"
+msgstr "이미지를 64비트 부동 소수점으로 변환"
 
 #: ../app/actions/image-actions.c:250
 msgctxt "image-convert-action"
@@ -5971,10 +5965,9 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "지각적 감마 (sRGB)"
 
 #: ../app/actions/image-actions.c:252
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
-msgstr "이미지를 그레이스케일로 변환합니다"
+msgstr "이미지를 지각적 (sRGB) 감마로 변환"
 
 #: ../app/actions/image-actions.c:256
 msgctxt "image-convert-action"
@@ -5982,10 +5975,9 @@ msgid "Linear light"
 msgstr "선형 라이트"
 
 #: ../app/actions/image-actions.c:258
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
-msgstr "이미지를 색인한 색으로 변환합니다"
+msgstr "이미지를 선형 라이트로 변환"
 
 #: ../app/actions/image-actions.c:265
 msgctxt "image-action"
@@ -6203,18 +6195,17 @@ msgstr "혼합 공간"
 #: ../app/actions/layers-actions.c:60
 msgctxt "layers-action"
 msgid "Composite Space"
-msgstr ""
+msgstr "합성 공간"
 
 #: ../app/actions/layers-actions.c:64
 msgctxt "layers-action"
 msgid "Composite Mode"
-msgstr ""
+msgstr "합성 모드"
 
 #: ../app/actions/layers-actions.c:68
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag"
-msgstr "색"
+msgstr "색 태그"
 
 #: ../app/actions/layers-actions.c:72
 msgctxt "layers-action"
@@ -6274,7 +6265,7 @@ msgstr "캔버스 내 텍스트 편집(_X)"
 #: ../app/actions/layers-actions.c:96
 msgctxt "layers-action"
 msgid "Edit this text layer content on canvas"
-msgstr ""
+msgstr "캔버스에서 이 텍스트 레이어 내용 편집"
 
 #: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
@@ -6516,7 +6507,7 @@ msgctxt "layers-action"
 msgid ""
 "Crop the layer to the extents of its content (remove empty borders from the "
 "layer)"
-msgstr ""
+msgstr "레이어를 내용의 크기에 맞추어 자르기 (이미지의 테두리 여백을 제거)"
 
 #: ../app/actions/layers-actions.c:247 ../app/actions/layers-actions.c:257
 msgctxt "layers-action"
@@ -6591,13 +6582,13 @@ msgstr "레이어 보임 여부를 전환"
 #: ../app/actions/layers-actions.c:312
 msgctxt "layers-action"
 msgid "Toggle Layer _Linked State"
-msgstr ""
+msgstr "레이어 연결 상태 토글(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
-msgstr ""
+msgstr "레이어의 픽셀 잠그기(_O)"
 
 #: ../app/actions/layers-actions.c:324
 msgctxt "layers-action"
@@ -6688,7 +6679,7 @@ msgstr "레이어 합성 모드: 배경에 맞추어 오리기"
 #: ../app/actions/layers-actions.c:401
 msgctxt "layers-action"
 msgid "Clip to Layer"
-msgstr ""
+msgstr "레이어에 맞게 오리기"
 
 #: ../app/actions/layers-actions.c:402
 msgctxt "layers-action"
@@ -6698,7 +6689,7 @@ msgstr "레이어 합성 모드: 레이어에 맞추어 오리기"
 #: ../app/actions/layers-actions.c:407
 msgctxt "layers-action"
 msgid "Intersection"
-msgstr ""
+msgstr "교차"
 
 #: ../app/actions/layers-actions.c:408
 msgctxt "layers-action"
@@ -7056,16 +7047,14 @@ msgid "MyPaint Brushes Menu"
 msgstr "마이페인트 붓 메뉴"
 
 #: ../app/actions/mypaint-brushes-actions.c:47
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "_New MyPaint Brush"
-msgstr "새 붓(_N)"
+msgstr "새 마이페인트 붓"
 
 #: ../app/actions/mypaint-brushes-actions.c:48
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "Create a new MyPaint brush"
-msgstr "새 붓을 만듭니다"
+msgstr "새 마이페인트 붓 만들기"
 
 #: ../app/actions/mypaint-brushes-actions.c:53
 msgctxt "mypaint-brushes-action"
@@ -7073,10 +7062,9 @@ msgid "D_uplicate MyPaint Brush"
 msgstr "마이페인트 붓 복제(_U)"
 
 #: ../app/actions/mypaint-brushes-actions.c:54
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "Duplicate this MyPaint brush"
-msgstr "이 붓을 복제합니다"
+msgstr "이 마이페인트 붓 복제"
 
 #: ../app/actions/mypaint-brushes-actions.c:59
 msgctxt "mypaint-brushes-action"
@@ -7104,10 +7092,9 @@ msgid "_Delete MyPaint Brush"
 msgstr "마이페인트 붓 삭제(_D)"
 
 #: ../app/actions/mypaint-brushes-actions.c:72
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "Delete this MyPaint brush"
-msgstr "이 붓을 삭제합니다"
+msgstr "이 마이페인트 붓 삭제"
 
 #: ../app/actions/mypaint-brushes-actions.c:77
 msgctxt "mypaint-brushes-action"
@@ -7260,10 +7247,9 @@ msgid "Show in _File Manager"
 msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/palettes-actions.c:79
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Show palette file location in the file manager"
-msgstr "팔레트 파일 위치를 클립보드를 복사합니다"
+msgstr "파일 관리자에서 팔레트 파일 위치를 표시"
 
 #: ../app/actions/palettes-actions.c:84
 msgctxt "palettes-action"
@@ -7291,10 +7277,9 @@ msgid "_Edit Palette..."
 msgstr "팔레트 편집(_E)..."
 
 #: ../app/actions/palettes-actions.c:100
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Edit this palette"
-msgstr "팔레트를 편집합니다"
+msgstr "이 팔레트를 편집"
 
 #: ../app/actions/palettes-commands.c:83
 #, fuzzy
@@ -7587,16 +7572,14 @@ msgid "Replace the selection by its border"
 msgstr "선택 영역을 테두리로 교체"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
 msgctxt "select-action"
 msgid "Re_move Holes"
-msgstr "제어기 제거"
+msgstr "구멍 제거(_M)"
 
 #: ../app/actions/select-actions.c:106
-#, fuzzy
 msgctxt "select-action"
 msgid "Remove holes from the selection"
-msgstr "선택 영역에서 흐릿한 부분을 제거합니다"
+msgstr "선택 영역에서 구멍을 제거"
 
 #: ../app/actions/select-actions.c:111
 msgctxt "select-action"
@@ -7614,16 +7597,14 @@ msgid "_Fill Selection Outline..."
 msgstr "선택 영역 외곽선 채우기(_F)"
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
 msgctxt "select-action"
 msgid "Fill the selection outline"
-msgstr "선택 영역 외곽선을 보입니다"
+msgstr "선택 영역 외곽선 채우기"
 
 #: ../app/actions/select-actions.c:123
-#, fuzzy
 msgctxt "select-action"
 msgid "_Fill Selection Outline"
-msgstr "선택 영역 외곽선을 보입니다"
+msgstr "선택 영역 외곽선 채우기(_F)"
 
 #: ../app/actions/select-actions.c:124
 msgctxt "select-action"
@@ -8070,10 +8051,9 @@ msgid "Show in _File Manager"
 msgstr "파일 관리자에서 표시(_F)"
 
 #: ../app/actions/tool-presets-actions.c:69
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
-msgstr "팔레트 파일 위치를 클립보드에 복사합니다"
+msgstr "파일 관리자에서 도구 프리셋 파일 위치 보이기"
 
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
@@ -8171,10 +8151,9 @@ msgid "Rotate by an arbitrary angle"
 msgstr "임의 각도로 회전합니다"
 
 #: ../app/actions/tools-actions.c:151
-#, fuzzy
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
-msgstr "에어브러시"
+msgstr "에어브러시 속도: 설정"
 
 #: ../app/actions/tools-actions.c:155
 msgctxt "tools-action"
@@ -8207,10 +8186,9 @@ msgid "Airbrush Rate: Increase by 10"
 msgstr "에어브러시 속도: 10만큼 늘이기"
 
 #: ../app/actions/tools-actions.c:183
-#, fuzzy
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
-msgstr "에어브러시"
+msgstr "에어브러시 흐름: 설정"
 
 #: ../app/actions/tools-actions.c:187
 msgctxt "tools-action"
@@ -8248,10 +8226,9 @@ msgid "Tool's Opacity: Set"
 msgstr "도구 불투명도: 설정"
 
 #: ../app/actions/tools-actions.c:268
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
-msgstr "저장된 도구 옵션을 기본값으로 초기화(_R)"
+msgstr "도구 불투명도: 기본 값으로 설정"
 
 #: ../app/actions/tools-actions.c:272
 msgctxt "tools-action"
@@ -8349,10 +8326,9 @@ msgid "Tool's Aspect Ratio: Set"
 msgstr "도구 종횡비: 설정"
 
 #: ../app/actions/tools-actions.c:356
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
-msgstr "저장된 도구 옵션을 기본값으로 초기화(_R)"
+msgstr "도구 종횡비: 기본 값으로 설정"
 
 #: ../app/actions/tools-actions.c:360
 msgctxt "tools-action"
@@ -8450,10 +8426,9 @@ msgid "Tool's Spacing: Set"
 msgstr "도구 간격: 설정"
 
 #: ../app/actions/tools-actions.c:444
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
-msgstr "저장된 도구 옵션을 기본값으로 초기화(_R)"
+msgstr "도구 간격: 기본 값으로 설정"
 
 #: ../app/actions/tools-actions.c:448
 msgctxt "tools-action"
@@ -8776,10 +8751,9 @@ msgid "Toggle Path _Visibility"
 msgstr "경로 보임 여부를 전환(_V)"
 
 #: ../app/actions/vectors-actions.c:172
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Toggle Path _Linked State"
-msgstr "연결 상태을 전환합니다"
+msgstr "경로 연계 상태 전환(_L)"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/vectors-actions.c:178
@@ -8973,10 +8947,9 @@ msgid "Select _Bottom Path"
 msgstr "바닥 경로 선택(_B)"
 
 #: ../app/actions/vectors-actions.c:311
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select the bottommost path"
-msgstr "최하위 레이어를 선택합니다"
+msgstr "최하위 경로 선택"
 
 #: ../app/actions/vectors-actions.c:316
 msgctxt "vectors-action"
@@ -8984,10 +8957,9 @@ msgid "Select _Previous Path"
 msgstr "이전 경로 선택(_P)"
 
 #: ../app/actions/vectors-actions.c:317
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
-msgstr "현재 레이어 위 레이어를 선택합니다"
+msgstr "현재 경로 위의 경로를 선택"
 
 #: ../app/actions/vectors-actions.c:322
 msgctxt "vectors-action"
@@ -8995,10 +8967,9 @@ msgid "Select _Next Path"
 msgstr "다음 경로 선택(_N)"
 
 #: ../app/actions/vectors-actions.c:323
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
-msgstr "현재 레이어 아래 레이어를 선택합니다"
+msgstr "현재 경로 아래의 벡터 선택"
 
 #: ../app/actions/vectors-commands.c:162 ../app/actions/vectors-commands.c:719
 msgid "Path Attributes"
@@ -9037,10 +9008,9 @@ msgid "_Zoom"
 msgstr "확대(_Z)"
 
 #: ../app/actions/view-actions.c:72
-#, fuzzy
 msgctxt "view-action"
 msgid "_Flip & Rotate"
-msgstr "회전(_R)"
+msgstr "뒤집기 및 회전(_F)"
 
 #: ../app/actions/view-actions.c:73
 msgctxt "view-action"
@@ -9048,10 +9018,9 @@ msgid "_Padding Color"
 msgstr "색 채우기(_P)"
 
 #: ../app/actions/view-actions.c:76
-#, fuzzy
 msgctxt "view-action"
 msgid "_Color Management"
-msgstr "색상 관리"
+msgstr "색 관리"
 
 #: ../app/actions/view-actions.c:79
 msgctxt "view-action"
@@ -9084,10 +9053,9 @@ msgid "_Close View"
 msgstr "보기 닫기(_C)"
 
 #: ../app/actions/view-actions.c:96
-#, fuzzy
 msgctxt "view-action"
 msgid "Close the active image view"
-msgstr "이미지 창 닫기"
+msgstr "활성 이미지 창 닫기"
 
 #: ../app/actions/view-actions.c:101
 msgctxt "view-action"
@@ -9116,10 +9084,9 @@ msgid "Zoom to _Selection"
 msgstr "선택 영역 잘라내기(_C)"
 
 #: ../app/actions/view-actions.c:114
-#, fuzzy
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
-msgstr "창 전체를 사용할 수 있도록 확대 비율을 조정합니다"
+msgstr "선택 영역이 창 전체를 사용하도록 확대 비율을 조정"
 
 #: ../app/actions/view-actions.c:119
 msgctxt "view-action"
@@ -9163,10 +9130,9 @@ msgid "Configure filters applied to this view"
 msgstr "이 보기에 적용된 필터를 설정합니다"
 
 #: ../app/actions/view-actions.c:143
-#, fuzzy
 msgctxt "view-action"
 msgid "As in _Preferences"
-msgstr "환경 설정을 따름(_P)"
+msgstr "기본 설정을 따름(_P)"
 
 #: ../app/actions/view-actions.c:145
 #, fuzzy
@@ -9215,10 +9181,9 @@ msgid "A pixel on the screen represents an image pixel"
 msgstr "화면의 픽셀을 이미지 픽셀로 표현합니다"
 
 #: ../app/actions/view-actions.c:178
-#, fuzzy
 msgctxt "view-action"
 msgid "_Color-Manage this View"
-msgstr "색상 관리"
+msgstr "이 창을 색 관리"
 
 #: ../app/actions/view-actions.c:179
 msgctxt "view-action"
@@ -9226,10 +9191,9 @@ msgid "Use color management for this view"
 msgstr "이 보기에서 색상 관리 사용"
 
 #: ../app/actions/view-actions.c:185
-#, fuzzy
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr "색(_C)"
+msgstr ""
 
 #: ../app/actions/view-actions.c:186
 msgctxt "view-action"
@@ -9562,28 +9526,24 @@ msgid "Set a custom zoom factor"
 msgstr "사용자 확대 비율 설정"
 
 #: ../app/actions/view-actions.c:460
-#, fuzzy
 msgctxt "view-action"
 msgid "Flip Horizontally"
-msgstr "수평 뒤집기(_H)"
+msgstr "수평 뒤집기"
 
 #: ../app/actions/view-actions.c:461
-#, fuzzy
 msgctxt "view-action"
 msgid "Flip the view horizontally"
-msgstr "수평으로 뒤집습니다"
+msgstr "이 창을 수평으로 뒤집기"
 
 #: ../app/actions/view-actions.c:467
-#, fuzzy
 msgctxt "view-action"
 msgid "Flip Vertically"
-msgstr "수직 뒤집기(_V)"
+msgstr "수직 뒤집기"
 
 #: ../app/actions/view-actions.c:468
-#, fuzzy
 msgctxt "view-action"
 msgid "Flip the view vertically"
-msgstr "수직으로 뒤집습니다"
+msgstr "이 창을 수직으로 뒤집기"
 
 #: ../app/actions/view-actions.c:482
 msgctxt "view-action"
@@ -10104,27 +10064,27 @@ msgstr "이상적 크기 추측"
 #: ../app/config/config-enums.c:179
 msgctxt "icon-size"
 msgid "Theme-set size"
-msgstr ""
+msgstr "테마 설정 크기"
 
 #: ../app/config/config-enums.c:180
 msgctxt "icon-size"
 msgid "Small size"
-msgstr ""
+msgstr "작은 크기"
 
 #: ../app/config/config-enums.c:181
 msgctxt "icon-size"
 msgid "Medium size"
-msgstr ""
+msgstr "중간 크기"
 
 #: ../app/config/config-enums.c:182
 msgctxt "icon-size"
 msgid "Large size"
-msgstr ""
+msgstr "커다란 크기"
 
 #: ../app/config/config-enums.c:183
 msgctxt "icon-size"
 msgid "Huge size"
-msgstr ""
+msgstr "거대한 크기"
 
 #: ../app/config/config-enums.c:213
 msgctxt "position"
@@ -11506,7 +11466,7 @@ msgstr "이미지 해상도 바꾸기"
 #: ../app/core/core-enums.c:907
 msgctxt "undo-type"
 msgid "Change metadata"
-msgstr ""
+msgstr "메타데이터 변경"
 
 #: ../app/core/core-enums.c:908
 msgctxt "undo-type"
@@ -11516,7 +11476,7 @@ msgstr "인덱스 팔레트 바꾸기"
 #: ../app/core/core-enums.c:909
 msgctxt "undo-type"
 msgid "Change color managed state"
-msgstr ""
+msgstr "색 관리된 상태 변경"
 
 #: ../app/core/core-enums.c:916
 msgctxt "undo-type"
@@ -11824,7 +11784,7 @@ msgstr "선택 영역을 입력으로 사용"
 #: ../app/core/core-enums.c:1193
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
-msgstr ""
+msgstr "전체 레이어를 입력으로 사용"
 
 #: ../app/core/core-enums.c:1222
 msgctxt "channel-border-style"
@@ -12331,7 +12291,7 @@ msgstr "채널 줄임"
 #: ../app/core/gimpchannel.c:315
 msgctxt "undo-type"
 msgid "Flood Channel"
-msgstr ""
+msgstr "플러드 채널"
 
 #: ../app/core/gimpchannel.c:842
 #, fuzzy
@@ -12905,10 +12865,9 @@ msgid "Set Colormap"
 msgstr "색상표 설정"
 
 #: ../app/core/gimpimage-colormap.c:241
-#, fuzzy
 msgctxt "undo-type"
 msgid "Unset Colormap"
-msgstr "색상표 설정"
+msgstr "색상표 설정해제"
 
 #: ../app/core/gimpimage-colormap.c:294
 msgctxt "undo-type"
@@ -16738,7 +16697,7 @@ msgstr "이동"
 #: ../app/display/display-enums.c:411
 msgctxt "transform-handle-mode"
 msgid "Remove"
-msgstr ""
+msgstr "제거"
 
 #: ../app/display/display-enums.c:440
 msgctxt "vector-mode"
@@ -16925,7 +16884,7 @@ msgstr "활성 레이어의 픽셀이 잠겼습니다."
 #: ../app/widgets/gimpdrawabletreeview.c:358
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr ""
+msgstr "패턴 레이어에 내려놓기"
 
 #: ../app/display/gimpdisplayshell-dnd.c:434
 #: ../app/widgets/gimpdrawabletreeview.c:277
@@ -17589,7 +17548,7 @@ msgstr "레이어에 맞게 오리기"
 #: ../app/operations/operations-enums.c:63
 msgctxt "layer-composite-mode"
 msgid "Intersection"
-msgstr ""
+msgstr "교차"
 
 #: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
@@ -17599,13 +17558,11 @@ msgstr "일반 (레거시)"
 #. Translators: this is an abbreviated version of "Normal (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:156
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Normal (l)"
-msgstr "일반"
+msgstr "일반 (L)"
 
 #: ../app/operations/operations-enums.c:157
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "분해"
@@ -17642,10 +17599,9 @@ msgstr "화면 (레거시)"
 #. Translators: this is an abbreviated version of "Screen (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:169
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Screen (l)"
-msgstr "화면"
+msgstr "화면 (L)"
 
 #: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
@@ -17660,18 +17616,16 @@ msgid "Old Overlay"
 msgstr "예전 덧씌우기"
 
 #: ../app/operations/operations-enums.c:174
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
-msgstr "차이"
+msgstr "차이 (레거시)"
 
 #. Translators: this is an abbreviated version of "Difference (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:177
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Difference (l)"
-msgstr "차이"
+msgstr "차이 (L)"
 
 #: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
@@ -17686,32 +17640,28 @@ msgid "Addition (l)"
 msgstr "추가 (L)"
 
 #: ../app/operations/operations-enums.c:182
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
-msgstr "빼기"
+msgstr "빼기 (레거시)"
 
 #. Translators: this is an abbreviated version of "Subtract (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:185
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Subtract (l)"
-msgstr "빼기"
+msgstr "빼기 (L)"
 
 #: ../app/operations/operations-enums.c:186
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
-msgstr "어두운 색만"
+msgstr "어두운 색만 (레거시)"
 
 #. Translators: this is an abbreviated version of "Darken only (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:189
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Darken only (l)"
-msgstr "어두운 색만"
+msgstr "어두운 색만 (L)"
 
 #: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
@@ -17745,10 +17695,9 @@ msgstr "채도 HSV (레거시)"
 #. Translators: this is an abbreviated version of "Saturation (HSV) (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:201
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Saturation (HSV) (l)"
-msgstr "채도"
+msgstr "채도 (HSV) (L)"
 
 #: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
@@ -17835,46 +17784,40 @@ msgid "Soft light (l)"
 msgstr "부드러운 빛 (_L)"
 
 #: ../app/operations/operations-enums.c:230
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
-msgstr "질감 드러내기"
+msgstr "질감 드러내기 (레거시)"
 
 #. Translators: this is an abbreviated version of "Grain extract (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:233
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Grain extract (l)"
-msgstr "질감 드러내기"
+msgstr "질감 드러내기 (L)"
 
 #: ../app/operations/operations-enums.c:234
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
-msgstr "질감 합치기"
+msgstr "질감 합치기 (레거시)"
 
 #. Translators: this is an abbreviated version of "Grain merge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:237
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
-msgstr "질감 합치기"
+msgstr "질감 합치기 (L)"
 
 #: ../app/operations/operations-enums.c:238
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
-msgstr "색상 지우기"
+msgstr "색 지우기 (레거시)"
 
 #. Translators: this is an abbreviated version of "Color erase (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:241
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Color erase (l)"
-msgstr "색상 지우기"
+msgstr "색 지우기 (L)"
 
 #: ../app/operations/operations-enums.c:242
 msgctxt "layer-mode"
@@ -17892,10 +17835,9 @@ msgid "Chroma (LCH)"
 msgstr "크로마 (LCH)"
 
 #: ../app/operations/operations-enums.c:245
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Color (LCH)"
-msgstr "색"
+msgstr "색 (LCH)"
 
 #: ../app/operations/operations-enums.c:246
 msgctxt "layer-mode"
@@ -17938,7 +17880,6 @@ msgid "Subtract"
 msgstr "빼기"
 
 #: ../app/operations/operations-enums.c:254
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Darken only"
 msgstr "어두운 색만"
@@ -17954,16 +17895,14 @@ msgid "Hue (HSV)"
 msgstr "색조 (HSV)"
 
 #: ../app/operations/operations-enums.c:257
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Saturation (HSV)"
-msgstr "채도"
+msgstr "채도 (HSV)"
 
 #: ../app/operations/operations-enums.c:258
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Color (HSL)"
-msgstr "색"
+msgstr "색 (HSL)"
 
 #: ../app/operations/operations-enums.c:259
 msgctxt "layer-mode"
@@ -17996,13 +17935,11 @@ msgid "Soft light"
 msgstr "부드러운 빛"
 
 #: ../app/operations/operations-enums.c:265
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Grain extract"
 msgstr "질감 드러내기"
 
 #: ../app/operations/operations-enums.c:266
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Grain merge"
 msgstr "질감 합치기"
@@ -18030,12 +17967,12 @@ msgstr "하드 믹스"
 #: ../app/operations/operations-enums.c:271
 msgctxt "layer-mode"
 msgid "Exclusion"
-msgstr ""
+msgstr "제외"
 
 #: ../app/operations/operations-enums.c:272
 msgctxt "layer-mode"
 msgid "Linear burn"
-msgstr ""
+msgstr "선형 번"
 
 #: ../app/operations/operations-enums.c:273
 msgctxt "layer-mode"
@@ -18067,10 +18004,9 @@ msgid "Luminance"
 msgstr "휘도"
 
 #: ../app/operations/operations-enums.c:282
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Color erase"
-msgstr "색상 지우기"
+msgstr "색 지우기"
 
 #: ../app/operations/operations-enums.c:283
 msgctxt "layer-mode"
@@ -18098,7 +18034,6 @@ msgid "Replace"
 msgstr "바꾸기"
 
 #: ../app/operations/operations-enums.c:288
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Anti erase"
 msgstr "지우기 방지"
@@ -18762,17 +18697,15 @@ msgid "Smudge"
 msgstr "문지르기"
 
 #: ../app/paint/gimpsmudgeoptions.c:70
-#, fuzzy
 msgctxt "smudge-tool"
 msgid "Rate"
-msgstr "비율"
+msgstr "속도"
 
 #: ../app/paint/gimpsmudgeoptions.c:71
 msgid "The strength of smudging"
 msgstr ""
 
 #: ../app/paint/gimpsmudgeoptions.c:77
-#, fuzzy
 msgctxt "smudge-tool"
 msgid "Flow"
 msgstr "흐름"
@@ -18881,7 +18814,6 @@ msgid "Hue-Saturation"
 msgstr "색상-채도"
 
 #: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:726
-#, fuzzy
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "임계값"
@@ -19377,7 +19309,7 @@ msgstr "외계의 지도"
 #: ../app/pdb/plug-in-compat-cmds.c:449
 msgctxt "undo-type"
 msgid "Antialias"
-msgstr ""
+msgstr "계단현상 제거"
 
 #: ../app/pdb/plug-in-compat-cmds.c:492
 msgctxt "undo-type"
@@ -19411,12 +19343,12 @@ msgstr "대비 늘이기"
 #: ../app/pdb/plug-in-compat-cmds.c:940
 msgctxt "undo-type"
 msgid "Channel Mixer"
-msgstr ""
+msgstr "채널 믹서"
 
 #: ../app/pdb/plug-in-compat-cmds.c:984
 msgctxt "undo-type"
 msgid "Color to Alpha"
-msgstr ""
+msgstr "색을 알파로"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1030
 #, c-format
@@ -19461,7 +19393,7 @@ msgstr "판각"
 #: ../app/pdb/plug-in-compat-cmds.c:1572
 msgctxt "undo-type"
 msgid "Color Exchange"
-msgstr ""
+msgstr "색 교환"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1620
 msgctxt "undo-type"
@@ -19614,10 +19546,9 @@ msgid "Spread"
 msgstr "퍼트리기"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3972
-#, fuzzy
 msgctxt "undo-type"
 msgid "Threshold Alpha"
-msgstr "임계값"
+msgstr "임계값 알파"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4018
 msgctxt "undo-type"
@@ -22723,10 +22654,9 @@ msgid "Unified transform"
 msgstr "Cage 변형"
 
 #: ../app/tools/gimpunifiedtransformtool.c:190
-#, fuzzy
 msgctxt "undo-type"
 msgid "Unified Transform"
-msgstr "Cage 변형"
+msgstr "통합 변형"
 
 #: ../app/tools/gimpvectoroptions.c:181
 #, c-format
@@ -22936,7 +22866,7 @@ msgstr "경로"
 #: ../app/tools/tools-enums.c:151
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
-msgstr ""
+msgstr "전경 그리기"
 
 #: ../app/tools/tools-enums.c:152
 msgctxt "matting-draw-mode"
@@ -22946,7 +22876,7 @@ msgstr "배경 그리기"
 #: ../app/tools/tools-enums.c:153
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
-msgstr ""
+msgstr "모호한 부분 그리기"
 
 #: ../app/tools/tools-enums.c:186
 #, fuzzy
