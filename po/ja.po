@@ -8512,19 +8512,14 @@ msgid "Replace the selection by its border"
 msgstr "現在の選択範囲の境界線を縁取るような選択範囲を作成します"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
-#| msgid "Remove Controller"
 msgctxt "select-action"
 msgid "Re_move Holes"
-msgstr "コントローラーの削除"
+msgstr "穴の削除(_M)"
 
 #: ../app/actions/select-actions.c:106
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "Remove fuzziness from the selection"
 msgctxt "select-action"
 msgid "Remove holes from the selection"
-msgstr "選択範囲の境界をはっきりさせます"
+msgstr "選択範囲の穴を削除します"
 
 #: ../app/actions/select-actions.c:111
 msgctxt "select-action"
@@ -8634,11 +8629,8 @@ msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 
 #: ../app/actions/select-commands.c:423
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the selection outline"
 msgid "Fill Selection Outline"
-msgstr "選択範囲の境界線を表示します"
+msgstr "選択範囲の境界線で塗りつぶす"
 
 #: ../app/actions/select-commands.c:452
 msgid "Stroke Selection"
@@ -12685,9 +12677,6 @@ msgid "Fixed"
 msgstr "固定"
 
 #: ../app/core/core-enums.c:611
-#, fuzzy
-#| msgctxt "fill-type"
-#| msgid "Foreground color"
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "描画色"
@@ -12697,27 +12686,21 @@ msgstr "描画色"
 #: ../app/core/core-enums.c:614
 msgctxt "gradient-color"
 msgid "FG"
-msgstr ""
+msgstr "FG"
 
 #: ../app/core/core-enums.c:615
-#, fuzzy
-#| msgctxt "gradient-editor-color-type"
-#| msgid "Fo_reground Color (Transparent)"
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
-msgstr "描画色 (透明度あり)(_R)"
+msgstr "描画色 (透明度あり)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
 #: ../app/core/core-enums.c:618
 msgctxt "gradient-color"
 msgid "FG (t)"
-msgstr ""
+msgstr "FG (t)"
 
 #: ../app/core/core-enums.c:619
-#, fuzzy
-#| msgctxt "fill-type"
-#| msgid "Background color"
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "背景色"
@@ -12727,22 +12710,19 @@ msgstr "背景色"
 #: ../app/core/core-enums.c:622
 msgctxt "gradient-color"
 msgid "BG"
-msgstr ""
+msgstr "BG"
 
 #: ../app/core/core-enums.c:623
-#, fuzzy
-#| msgctxt "gradient-editor-color-type"
-#| msgid "B_ackground Color (Transparent)"
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
-msgstr "背景色 (透明度あり)(_A)"
+msgstr "背景色 (透明度あり)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
 #: ../app/core/core-enums.c:626
 msgctxt "gradient-color"
 msgid "BG (t)"
-msgstr ""
+msgstr "BG (t)"
 
 #: ../app/core/core-enums.c:739
 msgctxt "histogram-channel"
@@ -15400,12 +15380,9 @@ msgid "Shrink Selection"
 msgstr "選択範囲の縮小"
 
 #: ../app/core/gimpselection.c:197
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Remove item"
 msgctxt "undo-type"
 msgid "Remove Holes"
-msgstr "アイテムの削除"
+msgstr "穴の削除"
 
 #: ../app/core/gimpselection.c:305
 #, fuzzy
@@ -16356,17 +16333,12 @@ msgid "Unknown error"
 msgstr "未知のエラー"
 
 #: ../app/dialogs/fill-dialog.c:109
-#, fuzzy
-#| msgid "Choose Stroke Style"
 msgid "Choose Fill Style"
-msgstr "ストロークスタイルの選択"
+msgstr "塗りつぶしスタイルの選択"
 
 #: ../app/dialogs/fill-dialog.c:116
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "_File"
 msgid "_Fill"
-msgstr "ファイル(_F)"
+msgstr "塗りつぶし(_F)"
 
 #: ../app/dialogs/grid-dialog.c:95
 msgid "Configure Grid"
@@ -17663,10 +17635,8 @@ msgstr "キャンバスサイズダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2257
 #: ../app/dialogs/preferences-dialog.c:2286
-#, fuzzy
-#| msgid "_Fill with:"
 msgid "Fill with:"
-msgstr "塗りつぶし色(_F):"
+msgstr "塗りつぶし色:"
 
 #: ../app/dialogs/preferences-dialog.c:2260
 msgid "Resize layers:"
@@ -18601,10 +18571,8 @@ msgid "Layer Size"
 msgstr "レイヤーサイズ"
 
 #: ../app/dialogs/resize-dialog.c:156
-#, fuzzy
-#| msgid "_Fill with:"
 msgid "Fill With"
-msgstr "塗りつぶし色(_F):"
+msgstr "塗りつぶし色"
 
 #: ../app/dialogs/resize-dialog.c:185
 msgid "Re_set"
@@ -18628,7 +18596,7 @@ msgstr "テキストレイヤーサイズの変更(_T)"
 
 #: ../app/dialogs/resize-dialog.c:390
 msgid "Resizing text layers will make them uneditable"
-msgstr ""
+msgstr "テキストレイヤーのサイズを変更すると編集できなくなります"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
@@ -24165,11 +24133,8 @@ msgid "Start Endpoint"
 msgstr "左終端色(_L)"
 
 #: ../app/tools/gimpgradienttool-editor.c:1671
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Left Endpoint"
 msgid "End Endpoint"
-msgstr "左終端色(_L)"
+msgstr "終端点の終了"
 
 #: ../app/tools/gimpgradienttool-editor.c:1724
 #, c-format
