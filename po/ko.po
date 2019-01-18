@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-18 04:58+0900\n"
+"PO-Revision-Date: 2019-01-18 13:19+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -122,7 +122,7 @@ msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
 msgstr ""
-"향상된 디지털 페인팅: 캔버스 회전 및 뒤집기, 대칭 페인팅, 마이페인트 붓 …"
+"향상된 디지털 페인팅: 캔버스 회전 및 뒤집기, 대칭 페인팅, 내페인트 붓 …"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
@@ -676,7 +676,7 @@ msgstr "레이어"
 #: ../app/actions/actions.c:198 ../app/core/gimp-data-factories.c:327
 #: ../app/dialogs/dialogs.c:341 ../app/dialogs/preferences-dialog.c:3131
 msgid "MyPaint Brushes"
-msgstr "마이페인트 붓"
+msgstr "내페인트 붓"
 
 #: ../app/actions/actions.c:201 ../app/dialogs/dialogs.c:432
 #: ../app/widgets/gimppaletteeditor.c:149
@@ -2880,12 +2880,12 @@ msgstr "페인트 동적 요소스 편집기를 엽니다"
 #: ../app/actions/dialogs-actions.c:161
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
-msgstr "마이페인트 붓(_M)"
+msgstr "내페인트 붓(_M)"
 
 #: ../app/actions/dialogs-actions.c:162
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
-msgstr "마이페인트 붓 대화상자를 열기"
+msgstr "내페인트 붓 대화상자를 열기"
 
 #: ../app/actions/dialogs-actions.c:167
 msgctxt "dialogs-action"
@@ -4006,9 +4006,8 @@ msgid "Pasted as new layer because the target is a layer group."
 msgstr "목표가 레이어 그룹이므로 새 레이어로 붙였음."
 
 #: ../app/actions/edit-commands.c:579 ../app/display/gimpdisplayshell-dnd.c:489
-#, fuzzy
 msgid "Pasted as new layer because the target's pixels are locked."
-msgstr "활성 레이어의 픽셀이 잠겼습니다."
+msgstr ""
 
 #: ../app/actions/edit-commands.c:617
 msgid "There is no active layer or channel to cut from."
@@ -6077,14 +6076,12 @@ msgid "Cannot crop because the current selection is empty."
 msgstr "선택이 비어 있으므로, 잘라낼 수 없습니다."
 
 #: ../app/actions/image-commands.c:888
-#, fuzzy
 msgid "Cannot crop because the image has no content."
-msgstr "선택이 비어 있으므로, 잘라낼 수 없습니다."
+msgstr ""
 
 #: ../app/actions/image-commands.c:894
-#, fuzzy
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr "선택이 비어 있으므로, 잘라낼 수 없습니다."
+msgstr ""
 
 #: ../app/actions/image-commands.c:1029
 #, c-format
@@ -6106,9 +6103,8 @@ msgid "Converting image to %s"
 msgstr "이미지를 %s(으)로 변환"
 
 #: ../app/actions/image-commands.c:1248
-#, fuzzy
 msgid "Assign color profile"
-msgstr "색상 프로필"
+msgstr "색 프로필 할당"
 
 #: ../app/actions/image-commands.c:1294
 #, c-format
@@ -6171,9 +6167,8 @@ msgid "Delete this image"
 msgstr "이미지 삭제"
 
 #: ../app/actions/items-commands.c:208 ../app/actions/items-commands.c:253
-#, fuzzy
 msgid "There is no active layer or channel to fill."
-msgstr "잘라낼 활성 레이어나 채널이 없습니다."
+msgstr "채울 활성 레이어나 채널이 없습니다."
 
 #: ../app/actions/items-commands.c:293 ../app/actions/items-commands.c:338
 msgid "There is no active layer or channel to stroke to."
@@ -7028,49 +7023,47 @@ msgid "Crop Layer to Content"
 msgstr "레이어를 내용에 맞추어 자르기"
 
 #: ../app/actions/layers-commands.c:848
-#, fuzzy
 msgid "Cannot crop because the active layer has no content."
-msgstr "선택이 비어 있으므로, 잘라낼 수 없습니다."
+msgstr ""
 
 #: ../app/actions/layers-commands.c:855
-#, fuzzy
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr "선택이 비어 있으므로, 잘라낼 수 없습니다."
+msgstr ""
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
 msgid "MyPaint Brushes Menu"
-msgstr "마이페인트 붓 메뉴"
+msgstr "내페인트 붓 메뉴"
 
 #: ../app/actions/mypaint-brushes-actions.c:47
 msgctxt "mypaint-brushes-action"
 msgid "_New MyPaint Brush"
-msgstr "새 마이페인트 붓"
+msgstr "새 내페인트 붓"
 
 #: ../app/actions/mypaint-brushes-actions.c:48
 msgctxt "mypaint-brushes-action"
 msgid "Create a new MyPaint brush"
-msgstr "새 마이페인트 붓 만들기"
+msgstr "새 내페인트 붓 만들기"
 
 #: ../app/actions/mypaint-brushes-actions.c:53
 msgctxt "mypaint-brushes-action"
 msgid "D_uplicate MyPaint Brush"
-msgstr "마이페인트 붓 복제(_U)"
+msgstr "내페인트 붓 복제(_U)"
 
 #: ../app/actions/mypaint-brushes-actions.c:54
 msgctxt "mypaint-brushes-action"
 msgid "Duplicate this MyPaint brush"
-msgstr "이 마이페인트 붓 복제"
+msgstr "이 내페인트 붓 복제"
 
 #: ../app/actions/mypaint-brushes-actions.c:59
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint Brush _Location"
-msgstr "마이페인트 위치 복사(_L)"
+msgstr "내페인트 위치 복사(_L)"
 
 #: ../app/actions/mypaint-brushes-actions.c:60
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint brush file location to clipboard"
-msgstr "마이페인트 붓 파일 위치를 클립보드로 복사"
+msgstr "내페인트 붓 파일 위치를 클립보드로 복사"
 
 #: ../app/actions/mypaint-brushes-actions.c:65
 msgctxt "mypaint-brushes-action"
@@ -7080,37 +7073,37 @@ msgstr "파일 관리자에서 표시(_F)"
 #: ../app/actions/mypaint-brushes-actions.c:66
 msgctxt "mypaint-brushes-action"
 msgid "Show MyPaint brush file location in the file manager"
-msgstr "마이페인트 붓 파일 위치를 파일 관리자에서 표시"
+msgstr "내페인트 붓 파일 위치를 파일 관리자에서 표시"
 
 #: ../app/actions/mypaint-brushes-actions.c:71
 msgctxt "mypaint-brushes-action"
 msgid "_Delete MyPaint Brush"
-msgstr "마이페인트 붓 삭제(_D)"
+msgstr "내페인트 붓 삭제(_D)"
 
 #: ../app/actions/mypaint-brushes-actions.c:72
 msgctxt "mypaint-brushes-action"
 msgid "Delete this MyPaint brush"
-msgstr "이 마이페인트 붓 삭제"
+msgstr "이 내페인트 붓 삭제"
 
 #: ../app/actions/mypaint-brushes-actions.c:77
 msgctxt "mypaint-brushes-action"
 msgid "_Refresh MyPaint Brushes"
-msgstr "마이페인트 붓 새로 고침(_R)"
+msgstr "내페인트 붓 새로 고침(_R)"
 
 #: ../app/actions/mypaint-brushes-actions.c:78
 msgctxt "mypaint-brushes-action"
 msgid "Refresh MyPaint brushes"
-msgstr "마이페인트 붓 새로 고침"
+msgstr "내페인트 붓 새로 고침"
 
 #: ../app/actions/mypaint-brushes-actions.c:86
 msgctxt "mypaint-brushes-action"
 msgid "_Edit MyPaint Brush..."
-msgstr "마이페인트 붓 편집(_E)..."
+msgstr "내페인트 붓 편집(_E)..."
 
 #: ../app/actions/mypaint-brushes-actions.c:87
 msgctxt "mypaint-brushes-action"
 msgid "Edit MyPaint brush"
-msgstr "마이페인트 붓 편집"
+msgstr "내페인트 붓 편집"
 
 #: ../app/actions/palette-editor-actions.c:44
 msgctxt "palette-editor-action"
@@ -7278,7 +7271,6 @@ msgid "Edit this palette"
 msgstr "이 팔레트를 편집"
 
 #: ../app/actions/palettes-commands.c:83
-#, fuzzy
 msgid "Merge Palettes"
 msgstr "팔레트 합치기"
 
@@ -7645,9 +7637,8 @@ msgstr "선택 영역 줄이기 량"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:230 ../app/actions/select-commands.c:356
-#, fuzzy
 msgid "_Selected areas continue outside the image"
-msgstr "연속된 영역 선택"
+msgstr ""
 
 #: ../app/actions/select-commands.c:233
 msgid "When shrinking, act as if selected areas continued outside the image."
@@ -7670,9 +7661,8 @@ msgid "Border selection by"
 msgstr "테두리 선택 영역 량"
 
 #: ../app/actions/select-commands.c:345
-#, fuzzy
 msgid "Border style"
-msgstr "항목 순서 다시"
+msgstr ""
 
 #: ../app/actions/select-commands.c:359
 msgid "When bordering, act as if selected areas continued outside the image."
@@ -7680,9 +7670,8 @@ msgstr ""
 "테두리를 만들 때, 선택된 영역이 이미지 밖으로 계속되는 것처럼 작동합니다."
 
 #: ../app/actions/select-commands.c:423
-#, fuzzy
 msgid "Fill Selection Outline"
-msgstr "선택 영역 외곽선을 보입니다"
+msgstr "선택 영역 외곽선 채우기"
 
 #: ../app/actions/select-commands.c:452
 msgid "Stroke Selection"
@@ -9072,10 +9061,9 @@ msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "창 전체를 사용할 수 있도록 확대 비율을 조정합니다"
 
 #: ../app/actions/view-actions.c:113
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom to _Selection"
-msgstr "선택 영역 잘라내기(_C)"
+msgstr "선택 영역으로 줌(_S)"
 
 #: ../app/actions/view-actions.c:114
 msgctxt "view-action"
@@ -9098,10 +9086,9 @@ msgid "Othe_r rotation angle..."
 msgstr "기타 회전 각도(_R)..."
 
 #: ../app/actions/view-actions.c:126
-#, fuzzy
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
-msgstr "사용자 확대 비율 설정"
+msgstr "맞춤 회전 각도를 설정"
 
 #: ../app/actions/view-actions.c:131
 msgctxt "view-action"
@@ -9129,10 +9116,9 @@ msgid "As in _Preferences"
 msgstr "기본 설정을 따름(_P)"
 
 #: ../app/actions/view-actions.c:145
-#, fuzzy
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
-msgstr "환경 설정에서 설정한 색으로 여백 색을 재설정합니다"
+msgstr "기본 설정에서 구성한 대로 색 관리를 재설정"
 
 #: ../app/actions/view-actions.c:150
 msgctxt "view-action"
@@ -9187,7 +9173,7 @@ msgstr "이 보기에서 색상 관리 사용"
 #: ../app/actions/view-actions.c:185
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr ""
+msgstr "색 교정"
 
 #: ../app/actions/view-actions.c:186
 msgctxt "view-action"
@@ -9362,10 +9348,9 @@ msgid "Toggle fullscreen view"
 msgstr "전체화면 보기로 전환합니다"
 
 #: ../app/actions/view-actions.c:315
-#, fuzzy
 msgctxt "view-action"
 msgid "Set zoom factor"
-msgstr "사용자 확대 비율 설정"
+msgstr ""
 
 #: ../app/actions/view-actions.c:320
 msgctxt "view-action"
@@ -9408,16 +9393,14 @@ msgid "Zoom In"
 msgstr "확대"
 
 #: ../app/actions/view-actions.c:354
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom out a lot"
-msgstr "축소"
+msgstr ""
 
 #: ../app/actions/view-actions.c:359
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom in a lot"
-msgstr "확대"
+msgstr ""
 
 #: ../app/actions/view-actions.c:367 ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
@@ -9550,28 +9533,24 @@ msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "뒤집지 않은 상태 및 각도 0°로 초기화"
 
 #: ../app/actions/view-actions.c:492
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
-msgstr "시계방향으로 90도 회전(_C)"
+msgstr "오른쪽으로 15° 회전(_C)"
 
 #: ../app/actions/view-actions.c:493
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
-msgstr "이미지를 오른쪽으로 90도 회전합니다"
+msgstr "뷰를 오른쪽으로 15° 회전"
 
 #: ../app/actions/view-actions.c:498
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
-msgstr "시계방향으로 90도 회전(_C)"
+msgstr "시계 방향으로 90° 회전(_C)"
 
 #: ../app/actions/view-actions.c:499
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
-msgstr "이미지를 오른쪽으로 90도 회전합니다"
+msgstr "뷰를 오른쪽으로 90° 회전"
 
 #: ../app/actions/view-actions.c:504
 msgctxt "view-action"
@@ -9579,34 +9558,29 @@ msgid "Rotate _180°"
 msgstr "_180° 회전"
 
 #: ../app/actions/view-actions.c:505
-#, fuzzy
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "이미지를 위아래로 뒤집습니다"
 
 #: ../app/actions/view-actions.c:510
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "시계 반대방향으로 90° 회전(_W)"
+msgstr "반시계 방향으로 90° 회전(_W)"
 
 #: ../app/actions/view-actions.c:511
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
-msgstr "이미지를 왼쪽으로 90도 회전합니다"
+msgstr "뷰를 왼쪽으로 90° 회전"
 
 #: ../app/actions/view-actions.c:516
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
-msgstr "시계 반대방향으로 90° 회전(_W)"
+msgstr "반시계 방향으로 15° 회전(_W)"
 
 #: ../app/actions/view-actions.c:517
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
-msgstr "이미지를 왼쪽으로 90도 회전합니다"
+msgstr "뷰를 왼쪽으로 15° 회전"
 
 #: ../app/actions/view-actions.c:525 ../app/actions/view-actions.c:552
 msgctxt "view-action"
@@ -9699,10 +9673,9 @@ msgid "Use the dark check color"
 msgstr "체크무늬의 어두운 색을 사용합니다"
 
 #: ../app/actions/view-actions.c:597
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
-msgstr "사용자 정의 색상 선택(_C)..."
+msgstr "맞춤 색상(_C)..."
 
 #: ../app/actions/view-actions.c:598
 msgctxt "view-padding-color"
@@ -10224,7 +10197,7 @@ msgstr "파일을 열 때 삽입된 색상 프로필을 다루는 방법입니�
 
 #: ../app/config/gimprc-blurbs.h:46
 msgid "Sets the default folder path for all color profile file dialogs."
-msgstr ""
+msgstr "모든 색 프로필 파일 대화상자에서 사용할 기본 폴더 경로를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:49
 msgid "Sets the type of mouse pointers to use."
@@ -10302,11 +10275,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid "Default to the last used settings in filter tools."
-msgstr ""
+msgstr "필터 도구에서 마지막에 사용한 설정으로 기본값을 변경."
 
 #: ../app/config/gimprc-blurbs.h:185
 msgid "Show advanced color options in filter tools."
-msgstr ""
+msgstr "필터 도구에 고급 색 옵션 표시."
 
 #: ../app/config/gimprc-blurbs.h:188
 msgid "Sets the text to appear in image window status bars."
@@ -10321,12 +10294,16 @@ msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
 msgstr ""
+"가져온 이미지를 부동 소수점 정밀도로 올립니다. 인덱스 이미지에는 적용되지 않"
+"습니다."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
+"가져온 이미지를 부동 소수점 정밀도로 올릴 때, 색상 값을 약간 배포하려고 최소"
+"한의 노이즈도 추가합니다."
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid "Add an alpha channel to all layers of imported images."
@@ -10334,23 +10311,23 @@ msgstr "가져온 이미지의 모든 레이어에 알파 채널 추가합니다
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid "Which plug-in to use for importing raw digital camera files."
-msgstr ""
+msgstr "RAW 디지털 카메라 파일 가져 오기에 어느 플러그인을 사용할지."
 
 #: ../app/config/gimprc-blurbs.h:208
 msgid "Export Exif metadata by default."
-msgstr ""
+msgstr "기본적으로 EXIF 메타데이터를 내보냅니다."
 
 #: ../app/config/gimprc-blurbs.h:211
 msgid "Export XMP metadata by default."
-msgstr ""
+msgstr "기본적으로 XMPF 메타데이터를 내보냅니다."
 
 #: ../app/config/gimprc-blurbs.h:214
 msgid "Export IPTC metadata by default."
-msgstr ""
+msgstr "기본적으로 IPTCF 메타데이터를 내보냅니다."
 
 #: ../app/config/gimprc-blurbs.h:217
 msgid "Try generating debug data for bug reporting when appropriate."
-msgstr ""
+msgstr "적합하면 버그 보고용의 디버그 자료 생성을 시도합니다."
 
 #: ../app/config/gimprc-blurbs.h:220
 msgid ""
@@ -10472,6 +10449,8 @@ msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
 msgstr ""
+"활성화하면 김프는 이전에 창을 열어 둔 모니터에 창을 복원하려고 시도합니다.  "
+"비활성화하면 창은 현재 사용 중인 모니터에 나타납니다."
 
 #: ../app/config/gimprc-blurbs.h:326
 msgid ""
@@ -10483,6 +10462,8 @@ msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
 msgstr ""
+"이 기능을 사용하면 모든 입력 장치에 동일한 도구 및 도구 옵션이 사용됩니다. 입"
+"력 장치가 변경되면 도구는 전환되지 않습니다."
 
 #: ../app/config/gimprc-blurbs.h:335
 msgid ""
@@ -10606,19 +10587,19 @@ msgstr "N-점 변형 도구를 활성화 합니다."
 
 #: ../app/config/gimprc-blurbs.h:409
 msgid "Enable the Handle Transform tool."
-msgstr ""
+msgstr "핸들 변형 도구를 활성화합니다."
 
 #: ../app/config/gimprc-blurbs.h:412
 msgid "Enable symmetry on painting."
-msgstr ""
+msgstr "페인팅할 때 대칭을 활성화."
 
 #: ../app/config/gimprc-blurbs.h:415
 msgid "Enable the MyPaint Brush tool."
-msgstr ""
+msgstr "내페인트 붓 도구를 활성화."
 
 #: ../app/config/gimprc-blurbs.h:418
 msgid "Enable the Seamless Clone tool."
-msgstr ""
+msgstr "무봉합선 복제 도구 활성화."
 
 #: ../app/config/gimprc-blurbs.h:421
 msgid "What to do when the space bar is pressed in the image window."
@@ -10674,135 +10655,139 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:467
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
-msgstr ""
+msgstr "'색 프로필로 변환' 대화 상자의 기본 렌더링 의도를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:470
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
-msgstr ""
+msgstr " '색 프로필로 변환' 대화 상자의 기본 '검정 점 보상' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:474
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
-msgstr ""
+msgstr "'정밀도 변환' 대화 상자의 기본 레이어 디더링 방법을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:477
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
-msgstr ""
+msgstr "'정밀도 변환' 대화 상자의 기본 텍스트 레이어 디더링 방법을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:480
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
-msgstr ""
+msgstr "'정밀도 변환' 대화 상자의 기본 채널 디더링 방법을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:483
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
-msgstr ""
+msgstr "'인덱스로 변환' 대화 상자의 기본 팔레트 유형을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:486
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
-msgstr ""
+msgstr "'인덱스로 변환' 대화 상자의 기본 최대 색상 수를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:489
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
-msgstr ""
+msgstr "'인덱스로 변환' 대화 상자의 기본 '중복 색상 제거' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:492
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
-msgstr ""
+msgstr "'인덱스로 변환' 대화 상자의 기본 디더링 유형을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:495
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
-msgstr ""
+msgstr "'인덱스로 변환' 대화 상자의 기본 '알파 디더링' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:498
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"'인덱스로 변환' 대화 상자의 기본 '텍스트 레이어 디더링' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:501
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
-msgstr ""
+msgstr "'캔버스 크기' 대화 상자의 기본 채우기 유형을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:504
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
+"'캔버스 크기' 대화 상자에서 크기를 조정할 기본 레이어 세트를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:507
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
+"'캔버스 크기' 대화 상자의 기본 '텍스트 레이어 크기 조정' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:510
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr ""
+msgstr "'새 레이어' 대화 상자의 기본 레이어 이름을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:513
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "'새 레이어' 대화 상자의 기본 모드를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:516
 msgid "Sets the default blend space for the 'New Layer' dialog."
-msgstr ""
+msgstr "'새 레이어' 대화 상자의 기본 혼합 공간을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:519
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr ""
+msgstr "'새 레이어' 대화 상자의 기본 합성 공간을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:522
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "'새 레이어' 대화 상자의 기본 합성 모드를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:525
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr ""
+msgstr "'새 레이어' 대화 상자의 기본 불투명도를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:528
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr ""
+msgstr "'새 레이어' 대화 상자의 기본 채우기 유형을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:531
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
-msgstr ""
+msgstr "'레이어 경계 크기' 대화 상자의 기본 채우기 유형을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:534
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
-msgstr ""
+msgstr "'레이어 마스크 추가' 대화 상자의 기본 마스크를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:537
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
-msgstr ""
+msgstr "'레이어 마스크 추가' 대화 상자의 기본 '마스크 반전' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:540
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "'보이는 레이어 합치기' 대화 상자의 기본 합치기 유형을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:543
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "'보이는 레이어 합치기' 대화 상자의 기본 '활성 그룹만'을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:546
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"'보이는 레이어 합치기' 대화 상자의 기본 '안 보이면 버리기'을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:549
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr ""
+msgstr "'새 채널' 대화 상자의 기본 채널 이름을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:552
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr ""
+msgstr "'새 채널' 대화 상자의 기본 색상 및 불투명도를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:555
 #, fuzzy
@@ -10811,59 +10796,67 @@ msgstr "열기 대화상자에서 보여질 미리 보기의 크기를 설정합
 
 #: ../app/config/gimprc-blurbs.h:558
 msgid "Sets the default folder path for the 'Export Path' dialog."
-msgstr ""
+msgstr "'경로 내보내기' 대화 상자의 기본 폴더 경로를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:561
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
+"'경로 내보내기' 대화 상자의 기본 '활성 경로 내보내기' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:564
 msgid "Sets the default folder path for the 'Import Path' dialog."
-msgstr ""
+msgstr "'경로 가져 오기' 대화 상자의 기본 폴더 경로를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:567
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
+"'경로 가져 오기' 대화 상자의 기본 '가져온 경로 합치기' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:570
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
+"'경로 가져 오기' 대화 상자의 기본 '크기에 맞게 가져온 경로 크기 조정' 상태를 "
+"설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:573
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
-msgstr ""
+msgstr "'페더 선택' 대화 상자의 기본 페더 반지름을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:576
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
-msgstr ""
+msgstr "'선택 영역 확장' 대화 상자의 기본 확장 반지름을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:579
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
-msgstr ""
+msgstr "'선택 영역 축소' 대화 상자의 기본 축소 반지름을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:582
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr ""
+"'선택 영역 축소' 대화 상자의 기본 '선택된 영역이 이미지 외부로 계속됨' 설정"
+"을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default border radius for the 'Border Selection' dialog."
-msgstr ""
+msgstr "'테두리 선택' 대화 상자의 기본 테두리 반지름을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:589
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr ""
+"'테두리 선택' 대화 상자의 기본 '선택한 영역이 이미지 외부로 계속됨' 설정을 설"
+"정합니다."
 
 #: ../app/config/gimprc-blurbs.h:593
 msgid "Sets the default border style for the 'Border Selection' dialog."
-msgstr ""
+msgstr "'테두리 선택' 대화 상자의 기본 테두리 스타일을 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:602
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -10941,7 +10934,7 @@ msgstr "F1을 눌러서 도움말을 볼 수 있습니다."
 
 #: ../app/config/gimprc-blurbs.h:652
 msgid "When enabled, uses OpenCL for some operations."
-msgstr ""
+msgstr "활성화하면, 일부 작업에 OpenCL을 사용합니다."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:131
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:293
@@ -12348,7 +12341,7 @@ msgstr "페인트 동적 요소"
 #: ../app/core/gimpcontext.c:718 ../app/core/gimpcontext.c:719
 #: ../app/tools/gimpmybrushtool.c:73
 msgid "MyPaint Brush"
-msgstr "마이페인트 붓"
+msgstr "내페인트 붓"
 
 #: ../app/core/gimpcontext.c:725 ../app/core/gimpcontext.c:726
 msgid "Pattern"
@@ -13349,7 +13342,7 @@ msgstr ""
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
 msgid "Failed to deserialize MyPaint brush."
-msgstr "마이페인트 붓 직렬화 제거 실패."
+msgstr "내페인트 붓 직렬화 제거 실패."
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
@@ -13943,7 +13936,7 @@ msgstr ""
 
 #: ../app/dialogs/action-search-dialog.c:67
 msgid "Search Actions"
-msgstr ""
+msgstr "동작 검색"
 
 #: ../app/dialogs/channel-options-dialog.c:126
 msgid "Channel _name:"
@@ -15253,7 +15246,7 @@ msgstr "이미지 양식"
 
 #: ../app/dialogs/preferences-dialog.c:1550
 msgid "Experimental Playground"
-msgstr ""
+msgstr "실험적 놀이터"
 
 #: ../app/dialogs/preferences-dialog.c:1551
 msgid "Playground"
@@ -15277,7 +15270,7 @@ msgstr "N-점 변형 도구(_N)"
 
 #: ../app/dialogs/preferences-dialog.c:1574
 msgid "_Seamless Clone tool"
-msgstr ""
+msgstr "무봉합선 복제 도구(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:1584
 #: ../app/dialogs/preferences-dialog.c:1585
@@ -15517,7 +15510,7 @@ msgstr "검은 점 보상"
 #. Convert Precision Dialog
 #: ../app/dialogs/preferences-dialog.c:2132
 msgid "Precision Conversion Dialog"
-msgstr ""
+msgstr "정밀도 변환 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2139
 msgid "Dither layers:"
@@ -15727,7 +15720,7 @@ msgstr "'선택 영역 확장' 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2336
 msgid "Grow radius:"
-msgstr ""
+msgstr "확장 반지름:"
 
 #. Shrink Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2340
@@ -16189,11 +16182,11 @@ msgstr "도구 사전 설정 폴더 선택"
 
 #: ../app/dialogs/preferences-dialog.c:3131
 msgid "MyPaint Brush Folders"
-msgstr "마이페인트 붓 폴더"
+msgstr "내페인트 붓 폴더"
 
 #: ../app/dialogs/preferences-dialog.c:3133
 msgid "Select MyPaint Brush Folders"
-msgstr "마이페인트 붓 폴더 선택"
+msgstr "내페인트 붓 폴더 선택"
 
 #: ../app/dialogs/preferences-dialog.c:3135
 msgid "Plug-in Folders"
@@ -16332,12 +16325,12 @@ msgstr[0] "저장 안된 이미지가 %d 개 있습니다.:"
 #: ../app/dialogs/quit-dialog.c:357
 #, c-format
 msgid "Press %s to quit."
-msgstr ""
+msgstr "끝내려면 %s(을)를 누르십시오."
 
 #: ../app/dialogs/quit-dialog.c:360
 #, c-format
 msgid "Press %s to close all images."
-msgstr ""
+msgstr "모든 이미지를 닫으려면 %s(을)를 누르십시오."
 
 #: ../app/dialogs/quit-dialog.c:364 ../app/dialogs/user-install-dialog.c:89
 msgid "_Quit"
@@ -16350,12 +16343,12 @@ msgstr "닫기(_O)"
 #: ../app/dialogs/quit-dialog.c:388
 #, c-format
 msgid "Press %s to discard all changes and quit."
-msgstr ""
+msgstr "모든 변경 사항을 취소하고 끝내려면 %s(을)를 누르십시오."
 
 #: ../app/dialogs/quit-dialog.c:391
 #, c-format
 msgid "Press %s to discard all changes and close all images."
-msgstr ""
+msgstr "모든 변경 사항을 취소하고 모든 이미지를 닫으려면 %s(을)를 누르십시오."
 
 #: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
@@ -17354,7 +17347,7 @@ msgstr "RGB"
 #: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338
 #: ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-알파"
 
 #: ../app/gegl/gimp-babl.c:342 ../app/gegl/gimp-babl.c:343
 #: ../app/gegl/gimp-babl.c:344 ../app/gegl/gimp-babl.c:345
@@ -17411,7 +17404,7 @@ msgstr "성분(_O)"
 
 #: ../app/gegl/gimp-babl.c:440
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "인덱스-알파"
 
 #: ../app/gegl/gimp-babl.c:442
 #, fuzzy
@@ -17995,7 +17988,7 @@ msgstr "범위"
 #: ../app/operations/gimpcolorbalanceconfig.c:97
 #: ../app/operations/gimphuesaturationconfig.c:95
 msgid "The affected range"
-msgstr ""
+msgstr "영향을 받는 영역"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:103
 #: ../app/operations/gimpcolorbalanceconfig.c:104
@@ -18239,7 +18232,7 @@ msgstr "버리기(_D)"
 
 #: ../app/gui/gui.c:329
 msgid "_Recover"
-msgstr ""
+msgstr "복구(_R)"
 
 #: ../app/gui/gui.c:340
 msgid "Eeek! It looks like GIMP recovered from a crash!"
@@ -18423,7 +18416,7 @@ msgstr "이 붓으로 지우기"
 
 #: ../app/paint/gimpmybrushoptions.c:114
 msgid "No erasing effect"
-msgstr ""
+msgstr "지우는 효과 없음"
 
 #: ../app/paint/gimpmybrushoptions.c:115 ../app/paint/gimpsmudgeoptions.c:85
 msgid "Never decrease alpha of existing pixels"
@@ -18857,22 +18850,22 @@ msgstr "페인트 동적 요소 '%s'은(는) 이름 변경 불가"
 
 #: ../app/pdb/gimppdb-utils.c:189
 msgid "Invalid empty MyPaint brush name"
-msgstr "잘못된 빈 마이페인트 붓 이름"
+msgstr "잘못된 빈 내페인트 붓 이름"
 
 #: ../app/pdb/gimppdb-utils.c:198
 #, c-format
 msgid "MyPaint brush '%s' not found"
-msgstr "마이페인트 붓 '%s'이(가) 없음"
+msgstr "내페인트 붓 '%s'이(가) 없음"
 
 #: ../app/pdb/gimppdb-utils.c:204
 #, c-format
 msgid "MyPaint brush '%s' is not editable"
-msgstr "마이페인트 붓 '%s'을(를) 수정할 수 없음"
+msgstr "내페인트 붓 '%s'을(를) 수정할 수 없음"
 
 #: ../app/pdb/gimppdb-utils.c:211
 #, c-format
 msgid "MyPaint brush '%s' is not renamable"
-msgstr "마이페인트 붓 '%s'은(는) 이름 변경 불가"
+msgstr "내페인트 붓 '%s'은(는) 이름 변경 불가"
 
 #: ../app/pdb/gimppdb-utils.c:231
 msgid "Invalid empty pattern name"
@@ -21628,11 +21621,11 @@ msgstr "이동(_M)"
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
-msgstr "마이페인트 붓 도구: 김프에서 마이페인트 붓을 사용"
+msgstr "내페인트 붓 도구: 김프에서 내페인트 붓을 사용"
 
 #: ../app/tools/gimpmybrushtool.c:75
 msgid "M_yPaint Brush"
-msgstr "마이페인트 붓(_Y)"
+msgstr "내페인트 붓(_Y)"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:77
 #: ../app/tools/gimpnpointdeformationoptions.c:78
@@ -22057,7 +22050,7 @@ msgstr ""
 
 #: ../app/tools/gimpseamlessclonetool.c:192
 msgid "_Seamless Clone"
-msgstr ""
+msgstr "무봉합선 복제(_S)"
 
 #: ../app/tools/gimpseamlessclonetool.c:789
 #, fuzzy
@@ -24955,7 +24948,7 @@ msgstr "동적 요소 선택 영역 대화 열기"
 
 #: ../app/widgets/gimpviewablebox.c:229
 msgid "Open the MyPaint brush selection dialog"
-msgstr "마이페인트 붓 선택 영역 대화상자 열기"
+msgstr "내페인트 붓 선택 영역 대화상자 열기"
 
 #: ../app/widgets/gimpviewablebox.c:292
 msgid "Open the pattern selection dialog"
