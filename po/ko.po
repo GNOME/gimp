@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-18 13:19+0900\n"
+"PO-Revision-Date: 2019-01-18 21:20+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -406,7 +406,7 @@ msgstr "사용자 인터페이스 없이 실행합니다"
 
 #: ../app/main.c:187
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "무늬, 그라디언트, 색상표, 붓 등을 불러오지 않습니다..."
+msgstr "무늬, 그레이디언트, 색상표, 붓 등을 불러오지 않습니다..."
 
 #: ../app/main.c:192
 msgid "Do not load any fonts"
@@ -636,13 +636,13 @@ msgstr "글꼴"
 #: ../app/actions/actions.c:174 ../app/dialogs/dialogs.c:428
 #: ../app/widgets/gimpgradienteditor.c:271
 msgid "Gradient Editor"
-msgstr "그라디언트 편집기"
+msgstr "그레이디언트 편집기"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:177 ../app/core/gimp-data-factories.c:342
 #: ../app/dialogs/dialogs.c:347 ../app/dialogs/preferences-dialog.c:3119
 msgid "Gradients"
-msgstr "그라디언트"
+msgstr "그레이디언트"
 
 #: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:353
 #: ../app/dialogs/dialogs.c:359 ../app/dialogs/preferences-dialog.c:3127
@@ -1398,7 +1398,7 @@ msgstr "팔레트(_P)"
 #: ../app/actions/context-actions.c:63
 msgctxt "context-action"
 msgid "_Gradient"
-msgstr "그라디언트(_G)"
+msgstr "그레이디언트(_G)"
 
 #: ../app/actions/context-actions.c:65
 msgctxt "context-action"
@@ -2900,22 +2900,22 @@ msgstr "무늬 대화상자를 엽니다"
 #: ../app/actions/dialogs-actions.c:173
 msgctxt "dialogs-action"
 msgid "_Gradients"
-msgstr "그라디언트(_G)"
+msgstr "그레이디언트(_G)"
 
 #: ../app/actions/dialogs-actions.c:174
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
-msgstr "그라디언트 대화상자를 엽니다"
+msgstr "그레이디언트 대화상자를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:179
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
-msgstr "그라디언트 편집기"
+msgstr "그레이디언트 편집기"
 
 #: ../app/actions/dialogs-actions.c:180
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
-msgstr "그라디언트 편집기를 엽니다"
+msgstr "그레이디언트 편집기를 엽니다"
 
 #: ../app/actions/dialogs-actions.c:185
 msgctxt "dialogs-action"
@@ -4007,7 +4007,7 @@ msgstr "목표가 레이어 그룹이므로 새 레이어로 붙였음."
 
 #: ../app/actions/edit-commands.c:579 ../app/display/gimpdisplayshell-dnd.c:489
 msgid "Pasted as new layer because the target's pixels are locked."
-msgstr ""
+msgstr "목표의 픽셀이 잠겨서 새 레이어로 붙였음."
 
 #: ../app/actions/edit-commands.c:617
 msgid "There is no active layer or channel to cut from."
@@ -5100,7 +5100,7 @@ msgstr "최근 사용한 필터 대화상자 다시 표시"
 #: ../app/actions/filters-actions.c:1037
 #, c-format
 msgid "Re_peat \"%s\""
-msgstr "\"%s\" 반복(_P):"
+msgstr "\"%s\" 반복(_P)"
 
 #: ../app/actions/filters-actions.c:1038
 #, c-format
@@ -5138,7 +5138,7 @@ msgstr "'%s'용 마지막 세팅이 없어서, 필터 대화 상자를 대신 �
 #: ../app/actions/gradient-editor-actions.c:46
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
-msgstr "그라디언트 편집기 메뉴"
+msgstr "그레이디언트 편집기 메뉴"
 
 #: ../app/actions/gradient-editor-actions.c:50
 msgctxt "gradient-editor-action"
@@ -5193,7 +5193,7 @@ msgstr "끝점의 불투명도 혼합(_Y)"
 #: ../app/actions/gradient-editor-actions.c:125
 msgctxt "gradient-editor-action"
 msgid "Edit Active Gradient"
-msgstr "활성 그라디언트 편집"
+msgstr "활성 그레이디언트 편집"
 
 #: ../app/actions/gradient-editor-actions.c:156
 msgctxt "gradient-editor-action"
@@ -5412,7 +5412,7 @@ msgstr "왼쪽 끝점 색상"
 
 #: ../app/actions/gradient-editor-commands.c:87
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr "그라디언트 구획의 왼쪽 끝점 색상"
+msgstr "그레이디언트 구획의 왼쪽 끝점 색상"
 
 #: ../app/actions/gradient-editor-commands.c:237
 msgid "Right Endpoint Color"
@@ -5420,7 +5420,7 @@ msgstr "오른쪽 끝점 색상"
 
 #: ../app/actions/gradient-editor-commands.c:239
 msgid "Gradient Segment's Right Endpoint Color"
-msgstr "그라디언트 구획의 오른쪽 끝점 색상"
+msgstr "그레이디언트 구획의 오른쪽 끝점 색상"
 
 #: ../app/actions/gradient-editor-commands.c:460
 msgid "Replicate Segment"
@@ -5428,7 +5428,7 @@ msgstr "구획 복제"
 
 #: ../app/actions/gradient-editor-commands.c:461
 msgid "Replicate Gradient Segment"
-msgstr "그라디언트 구획 복제"
+msgstr "그레이디언트 구획 복제"
 
 #: ../app/actions/gradient-editor-commands.c:465
 msgid "Replicate Selection"
@@ -5436,7 +5436,7 @@ msgstr "선택 영역 복제"
 
 #: ../app/actions/gradient-editor-commands.c:466
 msgid "Replicate Gradient Selection"
-msgstr "그라디언트 선택 영역 복제"
+msgstr "그레이디언트 선택 영역 복제"
 
 #: ../app/actions/gradient-editor-commands.c:479
 msgid "_Replicate"
@@ -5464,7 +5464,7 @@ msgstr "균등한 구획 분할"
 
 #: ../app/actions/gradient-editor-commands.c:564
 msgid "Split Gradient Segment Uniformly"
-msgstr "균등한 그라디언트 구획 분할"
+msgstr "균등한 그레이디언트 구획 분할"
 
 #: ../app/actions/gradient-editor-commands.c:568
 msgid "Split Segments Uniformly"
@@ -5472,7 +5472,7 @@ msgstr "균등한 구획 분할"
 
 #: ../app/actions/gradient-editor-commands.c:569
 msgid "Split Gradient Segments Uniformly"
-msgstr "균등한 그라디언트 구획 분할"
+msgstr "균등한 그레이디언트 구획 분할"
 
 #: ../app/actions/gradient-editor-commands.c:582
 msgid "_Split"
@@ -5497,27 +5497,27 @@ msgstr ""
 #: ../app/actions/gradients-actions.c:44
 msgctxt "gradients-action"
 msgid "Gradients Menu"
-msgstr "그라디언트 메뉴"
+msgstr "그레이디언트 메뉴"
 
 #: ../app/actions/gradients-actions.c:48
 msgctxt "gradients-action"
 msgid "_New Gradient"
-msgstr "새 그라디언트(_N)"
+msgstr "새 그레이디언트(_N)"
 
 #: ../app/actions/gradients-actions.c:49
 msgctxt "gradients-action"
 msgid "Create a new gradient"
-msgstr "새 그라디언트를 만듭니다"
+msgstr "새 그레이디언트를 만듭니다"
 
 #: ../app/actions/gradients-actions.c:54
 msgctxt "gradients-action"
 msgid "D_uplicate Gradient"
-msgstr "그라디언트 복제(_U)"
+msgstr "그레이디언트 복제(_U)"
 
 #: ../app/actions/gradients-actions.c:55
 msgctxt "gradients-action"
 msgid "Duplicate this gradient"
-msgstr "그라디언트 복제합니다"
+msgstr "그레이디언트 복제합니다"
 
 #: ../app/actions/gradients-actions.c:60
 msgctxt "gradients-action"
@@ -5527,7 +5527,7 @@ msgstr "그라데이션 위치 복사(_L)"
 #: ../app/actions/gradients-actions.c:61
 msgctxt "gradients-action"
 msgid "Copy gradient file location to clipboard"
-msgstr "그라디언트 파일 위치를 클립보드에 복사합니다"
+msgstr "그레이디언트 파일 위치를 클립보드에 복사합니다"
 
 #: ../app/actions/gradients-actions.c:66
 msgctxt "gradients-action"
@@ -5547,32 +5547,32 @@ msgstr "_POV-Ray로 저장..."
 #: ../app/actions/gradients-actions.c:73
 msgctxt "gradients-action"
 msgid "Save gradient as POV-Ray"
-msgstr "그라디언트를 POV-Ray로 저장합니다"
+msgstr "그레이디언트를 POV-Ray로 저장합니다"
 
 #: ../app/actions/gradients-actions.c:78
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
-msgstr "그라디언트 삭제(_D)"
+msgstr "그레이디언트 삭제(_D)"
 
 #: ../app/actions/gradients-actions.c:79
 msgctxt "gradients-action"
 msgid "Delete this gradient"
-msgstr "그라디언트를 삭제합니다"
+msgstr "그레이디언트를 삭제합니다"
 
 #: ../app/actions/gradients-actions.c:84
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
-msgstr "그라디언트 새로 고침(_R)"
+msgstr "그레이디언트 새로 고침(_R)"
 
 #: ../app/actions/gradients-actions.c:85
 msgctxt "gradients-action"
 msgid "Refresh gradients"
-msgstr "그라디언트를 새로 고칩니다"
+msgstr "그레이디언트를 새로 고칩니다"
 
 #: ../app/actions/gradients-actions.c:93
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
-msgstr "그라디언트 편집(_E)..."
+msgstr "그레이디언트 편집(_E)..."
 
 #: ../app/actions/gradients-actions.c:94
 msgctxt "gradients-action"
@@ -6077,11 +6077,11 @@ msgstr "선택이 비어 있으므로, 잘라낼 수 없습니다."
 
 #: ../app/actions/image-commands.c:888
 msgid "Cannot crop because the image has no content."
-msgstr ""
+msgstr "이미지에 내용이 없어서 자를 수 없습니다."
 
 #: ../app/actions/image-commands.c:894
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr ""
+msgstr "이미지가 이미 내용에 맞추어 잘라져서 자를 수 없음."
 
 #: ../app/actions/image-commands.c:1029
 #, c-format
@@ -7024,11 +7024,11 @@ msgstr "레이어를 내용에 맞추어 자르기"
 
 #: ../app/actions/layers-commands.c:848
 msgid "Cannot crop because the active layer has no content."
-msgstr ""
+msgstr "활성 레이어에 내용이 없어서 자를 수 없음."
 
 #: ../app/actions/layers-commands.c:855
 msgid "Cannot crop because the active layer is already cropped to its content."
-msgstr ""
+msgstr "활성 레이어가 이미 내용에 맞추어 잘라져서 자를 수 없음."
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -7638,7 +7638,7 @@ msgstr "선택 영역 줄이기 량"
 #. Edge lock button
 #: ../app/actions/select-commands.c:230 ../app/actions/select-commands.c:356
 msgid "_Selected areas continue outside the image"
-msgstr ""
+msgstr "선택한 영역이 이미지 외부로 계속됨(_S)"
 
 #: ../app/actions/select-commands.c:233
 msgid "When shrinking, act as if selected areas continued outside the image."
@@ -7662,7 +7662,7 @@ msgstr "테두리 선택 영역 량"
 
 #: ../app/actions/select-commands.c:345
 msgid "Border style"
-msgstr ""
+msgstr "테두리 스타일"
 
 #: ../app/actions/select-commands.c:359
 msgid "When bordering, act as if selected areas continued outside the image."
@@ -9350,7 +9350,7 @@ msgstr "전체화면 보기로 전환합니다"
 #: ../app/actions/view-actions.c:315
 msgctxt "view-action"
 msgid "Set zoom factor"
-msgstr ""
+msgstr "확대 비율 설정"
 
 #: ../app/actions/view-actions.c:320
 msgctxt "view-action"
@@ -9395,12 +9395,12 @@ msgstr "확대"
 #: ../app/actions/view-actions.c:354
 msgctxt "view-action"
 msgid "Zoom out a lot"
-msgstr ""
+msgstr "많이 축소"
 
 #: ../app/actions/view-actions.c:359
 msgctxt "view-action"
 msgid "Zoom in a lot"
-msgstr ""
+msgstr "많이 확대"
 
 #: ../app/actions/view-actions.c:367 ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
@@ -10257,7 +10257,7 @@ msgstr "선택한 동적 요소은 모든 도구에 쓰일 것입니다."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "모든 도구에서 선택한 그라디언트를 사용합니다."
+msgstr "모든 도구에서 선택한 그레이디언트를 사용합니다."
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected pattern will be used for all tools."
@@ -10661,7 +10661,7 @@ msgstr "'색 프로필로 변환' 대화 상자의 기본 렌더링 의도를 �
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
-msgstr " '색 프로필로 변환' 대화 상자의 기본 '검정 점 보상' 상태를 설정합니다."
+msgstr "'색 프로필로 변환' 대화 상자의 기본 '검정 점 보상' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:474
 msgid ""
@@ -10887,7 +10887,7 @@ msgstr "도구상자의 현재 전경색/배경색를 표시합니다."
 
 #: ../app/config/gimprc-blurbs.h:618
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
-msgstr "도구상자에 현재 선택한 붓, 무늬, 그라디언트를 보입니다."
+msgstr "도구상자에 현재 선택한 붓, 무늬, 그레이디언트를 보입니다."
 
 #: ../app/config/gimprc-blurbs.h:621
 msgid "Show the currently active image in the toolbox."
@@ -11890,12 +11890,12 @@ msgstr "전경색을 투명하게"
 #: ../app/core/gimp-spawn.c:186
 #, c-format
 msgid "Failed to fork (%s)"
-msgstr ""
+msgstr "포크하기 실패 (%s)"
 
 #: ../app/core/gimp-spawn.c:223
 #, c-format
 msgid "Failed to execute child process “%s” (%s)"
-msgstr ""
+msgstr "자식 프로세스 “%s” 실행 실패 (%s)"
 
 #. This is a special string to specify the language identifier to
 #. * look for in the gimp-tags-default.xml file. Please translate the
@@ -11971,7 +11971,7 @@ msgstr "붓 파일에 치명적 구문해석 오류: 알 수 없는 버전 %d."
 #: ../app/core/gimpbrush-load.c:233
 #, c-format
 msgid "Unsupported brush format"
-msgstr ""
+msgstr "지원하지 않는 브러시 형식"
 
 #: ../app/core/gimpbrush-load.c:253 ../app/core/gimpbrushgenerated-load.c:125
 #: ../app/core/gimpbrushpipe-load.c:75
@@ -12073,17 +12073,17 @@ msgstr "김프 붓 파일이 아닙니다."
 #: ../app/core/gimpbrushgenerated-load.c:95
 #, c-format
 msgid "Unknown GIMP brush version."
-msgstr ""
+msgstr "알 수 없는 김프 브러시 버전."
 
 #: ../app/core/gimpbrushgenerated-load.c:152
 #, c-format
 msgid "Unknown GIMP brush shape."
-msgstr ""
+msgstr "알 수 없는 김프 브러시 모양."
 
 #: ../app/core/gimpbrushgenerated-load.c:242
 #, c-format
 msgid "In line %d of brush file: "
-msgstr ""
+msgstr "브러시 파일의 %d번째 줄에서: "
 
 #: ../app/core/gimpbrushgenerated.c:135
 msgid "Brush Shape"
@@ -12352,7 +12352,7 @@ msgstr "무늬"
 #: ../app/tools/gimpgradientoptions.c:284 ../app/tools/gimpgradienttool.c:156
 #: ../app/tools/gimppaintoptions-gui.c:379
 msgid "Gradient"
-msgstr "그라디언트"
+msgstr "그레이디언트"
 
 #: ../app/core/gimpcontext.c:739 ../app/core/gimpcontext.c:740
 #: ../app/widgets/gimpcolorselectorpalette.c:59
@@ -12479,7 +12479,7 @@ msgstr "떠있는 선택"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
-msgstr ""
+msgstr "모호한 픽셀의 알파 계산하기"
 
 #: ../app/core/gimpdrawable-fill.c:202 ../app/vectors/gimpvectors.c:668
 msgid "Not enough points to fill"
@@ -12587,7 +12587,7 @@ msgstr "김프 그레이디언트 파일이 아닙니다."
 #: ../app/core/gimpgradient-load.c:95
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "그라디언트 파일 '%s'에 잘못된 UTF-8 문자열이 있습니다."
+msgstr "그레이디언트 파일 '%s'에 잘못된 UTF-8 문자열이 있습니다."
 
 #: ../app/core/gimpgradient-load.c:121
 #, c-format
@@ -12599,7 +12599,7 @@ msgstr "파일이 손상되었습니다."
 #: ../app/core/gimpgradient-load.c:229 ../app/core/gimpgradient-load.c:237
 #, c-format
 msgid "Corrupt segment %d."
-msgstr ""
+msgstr "손상된 세그먼트 %d."
 
 #: ../app/core/gimpgradient-load.c:248 ../app/core/gimpgradient-load.c:258
 #, c-format
@@ -12614,12 +12614,12 @@ msgstr "그레이디언트 파일 %d번째 줄에서: "
 #: ../app/core/gimpgradient-load.c:349
 #, c-format
 msgid "No linear gradients found."
-msgstr ""
+msgstr "선형 그레이디언트 찾지 못함."
 
 #: ../app/core/gimpgradient-save.c:211
 #, c-format
 msgid "Writing POV file '%s' failed: %s"
-msgstr ""
+msgstr "POVB 파일 '%s' 쓰기 실패: %s"
 
 #: ../app/core/gimpgrid.c:86
 msgid "Line style"
@@ -12802,26 +12802,26 @@ msgstr "대상 정렬하기"
 
 #: ../app/core/gimpimage-color-profile.c:122
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
-msgstr ""
+msgstr "ICC 프로필 검증 실패: 기생물의 이름이 'icc-profile'이 아님"
 
 #: ../app/core/gimpimage-color-profile.c:131
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
-msgstr ""
+msgstr "ICC 프로필 검증 실패: 기생물의 플래그가 (PERSISTENT | UNDOABLE)이 아님"
 
 #: ../app/core/gimpimage-color-profile.c:188
 msgid "ICC profile validation failed: "
-msgstr ""
+msgstr "ICC 프로필 검증 실패: "
 
 #: ../app/core/gimpimage-color-profile.c:332
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
-msgstr ""
+msgstr "ICC 프로필 검증 실패: 색 프로필이 그레이스케일 색 공간용이 아님"
 
 #: ../app/core/gimpimage-color-profile.c:342
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
-msgstr ""
+msgstr "ICC 프로필 검증 실패: 색 프로필이 RGB 색 공간용이 아님"
 
 #: ../app/core/gimpimage-color-profile.c:397
 #, c-format
@@ -13337,7 +13337,7 @@ msgstr "레이어 마스크의 이름을 변경할 수 없습니다."
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
 msgid "MyPaint brush file is unreasonably large, skipping."
-msgstr ""
+msgstr "내페인트 붓 파일이 지나치게 큼. 건너 뜀."
 
 #: ../app/core/gimpmybrush-load.c:93
 #, c-format
@@ -13364,12 +13364,12 @@ msgstr "알 수 없는 형식의 팔레트 파일입니다.: %s"
 #: ../app/core/gimppalette-load.c:70
 #, c-format
 msgid "Missing magic header."
-msgstr ""
+msgstr "매직 헤더가 없음."
 
 #: ../app/core/gimppalette-load.c:93
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "팔레트 파일 '%s'에 잘못된 UTF-8 문자열이 있습니다."
+msgstr "팔레트 파일 '%s'에 잘못된 UTF-8 문자열이 있음"
 
 #: ../app/core/gimppalette-load.c:113
 #, c-format
@@ -13417,7 +13417,7 @@ msgstr "팔레트 파일'%s'에서 헤더를 읽을 수 없음: "
 
 #: ../app/core/gimppalette-load.c:461
 msgid "Premature end of file."
-msgstr ""
+msgstr "너무 이른 파일 끝."
 
 #: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:254
 msgid "History Color"
@@ -13430,7 +13430,7 @@ msgstr "파일이 잘린 것으로 보임: "
 #: ../app/core/gimppattern-load.c:77
 #, c-format
 msgid "Unknown pattern format version %d."
-msgstr ""
+msgstr "알 수 없는 무늬 형식 버전 %d."
 
 #: ../app/core/gimppattern-load.c:86
 #, c-format
@@ -13444,7 +13444,7 @@ msgstr ""
 #: ../app/core/gimppattern-load.c:98
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr ""
+msgstr "'%1$s'에 잘못된 헤더 데이터 : 너비=%2$lu, 높이=%3$lu, 바이트=%4$lu"
 
 #: ../app/core/gimppattern-load.c:117 ../app/core/gimppattern-load.c:155
 #, fuzzy
@@ -13553,7 +13553,7 @@ msgstr "떠있는 레이어"
 #: ../app/core/gimpsettings.c:151
 #, c-format
 msgid "Last used: %s"
-msgstr ""
+msgstr "마지막 사용됨: %s"
 
 #: ../app/core/gimpstrokeoptions.c:156
 msgid "Method"
@@ -13614,7 +13614,7 @@ msgstr "대칭 페인팅 활성화"
 
 #: ../app/core/gimpsymmetry-mandala.c:113
 msgid "Mandala"
-msgstr ""
+msgstr "만달라"
 
 #: ../app/core/gimpsymmetry-mandala.c:120
 msgid "Center abscissa"
@@ -13631,11 +13631,11 @@ msgstr "줄 번호"
 
 #: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
-msgstr ""
+msgstr "붓 변형 비활성화"
 
 #: ../app/core/gimpsymmetry-mandala.c:153
 msgid "Disable brush rotation"
-msgstr ""
+msgstr "붓 회전 비활성화"
 
 #: ../app/core/gimpsymmetry-mirror.c:123
 #, fuzzy
@@ -13831,7 +13831,7 @@ msgstr "저장된 팔레트 적용"
 
 #: ../app/core/gimptoolpreset.c:189
 msgid "Apply stored gradient"
-msgstr "저장된 그라디언트 적용"
+msgstr "저장된 그레이디언트 적용"
 
 #: ../app/core/gimptoolpreset.c:196
 msgid "Apply stored font"
@@ -13999,7 +13999,7 @@ msgstr "다음으로 변환"
 
 #: ../app/dialogs/color-profile-dialog.c:164
 msgid "RGB Conversion"
-msgstr ""
+msgstr "RGB 변환"
 
 #: ../app/dialogs/color-profile-dialog.c:167
 msgid "Convert Image to RGB"
@@ -14778,7 +14778,7 @@ msgstr "원본 선택"
 #: ../app/dialogs/palette-import-dialog.c:212
 #: ../app/dialogs/preferences-dialog.c:1641
 msgid "_Gradient"
-msgstr "그라디언트(_G)"
+msgstr "그레이디언트(_G)"
 
 #: ../app/dialogs/palette-import-dialog.c:223
 msgid "I_mage"
@@ -15002,7 +15002,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1181
 msgid "Use OpenCL"
-msgstr ""
+msgstr "OpenCL 사용"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1185
@@ -15126,7 +15126,7 @@ msgstr "렌더링 의도(_N):"
 
 #: ../app/dialogs/preferences-dialog.c:1375
 msgid "Use black _point compensation"
-msgstr ""
+msgstr "검정 점 보상 사용(_P)"
 
 #: ../app/dialogs/preferences-dialog.c:1385
 msgid "O_ptimize soft-proofing for:"
@@ -15456,7 +15456,7 @@ msgstr "전경색 및 배경색 표시(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:2054
 msgid "Show active _brush, pattern & gradient"
-msgstr "활성화된 붓, 무늬, 그라디언트 표시(_B)"
+msgstr "활성화된 붓, 무늬, 그레이디언트 표시(_B)"
 
 #: ../app/dialogs/preferences-dialog.c:2058
 msgid "Show active _image"
@@ -16158,11 +16158,11 @@ msgstr "팔레트 폴더 선택"
 
 #: ../app/dialogs/preferences-dialog.c:3119
 msgid "Gradient Folders"
-msgstr "그라디언트 폴더"
+msgstr "그레이디언트 폴더"
 
 #: ../app/dialogs/preferences-dialog.c:3121
 msgid "Select Gradient Folders"
-msgstr "그라디언트 폴더 선택"
+msgstr "그레이디언트 폴더 선택"
 
 #: ../app/dialogs/preferences-dialog.c:3123
 msgid "Font Folders"
@@ -16839,12 +16839,12 @@ msgstr "화면 색상 표시 필터 설정"
 #: ../app/display/gimpdisplayshell-handlers.c:871
 #, c-format
 msgid "Image saved to '%s'"
-msgstr "이미지가 '%s'(으)로 저장되었습니다."
+msgstr "이미지가 '%s'(으)로 저장되었음"
 
 #: ../app/display/gimpdisplayshell-handlers.c:884
 #, c-format
 msgid "Image exported to '%s'"
-msgstr "이미지를 '%s'(으)로 내보내었습니다."
+msgstr "이미지를 '%s'(으)로 내보내었음"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:128
 msgid "Layer Select"
@@ -18878,17 +18878,17 @@ msgstr "무늬 '%s'을(를) 찾을 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:260
 msgid "Invalid empty gradient name"
-msgstr "빈 문자열은 그라디언트 이름으로 부적절합니다"
+msgstr "빈 문자열은 그레이디언트 이름으로 부적절합니다"
 
 #: ../app/pdb/gimppdb-utils.c:269
 #, c-format
 msgid "Gradient '%s' not found"
-msgstr "그라디언트 '%s'을(를) 찾을 수 없습니다"
+msgstr "그레이디언트 '%s'을(를) 찾을 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:275
 #, c-format
 msgid "Gradient '%s' is not editable"
-msgstr "그라디언트 '%s'은(는) 수정할 수 없습니다"
+msgstr "그레이디언트 '%s'은(는) 수정할 수 없습니다"
 
 #: ../app/pdb/gimppdb-utils.c:282
 #, c-format
@@ -20889,7 +20889,7 @@ msgstr "프리셋(_S):"
 #: ../app/tools/gimpfiltertool-settings.c:240
 #, c-format
 msgid "Settings saved to '%s'"
-msgstr "'%s'(으)로 설정이 저장되었습니다."
+msgstr "'%s'(으)로 설정이 저장되었음"
 
 #: ../app/tools/gimpflipoptions.c:67
 msgid "Flip Type"
@@ -21146,12 +21146,12 @@ msgstr ""
 #: ../app/tools/gimpgradientoptions.c:150
 #, fuzzy
 msgid "Modify active gradient"
-msgstr "활성 그라디언트 편집"
+msgstr "활성 그레이디언트 편집"
 
 #: ../app/tools/gimpgradientoptions.c:151
 #, fuzzy
 msgid "Modify the active gradient in-place"
-msgstr "활성 그라디언트 편집"
+msgstr "활성 그레이디언트 편집"
 
 #: ../app/tools/gimpgradientoptions.c:290
 #: ../app/tools/gimppaintoptions-gui.c:385
@@ -21184,7 +21184,7 @@ msgstr "클릭-끌기 해서 그레이디언트 그리기"
 
 #: ../app/tools/gimpgradienttool.c:264
 msgid "No gradient available for use with this tool."
-msgstr "이 도구에서는 가능한 그라디언트 없음."
+msgstr "이 도구에서는 가능한 그레이디언트 없음."
 
 #: ../app/tools/gimpgradienttool.c:614
 msgid "Gradient: "
@@ -22921,7 +22921,7 @@ msgstr "경로 가져오기"
 #: ../app/vectors/gimpvectors-import.c:373
 #, c-format
 msgid "No paths found in '%s'"
-msgstr "'%s'에서 경로를 찾을 수 없습니다"
+msgstr "'%s'에서 경로를 찾을 수 없음"
 
 #: ../app/vectors/gimpvectors-import.c:377
 msgid "No paths found in the buffer"
@@ -23272,7 +23272,7 @@ msgstr "'%s'에 동작 할당"
 #: ../app/widgets/gimpcontrollereditor.c:647
 #, c-format
 msgid "Select Action for Event '%s'"
-msgstr "이벤트 '%s'을(를) 위한 동작을 선택하십시오."
+msgstr "이벤트 '%s'용 동작 선택"
 
 #: ../app/widgets/gimpcontrollereditor.c:652
 msgid "Select Controller Event Action"
@@ -24873,8 +24873,8 @@ msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
 msgstr ""
-"활성 그라디언트.\n"
-"그라디언트 대화상자를 열려면 클릭하십시오."
+"활성 그레이디언트.\n"
+"그레이디언트 대화상자를 열려면 클릭하십시오."
 
 #: ../app/widgets/gimptooleditor.c:295
 msgid "Raise this tool"
@@ -24956,7 +24956,7 @@ msgstr "무늬 대화상자 표시"
 
 #: ../app/widgets/gimpviewablebox.c:362
 msgid "Open the gradient selection dialog"
-msgstr "그라디언트 대화상자 표시"
+msgstr "그레이디언트 대화상자 표시"
 
 #: ../app/widgets/gimpviewablebox.c:501
 msgid "Open the palette selection dialog"
@@ -25157,7 +25157,7 @@ msgstr "XCF 오류: XCF 파일 버전 %d은(는) 지원되지 않습니다"
 #: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Saving '%s'"
-msgstr "'%s' 저장"
+msgstr "'%s' 저장하기"
 
 #: ../app/xcf/xcf.c:390
 #, c-format
