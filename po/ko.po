@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2018-04-25 12:53+0200\n"
-"PO-Revision-Date: 2019-01-18 21:20+0900\n"
+"PO-Revision-Date: 2019-01-19 02:42+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -111,7 +111,7 @@ msgstr "대부분의 도구를 개선, 몇 가지 새로운 변환 도구"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
-msgstr "많은 이미지 형식에 대한 향상된 지원, 특히 더 나은 PSD 가져 오기"
+msgstr "많은 이미지 형식에 대한 향상된 지원, 특히 더 나은 PSD 들여오기"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
@@ -4295,7 +4295,7 @@ msgstr "겹쳐쓰기(_W)"
 #: ../app/actions/file-actions.c:166
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
-msgstr "이미지를 불러온 파일 형식을 이용하여 해당 파일로 다시 내보냅니다"
+msgstr "이미지를 들여온 파일 형식을 이용하여 해당 파일로 다시 내보냅니다"
 
 #: ../app/actions/file-actions.c:171
 msgctxt "file-action"
@@ -4720,7 +4720,7 @@ msgstr "노출(_X)..."
 #: ../app/actions/filters-actions.c:342
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
-msgstr ""
+msgstr "_Fattal et al. 2002..."
 
 #: ../app/actions/filters-actions.c:347
 msgctxt "filters-action"
@@ -4795,7 +4795,7 @@ msgstr "레벨(_L)..."
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
-msgstr ""
+msgstr "_Mantiuk 2006..."
 
 #: ../app/actions/filters-actions.c:422
 msgctxt "filters-action"
@@ -4935,7 +4935,7 @@ msgstr "적목 현상 제거(_R)..."
 #: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
-msgstr ""
+msgstr "_Reinhard 2005..."
 
 #: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
@@ -7193,12 +7193,12 @@ msgstr "새 팔레트를 만듭니다"
 #: ../app/actions/palettes-actions.c:54
 msgctxt "palettes-action"
 msgid "_Import Palette..."
-msgstr "팔레트 가져오기(_I)..."
+msgstr "팔레트 들여오기(_I)..."
 
 #: ../app/actions/palettes-actions.c:55
 msgctxt "palettes-action"
 msgid "Import palette"
-msgstr "팔레트를 가져옵니다"
+msgstr "팔레트를 들여옵니다"
 
 #: ../app/actions/palettes-actions.c:60
 msgctxt "palettes-action"
@@ -8726,7 +8726,7 @@ msgstr "경로 내보내기(_X)..."
 #: ../app/actions/vectors-actions.c:158
 msgctxt "vectors-action"
 msgid "I_mport Path..."
-msgstr "경로 가져오기(_M)..."
+msgstr "경로 들여오기(_M)..."
 
 #: ../app/actions/vectors-actions.c:166
 msgctxt "vectors-action"
@@ -9698,40 +9698,34 @@ msgid "Set horizontal scroll offset"
 msgstr "수평 스크롤 오프셋 설정"
 
 #: ../app/actions/view-actions.c:618
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll to left border"
-msgstr "왼쪽으로 스크롤"
+msgstr "왼쪽 테루리로 스크롤"
 
 #: ../app/actions/view-actions.c:623
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll to right border"
-msgstr "오른쪽으로 스크롤"
+msgstr "오른쪽 테두리 스크롤"
 
 #: ../app/actions/view-actions.c:628
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "왼쪽으로 스크롤"
 
 #: ../app/actions/view-actions.c:633
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "오른쪽으로 스크롤"
 
 #: ../app/actions/view-actions.c:638
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll page left"
-msgstr "왼쪽으로 스크롤"
+msgstr "왼쪽으로 페이지 스크롤"
 
 #: ../app/actions/view-actions.c:643
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll page right"
-msgstr "오른쪽으로 스크롤"
+msgstr "오른쪽으로 페이지 스크롤"
 
 #: ../app/actions/view-actions.c:651
 msgctxt "view-action"
@@ -9749,28 +9743,24 @@ msgid "Scroll to bottom border"
 msgstr "하단 테두리까지 스크롤"
 
 #: ../app/actions/view-actions.c:666
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "위로 스크롤"
 
 #: ../app/actions/view-actions.c:671
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "아래로 스크롤"
 
 #: ../app/actions/view-actions.c:676
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll page up"
-msgstr "위로 스크롤"
+msgstr "페이지를 위로 스크롤"
 
 #: ../app/actions/view-actions.c:681
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll page down"
-msgstr "아래로 스크롤"
+msgstr "페이지를 아래로 스크롤"
 
 #: ../app/actions/view-actions.c:903
 #, c-format
@@ -9892,12 +9882,10 @@ msgid "Hide Docks"
 msgstr "독 숨기기"
 
 #: ../app/actions/windows-actions.c:124
-#, fuzzy
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
-"사용 가능한 독이나 다른 대화 상자가 숨김 상태이면, 이미지 창만 남겨둡니다."
 
 #: ../app/actions/windows-actions.c:130
 msgctxt "windows-action"
@@ -9905,10 +9893,9 @@ msgid "Single-Window Mode"
 msgstr "단일창 모드"
 
 #: ../app/actions/windows-actions.c:131
-#, fuzzy
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
-msgstr "활성화하면 김프는 단일창 모드로 들어갑니다."
+msgstr ""
 
 #: ../app/actions/windows-actions.c:140
 msgctxt "windows-tabs-position-action"
@@ -10268,10 +10255,8 @@ msgid "Sets the browser used by the help system."
 msgstr "도움말 시스템에 사용할 프로그램을 지정하십시오."
 
 #: ../app/config/gimprc-blurbs.h:179
-#, fuzzy
 msgid "How many recent settings to keep around in filter tools."
 msgstr ""
-"파일 메뉴에 유지할 최근에 사용한 이미지 파일 이름의 갯수를 지정하십시오."
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid "Default to the last used settings in filter tools."
@@ -10294,7 +10279,7 @@ msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
 msgstr ""
-"가져온 이미지를 부동 소수점 정밀도로 올립니다. 인덱스 이미지에는 적용되지 않"
+"들여온 이미지를 부동 소수점 정밀도로 올립니다. 인덱스 이미지에는 적용되지 않"
 "습니다."
 
 #: ../app/config/gimprc-blurbs.h:198
@@ -10302,16 +10287,16 @@ msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
-"가져온 이미지를 부동 소수점 정밀도로 올릴 때, 색상 값을 약간 배포하려고 최소"
+"들여온 이미지를 부동 소수점 정밀도로 올릴 때, 색상 값을 약간 배포하려고 최소"
 "한의 노이즈도 추가합니다."
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid "Add an alpha channel to all layers of imported images."
-msgstr "가져온 이미지의 모든 레이어에 알파 채널 추가합니다."
+msgstr "들여온 이미지의 모든 레이어에 알파 채널 추가합니다."
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid "Which plug-in to use for importing raw digital camera files."
-msgstr "RAW 디지털 카메라 파일 가져 오기에 어느 플러그인을 사용할지."
+msgstr "RAW 디지털 카메라 파일 들여오기에 어느 플러그인을 사용할지."
 
 #: ../app/config/gimprc-blurbs.h:208
 msgid "Export Exif metadata by default."
@@ -10400,9 +10385,8 @@ msgstr ""
 "이미지 창의 우하단에 위치하는 내비게이션 미리 보기의 크기를 지정하십시오."
 
 #: ../app/config/gimprc-blurbs.h:274
-#, fuzzy
 msgid "Sets how many threads GIMP should use for operations that support it."
-msgstr "김프가 동시에 사용을 시도할 프로세스 수를 설정하십시오."
+msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:296
 msgid ""
@@ -10426,19 +10410,17 @@ msgid "Sets the default quick mask color."
 msgstr "기본 퀵 마스크 색상을 설정하십시오."
 
 #: ../app/config/gimprc-blurbs.h:308
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
 "mode."
-msgstr "실제 이미지 크기가 바뀌면 이미지 창의 크기를 자동으로 조정합니다."
+msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:313
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
-msgstr "이미지를 확대하거나 축소하면, 이미지 창의 크기가 자동으로 조정됩니다."
+msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:318
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -10790,9 +10772,8 @@ msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "'새 채널' 대화 상자의 기본 색상 및 불투명도를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:555
-#, fuzzy
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr "열기 대화상자에서 보여질 미리 보기의 크기를 설정합니다."
+msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:558
 msgid "Sets the default folder path for the 'Export Path' dialog."
@@ -10806,21 +10787,21 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:564
 msgid "Sets the default folder path for the 'Import Path' dialog."
-msgstr "'경로 가져 오기' 대화 상자의 기본 폴더 경로를 설정합니다."
+msgstr "'경로 들여오기' 대화 상자의 기본 폴더 경로를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:567
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
-"'경로 가져 오기' 대화 상자의 기본 '가져온 경로 합치기' 상태를 설정합니다."
+"'경로 들여오기' 대화 상자의 기본 '들여온 경로 합치기' 상태를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:570
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
-"'경로 가져 오기' 대화 상자의 기본 '크기에 맞게 가져온 경로 크기 조정' 상태를 "
-"설정합니다."
+"'경로 들여오기' 대화 상자의 기본 '크기에 맞게 들여온 경로 크기조정' 상태를 설"
+"정합니다."
 
 #: ../app/config/gimprc-blurbs.h:573
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
@@ -11422,7 +11403,7 @@ msgstr "기생충 없애기"
 #: ../app/core/core-enums.c:900
 msgctxt "undo-type"
 msgid "Import paths"
-msgstr "경로 가져오기"
+msgstr "경로 들여오기"
 
 #: ../app/core/core-enums.c:901
 msgctxt "undo-type"
@@ -12056,14 +12037,12 @@ msgid "Brush Spacing"
 msgstr "붓 간격"
 
 #: ../app/core/gimpbrushclipboard.c:190
-#, fuzzy
 msgid "Clipboard Mask"
-msgstr "클립보드"
+msgstr ""
 
 #: ../app/core/gimpbrushclipboard.c:192 ../app/core/gimppatternclipboard.c:169
-#, fuzzy
 msgid "Clipboard Image"
-msgstr "클립보드"
+msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:75
 #, c-format
@@ -12279,9 +12258,8 @@ msgid "Flood Channel"
 msgstr "플러드 채널"
 
 #: ../app/core/gimpchannel.c:842
-#, fuzzy
 msgid "Cannot fill empty channel."
-msgstr "빈 채널에는 따라 그리기를 할 수 없습니다."
+msgstr ""
 
 #: ../app/core/gimpchannel.c:878
 msgid "Cannot stroke empty channel."
@@ -12334,9 +12312,8 @@ msgid "Brush"
 msgstr "붓"
 
 #: ../app/core/gimpcontext.c:712
-#, fuzzy
 msgid "Paint dynamics"
-msgstr "페인트 동적 요소"
+msgstr ""
 
 #: ../app/core/gimpcontext.c:718 ../app/core/gimpcontext.c:719
 #: ../app/tools/gimpmybrushtool.c:73
@@ -12401,15 +12378,12 @@ msgid "%s copy"
 msgstr "%s 복사"
 
 #: ../app/core/gimpdatafactory.c:742
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
 "exist. Please create the folder or fix your configuration in the Preferences "
 "dialog's 'Folders' section."
 msgstr ""
-"지정된 쓰기 가능한 데이터 폴더(%s)가 있지만, 해당 폴더가 실제로는 존재하지 않"
-"습니다. 해당 폴더를 만들하거나 환경 설정 대화 상자의 '폴더' 부분에서 설정을 "
-"변경하십시오."
 
 #: ../app/core/gimpdatafactory.c:761
 #, c-format
@@ -12604,7 +12578,7 @@ msgstr "손상된 세그먼트 %d."
 #: ../app/core/gimpgradient-load.c:248 ../app/core/gimpgradient-load.c:258
 #, c-format
 msgid "Segments do not span the range 0-1."
-msgstr ""
+msgstr "세그먼트가 0-1 범위에 걸쳐 있지 않습니다."
 
 #: ../app/core/gimpgradient-load.c:273
 #, c-format
@@ -12732,7 +12706,7 @@ msgstr " (겹쳐써짐)"
 
 #: ../app/core/gimpimage.c:2236
 msgid " (imported)"
-msgstr " (가져옴)"
+msgstr " (들여옴)"
 
 #: ../app/core/gimpimage.c:2564
 msgctxt "undo-type"
@@ -13447,9 +13421,8 @@ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr "'%1$s'에 잘못된 헤더 데이터 : 너비=%2$lu, 높이=%3$lu, 바이트=%4$lu"
 
 #: ../app/core/gimppattern-load.c:117 ../app/core/gimppattern-load.c:155
-#, fuzzy
 msgid "File appears truncated."
-msgstr "파일의 %d 줄이 잘렸습니다."
+msgstr ""
 
 #: ../app/core/gimppattern-load.c:123
 #, c-format
@@ -13577,9 +13550,8 @@ msgid "Join style"
 msgstr "결합 스타일"
 
 #: ../app/core/gimpstrokeoptions.c:192
-#, fuzzy
 msgid "Miter limit"
-msgstr "뾰족한 결합 제한"
+msgstr ""
 
 # 연귀 : 두 재를 맞추기 위하여 나무 마무리가 보이지 않게 귀를 45도 각도로 비스듬히 잘라 맞춘 곳. ≒제비촉.
 #: ../app/core/gimpstrokeoptions.c:193
@@ -13625,9 +13597,8 @@ msgid "Center ordinate"
 msgstr "중심 세로좌표"
 
 #: ../app/core/gimpsymmetry-mandala.c:144
-#, fuzzy
 msgid "Number of points"
-msgstr "줄 번호"
+msgstr ""
 
 #: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
@@ -13638,27 +13609,24 @@ msgid "Disable brush rotation"
 msgstr "붓 회전 비활성화"
 
 #: ../app/core/gimpsymmetry-mirror.c:123
-#, fuzzy
 msgid "Mirror"
-msgstr "에러"
+msgstr ""
 
 #: ../app/core/gimpsymmetry-mirror.c:130
-#, fuzzy
 msgid "Horizontal Symmetry"
-msgstr "좌우로"
+msgstr "수평 대칭"
 
 #: ../app/core/gimpsymmetry-mirror.c:131
 msgid "Reflect the initial stroke across a horizontal axis"
-msgstr ""
+msgstr "수평 축을 가로질러 최초의 스트로크를 반사"
 
 #: ../app/core/gimpsymmetry-mirror.c:138
-#, fuzzy
 msgid "Vertical Symmetry"
-msgstr "위아래로"
+msgstr "수직 대칭"
 
 #: ../app/core/gimpsymmetry-mirror.c:139
 msgid "Reflect the initial stroke across a vertical axis"
-msgstr ""
+msgstr "수직 축을 가로질러 최초의 스트로크를 반사"
 
 #: ../app/core/gimpsymmetry-mirror.c:146
 msgid "Central Symmetry"
@@ -13666,11 +13634,11 @@ msgstr "중심 대칭"
 
 #: ../app/core/gimpsymmetry-mirror.c:147
 msgid "Invert the initial stroke through a point"
-msgstr ""
+msgstr "점을 통과해서 최초의 스트로크를 반사"
 
 #: ../app/core/gimpsymmetry-mirror.c:155
 msgid "Disable brush reflection"
-msgstr ""
+msgstr "붓 반사 비활성화"
 
 #: ../app/core/gimpsymmetry-mirror.c:162
 msgid "Vertical axis position"
@@ -13681,9 +13649,8 @@ msgid "Horizontal axis position"
 msgstr "수평 축 위치"
 
 #: ../app/core/gimpsymmetry-tiling.c:102
-#, fuzzy
 msgid "Tiling"
-msgstr "비율 조정"
+msgstr ""
 
 #: ../app/core/gimpsymmetry-tiling.c:108
 msgid "Interval X"
@@ -13691,7 +13658,7 @@ msgstr "간격 X"
 
 #: ../app/core/gimpsymmetry-tiling.c:109
 msgid "Interval on the X axis (pixels)"
-msgstr ""
+msgstr "X 축에서 간격 (픽셀)"
 
 #: ../app/core/gimpsymmetry-tiling.c:120
 msgid "Interval Y"
@@ -13699,7 +13666,7 @@ msgstr "간격 Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:121
 msgid "Interval on the Y axis (pixels)"
-msgstr ""
+msgstr "Y 축에서 간격 (픽셀)"
 
 #: ../app/core/gimpsymmetry-tiling.c:132
 msgid "Shift"
@@ -13707,21 +13674,19 @@ msgstr "시프트"
 
 #: ../app/core/gimpsymmetry-tiling.c:133
 msgid "X-shift between lines (pixels)"
-msgstr ""
+msgstr "줄 사이의 X 시프트 (픽셀)"
 
 #: ../app/core/gimpsymmetry-tiling.c:144
-#, fuzzy
 msgid "Max strokes X"
-msgstr "스트로크 잠그기(_O)"
+msgstr ""
 
 #: ../app/core/gimpsymmetry-tiling.c:145
 msgid "Maximum number of strokes on the X axis"
 msgstr "X 축에서 획의 최대 개수"
 
 #: ../app/core/gimpsymmetry-tiling.c:152
-#, fuzzy
 msgid "Max strokes Y"
-msgstr "스트로크 잠그기(_O)"
+msgstr ""
 
 #: ../app/core/gimpsymmetry-tiling.c:153
 msgid "Maximum number of strokes on the Y axis"
@@ -13762,7 +13727,6 @@ msgstr "해상도 단위"
 
 #. serialized name
 #: ../app/core/gimptemplate.c:182
-#, fuzzy
 msgid "Image type"
 msgstr "이미지 유형"
 
@@ -13778,15 +13742,16 @@ msgid "Gamma"
 msgstr "감마"
 
 #: ../app/core/gimptemplate.c:213
-#, fuzzy
 msgid "Color managed"
-msgstr "색상 관리"
+msgstr "색 관리됨"
 
 #: ../app/core/gimptemplate.c:214
 msgid ""
 "Whether the image is color managed. Disabling color management is equivalent "
 "to choosing a built-in sRGB profile. Better leave color management enabled."
 msgstr ""
+"이미지의 색 관리 여부. 색 관리를 비활성화하는 것은 내장된 sRGB 프로필을 선택"
+"하는 것과 같습니다. 색 관리를 활성화된 채로 놔두는 것이 더 낫습니다."
 
 #: ../app/core/gimptemplate.c:223
 msgid "Color profile"
@@ -13817,9 +13782,8 @@ msgid "Apply stored dynamics"
 msgstr "저장된 동적 요소 적용"
 
 #: ../app/core/gimptoolpreset.c:168
-#, fuzzy
 msgid "Apply stored MyPaint brush"
-msgstr "저장된 붓 적용"
+msgstr "저장된 내페이느 붓 적용"
 
 #: ../app/core/gimptoolpreset.c:175
 msgid "Apply stored pattern"
@@ -13944,23 +13908,21 @@ msgstr "채널 이름(_N):"
 
 #: ../app/dialogs/channel-options-dialog.c:128
 #: ../app/dialogs/layer-options-dialog.c:168
-#, fuzzy
 msgid "Lock _pixels"
-msgstr "픽셀 잠그기"
+msgstr "픽셀 잠그기(_P)"
 
 #: ../app/dialogs/channel-options-dialog.c:129
 #: ../app/dialogs/layer-options-dialog.c:169
 msgid "Lock position and _size"
-msgstr ""
+msgstr "위치와 크기 잠그기(_S)"
 
 #: ../app/dialogs/channel-options-dialog.c:171
 msgid "Initialize from _selection"
 msgstr "선택 영역 초기화(_S)"
 
 #: ../app/dialogs/color-profile-dialog.c:128
-#, fuzzy
 msgid "Assign ICC Color Profile"
-msgstr "색상 프로필"
+msgstr "ICC 색 프로필 할당"
 
 #: ../app/dialogs/color-profile-dialog.c:131
 msgid "Assign a color profile to the image"
@@ -14007,7 +13969,7 @@ msgstr "이미지를 RGB로 변환"
 
 #: ../app/dialogs/color-profile-dialog.c:182
 msgid "Grayscale Conversion"
-msgstr ""
+msgstr "그레이스케일 변환"
 
 #: ../app/dialogs/color-profile-dialog.c:185
 msgid "Convert Image to Grayscale"
@@ -14019,7 +13981,7 @@ msgstr "소프트푸르핑 프로필"
 
 #: ../app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
-msgstr ""
+msgstr "소프트푸르핑 프로필 선택"
 
 #: ../app/dialogs/color-profile-dialog.c:209
 #: ../app/tools/gimpforegroundselecttool.c:314
@@ -14036,7 +13998,7 @@ msgstr "현재 색 프로필"
 
 #: ../app/dialogs/color-profile-dialog.c:261
 msgid "Profile _details"
-msgstr ""
+msgstr "프로필 세부사항"
 
 #: ../app/dialogs/color-profile-dialog.c:290
 #: ../app/dialogs/color-profile-import-dialog.c:160
@@ -14049,9 +14011,8 @@ msgid "_Black Point Compensation"
 msgstr "검은 점 보상(_B)"
 
 #: ../app/dialogs/color-profile-dialog.c:386
-#, fuzzy
 msgid "Select Destination Profile"
-msgstr "프린터 색상 프로필 선택"
+msgstr "목적지 프로필 선택"
 
 #: ../app/dialogs/color-profile-dialog.c:485
 #: ../app/widgets/gimpwidgets-constructors.c:86
@@ -14077,9 +14038,8 @@ msgid "Convert the image to the RGB working space?"
 msgstr "이미지를 RGB 작업 공간으로 변환할까요?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:99
-#, fuzzy
 msgid "Import the image from a color profile"
-msgstr "파일에서 설정 가져오기"
+msgstr "색 프로필로부터 이미지 들여오기"
 
 #: ../app/dialogs/color-profile-import-dialog.c:104
 msgid "_Keep"
@@ -14088,7 +14048,7 @@ msgstr "유지(_K)"
 #: ../app/dialogs/color-profile-import-dialog.c:122
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr ""
+msgstr "이미지 '%s'에 내장된 색 프로필이 있음"
 
 #: ../app/dialogs/color-profile-import-dialog.c:185
 msgid "_Don't ask me again"
@@ -14107,9 +14067,8 @@ msgid "_Maximum number of colors:"
 msgstr "최대 색상 수(_M):"
 
 #: ../app/dialogs/convert-indexed-dialog.c:219
-#, fuzzy
 msgid "_Remove unused and duplicate colors from colormap"
-msgstr "쓰지 않은 색을 색상표에서 없애기(_R)"
+msgstr "쓰지 않거나 중복된 색을 색상표에서 없애기(_R)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:248
 msgid "Color _dithering:"
@@ -14121,14 +14080,13 @@ msgstr "투명도의 디더링 활성화(_T)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:275
 #: ../app/dialogs/preferences-dialog.c:2178
-#, fuzzy
 msgid "Enable dithering of text layers"
-msgstr "투명도의 디더링 활성화(_T)"
+msgstr "텍스트 레이어의 디더링 활성화"
 
 #: ../app/dialogs/convert-indexed-dialog.c:286
 #: ../app/dialogs/convert-precision-dialog.c:276
 msgid "Dithering text layers will make them uneditable"
-msgstr ""
+msgstr "텍스트 레이어를 디더링하면 편집할 수 없는 상태가 됨"
 
 #: ../app/dialogs/convert-indexed-dialog.c:410
 #: ../app/pdb/image-convert-cmds.c:159
@@ -14142,12 +14100,12 @@ msgstr "이미지를 %s(으)로 변환"
 
 #: ../app/dialogs/convert-precision-dialog.c:157
 msgid "Precision Conversion"
-msgstr ""
+msgstr "정밀도 변환"
 
 #: ../app/dialogs/convert-precision-dialog.c:204
 #: ../app/widgets/gimptemplateeditor.c:425
 msgid "Perceptual gamma (sRGB)"
-msgstr ""
+msgstr "지각적 감마 (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:205
 #: ../app/widgets/gimptemplateeditor.c:424
@@ -14163,9 +14121,8 @@ msgid "_Text Layers:"
 msgstr "텍스트 레이어(_T):"
 
 #: ../app/dialogs/convert-precision-dialog.c:286
-#, fuzzy
 msgid "_Channels and Masks:"
-msgstr "채널 이름(_N):"
+msgstr "채널과 마스크(_C):"
 
 #: ../app/dialogs/data-delete-dialog.c:82
 msgid "Delete Object"
@@ -14508,9 +14465,8 @@ msgid "_Visible"
 msgstr "보임(_V)"
 
 #: ../app/dialogs/item-options-dialog.c:277
-#, fuzzy
 msgid "_Linked"
-msgstr "연결(_L)"
+msgstr "연결됨(_L)"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
@@ -14562,9 +14518,8 @@ msgid "_Mode:"
 msgstr "모드(_M):"
 
 #: ../app/dialogs/layer-options-dialog.c:203
-#, fuzzy
 msgid "Blend space:"
-msgstr "색상 공간:"
+msgstr "혼합 공간:"
 
 #: ../app/dialogs/layer-options-dialog.c:213
 msgid "Composite space:"
@@ -14609,9 +14564,8 @@ msgid "Active Filters"
 msgstr "활성 필터"
 
 #: ../app/dialogs/layer-options-dialog.c:438
-#, fuzzy
 msgid "Lock _alpha"
-msgstr "알파 채널 잠금"
+msgstr "알파 잠그기(_A)"
 
 #: ../app/dialogs/layer-options-dialog.c:450
 msgid "Set name from _text"
@@ -14633,11 +14587,11 @@ msgstr "%1$s   %2$s   %3$s"
 
 #: ../app/dialogs/lebl-dialog.c:130
 msgid "Press 'q' to quit"
-msgstr ""
+msgstr "끝내려면 'q'를 누르십시오"
 
 #: ../app/dialogs/lebl-dialog.c:135
 msgid "Paused"
-msgstr ""
+msgstr "멈춤"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
@@ -14648,20 +14602,20 @@ msgstr "%1$s\t%2$s"
 
 #: ../app/dialogs/lebl-dialog.c:139
 msgid "Press 'p' to unpause"
-msgstr ""
+msgstr "다시 시작하면 'p'를 누르십시오"
 
 #: ../app/dialogs/lebl-dialog.c:145
 #, c-format
 msgid "Level: %s,  Lives: %s"
-msgstr ""
+msgstr "레벨: %s,  목숨: %s"
 
 #: ../app/dialogs/lebl-dialog.c:150
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr ""
+msgstr "→/← 로 이동, 스페이스로 발사, 'p'로 멈춤, 'q'로 끝내기"
 
 #: ../app/dialogs/lebl-dialog.c:804
 msgid "Killer GEGLs from Outer Space"
-msgstr ""
+msgstr "우주 공간에서 온 킬러 GEGL"
 
 #: ../app/dialogs/module-dialog.c:129
 msgid "Module Manager"
@@ -14750,9 +14704,8 @@ msgid "Edge Behavior"
 msgstr "경계선의 움직임"
 
 #: ../app/dialogs/offset-dialog.c:254
-#, fuzzy
 msgid "W_rap around"
-msgstr "감싸기(_W)"
+msgstr ""
 
 #: ../app/dialogs/offset-dialog.c:257
 msgid "Fill with _background color"
@@ -14764,11 +14717,11 @@ msgstr "투명 만들기(_T)"
 
 #: ../app/dialogs/palette-import-dialog.c:157
 msgid "Import a New Palette"
-msgstr "새 팔레트 가져오기"
+msgstr "새 팔레트 들여오기"
 
 #: ../app/dialogs/palette-import-dialog.c:163
 msgid "_Import"
-msgstr "가져오기(_I)"
+msgstr "들여오기(_I)"
 
 #. The "Source" frame
 #: ../app/dialogs/palette-import-dialog.c:201
@@ -14804,11 +14757,11 @@ msgstr "팔레트 파일 선택"
 #. The "Import" frame
 #: ../app/dialogs/palette-import-dialog.c:301
 msgid "Import Options"
-msgstr "가져오기 옵션"
+msgstr "들여오기 옵션"
 
 #: ../app/dialogs/palette-import-dialog.c:315
 msgid "New import"
-msgstr "새로 가져오기"
+msgstr "새로 들여오기"
 
 #: ../app/dialogs/palette-import-dialog.c:317
 msgid "Palette _name:"
@@ -14838,7 +14791,7 @@ msgstr "선택한 원본에는 아무런 색상이 없습니다."
 
 #: ../app/dialogs/palette-import-dialog.c:466
 msgid "There is no palette to import."
-msgstr "가져올 팔레트가 없습니다."
+msgstr "들여올 팔레트가 없습니다."
 
 #: ../app/dialogs/preferences-dialog.c:280
 msgid "Reset All Preferences"
@@ -14961,7 +14914,7 @@ msgstr "기본 설정"
 #: ../app/dialogs/preferences-dialog.c:1130
 #: ../app/dialogs/preferences-dialog.c:1131
 msgid "System Resources"
-msgstr ""
+msgstr "시스템 자원"
 
 #: ../app/dialogs/preferences-dialog.c:1138
 msgid "Resource Consumption"
@@ -14984,9 +14937,8 @@ msgid "Maximum _new image size:"
 msgstr "새 이미지 최대 크기(_N):"
 
 #: ../app/dialogs/preferences-dialog.c:1162
-#, fuzzy
 msgid "Number of _threads to use:"
-msgstr "사용할 프로세서 갯수(_P):"
+msgstr "사용할 스레드 수(_T):"
 
 #: ../app/dialogs/preferences-dialog.c:1167
 msgid ""
@@ -14994,11 +14946,14 @@ msgid ""
 "Setting this to greater than one might\n"
 "result in image errors or crashes."
 msgstr ""
+"스레드 지원은 아직 불안정함.\n"
+"이것을 1보다 큰 값으로 설정하면\n"
+"이미지 오류나 충돌 발생 우려가 있음."
 
 #. Hardware Acceleration
 #: ../app/dialogs/preferences-dialog.c:1177
 msgid "Hardware Acceleration"
-msgstr ""
+msgstr "하드웨어 가속"
 
 #: ../app/dialogs/preferences-dialog.c:1181
 msgid "Use OpenCL"
@@ -15058,9 +15013,8 @@ msgid "Color Management"
 msgstr "색상 관리"
 
 #: ../app/dialogs/preferences-dialog.c:1282
-#, fuzzy
 msgid "Reset Color Management"
-msgstr "색상 관리"
+msgstr "색 관리 재설정"
 
 #: ../app/dialogs/preferences-dialog.c:1305
 msgid "Image display _mode:"
@@ -15068,9 +15022,8 @@ msgstr "이미지 표시 모드(_M):"
 
 #. Color Managed Display
 #: ../app/dialogs/preferences-dialog.c:1309
-#, fuzzy
 msgid "Color Managed Display"
-msgstr "색상 관리"
+msgstr "색 관리된 디스플레이"
 
 #: ../app/dialogs/preferences-dialog.c:1318
 msgid "Select Monitor Color Profile"
@@ -15112,9 +15065,8 @@ msgid "Soft-Proofing"
 msgstr "소프트푸르핑"
 
 #: ../app/dialogs/preferences-dialog.c:1363
-#, fuzzy
 msgid "Select Soft-Proofing Color Profile"
-msgstr "프린터 색상 프로필 선택"
+msgstr "소프트푸르핑 색 프로필 선택"
 
 #: ../app/dialogs/preferences-dialog.c:1364
 msgid "_Soft-proofing profile:"
@@ -15146,9 +15098,8 @@ msgid "Preferred Profiles"
 msgstr "기본 설정한 프로필"
 
 #: ../app/dialogs/preferences-dialog.c:1419
-#, fuzzy
 msgid "Select Preferred RGB Color Profile"
-msgstr "RGB 색상 프로파일 선택"
+msgstr "기본 설정된 RGB 색 프로필 선택"
 
 #: ../app/dialogs/preferences-dialog.c:1420
 msgid "_RGB profile:"
@@ -15193,16 +15144,16 @@ msgstr "고급 색 옵션 보이기"
 #: ../app/dialogs/preferences-dialog.c:1468
 #: ../app/dialogs/preferences-dialog.c:1469
 msgid "Image Import & Export"
-msgstr "이미지 가져오기 및 내보내기"
+msgstr "이미지 들여오기 및 내보내기"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1475
 msgid "Import Policies"
-msgstr "정책 가져오기"
+msgstr "정책 들여오기"
 
 #: ../app/dialogs/preferences-dialog.c:1479
 msgid "Promote imported images to _floating point precision"
-msgstr ""
+msgstr "들여온 이미지를 부동 소수점 정밀도로 올리기"
 
 #: ../app/dialogs/preferences-dialog.c:1485
 msgid "Dither images when promoting to floating point"
@@ -15210,7 +15161,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1490
 msgid "Add an alpha channel to imported images"
-msgstr "가져온 이미지에 알파 채널 추가"
+msgstr "들여온 이미지에 알파 채널 추가"
 
 #: ../app/dialogs/preferences-dialog.c:1495
 #: ../app/dialogs/preferences-dialog.c:2105
@@ -15240,9 +15191,8 @@ msgstr ""
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1517
-#, fuzzy
 msgid "Raw Image Importer"
-msgstr "이미지 양식"
+msgstr "RAW 이미지 들여오기 도구"
 
 #: ../app/dialogs/preferences-dialog.c:1550
 msgid "Experimental Playground"
@@ -15260,9 +15210,8 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1567
-#, fuzzy
 msgid "Insane Options"
-msgstr "흐리게 옵션"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1571
 msgid "_N-Point Deformation tool"
@@ -15479,7 +15428,7 @@ msgstr "대화상자 기본값으로 초기화"
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:2100
 msgid "Color Profile Import Dialog"
-msgstr "색 프로필 가져오기 대화상자"
+msgstr "색 프로필 들여오기 대화상자"
 
 #. All color profile chooser dialogs
 #: ../app/dialogs/preferences-dialog.c:2109
@@ -15526,33 +15475,28 @@ msgstr "디더링 채널/마스크:"
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:2153
-#, fuzzy
 msgid "Indexed Conversion Dialog"
-msgstr "색인 색상 변환"
+msgstr "인덱스 변환 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2158
 msgid "Colormap:"
 msgstr "색상표:"
 
 #: ../app/dialogs/preferences-dialog.c:2161
-#, fuzzy
 msgid "Maximum number of colors:"
-msgstr "최대 색상 수(_M):"
+msgstr "최대 색상 수:"
 
 #: ../app/dialogs/preferences-dialog.c:2165
-#, fuzzy
 msgid "Remove unused and duplicate colors from colormap"
-msgstr "쓰지 않은 색을 색상표에서 없애기(_R)"
+msgstr "쓰지 않거나 중복된 색을 색상표에서 없애기"
 
 #: ../app/dialogs/preferences-dialog.c:2171
-#, fuzzy
 msgid "Color dithering:"
-msgstr "색상 디더링(_D):"
+msgstr "색 디더링:"
 
 #: ../app/dialogs/preferences-dialog.c:2175
-#, fuzzy
 msgid "Enable dithering of transparency"
-msgstr "투명도의 디더링 활성화(_T)"
+msgstr "투명도의 디더링 활성화"
 
 #: ../app/dialogs/preferences-dialog.c:2187
 msgid "Keep recent settings:"
@@ -15564,9 +15508,8 @@ msgstr "마지막 사용한 설정을 기본값으로"
 
 #. Canvas Size Dialog
 #: ../app/dialogs/preferences-dialog.c:2198
-#, fuzzy
 msgid "Canvas Size Dialog"
-msgstr "캔버스 크기"
+msgstr "캔버스 크기 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2203
 #: ../app/dialogs/preferences-dialog.c:2232
@@ -15578,7 +15521,6 @@ msgid "Resize layers:"
 msgstr "레이어 크기 바꾸기:"
 
 #: ../app/dialogs/preferences-dialog.c:2210
-#, fuzzy
 msgid "Resize text layers"
 msgstr "텍스트 레이어 크기 바꾸기"
 
@@ -15623,9 +15565,8 @@ msgid "Merged layer size:"
 msgstr "합친 레이어 크기:"
 
 #: ../app/dialogs/preferences-dialog.c:2260
-#, fuzzy
 msgid "Merge within active group only"
-msgstr "활성 그룹만 합치기(_G)"
+msgstr "활성 그룹 안에서만 합치기"
 
 #: ../app/dialogs/preferences-dialog.c:2263
 msgid "Discard invisible layers"
@@ -15637,14 +15578,12 @@ msgid "New Channel Dialog"
 msgstr "새 채널 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2272
-#, fuzzy
 msgid "Channel name:"
-msgstr "채널 이름(_N):"
+msgstr "채널 이름:"
 
 #: ../app/dialogs/preferences-dialog.c:2276
-#, fuzzy
 msgid "Color and opacity:"
-msgstr "색상 공간:"
+msgstr "색과 불투명도:"
 
 #: ../app/dialogs/preferences-dialog.c:2277
 msgid "Default New Channel Color and Opacity"
@@ -15661,53 +15600,46 @@ msgstr "경로 이름:"
 
 #. Export Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2291
-#, fuzzy
 msgid "Export Paths Dialog"
-msgstr "SVG로 경로 내보내기"
+msgstr "경로 내보내기 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2296
-#, fuzzy
 msgid "Export folder:"
-msgstr "임시 폴더:"
+msgstr "내보내기 폴더:"
 
 #: ../app/dialogs/preferences-dialog.c:2297
-#, fuzzy
 msgid "Select Default Folder for Exporting Paths"
-msgstr "임시 폴더 선택"
+msgstr "경로 내보내기용 기본 폴더 선택"
 
 #: ../app/dialogs/preferences-dialog.c:2301
-#, fuzzy
 msgid "Export the active path only"
-msgstr "현재 경로 내보내기"
+msgstr "활성 경로만 내보내기"
 
 #. Import Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2305
 msgid "Import Paths Dialog"
-msgstr "경로 가져오기 대화상자"
+msgstr "경로 들여오기 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2310
-#, fuzzy
 msgid "Import folder:"
-msgstr "임시 폴더:"
+msgstr "들여오기 폴더:"
 
 #: ../app/dialogs/preferences-dialog.c:2311
-#, fuzzy
 msgid "Select Default Folder for Importing Paths"
-msgstr "임시 폴더 선택"
+msgstr "경로 들여오기용 기본 폴더 선택"
 
 #: ../app/dialogs/preferences-dialog.c:2315
 msgid "Merge imported paths"
-msgstr "가져온 경로 합치기"
+msgstr "들여온 경로 합치기"
 
 #: ../app/dialogs/preferences-dialog.c:2318
 msgid "Scale imported paths"
-msgstr "가져온 경로 크기 조정"
+msgstr "들여온 경로 크기 조정"
 
 #. Feather Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2322
-#, fuzzy
 msgid "Feather Selection Dialog"
-msgstr "선택 영역 페더"
+msgstr "'선택 영역 페더' 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2327
 msgid "Feather radius:"
@@ -15733,24 +15665,21 @@ msgstr "축소 반지름:"
 
 #: ../app/dialogs/preferences-dialog.c:2349
 #: ../app/dialogs/preferences-dialog.c:2366
-#, fuzzy
 msgid "Selected areas continue outside the image"
-msgstr "연속된 영역 선택"
+msgstr "선택한 영역이 이미지 외부로 계속됨"
 
 #. Border Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2353
-#, fuzzy
 msgid "Border Selection Dialog"
-msgstr "테두리 선택"
+msgstr "테두리 선택 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2358
 msgid "Border radius:"
 msgstr "테두리 반지름:"
 
 #: ../app/dialogs/preferences-dialog.c:2362
-#, fuzzy
 msgid "Border style:"
-msgstr "선 결합 스타일(_J):"
+msgstr "테두리 스타일:"
 
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2370
@@ -15759,9 +15688,8 @@ msgstr ""
 
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2379
-#, fuzzy
 msgid "Stroke Selection & Stroke Path Dialogs"
-msgstr "선택 영역을 경로로(_O)"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2402
 #: ../app/dialogs/preferences-dialog.c:2403
@@ -15789,9 +15717,8 @@ msgid "User manual:"
 msgstr "사용자 설명서:"
 
 #: ../app/dialogs/preferences-dialog.c:2435
-#, fuzzy
 msgid "User interface language"
-msgstr "사용자 인터페이스"
+msgstr ""
 
 #. If there is no webkit available, assume we are on a platform
 #. *  that doesn't use the help browser, so don't bother showing
@@ -15821,14 +15748,12 @@ msgid "Show _unavailable actions"
 msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2531
-#, fuzzy
 msgid "Maximum History Size:"
-msgstr "새 이미지 최대 크기(_N):"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2535
-#, fuzzy
 msgid "Clear Action History"
-msgstr "실행 취소 이력 지우기"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2550
 #: ../app/dialogs/preferences-dialog.c:2551
@@ -16045,9 +15970,8 @@ msgid "Image Statusbar Format"
 msgstr "이미지 상태표시줄 형식"
 
 #: ../app/dialogs/preferences-dialog.c:2954
-#, fuzzy
 msgid "Image Window Snapping Behavior"
-msgstr "이미지 창 모양"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2955
 msgid "Snapping"
@@ -16253,14 +16177,12 @@ msgid "Select Theme Folders"
 msgstr "테마 폴더 선택"
 
 #: ../app/dialogs/preferences-dialog.c:3159
-#, fuzzy
 msgid "Icon Themes"
-msgstr "테마"
+msgstr "아이콘 테마"
 
 #: ../app/dialogs/preferences-dialog.c:3159
-#, fuzzy
 msgid "Icon Theme Folders"
-msgstr "테마 폴더"
+msgstr "아이콘 테마 폴더"
 
 #: ../app/dialogs/preferences-dialog.c:3161
 msgid "Select Icon Theme Folders"
@@ -16392,9 +16314,8 @@ msgid "Resize _layers:"
 msgstr "레이어 크기 바꾸기(_L):"
 
 #: ../app/dialogs/resize-dialog.c:379
-#, fuzzy
 msgid "Resize _text layers"
-msgstr "텍스트 레이어 크기 바꾸기"
+msgstr "텍스트 레이어 크기 바꾸기(_T)"
 
 #: ../app/dialogs/resize-dialog.c:390
 msgid "Resizing text layers will make them uneditable"
@@ -16518,7 +16439,7 @@ msgstr "현재 이미지의 모든 경로 내보내기"
 
 #: ../app/dialogs/vectors-import-dialog.c:85
 msgid "Import Paths from SVG"
-msgstr "SVG에서 경로 가져오기"
+msgstr "SVG에서 경로 들여오기"
 
 #: ../app/dialogs/vectors-import-dialog.c:124
 msgid "All files (*.*)"
@@ -16530,11 +16451,11 @@ msgstr "화질저하없이 변형이 가능한 SVG 이미지 (*.svg)"
 
 #: ../app/dialogs/vectors-import-dialog.c:140
 msgid "_Merge imported paths"
-msgstr "가져온 경로 합치기(_M)"
+msgstr "들여온 경로 합치기(_M)"
 
 #: ../app/dialogs/vectors-import-dialog.c:150
 msgid "_Scale imported paths to fit image"
-msgstr "가져온 경로의 크기를 이미지에 맞추기(_S)"
+msgstr "들여온 경로의 크기를 이미지에 맞추기(_S)"
 
 #: ../app/dialogs/vectors-options-dialog.c:106
 msgid "Path _name:"
@@ -16851,9 +16772,8 @@ msgid "Layer Select"
 msgstr "레이어 선택"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:114
-#, fuzzy
 msgid "Rotate View"
-msgstr "이미지 회전"
+msgstr "뷰 회전"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:116
 msgid "Select Rotation Angle"
@@ -16901,9 +16821,8 @@ msgid "(none)"
 msgstr "(없음)"
 
 #: ../app/display/gimpdisplayshell-title.c:473
-#, fuzzy
 msgid "not color managed"
-msgstr "색상 관리"
+msgstr "색 관리되지 않음"
 
 #: ../app/display/gimpdisplayshell-utils.c:149
 #: ../app/tools/gimpmeasuretool.c:528 ../app/tools/gimpmeasuretool.c:681
@@ -16941,7 +16860,6 @@ msgid "Click-Drag to move all points"
 msgstr "모든 지점을 이동하려면 클릭 후 드래그하십시오"
 
 #: ../app/display/gimptoolgyroscope.c:702
-#, fuzzy
 msgid "Click-Drag to zoom"
 msgstr "클릭-끌기 해서 확대/축소"
 
@@ -16986,14 +16904,12 @@ msgid "Click-Drag to move"
 msgstr "클릭-끌기 해서 이동"
 
 #: ../app/display/gimptoolhandlegrid.c:840
-#, fuzzy
 msgid "Click-Drag to rotate and scale"
-msgstr "새 선택을 만들려면 클릭 후 드래그하십시오"
+msgstr ""
 
 #: ../app/display/gimptoolhandlegrid.c:843
-#, fuzzy
 msgid "Click-Drag to shear and scale"
-msgstr "새 선택을 만들려면 클릭 후 드래그하십시오"
+msgstr ""
 
 #: ../app/display/gimptoolhandlegrid.c:846
 #: ../app/display/gimptooltransformgrid.c:1761
@@ -17005,14 +16921,12 @@ msgid "Click to add a handle"
 msgstr "클릭해서 핸들 추가"
 
 #: ../app/display/gimptoolhandlegrid.c:863
-#, fuzzy
 msgid "Click-Drag to move this handle"
-msgstr "조절점을 이동하려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/display/gimptoolhandlegrid.c:868
-#, fuzzy
 msgid "Click-Drag to remove this handle"
-msgstr "조절점을 이동하려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/display/gimptoolline.c:335 ../app/display/gimptoolline.c:498
 msgid "Line: "
@@ -17023,9 +16937,8 @@ msgid "Click-Drag to move the endpoint"
 msgstr "클릭-끌기 해서 끝 점을 이동"
 
 #: ../app/display/gimptoolline.c:1497
-#, fuzzy
 msgid "Release to remove the slider"
-msgstr "전체 줄을 %s 만큼 이동"
+msgstr ""
 
 #: ../app/display/gimptoolline.c:1501
 #, c-format
@@ -17033,28 +16946,24 @@ msgid "%s for constrained values"
 msgstr "%s(으)로 제한된 값"
 
 #: ../app/display/gimptoolline.c:1511
-#, fuzzy
 msgid "Click-Drag to move the slider; drag away to remove the slider"
-msgstr "선택 영역 마스크를 이동시키려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/display/gimptoolline.c:1516
 msgid "Click-Drag to move or remove the slider"
 msgstr "클릭-끌기 해서 슬라이더를 이동 또는 제거"
 
 #: ../app/display/gimptoolline.c:1521
-#, fuzzy
 msgid "Click-Drag to move the slider"
-msgstr "선택한 픽셀을 이동시키려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/display/gimptoolline.c:1532
-#, fuzzy
 msgid "Click-Drag away to remove the slider"
-msgstr "선택한 픽셀을 이동시키려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/display/gimptoolline.c:1536
-#, fuzzy
 msgid "Click-Drag to remove the slider"
-msgstr "선택한 픽셀을 이동시키려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/display/gimptoolline.c:1547
 msgid "Click or Click-Drag to add a new slider"
@@ -17223,7 +17132,6 @@ msgid "Click-Drag to move segment vertex"
 msgstr "구획의 꼭지점을 이동하려면 클릭후 드래그하십시오"
 
 #: ../app/display/gimptoolpolygon.c:875
-#, fuzzy
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
 msgstr "엔터는 입력, ESC 키는 취소, 백스페이스는 모양을 다시 열기"
 
@@ -17248,7 +17156,6 @@ msgstr "위치: "
 
 #: ../app/display/gimptooltransformgrid.c:1766
 #: ../app/display/gimptooltransformgrid.c:1771
-#, fuzzy
 msgid "Click-Drag to scale"
 msgstr "클릭-끌기 해서 크기 조정"
 
@@ -17257,7 +17164,6 @@ msgid "Click-Drag to move the pivot point"
 msgstr "클릭-끌기 해서 피벗 포인트를 이동"
 
 #: ../app/display/gimptooltransformgrid.c:1780
-#, fuzzy
 msgid "Click-Drag to shear"
 msgstr "클릭-끌기 해서 기울이기"
 
@@ -17293,9 +17199,8 @@ msgid "Mounting remote volume"
 msgstr ""
 
 #: ../app/file/file-remote.c:289
-#, fuzzy
 msgid "Opening remote file"
-msgstr "이미지 파일을 엽니다"
+msgstr ""
 
 #: ../app/file/file-remote.c:357
 #, c-format
@@ -17391,25 +17296,22 @@ msgstr "초록 성분"
 #: ../app/gegl/gimp-babl.c:400 ../app/gegl/gimp-babl.c:401
 #: ../app/gegl/gimp-babl.c:402 ../app/gegl/gimp-babl.c:403
 #: ../app/gegl/gimp-babl.c:404 ../app/gegl/gimp-babl.c:405
-#, fuzzy
 msgid "Blue component"
-msgstr "성분(_O)"
+msgstr "파랑 성분"
 
 #: ../app/gegl/gimp-babl.c:407 ../app/gegl/gimp-babl.c:408
 #: ../app/gegl/gimp-babl.c:409 ../app/gegl/gimp-babl.c:410
 #: ../app/gegl/gimp-babl.c:411 ../app/gegl/gimp-babl.c:412
-#, fuzzy
 msgid "Alpha component"
-msgstr "성분(_O)"
+msgstr "알파 성분"
 
 #: ../app/gegl/gimp-babl.c:440
 msgid "Indexed-alpha"
 msgstr "인덱스-알파"
 
 #: ../app/gegl/gimp-babl.c:442
-#, fuzzy
 msgid "Indexed"
-msgstr "인덱스 %d"
+msgstr "인덱스"
 
 # http://gui.gimp.org/index.php/Cage_tool
 #: ../app/gegl/gimp-gegl-enums.c:24
@@ -17997,9 +17899,8 @@ msgstr "청록-빨강"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:109
 #: ../app/operations/gimpcolorbalanceconfig.c:110
-#, fuzzy
 msgid "Magenta-Green"
-msgstr "자홍색"
+msgstr ""
 
 #: ../app/operations/gimpcolorbalanceconfig.c:115
 #: ../app/operations/gimpcolorbalanceconfig.c:116
@@ -18014,9 +17915,8 @@ msgstr "휘도 유지"
 #: ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:108
 #: ../app/widgets/gimphistogrameditor.c:110
-#, fuzzy
 msgid "Linear"
-msgstr "선형(_L)"
+msgstr "선형"
 
 #: ../app/operations/gimpcurvesconfig.c:106
 #: ../app/operations/gimplevelsconfig.c:109
@@ -18025,9 +17925,8 @@ msgstr ""
 
 #: ../app/operations/gimpcurvesconfig.c:112
 #: ../app/operations/gimplevelsconfig.c:115
-#, fuzzy
 msgid "The affected channel"
-msgstr "채널 삭제"
+msgstr ""
 
 #: ../app/operations/gimpcurvesconfig.c:118
 #: ../app/operations/gimpcurvesconfig.c:119
@@ -18154,7 +18053,6 @@ msgstr "이미지 색상화"
 
 #: ../app/operations/gimpoperationcolorize.c:114
 #: ../app/operations/gimpoperationcolorize.c:115
-#, fuzzy
 msgid "Color"
 msgstr "색"
 
@@ -18192,19 +18090,16 @@ msgstr ""
 
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:88
-#, fuzzy
 msgid "Reduce image to two colors using a threshold"
-msgstr "임계 도구: 임계값을 기준으로 이미지를 두 개의 색상으로 줄입니다"
+msgstr ""
 
 #: ../app/operations/gimpoperationthreshold.c:97
-#, fuzzy
 msgid "Low threshold"
-msgstr "임계값"
+msgstr ""
 
 #: ../app/operations/gimpoperationthreshold.c:104
-#, fuzzy
 msgid "High threshold"
-msgstr "임계값"
+msgstr ""
 
 #: ../app/operations/gimpoperationthresholdalpha.c:80
 msgid ""
@@ -18222,9 +18117,8 @@ msgid "default:LTR"
 msgstr ""
 
 #: ../app/gui/gui.c:326
-#, fuzzy
 msgid "Image Recovery"
-msgstr "이미지 편집기"
+msgstr ""
 
 #: ../app/gui/gui.c:328
 msgid "_Discard"
@@ -18306,9 +18200,8 @@ msgid "Convolve"
 msgstr "흐리게 선명하게"
 
 #: ../app/paint/gimpconvolveoptions.c:68
-#, fuzzy
 msgid "Convolve Type"
-msgstr "컨발브 유형 (%s)"
+msgstr ""
 
 #: ../app/paint/gimpconvolveoptions.c:76
 msgctxt "convolve-tool"
@@ -18332,9 +18225,8 @@ msgid "Eraser"
 msgstr "지우개"
 
 #: ../app/paint/gimperaseroptions.c:66
-#, fuzzy
 msgid "Anti erase"
-msgstr "지우기 방지"
+msgstr ""
 
 #: ../app/paint/gimpheal.c:115 ../app/tools/gimphealtool.c:53
 msgid "Heal"
@@ -18390,9 +18282,8 @@ msgid "Mybrush"
 msgstr "내브러시"
 
 #: ../app/paint/gimpmybrushcore.c:160
-#, fuzzy
 msgid "No MyPaint brushes available for use with this tool."
-msgstr "이 도구에 맞는 붓이 없습니다."
+msgstr ""
 
 #: ../app/paint/gimpmybrushoptions.c:86 ../app/tools/gimpcoloroptions.c:85
 #: ../app/tools/gimprectangleselectoptions.c:100
@@ -18401,9 +18292,8 @@ msgid "Radius"
 msgstr "반경"
 
 #: ../app/paint/gimpmybrushoptions.c:93
-#, fuzzy
 msgid "Base Opacity"
-msgstr "불투명"
+msgstr ""
 
 #: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:221
 #: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
@@ -18457,38 +18347,32 @@ msgid "Link Size"
 msgstr "링크 크기"
 
 #: ../app/paint/gimppaintoptions.c:236
-#, fuzzy
 msgid "Link brush size to brush native"
-msgstr "붓의 기본 크기로 되돌리기"
+msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:242
-#, fuzzy
 msgid "Link Aspect Ratio"
-msgstr "종횡비"
+msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:243
-#, fuzzy
 msgid "Link brush aspect ratio to brush native"
-msgstr "붓의 기본 종횡비로 되돌리기"
+msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:249
-#, fuzzy
 msgid "Link Angle"
-msgstr "잉크 얼룩 각도"
+msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:250
 msgid "Link brush angle to brush native"
 msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:256
-#, fuzzy
 msgid "Link Spacing"
 msgstr "줄 간격"
 
 #: ../app/paint/gimppaintoptions.c:257
-#, fuzzy
 msgid "Link brush spacing to brush native"
-msgstr "붓의 기본 종횡비로 되돌리기"
+msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:263
 msgid "Link Hardness"
@@ -19076,19 +18960,16 @@ msgid "Feather radius Y"
 msgstr "페더 Y축 반지름"
 
 #: ../app/pdb/gimppdbcontext.c:135
-#, fuzzy
 msgid "Sample criterion"
-msgstr "선택 영역 기준"
+msgstr ""
 
 #: ../app/pdb/gimppdbcontext.c:143
-#, fuzzy
 msgid "Sample threshold"
-msgstr "임계값 적용"
+msgstr ""
 
 #: ../app/pdb/gimppdbcontext.c:150
-#, fuzzy
 msgid "Sample transparent"
-msgstr "투명 만들기(_T)"
+msgstr ""
 
 #: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:124
 #: ../app/tools/gimpregionselectoptions.c:104
@@ -19106,9 +18987,8 @@ msgid "Transform direction"
 msgstr "변형 방향"
 
 #: ../app/pdb/gimppdbcontext.c:180
-#, fuzzy
 msgid "Transform resize"
-msgstr "항목 변환"
+msgstr ""
 
 #: ../app/pdb/gimppdbcontext.c:195
 msgid "Distance metric"
@@ -19237,9 +19117,8 @@ msgid "Apply Lens"
 msgstr "렌즈 적용"
 
 #: ../app/pdb/plug-in-compat-cmds.c:598
-#, fuzzy
 msgid "Autocrop image"
-msgstr "이미지 잘라내기"
+msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:660
 msgid "Autocrop layer"
@@ -19616,7 +19495,6 @@ msgid "Plug-in Interpreters"
 msgstr "플러그인 해석기"
 
 #: ../app/plug-in/gimppluginmanager.c:236
-#, fuzzy
 msgid "Plug-in Environment"
 msgstr "플러그인 환경"
 
@@ -19698,9 +19576,8 @@ msgid "Green channel"
 msgstr "초록 채널"
 
 #: ../app/propgui/gimppropgui-channel-mixer.c:111
-#, fuzzy
 msgid "Blue channel"
-msgstr "새 채널"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-color-balance.c:98
 msgid "Select Range to Adjust"
@@ -19754,23 +19631,20 @@ msgid "Clockwise"
 msgstr "시계방향"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:130
-#, fuzzy
 msgid "Invert Range"
-msgstr "채널 반전"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-color-rotate.c:134
 msgid "Select All"
 msgstr "모두 선택"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:214
-#, fuzzy
 msgid "Source Range"
-msgstr "소스"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-color-rotate.c:225
-#, fuzzy
 msgid "Destination Range"
-msgstr "목적지 범위"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-color-rotate.c:236
 msgid "Gray Handling"
@@ -19785,14 +19659,12 @@ msgid "Pick nearest full-opacity color"
 msgstr ""
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:202
-#, fuzzy
 msgid "Rotate matrix 90° counter-clockwise"
-msgstr "시계 반대방향으로 90° 회전(_W)"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:208
-#, fuzzy
 msgid "Rotate matrix 90° clockwise"
-msgstr "시계방향으로 90도 회전(_C)"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:214
 msgid "Flip matrix horizontally"
@@ -19815,9 +19687,8 @@ msgid "Sharp Edges"
 msgstr ""
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:101
-#, fuzzy
 msgid "Other Options"
-msgstr "흐리게 옵션"
+msgstr ""
 
 #: ../app/propgui/gimppropgui-generic.c:185
 msgid "Pick coordinates from the image"
@@ -19996,9 +19867,8 @@ msgid "New Seed"
 msgstr "새 씨앗"
 
 #: ../app/propgui/gimppropgui.c:376
-#, fuzzy
 msgid "Pick color from the image"
-msgstr "이미지 색상화"
+msgstr ""
 
 #: ../app/propgui/gimppropgui.c:520
 msgid "This operation has no editable properties"
@@ -20259,9 +20129,8 @@ msgid "Edit these Settings as Levels"
 msgstr "레벨로 이 설정 편집하기"
 
 #: ../app/tools/gimpbucketfilloptions.c:102
-#, fuzzy
 msgid "Fill selection"
-msgstr "선택 영역 띄움"
+msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:103
 msgid "Which area will be filled"
@@ -20306,7 +20175,6 @@ msgstr "최대 색상 차이"
 
 #: ../app/tools/gimpbucketfilloptions.c:149
 #: ../app/tools/gimpbucketfilloptions.c:353
-#, fuzzy
 msgid "Fill by"
 msgstr "채울 내용"
 
@@ -20355,9 +20223,8 @@ msgstr "영역 채우기(_B)"
 #: ../app/tools/gimpforegroundselecttool.c:288
 #: ../app/tools/gimpgradienttool.c:257 ../app/tools/gimppainttool.c:284
 #: ../app/tools/gimptransformtool.c:1457 ../app/tools/gimpwarptool.c:640
-#, fuzzy
 msgid "The active layer is not visible."
-msgstr "활성 레이어의 픽셀이 잠겼습니다."
+msgstr ""
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "Select by Color"
@@ -20447,9 +20314,8 @@ msgid "Color Picker Average Radius"
 msgstr "색 추출기 평균 반경"
 
 #: ../app/tools/gimpcolorpickeroptions.c:79
-#, fuzzy
 msgid "Pick Mode"
-msgstr "추출 모드 (%s)"
+msgstr ""
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
 msgid "Choose what color picker will do"
@@ -20572,9 +20438,8 @@ msgstr "강조 불투명도"
 
 #: ../app/tools/gimpcropoptions.c:87
 #: ../app/tools/gimprectangleselectoptions.c:87
-#, fuzzy
 msgid "How much to dim everything outside selection"
-msgstr "선택 영역 외의 모든 부분을 어둡게"
+msgstr ""
 
 #: ../app/tools/gimpcropoptions.c:93
 msgid "Current layer only"
@@ -20614,9 +20479,8 @@ msgid "_Crop"
 msgstr "잘라내기(_C)"
 
 #: ../app/tools/gimpcroptool.c:158
-#, fuzzy
 msgid "Click-Drag to draw a crop rectangle"
-msgstr "새 선택을 만들려면 클릭 후 드래그하십시오"
+msgstr ""
 
 #: ../app/tools/gimpcroptool.c:278
 msgid "Click or press Enter to crop"
@@ -20759,9 +20623,8 @@ msgstr "이동할 경로가 없습니다."
 
 #: ../app/tools/gimpeditselectiontool.c:1126 ../app/tools/gimpmovetool.c:266
 #: ../app/tools/gimptransformtool.c:1484
-#, fuzzy
 msgid "The active path's position is locked."
-msgstr "활성 경로가 잠겨 있습니다."
+msgstr ""
 
 #: ../app/tools/gimpeditselectiontool.c:1137 ../app/tools/gimpmovetool.c:299
 msgid "There is no layer to move."
@@ -20771,19 +20634,16 @@ msgstr "이동할 레이어가 없습니다."
 #: ../app/tools/gimpeditselectiontool.c:1171
 #: ../app/tools/gimpeditselectiontool.c:1180 ../app/tools/gimpmovetool.c:306
 #: ../app/tools/gimpmovetool.c:324
-#, fuzzy
 msgid "The active layer's position is locked."
-msgstr "활성 레이어의 픽셀이 잠겼습니다."
+msgstr ""
 
 #: ../app/tools/gimpeditselectiontool.c:1158 ../app/tools/gimpmovetool.c:315
-#, fuzzy
 msgid "The active channel's position is locked."
-msgstr "활성 경로가 잠겨 있습니다."
+msgstr ""
 
 #: ../app/tools/gimpeditselectiontool.c:1162 ../app/tools/gimpmovetool.c:317
-#, fuzzy
 msgid "The active channel's pixels are locked."
-msgstr "활성 레이어의 픽셀이 잠겼습니다."
+msgstr ""
 
 #: ../app/tools/gimpellipseselecttool.c:64
 msgid "Ellipse Select"
@@ -20833,9 +20693,8 @@ msgid "Split _view"
 msgstr "보기 분할(_V)"
 
 #: ../app/tools/gimpfilteroptions.c:109
-#, fuzzy
 msgid "Color _managed"
-msgstr "색상 관리"
+msgstr ""
 
 #. The Color Options expander
 #: ../app/tools/gimpfiltertool.c:373
@@ -20873,14 +20732,14 @@ msgid "%s: switch horizontal and vertical"
 msgstr "%s: 수평과 수직 전환"
 
 #: ../app/tools/gimpfiltertool.c:1300 ../app/tools/gimpfiltertool-settings.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "Import '%s' Settings"
-msgstr "임계값 설정 가져오기"
+msgstr "'%s' 설정 들여오기"
 
 #: ../app/tools/gimpfiltertool.c:1302 ../app/tools/gimpfiltertool-settings.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Export '%s' Settings"
-msgstr "임계값 설정 내보내기"
+msgstr ""
 
 #: ../app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
@@ -21002,9 +20861,8 @@ msgid "Number of iterations to perform"
 msgstr "수행할 반복 횟수"
 
 #: ../app/tools/gimpforegroundselectoptions.c:300
-#, fuzzy
 msgid "Reset stroke width native size"
-msgstr "붓의 기본 크기로 되돌리기"
+msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:189
 msgid "Foreground Select"
@@ -21055,9 +20913,8 @@ msgid "press Escape to exit preview or Enter to apply."
 msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:1219
-#, fuzzy
 msgid "Paint mask"
-msgstr "페인트 동적 요소"
+msgstr ""
 
 #: ../app/tools/gimpfreeselecttool.c:129
 msgid ""
@@ -21114,9 +20971,8 @@ msgid "Transform Matrix"
 msgstr "변형 행렬"
 
 #: ../app/tools/gimpgenerictransformtool.c:114
-#, fuzzy
 msgid "Invalid transform"
-msgstr "Cage 변형"
+msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:102
 #: ../app/tools/gimpgradientoptions.c:314
@@ -21144,14 +21000,12 @@ msgid "Commit gradient instantly"
 msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:150
-#, fuzzy
 msgid "Modify active gradient"
-msgstr "활성 그레이디언트 편집"
+msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:151
-#, fuzzy
 msgid "Modify the active gradient in-place"
-msgstr "활성 그레이디언트 편집"
+msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:290
 #: ../app/tools/gimppaintoptions-gui.c:385
@@ -21160,9 +21014,9 @@ msgstr "이 그레이디언트를 편집"
 
 #. the instant toggle
 #: ../app/tools/gimpgradientoptions.c:367
-#, fuzzy, c-format
+#, c-format
 msgid "Instant mode  (%s)"
-msgstr "상호연동적인 세밀 작업 (%s)"
+msgstr ""
 
 #: ../app/tools/gimpgradientoptions.c:387
 msgid ""
@@ -21206,9 +21060,8 @@ msgid "Color:"
 msgstr "색상:"
 
 #: ../app/tools/gimpgradienttool-editor.c:1350
-#, fuzzy
 msgid "Change Endpoint Color"
-msgstr "왼쪽 끝점 색상"
+msgstr ""
 
 #. the position label
 #: ../app/tools/gimpgradienttool-editor.c:1388
@@ -21228,9 +21081,8 @@ msgstr "오른쪽 색:"
 
 #: ../app/tools/gimpgradienttool-editor.c:1446
 #: ../app/tools/gimpgradienttool-editor.c:1455
-#, fuzzy
 msgid "Change Stop Color"
-msgstr "전경색 바꾸기"
+msgstr ""
 
 #: ../app/tools/gimpgradienttool-editor.c:1477
 msgid "Delete stop"
@@ -21259,9 +21111,8 @@ msgid "Start Endpoint"
 msgstr ""
 
 #: ../app/tools/gimpgradienttool-editor.c:1668
-#, fuzzy
 msgid "End Endpoint"
-msgstr "왼쪽 끝점 색(_L)"
+msgstr ""
 
 #: ../app/tools/gimpgradienttool-editor.c:1721
 #, c-format
@@ -21269,9 +21120,9 @@ msgid "Stop %d"
 msgstr ""
 
 #: ../app/tools/gimpgradienttool-editor.c:1789
-#, fuzzy, c-format
+#, c-format
 msgid "Midpoint %d"
-msgstr "포인"
+msgstr ""
 
 #: ../app/tools/gimpgradienttool-editor.c:2366
 #: ../app/tools/gimpgradienttool-editor.c:2375
@@ -21308,9 +21159,8 @@ msgid "Move transform handles"
 msgstr "변형 핸들 이동"
 
 #: ../app/tools/gimphandletransformoptions.c:177
-#, fuzzy
 msgid "Remove transform handles"
-msgstr "이미지에서 기생충 제거"
+msgstr ""
 
 #: ../app/tools/gimphandletransformtool.c:115
 msgid "Handle Transform"
@@ -21445,27 +21295,24 @@ msgid "Pick black point for all channels"
 msgstr "모든 채널에서 검은 점 추출"
 
 #: ../app/tools/gimplevelstool.c:273
-#, fuzzy
 msgid "Pick black point for the selected channel"
-msgstr "선택한 픽셀을 이동시키려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/tools/gimplevelstool.c:280
 msgid "Pick gray point for all channels"
 msgstr "모든 채널에서 회색 점 추출"
 
 #: ../app/tools/gimplevelstool.c:282
-#, fuzzy
 msgid "Pick gray point for the selected channel"
-msgstr "선택한 픽셀을 이동시키려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/tools/gimplevelstool.c:289
 msgid "Pick white point for all channels"
 msgstr "모든 채널에서 흰 점 추출"
 
 #: ../app/tools/gimplevelstool.c:291
-#, fuzzy
 msgid "Pick white point for the selected channel"
-msgstr "선택한 픽셀을 이동시키려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/tools/gimplevelstool.c:395
 msgid "Adjust levels in linear light"
@@ -21499,9 +21346,8 @@ msgid "All Channels"
 msgstr "모든 채널"
 
 #: ../app/tools/gimplevelstool.c:610
-#, fuzzy
 msgid "_Auto Input Levels"
-msgstr "입력 레벨"
+msgstr ""
 
 #: ../app/tools/gimplevelstool.c:613
 msgid "Adjust levels for all channels automatically"
@@ -21644,9 +21490,8 @@ msgstr "변형 모드"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:98
 #: ../app/tools/gimpnpointdeformationoptions.c:99
-#, fuzzy
 msgid "Use weights"
-msgstr "편집기 사용"
+msgstr ""
 
 #: ../app/tools/gimpnpointdeformationoptions.c:105
 msgid "Control points influence"
@@ -21686,9 +21531,8 @@ msgid "_N-Point Deformation"
 msgstr "N-점 변형(_N)"
 
 #: ../app/tools/gimpoperationtool.c:135
-#, fuzzy
 msgid "Operation Tool: Use an arbitrary GEGL operation"
-msgstr "GEGL 도구: 임의의 GEGL 동작 사용"
+msgstr ""
 
 #. don't translate "Aux"
 #: ../app/tools/gimpoperationtool.c:547
@@ -21719,24 +21563,20 @@ msgid "Reset size to brush's native size"
 msgstr "붓의 기본 크기로 되돌리기"
 
 #: ../app/tools/gimppaintoptions-gui.c:182
-#, fuzzy
 msgid "Reset aspect ratio to brush's native aspect ratio"
-msgstr "붓의 기본 종횡비로 되돌리기"
+msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:190
-#, fuzzy
 msgid "Reset angle to brush's native angle"
-msgstr "붓의 기본 크기로 되돌리기"
+msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:198
-#, fuzzy
 msgid "Reset spacing to brush's native spacing"
-msgstr "붓의 기본 크기로 되돌리기"
+msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:206
-#, fuzzy
 msgid "Reset hardness to brush's native hardness"
-msgstr "붓의 기본 크기로 되돌리기"
+msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:214
 msgid "Reset force to default"
@@ -21960,9 +21800,8 @@ msgid "Draw mask"
 msgstr "마스크 그리기"
 
 #: ../app/tools/gimpregionselectoptions.c:128
-#, fuzzy
 msgid "Draw the selected region's mask"
-msgstr "선택 영역 마스크를 이동시키려면 클릭후 드래그하십시오"
+msgstr ""
 
 #: ../app/tools/gimpregionselecttool.c:154
 msgid "Move the mouse to change threshold"
@@ -22053,9 +21892,8 @@ msgid "_Seamless Clone"
 msgstr "무봉합선 복제(_S)"
 
 #: ../app/tools/gimpseamlessclonetool.c:789
-#, fuzzy
 msgid "Cloning the foreground object"
-msgstr "선택을 전경색으로 채웁니다"
+msgstr ""
 
 #: ../app/tools/gimpselectionoptions.c:87
 msgid "Feather edges"
@@ -22199,16 +22037,14 @@ msgid "Text alignment"
 msgstr "텍스트 정렬"
 
 #: ../app/tools/gimptextoptions.c:174
-#, fuzzy
 msgid "Indentation"
-msgstr "초기화"
+msgstr ""
 
 #: ../app/tools/gimptextoptions.c:175
 msgid "Indentation of the first line"
 msgstr "첫 줄 들여쓰기"
 
 #: ../app/tools/gimptextoptions.c:182
-#, fuzzy
 msgid "Line spacing"
 msgstr "줄 간격"
 
@@ -22217,9 +22053,8 @@ msgid "Adjust line spacing"
 msgstr "줄 간격 조정"
 
 #: ../app/tools/gimptextoptions.c:190
-#, fuzzy
 msgid "Letter spacing"
-msgstr "줄 간격"
+msgstr ""
 
 #: ../app/tools/gimptextoptions.c:191
 msgid "Adjust letter spacing"
@@ -22382,7 +22217,7 @@ msgid "Limit rotation steps to 15 degrees"
 msgstr "회전 각도를 15도 단위로 제한"
 
 #: ../app/tools/gimptransformoptions.c:516
-#, fuzzy, c-format
+#, c-format
 msgid "Keep aspect (%s)"
 msgstr "종횡비 유지 (%s)"
 
@@ -22484,14 +22319,13 @@ msgid "Transforming"
 msgstr "변형 중"
 
 #: ../app/tools/gimptransformtool.c:259
-#, fuzzy, c-format
+#, c-format
 msgid "The selection does not intersect with the layer."
-msgstr "입력한 파일 확장자명은 선택한 파일의 형식과 일치하지 않습니다."
+msgstr ""
 
 #: ../app/tools/gimptransformtool.c:514 ../app/tools/gimptransformtool.c:526
-#, fuzzy
 msgid "Transform Step"
-msgstr "항목 변환"
+msgstr ""
 
 #: ../app/tools/gimptransformtool.c:996
 msgid "The current transform is invalid"
@@ -22502,9 +22336,8 @@ msgid "There is no layer to transform."
 msgstr "변형할 레이어가 없습니다."
 
 #: ../app/tools/gimptransformtool.c:1451
-#, fuzzy
 msgid "The active layer's position and size are locked."
-msgstr "활성 레이어의 픽셀이 잠겼습니다."
+msgstr ""
 
 #: ../app/tools/gimptransformtool.c:1464
 msgid "There is no selection to transform."
@@ -22519,28 +22352,24 @@ msgid "The active path's strokes are locked."
 msgstr "활성 레이어의 스트로크가 잠겨 있습니다."
 
 #: ../app/tools/gimptransformtool.c:1486
-#, fuzzy
 msgid "The active path has no strokes."
-msgstr "활성 경로가 잠겨 있습니다."
+msgstr ""
 
 #: ../app/tools/gimpunifiedtransformtool.c:87
-#, fuzzy
 msgid "Unified Transform"
-msgstr "Cage 변형"
+msgstr ""
 
 #: ../app/tools/gimpunifiedtransformtool.c:88
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr "통합 변형 도구: 레이어, 선택, 경로를 변형"
 
 #: ../app/tools/gimpunifiedtransformtool.c:90
-#, fuzzy
 msgid "_Unified Transform"
-msgstr "_Cage 변형"
+msgstr ""
 
 #: ../app/tools/gimpunifiedtransformtool.c:115
-#, fuzzy
 msgid "Unified transform"
-msgstr "Cage 변형"
+msgstr ""
 
 #: ../app/tools/gimpunifiedtransformtool.c:190
 msgctxt "undo-type"
@@ -22602,9 +22431,8 @@ msgid "Effect Strength"
 msgstr "효과 힘"
 
 #: ../app/tools/gimpwarpoptions.c:113
-#, fuzzy
 msgid "Stroke Spacing"
-msgstr "선택 영역 따라 그리기"
+msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:127 ../app/tools/gimpwarpoptions.c:329
 msgid "Abyss policy"
@@ -22631,9 +22459,8 @@ msgid "Apply effect during motion"
 msgstr "모션 중 효과 적용"
 
 #: ../app/tools/gimpwarpoptions.c:149
-#, fuzzy
 msgid "Periodically"
-msgstr "위아래로"
+msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:150
 msgid "Apply effect periodically"
@@ -22652,9 +22479,8 @@ msgid "Frames"
 msgstr "프레임"
 
 #: ../app/tools/gimpwarpoptions.c:164
-#, fuzzy
 msgid "Number of animation frames"
-msgstr "줄 번호"
+msgstr ""
 
 #. the stroke frame
 #: ../app/tools/gimpwarpoptions.c:339
@@ -22663,27 +22489,24 @@ msgstr ""
 
 #. the animation frame
 #: ../app/tools/gimpwarpoptions.c:361
-#, fuzzy
 msgid "Animate"
-msgstr "애니메이션(_I)"
+msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:375
 msgid "Create Animation"
 msgstr "애니메이션 만들기"
 
 #: ../app/tools/gimpwarptool.c:155
-#, fuzzy
 msgid "Warp Transform"
-msgstr "Cage 변형"
+msgstr ""
 
 #: ../app/tools/gimpwarptool.c:156
 msgid "Warp Transform: Deform with different tools"
 msgstr ""
 
 #: ../app/tools/gimpwarptool.c:157
-#, fuzzy
 msgid "_Warp Transform"
-msgstr "_Cage 변형"
+msgstr ""
 
 #: ../app/tools/gimpwarptool.c:484 ../app/tools/gimpwarptool.c:496
 msgid "Warp Tool Stroke"
@@ -22698,9 +22521,8 @@ msgid "No stroke events selected."
 msgstr ""
 
 #: ../app/tools/gimpwarptool.c:863
-#, fuzzy
 msgid "Warp transform"
-msgstr "Cage 변형"
+msgstr ""
 
 #: ../app/tools/gimpwarptool.c:1076
 msgid "Please add some warp strokes first."
@@ -22766,40 +22588,34 @@ msgid "Draw unknown"
 msgstr "모호한 부분 그리기"
 
 #: ../app/tools/tools-enums.c:186
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Move pixels"
-msgstr "픽셀 잠그기"
+msgstr ""
 
 #: ../app/tools/tools-enums.c:187
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Grow area"
-msgstr "채널 늘임"
+msgstr ""
 
 #: ../app/tools/tools-enums.c:188
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Shrink area"
-msgstr "창 크기를 이미지에 맞춤(_W)"
+msgstr ""
 
 #: ../app/tools/tools-enums.c:189
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Swirl clockwise"
-msgstr "HSV(시계방향색상)(_H)"
+msgstr ""
 
 #: ../app/tools/tools-enums.c:190
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
-msgstr "HSV(시계반대방향 색상)(_C)"
+msgstr ""
 
 #: ../app/tools/tools-enums.c:191
-#, fuzzy
 msgctxt "warp-behavior"
 msgid "Erase warping"
-msgstr "지우개"
+msgstr ""
 
 #: ../app/tools/tools-enums.c:192
 msgctxt "warp-behavior"
@@ -22912,11 +22728,11 @@ msgstr ""
 
 #: ../app/vectors/gimpvectors-import.c:331
 msgid "Import Paths"
-msgstr "경로 가져오기"
+msgstr "경로 들여오기"
 
 #: ../app/vectors/gimpvectors-import.c:342
 msgid "Imported Path"
-msgstr "경로 가져오기"
+msgstr "경로 들여오기"
 
 #: ../app/vectors/gimpvectors-import.c:373
 #, c-format
@@ -23255,9 +23071,8 @@ msgid "_Edit event"
 msgstr "그레이디언트를 편집"
 
 #: ../app/widgets/gimpcontrollereditor.c:382
-#, fuzzy
 msgid "_Clear event"
-msgstr "이벤트 잡아내기(_G)"
+msgstr ""
 
 #: ../app/widgets/gimpcontrollereditor.c:521
 #, c-format
@@ -23618,9 +23433,8 @@ msgid "The specified file was not found."
 msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:232
-#, fuzzy
 msgid "The specified path was not found."
-msgstr "활성 경로가 잠겨 있습니다."
+msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:235
 msgid ""
@@ -23701,9 +23515,8 @@ msgid "Occupied"
 msgstr "점유된"
 
 #: ../app/widgets/gimpdashboard.c:347
-#, fuzzy
 msgid "Tile cache occupied size"
-msgstr "타일 캐쉬 크기"
+msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:356
 msgctxt "dashboard-variable"
@@ -23831,9 +23644,8 @@ msgid "Misc"
 msgstr "기타"
 
 #: ../app/widgets/gimpdashboard.c:584
-#, fuzzy
 msgid "Miscellaneous information"
-msgstr "텍스 정보 버리기"
+msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:744
 msgid "Select fields"
@@ -23905,9 +23717,8 @@ msgstr "Y 기울기"
 #.
 #: ../app/widgets/gimpdeviceinfoeditor.c:148
 #: ../app/widgets/gimpdynamicseditor.c:165
-#, fuzzy
 msgid "Wheel/Rotation"
-msgstr "회전"
+msgstr ""
 
 #. the axes
 #. The axes of an input device
@@ -24279,9 +24090,8 @@ msgstr ""
 "도움말 추가 패키지를 설치하거나 온라인 버전을 사용하도록 설정을 바꾸십시오."
 
 #: ../app/widgets/gimphelp.c:847
-#, fuzzy
 msgid "Read _Online"
-msgstr "온라인으로 보기(_R)"
+msgstr ""
 
 #: ../app/widgets/gimphistogrameditor.c:128
 msgid "Mean:"
@@ -24308,9 +24118,8 @@ msgid "Percentile:"
 msgstr "백분율:"
 
 #: ../app/widgets/gimphistogrameditor.c:160
-#, fuzzy
 msgid "Histogram channel"
-msgstr "히스토그램 배율"
+msgstr ""
 
 #: ../app/widgets/gimphistogrameditor.c:171
 msgid "Show values in linear space"
@@ -24333,9 +24142,8 @@ msgid "Copy Icon to Clipboard"
 msgstr "아이콘을 클립보드로 복사"
 
 #: ../app/widgets/gimpiconpicker.c:272
-#, fuzzy
 msgid "Paste Icon from Clipboard"
-msgstr "클립보드의 내용을 붙여넣습니다"
+msgstr ""
 
 #: ../app/widgets/gimpiconpicker.c:484
 msgid "Load Icon Image"
@@ -24450,9 +24258,8 @@ msgid "System Language"
 msgstr "시스템 언어"
 
 #: ../app/widgets/gimplayermodebox.c:158
-#, fuzzy
 msgid "Switch to another group of modes"
-msgstr "이전 이미지로 전환합니다"
+msgstr ""
 
 #: ../app/widgets/gimplayertreeview.c:319
 msgid "Lock alpha channel"
@@ -24487,9 +24294,8 @@ msgstr "도킹 가능한 대화상자를 여기로 끌어 놓으십시오"
 
 #: ../app/widgets/gimppickablepopup.c:206
 #: ../app/widgets/gimppickablepopup.c:423
-#, fuzzy
 msgid "Select an image in the left pane"
-msgstr "위 목록에서 연산 선택"
+msgstr ""
 
 #: ../app/widgets/gimppluginview.c:149
 msgid "Plug-In"
@@ -24500,12 +24306,11 @@ msgid "Progress"
 msgstr "진행"
 
 #: ../app/widgets/gimpsamplepointeditor.c:158
-#, fuzzy
 msgid ""
 "This image\n"
 "has no\n"
 "sample points"
-msgstr "이미지 색표본점을 표시합니다"
+msgstr ""
 
 #: ../app/widgets/gimpsavedialog.c:151
 msgid "All XCF images"
@@ -24556,19 +24361,16 @@ msgid "Save the current settings as named preset"
 msgstr ""
 
 #: ../app/widgets/gimpsettingsbox.c:346
-#, fuzzy
 msgid "Manage presets"
-msgstr "저장된 설정 관리"
+msgstr ""
 
 #: ../app/widgets/gimpsettingsbox.c:360
-#, fuzzy
 msgid "_Import Current Settings from File..."
-msgstr "파일로부터 설정 불러오기(_I)..."
+msgstr "파일로부터 현재 설정 들여오기(_I)..."
 
 #: ../app/widgets/gimpsettingsbox.c:366
-#, fuzzy
 msgid "_Export Current Settings to File..."
-msgstr "설정을 파일로 내보내기(_E)..."
+msgstr ""
 
 #: ../app/widgets/gimpsettingsbox.c:373
 msgid "_Manage Saved Presets..."
@@ -24579,28 +24381,24 @@ msgid "Save Settings as Named Preset"
 msgstr ""
 
 #: ../app/widgets/gimpsettingsbox.c:616
-#, fuzzy
 msgid "Enter a name for the preset"
-msgstr "설정의 이름을 입력하십시오"
+msgstr ""
 
 #: ../app/widgets/gimpsettingsbox.c:617
 msgid "Saved Settings"
 msgstr "저장된 설정"
 
 #: ../app/widgets/gimpsettingsbox.c:658
-#, fuzzy
 msgid "Manage Saved Presets"
-msgstr "저장된 설정 관리"
+msgstr ""
 
 #: ../app/widgets/gimpsettingseditor.c:195
-#, fuzzy
 msgid "Import presets from a file"
-msgstr "파일에서 설정 가져오기"
+msgstr "파일에서 프리셋 들여오기"
 
 #: ../app/widgets/gimpsettingseditor.c:204
-#, fuzzy
 msgid "Export the selected presets to a file"
-msgstr "선택한 설정을 파일로 내보내기"
+msgstr ""
 
 #: ../app/widgets/gimpsettingseditor.c:213
 msgid "Delete the selected preset"
@@ -24682,14 +24480,12 @@ msgid "_Gamma:"
 msgstr "감마(_G):"
 
 #: ../app/widgets/gimptemplateeditor.c:432
-#, fuzzy
 msgid "Color _manage this image"
-msgstr "이미지 색상화"
+msgstr ""
 
 #: ../app/widgets/gimptemplateeditor.c:441
-#, fuzzy
 msgid "Choose A Color Profile"
-msgstr "색상 프로필"
+msgstr ""
 
 #: ../app/widgets/gimptemplateeditor.c:445
 msgid "Co_lor profile:"
@@ -24987,9 +24783,9 @@ msgid "%s (try %s, %s, %s)"
 msgstr "%s (시도 %s, %s, %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1658
-#, fuzzy, c-format
+#, c-format
 msgid "Built-in grayscale (%s)"
-msgstr "지우기 방지 (%s)"
+msgstr ""
 
 #: ../app/widgets/gimpwidgets-utils.c:1665
 #, c-format
