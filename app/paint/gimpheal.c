@@ -511,17 +511,21 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   gint              paint_area_width,
                   gint              paint_area_height)
 {
-  GimpPaintCore     *paint_core = GIMP_PAINT_CORE (source_core);
-  GimpContext       *context    = GIMP_CONTEXT (paint_options);
-  GimpDynamics      *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpPaintCore     *paint_core  = GIMP_PAINT_CORE (source_core);
+  GimpContext       *context     = GIMP_CONTEXT (paint_options);
+  GimpSourceOptions *src_options = GIMP_SOURCE_OPTIONS (paint_options);
+  GimpDynamics      *dynamics    = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image       = gimp_item_get_image (GIMP_ITEM (drawable));
   GeglBuffer        *src_copy;
   GeglBuffer        *mask_buffer;
+  GimpPickable      *dest_pickable;
   const GimpTempBuf *mask_buf;
   gdouble            fade_point;
   gdouble            force;
   gint               mask_off_x;
   gint               mask_off_y;
+  gint               dest_pickable_off_x;
+  gint               dest_pickable_off_y;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -566,8 +570,25 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                          src_rect->width,
                                          src_rect->height));
 
-  gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                         GEGL_RECTANGLE (paint_buffer_x, paint_buffer_y,
+  if (src_options->sample_merged)
+    {
+      dest_pickable = GIMP_PICKABLE (image);
+
+      gimp_item_get_offset (GIMP_ITEM (drawable),
+                            &dest_pickable_off_x,
+                            &dest_pickable_off_y);
+    }
+  else
+    {
+      dest_pickable = GIMP_PICKABLE (drawable);
+
+      dest_pickable_off_x = 0;
+      dest_pickable_off_y = 0;
+    }
+
+  gimp_gegl_buffer_copy (gimp_pickable_get_buffer (dest_pickable),
+                         GEGL_RECTANGLE (paint_buffer_x + dest_pickable_off_x,
+                                         paint_buffer_y + dest_pickable_off_y,
                                          gegl_buffer_get_width  (paint_buffer),
                                          gegl_buffer_get_height (paint_buffer)),
                          GEGL_ABYSS_NONE,
