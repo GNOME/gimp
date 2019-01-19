@@ -485,6 +485,14 @@ gimp_session_info_dialog_show (GtkWidget       *widget,
 {
   gtk_window_move (GTK_WINDOW (widget),
                    info->p->x, info->p->y);
+
+  if (gimp_session_info_get_remember_size (info) &&
+      info->p->width  > 0 &&
+      info->p->height > 0)
+    {
+      gtk_window_resize (GTK_WINDOW (info->p->widget),
+                         info->p->width, info->p->height);
+    }
 }
 
 static gboolean
@@ -683,6 +691,10 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
        *  dock windows. gtk_window_resize() seems to work fine for all
        *  windows. Leave this comment here until we figured what's
        *  going on...
+       *
+       *  XXX If we end up updating this code, also do the same to the
+       *  gtk_window_resize() call in gimp_session_info_dialog_show()
+       *  signal handler.
        */
 #if 1
       gtk_window_resize (GTK_WINDOW (info->p->widget),
@@ -736,7 +748,7 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
    *  are shown. This is important especially for transient dialogs,
    *  because window managers behave even "smarter" then...
    */
-  if (GTK_IS_DIALOG (info->p->widget))
+  if (GTK_IS_WINDOW (info->p->widget))
     g_signal_connect (info->p->widget, "show",
                       G_CALLBACK (gimp_session_info_dialog_show),
                       info);
@@ -970,7 +982,7 @@ gimp_session_info_set_widget (GimpSessionInfo *info,
 {
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
 
-  if (GTK_IS_DIALOG (info->p->widget))
+  if (GTK_IS_WINDOW (info->p->widget))
     g_signal_handlers_disconnect_by_func (info->p->widget,
                                           gimp_session_info_dialog_show,
                                           info);
