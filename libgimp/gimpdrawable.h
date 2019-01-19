@@ -103,7 +103,7 @@ gboolean       gimp_drawable_set_name               (gint32              drawabl
                                                      const gchar        *name);
 GIMP_DEPRECATED_FOR(gimp_item_get_visible)
 gboolean       gimp_drawable_get_visible            (gint32              drawable_ID);
-GIMP_DEPRECATED_FOR(gimp_item_get_visible)
+GIMP_DEPRECATED_FOR(gimp_item_set_visible)
 gboolean       gimp_drawable_set_visible            (gint32              drawable_ID,
                                                      gboolean            visible);
 GIMP_DEPRECATED_FOR(gimp_item_get_linked)
