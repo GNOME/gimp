@@ -151,6 +151,9 @@ gimp_color_profile_combo_box_init (GimpColorProfileComboBox *combo_box)
   gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (combo_box),
                                         gimp_color_profile_row_separator_func,
                                         NULL, NULL);
+
+  /* See issues #2828 and #2642. */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (combo_box), 1);
 }
 
 static void

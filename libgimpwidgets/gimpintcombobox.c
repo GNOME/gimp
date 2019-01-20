@@ -930,6 +930,9 @@ gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
       for (; attached_menus; attached_menus = g_list_next (attached_menus))
         queue_resize_cell_view (attached_menus->data);
     }
+
+  /* See issues #2828 and #2642. */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (combo_box), 1);
 }
 
 static void

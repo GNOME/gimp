@@ -83,6 +83,9 @@ gimp_unit_combo_box_init (GimpUnitComboBox *combo)
   g_signal_connect (combo, "notify::popup-shown",
                     G_CALLBACK (gimp_unit_combo_box_popup_shown),
                     NULL);
+
+  /* See issues #2828 and #2642. */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (combo), 1);
 }
 
 static void

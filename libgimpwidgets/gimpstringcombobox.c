@@ -159,6 +159,9 @@ gimp_string_combo_box_constructed (GObject *object)
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (object), cell,
                                   "text", priv->label_column,
                                   NULL);
+
+  /* See issues #2828 and #2642. */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (object), 1);
 }
 
 static void

@@ -186,6 +186,9 @@ gimp_scale_combo_box_constructed (GObject *object)
   g_signal_connect (entry, "key-press-event",
                     G_CALLBACK (gimp_scale_combo_box_entry_key_press),
                     combo_box);
+
+  /* See issues #2828 and #2642. */
+  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (object), 1);
 }
 
 static void
