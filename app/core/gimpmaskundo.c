@@ -97,7 +97,6 @@ gimp_mask_undo_constructed (GObject *object)
   GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
   GimpItem     *item;
   GimpDrawable *drawable;
-  gint          x, y, w, h;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -106,22 +105,31 @@ gimp_mask_undo_constructed (GObject *object)
   item     = GIMP_ITEM_UNDO (object)->item;
   drawable = GIMP_DRAWABLE (item);
 
-  if (gimp_item_bounds (item, &x, &y, &w, &h))
-    {
-      mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
-                                           gimp_drawable_get_format (drawable));
-
-      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                             GEGL_RECTANGLE (x, y, w, h),
-                             GEGL_ABYSS_NONE,
-                             mask_undo->buffer,
-                             GEGL_RECTANGLE (0, 0, 0, 0));
-
-      mask_undo->x = x;
-      mask_undo->y = y;
-    }
-
   mask_undo->format = gimp_drawable_get_format (drawable);
+
+  if (gimp_item_bounds (item,
+                        &mask_undo->bounds.x,
+                        &mask_undo->bounds.y,
+                        &mask_undo->bounds.width,
+                        &mask_undo->bounds.height))
+    {
+      GeglBuffer    *buffer = gimp_drawable_get_buffer (drawable);
+      GeglRectangle  rect;
+
+      gimp_gegl_rectangle_align_to_tile_grid (&rect, &mask_undo->bounds,
+                                              buffer);
+
+      mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                           rect.width,
+                                                           rect.height),
+                                           mask_undo->format);
+
+      gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
+                             mask_undo->buffer, GEGL_RECTANGLE (0, 0, 0, 0));
+
+      mask_undo->x = rect.x;
+      mask_undo->y = rect.y;
+    }
 }
 
 static void
@@ -182,38 +190,38 @@ gimp_mask_undo_pop (GimpUndo            *undo,
                     GimpUndoMode         undo_mode,
                     GimpUndoAccumulator *accum)
 {
-  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (undo);
-  GimpItem     *item      = GIMP_ITEM_UNDO (undo)->item;
-  GimpDrawable *drawable  = GIMP_DRAWABLE (item);
-  GimpChannel  *channel   = GIMP_CHANNEL (item);
-  GeglBuffer   *new_buffer;
-  const Babl   *format;
-  gint          x, y, w, h;
-  gint          width  = 0;
-  gint          height = 0;
+  GimpMaskUndo  *mask_undo  = GIMP_MASK_UNDO (undo);
+  GimpItem      *item       = GIMP_ITEM_UNDO (undo)->item;
+  GimpDrawable  *drawable   = GIMP_DRAWABLE (item);
+  GimpChannel   *channel    = GIMP_CHANNEL (item);
+  GeglBuffer    *new_buffer = NULL;
+  GeglRectangle  bounds     = {};
+  GeglRectangle  rect       = {};
+  const Babl    *format;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if (gimp_item_bounds (item, &x, &y, &w, &h))
-    {
-      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
-                                    gimp_drawable_get_format (drawable));
-
-      gimp_gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                             GEGL_RECTANGLE (x, y, w, h),
-                             GEGL_ABYSS_NONE,
-                             new_buffer,
-                             GEGL_RECTANGLE (0, 0, 0, 0));
-
-      gegl_buffer_clear (gimp_drawable_get_buffer (drawable),
-                         GEGL_RECTANGLE (x, y, w, h));
-    }
-  else
-    {
-      new_buffer = NULL;
-    }
-
   format = gimp_drawable_get_format (drawable);
+
+  if (gimp_item_bounds (item,
+                        &bounds.x,
+                        &bounds.y,
+                        &bounds.width,
+                        &bounds.height))
+    {
+      GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
+
+      gimp_gegl_rectangle_align_to_tile_grid (&rect, &bounds, buffer);
+
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                    rect.width, rect.height),
+                                    format);
+
+      gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
+                             new_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
+
+      gegl_buffer_clear (buffer, &rect);
+    }
 
   if (mask_undo->convert_format)
     {
@@ -223,7 +231,6 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
       buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                 mask_undo->format);
-      gegl_buffer_clear (buffer, NULL);
 
       gimp_drawable_set_buffer (drawable, FALSE, NULL, buffer);
       g_object_unref (buffer);
@@ -231,9 +238,6 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   if (mask_undo->buffer)
     {
-      width  = gegl_buffer_get_width  (mask_undo->buffer);
-      height = gegl_buffer_get_height (mask_undo->buffer);
-
       gimp_gegl_buffer_copy (mask_undo->buffer,
                              NULL,
                              GEGL_ABYSS_NONE,
@@ -249,10 +253,10 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   if (mask_undo->buffer)
     {
       channel->empty = FALSE;
-      channel->x1    = mask_undo->x;
-      channel->y1    = mask_undo->y;
-      channel->x2    = mask_undo->x + width;
-      channel->y2    = mask_undo->y + height;
+      channel->x1    = mask_undo->bounds.x;
+      channel->y1    = mask_undo->bounds.y;
+      channel->x2    = mask_undo->bounds.x + mask_undo->bounds.width;
+      channel->y2    = mask_undo->bounds.y + mask_undo->bounds.height;
     }
   else
     {
@@ -267,10 +271,11 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   channel->bounds_known = TRUE;
 
   /*  set the new mask undo parameters  */
-  mask_undo->buffer = new_buffer;
-  mask_undo->x      = x;
-  mask_undo->y      = y;
   mask_undo->format = format;
+  mask_undo->buffer = new_buffer;
+  mask_undo->bounds = bounds;
+  mask_undo->x      = rect.x;
+  mask_undo->y      = rect.y;
 
   gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
