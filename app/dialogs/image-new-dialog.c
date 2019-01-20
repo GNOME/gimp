@@ -147,8 +147,6 @@ image_new_dialog_new (GimpContext *context)
                                  "ellipsize",         PANGO_ELLIPSIZE_NONE,
                                  "focus-on-click",    FALSE,
                                  NULL);
-  /* See issues #2828 and #2642. */
-  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (private->combo), 1);
   gtk_box_pack_start (GTK_BOX (hbox), private->combo, TRUE, TRUE, 0);
   gtk_widget_show (private->combo);
 
