@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-20 22:11+0900\n"
+"PO-Revision-Date: 2019-01-21 02:31+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -158,116 +158,134 @@ msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
 msgstr ""
+"색 프로필 있는 PNG, JPEG 및 TIFF를 내보내는 새로운 옵션; 항상 색 프로필 있는 "
+"PSD 내보냄"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "New DDS format loading/exporting plug-in"
-msgstr ""
+msgstr "새 DDS 형식 불러오기/내보내기 플러그인"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr ""
+"김프 2.10.8는 주로 버그 수정 및 최적화 릴리스입니다. 특히, 다음을 포함:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
-msgstr ""
+msgstr "프로젝션을 렌더링할 때의 적응성 청크 크기, 동적으로 응답성을 개선함"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
-msgstr ""
+msgstr "Windows에서 RawTherapee (버전 5.5 이상)의 감지가 개선되었음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
-msgstr ""
+msgstr "저장 대화 상자의 XCF 호환성 정보가 더 이해하기 쉽고 찾기 쉬워짐"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
-msgstr ""
+msgstr "대시보드 도크에 다양한 성능 로그 도구가 추가되고 로그 기록이 가능해짐"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
 msgstr ""
+"김프 2.10.6에서는 버그 수정, 최적화 및 기능 추가를 많이 하였습니다. 가장 주목"
+"할 만한 변화:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
+"텍스트 레이어는 이제 세로 텍스트를 나타낼 수 있음(다양 한 문자 방향과 선 방"
+"향 제공)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr ""
+msgstr "새로운 '작은 행성' (gegl:stereographic-projection) 필터"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "New \"Long Shadow\" filter"
-msgstr ""
+msgstr "새 \"긴 그림자\" 필터"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
-msgstr ""
+msgstr "이제 측정 도구의 \"곧게 하기\" 옵션을 사용하여 수직 곧게 하기가 가능함"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
 msgstr ""
+"이제 드로어블 미리보기는 비동기적으로 렌더링되며 기본 설정에서 레이어 그룹 미"
+"리보기를 비활성화할 수 있음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
 msgstr ""
+"현재 실행 중인 비동기 작업의 수를 보여 주는 대시보드 \"기타\" 그룹의 새 \"비"
+"동기\" 필드"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
+"열기/저장/내보내기 대화 상자의 파일 형식 필터링이 덜 혼란스럽도록 바꾸었음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
-msgstr ""
+msgstr "새로운 언어 (김프는 이제 81개 언어로 번역되었음): 마라티 어"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
+"김프 2.10.4에는 다양한 최적화뿐만 아니라 버그 수정이 많이 포함 되었습니다. 가"
+"장 주목할 만한 변화:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr ""
+"측정 도구에서 곧게 하기: 측정 선을 수평선으로 사용하여 레이어를 회전할 수 있"
+"음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Fast startup: fonts loading is not blocking startup anymore"
-msgstr ""
+msgstr "빠른 시작: 글꼴 불러오기가 더는 시작을 방해하지 않음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
-msgstr ""
+msgstr "붓, 무늬 및 그레이디언트와 동일한 사용자 인터페이스로 글꼴에 태그 부여"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
-msgstr ""
+msgstr "PSD 지원: PSD 이미지의 미리 합성된 버전을 들여올 수 있음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
 msgstr ""
+"대시보드 업데이트: 새 '메모리' 그룹 및 다양한 메트릭을 표시하는 개선된 '스"
+"왑' 그룹"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
@@ -275,6 +293,8 @@ msgid ""
 "the usual bug-fixing version after a major release, with a few dozen bugs "
 "fixed."
 msgstr ""
+"김프 2.10 시리즈의 (2.10.0에 뒤이어 아주 빠른) 이 두 번째 릴리스는, 주로 주 "
+"릴리스 후 일반적인 버그 수정 버전이며, 몇 십 개의 버그를 수정했습니다."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
@@ -283,6 +303,9 @@ msgid ""
 "\"Recursive Transform\". These are nice examples of our relaxed feature "
 "policy in stable micro releases."
 msgstr ""
+"또한 가져오기 및 내보내기에 HEIF 형식을 지원하는 새로운 플러그인과 2개의 새 "
+"필터 \"구형화\" 및 \"재귀 변형\"도 제공합니다. 이들 기능은 안정된 극소형 릴리"
+"스에서 우리의 여유 있는 기능 정책을 보여주는 적절한 예입니다."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid ""
@@ -15623,6 +15646,9 @@ msgid ""
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
 "bugs."
 msgstr ""
+"우리는 이러한 설정이 필요하지 않기를 바라지만, 모든 소프트웨어처럼, 김프에는 "
+"버그가 있고 충돌이 발생할 수 있습니다. 그러한 경우, 버그를 보고하여 우리를 도"
+"울 수 있습니다."
 
 #: ../app/dialogs/preferences-dialog.c:1243
 msgid "Bug Reporting"
@@ -15871,10 +15897,13 @@ msgid ""
 "use them unless you really know what you are doing or you intend to "
 "contribute patches."
 msgstr ""
+"이들 기능은 미완성이고, 버그가 있으며 김프에 충돌이 발생할 수 있습니다. 정말"
+"로 무엇을 하고 있는지 알거나 패치를 기여하려는 것이 아니라면 사용하지 않는 것"
+"이 좋습니다."
 
 #: ../app/dialogs/preferences-dialog.c:1605
 msgid "Insane Options"
-msgstr ""
+msgstr "비정상적 옵션"
 
 #: ../app/dialogs/preferences-dialog.c:1609
 msgid "_N-Point Deformation tool"
@@ -21775,7 +21804,7 @@ msgstr "모호한 부분 선택하기"
 
 #: ../app/tools/gimpforegroundselecttool.c:650
 msgid "press Enter to preview."
-msgstr ""
+msgstr "미리보려 엔터를 누르십시오."
 
 #: ../app/tools/gimpforegroundselecttool.c:652
 msgid "press Escape to exit preview or Enter to apply."
@@ -21783,7 +21812,7 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:1231
 msgid "Paint mask"
-msgstr ""
+msgstr "페인트 마스크"
 
 #: ../app/tools/gimpfreeselecttool.c:129
 msgid ""
@@ -25576,7 +25605,7 @@ msgstr ""
 
 #: ../app/widgets/gimpsettingsbox.c:340
 msgid "Manage presets"
-msgstr ""
+msgstr "저장된 프리셋"
 
 #: ../app/widgets/gimpsettingsbox.c:353
 msgid "_Import Current Settings from File..."
@@ -25604,7 +25633,7 @@ msgstr "저장된 설정"
 
 #: ../app/widgets/gimpsettingsbox.c:634
 msgid "Manage Saved Presets"
-msgstr ""
+msgstr "저장된 프리셋 관리"
 
 #: ../app/widgets/gimpsettingseditor.c:192
 msgid "Import presets from a file"
@@ -25797,7 +25826,7 @@ msgstr "취소선"
 #: ../app/widgets/gimptextstyleeditor.c:1306
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
-msgstr ""
+msgstr "이 시스템에서 글꼴 \"%s\"를 사용할 수 없음"
 
 #: ../app/widgets/gimpthumbbox.c:323
 #, c-format
@@ -25999,7 +26028,7 @@ msgstr "%s (시도 %s, %s, %s)"
 #: ../app/widgets/gimpwidgets-utils.c:1708
 #, c-format
 msgid "Built-in grayscale (%s)"
-msgstr "내장 회색조( %s)"
+msgstr "내장 그레이스케일(%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1715
 #, c-format
@@ -26009,12 +26038,12 @@ msgstr "내장 RGB (%s)"
 #: ../app/widgets/gimpwidgets-utils.c:1735
 #, c-format
 msgid "Preferred grayscale (%s)"
-msgstr ""
+msgstr "기본 설정된 그레이스케일 (%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1744
 #, c-format
 msgid "Preferred RGB (%s)"
-msgstr ""
+msgstr "기본 설정된 RGB (%s)"
 
 #: ../app/widgets/widgets-enums.c:23
 msgctxt "active-color"
@@ -26112,7 +26141,7 @@ msgstr "김프 XCF 이미지"
 
 #: ../app/xcf/xcf.c:272 ../app/xcf/xcf.c:361
 msgid "Memory Stream"
-msgstr ""
+msgstr "메모리 스트림"
 
 #: ../app/xcf/xcf.c:283
 #, c-format
@@ -26146,7 +26175,7 @@ msgstr "'%s' 만들기 오류: "
 
 #: ../app/xcf/xcf-load.c:228
 msgid "Invalid image mode and precision combination."
-msgstr ""
+msgstr "이미지 모드 및 정밀도 조합이 잘못 되었습니다."
 
 #: ../app/xcf/xcf-load.c:353
 #, c-format
@@ -26211,12 +26240,12 @@ msgstr "XCF 쓰기 오류: "
 #: ../app/xcf/xcf-write.c:199
 #, c-format
 msgid "Error writing XCF: failed to allocate %d bytes of memory."
-msgstr ""
+msgstr "XCF 쓰기 중 오류:%d 바이트의 메모리를 할당하지 못했습니다."
 
 #: ../app/xcf/xcf-write.c:293
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
-msgstr ""
+msgstr "XCF 쓰기 중 오류 발생: 픽셀을 쓸 때 지원되지 않는 BPC: %d"
 
 #: ../app-tools/gimp-debug-tool.c:78
 msgid "GIMP Crash Debug"
