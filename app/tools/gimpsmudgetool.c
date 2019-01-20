@@ -96,6 +96,10 @@ gimp_smudge_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   /*  the rate scale  */
   scale = gimp_prop_spin_scale_new (config, "rate", NULL,
                                     1.0, 10.0, 1);

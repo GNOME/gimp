@@ -39,6 +39,7 @@ struct _GimpSmudgeOptions
   gdouble           rate;
   gdouble           flow;
   gboolean          no_erasing;
+  gboolean          sample_merged;
 };
 
 struct _GimpSmudgeOptionsClass

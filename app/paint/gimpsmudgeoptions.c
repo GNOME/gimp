@@ -40,6 +40,7 @@ enum
   PROP_RATE,
   PROP_FLOW,
   PROP_NO_ERASING,
+  PROP_SAMPLE_MERGED
 };
 
 
@@ -85,6 +86,13 @@ gimp_smudge_options_class_init (GimpSmudgeOptionsClass *klass)
                             _("Never decrease alpha of existing pixels"),
                             SMUDGE_DEFAULT_NO_ERASING,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                            "sample-merged",
+                            _("Sample merged"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -111,6 +119,9 @@ gimp_smudge_options_set_property (GObject      *object,
     case PROP_NO_ERASING:
       options->no_erasing = g_value_get_boolean (value);
       break;
+    case PROP_SAMPLE_MERGED:
+      options->sample_merged = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -136,6 +147,9 @@ gimp_smudge_options_get_property (GObject    *object,
       break;
     case PROP_NO_ERASING:
       g_value_set_boolean (value, options->no_erasing);
+      break;
+    case PROP_SAMPLE_MERGED:
+      g_value_set_boolean (value, options->sample_merged);
       break;
 
     default:

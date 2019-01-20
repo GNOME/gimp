@@ -205,21 +205,45 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                    GimpPaintOptions *paint_options,
                    GimpSymmetry     *sym)
 {
-  GimpSmudge *smudge = GIMP_SMUDGE (paint_core);
-  GeglBuffer *paint_buffer;
-  GimpCoords *coords;
-  gint        paint_buffer_x;
-  gint        paint_buffer_y;
-  gint        accum_size;
-  gint        n_strokes;
-  gint        i;
-  gint        x, y;
+  GimpSmudge        *smudge  = GIMP_SMUDGE (paint_core);
+  GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (paint_options);
+  GimpImage         *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpPickable      *dest_pickable;
+  GeglBuffer        *pickable_buffer;
+  GeglBuffer        *paint_buffer;
+  GimpCoords        *coords;
+  gint               dest_pickable_off_x;
+  gint               dest_pickable_off_y;
+  gint               paint_buffer_x;
+  gint               paint_buffer_y;
+  gint               accum_size;
+  gint               n_strokes;
+  gint               i;
+  gint               x, y;
 
   coords = gimp_symmetry_get_origin (sym);
   gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
                                            drawable,
                                            paint_options,
                                            coords);
+
+  if (options->sample_merged)
+    {
+      dest_pickable = GIMP_PICKABLE (image);
+
+      gimp_item_get_offset (GIMP_ITEM (drawable),
+                            &dest_pickable_off_x,
+                            &dest_pickable_off_y);
+    }
+  else
+    {
+      dest_pickable = GIMP_PICKABLE (drawable);
+
+      dest_pickable_off_x = 0;
+      dest_pickable_off_y = 0;
+    }
+
+  pickable_buffer = gimp_pickable_get_buffer (dest_pickable);
 
   n_strokes = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
@@ -263,14 +287,18 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
         {
           gfloat     pixel[4];
           GeglColor *color;
+          gint       pick_x;
+          gint       pick_y;
 
-          gimp_pickable_get_pixel_at (GIMP_PICKABLE (drawable),
-                                      CLAMP ((gint) coords->x,
-                                             0,
-                                             gimp_item_get_width (GIMP_ITEM (drawable)) - 1),
-                                      CLAMP ((gint) coords->y,
-                                             0,
-                                             gimp_item_get_height (GIMP_ITEM (drawable)) - 1),
+          pick_x = CLAMP ((gint) coords->x + dest_pickable_off_x,
+                          0,
+                          gegl_buffer_get_width (pickable_buffer) - 1);
+          pick_y = CLAMP ((gint) coords->y + dest_pickable_off_y,
+                          0,
+                          gegl_buffer_get_height (pickable_buffer) - 1);
+
+          gimp_pickable_get_pixel_at (dest_pickable,
+                                      pick_x, pick_y,
                                       babl_format ("RGBA float"),
                                       pixel);
 
@@ -281,17 +309,17 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
         }
 
       /* copy the region under the original painthit. */
-      gimp_gegl_buffer_copy (
-        gimp_drawable_get_buffer (drawable),
-        GEGL_RECTANGLE (paint_buffer_x,
-                        paint_buffer_y,
-                        gegl_buffer_get_width  (paint_buffer),
-                        gegl_buffer_get_height (paint_buffer)),
-        GEGL_ABYSS_NONE,
-        accum_buffer,
-        GEGL_RECTANGLE (paint_buffer_x - x,
-                        paint_buffer_y - y,
-                        0, 0));
+      gimp_gegl_buffer_copy
+        (pickable_buffer,
+         GEGL_RECTANGLE (paint_buffer_x + dest_pickable_off_x,
+                         paint_buffer_y + dest_pickable_off_y,
+                         gegl_buffer_get_width  (paint_buffer),
+                         gegl_buffer_get_height (paint_buffer)),
+         GEGL_ABYSS_NONE,
+         accum_buffer,
+         GEGL_RECTANGLE (paint_buffer_x - x,
+                         paint_buffer_y - y,
+                         0, 0));
     }
 
   smudge->accum_buffers = g_list_reverse (smudge->accum_buffers);
@@ -311,7 +339,10 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   GimpContext        *context    = GIMP_CONTEXT (paint_options);
   GimpDynamics       *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpImage          *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpPickable       *dest_pickable;
   GeglBuffer         *paint_buffer;
+  gint                dest_pickable_off_x;
+  gint                dest_pickable_off_y;
   gint                paint_buffer_x;
   gint                paint_buffer_y;
   gint                paint_buffer_width;
@@ -335,6 +366,22 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   gint                paint_width, paint_height;
   gint                n_strokes;
   gint                i;
+
+  if (options->sample_merged)
+    {
+      dest_pickable = GIMP_PICKABLE (image);
+
+      gimp_item_get_offset (GIMP_ITEM (drawable),
+                            &dest_pickable_off_x,
+                            &dest_pickable_off_y);
+    }
+  else
+    {
+      dest_pickable = GIMP_PICKABLE (drawable);
+
+      dest_pickable_off_x = 0;
+      dest_pickable_off_y = 0;
+    }
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -394,7 +441,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
   /* Convert to linear RGBA */
   if (brush_color_ptr)
-    gimp_pickable_srgb_to_pixel (GIMP_PICKABLE (drawable),
+    gimp_pickable_srgb_to_pixel (dest_pickable,
                                  &brush_color,
                                  babl_format ("RGBA double"),
                                  &brush_color);
@@ -462,9 +509,11 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                    paint_buffer_y - y,
                                                    paint_buffer_width,
                                                    paint_buffer_height),
-                                   gimp_drawable_get_buffer (drawable),
-                                   GEGL_RECTANGLE (paint_buffer_x,
-                                                   paint_buffer_y,
+                                   gimp_pickable_get_buffer (dest_pickable),
+                                   GEGL_RECTANGLE (paint_buffer_x +
+                                                   dest_pickable_off_x,
+                                                   paint_buffer_y +
+                                                   dest_pickable_off_y,
                                                    paint_buffer_width,
                                                    paint_buffer_height),
                                    brush_color_ptr,
