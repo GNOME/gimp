@@ -47,6 +47,10 @@ Core:
     layers by clicking on pixels. The available layers will be looped
     through (starting from the upper one) while Alt key is hold and the
     picked layer name will be temporarily displayed in the status bar.
+  - When clearing a channel, do nothing if the channel is already empty;
+    otherwise, align the cleared rectangle to the channel buffer's tile
+    grid, so that all affected tiles are dropped, rather than zeroed.
+    Furthermore, only update the affected region of the channel.
 
 User interface:
 
@@ -69,6 +73,9 @@ Usability:
     is chosen.
   - GIMP now allows selecting default export file type for new projects.
     The choice is limited to PNG, JPEG, WebP, PSD, ORA, TIFF, BMP.
+  - Work around weird display of the item list in various drop down all
+    over GIMP (all GIMP classes based off GtkComboBox), which had empty
+    scrollable space at the top.
 
 Tools:
 
@@ -97,6 +104,11 @@ Tools:
     nothing).
   - In the Unified Transform tool, default to preserving aspect ratio
     when scaling up or down.
+  - In the Healing tool, "Sample merged" now also work for the target
+    pixels, allowing to draw in empty layers.
+  - Selection by color is now parallelized, hence improving speed of the
+    Select by Color tool (and any other processing which may share this
+    piece of code now or in the future).
 
 Plug-ins:
 
