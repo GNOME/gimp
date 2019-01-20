@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-20 06:58+0900\n"
+"PO-Revision-Date: 2019-01-20 15:27+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -79,36 +79,43 @@ msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
 msgstr ""
+"김프 2.10.10은 많은 새 기능과 버그 수정이 있는 꽤 큰 업데이트입니다. 눈에 띄"
+"는 개선 사항 중 일부:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
+"버킷 채우기 도구: 완전히 닫히지 않은 라인 아트 영역에 대한 새로운 \"라인 아"
+"트 감지로 채우기\""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
-msgstr ""
+msgstr "이제 버킷 채우기 도구에서 Ctrl+클릭으로 빠르게 색상을 선택할 수 있음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
+"버킷 채우기 도구에서 \"유사한 색상을\" 및 \"라인 아트 감지로\" 채울 때 마우스"
+"를 누르고 있을 수 있음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
+"크기 바꾸기 도구에서때 숫자 입력을 사용할 때에도 중심을 기준으로 크기를 바꿈"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
-msgstr ""
+msgstr "이제 통합 변환 도구에서 크게 또는 작게 할 때 종횡비 유지가 기본 설정임"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
-msgstr ""
+msgstr "새로운 일반 캔버스 수정자 'Alt + 가운데 클릭'으로 레이어 선택"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid ""
