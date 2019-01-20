@@ -35,9 +35,9 @@ typedef struct _GimpMaskUndoClass GimpMaskUndoClass;
 
 struct _GimpMaskUndo
 {
-  GimpItemUndo  parent_instance;
+  GimpItemUndo   parent_instance;
 
-  gboolean      convert_format;
+  gboolean       convert_format;
 
   const Babl    *format;
   GeglBuffer    *buffer;
