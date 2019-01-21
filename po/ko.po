@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-22 02:08+0900\n"
+"PO-Revision-Date: 2019-01-22 07:52+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -13315,12 +13315,12 @@ msgstr " (들여옴)"
 #: ../app/core/gimpimage.c:2469
 #, c-format
 msgid "Layer mode '%s' was added in %s"
-msgstr ""
+msgstr "%2$s에 레이어 모드 %1$s가 추가되었음"
 
 #: ../app/core/gimpimage.c:2484
 #, c-format
 msgid "Layer groups were added in %s"
-msgstr ""
+msgstr "%s에 레이어 그룹이 추가되었음"
 
 #: ../app/core/gimpimage.c:2491
 #, c-format
@@ -13928,7 +13928,7 @@ msgstr "회색 픽셀 대신 투명한 픽셀 선택"
 
 #: ../app/core/gimplineart.c:298 ../app/tools/gimpbucketfilloptions.c:172
 msgid "Line art detection threshold"
-msgstr ""
+msgstr "라인 아트 감지 임계값"
 
 #: ../app/core/gimplineart.c:299 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
@@ -13944,19 +13944,19 @@ msgstr "라인 아트 아래에서 커진 최대 픽셀 수"
 
 #: ../app/core/gimplineart.c:312
 msgid "Maximum curved closing length"
-msgstr ""
+msgstr "최대 곡선 마감 길이"
 
 #: ../app/core/gimplineart.c:313
 msgid "Maximum curved length (in pixels) to close the line art"
-msgstr ""
+msgstr "라인 아트를 닫는 최대 곡선 길이 (픽셀 단위)"
 
 #: ../app/core/gimplineart.c:319
 msgid "Maximum straight closing length"
-msgstr ""
+msgstr "최대 직선 마감 길이"
 
 #: ../app/core/gimplineart.c:320
 msgid "Maximum straight length (in pixels) to close the line art"
-msgstr ""
+msgstr "라인 아트를 닫는 최대 직선 길이 (픽셀 단위)"
 
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
@@ -14270,7 +14270,7 @@ msgstr "붓 회전 비활성화"
 
 #: ../app/core/gimpsymmetry-mirror.c:123
 msgid "Mirror"
-msgstr ""
+msgstr "거울면"
 
 #: ../app/core/gimpsymmetry-mirror.c:130
 msgid "Horizontal Symmetry"
@@ -14338,7 +14338,7 @@ msgstr "줄 사이의 X 시프트 (픽셀)"
 
 #: ../app/core/gimpsymmetry-tiling.c:144
 msgid "Max strokes X"
-msgstr ""
+msgstr "X축 최대 스트로크"
 
 #: ../app/core/gimpsymmetry-tiling.c:145
 msgid "Maximum number of strokes on the X axis"
@@ -14346,7 +14346,7 @@ msgstr "X 축에서 획의 최대 개수"
 
 #: ../app/core/gimpsymmetry-tiling.c:152
 msgid "Max strokes Y"
-msgstr ""
+msgstr "Y축 최대 스트로크"
 
 #: ../app/core/gimpsymmetry-tiling.c:153
 msgid "Maximum number of strokes on the Y axis"
@@ -15876,7 +15876,7 @@ msgstr "사용 가능하면 기본적으로 IPTC 메타데이터 내보내기"
 
 #: ../app/dialogs/preferences-dialog.c:1540
 msgid "Metadata can contain sensitive information."
-msgstr ""
+msgstr "메타데이터에는 민감한한 정보가 포함될 수 있습니다."
 
 #. Export File Type
 #: ../app/dialogs/preferences-dialog.c:1544
@@ -16460,7 +16460,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:2583
 msgid "Maximum History Size:"
-msgstr ""
+msgstr "최대 이력 크기:"
 
 #: ../app/dialogs/preferences-dialog.c:2587
 msgid "Clear Action History"
@@ -17619,7 +17619,7 @@ msgstr "(없음)"
 #: ../app/display/gimpdisplayshell-tool-events.c:1566
 #, c-format
 msgid "Layer picked: '%s'"
-msgstr ""
+msgstr "레이어 선택됨: '%s'"
 
 #: ../app/display/gimpdisplayshell-utils.c:174
 #: ../app/tools/gimpmeasuretool.c:592 ../app/tools/gimpmeasuretool.c:744
@@ -17993,7 +17993,7 @@ msgstr "'%s' 열기 실패: %s"
 
 #: ../app/file/file-remote.c:113
 msgid "Mounting remote volume"
-msgstr ""
+msgstr "원격 볼륨 마운팅"
 
 #: ../app/file/file-remote.c:289
 msgid "Opening remote file"
@@ -18933,7 +18933,7 @@ msgstr ""
 
 #: ../app/operations/gimpoperationthreshold.c:97
 msgid "Low threshold"
-msgstr ""
+msgstr "낮은 임계값"
 
 #: ../app/operations/gimpoperationthreshold.c:104
 msgid "High threshold"
@@ -18943,7 +18943,7 @@ msgstr "높은 임계값"
 msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
-msgstr ""
+msgstr "알파 채널을 어떤 값을 기준으로 분리하여 투명도를 100%나 0%로만 만들기"
 
 #: ../app/gui/gui.c:312
 msgid "Image Recovery"
@@ -19141,7 +19141,7 @@ msgstr "지우는 효과 없음"
 
 #: ../app/paint/gimpmybrushoptions.c:115 ../app/paint/gimpsmudgeoptions.c:85
 msgid "Never decrease alpha of existing pixels"
-msgstr ""
+msgstr "기존 픽셀의 알파를 줄이지 않음"
 
 #: ../app/paint/gimppaintbrush.c:68 ../app/tools/gimppaintbrushtool.c:57
 msgid "Paintbrush"
@@ -19179,7 +19179,7 @@ msgstr "링크 크기"
 
 #: ../app/paint/gimppaintoptions.c:246
 msgid "Link brush size to brush native"
-msgstr ""
+msgstr "붓 크기를 붓 네이티브에 연계"
 
 #: ../app/paint/gimppaintoptions.c:252
 msgid "Link Aspect Ratio"
@@ -19187,7 +19187,7 @@ msgstr "종횡비 연계"
 
 #: ../app/paint/gimppaintoptions.c:253
 msgid "Link brush aspect ratio to brush native"
-msgstr ""
+msgstr "붓 종횡비를 붓시 네이티브에 연계"
 
 #: ../app/paint/gimppaintoptions.c:259
 msgid "Link Angle"
@@ -19195,7 +19195,7 @@ msgstr "각도 연계"
 
 #: ../app/paint/gimppaintoptions.c:260
 msgid "Link brush angle to brush native"
-msgstr ""
+msgstr "붓 각도를 붓 네이티브에 연계"
 
 #: ../app/paint/gimppaintoptions.c:266
 msgid "Link Spacing"
@@ -19203,7 +19203,7 @@ msgstr "줄 간격"
 
 #: ../app/paint/gimppaintoptions.c:267
 msgid "Link brush spacing to brush native"
-msgstr ""
+msgstr "붓 간격을 붓 네이티브에 연계"
 
 #: ../app/paint/gimppaintoptions.c:273
 msgid "Link Hardness"
@@ -19211,15 +19211,15 @@ msgstr "경도 연계"
 
 #: ../app/paint/gimppaintoptions.c:274
 msgid "Link brush hardness to brush native"
-msgstr ""
+msgstr "붓 경도를 붓 네이티브에 연계"
 
 #: ../app/paint/gimppaintoptions.c:280
 msgid "Lock brush to view"
-msgstr ""
+msgstr "붓을 뷰에 고정"
 
 #: ../app/paint/gimppaintoptions.c:281
 msgid "Keep brush appearance fixed relative to the view"
-msgstr ""
+msgstr "붓 모양을 뷰에 상대적인 고정 상태로 유지"
 
 #: ../app/paint/gimppaintoptions.c:287
 msgid "Incremental"
@@ -21071,11 +21071,11 @@ msgstr "라인 아트 계산용 원본 이미지"
 
 #: ../app/tools/gimpbucketfilloptions.c:186
 msgid "Maximum gap length"
-msgstr ""
+msgstr "최대 간격 길이"
 
 #: ../app/tools/gimpbucketfilloptions.c:187
 msgid "Maximum gap (in pixels) in line art which can be closed"
-msgstr ""
+msgstr "닫을 수 있는 라인 아트의 최대 간격 (픽셀 단위)"
 
 #: ../app/tools/gimpbucketfilloptions.c:193
 #: ../app/tools/gimpbucketfilloptions.c:441
@@ -21742,7 +21742,7 @@ msgstr "엔진"
 
 #: ../app/tools/gimpforegroundselectoptions.c:109
 msgid "Matting engine to use"
-msgstr ""
+msgstr "사용할 매팅 엔진"
 
 #: ../app/tools/gimpforegroundselectoptions.c:117
 msgid "Number of downsampled levels to use"
@@ -21886,11 +21886,11 @@ msgstr "무효 변형"
 #: ../app/tools/gimpgradientoptions.c:101
 #: ../app/tools/gimpgradientoptions.c:298
 msgid "Metric"
-msgstr ""
+msgstr "측정 방식"
 
 #: ../app/tools/gimpgradientoptions.c:102
 msgid "Metric to use for the distance calculation"
-msgstr ""
+msgstr "거리 계산에 사용할 측정 방식"
 
 #: ../app/tools/gimpgradientoptions.c:109
 msgid "Adaptive Supersampling"
@@ -21910,11 +21910,11 @@ msgstr "즉시 그레이디언트를 커밋"
 
 #: ../app/tools/gimpgradientoptions.c:142
 msgid "Modify active gradient"
-msgstr ""
+msgstr "활성 그레이디언트 수정"
 
 #: ../app/tools/gimpgradientoptions.c:143
 msgid "Modify the active gradient in-place"
-msgstr ""
+msgstr "제자리에서 그레이디언트 수정"
 
 #: ../app/tools/gimpgradientoptions.c:274
 #: ../app/tools/gimppaintoptions-gui.c:383
@@ -22009,7 +22009,7 @@ msgstr "채색:"
 
 #: ../app/tools/gimpgradienttool-editor.c:1547
 msgid "New stop at midpoint"
-msgstr ""
+msgstr "중점에 새 스톱"
 
 #: ../app/tools/gimpgradienttool-editor.c:1555
 msgid "Center midpoint"
@@ -22031,7 +22031,7 @@ msgstr ""
 #: ../app/tools/gimpgradienttool-editor.c:1747
 #, c-format
 msgid "Midpoint %d"
-msgstr ""
+msgstr "중점 %d"
 
 #: ../app/tools/gimpgradienttool-editor.c:2323
 #: ../app/tools/gimpgradienttool-editor.c:2332
@@ -22193,7 +22193,7 @@ msgstr "지점을 추가하려면 클릭하거나 클릭 후 드래그하십시�
 
 #: ../app/tools/gimpiscissorstool.c:1138 ../app/tools/gimpiscissorstool.c:1150
 msgid "Modify Scissors Curve"
-msgstr ""
+msgstr "가 위 곡선 수정"
 
 #: ../app/tools/gimplevelstool.c:140
 msgid "_Levels..."
@@ -22458,7 +22458,7 @@ msgstr "N-점 변형"
 
 #: ../app/tools/gimpnpointdeformationtool.c:159
 msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
-msgstr ""
+msgstr "N점 변형 도구: 점을 사용하여 이미지를 고무처럼 변형"
 
 #: ../app/tools/gimpnpointdeformationtool.c:161
 msgid "_N-Point Deformation"
@@ -22530,7 +22530,7 @@ msgstr "색 옵션"
 
 #: ../app/tools/gimppaintoptions-gui.c:576
 msgid "Link to brush default"
-msgstr ""
+msgstr "붓 기본값에 연계"
 
 #: ../app/tools/gimppainttool.c:166
 msgid "Click to paint"
@@ -22814,12 +22814,12 @@ msgstr ""
 #: ../app/tools/gimpseamlesscloneoptions.c:73
 msgid ""
 "Maximal scale of refinement points to be used for the interpolation mesh"
-msgstr ""
+msgstr "보간 메시에 사용할 미세 조정 점의 최대 축척"
 
 #: ../app/tools/gimpseamlessclonetool.c:190
 #: ../app/tools/gimpseamlessclonetool.c:751
 msgid "Seamless Clone"
-msgstr ""
+msgstr "무봉합선 복제"
 
 #: ../app/tools/gimpseamlessclonetool.c:191
 msgid "Seamless Clone: Seamlessly paste one image into another"
@@ -23199,7 +23199,7 @@ msgstr "중심에서 45도 각도로 이동 제한 (%s)"
 #: ../app/tools/gimptransformgridoptions.c:442
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
-msgstr ""
+msgstr "크기 조정할 때 종횡비 유지 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:444
 #, c-format
@@ -23234,7 +23234,7 @@ msgstr ""
 #: ../app/tools/gimptransformgridoptions.c:457
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
-msgstr ""
+msgstr "원근을 변경할 때 피벗의 위치 유지 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:460
 msgid "Pivot"
@@ -23256,7 +23256,7 @@ msgstr "잠그기"
 
 #: ../app/tools/gimptransformgridoptions.c:464
 msgid "Lock pivot position to canvas"
-msgstr ""
+msgstr "피벗 위치를 캔버스에 고정"
 
 #: ../app/tools/gimptransformgridtool.c:201
 #: ../app/tools/gimptransformtool.c:312
@@ -23337,7 +23337,7 @@ msgstr ""
 
 #: ../app/tools/gimpunifiedtransformtool.c:84
 msgid "Unified Transform"
-msgstr ""
+msgstr "통합 변형"
 
 #: ../app/tools/gimpunifiedtransformtool.c:85
 msgid "Unified Transform Tool: Transform the layer, selection or path"
@@ -23345,7 +23345,7 @@ msgstr "통합 변형 도구: 레이어, 선택, 경로를 변형"
 
 #: ../app/tools/gimpunifiedtransformtool.c:87
 msgid "_Unified Transform"
-msgstr ""
+msgstr "통합 변형(_U)"
 
 #: ../app/tools/gimpunifiedtransformtool.c:109
 msgid "Unified transform"
@@ -24571,7 +24571,7 @@ msgstr "최대 색상 차이"
 
 #: ../app/widgets/gimpdashboard.c:456
 msgid "Maximal tile cache occupied size"
-msgstr ""
+msgstr "타일 캐시의 최대 점유 크기"
 
 #: ../app/widgets/gimpdashboard.c:465 ../app/widgets/gimpdashboard.c:517
 msgctxt "dashboard-variable"
@@ -24810,7 +24810,7 @@ msgstr "기타"
 
 #: ../app/widgets/gimpdashboard.c:885
 msgid "Miscellaneous information"
-msgstr ""
+msgstr "기타 정보"
 
 #: ../app/widgets/gimpdashboard.c:1066
 msgid "Select fields"
@@ -25069,7 +25069,7 @@ msgstr "픽셀 잠그기"
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
 msgid "Lock position and size"
-msgstr ""
+msgstr "위치와 크기 고정"
 
 #: ../app/widgets/gimpdrawabletreeview.c:189
 msgid "Cannot select item while a floating selection is active."
@@ -25572,6 +25572,8 @@ msgstr "모든 XCF 이미지"
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
 msgstr ""
+"%s 이상에서 XCF 파일을 읽을 수 있게 하려면 압축을 사용하지 않도록 설정하십시"
+"오."
 
 #: ../app/widgets/gimpsavedialog.c:326
 msgid "Save this XCF file with better but slower compression"
@@ -25591,7 +25593,7 @@ msgstr ""
 
 #: ../app/widgets/gimpsavedialog.c:407
 msgid "Metadata won't be visible in GIMP older than version 2.10."
-msgstr ""
+msgstr "2.10 버전보다 오래 된 김프에서는 메타데이터가 표시되지 않습니다."
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
