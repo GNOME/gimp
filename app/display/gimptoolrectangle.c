@@ -222,7 +222,7 @@ struct _GimpToolRectanglePrivate
 
   /* Whether to draw round corners */
   gboolean                round_corners;
-  gboolean                corner_radius;
+  gdouble                 corner_radius;
 
   /* The title for the statusbar coords */
   gchar                  *status_title;
@@ -556,7 +556,7 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
   g_object_class_install_property (object_class, PROP_CORNER_RADIUS,
                                    g_param_spec_double ("corner-radius",
                                                         NULL, NULL,
-                                                        0.0, 1000.0, 5.0,
+                                                        0.0, 10000.0, 10.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
