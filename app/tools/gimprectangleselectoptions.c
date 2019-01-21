@@ -28,6 +28,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
 
 #include "gimprectangleoptions.h"
 #include "gimprectangleselectoptions.h"
@@ -99,7 +100,7 @@ gimp_rectangle_select_options_class_init (GimpRectangleSelectOptionsClass *klass
                            "corner-radius",
                            _("Radius"),
                            _("Radius of rounding in pixels"),
-                           0.0, 100.0, 5.0,
+                           0.0, 10000.0, 10.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   gimp_rectangle_options_install_properties (object_class);
@@ -173,6 +174,9 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
 
       scale = gimp_prop_spin_scale_new (config, "corner-radius", NULL,
                                         1.0, 10.0, 1);
+      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
+                                        0.0, 1000.0);
+      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
 
       frame = gimp_prop_expanding_frame_new (config, "round-corners", NULL,
                                              scale, NULL);
