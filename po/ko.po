@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-22 07:52+0900\n"
+"PO-Revision-Date: 2019-01-22 08:36+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -1917,22 +1917,22 @@ msgstr "전경 빨강: 최대로 설정"
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 1%"
-msgstr "전경색 빨강: 1% 감소"
+msgstr "전경 빨강: 1% 감소"
 
 #: ../app/actions/context-actions.c:305
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 1%"
-msgstr "전경색 빨강: 1% 증가"
+msgstr "전경 빨강: 1% 증가"
 
 #: ../app/actions/context-actions.c:309
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 10%"
-msgstr "전경색 빨강: 10% 감소"
+msgstr "전경 빨강: 10% 감소"
 
 #: ../app/actions/context-actions.c:313
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 10%"
-msgstr "전경색 빨강: 10% 증가"
+msgstr "전경 빨강: 10% 증가"
 
 #: ../app/actions/context-actions.c:321
 msgctxt "context-action"
@@ -1952,22 +1952,22 @@ msgstr "전경 초록: 최대로 설정"
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 1%"
-msgstr "전경색 초록: 1% 감소"
+msgstr "전경 초록: 1% 감소"
 
 #: ../app/actions/context-actions.c:337
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 1%"
-msgstr "전경색 초록: 1% 증가"
+msgstr "전경 초록: 1% 증가"
 
 #: ../app/actions/context-actions.c:341
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 10%"
-msgstr "전경색 초록: 10% 감소"
+msgstr "전경 초록: 10% 감소"
 
 #: ../app/actions/context-actions.c:345
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 10%"
-msgstr "전경색 초록: 10% 증가"
+msgstr "전경 초록: 10% 증가"
 
 #: ../app/actions/context-actions.c:353
 msgctxt "context-action"
@@ -1987,22 +1987,22 @@ msgstr "전경 파랑: 최대로 설정"
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 1%"
-msgstr "전경색 파랑: 1% 감소"
+msgstr "전경 파랑: 1% 감소"
 
 #: ../app/actions/context-actions.c:369
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 1%"
-msgstr "전경색 파랑: 1% 증가"
+msgstr "전경 파랑: 1% 증가"
 
 #: ../app/actions/context-actions.c:373
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 10%"
-msgstr "전경색 파랑: 10% 감소"
+msgstr "전경 파랑: 10% 감소"
 
 #: ../app/actions/context-actions.c:377
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 10%"
-msgstr "전경색 파랑: 10% 증가"
+msgstr "전경 파랑: 10% 증가"
 
 #: ../app/actions/context-actions.c:385
 msgctxt "context-action"
@@ -2127,22 +2127,22 @@ msgstr "전경 색조: 최대로 설정"
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 1%"
-msgstr "전경색 색조: 1% 감소"
+msgstr "전경 색조: 1% 감소"
 
 #: ../app/actions/context-actions.c:497
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 1%"
-msgstr "전경색 색조: 1% 증가"
+msgstr "전경 색조: 1% 증가"
 
 #: ../app/actions/context-actions.c:501
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 10%"
-msgstr "전경색 파랑: 10% 감소"
+msgstr "전경 파랑: 10% 감소"
 
 #: ../app/actions/context-actions.c:505
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 10%"
-msgstr "전경색 색조: 10% 증가"
+msgstr "전경 색조: 10% 증가"
 
 #: ../app/actions/context-actions.c:513
 msgctxt "context-action"
@@ -2162,22 +2162,22 @@ msgstr "전경 채도: 최대로 설정"
 #: ../app/actions/context-actions.c:525
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "전경색 채도: 1% 감소"
+msgstr "전경 채도: 1% 감소"
 
 #: ../app/actions/context-actions.c:529
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "전경색 채도: 1% 증가"
+msgstr "전경 채도: 1% 증가"
 
 #: ../app/actions/context-actions.c:533
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "전경색 채도: 10% 감소"
+msgstr "전경 채도: 10% 감소"
 
 #: ../app/actions/context-actions.c:537
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "전경색 채도: 10% 증가"
+msgstr "전경 채도: 10% 증가"
 
 #: ../app/actions/context-actions.c:545
 msgctxt "context-action"
@@ -2197,22 +2197,22 @@ msgstr "전경 값: 최대로 설정"
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 1%"
-msgstr "전경색 값: 1% 감소"
+msgstr "전경 값: 1% 감소"
 
 #: ../app/actions/context-actions.c:561
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 1%"
-msgstr "전경색 값: 1% 증가"
+msgstr "전경 값: 1% 증가"
 
 #: ../app/actions/context-actions.c:565
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 10%"
-msgstr "전경색 값: 10% 감소"
+msgstr "전경 값: 10% 감소"
 
 #: ../app/actions/context-actions.c:569
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 10%"
-msgstr "전경색 값: 10% 증가"
+msgstr "전경 값: 10% 증가"
 
 #: ../app/actions/context-actions.c:577
 msgctxt "context-action"
@@ -14258,7 +14258,7 @@ msgstr "중심 세로좌표"
 
 #: ../app/core/gimpsymmetry-mandala.c:144
 msgid "Number of points"
-msgstr ""
+msgstr "포인트 수"
 
 #: ../app/core/gimpsymmetry-mandala.c:152 ../app/core/gimpsymmetry-mirror.c:154
 msgid "Disable brush transform"
@@ -15727,7 +15727,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1353
 msgid "_Optimize image display for:"
-msgstr ""
+msgstr "이미지 최적화 용도(_O):"
 
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1357
@@ -15752,7 +15752,7 @@ msgstr "검정 점 보상 사용(_P)"
 
 #: ../app/dialogs/preferences-dialog.c:1388
 msgid "O_ptimize soft-proofing for:"
-msgstr ""
+msgstr "소프트푸르핑 최적화 용도(_P)"
 
 #: ../app/dialogs/preferences-dialog.c:1397
 msgid "Mark out of gamut colors"
@@ -17970,7 +17970,7 @@ msgstr "비정상적인 파일입니다"
 
 #: ../app/file/file-open.c:125 ../app/file/file-save.c:135
 msgid "Permission denied"
-msgstr ""
+msgstr "허가 거부됨"
 
 #: ../app/file/file-open.c:257
 #, c-format
@@ -17997,7 +17997,7 @@ msgstr "원격 볼륨 마운팅"
 
 #: ../app/file/file-remote.c:289
 msgid "Opening remote file"
-msgstr ""
+msgstr "원격 파일 열기"
 
 #: ../app/file/file-remote.c:357
 #, c-format
@@ -18929,7 +18929,7 @@ msgstr ""
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
-msgstr ""
+msgstr "임계값을 사용하여 이미지를 두 가지 색으로 축소"
 
 #: ../app/operations/gimpoperationthreshold.c:97
 msgid "Low threshold"
@@ -19114,7 +19114,7 @@ msgstr "내브러시"
 
 #: ../app/paint/gimpmybrushcore.c:157
 msgid "No MyPaint brushes available for use with this tool."
-msgstr ""
+msgstr "이 도구와 함께 사용할 수 있는 내페인트 붓은 없습니다."
 
 #: ../app/paint/gimpmybrushoptions.c:86 ../app/tools/gimpcoloroptions.c:85
 #: ../app/tools/gimprectangleselectoptions.c:100
@@ -19754,15 +19754,15 @@ msgstr "페더 Y축 반지름"
 
 #: ../app/pdb/gimppdbcontext.c:135
 msgid "Sample criterion"
-msgstr ""
+msgstr "샘플 기준"
 
 #: ../app/pdb/gimppdbcontext.c:143
 msgid "Sample threshold"
-msgstr ""
+msgstr "샘플 임계값"
 
 #: ../app/pdb/gimppdbcontext.c:150
 msgid "Sample transparent"
-msgstr ""
+msgstr "샘플 투명"
 
 #: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
 #: ../app/tools/gimpregionselectoptions.c:104
@@ -20500,7 +20500,7 @@ msgstr "모두 선택"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:214
 msgid "Source Range"
-msgstr ""
+msgstr "원본 범위"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:225
 msgid "Destination Range"
@@ -20520,11 +20520,11 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:199
 msgid "Rotate matrix 90° counter-clockwise"
-msgstr ""
+msgstr "행렬을 반시계 방향으로 90° 회전"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:205
 msgid "Rotate matrix 90° clockwise"
-msgstr ""
+msgstr "행렬을 시계 방향으로 90° 회전"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:211
 msgid "Flip matrix horizontally"
@@ -20544,7 +20544,7 @@ msgstr "연속"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:90
 msgid "Sharp Edges"
-msgstr ""
+msgstr "선명한 경계선"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:101
 msgid "Other Options"
@@ -21594,7 +21594,7 @@ msgstr "보기 분할(_V)"
 
 #: ../app/tools/gimpfilteroptions.c:102
 msgid "On-canvas con_trols"
-msgstr ""
+msgstr "캔버스 내 컨트롤(_T)"
 
 #: ../app/tools/gimpfilteroptions.c:103
 msgid "Show on-canvas filter controls"
@@ -21746,7 +21746,7 @@ msgstr "사용할 매팅 엔진"
 
 #: ../app/tools/gimpforegroundselectoptions.c:117
 msgid "Number of downsampled levels to use"
-msgstr ""
+msgstr "사용할 다운샘플링된 레벨 개수"
 
 #: ../app/tools/gimpforegroundselectoptions.c:123
 msgid "Active levels"
@@ -21754,7 +21754,7 @@ msgstr "활성 레벨"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Number of levels to perform solving"
-msgstr ""
+msgstr "해결을 수행할 레벨 개수"
 
 #: ../app/tools/gimpforegroundselectoptions.c:130
 msgid "Iterations"
@@ -22017,7 +22017,7 @@ msgstr "중심 중점"
 
 #: ../app/tools/gimpgradienttool-editor.c:1618
 msgid "Start Endpoint"
-msgstr ""
+msgstr "시작 끝점"
 
 #: ../app/tools/gimpgradienttool-editor.c:1626
 msgid "End Endpoint"
@@ -22026,7 +22026,7 @@ msgstr "끝 끝점"
 #: ../app/tools/gimpgradienttool-editor.c:1679
 #, c-format
 msgid "Stop %d"
-msgstr ""
+msgstr "스톱 %d"
 
 #: ../app/tools/gimpgradienttool-editor.c:1747
 #, c-format
@@ -22438,7 +22438,7 @@ msgstr "조절점의 영향력 크기"
 #: ../app/tools/gimpnpointdeformationoptions.c:112
 #: ../app/tools/gimpnpointdeformationoptions.c:113
 msgid "Show lattice"
-msgstr ""
+msgstr "래티스 보이기"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
 #: ../app/tools/gimpscaletool.c:92 ../app/tools/gimptransformgridoptions.c:441
@@ -22466,7 +22466,7 @@ msgstr "N-점 변형(_N)"
 
 #: ../app/tools/gimpoperationtool.c:135
 msgid "Operation Tool: Use an arbitrary GEGL operation"
-msgstr ""
+msgstr "GEGL 도구: 임의의 GEGL 연산 사용"
 
 #. don't translate "Aux"
 #: ../app/tools/gimpoperationtool.c:547
@@ -23243,7 +23243,7 @@ msgstr "피벗"
 #: ../app/tools/gimptransformgridoptions.c:461
 #, c-format
 msgid "Snap (%s)"
-msgstr ""
+msgstr "스냅 (% s)"
 
 #: ../app/tools/gimptransformgridoptions.c:462
 #, c-format
@@ -23440,7 +23440,7 @@ msgstr "모션 중 효과 적용"
 
 #: ../app/tools/gimpwarpoptions.c:149
 msgid "Periodically"
-msgstr ""
+msgstr "주기적으로"
 
 #: ../app/tools/gimpwarpoptions.c:150
 msgid "Apply effect periodically"
@@ -23460,7 +23460,7 @@ msgstr "프레임"
 
 #: ../app/tools/gimpwarpoptions.c:164
 msgid "Number of animation frames"
-msgstr ""
+msgstr "애니메이션 프레임 수"
 
 #. the stroke frame
 #: ../app/tools/gimpwarpoptions.c:341
@@ -23498,15 +23498,15 @@ msgstr "레이어 그룹을 워프할 수 없습니다."
 
 #: ../app/tools/gimpwarptool.c:663
 msgid "No stroke events selected."
-msgstr ""
+msgstr "선택한 스트로크 이벤트가 없음."
 
 #: ../app/tools/gimpwarptool.c:685
 msgid "No warp to erase."
-msgstr ""
+msgstr "지울 워프가 없음."
 
 #: ../app/tools/gimpwarptool.c:689
 msgid "No warp to smooth."
-msgstr ""
+msgstr "매끄럽게 할 워프가 없음."
 
 #: ../app/tools/gimpwarptool.c:912
 msgid "Warp transform"
@@ -24419,7 +24419,7 @@ msgstr "버그 정보 복사"
 
 #: ../app/widgets/gimpcriticaldialog.c:55
 msgid "Open Bug Tracker"
-msgstr ""
+msgstr "버그 트래커 열기"
 
 #: ../app/widgets/gimpcriticaldialog.c:133
 #: ../app/widgets/gimpcriticaldialog.c:456
@@ -24634,7 +24634,7 @@ msgstr "큐 정체됨"
 #: ../app/widgets/gimpdashboard.c:536
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
-msgstr ""
+msgstr "꽉 찬 큐로 인해 스왑에 쓰기가 막힌 횟수"
 
 #: ../app/widgets/gimpdashboard.c:545
 msgctxt "dashboard-variable"
@@ -24729,11 +24729,11 @@ msgstr "가용한"
 
 #: ../app/widgets/gimpdashboard.c:656
 msgid "Amount of available physical memory"
-msgstr "사용 가능한 물리적 메모리의 크기"
+msgstr "사용 가능한 실제 메모리의 크기"
 
 #: ../app/widgets/gimpdashboard.c:665
 msgid "Physical memory size"
-msgstr ""
+msgstr "실제 메모리 크기"
 
 #: ../app/widgets/gimpdashboard.c:676
 msgctxt "dashboard-variable"
@@ -24751,7 +24751,7 @@ msgstr "비동기"
 
 #: ../app/widgets/gimpdashboard.c:686
 msgid "Number of ongoing asynchronous operations"
-msgstr ""
+msgstr "진행 중인 비동기 작업 수"
 
 #: ../app/widgets/gimpdashboard.c:694
 msgctxt "dashboard-variable"
@@ -24814,7 +24814,7 @@ msgstr "기타 정보"
 
 #: ../app/widgets/gimpdashboard.c:1066
 msgid "Select fields"
-msgstr ""
+msgstr "필드 선택"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
 #: ../app/widgets/gimpdashboard.c:3131
@@ -24933,7 +24933,7 @@ msgstr "회전"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:153
 msgid "Slider"
-msgstr ""
+msgstr "슬라이더"
 
 #. the axes
 #. The axes of an input device
@@ -25329,7 +25329,7 @@ msgstr "사용 언어의 김프 사용자 설명서가 설치되지 않았습니
 
 #: ../app/widgets/gimphelp.c:820
 msgid "Read Selected _Language"
-msgstr ""
+msgstr "선택한 언어로 읽기(_L)"
 
 #: ../app/widgets/gimphelp.c:824
 msgid "Available manuals..."
@@ -25350,7 +25350,7 @@ msgstr ""
 
 #: ../app/widgets/gimphelp.c:847
 msgid "Read _Online"
-msgstr ""
+msgstr "온라인으로 읽기(_O)"
 
 #: ../app/widgets/gimphistogrameditor.c:112
 msgid "Linear/Preceptual"
@@ -25584,6 +25584,8 @@ msgid ""
 "On edge cases, better compression algorithms might still end up on bigger "
 "file size; manual check recommended"
 msgstr ""
+"극한 상황에서, 더 나은 압축 알고리즘을 사용해도 파일 크기가 더 커질 수 있음. "
+"수동 검사 권장"
 
 #: ../app/widgets/gimpsavedialog.c:398
 #, c-format
@@ -25616,7 +25618,7 @@ msgstr ""
 
 #: ../app/widgets/gimpsettingsbox.c:322
 msgid "Save the current settings as named preset"
-msgstr ""
+msgstr "현재 설정을 명명된 프리셋으로 저장"
 
 #: ../app/widgets/gimpsettingsbox.c:340
 msgid "Manage presets"
