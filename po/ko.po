@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-21 06:25+0900\n"
+"PO-Revision-Date: 2019-01-21 18:45+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -3442,7 +3442,7 @@ msgstr "확장 관리(_E)"
 #: ../app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
-msgstr ""
+msgstr "확장 관리: 검색, 설치, 제거, 업데이트."
 
 #: ../app/actions/dialogs-actions.c:363
 #: ../app/dialogs/preferences-dialog.c:2089
@@ -6148,6 +6148,8 @@ msgid ""
 "discarding the image's color profile, but allows to easily restore the "
 "profile."
 msgstr ""
+"이미지에 sRGB 프로필을 임시로 사용합니다. 이는 이미지의 색 프로필을 버리는 것"
+"과 같지만 프로필을 쉽게 복원할 수 있습니다."
 
 #: ../app/actions/image-actions.c:193 ../app/actions/image-actions.c:446
 msgctxt "image-convert-action"
@@ -8068,42 +8070,42 @@ msgstr "오른쪽에서 왼쪽으로"
 #: ../app/actions/text-editor-actions.c:71
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
-msgstr ""
+msgstr "TTB-RTL"
 
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "수직, 오른쪽에서 왼쪽으로 (혼합된 방향)"
 
 #: ../app/actions/text-editor-actions.c:77
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
-msgstr ""
+msgstr "TTB-RTL-UPRIGHT"
 
 #: ../app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "수직, 오른쪽에서 왼쪽으로 (연직 방향)"
 
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
-msgstr ""
+msgstr "TTB-LTR"
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "수직, 왼쪽에서 오른쪽으로 (혼합된 방향)"
 
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
-msgstr ""
+msgstr "TTB-LTR-UPRIGHT"
 
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "수직, 왼쪽에서 오른쪽으로 (연직 방향)"
 
 #: ../app/actions/text-editor-commands.c:60
 #: ../app/actions/text-tool-commands.c:114
@@ -8207,22 +8209,22 @@ msgstr "오른쪽에서 왼쪽으로"
 #: ../app/actions/text-tool-actions.c:116
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "수직, 오른쪽에서 왼쪽으로 (혼합된 방향)"
 
 #: ../app/actions/text-tool-actions.c:121
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "수직, 오른쪽에서 왼쪽으로 (연직 방향)"
 
 #: ../app/actions/text-tool-actions.c:126
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "수직, 왼쪽에서 오른쪽으로 (혼합된 방향)"
 
 #: ../app/actions/text-tool-actions.c:131
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "수직, 왼쪽에서 오른쪽으로 (연직 방향)"
 
 #: ../app/actions/tool-options-actions.c:57
 msgctxt "tool-options-action"
@@ -12335,7 +12337,7 @@ msgstr ""
 msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
 "mandatory."
-msgstr ""
+msgstr "버전 비교용 <requires><id>org.gimp.GIMP</id></requires>은 필수 사항임."
 
 #: ../app/core/gimpextension.c:704
 #, c-format
@@ -12365,7 +12367,7 @@ msgstr ""
 #: ../app/core/gimpextension.c:828
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
-msgstr ""
+msgstr "<li> 는 <ol> 이나 <ul> 태그 안에 있어야 합니다."
 
 #: ../app/core/gimpextension.c:833
 #, c-format
@@ -13412,11 +13414,11 @@ msgstr "대상 정렬하기"
 
 #: ../app/core/gimpimage-color-profile.c:120
 msgid "Enable 'Use sRGB Profile'"
-msgstr ""
+msgstr "'sRGB 프로필 사용' 활성화"
 
 #: ../app/core/gimpimage-color-profile.c:137
 msgid "Disable 'Use sRGB Profile'"
-msgstr ""
+msgstr "'sRGB 프로필 사용' 비활성화"
 
 #: ../app/core/gimpimage-color-profile.c:195
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
@@ -15882,7 +15884,7 @@ msgstr "내보내기 파일 유형"
 
 #: ../app/dialogs/preferences-dialog.c:1548
 msgid "Default export file type:"
-msgstr ""
+msgstr "기본 내보내기 파일 유형:"
 
 #. Raw Image Importer
 #: ../app/dialogs/preferences-dialog.c:1552
@@ -23298,7 +23300,7 @@ msgstr ""
 msgid ""
 "Applying the transformation will result in an item that is over %g times "
 "larger than the image."
-msgstr ""
+msgstr "변형을 적용하면 항목이 이미지보다 %g배보다 더 커집니다."
 
 #: ../app/tools/gimptransformtool.c:511
 msgid "There is no layer to transform."
@@ -24013,7 +24015,7 @@ msgstr "X:"
 #: ../app/widgets/gimpcolorframe.c:943
 msgctxt "xyY color space"
 msgid "y:"
-msgstr ""
+msgstr "y:"
 
 #. TRANSLATORS: Y from xyY color space
 #: ../app/widgets/gimpcolorframe.c:945
@@ -24717,7 +24719,7 @@ msgstr "사용됨"
 
 #: ../app/widgets/gimpdashboard.c:647
 msgid "Amount of memory used by the process"
-msgstr ""
+msgstr "프로세스가 사용하는 메모리의 크기"
 
 #: ../app/widgets/gimpdashboard.c:655
 msgctxt "dashboard-variable"
@@ -24726,7 +24728,7 @@ msgstr "가용한"
 
 #: ../app/widgets/gimpdashboard.c:656
 msgid "Amount of available physical memory"
-msgstr ""
+msgstr "사용 가능한 물리적 메모리의 크기"
 
 #: ../app/widgets/gimpdashboard.c:665
 msgid "Physical memory size"
@@ -24889,11 +24891,11 @@ msgstr "압력 곡선"
 
 #: ../app/widgets/gimpdeviceinfo.c:901 ../app/widgets/gimpdeviceinfo.c:926
 msgid "(Device not present)"
-msgstr ""
+msgstr "(장치 없음)"
 
 #: ../app/widgets/gimpdeviceinfo.c:909 ../app/widgets/gimpdeviceinfo.c:934
 msgid "(Virtual device)"
-msgstr ""
+msgstr "(수직 장치)"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 #: ../app/widgets/gimpdynamicseditor.c:161
