@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-21 18:45+0900\n"
+"PO-Revision-Date: 2019-01-22 02:08+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -10618,7 +10618,7 @@ msgstr "도움말 시스템에 사용할 프로그램을 지정하십시오."
 
 #: ../app/config/gimprc-blurbs.h:179
 msgid "How many recent settings to keep around in filter tools."
-msgstr ""
+msgstr "필터 도구에서 유지할 최근 설정 수입니다."
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid "Default to the last used settings in filter tools."
@@ -12311,21 +12311,22 @@ msgstr "전역 버퍼"
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
+"확장 AppData는 \"addon\" 유형이어야 하는데, \"%s\"를 대신 발견했습니다."
 
 #: ../app/core/gimpextension.c:345
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
-msgstr ""
+msgstr "확장 AppData는  \"org.gimp.GIMP\"를 확장해야 합니다."
 
 #: ../app/core/gimpextension.c:359
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
-msgstr ""
+msgstr "확장 AppData 아이디(\"%1$s\")와 디렉터리(\"%2$s\")가 같아야 합니다."
 
 #: ../app/core/gimpextension.c:374
 #, c-format
 msgid "Extension AppData must advertize a version in a <release> tag."
-msgstr ""
+msgstr "확장 AppData는 <release> 태그 안에서 버전을 알려 주어야 합니다."
 
 #: ../app/core/gimpextension.c:408
 #, c-format
@@ -13329,17 +13330,17 @@ msgstr "%s에 레이어 그룹의 마스크가 추가 되었음"
 #: ../app/core/gimpimage.c:2507
 #, c-format
 msgid "High bit-depth images were added in %s"
-msgstr ""
+msgstr "%s에 높은 비트 심도 이미지가 추가되었음"
 
 #: ../app/core/gimpimage.c:2515
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
-msgstr ""
+msgstr "높은 비트 심도 이미지의 인코딩이 %s에서 수정되었음"
 
 #: ../app/core/gimpimage.c:2523
 #, c-format
 msgid "Internal zlib compression was added in %s"
-msgstr ""
+msgstr "%s에 내부 zlib 압축이 추가되었음"
 
 #: ../app/core/gimpimage.c:2540
 #, c-format
@@ -15853,7 +15854,7 @@ msgstr "기본적으로 이미지의 색 프로필을 내보냄"
 #.
 #: ../app/dialogs/preferences-dialog.c:1521
 msgid "Export Exif metadata by default when available"
-msgstr ""
+msgstr "사용 가능하면 기본적으로 Exif 메타데이터 내보내기"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -15862,7 +15863,7 @@ msgstr ""
 #.
 #: ../app/dialogs/preferences-dialog.c:1529
 msgid "Export XMP metadata by default when available"
-msgstr ""
+msgstr "사용 가능하면 기본적으로 XMP 메타데이터 내보내기"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -15871,7 +15872,7 @@ msgstr ""
 #.
 #: ../app/dialogs/preferences-dialog.c:1537
 msgid "Export IPTC metadata by default when available"
-msgstr ""
+msgstr "사용 가능하면 기본적으로 IPTC 메타데이터 내보내기"
 
 #: ../app/dialogs/preferences-dialog.c:1540
 msgid "Metadata can contain sensitive information."
@@ -16398,7 +16399,7 @@ msgstr "테두리 스타일:"
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2425
 msgid "Fill Selection Outline & Fill Path Dialogs"
-msgstr ""
+msgstr "선택 윤곽 채우기 & 경로 채우기 대화상자"
 
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2434
@@ -16681,7 +16682,7 @@ msgstr "이미지 상태표시줄 형식"
 
 #: ../app/dialogs/preferences-dialog.c:3007
 msgid "Image Window Snapping Behavior"
-msgstr ""
+msgstr "이미지 창 스냅하기 작동방식"
 
 #: ../app/dialogs/preferences-dialog.c:3008
 msgid "Snapping"
@@ -18024,7 +18025,7 @@ msgstr "저장할 활성 레이어가 없음"
 
 #: ../app/file/file-save.c:119
 msgid "Failed to get file information"
-msgstr ""
+msgstr "파일 정보 가져오기 실패"
 
 #: ../app/file/file-save.c:290
 #, c-format
@@ -18810,7 +18811,7 @@ msgstr "낮은 입력"
 #: ../app/operations/gimplevelsconfig.c:137
 #: ../app/operations/gimplevelsconfig.c:138
 msgid "High Input"
-msgstr ""
+msgstr "높은 입력"
 
 #: ../app/operations/gimplevelsconfig.c:143
 msgid "Clamp Input"
@@ -18828,7 +18829,7 @@ msgstr "낮은 출력"
 #: ../app/operations/gimplevelsconfig.c:161
 #: ../app/operations/gimplevelsconfig.c:162
 msgid "High Output"
-msgstr ""
+msgstr "높은 출력"
 
 #: ../app/operations/gimplevelsconfig.c:167
 msgid "Clamp Output"
@@ -18936,7 +18937,7 @@ msgstr ""
 
 #: ../app/operations/gimpoperationthreshold.c:104
 msgid "High threshold"
-msgstr ""
+msgstr "높은 임계값"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:80
 msgid ""
@@ -18946,7 +18947,7 @@ msgstr ""
 
 #: ../app/gui/gui.c:312
 msgid "Image Recovery"
-msgstr ""
+msgstr "이미지 복구"
 
 #: ../app/gui/gui.c:314
 msgid "_Discard"
@@ -20507,7 +20508,7 @@ msgstr "목적지 범위"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:236
 msgid "Gray Handling"
-msgstr ""
+msgstr "회색 처리"
 
 #: ../app/propgui/gimppropgui-color-to-alpha.c:109
 msgid "Pick farthest full-transparency color"
@@ -20535,7 +20536,7 @@ msgstr "행렬을 수직으로 뒤집기"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:68
 msgid "Frequencies"
-msgstr ""
+msgstr "주파수"
 
 #: ../app/propgui/gimppropgui-diffraction-patterns.c:79
 msgid "Contours"
@@ -21350,7 +21351,7 @@ msgstr "강조 불투명도"
 #: ../app/tools/gimpcropoptions.c:87
 #: ../app/tools/gimprectangleselectoptions.c:87
 msgid "How much to dim everything outside selection"
-msgstr ""
+msgstr "선택 영역 밖의 모든 항목을 흐리게 하는 정도"
 
 #: ../app/tools/gimpcropoptions.c:93
 msgid "Current layer only"
@@ -21375,7 +21376,7 @@ msgstr "채우기"
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "How to fill new areas created by 'Allow growing'"
-msgstr ""
+msgstr "'확장 허용'으로 만든 새 영역을 채우는 방법"
 
 #: ../app/tools/gimpcroptool.c:119
 msgid "Crop"
@@ -22020,7 +22021,7 @@ msgstr ""
 
 #: ../app/tools/gimpgradienttool-editor.c:1626
 msgid "End Endpoint"
-msgstr ""
+msgstr "끝 끝점"
 
 #: ../app/tools/gimpgradienttool-editor.c:1679
 #, c-format
@@ -22985,7 +22986,7 @@ msgstr "텍스트 정렬"
 
 #: ../app/tools/gimptextoptions.c:176
 msgid "Indentation"
-msgstr ""
+msgstr "들여쓰기"
 
 #: ../app/tools/gimptextoptions.c:177
 msgid "Indentation of the first line"
@@ -23061,7 +23062,7 @@ msgstr "텍스트(_X)"
 
 #: ../app/tools/gimptexttool.c:1039
 msgid "Fonts are still loading"
-msgstr ""
+msgstr "아직 글꼴을 불러오는 중임"
 
 #: ../app/tools/gimptexttool.c:1050
 msgid "Text box: "
@@ -23218,7 +23219,7 @@ msgstr "투시 핸들이 가장자리와 대각선을 따라 이동하도록 제
 #: ../app/tools/gimptransformgridoptions.c:451
 #, c-format
 msgid "From pivot  (%s)"
-msgstr ""
+msgstr "피벗에서  (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:453
 #, c-format
@@ -23423,7 +23424,7 @@ msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:135
 msgid "High quality preview"
-msgstr ""
+msgstr "고화질 미리보기"
 
 #: ../app/tools/gimpwarpoptions.c:136
 msgid "Use an accurate but slower preview"
@@ -23820,7 +23821,7 @@ msgstr "잘못된 단축키입니다."
 
 #: ../app/widgets/gimpactionview.c:725 ../app/widgets/gimpactionview.c:829
 msgid "F1 cannot be remapped."
-msgstr ""
+msgstr "F1 키를 다시 매핑할 수 없습니다."
 
 #: ../app/widgets/gimpactionview.c:733
 #, c-format
@@ -24009,7 +24010,7 @@ msgstr "b*:"
 #: ../app/widgets/gimpcolorframe.c:941
 msgctxt "xyY color space"
 msgid "x:"
-msgstr "X:"
+msgstr "x:"
 
 #. TRANSLATORS: y from xyY color space
 #: ../app/widgets/gimpcolorframe.c:943
@@ -24529,7 +24530,7 @@ msgstr "알 수 없는 마이크로소프트 윈도우즈 오류."
 #: ../app/widgets/gimpcriticaldialog.c:272
 #, c-format
 msgid "Failed to open '%s': %s"
-msgstr ""
+msgstr "'%1$s' 열기 실패: %2$s"
 
 #: ../app/widgets/gimpcriticaldialog.c:422
 #, c-format
@@ -24540,7 +24541,7 @@ msgstr "김프가 치명적인 오류 ' %s ' 로 인해 비정상 종료되었�
 #: ../app/widgets/gimpcriticaldialog.c:429
 #, c-format
 msgid "GIMP encountered an error: %s"
-msgstr ""
+msgstr "김프에 오류가 발생했습니다: %s"
 
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
@@ -24548,7 +24549,7 @@ msgstr ""
 #: ../app/widgets/gimpcriticaldialog.c:437
 #, c-format
 msgid "GIMP encountered several critical errors!"
-msgstr ""
+msgstr "김프에 몇 가지 치명적인 오류가 발생했습니다!"
 
 #: ../app/widgets/gimpcriticaldialog.c:489
 msgid "_Restart GIMP"
@@ -24768,7 +24769,7 @@ msgstr "캐시"
 
 #: ../app/widgets/gimpdashboard.c:708
 msgid "In-memory tile cache"
-msgstr ""
+msgstr "메모리 내 타일 캐시"
 
 #: ../app/widgets/gimpdashboard.c:744
 msgctxt "dashboard-group"
@@ -25381,7 +25382,7 @@ msgstr "백분율:"
 
 #: ../app/widgets/gimphistogrameditor.c:164
 msgid "Histogram channel"
-msgstr ""
+msgstr "히스토그램 채널"
 
 #: ../app/widgets/gimpiconpicker.c:240
 msgid "From File..."
@@ -25625,7 +25626,7 @@ msgstr "파일로부터 현재 설정 들여오기(_I)..."
 
 #: ../app/widgets/gimpsettingsbox.c:358
 msgid "_Export Current Settings to File..."
-msgstr ""
+msgstr "현재 설정을 파일로 내보내기(_E)..."
 
 #: ../app/widgets/gimpsettingsbox.c:364
 msgid "_Manage Saved Presets..."
@@ -25637,7 +25638,7 @@ msgstr ""
 
 #: ../app/widgets/gimpsettingsbox.c:592
 msgid "Enter a name for the preset"
-msgstr ""
+msgstr "프리셋 이름 입력"
 
 #: ../app/widgets/gimpsettingsbox.c:593
 msgid "Saved Settings"
@@ -25653,7 +25654,7 @@ msgstr "파일에서 프리셋 들여오기"
 
 #: ../app/widgets/gimpsettingseditor.c:201
 msgid "Export the selected presets to a file"
-msgstr ""
+msgstr "선택한 프리셋을 파일로 내보내기"
 
 #: ../app/widgets/gimpsettingseditor.c:210
 msgid "Delete the selected preset"
@@ -25777,7 +25778,7 @@ msgstr "텍스트의 가장 바깥 요소는 <%s>가 아닌 <markup>이어야 �
 #: ../app/widgets/gimptextbuffer.c:1701
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
-msgstr ""
+msgstr "입력 파일 '%1$s'가 잘린 것으로 보임: %2$s"
 
 #: ../app/widgets/gimptextbuffer.c:1719
 #, c-format
