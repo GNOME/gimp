@@ -1,18 +1,18 @@
 # Swedish messages for GIMP Script-Fu.
-# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017, 2018 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017, 2018, 2019 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-12-28 13:32+0000\n"
-"PO-Revision-Date: 2018-12-30 22:05+0100\n"
+"POT-Creation-Date: 2019-01-20 11:49+0000\n"
+"PO-Revision-Date: 2019-01-22 22:41+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -939,15 +939,16 @@ msgstr "Y-delar"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
-msgstr "Nya guider from _urval"
+msgstr "Nya hjälplinjer från _markering"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Skapa fyra guider runt begränsningsrutan för den aktuella markeringen"
+msgstr ""
+"Skapa fyra hjälplinjer runt begränsningsrutan för den aktuella markeringen"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "Ny guide (i _procent)…"
+msgstr "Ny hjälplinje (i _procent)…"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -976,7 +977,7 @@ msgstr "Position (i %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
-msgstr "Ny _guide…"
+msgstr "Ny _hjälplinje…"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
@@ -989,7 +990,7 @@ msgstr "Position"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
-msgstr "_Ta bort alla guider"
+msgstr "_Ta bort alla hjälplinjer"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
