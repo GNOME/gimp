@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-22 08:36+0900\n"
+"PO-Revision-Date: 2019-01-22 16:05+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -15723,7 +15723,7 @@ msgstr "속도"
 #: ../app/dialogs/preferences-dialog.c:1352
 #: ../app/dialogs/preferences-dialog.c:1387
 msgid "Precision / Color Fidelity"
-msgstr ""
+msgstr "정밀도 / 색 충실도"
 
 #: ../app/dialogs/preferences-dialog.c:1353
 msgid "_Optimize image display for:"
@@ -16554,7 +16554,7 @@ msgstr "마칠 때 창 위치 저장하기(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:2757
 msgid "Open windows on the same _monitor they were open before"
-msgstr ""
+msgstr "창이 열렸던 모니터에서 창을 열기(_M)"
 
 #: ../app/dialogs/preferences-dialog.c:2761
 msgid "Save Window Positions _Now"
@@ -17098,7 +17098,7 @@ msgstr "텍스트 레이어 크기 바꾸기(_T)"
 
 #: ../app/dialogs/resize-dialog.c:380
 msgid "Resizing text layers will make them uneditable"
-msgstr ""
+msgstr "텍스트 레이어의 크기를 바꾸면 편집 불가 상태가 됨"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
@@ -17453,7 +17453,7 @@ msgstr "다른 이름으로 저장(_A)"
 #: ../app/display/gimpdisplayshell-close.c:214
 #, c-format
 msgid "Press %s to discard all changes and close the image."
-msgstr ""
+msgstr "모든 변경 사항을 취소하고 이미지를 닫으려면 %s(을)를 누르십시오."
 
 #: ../app/display/gimpdisplayshell-close.c:274
 #, c-format
@@ -17735,7 +17735,7 @@ msgstr "클릭-끌기 해서 끝 점을 이동"
 
 #: ../app/display/gimptoolline.c:1566
 msgid "Release to remove the slider"
-msgstr ""
+msgstr "떼어서 슬라이더 제거"
 
 #: ../app/display/gimptoolline.c:1570
 #, c-format
@@ -18771,7 +18771,7 @@ msgstr "김프 곡선 파일이 아닙니다"
 
 #: ../app/operations/gimpcurvesconfig.c:597
 msgid "Parse error, didn't find 2 integers"
-msgstr ""
+msgstr "구문분석 오류, 2개의 정수를 찾지 못함"
 
 #: ../app/operations/gimpcurvesconfig.c:717
 msgid "Writing curves file failed: "
@@ -18924,7 +18924,7 @@ msgstr "포스터화 단계"
 
 #: ../app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
-msgstr ""
+msgstr "부분적 투명도를 색상으로 바꾸기"
 
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:94
@@ -19179,7 +19179,7 @@ msgstr "링크 크기"
 
 #: ../app/paint/gimppaintoptions.c:246
 msgid "Link brush size to brush native"
-msgstr "붓 크기를 붓 네이티브에 연계"
+msgstr "붓 크기를 붓 자체값에 연계"
 
 #: ../app/paint/gimppaintoptions.c:252
 msgid "Link Aspect Ratio"
@@ -19187,7 +19187,7 @@ msgstr "종횡비 연계"
 
 #: ../app/paint/gimppaintoptions.c:253
 msgid "Link brush aspect ratio to brush native"
-msgstr "붓 종횡비를 붓시 네이티브에 연계"
+msgstr "붓 종횡비를 붓의 자체값에 연계"
 
 #: ../app/paint/gimppaintoptions.c:259
 msgid "Link Angle"
@@ -19195,7 +19195,7 @@ msgstr "각도 연계"
 
 #: ../app/paint/gimppaintoptions.c:260
 msgid "Link brush angle to brush native"
-msgstr "붓 각도를 붓 네이티브에 연계"
+msgstr "붓 각도를 붓 자체값에 연계"
 
 #: ../app/paint/gimppaintoptions.c:266
 msgid "Link Spacing"
@@ -19203,7 +19203,7 @@ msgstr "줄 간격"
 
 #: ../app/paint/gimppaintoptions.c:267
 msgid "Link brush spacing to brush native"
-msgstr "붓 간격을 붓 네이티브에 연계"
+msgstr "붓 간격을 붓 자체값에 연계"
 
 #: ../app/paint/gimppaintoptions.c:273
 msgid "Link Hardness"
@@ -19211,7 +19211,7 @@ msgstr "경도 연계"
 
 #: ../app/paint/gimppaintoptions.c:274
 msgid "Link brush hardness to brush native"
-msgstr "붓 경도를 붓 네이티브에 연계"
+msgstr "붓 경도를 붓 자체값에 연계"
 
 #: ../app/paint/gimppaintoptions.c:280
 msgid "Lock brush to view"
@@ -20512,11 +20512,11 @@ msgstr "회색 처리"
 
 #: ../app/propgui/gimppropgui-color-to-alpha.c:109
 msgid "Pick farthest full-transparency color"
-msgstr ""
+msgstr "가장 먼 완전투명 색 추출"
 
 #: ../app/propgui/gimppropgui-color-to-alpha.c:131
 msgid "Pick nearest full-opacity color"
-msgstr ""
+msgstr "최근접 완전불투명 색 추출"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:199
 msgid "Rotate matrix 90° counter-clockwise"
@@ -20552,7 +20552,7 @@ msgstr "다른 옵션"
 
 #: ../app/propgui/gimppropgui-generic.c:185
 msgid "Pick coordinates from the image"
-msgstr ""
+msgstr "이미지에서 좌표 추출"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:133
 msgid "M_aster"
@@ -20752,7 +20752,7 @@ msgstr "새 씨앗"
 
 #: ../app/propgui/gimppropgui.c:390
 msgid "Pick color from the image"
-msgstr ""
+msgstr "이미지에서 색 추출"
 
 #: ../app/propgui/gimppropgui.c:540
 msgid "This operation has no editable properties"
@@ -21766,7 +21766,7 @@ msgstr "수행할 반복 횟수"
 
 #: ../app/tools/gimpforegroundselectoptions.c:300
 msgid "Reset stroke width native size"
-msgstr ""
+msgstr "스트로크 폭을 자체 크기로 재설정"
 
 #: ../app/tools/gimpforegroundselecttool.c:190
 msgid "Foreground Select"
@@ -21819,7 +21819,7 @@ msgstr "미리보려 엔터를 누르십시오."
 
 #: ../app/tools/gimpforegroundselecttool.c:652
 msgid "press Escape to exit preview or Enter to apply."
-msgstr ""
+msgstr "Esc 키로 미리보기를 끝내거나 Enter 키를 눌러 적용합니다."
 
 #: ../app/tools/gimpforegroundselecttool.c:1231
 msgid "Paint mask"
@@ -22069,7 +22069,7 @@ msgstr "변형 핸들 이동"
 
 #: ../app/tools/gimphandletransformoptions.c:177
 msgid "Remove transform handles"
-msgstr ""
+msgstr "변형 핸들 제거"
 
 #: ../app/tools/gimphandletransformtool.c:111
 msgid "Handle Transform"
@@ -22205,7 +22205,7 @@ msgstr "모든 채널에서 검은 점 추출"
 
 #: ../app/tools/gimplevelstool.c:282
 msgid "Pick black point for the selected channel"
-msgstr ""
+msgstr "선택한 채널에서 검정 점 추출"
 
 #: ../app/tools/gimplevelstool.c:289
 msgid "Pick gray point for all channels"
@@ -22213,7 +22213,7 @@ msgstr "모든 채널에서 회색 점 추출"
 
 #: ../app/tools/gimplevelstool.c:291
 msgid "Pick gray point for the selected channel"
-msgstr ""
+msgstr "선택한 채널에서 회색 점 추출"
 
 #: ../app/tools/gimplevelstool.c:298
 msgid "Pick white point for all channels"
@@ -22221,7 +22221,7 @@ msgstr "모든 채널에서 흰 점 추출"
 
 #: ../app/tools/gimplevelstool.c:300
 msgid "Pick white point for the selected channel"
-msgstr ""
+msgstr "선택한 채널에서 흰색 점 추출"
 
 #. Input levels frame
 #: ../app/tools/gimplevelstool.c:411
@@ -22302,7 +22302,7 @@ msgstr "방향"
 
 #: ../app/tools/gimpmeasureoptions.c:72
 msgid "Orientation against which the angle is measured"
-msgstr ""
+msgstr "각도가 측정 되는 방향"
 
 #: ../app/tools/gimpmeasureoptions.c:80
 msgid "Open a floating dialog to view details about measurements"
@@ -22415,7 +22415,7 @@ msgstr "밀도"
 #: ../app/tools/gimpnpointdeformationoptions.c:84
 #: ../app/tools/gimpnpointdeformationoptions.c:85
 msgid "Rigidity"
-msgstr ""
+msgstr "강성률"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:91
 #: ../app/tools/gimpnpointdeformationoptions.c:92
@@ -22448,7 +22448,7 @@ msgstr "크기 조정"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:231
 msgid "Rigid (Rubber)"
-msgstr ""
+msgstr "강성임 (고무)"
 
 #: ../app/tools/gimpnpointdeformationtool.c:158
 #: ../app/tools/gimpnpointdeformationtool.c:1000
@@ -22498,19 +22498,19 @@ msgstr "붓의 기본 크기로 되돌리기"
 
 #: ../app/tools/gimppaintoptions-gui.c:177
 msgid "Reset aspect ratio to brush's native aspect ratio"
-msgstr ""
+msgstr "종횡비를 붓의 자체 종횡비로 재설정"
 
 #: ../app/tools/gimppaintoptions-gui.c:185
 msgid "Reset angle to brush's native angle"
-msgstr ""
+msgstr "각도를 붓의 자체 각도로 재설정"
 
 #: ../app/tools/gimppaintoptions-gui.c:193
 msgid "Reset spacing to brush's native spacing"
-msgstr ""
+msgstr "간격을 붓의 자체 간격으로 재설정"
 
 #: ../app/tools/gimppaintoptions-gui.c:201
 msgid "Reset hardness to brush's native hardness"
-msgstr ""
+msgstr "경도를 붓의 자체 경도로 재설정"
 
 #: ../app/tools/gimppaintoptions-gui.c:209
 msgid "Reset force to default"
@@ -22809,7 +22809,7 @@ msgstr "%d x %d 비율로 크기 조정"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:72
 msgid "Refinement scale"
-msgstr ""
+msgstr "정제 스케일"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:73
 msgid ""
@@ -23420,7 +23420,7 @@ msgstr "심연 정책"
 
 #: ../app/tools/gimpwarpoptions.c:128
 msgid "Out-of-bounds sampling behavior"
-msgstr ""
+msgstr "경계 초과시 샘플링 작동방식"
 
 #: ../app/tools/gimpwarpoptions.c:135
 msgid "High quality preview"
@@ -23452,7 +23452,7 @@ msgstr "비율"
 
 #: ../app/tools/gimpwarpoptions.c:157
 msgid "Periodic stroke rate"
-msgstr ""
+msgstr "주기적인 스트로크 속도"
 
 #: ../app/tools/gimpwarpoptions.c:163
 msgid "Frames"
@@ -23514,12 +23514,12 @@ msgstr "워프 변형"
 
 #: ../app/tools/gimpwarptool.c:1184
 msgid "Please add some warp strokes first."
-msgstr ""
+msgstr "먼저 워프 스트로크를 몇 개 추가하십시오."
 
 #: ../app/tools/gimpwarptool.c:1198 ../app/tools/gimpwarptool.c:1235
 #, c-format
 msgid "Rendering Frame %d"
-msgstr ""
+msgstr "프레임 %d 렌더링"
 
 #: ../app/tools/gimpwarptool.c:1213 ../app/tools/gimpwarptool.c:1243
 #, c-format
@@ -24435,7 +24435,7 @@ msgstr "버그 정보를 클립보드에 복사하려면 클릭: "
 #: ../app/widgets/gimpcriticaldialog.c:137
 #: ../app/widgets/gimpcriticaldialog.c:460
 msgid "Open our bug tracker in the browser by clicking: "
-msgstr ""
+msgstr "다음을 클릭하여 브라우저에서 버그 트래커 열기: "
 
 #: ../app/widgets/gimpcriticaldialog.c:139
 #: ../app/widgets/gimpcriticaldialog.c:462
@@ -24445,7 +24445,7 @@ msgstr "아직 없는 경우 로그인을 만듭니다."
 #: ../app/widgets/gimpcriticaldialog.c:140
 #: ../app/widgets/gimpcriticaldialog.c:463
 msgid "Paste the clipboard text in a new bug report."
-msgstr ""
+msgstr "클립보드 텍스트를 새 버그 보고서에 붙여넣습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:141
 #: ../app/widgets/gimpcriticaldialog.c:464
@@ -24778,7 +24778,7 @@ msgstr "교체"
 
 #: ../app/widgets/gimpdashboard.c:745
 msgid "On-disk tile swap"
-msgstr ""
+msgstr "온디스크 타일 스왑"
 
 #: ../app/widgets/gimpdashboard.c:809
 msgctxt "dashboard-group"
@@ -24858,7 +24858,7 @@ msgstr "N/A"
 
 #: ../app/widgets/gimpdashboard.c:4440
 msgid "Resolving symbol information..."
-msgstr ""
+msgstr "기호 정보 해결하기..."
 
 #: ../app/widgets/gimpdataeditor.c:411
 #, c-format
@@ -24956,7 +24956,7 @@ msgstr "판매자 ID:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:377
 msgid "Product ID:"
-msgstr ""
+msgstr "제품 아이디:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:382
 msgid "Tool type:"
@@ -25398,7 +25398,7 @@ msgstr "아이콘을 클립보드로 복사"
 
 #: ../app/widgets/gimpiconpicker.c:267
 msgid "Paste Icon from Clipboard"
-msgstr ""
+msgstr "클립보드에서 아이콘 붙여넣기"
 
 #: ../app/widgets/gimpiconpicker.c:479
 msgid "Load Icon Image"
@@ -25614,7 +25614,7 @@ msgstr "잘못된 UTF-8"
 
 #: ../app/widgets/gimpsettingsbox.c:298
 msgid "Pick a preset from the list"
-msgstr ""
+msgstr "목록에서 프리셋 선택"
 
 #: ../app/widgets/gimpsettingsbox.c:322
 msgid "Save the current settings as named preset"
@@ -25638,7 +25638,7 @@ msgstr "저장된 프리셋 관리(_M)..."
 
 #: ../app/widgets/gimpsettingsbox.c:589
 msgid "Save Settings as Named Preset"
-msgstr ""
+msgstr "설정을 명명된 프리셋으로 저장"
 
 #: ../app/widgets/gimpsettingsbox.c:592
 msgid "Enter a name for the preset"
