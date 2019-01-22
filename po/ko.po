@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-22 16:57+0900\n"
+"PO-Revision-Date: 2019-01-23 03:52+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -12380,12 +12380,12 @@ msgstr "알 수 없는 태그 <%s>."
 #: ../app/core/gimpextensionmanager.c:837
 #, c-format
 msgid "Skipping extension '%s': %s\n"
-msgstr ""
+msgstr "'%s' 확장기능 건너뛰기: %s\n"
 
 #: ../app/core/gimpextensionmanager.c:845
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
-msgstr ""
+msgstr "확장기능 디렉터리에서 알 수 없는 파일 '%s' 건너뛰 기.\n"
 
 #: ../app/core/gimp-gradients.c:64
 msgid "Custom"
@@ -13347,7 +13347,7 @@ msgstr "%s에 내부 zlib 압축이 추가되었음"
 #: ../app/core/gimpimage.c:2540
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
-msgstr ""
+msgstr "%s에 4GB보다 큰 이미지 파일 지원 기능이 추가되었음"
 
 #: ../app/core/gimpimage.c:2634
 msgctxt "undo-type"
@@ -16406,7 +16406,7 @@ msgstr "선택 윤곽 채우기 & 경로 채우기 대화상자"
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2434
 msgid "Stroke Selection & Stroke Path Dialogs"
-msgstr ""
+msgstr "선택 윤곽선에 스트로크 및 경로 위에 스트로크 대화상자"
 
 #: ../app/dialogs/preferences-dialog.c:2457
 #: ../app/dialogs/preferences-dialog.c:2458
@@ -16450,6 +16450,8 @@ msgid ""
 "The GIMP help browser doesn't seem to be installed. Using the web browser "
 "instead."
 msgstr ""
+"김프 도움말 브라우저가 설치되지 않은 것 같습니다. 대신 웹 브라우저를 사용합니"
+"다."
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2576
@@ -16688,7 +16690,7 @@ msgstr "이미지 창 스냅하기 작동방식"
 
 #: ../app/dialogs/preferences-dialog.c:3008
 msgid "Snapping"
-msgstr ""
+msgstr "스내핑"
 
 #: ../app/dialogs/preferences-dialog.c:3015
 msgid "Default Behavior in Normal Mode"
@@ -16700,7 +16702,7 @@ msgstr "전체 화면 모드의 기본 작동방식"
 
 #: ../app/dialogs/preferences-dialog.c:3028
 msgid "_Snapping distance:"
-msgstr ""
+msgstr "스내핑 거리(_S)"
 
 #: ../app/dialogs/preferences-dialog.c:3037
 #: ../app/dialogs/preferences-dialog.c:3038
@@ -17137,7 +17139,7 @@ msgstr "따라 그리기 형식"
 
 #: ../app/dialogs/stroke-dialog.c:129
 msgid "_Stroke"
-msgstr ""
+msgstr "스트로크(_S)"
 
 #: ../app/dialogs/stroke-dialog.c:230
 msgid "Paint tool:"
@@ -19344,7 +19346,7 @@ msgstr "흐름"
 
 #: ../app/paint/gimpsmudgeoptions.c:78
 msgid "The amount of brush color to blend"
-msgstr ""
+msgstr "혼합할 붓 색의 양"
 
 #: ../app/paint/gimpsmudgeoptions.c:84
 msgctxt "smudge-tool"
@@ -20341,11 +20343,12 @@ msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr ""
+"잠재적 플러그인 '%s' 건너뛰기: 하위 디렉터리에 플러그인을 설치해야 합니다.\n"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:382
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
-msgstr ""
+msgstr "플러그인 디렉터리에서 알 수 없는 파일 '%s' 건너뛰기.\n"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:429
 msgid "Resource configuration"
@@ -20861,6 +20864,7 @@ msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
 msgstr ""
+"새 텍스트 레이아웃을 생성할 수 없습니다. 아마도 글꼴 크기가 너무 큽니다."
 
 #: ../app/text/text-enums.c:23
 msgctxt "text-box-mode"
@@ -21128,7 +21132,7 @@ msgstr "영역 채우기(_B)"
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:313
 #: ../app/tools/gimptransformtool.c:524 ../app/tools/gimpwarptool.c:651
 msgid "The active layer is not visible."
-msgstr ""
+msgstr "활성 레이어가 보이지 않습니다."
 
 #: ../app/tools/gimpbucketfilltool.c:309
 msgid "No valid line art source selected."
@@ -21526,7 +21530,7 @@ msgstr "이동할 경로가 없습니다."
 #: ../app/tools/gimpeditselectiontool.c:1128 ../app/tools/gimpmovetool.c:268
 #: ../app/tools/gimptransformtool.c:558
 msgid "The active path's position is locked."
-msgstr ""
+msgstr "활성 경로의 위치가 잠겼습니다."
 
 #: ../app/tools/gimpeditselectiontool.c:1139 ../app/tools/gimpmovetool.c:300
 msgid "There is no layer to move."
@@ -21537,15 +21541,15 @@ msgstr "이동할 레이어가 없습니다."
 #: ../app/tools/gimpeditselectiontool.c:1182 ../app/tools/gimpmovetool.c:307
 #: ../app/tools/gimpmovetool.c:325
 msgid "The active layer's position is locked."
-msgstr ""
+msgstr "활성 레이어의 위치가 잠겼습니다."
 
 #: ../app/tools/gimpeditselectiontool.c:1160 ../app/tools/gimpmovetool.c:316
 msgid "The active channel's position is locked."
-msgstr ""
+msgstr "활성 채널의 위치가 잠겼습니다."
 
 #: ../app/tools/gimpeditselectiontool.c:1164 ../app/tools/gimpmovetool.c:318
 msgid "The active channel's pixels are locked."
-msgstr ""
+msgstr "활성 채널의 픽셀이 잠겼습니다."
 
 #: ../app/tools/gimpellipseselecttool.c:64
 msgid "Ellipse Select"
@@ -21934,6 +21938,8 @@ msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
 msgstr ""
+"활성 그레이디언트가 쓰기 불가능 하며 직접 편집할 수 없습니다. 복사본을 편집하"
+"려면 이 옵션의 선택을 취소하시시오."
 
 #: ../app/tools/gimpgradienttool.c:160
 msgid "Gradient Tool: Fill selected area with a color gradient"
@@ -22341,7 +22347,7 @@ msgstr "측정(_M)"
 
 #: ../app/tools/gimpmeasuretool.c:153
 msgid "Straightening"
-msgstr ""
+msgstr "곧게 하기"
 
 #: ../app/tools/gimpmeasuretool.c:172
 msgid "Click-Drag to create a line"
@@ -23250,7 +23256,7 @@ msgstr "스냅 (% s)"
 #: ../app/tools/gimptransformgridoptions.c:462
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
-msgstr ""
+msgstr "모퉁이 및 중심에 피벗을 스냅 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:463
 msgid "Lock"
@@ -23311,11 +23317,11 @@ msgstr "변형할 레이어가 없습니다."
 
 #: ../app/tools/gimptransformtool.c:518
 msgid "The active layer's position and size are locked."
-msgstr ""
+msgstr "활성 레이어의 위치와 크기가 잠겼습니다."
 
 #: ../app/tools/gimptransformtool.c:531
 msgid "The selection does not intersect with the layer."
-msgstr ""
+msgstr "선택 영역이 레이어와 교차하지 않습니다."
 
 #: ../app/tools/gimptransformtool.c:538
 msgid "There is no selection to transform."
@@ -23331,11 +23337,11 @@ msgstr "활성 레이어의 스트로크가 잠겨 있습니다."
 
 #: ../app/tools/gimptransformtool.c:560
 msgid "The active path has no strokes."
-msgstr ""
+msgstr "활성 경로에 스트로크가 없습니다."
 
 #: ../app/tools/gimptransformtool.c:629
 msgid "The current transform is invalid"
-msgstr ""
+msgstr "현재 변형 유효하지 않음"
 
 #: ../app/tools/gimpunifiedtransformtool.c:84
 msgid "Unified Transform"
@@ -23406,7 +23412,7 @@ msgstr "효과 경도"
 
 #: ../app/tools/gimpwarpoptions.c:105
 msgid "Strength"
-msgstr ""
+msgstr "강도"
 
 #: ../app/tools/gimpwarpoptions.c:106
 msgid "Effect Strength"
@@ -23414,7 +23420,7 @@ msgstr "효과 힘"
 
 #: ../app/tools/gimpwarpoptions.c:113
 msgid "Stroke Spacing"
-msgstr ""
+msgstr "스트로크 간격"
 
 #: ../app/tools/gimpwarpoptions.c:127 ../app/tools/gimpwarpoptions.c:331
 msgid "Abyss policy"
@@ -23467,7 +23473,7 @@ msgstr "애니메이션 프레임 수"
 #. the stroke frame
 #: ../app/tools/gimpwarpoptions.c:341
 msgid "Stroke"
-msgstr ""
+msgstr "스트로크"
 
 #. the animation frame
 #: ../app/tools/gimpwarpoptions.c:365
@@ -24474,28 +24480,30 @@ msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:230
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "운영 체제의 메모리나 리소스가 부족합니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:233
 msgid "The specified file was not found."
-msgstr ""
+msgstr "지정한 파일을 찾지 못했습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:236
 msgid "The specified path was not found."
-msgstr ""
+msgstr "지정한 경로를 찾지 못했습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:239
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
+".exe 파일이 잘못 되었습니다 (Microsoft Win32 형식이 아닌 .exe 이거나 .exe 이"
+"미지 안에 오류)."
 
 #: ../app/widgets/gimpcriticaldialog.c:242
 msgid "The operating system denied access to the specified file."
-msgstr ""
+msgstr "운영 체제가 지정한 파일에 대한 액세스를 거부했습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:245
 msgid "The file name association is incomplete or invalid."
-msgstr ""
+msgstr "파일 이름 연결이 불완전 하거나 유효하지 않습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:248
 msgid "DDE transaction busy"
@@ -24503,15 +24511,15 @@ msgstr "DDE 트랜잭션 바쁨"
 
 #: ../app/widgets/gimpcriticaldialog.c:251
 msgid "The DDE transaction failed."
-msgstr ""
+msgstr "DDE 트랜잭션 실패."
 
 #: ../app/widgets/gimpcriticaldialog.c:254
 msgid "The DDE transaction timed out."
-msgstr ""
+msgstr "DDE 트랜잭션 시간 초과."
 
 #: ../app/widgets/gimpcriticaldialog.c:257
 msgid "The specified DLL was not found."
-msgstr ""
+msgstr "지정한 DLL을 찾지 못했습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:260
 msgid "There is no application associated with the given file name extension."
@@ -24604,7 +24612,7 @@ msgstr ""
 
 #: ../app/widgets/gimpdashboard.c:498
 msgid "Swap file occupied size"
-msgstr ""
+msgstr "스왑 파일이 점유하는 크기"
 
 #: ../app/widgets/gimpdashboard.c:507 ../app/widgets/gimpdashboard.c:664
 msgctxt "dashboard-variable"
@@ -24617,7 +24625,7 @@ msgstr "스왑 파일 크기"
 
 #: ../app/widgets/gimpdashboard.c:518
 msgid "Swap file size limit"
-msgstr ""
+msgstr "스왑 파일 크기 제한"
 
 #: ../app/widgets/gimpdashboard.c:525
 msgctxt "dashboard-variable"
@@ -24626,7 +24634,7 @@ msgstr "큐에 들어감"
 
 #: ../app/widgets/gimpdashboard.c:526
 msgid "Size of data queued for writing to the swap"
-msgstr ""
+msgstr "스왑에 쓰려고 큐에 넣은 데이터의 크기"
 
 #: ../app/widgets/gimpdashboard.c:535
 msgctxt "dashboard-variable"
@@ -24666,7 +24674,7 @@ msgstr "처리량 읽기"
 
 #: ../app/widgets/gimpdashboard.c:568
 msgid "The rate at which data is read from the swap"
-msgstr ""
+msgstr "스왑에서 데이터를 읽는 속도"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
@@ -24687,7 +24695,7 @@ msgstr "처리량 쓰기"
 
 #: ../app/widgets/gimpdashboard.c:591
 msgid "The rate at which data is written to the swap"
-msgstr ""
+msgstr "스왑에 데이터를 쓰는 속도"
 
 #: ../app/widgets/gimpdashboard.c:601
 msgid "Swap compression ratio"
@@ -25504,7 +25512,7 @@ msgstr "시스템 언어"
 
 #: ../app/widgets/gimplayermodebox.c:153
 msgid "Switch to another group of modes"
-msgstr ""
+msgstr "또다른 모드 그룹으로 전환"
 
 #: ../app/widgets/gimplayertreeview.c:310
 msgid "Lock alpha channel"
@@ -25594,6 +25602,7 @@ msgstr ""
 msgid ""
 "The image uses features from %s and won't be readable by older GIMP versions."
 msgstr ""
+"이 이미지는 %s의 기능을 사용하며 이전 버전의 김프에서는 읽을 수 없습니다."
 
 #: ../app/widgets/gimpsavedialog.c:407
 msgid "Metadata won't be visible in GIMP older than version 2.10."
