@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-06 18:25+0000\n"
-"PO-Revision-Date: 2019-01-16 01:30+0900\n"
+"POT-Creation-Date: 2019-01-20 11:44+0000\n"
+"PO-Revision-Date: 2019-01-22 21:24+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -72,114 +72,196 @@ msgstr "GIMP で写真編集"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:8
 msgid ""
+"GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
+"Notable improvements include:"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+msgid ""
+"Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
+"closed line art zones"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+msgid ""
+"Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
+"and \"by line art detection\""
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid "Scale tool scales around center even when using numeric input"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid ""
+"Unified Transform tool now defaults to preserving aspect ratio when scaling "
+"up or down"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid ""
+"Failure to edit locked layers will blink to shift attention to the cause of "
+"the error"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+msgid ""
+"New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+msgid "Several optimizations including faster layer group rendering"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+msgid ""
+"Swap and cache files are not saved in the configuration directory anymore"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+msgid ""
+"Various file saving/exporting made more robust to error by not saving "
+"partial files"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#, fuzzy
+#| msgid "Many usability improvements"
+msgid "HiDPI support improvements"
+msgstr "ユーザビリティの改善"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+msgid "New preference to choose the default export file type"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+msgid ""
+"New option to export PNG, JPEG and TIFF with a color profile; always export "
+"PSD with a color profile"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+msgid "New DDS format loading/exporting plug-in"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
 "fixed."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -187,224 +269,224 @@ msgid ""
 "policy in stable micro releases."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "And much, much more…"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-"
 "released/"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
 "(yaw, pitch, roll)."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-"
 "rc2-released/"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 #, fuzzy
 #| msgid "Cannot paint on layer groups."
 msgid "Layer masks on layer groups"
 msgstr "グループレイヤーに直接描画することはできません。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Metadata defaults preferences now available"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "Various GUI polishing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid ""
 "For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-"
 "rc1-released/"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the gradient editor"
 msgid "On-canvas gradient editing"
 msgstr "グラデーションエディターを開いてグラデーションを編集します"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "Notification when an image is over/underexposed"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 #, fuzzy
 #| msgid "Color Management"
 msgid "Better and faster color management"
 msgstr "カラーマネジメント"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 #, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste _Into"
 msgid "Paste in place feature"
 msgstr "選択範囲内に貼り付け(_I)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Many usability improvements"
 msgstr "ユーザビリティの改善"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "マニュアルはお好みの言語で見ることができます"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "New support for password-protected PDF"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid ""
 "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
 "released/"
@@ -830,7 +912,7 @@ msgid "Plug-ins"
 msgstr "プラグイン"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:387
+#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:388
 #: ../app/dialogs/preferences-dialog.c:1741
 msgid "Quick Mask"
 msgstr "クイックマスク"
@@ -3139,7 +3221,7 @@ msgstr "240秒"
 #: ../app/dialogs/file-save-dialog.c:714 ../app/dialogs/fill-dialog.c:115
 #: ../app/dialogs/grid-dialog.c:102
 #: ../app/dialogs/image-merge-layers-dialog.c:100
-#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:325
+#: ../app/dialogs/image-new-dialog.c:106 ../app/dialogs/image-new-dialog.c:327
 #: ../app/dialogs/image-scale-dialog.c:210
 #: ../app/dialogs/item-options-dialog.c:145
 #: ../app/dialogs/layer-add-mask-dialog.c:110
@@ -3159,7 +3241,7 @@ msgstr "240秒"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:329
+#: ../app/tools/gimpfiltertool.c:330
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:919
 #: ../app/tools/gimptransformtool.c:308 ../app/widgets/gimpactionview.c:669
@@ -8336,7 +8418,7 @@ msgstr "全フィルターのリセット"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:918
+#: ../app/tools/gimpfiltertool.c:329 ../app/tools/gimptransformgridtool.c:918
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -11019,21 +11101,24 @@ msgid "_Zoom (%s)"
 msgstr "表示倍率 (%s)(_Z)"
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1136
+#. H: Horizontal, V: Vertical
+#: ../app/actions/view-actions.c:1137
 msgid "(H+V) "
 msgstr " (水平+垂直) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1141
+#. H: Horizontal
+#: ../app/actions/view-actions.c:1143
 msgid "(H) "
 msgstr " (水平) "
 
 #. please preserve the trailing space
-#: ../app/actions/view-actions.c:1146
+#. V: Vertical
+#: ../app/actions/view-actions.c:1149
 msgid "(V) "
 msgstr " (垂直) "
 
-#: ../app/actions/view-actions.c:1153
+#: ../app/actions/view-actions.c:1156
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "反転%sと回転 (%d°)"
@@ -11058,7 +11143,7 @@ msgstr "このウィンドウをスクリーン %s に移動します"
 
 #: ../app/actions/window-commands.c:76 ../app/dialogs/file-save-dialog.c:638
 #: ../app/dialogs/grid-dialog.c:103 ../app/dialogs/image-new-dialog.c:107
-#: ../app/dialogs/image-new-dialog.c:326
+#: ../app/dialogs/image-new-dialog.c:328
 #: ../app/dialogs/item-options-dialog.c:146
 #: ../app/dialogs/preferences-dialog.c:1124
 #: ../app/dialogs/print-size-dialog.c:125
@@ -11067,7 +11152,7 @@ msgstr "このウィンドウをスクリーン %s に移動します"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:195
-#: ../app/tools/gimpfiltertool.c:330 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:331 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -11468,7 +11553,7 @@ msgstr ""
 msgid "Layer"
 msgstr "レイヤー"
 
-#: ../app/config/gimpdialogconfig.c:406 ../app/core/gimpchannel.c:273
+#: ../app/config/gimpdialogconfig.c:406 ../app/core/gimpchannel.c:274
 #: ../app/operations/gimpcurvesconfig.c:110
 #: ../app/operations/gimplevelsconfig.c:115
 #: ../app/operations/gimpoperationthreshold.c:89
@@ -13805,125 +13890,125 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "色域を選択"
 
-#: ../app/core/gimpchannel.c:274
+#: ../app/core/gimpchannel.c:275
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "チャンネル名の変更"
 
-#: ../app/core/gimpchannel.c:275
+#: ../app/core/gimpchannel.c:276
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "チャンネルを移動"
 
-#: ../app/core/gimpchannel.c:276
+#: ../app/core/gimpchannel.c:277
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "チャンネルの拡大・縮小"
 
-#: ../app/core/gimpchannel.c:277
+#: ../app/core/gimpchannel.c:278
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "チャンネルのサイズ変更"
 
-#: ../app/core/gimpchannel.c:278
+#: ../app/core/gimpchannel.c:279
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "チャンネルを鏡像反転"
 
-#: ../app/core/gimpchannel.c:279
+#: ../app/core/gimpchannel.c:280
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "チャンネルを回転"
 
-#: ../app/core/gimpchannel.c:280 ../app/core/gimpdrawable-transform.c:1093
+#: ../app/core/gimpchannel.c:281 ../app/core/gimpdrawable-transform.c:1093
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "チャンネルを変形"
 
-#: ../app/core/gimpchannel.c:281 ../app/core/gimpchannel.c:313
+#: ../app/core/gimpchannel.c:282 ../app/core/gimpchannel.c:314
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "チャンネルを塗りつぶす"
 
-#: ../app/core/gimpchannel.c:282
+#: ../app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "チャンネルにストローク"
 
-#: ../app/core/gimpchannel.c:283
+#: ../app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "チャンネルを選択範囲に"
 
-#: ../app/core/gimpchannel.c:284
+#: ../app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "チャンネルの並べ替え"
 
-#: ../app/core/gimpchannel.c:285
+#: ../app/core/gimpchannel.c:286
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "チャンネルを前面へ"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:287
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "チャンネルを最前面へ"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:288
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "チャンネルを背面へ"
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:289
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "チャンネルを最背面へ"
 
-#: ../app/core/gimpchannel.c:289
+#: ../app/core/gimpchannel.c:290
 msgid "Channel cannot be raised higher."
 msgstr "これ以上チャンネルを前面に移動させられません"
 
-#: ../app/core/gimpchannel.c:290
+#: ../app/core/gimpchannel.c:291
 msgid "Channel cannot be lowered more."
 msgstr "これ以上チャンネルを背面に移動させられません"
 
-#: ../app/core/gimpchannel.c:310
+#: ../app/core/gimpchannel.c:311
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "チャンネルをぼかす"
 
-#: ../app/core/gimpchannel.c:311
+#: ../app/core/gimpchannel.c:312
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "チャンネルをシャープに"
 
-#: ../app/core/gimpchannel.c:312
+#: ../app/core/gimpchannel.c:313
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "チャンネルをクリア"
 
-#: ../app/core/gimpchannel.c:314
+#: ../app/core/gimpchannel.c:315
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "チャンネルの反転"
 
-#: ../app/core/gimpchannel.c:315
+#: ../app/core/gimpchannel.c:316
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "チャンネルを縁取り"
 
-#: ../app/core/gimpchannel.c:316
+#: ../app/core/gimpchannel.c:317
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "チャンネルの拡大"
 
-#: ../app/core/gimpchannel.c:317
+#: ../app/core/gimpchannel.c:318
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "チャンネルの縮小"
 
-#: ../app/core/gimpchannel.c:318
+#: ../app/core/gimpchannel.c:319
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Flip Channel"
@@ -13931,27 +14016,27 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "チャンネルを鏡像反転"
 
-#: ../app/core/gimpchannel.c:847
+#: ../app/core/gimpchannel.c:848
 #, fuzzy
 #| msgid "Cannot stroke empty channel."
 msgid "Cannot fill empty channel."
 msgstr "空のチャンネルはストロークできません。"
 
-#: ../app/core/gimpchannel.c:883
+#: ../app/core/gimpchannel.c:884
 msgid "Cannot stroke empty channel."
 msgstr "空のチャンネルはストロークできません。"
 
-#: ../app/core/gimpchannel.c:1706
+#: ../app/core/gimpchannel.c:1723
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "チャンネル表示色の設定"
 
-#: ../app/core/gimpchannel.c:1757
+#: ../app/core/gimpchannel.c:1774
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "チャンネル不透明度の設定"
 
-#: ../app/core/gimpchannel.c:1846 ../app/core/gimpselection.c:169
+#: ../app/core/gimpchannel.c:1863 ../app/core/gimpselection.c:169
 msgid "Selection Mask"
 msgstr "選択マスク"
 
@@ -14168,7 +14253,7 @@ msgid "Render Stroke"
 msgstr "ストローク描画"
 
 #: ../app/core/gimpdrawable-gradient.c:125
-#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1037
+#: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1043
 #, fuzzy
 #| msgid "Gradient"
 msgctxt "undo-type"
@@ -14226,7 +14311,7 @@ msgid "Style"
 msgstr "タブの見出し(_T)"
 
 #: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
-#: ../app/tools/gimpbucketfilloptions.c:146
+#: ../app/tools/gimpbucketfilloptions.c:147
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "なめらかに"
@@ -15126,21 +15211,21 @@ msgstr "レイヤーマスク名を変更できません"
 msgid "Select transparent pixels instead of gray ones"
 msgstr "透明部分も選択可"
 
-#: ../app/core/gimplineart.c:298 ../app/tools/gimpbucketfilloptions.c:163
+#: ../app/core/gimplineart.c:298 ../app/tools/gimpbucketfilloptions.c:172
 msgid "Line art detection threshold"
 msgstr ""
 
-#: ../app/core/gimplineart.c:299 ../app/tools/gimpbucketfilloptions.c:164
+#: ../app/core/gimplineart.c:299 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 
-#: ../app/core/gimplineart.c:305 ../app/tools/gimpbucketfilloptions.c:170
+#: ../app/core/gimplineart.c:305 ../app/tools/gimpbucketfilloptions.c:179
 #, fuzzy
 #| msgid "Maximum _new image size:"
 msgid "Maximum growing size"
 msgstr "新しい画像の最大サイズ(_N):"
 
-#: ../app/core/gimplineart.c:306 ../app/tools/gimpbucketfilloptions.c:171
+#: ../app/core/gimplineart.c:306 ../app/tools/gimpbucketfilloptions.c:180
 #, fuzzy
 #| msgid "_Maximum number of colors:"
 msgid "Maximum number of pixels grown under the line art"
@@ -15707,7 +15792,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "カラープロファイル"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:107
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:108
 #, fuzzy
 #| msgid "Fill by:"
 msgid "Fill type"
@@ -16385,17 +16470,17 @@ msgstr "新しい画像を作成"
 msgid "_Template:"
 msgstr "テンプレート(_T):"
 
-#: ../app/dialogs/image-new-dialog.c:319
+#: ../app/dialogs/image-new-dialog.c:321
 msgid "Confirm Image Size"
 msgstr "キャンバスサイズの確認"
 
-#: ../app/dialogs/image-new-dialog.c:341
+#: ../app/dialogs/image-new-dialog.c:343
 #: ../app/dialogs/image-scale-dialog.c:237
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "大きさが %s の画像を作成しようとしています。"
 
-#: ../app/dialogs/image-new-dialog.c:348
+#: ../app/dialogs/image-new-dialog.c:350
 #, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
@@ -19011,18 +19096,18 @@ msgid "Drop New Path"
 msgstr "新しいパスをドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
-#: ../app/tools/gimpbucketfilltool.c:297 ../app/tools/gimpcagetool.c:221
-#: ../app/tools/gimpfiltertool.c:273 ../app/tools/gimpgradienttool.c:248
+#: ../app/tools/gimpbucketfilltool.c:285 ../app/tools/gimpcagetool.c:221
+#: ../app/tools/gimpfiltertool.c:274 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
 msgstr "レイヤーグループのピクセルは変更できません。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
-#: ../app/tools/gimpbucketfilltool.c:311 ../app/tools/gimpcagetool.c:228
+#: ../app/tools/gimpbucketfilltool.c:299 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1150
-#: ../app/tools/gimpfiltertool.c:280 ../app/tools/gimpgradienttool.c:255
-#: ../app/tools/gimpmovetool.c:308 ../app/tools/gimppainttool.c:286
+#: ../app/tools/gimpfiltertool.c:281 ../app/tools/gimpgradienttool.c:255
+#: ../app/tools/gimpmovetool.c:309 ../app/tools/gimppainttool.c:286
 #: ../app/tools/gimpselectiontool.c:453 ../app/tools/gimptransformtool.c:513
 #: ../app/tools/gimpwarptool.c:638
 #, c-format
@@ -19134,6 +19219,11 @@ msgstr "(なし)"
 #| msgid "Color Management"
 msgid "not color managed"
 msgstr "カラーマネジメント"
+
+#: ../app/display/gimpdisplayshell-tool-events.c:1603
+#, c-format
+msgid "Layer picked: '%s'"
+msgstr ""
 
 #: ../app/display/gimpdisplayshell-utils.c:174
 #: ../app/tools/gimpmeasuretool.c:592 ../app/tools/gimpmeasuretool.c:745
@@ -20709,7 +20799,9 @@ msgstr "スタンプで描画"
 msgid "No patterns available for use with this tool."
 msgstr "このツールではパターンは利用できません。"
 
-#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpcloneoptions-gui.c:70
+#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:164
+#: ../app/tools/gimpbucketfilloptions.c:457
+#: ../app/tools/gimpcloneoptions-gui.c:70
 msgid "Source"
 msgstr "スタンプソース"
 
@@ -21071,7 +21163,7 @@ msgid "Alignment"
 msgstr "位置合わせ"
 
 #: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:128
-#: ../app/tools/gimpbucketfilloptions.c:131 ../app/tools/gimpcoloroptions.c:69
+#: ../app/tools/gimpbucketfilloptions.c:132 ../app/tools/gimpcoloroptions.c:69
 #: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
 msgstr "見えている色で"
@@ -21541,7 +21633,7 @@ msgstr "しきい値を適用"
 msgid "Sample transparent"
 msgstr "透明にする(_T)"
 
-#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:138
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
 #: ../app/tools/gimpregionselectoptions.c:104
 #, fuzzy
 #| msgctxt "guides-type"
@@ -22803,7 +22895,7 @@ msgstr "固定"
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
 msgstr ""
 "[エアブラシで描画]\n"
-"アクティブなブラシで圧力調整可能なエアブラシとして描画します。"
+"アクティブなブラシで圧力調整可能なエアブラシとして描画します"
 
 #: ../app/tools/gimpairbrushtool.c:69
 msgid "_Airbrush"
@@ -22959,26 +23051,26 @@ msgstr "コントラスト(_T):"
 msgid "Edit these Settings as Levels"
 msgstr "この設定をレベルで調整"
 
-#: ../app/tools/gimpbucketfilloptions.c:115
+#: ../app/tools/gimpbucketfilloptions.c:116
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float selection"
 msgid "Fill selection"
 msgstr "フローティング選択範囲"
 
-#: ../app/tools/gimpbucketfilloptions.c:116
+#: ../app/tools/gimpbucketfilloptions.c:117
 msgid "Which area will be filled"
 msgstr "どの領域を塗りつぶすのかを指定します"
 
-#: ../app/tools/gimpbucketfilloptions.c:123
+#: ../app/tools/gimpbucketfilloptions.c:124
 msgid "Fill transparent areas"
 msgstr "透明領域を塗りつぶす"
 
-#: ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/tools/gimpbucketfilloptions.c:125
 msgid "Allow completely transparent regions to be filled"
 msgstr "完全に透明な部分の塗りつぶしも許可します"
 
-#: ../app/tools/gimpbucketfilloptions.c:132
+#: ../app/tools/gimpbucketfilloptions.c:133
 msgid "Base filled area on all visible layers"
 msgstr ""
 "この設定がオンのときは、現在見えている色を評価して塗りつぶし領域を決定しま"
@@ -22986,12 +23078,12 @@ msgstr ""
 "設定がオフのときは、アクティブなレイヤーのみの色を評価して塗りつぶし領域を決"
 "定します"
 
-#: ../app/tools/gimpbucketfilloptions.c:139
+#: ../app/tools/gimpbucketfilloptions.c:140
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr ""
 
-#: ../app/tools/gimpbucketfilloptions.c:147
+#: ../app/tools/gimpbucketfilloptions.c:148
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
@@ -22999,96 +23091,108 @@ msgid ""
 msgstr ""
 
 # 「閾（しきい）」の漢字が読めない、またはディスプレイ上で識別できない人がいる可能性があるので、「しきい値」とした
-#: ../app/tools/gimpbucketfilloptions.c:156
+#: ../app/tools/gimpbucketfilloptions.c:157
 #: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "しきい値"
 
-#: ../app/tools/gimpbucketfilloptions.c:157
+#: ../app/tools/gimpbucketfilloptions.c:158
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "最大の色の差"
 
-#: ../app/tools/gimpbucketfilloptions.c:177
+#: ../app/tools/gimpbucketfilloptions.c:165
+#, fuzzy
+#| msgid "Set Image Print Resolution"
+msgid "Source image for line art computation"
+msgstr "画像印刷解像度の設定"
+
+#: ../app/tools/gimpbucketfilloptions.c:186
 msgid "Maximum gap length"
 msgstr ""
 
-#: ../app/tools/gimpbucketfilloptions.c:178
+#: ../app/tools/gimpbucketfilloptions.c:187
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr ""
 
-#: ../app/tools/gimpbucketfilloptions.c:184
-#: ../app/tools/gimpbucketfilloptions.c:426
+#: ../app/tools/gimpbucketfilloptions.c:193
+#: ../app/tools/gimpbucketfilloptions.c:441
 #, fuzzy
 #| msgid "Fill by:"
 msgid "Fill by"
 msgstr "判定基準:"
 
-#: ../app/tools/gimpbucketfilloptions.c:185
+#: ../app/tools/gimpbucketfilloptions.c:194
 msgid "Criterion used for determining color similarity"
 msgstr "類似色領域判定時の基準とする要素を指定します"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:363
+#: ../app/tools/gimpbucketfilloptions.c:378
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "塗りつぶし色  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:378
+#: ../app/tools/gimpbucketfilloptions.c:393
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "塗りつぶす範囲 (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:387
+#: ../app/tools/gimpbucketfilloptions.c:402
 msgid "Finding Similar Colors"
 msgstr "類似色の識別"
 
 #. Line art frame
-#: ../app/tools/gimpbucketfilloptions.c:431
+#: ../app/tools/gimpbucketfilloptions.c:446
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Invert Selection"
 msgid "Line Art Detection"
 msgstr "選択範囲を反転"
 
-#: ../app/tools/gimpbucketfilltool.c:164
+#: ../app/tools/gimpbucketfilltool.c:157
 msgid "Bucket Fill"
 msgstr "塗りつぶし"
 
-#: ../app/tools/gimpbucketfilltool.c:165
+#: ../app/tools/gimpbucketfilltool.c:158
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
 "[塗りつぶし]\n"
 "対象の範囲を色やパターンで塗りつぶします"
 
-#: ../app/tools/gimpbucketfilltool.c:166
+#: ../app/tools/gimpbucketfilltool.c:159
 msgid "_Bucket Fill"
 msgstr "塗りつぶし(_B)"
 
-#: ../app/tools/gimpbucketfilltool.c:304 ../app/tools/gimpcagetool.c:237
-#: ../app/tools/gimpfiltertool.c:289
+#: ../app/tools/gimpbucketfilltool.c:292 ../app/tools/gimpcagetool.c:237
+#: ../app/tools/gimpfiltertool.c:290
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:313
 #: ../app/tools/gimptransformtool.c:521 ../app/tools/gimpwarptool.c:651
 msgid "The active layer is not visible."
 msgstr "アクティブレイヤーは非表示になっています。"
 
-#: ../app/tools/gimpbucketfilltool.c:339
+#: ../app/tools/gimpbucketfilltool.c:309
+#, fuzzy
+#| msgid "No filter selected"
+msgid "No valid line art source selected."
+msgstr "フィルターが選択されていません"
+
+#: ../app/tools/gimpbucketfilltool.c:337
 #, fuzzy
 #| msgid "Bucket Fill"
 msgid "Bucket fill"
 msgstr "塗りつぶし"
 
-#: ../app/tools/gimpbucketfilltool.c:693 ../app/tools/gimpbucketfilltool.c:809
+#: ../app/tools/gimpbucketfilltool.c:706 ../app/tools/gimpbucketfilltool.c:830
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:447
 msgid "Click in any image to pick the background color"
 msgstr "クリックされたピクセルの色を背景色に設定します"
 
-#: ../app/tools/gimpbucketfilltool.c:700 ../app/tools/gimpbucketfilltool.c:818
+#: ../app/tools/gimpbucketfilltool.c:713 ../app/tools/gimpbucketfilltool.c:839
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:441
 msgid "Click in any image to pick the foreground color"
 msgstr "クリックされたピクセルの色を描画色に設定します"
@@ -23513,20 +23617,20 @@ msgstr "移動: "
 msgid "Move Floating Selection"
 msgstr "フローティング選択範囲の移動"
 
-#: ../app/tools/gimpeditselectiontool.c:1123 ../app/tools/gimpmovetool.c:263
+#: ../app/tools/gimpeditselectiontool.c:1123 ../app/tools/gimpmovetool.c:264
 #, fuzzy
 #| msgid "There is no path to transform."
 msgid "There is no path to move."
 msgstr "変形できるパスがありません。"
 
-#: ../app/tools/gimpeditselectiontool.c:1127 ../app/tools/gimpmovetool.c:267
+#: ../app/tools/gimpeditselectiontool.c:1127 ../app/tools/gimpmovetool.c:268
 #: ../app/tools/gimptransformtool.c:555
 #, fuzzy
 #| msgid "The active path is locked."
 msgid "The active path's position is locked."
 msgstr "アクティブなパスは保護されています。"
 
-#: ../app/tools/gimpeditselectiontool.c:1138 ../app/tools/gimpmovetool.c:299
+#: ../app/tools/gimpeditselectiontool.c:1138 ../app/tools/gimpmovetool.c:300
 #, fuzzy
 #| msgid "There is no layer to transform."
 msgid "There is no layer to move."
@@ -23534,20 +23638,20 @@ msgstr "変形できるレイヤーがありません。"
 
 #: ../app/tools/gimpeditselectiontool.c:1146
 #: ../app/tools/gimpeditselectiontool.c:1172
-#: ../app/tools/gimpeditselectiontool.c:1181 ../app/tools/gimpmovetool.c:306
-#: ../app/tools/gimpmovetool.c:324
+#: ../app/tools/gimpeditselectiontool.c:1181 ../app/tools/gimpmovetool.c:307
+#: ../app/tools/gimpmovetool.c:325
 #, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "The active layer's position is locked."
 msgstr "アクティブレイヤー中のすべてのピクセルが保護されています。"
 
-#: ../app/tools/gimpeditselectiontool.c:1159 ../app/tools/gimpmovetool.c:315
+#: ../app/tools/gimpeditselectiontool.c:1159 ../app/tools/gimpmovetool.c:316
 #, fuzzy
 #| msgid "The active path is locked."
 msgid "The active channel's position is locked."
 msgstr "アクティブなパスは保護されています。"
 
-#: ../app/tools/gimpeditselectiontool.c:1163 ../app/tools/gimpmovetool.c:317
+#: ../app/tools/gimpeditselectiontool.c:1163 ../app/tools/gimpmovetool.c:318
 #, fuzzy
 #| msgid "The active layer's pixels are locked."
 msgid "The active channel's pixels are locked."
@@ -23596,15 +23700,25 @@ msgstr "%s-クリック: ピクセルの色を背景色に設定"
 msgid "Anti erase  (%s)"
 msgstr "逆消しゴム  (%s)"
 
-#: ../app/tools/gimpfilteroptions.c:71
+#: ../app/tools/gimpfilteroptions.c:72
 msgid "_Preview"
 msgstr "プレビュー(_P)"
 
-#: ../app/tools/gimpfilteroptions.c:78
+#: ../app/tools/gimpfilteroptions.c:79
 msgid "Split _view"
 msgstr "分割表示(_V)"
 
-#: ../app/tools/gimpfilteroptions.c:109
+#: ../app/tools/gimpfilteroptions.c:102
+msgid "On-canvas con_trols"
+msgstr ""
+
+#: ../app/tools/gimpfilteroptions.c:103
+#, fuzzy
+#| msgid "Show s_election"
+msgid "Show on-canvas filter controls"
+msgstr "選択範囲の境界線(_E)"
+
+#: ../app/tools/gimpfilteroptions.c:117
 #, fuzzy
 #| msgid "Color Management"
 msgid "Color _managed"
@@ -23613,56 +23727,56 @@ msgstr "カラーマネジメント"
 # 表記揺れではない。
 # 非常に高度な設定らしい（設定項目は、多言語への翻訳が許されていない）ので、あえて「高度なオプション」としている。
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:379
+#: ../app/tools/gimpfiltertool.c:389
 #, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Advanced options"
 msgid "Advanced Color Options"
 msgstr "高度なオプション"
 
-#: ../app/tools/gimpfiltertool.c:398
+#: ../app/tools/gimpfiltertool.c:408
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:399
+#: ../app/tools/gimpfiltertool.c:409
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:643
+#: ../app/tools/gimpfiltertool.c:653
 #, fuzzy
 #| msgid "Click to pick this guide as first item"
 msgid "Click to switch the original and filtered sides"
 msgstr "クリック: このガイドを [最初のアイテム] にします"
 
-#: ../app/tools/gimpfiltertool.c:647
+#: ../app/tools/gimpfiltertool.c:657
 #, fuzzy
 #| msgid "Click to place vertical and horizontal guides"
 msgid "Click to switch between vertical and horizontal"
 msgstr "クリック: 垂直方向・水平方向のガイドを配置します"
 
-#: ../app/tools/gimpfiltertool.c:651
+#: ../app/tools/gimpfiltertool.c:661
 #, fuzzy
 #| msgid "Click to dodge the line"
 msgid "Click to move the split guide"
 msgstr "クリック: 直線を覆い焼きします"
 
-#: ../app/tools/gimpfiltertool.c:653
+#: ../app/tools/gimpfiltertool.c:663
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:654
+#: ../app/tools/gimpfiltertool.c:664
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr ""
 
-#: ../app/tools/gimpfiltertool.c:1342 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1359 ../app/tools/gimpfiltertool-settings.c:71
 #, fuzzy, c-format
 #| msgid "Import Threshold Settings"
 msgid "Import '%s' Settings"
 msgstr "しきい値設定のインポート"
 
-#: ../app/tools/gimpfiltertool.c:1344 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1361 ../app/tools/gimpfiltertool-settings.c:73
 #, fuzzy, c-format
 #| msgid "Export Threshold Settings"
 msgid "Export '%s' Settings"
@@ -23949,8 +24063,6 @@ msgid "Select an operation from the list above"
 msgstr "上の一覧からオペレーションを選択してください"
 
 #: ../app/tools/gimpgenerictransformtool.c:104
-#, fuzzy
-#| msgid "Transformation Matrix"
 msgid "Transform Matrix"
 msgstr "変形情報行列"
 
@@ -24174,7 +24286,7 @@ msgstr "ガイドを追加: "
 #: ../app/tools/gimphandletransformoptions.c:73
 #: ../app/tools/gimphandletransformoptions.c:74
 msgid "Handle mode"
-msgstr ""
+msgstr "ハンドルモード"
 
 #: ../app/tools/gimphandletransformoptions.c:167
 msgid "Add handles and transform the image"
@@ -24195,37 +24307,27 @@ msgid "Remove transform handles"
 msgstr "画像からパラサイトを削除"
 
 #: ../app/tools/gimphandletransformtool.c:111
-#, fuzzy
-#| msgid "Cage Transform"
 msgid "Handle Transform"
-msgstr "ケージ変形"
+msgstr "ハンドル変形"
 
 #: ../app/tools/gimphandletransformtool.c:112
-#, fuzzy
-#| msgid "Shear Tool: Shear the layer, selection or path"
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
-"[剪断変形]\n"
-"レイヤー、選択範囲、またはパスを剪断変形します"
+"[ハンドル変形]\n"
+"レイヤー、選択範囲、またはパスをハンドルを使って変形します"
 
 #: ../app/tools/gimphandletransformtool.c:114
-#, fuzzy
-#| msgid "_Cage Transform"
 msgid "_Handle Transform"
-msgstr "ケージ変形(_C)"
+msgstr "ハンドル変形(_H)"
 
 #: ../app/tools/gimphandletransformtool.c:139
-#, fuzzy
-#| msgid "Transformation"
 msgid "Handle transformation"
-msgstr "変形"
+msgstr "ハンドル変形"
 
 #: ../app/tools/gimphandletransformtool.c:205
-#, fuzzy
-#| msgid "Cage transform"
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "ケージ変形"
+msgstr "ハンドル変形"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
@@ -25371,7 +25473,7 @@ msgstr "自動調整(_A)"
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "画像から最適なしいき値を計算します"
 
-#: ../app/tools/gimptool.c:1194
+#: ../app/tools/gimptool.c:1213
 msgid "Can't work on an empty image, add a layer first"
 msgstr "空の画像では作業できません。まずレイヤーを追加してください。"
 
@@ -25390,7 +25492,7 @@ msgstr "プレビューを表示"
 #: ../app/tools/gimptransformgridoptions.c:100
 #, fuzzy
 #| msgid "Show a preview of the transformed image"
-msgid "Show a preview of the transform_grided image"
+msgid "Show a preview of the transformed image"
 msgstr "変形画像のプレビューを表示します"
 
 #: ../app/tools/gimptransformgridoptions.c:106
@@ -25618,37 +25720,27 @@ msgid "The current transform is invalid"
 msgstr ""
 
 #: ../app/tools/gimpunifiedtransformtool.c:84
-#, fuzzy
-#| msgid "Cage Transform"
 msgid "Unified Transform"
-msgstr "ケージ変形"
+msgstr "統合変形"
 
 #: ../app/tools/gimpunifiedtransformtool.c:85
-#, fuzzy
-#| msgid "Shear Tool: Shear the layer, selection or path"
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr ""
-"[剪断変形]\n"
-"レイヤー、選択範囲、またはパスを剪断変形します"
+"[統合変形]\n"
+"レイヤー、選択範囲、またはパスを変形します"
 
 #: ../app/tools/gimpunifiedtransformtool.c:87
-#, fuzzy
-#| msgid "_Cage Transform"
 msgid "_Unified Transform"
-msgstr "ケージ変形(_C)"
+msgstr "統合変形(_U)"
 
 #: ../app/tools/gimpunifiedtransformtool.c:109
-#, fuzzy
-#| msgid "Cage transform"
 msgid "Unified transform"
-msgstr "ケージ変形"
+msgstr "統合変形"
 
 #: ../app/tools/gimpunifiedtransformtool.c:120
-#, fuzzy
-#| msgid "Cage Transform"
 msgctxt "undo-type"
 msgid "Unified Transform"
-msgstr "ケージ変形"
+msgstr "統合変形"
 
 #: ../app/tools/gimpvectoroptions.c:181
 #, c-format
@@ -25875,51 +25967,81 @@ msgctxt "bucket-fill-area"
 msgid "Fill by line art detection"
 msgstr "選択範囲"
 
-#: ../app/tools/tools-enums.c:56
+#: ../app/tools/tools-enums.c:57
+#, fuzzy
+#| msgctxt "item-set"
+#| msgid "All visible layers"
+msgctxt "line-art-source"
+msgid "All visible layers"
+msgstr "すべての可視レイヤー"
+
+#: ../app/tools/tools-enums.c:58
+#, fuzzy
+#| msgctxt "align-reference-type"
+#| msgid "Active layer"
+msgctxt "line-art-source"
+msgid "Active layer"
+msgstr "アクティブなレイヤー"
+
+#: ../app/tools/tools-enums.c:59
+#, fuzzy
+#| msgid "Set layer or path as active"
+msgctxt "line-art-source"
+msgid "Layer below the active one"
+msgstr "つかんだレイヤーやパスをアクティブにする"
+
+#: ../app/tools/tools-enums.c:60
+#, fuzzy
+#| msgid "Move the active layer"
+msgctxt "line-art-source"
+msgid "Layer above the active one"
+msgstr "アクティブなレイヤーを移動"
+
+#: ../app/tools/tools-enums.c:89
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "自由選択"
 
-#: ../app/tools/tools-enums.c:57
+#: ../app/tools/tools-enums.c:90
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "サイズを固定"
 
-#: ../app/tools/tools-enums.c:58
+#: ../app/tools/tools-enums.c:91
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "縦横比を固定"
 
-#: ../app/tools/tools-enums.c:87
+#: ../app/tools/tools-enums.c:120
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "レイヤー"
 
-#: ../app/tools/tools-enums.c:88
+#: ../app/tools/tools-enums.c:121
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "選択範囲"
 
-#: ../app/tools/tools-enums.c:89
+#: ../app/tools/tools-enums.c:122
 msgctxt "transform-type"
 msgid "Path"
 msgstr "パス"
 
-#: ../app/tools/tools-enums.c:182
+#: ../app/tools/tools-enums.c:215
 #, fuzzy
 #| msgid "Mark foreground"
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
 msgstr "前景部分をマーク"
 
-#: ../app/tools/tools-enums.c:183
+#: ../app/tools/tools-enums.c:216
 #, fuzzy
 #| msgid "Mark background"
 msgctxt "matting-draw-mode"
 msgid "Draw background"
 msgstr "背景部分をマーク"
 
-#: ../app/tools/tools-enums.c:184
+#: ../app/tools/tools-enums.c:217
 #, fuzzy
 #| msgctxt "orientation-type"
 #| msgid "Unknown"
@@ -25927,14 +26049,14 @@ msgctxt "matting-draw-mode"
 msgid "Draw unknown"
 msgstr "不明"
 
-#: ../app/tools/tools-enums.c:217
+#: ../app/tools/tools-enums.c:250
 #, fuzzy
 #| msgid "Lock pixels"
 msgctxt "warp-behavior"
 msgid "Move pixels"
 msgstr "すべてのピクセルを保護"
 
-#: ../app/tools/tools-enums.c:218
+#: ../app/tools/tools-enums.c:251
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Grow Channel"
@@ -25942,7 +26064,7 @@ msgctxt "warp-behavior"
 msgid "Grow area"
 msgstr "チャンネルの拡大"
 
-#: ../app/tools/tools-enums.c:219
+#: ../app/tools/tools-enums.c:252
 #, fuzzy
 #| msgctxt "view-action"
 #| msgid "Shrink _Wrap"
@@ -25950,7 +26072,7 @@ msgctxt "warp-behavior"
 msgid "Shrink area"
 msgstr "ウィンドウサイズを合わせる(_W)"
 
-#: ../app/tools/tools-enums.c:220
+#: ../app/tools/tools-enums.c:253
 #, fuzzy
 #| msgctxt "gradient-editor-coloring"
 #| msgid "HSV (clockwise _hue)"
@@ -25958,7 +26080,7 @@ msgctxt "warp-behavior"
 msgid "Swirl clockwise"
 msgstr "HSV (色相時計回り)(_H)"
 
-#: ../app/tools/tools-enums.c:221
+#: ../app/tools/tools-enums.c:254
 #, fuzzy
 #| msgctxt "gradient-editor-coloring"
 #| msgid "HSV (_counter-clockwise hue)"
@@ -25966,14 +26088,14 @@ msgctxt "warp-behavior"
 msgid "Swirl counter-clockwise"
 msgstr "HSV (色相反時計回り)(_C)"
 
-#: ../app/tools/tools-enums.c:222
+#: ../app/tools/tools-enums.c:255
 #, fuzzy
 #| msgid "Eraser"
 msgctxt "warp-behavior"
 msgid "Erase warping"
 msgstr "消しゴム"
 
-#: ../app/tools/tools-enums.c:223
+#: ../app/tools/tools-enums.c:256
 #, fuzzy
 #| msgid "Smoothing:"
 msgctxt "warp-behavior"
