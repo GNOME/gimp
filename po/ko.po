@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-23 03:52+0900\n"
+"PO-Revision-Date: 2019-01-23 05:16+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -6139,7 +6139,7 @@ msgstr "이미지에 대한 정보를 봅니다"
 #: ../app/actions/image-actions.c:181
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
-msgstr "sRGB 프로필 사용(_S)"
+msgstr "_sRGB 프로필 사용"
 
 #: ../app/actions/image-actions.c:182
 msgctxt "image-action"
@@ -12333,7 +12333,7 @@ msgstr "확장 AppData는 <release> 태그 안에서 버전을 알려 주어야 
 #: ../app/core/gimpextension.c:408
 #, c-format
 msgid "Unsupported <requires> \"%s\" (type %s)."
-msgstr ""
+msgstr "지원하지 않는 <requires> \"%1$s\" (%2$s 유형)."
 
 #: ../app/core/gimpextension.c:423
 #, c-format
@@ -12365,7 +12365,7 @@ msgstr "'%s'은(는) 올바른 파일이 아닙니다."
 #: ../app/core/gimpextension.c:807
 #, c-format
 msgid "This parser does not support imbricated lists."
-msgstr ""
+msgstr "이 구문분석기는 이 중첩된 목록을 지원하지 않습니다."
 
 #: ../app/core/gimpextension.c:828
 #, c-format
@@ -13934,7 +13934,7 @@ msgstr "라인 아트 감지 임계값"
 
 #: ../app/core/gimplineart.c:299 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
-msgstr ""
+msgstr "윤곽을 감지할 임계값 (값이 클수록 더 많은 픽셀이 포함됨)"
 
 #: ../app/core/gimplineart.c:305 ../app/tools/gimpbucketfilloptions.c:179
 msgid "Maximum growing size"
@@ -14312,7 +14312,7 @@ msgstr "수평 축 위치"
 
 #: ../app/core/gimpsymmetry-tiling.c:102
 msgid "Tiling"
-msgstr ""
+msgstr "타일링"
 
 #: ../app/core/gimpsymmetry-tiling.c:108
 msgid "Interval X"
@@ -15384,7 +15384,7 @@ msgstr "경계선의 움직임"
 
 #: ../app/dialogs/offset-dialog.c:248
 msgid "W_rap around"
-msgstr ""
+msgstr "감싸기(_R)"
 
 #: ../app/dialogs/offset-dialog.c:251
 msgid "Fill with _background color"
@@ -15671,13 +15671,14 @@ msgstr "디버깅 정책(_P):"
 
 #: ../app/dialogs/preferences-dialog.c:1261
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
-msgstr ""
+msgstr "이 기능을 사용하려면 시스템에 \"gdb\" 또는 \"lldb\"를 설치해야 합니다."
 
 #: ../app/dialogs/preferences-dialog.c:1265
 msgid ""
 "This feature is more efficient with \"gdb\" or \"lldb\" installed on your "
 "system."
 msgstr ""
+"이 기능은 시스템에 설치된 \"gdb\" 또는 \"lldb\"와 사용할 때 더 효율적입니다."
 
 #: ../app/dialogs/preferences-dialog.c:1278
 #: ../app/dialogs/preferences-dialog.c:1279
@@ -16086,7 +16087,7 @@ msgstr "테마 선택"
 
 #: ../app/dialogs/preferences-dialog.c:1943
 msgid "Use dark theme variant if available"
-msgstr ""
+msgstr "사용할 수 있으면 변형된 어두운 테마 사용"
 
 #: ../app/dialogs/preferences-dialog.c:1951
 msgid "Reload C_urrent Theme"
@@ -16104,7 +16105,7 @@ msgstr "아이콘 테마 선택"
 
 #: ../app/dialogs/preferences-dialog.c:2079
 msgid "Use symbolic icons if available"
-msgstr ""
+msgstr "사용 가능하면 기호 아이콘 사용"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2098
@@ -18011,7 +18012,7 @@ msgstr "이미지 다운로드하기 (%2$s 중 %1$s)"
 #: ../app/file/file-remote.c:361
 #, c-format
 msgid "Uploading image (%s of %s)"
-msgstr ""
+msgstr "이미지 업로드 (%2$s 중 %1$s)"
 
 #: ../app/file/file-remote.c:384
 #, c-format
@@ -18021,7 +18022,7 @@ msgstr "이미지 데이터의 %s 다운로드 함"
 #: ../app/file/file-remote.c:388
 #, c-format
 msgid "Uploaded %s of image data"
-msgstr ""
+msgstr "이미지 데이터의 %s 업로드"
 
 #: ../app/file/file-save.c:99
 msgid "There is no active layer to save"
@@ -19337,7 +19338,7 @@ msgstr "속도"
 
 #: ../app/paint/gimpsmudgeoptions.c:71
 msgid "The strength of smudging"
-msgstr ""
+msgstr "문지르기 강도"
 
 #: ../app/paint/gimpsmudgeoptions.c:77
 msgctxt "smudge-tool"
@@ -20392,7 +20393,7 @@ msgstr "알파 있는 인덱스"
 
 #: ../app/plug-in/gimppluginprocedure.c:1045
 msgid "This plug-in only works on the following layer types:"
-msgstr ""
+msgstr "이 플러그인은 다음 레이어 유형에서만 작동함:"
 
 #: ../app/plug-in/gimppluginprocedure.c:1248
 #, c-format
@@ -20761,7 +20762,7 @@ msgstr "이미지에서 색 추출"
 
 #: ../app/propgui/gimppropgui.c:540
 msgid "This operation has no editable properties"
-msgstr ""
+msgstr "이 작업에는 편집 가능한 속성이 없음"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
@@ -21233,7 +21234,7 @@ msgstr "표본 평균"
 
 #: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:72
 msgid "Use averaged color value from nearby pixels"
-msgstr ""
+msgstr "주변 픽셀의 평균 색 값 사용"
 
 #: ../app/tools/gimpcoloroptions.c:86
 msgid "Color Picker Average Radius"
@@ -23436,7 +23437,7 @@ msgstr "고화질 미리보기"
 
 #: ../app/tools/gimpwarpoptions.c:136
 msgid "Use an accurate but slower preview"
-msgstr ""
+msgstr "정확하지만 더 느린 미리보기 사용"
 
 #: ../app/tools/gimpwarpoptions.c:142
 msgid "During motion"
@@ -24434,6 +24435,8 @@ msgstr "버그 트래커 열기"
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
+"김프를 개선하는 데 도움을 주려면, 다음의 간단한 단계를 통해 버그를 신고할 수 "
+"있음:"
 
 #: ../app/widgets/gimpcriticaldialog.c:135
 #: ../app/widgets/gimpcriticaldialog.c:458
@@ -24469,6 +24472,8 @@ msgid ""
 "This error may have left GIMP in an inconsistent state. It is advised to "
 "save your work and restart GIMP."
 msgstr ""
+"이 오류는 김프를 일관성 없는 상태로 남겨둘 수 있습니다. 작업물을 저장하고 김"
+"프를 다시 시작 하는 것이 좋습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:154
 msgid ""
@@ -24523,11 +24528,11 @@ msgstr "지정한 DLL을 찾지 못했습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:260
 msgid "There is no application associated with the given file name extension."
-msgstr ""
+msgstr "지정된 파일 이름 확장명과 연결된 프로그램이 없습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:263
 msgid "There was not enough memory to complete the operation."
-msgstr ""
+msgstr "메모리가 부족하여 작업을 완료할 수 없습니다."
 
 #: ../app/widgets/gimpcriticaldialog.c:266
 msgid "A sharing violation occurred."
@@ -24572,7 +24577,7 @@ msgstr "점유된"
 
 #: ../app/widgets/gimpdashboard.c:446
 msgid "Tile cache occupied size"
-msgstr ""
+msgstr "타일 캐시가 점유한 크기"
 
 #: ../app/widgets/gimpdashboard.c:455
 msgctxt "dashboard-variable"
@@ -24590,7 +24595,7 @@ msgstr "제한"
 
 #: ../app/widgets/gimpdashboard.c:466
 msgid "Tile cache size limit"
-msgstr ""
+msgstr "타일 캐시 크기 제한"
 
 #: ../app/widgets/gimpdashboard.c:474 ../app/widgets/gimpdashboard.c:600
 msgctxt "dashboard-variable"
@@ -24599,7 +24604,7 @@ msgstr "압축"
 
 #: ../app/widgets/gimpdashboard.c:475
 msgid "Tile cache compression ratio"
-msgstr ""
+msgstr "타일 캐시 압축 비율"
 
 #: ../app/widgets/gimpdashboard.c:484
 msgctxt "dashboard-variable"
@@ -24608,7 +24613,7 @@ msgstr "히트/미스"
 
 #: ../app/widgets/gimpdashboard.c:485
 msgid "Tile cache hit/miss ratio"
-msgstr ""
+msgstr "타일 캐시 적중/미스 비율"
 
 #: ../app/widgets/gimpdashboard.c:498
 msgid "Swap file occupied size"
@@ -24665,7 +24670,7 @@ msgstr "읽기"
 
 #: ../app/widgets/gimpdashboard.c:558
 msgid "Total amount of data read from the swap"
-msgstr ""
+msgstr "스왑에서 읽은 데이터의 총량"
 
 #: ../app/widgets/gimpdashboard.c:567
 msgctxt "dashboard-variable"
@@ -24686,7 +24691,7 @@ msgstr "기록됨"
 
 #: ../app/widgets/gimpdashboard.c:581
 msgid "Total amount of data written to the swap"
-msgstr ""
+msgstr "스왑에 쓴 데이터의 총량"
 
 #: ../app/widgets/gimpdashboard.c:590
 msgctxt "dashboard-variable"
@@ -24717,11 +24722,11 @@ msgstr "활성"
 
 #: ../app/widgets/gimpdashboard.c:624
 msgid "Whether the CPU is active"
-msgstr ""
+msgstr "CPU가 활성 상태인지"
 
 #: ../app/widgets/gimpdashboard.c:633
 msgid "Total amount of time the CPU has been active"
-msgstr ""
+msgstr "CPU가 활성 상태였던 총 시간"
 
 #: ../app/widgets/gimpdashboard.c:646
 msgctxt "dashboard-variable"
@@ -24752,7 +24757,7 @@ msgstr "밉맵됨"
 
 #: ../app/widgets/gimpdashboard.c:677
 msgid "Total size of processed mipmapped data"
-msgstr ""
+msgstr "처리된 밉매핑된 데이터의 총 크기"
 
 #: ../app/widgets/gimpdashboard.c:685
 msgctxt "dashboard-variable"
@@ -24770,7 +24775,7 @@ msgstr "스크래치"
 
 #: ../app/widgets/gimpdashboard.c:695
 msgid "Total size of scratch memory"
-msgstr ""
+msgstr "스크래치 메모리의 총 크기"
 
 #: ../app/widgets/gimpdashboard.c:707
 msgctxt "dashboard-group"
@@ -24978,7 +24983,7 @@ msgstr "도구 시리얼:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:392
 msgid "Tool hardware ID:"
-msgstr ""
+msgstr "도구 하드웨어 ID:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:404
 #: ../app/widgets/gimpdeviceinfoeditor.c:619
@@ -25572,6 +25577,9 @@ msgid ""
 "has no\n"
 "sample points"
 msgstr ""
+"이 이미지에는\n"
+"표본 점이\n"
+"없습니다"
 
 #: ../app/widgets/gimpsavedialog.c:150
 msgid "All XCF images"
