@@ -1,19 +1,19 @@
 # Swedish messages for GIMP plugins.
-# Copyright © 1999-2018 Free Software Foundation, Inc.
+# Copyright © 1999-2019 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002.
 # Jan Morén <jan.moren@lucs.lu.se>, 2002, 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
 # Påvel Nicklasson <pavel@frimix.se>, 2014.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2018.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2018, 2019.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-12-28 13:31+0000\n"
-"PO-Revision-Date: 2018-12-30 21:43+0100\n"
+"POT-Creation-Date: 2019-01-16 19:58+0000\n"
+"PO-Revision-Date: 2019-01-19 00:40+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -54,8 +54,8 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:951 ../plug-ins/common/file-gif-save.c:1089
 #: ../plug-ins/common/file-heif.c:953 ../plug-ins/common/file-jp2-load.c:949
-#: ../plug-ins/common/file-pdf-load.c:707
-#: ../plug-ins/common/file-pdf-load.c:1272
+#: ../plug-ins/common/file-pdf-load.c:694
+#: ../plug-ins/common/file-pdf-load.c:1259
 #: ../plug-ins/common/file-pdf-save.c:1026 ../plug-ins/common/file-ps.c:3398
 #: ../plug-ins/common/file-raw-data.c:1833 ../plug-ins/common/file-svg.c:727
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1270
@@ -118,7 +118,7 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
-#: ../plug-ins/common/file-heif.c:954 ../plug-ins/common/file-pdf-load.c:708
+#: ../plug-ins/common/file-heif.c:954 ../plug-ins/common/file-pdf-load.c:695
 #: ../plug-ins/common/file-svg.c:728 ../plug-ins/common/file-wmf.c:516
 #: ../plug-ins/common/film.c:1271 ../plug-ins/common/filter-pack.c:1207
 #: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:648
@@ -2206,7 +2206,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
 #: ../plug-ins/common/file-heif.c:353 ../plug-ins/common/file-jp2-load.c:1064
 #: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:370
-#: ../plug-ins/common/file-pdf-load.c:1043 ../plug-ins/common/file-pix.c:357
+#: ../plug-ins/common/file-pdf-load.c:1030 ../plug-ins/common/file-pix.c:357
 #: ../plug-ins/common/file-png.c:927 ../plug-ins/common/file-pnm.c:566
 #: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
 #: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
@@ -2217,7 +2217,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
 #: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-raw/file-darktable.c:399
-#: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
@@ -2313,50 +2313,50 @@ msgstr "Exporterar ”%s”"
 msgid "C source code"
 msgstr "C-källkod"
 
-#: ../plug-ins/common/file-csource.c:892
+#: ../plug-ins/common/file-csource.c:898
 msgid "C-Source"
 msgstr "C-källkod"
 
-#: ../plug-ins/common/file-csource.c:910
+#: ../plug-ins/common/file-csource.c:916
 msgid "_Prefixed name:"
 msgstr "_Prefixnamn:"
 
 # src/header_stuff.c:462
-#: ../plug-ins/common/file-csource.c:919
+#: ../plug-ins/common/file-csource.c:925
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:926
+#: ../plug-ins/common/file-csource.c:932
 msgid "_Save comment to file"
 msgstr "_Spara kommentar till fil"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:938
+#: ../plug-ins/common/file-csource.c:944
 msgid "_Use GLib types (guint8*)"
 msgstr "_Använd GLib-typer (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:951
+#: ../plug-ins/common/file-csource.c:957
 msgid "Us_e macros instead of struct"
 msgstr "An_vänd makron istället för structar"
 
-#: ../plug-ins/common/file-csource.c:964
+#: ../plug-ins/common/file-csource.c:970
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Använd _1-byte skurlängdskodning"
 
-#: ../plug-ins/common/file-csource.c:977
+#: ../plug-ins/common/file-csource.c:983
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Spa_ra alfakanal (RGBARGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:989
+#: ../plug-ins/common/file-csource.c:995
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Spara som _RGB565 (16-bitars)"
 
-#: ../plug-ins/common/file-csource.c:1011
+#: ../plug-ins/common/file-csource.c:1017
 msgid "Op_acity:"
 msgstr "Op_acitet:"
 
@@ -3204,67 +3204,66 @@ msgstr[0] ""
 msgstr[1] ""
 "PDF-dokumentet ”%1$s” har %3$d sidor. Sida %2$d är utanför intervallet."
 
-#: ../plug-ins/common/file-pdf-load.c:679
-#: ../plug-ins/common/file-pdf-load.c:749
+#: ../plug-ins/common/file-pdf-load.c:681
+msgid "PDF is password protected, please input the password:"
+msgstr "PDF är lösenordsskyddad, ange lösenordet:"
+
+#: ../plug-ins/common/file-pdf-load.c:691
+msgid "Encrypted PDF"
+msgstr "Krypterad PDF"
+
+#: ../plug-ins/common/file-pdf-load.c:718
+msgid "Wrong password! Please input the right one:"
+msgstr "Felaktigt lösenord! Ange det korrekta:"
+
+#: ../plug-ins/common/file-pdf-load.c:736
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Kunde inte läsa in ”%s”: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:694
-msgid "PDF is password protected, please input the password:"
-msgstr "PDF är lösenordsskyddad, ange lösenordet:"
-
-#: ../plug-ins/common/file-pdf-load.c:704
-msgid "Encrypted PDF"
-msgstr "Krypterad PDF"
-
-#: ../plug-ins/common/file-pdf-load.c:732
-msgid "Wrong password! Please input the right one:"
-msgstr "Felaktigt lösenord! Ange det korrekta:"
-
-#: ../plug-ins/common/file-pdf-load.c:1077
+#: ../plug-ins/common/file-pdf-load.c:1064
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1156
+#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:1156
 #, c-format
 msgid "%s-pages"
 msgstr "%s-sidor"
 
-#: ../plug-ins/common/file-pdf-load.c:1268
+#: ../plug-ins/common/file-pdf-load.c:1255
 msgid "Import from PDF"
 msgstr "Importera från PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3399
+#: ../plug-ins/common/file-pdf-load.c:1260 ../plug-ins/common/file-ps.c:3399
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
 #: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "_Importera"
 
-#: ../plug-ins/common/file-pdf-load.c:1306
+#: ../plug-ins/common/file-pdf-load.c:1293
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Fel vid hämtning av sidantal från angiven PDF-fil."
 
-#: ../plug-ins/common/file-pdf-load.c:1352
+#: ../plug-ins/common/file-pdf-load.c:1339
 msgid "_Width (pixels):"
 msgstr "_Bredd (bildpunkter):"
 
-#: ../plug-ins/common/file-pdf-load.c:1353
+#: ../plug-ins/common/file-pdf-load.c:1340
 msgid "_Height (pixels):"
 msgstr "_Höjd (bildpunkter):"
 
-#: ../plug-ins/common/file-pdf-load.c:1355
+#: ../plug-ins/common/file-pdf-load.c:1342
 msgid "_Resolution:"
 msgstr "_Upplösning:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1366
+#: ../plug-ins/common/file-pdf-load.c:1353
 msgid "Use _Anti-aliasing"
 msgstr "Använd _kantutjämning"
 
-#: ../plug-ins/common/file-pdf-load.c:1644
-#: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
+#: ../plug-ins/common/file-pdf-load.c:1631
+#: ../plug-ins/common/file-pdf-load.c:1632 ../plug-ins/common/file-svg.c:916
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -5169,8 +5168,8 @@ msgid "Slice the image into subimages using guides"
 msgstr "Dela upp bilden i underbilder med hjälplinjer"
 
 #: ../plug-ins/common/guillotine.c:81
-msgid "_Guillotine"
-msgstr "_Pappersskärare"
+msgid "Slice Using G_uides"
+msgstr "Dela _upp med hjälplinjer"
 
 #: ../plug-ins/common/guillotine.c:119
 msgid "Guillotine"
@@ -6877,6 +6876,113 @@ msgstr "32 bitar"
 msgid "Windows BMP image"
 msgstr "Windows BMP-bild"
 
+#: ../plug-ins/file-dds/dds.c:134 ../plug-ins/file-dds/dds.c:153
+msgid "DDS image"
+msgstr "DDS-bild"
+
+#: ../plug-ins/file-dds/dds.c:170
+msgid "Decode YCoCg"
+msgstr "Avkoda YCoCg"
+
+#: ../plug-ins/file-dds/dds.c:183
+msgid "Decode YCoCg (scaled)"
+msgstr "Avkoda YCoCg (skalad)"
+
+#: ../plug-ins/file-dds/dds.c:196
+msgid "Decode Alpha exponent"
+msgstr "Avkoda alfaexponent"
+
+#: ../plug-ins/file-dds/ddsread.c:1266
+msgid "Load DDS"
+msgstr "Läs in DDS"
+
+#: ../plug-ins/file-dds/ddsread.c:1268 ../plug-ins/file-dds/ddswrite.c:1887
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ../plug-ins/file-dds/ddsread.c:1269 ../plug-ins/file-dds/ddswrite.c:1888
+msgid "OK"
+msgstr "OK"
+
+#: ../plug-ins/file-dds/ddsread.c:1285
+msgid "Load mipmaps"
+msgstr "Läs in mipmap-bilder"
+
+#: ../plug-ins/file-dds/ddsread.c:1292
+msgid "Automatically decode YCoCg/AExp images when detected"
+msgstr "Avkoda automatiskt YCoCg/AExp-bilder då de påträffas"
+
+#: ../plug-ins/file-dds/ddswrite.c:1885
+msgid "Export as DDS"
+msgstr "Exportera som DDS"
+
+#: ../plug-ins/file-dds/ddswrite.c:1912
+msgid "Compression:"
+msgstr "Komprimering:"
+
+# src/sidebar.c:115
+#: ../plug-ins/file-dds/ddswrite.c:1931
+msgid "Format:"
+msgstr "Format:"
+
+# src/menus.c:280
+#: ../plug-ins/file-dds/ddswrite.c:1952
+msgid "Save:"
+msgstr "Spara:"
+
+#: ../plug-ins/file-dds/ddswrite.c:1972
+msgid "Mipmaps:"
+msgstr "Mipmap-bilder:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2003
+msgid "Transparent index:"
+msgstr "Transparent index:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2041
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Avancerade inställningar</b>"
+
+#: ../plug-ins/file-dds/ddswrite.c:2055
+#: ../plug-ins/file-tiff/file-tiff-save.c:975
+msgid "Compression"
+msgstr "Komprimering"
+
+#: ../plug-ins/file-dds/ddswrite.c:2066
+msgid "Use perceptual error metric"
+msgstr "Använd perceptuell felmetrik"
+
+#: ../plug-ins/file-dds/ddswrite.c:2077
+msgid "Mipmaps"
+msgstr "Mipmap-bilder"
+
+#: ../plug-ins/file-dds/ddswrite.c:2088
+msgid "Filter:"
+msgstr "Filter:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2108
+msgid "Wrap mode:"
+msgstr "Övergångsläge:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2128
+msgid "Apply gamma correction"
+msgstr "Tillämpa gammakorrigering"
+
+#: ../plug-ins/file-dds/ddswrite.c:2139
+msgid "Use sRGB colorspace"
+msgstr "Använd sRGB-färgrymd"
+
+#: ../plug-ins/file-dds/ddswrite.c:2150 ../plug-ins/gimpressionist/brush.c:544
+msgid "Gamma:"
+msgstr "Gamma:"
+
+#: ../plug-ins/file-dds/ddswrite.c:2168
+msgid "Preserve alpha test coverage"
+msgstr "Behåll alfatesttäckning"
+
+#: ../plug-ins/file-dds/ddswrite.c:2179
+msgid "Alpha test threshold:"
+msgstr "Alfatesttröskelvärde:"
+
 #: ../plug-ins/file-exr/file-exr.c:193
 #, c-format
 msgid "Error opening file '%s' for reading"
@@ -7042,7 +7148,7 @@ msgstr "Ikon #%i"
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:527
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
 #: ../plug-ins/file-raw/file-darktable.c:494
-#: ../plug-ins/file-raw/file-rawtherapee.c:431
+#: ../plug-ins/file-raw/file-rawtherapee.c:436
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Öppnar miniatyrbild för ”%s”"
@@ -7579,10 +7685,6 @@ msgstr "Misslyckades med skrivning av en scanlinje på rad %d"
 #: ../plug-ins/file-tiff/file-tiff-save.c:949
 msgid "TIFF"
 msgstr "TIFF"
-
-#: ../plug-ins/file-tiff/file-tiff-save.c:975
-msgid "Compression"
-msgstr "Komprimering"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:979
 msgid "_None"
@@ -8767,10 +8869,6 @@ msgstr "Spara pensel"
 msgid "_Brush"
 msgstr "_Pensel"
 
-#: ../plug-ins/gimpressionist/brush.c:544
-msgid "Gamma:"
-msgstr "Gamma:"
-
 #: ../plug-ins/gimpressionist/brush.c:562
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Ändrar gamma (ljusstyrka) på den valda penseln"
@@ -9704,7 +9802,7 @@ msgid "Location Shown"
 msgstr "Visad plats"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:39
-msgid "Featured Organisation"
+msgid "Featured Organization"
 msgstr "Organisation i blickfånget"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:40
@@ -11934,15 +12032,15 @@ msgid "Original digital capture of a real life scene"
 msgstr "Ursprunglig digital tagning av en scen i verkliga livet"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
-msgid "Digitised from a negative on film"
+msgid "Digitized from a negative on film"
 msgstr "Digitaliserat från ett filmnegativ"
 
 #: ../plug-ins/metadata/metadata-tags.h:252
-msgid "Digitised from a positive on film"
+msgid "Digitized from a positive on film"
 msgstr "Digitaliserat från ett filmpositiv"
 
 #: ../plug-ins/metadata/metadata-tags.h:253
-msgid "Digitised from a print on non-transparent medium"
+msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitaliserat från en utskrift på ett icke-transparent medium"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
@@ -12427,44 +12525,44 @@ msgstr "Inget val att konvertera"
 msgid "Selection to Path Advanced Settings"
 msgstr "Markering till avancerade baninställningar"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:98
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:116
 msgid "Align Threshold:"
 msgstr "Tröskelvärde för justering:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:102
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:120
 msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr "Om två ändpunkter är närmare än detta, kommer de att göras lika."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:129
 msgid "Corner Always Threshold:"
 msgstr "Tröskelvärde för alltid hörn:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:115
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:133
 msgid ""
 "If the angle defined by a point and its predecessors and successors is "
-"smaller than this, it's a corner, even if it's within `corner_surround' "
+"smaller than this, it's a corner, even if it's within 'corner_surround' "
 "pixels of a point with a smaller angle."
 msgstr ""
 "Om vinkeln som definieras av en punkt och dess föregångare och efterföljare "
 "är mindre än detta, så är den ett hörn även om det är inom ”corner_surround”-"
 "bildpunkter från en punkt med en mindre vinkel."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:126
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:144
 msgid "Corner Surround:"
 msgstr "Hörnomgivning:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:130
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:148
 msgid ""
 "Number of points to consider when determining if a point is a corner or not."
 msgstr ""
 "Antal punkter som tas hänsyn till när det bestäms om en punkt är ett hörn "
 "eller ej."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:139
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:157
 msgid "Corner Threshold:"
 msgstr "Tröskelvärde för hörn:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:143
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:161
 msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
@@ -12472,33 +12570,33 @@ msgstr ""
 "Om en punkt, dess föregångare och efterföljare definierar en vinkel mindre "
 "än detta, så är den ett hörn."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:154
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:172
 msgid "Error Threshold:"
 msgstr "Tröskelvärde för fel:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:158
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:176
 msgid ""
-"Amount of error at which a fitted spline is unacceptable.  If any pixel is "
+"Amount of error at which a fitted spline is unacceptable. If any pixel is "
 "further away than this from the fitted curve, we try again."
 msgstr ""
 "Storleken på felet vid vilket en inpassad spline är oacceptabel. Om någon "
 "bildpunkt är längre bort än detta från den inpassade kurvan, så försöker vi "
 "igen."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:169
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:187
 msgid "Filter Alternative Surround:"
 msgstr "Filtrera alternativ omgivning:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:173
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "A second number of adjacent points to consider when filtering."
 msgstr ""
 "Ett andra antal närliggande punkter som tas hänsyn till vid filtrering."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:183
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:201
 msgid "Filter Epsilon:"
 msgstr "Filterepsilon:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:187
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:205
 msgid ""
 "If the angles between the vectors produced by filter_surround and "
 "filter_alternative_surround points differ by more than this, use the one "
@@ -12508,15 +12606,15 @@ msgstr ""
 "filter_alternative_surround punkter skiljer sig med mer än detta så använd "
 "den från filter_alternative_surround."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:198
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:216
 msgid "Filter Iteration Count:"
 msgstr "Antal iterationer för filter:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:202
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:220
 msgid ""
 "Number of times to smooth original data points.  Increasing this number "
-"dramatically --- to 50 or so --- can produce vastly better results.  But if "
-"any points that ``should'' be corners aren't found, the curve goes to hell "
+"dramatically --- to 50 or so --- can produce vastly better results. But if "
+"any points that 'should' be corners aren't found, the curve goes to hell "
 "around that point."
 msgstr ""
 "Antalet gånger som de ursprungliga datapunkterna ska jämnas ut. Att "
@@ -12524,53 +12622,52 @@ msgstr ""
 "resultat. Men om några punkter som ”borde” vara hörn inte hittas, kommer "
 "kurvan att gå åt helvete vid den punkten."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:214
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
 msgid "Filter Percent:"
 msgstr "Filterprocent:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:218
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:236
 msgid ""
 "To produce the new point, use the old point plus this times the neighbors."
 msgstr ""
 "För att generera en ny punkt, använd den gamla punkten samt detta "
 "multiplicerat med grannarna."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:227
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:245
 msgid "Filter Secondary Surround:"
 msgstr "Andra filteromgivning:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:231
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:249
 msgid ""
-"Number of adjacent points to consider if `filter_surround' points defines a "
+"Number of adjacent points to consider if 'filter_surround' points defines a "
 "straight line."
 msgstr ""
 "Antal intilliggande punkter att ta hänsyn till om ”filter_surround”-punkter "
 "definierar en rak linje."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:241
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:259
 msgid "Filter Surround:"
 msgstr "Filteromgivning:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:245
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:263
 msgid "Number of adjacent points to consider when filtering."
 msgstr "Antal intilliggande punkter att ta hänsyn till vid filtrering."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:253
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:271
 msgid "Keep Knees"
 msgstr "Behåll knän"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:258
-msgid ""
-"Says whether or not to remove ``knee'' points after finding the outline."
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:276
+msgid "Says whether or not to remove 'knee' points after finding the outline."
 msgstr ""
 "Styr huruvida ”knä”-punkter ska tas bort eller ej efter att ha hittat en "
 "kontur."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:269
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:287
 msgid "Line Reversion Threshold:"
 msgstr "Tröskelvärde för linjeåtergång:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:273
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:291
 msgid ""
 "If a spline is closer to a straight line than this, it remains a straight "
 "line, even if it would otherwise be changed back to a curve. This is "
@@ -12582,11 +12679,11 @@ msgstr ""
 "kurva. Detta viktas med kvadraten på kurvans längd för att göra det mer "
 "sannolikt att korta kurvor återgår."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:285
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
 msgid "Line Threshold:"
 msgstr "Tröskelvärde för linje:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:289
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:307
 msgid ""
 "How many pixels (on the average) a spline can diverge from the line "
 "determined by its endpoints before it is changed to a straight line."
@@ -12594,11 +12691,11 @@ msgstr ""
 "Hur många bildpunkter (i genomsnitt) en spline kan avvika från linjen som "
 "bestäms av dess ändpunkter innan den görs om till en rak linje."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:299
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:317
 msgid "Reparametrize Improvement:"
 msgstr "Omparametrisera förbättring:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:321
 msgid ""
 "If reparameterization doesn't improve the fit by this much percent, stop "
 "doing it. Amount of error at which it is pointless to reparameterize."
@@ -12607,15 +12704,15 @@ msgstr ""
 "många procent, så avsluta den. Felstorleken vid vilken det är meningslöst "
 "att omparametrisera."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:313
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:331
 msgid "Reparametrize Threshold:"
 msgstr "Tröskelvärde för omparametrisering:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:317
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:335
 msgid ""
 "Amount of error at which it is pointless to reparameterize.  This happens, "
-"for example, when we are trying to fit the outline of the outside of an `O' "
-"with a single spline.  The initial fit is not good enough for the Newton-"
+"for example, when we are trying to fit the outline of the outside of an 'O' "
+"with a single spline. The initial fit is not good enough for the Newton-"
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
@@ -12625,11 +12722,11 @@ msgstr ""
 "Raphson-iterationen ska förbättra den. Det kan vara så att det skulle vara "
 "bättre att detektera fallen då vi inte hittar några hörn."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:330
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:348
 msgid "Subdivide Search:"
 msgstr "Uppdelningssökning:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:334
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:352
 msgid ""
 "Percentage of the curve away from the worst point to look for a better place "
 "to subdivide."
@@ -12637,11 +12734,11 @@ msgstr ""
 "Procent av kurvan bort från den sämsta punkten att leta efter en bättre "
 "plats att dela upp på."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:343
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
 msgid "Subdivide Surround:"
 msgstr "Uppdelningsomgivning:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:347
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:365
 msgid ""
 "Number of points to consider when deciding whether a given point is a better "
 "place to subdivide."
@@ -12649,11 +12746,11 @@ msgstr ""
 "Antal punkter som tas hänsyn till när det bestäms huruvida en given punkt är "
 "en bättre plats att dela upp på."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:357
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
 msgid "Subdivide Threshold:"
 msgstr "Tröskelvärde för uppdelning:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:361
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:379
 msgid ""
 "How many pixels a point can diverge from a straight line and still be "
 "considered a better place to subdivide."
@@ -12661,11 +12758,11 @@ msgstr ""
 "Hur många bildpunkter en punkt kan avvika från en rak linje och fortfarande "
 "anses vara en bättre plats att dela upp på."
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:371
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:389
 msgid "Tangent Surround:"
 msgstr "Tangentomgivning:"
 
-#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
+#: ../plug-ins/selection-to-path/selection-to-path-dialog.c:393
 msgid ""
 "Number of points to look at on either side of a point when computing the "
 "approximation to the tangent at that point."
@@ -12685,6 +12782,9 @@ msgstr "_Bildläsare/Kamera…"
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
+
+#~ msgid "_Guillotine"
+#~ msgstr "_Pappersskärare"
 
 #~ msgid "Advanced"
 #~ msgstr "Avancerat"
