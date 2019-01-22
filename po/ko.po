@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-19 17:32+0000\n"
-"PO-Revision-Date: 2019-01-22 16:05+0900\n"
+"PO-Revision-Date: 2019-01-22 16:57+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -10765,7 +10765,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:289
 msgid "Sets how many threads GIMP should use for operations that support it."
-msgstr ""
+msgstr "스레드를 지원하는 작업에 사용할 스레드 수를 설정합니다."
 
 #: ../app/config/gimprc-blurbs.h:311
 msgid ""
@@ -10782,6 +10782,8 @@ msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr ""
+"김프에서 레이어 그룹의 미리보기를 만들지를 설정합니다. 레이어 그룹 미리보기"
+"는 일반 레이어 미리보기보다 시스템 자원을 더 많이 씁니다."
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid ""
@@ -12373,7 +12375,7 @@ msgstr "<li> 는 <ol> 이나 <ul> 태그 안에 있어야 합니다."
 #: ../app/core/gimpextension.c:833
 #, c-format
 msgid "Unknown tag <%s>."
-msgstr ""
+msgstr "알 수 없는 태그 <%s>."
 
 #: ../app/core/gimpextensionmanager.c:837
 #, c-format
@@ -14899,7 +14901,7 @@ msgstr "확장 검색:"
 
 #: ../app/dialogs/extensions-dialog.c:174
 msgid "Search extensions matching these keywords"
-msgstr ""
+msgstr "이러한 핵심어와 일치 하는 확장 기능 검색"
 
 #: ../app/dialogs/file-open-dialog.c:257
 msgid "Open layers"
@@ -15777,7 +15779,7 @@ msgstr "RGB 프로필(_R):"
 
 #: ../app/dialogs/preferences-dialog.c:1430
 msgid "Select Preferred Grayscale Color Profile"
-msgstr ""
+msgstr "선호하는 회색조 색 프로필 선택"
 
 #: ../app/dialogs/preferences-dialog.c:1431
 msgid "_Grayscale profile:"
@@ -16112,7 +16114,7 @@ msgstr "모양새"
 
 #: ../app/dialogs/preferences-dialog.c:2102
 msgid "Show GIMP _logo (drag-and-drop target)"
-msgstr ""
+msgstr "김프 로고 표시 (드래그-앤드-드롭 대상) (_L)"
 
 #: ../app/dialogs/preferences-dialog.c:2106
 msgid "Show _foreground & background color"
@@ -16156,7 +16158,7 @@ msgstr "프로필 폴더:"
 
 #: ../app/dialogs/preferences-dialog.c:2170
 msgid "Select Default Folder for Color Profiles"
-msgstr ""
+msgstr "색 프로필용 기본 폴더 선택"
 
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:2174
@@ -16456,7 +16458,7 @@ msgstr "동작 검색"
 
 #: ../app/dialogs/preferences-dialog.c:2580
 msgid "Show _unavailable actions"
-msgstr ""
+msgstr "사용할 수 없는 동작 표시(_U)"
 
 #: ../app/dialogs/preferences-dialog.c:2583
 msgid "Maximum History Size:"
@@ -16712,7 +16714,7 @@ msgstr "확장 입력 장치"
 
 #: ../app/dialogs/preferences-dialog.c:3048
 msgid "S_hare tool and tool options between input devices"
-msgstr ""
+msgstr "입력 장치 간에 도구 및 도구 옵션 공유(_H)"
 
 #: ../app/dialogs/preferences-dialog.c:3052
 msgid "Configure E_xtended Input Devices..."
@@ -17572,7 +17574,7 @@ msgstr "뷰 회전"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:116
 msgid "Select Rotation Angle"
-msgstr ""
+msgstr "회전 각도 선택"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
 #: ../app/tools/gimpmeasuretool.c:761
@@ -19781,7 +19783,7 @@ msgstr "변형 방향"
 
 #: ../app/pdb/gimppdbcontext.c:180
 msgid "Transform resize"
-msgstr ""
+msgstr "변형 크기변경"
 
 #: ../app/pdb/gimppdbcontext.c:195
 msgid "Distance metric"
@@ -21042,7 +21044,7 @@ msgstr "모든 보이는 레이어에서 기본 채움 영역"
 #: ../app/tools/gimpbucketfilloptions.c:140
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
-msgstr ""
+msgstr "대각선으로 인접한 픽셀을 연결된 것처럼 처리"
 
 #: ../app/tools/gimpbucketfilloptions.c:148
 msgid ""
@@ -21598,7 +21600,7 @@ msgstr "캔버스 내 컨트롤(_T)"
 
 #: ../app/tools/gimpfilteroptions.c:103
 msgid "Show on-canvas filter controls"
-msgstr ""
+msgstr "온캔버스 필터 컨트롤 표시"
 
 #: ../app/tools/gimpfilteroptions.c:117
 msgid "Color _managed"
@@ -22823,7 +22825,7 @@ msgstr "무봉합선 복제"
 
 #: ../app/tools/gimpseamlessclonetool.c:191
 msgid "Seamless Clone: Seamlessly paste one image into another"
-msgstr ""
+msgstr "무봉합선 복제: 한 이미지를 다른 이미지로 봉합선 없이 붙이기"
 
 #: ../app/tools/gimpseamlessclonetool.c:192
 msgid "_Seamless Clone"
@@ -23180,7 +23182,7 @@ msgstr "중심 주변 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:422
 msgid "Scale around the center point"
-msgstr ""
+msgstr "중심점을 기준으로 배율 조정"
 
 #: ../app/tools/gimptransformgridoptions.c:438
 #, c-format
@@ -23209,7 +23211,7 @@ msgstr "회전을 15씩 증가하도록 제한 (%s)"
 #: ../app/tools/gimptransformgridoptions.c:446
 #, c-format
 msgid "Shear along edge direction only (%s)"
-msgstr ""
+msgstr "가장자리 방향을 따라서만 기울이기 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:448
 #, c-format
@@ -23224,12 +23226,12 @@ msgstr "피벗에서  (%s)"
 #: ../app/tools/gimptransformgridoptions.c:453
 #, c-format
 msgid "Scale from pivot point (%s)"
-msgstr ""
+msgstr "피벗 점에서 배율 조정 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:455
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
-msgstr ""
+msgstr "동일한 크기로 맞은편 가장자리 기울이기 (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:457
 #, c-format
@@ -23266,7 +23268,7 @@ msgstr "변형(_T)"
 #: ../app/tools/gimptransformgridtool.c:479
 #: ../app/tools/gimptransformgridtool.c:491
 msgid "Transform Step"
-msgstr ""
+msgstr "변형 단계"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -23294,7 +23296,7 @@ msgstr "변형 확인"
 
 #: ../app/tools/gimptransformtool.c:322
 msgid "Transformation creates a very large item."
-msgstr ""
+msgstr "변형은 매우 큰 항목을 만듭니다."
 
 #: ../app/tools/gimptransformtool.c:326
 #, c-format
@@ -23349,7 +23351,7 @@ msgstr "통합 변형(_U)"
 
 #: ../app/tools/gimpunifiedtransformtool.c:109
 msgid "Unified transform"
-msgstr ""
+msgstr "통합 변형"
 
 #: ../app/tools/gimpunifiedtransformtool.c:120
 msgctxt "undo-type"
@@ -24698,7 +24700,7 @@ msgstr "사용"
 
 #: ../app/widgets/gimpdashboard.c:615
 msgid "Total CPU usage"
-msgstr ""
+msgstr "총 CPU 사용량"
 
 #: ../app/widgets/gimpdashboard.c:623 ../app/widgets/gimpdashboard.c:632
 msgctxt "dashboard-variable"
@@ -25546,7 +25548,7 @@ msgstr "도킹 가능한 대화상자를 여기로 끌어 놓으십시오"
 #: ../app/widgets/gimppickablepopup.c:203
 #: ../app/widgets/gimppickablepopup.c:420
 msgid "Select an image in the left pane"
-msgstr ""
+msgstr "왼쪽 페인에서 이미지를 선택"
 
 #: ../app/widgets/gimppluginview.c:149
 msgid "Plug-In"
@@ -25577,7 +25579,7 @@ msgstr ""
 
 #: ../app/widgets/gimpsavedialog.c:326
 msgid "Save this XCF file with better but slower compression"
-msgstr ""
+msgstr "더 나은, 하지만 더 느린 압축으로 이 XCF 파일 저장"
 
 #: ../app/widgets/gimpsavedialog.c:328
 msgid ""
