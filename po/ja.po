@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-20 11:44+0000\n"
-"PO-Revision-Date: 2019-01-22 21:24+0900\n"
+"PO-Revision-Date: 2019-01-24 01:56+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -11709,16 +11709,19 @@ msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
 msgstr ""
+"インポートした画像の精度を浮動小数点に引き上げます。インデックス画像には適用しません。"
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
+"インポートした画像の精度を浮動小数点に引き上げるときに、最小限のノイズを加えて色の"
+"値を少し分散させます。"
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid "Add an alpha channel to all layers of imported images."
-msgstr ""
+msgstr "インポートした画像のすべてのレイヤーにアルファチャンネルを追加します。"
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid "Which plug-in to use for importing raw digital camera files."
@@ -12427,10 +12430,8 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "この設定がオンのときは、F1 キーを押すとヘルプブラウザーが開きます。"
 
 #: ../app/config/gimprc-blurbs.h:674
-#, fuzzy
-#| msgid "When enabled, menus can be torn off."
 msgid "When enabled, uses OpenCL for some operations."
-msgstr "この設定がオンのときは、メニューの切り離しが可能になります。"
+msgstr "この設定がオンのときは、いくつかの処理で OpenCL を使用します。"
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:131
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
@@ -12559,12 +12560,9 @@ msgid "Keep embedded profile"
 msgstr "埋め込まれているプロファイルを使う"
 
 #: ../app/core/core-enums.c:188
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
-msgstr "画像を RGB カラースペースに変換します"
+msgstr "優先の RGB カラープロファイルに変換する"
 
 #: ../app/core/core-enums.c:282
 msgctxt "convert-dither-type"
@@ -17287,18 +17285,15 @@ msgstr "インポートポリシー"
 
 #: ../app/dialogs/preferences-dialog.c:1494
 msgid "Promote imported images to _floating point precision"
-msgstr ""
+msgstr "インポートした画像の精度を浮動小数点数にする(_F)"
 
 #: ../app/dialogs/preferences-dialog.c:1503
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgid "Dither images when promoting to floating point"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "浮動小数点数にするときにディザリングを行う"
 
 #: ../app/dialogs/preferences-dialog.c:1508
 msgid "Add an alpha channel to imported images"
-msgstr "インポートした画像にアルファチャンネルを追加します"
+msgstr "インポートした画像にアルファチャンネルを追加する"
 
 #: ../app/dialogs/preferences-dialog.c:1513
 #: ../app/dialogs/preferences-dialog.c:2159
@@ -25820,7 +25815,7 @@ msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:135
 msgid "High quality preview"
-msgstr ""
+msgstr "高品質プレビュー"
 
 #: ../app/tools/gimpwarpoptions.c:136
 #, fuzzy
@@ -25883,24 +25878,22 @@ msgid "Create Animation"
 msgstr "アニメーション(_I)"
 
 #: ../app/tools/gimpwarptool.c:160
-#, fuzzy
-#| msgid "Cage Transform"
 msgid "Warp Transform"
-msgstr "ケージ変形"
+msgstr "ワープ変形"
 
 #: ../app/tools/gimpwarptool.c:161
 msgid "Warp Transform: Deform with different tools"
 msgstr ""
+"[ワープ変形]\n"
+"複数のツールで変形します"
 
 #: ../app/tools/gimpwarptool.c:162
-#, fuzzy
-#| msgid "_Cage Transform"
 msgid "_Warp Transform"
-msgstr "ケージ変形(_C)"
+msgstr "ワープ変形(_W)"
 
 #: ../app/tools/gimpwarptool.c:491 ../app/tools/gimpwarptool.c:503
 msgid "Warp Tool Stroke"
-msgstr ""
+msgstr "ワープツールのストローク"
 
 #: ../app/tools/gimpwarptool.c:627
 #, fuzzy
@@ -25923,10 +25916,8 @@ msgid "No warp to smooth."
 msgstr ""
 
 #: ../app/tools/gimpwarptool.c:912
-#, fuzzy
-#| msgid "Cage transform"
 msgid "Warp transform"
-msgstr "ケージ変形"
+msgstr "ワープ変形"
 
 #: ../app/tools/gimpwarptool.c:1184
 msgid "Please add some warp strokes first."
