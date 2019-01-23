@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-22 21:50+0000\n"
-"PO-Revision-Date: 2019-01-23 09:21+0900\n"
+"PO-Revision-Date: 2019-01-23 21:07+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -102,10 +102,8 @@ msgstr "보이는 레이어 정렬"
 #: ../plug-ins/metadata/metadata-editor.c:5683
 #: ../plug-ins/pagecurl/pagecurl.c:436 ../plug-ins/screenshot/screenshot.c:497
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
-#, fuzzy
-#| msgid "_Advanced"
 msgid "_Cancel"
-msgstr "고급(_A)"
+msgstr "취소(_C)"
 
 #: ../plug-ins/common/align-layers.c:631 ../plug-ins/common/blinds.c:226
 #: ../plug-ins/common/border-average.c:363 ../plug-ins/common/cartoon.c:829
@@ -145,7 +143,7 @@ msgstr "고급(_A)"
 #: ../plug-ins/pagecurl/pagecurl.c:437
 #: ../plug-ins/selection-to-path/selection-to-path.c:310
 msgid "_OK"
-msgstr ""
+msgstr "확인(_O)"
 
 #: ../plug-ins/common/align-layers.c:650 ../plug-ins/common/align-layers.c:681
 msgctxt "align-style"
@@ -344,7 +342,7 @@ msgstr "구획 수(_N):"
 
 #: ../plug-ins/common/blur.c:124
 msgid "Simple blur, fast but not very strong"
-msgstr "간단한 블루어, 빠르지만 효과적이지는 않습니다."
+msgstr "간단한 블러, 빠르지만 그리 강하지 않음"
 
 #: ../plug-ins/common/blur.c:133
 msgid "_Blur"
@@ -399,17 +397,15 @@ msgstr ""
 
 #: ../plug-ins/common/busy-dialog.c:299
 msgid "Canceling..."
-msgstr ""
+msgstr "취소하기..."
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
 msgstr "모의로 강화된 경계선을 이용해 만화화"
 
 #: ../plug-ins/common/cartoon.c:147
-#, fuzzy
-#| msgid "Ca_rtoon..."
 msgid "Ca_rtoon (legacy)..."
-msgstr "만화(_R)..."
+msgstr "만화(_R) (레거시)..."
 
 #: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
 #: ../plug-ins/common/edge-neon.c:229 ../plug-ins/common/photocopy.c:244
@@ -435,10 +431,8 @@ msgid "Create a checkerboard pattern"
 msgstr "체커보드 무늬 만들기"
 
 #: ../plug-ins/common/checkerboard.c:94
-#, fuzzy
-#| msgid "_Checkerboard..."
 msgid "_Checkerboard (legacy)..."
-msgstr "체커보드(_C)..."
+msgstr "체커보드(_C) (레거시)..."
 
 #: ../plug-ins/common/checkerboard.c:161
 msgid "Adding checkerboard"
@@ -719,10 +713,8 @@ msgstr "무작위 시작 값"
 #: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
 #: ../plug-ins/lighting/lighting-ui.c:608
 #: ../plug-ins/lighting/lighting-ui.c:1308
-#, fuzzy
-#| msgid "Open"
 msgid "_Open"
-msgstr "열기"
+msgstr "열기(_O)"
 
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1306
@@ -739,10 +731,8 @@ msgstr "열기"
 #: ../plug-ins/ifs-compose/ifs-compose.c:2514
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:601
 #: ../plug-ins/lighting/lighting-ui.c:1164
-#, fuzzy
-#| msgid "Save"
 msgid "_Save"
-msgstr "저장"
+msgstr "저장(_S)"
 
 #: ../plug-ins/common/cml-explorer.c:1325 ../plug-ins/common/filter-pack.c:699
 #: ../plug-ins/common/van-gogh-lic.c:674
@@ -1076,7 +1066,7 @@ msgstr "색상 교환(_S)"
 #: ../plug-ins/common/colormap-remap.c:298
 #: ../plug-ins/common/colormap-remap.c:309
 msgid "Invalid remap array was passed to remap function"
-msgstr "재매핑 함수에 잘못된 재매핑 배열이 전달되었습니다."
+msgstr "재매핑 함수에 잘못된 재매핑 배열이 전달되었음"
 
 #: ../plug-ins/common/colormap-remap.c:333
 msgid "Rearranging the colormap"
@@ -1116,10 +1106,8 @@ msgstr "색상표 재배치"
 #: ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:759
 #: ../plug-ins/selection-to-path/selection-to-path.c:308
-#, fuzzy
-#| msgid "_Presets"
 msgid "_Reset"
-msgstr "사전 설정(_P)"
+msgstr "초기화(_R)"
 
 #: ../plug-ins/common/colormap-remap.c:717
 msgid ""
@@ -1181,38 +1169,33 @@ msgid "_Black:"
 msgstr "검정(_B):"
 
 #: ../plug-ins/common/compose.c:175
-#, fuzzy
 #| msgid "_X:"
 msgid "_L:"
-msgstr "_X:"
+msgstr "_L:"
 
 #: ../plug-ins/common/compose.c:176
-#, fuzzy
 #| msgid "_X:"
 msgid "_A:"
-msgstr "_X:"
+msgstr "_A:"
 
 #: ../plug-ins/common/compose.c:177
-#, fuzzy
 #| msgid "_X:"
 msgid "_B:"
-msgstr "_X:"
+msgstr "_B:"
 
 #: ../plug-ins/common/compose.c:179
-#, fuzzy
 #| msgid "_RLE"
 msgid "_L"
-msgstr "_RLE"
+msgstr "_L"
 
 #: ../plug-ins/common/compose.c:180
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: ../plug-ins/common/compose.c:181
-#, fuzzy
 #| msgid "_Hue"
 msgid "_H"
-msgstr "색상(_H)"
+msgstr "_H"
 
 #: ../plug-ins/common/compose.c:183
 msgid "_Luma y470:"
@@ -1273,23 +1256,23 @@ msgstr "LAB"
 
 #: ../plug-ins/common/compose.c:246 ../plug-ins/common/decompose.c:204
 msgid "LCH"
-msgstr ""
+msgstr "LCH"
 
 #: ../plug-ins/common/compose.c:253 ../plug-ins/common/decompose.c:206
 msgid "YCbCr_ITU_R470"
-msgstr ""
+msgstr "YCbCr_ITU_R470"
 
 #: ../plug-ins/common/compose.c:260 ../plug-ins/common/decompose.c:209
 msgid "YCbCr_ITU_R709"
-msgstr ""
+msgstr "YCbCr_ITU_R709"
 
 #: ../plug-ins/common/compose.c:267 ../plug-ins/common/decompose.c:207
 msgid "YCbCr_ITU_R470_256"
-msgstr ""
+msgstr "YCbCr_ITU_R470_256"
 
 #: ../plug-ins/common/compose.c:274 ../plug-ins/common/decompose.c:210
 msgid "YCbCr_ITU_R709_256"
-msgstr ""
+msgstr "YCbCr_ITU_R709_256"
 
 #: ../plug-ins/common/compose.c:400
 msgid "Create an image using multiple gray images as color channels"
@@ -1317,7 +1300,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:510
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "'분해-데이터' 기생자 검색 오류: 레이어 수가 적습니다."
+msgstr "'decompose-data' 기생물 스캐닝 오류: 레이어 수가 너무 적음"
 
 #: ../plug-ins/common/compose.c:543
 #, c-format
@@ -1343,7 +1326,7 @@ msgstr "드로어블의 크기가 다름"
 
 #: ../plug-ins/common/compose.c:908
 msgid "Images have different size"
-msgstr "이미지의 크기가 다릅니다."
+msgstr "이미지의 크기가 다름"
 
 #: ../plug-ins/common/compose.c:926
 msgid "Error in getting layer IDs"
@@ -1538,15 +1521,11 @@ msgid "Curve for Border"
 msgstr "경계선을 위한 커브"
 
 #: ../plug-ins/common/curve-bend.c:1401
-#, fuzzy
-#| msgid "_Upper"
 msgctxt "curve-border"
 msgid "_Upper"
 msgstr "위쪽(_U)"
 
 #: ../plug-ins/common/curve-bend.c:1402
-#, fuzzy
-#| msgid "_Lower"
 msgctxt "curve-border"
 msgid "_Lower"
 msgstr "아래쪽(_L)"
@@ -1580,7 +1559,7 @@ msgstr "거울(_M)"
 
 #: ../plug-ins/common/curve-bend.c:1449
 msgid "Mirror the active curve to the other border"
-msgstr "현재 커브를 다른 테두리로 복제합니다."
+msgstr "현재 곡선을 다른 테두리로 대칭 복사"
 
 #. The Swap button
 #: ../plug-ins/common/curve-bend.c:1457
@@ -1673,7 +1652,7 @@ msgstr "노랑"
 
 #: ../plug-ins/common/decompose.c:155 ../plug-ins/common/decompose.c:159
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: ../plug-ins/common/decompose.c:156
 msgid "A"
@@ -1681,15 +1660,15 @@ msgstr "A"
 
 #: ../plug-ins/common/decompose.c:157
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: ../plug-ins/common/decompose.c:160
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: ../plug-ins/common/decompose.c:161
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: ../plug-ins/common/decompose.c:163
 msgid "luma-y470"
@@ -1787,7 +1766,7 @@ msgstr "분해 중"
 
 #: ../plug-ins/common/decompose.c:491
 msgid "Image not suitable for this decomposition"
-msgstr ""
+msgstr "이 분해에 적합하지 않은 이미지"
 
 #: ../plug-ins/common/decompose.c:817
 msgid "Decompose"
@@ -1931,10 +1910,8 @@ msgid "Edge detection with control of edge thickness"
 msgstr "경계 두께 제어를 통해 경계 검출"
 
 #: ../plug-ins/common/edge-dog.c:142
-#, fuzzy
-#| msgid "_Difference of Gaussians..."
 msgid "_Difference of Gaussians (legacy)..."
-msgstr "여러 가우시안의 차이(_D)..."
+msgstr "여러 가우시안의 차이(_D) (레거시).."
 
 #: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
 msgid "DoG Edge Detect"
@@ -1958,13 +1935,11 @@ msgstr "반전(_I)"
 
 #: ../plug-ins/common/edge-neon.c:135
 msgid "Simulate the glowing boundary of a neon light"
-msgstr "모의로 네온 빛의 경계를 빛나게 합니다."
+msgstr "네온 빛의 빛나는 경계를 흉내 냄"
 
 #: ../plug-ins/common/edge-neon.c:140
-#, fuzzy
-#| msgid "_Neon..."
 msgid "_Neon (legacy)..."
-msgstr "네온(_N)..."
+msgstr "네온(_N) (레거시)"
 
 #: ../plug-ins/common/edge-neon.c:212
 msgid "Neon"
@@ -1980,13 +1955,11 @@ msgstr "총량(_A):"
 
 #: ../plug-ins/common/emboss.c:125
 msgid "Simulate an image created by embossing"
-msgstr "모의로 엠보싱 효과를 가진 이미지를 만듭니다."
+msgstr "엠보싱으로 만든 이미지를 흉내 냄"
 
 #: ../plug-ins/common/emboss.c:131
-#, fuzzy
-#| msgid "_Emboss..."
 msgid "_Emboss (legacy)..."
-msgstr "엠보스(_E)..."
+msgstr "엠보싱(_E) (레거시)..."
 
 #: ../plug-ins/common/emboss.c:387 ../plug-ins/common/emboss.c:449
 msgid "Emboss"
@@ -2039,10 +2012,9 @@ msgstr "KISS 팔레트 불러오기"
 
 #: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-cel.c:363
 #: ../plug-ins/common/file-cel.c:384
-#, fuzzy, c-format
-#| msgid "Error while reading '%s': %s"
+#, c-format
 msgid "EOF or error while reading image header"
-msgstr "'%s' 파일 읽는 중 오류: %s"
+msgstr "이미지 헤더 읽는 중에 파일끝 또는 오류"
 
 #. Read file pointer
 #. File header
@@ -2104,15 +2076,14 @@ msgid "Opening '%s'"
 msgstr "'%s' 여는 중"
 
 #: ../plug-ins/common/file-cel.c:393
-#, fuzzy, c-format
-#| msgid "'%s' is not a PCX file"
+#, c-format
 msgid "is not a CEL image file"
-msgstr "'%s'은(는) PCX 파일이 아닙니다."
+msgstr "CEL 이미지 파일이 아님"
 
 #: ../plug-ins/common/file-cel.c:408
 #, c-format
 msgid "illegal bpp value in image: %hhu"
-msgstr ""
+msgstr "이미지에 잘못된 bpp 값: %hhu"
 
 #: ../plug-ins/common/file-cel.c:423
 #, c-format
@@ -2128,10 +2099,9 @@ msgstr "새 이미지를 만들 수 없음"
 
 #: ../plug-ins/common/file-cel.c:476 ../plug-ins/common/file-cel.c:513
 #: ../plug-ins/common/file-cel.c:539
-#, fuzzy, c-format
-#| msgid "Error while reading '%s': %s"
+#, c-format
 msgid "EOF or error while reading image data"
-msgstr "'%s' 파일 읽는 중 오류: %s"
+msgstr "이미지 데이터 읽는 중에 파일끝 또는 오류"
 
 #: ../plug-ins/common/file-cel.c:557
 #, c-format
@@ -2144,10 +2114,9 @@ msgid "'%s': EOF or error while reading palette header"
 msgstr "'%s': 팔레트 헤더를 읽는 동안 파일끝 또는 오류"
 
 #: ../plug-ins/common/file-cel.c:663
-#, fuzzy, c-format
-#| msgid "'%s' is not a PCX file"
+#, c-format
 msgid "'%s': is not a KCF palette file"
-msgstr "'%s'은(는) PCX 파일이 아닙니다."
+msgstr "'%s': KCF 팔레트 파일이 아님"
 
 #: ../plug-ins/common/file-cel.c:672
 #, c-format
@@ -2496,7 +2465,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1296
 msgid "I don't care"
-msgstr "보호하지 않습니다."
+msgstr "상관 없음"
 
 #: ../plug-ins/common/file-gif-save.c:1298
 msgid "Cumulative layers (combine)"
@@ -2527,7 +2496,7 @@ msgstr "김프 붓 (애니메이션)"
 #: ../plug-ins/common/file-gih.c:502
 #, c-format
 msgid "Brush name is too long: %lu"
-msgstr ""
+msgstr "붓 이름이 너무 긺: %lu"
 
 #: ../plug-ins/common/file-gih.c:595
 msgid "GIMP brush file appears to be corrupted."
@@ -3172,7 +3141,7 @@ msgstr "가져오기(_I)"
 
 #: ../plug-ins/common/file-pdf-load.c:1112
 msgid "Error getting number of pages from the given PDF file."
-msgstr "지정한 PDF 파일에서 페이지를 가져오던 중 오류"
+msgstr "지정한 PDF 파일에서 페이지를 가져오던 중 오류."
 
 #: ../plug-ins/common/file-pdf-load.c:1158
 msgid "_Width (pixels):"
@@ -3293,7 +3262,7 @@ msgstr "페이지 %d"
 
 #: ../plug-ins/common/file-pdf-save.c:1226
 msgid "Error! In order to save the file, at least one image should be added!"
-msgstr "오류! 파일을 저장하려면 최소 하나의 이미지가 추가되어야 합니다."
+msgstr "오류! 파일을 저장하려면 최소 하나의 이미지가 추가되어야 합니다!"
 
 #: ../plug-ins/common/file-pdf-save.c:1402
 #: ../plug-ins/print/print-draw-page.c:123
@@ -3330,7 +3299,7 @@ msgstr "'%s' 저장 중 오류. 이미지를 저장할 수 없습니다."
 #: ../plug-ins/common/file-png.c:917
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr "'%s' 파일 읽는 중 오류. 파일이 손상되었습니다."
+msgstr "'%s' 파일 읽기 중 오류. 파일 손상?"
 
 #: ../plug-ins/common/file-png.c:1072
 #, c-format
@@ -3460,7 +3429,7 @@ msgstr "이미지의 높이가 너무 큽니다."
 
 #: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
-msgstr ""
+msgstr "가짜 배율 인수."
 
 #: ../plug-ins/common/file-pnm.c:650
 #, fuzzy
@@ -3851,6 +3820,10 @@ msgid ""
 "valid HGT file or its variant is not supported yet. Supported HGT files are: "
 "SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
 msgstr ""
+"샘플 간격의 자동 감지에 실패 했습니다. \"%s\"는 유효한 HGT 파일이 아닌 것으"
+"로 보입니다. 혹은 변형된 형식이 아직 지원되지 않습니다. 지원 되는 HGT 파일"
+"은: SRTM-1과 SRTM-3입니다. 변형 형식을 알고 있으면, 인수 1이나 3을 사용하 여 "
+"실행하십시오."
 
 #: ../plug-ins/common/file-raw-data.c:1833
 msgid "Load Image from Raw Data"
@@ -3908,11 +3881,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-raw-data.c:1945
 msgid "BGR565 Big Endian"
-msgstr ""
+msgstr "BGR565 빅 엔디언"
 
 #: ../plug-ins/common/file-raw-data.c:1946
 msgid "BGR565 Little Endian"
-msgstr ""
+msgstr "BGR565 리틀 엔디언"
 
 #: ../plug-ins/common/file-raw-data.c:1947
 msgid "Planar RGB"
@@ -4781,7 +4754,7 @@ msgstr "이미지 선택"
 
 #: ../plug-ins/common/film.c:1148
 msgid "All Values are Fractions of the Strip Height"
-msgstr "모든 값은 스트립 높이를 분수로 나나탠 값입니다."
+msgstr "모든 값은 스트립 높이를 분수로 나나탠 값임"
 
 #: ../plug-ins/common/film.c:1151
 msgid "Ad_vanced"
@@ -4915,7 +4888,7 @@ msgstr "중간톤(_M)"
 
 #: ../plug-ins/common/filter-pack.c:679
 msgid "H_ighlights"
-msgstr "강조(_I):"
+msgstr "강조(_I)"
 
 #: ../plug-ins/common/filter-pack.c:693
 msgid "Windows"
@@ -4943,7 +4916,7 @@ msgstr "픽셀 선택"
 
 #: ../plug-ins/common/filter-pack.c:828
 msgid "H_ue"
-msgstr "색조(_U):"
+msgstr "색조(_U)"
 
 #: ../plug-ins/common/filter-pack.c:829
 msgid "Satu_ration"
@@ -5250,7 +5223,7 @@ msgstr "파일 확장자에 오류가 발생했거나 확장자가 올바르지 
 #: ../plug-ins/common/mail.c:820
 #, c-format
 msgid "Could not start sendmail (%s)"
-msgstr "sendmail을 시작할 수 없음 (%s)"
+msgstr "메일전송을 시작할 수 없음 (%s)"
 
 #: ../plug-ins/common/max-rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
@@ -5338,7 +5311,7 @@ msgstr "휘도"
 
 #: ../plug-ins/common/newsprint.c:508
 msgid "Halftone the image to give newspaper-like effect"
-msgstr "하프톤은 이미지에 신문과 같은 효과를 만듭니다."
+msgstr "하프톤은 이미지에 신문 같은 효과를 냄"
 
 #: ../plug-ins/common/newsprint.c:517
 msgid "Newsprin_t..."
@@ -5658,7 +5631,7 @@ msgstr "표본 색상 가져오기(_S)"
 #: ../plug-ins/gimpressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
-msgstr ""
+msgstr "적용(_A)"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample-colorize.c:1359
@@ -6223,7 +6196,7 @@ msgstr "수치"
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "How many units make up an inch."
-msgstr "인치를 보완할 단위 수"
+msgstr "1인치를 이룰 단위 수"
 
 #: ../plug-ins/common/unit-editor.c:99
 msgid "Digits"
@@ -6842,7 +6815,7 @@ msgstr ""
 
 #: ../plug-ins/file-dds/ddsread.c:1268 ../plug-ins/file-dds/ddswrite.c:1887
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: ../plug-ins/file-dds/ddsread.c:1269 ../plug-ins/file-dds/ddswrite.c:1888
 msgid "OK"
@@ -6856,7 +6829,7 @@ msgstr "이미지 맵 불러오기"
 
 #: ../plug-ins/file-dds/ddsread.c:1292
 msgid "Automatically decode YCoCg/AExp images when detected"
-msgstr ""
+msgstr "감지되면 YCoCg/AExp 이미지 자동 디코딩"
 
 #: ../plug-ins/file-dds/ddswrite.c:1885
 msgid "Export as DDS"
@@ -6991,7 +6964,7 @@ msgstr "FITS 파일 열기 실패"
 
 #: ../plug-ins/file-fits/fits.c:376
 msgid "FITS file keeps no displayable images"
-msgstr "FITS 파일에 표시가능한 이미지가 없습니다."
+msgstr "FITS 파일에 표시가능한 이미지가 없음"
 
 #: ../plug-ins/file-fits/fits.c:457
 #, fuzzy
@@ -7175,7 +7148,7 @@ msgstr ""
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:846
 msgid "Enable preview to obtain the file size."
-msgstr "파일 크기를 얻으려면 미리 보기 활성화"
+msgstr "파일 크기를 얻으려면 미리 보기 활성화."
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:849
 msgid "Sho_w preview in image window"
@@ -7403,7 +7376,7 @@ msgstr "'%s' 파일 열기 실패: %s"
 
 #: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "오류: 김프 기반 이미지형식을 PSD 모드로 변환할 수 없습니다."
+msgstr "오류: 김프 기반 이미지형식을 PSD 모드로 변환할 수 없음"
 
 #: ../plug-ins/file-psd/psd-save.c:1563
 #, fuzzy, c-format
@@ -8039,7 +8012,7 @@ msgstr "흐릿하게"
 
 #: ../plug-ins/flame/flame.c:778
 msgid "Gaussian"
-msgstr "가우시안 블루어"
+msgstr "가우시안 블러"
 
 #: ../plug-ins/flame/flame.c:791
 msgid "_Variation:"
@@ -8141,7 +8114,7 @@ msgstr "실시간 미리 보기"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:642
 msgid "If enabled the preview will be redrawn automatically"
-msgstr "이 옵션을 활성화하면, 미리 보기가 자동으로 갱신될 것입니다."
+msgstr "이 옵션을 활성화하면, 미리 보기가 자동으로 다시 그려짐"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:645
 msgid "R_edraw preview"
@@ -8363,7 +8336,8 @@ msgstr "반전"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr "높은 색상 값을 낮은 값으로 교체합니다."
+msgstr ""
+"이 옵션을 사용하면, 더 높은 색 값을 더 낮은 값으로 또는 그 반대로 교체함"
 
 #. Colormode toggle box
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1115
@@ -8446,7 +8420,7 @@ msgstr "프랙탈 삭제"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:945
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "'%s' 파일은 프랙탈익스플로러 파일이 아닙니다."
+msgstr "'%s' 파일은 프랙탈익스플로러 파일이 아님"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:955
 #, c-format
@@ -8454,8 +8428,8 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"'%s' 파일은 망가졌습니다.\n"
-"%d 번째 줄 옵션이 잘못되었습니다."
+"'%s' 파일은 손상되었습니다.\n"
+"%d번째 줄 옵션 섹션이 부정확함"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1000
 msgid "My first fractal"
@@ -8889,8 +8863,7 @@ msgstr ""
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
-msgstr ""
-"임시 파일 '%s' 읽기 실패. 패러사이트(parasite) %s을(를) 불러오지 못했습니다."
+msgstr "기생물을 불러올 임시 파일 '%1$s' 읽기 실패: %2$s"
 
 #: ../plug-ins/gimpressionist/brush.c:244
 msgid "Can only save drawables!"
@@ -10508,11 +10481,11 @@ msgstr "김프 도움말 브라우저"
 
 #: ../plug-ins/help-browser/dialog.c:542
 msgid "Go back one page"
-msgstr "이전 페이지로 이동합니다."
+msgstr "한 페이지로 뒤로 이동"
 
 #: ../plug-ins/help-browser/dialog.c:547
 msgid "Go forward one page"
-msgstr "다음 페이지로 이동합니다."
+msgstr "한 페이지로 앞으로 이동"
 
 #: ../plug-ins/help-browser/dialog.c:552
 msgid "_Reload"
@@ -10532,7 +10505,7 @@ msgstr "페이지 불러오기 중지"
 
 #: ../plug-ins/help-browser/dialog.c:562
 msgid "Go to the index page"
-msgstr "인덱스 페이지로 이동합니다."
+msgstr "인덱스 페이지로 이동"
 
 #: ../plug-ins/help-browser/dialog.c:567
 msgid "C_opy location"
@@ -11768,7 +11741,7 @@ msgstr "광택있는(_P):"
 #: ../plug-ins/lighting/lighting-ui.c:770
 #: ../plug-ins/map-object/map-object-ui.c:927
 msgid "Higher values makes the highlights more focused"
-msgstr "높은 값은 하이라이트에 많이 집중되게 합니다."
+msgstr "값이 높을수록 하이라이트가 더 집중 조명됩니다."
 
 #. Metallic
 #: ../plug-ins/lighting/lighting-ui.c:779
@@ -12155,7 +12128,7 @@ msgstr ""
 
 #: ../plug-ins/metadata/metadata-editor.c:762
 msgid "Calendar Date:"
-msgstr ""
+msgstr "달력 날짜:"
 
 #: ../plug-ins/metadata/metadata-editor.c:766
 msgid "Set Date"
@@ -12379,7 +12352,7 @@ msgstr "해수면 위"
 
 #: ../plug-ins/metadata/metadata-tags.h:341
 msgid "Below Sea Level"
-msgstr ""
+msgstr "해수면 아래"
 
 #: ../plug-ins/metadata/metadata-tags.h:347
 msgid "North"
@@ -12763,6 +12736,8 @@ msgid ""
 "Amount of error at which a fitted spline is unacceptable. If any pixel is "
 "further away than this from the fitted curve, we try again."
 msgstr ""
+"꼭 맞는 스플라인이 허용되지 않는 오류의 양입니다. 꼭 맞는 곡선에서 픽셀이 이"
+"보다 멀리 떨어져 있으면 다시 시도합니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:182
 msgid "Filter Alternative Surround:"
@@ -12886,6 +12861,10 @@ msgid ""
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
+"재매개변수화하는 것이 무의미한 오류의 양입니다.  예를 들어, 단일 스플라인을 "
+"사용하여 'O' 외부의 윤곽선을 피팅하려고 할 때 이 문제가 발생합니다. 초기 피팅"
+"은  Newton-Raphson 반복이 그것을 개선하기에 충분히 좋지 않습니다.  아마도 어"
+"떤 코너도 찾지 못한 경우를 감지하는 것이 더 좋을 수 있습니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:342
 #, fuzzy
