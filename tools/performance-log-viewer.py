@@ -1694,13 +1694,12 @@ class VariablesViewer (Gtk.ScrolledWindow):
 
             Gtk.ListStore.__init__ (self,
                                     *((str, str, Gdk.RGBA) + n_stats * (str,)))
-            enum.Enum.__init__ (self)
 
             for var, var_def in var_defs.items ():
-                i = self.append (((var,
-                                   var_def.desc,
-                                   Gdk.RGBA (*var_def.color)) +
-                                  n_stats * ("",)))
+                 self.append (((var,
+                                var_def.desc,
+                                Gdk.RGBA (*var_def.color)) +
+                               n_stats * ("",)))
 
     def __init__ (self, *args, **kwargs):
         Gtk.Box.__init__ (self,
