@@ -18,16 +18,17 @@ report performance-related issues.
       - [4.1.1. Selecting Samples](#411-selecting-samples)
     - [4.2. Information Area](#42-information-area)
       - [4.2.1. Information Page](#421-information-page)
-      - [4.2.2. Variables Page](#422-variables-page)
-      - [4.2.3. Backtrace Page](#423-backtrace-page)
-        - [4.2.3.1. Threads Pane](#4231-threads-pane)
-        - [4.2.3.2. Stack Pane](#4232-stack-pane)
-      - [4.2.4. Profile Page](#424-profile-page)
-        - [4.2.4.1. Root Column](#4241-root-column)
-          - [4.2.4.1.1. Thread Filter](#42411-thread-filter)
-          - [4.2.4.1.2. Call-Graph Direction](#42412-call-graph-direction)
-        - [4.2.4.2. Function Columns](#4242-function-columns)
-        - [4.2.4.3. Source Columns](#4243-source-columns)
+      - [4.2.2. Markers Page](#422-markers-page)
+      - [4.2.3. Variables Page](#423-variables-page)
+      - [4.2.4. Backtrace Page](#424-backtrace-page)
+        - [4.2.4.1. Threads Pane](#4241-threads-pane)
+        - [4.2.4.2. Stack Pane](#4242-stack-pane)
+      - [4.2.5. Profile Page](#425-profile-page)
+        - [4.2.5.1. Root Column](#4251-root-column)
+          - [4.2.5.1.1. Thread Filter](#42511-thread-filter)
+          - [4.2.5.1.2. Call-Graph Direction](#42512-call-graph-direction)
+        - [4.2.5.2. Function Columns](#4252-function-columns)
+        - [4.2.5.3. Source Columns](#4253-source-columns)
     - [4.3. Selection Modifiers](#43-selection-modifiers)
       - [4.3.1. Searching Samples](#431-searching-samples)
     - [4.4. History Navigation](#44-history-navigation)
@@ -249,7 +250,17 @@ associated with any sample, including:
 
 The key/value lists are searchable by key name.
 
-#### 4.2.2. Variables Page
+#### 4.2.4. Markers Page
+
+The *markers page* lists the event markers contained in the log, displaying
+their number, relative time, and description.
+It is only present in logs containing event markers.
+
+If the current selection contains samples corresponding to any markers, the
+markers are selected in the markers-page list.  Conversely, if any markers are
+selected in the markers-page list, the corresponding samples are selected.
+
+#### 4.2.3. Variables Page
 
 The *variables page* shows instrumentation-variable statistics for the current
 selection.
@@ -267,13 +278,13 @@ standard deviation.
 The variable list is searchable by variable name, and its tooltip shows the
 variable descriptions.
 
-#### 4.2.3. Backtrace Page
+#### 4.2.4. Backtrace Page
 
 The *backtrace page* shows the program backtrace at the current sample.
 It is only available when a single sample is selected, in logs containing
 backtraces.
 
-##### 4.2.3.1. Threads Pane
+##### 4.2.4.1. Threads Pane
 
 The *threads pane*, on the left side of the page, lists all active threads at
 the time of the sample, displaying the following information:
@@ -306,7 +317,7 @@ The thread list is searchable by thread name.
 Double-clicking on a thread selects all samples at which the thread is in the
 running state.
 
-##### 4.2.3.2. Stack Pane
+##### 4.2.4.2. Stack Pane
 
 The *stack pane*, on the right side of the page, shows the selected thread's
 call stack at the time of the sample, displaying the following information:
@@ -350,7 +361,7 @@ The frame list is searchable by function name.
 Double-clicking on a frame selects all samples at which the corresponding
 function is present in the backtrace.
 
-#### 4.2.4. Profile Page
+#### 4.2.5. Profile Page
 
 The *profile page* shows a fully context-sensitive *call graph*, annotated with
 frequency information, for the current selection.
@@ -368,7 +379,7 @@ Each non-root column lists the direct *descendants* (*callers* or *callees*) of
 a given function; selecting a descendant opens a new column to the right of the
 current column, showing the descendants of the selected function, and so on.
 
-##### 4.2.4.1. Root Column
+##### 4.2.5.1. Root Column
 
 The *root column* of the call graph shows a list of all functions included in
 the graph.
@@ -398,14 +409,14 @@ Pressing *Escape* while the list has focus deselects the current item.
 The root-column header buttons allow controlling the structure of the call
 graph:
 
-###### 4.2.4.1.1. Thread Filter
+###### 4.2.5.1.1. Thread Filter
 
 The *Threads* button opens the *thread filter*, allowing control over which
 threads, and which states of each thread, are included in the graph.
 
 The thread filter lists all threads included in the current selection.
 Each thread is identified by ID and name, as described in
-[section *4.2.3.1*](#4231-threads-pane).
+[section *4.2.4.1*](#4241-threads-pane).
 Next to each thread is a row of toggles, corresponding to the different thread
 states; only call stacks during which the thread was in one of the active
 states are included in the graph.
@@ -413,7 +424,7 @@ Clicking on a thread-state column title toggles the entire column.
 
 The thread list can be searched by thread name.
 
-###### 4.2.4.1.2. Call-Graph Direction
+###### 4.2.5.1.2. Call-Graph Direction
 
 By default, the graph direction is *caller → callee*—the direct descendants of
 each function are its callees.
@@ -421,7 +432,7 @@ The *Call-Graph Direction* button allows toggling the graph between the *caller
 → callee* direction, and the reverse *callee → caller* direction, in which the
 direct descendants of each function are its callers.
 
-##### 4.2.4.2. Function Columns
+##### 4.2.5.2. Function Columns
 
 When a function from the root column is selected, a new *function column* opens
 to the right of the root column, listing the direct descendants of the
@@ -472,7 +483,7 @@ corresponding to the current column, that is, all the samples whose call stacks
 contribute to column.
 The button's tooltip shows a textual description of the samples.
 
-##### 4.2.4.3. Source Columns
+##### 4.2.5.3. Source Columns
 
 When the *[Self]* item of a function column is selected, if the log contains
 source-location information for the function, and the corresponding source file
@@ -535,7 +546,7 @@ A number of sample-dependent variables and functions are provided:
     thread name.
 
     The optional `state` argument, if not `None`, may specify a thread state
-    (see [section *4.2.3.1*](#4231-threads-pane)).
+    (see [section *4.2.4.1*](#4241-threads-pane)).
     Only samples at which the thread is in the given state are matched.
     The argument may be a regular expression, which should fully match the
     thread state.

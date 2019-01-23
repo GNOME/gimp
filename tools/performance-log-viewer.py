@@ -288,15 +288,16 @@ Frame  = namedtuple ("Frame",  ("id", "address", "info"))
 Sample = namedtuple ("Sample", ("t", "vars", "markers", "backtrace"))
 Marker = namedtuple ("Marker", ("id", "t", "description"))
 
-samples = []
-markers = []
+samples     = []
+markers     = []
+last_marker = 0
 
 for element in log.find ("samples"):
     if element.tag == "sample":
         sample = Sample (
             t         = int (element.get ("t")),
             vars      = {},
-            markers   = markers,
+            markers   = markers[last_marker:],
             backtrace = []
         )
 
@@ -347,7 +348,7 @@ for element in log.find ("samples"):
 
         samples.append (sample)
 
-        markers = []
+        last_marker = len (markers)
     elif element.tag == "marker":
         marker = Marker (
             id          = int (element.get ("id")),
@@ -357,10 +358,8 @@ for element in log.find ("samples"):
 
         markers.append (marker)
 
-if samples and markers:
-    samples[-1].markers += markers
-
-markers = None
+if samples:
+    samples[-1].markers.extend (markers[last_marker:])
 
 DELTA_SAME = __builtins__.object ()
 
@@ -1674,6 +1673,128 @@ class InformationViewer (Gtk.ScrolledWindow):
         if info:
             for element in info:
                 add_element (element)
+
+class MarkersViewer (Gtk.ScrolledWindow):
+    class Store (Gtk.ListStore):
+        ID   = 0
+        TIME = 1
+        DESC = 2
+
+        def __init__ (self):
+            Gtk.ListStore.__init__ (self, int, int, str)
+
+            for marker in markers:
+                self.append ((marker.id, marker.t, marker.description))
+
+    def __init__ (self, *args, **kwargs):
+        Gtk.Box.__init__ (self,
+                          *args,
+                          hscrollbar_policy = Gtk.PolicyType.AUTOMATIC,
+                          vscrollbar_policy = Gtk.PolicyType.AUTOMATIC,
+                          **kwargs)
+
+        self.needs_update = True
+
+        store = self.Store ()
+        self.store = store
+
+        tree = Gtk.TreeView (model = store)
+        self.tree = tree
+        self.add (tree)
+        tree.show ()
+
+        tree.get_selection ().set_mode (Gtk.SelectionMode.MULTIPLE)
+
+        self.tree_selection_changed_handler = tree.get_selection ().connect (
+            "changed", self.tree_selection_changed
+        )
+
+        col = Gtk.TreeViewColumn (title = "#")
+        tree.append_column (col)
+        col.set_resizable (True)
+
+        cell = Gtk.CellRendererText (xalign = 1)
+        col.pack_start (cell, False)
+        col.add_attribute (cell, "text", store.ID)
+
+        def format_time_col (tree_col, cell, model, iter, col):
+            time = model[iter][col]
+
+            cell.set_property ("text", format_duration (time / 1000000))
+
+        col = Gtk.TreeViewColumn (title = "Time")
+        tree.append_column (col)
+        col.set_resizable (True)
+        col.set_alignment (0.5)
+
+        cell = Gtk.CellRendererText (xalign = 1)
+        col.pack_start (cell, False)
+        col.set_cell_data_func (cell, format_time_col, store.TIME)
+
+        col = Gtk.TreeViewColumn (title = "Description")
+        tree.append_column (col)
+        col.set_resizable (True)
+        col.set_alignment (0.5)
+
+        cell = Gtk.CellRendererText ()
+        col.pack_start (cell, False)
+        col.add_attribute (cell, "text", store.DESC)
+
+        col = Gtk.TreeViewColumn ()
+        tree.append_column (col)
+
+        selection.connect ("change-complete", self.selection_change_complete)
+
+    def update (self):
+        markers = set ()
+
+        if not self.needs_update:
+            return
+
+        self.needs_update = False
+
+        for i in selection.selection:
+            markers.update (marker.id for marker in samples[i].markers)
+
+        tree_sel = self.tree.get_selection ()
+
+        GObject.signal_handler_block (tree_sel,
+                                      self.tree_selection_changed_handler)
+
+        tree_sel.unselect_all ()
+
+        for row in self.store:
+            if row[self.store.ID] in markers:
+                tree_sel.select_iter (row.iter)
+
+        GObject.signal_handler_unblock (tree_sel,
+                                        self.tree_selection_changed_handler)
+
+    def do_map (self):
+        self.update ()
+
+        Gtk.ScrolledWindow.do_map (self)
+
+    def selection_change_complete (self, selection):
+        self.needs_update = True
+
+        if self.get_mapped ():
+            self.update ()
+
+    def tree_selection_changed (self, tree_sel):
+        sel = set ()
+
+        for row in self.store:
+            if tree_sel.iter_is_selected (row.iter):
+                id = row[self.store.ID]
+
+                for i in range (len (samples)):
+                    if any (marker.id == id for marker in samples[i].markers):
+                        sel.add (i)
+
+        selection.select (sel)
+
+        selection.change_complete ()
 
 class VariablesViewer (Gtk.ScrolledWindow):
     class Store (Gtk.ListStore):
@@ -3465,6 +3586,11 @@ class LogViewer (Gtk.Window):
         info_viewer = InformationViewer ()
         stack.add_titled (info_viewer, "information", "Information")
         info_viewer.show ()
+
+        if markers:
+            markers_viewer = MarkersViewer ()
+            stack.add_titled (markers_viewer, "markers", "Markers")
+            markers_viewer.show ()
 
         vars_viewer = VariablesViewer ()
         stack.add_titled (vars_viewer, "variables", "Variables")
