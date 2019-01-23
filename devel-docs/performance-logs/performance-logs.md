@@ -459,9 +459,9 @@ It is most useful for its *Self* percentage, which, in the *caller → callee*
 direction, indicates the amount of time spent executing code belonging
 exclusively to the current function, and not to any of its descendants,
 relative to the total amount of time spent executing the function as a whole.
-In other words, the sum of *[Self]*'s *Self* percentage, and the rest of the
-descendants' *All* percentage, adds up to 100%—the full execution time of the
-function.
+In other words, in non-recursive cases, the sum of *[Self]*'s *Self*
+percentage, and the rest of the descendants' *All* percentage, adds up to
+100%—the full execution time of the function.
 
 Double-clicking on any of the descendants selects the corresponding function in
 the root column, effectively discarding the current call-chain context.
