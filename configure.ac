@@ -2951,6 +2951,7 @@ desktop/Makefile
 desktop/gimp-data-extras.metainfo.xml.in
 desktop/gimp.desktop.in
 desktop/org.gimp.GIMP.appdata.xml.in
+desktop/test-appdata.sh
 etc/Makefile
 etc/gimprc
 m4macros/Makefile
