@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-22 21:50+0000\n"
-"PO-Revision-Date: 2019-01-24 02:00+0900\n"
+"PO-Revision-Date: 2019-01-24 06:26+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -2089,7 +2089,7 @@ msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
 msgstr ""
-"잘못 된 이미지 치수: 너비: %1$d, 가로 오프셋: %2$d, 높이: %3$d, 세로 오프셋: "
+"잘못된 이미지 치수: 너비: %1$d, 가로 오프셋: %2$d, 높이: %3$d, 세로 오프셋: "
 "%4$d"
 
 #: ../plug-ins/common/file-cel.c:437
@@ -2126,7 +2126,7 @@ msgstr "'%s': 팔레트에 잘못된 bpp 값: %hhu"
 #: ../plug-ins/common/file-cel.c:681
 #, c-format
 msgid "'%s': illegal number of colors: %u"
-msgstr "' %s ': 잘못 된 색상 수:% u"
+msgstr "' %s ': 잘못된 색상 수:% u"
 
 #: ../plug-ins/common/file-cel.c:696 ../plug-ins/common/file-cel.c:713
 #: ../plug-ins/common/file-cel.c:733
@@ -2762,7 +2762,7 @@ msgstr "xvYCC"
 #: ../plug-ins/common/file-jp2-load.c:991
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
-msgstr ""
+msgstr "%3$d개의 구성요소가 있는 지원하지 않는 JPEG 2000%1$s '%2$s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1000
 msgid "Color space:"
@@ -2774,34 +2774,29 @@ msgid "Could not open '%s' for reading"
 msgstr "'%s' 파일을 읽기용으로 열 수 없음"
 
 #: ../plug-ins/common/file-jp2-load.c:1082
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
-msgstr "'%s'을(를) 디코딩할 수 없습니다."
+msgstr "'%s'용으로 디코더에 매개 변수를 설정할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1090
-#, fuzzy, c-format
-#| msgid "Could not read header from '%s'"
+#, c-format
 msgid "Couldn't read JP2 header from '%s'."
-msgstr "'%s'에서 파일 헤더를 읽을 수 없습니다."
+msgstr "'%s'에서 JP2 헤더를 읽을 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1098
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decode JP2 image in '%s'."
-msgstr "'%s'을(를) 디코딩할 수 없습니다."
+msgstr "'%s'에서 JP2 이미지를 디코딩할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1106
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
-msgstr "'%s'을(를) 디코딩할 수 없습니다."
+msgstr "'%s'에서 JP2 이미지를 압축 해제 할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1135
-#, fuzzy, c-format
-#| msgid "Couldn't decode '%s'."
+#, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
-msgstr "'%s'을(를) 디코딩할 수 없습니다."
+msgstr "'%s'에서 CIELAB JP2 이미지를 디코딩할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1192
 #, c-format
@@ -2811,17 +2806,17 @@ msgstr "JP2 코드스트림 '%s'에 모르는 색 공간."
 #: ../plug-ins/common/file-jp2-load.c:1203
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
-msgstr ""
+msgstr "YCbCr JP2 이미지 '%s'(을)를 RGB로 변환할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1213
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
-msgstr ""
+msgstr "'%s'인 CMYK JP2 이미지를 RGB로 변환할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1223
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
-msgstr ""
+msgstr "'%s'인 xvYCC JP2 이미지를 RGB로 변환할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1250
 #, c-format
@@ -2957,10 +2952,9 @@ msgid "GIMP pattern"
 msgstr "김프 무늬"
 
 #: ../plug-ins/common/file-pat.c:373
-#, fuzzy, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+#, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-msgstr "'%s'의 헤더가 올바르지 않습니다.: 너비=%lu, 높이=%lu, 바이트=%lu"
+msgstr "'%1$s'에 잘못된 헤더 데이터: 무늬 이름이 너무 긺: %2$lu"
 
 #: ../plug-ins/common/file-pat.c:392
 #, c-format
@@ -3003,7 +2997,7 @@ msgstr "PCX 헤더에 잘못된 줄당 바이트 수"
 
 #: ../plug-ins/common/file-pcx.c:432
 msgid "Resolution out of bounds in XCX header, using 72x72"
-msgstr ""
+msgstr "XCX 헤더에 범위를 벗어난 해상도. 72x72를 사용함"
 
 #: ../plug-ins/common/file-pcx.c:440
 #, c-format
@@ -3015,10 +3009,8 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "사용하지 않는 PCX 특징"
 
 #: ../plug-ins/common/file-pcx.c:813 ../plug-ins/common/file-pnm.c:1245
-#, fuzzy
-#| msgid "Cannot save images with alpha channel."
 msgid "Cannot export images with alpha channel."
-msgstr "알파 채널을 포함한 채로 저장할 수 없습니다."
+msgstr "알파 채널이 있는 이미지를 내보낼 수 없습니다."
 
 #: ../plug-ins/common/file-pcx.c:833
 #, c-format
@@ -3061,18 +3053,20 @@ msgstr "Portable Document Format"
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
+"PDF 문서 '%1$s '에는 %3$d 페이지가 있습니다. %2$d 페이지가 범위를 벗어났습니"
+"다."
 
 #: ../plug-ins/common/file-pdf-load.c:681
 msgid "PDF is password protected, please input the password:"
-msgstr ""
+msgstr "PDF는 암호로 보호되었음. 암호 입력:"
 
 #: ../plug-ins/common/file-pdf-load.c:691
 msgid "Encrypted PDF"
-msgstr ""
+msgstr "암호화된 PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:718
 msgid "Wrong password! Please input the right one:"
-msgstr ""
+msgstr "틀린 암호! 바른 암호 입력:"
 
 #: ../plug-ins/common/file-pdf-load.c:736
 #, c-format
@@ -3172,25 +3166,21 @@ msgstr "마스크를 유지하는 것은 출력 내용에 영향을 주지 않�
 #: ../plug-ins/common/file-pdf-save.c:1132
 #, c-format
 msgid "Layers as pages (%s)"
-msgstr ""
+msgstr "레이어를 페이지로 (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:935
 #: ../plug-ins/common/file-pdf-save.c:1134
 msgid "top layers first"
-msgstr ""
+msgstr "맨 위 레이어 먼저"
 
 #: ../plug-ins/common/file-pdf-save.c:935
 #: ../plug-ins/common/file-pdf-save.c:1134
-#, fuzzy
-#| msgid "Bottom left"
 msgid "bottom layers first"
-msgstr "왼쪽 아래"
+msgstr "맨 아래 레이어 먼저"
 
 #: ../plug-ins/common/file-pdf-save.c:943
-#, fuzzy
-#| msgid "Reverse Order"
 msgid "Reverse the pages order"
-msgstr "순서 반전"
+msgstr "페이지 순서 반전"
 
 #: ../plug-ins/common/file-pdf-save.c:1017
 msgid "Save to:"
@@ -3249,10 +3239,9 @@ msgid "Error creating PNG read struct while loading '%s'."
 msgstr "'%s'(을)를 불러오는 동안 PNG 읽기 구조체 만들기 중 오류."
 
 #: ../plug-ins/common/file-png.c:909
-#, fuzzy, c-format
-#| msgid "Error while saving '%s'. Could not save image."
+#, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
-msgstr "'%s' 저장 중 오류. 이미지를 저장할 수 없습니다."
+msgstr "'%s' 읽기 중 오류. PNG 헤더 정보 구조체를 만들 수 없습니다."
 
 #: ../plug-ins/common/file-png.c:917
 #, c-format
@@ -3304,16 +3293,14 @@ msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "'%s'(을)를 내보내는 동안 PNG 쓰기 구조체 만들기 중 오류."
 
 #: ../plug-ins/common/file-png.c:1564
-#, fuzzy, c-format
-#| msgid "Error while saving '%s'. Could not save image."
+#, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "'%s' 저장 중 오류. 이미지를 저장할 수 없습니다."
+msgstr "'%s' 내보내기 중 오류. PNG 헤더 정보 구조체를 만들 수 없습니다."
 
 #: ../plug-ins/common/file-png.c:1572
-#, fuzzy, c-format
-#| msgid "Error while saving '%s'. Could not save image."
+#, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "'%s' 저장 중 오류. 이미지를 저장할 수 없습니다."
+msgstr "'%s' 내보내기 중 오류. 이미지를 내보낼 수 없습니다."
 
 #: ../plug-ins/common/file-png.c:2376 ../plug-ins/common/file-raw-data.c:2133
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
@@ -3420,10 +3407,9 @@ msgid "Encapsulated PostScript image"
 msgstr "캡슐화된 포스트스크립트 이미지"
 
 #: ../plug-ins/common/file-ps.c:1081
-#, fuzzy, c-format
-#| msgid "Could not interpret Postscript file '%s'"
+#, c-format
 msgid "Could not interpret PostScript file '%s'"
-msgstr "포스트스크립트 파일 '%s'을(를) 해석할 수 없습니다."
+msgstr "포스트스크립트 파일 '%s'을(를) 해석할 수 없음"
 
 #: ../plug-ins/common/file-ps.c:1219
 #, c-format
@@ -3611,7 +3597,7 @@ msgstr "LZ77"
 #: ../plug-ins/common/file-psp.c:728
 #, c-format
 msgid "Error reading block header"
-msgstr "블록 헤더 읽기 중 오류."
+msgstr "블록 헤더 읽기 중 오류"
 
 #: ../plug-ins/common/file-psp.c:735
 #, c-format
@@ -3659,22 +3645,19 @@ msgid "Invalid layer sub-block %s, should be LAYER"
 msgstr ""
 
 #: ../plug-ins/common/file-psp.c:1397 ../plug-ins/common/file-psp.c:1428
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error reading layer information chunk"
-msgstr "'%s'의 BMP 파일 헤더 읽기 오류"
+msgstr "레이어 정보 청크 읽기 중 오류"
 
 #: ../plug-ins/common/file-psp.c:1462
-#, fuzzy, c-format
-#| msgid "Image dimensions: %d × %d"
+#, c-format
 msgid "Invalid layer dimensions: %dx%d"
-msgstr "이미지 면적: %d × %d"
+msgstr "잘못된 이미지 치수: %d×%d"
 
 #: ../plug-ins/common/file-psp.c:1515
-#, fuzzy, c-format
-#| msgid "Error reading file"
+#, c-format
 msgid "Error creating layer"
-msgstr "파일 읽기 오류"
+msgstr "레이어 만들기 중 오류"
 
 #: ../plug-ins/common/file-psp.c:1566
 #, c-format
@@ -3697,10 +3680,9 @@ msgid "Invalid channel type %d in channel information chunk"
 msgstr ""
 
 #: ../plug-ins/common/file-psp.c:1682
-#, fuzzy, c-format
-#| msgid "Error reading file"
+#, c-format
 msgid "Error reading tube data chunk"
-msgstr "파일 읽기 오류"
+msgstr "튜브 데이터 청크 읽기 중 오류"
 
 #: ../plug-ins/common/file-psp.c:1783
 #, c-format
@@ -3809,10 +3791,8 @@ msgid "SRTM-3 (3 arc-seconds)"
 msgstr ""
 
 #: ../plug-ins/common/file-raw-data.c:1924
-#, fuzzy
-#| msgid "Spacing:"
 msgid "_Sample Spacing:"
-msgstr "공간:"
+msgstr "샘플 간격(_S):"
 
 #: ../plug-ins/common/file-raw-data.c:1942
 msgid "RGB Alpha"
@@ -3839,10 +3819,8 @@ msgid "Planar RGB"
 msgstr "2차원 RGB"
 
 #: ../plug-ins/common/file-raw-data.c:1948
-#, fuzzy
-#| msgid "16 bits"
 msgid "B&W 1 bit"
-msgstr "16비트"
+msgstr "흑/백 1비트"
 
 #: ../plug-ins/common/file-raw-data.c:1949
 msgid "Gray 2 bit"
@@ -4175,22 +4153,15 @@ msgstr ""
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:1004
-#, fuzzy
-#| msgid ""
-#| "The image which you are trying to save as an XBM contains more than two "
-#| "colors.\n"
-#| "\n"
-#| "Please convert it to a black and white (1-bit) indexed image and try "
-#| "again."
 msgid ""
 "The image which you are trying to export as an XBM contains more than two "
 "colors.\n"
 "\n"
 "Please convert it to a black and white (1-bit) indexed image and try again."
 msgstr ""
-"XBM 형식으로 저장하려는 이미지에 두 개 이상의 색상이 있습니다.\n"
+"XBM로 내보내려는 이미지에 3개 이상의 색상이 있습니다.\n"
 "\n"
-"흑백(1-bit) 이미지로 변환하고 다시 시도하십시오."
+"흑/백(1비트) 인덱스 이미지로 변환하고 다시 시도하십시오."
 
 #: ../plug-ins/common/file-xbm.c:1016
 msgid ""
@@ -4437,19 +4408,15 @@ msgid "Width and/or height of frame '%s' is zero!"
 msgstr "'%s' 프레임의 너비 또는 높이가 0임!"
 
 #: ../plug-ins/common/file-xmc.c:1616
-#, fuzzy, c-format
-#| msgid ""
-#| "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
-#| "Try to change the hot spot position, layer geometry or save without auto-"
-#| "crop."
+#, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"'%s' 프레임에 핫스팟이 없으므로 커서를 저장할 수 없습니다.\n"
-"핫스팟 위치, 레이어 구조를 바꾸거나 자동 잘라 내기를 하지 않고 저장을 시도해 "
-"보십시오."
+"'%s' 프레임에 핫스팟이 없어서 커서를 내보낼 수 없습니다.\n"
+"핫스팟 위치, 레이어 구조를 바꾸어 보거나 자동 잘라내기를 하지 않고 저장하십시"
+"오."
 
 #: ../plug-ins/common/file-xmc.c:1786
 #, c-format
@@ -6430,16 +6397,12 @@ msgid "_Wavelet-decompose..."
 msgstr "잔물결 분해(_W)..."
 
 #: ../plug-ins/common/wavelet-decompose.c:177
-#, fuzzy
-#| msgid "Decompose"
 msgid "Wavelet-Decompose"
-msgstr "분해"
+msgstr "잔물결 분해"
 
 #: ../plug-ins/common/wavelet-decompose.c:186
-#, fuzzy
-#| msgid "Decomposing"
 msgid "Decomposition"
-msgstr "분해 중"
+msgstr "분해"
 
 #: ../plug-ins/common/wavelet-decompose.c:254
 #, c-format
@@ -6452,8 +6415,6 @@ msgid "Residual"
 msgstr ""
 
 #: ../plug-ins/common/wavelet-decompose.c:387
-#, fuzzy
-#| msgid "Scale:"
 msgid "Scales:"
 msgstr "스케일:"
 
@@ -6621,10 +6582,9 @@ msgid "Error reading BMP file header from '%s'"
 msgstr "'%s'의 BMP 파일 헤더 읽기 오류"
 
 #: ../plug-ins/file-bmp/bmp-load.c:381
-#, fuzzy, c-format
-#| msgid "Unsupported compression mode: %d"
+#, c-format
 msgid "Unsupported compression (%u) in BMP file from '%s'"
-msgstr "지원하지 않는 압축 모드: %d"
+msgstr "'%2$s'로부터의 BMP 파일에 지원하지 않는 압축(%1$u)"
 
 #: ../plug-ins/file-bmp/bmp-load.c:675
 msgid "Unrecognized or invalid BMP compression format."
@@ -6640,8 +6600,6 @@ msgid "The bitmap ends unexpectedly."
 msgstr "비트맵이 예상치 못하게 종료되었습니다."
 
 #: ../plug-ins/file-bmp/bmp-save.c:182 ../plug-ins/file-bmp/bmp-save.c:215
-#, fuzzy
-#| msgid "Cannot save indexed image with transparency in BMP file format."
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 "투명한 부분이 있는 인덱스 이미지는 BMP 파일 형식으로 저장할 수 없습니다."
@@ -6700,10 +6658,8 @@ msgid "Windows BMP image"
 msgstr "윈도 BMP 이미지"
 
 #: ../plug-ins/file-dds/dds.c:134 ../plug-ins/file-dds/dds.c:153
-#, fuzzy
-#| msgid "SVG image"
 msgid "DDS image"
-msgstr "SVG 이미지"
+msgstr "DDS 이미지"
 
 #: ../plug-ins/file-dds/dds.c:170
 msgid "Decode YCoCg"
@@ -6730,10 +6686,8 @@ msgid "OK"
 msgstr ""
 
 #: ../plug-ins/file-dds/ddsread.c:1285
-#, fuzzy
-#| msgid "Load Image Map"
 msgid "Load mipmaps"
-msgstr "이미지 맵 불러오기"
+msgstr "밉맵 불러오기"
 
 #: ../plug-ins/file-dds/ddsread.c:1292
 msgid "Automatically decode YCoCg/AExp images when detected"
@@ -6748,10 +6702,8 @@ msgid "Compression:"
 msgstr "압축:"
 
 #: ../plug-ins/file-dds/ddswrite.c:1931
-#, fuzzy
-#| msgid "_Format:"
 msgid "Format:"
-msgstr "형식(_F):"
+msgstr "형식:"
 
 #: ../plug-ins/file-dds/ddswrite.c:1952
 msgid "Save:"
@@ -6766,10 +6718,8 @@ msgid "Transparent index:"
 msgstr "투명 인덱스:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2041
-#, fuzzy
-#| msgid "Advanced Options"
 msgid "<b>Advanced Options</b>"
-msgstr "고급 옵션"
+msgstr "<b>고급 옵션</b>"
 
 #: ../plug-ins/file-dds/ddswrite.c:2055
 #: ../plug-ins/file-tiff/file-tiff-save.c:975
@@ -6789,22 +6739,16 @@ msgid "Filter:"
 msgstr "필터:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2108
-#, fuzzy
-#| msgid "Paint mode:"
 msgid "Wrap mode:"
-msgstr "칠하기 모드:"
+msgstr "감싸기 모드:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2128
-#, fuzzy
-#| msgid "Applying convolution"
 msgid "Apply gamma correction"
-msgstr "컨벌루션 적용 중"
+msgstr "감마 보정 적용"
 
 #: ../plug-ins/file-dds/ddswrite.c:2139
-#, fuzzy
-#| msgid "Use subcolors"
 msgid "Use sRGB colorspace"
-msgstr "하위색상 사용"
+msgstr "sRGB 색공간 사용"
 
 #: ../plug-ins/file-dds/ddswrite.c:2150 ../plug-ins/gimpressionist/brush.c:541
 msgid "Gamma:"
@@ -6815,40 +6759,33 @@ msgid "Preserve alpha test coverage"
 msgstr ""
 
 #: ../plug-ins/file-dds/ddswrite.c:2179
-#, fuzzy
-#| msgid "_Alpha threshold:"
 msgid "Alpha test threshold:"
-msgstr "알파 임계값(_A):"
+msgstr "알파 테스트 임계값:"
 
 #: ../plug-ins/file-exr/file-exr.c:193
-#, fuzzy, c-format
-#| msgid "Error opening file '%s'"
+#, c-format
 msgid "Error opening file '%s' for reading"
-msgstr "파일 열기 오류 '%s'"
+msgstr "읽기용으로 파일 '%s' 열기 중 오류"
 
 #: ../plug-ins/file-exr/file-exr.c:204
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error querying image dimensions from '%s'"
-msgstr "'%s'의 BMP 파일 헤더 읽기 오류"
+msgstr "'%s'에서 이미지 치수 조회 중 오류"
 
 #: ../plug-ins/file-exr/file-exr.c:224
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error querying image precision from '%s'"
-msgstr "'%s'의 BMP 파일 헤더 읽기 오류"
+msgstr "'%s'에서 이미지 정밀도 조회 중 오류"
 
 #: ../plug-ins/file-exr/file-exr.c:241
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error querying image type from '%s'"
-msgstr "'%s'의 BMP 파일 헤더 읽기 오류"
+msgstr "'%s'에서 이미지 유형 조회 중 오류"
 
 #: ../plug-ins/file-exr/file-exr.c:289
-#, fuzzy, c-format
-#| msgid "Error reading BMP file header from '%s'"
+#, c-format
 msgid "Error reading pixel data from '%s'"
-msgstr "'%s'의 BMP 파일 헤더 읽기 오류"
+msgstr "'%s'에서 픽셀 데이터 읽기 중 오류"
 
 #: ../plug-ins/file-faxg3/faxg3.c:104
 msgid "G3 fax image"
@@ -6910,10 +6847,8 @@ msgid "Frame (%i)"
 msgstr "프레임 (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:721
-#, fuzzy
-#| msgid "Sorry, I can save only INDEXED and GRAY images."
 msgid "Sorry, I can export only INDEXED and GRAY images."
-msgstr "인덱스나 그레이 이미지만 저장할 수 있습니다."
+msgstr "인덱스나 그레이 이미지만 내보낼 수 있습니다."
 
 #: ../plug-ins/file-fli/fli-gimp.c:873
 msgid "GFLI 1.3 - Load framestack"
@@ -6974,10 +6909,10 @@ msgid "Compressed (PNG)"
 msgstr "압축 (PNG)"
 
 #: ../plug-ins/file-ico/ico-load.c:221
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not load '%s': %s"
 msgid "Could not read '%lu' bytes"
-msgstr "'%s'을(를) 불러올 수 없습니다.: %s"
+msgstr "'%lu' 바이트 읽지 못함"
 
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
@@ -7055,8 +6990,6 @@ msgstr "이미지 창에 미리 보기 표시(_W)"
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:867
 #: ../plug-ins/file-webp/file-webp-dialog.c:380
-#, fuzzy
-#| msgid "Save _EXIF data"
 msgid "Save _Exif data"
 msgstr "EXIF 데이터 저장(_E)"
 
@@ -7067,10 +7000,8 @@ msgid "Save _XMP data"
 msgstr "XMP 데이터 저장(_X)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:895
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save _IPTC data"
-msgstr "XMP 데이터 저장(_X)"
+msgstr "IPTC 데이터 저장(_I)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:909
 msgid "Save _thumbnail"
@@ -7079,10 +7010,8 @@ msgstr "미리 보기 저장(_T)"
 #: ../plug-ins/file-jpeg/jpeg-save.c:923
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
-#, fuzzy
-#| msgid "_Save comment to file"
 msgid "Save color profile"
-msgstr "설명을 파일로 저장(_S)"
+msgstr "색 프로필 저장"
 
 #. Comment
 #: ../plug-ins/file-jpeg/jpeg-save.c:936
@@ -7267,38 +7196,31 @@ msgid "Unsupported or invalid channel size"
 msgstr "지원하지 않거나 잘못된 채널 크기"
 
 #: ../plug-ins/file-psd/psd-load.c:2202
-#, fuzzy, c-format
-#| msgid "Failed to open '%s': %s"
+#, c-format
 msgid "Failed to decompress data"
-msgstr "'%s' 파일 열기 실패: %s"
+msgstr "데이터 압축 해제 실패"
 
 #: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "오류: 김프 기반 이미지형식을 PSD 모드로 변환할 수 없음"
 
 #: ../plug-ins/file-psd/psd-save.c:1563
-#, fuzzy, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images that "
-#| "are more than 30,000 pixels wide or tall."
+#, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"'%s'을(를) 저장할 수 없습니다. PSD 파일 형식은 가로나 세로가 30,000 픽셀이 넘"
-"는 이미지를 지원하지 않습니다."
+"'%s'을(를) 내보낼 수 없음.  PSD 파일 형식은 가로나 세로가 30,000 픽셀이 넘는 "
+"이미지를 지원하지 않습니다."
 
 #: ../plug-ins/file-psd/psd-save.c:1584
-#, fuzzy, c-format
-#| msgid ""
-#| "Unable to save '%s'.  The PSD file format does not support images with "
-#| "layers that are more than 30,000 pixels wide or tall."
+#, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"'%s'을(를) 저장할 수 없습니다. PSD 파일 형식은 가로나 세로가 30,000 픽셀이 넘"
-"는 레이어를 지원하지 않습니다."
+"'%s'을(를) 내보낼 수 없음.  PSD 파일 형식은 가로나 세로가 30,000 픽셀이 넘는 "
+"레이어가 있는 이미지를 지원하지 않습니다."
 
 #: ../plug-ins/file-psd/psd-util.c:179
 msgid "Unexpected end of file"
@@ -7309,10 +7231,8 @@ msgid "Photoshop image"
 msgstr "포토샵 이미지"
 
 #: ../plug-ins/file-psd/psd.c:130
-#, fuzzy
-#| msgid "Photoshop image"
 msgid "Photoshop image (merged)"
-msgstr "포토샵 이미지"
+msgstr "포토샵 이미지 (합쳐짐)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -7503,10 +7423,9 @@ msgid "TIFF Channel"
 msgstr "TIFF 채널"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:606
-#, fuzzy, c-format
-#| msgid "FITS save cannot handle images with alpha channels"
+#, c-format
 msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr "FITS은 알파 채널을 가진 이미지를 처리할 수 없습니다."
+msgstr "TIFF 내보내기는 알파 채널을 가진 이미지를 처리할 수 없습니다."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:619
 msgid ""
@@ -7564,10 +7483,8 @@ msgid "CCITT Group _4 fax"
 msgstr "CCITT 그룹 _4 팩스"
 
 #: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
-#, fuzzy
-#| msgid "PNG image"
 msgid "WebP image"
-msgstr "PNG 이미지"
+msgstr "WebP 이미지"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:70
 msgid "(no keyframes)"
@@ -7583,32 +7500,24 @@ msgid "WebP"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:138
-#, fuzzy
-#| msgid "Image _title:"
 msgid "Image quality:"
-msgstr "이미지 제목(_T):"
+msgstr "이미지 품질:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:146
 msgid "Image quality"
 msgstr "이미지 화질"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:157
-#, fuzzy
-#| msgid "Quality:"
 msgid "Alpha quality:"
-msgstr "화질:"
+msgstr "알파 품질:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:165
-#, fuzzy
-#| msgid "Alpha Channels"
 msgid "Alpha channel quality"
-msgstr "알파 채널"
+msgstr "알파 채널 품질"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:190
-#, fuzzy
-#| msgid "Source 1:"
 msgid "Source type:"
-msgstr "원본 1:"
+msgstr "원본 유형::"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:193
 msgid "WebP encoder \"preset\""
@@ -7616,17 +7525,13 @@ msgstr ""
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:225
-#, fuzzy
-#| msgid "As _animation"
 msgid "As A_nimation"
-msgstr "애니메이션으로(_A)"
+msgstr "애니메이션으로(_N)"
 
 #. loop animation checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:254
-#, fuzzy
-#| msgid "_Loop forever"
 msgid "Loop forever"
-msgstr "무한 반복(_L)"
+msgstr "무한 반복"
 
 #. label for 'max key-frame distance' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:271
@@ -7640,29 +7545,23 @@ msgstr ""
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:329
-#, fuzzy
-#| msgid "_Delay between frames where unspecified:"
 msgid "Delay between frames where unspecified:"
-msgstr "프레임의 기본 지연 시간(_D):"
+msgstr "지정되지 않은 곳의 프레임 간 지연시간:"
 
 #. Create the force-delay checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:351
-#, fuzzy
-#| msgid "_Use delay entered above for all frames"
 msgid "Use delay entered above for all frames"
-msgstr "모든 프레임에 입력된 지연시간 사용(_U)"
+msgstr "모든 프레임에 위에서 입력한 지연시간 사용"
 
 #: ../plug-ins/file-webp/file-webp-load.c:106
-#, fuzzy, c-format
-#| msgid "Invalid file."
+#, c-format
 msgid "Invalid WebP file '%s'"
-msgstr "잘못된 파일"
+msgstr "잘못된 WebP 파일 '%s'"
 
 #: ../plug-ins/file-webp/file-webp-load.c:188
-#, fuzzy, c-format
-#| msgid "Failed to save PPM file '%s': %s"
+#, c-format
 msgid "Failed to decode animated WebP file '%s'"
-msgstr "PPM 파일 '%s' 저장 실패: %s"
+msgstr "움직이는 WebP 파일 '%s' 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:196
 #, c-format
@@ -7670,16 +7569,15 @@ msgid "Failed to decode animated WebP information from '%s'"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-load.c:215
-#, fuzzy, c-format
-#| msgid "Failed to read %s from '%s': %s"
+#, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
-msgstr "%s 읽기 실패. 파일 '%s' : %s"
+msgstr "'%s'의 움직이는 WebP 프레임 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:220
-#, fuzzy, c-format
+#, c-format
 #| msgid "Frame %d (%d%s)"
 msgid "Frame %d (%dms)"
-msgstr "%d (%d%s) 프레임"
+msgstr "프레임 %d (%dms)"
 
 #: ../plug-ins/file-webp/file-webp-save.c:112
 msgid "out of memory"
@@ -7690,22 +7588,16 @@ msgid "not enough memory to flush bits"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:116
-#, fuzzy
-#| msgid "Parameters"
 msgid "NULL parameter"
-msgstr "매개변수"
+msgstr "NULL 매개변수"
 
 #: ../plug-ins/file-webp/file-webp-save.c:118
-#, fuzzy
-#| msgid "Invalid X resolution."
 msgid "invalid configuration"
-msgstr "잘못된  X 해상도"
+msgstr "잘못된 구성"
 
 #: ../plug-ins/file-webp/file-webp-save.c:120
-#, fuzzy
-#| msgid "Image dimensions: %d × %d"
 msgid "bad image dimensions"
-msgstr "이미지 면적: %d × %d"
+msgstr "잘못된 이미지 치수"
 
 #: ../plug-ins/file-webp/file-webp-save.c:122
 msgid "partition is bigger than 512K"
@@ -7732,10 +7624,8 @@ msgid "list terminator"
 msgstr ""
 
 #: ../plug-ins/file-webp/file-webp-save.c:134
-#, fuzzy
-#| msgid "Unknown error"
 msgid "unknown error"
-msgstr "알 수 없는 이유"
+msgstr "알 수 없는 오류"
 
 #: ../plug-ins/file-webp/file-webp-save.c:181
 #: ../plug-ins/file-webp/file-webp-save.c:517
@@ -7744,14 +7634,12 @@ msgid "Unable to open '%s' for writing: %s"
 msgstr "%1$s을(를) 쓰기용으로 열기 실패: %2$s"
 
 #: ../plug-ins/file-webp/file-webp-save.c:254
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Parse error in '%s':\n"
 #| "%s"
 msgid "WebP error: '%s'"
-msgstr ""
-"'%s' 해석 오류:\n"
-"%s"
+msgstr "WebP 오류: '%s'"
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
@@ -8023,16 +7911,12 @@ msgid "Zoom"
 msgstr "확대"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:666
-#, fuzzy
-#| msgid "Zoom in"
 msgid "Zoom _In"
-msgstr "확대"
+msgstr "확대(_I)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:674
-#, fuzzy
-#| msgid "Zoom out"
 msgid "Zoom _Out"
-msgstr "축소"
+msgstr "축소(_O)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:691
 msgid "Undo last zoom change"
@@ -8472,29 +8356,22 @@ msgid "Lower selected object"
 msgstr "선택한 개체 아래로 내리기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:912
-#, fuzzy
-#| msgid "pixels from _top"
 msgid "Raise to _top"
-msgstr "위쪽의 픽셀(_T)"
+msgstr "맨 위(_T)로 올리기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:912
 msgid "Raise selected object to top"
 msgstr "선택한 개체를 최상위로 올리기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:916
-#, fuzzy
-#| msgid "To _bottom"
 msgid "Lower to _bottom"
-msgstr "맨 아래로(_B)"
+msgstr "맨 밑(_B)으로 내리기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:916
 msgid "Lower selected object to bottom"
 msgstr "선택한 개체를 최하위로 내리기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:920
-#, fuzzy
-#| msgctxt "search"
-#| msgid "_Previous"
 msgid "_Previous"
 msgstr "이전(_P)"
 
@@ -8503,9 +8380,6 @@ msgid "Show previous object"
 msgstr "이전 개체 표시"
 
 #: ../plug-ins/gfig/gfig-dialog.c:924
-#, fuzzy
-#| msgctxt "search"
-#| msgid "_Next"
 msgid "_Next"
 msgstr "다음(_N)"
 
@@ -8514,10 +8388,8 @@ msgid "Show next object"
 msgstr "다음 개체 표시"
 
 #: ../plug-ins/gfig/gfig-dialog.c:928
-#, fuzzy
-#| msgid "Show all objects"
 msgid "Show _all"
-msgstr "모든 개체 표시"
+msgstr "모두 표시(_A)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:928 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
@@ -9452,31 +9324,23 @@ msgstr "생성 시각 저장(_T)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
-#, fuzzy
-#| msgid "Save _EXIF data"
 msgid "Save Exif data"
-msgstr "EXIF 데이터 저장(_E)"
+msgstr "EXIF 데이터 저장"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save XMP data"
-msgstr "XMP 데이터 저장(_X)"
+msgstr "XMP 데이터 저장"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:9
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
-#, fuzzy
-#| msgid "Save _XMP data"
 msgid "Save IPTC data"
-msgstr "XMP 데이터 저장(_X)"
+msgstr "IPTC 데이터 저장"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
-#, fuzzy
-#| msgid "Save _thumbnail"
 msgid "Save thumbnail"
-msgstr "미리 보기 저장(_T)"
+msgstr "썸네일 저장"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
 msgid "Save comme_nt"
@@ -9504,10 +9368,9 @@ msgid "8bpc GRAY"
 msgstr "8bpc GRAY"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:21
-#, fuzzy
 #| msgid "RGBA"
 msgid "8bpc RGBA"
-msgstr "RGBA"
+msgstr "8bpc RGBA"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:22
 msgid "8bpc GRAYA"
@@ -9530,10 +9393,8 @@ msgid "16bpc GRAYA"
 msgstr "16bpc GRAYA"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:27
-#, fuzzy
-#| msgid "_Format:"
 msgid "_Pixel format:"
-msgstr "형식(_F):"
+msgstr "픽셀 형식:"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:1
 msgid "RGB Save Type"
@@ -9548,22 +9409,17 @@ msgid "Planar (RRR,GGG,BBB)"
 msgstr "2차원 (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
-#, fuzzy
-#| msgid "Save _color values from transparent pixels"
 msgid "Save color values from transparent pixels"
-msgstr "투명한 픽셀의 색상값 저장(_C)"
+msgstr "투명한 픽셀의 색상 값 저장"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
-#, fuzzy
 #| msgid "Comment"
 msgid "<b>Comment</b>"
-msgstr "설명"
+msgstr "<b>주석</b>"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
-#, fuzzy
-#| msgid "PDF document"
 msgid "Document Title"
-msgstr "PDF 문서"
+msgstr "문서 제목"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:2
 msgid "Author"
@@ -9582,32 +9438,25 @@ msgid "Description Writer\t"
 msgstr "설명 작성자\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
-#, fuzzy
 #| msgid "Rotating"
 msgid "Rating"
-msgstr "회전"
+msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
 msgid "Keywords"
 msgstr "핵심어"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:8
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyright Status"
-msgstr "저작권"
+msgstr "저작권 지위"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:9
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyright Notice"
-msgstr "저작권"
+msgstr "저작권 고지"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:10
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyright URL"
-msgstr "저작권"
+msgstr "저작권 URL"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:11
 msgid "Address"
@@ -9622,20 +9471,16 @@ msgid "Postal Code\t"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:14
-#, fuzzy
-#| msgid "Rotate / Scale"
 msgid "State / Province"
-msgstr "회전 / 크기 조정"
+msgstr "주 / 도"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:15
 msgid "Country"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:16
-#, fuzzy
-#| msgid "Phong"
 msgid "Phone(s)"
-msgstr "Phong"
+msgstr "전화"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:17
 msgid "Email(s)"
@@ -9646,10 +9491,8 @@ msgid "Website(s)"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:19
-#, fuzzy
-#| msgid "Installation Date"
 msgid "Creation Date"
-msgstr "설치한 날짜"
+msgstr "작성 날짜"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:20
 msgid "Intellectual Genre"
@@ -9672,10 +9515,9 @@ msgid "IPTC Subject Code"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
-#, fuzzy
 #| msgid "Create line"
 msgid "Headline"
-msgstr "선 만들기"
+msgstr "헤드라인"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:26
 msgid "Urgency"
@@ -9686,26 +9528,20 @@ msgid "Job Identifier\t"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
-#, fuzzy
-#| msgid "Intersection"
 msgid "Instructions"
-msgstr "교차"
+msgstr "지시 사항"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:29
 msgid "Credit Line"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
-#, fuzzy
-#| msgid "C-Source"
 msgid "Source"
-msgstr "C-소스"
+msgstr "원본"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
-#, fuzzy
-#| msgid "Image Types"
 msgid "Usage Terms"
-msgstr "이미지 유형"
+msgstr "사용 약관"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:32
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:7
@@ -9713,10 +9549,8 @@ msgid "IPTC"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
-#, fuzzy
-#| msgid "Curl Location"
 msgid "Sublocation"
-msgstr "말아 올릴 위치"
+msgstr "하위 위치"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:34
 msgid "Person Shown"
@@ -9731,10 +9565,8 @@ msgid "Country ISO-Code"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:37
-#, fuzzy
-#| msgid "Select Region"
 msgid "World Region"
-msgstr "영역 선택"
+msgstr "세계 지역"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:38
 msgid "Location Shown"
@@ -9749,16 +9581,12 @@ msgid "Event"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:42
-#, fuzzy
-#| msgid "Add a New Unit"
 msgid "Add an entry"
-msgstr "새로운 단위 추가"
+msgstr "항목 추가"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:43
-#, fuzzy
-#| msgid "Move an object"
 msgid "Remove an entry"
-msgstr "개체 이동"
+msgstr "항목 제거"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:44
 msgid "Code"
@@ -9773,10 +9601,8 @@ msgid "Country ISO Code"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
-#, fuzzy
-#| msgid "Map to Object"
 msgid "Artwork or Object"
-msgstr "지도를 개체로"
+msgstr "미술작품 또는 개체"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:48
 msgid "Title"
@@ -9807,20 +9633,16 @@ msgid "Model Release Status"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
-#, fuzzy
-#| msgid "Add Additional Guides"
 msgid "Additional Model Info"
-msgstr "안내선 추가"
+msgstr "추가 모델 정보"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:56
 msgid "Model Release Identifier"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:57
-#, fuzzy
-#| msgid "Image Size"
 msgid "Image Supplier ID"
-msgstr "이미지 크기"
+msgstr "이미지 공급자 ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:58
 msgid "Supplier's Image ID"
@@ -9831,10 +9653,8 @@ msgid "Registry Entry"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:60
-#, fuzzy
-#| msgid "Image Size"
 msgid "Image Supplier Name"
-msgstr "이미지 크기"
+msgstr "이미지 공급자 이름"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:61
 msgid "Max. Available Width"
@@ -9869,10 +9689,8 @@ msgid "Property Release Status"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
-#, fuzzy
-#| msgid "Image Selection"
 msgid "Image Creator"
-msgstr "이미지 선택"
+msgstr "이미지 작성자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:70
 msgid "Identifier"
@@ -9953,10 +9771,8 @@ msgid "GPS"
 msgstr "GPS"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:89
-#, fuzzy
-#| msgid "Gradient"
 msgid "Patient"
-msgstr "색감변화도"
+msgstr "환자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:90
 msgid "Patient ID"
@@ -9975,26 +9791,21 @@ msgid "Study ID"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
-#, fuzzy
 #| msgid "Rendering wind"
 msgid "Referring Physician"
-msgstr "바람 렌더링"
+msgstr "담당 의사"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:95
 msgid "Study Date"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:96
-#, fuzzy
-#| msgid "Description"
 msgid "Study Description"
-msgstr "설명"
+msgstr "연구 설명"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:97
-#, fuzzy
-#| msgid "Select Number Color"
 msgid "Series Number"
-msgstr "숫자 색상 선택"
+msgstr "시리즈 번호"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:98
 #| msgid "Quality:"
@@ -10006,10 +9817,8 @@ msgid "Series Date"
 msgstr ""
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
-#, fuzzy
-#| msgid "Description"
 msgid "Series Description"
-msgstr "설명"
+msgstr "시리즈 설명"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:101
 msgid "Equipment Institution"
@@ -10105,8 +9914,6 @@ msgid "A_uto update preview"
 msgstr "미리 보기 자동 업데이트(_U)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2465
-#, fuzzy
-#| msgid "`Default' is created."
 msgid "'Default' is created."
 msgstr "`기본값'이 만들어졌습니다."
 
@@ -10203,10 +10010,8 @@ msgid "Gradient Flare Editor"
 msgstr "화염 그라디언트 편집기"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
-#, fuzzy
-#| msgid "Rescan Gradients"
 msgid "_Rescan Gradients"
-msgstr "그라디언트 다시읽기"
+msgstr "그레이디언트 다시 스캔(_R)"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3444
@@ -10629,8 +10434,6 @@ msgid "Open IFS Fractal file"
 msgstr "프랙탈 파일 열기"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-#, fuzzy
-#| msgid "Image Map Plug-In"
 msgid "Image Map Plug-in"
 msgstr "이미지맵 플러그인"
 
@@ -11944,10 +11747,8 @@ msgid "Update preview _live"
 msgstr "미리 보기 실시간 갱신(_L)"
 
 #: ../plug-ins/metadata/metadata-editor.c:408
-#, fuzzy
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "Edit metadata (IPTC, EXIF, XMP)"
-msgstr "메타데이터(EXIF, IPTC, XMP) 보기 및 수정"
+msgstr "메타데이터 편집 (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-editor.c:416
 msgid "Edit Metadata"
@@ -11963,10 +11764,8 @@ msgid "Write Metadata"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-editor.c:572
-#, fuzzy
-#| msgid "Import _paths"
 msgid "Import metadata"
-msgstr "경로 가져오기(_P)"
+msgstr "메타데이터 들여오기"
 
 #: ../plug-ins/metadata/metadata-editor.c:574
 msgid "Export metadata"
@@ -11985,16 +11784,12 @@ msgid "Unrated"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-editor.c:5645
-#, fuzzy
-#| msgid "Import XMP from File"
 msgid "Import Metadata File"
-msgstr "파일에서 XMP 가져오기"
+msgstr "메타데이터 파일 들여오기"
 
 #: ../plug-ins/metadata/metadata-editor.c:5680
-#, fuzzy
-#| msgid "Export XMP to File"
 msgid "Export Metadata File"
-msgstr "XMP를 파일로 내보내기"
+msgstr "메타데이터 파일 내보내기"
 
 #: ../plug-ins/metadata/metadata-editor.c:5684
 msgid "_Export"
@@ -12017,10 +11812,9 @@ msgid "Digitized from a print on non-transparent medium"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:254
-#, fuzzy
 #| msgid "Create star"
 msgid "Created by software"
-msgstr "별모양 만들기"
+msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:262
 #: ../plug-ins/metadata/metadata-tags.h:273
@@ -12130,10 +11924,8 @@ msgstr "모름"
 
 #. DO NOT SAVE
 #: ../plug-ins/metadata/metadata-tags.h:309
-#, fuzzy
-#| msgid "Copyright"
 msgid "Copyrighted"
-msgstr "저작권"
+msgstr "저작권 있음"
 
 #. TRUE
 #: ../plug-ins/metadata/metadata-tags.h:310
@@ -12142,10 +11934,8 @@ msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:316
 #: ../plug-ins/metadata/metadata-tags.h:332
-#, fuzzy
-#| msgid "Select Image File"
 msgid "Select a value"
-msgstr "이미지 파일 선택"
+msgstr "값 선택"
 
 #: ../plug-ins/metadata/metadata-tags.h:317
 msgid "Work"
@@ -12156,10 +11946,9 @@ msgid "Cell"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-tags.h:319
-#, fuzzy
 #| msgid "Fan"
 msgid "Fax"
-msgstr "팬"
+msgstr "팩스"
 
 #: ../plug-ins/metadata/metadata-tags.h:320
 msgid "Home"
@@ -12206,10 +11995,8 @@ msgid "West"
 msgstr ""
 
 #: ../plug-ins/metadata/metadata-viewer.c:120
-#, fuzzy
-#| msgid "View and edit metadata (EXIF, IPTC, XMP)"
 msgid "View metadata (Exif, IPTC, XMP)"
-msgstr "메타데이터(EXIF, IPTC, XMP) 보기 및 수정"
+msgstr "메타데이터 보기 (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:127
 msgid "View Metadata"
@@ -12456,16 +12243,12 @@ msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 
 #: ../plug-ins/screenshot/screenshot.c:791
-#, fuzzy
-#| msgid "After the delay, the screenshot is taken."
 msgid "After the delay, the active window will be captured."
-msgstr "지정한 시간(초) 이후에 화면을 찍습니다."
+msgstr "지연시간 후 활성 창을 캡처합니다."
 
 #: ../plug-ins/screenshot/screenshot.c:798
-#, fuzzy
-#| msgid "Color fill"
 msgid "Color Profile"
-msgstr "색상으로 채우기"
+msgstr "색 프로필"
 
 #: ../plug-ins/screenshot/screenshot.c:803
 msgid "Tag image with _monitor profile"
@@ -12509,10 +12292,9 @@ msgid "Selection to Path Advanced Settings"
 msgstr "선택을 경로로 바꾸기 고급 설정"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Align Threshold:"
-msgstr "발단규모(Threshold):"
+msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:115
 msgid "If two endpoints are closer than this, they are made to be equal."
@@ -12539,10 +12321,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:152
-#, fuzzy
-#| msgid "Lower t_hreshold:"
 msgid "Corner Threshold:"
-msgstr "낮은 임계값(_H):"
+msgstr "코너 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:156
 msgid ""
@@ -12551,10 +12331,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:167
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Error Threshold:"
-msgstr "발단규모(Threshold):"
+msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:171
 msgid ""
@@ -12573,10 +12352,8 @@ msgid "A second number of adjacent points to consider when filtering."
 msgstr "필터링할 때 고려할 인접 지점의 두 번째 개수입니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:196
-#, fuzzy
-#| msgid "_Filter length:"
 msgid "Filter Epsilon:"
-msgstr "필터 길이(_F):"
+msgstr "필터 엡실론:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:200
 msgid ""
@@ -12586,10 +12363,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:211
-#, fuzzy
-#| msgid "T_ile saturation:"
 msgid "Filter Iteration Count:"
-msgstr "타일 채도(_I):"
+msgstr "필터 반복 횟수:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:215
 msgid ""
@@ -12600,10 +12375,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:227
-#, fuzzy
-#| msgid "_Filter length:"
 msgid "Filter Percent:"
-msgstr "필터 길이(_F):"
+msgstr "필터 퍼센트:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:231
 msgid ""
@@ -12637,10 +12410,8 @@ msgid "Says whether or not to remove 'knee' points after finding the outline."
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:281
-#, fuzzy
-#| msgid "Deviation threshold:"
 msgid "Line Reversion Threshold:"
-msgstr "편차 임계값:"
+msgstr "선 역전 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:285
 msgid ""
@@ -12651,10 +12422,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:297
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Line Threshold:"
-msgstr "발단규모(Threshold):"
+msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:301
 msgid ""
@@ -12673,10 +12443,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:325
-#, fuzzy
-#| msgid "Deviation threshold:"
 msgid "Reparametrize Threshold:"
-msgstr "편차 임계값:"
+msgstr "재매개변수화 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:329
 msgid ""
@@ -12692,10 +12460,8 @@ msgstr ""
 "떤 코너도 찾지 못한 경우를 감지하는 것이 더 좋을 수 있습니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:342
-#, fuzzy
-#| msgid "Subdivide:"
 msgid "Subdivide Search:"
-msgstr "재분할:"
+msgstr "세분화 검색:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:346
 msgid ""
@@ -12704,10 +12470,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:355
-#, fuzzy
-#| msgid "Subdivide:"
 msgid "Subdivide Surround:"
-msgstr "재분할:"
+msgstr "세분화 둘러싸기:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:359
 msgid ""
@@ -12716,10 +12480,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:369
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Subdivide Threshold:"
-msgstr "발단규모(Threshold):"
+msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:373
 msgid ""
