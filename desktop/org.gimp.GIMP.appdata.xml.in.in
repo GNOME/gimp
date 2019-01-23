@@ -73,6 +73,7 @@
 
   <releases>
     <release version="2.10.10" date="TODO">
+      <url type="details">https://www.gimp.org/news/2019/01/TODO/gimp-2-10-10-released/</url>
       <description>
         <_p>
           GIMP 2.10.10 is quite a big update with many new features and
@@ -137,6 +138,7 @@
       </description>
     </release>
     <release version="2.10.8" date="2018-11-07">
+      <url type="details">https://www.gimp.org/news/2018/11/08/gimp-2-10-8-released/</url>
       <description>
         <_p>
           GIMP 2.10.8 is mostly a bug fix and optimization release. In
@@ -163,6 +165,7 @@
       </description>
     </release>
     <release version="2.10.6" date="2018-08-19">
+      <url type="details">https://www.gimp.org/news/2018/08/19/gimp-2-10-6-released/</url>
       <description>
         <_p>
           GIMP 2.10.6 comes with a lot of bug fixes, optimizations and
@@ -203,6 +206,7 @@
       </description>
     </release>
     <release version="2.10.4" date="2018-07-04">
+      <url type="details">https://www.gimp.org/news/2018/07/04/gimp-2-10-4-released/</url>
       <description>
         <_p>
           GIMP 2.10.4 includes a lot of bug fixes as well as various
@@ -232,6 +236,7 @@
       </description>
     </release>
     <release version="2.10.2" date="2018-05-20">
+      <url type="details">https://www.gimp.org/news/2018/05/20/gimp-2-10-2-released/</url>
       <description>
         <_p>
           This second release in the GIMP 2.10 series, so soon after
@@ -249,6 +254,7 @@
     </release>
 
     <release version="2.10.0" date="2018-04-27">
+      <url type="details">https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/</url>
       <description>
         <_p>
           First release of the 2.10 series which prominently features
@@ -298,11 +304,11 @@
             And much, much more…
           </_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/</_p>
       </description>
     </release>
 
     <release version="2.10.0~rc2" date="2018-04-17" type="development">
+      <url type="details">https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/</url>
       <description>
         <_p>
         In this second release candidate before GIMP 2.10.0, while
@@ -326,10 +332,10 @@
           on receiving signals but also on warnings and critical errors
           when "fatal-warnings" debug key is set</_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/</_p>
       </description>
     </release>
     <release version="2.10.0~rc1" date="2018-03-26" type="development">
+      <url type="details">https://www.gimp.org/news/2018/03/26/gimp-2-10-0-rc1-released/</url>
       <description>
         <_p>
         GIMP 2.10.0-RC1 is the first release candidate before GIMP
@@ -348,11 +354,11 @@
           <_li>Metadata defaults preferences now available</_li>
           <_li>Various GUI polishing</_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-rc1-released/</_p>
       </description>
     </release>
 
     <release version="2.9.8" date="2017-12-12" type="development">
+      <url type="details">https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</url>
       <description>
         <_p>GIMP 2.9.8 introduces on-canvas gradient
         editing and various enhancements while focusing on bugfixing
@@ -370,7 +376,6 @@
           <_li>New support for password-protected PDF</_li>
           <_li>New support for HGT format (Digital Elevation Model data)</_li>
         </ul>
-        <_p>For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</_p>
       </description>
     </release>
     <release version="2.9.6" date="2017-08-24" type="development" />
