@@ -250,7 +250,7 @@ associated with any sample, including:
 
 The key/value lists are searchable by key name.
 
-#### 4.2.4. Markers Page
+#### 4.2.2. Markers Page
 
 The *markers page* lists the event markers contained in the log, displaying
 their number, relative time, and description.
