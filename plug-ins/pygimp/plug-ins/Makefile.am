@@ -13,6 +13,7 @@ source_scripts = \
 	palette-to-gradient.py			\
 	py-slice.py						\
 	python-eval.py					\
+	spyro_plus.py					\
 									\
 	benchmark-foreground-extract.py	\
 	clothify.py						\
@@ -30,7 +31,8 @@ scripts = \
 	palette-sort/palette-sort.py					\
 	palette-to-gradient/palette-to-gradient.py		\
 	py-slice/py-slice.py							\
-	python-eval/python-eval.py
+	python-eval/python-eval.py						\
+	spyro_plus/spyro_plus.py
 
 test_scripts = \
 	benchmark-foreground-extract/benchmark-foreground-extract.py	\
