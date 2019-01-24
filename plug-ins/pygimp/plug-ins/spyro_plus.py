@@ -41,7 +41,7 @@ pattern_notation_page = {}
 ring_teeth = [96, 144, 105, 150]
 
 # Moving gear. Each gear is a pair of (#teeth, #holes)
-# Hole #1 is closest to the edge of the wheel. 
+# Hole #1 is closest to the edge of the wheel.
 # The last hole is closest to the center.
 wheel = [
     (24, 5), (30, 8), (32, 9), (36, 11), (40, 13), (42, 14), (45, 16),
@@ -86,7 +86,7 @@ class CircleShape(Shape):
         cp = self.cp
         if dist is None:
             dist = cp.moving_gear_radius
-            
+
         return (cp.x_center + (cp.x_half_size - dist) * cos(oangle),
                 cp.y_center + (cp.y_half_size - dist) * sin(oangle))
 
@@ -104,7 +104,7 @@ class SidedShape(CanRotateShape, Shape):
             dist = self.cp.moving_gear_radius
         shape_factor = self.get_shape_factor(oangle)
         return (
-            self.cp.x_center + 
+            self.cp.x_center +
             (self.cp.x_half_size - dist) * shape_factor * cos(oangle),
             self.cp.y_center +
             (self.cp.y_half_size - dist) * shape_factor * sin(oangle)
@@ -118,11 +118,11 @@ class PolygonShape(SidedShape):
         oangle_mod = fmod(oangle + self.cp.shape_rotation_radians, self.angle_of_each_side)
         if oangle_mod > self.half_angle:
             oangle_mod = self.angle_of_each_side - oangle_mod
-        
+
         # When oangle_mod = 0, the shape_factor will be cos(half_angle)) - which is the minimal shape_factor.
         # When oangle_mod is near the half_angle, the shape_factor will near 1.
-        shape_factor = self.cos_half_angle / cos(oangle_mod) 
-        shape_factor -= self.pp.morph * (1 - shape_factor) * (1 + (self.pp.sides - 3) * 2) 
+        shape_factor = self.cos_half_angle / cos(oangle_mod)
+        shape_factor -= self.pp.morph * (1 - shape_factor) * (1 + (self.pp.sides - 3) * 2)
         return shape_factor
 
 
@@ -132,8 +132,8 @@ class SineShape(SidedShape):
 
     def get_shape_factor(self, oangle):
         oangle_mod = fmod(oangle + self.cp.shape_rotation_radians, self.angle_of_each_side)
-        oangle_stretched = oangle_mod * self.pp.sides 
-        return 1 - self.pp.morph * (cos(oangle_stretched) + 1) 
+        oangle_stretched = oangle_mod * self.pp.sides
+        return 1 - self.pp.morph * (cos(oangle_stretched) + 1)
 
 
 class BumpShape(SidedShape):
@@ -143,7 +143,7 @@ class BumpShape(SidedShape):
     def get_shape_factor(self, oangle):
         oangle_mod = fmod(oangle + self.cp.shape_rotation_radians, self.angle_of_each_side)
         # Stretch back to angle between 0 and pi
-        oangle_stretched = oangle_mod/2.0 * self.pp.sides 
+        oangle_stretched = oangle_mod/2.0 * self.pp.sides
 
         # Compute factor for polygon.
         poly_angle = oangle_mod
@@ -193,8 +193,8 @@ class RoundPart(ShapePart):
 
     def perpendicular_at_oangle(self, oangle, perp_distance):
         angle = (
-            self.start_angle + 
-            self.diff_angle * (oangle - self.bound_start) / self.bound_diff 
+            self.start_angle +
+            self.diff_angle * (oangle - self.bound_start) / self.bound_diff
         )
         return (self.x + perp_distance * cos(angle),
                 self.y + perp_distance * sin(angle))
@@ -271,8 +271,8 @@ class RackShape(CanRotateShape, AbstractShapeFromParts):
         self.parts.append(StraightPart(side_teeth, -1, x2, y2, x1, y1))
         self.parts.append(
             RoundPart(
-                round_teeth, x1, y1, 
-                half_pi + cp.shape_rotation_radians, 
+                round_teeth, x1, y1,
+                half_pi + cp.shape_rotation_radians,
                 3 * half_pi + cp.shape_rotation_radians
             )
         )
@@ -425,7 +425,7 @@ class SelectionShape(Shape):
 
 shapes = [
     CircleShape(), RackShape(), FrameShape(), SelectionShape(),
-    PolygonShape(), SineShape(), BumpShape()     
+    PolygonShape(), SineShape(), BumpShape()
 ]
 
 
@@ -437,13 +437,13 @@ def get_gradient_samples(num_samples):
     reverse_mode = pdb.gimp_context_get_gradient_reverse()
     repeat_mode = pdb.gimp_context_get_gradient_repeat_mode()
 
-    if repeat_mode == REPEAT_TRIANGULAR: 
+    if repeat_mode == REPEAT_TRIANGULAR:
         # Get two uniform samples, which are reversed from each other, and connect them.
 
         samples = num_samples/2 + 1
         num, color_samples = pdb.gimp_gradient_get_uniform_samples(gradient_name,
              samples, reverse_mode)
-        
+
         color_samples = list(color_samples)
         del color_samples[-4:]   # Delete last color because it will appear in the next sample
 
@@ -453,10 +453,10 @@ def get_gradient_samples(num_samples):
 
         num, color_samples2 = pdb.gimp_gradient_get_uniform_samples(gradient_name,
              samples, 1 - reverse_mode)
-        
+
         color_samples2 = list(color_samples2)
         del color_samples2[-4:]  # Delete last color because it will appear in the very first sample
-        
+
         color_samples.extend(color_samples2)
         color_samples = tuple(color_samples)
     else:
@@ -518,7 +518,7 @@ class AbstractStrokeTool():
 
         # Call template method to set the kind of stroke to draw.
         self.prepare_stroke_context(color)
- 
+
         pdb.gimp_drawable_edit_stroke_item(layer, path)
         pdb.gimp_context_pop()
 
@@ -575,9 +575,9 @@ class StrokePaintTool(AbstractStrokeTool):
 
 tools = [
     PreviewTool(),
-    StrokePaintTool("PaintBrush", "gimp-paintbrush"), 
+    StrokePaintTool("PaintBrush", "gimp-paintbrush"),
     PencilTool(), AirBrushTool(), StrokeTool(),
-    StrokePaintTool("Ink", 'gimp-ink'), 
+    StrokePaintTool("Ink", 'gimp-ink'),
     StrokePaintTool("MyPaintBrush", 'gimp-mybrush')
     # Clone does not work properly when an image is not set.  When that happens, drawing fails, and
     # I am unable to catch the error. This causes the plugin to crash, and subsequent problems with undo.
@@ -588,7 +588,7 @@ tools = [
 class PatternParameters:
     """
     All the parameters that define a pattern live in objects of this class.
-    If you serialize and saved this class, you should reproduce 
+    If you serialize and saved this class, you should reproduce
     the pattern that the plugin would draw.
     """
     def __init__(self):
@@ -638,7 +638,7 @@ class PatternParameters:
         if not hasattr(self, 'tool_index'):
             self.tool_index = 0   # Index in the tools array.
         if not hasattr(self, 'long_gradient'):
-            self.long_gradient = False        
+            self.long_gradient = False
 
         if not hasattr(self, 'keep_separate_layer'):
             self.keep_separate_layer = True
@@ -744,7 +744,7 @@ class ComputedParameters:
             self.hole_percent = (max_hole_number - pp.hole_number) / float(max_hole_number - 1) * 97.5 + 2.5
 
         # Rotations
-        self.shape_rotation_radians = self.radians_from_degrees(pp.shape_rotation) 
+        self.shape_rotation_radians = self.radians_from_degrees(pp.shape_rotation)
         self.pattern_rotation_radians = self.radians_from_degrees(pp.pattern_rotation)
 
         # Compute the total number of teeth we have to go over.
@@ -974,7 +974,7 @@ class DrawingEngine:
         return self.start + 2 < len(self.strokes)
 
     # Used for displaying progress.
-    def fraction_done(self):      
+    def fraction_done(self):
         return (self.start + 2.0) / len(self.strokes)
 
     def report_time(self, time_sec):
@@ -1145,7 +1145,7 @@ class SpyroWindow(gtk.Window):
             # Teeth
             row = 0
             fixed_gear_tooltip = (
-                "Number of teeth of fixed gear. The size of the fixed gear is " 
+                "Number of teeth of fixed gear. The size of the fixed gear is "
                 "proportional to the number of teeth."
             )
             label_in_table("Fixed Gear Teeth", gear_table, row, fixed_gear_tooltip)
@@ -1184,7 +1184,7 @@ class SpyroWindow(gtk.Window):
                                                             self.kit_inner_teeth_combo_changed)
 
             row += 1
-            label_in_table("Hole Number", kit_table, row, "Hole #1 is at the edge of the gear. " 
+            label_in_table("Hole Number", kit_table, row, "Hole #1 is at the edge of the gear. "
                            "The maximum hole number is near the center. "
                            "The maximum hole number is different for each gear.")
             self.kit_hole_adj = gtk.Adjustment(self.p.hole_number, 1, self.p.kit_max_hole_number(), 1)
@@ -1207,10 +1207,10 @@ class SpyroWindow(gtk.Window):
             add_vertical_space(vbox, 14)
 
             hbox = gtk.HBox(spacing=5)
-            pattern_table = create_table(1, 3, 5) 
+            pattern_table = create_table(1, 3, 5)
 
             row = 0
-            label_in_table("Rotation", pattern_table, row, 
+            label_in_table("Rotation", pattern_table, row,
                            "Rotation of the pattern, in degrees. "
                            "The starting position of the moving gear in the fixed gear.")
             self.pattern_rotation_adj, myscale = rotation_in_table(
@@ -1323,7 +1323,7 @@ class SpyroWindow(gtk.Window):
 
             # Create the dialog
             gtk.Window.__init__(self)
-            self.set_title("Spyrogimp Plus")
+            self.set_title("Spyrogimp")
             self.set_default_size(350, -1)
             self.set_border_width(10)
             # self.set_keep_above(True) # keep the window on top
@@ -1722,12 +1722,12 @@ gtk.binding_entry_add_signal(SpyroWindow, gtk.keysyms.Escape, 0, 'myescape', str
 class SpyrogimpPlusPlugin(gimpplugin.plugin):
 
     # Implementation of plugin.
-    def plug_in_spyrogimp_plus(self, run_mode, image, layer,
-                               curve_type=0, shape=0, sides=3, morph=0.0,
-                               fixed_teeth=96, moving_teeth=36, hole_percent=100.0,
-                               margin=0, equal_w_h=0,
-                               pattern_rotation=0.0, shape_rotation=0.0,
-                               tool=1, long_gradient=False):
+    def plug_in_spyrogimp(self, run_mode, image, layer,
+                          curve_type=0, shape=0, sides=3, morph=0.0,
+                          fixed_teeth=96, moving_teeth=36, hole_percent=100.0,
+                          margin=0, equal_w_h=0,
+                          pattern_rotation=0.0, shape_rotation=0.0,
+                          tool=1, long_gradient=False):
         if run_mode == RUN_NONINTERACTIVE:
             pp = PatternParameters()
             pp.curve_type = curve_type
@@ -1757,8 +1757,8 @@ class SpyrogimpPlusPlugin(gimpplugin.plugin):
             engine.draw_full(layer)
 
     def query(self):
-        plugin_name = "plug_in_spyrogimp_plus"
-        label = "Spyrogimp Plus..."
+        plugin_name = "plug_in_spyrogimp"
+        label = "Spyrogimp..."
         menu = "<Image>/Filters/Render/"
 
         params = [
@@ -1766,7 +1766,7 @@ class SpyrogimpPlusPlugin(gimpplugin.plugin):
             (PDB_INT32, "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"),
             (PDB_IMAGE, "image", "Input image"),
             (PDB_DRAWABLE, "drawable", "Input drawable"),
-            (PDB_INT32, "curve_type", 
+            (PDB_INT32, "curve_type",
             "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"),
             (PDB_INT32, "shape", "Shape of fixed gear"),
             (PDB_INT32, "sides", "Number of sides of fixed gear (3 or greater). Only used by some shapes."),
