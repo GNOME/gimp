@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-22 21:50+0000\n"
-"PO-Revision-Date: 2019-01-24 06:26+0900\n"
+"PO-Revision-Date: 2019-01-24 09:19+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -787,9 +787,9 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "\"시드 고정\" 단추는 단축명입니다.\n"
-"같은 씨앗(seed)이 같은 이미지를 만들때, (1) 이미지의 넓이가 같아야 한다(이 이"
-"유는 그리기에서의 이미지는 미리 보기에서 다르기 때문), 그리고 (2) 모든 변화율"
-"은 0과 같아야 합니다."
+"같은 씨앗(seed)이 같은 이미지를 만들려면, (1) 이미지의 넓이가 같아야 하고(드"
+"로어블에서의 이미지가 미리 보기와 다른 이유), 그리고 (2) 모든 변화율은 0과 같"
+"아야 합니다."
 
 #: ../plug-ins/common/cml-explorer.c:1442
 msgid "O_thers"
@@ -2126,7 +2126,7 @@ msgstr "'%s': 팔레트에 잘못된 bpp 값: %hhu"
 #: ../plug-ins/common/file-cel.c:681
 #, c-format
 msgid "'%s': illegal number of colors: %u"
-msgstr "' %s ': 잘못된 색상 수:% u"
+msgstr "'%s': 잘못된 색상 수: %u"
 
 #: ../plug-ins/common/file-cel.c:696 ../plug-ins/common/file-cel.c:713
 #: ../plug-ins/common/file-cel.c:733
@@ -3217,7 +3217,7 @@ msgstr "오류! 파일을 저장하려면 최소 하나의 이미지가 추가�
 #: ../plug-ins/common/file-pdf-save.c:1402
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
-msgstr ""
+msgstr "이미지의 크기(너비나 높이)를 처리할 수 없음."
 
 #: ../plug-ins/common/file-pix.c:143 ../plug-ins/common/file-pix.c:159
 msgid "Alias Pix image"
@@ -3602,7 +3602,7 @@ msgstr "블록 헤더 읽기 중 오류"
 #: ../plug-ins/common/file-psp.c:735
 #, c-format
 msgid "Invalid block header at %ld"
-msgstr ""
+msgstr "%ld에서 잘못된 블록 헤더"
 
 #: ../plug-ins/common/file-psp.c:738
 #, c-format
@@ -3612,37 +3612,37 @@ msgstr "잘못된 블록 헤더"
 #: ../plug-ins/common/file-psp.c:841
 #, c-format
 msgid "Seek error: %s"
-msgstr ""
+msgstr "탐색 오류: %s"
 
 #: ../plug-ins/common/file-psp.c:881
 #, c-format
 msgid "Error reading creator keyword chunk"
-msgstr ""
+msgstr "작성자 핵심어 청크 읽기 중 오류"
 
 #: ../plug-ins/common/file-psp.c:887
 #, c-format
 msgid "Invalid keyword chunk header"
-msgstr ""
+msgstr "잘못된 핵심어 청크 헤더"
 
 #: ../plug-ins/common/file-psp.c:902 ../plug-ins/common/file-psp.c:934
 #, c-format
 msgid "Error reading creator keyword data"
-msgstr ""
+msgstr "작성자 핵심어 데이터 읽기 중 오류"
 
 #: ../plug-ins/common/file-psp.c:909
 #, c-format
 msgid "Creator keyword data not nul-terminated"
-msgstr ""
+msgstr "작성자 핵심어 데이터가 NUL로 끝나지 않았음"
 
 #: ../plug-ins/common/file-psp.c:1285 ../plug-ins/common/file-psp.c:1299
 #, c-format
 msgid "zlib error"
-msgstr ""
+msgstr "zlib 오류"
 
 #: ../plug-ins/common/file-psp.c:1365
 #, c-format
 msgid "Invalid layer sub-block %s, should be LAYER"
-msgstr ""
+msgstr "잘못된 레이어 하위-블록 %s. 레이어 이어야 함"
 
 #: ../plug-ins/common/file-psp.c:1397 ../plug-ins/common/file-psp.c:1428
 #, c-format
@@ -3662,22 +3662,22 @@ msgstr "레이어 만들기 중 오류"
 #: ../plug-ins/common/file-psp.c:1566
 #, c-format
 msgid "Invalid layer sub-block %s, should be CHANNEL"
-msgstr ""
+msgstr "잘못된 레이어 하위-블록 %s. 채널이어야 함"
 
 #: ../plug-ins/common/file-psp.c:1582
 #, c-format
 msgid "Error reading channel information chunk"
-msgstr ""
+msgstr "채널 정보 청크 읽기 중 오류"
 
 #: ../plug-ins/common/file-psp.c:1594
 #, c-format
 msgid "Invalid bitmap type %d in channel information chunk"
-msgstr ""
+msgstr "채널 정보 청크에 잘못된 비트맵 유형 %d"
 
 #: ../plug-ins/common/file-psp.c:1602
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
-msgstr ""
+msgstr "채널 정보 청크에 잘못된 채널 유형 %d"
 
 #: ../plug-ins/common/file-psp.c:1682
 #, c-format
@@ -3692,7 +3692,7 @@ msgstr "파일 헤더 읽기 중 오류."
 #: ../plug-ins/common/file-psp.c:1790
 #, c-format
 msgid "Incorrect file signature."
-msgstr ""
+msgstr "잘못된 파일 서명."
 
 #: ../plug-ins/common/file-psp.c:1808
 #, c-format
@@ -3701,22 +3701,22 @@ msgstr "지원하지 않는 PSP 파일 포맷 버전 %1$d.%2$d."
 
 #: ../plug-ins/common/file-psp.c:1828
 msgid "invalid block size"
-msgstr ""
+msgstr "잘못된 블록 크기"
 
 #: ../plug-ins/common/file-psp.c:1837
 #, c-format
 msgid "Duplicate General Image Attributes block."
-msgstr ""
+msgstr "일반 이미지 특성 블록 복제."
 
 #: ../plug-ins/common/file-psp.c:1867
 #, c-format
 msgid "Missing General Image Attributes block."
-msgstr ""
+msgstr "일반 이미지 특성 블록 없음."
 
 #: ../plug-ins/common/file-psp.c:1956
 #, c-format
 msgid "Exporting not implemented yet."
-msgstr ""
+msgstr "내보내기 아직 구현 안 됨."
 
 #: ../plug-ins/common/file-raw-data.c:283
 #: ../plug-ins/common/file-raw-data.c:319
@@ -3727,7 +3727,7 @@ msgstr "Raw 이미지 데이터"
 #: ../plug-ins/common/file-raw-data.c:304
 #: ../plug-ins/common/file-raw-data.c:1886
 msgid "Digital Elevation Model data"
-msgstr ""
+msgstr "디지털 고도 모델 데이터"
 
 #: ../plug-ins/common/file-raw-data.c:424
 #, c-format
@@ -3751,7 +3751,7 @@ msgid ""
 msgstr ""
 "샘플 간격의 자동 감지에 실패 했습니다. \"%s\"는 유효한 HGT 파일이 아닌 것으"
 "로 보입니다. 혹은 변형된 형식이 아직 지원되지 않습니다. 지원 되는 HGT 파일"
-"은: SRTM-1과 SRTM-3입니다. 변형 형식을 알고 있으면, 인수 1이나 3을 사용하 여 "
+"은: SRTM-1과 SRTM-3입니다. 변형 형식을 알고 있으면, 인수 1이나 3을 사용하여 "
 "실행하십시오."
 
 #: ../plug-ins/common/file-raw-data.c:1833
@@ -3764,11 +3764,11 @@ msgstr "Raw 데이터에서 이미지 불러오기"
 #.
 #: ../plug-ins/common/file-raw-data.c:1882
 msgid "Digital Elevation Model data (1 arc-second)"
-msgstr ""
+msgstr "디지털 고도 모델 데이터 (1 아크초)"
 
 #: ../plug-ins/common/file-raw-data.c:1884
 msgid "Digital Elevation Model data (3 arc-seconds)"
-msgstr ""
+msgstr "디지털 고도 모델 데이터 (3 아크초)"
 
 #: ../plug-ins/common/file-raw-data.c:1890
 msgid "Image"
@@ -3784,11 +3784,11 @@ msgstr "이미지"
 #.
 #: ../plug-ins/common/file-raw-data.c:1920
 msgid "SRTM-1 (1 arc-second)"
-msgstr ""
+msgstr "SRTM-1 (1 아크초)"
 
 #: ../plug-ins/common/file-raw-data.c:1921
 msgid "SRTM-3 (3 arc-seconds)"
-msgstr ""
+msgstr "SRTM-3 (3 아크초)"
 
 #: ../plug-ins/common/file-raw-data.c:1924
 msgid "_Sample Spacing:"
@@ -3800,11 +3800,11 @@ msgstr "RGB 알파"
 
 #: ../plug-ins/common/file-raw-data.c:1943
 msgid "RGB565 Big Endian"
-msgstr ""
+msgstr "RGB565 빅 엔디언"
 
 #: ../plug-ins/common/file-raw-data.c:1944
 msgid "RGB565 Little Endian"
-msgstr ""
+msgstr "RGB565 리틀 엔디언"
 
 #: ../plug-ins/common/file-raw-data.c:1945
 msgid "BGR565 Big Endian"
@@ -3824,15 +3824,15 @@ msgstr "흑/백 1비트"
 
 #: ../plug-ins/common/file-raw-data.c:1949
 msgid "Gray 2 bit"
-msgstr ""
+msgstr "회색 2비트"
 
 #: ../plug-ins/common/file-raw-data.c:1950
 msgid "Gray 4 bit"
-msgstr ""
+msgstr "회색 4비트"
 
 #: ../plug-ins/common/file-raw-data.c:1951
 msgid "Gray 8 bit"
-msgstr ""
+msgstr "회색 8비트"
 
 #: ../plug-ins/common/file-raw-data.c:1952
 msgid "Indexed"
@@ -3844,19 +3844,19 @@ msgstr "인덱스된 알파"
 
 #: ../plug-ins/common/file-raw-data.c:1954
 msgid "Gray unsigned 16 bit Big Endian"
-msgstr ""
+msgstr "회색 무부호 16비트 빅 엔디언"
 
 #: ../plug-ins/common/file-raw-data.c:1955
 msgid "Gray unsigned 16 bit Little Endian"
-msgstr ""
+msgstr "회색 무부호 16비트 리틀 엔디언"
 
 #: ../plug-ins/common/file-raw-data.c:1956
 msgid "Gray 16 bit Big Endian"
-msgstr ""
+msgstr "회색 16비트 빅 엔디언"
 
 #: ../plug-ins/common/file-raw-data.c:1957
 msgid "Gray 16 bit Little Endian"
-msgstr ""
+msgstr "회색 16비트 리틀 엔디언"
 
 #: ../plug-ins/common/file-raw-data.c:1962
 msgid "Image _Type:"
@@ -4534,8 +4534,8 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"XWD-파일 %s은(는) %d 형식, 깊이(depth) %d, 픽셀 당 %d 비트를 가지고 있습니"
-"다. 이는 현재 지원되지 않습니다."
+"XWD-파일 %1$s은(는) 형식 %2$d , 심도 %3$d, 픽셀당비트 %4$d을(를) 가지고 있습"
+"니다. 이는 현재 지원되지 않습니다."
 
 #: ../plug-ins/common/file-xwd.c:636
 msgid "Cannot export images with alpha channels."
@@ -4683,7 +4683,7 @@ msgstr "숫자 높이(_N):"
 
 #: ../plug-ins/common/film.c:1253
 msgid "Re_set"
-msgstr ""
+msgstr "초기화(_S)"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
@@ -4862,11 +4862,11 @@ msgstr "미리 보기 크기"
 
 #: ../plug-ins/common/goat-exercise.c:62
 msgid "Exercise a goat"
-msgstr ""
+msgstr "염소 운동 시키기"
 
 #: ../plug-ins/common/goat-exercise.c:67
 msgid "Goat-exercise"
-msgstr ""
+msgstr "염소 운동"
 
 #: ../plug-ins/common/gradient-map.c:77
 msgid "Recolor the image using colors from the active gradient"
@@ -4954,7 +4954,7 @@ msgstr "안내선을 이용해 작은 이미지로 이미지 자르기"
 
 #: ../plug-ins/common/guillotine.c:81
 msgid "Slice Using G_uides"
-msgstr ""
+msgstr "안내선으로 조각내기(_U)"
 
 #: ../plug-ins/common/guillotine.c:119
 msgid "Guillotine"
@@ -5853,11 +5853,11 @@ msgstr "구 디자이너"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2927
 #: ../plug-ins/ifs-compose/ifs-compose.c:1024
 msgid "_New"
-msgstr ""
+msgstr "신규(_N)"
 
 #: ../plug-ins/common/sphere-designer.c:2664
 msgid "D_uplicate"
-msgstr ""
+msgstr "복제(_U)"
 
 #: ../plug-ins/common/sphere-designer.c:2670
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:761
@@ -6190,7 +6190,7 @@ msgstr "단위 편집기"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1059
 #: ../plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
-msgstr ""
+msgstr "새로 고침(_R)"
 
 #: ../plug-ins/common/van-gogh-lic.c:568 ../plug-ins/common/van-gogh-lic.c:643
 msgid "Van Gogh (LIC)"
@@ -6412,7 +6412,7 @@ msgstr "배율 %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:278
 msgid "Residual"
-msgstr ""
+msgstr "잔여"
 
 #: ../plug-ins/common/wavelet-decompose.c:387
 msgid "Scales:"
@@ -6421,7 +6421,7 @@ msgstr "스케일:"
 #. create group layer
 #: ../plug-ins/common/wavelet-decompose.c:399
 msgid "Create a layer group to store the decomposition"
-msgstr ""
+msgstr "분해를 저장할 레이어 그룹 만들기"
 
 #. create layer masks
 #: ../plug-ins/common/wavelet-decompose.c:411
@@ -6506,7 +6506,7 @@ msgstr "웹페이지에서 만들기"
 
 #: ../plug-ins/common/web-page.c:235
 msgid "Cre_ate"
-msgstr ""
+msgstr "만들기(_A)"
 
 #: ../plug-ins/common/web-page.c:264
 msgid "Enter location (URI):"
@@ -6663,19 +6663,19 @@ msgstr "DDS 이미지"
 
 #: ../plug-ins/file-dds/dds.c:170
 msgid "Decode YCoCg"
-msgstr ""
+msgstr "YCoCg 디코딩"
 
 #: ../plug-ins/file-dds/dds.c:183
 msgid "Decode YCoCg (scaled)"
-msgstr ""
+msgstr "YCoCg 디코딩 (배율 조정됨)"
 
 #: ../plug-ins/file-dds/dds.c:196
 msgid "Decode Alpha exponent"
-msgstr ""
+msgstr "알파 구성요소 디코딩"
 
 #: ../plug-ins/file-dds/ddsread.c:1266
 msgid "Load DDS"
-msgstr ""
+msgstr "DDS 불러오기"
 
 #: ../plug-ins/file-dds/ddsread.c:1268 ../plug-ins/file-dds/ddswrite.c:1887
 msgid "Cancel"
@@ -6683,7 +6683,7 @@ msgstr "취소"
 
 #: ../plug-ins/file-dds/ddsread.c:1269 ../plug-ins/file-dds/ddswrite.c:1888
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 #: ../plug-ins/file-dds/ddsread.c:1285
 msgid "Load mipmaps"
@@ -6695,7 +6695,7 @@ msgstr "감지되면 YCoCg/AExp 이미지 자동 디코딩"
 
 #: ../plug-ins/file-dds/ddswrite.c:1885
 msgid "Export as DDS"
-msgstr ""
+msgstr "DDS로 내보내기"
 
 #: ../plug-ins/file-dds/ddswrite.c:1912
 msgid "Compression:"
@@ -6711,7 +6711,7 @@ msgstr "저장:"
 
 #: ../plug-ins/file-dds/ddswrite.c:1972
 msgid "Mipmaps:"
-msgstr ""
+msgstr "밉맵:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2003
 msgid "Transparent index:"
@@ -6728,11 +6728,11 @@ msgstr "압축"
 
 #: ../plug-ins/file-dds/ddswrite.c:2066
 msgid "Use perceptual error metric"
-msgstr ""
+msgstr "지각적 오류 측정법 사용"
 
 #: ../plug-ins/file-dds/ddswrite.c:2077
 msgid "Mipmaps"
-msgstr ""
+msgstr "밉맵"
 
 #: ../plug-ins/file-dds/ddswrite.c:2088
 msgid "Filter:"
@@ -6756,7 +6756,7 @@ msgstr "감마:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2168
 msgid "Preserve alpha test coverage"
-msgstr ""
+msgstr "알파 테스트 커버리지 유지"
 
 #: ../plug-ins/file-dds/ddswrite.c:2179
 msgid "Alpha test threshold:"
@@ -6917,7 +6917,7 @@ msgstr "'%lu' 바이트 읽지 못함"
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
 msgid "Icon #%d has zero width or height"
-msgstr ""
+msgstr "아이콘 #%d(은)는 너비 또는 높이가 0임"
 
 #. read successfully. add to image
 #: ../plug-ins/file-ico/ico-load.c:634
@@ -7037,11 +7037,11 @@ msgstr "최적화(_O)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1060
 msgid "Use arithmetic _coding"
-msgstr ""
+msgstr "산술적 코딩 사용(_C)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1062
 msgid "Older software may have trouble opening arithmetic-coded images"
-msgstr ""
+msgstr "예전 소프트웨어에서는 산술 코딩된 이미지를 여는 데 문제가 있을 수 있음"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1084
 msgid "_Progressive"
@@ -7236,103 +7236,103 @@ msgstr "포토샵 이미지 (합쳐짐)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
-msgstr ""
+msgstr "Raw 캐논"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:58
 msgid "Raw Nikon"
-msgstr ""
+msgstr "Raw 니콘"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:69
 msgid "Raw Hasselblad"
-msgstr ""
+msgstr "Raw Hasselblad"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:80
 msgid "Raw Sony"
-msgstr ""
+msgstr "Raw 소니"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:91
 msgid "Raw Casio BAY"
-msgstr ""
+msgstr "Raw 카시오 베이"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:102
 msgid "Raw Phantom Software CINE"
-msgstr ""
+msgstr "Raw 팬텀 소프트웨어 CINE"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:113
 msgid "Raw Sinar"
-msgstr ""
+msgstr "Raw Sinar"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:124
 msgid "Raw Kodak"
-msgstr ""
+msgstr "Raw 코닥"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:135
 msgid "Raw Adobe DNG Digital Negative"
-msgstr ""
+msgstr "Raw 어도비 DNG 디지털 네거티브"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:146
 msgid "Raw Epson ERF"
-msgstr ""
+msgstr "Raw 엡손 ERF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:157
 msgid "Raw Phase One"
-msgstr ""
+msgstr "Raw Phase One"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:168
 msgid "Raw Minolta"
-msgstr ""
+msgstr "Raw 미놀타"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:179
 msgid "Raw Mamiya MEF"
-msgstr ""
+msgstr "Raw Mamiya MEF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:189
 msgid "Raw Leaf MOS"
-msgstr ""
+msgstr "Raw Leaf MOS"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:200
 msgid "Raw Olympus ORF"
-msgstr ""
+msgstr "Raw 올림푸스 ORF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:211
 msgid "Raw Pentax PEF"
-msgstr ""
+msgstr "Raw Pentax PEF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:222
 msgid "Raw Logitech PXN"
-msgstr ""
+msgstr "Raw 로지텍 PXN"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:233
 msgid "Raw Apple QuickTake QTK"
-msgstr ""
+msgstr "Raw 애플 QuickTake QTK"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:244
 msgid "Raw Fujifilm RAF"
-msgstr ""
+msgstr "Raw 후지필름 RAF"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:255
 msgid "Raw Panasonic"
-msgstr ""
+msgstr "Raw 파나소닉"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:266
 msgid "Raw Digital Foto Maker RDC"
-msgstr ""
+msgstr "Raw 디지털 Foto 메이커 RDC"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:277
 msgid "Raw Leica RWL"
-msgstr ""
+msgstr "Raw Leica RWL"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:288
 msgid "Raw Samsung SRW"
-msgstr ""
+msgstr "Raw 삼성 SRW"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:299
 msgid "Raw Sigma X3F"
-msgstr ""
+msgstr "Raw 시그마 X3F"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:310
 msgid "Raw Arriflex ARI"
-msgstr ""
+msgstr "Raw Arriflex ARI"
 
 #: ../plug-ins/file-raw/file-raw-placeholder.c:139
 #, c-format
@@ -7345,6 +7345,13 @@ msgid ""
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
+"'%s' 파일을 열, 설치된 RAW 로더가 없습니다.\n"
+"\n"
+"김프는 현재 다음과 같은 RAW 로더를 지원 합니다.\n"
+"-darktable (http://www.darktable.org/), 최소 1.7\n"
+"-RawTherapee (http://rawtherapee.com/), 최소 5.2\n"
+"\n"
+"RAW 파일을 로드하려면 이 중 하나를 설치하십시오."
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -7432,10 +7439,11 @@ msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
 msgstr ""
+"단색 사진만 \"CCITT 그룹 4\" 또는 \"CCITT 그룹 3\"\"로 압축할 수 있습니다."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:633
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
-msgstr ""
+msgstr "인덱스된 그림은 \"JPEG\"로 압축할 수 없습니다."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:732
 msgid ""
@@ -7448,7 +7456,7 @@ msgstr ""
 #: ../plug-ins/file-tiff/file-tiff-save.c:824
 #, c-format
 msgid "Failed a scanline write on row %d"
-msgstr ""
+msgstr "%d번 행에 스캔 라인 쓰기 실패"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:949
 msgid "TIFF"
@@ -7497,7 +7505,7 @@ msgstr "(모든 프레임이 키프레임)"
 #. Create the dialog
 #: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
-msgstr ""
+msgstr "WebP"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:138
 msgid "Image quality:"
@@ -7521,7 +7529,7 @@ msgstr "원본 유형::"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:193
 msgid "WebP encoder \"preset\""
-msgstr ""
+msgstr "WebP 인코더 \"프리셋\""
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:225
@@ -7536,12 +7544,12 @@ msgstr "무한 반복"
 #. label for 'max key-frame distance' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:271
 msgid "Max distance between key-frames:"
-msgstr ""
+msgstr "키 프레임 사이의 최대 거리:"
 
 #. minimize-size checkbox
 #: ../plug-ins/file-webp/file-webp-dialog.c:306
 msgid "Minimize output size (slower)"
-msgstr ""
+msgstr "출력 크기 최소화 (더 느림)"
 
 #. label for 'delay' adjustment
 #: ../plug-ins/file-webp/file-webp-dialog.c:329
@@ -7566,7 +7574,7 @@ msgstr "움직이는 WebP 파일 '%s' 디코딩 실패"
 #: ../plug-ins/file-webp/file-webp-load.c:196
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
-msgstr ""
+msgstr "'%s'의 움직이는 WebP 정보 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:215
 #, c-format
@@ -7581,11 +7589,11 @@ msgstr "프레임 %d (%dms)"
 
 #: ../plug-ins/file-webp/file-webp-save.c:112
 msgid "out of memory"
-msgstr ""
+msgstr "메모리 부족"
 
 #: ../plug-ins/file-webp/file-webp-save.c:114
 msgid "not enough memory to flush bits"
-msgstr ""
+msgstr "비트를 플러시 하기에 부족한 메모리가"
 
 #: ../plug-ins/file-webp/file-webp-save.c:116
 msgid "NULL parameter"
@@ -7601,27 +7609,27 @@ msgstr "잘못된 이미지 치수"
 
 #: ../plug-ins/file-webp/file-webp-save.c:122
 msgid "partition is bigger than 512K"
-msgstr ""
+msgstr "파티션이 512K 보다 큼"
 
 #: ../plug-ins/file-webp/file-webp-save.c:124
 msgid "partition is bigger than 16M"
-msgstr ""
+msgstr "파티션이 16M 보다 큼"
 
 #: ../plug-ins/file-webp/file-webp-save.c:126
 msgid "unable to flush bytes"
-msgstr ""
+msgstr "바이트를 플러시할 수 없음"
 
 #: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
-msgstr ""
+msgstr "파일이 4GiB보다 큼"
 
 #: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "user aborted encoding"
-msgstr ""
+msgstr "사용자가 인코딩 중단함"
 
 #: ../plug-ins/file-webp/file-webp-save.c:132
 msgid "list terminator"
-msgstr ""
+msgstr "목록 종결자"
 
 #: ../plug-ins/file-webp/file-webp-save.c:134
 msgid "unknown error"
@@ -8341,7 +8349,7 @@ msgstr "기본 설정(_P)..."
 
 #: ../plug-ins/gfig/gfig-dialog.c:904
 msgid "_Raise"
-msgstr ""
+msgstr "올리기(_R)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:904
 msgid "Raise selected object"
@@ -8773,9 +8781,7 @@ msgstr "그림자 깊이(depth):"
 #: ../plug-ins/gimpressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
-"그림자 넣기의 깊이(depth), 즉, 그것을 되어야만 하는 개체와 얼마나 떨어져 있는"
-"가"
+msgstr "그림자의 깊이, 즉, 그림자가 개체와 얼마나 떨어져야 하는지 지정"
 
 #: ../plug-ins/gimpressionist/general.c:266
 msgid "Shadow blur:"
@@ -9276,7 +9282,7 @@ msgstr "무한 반복(_L)"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "GIF supports hundredths of a second precision."
-msgstr ""
+msgstr "GIF는 100분의 1초 정밀도를 지원 합니다."
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "_Delay between frames where unspecified:"
@@ -9440,7 +9446,7 @@ msgstr "설명 작성자\t"
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
 #| msgid "Rotating"
 msgid "Rating"
-msgstr ""
+msgstr "등급"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
 msgid "Keywords"
@@ -9464,11 +9470,11 @@ msgstr "주소"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:12
 msgid "City"
-msgstr ""
+msgstr "도시"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:13
 msgid "Postal Code\t"
-msgstr ""
+msgstr "우편 번호\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:14
 msgid "State / Province"
@@ -9476,7 +9482,7 @@ msgstr "주 / 도"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:15
 msgid "Country"
-msgstr ""
+msgstr "국가"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:16
 msgid "Phone(s)"
@@ -9484,11 +9490,11 @@ msgstr "전화"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:17
 msgid "Email(s)"
-msgstr ""
+msgstr "이메일"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:18
 msgid "Website(s)"
-msgstr ""
+msgstr "웹사이트"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:19
 msgid "Creation Date"
@@ -9496,11 +9502,11 @@ msgstr "작성 날짜"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:20
 msgid "Intellectual Genre"
-msgstr ""
+msgstr "지적 장르"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:21
 msgid "IPTC Scene Code"
-msgstr ""
+msgstr "IPTC 장면 코드"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
 msgid "Sublocation\t"
@@ -9508,11 +9514,11 @@ msgstr "하위 위치\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:23
 msgid "ISO Country Code"
-msgstr ""
+msgstr "ISO 국가 코드"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:24
 msgid "IPTC Subject Code"
-msgstr ""
+msgstr "IPTC 주제 코드"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
 #| msgid "Create line"
@@ -9521,11 +9527,11 @@ msgstr "헤드라인"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:26
 msgid "Urgency"
-msgstr ""
+msgstr "긴급성"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:27
 msgid "Job Identifier\t"
-msgstr ""
+msgstr "작업 식별자\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
 msgid "Instructions"
@@ -9533,7 +9539,7 @@ msgstr "지시 사항"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:29
 msgid "Credit Line"
-msgstr ""
+msgstr "크레딧 라인"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
 msgid "Source"
@@ -9546,7 +9552,7 @@ msgstr "사용 약관"
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:32
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:7
 msgid "IPTC"
-msgstr ""
+msgstr "IPTC"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
 msgid "Sublocation"
@@ -9554,15 +9560,15 @@ msgstr "하위 위치"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:34
 msgid "Person Shown"
-msgstr ""
+msgstr "나온 사람"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:35
 msgid "Country Name"
-msgstr ""
+msgstr "국가 이름"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:36
 msgid "Country ISO-Code"
-msgstr ""
+msgstr "국가 ISO 부호"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:37
 msgid "World Region"
@@ -9570,15 +9576,15 @@ msgstr "세계 지역"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:38
 msgid "Location Shown"
-msgstr ""
+msgstr "나온 위치"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:39
 msgid "Featured Organization"
-msgstr ""
+msgstr "주요 조직"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:40
 msgid "Event"
-msgstr ""
+msgstr "이벤트"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:42
 msgid "Add an entry"
@@ -9590,15 +9596,15 @@ msgstr "항목 제거"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:44
 msgid "Code"
-msgstr ""
+msgstr "코드"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:45
 msgid "Province / State"
-msgstr ""
+msgstr "도 / 주"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:46
 msgid "Country ISO Code"
-msgstr ""
+msgstr "국가 ISO 부호"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
 msgid "Artwork or Object"
@@ -9618,7 +9624,7 @@ msgstr "제작자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:51
 msgid "Source Inventory ID"
-msgstr ""
+msgstr "소스 인벤토리 ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:52
 msgid "Model Age"
@@ -9626,11 +9632,11 @@ msgstr "모델 연령"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:53
 msgid "Minor Model Age Disclosure"
-msgstr ""
+msgstr "마이너 모델 나이 공개"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:54
 msgid "Model Release Status"
-msgstr ""
+msgstr "모델 릴리스 상태"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
 msgid "Additional Model Info"
@@ -9638,7 +9644,7 @@ msgstr "추가 모델 정보"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:56
 msgid "Model Release Identifier"
-msgstr ""
+msgstr "모델 릴리스 식별자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:57
 msgid "Image Supplier ID"
@@ -9646,11 +9652,11 @@ msgstr "이미지 공급자 ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:58
 msgid "Supplier's Image ID"
-msgstr ""
+msgstr "공급자의 이미지 ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:59
 msgid "Registry Entry"
-msgstr ""
+msgstr "레지스트리 항목"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:60
 msgid "Image Supplier Name"
@@ -9658,7 +9664,7 @@ msgstr "이미지 공급자 이름"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:61
 msgid "Max. Available Width"
-msgstr ""
+msgstr "사용 가능한 최대 너비"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:62
 msgid "Max. Available Height"
@@ -9670,11 +9676,11 @@ msgstr "디지털 소스 유형"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:64
 msgid "Organization Identifier"
-msgstr ""
+msgstr "조직 식별자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:65
 msgid "Item Identifier"
-msgstr ""
+msgstr "아이템 식별자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:66
 msgid "Copyright Owner"
@@ -9686,7 +9692,7 @@ msgstr "허가권자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:68
 msgid "Property Release Status"
-msgstr ""
+msgstr "속성 릴리스 상태"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
 msgid "Image Creator"
@@ -9698,55 +9704,55 @@ msgstr "식별자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:71
 msgid "Phone Number 1"
-msgstr ""
+msgstr "전화 번호 1"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:72
 msgid "Phone Type 1"
-msgstr ""
+msgstr "전화 유형 1"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:73
 msgid "Phone Number 2"
-msgstr ""
+msgstr "전화 번호 2"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:74
 msgid "Phone Type 2"
-msgstr ""
+msgstr "전화 유형 2"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:75
 msgid "Email Address"
-msgstr ""
+msgstr "이메일 주소"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:76
 msgid "Web Address"
-msgstr ""
+msgstr "웹 주소"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
 msgid "Property Release Identifier"
-msgstr ""
+msgstr "속성 릴리스 식별자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
 msgid "IPTC Extension"
-msgstr ""
+msgstr "IPTC 확장"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:79
 msgid "Supplemental Category"
-msgstr ""
+msgstr "추가 범주"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:80
 msgid "Category"
-msgstr ""
+msgstr "범주"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:81
 msgid "Categories"
-msgstr ""
+msgstr "범주"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:82
 msgid "Longitude Reference"
-msgstr ""
+msgstr "경도 참조"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:83
 msgid "Longitude"
-msgstr ""
+msgstr "경도"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:84
 #| msgid "A_mplitude:"
@@ -9755,11 +9761,11 @@ msgstr "고도"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:85
 msgid "Latitude"
-msgstr ""
+msgstr "위도"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:86
 msgid "Latitude Reference"
-msgstr ""
+msgstr "위도 참조"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:87
 msgid "Altitude Reference"
@@ -9776,19 +9782,19 @@ msgstr "환자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:90
 msgid "Patient ID"
-msgstr ""
+msgstr "환자 ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:91
 msgid "Date of Birth"
-msgstr ""
+msgstr "생일"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:92
 msgid "Patient Sex"
-msgstr ""
+msgstr "환자 성별"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:93
 msgid "Study ID"
-msgstr ""
+msgstr "연구 ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
 #| msgid "Rendering wind"
@@ -9797,7 +9803,7 @@ msgstr "담당 의사"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:95
 msgid "Study Date"
-msgstr ""
+msgstr "연구 날짜"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:96
 msgid "Study Description"
@@ -9810,11 +9816,11 @@ msgstr "시리즈 번호"
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:98
 #| msgid "Quality:"
 msgid "Modality"
-msgstr ""
+msgstr "양상"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:99
 msgid "Series Date"
-msgstr ""
+msgstr "시리즈 날짜"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
 msgid "Series Description"
@@ -9822,11 +9828,11 @@ msgstr "시리즈 설명"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:101
 msgid "Equipment Institution"
-msgstr ""
+msgstr "비품 기관"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:102
 msgid "Equipment Manufacturer"
-msgstr ""
+msgstr "비품 제조업체"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
 #| msgid "DICOM image"
@@ -9835,15 +9841,15 @@ msgstr "DICOM"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
 msgid "Exif Tag"
-msgstr ""
+msgstr "EXIF 태그"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
 msgid "Exif"
-msgstr ""
+msgstr "Exif"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:4
 msgid "XMP Tag"
-msgstr ""
+msgstr "XMP 태그"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:5
 #| msgid "XBM"
@@ -9852,7 +9858,7 @@ msgstr "XMP"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:6
 msgid "IPTC Tag"
-msgstr ""
+msgstr "IPTC 태그"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -10254,8 +10260,8 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"'%s' 해석 오류:\n"
-"%s"
+"'%1$s'에서 해석 오류:\n"
+"%2$s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:333
 msgid "Create an Iterated Function System (IFS) fractal"
@@ -11752,16 +11758,16 @@ msgstr "메타데이터 편집 (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-editor.c:416
 msgid "Edit Metadata"
-msgstr ""
+msgstr "메타데이터 편집"
 
 #: ../plug-ins/metadata/metadata-editor.c:539
 #, c-format
 msgid "Metadata Editor: %s"
-msgstr ""
+msgstr "메타데이터 편집기: %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:548
 msgid "Write Metadata"
-msgstr ""
+msgstr "메타데이터 쓰기"
 
 #: ../plug-ins/metadata/metadata-editor.c:572
 msgid "Import metadata"
@@ -11769,7 +11775,7 @@ msgstr "메타데이터 들여오기"
 
 #: ../plug-ins/metadata/metadata-editor.c:574
 msgid "Export metadata"
-msgstr ""
+msgstr "메타데이터 내보내기"
 
 #: ../plug-ins/metadata/metadata-editor.c:762
 msgid "Calendar Date:"
@@ -11777,11 +11783,11 @@ msgstr "달력 날짜:"
 
 #: ../plug-ins/metadata/metadata-editor.c:766
 msgid "Set Date"
-msgstr ""
+msgstr "날짜 설정"
 
 #: ../plug-ins/metadata/metadata-editor.c:1620
 msgid "Unrated"
-msgstr ""
+msgstr "등급 없음"
 
 #: ../plug-ins/metadata/metadata-editor.c:5645
 msgid "Import Metadata File"
@@ -11797,24 +11803,24 @@ msgstr "내보내기(_E)"
 
 #: ../plug-ins/metadata/metadata-tags.h:250
 msgid "Original digital capture of a real life scene"
-msgstr ""
+msgstr "실생활 장면의 원래 디지털 캡처"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
 msgid "Digitized from a negative on film"
-msgstr ""
+msgstr "네거티브 필름으로부터 디지털화됨"
 
 #: ../plug-ins/metadata/metadata-tags.h:252
 msgid "Digitized from a positive on film"
-msgstr ""
+msgstr "포지티브 필름으로부터 디지털화됨"
 
 #: ../plug-ins/metadata/metadata-tags.h:253
 msgid "Digitized from a print on non-transparent medium"
-msgstr ""
+msgstr "비투명 매체 상의 인쇄물로부터 디지털화됨"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
 #| msgid "Create star"
 msgid "Created by software"
-msgstr ""
+msgstr "소프트웨어로 만들어짐"
 
 #: ../plug-ins/metadata/metadata-tags.h:262
 #: ../plug-ins/metadata/metadata-tags.h:273
@@ -11825,23 +11831,23 @@ msgstr "없음"
 #: ../plug-ins/metadata/metadata-tags.h:263
 #: ../plug-ins/metadata/metadata-tags.h:274
 msgid "Not Applicable"
-msgstr ""
+msgstr "적용 불가"
 
 #: ../plug-ins/metadata/metadata-tags.h:264
 msgid "Unlimited Model Releases"
-msgstr ""
+msgstr "무제한 모델 릴리스"
 
 #: ../plug-ins/metadata/metadata-tags.h:265
 msgid "Limited or Incomplete Model Releases"
-msgstr ""
+msgstr "제한되거나 불완전한 모델 릴리스"
 
 #: ../plug-ins/metadata/metadata-tags.h:275
 msgid "Unlimited Property Releases"
-msgstr ""
+msgstr "무제한 속성 릴리스"
 
 #: ../plug-ins/metadata/metadata-tags.h:276
 msgid "Limited or Incomplete Property Releases"
-msgstr ""
+msgstr "제한되거나 불완전한 속성 릴리스"
 
 #: ../plug-ins/metadata/metadata-tags.h:284
 msgid "Age Unknown"
@@ -11930,7 +11936,7 @@ msgstr "저작권 있음"
 #. TRUE
 #: ../plug-ins/metadata/metadata-tags.h:310
 msgid "Public Domain"
-msgstr ""
+msgstr "퍼블릭 도메인"
 
 #: ../plug-ins/metadata/metadata-tags.h:316
 #: ../plug-ins/metadata/metadata-tags.h:332
@@ -11939,11 +11945,11 @@ msgstr "값 선택"
 
 #: ../plug-ins/metadata/metadata-tags.h:317
 msgid "Work"
-msgstr ""
+msgstr "직장"
 
 #: ../plug-ins/metadata/metadata-tags.h:318
 msgid "Cell"
-msgstr ""
+msgstr "휴대폰"
 
 #: ../plug-ins/metadata/metadata-tags.h:319
 #| msgid "Fan"
@@ -11952,19 +11958,19 @@ msgstr "팩스"
 
 #: ../plug-ins/metadata/metadata-tags.h:320
 msgid "Home"
-msgstr ""
+msgstr "집"
 
 #: ../plug-ins/metadata/metadata-tags.h:321
 msgid "Pager"
-msgstr ""
+msgstr "호출기"
 
 #: ../plug-ins/metadata/metadata-tags.h:333
 msgid "Male"
-msgstr ""
+msgstr "남성"
 
 #: ../plug-ins/metadata/metadata-tags.h:334
 msgid "Female"
-msgstr ""
+msgstr "여성"
 
 #: ../plug-ins/metadata/metadata-tags.h:335
 msgid "Other"
@@ -11980,19 +11986,19 @@ msgstr "해수면 아래"
 
 #: ../plug-ins/metadata/metadata-tags.h:347
 msgid "North"
-msgstr ""
+msgstr "북"
 
 #: ../plug-ins/metadata/metadata-tags.h:347
 msgid "South"
-msgstr ""
+msgstr "남"
 
 #: ../plug-ins/metadata/metadata-tags.h:353
 msgid "East"
-msgstr ""
+msgstr "동"
 
 #: ../plug-ins/metadata/metadata-tags.h:353
 msgid "West"
-msgstr ""
+msgstr "서"
 
 #: ../plug-ins/metadata/metadata-viewer.c:120
 msgid "View metadata (Exif, IPTC, XMP)"
@@ -12000,12 +12006,12 @@ msgstr "메타데이터 보기 (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:127
 msgid "View Metadata"
-msgstr ""
+msgstr "메타데이터 보기"
 
 #: ../plug-ins/metadata/metadata-viewer.c:220
 #, c-format
 msgid "Metadata Viewer: %s"
-msgstr ""
+msgstr "메타데이터 뷰어: %s"
 
 #: ../plug-ins/metadata/metadata-viewer.c:360
 #, c-format
@@ -12220,7 +12226,7 @@ msgstr "일정 시간 후에, 마우스로 선택한 영역의 화면을 잡아�
 
 #: ../plug-ins/screenshot/screenshot.c:725
 msgid "Click in a window to snap it after delay."
-msgstr ""
+msgstr "지연시간 뒤에 스냅 샷이 찍힐 창을 클릭합니다."
 
 #: ../plug-ins/screenshot/screenshot.c:730
 msgid "At the end of the delay, click in a window to snap it."
@@ -12236,11 +12242,11 @@ msgstr "지정한 시간(초) 이후에 화면을 찍습니다."
 
 #: ../plug-ins/screenshot/screenshot.c:780
 msgid "Once the region is selected, it will be captured after this delay."
-msgstr ""
+msgstr "영역을 선택하면 이 지연시간 뒤에 캡처됩니다."
 
 #: ../plug-ins/screenshot/screenshot.c:785
 msgid "Once the window is selected, it will be captured after this delay."
-msgstr ""
+msgstr "창을 선택하면 이 지연시간 뒤에 캡처됩니다."
 
 #: ../plug-ins/screenshot/screenshot.c:791
 msgid "After the delay, the active window will be captured."
@@ -12252,11 +12258,11 @@ msgstr "색 프로필"
 
 #: ../plug-ins/screenshot/screenshot.c:803
 msgid "Tag image with _monitor profile"
-msgstr ""
+msgstr "모니터 프로필로 이미지 태그(_M)"
 
 #: ../plug-ins/screenshot/screenshot.c:807
 msgid "Convert image to sR_GB"
-msgstr ""
+msgstr "이미지를 sRGB로 변환(_G)"
 
 #: ../plug-ins/screenshot/screenshot-win32.c:299
 msgid "No data captured"
@@ -12294,15 +12300,15 @@ msgstr "선택을 경로로 바꾸기 고급 설정"
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
 #| msgid "Threshold:"
 msgid "Align Threshold:"
-msgstr ""
+msgstr "정렬 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:115
 msgid "If two endpoints are closer than this, they are made to be equal."
-msgstr ""
+msgstr "두 끝점이 이보다 가까우면, 동일하게 합니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:124
 msgid "Corner Always Threshold:"
-msgstr ""
+msgstr "항상 코너 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:128
 msgid ""
@@ -12310,6 +12316,8 @@ msgid ""
 "smaller than this, it's a corner, even if it's within 'corner_surround' "
 "pixels of a point with a smaller angle."
 msgstr ""
+"점과 그 선행 및 후행 점이 이루는 각도는 이보다 작으면, 더 작은 각도인 점의 "
+"'corner_surround' 픽셀 내에 있더라도 코너가 됩니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:139
 msgid "Corner Surround:"
@@ -12318,7 +12326,7 @@ msgstr "코너 둘러싸기:"
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:143
 msgid ""
 "Number of points to consider when determining if a point is a corner or not."
-msgstr ""
+msgstr "점이 코너인지 아닌지를 결정할 때 고려할 점의 개수입니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:152
 msgid "Corner Threshold:"
@@ -12328,12 +12336,12 @@ msgstr "코너 임계값:"
 msgid ""
 "If a point, its predecessors, and its successors define an angle smaller "
 "than this, it's a corner."
-msgstr ""
+msgstr "점, 그 선행 및 후행점이 이루는 각도가 이보다 작으면, 코너가 됩니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:167
 #| msgid "Threshold:"
 msgid "Error Threshold:"
-msgstr ""
+msgstr "오류 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:171
 msgid ""
@@ -12345,7 +12353,7 @@ msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:182
 msgid "Filter Alternative Surround:"
-msgstr ""
+msgstr "필터 대체 둘러싸기:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:186
 msgid "A second number of adjacent points to consider when filtering."
@@ -12361,6 +12369,8 @@ msgid ""
 "filter_alternative_surround points differ by more than this, use the one "
 "from filter_alternative_surround."
 msgstr ""
+"filter_surround 및 filter_alternative_surround 포인트가 이루는 벡터 사이의 각"
+"도가 이보다 차이가 나면 filter_alternative_surround에서 하나를 사용합니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:211
 msgid "Filter Iteration Count:"
@@ -12373,6 +12383,9 @@ msgid ""
 "any points that 'should' be corners aren't found, the curve goes to hell "
 "around that point."
 msgstr ""
+"원래의 데이터 점을 매끄럽게 할 횟수.  이 숫자를 50 등으로 대폭 늘리면 훨씬 "
+"더 나은 결과를 얻을 수 있습니다. 그러나 코너 이어야 하는 점이 발견되지 않으"
+"면 곡선은 그 점 근처에서 엉망진창이 됩니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:227
 msgid "Filter Percent:"
@@ -12382,32 +12395,33 @@ msgstr "필터 퍼센트:"
 msgid ""
 "To produce the new point, use the old point plus this times the neighbors."
 msgstr ""
+"새 점을 생성하려고 이전 점을, 그리고 이만큼 여러 번 인접 점을 사용합니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:240
 msgid "Filter Secondary Surround:"
-msgstr ""
+msgstr "필터 2차 둘러싸기:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:244
 msgid ""
 "Number of adjacent points to consider if 'filter_surround' points defines a "
 "straight line."
-msgstr ""
+msgstr "'filter_surround' 점이 직선을 이룰 때 고려할 인접 점의 개수입니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:254
 msgid "Filter Surround:"
-msgstr ""
+msgstr "필터 둘러싸기:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:258
 msgid "Number of adjacent points to consider when filtering."
-msgstr ""
+msgstr "필터링할 때 고려할 인접 점의 개수입니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:266
 msgid "Keep Knees"
-msgstr ""
+msgstr "무릎을 유지"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:270
 msgid "Says whether or not to remove 'knee' points after finding the outline."
-msgstr ""
+msgstr "외곽선을 찾은 후 '무릎' 점을 제거할지를 나나냅니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:281
 msgid "Line Reversion Threshold:"
@@ -12420,27 +12434,34 @@ msgid ""
 "weighted by the square of the curve length, to make shorter curves more "
 "likely to be reverted."
 msgstr ""
+"스플라인이 이보다 직선에 가까우면, 다른 경우에는 곡선으로 다시 변경될 때도 직"
+"선으로 유지됩니다. 이는 곡선 길이의 제곱에 의해 가중치가 부여되어 더 짧은 곡"
+"선일수록 더 되돌려지기 쉽게 합니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:297
 #| msgid "Threshold:"
 msgid "Line Threshold:"
-msgstr ""
+msgstr "선 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:301
 msgid ""
 "How many pixels (on the average) a spline can diverge from the line "
 "determined by its endpoints before it is changed to a straight line."
 msgstr ""
+"스플라인이 직선으로 변경되기 전에, 그 끝점으로 결정된 선에서 얼마나 많은 픽셀"
+"(평균적으로)만큼 벗어날 수 있는지 지정."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:311
 msgid "Reparametrize Improvement:"
-msgstr ""
+msgstr "재매개변수화 개선:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:315
 msgid ""
 "If reparameterization doesn't improve the fit by this much percent, stop "
 "doing it. Amount of error at which it is pointless to reparameterize."
 msgstr ""
+"재매개변수화가 적합성을 지정한 퍼센트만큼 개선하지 않으면 작업을 중지합니다. "
+"재매개변수화 하는 것이 무의미한 오류의 양입니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:325
 msgid "Reparametrize Threshold:"
@@ -12468,6 +12489,8 @@ msgid ""
 "Percentage of the curve away from the worst point to look for a better place "
 "to subdivide."
 msgstr ""
+"세분화 하기에 더 나은 곳을 찾기에 최악인 점에서 떨어져 있는 곡선의 백분율입니"
+"다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:355
 msgid "Subdivide Surround:"
@@ -12477,18 +12500,20 @@ msgstr "세분화 둘러싸기:"
 msgid ""
 "Number of points to consider when deciding whether a given point is a better "
 "place to subdivide."
-msgstr ""
+msgstr "주어진 점이 세분화 하기에 더 나은 곳인지 결정할 때 고려할 점의 개수."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:369
 #| msgid "Threshold:"
 msgid "Subdivide Threshold:"
-msgstr ""
+msgstr "세분화 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:373
 msgid ""
 "How many pixels a point can diverge from a straight line and still be "
 "considered a better place to subdivide."
 msgstr ""
+"직선으로부터 벗어날 수 있는, 그래도 여전히 세분화하기에 더 나은 곳으로 간주"
+"될 수 있는, 픽셀의 양."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:383
 msgid "Tangent Surround:"
@@ -12499,6 +12524,7 @@ msgid ""
 "Number of points to look at on either side of a point when computing the "
 "approximation to the tangent at that point."
 msgstr ""
+"해당 점에서 접선에 대한 근사값을 계산할 때 점의 양쪽에서 살펴볼 점의 개수."
 
 #: ../plug-ins/twain/twain.c:86
 msgid "Capture an image from a TWAIN datasource"
