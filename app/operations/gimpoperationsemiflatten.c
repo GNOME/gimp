@@ -92,8 +92,8 @@ gimp_operation_semi_flatten_class_init (GimpOperationSemiFlattenClass *klass)
 
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color",
-                                                        "Color",
-                                                        "The color",
+                                                        _("Color"),
+                                                        _("The color"),
                                                         FALSE, &white,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
