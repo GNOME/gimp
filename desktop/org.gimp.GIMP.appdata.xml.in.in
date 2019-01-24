@@ -134,6 +134,10 @@
           <_li>
           New DDS format loading/exporting plug-in
           </_li>
+          <_li>
+          Full rewrite of the Spyrogimp plug-in with more options and
+          better interaction
+          </_li>
         </ul>
       </description>
     </release>
