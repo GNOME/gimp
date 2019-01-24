@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-20 11:49+0000\n"
-"PO-Revision-Date: 2019-01-22 22:41+0100\n"
+"POT-Creation-Date: 2019-01-24 16:47+0000\n"
+"PO-Revision-Date: 2019-01-24 22:47+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1444,14 +1444,12 @@ msgid "Rendering Spyro"
 msgstr "Renderar spiro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "_Spirogimp…"
+msgid "_Spyrogimp (older script-fu version)..."
+msgstr "_Spirogimp (äldre script-fu-version)…"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Lägg till spirografer, epitrokoider och Lissajous-kurvor till aktuellt lager"
+msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+msgstr "Denna procedur är föråldrad! Använd ”plug-in-spyrogimp” istället."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
@@ -1719,6 +1717,15 @@ msgstr "X-avstånd för skuggkastning"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Y-avstånd för skuggkastning"
+
+#~ msgid "_Spyrogimp..."
+#~ msgstr "_Spirogimp…"
+
+#~ msgid ""
+#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+#~ msgstr ""
+#~ "Lägg till spirografer, epitrokoider och Lissajous-kurvor till aktuellt "
+#~ "lager"
 
 #~ msgid "Plug-in _Registry"
 #~ msgstr "_Register för insticksmoduler"
