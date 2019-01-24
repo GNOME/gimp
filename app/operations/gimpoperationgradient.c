@@ -80,11 +80,9 @@ typedef struct
 
 typedef struct
 {
-  GeglBuffer *buffer;
-  gfloat     *row_data;
-  gint        roi_x;
-  gint        width;
-  GRand      *dither_rand;
+  gfloat        *data;
+  GeglRectangle  roi;
+  GRand         *dither_rand;
 } PutPixelData;
 
 
@@ -982,8 +980,8 @@ gradient_put_pixel (gint      x,
                     gpointer  put_pixel_data)
 {
   PutPixelData *ppd   = put_pixel_data;
-  const gint    index = x - ppd->roi_x;
-  gfloat       *dest  = ppd->row_data + 4 * index;
+  const gint    index = (y - ppd->roi.y) * ppd->roi.width + (x - ppd->roi.x);
+  gfloat       *dest  = ppd->data + 4 * index;
 
   if (ppd->dither_rand)
     {
@@ -1011,12 +1009,6 @@ gradient_put_pixel (gint      x,
       *dest++ = color->b;
       *dest++ = color->a;
     }
-
-  /* Paint whole row if we are on the rightmost pixel */
-  if (index == (ppd->width - 1))
-    gegl_buffer_set (ppd->buffer, GEGL_RECTANGLE (ppd->roi_x, y, ppd->width, 1),
-                     0, babl_format ("R'G'B'A float"), ppd->row_data,
-                     GEGL_AUTO_ROWSTRIDE);
 }
 
 static gboolean
@@ -1034,6 +1026,10 @@ gimp_operation_gradient_process (GeglOperation       *operation,
   const gdouble ey = self->end_y;
 
   RenderBlendData rbd = { 0, };
+
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
+  GRand              *dither_rand = NULL;
 
   if (! self->gradient)
     return TRUE;
@@ -1097,45 +1093,38 @@ gimp_operation_gradient_process (GeglOperation       *operation,
 
   /* Render the gradient! */
 
+  iter = gegl_buffer_iterator_new (output, result, 0,
+                                   babl_format ("R'G'B'A float"),
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
+  roi = &iter->items[0].roi;
+
+  if (self->dither)
+    dither_rand = g_rand_new ();
+
   if (self->supersample)
     {
-      PutPixelData  ppd = { 0, };
+      PutPixelData ppd;
 
-      ppd.buffer      = output;
-      ppd.row_data    = g_malloc (sizeof (float) * 4 * result->width);
-      ppd.roi_x       = result->x;
-      ppd.width       = result->width;
-      if (self->dither)
-        ppd.dither_rand = g_rand_new ();
+      ppd.dither_rand = dither_rand;
 
-      gimp_adaptive_supersample_area (result->x, result->y,
-                                      result->x + result->width  - 1,
-                                      result->y + result->height - 1,
-                                      self->supersample_depth,
-                                      self->supersample_threshold,
-                                      gradient_render_pixel, &rbd,
-                                      gradient_put_pixel, &ppd,
-                                      NULL,
-                                      NULL);
+      while (gegl_buffer_iterator_next (iter))
+        {
+          ppd.data = iter->items[0].data;
+          ppd.roi  = *roi;
 
-      if (self->dither)
-        g_rand_free (ppd.dither_rand);
-      g_free (ppd.row_data);
+          gimp_adaptive_supersample_area (roi->x, roi->y,
+                                          roi->x + roi->width  - 1,
+                                          roi->y + roi->height - 1,
+                                          self->supersample_depth,
+                                          self->supersample_threshold,
+                                          gradient_render_pixel, &rbd,
+                                          gradient_put_pixel, &ppd,
+                                          NULL,
+                                          NULL);
+        }
     }
   else
     {
-      GeglBufferIterator *iter;
-      GeglRectangle      *roi;
-      GRand              *seed = NULL;
-
-      iter = gegl_buffer_iterator_new (output, result, 0,
-                                       babl_format ("R'G'B'A float"),
-                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
-      roi = &iter->items[0].roi;
-
-      if (self->dither)
-        seed = g_rand_new ();
-
       while (gegl_buffer_iterator_next (iter))
         {
           gfloat *dest = iter->items[0].data;
@@ -1143,10 +1132,8 @@ gimp_operation_gradient_process (GeglOperation       *operation,
           gint    endy = roi->y + roi->height;
           gint    x, y;
 
-          if (seed)
+          if (dither_rand)
             {
-              GRand *dither_rand = g_rand_new_with_seed (g_rand_int (seed));
-
               for (y = roi->y; y < endy; y++)
                 for (x = roi->x; x < endx; x++)
                   {
@@ -1170,8 +1157,6 @@ gimp_operation_gradient_process (GeglOperation       *operation,
                     *dest++ = MAX (b, 0.0);
                     *dest++ = MAX (a, 0.0);
                   }
-
-              g_rand_free (dither_rand);
             }
           else
             {
@@ -1189,10 +1174,10 @@ gimp_operation_gradient_process (GeglOperation       *operation,
                   }
             }
         }
-
-      if (self->dither)
-        g_rand_free (seed);
     }
+
+  if (self->dither)
+    g_rand_free (dither_rand);
 
   g_clear_object (&rbd.dist_sampler);
 
