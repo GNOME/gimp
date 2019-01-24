@@ -18,7 +18,7 @@
 
 #include "config.h"
 
-#include <babl/babl.h>
+#include <gegl.h>
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -276,8 +276,8 @@ gimp_adaptive_supersample_area (gint              x1,
 
   width = x2 - x1 + 1;
 
-  top_row = g_new (GimpSampleType, sub_pixel_size * width + 1);
-  bot_row = g_new (GimpSampleType, sub_pixel_size * width + 1);
+  top_row = gegl_scratch_new (GimpSampleType, sub_pixel_size * width + 1);
+  bot_row = gegl_scratch_new (GimpSampleType, sub_pixel_size * width + 1);
 
   for (x = 0; x < (sub_pixel_size * width + 1); x++)
     {
@@ -292,11 +292,11 @@ gimp_adaptive_supersample_area (gint              x1,
 
   /* Allocate block matrix */
 
-  block = g_new (GimpSampleType *, sub_pixel_size + 1); /* Rows */
+  block = gegl_scratch_new (GimpSampleType *, sub_pixel_size + 1); /* Rows */
 
   for (y = 0; y < (sub_pixel_size + 1); y++)
     {
-      block[y] = g_new (GimpSampleType, sub_pixel_size + 1); /* Columns */
+      block[y] = gegl_scratch_new (GimpSampleType, sub_pixel_size + 1); /* Columns */
 
       for (x = 0; x < (sub_pixel_size + 1); x++)
         {
@@ -384,11 +384,11 @@ gimp_adaptive_supersample_area (gint              x1,
   /* Free memory */
 
   for (y = 0; y < (sub_pixel_size + 1); y++)
-    g_free (block[y]);
+    gegl_scratch_free (block[y]);
 
-  g_free (block);
-  g_free (top_row);
-  g_free (bot_row);
+  gegl_scratch_free (block);
+  gegl_scratch_free (top_row);
+  gegl_scratch_free (bot_row);
 
   return num_samples;
 }
