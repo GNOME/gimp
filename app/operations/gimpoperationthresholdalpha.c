@@ -87,8 +87,8 @@ gimp_operation_threshold_alpha_class_init (GimpOperationThresholdAlphaClass *kla
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_double ("value",
-                                                        "Value",
-                                                        "The alpha value",
+                                                        _("Value"),
+                                                        _("The alpha value"),
                                                         0.0, 1.0, 0.5,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
