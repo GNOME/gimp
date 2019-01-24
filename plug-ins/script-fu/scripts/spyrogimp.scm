@@ -311,8 +311,8 @@
 
 
 (script-fu-register "script-fu-spyrogimp"
-  _"_Spyrogimp..."
-  _"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+  _"_Spyrogimp (older script-fu version)..."
+  _"This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
   "Elad Shahar <elad@wisdom.weizmann.ac.il>"
   "Elad Shahar"
   "June 2003"
@@ -350,6 +350,3 @@
   SF-COLOR      _"Color"          "black"
   SF-GRADIENT   _"Gradient"       "Deep Sea"
 )
-
-(script-fu-menu-register "script-fu-spyrogimp"
-                         "<Image>/Filters/Render")
