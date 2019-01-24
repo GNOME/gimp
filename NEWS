@@ -120,6 +120,8 @@ Plug-ins:
   - Add a new option saving a color profile when exporting PNG, JPEG, TIFF.
     Always save it when exporting to PSD.
   - Remove the "Advanced" expanders from the PNG and TIFF export dialogs.
+  - Full rewrite of the Spyrogimp plug-in with much more options and
+    better interaction.
 
 Filters:
 
