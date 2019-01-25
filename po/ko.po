@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 11:20+0000\n"
-"PO-Revision-Date: 2019-01-25 23:27+0900\n"
+"PO-Revision-Date: 2019-01-25 16:11+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -390,7 +390,6 @@ msgstr ""
 "니다. 더 큰 변화:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
-#, fuzzy
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -398,7 +397,6 @@ msgstr ""
 "병렬화된 페인팅 코드를 포함하여, 페인팅 및 디스플레이의 주요 핵심 최적화"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
-#, fuzzy
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr "대칭은 이제 XCF 파일에 보존됩니다(이미지 기생물로 저장됨)."
 
@@ -421,15 +419,14 @@ msgstr ""
 "의 캔버스 내 상호 작용을 제공합니다."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
-#, fuzzy
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set"
 msgstr ""
-"디버그 키가 설정된 경우, 시그널 수신 시만 아니라 “fatal-warnings” 경고 및 치"
-"명적인 오류 시에도 --stack-trace-mode 명령 줄 옵션을 사용하여 플러그 인에서 "
-"스택 추적을 출력하도록 플러그인 디버깅을 개선하였습니다."
+"\"fatal-warnings\" 디버그 키를 설정했을 때, 시그널 수신 시만 아니라 경고 및 "
+"치명적인 오류 시에도 --stack-trace-mode 명령 줄 옵션을 사용하여 플러그 인에"
+"서 스택 추적을 출력하도록 플러그인 디버깅을 개선하였음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
@@ -3413,10 +3410,9 @@ msgid "Search commands by keyword, and run them"
 msgstr "핵심어로 명령 검색 후 실행"
 
 #: ../app/actions/dialogs-actions.c:299
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
-msgstr "확장 시작 중"
+msgstr "확장 관리(_E)"
 
 #: ../app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
@@ -6116,10 +6112,9 @@ msgid "Display information about this image"
 msgstr "이미지에 대한 정보를 봅니다"
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
-msgstr "RGB 프로필(_R):"
+msgstr "_sRGB 프로필 사용"
 
 #: ../app/actions/image-actions.c:182
 msgctxt "image-action"
@@ -11327,22 +11322,19 @@ msgid "Active path"
 msgstr "활성 경로"
 
 #: ../app/core/core-enums.c:114
-#, fuzzy
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
-msgstr "색 프로필 선택"
+msgstr "전경색으로 채우기"
 
 #: ../app/core/core-enums.c:115
-#, fuzzy
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
-msgstr "색 프로필 선택"
+msgstr "배경색으로 채우기"
 
 #: ../app/core/core-enums.c:116
-#, fuzzy
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "무늬"
+msgstr "무늬 채우기"
 
 #: ../app/core/core-enums.c:145
 msgctxt "channel-border-style"
@@ -11758,22 +11750,19 @@ msgid "Large (256x256)"
 msgstr "크게(256x256)"
 
 #: ../app/core/core-enums.c:972
-#, fuzzy
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "선형"
 
 #: ../app/core/core-enums.c:973
-#, fuzzy
 msgctxt "trc-type"
 msgid "Non-Linear"
-msgstr "선형"
+msgstr "비선형"
 
 #: ../app/core/core-enums.c:974
-#, fuzzy
 msgctxt "trc-type"
 msgid "Perceptual"
-msgstr "지각적(_P)"
+msgstr "지각적"
 
 #: ../app/core/core-enums.c:1164
 msgctxt "undo-type"
@@ -12002,16 +11991,14 @@ msgid "Change indexed palette"
 msgstr "인덱스 팔레트 바꾸기"
 
 #: ../app/core/core-enums.c:1210
-#, fuzzy
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
-msgstr "색 프로필 선택"
+msgstr "색 프로필 숨김/표시"
 
 #: ../app/core/core-enums.c:1215
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel format"
-msgstr "레이어/채널"
+msgstr "레이어/채널 형식"
 
 #: ../app/core/core-enums.c:1218
 msgctxt "undo-type"
@@ -12328,24 +12315,24 @@ msgid ""
 msgstr "버전 비교용 <requires><id>org.gimp.GIMP</id></requires>은 필수 사항임."
 
 #: ../app/core/gimpextension.c:704
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a relative path."
-msgstr "붓 '%s'은(는) 생성된 붓이 아닙니다"
+msgstr "'%s'은(는) 상대 경로가 아닙니다."
 
 #: ../app/core/gimpextension.c:738
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a child of the extension."
-msgstr "'%s:'은(는) 정확한 URI 스키마가 아닙니다"
+msgstr "'%s'은(는) 확장의 자식이 아닙니다."
 
 #: ../app/core/gimpextension.c:752
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a directory."
-msgstr "붓 '%s'을(를) 수정할 수 없습니다"
+msgstr "'%s'은(는) 디렉터리가 아닙니다."
 
 #: ../app/core/gimpextension.c:766
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid file."
-msgstr "'%s:'은(는) 정확한 URI 스키마가 아닙니다"
+msgstr "'%s'은(는) 올바른 파일이 아닙니다."
 
 #: ../app/core/gimpextension.c:807
 #, c-format
@@ -13321,9 +13308,9 @@ msgid "High bit-depth images were added in %s"
 msgstr "%s에 높은 비트 심도 이미지가 추가되었음"
 
 #: ../app/core/gimpimage.c:2515
-#, fuzzy, c-format
+#, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
-msgstr "%s에 높은 비트 심도 이미지가 추가되었음"
+msgstr "높은 비트 심도 이미지의 인코딩이 %s에서 수정되었음"
 
 #: ../app/core/gimpimage.c:2523
 #, c-format
@@ -13402,14 +13389,12 @@ msgid "Arrange Objects"
 msgstr "대상 정렬하기"
 
 #: ../app/core/gimpimage-color-profile.c:120
-#, fuzzy
 msgid "Enable 'Use sRGB Profile'"
-msgstr "RGB 프로필(_R):"
+msgstr "'sRGB 프로필 사용' 활성화"
 
 #: ../app/core/gimpimage-color-profile.c:137
-#, fuzzy
 msgid "Disable 'Use sRGB Profile'"
-msgstr "RGB 프로필(_R):"
+msgstr "'sRGB 프로필 사용' 비활성화"
 
 #: ../app/core/gimpimage-color-profile.c:195
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
@@ -13435,23 +13420,20 @@ msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr "ICC 프로필 검증 실패: 색 프로필이 RGB 색 공간용이 아님"
 
 #: ../app/core/gimpimage-color-profile.c:473
-#, fuzzy
 msgid "Assigning color profile"
-msgstr "색 프로필 할당"
+msgstr "색 프로필 할당하기"
 
 #: ../app/core/gimpimage-color-profile.c:474
-#, fuzzy
 msgid "Discarding color profile"
-msgstr "색 프로필 버리기(_D)"
+msgstr "색 프로필 버리기"
 
 #: ../app/core/gimpimage-color-profile.c:478
 msgid "Assign color profile"
 msgstr "색 프로필 할당"
 
 #: ../app/core/gimpimage-color-profile.c:479
-#, fuzzy
 msgid "Discard color profile"
-msgstr "색 프로필 버리기(_D)"
+msgstr "색 프로필 버리기"
 
 #: ../app/core/gimpimage-color-profile.c:522
 #, c-format
@@ -13505,7 +13487,7 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "인덱스된 색상으로 변환(단계 3)"
 
 #: ../app/core/gimpimage-convert-precision.c:79
-#, fuzzy, c-format
+#, c-format
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "이미지를 %s(으)로 변환"
@@ -14394,9 +14376,8 @@ msgstr "정밀도"
 
 #: ../app/core/gimptemplate.c:206 ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:110
-#, fuzzy
 msgid "Linear/Perceptual"
-msgstr "지각적(_P)"
+msgstr "선형/지각적"
 
 #: ../app/core/gimptemplate.c:215
 msgid "Color profile"
@@ -14759,14 +14740,12 @@ msgid "Linear light"
 msgstr "선형 라이트"
 
 #: ../app/dialogs/convert-precision-dialog.c:208
-#, fuzzy
 msgid "Non-Linear"
-msgstr "선형"
+msgstr "비선형"
 
 #: ../app/dialogs/convert-precision-dialog.c:211
-#, fuzzy
 msgid "Perceptual (sRGB)"
-msgstr "지각적 감마 (sRGB)"
+msgstr "지각적 (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:244
 msgid "_Layers:"
@@ -14876,26 +14855,22 @@ msgstr "확장자"
 #. "gimp-extensions-installed",
 #: ../app/dialogs/extensions-dialog.c:108
 #: ../app/dialogs/extensions-dialog.c:109
-#, fuzzy
 msgid "Installed Extensions"
-msgstr "확장 시작 중"
+msgstr "설치된 확장"
 
 #: ../app/dialogs/extensions-dialog.c:124
 #: ../app/dialogs/extensions-dialog.c:125
-#, fuzzy
 msgid "System Extensions"
-msgstr "확장자로"
+msgstr "시스템 확장"
 
 #: ../app/dialogs/extensions-dialog.c:140
 #: ../app/dialogs/extensions-dialog.c:141
-#, fuzzy
 msgid "Install Extensions"
-msgstr "확장자"
+msgstr "확장 설치"
 
 #: ../app/dialogs/extensions-dialog.c:158
-#, fuzzy
 msgid "Search extension:"
-msgstr "동작 검색"
+msgstr "확장 검색:"
 
 #: ../app/dialogs/extensions-dialog.c:174
 msgid "Search extensions matching these keywords"
@@ -18745,9 +18720,8 @@ msgstr "휘도 유지"
 
 #: ../app/operations/gimpcurvesconfig.c:106
 #: ../app/operations/gimplevelsconfig.c:111
-#, fuzzy
 msgid "Work on linear or perceptual RGB"
-msgstr "이미지를 지각적 (sRGB) 감마로 변환"
+msgstr "선형 또는 지각적 RGB에서 작동"
 
 #: ../app/operations/gimpcurvesconfig.c:113
 #: ../app/operations/gimplevelsconfig.c:118
@@ -18932,9 +18906,8 @@ msgid "Replace partial transparency with a color"
 msgstr "부분적 투명도를 색상으로 바꾸기"
 
 #: ../app/operations/gimpoperationsemiflatten.c:96
-#, fuzzy
 msgid "The color"
-msgstr "글자 색상"
+msgstr "색상"
 
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:94
@@ -18956,7 +18929,6 @@ msgid ""
 msgstr "알파 채널을 어떤 값을 기준으로 분리하여 투명도를 100%나 0%로만 만들기"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:90
-#, fuzzy
 msgid "Value"
 msgstr "값"
 
@@ -20025,10 +19997,9 @@ msgid "Lens Flare"
 msgstr "렌즈 플레어"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1685
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fractal Trace"
-msgstr "프랙탈 트레이싱(_F)..."
+msgstr "프랙탈 트레이싱"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1869
 msgctxt "undo-type"
@@ -20347,9 +20318,8 @@ msgid "Unknown file type"
 msgstr "알 수 없는 이미지 유형"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:230
-#, fuzzy
 msgid "Loading extension plug-ins"
-msgstr "확장 시작 중"
+msgstr "확장 플러그인 불러오기"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:250
 msgid "Searching plug-ins"
@@ -24955,12 +24925,10 @@ msgid "Wheel"
 msgstr "휠"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:151
-#, fuzzy
 msgid "Distance"
-msgstr "거리:"
+msgstr "거리"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:152
-#, fuzzy
 msgid "Rotation"
 msgstr "회전"
 
@@ -24980,9 +24948,8 @@ msgid "Keys"
 msgstr "키"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:367
-#, fuzzy
 msgid "Source:"
-msgstr "소스"
+msgstr "원본:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:372
 msgid "Vendor ID:"
@@ -24993,14 +24960,12 @@ msgid "Product ID:"
 msgstr "제품 아이디:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:382
-#, fuzzy
 msgid "Tool type:"
-msgstr "채우기 유형:"
+msgstr "도구 유형:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:387
-#, fuzzy
 msgid "Tool serial:"
-msgstr "도구 프리셋"
+msgstr "도구 시리얼:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:392
 msgid "Tool hardware ID:"
@@ -25389,9 +25354,8 @@ msgid "Read _Online"
 msgstr "온라인으로 읽기(_O)"
 
 #: ../app/widgets/gimphistogrameditor.c:112
-#, fuzzy
 msgid "Linear/Preceptual"
-msgstr "지각적(_P)"
+msgstr "선형/지각적"
 
 #: ../app/widgets/gimphistogrameditor.c:132
 msgid "Mean:"
