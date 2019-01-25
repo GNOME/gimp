@@ -62,6 +62,8 @@ struct _GimpSpinScalePrivate
   guint            mnemonic_keyval;
   gboolean         mnemonics_visible;
 
+  gboolean         constrain_drag;
+
   gboolean         scale_limits_set;
   gdouble          scale_lower;
   gdouble          scale_upper;
@@ -721,6 +723,9 @@ gimp_spin_scale_change_value (GtkWidget *widget,
   value = RINT (value);
   value /= power;
 
+  if (private->constrain_drag)
+    value = rint (value);
+
   gtk_adjustment_set_value (adjustment, value);
 }
 
@@ -1337,4 +1342,36 @@ gimp_spin_scale_get_gamma (GimpSpinScale *scale)
   g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
 
   return GET_PRIVATE (scale)->gamma;
+}
+
+/**
+ * gimp_spin_scale_set_constrain_drag:
+ * @scale: the #GimpSpinScale.
+ * @constrain: whether constraining to integer values when dragging with
+ *             pointer.
+ *
+ * If @constrain_drag is TRUE, dragging the scale with the pointer will
+ * only result into integer values. It will still possible to set the
+ * scale to fractional values (if the spin scale "digits" is above 0)
+ * for instance with keyboard edit.
+ */
+void
+gimp_spin_scale_set_constrain_drag (GimpSpinScale *scale,
+                                    gboolean       constrain)
+{
+  GimpSpinScalePrivate *private;
+
+  g_return_if_fail (GIMP_IS_SPIN_SCALE (scale));
+
+  private = GET_PRIVATE (scale);
+
+  private->constrain_drag = constrain;
+}
+
+gboolean
+gimp_spin_scale_get_constrain_drag (GimpSpinScale *scale)
+{
+  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), 1.0);
+
+  return GET_PRIVATE (scale)->constrain_drag;
 }

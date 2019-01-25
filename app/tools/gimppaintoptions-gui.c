@@ -524,6 +524,8 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
 
   scale = gimp_prop_spin_scale_new (config, prop_name, NULL,
                                     step_increment, page_increment, digits);
+  gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
+
   gimp_prop_widget_set_factor (scale, factor,
                                step_increment, page_increment, digits);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
