@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-22 21:50+0000\n"
-"PO-Revision-Date: 2019-01-24 09:19+0900\n"
+"POT-Creation-Date: 2019-01-25 23:37+0000\n"
+"PO-Revision-Date: 2019-01-25 23:48+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -361,11 +361,8 @@ msgid "_Border Average..."
 msgstr "테두리 평균(_B)..."
 
 #: ../plug-ins/common/border-average.c:173
-msgid "Border Average"
-msgstr "테두리 평균"
-
 #: ../plug-ins/common/border-average.c:358
-msgid "Borderaverage"
+msgid "Border Average"
 msgstr "테두리 평균"
 
 #: ../plug-ins/common/border-average.c:380
@@ -787,9 +784,9 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "\"시드 고정\" 단추는 단축명입니다.\n"
-"같은 씨앗(seed)이 같은 이미지를 만들려면, (1) 이미지의 넓이가 같아야 하고(드"
-"로어블에서의 이미지가 미리 보기와 다른 이유), 그리고 (2) 모든 변화율은 0과 같"
-"아야 합니다."
+"같은 씨앗(seed)이 같은 이미지를 만들때, (1) 이미지의 넓이가 같아야 한다(이 이"
+"유는 그리기에서의 이미지는 미리 보기에서 다르기 때문), 그리고 (2) 모든 변화율"
+"은 0과 같아야 합니다."
 
 #: ../plug-ins/common/cml-explorer.c:1442
 msgid "O_thers"
@@ -930,7 +927,7 @@ msgstr "CML 익스플로러 매개변수 저장하기"
 #: ../plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "%1$s을(를) 쓰기용으로 열 수 없음: %2$s"
+msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
 
 #: ../plug-ins/common/cml-explorer.c:2120
 #, c-format
@@ -1167,22 +1164,18 @@ msgid "_Black:"
 msgstr "검정(_B):"
 
 #: ../plug-ins/common/compose.c:175
-#| msgid "_X:"
 msgid "_L:"
 msgstr "_L:"
 
 #: ../plug-ins/common/compose.c:176
-#| msgid "_X:"
 msgid "_A:"
 msgstr "_A:"
 
 #: ../plug-ins/common/compose.c:177
-#| msgid "_X:"
 msgid "_B:"
 msgstr "_B:"
 
 #: ../plug-ins/common/compose.c:179
-#| msgid "_RLE"
 msgid "_L"
 msgstr "_L"
 
@@ -1191,7 +1184,6 @@ msgid "_C"
 msgstr "_C"
 
 #: ../plug-ins/common/compose.c:181
-#| msgid "_Hue"
 msgid "_H"
 msgstr "_H"
 
@@ -2211,11 +2203,11 @@ msgstr "불투명도(_A):"
 
 #: ../plug-ins/common/file-compressor.c:176
 msgid "gzip archive"
-msgstr "gzip 압축파일"
+msgstr "gzip 압축"
 
 #: ../plug-ins/common/file-compressor.c:195
 msgid "bzip archive"
-msgstr "bzip 압축파일"
+msgstr "bzip 압축"
 
 #: ../plug-ins/common/file-compressor.c:214
 msgid "xz archive"
@@ -2317,12 +2309,10 @@ msgid "Spacing:"
 msgstr "공간:"
 
 #: ../plug-ins/common/file-gegl.c:73
-#| msgid "Radians"
 msgid "Radiance RGBE"
 msgstr "광채 RGBE"
 
 #: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-exr/file-exr.c:86
-#| msgid "Open File"
 msgid "OpenEXR image"
 msgstr "OpenEXR 이미지"
 
@@ -2766,7 +2756,7 @@ msgstr "%3$d개의 구성요소가 있는 지원하지 않는 JPEG 2000%1$s '%2$
 
 #: ../plug-ins/common/file-jp2-load.c:1000
 msgid "Color space:"
-msgstr "색 공간:"
+msgstr "색상 공간:"
 
 #: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:973
 #, c-format
@@ -3697,7 +3687,7 @@ msgstr "잘못된 파일 서명."
 #: ../plug-ins/common/file-psp.c:1808
 #, c-format
 msgid "Unsupported PSP file format version %d.%d."
-msgstr "지원하지 않는 PSP 파일 포맷 버전 %1$d.%2$d."
+msgstr "지원하지 않는 PSP 파일 형식 버전 %1$d.%2$d."
 
 #: ../plug-ins/common/file-psp.c:1828
 msgid "invalid block size"
@@ -4534,8 +4524,8 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"XWD-파일 %1$s은(는) 형식 %2$d , 심도 %3$d, 픽셀당비트 %4$d을(를) 가지고 있습"
-"니다. 이는 현재 지원되지 않습니다."
+"XWD-파일 %s은(는) %d 형식, 깊이(depth) %d, 픽셀 당 %d 비트를 가지고 있습니"
+"다. 이는 현재 지원되지 않습니다."
 
 #: ../plug-ins/common/file-xwd.c:636
 msgid "Cannot export images with alpha channels."
@@ -6406,7 +6396,6 @@ msgstr "분해"
 
 #: ../plug-ins/common/wavelet-decompose.c:254
 #, c-format
-#| msgid "Scale X:"
 msgid "Scale %d"
 msgstr "배율 %d"
 
@@ -6485,7 +6474,7 @@ msgstr "공유 충돌이 발생하였습니다."
 
 #: ../plug-ins/common/web-browser.c:182
 msgid "Unknown Microsoft Windows error."
-msgstr "알 수 없는 Microsoft Windows 오류."
+msgstr "알 수 없는 마이크로소프트 윈도우즈 오류."
 
 #: ../plug-ins/common/web-browser.c:185
 #, c-format
@@ -6910,7 +6899,6 @@ msgstr "압축 (PNG)"
 
 #: ../plug-ins/file-ico/ico-load.c:221
 #, c-format
-#| msgid "Could not load '%s': %s"
 msgid "Could not read '%lu' bytes"
 msgstr "'%lu' 바이트 읽지 못함"
 
@@ -7583,7 +7571,6 @@ msgstr "'%s'의 움직이는 WebP 프레임 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:220
 #, c-format
-#| msgid "Frame %d (%d%s)"
 msgid "Frame %d (%dms)"
 msgstr "프레임 %d (%dms)"
 
@@ -7593,7 +7580,7 @@ msgstr "메모리 부족"
 
 #: ../plug-ins/file-webp/file-webp-save.c:114
 msgid "not enough memory to flush bits"
-msgstr "비트를 플러시 하기에 부족한 메모리가"
+msgstr "비트를 플러시 하기에 부족한 메모리"
 
 #: ../plug-ins/file-webp/file-webp-save.c:116
 msgid "NULL parameter"
@@ -7643,9 +7630,6 @@ msgstr "%1$s을(를) 쓰기용으로 열기 실패: %2$s"
 
 #: ../plug-ins/file-webp/file-webp-save.c:254
 #, c-format
-#| msgid ""
-#| "Parse error in '%s':\n"
-#| "%s"
 msgid "WebP error: '%s'"
 msgstr "WebP 오류: '%s'"
 
@@ -7805,7 +7789,7 @@ msgstr "흐릿하게"
 
 #: ../plug-ins/flame/flame.c:778
 msgid "Gaussian"
-msgstr "가우시안 블러"
+msgstr "가우시안 블루어"
 
 #: ../plug-ins/flame/flame.c:791
 msgid "_Variation:"
@@ -8781,7 +8765,9 @@ msgstr "그림자 깊이(depth):"
 #: ../plug-ins/gimpressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "그림자의 깊이, 즉, 그림자가 개체와 얼마나 떨어져야 하는지 지정"
+msgstr ""
+"그림자 넣기의 깊이(depth), 즉, 그것을 되어야만 하는 개체와 얼마나 떨어져 있는"
+"가"
 
 #: ../plug-ins/gimpressionist/general.c:266
 msgid "Shadow blur:"
@@ -8983,7 +8969,7 @@ msgstr "버텍스_3"
 #: ../plug-ins/gimpressionist/orientmap.c:651
 #: ../plug-ins/gimpressionist/sizemap.c:540
 msgid "_Voronoi"
-msgstr "보로노이(_V)"
+msgstr "보르노이(_V)"
 
 #: ../plug-ins/gimpressionist/orientmap.c:659
 msgid ""
@@ -9374,7 +9360,6 @@ msgid "8bpc GRAY"
 msgstr "8bpc GRAY"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:21
-#| msgid "RGBA"
 msgid "8bpc RGBA"
 msgstr "8bpc RGBA"
 
@@ -9419,7 +9404,6 @@ msgid "Save color values from transparent pixels"
 msgstr "투명한 픽셀의 색상 값 저장"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
-#| msgid "Comment"
 msgid "<b>Comment</b>"
 msgstr "<b>주석</b>"
 
@@ -9444,7 +9428,6 @@ msgid "Description Writer\t"
 msgstr "설명 작성자\t"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
-#| msgid "Rotating"
 msgid "Rating"
 msgstr "등급"
 
@@ -9521,7 +9504,6 @@ msgid "IPTC Subject Code"
 msgstr "IPTC 주제 코드"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
-#| msgid "Create line"
 msgid "Headline"
 msgstr "헤드라인"
 
@@ -9543,7 +9525,7 @@ msgstr "크레딧 라인"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
 msgid "Source"
-msgstr "원본"
+msgstr "소스"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
 msgid "Usage Terms"
@@ -9755,7 +9737,6 @@ msgid "Longitude"
 msgstr "경도"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:84
-#| msgid "A_mplitude:"
 msgid "Altitude"
 msgstr "고도"
 
@@ -9772,7 +9753,6 @@ msgid "Altitude Reference"
 msgstr "고도 레퍼런스"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:88
-#| msgid "PSP"
 msgid "GPS"
 msgstr "GPS"
 
@@ -9797,7 +9777,6 @@ msgid "Study ID"
 msgstr "연구 ID"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
-#| msgid "Rendering wind"
 msgid "Referring Physician"
 msgstr "담당 의사"
 
@@ -9814,7 +9793,6 @@ msgid "Series Number"
 msgstr "시리즈 번호"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:98
-#| msgid "Quality:"
 msgid "Modality"
 msgstr "양상"
 
@@ -9835,7 +9813,6 @@ msgid "Equipment Manufacturer"
 msgstr "비품 제조업체"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
-#| msgid "DICOM image"
 msgid "DICOM"
 msgstr "DICOM"
 
@@ -9852,7 +9829,6 @@ msgid "XMP Tag"
 msgstr "XMP 태그"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:5
-#| msgid "XBM"
 msgid "XMP"
 msgstr "XMP"
 
@@ -10260,8 +10236,8 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"'%1$s'에서 해석 오류:\n"
-"%2$s"
+"'%s' 해석 오류:\n"
+"%s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:333
 msgid "Create an Iterated Function System (IFS) fractal"
@@ -11818,7 +11794,6 @@ msgid "Digitized from a print on non-transparent medium"
 msgstr "비투명 매체 상의 인쇄물로부터 디지털화됨"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
-#| msgid "Create star"
 msgid "Created by software"
 msgstr "소프트웨어로 만들어짐"
 
@@ -11952,7 +11927,6 @@ msgid "Cell"
 msgstr "휴대폰"
 
 #: ../plug-ins/metadata/metadata-tags.h:319
-#| msgid "Fan"
 msgid "Fax"
 msgstr "팩스"
 
@@ -12298,7 +12272,6 @@ msgid "Selection to Path Advanced Settings"
 msgstr "선택을 경로로 바꾸기 고급 설정"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
-#| msgid "Threshold:"
 msgid "Align Threshold:"
 msgstr "정렬 임계값:"
 
@@ -12339,7 +12312,6 @@ msgid ""
 msgstr "점, 그 선행 및 후행점이 이루는 각도가 이보다 작으면, 코너가 됩니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:167
-#| msgid "Threshold:"
 msgid "Error Threshold:"
 msgstr "오류 임계값:"
 
@@ -12439,7 +12411,6 @@ msgstr ""
 "선일수록 더 되돌려지기 쉽게 합니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:297
-#| msgid "Threshold:"
 msgid "Line Threshold:"
 msgstr "선 임계값:"
 
@@ -12503,7 +12474,6 @@ msgid ""
 msgstr "주어진 점이 세분화 하기에 더 나은 곳인지 결정할 때 고려할 점의 개수."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:369
-#| msgid "Threshold:"
 msgid "Subdivide Threshold:"
 msgstr "세분화 임계값:"
 
@@ -12538,6 +12508,132 @@ msgstr "스캐너/카메라(_S)..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "스캐너/카메라에서 데이터 전송하기"
+
+#~ msgid "Preview a GIMP layer-based animation"
+#~ msgstr "김프 레이어 기반 애니메이션 미리 보기"
+
+#~ msgid "_Playback..."
+#~ msgstr "재생(_P)..."
+
+#~ msgid "%.1f %%"
+#~ msgstr "%.1f %%"
+
+#~ msgid "Step _back"
+#~ msgstr "단계 되돌리기(_B)"
+
+#~ msgid "Step back to previous frame"
+#~ msgstr "이전 프레임으로 단계 되돌리기"
+
+#~ msgid "_Step"
+#~ msgstr "단계(_S)"
+
+#~ msgid "Step to next frame"
+#~ msgstr "다음 프레임으로"
+
+#~ msgid "Rewind the animation"
+#~ msgstr "애니메이션 되감기"
+
+#~ msgid "Reload the image"
+#~ msgstr "이미지 다시 불러오기"
+
+#~ msgid "Faster"
+#~ msgstr "빠르게"
+
+#~ msgid "Increase the speed of the animation"
+#~ msgstr "애니메이션 속도 증가"
+
+#~ msgid "Slower"
+#~ msgstr "느리게"
+
+#~ msgid "Decrease the speed of the animation"
+#~ msgstr "애니메이션 속도 감소"
+
+#~ msgid "Reset speed"
+#~ msgstr "속도 초기화"
+
+#~ msgid "Reset the speed of the animation"
+#~ msgstr "애니메이션의 속도 초기화"
+
+#~ msgid "Start playback"
+#~ msgstr "재생 시작"
+
+#~ msgid "Detach"
+#~ msgstr "떼어내기"
+
+#~ msgid "Detach the animation from the dialog window"
+#~ msgstr "대화 상자 창에서 애니메이션 분리하기"
+
+#~ msgid "Animation Playback:"
+#~ msgstr "애니메이션 재생:"
+
+#~ msgid "%d fps"
+#~ msgstr "%d fps"
+
+#~ msgid "Default framerate"
+#~ msgstr "기본 프레임 속도"
+
+#~ msgid "Playback speed"
+#~ msgstr "재생 속도"
+
+#~ msgid "Memory could not be allocated to the frame container."
+#~ msgstr "프레임 컨테이너 안에 메모리가 할당될 수 없음."
+
+#~ msgid "Invalid image. Did you close it?"
+#~ msgstr "잘못된 이미지. 닫을까요?"
+
+#~ msgid "Frame %d of %d"
+#~ msgstr "프레임 %d of %d"
+
+#~ msgid "Stop playback"
+#~ msgstr "재생 중지"
+
+#~ msgid "Borderaverage"
+#~ msgstr "테두리 평균"
+
+#~ msgid "Stretch color saturation to cover maximum possible range"
+#~ msgstr "가능한 최대로 색상 채도 높이기"
+
+#~ msgid "_Color Enhance (legacy)"
+#~ msgstr "색 강화(_C)"
+
+#~ msgid "Color Enhance"
+#~ msgstr "색상 강화"
+
+#~ msgid "Transform image with the Mandelbrot Fractal"
+#~ msgstr "만델브로트(Mandelbrot) 프랙탈로 이미지 변형"
+
+#~ msgid "_Fractal Trace (legacy)..."
+#~ msgstr "프랙탈 트레이싱(_F) (레거시)..."
+
+#~ msgid "Fractal Trace"
+#~ msgstr "프랙탈 자취"
+
+#~ msgid "Outside Type"
+#~ msgstr "외부 유형"
+
+#~ msgid "_Wrap"
+#~ msgstr "싸기(_W)"
+
+#~ msgid "_White"
+#~ msgstr "흰색(_W)"
+
+#~ msgid "Mandelbrot Parameters"
+#~ msgstr "만델브로트 매개변수"
+
+#~ msgid "X_1:"
+#~ msgstr "X_1:"
+
+#~ msgid "X_2:"
+#~ msgstr "X_2:"
+
+#~ msgid "Y_1:"
+#~ msgstr "Y_1:"
+
+#~ msgid "Y_2:"
+#~ msgstr "Y_2:"
+
+#~ msgid "automatic pixelformat"
+#~ msgstr "자동 픽셀형식"
 
 #~ msgid "Original"
 #~ msgstr "원래 환경"
@@ -12702,68 +12798,8 @@ msgstr "스캐너/카메라에서 데이터 전송하기"
 #~ msgid "_HSL color model"
 #~ msgstr "_HSL 색상 모델"
 
-#~ msgid "Preview a GIMP layer-based animation"
-#~ msgstr "김프 레이어 기반 애니메이션 미리 보기"
-
-#~ msgid "_Playback..."
-#~ msgstr "재생(_P)..."
-
-#~ msgid "_Step"
-#~ msgstr "단계(_S)"
-
-#~ msgid "Step to next frame"
-#~ msgstr "다음 프레임으로"
-
-#~ msgid "Rewind the animation"
-#~ msgstr "애니메이션 되감기"
-
-#~ msgid "Faster"
-#~ msgstr "빠르게"
-
-#~ msgid "Increase the speed of the animation"
-#~ msgstr "애니메이션 속도 증가"
-
-#~ msgid "Slower"
-#~ msgstr "느리게"
-
-#~ msgid "Decrease the speed of the animation"
-#~ msgstr "애니메이션 속도 감소"
-
-#~ msgid "Reset speed"
-#~ msgstr "속도 초기화"
-
-#~ msgid "Reset the speed of the animation"
-#~ msgstr "애니메이션의 속도 초기화"
-
-#~ msgid "Start playback"
-#~ msgstr "재생 시작"
-
-#~ msgid "Detach"
-#~ msgstr "떼어내기"
-
-#~ msgid "Detach the animation from the dialog window"
-#~ msgstr "대화 상자 창에서 애니메이션 분리하기"
-
-#~ msgid "Animation Playback:"
-#~ msgstr "애니메이션 재생:"
-
-#~ msgid "%d fps"
-#~ msgstr "%d fps"
-
-#~ msgid "Default framerate"
-#~ msgstr "기본 프레임 속도"
-
-#~ msgid "Playback speed"
-#~ msgstr "재생 속도"
-
 #~ msgid "Tried to display an invalid layer."
 #~ msgstr "잘못된 레이어를 표시하려고 시도했습니다."
-
-#~ msgid "Frame %d of %d"
-#~ msgstr "프레임 %d of %d"
-
-#~ msgid "Stop playback"
-#~ msgstr "재생 중지"
 
 #~ msgid "Antialias using the Scale3X edge-extrapolation algorithm"
 #~ msgstr "Scale3X edge-extrapolation 알고리즘을 이용한 안티앨리아스"
@@ -12937,15 +12973,6 @@ msgstr "스캐너/카메라에서 데이터 전송하기"
 #~ msgid "Save Channel Mixer Settings"
 #~ msgstr "채널 믹서 설정 저장하기"
 
-#~ msgid "Stretch color saturation to cover maximum possible range"
-#~ msgstr "가능한 최대로 색상 채도 높이기"
-
-#~ msgid "_Color Enhance"
-#~ msgstr "색상 강화(_C)..."
-
-#~ msgid "Color Enhance"
-#~ msgstr "색상 강화"
-
 #~ msgid "Swap one color with another"
 #~ msgstr "색상을 다른 색상과 교환"
 
@@ -13061,9 +13088,6 @@ msgstr "스캐너/카메라에서 데이터 전송하기"
 
 #~ msgid "E_xtend"
 #~ msgstr "확장(_X)"
-
-#~ msgid "_Wrap"
-#~ msgstr "싸기(_W)"
 
 #~ msgid "Cro_p"
 #~ msgstr "잘라내기(_P)"
@@ -13412,36 +13436,6 @@ msgstr "스캐너/카메라에서 데이터 전송하기"
 
 #~ msgid "Error during writing rgb image"
 #~ msgstr "rgb 이미지 쓰기 동작 시 에러"
-
-#~ msgid "Transform image with the Mandelbrot Fractal"
-#~ msgstr "만델브로트(Mandelbrot) 프랙탈로 이미지 변형"
-
-#~ msgid "_Fractal Trace..."
-#~ msgstr "프랙탈 자취(_F)..."
-
-#~ msgid "Fractal Trace"
-#~ msgstr "프랙탈 자취"
-
-#~ msgid "Outside Type"
-#~ msgstr "외부 유형"
-
-#~ msgid "_White"
-#~ msgstr "흰색(_W)"
-
-#~ msgid "Mandelbrot Parameters"
-#~ msgstr "만델브로트 매개변수"
-
-#~ msgid "X_1:"
-#~ msgstr "X_1:"
-
-#~ msgid "X_2:"
-#~ msgstr "X_2:"
-
-#~ msgid "Y_1:"
-#~ msgstr "Y_1:"
-
-#~ msgid "Y_2:"
-#~ msgstr "Y_2:"
 
 #~ msgid "_Guillotine"
 #~ msgstr "_Guillotine"
@@ -14935,9 +14929,6 @@ msgstr "스캐너/카메라에서 데이터 전송하기"
 #~ msgid "Could not open output file for writing"
 #~ msgstr "쓰기 모드로 출력 파일을 열 수 없습니다."
 
-#~ msgid "Email the image"
-#~ msgstr "이메일로 보내기"
-
 #~ msgid "_Mail Image..."
 #~ msgstr "메일로 보내기(_M)..."
 
@@ -14946,3 +14937,12 @@ msgstr "스캐너/카메라에서 데이터 전송하기"
 
 #~ msgid "_MIME"
 #~ msgstr "_MIME 형식"
+
+#~ msgid "_Color Enhance"
+#~ msgstr "색상 강화(_C)..."
+
+#~ msgid "_Fractal Trace..."
+#~ msgstr "프랙탈 자취(_F)..."
+
+#~ msgid "Email the image"
+#~ msgstr "이메일로 보내기"
