@@ -42,7 +42,21 @@ import gimp
 
 class plugin:
     def start(self):
-        gimp.main(self.init, self.quit, self.query, self._run)
+        # only pass the init()/quit() member functions to gimp.main() if the
+        # plug-in overrides them, to avoid the default NOP versions from being
+        # called unnecessarily.  in particular, this avoids plug-ins that don't
+        # implement init() from being registered as having an init function,
+        # causing them to be run at each startup.
+        def get_func(name):
+            if getattr(self.__class__, name) != getattr(plugin, name):
+                return getattr(self, name)
+            else:
+                return None
+
+        gimp.main(get_func("init"),
+                  get_func("quit"),
+                  self.query,
+                  self._run)
 
     def init(self):
         pass
