@@ -76,6 +76,16 @@ Usability:
   - Work around weird display of the item list in various drop down all
     over GIMP (all GIMP classes based off GtkComboBox), which had empty
     scrollable space at the top.
+  - GimpSpinScale widget now has an optional feature to constrain the
+    value to integer when dragging with a pointer (even if the scale
+    allows for fractional numbers), set with new function
+    gimp_spin_scale_set_constrain_drag().
+    This is useful for settings where fractional numbers are technically
+    possible, yet most common use case are with integers (such as pixel
+    sizes, angles in degrees, etc.) so you want the easy interface to be
+    constrained. Fractional numbers are still settable, for instance by
+    keyboard edit; and arrow incrementation won't drop fraction parts.
+    This is currently only activated for brush options in paint tools.
 
 Tools:
 
