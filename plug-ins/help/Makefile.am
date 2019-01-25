@@ -17,7 +17,7 @@ help_RC = help.rc.o
 endif
 
 AM_CPPFLAGS = \
-	-DGIMPDATADIR=\""$(gimpdatadir)"\"	\
+	-DDATADIR=\""$(gimpdatadir)"\"	\
 	-I$(top_srcdir)			\
 	$(CAIRO_CFLAGS)			\
 	$(GIO_CFLAGS)			\
