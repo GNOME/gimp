@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-20 11:44+0000\n"
-"PO-Revision-Date: 2019-01-24 01:56+0900\n"
+"PO-Revision-Date: 2019-01-27 00:59+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -6769,12 +6769,9 @@ msgid "8 bit integer"
 msgstr "8 bit 整数"
 
 #: ../app/actions/image-actions.c:213
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 8 bit 整数に変換します"
 
 #: ../app/actions/image-actions.c:217
 msgctxt "image-convert-action"
@@ -6782,12 +6779,9 @@ msgid "16 bit integer"
 msgstr "16 bit 整数"
 
 #: ../app/actions/image-actions.c:219
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 16 bit 整数に変換します"
 
 #: ../app/actions/image-actions.c:223
 msgctxt "image-convert-action"
@@ -6795,12 +6789,9 @@ msgid "32 bit integer"
 msgstr "32 bit 整数"
 
 #: ../app/actions/image-actions.c:225
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 32 bit 整数に変換します"
 
 #: ../app/actions/image-actions.c:229
 msgctxt "image-convert-action"
@@ -6808,12 +6799,9 @@ msgid "16 bit floating point"
 msgstr "16 bit 浮動小数点"
 
 #: ../app/actions/image-actions.c:231
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 16 bit 浮動小数点に変換します"
 
 #: ../app/actions/image-actions.c:235
 msgctxt "image-convert-action"
@@ -6821,12 +6809,9 @@ msgid "32 bit floating point"
 msgstr "32 bit 浮動小数点"
 
 #: ../app/actions/image-actions.c:237
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 32 bit 浮動小数点に変換します"
 
 #: ../app/actions/image-actions.c:241
 msgctxt "image-convert-action"
@@ -6834,17 +6819,14 @@ msgid "64 bit floating point"
 msgstr "64 bit 浮動小数点"
 
 #: ../app/actions/image-actions.c:243
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 64 bit 浮動小数点に変換します"
 
 #: ../app/actions/image-actions.c:250
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr ""
+msgstr "知覚的ガンマ (sRGB)"
 
 #: ../app/actions/image-actions.c:252
 #, fuzzy
@@ -6855,12 +6837,9 @@ msgid "Convert the image to perceptual (sRGB) gamma"
 msgstr "画像をグレースケールに変換します"
 
 #: ../app/actions/image-actions.c:256
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "image-convert-action"
 msgid "Linear light"
-msgstr "ハードライト"
+msgstr "リニアライト"
 
 #: ../app/actions/image-actions.c:258
 #, fuzzy
@@ -11735,32 +11714,29 @@ msgid "Export file type used by default."
 msgstr "サンプルポイントを表示します"
 
 #: ../app/config/gimprc-blurbs.h:211
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgid "Export the image's color profile by default."
-msgstr "サンプルポイントを表示します"
+msgstr "デフォルトで画像のカラープロファイルをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
 #.
 #: ../app/config/gimprc-blurbs.h:217
 msgid "Export Exif metadata by default."
-msgstr ""
+msgstr "デフォルトで Exif メタデータをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
 #: ../app/config/gimprc-blurbs.h:223
 msgid "Export XMP metadata by default."
-msgstr ""
+msgstr "デフォルトで XMP メタデータをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
 #: ../app/config/gimprc-blurbs.h:229
 msgid "Export IPTC metadata by default."
-msgstr ""
+msgstr "デフォルトで IPTC メタデータをエクスポートします。"
 
 #: ../app/config/gimprc-blurbs.h:232
 msgid "Try generating debug data for bug reporting when appropriate."
@@ -11844,10 +11820,8 @@ msgstr ""
 "す。"
 
 #: ../app/config/gimprc-blurbs.h:289
-#, fuzzy
-#| msgid "Sets how many processors GIMP should try to use simultaneously."
 msgid "Sets how many threads GIMP should use for operations that support it."
-msgstr "GIMP での処理で同時に使いたい CPU の数を指定します"
+msgstr "GIMP での処理で同時に使いたいスレッドの数を指定します。"
 
 #: ../app/config/gimprc-blurbs.h:311
 msgid ""
@@ -11863,6 +11837,8 @@ msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr ""
+"この設定がオンのときは、レイヤーグループのプレビューが表示されます。"
+"レイヤーグループのプレビューは通常のレイヤープレビューよりも高負荷です。"
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid ""
@@ -14046,9 +14022,6 @@ msgid "Foreground"
 msgstr "描画色"
 
 #: ../app/core/gimpcontext.c:685 ../app/core/gimpgrid.c:94
-#, fuzzy
-#| msgctxt "fill-type"
-#| msgid "Foreground color"
 msgid "Foreground color"
 msgstr "描画色"
 
@@ -14057,9 +14030,6 @@ msgid "Background"
 msgstr "背景"
 
 #: ../app/core/gimpcontext.c:692 ../app/core/gimpgrid.c:101
-#, fuzzy
-#| msgctxt "fill-type"
-#| msgid "Background color"
 msgid "Background color"
 msgstr "背景色"
 
@@ -17065,7 +17035,7 @@ msgstr "ハードウェアアクセラレーション"
 
 #: ../app/dialogs/preferences-dialog.c:1194
 msgid "Use OpenCL"
-msgstr "OpenCL を使用"
+msgstr "OpenCL を使用する"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1198
@@ -17306,11 +17276,8 @@ msgid "Export Policies"
 msgstr "エクスポートポリシー"
 
 #: ../app/dialogs/preferences-dialog.c:1521
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgid "Export the image's color profile by default"
-msgstr "サンプルポイントを表示します"
+msgstr "画像のカラープロファイルをエクスポートする"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17319,7 +17286,7 @@ msgstr "サンプルポイントを表示します"
 #.
 #: ../app/dialogs/preferences-dialog.c:1529
 msgid "Export Exif metadata by default when available"
-msgstr ""
+msgstr "Exif メタデータをエクスポートする (可能な場合)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17328,7 +17295,7 @@ msgstr ""
 #.
 #: ../app/dialogs/preferences-dialog.c:1537
 msgid "Export XMP metadata by default when available"
-msgstr ""
+msgstr "XMP メタデータをエクスポートする (可能な場合)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17337,7 +17304,7 @@ msgstr ""
 #.
 #: ../app/dialogs/preferences-dialog.c:1545
 msgid "Export IPTC metadata by default when available"
-msgstr ""
+msgstr "IPTC メタデータをエクスポートする (可能な場合)"
 
 #: ../app/dialogs/preferences-dialog.c:1548
 msgid "Metadata can contain sensitive information."
@@ -17614,17 +17581,13 @@ msgid "Profile folder:"
 msgstr "プロファイルフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2169
-#, fuzzy
-#| msgid "Select Folder for Temporary Files"
 msgid "Select Default Folder for Color Profiles"
-msgstr "一時ファイル用フォルダーを選択します"
+msgstr "カラープロファイル用デフォルトフォルダーの選択"
 
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:2173
-#, fuzzy
-#| msgid "Select Monitor Color Profile"
 msgid "Convert to Color Profile Dialog"
-msgstr "モニタープロファイルの選択"
+msgstr "カラープロファイルに変換ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2178
 #, fuzzy
@@ -24764,11 +24727,9 @@ msgid "_N-Point Deformation"
 msgstr "ピクセル情報"
 
 #: ../app/tools/gimpoperationtool.c:135
-#, fuzzy
-#| msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr ""
-"[GEGL 操作]\n"
+"[操作ツール]\n"
 "任意の GEGL 操作を行い画像に変化を与えます。 GEGL 操作はインデックスレイヤー"
 "では利用できません。"
 
@@ -28303,10 +28264,8 @@ msgid "Color _manage this image"
 msgstr "画像の着色"
 
 #: ../app/widgets/gimptemplateeditor.c:438
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Choose A Color Profile"
-msgstr "カラープロファイル"
+msgstr "カラープロファイルの選択"
 
 #: ../app/widgets/gimptemplateeditor.c:442
 msgid "Co_lor profile:"
@@ -28636,10 +28595,9 @@ msgid "Built-in grayscale (%s)"
 msgstr "逆消しゴム  (%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1806
-#, fuzzy, c-format
-#| msgid "Direction  (%s)"
+#, c-format
 msgid "Built-in RGB (%s)"
-msgstr "方向 (%s)"
+msgstr "組み込み RGB (%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1823
 #, c-format
