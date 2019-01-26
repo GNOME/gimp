@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-23 19:41+0000\n"
-"PO-Revision-Date: 2019-01-25 05:11+0900\n"
+"PO-Revision-Date: 2019-01-26 00:06+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -51,7 +51,7 @@ msgstr "Script-Fu(_S)"
 
 #: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
-msgstr "테스트(_T)"
+msgstr "시험(_T)"
 
 #: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Buttons"
@@ -79,7 +79,7 @@ msgstr "빗면 무늬(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:328
 msgid "_Classic.Gimp.Org"
-msgstr "예전 Gimp.Org(_C)"
+msgstr "_Classic.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:331
 msgid "Alpha to _Logo"
@@ -145,11 +145,11 @@ msgstr "취소(_C)"
 #: ../plug-ins/script-fu/script-fu-console.c:337
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
+msgstr "'%s'을(를) 쓰기용으로 열기 실패: %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:366
 msgid "Script-Fu Procedure Browser"
-msgstr "Script-Fu 프로시저 찾아보기"
+msgstr "Script-Fu 프러시저 브라우저"
 
 #: ../plug-ins/script-fu/script-fu-console.c:370
 msgid "_Apply"
@@ -215,11 +215,11 @@ msgstr "Script-Fu 무늬 선택"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:499
 msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu 그라디언트 선택"
+msgstr "Script-Fu 그레이디언트 선택"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:508
 msgid "Script-Fu Brush Selection"
-msgstr "Script-Fu 브러시 선택"
+msgstr "Script-Fu 붓 선택"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:877
 #, c-format
@@ -228,7 +228,7 @@ msgstr "%s 실행 중 오류:"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
-msgstr "'script-fu-register' 호출에 필요한 매개변수가 부족"
+msgstr "'script-fu-register' 호출에 필요한 매개변수가 부족함"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
@@ -413,7 +413,7 @@ msgstr "빗면 그림자"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:170
 msgid "Bevel Highlight"
-msgstr "빗면 강종"
+msgstr "빗면 강조"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:171
 msgid "Cast Shadow"
@@ -608,7 +608,7 @@ msgstr "왜곡(_D)..."
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
-msgstr "선택영역 압박"
+msgstr "선택 영역 압박"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Threshold (bigger 1<-->254 smaller)"
@@ -756,7 +756,7 @@ msgstr "색채 배합(_C)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
-msgstr "흰색위에 검정"
+msgstr "흰색 위에 검정"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Active colors"
@@ -808,7 +808,7 @@ msgstr "경로 사용하기(_P)"
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:138
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
-msgstr "사용자 설명서로의 북마크"
+msgstr "사용자 설명서 바로 가기"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
@@ -916,7 +916,7 @@ msgstr "격자(_G)..."
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
-msgstr "X와 Y 위치 목록에 지정한 대로 현재 브러시를 사용하여 격자 그리기"
+msgstr "X와 Y 위치 목록에 지정한 대로 현재 붓을 사용하여 격자 그리기"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
@@ -1356,7 +1356,7 @@ msgstr "이미지로(_I)"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:82
 msgid "Convert a selection to an image"
-msgstr "선택을 이미지로 변환"
+msgstr "선택 영역을 이미지로 변환"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
 msgid "To _Pattern..."
@@ -1589,8 +1589,7 @@ msgstr "파도(_W)..."
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr ""
-"현재 이미지에 돌이 던져진 것 같은 효과가 있는 다중 레이어 이미지 만들기"
+msgstr "현재 이미지에 돌을 던진 것 같은 효과가 있는 다중 레이어 이미지 만들기"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
