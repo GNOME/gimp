@@ -11,6 +11,18 @@
 
 #include "openexr-wrapper.h"
 
+#if defined(__MINGW32__)
+#ifndef FLT_EPSILON
+#define FLT_EPSILON  __FLT_EPSILON__
+#endif
+#ifndef DBL_EPSILON
+#define DBL_EPSILON  __DBL_EPSILON__
+#endif
+#ifndef LDBL_EPSILON
+#define LDBL_EPSILON __LDBL_EPSILON__
+#endif
+#endif
+
 #include <ImfInputFile.h>
 #include <ImfChannelList.h>
 #include <ImfRgbaFile.h>
