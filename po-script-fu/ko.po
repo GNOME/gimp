@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-23 19:41+0000\n"
-"PO-Revision-Date: 2019-01-25 05:11+0900\n"
+"POT-Creation-Date: 2019-01-26 00:07+0000\n"
+"PO-Revision-Date: 2019-01-26 12:36+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -51,7 +51,7 @@ msgstr "Script-Fu(_S)"
 
 #: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
-msgstr "테스트(_T)"
+msgstr "시험(_T)"
 
 #: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Buttons"
@@ -79,7 +79,7 @@ msgstr "빗면 무늬(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:328
 msgid "_Classic.Gimp.Org"
-msgstr "예전 Gimp.Org(_C)"
+msgstr "_Classic.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:331
 msgid "Alpha to _Logo"
@@ -107,7 +107,7 @@ msgid "Script-Fu Console"
 msgstr "Script-Fu 콘솔"
 
 #: ../plug-ins/script-fu/script-fu-console.c:132
-#: ../plug-ins/script-fu/script-fu-console.c:293
+#: ../plug-ins/script-fu/script-fu-console.c:296
 msgid "_Save"
 msgstr "저장(_S)"
 
@@ -116,7 +116,7 @@ msgid "C_lear"
 msgstr "지우기(_L)"
 
 #: ../plug-ins/script-fu/script-fu-console.c:134
-#: ../plug-ins/script-fu/script-fu-console.c:371
+#: ../plug-ins/script-fu/script-fu-console.c:374
 msgid "_Close"
 msgstr "닫기(_C)"
 
@@ -132,26 +132,26 @@ msgstr "대화형 Scheme 개발"
 msgid "_Browse..."
 msgstr "찾아보기(_B)..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:288
+#: ../plug-ins/script-fu/script-fu-console.c:291
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu 콘솔 출력 저장"
 
-#: ../plug-ins/script-fu/script-fu-console.c:292
-#: ../plug-ins/script-fu/script-fu-interface.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:295
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #: ../plug-ins/script-fu/script-fu-server.c:834
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: ../plug-ins/script-fu/script-fu-console.c:337
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
+msgstr "'%s'을(를) 쓰기용으로 열기 실패: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:366
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
-msgstr "Script-Fu 프로시저 찾아보기"
+msgstr "Script-Fu 프러시저 브라우저"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:373
 msgid "_Apply"
 msgstr "적용(_A)"
 
@@ -159,76 +159,76 @@ msgstr "적용(_A)"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 평가 모드는 비대화형 호출만 허용"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu는 동시에 두 개의 스크립트를 실행할 수 없습니다."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "\"%s\" 스크립트가 이미 실행되고 있습니다."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:228
+#: ../plug-ins/script-fu/script-fu-interface.c:230
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:235
+#: ../plug-ins/script-fu/script-fu-interface.c:237
 msgid "_Reset"
 msgstr "초기화(_R)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:239
 msgid "_OK"
 msgstr "확인(_O)"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:293
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:341
+#: ../plug-ins/script-fu/script-fu-interface.c:343
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 색상 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:459
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 폴더 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 글꼴 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu 팔레트 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:490
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu 무늬 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:499
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu 그라디언트 선택"
+msgstr "Script-Fu 그레이디언트 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:508
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
-msgstr "Script-Fu 브러시 선택"
+msgstr "Script-Fu 붓 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:877
+#: ../plug-ins/script-fu/script-fu-interface.c:887
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s 실행 중 오류:"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
-msgstr "'script-fu-register' 호출에 필요한 매개변수가 부족"
+msgstr "'script-fu-register' 호출에 필요한 매개변수가 부족함"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
@@ -413,7 +413,7 @@ msgstr "빗면 그림자"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:170
 msgid "Bevel Highlight"
-msgstr "빗면 강종"
+msgstr "빗면 강조"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:171
 msgid "Cast Shadow"
@@ -608,7 +608,7 @@ msgstr "왜곡(_D)..."
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
-msgstr "선택영역 압박"
+msgstr "선택 영역 압박"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Threshold (bigger 1<-->254 smaller)"
@@ -756,7 +756,7 @@ msgstr "색채 배합(_C)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
-msgstr "흰색위에 검정"
+msgstr "흰색 위에 검정"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Active colors"
@@ -808,7 +808,7 @@ msgstr "경로 사용하기(_P)"
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:138
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
-msgstr "사용자 설명서로의 북마크"
+msgstr "사용자 설명서 바로 가기"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
@@ -916,7 +916,7 @@ msgstr "격자(_G)..."
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
-msgstr "X와 Y 위치 목록에 지정한 대로 현재 브러시를 사용하여 격자 그리기"
+msgstr "X와 Y 위치 목록에 지정한 대로 현재 붓을 사용하여 격자 그리기"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
@@ -1356,7 +1356,7 @@ msgstr "이미지로(_I)"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:82
 msgid "Convert a selection to an image"
-msgstr "선택을 이미지로 변환"
+msgstr "선택 영역을 이미지로 변환"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
 msgid "To _Pattern..."
@@ -1419,13 +1419,13 @@ msgid "Rendering Spyro"
 msgstr "스파이로 렌더링하기"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "스파이로그래프(_S)..."
+msgid "_Spyrogimp (older script-fu version)..."
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr "현재 레이어에 스파이로그래프,에피트로코이드 및 리사주 곡선을 추가"
+msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+msgstr ""
+"이 프러시저는 폐기 예정입니다! 'plug-in-spyrogimp'를 대신 사용하십시오."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
@@ -1589,8 +1589,7 @@ msgstr "파도(_W)..."
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr ""
-"현재 이미지에 돌이 던져진 것 같은 효과가 있는 다중 레이어 이미지 만들기"
+msgstr "현재 이미지에 돌을 던진 것 같은 효과가 있는 다중 레이어 이미지 만들기"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
@@ -1689,6 +1688,13 @@ msgstr "그림자 효과 X 오프셋"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "그림자 효과 Y 오프셋"
+
+#~ msgid "_Spyrogimp..."
+#~ msgstr "스파이로그래프(_S)..."
+
+#~ msgid ""
+#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+#~ msgstr "현재 레이어에 스파이로그래프,에피트로코이드 및 리사주 곡선을 추가"
 
 #~ msgid "FG-BG-RGB"
 #~ msgstr "FG-BG-RGB"
