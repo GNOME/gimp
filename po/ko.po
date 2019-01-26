@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 11:20+0000\n"
-"PO-Revision-Date: 2019-01-25 16:11+0900\n"
+"PO-Revision-Date: 2019-01-27 04:38+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -6104,7 +6104,7 @@ msgstr "이미지를 위한 격자 설정"
 #: ../app/actions/image-actions.c:172
 msgctxt "image-action"
 msgid "Image Pr_operties"
-msgstr "이미지 성질(_O)"
+msgstr "이미지 속성(_O)"
 
 #: ../app/actions/image-actions.c:173
 msgctxt "image-action"
@@ -13098,7 +13098,7 @@ msgstr "스타일"
 #: ../app/tools/gimpbucketfilloptions.c:147
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
-msgstr "부드럽게 하기"
+msgstr "에일리어싱 제거"
 
 #: ../app/core/gimpfilloptions.c:300
 msgctxt "undo-type"
@@ -21045,7 +21045,7 @@ msgid ""
 "uniformly."
 msgstr ""
 "클릭한 픽셀과의 색 차이에 따라 또는 라인 아트 테두리에 따라 채우기 불투명도 "
-"결정(임계값 참조). 전체 영역을 균일하게 채우려면 앤티에일리어싱을 비활성화."
+"결정(임계값 참조). 전체 영역을 균일하게 채우려면 에일리어싱 제거를 비활성화."
 
 #: ../app/tools/gimpbucketfilloptions.c:157
 #: ../app/tools/gimpgradientoptions.c:121
@@ -22547,7 +22547,7 @@ msgstr "레이어 그룹 위에 칠할 수 없습니다."
 #: ../app/tools/gimppainttool.c:635
 #, c-format
 msgid "%s for a straight line"
-msgstr "직선으로 하려면 %s"
+msgstr "%s 하면 직선"
 
 #: ../app/tools/gimppainttool.c:838
 msgid "The active layer does not have an alpha channel."
@@ -25168,7 +25168,7 @@ msgstr "색 채우기"
 
 #: ../app/widgets/gimpfilleditor.c:143
 msgid "_Antialiasing"
-msgstr "부드럽게 하기(_A)"
+msgstr "에일리어싱 제거(_A)"
 
 #: ../app/widgets/gimpgradienteditor.c:584
 msgid "Left Endpoint Color"
@@ -26030,7 +26030,7 @@ msgstr "글꼴 선택 영역 대화상자 표시"
 #: ../app/widgets/gimpwidgets-utils.c:608
 #, c-format
 msgid "%s (try %s)"
-msgstr "%s (시도 %s)"
+msgstr "%s (%s 시도)"
 
 #: ../app/widgets/gimpwidgets-utils.c:608
 #, c-format
@@ -26040,12 +26040,12 @@ msgstr "%s (%s)"
 #: ../app/widgets/gimpwidgets-utils.c:612
 #, c-format
 msgid "%s (try %s, %s)"
-msgstr "%s (시도 %s, %s)"
+msgstr "%s (%s, %s 시도)"
 
 #: ../app/widgets/gimpwidgets-utils.c:616
 #, c-format
 msgid "%s (try %s, %s, %s)"
-msgstr "%s (시도 %s, %s, %s)"
+msgstr "%s (%s, %s, %s 시도)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1708
 #, c-format
@@ -26291,6 +26291,26 @@ msgstr "퍼지"
 #~ "gimp-2-10-0-released/"
 
 #~ msgid ""
+#~ "Major core optimizations for painting and display, including parallelized "
+#~ "painting code."
+#~ msgstr ""
+#~ "병렬화된 페인팅 코드를 포함하여, 페인팅 및 디스플레이의 주요 핵심 최적화"
+
+#~ msgid ""
+#~ "Symmetries are now preserved in XCF files (saved as image parasites)."
+#~ msgstr "대칭은 이제 XCF 파일에 보존됩니다(이미지 기생물로 저장됨)."
+
+#~ msgid ""
+#~ "Plug-in debugging improved to output stack traces from plug-ins with --"
+#~ "stack-trace-mode command line option not only on receiving signals but "
+#~ "also on warnings and critical errors when \"fatal-warnings\" debug key is "
+#~ "set."
+#~ msgstr ""
+#~ "디버그 키가 설정된 경우, 시그널 수신 시만 아니라 “fatal-warnings” 경고 및 "
+#~ "치명적인 오류 시에도 --stack-trace-mode 명령 줄 옵션을 사용하여 플러그 인"
+#~ "에서 스택 추적을 출력하도록 플러그인 디버깅을 개선하였습니다."
+
+#~ msgid ""
 #~ "For more information, see https://www.gimp.org/news/2018/04/17/"
 #~ "gimp-2-10-0-rc2-released/"
 #~ msgstr ""
@@ -26451,8 +26471,17 @@ msgstr "퍼지"
 #~ msgid "Adjust levels perceptually"
 #~ msgstr "지각적으로 레벨을 조정"
 
+#~ msgid "Show values in linear space"
+#~ msgstr "선형 공간에서 값 표시"
+
+#~ msgid "Show values in perceptual space"
+#~ msgstr "지각적 공간에서 값 표시"
+
 #~ msgid "Guess icon size from resolution"
 #~ msgstr "해상도로부터 아이콘 크기 추측"
+
+#~ msgid "Use icon size from the theme"
+#~ msgstr "테마의 아이콘 크기 사용"
 
 #~ msgid "Custom icon size"
 #~ msgstr "맞춤 아이콘 크기"
@@ -27178,12 +27207,3 @@ msgstr "퍼지"
 
 #~ msgid "Error saving XCF file: %s"
 #~ msgstr "XCF 파일 저장 오류: %s"
-
-#~ msgid "Show values in linear space"
-#~ msgstr "선형 공간에서 값 표시"
-
-#~ msgid "Show values in perceptual space"
-#~ msgstr "지각적 공간에서 값 표시"
-
-#~ msgid "Use icon size from the theme"
-#~ msgstr "테마의 아이콘 크기 사용"
