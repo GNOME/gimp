@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-23 19:39+0000\n"
-"PO-Revision-Date: 2019-01-24 11:58+0900\n"
+"PO-Revision-Date: 2019-01-27 04:33+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -1641,7 +1641,7 @@ msgstr "부드럽게(_T)"
 #. The antialiasing toggle
 #: ../plug-ins/common/curve-bend.c:1351 ../plug-ins/common/qbist.c:862
 msgid "_Antialiasing"
-msgstr "안티앨리어싱(_A)"
+msgstr "에일리어싱 제거(_A)"
 
 #. The work_on_copy toggle
 #: ../plug-ins/common/curve-bend.c:1361
@@ -3242,7 +3242,7 @@ msgstr "해상도(_R):"
 #. Antialiasing
 #: ../plug-ins/common/file-pdf-load.c:1353
 msgid "Use _Anti-aliasing"
-msgstr "안티-앨리어싱 사용(_A)"
+msgstr "에일리어싱 제거 사용(_A)"
 
 #: ../plug-ins/common/file-pdf-load.c:1631
 #: ../plug-ins/common/file-pdf-load.c:1632 ../plug-ins/common/file-svg.c:916
@@ -3611,7 +3611,7 @@ msgstr "자동"
 
 #: ../plug-ins/common/file-ps.c:3552
 msgid "Text antialiasing"
-msgstr "텍스트 안티앨리어싱"
+msgstr "텍스트 에일리어싱 제거"
 
 #: ../plug-ins/common/file-ps.c:3556 ../plug-ins/common/file-ps.c:3568
 msgctxt "antialiasing"
@@ -3628,7 +3628,7 @@ msgstr "강함"
 
 #: ../plug-ins/common/file-ps.c:3564
 msgid "Graphic antialiasing"
-msgstr "그래픽 안티앨리어싱"
+msgstr "그래픽 에일리어싱 제거"
 
 #: ../plug-ins/common/file-ps.c:3642
 msgid "PostScript"
@@ -5449,7 +5449,7 @@ msgstr "제작소 초깃값(_F)"
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1293
 msgid "Antialiasing"
-msgstr "앤티앨리어싱"
+msgstr "에일리어싱 제거"
 
 #: ../plug-ins/common/newsprint.c:1442
 msgid "O_versample:"
@@ -11730,15 +11730,15 @@ msgstr "필터를 적용했을 때, 새로운 이미지 만들기"
 
 #: ../plug-ins/map-object/map-object-ui.c:528
 msgid "Enable _antialiasing"
-msgstr "안티앨리어싱 사용(_A)"
+msgstr "에일리어싱 제거 사용(_A)"
 
 #: ../plug-ins/map-object/map-object-ui.c:539
 msgid "Enable/disable jagged edges removal (antialiasing)"
-msgstr "톱니 같은 들쑥날쑥한 것 제거 가능/불가능 (앤티앨리어싱)"
+msgstr "톱니 같은 들쑥날쑥한 것 제거 가능/불가능 (앤티에일리어싱)"
 
 #: ../plug-ins/map-object/map-object-ui.c:557
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "앤티앨리어싱 특성. 더 높게 하지만 더 느리게"
+msgstr "에일리어싱 제거 품질. 더 높게 하지만 더 느리게"
 
 #: ../plug-ins/map-object/map-object-ui.c:574
 msgid "Stop when pixel differences are smaller than this value"
@@ -12863,7 +12863,7 @@ msgstr "스캐너/카메라에서 데이터 전송하기"
 #~ msgstr "안티앨리어싱(_A)"
 
 #~ msgid "Antialiasing..."
-#~ msgstr "앤티앨리어싱..."
+#~ msgstr "에일리어싱 제거..."
 
 #~ msgid "Add a canvas texture to the image"
 #~ msgstr "이미지에 캔버스 텍스쳐 추가"
