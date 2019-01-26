@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-20 12:28+0000\n"
-"PO-Revision-Date: 2019-01-24 01:56+0900\n"
+"POT-Creation-Date: 2019-01-25 23:36+0000\n"
+"PO-Revision-Date: 2019-01-27 00:59+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -154,118 +154,124 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
+"Full rewrite of the Spyrogimp plug-in with more options and better "
+"interaction"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "New \"Long Shadow\" filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
 "fixed."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -273,71 +279,65 @@ msgid ""
 "policy in stable micro releases."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
-msgid "And much, much more…"
-msgstr ""
-
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
-msgid ""
-"For more information, see https://www.gimp.org/news/2018/04/27/gimp-2-10-0-"
-"released/"
+msgid "And much, much more…"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
@@ -379,124 +379,104 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
-"For more information, see https://www.gimp.org/news/2018/04/17/gimp-2-10-0-"
-"rc2-released/"
-msgstr ""
-
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
-msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 #, fuzzy
 #| msgid "Cannot paint on layer groups."
 msgid "Layer masks on layer groups"
 msgstr "グループレイヤーに直接描画することはできません。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Metadata defaults preferences now available"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "Various GUI polishing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
-msgid ""
-"For more information, see https://www.gimp.org/news/2018/03/26/gimp-2-10-0-"
-"rc1-released/"
-msgstr ""
-
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the gradient editor"
 msgid "On-canvas gradient editing"
 msgstr "グラデーションエディターを開いてグラデーションを編集します"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Notification when an image is over/underexposed"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 #, fuzzy
 #| msgid "Color Management"
 msgid "Better and faster color management"
 msgstr "カラーマネジメント"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 #, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Paste _Into"
 msgid "Paste in place feature"
 msgstr "選択範囲内に貼り付け(_I)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Many usability improvements"
 msgstr "ユーザビリティの改善"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "マニュアルはお好みの言語で見ることができます"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "New support for password-protected PDF"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr ""
-
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
-msgid ""
-"For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
-"released/"
-msgstr ""
-"より詳しい情報は次をご覧ください: https://www.gimp.org/news/2017/12/12/"
-"gimp-2-9-8-released/"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.in.h:1
 msgid "Extra files for GIMP"
@@ -6780,12 +6760,9 @@ msgid "8 bit integer"
 msgstr "8 bit 整数"
 
 #: ../app/actions/image-actions.c:213
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 8 bit 整数に変換します"
 
 #: ../app/actions/image-actions.c:217
 msgctxt "image-convert-action"
@@ -6793,12 +6770,9 @@ msgid "16 bit integer"
 msgstr "16 bit 整数"
 
 #: ../app/actions/image-actions.c:219
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 16 bit 整数に変換します"
 
 #: ../app/actions/image-actions.c:223
 msgctxt "image-convert-action"
@@ -6806,12 +6780,9 @@ msgid "32 bit integer"
 msgstr "32 bit 整数"
 
 #: ../app/actions/image-actions.c:225
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 32 bit 整数に変換します"
 
 #: ../app/actions/image-actions.c:229
 msgctxt "image-convert-action"
@@ -6819,12 +6790,9 @@ msgid "16 bit floating point"
 msgstr "16 bit 浮動小数点"
 
 #: ../app/actions/image-actions.c:231
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 16 bit 浮動小数点に変換します"
 
 #: ../app/actions/image-actions.c:235
 msgctxt "image-convert-action"
@@ -6832,12 +6800,9 @@ msgid "32 bit floating point"
 msgstr "32 bit 浮動小数点"
 
 #: ../app/actions/image-actions.c:237
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 32 bit 浮動小数点に変換します"
 
 #: ../app/actions/image-actions.c:241
 msgctxt "image-convert-action"
@@ -6845,17 +6810,14 @@ msgid "64 bit floating point"
 msgstr "64 bit 浮動小数点"
 
 #: ../app/actions/image-actions.c:243
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to indexed colors"
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
-msgstr "画像をインデックスカラーに変換します"
+msgstr "画像を 64 bit 浮動小数点に変換します"
 
 #: ../app/actions/image-actions.c:250
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr ""
+msgstr "知覚的ガンマ (sRGB)"
 
 #: ../app/actions/image-actions.c:252
 #, fuzzy
@@ -6866,12 +6828,9 @@ msgid "Convert the image to perceptual (sRGB) gamma"
 msgstr "画像をグレースケールに変換します"
 
 #: ../app/actions/image-actions.c:256
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Hard light"
 msgctxt "image-convert-action"
 msgid "Linear light"
-msgstr "ハードライト"
+msgstr "リニアライト"
 
 #: ../app/actions/image-actions.c:258
 #, fuzzy
@@ -11661,15 +11620,16 @@ msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
 msgstr ""
-"インポートした画像の精度を浮動小数点に引き上げます。インデックス画像には適用しません。"
+"インポートした画像の精度を浮動小数点に引き上げます。インデックス画像には適用"
+"しません。"
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
-"インポートした画像の精度を浮動小数点に引き上げるときに、最小限のノイズを加えて色の"
-"値を少し分散させます。"
+"インポートした画像の精度を浮動小数点に引き上げるときに、最小限のノイズを加え"
+"て色の値を少し分散させます。"
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid "Add an alpha channel to all layers of imported images."
@@ -11687,32 +11647,29 @@ msgid "Export file type used by default."
 msgstr "サンプルポイントを表示します"
 
 #: ../app/config/gimprc-blurbs.h:211
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgid "Export the image's color profile by default."
-msgstr "サンプルポイントを表示します"
+msgstr "デフォルトで画像のカラープロファイルをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
 #.
 #: ../app/config/gimprc-blurbs.h:217
 msgid "Export Exif metadata by default."
-msgstr ""
+msgstr "デフォルトで Exif メタデータをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
 #: ../app/config/gimprc-blurbs.h:223
 msgid "Export XMP metadata by default."
-msgstr ""
+msgstr "デフォルトで XMP メタデータをエクスポートします。"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
 #: ../app/config/gimprc-blurbs.h:229
 msgid "Export IPTC metadata by default."
-msgstr ""
+msgstr "デフォルトで IPTC メタデータをエクスポートします。"
 
 #: ../app/config/gimprc-blurbs.h:232
 msgid "Try generating debug data for bug reporting when appropriate."
@@ -11796,10 +11753,8 @@ msgstr ""
 "す。"
 
 #: ../app/config/gimprc-blurbs.h:289
-#, fuzzy
-#| msgid "Sets how many processors GIMP should try to use simultaneously."
 msgid "Sets how many threads GIMP should use for operations that support it."
-msgstr "GIMP での処理で同時に使いたい CPU の数を指定します"
+msgstr "GIMP での処理で同時に使いたいスレッドの数を指定します。"
 
 #: ../app/config/gimprc-blurbs.h:311
 msgid ""
@@ -11815,6 +11770,8 @@ msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr ""
+"この設定がオンのときは、レイヤーグループのプレビューが表示されます。"
+"レイヤーグループのプレビューは通常のレイヤープレビューよりも高負荷です。"
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid ""
@@ -14126,9 +14083,6 @@ msgid "Foreground"
 msgstr "描画色"
 
 #: ../app/core/gimpcontext.c:685 ../app/core/gimpgrid.c:94
-#, fuzzy
-#| msgctxt "fill-type"
-#| msgid "Foreground color"
 msgid "Foreground color"
 msgstr "描画色"
 
@@ -14137,9 +14091,6 @@ msgid "Background"
 msgstr "背景"
 
 #: ../app/core/gimpcontext.c:692 ../app/core/gimpgrid.c:101
-#, fuzzy
-#| msgctxt "fill-type"
-#| msgid "Background color"
 msgid "Background color"
 msgstr "背景色"
 
@@ -17144,7 +17095,7 @@ msgstr "ハードウェアアクセラレーション"
 
 #: ../app/dialogs/preferences-dialog.c:1189
 msgid "Use OpenCL"
-msgstr "OpenCL を使用"
+msgstr "OpenCL を使用する"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1193
@@ -17385,11 +17336,8 @@ msgid "Export Policies"
 msgstr "エクスポートポリシー"
 
 #: ../app/dialogs/preferences-dialog.c:1513
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgid "Export the image's color profile by default"
-msgstr "サンプルポイントを表示します"
+msgstr "画像のカラープロファイルをエクスポートする"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17398,7 +17346,7 @@ msgstr "サンプルポイントを表示します"
 #.
 #: ../app/dialogs/preferences-dialog.c:1521
 msgid "Export Exif metadata by default when available"
-msgstr ""
+msgstr "Exif メタデータをエクスポートする (可能な場合)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17407,7 +17355,7 @@ msgstr ""
 #.
 #: ../app/dialogs/preferences-dialog.c:1529
 msgid "Export XMP metadata by default when available"
-msgstr ""
+msgstr "XMP メタデータをエクスポートする (可能な場合)"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -17416,7 +17364,7 @@ msgstr ""
 #.
 #: ../app/dialogs/preferences-dialog.c:1537
 msgid "Export IPTC metadata by default when available"
-msgstr ""
+msgstr "IPTC メタデータをエクスポートする (可能な場合)"
 
 #: ../app/dialogs/preferences-dialog.c:1540
 msgid "Metadata can contain sensitive information."
@@ -17703,17 +17651,13 @@ msgid "Profile folder:"
 msgstr "プロファイルフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2170
-#, fuzzy
-#| msgid "Select Folder for Temporary Files"
 msgid "Select Default Folder for Color Profiles"
-msgstr "一時ファイル用フォルダーを選択します"
+msgstr "カラープロファイル用デフォルトフォルダーの選択"
 
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:2174
-#, fuzzy
-#| msgid "Select Monitor Color Profile"
 msgid "Convert to Color Profile Dialog"
-msgstr "モニタープロファイルの選択"
+msgstr "カラープロファイルに変換ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2179
 #, fuzzy
@@ -19176,7 +19120,7 @@ msgid "Drop New Path"
 msgstr "新しいパスをドロップ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:360
-#: ../app/tools/gimpbucketfilltool.c:285 ../app/tools/gimpcagetool.c:221
+#: ../app/tools/gimpbucketfilltool.c:289 ../app/tools/gimpcagetool.c:221
 #: ../app/tools/gimpfiltertool.c:274 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
@@ -19184,7 +19128,7 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "レイヤーグループのピクセルは変更できません。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:368
-#: ../app/tools/gimpbucketfilltool.c:299 ../app/tools/gimpcagetool.c:228
+#: ../app/tools/gimpbucketfilltool.c:303 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1151
 #: ../app/tools/gimpfiltertool.c:281 ../app/tools/gimpgradienttool.c:255
 #: ../app/tools/gimpmovetool.c:309 ../app/tools/gimppainttool.c:286
@@ -20751,6 +20695,7 @@ msgstr "画像の着色"
 
 #: ../app/operations/gimpoperationcolorize.c:114
 #: ../app/operations/gimpoperationcolorize.c:115
+#: ../app/operations/gimpoperationsemiflatten.c:95
 msgid "Color"
 msgstr "色"
 
@@ -20796,6 +20741,12 @@ msgstr "ポスタリゼーションのレベル"
 msgid "Replace partial transparency with a color"
 msgstr ""
 
+#: ../app/operations/gimpoperationsemiflatten.c:96
+#, fuzzy
+#| msgid "Text Color"
+msgid "The color"
+msgstr "文字色"
+
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:94
 msgid "Reduce image to two colors using a threshold"
@@ -20815,6 +20766,17 @@ msgstr "高しきい値"
 msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
+msgstr ""
+
+#: ../app/operations/gimpoperationthresholdalpha.c:90
+#, fuzzy
+#| msgctxt "histogram-channel"
+#| msgid "Value"
+msgid "Value"
+msgstr "明度"
+
+#: ../app/operations/gimpoperationthresholdalpha.c:91
+msgid "The alpha value"
 msgstr ""
 
 #: ../app/gui/gui.c:312
@@ -20990,7 +20952,7 @@ msgid "No MyPaint brushes available for use with this tool."
 msgstr "有効な MyPaint ブラシがありません。"
 
 #: ../app/paint/gimpmybrushoptions.c:86 ../app/tools/gimpcoloroptions.c:85
-#: ../app/tools/gimprectangleselectoptions.c:100
+#: ../app/tools/gimprectangleselectoptions.c:101
 #: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:155
 msgid "Radius"
 msgstr "半径"
@@ -21017,7 +20979,7 @@ msgstr "ブラシエディターで編集します"
 msgid "No erasing effect"
 msgstr ""
 
-#: ../app/paint/gimpmybrushoptions.c:115 ../app/paint/gimpsmudgeoptions.c:85
+#: ../app/paint/gimpmybrushoptions.c:115 ../app/paint/gimpsmudgeoptions.c:86
 msgid "Never decrease alpha of existing pixels"
 msgstr ""
 
@@ -21224,28 +21186,35 @@ msgstr "遠近スタンプで描画"
 msgid "Smudge"
 msgstr "にじみ"
 
-#: ../app/paint/gimpsmudgeoptions.c:70
+#: ../app/paint/gimpsmudgeoptions.c:71
 msgctxt "smudge-tool"
 msgid "Rate"
 msgstr "割合"
 
-#: ../app/paint/gimpsmudgeoptions.c:71
+#: ../app/paint/gimpsmudgeoptions.c:72
 msgid "The strength of smudging"
 msgstr ""
 
-#: ../app/paint/gimpsmudgeoptions.c:77
+#: ../app/paint/gimpsmudgeoptions.c:78
 msgctxt "smudge-tool"
 msgid "Flow"
 msgstr "流量"
 
-#: ../app/paint/gimpsmudgeoptions.c:78
+#: ../app/paint/gimpsmudgeoptions.c:79
 msgid "The amount of brush color to blend"
 msgstr ""
 
-#: ../app/paint/gimpsmudgeoptions.c:84
+#: ../app/paint/gimpsmudgeoptions.c:85
 msgctxt "smudge-tool"
 msgid "No erasing effect"
 msgstr ""
+
+#: ../app/paint/gimpsmudgeoptions.c:92 ../app/paint/gimpsourceoptions.c:71
+#: ../app/pdb/gimppdbcontext.c:128 ../app/tools/gimpbucketfilloptions.c:132
+#: ../app/tools/gimpcoloroptions.c:69 ../app/tools/gimphealtool.c:99
+#: ../app/tools/gimpregionselectoptions.c:97
+msgid "Sample merged"
+msgstr "見えている色で"
 
 #: ../app/paint/gimpsourcecore.c:239
 msgid "Set a source image first."
@@ -21255,12 +21224,6 @@ msgstr "最初にスタンプソースを設定してください"
 #: ../app/tools/gimphealtool.c:105
 msgid "Alignment"
 msgstr "位置合わせ"
-
-#: ../app/paint/gimpsourceoptions.c:71 ../app/pdb/gimppdbcontext.c:128
-#: ../app/tools/gimpbucketfilloptions.c:132 ../app/tools/gimpcoloroptions.c:69
-#: ../app/tools/gimphealtool.c:99 ../app/tools/gimpregionselectoptions.c:97
-msgid "Sample merged"
-msgstr "見えている色で"
 
 #: ../app/paint/paint-enums.c:52
 msgctxt "perspective-clone-mode"
@@ -23259,7 +23222,7 @@ msgstr ""
 msgid "_Bucket Fill"
 msgstr "塗りつぶし(_B)"
 
-#: ../app/tools/gimpbucketfilltool.c:292 ../app/tools/gimpcagetool.c:237
+#: ../app/tools/gimpbucketfilltool.c:296 ../app/tools/gimpcagetool.c:237
 #: ../app/tools/gimpfiltertool.c:290
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:313
@@ -23267,24 +23230,24 @@ msgstr "塗りつぶし(_B)"
 msgid "The active layer is not visible."
 msgstr "アクティブレイヤーは非表示になっています。"
 
-#: ../app/tools/gimpbucketfilltool.c:309
+#: ../app/tools/gimpbucketfilltool.c:313
 #, fuzzy
 #| msgid "No filter selected"
 msgid "No valid line art source selected."
 msgstr "フィルターが選択されていません"
 
-#: ../app/tools/gimpbucketfilltool.c:337
+#: ../app/tools/gimpbucketfilltool.c:341
 #, fuzzy
 #| msgid "Bucket Fill"
 msgid "Bucket fill"
 msgstr "塗りつぶし"
 
-#: ../app/tools/gimpbucketfilltool.c:706 ../app/tools/gimpbucketfilltool.c:830
+#: ../app/tools/gimpbucketfilltool.c:710 ../app/tools/gimpbucketfilltool.c:845
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:447
 msgid "Click in any image to pick the background color"
 msgstr "クリックされたピクセルの色を背景色に設定します"
 
-#: ../app/tools/gimpbucketfilltool.c:713 ../app/tools/gimpbucketfilltool.c:839
+#: ../app/tools/gimpbucketfilltool.c:717 ../app/tools/gimpbucketfilltool.c:854
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:441
 msgid "Click in any image to pick the foreground color"
 msgstr "クリックされたピクセルの色を描画色に設定します"
@@ -23495,24 +23458,24 @@ msgid "Convolve Type  (%s)"
 msgstr "色混ぜの種類  (%s)"
 
 #: ../app/tools/gimpcropoptions.c:78
-#: ../app/tools/gimprectangleselectoptions.c:78
+#: ../app/tools/gimprectangleselectoptions.c:79
 msgid "Highlight"
 msgstr "ハイライト表示"
 
 #: ../app/tools/gimpcropoptions.c:79
-#: ../app/tools/gimprectangleselectoptions.c:79
+#: ../app/tools/gimprectangleselectoptions.c:80
 msgid "Dim everything outside selection"
 msgstr "選択範囲の外側を暗く表示します"
 
 #: ../app/tools/gimpcropoptions.c:86
-#: ../app/tools/gimprectangleselectoptions.c:86
+#: ../app/tools/gimprectangleselectoptions.c:87
 #, fuzzy
 #| msgid "Highlight"
 msgid "Highlight opacity"
 msgstr "ハイライト表示"
 
 #: ../app/tools/gimpcropoptions.c:87
-#: ../app/tools/gimprectangleselectoptions.c:87
+#: ../app/tools/gimprectangleselectoptions.c:88
 #, fuzzy
 #| msgid "Dim everything outside selection"
 msgid "How much to dim everything outside selection"
@@ -24839,11 +24802,9 @@ msgid "_N-Point Deformation"
 msgstr "ピクセル情報"
 
 #: ../app/tools/gimpoperationtool.c:135
-#, fuzzy
-#| msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr ""
-"[GEGL 操作]\n"
+"[操作ツール]\n"
 "任意の GEGL 操作を行い画像に変化を与えます。 GEGL 操作はインデックスレイヤー"
 "では利用できません。"
 
@@ -24909,7 +24870,7 @@ msgstr "フェードのオプション"
 msgid "Color Options"
 msgstr "色のオプション"
 
-#: ../app/tools/gimppaintoptions-gui.c:576
+#: ../app/tools/gimppaintoptions-gui.c:578
 msgid "Link to brush default"
 msgstr ""
 
@@ -25079,15 +25040,15 @@ msgstr "サイズ:"
 msgid "Auto Shrink"
 msgstr "選択範囲の自動縮小"
 
-#: ../app/tools/gimprectangleselectoptions.c:93
+#: ../app/tools/gimprectangleselectoptions.c:94
 msgid "Rounded corners"
 msgstr "角を丸める"
 
-#: ../app/tools/gimprectangleselectoptions.c:94
+#: ../app/tools/gimprectangleselectoptions.c:95
 msgid "Round corners of selection"
 msgstr "この設定をオンにすると、選択範囲の角を丸めます"
 
-#: ../app/tools/gimprectangleselectoptions.c:101
+#: ../app/tools/gimprectangleselectoptions.c:102
 msgid "Radius of rounding in pixels"
 msgstr "角丸めの半径をピクセル単位で設定します"
 
@@ -28415,10 +28376,8 @@ msgid "_Gamma:"
 msgstr "ガンマ(_G):"
 
 #: ../app/widgets/gimptemplateeditor.c:413
-#, fuzzy
-#| msgid "Color Profile"
 msgid "Choose A Color Profile"
-msgstr "カラープロファイル"
+msgstr "カラープロファイルの選択"
 
 #: ../app/widgets/gimptemplateeditor.c:417
 msgid "Co_lor profile:"
@@ -28748,10 +28707,9 @@ msgid "Built-in grayscale (%s)"
 msgstr "逆消しゴム  (%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1715
-#, fuzzy, c-format
-#| msgid "Direction  (%s)"
+#, c-format
 msgid "Built-in RGB (%s)"
-msgstr "方向 (%s)"
+msgstr "組み込み RGB (%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:1735
 #, c-format
@@ -28978,6 +28936,13 @@ msgstr "round"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "fuzzy"
+
+#~ msgid ""
+#~ "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
+#~ "released/"
+#~ msgstr ""
+#~ "より詳しい情報は次をご覧ください: https://www.gimp.org/news/2017/12/12/"
+#~ "gimp-2-9-8-released/"
 
 #~ msgctxt "tab-style"
 #~ msgid "Automatic"
