@@ -1,19 +1,19 @@
 # Polish translation for gimp-script-fu.
-# Copyright © 1999-2017 the gimp authors.
+# Copyright © 1999-2019 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999-2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2007.
 # Łukasz Jernaś <deejay1@srem.org>, 2010.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2019.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-18 13:19+0100\n"
-"PO-Revision-Date: 2018-11-18 13:20+0100\n"
+"POT-Creation-Date: 2019-01-26 11:22+0100\n"
+"PO-Revision-Date: 2019-01-26 11:23+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1446,13 +1446,14 @@ msgid "Rendering Spyro"
 msgstr "Renderowanie Spyro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "Spy_rogimp…"
+msgid "_Spyrogimp (older script-fu version)..."
+msgstr "Spy_rogimp (poprzednia wersja używająca Script-Fu)…"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr "Dodaje spirogramy, epitrochoidy i krzywe Lissajous do bieżącej warstwy"
+msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+msgstr ""
+"Ta procedura jest przestarzała. Należy używać „plug-in-spyrogimp” zamiast "
+"niej."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
