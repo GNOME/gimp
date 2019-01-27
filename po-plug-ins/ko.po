@@ -1,15 +1,17 @@
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# The Korean translation for the GNU Image Manipulation Program
+# Copyright (C) 1998-2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
 # Sung-Hyun Nam <namsh@kldp.org>, 1999.
 # Dongsu Jang <iolo@hellocity.net>, 2004.
 # Jihui Choi <jihui.choi@gmail.com>, 2007, 2012.
+# Sensu Iun <cieltero@gmail.com>, 2019
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:37+0000\n"
-"PO-Revision-Date: 2019-01-27 04:45+0900\n"
+"PO-Revision-Date: 2019-01-28 07:54+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -334,7 +336,7 @@ msgstr "투명(_T)"
 
 #: ../plug-ins/common/blinds.c:307
 msgid "_Displacement:"
-msgstr "치환 맵(_D):"
+msgstr "변위(_D):"
 
 #: ../plug-ins/common/blinds.c:319
 msgid "_Number of segments:"
@@ -784,9 +786,9 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "\"시드 고정\" 단추는 단축명입니다.\n"
-"같은 씨앗(seed)이 같은 이미지를 만들때, (1) 이미지의 넓이가 같아야 한다(이 이"
-"유는 그리기에서의 이미지는 미리 보기에서 다르기 때문), 그리고 (2) 모든 변화율"
-"은 0과 같아야 합니다."
+"같은 씨앗이 같은 이미지를 만들때, (1) 이미지의 넓이가 같아야 한다(이 이유는 "
+"그리기에서의 이미지는 미리 보기에서 다르기 때문), 그리고 (2) 모든 변화율은 0"
+"과 같아야 합니다."
 
 #: ../plug-ins/common/cml-explorer.c:1442
 msgid "O_thers"
@@ -1366,15 +1368,15 @@ msgstr "Retinex 기법을 이용한 향상된 대비"
 
 #: ../plug-ins/common/contrast-retinex.c:166
 msgid "Retine_x..."
-msgstr "레티넥스(Retinex)(_X)..."
+msgstr "레티넥스(_X)..."
 
 #: ../plug-ins/common/contrast-retinex.c:250
 msgid "Retinex"
-msgstr "레티넥스(Retinex)"
+msgstr "레티넥스"
 
 #: ../plug-ins/common/contrast-retinex.c:285
 msgid "Retinex Image Enhancement"
-msgstr "레티넥스(Retinex) 이미지 향상"
+msgstr "레티넥스 이미지 향상"
 
 #: ../plug-ins/common/contrast-retinex.c:321
 msgid "Uniform"
@@ -1784,19 +1786,19 @@ msgstr ""
 
 #: ../plug-ins/common/depth-merge.c:183
 msgid "Combine two images using depth maps (z-buffers)"
-msgstr "깊이(depth) 맵(z-버퍼)을 이용하여 두 이미지 결합하기"
+msgstr "깊이 맵(z-버퍼)을 이용하여 두 이미지 결합하기"
 
 #: ../plug-ins/common/depth-merge.c:192
 msgid "_Depth Merge..."
-msgstr "깊이(depth) 합치기(_D)..."
+msgstr "깊이 합치기(_D)..."
 
 #: ../plug-ins/common/depth-merge.c:393
 msgid "Depth-merging"
-msgstr "깊이(depth) 합치기중"
+msgstr "깊이 합치기중"
 
 #: ../plug-ins/common/depth-merge.c:651
 msgid "Depth Merge"
-msgstr "깊이(depth) 합치기"
+msgstr "깊이 합치기"
 
 #: ../plug-ins/common/depth-merge.c:701
 msgid "Source 1:"
@@ -1804,7 +1806,7 @@ msgstr "원본 1:"
 
 #: ../plug-ins/common/depth-merge.c:714 ../plug-ins/common/depth-merge.c:742
 msgid "Depth map:"
-msgstr "깊이(depth) 맵:"
+msgstr "깊이 맵:"
 
 #: ../plug-ins/common/depth-merge.c:729
 msgid "Source 2:"
@@ -1840,7 +1842,7 @@ msgstr "잡티 없애기"
 
 #: ../plug-ins/common/despeckle.c:471
 msgid "Median"
-msgstr "중앙"
+msgstr "중심"
 
 #: ../plug-ins/common/despeckle.c:479
 msgid "_Adaptive"
@@ -4066,7 +4068,7 @@ msgstr "TarGA 이미지"
 #: ../plug-ins/common/file-tga.c:456
 #, c-format
 msgid "Cannot read footer from '%s'"
-msgstr "'%s'의 푸터(footer)를 읽을 수 없습니다."
+msgstr "'%s'에서 꼬리말(footer)를 읽을 수 없음"
 
 #: ../plug-ins/common/file-tga.c:474
 #, c-format
@@ -4524,8 +4526,8 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"XWD-파일 %s은(는) %d 형식, 깊이(depth) %d, 픽셀 당 %d 비트를 가지고 있습니"
-"다. 이는 현재 지원되지 않습니다."
+"XWD-파일 %s은(는) %d 형식, 깊이 %d, 픽셀 당 %d 비트를 가지고 있습니다. 이는 "
+"현재 지원되지 않습니다."
 
 #: ../plug-ins/common/file-xwd.c:636
 msgid "Cannot export images with alpha channels."
@@ -4860,11 +4862,11 @@ msgstr "염소 운동"
 
 #: ../plug-ins/common/gradient-map.c:77
 msgid "Recolor the image using colors from the active gradient"
-msgstr "현재 그라디언트의 색상을 이용해 이미지에 색상입히기"
+msgstr "현재 그레이디언트의 색상을 이용해 이미지에 색상입히기"
 
 #: ../plug-ins/common/gradient-map.c:90
 msgid "_Gradient Map"
-msgstr "그라디언트맵(_G)"
+msgstr "그레이디언트맵(_G)"
 
 #: ../plug-ins/common/gradient-map.c:99
 msgid "Recolor the image using colors from the active palette"
@@ -4876,7 +4878,7 @@ msgstr "팔레트 맵(_P)"
 
 #: ../plug-ins/common/gradient-map.c:160
 msgid "Gradient Map"
-msgstr "그라디언트맵"
+msgstr "그레이디언트맵"
 
 #: ../plug-ins/common/gradient-map.c:165
 msgid "Palette Map"
@@ -5518,11 +5520,11 @@ msgstr "예제:"
 
 #: ../plug-ins/common/sample-colorize.c:1382
 msgid "From reverse gradient"
-msgstr "역(逆) 그라디언트 색상 사용"
+msgstr "역(逆) 그레이디언트 색상 사용"
 
 #: ../plug-ins/common/sample-colorize.c:1387
 msgid "From gradient"
-msgstr "그라디언트 색상 사용"
+msgstr "그레이디언트 색상 사용"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1406
@@ -5574,7 +5576,7 @@ msgstr "색상화 재매핑"
 
 #: ../plug-ins/common/sharpen.c:112
 msgid "Make image sharper (less powerful than Unsharp Mask)"
-msgstr "이미지를 날카롭게 만듭니다(Unsharp 마스크보다 약한 효과)"
+msgstr "이미지를 날카롭게 만듭니다(언샾 마스크보다 약한 효과)"
 
 #: ../plug-ins/common/sharpen.c:119
 msgid "_Sharpen..."
@@ -5637,7 +5639,7 @@ msgstr "밝은 점을 빛나는 불꽃으로 변환"
 
 #: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
-msgstr "불꽃(Sparkle)(_S)..."
+msgstr "스파클(_S)..."
 
 #: ../plug-ins/common/sparkle.c:223
 msgid "Region selected for filter is empty"
@@ -5786,7 +5788,7 @@ msgstr "대리석"
 
 #: ../plug-ins/common/sphere-designer.c:296
 msgid "Lizard"
-msgstr "도마뱀(Lizard)"
+msgstr "도마뱀"
 
 #: ../plug-ins/common/sphere-designer.c:297
 msgid "Phong"
@@ -5802,20 +5804,20 @@ msgstr "나무"
 
 #: ../plug-ins/common/sphere-designer.c:300 ../plug-ins/flame/flame.c:760
 msgid "Spiral"
-msgstr "나선(Spiral)"
+msgstr "나선"
 
 #: ../plug-ins/common/sphere-designer.c:301
 msgid "Spots"
-msgstr "정(Spots)"
+msgstr "스폿"
 
 #: ../plug-ins/common/sphere-designer.c:1749
 #: ../plug-ins/common/sphere-designer.c:2694
 msgid "Texture"
-msgstr "텍스쳐"
+msgstr "텍스처"
 
 #: ../plug-ins/common/sphere-designer.c:1751
 msgid "Bumpmap"
-msgstr "충돌(Bump) 맵"
+msgstr "범프맵"
 
 #: ../plug-ins/common/sphere-designer.c:1753
 #: ../plug-ins/common/sphere-designer.c:2696
@@ -5865,7 +5867,7 @@ msgstr "속성"
 
 #: ../plug-ins/common/sphere-designer.c:2695
 msgid "Bump"
-msgstr "충돌(bump)"
+msgstr "범프"
 
 #. row labels
 #: ../plug-ins/common/sphere-designer.c:2703
@@ -5875,7 +5877,7 @@ msgstr "유형:"
 
 #: ../plug-ins/common/sphere-designer.c:2722
 msgid "Texture:"
-msgstr "텍스쳐:"
+msgstr "텍스처:"
 
 #: ../plug-ins/common/sphere-designer.c:2727
 msgid "Colors:"
@@ -5952,7 +5954,7 @@ msgstr "구체 렌더링"
 
 #: ../plug-ins/common/sphere-designer.c:3023
 msgid "Create an image of a textured sphere"
-msgstr "구체 텍스쳐 만들기"
+msgstr "구체 텍스처 만들기"
 
 #: ../plug-ins/common/sphere-designer.c:3030
 msgid "Sphere _Designer..."
@@ -6204,7 +6206,7 @@ msgstr "유도적(_D)"
 
 #: ../plug-ins/common/van-gogh-lic.c:688
 msgid "_Gradient"
-msgstr "그라디언트(_G)"
+msgstr "그레이디언트(_G)"
 
 #: ../plug-ins/common/van-gogh-lic.c:694
 msgid "Convolve"
@@ -6256,11 +6258,11 @@ msgstr "다양안 방법으로 이미지를 비틀거나 문지르기 함"
 
 #: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
-msgstr "왜곡(Warp)(_W)..."
+msgstr "뒤틀기(_W)..."
 
 #: ../plug-ins/common/warp.c:398
 msgid "Warp"
-msgstr "왜곡되게"
+msgstr "뒤틀기"
 
 #: ../plug-ins/common/warp.c:420
 msgid "Basic Options"
@@ -6279,7 +6281,7 @@ msgstr "반복:"
 #. Displacement map menu
 #: ../plug-ins/common/warp.c:464
 msgid "Displacement map:"
-msgstr "치환 매핑:"
+msgstr "변위 맵:"
 
 #. =======================================================================
 #. Displacement Type
@@ -6312,7 +6314,7 @@ msgstr "고급 옵션"
 
 #: ../plug-ins/common/warp.c:576
 msgid "Dither size:"
-msgstr "떨림(Dither) 크기:"
+msgstr "디디링 크기:"
 
 #: ../plug-ins/common/warp.c:589
 msgid "Rotation angle:"
@@ -6325,11 +6327,11 @@ msgstr "하위 단계:"
 #. Magnitude map menu
 #: ../plug-ins/common/warp.c:611
 msgid "Magnitude map:"
-msgstr "크기(Magnitude) 매핑:"
+msgstr "규모 매핑:"
 
 #: ../plug-ins/common/warp.c:636
 msgid "Use magnitude map"
-msgstr "크기(Magnitude) 매핑 사용"
+msgstr "규모 매핑 사용"
 
 #. --------------------------------------------------------------------
 #. ---------    The "other" grid          --------------------------
@@ -6339,7 +6341,7 @@ msgstr "자세한 고급 옵션"
 
 #: ../plug-ins/common/warp.c:666
 msgid "Gradient scale:"
-msgstr "그라디언트 비율:"
+msgstr "그레이디언트 비율:"
 
 #: ../plug-ins/common/warp.c:686
 msgid "Gradient map selection menu"
@@ -6361,16 +6363,16 @@ msgstr "고정-방향-벡터 맵 선택 메뉴"
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1210
 msgid "Smoothing X gradient"
-msgstr "X 그라디언트를 부드럽게"
+msgstr "X 그레이디언트를 부드럽게"
 
 #: ../plug-ins/common/warp.c:1213
 msgid "Smoothing Y gradient"
-msgstr "Y 그라디언트를 부드럽게"
+msgstr "Y 그레이디언트를 부드럽게"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1260
 msgid "Finding XY gradient"
-msgstr "XY 그라디언트 찾기"
+msgstr "XY 그레이디언트 찾기"
 
 #: ../plug-ins/common/warp.c:1281
 #, c-format
@@ -7016,7 +7018,7 @@ msgstr "간격(MCU 행):"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1019
 msgid "Use _restart markers"
-msgstr "재시작 표식 사용(_R)"
+msgstr "재시작 마커 사용(_R)"
 
 #. Optimize
 #: ../plug-ins/file-jpeg/jpeg-save.c:1038
@@ -7734,7 +7736,7 @@ msgstr "Ex"
 #: ../plug-ins/flame/flame.c:764
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:845
 msgid "Julia"
-msgstr "쥴리아(Julia)"
+msgstr "줄리아"
 
 #: ../plug-ins/flame/flame.c:765
 msgid "Waves"
@@ -7844,7 +7846,7 @@ msgstr "색상표(_M):"
 
 #: ../plug-ins/flame/flame.c:1206
 msgid "Custom gradient"
-msgstr "사용자 그라디언트"
+msgstr "사용자 그레이디언트"
 
 #: ../plug-ins/flame/flame.c:1232
 msgid "C_amera"
@@ -7988,19 +7990,19 @@ msgstr "프랙탈 유형"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:843
 msgid "Mandelbrot"
-msgstr "만델브로(Mandelbrot)"
+msgstr "만델브로"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:847
 msgid "Barnsley 1"
-msgstr "반슬리(Barnsley) 1"
+msgstr "반슬리 1"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:849
 msgid "Barnsley 2"
-msgstr "반슬리(Barnsley) 2"
+msgstr "반슬리 2"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:851
 msgid "Barnsley 3"
-msgstr "반슬리(Barnsley) 3"
+msgstr "반슬리 3"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:853
 msgid "Spider"
@@ -8016,7 +8018,7 @@ msgstr "람다(λ)"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:859
 msgid "Sierpinski"
-msgstr "시어핀스키(Sierpinski)"
+msgstr "시어핀스키"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:905
 msgid "Co_lors"
@@ -8127,15 +8129,15 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1146
 msgid "Apply active gradient to final image"
-msgstr "현재 그라디언트를 마지막 이미지에 적용"
+msgstr "현재 그레이디언트를 마지막 이미지에 적용"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1158
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "그라디언트 편집기의 그라디언트를 이용해 색상맵 만들기"
+msgstr "그레이디언트 편집기의 그레이디언트를 이용해 색상맵 만들기"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1169
 msgid "FractalExplorer Gradient"
-msgstr "프랙탈 익스플로러 그라디언트"
+msgstr "프랙탈 익스플로러 그레이디언트"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1199
 msgid "_Fractals"
@@ -8273,15 +8275,15 @@ msgstr "무늬로 채우기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Shape gradient"
-msgstr "모양 그라디언트"
+msgstr "모양 그레이디언트"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
-msgstr "세로 방향 그라디언트"
+msgstr "세로 방향 그레이디언트"
 
 #: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Horizontal gradient"
-msgstr "가로 방향 그라디언트"
+msgstr "가로 방향 그레이디언트"
 
 #. "show image" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:480
@@ -8609,9 +8611,7 @@ msgstr "Gfig(_G)..."
 #: ../plug-ins/gfig/gfig.c:731
 msgid ""
 "Error trying to save figure as a parasite: can't attach parasite to drawable."
-msgstr ""
-"기생자(parasite)로 형태 저장 중 오류: drawble에 기생자(parasite)를 덧붙일 수 "
-"없습니다."
+msgstr "기생물로 형태 저장 중 오류: 드로어블에 기생물을 덧붙일 수 없습니다."
 
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
@@ -8708,7 +8708,7 @@ msgstr "페이퍼에서"
 
 #: ../plug-ins/gimpressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
-msgstr "배경으로써 선택된 페이퍼의 텍스쳐 복사"
+msgstr "배경으로써 선택된 페이퍼의 텍스처 복사"
 
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid colored background"
@@ -8760,14 +8760,13 @@ msgstr "그림자 넣기에 얼마나 \"어두운\"가"
 
 #: ../plug-ins/gimpressionist/general.c:257
 msgid "Shadow depth:"
-msgstr "그림자 깊이(depth):"
+msgstr "그림자 깊이:"
 
 #: ../plug-ins/gimpressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
-"그림자 넣기의 깊이(depth), 즉, 그것을 되어야만 하는 개체와 얼마나 떨어져 있는"
-"가"
+"그림자 넣기의 깊이, 즉, 그것을 되어야만 하는 개체와 얼마나 떨어져 있는가"
 
 #: ../plug-ins/gimpressionist/general.c:266
 msgid "Shadow blur:"
@@ -8861,7 +8860,7 @@ msgstr "원주"
 
 #: ../plug-ins/gimpressionist/orientation.c:164
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "이미지 중앙으로부터의 거리는 한번긋기의 방향으로 결정하기"
+msgstr "이미지 중심으로부터의 거리는 한번긋기의 방향으로 결정하기"
 
 #: ../plug-ins/gimpressionist/orientation.c:171
 #: ../plug-ins/gimpressionist/size.c:178
@@ -9016,7 +9015,7 @@ msgstr "종이(_A)"
 
 #: ../plug-ins/gimpressionist/paper.c:172
 msgid "Inverts the Papers texture"
-msgstr "페이퍼 텍스쳐 반대로(invert)"
+msgstr "종이 텍스처 반전"
 
 #: ../plug-ins/gimpressionist/paper.c:176
 msgid "O_verlay"
@@ -9024,11 +9023,11 @@ msgstr "겹치기(_V)"
 
 #: ../plug-ins/gimpressionist/paper.c:181
 msgid "Applies the paper as it is (without embossing it)"
-msgstr "양각된 것 없는 그것처럼 페이퍼에 적용하기"
+msgstr "종이를 있는 그대로 적용(엠보싱 하지 않음)"
 
 #: ../plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr "텍스쳐의 스케일 지정 (원래 파일의 퍼센트로)"
+msgstr "텍스처의 스케일 지정 (원래 파일의 퍼센트로)"
 
 #: ../plug-ins/gimpressionist/placement.c:66
 msgid "Pl_acement"
@@ -9056,11 +9055,11 @@ msgstr "획은 이미지 전체에 고르게 분포됨"
 
 #: ../plug-ins/gimpressionist/placement.c:101
 msgid "Centered"
-msgstr "중앙 정렬"
+msgstr "중심 정렬"
 
 #: ../plug-ins/gimpressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
-msgstr "이미지의 중앙 둘레에 붓 한번긋기 집중하기"
+msgstr "이미지의 중심 둘레에 붓 한번긋기 집중하기"
 
 #: ../plug-ins/gimpressionist/placement.c:119
 msgid "Stroke _density:"
@@ -9846,11 +9845,11 @@ msgstr "겹치기"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:807
 msgid "Produce a lense flare effect using gradients"
-msgstr "그라디언트를 이용해 렌즈 화염 효과 만들기"
+msgstr "그레이디언트를 이용해 렌즈 화염 효과 만들기"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:812
 msgid "_Gradient Flare..."
-msgstr "화염 그라디언트(_G)..."
+msgstr "화염 그레이디언트(_G)..."
 
 #.
 #. *    Dialog Shell
@@ -9858,7 +9857,7 @@ msgstr "화염 그라디언트(_G)..."
 #: ../plug-ins/gradient-flare/gradient-flare.c:954
 #: ../plug-ins/gradient-flare/gradient-flare.c:2360
 msgid "Gradient Flare"
-msgstr "화염 그라디언트"
+msgstr "화염 그레이디언트"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1265
 #, c-format
@@ -9954,7 +9953,7 @@ msgstr "선택(_E)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3061
 msgid "New Gradient Flare"
-msgstr "새 화염 그라디언트"
+msgstr "새 화염 그레이디언트"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Enter a name for the new GFlare"
@@ -9968,7 +9967,7 @@ msgstr "'%s'(이)라는 이름은 이미 사용됨!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3140
 msgid "Copy Gradient Flare"
-msgstr "화염 그라디언트 복사"
+msgstr "화염 그레이디언트 복사"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3143
 msgid "Enter a name for the copied GFlare"
@@ -9980,7 +9979,7 @@ msgstr "삭제할 수 없습니다!! 최소한 하나의 GFlare는 있어야 합
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3206
 msgid "Delete Gradient Flare"
-msgstr "화염 그라디언트 삭제"
+msgstr "화염 그레이디언트 삭제"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3278
 #, c-format
@@ -9989,7 +9988,7 @@ msgstr "gflare_list에서 %s을(를) 찾을 수가 없음"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3318
 msgid "Gradient Flare Editor"
-msgstr "화염 그라디언트 편집기"
+msgstr "화염 그레이디언트 편집기"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
 msgid "_Rescan Gradients"
@@ -10029,23 +10028,23 @@ msgstr "두 번째 화염 그리기 옵션"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3656
 #: ../plug-ins/gradient-flare/gradient-flare.c:3795
 msgid "Gradients"
-msgstr "그라디언트"
+msgstr "그레이디언트"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3564
 #: ../plug-ins/gradient-flare/gradient-flare.c:3669
 #: ../plug-ins/gradient-flare/gradient-flare.c:3806
 msgid "Radial gradient:"
-msgstr "방사형 그라디언트:"
+msgstr "방사형 그레이디언트:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3568
 #: ../plug-ins/gradient-flare/gradient-flare.c:3673
 msgid "Angular gradient:"
-msgstr "각진 그라디언트:"
+msgstr "각진 그레이디언트:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3572
 #: ../plug-ins/gradient-flare/gradient-flare.c:3677
 msgid "Angular size gradient:"
-msgstr "그라디언트의 각 크기:"
+msgstr "그레이디언트의 각 크기:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3592
 #: ../plug-ins/gradient-flare/gradient-flare.c:3697
@@ -10083,11 +10082,11 @@ msgstr "광선(_R)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3810
 msgid "Size factor gradient:"
-msgstr "크기 인수 그라디언트:"
+msgstr "크기 인수 그레이디언트:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3814
 msgid "Probability gradient:"
-msgstr "가상 그라디언트:"
+msgstr "가상 그레이디언트:"
 
 #.
 #. *    Shape Radio Button Frame
@@ -10433,7 +10432,7 @@ msgstr "원(_I)"
 
 #: ../plug-ins/imagemap/imap_circle.c:261
 msgid "Center _x:"
-msgstr "X의 중앙(_X):"
+msgstr "X의 중심(_X):"
 
 #: ../plug-ins/imagemap/imap_circle.c:266
 #: ../plug-ins/imagemap/imap_circle.c:273
@@ -10449,7 +10448,7 @@ msgstr "픽셀"
 
 #: ../plug-ins/imagemap/imap_circle.c:268
 msgid "Center _y:"
-msgstr "Y의 중앙(_Y):"
+msgstr "Y의 중심(_Y):"
 
 #: ../plug-ins/imagemap/imap_cmd_clear.c:50
 msgid "Clear"
@@ -11180,7 +11179,7 @@ msgstr "투명한 배경(_R)"
 
 #: ../plug-ins/lighting/lighting-ui.c:324
 msgid "Make destination image transparent where bump height is zero"
-msgstr "충돌(bump) 높이가 0인 목적 이미지를 투명하게 만들기"
+msgstr "범프 높이가 0인 목적 이미지를 투명하게 만들기"
 
 #: ../plug-ins/lighting/lighting-ui.c:327
 msgid "Cre_ate new image"
@@ -11385,11 +11384,11 @@ msgstr "충돌 매핑 사용(_N)"
 
 #: ../plug-ins/lighting/lighting-ui.c:829
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "충돌-매핑(bump-mapping) 가능/불가능 (이미지 깊이(depth))"
+msgstr "범프 매핑 사용/미사용 (이미지 깊이)"
 
 #: ../plug-ins/lighting/lighting-ui.c:852
 msgid "Bumpm_ap image:"
-msgstr "충돌(Bump) 맵 이미지(_A):"
+msgstr "범프 맵 이미지(_A):"
 
 #: ../plug-ins/lighting/lighting-ui.c:856
 msgid "Logarithmic"
@@ -12039,11 +12038,11 @@ msgstr "말아 올려진 아래의 그림자(_S)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:572
 msgid "Current gradient (reversed)"
-msgstr "현재 그라디언트(반대로)"
+msgstr "현재 그레이디언트(반대로)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:577
 msgid "Current gradient"
-msgstr "현재 그라디언트"
+msgstr "현재 그레이디언트"
 
 #: ../plug-ins/pagecurl/pagecurl.c:582
 msgid "Foreground / background colors"
@@ -12508,2441 +12507,3 @@ msgstr "스캐너/카메라(_S)..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "스캐너/카메라에서 데이터 전송하기"
-
-#~ msgid "Preview a GIMP layer-based animation"
-#~ msgstr "김프 레이어 기반 애니메이션 미리 보기"
-
-#~ msgid "_Playback..."
-#~ msgstr "재생(_P)..."
-
-#~ msgid "%.1f %%"
-#~ msgstr "%.1f %%"
-
-#~ msgid "Step _back"
-#~ msgstr "단계 되돌리기(_B)"
-
-#~ msgid "Step back to previous frame"
-#~ msgstr "이전 프레임으로 단계 되돌리기"
-
-#~ msgid "_Step"
-#~ msgstr "단계(_S)"
-
-#~ msgid "Step to next frame"
-#~ msgstr "다음 프레임으로"
-
-#~ msgid "Rewind the animation"
-#~ msgstr "애니메이션 되감기"
-
-#~ msgid "Reload the image"
-#~ msgstr "이미지 다시 불러오기"
-
-#~ msgid "Faster"
-#~ msgstr "빠르게"
-
-#~ msgid "Increase the speed of the animation"
-#~ msgstr "애니메이션 속도 증가"
-
-#~ msgid "Slower"
-#~ msgstr "느리게"
-
-#~ msgid "Decrease the speed of the animation"
-#~ msgstr "애니메이션 속도 감소"
-
-#~ msgid "Reset speed"
-#~ msgstr "속도 초기화"
-
-#~ msgid "Reset the speed of the animation"
-#~ msgstr "애니메이션의 속도 초기화"
-
-#~ msgid "Start playback"
-#~ msgstr "재생 시작"
-
-#~ msgid "Detach"
-#~ msgstr "떼어내기"
-
-#~ msgid "Detach the animation from the dialog window"
-#~ msgstr "대화 상자 창에서 애니메이션 분리하기"
-
-#~ msgid "Animation Playback:"
-#~ msgstr "애니메이션 재생:"
-
-#~ msgid "%d fps"
-#~ msgstr "%d fps"
-
-#~ msgid "Default framerate"
-#~ msgstr "기본 프레임 속도"
-
-#~ msgid "Playback speed"
-#~ msgstr "재생 속도"
-
-#~ msgid "Memory could not be allocated to the frame container."
-#~ msgstr "프레임 컨테이너 안에 메모리가 할당될 수 없음."
-
-#~ msgid "Invalid image. Did you close it?"
-#~ msgstr "잘못된 이미지. 닫을까요?"
-
-#~ msgid "Frame %d of %d"
-#~ msgstr "프레임 %d of %d"
-
-#~ msgid "Stop playback"
-#~ msgstr "재생 중지"
-
-#~ msgid "Borderaverage"
-#~ msgstr "테두리 평균"
-
-#~ msgid "Stretch color saturation to cover maximum possible range"
-#~ msgstr "가능한 최대로 색상 채도 높이기"
-
-#~ msgid "_Color Enhance (legacy)"
-#~ msgstr "색 강화(_C)"
-
-#~ msgid "Color Enhance"
-#~ msgstr "색상 강화"
-
-#~ msgid "Transform image with the Mandelbrot Fractal"
-#~ msgstr "만델브로트(Mandelbrot) 프랙탈로 이미지 변형"
-
-#~ msgid "_Fractal Trace (legacy)..."
-#~ msgstr "프랙탈 트레이싱(_F) (레거시)..."
-
-#~ msgid "Fractal Trace"
-#~ msgstr "프랙탈 자취"
-
-#~ msgid "Outside Type"
-#~ msgstr "외부 유형"
-
-#~ msgid "_Wrap"
-#~ msgstr "싸기(_W)"
-
-#~ msgid "_White"
-#~ msgstr "흰색(_W)"
-
-#~ msgid "Mandelbrot Parameters"
-#~ msgstr "만델브로트 매개변수"
-
-#~ msgid "X_1:"
-#~ msgstr "X_1:"
-
-#~ msgid "X_2:"
-#~ msgstr "X_2:"
-
-#~ msgid "Y_1:"
-#~ msgstr "Y_1:"
-
-#~ msgid "Y_2:"
-#~ msgstr "Y_2:"
-
-#~ msgid "automatic pixelformat"
-#~ msgstr "자동 픽셀형식"
-
-#~ msgid "Original"
-#~ msgstr "원래 환경"
-
-#~ msgid "Rotated"
-#~ msgstr "회전"
-
-#~ msgid "Continuous update"
-#~ msgstr "업데이트 정책"
-
-#~ msgid "Area:"
-#~ msgstr "영역:"
-
-#~ msgid "Entire Layer"
-#~ msgstr "전체 레이어"
-
-#~ msgid "Context"
-#~ msgstr "문맥"
-
-#~ msgctxt "color-range"
-#~ msgid "From:"
-#~ msgstr "시작:"
-
-#~ msgctxt "color-range"
-#~ msgid "To:"
-#~ msgstr "끝:"
-
-#~ msgctxt "color-rotate"
-#~ msgid "From:"
-#~ msgstr "시작:"
-
-#~ msgctxt "color-rotate"
-#~ msgid "To:"
-#~ msgstr "끝:"
-
-#~ msgid "Hue:"
-#~ msgstr "색조:"
-
-#~ msgid "Saturation:"
-#~ msgstr "채도:"
-
-#~ msgid "Gray Mode"
-#~ msgstr "그레이 모드"
-
-#~ msgid "Treat as this"
-#~ msgstr "이것으로 간주하기"
-
-#~ msgid "Change to this"
-#~ msgstr "이것으로 바꾸기"
-
-#~ msgid "Units"
-#~ msgstr "단위"
-
-#~ msgid "Radians/Pi"
-#~ msgstr "라디안/파이"
-
-#~ msgid "Degrees"
-#~ msgstr "고도"
-
-#~ msgid "Rotate Colors"
-#~ msgstr "색상 회전"
-
-#~ msgid "Main Options"
-#~ msgstr "주 옵션"
-
-#~ msgid "Gray Options"
-#~ msgstr "그레이 옵션"
-
-#~ msgid "Switch to Clockwise"
-#~ msgstr "시계방향으로 연결하기"
-
-#~ msgid "Switch to C/Clockwise"
-#~ msgstr "시계 반대방향으로 연결하기"
-
-#~ msgid "Change Order of Arrows"
-#~ msgstr "화살표 순서 바꾸기"
-
-#~ msgid "Replace a range of colors with another"
-#~ msgstr "색상으로 영역을 다른 색상으로 교체"
-
-#~ msgid "_Rotate Colors..."
-#~ msgstr "색상 회전(_R)..."
-
-#~ msgid "Rotating the colors"
-#~ msgstr "색상 회전 중"
-
-#~ msgid "_Modify red channel"
-#~ msgstr "빨강 채널 수정(_M)"
-
-#~ msgid "_Modify hue channel"
-#~ msgstr "색상 채널 수정(_M)"
-
-#~ msgid "Mo_dify green channel"
-#~ msgstr "초록 채널 수정(_D)"
-
-#~ msgid "Mo_dify saturation channel"
-#~ msgstr "채도 채널 수정(_D)"
-
-#~ msgid "Mod_ify blue channel"
-#~ msgstr "파랑 채널 수정(_I)"
-
-#~ msgid "Mod_ify luminosity channel"
-#~ msgstr "휘도 채널 수정(_I)"
-
-#~ msgid "Red _frequency:"
-#~ msgstr "빨강 주파수(_F):"
-
-#~ msgid "Hue _frequency:"
-#~ msgstr "색상 주파수(_F):"
-
-#~ msgid "Green fr_equency:"
-#~ msgstr "초록 주파수(_E):"
-
-#~ msgid "Saturation fr_equency:"
-#~ msgstr "채도 주파수(_E):"
-
-#~ msgid "Blue freq_uency:"
-#~ msgstr "파랑 주파수(_U):"
-
-#~ msgid "Luminosity freq_uency:"
-#~ msgstr "휘도 주파수(_U):"
-
-#~ msgid "Red _phaseshift:"
-#~ msgstr "빨강 위상이동(_P):"
-
-#~ msgid "Hue _phaseshift:"
-#~ msgstr "색상 위상이동(_P):"
-
-#~ msgid "Green ph_aseshift:"
-#~ msgstr "초록 위상이동(_A):"
-
-#~ msgid "Saturation ph_aseshift:"
-#~ msgstr "채도 위상이동(_A):"
-
-#~ msgid "Blue pha_seshift:"
-#~ msgstr "파랑 위상이동(_S):"
-
-#~ msgid "Luminosity pha_seshift:"
-#~ msgstr "휘도 위상이동(_S):"
-
-#~ msgid "Alter colors in various psychedelic ways"
-#~ msgstr "색상을 바꿔 다양한 환각적 효과 만들기"
-
-#~ msgid "_Alien Map..."
-#~ msgstr "에일리언 맵(_A)..."
-
-#~ msgid "Alien Map: Transforming"
-#~ msgstr "에일리언 맵: 변환"
-
-#~ msgid "Alien Map"
-#~ msgstr "에일리언 맵"
-
-#~ msgid "Number of cycles covering full value range"
-#~ msgstr "모든 범위의 값을 사용하는 주기 수"
-
-#~ msgid "Phase angle, range 0-360"
-#~ msgstr "위상 각도, 범위 0-360"
-
-#~ msgid "_RGB color model"
-#~ msgstr "_RGB 색상 모델"
-
-#~ msgid "_HSL color model"
-#~ msgstr "_HSL 색상 모델"
-
-#~ msgid "Tried to display an invalid layer."
-#~ msgstr "잘못된 레이어를 표시하려고 시도했습니다."
-
-#~ msgid "Antialias using the Scale3X edge-extrapolation algorithm"
-#~ msgstr "Scale3X edge-extrapolation 알고리즘을 이용한 계단현상 제거"
-
-#~ msgid "_Antialias"
-#~ msgstr "계단현상 제거(_A)"
-
-#~ msgid "Antialiasing..."
-#~ msgstr "계단현상 제거..."
-
-#~ msgid "Add a canvas texture to the image"
-#~ msgstr "이미지에 캔버스 텍스쳐 추가"
-
-#~ msgid "_Apply Canvas..."
-#~ msgstr "캔버스에 적용(_A)..."
-
-#~ msgid "Applying canvas"
-#~ msgstr "캔버스에 적용"
-
-#~ msgid "Apply Canvas"
-#~ msgstr "캔버스에 적용"
-
-#~ msgid "_Top-right"
-#~ msgstr "위-오른쪽(_T)"
-
-#~ msgid "Top-_left"
-#~ msgstr "위-왼쪽(_L)"
-
-#~ msgid "_Bottom-left"
-#~ msgstr "아래-왼쪽(_B)"
-
-#~ msgid "Bottom-_right"
-#~ msgstr "아래-오른쪽(_R)"
-
-#~ msgid "Blur neighboring pixels, but only in low-contrast areas"
-#~ msgstr "대비값이 낮은 근처 픽셀을 흐릿하게 합니다."
-
-#~ msgid "_Selective Gaussian Blur..."
-#~ msgstr "선택적인 가우시안 블루어(_S)..."
-
-#~ msgid "Selective Gaussian Blur"
-#~ msgstr "선택적인 가우시안 블루어"
-
-#~ msgid "_Blur radius:"
-#~ msgstr "블루어 반지름(_B):"
-
-#~ msgid "_Max. delta:"
-#~ msgstr "델타 최댓값(_M):"
-
-#~ msgid "Simplest, most commonly used way of blurring"
-#~ msgstr "단순하며 가장 일반적으로 사용되는 흐릿하게 하는 방법"
-
-#~ msgid "_Gaussian Blur..."
-#~ msgstr "가우시안 블루어(_G)..."
-
-#~ msgid "Apply a gaussian blur"
-#~ msgstr "가우시안 블루어 적용"
-
-#~ msgid "Gaussian Blur"
-#~ msgstr "가우시안 블루어"
-
-#~ msgid "Blur Radius"
-#~ msgstr "블루어 반경"
-
-#~ msgid "Blur Method"
-#~ msgstr "블루어 방법"
-
-#~ msgid "_IIR"
-#~ msgstr "_IIR"
-
-#~ msgid "Simulate movement using directional blur"
-#~ msgstr "모의로 방향성을 가진 붓의 이동을 구현합니다."
-
-#~ msgid "_Motion Blur..."
-#~ msgstr "모션 블루어(_M)..."
-
-#~ msgid "Motion blurring"
-#~ msgstr "모션 블루어"
-
-#~ msgid "Motion Blur"
-#~ msgstr "모션 블루어"
-
-#~ msgid "Blur Type"
-#~ msgstr "블루어 유형"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Linear"
-#~ msgstr "선형(_L)"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Radial"
-#~ msgstr "방사형(_R)"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Zoom"
-#~ msgstr "확대(_Z)"
-
-#~ msgid "Blur Center"
-#~ msgstr "블루어 중앙"
-
-#~ msgid "Blur _outward"
-#~ msgstr "바깥쪽으로 흐릿하게(_O)"
-
-#~ msgid "Blur Parameters"
-#~ msgstr "블루어 매개변수"
-
-#~ msgid "Create an embossing effect using a bump map"
-#~ msgstr "충돌(bump) 맵을 이용해 엠보싱 효과 만들기"
-
-#~ msgid "_Bump Map..."
-#~ msgstr "충돌맵(_B)..."
-
-#~ msgid "Bump-mapping"
-#~ msgstr "충돌(Bump)-매핑"
-
-#~ msgid "Bump Map"
-#~ msgstr "충돌맵"
-
-#~ msgid "_Bump map:"
-#~ msgstr "충돌맵(_B):"
-
-#~ msgid "_Map type:"
-#~ msgstr "맵 유형(_M):"
-
-#~ msgid "Co_mpensate for darkening"
-#~ msgstr "어둠 보정(_M)"
-
-#~ msgid "I_nvert bumpmap"
-#~ msgstr "충돌맵 반전(_N)"
-
-#~ msgid "_Tile bumpmap"
-#~ msgstr "타일 충돌맵(_T)"
-
-#~ msgid "_Elevation:"
-#~ msgstr "높이(_E):"
-
-#~ msgid ""
-#~ "The offset can be adjusted by dragging the preview using the middle mouse "
-#~ "button."
-#~ msgstr ""
-#~ "마우스 가운데 단추를 이용해 미리 보기에서 드래그하면 오프셋을 조정할 수 있"
-#~ "습니다."
-
-#~ msgid "_Waterlevel:"
-#~ msgstr "수위(_W):"
-
-#~ msgid "A_mbient:"
-#~ msgstr "둘러싼 환경(_M):"
-
-#~ msgid "Alter colors by mixing RGB Channels"
-#~ msgstr "RGB 채널을 섞어 색상 바꾸기"
-
-#~ msgid "Channel Mi_xer..."
-#~ msgstr "채널 믹서(_X)..."
-
-#~ msgid "Channel Mixer"
-#~ msgstr "채널 믹서"
-
-#~ msgid "O_utput channel:"
-#~ msgstr "출력 채널(_U):"
-
-#~ msgid "_Monochrome"
-#~ msgstr "흑백(_M)"
-
-#~ msgid "Preserve _luminosity"
-#~ msgstr "휘도 유지(_L)"
-
-#~ msgid "Load Channel Mixer Settings"
-#~ msgstr "채널 믹서 설정 읽어오기:"
-
-#~ msgid "Save Channel Mixer Settings"
-#~ msgstr "채널 믹서 설정 저장하기"
-
-#~ msgid "Swap one color with another"
-#~ msgstr "색상을 다른 색상과 교환"
-
-#~ msgid "_Color Exchange..."
-#~ msgstr "색상 교환(_C)..."
-
-#~ msgid "Color Exchange"
-#~ msgstr "색상 교환"
-
-#~ msgid "Middle-Click Inside Preview to Pick \"From Color\""
-#~ msgstr ""
-#~ "미리 보기에서 마우스 가운데 단추를 눌러 \"색상에서\" 기능을 사용합니다."
-
-#~ msgid "To Color"
-#~ msgstr "색상으로"
-
-#~ msgid "From Color"
-#~ msgstr "색상에서"
-
-#~ msgid "Color Exchange: To Color"
-#~ msgstr "색상 교체: 색상으로"
-
-#~ msgid "Color Exchange: From Color"
-#~ msgstr "색상교체: 색상에서"
-
-#~ msgid "R_ed threshold:"
-#~ msgstr "빨강 임계값(_E):"
-
-#~ msgid "G_reen threshold:"
-#~ msgstr "초록 임계값(_R):"
-
-#~ msgid "B_lue threshold:"
-#~ msgstr "파랑 임계값(_L):"
-
-#~ msgid "Lock _thresholds"
-#~ msgstr "임계값 잠그기(_T)"
-
-#~ msgid "Convert a specified color to transparency"
-#~ msgstr "선택된 색상을 투명으로 변환"
-
-#~ msgid "Color to _Alpha..."
-#~ msgstr "색상을 알파로(_A)..."
-
-#~ msgid "Removing color"
-#~ msgstr "색상 제거 중"
-
-#~ msgid "Color to Alpha"
-#~ msgstr "색상을 알파로"
-
-#~ msgctxt "color-to-alpha"
-#~ msgid "From:"
-#~ msgstr "시작:"
-
-#~ msgid "Color to Alpha Color Picker"
-#~ msgstr "색상을 알파 색상 추출로"
-
-#~ msgid "to alpha"
-#~ msgstr "알파로"
-
-#~ msgid "_Luma y470f:"
-#~ msgstr "Luma y470f(_L):"
-
-#~ msgid "_Blueness cb470f:"
-#~ msgstr "파랑 cb470f(_B):"
-
-#~ msgid "_Redness cr470f:"
-#~ msgstr "빨강 cr470f(_R):"
-
-#~ msgid "_Luma y709f:"
-#~ msgstr "Luma y709f(_L):"
-
-#~ msgid "_Blueness cb709f:"
-#~ msgstr "파랑 cb709f(_B):"
-
-#~ msgid "_Redness cr709f:"
-#~ msgstr "빨강 cr709f(_R):"
-
-#~ msgid "Image is not a gray image (bpp=%d)"
-#~ msgstr "그레이 이미지가 아닙니다. (bpp=%d)"
-
-#~ msgid "Stretch image contrast to cover the maximum possible range"
-#~ msgstr "가능한 최대로 이미지의 HSV 높이기"
-
-#~ msgid "Stretch _HSV"
-#~ msgstr "_HSV 강화"
-
-#~ msgid "Auto-Stretching HSV"
-#~ msgstr "자동으로 HSV 강화"
-
-#~ msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-#~ msgstr "autostretch_hsv: cmap은 NULL이었습니다! 종료중...\n"
-
-#~ msgid "Stretch contrast to cover the maximum possible range"
-#~ msgstr "가능한 최대로 대비 높이기"
-
-#~ msgid "_Stretch Contrast"
-#~ msgstr "대조 증가(_S)"
-
-#~ msgid "Auto-stretching contrast"
-#~ msgstr "자동으로 대비 증가"
-
-#~ msgid "c_astretch: cmap was NULL!  Quitting...\n"
-#~ msgstr "c_astretch: cmap은 NULL이었습니다! 종료중...\n"
-
-#~ msgid "Gr_ey"
-#~ msgstr "그레이(_E)"
-
-#~ msgid "Re_d"
-#~ msgstr "빨강(_D)"
-
-#~ msgid "_Alpha"
-#~ msgstr "알파(_A)"
-
-#~ msgid "E_xtend"
-#~ msgstr "확장(_X)"
-
-#~ msgid "Cro_p"
-#~ msgstr "잘라내기(_P)"
-
-#~ msgid "Apply a generic 5x5 convolution matrix"
-#~ msgstr "일반적인 5x5 컨벌루션 행렬 적용"
-
-#~ msgid "_Convolution Matrix..."
-#~ msgstr "컨벌루션 행렬(_C)..."
-
-#~ msgid "Convolution does not work on layers smaller than 3x3 pixels."
-#~ msgstr "컨벌루션은 3x3 픽셀보다 작은 레이어에서는 동작하지 않습니다."
-
-#~ msgid "Convolution Matrix"
-#~ msgstr "컨벌루션 행렬"
-
-#~ msgid "Matrix"
-#~ msgstr "행렬"
-
-#~ msgid "D_ivisor:"
-#~ msgstr "나누기(_I):"
-
-#~ msgid "N_ormalise"
-#~ msgstr "표준화(_O)"
-
-#~ msgid "A_lpha-weighting"
-#~ msgstr "알파-웨이팅(_L)"
-
-#~ msgid "Border"
-#~ msgstr "테두리"
-
-#~ msgid "Channels"
-#~ msgstr "채널"
-
-#~ msgid "Remove empty borders from the image"
-#~ msgstr "이미지의 빈 테두리 제거"
-
-#~ msgid "Autocrop Imag_e"
-#~ msgstr "이미지 자동 잘라내기(_E)"
-
-#~ msgid "Remove empty borders from the layer"
-#~ msgstr "레이어의 빈 테두리 제거"
-
-#~ msgid "Autocrop Lay_er"
-#~ msgstr "레이어 자동 잘라내기(_E)"
-
-#~ msgid "Cropping"
-#~ msgstr "잘라내는 중"
-
-#~ msgid "Convert the image into randomly rotated square blobs"
-#~ msgstr "이미지를 무작위로 회전된 정사각형 블록으로 변환하기"
-
-#~ msgid "_Cubism..."
-#~ msgstr "입체파(_C)..."
-
-#~ msgid "Cubism"
-#~ msgstr "입체파"
-
-#~ msgid "_Tile size:"
-#~ msgstr "타일 크기(_T):"
-
-#~ msgid "_Use background color"
-#~ msgstr "배경 색상 사용(_U)"
-
-#~ msgid "Cubistic transformation"
-#~ msgstr "입체적 변환"
-
-#~ msgid "hue_l"
-#~ msgstr "색조(_L)"
-
-#~ msgid "saturation_l"
-#~ msgstr "채도(_L)"
-
-#~ msgid "luma-y470f"
-#~ msgstr "luma-y470f"
-
-#~ msgid "blueness-cb470f"
-#~ msgstr "파랑-cb470f"
-
-#~ msgid "redness-cr470f"
-#~ msgstr "빨강-cr470f"
-
-#~ msgid "luma-y709f"
-#~ msgstr "luma-y709f"
-
-#~ msgid "blueness-cb709f"
-#~ msgstr "파랑-cb709f"
-
-#~ msgid "redness-cr709f"
-#~ msgstr "빨강-cr709f"
-
-#~ msgid "Fix images where every other row is missing"
-#~ msgstr "일부 행이 빠진 이미지 수정"
-
-#~ msgid "_Deinterlace..."
-#~ msgstr "역(逆)인터레이스(_D)..."
-
-#~ msgid "Deinterlace"
-#~ msgstr "역(逆)인터레이스"
-
-#~ msgid "Keep o_dd fields"
-#~ msgstr "홀수 영역 유지(_D)"
-
-#~ msgid "Keep _even fields"
-#~ msgstr "짝수 영역 유지(_E)"
-
-#~ msgid "Generate diffraction patterns"
-#~ msgstr "회절 무늬 생성"
-
-#~ msgid "_Diffraction Patterns..."
-#~ msgstr "회절 무늬(_D)..."
-
-#~ msgid "Creating diffraction pattern"
-#~ msgstr "회절 무늬 생성 중"
-
-#~ msgid "Diffraction Patterns"
-#~ msgstr "회절 무늬"
-
-#~ msgid "Frequencies"
-#~ msgstr "진동수"
-
-#~ msgid "Contours"
-#~ msgstr "등고선"
-
-#~ msgid "Sharp Edges"
-#~ msgstr "날카로운 경계선"
-
-#~ msgid "Sc_attering:"
-#~ msgstr "산란(_A):"
-
-#~ msgid "Po_larization:"
-#~ msgstr "분극화(_L):"
-
-#~ msgid "Other Options"
-#~ msgstr "다른 옵션"
-
-#~ msgid "_X displacement"
-#~ msgstr "_X 치환"
-
-#~ msgid "_Pinch"
-#~ msgstr "꼬집기(_P)"
-
-#~ msgid "_Y displacement"
-#~ msgstr "_Y 치환"
-
-#~ msgid "_Whirl"
-#~ msgstr "소용돌이(_W)"
-
-#~ msgid "Displace pixels as indicated by displacement maps"
-#~ msgstr "지정된 치환 맵으로 픽셀 치환"
-
-#~ msgid "_Displace..."
-#~ msgstr "치환하기(_D)..."
-
-#~ msgid "Displacing"
-#~ msgstr "치환 중"
-
-#~ msgid "Displace"
-#~ msgstr "치환"
-
-#~ msgid "_X displacement:"
-#~ msgstr "_X 치환:"
-
-#~ msgid "_Y displacement:"
-#~ msgstr "_Y 치환:"
-
-#~ msgid "Displacement Mode"
-#~ msgstr "치환 모드"
-
-#~ msgid "_Cartesian"
-#~ msgstr "데카르트식(_C)"
-
-#~ msgid "_Polar"
-#~ msgstr "극(_P)"
-
-#~ msgid "Edge Behavior"
-#~ msgstr "경계선의 움직임"
-
-#~ msgid "_Smear"
-#~ msgstr "번지기(_Smear)"
-
-#~ msgid "High-resolution edge detection"
-#~ msgstr "고해상도 경계선 검출"
-
-#~ msgid "_Laplace"
-#~ msgstr "라플라스(_L)"
-
-#~ msgid "Laplace"
-#~ msgstr "라플라스"
-
-#~ msgid "Cleanup"
-#~ msgstr "지우기"
-
-#~ msgid "Specialized direction-dependent edge detection"
-#~ msgstr "특수한 방향 의존적 경계 검출"
-
-#~ msgid "_Sobel..."
-#~ msgstr "소벨(Sobel)(_S)..."
-
-#~ msgid "Sobel Edge Detection"
-#~ msgstr "소벨(Sobel) 경계 검출"
-
-#~ msgid "Sobel _horizontally"
-#~ msgstr "수평으로 소벨(Sobel)(_H)"
-
-#~ msgid "Sobel _vertically"
-#~ msgstr "수직으로 소벨(Sobel)(_V)"
-
-#~ msgid "_Keep sign of result (one direction only)"
-#~ msgstr "결과값을 유지(한 방향으로만)(_K)"
-
-#~ msgid "Sobel edge detecting"
-#~ msgstr "소벨(Sobel) 경계 검출"
-
-#~ msgid "Several simple methods for detecting edges"
-#~ msgstr "몇 가지 간단한 경계 검출법"
-
-#~ msgid "_Edge..."
-#~ msgstr "경계선(_E)..."
-
-#~ msgid "Edge detection"
-#~ msgstr "경계선 검출"
-
-#~ msgid "Edge Detection"
-#~ msgstr "경계선 검출"
-
-#~ msgid "Sobel"
-#~ msgstr "소벨(Sobel)"
-
-#~ msgid "Prewitt compass"
-#~ msgstr "Prewitt 나침반"
-
-#~ msgid "Roberts"
-#~ msgstr "로버트"
-
-#~ msgid "Differential"
-#~ msgstr "차이점"
-
-#~ msgid "_Algorithm:"
-#~ msgstr "알고리즘(_A):"
-
-#~ msgid "A_mount:"
-#~ msgstr "총량(_M):"
-
-#~ msgid "Simulate an antique engraving"
-#~ msgstr "모의로 고대양식의 조각을 만듭니다."
-
-#~ msgid "En_grave..."
-#~ msgstr "새김(_G)..."
-
-#~ msgid "Engraving"
-#~ msgstr "새기는 중"
-
-#~ msgid "Engrave"
-#~ msgstr "새김"
-
-#~ msgid "_Limit line width"
-#~ msgstr "선 너비 한계(_L)"
-
-#~ msgid "GIMP brushes are either GRAYSCALE or RGBA"
-#~ msgstr "김프 붓은 그레이스케일이나 RGBA로 되어 있습니다."
-
-#~ msgid "Error writing output file."
-#~ msgstr "출력 파일 쓰기 오류"
-
-#~ msgid "Error in GIMP brush pipe file."
-#~ msgstr "김프 붓 파이프 파일에 오류"
-
-#~ msgid "Couldn't load one brush in the pipe, giving up."
-#~ msgstr "파이프로 붓을 불러올 수 없습니다."
-
-#~ msgid ""
-#~ "The image '%s' is in grayscale but does not contain any gray component."
-#~ msgstr ""
-#~ "'%s' 이미지는 그레이스케일 색상 공간에 있으나, 어떤 회색 요소도 포함하고 "
-#~ "있지 않습니다."
-
-#~ msgid "The image '%s' is in RGB, but is missing some of the components."
-#~ msgstr "'%s' 이미지는 RGB 색상 공간에 있으나, 일부 요소가 빠져 있습니다."
-
-#~ msgid ""
-#~ "The image '%s' is in the CIEXYZ color space, but there is no code in "
-#~ "place to convert it to RGB."
-#~ msgstr ""
-#~ "'%s' 이미지는 CIEXYZ 색상 공간에 있으나, RGB로 변환할 수 있는 어떤 코드도 "
-#~ "없습니다."
-
-#~ msgid ""
-#~ "The image '%s' is in the CIELAB color space, but there is no code in "
-#~ "place to convert it to RGB."
-#~ msgstr ""
-#~ "%s 이미지는 CIELAB 색상 공간에 있으나, RGB로 변환할 수 있는 어떤 코드도 없"
-#~ "습니다."
-
-#~ msgid ""
-#~ "The image '%s' is in the YCbCr color space, but there is no code in place "
-#~ "to convert it to RGB."
-#~ msgstr ""
-#~ "%s 이미지는 YCbCr 색상 공간에 있으나, RGB로 변환할 수 있는 어떤 코드도 없"
-#~ "습니다."
-
-#~ msgid "The image '%s' is in an unknown color space."
-#~ msgstr "'%s' 이미지는 알 수 없는 색상 공간에 있습니다."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' does not have the same size as the "
-#~ "image. This is currently not supported."
-#~ msgstr ""
-#~ "'%2$s' 이미지의 %1$d 요소는 크기가 이미지와 다릅니다. 이 기능은 아직 지원"
-#~ "되지 않습니다."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' does not have both a hstep and vstep."
-#~ msgstr ""
-#~ "%2$s 이미지의 %1$d 요소에는 hstep, vstep 가 모두 포함되어 있지 않습니다."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' is signed. This is currently not "
-#~ "supported."
-#~ msgstr ""
-#~ "%2$s 이미지의 %1$d 요소는 서명되었습니다. 이 기능은 아직 지원되지 않습니"
-#~ "다."
-
-#~ msgid "RGB565"
-#~ msgstr "RGB565"
-
-#~ msgid "Indexed Palette Type"
-#~ msgstr "인덱스된 팔레트 형식"
-
-#~ msgid ""
-#~ "Warning:\n"
-#~ "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
-#~ "bit, so it will be converted for you. Information will be lost because of "
-#~ "this conversion."
-#~ msgstr ""
-#~ "경고:\n"
-#~ "불러온 이미지는 채널당 16비트로 되어 있습니다. 김프는 8비트 이미지만 편집"
-#~ "할 수 있으므로, 자동으로 변환됩니다. 따라서 변환 과정 중에 일부 정보가 유"
-#~ "실될 수 있습니다."
-
-#~ msgid "This plug-in can only handle RGBA image files with 8bit color depth."
-#~ msgstr "이 플러그인은 8비트 색상 깊이를 가진 RGBA 파일에서만 동작합니다."
-
-#~ msgid "Error during writing indexed/gray image"
-#~ msgstr "그레이스케일/인덱스 이미지 쓰기 오류"
-
-#~ msgid "Error during writing rgb image"
-#~ msgstr "rgb 이미지 쓰기 동작 시 에러"
-
-#~ msgid "_Guillotine"
-#~ msgstr "_Guillotine"
-
-#~ msgid "Superimpose many altered copies of the image"
-#~ msgstr "편집된 이미지 복사본 겹쳐놓기"
-
-#~ msgid "_Illusion..."
-#~ msgstr "환상(_I)..."
-
-#~ msgid "Illusion"
-#~ msgstr "환상"
-
-#~ msgid "_Divisions:"
-#~ msgstr "나누기(_D):"
-
-#~ msgid "Mode _2"
-#~ msgstr "모드 _2:"
-
-#~ msgid "Use mouse control to warp image areas"
-#~ msgstr "마우스를 이용해 이미지 뒤틀기"
-
-#~ msgid "_IWarp..."
-#~ msgstr "왜곡시키기(IWarp)(_I)..."
-
-#~ msgid "Warping"
-#~ msgstr "구부리기"
-
-#~ msgid "Warping Frame %d"
-#~ msgstr "%d 프레임 휘기"
-
-#~ msgid "Ping pong"
-#~ msgstr "핑퐁"
-
-#~ msgid "Region affected by plug-in is empty"
-#~ msgstr "플러그인을 적용한 영역인 비어 있습니다."
-
-#~ msgid "A_nimate"
-#~ msgstr "애니메이션(_N)"
-
-#~ msgid "Number of _frames:"
-#~ msgstr "프레임 수(_F):"
-
-#~ msgid "R_everse"
-#~ msgstr "거꾸로(_E)"
-
-#~ msgid "_Ping pong"
-#~ msgstr "핑퐁(_P)"
-
-#~ msgid "_Animate"
-#~ msgstr "애니메이션(_A)"
-
-#~ msgid "Deform Mode"
-#~ msgstr "변형 모드"
-
-#~ msgid "_Move"
-#~ msgstr "이동(_M)"
-
-#~ msgid "_Grow"
-#~ msgstr "늘이기(_G)"
-
-#~ msgid "S_wirl CCW"
-#~ msgstr "나선형(시계반대방향)(_W)"
-
-#~ msgid "Remo_ve"
-#~ msgstr "제거하기(_V)"
-
-#~ msgid "S_hrink"
-#~ msgstr "줄이기(_H)"
-
-#~ msgid "Sw_irl CW"
-#~ msgstr "나선형(시계방향)(_I)"
-
-#~ msgid "_Deform radius:"
-#~ msgstr "변형 반경(_D):"
-
-#~ msgid "D_eform amount:"
-#~ msgstr "변형 총량(_E):"
-
-#~ msgid "_Bilinear"
-#~ msgstr "이중선형(_B)"
-
-#~ msgid "Adaptive s_upersample"
-#~ msgstr "적응성이 있는 슈퍼샘플링(_U)"
-
-#~ msgid "Ma_x depth:"
-#~ msgstr "최대 깊이(depth)(_X):"
-
-#~ msgid "Thresho_ld:"
-#~ msgstr "임계값(_L):"
-
-#~ msgid "IWarp"
-#~ msgstr "왜곡시키기"
-
-#~ msgid ""
-#~ "Click and drag in the preview to define the distortions to apply to the "
-#~ "image."
-#~ msgstr ""
-#~ "미리 보기에 끌어놓기를 해서 이미지에 적용할 왜곡 효과를 설정할 수 있습니"
-#~ "다."
-
-#~ msgid "Set a color profile on the image"
-#~ msgstr "이미지의 색상 프로필 설정"
-
-#~ msgid "_Assign Color Profile..."
-#~ msgstr "색상 프로필 할당(_A)..."
-
-#~ msgid "Assign default RGB Profile"
-#~ msgstr "기본 RGB 프로필 할당"
-
-#~ msgid "Apply a color profile on the image"
-#~ msgstr "이미지에 색상 프로필 적용"
-
-#~ msgid "_Convert to Color Profile..."
-#~ msgstr "색상 프로필로 변환(_C)..."
-
-#~ msgid "Convert to default RGB Profile"
-#~ msgstr "기본 RGB 프로필로 변환"
-
-#~ msgid "Image Color Profile Information"
-#~ msgstr "이미지 색상 프로필 정보"
-
-#~ msgid "Color Profile Information"
-#~ msgstr "색상 프로필 정보"
-
-#~ msgid "Color profile '%s' is not for RGB color space."
-#~ msgstr "색상 프로필 '%s'은(는) RGB 색상 공간이 아닙니다."
-
-#~ msgid "Default RGB working space"
-#~ msgstr "기본 RGB 작업 공간"
-
-#~ msgid ""
-#~ "Data attached as 'icc-profile' does not appear to be an ICC color profile"
-#~ msgstr "'icc-프로필'이 첨부된 데이터는 ICC 색상 프로필에 표시되지 않습니다."
-
-#~ msgid "'%s' does not appear to be an ICC color profile"
-#~ msgstr "'%s'은(는) ICC 색상 프로필에 표시되지 않습니다."
-
-#~ msgid "Converting from '%s' to '%s'"
-#~ msgstr "'%s'을(를) '%s'(으)로 변환"
-
-#~ msgid "Could not load ICC profile from '%s'"
-#~ msgstr "'%s'에서 ICC 프로필을 읽어올 수 없습니다."
-
-#~ msgid "The image '%s' has an embedded color profile:"
-#~ msgstr "이미지 '%s'은(는) 색상 프로필을 포함하고 있지 않습니다.:"
-
-#~ msgid "Convert the image to the RGB working space (%s)?"
-#~ msgstr "이미지를 RGB 작업 공간 (%s)(으)로 변환하시겠습니까?"
-
-#~ msgid "Convert to RGB working space?"
-#~ msgstr "RGB 작업 공간으로 변환하시겠습니까?"
-
-#~ msgid "_Keep"
-#~ msgstr "배경 유지(_K)"
-
-#~ msgid "_Convert"
-#~ msgstr "변환(_C)"
-
-#~ msgid "_Don't ask me again"
-#~ msgstr "다시 물어보지 않기(_D)"
-
-#~ msgid "Select destination profile"
-#~ msgstr "대상 프로필 선택"
-
-#~ msgid "All files (*.*)"
-#~ msgstr "모든 파일 (*.*)"
-
-#~ msgid "ICC color profile (*.icc, *.icm)"
-#~ msgstr "ICC 색상 프로필 (*.icc, *.icm)"
-
-#~ msgid "RGB workspace (%s)"
-#~ msgstr "RGB 작업공간 (%s)"
-
-#~ msgid "Convert to ICC Color Profile"
-#~ msgstr "ICC 색상 프로필로 변환"
-
-#~ msgid "Assign ICC Color Profile"
-#~ msgstr "ICC 색상 프로필 할당"
-
-#~ msgid "_Assign"
-#~ msgstr "할당(_A)"
-
-#~ msgid "Current Color Profile"
-#~ msgstr "현재 색상 프로필"
-
-#~ msgid "Convert to"
-#~ msgstr "변환"
-
-#~ msgid "Assign"
-#~ msgstr "할당"
-
-#~ msgid "_Rendering Intent:"
-#~ msgstr "랜더링 목적(_R):"
-
-#~ msgid "_Black Point Compensation"
-#~ msgstr "검은색 점 보정(_B)"
-
-#~ msgid "Destination profile is not for RGB color space."
-#~ msgstr "대상 프로필이 RGB 색상 공간에 대한 것이 아닙니다."
-
-#~ msgid "Simulate an elliptical lens over the image"
-#~ msgstr "모의로 이미지에 타원 렌즈 효과를 적용해봅니다."
-
-#~ msgid "Apply _Lens..."
-#~ msgstr "렌즈 적용(_L)..."
-
-#~ msgid "Applying lens"
-#~ msgstr "렌즈 적용"
-
-#~ msgid "Lens Effect"
-#~ msgstr "렌즈 효과"
-
-#~ msgid "_Keep original surroundings"
-#~ msgstr "원래 환경 유지(_K)"
-
-#~ msgid "_Set surroundings to index 0"
-#~ msgstr "인덱스 0에 환경 설정(_S)"
-
-#~ msgid "_Set surroundings to background color"
-#~ msgstr "배경 색상에 환경 설정(_S)"
-
-#~ msgid "_Make surroundings transparent"
-#~ msgstr "투명한 환경 만들기(_M)"
-
-#~ msgid "_Lens refraction index:"
-#~ msgstr "렌즈 굴절 인덱스(_L):"
-
-#~ msgid "Corrects lens distortion"
-#~ msgstr "렌즈 왜곡 현상 보정"
-
-#~ msgid "Lens Distortion..."
-#~ msgstr "렌즈 왜곡..."
-
-#~ msgid "Lens distortion"
-#~ msgstr "렌즈 왜곡"
-
-#~ msgid "Lens Distortion"
-#~ msgstr "렌즈 왜곡"
-
-#~ msgid "_Main:"
-#~ msgstr "메인(_M):"
-
-#~ msgid "_Edge:"
-#~ msgstr "가장자리(_E):"
-
-#~ msgid "_Brighten:"
-#~ msgstr "밝게(_B):"
-
-#~ msgid "_X shift:"
-#~ msgstr "_X 이동:"
-
-#~ msgid "_Y shift:"
-#~ msgstr "_Y 이동:"
-
-#~ msgid "Add a lens flare effect"
-#~ msgstr "렌즈 플레어 효과 적용"
-
-#~ msgid "Lens _Flare..."
-#~ msgstr "렌즈 플레어(_F)..."
-
-#~ msgid "Render lens flare"
-#~ msgstr "렌즈 플레어 효과 렌더링"
-
-#~ msgid "Lens Flare"
-#~ msgstr "렌즈 플레어"
-
-#~ msgid "Center of Flare Effect"
-#~ msgstr "플레어 효과의 중심"
-
-#~ msgid "Show _position"
-#~ msgstr "위치 표시(_P)"
-
-#~ msgid "Convert the image into irregular tiles"
-#~ msgstr "이미지를 불규칙한 타일로 변환"
-
-#~ msgid "_Mosaic..."
-#~ msgstr "모자이크(_M)..."
-
-#~ msgid "Finding edges"
-#~ msgstr "가장자리 찾기"
-
-#~ msgid "Rendering tiles"
-#~ msgstr "타일 랜더링"
-
-#~ msgid "Mosaic"
-#~ msgstr "모자이크"
-
-#~ msgid "Squares"
-#~ msgstr "정사각형"
-
-#~ msgid "Hexagons"
-#~ msgstr "6각형"
-
-#~ msgid "Octagons & squares"
-#~ msgstr "팔각형과 정사각형"
-
-#~ msgid "Triangles"
-#~ msgstr "삼각형"
-
-#~ msgid "_Tiling primitives:"
-#~ msgstr "원시적인 타일링(_T):"
-
-#~ msgid "Tile _size:"
-#~ msgstr "타일 크기(_S):"
-
-#~ msgid "Tile _height:"
-#~ msgstr "타일 높이(_H):"
-
-#~ msgid "Til_e spacing:"
-#~ msgstr "타일 간격(_E):"
-
-#~ msgid "Tile _neatness:"
-#~ msgstr "타일의 깔끔한 정도(_N):"
-
-#~ msgid "Light _direction:"
-#~ msgstr "빛의 방향(_D):"
-
-#~ msgid "Color _variation:"
-#~ msgstr "색상 변화(_V):"
-
-#~ msgid "Co_lor averaging"
-#~ msgstr "색상 평균(_L)"
-
-#~ msgid "Allo_w tile splitting"
-#~ msgstr "타일 흩뿌리기 허용(_W)"
-
-#~ msgid "_Pitted surfaces"
-#~ msgstr "움푹 들어간 외관(_P)"
-
-#~ msgid "_FG/BG lighting"
-#~ msgstr "전경/배경 빛(_F)"
-
-#~ msgid "Randomize hue/saturation/value independently"
-#~ msgstr "색상/채도/밝기를 무작위로 조절합니다."
-
-#~ msgid "HSV Noise..."
-#~ msgstr "HSV 잡음..."
-
-#~ msgid "HSV Noise"
-#~ msgstr "HSV 잡음"
-
-#~ msgid "_Holdness:"
-#~ msgstr "붙잡음(_H):"
-
-#~ msgid "H_ue:"
-#~ msgstr "색조(_U):"
-
-#~ msgid "Random Hurl"
-#~ msgstr "무작위로 투척"
-
-#~ msgid "Random Pick"
-#~ msgstr "무작위로 찍기"
-
-#~ msgid "Random Slur"
-#~ msgstr "무작위로 연결선 긋기"
-
-#~ msgid "Completely randomize a fraction of pixels"
-#~ msgstr "완전히 무작위로 픽셀 조각을 선택합니다."
-
-#~ msgid "Randomly interchange some pixels with neighbors"
-#~ msgstr "무작위로 일부 픽셀을 주변 픽셀과 맞바꿉니다."
-
-#~ msgid "Randomly slide some pixels downward (similar to melting)"
-#~ msgstr "무작위로 일부 픽셀을 아래쪽으로 미끄러뜨립니다(녹는 현상 비슷하게)."
-
-#~ msgid "_Hurl..."
-#~ msgstr "투척(_H)..."
-
-#~ msgid "_Pick..."
-#~ msgstr "찌르기(_P)..."
-
-#~ msgid "_Slur..."
-#~ msgstr "연결선 긋기(_S)..."
-
-#~ msgid "_Random seed:"
-#~ msgstr "무작위 시작 값(_R):"
-
-#~ msgid "R_andomization (%):"
-#~ msgstr "난수 (%)(_A):"
-
-#~ msgid "Percentage of pixels to be filtered"
-#~ msgstr "필터된 픽셀들의 퍼센티지"
-
-#~ msgid "R_epeat:"
-#~ msgstr "반복(_E):"
-
-#~ msgid "Number of times to apply filter"
-#~ msgstr "적용된 필터의 횟수"
-
-#~ msgid "Distort colors by random amounts"
-#~ msgstr "무작위로 색상 왜곡"
-
-#~ msgid "_RGB Noise..."
-#~ msgstr "RGB 잡음(_R)..."
-
-#~ msgid "Adding noise"
-#~ msgstr "잡음 추가"
-
-#~ msgid "RGB Noise"
-#~ msgstr "RGB 잡음"
-
-#~ msgid "Co_rrelated noise"
-#~ msgstr "서로 관련된 잡음(_R)"
-
-#~ msgid "_Independent RGB"
-#~ msgstr "독립적인 RGB(_I)"
-
-#~ msgid "_Gray:"
-#~ msgstr "회색(_G):"
-
-#~ msgid "Channel #%d:"
-#~ msgstr "채널 #%d:"
-
-#~ msgid "Create a random cloud-like texture"
-#~ msgstr "무작위 구름 텍스쳐 만들기"
-
-#~ msgid "_Solid Noise..."
-#~ msgstr "강한 잡음(_S)..."
-
-#~ msgid "Solid Noise"
-#~ msgstr "강한 잡음"
-
-#~ msgid "_Detail:"
-#~ msgstr "자세히(_D):"
-
-#~ msgid "T_urbulent"
-#~ msgstr "휘몰아치는 효과(_U)"
-
-#~ msgid "T_ilable"
-#~ msgstr "타일 덮기 가능(_I)"
-
-#~ msgid "_X size:"
-#~ msgstr "_X 크기:"
-
-#~ msgid "_Y size:"
-#~ msgstr "_Y 크기:"
-
-#~ msgid "Move pixels around randomly"
-#~ msgstr "무작위로 픽셀 이동"
-
-#~ msgid "Sp_read..."
-#~ msgstr "스프레드(Spread)(_R)..."
-
-#~ msgid "Spreading"
-#~ msgstr "스프레드(Spreading)"
-
-#~ msgid "Spread"
-#~ msgstr "스프레드"
-
-#~ msgid "Spread Amount"
-#~ msgstr "스프레드 총량"
-
-#~ msgid "Add a starburst to the image"
-#~ msgstr "이미지에 별빛 무늬 추가"
-
-#~ msgid "Super_nova..."
-#~ msgstr "초신성 효과(_N)..."
-
-#~ msgid "Rendering supernova"
-#~ msgstr "초신성 효과 렌더링"
-
-#~ msgid "Supernova"
-#~ msgstr "초신성 효과"
-
-#~ msgid "Supernova Color Picker"
-#~ msgstr "초신성 효과 색상 추출기"
-
-#~ msgid "_Spokes:"
-#~ msgstr "바퀴살(_S):"
-
-#~ msgid "R_andom hue:"
-#~ msgstr "임의 색상(_A):"
-
-#~ msgid "Center of Nova"
-#~ msgstr "신성 효과의 중심부"
-
-#~ msgid "Simplify image into an array of solid-colored squares"
-#~ msgstr "단색 정사각 배열로 이미지를 단순화시킵니다."
-
-#~ msgid "_Pixelize..."
-#~ msgstr "픽셀화(_P)..."
-
-#~ msgid "Pixelizing"
-#~ msgstr "픽셀화 중"
-
-#~ msgid "Pixelize"
-#~ msgstr "픽셀화"
-
-#~ msgid "Pixel _width:"
-#~ msgstr "픽셀 너비(_W):"
-
-#~ msgid "Pixel _height:"
-#~ msgstr "픽셀 높이(_H):"
-
-#~ msgid "Create a random plasma texture"
-#~ msgstr "무작위 플라스마 텍스쳐 만들기"
-
-#~ msgid "_Plasma..."
-#~ msgstr "플라스마(_P)..."
-
-#~ msgid "Plasma"
-#~ msgstr "플라스마"
-
-#~ msgid "Random _seed:"
-#~ msgstr "무작위 시작 값(_S):"
-
-#~ msgid "T_urbulence:"
-#~ msgstr "휘몰아침(_U):"
-
-#~ msgid "Convert image to or from polar coordinates"
-#~ msgstr "이미지를 극좌표로 변환, 혹은 극좌표에서 이미지로 변환"
-
-#~ msgid "P_olar Coordinates..."
-#~ msgstr "극 좌표(_O)..."
-
-#~ msgid "Polar coordinates"
-#~ msgstr "극좌표"
-
-#~ msgid "Polar Coordinates"
-#~ msgstr "극좌표"
-
-#~ msgid "Circle _depth in percent:"
-#~ msgstr "원 깊이(퍼센트)(_D):"
-
-#~ msgid "Offset _angle:"
-#~ msgstr "오프셋 각도(_A):"
-
-#~ msgid "_Map backwards"
-#~ msgstr "뒤쪽으로 매핑(_M)"
-
-#~ msgid ""
-#~ "If checked the mapping will begin at the right side, as opposed to "
-#~ "beginning at the left."
-#~ msgstr ""
-#~ "선택하면 오른쪽부터 매핑이 시작되고, 선택하지 않으면 왼쪽부터 시작됩니다."
-
-#~ msgid "Map from _top"
-#~ msgstr "위에서부터 매핑(_T)"
-
-#~ msgid ""
-#~ "If unchecked the mapping will put the bottom row in the middle and the "
-#~ "top row on the outside.  If checked it will be the opposite."
-#~ msgstr ""
-#~ "선택하지 않으면, 중앙의 바닥열과 바깥쪽의 최상위 열에 매핑됩니다. 선택하"
-#~ "면 반대로 동작합니다."
-
-#~ msgid "To _polar"
-#~ msgstr "극쪽으로(_P)"
-
-#~ msgid ""
-#~ "If unchecked the image will be circularly mapped onto a rectangle.  If "
-#~ "checked the image will be mapped onto a circle."
-#~ msgstr ""
-#~ "선택하지 않으면, 이미지가 사각형 모양으로 순환하며 매핑됩니다. 선택하면 원"
-#~ "형으로 매핑됩니다."
-
-#~ msgid "Remove the red eye effect caused by camera flashes"
-#~ msgstr "카메라 플래쉬에 의해 생긴 적목현상 제거하기"
-
-#~ msgid "_Red Eye Removal..."
-#~ msgstr "적목현상 제거(_R)..."
-
-#~ msgid "Red Eye Removal"
-#~ msgstr "적목현상 제거"
-
-#~ msgid "Threshold for the red eye color to remove."
-#~ msgstr "적목현상의 빨간 색상을 제거하기 위한 임계값"
-
-#~ msgid "Manually selecting the eyes may improve the results."
-#~ msgstr "눈 부분을 직접 선택해주면 보다 나은 결과를 얻을 수 있습니다."
-
-#~ msgid "Removing red eye"
-#~ msgstr "적목현상 제거"
-
-#~ msgid "Displace pixels in a ripple pattern"
-#~ msgstr "잔물결 무늬의 픽셀 치환"
-
-#~ msgid "_Ripple..."
-#~ msgstr "잔물결(Ripple)(_R)..."
-
-#~ msgid "Rippling"
-#~ msgstr "잔물결"
-
-#~ msgid "Ripple"
-#~ msgstr "잔물결(Ripple)"
-
-#~ msgid "_Retain tilability"
-#~ msgstr "tilability 유지(_R)"
-
-#~ msgid "Edges"
-#~ msgstr "경계선"
-
-#~ msgid "_Blank"
-#~ msgstr "빈 칸(_B)"
-
-#~ msgid "Wave Type"
-#~ msgstr "파도(wave) 형식"
-
-#~ msgid "Saw_tooth"
-#~ msgstr "톱니(_T)"
-
-#~ msgid "S_ine"
-#~ msgstr "사인(_I)"
-
-#~ msgid "_Period:"
-#~ msgstr "주기(_P):"
-
-#~ msgid "Phase _shift:"
-#~ msgstr "현상 이동(_S):"
-
-#~ msgid "You can not rotate the whole image if there's a selection."
-#~ msgstr "만약 선택한 부분이 있다면 전체 이미지를 회전할 수 없습니다."
-
-#~ msgid "You can not rotate the whole image if there's a floating selection."
-#~ msgstr ""
-#~ "만약 유동적인 선택한 부분이 있다면 전체 이미지를 회전할 수 없습니다."
-
-#~ msgid "Sorry, channels and masks can not be rotated."
-#~ msgstr "채널과 마스크는 회전시킬 수 없습니다."
-
-#~ msgid "Replace partial transparency with the current background color"
-#~ msgstr "부분적으로 투명한 부분을 현재 배경색으로 바꿉니다."
-
-#~ msgid "_Semi-Flatten"
-#~ msgstr "중간 합치기(_Semi-Flatten)"
-
-#~ msgid "Semi-Flattening"
-#~ msgstr "중간 합치기(Semi-Flatten) 중"
-
-#~ msgid "Shift each row of pixels by a random amount"
-#~ msgstr "픽셀의 각 행을 무작위값만큼 이동시킵니다."
-
-#~ msgid "_Shift..."
-#~ msgstr "이동(_S)..."
-
-#~ msgid "Shifting"
-#~ msgstr "이동 중"
-
-#~ msgid "Shift"
-#~ msgstr "이동"
-
-#~ msgid "Shift _horizontally"
-#~ msgstr "수평으로 이동(_H)"
-
-#~ msgid "Shift _vertically"
-#~ msgstr "수직으로 이동(_V)"
-
-#~ msgid "Shift _amount:"
-#~ msgstr "이동 거리(_A):"
-
-#~ msgid "Generate complex sinusoidal textures"
-#~ msgstr "복잡한 사인곡선 텍스쳐 생성"
-
-#~ msgid "_Sinus..."
-#~ msgstr "사인곡선(_S)..."
-
-#~ msgid "Sinus: rendering"
-#~ msgstr "사인곡선: 렌더링"
-
-#~ msgid "Sinus"
-#~ msgstr "사인곡선"
-
-#~ msgid "Drawing Settings"
-#~ msgstr "그리기 설정"
-
-#~ msgid "_X scale:"
-#~ msgstr "_X 배율:"
-
-#~ msgid "_Y scale:"
-#~ msgstr "_Y 배율:"
-
-#~ msgid "Co_mplexity:"
-#~ msgstr "복잡도(_M):"
-
-#~ msgid "Calculation Settings"
-#~ msgstr "계산 설정"
-
-#~ msgid "R_andom seed:"
-#~ msgstr "임의 시작 값(_A):"
-
-#~ msgid "_Force tiling?"
-#~ msgstr "강제 타일링합니까?(_F)"
-
-#~ msgid "_Ideal"
-#~ msgstr "관념적(_I)"
-
-#~ msgid "_Distorted"
-#~ msgstr "왜곡(_D)"
-
-#~ msgid "The colors are white and black."
-#~ msgstr "흰색과 검은색입니다."
-
-#~ msgid "Bl_ack & white"
-#~ msgstr "검은색 & 흰색(_A)"
-
-#~ msgid "_Foreground & background"
-#~ msgstr "전경 & 배경(_F)"
-
-#~ msgid "C_hoose here:"
-#~ msgstr "여기를 선택(_H):"
-
-#~ msgid "First color"
-#~ msgstr "첫 번째 색상"
-
-#~ msgid "Second color"
-#~ msgstr "두 번째 색상"
-
-#~ msgid "F_irst color:"
-#~ msgstr "첫 번째 색상(_I):"
-
-#~ msgid "S_econd color:"
-#~ msgstr "두 번째 색상(_E):"
-
-#~ msgid "Blend Settings"
-#~ msgstr "혼합 설정"
-
-#~ msgid "L_inear"
-#~ msgstr "선형(_I)"
-
-#~ msgid "Bili_near"
-#~ msgstr "복선형(_N)"
-
-#~ msgid "Sin_usoidal"
-#~ msgstr "사인곡선(_U)"
-
-#~ msgid "_Blend"
-#~ msgstr "혼합(_B)"
-
-#~ msgid "Do _preview"
-#~ msgstr "미리 보기 사용(_P)"
-
-#~ msgid "Make transparency all-or-nothing"
-#~ msgstr "투명도를 1bit(있음/없음)로 만들기"
-
-#~ msgid "_Threshold Alpha..."
-#~ msgstr "알파 임계값(_T)..."
-
-#~ msgid "The layer has its alpha channel locked."
-#~ msgstr "레이어의 알파 채널이 잠겨 있습니다."
-
-#~ msgid "RGBA/GRAYA drawable is not selected."
-#~ msgstr "RGBA/GRAYA drawable이 선택되지 않았습니다."
-
-#~ msgid "Coloring transparency"
-#~ msgstr "색상의 투명한 정도"
-
-#~ msgid "Threshold Alpha"
-#~ msgstr "알파 임계값"
-
-#~ msgid "Simulate distortion caused by square glass tiles"
-#~ msgstr "정사각 글래스 타일를 이용한 왜곡 시험하기"
-
-#~ msgid "_Glass Tile..."
-#~ msgstr "글래스 타일(_G)..."
-
-#~ msgid "Glass Tile"
-#~ msgstr "글래스 타일"
-
-#~ msgid "Tile _width:"
-#~ msgstr "타일 너비(_W):"
-
-#~ msgid "Paper Tile"
-#~ msgstr "종이 타일"
-
-#~ msgid "Division"
-#~ msgstr "나누기"
-
-#~ msgid "Fractional Pixels"
-#~ msgstr "단편적인 픽셀"
-
-#~ msgid "_Background"
-#~ msgstr "배경(_B)"
-
-#~ msgid "_Ignore"
-#~ msgstr "무시하기(_I)"
-
-#~ msgid "_Force"
-#~ msgstr "강제(_F)"
-
-#~ msgid "C_entering"
-#~ msgstr "중간(_E)"
-
-#~ msgid "Movement"
-#~ msgstr "이동"
-
-#~ msgid "_Max (%):"
-#~ msgstr "최대 (%)(_M):"
-
-#~ msgid "_Wrap around"
-#~ msgstr "감싸기(_W)"
-
-#~ msgid "Background Type"
-#~ msgstr "배경 유형"
-
-#~ msgid "I_nverted image"
-#~ msgstr "이미지 반전(_N)"
-
-#~ msgid "Im_age"
-#~ msgstr "이미지(_A)"
-
-#~ msgid "Fo_reground color"
-#~ msgstr "전경색(_R)"
-
-#~ msgid "Bac_kground color"
-#~ msgstr "배경색(_K)"
-
-#~ msgid "S_elect here:"
-#~ msgstr "선택(_E):"
-
-#~ msgid "Background Color"
-#~ msgstr "배경색"
-
-#~ msgid "Cut image into paper tiles, and slide them"
-#~ msgstr "종이 타일 안으로 이미지를 잘라 넣고, 잘게 자릅니다."
-
-#~ msgid "September 31, 1999"
-#~ msgstr "1999년 11월 31일"
-
-#~ msgid "_Paper Tile..."
-#~ msgstr "종이 타일(_P)..."
-
-#~ msgid "Alters edges to make the image seamlessly tileable"
-#~ msgstr "테두리를 균일한 이미지 타일로 바꾸기"
-
-#~ msgid "_Make Seamless"
-#~ msgstr "균일하게 만들기(_M)"
-
-#~ msgid "Tiler"
-#~ msgstr "타일러(Tiler)"
-
-#~ msgid "The most widely useful method for sharpening an image"
-#~ msgstr "이미지를 날카롭게 만드는 데에 가장 많이 쓰이는 방법"
-
-#~ msgid "_Unsharp Mask..."
-#~ msgstr "언샤픈 마스크(Unsharp Mask)(_U)..."
-
-#~ msgid "Merging"
-#~ msgstr "합치기"
-
-#~ msgid "Unsharp Mask"
-#~ msgstr "언샤픈 마스크(Unsharp Mask)"
-
-#~ msgid "Invert the brightness of each pixel"
-#~ msgstr "각 픽셀의 밝기 값 반전"
-
-#~ msgid "_Value Invert"
-#~ msgstr "명도 반전(_V)"
-
-#~ msgid "Value Invert"
-#~ msgstr "명도 반전"
-
-#~ msgid "More _white (larger value)"
-#~ msgstr "더 하얗게 (큰 값)(_W)"
-
-#~ msgid "More blac_k (smaller value)"
-#~ msgstr "더 어둡게 (작은 값)(_K)"
-
-#~ msgid "_Middle value to peaks"
-#~ msgstr "중간값을 최댓값으로(_M)"
-
-#~ msgid "_Foreground to peaks"
-#~ msgstr "전경을 최댓값으로(_F)"
-
-#~ msgid "O_nly foreground"
-#~ msgstr "전경만(_N)"
-
-#~ msgid "Only b_ackground"
-#~ msgstr "배경만(_A)"
-
-#~ msgid "Mor_e opaque"
-#~ msgstr "더 불투명하게(_E)"
-
-#~ msgid "More t_ransparent"
-#~ msgstr "더 투명하게(_R)"
-
-#~ msgid "Propagate certain colors to neighboring pixels"
-#~ msgstr "특정 색상을 주변 픽셀로 번지게 하기"
-
-#~ msgid "_Value Propagate..."
-#~ msgstr "명암 번지기(_V)..."
-
-#~ msgid "Shrink lighter areas of the image"
-#~ msgstr "이미지의 밝은 영역 줄이기"
-
-#~ msgid "E_rode"
-#~ msgstr "침식(_R)"
-
-#~ msgid "Grow lighter areas of the image"
-#~ msgstr "이미지의 밝은 영역 늘이기"
-
-#~ msgid "_Dilate"
-#~ msgstr "팽창(_D) "
-
-#~ msgid "Value Propagate"
-#~ msgstr "명암 번지기"
-
-#~ msgid "Propagate"
-#~ msgstr "번지기"
-
-#~ msgid "_Upper threshold:"
-#~ msgstr "높은 임계값(_U):"
-
-#~ msgid "_Propagating rate:"
-#~ msgstr "번짐 비율(_P):"
-
-#~ msgid "To l_eft"
-#~ msgstr "왼쪽으로(_E)"
-
-#~ msgid "To _right"
-#~ msgstr "오른쪽으로(_R)"
-
-#~ msgid "To _top"
-#~ msgstr "맨 위로(_T)"
-
-#~ msgid "Propagating _alpha channel"
-#~ msgstr "알파 채널 번지기(_A)"
-
-#~ msgid "Propagating value channel"
-#~ msgstr "명암 채널 번지기"
-
-#~ msgid "_Staggered"
-#~ msgstr "비틀거리는(_S)"
-
-#~ msgid "_Large staggered"
-#~ msgstr "크게 비틀거리는(_L)"
-
-#~ msgid "S_triped"
-#~ msgstr "줄무늬(_T)"
-
-#~ msgid "_Wide-striped"
-#~ msgstr "넓은 줄무늬(_W)"
-
-#~ msgid "Lo_ng-staggered"
-#~ msgstr "길게 비틀거리는(_N)"
-
-#~ msgid "_3x3"
-#~ msgstr "_3x3"
-
-#~ msgid "Larg_e 3x3"
-#~ msgstr "크게 3x3(_E)"
-
-#~ msgid "_Hex"
-#~ msgstr "16진수(_H)"
-
-#~ msgid "_Dots"
-#~ msgstr "점(_D)"
-
-#~ msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-#~ msgstr "모의로 퍼지나 저해상도 모니터에 의한 왜곡 현상 만들기"
-
-#~ msgid "Vi_deo..."
-#~ msgstr "비디오 형식(_D)..."
-
-#~ msgid "Video"
-#~ msgstr "비디오형식"
-
-#~ msgid "Video Pattern"
-#~ msgstr "비디오 무늬"
-
-#~ msgid "_Rotated"
-#~ msgstr "회전하기(_R)"
-
-#~ msgid "Distort the image with waves"
-#~ msgstr "웨이브로 이미지 뒤틀기"
-
-#~ msgid "_Waves..."
-#~ msgstr "물결(_W)..."
-
-#~ msgid "_Reflective"
-#~ msgstr "반사 효과(_R)"
-
-#~ msgid "_Amplitude:"
-#~ msgstr "진폭(_A):"
-
-#~ msgid "_Phase:"
-#~ msgstr "위상(_P):"
-
-#~ msgid "_Wavelength:"
-#~ msgstr "물결 길이(_W):"
-
-#~ msgid "Waving"
-#~ msgstr "물결"
-
-#~ msgid "_Create"
-#~ msgstr "만들기(_C)"
-
-#~ msgid "Distort an image by whirling and pinching"
-#~ msgstr "소용돌이와 꼬집기로 이미지 뒤틀기"
-
-#~ msgid "W_hirl and Pinch..."
-#~ msgstr "소용돌이와 꼬집기(_H)..."
-
-#~ msgid "Whirling and pinching"
-#~ msgstr "소용돌이와 꼬집기"
-
-#~ msgid "Whirl and Pinch"
-#~ msgstr "소용돌이와 꼬집기"
-
-#~ msgid "_Whirl angle:"
-#~ msgstr "소용돌이 각도(_W):"
-
-#~ msgid "_Pinch amount:"
-#~ msgstr "꼬집는 정도(_P):"
-
-#~ msgid "Smear image to give windblown effect"
-#~ msgstr "바람 부는 효과처럼 이미지 문지르기"
-
-#~ msgid "Wi_nd..."
-#~ msgstr "바람효과(_N)..."
-
-#~ msgid "Rendering blast"
-#~ msgstr "돌풍 렌더링"
-
-#~ msgid "Wind"
-#~ msgstr "바람"
-
-#~ msgid "Style"
-#~ msgstr "모양새"
-
-#~ msgid "_Wind"
-#~ msgstr "바람(_W)"
-
-#~ msgid "_Blast"
-#~ msgstr "돌풍(_B)"
-
-#~ msgid "_Left"
-#~ msgstr "왼쪽(_L)"
-
-#~ msgid "_Right"
-#~ msgstr "오른쪽(_R)"
-
-#~ msgid "Edge Affected"
-#~ msgstr "적용 범위"
-
-#~ msgid "L_eading"
-#~ msgstr "유도(_E)..."
-
-#~ msgid "Tr_ailing"
-#~ msgstr "포복(_A)"
-
-#~ msgid "Bot_h"
-#~ msgstr "양쪽(_H)"
-
-#~ msgid "Higher values restrict the effect to fewer areas of the image"
-#~ msgstr "높은 값은 이미지의 일부 영역에 효과가 제한됩니다."
-
-#~ msgid "Higher values increase the magnitude of the effect"
-#~ msgstr "높은 값은 효과의 강도를 증가시킵니다."
-
-#~ msgid "Rotate Image?"
-#~ msgstr "이미지를 회전하시겠습니까?"
-
-#~ msgid "_Keep Orientation"
-#~ msgstr "방향 유지(_K)"
-
-#~ msgid "According to the EXIF data, this image is rotated."
-#~ msgstr "EXIF 데이터에 의하면, 이 이미지는 회전되었습니다."
-
-#~ msgid "Would you like GIMP to rotate it into the standard orientation?"
-#~ msgstr "표준 방향으로 회전하겠습니까?"
-
-#~ msgid ""
-#~ "Unable to save layer with mode '%s'.  Either the PSD file format or the "
-#~ "save plug-in does not support that, using normal mode instead."
-#~ msgstr ""
-#~ "'%s' 모드의 레이어는 저장할 수 없습니다. PSD 파일 형식이나 플러그인에서 지"
-#~ "원하지 않을 경우, 일반 모드로 저장하십시오."
-
-#~ msgid "Downloading image (%s of %s)"
-#~ msgstr "이미지 내려받기 중 (%s / %s)"
-
-#~ msgid "Downloaded %s of image data"
-#~ msgstr "이미지 데이터 %s 내려받기 완료"
-
-#~ msgid "Uploaded %s of image data"
-#~ msgstr "이미지 데이터 %s 업로드 완료"
-
-#~ msgid "Connecting to server"
-#~ msgstr "서버에 연결 중"
-
-#~ msgid "Could not initialize libcurl"
-#~ msgstr "libcurl을 초기화할 수 없습니다."
-
-#~ msgid "Downloading %s of image data"
-#~ msgstr "이미지 데이터 %s 내려받기 중"
-
-#~ msgid "Opening '%s' for reading resulted in %s response code: %ld"
-#~ msgstr "%s 응답 코드의 읽기 결과 확인을 위해 '%s' 열기: %ld"
-
-#~ msgid "wget exited abnormally on URI '%s'"
-#~ msgstr "'%s' (은)는 올바르지 못한 URI입니다."
-
-#~ msgid "(timeout is %d second)"
-#~ msgid_plural "(timeout is %d seconds)"
-#~ msgstr[0] "(제한 시간은 %d 초입니다.)"
-
-#~ msgid "Opening URI"
-#~ msgstr "URI에서 파일 열기"
-
-#~ msgid "A network error occurred: %s"
-#~ msgstr "네트워크 오류가 발생했습니다.: %s"
-
-#~ msgid "Downloading unknown amount of image data"
-#~ msgstr "내려받기 중인 이미지 데이터의 용량을 알 수 없습니다."
-
-#~ msgid "URI"
-#~ msgstr "URI"
-
-#~ msgid "GIMP compressed XJT image"
-#~ msgstr "김프 압축된 XJT 이미지"
-
-#~ msgid "XJT file contains unknown layermode %d"
-#~ msgstr "XJT 파일에 알 수 없는 레이어모드 %d (이)가 포함되어 있습니다."
-
-#~ msgid "Warning: unsupported layermode %d saved to XJT"
-#~ msgstr "경고: 지원하지 않는 레이어모드 %d (이)가 XJT로 저장되었습니다."
-
-#~ msgid "XJT file contains unknown pathtype %d"
-#~ msgstr "XJT 파일에 알 수 없는 경로형식 %d (이)가 포함되어 있습니다."
-
-#~ msgid "Warning: unsupported pathtype %d saved to XJT"
-#~ msgstr "경고: 지원하지 않는 경로형식 %d (이)가 XJT로 저장되었습니다."
-
-#~ msgid "XJT file contains unknown unittype %d"
-#~ msgstr "XJT 파일에 알 수 없는 단위 %d (이)가 포함되어 있습니다."
-
-#~ msgid "Warning: unsupported unittype %d saved to XJT"
-#~ msgstr "경고: 지원하지 않는 단위 %d (이)가 XJT로 저장되었습니다."
-
-#~ msgid "XJT"
-#~ msgstr "XJT"
-
-#~ msgid "Optimize"
-#~ msgstr "최적화"
-
-#~ msgid "Clear transparent"
-#~ msgstr "투명 지우기"
-
-#~ msgid "Smoothing:"
-#~ msgstr "부드럽게:"
-
-#~ msgid "Could not create working folder '%s': %s"
-#~ msgstr "작업 폴더 '%s' (을)를 만들 수 없습니다: %s."
-
-#~ msgid "Error: Could not read XJT property file '%s'."
-#~ msgstr "오류: XJT 속성 파일 '%s'을(를) 읽을 수 없습니다."
-
-#~ msgid "Error: XJT property file '%s' is empty."
-#~ msgstr "오류: XJT 속성 파일 '%s' (이)가 비었습니다."
-
-#~ msgid "The name `%s' is used already!"
-#~ msgstr "'%s'(이)라는 이름은 이미 사용하고 있습니다."
-
-#~ msgid "Constructing maze using Prim's Algorithm"
-#~ msgstr "Prim 알고리즘을 이용해 미로 만들기"
-
-#~ msgid "Constructing tileable maze using Prim's Algorithm"
-#~ msgstr "Prim 알고리즘을 이용해 연속적인 미로 만들기"
-
-#~ msgid "Maze"
-#~ msgstr "미로"
-
-#~ msgid "Maze Size"
-#~ msgstr "미로 크기"
-
-#~ msgid "Pieces:"
-#~ msgstr "조각:"
-
-#~ msgid "Height (pixels):"
-#~ msgstr "높이 (픽셀):"
-
-#~ msgid "Algorithm"
-#~ msgstr "알고리즘"
-
-#~ msgid "Depth first"
-#~ msgstr "깊이 첫 번째"
-
-#~ msgid "Prim's algorithm"
-#~ msgstr "Prim 알고리즘"
-
-#~ msgid ""
-#~ "Selection size is not even.\n"
-#~ "Tileable maze won't work perfectly."
-#~ msgstr ""
-#~ "선택 크기가 올바르지 않습니다.\n"
-#~ "연속적인 미로를 완벽하게 실행할 수 없습니다."
-
-#~ msgid "Draw a labyrinth"
-#~ msgstr "미로 정원 그리기"
-
-#~ msgid "_Maze..."
-#~ msgstr "미로(_M)..."
-
-#~ msgid "Drawing maze"
-#~ msgstr "미로 그리기"
-
-#~ msgid "Property"
-#~ msgstr "속성"
-
-#~ msgid "Empty"
-#~ msgstr "비어 있음"
-
-#~ msgid "Origin"
-#~ msgstr "원래 환경"
-
-#~ msgid "Camera 1"
-#~ msgstr "카메라 1"
-
-#~ msgid "Camera 2"
-#~ msgstr "카메라 2"
-
-#~ msgid "Thumbnail"
-#~ msgstr "미리 보기"
-
-#~ msgid "Advanced"
-#~ msgstr "고급"
-
-#~ msgid "Cannot create file"
-#~ msgstr "파일을 만들 수 없습니다."
-
-#~ msgid "Some error occurred while saving"
-#~ msgstr "저장하는 중 오류가 발생하였습니다."
-
-#~ msgid "Could not close the file"
-#~ msgstr "파일을 닫을 수 없습니다."
-
-#~ msgid "Image Properties"
-#~ msgstr "이미지 속성"
-
-#~ msgid "_Import XMP..."
-#~ msgstr "XMP 가져오기(_I)..."
-
-#~ msgid "_Export XMP..."
-#~ msgstr "XMP 내보내기(_E)..."
-
-#~ msgid "Propert_ies"
-#~ msgstr "속성(_I)"
-
-#~ msgid "Error: No XMP packet found"
-#~ msgstr "오류: XMP 패킷을 찾을 수 없습니다."
-
-#~ msgid "Error on line %d char %d: %s"
-#~ msgstr "%d째 줄 %d 문자에서 오류: %s"
-
-#~ msgid "Expected text or optional element <%s>, found <%s> instead"
-#~ msgstr "텍스트, 혹은 선택적 요소 <%s> 대신, <%s> 를 찾았습니다."
-
-#~ msgid "Expected element <%s>, found <%s> instead"
-#~ msgstr "<%s> 속성 대신, <%s> 속성을 찾았습니다."
-
-#~ msgid "Unknown element <%s>"
-#~ msgstr "알 수 없는 속성 <%s>"
-
-#~ msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-#~ msgstr "알 수 없는 속성 \"%s\"=\"%s\" 요소 <%s>"
-
-#~ msgid "Required attribute rdf:about missing in <%s>"
-#~ msgstr "rdf 속성 필요:<%s>"
-
-#~ msgid "Nested elements (<%s>) are not allowed in this context"
-#~ msgstr "중첩된 요소 (<%s>) (은)는 이 문맥에서 허용되지 않습니다."
-
-#~ msgid "End of element <%s> not expected in this context"
-#~ msgstr "<%s> 속성은 이 문맥에 적절하지 않습니다."
-
-#~ msgid "The current element (<%s>) cannot contain text"
-#~ msgstr "현재 요소 (<%s>) (은)는 텍스트를 포함할 수 없습니다."
-
-#~ msgid "XMP packets must start with <?xpacket begin=...?>"
-#~ msgstr "XMP 패킷은 <?xpacket begin=...?> 에서 시작해야 합니다."
-
-#~ msgid "XMP packets must end with <?xpacket end=...?>"
-#~ msgstr "XMP 패킷은 <?xpacket end=...?> 로 끝나야합니다."
-
-#~ msgid "XMP cannot contain XML comments or processing instructions"
-#~ msgstr "XMP는 XML 설명이나 진행 명령을 포함할 수 없습니다."
-
-#~ msgid "Grab"
-#~ msgstr "잡아내기"
-
-#~ msgid "Grab a single window"
-#~ msgstr "창 잡아내기"
-
-#~ msgid "Grab the whole screen"
-#~ msgstr "전체 화면 잡아내기"
-
-#~ msgid "after"
-#~ msgstr "다음"
-
-#~ msgid "Seconds delay"
-#~ msgstr "지연 시간(초)"
-
-#~ msgid "Include decorations"
-#~ msgstr "창 테두리 포함"
-
-#~ msgid "Capture a window or desktop image"
-#~ msgstr "창이나 데스크톱 이미지 잡아내기"
-
-#~ msgid "_Screen Shot..."
-#~ msgstr "스크린샷(_S)..."
-
-#~ msgid "Ascii"
-#~ msgstr "Ascii"
-
-#~ msgid ""
-#~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
-#~ "if necessary - use the environment variable GS_PROG to tell GIMP about "
-#~ "its location.\n"
-#~ "(%s)"
-#~ msgstr ""
-#~ "고스트스크립트 시작 오류. 고스트스크립트가 설치되었는지 확인하십시오. 혹"
-#~ "은 GS_PROG 환경변수 설정이 정확한지 확인하십시오.\n"
-#~ "(%s)"
-
-#, fuzzy
-#~| msgid "The name '%s' is used already!"
-#~ msgid "The size of '%s' is zero!"
-#~ msgstr "'%s'(이)라는 이름은 이미 사용하고 있습니다."
-
-#~ msgid "Save as Text"
-#~ msgstr "텍스트로 저장"
-
-#~ msgid "Save as C-Source"
-#~ msgstr "C-소스로 저장"
-
-#~ msgid "Save as Brush"
-#~ msgstr "붓으로 저장"
-
-#~ msgid "Save as GIF"
-#~ msgstr "GIF로 저장"
-
-#~ msgid "Layer %s doesn't have an alpha channel, skipped"
-#~ msgstr "%s 레이어는 알파 채널이 없습니다. 넘어가기."
-
-#~ msgid "Save as HTML table"
-#~ msgstr "HTML 테이블로 저장"
-
-#~ msgid "Save as MNG"
-#~ msgstr "MNG로 저장"
-
-#~ msgid "Save as Pattern"
-#~ msgstr "무늬로 저장"
-
-#~ msgid "pixels/%s"
-#~ msgstr "픽셀/%s"
-
-#~ msgid "Save as PNG"
-#~ msgstr "PNG로 저장"
-
-#~ msgid "Save _gamma"
-#~ msgstr "감마값 저장(_G)"
-
-#~ msgid "Save as PNM"
-#~ msgstr "PNM으로 저장"
-
-#~ msgid "Save as PSP"
-#~ msgstr "PSP로 저장"
-
-#~ msgid "Save as TGA"
-#~ msgstr "TGA로 저장하기"
-
-#~ msgid "Save as TIFF"
-#~ msgstr "TIFF로 저장하기"
-
-#~ msgid "Save as XBM"
-#~ msgstr "XBM으로 저장"
-
-#~ msgid "Save as XPM"
-#~ msgstr "XPM으로 저장하기"
-
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "안녕하세요, 김프팀!"
-
-#~ msgid "Gee Zoom"
-#~ msgstr "Gee Zoom"
-
-#~ msgid "Thank You for Choosing GIMP"
-#~ msgstr "김프를 사용해주셔서 감사합니다."
-
-#~ msgid "An obsolete creation by %s"
-#~ msgstr "%s에 의한 쓰임이 적은 생성물"
-
-#~ msgid "Gee Slime"
-#~ msgstr "Gee Slime"
-
-#~ msgid "A less obsolete creation by %s"
-#~ msgstr "%s에 의한 쓰임이 적지 않은 생성물"
-
-#~ msgid "There was an error taking the screenshot."
-#~ msgstr "스크린샷을 저장하는 중에 오류가 발생했습니다."
-
-#~ msgid ""
-#~ "Web browser not specified.\n"
-#~ "Please specify a web browser using the Preferences dialog."
-#~ msgstr ""
-#~ "웹브라우저가 지정되지 않았습니다.\n"
-#~ "기본 설정 대화상자에서 사용할 웹브라우저를 지정하십시오."
-
-#~ msgid ""
-#~ "Could not parse the web browser command specified in the Preferences "
-#~ "dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "기본설정 대화상자에서 지정한 웹브라우저 명령을 해석할 수 없습니다.:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Could not execute the web browser specified in the Preferences dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "기본설정 대화상자에서 선택한 웹 브라우저를 시작할 수 없습니다.:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Save as BMP"
-#~ msgstr "BMP로 저장"
-
-#~ msgid "GFLI 1.3 - Save framestack"
-#~ msgstr "GFLI 1.3 - 프레임스택 저장하기"
-
-#~ msgid "File size: %02.01f kB"
-#~ msgstr "파일 크기: %02.01f kB"
-
-#~ msgid "Save as JPEG"
-#~ msgstr "JPEG으로 저장"
-
-#~ msgid "Frequency (rows):"
-#~ msgstr "빈도 (행):"
-
-#~ msgid "2x1,1x1,1x1 (4:2:2)"
-#~ msgstr "2x1,1x1,1x1 (4:2:2)"
-
-#~ msgid "1x2,1x1,1x1"
-#~ msgstr "1x2,1x1,1x1"
-
-#~ msgid "2x2,1x1,1x1 (smallest file)"
-#~ msgstr "2x2,1x1,1x1 (저화질)"
-
-#~ msgid "Save as SGI"
-#~ msgstr "SGI로 저장"
-
-#~ msgid "Co_nnect"
-#~ msgstr "연결(_N)"
-
-#~ msgid "Connect _anonymously"
-#~ msgstr "익명으로 연결(_A)"
-
-#~ msgid "Connect as u_ser:"
-#~ msgstr "다음 사용자로 연결(_S):"
-
-#~ msgid "_Username:"
-#~ msgstr "사용자 이름(_U):"
-
-#~ msgid "_Domain:"
-#~ msgstr "도메인(_D):"
-
-#~ msgid "_Forget password immediately"
-#~ msgstr "열쇠글 기억하지 않기(_F)"
-
-#~ msgid "_Remember password until you logout"
-#~ msgstr "로그아웃까지 열쇠글 기억(_R)"
-
-#~ msgid "_Remember forever"
-#~ msgstr "계속 기억(_R)"
-
-#~ msgid "Uploading %s of image data"
-#~ msgstr "이미지 데이터 %s 업로드 중..."
-
-#~ msgid "Failed to write %s to '%s': %s"
-#~ msgstr "%s (을) '%s'(으)로 쓰기 실패: %s"
-
-#~ msgid "Save as XJT"
-#~ msgstr "XJT로 저장"
-
-#~ msgid "Sizes:"
-#~ msgstr "크기:"
-
-#~ msgid "Size:"
-#~ msgstr "크기:"
-
-#~ msgid "Send to Back"
-#~ msgstr "검색 결과로 돌아가기"
-
-#~ msgid "Unable to add additional point.\n"
-#~ msgstr "추가 포인트 추가 불가능\n"
-
-#~ msgid "Could not open output file for writing"
-#~ msgstr "쓰기 모드로 출력 파일을 열 수 없습니다."
-
-#~ msgid "_Mail Image..."
-#~ msgstr "메일로 보내기(_M)..."
-
-#~ msgid "Encapsulation:"
-#~ msgstr "요약 레벨:"
-
-#~ msgid "_MIME"
-#~ msgstr "_MIME 형식"
-
-#~ msgid "_Color Enhance"
-#~ msgstr "색상 강화(_C)..."
-
-#~ msgid "_Fractal Trace..."
-#~ msgstr "프랙탈 자취(_F)..."
-
-#~ msgid "Email the image"
-#~ msgstr "이메일로 보내기"
