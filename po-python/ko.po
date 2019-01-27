@@ -1,15 +1,17 @@
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# The Korean translation for the GNU Image Manipulation Program
+# Copyright (C) 1998-2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
 # Sung-Hyun Nam <namsh@kldp.org>, 1999.
 # Dongsu Jang <iolo@hellocity.net>, 2004.
 # Choi, Ji-Hui <like.a.dust@gmail.com>, 2007.
+# Sensu Iun <cieltero@gmail.com>, 2019
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:50+0000\n"
-"PO-Revision-Date: 2019-01-25 23:52+0900\n"
+"PO-Revision-Date: 2019-01-28 07:55+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "Language: ko\n"
@@ -446,33 +448,3 @@ msgstr "물방울 그림자 _X축 변위"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "물방울 그림자 _Y축 변위"
-
-#~ msgid "Color _model"
-#~ msgstr "색상 모델(_M)"
-
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
-#~ msgid "HSV"
-#~ msgstr "HSV"
-
-#~ msgid "Red or Hue"
-#~ msgstr "빨강 혹은 색조"
-
-#~ msgid "Blue or Value"
-#~ msgstr "파랑 혹은 명암"
-
-#~ msgid "Create a new brush with characters from a text sequence"
-#~ msgstr "텍스트 시퀀스의 문자로 새 붓을 만들기"
-
-#~ msgid "New Brush from _Text..."
-#~ msgstr "텍스트로부터 새 붓 만들기(_T)..."
-
-#~ msgid "Font"
-#~ msgstr "글꼴"
-
-#~ msgid "Pixel Size"
-#~ msgstr "픽셀 크기"
-
-#~ msgid "Text"
-#~ msgstr "텍스트"
