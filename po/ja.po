@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-20 11:44+0000\n"
-"PO-Revision-Date: 2019-01-27 00:59+0900\n"
+"PO-Revision-Date: 2019-01-28 00:15+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -6562,11 +6562,9 @@ msgid "Set a color profile on the image"
 msgstr "カラープロファイルはグレースケール画像に適用できません (%s)"
 
 #: ../app/actions/image-actions.c:94
-#, fuzzy
-#| msgid "Select Monitor Color Profile"
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
-msgstr "モニタープロファイルの選択"
+msgstr "カラープロファイルに変換(_C)..."
 
 #: ../app/actions/image-actions.c:95
 #, fuzzy
@@ -10426,17 +10424,17 @@ msgstr ""
 #: ../app/actions/view-actions.c:198 ../app/actions/view-actions.c:205
 msgctxt "view-action"
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "黒点の補正(_B)"
 
 #: ../app/actions/view-actions.c:199
 msgctxt "view-action"
 msgid "Use black point compensation for image display"
-msgstr ""
+msgstr "黒点の補正を使用します"
 
 #: ../app/actions/view-actions.c:206
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
-msgstr ""
+msgstr "ソフトプルーフで黒点の補正を使用します"
 
 #: ../app/actions/view-actions.c:212
 #, fuzzy
@@ -11582,11 +11580,9 @@ msgstr ""
 "します"
 
 #: ../app/config/gimprc-blurbs.h:46
-#, fuzzy
-#| msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgid "Sets the default folder path for all color profile file dialogs."
 msgstr ""
-"[画像ファイルを開く] ダイアログで表示されるサムネイルの大きさを設定します"
+"すべての [カラープロファイルファイル] ダイアログで使用する既定のフォルダーパスを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:49
 msgid "Sets the type of mouse pointers to use."
@@ -12134,28 +12130,35 @@ msgstr ""
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
+"[カラープロファイルに変換] ダイアログのデフォルトのレンダリングインテントを設"
+"定します。"
 
 #: ../app/config/gimprc-blurbs.h:492
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
+"[カラープロファイルに変換] ダイアログの [黒点の補正] をデフォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:496
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"[精度変換] ダイアログのデフォルトのレイヤーのディザリング方法を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:499
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
+"[精度変換] ダイアログのデフォルトのテキストレイヤーのディザリング方法を設定し"
+"ます。"
 
 #: ../app/config/gimprc-blurbs.h:502
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"[精度変換] ダイアログのデフォルトのチャンネルのディザリング方法を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:505
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
@@ -16050,15 +16053,13 @@ msgstr "プロファイルの詳細(_D)"
 
 #: ../app/dialogs/color-profile-dialog.c:290
 #: ../app/dialogs/color-profile-import-dialog.c:160
-#, fuzzy
-#| msgid "_Display rendering intent:"
 msgid "_Rendering Intent:"
-msgstr "モニター表示のレンダリングインテント(_D):"
+msgstr "レンダリングインテント(_R):"
 
 #: ../app/dialogs/color-profile-dialog.c:306
 #: ../app/dialogs/color-profile-import-dialog.c:176
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "黒点の補正(_B)"
 
 #: ../app/dialogs/color-profile-dialog.c:386
 #, fuzzy
@@ -16172,7 +16173,7 @@ msgstr "画像をRGBに変換"
 
 #: ../app/dialogs/convert-precision-dialog.c:157
 msgid "Precision Conversion"
-msgstr ""
+msgstr "精度変換"
 
 #: ../app/dialogs/convert-precision-dialog.c:204
 #: ../app/widgets/gimptemplateeditor.c:422
@@ -17118,14 +17119,12 @@ msgid "_Try to use the system monitor profile"
 msgstr "システムのモニタープロファイル使用を優先する(_T)"
 
 #: ../app/dialogs/preferences-dialog.c:1345
-#, fuzzy
-#| msgid "_Display rendering intent:"
 msgid "_Rendering intent:"
-msgstr "モニター表示のレンダリングインテント(_D):"
+msgstr "レンダリングインテント(_R):"
 
 #: ../app/dialogs/preferences-dialog.c:1350
 msgid "Use _black point compensation"
-msgstr ""
+msgstr "黒点の補正を使用する(_B)"
 
 #: ../app/dialogs/preferences-dialog.c:1358
 #: ../app/dialogs/preferences-dialog.c:1394 ../app/paint/gimpinkoptions.c:93
@@ -17164,10 +17163,8 @@ msgid "_Soft-proofing profile:"
 msgstr "ソフトプルーフのレンダリングインテント(_S):"
 
 #: ../app/dialogs/preferences-dialog.c:1381
-#, fuzzy
-#| msgid "_Display rendering intent:"
 msgid "Re_ndering intent:"
-msgstr "モニター表示のレンダリングインテント(_D):"
+msgstr "レンダリングインテント(_N):"
 
 #: ../app/dialogs/preferences-dialog.c:1386
 msgid "Use black _point compensation"
@@ -17590,40 +17587,29 @@ msgid "Convert to Color Profile Dialog"
 msgstr "カラープロファイルに変換ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2178
-#, fuzzy
-#| msgid "_Display rendering intent:"
 msgid "Rendering intent:"
-msgstr "モニター表示のレンダリングインテント(_D):"
+msgstr "レンダリングインテント:"
 
 #: ../app/dialogs/preferences-dialog.c:2182
-#, fuzzy
-#| msgid "Click to complete selection"
 msgid "Black point compensation"
-msgstr "クリック: 選択範囲を確定します"
+msgstr "黒点の補正"
 
 #. Convert Precision Dialog
 #: ../app/dialogs/preferences-dialog.c:2186
 msgid "Precision Conversion Dialog"
-msgstr ""
+msgstr "精度変換ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2193
-#, fuzzy
-#| msgid "Drop layers"
 msgid "Dither layers:"
-msgstr "レイヤーをドロップ"
+msgstr "レイヤーのディザリング:"
 
 #: ../app/dialogs/preferences-dialog.c:2198
-#, fuzzy
-#| msgid "Resize Text Layer"
 msgid "Dither text layers:"
-msgstr "テキストレイヤーサイズの変更"
+msgstr "テキストレイヤーのディザリング:"
 
 #: ../app/dialogs/preferences-dialog.c:2203
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Delete channel"
 msgid "Dither channels/masks:"
-msgstr "チャンネルの削除"
+msgstr "チャンネル/マスクのディザリング:"
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:2207
