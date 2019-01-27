@@ -1,15 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR
+# The Korean translation for the GNU Image Manipulation Program
+# Copyright (C) 1998-2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
 # Sangdo Jun <sebuls@gmail.com>, 2018.
+# Sensu Iun <cieltero@gmail.com>, 2019
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp windows installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-24 22:33+0000\n"
-"PO-Revision-Date: 2019-01-25 11:36+0900\n"
+"PO-Revision-Date: 2019-01-28 07:56+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: Korean\n"
 "Language: ko\n"
@@ -46,11 +46,11 @@ msgid ""
 "gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"이것은 김프의 개발 버전으로 어떤 기능은 끝나지 않았거나, 불안정할 수 있습니"
-"다.%n이 버전의 김프는 일상업무용이 아니므로 불안정할 수 있고, 작업한 내용을 "
+"이것은 김프의 개발 버전으로 어떤 기능은 완성되지 않았거나, 불안정할 수 있습니"
+"다.%n이 버전의 김프는 일상 업무용이 아니므로 불안정할 수 있고, 작업한 내용을 "
 "잃을 수 있습니다.%n문제가 생기면, 이미 Git에서 고쳤는지 먼저 확인하고 개발자"
 "에게 연락하거나 김프 giblab에 알리세요:%n_https://gitlab.gnome.org/GNOME/"
-"gimp/issues%n%n그래도 설치를 계속 하시겠습니까?"
+"gimp/issues%n%n그래도 설치를 계속하시겠습니까?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -91,7 +91,7 @@ msgid ""
 "have more control over what gets installed."
 msgstr ""
 "김프 설치가 준비되었습니다. 기본 설정을 사용하려면 지금 설치 버튼을 클릭하"
-"고, 설치할 때 좀더 제어하고 싶으면 사용자 정의 설치 버튼을 클릭하세요."
+"고, 설정을 바꾸고 설치하려면 맞춤 버튼을 클릭하세요."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:14
 msgid "&Install"
@@ -99,7 +99,7 @@ msgstr "설치(&I)"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:15
 msgid "&Customize"
-msgstr "사용자 정의 설치(&C)"
+msgstr "맞춤(&C)"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:16
 msgid "Compact installation"
@@ -107,7 +107,7 @@ msgstr "최소 설치"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:17
 msgid "Custom installation"
-msgstr "사용자 정의 설치"
+msgstr "맞춤 설치"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:18
 msgid "Full installation"
@@ -171,11 +171,11 @@ msgstr "파이썬 스크립팅 언어로 쓰인 김프 플러그인 사용 허�
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "MyPaint brushes"
-msgstr "마이페인트 붓"
+msgstr "내페인트 붓"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:34
 msgid "Install the default set of MyPaint brushes"
-msgstr "마이페인트 붓 기본 집합 설치"
+msgstr "내페인트 붓 기본 집합 설치"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:35
 msgid "PostScript support"
@@ -195,7 +195,7 @@ msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr ""
-"32비트 플러그 쓸 때 필요한 파일을 넣으세요.%n파이썬을 지원하려면 필요합니다."
+"32비트 플러그인 사용에 필요한 파일을 포함.%n파이썬을 지원하려면 필요합니다."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:40
 msgid "Additional icons:"
@@ -232,7 +232,7 @@ msgstr "파이썬 인터프리터 정보 업데이트 중 오류."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
 msgid "Error updating MyPaint brushes info."
-msgstr "마이페인트 붓 정보 업데이트 중 오류."
+msgstr "내페인트 붓 정보 업데이트 중 오류."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:50
 #, no-c-format
@@ -297,9 +297,9 @@ msgid ""
 "Setup will now exit."
 msgstr ""
 "김프 %1을 현재 설치된 김프 버전 위에 설치할 수 없으며, 이전 버전을 자동 제거"
-"하는데 실패했습니다.%n%n이전 버전을 제거하고 이 버전을 %2에 설치하거나, 사용"
-"자 정의 설치를 선택하고, 다른 설치 폴더를 선택하세요.%n%n이제 설치 프로그램"
-"을 종료합니다."
+"하는데 실패했습니다.%n%n이전 버전을 제거하고 이 버전을 %2에 설치하거나, 맞춤 "
+"설치를 선택하고, 다른 설치 폴더를 선택하세요.%n%n이제 설치 프로그램을 종료합"
+"니다."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
@@ -312,8 +312,8 @@ msgid ""
 msgstr ""
 "김프 %1을 현재 설치된 김프 버전 위에 설치할 수 없으며, 설치 프로그램이 이전 "
 "버전을 어떻게 자동 제거할지 결정할 수 없습니다.%n%n김프 및 애드온의 이전 버전"
-"을 직접 제거하고 %2에 이 버전을 설치하거나, 사용자 정의 설치를 선택하고 다른 "
-"설치 폴더를 선택하십시오.%n%n이제 설치 프로그램을 종료합니다."
+"을 직접 제거하고 %2에 이 버전을 설치하거나, 맞춤 설치를 선택하고 다른 설치 폴"
+"더를 선택하십시오.%n%n이제 설치 프로그램을 종료합니다."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
@@ -354,7 +354,7 @@ msgstr "김프 파이썬 확장용 환경 설정..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up MyPaint brushes..."
-msgstr "마이페인트 붓 환경 설정..."
+msgstr "내페인트 붓 환경 설정..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up GIMP environment..."
