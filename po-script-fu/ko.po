@@ -1,16 +1,19 @@
-# Copyright (C) 1999 Free Software Foundation, Inc.
+# The Korean translation for the GNU Image Manipulation Program
+# Copyright (C) 1998-2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
 # Sung-Hyun Nam <namsh@kldp.org>, 1999.
 # Dongsu Jang <iolo@hellocity.net>, 2004.
 # Choi, Ji-Hui <like.a.dust@gmail.com>, 2007.
 # sebul <sebuls@gmail.com>, 2011.
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
+# Sensu Iun <cieltero@gmail.com>, 2019
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-26 00:07+0000\n"
-"PO-Revision-Date: 2019-01-26 12:36+0900\n"
+"PO-Revision-Date: 2019-01-28 07:55+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -1688,40 +1691,3 @@ msgstr "그림자 효과 X 오프셋"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "그림자 효과 Y 오프셋"
-
-#~ msgid "_Spyrogimp..."
-#~ msgstr "스파이로그래프(_S)..."
-
-#~ msgid ""
-#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-#~ msgstr "현재 레이어에 스파이로그래프,에피트로코이드 및 리사주 곡선을 추가"
-
-#~ msgid "FG-BG-RGB"
-#~ msgstr "FG-BG-RGB"
-
-#~ msgid "Tile"
-#~ msgstr "타일"
-
-#~ msgid "Bumpmap (alpha layer) blur radius"
-#~ msgstr "범프맵(알파 레이어) 흐릿한 반지름"
-
-#~ msgid "Create a logo with outlined text and a drop shadow"
-#~ msgstr "테두리가 있는 글자 로고와 그림자를 만듭니다."
-
-#~ msgid "Default bumpmap settings"
-#~ msgstr "기본 범프맵 설정"
-
-#~ msgid "Outline blur radius"
-#~ msgstr "윤곽선 흐릿한 영역의 반지름"
-
-#~ msgid "3_D Truchet..."
-#~ msgstr "3D 트뤼셰(Truchet)(_D)..."
-
-#~ msgid "End blend"
-#~ msgstr "끝 혼합 색상"
-
-#~ msgid "Number of Y tiles"
-#~ msgstr "Y 타일 수"
-
-#~ msgid "Supersample"
-#~ msgstr "수퍼샘플"
