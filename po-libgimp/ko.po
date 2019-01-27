@@ -1,15 +1,17 @@
-# Copyright (C) 1999 Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# The Korean translation for the GNU Image Manipulation Program
+# Copyright (C) 1998-2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
 # Sung-Hyun Nam <namsh@kldp.org>, 1999.
 # Dongsu Jang <iolo@hellocity.net>, 2004.
 # Jihui Choi <jihui.choi@gmail.com>, 2007, 2012.
+# Sensu Iun <cieltero@gmail.com>, 2019
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-24 20:14+0000\n"
-"PO-Revision-Date: 2019-01-25 23:14+0900\n"
+"PO-Revision-Date: 2019-01-28 07:50+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -2936,167 +2938,3 @@ msgstr "대비 주기"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "대비"
-
-#~ msgid "Sans"
-#~ msgstr "Sans"
-
-#~ msgctxt "desaturate-mode"
-#~ msgid "Luminosity"
-#~ msgstr "광도"
-
-#~ msgctxt "desaturate-mode"
-#~ msgid "Average"
-#~ msgstr "평균"
-
-#~ msgctxt "icon-type"
-#~ msgid "Stock ID"
-#~ msgstr "Stock ID"
-
-#~ msgctxt "interpolation-type"
-#~ msgid "Sinc (Lanczos3)"
-#~ msgstr "Sinc (Lanczos3)"
-
-#~ msgctxt "repeat-mode"
-#~ msgid "None"
-#~ msgstr "없음"
-
-#~ msgid "Mode of operation for color management."
-#~ msgstr "색상 관리 동작을 위한 모드"
-
-#~ msgid "The default RGB working space color profile."
-#~ msgstr "기본 RGB 작업 공간 색상 프로필"
-
-#~ msgid "The color profile used for simulating a printed version (softproof)."
-#~ msgstr "모의 인쇄(softproof)를 위한 색상 프로필"
-
-#~ msgid "Sets how colors are mapped for your display."
-#~ msgstr "화면에 색상을 매핑할 방법을 설정합니다."
-
-#~ msgid ""
-#~ "Sets how colors are converted from RGB working space to the print "
-#~ "simulation device."
-#~ msgstr ""
-#~ "RGB 색상 공간의 색상들을 모의 인쇄 장치로 변환시킬 방법을 설정합니다."
-
-#~ msgctxt "color-management-mode"
-#~ msgid "Print simulation"
-#~ msgstr "모의 인쇄"
-
-#~ msgid "Could not open '%s' for writing: %s"
-#~ msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
-
-#~ msgid ""
-#~ "Error writing to temporary file for '%s': %s\n"
-#~ "The original file has not been touched."
-#~ msgstr ""
-#~ "임시 파일 '%s' 쓰기 오류: %s\n"
-#~ "원래 파일은 바뀌지 않았습니다."
-
-#~ msgid ""
-#~ "Error writing to temporary file for '%s': %s\n"
-#~ "No file has been created."
-#~ msgstr ""
-#~ "임시 파일 '%s'에 쓰기 실패: %s\n"
-#~ "아무 파일도 만들어 지지 않았습니다."
-
-#~ msgid "Could not create '%s': %s"
-#~ msgstr "'%s'을(를) 만들 수 없습니다: %s"
-
-#~ msgid "Page 000"
-#~ msgstr "페이지 000"
-
-#~ msgid "_Edit"
-#~ msgstr "편집(_E)"
-
-#~ msgid "Hue"
-#~ msgstr "색상"
-
-#~ msgid "CMYK color selector"
-#~ msgstr "CMYK 색상 선택기"
-
-#~ msgid "Black _pullout:"
-#~ msgstr "검은색 농도(_P):"
-
-#~ msgid "The percentage of black to pull out of the colored inks."
-#~ msgstr "색상 잉크로 만들 검은색의 비율"
-
-#~ msgid "_Gamma:"
-#~ msgstr "감마(_G):"
-
-#~ msgid "Color management display filter using ICC color profiles"
-#~ msgstr "ICC 색상 프로필을 사용하는 색상 관리 화면 필터"
-
-#~ msgid "Color Management"
-#~ msgstr "색상 관리"
-
-#~ msgid ""
-#~ "This filter takes its configuration from the Color Management section in "
-#~ "the Preferences dialog."
-#~ msgstr "이 필터는 기본 설정 대화상자의 색상 관리 부분의 설정을 사용합니다."
-
-#~ msgid "Print simulation profile:"
-#~ msgstr "모의 인쇄 프로필:"
-
-#~ msgid "Color Proof"
-#~ msgstr "색상 교정"
-
-#~ msgid "Choose an ICC Color Profile"
-#~ msgstr "ICC 색상 프로필 선택"
-
-#~ msgid "_Profile:"
-#~ msgstr "프로필(_P):"
-
-#~ msgid "_Intent:"
-#~ msgstr "의도(_I):"
-
-#~ msgid "gradient|Linear"
-#~ msgstr "선형"
-
-#~ msgid "interpolation|None"
-#~ msgstr "없음"
-
-#~ msgid "interpolation|Linear"
-#~ msgstr "선형"
-
-#~ msgid "intent|Saturation"
-#~ msgstr "채도"
-
-#~ msgid "Painter-style triangle color selector"
-#~ msgstr "페인터같은 삼각형 색 선택기"
-
-#~ msgid "Triangle"
-#~ msgstr "삼각형"
-
-#~ msgid "%d Byte"
-#~ msgid_plural "%d Bytes"
-#~ msgstr[0] "%d 바이트"
-
-#~ msgid "%.2f KB"
-#~ msgstr "%.2f KB"
-
-#~ msgid "%.1f KB"
-#~ msgstr "%.1f KB"
-
-#~ msgid "%d KB"
-#~ msgstr "%d KB"
-
-#~ msgid "%.2f MB"
-#~ msgstr "%.2f MB"
-
-#~ msgid "%.1f MB"
-#~ msgstr "%.1f MB"
-
-#~ msgid "%d MB"
-#~ msgstr "%d MB"
-
-#~ msgid "%.2f GB"
-#~ msgstr "%.2f GB"
-
-#~ msgid "%.1f GB"
-#~ msgstr "%.1f GB"
-
-#~ msgid "%d GB"
-#~ msgstr "%d GB"
-
-#~ msgid "profile|None"
-#~ msgstr "없음"
