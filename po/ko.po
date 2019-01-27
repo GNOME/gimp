@@ -1,17 +1,19 @@
 # The Korean translation for the GNU Image Manipulation Program
-# Copyright (C) 1999 Free Software Foundation, Inc.
+# Copyright (C) 1998-2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
 # Sung-Hyun Nam <namsh@kldp.org>, 1999.
 # Dongsu Jang <iolo@hellocity.net>, 2004.
 # Ji-Hui Choi <like.a.dust@gmail.com>, 2007, 2012.
 # Sebul <sebuls@gmail.com>, 2012.
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
+# Sensu Iun <cieltero@gmail.com>, 2019
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-23 19:36+0000\n"
-"PO-Revision-Date: 2019-01-27 04:39+0900\n"
+"PO-Revision-Date: 2019-01-28 07:50+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -391,7 +393,7 @@ msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code."
 msgstr ""
-"병렬화된 페인팅 코드를 포함하여, 페인팅 및 디스플레이의 주요 핵심 최적화"
+"병렬화된 페인팅 코드를 포함하여, 페인팅 및 디스플레이의 주요 핵심 최적화."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)."
@@ -1419,7 +1421,7 @@ msgstr "선택 영역에서 빼기(_S)"
 #: ../app/actions/channels-actions.c:210
 msgctxt "channels-action"
 msgid "Subtract this channel from the current selection"
-msgstr "현재 선택에서 이 채널을 뺍니다"
+msgstr "현재 선택 영역에서 이 채널을 뺍니다"
 
 #: ../app/actions/channels-actions.c:215
 msgctxt "channels-action"
@@ -1573,7 +1575,7 @@ msgstr "선택 영역에서 빼기(_S)"
 #: ../app/actions/colormap-actions.c:86
 msgctxt "colormap-action"
 msgid "Subtract all pixels with this color from the current selection"
-msgstr "현재 선택에서 이 색상을 가진 모든 픽셀을 빼기"
+msgstr "현재 선택 영역에서 이 색상을 가진 모든 픽셀을 빼기"
 
 #: ../app/actions/colormap-actions.c:91
 msgctxt "colormap-action"
@@ -1993,7 +1995,7 @@ msgstr "전경 파랑: 1% 증가"
 #: ../app/actions/context-actions.c:373
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 10%"
-msgstr "전경색 파랑: 10% 감소"
+msgstr "전경 파랑: 10% 감소"
 
 #: ../app/actions/context-actions.c:377
 msgctxt "context-action"
@@ -4897,7 +4899,7 @@ msgstr "색을 알파로(_A)..."
 #: ../app/actions/filters-actions.c:252
 msgctxt "filters-action"
 msgid "_Extract Component..."
-msgstr "구성 요소 추출(E)..."
+msgstr "구성 요소 추출(_E)..."
 
 #: ../app/actions/filters-actions.c:257
 msgctxt "filters-action"
@@ -7104,7 +7106,7 @@ msgstr "선택 영역에서 빼기(_S)"
 #: ../app/actions/layers-actions.c:501
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
-msgstr "현재 선택에서 레이어 마스크를 뺍니다"
+msgstr "현재 선택 영역에서 레이어 마스크를 뺍니다"
 
 #: ../app/actions/layers-actions.c:506 ../app/actions/layers-actions.c:536
 msgctxt "layers-action"
@@ -7124,22 +7126,22 @@ msgstr "알파를 선택 영역으로(_P)"
 #: ../app/actions/layers-actions.c:517
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
-msgstr "선택을 레이어 알파 채널로 교체합니다"
+msgstr "선택 영역을 레이어 알파 채널로 교체합니다"
 
 #: ../app/actions/layers-actions.c:522
 msgctxt "layers-action"
 msgid "A_dd to Selection"
-msgstr "선택에 추가(_D)"
+msgstr "선택 영역에 추가(_D)"
 
 #: ../app/actions/layers-actions.c:524
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
-msgstr "현재 선택에 레이어 알파 채널 추가"
+msgstr "현재 선택 영역에 레이어 알파 채널 추가"
 
 #: ../app/actions/layers-actions.c:531
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr "현재 선택에서 레이어 알파 채널 빼기"
+msgstr "현재 선택 영역에서 레이어 알파 채널 빼기"
 
 #: ../app/actions/layers-actions.c:538
 msgctxt "layers-action"
@@ -9196,17 +9198,17 @@ msgstr "선택에 추가(_A)"
 #: ../app/actions/vectors-actions.c:263
 msgctxt "vectors-action"
 msgid "Add path to selection"
-msgstr "선택에 경로를 추가합니다"
+msgstr "선택 영역에 경로를 추가합니다"
 
 #: ../app/actions/vectors-actions.c:268
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
-msgstr "선택에서 빼기(_S)"
+msgstr "선택 영역에서 빼기(_S)"
 
 #: ../app/actions/vectors-actions.c:269
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
-msgstr "선택에서 경로를 뺍니다"
+msgstr "선택 영역에서 경로를 뺍니다"
 
 #: ../app/actions/vectors-actions.c:274
 msgctxt "vectors-action"
@@ -10624,8 +10626,8 @@ msgid ""
 "This may affect the way your window manager decorates and handles these "
 "windows."
 msgstr ""
-"독(Dock) 창과 도구 상자에 지정된 창 유형. 창 관리자가 창을 장식하고 처리하는 "
-"방법에 영향을 줍니다."
+"독 창과 도구 상자에 지정된 창 유형. 창 관리자가 창을 장식하고 처리하는 방법"
+"에 영향을 줍니다."
 
 #: ../app/config/gimprc-blurbs.h:145
 msgid "When enabled, the selected brush will be used for all tools."
@@ -10750,8 +10752,8 @@ msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr ""
-"선택 영역 점선(marching ants)의 속도를 지정하십시오. 이 값은 밀리초 단위입니"
-"다.(값이 작을수록 빠릅니다)"
+"선택 영역 점선(행진하는 개미떼)의 속도를 지정하십시오. 이 값은 밀리초 단위입"
+"니다.(값이 작을수록 빠릅니다)"
 
 #: ../app/config/gimprc-blurbs.h:256
 msgid ""
@@ -20764,7 +20766,7 @@ msgid ""
 "Some text properties may be wrong. Unless you want to edit the text layer, "
 "you don't need to worry about this."
 msgstr ""
-"레이어 '%s'의 텍스트 기생(parasite) 해석 오류:\n"
+"레이어 '%s'의 텍스트 기생물 구문 분석 오류:\n"
 "%s\n"
 "\n"
 "일부 텍스트 등록정보가 틀릴 수 있습니다. 텍스트 레이어를 수정하지 않는다면, "
@@ -22111,7 +22113,7 @@ msgstr "클릭하거나 엔터를 누르면 선택으로 변환"
 
 #: ../app/tools/gimpiscissorstool.c:963
 msgid "Press Enter to convert to a selection"
-msgstr "선택으로 변환하려면 "
+msgstr "선택 영역으로 변환하려면 엔터를 누르십시오"
 
 #: ../app/tools/gimpiscissorstool.c:979
 msgid "Click or Click-Drag to add a point"
@@ -22785,19 +22787,19 @@ msgstr "모드:"
 
 #: ../app/tools/gimpselectiontool.c:262
 msgid "Click-Drag to replace the current selection"
-msgstr "클릭-끌기 하면 현재 선택 바꾸기"
+msgstr "클릭-끌기 하면 현재 선택 영역 바꾸기"
 
 #: ../app/tools/gimpselectiontool.c:270
 msgid "Click-Drag to create a new selection"
-msgstr "클릭-끌기 하면 새 선택 만들기"
+msgstr "클릭-끌기 하면 새 선택 영역 만들기"
 
 #: ../app/tools/gimpselectiontool.c:275
 msgid "Click-Drag to add to the current selection"
-msgstr "클릭-끌기 하면 현재 선택에 더하기"
+msgstr "클릭-끌기 하면 현재 선택영역 에 더하기"
 
 #: ../app/tools/gimpselectiontool.c:284
 msgid "Click-Drag to subtract from the current selection"
-msgstr "클릭-끌기 하면 현재 선택에서 빼기"
+msgstr "클릭-끌기 하면 현재 선택영역 에서 빼기"
 
 #: ../app/tools/gimpselectiontool.c:293
 msgid "Click-Drag to intersect with the current selection"
@@ -22822,7 +22824,7 @@ msgstr "클릭 하면 떠있는 선택을 고정"
 #: ../app/tools/gimpselectiontool.c:422
 #, c-format
 msgid "Cannot subtract from an empty selection."
-msgstr "비어 있는 선택에서 뺄 수 없습니다."
+msgstr "비어 있는 선택 영역에서 뺄 수 없습니다."
 
 #: ../app/tools/gimpselectiontool.c:433
 #, c-format
@@ -22836,7 +22838,7 @@ msgstr "기울이기"
 
 #: ../app/tools/gimpsheartool.c:89
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "기울이기 도구: 레이어, 선택, 경로를 기울입니다"
+msgstr "기울이기 도구: 레이어, 선택 영역, 경로를 기울입니다"
 
 #: ../app/tools/gimpsheartool.c:90
 msgid "S_hear"
@@ -24902,7 +24904,7 @@ msgstr "배경: %d, %d, %d"
 
 #: ../app/widgets/gimpdnd-xds.c:205
 msgid "The given filename does not have any known file extension."
-msgstr "파일 확장자명이 올바르지 않습니다."
+msgstr "파일 확장명이 올바르지 않습니다."
 
 #: ../app/widgets/gimpdnd-xds.c:223
 msgid "File Exists"
@@ -26200,911 +26202,3 @@ msgstr "둥글게"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "퍼지"
-
-#, fuzzy
-#~| msgid "Starting Extensions"
-#~ msgctxt "dialogs-action"
-#~ msgid "Manage _Extensions"
-#~ msgstr "확장 시작 중"
-
-#, fuzzy
-#~| msgid "_RGB profile:"
-#~ msgctxt "image-action"
-#~ msgid "Use _sRGB Profile"
-#~ msgstr "RGB 프로필(_R):"
-
-#, fuzzy
-#~| msgid "Set color profile"
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "FG color fill"
-#~ msgstr "색 프로필 선택"
-
-#, fuzzy
-#~| msgid "Set color profile"
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "BG color fill"
-#~ msgstr "색 프로필 선택"
-
-#, fuzzy
-#~| msgid "Pattern"
-#~ msgctxt "bucket-fill-mode"
-#~ msgid "Pattern fill"
-#~ msgstr "무늬"
-
-#, fuzzy
-#~| msgid "Linear"
-#~ msgctxt "trc-type"
-#~ msgid "Linear"
-#~ msgstr "선형"
-
-#, fuzzy
-#~| msgid "Linear"
-#~ msgctxt "trc-type"
-#~ msgid "Non-Linear"
-#~ msgstr "선형"
-
-#, fuzzy
-#~| msgctxt "view-action"
-#~| msgid "_Perceptual"
-#~ msgctxt "trc-type"
-#~ msgid "Perceptual"
-#~ msgstr "지각적(_P)"
-
-#, fuzzy
-#~| msgid "Set color profile"
-#~ msgctxt "undo-type"
-#~ msgid "Hide/Unhide color profile"
-#~ msgstr "색 프로필 선택"
-
-#, fuzzy
-#~| msgctxt "undo-type"
-#~| msgid "Layer/Channel"
-#~ msgctxt "undo-type"
-#~ msgid "Layer/Channel format"
-#~ msgstr "레이어/채널"
-
-#, fuzzy
-#~| msgid "Brush '%s' is not a generated brush"
-#~ msgid "'%s' is not a relative path."
-#~ msgstr "붓 '%s'은(는) 생성된 붓이 아닙니다"
-
-#, fuzzy
-#~| msgid "'%s:' is not a valid URI scheme"
-#~ msgid "'%s' is not a child of the extension."
-#~ msgstr "'%s:'은(는) 정확한 URI 스키마가 아닙니다"
-
-#, fuzzy
-#~| msgid "Brush '%s' is not editable"
-#~ msgid "'%s' is not a directory."
-#~ msgstr "붓 '%s'을(를) 수정할 수 없습니다"
-
-#, fuzzy
-#~| msgid "'%s:' is not a valid URI scheme"
-#~ msgid "'%s' is not a valid file."
-#~ msgstr "'%s:'은(는) 정확한 URI 스키마가 아닙니다"
-
-#, fuzzy
-#~| msgid "Assign color profile"
-#~ msgid "Assigning color profile"
-#~ msgstr "색 프로필 할당"
-
-#, fuzzy
-#~| msgctxt "image-action"
-#~| msgid "_Discard Color Profile"
-#~ msgid "Discarding color profile"
-#~ msgstr "색 프로필 버리기(_D)"
-
-#, fuzzy
-#~| msgctxt "image-action"
-#~| msgid "_Discard Color Profile"
-#~ msgid "Discard color profile"
-#~ msgstr "색 프로필 버리기(_D)"
-
-#, fuzzy
-#~| msgid "Convert Image to %s"
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to %s"
-#~ msgstr "이미지를 %s(으)로 변환"
-
-#, fuzzy
-#~| msgctxt "view-action"
-#~| msgid "_Perceptual"
-#~ msgid "Linear/Perceptual"
-#~ msgstr "지각적(_P)"
-
-#, fuzzy
-#~| msgid "Linear"
-#~ msgid "Non-Linear"
-#~ msgstr "선형"
-
-#, fuzzy
-#~| msgid "Perceptual gamma (sRGB)"
-#~ msgid "Perceptual (sRGB)"
-#~ msgstr "지각적 감마 (sRGB)"
-
-#, fuzzy
-#~| msgid "Starting Extensions"
-#~ msgid "Installed Extensions"
-#~ msgstr "확장 시작 중"
-
-#, fuzzy
-#~| msgid "By Extension"
-#~ msgid "System Extensions"
-#~ msgstr "확장자로"
-
-#, fuzzy
-#~| msgid "Extensions"
-#~ msgid "Install Extensions"
-#~ msgstr "확장자"
-
-#, fuzzy
-#~| msgid "Search Actions"
-#~ msgid "Search extension:"
-#~ msgstr "동작 검색"
-
-#, fuzzy
-#~| msgctxt "image-convert-action"
-#~| msgid "Convert the image to perceptual (sRGB) gamma"
-#~ msgid "Work on linear or perceptual RGB"
-#~ msgstr "이미지를 지각적 (sRGB) 감마로 변환"
-
-#, fuzzy
-#~| msgctxt "filters-action"
-#~| msgid "_Fractal Trace..."
-#~ msgctxt "undo-type"
-#~ msgid "Fractal Trace"
-#~ msgstr "프랙탈 트레이싱(_F)..."
-
-#, fuzzy
-#~| msgid "Starting Extensions"
-#~ msgid "Loading extension plug-ins"
-#~ msgstr "확장 시작 중"
-
-#~ msgid "Wheel"
-#~ msgstr "휠"
-
-#, fuzzy
-#~| msgid "Distance:"
-#~ msgid "Distance"
-#~ msgstr "거리:"
-
-#, fuzzy
-#~| msgid "Rotating"
-#~ msgid "Rotation"
-#~ msgstr "회전"
-
-#, fuzzy
-#~| msgid "Source"
-#~ msgid "Source:"
-#~ msgstr "소스"
-
-#, fuzzy
-#~| msgid "Fill type:"
-#~ msgid "Tool type:"
-#~ msgstr "채우기 유형:"
-
-#, fuzzy
-#~| msgid "Tool Preset"
-#~ msgid "Tool serial:"
-#~ msgstr "도구 프리셋"
-
-#, fuzzy
-#~| msgctxt "view-action"
-#~| msgid "_Perceptual"
-#~ msgid "Linear/Preceptual"
-#~ msgstr "지각적(_P)"
-
-#~ msgctxt "dashboard-action"
-#~ msgid "Reset"
-#~ msgstr "초기화"
-
-#~ msgctxt "edit-action"
-#~ msgid "_Fade..."
-#~ msgstr "점점 흐릿하게(_F)..."
-
-#~ msgctxt "edit-action"
-#~ msgid "Modify paint mode and opacity of the last pixel manipulation"
-#~ msgstr "마지막 픽셀 다루기 그리기 모드 및 불투명도를 수정합니다"
-
-#~ msgid "_Fade %s..."
-#~ msgstr "%s 점점 희미하게(_F)..."
-
-#~ msgid "_Fade..."
-#~ msgstr "점점 흐릿하게(_F)..."
-
-#~ msgid "Fade %s"
-#~ msgstr "점점 흐리게 %s"
-
-#~ msgid "_Fade"
-#~ msgstr "점점 흐리게(_F)"
-
-#~ msgid ""
-#~ "Threading support is not yet stable.\n"
-#~ "Setting this to greater than one might\n"
-#~ "result in image errors or crashes."
-#~ msgstr ""
-#~ "스레드 지원은 아직 불안정함.\n"
-#~ "이것을 1보다 큰 값으로 설정하면\n"
-#~ "이미지 오류나 충돌 발생 우려가 있음."
-
-#~ msgctxt "layer-mode"
-#~ msgid "Hue (HSV) (legacy)"
-#~ msgstr "색조 (HSV) (레거시)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Hue (HSV) (l)"
-#~ msgstr "색조 (HSV) (L)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Saturation (HSV) (l)"
-#~ msgstr "채도 (HSV) (L)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Color (HSL) (l)"
-#~ msgstr "색상 (HSL) (L)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Value (HSV) (l)"
-#~ msgstr "값 (HSV) (L)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Chroma (LCH)"
-#~ msgstr "크로마 (LCH)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Lightness (LCH)"
-#~ msgstr "밝기 (LCH)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Hue (HSV)"
-#~ msgstr "색조 (HSV)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Color (HSL)"
-#~ msgstr "색 (HSL)"
-
-#~ msgid "Pick Mode"
-#~ msgstr "추출 모드"
-
-#~ msgid "The selection is empty."
-#~ msgstr "선택 영역이 이었습니다."
-
-#~ msgid ""
-#~ "Hexadecimal color notation as used in HTML and CSS.  This entry also "
-#~ "accepts CSS color names."
-#~ msgstr ""
-#~ "HTML이나 CSS에서 16진수 색상 표현. 이 항목은 CSS 색상명을 사용합니다."
-
-#~ msgctxt "dashboard-variable"
-#~ msgid "Busy"
-#~ msgstr "바쁨"
-
-#~ msgid "All images"
-#~ msgstr "모든 이미지"
-
-#~ msgid "Columns:"
-#~ msgstr "열:"
-
-#~ msgid ""
-#~ "Foreground & background colors.\n"
-#~ "The black and white squares reset colors.\n"
-#~ "The arrows swap colors.\n"
-#~ "Click to open the color selection dialog."
-#~ msgstr ""
-#~ "전경색과 배경색.\n"
-#~ "검정/흰 정사각형은 전경색과 배경색을 기본값으로 초기화시킵니다.\n"
-#~ "화살표는 전경색과 배경색을 서로 맞바꿉니다.\n"
-#~ "각 색상이 있는 부분을 클릭하면, 색상 선택 영역 대화상자가 열립니다."
-
-#~ msgctxt "color-frame-mode"
-#~ msgid "HSV"
-#~ msgstr "HSV"
-
-#~ msgid ""
-#~ "Unable to open a test swap file.\n"
-#~ "\n"
-#~ "To avoid data loss, please check the location and permissions of the swap "
-#~ "directory defined in your Preferences (currently \"%s\")."
-#~ msgstr ""
-#~ "테스트 스왑 파일을 열 수 없습니다.\n"
-#~ "\n"
-#~ "데이터의 손실을 피하려면 환경 설정에 정의된 스왑 디렉터리(현재위치 \"%s\")"
-#~ "의 위치와 허가 권한을 확인하십시오."
-
-#~ msgid "Configuration"
-#~ msgstr "설정"
-
-#~ msgid "New Channel Options"
-#~ msgstr "새 채널 옵션"
-
-#~ msgctxt "config-action"
-#~ msgid "Use _GEGL"
-#~ msgstr "GEGL 사용(_G)"
-
-#~ msgctxt "config-action"
-#~ msgid "If possible, use GEGL for image processing"
-#~ msgstr "가능하면 이미지 처리에 GEGL을 사용합니다"
-
-#~ msgctxt "drawable-action"
-#~ msgid "Invert the colors"
-#~ msgstr "색 반전"
-
-#~ msgctxt "drawable-action"
-#~ msgid "Flip horizontally"
-#~ msgstr "수평으로 뒤집습니다"
-
-#~ msgctxt "drawable-action"
-#~ msgid "Flip vertically"
-#~ msgstr "수직으로 뒤집습니다"
-
-#~ msgid "Equalize does not operate on indexed layers."
-#~ msgstr "평준화는 인덱스 레이어에서 동작하지 않습니다."
-
-#~ msgid "Invert does not operate on indexed layers."
-#~ msgstr "반전은 인덱스 레이어에서 동작하지 않습니다."
-
-#~ msgctxt "file-action"
-#~ msgid "Export to"
-#~ msgstr "내보내기"
-
-#~ msgid "Export to"
-#~ msgstr "내보내기"
-
-#~ msgctxt "layers-action"
-#~ msgid "Te_xt Tool"
-#~ msgstr "텍스트 도구(_X)"
-
-#~ msgid "Crop Layer"
-#~ msgstr "레이어 잘라내기"
-
-#~ msgctxt "plug-in-action"
-#~ msgid "_Map"
-#~ msgstr "맵(_M)"
-
-#~ msgctxt "plug-in-action"
-#~ msgid "_Pattern"
-#~ msgstr "무늬(_P)"
-
-#~ msgid "_Shrink from image border"
-#~ msgstr "이미지 테두리 줄이기(_S)"
-
-#~ msgid "_Feather border"
-#~ msgstr "테두리 페더(_F)"
-
-#~ msgid "_Lock selection to image edges"
-#~ msgstr "선택을 이미지 경계로 잠그기(_L)"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Path _Tool"
-#~ msgstr "경로 도구(_T)"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Visible"
-#~ msgstr "보이기(_V)"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Linked"
-#~ msgstr "연계(_L)"
-
-#~ msgctxt "view-action"
-#~ msgid "Use GEGL"
-#~ msgstr "GEGL 사용"
-
-#~ msgctxt "view-action"
-#~ msgid "Use GEGL to create this window's projection"
-#~ msgstr "이 창 투사를 만드는 데 GEGL을 사용합니다"
-
-#~ msgctxt "layer-mode-effects"
-#~ msgid "Value"
-#~ msgstr "명도"
-
-#~ msgid ""
-#~ "Unable to open swap file. GIMP has run out of memory and cannot use the "
-#~ "swap file. Some parts of your images may be corrupted. Try to save your "
-#~ "work using different filenames, restart GIMP and check the location of "
-#~ "the swap directory in your Preferences."
-#~ msgstr ""
-#~ "스왑 파일을 열 수 없습니다. 메모리가 부족하며, 스왑 파일도 사용할 수 없습"
-#~ "니다. 이미지의 일부가 망가질 수도 있으니, 작업중인 내용을 다른 이름으로 저"
-#~ "장후 김프를 다시 시작하십시오. 그리고 기본 설정에서 스왑 디렉터리의 위치"
-#~ "를 확인하십시오."
-
-#~ msgid "Ask for confirmation before closing an image without saving."
-#~ msgstr "이미지를 저장하지 않고 닫을 때 다시 확인합니다."
-
-#~ msgid "Sets the pixel format to use for mouse pointers."
-#~ msgstr "마우스 커서의 픽셀 포맷을 설정합니다."
-
-#~ msgid ""
-#~ "When enabled, the X server is queried for the mouse's current position on "
-#~ "each motion event, rather than relying on the position hint.  This means "
-#~ "painting with large brushes should be more accurate, but it may be "
-#~ "slower.  Conversely, on some X servers enabling this option results in "
-#~ "faster painting."
-#~ msgstr ""
-#~ "마우스 움직임 이벤트가 발생할 때마다 위치에 의존하는 대신 X 서버에 마우스"
-#~ "의 현재 위치를 물어봅니다.  즉, 큰 붓으로 작업할 경우 더 정확하지만, 더 느"
-#~ "려집니다.  반대로, 일부  X 서버는 이 옵션을 사용하면 더 빨라집니다."
-
-#~ msgctxt "convert-palette-type"
-#~ msgid "Generate optimum palette"
-#~ msgstr "최적 팔레트 생성"
-
-#~ msgctxt "convert-palette-type"
-#~ msgid "Use web-optimized palette"
-#~ msgstr "웹에 최적 팔레트 사용"
-
-#~ msgctxt "convert-palette-type"
-#~ msgid "Use black and white (1-bit) palette"
-#~ msgstr "흑백(1비트) 팔레트 사용"
-
-#~ msgctxt "convert-palette-type"
-#~ msgid "Use custom palette"
-#~ msgstr "사용자 팔레트 사용"
-
-#~ msgctxt "fill-type"
-#~ msgid "White"
-#~ msgstr "흰"
-
-#~ msgctxt "fill-type"
-#~ msgid "Transparency"
-#~ msgstr "투명"
-
-#~ msgctxt "fill-type"
-#~ msgid "None"
-#~ msgstr "없음"
-
-#~ msgctxt "stroke-method"
-#~ msgid "Stroke line"
-#~ msgstr "선 따라그리기"
-
-#~ msgctxt "stroke-method"
-#~ msgid "Stroke with a paint tool"
-#~ msgstr "칠 도구로 따라 그리기"
-
-#~ msgctxt "join-style"
-#~ msgid "Miter"
-#~ msgstr "뾰족하게(Miter)"
-
-#~ msgctxt "join-style"
-#~ msgid "Round"
-#~ msgstr "둥글게"
-
-#~ msgctxt "join-style"
-#~ msgid "Bevel"
-#~ msgstr "비스듬하게(Bevel)"
-
-#~ msgctxt "cap-style"
-#~ msgid "Butt"
-#~ msgstr "정확하게(Butt)"
-
-#~ msgctxt "cap-style"
-#~ msgid "Round"
-#~ msgstr "둥글게"
-
-#~ msgctxt "cap-style"
-#~ msgid "Square"
-#~ msgstr "정사각"
-
-#~ msgctxt "brush-generated-shape"
-#~ msgid "Circle"
-#~ msgstr "원"
-
-#~ msgctxt "brush-generated-shape"
-#~ msgid "Square"
-#~ msgstr "정사각"
-
-#~ msgctxt "brush-generated-shape"
-#~ msgid "Diamond"
-#~ msgstr "다이아몬드"
-
-#~ msgctxt "orientation-type"
-#~ msgid "Horizontal"
-#~ msgstr "수평"
-
-#~ msgctxt "orientation-type"
-#~ msgid "Vertical"
-#~ msgstr "수직"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Red"
-#~ msgstr "빨강"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Green"
-#~ msgstr "초록"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Blue"
-#~ msgstr "파랑"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Hue"
-#~ msgstr "색조"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Saturation"
-#~ msgstr "채도"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Value"
-#~ msgstr "명도"
-
-#~ msgid "Could not read %d byte from '%s': %s"
-#~ msgid_plural "Could not read %d bytes from '%s': %s"
-#~ msgstr[0] "\t\t%d바이트를 '%s'에서 읽을 수 없습니다: %s"
-
-#~ msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-#~ msgstr "붓 파일 '%s'에 치명적인 해석 오류: 김프 붓 파일이 아닙니다."
-
-#~ msgid ""
-#~ "Fatal parse error in brush file '%s': Unknown GIMP brush version in line "
-#~ "%d."
-#~ msgstr ""
-#~ "붓 파일 '%s'에 치명적인 해석 오류: %d번째 줄의 김프 붓 버전을 알 수 없습니"
-#~ "다."
-
-#~ msgid ""
-#~ "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
-#~ msgstr ""
-#~ "붓 파일 '%s'에 치명적인 해석 오류: %d번째 줄의 김프 붓 모양을 알 수 없습니"
-#~ "다."
-
-#~ msgid "Line %d: %s"
-#~ msgstr "줄 %d: %s"
-
-#~ msgid "Error while reading brush file '%s': %s"
-#~ msgstr "붓 파일 '%s' 읽기 오류: %s"
-
-#~ msgid "Could not delete '%s': %s"
-#~ msgstr "'%s'을(를) 지울 수 없습니다: %s"
-
-#~ msgctxt "undo-type"
-#~ msgid "Blend"
-#~ msgstr "혼합"
-
-#~ msgid "Hue_Saturation"
-#~ msgstr "색상-채도"
-
-#~ msgid "Fatal parse error in gradient file '%s': Read error in line %d."
-#~ msgstr "색상표 파일 '%s'에 치명적 해석 오류: %d번째 줄에서 읽기 오류."
-
-#~ msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-#~ msgstr ""
-#~ "그라디언트 파일 '%s'에 치명적인 해석 오류: 김프 그라디언트 파일이 아닙니"
-#~ "다."
-
-#~ msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
-#~ msgstr ""
-#~ "그라디언트 파일 '%s'에 치명적인 해석 오류: 파일이 %d번째 줄이 손상되었습니"
-#~ "다."
-
-#~ msgid ""
-#~ "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
-#~ msgstr ""
-#~ "그라디언트 파일 '%s'에 치명적인 해석 오류: %d 구역(%d번째 줄)이 손상되었습"
-#~ "니다."
-
-#~ msgid "Failed to import gradients from '%s': %s"
-#~ msgstr "'%s'에서 그라디언트 가져오기 실패: %s"
-
-#~ msgid "Fatal parse error in palette file '%s': Read error in line %d."
-#~ msgstr "팔레트 파일 '%s'에 치명적 해석 오류: %d번째 줄에서 읽기 오류."
-
-#~ msgid "Fatal parse error in palette file '%s': Missing magic header."
-#~ msgstr "팔레트 파일 '%s'에 치명적인 해석 오류: 매직 헤더가 없습니다."
-
-#~ msgid "Expanded as necessary"
-#~ msgstr "필요에 따라 확장"
-
-#~ msgid "Clipped to image"
-#~ msgstr "이미지에 맞게 잘라내기"
-
-#~ msgid "Offset by  x/_2, y/2"
-#~ msgstr "x/2, y/2 만큼 오프셋(_2)"
-
-#~ msgid "Saving Images"
-#~ msgstr "이미지 저장"
-
-#~ msgid "Confirm closing of unsa_ved images"
-#~ msgstr "저장 안 한 이미지를 닫을 때 확인(_V)"
-
-#~ msgid "Guide & Grid Snapping"
-#~ msgstr "안내선과 격자에 맞추기"
-
-#~ msgid "Fit to window"
-#~ msgstr "창 크기에 맞게"
-
-#~ msgid "Pointer re_ndering:"
-#~ msgstr "포인터 렌더링(_N):"
-
-#~ msgid "_Print simulation profile:"
-#~ msgstr "모의 인쇄 프로필(_P):"
-
-#~ msgid "_Mode of operation:"
-#~ msgstr "동작 모드(_M):"
-
-#~ msgid ""
-#~ "Indexed color layers are always scaled without interpolation. The chosen "
-#~ "interpolation type will affect channels and layer masks only."
-#~ msgstr ""
-#~ "인덱스된 색상 레이어는 보간법을 사용하지 않고 비율을 조정합니다.  선택한 "
-#~ "보간법은 채널과 마스크에만 적용됩니다."
-
-#~ msgid "Close _without Saving"
-#~ msgstr "저장 않고 닫기(_W)"
-
-#~ msgid ""
-#~ "Color management has been disabled. It can be enabled again in the "
-#~ "Preferences dialog."
-#~ msgstr ""
-#~ "색상 관리를 사용할 수 없습니다. 기본 설정 대화상자에서 활성화를 시킬 수 있"
-#~ "습니다."
-
-#~ msgid "Perspective Clone does not operate on indexed layers."
-#~ msgstr "원근 복제 도구는 인덱스 레이어에서 사용할 수 없습니다."
-
-#~ msgctxt "convolve-type"
-#~ msgid "Blur"
-#~ msgstr "흐리게"
-
-#~ msgctxt "ink-blob-type"
-#~ msgid "Circle"
-#~ msgstr "원"
-
-#~ msgctxt "ink-blob-type"
-#~ msgid "Square"
-#~ msgstr "정사각"
-
-#~ msgctxt "ink-blob-type"
-#~ msgid "Diamond"
-#~ msgstr "다이아몬드"
-
-#~ msgid "Move Layer"
-#~ msgstr "레이어 이동"
-
-#~ msgid "Plug-In missing (%s)"
-#~ msgstr "플러그인 없음 (%s)"
-
-#~ msgid "Blend"
-#~ msgstr "혼합"
-
-#~ msgid "Blen_d"
-#~ msgstr "혼합(_D)"
-
-#~ msgid "Blend does not operate on indexed layers."
-#~ msgstr "혼합 기능은 인덱스 레이어에서는 동작하지 않습니다."
-
-#~ msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
-#~ msgstr "명도/대비 도구: 명도와 대비를 조절합니다"
-
-#~ msgid "Import Brightness-Contrast settings"
-#~ msgstr "명도-대비 설정 가져오기"
-
-#~ msgid "Export Brightness-Contrast settings"
-#~ msgstr "명도-대비 설정 내보내기"
-
-#~ msgid "Brightness-Contrast does not operate on indexed layers."
-#~ msgstr "명도-대비는 인덱스된 레이어에 동작하지 않습니다."
-
-#~ msgid "Adjust Color Balance"
-#~ msgstr "색상 균형 조절"
-
-#~ msgid "Import Color Balance Settings"
-#~ msgstr "색상 균형 설정 가져오기"
-
-#~ msgid "Export Color Balance Settings"
-#~ msgstr "색상 균형 설정 내보내기"
-
-#~ msgid "Color Balance operates only on RGB color layers."
-#~ msgstr "색상 균형은 RGB 색상 레이어에만 동작합니다."
-
-#~ msgid "Colorize"
-#~ msgstr "컬러화(Colorize)"
-
-#~ msgid "Colorize Tool: Colorize the image"
-#~ msgstr "색상화 도구: 이미지에 색을 입힙니다."
-
-#~ msgid "Import Colorize Settings"
-#~ msgstr "색상화 설정 가져오기"
-
-#~ msgid "Export Colorize Settings"
-#~ msgstr "색상화 설정 내보내기"
-
-#~ msgid "Colorize operates only on RGB color layers."
-#~ msgstr "컬러화는 RGB 색상 레이어에서만 동작합니다."
-
-#~ msgid "Curves Tool: Adjust color curves"
-#~ msgstr "커브 도구: 커브를 이용해 색상을 조절합니다."
-
-#~ msgid "Import Curves"
-#~ msgstr "커브 가져오기"
-
-#~ msgid "Export Curves"
-#~ msgstr "커브 내보내기"
-
-#~ msgid "Curves does not operate on indexed layers."
-#~ msgstr "커브는 인덱스 레이어에서 동작하지 않습니다."
-
-#~ msgid "Click to locate on curve (try Shift, Ctrl)"
-#~ msgstr "곡선을 배치하려면 클릭하세요(Shift, Ctrl키 사용 가능)"
-
-#~ msgid "Desaturate (Remove Colors)"
-#~ msgstr "무채화(색상 제거하기)"
-
-#~ msgid "Desaturate only operates on RGB layers."
-#~ msgstr "무채화 도구는 RGB 색상 레이어에서만 동작."
-
-#~ msgid "Move Selection"
-#~ msgstr "선택 영역 이동"
-
-#~ msgid "Affect:"
-#~ msgstr "영향:"
-
-#~ msgid "Flip Type  (%s)"
-#~ msgstr "뒤집기 유형 (%s)"
-
-#~ msgid ""
-#~ "Smaller values give a more accurate selection border but may introduce "
-#~ "holes in the selection"
-#~ msgstr ""
-#~ "작은 값은 조금더 정확한 선택 영역 테두리를 만들 수 있습니다. 하지만 선택"
-#~ "에 구멍들을 만들 수도 있습니다."
-
-#~ msgid "Sensitivity for brightness component"
-#~ msgstr "밝기 구성 요소의 감도"
-
-#~ msgid "Sensitivity for red/green component"
-#~ msgstr "빨강/녹색 구성 요소의 감도"
-
-#~ msgid "Sensitivity for yellow/blue component"
-#~ msgstr "노랑/파랑 구성 요소의 감도"
-
-#~ msgid "Small brush"
-#~ msgstr "작은 붓"
-
-#~ msgid "Large brush"
-#~ msgstr "큰 붓"
-
-#~ msgid "Color Sensitivity"
-#~ msgstr "색상 감도"
-
-#~ msgid "Add more strokes or press Enter to accept the selection"
-#~ msgstr "스트로크를 추가하거나 엔터를 눌러 선택을 만드십시오."
-
-#~ msgid "Mark foreground by painting on the object to extract"
-#~ msgstr "추출할 물체를 칠해서 선택합니다."
-
-#~ msgid "GEGL operations do not operate on indexed layers."
-#~ msgstr "GEGL 동작은 인덱스 레이어에서 사용할 수 없습니다."
-
-#~ msgid "_Operation:"
-#~ msgstr "동작(_O):"
-
-#~ msgid "Operation Settings"
-#~ msgstr "동작 설정"
-
-#~ msgid "Adjust Hue / Lightness / Saturation"
-#~ msgstr "색상 / 명도 / 채도 조절"
-
-#~ msgid "Import Hue-Saturation Settings"
-#~ msgstr "색상-채도 설정 가져오기"
-
-#~ msgid "Export Hue-Saturation Settings"
-#~ msgstr "색상-채도 설정 내보내기"
-
-#~ msgid "Hue-Saturation operates only on RGB color layers."
-#~ msgstr "색상-채도는 RGB 색상 레이어에서만 동작합니다."
-
-#~ msgid "Levels Tool: Adjust color levels"
-#~ msgstr "레벨 도구: 색상 레벨을 조정합니다."
-
-#~ msgid "Import Levels"
-#~ msgstr "레벨 가져오기"
-
-#~ msgid "Export Levels"
-#~ msgstr "레벨 내보내기"
-
-#~ msgid "Levels does not operate on indexed layers."
-#~ msgstr "레벨 기능은 인덱스 레이어에서 동작하지 않습니다."
-
-#~ msgid "Pick black point"
-#~ msgstr "검정색 점 고르기"
-
-#~ msgid "Pick gray point"
-#~ msgstr "회색 점 고르기"
-
-#~ msgid "Pick white point"
-#~ msgstr "흰색 점 고르기"
-
-#~ msgid "Reset angle to zero"
-#~ msgstr "각을 0으로"
-
-#~ msgid "Posterize (Reduce Number of Colors)"
-#~ msgstr "포스터화(색상 수 줄이기)"
-
-#~ msgid "Posterize does not operate on indexed layers."
-#~ msgstr "포스터화는 인덱스 레이어에서 동작하지 않습니다."
-
-#~ msgid "Fixed:"
-#~ msgstr "고정:"
-
-#~ msgid "Threshold does not operate on indexed layers."
-#~ msgstr "임계값은 인덱스된 레이어에서 동작하지 않습니다."
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Aspect ratio"
-#~ msgstr "종횡비"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Width"
-#~ msgstr "너비"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Height"
-#~ msgstr "높이"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Size"
-#~ msgstr "크기"
-
-#~ msgid "Error while writing '%s': %s"
-#~ msgstr "'%s' 쓰기 오류: %s"
-
-#~ msgid "Green:"
-#~ msgstr "초록:"
-
-#~ msgid "Blue:"
-#~ msgstr "파랑:"
-
-#~ msgid "Value:"
-#~ msgstr "값:"
-
-#~ msgid "Hue:"
-#~ msgstr "색상:"
-
-#~ msgid "Sat.:"
-#~ msgstr "채도:"
-
-#~ msgid "Cyan:"
-#~ msgstr "청록색:"
-
-#~ msgid "Magenta:"
-#~ msgstr "자홍색:"
-
-#~ msgid "Yellow:"
-#~ msgstr "노란색:"
-
-#~ msgid "Black:"
-#~ msgstr "검정색:"
-
-#~ msgid "Alpha:"
-#~ msgstr "알파:"
-
-#~ msgid "Channel:"
-#~ msgstr "채널:"
-
-#~ msgid "Querying..."
-#~ msgstr "요청 중..."
-
-#~ msgid "ICC color profile (*.icc, *.icm)"
-#~ msgstr "ICC 색상 프로필 (*.icc, *.icm)"
-
-#~ msgid "Add settings to favorites"
-#~ msgstr "설정을 즐겨찾기에 추가"
-
-#~ msgid "_Manage Settings..."
-#~ msgstr "설정 관리(_M)..."
-
-#~ msgid "Add Settings to Favorites"
-#~ msgstr "즐겨찾기 설정 추가"
-
-#~ msgid "English"
-#~ msgstr "영어"
-
-#~ msgctxt "color-frame-mode"
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
-#~ msgid "Error saving XCF file: %s"
-#~ msgstr "XCF 파일 저장 오류: %s"
