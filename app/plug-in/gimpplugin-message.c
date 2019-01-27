@@ -792,9 +792,11 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n\n"
-                    "attempted to install a procedure NULL parameter name.",
+                    "attempted to install procedure \"%s\" with a "
+                    "NULL parameter name.",
                     gimp_object_get_name (plug_in),
-                    gimp_file_get_utf8_name (plug_in->file));
+                    gimp_file_get_utf8_name (plug_in->file),
+                    canonical);
       g_free (canonical);
       return;
     }
@@ -803,11 +805,26 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                     "Plug-in \"%s\"\n(%s)\n\n"
-                    "attempted to install a procedure with invalid UTF-8 strings.",
+                    "attempted to install procedure \"%s\" with "
+                    "invalid UTF-8 strings.",
                     gimp_object_get_name (plug_in),
-                    gimp_file_get_utf8_name (plug_in->file));
+                    gimp_file_get_utf8_name (plug_in->file),
+                    canonical);
       g_free (canonical);
       return;
+    }
+
+  if (proc_install->menu_path && strlen (proc_install->menu_path) &&
+      proc_install->menu_path[0] == '<')
+    {
+      g_printerr ("Plug-in \"%s\"\n(%s) "
+                  "is installing procedure \"%s\" with a full "
+                  "menu path \"%s\" as menu label, this deprecated and will "
+                  "be an error in GIMP 3.0\n",
+                  gimp_object_get_name (plug_in),
+                  gimp_file_get_utf8_name (plug_in->file),
+                  canonical,
+                  proc_install->menu_path);
     }
 
   /*  Create the procedure object  */

@@ -731,6 +731,9 @@ gimp_quit (void)
  * "&lt;Domain&gt;/Path/To/My/Menu"
  * (e.g. "&lt;Image&gt;/Filters/Render/Useless").
  *
+ * Note that registering a full (pre-2.2-style) menu path is
+ * deprecated and will cause a failure in GIMP 3.0 and newer.
+ *
  * It is possible to register a procedure only for keyboard-shortcut
  * activation by passing a @menu_label to gimp_install_procedure() but
  * not registering any menu path with gimp_plugin_menu_register(). In
