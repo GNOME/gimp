@@ -4767,7 +4767,7 @@ msgstr "애니메이션(_I)"
 #: ../app/actions/filters-actions.c:104
 msgctxt "filters-action"
 msgid "_Antialias"
-msgstr "계단현상 제거(__A)"
+msgstr "계단현상 제거(_A)"
 
 #: ../app/actions/filters-actions.c:109
 msgctxt "filters-action"
@@ -13047,7 +13047,7 @@ msgstr "스타일"
 #: ../app/tools/gimpbucketfilloptions.c:147
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
-msgstr "에일리어싱 제거"
+msgstr "계단현상 제거"
 
 #: ../app/core/gimpfilloptions.c:300
 msgctxt "undo-type"
@@ -20968,7 +20968,7 @@ msgid ""
 "uniformly."
 msgstr ""
 "클릭한 픽셀과의 색 차이에 따라 또는 라인 아트 테두리에 따라 채우기 불투명도 "
-"결정(임계값 참조). 전체 영역을 균일하게 채우려면 에일리어싱 제거를 비활성화."
+"결정(임계값 참조). 전체 영역을 균일하게 채우려면 계단현상 제거를 비활성화."
 
 #: ../app/tools/gimpbucketfilloptions.c:157
 #: ../app/tools/gimpgradientoptions.c:121
@@ -25061,7 +25061,7 @@ msgstr "색 채우기"
 
 #: ../app/widgets/gimpfilleditor.c:143
 msgid "_Antialiasing"
-msgstr "에일리어싱 제거(_A)"
+msgstr "계단현상 제거(_A)"
 
 #: ../app/widgets/gimpgradienteditor.c:588
 msgid "Left Endpoint Color"
