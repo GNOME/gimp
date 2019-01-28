@@ -42,7 +42,6 @@ struct _GimpFilterOptions
   gdouble             preview_position;
   gboolean            controller;
   GimpFilterRegion    region;
-  gboolean            color_managed;
   gboolean            gamma_hack;
 };
 

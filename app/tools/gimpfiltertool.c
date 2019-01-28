@@ -309,7 +309,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       GtkWidget     *expander;
       GtkWidget     *frame;
       GtkWidget     *vbox2;
-      GtkWidget     *combo;
       GeglOperation *operation;
       const gchar   *operation_name = NULL;
 
@@ -401,15 +400,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
       gtk_container_add (GTK_CONTAINER (frame), vbox2);
       gtk_widget_show (vbox2);
-
-      /*  The color managed combo  */
-      combo = gimp_prop_boolean_combo_box_new
-        (G_OBJECT (tool_info->tool_options), "color-managed",
-         _("Convert pixels to built-in sRGB to apply filter (slow)"),
-         _("Assume pixels are built-in sRGB (ignore actual image color space)"));
-      g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-      gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
-      gtk_widget_show (combo);
 
       /*  The gamma hack toggle  */
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
@@ -810,12 +800,6 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       gimp_drawable_filter_set_region (filter_tool->filter,
                                        filter_options->region);
     }
-  else if (! strcmp (pspec->name, "color-managed") &&
-           filter_tool->filter)
-    {
-      gimp_drawable_filter_set_color_managed (filter_tool->filter,
-                                              filter_options->color_managed);
-    }
   else if (! strcmp (pspec->name, "gamma-hack") &&
            filter_tool->filter)
     {
@@ -1106,12 +1090,10 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
                                                   filter_tool->operation,
                                                   gimp_tool_get_icon_name (tool));
 
-  gimp_drawable_filter_set_region        (filter_tool->filter,
-                                          options->region);
-  gimp_drawable_filter_set_color_managed (filter_tool->filter,
-                                          options->color_managed);
-  gimp_drawable_filter_set_gamma_hack    (filter_tool->filter,
-                                          options->gamma_hack);
+  gimp_drawable_filter_set_region     (filter_tool->filter,
+                                       options->region);
+  gimp_drawable_filter_set_gamma_hack (filter_tool->filter,
+                                       options->gamma_hack);
 
   g_signal_connect (filter_tool->filter, "flush",
                     G_CALLBACK (gimp_filter_tool_flush),

@@ -84,8 +84,6 @@ struct _GimpDrawableFilter
   GeglNode               *translate;
   GeglNode               *crop_before;
   GeglNode               *cast_before;
-  GeglNode               *transform_before;
-  GeglNode               *transform_after;
   GeglNode               *cast_after;
   GeglNode               *crop_after;
   GimpApplicator         *applicator;
@@ -108,7 +106,6 @@ static void       gimp_drawable_filter_sync_mode          (GimpDrawableFilter  *
 static void       gimp_drawable_filter_sync_affect        (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_format        (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_mask          (GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_sync_transform     (GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_sync_gamma_hack    (GimpDrawableFilter  *filter);
 
 static gboolean   gimp_drawable_filter_is_filtering       (GimpDrawableFilter  *filter);
@@ -122,8 +119,6 @@ static void       gimp_drawable_filter_affect_changed     (GimpImage           *
                                                            GimpChannelType      channel,
                                                            GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_mask_changed       (GimpImage           *image,
-                                                           GimpDrawableFilter  *filter);
-static void       gimp_drawable_filter_profile_changed    (GimpColorManaged    *managed,
                                                            GimpDrawableFilter  *filter);
 static void       gimp_drawable_filter_format_changed     (GimpDrawable        *drawable,
                                                            GimpDrawableFilter  *filter);
@@ -246,22 +241,13 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                                                  "operation", "gegl:nop",
                                                  NULL);
 
-      filter->transform_before = gegl_node_new_child (node,
-                                                      "operation", "gegl:nop",
-                                                      NULL);
-
       gegl_node_link_many (input,
                            filter->translate,
                            filter->crop_before,
                            filter->cast_before,
-                           filter->transform_before,
                            filter->operation,
                            NULL);
     }
-
-  filter->transform_after = gegl_node_new_child (node,
-                                                 "operation", "gegl:nop",
-                                                 NULL);
 
   filter->cast_after = gegl_node_new_child (node,
                                             "operation", "gegl:nop",
@@ -272,7 +258,6 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
                                             NULL);
 
   gegl_node_link_many (filter->operation,
-                       filter->transform_after,
                        filter->cast_after,
                        filter->crop_after,
                        NULL);
@@ -413,23 +398,6 @@ gimp_drawable_filter_set_mode (GimpDrawableFilter     *filter,
 }
 
 void
-gimp_drawable_filter_set_color_managed (GimpDrawableFilter *filter,
-                                        gboolean            color_managed)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
-
-  if (color_managed != filter->color_managed)
-    {
-      filter->color_managed = color_managed;
-
-      gimp_drawable_filter_sync_transform (filter);
-
-      if (gimp_drawable_filter_is_filtering (filter))
-        gimp_drawable_filter_update_drawable (filter, NULL);
-    }
-}
-
-void
 gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter *filter,
                                      gboolean            gamma_hack)
 {
@@ -440,7 +408,6 @@ gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter *filter,
       filter->gamma_hack = gamma_hack;
 
       gimp_drawable_filter_sync_gamma_hack (filter);
-      gimp_drawable_filter_sync_transform (filter);
 
       if (gimp_drawable_filter_is_filtering (filter))
         gimp_drawable_filter_update_drawable (filter, NULL);
@@ -755,115 +722,6 @@ gimp_drawable_filter_sync_mask (GimpDrawableFilter *filter)
 }
 
 static void
-gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
-{
-  GimpColorManaged *managed = GIMP_COLOR_MANAGED (filter->drawable);
-
-  if (filter->color_managed)
-    {
-      const Babl       *drawable_format  = NULL;
-      const Babl       *input_format     = NULL;
-      const Babl       *output_format    = NULL;
-      GimpColorProfile *drawable_profile = NULL;
-      GimpColorProfile *input_profile    = NULL;
-      GimpColorProfile *output_profile   = NULL;
-      guint32           dummy;
-
-      drawable_format = gimp_drawable_get_format (filter->drawable);
-      if (filter->has_input)
-        input_format  = gimp_gegl_node_get_format (filter->operation, "input");
-      output_format   = gimp_gegl_node_get_format (filter->operation, "output");
-
-      g_printerr ("drawable format:      %s\n", babl_get_name (drawable_format));
-      if (filter->has_input)
-        g_printerr ("filter input format:  %s\n", babl_get_name (input_format));
-      g_printerr ("filter output format: %s\n", babl_get_name (output_format));
-
-      /*  convert the drawable format to float, so we get a precise
-       *  color transform
-       */
-      drawable_format =
-        gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
-                          gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
-                                               gimp_babl_format_get_trc (drawable_format)),
-                          babl_format_has_alpha (drawable_format),
-                          babl_format_get_space (drawable_format));
-
-      /*  convert the filter input/output formats to something we have
-       *  built-in color profiles for (see the get_color_profile()
-       *  calls below)
-       */
-      if (filter->has_input)
-        input_format = gimp_color_profile_get_lcms_format (input_format,  &dummy);
-      output_format  = gimp_color_profile_get_lcms_format (output_format, &dummy);
-
-      g_printerr ("profile transform drawable format: %s\n",
-                  babl_get_name (drawable_format));
-      if (filter->has_input)
-        g_printerr ("profile transform input format:    %s\n",
-                    babl_get_name (input_format));
-      g_printerr ("profile transform output format:   %s\n",
-                  babl_get_name (output_format));
-
-      drawable_profile = gimp_color_managed_get_color_profile (managed);
-      if (filter->has_input)
-        input_profile  = gimp_babl_format_get_color_profile (input_format);
-      output_profile   = gimp_babl_format_get_color_profile (output_format);
-
-      if ((filter->has_input &&
-           ! gimp_color_transform_can_gegl_copy (drawable_profile,
-                                                 input_profile)) ||
-          ! gimp_color_transform_can_gegl_copy (output_profile,
-                                                drawable_profile))
-        {
-          g_printerr ("using gimp:profile-transform\n");
-
-          if (filter->has_input)
-            {
-              gegl_node_set (filter->transform_before,
-                             "operation",    "gimp:profile-transform",
-                             "src-profile",  drawable_profile,
-                             "src-format",   drawable_format,
-                             "dest-profile", input_profile,
-                             "dest-format",  input_format,
-                             NULL);
-            }
-
-          gegl_node_set (filter->transform_after,
-                         "operation",    "gimp:profile-transform",
-                         "src-profile",  output_profile,
-                         "src-format",   output_format,
-                         "dest-profile", drawable_profile,
-                         "dest-format",  drawable_format,
-                         NULL);
-
-          if (filter->has_input)
-            g_object_unref (input_profile);
-          g_object_unref (output_profile);
-
-          return;
-        }
-
-      if (filter->has_input)
-        g_object_unref (input_profile);
-      g_object_unref (output_profile);
-    }
-
-  g_printerr ("using gegl copy\n");
-
-  if (filter->has_input)
-    {
-      gegl_node_set (filter->transform_before,
-                     "operation", "gegl:nop",
-                     NULL);
-    }
-
-  gegl_node_set (filter->transform_after,
-                 "operation", "gegl:nop",
-                 NULL);
-}
-
-static void
 gimp_drawable_filter_sync_gamma_hack (GimpDrawableFilter *filter)
 {
   if (filter->gamma_hack)
@@ -948,7 +806,6 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
       gimp_drawable_filter_sync_mode (filter);
       gimp_drawable_filter_sync_affect (filter);
       gimp_drawable_filter_sync_format (filter);
-      gimp_drawable_filter_sync_transform (filter);
       gimp_drawable_filter_sync_gamma_hack (filter);
 
       gimp_drawable_add_filter (filter->drawable,
@@ -959,9 +816,6 @@ gimp_drawable_filter_add_filter (GimpDrawableFilter *filter)
                         filter);
       g_signal_connect (image, "mask-changed",
                         G_CALLBACK (gimp_drawable_filter_mask_changed),
-                        filter);
-      g_signal_connect (image, "profile-changed",
-                        G_CALLBACK (gimp_drawable_filter_profile_changed),
                         filter);
       g_signal_connect (filter->drawable, "format-changed",
                         G_CALLBACK (gimp_drawable_filter_format_changed),
@@ -1002,9 +856,6 @@ gimp_drawable_filter_remove_filter (GimpDrawableFilter *filter)
                                             filter);
       g_signal_handlers_disconnect_by_func (filter->drawable,
                                             gimp_drawable_filter_format_changed,
-                                            filter);
-      g_signal_handlers_disconnect_by_func (image,
-                                            gimp_drawable_filter_profile_changed,
                                             filter);
       g_signal_handlers_disconnect_by_func (image,
                                             gimp_drawable_filter_mask_changed,
@@ -1086,14 +937,6 @@ gimp_drawable_filter_mask_changed (GimpImage          *image,
   gimp_drawable_filter_sync_mask (filter);
   gimp_drawable_filter_sync_region (filter);
 
-  gimp_drawable_filter_update_drawable (filter, NULL);
-}
-
-static void
-gimp_drawable_filter_profile_changed (GimpColorManaged   *managed,
-                                      GimpDrawableFilter *filter)
-{
-  gimp_drawable_filter_sync_transform (filter);
   gimp_drawable_filter_update_drawable (filter, NULL);
 }
 
