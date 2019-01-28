@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-24 20:14+0000\n"
-"PO-Revision-Date: 2019-01-28 07:51+0900\n"
+"PO-Revision-Date: 2019-01-28 12:37+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "Language: ko\n"
@@ -55,7 +55,7 @@ msgstr "파이썬-푸 폴더 선택"
 #: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "잘못된 '%s'용 입력"
+msgstr "잘못된 ‘%s’용 입력"
 
 #: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
@@ -402,12 +402,12 @@ msgstr "파이썬 프러시저 브라우저"
 #: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "'%s'을(를) 쓰기용으로 열기 실패: %s"
+msgstr "‘%s’을(를) 쓰기용으로 열기 실패: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "'%s'에 쓸 수 없음: %s"
+msgstr "‘%s’에 쓸 수 없음: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
