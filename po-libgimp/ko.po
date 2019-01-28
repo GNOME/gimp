@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:37+0000\n"
-"PO-Revision-Date: 2019-01-28 07:54+0900\n"
+"PO-Revision-Date: 2019-01-28 12:39+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -1502,7 +1502,7 @@ msgstr "ILCreateFromPath() 실패"
 #: ../libgimpbase/gimputils.c:459
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
-msgstr "'%s'을(를) 유효한 NSURL로 변환할 수 없습니다."
+msgstr "‘%s’을(를) 유효한 NSURL로 변환할 수 없습니다."
 
 #: ../libgimpbase/gimputils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
@@ -1515,7 +1515,7 @@ msgstr "ShowItems 호출하기 실패: "
 #: ../libgimpcolor/gimpcolorprofile.c:258
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
-msgstr "'%s'가(이) ICC 색 프로필로 보이지 않음"
+msgstr "‘%s’가(이) ICC 색 프로필로 보이지 않음"
 
 #: ../libgimpcolor/gimpcolorprofile.c:304
 msgid "Data does not appear to be an ICC color profile"
@@ -1684,8 +1684,8 @@ msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"이 옵션을 사용 하면, '소프트 교정'은 대상 색 공간에서 표현할 수 없는 색을 표"
-"시합니다."
+"이 옵션을 사용 하면, 소프트 교정은 대상 색 공간에서 표현할 수 없는 색을 표시"
+"합니다."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1749,25 +1749,25 @@ msgstr "범위 벗어난 색상에 표시"
 
 #: ../libgimpconfig/gimpcolorconfig.c:312
 msgid "Out of gamut warning color"
-msgstr "'범위 밖임 경고' 색"
+msgstr "범위 밖임 경고 색"
 
 #: ../libgimpconfig/gimpcolorconfig.c:660
 #: ../libgimpconfig/gimpcolorconfig.c:844
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr "색 프로필 '%s'은(는) RGB 색 공간용이 아닙니다."
+msgstr "색 프로필 ‘%s’은(는) RGB 색 공간용이 아닙니다."
 
 #: ../libgimpconfig/gimpcolorconfig.c:702
 #: ../libgimpconfig/gimpcolorconfig.c:894
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
-msgstr "색 프로필 '%s'은(는) GRAY 색 공간용이 아닙니다."
+msgstr "색 프로필 ‘%s’은(는) GRAY 색 공간용이 아닙니다."
 
 #: ../libgimpconfig/gimpcolorconfig.c:744
 #: ../libgimpconfig/gimpcolorconfig.c:944
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
-msgstr "색 프로필 '%s'은(는) CMYK 색 공간용이 아닙니다."
+msgstr "색 프로필 ‘%s’은(는) CMYK 색 공간용이 아닙니다."
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
@@ -1783,17 +1783,17 @@ msgstr "불린 토큰 %1$s의 값은 'yes'나 'no'가 되어야 하는데, 주�
 #: ../libgimpconfig/gimpconfig-deserialize.c:568
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "잘못된 값 '%s' (토큰 '%s')"
+msgstr "토큰 ‘%2$s’에 잘못된 값 ‘%1$s’"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:583
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "잘못된 값 '%ld' (토큰 %s)"
+msgstr "토큰 %2$s에 잘못된 값 ‘%1$ld’"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:652
 #, c-format
 msgid "while parsing token '%s': %s"
-msgstr "토큰 '%s' 구문 분석 중: %s"
+msgstr "토큰 ‘%s’ 구문 분석 중: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:676
 #: ../libgimpconfig/gimpconfig-iface.c:689 ../libgimpconfig/gimpscanner.c:743
@@ -1815,22 +1815,22 @@ msgstr "${%s}을(를) 확장할 수 없음"
 #: ../libgimpconfig/gimpconfigwriter.c:673
 #, c-format
 msgid "Error writing to '%s': %s"
-msgstr "'%s'에 쓰기 중 오류: %s"
+msgstr "‘%s’에 쓰기 중 오류: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:183
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr "'%2$s'용 디렉터리 '%1$s' 만들기 실패: "
+msgstr "‘%2$s’용 디렉터리 ‘%1$s’ 만들기 실패: "
 
 #: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
 msgid "Could not create temporary file for '%s': "
-msgstr "'%s'용 임시 파일 만들기 실패: "
+msgstr "‘%s’용 임시 파일 만들기 실패: "
 
 #: ../libgimpconfig/gimpconfigwriter.c:783
 #, c-format
 msgid "Error writing '%s': %s"
-msgstr "'%1$s' 쓰기 중 오류: %2$s"
+msgstr "‘%1$s’ 쓰기 중 오류: %2$s"
 
 #: ../libgimpconfig/gimpscanner.c:409
 #, c-format
@@ -1841,19 +1841,19 @@ msgstr "잘못된 UTF-8 문자열"
 #: ../libgimpconfig/gimpscanner.c:618
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
-msgstr "불리언 토큰은 'yes'나 'no'가 되어야 하는데, 주어진 값은 %s."
+msgstr "불리언 토큰은 'yes'나 'no'가 되어야 하는데, 주어진 값은 '%s'"
 
 #: ../libgimpconfig/gimpscanner.c:852
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "'%s'의 %d행 해석 오류: %s"
+msgstr "‘%s’의 %d행 해석 오류: %s"
 
 #: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
 #: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
 #: ../libgimpmodule/gimpmodule.c:424
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "모듈 '%s'을(를) 불러오는 중 오류: %s"
+msgstr "모듈 ‘%s’을(를) 불러오는 중 오류: %s"
 
 #: ../libgimpmodule/gimpmodule.c:384
 msgid "Module error"
@@ -1883,7 +1883,7 @@ msgstr ""
 #: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다."
+msgstr "썸네일 폴더 ‘%s’을(를) 만들지 못했습니다."
 
 #: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
@@ -1893,7 +1893,7 @@ msgstr "미리 보기에 Thumb 파일이 없습니다.::URI 태그"
 #: ../libgimpthumb/gimpthumbnail.c:905
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다.:%s"
+msgstr "썸네일 폴더 ‘%s’을(를) 만들지 못했습니다.:%s"
 
 #: ../libgimpwidgets/gimpbrowser.c:141
 msgid "_Search:"
@@ -2148,7 +2148,7 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"이 값을 난수 생성기의 씨앗으로 사용 -- 주어진 \"난수\" 연산을 반복할 수 있음"
+"이 값을 난수 생성기의 씨앗으로 사용 -- 주어진 “난수” 연산을 반복할 수 있음"
 
 #: ../libgimpwidgets/gimpwidgets.c:475
 msgid "_New Seed"
