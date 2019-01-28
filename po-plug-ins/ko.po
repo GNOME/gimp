@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:37+0000\n"
-"PO-Revision-Date: 2019-01-28 07:54+0900\n"
+"PO-Revision-Date: 2019-01-28 12:39+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -768,7 +768,7 @@ msgstr "시작 오프셋:"
 
 #: ../plug-ins/common/cml-explorer.c:1398
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "무작위 시작 값(오직 \"시작 값으로 부터\"의 모드만)"
+msgstr "무작위 시작 값(오직 “시작 값으로 부터”의 모드만)"
 
 #: ../plug-ins/common/cml-explorer.c:1409
 msgid "Seed:"
@@ -776,7 +776,7 @@ msgstr "시작 값:"
 
 #: ../plug-ins/common/cml-explorer.c:1422
 msgid "Switch to \"From seed\" With the Last Seed"
-msgstr "마지막 시작 값을 \"시작 값으로 부터\"로 전환"
+msgstr "마지막 시작 값을 “시작 값으로 부터”로 전환"
 
 #: ../plug-ins/common/cml-explorer.c:1434
 msgid ""
@@ -785,7 +785,7 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"\"시드 고정\" 단추는 단축명입니다.\n"
+"“시드 고정” 단추는 단축명입니다.\n"
 "같은 씨앗이 같은 이미지를 만들때, (1) 이미지의 넓이가 같아야 한다(이 이유는 "
 "그리기에서의 이미지는 미리 보기에서 다르기 때문), 그리고 (2) 모든 변화율은 0"
 "과 같아야 합니다."
@@ -929,12 +929,12 @@ msgstr "CML 익스플로러 매개변수 저장하기"
 #: ../plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
+msgstr "‘%s’을(를) 쓰기 모드로 열기 실패: %s"
 
 #: ../plug-ins/common/cml-explorer.c:2120
 #, c-format
 msgid "Parameters were saved to '%s'"
-msgstr "매개변수가  '%s'(으)로 저장되었습니다."
+msgstr "매개변수가 ‘%s’(으)로 저장되었습니다."
 
 #: ../plug-ins/common/cml-explorer.c:2142
 msgid "Load CML Explorer Parameters"
@@ -966,7 +966,7 @@ msgstr "CML 익스플로러 매개변수 읽어오기"
 #: ../plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "%1$s을(를) 읽기용으로 열 수 없음: %2$s"
+msgstr "‘%1$s’을(를) 읽기용으로 열 수 없음: %2$s"
 
 #: ../plug-ins/common/cml-explorer.c:2260
 msgid "Error: it's not CML parameter file."
@@ -975,12 +975,12 @@ msgstr "애러: CML 패러미터 파일이 아닙니다."
 #: ../plug-ins/common/cml-explorer.c:2267
 #, c-format
 msgid "Warning: '%s' is an old format file."
-msgstr "경고: '%s'은(는) 오래된 형식의 파일입니다."
+msgstr "경고: ‘%s’은(는) 오래된 형식의 파일입니다."
 
 #: ../plug-ins/common/cml-explorer.c:2271
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr "경고: '%s'은(는) 새 버전의 CML 익스플로러 매개변수 파일입니다."
+msgstr "경고: ‘%s’은(는) 새 버전의 CML 익스플로러 매개변수 파일입니다."
 
 #: ../plug-ins/common/cml-explorer.c:2334
 msgid "Error: failed to load parameters"
@@ -1287,12 +1287,12 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
-"현재 이미지가 '분해' 동작을 통해 생성되었을 때만 '재합성' 동작을 실행할 수 있"
+"현재 이미지가 ‘분해’ 동작을 통해 생성되었을 때만 ‘재합성’ 동작을 실행할 수 있"
 "습니다."
 
 #: ../plug-ins/common/compose.c:510
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "'decompose-data' 기생물 스캐닝 오류: 레이어 수가 너무 적음"
+msgstr "‘decompose-data’ 기생물 스캐닝 오류: 레이어 수가 너무 적음"
 
 #: ../plug-ins/common/compose.c:543
 #, c-format
@@ -1451,7 +1451,7 @@ msgstr "빈 선택은 사용할 수 없습니다."
 #: ../plug-ins/common/curve-bend.c:903
 #, c-format
 msgid "Error while reading '%s': %s"
-msgstr "'%s' 파일 읽는 중 오류: %s"
+msgstr "‘%s’ 파일 읽는 중 오류: %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -2065,7 +2065,7 @@ msgstr "이미지 헤더 읽는 중에 파일끝 또는 오류"
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
-msgstr "'%s' 여는 중"
+msgstr "‘%s’ 여는 중"
 
 #: ../plug-ins/common/file-cel.c:393
 #, c-format
@@ -2105,28 +2105,28 @@ msgstr "%d 비트는 지원하지 않습니다!"
 #: ../plug-ins/common/file-cel.c:642 ../plug-ins/common/file-cel.c:654
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
-msgstr "'%s': 팔레트 헤더를 읽는 동안 파일끝 또는 오류"
+msgstr "‘%s’: 팔레트 헤더를 읽는 동안 파일끝 또는 오류"
 
 #: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': is not a KCF palette file"
-msgstr "'%s': KCF 팔레트 파일이 아님"
+msgstr "‘%s’: KCF 팔레트 파일이 아님"
 
 #: ../plug-ins/common/file-cel.c:672
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
-msgstr "'%s': 팔레트에 잘못된 bpp 값: %hhu"
+msgstr "‘%s’: 팔레트에 잘못된 bpp 값: %hhu"
 
 #: ../plug-ins/common/file-cel.c:681
 #, c-format
 msgid "'%s': illegal number of colors: %u"
-msgstr "'%s': 잘못된 색상 수: %u"
+msgstr "‘%s’: 잘못된 색상 수: %u"
 
 #: ../plug-ins/common/file-cel.c:696 ../plug-ins/common/file-cel.c:713
 #: ../plug-ins/common/file-cel.c:733
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
-msgstr "'%s': 팔레트 데이터를 읽는 동안 파일끝 또는 오류"
+msgstr "‘%s’: 팔레트 데이터를 읽는 동안 파일끝 또는 오류"
 
 #. init the progress meter
 #.
@@ -2151,7 +2151,7 @@ msgstr "'%s': 팔레트 데이터를 읽는 동안 파일끝 또는 오류"
 #: ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
-msgstr "'%s' 내보내기"
+msgstr "‘%s’ 내보내기"
 
 #: ../plug-ins/common/file-csource.c:111
 msgid "C source code"
@@ -2222,7 +2222,7 @@ msgstr "알 수 없는 파일 확장자입니다. 압축된 XCF 형식으로 저
 #: ../plug-ins/common/file-compressor.c:444
 #, c-format
 msgid "Compressing '%s'"
-msgstr "'%s' 압축하기"
+msgstr "‘%s’ 압축하기"
 
 #: ../plug-ins/common/file-compressor.c:481
 msgid "No sensible file extension, attempting to load with file magic."
@@ -2235,7 +2235,7 @@ msgstr "바탕 화면 링크"
 #: ../plug-ins/common/file-desktop-link.c:175
 #, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr "데스크톱 파일 '%s' 읽어오기 오류: %s"
+msgstr "데스크톱 파일 ‘%s’ 읽어오기 오류: %s"
 
 #: ../plug-ins/common/file-dicom.c:139
 msgid "DICOM image"
@@ -2248,7 +2248,7 @@ msgstr "디지털 이미지와 의료용 이미지의 연동"
 #: ../plug-ins/common/file-dicom.c:368
 #, c-format
 msgid "'%s' is not a DICOM file."
-msgstr "'%s'은(는) DICOM 파일이 아닙니다."
+msgstr "‘%s’은(는) DICOM 파일이 아닙니다."
 
 #: ../plug-ins/common/file-dicom.c:1341
 msgid "Cannot save images with alpha channel."
@@ -2267,7 +2267,7 @@ msgstr "김프 붓"
 #: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr "'%s'의 헤더가 올바르지 않습니다.: 너비=%lu, 높이=%lu, 바이트=%lu"
+msgstr "‘%s’의 헤더가 올바르지 않습니다.: 너비=%lu, 높이=%lu, 바이트=%lu"
 
 #: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
 #: ../plug-ins/common/file-gbr.c:456
@@ -2278,17 +2278,17 @@ msgstr "지원하지 않는 붓 형식"
 #: ../plug-ins/common/file-gbr.c:468
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
-msgstr "'%1$s'에 잘못된 헤더 데이터: 붓 이름이 너무 긺: %2$lu"
+msgstr "‘%1$s’에 잘못된 헤더 데이터: 붓 이름이 너무 긺: %2$lu"
 
 #: ../plug-ins/common/file-gbr.c:482
 #, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr "김프 붓 파일 '%s'의 오류"
+msgstr "김프 붓 파일 ‘%s’의 오류"
 
 #: ../plug-ins/common/file-gbr.c:490
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "붓 파일 '%s'에 잘못된 UTF-8 문자열이 있습니다."
+msgstr "붓 파일 ‘%s’에 잘못된 UTF-8 문자열이 있습니다."
 
 #: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
 #: ../plug-ins/common/file-gih.c:1211 ../plug-ins/common/file-pat.c:398
@@ -2321,7 +2321,7 @@ msgstr "OpenEXR 이미지"
 #: ../plug-ins/common/file-gegl.c:336
 #, c-format
 msgid "Could not open '%s'"
-msgstr "'%s' 열기 실패"
+msgstr "‘%s’ 열기 실패"
 
 #: ../plug-ins/common/file-gif-load.c:148
 #: ../plug-ins/common/file-gif-save.c:167
@@ -2345,7 +2345,7 @@ msgstr "배경 (%d%s)"
 #: ../plug-ins/common/file-gif-load.c:1021
 #, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "'%s'(%d 프레임) 열기..."
+msgstr "‘%s’(%d 프레임) 열기..."
 
 #: ../plug-ins/common/file-gif-load.c:1050
 #, c-format
@@ -2375,7 +2375,7 @@ msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
-"'%s'을(를) 내보낼 수 없음. GIF 파일 형식은 가로나 세로가 %d 픽셀이 넘는 이미"
+"‘%s’을(를) 내보낼 수 없음. GIF 파일 형식은 가로나 세로가 %d 픽셀이 넘는 이미"
 "지를 지원하지 않습니다."
 
 #: ../plug-ins/common/file-gif-save.c:773
@@ -2427,7 +2427,7 @@ msgid ""
 "Error loading UI file '%s':\n"
 "%s"
 msgstr ""
-"UI 파일 '%s' 불러오기 오류:\n"
+"UI 파일 ‘%s’ 불러오기 오류:\n"
 "%s"
 
 #: ../plug-ins/common/file-gif-save.c:1296
@@ -2754,7 +2754,7 @@ msgstr "xvYCC"
 #: ../plug-ins/common/file-jp2-load.c:991
 #, c-format
 msgid "Unsupported JPEG 2000%s '%s' with %d components."
-msgstr "%3$d개의 구성요소가 있는 지원하지 않는 JPEG 2000%1$s '%2$s'."
+msgstr "%3$d개의 구성요소가 있는 지원하지 않는 JPEG 2000%1$s ‘%2$s’."
 
 #: ../plug-ins/common/file-jp2-load.c:1000
 msgid "Color space:"
@@ -2763,57 +2763,57 @@ msgstr "색상 공간:"
 #: ../plug-ins/common/file-jp2-load.c:1071 ../plug-ins/common/file-wmf.c:973
 #, c-format
 msgid "Could not open '%s' for reading"
-msgstr "'%s' 파일을 읽기용으로 열 수 없음"
+msgstr "‘%s’ 파일을 읽기용으로 열 수 없음"
 
 #: ../plug-ins/common/file-jp2-load.c:1082
 #, c-format
 msgid "Couldn't set parameters on decoder for '%s'."
-msgstr "'%s'용으로 디코더에 매개 변수를 설정할 수 없습니다."
+msgstr "‘%s’용으로 디코더에 매개 변수를 설정할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1090
 #, c-format
 msgid "Couldn't read JP2 header from '%s'."
-msgstr "'%s'에서 JP2 헤더를 읽을 수 없습니다."
+msgstr "‘%s’에서 JP2 헤더를 읽을 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1098
 #, c-format
 msgid "Couldn't decode JP2 image in '%s'."
-msgstr "'%s'에서 JP2 이미지를 디코딩할 수 없습니다."
+msgstr "‘%s’에서 JP2 이미지를 디코딩할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1106
 #, c-format
 msgid "Couldn't decompress JP2 image in '%s'."
-msgstr "'%s'에서 JP2 이미지를 압축 해제 할 수 없습니다."
+msgstr "‘%s’에서 JP2 이미지를 압축 해제 할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1135
 #, c-format
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
-msgstr "'%s'에서 CIELAB JP2 이미지를 디코딩할 수 없습니다."
+msgstr "‘%s’에서 CIELAB JP2 이미지를 디코딩할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1192
 #, c-format
 msgid "Unknown color space in JP2 codestream '%s'."
-msgstr "JP2 코드스트림 '%s'에 모르는 색 공간."
+msgstr "JP2 코드스트림 ‘%s’에 모르는 색 공간."
 
 #: ../plug-ins/common/file-jp2-load.c:1203
 #, c-format
 msgid "Couldn't convert YCbCr JP2 image '%s' to RGB."
-msgstr "YCbCr JP2 이미지 '%s'(을)를 RGB로 변환할 수 없습니다."
+msgstr "YCbCr JP2 이미지 ‘%s’(을)를 RGB로 변환할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1213
 #, c-format
 msgid "Couldn't convert CMYK JP2 image in '%s' to RGB."
-msgstr "'%s'인 CMYK JP2 이미지를 RGB로 변환할 수 없습니다."
+msgstr "‘%s’인 CMYK JP2 이미지를 RGB로 변환할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1223
 #, c-format
 msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
-msgstr "'%s'인 xvYCC JP2 이미지를 RGB로 변환할 수 없습니다."
+msgstr "‘%s’인 xvYCC JP2 이미지를 RGB로 변환할 수 없습니다."
 
 #: ../plug-ins/common/file-jp2-load.c:1250
 #, c-format
 msgid "Unsupported color space in JP2 image '%s'."
-msgstr "JP2 이미지 '%s'에 지원되지 않는 색 공간."
+msgstr "JP2 이미지 ‘%s’에 지원되지 않는 색 공간."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -2946,12 +2946,12 @@ msgstr "김프 무늬"
 #: ../plug-ins/common/file-pat.c:373
 #, c-format
 msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-msgstr "'%1$s'에 잘못된 헤더 데이터: 무늬 이름이 너무 긺: %2$lu"
+msgstr "‘%1$s’에 잘못된 헤더 데이터: 무늬 이름이 너무 긺: %2$lu"
 
 #: ../plug-ins/common/file-pat.c:392
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "무늬 파일 '%s'에 잘못된 UTF-8 문자열이 있습니다."
+msgstr "무늬 파일 ‘%s’에 잘못된 UTF-8 문자열이 있습니다."
 
 #: ../plug-ins/common/file-pat.c:644
 msgid "Pattern"
@@ -2964,12 +2964,12 @@ msgstr "ZSoft PCX 이미지"
 #: ../plug-ins/common/file-pcx.c:386
 #, c-format
 msgid "Could not read header from '%s'"
-msgstr "'%s'에서 파일 헤더를 읽을 수 없습니다."
+msgstr "‘%s’에서 파일 헤더를 읽을 수 없습니다."
 
 #: ../plug-ins/common/file-pcx.c:397
 #, c-format
 msgid "'%s' is not a PCX file"
-msgstr "'%s'은(는) PCX 파일이 아님"
+msgstr "‘%s’은(는) PCX 파일이 아님"
 
 #: ../plug-ins/common/file-pcx.c:413 ../plug-ins/file-bmp/bmp-load.c:723
 #: ../plug-ins/file-psd/psd-load.c:309
@@ -3027,7 +3027,7 @@ msgstr "범위의 아래쪽 바깥 경계(%d 보다 커야 함): %d"
 #: ../plug-ins/common/file-pcx.c:926
 #, c-format
 msgid "Writing to file '%s' failed: %s"
-msgstr "파일 '%s'에 쓰기 실패: %s"
+msgstr "파일 ‘%s’에 쓰기 실패: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:321
 #: ../plug-ins/common/file-pdf-load.c:340
@@ -3045,7 +3045,7 @@ msgstr "Portable Document Format"
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
-"PDF 문서 '%1$s '에는 %3$d 페이지가 있습니다. %2$d 페이지가 범위를 벗어났습니"
+"PDF 문서 ‘%1$s’에는 %3$d 페이지가 있습니다. %2$d 페이지가 범위를 벗어났습니"
 "다."
 
 #: ../plug-ins/common/file-pdf-load.c:681
@@ -3063,7 +3063,7 @@ msgstr "틀린 암호! 바른 암호 입력:"
 #: ../plug-ins/common/file-pdf-load.c:736
 #, c-format
 msgid "Could not load '%s': %s"
-msgstr "'%s'을(를) 불러올 수 없습니다.: %s"
+msgstr "‘%s’을(를) 불러올 수 없습니다.: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:883
 #, c-format
@@ -3228,27 +3228,27 @@ msgstr "PNG 파일 불러오기 오류: %s\n"
 #: ../plug-ins/common/file-png.c:900
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
-msgstr "'%s'(을)를 불러오는 동안 PNG 읽기 구조체 만들기 중 오류."
+msgstr "‘%s’(을)를 불러오는 동안 PNG 읽기 구조체 만들기 중 오류."
 
 #: ../plug-ins/common/file-png.c:909
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
-msgstr "'%s' 읽기 중 오류. PNG 헤더 정보 구조체를 만들 수 없습니다."
+msgstr "‘%s’ 읽기 중 오류. PNG 헤더 정보 구조체를 만들 수 없습니다."
 
 #: ../plug-ins/common/file-png.c:917
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr "'%s' 파일 읽기 중 오류. 파일 손상?"
+msgstr "‘%s’ 파일 읽기 중 오류. 파일 손상?"
 
 #: ../plug-ins/common/file-png.c:1072
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr "PNG 파일 '%s' 안에 모르는 색 모델."
+msgstr "PNG 파일 ‘%s’ 안에 모르는 색 모델."
 
 #: ../plug-ins/common/file-png.c:1085 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
-msgstr "새 이미지 '%s' (을)를 만들 수 없습니다.: %s"
+msgstr "새 이미지 ‘%s’(을)를 만들 수 없습니다.: %s"
 
 #: ../plug-ins/common/file-png.c:1141
 msgid ""
@@ -3282,23 +3282,23 @@ msgstr ""
 #: ../plug-ins/common/file-png.c:1555
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "'%s'(을)를 내보내는 동안 PNG 쓰기 구조체 만들기 중 오류."
+msgstr "‘%s’(을)를 내보내는 동안 PNG 쓰기 구조체 만들기 중 오류."
 
 #: ../plug-ins/common/file-png.c:1564
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "'%s' 내보내기 중 오류. PNG 헤더 정보 구조체를 만들 수 없습니다."
+msgstr "‘%s’ 내보내기 중 오류. PNG 헤더 정보 구조체를 만들 수 없습니다."
 
 #: ../plug-ins/common/file-png.c:1572
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
-msgstr "'%s' 내보내기 중 오류. 이미지를 내보낼 수 없습니다."
+msgstr "‘%s’ 내보내기 중 오류. 이미지를 내보낼 수 없습니다."
 
 #: ../plug-ins/common/file-png.c:2376 ../plug-ins/common/file-raw-data.c:2133
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 #, c-format
 msgid "Error loading UI file '%s': %s"
-msgstr "UI 파일 '%s' 불러오기 오류: %s"
+msgstr "UI 파일 ‘%s’ 불러오기 오류: %s"
 
 #: ../plug-ins/common/file-png.c:2377 ../plug-ins/common/file-raw-data.c:2134
 #: ../plug-ins/file-tiff/file-tiff-save.c:960
@@ -3401,7 +3401,7 @@ msgstr "캡슐화된 포스트스크립트 이미지"
 #: ../plug-ins/common/file-ps.c:1081
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
-msgstr "포스트스크립트 파일 '%s'을(를) 해석할 수 없음"
+msgstr "포스트스크립트 파일 ‘%s’을(를) 해석할 수 없음"
 
 #: ../plug-ins/common/file-ps.c:1219
 #, c-format
@@ -3724,7 +3724,7 @@ msgstr "디지털 고도 모델 데이터"
 #: ../plug-ins/common/file-raw-data.c:424
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
-msgstr "크기 검증용으로 '%1$s' 열기 실패: %2$s"
+msgstr "크기 검증용으로 ‘%1$s’ 열기 실패: %2$s"
 
 #: ../plug-ins/common/file-raw-data.c:502
 #, c-format
@@ -3741,10 +3741,10 @@ msgid ""
 "valid HGT file or its variant is not supported yet. Supported HGT files are: "
 "SRTM-1 and SRTM-3. If you know the variant, run with argument 1 or 3."
 msgstr ""
-"샘플 간격의 자동 감지에 실패 했습니다. \"%s\"는 유효한 HGT 파일이 아닌 것으"
-"로 보입니다. 혹은 변형된 형식이 아직 지원되지 않습니다. 지원 되는 HGT 파일"
-"은: SRTM-1과 SRTM-3입니다. 변형 형식을 알고 있으면, 인수 1이나 3을 사용하여 "
-"실행하십시오."
+"샘플 간격의 자동 감지에 실패 했습니다. “%s”는 유효한 HGT 파일이 아닌 것으로 "
+"보입니다. 혹은 변형된 형식이 아직 지원되지 않습니다. 지원 되는 HGT 파일은: "
+"SRTM-1과 SRTM-3입니다. 변형 형식을 알고 있으면, 인수 1이나 3을 사용하여 실행"
+"하십시오."
 
 #: ../plug-ins/common/file-raw-data.c:1833
 msgid "Load Image from Raw Data"
@@ -3896,7 +3896,7 @@ msgstr "SUN 래스터파일 이미지"
 #: ../plug-ins/common/file-sunras.c:447
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
-msgstr "'%s'을(를) SUN 래스터 파일로 열 수 없음"
+msgstr "‘%s’을(를) SUN 래스터 파일로 열 수 없음"
 
 #: ../plug-ins/common/file-sunras.c:457
 msgid "The type of this SUN-rasterfile is not supported"
@@ -3905,7 +3905,7 @@ msgstr "이 SUN 래스터파일 형식은 지원하지 않음"
 #: ../plug-ins/common/file-sunras.c:486
 #, c-format
 msgid "Could not read color entries from '%s'"
-msgstr "'%s'의 색상을 읽을 수 없습니다."
+msgstr "‘%s’의 색상을 읽을 수 없습니다."
 
 #: ../plug-ins/common/file-sunras.c:495
 msgid "Type of colormap not supported"
@@ -3918,17 +3918,17 @@ msgid ""
 "'%s':\n"
 "No image width specified"
 msgstr ""
-"'%s':\n"
+"‘%s’:\n"
 "이미지 너비가 지정되지 않았음"
 
 #: ../plug-ins/common/file-sunras.c:510 ../plug-ins/common/file-xbm.c:843
 #: ../plug-ins/common/file-xwd.c:533
 #, c-format
 msgid ""
-"'%s':\n"
+"‘%s’:\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
-"'%s':\n"
+"‘%s’:\n"
 "이미지 너비가 김프가 처리할 수 있는 것보다 넓음"
 
 #: ../plug-ins/common/file-sunras.c:518 ../plug-ins/common/file-xbm.c:851
@@ -3938,7 +3938,7 @@ msgid ""
 "'%s':\n"
 "No image height specified"
 msgstr ""
-"'%s':\n"
+"‘%s’:\n"
 "이미지 높이가 지정되지 않았음"
 
 #: ../plug-ins/common/file-sunras.c:526 ../plug-ins/common/file-xbm.c:859
@@ -3948,7 +3948,7 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
-"'%s':\n"
+"‘%s’:\n"
 "이미지 높이가 김프가 처리할 수 있는 것보다 높음"
 
 #: ../plug-ins/common/file-sunras.c:562
@@ -4068,17 +4068,17 @@ msgstr "TarGA 이미지"
 #: ../plug-ins/common/file-tga.c:456
 #, c-format
 msgid "Cannot read footer from '%s'"
-msgstr "'%s'에서 꼬리말(footer)를 읽을 수 없음"
+msgstr "‘%s’에서 꼬리말(footer)를 읽을 수 없음"
 
 #: ../plug-ins/common/file-tga.c:474
 #, c-format
 msgid "Cannot read extension from '%s'"
-msgstr "'%s'의 확장자를 읽을 수 없습니다."
+msgstr "‘%s’의 확장자를 읽을 수 없습니다."
 
 #: ../plug-ins/common/file-tga.c:486
 #, c-format
 msgid "Cannot read header from '%s'"
-msgstr "'%s'의 헤더를 읽을 수 없습니다."
+msgstr "‘%s’의 헤더를 읽을 수 없습니다."
 
 #: ../plug-ins/common/file-tga.c:1417
 msgid "TGA"
@@ -4131,7 +4131,7 @@ msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
 msgstr ""
-"'%s':\n"
+"‘%s’:\n"
 "이미지 헤더를 읽을 수 없습니다. (ftell == %ld)"
 
 #: ../plug-ins/common/file-xbm.c:867
@@ -4140,7 +4140,7 @@ msgid ""
 "'%s':\n"
 "No image data type specified"
 msgstr ""
-"'%s':\n"
+"‘%s’:\n"
 "이미지 데이터 형식이 지정되지 않았음"
 
 #. The image is not black-and-white.
@@ -4228,32 +4228,32 @@ msgstr ""
 #: ../plug-ins/common/file-xmc.c:672
 #, c-format
 msgid "'%s' is not a valid X cursor."
-msgstr "'%s'은(는) 잘못된 X 커서입니다."
+msgstr "‘%s’은(는) 잘못된 X 커서입니다."
 
 #: ../plug-ins/common/file-xmc.c:685
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
-msgstr "'%2$s의 %1$d 프레임 너비는 X 커서에 쓰기엔 너무 넓습니다."
+msgstr "‘%2$s’의 %1$d 프레임 너비는 X 커서에 쓰기엔 너무 넓습니다."
 
 #: ../plug-ins/common/file-xmc.c:693
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
-msgstr "%2$s의 %1$d 프레임 높이는 X 커서에 쓰기엔 너무 높습니다."
+msgstr "‘%2$s’의 %1$d 프레임 높이는 X 커서에 쓰기엔 너무 높습니다."
 
 #: ../plug-ins/common/file-xmc.c:918
 #, c-format
 msgid "there is no image chunk in \"%s\"."
-msgstr "\"%s\"에는 이미지 조각이 없습니다."
+msgstr "“%s”에는 이미지 조각이 없습니다."
 
 #: ../plug-ins/common/file-xmc.c:959
 #, c-format
 msgid "'%s' is too wide for an X cursor."
-msgstr "'%s'은(는) 너무 넓은 X 커서입니다."
+msgstr "‘%s’은(는) 너무 넓은 X 커서입니다."
 
 #: ../plug-ins/common/file-xmc.c:968
 #, c-format
 msgid "'%s' is too high for an X cursor."
-msgstr "'%s'은(는) 너무 높은 X 커서입니다."
+msgstr "‘%s’은(는) 너무 높은 X 커서입니다."
 
 #: ../plug-ins/common/file-xmc.c:1032
 #, c-format
@@ -4303,10 +4303,10 @@ msgid ""
 "theme-size\"."
 msgstr ""
 "프레임의 일반 크기를 선택합니다.\n"
-"다중-크기 커서를 만들 계획이 아니면, 기본값인 \"32px\"를 사용하십시오.\n"
+"다중-크기 커서를 만들 계획이 아니면, 기본값인 “32px”를 사용하십시오.\n"
 "일반 크기는 실제 크기(너비와 높이)와는 관계가 없습니다.\n"
 "이는 프레임이 애니메이션의 어느 순서에 있을 것인가를 결정하는 데에만 사용되"
-"며, 순서 위치는 \"gtk-cursor-theme-size\"의 값을 기준으로 결정합니다."
+"며, 순서 위치는 “gtk-cursor-theme-size”의 값을 기준으로 결정합니다."
 
 #: ../plug-ins/common/file-xmc.c:1191
 msgid "_Use this value only for a frame which size is not specified."
@@ -4382,22 +4382,22 @@ msgstr "주석은 %d 개의 문자로 제한되어 있습니다."
 #: ../plug-ins/file-webp/file-webp-save.c:509
 #, c-format
 msgid "Saving '%s'"
-msgstr "'%s' 저장 중"
+msgstr "‘%s’ 저장 중"
 
 #: ../plug-ins/common/file-xmc.c:1555
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
-msgstr "'%s' 프레임이 너무 넓습니다. %dpx 이하로 줄이십시오."
+msgstr "‘%s’ 프레임이 너무 넓습니다. %dpx 이하로 줄이십시오."
 
 #: ../plug-ins/common/file-xmc.c:1565
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
-msgstr "'%s' 프레임이 너무 높습니다. %dpx 이하로 줄이십시오."
+msgstr "‘%s’ 프레임이 너무 높습니다. %dpx 이하로 줄이십시오."
 
 #: ../plug-ins/common/file-xmc.c:1575
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
-msgstr "'%s' 프레임의 너비 또는 높이가 0임!"
+msgstr "‘%s’ 프레임의 너비 또는 높이가 0임!"
 
 #: ../plug-ins/common/file-xmc.c:1616
 #, c-format
@@ -4406,7 +4406,7 @@ msgid ""
 "Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"'%s' 프레임에 핫스팟이 없어서 커서를 내보낼 수 없습니다.\n"
+"‘%s’ 프레임에 핫스팟이 없어서 커서를 내보낼 수 없습니다.\n"
 "핫스팟 위치, 레이어 구조를 바꾸어 보거나 자동 잘라내기를 하지 않고 저장하십시"
 "오."
 
@@ -4432,8 +4432,8 @@ msgid ""
 msgstr ""
 "사용자의 커서를 성공적으로 내보냈지만 포함된 하나 이상의 프레임의 명목상의 크"
 "기가 GNOME 설정에서 지원하지 않는 크기입니다.\n"
-"내보내기 대화상자에서 \"모든 프레임의 크기 바꾸기...\" 를 선택하여 이 기준에 "
-"맞출 수 있습니다. 아니면 커서가 GNOME 설정에 나타나지 않을 있습니다."
+"내보내기 대화상자에서 “모든 프레임의 크기 바꾸기...” 를 선택하여 이 기준에 맞"
+"출 수 있습니다. 아니면 커서가 GNOME 설정에 나타나지 않을 있습니다."
 
 #: ../plug-ins/common/file-xmc.c:2031
 #, c-format
@@ -4441,8 +4441,8 @@ msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
 "fit."
 msgstr ""
-"기생체 \"%s\"이(가) X 커서 설명에 추가하기에 너무 깁니다. 적당한 길이로 자르"
-"십시오."
+"기생체 “%s”이(가) X 커서 설명에 추가하기에 너무 깁니다. 적당한 길이로 자르십"
+"시오."
 
 #: ../plug-ins/common/file-xmc.c:2146
 #, c-format
@@ -4470,7 +4470,7 @@ msgstr "X 픽스맵 이미지"
 #: ../plug-ins/common/file-xpm.c:365 ../plug-ins/common/file-xpm.c:800
 #, c-format
 msgid "Error opening file '%s'"
-msgstr "파일 열기 오류 '%s'"
+msgstr "파일 열기 오류 ‘%s’"
 
 #: ../plug-ins/common/file-xpm.c:371 ../plug-ins/common/file-xpm.c:806
 msgid "XPM file invalid"
@@ -4496,7 +4496,7 @@ msgstr "X 창 복사"
 #: ../plug-ins/common/file-xwd.c:464
 #, c-format
 msgid "Could not read XWD header from '%s'"
-msgstr "'%s'에서 XWD 헤더를 읽어올 수 없습니다."
+msgstr "‘%s’에서 XWD 헤더를 읽어올 수 없습니다."
 
 #: ../plug-ins/common/file-xwd.c:485
 #, c-format
@@ -4504,7 +4504,7 @@ msgid ""
 "'%s':\n"
 "Illegal number of colormap entries: %ld"
 msgstr ""
-"'%s':\n"
+"‘%s’:\n"
 "잘못된 색상맵 항목 수: %ld"
 
 #: ../plug-ins/common/file-xwd.c:495
@@ -4513,7 +4513,7 @@ msgid ""
 "'%s':\n"
 "Number of colormap entries < number of colors"
 msgstr ""
-"'%s':\n"
+"‘%s’:\n"
 "색상맵 항목 수가 색 수보다 많음"
 
 #: ../plug-ins/common/file-xwd.c:518
@@ -4536,12 +4536,12 @@ msgstr "알파 채널이 있는 이미지를 내보낼 수 없습니다."
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
 msgid "Could not open '%s' for writing: "
-msgstr "'%s'을(를) 쓰기용으로 열기 실패: "
+msgstr "‘%s’을(를) 쓰기용으로 열기 실패: "
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
 msgid "Error exporting '%s': "
-msgstr "'%s' 내보내기 중 오류: "
+msgstr "‘%s’ 내보내기 중 오류: "
 
 #: ../plug-ins/common/file-xwd.c:1762 ../plug-ins/common/file-xwd.c:2160
 #, c-format
@@ -5827,7 +5827,7 @@ msgstr "빛"
 #: ../plug-ins/common/sphere-designer.c:2016
 #, c-format
 msgid "File '%s' is not a valid save file."
-msgstr "'%s'은(는) 잘못된 저장 파일입니다."
+msgstr "‘%s’은(는) 잘못된 저장 파일입니다."
 
 #: ../plug-ins/common/sphere-designer.c:2196
 msgid "Open File"
@@ -6079,8 +6079,8 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
-"이 영역은 숫자 입력을 위한 도움 영역입니다. 입력란에 입력된 수를 \"인치\" 입"
-"력란의 두 자리 숫자와 일치시킬 수의 범위를 결정합니다."
+"이 영역은 숫자 입력을 위한 도움 영역입니다. 입력란에 입력된 수를 “인치” 입력"
+"란의 두 자리 숫자와 일치시킬 수의 범위를 결정합니다."
 
 #: ../plug-ins/common/unit-editor.c:104
 msgid "Symbol"
@@ -6090,7 +6090,7 @@ msgstr "기호"
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
-msgstr "단위 기호(예: 인치 \"'\"). 기호가 없으면 단위의 약자가 사용됩니다."
+msgstr "단위 기호(예: 인치 \"). 기호가 없으면 단위의 약자가 사용됩니다."
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "Abbreviation"
@@ -6098,7 +6098,7 @@ msgstr "약자"
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "단위의 약자 (예: 센티미터 \"cm\")"
+msgstr "단위의 약자 (예: 센티미터 “cm”)"
 
 #: ../plug-ins/common/unit-editor.c:109
 msgid "Singular"
@@ -6481,7 +6481,7 @@ msgstr "알 수 없는 마이크로소프트 윈도우즈 오류."
 #: ../plug-ins/common/web-browser.c:185
 #, c-format
 msgid "Failed to open '%s': %s"
-msgstr "'%s' 파일 열기 실패: %s"
+msgstr "‘%s’ 파일 열기 실패: %s"
 
 #: ../plug-ins/common/web-page.c:98
 msgid "Create an image of a webpage"
@@ -6539,7 +6539,7 @@ msgstr "웹페이지"
 #: ../plug-ins/common/web-page.c:459
 #, c-format
 msgid "Transferring webpage image for '%s'"
-msgstr "'%s'(으)로 웹페이지 이미지 전송"
+msgstr "‘%s’(으)로 웹페이지 이미지 전송"
 
 #: ../plug-ins/common/web-page.c:483
 #, c-format
@@ -6549,7 +6549,7 @@ msgstr "지정한 URL이 없음"
 #: ../plug-ins/common/web-page.c:545
 #, c-format
 msgid "Downloading webpage '%s'"
-msgstr "웹페이지 '%s' 내려받기 중"
+msgstr "웹페이지 ‘%s’ 내려받기 중"
 
 #: ../plug-ins/file-bmp/bmp-load.c:146
 msgid "Bad colormap"
@@ -6563,19 +6563,19 @@ msgstr "잘못된 색상맵"
 #: ../plug-ins/file-bmp/bmp-load.c:556
 #, c-format
 msgid "'%s' is not a valid BMP file"
-msgstr "'%s'은(는) 잘못된 BMP 파일임"
+msgstr "‘%s’은(는) 잘못된 BMP 파일임"
 
 #: ../plug-ins/file-bmp/bmp-load.c:298 ../plug-ins/file-bmp/bmp-load.c:325
 #: ../plug-ins/file-bmp/bmp-load.c:357 ../plug-ins/file-bmp/bmp-load.c:398
 #: ../plug-ins/file-bmp/bmp-load.c:429 ../plug-ins/file-bmp/bmp-load.c:471
 #, c-format
 msgid "Error reading BMP file header from '%s'"
-msgstr "'%s'의 BMP 파일 헤더 읽기 오류"
+msgstr "‘%s’의 BMP 파일 헤더 읽기 오류"
 
 #: ../plug-ins/file-bmp/bmp-load.c:381
 #, c-format
 msgid "Unsupported compression (%u) in BMP file from '%s'"
-msgstr "'%2$s'로부터의 BMP 파일에 지원하지 않는 압축(%1$u)"
+msgstr "‘%2$s’로부터의 BMP 파일에 지원하지 않는 압축(%1$u)"
 
 #: ../plug-ins/file-bmp/bmp-load.c:675
 msgid "Unrecognized or invalid BMP compression format."
@@ -6756,27 +6756,27 @@ msgstr "알파 테스트 임계값:"
 #: ../plug-ins/file-exr/file-exr.c:193
 #, c-format
 msgid "Error opening file '%s' for reading"
-msgstr "읽기용으로 파일 '%s' 열기 중 오류"
+msgstr "읽기용으로 파일 ‘%s’ 열기 중 오류"
 
 #: ../plug-ins/file-exr/file-exr.c:204
 #, c-format
 msgid "Error querying image dimensions from '%s'"
-msgstr "'%s'에서 이미지 치수 조회 중 오류"
+msgstr "‘%s’에서 이미지 치수 조회 중 오류"
 
 #: ../plug-ins/file-exr/file-exr.c:224
 #, c-format
 msgid "Error querying image precision from '%s'"
-msgstr "'%s'에서 이미지 정밀도 조회 중 오류"
+msgstr "‘%s’에서 이미지 정밀도 조회 중 오류"
 
 #: ../plug-ins/file-exr/file-exr.c:241
 #, c-format
 msgid "Error querying image type from '%s'"
-msgstr "'%s'에서 이미지 유형 조회 중 오류"
+msgstr "‘%s’에서 이미지 유형 조회 중 오류"
 
 #: ../plug-ins/file-exr/file-exr.c:289
 #, c-format
 msgid "Error reading pixel data from '%s'"
-msgstr "'%s'에서 픽셀 데이터 읽기 중 오류"
+msgstr "‘%s’에서 픽셀 데이터 읽기 중 오류"
 
 #: ../plug-ins/file-faxg3/faxg3.c:104
 msgid "G3 fax image"
@@ -6902,7 +6902,7 @@ msgstr "압축 (PNG)"
 #: ../plug-ins/file-ico/ico-load.c:221
 #, c-format
 msgid "Could not read '%lu' bytes"
-msgstr "'%lu' 바이트 읽지 못함"
+msgstr "‘%lu’ 바이트 읽지 못함"
 
 #: ../plug-ins/file-ico/ico-load.c:248
 #, c-format
@@ -6921,7 +6921,7 @@ msgstr "아이콘 #%i"
 #: ../plug-ins/file-raw/file-rawtherapee.c:436
 #, c-format
 msgid "Opening thumbnail for '%s'"
-msgstr "'%s'의 미리 보기 열기"
+msgstr "‘%s’의 미리 보기 열기"
 
 #: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
 msgid "Microsoft Windows icon"
@@ -7200,7 +7200,7 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
 "more than 30,000 pixels wide or tall."
 msgstr ""
-"'%s'을(를) 내보낼 수 없음.  PSD 파일 형식은 가로나 세로가 30,000 픽셀이 넘는 "
+"‘%s’을(를) 내보낼 수 없음.  PSD 파일 형식은 가로나 세로가 30,000 픽셀이 넘는 "
 "이미지를 지원하지 않습니다."
 
 #: ../plug-ins/file-psd/psd-save.c:1584
@@ -7209,7 +7209,7 @@ msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
 "layers that are more than 30,000 pixels wide or tall."
 msgstr ""
-"'%s'을(를) 내보낼 수 없음.  PSD 파일 형식은 가로나 세로가 30,000 픽셀이 넘는 "
+"‘%s’을(를) 내보낼 수 없음.  PSD 파일 형식은 가로나 세로가 30,000 픽셀이 넘는 "
 "레이어가 있는 이미지를 지원하지 않습니다."
 
 #: ../plug-ins/file-psd/psd-util.c:179
@@ -7335,7 +7335,7 @@ msgid ""
 "\n"
 "Please install one of them in order to load RAW files."
 msgstr ""
-"'%s' 파일을 열, 설치된 RAW 로더가 없습니다.\n"
+"‘%s’ 파일을 열, 설치된 RAW 로더가 없습니다.\n"
 "\n"
 "김프는 현재 다음과 같은 RAW 로더를 지원 합니다.\n"
 "-darktable (http://www.darktable.org/), 최소 1.7\n"
@@ -7350,7 +7350,7 @@ msgstr "실리콘 그래픽스 IRIS 이미지"
 #: ../plug-ins/file-sgi/sgi.c:332
 #, c-format
 msgid "Could not open '%s' for reading."
-msgstr "'%s' 파일을 열 수 없습니다."
+msgstr "‘%s’ 파일을 열 수 없습니다."
 
 #: ../plug-ins/file-sgi/sgi.c:347
 #, c-format
@@ -7370,7 +7370,7 @@ msgstr "잘못된 채널 수: %hu"
 #: ../plug-ins/file-sgi/sgi.c:587
 #, c-format
 msgid "Could not open '%s' for writing."
-msgstr "'%s'을(를) 쓰기용으로 열 수 없음."
+msgstr "‘%s’을(를) 쓰기용으로 열 수 없음."
 
 #: ../plug-ins/file-sgi/sgi.c:670
 msgid "SGI"
@@ -7404,7 +7404,7 @@ msgstr "TIFF 이미지"
 #: ../plug-ins/file-tiff/file-tiff.c:231
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr "TIFF '%s' 안에 디렉터리가 없음"
+msgstr "TIFF ‘%s’ 안에 디렉터리가 없음"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:143
 msgid "Import from TIFF"
@@ -7428,12 +7428,11 @@ msgstr "TIFF 내보내기는 알파 채널을 가진 이미지를 처리할 수 
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
-msgstr ""
-"단색 사진만 \"CCITT 그룹 4\" 또는 \"CCITT 그룹 3\"\"로 압축할 수 있습니다."
+msgstr "단색 사진만 “CCITT 그룹 4” 또는 “CCITT 그룹 3”으로 압축할 수 있습니다."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:633
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
-msgstr "인덱스된 그림은 \"JPEG\"로 압축할 수 없습니다."
+msgstr "인덱스된 그림은 “JPEG”로 압축할 수 없습니다."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:732
 msgid ""
@@ -7519,7 +7518,7 @@ msgstr "원본 유형::"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:193
 msgid "WebP encoder \"preset\""
-msgstr "WebP 인코더 \"프리셋\""
+msgstr "WebP 인코더 “프리셋”"
 
 #. Create the top-level animation checkbox expander
 #: ../plug-ins/file-webp/file-webp-dialog.c:225
@@ -7554,22 +7553,22 @@ msgstr "모든 프레임에 위에서 입력한 지연시간 사용"
 #: ../plug-ins/file-webp/file-webp-load.c:106
 #, c-format
 msgid "Invalid WebP file '%s'"
-msgstr "잘못된 WebP 파일 '%s'"
+msgstr "잘못된 WebP 파일 ‘%s’"
 
 #: ../plug-ins/file-webp/file-webp-load.c:188
 #, c-format
 msgid "Failed to decode animated WebP file '%s'"
-msgstr "움직이는 WebP 파일 '%s' 디코딩 실패"
+msgstr "움직이는 WebP 파일 ‘%s’ 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:196
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
-msgstr "'%s'의 움직이는 WebP 정보 디코딩 실패"
+msgstr "‘%s’의 움직이는 WebP 정보 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:215
 #, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
-msgstr "'%s'의 움직이는 WebP 프레임 디코딩 실패"
+msgstr "‘%s’의 움직이는 WebP 프레임 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:220
 #, c-format
@@ -7633,7 +7632,7 @@ msgstr "%1$s을(를) 쓰기용으로 열기 실패: %2$s"
 #: ../plug-ins/file-webp/file-webp-save.c:254
 #, c-format
 msgid "WebP error: '%s'"
-msgstr "WebP 오류: '%s'"
+msgstr "WebP 오류: ‘%s’"
 
 #: ../plug-ins/flame/flame.c:129
 msgid "Create cosmic recursive fractal flames"
@@ -7654,7 +7653,7 @@ msgstr "화염 효과는 RGB 영역에서만 동작합니다."
 #: ../plug-ins/flame/flame.c:401
 #, c-format
 msgid "'%s' is not a regular file"
-msgstr "%s(은)는 일반 파일이 아님"
+msgstr "‘%s’(은)는 일반 파일이 아님"
 
 #: ../plug-ins/flame/flame.c:645
 msgid "Edit Flame"
@@ -7880,7 +7879,7 @@ msgid ""
 msgstr ""
 "gimprc에 %1$s이(가) 없음:\n"
 "사용자의 %4$s 파일에\n"
-"(%2$s \"%3$s\")\n"
+"(%2$s “%3$s”)\n"
 "같은 항목을 추가해야 합니다."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:561
@@ -8038,7 +8037,7 @@ msgstr "loglog 스무딩 사용"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:938
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr "결과에서 \"밴드 현상\"을 제거하려면 로그 로그 스무딩 사용"
+msgstr "결과에서 “밴드 현상”을 제거하려면 로그 로그 스무딩 사용"
 
 #. Color Density frame
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:942
@@ -8146,7 +8145,7 @@ msgstr "프랙탈(_F)"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1561
 #, c-format
 msgid "Could not write '%s': %s"
-msgstr "'%s'을(를) 기록할 수 없습니다.: %s"
+msgstr "‘%s’을(를) 기록할 수 없습니다.: %s"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1636
 msgid "Load Fractal Parameters"
@@ -8159,12 +8158,12 @@ msgstr "프랙탈 매개변수 저장하기"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1872
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
-msgstr "'%s'은(는) 프랙탈익스플로러 파일이 아님"
+msgstr "‘%s’은(는) 프랙탈익스플로러 파일이 아님"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1879
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr "'%s'은(는) 손상되었습니다. %d번째 줄 옵션이 잘못되었음"
+msgstr "‘%s’은(는) 손상되었습니다. %d번째 줄 옵션이 잘못되었음"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:236
 msgid "Render fractal art"
@@ -8182,7 +8181,7 @@ msgstr "프렉탈 렌더링"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3202
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "\"%s\"을(를) 디스크와 목록에서 삭제하시겠습니까?"
+msgstr "“%s”을(를) 디스크와 목록에서 삭제하시겠습니까?"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:756
 msgid "Delete Fractal"
@@ -8191,7 +8190,7 @@ msgstr "프랙탈 삭제"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:945
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr "'%s' 파일은 프랙탈익스플로러 파일이 아님"
+msgstr "‘%s’ 파일은 프랙탈익스플로러 파일이 아님"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:955
 #, c-format
@@ -8199,7 +8198,7 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
-"'%s' 파일은 손상되었습니다.\n"
+"‘%s’ 파일은 손상되었습니다.\n"
 "%d번째 줄 옵션 섹션이 부정확함"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1000
@@ -8616,7 +8615,7 @@ msgstr "기생물로 형태 저장 중 오류: 드로어블에 기생물을 덧�
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
-msgstr "기생물을 불러올 임시 파일 '%1$s' 읽기 실패: %2$s"
+msgstr "기생물을 불러올 임시 파일 ‘%1$s’ 읽기 실패: %2$s"
 
 #: ../plug-ins/gimpressionist/brush.c:244
 msgid "Can only save drawables!"
@@ -8748,7 +8747,7 @@ msgstr "어두운 가장자리:"
 
 #: ../plug-ins/gimpressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr "각 붓 한번 긋기의 가장자리는 얼마나 \"어두운\"가"
+msgstr "각 붓 한번 긋기의 가장자리는 얼마나 “어두운”가"
 
 #: ../plug-ins/gimpressionist/general.c:248
 msgid "Shadow darken:"
@@ -8756,7 +8755,7 @@ msgstr "그림자를 어둡게:"
 
 #: ../plug-ins/gimpressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
-msgstr "그림자 넣기에 얼마나 \"어두운\"가"
+msgstr "그림자 넣기에 얼마나 “어두운”가"
 
 #: ../plug-ins/gimpressionist/general.c:257
 msgid "Shadow depth:"
@@ -8870,7 +8869,7 @@ msgstr "흘러내림"
 #: ../plug-ins/gimpressionist/orientation.c:172
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr "획은 \"흐르는\" 무늬를 뒤따라감"
+msgstr "획은 “흐르는” 무늬를 뒤따라감"
 
 #: ../plug-ins/gimpressionist/orientation.c:176
 msgid "The hue of the region determines the direction of the stroke"
@@ -9076,7 +9075,7 @@ msgstr "붓 한번긋기의 상대적 농도"
 #: ../plug-ins/gimpressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
-msgstr "PPM 파일 '%s' 저장 실패: %s"
+msgstr "PPM 파일 ‘%s’ 저장 실패: %s"
 
 #: ../plug-ins/gimpressionist/presets.c:638
 msgid "Save Current"
@@ -9233,7 +9232,7 @@ msgstr "세기(_T):"
 
 #: ../plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the strength of the selected smvector"
-msgstr "'선택된 SM벡터의 능력을 변환"
+msgstr "선택된 SM벡터의 능력을 변환"
 
 #: ../plug-ins/gimpressionist/sizemap.c:531
 msgid "St_rength exp.:"
@@ -9862,12 +9861,12 @@ msgstr "화염 그레이디언트"
 #: ../plug-ins/gradient-flare/gradient-flare.c:1265
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr "GFlare 파일 '%s' 열기 실패: %s"
+msgstr "GFlare 파일 ‘%s’ 열기 실패: %s"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1273
 #, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr "'%s'은(는) 잘못된 GFlare 파일입니다."
+msgstr "‘%s’은(는) 잘못된 GFlare 파일입니다."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1327
 #, c-format
@@ -9881,14 +9880,14 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "and make a folder '%s', then you can save your own GFlares into that folder."
 msgstr ""
-"GFlare '%s'은(는) 저장되지 않았습니다. '%s'에 새 항목을 추가하려면\n"
+"GFlare ‘%s’은(는) 저장되지 않았습니다. ‘%s’에 새 항목을 추가하려면\n"
 "(gflare-path \"%s\")\n"
-"에 '%s' 폴더를 생성하고, 새 GFlare를 폴더에 저장하십시오."
+"에 ‘%s’ 폴더를 생성하고, 새 GFlare를 폴더에 저장하십시오."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1485
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "GFlare 파일 '%s' 쓰기 실패: %s"
+msgstr "GFlare 파일 ‘%s’ 쓰기 실패: %s"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2414
 msgid "A_uto update preview"
@@ -9896,7 +9895,7 @@ msgstr "미리 보기 자동 업데이트(_U)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2465
 msgid "'Default' is created."
-msgstr "`기본값'이 만들어졌습니다."
+msgstr "‘기본값’이 만들어졌습니다."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2466
 msgid "Default"
@@ -9963,7 +9962,7 @@ msgstr "새 GFlare의 이름을 입력"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3165
 #, c-format
 msgid "The name '%s' is used already!"
-msgstr "'%s'(이)라는 이름은 이미 사용됨!"
+msgstr "‘%s’(이)라는 이름은 이미 사용됨!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3140
 msgid "Copy Gradient Flare"
@@ -10195,7 +10194,7 @@ msgstr "닫기(_C)"
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
-msgstr "도움말 페이지 '%s'을(를) 볼 수 없습니다."
+msgstr "도움말 페이지 ‘%s’을(를) 볼 수 없습니다."
 
 #: ../plug-ins/help/gimphelpdomain.c:186
 msgid "The GIMP user manual is not available."
@@ -10222,12 +10221,12 @@ msgstr "아마도 GIO 백엔드가 없고 GVFS를 설치해야 하지 않습니�
 #: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
-msgstr "도움말 ID '%s' 알 수 없음"
+msgstr "도움말 ID ‘%s’ 알 수 없음"
 
 #: ../plug-ins/help/gimphelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
-msgstr "'%s'에서 인덱스 불러오기"
+msgstr "‘%s’에서 인덱스 불러오기"
 
 #: ../plug-ins/help/gimphelplocale.c:266
 #, c-format
@@ -10235,7 +10234,7 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"'%s' 해석 오류:\n"
+"‘%s’ 해석 오류:\n"
 "%s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:333
@@ -10404,7 +10403,7 @@ msgstr "열기 실패"
 #: ../plug-ins/ifs-compose/ifs-compose.c:2469
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
-msgstr "파일 '%s'은(는) IFS 프랙탈 파일이 아닙니다."
+msgstr "파일 ‘%s’은(는) IFS 프랙탈 파일이 아닙니다."
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2509
 msgid "Save as IFS Fractal file"
@@ -10536,8 +10535,8 @@ msgid ""
 "suitable for navigation bars."
 msgstr ""
 "안내선은 미리 정의된 사각형으로 이미지에 표시됩니다. 안내선의 너비, 높이, 간"
-"격 등을 설정할 수 있습니다. 이는 내비게이션 막대에 맞는 \"미리 보기\" 모음으"
-"로 된 이미지맵 형식을 빠르게 만드는데 유용합니다."
+"격 등을 설정할 수 있습니다. 이는 내비게이션 막대에 맞는 “미리 보기” 모음으로 "
+"된 이미지맵 형식을 빠르게 만드는데 유용합니다."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:168
 msgid "_Left start at:"
@@ -10812,7 +10811,7 @@ msgstr "바뀐 내용을 버리시겠습니까?"
 #: ../plug-ins/imagemap/imap_main.c:841
 #, c-format
 msgid "File \"%s\" saved."
-msgstr "파일 \"%s\"이(가) 저장되었습니다."
+msgstr "파일 “%s”이(가) 저장되었습니다."
 
 #: ../plug-ins/imagemap/imap_main.c:845
 msgid "Couldn't save file:"
@@ -12289,7 +12288,7 @@ msgid ""
 "pixels of a point with a smaller angle."
 msgstr ""
 "점과 그 선행 및 후행 점이 이루는 각도는 이보다 작으면, 더 작은 각도인 점의 "
-"'corner_surround' 픽셀 내에 있더라도 코너가 됩니다."
+"‘corner_surround’ 픽셀 내에 있더라도 코너가 됩니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:139
 msgid "Corner Surround:"
@@ -12392,7 +12391,7 @@ msgstr "무릎을 유지"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:270
 msgid "Says whether or not to remove 'knee' points after finding the outline."
-msgstr "외곽선을 찾은 후 '무릎' 점을 제거할지를 나나냅니다."
+msgstr "외곽선을 찾은 후 ‘무릎’ 점을 제거할지를 나나냅니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:281
 msgid "Line Reversion Threshold:"
@@ -12446,7 +12445,7 @@ msgid ""
 "detect the cases where we didn't find any corners."
 msgstr ""
 "재매개변수화하는 것이 무의미한 오류의 양입니다.  예를 들어, 단일 스플라인을 "
-"사용하여 'O' 외부의 윤곽선을 피팅하려고 할 때 이 문제가 발생합니다. 초기 피팅"
+"사용하여 ‘O’ 외부의 윤곽선을 피팅하려고 할 때 이 문제가 발생합니다. 초기 피팅"
 "은  Newton-Raphson 반복이 그것을 개선하기에 충분히 좋지 않습니다.  아마도 어"
 "떤 코너도 찾지 못한 경우를 감지하는 것이 더 좋을 수 있습니다."
 
