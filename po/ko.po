@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 11:20+0000\n"
-"PO-Revision-Date: 2019-01-28 12:38+0900\n"
+"PO-Revision-Date: 2019-01-29 03:59+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -427,8 +427,8 @@ msgid ""
 "warnings and critical errors when \"fatal-warnings\" debug key is set"
 msgstr ""
 "“fatal-warnings” 디버그 키를 설정했을 때, 시그널 수신 시만 아니라 경고 및 치"
-"명적인 오류 시에도 --stack-trace-mode 명령 줄 옵션을 사용하여 플러그 인에서 "
-"스택 추적을 출력하도록 플러그인 디버깅을 개선하였음"
+"명적인 오류 시에도 --stack-trace-mode 명령 줄 옵션을 사용하여 플러그인에서 스"
+"택 추적을 출력하도록 플러그인 디버깅을 개선하였음"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
@@ -810,7 +810,7 @@ msgstr "독"
 
 #: ../app/actions/actions.c:144
 msgid "Dockable"
-msgstr "도킹가능"
+msgstr "도킹 가능"
 
 #. Document History
 #: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:362
@@ -820,7 +820,7 @@ msgstr "문서 이력"
 
 #: ../app/actions/actions.c:150
 msgid "Drawable"
-msgstr "그릴 수 있음"
+msgstr "드로어블"
 
 #: ../app/actions/actions.c:153 ../app/dialogs/dialogs.c:338
 msgid "Paint Dynamics"
@@ -1044,7 +1044,7 @@ msgstr "파일 관리자에서 보이기(_F)"
 #: ../app/actions/brushes-actions.c:72
 msgctxt "brushes-action"
 msgid "Show brush file location in the file manager"
-msgstr "파일 관리자에서 붓 파일 위치를 보이기"
+msgstr "파일 관리자에서 붓 파일 위치 보이기"
 
 #: ../app/actions/brushes-actions.c:77
 msgctxt "brushes-action"
@@ -1054,7 +1054,7 @@ msgstr "붓 삭제(_D)"
 #: ../app/actions/brushes-actions.c:78
 msgctxt "brushes-action"
 msgid "Delete this brush"
-msgstr "이 붓을 삭제하기"
+msgstr "이 붓을 삭제"
 
 #: ../app/actions/brushes-actions.c:83
 msgctxt "brushes-action"
@@ -1074,7 +1074,7 @@ msgstr "붓 편집(_E)..."
 #: ../app/actions/brushes-actions.c:93
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr "붓을 편집하기"
+msgstr "이 붓을 편집"
 
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
@@ -1254,12 +1254,12 @@ msgstr "채널 대화상자에서 이 채널을 한 단계 아래로 내립니�
 #: ../app/actions/channels-actions.c:103
 msgctxt "channels-action"
 msgid "Lower Channel to _Bottom"
-msgstr "채널을 바닥으로 내리기(_B)"
+msgstr "채널을 맨 아래로 내리기(_B)"
 
 #: ../app/actions/channels-actions.c:105
 msgctxt "channels-action"
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr "채널을 채널 스택의 바닥으로 내립니다"
+msgstr "채널을 채널 스택에서 맨 아래로 내립니다"
 
 #: ../app/actions/channels-actions.c:113
 msgctxt "channels-action"
@@ -1410,7 +1410,7 @@ msgstr "선택 영역과 겹치기(_I)"
 #: ../app/actions/channels-actions.c:216
 msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
-msgstr "현재 선택 영역과 이 채널의 겹칩니다"
+msgstr "현재 선택 영역과 이 채널을 겹칩니다"
 
 #: ../app/actions/channels-actions.c:224
 msgctxt "channels-action"
@@ -1644,7 +1644,7 @@ msgstr "종횡비(_A)"
 #: ../app/actions/context-actions.c:78
 msgctxt "context-action"
 msgid "A_ngle"
-msgstr "각(_N)"
+msgstr "각도(_N)"
 
 #: ../app/actions/context-actions.c:81
 msgctxt "context-action"
@@ -2604,7 +2604,7 @@ msgstr "붓 반지름(편집기): 상대적으로 줄이기"
 #: ../app/actions/context-actions.c:957
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase Relative"
-msgstr "붓 반지름(편집기): 상재적으로 늘리기"
+msgstr "붓 반지름(편집기): 상대적으로 늘리기"
 
 #: ../app/actions/context-actions.c:965
 msgctxt "context-action"
@@ -5416,7 +5416,7 @@ msgstr "그레이디언트 편집기 메뉴"
 #: ../app/actions/gradient-editor-actions.c:50
 msgctxt "gradient-editor-action"
 msgid "Left Color Type"
-msgstr "왼쪽 색 타입"
+msgstr "왼쪽 색 유형"
 
 #: ../app/actions/gradient-editor-actions.c:52
 msgctxt "gradient-editor-action"
@@ -5431,7 +5431,7 @@ msgstr "왼쪽 색 저장(_S)"
 #: ../app/actions/gradient-editor-actions.c:57
 msgctxt "gradient-editor-action"
 msgid "Right Color Type"
-msgstr "오른쪽 색 타입"
+msgstr "오른쪽 색 유형"
 
 #: ../app/actions/gradient-editor-actions.c:59
 msgctxt "gradient-editor-action"
@@ -6281,7 +6281,7 @@ msgstr "이미지를 위아래로 뒤집습니다"
 #: ../app/actions/image-actions.c:292
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "시계 반대방향으로 90° 회전(_W)"
+msgstr "반시계 방향으로 90° 회전(_W)"
 
 #: ../app/actions/image-actions.c:293
 msgctxt "image-action"
@@ -7039,7 +7039,7 @@ msgstr "레이어마스크 적용(_M)"
 #: ../app/actions/layers-actions.c:474
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
-msgstr "레이어 마스크 효과 적용하고 없앱니다"
+msgstr "레이어 마스크의 효과를 적용하고 없앱니다"
 
 #: ../app/actions/layers-actions.c:479
 msgctxt "layers-action"
@@ -7049,7 +7049,7 @@ msgstr "레이어 마스크 삭제(_K)"
 #: ../app/actions/layers-actions.c:480
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
-msgstr "레이어 마스크와 효과 없앱니다"
+msgstr "레이어 마스크와 그 효과를 없앱니다"
 
 #: ../app/actions/layers-actions.c:488
 msgctxt "layers-action"
@@ -7776,7 +7776,7 @@ msgstr "선택 영역에서 흐릿한 부분을 제거합니다"
 #: ../app/actions/select-actions.c:87
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr "줄이기(_H)..."
+msgstr "축소(_H)..."
 
 #: ../app/actions/select-actions.c:88
 msgctxt "select-action"
@@ -7786,7 +7786,7 @@ msgstr "선택 영역을 줄입니다"
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "늘리기(_G)..."
+msgstr "확장(_G)..."
 
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
@@ -7869,7 +7869,7 @@ msgstr "선택 영역 페더"
 
 #: ../app/actions/select-commands.c:160
 msgid "Feather selection by"
-msgstr "선택 영역 페더 량"
+msgstr "선택 영역 페더 양"
 
 #: ../app/actions/select-commands.c:216
 msgid "Shrink Selection"
@@ -7877,7 +7877,7 @@ msgstr "선택 영역 줄이기"
 
 #: ../app/actions/select-commands.c:220
 msgid "Shrink selection by"
-msgstr "선택 영역 줄이기 량"
+msgstr "선택 영역 줄이기 양"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:230 ../app/actions/select-commands.c:356
@@ -8460,7 +8460,7 @@ msgstr "에어브러시 속도: 1만큼 줄이기"
 #: ../app/actions/tools-actions.c:167
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
-msgstr "에어브러시 속도: 1만큼 늘이기"
+msgstr "에어브러시 속도: 1만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:171
 msgctxt "tools-action"
@@ -8470,7 +8470,7 @@ msgstr "에어브러시 속도: 10만큼 줄이기"
 #: ../app/actions/tools-actions.c:175
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
-msgstr "에어브러시 속도: 10만큼 늘이기"
+msgstr "에어브러시 속도: 10만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:183
 msgctxt "tools-action"
@@ -8495,7 +8495,7 @@ msgstr "에어브러시 흐름: 1만큼 줄이기"
 #: ../app/actions/tools-actions.c:199
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
-msgstr "에어브러시 흐름: 1만큼 늘이기"
+msgstr "에어브러시 흐름: 1만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:203
 msgctxt "tools-action"
@@ -8505,7 +8505,7 @@ msgstr "에어브러시 흐름: 10만큼 줄이기"
 #: ../app/actions/tools-actions.c:207
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
-msgstr "에어브러시 흐름: 10만큼 늘이기"
+msgstr "에어브러시 흐름: 10만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:264
 msgctxt "tools-action"
@@ -8535,7 +8535,7 @@ msgstr "도구 불투명도: 1만큼 줄이기"
 #: ../app/actions/tools-actions.c:284
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
-msgstr "도구 불투명도: 1만큼 늘이기"
+msgstr "도구 불투명도: 1만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:288
 msgctxt "tools-action"
@@ -8545,7 +8545,7 @@ msgstr "도구 불투명도: 10만큼 줄이기"
 #: ../app/actions/tools-actions.c:292
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
-msgstr "도구 불투명도: 10만큼 늘이기"
+msgstr "도구 불투명도: 10만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:296
 msgctxt "tools-action"
@@ -8555,7 +8555,7 @@ msgstr "도구 불투명도: 상대적으로 줄이기"
 #: ../app/actions/tools-actions.c:300
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
-msgstr "도구 불투명도: 상대적으로 늘이기"
+msgstr "도구 불투명도: 상대적으로 늘리기"
 
 #: ../app/actions/tools-actions.c:308
 msgctxt "tools-action"
@@ -8585,7 +8585,7 @@ msgstr "도구 크기: 1만큼 줄이기"
 #: ../app/actions/tools-actions.c:328
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 1"
-msgstr "도구 크기: 1만큼 늘이기"
+msgstr "도구 크기: 1만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:332
 msgctxt "tools-action"
@@ -8595,7 +8595,7 @@ msgstr "도구 크기도: 10만큼 줄이기"
 #: ../app/actions/tools-actions.c:336
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 10"
-msgstr "도구 크기: 10만큼 늘이기"
+msgstr "도구 크기: 10만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:340
 msgctxt "tools-action"
@@ -8605,7 +8605,7 @@ msgstr "도구 크기: 상대적으로 줄이기"
 #: ../app/actions/tools-actions.c:344
 msgctxt "tools-action"
 msgid "Tool's Size: Increase Relative"
-msgstr "도구 크기: 상대적으로 늘이기"
+msgstr "도구 크기: 상대적으로 늘리기"
 
 #: ../app/actions/tools-actions.c:352
 msgctxt "tools-action"
@@ -8635,7 +8635,7 @@ msgstr "도구 종횡비: 0.1만큼 줄이기"
 #: ../app/actions/tools-actions.c:372
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 0.1"
-msgstr "도구 종횡비: 0.1만큼 늘이기"
+msgstr "도구 종횡비: 0.1만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:376
 msgctxt "tools-action"
@@ -8645,7 +8645,7 @@ msgstr "도구 종횡비: 1만큼 줄이기"
 #: ../app/actions/tools-actions.c:380
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 1"
-msgstr "도구 종횡비: 1만큼 늘이기"
+msgstr "도구 종횡비: 1만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:384
 msgctxt "tools-action"
@@ -8655,7 +8655,7 @@ msgstr "도구 종횡비: 상대적으로 줄이기"
 #: ../app/actions/tools-actions.c:388
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase Relative"
-msgstr "도구 종횡비: 상대적으로 늘이기"
+msgstr "도구 종횡비: 상대적으로 늘리기"
 
 #: ../app/actions/tools-actions.c:396
 msgctxt "tools-action"
@@ -8685,7 +8685,7 @@ msgstr "도구 각도: 1° 줄이기"
 #: ../app/actions/tools-actions.c:416
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 1°"
-msgstr "도구 각도: 1° 늘이기"
+msgstr "도구 각도: 1° 늘리기"
 
 #: ../app/actions/tools-actions.c:420
 msgctxt "tools-action"
@@ -8695,7 +8695,7 @@ msgstr "도구 각도: 15° 줄이기"
 #: ../app/actions/tools-actions.c:424
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 15°"
-msgstr "도구 각도: 15° 늘이기"
+msgstr "도구 각도: 15° 늘리기"
 
 #: ../app/actions/tools-actions.c:428
 msgctxt "tools-action"
@@ -8705,7 +8705,7 @@ msgstr "도구 각도: 상대적으로 줄이기"
 #: ../app/actions/tools-actions.c:432
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase Relative"
-msgstr "도구 각도: 상대적으로 늘이기"
+msgstr "도구 각도: 상대적으로 늘리기"
 
 #: ../app/actions/tools-actions.c:440
 msgctxt "tools-action"
@@ -8735,7 +8735,7 @@ msgstr "붓 간격: 1만큼 줄이기"
 #: ../app/actions/tools-actions.c:460
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 1"
-msgstr "도구 간격: 1만큼 늘이기"
+msgstr "도구 간격: 1만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:464
 msgctxt "tools-action"
@@ -8745,7 +8745,7 @@ msgstr "도구 간격: 1만큼 줄이기"
 #: ../app/actions/tools-actions.c:468
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 10"
-msgstr "도구 간격: 10만큼 늘이기"
+msgstr "도구 간격: 10만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:472
 msgctxt "tools-action"
@@ -8755,7 +8755,7 @@ msgstr "도구 간격: 상대적으로 줄이기"
 #: ../app/actions/tools-actions.c:476
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase Relative"
-msgstr "도구 간격: 상대적으로 늘이기"
+msgstr "도구 간격: 상대적으로 늘리기"
 
 #: ../app/actions/tools-actions.c:484
 msgctxt "tools-action"
@@ -8785,7 +8785,7 @@ msgstr "도구 경도: 1만큼 줄이기"
 #: ../app/actions/tools-actions.c:504
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 1"
-msgstr "도구 경도: 1만큼 늘이기"
+msgstr "도구 경도: 1만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:508
 msgctxt "tools-action"
@@ -8795,7 +8795,7 @@ msgstr "도구 경도: 10만큼 줄이기"
 #: ../app/actions/tools-actions.c:512
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 10"
-msgstr "도구 경도: 10만큼 늘이기"
+msgstr "도구 경도: 10만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:516
 msgctxt "tools-action"
@@ -8805,7 +8805,7 @@ msgstr "도구 경도: 상대적으로 줄이기"
 #: ../app/actions/tools-actions.c:520
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase Relative"
-msgstr "도구 경도: 상대적으로 늘이기"
+msgstr "도구 경도: 상대적으로 늘리기"
 
 #: ../app/actions/tools-actions.c:528
 msgctxt "tools-action"
@@ -8835,7 +8835,7 @@ msgstr "도구 힘: 1° 줄이기"
 #: ../app/actions/tools-actions.c:548
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 1"
-msgstr "도구 힘: 1° 늘이기"
+msgstr "도구 힘: 1° 늘리기"
 
 #: ../app/actions/tools-actions.c:552
 msgctxt "tools-action"
@@ -8845,7 +8845,7 @@ msgstr "도구 힘: 10만큼 줄이기"
 #: ../app/actions/tools-actions.c:556
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 10"
-msgstr "도구 힘: 10만큼 늘이기"
+msgstr "도구 힘: 10만큼 늘리기"
 
 #: ../app/actions/tools-actions.c:560
 msgctxt "tools-action"
@@ -8855,7 +8855,7 @@ msgstr "도구 힘: 상대적으로 줄이기"
 #: ../app/actions/tools-actions.c:564
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
-msgstr "도구 힘: 상대적으로 늘이기"
+msgstr "도구 힘: 상대적으로 늘리기"
 
 #: ../app/actions/vectors-actions.c:46
 msgctxt "vectors-action"
@@ -9035,7 +9035,7 @@ msgstr "경로 들여오기(_M)..."
 #: ../app/actions/vectors-actions.c:166
 msgctxt "vectors-action"
 msgid "Toggle Path _Visibility"
-msgstr "경로 보임 여부를 전환(_V)"
+msgstr "경로 보임 상태 전환(_V)"
 
 #: ../app/actions/vectors-actions.c:172
 msgctxt "vectors-action"
@@ -9814,7 +9814,7 @@ msgstr "다른 확대 배율(_R)..."
 #: ../app/actions/view-actions.c:457
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
-msgstr "사용자 확대 비율 설정"
+msgstr "맞춤 확대 비율 설정"
 
 #: ../app/actions/view-actions.c:465
 msgctxt "view-action"
@@ -11654,7 +11654,7 @@ msgstr "빨강"
 #: ../app/core/core-enums.c:772
 msgctxt "histogram-channel"
 msgid "Green"
-msgstr "녹색"
+msgstr "초록"
 
 #: ../app/core/core-enums.c:773
 msgctxt "histogram-channel"
@@ -12483,12 +12483,12 @@ msgstr "붓 파일에 치명적 구문해석 오류: 바이트 = 0."
 #: ../app/core/gimpbrush-load.c:195
 #, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
-msgstr "붓 파일에 치명적인 해석 오류: %d×%d (이)가 최대 크기를 넘습니다."
+msgstr "붓 파일에 치명적인 구문 분석 오류: %d×%d (이)가 최대 크기를 넘습니다."
 
 #: ../app/core/gimpbrush-load.c:221
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
-msgstr "붓 파일에서 치명적인 구문 해석 오류: 알 수 없는 심도 %d."
+msgstr "붓 파일에서 치명적인 구문 분석 오류: 알 수 없는 심도 %d."
 
 #: ../app/core/gimpbrush-load.c:233
 #, c-format
@@ -13565,7 +13565,7 @@ msgstr "항목 변환"
 #: ../app/core/gimpimage-merge.c:135
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
-msgstr "보이는 레이어 합치"
+msgstr "보이는 레이어 합치기"
 
 #: ../app/core/gimpimage-merge.c:198
 msgctxt "undo-type"
@@ -13618,12 +13618,12 @@ msgstr "합치려면 두 개 이상의 보이는 경로가 필요합니다."
 #: ../app/core/gimpimage-quick-mask.c:88
 msgctxt "undo-type"
 msgid "Enable Quick Mask"
-msgstr "퀵 마스크 사용 가능"
+msgstr "퀵 마스크 활성화"
 
 #: ../app/core/gimpimage-quick-mask.c:120
 msgctxt "undo-type"
 msgid "Disable Quick Mask"
-msgstr "퀵 마스크 사용 불가"
+msgstr "퀵 마스크 비활성화"
 
 #: ../app/core/gimpimage-sample-points.c:52
 msgctxt "undo-type"
@@ -15063,7 +15063,7 @@ msgstr "속성"
 
 #: ../app/dialogs/image-properties-dialog.c:89
 msgid "Color Profile"
-msgstr "색상 프로필"
+msgstr "색 프로필"
 
 #: ../app/dialogs/image-scale-dialog.c:115
 msgctxt "dialog-title"
@@ -15674,7 +15674,7 @@ msgstr "색 관리된 디스플레이"
 
 #: ../app/dialogs/preferences-dialog.c:1324
 msgid "Select Monitor Color Profile"
-msgstr "모니터 색상 프로필 선택"
+msgstr "모니터 색 프로필 선택"
 
 #: ../app/dialogs/preferences-dialog.c:1325
 msgid "_Monitor profile:"
@@ -19842,11 +19842,11 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:864
 #, c-format
 msgid ""
-"Procedure ‘%s’ returned '%s' as return value '%s' (#%d, type %s). This value "
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"‘%s’ 프러시저는 ‘%s’를(를) ‘%s’ (#%d, type %s)의 반환값으로 반환하였습니다. "
-"이 값은 범위를 벗어난 값입니다."
+"‘%1$s’ 프러시저는 반환 값 ‘%3$s’(으)로서 ‘%2$s’를(를) 반환하였습니다 (#%4$d, "
+"유형 %5$s) . 이 값은 범위를 벗어난 값입니다."
 
 #: ../app/pdb/gimpprocedure.c:878
 #, c-format
