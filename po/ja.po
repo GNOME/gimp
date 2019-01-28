@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:36+0000\n"
-"PO-Revision-Date: 2019-01-28 00:15+0900\n"
+"PO-Revision-Date: 2019-01-29 02:24+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -11669,7 +11669,7 @@ msgstr "デフォルトで IPTC メタデータをエクスポートします。
 
 #: ../app/config/gimprc-blurbs.h:232
 msgid "Try generating debug data for bug reporting when appropriate."
-msgstr ""
+msgstr "必要に応じて、バグ報告用のデバッグデータの生成を試みます。"
 
 #: ../app/config/gimprc-blurbs.h:235
 msgid ""
@@ -12581,22 +12581,22 @@ msgstr "二点鎖線"
 #: ../app/core/core-enums.c:453
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
-msgstr ""
+msgstr "警告、致命的なエラー、クラッシュをデバッグ"
 
 #: ../app/core/core-enums.c:454
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
-msgstr ""
+msgstr "致命的なエラーとクラッシュをデバッグ"
 
 #: ../app/core/core-enums.c:455
 msgctxt "debug-policy"
 msgid "Debug crashes only"
-msgstr ""
+msgstr "クラッシュのみデバッグ"
 
 #: ../app/core/core-enums.c:456
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
-msgstr ""
+msgstr "デバッグしない"
 
 #: ../app/core/core-enums.c:542
 msgctxt "dynamics-output-type"
@@ -17127,14 +17127,17 @@ msgid ""
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
 "bugs."
 msgstr ""
+"これらの設定が必要ないことを願っていますが、すべてのソフトウェアと同じく、"
+"GIMP にはバグがあり、クラッシュする可能性があります。クラッシュした時に、バグ"
+"を報告することによって私たちを助けることができます。"
 
 #: ../app/dialogs/preferences-dialog.c:1243
 msgid "Bug Reporting"
-msgstr ""
+msgstr "バグレポート"
 
 #: ../app/dialogs/preferences-dialog.c:1249
 msgid "Debug _policy:"
-msgstr ""
+msgstr "デバッグポリシー(_P):"
 
 #: ../app/dialogs/preferences-dialog.c:1261
 msgid "This feature requires \"gdb\" or \"lldb\" installed on your system."
@@ -17157,14 +17160,12 @@ msgstr "カラーマネジメントをリセットする"
 
 #: ../app/dialogs/preferences-dialog.c:1311
 msgid "Image display _mode:"
-msgstr ""
+msgstr "画像表示モード(_M):"
 
 #. Color Managed Display
 #: ../app/dialogs/preferences-dialog.c:1315
-#, fuzzy
-#| msgid "Color Management"
 msgid "Color Managed Display"
-msgstr "カラーマネジメント"
+msgstr "カラーマネジメントされたディスプレイ"
 
 #: ../app/dialogs/preferences-dialog.c:1324
 msgid "Select Monitor Color Profile"
@@ -17194,33 +17195,24 @@ msgstr "スピード"
 #: ../app/dialogs/preferences-dialog.c:1352
 #: ../app/dialogs/preferences-dialog.c:1387
 msgid "Precision / Color Fidelity"
-msgstr ""
+msgstr "精度 / 色の再現性"
 
 #: ../app/dialogs/preferences-dialog.c:1353
-#, fuzzy
-#| msgctxt "documents-action"
-#| msgid "Open image dialog"
 msgid "_Optimize image display for:"
-msgstr ""
-"[画像ファイルを開く] ダイアログを表示して、選択したエントリーが指す画像ファイ"
-"ルがあるフォルダーに移動します。"
+msgstr "画面表示の最適化(_O):"
 
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1357
 msgid "Soft-Proofing"
-msgstr ""
+msgstr "ソフトプルーフ"
 
 #: ../app/dialogs/preferences-dialog.c:1367
-#, fuzzy
-#| msgid "Select Printer Color Profile"
 msgid "Select Soft-Proofing Color Profile"
-msgstr "シミュレーション対象のプロファイルの選択"
+msgstr "ソフトプルーフのプロファイルの選択"
 
 #: ../app/dialogs/preferences-dialog.c:1368
-#, fuzzy
-#| msgid "_Softproof rendering intent:"
 msgid "_Soft-proofing profile:"
-msgstr "ソフトプルーフのレンダリングインテント(_S):"
+msgstr "ソフトプルーフのプロファイル(_S):"
 
 #: ../app/dialogs/preferences-dialog.c:1374
 msgid "Re_ndering intent:"
@@ -17228,11 +17220,11 @@ msgstr "レンダリングインテント(_N):"
 
 #: ../app/dialogs/preferences-dialog.c:1379
 msgid "Use black _point compensation"
-msgstr ""
+msgstr "黒点の補正を使用する(_P)"
 
 #: ../app/dialogs/preferences-dialog.c:1388
 msgid "O_ptimize soft-proofing for:"
-msgstr ""
+msgstr "ソフトプルーフの最適化(_P):"
 
 #: ../app/dialogs/preferences-dialog.c:1397
 msgid "Mark out of gamut colors"
@@ -17683,32 +17675,24 @@ msgstr "チャンネル/マスクのディザリング:"
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:2208
-#, fuzzy
-#| msgid "Indexed Color Conversion"
 msgid "Indexed Conversion Dialog"
-msgstr "インデックスカラー変換"
+msgstr "インデックス変換ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2213
 msgid "Colormap:"
 msgstr "カラーマップ:"
 
 #: ../app/dialogs/preferences-dialog.c:2216
-#, fuzzy
-#| msgid "_Maximum number of colors:"
 msgid "Maximum number of colors:"
-msgstr "最大色数(_M):"
+msgstr "最大色数:"
 
 #: ../app/dialogs/preferences-dialog.c:2220
-#, fuzzy
-#| msgid "_Remove unused colors from colormap"
 msgid "Remove unused and duplicate colors from colormap"
-msgstr "未使用の色をカラーマップから削除(_R)"
+msgstr "未使用・重複した色をカラーマップから削除する"
 
 #: ../app/dialogs/preferences-dialog.c:2226
-#, fuzzy
-#| msgid "Color _dithering:"
 msgid "Color dithering:"
-msgstr "色ディザリング(_D):"
+msgstr "色ディザリング:"
 
 #: ../app/dialogs/preferences-dialog.c:2230
 msgid "Enable dithering of transparency"
