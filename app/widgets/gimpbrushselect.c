@@ -173,6 +173,7 @@ gimp_brush_select_constructed (GObject *object)
 
   scale = gimp_spin_scale_new (select->opacity_data,
                                _("Opacity"), 1);
+  gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
   gtk_box_pack_end (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
