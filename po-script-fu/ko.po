@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-26 00:07+0000\n"
-"PO-Revision-Date: 2019-01-28 07:55+0900\n"
+"PO-Revision-Date: 2019-01-28 12:40+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -101,8 +101,8 @@ msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"스크립트 대화상자가 열려있는 동안에는 \"스크립트 새로고침\"을 사용할 수 없습"
-"니다. 모든 Script-Fu 창을 닫고 다시 시도하십시오."
+"스크립트 대화상자가 열려있는 동안에는 “스크립트 새로고침”을 사용할 수 없습니"
+"다. 모든 Script-Fu 창을 닫고 다시 시도하십시오."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
 #: ../plug-ins/script-fu/script-fu-console.c:194
@@ -148,7 +148,7 @@ msgstr "취소(_C)"
 #: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "'%s'을(를) 쓰기용으로 열기 실패: %s"
+msgstr "‘%s’을(를) 쓰기용으로 열기 실패: %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
@@ -169,7 +169,7 @@ msgstr "Script-Fu는 동시에 두 개의 스크립트를 실행할 수 없습�
 #: ../plug-ins/script-fu/script-fu-interface.c:204
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "\"%s\" 스크립트가 이미 실행되고 있습니다."
+msgstr "“%s” 스크립트가 이미 실행되고 있습니다."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:230
 #, c-format
@@ -231,7 +231,7 @@ msgstr "%s 실행 중 오류:"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
-msgstr "'script-fu-register' 호출에 필요한 매개변수가 부족함"
+msgstr "‘script-fu-register’ 호출에 필요한 매개변수가 부족함"
 
 #: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
@@ -372,7 +372,7 @@ msgstr "타들어감(_B)..."
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr "중간 레이어를 만들어 두 레이어 사이에 움직이는 '타들어감 ' 전환을 만듦"
+msgstr "중간 레이어를 만들어 두 레이어 사이에 움직이는 ‘타들어감’ 전환을 만듦"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
@@ -1232,7 +1232,7 @@ msgstr "포식자(_P)..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "선택한 영역 (또는 알파)에 '포식자' 효과 추가"
+msgstr "선택한 영역 (또는 알파)에 ‘포식자’ 효과 추가"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
 msgid "Edge amount"
@@ -1428,7 +1428,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
 msgstr ""
-"이 프러시저는 폐기 예정입니다! 'plug-in-spyrogimp'를 대신 사용하십시오."
+"이 프러시저는 폐기 예정입니다! ‘plug-in-spyrogimp’를 대신 사용하십시오."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
