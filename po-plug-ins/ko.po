@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:37+0000\n"
-"PO-Revision-Date: 2019-01-28 12:39+0900\n"
+"PO-Revision-Date: 2019-01-30 04:46+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -170,7 +170,7 @@ msgstr "격자에 붙이기"
 
 #: ../plug-ins/common/align-layers.c:663
 msgid "_Horizontal style:"
-msgstr "수평선 스타일(_H):"
+msgstr "수평 스타일(_H):"
 
 #: ../plug-ins/common/align-layers.c:667
 msgid "Left edge"
@@ -187,7 +187,7 @@ msgstr "오른쪽 경계"
 
 #: ../plug-ins/common/align-layers.c:678
 msgid "Ho_rizontal base:"
-msgstr "수평 기반(_R):"
+msgstr "수평 기준(_R):"
 
 #: ../plug-ins/common/align-layers.c:683
 msgid "Fill (top to bottom)"
@@ -219,11 +219,11 @@ msgstr "격자 크기(_G):"
 
 #: ../plug-ins/common/align-layers.c:721
 msgid "_Ignore the bottom layer even if visible"
-msgstr "바닥 레이어가 보일 경우 무시(_I)"
+msgstr "맨 아래 레이어는 보이더라도 무시(_I)"
 
 #: ../plug-ins/common/align-layers.c:731
 msgid "_Use the (invisible) bottom layer as the base"
-msgstr "(보이지 않는) 바닥 레이어를 기본으로 사용(_U)"
+msgstr "(보이지 않는) 맨 아래 레이어를 기준으로 사용(_U)"
 
 #: ../plug-ins/common/animation-optimize.c:132
 msgid "Modify image to reduce size when saved as GIF animation"
@@ -231,11 +231,11 @@ msgstr "GIF 애니메이션으로 저장할 때 이미지를 수정해 크기 �
 
 #: ../plug-ins/common/animation-optimize.c:144
 msgid "Optimize (for _GIF)"
-msgstr "GIF 최적화(_G)"
+msgstr "최적화 (_GIF용)"
 
 #: ../plug-ins/common/animation-optimize.c:152
 msgid "Reduce file size where combining layers is possible"
-msgstr "가능한 레이어를 결합해서 파일 크기 줄이기"
+msgstr "레이어가 조합하기(combining)가 가능한 곳에서 파일 크기 줄이기"
 
 #: ../plug-ins/common/animation-optimize.c:162
 msgid "_Optimize (Difference)"
@@ -243,19 +243,19 @@ msgstr "최적화(차이)(_O)"
 
 #: ../plug-ins/common/animation-optimize.c:170
 msgid "Remove optimization to make editing easier"
-msgstr "최적화를 해제하여 편집을 수월하게 만들기"
+msgstr "최적화를 제거하여 편집을 수월하게 하기"
 
 #: ../plug-ins/common/animation-optimize.c:177
 msgid "_Unoptimize"
-msgstr "비최적화(_U)"
+msgstr "최적화 제거(_U)"
 
 #: ../plug-ins/common/animation-optimize.c:197
 msgid "_Remove Backdrop"
-msgstr "배경 제거(_R)"
+msgstr "배경막 제거(_R)"
 
 #: ../plug-ins/common/animation-optimize.c:213
 msgid "_Find Backdrop"
-msgstr "배경 찾기(_F)"
+msgstr "배경막 찾기(_F)"
 
 #: ../plug-ins/common/animation-optimize.c:426
 msgid "Unoptimizing animation"
@@ -263,11 +263,11 @@ msgstr "애니메이션 역 최적화"
 
 #: ../plug-ins/common/animation-optimize.c:429
 msgid "Removing animation background"
-msgstr "애니메이션 배경 제거 중"
+msgstr "애니메이션 배경 제거하기"
 
 #: ../plug-ins/common/animation-optimize.c:432
 msgid "Finding animation background"
-msgstr "애니메이션 배경 찾는 중"
+msgstr "애니메이션 배경 찾기"
 
 #: ../plug-ins/common/animation-optimize.c:436
 msgid "Optimizing animation"
@@ -275,7 +275,7 @@ msgstr "애니메이션 최적화"
 
 #: ../plug-ins/common/blinds.c:113
 msgid "Simulate an image painted on window blinds"
-msgstr "가려진 창의 이미지에 모의로 칠하기"
+msgstr "창 블라인드 위에 그린 이미지를 흉내 내기"
 
 #: ../plug-ins/common/blinds.c:118
 msgid "_Blinds..."
@@ -287,11 +287,11 @@ msgstr "블라인드 추가"
 
 #: ../plug-ins/common/blinds.c:221
 msgid "Blinds"
-msgstr "가리기"
+msgstr "블라인드"
 
 #: ../plug-ins/common/blinds.c:256
 msgid "Orientation"
-msgstr "적응성"
+msgstr "방향성"
 
 #: ../plug-ins/common/blinds.c:260 ../plug-ins/common/tile-small.c:455
 #: ../plug-ins/pagecurl/pagecurl.c:525
@@ -352,11 +352,11 @@ msgstr "흐릿하게(_B)"
 
 #: ../plug-ins/common/blur.c:175
 msgid "Blurring"
-msgstr "흐릿하게 만드는 중"
+msgstr "흐릿하게 하기"
 
 #: ../plug-ins/common/border-average.c:99
 msgid "Set foreground to the average color of the image border"
-msgstr "이미지 테두리의 평균 색상을 전경색으로 설정"
+msgstr "이미지 테두리의 평균 색을 전경색으로 설정"
 
 #: ../plug-ins/common/border-average.c:104
 msgid "_Border Average..."
@@ -400,7 +400,7 @@ msgstr "취소하기..."
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
-msgstr "모의로 강화된 경계선을 이용해 만화화"
+msgstr "경계선을 강화하여 만화를 흉내 내기"
 
 #: ../plug-ins/common/cartoon.c:147
 msgid "Ca_rtoon (legacy)..."
@@ -419,7 +419,7 @@ msgstr "만화"
 
 #: ../plug-ins/common/cartoon.c:862 ../plug-ins/common/photocopy.c:884
 msgid "_Mask radius:"
-msgstr "마스크 반경(_M):"
+msgstr "마스크 반지름(_M):"
 
 #: ../plug-ins/common/cartoon.c:876
 msgid "_Percent black:"
@@ -435,7 +435,7 @@ msgstr "체커보드(_C) (레거시)..."
 
 #: ../plug-ins/common/checkerboard.c:161
 msgid "Adding checkerboard"
-msgstr "체커보드 추가"
+msgstr "체커보드 추가하기"
 
 #: ../plug-ins/common/checkerboard.c:346
 msgid "Checkerboard"
@@ -448,7 +448,7 @@ msgstr "크기(_S):"
 
 #: ../plug-ins/common/checkerboard.c:420
 msgid "_Psychobilly"
-msgstr "싸이코빌리(_P)"
+msgstr "사이코빌리(_P)"
 
 #: ../plug-ins/common/cml-explorer.c:129
 msgid "Keep image's values"
@@ -573,7 +573,7 @@ msgstr "평균값 사용"
 
 #: ../plug-ins/common/cml-explorer.c:202
 msgid "Use reverse value"
-msgstr "반대값 사용"
+msgstr "반대 값 사용"
 
 #: ../plug-ins/common/cml-explorer.c:203
 msgid "With random power (0,10)"
@@ -585,7 +585,7 @@ msgstr "무작위 (0,1) 제곱으로"
 
 #: ../plug-ins/common/cml-explorer.c:205
 msgid "With gradient power (0,1)"
-msgstr "색감변화도 (0,1) 제곱으로"
+msgstr "그레이디언트 (0,1) 제곱으로"
 
 #: ../plug-ins/common/cml-explorer.c:206
 msgid "Multiply rand. value (0,1)"
@@ -597,7 +597,7 @@ msgstr "랜덤 값 (0,2) 곱으로"
 
 #: ../plug-ins/common/cml-explorer.c:208
 msgid "Multiply gradient (0,1)"
-msgstr "색감변화도 (0,1) 곱으로"
+msgstr "그레이디언트 (0,1) 곱으로"
 
 #: ../plug-ins/common/cml-explorer.c:209
 msgid "With p and random (0,1)"
@@ -605,27 +605,27 @@ msgstr "p와 무작위 (0,1)로"
 
 #: ../plug-ins/common/cml-explorer.c:223
 msgid "All black"
-msgstr "모든 검은색"
+msgstr "모두 검정"
 
 #: ../plug-ins/common/cml-explorer.c:224
 msgid "All gray"
-msgstr "모든 회색"
+msgstr "모두 회색"
 
 #: ../plug-ins/common/cml-explorer.c:225
 msgid "All white"
-msgstr "모든 흰색"
+msgstr "모두 흰색"
 
 #: ../plug-ins/common/cml-explorer.c:226
 msgid "The first row of the image"
-msgstr "이미지의 첫 번째 열"
+msgstr "이미지의 첫 번째 행"
 
 #: ../plug-ins/common/cml-explorer.c:227
 msgid "Continuous gradient"
-msgstr "연속적인 색감변화도"
+msgstr "연속적인 그레이디언트"
 
 #: ../plug-ins/common/cml-explorer.c:228
 msgid "Continuous grad. w/o gap"
-msgstr "공간 없는 연속적인 색감변화도"
+msgstr "간격 없는 연속적인 그레이디언트"
 
 #: ../plug-ins/common/cml-explorer.c:229
 msgid "Random, ch. independent"
@@ -637,18 +637,18 @@ msgstr "무작위로 공유됨"
 
 #: ../plug-ins/common/cml-explorer.c:231
 msgid "Randoms from seed"
-msgstr "시작 값에서 무작위하게"
+msgstr "씨앗 값에서 무작위하게"
 
 #: ../plug-ins/common/cml-explorer.c:232
 msgid "Randoms from seed (shared)"
-msgstr "시작 값에서 무작위하게 (공유됨)"
+msgstr "씨앗  값에서 무작위하게 (공유됨)"
 
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:183
 #: ../plug-ins/gimpressionist/orientation.c:175
 #: ../plug-ins/gimpressionist/size.c:182
 msgid "Hue"
-msgstr "색도"
+msgstr "색조"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
 #: ../plug-ins/common/decompose.c:184
@@ -681,19 +681,19 @@ msgstr "CML 익스플로러: 진화 중"
 
 #: ../plug-ins/common/cml-explorer.c:1217
 msgid "Coupled-Map-Lattice Explorer"
-msgstr "연결된-맵 격자무늬(Coupled-Map Lattice) 탐색"
+msgstr "연결된-맵 격자무늬(Coupled-Map Lattice) 탐색기"
 
 #: ../plug-ins/common/cml-explorer.c:1261
 msgid "New Seed"
-msgstr "새 시작 값"
+msgstr "새 씨앗  값"
 
 #: ../plug-ins/common/cml-explorer.c:1272
 msgid "Fix Seed"
-msgstr "시작 값 고정"
+msgstr "씨앗  값 고정"
 
 #: ../plug-ins/common/cml-explorer.c:1283
 msgid "Random Seed"
-msgstr "무작위 시작 값"
+msgstr "무작위 씨앗  값"
 
 #. The Load button
 #: ../plug-ins/common/cml-explorer.c:1298
@@ -744,7 +744,7 @@ msgstr "채도(_U)"
 
 #: ../plug-ins/common/cml-explorer.c:1333 ../plug-ins/common/filter-pack.c:707
 msgid "_Value"
-msgstr "명도(_V)"
+msgstr "값(_V)"
 
 #: ../plug-ins/common/cml-explorer.c:1337
 msgid "_Advanced"
@@ -768,15 +768,15 @@ msgstr "시작 오프셋:"
 
 #: ../plug-ins/common/cml-explorer.c:1398
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "무작위 시작 값(오직 “시작 값으로 부터”의 모드만)"
+msgstr "무작위 시작 값(“씨앗 값으로 부터” 모드 전용)"
 
 #: ../plug-ins/common/cml-explorer.c:1409
 msgid "Seed:"
-msgstr "시작 값:"
+msgstr "씨앗 값:"
 
 #: ../plug-ins/common/cml-explorer.c:1422
 msgid "Switch to \"From seed\" With the Last Seed"
-msgstr "마지막 시작 값을 “시작 값으로 부터”로 전환"
+msgstr "마지막 씨앗 값을 사용하여 “씨앗 값으로 부터”로 전환"
 
 #: ../plug-ins/common/cml-explorer.c:1434
 msgid ""
@@ -785,10 +785,10 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"“시드 고정” 단추는 단축명입니다.\n"
-"같은 씨앗이 같은 이미지를 만들때, (1) 이미지의 넓이가 같아야 한다(이 이유는 "
-"그리기에서의 이미지는 미리 보기에서 다르기 때문), 그리고 (2) 모든 변화율은 0"
-"과 같아야 합니다."
+"“씨앗 값 고정” 단추는 단축명입니다.\n"
+"같은 씨앗이 같은 이미지를 만들려면, (1) 이미지의 너비가 같아야 하고(이것이 드"
+"로어블에서의 이미지가 미리 보기에서와 다른 이유), (2) 모든 변화율은 0과 같아"
+"야 합니다."
 
 #: ../plug-ins/common/cml-explorer.c:1442
 msgid "O_thers"
@@ -813,27 +813,27 @@ msgstr "매개변수 복사"
 
 #: ../plug-ins/common/cml-explorer.c:1503
 msgid "Selective Load Settings"
-msgstr "선택적인 읽어오기 설정"
+msgstr "선택적인 불러오기 설정"
 
 #: ../plug-ins/common/cml-explorer.c:1523
 msgid "Source channel in file:"
-msgstr "파일에서의 원본 채널:"
+msgstr "파일 안의 원본 채널:"
 
 #: ../plug-ins/common/cml-explorer.c:1544
 msgid "_Misc Ops."
-msgstr "기타 동작(_M)"
+msgstr "기타 연산(_M)"
 
 #: ../plug-ins/common/cml-explorer.c:1603
 msgid "Function type:"
-msgstr "함수 형식:"
+msgstr "함수 유형:"
 
 #: ../plug-ins/common/cml-explorer.c:1619
 msgid "Composition:"
-msgstr "구성:"
+msgstr "합성:"
 
 #: ../plug-ins/common/cml-explorer.c:1633
 msgid "Misc arrange:"
-msgstr "기타 정리:"
+msgstr "기타 배치:"
 
 #: ../plug-ins/common/cml-explorer.c:1637
 msgid "Use cyclic range"
@@ -841,7 +841,7 @@ msgstr "주기적인 범위 사용"
 
 #: ../plug-ins/common/cml-explorer.c:1647
 msgid "Mod. rate:"
-msgstr "모듈 비율:"
+msgstr "변조 비율:"
 
 #: ../plug-ins/common/cml-explorer.c:1656
 msgid "Env. sensitivity:"
@@ -849,7 +849,7 @@ msgstr "환경 민감도:"
 
 #: ../plug-ins/common/cml-explorer.c:1665
 msgid "Diffusion dist.:"
-msgstr "확산 목적지:"
+msgstr "확산 분포:"
 
 #: ../plug-ins/common/cml-explorer.c:1674
 msgid "# of subranges:"
@@ -885,7 +885,7 @@ msgstr "변화율:"
 
 #: ../plug-ins/common/cml-explorer.c:1785
 msgid "Mutation dist.:"
-msgstr "변화 거리:"
+msgstr "변화 분포:"
 
 #: ../plug-ins/common/cml-explorer.c:1878
 msgid "Graph of the Current Settings"
@@ -906,7 +906,7 @@ msgstr "닫기(_C)"
 
 #: ../plug-ins/common/cml-explorer.c:1950
 msgid "Warning: the source and the destination are the same channel."
-msgstr "경고: 소스와 목적지는 같은 채널입니다."
+msgstr "경고: 소스와 목적지가 같은 채널입니다."
 
 #: ../plug-ins/common/cml-explorer.c:2009
 msgid "Save CML Explorer Parameters"
@@ -929,7 +929,7 @@ msgstr "CML 익스플로러 매개변수 저장하기"
 #: ../plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "‘%s’을(를) 쓰기 모드로 열기 실패: %s"
+msgstr "‘%s’을(를) 쓰기용으로 열기 실패: %s"
 
 #: ../plug-ins/common/cml-explorer.c:2120
 #, c-format
@@ -938,7 +938,7 @@ msgstr "매개변수가 ‘%s’(으)로 저장되었습니다."
 
 #: ../plug-ins/common/cml-explorer.c:2142
 msgid "Load CML Explorer Parameters"
-msgstr "CML 익스플로러 매개변수 읽어오기"
+msgstr "CML 익스플로러 매개변수 불러오기"
 
 #: ../plug-ins/common/cml-explorer.c:2238 ../plug-ins/common/curve-bend.c:893
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
@@ -970,7 +970,7 @@ msgstr "‘%1$s’을(를) 읽기용으로 열 수 없음: %2$s"
 
 #: ../plug-ins/common/cml-explorer.c:2260
 msgid "Error: it's not CML parameter file."
-msgstr "애러: CML 패러미터 파일이 아닙니다."
+msgstr "오류: CML 매개변수 파일이 아닙니다."
 
 #: ../plug-ins/common/cml-explorer.c:2267
 #, c-format
@@ -980,15 +980,15 @@ msgstr "경고: ‘%s’은(는) 오래된 형식의 파일입니다."
 #: ../plug-ins/common/cml-explorer.c:2271
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr "경고: ‘%s’은(는) 새 버전의 CML 익스플로러 매개변수 파일입니다."
+msgstr "경고: ‘%s’은(는) 새 버전의 CML 익스플로러용 매개변수 파일입니다."
 
 #: ../plug-ins/common/cml-explorer.c:2334
 msgid "Error: failed to load parameters"
-msgstr "오류: 매개변수 읽어오기 실패"
+msgstr "오류: 매개변수 불러오기 실패"
 
 #: ../plug-ins/common/color-cube-analyze.c:106
 msgid "Analyze the set of colors in the image"
-msgstr "이미지의 색상 설정 분석"
+msgstr "이미지의 색상 집합 분석"
 
 #: ../plug-ins/common/color-cube-analyze.c:112
 msgid "Colorcube A_nalysis..."
@@ -1029,7 +1029,7 @@ msgstr "색상화(_Y)..."
 
 #: ../plug-ins/common/colorify.c:167
 msgid "Colorifying"
-msgstr "색상화 중"
+msgstr "색상화하기"
 
 #: ../plug-ins/common/colorify.c:253
 msgid "Colorify"
@@ -1037,11 +1037,11 @@ msgstr "색상화"
 
 #: ../plug-ins/common/colorify.c:288
 msgid "Custom color:"
-msgstr "사용자 색상:"
+msgstr "맞춤 색상:"
 
 #: ../plug-ins/common/colorify.c:292
 msgid "Colorify Custom Color"
-msgstr "사용자 색상으로 색상화"
+msgstr "맞춤 색상으로 색상화"
 
 #: ../plug-ins/common/colormap-remap.c:97
 msgid "Rearrange the colormap"
@@ -1075,7 +1075,7 @@ msgstr "색상으로 정렬"
 
 #: ../plug-ins/common/colormap-remap.c:505
 msgid "Sort on Saturation"
-msgstr "채도 정렬"
+msgstr "채도로 정렬"
 
 #: ../plug-ins/common/colormap-remap.c:509
 msgid "Sort on Value"
@@ -1111,7 +1111,7 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"색상을 끌어놓기 해서 색상표를 재정렬합니다. 원본 인덱스의 색상 수가 표시되"
+"색상을 끌어놓기 해서 색상표를 재배치합니다. 원본 인덱스의 색상 수가 표시되"
 "며, 마우스 우클릭을 하면 정렬 옵션 메뉴가 나타납니다."
 
 #. Decompositions availables.
@@ -1135,7 +1135,7 @@ msgstr "알파(_A):"
 
 #: ../plug-ins/common/compose.c:158 ../plug-ins/common/compose.c:162
 msgid "_Hue:"
-msgstr "색상(_H):"
+msgstr "색조(_H):"
 
 #: ../plug-ins/common/compose.c:159 ../plug-ins/common/compose.c:163
 msgid "_Saturation:"
@@ -1143,7 +1143,7 @@ msgstr "채도(_S):"
 
 #: ../plug-ins/common/compose.c:160
 msgid "_Value:"
-msgstr "명도(_V):"
+msgstr "값(_V):"
 
 #: ../plug-ins/common/compose.c:164
 msgid "_Lightness:"
@@ -1151,7 +1151,7 @@ msgstr "밝기(_L):"
 
 #: ../plug-ins/common/compose.c:166 ../plug-ins/common/compose.c:171
 msgid "_Cyan:"
-msgstr "시안(_C):"
+msgstr "청록색(_C):"
 
 #: ../plug-ins/common/compose.c:167 ../plug-ins/common/compose.c:172
 msgid "_Magenta:"
@@ -1191,27 +1191,27 @@ msgstr "_H"
 
 #: ../plug-ins/common/compose.c:183
 msgid "_Luma y470:"
-msgstr "Luma y470(_L):"
+msgstr "루마 y470(_L):"
 
 #: ../plug-ins/common/compose.c:184
 msgid "_Blueness cb470:"
-msgstr "파랑 cb470(_B):"
+msgstr "파람 cb470(_B):"
 
 #: ../plug-ins/common/compose.c:185
 msgid "_Redness cr470:"
-msgstr "빨강 cr470(_R):"
+msgstr "빨감 cr470(_R):"
 
 #: ../plug-ins/common/compose.c:187
 msgid "_Luma y709:"
-msgstr "Luma y709(_L):"
+msgstr "루마 y709(_L):"
 
 #: ../plug-ins/common/compose.c:188
 msgid "_Blueness cb709:"
-msgstr "파랑 cb709(_B):"
+msgstr "파람 cb709(_B):"
 
 #: ../plug-ins/common/compose.c:189
 msgid "_Redness cr709:"
-msgstr "빨강 cr709(_R):"
+msgstr "빨감 cr709(_R):"
 
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
@@ -1272,7 +1272,7 @@ msgstr "여러 개의 그레이 이미지를 색상 채널로 이용해 이미�
 
 #: ../plug-ins/common/compose.c:406
 msgid "C_ompose..."
-msgstr "구성(_O)..."
+msgstr "합성(_O)..."
 
 #: ../plug-ins/common/compose.c:430
 msgid "Recompose an image that was previously decomposed"
@@ -1280,7 +1280,7 @@ msgstr "분해했던 이미지 재합성"
 
 #: ../plug-ins/common/compose.c:438
 msgid "R_ecompose"
-msgstr "재구성(_E)"
+msgstr "재합성(_E)"
 
 #: ../plug-ins/common/compose.c:486
 msgid ""
@@ -1292,7 +1292,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:510
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "‘decompose-data’ 기생물 스캐닝 오류: 레이어 수가 너무 적음"
+msgstr "‘decompose-data’ 기생물 스캐닝 중 오류: 레이어 수가 너무 적음"
 
 #: ../plug-ins/common/compose.c:543
 #, c-format
@@ -1301,11 +1301,11 @@ msgstr "이미지 %d에 레이어를 가져올 수 없음"
 
 #: ../plug-ins/common/compose.c:610
 msgid "Composing"
-msgstr "구성 중"
+msgstr "합성하기"
 
 #: ../plug-ins/common/compose.c:845 ../plug-ins/common/compose.c:1320
 msgid "At least one image is needed to compose"
-msgstr "이미지를 구성하려면 최소한 한 개 이상의 이미지가 필요함"
+msgstr "이미지를 합성하려면 최소한 한 개의 이미지가 필요함"
 
 #: ../plug-ins/common/compose.c:856 ../plug-ins/common/compose.c:872
 #, c-format
@@ -1322,7 +1322,7 @@ msgstr "이미지의 크기가 다름"
 
 #: ../plug-ins/common/compose.c:926
 msgid "Error in getting layer IDs"
-msgstr "레이어 ID를 얻는중 에러"
+msgstr "레이어 ID를 얻는 중 에러"
 
 #: ../plug-ins/common/compose.c:944
 msgid "Unable to recompose, source layer not found"
@@ -1330,21 +1330,21 @@ msgstr "원본 레이어가 없어 재합성을 할 수 없음"
 
 #: ../plug-ins/common/compose.c:1072
 msgid "Compose"
-msgstr "구성"
+msgstr "합성"
 
 #. Compose type combo
 #: ../plug-ins/common/compose.c:1100
 msgid "Compose Channels"
-msgstr "채널 구성"
+msgstr "채널 합성"
 
 #: ../plug-ins/common/compose.c:1110 ../plug-ins/common/decompose.c:852
 msgid "Color _model:"
-msgstr "색상 모델(_M):"
+msgstr "색 모델(_M):"
 
 #. Channel representation grid
 #: ../plug-ins/common/compose.c:1142
 msgid "Channel Representations"
-msgstr "채널 표시"
+msgstr "채널 표현"
 
 #: ../plug-ins/common/compose.c:1205
 msgid "Mask value"
@@ -1352,7 +1352,7 @@ msgstr "마스크 값"
 
 #: ../plug-ins/common/contrast-normalize.c:79
 msgid "Stretch brightness values to cover the full range"
-msgstr "가능한 최대로 밝기값 높이기"
+msgstr "전체 범위를 포괄하도록 밝기값 늘이기"
 
 #: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
 msgid "_Normalize"
@@ -1360,11 +1360,11 @@ msgstr "일반화(_N)"
 
 #: ../plug-ins/common/contrast-normalize.c:123
 msgid "Normalizing"
-msgstr "표준화"
+msgstr "표준화하기"
 
 #: ../plug-ins/common/contrast-retinex.c:156
 msgid "Enhance contrast using the Retinex method"
-msgstr "Retinex 기법을 이용한 향상된 대비"
+msgstr "레티넥스 방식을 이용하여 대비를 증강"
 
 #: ../plug-ins/common/contrast-retinex.c:166
 msgid "Retine_x..."
@@ -1376,7 +1376,7 @@ msgstr "레티넥스"
 
 #: ../plug-ins/common/contrast-retinex.c:285
 msgid "Retinex Image Enhancement"
-msgstr "레티넥스 이미지 향상"
+msgstr "레티넥스 이미지 증강"
 
 #: ../plug-ins/common/contrast-retinex.c:321
 msgid "Uniform"
@@ -1398,11 +1398,11 @@ msgstr "레벨(_L):"
 
 #: ../plug-ins/common/contrast-retinex.c:339
 msgid "_Scale:"
-msgstr "크기 조절(_S):"
+msgstr "크기 조정(_S):"
 
 #: ../plug-ins/common/contrast-retinex.c:352
 msgid "Scale _division:"
-msgstr "배율 분할(_D):"
+msgstr "분할 크기 조정(_D):"
 
 #: ../plug-ins/common/contrast-retinex.c:365
 msgid "Dy_namic:"
@@ -1410,23 +1410,23 @@ msgstr "동적(_N):"
 
 #: ../plug-ins/common/contrast-retinex.c:633
 msgid "Retinex: filtering"
-msgstr "Retinex: 필터링"
+msgstr "레티넥스: 필터링"
 
 #: ../plug-ins/common/crop-zealous.c:69
 msgid "Autocrop unused space from edges and middle"
-msgstr "가장자리와 가운데의 사용하지 않는 공간 자동으로 잘라내기"
+msgstr "가장자리와 가운데의 사용하지 않는 공간 자동으로 자르기"
 
 #: ../plug-ins/common/crop-zealous.c:74
 msgid "_Zealous Crop"
-msgstr "지능적으로 잘라내기(_Z)"
+msgstr "지능적으로 자르기(_Z)"
 
 #: ../plug-ins/common/crop-zealous.c:123
 msgid "Zealous cropping"
-msgstr "지능적으로 잘라내기"
+msgstr "지능적으로 자르기"
 
 #: ../plug-ins/common/crop-zealous.c:255
 msgid "Nothing to crop."
-msgstr "잘라낼 것 없음."
+msgstr "자를 것 없음."
 
 #: ../plug-ins/common/curve-bend.c:528
 msgid "Bend the image using two control curves"
@@ -1434,30 +1434,30 @@ msgstr "두 조절 곡선을 이용해 이미지를 구부림"
 
 #: ../plug-ins/common/curve-bend.c:549
 msgid "_Curve Bend..."
-msgstr "휘어진 사선(_C)..."
+msgstr "곡선 구부리기(_C)..."
 
 #: ../plug-ins/common/curve-bend.c:685 ../plug-ins/common/edge-dog.c:178
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "레이어에서만 동작합니다(단, 채널이나 마스크에서 불러올 수는 있습니다)."
+msgstr "레이어에서만 동작합니다(그런데 채널이나 마스크에서 호출하였음)."
 
 #: ../plug-ins/common/curve-bend.c:695
 msgid "Cannot operate on layers with masks."
-msgstr "레이어의 마스크를 사용할 수 없습니다."
+msgstr "마스크가 있는 레이어에서는 동작하지 않습니다."
 
 #: ../plug-ins/common/curve-bend.c:707
 msgid "Cannot operate on empty selections."
-msgstr "빈 선택은 사용할 수 없습니다."
+msgstr "빈 선택 영역에서는 동작하지 않습니다."
 
 #: ../plug-ins/common/curve-bend.c:903
 #, c-format
 msgid "Error while reading '%s': %s"
-msgstr "‘%s’ 파일 읽는 중 오류: %s"
+msgstr "‘%s’ 읽는 중 오류: %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
 #: ../plug-ins/common/curve-bend.c:1222 ../plug-ins/common/curve-bend.c:2962
 msgid "Curve Bend"
-msgstr "휘어진 사선"
+msgstr "곡선 구부리기"
 
 #. Preview area, top of column
 #. preview
@@ -1486,7 +1486,7 @@ msgstr "옵션"
 #. Rotate spinbutton
 #: ../plug-ins/common/curve-bend.c:1319
 msgid "Rotat_e:"
-msgstr "회전하기(_E):"
+msgstr "회전(_E):"
 
 #. The smoothing toggle
 #: ../plug-ins/common/curve-bend.c:1338
@@ -1506,11 +1506,11 @@ msgstr "사본으로 작업하기(_Y)"
 #. The curves graph
 #: ../plug-ins/common/curve-bend.c:1368
 msgid "Modify Curves"
-msgstr "커브 수정"
+msgstr "곡선 수정"
 
 #: ../plug-ins/common/curve-bend.c:1397
 msgid "Curve for Border"
-msgstr "경계선을 위한 커브"
+msgstr "테두리용 곡선"
 
 #: ../plug-ins/common/curve-bend.c:1401
 msgctxt "curve-border"
@@ -1524,7 +1524,7 @@ msgstr "아래쪽(_L)"
 
 #: ../plug-ins/common/curve-bend.c:1412
 msgid "Curve Type"
-msgstr "커브 유형"
+msgstr "곡선 유형"
 
 #: ../plug-ins/common/curve-bend.c:1416
 msgid "Smoot_h"
@@ -1556,31 +1556,31 @@ msgstr "현재 곡선을 다른 테두리로 대칭 복사"
 #. The Swap button
 #: ../plug-ins/common/curve-bend.c:1457
 msgid "S_wap"
-msgstr "교환하기(_W)"
+msgstr "맞바꾸기(_W)"
 
 #: ../plug-ins/common/curve-bend.c:1462
 msgid "Swap the two curves"
-msgstr "두 커브 교환하기"
+msgstr "두 곡선을 맞바꾸기"
 
 #: ../plug-ins/common/curve-bend.c:1474
 msgid "Reset the active curve"
-msgstr "현재 커브 초기화"
+msgstr "현재 곡선 초기화"
 
 #: ../plug-ins/common/curve-bend.c:1491
 msgid "Load the curves from a file"
-msgstr "파일에서 커브 읽어오기"
+msgstr "파일에서 곡선 불러오기"
 
 #: ../plug-ins/common/curve-bend.c:1503
 msgid "Save the curves to a file"
-msgstr "파일로 커브 저장하기"
+msgstr "파일로 곡선 저장하기"
 
 #: ../plug-ins/common/curve-bend.c:2059
 msgid "Load Curve Points from File"
-msgstr "파일에서 커브 포인트 읽어오기"
+msgstr "파일에서 곡선 점 불러오기"
 
 #: ../plug-ins/common/curve-bend.c:2094
 msgid "Save Curve Points to File"
-msgstr "파일로 커브 포인트 저장하기"
+msgstr "파일로 곡선 점 저장하기"
 
 #: ../plug-ins/common/decompose.c:133
 msgid "red"
@@ -1616,11 +1616,11 @@ msgstr "밝기"
 
 #: ../plug-ins/common/decompose.c:146
 msgid "cyan-k"
-msgstr "시안-k"
+msgstr "청록-k"
 
 #: ../plug-ins/common/decompose.c:147
 msgid "magenta-k"
-msgstr "마젠타-k"
+msgstr "자홍-k"
 
 #: ../plug-ins/common/decompose.c:148
 msgid "yellow-k"
@@ -1628,15 +1628,15 @@ msgstr "노랑-k"
 
 #: ../plug-ins/common/decompose.c:149
 msgid "black"
-msgstr "검은색"
+msgstr "검정"
 
 #: ../plug-ins/common/decompose.c:151
 msgid "cyan"
-msgstr "시안"
+msgstr "청록"
 
 #: ../plug-ins/common/decompose.c:152
 msgid "magenta"
-msgstr "마젠타"
+msgstr "자홍"
 
 #: ../plug-ins/common/decompose.c:153
 msgid "yellow"
@@ -1664,27 +1664,27 @@ msgstr "H"
 
 #: ../plug-ins/common/decompose.c:163
 msgid "luma-y470"
-msgstr "luma-y470"
+msgstr "루마-y470"
 
 #: ../plug-ins/common/decompose.c:164
 msgid "blueness-cb470"
-msgstr "파랑-cb470"
+msgstr "파람-cb470"
 
 #: ../plug-ins/common/decompose.c:165
 msgid "redness-cr470"
-msgstr "빨강-cr470"
+msgstr "빨감-cr470"
 
 #: ../plug-ins/common/decompose.c:167
-msgid "luma-y709"
+msgid "루마-y709"
 msgstr "luma-y709"
 
 #: ../plug-ins/common/decompose.c:168
 msgid "blueness-cb709"
-msgstr "파랑-cb709"
+msgstr "파람-cb709"
 
 #: ../plug-ins/common/decompose.c:169
 msgid "redness-cr709"
-msgstr "빨강-cr709"
+msgstr "빨감-cr709"
 
 #. Redmode radio frame
 #: ../plug-ins/common/decompose.c:177
@@ -1710,7 +1710,7 @@ msgstr "알파"
 
 #: ../plug-ins/common/decompose.c:188
 msgid "Hue (HSL)"
-msgstr "채도 (HSL)"
+msgstr "색조 (HSL)"
 
 #: ../plug-ins/common/decompose.c:189
 msgid "Saturation (HSL)"
@@ -1722,11 +1722,11 @@ msgstr "밝기"
 
 #: ../plug-ins/common/decompose.c:193
 msgid "Cyan"
-msgstr "시안"
+msgstr "청록"
 
 #: ../plug-ins/common/decompose.c:194
 msgid "Magenta"
-msgstr "마젠타"
+msgstr "자홍"
 
 #: ../plug-ins/common/decompose.c:195
 msgid "Yellow"
@@ -1734,11 +1734,11 @@ msgstr "노랑"
 
 #: ../plug-ins/common/decompose.c:198
 msgid "Cyan_K"
-msgstr "시안_K"
+msgstr "청록_K"
 
 #: ../plug-ins/common/decompose.c:199
 msgid "Magenta_K"
-msgstr "마젠타_K"
+msgstr "자홍_K"
 
 #: ../plug-ins/common/decompose.c:200
 msgid "Yellow_K"
@@ -1746,7 +1746,7 @@ msgstr "노랑_K"
 
 #: ../plug-ins/common/decompose.c:270 ../plug-ins/common/decompose.c:284
 msgid "Decompose an image into separate colorspace components"
-msgstr "이미지를 분리된 색상공간 구성요소로 분해하기"
+msgstr "이미지를 분리된 색공간 구성요소로 분해하기"
 
 #: ../plug-ins/common/decompose.c:276 ../plug-ins/common/decompose.c:294
 msgid "_Decompose..."
@@ -1774,7 +1774,7 @@ msgstr "레이어로 분해(_D)"
 
 #: ../plug-ins/common/decompose.c:898
 msgid "_Foreground as registration color"
-msgstr "등록된 색상을 배경으로(_F)"
+msgstr "등록 색상을 전경으로(_F)"
 
 #: ../plug-ins/common/decompose.c:899
 msgid ""
@@ -1842,7 +1842,7 @@ msgstr "잡티 없애기"
 
 #: ../plug-ins/common/despeckle.c:471
 msgid "Median"
-msgstr "중심"
+msgstr "중앙값"
 
 #: ../plug-ins/common/despeckle.c:479
 msgid "_Adaptive"
@@ -1857,7 +1857,7 @@ msgstr "반복(_E)"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2758
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
-msgstr "반경(_R):"
+msgstr "반지름(_R):"
 
 #: ../plug-ins/common/despeckle.c:526
 msgid "_Black level:"
@@ -1915,11 +1915,11 @@ msgstr "부드러움에 대한 매개변수"
 
 #: ../plug-ins/common/edge-dog.c:346
 msgid "_Radius 1:"
-msgstr "반경 1(_R):"
+msgstr "반지름 1(_R):"
 
 #: ../plug-ins/common/edge-dog.c:350
 msgid "R_adius 2:"
-msgstr "반경 2(_A):"
+msgstr "반지름 2(_A):"
 
 #: ../plug-ins/common/edge-dog.c:373 ../plug-ins/gimpressionist/paper.c:166
 msgid "_Invert"
@@ -2644,7 +2644,7 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
-"GTM을 이용해 같은 색상을 가진 블록의 사각 선택을 ROWSPAN 과 COLSPAN 값을 가"
+"GTM을 이용해 같은 색상을 가진 블록의 사각형 선택을 ROWSPAN 과 COLSPAN 값을 가"
 "진 하나의 큰 셀로 교체합니다."
 
 #: ../plug-ins/common/file-html-table.c:554
@@ -2712,7 +2712,7 @@ msgstr "각 테이블 셀의 높이. 숫자나 퍼센트를 사용할 수 있습
 
 #: ../plug-ins/common/file-html-table.c:677
 msgid "Cell-_padding:"
-msgstr "셀 여백(_P):"
+msgstr "셀 패딩(_P):"
 
 #: ../plug-ins/common/file-html-table.c:681
 msgid "The amount of cell padding."
@@ -6921,7 +6921,7 @@ msgstr "아이콘 #%i"
 #: ../plug-ins/file-raw/file-rawtherapee.c:436
 #, c-format
 msgid "Opening thumbnail for '%s'"
-msgstr "‘%s’의 미리 보기 열기"
+msgstr "‘%s’의 축소판 열기"
 
 #: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
 msgid "Microsoft Windows icon"
@@ -6995,7 +6995,7 @@ msgstr "IPTC 데이터 저장(_I)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:909
 msgid "Save _thumbnail"
-msgstr "미리 보기 저장(_T)"
+msgstr "축소판 저장(_T)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:923
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
@@ -7837,7 +7837,7 @@ msgstr "공간 과표본(_T):"
 
 #: ../plug-ins/flame/flame.c:1145
 msgid "Spatial _filter radius:"
-msgstr "공간 필터 반경(_F):"
+msgstr "공간 필터 반지름(_F):"
 
 #: ../plug-ins/flame/flame.c:1164
 msgid "Color_map:"
@@ -8505,7 +8505,7 @@ msgstr "극점으로 사용할 격자 영역:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1463
 msgid "Polar grid radius interval:"
-msgstr "극점 격자 반경의 간격:"
+msgstr "극점 격자 반지름의 간격:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1479 ../plug-ins/imagemap/imap_menu.c:234
 msgid "Rectangle"
@@ -8840,7 +8840,7 @@ msgstr "영역의 값(명도)이 획의 방향을 결정하도록 함"
 #: ../plug-ins/gimpressionist/orientation.c:155
 #: ../plug-ins/gimpressionist/size.c:162
 msgid "Radius"
-msgstr "반경"
+msgstr "반지름"
 
 #: ../plug-ins/gimpressionist/orientation.c:156
 msgid ""
@@ -9054,7 +9054,7 @@ msgstr "획은 이미지 전체에 고르게 분포됨"
 
 #: ../plug-ins/gimpressionist/placement.c:101
 msgid "Centered"
-msgstr "중심 정렬"
+msgstr "가운데 정렬"
 
 #: ../plug-ins/gimpressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
@@ -9330,7 +9330,7 @@ msgstr "IPTC 데이터 저장"
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save thumbnail"
-msgstr "썸네일 저장"
+msgstr "축소판 저장"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
 msgid "Save comme_nt"
@@ -10535,8 +10535,8 @@ msgid ""
 "suitable for navigation bars."
 msgstr ""
 "안내선은 미리 정의된 사각형으로 이미지에 표시됩니다. 안내선의 너비, 높이, 간"
-"격 등을 설정할 수 있습니다. 이는 내비게이션 막대에 맞는 “미리 보기” 모음으로 "
-"된 이미지맵 형식을 빠르게 만드는데 유용합니다."
+"격 등을 설정할 수 있습니다. 이는 내비게이션 막대에 맞는 “축소판” 모음으로 된 "
+"이미지맵 형식을 빠르게 만드는데 유용합니다."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:168
 msgid "_Left start at:"
@@ -10606,7 +10606,7 @@ msgstr "위로 이동"
 #: ../plug-ins/imagemap/imap_cmd_paste.c:50
 #: ../plug-ins/imagemap/imap_menu.c:170
 msgid "Paste"
-msgstr "붙여넣기"
+msgstr "붙여 넣기"
 
 #: ../plug-ins/imagemap/imap_cmd_select.c:52
 msgid "Select"
@@ -10970,7 +10970,7 @@ msgstr "기존 영역 선택"
 
 #: ../plug-ins/imagemap/imap_menu.c:235
 msgid "Define Rectangle area"
-msgstr "사각 영역 설정"
+msgstr "사각형 영역 설정"
 
 #: ../plug-ins/imagemap/imap_menu.c:237
 msgid "Define Circle/Oval area"
@@ -11692,7 +11692,7 @@ msgstr "반경(_A):"
 
 #: ../plug-ins/map-object/map-object-ui.c:1214
 msgid "Cylinder radius"
-msgstr "원통 반경"
+msgstr "원통 반지름"
 
 #: ../plug-ins/map-object/map-object-ui.c:1224
 msgid "L_ength:"
