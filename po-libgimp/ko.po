@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:37+0000\n"
-"PO-Revision-Date: 2019-01-28 12:39+0900\n"
+"PO-Revision-Date: 2019-01-30 03:51+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -125,21 +125,20 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"기본 설정을 사용하여 인덱스된 이미지로 바꾸기\n"
+"기본 설정을 사용하여 인덱스된 이미지로 변환\n"
 "(결과를 수동으로 조절하십시오)"
 
 #: ../libgimp/gimpexport.c:342
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s 플러그인은 비트맵(두 가지 색상)으로 인덱스된 이미지만 처리할 수 있음"
+msgstr "%s 플러그인은 비트맵 (2색)인덱스 이미지만 처리할 수 있음"
 
 #: ../libgimp/gimpexport.c:343
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"비트맵 기본 설정을 사용하여 인덱스된 이미지로 바꾸기\n"
+"비트맵 기본 설정을 사용하여 인덱스된 이미지로 변환\n"
 "(결과를 수동으로 조절하십시오)"
 
 #: ../libgimp/gimpexport.c:352
@@ -160,7 +159,7 @@ msgstr "%s 플러그인은 그레이스케일이나 인덱스된 이미지만 �
 #: ../libgimp/gimpexport.c:382
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s 플러그인을 사용하려면 알파 채널이 필요함"
+msgstr "%s 플러그인은 알파 채널이 필요함"
 
 #: ../libgimp/gimpexport.c:383
 msgid "Add Alpha Channel"
@@ -168,7 +167,7 @@ msgstr "알파 채널 추가"
 
 #: ../libgimp/gimpexport.c:442
 msgid "Confirm Save"
-msgstr "저장 확인"
+msgstr "저장 승인"
 
 #: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
 #: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:576
@@ -207,7 +206,7 @@ msgstr "다음과 같은 이유로 %s(으)로 저장하기 전에 이미지를 �
 #. the footline
 #: ../libgimp/gimpexport.c:634
 msgid "The export conversion won't modify your original image."
-msgstr "내보내기 변환은 원래 이미지를 변경하지 않습니다."
+msgstr "내보내기 변환은 원래 이미지를 수정하지 않습니다."
 
 #: ../libgimp/gimpexport.c:741
 #, c-format
@@ -224,7 +223,7 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"채널(저장된 선택)을 %s(으)로 저장하려고 합니다.\n"
+"채널(저장된 선택 영역)을 %s(으)로 저장하려고 합니다.\n"
 "보이는 레이어를 저장하지 않습니다."
 
 #: ../libgimp/gimpexport.c:1015
@@ -324,7 +323,7 @@ msgstr "일치하는 항목 없음"
 
 #: ../libgimp/gimpprocbrowserdialog.c:417
 msgid "Search term invalid or incomplete"
-msgstr "검색어가 완전하지 않거나 잘못 되었음"
+msgstr "검색어가 완전하지 않거나 잘못되었음"
 
 #: ../libgimp/gimpprocbrowserdialog.c:426
 msgid "Searching"
@@ -366,13 +365,13 @@ msgstr[0] "프러시저 %d개"
 
 #: ../libgimp/gimpprocbrowserdialog.c:512
 msgid "No matches for your query"
-msgstr "질의에 일치하는 항목 없음"
+msgstr "질의와 일치하는 항목 없음"
 
 #: ../libgimp/gimpprocbrowserdialog.c:516
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
-msgstr[0] "%d 개의 프러시저가 질의에 일치"
+msgstr[0] "%d개의 프러시저가 질의와 일치"
 
 #: ../libgimp/gimpprocview.c:173
 msgid "Parameters"
@@ -425,7 +424,7 @@ msgstr "레이어의 알파 채널 전송(_T)"
 #: ../libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
 msgid "_Selection"
-msgstr "선택(_S)"
+msgstr "선택 영역(_S)"
 
 #: ../libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
@@ -470,7 +469,7 @@ msgstr "정사각형"
 #: ../libgimpbase/gimpbaseenums.c:100
 msgctxt "brush-generated-shape"
 msgid "Diamond"
-msgstr "다이아몬드"
+msgstr "마름모"
 
 #: ../libgimpbase/gimpbaseenums.c:130
 msgctxt "cap-style"
@@ -555,7 +554,7 @@ msgstr "크게"
 #: ../libgimpbase/gimpbaseenums.c:269
 msgctxt "check-type"
 msgid "Light checks"
-msgstr "밝은색 체크무늬"
+msgstr "밝은 체크무늬"
 
 #: ../libgimpbase/gimpbaseenums.c:270
 msgctxt "check-type"
@@ -565,7 +564,7 @@ msgstr "중간색 체크무늬"
 #: ../libgimpbase/gimpbaseenums.c:271
 msgctxt "check-type"
 msgid "Dark checks"
-msgstr "어두운색 체크무늬"
+msgstr "어두운 체크무늬"
 
 #: ../libgimpbase/gimpbaseenums.c:272
 msgctxt "check-type"
@@ -680,7 +679,7 @@ msgstr "웹에 최적화된 팔레트 사용"
 #: ../libgimpbase/gimpbaseenums.c:419
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
-msgstr "흑백 (1비트) 팔레트 사용"
+msgstr "검정 하양 (1비트) 팔레트 사용"
 
 #: ../libgimpbase/gimpbaseenums.c:420
 msgctxt "convert-palette-type"
@@ -787,7 +786,7 @@ msgstr "HSV (반시계 방향 색조)"
 #: ../libgimpbase/gimpbaseenums.c:648
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
-msgstr "HSV (반시계 방향)"
+msgstr "HSV (반시계)"
 
 #: ../libgimpbase/gimpbaseenums.c:649
 msgctxt "gradient-segment-color"
@@ -799,7 +798,7 @@ msgstr "HSV (시계 방향 색조)"
 #: ../libgimpbase/gimpbaseenums.c:652
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
-msgstr "HSV (시계 방향)"
+msgstr "HSV (시계)"
 
 #: ../libgimpbase/gimpbaseenums.c:685
 msgctxt "gradient-segment-type"
@@ -914,7 +913,7 @@ msgstr "나선형 (시계 방향)"
 #: ../libgimpbase/gimpbaseenums.c:752
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
-msgstr "나선형 (시계방향)"
+msgstr "나선형 (시계)"
 
 #: ../libgimpbase/gimpbaseenums.c:753
 msgctxt "gradient-type"
@@ -926,7 +925,7 @@ msgstr "나선형 (반시계 방향)"
 #: ../libgimpbase/gimpbaseenums.c:756
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
-msgstr "나선형 (반시계 방향)"
+msgstr "나선형 (반시계)"
 
 #: ../libgimpbase/gimpbaseenums.c:788
 msgctxt "grid-style"
@@ -961,7 +960,7 @@ msgstr "아이콘 이름"
 #: ../libgimpbase/gimpbaseenums.c:863
 msgctxt "icon-type"
 msgid "Inline pixbuf"
-msgstr "직렬 pixbuf"
+msgstr "인라인 pixbuf"
 
 #: ../libgimpbase/gimpbaseenums.c:864
 msgctxt "icon-type"
@@ -1026,7 +1025,7 @@ msgstr "정사각형"
 #: ../libgimpbase/gimpbaseenums.c:966
 msgctxt "ink-blob-type"
 msgid "Diamond"
-msgstr "다이아몬드"
+msgstr "마름모"
 
 #: ../libgimpbase/gimpbaseenums.c:998
 msgctxt "interpolation-type"
@@ -1056,7 +1055,7 @@ msgstr "낮은 후광"
 #: ../libgimpbase/gimpbaseenums.c:1032
 msgctxt "join-style"
 msgid "Miter"
-msgstr "마이터"
+msgstr "연귀"
 
 #: ../libgimpbase/gimpbaseenums.c:1033
 msgctxt "join-style"
@@ -1076,12 +1075,12 @@ msgstr "필요에 따라 확장"
 #: ../libgimpbase/gimpbaseenums.c:1096
 msgctxt "merge-type"
 msgid "Clipped to image"
-msgstr "이미지에 맞추어 오리기"
+msgstr "이미지로 오리기"
 
 #: ../libgimpbase/gimpbaseenums.c:1097
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
-msgstr "맨 아래 레이어에 맞추어 오리기"
+msgstr "맨 아래 레이어로 오리기"
 
 #: ../libgimpbase/gimpbaseenums.c:1098
 msgctxt "merge-type"
@@ -1221,7 +1220,7 @@ msgstr "64비트 비선형 부동 소수점"
 #: ../libgimpbase/gimpbaseenums.c:1462
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
-msgstr "64비트 비선형 부동 소수점"
+msgstr "64비트 지각적 부동 소수점"
 
 #: ../libgimpbase/gimpbaseenums.c:1537
 msgctxt "repeat-mode"
@@ -1236,7 +1235,7 @@ msgstr "톱니 파형"
 #: ../libgimpbase/gimpbaseenums.c:1539
 msgctxt "repeat-mode"
 msgid "Triangular wave"
-msgstr "삼각파형"
+msgstr "삼각 파형"
 
 #: ../libgimpbase/gimpbaseenums.c:1540
 msgctxt "repeat-mode"
@@ -1396,7 +1395,7 @@ msgstr "오른쪽 정렬"
 #: ../libgimpbase/gimpbaseenums.c:1849
 msgctxt "text-justification"
 msgid "Centered"
-msgstr "중심 정렬"
+msgstr "가운데 정렬"
 
 #: ../libgimpbase/gimpbaseenums.c:1850
 msgctxt "text-justification"
@@ -1441,12 +1440,12 @@ msgstr "오리기"
 #: ../libgimpbase/gimpbaseenums.c:1945
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr "결과물로 자르기"
+msgstr "결과물로 오리기"
 
 #: ../libgimpbase/gimpbaseenums.c:1946
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "특정 종횡비로 자르기"
+msgstr "특정 종횡비로 오리기"
 
 #: ../libgimpbase/gimpmetadata.c:878
 #, c-format
@@ -1466,7 +1465,7 @@ msgstr "로컬 파일에만 메타데이터를 저장할 수 있음"
 #: ../libgimpbase/gimpmetadata.c:1011
 #, c-format
 msgid "Invalid Exif data size."
-msgstr "Exif 데이터 크기가 잘못됨."
+msgstr "잘못된 Exif 데이터 크."
 
 #: ../libgimpbase/gimpmetadata.c:1040
 #, c-format
@@ -1567,7 +1566,7 @@ msgstr "지각적"
 #: ../libgimpconfig/gimpconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
-msgstr "상대적 색도계"
+msgstr "상대 색도계"
 
 #: ../libgimpconfig/gimpconfigenums.c:59
 msgctxt "color-rendering-intent"
@@ -1600,8 +1599,8 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"시스템의 디스플레이 색 프로필을 사용합니다. 설정된 모니터 프로필은 대비용으로"
-"만 사용됩니다."
+"활성화하면, 윈도우잉 시스템의 디스플레이 색 프로필을 사용하려고 시도합니다.구"
+"성된 모니터 프로필은 대비용으로만 사용됩니다."
 
 #: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
@@ -1647,7 +1646,7 @@ msgstr ""
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr "검정 점 보정을 사용하십시오 (하지 않을 이유를 알지 못한다면)."
+msgstr "검정 점 보정을 사용하십시오 (사용하지 않을 이유를 알지 못한다면)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
@@ -1662,7 +1661,7 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
-"이미지의 색 공간에서 출력 가상실험 장치(일반적으로 모니터)로 색을 변환하는 방"
+"이미지의 색 공간에서 출력 모의실험 장치(일반적으로 모니터)로 색을 변환하는 방"
 "법. 모두 시도해 보고 가장 낫게 보이는 것을 선택하십시오. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
@@ -1684,12 +1683,11 @@ msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"이 옵션을 사용 하면, 소프트 교정은 대상 색 공간에서 표현할 수 없는 색을 표시"
-"합니다."
+"사용하면, 소프트 교정은 대상 색 공간에서 표현할 수 없는 색을 표시합니다."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
-msgstr "범위를 벗어난 색상을 표시하는 데 사용할 색."
+msgstr "범위를 벗어난 색을 표시하는 데 사용할 색."
 
 #: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
@@ -1725,7 +1723,7 @@ msgstr "디스플레이 렌더링 의도"
 
 #: ../libgimpconfig/gimpcolorconfig.c:269
 msgid "Use black point compensation for the display"
-msgstr "이미지 디스플레이에 검정 점 보상 사용"
+msgstr "디스플레이에 검정 점 보상 사용"
 
 #: ../libgimpconfig/gimpcolorconfig.c:276
 msgid "Optimize display color transformations"
@@ -1772,13 +1770,13 @@ msgstr "색 프로필 ‘%s’은(는) CMYK 색 공간용이 아닙니다."
 #: ../libgimpconfig/gimpconfig-deserialize.c:113
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "잘못된 UTF-8 문자열 (토큰 %s)"
+msgstr "토큰 %s에 사용한 값이 유효한 UTF-8 문자열이 아님"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpconfig-deserialize.c:466
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "불린 토큰 %1$s의 값은 'yes'나 'no'가 되어야 하는데, 주어진 값은 '%2$s'"
+msgstr "불리언 토큰 %s의 값은 'yes'나 'no'가 되어야 하는데, 주어진 값은 '%s'"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:568
 #, c-format
@@ -1846,7 +1844,7 @@ msgstr "불리언 토큰은 'yes'나 'no'가 되어야 하는데, 주어진 값�
 #: ../libgimpconfig/gimpscanner.c:852
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "‘%s’의 %d행 해석 오류: %s"
+msgstr "‘%2$d행에서 %1$s’  구문 분석 중 오류: %3$s"
 
 #: ../libgimpmodule/gimpmodule.c:162 ../libgimpmodule/gimpmodule.c:180
 #: ../libgimpmodule/gimpmodule.c:289 ../libgimpmodule/gimpmodule.c:316
@@ -1861,7 +1859,7 @@ msgstr "모듈 오류"
 
 #: ../libgimpmodule/gimpmodule.c:385
 msgid "Loaded"
-msgstr "불러오기 완료"
+msgstr "불러옴"
 
 #: ../libgimpmodule/gimpmodule.c:386
 msgid "Load failed"
@@ -1877,23 +1875,23 @@ msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"유효한 축소판 그림 디렉터리를 확인할 수 없습니다.\n"
+"유효한 축소판 디렉터리를 확인할 수 없습니다.\n"
 "축소판은 대신 임시 파일용 폴더(%s)에 저장됩니다."
 
 #: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "썸네일 폴더 ‘%s’을(를) 만들지 못했습니다."
+msgstr "축소판 폴더 ‘%s’을(를) 만들지 못했습니다."
 
 #: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr "미리 보기에 Thumb 파일이 없습니다.::URI 태그"
+msgstr "축소판에 Thumb::URI 태그가 없음"
 
 #: ../libgimpthumb/gimpthumbnail.c:905
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "썸네일 폴더 ‘%s’을(를) 만들지 못했습니다.:%s"
+msgstr "‘%s’용 축소판을 만들지 못했음:%s"
 
 #: ../libgimpwidgets/gimpbrowser.c:141
 msgid "_Search:"
@@ -2012,11 +2010,11 @@ msgstr "파일 관리자에서 파일 위치 보이기"
 
 #: ../libgimpwidgets/gimpfileentry.c:225
 msgid "Open a file selector to browse your folders"
-msgstr "폴더을 찾아보도록 파일 선택기 열기"
+msgstr "폴더를 찾아보려면 파일 선택기 열기"
 
 #: ../libgimpwidgets/gimpfileentry.c:226
 msgid "Open a file selector to browse your files"
-msgstr "파일을 찾아보도록 파일 선택기 열기"
+msgstr "파일을 찾아보려면 파일 선택기 열기"
 
 #: ../libgimpwidgets/gimpfileentry.c:238
 msgid "Indicates whether or not the folder exists"
@@ -2078,7 +2076,7 @@ msgstr "범위 선택(_R):"
 
 #: ../libgimpwidgets/gimppageselector.c:333
 msgid "Open _pages as"
-msgstr "페이지 열기(_P)"
+msgstr "다음 형식으로 페이지 열기(_P)"
 
 #: ../libgimpwidgets/gimppageselector.c:461
 #: ../libgimpwidgets/gimppageselector.c:659
@@ -2095,7 +2093,7 @@ msgstr "한 페이지 선택함"
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
-msgstr[0] "%d개의 페이지 선택됨"
+msgstr[0] "%d개의 페이지가 선택됨"
 
 #: ../libgimpwidgets/gimppatheditor.c:180
 msgid "Add a new folder"
@@ -2141,7 +2139,7 @@ msgstr "체크무늬 스타일"
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
-msgstr[0] "텍스트 입력란은 최대 %d개의 문자를 입력할 수 있습니다."
+msgstr[0] "텍스트 입력란은 최대 %d개의 문자만 입력할 수 있습니다."
 
 #: ../libgimpwidgets/gimpwidgets.c:471
 msgid ""
@@ -2404,7 +2402,7 @@ msgstr "휠"
 
 #: ../modules/controller-dx-dinput.c:156
 msgid "DirectX DirectInput event controller"
-msgstr "다이렉트X 직접 입력 이벤트 제어기"
+msgstr "다이렉트X DirectInput 이벤트 제어기"
 
 #: ../modules/controller-dx-dinput.c:196
 #: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
@@ -2413,11 +2411,11 @@ msgstr "장치:"
 
 #: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
-msgstr "직접 입력 이벤트를 읽어 을 장치."
+msgstr "DirectInput 이벤트를 읽어 을 장치."
 
 #: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
-msgstr "다이렉트X 직접 입력"
+msgstr "다이렉트X DirectInput"
 
 #: ../modules/controller-dx-dinput.c:419
 #, c-format
@@ -2468,7 +2466,7 @@ msgstr "X 축 기울이기 가까이"
 
 #: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
-msgstr "Y 축 기울기 오른쪽으로"
+msgstr "Y 축 기울이기 오른쪽으로"
 
 #: ../modules/controller-dx-dinput.c:481
 #: ../modules/controller-linux-input.c:100
@@ -2512,7 +2510,7 @@ msgstr "POV %d 반환"
 
 #: ../modules/controller-dx-dinput.c:1081
 msgid "DirectInput Events"
-msgstr "다이렉트입력 이벤트"
+msgstr "DirectInput 이벤트"
 
 #: ../modules/controller-dx-dinput.c:1092
 #: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
@@ -2582,7 +2580,7 @@ msgstr "버튼 가운데"
 
 #: ../modules/controller-linux-input.c:72
 msgid "Button Side"
-msgstr "버튼 가장자리"
+msgstr "버튼 옆쪽"
 
 #: ../modules/controller-linux-input.c:73
 msgid "Button Extra"
@@ -2622,11 +2620,11 @@ msgstr "X 축 뒤로 이동"
 
 #: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
-msgstr "X 축 기울기 앞으로"
+msgstr "X 축 기울이기 앞으로"
 
 #: ../modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
-msgstr "X 축 기울기 뒤로"
+msgstr "X 축 기울이기 뒤로"
 
 #: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
@@ -2658,7 +2656,7 @@ msgstr "리눅스 입력 이벤트 제어기"
 
 #: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
-msgstr "리눅스 입력 이벤트를 읽어 을 장치명."
+msgstr "리눅스 입력 이벤트를 읽어 올 장치명."
 
 #: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
@@ -2695,7 +2693,7 @@ msgstr "MIDI 이벤트를 읽어 올 장치명."
 
 #: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "ALSA 장치를 사용하려면 'alsa'를 입력하십시오."
+msgstr "ALSA 장치를 사용하려면 ‘alsa’를 입력하십시오."
 
 #: ../modules/controller-midi.c:221
 msgid "Channel:"
@@ -2706,8 +2704,7 @@ msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
-"이벤트로 읽을 수 있는 MIDI 채널. 모든 MIDI 채널에서 읽을 수 있게 하려면 -1로 "
-"설정하십시오."
+"이벤트를 읽어 올 MIDI 채널. 모든 MIDI 채널에서 읽어 오려면 -1로 설정하십시오."
 
 #: ../modules/controller-midi.c:226
 msgid "MIDI"
@@ -2873,7 +2870,7 @@ msgstr "고대비 색상 화면 표시 필터"
 
 #: ../modules/display-filter-high-contrast.c:123
 msgid "Contrast cycles"
-msgstr "대비 주기"
+msgstr "대비 사이클"
 
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
