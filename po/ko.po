@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 11:20+0000\n"
-"PO-Revision-Date: 2019-01-29 18:10+0900\n"
+"PO-Revision-Date: 2019-01-29 18:24+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -19646,7 +19646,7 @@ msgid ""
 "the same item tree"
 msgstr ""
 "같은 항목 트리의 부분이 아니므로, ‘%s’ (%d) 와 ‘%s’ (%d) 항목은 사용할 수 없"
-"습니다."
+"음"
 
 #: ../app/pdb/gimppdb-utils.c:529
 #, c-format
@@ -21373,7 +21373,7 @@ msgstr "키우기 허용"
 #: ../app/tools/gimpcropoptions.c:101
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
-"자르기 프레임을 이미지 경계를 넘는 곳으로 끌어서 캔버스 크기 바꾸기 허용 "
+"자르기 프레임을 이미지 경계를 넘는 곳으로 끌어서 캔버스 크기 바꾸기 허용"
 
 #: ../app/tools/gimpcropoptions.c:108 ../app/tools/gimpcropoptions.c:200
 msgid "Fill with"
