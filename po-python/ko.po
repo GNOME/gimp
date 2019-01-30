@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-24 20:14+0000\n"
-"PO-Revision-Date: 2019-01-28 12:37+0900\n"
+"PO-Revision-Date: 2019-01-30 12:22+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
 "Language: ko\n"
@@ -315,7 +315,7 @@ msgstr "양자화(_Q)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
 msgid "_Partitioning channel"
-msgstr "파티셔인 채널(_P)"
+msgstr "파티셔닝 채널(_P)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
 msgid "Partition q_uantization"
@@ -423,7 +423,7 @@ msgstr "콘솔(_C)"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "레이어에 그림자를 추가하고, 선택적으로 빗면 넣기"
+msgstr "레이어에 물방울 그림자를 추가하고, 선택적으로 빗면 넣기"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
