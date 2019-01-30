@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-24 20:14+0000\n"
-"PO-Revision-Date: 2019-01-30 12:45+0900\n"
+"POT-Creation-Date: 2019-01-26 00:07+0000\n"
+"PO-Revision-Date: 2019-01-30 12:44+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -110,7 +110,7 @@ msgid "Script-Fu Console"
 msgstr "Script-Fu 콘솔"
 
 #: ../plug-ins/script-fu/script-fu-console.c:132
-#: ../plug-ins/script-fu/script-fu-console.c:293
+#: ../plug-ins/script-fu/script-fu-console.c:296
 msgid "_Save"
 msgstr "저장(_S)"
 
@@ -119,7 +119,7 @@ msgid "C_lear"
 msgstr "지우기(_L)"
 
 #: ../plug-ins/script-fu/script-fu-console.c:134
-#: ../plug-ins/script-fu/script-fu-console.c:371
+#: ../plug-ins/script-fu/script-fu-console.c:374
 msgid "_Close"
 msgstr "닫기(_C)"
 
@@ -135,26 +135,26 @@ msgstr "대화형 Scheme 개발"
 msgid "_Browse..."
 msgstr "찾아보기(_B)..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:288
+#: ../plug-ins/script-fu/script-fu-console.c:291
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu 콘솔 출력 저장"
 
-#: ../plug-ins/script-fu/script-fu-console.c:292
-#: ../plug-ins/script-fu/script-fu-interface.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:295
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #: ../plug-ins/script-fu/script-fu-server.c:834
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: ../plug-ins/script-fu/script-fu-console.c:337
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "‘%s’을(를) 쓰기용으로 열기 실패: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:366
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu 프러시저 브라우저"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:373
 msgid "_Apply"
 msgstr "적용(_A)"
 
@@ -162,69 +162,69 @@ msgstr "적용(_A)"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 평가 모드는 비대화형 호출만 허용"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu는 동시에 두 개의 스크립트를 실행할 수 없습니다."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "“%s” 스크립트가 이미 실행되고 있습니다."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:228
+#: ../plug-ins/script-fu/script-fu-interface.c:230
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:235
+#: ../plug-ins/script-fu/script-fu-interface.c:237
 msgid "_Reset"
 msgstr "초기화(_R)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:239
 msgid "_OK"
 msgstr "확인(_O)"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:293
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:341
+#: ../plug-ins/script-fu/script-fu-interface.c:343
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 색상 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:459
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 폴더 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 글꼴 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu 팔레트 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:490
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu 무늬 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:499
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 그레이디언트 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:508
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 붓 선택"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:877
+#: ../plug-ins/script-fu/script-fu-interface.c:887
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s 실행 중 오류:"
