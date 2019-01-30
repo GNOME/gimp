@@ -427,28 +427,32 @@ gimp_drawable_get_format (gint32 drawable_ID)
 
   if (format_str)
     {
-      gint32            image_ID = gimp_item_get_image (drawable_ID);
-      GimpColorProfile *profile;
-      const Babl       *space = NULL;
+      gint32      image_ID = gimp_item_get_image (drawable_ID);
+      const Babl *space    = NULL;
 
-      profile = gimp_image_get_color_profile (image_ID);
-
-      if (profile)
+      if (gimp_item_is_layer (drawable_ID))
         {
-          GError *error = NULL;
+          GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
 
-          space =
-            gimp_color_profile_get_space (profile,
-                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                          &error);
-          if (! space)
+          if (profile)
             {
-              g_printerr ("%s: failed to create Babl space from profile: %s\n",
-                          G_STRFUNC, error->message);
-              g_clear_error (&error);
-            }
+              GError *error = NULL;
 
-          g_object_unref (profile);
+              space = gimp_color_profile_get_space
+                (profile,
+                 GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                 &error);
+
+              if (! space)
+                {
+                  g_printerr ("%s: failed to create Babl space from "
+                              "profile: %s\n",
+                              G_STRFUNC, error->message);
+                  g_clear_error (&error);
+                }
+
+              g_object_unref (profile);
+            }
         }
 
       if (gimp_drawable_is_indexed (drawable_ID))
