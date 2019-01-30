@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-20 11:44+0000\n"
-"PO-Revision-Date: 2019-01-29 02:24+0900\n"
+"PO-Revision-Date: 2019-01-30 23:16+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -10217,18 +10217,14 @@ msgid "_Color Management"
 msgstr "カラーマネジメント(_C)"
 
 #: ../app/actions/view-actions.c:79
-#, fuzzy
-#| msgid "_Display rendering intent:"
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
-msgstr "モニター表示のレンダリングインテント(_D):"
+msgstr "モニター表示のレンダリングインテント(_R)"
 
 #: ../app/actions/view-actions.c:82
-#, fuzzy
-#| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "ソフトプルーフのレンダリングインテント(_S):"
+msgstr "ソフトプルーフのレンダリングインテント(_N)"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -11657,19 +11653,17 @@ msgid "Sets the browser used by the help system."
 msgstr "ヘルプシステムで使うブラウザーを指定します"
 
 #: ../app/config/gimprc-blurbs.h:179
-#, fuzzy
-#| msgid "How many recently opened image filenames to keep on the File menu."
 msgid "How many recent settings to keep around in filter tools."
 msgstr ""
-"[ファイル] → [最近開いたファイル] で表示されるエントリーの数を設定します"
+"フィルターツールのプリセットで選択できる設定の履歴数です。"
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid "Default to the last used settings in filter tools."
-msgstr ""
+msgstr "フィルターツールで最後に使用した設定をデフォルトにします。"
 
 #: ../app/config/gimprc-blurbs.h:185
 msgid "Show advanced color options in filter tools."
-msgstr ""
+msgstr "フィルターツールで高度な色オプションを表示します。"
 
 #: ../app/config/gimprc-blurbs.h:188
 msgid "Sets the text to appear in image window status bars."
@@ -12206,11 +12200,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:532
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr ""
+msgstr "[新しいレイヤー] ダイアログのデフォルトのレイヤー名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:535
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "[新しいレイヤー] ダイアログのデフォルトのモードを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:538
 msgid "Sets the default blend space for the 'New Layer' dialog."
@@ -12218,19 +12212,19 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:541
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr ""
+msgstr "[新しいレイヤー] ダイアログのデフォルトの合成色空間を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "[新しいレイヤー] ダイアログのデフォルトの合成モードを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr ""
+msgstr "[新しいレイヤー] ダイアログのデフォルトの不透明度を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:550
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr ""
+msgstr "[新しいレイヤー] ダイアログのデフォルトの塗りつぶし形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
@@ -12541,7 +12535,7 @@ msgstr "埋め込まれているプロファイルを使う"
 #: ../app/core/core-enums.c:188
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
-msgstr "優先の RGB カラープロファイルに変換する"
+msgstr "優先 RGB カラープロファイルに変換する"
 
 #: ../app/core/core-enums.c:282
 msgctxt "convert-dither-type"
@@ -15470,7 +15464,7 @@ msgstr "フロート化されたレイヤー"
 #: ../app/core/gimpsettings.c:151
 #, c-format
 msgid "Last used: %s"
-msgstr ""
+msgstr "最近の使用: %s"
 
 #: ../app/core/gimpstrokeoptions.c:155
 msgid "Method"
@@ -15937,11 +15931,8 @@ msgstr "すべてのピクセルを保護"
 
 #: ../app/dialogs/channel-options-dialog.c:129
 #: ../app/dialogs/layer-options-dialog.c:169
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Reposition channel"
 msgid "Lock position and _size"
-msgstr "チャンネルの再配置"
+msgstr "位置とサイズを保護(_S)"
 
 #: ../app/dialogs/channel-options-dialog.c:171
 msgid "Initialize from _selection"
@@ -16149,10 +16140,8 @@ msgstr "透明部分のディザリングを行う(_T)"
 
 #: ../app/dialogs/convert-indexed-dialog.c:280
 #: ../app/dialogs/preferences-dialog.c:2232
-#, fuzzy
-#| msgid "Enable dithering of _transparency"
 msgid "Enable dithering of text layers"
-msgstr "透明部分のディザリングを行う(_T)"
+msgstr "テキストレイヤーのディザリングを行う"
 
 #: ../app/dialogs/convert-indexed-dialog.c:291
 #: ../app/dialogs/convert-precision-dialog.c:276
@@ -16522,10 +16511,8 @@ msgid "Configure Input Devices"
 msgstr "入力デバイスの設定"
 
 #: ../app/dialogs/item-options-dialog.c:198
-#, fuzzy
-#| msgid "Color:"
 msgid "Color tag:"
-msgstr "色:"
+msgstr "カラータグ:"
 
 #. The switches frame & vbox
 #: ../app/dialogs/item-options-dialog.c:259
@@ -16601,18 +16588,12 @@ msgid "Blend space:"
 msgstr "色空間:"
 
 #: ../app/dialogs/layer-options-dialog.c:213
-#, fuzzy
-#| msgctxt "select-criterion"
-#| msgid "Composite"
 msgid "Composite space:"
-msgstr "コンポジット"
+msgstr "合成色空間:"
 
 #: ../app/dialogs/layer-options-dialog.c:225
-#, fuzzy
-#| msgctxt "select-criterion"
-#| msgid "Composite"
 msgid "Composite mode:"
-msgstr "コンポジット"
+msgstr "合成モード:"
 
 #: ../app/dialogs/layer-options-dialog.c:239
 msgid "_Opacity:"
@@ -17176,26 +17157,20 @@ msgstr "マーキング色の選択"
 
 #. Preferred profiles
 #: ../app/dialogs/preferences-dialog.c:1421
-#, fuzzy
-#| msgid "Preferences"
 msgid "Preferred Profiles"
-msgstr "GIMP の設定"
+msgstr "優先プロファイル"
 
 #: ../app/dialogs/preferences-dialog.c:1430
-#, fuzzy
-#| msgid "Select RGB Color Profile"
 msgid "Select Preferred RGB Color Profile"
-msgstr "RGB プロファイルの選択"
+msgstr "優先 RGB プロファイルの選択"
 
 #: ../app/dialogs/preferences-dialog.c:1431
 msgid "_RGB profile:"
 msgstr "RGB プロファイル(_R):"
 
 #: ../app/dialogs/preferences-dialog.c:1438
-#, fuzzy
-#| msgid "Select Printer Color Profile"
 msgid "Select Preferred Grayscale Color Profile"
-msgstr "シミュレーション対象のプロファイルの選択"
+msgstr "優先 グレースケールプロファイルの選択"
 
 #: ../app/dialogs/preferences-dialog.c:1439
 msgid "_Grayscale profile:"
@@ -17221,16 +17196,13 @@ msgstr "ファイルを開く時の挙動:"
 #. Filter Dialogs
 #: ../app/dialogs/preferences-dialog.c:1461
 #: ../app/dialogs/preferences-dialog.c:2236
-#, fuzzy
-#| msgctxt "documents-action"
-#| msgid "File Open _Dialog"
 msgid "Filter Dialogs"
-msgstr "ダイアログの表示(_D)"
+msgstr "フィルターダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:1465
 #: ../app/dialogs/preferences-dialog.c:2248
 msgid "Show advanced color options"
-msgstr "高度な色オプションを表示"
+msgstr "高度な色オプションを表示する"
 
 #: ../app/dialogs/preferences-dialog.c:1479
 #: ../app/dialogs/preferences-dialog.c:1480
@@ -17629,17 +17601,12 @@ msgid "Enable dithering of transparency"
 msgstr "透明部分のディザリングを行う"
 
 #: ../app/dialogs/preferences-dialog.c:2241
-#, fuzzy
-#| msgid "Recent Settings:"
 msgid "Keep recent settings:"
-msgstr "最近の設定:"
+msgstr "最近の設定の保存数:"
 
 #: ../app/dialogs/preferences-dialog.c:2245
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "Rerun the last used plug-in using the same settings"
 msgid "Default to the last used settings"
-msgstr "前回と同じ設定でフィルターを再実行します"
+msgstr "最後に使用した設定をデフォルトにする"
 
 #. Canvas Size Dialog
 #: ../app/dialogs/preferences-dialog.c:2252
@@ -27479,7 +27446,7 @@ msgstr "すべてのピクセルを保護"
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
 msgid "Lock position and size"
-msgstr ""
+msgstr "位置とサイズを保護"
 
 #: ../app/widgets/gimpdrawabletreeview.c:189
 #, fuzzy
