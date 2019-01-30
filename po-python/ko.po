@@ -4,16 +4,18 @@
 # Sung-Hyun Nam <namsh@kldp.org>, 1999.
 # Dongsu Jang <iolo@hellocity.net>, 2004.
 # Choi, Ji-Hui <like.a.dust@gmail.com>, 2007.
+# sebul <sebuls@gmail.com>, 2011.
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
 # Sensu Iun <cieltero@gmail.com>, 2019
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
+"Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-24 20:14+0000\n"
-"PO-Revision-Date: 2019-01-30 12:22+0900\n"
+"PO-Revision-Date: 2019-01-30 12:45+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
-"Language-Team: Mr.Dust <like.a.dust@gmail.com>\n"
+"Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,429 +24,1671 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
-msgid "Missing exception information"
-msgstr "누락된 예외 정보"
-
-#: ../plug-ins/pygimp/gimpfu.py:404
-#, python-format
-msgid "An error occurred running %s"
-msgstr "%s 실행 중 오류 발생"
-
-#: ../plug-ins/pygimp/gimpfu.py:415
-msgid "_More Information"
-msgstr "자세한 정보(_M)"
-
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
-msgid "No"
-msgstr "아니요"
-
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
-msgid "Yes"
-msgstr "예"
-
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
-msgid "Python-Fu File Selection"
-msgstr "파이썬-푸 파일 선택"
-
-#: ../plug-ins/pygimp/gimpfu.py:648
-msgid "Python-Fu Folder Selection"
-msgstr "파이썬-푸 폴더 선택"
-
-#: ../plug-ins/pygimp/gimpfu.py:737
-#, python-format
-msgid "Invalid input for '%s'"
-msgstr "잘못된 ‘%s’용 입력"
-
-#: ../plug-ins/pygimp/gimpui.py:176
-msgid "Python-Fu Color Selection"
-msgstr "파이썬-푸 색상 선택"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
-msgid "Saving as colored XHTML"
-msgstr "색상 XHTML로 저장하기"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
-msgid "Save as colored XHTML"
-msgstr "색상 XHTML로 저장"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
-msgid "Colored XHTML"
-msgstr "색상 XHTML"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Character _source"
-msgstr "문자 원본(_S)"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Source code"
-msgstr "소스 코드"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
-msgid "Text file"
-msgstr "텍스트 파일"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
-msgid "Entry box"
-msgstr "항목 상자"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
-msgid "_File to read or characters to use"
-msgstr "읽을 파일 또는 사용할 문자(_F)"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
-msgid "Fo_nt size in pixels"
-msgstr "글꼴 크기(픽셀 단위)(_N)"
-
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
-msgid "_Write a separate CSS file"
-msgstr "분리된 CSS 파일 쓰기(_W)"
-
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
-msgid "Gradient to use"
-msgstr "사용할 그레이디언트"
-
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
-msgid "File Name"
-msgstr "파일 이름"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
-msgid "Exports the image histogram to a text file (CSV)"
-msgstr "이미지 히스토그램을 텍스트 파일(CSV)로 내보내기"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
-msgid "_Export histogram..."
-msgstr "히스토그램 내보내기(_E)..."
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
-msgid "_Image"
-msgstr "이미지(_I)"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
-msgid "_Drawable"
-msgstr "드로어블(_D)"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
-msgid "Histogram _File"
-msgstr "히스토그램 파일(_F)"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
-msgid "_Bucket Size"
-msgstr "양동이 크기(_B)"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
-msgid "Sample _Average"
-msgstr "표본 평균(_A)"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
-msgid "Output format"
-msgstr "출력 형식"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
-msgid "Pixel count"
-msgstr "픽셀 개수"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
-msgid "Normalized"
-msgstr "정규화됨"
-
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
-msgid "Percent"
-msgstr "퍼센트"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
-msgid "Add a layer of fog"
-msgstr "안개 레이어 더하기"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "_Fog..."
-msgstr "안개(_F)..."
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "_Layer name"
-msgstr "레이어 이름(_L)"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
-msgid "Clouds"
-msgstr "구름"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
-msgid "_Fog color"
-msgstr "안개 색(_F)"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
-msgid "_Turbulence"
-msgstr "휘몰아침(_T)"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
-msgid "Op_acity"
-msgstr "불투명도(_A)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
-msgid "Offset the colors in a palette"
-msgstr "팔레트의 색상 오프셋"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
-msgid "_Offset Palette..."
-msgstr "팔레트 오프셋(_O)..."
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
-msgid "Palette"
-msgstr "팔레트"
-
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-msgid "Off_set"
-msgstr "오프셋(_S)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Red"
-msgstr "빨강"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Green"
-msgstr "초록"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
-msgid "Blue"
-msgstr "파랑"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
-msgid "Luma (Y)"
-msgstr "루마 (Y)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-msgid "Hue"
-msgstr "색조"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-msgid "Saturation"
-msgstr "채도"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-msgid "Value"
-msgstr "값"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
-msgid "Saturation (HSL)"
-msgstr "채도 (HSL)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
-msgid "Lightness (HSL)"
-msgstr "밝기 (HSL)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
-msgid "Index"
-msgstr "인덱스"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
-msgid "Random"
-msgstr "무작위"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
-msgid "Lightness (LAB)"
-msgstr "밝기 (LAB)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
-msgid "A-color"
-msgstr "A-색"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
-msgid "B-color"
-msgstr "B-색"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
-msgid "Chroma (LCHab)"
-msgstr "크로마 (LCHab)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
-msgid "Hue (LCHab)"
-msgstr "색조 (LCHab)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
-msgid "Sort the colors in a palette"
-msgstr "팔레트의 색상 정렬"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
-msgid "_Sort Palette..."
-msgstr "팔레트 정렬(_S)..."
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
-msgid "Se_lections"
-msgstr "선택(_L)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "All"
-msgstr "모두"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "Slice / Array"
-msgstr "조각 / 배열"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
-msgid "Autoslice (fg->bg)"
-msgstr "자동조각 (전경→배경)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
-msgid "Partitioned"
-msgstr "파티션으로 나뉨"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
-msgid "Slice _expression"
-msgstr "조각 표현(_E)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
-msgid "Channel to _sort"
-msgstr "정렬할 채널(_S)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
-msgid "_Ascending"
-msgstr "오름차순(_A)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-msgid "Secondary Channel to s_ort"
-msgstr "정렬할 2차 채널(_O)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
-msgid "_Quantization"
-msgstr "양자화(_Q)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
-msgid "_Partitioning channel"
-msgstr "파티셔닝 채널(_P)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
-msgid "Partition q_uantization"
-msgstr "파티션 양자화(_U)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
-msgid "Create a repeating gradient using colors from the palette"
-msgstr "팔레트의 색상을 이용해 반복하는 그레이디언트 만들기"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-msgid "Palette to _Repeating Gradient"
-msgstr "팔레트를 반복하는 그레이디언트로(_R)"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
-msgid "Create a gradient using colors from the palette"
-msgstr "팔레트의 색상을 이용해 그레이디언트 만들기"
-
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
-msgid "Palette to _Gradient"
-msgstr "팔레트를 그레이디언트로(_G)"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
-msgid "Slice"
-msgstr "조각 내기"
-
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "안내선에 따라 이미지를 자르고, 이미지와 HTML 테이블 태그를 만들기"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
-msgid "_Slice..."
-msgstr "조각 내기(_S)..."
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
-msgid "Path for HTML export"
-msgstr "HTML 내보내기용 경로"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
-msgid "Filename for export"
-msgstr "내보내기용 파일명"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-msgid "Image name prefix"
-msgstr "이미지 이름 접두어"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Image format"
-msgstr "이미지 형식"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
-msgid "Separate image folder"
-msgstr "분리된 이미지 폴더"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
-msgid "Folder for image export"
-msgstr "이미지 내보내기용 폴더"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
-msgid "Space between table elements"
-msgstr "테이블 요소 사이의 간격"
-
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
-msgid "Javascript for onmouseover and clicked"
-msgstr "마우스오버 및 클릭용 자바스크립트"
-
-#. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
-msgid "Skip animation for table caps"
-msgstr "테이블 캡션용 애니메이션 건너 뛰기"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:57
-msgid "Python Console"
-msgstr "파이썬 콘솔"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:61
-msgid "_Browse..."
-msgstr "찾아보기(_B)..."
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:154
-msgid "Python Procedure Browser"
-msgstr "파이썬 프러시저 브라우저"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:183
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "‘%s’을(를) 쓰기용으로 열기 실패: %s"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:198
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "‘%s’에 쓸 수 없음: %s"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:206
-msgid "Save Python-Fu Console Output"
-msgstr "파이썬-푸 콘솔 출력 저장하기"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:232
-msgid "Interactive GIMP Python interpreter"
-msgstr "대화형 김프-파이썬 해석기"
-
-#: ../plug-ins/pygimp/plug-ins/python-console.py:237
+#: ../plug-ins/script-fu/script-fu.c:111
+msgid "Interactive console for Script-Fu development"
+msgstr "Script-Fu 개발용 대화형 콘솔"
+
+#: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
 msgstr "콘솔(_C)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
-msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "레이어에 물방울 그림자를 추가하고, 선택적으로 빗면 넣기"
+#: ../plug-ins/script-fu/script-fu.c:141
+msgid "Server for remote Script-Fu operation"
+msgstr "원격 Script-Fu 동작용 서버"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
-msgid "_Drop Shadow and Bevel..."
-msgstr "물방울 그림자와 빗면(_D)..."
+#: ../plug-ins/script-fu/script-fu.c:151
+msgid "_Start Server..."
+msgstr "서버 시작(_S)..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "_Shadow blur"
-msgstr "그림자 블러(_S)"
+#: ../plug-ins/script-fu/script-fu.c:306
+msgid "_GIMP Online"
+msgstr "김프 온라인(_G)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "_Bevel"
-msgstr "빗면(_B)"
+#: ../plug-ins/script-fu/script-fu.c:307
+msgid "_User Manual"
+msgstr "사용자 설명서(_U)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "_Drop shadow"
-msgstr "물방울 그림자(_D)"
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Script-Fu"
+msgstr "Script-Fu(_S)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow _X displacement"
-msgstr "물방울 그림자 _X축 변위"
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Test"
+msgstr "시험(_T)"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
-msgid "Drop shadow _Y displacement"
-msgstr "물방울 그림자 _Y축 변위"
+#: ../plug-ins/script-fu/script-fu.c:315
+msgid "_Buttons"
+msgstr "단추(_B)"
+
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Logos"
+msgstr "로고(_L)"
+
+#: ../plug-ins/script-fu/script-fu.c:319
+msgid "_Patterns"
+msgstr "무늬(_P)"
+
+#: ../plug-ins/script-fu/script-fu.c:322
+msgid "_Web Page Themes"
+msgstr "웹 페이지 테마(_W)"
+
+#: ../plug-ins/script-fu/script-fu.c:324
+msgid "_Alien Glow"
+msgstr "외계의 빛(_A)"
+
+#: ../plug-ins/script-fu/script-fu.c:326
+msgid "_Beveled Pattern"
+msgstr "빗면 무늬(_B)"
+
+#: ../plug-ins/script-fu/script-fu.c:328
+msgid "_Classic.Gimp.Org"
+msgstr "_Classic.Gimp.Org"
+
+#: ../plug-ins/script-fu/script-fu.c:331
+msgid "Alpha to _Logo"
+msgstr "알파를 로고로(_L)"
+
+#: ../plug-ins/script-fu/script-fu.c:334
+msgid "Re-read all available Script-Fu scripts"
+msgstr "사용가능한 모든 Script-Fu 스크립트를 다시 읽기"
+
+#: ../plug-ins/script-fu/script-fu.c:339
+msgid "_Refresh Scripts"
+msgstr "스크립트 새로고침(_R)"
+
+#: ../plug-ins/script-fu/script-fu.c:362
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"스크립트 대화상자가 열려있는 동안에는 “스크립트 새로고침”을 사용할 수 없습니"
+"다. 모든 Script-Fu 창을 닫고 다시 시도하십시오."
+
+#: ../plug-ins/script-fu/script-fu-console.c:127
+#: ../plug-ins/script-fu/script-fu-console.c:194
+msgid "Script-Fu Console"
+msgstr "Script-Fu 콘솔"
+
+#: ../plug-ins/script-fu/script-fu-console.c:132
+#: ../plug-ins/script-fu/script-fu-console.c:293
+msgid "_Save"
+msgstr "저장(_S)"
+
+#: ../plug-ins/script-fu/script-fu-console.c:133
+msgid "C_lear"
+msgstr "지우기(_L)"
+
+#: ../plug-ins/script-fu/script-fu-console.c:134
+#: ../plug-ins/script-fu/script-fu-console.c:371
+msgid "_Close"
+msgstr "닫기(_C)"
+
+#: ../plug-ins/script-fu/script-fu-console.c:190
+msgid "Welcome to TinyScheme"
+msgstr "TinyScheme에 잘 오셨습니다"
+
+#: ../plug-ins/script-fu/script-fu-console.c:196
+msgid "Interactive Scheme Development"
+msgstr "대화형 Scheme 개발"
+
+#: ../plug-ins/script-fu/script-fu-console.c:232
+msgid "_Browse..."
+msgstr "찾아보기(_B)..."
+
+#: ../plug-ins/script-fu/script-fu-console.c:288
+msgid "Save Script-Fu Console Output"
+msgstr "Script-Fu 콘솔 출력 저장"
+
+#: ../plug-ins/script-fu/script-fu-console.c:292
+#: ../plug-ins/script-fu/script-fu-interface.c:236
+#: ../plug-ins/script-fu/script-fu-server.c:834
+msgid "_Cancel"
+msgstr "취소(_C)"
+
+#: ../plug-ins/script-fu/script-fu-console.c:337
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "‘%s’을(를) 쓰기용으로 열기 실패: %s"
+
+#: ../plug-ins/script-fu/script-fu-console.c:366
+msgid "Script-Fu Procedure Browser"
+msgstr "Script-Fu 프러시저 브라우저"
+
+#: ../plug-ins/script-fu/script-fu-console.c:370
+msgid "_Apply"
+msgstr "적용(_A)"
+
+#: ../plug-ins/script-fu/script-fu-eval.c:60
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "Script-Fu 평가 모드는 비대화형 호출만 허용"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:200
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Script-Fu는 동시에 두 개의 스크립트를 실행할 수 없습니다."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:202
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "“%s” 스크립트가 이미 실행되고 있습니다."
+
+#: ../plug-ins/script-fu/script-fu-interface.c:228
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:235
+msgid "_Reset"
+msgstr "초기화(_R)"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:237
+msgid "_OK"
+msgstr "확인(_O)"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:291
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:341
+msgid "Script-Fu Color Selection"
+msgstr "Script-Fu 색상 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:457
+msgid "Script-Fu File Selection"
+msgstr "Script-Fu 파일 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:460
+msgid "Script-Fu Folder Selection"
+msgstr "Script-Fu 폴더 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:473
+msgid "Script-Fu Font Selection"
+msgstr "Script-Fu 글꼴 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:481
+msgid "Script-Fu Palette Selection"
+msgstr "Script-Fu 팔레트 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:490
+msgid "Script-Fu Pattern Selection"
+msgstr "Script-Fu 무늬 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:499
+msgid "Script-Fu Gradient Selection"
+msgstr "Script-Fu 그레이디언트 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:508
+msgid "Script-Fu Brush Selection"
+msgstr "Script-Fu 붓 선택"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:877
+#, c-format
+msgid "Error while executing %s:"
+msgstr "%s 실행 중 오류:"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "‘script-fu-register’ 호출에 필요한 매개변수가 부족함"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:648
+#, c-format
+msgid "Error while loading %s:"
+msgstr "%s 불러오는 중 오류:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:830
+msgid "Script-Fu Server Options"
+msgstr "Script-Fu 서버 옵션"
+
+#: ../plug-ins/script-fu/script-fu-server.c:835
+msgid "_Start Server"
+msgstr "서버 시작(_S)"
+
+#: ../plug-ins/script-fu/script-fu-server.c:868
+msgid "Listen on IP:"
+msgstr "수신 대기 IP:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:875
+msgid "Server port:"
+msgstr "서버 포트:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:881
+msgid "Server logfile:"
+msgstr "서버 로그파일:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:894
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+"127.0.0.1 (특히 0.0.0.0) 이외의 IP 주소에서 수신 대기 하면 공격자가 이 컴퓨터"
+"에서 임의 코드를 원격으로 실행할 수 있습니다."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr "범프맵"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:183
+msgid "Add B_evel..."
+msgstr "빗면 더하기(_E)..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:184
+msgid "Add a beveled border to an image"
+msgstr "이미지에 빗면 테두리를 추가"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:191
+msgid "Thickness"
+msgstr "두께"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:192
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:257
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Work on copy"
+msgstr "사본으로 작업하기"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+msgid "Keep bump layer"
+msgstr "범프 레이어 유지"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
+msgid "Border Layer"
+msgstr "레이어에 테두리"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:162
+msgid "Add _Border..."
+msgstr "액자 더하기(_B)..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:163
+msgid "Add a border around an image"
+msgstr "이미지에 테두리를 추가"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border X size"
+msgstr "테두리 X 크기"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Border Y size"
+msgstr "테두리 Y 크기"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:172
+msgid "Border color"
+msgstr "테두리 색"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:173
+msgid "Delta value on color"
+msgstr "색상에 대한 델타 값"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+msgid "Frame"
+msgstr "프레임"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr "혼합 애니메이션에는 최소 3개의 원본 레이어가 필요함"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "혼합(_B)..."
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"중간 레이어를 만들어 배경 위에 두 개 이상의 레이어를 애니메이션으로 혼합"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr "중간 프레임"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr "최대 흐림 반지름"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr "반복됨"
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:217
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"타들어가기 스크립트에는 총 두 개의 레이어가 필요합니다. 투명도가 있는 전경 레"
+"이어와 배경 레이어입니다."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
+msgid "B_urn-In..."
+msgstr "타들어감(_B)..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr "중간 레이어를 만들어 두 레이어 사이에 움직이는 ‘타들어감’ 전환을 만듦"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Glow color"
+msgstr "백열광 색상"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Fadeout"
+msgstr "페이드 아웃"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Fadeout width"
+msgstr "페이드 아웃 너비"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
+msgid "Corona width"
+msgstr "코로나 너비"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
+msgid "After glow"
+msgstr "잔광"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
+msgid "Add glowing"
+msgstr "백열광 추가"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
+msgid "Prepare for GIF"
+msgstr "GIF용 준비"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
+msgid "Speed (pixels/frame)"
+msgstr "속도 (프레임당 픽셀)"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+msgid "Carved Surface"
+msgstr "새겨 넣은 표면"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+msgid "Bevel Shadow"
+msgstr "빗면 그림자"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+msgid "Bevel Highlight"
+msgstr "빗면 강조"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+msgid "Cast Shadow"
+msgstr "그림자 투사"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+msgid "Inset"
+msgstr "인셋"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+msgid "Stencil C_arve..."
+msgstr "스텐실 새기기(_A)..."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr "지정한 드로어블을 지정한 이미지로 부터 새겨 낼 스텐실로 사용."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+msgid "Image to carve"
+msgstr "새길 이미지"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+msgid "Carve white areas"
+msgstr "흰 영역 새기기"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+msgid "Background"
+msgstr "배경"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+msgid "Layer 1"
+msgstr "레이어 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+msgid "Layer 2"
+msgstr "레이어 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+msgid "Layer 3"
+msgstr "레이어 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+msgid "Drop Shadow"
+msgstr "물방울 그림자"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:217
+msgid "Chrome"
+msgstr "크롬"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:218
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+msgid "Highlight"
+msgstr "강조"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+msgid "Stencil C_hrome..."
+msgstr "스텐실 크롬(_H)..."
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:231
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"지정한 (그레이스케일) 스텐실을 사용하여 선택한 영역(또는 알파)에 크롬 효과 추"
+"가"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:238
+msgid "Chrome saturation"
+msgstr "크롬 채도"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:239
+msgid "Chrome lightness"
+msgstr "크롬 명도"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
+msgid "Chrome factor"
+msgstr "크롬 팩터"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+msgid "Environment map"
+msgstr "환경 맵"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:244
+msgid "Highlight balance"
+msgstr "강조 균형"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:245
+msgid "Chrome balance"
+msgstr "크롬 균형"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
+msgid "Chrome white areas"
+msgstr "크롬 흰 영역"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:74
+msgid "Effect layer"
+msgstr "효과 레이어"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:127
+msgid "_Circuit..."
+msgstr "회로(_C)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:128
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr "선택한 영역(혹은 알파)을 회로판 위와 같은 자취로 채우기"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid "Oilify mask size"
+msgstr "유화 효과 마스크 크기"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:136
+msgid "Circuit seed"
+msgstr "회로 씨앗"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:137
+msgid "No background (only for separate layer)"
+msgstr "배경 없음 (독립된 레이어용으로만)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:138
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Keep selection"
+msgstr "선택 영역 유지"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:139
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+msgid "Separate layer"
+msgstr "독립된 레이어"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "_Clothify..."
+msgstr "천 효과(_C)..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:53
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "천 같은 텍스처를 선택한 영역(또는 알파)에 추가"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur X"
+msgstr "X축 블러"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Blur Y"
+msgstr "Y축 블러"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Azimuth"
+msgstr "방위"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Elevation"
+msgstr "고도"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:64
+msgid "Depth"
+msgstr "깊이"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr "얼룩"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "_Coffee Stain..."
+msgstr "커피 얼룩(_C).."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:83
+msgid "Add realistic looking coffee stains to the image"
+msgstr "사실적으로 보이는 커피 얼룩을 이미지에 추가"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+msgid "Stains"
+msgstr "얼룩"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:91
+msgid "Darken only"
+msgstr "어두운 색만"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
+msgid "Difference Clouds..."
+msgstr "차이 구름..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
+msgid "Solid noise applied with Difference layer mode"
+msgstr "차이 레이어 모드를 적용한 솔리드 노이즈"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+msgid "_Distort..."
+msgstr "왜곡(_D)..."
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+msgid "Distress the selection"
+msgstr "선택 영역 압박"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "임계값 (1(커짐)과 254사(작아짐) 사이)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "Spread"
+msgstr "퍼트리기"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "Granularity (1 is low)"
+msgstr "오돌토돌함 (1이면 작음)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+msgid "Smooth"
+msgstr "매끄럽게"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+msgid "Smooth horizontally"
+msgstr "가로로 매끄럽게"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+msgid "Smooth vertically"
+msgstr "세로로 매끄럽게"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow (legacy)..."
+msgstr "물방울 그림자(_D) (레거시)..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "선택한 영역(또는 알파)에 물방울 그림자 추가"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "X 오프셋"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "Y 오프셋"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Blur radius"
+msgstr "흐림 반지름"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+msgid "Color"
+msgstr "색"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Opacity"
+msgstr "불투명도"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+msgid "Allow resizing"
+msgstr "크기 바꾸기 허용"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
+msgid "_Erase Every Other Row..."
+msgstr "2줄마다 1줄 지우기(_E)..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:42
+msgid "Erase every other row or column"
+msgstr "2줄(2열)마다 1줄(1열) 지우기"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Rows/cols"
+msgstr "행/열"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Rows"
+msgstr "행"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Columns"
+msgstr "열"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+msgid "Even/odd"
+msgstr "짝수/홀수"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+msgid "Even"
+msgstr "짝수"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+msgid "Odd"
+msgstr "홀수"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+msgid "Erase/fill"
+msgstr "지우기/채우기"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+msgid "Erase"
+msgstr "지우기"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+msgid "Fill with BG"
+msgstr "배경색으로 채우기"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr "글꼴 지도 렌더링(_F)..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr "글꼴이름 필터와 일치하는 글꼴 미리 보기로 채워진 이미지 만들기"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+msgid "_Text"
+msgstr "텍스트(_T)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr "텍스트를 글꼴 이름으로 사용(_N)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr "라벨(_L)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr "필터(_F) (정규표현식)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Font _size (pixels)"
+msgstr "글꼴 크기(_S) (픽셀)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+msgid "_Border (pixels)"
+msgstr "테두리(_B) (픽셀)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "_Color scheme"
+msgstr "색채 배합(_C)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Black on white"
+msgstr "흰색 위에 검정"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Active colors"
+msgstr "활성 색"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
+msgid "_Fuzzy Border..."
+msgstr "퍼지 테두리(_F)..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "이미지에 울퉁불퉁하고, 모호한 테두리 추가"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr "테두리 크기"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Blur border"
+msgstr "테두리 블러"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+msgid "Granularity (1 is Low)"
+msgstr "오돌토돌함 (1이면 작음)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Add shadow"
+msgstr "그림자 추가"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
+msgid "Shadow weight (%)"
+msgstr "그림자 가중치 (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
+msgid "Flatten image"
+msgstr "이미지 평탄화"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr "경로 사용하기(_P)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "사용자 설명서로 바로 가기"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr "이미지를 웹용으로 준비(_P)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "디지털 카메라 사진으로 작업(_W)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr "파일 만들기, 열기, 저장하기 (_F)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr "기본 개념(_B)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr "대화 상자 사용법(_D)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr "간단한 개체 그리기(_S)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr "선택 영역 만들기 및 사용하기(_S)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+msgid "_Main Web Site"
+msgstr "메인 웹 사이트(_M)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+msgid "Bookmark to the GIMP web site"
+msgstr "김프 웹 사이트로 바로가기"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+msgid "_Developer Web Site"
+msgstr "개발자 웹 사이트(_D)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+msgid "_Roadmap"
+msgstr "로드맵(_R)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Bookmark to the roadmap of GIMP"
+msgstr "김프 로드맵으로 바로가기"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+msgid "_Wiki"
+msgstr "위키(_W)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+msgid "Bookmark to the wiki of GIMP"
+msgstr "김프 위키로 바로가기"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+msgid "_Bug Reports and Feature Requests"
+msgstr "버그 보고와 기능 요청 (_B)"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr "김프 버그 트래커로 바로가기"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+msgid "_User Manual Web Site"
+msgstr "사용자 설명서 웹 사이트(_U)"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+msgid "Custom _Gradient..."
+msgstr "맞춤 그레이디언트(_G)..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+msgid "Create an image filled with an example of the current gradient"
+msgstr "현재 그레이디언트의 예를 사용하여 채워진 이미지 만들기"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:75
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Width"
+msgstr "너비"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:76
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:197
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+msgid "Height"
+msgstr "높이"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:77
+msgid "Gradient reverse"
+msgstr "그레이디언트 역전"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "격자(_G)..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr "X와 Y 위치 목록에 지정한 대로 현재 붓을 사용하여 격자 그리기"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr "X 분할"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr "Y 분할"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "선택 영역으로부터 새 안내선(_s)"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+msgid "Create four guides around the bounding box of the current selection"
+msgstr "현재 선택 영역의 경계 상자 둘레에 안내선 4개 만들기"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr "새 안내선(퍼센트로)(_P)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr "이미지 크기에 대한 퍼센트로 지정한 위치에 안내선 추가"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Direction"
+msgstr "방향"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Horizontal"
+msgstr "가로"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "수직"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "Position (in %)"
+msgstr "위치 (%)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr "새 안내선(_G)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "지정한 방향과 위치에 안내선 추가 (픽셀 단위)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "Position"
+msgstr "위치"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "안내선 모두 제거(_R)"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr "가로 및 세로 안내선 모두 제거"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr "용암(_L)..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr "현재 선택 영역을 용암으로 채우기"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
+msgid "Seed"
+msgstr "씨앗"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "크기"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
+msgstr "거친 정도"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+msgid "Gradient"
+msgstr "그레이디언트"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+msgid "Use current gradient"
+msgstr "현재 그레이디언트 사용"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+msgid "Line _Nova..."
+msgstr "선 신성(_N)..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr "전경색을 사용하여 중심에서 바깥쪽으로 퍼지는 광선으로 레이어 채우기"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Number of lines"
+msgstr "선 개수"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Sharpness (degrees)"
+msgstr "선명도 (각도)"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:118
+msgid "Offset radius"
+msgstr "오프셋 반지름"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:119
+msgid "Randomness"
+msgstr "무작위도"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr "사각형인(_R)..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr "사각형인 붓을 만들기"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Name"
+msgstr "이름"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:143
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:198
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:268
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "Spacing"
+msgstr "간격"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:133
+msgid "Re_ctangular, Feathered..."
+msgstr "사각형인, 페더 처리된(_C)..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:134
+msgid "Create a rectangular brush with feathered edges"
+msgstr "가장자리가 페더 처리된 사각형인 붓을 만들기"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:142
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:267
+msgid "Feathering"
+msgstr "페더 처리하기"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:189
+msgid "_Elliptical..."
+msgstr "타원형인(_E)..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:190
+msgid "Create an elliptical brush"
+msgstr "타원형인 붓을 만들기"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:258
+msgid "Elli_ptical, Feathered..."
+msgstr "원형인, 페더 처리된(_P)..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:259
+msgid "Create an elliptical brush with feathered edges"
+msgstr "가장자리가 페더 처리된 타원형인 붓을 만들기"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr "옛날 사진(_O)..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr "이미지를 오래된 사진처럼 보이게 하기"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr "초점 흐리게 하기"
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "세피아"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr "얼룩"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
+msgid "Folder for the output file"
+msgstr "출력 파일용 폴더"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr "만들 파일의 이름(이 이름의 파일이 이미 존재하면 교체됨)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "입력한 파일 이름이 파일 이름으로 사용할 수 있는 이름이 아닙니다."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"이름에 있는 모든 문자가 공백으로 쓰이는 문자이거나 또는 파일 이름에 표시할 "
+"수 없는 문자입니다."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"활성 팔레트를 색상 항목 이름이 클래스 이름이고 색상 자체는 색상 특성인 CSS 스"
+"타일시트로 내보내기"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "활성 팔레트를 PHP 사전으로 내보내기 (이름 => 색상)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "활성 팔레트를 Python 사전으로 내보내기 (이름: 색상)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"팔테트 안의 모든 색을 줄당 16진수 값 하나씩 텍스트 파일에 쓰기 (이름 없음)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "활성 색상표를 java.util.Hashtable<String, Color>로 내보내기"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr "클립보드에 붙여 넣을 이미지 데이터가 없습니다."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+msgid "New _Brush..."
+msgstr "새 붓(_B)"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr "클립보드 내용을 새 붓으로 붙여 넣기"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "Brush name"
+msgstr "붓 이름"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+msgid "File name"
+msgstr "파일 이름"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+msgid "New _Pattern..."
+msgstr "새 무늬(_P)..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "클립보드 내용을 새 패턴으로 붙여 넣기"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+msgid "Pattern name"
+msgstr "무늬 이름"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr "원근(_P)..."
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "선택한 영역 (또는 알파)에 원근 있는 그림자 추가"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "각도"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative distance of horizon"
+msgstr "수평선의 상대적 거리"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Relative length of shadow"
+msgstr "그림자의 상대적 길이"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr "보간"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr "포식자(_P)..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "선택한 영역 (또는 알파)에 ‘포식자’ 효과 추가"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+msgid "Edge amount"
+msgstr "가장자리 양"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr "픽셀화"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+msgid "Pixel amount"
+msgstr "픽셀 양"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer Order"
+msgstr "레이어 순서 반전"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr "이미지에서 레이어 순서 반전"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
+msgid "_Rippling..."
+msgstr "잔물결 효과(_R)..."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr "현재 레이어에 잔물결 효과를 추가하여 다중 레이어 이미지 만들기"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Rippling strength"
+msgstr "잔물결 강도"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "프레임 개수"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Edge behavior"
+msgstr "가장자리 동작방식"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Wrap"
+msgstr "반복"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Smear"
+msgstr "문지르기"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Black"
+msgstr "검정"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr "둥근 모퉁이(_R)..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr "이미지의 모퉁이를 둥글게 하고 선택적으로 물방울 그림자와 배경을 추가"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+msgid "Edge radius"
+msgstr "가장자리 반지름"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+msgid "Add drop-shadow"
+msgstr "물방울 그림자 추가"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Shadow X offset"
+msgstr "그림자 X 오프셋"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Shadow Y offset"
+msgstr "그림자 Y 오프셋"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add background"
+msgstr "배경 추가"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr "색상맵 설정(_T)..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "이미지의 색상맵을 지정한 팔레트에 있는 색으로 변경."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr "팔레트"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr "둥근 사각형(_E)..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr "현재 선택 영역의 모퉁이를 둥글게 하기"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "Radius (%)"
+msgstr "반지름 (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Concave"
+msgstr "오목"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+msgid "To _Brush..."
+msgstr "붓으로(_B)..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr "선택 영역을 붓으로 변환"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+msgid "To _Image"
+msgstr "이미지로(_I)"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr "선택 영역을 이미지로 변환"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+msgid "To _Pattern..."
+msgstr "무늬로(_P)..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr "선택 영역을 무늬로 변환"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "_Slide..."
+msgstr "슬라이드(_S)..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr "슬라이드 필름 같은 프레임, 스프로킷 구멍, 라벨을 이미지에 추가"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:253
+msgid "Text"
+msgstr "텍스트"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:254
+msgid "Number"
+msgstr "수"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:255
+msgid "Font"
+msgstr "글꼴"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:256
+msgid "Font color"
+msgstr "글꼴 색"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr "회전하는 구체(_S)..."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "현재 이미지를 회전하는 구형에 매핑하여 애니메이션을 만들기"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "프레임"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Turn from left to right"
+msgstr "왼쪽에서 오른쪽으로 회전"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Transparent background"
+msgstr "투명한 배경"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "인덱스를 n 색으로 (0 = RGB 유지)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+msgid "Rendering Spyro"
+msgstr "스파이로 렌더링하기"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+msgid "_Spyrogimp (older script-fu version)..."
+msgstr "스파이로김프(_S) (더 오래된 스크립트-푸 버전)..."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+msgstr ""
+"이 프러시저는 폐기 예정입니다! ‘plug-in-spyrogimp’를 대신 사용하십시오."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Type"
+msgstr "유형"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Spyrograph"
+msgstr "스파이로그래프"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+msgid "Epitrochoid"
+msgstr "에피트로코이드"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+msgid "Lissajous"
+msgstr "리사주"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Shape"
+msgstr "모양"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Circle"
+msgstr "원"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+msgid "Triangle"
+msgstr "삼각형"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+msgid "Square"
+msgstr "정사각형"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+msgid "Pentagon"
+msgstr "5각형"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+msgid "Hexagon"
+msgstr "6각형"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+msgid "Polygon: 7 sides"
+msgstr "정다각형: 변 7개"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+msgid "Polygon: 8 sides"
+msgstr "정다각형: 변 8개"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+msgid "Polygon: 9 sides"
+msgstr "정다각형: 변 9개"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+msgid "Polygon: 10 sides"
+msgstr "정다각형: 변 10개"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+msgid "Outer teeth"
+msgstr "바깥 톱니"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+msgid "Inner teeth"
+msgstr "안쪽 톱니"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+msgid "Margin (pixels)"
+msgstr "여백 (픽셀)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+msgid "Hole ratio"
+msgstr "구멍 비율"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+msgid "Start angle"
+msgstr "시작 각도"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Tool"
+msgstr "도구"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Pencil"
+msgstr "연필"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+msgid "Brush"
+msgstr "붓"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+msgid "Airbrush"
+msgstr "에어브러시"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Color method"
+msgstr "채색 방식"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Solid Color"
+msgstr "고정 색상"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+msgid "Gradient: Loop Sawtooth"
+msgstr "그레이디언트: 반복 톱니"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+msgid "Gradient: Loop Triangle"
+msgstr "그레이디언트: 반복 삼각형"
+
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:272
+msgid "_Sphere..."
+msgstr "구형(_S)..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr "타일링 가능한 블러(_T)..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr ""
+"이미지의 가장자리를 흐리게 하여 이어진 표시 없이 타일링되는 이미지로 바꾸기"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "반지름"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+msgid "Blur vertically"
+msgstr "세로로 흐릿하게"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+msgid "Blur horizontally"
+msgstr "가로로 흐림"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Blur type"
+msgstr "블러 유형"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "IIR"
+msgstr "IIR"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr "마스크 크기"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+msgid "Mask opacity"
+msgstr "마스크 불투명도"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr "파도(_W)..."
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr "현재 이미지에 돌을 던진 것 같은 효과가 있는 다중 레이어 이미지 만들기"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr "진폭"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr "파장"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+msgid "Invert direction"
+msgstr "방향 반전"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "_Weave..."
+msgstr "직조(_W)..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr "직조 효과로 채워진, 오버레이 또는 범프 맵으로 사용할 새 레이어 만들기"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:405
+msgid "Ribbon width"
+msgstr "리본 너비"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:406
+msgid "Ribbon spacing"
+msgstr "리본 간격"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:407
+msgid "Shadow darkness"
+msgstr "그림자 어둡기"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:408
+msgid "Shadow depth"
+msgstr "그림자 깊이"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:409
+msgid "Thread length"
+msgstr "실 길이"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:410
+msgid "Thread density"
+msgstr "실 밀도"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:411
+msgid "Thread intensity"
+msgstr "실 농도"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "그림자"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr "_Xach 효과..."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr "선택한 영역 (또는 알파)에 미묘한 반투명 3D 효과 추가"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+msgid "Highlight X offset"
+msgstr "강조 X 오프셋"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight Y offset"
+msgstr "강조 Y 오프셋"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "강조 색상"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight opacity"
+msgstr "강조 불투명도"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Drop shadow color"
+msgstr "물방울 그림자 색"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr "물방울 그림자 불투명도"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow blur radius"
+msgstr "그림자 효과 흐림 반지름"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow X offset"
+msgstr "그림자 효과 X 오프셋"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow Y offset"
+msgstr "그림자 효과 Y 오프셋"
