@@ -24,18 +24,28 @@ import gobject
 import gtk
 
 from math import pi, sin, cos, atan, atan2, fmod, radians
+import gettext
 import fractions
 import time
+
+
+# i18n
+t = gettext.translation("gimp20-python", gimp.locale_directory, fallback=True)
+_ = t.ugettext
+
+def N_(message):
+    return message
+
 
 pdb = gimp.pdb
 
 two_pi, half_pi = 2 * pi, pi / 2
-layer_name = "Spyro Layer"
+layer_name = _("Spyro Layer")
 
 # "Enums"
 GEAR_NOTATION, TOY_KIT_NOTATION = range(2)       # Pattern notations
 
-# Mapping of pattern notation to the corresponding tab in the patttern notation notebook.
+# Mapping of pattern notation to the corresponding tab in the pattern notation notebook.
 pattern_notation_page = {}
 
 ring_teeth = [96, 144, 105, 150]
@@ -76,7 +86,7 @@ class Shape:
 
 
 class CircleShape(Shape):
-    name = "Circle"
+    name = _("Circle")
 
     def get_center_of_moving_gear(self, oangle, dist=None):
         """
@@ -112,7 +122,7 @@ class SidedShape(CanRotateShape, Shape):
 
 
 class PolygonShape(SidedShape):
-    name = "Polygon-Star"
+    name = _("Polygon-Star")
 
     def get_shape_factor(self, oangle):
         oangle_mod = fmod(oangle + self.cp.shape_rotation_radians, self.angle_of_each_side)
@@ -128,7 +138,7 @@ class PolygonShape(SidedShape):
 
 class SineShape(SidedShape):
     # Sine wave on a circle ring.
-    name = "Sine"
+    name = _("Sine")
 
     def get_shape_factor(self, oangle):
         oangle_mod = fmod(oangle + self.cp.shape_rotation_radians, self.angle_of_each_side)
@@ -138,7 +148,7 @@ class SineShape(SidedShape):
 
 class BumpShape(SidedShape):
     # Semi-circles, based on a polygon
-    name = "Bumps"
+    name = _("Bumps")
 
     def get_shape_factor(self, oangle):
         oangle_mod = fmod(oangle + self.cp.shape_rotation_radians, self.angle_of_each_side)
@@ -243,7 +253,7 @@ class AbstractShapeFromParts(Shape):
 
 
 class RackShape(CanRotateShape, AbstractShapeFromParts):
-    name = "Rack"
+    name = _("Rack")
 
     def configure(self, img, pp, cp, drawing_no):
         Shape.configure(self, img, pp, cp, drawing_no)
@@ -287,7 +297,7 @@ class RackShape(CanRotateShape, AbstractShapeFromParts):
 
 
 class FrameShape(AbstractShapeFromParts):
-    name = "Frame"
+    name = _("Frame")
 
     def configure(self, img, pp, cp, drawing_no):
         Shape.configure(self, img, pp, cp, drawing_no)
@@ -376,7 +386,7 @@ class SelectionToPath:
 
 
 class SelectionShape(Shape):
-    name = "Selection"
+    name = _("Selection")
 
     def __init__(self):
         self.path = None
@@ -466,7 +476,7 @@ def get_gradient_samples(num_samples):
 
 
 class PencilTool():
-    name = "Pencil"
+    name = _("Pencil")
     can_color = True
 
     def draw(self, layer, strokes, color=None):
@@ -482,7 +492,7 @@ class PencilTool():
 
 
 class AirBrushTool():
-    name = "AirBrush"
+    name = _("AirBrush")
     can_color = True
 
     def draw(self, layer, strokes, color=None):
@@ -542,12 +552,12 @@ class PreviewTool:
         pdb.gimp_pencil(layer, len(strokes), strokes)
         pdb.gimp_context_pop()
 
-    name = "Preview"
+    name = _("Preview")
     can_color = False
 
 
 class StrokeTool(AbstractStrokeTool):
-    name = "Stroke"
+    name = _("Stroke")
     can_color = True
 
     def prepare_stroke_context(self, color):
@@ -575,10 +585,10 @@ class StrokePaintTool(AbstractStrokeTool):
 
 tools = [
     PreviewTool(),
-    StrokePaintTool("PaintBrush", "gimp-paintbrush"),
+    StrokePaintTool(_("PaintBrush"), "gimp-paintbrush"),
     PencilTool(), AirBrushTool(), StrokeTool(),
-    StrokePaintTool("Ink", 'gimp-ink'),
-    StrokePaintTool("MyPaintBrush", 'gimp-mybrush')
+    StrokePaintTool(_("Ink"), 'gimp-ink'),
+    StrokePaintTool(_("MyPaintBrush"), 'gimp-mybrush')
     # Clone does not work properly when an image is not set.  When that happens, drawing fails, and
     # I am unable to catch the error. This causes the plugin to crash, and subsequent problems with undo.
     # StrokePaintTool("Clone", 'gimp-clone', False)
@@ -807,21 +817,21 @@ class RouletteCurveType(CurveType):
 
 
 class SpyroCurveType(RouletteCurveType):
-    name = "Spyrograph"
+    name = _("Spyrograph")
 
     def get_angle_factor(self, cp):
         return - (cp.fixed_gear_teeth - cp.moving_gear_teeth) / float(cp.moving_gear_teeth)
 
 
 class EpitrochoidCurvetype(RouletteCurveType):
-    name = "Epitrochoid"
+    name = _("Epitrochoid")
 
     def get_angle_factor(self, cp):
         return (cp.fixed_gear_teeth + cp.moving_gear_teeth) / float(cp.moving_gear_teeth)
 
 
 class SineCurveType(CurveType):
-    name = "Sine"
+    name = _("Sine")
 
     def get_angle_factor(self, cp):
         return cp.fixed_gear_teeth / float(cp.moving_gear_teeth)
@@ -841,7 +851,7 @@ class SineCurveType(CurveType):
 
 
 class LissaCurveType:
-    name = "Lissajous"
+    name = _("Lissajous")
 
     def get_angle_factor(self, cp):
         return cp.fixed_gear_teeth / float(cp.moving_gear_teeth)
@@ -1085,23 +1095,23 @@ class SpyroWindow(gtk.Window):
 
             # Curve type
             row = 0
-            label_in_table("Curve Type", table, row,
-                           "An Epitrochoid pattern is when the moving gear is on the outside of the fixed gear.")
+            label_in_table(_("Curve Type"), table, row,
+                           _("An Epitrochoid pattern is when the moving gear is on the outside of the fixed gear."))
             self.curve_type_combo = set_combo_in_table([ct.name for ct in curve_types], table, row,
                                                        self.curve_type_changed)
 
             row += 1
-            label_in_table("Tool", table, row,
-                           "The tool with which to draw the pattern."
-                           "The Preview tool just draws quickly.")
+            label_in_table(_("Tool"), table, row,
+                           _("The tool with which to draw the pattern."
+                             "The Preview tool just draws quickly."))
             self.tool_combo = set_combo_in_table([tool.name for tool in tools], table, row,
                                                  self.tool_combo_changed)
 
-            self.long_gradient_checkbox = gtk.CheckButton("Long Gradient")
+            self.long_gradient_checkbox = gtk.CheckButton(_("Long Gradient"))
             self.long_gradient_checkbox.set_tooltip_text(
-                "When unchecked, the current tool settings will be used. "
-                "When checked, will use a long gradient to match the length of the pattern, "
-                "based on current gradient and repeat mode from the gradient tool settings."
+                _("When unchecked, the current tool settings will be used. "
+                  "When checked, will use a long gradient to match the length of the pattern, "
+                  "based on current gradient and repeat mode from the gradient tool settings.")
             )
             self.long_gradient_checkbox.set_border_width(0)
             table.attach(self.long_gradient_checkbox, 2, 3, row, row + 1, xoptions=0, yoptions=0)
@@ -1119,11 +1129,11 @@ class SpyroWindow(gtk.Window):
             hbox = gtk.HBox(spacing=5)
             hbox.set_border_width(5)
 
-            label = gtk.Label("Specify pattern using one of the following tabs:")
-            label.set_tooltip_text(
+            label = gtk.Label(_("Specify pattern using one of the following tabs:"))
+            label.set_tooltip_text(_(
                 "The pattern is specified only by the active tab. Toy Kit is similar to Gears, "
                 "but it uses gears and hole numbers which are found in toy kits. "
-                "If you follow the instructions from the toy kit manuals, results should be similar.")
+                "If you follow the instructions from the toy kit manuals, results should be similar."))
             hbox.pack_start(label)
             label.show()
 
@@ -1144,27 +1154,27 @@ class SpyroWindow(gtk.Window):
 
             # Teeth
             row = 0
-            fixed_gear_tooltip = (
+            fixed_gear_tooltip = _(
                 "Number of teeth of fixed gear. The size of the fixed gear is "
                 "proportional to the number of teeth."
             )
-            label_in_table("Fixed Gear Teeth", gear_table, row, fixed_gear_tooltip)
+            label_in_table(_("Fixed Gear Teeth"), gear_table, row, fixed_gear_tooltip)
             self.outer_teeth_adj = gtk.Adjustment(self.p.outer_teeth, 10, 180, 1)
             hscale_in_table(self.outer_teeth_adj, gear_table, row, self.outer_teeth_changed)
 
             row += 1
-            moving_gear_tooltip = (
+            moving_gear_tooltip = _(
                 "Number of teeth of moving gear. The size of the moving gear is "
                 "proportional to the number of teeth."
             )
-            label_in_table("Moving Gear Teeth", gear_table, row, moving_gear_tooltip)
+            label_in_table(_("Moving Gear Teeth"), gear_table, row, moving_gear_tooltip)
             self.inner_teeth_adj = gtk.Adjustment(self.p.inner_teeth, 2, 100, 1)
             hscale_in_table(self.inner_teeth_adj, gear_table, row, self.inner_teeth_changed)
 
             row += 1
-            label_in_table("Hole percent", gear_table, row,
-                           "How far is the hole from the center of the moving gear. "
-                           "100% means that the hole is at the gear's edge.")
+            label_in_table(_("Hole percent"), gear_table, row,
+                           _("How far is the hole from the center of the moving gear. "
+                             "100% means that the hole is at the gear's edge."))
             self.hole_percent_adj = gtk.Adjustment(self.p.hole_percent, 2.5, 100.0, 0.5)
             self.hole_percent_myscale = hscale_in_table(self.hole_percent_adj, gear_table,
                                                         row, self.hole_percent_changed, digits=1)
@@ -1174,31 +1184,32 @@ class SpyroWindow(gtk.Window):
             kit_table = create_table(3, 3, 5)
 
             row = 0
-            label_in_table("Fixed Gear Teeth", kit_table, row, fixed_gear_tooltip)
+            label_in_table(_("Fixed Gear Teeth"), kit_table, row, fixed_gear_tooltip)
             self.kit_outer_teeth_combo = set_combo_in_table([str(t) for t in ring_teeth], kit_table, row,
                                                             self.kit_outer_teeth_combo_changed)
 
             row += 1
-            label_in_table("Moving Gear Teeth", kit_table, row, moving_gear_tooltip)
+            label_in_table(_("Moving Gear Teeth"), kit_table, row, moving_gear_tooltip)
             self.kit_inner_teeth_combo = set_combo_in_table([str(t) for t in wheel_teeth], kit_table, row,
                                                             self.kit_inner_teeth_combo_changed)
 
             row += 1
-            label_in_table("Hole Number", kit_table, row, "Hole #1 is at the edge of the gear. "
-                           "The maximum hole number is near the center. "
-                           "The maximum hole number is different for each gear.")
+            label_in_table(_("Hole Number"), kit_table, row,
+                           _("Hole #1 is at the edge of the gear. "
+                             "The maximum hole number is near the center. "
+                             "The maximum hole number is different for each gear."))
             self.kit_hole_adj = gtk.Adjustment(self.p.hole_number, 1, self.p.kit_max_hole_number(), 1)
             self.kit_hole_myscale = hscale_in_table(self.kit_hole_adj, kit_table, row, self.kit_hole_changed)
 
             # Add tables as childs of the pattern notebook
 
             pattern_notation_page[TOY_KIT_NOTATION] = self.pattern_notebook.append_page(kit_table)
-            self.pattern_notebook.set_tab_label_text(kit_table, 'Toy Kit')
+            self.pattern_notebook.set_tab_label_text(kit_table, _("Toy Kit"))
             self.pattern_notebook.set_tab_label_packing(kit_table, 0, 0, gtk.PACK_END)
             kit_table.show()
 
             pattern_notation_page[GEAR_NOTATION] = self.pattern_notebook.append_page(gear_table)
-            self.pattern_notebook.set_tab_label_text(gear_table, 'Gears')
+            self.pattern_notebook.set_tab_label_text(gear_table, _("Gears"))
             self.pattern_notebook.set_tab_label_packing(gear_table, 0, 0, gtk.PACK_END)
             gear_table.show()
 
@@ -1210,9 +1221,9 @@ class SpyroWindow(gtk.Window):
             pattern_table = create_table(1, 3, 5)
 
             row = 0
-            label_in_table("Rotation", pattern_table, row,
-                           "Rotation of the pattern, in degrees. "
-                           "The starting position of the moving gear in the fixed gear.")
+            label_in_table(_("Rotation"), pattern_table, row,
+                           _("Rotation of the pattern, in degrees. "
+                             "The starting position of the moving gear in the fixed gear."))
             self.pattern_rotation_adj, myscale = rotation_in_table(
                 self.p.pattern_rotation, pattern_table, row, self.pattern_rotation_changed
             )
@@ -1234,27 +1245,27 @@ class SpyroWindow(gtk.Window):
             table = create_table(4, 2, 10)
 
             row = 0
-            label_in_table("Shape", table, row,
-                           "The shape of the fixed gear to be used inside current selection. "
-                           "Rack is a long round-edged shape provided in the toy kits. "
-                           "Frame hugs the boundaries of the rectangular selection, "
-                           "use hole=100 in Gear notation to touch boundary. "
-                           "Selection will hug boundaries of current selection - try something non-rectangular.")
+            label_in_table(_("Shape"), table, row,
+                           _("The shape of the fixed gear to be used inside current selection. "
+                             "Rack is a long round-edged shape provided in the toy kits. "
+                             "Frame hugs the boundaries of the rectangular selection, "
+                             "use hole=100 in Gear notation to touch boundary. "
+                             "Selection will hug boundaries of current selection - try something non-rectangular."))
             self.shape_combo = set_combo_in_table([shape.name for shape in shapes], table, row,
                                                   self.shape_combo_changed)
 
             row += 1
-            label_in_table("Sides", table, row, "Number of sides of the shape.")
+            label_in_table(_("Sides"), table, row, _("Number of sides of the shape."))
             self.sides_adj = gtk.Adjustment(self.p.sides, 3, 16, 1)
             self.sides_myscale = hscale_in_table(self.sides_adj, table, row, self.sides_changed)
 
             row += 1
-            label_in_table("Morph", table, row, "Morph fixed gear shape. Only affects some of the shapes.")
+            label_in_table(_("Morph"), table, row, _("Morph fixed gear shape. Only affects some of the shapes."))
             self.morph_adj = gtk.Adjustment(self.p.morph, 0.0, 1.0, 0.01)
             self.morph_myscale = hscale_in_table(self.morph_adj, table, row, self.morph_changed, digits=2)
 
             row += 1
-            label_in_table("Rotation", table, row, "Rotation of the fixed gear, in degrees")
+            label_in_table(_("Rotation"), table, row, _("Rotation of the fixed gear, in degrees"))
             self.shape_rotation_adj, self.shape_rotation_myscale = rotation_in_table(
                 self.p.shape_rotation, table, row, self.shape_rotation_changed
             )
@@ -1269,15 +1280,15 @@ class SpyroWindow(gtk.Window):
             table = create_table(2, 2, 10)
 
             row = 0
-            label_in_table("Margin (px)", table, row, "Margin from edge of selection.")
+            label_in_table(_("Margin (px)"), table, row, _("Margin from edge of selection."))
             self.margin_adj = gtk.Adjustment(self.p.margin_pixels, 0, max(img.height, img.width), 1)
             hscale_in_table(self.margin_adj, table, row, self.margin_changed)
 
             row += 1
-            self.equal_w_h_checkbox = gtk.CheckButton("Make width and height equal")
+            self.equal_w_h_checkbox = gtk.CheckButton(_("Make width and height equal"))
             self.equal_w_h_checkbox.set_tooltip_text(
-                "When unchecked, the pattern will fill the current image or selection. "
-                "When checked, the pattern will have same width and height, and will be centered."
+                _("When unchecked, the pattern will fill the current image or selection. "
+                  "When checked, the pattern will have same width and height, and will be centered.")
             )
             self.equal_w_h_checkbox.set_border_width(15)
             table.attach(self.equal_w_h_checkbox, 0, 2, row, row + 1)
@@ -1300,18 +1311,18 @@ class SpyroWindow(gtk.Window):
         def dialog_button_box():
             hbox = gtk.HBox(homogeneous=True, spacing=20)
 
-            add_button_to_box(hbox, "Redraw", self.redraw,
-                              "If you change the settings of a tool, change color, or change the selection, "
-                              "press this to preview how the pattern looks.")
-            add_button_to_box(hbox, "Reset", self.reset_params)
-            add_button_to_box(hbox, "Cancel", self.cancel_window)
-            self.ok_btn = add_button_to_box(hbox, "OK", self.ok_window)
+            add_button_to_box(hbox, _("Redraw"), self.redraw,
+                              _("If you change the settings of a tool, change color, or change the selection, "
+                                "press this to preview how the pattern looks."))
+            add_button_to_box(hbox, _("Reset"), self.reset_params)
+            add_button_to_box(hbox, _("Cancel"), self.cancel_window)
+            self.ok_btn = add_button_to_box(hbox, _("OK"), self.ok_window)
 
-            self.keep_separate_layer_checkbox = gtk.CheckButton("Keep\nLayer")
+            self.keep_separate_layer_checkbox = gtk.CheckButton(_("Keep\nLayer"))
             self.keep_separate_layer_checkbox.set_tooltip_text(
-                "If checked, then once OK is pressed, the spyro layer is kept, and the plugin exits quickly. "
-                "If unchecked, the spyro layer is deleted, and the pattern is redrawn on the layer that was "
-                "active when the plugin was launched."
+                _("If checked, then once OK is pressed, the spyro layer is kept, and the plugin exits quickly. "
+                  "If unchecked, the spyro layer is deleted, and the pattern is redrawn on the layer that was "
+                  "active when the plugin was launched.")
             )
             hbox.add(self.keep_separate_layer_checkbox)
             self.keep_separate_layer_checkbox.show()
@@ -1323,7 +1334,7 @@ class SpyroWindow(gtk.Window):
 
             # Create the dialog
             gtk.Window.__init__(self)
-            self.set_title("Spyrogimp")
+            self.set_title(_("Spyrogimp"))
             self.set_default_size(350, -1)
             self.set_border_width(10)
             # self.set_keep_above(True) # keep the window on top
@@ -1332,7 +1343,7 @@ class SpyroWindow(gtk.Window):
             vbox = gtk.VBox(spacing=10, homogeneous=False)
             self.add(vbox)
 
-            box = gimpui.HintBox("Draw spyrographs using current tool settings and selection.")
+            box = gimpui.HintBox(_("Draw spyrographs using current tool settings and selection."))
             vbox.pack_start(box, expand=False)
             box.show()
 
@@ -1345,13 +1356,13 @@ class SpyroWindow(gtk.Window):
             self.main_notebook.set_border_width(5)
 
             pattern_frame = pattern_notation_frame()
-            self.main_notebook.append_page(pattern_frame, gtk.Label("Curve Pattern"))
+            self.main_notebook.append_page(pattern_frame, gtk.Label(_("Curve Pattern")))
             pattern_frame.show()
             fixed_g_page = fixed_gear_page()
-            self.main_notebook.append_page(fixed_g_page, gtk.Label("Fixed Gear"))
+            self.main_notebook.append_page(fixed_g_page, gtk.Label(_("Fixed Gear")))
             fixed_g_page.show()
             size_p = size_page()
-            self.main_notebook.append_page(size_p, gtk.Label("Size"))
+            self.main_notebook.append_page(size_p, gtk.Label(_("Size")))
             size_p.show()
 
             vbox.add(self.main_notebook)
@@ -1528,7 +1539,6 @@ class SpyroWindow(gtk.Window):
             self.hole_percent_myscale.set_sensitive(False)
             self.kit_hole_myscale.set_sensitive(False)
 
-
     def curve_type_changed(self, val):
         self.p.curve_type = val.get_active()
         self.curve_type_side_effects()
@@ -1637,7 +1647,7 @@ class SpyroWindow(gtk.Window):
     # Progress bar of plugin window.
 
     def progress_start(self):
-        self.progress_bar.set_text("Rendering Pattern")
+        self.progress_bar.set_text(_("Rendering Pattern"))
         self.progress_bar.set_fraction(0.0)
         pdb.gimp_displays_flush()
 
@@ -1649,7 +1659,7 @@ class SpyroWindow(gtk.Window):
         self.progress_bar.set_fraction(self.engine.fraction_done())
 
     def progress_unknown(self):
-        self.progress_bar.set_text("Please wait : Rendering Pattern")
+        self.progress_bar.set_text(_("Please wait : Rendering Pattern"))
         self.progress_bar.pulse()
         pdb.gimp_displays_flush()
 
@@ -1758,7 +1768,7 @@ class SpyrogimpPlusPlugin(gimpplugin.plugin):
 
     def query(self):
         plugin_name = "plug_in_spyrogimp"
-        label = "Spyrogimp..."
+        label = N_("Spyrogimp...")
         menu = "<Image>/Filters/Render/"
 
         params = [
@@ -1767,7 +1777,7 @@ class SpyrogimpPlusPlugin(gimpplugin.plugin):
             (PDB_IMAGE, "image", "Input image"),
             (PDB_DRAWABLE, "drawable", "Input drawable"),
             (PDB_INT32, "curve_type",
-            "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"),
+             "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"),
             (PDB_INT32, "shape", "Shape of fixed gear"),
             (PDB_INT32, "sides", "Number of sides of fixed gear (3 or greater). Only used by some shapes."),
             (PDB_FLOAT, "morph", "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."),
@@ -1785,9 +1795,11 @@ class SpyrogimpPlusPlugin(gimpplugin.plugin):
              "Only applicable to some of the tools.")
         ]
 
+        gimp.domain_register("gimp20-python", gimp.locale_directory)
+
         gimp.install_procedure(
             plugin_name,
-            "Draw spyrographs using current tool settings and selection.",
+            N_("Draw spyrographs using current tool settings and selection."),
             "Uses current tool settings to draw Spyrograph patterns. "
             "The size and location of the pattern is based on the current selection.",
             "Elad Shahar",
