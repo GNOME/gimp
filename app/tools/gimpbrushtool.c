@@ -339,7 +339,7 @@ gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
                                 gdouble        x,
                                 gdouble        y)
 {
-  GimpPaintOptions     *options;
+  GimpTool             *tool;
   GimpDisplayShell     *shell;
   const GimpBezierDesc *boundary = NULL;
   gint                  width    = 0;
@@ -362,8 +362,8 @@ gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
   if (! boundary)
     return NULL;
 
-  options = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
-  shell   = gimp_display_get_shell (display);
+  tool  = GIMP_TOOL (brush_tool);
+  shell = gimp_display_get_shell (display);
 
   /*  don't draw the boundary if it becomes too small  */
   if (SCALEX (shell, width)  > 4 &&
@@ -372,7 +372,8 @@ gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
       x -= width  / 2.0;
       y -= height / 2.0;
 
-      if (gimp_paint_options_get_brush_mode (options) == GIMP_BRUSH_HARD)
+      if (gimp_tool_control_get_precision (tool->control) ==
+          GIMP_CURSOR_PRECISION_PIXEL_CENTER)
         {
 #define EPSILON 0.000001
           /*  Add EPSILON before rounding since e.g.
