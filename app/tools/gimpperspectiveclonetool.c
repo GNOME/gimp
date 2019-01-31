@@ -260,6 +260,9 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
                         clone_tool);
 
       /*  start drawing the bounding box and handles...  */
+      if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+        gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
       /*  Save the current transformation info  */
