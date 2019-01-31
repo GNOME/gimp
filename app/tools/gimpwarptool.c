@@ -201,6 +201,8 @@ gimp_warp_tool_init (GimpWarpTool *self)
   gimp_tool_control_set_dirty_action    (tool->control,
                                          GIMP_TOOL_ACTION_COMMIT);
   gimp_tool_control_set_wants_click     (tool->control, TRUE);
+  gimp_tool_control_set_precision       (tool->control,
+                                         GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor     (tool->control,
                                          GIMP_TOOL_CURSOR_WARP);
   gimp_tool_control_set_action_size     (tool->control,

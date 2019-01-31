@@ -240,7 +240,7 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
                                      GIMP_DIRTY_IMAGE_SIZE |
                                      GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_precision   (tool->control,
-                                     GIMP_CURSOR_PRECISION_PIXEL_CENTER);
+                                     GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 
@@ -974,6 +974,13 @@ gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
 
   gimp_tool_control_set_toggled (tool->control, FALSE);
 
+  /*  set precision to SUBPIXEL, because it may have been changed to
+   *  PIXEL_CENTER if the tool has switched to MATTING_STATE_PAINT_TRIMAP,
+   *  in gimp_foreground_select_tool_set_trimap().
+   */
+  gimp_tool_control_set_precision (tool->control,
+                                   GIMP_CURSOR_PRECISION_SUBPIXEL);
+
   fg_select->state = MATTING_STATE_FREE_SELECT;
 
   /*  update the undo actions / menu items  */
@@ -1040,6 +1047,10 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select)
 
   /* disable double click in paint trimap state */
   gimp_tool_control_set_wants_double_click (tool->control, FALSE);
+
+  /* set precision to PIXEL_CENTER in paint trimap state */
+  gimp_tool_control_set_precision (tool->control,
+                                   GIMP_CURSOR_PRECISION_PIXEL_CENTER);
 
   fg_select->state = MATTING_STATE_PAINT_TRIMAP;
 
