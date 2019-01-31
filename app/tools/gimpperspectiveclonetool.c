@@ -62,6 +62,8 @@ enum
 };
 
 
+static void     gimp_perspective_clone_tool_constructed    (GObject          *object);
+
 static gboolean gimp_perspective_clone_tool_initialize     (GimpTool         *tool,
                                                             GimpDisplay      *display,
                                                             GError          **error);
@@ -89,6 +91,11 @@ static void     gimp_perspective_clone_tool_button_release (GimpTool         *to
 static void     gimp_perspective_clone_tool_motion         (GimpTool         *tool,
                                                             const GimpCoords *coords,
                                                             guint32           time,
+                                                            GdkModifierType   state,
+                                                            GimpDisplay      *display);
+static void     gimp_perspective_clone_tool_modifier_key   (GimpTool         *tool,
+                                                            GdkModifierType   key,
+                                                            gboolean          press,
                                                             GdkModifierType   state,
                                                             GimpDisplay      *display);
 static void     gimp_perspective_clone_tool_cursor_update  (GimpTool         *tool,
@@ -151,8 +158,11 @@ gimp_perspective_clone_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_perspective_clone_tool_class_init (GimpPerspectiveCloneToolClass *klass)
 {
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+
+  object_class->constructed  = gimp_perspective_clone_tool_constructed;
 
   tool_class->initialize     = gimp_perspective_clone_tool_initialize;
   tool_class->has_display    = gimp_perspective_clone_tool_has_display;
@@ -161,6 +171,7 @@ gimp_perspective_clone_tool_class_init (GimpPerspectiveCloneToolClass *klass)
   tool_class->button_press   = gimp_perspective_clone_tool_button_press;
   tool_class->button_release = gimp_perspective_clone_tool_button_release;
   tool_class->motion         = gimp_perspective_clone_tool_motion;
+  tool_class->modifier_key   = gimp_perspective_clone_tool_modifier_key;
   tool_class->cursor_update  = gimp_perspective_clone_tool_cursor_update;
   tool_class->oper_update    = gimp_perspective_clone_tool_oper_update;
   tool_class->options_notify = gimp_perspective_clone_tool_options_notify;
@@ -177,6 +188,19 @@ gimp_perspective_clone_tool_init (GimpPerspectiveCloneTool *clone_tool)
                                          "context/context-pattern-select-set");
 
   gimp_matrix3_identity (&clone_tool->transform);
+}
+
+static void
+gimp_perspective_clone_tool_constructed (GObject *object)
+{
+  GimpPerspectiveCloneOptions *options;
+
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
+    gimp_paint_tool_set_active (GIMP_PAINT_TOOL (object), FALSE);
 }
 
 static gboolean
@@ -448,6 +472,39 @@ gimp_perspective_clone_tool_motion (GimpTool         *tool,
 }
 
 static void
+gimp_perspective_clone_tool_modifier_key (GimpTool        *tool,
+                                          GdkModifierType  key,
+                                          gboolean         press,
+                                          GdkModifierType  state,
+                                          GimpDisplay     *display)
+{
+  GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
+  GimpPerspectiveCloneOptions *options;
+
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
+
+  if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_PAINT &&
+      key == gimp_get_toggle_behavior_mask ())
+    {
+      if (press)
+        {
+          clone_tool->saved_precision =
+            gimp_tool_control_get_precision (tool->control);
+          gimp_tool_control_set_precision (tool->control,
+                                           GIMP_CURSOR_PRECISION_PIXEL_CENTER);
+        }
+      else
+        {
+          gimp_tool_control_set_precision (tool->control,
+                                           clone_tool->saved_precision);
+        }
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+                                                display);
+}
+
+static void
 gimp_perspective_clone_tool_cursor_update (GimpTool         *tool,
                                            const GimpCoords *coords,
                                            GdkModifierType   state,
@@ -592,6 +649,7 @@ gimp_perspective_clone_tool_options_notify (GimpTool         *tool,
                                             const GParamSpec *pspec)
 {
   GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
+  GimpPaintTool               *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpPerspectiveCloneOptions *clone_options;
 
   clone_options = GIMP_PERSPECTIVE_CLONE_OPTIONS (options);
@@ -608,13 +666,14 @@ gimp_perspective_clone_tool_options_notify (GimpTool         *tool,
 
       if (clone_options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_PAINT)
         {
-          /* GimpPaintTool's notify callback will set the right precision */
-          g_object_notify (G_OBJECT (options), "hard");
-
           gimp_perspective_clone_set_transform (clone, &clone_tool->transform);
+
+          gimp_paint_tool_set_active (paint_tool, TRUE);
         }
       else
         {
+          gimp_paint_tool_set_active (paint_tool, FALSE);
+
           gimp_tool_control_set_precision (tool->control,
                                            GIMP_CURSOR_PRECISION_SUBPIXEL);
 
@@ -692,8 +751,8 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
 
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_CROSS,
-                                 clone_tool->src_x,
-                                 clone_tool->src_y,
+                                 clone_tool->src_x + 0.5,
+                                 clone_tool->src_y + 0.5,
                                  GIMP_TOOL_HANDLE_SIZE_CROSS,
                                  GIMP_TOOL_HANDLE_SIZE_CROSS,
                                  GIMP_HANDLE_ANCHOR_CENTER);
