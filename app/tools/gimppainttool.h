@@ -41,6 +41,7 @@ struct _GimpPaintTool
 {
   GimpColorTool  parent_instance;
 
+  gboolean       active;
   gboolean       pick_colors;  /*  pick color if ctrl is pressed   */
   gboolean       draw_line;
 
@@ -83,6 +84,9 @@ struct _GimpPaintToolClass
 
 
 GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
+
+void    gimp_paint_tool_set_active          (GimpPaintTool       *tool,
+                                             gboolean             active);
 
 void    gimp_paint_tool_enable_color_picker (GimpPaintTool       *tool,
                                              GimpColorPickTarget  target);
