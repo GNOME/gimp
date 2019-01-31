@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:36+0000\n"
-"PO-Revision-Date: 2019-01-30 23:16+0900\n"
+"PO-Revision-Date: 2019-02-01 00:50+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1170,12 +1170,9 @@ msgid "Channels Menu"
 msgstr "チャンネルのメニュー"
 
 #: ../app/actions/channels-actions.c:49
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "channels-action"
 msgid "Color Tag"
-msgstr "色"
+msgstr "カラータグ"
 
 # 'Attributes' は直訳すると「属性」であるが、一般的なユーザーでも馴染みがあるであろう「プロパティ」をあえて使用した
 #: ../app/actions/channels-actions.c:53
@@ -6658,7 +6655,7 @@ msgstr "選択範囲の大きさで画像を切り抜きます"
 #: ../app/actions/image-actions.c:148
 msgctxt "image-action"
 msgid "Crop to C_ontent"
-msgstr "コンテンツで切り抜き(_O)"
+msgstr "内容で切り抜き(_O)"
 
 #: ../app/actions/image-actions.c:149
 msgctxt "image-action"
@@ -7083,12 +7080,9 @@ msgid "Composite Mode"
 msgstr "コンポジット"
 
 #: ../app/actions/layers-actions.c:68
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layers-action"
 msgid "Color Tag"
-msgstr "色"
+msgstr "カラータグ"
 
 #: ../app/actions/layers-actions.c:72
 msgctxt "layers-action"
@@ -7397,17 +7391,14 @@ msgstr "選択範囲の大きさでレイヤーを切り抜きます"
 #: ../app/actions/layers-actions.c:241
 msgctxt "layers-action"
 msgid "Crop to C_ontent"
-msgstr "コンテンツで切り抜き(_O)"
+msgstr "内容で切り抜き(_O)"
 
 #: ../app/actions/layers-actions.c:242
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Crop the layer to the extents of the selection"
 msgctxt "layers-action"
 msgid ""
 "Crop the layer to the extents of its content (remove empty borders from the "
 "layer)"
-msgstr "選択範囲の大きさでレイヤーを切り抜きます"
+msgstr "内容の大きさでレイヤーを切り抜きます (周りの何もない部分を削除します)"
 
 #: ../app/actions/layers-actions.c:247 ../app/actions/layers-actions.c:257
 msgctxt "layers-action"
@@ -7422,11 +7413,9 @@ msgstr ""
 "来の透明度情報は損なわれません)"
 
 #: ../app/actions/layers-actions.c:264
-#, fuzzy
-#| msgid "Add Layer Mask"
 msgctxt "layers-action"
 msgid "Add La_yer Mask"
-msgstr "レイヤーマスクを追加"
+msgstr "レイヤーマスクの追加(_Y)"
 
 #: ../app/actions/layers-actions.c:266
 #, fuzzy
@@ -8000,7 +7989,7 @@ msgstr "何も選択されてないので切り抜けません。"
 #: ../app/actions/layers-commands.c:888
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
-"アクティブレイヤーはすでにコンテンツで切り抜きされているので切り抜けません。"
+"アクティブレイヤーはすでに内容で切り抜きされているので切り抜けません。"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -9671,20 +9660,14 @@ msgid "Paths Menu"
 msgstr "パスメニュー"
 
 #: ../app/actions/vectors-actions.c:50
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "vectors-action"
 msgid "Color Tag"
-msgstr "色"
+msgstr "カラータグ"
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
-#| msgctxt "palettes-action"
-#| msgid "Edit palette"
 msgctxt "vectors-action"
 msgid "Edit Pa_th"
-msgstr "パレットエディターで編集します"
+msgstr "パスの編集(_T)"
 
 #: ../app/actions/vectors-actions.c:55
 #, fuzzy
@@ -9711,7 +9694,7 @@ msgstr "新しいパス(_N)..."
 #: ../app/actions/vectors-actions.c:67
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "新しいパスを作成します"
+msgstr "新しいパスの作成..."
 
 #: ../app/actions/vectors-actions.c:72
 msgctxt "vectors-action"
@@ -9789,12 +9772,9 @@ msgid "Lower this path to the bottom"
 msgstr "このパスを最背面に移動します"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "_New Path..."
 msgctxt "vectors-action"
 msgid "Fill Path..."
-msgstr "新しいパス(_N)..."
+msgstr "パスで塗りつぶす..."
 
 #: ../app/actions/vectors-actions.c:120
 #, fuzzy
@@ -9805,11 +9785,9 @@ msgid "Fill the path"
 msgstr "パスに沿って描画します"
 
 #: ../app/actions/vectors-actions.c:125
-#, fuzzy
-#| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill Path"
-msgstr "パスの反転"
+msgstr "パスで塗りつぶす"
 
 #: ../app/actions/vectors-actions.c:126
 #, fuzzy
@@ -10148,21 +10126,16 @@ msgstr "パス名を変更"
 
 #: ../app/actions/vectors-commands.c:203
 msgid "New Path"
-msgstr "新規パス"
+msgstr "新しいパス"
 
 #: ../app/actions/vectors-commands.c:206
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "Create a new path..."
 msgid "Create a New Path"
-msgstr "新しいパスを作成します"
+msgstr "新しいパスの作成"
 
 #: ../app/actions/vectors-commands.c:425 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:740
-#, fuzzy
-#| msgid "Flip Path"
 msgid "Fill Path"
-msgstr "パスの反転"
+msgstr "パスで塗りつぶす"
 
 #: ../app/actions/vectors-commands.c:455 ../app/tools/gimpvectoroptions.c:210
 #: ../app/tools/gimpvectortool.c:812
@@ -12157,44 +12130,42 @@ msgstr "[新しいレイヤー] ダイアログのデフォルトの塗りつぶ
 
 #: ../app/config/gimprc-blurbs.h:550
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
-msgstr ""
+msgstr "[レイヤーサイズの変更] ダイアログのデフォルトの塗りつぶし形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
-msgstr ""
+msgstr "[レイヤーマスクの追加] ダイアログのデフォルトのマスクを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:556
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
-msgstr ""
+msgstr "[レイヤーマスクの追加] ダイアログの [マスク反転] をデフォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:559
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "[可視レイヤーの統合] ダイアログのデフォルトの統合形式を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:562
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "[可視レイヤーの統合] ダイアログの [アクティブなレイヤーグループ内のみ] をデフォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:565
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "[可視レイヤーの統合] ダイアログの [不可視レイヤーの削除] をデフォルトで有効にします。"
 
 #: ../app/config/gimprc-blurbs.h:568
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr ""
+msgstr "[チャンネルの追加] ダイアログのデフォルトのチャンネル名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:571
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr ""
+msgstr "[チャンネルの追加] ダイアログのデフォルトの色と不透明度を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:574
-#, fuzzy
-#| msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr ""
-"[画像ファイルを開く] ダイアログで表示されるサムネイルの大きさを設定します"
+"[新しいパス] のデフォルトのパス名を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default folder path for the 'Export Path' dialog."
@@ -15129,7 +15100,7 @@ msgstr ""
 #: ../app/core/gimplayer.c:1885
 msgctxt "undo-type"
 msgid "Add Layer Mask"
-msgstr "レイヤーマスクを追加"
+msgstr "レイヤーマスクの追加"
 
 #: ../app/core/gimplayer.c:2003
 msgctxt "undo-type"
@@ -16576,11 +16547,8 @@ msgstr "カラータグ:"
 
 #. The switches frame & vbox
 #: ../app/dialogs/item-options-dialog.c:253
-#, fuzzy
-#| msgctxt "unit-plural"
-#| msgid "inches"
 msgid "Switches"
-msgstr "インチ"
+msgstr "スイッチ"
 
 #: ../app/dialogs/item-options-dialog.c:262
 msgid "_Visible"
@@ -16610,11 +16578,11 @@ msgstr "終了時にキーボードショートカットを保存する(_A)"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:103
 msgid "Add Layer Mask"
-msgstr "レイヤーマスクを追加"
+msgstr "レイヤーマスクの追加"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:105
 msgid "Add a Mask to the Layer"
-msgstr "レイヤーマスクを追加"
+msgstr "レイヤーマスクの追加"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:111
 msgid "_Add"
@@ -17230,7 +17198,7 @@ msgstr "RGB プロファイル(_R):"
 
 #: ../app/dialogs/preferences-dialog.c:1430
 msgid "Select Preferred Grayscale Color Profile"
-msgstr "優先 グレースケールプロファイルの選択"
+msgstr "優先グレースケールプロファイルの選択"
 
 #: ../app/dialogs/preferences-dialog.c:1431
 msgid "_Grayscale profile:"
@@ -17711,15 +17679,13 @@ msgstr "塗りつぶし形式:"
 
 #. Layer Boundary Size Dialog
 #: ../app/dialogs/preferences-dialog.c:2282
-#, fuzzy
-#| msgid "Set Layer Boundary Size"
 msgid "Layer Boundary Size Dialog"
-msgstr "レイヤーサイズの変更"
+msgstr "レイヤーサイズの変更ダイアログ"
 
 #. Add Layer Mask Dialog
 #: ../app/dialogs/preferences-dialog.c:2291
 msgid "Add Layer Mask Dialog"
-msgstr "レイヤーマスク追加ダイアログ"
+msgstr "レイヤーマスクの追加ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2296
 msgid "Layer mask type:"
@@ -17756,27 +17722,19 @@ msgid "Channel name:"
 msgstr "チャンネル名:"
 
 #: ../app/dialogs/preferences-dialog.c:2331
-#, fuzzy
-#| msgid "Color space:"
 msgid "Color and opacity:"
-msgstr "色空間:"
+msgstr "色と不透明度:"
 
 # 'Attributes' は直訳すると「属性」であるが、一般的なユーザーでも馴染みがあるであろう「プロパティ」をあえて使用した
 #: ../app/dialogs/preferences-dialog.c:2332
-#, fuzzy
-#| msgctxt "channels-action"
-#| msgid "Edit the channel's name, color and opacity"
 msgid "Default New Channel Color and Opacity"
 msgstr ""
-"チャンネルのプロパティを編集します。チャンネル名・チャンネル表示色と不透明度"
-"の編集が可能です。"
+"新しいチャンネルの色と不透明度の設定"
 
 #. New Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2337
-#, fuzzy
-#| msgid "New Path Options"
 msgid "New Path Dialog"
-msgstr "新しいパスを追加"
+msgstr "新しいパスダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2342
 msgid "Path name:"
@@ -26102,12 +26060,9 @@ msgid "Transform Path"
 msgstr "パスの変形"
 
 #: ../app/vectors/gimpvectors.c:231
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Flip Path"
 msgctxt "undo-type"
 msgid "Fill Path"
-msgstr "パスの鏡像反転"
+msgstr "パスで塗りつぶす"
 
 #: ../app/vectors/gimpvectors.c:232
 msgctxt "undo-type"
