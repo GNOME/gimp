@@ -42,11 +42,7 @@ test_scripts = \
 	whirlpinch/whirlpinch.py
 
 $(scripts) $(test_scripts): $(source_scripts)
-	@							\
-	dir=`dirname "$@"`;					\
-	base=`basename "$@"`;					\
-	echo "  GEN      $@";					\
-	mkdir -p "$$dir" && cp -f "$(srcdir)/$$base" "$@";
+	$(AM_V_GEN) mkdir -p $(@D) && cp -f "$(srcdir)/$(@F)" $@
 
 nobase_pluginexec_SCRIPTS = $(scripts)
 
