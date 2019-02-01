@@ -41,8 +41,12 @@ test_scripts = \
 	sphere/sphere.py						\
 	whirlpinch/whirlpinch.py
 
-%.py:
-	mkdir -p $(@D) && cp -f $(srcdir)/$(@F) $@
+$(scripts) $(test_scripts): $(source_scripts)
+	@							\
+	dir=`dirname "$@"`;					\
+	base=`basename "$@"`;					\
+	echo "  GEN      $@";					\
+	mkdir -p "$$dir" && cp -f "$(srcdir)/$$base" "$@";
 
 nobase_pluginexec_SCRIPTS = $(scripts)
 
