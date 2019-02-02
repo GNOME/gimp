@@ -336,11 +336,12 @@ parse_iso_codes (GHashTable  *base_lang_list,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
-  file = gimp_data_directory_file ("..", "..",
-                                   "xml", "iso-codes", "iso_639.xml", NULL);
+#if ENABLE_RELOCATABLE_RESOURCES
+  file = gimp_installation_directory_file ("share", "xml", "iso-codes",
+                                           "iso_639.xml", NULL);
 #else
-  file = g_file_new_for_path (ISO_CODES_LOCATION G_DIR_SEPARATOR_S "iso_639.xml");
+  file = g_file_new_for_path (ISO_CODES_LOCATION G_DIR_SEPARATOR_S
+                              "iso_639.xml");
 #endif
 
   success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
