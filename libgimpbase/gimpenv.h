@@ -47,46 +47,48 @@ GIMPVAR const guint gimp_minor_version;
 GIMPVAR const guint gimp_micro_version;
 
 
-const gchar * gimp_directory                  (void) G_GNUC_CONST;
-const gchar * gimp_installation_directory     (void) G_GNUC_CONST;
-const gchar * gimp_data_directory             (void) G_GNUC_CONST;
-const gchar * gimp_locale_directory           (void) G_GNUC_CONST;
-const gchar * gimp_sysconf_directory          (void) G_GNUC_CONST;
-const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
-const gchar * gimp_cache_directory            (void) G_GNUC_CONST;
-const gchar * gimp_temp_directory             (void) G_GNUC_CONST;
+const gchar * gimp_directory                   (void) G_GNUC_CONST;
+const gchar * gimp_installation_directory      (void) G_GNUC_CONST;
+const gchar * gimp_data_directory              (void) G_GNUC_CONST;
+const gchar * gimp_locale_directory            (void) G_GNUC_CONST;
+const gchar * gimp_sysconf_directory           (void) G_GNUC_CONST;
+const gchar * gimp_plug_in_directory           (void) G_GNUC_CONST;
+const gchar * gimp_cache_directory             (void) G_GNUC_CONST;
+const gchar * gimp_temp_directory              (void) G_GNUC_CONST;
 
-GFile       * gimp_directory_file             (const gchar *first_element,
-                                               ...) G_GNUC_MALLOC;
-GFile       * gimp_data_directory_file        (const gchar *first_element,
-                                               ...) G_GNUC_MALLOC;
-GFile       * gimp_locale_directory_file      (const gchar *first_element,
-                                               ...) G_GNUC_MALLOC;
-GFile       * gimp_sysconf_directory_file     (const gchar *first_element,
-                                               ...) G_GNUC_MALLOC;
-GFile       * gimp_plug_in_directory_file     (const gchar *first_element,
-                                               ...) G_GNUC_MALLOC;
+GFile       * gimp_directory_file              (const gchar *first_element,
+                                                ...) G_GNUC_MALLOC;
+GFile       * gimp_installation_directory_file (const gchar *first_element,
+                                                ...) G_GNUC_MALLOC;
+GFile       * gimp_data_directory_file         (const gchar *first_element,
+                                                ...) G_GNUC_MALLOC;
+GFile       * gimp_locale_directory_file       (const gchar *first_element,
+                                                ...) G_GNUC_MALLOC;
+GFile       * gimp_sysconf_directory_file      (const gchar *first_element,
+                                                ...) G_GNUC_MALLOC;
+GFile       * gimp_plug_in_directory_file      (const gchar *first_element,
+                                                ...) G_GNUC_MALLOC;
 
 #ifndef GIMP_DISABLE_DEPRECATED
 GIMP_DEPRECATED_FOR(g_get_user_special_dir)
-const gchar * gimp_user_directory             (GimpUserDirectory   type) G_GNUC_CONST;
+const gchar * gimp_user_directory              (GimpUserDirectory   type) G_GNUC_CONST;
 #endif /* !GIMP_DISABLE_DEPRECATED */
 
-const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;
-gchar       * gimp_personal_rc_file           (const gchar        *basename) G_GNUC_MALLOC;
+const gchar * gimp_gtkrc                       (void) G_GNUC_CONST;
+gchar       * gimp_personal_rc_file            (const gchar        *basename) G_GNUC_MALLOC;
 
-GList       * gimp_path_parse                 (const gchar        *path,
-                                               gint                max_paths,
-                                               gboolean            check,
-                                               GList             **check_failed);
-gchar       * gimp_path_to_str                (GList              *path) G_GNUC_MALLOC;
-void          gimp_path_free                  (GList              *path);
+GList       * gimp_path_parse                  (const gchar        *path,
+                                                gint                max_paths,
+                                                gboolean            check,
+                                                GList             **check_failed);
+gchar       * gimp_path_to_str                 (GList              *path) G_GNUC_MALLOC;
+void          gimp_path_free                   (GList              *path);
 
-gchar       * gimp_path_get_user_writable_dir (GList              *path) G_GNUC_MALLOC;
+gchar       * gimp_path_get_user_writable_dir  (GList              *path) G_GNUC_MALLOC;
 
 
 /*  should be considered private, don't use!  */
-void          gimp_env_init                   (gboolean            plug_in);
+void          gimp_env_init                    (gboolean            plug_in);
 
 
 G_END_DECLS
