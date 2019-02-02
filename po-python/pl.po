@@ -1,19 +1,19 @@
 # Polish translation for gimp-python.
-# Copyright © 1999-2017 the gimp authors.
+# Copyright © 1999-2019 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999, 2000.
 # Hubert Stachurski <hubi@forest.sggw.waw.pl>, 2008.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2019.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2017-03-26 21:21+0200\n"
-"PO-Revision-Date: 2017-03-26 21:22+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-02 14:40+0100\n"
+"PO-Revision-Date: 2019-02-02 14:42+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -343,82 +343,82 @@ msgid "Slice"
 msgstr "Przycinanie"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Obcina obraz wzdłuż prowadnic, tworzy obrazy i fragmenty tabel HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "_Przytnij…"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Ścieżka do eksportu HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Nazwa pliku do wyeksportowania"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Przedrostek nazwy obrazu"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Format obrazu"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Rozdziela katalog obrazu"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Katalog do wyeksportowania obrazów"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Odstęp między elementami tablicy"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "JavaScript dla zdarzeń „onmouseover” i „clicked”"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Pomija animację dla tabel"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Konsola języka Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Przeglądaj…"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:144
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Przeglądarka procedur języka Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:173
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nie można otworzyć „%s” do zapisania: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:188
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Nie można zapisać do „%s”: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:196
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "Zapis wyjścia konsoli Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktywny interpreter języka Python dla programu GIMP"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:227
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "_Konsola"
 
@@ -449,3 +449,338 @@ msgstr "_Poziome przesunięcie cienia"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Pi_onowe przesunięcie cienia"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+msgid "Spyro Layer"
+msgstr "Warstwa Spyro"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+msgid "Circle"
+msgstr "Okrąg"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+msgid "Polygon-Star"
+msgstr "Wielokąt — gwiazda"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+msgid "Sine"
+msgstr "Sinus"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+msgid "Bumps"
+msgstr "Wypukłości"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+msgid "Rack"
+msgstr "Stojak"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+msgid "Frame"
+msgstr "Ramka"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+msgid "Selection"
+msgstr "Zaznaczenie"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+msgid "Pencil"
+msgstr "Ołówek"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+msgid "AirBrush"
+msgstr "Aerograf"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+msgid "Preview"
+msgstr "Podgląd"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+msgid "Stroke"
+msgstr "Kreska"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+msgid "PaintBrush"
+msgstr "Pędzel"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+msgid "Ink"
+msgstr "Stalówka"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+msgid "MyPaintBrush"
+msgstr "Pędzel programu MyPaint"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+msgid "Spyrograph"
+msgstr "Spirogram"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+msgid "Epitrochoid"
+msgstr "Epitrochoida"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+msgid "Curve Type"
+msgstr "Typ krzywej"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Wzór epitrochoidy powstaje, kiedy ruchoma zębatka jest poza stałą zębatką."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+msgid "Tool"
+msgstr "Narzędzie"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+msgid ""
+"The tool with which to draw the pattern.The Preview tool just draws quickly."
+msgstr ""
+"Narzędzie, za pomocą którego rysować wzór. Narzędzie „Podgląd” po prostu "
+"rysuje szybko."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+msgid "Long Gradient"
+msgstr "Długi gradient"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"Jeśli odznaczono, to będą używane obecne ustawienia narzędzia. Zaznaczenie "
+"spowoduje użycie długiego gradientu, aby dopasować do długości wzoru na "
+"podstawie obecnego gradientu i trybu powtarzania z ustawień gradientu."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Określenie wzoru za pomocą jednej z tych kart:"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"Wzór jest określony tylko przez aktywną kartę. Toy Kit jest podobny do "
+"Zębatek, ale używa zębatek i numerów otworów, jakie można znaleźć "
+"w zabawkach. Jeśli używane są instrukcje z podręczników zabawek, to wyniki "
+"powinny być podobne."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"Liczba zębów stałej zębatki. Rozmiar stałej zębatki jest proporcjonalny do "
+"liczby zębów."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+msgid "Fixed Gear Teeth"
+msgstr "Zęby stałej zębatki"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"Liczba zębów ruchomej zębatki. Rozmiar ruchomej zębatki jest proporcjonalny "
+"do liczby zębów."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+msgid "Moving Gear Teeth"
+msgstr "Zęby ruchomej zębatki"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+msgid "Hole percent"
+msgstr "Procent otworu"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"Jak daleko otwór jest od środka ruchomej zębatki. 100% oznacza, że otwór "
+"jest na krawędzi zębatki."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+msgid "Hole Number"
+msgstr "Liczba otworu"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"Otwór o numerze 1 jest na krawędzi zębatki. Maksymalny numer otworu jest "
+"blisko środka. Maksymalny numer otworu jest różny dla każdej zębatki."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+msgid "Toy Kit"
+msgstr "Toy Kit"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+msgid "Gears"
+msgstr "Zębatki"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation"
+msgstr "Obrót"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+"Obrót wzoru w stopniach. Pozycja początkowa ruchomej zębatki w stałej "
+"zębatce."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+msgid "Shape"
+msgstr "Kształt"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"Kształt stałej zębatki używany wewnątrz obecnego zaznaczenia. Stojak to "
+"długi, obły kształt zawarty w zabawkach. Ramka przytula granice zaznaczenia "
+"prostokątnego, używa otworu o wartości 100 w notacji zębatek, aby dotknąć "
+"granicy. Zaznaczenie przytuli granice obecnego zaznaczenia — można spróbować "
+"coś nieprostokątnego."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Sides"
+msgstr "Strony"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Number of sides of the shape."
+msgstr "Liczba stron kształtu."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph"
+msgstr "Przekształcenie"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr ""
+"Przekształcenie kształtu stałej zębatki. Ma wpływ tylko na część kształtów."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "Obrót stałej zębatki w stopniach"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin (px)"
+msgstr "Margines (piksele)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin from edge of selection."
+msgstr "Margines od krawędzi zaznaczenia."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+msgid "Make width and height equal"
+msgstr "Równa szerokość i wysokość"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"Jeśli jest odznaczone, to wzór wypełni obecny obraz lub zaznaczenie. "
+"Zaznaczenie spowoduje, że wzór będzie miał tę samą szerokość i wysokość "
+"i będzie wyśrodkowany."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
+msgid "Redraw"
+msgstr "Ponowne rysowanie"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"Jeśli zmieniono ustawienia narzędzia, kolor lub zaznaczenie, to kliknięcie "
+"tego wyświetli podgląd, jak wzór będzie wyglądał."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
+msgid "Reset"
+msgstr "Przywróć"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
+msgid "OK"
+msgstr "OK"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+msgid ""
+"Keep\n"
+"Layer"
+msgstr ""
+"Zachowanie\n"
+"warstwy"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
+msgid ""
+"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
+"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
+"redrawn on the layer that was active when the plugin was launched."
+msgstr ""
+"Jeśli zaznaczono, to po kliknięciu OK warstwa Spyro zostanie zachowana, "
+"a wtyczka szybko zakończy działanie. Odznaczenie spowoduje, że warstwa Spyro "
+"zostanie usunięta, a wzór jest ponownie rysowany na warstwie, która była "
+"aktywna podczas uruchomienia wtyczki."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+msgid "Spyrogimp"
+msgstr "Spyrogimp"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr ""
+"Rysowanie spirogramów za pomocą obecnych ustawień narzędzia i zaznaczenia."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+msgid "Curve Pattern"
+msgstr "Wzór krzywej"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+msgid "Fixed Gear"
+msgstr "Stała zębatka"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+msgid "Size"
+msgstr "Rozmiar"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+msgid "Rendering Pattern"
+msgstr "Rysowanie wzoru"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+msgid "Please wait : Rendering Pattern"
+msgstr "Proszę czekać: rysowanie wzoru"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+msgid "Spyrogimp..."
+msgstr "Spyrogimp…"
