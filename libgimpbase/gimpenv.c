@@ -761,6 +761,36 @@ gimp_directory_file (const gchar *first_element,
 }
 
 /**
+ * gimp_installation_directory_file:
+ * @first_element: the first element of a path to a file in the
+ *                 top installation directory, or %NULL.
+ * @...: a %NULL terminated list of the remaining elements of the path
+ *       to the file.
+ *
+ * Returns a #GFile in the installation directory, or the installation
+ * directory itself if @first_element is %NULL.
+ *
+ * See also: gimp_installation_directory().
+ *
+ * Since: 2.10.10
+ *
+ * Returns: a new @GFile for the path, Free with g_object_unref().
+ **/
+GFile *
+gimp_installation_directory_file (const gchar *first_element,
+                                  ...)
+{
+  GFile   *file;
+  va_list  args;
+
+  va_start (args, first_element);
+  file = gimp_child_file (gimp_installation_directory (), first_element, args);
+  va_end (args);
+
+  return file;
+}
+
+/**
  * gimp_data_directory_file:
  * @first_element: the first element of a path to a file in the
  *                 data directory, or %NULL.
