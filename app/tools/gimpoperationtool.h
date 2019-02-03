@@ -43,6 +43,7 @@ struct _GimpOperationTool
   GList          *aux_inputs;
 
   /* dialog */
+  GWeakRef        options_sw_ref;
   GWeakRef        options_box_ref;
   GWeakRef        options_gui_ref;
 };
