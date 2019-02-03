@@ -76,6 +76,7 @@ EXPORTS
 	gimp_image_type_get_type
 	gimp_ink_blob_type_get_type
 	gimp_installation_directory
+	gimp_installation_directory_file
 	gimp_interpolation_type_compat_get_type
 	gimp_interpolation_type_get_type
 	gimp_join_style_get_type
