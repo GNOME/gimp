@@ -1194,6 +1194,12 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Use OpenCL"),
                           GTK_BOX (vbox2));
 
+  hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
+                             _("OpenCL drivers and support are experimental, "
+                               "expect slowdowns and possible crashes "
+                               "(please report)."));
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+
   /*  Image Thumbnails  */
   vbox2 = prefs_frame_new (_("Image Thumbnails"), GTK_CONTAINER (vbox), FALSE);
 
