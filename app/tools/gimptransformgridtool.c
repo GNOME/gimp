@@ -205,6 +205,7 @@ gimp_transform_grid_tool_class_init (GimpTransformGridToolClass *klass)
   tr_class->transform        = gimp_transform_grid_tool_transform;
 
   klass->info_to_matrix      = NULL;
+  klass->matrix_to_info      = NULL;
   klass->get_undo_desc       = gimp_transform_grid_tool_real_get_undo_desc;
   klass->dialog              = NULL;
   klass->dialog_update       = NULL;
@@ -753,32 +754,76 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
 static void
 gimp_transform_grid_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
-  GimpTransformGridTool *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
-  GimpTransformOptions  *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpTransformGridTool    *tg_tool    = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
+  GimpTransformOptions     *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tr_tool);
 
   if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->info_to_matrix)
     {
       GimpMatrix3 forward_transform;
       GimpMatrix3 backward_transform;
-
-      tr_tool->transform_valid = TRUE;
+      gboolean    forward_transform_valid;
+      gboolean    backward_transform_valid;
 
       tg_tool->trans_info      = tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD];
-      tr_tool->transform_valid = tr_tool->transform_valid &&
-                                 gimp_transform_grid_tool_info_to_matrix (
+      forward_transform_valid  = gimp_transform_grid_tool_info_to_matrix (
                                    tg_tool, &forward_transform);
 
       tg_tool->trans_info      = tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD];
-      tr_tool->transform_valid = tr_tool->transform_valid &&
-                                 gimp_transform_grid_tool_info_to_matrix (
+      backward_transform_valid = gimp_transform_grid_tool_info_to_matrix (
                                    tg_tool, &backward_transform);
 
-      if (tr_tool->transform_valid)
+      if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info &&
+          tg_options->direction_linked)
+        {
+          GimpMatrix3 transform = tr_tool->transform;
+
+          switch (tr_options->direction)
+            {
+            case GIMP_TRANSFORM_FORWARD:
+              if (forward_transform_valid)
+                {
+                  gimp_matrix3_invert (&transform);
+
+                  backward_transform = forward_transform;
+                  gimp_matrix3_mult (&transform, &backward_transform);
+
+                  tg_tool->trans_info =
+                    tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD];
+                  gimp_transform_grid_tool_matrix_to_info (tg_tool,
+                                                           &backward_transform);
+                  backward_transform_valid =
+                    gimp_transform_grid_tool_info_to_matrix (
+                      tg_tool, &backward_transform);
+                }
+              break;
+
+            case GIMP_TRANSFORM_BACKWARD:
+              if (backward_transform_valid)
+                {
+                  forward_transform = backward_transform;
+                  gimp_matrix3_mult (&transform, &forward_transform);
+
+                  tg_tool->trans_info =
+                    tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD];
+                  gimp_transform_grid_tool_matrix_to_info (tg_tool,
+                                                           &forward_transform);
+                  forward_transform_valid =
+                    gimp_transform_grid_tool_info_to_matrix (
+                      tg_tool, &forward_transform);
+                }
+              break;
+            }
+        }
+      else if (forward_transform_valid && backward_transform_valid)
         {
           tr_tool->transform = backward_transform;
           gimp_matrix3_invert (&tr_tool->transform);
           gimp_matrix3_mult (&forward_transform, &tr_tool->transform);
         }
+
+      tr_tool->transform_valid = forward_transform_valid &&
+                                 backward_transform_valid;
     }
 
   tg_tool->trans_info = tg_tool->trans_infos[tr_options->direction];
@@ -799,8 +844,19 @@ gimp_transform_grid_tool_get_undo_desc (GimpTransformTool *tr_tool)
   GimpTransformOptions  *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   gchar                 *result;
 
-  if (! memcmp (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
-                tg_tool->init_trans_info, sizeof (TransInfo)))
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info)
+    {
+      TransInfo trans_info;
+
+      memcpy (&trans_info, &tg_tool->init_trans_info, sizeof (TransInfo));
+
+      tg_tool->trans_info = trans_info;
+      gimp_transform_grid_tool_matrix_to_info (tg_tool, &tr_tool->transform);
+      result = GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->get_undo_desc (
+        tg_tool);
+    }
+  else if (! memcmp (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
+                     tg_tool->init_trans_info, sizeof (TransInfo)))
     {
       tg_tool->trans_info = tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD];
       result = GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->get_undo_desc (
@@ -1344,6 +1400,20 @@ gimp_transform_grid_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
     }
 
   return FALSE;
+}
+
+void
+gimp_transform_grid_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
+                                         const GimpMatrix3     *transform)
+{
+  g_return_if_fail (GIMP_IS_TRANSFORM_GRID_TOOL (tg_tool));
+  g_return_if_fail (transform != NULL);
+
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info)
+    {
+      return GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info (
+        tg_tool, transform);
+    }
 }
 
 void

@@ -62,6 +62,8 @@ enum
 
 static gboolean         gimp_scale_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
                                                         GimpMatrix3           *transform);
+static void             gimp_scale_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
+                                                        const GimpMatrix3     *transform);
 static gchar          * gimp_scale_tool_get_undo_desc  (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_dialog         (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_dialog_update  (GimpTransformGridTool *tg_tool);
@@ -104,6 +106,7 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
   GimpTransformGridToolClass *tg_class = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
 
   tg_class->info_to_matrix  = gimp_scale_tool_info_to_matrix;
+  tg_class->matrix_to_info  = gimp_scale_tool_matrix_to_info;
   tg_class->get_undo_desc   = gimp_scale_tool_get_undo_desc;
   tg_class->dialog          = gimp_scale_tool_dialog;
   tg_class->dialog_update   = gimp_scale_tool_dialog_update;
@@ -143,6 +146,29 @@ gimp_scale_tool_info_to_matrix  (GimpTransformGridTool *tg_tool,
                                tg_tool->trans_info[Y1] - tg_tool->trans_info[Y0]);
 
   return TRUE;
+}
+
+static void
+gimp_scale_tool_matrix_to_info  (GimpTransformGridTool *tg_tool,
+                                 const GimpMatrix3     *transform)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  gdouble            x;
+  gdouble            y;
+  gdouble            w;
+  gdouble            h;
+
+  x = transform->coeff[0][2];
+  y = transform->coeff[1][2];
+  w = transform->coeff[0][0];
+  h = transform->coeff[1][1];
+
+  tg_tool->trans_info[X0] = x + w * tr_tool->x1;
+  tg_tool->trans_info[Y0] = y + h * tr_tool->y1;
+  tg_tool->trans_info[X1] = tg_tool->trans_info[X0] +
+                            w * (tr_tool->x2 - tr_tool->x1);
+  tg_tool->trans_info[Y1] = tg_tool->trans_info[Y0] +
+                            h * (tr_tool->y2 - tr_tool->y1);
 }
 
 static gchar *

@@ -76,6 +76,8 @@ struct _GimpTransformGridToolClass
   /*  virtual functions  */
   gboolean         (* info_to_matrix) (GimpTransformGridTool  *tg_tool,
                                        GimpMatrix3            *transform);
+  void             (* matrix_to_info) (GimpTransformGridTool  *tg_tool,
+                                       const GimpMatrix3      *transform);
   gchar          * (* get_undo_desc)  (GimpTransformGridTool  *tg_tool);
   void             (* dialog)         (GimpTransformGridTool  *tg_tool);
   void             (* dialog_update)  (GimpTransformGridTool  *tg_tool);
@@ -100,6 +102,8 @@ GType      gimp_transform_grid_tool_get_type           (void) G_GNUC_CONST;
 
 gboolean   gimp_transform_grid_tool_info_to_matrix     (GimpTransformGridTool *tg_tool,
                                                         GimpMatrix3           *transform);
+void       gimp_transform_grid_tool_matrix_to_info     (GimpTransformGridTool *tg_tool,
+                                                        const GimpMatrix3     *transform);
 
 void       gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool);
 

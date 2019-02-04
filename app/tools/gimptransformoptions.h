@@ -44,6 +44,7 @@ struct _GimpTransformOptions
 
   /*  options gui  */
   GtkWidget              *type_box;
+  GtkWidget              *direction_frame;
 };
 
 struct _GimpTransformOptionsClass
