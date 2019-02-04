@@ -113,6 +113,7 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
   tg_class->update_widget   = gimp_scale_tool_update_widget;
   tg_class->widget_changed  = gimp_scale_tool_widget_changed;
 
+  tr_class->undo_desc       = C_("undo-type", "Scale");
   tr_class->progress_text   = _("Scaling");
   tg_class->ok_button_label = _("_Scale");
 }

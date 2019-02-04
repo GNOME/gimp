@@ -83,8 +83,6 @@ static void             gimp_handle_transform_tool_modifier_key   (GimpTool     
                                                                    GdkModifierType           state,
                                                                    GimpDisplay              *display);
 
-static gchar          * gimp_handle_transform_tool_get_undo_desc  (GimpTransformTool        *tr_tool);
-
 static void             gimp_handle_transform_tool_prepare        (GimpTransformGridTool    *tg_tool);
 static GimpToolWidget * gimp_handle_transform_tool_get_widget     (GimpTransformGridTool    *tg_tool);
 static void             gimp_handle_transform_tool_update_widget  (GimpTransformGridTool    *tg_tool);
@@ -127,8 +125,6 @@ gimp_handle_transform_tool_class_init (GimpHandleTransformToolClass *klass)
 
   tool_class->modifier_key     = gimp_handle_transform_tool_modifier_key;
 
-  tr_class->get_undo_desc      = gimp_handle_transform_tool_get_undo_desc;
-
   tg_class->prepare            = gimp_handle_transform_tool_prepare;
   tg_class->get_widget         = gimp_handle_transform_tool_get_widget;
   tg_class->update_widget      = gimp_handle_transform_tool_update_widget;
@@ -136,6 +132,7 @@ gimp_handle_transform_tool_class_init (GimpHandleTransformToolClass *klass)
 
   generic_class->recalc_points = gimp_handle_transform_tool_recalc_points;
 
+  tr_class->undo_desc          = C_("undo-type", "Handle transform");
   tr_class->progress_text      = _("Handle transformation");
 }
 
@@ -197,12 +194,6 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
                                                 state, display);
-}
-
-static gchar *
-gimp_handle_transform_tool_get_undo_desc (GimpTransformTool *tr_tool)
-{
-  return g_strdup (C_("undo-type", "Handle transform"));
 }
 
 static void

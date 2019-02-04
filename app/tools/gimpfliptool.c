@@ -130,6 +130,7 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
   tr_class->get_undo_desc   = gimp_flip_tool_get_undo_desc;
   tr_class->transform       = gimp_flip_tool_transform;
 
+  tr_class->undo_desc       = C_("undo-type", "Flip");
   tr_class->progress_text   = _("Flipping");
 }
 
@@ -305,7 +306,7 @@ gimp_flip_tool_get_undo_desc (GimpTransformTool *tr_tool)
       /* probably this is not actually reached today, but
        * could be if someone defined FLIP_DIAGONAL, say...
        */
-      return g_strdup (C_("undo-desc", "Flip"));
+      return GIMP_TRANSFORM_TOOL_CLASS (parent_class)->get_undo_desc (tr_tool);
     }
 }
 

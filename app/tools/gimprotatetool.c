@@ -118,6 +118,7 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
   tg_class->update_widget   = gimp_rotate_tool_update_widget;
   tg_class->widget_changed  = gimp_rotate_tool_widget_changed;
 
+  tr_class->undo_desc       = C_("undo-type", "Rotate");
   tr_class->progress_text   = _("Rotating");
   tg_class->ok_button_label = _("R_otate");
 }

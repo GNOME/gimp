@@ -72,6 +72,7 @@ struct _GimpTransformToolClass
                                   gint               *new_offset_x,
                                   gint               *new_offset_y);
 
+  const gchar *undo_desc;
   const gchar *progress_text;
 };
 
