@@ -230,7 +230,7 @@ gimp_icon_size_scale_icon_theme_notify (GimpGuiConfig *config,
 {
   GtkIconTheme *theme             = gtk_icon_theme_get_default();
   gint         *icon_sizes;
-  const gchar  *markup;
+  gchar        *markup;
   gdouble       value             = gtk_range_get_value (scale);
   gboolean      update_value      = FALSE;
   gboolean      has_small_toolbar = FALSE;
@@ -270,46 +270,58 @@ gimp_icon_size_scale_icon_theme_notify (GimpGuiConfig *config,
   g_free (icon_sizes);
 
   gtk_scale_clear_marks (GTK_SCALE (scale));
-  if (has_small_toolbar)
-    markup = "Small";
-  else
+  markup = (gchar *) C_("icon-size", "Small");
+  if (! has_small_toolbar)
     {
-      markup = "<span strikethrough=\"true\">Small</span>";
+      markup = g_strdup_printf ("<span strikethrough=\"true\">%s</span>",
+                                markup);
       if (value == 0.0)
         update_value = TRUE;
     }
   gtk_scale_add_mark (GTK_SCALE (scale), 0.0, GTK_POS_BOTTOM,
                       markup);
-  if (has_large_toolbar)
-    markup = "Medium";
-  else
+  if (! has_small_toolbar)
+    g_free (markup);
+
+  markup = (gchar *) C_("icon-size", "Medium");
+  if (! has_large_toolbar)
     {
-      markup = "<span strikethrough=\"true\">Medium</span>";
+      markup = g_strdup_printf ("<span strikethrough=\"true\">%s</span>",
+                                markup);
       if (value == 1.0)
         update_value = TRUE;
     }
   gtk_scale_add_mark (GTK_SCALE (scale), 1.0, GTK_POS_BOTTOM,
                       markup);
-  if (has_dnd)
-    markup = "Large";
-  else
+  if (! has_large_toolbar)
+    g_free (markup);
+
+  markup = (gchar *) C_("icon-size", "Large");
+  if (! has_dnd)
     {
-      markup = "<span strikethrough=\"true\">Large</span>";
+      markup = g_strdup_printf ("<span strikethrough=\"true\">%s</span>",
+                                markup);
       if (value == 2.0)
         update_value = TRUE;
     }
   gtk_scale_add_mark (GTK_SCALE (scale), 2.0, GTK_POS_BOTTOM,
                       markup);
-  if (has_dialog)
-    markup = "Huge";
-  else
+  if (! has_dnd)
+    g_free (markup);
+
+  markup = (gchar *) C_("icon-size", "Huge");
+  if (! has_dialog)
     {
-      markup = "<span strikethrough=\"true\">Huge</span>";
+      markup = g_strdup_printf ("<span strikethrough=\"true\">%s</span>",
+                                markup);
       if (value == 3.0)
         update_value = TRUE;
     }
   gtk_scale_add_mark (GTK_SCALE (scale), 3.0, GTK_POS_BOTTOM,
                       markup);
+  if (! has_dialog)
+    g_free (markup);
+
   if (update_value)
     {
       GimpIconSize size;
