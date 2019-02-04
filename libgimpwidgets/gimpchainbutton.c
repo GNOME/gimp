@@ -55,7 +55,8 @@ enum
 {
   PROP_0,
   PROP_POSITION,
-  PROP_ICON_SIZE
+  PROP_ICON_SIZE,
+  PROP_ACTIVE
 };
 
 enum
@@ -163,6 +164,21 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
                                                       GTK_ICON_SIZE_BUTTON,
                                                       G_PARAM_CONSTRUCT |
                                                       GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpChainButton:active:
+   *
+   * The toggled state of the chain button.
+   *
+   * Since: 2.10.10
+   */
+  g_object_class_install_property (object_class, PROP_ACTIVE,
+                                   g_param_spec_boolean ("active",
+                                                         "Active",
+                                                         "The chain's toggled state",
+                                                         FALSE,
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -231,7 +247,8 @@ gimp_chain_button_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpChainButtonPrivate *private = GET_PRIVATE (object);
+  GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
+  GimpChainButtonPrivate *private = GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -241,6 +258,10 @@ gimp_chain_button_set_property (GObject      *object,
 
     case PROP_ICON_SIZE:
       g_object_set_property (G_OBJECT (private->image), "icon-size", value);
+      break;
+
+    case PROP_ACTIVE:
+      gimp_chain_button_set_active (button, g_value_get_boolean (value));
       break;
 
     default:
@@ -255,7 +276,8 @@ gimp_chain_button_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpChainButtonPrivate *private = GET_PRIVATE (object);
+  GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
+  GimpChainButtonPrivate *private = GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -265,6 +287,10 @@ gimp_chain_button_get_property (GObject    *object,
 
     case PROP_ICON_SIZE:
       g_object_get_property (G_OBJECT (private->image), "icon-size", value);
+      break;
+
+    case PROP_ACTIVE:
+      g_value_set_boolean (value, gimp_chain_button_get_active (button));
       break;
 
     default:
@@ -366,6 +392,8 @@ gimp_chain_button_set_active (GimpChainButton  *button,
       private->active = active ? TRUE : FALSE;
 
       gimp_chain_button_update_image (button);
+
+      g_object_notify (G_OBJECT (button), "active");
     }
 }
 
