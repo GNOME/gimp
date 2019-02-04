@@ -494,18 +494,21 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
   GimpTool           *tool    = GIMP_TOOL (measure);
 
-  gtk_widget_set_sensitive (options->straighten_button, FALSE);
+  if (options->straighten_button)
+    {
+      gtk_widget_set_sensitive (options->straighten_button, FALSE);
+
+      g_signal_handlers_disconnect_by_func (
+        options->straighten_button,
+        G_CALLBACK (gimp_measure_tool_straighten_button_clicked),
+        measure);
+    }
 
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (measure)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
-
-  g_signal_handlers_disconnect_by_func (
-    options->straighten_button,
-    G_CALLBACK (gimp_measure_tool_straighten_button_clicked),
-    measure);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&measure->widget);
