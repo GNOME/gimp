@@ -582,7 +582,7 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
           item    = gimp_transform_tool_get_active_item (tr_tool, display);
           if (item)
             {
-              if (show_preview)
+              if (gimp_transform_grid_options_show_preview (tg_options))
                 gimp_transform_grid_tool_hide_active_item (tg_tool, item);
               else
                 gimp_transform_grid_tool_show_active_item (tg_tool);
