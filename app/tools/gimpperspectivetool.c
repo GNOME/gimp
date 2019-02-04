@@ -59,7 +59,7 @@ static GimpToolWidget * gimp_perspective_tool_get_widget     (GimpTransformGridT
 static void             gimp_perspective_tool_update_widget  (GimpTransformGridTool    *tg_tool);
 static void             gimp_perspective_tool_widget_changed (GimpTransformGridTool    *tg_tool);
 
-static void             gimp_perspective_tool_recalc_points  (GimpGenericTransformTool *generic);
+static void             gimp_perspective_tool_info_to_points (GimpGenericTransformTool *generic);
 
 
 G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
@@ -93,15 +93,15 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
   GimpTransformGridToolClass    *tg_class      = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
   GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
-  tg_class->prepare            = gimp_perspective_tool_prepare;
-  tg_class->get_widget         = gimp_perspective_tool_get_widget;
-  tg_class->update_widget      = gimp_perspective_tool_update_widget;
-  tg_class->widget_changed     = gimp_perspective_tool_widget_changed;
+  tg_class->prepare             = gimp_perspective_tool_prepare;
+  tg_class->get_widget          = gimp_perspective_tool_get_widget;
+  tg_class->update_widget       = gimp_perspective_tool_update_widget;
+  tg_class->widget_changed      = gimp_perspective_tool_widget_changed;
 
-  generic_class->recalc_points = gimp_perspective_tool_recalc_points;
+  generic_class->info_to_points = gimp_perspective_tool_info_to_points;
 
-  tr_class->undo_desc          = C_("undo-type", "Perspective");
-  tr_class->progress_text      = _("Perspective transformation");
+  tr_class->undo_desc           = C_("undo-type", "Perspective");
+  tr_class->progress_text       = _("Perspective transformation");
 }
 
 static void
@@ -160,12 +160,13 @@ gimp_perspective_tool_update_widget (GimpTransformGridTool *tg_tool)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
+
   g_object_set (tg_tool->widget,
-                "transform", &tr_tool->transform,
-                "x1",        (gdouble) tr_tool->x1,
-                "y1",        (gdouble) tr_tool->y1,
-                "x2",        (gdouble) tr_tool->x2,
-                "y2",        (gdouble) tr_tool->y2,
+                "x1", (gdouble) tr_tool->x1,
+                "y1", (gdouble) tr_tool->y1,
+                "x2", (gdouble) tr_tool->x2,
+                "y2", (gdouble) tr_tool->y2,
                 NULL);
 }
 
@@ -202,7 +203,7 @@ gimp_perspective_tool_widget_changed (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_perspective_tool_recalc_points (GimpGenericTransformTool *generic)
+gimp_perspective_tool_info_to_points (GimpGenericTransformTool *generic)
 {
   GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (generic);
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);

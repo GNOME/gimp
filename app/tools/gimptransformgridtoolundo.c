@@ -87,7 +87,6 @@ gimp_transform_grid_tool_undo_constructed (GObject *object)
 {
   GimpTransformGridToolUndo *tg_tool_undo = GIMP_TRANSFORM_GRID_TOOL_UNDO (object);
   GimpTransformGridTool     *tg_tool;
-  gint                       i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -95,8 +94,10 @@ gimp_transform_grid_tool_undo_constructed (GObject *object)
 
   tg_tool = tg_tool_undo->tg_tool;
 
-  for (i = 0; i < TRANS_INFO_SIZE; i++)
-    tg_tool_undo->trans_info[i] = (*tg_tool->old_trans_info)[i];
+  memcpy (tg_tool_undo->trans_infos[GIMP_TRANSFORM_FORWARD],
+          tg_tool->init_trans_info, sizeof (TransInfo));
+  memcpy (tg_tool_undo->trans_infos[GIMP_TRANSFORM_BACKWARD],
+          tg_tool->init_trans_info, sizeof (TransInfo));
 
 #if 0
   if (tg_tool->original)
@@ -162,18 +163,17 @@ gimp_transform_grid_tool_undo_pop (GimpUndo            *undo,
 #if 0
       TileManager           *temp;
 #endif
-      gdouble                d;
-      gint                   i;
+      TransInfo              temp_trans_infos[2];
 
       tg_tool = tg_tool_undo->tg_tool;
 
-      /*  swap the transformation information arrays  */
-      for (i = 0; i < TRANS_INFO_SIZE; i++)
-        {
-          d = tg_tool_undo->trans_info[i];
-          tg_tool_undo->trans_info[i] = tg_tool->trans_info[i];
-          tg_tool->trans_info[i] = d;
-        }
+      /*  swap the transformation information00 arrays  */
+      memcpy (temp_trans_infos, tg_tool_undo->trans_infos,
+              sizeof (tg_tool->trans_infos));
+      memcpy (tg_tool_undo->trans_infos, tg_tool->trans_infos,
+              sizeof (tg_tool->trans_infos));
+      memcpy (tg_tool->trans_infos, temp_trans_infos,
+              sizeof (tg_tool->trans_infos));
 
 #if 0
       /*  swap the original buffer--the source buffer for repeated transform_grids

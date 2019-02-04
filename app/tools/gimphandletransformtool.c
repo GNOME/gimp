@@ -88,7 +88,7 @@ static GimpToolWidget * gimp_handle_transform_tool_get_widget     (GimpTransform
 static void             gimp_handle_transform_tool_update_widget  (GimpTransformGridTool    *tg_tool);
 static void             gimp_handle_transform_tool_widget_changed (GimpTransformGridTool    *tg_tool);
 
-static void             gimp_handle_transform_tool_recalc_points  (GimpGenericTransformTool *generic);
+static void             gimp_handle_transform_tool_info_to_points (GimpGenericTransformTool *generic);
 
 
 G_DEFINE_TYPE (GimpHandleTransformTool, gimp_handle_transform_tool,
@@ -123,17 +123,17 @@ gimp_handle_transform_tool_class_init (GimpHandleTransformToolClass *klass)
   GimpTransformGridToolClass    *tg_class   = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
   GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
-  tool_class->modifier_key     = gimp_handle_transform_tool_modifier_key;
+  tool_class->modifier_key      = gimp_handle_transform_tool_modifier_key;
 
-  tg_class->prepare            = gimp_handle_transform_tool_prepare;
-  tg_class->get_widget         = gimp_handle_transform_tool_get_widget;
-  tg_class->update_widget      = gimp_handle_transform_tool_update_widget;
-  tg_class->widget_changed     = gimp_handle_transform_tool_widget_changed;
+  tg_class->prepare             = gimp_handle_transform_tool_prepare;
+  tg_class->get_widget          = gimp_handle_transform_tool_get_widget;
+  tg_class->update_widget       = gimp_handle_transform_tool_update_widget;
+  tg_class->widget_changed      = gimp_handle_transform_tool_widget_changed;
 
-  generic_class->recalc_points = gimp_handle_transform_tool_recalc_points;
+  generic_class->info_to_points = gimp_handle_transform_tool_info_to_points;
 
-  tr_class->undo_desc          = C_("undo-type", "Handle transform");
-  tr_class->progress_text      = _("Handle transformation");
+  tr_class->undo_desc           = C_("undo-type", "Handle transform");
+  tr_class->progress_text       = _("Handle transformation");
 }
 
 static void
@@ -270,11 +270,16 @@ gimp_handle_transform_tool_get_widget (GimpTransformGridTool *tg_tool)
 static void
 gimp_handle_transform_tool_update_widget (GimpTransformGridTool *tg_tool)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpMatrix3 transform;
+  gboolean    transform_valid;
+
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
+
+  transform_valid = gimp_transform_grid_tool_info_to_matrix (tg_tool,
+                                                             &transform);
 
   g_object_set (tg_tool->widget,
-                "transform",   &tr_tool->transform,
-                "show-guides", tr_tool->transform_valid,
+                "show-guides", transform_valid,
                 "n-handles",   (gint) tg_tool->trans_info[N_HANDLES],
                 "orig-x1",     tg_tool->trans_info[OX0],
                 "orig-y1",     tg_tool->trans_info[OY0],
@@ -326,7 +331,7 @@ gimp_handle_transform_tool_widget_changed (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_handle_transform_tool_recalc_points (GimpGenericTransformTool *generic)
+gimp_handle_transform_tool_info_to_points (GimpGenericTransformTool *generic)
 {
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);
 

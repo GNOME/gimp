@@ -42,11 +42,11 @@
 
 /*  local function prototypes  */
 
-static void   gimp_generic_transform_tool_recalc_matrix (GimpTransformTool     *tr_tool);
-
-static void   gimp_generic_transform_tool_dialog        (GimpTransformGridTool *tg_tool);
-static void   gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool);
-static void   gimp_generic_transform_tool_prepare       (GimpTransformGridTool *tg_tool);
+static gboolean   gimp_generic_transform_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
+                                                              GimpMatrix3           *transform);
+static void       gimp_generic_transform_tool_dialog         (GimpTransformGridTool *tg_tool);
+static void       gimp_generic_transform_tool_dialog_update  (GimpTransformGridTool *tg_tool);
+static void       gimp_generic_transform_tool_prepare        (GimpTransformGridTool *tg_tool);
 
 
 G_DEFINE_TYPE (GimpGenericTransformTool, gimp_generic_transform_tool,
@@ -58,14 +58,12 @@ G_DEFINE_TYPE (GimpGenericTransformTool, gimp_generic_transform_tool,
 static void
 gimp_generic_transform_tool_class_init (GimpGenericTransformToolClass *klass)
 {
-  GimpTransformToolClass     *tr_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
   GimpTransformGridToolClass *tg_class = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
 
-  tr_class->recalc_matrix = gimp_generic_transform_tool_recalc_matrix;
-
-  tg_class->dialog        = gimp_generic_transform_tool_dialog;
-  tg_class->dialog_update = gimp_generic_transform_tool_dialog_update;
-  tg_class->prepare       = gimp_generic_transform_tool_prepare;
+  tg_class->info_to_matrix = gimp_generic_transform_tool_info_to_matrix;
+  tg_class->dialog         = gimp_generic_transform_tool_dialog;
+  tg_class->dialog_update  = gimp_generic_transform_tool_dialog_update;
+  tg_class->prepare        = gimp_generic_transform_tool_prepare;
 }
 
 static void
@@ -73,21 +71,20 @@ gimp_generic_transform_tool_init (GimpGenericTransformTool *unified_tool)
 {
 }
 
-static void
-gimp_generic_transform_tool_recalc_matrix (GimpTransformTool *tr_tool)
+static gboolean
+gimp_generic_transform_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
+                                            GimpMatrix3           *transform)
 {
-  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tr_tool);
+  GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
 
-  if (GIMP_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->recalc_points)
-    GIMP_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->recalc_points (generic);
+  if (GIMP_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->info_to_points)
+    GIMP_GENERIC_TRANSFORM_TOOL_GET_CLASS (generic)->info_to_points (generic);
 
-  gimp_matrix3_identity (&tr_tool->transform);
-  tr_tool->transform_valid =
-    gimp_transform_matrix_generic (&tr_tool->transform,
-                                   generic->input_points,
-                                   generic->output_points);
+  gimp_matrix3_identity (transform);
 
-  GIMP_TRANSFORM_TOOL_CLASS (parent_class)->recalc_matrix (tr_tool);
+  return gimp_transform_matrix_generic (transform,
+                                        generic->input_points,
+                                        generic->output_points);
 }
 
 static void
@@ -145,10 +142,14 @@ gimp_generic_transform_tool_dialog (GimpTransformGridTool *tg_tool)
 static void
 gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
 {
-  GimpTransformTool        *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpGenericTransformTool *generic = GIMP_GENERIC_TRANSFORM_TOOL (tg_tool);
+  GimpMatrix3               transform;
+  gboolean                  transform_valid;
 
-  if (tr_tool->transform_valid)
+  transform_valid = gimp_transform_grid_tool_info_to_matrix (tg_tool,
+                                                             &transform);
+
+  if (transform_valid)
     {
       gint x, y;
 
@@ -161,8 +162,7 @@ gimp_generic_transform_tool_dialog_update (GimpTransformGridTool *tg_tool)
             {
               gchar buf[32];
 
-              g_snprintf (buf, sizeof (buf),
-                          "%10.5f", tr_tool->transform.coeff[y][x]);
+              g_snprintf (buf, sizeof (buf), "%10.5f", transform.coeff[y][x]);
 
               gtk_label_set_text (GTK_LABEL (generic->matrix_labels[y][x]), buf);
             }
