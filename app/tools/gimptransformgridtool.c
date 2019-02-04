@@ -370,13 +370,6 @@ gimp_transform_grid_tool_button_release (GimpTool              *tool,
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
-      /* This hack is to perform the flip immediately with the flip tool */
-      if (! tg_tool->widget)
-        {
-          gimp_transform_grid_tool_response (NULL, GTK_RESPONSE_OK, tg_tool);
-          return;
-        }
-
       /* We're done with an interaction, save it on the undo list */
       gimp_transform_grid_tool_push_internal_undo (tg_tool);
     }
