@@ -77,7 +77,8 @@ enum
   PROP_X3,
   PROP_Y3,
   PROP_PIXEL_ANGLE,
-  PROP_UNIT_ANGLE
+  PROP_UNIT_ANGLE,
+  PROP_EFFECTIVE_ORIENTATION
 };
 
 enum
@@ -98,6 +99,7 @@ struct _GimpToolCompassPrivate
   gdouble                 display_angle;
   gdouble                 pixel_angle;
   gdouble                 unit_angle;
+  GimpCompassOrientation  effective_orientation;
 
   CompassFunction         function;
   gdouble                 mouse_x;
@@ -274,6 +276,12 @@ gimp_tool_compass_class_init (GimpToolCompassClass *klass)
                                    g_param_spec_double ("unit-angle", NULL, NULL,
                                                         -G_PI, G_PI, 0.0,
                                                         GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_EFFECTIVE_ORIENTATION,
+                                   g_param_spec_enum ("effective-orientation", NULL, NULL,
+                                                      GIMP_TYPE_COMPASS_ORIENTATION,
+                                                      GIMP_COMPASS_ORIENTATION_AUTO,
+                                                      GIMP_PARAM_READABLE));
 }
 
 static void
@@ -362,6 +370,9 @@ gimp_tool_compass_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_ORIENTATION:
+      private->orientation = g_value_get_enum (value);
+      break;
     case PROP_N_POINTS:
       private->n_points = g_value_get_int (value);
       break;
@@ -383,9 +394,6 @@ gimp_tool_compass_set_property (GObject      *object,
     case PROP_Y3:
       private->y[2] = g_value_get_int (value);
       break;
-    case PROP_ORIENTATION:
-      private->orientation = g_value_get_enum (value);
-      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -404,6 +412,9 @@ gimp_tool_compass_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_ORIENTATION:
+      g_value_set_enum (value, private->orientation);
+      break;
     case PROP_N_POINTS:
       g_value_set_int (value, private->n_points);
       break;
@@ -425,14 +436,14 @@ gimp_tool_compass_get_property (GObject    *object,
     case PROP_Y3:
       g_value_set_int (value, private->y[2]);
       break;
-    case PROP_ORIENTATION:
-      g_value_set_enum (value, private->orientation);
-      break;
     case PROP_PIXEL_ANGLE:
       g_value_set_double (value, private->pixel_angle);
       break;
     case PROP_UNIT_ANGLE:
       g_value_set_double (value, private->unit_angle);
+      break;
+    case PROP_EFFECTIVE_ORIENTATION:
+      g_value_set_enum (value, private->effective_orientation);
       break;
 
     default:
@@ -1086,6 +1097,8 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
 
   if (private->n_points == 3)
     {
+      orientation = GIMP_COMPASS_ORIENTATION_AUTO;
+
       private->radius2.x = private->x[2] - private->x[0];
       private->radius2.y = private->y[2] - private->y[0];
     }
@@ -1144,14 +1157,20 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
 
           return;
         }
-      else if (orientation == GIMP_COMPASS_ORIENTATION_AUTO &&
-               fabs (private->display_angle) > G_PI / 4.0 + EPSILON)
+      else if (orientation == GIMP_COMPASS_ORIENTATION_AUTO)
         {
-          gimp_tool_compass_update_angle (compass,
-                                          GIMP_COMPASS_ORIENTATION_VERTICAL,
-                                          FALSE);
+          if (fabs (private->display_angle) <= G_PI / 4.0 + EPSILON)
+            {
+              orientation = GIMP_COMPASS_ORIENTATION_HORIZONTAL;
+            }
+          else
+            {
+              gimp_tool_compass_update_angle (compass,
+                                              GIMP_COMPASS_ORIENTATION_VERTICAL,
+                                              FALSE);
 
-          return;
+              return;
+            }
         }
     }
 
@@ -1167,6 +1186,13 @@ gimp_tool_compass_update_angle (GimpToolCompass        *compass,
       private->unit_angle = unit_angle;
 
       g_object_notify (G_OBJECT (compass), "unit-angle");
+    }
+
+  if (orientation != private->effective_orientation)
+    {
+      private->effective_orientation = orientation;
+
+      g_object_notify (G_OBJECT (compass), "effective-orientation");
     }
 }
 
