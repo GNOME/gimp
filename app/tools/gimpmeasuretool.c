@@ -346,7 +346,36 @@ gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
 static gchar *
 gimp_measure_tool_get_undo_desc (GimpTransformTool *tr_tool)
 {
-  return g_strdup (_("Straighten"));
+  GimpMeasureTool        *measure = GIMP_MEASURE_TOOL (tr_tool);
+  GimpCompassOrientation  orientation;
+  gdouble                 angle;
+
+  g_object_get (measure->widget,
+                "effective-orientation", &orientation,
+                "pixel-angle",           &angle,
+                NULL);
+
+  angle = gimp_rad_to_deg (fabs (angle));
+
+  switch (orientation)
+    {
+    case GIMP_COMPASS_ORIENTATION_AUTO:
+      return g_strdup_printf (C_("undo-type",
+                                 "Straighten by %-3.3g°"),
+                              angle);
+
+    case GIMP_COMPASS_ORIENTATION_HORIZONTAL:
+      return g_strdup_printf (C_("undo-type",
+                                 "Straighten Horizontally by %-3.3g°"),
+                              angle);
+
+    case GIMP_COMPASS_ORIENTATION_VERTICAL:
+      return g_strdup_printf (C_("undo-type",
+                                 "Straighten Vertically by %-3.3g°"),
+                              angle);
+    }
+
+  g_return_val_if_reached (NULL);
 }
 
 static void
