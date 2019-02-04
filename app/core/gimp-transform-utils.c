@@ -441,8 +441,9 @@ gimp_transform_matrix_generic (GimpMatrix3       *matrix,
 {
   GimpMatrix3 trafo;
   gdouble     coeff[8 * 9];
-  gboolean    negative;
+  gboolean    negative = -1;
   gint        i;
+  gboolean    result   = TRUE;
 
   g_return_val_if_fail (matrix != NULL, FALSE);
   g_return_val_if_fail (input_points != NULL, FALSE);
@@ -494,21 +495,26 @@ gimp_transform_matrix_generic (GimpMatrix3       *matrix,
           trafo.coeff[2][2];
 
       if (fabs (w) <= EPSILON)
-        return FALSE;
+        result = FALSE;
 
       neg = (w < 0.0);
 
-      if (i == 0)
-        negative = neg;
+      if (negative < 0)
+        {
+          negative = neg;
+        }
       else if (neg != negative)
-        return FALSE;
+        {
+          result = FALSE;
+          break;
+        }
     }
 
   /* if the output points are all behind the camera, negate the matrix, which
    * would map the input points to the corresponding points in front of the
    * camera.
    */
-  if (negative)
+  if (negative > 0)
     {
       gint r;
       gint c;
@@ -525,7 +531,7 @@ gimp_transform_matrix_generic (GimpMatrix3       *matrix,
   /* append the transformation to 'matrix' */
   gimp_matrix3_mult (&trafo, matrix);
 
-  return TRUE;
+  return result;
 }
 
 gboolean
