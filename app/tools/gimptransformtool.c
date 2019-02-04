@@ -61,14 +61,15 @@
 
 /*  local function prototypes  */
 
-static GeglBuffer * gimp_transform_tool_real_transform (GimpTransformTool  *tr_tool,
-                                                        GimpItem           *item,
-                                                        GeglBuffer         *orig_buffer,
-                                                        gint                orig_offset_x,
-                                                        gint                orig_offset_y,
-                                                        GimpColorProfile  **buffer_profile,
-                                                        gint               *new_offset_x,
-                                                        gint               *new_offset_y);
+static gchar      * gimp_transform_tool_real_get_undo_desc (GimpTransformTool  *tr_tool);
+static GeglBuffer * gimp_transform_tool_real_transform     (GimpTransformTool  *tr_tool,
+                                                            GimpItem           *item,
+                                                            GeglBuffer         *orig_buffer,
+                                                            gint                orig_offset_x,
+                                                            gint                orig_offset_y,
+                                                            GimpColorProfile  **buffer_profile,
+                                                            gint               *new_offset_x,
+                                                            gint               *new_offset_y);
 
 static gboolean     gimp_transform_tool_confirm        (GimpTransformTool  *tr_tool,
                                                         GimpDisplay        *display);
@@ -86,9 +87,10 @@ static void
 gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 {
   klass->recalc_matrix = NULL;
-  klass->get_undo_desc = NULL;
+  klass->get_undo_desc = gimp_transform_tool_real_get_undo_desc;
   klass->transform     = gimp_transform_tool_real_transform;
 
+  klass->undo_desc     = _("Transform");
   klass->progress_text = _("Transforming");
 }
 
@@ -97,6 +99,12 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 {
   gimp_matrix3_identity (&tr_tool->transform);
   tr_tool->transform_valid = TRUE;
+}
+
+static gchar *
+gimp_transform_tool_real_get_undo_desc (GimpTransformTool *tr_tool)
+{
+  return g_strdup (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->undo_desc);
 }
 
 static GeglBuffer *

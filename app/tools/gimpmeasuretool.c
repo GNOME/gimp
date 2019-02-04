@@ -150,6 +150,7 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   tr_class->recalc_matrix    = gimp_measure_tool_recalc_matrix;
   tr_class->get_undo_desc    = gimp_measure_tool_get_undo_desc;
 
+  tr_class->undo_desc        = C_("undo-type", "Straighten");
   tr_class->progress_text    = _("Straightening");
 }
 

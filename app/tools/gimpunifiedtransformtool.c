@@ -56,8 +56,6 @@ enum
 
 /*  local function prototypes  */
 
-static gchar          * gimp_unified_transform_tool_get_undo_desc  (GimpTransformTool        *tr_tool);
-
 static void             gimp_unified_transform_tool_prepare        (GimpTransformGridTool    *tg_tool);
 static GimpToolWidget * gimp_unified_transform_tool_get_widget     (GimpTransformGridTool    *tg_tool);
 static void             gimp_unified_transform_tool_update_widget  (GimpTransformGridTool    *tg_tool);
@@ -97,8 +95,6 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
   GimpTransformGridToolClass    *tg_class      = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
   GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
-  tr_class->get_undo_desc      = gimp_unified_transform_tool_get_undo_desc;
-
   tg_class->prepare            = gimp_unified_transform_tool_prepare;
   tg_class->get_widget         = gimp_unified_transform_tool_get_widget;
   tg_class->update_widget      = gimp_unified_transform_tool_update_widget;
@@ -106,18 +102,13 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
 
   generic_class->recalc_points = gimp_unified_transform_tool_recalc_points;
 
+  tr_class->undo_desc          = C_("undo-type", "Unified Transform");
   tr_class->progress_text      = _("Unified transform");
 }
 
 static void
 gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
 {
-}
-
-static gchar *
-gimp_unified_transform_tool_get_undo_desc (GimpTransformTool *tr_tool)
-{
-  return g_strdup (C_("undo-type", "Unified Transform"));
 }
 
 static void

@@ -109,6 +109,7 @@ gimp_shear_tool_class_init (GimpShearToolClass *klass)
   tg_class->update_widget   = gimp_shear_tool_update_widget;
   tg_class->widget_changed  = gimp_shear_tool_widget_changed;
 
+  tr_class->progress_text   = C_("undo-type", "Shear");
   tr_class->progress_text   = _("Shearing");
   tg_class->ok_button_label = _("_Shear");
 }
