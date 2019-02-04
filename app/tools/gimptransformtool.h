@@ -61,16 +61,17 @@ struct _GimpTransformToolClass
   GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  void         (* recalc_matrix) (GimpTransformTool  *tr_tool);
-  gchar      * (* get_undo_desc) (GimpTransformTool  *tr_tool);
-  GeglBuffer * (* transform)     (GimpTransformTool  *tr_tool,
-                                  GimpItem           *item,
-                                  GeglBuffer         *orig_buffer,
-                                  gint                orig_offset_x,
-                                  gint                orig_offset_y,
-                                  GimpColorProfile  **buffer_profile,
-                                  gint               *new_offset_x,
-                                  gint               *new_offset_y);
+  void                     (* recalc_matrix) (GimpTransformTool  *tr_tool);
+  gchar                  * (* get_undo_desc) (GimpTransformTool  *tr_tool);
+  GimpTransformDirection   (* get_direction) (GimpTransformTool  *tr_tool);
+  GeglBuffer             * (* transform)     (GimpTransformTool  *tr_tool,
+                                              GimpItem           *item,
+                                              GeglBuffer         *orig_buffer,
+                                              gint                orig_offset_x,
+                                              gint                orig_offset_y,
+                                              GimpColorProfile  **buffer_profile,
+                                              gint               *new_offset_x,
+                                              gint               *new_offset_y);
 
   const gchar *undo_desc;
   const gchar *progress_text;

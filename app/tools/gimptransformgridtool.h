@@ -47,17 +47,17 @@ struct _GimpTransformGridTool
 {
   GimpTransformTool  parent_instance;
 
-  TransInfo          trans_info;       /*  transformation info                */
-  TransInfo         *old_trans_info;   /*  for resetting everything           */
-  TransInfo         *prev_trans_info;  /*  the current finished state         */
+  TransInfo          init_trans_info;  /*  initial transformation info           */
+  TransInfo          trans_infos[2];   /*  forward/backward transformation info  */
+  gdouble           *trans_info;       /*  current transformation info           */
   GList             *undo_list;        /*  list of all states,
                                            head is current == prev_trans_info,
-                                           tail is original == old_trans_info */
+                                           tail is original == old_trans_info    */
   GList             *redo_list;        /*  list of all undone states,
                                            NULL when nothing undone */
 
   GimpItem          *hidden_item;      /*  the item that was hidden during
-                                           the transform                      */
+                                           the transform                         */
 
   GimpToolWidget    *widget;
   GimpToolWidget    *grab_widget;
@@ -74,6 +74,9 @@ struct _GimpTransformGridToolClass
   GimpTransformToolClass  parent_class;
 
   /*  virtual functions  */
+  gboolean         (* info_to_matrix) (GimpTransformGridTool  *tg_tool,
+                                       GimpMatrix3            *transform);
+  gchar          * (* get_undo_desc)  (GimpTransformGridTool  *tg_tool);
   void             (* dialog)         (GimpTransformGridTool  *tg_tool);
   void             (* dialog_update)  (GimpTransformGridTool  *tg_tool);
   void             (* prepare)        (GimpTransformGridTool  *tg_tool);
@@ -93,9 +96,12 @@ struct _GimpTransformGridToolClass
 };
 
 
-GType   gimp_transform_grid_tool_get_type           (void) G_GNUC_CONST;
+GType      gimp_transform_grid_tool_get_type           (void) G_GNUC_CONST;
 
-void    gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool);
+gboolean   gimp_transform_grid_tool_info_to_matrix     (GimpTransformGridTool *tg_tool,
+                                                        GimpMatrix3           *transform);
+
+void       gimp_transform_grid_tool_push_internal_undo (GimpTransformGridTool *tg_tool);
 
 
 #endif  /*  __GIMP_TRANSFORM_GRID_TOOL_H__  */

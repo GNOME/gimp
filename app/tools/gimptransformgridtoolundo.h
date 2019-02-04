@@ -38,7 +38,7 @@ struct _GimpTransformGridToolUndo
   GimpUndo               parent_instance;
 
   GimpTransformGridTool *tg_tool;
-  TransInfo              trans_info;
+  TransInfo              trans_infos[2];
 #if 0                   
   TileManager           *original;
 #endif

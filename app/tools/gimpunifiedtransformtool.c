@@ -61,7 +61,7 @@ static GimpToolWidget * gimp_unified_transform_tool_get_widget     (GimpTransfor
 static void             gimp_unified_transform_tool_update_widget  (GimpTransformGridTool    *tg_tool);
 static void             gimp_unified_transform_tool_widget_changed (GimpTransformGridTool    *tg_tool);
 
-static void             gimp_unified_transform_tool_recalc_points  (GimpGenericTransformTool *generic);
+static void             gimp_unified_transform_tool_info_to_points (GimpGenericTransformTool *generic);
 
 
 G_DEFINE_TYPE (GimpUnifiedTransformTool, gimp_unified_transform_tool,
@@ -95,15 +95,15 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
   GimpTransformGridToolClass    *tg_class      = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
   GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
-  tg_class->prepare            = gimp_unified_transform_tool_prepare;
-  tg_class->get_widget         = gimp_unified_transform_tool_get_widget;
-  tg_class->update_widget      = gimp_unified_transform_tool_update_widget;
-  tg_class->widget_changed     = gimp_unified_transform_tool_widget_changed;
+  tg_class->prepare             = gimp_unified_transform_tool_prepare;
+  tg_class->get_widget          = gimp_unified_transform_tool_get_widget;
+  tg_class->update_widget       = gimp_unified_transform_tool_update_widget;
+  tg_class->widget_changed      = gimp_unified_transform_tool_widget_changed;
 
-  generic_class->recalc_points = gimp_unified_transform_tool_recalc_points;
+  generic_class->info_to_points = gimp_unified_transform_tool_info_to_points;
 
-  tr_class->undo_desc          = C_("undo-type", "Unified Transform");
-  tr_class->progress_text      = _("Unified transform");
+  tr_class->undo_desc           = C_("undo-type", "Unified Transform");
+  tr_class->progress_text       = _("Unified transform");
 }
 
 static void
@@ -166,14 +166,15 @@ gimp_unified_transform_tool_update_widget (GimpTransformGridTool *tg_tool)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
+
   g_object_set (tg_tool->widget,
-                "transform", &tr_tool->transform,
-                "x1",        (gdouble) tr_tool->x1,
-                "y1",        (gdouble) tr_tool->y1,
-                "x2",        (gdouble) tr_tool->x2,
-                "y2",        (gdouble) tr_tool->y2,
-                "pivot-x",   tg_tool->trans_info[PIVOT_X],
-                "pivot-y",   tg_tool->trans_info[PIVOT_Y],
+                "x1",      (gdouble) tr_tool->x1,
+                "y1",      (gdouble) tr_tool->y1,
+                "x2",      (gdouble) tr_tool->x2,
+                "y2",      (gdouble) tr_tool->y2,
+                "pivot-x", tg_tool->trans_info[PIVOT_X],
+                "pivot-y", tg_tool->trans_info[PIVOT_Y],
                 NULL);
 }
 
@@ -212,7 +213,7 @@ gimp_unified_transform_tool_widget_changed (GimpTransformGridTool *tg_tool)
 }
 
 static void
-gimp_unified_transform_tool_recalc_points (GimpGenericTransformTool *generic)
+gimp_unified_transform_tool_info_to_points (GimpGenericTransformTool *generic)
 {
   GimpTransformTool     *tr_tool = GIMP_TRANSFORM_TOOL (generic);
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (generic);

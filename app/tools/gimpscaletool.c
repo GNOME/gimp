@@ -60,9 +60,9 @@ enum
 
 /*  local function prototypes  */
 
-static void             gimp_scale_tool_recalc_matrix  (GimpTransformTool     *tr_tool);
-static gchar          * gimp_scale_tool_get_undo_desc  (GimpTransformTool     *tr_tool);
-
+static gboolean         gimp_scale_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
+                                                        GimpMatrix3           *transform);
+static gchar          * gimp_scale_tool_get_undo_desc  (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_dialog         (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_dialog_update  (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_prepare        (GimpTransformGridTool *tg_tool);
@@ -103,9 +103,8 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
   GimpTransformToolClass     *tr_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
   GimpTransformGridToolClass *tg_class = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
 
-  tr_class->recalc_matrix   = gimp_scale_tool_recalc_matrix;
-  tr_class->get_undo_desc   = gimp_scale_tool_get_undo_desc;
-
+  tg_class->info_to_matrix  = gimp_scale_tool_info_to_matrix;
+  tg_class->get_undo_desc   = gimp_scale_tool_get_undo_desc;
   tg_class->dialog          = gimp_scale_tool_dialog;
   tg_class->dialog_update   = gimp_scale_tool_dialog_update;
   tg_class->prepare         = gimp_scale_tool_prepare;
@@ -126,13 +125,14 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RESIZE);
 }
 
-static void
-gimp_scale_tool_recalc_matrix (GimpTransformTool *tr_tool)
+static gboolean
+gimp_scale_tool_info_to_matrix  (GimpTransformGridTool *tg_tool,
+                                 GimpMatrix3           *transform)
 {
-  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
-  gimp_matrix3_identity (&tr_tool->transform);
-  gimp_transform_matrix_scale (&tr_tool->transform,
+  gimp_matrix3_identity (transform);
+  gimp_transform_matrix_scale (transform,
                                tr_tool->x1,
                                tr_tool->y1,
                                tr_tool->x2 - tr_tool->x1,
@@ -142,15 +142,14 @@ gimp_scale_tool_recalc_matrix (GimpTransformTool *tr_tool)
                                tg_tool->trans_info[X1] - tg_tool->trans_info[X0],
                                tg_tool->trans_info[Y1] - tg_tool->trans_info[Y0]);
 
-  GIMP_TRANSFORM_TOOL_CLASS (parent_class)->recalc_matrix (tr_tool);
+  return TRUE;
 }
 
 static gchar *
-gimp_scale_tool_get_undo_desc (GimpTransformTool *tr_tool)
+gimp_scale_tool_get_undo_desc (GimpTransformGridTool *tg_tool)
 {
-  GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
-  gint                   width;
-  gint                   height;
+  gint width;
+  gint height;
 
   width  = ROUND (tg_tool->trans_info[X1] - tg_tool->trans_info[X0]);
   height = ROUND (tg_tool->trans_info[Y1] - tg_tool->trans_info[Y0]);
@@ -262,15 +261,16 @@ gimp_scale_tool_update_widget (GimpTransformGridTool *tg_tool)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
 
+  GIMP_TRANSFORM_GRID_TOOL_CLASS (parent_class)->update_widget (tg_tool);
+
   g_object_set (
     tg_tool->widget,
-    "transform", &tr_tool->transform,
-    "x1",        (gdouble) tr_tool->x1,
-    "y1",        (gdouble) tr_tool->y1,
-    "x2",        (gdouble) tr_tool->x2,
-    "y2",        (gdouble) tr_tool->y2,
-    "pivot-x",   (tg_tool->trans_info[X0] + tg_tool->trans_info[X1]) / 2.0,
-    "pivot-y",   (tg_tool->trans_info[Y0] + tg_tool->trans_info[Y1]) / 2.0,
+    "x1",      (gdouble) tr_tool->x1,
+    "y1",      (gdouble) tr_tool->y1,
+    "x2",      (gdouble) tr_tool->x2,
+    "y2",      (gdouble) tr_tool->y2,
+    "pivot-x", (tg_tool->trans_info[X0] + tg_tool->trans_info[X1]) / 2.0,
+    "pivot-y", (tg_tool->trans_info[Y0] + tg_tool->trans_info[Y1]) / 2.0,
     NULL);
 }
 
