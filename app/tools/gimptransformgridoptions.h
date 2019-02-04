@@ -37,6 +37,7 @@ struct _GimpTransformGridOptions
 {
   GimpTransformOptions  parent_instance;
 
+  gboolean              direction_linked;
   gboolean              show_preview;
   gdouble               preview_opacity;
   GimpGuidesType        grid_type;

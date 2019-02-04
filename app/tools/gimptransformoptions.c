@@ -243,6 +243,8 @@ gimp_transform_options_gui (GimpToolOptions *tool_options,
                                               0, 0);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
+
+      options->direction_frame = frame;
     }
 
   /*  the interpolation menu  */

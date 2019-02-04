@@ -83,6 +83,8 @@ static void             gimp_handle_transform_tool_modifier_key   (GimpTool     
                                                                    GdkModifierType           state,
                                                                    GimpDisplay              *display);
 
+static void             gimp_handle_transform_tool_matrix_to_info (GimpTransformGridTool    *tg_tool,
+                                                                   const GimpMatrix3        *transform);
 static void             gimp_handle_transform_tool_prepare        (GimpTransformGridTool    *tg_tool);
 static GimpToolWidget * gimp_handle_transform_tool_get_widget     (GimpTransformGridTool    *tg_tool);
 static void             gimp_handle_transform_tool_update_widget  (GimpTransformGridTool    *tg_tool);
@@ -125,6 +127,7 @@ gimp_handle_transform_tool_class_init (GimpHandleTransformToolClass *klass)
 
   tool_class->modifier_key      = gimp_handle_transform_tool_modifier_key;
 
+  tg_class->matrix_to_info      = gimp_handle_transform_tool_matrix_to_info;
   tg_class->prepare             = gimp_handle_transform_tool_prepare;
   tg_class->get_widget          = gimp_handle_transform_tool_get_widget;
   tg_class->update_widget       = gimp_handle_transform_tool_update_widget;
@@ -194,6 +197,32 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
                                                 state, display);
+}
+
+static void
+gimp_handle_transform_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
+                                           const GimpMatrix3     *transform)
+{
+  gimp_matrix3_transform_point (transform,
+                                tg_tool->trans_info[OX0],
+                                tg_tool->trans_info[OY0],
+                                &tg_tool->trans_info[X0],
+                                &tg_tool->trans_info[Y0]);
+  gimp_matrix3_transform_point (transform,
+                                tg_tool->trans_info[OX1],
+                                tg_tool->trans_info[OY1],
+                                &tg_tool->trans_info[X1],
+                                &tg_tool->trans_info[Y1]);
+  gimp_matrix3_transform_point (transform,
+                                tg_tool->trans_info[OX2],
+                                tg_tool->trans_info[OY2],
+                                &tg_tool->trans_info[X2],
+                                &tg_tool->trans_info[Y2]);
+  gimp_matrix3_transform_point (transform,
+                                tg_tool->trans_info[OX3],
+                                tg_tool->trans_info[OY3],
+                                &tg_tool->trans_info[X3],
+                                &tg_tool->trans_info[Y3]);
 }
 
 static void

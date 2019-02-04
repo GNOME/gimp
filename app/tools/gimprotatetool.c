@@ -53,6 +53,7 @@ enum
 
 
 #define SB_WIDTH 10
+#define EPSILON  1e-6
 
 
 /*  local function prototypes  */
@@ -63,6 +64,8 @@ static gboolean         gimp_rotate_tool_key_press      (GimpTool              *
 
 static gboolean         gimp_rotate_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
                                                          GimpMatrix3           *transform);
+static void             gimp_rotate_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
+                                                         const GimpMatrix3     *transform);
 static gchar          * gimp_rotate_tool_get_undo_desc  (GimpTransformGridTool *tg_tool);
 static void             gimp_rotate_tool_dialog         (GimpTransformGridTool *tg_tool);
 static void             gimp_rotate_tool_dialog_update  (GimpTransformGridTool *tg_tool);
@@ -109,6 +112,7 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
   tool_class->key_press     = gimp_rotate_tool_key_press;
 
   tg_class->info_to_matrix  = gimp_rotate_tool_info_to_matrix;
+  tg_class->matrix_to_info  = gimp_rotate_tool_matrix_to_info;
   tg_class->get_undo_desc   = gimp_rotate_tool_get_undo_desc;
   tg_class->dialog          = gimp_rotate_tool_dialog;
   tg_class->dialog_update   = gimp_rotate_tool_dialog_update;
@@ -179,6 +183,46 @@ gimp_rotate_tool_info_to_matrix (GimpTransformGridTool *tg_tool,
                                        tg_tool->trans_info[ANGLE]);
 
   return TRUE;
+}
+
+static void
+gimp_rotate_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
+                                 const GimpMatrix3     *transform)
+{
+  gdouble c;
+  gdouble s;
+  gdouble x;
+  gdouble y;
+  gdouble q;
+
+  c = transform->coeff[0][0];
+  s = transform->coeff[1][0];
+  x = transform->coeff[0][2];
+  y = transform->coeff[1][2];
+
+  tg_tool->trans_info[ANGLE] = atan2 (s, c);
+
+  q = 2.0 * (1.0 - transform->coeff[0][0]);
+
+  if (q > EPSILON)
+    {
+      tg_tool->trans_info[PIVOT_X] = ((1.0 - c) * x - s * y) / q;
+      tg_tool->trans_info[PIVOT_Y] = (s * x + (1.0 - c) * y) / q;
+    }
+  else
+    {
+      GimpMatrix3 transfer;
+
+      gimp_transform_grid_tool_info_to_matrix (tg_tool, &transfer);
+      gimp_matrix3_invert (&transfer);
+      gimp_matrix3_mult (transform, &transfer);
+
+      gimp_matrix3_transform_point (&transfer,
+                                    tg_tool->trans_info[PIVOT_X],
+                                    tg_tool->trans_info[PIVOT_Y],
+                                    &tg_tool->trans_info[PIVOT_X],
+                                    &tg_tool->trans_info[PIVOT_Y]);
+    }
 }
 
 static gchar *

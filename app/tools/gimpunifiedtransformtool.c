@@ -56,6 +56,8 @@ enum
 
 /*  local function prototypes  */
 
+static void             gimp_unified_transform_tool_matrix_to_info (GimpTransformGridTool    *tg_tool,
+                                                                    const GimpMatrix3        *transform);
 static void             gimp_unified_transform_tool_prepare        (GimpTransformGridTool    *tg_tool);
 static GimpToolWidget * gimp_unified_transform_tool_get_widget     (GimpTransformGridTool    *tg_tool);
 static void             gimp_unified_transform_tool_update_widget  (GimpTransformGridTool    *tg_tool);
@@ -95,6 +97,7 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
   GimpTransformGridToolClass    *tg_class      = GIMP_TRANSFORM_GRID_TOOL_CLASS (klass);
   GimpGenericTransformToolClass *generic_class = GIMP_GENERIC_TRANSFORM_TOOL_CLASS (klass);
 
+  tg_class->matrix_to_info      = gimp_unified_transform_tool_matrix_to_info;
   tg_class->prepare             = gimp_unified_transform_tool_prepare;
   tg_class->get_widget          = gimp_unified_transform_tool_get_widget;
   tg_class->update_widget       = gimp_unified_transform_tool_update_widget;
@@ -109,6 +112,45 @@ gimp_unified_transform_tool_class_init (GimpUnifiedTransformToolClass *klass)
 static void
 gimp_unified_transform_tool_init (GimpUnifiedTransformTool *unified_tool)
 {
+}
+
+static void
+gimp_unified_transform_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
+                                            const GimpMatrix3     *transform)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpMatrix3        transfer;
+
+  gimp_transform_grid_tool_info_to_matrix (tg_tool, &transfer);
+  gimp_matrix3_invert (&transfer);
+  gimp_matrix3_mult (transform, &transfer);
+
+  gimp_matrix3_transform_point (&transfer,
+                                tg_tool->trans_info[PIVOT_X],
+                                tg_tool->trans_info[PIVOT_Y],
+                                &tg_tool->trans_info[PIVOT_X],
+                                &tg_tool->trans_info[PIVOT_Y]);
+
+  gimp_matrix3_transform_point (transform,
+                                tr_tool->x1,
+                                tr_tool->y1,
+                                &tg_tool->trans_info[X0],
+                                &tg_tool->trans_info[Y0]);
+  gimp_matrix3_transform_point (transform,
+                                tr_tool->x2,
+                                tr_tool->y1,
+                                &tg_tool->trans_info[X1],
+                                &tg_tool->trans_info[Y1]);
+  gimp_matrix3_transform_point (transform,
+                                tr_tool->x1,
+                                tr_tool->y2,
+                                &tg_tool->trans_info[X2],
+                                &tg_tool->trans_info[Y2]);
+  gimp_matrix3_transform_point (transform,
+                                tr_tool->x2,
+                                tr_tool->y2,
+                                &tg_tool->trans_info[X3],
+                                &tg_tool->trans_info[Y3]);
 }
 
 static void
