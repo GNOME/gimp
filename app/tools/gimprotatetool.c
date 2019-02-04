@@ -187,11 +187,21 @@ gimp_rotate_tool_get_undo_desc (GimpTransformTool *tr_tool)
 {
   GimpTransformGridTool *tg_tool = GIMP_TRANSFORM_GRID_TOOL (tr_tool);
 
-  return g_strdup_printf (C_("undo-type",
-                             "Rotate by %-3.3g° around (%g, %g)"),
-                          gimp_rad_to_deg (tg_tool->trans_info[ANGLE]),
-                          tg_tool->trans_info[PIVOT_X],
-                          tg_tool->trans_info[PIVOT_Y]);
+  if (tg_tool->trans_info[PIVOT_X] == (tr_tool->x1 + tr_tool->x2) / 2.0 &&
+      tg_tool->trans_info[PIVOT_Y] == (tr_tool->y1 + tr_tool->y2) / 2.0)
+    {
+      return g_strdup_printf (C_("undo-type",
+                                 "Rotate by %-3.3g°"),
+                              gimp_rad_to_deg (tg_tool->trans_info[ANGLE]));
+    }
+  else
+    {
+      return g_strdup_printf (C_("undo-type",
+                                 "Rotate by %-3.3g° around (%g, %g)"),
+                              gimp_rad_to_deg (tg_tool->trans_info[ANGLE]),
+                              tg_tool->trans_info[PIVOT_X],
+                              tg_tool->trans_info[PIVOT_Y]);
+    }
 }
 
 static void
