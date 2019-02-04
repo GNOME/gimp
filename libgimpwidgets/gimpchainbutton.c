@@ -54,7 +54,8 @@
 enum
 {
   PROP_0,
-  PROP_POSITION
+  PROP_POSITION,
+  PROP_ICON_SIZE
 };
 
 enum
@@ -131,6 +132,22 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
                                                       GIMP_CHAIN_TOP,
                                                       G_PARAM_CONSTRUCT_ONLY |
                                                       GIMP_PARAM_READWRITE));
+
+  /**
+   * GimpChainButton:icon-size:
+   *
+   * The chain button icon size.
+   *
+   * Since: 2.10.10
+   */
+  g_object_class_install_property (object_class, PROP_ICON_SIZE,
+                                   g_param_spec_enum ("icon-size",
+                                                      "Icon Size",
+                                                      "The chain's icon size",
+                                                      GTK_TYPE_ICON_SIZE,
+                                                      GTK_ICON_SIZE_BUTTON,
+                                                      G_PARAM_CONSTRUCT |
+                                                      GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -202,6 +219,10 @@ gimp_chain_button_set_property (GObject      *object,
       button->position = g_value_get_enum (value);
       break;
 
+    case PROP_ICON_SIZE:
+      g_object_set_property (G_OBJECT (button->image), "icon-size", value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -220,6 +241,10 @@ gimp_chain_button_get_property (GObject    *object,
     {
     case PROP_POSITION:
       g_value_set_enum (value, button->position);
+      break;
+
+    case PROP_ICON_SIZE:
+      g_object_get_property (G_OBJECT (button->image), "icon-size", value);
       break;
 
     default:
@@ -252,6 +277,50 @@ gimp_chain_button_new (GimpChainPosition position)
   return g_object_new (GIMP_TYPE_CHAIN_BUTTON,
                        "position", position,
                        NULL);
+}
+
+/**
+ * gimp_chain_button_set_icon_size:
+ * @button: Pointer to a #GimpChainButton.
+ * @size: The new icon size.
+ *
+ * Sets the icon size of the #GimpChainButton.
+ *
+ * Since: 2.10.10
+ */
+void
+gimp_chain_button_set_icon_size (GimpChainButton *button,
+                                 GtkIconSize      size)
+{
+  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
+
+  g_object_set (button,
+                "icon-size", size,
+                NULL);
+}
+
+/**
+ * gimp_chain_button_get_icon_size:
+ * @button: Pointer to a #GimpChainButton.
+ *
+ * Gets the icon size of the #GimpChainButton.
+ *
+ * Returns: The icon size.
+ *
+ * Since: 2.10.10
+ */
+GtkIconSize
+gimp_chain_button_get_icon_size (GimpChainButton *button)
+{
+  GtkIconSize size;
+
+  g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), GTK_ICON_SIZE_BUTTON);
+
+  g_object_get (button,
+                "icon-size", &size,
+                NULL);
+
+  return size;
 }
 
 /**
@@ -312,7 +381,7 @@ gimp_chain_button_update_image (GimpChainButton *button)
 
   gtk_image_set_from_icon_name (GTK_IMAGE (button->image),
                                 gimp_chain_icon_names[i],
-                                GTK_ICON_SIZE_BUTTON);
+                                gimp_chain_button_get_icon_size (button));
 }
 
 
