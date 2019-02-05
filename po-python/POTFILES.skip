@@ -63,3 +63,4 @@ plug-ins/pygimp/plug-ins/palette-offset/palette-offset.py
 plug-ins/pygimp/plug-ins/palette-sort/palette-sort.py
 plug-ins/pygimp/plug-ins/palette-to-gradient/palette-to-gradient.py
 plug-ins/pygimp/plug-ins/py-slice/py-slice.py
+plug-ins/pygimp/plug-ins/spyro_plus/spyro_plus.py
