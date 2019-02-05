@@ -159,7 +159,6 @@ GEGL_REQUIRED_VERSION=gegl_required_version
 GEXIV2_REQUIRED_VERSION=gexiv2_required_version
 GLIB_REQUIRED_VERSION=glib_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
-GTK_WIN32_RECOMMENDED_VERSION=gtk_win32_recommended_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
 LCMS_REQUIRED_VERSION=lcms_required_version
@@ -193,7 +192,6 @@ AC_SUBST(GEGL_REQUIRED_VERSION)
 AC_SUBST(GEXIV2_REQUIRED_VERSION)
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
-AC_SUBST(GTK_WIN32_RECOMMENDED_VERSION)
 AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(LCMS_REQUIRED_VERSION)
@@ -2364,48 +2362,44 @@ AC_ARG_ENABLE(vector-icons, [  --disable-vector-icons  use raster icons rather t
               enable_vector_icons=auto)
 
 if test "x$enable_vector_icons" != "xno"; then
-  if test "x$have_recommended_gtk" != "x"; then
-      enable_vector_icons="no (gtk+-2-0 < gtk_win32_recommended_version)"
-  else
-    have_shared_mime_info=""
-    # shared-mime-info is needed to correctly detect SVG files (except on
-    # Windows, apparently).
-    PKG_CHECK_MODULES(MIME_INFO, [shared-mime-info],
-                      have_shared_mime_info="yes", have_shared_mime_info="no")
-    if test "x$have_shared_mime_info" = "xyes" ||
-       test "x$platform_win32" = "xyes"; then
-      # Check if librsvg was built with --disable-pixbuf-loader.
-      gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
-      # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
-      # error: cannot check for file existence when cross compiling
-      # So let's test files the shell way.
-      if (test "x$platform_win32" = "xyes" &&
-          test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
-         test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
-        # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
-        # to make sure we use the native pkg-config (in case we cross-compile).
-        if pkg-config --atleast-version=glib_required_version glib-2.0 &&
-           pkg-config gio-2.0; then
-          NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
-          NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
-          enable_vector_icons="yes"
+  have_shared_mime_info=""
+  # shared-mime-info is needed to correctly detect SVG files (except on
+  # Windows, apparently).
+  PKG_CHECK_MODULES(MIME_INFO, [shared-mime-info],
+                    have_shared_mime_info="yes", have_shared_mime_info="no")
+  if test "x$have_shared_mime_info" = "xyes" ||
+     test "x$platform_win32" = "xyes"; then
+    # Check if librsvg was built with --disable-pixbuf-loader.
+    gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
+    # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
+    # error: cannot check for file existence when cross compiling
+    # So let's test files the shell way.
+    if (test "x$platform_win32" = "xyes" &&
+        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
+       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
+      # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
+      # to make sure we use the native pkg-config (in case we cross-compile).
+      if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+         pkg-config gio-2.0; then
+        NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
+        NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+        enable_vector_icons="yes"
 
-          if test "x$platform_win32" = "xyes"; then
-            warning_vector_icons_windows="
+        if test "x$platform_win32" = "xyes"; then
+          warning_vector_icons_windows="
 WARNING: You enabled vector icons on Win32. Make sure to run:
-           $ gdk-pixbuf-query-loaders.exe --update-cache
-         on the target machine (this command generates loaders.cache)
-         so that GdkPixbuf knows where to find the SVG loader."
-          fi
-        else
-          enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
+         $ gdk-pixbuf-query-loaders.exe --update-cache
+       on the target machine (this command generates loaders.cache)
+       so that GdkPixbuf knows where to find the SVG loader."
         fi
       else
-        enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
+        enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
       fi
     else
-      enable_vector_icons="no (missing shared-mime-info)"
+      enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
     fi
+  else
+    enable_vector_icons="no (missing shared-mime-info)"
   fi
 fi
 
@@ -3035,7 +3029,7 @@ Tests:
   Test desktop file          $have_desktop_file_validate
 
 Bug report URL: $with_bug_report_url
-$override_bug_report_url$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
+$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
