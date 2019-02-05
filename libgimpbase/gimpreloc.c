@@ -16,11 +16,11 @@
 #include <limits.h>
 #include <string.h>
 
-#ifdef ENABLE_BINRELOC
+#if defined(ENABLE_RELOCATABLE_RESOURCES) && ! defined(G_OS_WIN32)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#endif /* ENABLE_BINRELOC */
+#endif /* ENABLE_RELOCATABLE_RESOURCES && ! G_OS_WIN32 */
 
 #include <glib.h>
 #include <glib/gstdio.h>
@@ -36,7 +36,7 @@
 static char *
 _br_find_exe (GimpBinrelocInitError *error)
 {
-#ifndef ENABLE_BINRELOC
+#if ! defined(ENABLE_RELOCATABLE_RESOURCES) || defined(G_OS_WIN32)
         if (error)
                 *error = GIMP_RELOC_INIT_ERROR_DISABLED;
         return NULL;
@@ -164,7 +164,7 @@ _br_find_exe (GimpBinrelocInitError *error)
         g_free (line);
         fclose (f);
         return path;
-#endif /* ENABLE_BINRELOC */
+#endif /* ! ENABLE_RELOCATABLE_RESOURCES || G_OS_WIN32 */
 }
 
 
@@ -175,7 +175,7 @@ _br_find_exe (GimpBinrelocInitError *error)
 static char *
 _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
 {
-#ifndef ENABLE_BINRELOC
+#if ! defined(ENABLE_RELOCATABLE_RESOURCES) || defined(G_OS_WIN32)
         if (error)
                 *error = GIMP_RELOC_INIT_ERROR_DISABLED;
         return (char *) NULL;
@@ -272,7 +272,7 @@ _br_find_exe_for_symbol (const void *symbol, GimpBinrelocInitError *error)
                 return (char *) NULL;
         else
                 return g_strdup (found);
-#endif /* ENABLE_BINRELOC */
+#endif /* ! ENABLE_RELOCATABLE_RESOURCES || G_OS_WIN32 */
 }
 
 

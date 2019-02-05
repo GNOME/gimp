@@ -65,7 +65,6 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)						\
 	$(GIO_CFLAGS)						\
 	$(GEXIV2_CFLAGS)					\
-	$(BINRELOC_CFLAGS)					\
 	-I$(includedir)
 
 AM_CFLAGS = \

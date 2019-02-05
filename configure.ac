@@ -612,9 +612,6 @@ AC_CHECK_FUNCS(difftime mmap)
 AC_CHECK_FUNCS(thr_self)
 
 
-AM_BINRELOC
-
-
 # _NL_MEASUREMENT_MEASUREMENT is an enum and not a define
 AC_MSG_CHECKING([for _NL_MEASUREMENT_MEASUREMENT])
 AC_LINK_IFELSE(
@@ -1500,6 +1497,7 @@ if test "x$enable_relocatable_bundle" = xyes; then
   AC_DEFINE(ENABLE_RELOCATABLE_RESOURCES, 1,
             [Define to 1 if resources are considered bundled under the same prefix])
 fi
+AM_CONDITIONAL(ENABLE_RELOCATABLE_RESOURCES, test x$enable_relocatable_bundle = xyes)
 
 AC_MSG_RESULT([$enable_relocatable_bundle])
 

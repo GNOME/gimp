@@ -252,11 +252,6 @@ These are:
      in the user's home directory) to ~/.config/DIR/@GIMP_APP_VERSION@.
      If DIR is an absolute path, the directory will be changed to DIR.
 
-  --enable-binreloc.  When compiled for Linux with this option enabled,
-     GIMP will be binary relocatable.  Plug-ins and data files will
-     be searched relative to the gimp binary instead of in the paths
-     defined at compile time.
-
   --with-shm=[none|sysv|posix|auto].  This option allows you to specify
      how image data is transported between the core and plug-ins. Usually
      the best way to do this is detected automatically.
