@@ -93,8 +93,6 @@ _gimp_tile_backend_plugin_class_init (GimpTileBackendPluginClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = gimp_tile_backend_plugin_finalize;
-
-  gimp_tile_cache_ntiles (64);
 }
 
 static void
@@ -209,7 +207,7 @@ gimp_tile_read_mul (GimpTileBackendPlugin *backend_plugin,
           gimp_tile = gimp_drawable_get_tile (priv->drawable,
                                               priv->shadow,
                                               y + v, x + u);
-          gimp_tile_ref (gimp_tile);
+          _gimp_tile_ref_nocache (gimp_tile, TRUE);
 
           {
             gint ewidth           = gimp_tile->ewidth;
@@ -261,7 +259,7 @@ gimp_tile_write_mul (GimpTileBackendPlugin *backend_plugin,
           gimp_tile = gimp_drawable_get_tile (priv->drawable,
                                               priv->shadow,
                                               y+v, x+u);
-          _gimp_tile_ref_noinit (gimp_tile);
+          _gimp_tile_ref_nocache (gimp_tile, FALSE);
 
           {
             gint ewidth           = gimp_tile->ewidth;
