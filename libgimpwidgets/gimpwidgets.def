@@ -24,9 +24,11 @@ EXPORTS
 	gimp_cell_renderer_toggle_get_type
 	gimp_cell_renderer_toggle_new
 	gimp_chain_button_get_active
+	gimp_chain_button_get_icon_size
 	gimp_chain_button_get_type
 	gimp_chain_button_new
 	gimp_chain_button_set_active
+	gimp_chain_button_set_icon_size
 	gimp_chain_position_get_type
 	gimp_color_area_get_color
 	gimp_color_area_get_type
