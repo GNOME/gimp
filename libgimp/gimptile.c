@@ -100,16 +100,25 @@ gimp_tile_ref_zero (GimpTile *tile)
 }
 
 void
-_gimp_tile_ref_noinit (GimpTile *tile)
+_gimp_tile_ref_nocache (GimpTile *tile,
+                        gboolean  init)
 {
   g_return_if_fail (tile != NULL);
 
   tile->ref_count++;
 
   if (tile->ref_count == 1)
-    tile->data = g_new (guchar, tile->ewidth * tile->eheight * tile->bpp);
-
-  gimp_tile_cache_insert (tile);
+    {
+      if (init)
+        {
+          gimp_tile_get (tile);
+          tile->dirty = FALSE;
+        }
+      else
+        {
+          tile->data = g_new (guchar, tile->ewidth * tile->eheight * tile->bpp);
+        }
+    }
 }
 
 void
