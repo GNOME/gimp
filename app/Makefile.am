@@ -106,7 +106,7 @@ else
 libm = -lm
 endif
 
-if USE_BINRELOC
+if ENABLE_RELOCATABLE_RESOURCES
 munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
 
