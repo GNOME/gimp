@@ -204,7 +204,7 @@ gimp_rotate_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
 
   q = 2.0 * (1.0 - transform->coeff[0][0]);
 
-  if (q > EPSILON)
+  if (fabs (q) > EPSILON)
     {
       tg_tool->trans_info[PIVOT_X] = ((1.0 - c) * x - s * y) / q;
       tg_tool->trans_info[PIVOT_Y] = (s * x + (1.0 - c) * y) / q;
@@ -228,10 +228,15 @@ gimp_rotate_tool_matrix_to_info (GimpTransformGridTool *tg_tool,
 static gchar *
 gimp_rotate_tool_get_undo_desc (GimpTransformGridTool *tg_tool)
 {
-  GimpTransformTool *tr_tool  = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
+  gdouble            center_x;
+  gdouble            center_y;
 
-  if (tg_tool->trans_info[PIVOT_X] == (tr_tool->x1 + tr_tool->x2) / 2.0 &&
-      tg_tool->trans_info[PIVOT_Y] == (tr_tool->y1 + tr_tool->y2) / 2.0)
+  center_x = (tr_tool->x1 + tr_tool->x2) / 2.0;
+  center_y = (tr_tool->y1 + tr_tool->y2) / 2.0;
+
+  if (fabs (tg_tool->trans_info[PIVOT_X] - center_x) <= EPSILON &&
+      fabs (tg_tool->trans_info[PIVOT_Y] - center_y) <= EPSILON)
     {
       return g_strdup_printf (C_("undo-type",
                                  "Rotate by %-3.3g°"),
@@ -430,9 +435,7 @@ rotate_angle_changed (GtkAdjustment         *adj,
 {
   gdouble value = gimp_deg_to_rad (gtk_adjustment_get_value (adj));
 
-#define ANGLE_EPSILON 0.0001
-
-  if (ABS (value - tg_tool->trans_info[ANGLE]) > ANGLE_EPSILON)
+  if (fabs (value - tg_tool->trans_info[ANGLE]) > EPSILON)
     {
       GimpTool          *tool    = GIMP_TOOL (tg_tool);
       GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
@@ -443,8 +446,6 @@ rotate_angle_changed (GtkAdjustment         *adj,
 
       gimp_transform_tool_recalc_matrix (tr_tool, tool->display);
     }
-
-#undef ANGLE_EPSILON
 }
 
 static void
