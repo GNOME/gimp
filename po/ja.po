@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-01 16:49+0000\n"
-"PO-Revision-Date: 2019-02-06 21:53+0900\n"
+"PO-Revision-Date: 2019-02-06 22:30+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -12254,7 +12254,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
-msgstr "[選択範囲の境界をぼかす] ダイアログのぼかす量の既定値を設定します。"
+msgstr "[選択範囲の境界をぼかす] ダイアログの境界の半径の既定値を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
@@ -12273,7 +12273,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:608
 msgid "Sets the default border radius for the 'Border Selection' dialog."
-msgstr "[縁取り選択] ダイアログの縁の幅の既定値を設定します。"
+msgstr "[縁取り選択] ダイアログの縁取り半径の既定値を設定します。"
 
 #: ../app/config/gimprc-blurbs.h:611
 msgid ""
@@ -12285,7 +12285,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:615
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
-"[縁取り選択] ダイアログのデフォルトの縁のスタイルを設定します。"
+"[縁取り選択] ダイアログのデフォルトの縁取りスタイルを設定します。"
 
 #: ../app/config/gimprc-blurbs.h:624
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -17700,7 +17700,7 @@ msgstr "選択範囲の境界をぼかすダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2381
 msgid "Feather radius:"
-msgstr "線をぼかす量:"
+msgstr "境界の半径:"
 
 #. Grow Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2385
@@ -17709,7 +17709,7 @@ msgstr "選択範囲の拡大ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2390
 msgid "Grow radius:"
-msgstr "選択範囲の拡大量:"
+msgstr "拡大量:"
 
 #. Shrink Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2394
@@ -17718,7 +17718,7 @@ msgstr "選択範囲の縮小ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2399
 msgid "Shrink radius:"
-msgstr "選択範囲の縮小量:"
+msgstr "縮小量:"
 
 #: ../app/dialogs/preferences-dialog.c:2403
 #: ../app/dialogs/preferences-dialog.c:2420
@@ -17732,11 +17732,11 @@ msgstr "縁取り選択ダイアログ"
 
 #: ../app/dialogs/preferences-dialog.c:2412
 msgid "Border radius:"
-msgstr "縁の幅:"
+msgstr "縁取り半径:"
 
 #: ../app/dialogs/preferences-dialog.c:2416
 msgid "Border style:"
-msgstr "縁のスタイル:"
+msgstr "縁取りスタイル:"
 
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2424
