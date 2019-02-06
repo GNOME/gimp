@@ -33,6 +33,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-mask.h"
 
@@ -277,6 +279,7 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
                                         GError      **error)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpGuiConfig            *config    = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage                *image     = gimp_display_get_image (display);
   GimpDrawable             *drawable  = gimp_image_get_active_drawable (image);
   GimpDisplayShell         *shell     = gimp_display_get_shell (display);
@@ -284,7 +287,7 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
   if (! drawable)
     return FALSE;
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) && ! config->edit_non_visible)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("The active layer is not visible."));

@@ -41,6 +41,7 @@ struct _GimpGuiConfig
 {
   GimpDisplayConfig    parent_instance;
 
+  gboolean             edit_non_visible;
   gboolean             move_tool_changes_active;
   gint                 filter_tool_max_recent;
   gboolean             filter_tool_use_last_settings;
