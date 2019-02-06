@@ -29,6 +29,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "gegl/gimp-gegl-apply-operation.h"
 
 #include "core/gimp.h"
@@ -658,6 +660,7 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
 {
   GimpTool        *tool     = GIMP_TOOL (wt);
   GimpWarpOptions *options  = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpGuiConfig   *config   = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage       *image    = gimp_display_get_image (display);
   GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
 
@@ -685,7 +688,7 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
       return FALSE;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) && ! config->edit_non_visible)
     {
       if (show_message)
         {

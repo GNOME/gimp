@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpasync.h"
 #include "core/gimpcancelable.h"
@@ -471,6 +473,7 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
 {
   GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpGuiConfig         *config      = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage             *image       = gimp_display_get_image (display);
   GimpDrawable          *drawable    = gimp_image_get_active_drawable (image);
   gboolean               sample_merged;
@@ -489,7 +492,7 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) && ! config->edit_non_visible)
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer is not visible."));
@@ -757,6 +760,7 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
                                      GimpDisplay      *display)
 {
   GimpBucketFillOptions *options  = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+  GimpGuiConfig         *config   = GIMP_GUI_CONFIG (display->gimp->config);
   GimpCursorModifier     modifier = GIMP_CURSOR_MODIFIER_BAD;
   GimpImage             *image    = gimp_display_get_image (display);
   gboolean               sample_merged;
@@ -770,7 +774,7 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
 
       if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
           ! gimp_item_is_content_locked (GIMP_ITEM (drawable))    &&
-          gimp_item_is_visible (GIMP_ITEM (drawable)))
+          (gimp_item_is_visible (GIMP_ITEM (drawable)) || config->edit_non_visible))
         {
           switch (options->fill_mode)
             {

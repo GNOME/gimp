@@ -272,6 +272,9 @@ _("Sets the monitor's vertical resolution, in dots per inch.  If set to " \
   "0, forces the X server to be queried for both horizontal and vertical " \
   "resolution information.")
 
+#define EDIT_NON_VISIBLE_BLURB \
+_("When enabled, non-visible layers can be edited as normal.")
+
 #define MOVE_TOOL_CHANGES_ACTIVE_BLURB \
 _("If enabled, the move tool sets the edited layer or path as active.  " \
   "This used to be the default behaviour in older versions.")

@@ -25,6 +25,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimperror.h"
@@ -520,6 +522,7 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
   GimpItem             *item;
   const gchar          *null_message   = NULL;
   const gchar          *locked_message = NULL;
+  GimpGuiConfig        *config         = GIMP_GUI_CONFIG (display->gimp->config);
 
   g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
@@ -542,6 +545,7 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
             locked_message = _("The active layer's position and size are locked.");
 
           if (! gimp_item_is_visible (item) &&
+              ! config->edit_non_visible &&
               item != tr_tool->item) /* see bug #759194 */
             {
               g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,

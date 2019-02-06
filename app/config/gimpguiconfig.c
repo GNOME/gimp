@@ -46,6 +46,7 @@
 enum
 {
   PROP_0,
+  PROP_EDIT_NON_VISIBLE,
   PROP_MOVE_TOOL_CHANGES_ACTIVE,
   PROP_FILTER_TOOL_MAX_RECENT,
   PROP_FILTER_TOOL_USE_LAST_SETTINGS,
@@ -128,6 +129,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   object_class->finalize     = gimp_gui_config_finalize;
   object_class->set_property = gimp_gui_config_set_property;
   object_class->get_property = gimp_gui_config_get_property;
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EDIT_NON_VISIBLE,
+                            "edit-non-visible",
+                            "Non-visible layers can be edited",
+                            EDIT_NON_VISIBLE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MOVE_TOOL_CHANGES_ACTIVE,
                             "move-tool-changes-active",
@@ -550,6 +558,9 @@ gimp_gui_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_EDIT_NON_VISIBLE:
+      gui_config->edit_non_visible = g_value_get_boolean (value);
+      break;
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       gui_config->move_tool_changes_active = g_value_get_boolean (value);
       break;
@@ -716,6 +727,9 @@ gimp_gui_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_EDIT_NON_VISIBLE:
+      g_value_set_boolean (value, gui_config->edit_non_visible);
+      break;
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       g_value_set_boolean (value, gui_config->move_tool_changes_active);
       break;

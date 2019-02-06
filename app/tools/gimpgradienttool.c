@@ -28,10 +28,13 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "operations/gimp-operation-config.h"
 
 #include "operations/layer-modes/gimp-layer-modes.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-gradient.h"
 #include "core/gimpdrawablefilter.h"
@@ -236,6 +239,7 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
   GimpImage           *image    = gimp_display_get_image (display);
   GimpDrawable        *drawable = gimp_image_get_active_drawable (image);
   GimpGradientOptions *options  = GIMP_GRADIENT_TOOL_GET_OPTIONS (tool);
+  GimpGuiConfig       *config   = GIMP_GUI_CONFIG (display->gimp->config);
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -258,7 +262,7 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) && ! config->edit_non_visible)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("The active layer is not visible."));
@@ -443,12 +447,13 @@ gimp_gradient_tool_cursor_update (GimpTool         *tool,
                                   GdkModifierType   state,
                                   GimpDisplay      *display)
 {
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GimpGuiConfig *config   = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage     *image    = gimp_display_get_image (display);
+  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
       gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
-      ! gimp_item_is_visible (GIMP_ITEM (drawable)))
+      ! (gimp_item_is_visible (GIMP_ITEM (drawable)) || config->edit_non_visible))
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
