@@ -270,6 +270,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   GimpTempBuf       *return_buf  = NULL;
   gint               mask_width;
   gint               mask_height;
+  guchar            *mask_data;
   guchar            *mask;
   guchar            *buf;
   gint               x, y;
@@ -327,12 +328,18 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
                                   babl_format ("R'G'B'A u8"));
   gimp_temp_buf_data_clear (return_buf);
 
-  mask = gimp_temp_buf_get_data (mask_buf);
+  mask = mask_data = gimp_temp_buf_lock (mask_buf, babl_format ("Y u8"),
+                                         GEGL_ACCESS_READ);
   buf  = gimp_temp_buf_get_data (return_buf);
 
   if (pixmap_buf)
     {
-      guchar *pixmap = gimp_temp_buf_get_data (pixmap_buf);
+      guchar *pixmap_data;
+      guchar *pixmap;
+
+      pixmap = pixmap_data = gimp_temp_buf_lock (pixmap_buf,
+                                                 babl_format ("R'G'B' u8"),
+                                                 GEGL_ACCESS_READ);
 
       for (y = 0; y < mask_height; y++)
         {
@@ -344,6 +351,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
               *buf++ = *mask++;
             }
         }
+
+      gimp_temp_buf_unlock (pixmap_buf, pixmap_data);
     }
   else
     {
@@ -358,6 +367,8 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             }
         }
     }
+
+  gimp_temp_buf_unlock (mask_buf, mask_data);
 
   if (scaled)
     {
