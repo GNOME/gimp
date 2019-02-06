@@ -32,6 +32,9 @@
 #include "gimptempbuf.h"
 
 
+#define LOCK_DATA_ALIGNMENT 16
+
+
 struct _GimpTempBuf
 {
   gint        ref_count;
@@ -40,6 +43,14 @@ struct _GimpTempBuf
   const Babl *format;
   guchar     *data;
 };
+
+typedef struct
+{
+  const Babl     *format;
+  GeglAccessMode  access_mode;
+} LockData;
+
+G_STATIC_ASSERT (sizeof (LockData) <= LOCK_DATA_ALIGNMENT);
 
 
 GimpTempBuf *
@@ -260,6 +271,75 @@ gimp_temp_buf_data_clear (GimpTempBuf *buf)
   memset (buf->data, 0, gimp_temp_buf_get_data_size (buf));
 
   return buf->data;
+}
+
+gpointer
+gimp_temp_buf_lock (const GimpTempBuf *buf,
+                    const Babl        *format,
+                    GeglAccessMode     access_mode)
+{
+  guchar   *data;
+  LockData *lock_data;
+  gint      n_pixels;
+  gint      bpp;
+
+  g_return_val_if_fail (buf != NULL, NULL);
+
+  if (! format || format == buf->format)
+    return gimp_temp_buf_get_data (buf);
+
+  n_pixels = buf->width * buf->height;
+  bpp      = babl_format_get_bytes_per_pixel (format);
+
+  data = gegl_scratch_alloc (LOCK_DATA_ALIGNMENT + n_pixels * bpp);
+
+  if ((guintptr) data % LOCK_DATA_ALIGNMENT)
+    {
+      g_free (data);
+
+      g_return_val_if_reached (NULL);
+    }
+
+  lock_data              = (LockData *) data;
+  lock_data->format      = format;
+  lock_data->access_mode = access_mode;
+
+  data += LOCK_DATA_ALIGNMENT;
+
+  if (access_mode & GEGL_ACCESS_READ)
+    {
+      babl_process (babl_fish (buf->format, format),
+                    gimp_temp_buf_get_data (buf),
+                    data,
+                    n_pixels);
+    }
+
+  return data;
+}
+
+void
+gimp_temp_buf_unlock (const GimpTempBuf *buf,
+                      gconstpointer      data)
+{
+  LockData *lock_data;
+
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (data != NULL);
+
+  if (data == buf->data)
+    return;
+
+  lock_data = (LockData *) ((const guint8 *) data - LOCK_DATA_ALIGNMENT);
+
+  if (lock_data->access_mode & GEGL_ACCESS_WRITE)
+    {
+      babl_process (babl_fish (lock_data->format, buf->format),
+                    data,
+                    gimp_temp_buf_get_data (buf),
+                    buf->width * buf->height);
+    }
+
+  gegl_scratch_free (lock_data);
 }
 
 gsize
