@@ -45,6 +45,12 @@ gsize         gimp_temp_buf_get_data_size   (const GimpTempBuf *buf);
 
 guchar      * gimp_temp_buf_data_clear      (GimpTempBuf       *buf);
 
+gpointer      gimp_temp_buf_lock            (const GimpTempBuf *buf,
+                                             const Babl        *format,
+                                             GeglAccessMode     access_mode) G_GNUC_WARN_UNUSED_RESULT;
+void          gimp_temp_buf_unlock          (const GimpTempBuf *buf,
+                                             gconstpointer      data);
+
 gsize         gimp_temp_buf_get_memsize     (const GimpTempBuf *buf);
 
 GeglBuffer  * gimp_temp_buf_create_buffer   (GimpTempBuf       *temp_buf) G_GNUC_WARN_UNUSED_RESULT;
