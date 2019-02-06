@@ -34,7 +34,7 @@ struct Kernel<guchar>
   static constexpr value_type
   round (accum_type x)
   {
-    return (x + 127) / 256;
+    return (x + 128) / 256;
   }
 };
 
