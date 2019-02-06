@@ -45,6 +45,53 @@ extern "C"
 #define EPSILON 1e-6
 
 
+static void
+clear_edges (GimpTempBuf *buf,
+             gint         top,
+             gint         bottom,
+             gint         left,
+             gint         right)
+{
+  guchar     *data;
+  const Babl *format = gimp_temp_buf_get_format (buf);
+  gint        bpp    = babl_format_get_bytes_per_pixel (format);
+  gint        width  = gimp_temp_buf_get_width (buf);
+  gint        height = gimp_temp_buf_get_width (buf);
+
+  if (top + bottom >= height || left + right >= width)
+    {
+      gimp_temp_buf_data_clear (buf);
+
+      return;
+    }
+
+  data = gimp_temp_buf_get_data (buf);
+
+  memset (data, 0, (top * width + left) * bpp);
+
+  if (left + right)
+    {
+      gint stride = width * bpp;
+      gint size   = (left + right) * bpp;
+      gint y;
+
+      data = gimp_temp_buf_get_data (buf) +
+             ((top + 1) * width - right) * bpp;
+
+      for (y = top; y < height - bottom - 1; y++)
+        {
+          memset (data, 0, size);
+
+          data += stride;
+        }
+    }
+
+  data = gimp_temp_buf_get_data (buf) +
+         ((height - bottom) * width - right) * bpp;
+
+  memset (data, 0, (bottom * width + right) * bpp);
+}
+
 template <class T>
 static inline void
 rotate_pointers (T    **p,
@@ -235,7 +282,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
   dest = gimp_temp_buf_new (mask_width  + 2,
                             mask_height + 2,
                             mask_format);
-  gimp_temp_buf_data_clear (dest);
+  clear_edges (dest, dest_offset_y, 0, 0, 0);
 
   core->subsample_brushes[index2][index1] = dest;
 
@@ -411,7 +458,7 @@ gimp_brush_core_pressurize_mask_impl (const GimpTempBuf *mask,
                                       Pressure           pressure)
 {
   gegl_parallel_distribute_range (
-    gimp_temp_buf_get_width  (mask) * gimp_temp_buf_get_height (mask),
+    gimp_temp_buf_get_width (mask) * gimp_temp_buf_get_height (mask),
     PIXELS_PER_THREAD,
     [=] (gint offset, gint size)
     {
@@ -457,7 +504,6 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
     gimp_temp_buf_new (gimp_temp_buf_get_width  (brush_mask) + 2,
                        gimp_temp_buf_get_height (brush_mask) + 2,
                        subsample_mask_format);
-  gimp_temp_buf_data_clear (core->pressure_brush);
 
 #ifdef FANCY_PRESSURE
   using Pressure = FancyPressure;
@@ -488,16 +534,18 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
 
 template <class T>
 static void
-gimp_brush_core_solidify_mask_impl (const GimpTempBuf *brush_mask,
+gimp_brush_core_solidify_mask_impl (const GimpTempBuf *mask,
                                     GimpTempBuf       *dest,
                                     gint               dest_offset_x,
                                     gint               dest_offset_y)
 {
-  gint brush_mask_width  = gimp_temp_buf_get_width  (brush_mask);
-  gint brush_mask_height = gimp_temp_buf_get_height (brush_mask);
+  gint mask_width  = gimp_temp_buf_get_width  (mask);
+  gint mask_height = gimp_temp_buf_get_height (mask);
+  gint dest_width  = gimp_temp_buf_get_width  (dest);
+  gint dest_height = gimp_temp_buf_get_height (dest);
 
   gegl_parallel_distribute_area (
-    GEGL_RECTANGLE (0, 0, brush_mask_width, brush_mask_height),
+    GEGL_RECTANGLE (0, 0, mask_width, mask_height),
     PIXELS_PER_THREAD,
     [=] (const GeglRectangle *area)
     {
@@ -505,10 +553,10 @@ gimp_brush_core_solidify_mask_impl (const GimpTempBuf *brush_mask,
       gfloat  *d;
       gint     i, j;
 
-      m = (const T *) gimp_temp_buf_get_data (brush_mask) +
-          area->y * brush_mask_width + area->x;
+      m = (const T *) gimp_temp_buf_get_data (mask) +
+          area->y * mask_width + area->x;
       d = ((gfloat *) gimp_temp_buf_get_data (dest) +
-           ((dest_offset_y + 1 + area->y) * gimp_temp_buf_get_width (dest) +
+           ((dest_offset_y + 1 + area->y) * dest_width +
             (dest_offset_x + 1 + area->x)));
 
       for (i = 0; i < area->height; i++)
@@ -516,8 +564,8 @@ gimp_brush_core_solidify_mask_impl (const GimpTempBuf *brush_mask,
           for (j = 0; j < area->width; j++)
             *d++ = (*m++) ? 1.0 : 0.0;
 
-          m += brush_mask_width     - area->width;
-          d += brush_mask_width + 2 - area->width;
+          m += mask_width - area->width;
+          d += dest_width - area->width;
         }
     });
 }
@@ -576,10 +624,11 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
   dest = gimp_temp_buf_new (brush_mask_width  + 2,
                             brush_mask_height + 2,
                             babl_format ("Y float"));
-  gimp_temp_buf_data_clear (dest);
+  clear_edges (dest,
+               1 + dest_offset_y, 1 - dest_offset_y,
+               1 + dest_offset_x, 1 - dest_offset_x);
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
-
 
   if (brush_mask_format == babl_format ("Y u8"))
     {

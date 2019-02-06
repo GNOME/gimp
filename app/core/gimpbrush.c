@@ -326,7 +326,6 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 
   return_buf = gimp_temp_buf_new (mask_width, mask_height,
                                   babl_format ("R'G'B'A u8"));
-  gimp_temp_buf_data_clear (return_buf);
 
   mask = mask_data = gimp_temp_buf_lock (mask_buf, babl_format ("Y u8"),
                                          GEGL_ACCESS_READ);
