@@ -135,7 +135,7 @@ static const GimpStringActionEntry filters_settings_actions[] =
 {
   { "filters-dilate", GIMP_ICON_GEGL,
     NC_("filters-action", "_Dilate"), NULL,
-    NC_("drawable-action", "Grow lighter areas of the image"),
+    NC_("filters-action", "Grow lighter areas of the image"),
     "gegl:value-propagate\n"
     "(mode white)"
     "(lower-threshold 0.000000)"
@@ -151,7 +151,7 @@ static const GimpStringActionEntry filters_settings_actions[] =
 
   { "filters-erode", GIMP_ICON_GEGL,
     NC_("filters-action", "_Erode"), NULL,
-    NC_("drawable-action", "Grow darker areas of the image"),
+    NC_("filters-action", "Grow darker areas of the image"),
     "gegl:value-propagate\n"
     "(mode black)"
     "(lower-threshold 0.000000)"
