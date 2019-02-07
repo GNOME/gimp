@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-23 19:36+0000\n"
-"PO-Revision-Date: 2019-01-31 09:30+0900\n"
+"PO-Revision-Date: 2019-02-07 13:32+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -503,7 +503,7 @@ msgstr "캔버스 내 그레이디언트 편집하기"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "Notification when an image is over/underexposed"
-msgstr "이미지가 노출 과다/부족인 경우 알림"
+msgstr "이미지가 노출 과다/부족일 때 알림"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "Better and faster color management"
@@ -604,12 +604,13 @@ msgstr ""
 "김프는 자유 소프트웨어 입니다. 자유 소프트웨어 재단의 GNU 일반 공중 사용허가"
 "서 버전 3 또는(사용자의 선택에 따라) 그 이후 버전의 조항에 의거하여 재배포, "
 "수정할 수 있습니다.\n"
+"\n"
 "김프가 유용하게 쓰이기를 바라면서 김프를 배포합니다. 하지만 어떠한 보장도 하"
 "지 않으며, 상업 가능성 또는 특정 목적에 대한 적합성의 암묵적 보증조차 하지 않"
 "습니다. 이에 대한 자세한 사항은 GNU 일반 공증 허가서를 참고하시기 바랍니다.\n"
 "\n"
 "김프와 함께 GNU 일반 공증 허가서 사본을 받았을 것입니다. 만약 그렇지 않다면, "
-"다음을 참조하십시오. https://www.gnu.org/licenses/"
+"다음을 참조하십시오: https://www.gnu.org/licenses/"
 
 #: ../app/gimp-version.c:66 ../app/gimp-version.c:164
 #, c-format
@@ -695,7 +696,7 @@ msgstr "대화상자 대신에 콘솔로 메시지를 출력합니다"
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB 호환 모드(off|on|warn)"
 
-# 모드 이름은 번역하지 말 것 (off|on|warn)
+# 모드 이름은 번역하지 말 것 (never|query|always)
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:249
 msgid "Debug in case of a crash (never|query|always)"
@@ -739,7 +740,7 @@ msgstr ""
 
 #: ../app/main.c:503
 msgid "Another GIMP instance is already running."
-msgstr "김프가 이미 실행 중입니다."
+msgstr "다른 김프가 인스턴스가 이미 실행 중입니다."
 
 #: ../app/main.c:594
 msgid "GIMP output. Type any character to close this window."
@@ -4645,8 +4646,8 @@ msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
-"이미지를 디스크에 저장된 상태로 되돌릴 경우, 실행 취소 정보를 포함한 바꾼 내"
-"용 모두를 잃게 됩니다."
+"이미지를 디스크에 저장된 상태로 되돌리면, 실행 취소 정보를 포함한 바꾼 내용 "
+"모두를 잃게 됩니다."
 
 #: ../app/actions/file-commands.c:773
 msgid "(Unnamed Template)"
@@ -7257,7 +7258,7 @@ msgstr "단축키: "
 #.
 #: ../app/actions/layers-actions.c:651
 msgid "-Click on thumbnail in Layers dockable"
-msgstr "-도킹 가능한 레이어의 축소판 클릭"
+msgstr "-클릭을 도킹 가능한 레이어의 축소판 위에서 하기"
 
 #: ../app/actions/layers-actions.c:909 ../app/actions/layers-actions.c:910
 msgctxt "layers-action"
@@ -7919,11 +7920,11 @@ msgstr "축소 할 때, 선택된 영역이 이미지 밖으로 계속되는 것
 
 #: ../app/actions/select-commands.c:278
 msgid "Grow Selection"
-msgstr "선택 영역 늘리기"
+msgstr "선택 영역 확장"
 
 #: ../app/actions/select-commands.c:282
 msgid "Grow selection by"
-msgstr "선택 영역 증가량"
+msgstr "선택 영역 증가 크기"
 
 #: ../app/actions/select-commands.c:329
 msgid "Border Selection"
@@ -11657,7 +11658,7 @@ msgstr "전경색"
 #: ../app/core/core-enums.c:614
 msgctxt "gradient-color"
 msgid "FG"
-msgstr "FG"
+msgstr "전경"
 
 #: ../app/core/core-enums.c:615
 msgctxt "gradient-color"
@@ -11669,7 +11670,7 @@ msgstr "전경색 (투명)"
 #: ../app/core/core-enums.c:618
 msgctxt "gradient-color"
 msgid "FG (t)"
-msgstr "FG (t)"
+msgstr "전경 (투)"
 
 #: ../app/core/core-enums.c:619
 msgctxt "gradient-color"
@@ -11681,7 +11682,7 @@ msgstr "배경색"
 #: ../app/core/core-enums.c:622
 msgctxt "gradient-color"
 msgid "BG"
-msgstr "BG"
+msgstr "배경"
 
 #: ../app/core/core-enums.c:623
 msgctxt "gradient-color"
@@ -11693,7 +11694,7 @@ msgstr "배경색 (투명)"
 #: ../app/core/core-enums.c:626
 msgctxt "gradient-color"
 msgid "BG (t)"
-msgstr "BG (t)"
+msgstr "배경 (투)"
 
 #: ../app/core/core-enums.c:739
 msgctxt "histogram-channel"
@@ -12909,7 +12910,7 @@ msgstr "%s 복사"
 #: ../app/core/gimpdatafactory.c:586 ../app/tools/gimptextoptions.c:536
 #: ../app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
-msgstr "글꼴 불러오기(약간 시간이 걸릴 수 있음...)"
+msgstr "글꼴 불러오기(시간이 걸릴 수 있음...)"
 
 #: ../app/core/gimpdatafactory.c:908
 #, c-format
@@ -12929,8 +12930,8 @@ msgid ""
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
 "쓰기 가능 데이터 폴더를 구성했지만, 해당 폴더는 데이터 검색 경로에 속하지 않"
-"습니다. gimprc 파일을 직접 수정한 경우, 기본 설정 대화 상자의 ‘폴더’ 부분에"
-"서 설정을 변경하십시오."
+"습니다. gimprc 파일을 직접 수정했다면, 기본 설정 대화 상자의 ‘폴더’ 부분에서 "
+"설정을 변경하십시오."
 
 #: ../app/core/gimpdatafactory.c:937
 #, c-format
@@ -13084,7 +13085,6 @@ msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "무늬로 채우기"
 
-# plain color : 단색, 무지(無地)
 #: ../app/core/gimpfilloptions.c:398
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
@@ -13933,7 +13933,7 @@ msgstr "내페인트 붓 직렬화 제거 실패."
 #: ../app/core/gimppalette-import.c:212
 #, c-format
 msgid "%s (occurs %u)"
-msgstr "%s (%u 발생)"
+msgstr "%s (%u번 발생)"
 
 #: ../app/core/gimppalette-import.c:425
 #, c-format
@@ -14179,8 +14179,8 @@ msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
 msgstr ""
-"연귀가 실제 연결 지점에서 연귀한계*선폭보다 길게 확장할 경우, 연귀 연결을 빗"
-"면 연결로 변환합니다."
+"연귀가 실제 연결 지점에서 연귀한계*선폭보다 길게 확장하면, 연귀 연결을 빗면 "
+"연결로 변환합니다."
 
 #: ../app/core/gimpstrokeoptions.c:201
 msgid "Dash offset"
@@ -15054,8 +15054,8 @@ msgstr ""
 msgid ""
 "Scaling the image to the chosen size will shrink some layers completely away."
 msgstr ""
-"선택한 크기로 이미지의 크기를 조정할 경우, 일부 레이어의 완전히 이미지가 잘려"
-"나갈 것입니다."
+"선택한 크기로 이미지의 크기를 조정하면, 일부 레이어가 완전히 잘려나갈 것입니"
+"다."
 
 #: ../app/dialogs/image-scale-dialog.c:262
 msgid "Is this what you want to do?"
@@ -17111,7 +17111,7 @@ msgstr "다음 팁(_N)"
 #. a link to the related section in the user manual
 #: ../app/dialogs/tips-dialog.c:205
 msgid "Learn more"
-msgstr "좀 더 배우기"
+msgstr "더 배우기"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -17325,12 +17325,12 @@ msgstr "선택 영역의 경계 상자"
 #. Width
 #: ../app/display/gimpcursorview.c:300
 msgid "W"
-msgstr "W"
+msgstr "너"
 
 #. Height
 #: ../app/display/gimpcursorview.c:307
 msgid "H"
-msgstr "H"
+msgstr "높"
 
 #: ../app/display/gimpcursorview.c:338
 msgid "_Sample Merged"
@@ -17399,8 +17399,7 @@ msgstr "이미지를 닫기 전에 ‘%s’를(를) 저장하시겠습니까?"
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] ""
-"이미지를 저장하지 않을 경우, 지난 %d시간 동안 바꾼 내용은 사라집니다."
+msgstr[0] "이미지를 저장하지 않으면, 지난 %d시간 동안 바꾼 내용은 사라집니다."
 
 #: ../app/display/gimpdisplayshell-close.c:318
 #, c-format
@@ -17411,14 +17410,14 @@ msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
 msgstr[0] ""
-"이미지를 저장하지 않을 경우, 지난 한 시간 %d분 동안 바꾼 내용은 사라집니다."
+"이미지를 저장하지 않으면, 지난 한 시간 %d분 동안 바꾼 내용은 사라집니다."
 
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "이미지를 저장하지 않을 경우, 지난 %d분 동안 바꾼 내용은 사라집니다."
+msgstr[0] "이미지를 저장하지 않으면, 지난 %d분 동안 바꾼 내용은 사라집니다."
 
 #: ../app/display/gimpdisplayshell-close.c:348
 #, c-format
@@ -18127,7 +18126,7 @@ msgstr "일반 (레거시)"
 #: ../app/operations/operations-enums.c:156
 msgctxt "layer-mode"
 msgid "Normal (l)"
-msgstr "일반 (L)"
+msgstr "일반 (레)"
 
 #: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
@@ -18144,7 +18143,7 @@ msgstr "뒤쪽으로 (레거시)"
 #: ../app/operations/operations-enums.c:161
 msgctxt "layer-mode"
 msgid "Behind (l)"
-msgstr "뒤쪽으로(L)"
+msgstr "뒤쪽으로(레)"
 
 #: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
@@ -18156,7 +18155,7 @@ msgstr "곱하기 (레거시)"
 #: ../app/operations/operations-enums.c:165
 msgctxt "layer-mode"
 msgid "Multiply (l)"
-msgstr "곱하기 (L)"
+msgstr "곱하기 (레)"
 
 #: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
@@ -18168,19 +18167,19 @@ msgstr "화면 (레거시)"
 #: ../app/operations/operations-enums.c:169
 msgctxt "layer-mode"
 msgid "Screen (l)"
-msgstr "화면 (L)"
+msgstr "화면 (레)"
 
 #: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
-msgstr "예전의 고장난 오버레이"
+msgstr "예전의 고장난 덧씌우기"
 
 #. Translators: this is an abbreviated version of "Old broken Overlay".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:173
 msgctxt "layer-mode"
 msgid "Old Overlay"
-msgstr "예전의 덧씌우기"
+msgstr "예전 덧씌우기"
 
 #: ../app/operations/operations-enums.c:174
 msgctxt "layer-mode"
@@ -18192,7 +18191,7 @@ msgstr "차이 (레거시)"
 #: ../app/operations/operations-enums.c:177
 msgctxt "layer-mode"
 msgid "Difference (l)"
-msgstr "차이 (L)"
+msgstr "차이 (레)"
 
 #: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
@@ -18204,7 +18203,7 @@ msgstr "추가 (레거시)"
 #: ../app/operations/operations-enums.c:181
 msgctxt "layer-mode"
 msgid "Addition (l)"
-msgstr "추가 (L)"
+msgstr "추가 (레)"
 
 #: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
@@ -18216,7 +18215,7 @@ msgstr "빼기 (레거시)"
 #: ../app/operations/operations-enums.c:185
 msgctxt "layer-mode"
 msgid "Subtract (l)"
-msgstr "빼기 (L)"
+msgstr "빼기 (레)"
 
 #: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
@@ -18228,7 +18227,7 @@ msgstr "어두운 색만 (레거시)"
 #: ../app/operations/operations-enums.c:189
 msgctxt "layer-mode"
 msgid "Darken only (l)"
-msgstr "어두운 색만 (L)"
+msgstr "어두운 색만 (레)"
 
 #: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
@@ -18240,7 +18239,7 @@ msgstr "밝은 색만 (레거시)"
 #: ../app/operations/operations-enums.c:193
 msgctxt "layer-mode"
 msgid "Lighten only (l)"
-msgstr "밝은 색만 (L)"
+msgstr "밝은 색만 (레)"
 
 #: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
@@ -18252,7 +18251,7 @@ msgstr "HSV 색조 (레거시)"
 #: ../app/operations/operations-enums.c:197
 msgctxt "layer-mode"
 msgid "HSV Hue (l)"
-msgstr "HSV 색조 (L)"
+msgstr "HSV 색조 (레)"
 
 #: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
@@ -18264,7 +18263,7 @@ msgstr "HSV 채도 (레거시)"
 #: ../app/operations/operations-enums.c:201
 msgctxt "layer-mode"
 msgid "HSV Saturation (l)"
-msgstr "HSV 채도 (L)"
+msgstr "HSV 채도 (레)"
 
 #: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
@@ -18276,7 +18275,7 @@ msgstr "HSL 색상 (레거시)"
 #: ../app/operations/operations-enums.c:205
 msgctxt "layer-mode"
 msgid "HSL Color (l)"
-msgstr "HSL 색 (L)"
+msgstr "HSL 색 (레)"
 
 #: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
@@ -18288,7 +18287,7 @@ msgstr "HSV 값 (레거시)"
 #: ../app/operations/operations-enums.c:209
 msgctxt "layer-mode"
 msgid "HSV Value (l)"
-msgstr "HSV 값 (L)"
+msgstr "HSV 값 (레)"
 
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
@@ -18300,7 +18299,7 @@ msgstr "나누기(레거시)"
 #: ../app/operations/operations-enums.c:213
 msgctxt "layer-mode"
 msgid "Divide (l)"
-msgstr "나누기(L)"
+msgstr "나누기 (레)"
 
 #: ../app/operations/operations-enums.c:214
 msgctxt "layer-mode"
@@ -18312,7 +18311,7 @@ msgstr "닷지 (레거시)"
 #: ../app/operations/operations-enums.c:217
 msgctxt "layer-mode"
 msgid "Dodge (l)"
-msgstr "닷지"
+msgstr "닷지 (레)"
 
 #: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
@@ -18324,7 +18323,7 @@ msgstr "태우기(레거시)"
 #: ../app/operations/operations-enums.c:221
 msgctxt "layer-mode"
 msgid "Burn (l)"
-msgstr "태우기 (L)"
+msgstr "태우기 (레)"
 
 #: ../app/operations/operations-enums.c:222
 msgctxt "layer-mode"
@@ -18336,7 +18335,7 @@ msgstr "강한 빛 (레거시)"
 #: ../app/operations/operations-enums.c:225
 msgctxt "layer-mode"
 msgid "Hard light (l)"
-msgstr "강한 빛 (L)"
+msgstr "강한 빛 (레)"
 
 #: ../app/operations/operations-enums.c:226
 msgctxt "layer-mode"
@@ -18348,7 +18347,7 @@ msgstr "부드러운 빛 (레거시)"
 #: ../app/operations/operations-enums.c:229
 msgctxt "layer-mode"
 msgid "Soft light (l)"
-msgstr "부드러운 빛 (_L)"
+msgstr "부드러운 빛 (레)"
 
 #: ../app/operations/operations-enums.c:230
 msgctxt "layer-mode"
@@ -18360,7 +18359,7 @@ msgstr "질감 드러내기 (레거시)"
 #: ../app/operations/operations-enums.c:233
 msgctxt "layer-mode"
 msgid "Grain extract (l)"
-msgstr "질감 드러내기 (L)"
+msgstr "질감 드러내기 (레)"
 
 #: ../app/operations/operations-enums.c:234
 msgctxt "layer-mode"
@@ -18372,7 +18371,7 @@ msgstr "질감 합치기 (레거시)"
 #: ../app/operations/operations-enums.c:237
 msgctxt "layer-mode"
 msgid "Grain merge (l)"
-msgstr "질감 합치기 (L)"
+msgstr "질감 합치기 (레)"
 
 #: ../app/operations/operations-enums.c:238
 msgctxt "layer-mode"
@@ -18384,7 +18383,7 @@ msgstr "색 지우기 (레거시)"
 #: ../app/operations/operations-enums.c:241
 msgctxt "layer-mode"
 msgid "Color erase (l)"
-msgstr "색 지우기 (L)"
+msgstr "색 지우기 (레)"
 
 #: ../app/operations/operations-enums.c:242
 msgctxt "layer-mode"
@@ -18864,7 +18863,7 @@ msgstr "알파 채널을 어떤 값을 기준으로 분리하여 투명도를 10
 #.
 #: ../app/gui/gui.c:238
 msgid "default:LTR"
-msgstr "기본값: LTR"
+msgstr "default:LTR"
 
 #: ../app/gui/gui.c:328
 msgid "Image Recovery"
@@ -19415,7 +19414,7 @@ msgstr "2차원 변형"
 #: ../app/pdb/drawable-transform-cmds.c:1470
 #: ../app/pdb/item-transform-cmds.c:933
 msgid "2D Transforming"
-msgstr "2차원 변형 중"
+msgstr "2차원 변형하기"
 
 #: ../app/pdb/floating-sel-cmds.c:69
 msgid "Cannot remove this layer because it is not a floating selection."
@@ -19759,8 +19758,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"‘%s’ 프러시저는 반환 값 ‘%s’(#%d)에 잘못된 값유형을 반환하였습니다. %s(을)를 "
-"기대했지만 , %s을(를) 받았습니다."
+"‘%s’ 프러시저는 반환 값 ‘%s’(#%d)에 잘못된 값유형을 반환하였습니다. %s이어야 "
+"하는데 , %s입니다."
 
 #: ../app/pdb/gimpprocedure.c:767
 #, c-format
@@ -19769,7 +19768,7 @@ msgid ""
 "%d). Expected %s, got %s."
 msgstr ""
 "‘%s’ 프러시저는 인수 ‘%s’ (#%d)에 잘못된 값 유형을 사용하여 호출되었습니다. "
-"%s을(를) 기대했지만, %s을(를) 받았습니다."
+"%s이어야 하는데, %s입니다."
 
 #: ../app/pdb/gimpprocedure.c:800
 #, c-format
@@ -20436,7 +20435,7 @@ msgstr "목적지 범위"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:236
 msgid "Gray Handling"
-msgstr "회색 처리"
+msgstr "회색 처리하기"
 
 #: ../app/propgui/gimppropgui-color-to-alpha.c:109
 msgid "Pick farthest full-transparency color"
@@ -24432,8 +24431,8 @@ msgstr "지정한 경로를 찾지 못했습니다."
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
-".exe 파일이 잘못 되었습니다 (Microsoft Win32 형식이 아닌 .exe 이거나 .exe 이"
-"미지 안에 오류)."
+".exe 파일이 잘못되었습니다 (Microsoft Win32 형식이 아닌 .exe 이거나 .exe 이미"
+"지 안에 오류)."
 
 #: ../app/widgets/gimpcriticaldialog.c:240
 msgid "The operating system denied access to the specified file."
@@ -24599,7 +24598,7 @@ msgstr "스왑 큐가 가득 찼는지"
 #: ../app/widgets/gimpdashboard.c:564
 msgctxt "dashboard-variable"
 msgid "Read"
-msgstr "읽기"
+msgstr "읽은"
 
 #: ../app/widgets/gimpdashboard.c:565
 msgid "Total amount of data read from the swap"
@@ -24620,7 +24619,7 @@ msgstr "스왑에서 데이터를 읽는 속도"
 #: ../app/widgets/gimpdashboard.c:587
 msgctxt "dashboard-variable"
 msgid "Written"
-msgstr "기록됨"
+msgstr "기록된"
 
 #: ../app/widgets/gimpdashboard.c:588
 msgid "Total amount of data written to the swap"
