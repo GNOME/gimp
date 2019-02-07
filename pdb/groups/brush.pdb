@@ -243,11 +243,22 @@ HELP
     {
       GimpTempBuf *mask   = gimp_brush_get_mask (brush);
       GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+      const Babl  *format;
 
-      width     = gimp_brush_get_width  (brush);
-      height    = gimp_brush_get_height (brush);
-      mask_bpp  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (mask));
-      color_bpp = pixmap ? babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pixmap)) : 0;
+      format = gimp_babl_compat_u8_mask_format (
+        gimp_temp_buf_get_format (mask));
+
+      width    = gimp_brush_get_width  (brush);
+      height   = gimp_brush_get_height (brush);
+      mask_bpp = babl_format_get_bytes_per_pixel (format);
+
+      if (pixmap)
+        {
+          format = gimp_babl_compat_u8_format (
+            gimp_temp_buf_get_format (pixmap));
+
+          color_bpp = babl_format_get_bytes_per_pixel (format);
+        }
     }
   else
     success = FALSE;
@@ -297,23 +308,35 @@ HELP
     {
       GimpTempBuf *mask   = gimp_brush_get_mask (brush);
       GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+      const Babl  *format;
+      gpointer     data;
+
+      format = gimp_babl_compat_u8_mask_format (
+        gimp_temp_buf_get_format (mask));
+      data   = gimp_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
 
       width          = gimp_temp_buf_get_width  (mask);
       height         = gimp_temp_buf_get_height (mask);
-      mask_bpp       = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (mask));
+      mask_bpp       = babl_format_get_bytes_per_pixel (format);
       num_mask_bytes = gimp_temp_buf_get_height (mask) *
                        gimp_temp_buf_get_width  (mask) * mask_bpp;
-      mask_bytes     = g_memdup (gimp_temp_buf_get_data (mask),
-                                 num_mask_bytes);
+      mask_bytes     = g_memdup (data, num_mask_bytes);
+
+      gimp_temp_buf_unlock (mask, data);
 
       if (pixmap)
         {
-          color_bpp       = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pixmap));
+          format = gimp_babl_compat_u8_format (
+            gimp_temp_buf_get_format (pixmap));
+          data   = gimp_temp_buf_lock (pixmap, format, GEGL_ACCESS_READ);
+
+          color_bpp       = babl_format_get_bytes_per_pixel (format);
           num_color_bytes = gimp_temp_buf_get_height (pixmap) *
                             gimp_temp_buf_get_width  (pixmap) *
                             color_bpp;
-          color_bytes     = g_memdup (gimp_temp_buf_get_data (pixmap),
-                                      num_color_bytes);
+          color_bytes     = g_memdup (data, num_color_bytes);
+
+          gimp_temp_buf_unlock (pixmap, data);
         }
     }
   else
@@ -849,6 +872,7 @@ CODE
 
 
 @headers = qw(<string.h>
+              "gegl/gimp-babl-compat.h"
               "core/gimp.h"
               "core/gimpbrush.h"
               "core/gimpbrushgenerated.h"

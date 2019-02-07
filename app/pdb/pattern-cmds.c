@@ -34,6 +34,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimppattern.h"
 #include "core/gimptempbuf.h"
+#include "gegl/gimp-babl-compat.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -64,9 +65,14 @@ pattern_get_info_invoker (GimpProcedure         *procedure,
 
       if (pattern)
         {
+          const Babl *format;
+
+          format = gimp_babl_compat_u8_format (
+            gimp_temp_buf_get_format (pattern->mask));
+
           width  = gimp_temp_buf_get_width  (pattern->mask);
           height = gimp_temp_buf_get_height (pattern->mask);
-          bpp    = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask));
+          bpp    = babl_format_get_bytes_per_pixel (format);
         }
       else
         success = FALSE;
@@ -110,12 +116,20 @@ pattern_get_pixels_invoker (GimpProcedure         *procedure,
 
       if (pattern)
         {
+          const Babl *format;
+          gpointer    data;
+
+          format = gimp_babl_compat_u8_format (
+            gimp_temp_buf_get_format (pattern->mask));
+          data   = gimp_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
+
           width           = gimp_temp_buf_get_width  (pattern->mask);
           height          = gimp_temp_buf_get_height (pattern->mask);
-          bpp             = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pattern->mask));
+          bpp             = babl_format_get_bytes_per_pixel (format);
           num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
-          color_bytes     = g_memdup (gimp_temp_buf_get_data (pattern->mask),
-                                      num_color_bytes);
+          color_bytes     = g_memdup (data, num_color_bytes);
+
+          gimp_temp_buf_unlock (pattern->mask, data);
         }
       else
         success = FALSE;

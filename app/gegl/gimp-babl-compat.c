@@ -81,3 +81,13 @@ gimp_babl_compat_u8_format (const Babl *format)
                            GIMP_PRECISION_U8_GAMMA,
                            babl_format_has_alpha (format));
 }
+
+const Babl *
+gimp_babl_compat_u8_mask_format (const Babl *format)
+{
+  g_return_val_if_fail (format != NULL, NULL);
+
+  return gimp_babl_format (gimp_babl_format_get_base_type (format),
+                           GIMP_PRECISION_U8_LINEAR,
+                           FALSE);
+}
