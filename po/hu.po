@@ -4790,7 +4790,7 @@ msgid "_Dilate"
 msgstr "_Tágítás"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "A kép világosabb területeinek növelése"
 
@@ -4800,7 +4800,7 @@ msgid "_Erode"
 msgstr "Zsu_gorítás"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "A kép sötétebb területeinek növelése"
 

@@ -1850,7 +1850,7 @@ msgstr ""
 
 #: ../app/actions/drawable-actions.c:70
 #, fuzzy
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "ਲੇਅਰ ਨੂੰ ਚਿੱਤਰ ਦੇ ਆਕਾਰ ਮੁਤਾਬਕ ਮੁੜ-ਆਕਾਰ ਕਰੋ"
 
@@ -1860,7 +1860,7 @@ msgid "E_rode"
 msgstr "ਈਰੋਡੇ(_r)"
 
 #: ../app/actions/drawable-actions.c:76
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 

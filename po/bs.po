@@ -1745,7 +1745,7 @@ msgid "_Dilate"
 msgstr "_Diletacija"
 
 #: ../app/actions/drawable-actions.c:70
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Razvij svjetlija područja slike"
 
@@ -1755,7 +1755,7 @@ msgid "E_rode"
 msgstr "E_rozija"
 
 #: ../app/actions/drawable-actions.c:76
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Razvij tamnija područja slike"
 

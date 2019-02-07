@@ -4541,7 +4541,7 @@ msgid "_Dilate"
 msgstr "Þen_ja"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Stækka ljósari svæði myndarinnar"
 
@@ -4551,7 +4551,7 @@ msgid "_Erode"
 msgstr "V_eðra"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Stækka dekkri svæði myndarinnar"
 
