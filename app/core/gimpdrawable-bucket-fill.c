@@ -332,14 +332,13 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
                                         gint             *mask_width,
                                         gint             *mask_height)
 {
-  GeglBufferIterator *gi;
-  GimpImage    *image;
-  GeglBuffer   *buffer;
-  GeglBuffer   *new_mask;
-  gint          x, y, width, height;
-  gint          mask_offset_x = 0;
-  gint          mask_offset_y = 0;
-  gint          sel_x, sel_y, sel_width, sel_height;
+  GimpImage  *image;
+  GeglBuffer *buffer;
+  GeglBuffer *new_mask;
+  gint        x, y, width, height;
+  gint        mask_offset_x = 0;
+  gint        mask_offset_y = 0;
+  gint        sel_x, sel_y, sel_width, sel_height;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -444,47 +443,6 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
     {
       mask_offset_x = x;
       mask_offset_y = y;
-    }
-
-  /* The smart colorization leaves some very irritating unselected
-   * pixels in some edge cases. Just flood any isolated pixel inside
-   * the final mask.
-   */
-  gi = gegl_buffer_iterator_new (new_mask, GEGL_RECTANGLE (x, y, width, height),
-                                 0, NULL, GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 5);
-  gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x, y - 1, width, height),
-                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
-  gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x, y + 1, width, height),
-                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
-  gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x - 1, y, width, height),
-                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
-  gegl_buffer_iterator_add (gi, new_mask, GEGL_RECTANGLE (x + 1, y, width, height),
-                            0, NULL, GEGL_ACCESS_READ, GEGL_ABYSS_WHITE);
-  while (gegl_buffer_iterator_next (gi))
-    {
-      gfloat *m      = (gfloat*) gi->items[0].data;
-      gfloat *py     = (gfloat*) gi->items[1].data;
-      gfloat *ny     = (gfloat*) gi->items[2].data;
-      gfloat *px     = (gfloat*) gi->items[3].data;
-      gfloat *nx     = (gfloat*) gi->items[4].data;
-      gint    startx = gi->items[0].roi.x;
-      gint    starty = gi->items[0].roi.y;
-      gint    endy   = starty + gi->items[0].roi.height;
-      gint    endx   = startx + gi->items[0].roi.width;
-      gint    i;
-      gint    j;
-
-      for (j = starty; j < endy; j++)
-        for (i = startx; i < endx; i++)
-          {
-            if (! *m && *py && *ny && *px && *nx)
-              *m = 1.0;
-            m++;
-            py++;
-            ny++;
-            px++;
-            nx++;
-          }
     }
 
   buffer = gimp_fill_options_create_buffer (options, drawable,

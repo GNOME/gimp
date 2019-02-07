@@ -214,6 +214,7 @@ static gint            gimp_number_of_transitions               (GArray         
                                                                  GeglBuffer             *buffer);
 static gboolean        gimp_lineart_curve_creates_region        (GeglBuffer             *mask,
                                                                  GArray                 *pixels,
+                                                                 GList                 **fill_pixels,
                                                                  int                     lower_size_limit,
                                                                  int                     upper_size_limit);
 static GArray        * gimp_lineart_line_segment_until_hit      (const GeglBuffer       *buffer,
@@ -221,6 +222,9 @@ static GArray        * gimp_lineart_line_segment_until_hit      (const GeglBuffe
                                                                  GimpVector2             direction,
                                                                  int                     size);
 static gfloat        * gimp_lineart_estimate_strokes_radii      (GeglBuffer             *mask);
+static void            gimp_line_art_simple_fill                (GeglBuffer             *buffer,
+                                                                 gint                    x,
+                                                                 gint                    y);
 
 /* Some callback-type functions. */
 
@@ -901,6 +905,8 @@ gimp_line_art_close (GeglBuffer  *buffer,
       gfloat     *smoothed_curvatures;
       gfloat      threshold;
       gfloat      clamped_threshold;
+      GList      *fill_pixels = NULL;
+      GList      *iter;
 
       normals             = g_new0 (gfloat, width * height * 2);
       curvatures          = g_new0 (gfloat, width * height);
@@ -984,6 +990,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
 
                   if (transitions == 2 &&
                       ! gimp_lineart_curve_creates_region (closed, discrete_curve,
+                                                           &fill_pixels,
                                                            created_regions_significant_area,
                                                            created_regions_minimum_area - 1))
                     {
@@ -1041,7 +1048,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
                                                                          segment_max_length);
 
                   if (segment->len &&
-                      ! gimp_lineart_curve_creates_region (closed, segment,
+                      ! gimp_lineart_curve_creates_region (closed, segment, &fill_pixels,
                                                            created_regions_significant_area,
                                                            created_regions_minimum_area - 1))
                     {
@@ -1067,6 +1074,21 @@ gimp_line_art_close (GeglBuffer  *buffer,
             }
         }
 
+      for (iter = fill_pixels; iter; iter = iter->next)
+        {
+          Pixel *p = iter->data;
+
+          /* XXX A best approach would be to generalize
+           * gimp_drawable_bucket_fill() to work on any buffer (the code
+           * is already mostly there) rather than reimplementing a naive
+           * bucket fill.
+           * This is mostly a quick'n dirty first implementation which I
+           * will improve later.
+           */
+          gimp_line_art_simple_fill (closed, (gint) p->x, (gint) p->y);
+        }
+
+      g_list_free_full (fill_pixels, g_free);
       g_free (normals);
       g_free (curvatures);
       g_free (smoothed_curvatures);
@@ -1767,11 +1789,13 @@ gimp_number_of_transitions (GArray     *pixels,
 static gboolean
 gimp_lineart_curve_creates_region (GeglBuffer *mask,
                                    GArray     *pixels,
+                                   GList     **fill_pixels,
                                    int         lower_size_limit,
                                    int         upper_size_limit)
 {
   const glong max_edgel_count = 2 * (upper_size_limit + 1);
   Pixel      *p = (Pixel*) pixels->data;
+  GList      *fp = NULL;
   gint        i;
 
   /* Mark pixels */
@@ -1817,35 +1841,54 @@ gimp_lineart_curve_creates_region (GeglBuffer *mask,
               e.direction = direction;
 
               count = gimp_edgel_track_mark (mask, e, max_edgel_count);
-              if ((count != -1) && (count <= max_edgel_count)              &&
-                  ((area = -1 * gimp_edgel_region_area (mask, e)) >= lower_size_limit) &&
-                  (area <= upper_size_limit))
+              if ((count != -1) && (count <= max_edgel_count))
                 {
-                  gint j;
+                  area = -1 * gimp_edgel_region_area (mask, e);
 
-                  /* Remove marks */
-                  for (j = 0; j < pixels->len; j++)
+                  if (area >= lower_size_limit && area <= upper_size_limit)
                     {
-                      Pixel p2 = g_array_index (pixels, Pixel, j);
+                      gint j;
 
-                      if (p2.x >= 0 && p2.x < gegl_buffer_get_width (mask) &&
-                          p2.y >= 0 && p2.y < gegl_buffer_get_height (mask))
+                      /* Remove marks */
+                      for (j = 0; j < pixels->len; j++)
                         {
-                          guchar val;
+                          Pixel p2 = g_array_index (pixels, Pixel, j);
 
-                          gegl_buffer_sample (mask, (gint) p2.x, (gint) p2.y, NULL, &val,
-                                              NULL, GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-                          val &= 1;
-                          gegl_buffer_set (mask, GEGL_RECTANGLE ((gint) p2.x, (gint) p2.y, 1, 1), 0,
-                                           NULL, &val, GEGL_AUTO_ROWSTRIDE);
+                          if (p2.x >= 0 && p2.x < gegl_buffer_get_width (mask) &&
+                              p2.y >= 0 && p2.y < gegl_buffer_get_height (mask))
+                            {
+                              guchar val;
+
+                              gegl_buffer_sample (mask, (gint) p2.x, (gint) p2.y, NULL, &val,
+                                                  NULL, GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+                              val &= 1;
+                              gegl_buffer_set (mask, GEGL_RECTANGLE ((gint) p2.x, (gint) p2.y, 1, 1), 0,
+                                               NULL, &val, GEGL_AUTO_ROWSTRIDE);
+                            }
                         }
+                      g_list_free_full (fp, g_free);
+
+                      return TRUE;
                     }
-                  return TRUE;
+                  else if (area < lower_size_limit)
+                    {
+                      Pixel *np = g_new (Pixel, 1);
+
+                      np->x = direction == XPlusDirection ? p.x + 1 : (direction == XMinusDirection ? p.x - 1 : p.x);
+                      np->y = direction == YPlusDirection ? p.y + 1 : (direction == YMinusDirection ? p.y - 1 : p.y);
+
+                      if (np->x >= 0 && np->x < gegl_buffer_get_width (mask) &&
+                          np->y >= 0 && np->y < gegl_buffer_get_height (mask))
+                        fp = g_list_prepend (fp, np);
+                      else
+                        g_free (np);
+                    }
                 }
             }
         }
     }
 
+  *fill_pixels = g_list_concat (*fill_pixels, fp);
   /* Remove marks */
   for (i = 0; i < pixels->len; i++)
     {
@@ -2057,6 +2100,32 @@ gimp_lineart_estimate_strokes_radii (GeglBuffer *mask)
   g_free (dist);
 
   return thickness;
+}
+
+static void
+gimp_line_art_simple_fill (GeglBuffer *buffer,
+                           gint        x,
+                           gint        y)
+{
+  guchar val;
+
+  if (x < 0 || x >= gegl_buffer_get_width (buffer) ||
+      y < 0 || y >= gegl_buffer_get_height (buffer))
+    return;
+
+  gegl_buffer_sample (buffer, x, y, NULL, &val,
+                      NULL, GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
+  if (! val)
+    {
+      val = 1;
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
+                       NULL, &val, GEGL_AUTO_ROWSTRIDE);
+      gimp_line_art_simple_fill (buffer, x + 1, y);
+      gimp_line_art_simple_fill (buffer, x - 1, y);
+      gimp_line_art_simple_fill (buffer, x, y + 1);
+      gimp_line_art_simple_fill (buffer, x, y - 1);
+    }
 }
 
 static guint
