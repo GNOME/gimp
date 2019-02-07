@@ -4205,7 +4205,7 @@ msgid "_Dilate"
 msgstr "_Дилатирај"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Појачај светлије делове слике"
 
@@ -4215,7 +4215,7 @@ msgid "_Erode"
 msgstr "_Еродирај"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Појачај тамније делове слике"
 

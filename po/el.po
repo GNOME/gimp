@@ -4788,7 +4788,7 @@ msgid "_Dilate"
 msgstr "_Διαστολή"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Επέκταση φωτεινότερων περιοχών της εικόνας"
 
@@ -4798,7 +4798,7 @@ msgid "_Erode"
 msgstr "Διά_βρωση"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Επέκταση σκοτεινότερων περιοχών της εικόνας"
 

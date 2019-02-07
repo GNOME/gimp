@@ -4759,7 +4759,7 @@ msgid "_Dilate"
 msgstr "_Utvidga"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Väx ljusare områden i bilden"
 
@@ -4769,7 +4769,7 @@ msgid "_Erode"
 msgstr "_Erodera"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Väx mörkare områden i bilden"
 

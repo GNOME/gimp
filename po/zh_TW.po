@@ -4453,7 +4453,7 @@ msgid "_Dilate"
 msgstr "擴大(_D)"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "增大圖像較亮區域"
 
@@ -4463,7 +4463,7 @@ msgid "_Erode"
 msgstr "侵蝕(_E)"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "增大圖像較暗區域"
 

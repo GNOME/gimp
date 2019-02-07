@@ -4706,7 +4706,7 @@ msgid "_Dilate"
 msgstr "_विस्तार [डायलेट]"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "चित्राचे फिकट भाग वाढवा"
 
@@ -4716,7 +4716,7 @@ msgid "_Erode"
 msgstr "_झीज [इरोड]"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "प्रतिमेचा गडद भाग वाढवा"
 

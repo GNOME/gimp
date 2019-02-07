@@ -4694,7 +4694,7 @@ msgid "_Dilate"
 msgstr "Lichtere _delen lichter maken"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Lichtere delen van het beeld groter maken"
 
@@ -4704,7 +4704,7 @@ msgid "_Erode"
 msgstr "Donkere delen donkerder _maken"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Donkere delen van het beeld groter maken"
 

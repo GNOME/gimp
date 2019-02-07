@@ -4917,7 +4917,7 @@ msgid "_Dilate"
 msgstr "_Udvid"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Forøg lysere områder i billedet"
 
@@ -4927,7 +4927,7 @@ msgid "_Erode"
 msgstr "_Erodér"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Forøg mørkere områder i billedet"
 

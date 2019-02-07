@@ -4518,7 +4518,7 @@ msgid "_Dilate"
 msgstr "膨胀(_D)"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "增长图像的较亮区域"
 
@@ -4528,7 +4528,7 @@ msgid "_Erode"
 msgstr "腐蚀(_E)"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "增长图像的较暗区域"
 

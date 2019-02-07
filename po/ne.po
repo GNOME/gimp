@@ -4472,7 +4472,7 @@ msgstr "फैलाउनु"
 
 #: ../app/actions/filters-actions.c:138
 #, fuzzy
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "छवि क्षेत्रहरू बेर्न माउस नियन्त्रण प्रयोग गर्नुहोस्"
 
@@ -4483,7 +4483,7 @@ msgstr ""
 
 #: ../app/actions/filters-actions.c:154
 #, fuzzy
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "छवि क्षेत्रहरू बेर्न माउस नियन्त्रण प्रयोग गर्नुहोस्"
 

@@ -1955,7 +1955,7 @@ msgid "_Dilate"
 msgstr "_Dilatar"
 
 #: ../app/actions/drawable-actions.c:77
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Aumentar áreas mais claras da imagem"
 
@@ -1965,7 +1965,7 @@ msgid "E_rode"
 msgstr "E_rodir"
 
 #: ../app/actions/drawable-actions.c:83
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Aumentar áreas mais escuras da imagem"
 

@@ -4390,7 +4390,7 @@ msgid "_Dilate"
 msgstr "_Dilata"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Eixampla les àrees més clares de la imatge"
 
@@ -4400,7 +4400,7 @@ msgid "_Erode"
 msgstr "_Erosiona"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Eixampla les àrees més fosques de la imatge"
 

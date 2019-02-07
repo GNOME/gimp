@@ -4762,7 +4762,7 @@ msgid "_Dilate"
 msgstr "_Дилатація"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Розширити світліші ділянки зображення"
 
@@ -4772,7 +4772,7 @@ msgid "_Erode"
 msgstr "Ер_озія"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Розширити темніші ділянки зображення"
 

@@ -4669,7 +4669,7 @@ msgid "_Dilate"
 msgstr "_Paplašināt"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Palielināt gaišākos apgabalus attēlā"
 
@@ -4679,7 +4679,7 @@ msgid "_Erode"
 msgstr "Sašau_rināt"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Palielināt tumšākos apgabalus attēlā"
 

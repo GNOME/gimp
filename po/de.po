@@ -4818,7 +4818,7 @@ msgid "_Dilate"
 msgstr "_Erweitern"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Hellere Bildbereiche vergrößern"
 
@@ -4828,7 +4828,7 @@ msgid "_Erode"
 msgstr "_Erodieren"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Dunklere Bildbereiche vergrößern"
 

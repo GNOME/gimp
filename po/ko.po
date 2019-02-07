@@ -4713,7 +4713,7 @@ msgstr ""
 
 #: ../app/actions/filters-actions.c:138
 #, fuzzy
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "이미지 변형을 위해 골조 변형하기"
 
@@ -4723,7 +4723,7 @@ msgid "_Erode"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 

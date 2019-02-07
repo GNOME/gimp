@@ -4385,7 +4385,7 @@ msgid "_Dilate"
 msgstr "_خفِّف"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "زوّد المناطق الفاتحة في الصورة"
 
@@ -4395,7 +4395,7 @@ msgid "_Erode"
 msgstr "_تآكل"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "زوّد المناطق الغامقة في الصورة"
 

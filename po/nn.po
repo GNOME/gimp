@@ -1791,7 +1791,7 @@ msgid "_Dilate"
 msgstr "_Utvid"
 
 #: ../app/actions/drawable-actions.c:70
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow lighter areas of the image"
 msgstr "Auk lyse område i biletet"
 
@@ -1801,7 +1801,7 @@ msgid "E_rode"
 msgstr "E_roder"
 
 #: ../app/actions/drawable-actions.c:76
-msgctxt "drawable-action"
+msgctxt "filters-action"
 msgid "Grow darker areas of the image"
 msgstr "Auk mørke område i biletet"
 
