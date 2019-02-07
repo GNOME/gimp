@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-23 19:39+0000\n"
-"PO-Revision-Date: 2019-01-30 08:07+0900\n"
+"PO-Revision-Date: 2019-02-07 13:34+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -260,19 +260,19 @@ msgstr "배경막 찾기(_F)"
 
 #: ../plug-ins/common/animation-optimize.c:426
 msgid "Unoptimizing animation"
-msgstr "애니메이션 역 최적화"
+msgstr "애니메이션 최적화 제거 중"
 
 #: ../plug-ins/common/animation-optimize.c:429
 msgid "Removing animation background"
-msgstr "애니메이션 배경 제거하기"
+msgstr "애니메이션 배경 제거 중"
 
 #: ../plug-ins/common/animation-optimize.c:432
 msgid "Finding animation background"
-msgstr "애니메이션 배경 찾기"
+msgstr "애니메이션 배경 찾는 중"
 
 #: ../plug-ins/common/animation-optimize.c:436
 msgid "Optimizing animation"
-msgstr "애니메이션 최적화"
+msgstr "애니메이션 최적화 중"
 
 #: ../plug-ins/common/animation-play.c:210
 msgid "Preview a GIMP layer-based animation"
@@ -414,7 +414,7 @@ msgstr "블라인드(_B)..."
 
 #: ../plug-ins/common/blinds.c:183
 msgid "Adding blinds"
-msgstr "블라인드 추가"
+msgstr "블라인드 추가 중"
 
 #: ../plug-ins/common/blinds.c:221
 msgid "Blinds"
@@ -483,7 +483,7 @@ msgstr "흐릿하게(_B)"
 
 #: ../plug-ins/common/blur.c:175
 msgid "Blurring"
-msgstr "흐릿하게 하기"
+msgstr "흐릿하게 하는 중"
 
 #: ../plug-ins/common/border-average.c:99
 msgid "Set foreground to the average color of the image border"
@@ -530,7 +530,7 @@ msgstr "작업이 완료될 때까지 기다려 주십시오"
 
 #: ../plug-ins/common/busy-dialog.c:299
 msgid "Canceling..."
-msgstr "취소하기..."
+msgstr "취소 중..."
 
 #: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
@@ -569,7 +569,7 @@ msgstr "체커보드(_C) (레거시)..."
 
 #: ../plug-ins/common/checkerboard.c:161
 msgid "Adding checkerboard"
-msgstr "체커보드 추가하기"
+msgstr "체커보드 추가 중"
 
 #: ../plug-ins/common/checkerboard.c:346
 msgid "Checkerboard"
@@ -987,7 +987,7 @@ msgstr "확산 분포:"
 
 #: ../plug-ins/common/cml-explorer.c:1646
 msgid "# of subranges:"
-msgstr "부구역 번호:"
+msgstr "부구역 개수:"
 
 #: ../plug-ins/common/cml-explorer.c:1655
 msgid "P(ower factor):"
@@ -1175,7 +1175,7 @@ msgstr "색상화(_Y)..."
 
 #: ../plug-ins/common/colorify.c:167
 msgid "Colorifying"
-msgstr "색상화하기"
+msgstr "색상화 중"
 
 #: ../plug-ins/common/colorify.c:253
 msgid "Colorify"
@@ -1447,7 +1447,7 @@ msgstr "이미지 %d에 레이어를 가져올 수 없음"
 
 #: ../plug-ins/common/compose.c:610
 msgid "Composing"
-msgstr "합성하기"
+msgstr "합성 중"
 
 #: ../plug-ins/common/compose.c:845 ../plug-ins/common/compose.c:1320
 msgid "At least one image is needed to compose"
@@ -1506,7 +1506,7 @@ msgstr "일반화(_N)"
 
 #: ../plug-ins/common/contrast-normalize.c:123
 msgid "Normalizing"
-msgstr "표준화하기"
+msgstr "표준화 중"
 
 #: ../plug-ins/common/contrast-retinex.c:156
 msgid "Enhance contrast using the Retinex method"
@@ -1556,7 +1556,7 @@ msgstr "동적(_N):"
 
 #: ../plug-ins/common/contrast-retinex.c:633
 msgid "Retinex: filtering"
-msgstr "레티넥스: 필터링"
+msgstr "레티넥스: 필터링 중"
 
 #: ../plug-ins/common/crop-zealous.c:69
 msgid "Autocrop unused space from edges and middle"
@@ -1568,7 +1568,7 @@ msgstr "지능적으로 자르기(_Z)"
 
 #: ../plug-ins/common/crop-zealous.c:123
 msgid "Zealous cropping"
-msgstr "지능적으로 자르기"
+msgstr "지능적으로 자르는 중"
 
 #: ../plug-ins/common/crop-zealous.c:255
 msgid "Nothing to crop."
@@ -1940,7 +1940,7 @@ msgstr "깊이 합치기(_D)..."
 
 #: ../plug-ins/common/depth-merge.c:393
 msgid "Depth-merging"
-msgstr "깊이 합치기"
+msgstr "깊이 합치는 중"
 
 #: ../plug-ins/common/depth-merge.c:651
 msgid "Depth Merge"
@@ -2023,7 +2023,7 @@ msgstr "줄무늬 없애기(_T)..."
 
 #: ../plug-ins/common/destripe.c:270
 msgid "Destriping"
-msgstr "줄무늬 없애기"
+msgstr "줄무늬 없애는 중"
 
 #: ../plug-ins/common/destripe.c:440
 msgid "Destripe"
@@ -2212,7 +2212,7 @@ msgstr "이미지 헤더 읽는 중에 파일끝 또는 오류"
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
-msgstr "‘%s’ 열기"
+msgstr "‘%s’ 여는 중"
 
 #: ../plug-ins/common/file-cel.c:393
 #, c-format
@@ -2298,7 +2298,7 @@ msgstr "‘%s’: 팔레트 데이터를 읽는 동안 파일끝 또는 오류"
 #: ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
-msgstr "‘%s’ 내보내기"
+msgstr "‘%s’ 내보내는 중"
 
 #: ../plug-ins/common/file-csource.c:111
 msgid "C source code"
@@ -2369,7 +2369,7 @@ msgstr "알 수 없는 파일 확장명입니다. 압축된 XCF 형식으로 저
 #: ../plug-ins/common/file-compressor.c:444
 #, c-format
 msgid "Compressing '%s'"
-msgstr "‘%s’ 압축하기"
+msgstr "‘%s’ 압축하는 중"
 
 #: ../plug-ins/common/file-compressor.c:481
 msgid "No sensible file extension, attempting to load with file magic."
@@ -2492,7 +2492,7 @@ msgstr "배경 (%d%s)"
 #: ../plug-ins/common/file-gif-load.c:1021
 #, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "‘%s’(%d 프레임) 열기..."
+msgstr "‘%s’(%d 프레임) 여는 중..."
 
 #: ../plug-ins/common/file-gif-load.c:1050
 #, c-format
@@ -2594,7 +2594,7 @@ msgstr ""
 #: ../plug-ins/common/file-gif-save.c:2533
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr "기본 주석은 %d 개의 문자로 제한됩니다."
+msgstr "기본 주석은 %d개의 문자로 제한됩니다."
 
 #: ../plug-ins/common/file-gih.c:189 ../plug-ins/common/file-gih.c:213
 msgid "GIMP brush (animated)"
@@ -3556,7 +3556,7 @@ msgstr "포스트스크립트 가져오기"
 #. Rendering
 #: ../plug-ins/common/file-ps.c:3438
 msgid "Rendering"
-msgstr "랜더링"
+msgstr "랜더링 중"
 
 #. Resolution
 #: ../plug-ins/common/file-ps.c:3457 ../plug-ins/common/file-svg.c:910
@@ -3591,7 +3591,7 @@ msgstr "경계 상자 시도"
 #. Coloring
 #: ../plug-ins/common/file-ps.c:3534
 msgid "Coloring"
-msgstr "채색하기"
+msgstr "채색 중"
 
 #: ../plug-ins/common/file-ps.c:3538
 msgid "B/W"
@@ -4143,11 +4143,11 @@ msgstr "알 수 없는 이유"
 
 #: ../plug-ins/common/file-svg.c:337
 msgid "Rendering SVG"
-msgstr "SVG 렌더링"
+msgstr "SVG 렌더링 중"
 
 #: ../plug-ins/common/file-svg.c:349
 msgid "Rendered SVG"
-msgstr "렌더링한 SVG"
+msgstr "SVG 렌더링 함"
 
 #: ../plug-ins/common/file-svg.c:547 ../plug-ins/common/file-wmf.c:369
 #, c-format
@@ -4171,7 +4171,7 @@ msgstr "SVG(Scalable Vector Graphics) 렌더링"
 #: ../plug-ins/common/file-svg.c:787 ../plug-ins/common/file-wmf.c:581
 #: ../plug-ins/common/grid.c:733
 msgid "Width:"
-msgstr "너이:"
+msgstr "너비:"
 
 #: ../plug-ins/common/file-svg.c:793 ../plug-ins/common/file-wmf.c:587
 msgid "Height:"
@@ -4526,7 +4526,7 @@ msgstr "주석은 %d개의 문자로 제한됩니다."
 #: ../plug-ins/file-webp/file-webp-save.c:509
 #, c-format
 msgid "Saving '%s'"
-msgstr "‘%s’ 저장하기"
+msgstr "‘%s’ 저장하는 중"
 
 #: ../plug-ins/common/file-xmc.c:1560
 #, c-format
@@ -4607,7 +4607,7 @@ msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
 "nominal sizes."
 msgstr ""
-"이 플러그인은 %i개의 서로다른 명목상 크기를 포함하는 커서를 처리할 수 없습니"
+"이 플러그인은 %i개의 서로 다른 명목상 크기를 포함하는 커서를 처리할 수 없습니"
 "다."
 
 #: ../plug-ins/common/file-xpm.c:174 ../plug-ins/common/file-xpm.c:199
@@ -4705,7 +4705,7 @@ msgstr "필름스트립(_F)..."
 
 #: ../plug-ins/common/film.c:307
 msgid "Composing images"
-msgstr "이미지 합성하기"
+msgstr "이미지 합성하는 중"
 
 #: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
 #: ../plug-ins/help-browser/dialog.c:1106
@@ -4892,7 +4892,7 @@ msgstr "필터팩은 대화식으로만 실행할 수 있습니다."
 
 #: ../plug-ins/common/filter-pack.c:398
 msgid "Applying filter pack"
-msgstr "필터팩 적용하기"
+msgstr "필터팩 적용 중"
 
 #: ../plug-ins/common/filter-pack.c:522
 msgid "Original:"
@@ -5091,7 +5091,7 @@ msgstr "격자(_G) (레거시)..."
 
 #: ../plug-ins/common/grid.c:241
 msgid "Drawing grid"
-msgstr "격자 그리기"
+msgstr "격자 그리는 중"
 
 #: ../plug-ins/common/grid.c:643 ../plug-ins/gfig/gfig-dialog.c:1391
 #: ../plug-ins/imagemap/imap_menu.c:223
@@ -5195,7 +5195,7 @@ msgstr "직소(_J)..."
 
 #: ../plug-ins/common/jigsaw.c:414
 msgid "Assembling jigsaw"
-msgstr "직소 맞추기"
+msgstr "직소 맞추는 중"
 
 #: ../plug-ins/common/jigsaw.c:2393
 msgid "Jigsaw"
@@ -5459,7 +5459,7 @@ msgstr "제작소 초깃값(_F)"
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1293
 msgid "Antialiasing"
-msgstr "계단현상 제거"
+msgstr "계단현상 제거 중"
 
 #: ../plug-ins/common/newsprint.c:1442
 msgid "O_versample:"
@@ -5508,7 +5508,7 @@ msgstr "유화 효과(_F) (레거시)..."
 
 #: ../plug-ins/common/oilify.c:247
 msgid "Oil painting"
-msgstr "유화"
+msgstr "유화 칠하는 중"
 
 #: ../plug-ins/common/oilify.c:781
 msgid "Oilify"
@@ -5541,7 +5541,7 @@ msgstr "지수맵 쓰기(_X):"
 #.
 #: ../plug-ins/common/oilify.c:925
 msgid "_Use intensity algorithm"
-msgstr "농도 알고리즘 사용(_U)"
+msgstr "강도 알고리즘 사용(_U)"
 
 #: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
@@ -5578,7 +5578,7 @@ msgstr "플러그인 브라우저(_P)"
 
 #: ../plug-ins/common/plugin-browser.c:363
 msgid "Searching by name"
-msgstr "이름으로 찾기"
+msgstr "이름으로 찾는 중"
 
 #: ../plug-ins/common/plugin-browser.c:377
 #, c-format
@@ -5780,7 +5780,7 @@ msgstr "선명하게(_S)..."
 #.
 #: ../plug-ins/common/sharpen.c:302
 msgid "Sharpening"
-msgstr "선명하게 하기"
+msgstr "선명하게 하는 중"
 
 #: ../plug-ins/common/sharpen.c:472
 msgid "Sharpen"
@@ -5796,7 +5796,7 @@ msgstr "부드러운 팔레트(_T)..."
 
 #: ../plug-ins/common/smooth-palette.c:179
 msgid "Deriving smooth palette"
-msgstr "부드러운 팔레트 파생하기"
+msgstr "부드러운 팔레트 파생하는 중"
 
 #: ../plug-ins/common/smooth-palette.c:434
 msgid "Smooth Palette"
@@ -5840,7 +5840,7 @@ msgstr "필터를 사용하려고 선택한 영역이 비었음"
 
 #: ../plug-ins/common/sparkle.c:299
 msgid "Sparkling"
-msgstr "스파클링"
+msgstr "스파클 하는 중"
 
 #: ../plug-ins/common/sparkle.c:337
 msgid "Sparkle"
@@ -5908,15 +5908,15 @@ msgstr "무작위 색조(_R):"
 
 #: ../plug-ins/common/sparkle.c:469
 msgid "Adjust how much the hue should be changed randomly"
-msgstr "색상 변경을 위한 무작위 값 조절하기"
+msgstr "색조가 무작위로 얼마나 변경될지를 조정"
 
 #: ../plug-ins/common/sparkle.c:479
 msgid "Rando_m saturation:"
-msgstr "무작위 채도값(_M):"
+msgstr "무작위 채도(_M):"
 
 #: ../plug-ins/common/sparkle.c:482
 msgid "Adjust how much the saturation should be changed randomly"
-msgstr "채도 변경을 위한 무작위 값 조절하기"
+msgstr "채도가 무작위로 얼마나 변경될지를 조정"
 
 #: ../plug-ins/common/sparkle.c:499
 msgid "_Preserve luminosity"
@@ -5928,11 +5928,11 @@ msgstr "광도를 유지하시겠습니까?"
 
 #: ../plug-ins/common/sparkle.c:515
 msgid "In_verse"
-msgstr "거꾸로(_V)"
+msgstr "반전(_V)"
 
 #: ../plug-ins/common/sparkle.c:521
 msgid "Should the effect be inversed?"
-msgstr "효과를 반대로 적용하시겠습니까?"
+msgstr "효과를 반전할까요?"
 
 #: ../plug-ins/common/sparkle.c:530
 msgid "A_dd border"
@@ -5969,11 +5969,11 @@ msgstr "배경색 사용"
 #: ../plug-ins/common/sphere-designer.c:293
 #: ../plug-ins/gimpressionist/general.c:165
 msgid "Solid"
-msgstr "입체"
+msgstr "솔리드"
 
 #: ../plug-ins/common/sphere-designer.c:294
 msgid "Checker"
-msgstr "맞춤법 검사"
+msgstr "체커"
 
 #: ../plug-ins/common/sphere-designer.c:295
 msgid "Marble"
@@ -6032,7 +6032,7 @@ msgstr "파일 저장"
 
 #: ../plug-ins/common/sphere-designer.c:2556
 msgid "Sphere Designer"
-msgstr "구 디자이너"
+msgstr "구체 디자이너"
 
 #: ../plug-ins/common/sphere-designer.c:2668
 #: ../plug-ins/gradient-flare/gradient-flare.c:2926
@@ -6090,7 +6090,7 @@ msgstr "스케일:"
 
 #: ../plug-ins/common/sphere-designer.c:2771
 msgid "Turbulence:"
-msgstr "휘몰아치는 효과:"
+msgstr "휘몰아침:"
 
 #: ../plug-ins/common/sphere-designer.c:2778
 msgid "Amount:"
@@ -6098,7 +6098,7 @@ msgstr "총량:"
 
 #: ../plug-ins/common/sphere-designer.c:2785
 msgid "Exp.:"
-msgstr "Exp.:"
+msgstr "지수:"
 
 #: ../plug-ins/common/sphere-designer.c:2792
 msgid "Transformations"
@@ -6143,11 +6143,11 @@ msgstr "Z 위치:"
 
 #: ../plug-ins/common/sphere-designer.c:2979
 msgid "Rendering sphere"
-msgstr "구체 렌더링"
+msgstr "구체 렌더링 중"
 
 #: ../plug-ins/common/sphere-designer.c:3030
 msgid "Create an image of a textured sphere"
-msgstr "구체 텍스처 만들기"
+msgstr "텍스처 있는 구체 이미지 만들기"
 
 #: ../plug-ins/common/sphere-designer.c:3037
 msgid "Sphere _Designer..."
@@ -6155,7 +6155,7 @@ msgstr "구체 디자이너(_D)..."
 
 #: ../plug-ins/common/sphere-designer.c:3107
 msgid "Region selected for plug-in is empty"
-msgstr "플러그인을 사용하려고 선택한 영역이 비었음"
+msgstr "플러그인을 사용할 선택 영역이 비었음"
 
 #: ../plug-ins/common/tile.c:110
 msgid "Create an array of copies of the image"
@@ -6168,7 +6168,7 @@ msgstr "타일(_T)..."
 #. Set the tile cache size
 #: ../plug-ins/common/tile.c:197 ../plug-ins/common/tile-small.c:326
 msgid "Tiling"
-msgstr "타일링"
+msgstr "타일링 중"
 
 #: ../plug-ins/common/tile.c:434
 msgid "Tile"
@@ -6176,7 +6176,7 @@ msgstr "타일"
 
 #: ../plug-ins/common/tile.c:456
 msgid "Tile to New Size"
-msgstr "새 크기의 타일"
+msgstr "새 크기로 타일"
 
 #: ../plug-ins/common/tile.c:478
 msgid "C_reate new image"
@@ -6192,7 +6192,7 @@ msgstr "작은 타일(_S)..."
 
 #: ../plug-ins/common/tile-small.c:268
 msgid "Region selected for filter is empty."
-msgstr "선택된 영역이 비어 있으므로, 필터를 적용할 수 없습니다."
+msgstr "필터를 사용할 선택 영역이 비었습니다."
 
 #. Get the preview image
 #: ../plug-ins/common/tile-small.c:369
@@ -6243,7 +6243,7 @@ msgstr "저장"
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
-msgstr "이 항목을 선택하면 김프 종료 시 정의된 단위를 저장합니다."
+msgstr "이 항목을 선택하면 단위 정의는 김프를 종료 하기 전에만 저장됩니다."
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid "ID"
@@ -6252,11 +6252,11 @@ msgstr "ID"
 #: ../plug-ins/common/unit-editor.c:96
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
-msgstr "이 문자열은 김프 설정 파일의 단위와 같게 사용됩니다."
+msgstr "이 문자열은 김프 구성 파일 안의 단위를 식별하는 데에 사용됩니다."
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "Factor"
-msgstr "수치"
+msgstr "팩터"
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "How many units make up an inch."
@@ -6272,8 +6272,9 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
-"이 영역은 숫자 입력을 위한 도움 영역입니다. 입력란에 입력된 수를 “인치” 입력"
-"란의 두 자리 숫자와 일치시킬 수의 범위를 결정합니다."
+"이 난은 숫자 입력란용 힌트입니다. 이것은 소수점 이하 두 자리인 “인치” 입력란"
+"과 비슷한 정확도를 얻으려면 소수점 이하 몇 자리를 해당 입력란이 제공해야 하는"
+"지를 지정합니다."
 
 #: ../plug-ins/common/unit-editor.c:104
 msgid "Symbol"
@@ -6311,15 +6312,15 @@ msgstr "단위의 복수 형태."
 
 #: ../plug-ins/common/unit-editor.c:121
 msgid "Create a new unit from scratch"
-msgstr "스크래치 내용으로 새 단위 만들기"
+msgstr "처음부터 새로 새 단위 만들기"
 
 #: ../plug-ins/common/unit-editor.c:127
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "현재 선택된 단위를 서식으로 새 단위 만들기"
+msgstr "현재 선택된 단위를 양식으로 사용하여 새 단위 만들기"
 
 #: ../plug-ins/common/unit-editor.c:145
 msgid "Create or alter units used in GIMP"
-msgstr "김프에서 사용할 단위를 생성하거나 변경"
+msgstr "김프에서 사용할 단위를 만들거나 변경"
 
 #: ../plug-ins/common/unit-editor.c:150
 msgid "U_nits"
@@ -6327,7 +6328,7 @@ msgstr "단위(_N)"
 
 #: ../plug-ins/common/unit-editor.c:205
 msgid "Add a New Unit"
-msgstr "새로운 단위 추가"
+msgstr "새 단위 추가"
 
 #: ../plug-ins/common/unit-editor.c:234
 msgid "_ID:"
@@ -6335,7 +6336,7 @@ msgstr "_ID:"
 
 #: ../plug-ins/common/unit-editor.c:247
 msgid "_Factor:"
-msgstr "인자(_F):"
+msgstr "팩터(_F):"
 
 #: ../plug-ins/common/unit-editor.c:259
 msgid "_Digits:"
@@ -6363,7 +6364,7 @@ msgstr "미완료된 입력"
 
 #: ../plug-ins/common/unit-editor.c:353
 msgid "Please fill in all text fields."
-msgstr "모든 항목을 모두 입력하십시오."
+msgstr "모든 텍스트 입력란에 기입하십시오."
 
 #: ../plug-ins/common/unit-editor.c:412
 msgid "Unit Editor"
@@ -6395,7 +6396,7 @@ msgstr "효과 작동기"
 
 #: ../plug-ins/common/van-gogh-lic.c:687
 msgid "_Derivative"
-msgstr "유도적(_D)"
+msgstr "파생적(_D)"
 
 #: ../plug-ins/common/van-gogh-lic.c:688
 msgid "_Gradient"
@@ -6403,15 +6404,15 @@ msgstr "그레이디언트(_G)"
 
 #: ../plug-ins/common/van-gogh-lic.c:694
 msgid "Convolve"
-msgstr "얽기"
+msgstr "콘볼브"
 
 #: ../plug-ins/common/van-gogh-lic.c:699
 msgid "_With white noise"
-msgstr "백색소음(_W)"
+msgstr "백색소음으로(_W)"
 
 #: ../plug-ins/common/van-gogh-lic.c:700
 msgid "W_ith source image"
-msgstr "원본 이미지(_I)"
+msgstr "원본 이미지로(_I)"
 
 #: ../plug-ins/common/van-gogh-lic.c:719
 msgid "_Effect image:"
@@ -6423,7 +6424,7 @@ msgstr "필터 길이(_F):"
 
 #: ../plug-ins/common/van-gogh-lic.c:739
 msgid "_Noise magnitude:"
-msgstr "잡음 크기(_N):"
+msgstr "노이즈 규모(_N):"
 
 #: ../plug-ins/common/van-gogh-lic.c:748
 msgid "In_tegration steps:"
@@ -6431,15 +6432,15 @@ msgstr "통합 단계(_T):"
 
 #: ../plug-ins/common/van-gogh-lic.c:757
 msgid "_Minimum value:"
-msgstr "최소 값(_M):"
+msgstr "최솟값(_M):"
 
 #: ../plug-ins/common/van-gogh-lic.c:766
 msgid "M_aximum value:"
-msgstr "최대 값(_A):"
+msgstr "최댓값(_A):"
 
 #: ../plug-ins/common/van-gogh-lic.c:812
 msgid "Special effects that nobody understands"
-msgstr "특수 효과"
+msgstr "아무니 이해하지 못하는 특수 효과"
 
 #: ../plug-ins/common/van-gogh-lic.c:817
 msgid "_Van Gogh (LIC)..."
@@ -6447,7 +6448,7 @@ msgstr "반 고흐 (LIC)(_V)..."
 
 #: ../plug-ins/common/warp.c:233
 msgid "Twist or smear image in many different ways"
-msgstr "다양안 방법으로 이미지를 비틀거나 문지르기 함"
+msgstr "다양안 방법으로 이미지를 비틀거나 문지르기"
 
 #: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
@@ -6484,7 +6485,7 @@ msgstr "경계 위:"
 
 #: ../plug-ins/common/warp.c:471
 msgid "Wrap"
-msgstr "싸기"
+msgstr "감싸기"
 
 #: ../plug-ins/common/warp.c:486
 msgid "Smear"
@@ -6538,11 +6539,11 @@ msgstr "그레이디언트 비율:"
 
 #: ../plug-ins/common/warp.c:659
 msgid "Gradient map selection menu"
-msgstr "색감변화도 맵 선택 메뉴"
+msgstr "그레이디언트 맵 선택 메뉴"
 
 #: ../plug-ins/common/warp.c:669
 msgid "Vector mag:"
-msgstr "벡터 방향:"
+msgstr "벡터 규모:"
 
 #. Angle
 #: ../plug-ins/common/warp.c:684 ../plug-ins/ifs-compose/ifs-compose.c:554
@@ -6556,16 +6557,16 @@ msgstr "고정-방향-벡터 맵 선택 메뉴"
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1182
 msgid "Smoothing X gradient"
-msgstr "X 그레이디언트를 부드럽게"
+msgstr "X 그레이디언트를 부드럽게 하는 중"
 
 #: ../plug-ins/common/warp.c:1185
 msgid "Smoothing Y gradient"
-msgstr "Y 그레이디언트를 부드럽게"
+msgstr "Y 그레이디언트를 부드럽게 하는 중"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1232
 msgid "Finding XY gradient"
-msgstr "XY 그레이디언트 찾기"
+msgstr "XY 그레이디언트 찾는 중"
 
 #: ../plug-ins/common/warp.c:1253
 #, c-format
@@ -6614,7 +6615,7 @@ msgstr "각 스케일 레이어에 레이어 마스크 추가"
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
-msgstr "운영 체제에 사용할 메모리가 부족합니다."
+msgstr "운영 체제에 메모리나 자원이 부족합니다."
 
 #: ../plug-ins/common/web-browser.c:144
 msgid "The specified file was not found."
@@ -6633,7 +6634,7 @@ msgstr ""
 
 #: ../plug-ins/common/web-browser.c:153
 msgid "The operating system denied access to the specified file."
-msgstr "지정한 파일에 접근할 수 없습니다."
+msgstr "운영 체제가 지정한 파일에의 접근을 거부했습니다."
 
 #: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
@@ -6657,19 +6658,19 @@ msgstr "지정한 DLL 파일을 찾을 수 없습니다."
 
 #: ../plug-ins/common/web-browser.c:171
 msgid "There is no application associated with the given file name extension."
-msgstr "지정한 파일 확장자와 연동된 프로그램이 없습니다."
+msgstr "지정한 파일 확장명과 연결된 프로그램이 없습니다."
 
 #: ../plug-ins/common/web-browser.c:174
 msgid "There was not enough memory to complete the operation."
-msgstr "동작을 완료하기에 메모리가 충분하지 않습니다."
+msgstr "작업을 완료하기에는 메모리가 충분하지 않습니다."
 
 #: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
-msgstr "공유 충돌이 발생하였습니다."
+msgstr "공유하기 위반이 발생하였습니다."
 
 #: ../plug-ins/common/web-browser.c:180
 msgid "Unknown Microsoft Windows error."
-msgstr "알 수 없는 마이크로소프트 윈도우즈 오류."
+msgstr "알 수 없는 Microsoft Windows  오류."
 
 #: ../plug-ins/common/web-browser.c:183
 #, c-format
@@ -6678,7 +6679,7 @@ msgstr "‘%s’ 파일 열기 실패: %s"
 
 #: ../plug-ins/common/web-page.c:98
 msgid "Create an image of a webpage"
-msgstr "웹페이지용 이미지 만들기"
+msgstr "웹페이지의 이미지 만들기"
 
 #: ../plug-ins/common/web-page.c:104
 msgid "From _Webpage..."
@@ -6733,12 +6734,12 @@ msgstr "지정한 URL이 없음"
 #: ../plug-ins/common/web-page.c:510
 #, c-format
 msgid "Downloading webpage '%s'"
-msgstr "웹페이지 ‘%s’ 내려받기 중"
+msgstr "웹페이지 ‘%s’ 내려받는 중"
 
 #: ../plug-ins/common/web-page.c:527
 #, c-format
 msgid "Transferring webpage image for '%s'"
-msgstr "‘%s’(으)로 웹페이지 이미지 전송"
+msgstr "‘%s’용 웹페이지 이미지 전송 중"
 
 #: ../plug-ins/common/web-page.c:536
 msgid "Webpage"
@@ -6763,7 +6764,7 @@ msgstr "‘%s’은(는) 잘못된 BMP 파일임"
 #: ../plug-ins/file-bmp/bmp-load.c:429 ../plug-ins/file-bmp/bmp-load.c:471
 #, c-format
 msgid "Error reading BMP file header from '%s'"
-msgstr "‘%s’의 BMP 파일 헤더 읽기 오류"
+msgstr "‘%s’에서 BMP 파일 헤더 읽기 중 오류"
 
 #: ../plug-ins/file-bmp/bmp-load.c:381
 #, c-format
@@ -6795,7 +6796,7 @@ msgstr "알파 채널을 무시합니다."
 #. Run-Length Encoded
 #: ../plug-ins/file-bmp/bmp-save.c:910
 msgid "_Run-Length Encoded"
-msgstr "_Run-Length로 인코드"
+msgstr "_Run-Length로 인코딩됨"
 
 #. Compatibility Options
 #: ../plug-ins/file-bmp/bmp-save.c:923
@@ -6804,7 +6805,7 @@ msgstr "호환 옵션(_M)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:933
 msgid "_Do not write color space information"
-msgstr "색상공간 정보를 작성하지 마십시오.(_D)"
+msgstr "색 공간 정보를 작성하지 않음(_D)"
 
 #: ../plug-ins/file-bmp/bmp-save.c:935
 msgid ""
@@ -6812,9 +6813,9 @@ msgid ""
 "information. GIMP writes color space information by default. Enabling this "
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
-"일부 응용 프로그램은 색상공간 정보가 포함된 BMP 이미지를 읽을 수 없습니다. 김"
+"일부 응용 프로그램은 색 공간 정보가 포함된 BMP 이미지를 읽을 수 없습니다. 김"
 "프는 기본적으로 색상공간 정보를 기록합니다. 이 옵션을 이용하면 김프로 파일 저"
-"장 시 색상공간 정보를 기록하지 않을 수 있습니다."
+"장 시 색상공간 정보를 기록하지 않습니다."
 
 #. Advanced Options
 #. Advanced expander
@@ -6977,7 +6978,7 @@ msgstr "G3 팩스 이미지"
 
 #: ../plug-ins/file-fits/fits.c:166 ../plug-ins/file-fits/fits.c:186
 msgid "Flexible Image Transport System"
-msgstr "유연한 이미지 전송 시스템"
+msgstr "Flexible Image Transport System"
 
 #: ../plug-ins/file-fits/fits.c:370
 msgid "Error during open of FITS file"
@@ -6997,7 +6998,7 @@ msgstr "FITS 파일 불러오기"
 
 #: ../plug-ins/file-fits/fits.c:1170
 msgid "Replacement for undefined pixels"
-msgstr "지정되지 않는 픽셀 교체"
+msgstr "지정되지 않은 픽셀용 교체"
 
 #: ../plug-ins/file-fits/fits.c:1175 ../plug-ins/gfig/gfig-dialog.c:1323
 #: ../plug-ins/gfig/gfig-dialog.c:1498
@@ -7010,11 +7011,11 @@ msgstr "픽셀 값 크기 조정"
 
 #: ../plug-ins/file-fits/fits.c:1187
 msgid "By DATAMIN/DATAMAX"
-msgstr "최소데이터/최대데이터"
+msgstr "DATAMIN/DATAMAX로"
 
 #: ../plug-ins/file-fits/fits.c:1194
 msgid "Image Composing"
-msgstr "이미지 구성 중"
+msgstr "이미지 합성하기"
 
 #: ../plug-ins/file-fits/fits.c:1198
 msgctxt "composing"
@@ -7090,7 +7091,7 @@ msgstr "32 bpp, 8-비트 알파, 팔레트 없음"
 
 #: ../plug-ins/file-ico/ico-dialog.c:187
 msgid "Compressed (PNG)"
-msgstr "압축 (PNG)"
+msgstr "압축됨 (PNG)"
 
 #: ../plug-ins/file-ico/ico-load.c:221
 #, c-format
@@ -7114,7 +7115,7 @@ msgstr "아이콘 #%i"
 #: ../plug-ins/file-raw/file-rawtherapee.c:436
 #, c-format
 msgid "Opening thumbnail for '%s'"
-msgstr "‘%s’의 축소판 열기"
+msgstr "‘%s’용 축소판 여는 중"
 
 #: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
 msgid "Microsoft Windows icon"
@@ -7159,8 +7160,8 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
-"원본 이미지가 기본 화질 설정을 사용하지 않은 JPEG 파일일 경우(양자화 테이"
-"블), 이 옵션을 이용하면 비슷한 화질과 파일 크기로 저장할 수 있습니다."
+"원본 이미지를 비표준 화질 설정(양자화 테이블)을 사용한 JPEG 파일에서 불러왔으"
+"면, 이 옵션을 이용하면 비슷한 화질과 파일 크기로 저장할 수 있습니다."
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:847
 msgid "Enable preview to obtain the file size."
@@ -7199,7 +7200,7 @@ msgstr "색 프로필 저장"
 #. Comment
 #: ../plug-ins/file-jpeg/jpeg-save.c:937
 msgid "Comment"
-msgstr "설명"
+msgstr "주석"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:995
 msgid "S_moothing:"
@@ -7237,28 +7238,28 @@ msgstr "서브샘플링(_B):"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1118
 msgid "4:4:4 (best quality)"
-msgstr "4:4:4 (최고품질)"
+msgstr "4:4:4 (최고 화질)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1120
 msgid "4:2:2 horizontal (chroma halved)"
-msgstr "4:2:2 수평 (chroma 2등분)"
+msgstr "4:2:2 수평 (크로마 2등분)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1122
 msgid "4:2:2 vertical (chroma halved)"
-msgstr "4:2:2 수직 (chroma 2등분)"
+msgstr "4:2:2 수직 (크로마 2등분)"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1124
 msgid "4:2:0 (chroma quartered)"
-msgstr "4:2:0 (chroma 4등분)"
+msgstr "4:2:0 (크로마 4등분)"
 
 #. DCT method
 #: ../plug-ins/file-jpeg/jpeg-save.c:1156
 msgid "_DCT method:"
-msgstr "DCT 기법(_D):"
+msgstr "DCT 방식(_D):"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1162
 msgid "Fast Integer"
-msgstr "빠른 정수형"
+msgstr "빠른 정수"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1163
 msgid "Integer"
@@ -7266,7 +7267,7 @@ msgstr "정수"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1164
 msgid "Floating-Point"
-msgstr "부동 소수"
+msgstr "부동 소수점"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1188
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
@@ -7291,7 +7292,7 @@ msgstr "미리 보기 내보내기"
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
-msgstr "PSD 파일 불러오기 오류: %s"
+msgstr "PSD 파일 불러오기 중 오류: %s"
 
 #: ../plug-ins/file-psd/psd-load.c:277
 #, c-format
@@ -7301,12 +7302,12 @@ msgstr "유효한 포토샵 문서 파일이 아님"
 #: ../plug-ins/file-psd/psd-load.c:284
 #, c-format
 msgid "Unsupported file format version: %d"
-msgstr "지원하지 않는 파일 포맷 버전입니다.: %d"
+msgstr "지원하지 않는 파일 포맷 버전: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:291
 #, c-format
 msgid "Too many channels in file: %d"
-msgstr "파일이 채널이 너무 많습니다.: %d"
+msgstr "파일에 채널이 너무 많음: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:318
 #, c-format
@@ -7321,7 +7322,7 @@ msgstr "지원하지 않는 색상 모드: %s"
 #: ../plug-ins/file-psd/psd-load.c:356
 #, c-format
 msgid "Unsupported bit depth: %d"
-msgstr "지원하지 않는 비트: %d"
+msgstr "지원하지 않는 비트 심도: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:390 ../plug-ins/file-psd/psd-load.c:400
 #: ../plug-ins/file-psd/psd-load.c:611 ../plug-ins/file-psd/psd-load.c:833
@@ -7332,7 +7333,7 @@ msgstr "파일이 손상되었음!"
 #: ../plug-ins/file-psd/psd-load.c:539
 #, c-format
 msgid "Too many channels in layer: %d"
-msgstr "레이어에 채널이 너무 많습니다.:%d"
+msgstr "레이어에 채널이 너무 많음:%d"
 
 #: ../plug-ins/file-psd/psd-load.c:547
 #, c-format
@@ -7385,7 +7386,7 @@ msgstr "데이터 압축 해제 실패"
 
 #: ../plug-ins/file-psd/psd-save.c:463
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "오류: 김프 기반 이미지형식을 PSD 모드로 변환할 수 없음"
+msgstr "오류: 김프 기반 이미지유형을 PSD 모드로 변환할 수 없음"
 
 #: ../plug-ins/file-psd/psd-save.c:1563
 #, c-format
@@ -7543,7 +7544,7 @@ msgstr "실리콘 그래픽스 IRIS 이미지"
 #: ../plug-ins/file-sgi/sgi.c:332
 #, c-format
 msgid "Could not open '%s' for reading."
-msgstr "‘%s’ 파일을 열 수 없습니다."
+msgstr "‘%s’ 파일을 읽기용으로 열 수 없습니다."
 
 #: ../plug-ins/file-sgi/sgi.c:347
 #, c-format
@@ -7571,7 +7572,7 @@ msgstr "SGI"
 
 #: ../plug-ins/file-sgi/sgi.c:672
 msgid "Compression type"
-msgstr "압축 형식"
+msgstr "압축 유형"
 
 #: ../plug-ins/file-sgi/sgi.c:676
 msgid "No compression"
@@ -7633,7 +7634,7 @@ msgid ""
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
 "TIFF 형식은 7비트 ASCII 인코딩으로 된 주석만\n"
-"지원합니다. 주석은 저장 되지 않음."
+"지원합니다. 주석은 저장되지 않음."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:824
 #, c-format
@@ -7646,7 +7647,7 @@ msgstr "TIFF"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:979
 msgid "_None"
-msgstr "압축 안함(_N)"
+msgstr "없음(_N)"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:980
 msgid "_LZW"
@@ -7691,7 +7692,7 @@ msgstr "WebP"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:140
 msgid "Image quality:"
-msgstr "이미지 품질:"
+msgstr "이미지 화질:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:148
 msgid "Image quality"
@@ -7756,12 +7757,12 @@ msgstr "움직이는 WebP 파일 ‘%s’ 디코딩 실패"
 #: ../plug-ins/file-webp/file-webp-load.c:196
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
-msgstr "‘%s’의 움직이는 WebP 정보 디코딩 실패"
+msgstr "‘%s’에서 움직이는 WebP 정보 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:215
 #, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
-msgstr "‘%s’의 움직이는 WebP 프레임 디코딩 실패"
+msgstr "‘%s’에서 움직이는 WebP 프레임 디코딩 실패"
 
 #: ../plug-ins/file-webp/file-webp-load.c:220
 #, c-format
@@ -7820,7 +7821,7 @@ msgstr "알 수 없는 오류"
 #: ../plug-ins/file-webp/file-webp-save.c:517
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
-msgstr "%1$s을(를) 쓰기용으로 열기 실패: %2$s"
+msgstr "%s을(를) 쓰기용으로 열기 실패: %s"
 
 #: ../plug-ins/file-webp/file-webp-save.c:254
 #, c-format
@@ -7841,7 +7842,7 @@ msgstr "화염 그리는 중"
 
 #: ../plug-ins/flame/flame.c:317
 msgid "Flame works only on RGB drawables."
-msgstr "화염 효과는 RGB 영역에서만 동작합니다."
+msgstr "화염 효과는 RGB 드로어블에서만 동작합니다."
 
 #: ../plug-ins/flame/flame.c:401
 #, c-format
@@ -7932,7 +7933,7 @@ msgstr "줄리아"
 
 #: ../plug-ins/flame/flame.c:762
 msgid "Waves"
-msgstr "물결"
+msgstr "파도"
 
 #: ../plug-ins/flame/flame.c:763
 msgid "Fisheye"
@@ -7963,11 +7964,11 @@ msgstr "링"
 
 #: ../plug-ins/flame/flame.c:769
 msgid "Fan"
-msgstr "팬"
+msgstr "부채"
 
 #: ../plug-ins/flame/flame.c:770
 msgid "Eyefish"
-msgstr "뱅어"
+msgstr "눈다랑어"
 
 #: ../plug-ins/flame/flame.c:771
 msgid "Bubble"
@@ -7983,7 +7984,7 @@ msgstr "흐릿하게"
 
 #: ../plug-ins/flame/flame.c:775
 msgid "Gaussian"
-msgstr "가우시안 블루어"
+msgstr "가우시안"
 
 #: ../plug-ins/flame/flame.c:788
 msgid "_Variation:"
@@ -8038,7 +8039,7 @@ msgstr "색상표(_M):"
 
 #: ../plug-ins/flame/flame.c:1205
 msgid "Custom gradient"
-msgstr "사용자 그레이디언트"
+msgstr "맞춤 그레이디언트"
 
 #: ../plug-ins/flame/flame.c:1231
 msgid "C_amera"
@@ -8085,7 +8086,7 @@ msgstr "실시간 미리 보기"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:645
 msgid "If enabled the preview will be redrawn automatically"
-msgstr "이 옵션을 활성화하면, 미리 보기가 자동으로 다시 그려짐"
+msgstr "이 옵션을 사용하면, 미리 보기가 자동으로 다시 그려짐"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:648
 msgid "R_edraw preview"
@@ -8177,7 +8178,7 @@ msgstr "프랙탈 유형"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
 msgid "Mandelbrot"
-msgstr "만델브로"
+msgstr "망델브로"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:848
 msgid "Barnsley 1"
@@ -8217,32 +8218,32 @@ msgstr "색상수:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:925
 msgid "Change the number of colors in the mapping"
-msgstr "매핑의 색상수 바꾸기"
+msgstr "매핑에서 색상 개수 변경"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "Use loglog smoothing"
-msgstr "loglog 스무딩 사용"
+msgstr "loglog 매끄럽게 하기 사용"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:939
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr "결과에서 “밴드 현상”을 제거하려면 로그 로그 스무딩 사용"
+msgstr "결과에서 “밴드 현상”을 제거하려면 로그 로그 매끄럽게 하기 사용"
 
 #. Color Density frame
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:943
 msgid "Color Density"
-msgstr "색상 농도"
+msgstr "색상 밀도"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:958
 msgid "Change the intensity of the red channel"
-msgstr "빨강 채널의 농도 바꾸기"
+msgstr "빨강 채널의 강도 변경"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:968
 msgid "Change the intensity of the green channel"
-msgstr "초록 채널의 농도 바꾸기"
+msgstr "초록 채널의 강도 변경"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:978
 msgid "Change the intensity of the blue channel"
-msgstr "파랑 채널의 농도 바꾸기"
+msgstr "파랑 채널의 강도 변경"
 
 #. Color Function frame
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:984
@@ -8266,7 +8267,7 @@ msgstr "없음"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1047
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1088
 msgid "Use sine-function for this color component"
-msgstr "이 색성분에 사인함수 사용"
+msgstr "이 색 성분에 사인함수 사용"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1050
@@ -8304,19 +8305,19 @@ msgstr "색상 모드"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1125
 msgid "As specified above"
-msgstr "앞서 설명한 것과 같이"
+msgstr "위에서 지정한 것과 같이"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1137
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"위에서 설정한 옵션(색상 농도/함수)으로 색상맵 만들기. 결과는 미리 보기 이미지"
+"위에서 지정한 옵션(색상 강도/함수)으로 색상맵 만들기. 결과는 미리 보기 이미지"
 "에 표시됨"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1147
 msgid "Apply active gradient to final image"
-msgstr "현재 그레이디언트를 마지막 이미지에 적용"
+msgstr "현재 그레이디언트를 최종 이미지에 적용"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1159
 msgid "Create a color-map using a gradient from the gradient editor"
@@ -8333,11 +8334,11 @@ msgstr "프랙탈(_F)"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1562
 #, c-format
 msgid "Could not write '%s': %s"
-msgstr "‘%s’을(를) 기록할 수 없습니다.: %s"
+msgstr "‘%s’을(를) 기록할 수 없음: %s"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1637
 msgid "Load Fractal Parameters"
-msgstr "프랙탈 매개변수 읽어오기"
+msgstr "프랙탈 매개변수 불러오기"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1675
 msgid "Save Fractal Parameters"
@@ -8351,11 +8352,11 @@ msgstr "‘%s’은(는) 프랙탈익스플로러 파일이 아님"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1880
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
-msgstr "‘%s’은(는) 손상되었습니다. %d번째 줄 옵션이 잘못되었음"
+msgstr "‘%s’은(는) 손상되었습니다. %d번째 줄 옵션 섹션이 잘못되었음"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:236
 msgid "Render fractal art"
-msgstr "프렉탈 아트 렌더링"
+msgstr "프랙탈 아트 렌더링"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:241
 msgid "_Fractal Explorer..."
@@ -8363,7 +8364,7 @@ msgstr "프랙탈 익스플로러(_F)..."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:368
 msgid "Rendering fractal"
-msgstr "프렉탈 렌더링"
+msgstr "프랙탈 렌더링 중"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:752
 #: ../plug-ins/gradient-flare/gradient-flare.c:3201
@@ -8399,11 +8400,11 @@ msgstr "폴더를 선택하고 목록을 재검색"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1076
 msgid "Apply currently selected fractal"
-msgstr "선택된 프랙탈 적용"
+msgstr "현재 선택된 프랙탈 적용"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1088
 msgid "Delete currently selected fractal"
-msgstr "선택된 프랙탈 삭제"
+msgstr "현재 선택된 프랙탈 삭제"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1111
 msgid "Rescan for Fractals"
@@ -8415,7 +8416,7 @@ msgstr "프랙탈 익스플로러 경로 추가"
 
 #: ../plug-ins/gfig/gfig-bezier.c:401
 msgid "Closed"
-msgstr "닫기"
+msgstr "닫힘"
 
 #: ../plug-ins/gfig/gfig-bezier.c:406
 msgid "Close curve on completion"
@@ -8423,7 +8424,7 @@ msgstr "완료 시 곡선 닫기"
 
 #: ../plug-ins/gfig/gfig-bezier.c:411
 msgid "Show Line Frame"
-msgstr "줄 화염 표시"
+msgstr "줄 프레임 표시"
 
 #: ../plug-ins/gfig/gfig-bezier.c:416
 msgid "Draws lines between the control points. Only during curve creation"
@@ -8510,7 +8511,7 @@ msgstr "저장(_S)..."
 
 #: ../plug-ins/gfig/gfig-dialog.c:890
 msgid "_Clear"
-msgstr "비우기(_C)"
+msgstr "지우기(_C)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:894 ../plug-ins/imagemap/imap_menu.c:223
 msgid "_Grid"
@@ -8542,15 +8543,15 @@ msgstr "맨 위(_T)로 올리기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:910
 msgid "Raise selected object to top"
-msgstr "선택한 개체를 최상위로 올리기"
+msgstr "선택한 개체를 맨 위로 올리기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:914
 msgid "Lower to _bottom"
-msgstr "맨 밑(_B)으로 내리기"
+msgstr "맨 밑으로 내리기(_B)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:914
 msgid "Lower selected object to bottom"
-msgstr "선택한 개체를 최하위로 내리기"
+msgstr "선택한 개체를 맨 아래로 내리기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:918
 msgid "_Previous"
@@ -8598,7 +8599,7 @@ msgstr "원호 만들기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Create reg polygon"
-msgstr "다각형 만들기"
+msgstr "정다각형 만들기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:54
 msgid "Create star"
@@ -8610,7 +8611,7 @@ msgstr "나선 만들기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:956
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "베시어 곡선을 만듭니다. Shift + 단추를 누르면 개체가 생성됩니다."
+msgstr "베지어 곡선을 만듭니다. Shift + 버튼을 누르면 개체 만들기를 끝냅니다."
 
 #: ../plug-ins/gfig/gfig-dialog.c:960 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
@@ -8668,8 +8669,7 @@ msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 msgstr ""
-"레이어 배경 형식. 복사하면 이전 레이어를 draw가 실행되기 전의 상태로 복사합니"
-"다."
+"레이어 배경 형식. 복사하면 이전 레이어를 draw가 실행되기 전에 복사합니다."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1339
 msgid "Background:"
@@ -8689,11 +8689,11 @@ msgstr "격자 간격:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1440
 msgid "Polar grid sectors desired:"
-msgstr "극점으로 사용할 격자 영역:"
+msgstr "바라는 극 격자 영역:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Polar grid radius interval:"
-msgstr "극점 격자 반지름의 간격:"
+msgstr "극 격자 반지름 간격:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1478 ../plug-ins/imagemap/imap_menu.c:234
 msgid "Rectangle"
@@ -8705,7 +8705,7 @@ msgstr "같은 크기"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1489
 msgid "Grid type:"
-msgstr "격자 형식:"
+msgstr "격자 유형:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
@@ -8715,7 +8715,7 @@ msgstr "일반"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1499
 msgid "Grey"
-msgstr "그레이"
+msgstr "회색"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1500
 msgid "Darker"
@@ -8756,15 +8756,15 @@ msgstr "개체가 어디로 갔습니까?"
 
 #: ../plug-ins/gfig/gfig-dobject.c:922
 msgid "Error reading file"
-msgstr "파일 읽기 오류"
+msgstr "파일 읽기 중 오류"
 
 #: ../plug-ins/gfig/gfig-dobject.c:1011
 msgid "Editing read-only object - you will not be able to save it"
-msgstr "읽기 전용 개체 편집하기 - 이 개체를 저장할 수는 없음"
+msgstr "읽기 전용 개체 편집하는 중 - 이 개체를 저장할 수는 없음"
 
 #: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
-msgstr "정다각형의 면 수"
+msgstr "정다각형의 변 수"
 
 #: ../plug-ins/gfig/gfig-preview.c:328
 msgid "Object Details"
@@ -8785,7 +8785,7 @@ msgstr "별의 꼭짓점 수"
 
 #: ../plug-ins/gfig/gfig-stock.c:40
 msgid "Create bezier curve"
-msgstr "베지에 곡선 만들기"
+msgstr "베지어 곡선 만들기"
 
 #: ../plug-ins/gfig/gfig.c:121
 msgid "Create geometric shapes"
@@ -8803,7 +8803,7 @@ msgstr "기생물로 형태 저장 중 오류: 드로어블에 기생물을 덧�
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
-msgstr "기생물을 불러올 임시 파일 ‘%1$s’ 읽기 실패: %2$s"
+msgstr "기생물을 불러올 임시 파일 ‘%s’ 읽기 실패: %s"
 
 #: ../plug-ins/gimpressionist/brush.c:247
 msgid "Can only save drawables!"
@@ -8841,12 +8841,12 @@ msgstr "붓의 종횡비 지정하기"
 #: ../plug-ins/gimpressionist/brush.c:612
 #: ../plug-ins/gimpressionist/paper.c:205
 msgid "Relief:"
-msgstr "교체:"
+msgstr "부조:"
 
 #: ../plug-ins/gimpressionist/brush.c:616
 #: ../plug-ins/gimpressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "이미지를 적용시키기 위해 모든 양각 효과를 적용 (퍼센트로)"
+msgstr "이미지에 적용할 돋을새김의 양을 지정 (퍼센트로)"
 
 #: ../plug-ins/gimpressionist/color.c:59
 msgid "Co_lor"
@@ -8870,11 +8870,11 @@ msgstr "붓의 한 가운데 픽셀에서 색상 표본 추출"
 
 #: ../plug-ins/gimpressionist/color.c:93
 msgid "Color _noise:"
-msgstr "색상 잡음(_N):"
+msgstr "색상 노이즈(_N):"
 
 #: ../plug-ins/gimpressionist/color.c:97
 msgid "Adds random noise to the color"
-msgstr "색상에 무작위 잡음 추가"
+msgstr "색상에 무작위 노이즈 추가"
 
 #: ../plug-ins/gimpressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3530
@@ -8883,23 +8883,23 @@ msgstr "일반(_G)"
 
 #: ../plug-ins/gimpressionist/general.c:149
 msgid "Keep original"
-msgstr "원래 환경 유지"
+msgstr "원본 유지"
 
 #: ../plug-ins/gimpressionist/general.c:150
 msgid "Preserve the original image as a background"
-msgstr "배경으로써 원래 이미지 보호"
+msgstr "배경으로서 원래 이미지 보존"
 
 #: ../plug-ins/gimpressionist/general.c:155
 msgid "From paper"
-msgstr "페이퍼에서"
+msgstr "종이로부터"
 
 #: ../plug-ins/gimpressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
-msgstr "배경으로써 선택된 페이퍼의 텍스처 복사"
+msgstr "배경으로서 선택된 종이의 텍스처를 복사"
 
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid colored background"
-msgstr "채색된 배경 입체"
+msgstr "단색 배경"
 
 #: ../plug-ins/gimpressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
@@ -8915,7 +8915,7 @@ msgstr "이미지의 가장자리까지 획을 그리려면 선택"
 
 #: ../plug-ins/gimpressionist/general.c:212
 msgid "Tileable"
-msgstr "타일 덮기 가능"
+msgstr "타일링 가능"
 
 #: ../plug-ins/gimpressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
@@ -8923,11 +8923,11 @@ msgstr "결과 이미지가 완벽하게 타일링 가능해야 하는지를 선
 
 #: ../plug-ins/gimpressionist/general.c:221
 msgid "Drop shadow"
-msgstr "그림자 효과"
+msgstr "물방울 그림자"
 
 #: ../plug-ins/gimpressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
-msgstr "각 붓 한번 긋기에 그림자 효과 추가"
+msgstr "각 붓 스트로크에 그림자 효과 추가"
 
 #: ../plug-ins/gimpressionist/general.c:239
 msgid "Edge darken:"
@@ -8935,7 +8935,7 @@ msgstr "어두운 가장자리:"
 
 #: ../plug-ins/gimpressionist/general.c:243
 msgid "How much to \"darken\" the edges of each brush stroke"
-msgstr "각 붓 한번 긋기의 가장자리는 얼마나 “어두운”가"
+msgstr "각 붓 스트로크의 가장자리를 얼마나 “어둡게 하는”지"
 
 #: ../plug-ins/gimpressionist/general.c:248
 msgid "Shadow darken:"
@@ -8943,7 +8943,7 @@ msgstr "그림자를 어둡게:"
 
 #: ../plug-ins/gimpressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
-msgstr "그림자 넣기에 얼마나 “어두운”가"
+msgstr "물방을 그림자를 얼마나 “어둡게 하는”가"
 
 #: ../plug-ins/gimpressionist/general.c:257
 msgid "Shadow depth:"
@@ -8953,7 +8953,7 @@ msgstr "그림자 깊이:"
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
-"그림자 넣기의 깊이, 즉, 그것을 되어야만 하는 개체와 얼마나 떨어져 있는가"
+"물방울 그림자의 깊이, 즉, 물방울 그림자가 체체와 얼마나 떨어져 있어야 하는지"
 
 #: ../plug-ins/gimpressionist/general.c:266
 msgid "Shadow blur:"
@@ -8961,7 +8961,7 @@ msgstr "그림자 흐림:"
 
 #: ../plug-ins/gimpressionist/general.c:270
 msgid "How much to blur the drop shadow"
-msgstr "그림자 넣기는 얼마나 흐린가"
+msgstr "물방울 그림자를 얼마나 흐리게 할 것인지"
 
 #: ../plug-ins/gimpressionist/general.c:275
 msgid "Deviation threshold:"
@@ -8969,7 +8969,7 @@ msgstr "편차 임계값:"
 
 #: ../plug-ins/gimpressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
-msgstr "적응성 있는 선택을 위한 탈출-값"
+msgstr "적응성 선택용 탈출-값"
 
 #: ../plug-ins/gimpressionist/gimp.c:89
 msgid "Performs various artistic operations"
@@ -8981,11 +8981,11 @@ msgstr "GIMPressionist(_G)..."
 
 #: ../plug-ins/gimpressionist/gimp.c:164
 msgid "The selection does not intersect the active layer or mask."
-msgstr "선택이 활성 레이어나 마스크와 겹치지 않습니다."
+msgstr "선택 영역이 활성 레이어나 마스크와 겹치지 않습니다."
 
 #: ../plug-ins/gimpressionist/gimp.c:391
 msgid "Painting"
-msgstr "그리기"
+msgstr "그리는 중"
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:138
 msgid "GIMPressionist"
@@ -8993,7 +8993,7 @@ msgstr "GIMPressionist"
 
 #: ../plug-ins/gimpressionist/orientation.c:91
 msgid "Or_ientation"
-msgstr "방향(_I)"
+msgstr "방향성(_I)"
 
 #: ../plug-ins/gimpressionist/orientation.c:105
 msgid "Directions:"
@@ -9009,15 +9009,15 @@ msgstr "시작 각도:"
 
 #: ../plug-ins/gimpressionist/orientation.c:121
 msgid "The starting angle of the first brush to create"
-msgstr "생성할 첫 번째 가지의 시작 각도"
+msgstr "만들 첫 번째 붓의 시작 각도"
 
 #: ../plug-ins/gimpressionist/orientation.c:129
 msgid "Angle span:"
-msgstr "각도 폭:"
+msgstr "각도 범위:"
 
 #: ../plug-ins/gimpressionist/orientation.c:133
 msgid "The angle span of the first brush to create"
-msgstr "생성할 첫 번째 가지의 회전 각도"
+msgstr "만들 첫 번째 붓의 각도 범위"
 
 #: ../plug-ins/gimpressionist/orientation.c:156
 msgid ""
@@ -9038,26 +9038,26 @@ msgstr "이미지 중심으로부터의 거리에 따라 획의 방향이 결정
 
 #: ../plug-ins/gimpressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
-msgstr "각 한번긋기의 무작위 방향 선택"
+msgstr "각 스트로크의 방향을 무작위로 선택"
 
 #: ../plug-ins/gimpressionist/orientation.c:167
 #: ../plug-ins/gimpressionist/size.c:170
 msgid "Radial"
-msgstr "원주"
+msgstr "방사형"
 
 #: ../plug-ins/gimpressionist/orientation.c:168
 msgid "Let the direction from the center determine the direction of the stroke"
-msgstr "이미지 중심으로부터의 거리는 한번긋기의 방향으로 결정하기"
+msgstr "중심으로부터의 거리가 스트로크의 방향을 결정하게 하기"
 
 #: ../plug-ins/gimpressionist/orientation.c:175
 #: ../plug-ins/gimpressionist/size.c:178
 msgid "Flowing"
-msgstr "흘러내림"
+msgstr "흘러가는 중"
 
 #: ../plug-ins/gimpressionist/orientation.c:176
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr "획은 “흐르는” 무늬를 뒤따라감"
+msgstr "획은 “흘러가는” 무늬를 뒤따라감"
 
 #: ../plug-ins/gimpressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
@@ -9066,7 +9066,7 @@ msgstr "영역의 색조가 획의 방향을 결정함"
 #: ../plug-ins/gimpressionist/orientation.c:183
 #: ../plug-ins/gimpressionist/size.c:186
 msgid "Adaptive"
-msgstr "적응성있게"
+msgstr "적응성"
 
 #: ../plug-ins/gimpressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
@@ -9079,15 +9079,15 @@ msgstr "수동"
 
 #: ../plug-ins/gimpressionist/orientation.c:192
 msgid "Manually specify the stroke orientation"
-msgstr "직접 한번긋기 적응성 지정"
+msgstr "스트로크 방향성을 수동으로 지정"
 
 #: ../plug-ins/gimpressionist/orientation.c:203
 msgid "Opens up the Orientation Map Editor"
-msgstr "적응성 맵 편집기 열어놓기"
+msgstr "방향성 맵 편집기 열어 놓기"
 
 #: ../plug-ins/gimpressionist/orientmap.c:523
 msgid "Orientation Map Editor"
-msgstr "적응성 맵 편집기"
+msgstr "방향성 맵 편집기"
 
 #: ../plug-ins/gimpressionist/orientmap.c:552
 msgid "Vectors"
@@ -9104,11 +9104,11 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientmap.c:588
 #: ../plug-ins/gimpressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
-msgstr "미리 보기 밝기 조절"
+msgstr "미리 보기 밝기 조정"
 
 #: ../plug-ins/gimpressionist/orientmap.c:611
 msgid "Select previous vector"
-msgstr "앞의 벡터 선택"
+msgstr "이전 벡터 선택"
 
 #: ../plug-ins/gimpressionist/orientmap.c:617
 msgid "Select next vector"
@@ -9142,20 +9142,20 @@ msgstr "일반(_N)"
 
 #: ../plug-ins/gimpressionist/orientmap.c:645
 msgid "Vorte_x"
-msgstr "버텍스(_X)"
+msgstr "소용돌이(_X)"
 
 #: ../plug-ins/gimpressionist/orientmap.c:646
 msgid "Vortex_2"
-msgstr "버텍스_2"
+msgstr "소용돌이_2"
 
 #: ../plug-ins/gimpressionist/orientmap.c:647
 msgid "Vortex_3"
-msgstr "버텍스_3"
+msgstr "소용돌이_3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:653
 #: ../plug-ins/gimpressionist/sizemap.c:540
 msgid "_Voronoi"
-msgstr "보르노이(_V)"
+msgstr "보로노이(_V)"
 
 #: ../plug-ins/gimpressionist/orientmap.c:661
 msgid ""
@@ -9169,7 +9169,7 @@ msgstr "각도(_N):"
 
 #: ../plug-ins/gimpressionist/orientmap.c:675
 msgid "Change the angle of the selected vector"
-msgstr "선택된 벡터 각도 바꾸기"
+msgstr "선택된 벡터의 각도 바꾸기"
 
 #: ../plug-ins/gimpressionist/orientmap.c:682
 msgid "Ang_le offset:"
@@ -9177,7 +9177,7 @@ msgstr "각도 오프셋(_L):"
 
 #: ../plug-ins/gimpressionist/orientmap.c:686
 msgid "Offset all vectors with a given angle"
-msgstr "주어진 각도를 가지고 모든 벡터 벌충"
+msgstr "주어진 각도로 모든 벡터를 오프셋"
 
 #: ../plug-ins/gimpressionist/orientmap.c:693
 msgid "_Strength:"
@@ -9189,12 +9189,12 @@ msgstr "선택된 벡터의 세기 바꾸기"
 
 #: ../plug-ins/gimpressionist/orientmap.c:704
 msgid "S_trength exp.:"
-msgstr "세기 exp.(_T):"
+msgstr "세기 지수(_T):"
 
 #: ../plug-ins/gimpressionist/orientmap.c:708
 #: ../plug-ins/gimpressionist/sizemap.c:535
 msgid "Change the exponent of the strength"
-msgstr "세기 성분 바꾸기"
+msgstr "세기 지수 바꾸기"
 
 #: ../plug-ins/gimpressionist/paper.c:137
 msgid "P_aper"
@@ -9230,15 +9230,15 @@ msgstr "무작위로"
 
 #: ../plug-ins/gimpressionist/placement.c:80
 msgid "Evenly distributed"
-msgstr "고르게 분배"
+msgstr "고르게 배분"
 
 #: ../plug-ins/gimpressionist/placement.c:88
 msgid "Place strokes randomly around the image"
-msgstr "이미지 둘레를 무작위로 한번긋기 하기"
+msgstr "이미지 둘레에 무작위로 스트로크 배치"
 
 #: ../plug-ins/gimpressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
-msgstr "획은 이미지 전체에 고르게 분포됨"
+msgstr "스트로크는 이미지 전체에 고르게 배분됨"
 
 #: ../plug-ins/gimpressionist/placement.c:101
 msgid "Centered"
@@ -9246,7 +9246,7 @@ msgstr "가운데 정렬"
 
 #: ../plug-ins/gimpressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
-msgstr "이미지의 중심 둘레에 붓 한번긋기 집중하기"
+msgstr "이미지의 중심 둘레에 붓 스트로크를 집중하기"
 
 #: ../plug-ins/gimpressionist/placement.c:119
 msgid "Stroke _density:"
@@ -9254,7 +9254,7 @@ msgstr "선 밀도(_D):"
 
 #: ../plug-ins/gimpressionist/placement.c:123
 msgid "The relative density of the brush strokes"
-msgstr "붓 한번긋기의 상대적 농도"
+msgstr "붓 스트로크의 상대적 밀도"
 
 #.
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
@@ -9267,7 +9267,7 @@ msgstr "PPM 파일 ‘%s’ 저장 실패: %s"
 
 #: ../plug-ins/gimpressionist/presets.c:638
 msgid "Save Current"
-msgstr "현재 파일 저장하기"
+msgstr "현재 설정 저장하기"
 
 #: ../plug-ins/gimpressionist/presets.c:893
 msgid "Gimpressionist Defaults"
@@ -9275,11 +9275,11 @@ msgstr "Gimpressionist 기본값"
 
 #: ../plug-ins/gimpressionist/presets.c:1014
 msgid "_Presets"
-msgstr "사전 설정(_P)"
+msgstr "프리셋(_P)"
 
 #: ../plug-ins/gimpressionist/presets.c:1029
 msgid "Save Current..."
-msgstr "현재 파일 저장..."
+msgstr "현재 설정 저장..."
 
 #: ../plug-ins/gimpressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
@@ -9287,15 +9287,15 @@ msgstr "지정된 파일에 현재 설정 저장"
 
 #: ../plug-ins/gimpressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
-msgstr "메모리에 선택된 사전 설정 읽기"
+msgstr "메모리에 선택된 프리셋 읽어 들이기"
 
 #: ../plug-ins/gimpressionist/presets.c:1071
 msgid "Deletes the selected Preset"
-msgstr "선택된 사전 설정 삭제"
+msgstr "선택한 프리셋 삭제"
 
 #: ../plug-ins/gimpressionist/presets.c:1077
 msgid "Reread the folder of Presets"
-msgstr "사전 설정 폴더를 다시 읽기"
+msgstr "프리셋 폴더를 다시 읽기"
 
 #: ../plug-ins/gimpressionist/preview.c:174
 #: ../plug-ins/gimpressionist/repaint.c:1197
@@ -9322,7 +9322,7 @@ msgstr "다양한 크기:"
 
 #: ../plug-ins/gimpressionist/size.c:112
 msgid "The number of sizes of brushes to use"
-msgstr "사용할 붓의 크기"
+msgstr "사용할 붓 크기의 개수"
 
 #: ../plug-ins/gimpressionist/size.c:120
 msgid "Minimum size:"
@@ -9330,7 +9330,7 @@ msgstr "최소 크기:"
 
 #: ../plug-ins/gimpressionist/size.c:124
 msgid "The smallest brush to create"
-msgstr "가장 작은 붓 만들기"
+msgstr "만들 가장 작은 붓"
 
 #: ../plug-ins/gimpressionist/size.c:132
 msgid "Maximum size:"
@@ -9338,7 +9338,7 @@ msgstr "최대 크기:"
 
 #: ../plug-ins/gimpressionist/size.c:136
 msgid "The largest brush to create"
-msgstr "가장 큰 붓 만들기"
+msgstr "만들 가장 큰 붓"
 
 #: ../plug-ins/gimpressionist/size.c:150
 msgid "Size depends on:"
@@ -9347,24 +9347,24 @@ msgstr "다음 기준에 따른 크기:"
 #: ../plug-ins/gimpressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "영역의 값(명도)이 획의 크기를 결정하도록 함"
+msgstr "영역의 값(명도)이 스트로크의 크기를 결정하도록 함"
 
 #: ../plug-ins/gimpressionist/size.c:163
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
-msgstr "이미지 중심으로부터의 거리에 따라 획의 크기가 결정됨"
+msgstr "이미지 중심으로부터의 거리에 따라 스트로크의 크기가 결정됨"
 
 #: ../plug-ins/gimpressionist/size.c:167
 msgid "Selects a random size for each stroke"
-msgstr "각 한번긋기를 위한 무작위 크기 선택"
+msgstr "각 스트로크의 크기를 무작위로 선택"
 
 #: ../plug-ins/gimpressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
-msgstr "중심으로부터의 방향이 획의 크기를 결정하도록 함"
+msgstr "중심으로부터의 방향이 스트로크의 크기를 결정하도록 함"
 
 #: ../plug-ins/gimpressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
-msgstr "영역의 색조가 획의 크기를 결정함"
+msgstr "영역의 색조가 스트로크의 크기를 결정함"
 
 #: ../plug-ins/gimpressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
@@ -9372,11 +9372,11 @@ msgstr "가장 가깝게 원본 이미지와 일치하는 붓 크기가 선택�
 
 #: ../plug-ins/gimpressionist/size.c:196
 msgid "Manually specify the stroke size"
-msgstr "직접 한번긋기 크기 지정"
+msgstr "스트로크 크기를 수동으로 지정"
 
 #: ../plug-ins/gimpressionist/size.c:207
 msgid "Opens up the Size Map Editor"
-msgstr "크기 맵 편집기 열어놓기"
+msgstr "크기 맵 편집기 열어 놓기"
 
 #: ../plug-ins/gimpressionist/sizemap.c:396
 msgid "Size Map Editor"
@@ -9391,12 +9391,12 @@ msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
-"SM벡터-필드. 왼쪽마우스 클릭으로 선택한 SM벡터 이동 , 오른쪽마우스 클릭 마우"
-"스를 가리키게 함, 마우스 가운데 단추 클릭으로 새로운 SM벡터 추가."
+"SM벡터-필드. 왼쪽 클릭으로 선택한 SM벡터 이동 , 오른쪽 클릭으로 마우스를 가리"
+"키게 함, 가운데 클릭으로 새로운 SM벡터 추가."
 
 #: ../plug-ins/gimpressionist/sizemap.c:479
 msgid "Select previous smvector"
-msgstr "앞의 SM벡터 선택"
+msgstr "이전 SM벡터 선택"
 
 #: ../plug-ins/gimpressionist/sizemap.c:486
 msgid "Select next smvector"
@@ -9408,11 +9408,11 @@ msgstr "새로운 SM벡터 추가"
 
 #: ../plug-ins/gimpressionist/sizemap.c:500
 msgid "Delete selected smvector"
-msgstr "선택된 SM벡터 삭제"
+msgstr "선택한 SM벡터 삭제"
 
 #: ../plug-ins/gimpressionist/sizemap.c:513
 msgid "Change the angle of the selected smvector"
-msgstr "선택된 SM벡터의 각도 변환"
+msgstr "선택한 SM벡터의 각도 변경"
 
 #: ../plug-ins/gimpressionist/sizemap.c:520
 msgid "S_trength:"
@@ -9420,17 +9420,17 @@ msgstr "세기(_T):"
 
 #: ../plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the strength of the selected smvector"
-msgstr "선택된 SM벡터의 능력을 변환"
+msgstr "선택한 SM벡터의 세기를 변경"
 
 #: ../plug-ins/gimpressionist/sizemap.c:531
 msgid "St_rength exp.:"
-msgstr "세기 표시(_R):"
+msgstr "세기 지수(_R):"
 
 #: ../plug-ins/gimpressionist/sizemap.c:547
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
-msgstr "보로노이 모드는 지정된 점에 가장 가까운 smvector만이 영향력이 있게 함"
+msgstr "보로노이 모드는 지정된 점에 가장 가까운 SM벡터만이 영향력을 갖게 함"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:1
 msgid "I_nterlace"
@@ -9438,7 +9438,7 @@ msgstr "인터레이스(_N)"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:2
 msgid "_GIF comment:"
-msgstr "GIF 설명(_G):"
+msgstr "GIF 주석(_G):"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:3
 msgid "As _animation"
@@ -9462,7 +9462,7 @@ msgstr "GIF는 100분의 1초 정밀도를 지원 합니다."
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:9
 msgid "_Frame disposal where unspecified:"
-msgstr "프레임 기본 처리(_F):"
+msgstr "지정하지 않은 부분의 프레임 기본 처리(_F):"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:10
 msgid "_Use delay entered above for all frames"
@@ -9470,7 +9470,7 @@ msgstr "모든 프레임에 입력된 지연시간 사용(_U)"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:11
 msgid "U_se disposal entered above for all frames"
-msgstr "모든 프레임에 적용(_S)"
+msgstr "위에서 입력한 처리 방식을 모든 프레임에 적용(_S)"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:12
 msgid "Animated GIF Options"
@@ -9482,7 +9482,7 @@ msgstr "인터레이싱 (Adam7)(_I)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
 msgid "Save _background color"
-msgstr "배경 색상 저장(_B)"
+msgstr "배경색 저장(_B)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save layer o_ffset"
@@ -9498,16 +9498,16 @@ msgstr "생성 시각 저장(_T)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
-msgstr "설명 저장(_N)"
+msgstr "주석 저장(_N)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
 msgid "Save color _values from transparent pixels"
-msgstr "투명한 픽셀의 색상값 저장(_V)"
+msgstr "투명한 픽셀의 색상 값 저장(_V)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:7
 msgid "S_ave Defaults"
-msgstr "기본값으로 저장(_A)"
+msgstr "기본값 저장(_A)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
@@ -9796,7 +9796,7 @@ msgstr "모델 연령"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:53
 msgid "Minor Model Age Disclosure"
-msgstr "마이너 모델 나이 공개"
+msgstr "마이너 모델 연령 공개"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:54
 msgid "Model Release Status"
@@ -9860,7 +9860,7 @@ msgstr "속성 릴리스 상태"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
 msgid "Image Creator"
-msgstr "이미지 작성자"
+msgstr "이미지 제작자"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:70
 msgid "Identifier"
@@ -9932,7 +9932,7 @@ msgstr "위도 참조"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:87
 msgid "Altitude Reference"
-msgstr "고도 레퍼런스"
+msgstr "고도 참조"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:88
 msgid "GPS"
@@ -10020,7 +10020,7 @@ msgstr "IPTC 태그"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
-msgstr "추가"
+msgstr "더하기"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:553
 msgid "Overlay"
@@ -10028,11 +10028,11 @@ msgstr "겹치기"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:807
 msgid "Produce a lense flare effect using gradients"
-msgstr "그레이디언트를 이용해 렌즈 화염 효과 만들기"
+msgstr "그레이디언트를 이용해 렌즈 플레어 효과 만들기"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:812
 msgid "_Gradient Flare..."
-msgstr "화염 그레이디언트(_G)..."
+msgstr "그레이디언트 플레어(_G)..."
 
 #.
 #. *    Dialog Shell
@@ -10040,7 +10040,7 @@ msgstr "화염 그레이디언트(_G)..."
 #: ../plug-ins/gradient-flare/gradient-flare.c:954
 #: ../plug-ins/gradient-flare/gradient-flare.c:2356
 msgid "Gradient Flare"
-msgstr "화염 그레이디언트"
+msgstr "그레이디언트 플레어"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1265
 #, c-format
@@ -10064,9 +10064,11 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "and make a folder '%s', then you can save your own GFlares into that folder."
 msgstr ""
-"GFlare ‘%s’은(는) 저장되지 않았습니다. ‘%s’에 새 항목을 추가하려면\n"
+"GFlare ‘%s’은(는) 저장되지 않았습니다. ‘%s’에 다음과 같은 새 항목을 추가하"
+"면: \n"
 "(gflare-path \"%s\")\n"
-"에 ‘%s’ 폴더를 생성하고, 새 GFlare를 폴더에 저장하십시오."
+"그리고 ‘%s’ 폴더를 만들면, 비로소 그 폴더에  자신의 GFlare를 저장할 수 있습니"
+"다."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1485
 #, c-format
@@ -10100,7 +10102,7 @@ msgstr "매개변수"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2770
 msgid "Ro_tation:"
-msgstr "회전하기(_T):"
+msgstr "회전(_T):"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2782
 msgid "_Hue rotation:"
@@ -10124,7 +10126,7 @@ msgstr "최대 깊이(_M):"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2858
 msgid "_Threshold"
-msgstr "임계치(_T)"
+msgstr "임계값(_T)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2868
 msgid "_Settings"
@@ -10132,11 +10134,11 @@ msgstr "설정(_S)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2996
 msgid "S_elector"
-msgstr "선택(_E)"
+msgstr "선택기(_E)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3060
 msgid "New Gradient Flare"
-msgstr "새 화염 그레이디언트"
+msgstr "새 그레이디언트 플레[어"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3063
 msgid "Enter a name for the new GFlare"
@@ -10150,7 +10152,7 @@ msgstr "‘%s’(이)라는 이름은 이미 사용됨!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3139
 msgid "Copy Gradient Flare"
-msgstr "화염 그레이디언트 복사"
+msgstr "그레이디언트 플레어 복사"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3142
 msgid "Enter a name for the copied GFlare"
@@ -10162,7 +10164,7 @@ msgstr "삭제할 수 없습니다!! 최소한 하나의 GFlare는 있어야 합
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3205
 msgid "Delete Gradient Flare"
-msgstr "화염 그레이디언트 삭제"
+msgstr "그레이디언트 플레어 삭제"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3277
 #, c-format
@@ -10171,7 +10173,7 @@ msgstr "gflare_list에서 %s을(를) 찾을 수가 없음"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3318
 msgid "Gradient Flare Editor"
-msgstr "화염 그레이디언트 편집기"
+msgstr "그레이디언트 플레어 편집기"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
 msgid "_Rescan Gradients"
@@ -10180,7 +10182,7 @@ msgstr "그레이디언트 다시 스캔(_R)"
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3447
 msgid "Glow Paint Options"
-msgstr "백열효과 그리기 옵션"
+msgstr "백열 효과 그리기 옵션"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3458
 #: ../plug-ins/gradient-flare/gradient-flare.c:3486
@@ -10202,7 +10204,7 @@ msgstr "광선 그리기 옵션"
 #. Rays
 #: ../plug-ins/gradient-flare/gradient-flare.c:3503
 msgid "Second Flares Paint Options"
-msgstr "두 번째 화염 그리기 옵션"
+msgstr "두 번째 플레어 그리기 옵션"
 
 #.
 #. *  Gradient Menus
@@ -10239,7 +10241,7 @@ msgstr "크기 (%):"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3712
 #: ../plug-ins/gradient-flare/gradient-flare.c:3849
 msgid "Rotation:"
-msgstr "회전하기:"
+msgstr "회전:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3619
 #: ../plug-ins/gradient-flare/gradient-flare.c:3725
@@ -10253,7 +10255,7 @@ msgstr "백열(_L)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3737
 msgid "# of Spikes:"
-msgstr "# 스파이크:"
+msgstr "스파이크 수:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3749
 msgid "Spike thickness:"
@@ -10265,18 +10267,18 @@ msgstr "광선(_R)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3813
 msgid "Size factor gradient:"
-msgstr "크기 인수 그레이디언트:"
+msgstr "크기 팩터 그레이디언트:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3817
 msgid "Probability gradient:"
-msgstr "가상 그레이디언트:"
+msgstr "확률 그레이디언트:"
 
 #.
 #. *    Shape Radio Button Frame
 #.
 #: ../plug-ins/gradient-flare/gradient-flare.c:3879
 msgid "Shape of Second Flares"
-msgstr "두 번째 화염의 모양"
+msgstr "두 번째 플레어의 모양"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3887
 #: ../plug-ins/imagemap/imap_menu.c:236
@@ -10290,11 +10292,11 @@ msgstr "다각형"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3938
 msgid "Random seed:"
-msgstr "무작위 시작 값:"
+msgstr "무작위 씨앗 값:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3952
 msgid "_Second Flares"
-msgstr "두 번째 화염(_S)"
+msgstr "두 번째 플레어(_S)"
 
 #: ../plug-ins/help-browser/dialog.c:180 ../plug-ins/help-browser/dialog.c:1107
 msgid "GIMP Help Browser"
@@ -10334,7 +10336,7 @@ msgstr "위치 복사(_O)"
 
 #: ../plug-ins/help-browser/dialog.c:582
 msgid "Copy the location of this page to the clipboard"
-msgstr "이 페이지의 위치를 클립보드로 저장하기"
+msgstr "이 페이지의 위치를 클립보드로 복사"
 
 #: ../plug-ins/help-browser/dialog.c:602
 msgid "Find text in current page"
@@ -10350,7 +10352,7 @@ msgstr "인덱스 표시(_H)"
 
 #: ../plug-ins/help-browser/dialog.c:627
 msgid "Toggle the visibility of the sidebar"
-msgstr "사이드바 표시 여부를 전환"
+msgstr "사이드바 보임 상태를 전환"
 
 #: ../plug-ins/help-browser/dialog.c:648
 msgid "Visit the GIMP documentation website"
@@ -10410,7 +10412,7 @@ msgstr "도움말 ID ‘%s’ 알 수 없음"
 #: ../plug-ins/help/gimphelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
-msgstr "‘%s’에서 인덱스 불러오기"
+msgstr "‘%s’에서 인덱스 불러오는 중"
 
 #: ../plug-ins/help/gimphelplocale.c:266
 #, c-format
@@ -10418,7 +10420,7 @@ msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"‘%s’ 해석 오류:\n"
+"‘%s’에 구문 분석 오류:\n"
 "%s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:333
@@ -10471,11 +10473,11 @@ msgstr "IFS 프랙탈: 대상"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:642
 msgid "Scale hue by:"
-msgstr "색상 조절:"
+msgstr "색조 배율 조정 기준:"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:657
 msgid "Scale value by:"
-msgstr "명암 조절:"
+msgstr "값 배율 조정 기준:"
 
 #. Full color control section
 #: ../plug-ins/ifs-compose/ifs-compose.c:674
@@ -10496,7 +10498,7 @@ msgstr "IFS 프랙탈: 파랑"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:706
 msgid "IFS Fractal: Black"
-msgstr "IFS 프랙탈: 검정색"
+msgstr "IFS 프랙탈: 검정"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:756
 msgid "IFS Fractal"
@@ -10504,7 +10506,7 @@ msgstr "IFS 프랙탈"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:854
 msgid "Spatial Transformation"
-msgstr "입체적 변환"
+msgstr "공간적 변환"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:860
 msgid "Color Transformation"
@@ -10547,7 +10549,7 @@ msgstr "회전 / 크기 조정"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1063
 msgid "Stretch"
-msgstr "늘림"
+msgstr "늘이기"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1161
 msgid "IFS Fractal Render Options"
@@ -10563,12 +10565,12 @@ msgstr "재분할:"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1223
 msgid "Spot radius:"
-msgstr "점의 반지름:"
+msgstr "스폿 반지름:"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1295
 #, c-format
 msgid "Rendering IFS (%d/%d)"
-msgstr "IFS 렌더링 (%d/%d)"
+msgstr "IFS 렌더링 중(%d/%d)"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1447
 #, c-format
@@ -10607,7 +10609,7 @@ msgstr "저작권 © 1999-2005 by Maurits Rijk"
 
 #: ../plug-ins/imagemap/imap_about.c:48
 msgid "Released under the GNU General Public License"
-msgstr "GNU 일반 공중 사용허가서 버전 2"
+msgstr "GNU 일반 공중 사용허가서 버전 2 하에서 릴리스됨"
 
 #: ../plug-ins/imagemap/imap_circle.c:63
 msgid "C_ircle"
@@ -10646,7 +10648,7 @@ msgstr "만들기"
 #: ../plug-ins/imagemap/imap_cmd_cut_object.c:50
 #: ../plug-ins/imagemap/imap_menu.c:166
 msgid "Cut"
-msgstr "잘라넣기"
+msgstr "잘라 내기"
 
 #: ../plug-ins/imagemap/imap_cmd_delete.c:56
 #: ../plug-ins/imagemap/imap_menu.c:172
@@ -10679,7 +10681,7 @@ msgstr "모두(_L)"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
 msgid "Add Additional Guides"
-msgstr "안내선 추가"
+msgstr "추가적 안내선 추가"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
 msgid "L_eft border"
@@ -10709,7 +10711,7 @@ msgstr "안내선 만들기"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr "안내선 경계 결과: %d,%d to %d,%d (%d 영역)"
+msgstr "결과적 안내선 경계: %d,%d to %d,%d (%d개의 영역)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:142
 msgid ""
@@ -10718,17 +10720,17 @@ msgid ""
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 msgstr ""
-"안내선은 미리 정의된 사각형으로 이미지에 표시됩니다. 안내선의 너비, 높이, 간"
-"격 등을 설정할 수 있습니다. 이는 내비게이션 막대에 맞는 “축소판” 모음으로 된 "
-"이미지맵 형식을 빠르게 만드는데 유용합니다."
+"안내선은 이미지를 덮는 미리 정의된 사각형입니다. 안내선은 너비, 높이, 서로 간"
+"의 격으로 정의합니다. 이것은 가장 흔한 이미지 맵 유형(내비게이션 막대에 적합"
+"한 “축소판 의 이미지 모음)을 빠르게 만들 수 있게 해 줍니다."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:168
 msgid "_Left start at:"
-msgstr "왼쪽부터 시작(_L):"
+msgstr "왼쪽 시작 위치(_L):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:178
 msgid "_Top start at:"
-msgstr "위쪽부터 시작(_T):"
+msgstr "위쪽 시작 위치(_T):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:183
 msgid "_Horz. spacing:"
@@ -10736,7 +10738,7 @@ msgstr "수평 간격(_H):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:189
 msgid "_No. across:"
-msgstr "가로 지르기(_N):"
+msgstr "가로 개수(_N):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:195
 msgid "_Vert. spacing:"
@@ -10744,7 +10746,7 @@ msgstr "수직 간격(_V):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:201
 msgid "No. _down:"
-msgstr "아래(_D):"
+msgstr "세로 개수(_D):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:210
 msgid "Base _URL:"
@@ -10752,7 +10754,7 @@ msgstr "기본 URL(_U):"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:235
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
-msgstr "안내선 경계 결과: 0,0 to 0,0 (0 영역)"
+msgstr "결과적 안내선 경계: 0,0 to 0,0 (0개의 영역)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:270
 msgid "Guides"
@@ -10798,7 +10800,7 @@ msgstr "선택"
 
 #: ../plug-ins/imagemap/imap_cmd_select_all.c:50
 msgid "Select All"
-msgstr "전체 선택"
+msgstr "모두 선택"
 
 #: ../plug-ins/imagemap/imap_cmd_select_next.c:50
 msgid "Select Next"
@@ -10826,7 +10828,7 @@ msgstr "모두 선택 해제"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:204
 msgid "Link Type"
-msgstr "링크 형식"
+msgstr "링크 유형"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:213
 msgid "_Web Site"
@@ -10848,7 +10850,6 @@ msgstr "기타(_H)"
 msgid "F_ile"
 msgstr "파일(_I)"
 
-# Wide Area Information Servers 광역 정보 서버 : 인터넷 상에서 키워드 등으로부터 파일을 검색하는 시스템
 # Wide Area Information Servers 광역 정보 서버 : 인터넷상에서 키워드 등으로부터 파일을 검색하는 시스템
 #: ../plug-ins/imagemap/imap_edit_area_info.c:243
 msgid "WAI_S"
@@ -10864,7 +10865,7 @@ msgstr "이메일(_M)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:261
 msgid "_URL to activate when this area is clicked: (required)"
-msgstr "이 영역이 클릭되면 URL이 활성화됩니다. (필수)(_U):"
+msgstr "이 영역을 클릭하면 활성화 할 _URL: (필수):"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:263
 msgid "Select HTML file"
@@ -10876,7 +10877,7 @@ msgstr "상대 링크(_V)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:278
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr "대상 프레임 이름/ID: (선택적 - 프레임만 사용할 경우)(_T)"
+msgstr "대상 프레임 이름/ID: (선택적 - 프레임에만 사용됨)(_T)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:281
 msgid "ALT te_xt: (optional)"
@@ -10925,11 +10926,11 @@ msgstr "격자 설정"
 
 #: ../plug-ins/imagemap/imap_grid.c:200
 msgid "_Snap-to grid enabled"
-msgstr "도구 동작을 격자에 붙이기(_S)"
+msgstr "격자에 붙이기 사용(_S)"
 
 #: ../plug-ins/imagemap/imap_grid.c:206
 msgid "Grid Visibility and Type"
-msgstr "격자 보임 및 형식"
+msgstr "격자 보임 및 유형"
 
 #: ../plug-ins/imagemap/imap_grid.c:213
 msgid "_Hidden"
@@ -11098,7 +11099,7 @@ msgstr "축소"
 
 #: ../plug-ins/imagemap/imap_menu.c:199
 msgid "_Zoom To"
-msgstr "전체 쪽을 맞게 확대(_Z)"
+msgstr "다음으로 확대/축소(_Z)"
 
 #: ../plug-ins/imagemap/imap_menu.c:201
 msgid "_Mapping"
@@ -11134,7 +11135,7 @@ msgstr "도움말(_H)"
 
 #: ../plug-ins/imagemap/imap_menu.c:214
 msgid "_Contents"
-msgstr "차례(_C)"
+msgstr "내용(_C)"
 
 #: ../plug-ins/imagemap/imap_menu.c:217
 msgid "_Zoom"
@@ -11162,7 +11163,7 @@ msgstr "원/타원 영역 설정"
 
 #: ../plug-ins/imagemap/imap_menu.c:239
 msgid "Define Polygon area"
-msgstr "다각형 영역 설정"
+msgstr "다각형 영역 정의"
 
 #: ../plug-ins/imagemap/imap_polygon.c:72
 msgid "_Polygon"
@@ -11246,7 +11247,7 @@ msgstr "일반:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:438
 msgid "Selected:"
-msgstr "선택:"
+msgstr "선택됨:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:442
 msgid "Interaction:"
@@ -11299,7 +11300,7 @@ msgstr "대상"
 
 #: ../plug-ins/imagemap/imap_settings.c:88
 msgid "Settings for this Mapfile"
-msgstr "맵 파일 설정"
+msgstr "이 맵 파일용 설정"
 
 #: ../plug-ins/imagemap/imap_settings.c:92
 msgid "Filename:"
@@ -11340,21 +11341,21 @@ msgstr "소스 보기"
 #: ../plug-ins/lighting/lighting-apply.c:105
 #: ../plug-ins/lighting/lighting-ui.c:1033
 msgid "Lighting Effects"
-msgstr "빛 효과"
+msgstr "조명 효과"
 
 #: ../plug-ins/lighting/lighting-main.c:191
 msgid "Apply various lighting effects to an image"
-msgstr "다양한 빛 효과를 이미지에 적용"
+msgstr "다양한 조명 효과를 이미지에 적용"
 
 #: ../plug-ins/lighting/lighting-main.c:196
 msgid "_Lighting Effects..."
-msgstr "빛 효과(_L)..."
+msgstr "조명 효과(_L)..."
 
 #. General options
 #: ../plug-ins/lighting/lighting-ui.c:306
 #: ../plug-ins/map-object/map-object-ui.c:438
 msgid "General Options"
-msgstr "일반적인 옵션"
+msgstr "일반 옵션"
 
 #: ../plug-ins/lighting/lighting-ui.c:314
 msgid "T_ransparent background"
@@ -11362,7 +11363,7 @@ msgstr "투명한 배경(_R)"
 
 #: ../plug-ins/lighting/lighting-ui.c:324
 msgid "Make destination image transparent where bump height is zero"
-msgstr "범프 높이가 0인 목적 이미지를 투명하게 만들기"
+msgstr "범프 높이가 0인 목적 이미지를 투명하게 하기"
 
 #: ../plug-ins/lighting/lighting-ui.c:327
 msgid "Cre_ate new image"
@@ -11375,11 +11376,11 @@ msgstr "필터를 적용했을 때, 새로운 이미지 만들기"
 
 #: ../plug-ins/lighting/lighting-ui.c:339
 msgid "High _quality preview"
-msgstr "고화질의 미리 보기(_Q)"
+msgstr "고화질 미리 보기(_Q)"
 
 #: ../plug-ins/lighting/lighting-ui.c:349
 msgid "Enable/disable high quality preview"
-msgstr "고화질 미리 보기 사용/사용 안 함"
+msgstr "고화질 미리 보기 사용/미사용"
 
 #: ../plug-ins/lighting/lighting-ui.c:357
 msgid "Distance:"
@@ -11434,7 +11435,7 @@ msgstr "점"
 #: ../plug-ins/lighting/lighting-ui.c:444
 #: ../plug-ins/map-object/map-object-ui.c:623
 msgid "Type of light source to apply"
-msgstr "적용된 라이트 근원지 형식"
+msgstr "적용할 광원 유형"
 
 #: ../plug-ins/lighting/lighting-ui.c:446
 #: ../plug-ins/map-object/map-object-ui.c:625
@@ -11448,7 +11449,7 @@ msgstr "광원 색상 설정"
 
 #: ../plug-ins/lighting/lighting-ui.c:468
 msgid "_Intensity:"
-msgstr "농도(_I):"
+msgstr "강도(_I):"
 
 #: ../plug-ins/lighting/lighting-ui.c:476
 msgid "Light intensity"
@@ -11469,7 +11470,7 @@ msgstr "XYZ 공간에서 광원 X 위치"
 #: ../plug-ins/lighting/lighting-ui.c:512
 #: ../plug-ins/map-object/map-object-ui.c:678
 msgid "Light source Y position in XYZ space"
-msgstr "XYZ 공간 중 라이트 근원지 Y 위치"
+msgstr "XYZ 공간에서 광원 Y 위치"
 
 #: ../plug-ins/lighting/lighting-ui.c:519
 msgid "_Z:"
@@ -11478,7 +11479,7 @@ msgstr "_Z:"
 #: ../plug-ins/lighting/lighting-ui.c:527
 #: ../plug-ins/map-object/map-object-ui.c:692
 msgid "Light source Z position in XYZ space"
-msgstr "XYZ 공간 중 라이트 근원지 Z 위치"
+msgstr "XYZ 공간에서 광원 Z 위치"
 
 #: ../plug-ins/lighting/lighting-ui.c:530
 msgid "Direction"
@@ -11487,12 +11488,12 @@ msgstr "방향"
 #: ../plug-ins/lighting/lighting-ui.c:547
 #: ../plug-ins/map-object/map-object-ui.c:718
 msgid "Light source X direction in XYZ space"
-msgstr "XYZ 공간 중 라이트 근원지 X 방향"
+msgstr "XYZ 공간에서 광원 X 방향"
 
 #: ../plug-ins/lighting/lighting-ui.c:561
 #: ../plug-ins/map-object/map-object-ui.c:731
 msgid "Light source Y direction in XYZ space"
-msgstr "XYZ 공간 중 라이트 근원지 Y 방향"
+msgstr "XYZ 공간에서 광원 Y 방향"
 
 #: ../plug-ins/lighting/lighting-ui.c:567
 #: ../plug-ins/map-object/map-object-ui.c:684
@@ -11506,7 +11507,7 @@ msgstr "Z:"
 #: ../plug-ins/lighting/lighting-ui.c:575
 #: ../plug-ins/map-object/map-object-ui.c:744
 msgid "Light source Z direction in XYZ space"
-msgstr "XYZ공 간 중 라이트 근원지 Z 방향"
+msgstr "XYZ 공간에서 광원 Z 방향"
 
 #: ../plug-ins/lighting/lighting-ui.c:578
 msgid "I_solate"
@@ -11518,7 +11519,7 @@ msgstr "조명 사전 설정:"
 
 #: ../plug-ins/lighting/lighting-ui.c:633
 msgid "Material Properties"
-msgstr "Material 속성"
+msgstr "재질 속성"
 
 #: ../plug-ins/lighting/lighting-ui.c:651
 msgid "_Glowing:"
@@ -11527,7 +11528,7 @@ msgstr "강렬한(_G):"
 #: ../plug-ins/lighting/lighting-ui.c:670
 #: ../plug-ins/map-object/map-object-ui.c:805
 msgid "Amount of original color to show where no direct light falls"
-msgstr "방향 없는 라이트가 향하는 곳을 보여주는 원래 총 색상"
+msgstr "직접 조명이 닿지 않는 곳을 보여줄 원래 색의 양"
 
 #: ../plug-ins/lighting/lighting-ui.c:684
 msgid "_Bright:"
@@ -11536,7 +11537,7 @@ msgstr "밝음(_B):"
 #: ../plug-ins/lighting/lighting-ui.c:703
 #: ../plug-ins/map-object/map-object-ui.c:834
 msgid "Intensity of original color when lit by a light source"
-msgstr "발광체로 비출 때의 원래 색상 명암도"
+msgstr "광원을 비출 때의 원래 색상의 강도"
 
 #: ../plug-ins/lighting/lighting-ui.c:717
 msgid "_Shiny:"
@@ -11545,7 +11546,7 @@ msgstr "빛남(_S):"
 #: ../plug-ins/lighting/lighting-ui.c:736
 #: ../plug-ins/map-object/map-object-ui.c:906
 msgid "Controls how intense the highlights will be"
-msgstr "하이라이트를 강하게 조정"
+msgstr "하이라이트를 얼마나 강하게 할지 조절"
 
 #: ../plug-ins/lighting/lighting-ui.c:749
 msgid "_Polished:"
@@ -11563,7 +11564,7 @@ msgstr "금속 느낌(_M)"
 
 #: ../plug-ins/lighting/lighting-ui.c:815
 msgid "E_nable bump mapping"
-msgstr "충돌 매핑 사용(_N)"
+msgstr "범프 매핑 사용(_N)"
 
 #: ../plug-ins/lighting/lighting-ui.c:829
 msgid "Enable/disable bump-mapping (image depth)"
@@ -11571,7 +11572,7 @@ msgstr "범프 매핑 사용/미사용 (이미지 깊이)"
 
 #: ../plug-ins/lighting/lighting-ui.c:852
 msgid "Bumpm_ap image:"
-msgstr "범프 맵 이미지(_A):"
+msgstr "범프맵 이미지(_A):"
 
 #: ../plug-ins/lighting/lighting-ui.c:856
 msgid "Logarithmic"
@@ -11579,7 +11580,7 @@ msgstr "대수"
 
 #: ../plug-ins/lighting/lighting-ui.c:868
 msgid "Cu_rve:"
-msgstr "커브(_R):"
+msgstr "곡선(_R):"
 
 #: ../plug-ins/lighting/lighting-ui.c:873
 msgid "Ma_ximum height:"
@@ -11595,15 +11596,15 @@ msgstr "환경 매핑 사용(_N)"
 
 #: ../plug-ins/lighting/lighting-ui.c:921
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "환경 매핑 사용/사용 안 함 (반사)"
+msgstr "환경 매핑 사용/미사용함 (반사)"
 
 #: ../plug-ins/lighting/lighting-ui.c:939
 msgid "En_vironment image:"
-msgstr "이미지 환경(_V):"
+msgstr "환경 이미지(_V):"
 
 #: ../plug-ins/lighting/lighting-ui.c:942
 msgid "Environment image to use"
-msgstr "사용할 이미지 환경"
+msgstr "사용할  환경 이미지"
 
 #: ../plug-ins/lighting/lighting-ui.c:964
 msgid "Op_tions"
@@ -11617,15 +11618,15 @@ msgstr "빛(_L)"
 #: ../plug-ins/lighting/lighting-ui.c:972
 #: ../plug-ins/map-object/map-object-ui.c:1287
 msgid "_Material"
-msgstr "재료(_M)"
+msgstr "재질(_M)"
 
 #: ../plug-ins/lighting/lighting-ui.c:976
 msgid "_Bump Map"
-msgstr "충돌(Bump) 맵(_B)"
+msgstr "범프 맵(_B)"
 
 #: ../plug-ins/lighting/lighting-ui.c:980
 msgid "_Environment Map"
-msgstr "환경 매핑(_E)"
+msgstr "환경 맵(_E)"
 
 #: ../plug-ins/lighting/lighting-ui.c:1099
 #: ../plug-ins/map-object/map-object-ui.c:1395
@@ -11638,15 +11639,15 @@ msgstr "대화형(_N)"
 
 #: ../plug-ins/lighting/lighting-ui.c:1115
 msgid "Enable/disable real time preview of changes"
-msgstr "실시간 미리 보기 사용/사용 안 함"
+msgstr "변경 사항 실시간 미리 보기 사용/미사용"
 
 #: ../plug-ins/lighting/lighting-ui.c:1158
 msgid "Save Lighting Preset"
-msgstr "조명 사전 설정 저장하기"
+msgstr "조명 프리셋 저장하기"
 
 #: ../plug-ins/lighting/lighting-ui.c:1302
 msgid "Load Lighting Preset"
-msgstr "조명 사전 설정 읽어오기"
+msgstr "조명 프리셋 불러오기"
 
 #: ../plug-ins/map-object/map-object-apply.c:251
 #: ../plug-ins/map-object/map-object-apply.c:274
@@ -11656,7 +11657,7 @@ msgstr "평면으로 매핑"
 #: ../plug-ins/map-object/map-object-apply.c:251
 #: ../plug-ins/map-object/map-object-apply.c:277
 msgid "Map to sphere"
-msgstr "구(球)로 매핑"
+msgstr "구로 매핑"
 
 #: ../plug-ins/map-object/map-object-apply.c:251
 #: ../plug-ins/map-object/map-object-apply.c:280
@@ -11670,7 +11671,7 @@ msgstr "원통으로 매핑"
 
 #: ../plug-ins/map-object/map-object-main.c:188
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
-msgstr "개체(평면, 구, 상자, 원통)에 이미지 매핑"
+msgstr "개체(평면, 구, 상자, 원통)로 이미지 매핑"
 
 #: ../plug-ins/map-object/map-object-main.c:193
 msgid "Map _Object..."
@@ -11688,7 +11689,7 @@ msgstr "원통형(_Y)"
 
 #: ../plug-ins/map-object/map-object-ui.c:450
 msgid "Map to:"
-msgstr "매핑:"
+msgstr "매핑 대상:"
 
 #: ../plug-ins/map-object/map-object-ui.c:454
 msgid "Plane"
@@ -11696,7 +11697,7 @@ msgstr "평면"
 
 #: ../plug-ins/map-object/map-object-ui.c:455
 msgid "Sphere"
-msgstr "구(球)"
+msgstr "구"
 
 #: ../plug-ins/map-object/map-object-ui.c:456
 msgid "Box"
@@ -11704,7 +11705,7 @@ msgstr "상자"
 
 #: ../plug-ins/map-object/map-object-ui.c:467
 msgid "Type of object to map to"
-msgstr "개체 유형을 맵으로"
+msgstr "매핑 대상 개체의 유형"
 
 #: ../plug-ins/map-object/map-object-ui.c:469
 msgid "Transparent background"
@@ -11712,15 +11713,15 @@ msgstr "투명한 배경"
 
 #: ../plug-ins/map-object/map-object-ui.c:480
 msgid "Make image transparent outside object"
-msgstr "개체 바깥쪽의 이미지를 투명하게 만들기"
+msgstr "개체 바깥쪽의 이미지를 투명하게 하기"
 
 #: ../plug-ins/map-object/map-object-ui.c:482
 msgid "Tile source image"
-msgstr "타일 원본 이미지"
+msgstr "원본 이미지 타일링"
 
 #: ../plug-ins/map-object/map-object-ui.c:493
 msgid "Tile source image: useful for infinite planes"
-msgstr "타일 원본 이미지: 무한 반복되는 평면을 만들기에 유용"
+msgstr "원본 이미지 타일링: 무한한 평면에 유용"
 
 #: ../plug-ins/map-object/map-object-ui.c:496
 msgid "Create new image"
@@ -11744,15 +11745,15 @@ msgstr "톱니 같은 들쑥날쑥한 가장자리 제거 사용/미사용 (계�
 
 #: ../plug-ins/map-object/map-object-ui.c:557
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "계단현상 제거 품질. 더 높게 하지만 더 느리게"
+msgstr "계단현상 제거 품질. 더 높게 할수록 더 느려짐"
 
 #: ../plug-ins/map-object/map-object-ui.c:574
 msgid "Stop when pixel differences are smaller than this value"
-msgstr "픽셀 차가 이 값보다 작다면 정지"
+msgstr "픽셀 차이가 이 값보다 작다면 정지"
 
 #: ../plug-ins/map-object/map-object-ui.c:609
 msgid "Point light"
-msgstr "발광점"
+msgstr "점 광원"
 
 #: ../plug-ins/map-object/map-object-ui.c:610
 msgid "Directional light"
@@ -11764,7 +11765,7 @@ msgstr "빛 없음"
 
 #: ../plug-ins/map-object/map-object-ui.c:616
 msgid "Lightsource type:"
-msgstr "광원 형식:"
+msgstr "광원 유형:"
 
 #: ../plug-ins/map-object/map-object-ui.c:630
 msgid "Lightsource color:"
@@ -11776,11 +11777,11 @@ msgstr "방향 벡터"
 
 #: ../plug-ins/map-object/map-object-ui.c:771
 msgid "Intensity Levels"
-msgstr "밀도 레벨"
+msgstr "강도 레벨"
 
 #: ../plug-ins/map-object/map-object-ui.c:790
 msgid "Ambient:"
-msgstr "환경:"
+msgstr "주변:"
 
 #: ../plug-ins/map-object/map-object-ui.c:819
 #: ../plug-ins/map-object/map-object-ui.c:862
@@ -11793,11 +11794,11 @@ msgstr "반사력"
 
 #: ../plug-ins/map-object/map-object-ui.c:877
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr "높은 값은 객체에 많은 라이트를 반사하게 합니다 (라이터가 나타남)"
+msgstr "높은 값일수고 객체가 더 많은 빛을 반사하게 합니다 (더 밝게 보임)"
 
 #: ../plug-ins/map-object/map-object-ui.c:891
 msgid "Specular:"
-msgstr "비추는 곳:"
+msgstr "정반사:"
 
 #: ../plug-ins/map-object/map-object-ui.c:920
 msgid "Highlight:"
@@ -11805,15 +11806,15 @@ msgstr "강조:"
 
 #: ../plug-ins/map-object/map-object-ui.c:982
 msgid "Object X position in XYZ space"
-msgstr "XYZ 좌표 중 물체 X의 위치"
+msgstr "XYZ 공간에서 물체의 X 위치"
 
 #: ../plug-ins/map-object/map-object-ui.c:996
 msgid "Object Y position in XYZ space"
-msgstr "XYZ 좌표 중 물체 Y의 위치"
+msgstr "XYZ 공간에서 물체의 Y 위치"
 
 #: ../plug-ins/map-object/map-object-ui.c:1010
 msgid "Object Z position in XYZ space"
-msgstr "XYZ 좌표 중 물체 Z의 위치"
+msgstr "XYZ 공간에서 물체의 Z의 위치"
 
 #: ../plug-ins/map-object/map-object-ui.c:1034
 msgid "Rotation angle about X axis"
@@ -11837,7 +11838,7 @@ msgstr "후면:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1092
 msgid "Map Images to Box Faces"
-msgstr "프레임안에서 이미지 분할"
+msgstr "이미지를 상자 면에 매핑"
 
 #: ../plug-ins/map-object/map-object-ui.c:1134
 msgid "X scale (size)"
@@ -11863,7 +11864,7 @@ msgstr "하단(_B):"
 
 #: ../plug-ins/map-object/map-object-ui.c:1188
 msgid "Images for the Cap Faces"
-msgstr "Cap Face 이미지"
+msgstr "마개 면에 사용할 이미지"
 
 #: ../plug-ins/map-object/map-object-ui.c:1217
 #: ../plug-ins/print/print-page-layout.c:249
@@ -11872,7 +11873,7 @@ msgstr "크기"
 
 #: ../plug-ins/map-object/map-object-ui.c:1229
 msgid "R_adius:"
-msgstr "반경(_A):"
+msgstr "반지름(_A):"
 
 #: ../plug-ins/map-object/map-object-ui.c:1233
 msgid "Cylinder radius"
@@ -11892,11 +11893,11 @@ msgstr "옵션(_P)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1291
 msgid "O_rientation"
-msgstr "방향(_R)"
+msgstr "방향성(_R)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1329
 msgid "Map to Object"
-msgstr "지도를 개체로"
+msgstr "물체로 매핑"
 
 #: ../plug-ins/map-object/map-object-ui.c:1386
 msgid "_Preview!"
@@ -11961,7 +11962,7 @@ msgstr "내보내기(_E)"
 
 #: ../plug-ins/metadata/metadata-tags.h:250
 msgid "Original digital capture of a real life scene"
-msgstr "실생활 장면의 원래 디지털 캡처"
+msgstr "실생활 장면의 원본 디지털 캡처"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
 msgid "Digitized from a negative on film"
@@ -12008,7 +12009,7 @@ msgstr "제한되거나 불완전한 속성 릴리스"
 
 #: ../plug-ins/metadata/metadata-tags.h:284
 msgid "Age Unknown"
-msgstr "연령 모름"
+msgstr "연령 미상"
 
 #: ../plug-ins/metadata/metadata-tags.h:285
 msgid "Age 25 or Over"
@@ -12217,7 +12218,7 @@ msgstr "말아 올릴 방향"
 
 #: ../plug-ins/pagecurl/pagecurl.c:563
 msgid "_Shade under curl"
-msgstr "말아 올려진 아래의 그림자(_S)"
+msgstr "말아 올린 부분 아래의 그림자(_S)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:576
 msgid "Current gradient (reversed)"
@@ -12250,7 +12251,7 @@ msgstr "페이지 여백 무시(_M)"
 #. crop marks toggle
 #: ../plug-ins/print/print-page-layout.c:165
 msgid "_Draw Crop Marks"
-msgstr "잘라내기 마스크 그리기(_D)"
+msgstr "자르기 마스크 그리기(_D)"
 
 #: ../plug-ins/print/print-page-layout.c:328
 msgid "_X resolution:"
@@ -12280,11 +12281,11 @@ msgstr "없음"
 
 #: ../plug-ins/print/print-page-layout.c:500
 msgid "Horizontally"
-msgstr "가로로 흐릿하게"
+msgstr "가로로"
 
 #: ../plug-ins/print/print-page-layout.c:501
 msgid "Vertically"
-msgstr "세로로 흐릿하게"
+msgstr "세로로"
 
 #: ../plug-ins/print/print-page-layout.c:502
 msgid "Both"
@@ -12312,15 +12313,15 @@ msgstr "이미지 설정"
 
 #: ../plug-ins/print/print.c:373
 msgid "An error occurred while trying to print:"
-msgstr "인쇄하는 중 알 수 없는 오류가 생겼습니다.:"
+msgstr "인쇄 시도 중 알 수 없는 오류가 생겼습니다.:"
 
 #: ../plug-ins/print/print.c:400
 msgid "Printing"
-msgstr "인쇄"
+msgstr "인쇄하는 중"
 
 #: ../plug-ins/screenshot/screenshot.c:128
 msgid "Create an image from an area of the screen"
-msgstr "화면의 영역으로 새 이미지 만들기"
+msgstr "화면의 한 영역으로부터 새 이미지 만들기"
 
 #: ../plug-ins/screenshot/screenshot.c:149
 msgid "_Screenshot..."
@@ -12342,7 +12343,7 @@ msgstr "그리기 영역"
 
 #: ../plug-ins/screenshot/screenshot.c:537
 msgid "Take a screenshot of a single _window"
-msgstr "창 하나만 찍기(_W)"
+msgstr "창 하나의 스크린샷 찍기(_W)"
 
 #: ../plug-ins/screenshot/screenshot.c:560
 msgid "Include window _decoration"
@@ -12367,7 +12368,7 @@ msgstr "지연 시간"
 
 #: ../plug-ins/screenshot/screenshot.c:692
 msgid "Selection delay: "
-msgstr "선택 지연시가: "
+msgstr "선택 지연 시간: "
 
 #. translators: this is the unit label of a spinbutton
 #: ../plug-ins/screenshot/screenshot.c:711
@@ -12394,7 +12395,7 @@ msgstr "스크린샷 지연시간: "
 
 #: ../plug-ins/screenshot/screenshot.c:786
 msgid "After the delay, the screenshot is taken."
-msgstr "지정한 시간(초) 이후에 화면을 찍습니다."
+msgstr "지정한 시간(초) 이후에 화면을 잡아냅니다."
 
 #: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the region is selected, it will be captured after this delay."
@@ -12426,11 +12427,11 @@ msgstr "캡처한 데이터가 없음"
 
 #: ../plug-ins/screenshot/screenshot-x11.c:95
 msgid "Error selecting the window"
-msgstr "창 선택 오류"
+msgstr "창 선택 중 오류"
 
 #: ../plug-ins/screenshot/screenshot-x11.c:412
 msgid "Importing screenshot"
-msgstr "스크린샷 가져오기"
+msgstr "스크린샷 들여오는 중"
 
 #: ../plug-ins/screenshot/screenshot-x11.c:465
 msgid "Mouse Pointer"
@@ -12438,12 +12439,12 @@ msgstr "마우스 포인터"
 
 #: ../plug-ins/screenshot/screenshot-x11.c:628
 msgid "Specified window not found"
-msgstr "지저한 창을 찾을 수 없음"
+msgstr "지정한 창을 찾을 수 없음"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: ../plug-ins/selection-to-path/pxl-outline.c:81
 msgid "Selection to Path"
-msgstr "선택을 경로로 바꾸기"
+msgstr "선택을 경로로"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:186
 msgid "No selection to convert"
@@ -12459,7 +12460,7 @@ msgstr "정렬 임계값:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:120
 msgid "If two endpoints are closer than this, they are made to be equal."
-msgstr "두 끝점이 이보다 가까우면, 동일하게 합니다."
+msgstr "두 끝점이 이보다 가까우면, 같게 만듭니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:129
 msgid "Corner Always Threshold:"
@@ -12538,8 +12539,8 @@ msgid ""
 "around that point."
 msgstr ""
 "원래의 데이터 점을 매끄럽게 할 횟수.  이 숫자를 50 등으로 대폭 늘리면 훨씬 "
-"더 나은 결과를 얻을 수 있습니다. 그러나 코너 이어야 하는 점이 발견되지 않으"
-"면 곡선은 그 점 근처에서 엉망진창이 됩니다."
+"더 나은 결과를 얻을 수 있습니다. 그러나 코너이어야 하는 점이 발견되지 않으면 "
+"곡선은 그 점 근처에서 엉망진창이 됩니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
 msgid "Filter Percent:"
@@ -12629,8 +12630,8 @@ msgid ""
 "detect the cases where we didn't find any corners."
 msgstr ""
 "재매개변수화하는 것이 무의미한 오류의 양입니다.  예를 들어, 단일 스플라인을 "
-"사용하여 ‘O’ 외부의 윤곽선을 피팅하려고 할 때 이 문제가 발생합니다. 초기 피팅"
-"은  Newton-Raphson 반복이 그것을 개선하기에 충분히 좋지 않습니다.  아마도 어"
+"사용하여 ‘O’ 외부의 윤곽선을 맞추려고 할 때 이 문제가 발생합니다. 초기 피팅"
+"은 Newton-Raphson 반복이 그것을 개선하기에 충분히 좋지 않습니다.  아마도 어"
 "떤 코너도 찾지 못한 경우를 감지하는 것이 더 좋을 수 있습니다."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:348
@@ -12689,4 +12690,4 @@ msgstr "스캐너/카메라(_S)..."
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
-msgstr "스캐너/카메라에서 데이터 전송하기"
+msgstr "스캐너/카메라에서 데이터 전송하는 중"
