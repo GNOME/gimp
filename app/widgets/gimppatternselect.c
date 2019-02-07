@@ -28,6 +28,8 @@
 
 #include "widgets-types.h"
 
+#include "gegl/gimp-babl-compat.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpparamspecs.h"
@@ -103,11 +105,19 @@ gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
                                   GError        **error)
 {
   GimpPattern    *pattern = GIMP_PATTERN (object);
+  const Babl     *format;
+  gpointer        data;
   GimpArray      *array;
   GimpValueArray *return_vals;
 
-  array = gimp_array_new (gimp_temp_buf_get_data (pattern->mask),
-                          gimp_temp_buf_get_data_size (pattern->mask),
+  format = gimp_babl_compat_u8_format (
+    gimp_temp_buf_get_format (pattern->mask));
+  data   = gimp_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
+
+  array = gimp_array_new (data,
+                          gimp_temp_buf_get_width         (pattern->mask) *
+                          gimp_temp_buf_get_height        (pattern->mask) *
+                          babl_format_get_bytes_per_pixel (format),
                           TRUE);
 
   return_vals =
@@ -125,6 +135,8 @@ gimp_pattern_select_run_callback (GimpPdbDialog  *dialog,
                                         G_TYPE_NONE);
 
   gimp_array_free (array);
+
+  gimp_temp_buf_unlock (pattern->mask, data);
 
   return return_vals;
 }
