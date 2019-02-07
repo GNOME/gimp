@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-24 20:14+0000\n"
-"PO-Revision-Date: 2019-01-31 09:33+0900\n"
+"PO-Revision-Date: 2019-02-07 13:33+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -334,35 +334,35 @@ msgstr "검색어가 완전하지 않거나 잘못되었음"
 
 #: ../libgimp/gimpprocbrowserdialog.c:407
 msgid "Searching"
-msgstr "검색하기"
+msgstr "검색 중"
 
 #: ../libgimp/gimpprocbrowserdialog.c:418
 msgid "Searching by name"
-msgstr "이름으로 찾기"
+msgstr "이름으로 찾는 중"
 
 #: ../libgimp/gimpprocbrowserdialog.c:439
 msgid "Searching by description"
-msgstr "설명으로 찾기"
+msgstr "설명으로 찾는 중"
 
 #: ../libgimp/gimpprocbrowserdialog.c:446
 msgid "Searching by help"
-msgstr "도움말로 찾기"
+msgstr "도움말로 찾는 중"
 
 #: ../libgimp/gimpprocbrowserdialog.c:453
 msgid "Searching by author"
-msgstr "저자로 찾기"
+msgstr "저자로 찾는 중"
 
 #: ../libgimp/gimpprocbrowserdialog.c:460
 msgid "Searching by copyright"
-msgstr "저작권으로 찾기"
+msgstr "저작권으로 찾는 중"
 
 #: ../libgimp/gimpprocbrowserdialog.c:467
 msgid "Searching by date"
-msgstr "날짜로 검색하기"
+msgstr "날짜로 검색하는 중"
 
 #: ../libgimp/gimpprocbrowserdialog.c:474
 msgid "Searching by type"
-msgstr "유형으로 찾기"
+msgstr "유형으로 찾는 중"
 
 #: ../libgimp/gimpprocbrowserdialog.c:484
 #, c-format
@@ -808,7 +808,7 @@ msgstr "HSV (반시계 방향 색조)"
 #: ../libgimpbase/gimpbaseenums.c:680
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
-msgstr "HSV (반시계)"
+msgstr "HSV (반시)"
 
 #: ../libgimpbase/gimpbaseenums.c:681
 msgctxt "gradient-segment-color"
@@ -820,7 +820,7 @@ msgstr "HSV (시계 방향 색조)"
 #: ../libgimpbase/gimpbaseenums.c:684
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
-msgstr "HSV (시계)"
+msgstr "HSV (시)"
 
 #: ../libgimpbase/gimpbaseenums.c:717
 msgctxt "gradient-segment-type"
@@ -852,14 +852,14 @@ msgstr "나선형 (증가)"
 #: ../libgimpbase/gimpbaseenums.c:724
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
-msgstr "구형 (감소)"
+msgstr "구형 (감소함)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:727
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
-msgstr "나선형 (감소)"
+msgstr "나선형 (감)"
 
 #: ../libgimpbase/gimpbaseenums.c:728
 msgctxt "gradient-segment-type"
@@ -935,7 +935,7 @@ msgstr "나선형 (시계 방향)"
 #: ../libgimpbase/gimpbaseenums.c:784
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
-msgstr "나선형 (시계)"
+msgstr "나선형 (시)"
 
 #: ../libgimpbase/gimpbaseenums.c:785
 msgctxt "gradient-type"
@@ -947,7 +947,7 @@ msgstr "나선형 (반시계 방향)"
 #: ../libgimpbase/gimpbaseenums.c:788
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
-msgstr "나선형 (반시계)"
+msgstr "나선형 (반시)"
 
 #: ../libgimpbase/gimpbaseenums.c:820
 msgctxt "grid-style"
@@ -2739,7 +2739,7 @@ msgstr "리눅스 입력 이벤트"
 #: ../modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
-msgstr "%s에서 읽기"
+msgstr "%s에서 읽는 중"
 
 #: ../modules/controller-linux-input.c:569
 #: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
