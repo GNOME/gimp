@@ -714,31 +714,31 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_warp_effect_hardness_actions),
                                       G_CALLBACK (tools_warp_effect_hardness_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_opacity_actions,
                                       G_N_ELEMENTS (tools_opacity_actions),
                                       G_CALLBACK (tools_opacity_cmd_callback));
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_size_actions,
                                       G_N_ELEMENTS (tools_size_actions),
                                       G_CALLBACK (tools_size_cmd_callback));
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_aspect_actions,
                                       G_N_ELEMENTS (tools_aspect_actions),
                                       G_CALLBACK (tools_aspect_cmd_callback));
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_angle_actions,
                                       G_N_ELEMENTS (tools_angle_actions),
                                       G_CALLBACK (tools_angle_cmd_callback));
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_spacing_actions,
                                       G_N_ELEMENTS (tools_spacing_actions),
                                       G_CALLBACK (tools_spacing_cmd_callback));
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_hardness_actions,
                                       G_N_ELEMENTS (tools_hardness_actions),
                                       G_CALLBACK (tools_hardness_cmd_callback));
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_force_actions,
                                       G_N_ELEMENTS (tools_force_actions),
                                       G_CALLBACK (tools_force_cmd_callback));
