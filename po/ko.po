@@ -9752,17 +9752,17 @@ msgstr "전체화면 보기로 전환합니다"
 
 #: ../app/actions/view-actions.c:315
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "사용자 확대 비율 설정"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -9798,13 +9798,13 @@ msgstr "확대"
 
 #: ../app/actions/view-actions.c:354
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "축소"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "확대"
 

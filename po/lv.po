@@ -9552,17 +9552,17 @@ msgid "Toggle fullscreen view"
 msgstr "Pārslēgt pilnekrāna skatu"
 
 #: ../app/actions/view-actions.c:321
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Iestatīt mērogu"
 
 #: ../app/actions/view-actions.c:326
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Tālināt cik vien iespējams"
 
 #: ../app/actions/view-actions.c:331
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Tuvināt cik vien iespējams"
 
@@ -9597,12 +9597,12 @@ msgid "Zoom In"
 msgstr "Tuvināt"
 
 #: ../app/actions/view-actions.c:360
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Ļoti tālināt"
 
 #: ../app/actions/view-actions.c:365
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Ļoti tuvināt"
 
