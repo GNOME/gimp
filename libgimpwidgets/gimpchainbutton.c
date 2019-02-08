@@ -367,6 +367,8 @@ gimp_chain_button_set_active (GimpChainButton  *button,
 
       gimp_chain_button_update_image (button);
 
+      g_signal_emit (button, gimp_chain_button_signals[TOGGLED], 0);
+
       g_object_notify (G_OBJECT (button), "active");
     }
 }
@@ -391,11 +393,7 @@ static void
 gimp_chain_button_clicked_callback (GtkWidget       *widget,
                                     GimpChainButton *button)
 {
-  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
-
   gimp_chain_button_set_active (button, ! button->active);
-
-  g_signal_emit (button, gimp_chain_button_signals[TOGGLED], 0);
 }
 
 static void
