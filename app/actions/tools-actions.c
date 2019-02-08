@@ -677,11 +677,11 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_ink_blob_angle_actions),
                                       G_CALLBACK (tools_ink_blob_angle_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_airbrush_rate_actions,
                                       G_N_ELEMENTS (tools_airbrush_rate_actions),
                                       G_CALLBACK (tools_airbrush_rate_cmd_callback));
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_airbrush_flow_actions,
                                       G_N_ELEMENTS (tools_airbrush_flow_actions),
                                       G_CALLBACK (tools_airbrush_flow_cmd_callback));
