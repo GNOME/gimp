@@ -729,12 +729,12 @@ layers_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (layers_select_actions),
                                       G_CALLBACK (layers_select_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_opacity_actions,
                                       G_N_ELEMENTS (layers_opacity_actions),
                                       G_CALLBACK (layers_opacity_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_mode_actions,
                                       G_N_ELEMENTS (layers_mode_actions),
                                       G_CALLBACK (layers_mode_cmd_callback));

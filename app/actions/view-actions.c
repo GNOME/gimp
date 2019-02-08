@@ -318,17 +318,17 @@ static const GimpToggleActionEntry view_toggle_actions[] =
 static const GimpEnumActionEntry view_zoom_actions[] =
 {
   { "view-zoom", NULL,
-    NC_("view-action", "Set zoom factor"), NULL, NULL,
+    NC_("view-zoom-action", "Set zoom factor"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
   { "view-zoom-minimum", GIMP_ICON_ZOOM_OUT,
-    NC_("view-action", "Zoom out as far as possible"), NULL, NULL,
+    NC_("view-zoom-action", "Zoom out as far as possible"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-maximum", GIMP_ICON_ZOOM_IN,
-    NC_("view-action", "Zoom in as far as possible"), NULL, NULL,
+    NC_("view-zoom-action", "Zoom in as far as possible"), NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
@@ -357,12 +357,12 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-out-skip", GIMP_ICON_ZOOM_OUT,
-    NC_("view-action", "Zoom out a lot"), NULL, NULL,
+    NC_("view-zoom-action", "Zoom out a lot"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-in-skip", GIMP_ICON_ZOOM_IN,
-    NC_("view-action", "Zoom in a lot"), NULL, NULL,
+    NC_("view-zoom-action", "Zoom in a lot"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN }
 };
@@ -748,12 +748,12 @@ view_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (view_padding_color_actions),
                                       G_CALLBACK (view_padding_color_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "view-action",
                                       view_scroll_horizontal_actions,
                                       G_N_ELEMENTS (view_scroll_horizontal_actions),
                                       G_CALLBACK (view_scroll_horizontal_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "view-action",
                                       view_scroll_vertical_actions,
                                       G_N_ELEMENTS (view_scroll_vertical_actions),
                                       G_CALLBACK (view_scroll_vertical_cmd_callback));
