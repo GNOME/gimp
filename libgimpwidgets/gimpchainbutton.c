@@ -393,6 +393,8 @@ gimp_chain_button_set_active (GimpChainButton  *button,
 
       gimp_chain_button_update_image (button);
 
+      g_signal_emit (button, gimp_chain_button_signals[TOGGLED], 0);
+
       g_object_notify (G_OBJECT (button), "active");
     }
 }
@@ -447,8 +449,6 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
   GimpChainButtonPrivate *private = GET_PRIVATE (button);
 
   gimp_chain_button_set_active (button, ! private->active);
-
-  g_signal_emit (button, gimp_chain_button_signals[TOGGLED], 0);
 }
 
 static void
