@@ -9136,17 +9136,17 @@ msgid "Toggle fullscreen view"
 msgstr "Txandakatu pantaila osoko ikuspegia"
 
 #: ../app/actions/view-actions.c:315
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Ezarri zoomaren faktorea"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Txikiagotu ahalik eta gehien"
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Handiagotu ahalik eta gehien"
 
@@ -9181,12 +9181,12 @@ msgid "Zoom In"
 msgstr "Handiagotu"
 
 #: ../app/actions/view-actions.c:354
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Txikiagotu asko"
 
 #: ../app/actions/view-actions.c:359
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Handiagotu asko"
 

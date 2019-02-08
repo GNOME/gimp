@@ -10153,17 +10153,17 @@ msgstr "Tam ekran görünümünü değiştir"
 #, fuzzy
 #| msgctxt "view-zoom-action"
 #| msgid "Set a custom zoom factor"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Özel bir yakınlaşma katsayısı ayarla"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -10200,14 +10200,14 @@ msgstr "Yakınlaştır"
 #: ../app/actions/view-actions.c:354
 #, fuzzy
 #| msgid "Zoom out"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Uzaklaş"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
 #| msgid "Zoom in"
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Yakınlaş"
 

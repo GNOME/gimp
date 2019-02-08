@@ -9662,17 +9662,17 @@ msgid "Toggle fullscreen view"
 msgstr "Toggle fullscreen view"
 
 #: ../app/actions/view-actions.c:321
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Set zoom factor"
 
 #: ../app/actions/view-actions.c:326
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Zoom out as far as possible"
 
 #: ../app/actions/view-actions.c:331
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Zoom in as far as possible"
 
@@ -9707,12 +9707,12 @@ msgid "Zoom In"
 msgstr "Zoom In"
 
 #: ../app/actions/view-actions.c:360
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Zoom out a lot"
 
 #: ../app/actions/view-actions.c:365
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Zoom in a lot"
 

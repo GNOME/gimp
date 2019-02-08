@@ -9252,17 +9252,17 @@ msgid "Toggle fullscreen view"
 msgstr "Commuta la vista en pantalla completa"
 
 #: ../app/actions/view-actions.c:315
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Defineix un factor de zoom"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Redueix al màxim possible"
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Amplia al màxim possible"
 
@@ -9297,12 +9297,12 @@ msgid "Zoom In"
 msgstr "Amplia"
 
 #: ../app/actions/view-actions.c:354
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Redueix molt"
 
 #: ../app/actions/view-actions.c:359
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Amplia molt"
 

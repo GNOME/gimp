@@ -9762,17 +9762,17 @@ msgid "Toggle fullscreen view"
 msgstr "Przełącza na pełny ekran"
 
 #: ../app/actions/view-actions.c:321
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Ustaw współczynnik powiększenia"
 
 #: ../app/actions/view-actions.c:326
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Jak najdalej"
 
 #: ../app/actions/view-actions.c:331
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Jak najbliżej"
 
@@ -9807,12 +9807,12 @@ msgid "Zoom In"
 msgstr "Bliżej"
 
 #: ../app/actions/view-actions.c:360
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Dużo dalej"
 
 #: ../app/actions/view-actions.c:365
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Dużo bliżej"
 

@@ -9268,17 +9268,17 @@ msgstr "تحول إلى منظور ملء الشاشة"
 
 #: ../app/actions/view-actions.c:315
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "استخدم عامل تقريب مخصص"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -9314,13 +9314,13 @@ msgstr "قرّب"
 
 #: ../app/actions/view-actions.c:354
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "بعّد"
 
 #: ../app/actions/view-actions.c:359
 #, fuzzy
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "قرّب"
 

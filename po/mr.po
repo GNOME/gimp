@@ -9591,17 +9591,17 @@ msgid "Toggle fullscreen view"
 msgstr "पूर्ण पडदा दृश्य अदलाबदल"
 
 #: ../app/actions/view-actions.c:321
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "दृश्य जवळ करण्याचे विभाजक ठरवा"
 
 #: ../app/actions/view-actions.c:326
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "जितके शक्य असेल तितके झूम आउट करा"
 
 #: ../app/actions/view-actions.c:331
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "शक्य तितका दृश्यरूप वाढवा [झूम इन]"
 
@@ -9636,12 +9636,12 @@ msgid "Zoom In"
 msgstr "दृश्यरूप वाढवा [झूम इन]"
 
 #: ../app/actions/view-actions.c:360
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "दृश्यरूप खूप कमी करा [झूम आउट]"
 
 #: ../app/actions/view-actions.c:365
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "दृश्यरूप खूप वाढवा [झूम इन]"
 

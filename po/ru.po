@@ -9654,17 +9654,17 @@ msgid "Toggle fullscreen view"
 msgstr "Переключиться в полноэкранный режим или выйти из него"
 
 #: ../app/actions/view-actions.c:321
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Указать другой коэффициент масштабирования"
 
 #: ../app/actions/view-actions.c:326
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Уменьшить просмотр насколько возможно"
 
 #: ../app/actions/view-actions.c:331
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Увеличить просмотр насколько возможно"
 
@@ -9699,12 +9699,12 @@ msgid "Zoom In"
 msgstr "Увеличить"
 
 #: ../app/actions/view-actions.c:360
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Уменьшить масштаб просмотра"
 
 #: ../app/actions/view-actions.c:365
-msgctxt "view-action"
+msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Увеличить масштаб просмотра"
 
