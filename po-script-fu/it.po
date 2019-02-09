@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-19 21:43+0100\n"
-"PO-Revision-Date: 2018-12-19 21:47+0100\n"
+"POT-Creation-Date: 2019-02-09 01:04+0100\n"
+"PO-Revision-Date: 2019-02-09 01:11+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -1454,14 +1454,12 @@ msgid "Rendering Spyro"
 msgstr "Disegno spirografo"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "_Spirografo..."
+msgid "_Spyrogimp (older script-fu version)..."
+msgstr "_Spirografo (vecchia versione script-fu)..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Aggiunge spirografi, epitrocoidi e figure di Lissajous al livello corrente"
+msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+msgstr "Questa procedura è deprecata! Usare invece 'plug-in-spyrogimp'."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"

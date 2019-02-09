@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 00:49+0100\n"
-"PO-Revision-Date: 2019-01-14 00:52+0100\n"
+"POT-Creation-Date: 2019-02-09 01:02+0100\n"
+"PO-Revision-Date: 2019-02-09 01:17+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -492,11 +492,8 @@ msgid "_Border Average..."
 msgstr "Media del _bordo..."
 
 #: ../plug-ins/common/border-average.c:173
-msgid "Border Average"
-msgstr "Media del bordo"
-
 #: ../plug-ins/common/border-average.c:358
-msgid "Borderaverage"
+msgid "Border Average"
 msgstr "Media del bordo"
 
 #: ../plug-ins/common/border-average.c:380
@@ -12580,12 +12577,9 @@ msgstr "Soglia sempre spigolo:"
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:133
 msgid ""
 "If the angle defined by a point and its predecessors and successors is "
-"smaller than this, it's a corner, even if it's within `corner_surround' "
+"smaller than this, it's a corner, even if it's within 'corner_surround' "
 "pixels of a point with a smaller angle."
-msgstr ""
-"Se l'angolo definito da un punto insieme ai suoi precedenti e successivi è "
-"minore di questo valore, è uno spigolo, anche se rimane all'interno dei "
-"pixel dell'\"intorno spigolo\" di un punto con un angolo minore."
+msgstr "Se l'angolo definito da un punto insieme ai suoi precedenti e successivi è minore di questo valore, è uno spigolo, anche se rimane all'interno dei pixel dell'\"intorno spigolo\" di un punto con un angolo più piccolo."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:144
 msgid "Corner Surround:"
@@ -12616,7 +12610,7 @@ msgstr "Soglia errore:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:176
 msgid ""
-"Amount of error at which a fitted spline is unacceptable.  If any pixel is "
+"Amount of error at which a fitted spline is unacceptable. If any pixel is "
 "further away than this from the fitted curve, we try again."
 msgstr ""
 "Quantità di errore alla quale una spline fittata è inaccettabile. Se qualche "
@@ -12653,14 +12647,10 @@ msgstr "Conteggio iterazioni filtro:"
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:220
 msgid ""
 "Number of times to smooth original data points.  Increasing this number "
-"dramatically --- to 50 or so --- can produce vastly better results.  But if "
-"any points that ``should'' be corners aren't found, the curve goes to hell "
+"dramatically --- to 50 or so --- can produce vastly better results. But if "
+"any points that 'should' be corners aren't found, the curve goes to hell "
 "around that point."
-msgstr ""
-"Numero di smussature dei punti dati originali. Incrementando questo numero "
-"in modo sostanziale --- per es. a 50 --- si possono produrre effettivi "
-"miglioramenti. Ma se vengono trovati punti che non \"dovrebbero\" essere "
-"spigoli, la curva impazzisce intorno a quei punti."
+msgstr "Numero di smussature dei punti dati originali. Incrementando questo numero in modo sostanziale --- per es. a 50 --- si possono produrre effettivi miglioramenti. Ma se non vengono trovati punti che \"dovrebbero\" essere spigoli, la curva impazzisce intorno a quel punto."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
 msgid "Filter Percent:"
@@ -12679,11 +12669,9 @@ msgstr "Intorno filtro secondario:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:249
 msgid ""
-"Number of adjacent points to consider if `filter_surround' points defines a "
+"Number of adjacent points to consider if 'filter_surround' points defines a "
 "straight line."
-msgstr ""
-"Numero di punti adiacenti da considerare se i punti \"intorno filtro\" "
-"definiscono una linea retta."
+msgstr "Numero di punti adiacenti da considerare se i punti \"intorno filtro\" definiscono una linea retta."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:259
 msgid "Filter Surround:"
@@ -12699,8 +12687,7 @@ msgid "Keep Knees"
 msgstr "Mantieni i ginocchi"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:276
-msgid ""
-"Says whether or not to remove ``knee'' points after finding the outline."
+msgid "Says whether or not to remove 'knee' points after finding the outline."
 msgstr ""
 "Indica se rimuovere o no i punti \"ginocchio\" dopo aver trovato il contorno."
 
@@ -12752,8 +12739,8 @@ msgstr "Soglia di riparametrizzazione:"
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:335
 msgid ""
 "Amount of error at which it is pointless to reparameterize.  This happens, "
-"for example, when we are trying to fit the outline of the outside of an `O' "
-"with a single spline.  The initial fit is not good enough for the Newton-"
+"for example, when we are trying to fit the outline of the outside of an 'O' "
+"with a single spline. The initial fit is not good enough for the Newton-"
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
