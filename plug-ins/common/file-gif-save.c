@@ -153,7 +153,7 @@ query (void)
   };
 
   gimp_install_procedure (SAVE_PROC,
-                          "exports files in Compuserve GIF file format",
+                          _("Exports files in Compuserve GIF file format"),
                           "Export a file in Compuserve GIF format, with "
                           "possible animation, transparency, and comment.  "
                           "To export an animation, operate on a multi-layer "
@@ -171,7 +171,7 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (SAVE2_PROC,
-                          "exports files in Compuserve GIF file format",
+                          _("Exports files in Compuserve GIF file format"),
                           "Export a file in Compuserve GIF format, with "
                           "possible animation, transparency, and comment.  "
                           "To export an animation, operate on a multi-layer "

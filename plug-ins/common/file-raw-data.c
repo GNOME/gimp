@@ -310,7 +310,7 @@ query (void)
   gimp_register_load_handler (LOAD_HGT_PROC, "hgt", "");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Dump images to disk in raw format",
+                          _("Dump images to disk in raw format"),
                           "This plug-in dumps images to disk in raw format, "
                           "using the default settings stored as a parasite.",
                           "timecop, pg@futureware.at",
@@ -323,7 +323,7 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (SAVE_PROC2,
-                          "Dump images to disk in raw format",
+                          _("Dump images to disk in raw format"),
                           "Dump images to disk in raw format",
                           "Björn Kautler, Bjoern@Kautler.net",
                           "Björn Kautler, Bjoern@Kautler.net",

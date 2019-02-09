@@ -336,7 +336,7 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (SAVE2_PROC,
-                          "Exports files in PNG file format",
+                          _("Exports files in PNG file format"),
                           "This plug-in exports Portable Network Graphics "
                           "(PNG) files. "
                           "This procedure adds 2 extra parameters to "
@@ -356,7 +356,7 @@ query (void)
                           save_args2, NULL);
 
   gimp_install_procedure (SAVE_DEFAULTS_PROC,
-                          "Exports files in PNG file format",
+                          _("Exports files in PNG file format"),
                           "This plug-in exports Portable Network Graphics (PNG) "
                           "files, using the default settings stored as "
                           "a parasite.",
