@@ -212,11 +212,11 @@ static GArray        * gimp_lineart_discrete_spline            (Pixel           
 
 static gint            gimp_number_of_transitions               (GArray                 *pixels,
                                                                  GeglBuffer             *buffer);
-static gboolean        gimp_lineart_curve_creates_region        (GeglBuffer             *mask,
+static gboolean        gimp_line_art_allow_closure              (GeglBuffer             *mask,
                                                                  GArray                 *pixels,
                                                                  GList                 **fill_pixels,
-                                                                 int                     lower_size_limit,
-                                                                 int                     upper_size_limit);
+                                                                 int                     significant_size,
+                                                                 int                     minimum_size);
 static GArray        * gimp_lineart_line_segment_until_hit      (const GeglBuffer       *buffer,
                                                                  Pixel                   start,
                                                                  GimpVector2             direction,
@@ -989,10 +989,10 @@ gimp_line_art_close (GeglBuffer  *buffer,
                     gimp_number_of_transitions (discrete_curve, closed);
 
                   if (transitions == 2 &&
-                      ! gimp_lineart_curve_creates_region (closed, discrete_curve,
-                                                           &fill_pixels,
-                                                           created_regions_significant_area,
-                                                           created_regions_minimum_area - 1))
+                      gimp_line_art_allow_closure (closed, discrete_curve,
+                                                   &fill_pixels,
+                                                   created_regions_significant_area,
+                                                   created_regions_minimum_area - 1))
                     {
                       for (i = 0; i < discrete_curve->len; i++)
                         {
@@ -1048,9 +1048,9 @@ gimp_line_art_close (GeglBuffer  *buffer,
                                                                          segment_max_length);
 
                   if (segment->len &&
-                      ! gimp_lineart_curve_creates_region (closed, segment, &fill_pixels,
-                                                           created_regions_significant_area,
-                                                           created_regions_minimum_area - 1))
+                      gimp_line_art_allow_closure (closed, segment, &fill_pixels,
+                                                   created_regions_significant_area,
+                                                   created_regions_minimum_area - 1))
                     {
                       gint j;
 
@@ -1783,17 +1783,42 @@ gimp_number_of_transitions (GArray     *pixels,
 }
 
 /**
- * Check whether a set of points will create a 4-connected background
- * region whose size (i.e. number of pixels) falls within a given interval.
+ * gimp_line_art_allow_closure:
+ * @mask: the current state of line art closure.
+ * @pixels: the pixels of a candidate closure (spline or segment).
+ * @fill_pixels: #GList of unsignificant pixels to bucket fill.
+ * @significant_size: number of pixels for area to be considered
+ *                    "significant".
+ * @minimum_size: number of pixels for area to be allowed.
+ *
+ * Checks whether adding the set of points @pixels to @mask will create
+ * 4-connected background regions whose size (i.e. number of pixels)
+ * will be below @minimum_size. If it creates such small areas, the
+ * function will refuse this candidate spline/segment, with the
+ * exception of very small areas under @significant_size. These
+ * micro-area are considered "unsignificant" and accepted (because they
+ * can be created in some conditions, for instance when created curves
+ * cross or start from a same endpoint), and one pixel for each
+ * micro-area will be added to @fill_pixels to be later filled along
+ * with the candidate pixels.
+ *
+ * Returns: #TRUE if @pixels should be added to @mask, #FALSE otherwise.
  */
 static gboolean
-gimp_lineart_curve_creates_region (GeglBuffer *mask,
-                                   GArray     *pixels,
-                                   GList     **fill_pixels,
-                                   int         lower_size_limit,
-                                   int         upper_size_limit)
+gimp_line_art_allow_closure (GeglBuffer *mask,
+                             GArray     *pixels,
+                             GList     **fill_pixels,
+                             int         significant_size,
+                             int         minimum_size)
 {
-  const glong max_edgel_count = 2 * (upper_size_limit + 1);
+  /* A theorem from the paper is that a zone with more than
+   * `2 * (@minimum_size - 1)` edgels (border pixels) will have more
+   * than @minimum_size pixels.
+   * Since we are following the edges of the area, we can therefore stop
+   * earlier if we reach this number of edgels.
+   */
+  const glong max_edgel_count = 2 * (minimum_size + 1);
+
   Pixel      *p = (Pixel*) pixels->data;
   GList      *fp = NULL;
   gint        i;
@@ -1845,7 +1870,7 @@ gimp_lineart_curve_creates_region (GeglBuffer *mask,
                 {
                   area = gimp_edgel_region_area (mask, e);
 
-                  if (area >= lower_size_limit && area <= upper_size_limit)
+                  if (area >= significant_size && area <= minimum_size)
                     {
                       gint j;
 
@@ -1868,9 +1893,9 @@ gimp_lineart_curve_creates_region (GeglBuffer *mask,
                         }
                       g_list_free_full (fp, g_free);
 
-                      return TRUE;
+                      return FALSE;
                     }
-                  else if (area < lower_size_limit)
+                  else if (area < significant_size)
                     {
                       Pixel *np = g_new (Pixel, 1);
 
@@ -1906,7 +1931,7 @@ gimp_lineart_curve_creates_region (GeglBuffer *mask,
                            NULL, &val, GEGL_AUTO_ROWSTRIDE);
         }
     }
-  return FALSE;
+  return TRUE;
 }
 
 static GArray *
