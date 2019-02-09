@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python2
+#!/usr/bin/env python2
 
 # Draw Spyrographs, Epitrochoids, and Lissajous curves with interactive feedback.
 #
@@ -1102,7 +1102,7 @@ class SpyroWindow(gtk.Window):
 
             row += 1
             label_in_table(_("Tool"), table, row,
-                           _("The tool with which to draw the pattern."
+                           _("The tool with which to draw the pattern. "
                              "The Preview tool just draws quickly."))
             self.tool_combo = set_combo_in_table([tool.name for tool in tools], table, row,
                                                  self.tool_combo_changed)
