@@ -71,8 +71,8 @@
 )
 
 (script-fu-register "script-fu-unsharp-mask"
-  "Unsharp Mask..."
-  "Make a new image from the current layer by applying the unsharp mask method"
+  _"Unsharp Mask..."
+  _"Make a new image from the current layer by applying the unsharp mask method"
   "Shuji Narazaki <narazaki@gimp.org>"
   "Shuji Narazaki"
   "1997,1998"
