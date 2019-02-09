@@ -576,23 +576,23 @@ static const GimpEnumActionEntry tools_force_actions[] =
 static const GimpEnumActionEntry tools_object_1_actions[] =
 {
   { "tools-object-1-set", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Select Object 1 by Index", NULL, NULL,
+    NC_("tools-action", "Select Object 1 by Index"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
   { "tools-object-1-first", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "First Object 1", NULL, NULL,
+    NC_("tools-action", "First Object 1"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
   { "tools-object-1-last", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Last Object 1", NULL, NULL,
+    NC_("tools-action", "Last Object 1"), NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
   { "tools-object-1-previous", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Previous Object 1", NULL, NULL,
+    NC_("tools-action", "Previous Object 1"), NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
   { "tools-object-1-next", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Next Object 1", NULL, NULL,
+    NC_("tools-action", "Next Object 1"), NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL }
 };
@@ -600,23 +600,23 @@ static const GimpEnumActionEntry tools_object_1_actions[] =
 static const GimpEnumActionEntry tools_object_2_actions[] =
 {
   { "tools-object-2-set", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Select Object 2 by Index", NULL, NULL,
+    NC_("tools-action", "Select Object 2 by Index"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
   { "tools-object-2-first", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "First Object 2", NULL, NULL,
+    NC_("tools-action", "First Object 2"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
   { "tools-object-2-last", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Last Object 2", NULL, NULL,
+    NC_("tools-action", "Last Object 2"), NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
   { "tools-object-2-previous", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Previous Object 2", NULL, NULL,
+    NC_("tools-action", "Previous Object 2"), NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
   { "tools-object-2-next", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    "Next Object 2", NULL, NULL,
+    NC_("tools-action", "Next Object 2"), NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL }
 };
@@ -750,11 +750,11 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_force_actions),
                                       tools_force_cmd_callback);
 
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_object_1_actions,
                                       G_N_ELEMENTS (tools_object_1_actions),
                                       tools_object_1_cmd_callback);
-  gimp_action_group_add_enum_actions (group, NULL,
+  gimp_action_group_add_enum_actions (group, "tools-action",
                                       tools_object_2_actions,
                                       G_N_ELEMENTS (tools_object_2_actions),
                                       tools_object_2_cmd_callback);

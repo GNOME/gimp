@@ -495,7 +495,7 @@ static const GimpToggleActionEntry view_flip_actions[] =
 static const GimpEnumActionEntry view_rotate_absolute_actions[] =
 {
   { "view-rotate-set-absolute", NULL,
-    "Display Rotation Absolute Angle Set", NULL, NULL,
+    NC_("view-action", "Display Rotation Absolute Angle Set"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 

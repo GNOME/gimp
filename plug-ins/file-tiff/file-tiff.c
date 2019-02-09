@@ -151,7 +151,7 @@ query (void)
                                     "0,string,II*\\0,0,string,MM\\0*");
 
   gimp_install_procedure (SAVE_PROC,
-                          "saves files in the tiff file format",
+                          _("Saves files in the tiff file format"),
                           "Saves files in the Tagged Image File Format.  "
                           "The value for the saved comment is taken "
                           "from the 'gimp-comment' parasite.",
@@ -169,7 +169,7 @@ query (void)
   gimp_register_save_handler (SAVE_PROC, "tif,tiff", "");
 
   gimp_install_procedure (SAVE2_PROC,
-                          "saves files in the tiff file format",
+                          _("Saves files in the tiff file format"),
                           "Saves files in the Tagged Image File Format.  "
                           "The value for the saved comment is taken "
                           "from the 'gimp-comment' parasite.",
