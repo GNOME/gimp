@@ -256,7 +256,7 @@ static glong      gimp_edgel_track_mark           (GeglBuffer         *mask,
                                                    Edgel               edgel,
                                                    long                size_limit);
 static glong      gimp_edgel_region_area          (const GeglBuffer   *mask,
-                                                   Edgel               starting_edgel);
+                                                   Edgel               start_edgel);
 
 /* Edgel set */
 
@@ -1843,7 +1843,7 @@ gimp_lineart_curve_creates_region (GeglBuffer *mask,
               count = gimp_edgel_track_mark (mask, e, max_edgel_count);
               if ((count != -1) && (count <= max_edgel_count))
                 {
-                  area = -1 * gimp_edgel_region_area (mask, e);
+                  area = gimp_edgel_region_area (mask, e);
 
                   if (area >= lower_size_limit && area <= upper_size_limit)
                     {
@@ -2287,14 +2287,14 @@ gimp_edgel_region_area (const GeglBuffer *mask,
                         Edgel             start_edgel)
 {
   Edgel edgel = start_edgel;
-  long  area = 0;
+  glong area = 0;
 
   do
     {
       if (edgel.direction == XPlusDirection)
-        area += edgel.x;
+        area -= edgel.x;
       else if (edgel.direction == XMinusDirection)
-        area -= edgel.x - 1;
+        area += edgel.x - 1;
 
       gimp_edgelset_next8 (mask, &edgel, &edgel);
     }
