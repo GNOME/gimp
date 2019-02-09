@@ -86,9 +86,6 @@ struct _GimpBucketFillToolPrivate
 static void     gimp_bucket_fill_tool_constructed      (GObject               *object);
 static void     gimp_bucket_fill_tool_finalize         (GObject               *object);
 
-static gboolean gimp_bucket_fill_tool_initialize       (GimpTool              *tool,
-                                                        GimpDisplay           *display,
-                                                        GError               **error);
 static void     gimp_bucket_fill_tool_button_press     (GimpTool              *tool,
                                                         const GimpCoords      *coords,
                                                         guint32                time,
@@ -171,7 +168,6 @@ gimp_bucket_fill_tool_class_init (GimpBucketFillToolClass *klass)
   object_class->constructed  = gimp_bucket_fill_tool_constructed;
   object_class->finalize     = gimp_bucket_fill_tool_finalize;
 
-  tool_class->initialize     = gimp_bucket_fill_tool_initialize;
   tool_class->button_press   = gimp_bucket_fill_tool_button_press;
   tool_class->motion         = gimp_bucket_fill_tool_motion;
   tool_class->button_release = gimp_bucket_fill_tool_button_release;
@@ -266,57 +262,6 @@ gimp_bucket_fill_tool_finalize (GObject *object)
   g_signal_handlers_disconnect_by_data (context, tool);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static gboolean
-gimp_bucket_fill_tool_initialize (GimpTool     *tool,
-                                  GimpDisplay  *display,
-                                  GError      **error)
-{
-  GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
-  GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
-  GimpImage             *image       = gimp_display_get_image (display);
-  GimpDrawable          *drawable    = gimp_image_get_active_drawable (image);
-
-  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
-    {
-      return FALSE;
-    }
-
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("Cannot modify the pixels of layer groups."));
-      return FALSE;
-    }
-
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer is not visible."));
-      return FALSE;
-    }
-
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer's pixels are locked."));
-      if (error)
-        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
-      return FALSE;
-    }
-
-  if (options->fill_area == GIMP_BUCKET_FILL_LINE_ART &&
-      ! gimp_line_art_get_input (bucket_tool->priv->line_art))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("No valid line art source selected."));
-      if (error)
-        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
-      return FALSE;
-    }
-
-  return TRUE;
 }
 
 static void
@@ -517,6 +462,7 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
   GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpImage             *image       = gimp_display_get_image (display);
+  GimpDrawable          *drawable    = gimp_image_get_active_drawable (image);
   gboolean               sample_merged;
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
@@ -526,13 +472,42 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
       return;
     }
 
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("Cannot modify the pixels of layer groups."));
+      return;
+    }
+
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("The active layer is not visible."));
+      return;
+    }
+
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("The active layer's pixels are locked."));
+      gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+      return;
+    }
+
+  if (options->fill_area == GIMP_BUCKET_FILL_LINE_ART &&
+      ! gimp_line_art_get_input (bucket_tool->priv->line_art))
+    {
+      gimp_tool_message_literal (tool, display,
+                                 _("No valid line art source selected."));
+      return;
+    }
+
   sample_merged = (options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
                    options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED :
                    options->sample_merged);
   if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
       gimp_image_coords_in_active_pickable (image, coords, sample_merged, TRUE))
     {
-      GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
       GimpContext     *context  = GIMP_CONTEXT (options);
       GimpFillOptions *fill_options;
       GError          *error = NULL;
