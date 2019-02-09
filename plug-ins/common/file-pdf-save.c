@@ -330,7 +330,7 @@ query (void)
   };
 
   gimp_install_procedure (SAVE_PROC,
-                          "Save files in PDF format",
+                          _("Save files in PDF format"),
                           "Saves files in Adobe's Portable Document Format. "
                           "PDF is designed to be easily processed by a variety "
                           "of different platforms, and is a distant cousin of "
@@ -345,7 +345,7 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (SAVE2_PROC,
-                          "Save files in PDF format",
+                          _("Save files in PDF format"),
                           "Saves files in Adobe's Portable Document Format. "
                           "PDF is designed to be easily processed by a variety "
                           "of different platforms, and is a distant cousin of "
@@ -362,7 +362,7 @@ query (void)
                           save2_args, NULL);
 
   gimp_install_procedure (SAVE_MULTI_PROC,
-                          "Save files in PDF format",
+                          _("Save files in PDF format"),
                           "Saves files in Adobe's Portable Document Format. "
                           "PDF is designed to be easily processed by a variety "
                           "of different platforms, and is a distant cousin of "

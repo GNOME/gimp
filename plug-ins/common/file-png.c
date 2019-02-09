@@ -320,7 +320,7 @@ query (void)
                                     "png", "", "0,string,\211PNG\r\n\032\n");
 
   gimp_install_procedure (SAVE_PROC,
-                          "Exports files in PNG file format",
+                          _("Exports files in PNG file format"),
                           "This plug-in exports Portable Network Graphics "
                           "(PNG) files.",
                           "Michael Sweet <mike@easysw.com>, "
@@ -336,7 +336,7 @@ query (void)
                           save_args, NULL);
 
   gimp_install_procedure (SAVE2_PROC,
-                          "Exports files in PNG file format",
+                          _("Exports files in PNG file format"),
                           "This plug-in exports Portable Network Graphics "
                           "(PNG) files. "
                           "This procedure adds 2 extra parameters to "
