@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-01 16:49+0000\n"
-"PO-Revision-Date: 2019-02-06 22:30+0900\n"
+"PO-Revision-Date: 2019-02-09 21:54+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -4121,12 +4121,9 @@ msgid "Flip _Horizontally"
 msgstr "水平反転(_H)"
 
 #: ../app/actions/drawable-actions.c:99
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Flip image horizontally"
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
-msgstr "画像の左右を反転します (すべてのレイヤーが反転します)"
+msgstr "左右を反転します"
 
 #: ../app/actions/drawable-actions.c:104
 msgctxt "drawable-action"
@@ -4134,12 +4131,9 @@ msgid "Flip _Vertically"
 msgstr "垂直反転(_V)"
 
 #: ../app/actions/drawable-actions.c:105
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Flip image vertically"
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
-msgstr "画像の上下を反転します (すべてのレイヤーが反転します)"
+msgstr "上下を反転します"
 
 #: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
@@ -4147,12 +4141,9 @@ msgid "Rotate 90° _clockwise"
 msgstr "時計回りに 90 度回転(_C)"
 
 #: ../app/actions/drawable-actions.c:114
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90 degrees to the right"
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
-msgstr "アイテムを時計回り (右) に 90 度回転します"
+msgstr "時計回り (右) に 90 度回転します"
 
 #: ../app/actions/drawable-actions.c:119
 msgctxt "drawable-action"
@@ -4160,9 +4151,6 @@ msgid "Rotate _180°"
 msgstr "180 度回転(_1)"
 
 #: ../app/actions/drawable-actions.c:120
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Turn upside-down"
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
 msgstr "180 度回転します"
@@ -4173,12 +4161,9 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "反時計回りに 90 度回転(_W)"
 
 #: ../app/actions/drawable-actions.c:126
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "Rotate 90 degrees to the left"
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
-msgstr "アイテムを反時計回り (左) に 90 度回転します"
+msgstr "反時計回り (左) に 90 度回転します"
 
 #: ../app/actions/drawable-commands.c:89
 msgid "White Balance operates only on RGB color layers."
@@ -5202,7 +5187,7 @@ msgid "_Dilate"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "filters-action"
+msgctxt "drawable-action"
 msgid "Grow lighter areas of the image"
 msgstr ""
 
@@ -5212,7 +5197,7 @@ msgid "_Erode"
 msgstr ""
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "filters-action"
+msgctxt "drawable-action"
 msgid "Grow darker areas of the image"
 msgstr ""
 
@@ -5736,12 +5721,9 @@ msgid "Sat_uration..."
 msgstr "彩度(_U)..."
 
 #: ../app/actions/filters-actions.c:592
-#, fuzzy
-#| msgctxt "patterns-action"
-#| msgid "_Edit Pattern..."
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
-msgstr "パターンの編集(_E)..."
+msgstr "半統合(_S)..."
 
 #: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
@@ -10542,17 +10524,17 @@ msgstr "通常表示/フルスクリーン表示を切り替えます"
 #, fuzzy
 #| msgctxt "view-zoom-action"
 #| msgid "Set a custom zoom factor"
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Set zoom factor"
 msgstr "表示倍率を指定します"
 
 #: ../app/actions/view-actions.c:326
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom out as far as possible"
 msgstr ""
 
 #: ../app/actions/view-actions.c:331
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom in as far as possible"
 msgstr ""
 
@@ -10589,14 +10571,14 @@ msgstr "拡大表示"
 #: ../app/actions/view-actions.c:360
 #, fuzzy
 #| msgid "Zoom out"
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom out a lot"
 msgstr "表示倍率を下げて縮小表示します"
 
 #: ../app/actions/view-actions.c:365
 #, fuzzy
 #| msgid "Zoom in"
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom in a lot"
 msgstr "表示倍率を上げて拡大表示します"
 
@@ -11799,29 +11781,21 @@ msgstr ""
 "変更できます。"
 
 #: ../app/config/gimprc-blurbs.h:327
-#, fuzzy
-#| msgid ""
-#| "When enabled, the image window will automatically resize itself whenever "
-#| "the physical image size changes."
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
 "mode."
 msgstr ""
 "この設定がオンのときは、キャンバスサイズ変更時に画像ウィンドウが自動的にサイ"
-"ズ変更されます。"
+"ズ変更されます。この設定はマルチウィンドウモードの時だけ有効になります。"
 
 #: ../app/config/gimprc-blurbs.h:332
-#, fuzzy
-#| msgid ""
-#| "When enabled, the image window will automatically resize itself when "
-#| "zooming into and out of images."
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
 msgstr ""
 "この設定がオンのときは、画像の表示倍率変更時に画像ウィンドウが自動的にサイズ"
-"変更されます。"
+"変更されます。この設定はマルチウィンドウモードの時だけ有効になります。"
 
 #: ../app/config/gimprc-blurbs.h:337
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -11832,6 +11806,8 @@ msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
 msgstr ""
+"有効にすると、GIMP は以前開いていたモニターにウィンドウを復元しようとします。無"
+"効にすると、現在使用中のモニターにウィンドウが表示されます。"
 
 #: ../app/config/gimprc-blurbs.h:345
 msgid ""
@@ -11845,6 +11821,8 @@ msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
 msgstr ""
+"有効にすると、同じツールとツールオプションがすべての入力デバイスで使用されま"
+"す。入力デバイスの変更時にツールの切り替えが発生しません。"
 
 #: ../app/config/gimprc-blurbs.h:354
 msgid ""
@@ -11867,10 +11845,6 @@ msgid "Save the tool options when GIMP exits."
 msgstr "この設定がオンのときは、終了時にツールオプションを保存します。"
 
 #: ../app/config/gimprc-blurbs.h:367
-#, fuzzy
-#| msgid ""
-#| "When enabled, all paint tools will show a preview of the current brush's "
-#| "outline."
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -11889,10 +11863,6 @@ msgstr ""
 "す。)"
 
 #: ../app/config/gimprc-blurbs.h:376
-#, fuzzy
-#| msgid ""
-#| "When enabled, the mouse pointer will be shown over the image while using "
-#| "a paint tool."
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
@@ -15841,19 +15811,19 @@ msgstr "GIMP ウェブサイトへ"
 #: ../app/dialogs/about-dialog.c:130
 msgid "translator-credits"
 msgstr ""
-"SHIRASAKI Yasuhiro\n"
-"Takashi Kido\n"
-"KAMAGASAKO Masatoshi\n"
-"Ryoichi INAGAKI\n"
-"Tadashi Jokagi\n"
-"OKANO Takayoshi\n"
-"Ken Okubo\n"
-"NISHIBORI Kiyotaka\n"
-"ONO Yoshio\n"
-"willelz\n"
-"Kiyotaka NISHIBORI\n"
+"Hajime Taira\n"
 "Jiro Matsuzawa\n"
-"sicklylife"
+"KAMAGASAKO Masatoshi\n"
+"Ken Okubo\n"
+"Kiyotaka NISHIBORI\n"
+"OKANO Takayoshi\n"
+"ONO Yoshio\n"
+"Ryoichi INAGAKI\n"
+"SHIRASAKI Yasuhiro\n"
+"sicklylife\n"
+"Tadashi Jokagi\n"
+"Takashi Kido\n"
+"willelz"
 
 #: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
@@ -16716,7 +16686,7 @@ msgstr "Y(_Y):"
 
 #: ../app/dialogs/offset-dialog.c:221
 msgid "By width/_2, height/2"
-msgstr ""
+msgstr "幅/2, 高さ/2(_2)"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:250
@@ -17666,7 +17636,7 @@ msgstr "エクスポートフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2351
 msgid "Select Default Folder for Exporting Paths"
-msgstr "パスをエクスポートするデフォルトのフォルダーを選択します"
+msgstr "パスをエクスポートするデフォルトのフォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:2355
 msgid "Export the active path only"
@@ -17683,7 +17653,7 @@ msgstr "インポートフォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:2365
 msgid "Select Default Folder for Importing Paths"
-msgstr "パスをインポートするデフォルトのフォルダーを選択します"
+msgstr "パスをインポートするデフォルトのフォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:2369
 msgid "Merge imported paths"
@@ -17801,20 +17771,16 @@ msgid "Action Search"
 msgstr "操作検索"
 
 #: ../app/dialogs/preferences-dialog.c:2582
-#, fuzzy
-#| msgid "Show s_election"
 msgid "Show _unavailable actions"
-msgstr "選択範囲の境界線(_E)"
+msgstr "実行できないアクションを表示する(_U)"
 
 #: ../app/dialogs/preferences-dialog.c:2585
 msgid "Maximum History Size:"
 msgstr "履歴の最大サイズ:"
 
 #: ../app/dialogs/preferences-dialog.c:2589
-#, fuzzy
-#| msgid "Clear Undo History"
 msgid "Clear Action History"
-msgstr "作業履歴の消去"
+msgstr "アクション履歴の消去"
 
 #: ../app/dialogs/preferences-dialog.c:2603
 #: ../app/dialogs/preferences-dialog.c:2604
@@ -18020,10 +17986,8 @@ msgid "Show image size"
 msgstr "キャンバスサイズを表示"
 
 #: ../app/dialogs/preferences-dialog.c:2906
-#, fuzzy
-#| msgid "Show image size"
 msgid "Show drawable size"
-msgstr "キャンバスサイズを表示"
+msgstr "描画領域のサイズを表示"
 
 #: ../app/dialogs/preferences-dialog.c:2919
 msgid "Image Title Format"
@@ -18108,7 +18072,7 @@ msgstr "一時フォルダー:"
 
 #: ../app/dialogs/preferences-dialog.c:3125
 msgid "Select Folder for Temporary Files"
-msgstr "一時ファイル用フォルダーを選択します"
+msgstr "一時ファイル用フォルダーの選択"
 
 #: ../app/dialogs/preferences-dialog.c:3129
 msgid "Swap folder:"
@@ -20494,13 +20458,11 @@ msgstr "ポスタリゼーションのレベル"
 
 #: ../app/operations/gimpoperationsemiflatten.c:84
 msgid "Replace partial transparency with a color"
-msgstr ""
+msgstr "半透明な部分を不透明な色に置き換えます"
 
 #: ../app/operations/gimpoperationsemiflatten.c:96
-#, fuzzy
-#| msgid "Text Color"
 msgid "The color"
-msgstr "文字色"
+msgstr "色"
 
 #: ../app/operations/gimpoperationthreshold.c:84
 #: ../app/tools/gimpthresholdtool.c:94
@@ -20522,17 +20484,15 @@ msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
 msgstr ""
+"アルファチャンネルをしきい値で処理して透過を完全な透明か完全な不透明にします"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:90
-#, fuzzy
-#| msgctxt "histogram-channel"
-#| msgid "Value"
 msgid "Value"
-msgstr "明度"
+msgstr "値"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:91
 msgid "The alpha value"
-msgstr ""
+msgstr "アルファ値"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -21869,7 +21829,7 @@ msgstr "グラデーション用フォルダーの選択"
 #: ../app/pdb/plug-in-compat-cmds.c:3632
 msgctxt "undo-type"
 msgid "Semi-Flatten"
-msgstr ""
+msgstr "半統合"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3675
 msgctxt "undo-type"
@@ -22585,10 +22545,8 @@ msgid "New Seed"
 msgstr "新規パレット"
 
 #: ../app/propgui/gimppropgui.c:390
-#, fuzzy
-#| msgid "Colorize the Image"
 msgid "Pick color from the image"
-msgstr "画像の着色"
+msgstr "画像から色を拾います"
 
 #: ../app/propgui/gimppropgui.c:540
 msgid "This operation has no editable properties"
@@ -26395,17 +26353,12 @@ msgid "Select the next event arriving from the controller"
 msgstr "このコントローラーからの次のイベントを選択"
 
 #: ../app/widgets/gimpcontrollereditor.c:374
-#, fuzzy
-#| msgctxt "gradients-action"
-#| msgid "Edit gradient"
 msgid "_Edit event"
-msgstr "グラデーションエディターで編集します"
+msgstr "イベントの編集(_E)"
 
 #: ../app/widgets/gimpcontrollereditor.c:382
-#, fuzzy
-#| msgid "_Grab event"
 msgid "_Clear event"
-msgstr "イベントを横取り(_G)"
+msgstr "イベントの消去(_C)"
 
 #: ../app/widgets/gimpcontrollereditor.c:521
 #, c-format
@@ -27250,10 +27203,8 @@ msgstr "Y方向の傾き"
 #.
 #: ../app/widgets/gimpdeviceinfoeditor.c:147
 #: ../app/widgets/gimpdynamicseditor.c:165
-#, fuzzy
-#| msgid "Rotating"
 msgid "Wheel/Rotation"
-msgstr "回転しています"
+msgstr "ホイール/回転"
 
 #. the axes
 #. The axes of an input device
@@ -27977,16 +27928,12 @@ msgid "Pick a preset from the list"
 msgstr "あらかじめ設定されたパラメーターを一覧から選んで代入します"
 
 #: ../app/widgets/gimpsettingsbox.c:324
-#, fuzzy
-#| msgid "Save curves settings to file"
 msgid "Save the current settings as named preset"
-msgstr "カーブ設定をファイルに保存します"
+msgstr "現在の設定をプリセットとして名前を付けて保存します"
 
 #: ../app/widgets/gimpsettingsbox.c:342
-#, fuzzy
-#| msgid "Manage Saved Settings"
 msgid "Manage presets"
-msgstr "プリセットデータの編集"
+msgstr "プリセットの管理"
 
 #: ../app/widgets/gimpsettingsbox.c:356
 msgid "_Import Current Settings from File..."
@@ -27997,50 +27944,36 @@ msgid "_Export Current Settings to File..."
 msgstr "現在の設定をファイルにエクスポート(_E)..."
 
 #: ../app/widgets/gimpsettingsbox.c:369
-#, fuzzy
-#| msgid "Manage Saved Settings"
 msgid "_Manage Saved Presets..."
-msgstr "プリセットデータの編集"
+msgstr "保存されたプリセットの管理(_M)..."
 
 #: ../app/widgets/gimpsettingsbox.c:609
-#, fuzzy
-#| msgid "Save Settings to Favorites"
 msgid "Save Settings as Named Preset"
-msgstr "設定をプリセットに追加"
+msgstr "設定に名前を付けてプリセットに追加"
 
 #: ../app/widgets/gimpsettingsbox.c:612
-#, fuzzy
-#| msgid "Enter a name for the settings"
 msgid "Enter a name for the preset"
-msgstr "この設定のプリセット名:"
+msgstr "プリセット名を入力してください"
 
 #: ../app/widgets/gimpsettingsbox.c:613
 msgid "Saved Settings"
 msgstr "保存済設定"
 
 #: ../app/widgets/gimpsettingsbox.c:654
-#, fuzzy
-#| msgid "Manage Saved Settings"
 msgid "Manage Saved Presets"
-msgstr "プリセットデータの編集"
+msgstr "保存されたプリセットの管理"
 
 #: ../app/widgets/gimpsettingseditor.c:192
-#, fuzzy
-#| msgid "Import settings from a file"
 msgid "Import presets from a file"
-msgstr "プリセットデータをファイルからインポートします"
+msgstr "プリセットをファイルからインポートします"
 
 #: ../app/widgets/gimpsettingseditor.c:201
-#, fuzzy
-#| msgid "Export the selected settings to a file"
 msgid "Export the selected presets to a file"
-msgstr "選択したプリセットデータをファイルにエクスポートします"
+msgstr "選択したプリセットをファイルにエクスポートします"
 
 #: ../app/widgets/gimpsettingseditor.c:210
-#, fuzzy
-#| msgid "Delete the selected settings"
 msgid "Delete the selected preset"
-msgstr "選択したプリセットデータを削除します"
+msgstr "選択したプリセットを削除します"
 
 #: ../app/widgets/gimpsizebox.c:455
 #, c-format
