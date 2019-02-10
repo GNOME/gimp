@@ -642,9 +642,9 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
                                   GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
 
   if (scrolling)
-    gtk_widget_set_size_request (options_sw, -1, workarea.height / 2);
+    gtk_widget_set_size_request (options_sw, minimum.width, workarea.height / 2);
   else
-    gtk_widget_set_size_request (options_sw, -1, -1);
+    gtk_widget_set_size_request (options_sw, minimum.width, minimum.height);
 
   g_object_unref (options_gui);
   g_object_unref (options_box);
