@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-01 16:49+0000\n"
-"PO-Revision-Date: 2019-02-09 21:54+0900\n"
+"PO-Revision-Date: 2019-02-11 00:30+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -5212,12 +5212,9 @@ msgid "_Apply Canvas..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:182
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display _Filters..."
 msgctxt "filters-action"
 msgid "Apply _Lens..."
-msgstr "ディスプレイフィルター(_F)..."
+msgstr "レンズ効果(_L)..."
 
 #: ../app/actions/filters-actions.c:187
 msgctxt "filters-action"
@@ -5320,11 +5317,9 @@ msgid "_Curves..."
 msgstr "トーンカーブ(_C)..."
 
 #: ../app/actions/filters-actions.c:272
-#, fuzzy
-#| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "_Deinterlace..."
-msgstr "脱色(_D)..."
+msgstr "インターレース除去(_D)..."
 
 #: ../app/actions/filters-actions.c:277
 #, fuzzy
@@ -5399,14 +5394,12 @@ msgstr ""
 #: ../app/actions/filters-actions.c:327
 msgctxt "filters-action"
 msgid "_Emboss..."
-msgstr ""
+msgstr "エンボス(_E)..."
 
 #: ../app/actions/filters-actions.c:332
-#, fuzzy
-#| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "En_grave..."
-msgstr "フェード(_F)..."
+msgstr "彫金(_G)..."
 
 #: ../app/actions/filters-actions.c:337
 msgctxt "filters-action"
@@ -5429,12 +5422,12 @@ msgstr "画像の拡大・縮小(_S)..."
 #: ../app/actions/filters-actions.c:352
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
-msgstr ""
+msgstr "ガウスぼかし(_G)..."
 
 #: ../app/actions/filters-actions.c:357
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
-msgstr ""
+msgstr "選択的ガウスぼかし(_S)..."
 
 #: ../app/actions/filters-actions.c:362
 #, fuzzy
@@ -5451,7 +5444,7 @@ msgstr "グリッド(_G)..."
 #: ../app/actions/filters-actions.c:372
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr ""
+msgstr "ハイパス(_H)..."
 
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
@@ -5479,15 +5472,12 @@ msgstr "グラデーションの編集(_E)..."
 #: ../app/actions/filters-actions.c:397
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
-msgstr ""
+msgstr "万華鏡(_K)..."
 
 #: ../app/actions/filters-actions.c:402
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "Open _Location..."
 msgctxt "filters-action"
 msgid "Lens Distortion..."
-msgstr "場所を開く(_L)..."
+msgstr "レンズ補正..."
 
 #: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
@@ -5525,12 +5515,9 @@ msgid "_Maze..."
 msgstr "フェード(_F)..."
 
 #: ../app/actions/filters-actions.c:437
-#, fuzzy
-#| msgctxt "colormap-action"
-#| msgid "_Edit Color..."
 msgctxt "filters-action"
 msgid "_Median Blur..."
-msgstr "色の変更(_E)..."
+msgstr "メディアンぼかし(_M)..."
 
 #: ../app/actions/filters-actions.c:442
 #, fuzzy
@@ -5543,25 +5530,22 @@ msgstr "チャンネルの追加(_N)..."
 #: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Mosaic..."
-msgstr ""
+msgstr "モザイク(_M)..."
 
 #: ../app/actions/filters-actions.c:452
-#, fuzzy
-#| msgctxt "tools-action"
-#| msgid "_Arbitrary Rotation..."
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
-msgstr "任意の回転(_A)..."
+msgstr "円形モーションぼかし(_C)..."
 
 #: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
-msgstr ""
+msgstr "線形モーションぼかし(_L)..."
 
 #: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr ""
+msgstr "放射形モーションぼかし(_Z)..."
 
 #: ../app/actions/filters-actions.c:467
 #, fuzzy
@@ -5611,11 +5595,9 @@ msgid "_RGB Noise..."
 msgstr "ノイズ(_N)"
 
 #: ../app/actions/filters-actions.c:502
-#, fuzzy
-#| msgid "Colori_ze..."
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
-msgstr "着色(_Z)..."
+msgstr "ノイズ軽減(_E)..."
 
 #: ../app/actions/filters-actions.c:507
 #, fuzzy
@@ -5664,11 +5646,9 @@ msgid "_Photocopy..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:542
-#, fuzzy
-#| msgid "_Posterize..."
 msgctxt "filters-action"
 msgid "_Pixelize..."
-msgstr "ポスタリゼーション(_P)..."
+msgstr "モザイク処理(_P)..."
 
 #: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
@@ -5678,7 +5658,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
-msgstr ""
+msgstr "極座標(_O)..."
 
 #: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
@@ -5695,7 +5675,7 @@ msgstr "ケージ変形(_C)"
 #: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr ""
+msgstr "赤目除去(_R)..."
 
 #: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
@@ -5713,7 +5693,7 @@ msgstr "ノイズ(_N)"
 #: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Ripple..."
-msgstr ""
+msgstr "波紋(_R)..."
 
 #: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
@@ -5736,12 +5716,9 @@ msgid "S_hadows-Highlights..."
 msgstr "影-ハイライト(_H)..."
 
 #: ../app/actions/filters-actions.c:607
-#, fuzzy
-#| msgctxt "drawable-action"
-#| msgid "_Offset..."
 msgctxt "filters-action"
 msgid "_Shift..."
-msgstr "オフセット(_O)..."
+msgstr "ずらし(_S)..."
 
 #: ../app/actions/filters-actions.c:612
 #, fuzzy
@@ -5758,7 +5735,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
-msgstr ""
+msgstr "シンメトリックニアレストネイバー(_S)..."
 
 #: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
@@ -5766,11 +5743,9 @@ msgid "_Softglow..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:632
-#, fuzzy
-#| msgid "Colori_ze..."
 msgctxt "filters-action"
 msgid "Spheri_ze..."
-msgstr "着色(_Z)..."
+msgstr "球面化(_Z)..."
 
 #: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
@@ -5827,7 +5802,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr ""
+msgstr "シャープ (アンシャープマスク)(_U)..."
 
 #: ../app/actions/filters-actions.c:687
 #, fuzzy
@@ -21551,7 +21526,7 @@ msgstr "ディスプレイ"
 #: ../app/pdb/plug-in-compat-cmds.c:347
 msgctxt "undo-type"
 msgid "Gaussian Blur"
-msgstr ""
+msgstr "ガウスぼかし"
 
 #: ../app/pdb/plug-in-compat-cmds.c:412
 msgctxt "undo-type"
@@ -21574,12 +21549,9 @@ msgid "Apply Canvas"
 msgstr "レイヤーマスクの適用"
 
 #: ../app/pdb/plug-in-compat-cmds.c:552
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Apply Layer Mask"
 msgctxt "undo-type"
 msgid "Apply Lens"
-msgstr "レイヤーマスクを適用"
+msgstr "レンズ効果"
 
 #: ../app/pdb/plug-in-compat-cmds.c:598
 #, fuzzy
@@ -21644,11 +21616,9 @@ msgid "Cubism"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:1217
-#, fuzzy
-#| msgid "_Desaturate..."
 msgctxt "undo-type"
 msgid "Deinterlace"
-msgstr "脱色(_D)..."
+msgstr "インターレース除去"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1296
 #, fuzzy
@@ -21666,7 +21636,7 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:1499
 msgctxt "undo-type"
 msgid "Engrave"
-msgstr ""
+msgstr "彫金"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1572
 #, fuzzy
@@ -21715,7 +21685,7 @@ msgstr "置換"
 #: ../app/pdb/plug-in-compat-cmds.c:2359
 msgctxt "undo-type"
 msgid "Lens Distortion"
-msgstr ""
+msgstr "レンズ補正"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2399
 #, fuzzy
@@ -21730,16 +21700,14 @@ msgid "Maze"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:2549 ../app/pdb/plug-in-compat-cmds.c:2633
-#, fuzzy
-#| msgid "Motion only"
 msgctxt "undo-type"
 msgid "Motion Blur"
-msgstr "ブラシ移動時のみ以下を適用"
+msgstr "モーションぼかし"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2734
 msgctxt "undo-type"
 msgid "Mosaic"
-msgstr ""
+msgstr "モザイク"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2796
 msgctxt "undo-type"
@@ -21752,12 +21720,9 @@ msgid "Paper Tile"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:2927 ../app/pdb/plug-in-compat-cmds.c:2970
-#, fuzzy
-#| msgctxt "color-frame-mode"
-#| msgid "Pixel"
 msgctxt "undo-type"
 msgid "Pixelize"
-msgstr "ピクセル値"
+msgstr "モザイク処理"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3021
 msgctxt "undo-type"
@@ -21767,12 +21732,12 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:3075
 msgctxt "undo-type"
 msgid "Polar Coordinates"
-msgstr ""
+msgstr "極座標"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3115
 msgctxt "undo-type"
 msgid "Red Eye Removal"
-msgstr ""
+msgstr "赤目除去"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3168
 #, fuzzy
@@ -21804,12 +21769,9 @@ msgid "RGB Noise"
 msgstr "ノイズ(_N)"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3419
-#, fuzzy
-#| msgctxt "dash-preset"
-#| msgid "Stipples"
 msgctxt "undo-type"
 msgid "Ripple"
-msgstr "点描"
+msgstr "波紋"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3544
 #, fuzzy
@@ -21820,11 +21782,9 @@ msgid "Noisify"
 msgstr "ノイズ(_N)"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3588
-#, fuzzy
-#| msgid "Select Gradient Folders"
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
-msgstr "グラデーション用フォルダーの選択"
+msgstr "選択的ガウスぼかし"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3632
 msgctxt "undo-type"
@@ -21834,7 +21794,7 @@ msgstr "半統合"
 #: ../app/pdb/plug-in-compat-cmds.c:3675
 msgctxt "undo-type"
 msgid "Shift"
-msgstr ""
+msgstr "ずらし"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3778
 #, fuzzy
@@ -21871,7 +21831,7 @@ msgstr "アルファチャンネルのしきい値"
 #: ../app/pdb/plug-in-compat-cmds.c:4018
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
-msgstr ""
+msgstr "シャープ (アンシャープマスク)"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4064
 msgctxt "undo-type"
@@ -22384,23 +22344,16 @@ msgid "R_eset Color"
 msgstr "色のリセット(_E)"
 
 #: ../app/propgui/gimppropgui-motion-blur-circular.c:132
-#, fuzzy
-#| msgctxt "tools-action"
-#| msgid "_Arbitrary Rotation..."
 msgid "Circular Motion Blur: "
-msgstr "任意の回転(_A)..."
+msgstr "円形モーションぼかし: "
 
 #: ../app/propgui/gimppropgui-motion-blur-linear.c:126
-#, fuzzy
-#| msgid "Motion only"
 msgid "Linear Motion Blur: "
-msgstr "ブラシ移動時のみ以下を適用"
+msgstr "線形モーションぼかし: "
 
 #: ../app/propgui/gimppropgui-motion-blur-zoom.c:127
-#, fuzzy
-#| msgid "Motion only"
 msgid "Zoom Motion Blur: "
-msgstr "ブラシ移動時のみ以下を適用"
+msgstr "放射形モーションぼかし: "
 
 #: ../app/propgui/gimppropgui-panorama-projection.c:125
 #, fuzzy
