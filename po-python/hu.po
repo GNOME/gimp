@@ -1,61 +1,60 @@
-# Hungarian translation of gimp-python.
-# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012 Free Software Foundation, Inc.
+# Hungarian translation for gimp-python.
+# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012, 2013, 2014, 2018, 2019 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-python package.
 #
-# Arpad Biro .
-# Andras Timar <timar@gnome.hu>, 2001, 2003.
-# Emese Kovacs <emese@gnome.hu>, 2001.
-# Laszlo Dvornik <dvornik@gnome.hu>, 2004.
-# Arpad Biro <biro arpad gmail>, 2004, 2007, 2008.
-# Gabor Kelemen <kelemeng@gnome.hu>, 2007, 2008, 2012.
-# Gabor Kelemen <kelemeng at gnome dot hu>, 2012.
-# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014.
+# Andras Timar <timar at gnome dot hu>, 2001, 2003.
+# Emese Kovacs <emese at gnome dot hu>, 2001.
+# Laszlo Dvornik <dvornik at gnome dot hu>, 2004.
+# Arpad Biro <biro arpad  at gmail dot com>, 2004, 2007, 2008.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2012.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python.gimp-2-6\n"
+"Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2014-03-05 18:38+0000\n"
-"PO-Revision-Date: 2014-03-05 20:55+0100\n"
-"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
+"POT-Creation-Date: 2019-02-01 16:53+0000\n"
+"PO-Revision-Date: 2019-02-08 08:11+0100\n"
+"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
 msgstr "Hiányzó kivételinformációk"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Hiba történt a következő futtatásakor: %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
 msgstr "_További információk"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
 msgstr "Nem"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
 msgstr "Igen"
 
-#: ../plug-ins/pygimp/gimpfu.py:597 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu fájlválasztás"
 
-#: ../plug-ins/pygimp/gimpfu.py:643
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu mappaválasztás"
 
-#: ../plug-ins/pygimp/gimpfu.py:732
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "A(z) „%s” bemenete érvénytelen"
@@ -289,7 +288,7 @@ msgstr "Szelet / Tömb"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Autoslice (fg->bg)"
-msgstr "Automatikus szeletelés (fg->bg)"
+msgstr "Automatikus szeletelés (előtér->háttér)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Partitioned"
@@ -309,7 +308,6 @@ msgid "_Ascending"
 msgstr "Nö_vekvő"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-#| msgid "Channel to _sort"
 msgid "Secondary Channel to s_ort"
 msgstr "_Rendezendő másodlagos csatorna"
 
@@ -346,84 +344,84 @@ msgid "Slice"
 msgstr "Szeletelés"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Kép vágása a segédvonalak mentén – képeket és egy HTML-táblázathoz való "
 "kódot hoz létre"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "_Szeletelés…"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Útvonal a HTML-exportáláshoz"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Fájlnév az exportáláshoz"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Képnév-előtag"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Képformátum"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Különálló képmappa"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Mappa a kép-exportáláshoz"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Helykihagyás a táblázat-elemek közt"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript-kód rámutatáshoz és kattintáshoz"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Animáció kihagyása a táblafeliratoknál"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Python-konzol"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "_Tallózás…"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Python eljárásböngésző"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "„%s” nem nyitható meg írásra: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "„%s” nem írható: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "A Python-Fu konzolkimenetének mentése"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interaktív GIMP-Python-fordító"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "_Konzol"
 
@@ -455,33 +453,340 @@ msgstr "Vetett árnyék _X-eltolása"
 msgid "Drop shadow _Y displacement"
 msgstr "Vetett árnyék _Y-eltolása"
 
-#~ msgid "Color _model"
-#~ msgstr "Szí_nmodell"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+msgid "Spyro Layer"
+msgstr "Spiro réteg"
 
-#~ msgid "RGB"
-#~ msgstr "RGB"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+msgid "Circle"
+msgstr "Kör"
 
-#~ msgid "HSV"
-#~ msgstr "HSV"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+msgid "Polygon-Star"
+msgstr "Sokszög-csillag"
 
-#~ msgid "Red or Hue"
-#~ msgstr "Vörös vagy árnyalat"
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+msgid "Sine"
+msgstr "Szinusz"
 
-#~ msgid "Blue or Value"
-#~ msgstr "Kék vagy érték"
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+msgid "Bumps"
+msgstr "Buckák"
 
-#~ msgid "Create a new brush with characters from a text sequence"
-#~ msgstr "Új ecset létrehozása egy szöveg karaktereiből"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+msgid "Rack"
+msgstr "Állvány"
 
-#~ msgid "New Brush from _Text..."
-#~ msgstr "Új _ecset szövegből…"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+msgid "Frame"
+msgstr "Keret"
 
-#~ msgid "Font"
-#~ msgstr "Betűkészlet"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+msgid "Selection"
+msgstr "Kijelölés"
 
-#~ msgid "Pixel Size"
-#~ msgstr "Képpontméret"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+msgid "Pencil"
+msgstr "Ceruza"
 
-#~| msgid "Text file"
-#~ msgid "Text"
-#~ msgstr "Szöveg"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+msgid "AirBrush"
+msgstr "Festékszóró"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+msgid "Preview"
+msgstr "Előnézet"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+msgid "Stroke"
+msgstr "Vonal"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+msgid "PaintBrush"
+msgstr "Festőecset"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+msgid "Ink"
+msgstr "Tus"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+msgid "MyPaintBrush"
+msgstr "MyPaint ecset"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+msgid "Spyrograph"
+msgstr "Spirográf"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+msgid "Epitrochoid"
+msgstr "Epitrochoid"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+msgid "Curve Type"
+msgstr "Görbe típusa"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Az epitrochoid minta olyan, mint amikor egy mozgó fogaskerék egy fix "
+"fogaskerék körül forog."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+msgid "Tool"
+msgstr "Eszköz"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+msgid ""
+"The tool with which to draw the pattern.The Preview tool just draws quickly."
+msgstr ""
+"Az eszköz, amellyel ki kell rajzolni a mintát. Az Előnézet eszköz csak "
+"gyorsan rajzol."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+msgid "Long Gradient"
+msgstr "Hosszú színátmenet"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"Ha nincs bejelölve, akkor a jelenlegi eszköz beállításai lesznek használva. "
+"Ha be van jelölve, akkor egy hosszú színátmenet lesz használva (hogy "
+"illeszkedjen a minta hosszához), amely a színátmenet-eszköz beállításaiban "
+"szereplő jelenlegi színátmenetre és ismétlési módra épül."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+msgid "Specify pattern using one of the following tabs:"
+msgstr "Adja meg a mintát a következő lapok egyikének használatával:"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"A mintát csak az aktív lap adja meg. A játékkészlet hasonló a "
+"fogaskerekekhez, de fogaskerekeket és furatszámokat használ, amelyek "
+"megtalálhatóak a játékkészletetekben. Ha követi a játékkészletek leírásaiban "
+"lévő utasításokat, akkor az eredmények hasonlóak lesznek."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"A rögzített fogaskerék fogainak száma. A rögzített fogaskerék mérete arányos "
+"a fogak számával."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+msgid "Fixed Gear Teeth"
+msgstr "Rögzített fogaskerék fog"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"A mozgó fogaskerék fogainak száma. A mozgó fogaskerék mérete arányos a fogak "
+"számával."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+msgid "Moving Gear Teeth"
+msgstr "Mozgó fogaskerék fog"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+msgid "Hole percent"
+msgstr "Furat százaléka"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"Milyen messze van a furat a mozgó fogaskerék közepétől. A 100% azt jelenti, "
+"hogy a furat a fogaskerék szélén van."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+msgid "Hole Number"
+msgstr "Furat száma"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"Az 1-es furat a fogaskerék szélénél van. A maximális furatszám a középpont "
+"közelében van. A maximális furatszám minden egyes fogaskeréknél különböző."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+msgid "Toy Kit"
+msgstr "Játékkészlet"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+msgid "Gears"
+msgstr "Fogaskerekek"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation"
+msgstr "Forgatás"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+"A minta forgatása fokokban. A mozgó fogaskerék kezdőpozíciója a rögzített "
+"fogaskerékben."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+msgid "Shape"
+msgstr "Alak"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"A jelenlegi kiválasztáson belül használandó rögzített fogaskerék alakja. Az "
+"állvány egy hosszú, lekerekített szélű alakzat, amelyet a játékkészletek "
+"biztosítanak. A keret körbeöleli a négyszögletes kiválasztás határait, "
+"használjon hole=100 értéket a Fogaskerék megadásban, hogy érintse a határt. "
+"A kiválasztás körbeöleli a jelenlegi kiválasztás határait – próbáljon ki "
+"valamilyen nem négyzetes alakzatot."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Sides"
+msgstr "Oldalak"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Number of sides of the shape."
+msgstr "Az alakzat oldalainak száma."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph"
+msgstr "Torzítás"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr ""
+"A rögzített fogaskerékalak torzítása. Csak egyes alakzatokra van hatása."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "A rögzített fogaskerék forgatása szögben"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin (px)"
+msgstr "Margó (képpont)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin from edge of selection."
+msgstr "Margó a kijelölés szélétől."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+msgid "Make width and height equal"
+msgstr "A szélesség és magasság egyenlővé tétele"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"Ha nincs bejelölve, akkor a minta kitölti a jelenlegi képet vagy "
+"kiválasztást. Ha be van jelölve, akkor a minta egyforma szélességű és "
+"magasságú lesz, valamint középre lesz igazítva."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
+msgid "Redraw"
+msgstr "Újrarajzolás"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"Ha változtat egy eszköz beállításain, változtat a színen vagy változtat a "
+"kijelölésen, akkor nyomja ezt meg, hogy megnézze a minta előnézetet."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
+msgid "Reset"
+msgstr "Visszaállítás"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
+msgid "Cancel"
+msgstr "Mégse"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
+msgid "OK"
+msgstr "Rendben"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+msgid ""
+"Keep\n"
+"Layer"
+msgstr ""
+"Réteg\n"
+"megtartása"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
+msgid ""
+"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
+"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
+"redrawn on the layer that was active when the plugin was launched."
+msgstr ""
+"Ha be van jelölve, akkor a Rendben megnyomásakor a spiro réteg megmarad, "
+"és a bővítmény gyorsan kilép. Ha nincs bejelölve, akkor a spiro réteg "
+"törlésre kerül, és a minta újra lesz rajzolva azon a rétegen, amely aktív "
+"volt a bővítmény futtatásakor."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+msgid "Spyrogimp"
+msgstr "Spirogimp"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr ""
+"Spirográfok rajzolása a jelenlegi eszköz beállításaival és kijelölésével."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+msgid "Curve Pattern"
+msgstr "Ívminta"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+msgid "Fixed Gear"
+msgstr "Rögzített fogaskerék"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+msgid "Size"
+msgstr "Méret"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+msgid "Rendering Pattern"
+msgstr "Minta megjelenítése"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+msgid "Please wait : Rendering Pattern"
+msgstr "Kis türelmet: Minta megjelenítése"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+msgid "Spyrogimp..."
+msgstr "Spirogimp…"
