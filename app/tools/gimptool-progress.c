@@ -166,7 +166,7 @@ gimp_tool_progress_start (GimpProgress *progress,
                     G_CALLBACK (gimp_tool_progress_key_press),
                     tool);
 
-  tool->progress_cancelable;
+  tool->progress_cancelable = cancelable;
 
   return progress;
 }
