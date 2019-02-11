@@ -37,8 +37,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-08 13:38+0100\n"
-"PO-Revision-Date: 2019-02-09 01:17+0100\n"
+"POT-Creation-Date: 2019-02-11 20:57+0100\n"
+"PO-Revision-Date: 2019-02-11 20:58+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -209,7 +209,9 @@ msgstr "Nuovo plugin per il caricamento/esportazione del formato DDS"
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
-msgstr "Competa riscrittura del plugin Spyrogimp con più opzioni e migliore interazione"
+msgstr ""
+"Competa riscrittura del plugin Spyrogimp con più opzioni e migliore "
+"interazione"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
@@ -459,11 +461,15 @@ msgstr ""
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
-msgstr "Grandi ottimizzazioni del nucleo nel disegno e nella visualizzazione, inclusa la parallelizzazione del codice di disegno"
+msgstr ""
+"Grandi ottimizzazioni del nucleo nel disegno e nella visualizzazione, "
+"inclusa la parallelizzazione del codice di disegno"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
-msgstr "Le simmetrie ora vengono mantenute nei file XCF (salvate come parassiti dell'immagine)"
+msgstr ""
+"Le simmetrie ora vengono mantenute nei file XCF (salvate come parassiti "
+"dell'immagine)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid ""
@@ -490,7 +496,11 @@ msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set"
-msgstr "Il debug dei plugin è migliorato; ora genera le tracce dello stack dei plugin tramite l'opzione a riga di comando --stack-trace-mode non solo alla ricezione di segnali ma anche quando ci sono avvertimenti e errori critici, se viene impostata la chiave di debug \"fatal-warnings\""
+msgstr ""
+"Il debug dei plugin è migliorato; ora genera le tracce dello stack dei "
+"plugin tramite l'opzione a riga di comando --stack-trace-mode non solo alla "
+"ricezione di segnali ma anche quando ci sono avvertimenti e errori critici, "
+"se viene impostata la chiave di debug \"fatal-warnings\""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
@@ -1008,7 +1018,7 @@ msgid "Select"
 msgstr "Seleziona"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:790
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:793
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Modelli"
@@ -12488,26 +12498,26 @@ msgid "View as grid"
 msgstr "Mostra come griglia"
 
 #. initialize babl fishes
-#: ../app/core/gimp.c:502 ../app/core/gimp.c:532
+#: ../app/core/gimp.c:505 ../app/core/gimp.c:535
 msgid "Initialization"
 msgstr "Inizializzazione"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:512
+#: ../app/core/gimp.c:515
 msgid "Internal Procedures"
 msgstr "Procedure interne"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:786
 msgid "Looking for data files"
 msgstr "Inizializzazione"
 
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:786
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize the module list
-#: ../app/core/gimp.c:794 ../app/dialogs/preferences-dialog.c:3229
+#: ../app/core/gimp.c:797 ../app/dialogs/preferences-dialog.c:3229
 msgid "Modules"
 msgstr "Moduli"
 
@@ -12680,62 +12690,47 @@ msgstr "Errore fatale nel file pennello: altezza = 0."
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "Errore fatale nel file pennello: byte = 0."
 
-#: ../app/core/gimpbrush-load.c:195
+#: ../app/core/gimpbrush-load.c:196
 #, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
 msgstr ""
 "Errore fatale di analisi nel file pennello: %dx%d supera la dimensione "
 "massima."
 
-#: ../app/core/gimpbrush-load.c:221
+#: ../app/core/gimpbrush-load.c:222
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr "Errore fatale di analisi nel file pennello: profondità sconosciuta %d."
 
-#: ../app/core/gimpbrush-load.c:233
+#: ../app/core/gimpbrush-load.c:234
 #, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr "Errore fatale di analisi nel file pennello: versione sconosciuta %d."
 
-#: ../app/core/gimpbrush-load.c:241
+#: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Formato pennello non supportato"
 
-#: ../app/core/gimpbrush-load.c:253
+#: ../app/core/gimpbrush-load.c:254
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr ""
 "Dati di intestazione non validi in '%s': nome pennello troppo lungo=%lu"
 
-#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrushgenerated-load.c:126
+#: ../app/core/gimpbrush-load.c:272 ../app/core/gimpbrushgenerated-load.c:126
 #: ../app/core/gimpbrushpipe-load.c:74
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: ../app/core/gimpbrush-load.c:278 ../app/core/gimppattern-load.c:141
+#: ../app/core/gimpbrush-load.c:279 ../app/core/gimppattern-load.c:141
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:570
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: ../app/core/gimpbrush-load.c:349
-#, c-format
-msgid ""
-"Fatal parse error in brush file:\n"
-"Unsupported brush depth %d\n"
-"GIMP brushes must be GRAY or RGBA.\n"
-"This might be an obsolete GIMP brush file, try loading it as image and save "
-"it again."
-msgstr ""
-"Errore fatale di analisi nel file pennello:\n"
-"Profondità pennello non supportata %d\n"
-"I pennelli di GIMP devono essere in scala di grigi o RGBA.\n"
-"Potrebbe trattarsi di un file pennello obsoleto di GIMP; provare a caricarlo "
-"come immagine e salvarlo nuovamente."
-
-#: ../app/core/gimpbrush-load.c:396
+#: ../app/core/gimpbrush-load.c:439
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12746,42 +12741,42 @@ msgstr ""
 "profondita pennello non supportata %d\n"
 "I pennelli di GIMP devono essere grigi o RGBA."
 
-#: ../app/core/gimpbrush-load.c:472
+#: ../app/core/gimpbrush-load.c:515
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "Impossibile decodificare versione formato abr %d."
 
-#: ../app/core/gimpbrush-load.c:590 ../app/core/gimpbrush-load.c:809
+#: ../app/core/gimpbrush-load.c:633 ../app/core/gimpbrush-load.c:852
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
 "Errore fatale di analisi file pennello: valore dimensione del pennello "
 "rovinato."
 
-#: ../app/core/gimpbrush-load.c:677 ../app/core/gimpbrush-load.c:867
+#: ../app/core/gimpbrush-load.c:720 ../app/core/gimpbrush-load.c:910
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Errore fatale di analisi file pennello: dimensioni pennello fuori campo."
 
-#: ../app/core/gimpbrush-load.c:689
+#: ../app/core/gimpbrush-load.c:732
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Errore fatale di analisi file pennello: i pennelli estesi non sono "
 "supportati."
 
-#: ../app/core/gimpbrush-load.c:838
+#: ../app/core/gimpbrush-load.c:881
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "Errore fatale di analisi file pennello: il file sembra troncato: "
 
-#: ../app/core/gimpbrush-load.c:875
+#: ../app/core/gimpbrush-load.c:918
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr ""
 "Errore fatale di analisi file pennello: metodo di compressione sconosciuto."
 
-#: ../app/core/gimpbrush-load.c:1011
+#: ../app/core/gimpbrush-load.c:1054
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
@@ -12789,7 +12784,7 @@ msgstr ""
 "Errore fatale di analisi file pennello: impossibile decodificare versione "
 "formato abr %d."
 
-#: ../app/core/gimpbrush-load.c:1132 ../app/core/gimpbrush-load.c:1150
+#: ../app/core/gimpbrush-load.c:1175 ../app/core/gimpbrush-load.c:1193
 #, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
@@ -13203,7 +13198,8 @@ msgstr "Errore durante il caricamento di \"%s\": "
 msgid "Error loading '%s'"
 msgstr "Errore durante il caricamento di \"%s\""
 
-#: ../app/core/gimpdataloaderfactory.c:474 ../app/xcf/xcf.c:452
+#: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:89
+#: ../app/file-data/file-data-pat.c:95 ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Impossibile aprire \"%s\" in lettura: "
@@ -15865,7 +15861,9 @@ msgstr "Usa OpenCL"
 msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
-msgstr "I driver e il supporto a OpenCL sono sperimentali, si possono verificare rallentamenti e persino blocchi (per favore, fare rapporto)."
+msgstr ""
+"I driver e il supporto a OpenCL sono sperimentali, si possono verificare "
+"rallentamenti e persino blocchi (per favore, fare rapporto)."
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1204
@@ -18310,6 +18308,14 @@ msgstr "\"%s:\" non è uno schema URI valido"
 msgid "Invalid character sequence in URI"
 msgstr "Carattere non valido in sequenza URI"
 
+#: ../app/file-data/file-data.c:58
+msgid "GIMP brush"
+msgstr "Pennello GIMP"
+
+#: ../app/file-data/file-data.c:123
+msgid "GIMP pattern"
+msgstr "Motivo GIMP"
+
 #: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
 #: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
 #: ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
@@ -19431,7 +19437,7 @@ msgstr "Rapporto dimensioni"
 
 #: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:82 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Spaziatura"
 
@@ -24255,7 +24261,7 @@ msgid "Spikes"
 msgstr "Vertici"
 
 #: ../app/widgets/gimpbrusheditor.c:216
-#: ../app/widgets/gimpbrushfactoryview.c:85
+#: ../app/widgets/gimpbrushfactoryview.c:86
 msgid "Percentage of width of brush"
 msgstr "Percentuale di larghezza del pennello"
 
