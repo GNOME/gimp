@@ -41,6 +41,7 @@
 #include "paint/gimp-paint.h"
 
 #include "xcf/xcf.h"
+#include "file-data/file-data.h"
 
 #include "gimp.h"
 #include "gimp-contexts.h"
@@ -282,6 +283,7 @@ gimp_constructed (GObject *object)
   gimp->pdb             = gimp_pdb_new (gimp);
 
   xcf_init (gimp);
+  file_data_init (gimp);
 
   /*  create user and default context  */
   gimp_contexts_init (gimp);
@@ -383,6 +385,7 @@ gimp_finalize (GObject *object)
       g_clear_object (&gimp->tool_info_list);
     }
 
+  file_data_exit (gimp);
   xcf_exit (gimp);
 
   g_clear_object (&gimp->pdb);

@@ -1,0 +1,240 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
+
+#include "libgimpbase/gimpbase.h"
+
+#include "core/core-types.h"
+
+#include "core/gimp.h"
+#include "core/gimpbrush.h"
+#include "core/gimpbrush-load.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer-new.h"
+#include "core/gimpparamspecs.h"
+#include "core/gimptempbuf.h"
+
+#include "pdb/gimpprocedure.h"
+
+#include "file-data-gbr.h"
+
+#include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static GimpImage * file_gbr_brush_to_image (Gimp      *gimp,
+                                            GimpBrush *brush);
+static GimpBrush * file_gbr_image_to_brush (GimpImage *image);
+
+
+/*  public functions  */
+
+GimpValueArray *
+file_gbr_load_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image = NULL;
+  const gchar    *uri;
+  GFile          *file;
+  GInputStream   *input;
+  GError         *my_error = NULL;
+
+  gimp_set_busy (gimp);
+
+  uri  = g_value_get_string (gimp_value_array_index (args, 1));
+  file = g_file_new_for_uri (uri);
+
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+
+  if (input)
+    {
+      GimpBrush *brush = gimp_brush_load_brush (context, file, input, error);
+
+      if (brush)
+        {
+          image = file_gbr_brush_to_image (gimp, brush);
+          g_object_unref (brush);
+        }
+
+      g_object_unref (input);
+    }
+  else
+    {
+      g_propagate_prefixed_error (error, my_error,
+                                  _("Could not open '%s' for reading: "),
+                                  gimp_file_get_utf8_name (file));
+    }
+
+  g_object_unref (file);
+
+  return_vals = gimp_procedure_get_return_values (procedure, image != NULL,
+                                                  error ? *error : NULL);
+
+  if (image)
+    gimp_value_set_image (gimp_value_array_index (return_vals, 1), image);
+
+  gimp_unset_busy (gimp);
+
+  return return_vals;
+}
+
+GimpValueArray *
+file_gbr_save_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  GimpBrush      *brush;
+  const gchar    *uri;
+  GFile          *file;
+  gboolean        success;
+
+  gimp_set_busy (gimp);
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  uri   = g_value_get_string (gimp_value_array_index (args, 3));
+  file  = g_file_new_for_uri (uri);
+
+  brush = file_gbr_image_to_brush (image);
+
+  gimp_data_set_file (GIMP_DATA (brush), file, TRUE, TRUE);
+
+  success = gimp_data_save (GIMP_DATA (brush), error);
+
+  g_object_unref (brush);
+  g_object_unref (file);
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  gimp_unset_busy (gimp);
+
+  return return_vals;
+}
+
+
+/*  private functions  */
+
+static GimpImage *
+file_gbr_brush_to_image (Gimp      *gimp,
+                         GimpBrush *brush)
+{
+  GimpImage         *image;
+  GimpLayer         *layer;
+  const Babl        *format;
+  const gchar       *name;
+  GimpImageBaseType  base_type;
+  gboolean           alpha;
+  gint               width;
+  gint               height;
+  GimpTempBuf       *mask   = gimp_brush_get_mask   (brush);
+  GimpTempBuf       *pixmap = gimp_brush_get_pixmap (brush);
+  GeglBuffer        *buffer;
+  GimpParasite      *parasite;
+
+  if (pixmap)
+    {
+      base_type = GIMP_RGB;
+      alpha     = TRUE;
+    }
+  else
+    {
+      base_type = GIMP_GRAY;
+      alpha     = FALSE;
+    }
+
+  name   = gimp_object_get_name (brush);
+  width  = gimp_temp_buf_get_width  (mask);
+  height = gimp_temp_buf_get_height (mask);
+
+  image = gimp_image_new (gimp, width, height, base_type,
+                          GIMP_PRECISION_U8_GAMMA);
+
+  parasite = gimp_parasite_new ("gimp-brush-name",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (name) + 1, name);
+  gimp_image_parasite_attach (image, parasite);
+  gimp_parasite_free (parasite);
+
+  format = gimp_image_get_layer_format (image, alpha);
+
+  layer = gimp_layer_new (image, width, height, format, name,
+                          1.0, GIMP_LAYER_MODE_NORMAL);
+  gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+  if (pixmap)
+    {
+      guchar *pixmap_data;
+      guchar *mask_data;
+      guchar *p;
+      guchar *m;
+      gint    i;
+
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                       babl_format ("R'G'B' u8"),
+                       gimp_temp_buf_get_data (pixmap), GEGL_AUTO_ROWSTRIDE);
+
+      pixmap_data = gegl_buffer_linear_open (buffer, NULL, NULL, NULL);
+      mask_data   = gimp_temp_buf_get_data (mask);
+
+      for (i = 0, p = pixmap_data, m = mask_data;
+           i < width * height;
+           i++, p += 4, m += 1)
+        {
+          p[3] = *m;
+        }
+
+      gegl_buffer_linear_close (buffer, pixmap_data);
+    }
+  else
+    {
+      guchar *mask_data = gimp_temp_buf_get_data (mask);
+      gint    i;
+
+      for (i = 0; i < width * height; i++)
+        mask_data[i] = 255 - mask_data[i];
+
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                       babl_format ("Y' u8"),
+                       mask_data, GEGL_AUTO_ROWSTRIDE);
+    }
+
+  return image;
+}
+
+static GimpBrush *
+file_gbr_image_to_brush (GimpImage *image)
+{
+  return NULL;
+}
