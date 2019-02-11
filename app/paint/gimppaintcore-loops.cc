@@ -907,11 +907,15 @@ struct CanvasBufferIterator<Base, Access, 0> : Base
         const GeglRectangle            *roi,
         const GeglRectangle            *area) const
   {
-    Base::init (params, state, iter, roi, area);
-
     state->canvas_buffer_iterator = gegl_buffer_iterator_add (
       iter, params->canvas_buffer, area, 0, babl_format ("Y float"),
       Derived::canvas_buffer_access, GEGL_ABYSS_NONE);
+
+    /* initialize the base class *after* initializing the iterator, to make
+     * sure that canvas_buffer is the primary buffer of the iterator, if no
+     * subclass added an iterator first.
+     */
+    Base::init (params, state, iter, roi, area);
   }
 };
 
@@ -1317,8 +1321,6 @@ struct DoLayerBlend : Base
         const GeglRectangle            *roi,
         const GeglRectangle            *area) const
   {
-    Base::init (params, state, iter, roi, area);
-
     state->iterator_base = gegl_buffer_iterator_add (iter, params->dest_buffer,
                                                      area, 0, iterator_format,
                                                      GEGL_ACCESS_WRITE,
@@ -1327,6 +1329,12 @@ struct DoLayerBlend : Base
     gegl_buffer_iterator_add (iter, params->src_buffer, area, 0,
                               iterator_format,
                               GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+    /* initialize the base class *after* initializing the iterator, to make
+     * sure that dest_buffer is the primary buffer of the iterator, if no
+     * subclass added an iterator first.
+     */
+    Base::init (params, state, iter, roi, area);
   }
 
   template <class Derived>
