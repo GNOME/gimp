@@ -375,6 +375,8 @@ libappcore_a_sources = \
 	gimppattern-header.h			\
 	gimppattern-load.c			\
 	gimppattern-load.h			\
+	gimppattern-save.c			\
+	gimppattern-save.h			\
 	gimppatternclipboard.c			\
 	gimppatternclipboard.h			\
 	gimppalette.c				\

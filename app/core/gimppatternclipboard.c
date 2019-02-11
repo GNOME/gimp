@@ -55,9 +55,7 @@ static void       gimp_pattern_clipboard_get_property (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
-#if 0
 static GimpData * gimp_pattern_clipboard_duplicate    (GimpData     *data);
-#endif
 
 static void       gimp_pattern_clipboard_changed      (Gimp         *gimp,
                                                        GimpPattern  *pattern);
@@ -72,17 +70,13 @@ static void
 gimp_pattern_clipboard_class_init (GimpPatternClipboardClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-#if 0
   GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
-#endif
 
   object_class->constructed  = gimp_pattern_clipboard_constructed;
   object_class->set_property = gimp_pattern_clipboard_set_property;
   object_class->get_property = gimp_pattern_clipboard_get_property;
 
-#if 0
   data_class->duplicate      = gimp_pattern_clipboard_duplicate;
-#endif
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp", NULL, NULL,
@@ -150,15 +144,15 @@ gimp_pattern_clipboard_get_property (GObject    *object,
     }
 }
 
-#if 0
 static GimpData *
 gimp_pattern_clipboard_duplicate (GimpData *data)
 {
-  GimpPatternClipboard *pattern = GIMP_PATTERN_CLIPBOARD (data);
+  GimpData *new = g_object_new (GIMP_TYPE_PATTERN, NULL);
 
-  return gimp_pattern_clipboard_new (pattern->gimp);
+  gimp_data_copy (new, data);
+
+  return new;
 }
-#endif
 
 GimpData *
 gimp_pattern_clipboard_new (Gimp *gimp)

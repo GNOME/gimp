@@ -147,7 +147,7 @@ gimp_data_factories_init (Gimp *gimp)
                                        "GIMP Pattern",
                                        gimp_pattern_load,
                                        GIMP_PATTERN_FILE_EXTENSION,
-                                       FALSE);
+                                       TRUE);
   gimp_data_loader_factory_add_fallback (gimp->pattern_factory,
                                          "Pattern from GdkPixbuf",
                                          gimp_pattern_load_pixbuf);
