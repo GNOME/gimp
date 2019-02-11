@@ -17,4 +17,6 @@ libappfile_data_a_SOURCES = \
 	file-data.c	\
 	file-data.h	\
 	file-data-gbr.c	\
-	file-data-gbr.h
+	file-data-gbr.h	\
+	file-data-pat.c	\
+	file-data-pat.h
