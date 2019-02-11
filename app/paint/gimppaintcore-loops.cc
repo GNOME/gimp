@@ -230,18 +230,16 @@ struct AlgorithmBase
    * Algorithms that redefine 'filter' should bitwise-OR their filter with that
    * of their base class.
    */
-  static constexpr guint          filter                 = 0;
+  static constexpr guint          filter               = 0;
 
   /* See CanvasBufferIterator. */
-  static constexpr gint           canvas_buffer_iterator = -1;
-  static constexpr GeglAccessMode canvas_buffer_access   = {};
+  static constexpr GeglAccessMode canvas_buffer_access = {};
 
-  /* The current number of iterators used by the hierarchy.  Algorithms should
-   * use the 'n_iterators' value of their base class as the base-index for
-   * their iterators, and redefine 'n_iterators' by adding the number of
+  /* The current maximal number of iterators used by the hierarchy.  Algorithms
+   * should redefine 'max_n_iterators' by adding the maximal number of
    * iterators they use to this value.
    */
-  static constexpr gint           n_iterators            = 0;
+  static constexpr gint           max_n_iterators      = 0;
 
   /* Non-static data members should be initialized in the constructor, and
    * should not be further modified.
@@ -557,27 +555,39 @@ struct DispatchStipple
  */
 
 template <class Base,
-          guint Access>
+          guint Access,
+          guint BaseAccess = Base::canvas_buffer_access>
 struct CanvasBufferIterator : Base
 {
-  /* The iterator index of the canvas buffer. */
-  static constexpr gint           canvas_buffer_iterator =
-    Base::canvas_buffer_iterator < 0 ? Base::n_iterators :
-                                       Base::canvas_buffer_iterator;
-  /* Used internally. */
-  static constexpr GeglAccessMode canvas_buffer_access   =
-    (GeglAccessMode) (Base::canvas_buffer_access | Access);
-  /* The total number of iterators used by the hierarchy, up to, and including,
-   * the current class.
+  /* The combined canvas-buffer access mode used by the hierarchy, up to, and
+   * including, the current class.
    */
-  static constexpr gint           n_iterators            =
-    Base::canvas_buffer_iterator < 0 ? Base::n_iterators + 1:
-                                       Base::n_iterators;
+  static constexpr GeglAccessMode canvas_buffer_access =
+    (GeglAccessMode) (Base::canvas_buffer_access | Access);
+
+  using Base::Base;
+};
+
+template <class Base,
+          guint Access>
+struct CanvasBufferIterator<Base, Access, 0> : Base
+{
+  /* The combined canvas-buffer access mode used by the hierarchy, up to, and
+   * including, the current class.
+   */
+  static constexpr GeglAccessMode canvas_buffer_access =
+    (GeglAccessMode) Access;
+
+  static constexpr gint           max_n_iterators      =
+    Base::max_n_iterators + 1;
 
   using Base::Base;
 
   template <class Derived>
-  using State = typename Base::template State<Derived>;
+  struct State : Base::template State<Derived>
+  {
+    gint canvas_buffer_iterator;
+  };
 
   template <class Derived>
   void
@@ -589,13 +599,9 @@ struct CanvasBufferIterator : Base
   {
     Base::init (params, state, iter, roi, area);
 
-    if (Base::canvas_buffer_iterator < 0)
-      {
-        gegl_buffer_iterator_add (iter, params->canvas_buffer, area, 0,
-                                  babl_format ("Y float"),
-                                  Derived::canvas_buffer_access,
-                                  GEGL_ABYSS_NONE);
-      }
+    state->canvas_buffer_iterator = gegl_buffer_iterator_add (
+      iter, params->canvas_buffer, area, 0, babl_format ("Y float"),
+      Derived::canvas_buffer_access, GEGL_ABYSS_NONE);
   }
 };
 
@@ -642,7 +648,7 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
     base_type::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
-      (gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
+      (gfloat *) iter->items[state->canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -741,7 +747,7 @@ struct CombinePaintMaskToCanvasMask :
     base_type::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
-      (gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
+      (gfloat *) iter->items[state->canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -831,7 +837,7 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
     base_type::init_step (params, state, iter, roi, area, rect);
 
     state->canvas_pixel =
-      (const gfloat *) iter->items[base_type::canvas_buffer_iterator].data;
+      (const gfloat *) iter->items[state->canvas_buffer_iterator].data;
   }
 
   template <class Derived>
@@ -952,8 +958,7 @@ struct DoLayerBlend : Base
     Base::filter |
     GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND;
 
-  static constexpr gint iterator_base = Base::n_iterators;
-  static constexpr gint n_iterators   = Base::n_iterators + 3;
+  static constexpr gint max_n_iterators = Base::max_n_iterators + 3;
 
   const Babl             *iterator_format;
   GimpOperationLayerMode  layer_mode;
@@ -982,6 +987,8 @@ struct DoLayerBlend : Base
   template <class Derived>
   struct State : Base::template State<Derived>
   {
+    gint           iterator_base;
+
     GeglRectangle  process_roi;
 
     gfloat        *out_pixel;
@@ -1005,9 +1012,10 @@ struct DoLayerBlend : Base
     mask_area.x -= params->mask_offset_x;
     mask_area.y -= params->mask_offset_y;
 
-    gegl_buffer_iterator_add (iter, params->dest_buffer, area, 0,
-                              iterator_format,
-                              GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+    state->iterator_base = gegl_buffer_iterator_add (iter, params->dest_buffer,
+                                                     area, 0, iterator_format,
+                                                     GEGL_ACCESS_WRITE,
+                                                     GEGL_ABYSS_NONE);
 
     gegl_buffer_iterator_add (iter, params->src_buffer, area, 0,
                               iterator_format,
@@ -1032,8 +1040,8 @@ struct DoLayerBlend : Base
   {
     Base::init_step (params, state, iter, roi, area, rect);
 
-    state->out_pixel  = (gfloat *) iter->items[iterator_base + 0].data;
-    state->in_pixel   = (gfloat *) iter->items[iterator_base + 1].data;
+    state->out_pixel  = (gfloat *) iter->items[state->iterator_base + 0].data;
+    state->in_pixel   = (gfloat *) iter->items[state->iterator_base + 1].data;
     state->mask_pixel = NULL;
 
     state->paint_pixel = this->paint_data                        +
@@ -1041,7 +1049,7 @@ struct DoLayerBlend : Base
                          (rect->x - roi->x) * 4;
 
     if (params->mask_buffer)
-      state->mask_pixel = (gfloat *) iter->items[iterator_base + 2].data;
+      state->mask_pixel = (gfloat *) iter->items[state->iterator_base + 2].data;
 
     state->process_roi.x      = rect->x;
     state->process_roi.width  = rect->width;
@@ -1136,11 +1144,12 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
           State state;
           gint  y;
 
-          if (Algorithm::n_iterators > 0)
+          if (Algorithm::max_n_iterators > 0)
             {
               GeglBufferIterator *iter;
 
-              iter = gegl_buffer_iterator_empty_new (Algorithm::n_iterators);
+              iter = gegl_buffer_iterator_empty_new (
+                Algorithm::max_n_iterators);
 
               algorithm.init (params, &state, iter, &roi, area);
 
