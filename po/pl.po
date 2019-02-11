@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-08 20:32+0100\n"
-"PO-Revision-Date: 2019-02-08 20:33+0100\n"
+"POT-Creation-Date: 2019-02-11 20:25+0100\n"
+"PO-Revision-Date: 2019-02-11 20:27+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1008,7 +1008,7 @@ msgid "Select"
 msgstr "Zaznaczenie"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:790
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:793
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Szablony"
@@ -12434,26 +12434,26 @@ msgid "View as grid"
 msgstr "Wyświetlaj jako siatkę"
 
 #. initialize babl fishes
-#: ../app/core/gimp.c:502 ../app/core/gimp.c:532
+#: ../app/core/gimp.c:505 ../app/core/gimp.c:535
 msgid "Initialization"
 msgstr "Inicjacja"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:512
+#: ../app/core/gimp.c:515
 msgid "Internal Procedures"
 msgstr "Wewnętrzne procedury"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:786
 msgid "Looking for data files"
 msgstr "Wyszukiwanie plików z danymi"
 
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:786
 msgid "Parasites"
 msgstr "Dane pasożytnicze"
 
 #. initialize the module list
-#: ../app/core/gimp.c:794 ../app/dialogs/preferences-dialog.c:3229
+#: ../app/core/gimp.c:797 ../app/dialogs/preferences-dialog.c:3229
 msgid "Modules"
 msgstr "Moduły"
 
@@ -12629,64 +12629,48 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: Rozmiar pliku = 0 "
 "bajtów."
 
-#: ../app/core/gimpbrush-load.c:195
+#: ../app/core/gimpbrush-load.c:196
 #, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: %d×%d ponad "
 "maksymalny rozmiar."
 
-#: ../app/core/gimpbrush-load.c:221
+#: ../app/core/gimpbrush-load.c:222
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: nieznana głębia %d."
 
-#: ../app/core/gimpbrush-load.c:233
+#: ../app/core/gimpbrush-load.c:234
 #, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: nieznana wersja %d."
 
-#: ../app/core/gimpbrush-load.c:241
+#: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Nieobsługiwany format pędzla"
 
-#: ../app/core/gimpbrush-load.c:253
+#: ../app/core/gimpbrush-load.c:254
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr "Nieprawidłowe dane nagłówka w „%s”: nazwa pędzla jest za długa: %lu"
 
-#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrushgenerated-load.c:126
+#: ../app/core/gimpbrush-load.c:272 ../app/core/gimpbrushgenerated-load.c:126
 #: ../app/core/gimpbrushpipe-load.c:74
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nieprawidłowy ciąg UTF-8 w pliku z pędzlami „%s”."
 
-#: ../app/core/gimpbrush-load.c:278 ../app/core/gimppattern-load.c:141
+#: ../app/core/gimpbrush-load.c:279 ../app/core/gimppattern-load.c:141
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:570
 msgid "Unnamed"
 msgstr "Bez nazwy"
 
-#: ../app/core/gimpbrush-load.c:349
-#, c-format
-msgid ""
-"Fatal parse error in brush file:\n"
-"Unsupported brush depth %d\n"
-"GIMP brushes must be GRAY or RGBA.\n"
-"This might be an obsolete GIMP brush file, try loading it as image and save "
-"it again."
-msgstr ""
-"Krytyczny błąd podczas przetwarzania pliku z pędzlami:\n"
-"Nieobsługiwana głębia pędzla %d\n"
-"Pędzle programu GIMP muszą być zapisane albo w odcieniach szarości lub "
-"w formacie RGBA.\n"
-"Może to być przestarzały plik z pędzlami programu GIMP, proszę spróbować "
-"wczytać go jako obraz i zapisać ponownie."
-
-#: ../app/core/gimpbrush-load.c:396
+#: ../app/core/gimpbrush-load.c:439
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12698,45 +12682,45 @@ msgstr ""
 "Pędzle programu GIMP muszą być zapisane albo w odcieniach szarości lub "
 "w formacie RGBA."
 
-#: ../app/core/gimpbrush-load.c:472
+#: ../app/core/gimpbrush-load.c:515
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "Nie można dekodować wersji formatu abr %d."
 
-#: ../app/core/gimpbrush-load.c:590 ../app/core/gimpbrush-load.c:809
+#: ../app/core/gimpbrush-load.c:633 ../app/core/gimpbrush-load.c:852
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: wartość rozmiaru "
 "pędzla jest uszkodzona."
 
-#: ../app/core/gimpbrush-load.c:677 ../app/core/gimpbrush-load.c:867
+#: ../app/core/gimpbrush-load.c:720 ../app/core/gimpbrush-load.c:910
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: wymiary pędzla są "
 "poza zakresem."
 
-#: ../app/core/gimpbrush-load.c:689
+#: ../app/core/gimpbrush-load.c:732
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: duże pędzle nie są "
 "obsługiwane."
 
-#: ../app/core/gimpbrush-load.c:838
+#: ../app/core/gimpbrush-load.c:881
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: plik jest ucięty: "
 
-#: ../app/core/gimpbrush-load.c:875
+#: ../app/core/gimpbrush-load.c:918
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: nieznana metoda "
 "kompresji."
 
-#: ../app/core/gimpbrush-load.c:1011
+#: ../app/core/gimpbrush-load.c:1054
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
@@ -12744,7 +12728,7 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: nie można dekodować "
 "wersji formatu abr %d."
 
-#: ../app/core/gimpbrush-load.c:1132 ../app/core/gimpbrush-load.c:1150
+#: ../app/core/gimpbrush-load.c:1175 ../app/core/gimpbrush-load.c:1193
 #, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
@@ -13159,7 +13143,8 @@ msgstr "Błąd podczas wczytywania „%s”: "
 msgid "Error loading '%s'"
 msgstr "Błąd podczas wczytywania „%s”"
 
-#: ../app/core/gimpdataloaderfactory.c:474 ../app/xcf/xcf.c:452
+#: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:89
+#: ../app/file-data/file-data-pat.c:95 ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Nie można otworzyć „%s” do odczytania: "
@@ -18282,6 +18267,14 @@ msgstr "„%s:” nie jest prawidłowym schematem URI"
 #: ../app/file/file-utils.c:81 ../app/file/file-utils.c:120
 msgid "Invalid character sequence in URI"
 msgstr "Nieprawidłowa sekwencja znaków w adresie URI"
+
+#: ../app/file-data/file-data.c:58
+msgid "GIMP brush"
+msgstr "Pędzel programu GIMP"
+
+#: ../app/file-data/file-data.c:123
+msgid "GIMP pattern"
+msgstr "Deseń programu GIMP"
 
 #: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
 #: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
