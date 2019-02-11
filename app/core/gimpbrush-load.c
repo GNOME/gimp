@@ -30,6 +30,7 @@
 #include "gimpbrush-header.h"
 #include "gimpbrush-load.h"
 #include "gimpbrush-private.h"
+#include "gimppattern-header.h"
 #include "gimptempbuf.h"
 
 #include "gimp-intl.h"
@@ -138,7 +139,6 @@ gimp_brush_load_brush (GimpContext   *context,
   gsize            bn_size;
   GimpBrushHeader  header;
   gchar           *name = NULL;
-  guchar          *pixmap;
   guchar          *mask;
   gsize            bytes_read;
   gssize           i, size;
@@ -189,7 +189,8 @@ gimp_brush_load_brush (GimpContext   *context,
     }
 
   if (header.width  > GIMP_BRUSH_MAX_SIZE ||
-      header.height > GIMP_BRUSH_MAX_SIZE)
+      header.height > GIMP_BRUSH_MAX_SIZE ||
+      G_MAXSIZE / header.width / header.height / MAX (4, header.bytes) < 1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file: %dx%d over max size."),
@@ -295,6 +296,64 @@ gimp_brush_load_brush (GimpContext   *context,
       success = (g_input_stream_read_all (input, mask, size,
                                          &bytes_read, NULL, error) &&
                  bytes_read == size);
+
+      /* For backwards-compatibility, check if a pattern follows.
+       * The obsolete .gpb format did it this way.
+       */
+      if (success)
+        {
+          GimpPatternHeader ph;
+          goffset           rewind;
+
+          rewind = g_seekable_tell (G_SEEKABLE (input));
+
+          if (g_input_stream_read_all (input, &ph, sizeof (GimpPatternHeader),
+                                       &bytes_read, NULL, NULL) &&
+              bytes_read == sizeof (GimpPatternHeader))
+            {
+              /*  rearrange the bytes in each unsigned int  */
+              ph.header_size  = g_ntohl (ph.header_size);
+              ph.version      = g_ntohl (ph.version);
+              ph.width        = g_ntohl (ph.width);
+              ph.height       = g_ntohl (ph.height);
+              ph.bytes        = g_ntohl (ph.bytes);
+              ph.magic_number = g_ntohl (ph.magic_number);
+
+              if (ph.magic_number == GIMP_PATTERN_MAGIC        &&
+                  ph.version      == 1                         &&
+                  ph.header_size  > sizeof (GimpPatternHeader) &&
+                  ph.bytes        == 3                         &&
+                  ph.width        == header.width               &&
+                  ph.height       == header.height              &&
+                  g_input_stream_skip (input,
+                                       ph.header_size -
+                                       sizeof (GimpPatternHeader),
+                                       NULL, NULL) ==
+                  ph.header_size - sizeof (GimpPatternHeader))
+                {
+                  guchar *pixmap;
+                  gssize  pixmap_size;
+
+                  brush->priv->pixmap =
+                    gimp_temp_buf_new (header.width, header.height,
+                                       babl_format ("R'G'B' u8"));
+
+                  pixmap = gimp_temp_buf_get_data (brush->priv->pixmap);
+
+                  pixmap_size = gimp_temp_buf_get_data_size (brush->priv->pixmap);
+
+                  success = (g_input_stream_read_all (input, pixmap,
+                                                      pixmap_size,
+                                                      &bytes_read, NULL,
+                                                      error) &&
+                             bytes_read == pixmap_size);
+                }
+            }
+
+          /*  seek back unconditionally  */
+          g_seekable_seek (G_SEEKABLE (input), rewind, G_SEEK_SET,
+                           NULL, NULL);
+        }
       break;
 
     case 2:  /*  cinepaint brush, 16 bit floats  */
@@ -338,26 +397,10 @@ gimp_brush_load_brush (GimpContext   *context,
       }
       break;
 
-    case 3:
-      /* The obsolete .gbp format had a 3-byte pattern following a
-       * 1-byte brush, when embedded in a brush pipe, the current code
-       * tries to load that pattern as a brush, and encounters the '3'
-       * in the header.
-       */
-      g_object_unref (brush);
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in brush file:\n"
-                     "Unsupported brush depth %d\n"
-                     "GIMP brushes must be GRAY or RGBA.\n"
-                     "This might be an obsolete GIMP brush file, try "
-                     "loading it as image and save it again."),
-                   header.bytes);
-      return NULL;
-      break;
-
     case 4:
       {
-        guchar buf[8 * 1024];
+        guchar *pixmap;
+        guchar  buf[8 * 1024];
 
         brush->priv->pixmap = gimp_temp_buf_new (header.width, header.height,
                                                  babl_format ("R'G'B' u8"));
