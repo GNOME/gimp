@@ -327,6 +327,41 @@ struct AlgorithmBase
                gint                            y) const
   {
   }
+
+  /* The 'finalize_step()' function is called once per chunk after its
+   * processing is done, and should finalize any chunk-specific resources of
+   * the state object.
+   *
+   * 'params' is the same parameter struct passed to the constructor.  'state'
+   * is the state object.
+   *
+   * An algorithm that overrides this function should call the
+   * 'finalize_step()' function of its base class after performing its own
+   * finalization, using the same arguments.
+   */
+  template <class Derived>
+  void
+  finalize_step (const GimpPaintCoreLoopsParams *params,
+                 State<Derived>                 *state) const
+  {
+  }
+
+  /* The 'finalize()' function is called once per state object after processing
+   * is done, and should finalize the state object.
+   *
+   * 'params' is the same parameter struct passed to the constructor.  'state'
+   * is the state object.
+   *
+   * An algorithm that overrides this function should call the 'finalize()'
+   * function of its base class after performing its own finalization, using
+   * the same arguments.
+   */
+  template <class Derived>
+  void
+  finalize (const GimpPaintCoreLoopsParams *params,
+            State<Derived>                 *state) const
+  {
+  }
 };
 
 
@@ -1182,7 +1217,11 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
                                              iter, &roi, area, rect,
                                              rect->y + y);
                     }
+
+                  algorithm.finalize_step (params, &state);
                 }
+
+              algorithm.finalize (params, &state);
             }
           else
             {
@@ -1195,6 +1234,9 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
                                          NULL, &roi, area, area,
                                          area->y + y);
                 }
+
+              algorithm.finalize_step (params, &state);
+              algorithm.finalize      (params, &state);
             }
         });
     },
