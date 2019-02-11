@@ -276,6 +276,7 @@ app/file/file-save.c
 app/file/file-utils.c
 
 app/file-data/file-data-gbr.c
+app/file-data/file-data-pat.c
 app/file-data/file-data.c
 
 app/gegl/gimp-babl.c
