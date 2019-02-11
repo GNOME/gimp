@@ -265,7 +265,7 @@ file_open_image (Gimp                *gimp,
     {
       if (error && ! *error)
         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                     _("%s plug-In could not open image"),
+                     _("%s plug-in could not open image"),
                      gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
     }
 
