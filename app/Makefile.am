@@ -28,6 +28,7 @@ SUBDIRS = \
 	plug-in		\
 	xcf		\
 	file		\
+	file-data	\
 	pdb		\
 	widgets		\
 	propgui		\
@@ -159,6 +160,7 @@ gimpconsoleldadd = \
 	vectors/libappvectors.a					\
 	core/libappcore.a					\
 	file/libappfile.a					\
+	file-data/libappfile-data.a				\
 	text/libapptext.a					\
 	paint/libapppaint.a					\
 	operations/libappoperations.a				\

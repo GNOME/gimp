@@ -2773,6 +2773,7 @@ app/gegl/Makefile
 app/dialogs/Makefile
 app/display/Makefile
 app/file/Makefile
+app/file-data/Makefile
 app/gui/Makefile
 app/menus/Makefile
 app/paint/Makefile
