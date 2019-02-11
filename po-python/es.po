@@ -9,23 +9,23 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2009.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
 # 
-# Rodrigo <rodhos92@gmail.com>, 2019.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
+# Rodrigo <rodhos92@gmail.com>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-02 13:45+0000\n"
-"PO-Revision-Date: 2019-02-05 15:20+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: es <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2019-02-08 18:17+0000\n"
+"PO-Revision-Date: 2019-02-09 17:32+0100\n"
+"Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: Gtranslator 3.31.90\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:395
@@ -569,10 +569,14 @@ msgid ""
 "use a long gradient to match the length of the pattern, based on current "
 "gradient and repeat mode from the gradient tool settings."
 msgstr ""
+"Cuando no está marcado, se utilizará la configuración actual de la "
+"herramienta. Cuando está marcado, utilizará un degradado largo para "
+"coincidir con la longitud del patrón, en función del degradado actual y el "
+"modo de repetición de la configuración de la herramienta de degradado."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
 msgid "Specify pattern using one of the following tabs:"
-msgstr ""
+msgstr "Especificar el patrón usando una de las siguientes pestañas:"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
 msgid ""
@@ -581,56 +585,68 @@ msgid ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 msgstr ""
+"El patrón se especifica solo por la pestaña activa. «Caja de juguetes» es "
+"similar a «Engranajes», pero usa engranajes y números de orificios que se "
+"encuentran en las cajas de juguetes. Si sigue las instrucciones de los "
+"manuales de la caja de juguetes, los resultados deberían ser similares."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr ""
+"Número de dientes del engranaje fijo. El tamaño del engranaje fijo es "
+"proporcional al número de dientes."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
 msgid "Fixed Gear Teeth"
-msgstr ""
+msgstr "Dientes del engranaje fijo"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
 msgstr ""
+"Número de dientes del engranaje móvil. El tamaño del engranaje móvil es "
+"proporcional al número de dientes."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
 msgid "Moving Gear Teeth"
-msgstr ""
+msgstr "Dientes del engranaje móvil"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
-#, fuzzy
 #| msgid "Percent"
 msgid "Hole percent"
-msgstr "Por ciento"
+msgstr "Porcentaje del agujero"
 
+# Me pregunto si el símbolo de % va a dar problemas ya que reconoce la letra s como una variable tipo string.
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
 msgstr ""
+"Cuan lejos está el agujero del centro del engranaje. 100% significa que el "
+"agujero está en el borde del engranaje."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
-#, fuzzy
 #| msgid "File Name"
 msgid "Hole Number"
-msgstr "Nombre del archivo"
+msgstr "Número del agujero"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
 msgstr ""
+"El agujero nº1 está en el borde del engranaje. El número de agujero máximo "
+"está cerca del centro. El número de agujero máximo es diferente para cada "
+"engranaje"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
 msgid "Toy Kit"
-msgstr ""
+msgstr "Caja de juguetes"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
 msgid "Gears"
@@ -638,16 +654,17 @@ msgstr "Engranajes"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
-#, fuzzy
 #| msgid "Saturation"
 msgid "Rotation"
-msgstr "Saturación"
+msgstr "Rotación"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
 msgstr ""
+"Rotación del patrón, en grados. La posición inicial del engranaje móvil en "
+"el engranaje fijo."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
 msgid "Shape"
@@ -661,6 +678,11 @@ msgid ""
 "boundary. Selection will hug boundaries of current selection - try something "
 "non-rectangular."
 msgstr ""
+"La forma del engranaje fijo que se utilizará dentro de la selección actual. "
+"El estante es una forma redondeada larga proporcionada en la caja de "
+"juguetes. El marco abarca los límites de la selección rectangular, use el "
+"agujero=100 en la notación de engranaje para tocar el límite. La selección "
+"abarcará los límites de la selección actual; intente algo no rectangular."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
 msgid "Sides"
@@ -672,15 +694,15 @@ msgstr "El número de lados de la figura."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
 msgid "Morph"
-msgstr ""
+msgstr "Transformar"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
 msgid "Morph fixed gear shape. Only affects some of the shapes."
-msgstr ""
+msgstr "Transformar la forma del engranaje fijo. Solo afecta a algunas formas."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
 msgid "Rotation of the fixed gear, in degrees"
-msgstr ""
+msgstr "Rotación del engranaje fijo, en grados"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
 msgid "Margin (px)"
@@ -688,17 +710,20 @@ msgstr "Margen (px)"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
 msgid "Margin from edge of selection."
-msgstr ""
+msgstr "Margen del borde de la selección."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
 msgid "Make width and height equal"
-msgstr ""
+msgstr "Igualar la anchura y la altura"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
 msgstr ""
+"Cuando no está marcado, el patrón llenará la imagen o selección actual. "
+"Cuando está marcado, el patrón tendrá el mismo ancho y alto, y estará "
+"centrado."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
 msgid "Redraw"
@@ -709,6 +734,9 @@ msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr ""
+"Si cambia la configuración de una herramienta, cambia de color o cambia la "
+"selección, presione esto para obtener una vista previa del aspecto del "
+"patrón."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
 msgid "Reset"
@@ -736,23 +764,29 @@ msgid ""
 "exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
 "redrawn on the layer that was active when the plugin was launched."
 msgstr ""
+"Si está marcado, una vez que se presiona Aceptar, se mantiene la capa spyro "
+"y el complemento se cierra rápidamente. Si no se selecciona, la capa spyro "
+"se elimina y el patrón se vuelve a dibujar en la capa que estaba activa "
+"cuando se lanzó el complemento."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
 msgid "Spyrogimp"
-msgstr ""
+msgstr "Spyrogimp"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr ""
+"Dibuja espirogramas usando la configuración y selección actual de la "
+"herramienta."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
 msgid "Curve Pattern"
-msgstr ""
+msgstr "Patrón de curva"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
 msgid "Fixed Gear"
-msgstr ""
+msgstr "Engranaje fijo"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
 msgid "Size"
@@ -769,7 +803,7 @@ msgstr "Espere : Trazando el patrón"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
 msgid "Spyrogimp..."
-msgstr ""
+msgstr "Spyrogimp…"
 
 #~ msgid "Color _model"
 #~ msgstr "_Modelo de color"
