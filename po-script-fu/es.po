@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-01 16:53+0000\n"
-"PO-Revision-Date: 2019-02-05 14:07+0100\n"
+"POT-Creation-Date: 2019-02-08 18:17+0000\n"
+"PO-Revision-Date: 2019-02-09 16:58+0100\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -884,7 +884,6 @@ msgid "_Roadmap"
 msgstr "Hoja de _ruta"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-#| msgid "Bookmark to the GIMP web site"
 msgid "Bookmark to the roadmap of GIMP"
 msgstr "Marcador a la hoja de ruta de GIMP"
 
@@ -893,7 +892,6 @@ msgid "_Wiki"
 msgstr "_Wiki"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-#| msgid "Bookmark to the GIMP web site"
 msgid "Bookmark to the wiki of GIMP"
 msgstr "Marcador a la wiki de GIMP"
 
@@ -902,7 +900,6 @@ msgid "_Bug Reports and Feature Requests"
 msgstr "_Informes de error y solicitudes de características"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-#| msgid "Bookmark to the user manual"
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Marcador al seguimiento de errores de GIMP"
 
@@ -1474,11 +1471,11 @@ msgstr "Trazando Spyro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
 msgid "_Spyrogimp (older script-fu version)..."
-msgstr ""
+msgstr "_Spyrogimp (versión de script-fu antigua)…"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
-msgstr ""
+msgstr "Este procedimiento está obsoleto. Use «plug-in-spyrogimp» en su lugar."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
