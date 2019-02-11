@@ -30,6 +30,7 @@
 
 #include "gimppattern.h"
 #include "gimppattern-load.h"
+#include "gimppattern-save.h"
 #include "gimptagged.h"
 #include "gimptempbuf.h"
 
@@ -83,6 +84,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
   viewable_class->get_new_preview   = gimp_pattern_get_new_preview;
   viewable_class->get_description   = gimp_pattern_get_description;
 
+  data_class->save                  = gimp_pattern_save;
   data_class->get_extension         = gimp_pattern_get_extension;
   data_class->copy                  = gimp_pattern_copy;
 }
