@@ -370,13 +370,43 @@ struct AlgorithmBase
  * A class template implementing a simple dispatch function object, which adds
  * an algorithm to the hierarchy unconditionally.  'AlgorithmTemplate' is the
  * alogithm class template (usually a helper class, rather than an actual
- * algorithm), and 'Mask' is the dispatch function mask, as described in
- * 'dispatch()'.
+ * algorithm), 'Mask' is the dispatch function mask, as described in
+ * 'dispatch()', and 'Dependencies' is a list of (types of) dispatch functions
+ * the algorithm depends on.
+ *
+ * Before adding the algorithm to the hierarchy, the hierarchy is augmented by
+ * dispatching through the list of dependencies, in order.
  */
 
 template <template <class Base> class AlgorithmTemplate,
-          guint                       Mask>
+          guint                       Mask,
+          class...                    Dependencies>
 struct BasicDispatch
+{
+  static constexpr guint mask = Mask;
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    dispatch (
+      [&] (auto algorithm)
+      {
+        using NewAlgorithm = typename decltype (algorithm)::type;
+
+        visitor (identity<AlgorithmTemplate<NewAlgorithm>> ());
+      },
+      params, algorithms, algorithm, Dependencies ()...);
+  }
+};
+
+template <template <class Base> class AlgorithmTemplate,
+          guint                       Mask>
+struct BasicDispatch<AlgorithmTemplate, Mask>
 {
   static constexpr guint mask = Mask;
 
@@ -398,7 +428,7 @@ struct BasicDispatch
  * A class template implementing a dispatch function suitable for dispatching
  * algorithms.  'AlgorithmTemplate' is the algorithm class template, 'Mask' is
  * the dispatch function mask, as described in 'dispatch()', and 'Dependencies'
- * is a list of (types of) dispatch functions the algorithm depends on, usd as
+ * is a list of (types of) dispatch functions the algorithm depends on, used as
  * explained below.
  *
  * 'AlgorithmDispatch' adds the algorithm to the hierarchy if it's included in
