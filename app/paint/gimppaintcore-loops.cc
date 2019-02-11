@@ -230,16 +230,13 @@ struct AlgorithmBase
    * Algorithms that redefine 'filter' should bitwise-OR their filter with that
    * of their base class.
    */
-  static constexpr guint          filter               = 0;
-
-  /* See CanvasBufferIterator. */
-  static constexpr GeglAccessMode canvas_buffer_access = {};
+  static constexpr guint          filter          = 0;
 
   /* The current maximal number of iterators used by the hierarchy.  Algorithms
    * should redefine 'max_n_iterators' by adding the maximal number of
    * iterators they use to this value.
    */
-  static constexpr gint           max_n_iterators      = 0;
+  static constexpr gint           max_n_iterators = 0;
 
   /* Non-static data members should be initialized in the constructor, and
    * should not be further modified.
@@ -556,14 +553,34 @@ struct DispatchStipple
 
 template <class Base,
           guint Access,
-          guint BaseAccess = Base::canvas_buffer_access>
+          guint BaseAccess>
+struct CanvasBufferIterator;
+
+template <class Base,
+          guint Access,
+          guint BaseAccess>
+static constexpr GeglAccessMode
+canvas_buffer_iterator_access (CanvasBufferIterator<Base, Access, BaseAccess> *algorithm)
+{
+  return CanvasBufferIterator<Base, Access, BaseAccess>::canvas_buffer_access;
+}
+
+static constexpr GeglAccessMode
+canvas_buffer_iterator_access (AlgorithmBase *algorithm)
+{
+  return {};
+}
+
+template <class Base,
+          guint Access,
+          guint BaseAccess = canvas_buffer_iterator_access ((Base *) NULL)>
 struct CanvasBufferIterator : Base
 {
   /* The combined canvas-buffer access mode used by the hierarchy, up to, and
    * including, the current class.
    */
   static constexpr GeglAccessMode canvas_buffer_access =
-    (GeglAccessMode) (Base::canvas_buffer_access | Access);
+    (GeglAccessMode) (BaseAccess | Access);
 
   using Base::Base;
 };
