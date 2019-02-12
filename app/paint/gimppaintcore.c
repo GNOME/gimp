@@ -793,7 +793,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   if (core->applicator)
     {
       /*  If the mode is CONSTANT:
-       *   combine the canvas buf, the paint mask to the canvas buffer
+       *   combine the canvas buffer and the paint mask to the paint buffer
        */
       if (mode == GIMP_PAINT_CONSTANT)
         {
@@ -802,9 +802,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
            */
           if (paint_mask != NULL)
             {
-              GimpTempBuf *modified_mask     = gimp_temp_buf_copy (paint_mask);
-              GeglBuffer  *paint_mask_buffer =
-                gimp_temp_buf_create_buffer ((GimpTempBuf *) modified_mask);
+              GeglBuffer *paint_mask_buffer =
+                gimp_temp_buf_create_buffer ((GimpTempBuf *) paint_mask);
 
               gimp_gegl_combine_mask_weird (paint_mask_buffer,
                                             GEGL_RECTANGLE (paint_mask_offset_x,
@@ -818,7 +817,6 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                             GIMP_IS_AIRBRUSH (core));
 
               g_object_unref (paint_mask_buffer);
-              gimp_temp_buf_unref (modified_mask);
             }
 
           gimp_gegl_apply_mask (core->canvas_buffer,
@@ -833,7 +831,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                           core->undo_buffer);
         }
       /*  Otherwise:
-       *   combine the canvas buf and the paint mask to the canvas buf
+       *   combine the paint mask to the paint buffer directly
        */
       else
         {
