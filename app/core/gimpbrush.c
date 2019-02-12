@@ -31,6 +31,7 @@
 #include "gimpbrush-boundary.h"
 #include "gimpbrush-load.h"
 #include "gimpbrush-private.h"
+#include "gimpbrush-save.h"
 #include "gimpbrush-transform.h"
 #include "gimpbrushcache.h"
 #include "gimpbrushgenerated.h"
@@ -82,6 +83,8 @@ static gchar       * gimp_brush_get_description       (GimpViewable         *vie
 
 static void          gimp_brush_dirty                 (GimpData             *data);
 static const gchar * gimp_brush_get_extension         (GimpData             *data);
+static void          gimp_brush_copy                  (GimpData             *data,
+                                                       GimpData             *src_data);
 
 static void          gimp_brush_real_begin_use        (GimpBrush            *brush);
 static void          gimp_brush_real_end_use          (GimpBrush            *brush);
@@ -134,7 +137,9 @@ gimp_brush_class_init (GimpBrushClass *klass)
   viewable_class->get_description   = gimp_brush_get_description;
 
   data_class->dirty                 = gimp_brush_dirty;
+  data_class->save                  = gimp_brush_save;
   data_class->get_extension         = gimp_brush_get_extension;
+  data_class->copy                  = gimp_brush_copy;
 
   klass->begin_use                  = gimp_brush_real_begin_use;
   klass->end_use                    = gimp_brush_real_end_use;
@@ -415,6 +420,28 @@ static const gchar *
 gimp_brush_get_extension (GimpData *data)
 {
   return GIMP_BRUSH_FILE_EXTENSION;
+}
+
+static void
+gimp_brush_copy (GimpData *data,
+                 GimpData *src_data)
+{
+  GimpBrush *brush     = GIMP_BRUSH (data);
+  GimpBrush *src_brush = GIMP_BRUSH (src_data);
+
+  g_clear_pointer (&brush->priv->mask, gimp_temp_buf_unref);
+  if (src_brush->priv->mask)
+    brush->priv->mask = gimp_temp_buf_copy (src_brush->priv->mask);
+
+  g_clear_pointer (&brush->priv->pixmap, gimp_temp_buf_unref);
+  if (src_brush->priv->pixmap)
+    brush->priv->pixmap = gimp_temp_buf_copy (src_brush->priv->pixmap);
+
+  brush->priv->spacing = src_brush->priv->spacing;
+  brush->priv->x_axis  = src_brush->priv->x_axis;
+  brush->priv->y_axis  = src_brush->priv->y_axis;
+
+  gimp_data_dirty (data);
 }
 
 static void
