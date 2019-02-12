@@ -95,11 +95,12 @@ extern "C"
 
 enum
 {
-  ALGORITHM_PAINT_BUF      = 1u << 31,
-  ALGORITHM_PAINT_MASK     = 1u << 30,
-  ALGORITHM_STIPPLE        = 1u << 29,
-  ALGORITHM_COMP_MASK      = 1u << 28,
-  ALGORITHM_TEMP_COMP_MASK = 1u << 27
+  ALGORITHM_PAINT_BUF            = 1u << 31,
+  ALGORITHM_PAINT_MASK           = 1u << 30,
+  ALGORITHM_STIPPLE              = 1u << 29,
+  ALGORITHM_COMP_MASK            = 1u << 28,
+  ALGORITHM_TEMP_COMP_MASK       = 1u << 27,
+  ALGORITHM_MASK_BUFFER_ITERATOR = 1u << 26
 };
 
 
@@ -731,6 +732,107 @@ static BasicDispatch<
 > dispatch_temp_comp_mask;
 
 
+/* MaskBufferIterator, mask_buffer_iterator_dispatch(),
+ * has_mask_buffer_iterator():
+ *
+ * An algorithm helper class, providing read-only iterator-access to the mask
+ * buffer.  Algorithms that iterate over the mask buffer should specify
+ * 'dispatch_mask_buffer_iterator()' as a dependency, and access
+ * 'MaskBufferIterator' members through their base type/subobject.
+ *
+ * The 'has_mask_buffer_iterator()' constexpr function determines if a given
+ * algorithm hierarchy uses has a mask-buffer iterator.
+ *
+ * The 'mask_buffer_iterator()' function returns the index of the mask-buffer
+ * iterator if the hierarchy has one, or -1 otherwise.
+ */
+
+template <class Base>
+struct MaskBufferIterator : Base
+{
+  static constexpr guint filter = Base::filter | ALGORITHM_MASK_BUFFER_ITERATOR;
+
+  static constexpr gint max_n_iterators = Base::max_n_iterators + 1;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    gint mask_buffer_iterator;
+  };
+
+  template <class Derived>
+  void
+  init (const GimpPaintCoreLoopsParams *params,
+        State<Derived>                 *state,
+        GeglBufferIterator             *iter,
+        const GeglRectangle            *roi,
+        const GeglRectangle            *area) const
+  {
+    Base::init (params, state, iter, roi, area);
+
+    GeglRectangle mask_area = *area;
+
+    mask_area.x -= params->mask_offset_x;
+    mask_area.y -= params->mask_offset_y;
+
+    state->mask_buffer_iterator = gegl_buffer_iterator_add (
+      iter, params->mask_buffer, &mask_area, 0, babl_format ("Y float"),
+      GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+  }
+};
+
+struct DispatchMaskBufferIterator
+{
+  static constexpr guint mask = ALGORITHM_MASK_BUFFER_ITERATOR;
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    if (params->mask_buffer)
+      visitor (identity<MaskBufferIterator<Algorithm>> ());
+    else
+      visitor (algorithm);
+  }
+} static dispatch_mask_buffer_iterator;
+
+template <class Base>
+static constexpr gboolean
+has_mask_buffer_iterator (const MaskBufferIterator<Base> *algorithm)
+{
+  return TRUE;
+}
+
+static constexpr gboolean
+has_mask_buffer_iterator (const AlgorithmBase *algorithm)
+{
+  return FALSE;
+}
+
+template <class Base,
+          class State>
+static gint
+mask_buffer_iterator (const MaskBufferIterator<Base> *algorithm,
+                      State                          *state)
+{
+  return state->mask_buffer_iterator;
+}
+
+template <class State>
+static gint
+mask_buffer_iterator (const AlgorithmBase *algorithm,
+                      State               *state)
+{
+  return -1;
+}
+
+
 /* CanvasBufferIterator:
  *
  * An algorithm helper class, providing iterator-access to the canvas buffer.
@@ -1168,7 +1270,7 @@ struct DoLayerBlend : Base
     Base::filter |
     GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND;
 
-  static constexpr gint max_n_iterators = Base::max_n_iterators + 3;
+  static constexpr gint max_n_iterators = Base::max_n_iterators + 2;
 
   const Babl             *iterator_format;
   GimpOperationLayerMode  layer_mode;
@@ -1225,20 +1327,6 @@ struct DoLayerBlend : Base
     gegl_buffer_iterator_add (iter, params->src_buffer, area, 0,
                               iterator_format,
                               GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-    if (! has_comp_mask (this) && params->mask_buffer)
-      {
-        GeglRectangle mask_area = *area;
-
-        mask_area.x -= params->mask_offset_x;
-        mask_area.y -= params->mask_offset_y;
-
-        gegl_buffer_iterator_add (iter, params->mask_buffer, &mask_area, 0,
-                                  babl_format ("Y float"),
-                                  GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-      }
-
-    state->mask_pixel = NULL;
   }
 
   template <class Derived>
@@ -1259,8 +1347,11 @@ struct DoLayerBlend : Base
                          (rect->y - roi->y) * this->paint_stride +
                          (rect->x - roi->x) * 4;
 
-    if (! has_comp_mask (this) && params->mask_buffer)
-      state->mask_pixel = (gfloat *) iter->items[state->iterator_base + 2].data;
+    if (! has_comp_mask (this) && has_mask_buffer_iterator (this))
+      {
+        state->mask_pixel =
+          (gfloat *) iter->items[mask_buffer_iterator (this, state)].data;
+      }
 
     state->process_roi.x      = rect->x;
     state->process_roi.width  = rect->width;
@@ -1279,13 +1370,21 @@ struct DoLayerBlend : Base
   {
     Base::process_row (params, state, iter, roi, area, rect, y);
 
+    gfloat *mask_pixel;
+
+    if (has_comp_mask (this))
+      mask_pixel = comp_mask_data (this, state);
+    else if (has_mask_buffer_iterator (this))
+      mask_pixel = state->mask_pixel;
+    else
+      mask_pixel = NULL;
+
     state->process_roi.y = y;
 
     layer_mode.function ((GeglOperation*) &layer_mode,
                          state->in_pixel,
                          state->paint_pixel,
-                         has_comp_mask (this) ? comp_mask_data (this, state) :
-                                                state->mask_pixel,
+                         mask_pixel,
                          state->out_pixel,
                          rect->width,
                          &state->process_roi,
@@ -1293,7 +1392,7 @@ struct DoLayerBlend : Base
 
     state->in_pixel     += rect->width * 4;
     state->out_pixel    += rect->width * 4;
-    if (! has_comp_mask (this) && state->mask_pixel)
+    if (! has_comp_mask (this) && has_mask_buffer_iterator (this))
       state->mask_pixel += rect->width;
     state->paint_pixel  += this->paint_stride;
   }
@@ -1302,7 +1401,8 @@ struct DoLayerBlend : Base
 static AlgorithmDispatch<
   DoLayerBlend,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND,
-  decltype (dispatch_paint_buf)
+  decltype (dispatch_paint_buf),
+  decltype (dispatch_mask_buffer_iterator)
 >
 dispatch_do_layer_blend;
 
