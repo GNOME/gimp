@@ -904,7 +904,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
               params.stipple             = GIMP_IS_AIRBRUSH (core);
               params.paint_opacity       = paint_opacity;
 
-              algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK;
+              algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER;
             }
 
           /* Write canvas_buffer to paint_buf */
@@ -923,7 +923,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
           params.paint_mask_offset_y = paint_mask_offset_y;
           params.paint_opacity       = paint_opacity;
 
-          algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+          algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA;
 
           /* dest_buffer -> paint_buf -> dest_buffer */
           if (core->comp_buffer)
@@ -1036,14 +1036,14 @@ gimp_paint_core_replace (GimpPaintCore            *core,
       else
         {
           /* Mix paint mask and canvas_buffer */
-          combine_paint_mask_to_canvas_mask (paint_mask,
-                                             paint_mask_offset_x,
-                                             paint_mask_offset_y,
-                                             core->canvas_buffer,
-                                             core->paint_buffer_x,
-                                             core->paint_buffer_y,
-                                             paint_opacity,
-                                             GIMP_IS_AIRBRUSH (core));
+          combine_paint_mask_to_canvas_buffer (paint_mask,
+                                               paint_mask_offset_x,
+                                               paint_mask_offset_y,
+                                               core->canvas_buffer,
+                                               core->paint_buffer_x,
+                                               core->paint_buffer_y,
+                                               paint_opacity,
+                                               GIMP_IS_AIRBRUSH (core));
         }
 
       /* initialize the maskPR from the canvas buffer */

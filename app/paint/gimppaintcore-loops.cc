@@ -688,27 +688,27 @@ struct CanvasBufferIterator<Base, Access, 0> : Base
 };
 
 
-/* CombinePaintMaskToCanvasMaskToPaintBufAlpha,
- * dispatch_combine_paint_mask_to_canvas_mask_to_paint_buf_alpha():
+/* CombinePaintMaskToCanvasBufferToPaintBufAlpha,
+ * dispatch_combine_paint_mask_to_canvas_buffer_to_paint_buf_alpha():
  *
  * An algorithm class, providing an optimized version combining both the
- * COMBINE_PAINT_MASK_TO_CANVAS_MASK and the CANVAS_BUFFER_TO_PAINT_BUF_ALPHA
+ * COMBINE_PAINT_MASK_TO_CANVAS_BUFFER and the CANVAS_BUFFER_TO_PAINT_BUF_ALPHA
  * algorithms.  Used instead of the individual implementations, when both
  * algorithms are requested.
  */
 
 template <class Base>
-struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
+struct CombinePaintMaskToCanvasBufferToPaintBufAlpha :
   CanvasBufferIterator<Base, GEGL_BUFFER_READWRITE>
 {
   using base_type = CanvasBufferIterator<Base, GEGL_BUFFER_READWRITE>;
   using mask_type = typename base_type::mask_type;
 
   static constexpr guint filter =
-    base_type::filter                                                 |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA  |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+    base_type::filter                                                   |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA;
 
   using base_type::base_type;
 
@@ -781,33 +781,34 @@ struct CombinePaintMaskToCanvasMaskToPaintBufAlpha :
 };
 
 static AlgorithmDispatch<
-  CombinePaintMaskToCanvasMaskToPaintBufAlpha,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK |
+  CombinePaintMaskToCanvasBufferToPaintBufAlpha,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
   decltype (dispatch_paint_mask),
   decltype (dispatch_stipple)
 >
-dispatch_combine_paint_mask_to_canvas_mask_to_paint_buf_alpha;
+dispatch_combine_paint_mask_to_canvas_buffer_to_paint_buf_alpha;
 
 
-/* CombinePaintMaskToCanvasMask, dispatch_combine_paint_mask_to_canvas_mask():
+/* CombinePaintMaskToCanvasBuffer,
+ * dispatch_combine_paint_mask_to_canvas_buffer():
  *
- * An algorithm class, implementing the COMBINE_PAINT_MASK_TO_CANVAS_MASK
+ * An algorithm class, implementing the COMBINE_PAINT_MASK_TO_CANVAS_BUFFER
  * algorithm.
  */
 
 template <class Base>
-struct CombinePaintMaskToCanvasMask :
+struct CombinePaintMaskToCanvasBuffer :
   CanvasBufferIterator<Base, GEGL_BUFFER_READWRITE>
 {
   using base_type = CanvasBufferIterator<Base, GEGL_BUFFER_READWRITE>;
   using mask_type = typename base_type::mask_type;
 
   static constexpr guint filter =
-    base_type::filter                                                 |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+    base_type::filter                                                   |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA;
 
   using base_type::base_type;
 
@@ -874,12 +875,12 @@ struct CombinePaintMaskToCanvasMask :
 };
 
 static AlgorithmDispatch<
-  CombinePaintMaskToCanvasMask,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK,
+  CombinePaintMaskToCanvasBuffer,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER,
   decltype (dispatch_paint_mask),
   decltype (dispatch_stipple)
 >
-dispatch_combine_paint_mask_to_canvas_mask;
+dispatch_combine_paint_mask_to_canvas_buffer;
 
 
 /* CanvasBufferToPaintBufAlpha, dispatch_canvas_buffer_to_paint_buf_alpha():
@@ -897,7 +898,7 @@ struct CanvasBufferToPaintBufAlpha : CanvasBufferIterator<Base,
   static constexpr guint filter =
     base_type::filter                                                |
     GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA;
 
   using base_type::base_type;
 
@@ -959,22 +960,23 @@ static AlgorithmDispatch<
 dispatch_canvas_buffer_to_paint_buf_alpha;
 
 
-/* PaintMaskToPaintBuffer, dispatch_paint_mask_to_paint_buffer():
+/* PaintMaskToPaintBufAlpha, dispatch_paint_mask_to_paint_buf_alpha():
  *
- * An algorithm class, implementing the PAINT_MASK_TO_PAINT_BUFFER algorithm.
+ * An algorithm class, implementing the PAINT_MASK_TO_PAINT_BUF_ALPHA
+ * algorithm.
  */
 
 template <class Base>
-struct PaintMaskToPaintBuffer : Base
+struct PaintMaskToPaintBufAlpha : Base
 {
   using mask_type = typename Base::mask_type;
 
   static constexpr guint filter =
     Base::filter |
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER;
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA;
 
   explicit
-  PaintMaskToPaintBuffer (const GimpPaintCoreLoopsParams *params) :
+  PaintMaskToPaintBufAlpha (const GimpPaintCoreLoopsParams *params) :
     Base (params)
   {
     /* Validate that the paint buffer is within the bounds of the paint mask */
@@ -1020,12 +1022,12 @@ struct PaintMaskToPaintBuffer : Base
 };
 
 static AlgorithmDispatch<
-  PaintMaskToPaintBuffer,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER,
+  PaintMaskToPaintBufAlpha,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
   decltype (dispatch_paint_mask)
 >
-dispatch_paint_mask_to_paint_buffer;
+dispatch_paint_mask_to_paint_buf_alpha;
 
 
 /* DoLayerBlend, dispatch_do_layer_blend():
@@ -1271,29 +1273,29 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
         });
     },
     params, algorithms, identity<AlgorithmBase> (),
-    dispatch_combine_paint_mask_to_canvas_mask_to_paint_buf_alpha,
-    dispatch_combine_paint_mask_to_canvas_mask,
+    dispatch_combine_paint_mask_to_canvas_buffer_to_paint_buf_alpha,
+    dispatch_combine_paint_mask_to_canvas_buffer,
     dispatch_canvas_buffer_to_paint_buf_alpha,
-    dispatch_paint_mask_to_paint_buffer,
+    dispatch_paint_mask_to_paint_buf_alpha,
     dispatch_do_layer_blend);
 }
 
 
-/* combine_paint_mask_to_canvas_mask():
+/* combine_paint_mask_to_canvas_buffer():
  *
  * A convenience wrapper around 'gimp_paint_core_loops_process()', performing
- * just the COMBINE_PAINT_MASK_TO_CANVAS_MASK algorithm.
+ * just the COMBINE_PAINT_MASK_TO_CANVAS_BUFFER algorithm.
  */
 
 void
-combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
-                                   gint               mask_x_offset,
-                                   gint               mask_y_offset,
-                                   GeglBuffer        *canvas_buffer,
-                                   gint               x_offset,
-                                   gint               y_offset,
-                                   gfloat             opacity,
-                                   gboolean           stipple)
+combine_paint_mask_to_canvas_buffer (const GimpTempBuf *paint_mask,
+                                     gint               mask_x_offset,
+                                     gint               mask_y_offset,
+                                     GeglBuffer        *canvas_buffer,
+                                     gint               x_offset,
+                                     gint               y_offset,
+                                     gfloat             opacity,
+                                     gboolean           stipple)
 {
   GimpPaintCoreLoopsParams params = {};
 
@@ -1312,7 +1314,7 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
 
   gimp_paint_core_loops_process (
     &params,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_MASK);
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER);
 }
 
 
@@ -1342,18 +1344,18 @@ canvas_buffer_to_paint_buf_alpha (GimpTempBuf  *paint_buf,
 }
 
 
-/* paint_mask_to_paint_buffer():
+/* paint_mask_to_paint_buf_alpha():
  *
  * A convenience wrapper around 'gimp_paint_core_loops_process()', performing
- * just the PAINT_MASK_TO_PAINT_BUFFER algorithm.
+ * just the PAINT_MASK_TO_PAINT_BUF_ALPHA algorithm.
  */
 
 void
-paint_mask_to_paint_buffer (const GimpTempBuf  *paint_mask,
-                            gint                mask_x_offset,
-                            gint                mask_y_offset,
-                            GimpTempBuf        *paint_buf,
-                            gfloat              paint_opacity)
+paint_mask_to_paint_buf_alpha (const GimpTempBuf  *paint_mask,
+                               gint                mask_x_offset,
+                               gint                mask_y_offset,
+                               GimpTempBuf        *paint_buf,
+                               gfloat              paint_opacity)
 {
   GimpPaintCoreLoopsParams params = {};
 
@@ -1367,7 +1369,7 @@ paint_mask_to_paint_buffer (const GimpTempBuf  *paint_mask,
 
   gimp_paint_core_loops_process (
     &params,
-    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUFFER);
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA);
 }
 
 
