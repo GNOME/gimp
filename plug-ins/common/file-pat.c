@@ -24,8 +24,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "app/core/gimppattern-header.h"
-
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -111,7 +109,6 @@ run (const gchar      *name,
   GError            *error  = NULL;
 
   INIT_I18N ();
-  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
