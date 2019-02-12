@@ -95,9 +95,11 @@ extern "C"
 
 enum
 {
-  ALGORITHM_PAINT_BUF  = 1u << 31,
-  ALGORITHM_PAINT_MASK = 1u << 30,
-  ALGORITHM_STIPPLE    = 1u << 29
+  ALGORITHM_PAINT_BUF      = 1u << 31,
+  ALGORITHM_PAINT_MASK     = 1u << 30,
+  ALGORITHM_STIPPLE        = 1u << 29,
+  ALGORITHM_COMP_MASK      = 1u << 28,
+  ALGORITHM_TEMP_COMP_MASK = 1u << 27
 };
 
 
@@ -605,6 +607,130 @@ struct DispatchStipple
 } static dispatch_stipple;
 
 
+/* CompMask, dispatch_comp_mask(), has_comp_mask(), comp_mask_data():
+ *
+ * An algorithm helper class, providing access to the mask used for
+ * compositing.  When this class is part of the hierarchy, 'DoLayerBlend' uses
+ * this buffer as the mask, instead of the input parameters' 'mask_buffer'.
+ * Algorithms that use the compositing mask should specify
+ * 'dispatch_comp_mask()' as a dependency, and access 'CompMask' members
+ * through their base type/subobject.
+ *
+ * Note that 'CompMask' only provides *access* to the compositing mask, but
+ * doesn't provide its actual *storage*.  This is the responsibility of the
+ * algorithms that use 'CompMask'.  Algorithms that need temporary storage for
+ * the compositing mask can use 'TempCompMask'.
+ *
+ * The 'has_comp_mask()' constexpr function determines if a given algorithm
+ * hierarchy uses the compositing mask.
+ *
+ * The 'comp_mask_data()' function returns a pointer to the compositing mask
+ * data for the current row if the hierarchy uses the compositing mask, or NULL
+ * otherwise.
+ */
+
+template <class Base>
+struct CompMask : Base
+{
+  /* Component type of the compositing mask. */
+  using comp_mask_type = gfloat;
+
+  static constexpr guint filter = Base::filter | ALGORITHM_COMP_MASK;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    /* Pointer to the compositing mask data for the current row. */
+    comp_mask_type *comp_mask_data;
+  };
+};
+
+static BasicDispatch<CompMask, ALGORITHM_COMP_MASK> dispatch_comp_mask;
+
+template <class Base>
+static constexpr gboolean
+has_comp_mask (const CompMask<Base> *algorithm)
+{
+  return TRUE;
+}
+
+static constexpr gboolean
+has_comp_mask (const AlgorithmBase *algorithm)
+{
+  return FALSE;
+}
+
+template <class Base,
+          class State>
+static gfloat *
+comp_mask_data (const CompMask<Base> *algorithm,
+                State                *state)
+{
+  return state->comp_mask_data;
+}
+
+template <class State>
+static gfloat *
+comp_mask_data (const AlgorithmBase *algorithm,
+                State               *state)
+{
+  return NULL;
+}
+
+
+/* TempCompMask, dispatch_temp_comp_mask():
+ *
+ * An algorithm helper class, providing temporary storage for the compositing
+ * mask.  Algorithms that need a temporary compositing mask should specify
+ * 'dispatch_temp_comp_mask()' as a dependency, which itself includes
+ * 'dispatch_comp_mask()' as a dependency.
+ */
+
+template <class Base>
+struct TempCompMask : Base
+{
+  static constexpr guint filter = Base::filter | ALGORITHM_TEMP_COMP_MASK;
+
+  using Base::Base;
+
+  template <class Derived>
+  using State = typename Base::template State<Derived>;
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    state->comp_mask_data = gegl_scratch_new (gfloat, rect->width);
+  }
+
+
+  template <class Derived>
+  void
+  finalize_step (const GimpPaintCoreLoopsParams *params,
+                 State<Derived>                 *state) const
+  {
+    gegl_scratch_free (state->comp_mask_data);
+
+    Base::finalize_step (params, state);
+  }
+};
+
+static BasicDispatch<
+  TempCompMask,
+  ALGORITHM_TEMP_COMP_MASK,
+  decltype (dispatch_comp_mask)
+> dispatch_temp_comp_mask;
+
+
 /* CanvasBufferIterator:
  *
  * An algorithm helper class, providing iterator-access to the canvas buffer.
@@ -1091,11 +1217,6 @@ struct DoLayerBlend : Base
   {
     Base::init (params, state, iter, roi, area);
 
-    GeglRectangle mask_area = *area;
-
-    mask_area.x -= params->mask_offset_x;
-    mask_area.y -= params->mask_offset_y;
-
     state->iterator_base = gegl_buffer_iterator_add (iter, params->dest_buffer,
                                                      area, 0, iterator_format,
                                                      GEGL_ACCESS_WRITE,
@@ -1105,12 +1226,19 @@ struct DoLayerBlend : Base
                               iterator_format,
                               GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
-    if (params->mask_buffer)
+    if (! has_comp_mask (this) && params->mask_buffer)
       {
+        GeglRectangle mask_area = *area;
+
+        mask_area.x -= params->mask_offset_x;
+        mask_area.y -= params->mask_offset_y;
+
         gegl_buffer_iterator_add (iter, params->mask_buffer, &mask_area, 0,
                                   babl_format ("Y float"),
                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
       }
+
+    state->mask_pixel = NULL;
   }
 
   template <class Derived>
@@ -1126,13 +1254,12 @@ struct DoLayerBlend : Base
 
     state->out_pixel  = (gfloat *) iter->items[state->iterator_base + 0].data;
     state->in_pixel   = (gfloat *) iter->items[state->iterator_base + 1].data;
-    state->mask_pixel = NULL;
 
     state->paint_pixel = this->paint_data                        +
                          (rect->y - roi->y) * this->paint_stride +
                          (rect->x - roi->x) * 4;
 
-    if (params->mask_buffer)
+    if (! has_comp_mask (this) && params->mask_buffer)
       state->mask_pixel = (gfloat *) iter->items[state->iterator_base + 2].data;
 
     state->process_roi.x      = rect->x;
@@ -1157,7 +1284,8 @@ struct DoLayerBlend : Base
     layer_mode.function ((GeglOperation*) &layer_mode,
                          state->in_pixel,
                          state->paint_pixel,
-                         state->mask_pixel,
+                         has_comp_mask (this) ? comp_mask_data (this, state) :
+                                                state->mask_pixel,
                          state->out_pixel,
                          rect->width,
                          &state->process_roi,
@@ -1165,7 +1293,7 @@ struct DoLayerBlend : Base
 
     state->in_pixel     += rect->width * 4;
     state->out_pixel    += rect->width * 4;
-    if (params->mask_buffer)
+    if (! has_comp_mask (this) && state->mask_pixel)
       state->mask_pixel += rect->width;
     state->paint_pixel  += this->paint_stride;
   }
