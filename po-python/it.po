@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2014-04-27 01:03+0200\n"
-"PO-Revision-Date: 2014-04-27 01:12+0200\n"
+"PO-Revision-Date: 2019-02-12 14:24+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -161,7 +161,7 @@ msgstr "Aggiungi un livello di nebbia"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Fog..."
-msgstr "_Nebbia"
+msgstr "_Nebbia..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "_Layer name"
