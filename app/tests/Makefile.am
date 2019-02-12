@@ -112,6 +112,7 @@ LDADD = \
 	../vectors/libappvectors.a					\
 	../core/libappcore.a						\
 	../file/libappfile.a						\
+	../file-data/libappfile-data.a					\
 	../text/libapptext.a						\
 	../paint/libapppaint.a						\
 	../config/libappconfig.a					\

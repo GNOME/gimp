@@ -105,6 +105,7 @@ test_config_LDADD = \
 	../vectors/libappvectors.a					\
 	../core/libappcore.a						\
 	../file/libappfile.a						\
+	../file-data/libappfile-data.a					\
 	../text/libapptext.a						\
 	../paint/libapppaint.a						\
 	../gegl/libappgegl.a						\
