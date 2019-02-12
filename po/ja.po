@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-01 16:49+0000\n"
-"PO-Revision-Date: 2019-02-11 00:30+0900\n"
+"PO-Revision-Date: 2019-02-12 23:21+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -5300,11 +5300,9 @@ msgid "_Extract Component..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:257
-#, fuzzy
-#| msgid "Transformation Matrix"
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
-msgstr "変形情報行列"
+msgstr "コンボリューション行列(_C)..."
 
 #: ../app/actions/filters-actions.c:262
 msgctxt "filters-action"
@@ -5331,7 +5329,7 @@ msgstr "脱色(_D)..."
 #: ../app/actions/filters-actions.c:282
 msgctxt "filters-action"
 msgid "Difference of Gaussians..."
-msgstr ""
+msgstr "ガウス差分..."
 
 #: ../app/actions/filters-actions.c:287
 #, fuzzy
@@ -5356,40 +5354,30 @@ msgid "Distance Map..."
 msgstr "距離:"
 
 #: ../app/actions/filters-actions.c:302
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "_Grow..."
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
-msgstr "選択範囲の拡大(_G)..."
+msgstr "ドロップシャドウ(_D)..."
 
 #: ../app/actions/filters-actions.c:307
-#, fuzzy
-#| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Edge..."
-msgstr "フェード(_F)..."
+msgstr "輪郭(_E)..."
 
 #: ../app/actions/filters-actions.c:312
-#, fuzzy
-#| msgid "_Replace"
 msgctxt "filters-action"
 msgid "_Laplace"
-msgstr "置換(_R)"
+msgstr "ラプラス(_L)"
 
 # xcf 形式以外の画像ファイルはインポートするように仕様変更されたことに伴い、「（インポート）」を追加した。
 #: ../app/actions/filters-actions.c:317
-#, fuzzy
-#| msgctxt "file-action"
-#| msgid "_Open..."
 msgctxt "filters-action"
 msgid "_Neon..."
-msgstr "開く/インポート(_O)..."
+msgstr "ネオン(_N)..."
 
 #: ../app/actions/filters-actions.c:322
 msgctxt "filters-action"
 msgid "_Sobel..."
-msgstr ""
+msgstr "ソーベル(_S)..."
 
 #: ../app/actions/filters-actions.c:327
 msgctxt "filters-action"
@@ -5462,12 +5450,9 @@ msgid "_Illusion..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:392
-#, fuzzy
-#| msgctxt "gradients-action"
-#| msgid "_Edit Gradient..."
 msgctxt "filters-action"
 msgid "_Image Gradient..."
-msgstr "グラデーションの編集(_E)..."
+msgstr "画像の勾配(_I)..."
 
 #: ../app/actions/filters-actions.c:397
 msgctxt "filters-action"
@@ -5482,7 +5467,7 @@ msgstr "レンズ補正..."
 #: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
 msgid "Lens Flare..."
-msgstr ""
+msgstr "レンズフレア..."
 
 #: ../app/actions/filters-actions.c:412
 msgctxt "filters-action"
@@ -5495,12 +5480,9 @@ msgid "_Little Planet..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:422
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "_Grow..."
 msgctxt "filters-action"
 msgid "_Long Shadow..."
-msgstr "選択範囲の拡大(_G)..."
+msgstr "ロングシャドウ(_L)..."
 
 #: ../app/actions/filters-actions.c:427
 msgctxt "filters-action"
@@ -5558,17 +5540,17 @@ msgstr "ノイズ(_N)"
 #: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
-msgstr ""
+msgstr "CIE LCh ノイズ..."
 
 #: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "HSV Noise..."
-msgstr ""
+msgstr "HSV ノイズ..."
 
 #: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Hurl..."
-msgstr ""
+msgstr "浴びせ(_H)..."
 
 #: ../app/actions/filters-actions.c:487
 #, fuzzy
@@ -5579,20 +5561,14 @@ msgid "_Perlin Noise..."
 msgstr "印刷サイズ(_P)..."
 
 #: ../app/actions/filters-actions.c:492
-#, fuzzy
-#| msgctxt "select-action"
-#| msgid "S_hrink..."
 msgctxt "filters-action"
 msgid "_Pick..."
-msgstr "選択範囲の縮小(_H)..."
+msgstr "つまむ(_P)..."
 
 #: ../app/actions/filters-actions.c:497
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_RGB Noise..."
-msgstr "ノイズ(_N)"
+msgstr "RGB ノイズ(_R)..."
 
 #: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
@@ -5608,12 +5584,9 @@ msgid "_Simplex Noise..."
 msgstr "ノイズ(_N)"
 
 #: ../app/actions/filters-actions.c:512
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "_Scale Layer..."
 msgctxt "filters-action"
 msgid "_Slur..."
-msgstr "レイヤーの拡大・縮小(_S)..."
+msgstr "ごまかす(_S)..."
 
 #: ../app/actions/filters-actions.c:517
 #, fuzzy
@@ -5624,11 +5597,9 @@ msgid "_Solid Noise..."
 msgstr "ノイズ(_N)"
 
 #: ../app/actions/filters-actions.c:522
-#, fuzzy
-#| msgid "_Threshold..."
 msgctxt "filters-action"
 msgid "Sp_read..."
-msgstr "しきい値(_T)..."
+msgstr "拡散(_R)..."
 
 #: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
@@ -5767,7 +5738,7 @@ msgstr "トーンカーブ(_C)..."
 #: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "Super_nova..."
-msgstr ""
+msgstr "超新星(_N)..."
 
 #: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
@@ -5805,27 +5776,19 @@ msgid "Sharpen (_Unsharp Mask)..."
 msgstr "シャープ (アンシャープマスク)(_U)..."
 
 #: ../app/actions/filters-actions.c:687
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_Scale Image..."
 msgctxt "filters-action"
 msgid "_Value Propagate..."
-msgstr "画像の拡大・縮小(_S)..."
+msgstr "明度伝搬(_V)..."
 
 #: ../app/actions/filters-actions.c:692
-#, fuzzy
-#| msgid "_GEGL Operation..."
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
-msgstr "GEGL 操作(_G)..."
+msgstr "ビデオ(_D)..."
 
 #: ../app/actions/filters-actions.c:697
-#, fuzzy
-#| msgctxt "palettes-action"
-#| msgid "_Edit Palette..."
 msgctxt "filters-action"
 msgid "_Vignette..."
-msgstr "パレットの編集(_E)..."
+msgstr "ビネット(_V)..."
 
 #: ../app/actions/filters-actions.c:702
 #, fuzzy
@@ -5835,23 +5798,19 @@ msgid "_Waterpixels..."
 msgstr "トーンカーブ(_C)..."
 
 #: ../app/actions/filters-actions.c:707
-#, fuzzy
-#| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Waves..."
-msgstr "トーンカーブ(_C)..."
+msgstr "波(_W)..."
 
 #: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
-msgstr ""
+msgstr "渦巻きと吸い込み(_H)..."
 
 #: ../app/actions/filters-actions.c:717
-#, fuzzy
-#| msgid "Grid"
 msgctxt "filters-action"
 msgid "W_ind..."
-msgstr "グリッド"
+msgstr "風(_I)..."
 
 #: ../app/actions/filters-actions.c:725
 #, fuzzy
@@ -21604,11 +21563,9 @@ msgid "Array 'channels' has only %d members, must have 5"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:1110
-#, fuzzy
-#| msgid "Transformation Matrix"
 msgctxt "undo-type"
 msgid "Convolution Matrix"
-msgstr "変形情報行列"
+msgstr "コンボリューション行列"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1172
 msgctxt "undo-type"
@@ -21631,7 +21588,7 @@ msgstr "パターンの複製(_U)"
 #: ../app/pdb/plug-in-compat-cmds.c:1455
 msgctxt "undo-type"
 msgid "Edge"
-msgstr ""
+msgstr "輪郭"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1499
 msgctxt "undo-type"
@@ -21648,7 +21605,7 @@ msgstr "カラーマネジメント"
 #: ../app/pdb/plug-in-compat-cmds.c:1620
 msgctxt "undo-type"
 msgid "Lens Flare"
-msgstr ""
+msgstr "レンズフレア"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1804
 msgctxt "undo-type"
@@ -21675,12 +21632,9 @@ msgid "Illusion"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:2283
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Replace"
 msgctxt "undo-type"
 msgid "Laplace"
-msgstr "置換"
+msgstr "ラプラス"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2359
 msgctxt "undo-type"
@@ -21712,7 +21666,7 @@ msgstr "モザイク"
 #: ../app/pdb/plug-in-compat-cmds.c:2796
 msgctxt "undo-type"
 msgid "Supernova"
-msgstr ""
+msgstr "超新星"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2886
 msgctxt "undo-type"
@@ -21761,12 +21715,9 @@ msgid "Random Slur"
 msgstr "不規則"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3349
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "undo-type"
 msgid "RGB Noise"
-msgstr "ノイズ(_N)"
+msgstr "RGB ノイズ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3419
 msgctxt "undo-type"
@@ -21807,7 +21758,7 @@ msgstr "サインカーブ(_S)"
 #: ../app/pdb/plug-in-compat-cmds.c:3826
 msgctxt "undo-type"
 msgid "Sobel"
-msgstr ""
+msgstr "ソーベル"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3887
 #, fuzzy
@@ -21820,7 +21771,7 @@ msgstr "描画色"
 #: ../app/pdb/plug-in-compat-cmds.c:3931
 msgctxt "undo-type"
 msgid "Spread"
-msgstr ""
+msgstr "拡散"
 
 # 「閾（しきい）」の漢字が読めない、またはディスプレイ上で識別できない人がいる可能性があるので、「しきい値」とした
 #: ../app/pdb/plug-in-compat-cmds.c:3972
@@ -21836,7 +21787,7 @@ msgstr "シャープ (アンシャープマスク)"
 #: ../app/pdb/plug-in-compat-cmds.c:4064
 msgctxt "undo-type"
 msgid "Video"
-msgstr ""
+msgstr "ビデオ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4101
 #, fuzzy
@@ -21848,7 +21799,7 @@ msgstr "反転"
 #: ../app/pdb/plug-in-compat-cmds.c:4205
 msgctxt "undo-type"
 msgid "Value Propagate"
-msgstr ""
+msgstr "明度伝搬"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4252
 msgctxt "undo-type"
@@ -21863,19 +21814,17 @@ msgstr ""
 #: ../app/pdb/plug-in-compat-cmds.c:4362
 msgctxt "undo-type"
 msgid "Waves"
-msgstr ""
+msgstr "波"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4410
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
-msgstr ""
+msgstr "渦巻きと吸い込み"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4462
-#, fuzzy
-#| msgid "Windows"
 msgctxt "undo-type"
 msgid "Wind"
-msgstr "ウィンドウ"
+msgstr "風"
 
 #: ../app/pdb/text-layer-cmds.c:95
 #, c-format
@@ -22409,7 +22358,7 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-supernova.c:125
 msgid "Supernova: "
-msgstr ""
+msgstr "超新星: "
 
 #: ../app/propgui/gimppropgui-utils.c:71
 msgid "1,700 K – Match flame"
