@@ -24,6 +24,8 @@
 
 #include "core/core-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -42,9 +44,11 @@
 
 /*  local function prototypes  */
 
-static GimpImage   * file_pat_pattern_to_image (Gimp        *gimp,
-                                                GimpPattern *pattern);
-static GimpPattern * file_pat_image_to_pattern (GimpImage   *image);
+static GimpImage   * file_pat_pattern_to_image (Gimp         *gimp,
+                                                GimpPattern  *pattern);
+static GimpPattern * file_pat_image_to_pattern (GimpImage    *image,
+                                                GimpDrawable *drawable,
+                                                const gchar  *name);
 
 
 /*  public functions  */
@@ -119,18 +123,23 @@ file_pat_save_invoker (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
+  GimpDrawable   *drawable;
   GimpPattern    *pattern;
   const gchar    *uri;
+  const gchar    *name;
   GFile          *file;
   gboolean        success;
 
   gimp_set_busy (gimp);
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  uri   = g_value_get_string (gimp_value_array_index (args, 3));
-  file  = g_file_new_for_uri (uri);
+  image    = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  uri      = g_value_get_string (gimp_value_array_index (args, 3));
+  name     = g_value_get_string (gimp_value_array_index (args, 5));
 
-  pattern = file_pat_image_to_pattern (image);
+  file = g_file_new_for_uri (uri);
+
+  pattern = file_pat_image_to_pattern (image, drawable, name);
 
   gimp_data_set_file (GIMP_DATA (pattern), file, TRUE, TRUE);
 
@@ -223,7 +232,34 @@ file_pat_pattern_to_image (Gimp        *gimp,
 }
 
 static GimpPattern *
-file_pat_image_to_pattern (GimpImage *image)
+file_pat_image_to_pattern (GimpImage    *image,
+                           GimpDrawable *drawable,
+                           const gchar  *name)
 {
-  return NULL;
+  GimpPattern *pattern;
+  const Babl  *format;
+  gint         width;
+  gint         height;
+
+  format = gimp_babl_format (gimp_drawable_is_gray (drawable) ?
+                             GIMP_GRAY : GIMP_RGB,
+                             GIMP_PRECISION_U8_GAMMA,
+                             gimp_drawable_has_alpha (drawable));
+
+  width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+  height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+  pattern = g_object_new (GIMP_TYPE_PATTERN,
+                          "name",      name,
+                          "mime-type", "image/x-gimp-pat",
+                          NULL);
+
+  pattern->mask = gimp_temp_buf_new (width, height, format);
+
+  gegl_buffer_get (gimp_drawable_get_buffer (drawable),
+                   GEGL_RECTANGLE (0, 0, width, height), 1.0,
+                   format, gimp_temp_buf_get_data (pattern->mask),
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  return pattern;
 }
