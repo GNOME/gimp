@@ -607,7 +607,7 @@ def _interact(proc_name, start_params):
             self.button = gtk.Button()
             self.button.set_image(image)
             box.pack_start(self.entry)
-            box.pack_start(self.button)
+            box.pack_start(self.button,False)
             self.button.connect("clicked", self.pick_file)
             if default:
                 self.entry.set_text(default)
