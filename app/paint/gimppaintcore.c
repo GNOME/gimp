@@ -987,9 +987,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                          gdouble                   image_opacity,
                          GimpPaintApplicationMode  mode)
 {
-  GeglRectangle  mask_rect;
-  GeglBuffer    *paint_mask_buffer;
-  gint           width, height;
+  gint width, height;
 
   if (! gimp_drawable_has_alpha (drawable))
     {
@@ -1007,14 +1005,17 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   width  = gegl_buffer_get_width  (core->paint_buffer);
   height = gegl_buffer_get_height (core->paint_buffer);
 
-  if (mode == GIMP_PAINT_CONSTANT &&
-
-      /* Some tools (ink) paint the mask to paint_core->canvas_buffer
-       * directly. Don't need to copy it in this case.
-       */
-      paint_mask != NULL)
+  if (core->applicator)
     {
-      if (core->applicator)
+      GeglRectangle  mask_rect;
+      GeglBuffer    *paint_mask_buffer;
+
+      if (mode == GIMP_PAINT_CONSTANT &&
+
+          /* Some tools (ink) paint the mask to paint_core->canvas_buffer
+           * directly. Don't need to copy it in this case.
+           */
+          paint_mask != NULL)
         {
           paint_mask_buffer =
             gimp_temp_buf_create_buffer ((GimpTempBuf *) paint_mask);
@@ -1032,47 +1033,121 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                                         GIMP_IS_AIRBRUSH (core));
 
           g_object_unref (paint_mask_buffer);
+
+          /* initialize the maskPR from the canvas buffer */
+          paint_mask_buffer = g_object_ref (core->canvas_buffer);
+
+          mask_rect = *GEGL_RECTANGLE (core->paint_buffer_x,
+                                       core->paint_buffer_y,
+                                       width, height);
         }
       else
         {
-          /* Mix paint mask and canvas_buffer */
-          combine_paint_mask_to_canvas_buffer (paint_mask,
-                                               paint_mask_offset_x,
-                                               paint_mask_offset_y,
-                                               core->canvas_buffer,
-                                               core->paint_buffer_x,
-                                               core->paint_buffer_y,
-                                               paint_opacity,
-                                               GIMP_IS_AIRBRUSH (core));
+          paint_mask_buffer =
+            gimp_temp_buf_create_buffer ((GimpTempBuf *) paint_mask);
+
+          mask_rect = *GEGL_RECTANGLE (paint_mask_offset_x,
+                                       paint_mask_offset_y,
+                                       width, height);
         }
 
-      /* initialize the maskPR from the canvas buffer */
-      paint_mask_buffer = g_object_ref (core->canvas_buffer);
+      /*  apply the paint area to the image  */
+      gimp_drawable_replace_buffer (drawable, core->paint_buffer,
+                                    GEGL_RECTANGLE (0, 0, width, height),
+                                    FALSE, NULL,
+                                    image_opacity,
+                                    paint_mask_buffer, &mask_rect,
+                                    core->paint_buffer_x,
+                                    core->paint_buffer_y);
 
-      mask_rect = *GEGL_RECTANGLE (core->paint_buffer_x,
-                                   core->paint_buffer_y,
-                                   width, height);
+      g_object_unref (paint_mask_buffer);
     }
   else
     {
-      paint_mask_buffer =
-        gimp_temp_buf_create_buffer ((GimpTempBuf *) paint_mask);
+      GimpPaintCoreLoopsParams    params = {};
+      GimpPaintCoreLoopsAlgorithm algorithms = GIMP_PAINT_CORE_LOOPS_ALGORITHM_NONE;
 
-      mask_rect = *GEGL_RECTANGLE (paint_mask_offset_x,
-                                   paint_mask_offset_y,
-                                   width, height);
+      params.paint_buf          = gimp_gegl_buffer_get_temp_buf (core->paint_buffer);
+      params.paint_buf_offset_x = core->paint_buffer_x;
+      params.paint_buf_offset_y = core->paint_buffer_y;
+
+      if (! params.paint_buf)
+        return;
+
+      if (core->comp_buffer)
+        params.dest_buffer = core->comp_buffer;
+      else
+        params.dest_buffer = gimp_drawable_get_buffer (drawable);
+
+      if (mode == GIMP_PAINT_CONSTANT)
+        {
+          params.canvas_buffer = core->canvas_buffer;
+
+          /* This step is skipped by the ink tool, which writes
+           * directly to canvas_buffer
+           */
+          if (paint_mask != NULL)
+            {
+              /* Mix paint mask and canvas_buffer */
+              params.paint_mask          = paint_mask;
+              params.paint_mask_offset_x = paint_mask_offset_x;
+              params.paint_mask_offset_y = paint_mask_offset_y;
+              params.stipple             = GIMP_IS_AIRBRUSH (core);
+              params.paint_opacity       = paint_opacity;
+
+              algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER;
+            }
+
+          /* Write canvas_buffer to the compositing mask */
+          algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK;
+
+          /* undo buf -> paint_buf -> dest_buffer */
+          params.src_buffer = core->undo_buffer;
+        }
+      else
+        {
+          g_return_if_fail (paint_mask);
+
+          /* Write paint_mask to the compositing mask, does not modify
+           * canvas_buffer
+           */
+          params.paint_mask          = paint_mask;
+          params.paint_mask_offset_x = paint_mask_offset_x;
+          params.paint_mask_offset_y = paint_mask_offset_y;
+          params.paint_opacity       = paint_opacity;
+
+          algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
+
+          /* dest_buffer -> paint_buf -> dest_buffer */
+          if (core->comp_buffer)
+            params.src_buffer = gimp_drawable_get_buffer (drawable);
+          else
+            params.src_buffer = params.dest_buffer;
+        }
+
+      params.mask_buffer   = core->mask_buffer;
+      params.mask_offset_x = core->mask_x_offset;
+      params.mask_offset_y = core->mask_y_offset;
+      params.image_opacity = image_opacity;
+      params.paint_mode    = GIMP_LAYER_MODE_REPLACE;
+
+      algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND;
+
+      gimp_paint_core_loops_process (&params, algorithms);
+
+      if (core->comp_buffer)
+        {
+          mask_components_onto (params.src_buffer,
+                                core->comp_buffer,
+                                gimp_drawable_get_buffer (drawable),
+                                GEGL_RECTANGLE (core->paint_buffer_x,
+                                                core->paint_buffer_y,
+                                                width,
+                                                height),
+                                gimp_drawable_get_active_mask (drawable),
+                                gimp_drawable_get_linear (drawable));
+        }
     }
-
-  /*  apply the paint area to the image  */
-  gimp_drawable_replace_buffer (drawable, core->paint_buffer,
-                                GEGL_RECTANGLE (0, 0, width, height),
-                                FALSE, NULL,
-                                image_opacity,
-                                paint_mask_buffer, &mask_rect,
-                                core->paint_buffer_x,
-                                core->paint_buffer_y);
-
-  g_object_unref (paint_mask_buffer);
 
   /*  Update the undo extents  */
   core->x1 = MIN (core->x1, core->paint_buffer_x);
