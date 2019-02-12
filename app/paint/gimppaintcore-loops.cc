@@ -1632,12 +1632,13 @@ struct DispatchPaintMaskToCompMask
             Dispatch<NewAlgorithm> () (visitor, params, algorithms, algorithm);
           },
           params, algorithms, algorithm,
-          dispatch_paint_mask, dispatch_mask_buffer_iterator);
-        }
-      else
-        {
-          visitor (algorithm);
-        }
+          dispatch_paint_mask,
+          dispatch_mask_buffer_iterator);
+      }
+    else
+      {
+        visitor (algorithm);
+      }
   }
 } static dispatch_paint_mask_to_comp_mask;
 
