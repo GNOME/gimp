@@ -77,7 +77,7 @@ gimp_data_factories_init (Gimp *gimp)
                                        "GIMP Brush",
                                        gimp_brush_load,
                                        GIMP_BRUSH_FILE_EXTENSION,
-                                       FALSE);
+                                       TRUE);
   gimp_data_loader_factory_add_loader (gimp->brush_factory,
                                        "GIMP Brush Pixmap",
                                        gimp_brush_load,

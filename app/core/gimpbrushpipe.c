@@ -63,6 +63,7 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
   GimpBrushClass    *brush_class       = GIMP_BRUSH_CLASS (klass);
 
   object_class->finalize         = gimp_brush_pipe_finalize;
@@ -70,6 +71,9 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
   gimp_object_class->get_memsize = gimp_brush_pipe_get_memsize;
 
   viewable_class->get_popup_size = gimp_brush_pipe_get_popup_size;
+
+  data_class->save               = NULL; /* don't inherit */
+  data_class->copy               = NULL; /* don't inherit */
 
   brush_class->begin_use         = gimp_brush_pipe_begin_use;
   brush_class->end_use           = gimp_brush_pipe_end_use;

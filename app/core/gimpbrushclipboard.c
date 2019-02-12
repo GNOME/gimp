@@ -57,9 +57,8 @@ static void       gimp_brush_clipboard_get_property (GObject      *object,
                                                      guint         property_id,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
-#if 0
+
 static GimpData * gimp_brush_clipboard_duplicate    (GimpData     *data);
-#endif
 
 static void       gimp_brush_clipboard_changed      (Gimp         *gimp,
                                                      GimpBrush    *brush);
@@ -74,17 +73,13 @@ static void
 gimp_brush_clipboard_class_init (GimpBrushClipboardClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-#if 0
   GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
-#endif
 
   object_class->constructed  = gimp_brush_clipboard_constructed;
   object_class->set_property = gimp_brush_clipboard_set_property;
   object_class->get_property = gimp_brush_clipboard_get_property;
 
-#if 0
   data_class->duplicate      = gimp_brush_clipboard_duplicate;
-#endif
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp", NULL, NULL,
@@ -168,15 +163,15 @@ gimp_brush_clipboard_get_property (GObject    *object,
     }
 }
 
-#if 0
 static GimpData *
 gimp_brush_clipboard_duplicate (GimpData *data)
 {
-  GimpBrushClipboard *brush = GIMP_BRUSH_CLIPBOARD (data);
+  GimpData *new = g_object_new (GIMP_TYPE_BRUSH, NULL);
 
-  return gimp_brush_clipboard_new (brush->gimp);
+  gimp_data_copy (new, data);
+
+  return new;
 }
-#endif
 
 GimpData *
 gimp_brush_clipboard_new (Gimp     *gimp,
