@@ -151,7 +151,6 @@ gimp_color_editor_init (GimpColorEditor *editor)
 {
   GtkWidget   *notebook;
   GtkWidget   *hbox;
-  GtkWidget   *vbox;
   GtkWidget   *button;
   gint         content_spacing;
   gint         button_spacing;
@@ -236,7 +235,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
     }
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), FALSE);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -249,13 +248,9 @@ gimp_color_editor_init (GimpColorEditor *editor)
                     G_CALLBACK (gimp_color_editor_fg_bg_notify),
                     editor);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
   /*  The color picker  */
   button = gimp_pick_button_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "color-picked",
@@ -264,7 +259,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   /*  The hex triplet entry  */
   editor->hex_entry = gimp_color_hex_entry_new ();
-  gtk_box_pack_end (GTK_BOX (vbox), editor->hex_entry, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), editor->hex_entry, TRUE, TRUE, 0);
   gtk_widget_show (editor->hex_entry);
 
   g_signal_connect (editor->hex_entry, "color-changed",
