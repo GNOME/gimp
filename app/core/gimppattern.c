@@ -195,8 +195,7 @@ gimp_pattern_copy (GimpData *data,
   GimpPattern *pattern     = GIMP_PATTERN (data);
   GimpPattern *src_pattern = GIMP_PATTERN (src_data);
 
-  gimp_temp_buf_unref (pattern->mask);
-
+  g_clear_pointer (&pattern->mask, gimp_temp_buf_unref);
   pattern->mask = gimp_temp_buf_copy (src_pattern->mask);
 
   gimp_data_dirty (data);
