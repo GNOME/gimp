@@ -36,18 +36,14 @@
 
 /*  local function prototypes  */
 
-static void       query          (void);
-static void       run            (const gchar      *name,
-                                  gint              nparams,
-                                  const GimpParam  *param,
-                                  gint             *nreturn_vals,
-                                  GimpParam       **return_vals);
-static gboolean   save_image     (GFile            *file,
-                                  gint32            image_ID,
-                                  gint32            drawable_ID,
-                                  GError          **error);
+static void       query       (void);
+static void       run         (const gchar      *name,
+                               gint              nparams,
+                               const GimpParam  *param,
+                               gint             *nreturn_vals,
+                               GimpParam       **return_vals);
 
-static gboolean   save_dialog    (void);
+static gboolean   save_dialog (void);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -217,7 +213,22 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (file, image_ID, drawable_ID, &error))
+          GimpParam *save_retvals;
+          gint       n_save_retvals;
+
+          save_retvals =
+            gimp_run_procedure ("file-pat-save-internal",
+                                &n_save_retvals,
+                                GIMP_PDB_INT32,    GIMP_RUN_NONINTERACTIVE,
+                                GIMP_PDB_IMAGE,    image_ID,
+                                GIMP_PDB_DRAWABLE, drawable_ID,
+                                GIMP_PDB_STRING,   param[3].data.d_string,
+                                GIMP_PDB_STRING,   param[4].data.d_string,
+                                GIMP_PDB_STRING,   description,
+                                GIMP_PDB_END);
+
+
+          if (save_retvals[0].data.d_status == GIMP_PDB_SUCCESS)
             {
               gimp_set_data (SAVE_PROC, description, sizeof (description));
             }
@@ -225,6 +236,8 @@ run (const gchar      *name,
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+          gimp_destroy_params (save_retvals, n_save_retvals);
         }
 
       if (export == GIMP_EXPORT_EXPORT)
@@ -259,133 +272,6 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-}
-
-static gboolean
-save_image (GFile   *file,
-            gint32   image_ID,
-            gint32   drawable_ID,
-            GError **error)
-{
-  GOutputStream     *output;
-  GimpPatternHeader  ph;
-  GeglBuffer        *buffer;
-  const Babl        *file_format;
-  guchar            *buf;
-  gint               width;
-  gint               height;
-  gint               line_size;
-  gint               line;
-
-  switch (gimp_drawable_type (drawable_ID))
-    {
-    case GIMP_GRAY_IMAGE:
-      file_format = babl_format ("Y' u8");
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      file_format = babl_format ("Y'A u8");
-      break;
-
-    case GIMP_RGB_IMAGE:
-    case GIMP_INDEXED_IMAGE:
-      file_format = babl_format ("R'G'B' u8");
-      break;
-
-    case GIMP_RGBA_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      file_format = babl_format ("R'G'B'A u8");
-      break;
-
-    default:
-      g_message ("Unsupported image type: %d\n"
-                 "GIMP Patterns must be GRAY or RGB",
-                 gimp_drawable_type (drawable_ID));
-      return FALSE;
-    }
-
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             g_file_get_parse_name (file));
-
-  output = G_OUTPUT_STREAM (g_file_replace (file,
-                                            NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, error));
-  if (! output)
-    return FALSE;
-
-  buffer = gimp_drawable_get_buffer (drawable_ID);
-
-  width  = gegl_buffer_get_width (buffer);
-  height = gegl_buffer_get_height (buffer);
-
-  ph.header_size  = g_htonl (sizeof (GimpPatternHeader) + strlen (description) + 1);
-  ph.version      = g_htonl (1);
-  ph.width        = g_htonl (width);
-  ph.height       = g_htonl (height);
-  ph.bytes        = g_htonl (babl_format_get_bytes_per_pixel (file_format));
-  ph.magic_number = g_htonl (GIMP_PATTERN_MAGIC);
-
-  if (! g_output_stream_write_all (output, &ph, sizeof (GimpPatternHeader),
-                                   NULL, NULL, error))
-    {
-      GCancellable *cancellable = g_cancellable_new ();
-
-      g_cancellable_cancel (cancellable);
-      g_output_stream_close (output, cancellable, NULL);
-      g_object_unref (cancellable);
-
-      g_object_unref (output);
-      return FALSE;
-    }
-
-  if (! g_output_stream_write_all (output,
-                                   description, strlen (description) + 1,
-                                   NULL, NULL, error))
-    {
-      GCancellable *cancellable = g_cancellable_new ();
-
-      g_cancellable_cancel (cancellable);
-      g_output_stream_close (output, cancellable, NULL);
-      g_object_unref (cancellable);
-
-      g_object_unref (output);
-      return FALSE;
-    }
-
-  line_size = width * babl_format_get_bytes_per_pixel (file_format);
-
-  /* this can't overflow because drawable->width is <= GIMP_PATTERN_MAX_SIZE */
-  buf = g_alloca (line_size);
-
-  for (line = 0; line < height; line++)
-    {
-      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, line, width, 1), 1.0,
-                       file_format, buf,
-                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-
-      if (! g_output_stream_write_all (output, buf, line_size,
-                                       NULL, NULL, error))
-        {
-          GCancellable *cancellable = g_cancellable_new ();
-
-          g_cancellable_cancel (cancellable);
-          g_output_stream_close (output, cancellable, NULL);
-          g_object_unref (cancellable);
-
-          g_object_unref (buffer);
-          g_object_unref (output);
-          return FALSE;
-        }
-
-      gimp_progress_update ((gdouble) line / (gdouble) height);
-    }
-
-  g_object_unref (buffer);
-  g_object_unref (output);
-
-  gimp_progress_update (1.0);
-
-  return TRUE;
 }
 
 static gboolean
