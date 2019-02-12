@@ -67,6 +67,14 @@ static void     gimp_fg_bg_editor_get_property      (GObject          *object,
                                                      GValue           *value,
                                                      GParamSpec       *pspec);
 
+static GtkSizeRequestMode
+                gimp_fg_bg_editor_get_request_mode  (GtkWidget        *widget);
+static void
+   gimp_fg_bg_editor_get_preferred_width_for_height (GtkWidget        *widget,
+                                                     gint              height,
+                                                     gint             *minimum_width,
+                                                     gint             *natural_width);
+
 static void     gimp_fg_bg_editor_style_updated     (GtkWidget        *widget);
 static gboolean gimp_fg_bg_editor_draw              (GtkWidget        *widget,
                                                      cairo_t          *cr);
@@ -136,12 +144,14 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
   object_class->set_property         = gimp_fg_bg_editor_set_property;
   object_class->get_property         = gimp_fg_bg_editor_get_property;
 
-  widget_class->style_updated        = gimp_fg_bg_editor_style_updated;
-  widget_class->draw                 = gimp_fg_bg_editor_draw;
-  widget_class->button_press_event   = gimp_fg_bg_editor_button_press;
-  widget_class->button_release_event = gimp_fg_bg_editor_button_release;
-  widget_class->drag_motion          = gimp_fg_bg_editor_drag_motion;
-  widget_class->query_tooltip        = gimp_fg_bg_editor_query_tooltip;
+  widget_class->get_request_mode               = gimp_fg_bg_editor_get_request_mode;
+  widget_class->get_preferred_width_for_height = gimp_fg_bg_editor_get_preferred_width_for_height;
+  widget_class->style_updated                  = gimp_fg_bg_editor_style_updated;
+  widget_class->draw                           = gimp_fg_bg_editor_draw;
+  widget_class->button_press_event             = gimp_fg_bg_editor_button_press;
+  widget_class->button_release_event           = gimp_fg_bg_editor_button_release;
+  widget_class->drag_motion                    = gimp_fg_bg_editor_drag_motion;
+  widget_class->query_tooltip                  = gimp_fg_bg_editor_query_tooltip;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
@@ -179,6 +189,8 @@ gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
   gimp_widget_track_monitor (GTK_WIDGET (editor),
                              G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
                              NULL);
+
+  gtk_widget_set_size_request (GTK_WIDGET (editor), 32, 24);
 }
 
 static void
@@ -237,6 +249,22 @@ gimp_fg_bg_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static GtkSizeRequestMode
+gimp_fg_bg_editor_get_request_mode (GtkWidget *widget)
+{
+  return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
+}
+
+static void
+gimp_fg_bg_editor_get_preferred_width_for_height (GtkWidget *widget,
+                                                  gint       height,
+                                                  gint      *minimum_width,
+                                                  gint      *natural_width)
+{
+  *minimum_width = height * 4/3;
+  *natural_width = height * 4/3;
 }
 
 static void

@@ -240,7 +240,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   /*  FG/BG editor  */
   editor->fg_bg = gimp_fg_bg_editor_new (NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), editor->fg_bg, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), editor->fg_bg, FALSE, FALSE, 0);
   gtk_widget_show (editor->fg_bg);
 
   g_signal_connect (editor->fg_bg, "notify::active-color",
