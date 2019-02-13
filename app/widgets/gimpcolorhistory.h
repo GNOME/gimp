@@ -39,7 +39,9 @@ struct _GimpColorHistory
   GimpContext  *context;
 
   GtkWidget   **color_areas;
+  GtkWidget   **buttons;
   gint          history_size;
+  gint          n_rows;
 };
 
 struct _GimpColorHistoryClass

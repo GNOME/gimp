@@ -56,25 +56,43 @@ enum
 #define DEFAULT_HISTORY_SIZE 12
 #define COLOR_AREA_SIZE      20
 
-static void   gimp_color_history_constructed   (GObject           *object);
-static void   gimp_color_history_finalize      (GObject           *object);
-static void   gimp_color_history_set_property  (GObject           *object,
-                                                guint              property_id,
-                                                const GValue      *value,
-                                                GParamSpec        *pspec);
-static void   gimp_color_history_get_property  (GObject           *object,
-                                                guint              property_id,
-                                                GValue            *value,
-                                                GParamSpec        *pspec);
+/* GObject methods */
+static void   gimp_color_history_constructed                    (GObject           *object);
+static void   gimp_color_history_finalize                       (GObject           *object);
+static void   gimp_color_history_set_property                   (GObject           *object,
+                                                                 guint              property_id,
+                                                                 const GValue      *value,
+                                                                 GParamSpec        *pspec);
+static void   gimp_color_history_get_property                   (GObject           *object,
+                                                                 guint              property_id,
+                                                                 GValue            *value,
+                                                                 GParamSpec        *pspec);
 
-static void   gimp_color_history_color_clicked (GtkWidget         *widget,
-                                                GimpColorHistory  *history);
+/* GtkWidget methods */
+static GtkSizeRequestMode gimp_color_history_get_request_mode   (GtkWidget         *widget);
+static void   gimp_color_history_get_preferred_width_for_height (GtkWidget         *widget,
+                                                                 gint               height,
+                                                                 gint              *minimum_width,
+                                                                 gint              *natural_width);
+static void   gimp_color_history_get_preferred_height_for_width (GtkWidget         *widget,
+                                                                 gint               width,
+                                                                 gint              *minimum_height,
+                                                                 gint              *natural_height);
+static void   gimp_color_history_size_allocate                  (GtkWidget         *widget,
+                                                                 GdkRectangle      *allocation);
 
-static void   gimp_color_history_palette_dirty (GimpPalette       *palette,
-                                                GimpColorHistory  *history);
+/* Signal handlers */
+static void   gimp_color_history_color_clicked                  (GtkWidget         *widget,
+                                                                 GimpColorHistory  *history);
 
-static void   gimp_color_history_color_changed (GtkWidget         *widget,
-                                                gpointer           data);
+static void   gimp_color_history_palette_dirty                  (GimpPalette       *palette,
+                                                                 GimpColorHistory  *history);
+
+static void   gimp_color_history_color_changed                  (GtkWidget         *widget,
+                                                                 gpointer           data);
+
+/* Utils */
+static void   gimp_color_history_reorganize                     (GimpColorHistory  *history);
 
 
 G_DEFINE_TYPE (GimpColorHistory, gimp_color_history, GTK_TYPE_GRID)
@@ -86,12 +104,18 @@ static guint history_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_color_history_class_init (GimpColorHistoryClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructed  = gimp_color_history_constructed;
   object_class->set_property = gimp_color_history_set_property;
   object_class->get_property = gimp_color_history_get_property;
   object_class->finalize     = gimp_color_history_finalize;
+
+  widget_class->get_request_mode               = gimp_color_history_get_request_mode;
+  widget_class->get_preferred_width_for_height = gimp_color_history_get_preferred_width_for_height;
+  widget_class->get_preferred_height_for_width = gimp_color_history_get_preferred_height_for_width;
+  widget_class->size_allocate                  = gimp_color_history_size_allocate;
 
   history_signals[COLOR_SELECTED] =
     g_signal_new ("color-selected",
@@ -126,6 +150,11 @@ static void
 gimp_color_history_init (GimpColorHistory *history)
 {
   history->color_areas = NULL;
+  history->buttons     = NULL;
+  history->n_rows      = 1;
+
+  gtk_grid_set_row_spacing (GTK_GRID (history), 2);
+  gtk_grid_set_column_spacing (GTK_GRID (history), 2);
 }
 
 static void
@@ -141,8 +170,6 @@ gimp_color_history_constructed (GObject *object)
   g_signal_connect_object (palette, "dirty",
                            G_CALLBACK (gimp_color_history_palette_dirty),
                            G_OBJECT (history), 0);
-
-  gimp_color_history_palette_dirty (palette, history);
 }
 
 static void
@@ -152,6 +179,8 @@ gimp_color_history_finalize (GObject *object)
 
   g_free (history->color_areas);
   history->color_areas = NULL;
+  g_free (history->buttons);
+  history->buttons = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -172,15 +201,19 @@ gimp_color_history_set_property (GObject      *object,
 
     case PROP_HISTORY_SIZE:
         {
-          GtkWidget *button;
-          gint       i;
+          GimpPalette *palette;
+          GtkWidget   *button;
+          GtkWidget   *color_area;
+          gint         i;
+
+          history->history_size = g_value_get_int (value);
 
           /* Destroy previous color buttons. */
           gtk_container_foreach (GTK_CONTAINER (history),
                                  (GtkCallback) gtk_widget_destroy, NULL);
-          history->history_size = g_value_get_int (value);
-          gtk_grid_set_row_spacing (GTK_GRID (history), 2);
-          gtk_grid_set_column_spacing (GTK_GRID (history), 2);
+          history->buttons = g_realloc_n (history->buttons,
+                                          history->history_size,
+                                          sizeof (GtkWidget*));
           history->color_areas = g_realloc_n (history->color_areas,
                                               history->history_size,
                                               sizeof (GtkWidget*));
@@ -189,32 +222,35 @@ gimp_color_history_set_property (GObject      *object,
               GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
               gint    row, column;
 
-              column = i % (history->history_size / 2);
-              row    = i / (history->history_size / 2);
+              column = i % (history->history_size / history->n_rows);
+              row    = i / (history->history_size / history->n_rows);
 
               button = gtk_button_new ();
-              gtk_widget_set_size_request (button,
-                                           COLOR_AREA_SIZE, COLOR_AREA_SIZE);
-              gtk_grid_attach (GTK_GRID (history), button,
-                               column, row, 1, 1);
+              gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
+              gtk_grid_attach (GTK_GRID (history), button, column, row, 1, 1);
               gtk_widget_show (button);
 
-              history->color_areas[i] = gimp_color_area_new (&black,
-                                                             GIMP_COLOR_AREA_SMALL_CHECKS,
-                                                             GDK_BUTTON2_MASK);
-              gimp_color_area_set_color_config (GIMP_COLOR_AREA (history->color_areas[i]),
+              color_area = gimp_color_area_new (&black, GIMP_COLOR_AREA_SMALL_CHECKS,
+                                                GDK_BUTTON2_MASK);
+              gimp_color_area_set_color_config (GIMP_COLOR_AREA (color_area),
                                                 history->context->gimp->config->color_management);
-              gtk_container_add (GTK_CONTAINER (button), history->color_areas[i]);
-              gtk_widget_show (history->color_areas[i]);
+              gtk_container_add (GTK_CONTAINER (button), color_area);
+              gtk_widget_show (color_area);
 
               g_signal_connect (button, "clicked",
                                 G_CALLBACK (gimp_color_history_color_clicked),
                                 history);
 
-              g_signal_connect (history->color_areas[i], "color-changed",
+              g_signal_connect (color_area, "color-changed",
                                 G_CALLBACK (gimp_color_history_color_changed),
                                 GINT_TO_POINTER (i));
+
+              history->buttons[i] = button;
+              history->color_areas[i] = color_area;
             }
+
+          palette = gimp_palettes_get_color_history (history->context->gimp);
+          gimp_color_history_palette_dirty (palette, history);
         }
       break;
 
@@ -246,6 +282,109 @@ gimp_color_history_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static GtkSizeRequestMode
+gimp_color_history_get_request_mode (GtkWidget *widget)
+{
+  return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
+}
+
+static void
+gimp_color_history_get_preferred_width_for_height (GtkWidget *widget,
+                                                   gint       height,
+                                                   gint      *minimum_width,
+                                                   gint      *natural_width)
+{
+  GimpColorHistory *history = GIMP_COLOR_HISTORY (widget);
+  GtkWidget        *button;
+  gint              button_width  = COLOR_AREA_SIZE;
+
+  button = gtk_grid_get_child_at (GTK_GRID (widget), 0, 0);
+  if (button)
+    button_width = MAX (gtk_widget_get_allocated_width (button),
+                        COLOR_AREA_SIZE);
+
+  /* This is a bit of a trick. Though the height actually depends on the
+   * width, I actually just request for about half the expected width if
+   * we were to align all color buttons on one line. This way, it is
+   * possible to resize the widget smaller than it currently is, hence
+   * allowing reorganization of icons.
+   */
+  *minimum_width = button_width * (1 + history->history_size / 2);
+  *natural_width = *minimum_width;
+}
+
+static void
+gimp_color_history_get_preferred_height_for_width (GtkWidget *widget,
+                                                   gint       width,
+                                                   gint      *minimum_height,
+                                                   gint      *natural_height)
+{
+  GimpColorHistory *history = GIMP_COLOR_HISTORY (widget);
+  GtkWidget        *button;
+  gint              button_width  = COLOR_AREA_SIZE;
+  gint              button_height = COLOR_AREA_SIZE;
+  gint              height;
+
+  button = gtk_grid_get_child_at (GTK_GRID (widget), 0, 0);
+  if (button)
+    {
+      button_width = MAX (gtk_widget_get_allocated_width (button),
+                          COLOR_AREA_SIZE);
+      button_height = MAX (gtk_widget_get_allocated_height (button),
+                           COLOR_AREA_SIZE);
+    }
+
+  if (width > button_width * history->history_size + 2 * (history->history_size - 1))
+    height = button_height;
+  else
+    height = 2 * button_height + 2;
+
+  *minimum_height = height;
+  *natural_height = height;
+}
+
+static void
+gimp_color_history_size_allocate (GtkWidget    *widget,
+                                  GdkRectangle *allocation)
+{
+  GimpColorHistory *history = GIMP_COLOR_HISTORY (widget);
+  GtkWidget        *button;
+  gint              button_width  = COLOR_AREA_SIZE;
+  gint              button_height = COLOR_AREA_SIZE;
+  gint              height;
+  gint              n_rows;
+
+  button = gtk_grid_get_child_at (GTK_GRID (widget), 0, 0);
+  if (button)
+    {
+      button_width = MAX (gtk_widget_get_allocated_width (button),
+                          COLOR_AREA_SIZE);
+      button_height = MAX (gtk_widget_get_allocated_height (button),
+                           COLOR_AREA_SIZE);
+    }
+
+  if (allocation->width > button_width * history->history_size +
+                          2 * (history->history_size - 1))
+    {
+      n_rows = 1;
+      height = button_height;
+    }
+  else
+    {
+      n_rows = 2;
+      height = 2 * button_height + 2;
+    }
+
+  if (n_rows != history->n_rows)
+    {
+      history->n_rows = n_rows;
+      gimp_color_history_reorganize (history);
+    }
+
+  allocation->height = height;
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 }
 
 
@@ -328,4 +467,27 @@ gimp_color_history_color_changed (GtkWidget *widget,
   gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
 
   gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &color);
+}
+
+static void
+gimp_color_history_reorganize (GimpColorHistory *history)
+{
+  GtkWidget   *button;
+  gint       i;
+
+  g_return_if_fail (history->buttons[0] && GTK_IS_BUTTON (history->buttons[0]));
+
+  for (i = 0; i < history->history_size; i++)
+    {
+      gint row, column;
+
+      column = i % (history->history_size / history->n_rows);
+      row    = i / (history->history_size / history->n_rows);
+
+      button = history->buttons[i];
+
+      g_object_ref (button);
+      gtk_container_remove (GTK_CONTAINER (history), button);
+      gtk_grid_attach (GTK_GRID (history), button, column, row, 1, 1);
+    }
 }
