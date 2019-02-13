@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-01 16:49+0000\n"
-"PO-Revision-Date: 2019-02-12 23:21+0900\n"
+"PO-Revision-Date: 2019-02-13 23:09+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -5184,7 +5184,7 @@ msgstr "コントラスト(_T):"
 #: ../app/actions/filters-actions.c:137
 msgctxt "filters-action"
 msgid "_Dilate"
-msgstr ""
+msgstr "明るさの最小値(_D)"
 
 #: ../app/actions/filters-actions.c:138
 msgctxt "drawable-action"
@@ -5194,7 +5194,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:153
 msgctxt "filters-action"
 msgid "_Erode"
-msgstr ""
+msgstr "明るさの最大値(_E)"
 
 #: ../app/actions/filters-actions.c:154
 msgctxt "drawable-action"
@@ -5209,7 +5209,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:177
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
-msgstr ""
+msgstr "キャンバス地(_A)..."
 
 #: ../app/actions/filters-actions.c:182
 msgctxt "filters-action"
@@ -5224,7 +5224,7 @@ msgstr "明るさ-コントラスト(_R)..."
 #: ../app/actions/filters-actions.c:192
 msgctxt "filters-action"
 msgid "_Bump Map..."
-msgstr ""
+msgstr "バンプマップ(_B)..."
 
 #: ../app/actions/filters-actions.c:197
 #, fuzzy
@@ -5236,7 +5236,7 @@ msgstr "カラーバランス(_B)..."
 #: ../app/actions/filters-actions.c:202
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
-msgstr ""
+msgstr "漫画(_R)..."
 
 #: ../app/actions/filters-actions.c:207
 #, fuzzy
@@ -5307,7 +5307,7 @@ msgstr "コンボリューション行列(_C)..."
 #: ../app/actions/filters-actions.c:262
 msgctxt "filters-action"
 msgid "_Cubism..."
-msgstr ""
+msgstr "キュービズム(_C)..."
 
 #: ../app/actions/filters-actions.c:267
 msgctxt "filters-action"
@@ -5340,18 +5340,14 @@ msgid "Diffraction Patterns..."
 msgstr "パターンの編集(_E)..."
 
 #: ../app/actions/filters-actions.c:292
-#, fuzzy
-#| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "Displace..."
-msgstr "脱色(_D)..."
+msgstr "ずらしマップ..."
 
 #: ../app/actions/filters-actions.c:297
-#, fuzzy
-#| msgid "Distance:"
 msgctxt "filters-action"
 msgid "Distance Map..."
-msgstr "距離:"
+msgstr "距離マップ..."
 
 #: ../app/actions/filters-actions.c:302
 msgctxt "filters-action"
@@ -5400,12 +5396,9 @@ msgid "_Fattal et al. 2002..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:347
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_Scale Image..."
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
-msgstr "画像の拡大・縮小(_S)..."
+msgstr "フラクタルトレース(_F)..."
 
 #: ../app/actions/filters-actions.c:352
 msgctxt "filters-action"
@@ -5418,11 +5411,9 @@ msgid "_Selective Gaussian Blur..."
 msgstr "選択的ガウスぼかし(_S)..."
 
 #: ../app/actions/filters-actions.c:362
-#, fuzzy
-#| msgid "_GEGL Operation..."
 msgctxt "filters-action"
 msgid "_GEGL graph..."
-msgstr "GEGL 操作(_G)..."
+msgstr "GEGL グラフ(_G)..."
 
 #: ../app/actions/filters-actions.c:367
 msgctxt "filters-action"
@@ -5447,7 +5438,7 @@ msgstr "色相-彩度(_S)..."
 #: ../app/actions/filters-actions.c:387
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr ""
+msgstr "幻(_I)..."
 
 #: ../app/actions/filters-actions.c:392
 msgctxt "filters-action"
@@ -5477,7 +5468,7 @@ msgstr "レベル(_L)..."
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr ""
+msgstr "リトルプラネット(_L)..."
 
 #: ../app/actions/filters-actions.c:422
 msgctxt "filters-action"
@@ -5604,17 +5595,17 @@ msgstr "拡散(_R)..."
 #: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "Oili_fy..."
-msgstr ""
+msgstr "油絵化(_F)..."
 
 #: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr ""
+msgstr "パノラマ投影(_P)..."
 
 #: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Photocopy..."
-msgstr ""
+msgstr "写真コピー(_P)..."
 
 #: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
@@ -5637,11 +5628,9 @@ msgid "_Posterize..."
 msgstr "ポスタリゼーション(_P)..."
 
 #: ../app/actions/filters-actions.c:562
-#, fuzzy
-#| msgid "_Cage Transform"
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
-msgstr "ケージ変形(_C)"
+msgstr "再帰変形(_R)..."
 
 #: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
@@ -5711,7 +5700,7 @@ msgstr "シンメトリックニアレストネイバー(_S)..."
 #: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Softglow..."
-msgstr ""
+msgstr "柔らかい発光(_S)..."
 
 #: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
@@ -5751,12 +5740,9 @@ msgid "_Threshold Alpha..."
 msgstr "アルファチャンネルのしきい値(_T)..."
 
 #: ../app/actions/filters-actions.c:667
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Can_vas Size..."
 msgctxt "filters-action"
 msgid "_Glass Tile..."
-msgstr "キャンバスサイズの変更(_V)..."
+msgstr "ガラスタイル(_G)..."
 
 #: ../app/actions/filters-actions.c:672
 #, fuzzy
@@ -5791,11 +5777,9 @@ msgid "_Vignette..."
 msgstr "ビネット(_V)..."
 
 #: ../app/actions/filters-actions.c:702
-#, fuzzy
-#| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "トーンカーブ(_C)..."
+msgstr "水彩画(_W)..."
 
 #: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
@@ -21473,14 +21457,12 @@ msgstr "自由選択"
 #: ../app/pdb/plug-in-compat-cmds.c:241
 msgctxt "undo-type"
 msgid "Bump Map"
-msgstr ""
+msgstr "バンプマップ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:313
-#, fuzzy
-#| msgid "Display"
 msgctxt "undo-type"
 msgid "Displace"
-msgstr "ディスプレイ"
+msgstr "ずらしマップ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:347
 msgctxt "undo-type"
@@ -21500,12 +21482,9 @@ msgid "Antialias"
 msgstr "なめらかに"
 
 #: ../app/pdb/plug-in-compat-cmds.c:492
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Apply layer mask"
 msgctxt "undo-type"
 msgid "Apply Canvas"
-msgstr "レイヤーマスクの適用"
+msgstr "キャンバス地"
 
 #: ../app/pdb/plug-in-compat-cmds.c:552
 msgctxt "undo-type"
@@ -21570,7 +21549,7 @@ msgstr "コンボリューション行列"
 #: ../app/pdb/plug-in-compat-cmds.c:1172
 msgctxt "undo-type"
 msgid "Cubism"
-msgstr ""
+msgstr "キュービズム"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1217
 msgctxt "undo-type"
@@ -21610,7 +21589,7 @@ msgstr "レンズフレア"
 #: ../app/pdb/plug-in-compat-cmds.c:1804
 msgctxt "undo-type"
 msgid "Glass Tile"
-msgstr ""
+msgstr "ガラスタイル"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1857
 #, fuzzy
@@ -21629,7 +21608,7 @@ msgstr "カラープロファイル"
 #: ../app/pdb/plug-in-compat-cmds.c:2246
 msgctxt "undo-type"
 msgid "Illusion"
-msgstr ""
+msgstr "幻"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2283
 msgctxt "undo-type"
@@ -21804,12 +21783,12 @@ msgstr "明度伝搬"
 #: ../app/pdb/plug-in-compat-cmds.c:4252
 msgctxt "undo-type"
 msgid "Dilate"
-msgstr ""
+msgstr "明るさの最小値"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4299
 msgctxt "undo-type"
 msgid "Erode"
-msgstr ""
+msgstr "明るさの最大値"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4362
 msgctxt "undo-type"
@@ -22305,10 +22284,8 @@ msgid "Zoom Motion Blur: "
 msgstr "放射形モーションぼかし: "
 
 #: ../app/propgui/gimppropgui-panorama-projection.c:125
-#, fuzzy
-#| msgid "Transformation"
 msgid "Panorama Projection: "
-msgstr "変形"
+msgstr "パノラマ投影: "
 
 #: ../app/propgui/gimppropgui-recursive-transform.c:259
 #, fuzzy
@@ -22331,10 +22308,8 @@ msgid "Remove transform"
 msgstr "画像からパラサイトを削除"
 
 #: ../app/propgui/gimppropgui-recursive-transform.c:315
-#, fuzzy
-#| msgid "Transform:"
 msgid "Recursive Transform: "
-msgstr "変形対象:"
+msgstr "再帰変形: "
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:62
 msgid "Shadows"
