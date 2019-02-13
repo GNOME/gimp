@@ -685,6 +685,13 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
 
           scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (statusbar));
 
+          /* Make sure icon_space_width has been initialized to avoid a
+           * division by zero.
+           */
+          if (statusbar->icon_space_width == 0)
+            gimp_statusbar_style_updated (GTK_WIDGET (statusbar));
+          g_return_if_fail (statusbar->icon_space_width != 0);
+
           /* prepend enough spaces for the icon plus one space */
           n_spaces = (gdk_pixbuf_get_width (statusbar->icon) / scale_factor +
                       ICON_SPACING) / statusbar->icon_space_width;
