@@ -55,8 +55,8 @@ clear_edges (GimpTempBuf *buf,
   guchar     *data;
   const Babl *format = gimp_temp_buf_get_format (buf);
   gint        bpp    = babl_format_get_bytes_per_pixel (format);
-  gint        width  = gimp_temp_buf_get_width (buf);
-  gint        height = gimp_temp_buf_get_width (buf);
+  gint        width  = gimp_temp_buf_get_width  (buf);
+  gint        height = gimp_temp_buf_get_height (buf);
 
   if (top + bottom >= height || left + right >= width)
     {
