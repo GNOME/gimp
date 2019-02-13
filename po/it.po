@@ -37,8 +37,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 20:57+0100\n"
-"PO-Revision-Date: 2019-02-11 20:58+0100\n"
+"POT-Creation-Date: 2019-02-13 11:29+0100\n"
+"PO-Revision-Date: 2019-02-13 11:29+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -12791,15 +12791,15 @@ msgstr ""
 "Errore fatale di analisi file pennello: dati pennello compresso RLE "
 "danneggiati."
 
-#: ../app/core/gimpbrush.c:151 ../app/paint/gimppaintoptions.c:225
+#: ../app/core/gimpbrush.c:156 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
 msgstr "Spaziatura pennello"
 
-#: ../app/core/gimpbrushclipboard.c:190
+#: ../app/core/gimpbrushclipboard.c:185
 msgid "Clipboard Mask"
 msgstr "Maschera appunti"
 
-#: ../app/core/gimpbrushclipboard.c:192 ../app/core/gimppatternclipboard.c:169
+#: ../app/core/gimpbrushclipboard.c:187 ../app/core/gimppatternclipboard.c:163
 msgid "Clipboard Image"
 msgstr "Immagine appunti"
 
@@ -13199,7 +13199,7 @@ msgid "Error loading '%s'"
 msgstr "Errore durante il caricamento di \"%s\""
 
 #: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:89
-#: ../app/file-data/file-data-pat.c:95 ../app/xcf/xcf.c:452
+#: ../app/file-data/file-data-pat.c:99 ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Impossibile aprire \"%s\" in lettura: "
@@ -18312,7 +18312,7 @@ msgstr "Carattere non valido in sequenza URI"
 msgid "GIMP brush"
 msgstr "Pennello GIMP"
 
-#: ../app/file-data/file-data.c:123
+#: ../app/file-data/file-data.c:123 ../app/file-data/file-data.c:185
 msgid "GIMP pattern"
 msgstr "Motivo GIMP"
 
@@ -25976,7 +25976,7 @@ msgstr "Rilasciare qui le finestre agganciabili"
 #: ../app/widgets/gimppickablepopup.c:203
 #: ../app/widgets/gimppickablepopup.c:420
 msgid "Select an image in the left pane"
-msgstr "Seleziona un'immagine nel pannello a sinistra"
+msgstr "Seleziona un'immagine a sinistra"
 
 #: ../app/widgets/gimppluginview.c:149
 msgid "Plug-In"
@@ -25984,7 +25984,7 @@ msgstr "Plug-in"
 
 #: ../app/widgets/gimpprogressdialog.c:223
 msgid "Progress"
-msgstr "Operazione in corso"
+msgstr "Avanzamento"
 
 #: ../app/widgets/gimpsamplepointeditor.c:161
 msgid ""
