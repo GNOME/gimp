@@ -111,7 +111,7 @@ static const GimpStringActionEntry filters_actions[] =
     GIMP_HELP_FILTER_COLOR_ENHANCE },
 
   { "filters-invert-linear", GIMP_ICON_INVERT,
-    NC_("filters-action", "_Linear Invert"), NULL, NULL,
+    NC_("filters-action", "L_inear Invert"), NULL, NULL,
     "gegl:invert-linear",
     GIMP_HELP_FILTER_INVERT_LINEAR },
 
