@@ -44,6 +44,7 @@
 #include "gimpfgbgeditor.h"
 #include "gimpwidgets-utils.h"
 
+#define CHANNEL_EPSILON 1e-3
 
 enum
 {
@@ -287,18 +288,19 @@ static gboolean
 gimp_fg_bg_editor_draw (GtkWidget *widget,
                         cairo_t   *cr)
 {
-  GimpFgBgEditor  *editor = GIMP_FG_BG_EDITOR (widget);
-  GtkStyleContext *style  = gtk_widget_get_style_context (widget);
-  GimpPalette     *colormap_palette = NULL;
-  GtkBorder        border;
-  GtkBorder        padding;
-  GdkRectangle     rect;
-  gint             scale_factor;
-  gint             width, height;
-  gint             default_w, default_h;
-  gint             swap_w, swap_h;
-  GimpRGB          color;
-  GimpRGB          transformed_color;
+  GimpFgBgEditor    *editor = GIMP_FG_BG_EDITOR (widget);
+  GtkStyleContext   *style  = gtk_widget_get_style_context (widget);
+  GimpPalette       *colormap_palette = NULL;
+  GtkBorder          border;
+  GtkBorder          padding;
+  GdkRectangle       rect;
+  gint               scale_factor;
+  gint               width, height;
+  gint               default_w, default_h;
+  gint               swap_w, swap_h;
+  GimpRGB            color;
+  GimpRGB            transformed_color;
+  GimpImageBaseType  base_type = GIMP_RGB;
 
   gtk_style_context_save (style);
 
@@ -383,9 +385,13 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   if (! editor->transform)
     gimp_fg_bg_editor_create_transform (editor);
 
-  if (gimp_context_get_image (editor->context) &&
-      gimp_image_get_base_type (gimp_context_get_image (editor->context)) == GIMP_INDEXED)
-    colormap_palette = gimp_image_get_colormap_palette (editor->active_image);
+  if (editor->active_image)
+    {
+      base_type = gimp_image_get_base_type (editor->active_image);
+
+      if (base_type == GIMP_INDEXED)
+        colormap_palette = gimp_image_get_colormap_palette (editor->active_image);
+    }
 
   /*  draw the background area  */
 
@@ -413,10 +419,17 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
 
 
       if (editor->color_config &&
+          /* Common out-of-gamut case */
           ((color.r < 0.0 || color.r > 1.0 ||
             color.g < 0.0 || color.g > 1.0 ||
             color.b < 0.0 || color.b > 1.0) ||
-           (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL))))
+           /* Indexed images */
+           (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL)) ||
+           /* Grayscale images */
+           (base_type == GIMP_GRAY &&
+            (ABS (color.r - color.g) > CHANNEL_EPSILON ||
+             ABS (color.r - color.b) > CHANNEL_EPSILON ||
+             ABS (color.g - color.b) > CHANNEL_EPSILON))))
         {
           GimpRGB color;
           gint    side     = MIN (rect.width, rect.height) * 2 / 3;
@@ -470,10 +483,17 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
       cairo_fill (cr);
 
       if (editor->color_config &&
+          /* Common out-of-gamut case */
           ((color.r < 0.0 || color.r > 1.0 ||
-           color.g < 0.0 || color.g > 1.0 ||
-           color.b < 0.0 || color.b > 1.0) ||
-           (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL))))
+            color.g < 0.0 || color.g > 1.0 ||
+            color.b < 0.0 || color.b > 1.0) ||
+           /* Indexed images */
+           (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL)) ||
+           /* Grayscale images */
+           (base_type == GIMP_GRAY &&
+            (ABS (color.r - color.g) > CHANNEL_EPSILON ||
+             ABS (color.r - color.b) > CHANNEL_EPSILON ||
+             ABS (color.g - color.b) > CHANNEL_EPSILON))))
         {
           GimpRGB color;
           gint    side     = MIN (rect.width, rect.height) * 2 / 3;
