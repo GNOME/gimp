@@ -62,6 +62,9 @@ User interface:
     better on a particular image.
   - Add basic support for cursors with a scale factor of 2 for HiDPI
     (artwork to be updated).
+  - Foreground and background color icons will now display out-of-gamut
+    warning on indexed images for colors outside of the palette, as well
+    as on grayscale images, for non-gray colors.
 
 Usability:
 
