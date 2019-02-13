@@ -606,11 +606,8 @@ def _interact(proc_name, start_params):
             image.set_from_stock(gtk.STOCK_FILE, gtk.ICON_SIZE_BUTTON)
             self.button = gtk.Button()
             self.button.set_image(image)
-            self.expander = gtk.Expander()
-            self.expander.add(self.button)
-            self.expander.set_expanded(False)
             box.pack_start(self.entry)
-            box.pack_start(self.button)
+            box.pack_start(self.button,False)
             self.button.connect("clicked", self.pick_file)
             if default:
                 self.entry.set_text(default)
