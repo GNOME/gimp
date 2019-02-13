@@ -52,6 +52,8 @@ struct _GimpFgBgEditor
 
   GimpActiveColor     active_color;
 
+  GimpImage          *active_image;
+
   GdkPixbuf          *default_icon;
   GdkPixbuf          *swap_icon;
 
