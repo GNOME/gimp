@@ -642,9 +642,25 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
                                   GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
 
   if (scrolling)
-    gtk_widget_set_size_request (options_sw, minimum.width, workarea.height / 2);
-  else
-    gtk_widget_set_size_request (options_sw, minimum.width, minimum.height);
+    {
+      GtkWidget *scrollbar;
+
+      minimum.height = workarea.height / 2;
+
+      scrollbar = gtk_scrolled_window_get_vscrollbar (
+        GTK_SCROLLED_WINDOW (options_sw));
+
+      if (scrollbar)
+        {
+          GtkRequisition req;
+
+          gtk_widget_size_request (scrollbar, &req);
+
+          minimum.width += req.width;
+        }
+    }
+
+  gtk_widget_set_size_request (options_sw, minimum.width, minimum.height);
 
   g_object_unref (options_gui);
   g_object_unref (options_box);
