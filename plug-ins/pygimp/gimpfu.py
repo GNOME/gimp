@@ -613,7 +613,6 @@ def _interact(proc_name, start_params):
                 self.entry.set_text(default)
 
         def show(self):
-            self.expander.show()
             super(FilenameSelector, self).show()
             self.button.show()
             self.entry.show()
