@@ -221,7 +221,6 @@ class FontSelector(FontSelectButton):
 class FileSelector(gtk.FileChooserButton):
     def __init__(self, default=""):
         gtk.FileChooserButton.__init__(self, _("Python-Fu File Selection"))
-        set.FileChooserButton.config( height=100, width=100)
         if default:
             self.set_filename(default)
     def get_value(self):
