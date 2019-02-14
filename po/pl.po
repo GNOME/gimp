@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 20:25+0100\n"
-"PO-Revision-Date: 2019-02-11 20:27+0100\n"
+"POT-Creation-Date: 2019-02-14 19:47+0100\n"
+"PO-Revision-Date: 2019-02-14 19:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -4838,7 +4838,7 @@ msgstr "_Uwydatnianie koloru"
 
 #: ../app/actions/filters-actions.c:114
 msgctxt "filters-action"
-msgid "_Linear Invert"
+msgid "L_inear Invert"
 msgstr "Odwróć _liniowo"
 
 #: ../app/actions/filters-actions.c:119
@@ -12735,15 +12735,15 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: dane pędzla "
 "skompresowane za pomocą RLE są uszkodzone."
 
-#: ../app/core/gimpbrush.c:151 ../app/paint/gimppaintoptions.c:225
+#: ../app/core/gimpbrush.c:156 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
 msgstr "Odstępy pędzla"
 
-#: ../app/core/gimpbrushclipboard.c:190
+#: ../app/core/gimpbrushclipboard.c:185
 msgid "Clipboard Mask"
 msgstr "Maska ze schowka"
 
-#: ../app/core/gimpbrushclipboard.c:192 ../app/core/gimppatternclipboard.c:169
+#: ../app/core/gimpbrushclipboard.c:187 ../app/core/gimppatternclipboard.c:163
 msgid "Clipboard Image"
 msgstr "Obraz ze schowka"
 
@@ -13144,7 +13144,7 @@ msgid "Error loading '%s'"
 msgstr "Błąd podczas wczytywania „%s”"
 
 #: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:89
-#: ../app/file-data/file-data-pat.c:95 ../app/xcf/xcf.c:452
+#: ../app/file-data/file-data-pat.c:99 ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Nie można otworzyć „%s” do odczytania: "
@@ -13160,7 +13160,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:498 ../app/tools/gimpscaletool.c:118
+#: ../app/core/gimpdrawable.c:497 ../app/tools/gimpscaletool.c:118
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
@@ -17722,7 +17722,7 @@ msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
-#: ../app/tools/gimpbucketfilltool.c:289 ../app/tools/gimpcagetool.c:223
+#: ../app/tools/gimpbucketfilltool.c:478 ../app/tools/gimpcagetool.c:223
 #: ../app/tools/gimpfiltertool.c:274 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
@@ -17730,7 +17730,7 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
-#: ../app/tools/gimpbucketfilltool.c:303 ../app/tools/gimpcagetool.c:230
+#: ../app/tools/gimpbucketfilltool.c:492 ../app/tools/gimpcagetool.c:230
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1150
 #: ../app/tools/gimpfiltertool.c:281 ../app/tools/gimpgradienttool.c:255
 #: ../app/tools/gimpmovetool.c:309 ../app/tools/gimppainttool.c:287
@@ -18206,7 +18206,7 @@ msgstr "Wtyczka %s zwróciła kod powodzenia, ale nie zwróciła obrazu"
 
 #: ../app/file/file-open.c:268
 #, c-format
-msgid "%s plug-In could not open image"
+msgid "%s plug-in could not open image"
 msgstr "Wtyczka %s nie może otworzyć obrazu"
 
 #: ../app/file/file-open.c:658
@@ -18272,7 +18272,7 @@ msgstr "Nieprawidłowa sekwencja znaków w adresie URI"
 msgid "GIMP brush"
 msgstr "Pędzel programu GIMP"
 
-#: ../app/file-data/file-data.c:123
+#: ../app/file-data/file-data.c:123 ../app/file-data/file-data.c:185
 msgid "GIMP pattern"
 msgstr "Deseń programu GIMP"
 
@@ -19397,7 +19397,7 @@ msgstr "Proporcje"
 
 #: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:82 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Odstępy"
 
@@ -21374,19 +21374,23 @@ msgstr "Wyszukiwanie podobnych kolorów"
 msgid "Line Art Detection"
 msgstr "Wykrywanie kresek rysunku"
 
-#: ../app/tools/gimpbucketfilltool.c:157
+#: ../app/tools/gimpbucketfilltool.c:154
 msgid "Bucket Fill"
 msgstr "Wypełnienie kubełkiem"
 
-#: ../app/tools/gimpbucketfilltool.c:158
+#: ../app/tools/gimpbucketfilltool.c:155
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr "Wypełnienie kubełkiem: wypełnia zaznaczony obszar kolorem lub deseniem"
 
-#: ../app/tools/gimpbucketfilltool.c:159
+#: ../app/tools/gimpbucketfilltool.c:156
 msgid "_Bucket Fill"
 msgstr "Wyp_ełnienie kubełkiem"
 
-#: ../app/tools/gimpbucketfilltool.c:296 ../app/tools/gimpcagetool.c:239
+#: ../app/tools/gimpbucketfilltool.c:286
+msgid "Bucket fill"
+msgstr "Wypełnienie kubełkiem"
+
+#: ../app/tools/gimpbucketfilltool.c:485 ../app/tools/gimpcagetool.c:239
 #: ../app/tools/gimpfiltertool.c:290
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:314
@@ -21394,20 +21398,16 @@ msgstr "Wyp_ełnienie kubełkiem"
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
-#: ../app/tools/gimpbucketfilltool.c:313
+#: ../app/tools/gimpbucketfilltool.c:501
 msgid "No valid line art source selected."
 msgstr "Nie zaznaczono prawidłowego źródła kresek rysunku."
 
-#: ../app/tools/gimpbucketfilltool.c:341
-msgid "Bucket fill"
-msgstr "Wypełnienie kubełkiem"
-
-#: ../app/tools/gimpbucketfilltool.c:710 ../app/tools/gimpbucketfilltool.c:845
+#: ../app/tools/gimpbucketfilltool.c:685 ../app/tools/gimpbucketfilltool.c:820
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:448
 msgid "Click in any image to pick the background color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor tła"
 
-#: ../app/tools/gimpbucketfilltool.c:717 ../app/tools/gimpbucketfilltool.c:854
+#: ../app/tools/gimpbucketfilltool.c:692 ../app/tools/gimpbucketfilltool.c:829
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:442
 msgid "Click in any image to pick the foreground color"
 msgstr "Kliknięcie w dowolnym obrazie pobierze jego kolor pierwszoplanowy"
@@ -24193,7 +24193,7 @@ msgid "Spikes"
 msgstr "Ostrza"
 
 #: ../app/widgets/gimpbrusheditor.c:216
-#: ../app/widgets/gimpbrushfactoryview.c:85
+#: ../app/widgets/gimpbrushfactoryview.c:86
 msgid "Percentage of width of brush"
 msgstr "Procent szerokości pędzla"
 
