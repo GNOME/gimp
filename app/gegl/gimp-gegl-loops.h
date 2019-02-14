@@ -81,17 +81,6 @@ void   gimp_gegl_combine_mask_weird    (GeglBuffer               *mask_buffer,
                                         gdouble                   opacity,
                                         gboolean                  stipple);
 
-void   gimp_gegl_replace               (GeglBuffer               *top_buffer,
-                                        const GeglRectangle      *top_rect,
-                                        GeglBuffer               *bottom_buffer,
-                                        const GeglRectangle      *bottom_rect,
-                                        GeglBuffer               *mask_buffer,
-                                        const GeglRectangle      *mask_rect,
-                                        GeglBuffer               *dest_buffer,
-                                        const GeglRectangle      *dest_rect,
-                                        gdouble                   opacity,
-                                        const gboolean           *affect);
-
 void   gimp_gegl_index_to_mask         (GeglBuffer               *indexed_buffer,
                                         const GeglRectangle      *indexed_rect,
                                         const Babl               *indexed_format,
