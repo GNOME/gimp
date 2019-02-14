@@ -1895,7 +1895,7 @@ gimp_line_art_allow_closure (GeglBuffer *mask,
 
                       return FALSE;
                     }
-                  else if (area < significant_size)
+                  else if (area > 0 && area < significant_size)
                     {
                       Pixel *np = g_new (Pixel, 1);
 
@@ -2307,6 +2307,20 @@ gimp_edgel_track_mark (GeglBuffer *mask,
   return count;
 }
 
+/**
+ * gimp_edgel_region_area:
+ * @mask: current state of closed line art buffer.
+ * @start_edgel: edgel to follow.
+ *
+ * Follows a line border, starting from @start_edgel to compute the area
+ * enclosed by this border.
+ * Unfortunately this may return a negative area when the line does not
+ * close a zone. In this case, there is an uncertaincy on the size of
+ * the created zone, and we should consider it a big size.
+ *
+ * Returns: the area enclosed by the followed line, or a negative value
+ * if the zone is not closed (hence actual area unknown).
+ */
 static glong
 gimp_edgel_region_area (const GeglBuffer *mask,
                         Edgel             start_edgel)
