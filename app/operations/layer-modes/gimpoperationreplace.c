@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl-plugin.h>
 
 #include "../operations-types.h"
