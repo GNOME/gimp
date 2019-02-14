@@ -13,22 +13,22 @@
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
 # Luis Angel Gonzo <luisangelgonzo@gmail.com>, 2017.
 # Luis Ángel Gonzo <luisangelgonzo@gmail.com>, 2017, 2018.
-# Rodrigo <rodhos92@gmail.com>, 2018, 2019.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
+# Rodrigo <rodhos92@gmail.com>, 2018, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-08 19:36+0000\n"
-"PO-Revision-Date: 2019-02-11 08:48+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: es <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2019-02-13 16:28+0000\n"
+"PO-Revision-Date: 2019-02-14 11:57+0100\n"
+"Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 3.31.90\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -1017,7 +1017,7 @@ msgid "Select"
 msgstr "Seleccionar"
 
 #. initialize the template list
-#: ../app/actions/actions.c:222 ../app/core/gimp.c:790
+#: ../app/actions/actions.c:222 ../app/core/gimp.c:793
 #: ../app/dialogs/dialogs.c:365
 msgid "Templates"
 msgstr "Plantillas"
@@ -12524,26 +12524,26 @@ msgid "View as grid"
 msgstr "Ver como rejilla"
 
 #. initialize babl fishes
-#: ../app/core/gimp.c:502 ../app/core/gimp.c:532
+#: ../app/core/gimp.c:505 ../app/core/gimp.c:535
 msgid "Initialization"
 msgstr "Inicialización"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:512
+#: ../app/core/gimp.c:515
 msgid "Internal Procedures"
 msgstr "Procedimientos internos"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:786
 msgid "Looking for data files"
 msgstr "Buscando archivos de datos"
 
-#: ../app/core/gimp.c:783
+#: ../app/core/gimp.c:786
 msgid "Parasites"
 msgstr "Parásitos"
 
 #. initialize the module list
-#: ../app/core/gimp.c:794 ../app/dialogs/preferences-dialog.c:3229
+#: ../app/core/gimp.c:797 ../app/dialogs/preferences-dialog.c:3229
 msgid "Modules"
 msgstr "Módulos"
 
@@ -12718,65 +12718,50 @@ msgstr "Error fatal de análisis en el archivo del pincel: altura = 0."
 msgid "Fatal parse error in brush file: Bytes = 0."
 msgstr "Error fatal de análisis en el archivo del pincel: bytes = 0."
 
-#: ../app/core/gimpbrush-load.c:195
+#: ../app/core/gimpbrush-load.c:196
 #, c-format
 msgid "Fatal parse error in brush file: %dx%d over max size."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: %dx%d supera el tamaño "
 "máximo."
 
-#: ../app/core/gimpbrush-load.c:221
+#: ../app/core/gimpbrush-load.c:222
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: profundidad desconocida %d."
 
-#: ../app/core/gimpbrush-load.c:233
+#: ../app/core/gimpbrush-load.c:234
 #, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: versión desconocida %d."
 
-#: ../app/core/gimpbrush-load.c:241
+#: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Unsupported brush format"
 msgstr "Formato de pincel no soportado"
 
-#: ../app/core/gimpbrush-load.c:253
+#: ../app/core/gimpbrush-load.c:254
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr ""
 "Datos de cabecera no válidos en «%s»: el nombre del pincel es demasiado "
 "largo: %lu"
 
-#: ../app/core/gimpbrush-load.c:271 ../app/core/gimpbrushgenerated-load.c:126
+#: ../app/core/gimpbrush-load.c:272 ../app/core/gimpbrushgenerated-load.c:126
 #: ../app/core/gimpbrushpipe-load.c:74
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Cadena UTF-8 no válida en el archivo de pincel «%s»."
 
-#: ../app/core/gimpbrush-load.c:278 ../app/core/gimppattern-load.c:141
+#: ../app/core/gimpbrush-load.c:279 ../app/core/gimppattern-load.c:141
 #: ../app/dialogs/template-options-dialog.c:110
 #: ../app/display/gimptoolpath.c:570
 msgid "Unnamed"
 msgstr "Sin nombre"
 
-#: ../app/core/gimpbrush-load.c:349
-#, c-format
-msgid ""
-"Fatal parse error in brush file:\n"
-"Unsupported brush depth %d\n"
-"GIMP brushes must be GRAY or RGBA.\n"
-"This might be an obsolete GIMP brush file, try loading it as image and save "
-"it again."
-msgstr ""
-"Error fatal de análisis en el archivo del pincel:\n"
-"profundidad del pincel no soportada %d\n"
-"Los pinceles de GIMP deben ser GRAY o RGBA.\n"
-"Este podría ser un archivo obsoleto de pincel GIMP, trate de cargarlo como "
-"imagen y guárdelo de nuevo."
-
-#: ../app/core/gimpbrush-load.c:396
+#: ../app/core/gimpbrush-load.c:439
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12787,12 +12772,12 @@ msgstr ""
 "profundidad del pincel no soportada %d\n"
 "Los pinceles de GIMP deben ser GRAY o RGBA."
 
-#: ../app/core/gimpbrush-load.c:472
+#: ../app/core/gimpbrush-load.c:515
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "No se puede decodificar el formato abr versión %d."
 
-#: ../app/core/gimpbrush-load.c:590 ../app/core/gimpbrush-load.c:809
+#: ../app/core/gimpbrush-load.c:633 ../app/core/gimpbrush-load.c:852
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
@@ -12800,34 +12785,34 @@ msgstr ""
 "pincel está corrupto."
 
 # rango, límite, ámbito
-#: ../app/core/gimpbrush-load.c:677 ../app/core/gimpbrush-load.c:867
+#: ../app/core/gimpbrush-load.c:720 ../app/core/gimpbrush-load.c:910
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: las dimensiones del pincel "
 "están fuera de rango."
 
-#: ../app/core/gimpbrush-load.c:689
+#: ../app/core/gimpbrush-load.c:732
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: los pinceles anchos no "
 "están soportados."
 
-#: ../app/core/gimpbrush-load.c:838
+#: ../app/core/gimpbrush-load.c:881
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: el archivo parece estar "
 "truncado."
 
-#: ../app/core/gimpbrush-load.c:875
+#: ../app/core/gimpbrush-load.c:918
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr ""
 "Error fatal de análisis en el archivo del pincel: método de compresión "
 "desconocido."
 
-#: ../app/core/gimpbrush-load.c:1011
+#: ../app/core/gimpbrush-load.c:1054
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
@@ -12835,22 +12820,22 @@ msgstr ""
 "Error fatal de análisis en el archivo del pincel: no se puede decodificar el "
 "formato abr versión %d."
 
-#: ../app/core/gimpbrush-load.c:1132 ../app/core/gimpbrush-load.c:1150
+#: ../app/core/gimpbrush-load.c:1175 ../app/core/gimpbrush-load.c:1193
 #, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
 "Error fatal de análisis en el archivo de pincel: los datos de pincel "
 "comprimidos en RLE están corruptos."
 
-#: ../app/core/gimpbrush.c:151 ../app/paint/gimppaintoptions.c:225
+#: ../app/core/gimpbrush.c:156 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
 msgstr "Espaciado del pincel"
 
-#: ../app/core/gimpbrushclipboard.c:190
+#: ../app/core/gimpbrushclipboard.c:185
 msgid "Clipboard Mask"
 msgstr "Máscara de portapapeles"
 
-#: ../app/core/gimpbrushclipboard.c:192 ../app/core/gimppatternclipboard.c:169
+#: ../app/core/gimpbrushclipboard.c:187 ../app/core/gimppatternclipboard.c:163
 msgid "Clipboard Image"
 msgstr "Imagen de portapapeles"
 
@@ -13250,7 +13235,8 @@ msgstr "Error al cargar «%s»: "
 msgid "Error loading '%s'"
 msgstr "Error al cargar «%s»"
 
-#: ../app/core/gimpdataloaderfactory.c:474 ../app/xcf/xcf.c:452
+#: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:89
+#: ../app/file-data/file-data-pat.c:99 ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "No se ha podido abrir «%s» para lectura: "
@@ -17834,7 +17820,7 @@ msgid "Drop New Path"
 msgstr "Descartar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
-#: ../app/tools/gimpbucketfilltool.c:289 ../app/tools/gimpcagetool.c:223
+#: ../app/tools/gimpbucketfilltool.c:478 ../app/tools/gimpcagetool.c:223
 #: ../app/tools/gimpfiltertool.c:274 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
@@ -17842,7 +17828,7 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "No se pueden modificar píxeles de los grupos de capas."
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
-#: ../app/tools/gimpbucketfilltool.c:303 ../app/tools/gimpcagetool.c:230
+#: ../app/tools/gimpbucketfilltool.c:492 ../app/tools/gimpcagetool.c:230
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1150
 #: ../app/tools/gimpfiltertool.c:281 ../app/tools/gimpgradienttool.c:255
 #: ../app/tools/gimpmovetool.c:309 ../app/tools/gimppainttool.c:287
@@ -18325,7 +18311,8 @@ msgstr ""
 
 #: ../app/file/file-open.c:268
 #, c-format
-msgid "%s plug-In could not open image"
+#| msgid "%s plug-In could not open image"
+msgid "%s plug-in could not open image"
 msgstr "El complemento %s no ha podido abrir la imagen"
 
 #: ../app/file/file-open.c:658
@@ -18386,6 +18373,16 @@ msgstr "«%s:» no es un esquema de URI válido"
 #: ../app/file/file-utils.c:81 ../app/file/file-utils.c:120
 msgid "Invalid character sequence in URI"
 msgstr "Secuencia de caracteres no válida en el URI"
+
+#: ../app/file-data/file-data.c:58
+#| msgid "Mybrush"
+msgid "GIMP brush"
+msgstr "Pincel GIMP"
+
+#: ../app/file-data/file-data.c:123 ../app/file-data/file-data.c:185
+#| msgid "Pattern"
+msgid "GIMP pattern"
+msgstr "Patrón GIMP"
 
 #: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
 #: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
@@ -19515,7 +19512,7 @@ msgstr "Proporción de aspecto"
 
 #: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
 #: ../app/widgets/gimpbrusheditor.c:211
-#: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:82 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaciado"
 
@@ -21496,20 +21493,24 @@ msgstr "Buscando colores similares"
 msgid "Line Art Detection"
 msgstr "Detección del arte lineal"
 
-#: ../app/tools/gimpbucketfilltool.c:157
+#: ../app/tools/gimpbucketfilltool.c:154
 msgid "Bucket Fill"
 msgstr "Relleno de cubeta"
 
-#: ../app/tools/gimpbucketfilltool.c:158
+#: ../app/tools/gimpbucketfilltool.c:155
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
 "Herramienta de relleno: rellenar con un color o patrón el área seleccionada"
 
-#: ../app/tools/gimpbucketfilltool.c:159
+#: ../app/tools/gimpbucketfilltool.c:156
 msgid "_Bucket Fill"
 msgstr "_Relleno"
 
-#: ../app/tools/gimpbucketfilltool.c:296 ../app/tools/gimpcagetool.c:239
+#: ../app/tools/gimpbucketfilltool.c:286
+msgid "Bucket fill"
+msgstr "Relleno de cubeta"
+
+#: ../app/tools/gimpbucketfilltool.c:485 ../app/tools/gimpcagetool.c:239
 #: ../app/tools/gimpfiltertool.c:290
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:314
@@ -21517,20 +21518,16 @@ msgstr "_Relleno"
 msgid "The active layer is not visible."
 msgstr "La capa activa no está visible."
 
-#: ../app/tools/gimpbucketfilltool.c:313
+#: ../app/tools/gimpbucketfilltool.c:501
 msgid "No valid line art source selected."
 msgstr "No se ha seleccionado un origen de arte lineal válido."
 
-#: ../app/tools/gimpbucketfilltool.c:341
-msgid "Bucket fill"
-msgstr "Relleno de cubeta"
-
-#: ../app/tools/gimpbucketfilltool.c:710 ../app/tools/gimpbucketfilltool.c:845
+#: ../app/tools/gimpbucketfilltool.c:685 ../app/tools/gimpbucketfilltool.c:820
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:448
 msgid "Click in any image to pick the background color"
 msgstr "Pulse sobre cualquier imagen para recoger el color de fondo"
 
-#: ../app/tools/gimpbucketfilltool.c:717 ../app/tools/gimpbucketfilltool.c:854
+#: ../app/tools/gimpbucketfilltool.c:692 ../app/tools/gimpbucketfilltool.c:829
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:442
 msgid "Click in any image to pick the foreground color"
 msgstr "Pulse sobre cualquier imagen para recoger el color de frente"
@@ -24346,7 +24343,7 @@ msgid "Spikes"
 msgstr "Púas"
 
 #: ../app/widgets/gimpbrusheditor.c:216
-#: ../app/widgets/gimpbrushfactoryview.c:85
+#: ../app/widgets/gimpbrushfactoryview.c:86
 msgid "Percentage of width of brush"
 msgstr "Porcentaje del ancho del pincel"
 
@@ -26813,6 +26810,19 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "borroso"
+
+#~ msgid ""
+#~ "Fatal parse error in brush file:\n"
+#~ "Unsupported brush depth %d\n"
+#~ "GIMP brushes must be GRAY or RGBA.\n"
+#~ "This might be an obsolete GIMP brush file, try loading it as image and "
+#~ "save it again."
+#~ msgstr ""
+#~ "Error fatal de análisis en el archivo del pincel:\n"
+#~ "profundidad del pincel no soportada %d\n"
+#~ "Los pinceles de GIMP deben ser GRAY o RGBA.\n"
+#~ "Este podría ser un archivo obsoleto de pincel GIMP, trate de cargarlo "
+#~ "como imagen y guárdelo de nuevo."
 
 #~ msgctxt "undo-desc"
 #~ msgid "Flip"
