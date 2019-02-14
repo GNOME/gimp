@@ -25,16 +25,11 @@
 #include "core-types.h"
 
 #include "gegl/gimpapplicator.h"
-#include "gegl/gimp-babl-compat.h"
-#include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpdrawable-combine.h"
 #include "gimpimage.h"
-#include "gimptempbuf.h"
 
 
 void
@@ -134,132 +129,4 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
   gimp_applicator_blit (applicator, GEGL_RECTANGLE (x, y, width, height));
 
   g_object_unref (applicator);
-}
-
-/*  Similar to gimp_drawable_apply_region but works in "replace" mode (i.e.
- *  transparent pixels in src2 make the result transparent rather than
- *  opaque.
- *
- * Takes an additional mask pixel region as well.
- */
-void
-gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
-                                   GeglBuffer          *buffer,
-                                   const GeglRectangle *buffer_region,
-                                   gboolean             push_undo,
-                                   const gchar         *undo_desc,
-                                   gdouble              opacity,
-                                   GeglBuffer          *mask_buffer,
-                                   const GeglRectangle *mask_buffer_region,
-                                   gint                 dest_x,
-                                   gint                 dest_y)
-{
-  GimpItem        *item             = GIMP_ITEM (drawable);
-  GimpImage       *image            = gimp_item_get_image (item);
-  GimpChannel     *mask             = gimp_image_get_mask (image);
-  GeglBuffer      *drawable_buffer;
-  GeglRectangle    buffer_rect      = *buffer_region;
-  GeglRectangle    mask_buffer_rect = *mask_buffer_region;
-  gint             x, y, width, height;
-  gint             offset_x, offset_y;
-  gboolean         active_components[MAX_CHANNELS];
-
-  /*  don't apply the mask to itself and don't apply an empty mask  */
-  if (GIMP_DRAWABLE (mask) == drawable || gimp_channel_is_empty (mask))
-    mask = NULL;
-
-  /*  configure the active channel array  */
-  gimp_drawable_get_active_components (drawable, active_components);
-
-  /*  get the layer offsets  */
-  gimp_item_get_offset (item, &offset_x, &offset_y);
-
-  /*  make sure the image application coordinates are within drawable bounds  */
-  if (! gimp_rectangle_intersect (dest_x, dest_y,
-                                  buffer_rect.width, buffer_rect.height,
-                                  0, 0,
-                                  gimp_item_get_width  (item),
-                                  gimp_item_get_height (item),
-                                  &x, &y, &width, &height))
-    {
-      return;
-    }
-
-  if (mask)
-    {
-      GimpItem *mask_item = GIMP_ITEM (mask);
-
-      /*  make sure coordinates are in mask bounds ...
-       *  we need to add the layer offset to transform coords
-       *  into the mask coordinate system
-       */
-      if (! gimp_rectangle_intersect (x, y, width, height,
-                                      -offset_x, -offset_y,
-                                      gimp_item_get_width  (mask_item),
-                                      gimp_item_get_height (mask_item),
-                                      &x, &y, &width, &height))
-        {
-          return;
-        }
-    }
-
-  /*  adjust the original regions according to the application
-   *  offset and size
-   */
-  buffer_rect.x           += x - dest_x;
-  buffer_rect.y           += y - dest_y;
-  buffer_rect.width        = width;
-  buffer_rect.height       = height;
-
-  mask_buffer_rect.x      += x - dest_x;
-  mask_buffer_rect.y      += y - dest_y;
-  mask_buffer_rect.width   = width;
-  mask_buffer_rect.height  = height;
-
-  /*  If the calling procedure specified an undo step...  */
-  if (push_undo)
-    gimp_drawable_push_undo (drawable, undo_desc,
-                             NULL, x, y, width, height);
-
-  drawable_buffer = gimp_drawable_get_buffer (drawable);
-
-  if (mask)
-    {
-      GeglBuffer *src_buffer;
-      GeglBuffer *dest_buffer;
-
-      src_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-
-      dest_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
-                                     gegl_buffer_get_format (src_buffer));
-
-      gimp_gegl_buffer_copy (src_buffer,
-                             GEGL_RECTANGLE (x + offset_x, y + offset_y,
-                                             width, height),
-                             GEGL_ABYSS_NONE,
-                             dest_buffer,
-                             GEGL_RECTANGLE (0, 0, 0, 0));
-
-      gimp_gegl_combine_mask (mask_buffer, &mask_buffer_rect,
-                              dest_buffer, GEGL_RECTANGLE (0, 0, width, height),
-                              1.0);
-
-      gimp_gegl_replace (buffer,          &buffer_rect,
-                         drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
-                         dest_buffer,     GEGL_RECTANGLE (0, 0, width, height),
-                         drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
-                         opacity,
-                         active_components);
-
-      g_object_unref (dest_buffer);
-    }
-  else
-    {
-      gimp_gegl_replace (buffer,          &buffer_rect,
-                         drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
-                         mask_buffer,     &mask_buffer_rect,
-                         drawable_buffer, GEGL_RECTANGLE (x, y, width, height),
-                         opacity,
-                         active_components);
-    }
 }
