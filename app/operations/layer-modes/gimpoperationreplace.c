@@ -24,8 +24,15 @@
 
 #include "../operations-types.h"
 
+#include "gimp-layer-modes.h"
 #include "gimpoperationreplace.h"
 
+
+static gboolean                   gimp_operation_replace_parent_process      (GeglOperation        *op,
+                                                                              GeglOperationContext *context,
+                                                                              const gchar          *output_prop,
+                                                                              const GeglRectangle  *result,
+                                                                              gint                  level);
 
 static gboolean                   gimp_operation_replace_process             (GeglOperation          *op,
                                                                               void                   *in,
@@ -41,6 +48,8 @@ static GimpLayerCompositeRegion   gimp_operation_replace_get_affected_region (Gi
 G_DEFINE_TYPE (GimpOperationReplace, gimp_operation_replace,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
+#define parent_class gimp_operation_replace_parent_class
+
 
 static void
 gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
@@ -53,6 +62,8 @@ gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
                                  "description", "GIMP replace mode operation",
                                  NULL);
 
+  operation_class->process              = gimp_operation_replace_parent_process;
+
   layer_mode_class->process             = gimp_operation_replace_process;
   layer_mode_class->get_affected_region = gimp_operation_replace_get_affected_region;
 }
@@ -60,6 +71,41 @@ gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
 static void
 gimp_operation_replace_init (GimpOperationReplace *self)
 {
+}
+
+static gboolean
+gimp_operation_replace_parent_process (GeglOperation        *op,
+                                       GeglOperationContext *context,
+                                       const gchar          *output_prop,
+                                       const GeglRectangle  *result,
+                                       gint                  level)
+{
+  GimpOperationLayerMode *layer_mode = (gpointer) op;
+
+  /* if the layer's opacity is 100%, it has no mask, and its composite mode
+   * contains "aux" (the latter should always be the case in practice,
+   * currently,) we can just pass "aux" directly as output.
+   */
+  if (layer_mode->opacity == 1.0                            &&
+      ! gegl_operation_context_get_object (context, "aux2") &&
+      (gimp_layer_mode_get_included_region (layer_mode->layer_mode,
+                                            layer_mode->real_composite_mode) &
+       GIMP_LAYER_COMPOSITE_REGION_SOURCE))
+    {
+      GObject *aux;
+
+      aux = gegl_operation_context_get_object (context, "aux");
+
+      gegl_operation_context_set_object (context, "output", aux);
+
+      return TRUE;
+    }
+  /* the opposite case, where the opacity is 0%, is handled by
+   * GimpOperationLayerMode.
+   */
+
+  return GEGL_OPERATION_CLASS (parent_class)->process (op, context, output_prop,
+                                                       result, level);
 }
 
 static gboolean
@@ -88,6 +134,7 @@ gimp_operation_replace_process (GeglOperation       *op,
         {
           gfloat opacity_value = opacity;
           gfloat new_alpha;
+          gfloat ratio;
           gint   b;
 
           if (has_mask)
@@ -95,18 +142,13 @@ gimp_operation_replace_process (GeglOperation       *op,
 
           new_alpha = (layer[ALPHA] - in[ALPHA]) * opacity_value + in[ALPHA];
 
-          if (new_alpha)
-            {
-              gfloat ratio = opacity_value * layer[ALPHA] / new_alpha;
+          ratio = opacity_value;
 
-              for (b = RED; b < ALPHA; b++)
-                out[b] = (layer[b] - in[b]) * ratio + in[b];
-            }
-          else
-            {
-              for (b = RED; b < ALPHA; b++)
-                out[b] = in[b];
-            }
+          if (new_alpha)
+            ratio *= layer[ALPHA] / new_alpha;
+
+          for (b = RED; b < ALPHA; b++)
+            out[b] = (layer[b] - in[b]) * ratio + in[b];
 
           out[ALPHA] = new_alpha;
 
@@ -136,8 +178,8 @@ gimp_operation_replace_process (GeglOperation       *op,
 
           out[ALPHA] = new_alpha;
 
-          in    += 4;
-          out   += 4;
+          in  += 4;
+          out += 4;
 
           if (has_mask)
             mask++;
@@ -156,16 +198,8 @@ gimp_operation_replace_process (GeglOperation       *op,
 
           new_alpha = layer[ALPHA] * opacity_value;
 
-          if (new_alpha)
-            {
-              for (b = RED; b < ALPHA; b++)
-                out[b] = layer[b];
-            }
-          else
-            {
-              for (b = RED; b < ALPHA; b++)
-                out[b] = in[b];
-            }
+          for (b = RED; b < ALPHA; b++)
+            out[b] = layer[b];
 
           out[ALPHA] = new_alpha;
 
@@ -179,18 +213,7 @@ gimp_operation_replace_process (GeglOperation       *op,
       break;
 
     case GIMP_LAYER_COMPOSITE_INTERSECTION:
-      while (samples--)
-        {
-          gint b;
-
-          for (b = RED; b < ALPHA; b++)
-            out[b] = in[b];
-
-          out[ALPHA] = 0.0f;
-
-          in  += 4;
-          out += 4;
-        }
+      memset (out, 0, 4 * samples * sizeof (gfloat));
       break;
     }
 
