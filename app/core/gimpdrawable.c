@@ -283,7 +283,6 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->get_active_mask          = NULL;
   klass->convert_type             = gimp_drawable_real_convert_type;
   klass->apply_buffer             = gimp_drawable_real_apply_buffer;
-  klass->replace_buffer           = gimp_drawable_real_replace_buffer;
   klass->get_buffer               = gimp_drawable_real_get_buffer;
   klass->set_buffer               = gimp_drawable_real_set_buffer;
   klass->push_undo                = gimp_drawable_real_push_undo;
@@ -1209,31 +1208,6 @@ gimp_drawable_apply_buffer (GimpDrawable           *drawable,
                                                     composite_mode,
                                                     base_buffer,
                                                     base_x, base_y);
-}
-
-void
-gimp_drawable_replace_buffer (GimpDrawable        *drawable,
-                              GeglBuffer          *buffer,
-                              const GeglRectangle *buffer_region,
-                              gboolean             push_undo,
-                              const gchar         *undo_desc,
-                              gdouble              opacity,
-                              GeglBuffer          *mask,
-                              const GeglRectangle *mask_region,
-                              gint                 x,
-                              gint                 y)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GEGL_IS_BUFFER (buffer));
-  g_return_if_fail (GEGL_IS_BUFFER (mask));
-
-  GIMP_DRAWABLE_GET_CLASS (drawable)->replace_buffer (drawable, buffer,
-                                                      buffer_region,
-                                                      push_undo, undo_desc,
-                                                      opacity,
-                                                      mask, mask_region,
-                                                      x, y);
 }
 
 GeglBuffer *

@@ -83,16 +83,6 @@ struct _GimpDrawableClass
                                            GeglBuffer           *base_buffer,
                                            gint                  base_x,
                                            gint                  base_y);
-  void          (* replace_buffer)        (GimpDrawable         *drawable,
-                                           GeglBuffer           *buffer,
-                                           const GeglRectangle  *buffer_region,
-                                           gboolean              push_undo,
-                                           const gchar          *undo_desc,
-                                           gdouble               opacity,
-                                           GeglBuffer           *mask,
-                                           const GeglRectangle  *mask_region,
-                                           gint                  x,
-                                           gint                  y);
   GeglBuffer  * (* get_buffer)            (GimpDrawable         *drawable);
   void          (* set_buffer)            (GimpDrawable         *drawable,
                                            gboolean              push_undo,
@@ -166,16 +156,6 @@ void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,
                                                   GeglBuffer          *base_buffer,
                                                   gint                 base_x,
                                                   gint                 base_y);
-void            gimp_drawable_replace_buffer     (GimpDrawable        *drawable,
-                                                  GeglBuffer          *buffer,
-                                                  const GeglRectangle *buffer_region,
-                                                  gboolean             push_undo,
-                                                  const gchar         *undo_desc,
-                                                  gdouble              opacity,
-                                                  GeglBuffer          *mask,
-                                                  const GeglRectangle *mask_region,
-                                                  gint                 x,
-                                                  gint                 y);
 
 GeglBuffer    * gimp_drawable_get_buffer         (GimpDrawable       *drawable);
 void            gimp_drawable_set_buffer         (GimpDrawable       *drawable,
