@@ -31,6 +31,8 @@ void         gimp_gegl_progress_connect             (GeglNode            *node,
                                                      GimpProgress        *progress,
                                                      const gchar         *text);
 
+gboolean     gimp_gegl_node_is_point_operation      (GeglNode            *node);
+
 const Babl * gimp_gegl_node_get_format              (GeglNode            *node,
                                                      const gchar         *pad_name);
 

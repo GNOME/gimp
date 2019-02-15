@@ -116,6 +116,24 @@ gimp_gegl_progress_connect (GeglNode     *node,
                           (GDestroyNotify) g_free);
 }
 
+gboolean
+gimp_gegl_node_is_point_operation (GeglNode *node)
+{
+  GeglOperation *operation;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), FALSE);
+
+  operation = gegl_node_get_gegl_operation (node);
+
+  if (! operation)
+    return FALSE;
+
+  return GEGL_IS_OPERATION_POINT_RENDER    (operation) ||
+         GEGL_IS_OPERATION_POINT_FILTER    (operation) ||
+         GEGL_IS_OPERATION_POINT_COMPOSER  (operation) ||
+         GEGL_IS_OPERATION_POINT_COMPOSER3 (operation);
+}
+
 const Babl *
 gimp_gegl_node_get_format (GeglNode    *node,
                            const gchar *pad_name)
