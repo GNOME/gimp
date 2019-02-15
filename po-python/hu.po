@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-01 16:53+0000\n"
-"PO-Revision-Date: 2019-02-08 08:11+0100\n"
+"POT-Creation-Date: 2019-02-10 17:38+0000\n"
+"PO-Revision-Date: 2019-02-15 17:33+0100\n"
 "Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -63,43 +63,43 @@ msgstr "A(z) „%s” bemenete érvénytelen"
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu színválasztás"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
 msgid "Saving as colored XHTML"
 msgstr "Mentés színes XHTML-ként"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
 msgid "Save as colored XHTML"
 msgstr "Mentés színes XHTML-ként"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
 msgid "Colored XHTML"
 msgstr "Színes XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
 msgid "Character _source"
 msgstr "_Karakterforrás"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Source code"
 msgstr "Forráskód"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Text file"
 msgstr "Szövegfájl"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Entry box"
 msgstr "Beviteli mező"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "_File to read or characters to use"
 msgstr "_Olvasandó fájl vagy használandó karakterek"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Fo_nt size in pixels"
 msgstr "Betű_méret képpontokban"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_Write a separate CSS file"
 msgstr "Önálló _CSS fájl írása"
 
@@ -546,7 +546,7 @@ msgstr "Eszköz"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Az eszköz, amellyel ki kell rajzolni a mintát. Az Előnézet eszköz csak "
 "gyorsan rajzol."
@@ -752,10 +752,10 @@ msgid ""
 "exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
 "redrawn on the layer that was active when the plugin was launched."
 msgstr ""
-"Ha be van jelölve, akkor a Rendben megnyomásakor a spiro réteg megmarad, "
-"és a bővítmény gyorsan kilép. Ha nincs bejelölve, akkor a spiro réteg "
-"törlésre kerül, és a minta újra lesz rajzolva azon a rétegen, amely aktív "
-"volt a bővítmény futtatásakor."
+"Ha be van jelölve, akkor a Rendben megnyomásakor a spiro réteg megmarad, és "
+"a bővítmény gyorsan kilép. Ha nincs bejelölve, akkor a spiro réteg törlésre "
+"kerül, és a minta újra lesz rajzolva azon a rétegen, amely aktív volt a "
+"bővítmény futtatásakor."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
 msgid "Spyrogimp"
