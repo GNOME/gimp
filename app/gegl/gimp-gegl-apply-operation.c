@@ -120,12 +120,18 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
       GeglNode *src_node;
 
       /* dup() because reading and writing the same buffer doesn't
-       * work with area ops when working in chunks. See bug #701875.
+       * generally work with non-point ops when working in chunks.
+       * See bug #701875.
        */
-      if (src_buffer == dest_buffer)
-        src_buffer = gegl_buffer_dup (src_buffer);
+      if (src_buffer == dest_buffer &&
+          ! gimp_gegl_node_is_point_operation (operation))
+        {
+          src_buffer = gegl_buffer_dup (src_buffer);
+        }
       else
-        g_object_ref (src_buffer);
+        {
+          g_object_ref (src_buffer);
+        }
 
       src_node = gegl_node_new_child (gegl,
                                       "operation", "gegl:buffer-source",
