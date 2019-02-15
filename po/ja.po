@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-01 16:49+0000\n"
-"PO-Revision-Date: 2019-02-13 23:09+0900\n"
+"PO-Revision-Date: 2019-02-15 23:07+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -5249,7 +5249,7 @@ msgstr "チャンネルの追加(_N)..."
 #: ../app/actions/filters-actions.c:212
 msgctxt "filters-action"
 msgid "_Checkerboard..."
-msgstr ""
+msgstr "市松模様(_C)..."
 
 #: ../app/actions/filters-actions.c:217
 msgctxt "filters-action"
@@ -5332,12 +5332,9 @@ msgid "Difference of Gaussians..."
 msgstr "ガウス差分..."
 
 #: ../app/actions/filters-actions.c:287
-#, fuzzy
-#| msgctxt "patterns-action"
-#| msgid "_Edit Pattern..."
 msgctxt "filters-action"
 msgid "Diffraction Patterns..."
-msgstr "パターンの編集(_E)..."
+msgstr "回折模様..."
 
 #: ../app/actions/filters-actions.c:292
 msgctxt "filters-action"
@@ -5481,11 +5478,9 @@ msgid "_Mantiuk 2006..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:432
-#, fuzzy
-#| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Maze..."
-msgstr "フェード(_F)..."
+msgstr "迷路(_M)..."
 
 #: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
@@ -5521,12 +5516,9 @@ msgid "_Zoom Motion Blur..."
 msgstr "放射形モーションぼかし(_Z)..."
 
 #: ../app/actions/filters-actions.c:467
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_Cell Noise..."
-msgstr "ノイズ(_N)"
+msgstr "セルノイズ(_C)..."
 
 #: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
@@ -5544,12 +5536,9 @@ msgid "_Hurl..."
 msgstr "浴びせ(_H)..."
 
 #: ../app/actions/filters-actions.c:487
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_Print Size..."
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
-msgstr "印刷サイズ(_P)..."
+msgstr "パーリンノイズ(_P)..."
 
 #: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
@@ -5567,12 +5556,9 @@ msgid "Noise R_eduction..."
 msgstr "ノイズ軽減(_E)..."
 
 #: ../app/actions/filters-actions.c:507
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
-msgstr "ノイズ(_N)"
+msgstr "シンプレックスノイズ(_S)..."
 
 #: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
@@ -5580,12 +5566,9 @@ msgid "_Slur..."
 msgstr "ごまかす(_S)..."
 
 #: ../app/actions/filters-actions.c:517
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "filters-action"
 msgid "_Solid Noise..."
-msgstr "ノイズ(_N)"
+msgstr "ソリッドノイズ(_S)..."
 
 #: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
@@ -5615,7 +5598,7 @@ msgstr "モザイク処理(_P)..."
 #: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Plasma..."
-msgstr ""
+msgstr "プラズマ(_P)..."
 
 #: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
@@ -5681,11 +5664,9 @@ msgid "_Shift..."
 msgstr "ずらし(_S)..."
 
 #: ../app/actions/filters-actions.c:612
-#, fuzzy
-#| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Sinus..."
-msgstr "トーンカーブ(_C)..."
+msgstr "Sin 曲線(_S)..."
 
 #: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
@@ -5745,16 +5726,14 @@ msgid "_Glass Tile..."
 msgstr "ガラスタイル(_G)..."
 
 #: ../app/actions/filters-actions.c:672
-#, fuzzy
-#| msgid "_Posterize..."
 msgctxt "filters-action"
 msgid "_Paper Tile..."
-msgstr "ポスタリゼーション(_P)..."
+msgstr "紙タイル(_P)..."
 
 #: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
-msgstr ""
+msgstr "シームレスタイル(_T)..."
 
 #: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
@@ -5779,7 +5758,7 @@ msgstr "ビネット(_V)..."
 #: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "水彩画(_W)..."
+msgstr "水彩(_W)..."
 
 #: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
@@ -7421,8 +7400,6 @@ msgstr "レイヤー透明部分が変更されないように保護します"
 
 #: ../app/actions/layers-actions.c:341 ../app/actions/layers-actions.c:362
 #: ../app/actions/layers-actions.c:383
-#, fuzzy
-#| msgid "Auto"
 msgctxt "layers-action"
 msgid "Auto"
 msgstr "自動"
@@ -18579,11 +18556,9 @@ msgid "Line spacing"
 msgstr "グリッド間隔を指定"
 
 #: ../app/display/display-enums.c:344
-#, fuzzy
-#| msgid "Aspect ratio"
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
-msgstr "とがりの縦横比"
+msgstr "縦横比"
 
 #: ../app/display/display-enums.c:345
 msgctxt "rectangle-fixed-rule"
@@ -21334,11 +21309,8 @@ msgstr "透明にする(_T)"
 
 #: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
 #: ../app/tools/gimpregionselectoptions.c:104
-#, fuzzy
-#| msgctxt "guides-type"
-#| msgid "Diagonal lines"
 msgid "Diagonal neighbors"
-msgstr "対角線構図"
+msgstr "対角に隣接"
 
 #: ../app/pdb/gimppdbcontext.c:164 ../app/tools/gimptransformoptions.c:100
 #: ../app/tools/gimptransformoptions.c:252 ../app/tools/gimpwarpoptions.c:119
@@ -21557,12 +21529,9 @@ msgid "Deinterlace"
 msgstr "インターレース除去"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1296
-#, fuzzy
-#| msgctxt "patterns-action"
-#| msgid "D_uplicate Pattern"
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
-msgstr "パターンの複製(_U)"
+msgstr "回折模様"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1455
 msgctxt "undo-type"
@@ -21621,16 +21590,14 @@ msgid "Lens Distortion"
 msgstr "レンズ補正"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2399
-#, fuzzy
-#| msgid "File Name:"
 msgctxt "undo-type"
 msgid "Tile Seamless"
-msgstr "ファイル名:"
+msgstr "シームレスタイル"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2466
 msgctxt "undo-type"
 msgid "Maze"
-msgstr ""
+msgstr "迷路"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2549 ../app/pdb/plug-in-compat-cmds.c:2633
 msgctxt "undo-type"
@@ -21650,7 +21617,7 @@ msgstr "超新星"
 #: ../app/pdb/plug-in-compat-cmds.c:2886
 msgctxt "undo-type"
 msgid "Paper Tile"
-msgstr ""
+msgstr "紙タイル"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2927 ../app/pdb/plug-in-compat-cmds.c:2970
 msgctxt "undo-type"
@@ -21660,7 +21627,7 @@ msgstr "モザイク処理"
 #: ../app/pdb/plug-in-compat-cmds.c:3021
 msgctxt "undo-type"
 msgid "Plasma"
-msgstr ""
+msgstr "プラズマ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3075
 msgctxt "undo-type"
@@ -21727,12 +21694,9 @@ msgid "Shift"
 msgstr "ずらし"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3778
-#, fuzzy
-#| msgctxt "gradient-editor-blending"
-#| msgid "_Sinusoidal"
 msgctxt "undo-type"
 msgid "Sinus"
-msgstr "サインカーブ(_S)"
+msgstr "Sin 曲線"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3826
 msgctxt "undo-type"
@@ -21740,12 +21704,9 @@ msgid "Sobel"
 msgstr "ソーベル"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3887
-#, fuzzy
-#| msgctxt "fill-style"
-#| msgid "Solid color"
 msgctxt "undo-type"
 msgid "Solid Noise"
-msgstr "描画色"
+msgstr "ソリッドノイズ"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3931
 msgctxt "undo-type"
@@ -22737,7 +22698,7 @@ msgstr ""
 #: ../app/tools/gimpbucketfilloptions.c:140
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
-msgstr ""
+msgstr "斜め4方向に隣接するピクセルを、上下左右に隣接するピクセルと同じように扱います"
 
 #: ../app/tools/gimpbucketfilloptions.c:148
 msgid ""
@@ -23427,16 +23388,14 @@ msgid "%s: switch horizontal and vertical"
 msgstr ""
 
 #: ../app/tools/gimpfiltertool.c:1359 ../app/tools/gimpfiltertool-settings.c:71
-#, fuzzy, c-format
-#| msgid "Import Threshold Settings"
+#, c-format
 msgid "Import '%s' Settings"
-msgstr "しきい値設定のインポート"
+msgstr "'%s' の設定のインポート"
 
 #: ../app/tools/gimpfiltertool.c:1361 ../app/tools/gimpfiltertool-settings.c:73
-#, fuzzy, c-format
-#| msgid "Export Threshold Settings"
+#, c-format
 msgid "Export '%s' Settings"
-msgstr "しきい値設定のエクスポート"
+msgstr "'%s' の設定のエクスポート"
 
 #: ../app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
@@ -27799,8 +27758,6 @@ msgid "Invalid UTF-8"
 msgstr "不適切な UTF-8 文字列"
 
 #: ../app/widgets/gimpsettingsbox.c:300
-#, fuzzy
-#| msgid "Pick a setting from the list"
 msgid "Pick a preset from the list"
 msgstr "あらかじめ設定されたパラメーターを一覧から選んで代入します"
 
