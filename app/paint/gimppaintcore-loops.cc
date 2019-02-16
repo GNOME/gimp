@@ -476,6 +476,85 @@ struct AlgorithmDispatch
 };
 
 
+/* MandatoryAlgorithmDispatch:
+ *
+ * A class template implementing a dispatch function suitable for dispatching
+ * algorithms that must be included in all hierarchies.  'AlgorithmTemplate' is
+ * the algorithm class template, 'Mask' is the dispatch function mask, as
+ * described in 'dispatch()', and 'Dependencies' is a list of (types of)
+ * dispatch functions the algorithm depends on, used as explained below.
+ *
+ * 'MandatoryAlgorithmDispatch' verifies that the algorithm is included in the
+ * set of requested algorithms (specifically, that the bitwise-AND of the
+ * requested-algorithms bitset and of 'Mask' is equal to 'Mask'), and adds the
+ * it to the hierarchy unconditionally.
+ *
+ * Before adding the algorithm to the hierarchy, the hierarchy is augmented by
+ * dispatching through the list of dependencies, in order.
+ */
+
+template <template <class Base> class AlgorithmTemplate,
+          guint                       Mask,
+          class...                    Dependencies>
+struct MandatoryAlgorithmDispatch
+{
+  static constexpr guint mask = Mask;
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    g_return_if_fail ((algorithms & Mask) == Mask);
+
+    BasicDispatch<AlgorithmTemplate, Mask, Dependencies...> () (visitor,
+                                                                params,
+                                                                algorithms,
+                                                                algorithm);
+  }
+};
+
+/* SuppressedAlgorithmDispatch:
+ *
+ * A class template implementing a placeholder dispatch function suitable for
+ * dispatching algorithms that are never included in any hierarchy.
+ * 'AlgorithmTemplate' is the algorithm class template, 'Mask' is the dispatch
+ * function mask, as described in 'dispatch()', and 'Dependencies' is a list of
+ * (types of) dispatch functions the algorithm depends on.  Note that
+ * 'AlgorithmTemplate' and 'Dependencies' are not actually used, and are merely
+ * included for exposition.
+ *
+ * 'SuppressedAlgorithmDispatch' verifies that the algorithm is not included in
+ * the set of requested algorithms (specifically, that the bitwise-AND of the
+ * requested-algorithms bitset and of 'Mask' is not equal to 'Mask'), and
+ * doesn't modify the hierarchy.
+ */
+
+template <template <class Base> class AlgorithmTemplate,
+          guint                       Mask,
+          class...                    Dependencies>
+struct SuppressedAlgorithmDispatch
+{
+  static constexpr guint mask = Mask;
+
+  template <class Visitor,
+            class Algorithm>
+  void
+  operator () (Visitor                         visitor,
+               const GimpPaintCoreLoopsParams *params,
+               GimpPaintCoreLoopsAlgorithm     algorithms,
+               identity<Algorithm>             algorithm) const
+  {
+    g_return_if_fail ((algorithms & Mask) != Mask);
+
+    visitor (algorithm);
+  }
+};
+
+
 /* PaintBuf, dispatch_paint_buf():
  *
  * An algorithm helper class, providing access to the paint buffer.  Algorithms
