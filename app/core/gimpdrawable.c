@@ -167,6 +167,9 @@ static gint64  gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
                                                     gint               width,
                                                     gint               height);
 
+static GimpComponentMask
+                gimp_drawable_real_get_active_mask (GimpDrawable      *drawable);
+
 static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
                                                     const Babl        *new_format,
@@ -280,7 +283,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->estimate_memsize         = gimp_drawable_real_estimate_memsize;
   klass->invalidate_boundary      = NULL;
   klass->get_active_components    = NULL;
-  klass->get_active_mask          = NULL;
+  klass->get_active_mask          = gimp_drawable_real_get_active_mask;
   klass->convert_type             = gimp_drawable_real_convert_type;
   klass->apply_buffer             = gimp_drawable_real_apply_buffer;
   klass->get_buffer               = gimp_drawable_real_get_buffer;
@@ -770,6 +773,13 @@ gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
   return (gint64) babl_format_get_bytes_per_pixel (format) * width * height;
 }
 
+static GimpComponentMask
+gimp_drawable_real_get_active_mask (GimpDrawable *drawable)
+{
+  /*  Return all, because that skips the component mask op when painting  */
+  return GIMP_COMPONENT_MASK_ALL;
+}
+
 /* FIXME: this default impl is currently unused because no subclass
  * chains up. the goal is to handle the almost identical subclass code
  * here again.
@@ -1104,16 +1114,28 @@ gimp_drawable_get_active_components (GimpDrawable *drawable,
 GimpComponentMask
 gimp_drawable_get_active_mask (GimpDrawable *drawable)
 {
-  GimpDrawableClass *drawable_class;
+  GimpComponentMask mask;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
 
-  drawable_class = GIMP_DRAWABLE_GET_CLASS (drawable);
+  mask = GIMP_DRAWABLE_GET_CLASS (drawable)->get_active_mask (drawable);
 
-  if (drawable_class->get_active_mask)
-    return drawable_class->get_active_mask (drawable);
+  /* if the drawable doesn't have an alpha channel, the value of the mask's
+   * alpha-bit doesn't matter, however, we'd like to have a fully-clear or
+   * fully-set mask whenever possible, since it allows us to skip component
+   * masking altogether.  we therefore set or clear the alpha bit, depending on
+   * the state of the other bits, so that it never gets in the way of a uniform
+   * mask.
+   */
+  if (! gimp_drawable_has_alpha (drawable))
+    {
+      if (mask & ~GIMP_COMPONENT_MASK_ALPHA)
+        mask |= GIMP_COMPONENT_MASK_ALPHA;
+      else
+        mask &= ~GIMP_COMPONENT_MASK_ALPHA;
+    }
 
-  return 0;
+  return mask;
 }
 
 void
