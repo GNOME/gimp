@@ -1249,6 +1249,7 @@ struct CombinePaintMaskToCanvasBuffer :
   static constexpr guint filter =
     base_type::filter                                                   |
     GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    |
     GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       |
     GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
@@ -1316,7 +1317,7 @@ struct CombinePaintMaskToCanvasBuffer :
   }
 };
 
-static SuppressedAlgorithmDispatch<
+static AlgorithmDispatch<
   CombinePaintMaskToCanvasBuffer,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER,
   decltype (dispatch_paint_mask),
