@@ -40,6 +40,7 @@ struct _GimpOperationMaskComponents
   GeglOperationPointComposer  parent_instance;
 
   GimpComponentMask           mask;
+  gpointer                    process;
 };
 
 struct _GimpOperationMaskComponentsClass
@@ -48,7 +49,16 @@ struct _GimpOperationMaskComponentsClass
 };
 
 
-GType   gimp_operation_mask_components_get_type (void) G_GNUC_CONST;
+GType        gimp_operation_mask_components_get_type   (void) G_GNUC_CONST;
+
+const Babl * gimp_operation_mask_components_get_format (const Babl        *input_format);
+
+void         gimp_operation_mask_components_process    (const Babl        *format,
+                                                        gconstpointer      in,
+                                                        gconstpointer      aux,
+                                                        gpointer           out,
+                                                        gint               n,
+                                                        GimpComponentMask  mask);
 
 
 #endif /* __GIMP_OPERATION_MASK_COMPONENTS_H__ */

@@ -146,28 +146,177 @@ gimp_operation_mask_components_set_property (GObject      *object,
     }
 }
 
+template <class T>
+struct ProcessGeneric
+{
+  static void
+  process (gconstpointer     in_buf,
+           gconstpointer     aux_buf,
+           gpointer          out_buf,
+           gint              n,
+           GimpComponentMask mask)
+  {
+    T    *out = (T *) out_buf;
+    gint  i;
+    gint  c;
+
+    if (aux_buf)
+      {
+        const T *in[4];
+
+        for (c = 0; c < 4; c++)
+          {
+            if (mask & (1 << c))
+              in[c] = (const T *) aux_buf + c;
+            else
+              in[c] = (const T *) in_buf  + c;
+          }
+
+        for (i = 0; i < n; i++)
+          {
+            for (c = 0; c < 4; c++)
+              {
+                out[c] = *in[c];
+
+                in[c] += 4;
+              }
+
+            out += 4;
+          }
+      }
+    else
+      {
+        const T *in = (const T*) in_buf;
+
+        for (i = 0; i < n; i++)
+          {
+            for (c = 0; c < 4; c++)
+              {
+                if (mask & (1 << c))
+                  out[c] = 0;
+                else
+                  out[c] = in[c];
+              }
+
+            in  += 4;
+            out += 4;
+          }
+      }
+  }
+};
+
+template <class T>
+struct Process : ProcessGeneric<T>
+{
+};
+
+template <>
+struct Process<guint8>
+{
+  static void
+  process (gconstpointer     in_buf,
+           gconstpointer     aux_buf,
+           gpointer          out_buf,
+           gint              n,
+           GimpComponentMask mask)
+  {
+    const guint32 *in;
+    guint32       *out;
+    guint32        in_mask = 0;
+    gint           i;
+    gint           c;
+
+    if (((guintptr) in_buf | (guintptr) aux_buf | (guintptr) out_buf) % 4)
+      {
+        ProcessGeneric<guint8>::process (in_buf, aux_buf, out_buf, n, mask);
+
+        return;
+      }
+
+    in  = (const guint32 *) in_buf;
+    out = (guint32       *) out_buf;
+
+    for (c = 0; c < 4; c++)
+      {
+        if (! (mask & (1 << c)))
+          in_mask |= 0xff << (8 * c);
+      }
+
+    if (aux_buf)
+      {
+        const guint32 *aux      = (const guint32 *) aux_buf;
+        guint32        aux_mask = ~in_mask;
+
+        for (i = 0; i < n; i++)
+          {
+            *out = (*in & in_mask) | (*aux & aux_mask);
+
+            in++;
+            aux++;
+            out++;
+          }
+      }
+    else
+      {
+        for (i = 0; i < n; i++)
+          {
+            *out = *in & in_mask;
+
+            in++;
+            out++;
+          }
+      }
+  }
+};
+
+template <class T>
+static gboolean
+gimp_operation_mask_components_process (GimpOperationMaskComponents *self,
+                                        void                        *in_buf,
+                                        void                        *aux_buf,
+                                        void                        *out_buf,
+                                        glong                        samples,
+                                        const GeglRectangle         *roi,
+                                        gint                         level)
+{
+  Process<T>::process (in_buf, aux_buf, out_buf, samples, self->mask);
+
+  return TRUE;
+}
+
 static void
 gimp_operation_mask_components_prepare (GeglOperation *operation)
 {
-  const Babl *format = gegl_operation_get_source_format (operation, "input");
+  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
+  const Babl                  *format;
 
-  if (format)
-    {
-      const Babl *model = babl_format_get_model (format);
-
-      if (model == babl_model ("R'G'B'A"))
-        format = babl_format ("R'G'B'A float");
-      else
-        format = babl_format ("RGBA float");
-    }
-  else
-    {
-      format = babl_format ("RGBA float");
-    }
+  format = gimp_operation_mask_components_get_format (
+    gegl_operation_get_source_format (operation, "input"));
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "aux",    format);
   gegl_operation_set_format (operation, "output", format);
+
+  switch (babl_format_get_bytes_per_pixel (format))
+    {
+    case 4:
+      self->process = (gpointer)
+                        gimp_operation_mask_components_process<guint8>;
+      break;
+
+    case 8:
+      self->process = (gpointer)
+                        gimp_operation_mask_components_process<guint16>;
+      break;
+
+    case 16:
+      self->process = (gpointer)
+                        gimp_operation_mask_components_process<guint32>;
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
 }
 
 static gboolean
@@ -210,30 +359,98 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
                                         const GeglRectangle *roi,
                                         gint                 level)
 {
-  GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
-  const gfloat                *src  = (const gfloat *) in_buf;
-  const gfloat                *aux  = (const gfloat *) aux_buf;
-  gfloat                      *dest = (gfloat       *) out_buf;
-  GimpComponentMask            mask = self->mask;
-  static const gfloat          nothing[] = { 0.0, 0.0, 0.0, 1.0 };
+  typedef gboolean (* ProcessFunc) (GimpOperationMaskComponents *self,
+                                    void                        *in_buf,
+                                    void                        *aux_buf,
+                                    void                        *out_buf,
+                                    glong                        samples,
+                                    const GeglRectangle         *roi,
+                                    gint                         level);
 
-  if (! aux)
-    aux = (gfloat *) nothing;
+  GimpOperationMaskComponents *self = (GimpOperationMaskComponents *) operation;
 
-  while (samples--)
+  return ((ProcessFunc) self->process) (self,
+                                        in_buf, aux_buf, out_buf, samples,
+                                        roi, level);
+}
+
+const Babl *
+gimp_operation_mask_components_get_format (const Babl *input_format)
+{
+  const Babl *format = NULL;
+
+  if (input_format)
     {
-      dest[RED]   = (mask & GIMP_COMPONENT_MASK_RED)   ? aux[RED]   : src[RED];
-      dest[GREEN] = (mask & GIMP_COMPONENT_MASK_GREEN) ? aux[GREEN] : src[GREEN];
-      dest[BLUE]  = (mask & GIMP_COMPONENT_MASK_BLUE)  ? aux[BLUE]  : src[BLUE];
-      dest[ALPHA] = (mask & GIMP_COMPONENT_MASK_ALPHA) ? aux[ALPHA] : src[ALPHA];
+      const Babl  *model      = babl_format_get_model (input_format);
+      const gchar *model_name = babl_get_name (model);
+      const Babl  *type       = babl_format_get_type (input_format, 0);
+      const gchar *type_name  = babl_get_name (type);
 
-      src += 4;
-
-      if (aux_buf)
-        aux  += 4;
-
-      dest += 4;
+      if (! strcmp (model_name, "Y")   ||
+          ! strcmp (model_name, "YA")  ||
+          ! strcmp (model_name, "RGB") ||
+          ! strcmp (model_name, "RGBA"))
+        {
+          if (! strcmp (type_name, "u8"))
+            format = babl_format ("RGBA u8");
+          else if (! strcmp (type_name, "u16"))
+            format = babl_format ("RGBA u16");
+          else if (! strcmp (type_name, "u32"))
+            format = babl_format ("RGBA u32");
+          else if (! strcmp (type_name, "float"))
+            format = babl_format ("RGBA float");
+        }
+      else if (! strcmp (model_name, "Y'")      ||
+               ! strcmp (model_name, "Y'A")     ||
+               ! strcmp (model_name, "R'G'B'")  ||
+               ! strcmp (model_name, "R'G'B'A") ||
+               babl_format_is_palette (input_format))
+        {
+          if (! strcmp (type_name, "u8"))
+            format = babl_format ("R'G'B'A u8");
+          else if (! strcmp (type_name, "u16"))
+            format = babl_format ("R'G'B'A u16");
+          else if (! strcmp (type_name, "u32"))
+            format = babl_format ("R'G'B'A u32");
+          else if (! strcmp (type_name, "float"))
+            format = babl_format ("R'G'B'A float");
+        }
     }
 
-  return TRUE;
+  if (! format)
+    format = babl_format ("RGBA float");
+
+  return format;
+}
+
+void
+gimp_operation_mask_components_process (const Babl        *format,
+                                        gconstpointer      in,
+                                        gconstpointer      aux,
+                                        gpointer           out,
+                                        gint               n,
+                                        GimpComponentMask  mask)
+{
+  g_return_if_fail (format != NULL);
+  g_return_if_fail (in != NULL);
+  g_return_if_fail (out != NULL);
+  g_return_if_fail (n >= 0);
+
+  switch (babl_format_get_bytes_per_pixel (format))
+    {
+    case 4:
+      Process<guint8>::process (in, aux, out, n, mask);
+      break;
+
+    case 8:
+      Process<guint16>::process (in, aux, out, n, mask);
+      break;
+
+    case 16:
+      Process<guint32>::process (in, aux, out, n, mask);
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
 }
