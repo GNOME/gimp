@@ -28,7 +28,8 @@ typedef enum
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       = 1 << 2,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK          = 1 << 3,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK             = 1 << 4,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND                      = 1 << 5
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND                      = 1 << 5,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS                     = 1 << 6
 } GimpPaintCoreLoopsAlgorithm;
 
 
@@ -57,6 +58,8 @@ typedef struct
   gdouble            image_opacity;
 
   GimpLayerMode      paint_mode;
+
+  GimpComponentMask  affect;
 } GimpPaintCoreLoopsParams;
 
 
