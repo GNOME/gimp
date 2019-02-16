@@ -2142,6 +2142,8 @@ struct MaskComponents : Base
   {
     if (comp_fish)
       gegl_scratch_free (state->comp_pixel);
+
+    Base::finalize_step (params, state);
   }
 };
 
