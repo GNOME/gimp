@@ -461,27 +461,6 @@ gimp_paint_core_start (GimpPaintCore     *core,
       gimp_applicator_set_dest_buffer (core->applicator,
                                        gimp_drawable_get_buffer (drawable));
     }
-  else
-    {
-      g_clear_object (&core->comp_buffer);
-
-      /* Allocate the scratch buffer if there's a component mask */
-      if (gimp_drawable_get_active_mask (drawable) != GIMP_COMPONENT_MASK_ALL)
-        {
-          const Babl *format =
-            gimp_babl_format (GIMP_RGB,
-                              gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
-                                                   gimp_drawable_get_trc (drawable)),
-                              TRUE,
-                              gimp_drawable_get_space (drawable));
-
-          core->comp_buffer =
-            gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                             gimp_item_get_width  (item),
-                                             gimp_item_get_height (item)),
-                             format);
-        }
-    }
 
   /*  Freeze the drawable preview so that it isn't constantly updated.  */
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
@@ -509,7 +488,6 @@ gimp_paint_core_finish (GimpPaintCore *core,
     }
 
   g_clear_object (&core->mask_buffer);
-  g_clear_object (&core->comp_buffer);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -787,8 +765,12 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                        GimpLayerMode             paint_mode,
                        GimpPaintApplicationMode  mode)
 {
-  gint width  = gegl_buffer_get_width  (core->paint_buffer);
-  gint height = gegl_buffer_get_height (core->paint_buffer);
+  gint              width  = gegl_buffer_get_width  (core->paint_buffer);
+  gint              height = gegl_buffer_get_height (core->paint_buffer);
+  GimpComponentMask affect = gimp_drawable_get_active_mask (drawable);
+
+  if (! affect)
+    return;
 
   if (core->applicator)
     {
@@ -882,10 +864,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
       if (! params.paint_buf)
         return;
 
-      if (core->comp_buffer)
-        params.dest_buffer = core->comp_buffer;
-      else
-        params.dest_buffer = gimp_drawable_get_buffer (drawable);
+      params.dest_buffer = gimp_drawable_get_buffer (drawable);
 
       if (mode == GIMP_PAINT_CONSTANT)
         {
@@ -925,10 +904,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
           algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA;
 
           /* dest_buffer -> paint_buf -> dest_buffer */
-          if (core->comp_buffer)
-            params.src_buffer = gimp_drawable_get_buffer (drawable);
-          else
-            params.src_buffer = params.dest_buffer;
+          params.src_buffer = params.dest_buffer;
         }
 
       params.mask_buffer   = core->mask_buffer;
@@ -939,21 +915,14 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 
       algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND;
 
-      gimp_paint_core_loops_process (&params, algorithms);
-
-      if (core->comp_buffer)
+      if (affect != GIMP_COMPONENT_MASK_ALL)
         {
-          mask_components_onto (params.src_buffer,
-                                core->comp_buffer,
-                                gimp_drawable_get_buffer (drawable),
-                                GEGL_RECTANGLE (core->paint_buffer_x,
-                                                core->paint_buffer_y,
-                                                width,
-                                                height),
-                                gimp_drawable_get_active_mask (drawable),
-                                gimp_drawable_get_trc (drawable),
-                                gimp_drawable_get_space (drawable));
+          params.affect = affect;
+
+          algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS;
         }
+
+      gimp_paint_core_loops_process (&params, algorithms);
     }
 
   /*  Update the undo extents  */
@@ -987,7 +956,8 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                          gdouble                   image_opacity,
                          GimpPaintApplicationMode  mode)
 {
-  gint width, height;
+  gint              width, height;
+  GimpComponentMask affect;
 
   if (! gimp_drawable_has_alpha (drawable))
     {
@@ -1004,6 +974,11 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
   width  = gegl_buffer_get_width  (core->paint_buffer);
   height = gegl_buffer_get_height (core->paint_buffer);
+
+  affect = gimp_drawable_get_active_mask (drawable);
+
+  if (! affect)
+    return;
 
   if (core->applicator)
     {
@@ -1141,10 +1116,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
       if (! params.paint_buf)
         return;
 
-      if (core->comp_buffer)
-        params.dest_buffer = core->comp_buffer;
-      else
-        params.dest_buffer = gimp_drawable_get_buffer (drawable);
+      params.dest_buffer = gimp_drawable_get_buffer (drawable);
 
       if (mode == GIMP_PAINT_CONSTANT)
         {
@@ -1186,10 +1158,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
           algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK;
 
           /* dest_buffer -> paint_buf -> dest_buffer */
-          if (core->comp_buffer)
-            params.src_buffer = gimp_drawable_get_buffer (drawable);
-          else
-            params.src_buffer = params.dest_buffer;
+          params.src_buffer = params.dest_buffer;
         }
 
       params.mask_buffer   = core->mask_buffer;
@@ -1200,21 +1169,14 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
       algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND;
 
-      gimp_paint_core_loops_process (&params, algorithms);
-
-      if (core->comp_buffer)
+      if (affect != GIMP_COMPONENT_MASK_ALL)
         {
-          mask_components_onto (params.src_buffer,
-                                core->comp_buffer,
-                                gimp_drawable_get_buffer (drawable),
-                                GEGL_RECTANGLE (core->paint_buffer_x,
-                                                core->paint_buffer_y,
-                                                width,
-                                                height),
-                                gimp_drawable_get_active_mask (drawable),
-                                gimp_drawable_get_trc (drawable),
-                                gimp_drawable_get_space (drawable));
+          params.affect = affect;
+
+          algorithms |= GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS;
         }
+
+      gimp_paint_core_loops_process (&params, algorithms);
     }
 
   /*  Update the undo extents  */

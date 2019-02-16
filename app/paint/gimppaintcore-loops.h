@@ -66,13 +66,5 @@ typedef struct
 void   gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
                                       GimpPaintCoreLoopsAlgorithm     algorithms);
 
-void   mask_components_onto          (GeglBuffer                     *src_buffer,
-                                      GeglBuffer                     *aux_buffer,
-                                      GeglBuffer                     *dst_buffer,
-                                      const GeglRectangle            *roi,
-                                      GimpComponentMask               mask,
-                                      GimpTRCType                     trc,
-                                      const Babl                     *space);
-
 
 #endif /* __GIMP_PAINT_CORE_LOOPS_H__ */
