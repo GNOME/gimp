@@ -231,6 +231,11 @@ run (const gchar      *name,
             }
           else
             {
+              g_set_error (&error, 0, 0,
+                           "Running procedure 'file-pat-save-internal' "
+                           "failed: %s",
+                           gimp_get_pdb_error ());
+
               status = GIMP_PDB_EXECUTION_ERROR;
             }
 
