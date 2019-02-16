@@ -243,7 +243,8 @@ static gfloat        * gimp_lineart_estimate_strokes_radii      (GeglBuffer     
                                                                  GimpAsync              *async);
 static void            gimp_line_art_simple_fill                (GeglBuffer             *buffer,
                                                                  gint                    x,
-                                                                 gint                    y);
+                                                                 gint                    y,
+                                                                 gint                   *counter);
 
 /* Some callback-type functions. */
 
@@ -1156,7 +1157,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
                       gimp_line_art_allow_closure (closed, discrete_curve,
                                                    &fill_pixels,
                                                    created_regions_significant_area,
-                                                   created_regions_minimum_area - 1))
+                                                   created_regions_minimum_area))
                     {
                       for (i = 0; i < discrete_curve->len; i++)
                         {
@@ -1227,7 +1228,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
                   if (segment->len &&
                       gimp_line_art_allow_closure (closed, segment, &fill_pixels,
                                                    created_regions_significant_area,
-                                                   created_regions_minimum_area - 1))
+                                                   created_regions_minimum_area))
                     {
                       gint j;
 
@@ -1253,7 +1254,8 @@ gimp_line_art_close (GeglBuffer  *buffer,
 
       for (iter = fill_pixels; iter; iter = iter->next)
         {
-          Pixel *p = iter->data;
+          Pixel *p        = iter->data;
+          gint   fill_max = created_regions_significant_area - 1;
 
           if (gimp_async_is_canceled (async))
             {
@@ -1269,7 +1271,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
            * This is mostly a quick'n dirty first implementation which I
            * will improve later.
            */
-          gimp_line_art_simple_fill (closed, (gint) p->x, (gint) p->y);
+          gimp_line_art_simple_fill (closed, (gint) p->x, (gint) p->y, &fill_max);
         }
 
  end2:
@@ -2115,7 +2117,7 @@ gimp_line_art_allow_closure (GeglBuffer *mask,
    * Since we are following the edges of the area, we can therefore stop
    * earlier if we reach this number of edgels.
    */
-  const glong max_edgel_count = 2 * (minimum_size + 1);
+  const glong max_edgel_count = 2 * minimum_size;
 
   Pixel      *p = (Pixel*) pixels->data;
   GList      *fp = NULL;
@@ -2168,7 +2170,7 @@ gimp_line_art_allow_closure (GeglBuffer *mask,
                 {
                   area = gimp_edgel_region_area (mask, e);
 
-                  if (area >= significant_size && area <= minimum_size)
+                  if (area >= significant_size && area < minimum_size)
                     {
                       gint j;
 
@@ -2442,12 +2444,14 @@ gimp_lineart_estimate_strokes_radii (GeglBuffer *mask,
 static void
 gimp_line_art_simple_fill (GeglBuffer *buffer,
                            gint        x,
-                           gint        y)
+                           gint        y,
+                           gint       *counter)
 {
   guchar val;
 
-  if (x < 0 || x >= gegl_buffer_get_width (buffer) ||
-      y < 0 || y >= gegl_buffer_get_height (buffer))
+  if (x < 0 || x >= gegl_buffer_get_width (buffer)  ||
+      y < 0 || y >= gegl_buffer_get_height (buffer) ||
+      counter <= 0)
     return;
 
   gegl_buffer_sample (buffer, x, y, NULL, &val,
@@ -2458,10 +2462,11 @@ gimp_line_art_simple_fill (GeglBuffer *buffer,
       val = 1;
       gegl_buffer_set (buffer, GEGL_RECTANGLE (x, y, 1, 1), 0,
                        NULL, &val, GEGL_AUTO_ROWSTRIDE);
-      gimp_line_art_simple_fill (buffer, x + 1, y);
-      gimp_line_art_simple_fill (buffer, x - 1, y);
-      gimp_line_art_simple_fill (buffer, x, y + 1);
-      gimp_line_art_simple_fill (buffer, x, y - 1);
+      (*counter)--;
+      gimp_line_art_simple_fill (buffer, x + 1, y, counter);
+      gimp_line_art_simple_fill (buffer, x - 1, y, counter);
+      gimp_line_art_simple_fill (buffer, x, y + 1, counter);
+      gimp_line_art_simple_fill (buffer, x, y - 1, counter);
     }
 }
 
