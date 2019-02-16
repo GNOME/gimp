@@ -1188,7 +1188,7 @@ struct CombinePaintMaskToCanvasBuffer :
   }
 };
 
-static AlgorithmDispatch<
+static SuppressedAlgorithmDispatch<
   CombinePaintMaskToCanvasBuffer,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER,
   decltype (dispatch_paint_mask),
@@ -1866,7 +1866,7 @@ struct DoLayerBlend : Base
   }
 };
 
-static AlgorithmDispatch<
+static MandatoryAlgorithmDispatch<
   DoLayerBlend,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND,
   decltype (dispatch_paint_buf),
