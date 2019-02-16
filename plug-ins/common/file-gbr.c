@@ -37,9 +37,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "app/core/gimpbrush-header.h"
-#include "app/core/gimppattern-header.h"
-
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -63,11 +60,6 @@ static void       run            (const gchar      *name,
                                   const GimpParam  *param,
                                   gint             *nreturn_vals,
                                   GimpParam       **return_vals);
-
-static gboolean   save_image     (GFile            *file,
-                                  gint32            image_ID,
-                                  gint32            drawable_ID,
-                                  GError          **error);
 
 static gboolean   save_dialog    (void);
 static void       entry_callback (GtkWidget        *widget,
@@ -143,7 +135,6 @@ run (const gchar      *name,
   GError            *error  = NULL;
 
   INIT_I18N ();
-  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
@@ -246,14 +237,36 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (file, image_ID, drawable_ID, &error))
+          GimpParam *save_retvals;
+          gint       n_save_retvals;
+
+          save_retvals =
+            gimp_run_procedure ("file-gbr-save-internal",
+                                &n_save_retvals,
+                                GIMP_PDB_INT32,    GIMP_RUN_NONINTERACTIVE,
+                                GIMP_PDB_IMAGE,    image_ID,
+                                GIMP_PDB_DRAWABLE, drawable_ID,
+                                GIMP_PDB_STRING,   param[3].data.d_string,
+                                GIMP_PDB_STRING,   param[4].data.d_string,
+                                GIMP_PDB_INT32,    info.spacing,
+                                GIMP_PDB_STRING,   info.description,
+                                GIMP_PDB_END);
+
+          if (save_retvals[0].data.d_status == GIMP_PDB_SUCCESS)
             {
               gimp_set_data (SAVE_PROC, &info, sizeof (info));
             }
           else
             {
+              g_set_error (&error, 0, 0,
+                           "Running procedure 'file-gbr-save-internal' "
+                           "failed: %s",
+                           gimp_get_pdb_error ());
+
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+          gimp_destroy_params (save_retvals, n_save_retvals);
         }
 
       if (export == GIMP_EXPORT_EXPORT)
@@ -288,157 +301,6 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-}
-
-static gboolean
-save_image (GFile   *file,
-            gint32   image_ID,
-            gint32   drawable_ID,
-            GError **error)
-{
-  GOutputStream   *output;
-  GimpBrushHeader  bh;
-  guchar          *brush_buf;
-  GeglBuffer      *buffer;
-  const Babl      *format;
-  gint             line;
-  gint             x;
-  gint             bpp;
-  gint             file_bpp;
-  gint             width;
-  gint             height;
-  GimpRGB          gray, white;
-
-  gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
-
-  switch (gimp_drawable_type (drawable_ID))
-    {
-    case GIMP_GRAY_IMAGE:
-      file_bpp = 1;
-      format = babl_format ("Y' u8");
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      file_bpp = 1;
-      format = babl_format ("Y'A u8");
-      break;
-
-    default:
-      file_bpp = 4;
-      format = babl_format ("R'G'B'A u8");
-      break;
-    }
-
-  bpp = babl_format_get_bytes_per_pixel (format);
-
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             g_file_get_parse_name (file));
-
-  output = G_OUTPUT_STREAM (g_file_replace (file,
-                                            NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, error));
-  if (! output)
-    return FALSE;
-
-  buffer = gimp_drawable_get_buffer (drawable_ID);
-
-  width  = gimp_drawable_width  (drawable_ID);
-  height = gimp_drawable_height (drawable_ID);
-
-  bh.header_size  = g_htonl (sizeof (GimpBrushHeader) +
-                             strlen (info.description) + 1);
-  bh.version      = g_htonl (2);
-  bh.width        = g_htonl (width);
-  bh.height       = g_htonl (height);
-  bh.bytes        = g_htonl (file_bpp);
-  bh.magic_number = g_htonl (GIMP_BRUSH_MAGIC);
-  bh.spacing      = g_htonl (info.spacing);
-
-  if (! g_output_stream_write_all (output, &bh, sizeof (GimpBrushHeader),
-                                   NULL, NULL, error))
-    {
-      GCancellable *cancellable = g_cancellable_new ();
-
-      g_cancellable_cancel (cancellable);
-      g_output_stream_close (output, cancellable, NULL);
-      g_object_unref (cancellable);
-
-      g_object_unref (output);
-      return FALSE;
-    }
-
-  if (! g_output_stream_write_all (output,
-                                   info.description,
-                                   strlen (info.description) + 1,
-                                   NULL, NULL, error))
-    {
-      GCancellable *cancellable = g_cancellable_new ();
-
-      g_cancellable_cancel (cancellable);
-      g_output_stream_close (output, cancellable, NULL);
-      g_object_unref (cancellable);
-
-      g_object_unref (output);
-      return FALSE;
-    }
-
-  brush_buf = g_new (guchar, width * bpp);
-
-  for (line = 0; line < height; line++)
-    {
-      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, line, width, 1), 1.0,
-                       format, brush_buf,
-                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-
-      switch (bpp)
-        {
-        case 1:
-          /*  invert  */
-          for (x = 0; x < width; x++)
-            brush_buf[x] = 255 - brush_buf[x];
-          break;
-
-        case 2:
-          for (x = 0; x < width; x++)
-            {
-              /*  apply alpha channel  */
-              gimp_rgba_set_uchar (&gray,
-                                   brush_buf[2 * x],
-                                   brush_buf[2 * x],
-                                   brush_buf[2 * x],
-                                   brush_buf[2 * x + 1]);
-              gimp_rgb_composite (&gray, &white, GIMP_RGB_COMPOSITE_BEHIND);
-              gimp_rgba_get_uchar (&gray, &brush_buf[x], NULL, NULL, NULL);
-              /* invert */
-              brush_buf[x] = 255 - brush_buf[x];
-            }
-          break;
-        }
-
-      if (! g_output_stream_write_all (output, brush_buf, width * file_bpp,
-                                       NULL, NULL, error))
-        {
-          GCancellable *cancellable = g_cancellable_new ();
-
-          g_cancellable_cancel (cancellable);
-          g_output_stream_close (output, cancellable, NULL);
-          g_object_unref (cancellable);
-
-          g_free (brush_buf);
-          g_object_unref (output);
-          return FALSE;
-        }
-
-      gimp_progress_update ((gdouble) line / (gdouble) height);
-    }
-
-  g_free (brush_buf);
-  g_object_unref (buffer);
-  g_object_unref (output);
-
-  gimp_progress_update (1.0);
-
-  return TRUE;
 }
 
 static gboolean
