@@ -60,46 +60,15 @@ typedef struct
 } GimpPaintCoreLoopsParams;
 
 
-void gimp_paint_core_loops_process       (const GimpPaintCoreLoopsParams *params,
-                                          GimpPaintCoreLoopsAlgorithm     algorithms);
+void   gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
+                                      GimpPaintCoreLoopsAlgorithm     algorithms);
 
-void combine_paint_mask_to_canvas_buffer (const GimpTempBuf              *paint_mask,
-                                          gint                            mask_x_offset,
-                                          gint                            mask_y_offset,
-                                          GeglBuffer                     *canvas_buffer,
-                                          gint                            x_offset,
-                                          gint                            y_offset,
-                                          gfloat                          opacity,
-                                          gboolean                        stipple);
-
-void canvas_buffer_to_paint_buf_alpha    (GimpTempBuf                    *paint_buf,
-                                          GeglBuffer                     *canvas_buffer,
-                                          gint                            x_offset,
-                                          gint                            y_offset);
-
-void paint_mask_to_paint_buf_alpha       (const GimpTempBuf              *paint_mask,
-                                          gint                            mask_x_offset,
-                                          gint                            mask_y_offset,
-                                          GimpTempBuf                    *paint_buf,
-                                          gfloat                          paint_opacity);
-
-void do_layer_blend                      (GeglBuffer                     *src_buffer,
-                                          GeglBuffer                     *dst_buffer,
-                                          GimpTempBuf                    *paint_buf,
-                                          GeglBuffer                     *mask_buffer,
-                                          gfloat                          opacity,
-                                          gint                            x_offset,
-                                          gint                            y_offset,
-                                          gint                            mask_x_offset,
-                                          gint                            mask_y_offset,
-                                          GimpLayerMode                   paint_mode);
-
-void mask_components_onto                (GeglBuffer                     *src_buffer,
-                                          GeglBuffer                     *aux_buffer,
-                                          GeglBuffer                     *dst_buffer,
-                                          const GeglRectangle            *roi,
-                                          GimpComponentMask               mask,
-                                          gboolean                        linear_mode);
+void   mask_components_onto          (GeglBuffer                     *src_buffer,
+                                      GeglBuffer                     *aux_buffer,
+                                      GeglBuffer                     *dst_buffer,
+                                      const GeglRectangle            *roi,
+                                      GimpComponentMask               mask,
+                                      gboolean                        linear_mode);
 
 
 #endif /* __GIMP_PAINT_CORE_LOOPS_H__ */
