@@ -161,8 +161,6 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (GimpDrawable       *drawable,
                                                 gboolean           *active);
-static GimpComponentMask
-                  gimp_channel_get_active_mask (GimpDrawable      *drawable);
 
 static void      gimp_channel_set_buffer     (GimpDrawable        *drawable,
                                               gboolean             push_undo,
@@ -295,7 +293,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->convert_type          = gimp_channel_convert_type;
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
-  drawable_class->get_active_mask       = gimp_channel_get_active_mask;
   drawable_class->set_buffer            = gimp_channel_set_buffer;
 
   klass->boundary       = gimp_channel_real_boundary;
@@ -1011,13 +1008,6 @@ gimp_channel_get_active_components (GimpDrawable *drawable,
   /*  Make sure that the alpha channel is not valid.  */
   active[GRAY]    = TRUE;
   active[ALPHA_G] = FALSE;
-}
-
-static GimpComponentMask
-gimp_channel_get_active_mask (GimpDrawable *drawable)
-{
-  /*  Return all, because that skips the component mask op when painting  */
-  return GIMP_COMPONENT_MASK_ALL;
 }
 
 static void
