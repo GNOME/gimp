@@ -60,7 +60,7 @@ libappoperations_a_sources = \
 	gimpoperationgrow.h			\
 	gimpoperationhistogramsink.c		\
 	gimpoperationhistogramsink.h		\
-	gimpoperationmaskcomponents.c		\
+	gimpoperationmaskcomponents.cc		\
 	gimpoperationmaskcomponents.h		\
 	gimpoperationprofiletransform.c		\
 	gimpoperationprofiletransform.h		\

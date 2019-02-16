@@ -22,9 +22,14 @@
 
 #include <gegl.h>
 
+extern "C"
+{
+
 #include "operations-types.h"
 
 #include "gimpoperationmaskcomponents.h"
+
+} /* extern "C" */
 
 
 enum
@@ -91,8 +96,9 @@ gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *kla
                                                        "The component mask",
                                                        GIMP_TYPE_COMPONENT_MASK,
                                                        GIMP_COMPONENT_MASK_ALL,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+                                                       (GParamFlags) (
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT)));
 }
 
 static void
@@ -131,7 +137,7 @@ gimp_operation_mask_components_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_MASK:
-      self->mask = g_value_get_flags (value);
+      self->mask = (GimpComponentMask) g_value_get_flags (value);
       break;
 
    default:
@@ -205,9 +211,9 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
                                         gint                 level)
 {
   GimpOperationMaskComponents *self = GIMP_OPERATION_MASK_COMPONENTS (operation);
-  gfloat                      *src  = in_buf;
-  gfloat                      *aux  = aux_buf;
-  gfloat                      *dest = out_buf;
+  const gfloat                *src  = (const gfloat *) in_buf;
+  const gfloat                *aux  = (const gfloat *) aux_buf;
+  gfloat                      *dest = (gfloat       *) out_buf;
   GimpComponentMask            mask = self->mask;
   static const gfloat          nothing[] = { 0.0, 0.0, 0.0, 1.0 };
 
