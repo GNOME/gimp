@@ -701,18 +701,9 @@ gimp_drawable_filter_sync_mode (GimpDrawableFilter *filter)
 static void
 gimp_drawable_filter_sync_affect (GimpDrawableFilter *filter)
 {
-  GimpComponentMask active_mask;
-
-  active_mask = gimp_drawable_get_active_mask (filter->drawable);
-
-  /*  don't let the filter affect the drawable projection's alpha,
-   *  because it can't affect the drawable buffer's alpha either when
-   *  finally merged (see bug #699279)
-   */
-  if (! gimp_drawable_has_alpha (filter->drawable))
-    active_mask &= ~GIMP_COMPONENT_MASK_ALPHA;
-
-  gimp_applicator_set_affect (filter->applicator, active_mask);
+  gimp_applicator_set_affect (
+    filter->applicator,
+    gimp_drawable_get_active_mask (filter->drawable));
 }
 
 static void
