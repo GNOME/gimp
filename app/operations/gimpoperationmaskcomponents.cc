@@ -397,6 +397,8 @@ gimp_operation_mask_components_get_format (const Babl *input_format)
             format = babl_format ("RGBA u16");
           else if (! strcmp (type_name, "u32"))
             format = babl_format ("RGBA u32");
+          else if (! strcmp (type_name, "half"))
+            format = babl_format ("RGBA half");
           else if (! strcmp (type_name, "float"))
             format = babl_format ("RGBA float");
         }
@@ -412,6 +414,8 @@ gimp_operation_mask_components_get_format (const Babl *input_format)
             format = babl_format ("R'G'B'A u16");
           else if (! strcmp (type_name, "u32"))
             format = babl_format ("R'G'B'A u32");
+          else if (! strcmp (type_name, "half"))
+            format = babl_format ("R'G'B'A half");
           else if (! strcmp (type_name, "float"))
             format = babl_format ("R'G'B'A float");
         }
