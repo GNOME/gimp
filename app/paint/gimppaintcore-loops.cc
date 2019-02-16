@@ -100,7 +100,9 @@ enum
   ALGORITHM_STIPPLE              = 1u << 29,
   ALGORITHM_COMP_MASK            = 1u << 28,
   ALGORITHM_TEMP_COMP_MASK       = 1u << 27,
-  ALGORITHM_MASK_BUFFER_ITERATOR = 1u << 26
+  ALGORITHM_COMP_BUFFER          = 1u << 26,
+  ALGORITHM_TEMP_COMP_BUFFER     = 1u << 25,
+  ALGORITHM_MASK_BUFFER_ITERATOR = 1u << 24
 };
 
 
@@ -809,6 +811,130 @@ static BasicDispatch<
   ALGORITHM_TEMP_COMP_MASK,
   decltype (dispatch_comp_mask)
 > dispatch_temp_comp_mask;
+
+
+/* CompBuffer, dispatch_comp_buffer(), has_comp_buffer(), comp_buffer_data():
+ *
+ * An algorithm helper class, providing access to the output buffer used for
+ * compositing.  When this class is part of the hierarchy, 'DoLayerBlend' uses
+ * this buffer as the output buffer, instead of the input parameters'
+ * 'dest_buffer'.  Algorithms that use the compositing buffer should specify
+ * 'dispatch_comp_buffer()' as a dependency, and access 'CompBuffer' members
+ * through their base type/subobject.
+ *
+ * Note that 'CompBuffer' only provides *access* to the compositing buffer, but
+ * doesn't provide its actual *storage*.  This is the responsibility of the
+ * algorithms that use 'CompBuffer'.  Algorithms that need temporary storage
+ * for the compositing buffer can use 'TempCompBuffer'.
+ *
+ * The 'has_comp_buffer()' constexpr function determines if a given algorithm
+ * hierarchy uses the compositing buffer.
+ *
+ * The 'comp_buffer_data()' function returns a pointer to the compositing
+ * buffer data for the current row if the hierarchy uses the compositing
+ * buffer, or NULL otherwise.
+ */
+
+template <class Base>
+struct CompBuffer : Base
+{
+  /* Component type of the compositing buffer. */
+  using comp_buffer_type = gfloat;
+
+  static constexpr guint filter = Base::filter | ALGORITHM_COMP_BUFFER;
+
+  using Base::Base;
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    /* Pointer to the compositing buffer data for the current row. */
+    comp_buffer_type *comp_buffer_data;
+  };
+};
+
+static BasicDispatch<CompBuffer, ALGORITHM_COMP_BUFFER> dispatch_comp_buffer;
+
+template <class Base>
+static constexpr gboolean
+has_comp_buffer (const CompBuffer<Base> *algorithm)
+{
+  return TRUE;
+}
+
+static constexpr gboolean
+has_comp_buffer (const AlgorithmBase *algorithm)
+{
+  return FALSE;
+}
+
+template <class Base,
+          class State>
+static gfloat *
+comp_buffer_data (const CompBuffer<Base> *algorithm,
+                  State                  *state)
+{
+  return state->comp_buffer_data;
+}
+
+template <class State>
+static gfloat *
+comp_buffer_data (const AlgorithmBase *algorithm,
+                  State               *state)
+{
+  return NULL;
+}
+
+
+/* TempCompBuffer, dispatch_temp_comp_buffer():
+ *
+ * An algorithm helper class, providing temporary storage for the compositing
+ * buffer.  Algorithms that need a temporary compositing buffer should specify
+ * 'dispatch_temp_comp_buffer()' as a dependency, which itself includes
+ * 'dispatch_comp_buffer()' as a dependency.
+ */
+
+template <class Base>
+struct TempCompBuffer : Base
+{
+  static constexpr guint filter = Base::filter | ALGORITHM_TEMP_COMP_BUFFER;
+
+  using Base::Base;
+
+  template <class Derived>
+  using State = typename Base::template State<Derived>;
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    state->comp_buffer_data = gegl_scratch_new (gfloat, 4 * rect->width);
+  }
+
+
+  template <class Derived>
+  void
+  finalize_step (const GimpPaintCoreLoopsParams *params,
+                 State<Derived>                 *state) const
+  {
+    gegl_scratch_free (state->comp_buffer_data);
+
+    Base::finalize_step (params, state);
+  }
+};
+
+static BasicDispatch<
+  TempCompBuffer,
+  ALGORITHM_TEMP_COMP_BUFFER,
+  decltype (dispatch_comp_buffer)
+> dispatch_temp_comp_buffer;
 
 
 /* MaskBufferIterator, mask_buffer_iterator_dispatch(),
@@ -1781,17 +1907,20 @@ struct DoLayerBlend : Base
         const GeglRectangle            *roi,
         const GeglRectangle            *area) const
   {
-    state->iterator_base = gegl_buffer_iterator_add (iter, params->dest_buffer,
+    state->iterator_base = gegl_buffer_iterator_add (iter, params->src_buffer,
                                                      area, 0, iterator_format,
-                                                     GEGL_ACCESS_WRITE,
+                                                     GEGL_ACCESS_READ,
                                                      GEGL_ABYSS_NONE);
 
-    gegl_buffer_iterator_add (iter, params->src_buffer, area, 0,
-                              iterator_format,
-                              GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+    if (! has_comp_buffer ((const Derived *) this))
+      {
+        gegl_buffer_iterator_add (iter, params->dest_buffer, area, 0,
+                                  iterator_format,
+                                  GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+      }
 
     /* initialize the base class *after* initializing the iterator, to make
-     * sure that dest_buffer is the primary buffer of the iterator, if no
+     * sure that src_buffer is the primary buffer of the iterator, if no
      * subclass added an iterator first.
      */
     Base::init (params, state, iter, roi, area);
@@ -1808,8 +1937,7 @@ struct DoLayerBlend : Base
   {
     Base::init_step (params, state, iter, roi, area, rect);
 
-    state->out_pixel  = (gfloat *) iter->items[state->iterator_base + 0].data;
-    state->in_pixel   = (gfloat *) iter->items[state->iterator_base + 1].data;
+    state->in_pixel = (gfloat *) iter->items[state->iterator_base + 0].data;
 
     state->paint_pixel = this->paint_data                        +
                          (rect->y - roi->y) * this->paint_stride +
@@ -1820,6 +1948,9 @@ struct DoLayerBlend : Base
         state->mask_pixel =
           (gfloat *) iter->items[mask_buffer_iterator (this, state)].data;
       }
+
+    if (! has_comp_buffer ((const Derived *) this))
+      state->out_pixel = (gfloat *) iter->items[state->iterator_base + 1].data;
 
     state->process_roi.x      = rect->x;
     state->process_roi.width  = rect->width;
@@ -1839,6 +1970,7 @@ struct DoLayerBlend : Base
     Base::process_row (params, state, iter, roi, area, rect, y);
 
     gfloat *mask_pixel;
+    gfloat *out_pixel;
 
     if (has_comp_mask (this))
       mask_pixel = comp_mask_data (this, state);
@@ -1847,22 +1979,34 @@ struct DoLayerBlend : Base
     else
       mask_pixel = NULL;
 
+    if (! has_comp_buffer ((const Derived *) this))
+      {
+        out_pixel = state->out_pixel;
+      }
+    else
+      {
+        out_pixel = comp_buffer_data (
+          (const Derived *) this,
+          (typename Derived::template State<Derived> *) state);
+      }
+
     state->process_roi.y = y;
 
     layer_mode.function ((GeglOperation*) &layer_mode,
                          state->in_pixel,
                          state->paint_pixel,
                          mask_pixel,
-                         state->out_pixel,
+                         out_pixel,
                          rect->width,
                          &state->process_roi,
                          0);
 
     state->in_pixel     += rect->width * 4;
-    state->out_pixel    += rect->width * 4;
+    state->paint_pixel  += this->paint_stride;
     if (! has_comp_mask (this) && has_mask_buffer_iterator (this))
       state->mask_pixel += rect->width;
-    state->paint_pixel  += this->paint_stride;
+    if (! has_comp_buffer ((const Derived *) this))
+      state->out_pixel  += rect->width * 4;
   }
 };
 
