@@ -17,16 +17,19 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core/core-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpbrush-load.h"
+#include "core/gimpbrush-private.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-new.h"
@@ -42,9 +45,12 @@
 
 /*  local function prototypes  */
 
-static GimpImage * file_gbr_brush_to_image (Gimp      *gimp,
-                                            GimpBrush *brush);
-static GimpBrush * file_gbr_image_to_brush (GimpImage *image);
+static GimpImage * file_gbr_brush_to_image (Gimp         *gimp,
+                                            GimpBrush    *brush);
+static GimpBrush * file_gbr_image_to_brush (GimpImage    *image,
+                                            GimpDrawable *drawable,
+                                            const gchar  *name,
+                                            gdouble       spacing);
 
 
 /*  public functions  */
@@ -113,18 +119,25 @@ file_gbr_save_invoker (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
+  GimpDrawable   *drawable;
   GimpBrush      *brush;
   const gchar    *uri;
+  const gchar    *name;
   GFile          *file;
+  gint            spacing;
   gboolean        success;
 
   gimp_set_busy (gimp);
 
-  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  uri   = g_value_get_string (gimp_value_array_index (args, 3));
-  file  = g_file_new_for_uri (uri);
+  image    = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  uri      = g_value_get_string (gimp_value_array_index (args, 3));
+  spacing  = g_value_get_int (gimp_value_array_index (args, 5));
+  name     = g_value_get_string (gimp_value_array_index (args, 6));
 
-  brush = file_gbr_image_to_brush (image);
+  file = g_file_new_for_uri (uri);
+
+  brush = file_gbr_image_to_brush (image, drawable, name, spacing);
 
   gimp_data_set_file (GIMP_DATA (brush), file, TRUE, TRUE);
 
@@ -234,7 +247,105 @@ file_gbr_brush_to_image (Gimp      *gimp,
 }
 
 static GimpBrush *
-file_gbr_image_to_brush (GimpImage *image)
+file_gbr_image_to_brush (GimpImage    *image,
+                         GimpDrawable *drawable,
+                         const gchar  *name,
+                         gdouble       spacing)
 {
-  return NULL;
+  GimpBrush   *brush;
+  GeglBuffer  *buffer;
+  GimpTempBuf *mask;
+  GimpTempBuf *pixmap = NULL;
+  gint         width;
+  gint         height;
+
+  buffer = gimp_drawable_get_buffer (drawable);
+  width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+  height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+  brush = g_object_new (GIMP_TYPE_BRUSH,
+                        "name",      name,
+                        "mime-type", "image/x-gimp-gbr",
+                        "spacing",   spacing,
+                        NULL);
+
+  mask = gimp_temp_buf_new (width, height, babl_format ("Y u8"));
+
+  if (gimp_drawable_is_gray (drawable))
+    {
+      guchar *m = gimp_temp_buf_get_data (mask);
+      gint    i;
+
+      if (gimp_drawable_has_alpha (drawable))
+        {
+          GeglBufferIterator *iter;
+          GimpRGB             white;
+
+          gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
+
+          iter = gegl_buffer_iterator_new (buffer, NULL, 0,
+                                           babl_format ("Y'A u8"),
+                                           GEGL_ACCESS_READ, GEGL_ABYSS_NONE,
+                                           1);
+
+          while (gegl_buffer_iterator_next (iter))
+            {
+              guint8 *data = (guint8 *) iter->items[0].data;
+              gint    j;
+
+              for (j = 0; j < iter->length; j++)
+                {
+                  GimpRGB gray;
+                  gint    x, y;
+                  gint    dest;
+
+                  gimp_rgba_set_uchar (&gray,
+                                       data[0], data[0], data[0],
+                                       data[1]);
+
+                  gimp_rgb_composite (&gray, &white,
+                                      GIMP_RGB_COMPOSITE_BEHIND);
+
+                  x = iter->items[0].roi.x + j % iter->items[0].roi.width;
+                  y = iter->items[0].roi.y + j / iter->items[0].roi.width;
+
+                  dest = y * width + x;
+
+                  gimp_rgba_get_uchar (&gray, &m[dest], NULL, NULL, NULL);
+
+                  data += 2;
+                }
+            }
+        }
+      else
+        {
+          gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
+                           babl_format ("Y' u8"), m,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+        }
+
+      /*  invert  */
+      for (i = 0; i < width * height; i++)
+        m[i] = 255 - m[i];
+    }
+  else
+    {
+      pixmap = gimp_temp_buf_new (width, height, babl_format ("R'G'B' u8"));
+
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
+                       babl_format ("R'G'B' u8"),
+                       gimp_temp_buf_get_data (pixmap),
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
+                       babl_format ("A u8"),
+                       gimp_temp_buf_get_data (mask),
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+    }
+
+
+  brush->priv->mask   = mask;
+  brush->priv->pixmap = pixmap;
+
+  return brush;
 }
