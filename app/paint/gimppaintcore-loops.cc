@@ -28,6 +28,8 @@ extern "C"
 
 #include "core/gimptempbuf.h"
 
+#include "operations/gimpoperationmaskcomponents.h"
+
 #include "operations/layer-modes/gimpoperationlayermode.h"
 
 #include "gimppaintcore-loops.h"
@@ -2019,6 +2021,136 @@ static MandatoryAlgorithmDispatch<
 dispatch_do_layer_blend;
 
 
+/* MaskComponents, dispatch_mask_components():
+ *
+ * An algorithm class, implementing the MASK_COMPONENTS algorithm.
+ */
+
+template <class Base>
+struct MaskComponents : Base
+{
+  static constexpr guint filter =
+    Base::filter |
+    GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS;
+
+  static constexpr gint max_n_iterators = Base::max_n_iterators + 1;
+
+  const Babl *format;
+  const Babl *comp_fish = NULL;
+
+  explicit
+  MaskComponents (const GimpPaintCoreLoopsParams *params) :
+    Base (params)
+  {
+    format = gimp_operation_mask_components_get_format (
+      gegl_buffer_get_format (params->dest_buffer));
+
+    if (format != this->iterator_format)
+      comp_fish = babl_fish (this->iterator_format, format);
+  }
+
+  template <class Derived>
+  struct State : Base::template State<Derived>
+  {
+    gint    dest_buffer_iterator;
+
+    guint8 *dest_pixel;
+    guint8 *comp_pixel;
+  };
+
+  template <class Derived>
+  void
+  init (const GimpPaintCoreLoopsParams *params,
+        State<Derived>                 *state,
+        GeglBufferIterator             *iter,
+        const GeglRectangle            *roi,
+        const GeglRectangle            *area) const
+  {
+    state->dest_buffer_iterator = gegl_buffer_iterator_add (
+      iter, params->dest_buffer, area, 0, format,
+      GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
+
+    /* initialize the base class *after* initializing the iterator, to make
+     * sure that dest_buffer is the primary buffer of the iterator, if no
+     * subclass added an iterator first.
+     */
+    Base::init (params, state, iter, roi, area);
+  }
+
+  template <class Derived>
+  void
+  init_step (const GimpPaintCoreLoopsParams *params,
+             State<Derived>                 *state,
+             GeglBufferIterator             *iter,
+             const GeglRectangle            *roi,
+             const GeglRectangle            *area,
+             const GeglRectangle            *rect) const
+  {
+    Base::init_step (params, state, iter, roi, area, rect);
+
+    state->dest_pixel =
+      (guint8 *) iter->items[state->dest_buffer_iterator].data;
+
+    if (comp_fish)
+      {
+        state->comp_pixel = (guint8 *) gegl_scratch_alloc (
+          rect->width * babl_format_get_bytes_per_pixel (format));
+      }
+  }
+
+  template <class Derived>
+  void
+  process_row (const GimpPaintCoreLoopsParams *params,
+               State<Derived>                 *state,
+               GeglBufferIterator             *iter,
+               const GeglRectangle            *roi,
+               const GeglRectangle            *area,
+               const GeglRectangle            *rect,
+               gint                            y) const
+  {
+    Base::process_row (params, state, iter, roi, area, rect, y);
+
+    gpointer comp_pixel;
+
+    if (comp_fish)
+      {
+        babl_process (comp_fish,
+                      state->comp_buffer_data, state->comp_pixel,
+                      rect->width);
+
+        comp_pixel = state->comp_pixel;
+      }
+    else
+      {
+        comp_pixel = state->comp_buffer_data;
+      }
+
+    gimp_operation_mask_components_process (format,
+                                            state->dest_pixel, comp_pixel,
+                                            state->dest_pixel,
+                                            rect->width, params->affect);
+
+    state->dest_pixel += rect->width * babl_format_get_bytes_per_pixel (format);
+  }
+
+  template <class Derived>
+  void
+  finalize_step (const GimpPaintCoreLoopsParams *params,
+                 State<Derived>                 *state) const
+  {
+    if (comp_fish)
+      gegl_scratch_free (state->comp_pixel);
+  }
+};
+
+static AlgorithmDispatch<
+  MaskComponents,
+  GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS,
+  decltype (dispatch_temp_comp_buffer)
+>
+dispatch_mask_components;
+
+
 /* gimp_paint_core_loops_process():
  *
  * Performs the set of algorithms requested in 'algorithms', specified as a
@@ -2119,7 +2251,8 @@ gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
     dispatch_paint_mask_to_paint_buf_alpha,
     dispatch_canvas_buffer_to_comp_mask,
     dispatch_paint_mask_to_comp_mask,
-    dispatch_do_layer_blend);
+    dispatch_do_layer_blend,
+    dispatch_mask_components);
 }
 
 
