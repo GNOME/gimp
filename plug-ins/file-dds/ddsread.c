@@ -45,7 +45,7 @@
 #include "ddsplugin.h"
 #include "dds.h"
 #include "dxt.h"
-#include "endian.h"
+#include "endian_rw.h"
 #include "misc.h"
 #include "imath.h"
 

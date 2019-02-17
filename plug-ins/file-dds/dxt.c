@@ -36,7 +36,7 @@
 
 #include "dds.h"
 #include "dxt.h"
-#include "endian.h"
+#include "endian_rw.h"
 #include "mipmap.h"
 #include "imath.h"
 #include "vec.h"

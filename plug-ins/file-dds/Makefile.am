@@ -35,7 +35,7 @@ file_dds_SOURCES = \
 	dxt.c			\
 	dxt.h			\
 	dxt_tables.h	\
-	endian.h		\
+	endian_rw.h		\
 	imath.h			\
 	mipmap.c		\
 	mipmap.h		\
