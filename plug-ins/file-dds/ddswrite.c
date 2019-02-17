@@ -39,7 +39,7 @@
 #include "dds.h"
 #include "dxt.h"
 #include "mipmap.h"
-#include "endian.h"
+#include "endian_rw.h"
 #include "imath.h"
 #include "color.h"
 
