@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-01 16:49+0000\n"
-"PO-Revision-Date: 2019-02-15 23:07+0900\n"
+"PO-Revision-Date: 2019-02-18 23:39+0900\n"
 "Last-Translator: ONO Yoshio <ohtsuka.yoshio@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -6949,20 +6949,14 @@ msgid "Blend Space"
 msgstr "ブレンド: "
 
 #: ../app/actions/layers-actions.c:60
-#, fuzzy
-#| msgctxt "select-criterion"
-#| msgid "Composite"
 msgctxt "layers-action"
 msgid "Composite Space"
-msgstr "コンポジット"
+msgstr "合成色空間"
 
 #: ../app/actions/layers-actions.c:64
-#, fuzzy
-#| msgctxt "select-criterion"
-#| msgid "Composite"
 msgctxt "layers-action"
 msgid "Composite Mode"
-msgstr "コンポジット"
+msgstr "合成モード"
 
 #: ../app/actions/layers-actions.c:68
 msgctxt "layers-action"
@@ -7432,22 +7426,22 @@ msgstr ""
 #: ../app/actions/layers-actions.c:363
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
-msgstr ""
+msgstr "レイヤーの合成色空間: 自動"
 
 #: ../app/actions/layers-actions.c:369
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
-msgstr ""
+msgstr "レイヤーの合成色空間: RGB (リニア)"
 
 #: ../app/actions/layers-actions.c:375
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
-msgstr ""
+msgstr "レイヤーの合成色空間: RGB (知覚的)"
 
 #: ../app/actions/layers-actions.c:384
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
-msgstr ""
+msgstr "レイヤーの合成モード: 自動"
 
 #: ../app/actions/layers-actions.c:389
 msgctxt "layers-action"
@@ -7455,19 +7449,14 @@ msgid "Union"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:390
-#, fuzzy
-#| msgctxt "select-criterion"
-#| msgid "Composite"
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Union"
-msgstr "コンポジット"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:395
-#, fuzzy
-#| msgid "Click to sharpen"
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
-msgstr "クリック: シャープにします"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:396
 msgctxt "layers-action"
@@ -7475,11 +7464,9 @@ msgid "Layer Composite Mode: Clip to Backdrop"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:401
-#, fuzzy
-#| msgid "Flip Text Layer"
 msgctxt "layers-action"
 msgid "Clip to Layer"
-msgstr "テキストレイヤーの反転"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:402
 msgctxt "layers-action"
@@ -7487,11 +7474,9 @@ msgid "Layer Composite Mode: Clip to Layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:407
-#, fuzzy
-#| msgid "Intersect"
 msgctxt "layers-action"
 msgid "Intersection"
-msgstr "交差"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:408
 msgctxt "layers-action"
@@ -7499,8 +7484,6 @@ msgid "Layer Composite Mode: Intersection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:416
-#, fuzzy
-#| msgid "None"
 msgctxt "layers-action"
 msgid "None"
 msgstr "なし"
@@ -7508,11 +7491,9 @@ msgstr "なし"
 #: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
 msgid "Layer Color Tag: Clear"
-msgstr ""
+msgstr "レイヤーのカラータグ: 消去"
 
 #: ../app/actions/layers-actions.c:422
-#, fuzzy
-#| msgid "Blue"
 msgctxt "layers-action"
 msgid "Blue"
 msgstr "青"
@@ -7520,11 +7501,9 @@ msgstr "青"
 #: ../app/actions/layers-actions.c:423
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Blue"
-msgstr ""
+msgstr "レイヤーのカラータグ: 青に設定"
 
 #: ../app/actions/layers-actions.c:428
-#, fuzzy
-#| msgid "Green"
 msgctxt "layers-action"
 msgid "Green"
 msgstr "緑"
@@ -7532,11 +7511,9 @@ msgstr "緑"
 #: ../app/actions/layers-actions.c:429
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Green"
-msgstr ""
+msgstr "レイヤーのカラータグ: 緑に設定"
 
 #: ../app/actions/layers-actions.c:434
-#, fuzzy
-#| msgid "Yellow"
 msgctxt "layers-action"
 msgid "Yellow"
 msgstr "イエロー"
@@ -7544,7 +7521,7 @@ msgstr "イエロー"
 #: ../app/actions/layers-actions.c:435
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Yellow"
-msgstr ""
+msgstr "レイヤーのカラータグ: イエローに設定"
 
 #: ../app/actions/layers-actions.c:440
 msgctxt "layers-action"
@@ -7554,21 +7531,19 @@ msgstr "オレンジ"
 #: ../app/actions/layers-actions.c:441
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Orange"
-msgstr ""
+msgstr "レイヤーのカラータグ: オレンジに設定"
 
 #: ../app/actions/layers-actions.c:446
 msgctxt "layers-action"
 msgid "Brown"
-msgstr ""
+msgstr "ブラウン"
 
 #: ../app/actions/layers-actions.c:447
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Brown"
-msgstr ""
+msgstr "レイヤーのカラータグ: ブラウンに設定"
 
 #: ../app/actions/layers-actions.c:452
-#, fuzzy
-#| msgid "Red"
 msgctxt "layers-action"
 msgid "Red"
 msgstr "赤"
@@ -7576,30 +7551,27 @@ msgstr "赤"
 #: ../app/actions/layers-actions.c:453
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Red"
-msgstr ""
+msgstr "レイヤーのカラータグ: 赤に設定"
 
 #: ../app/actions/layers-actions.c:458
 msgctxt "layers-action"
 msgid "Violet"
-msgstr ""
+msgstr "紫"
 
 #: ../app/actions/layers-actions.c:459
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Violet"
-msgstr ""
+msgstr "レイヤーのカラータグ: 紫に設定"
 
 #: ../app/actions/layers-actions.c:464
-#, fuzzy
-#| msgctxt "image-convert-action"
-#| msgid "_Grayscale"
 msgctxt "layers-action"
 msgid "Gray"
-msgstr "グレースケール(_G)"
+msgstr "グレー"
 
 #: ../app/actions/layers-actions.c:465
 msgctxt "layers-action"
 msgid "Layer Color Tag: Set to Gray"
-msgstr ""
+msgstr "レイヤーのカラータグ: グレーに設定"
 
 #: ../app/actions/layers-actions.c:473
 msgctxt "layers-action"
@@ -14028,7 +14000,7 @@ msgstr "フローティング選択範囲"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
-msgstr ""
+msgstr "不明ピクセルのアルファ値を計算しています"
 
 #: ../app/core/gimpdrawable-fill.c:204 ../app/vectors/gimpvectors.c:668
 msgid "Not enough points to fill"
@@ -23463,10 +23435,8 @@ msgid "Flip"
 msgstr "鏡像反転"
 
 #: ../app/tools/gimpforegroundselectoptions.c:84
-#, fuzzy
-#| msgid "Paint Mode"
 msgid "Draw Mode"
-msgstr "描画モードを指定します"
+msgstr "描画モード"
 
 #: ../app/tools/gimpforegroundselectoptions.c:85
 msgid ""
@@ -23477,10 +23447,8 @@ msgstr ""
 "塗りします"
 
 #: ../app/tools/gimpforegroundselectoptions.c:93
-#, fuzzy
-#| msgid "Stroke Path"
 msgid "Stroke width"
-msgstr "パスの境界線を描画"
+msgstr "ストローク幅"
 
 #: ../app/tools/gimpforegroundselectoptions.c:94
 msgid "Size of the brush used for refinements"
@@ -23488,10 +23456,8 @@ msgstr "抽出部分の修正に使用するブラシサイズを指定します
 
 #: ../app/tools/gimpforegroundselectoptions.c:100
 #: ../app/tools/gimpforegroundselectoptions.c:305
-#, fuzzy
-#| msgid "Preview color:"
 msgid "Preview color"
-msgstr "プレビュー色:"
+msgstr "プレビュー色"
 
 #: ../app/tools/gimpforegroundselectoptions.c:101
 msgid "Color of selection preview mask"
@@ -23500,45 +23466,35 @@ msgstr "選択範囲候補の表示色を指定します"
 #: ../app/tools/gimpforegroundselectoptions.c:108
 #: ../app/tools/gimpforegroundselectoptions.c:316
 msgid "Engine"
-msgstr ""
+msgstr "エンジン"
 
 #: ../app/tools/gimpforegroundselectoptions.c:109
 msgid "Matting engine to use"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:117
-#, fuzzy
-#| msgid "Number of _processors to use:"
 msgid "Number of downsampled levels to use"
-msgstr "使用するプロセッサーの数(_P):"
+msgstr "使用するダウンサンプルレベル数です"
 
 #: ../app/tools/gimpforegroundselectoptions.c:123
-#, fuzzy
-#| msgid "Active Filters"
 msgid "Active levels"
-msgstr "アクティブなフィルター"
+msgstr "有効レベル"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
 msgid "Number of levels to perform solving"
-msgstr ""
+msgstr "解決するレベル数です"
 
 #: ../app/tools/gimpforegroundselectoptions.c:130
-#, fuzzy
-#| msgid "Interpolation:"
 msgid "Iterations"
-msgstr "補間アルゴリズム:"
+msgstr "反復数"
 
 #: ../app/tools/gimpforegroundselectoptions.c:131
-#, fuzzy
-#| msgid "Number of _processors to use:"
 msgid "Number of iterations to perform"
-msgstr "使用するプロセッサーの数(_P):"
+msgstr "実行を反復する回数です"
 
 #: ../app/tools/gimpforegroundselectoptions.c:300
-#, fuzzy
-#| msgid "Reset size to brush's native size"
 msgid "Reset stroke width native size"
-msgstr "ブラシを本来のサイズに戻します"
+msgstr "ストロークを本来のサイズに戻します"
 
 #: ../app/tools/gimpforegroundselecttool.c:190
 msgid "Foreground Select"
@@ -23555,23 +23511,16 @@ msgid "F_oreground Select"
 msgstr "前景抽出選択(_O)"
 
 #: ../app/tools/gimpforegroundselecttool.c:308
-#, fuzzy
-#| msgid "Foreground Select"
 msgid "Dialog for foreground select"
-msgstr "前景抽出選択"
+msgstr "前景抽出選択のダイアログ"
 
 #: ../app/tools/gimpforegroundselecttool.c:326
-#, fuzzy
-#| msgid "_Preview"
 msgid "_Preview mask"
-msgstr "プレビュー(_P)"
+msgstr "マスクのプレビュー(_P)"
 
 #: ../app/tools/gimpforegroundselecttool.c:337
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Select foreground"
 msgid "Select foreground pixels"
-msgstr "前景抽出選択"
+msgstr "前景ピクセルの選択"
 
 #: ../app/tools/gimpforegroundselecttool.c:616
 #: ../app/tools/gimpforegroundselecttool.c:621
@@ -23579,46 +23528,32 @@ msgid "Roughly outline the object to extract"
 msgstr "抽出したい部分の輪郭をおおまかに描きます"
 
 #: ../app/tools/gimpforegroundselecttool.c:617
-#, fuzzy
-#| msgid "Click or press Enter to crop"
 msgid "press Enter to refine."
-msgstr "クリックまたは Enter/Return: 切り抜きます"
+msgstr "Enter を押すとリファインします。"
 
 #: ../app/tools/gimpforegroundselecttool.c:644
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Select foreground"
 msgid "Selecting foreground"
-msgstr "前景抽出選択"
+msgstr "前景を選択しています"
 
 #: ../app/tools/gimpforegroundselecttool.c:646
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Select foreground"
 msgid "Selecting background"
-msgstr "前景抽出選択"
+msgstr "背景を選択しています"
 
 #: ../app/tools/gimpforegroundselecttool.c:648
-#, fuzzy
-#| msgid "Selection"
 msgid "Selecting unknown"
-msgstr "選択範囲"
+msgstr "不明部分を選択しています"
 
 #: ../app/tools/gimpforegroundselecttool.c:651
-#, fuzzy
-#| msgid "Click or press Enter to crop"
 msgid "press Enter to preview."
-msgstr "クリックまたは Enter/Return: 切り抜きます"
+msgstr "Enter を押すとプレビューします。"
 
 #: ../app/tools/gimpforegroundselecttool.c:653
 msgid "press Escape to exit preview or Enter to apply."
-msgstr ""
+msgstr "Escape を押してプレビューを終了するか、Enter を押して適用してください。"
 
 #: ../app/tools/gimpforegroundselecttool.c:1243
-#, fuzzy
-#| msgid "Paint Dynamics"
 msgid "Paint mask"
-msgstr "描画の動的特性"
+msgstr "マスク描画"
 
 #: ../app/tools/gimpfreeselecttool.c:129
 msgid ""
@@ -24676,16 +24611,12 @@ msgid "Selection criterion"
 msgstr "選択範囲判定時の基準とする要素を指定します"
 
 #: ../app/tools/gimpregionselectoptions.c:127
-#, fuzzy
-#| msgid "%s mask"
 msgid "Draw mask"
-msgstr "%s マスク"
+msgstr "マスク描画"
 
 #: ../app/tools/gimpregionselectoptions.c:128
-#, fuzzy
-#| msgid "Click-Drag to move the selection mask"
 msgid "Draw the selected region's mask"
-msgstr "クリック-ドラッグ: 選択マスクを移動します"
+msgstr "選択領域のマスクを描画します"
 
 #: ../app/tools/gimpregionselecttool.c:154
 msgid "Move the mouse to change threshold"
@@ -25577,17 +25508,11 @@ msgid "Fill by line art detection"
 msgstr "選択範囲"
 
 #: ../app/tools/tools-enums.c:57
-#, fuzzy
-#| msgctxt "item-set"
-#| msgid "All visible layers"
 msgctxt "line-art-source"
 msgid "All visible layers"
 msgstr "すべての可視レイヤー"
 
 #: ../app/tools/tools-enums.c:58
-#, fuzzy
-#| msgctxt "align-reference-type"
-#| msgid "Active layer"
 msgctxt "line-art-source"
 msgid "Active layer"
 msgstr "アクティブなレイヤー"
@@ -25637,26 +25562,19 @@ msgid "Path"
 msgstr "パス"
 
 #: ../app/tools/tools-enums.c:215
-#, fuzzy
-#| msgid "Mark foreground"
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
-msgstr "前景部分をマーク"
+msgstr "前景を描画"
 
 #: ../app/tools/tools-enums.c:216
-#, fuzzy
-#| msgid "Mark background"
 msgctxt "matting-draw-mode"
 msgid "Draw background"
-msgstr "背景部分をマーク"
+msgstr "背景を描画"
 
 #: ../app/tools/tools-enums.c:217
-#, fuzzy
-#| msgctxt "orientation-type"
-#| msgid "Unknown"
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
-msgstr "不明"
+msgstr "不明部分を描画"
 
 #: ../app/tools/tools-enums.c:250
 #, fuzzy
