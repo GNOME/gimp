@@ -158,6 +158,8 @@ gimp_brush_pipe_load (GimpContext   *context,
         }
 
       gimp_pixpipe_params_free (&params);
+
+      pipe->params = g_strdup (paramstring);
     }
   else
     {
@@ -193,12 +195,7 @@ gimp_brush_pipe_load (GimpContext   *context,
                                                               file, input,
                                                               error);
 
-      if (pipe->brushes[pipe->n_brushes])
-        {
-          gimp_object_set_name (GIMP_OBJECT (pipe->brushes[pipe->n_brushes]),
-                                NULL);
-        }
-      else
+      if (! pipe->brushes[pipe->n_brushes])
         {
           g_object_unref (pipe);
           return NULL;

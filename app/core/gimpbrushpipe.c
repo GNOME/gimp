@@ -99,16 +99,11 @@ gimp_brush_pipe_finalize (GObject *object)
 {
   GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (object);
 
-  if (pipe->rank)
-    {
-      g_free (pipe->rank);
-      pipe->rank = NULL;
-    }
-  if (pipe->stride)
-    {
-      g_free (pipe->stride);
-      pipe->stride = NULL;
-    }
+  g_clear_pointer (&pipe->rank,   g_free);
+  g_clear_pointer (&pipe->stride, g_free);
+  g_clear_pointer (&pipe->select, g_free);
+  g_clear_pointer (&pipe->index,  g_free);
+  g_clear_pointer (&pipe->params, g_free);
 
   if (pipe->brushes)
     {
@@ -120,17 +115,6 @@ gimp_brush_pipe_finalize (GObject *object)
 
       g_free (pipe->brushes);
       pipe->brushes = NULL;
-    }
-
-  if (pipe->select)
-    {
-      g_free (pipe->select);
-      pipe->select = NULL;
-    }
-  if (pipe->index)
-    {
-      g_free (pipe->index);
-      pipe->index = NULL;
     }
 
   GIMP_BRUSH (pipe)->priv->mask   = NULL;
