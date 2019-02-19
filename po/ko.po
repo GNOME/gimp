@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 11:20+0000\n"
-"PO-Revision-Date: 2019-02-04 05:52+0900\n"
+"PO-Revision-Date: 2019-02-19 22:58+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -19800,8 +19800,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"‘%s’ 프러시저는 반환 값 ‘%s’(#%d)에 잘못된 값유형을 반환하였습니다. %s이"
-"어야 하는데 , %s입니다."
+"‘%s’ 프러시저는 반환 값 ‘%s’(#%d)에 잘못된 값유형을 반환하였습니다. %s이어야 "
+"하는데 , %s입니다."
 
 #: ../app/pdb/gimpprocedure.c:767
 #, c-format
@@ -22605,7 +22605,7 @@ msgstr "자동으로 레이어에 가장 가까운 사각형 모양으로 줄이
 
 #: ../app/tools/gimprectangleoptions.c:92
 msgid "Shrink merged"
-msgstr "줄여 합치기"
+msgstr "합쳐서 줄이기"
 
 #: ../app/tools/gimprectangleoptions.c:93
 msgid "Use all visible layers when shrinking the selection"
@@ -24491,8 +24491,8 @@ msgstr "지정한 경로를 찾지 못했습니다."
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
-".exe 파일이 잘못되었습니다 (Microsoft Win32 형식이 아닌 .exe 이거나 .exe 이"
-"미지 안에 오류)."
+".exe 파일이 잘못되었습니다 (Microsoft Win32 형식이 아닌 .exe 이거나 .exe 이미"
+"지 안에 오류)."
 
 #: ../app/widgets/gimpcriticaldialog.c:242
 msgid "The operating system denied access to the specified file."
