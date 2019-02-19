@@ -77,9 +77,7 @@ file_pat_load_invoker (GimpProcedure         *procedure,
 
   if (input)
     {
-      GList *list;
-
-      list = gimp_pattern_load (context, file, input, error);
+      GList *list = gimp_pattern_load (context, file, input, error);
 
       if (list)
         {
