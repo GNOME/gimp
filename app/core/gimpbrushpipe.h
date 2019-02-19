@@ -61,6 +61,8 @@ struct _GimpBrushPipe
                                  * ranks in some odd special case */
   GimpBrush       **brushes;
   GimpBrush        *current;    /* Currently selected brush */
+
+  gchar            *params;     /* For pipe <-> image conversion */
 };
 
 struct _GimpBrushPipeClass
