@@ -1865,3 +1865,10 @@ gimp_color_profile_chooser_dialog_connect_path (GtkWidget   *dialog,
                     G_CALLBACK (connect_path_response),
                     NULL);
 }
+
+void
+gimp_widget_flush_expose (void)
+{
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, FALSE);
+}
