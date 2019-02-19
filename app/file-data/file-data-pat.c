@@ -206,7 +206,7 @@ file_pat_pattern_to_image (Gimp        *gimp,
   height = gimp_temp_buf_get_height (mask);
 
   image = gimp_image_new (gimp, width, height, base_type,
-                          GIMP_PRECISION_U8_PERCEPTUAL);
+                          GIMP_PRECISION_U8_NON_LINEAR);
 
   parasite = gimp_parasite_new ("gimp-pattern-name",
                                 GIMP_PARASITE_PERSISTENT,
@@ -241,7 +241,7 @@ file_pat_image_to_pattern (GimpImage    *image,
 
   format = gimp_babl_format (gimp_drawable_is_gray (drawable) ?
                              GIMP_GRAY : GIMP_RGB,
-                             GIMP_PRECISION_U8_PERCEPTUAL,
+                             GIMP_PRECISION_U8_NON_LINEAR,
                              gimp_drawable_has_alpha (drawable),
                              NULL);
 
