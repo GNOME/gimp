@@ -33,6 +33,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-new.h"
+#include "core/gimpimage-resize.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimptempbuf.h"
 
@@ -154,55 +155,62 @@ file_gbr_save_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
-
-/*  private functions  */
-
-static GimpImage *
-file_gbr_brush_to_image (Gimp      *gimp,
+GimpLayer *
+file_gbr_brush_to_layer (GimpImage *image,
                          GimpBrush *brush)
 {
-  GimpImage         *image;
-  GimpLayer         *layer;
-  const Babl        *format;
-  const gchar       *name;
-  GimpImageBaseType  base_type;
-  gboolean           alpha;
-  gint               width;
-  gint               height;
-  GimpTempBuf       *mask   = gimp_brush_get_mask   (brush);
-  GimpTempBuf       *pixmap = gimp_brush_get_pixmap (brush);
-  GeglBuffer        *buffer;
-  GimpParasite      *parasite;
+  GimpLayer    *layer;
+  const Babl   *format;
+  gboolean      alpha;
+  gint          width;
+  gint          height;
+  gint          image_width;
+  gint          image_height;
+  GimpTempBuf  *mask;
+  GimpTempBuf  *pixmap;
+  GeglBuffer   *buffer;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+
+  mask   = gimp_brush_get_mask   (brush);
+  pixmap = gimp_brush_get_pixmap (brush);
 
   if (pixmap)
-    {
-      base_type = GIMP_RGB;
-      alpha     = TRUE;
-    }
+    alpha = TRUE;
   else
-    {
-      base_type = GIMP_GRAY;
-      alpha     = FALSE;
-    }
+    alpha = FALSE;
 
-  name   = gimp_object_get_name (brush);
   width  = gimp_temp_buf_get_width  (mask);
   height = gimp_temp_buf_get_height (mask);
 
-  image = gimp_image_new (gimp, width, height, base_type,
-                          GIMP_PRECISION_U8_GAMMA);
+  image_width  = gimp_image_get_width  (image);
+  image_height = gimp_image_get_height (image);
 
-  parasite = gimp_parasite_new ("gimp-brush-name",
-                                GIMP_PARASITE_PERSISTENT,
-                                strlen (name) + 1, name);
-  gimp_image_parasite_attach (image, parasite);
-  gimp_parasite_free (parasite);
+  if (width > image_width || height > image_height)
+    {
+      gint new_width  = MAX (image_width,  width);
+      gint new_height = MAX (image_height, height);
+
+      gimp_image_resize (image, gimp_get_user_context (image->gimp),
+                         new_width, new_height,
+                         (new_width  - image_width) / 2,
+                         (new_height - image_height) / 2,
+                         NULL);
+
+      image_width  = new_width;
+      image_height = new_height;
+    }
 
   format = gimp_image_get_layer_format (image, alpha);
 
-  layer = gimp_layer_new (image, width, height, format, name,
+  layer = gimp_layer_new (image, width, height, format,
+                          gimp_object_get_name (brush),
                           1.0, GIMP_LAYER_MODE_NORMAL);
-  gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+
+  gimp_item_set_offset (GIMP_ITEM (layer),
+                        (image_width  - width)  / 2,
+                        (image_height - height) / 2);
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
@@ -242,6 +250,47 @@ file_gbr_brush_to_image (Gimp      *gimp,
                        babl_format ("Y' u8"),
                        mask_data, GEGL_AUTO_ROWSTRIDE);
     }
+
+  return layer;
+}
+
+
+/*  private functions  */
+
+static GimpImage *
+file_gbr_brush_to_image (Gimp      *gimp,
+                         GimpBrush *brush)
+{
+  GimpImage         *image;
+  GimpLayer         *layer;
+  const gchar       *name;
+  GimpImageBaseType  base_type;
+  gint               width;
+  gint               height;
+  GimpTempBuf       *mask   = gimp_brush_get_mask   (brush);
+  GimpTempBuf       *pixmap = gimp_brush_get_pixmap (brush);
+  GimpParasite      *parasite;
+
+  if (pixmap)
+    base_type = GIMP_RGB;
+  else
+    base_type = GIMP_GRAY;
+
+  name   = gimp_object_get_name (brush);
+  width  = gimp_temp_buf_get_width  (mask);
+  height = gimp_temp_buf_get_height (mask);
+
+  image = gimp_image_new (gimp, width, height, base_type,
+                          GIMP_PRECISION_U8_GAMMA);
+
+  parasite = gimp_parasite_new ("gimp-brush-name",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (name) + 1, name);
+  gimp_image_parasite_attach (image, parasite);
+  gimp_parasite_free (parasite);
+
+  layer = file_gbr_brush_to_layer (image, brush);
+  gimp_image_add_layer (image, layer, NULL, 0, FALSE);
 
   return image;
 }
