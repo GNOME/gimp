@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-23 19:36+0000\n"
-"PO-Revision-Date: 2019-02-07 13:32+0900\n"
+"PO-Revision-Date: 2019-02-19 22:59+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -22545,7 +22545,7 @@ msgstr "자동으로 레이어에 가장 가까운 사각형 모양으로 줄이
 
 #: ../app/tools/gimprectangleoptions.c:92
 msgid "Shrink merged"
-msgstr "줄여 합치기"
+msgstr "합쳐서 줄이기"
 
 #: ../app/tools/gimprectangleoptions.c:93
 msgid "Use all visible layers when shrinking the selection"
