@@ -285,11 +285,13 @@ themes_apply_theme (Gimp          *gimp,
              "\n"
              "* { -gtk-icon-style: %s; }\n"
              "\n"
+             "%s"
              "/* end of theme.css */\n",
              gimp_file_get_utf8_name (css_user),
              esc_css_theme,
              esc_css_user,
-             config->prefer_symbolic_icons ? "symbolic" : "regular"))
+             config->prefer_symbolic_icons ? "symbolic" : "regular",
+             config->prefer_dark_theme ? "/* prefer-dark-theme */\n\n" : ""))
         {
           GCancellable *cancellable = g_cancellable_new ();
 

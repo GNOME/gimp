@@ -349,17 +349,29 @@ gimp_ui_theme_changed (GFileMonitor      *monitor,
                        GFileMonitorEvent  event_type,
                        GtkCssProvider    *css_provider)
 {
-  gchar    *dark    = gimp_gimprc_query ("prefer-dark-theme");
-  gboolean  setting = dark && ! strcmp (dark, "yes");
-  GError   *error   = NULL;
-
-  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
-                "gtk-application-prefer-dark-theme", setting,
-                NULL);
-
-  g_free (dark);
+  GError *error = NULL;
+  gchar  *contents;
 
   file = gimp_directory_file ("theme.css", NULL);
+
+  if (g_file_load_contents (file, NULL, &contents, NULL, NULL, &error))
+    {
+      gboolean prefer_dark_theme;
+
+      prefer_dark_theme = strstr (contents, "/* prefer-dark-theme */") != NULL;
+
+      g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
+                    "gtk-application-prefer-dark-theme", prefer_dark_theme,
+                    NULL);
+
+      g_free (contents);
+    }
+  else
+    {
+      g_printerr ("%s: error loading %s: %s\n", G_STRFUNC,
+                  gimp_file_get_utf8_name (file), error->message);
+      g_clear_error (&error);
+    }
 
   if (! gtk_css_provider_load_from_file (css_provider, file, &error))
     {
