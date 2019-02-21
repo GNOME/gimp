@@ -83,7 +83,7 @@ gimp_operation_buffer_source_validate_class_init (GimpOperationBufferSourceValid
   operation_class->process          = gimp_operation_buffer_source_validate_process;
 
   operation_class->threaded         = FALSE;
-  operation_class->no_cache         = TRUE;
+  operation_class->cache_policy     = GEGL_CACHE_POLICY_NEVER;
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:buffer-source-validate",

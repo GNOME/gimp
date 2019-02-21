@@ -108,7 +108,6 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 
   operation_class->get_required_for_output = gimp_operation_cage_transform_get_required_for_output;
   operation_class->get_cached_region       = gimp_operation_cage_transform_get_cached_region;
-  operation_class->no_cache                = FALSE;
   operation_class->get_bounding_box        = gimp_operation_cage_transform_get_bounding_box;
   /* XXX Temporarily disable multi-threading on this operation because
    * it is much faster when single-threaded. See bug 787663.

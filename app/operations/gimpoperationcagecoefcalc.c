@@ -71,7 +71,7 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
 
   operation_class->prepare            = gimp_operation_cage_coef_calc_prepare;
   operation_class->get_bounding_box   = gimp_operation_cage_coef_calc_get_bounding_box;
-  operation_class->no_cache           = FALSE;
+  operation_class->cache_policy       = GEGL_CACHE_POLICY_ALWAYS;
   operation_class->get_cached_region  = NULL;
 
   source_class->process               = gimp_operation_cage_coef_calc_process;
