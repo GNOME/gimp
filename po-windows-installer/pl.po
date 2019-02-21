@@ -1,15 +1,15 @@
 # Polish translation for gimp-windows-installer.
-# Copyright © 2012, 2017-2018 the gimp authors.
+# Copyright © 2012, 2017-2019 the gimp authors.
 # This file is distributed under the same license as the gimp package.
-# Piotr Drąg <piotrdrag@gmail.com>, 2012, 2017-2018.
-# Aviary.pl <community-poland@mozilla.org>, 2012, 2017-2018.
+# Piotr Drąg <piotrdrag@gmail.com>, 2012, 2017-2019.
+# Aviary.pl <community-poland@mozilla.org>, 2012, 2017-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-08-05 19:09+0200\n"
-"PO-Revision-Date: 2018-08-05 19:10+0200\n"
+"POT-Creation-Date: 2019-02-21 17:28+0100\n"
+"PO-Revision-Date: 2019-02-21 17:29+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -138,7 +138,7 @@ msgstr "Biblioteki wykonawcze"
 msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
 msgstr ""
 "Biblioteki wykonawcze używane przez program GIMP, w tym środowisko "
-"wykonawcze GTK+"
+"wykonawcze GTK"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:24
 msgid "Debug symbols"
@@ -150,7 +150,7 @@ msgstr "Informacje pomagające debugować program GIMP"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:26
 msgid "MS-Windows engine for GTK+"
-msgstr "Mechanizm Windows dla biblioteki GTK+"
+msgstr "Mechanizm Windows dla biblioteki GTK"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:27
 msgid "Native Windows look for GIMP"
