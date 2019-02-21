@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-13 22:19+0000\n"
-"PO-Revision-Date: 2019-02-21 20:24+0100\n"
+"POT-Creation-Date: 2019-02-21 19:29+0000\n"
+"PO-Revision-Date: 2019-02-21 20:35+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -438,8 +438,8 @@ msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
 msgstr ""
-"Jelentős alapvető optimalizációk a festés és megjelenítés terén, beleértve "
-"a festési kód párhuzamosítását"
+"Jelentős alapvető optimalizációk a festés és megjelenítés terén, beleértve a "
+"festési kód párhuzamosítását"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
@@ -977,7 +977,7 @@ msgid "Plug-ins"
 msgstr "Bővítmények"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:390
+#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:387
 #: ../app/dialogs/preferences-dialog.c:1740
 msgid "Quick Mask"
 msgstr "Gyorsmaszk"
@@ -3005,7 +3005,7 @@ msgstr "240 másodperc"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:328
+#: ../app/tools/gimpfiltertool.c:327
 #: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:1094
 #: ../app/tools/gimptransformtool.c:335 ../app/widgets/gimpactionview.c:602
@@ -7719,7 +7719,7 @@ msgstr "Összes szűrő visszaállítása"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:327 ../app/tools/gimptransformgridtool.c:1093
+#: ../app/tools/gimpfiltertool.c:326 ../app/tools/gimptransformgridtool.c:1093
 #: ../app/widgets/gimpcolordialog.c:124
 #: ../app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
@@ -10256,7 +10256,7 @@ msgstr "Ezen ablak áthelyezése a(z) „%s” képernyőre"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:188
-#: ../app/tools/gimpfiltertool.c:329 ../app/widgets/gimpcolordialog.c:126
+#: ../app/tools/gimpfiltertool.c:328 ../app/widgets/gimpcolordialog.c:126
 #: ../app/widgets/gimpcontrollereditor.c:662
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:176
 msgid "_OK"
@@ -10562,7 +10562,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Hiba „%%s” feldolgozásakor: a sor hosszabb mint %s karakter."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:297
+#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:299
 #: ../app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10588,7 +10588,7 @@ msgstr ""
 msgid "Layer"
 msgstr "Réteg"
 
-#: ../app/config/gimpdialogconfig.c:406 ../app/core/gimpchannel.c:276
+#: ../app/config/gimpdialogconfig.c:406 ../app/core/gimpchannel.c:274
 #: ../app/operations/gimpcurvesconfig.c:119
 #: ../app/operations/gimplevelsconfig.c:124
 #: ../app/operations/gimpoperationthreshold.c:89
@@ -12547,8 +12547,8 @@ msgstr "Globális tároló"
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
-"A kiegészítő AppData fájljának „addon” típusúnak kell lennie, de helyette „"
-"%s” található."
+"A kiegészítő AppData fájljának „addon” típusúnak kell lennie, de helyette "
+"„%s” található."
 
 #: ../app/core/gimpextension.c:345
 #, c-format
@@ -12561,7 +12561,8 @@ msgstr ""
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr ""
-"A kiegészítő AppData azonosítója („%s”) és könyvtára („%s”) meg kell egyezzen."
+"A kiegészítő AppData azonosítója („%s”) és könyvtára („%s”) meg kell "
+"egyezzen."
 
 #: ../app/core/gimpextension.c:374
 #, c-format
@@ -12581,8 +12582,8 @@ msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
 "mandatory."
 msgstr ""
-"<requires><id>org.gimp.GIMP</id></requires> kötelező a "
-"verzió-összehasonlításhoz."
+"<requires><id>org.gimp.GIMP</id></requires> kötelező a verzió-"
+"összehasonlításhoz."
 
 #: ../app/core/gimpextension.c:704
 #, c-format
@@ -12693,7 +12694,7 @@ msgstr "Nem sikerült a gyermekfolyamat („%s”) végrehajtása (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:hu"
 
-#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:309
+#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:311
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Hiba a(z) „%s” bezárásakor: %s"
@@ -12983,148 +12984,148 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Kijelölés indexelt szín szerint"
 
-#: ../app/core/gimpchannel.c:277
+#: ../app/core/gimpchannel.c:275
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Csatorna átnevezése"
 
-#: ../app/core/gimpchannel.c:278
+#: ../app/core/gimpchannel.c:276
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Csatorna áthelyezése"
 
-#: ../app/core/gimpchannel.c:279
+#: ../app/core/gimpchannel.c:277
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Csatorna átméretezése"
 
-#: ../app/core/gimpchannel.c:280
+#: ../app/core/gimpchannel.c:278
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Csatorna átméretezése"
 
-#: ../app/core/gimpchannel.c:281
+#: ../app/core/gimpchannel.c:279
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Csatorna tükrözése"
 
-#: ../app/core/gimpchannel.c:282
+#: ../app/core/gimpchannel.c:280
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Csatorna forgatása"
 
-#: ../app/core/gimpchannel.c:283 ../app/core/gimpdrawable-transform.c:1093
+#: ../app/core/gimpchannel.c:281 ../app/core/gimpdrawable-transform.c:1093
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Csatorna átalakítása"
 
-#: ../app/core/gimpchannel.c:284 ../app/core/gimpchannel.c:316
+#: ../app/core/gimpchannel.c:282 ../app/core/gimpchannel.c:313
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Csatorna kitöltése"
 
-#: ../app/core/gimpchannel.c:285
+#: ../app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Csatorna körberajzolása"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Csatorna kijelöléssé alakítása"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Csatorna átrendezése"
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:286
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Csatorna feljebb helyezése"
 
-#: ../app/core/gimpchannel.c:289
+#: ../app/core/gimpchannel.c:287
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Csatorna legfelülre helyezése"
 
-#: ../app/core/gimpchannel.c:290
+#: ../app/core/gimpchannel.c:288
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Csatorna lejjebb helyezése"
 
-#: ../app/core/gimpchannel.c:291
+#: ../app/core/gimpchannel.c:289
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Csatorna legalulra helyezése"
 
-#: ../app/core/gimpchannel.c:292
+#: ../app/core/gimpchannel.c:290
 msgid "Channel cannot be raised higher."
 msgstr "A csatorna tovább nem emelhető."
 
-#: ../app/core/gimpchannel.c:293
+#: ../app/core/gimpchannel.c:291
 msgid "Channel cannot be lowered more."
 msgstr "A csatorna tovább nem süllyeszthető."
 
-#: ../app/core/gimpchannel.c:313
+#: ../app/core/gimpchannel.c:310
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Csatorna lágy szélűvé tétele"
 
-#: ../app/core/gimpchannel.c:314
+#: ../app/core/gimpchannel.c:311
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Csatorna élesítése"
 
-#: ../app/core/gimpchannel.c:315
+#: ../app/core/gimpchannel.c:312
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Csatorna ürítése"
 
-#: ../app/core/gimpchannel.c:317
+#: ../app/core/gimpchannel.c:314
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Csatorna megfordítása"
 
-#: ../app/core/gimpchannel.c:318
+#: ../app/core/gimpchannel.c:315
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Csatorna keretezése"
 
-#: ../app/core/gimpchannel.c:319
+#: ../app/core/gimpchannel.c:316
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Csatorna növelése"
 
-#: ../app/core/gimpchannel.c:320
+#: ../app/core/gimpchannel.c:317
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Csatorna szűkítése"
 
-#: ../app/core/gimpchannel.c:321
+#: ../app/core/gimpchannel.c:318
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Csatorna elárasztása"
 
-#: ../app/core/gimpchannel.c:851
+#: ../app/core/gimpchannel.c:848
 msgid "Cannot fill empty channel."
 msgstr "Üres csatorna nem tölthető ki."
 
-#: ../app/core/gimpchannel.c:887
+#: ../app/core/gimpchannel.c:884
 msgid "Cannot stroke empty channel."
 msgstr "Üres csatorna körvonala nem rajzolható meg."
 
-#: ../app/core/gimpchannel.c:1726
+#: ../app/core/gimpchannel.c:1716
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Csatornaszín beállítása"
 
-#: ../app/core/gimpchannel.c:1777
+#: ../app/core/gimpchannel.c:1767
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Csatorna átlátszatlanság beállítása"
 
-#: ../app/core/gimpchannel.c:1866 ../app/core/gimpselection.c:170
+#: ../app/core/gimpchannel.c:1856 ../app/core/gimpselection.c:170
 msgid "Selection Mask"
 msgstr "Kijelölési maszk"
 
@@ -13256,8 +13257,9 @@ msgstr "„%s” betöltése közben hiba történt: "
 msgid "Error loading '%s'"
 msgstr "Hiba a(z) „%s” betöltésekor"
 
-#: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:89
-#: ../app/file-data/file-data-pat.c:99 ../app/xcf/xcf.c:452
+#: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:96
+#: ../app/file-data/file-data-gih.c:101 ../app/file-data/file-data-pat.c:97
+#: ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "„%s” nem nyitható meg olvasásra: "
@@ -13273,7 +13275,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:118
+#: ../app/core/gimpdrawable.c:502 ../app/tools/gimpscaletool.c:118
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Méretezés"
@@ -14179,41 +14181,41 @@ msgstr "Rétegmaszk kijelöléssé alakítása"
 msgid "Cannot rename layer masks."
 msgstr "Rétegmaszkot nem lehet átnevezni."
 
-#: ../app/core/gimplineart.c:295 ../app/core/gimplineart.c:296
+#: ../app/core/gimplineart.c:296 ../app/core/gimplineart.c:297
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Átlátszó képpontok kijelölése a szürkék helyett"
 
-#: ../app/core/gimplineart.c:302 ../app/tools/gimpbucketfilloptions.c:172
+#: ../app/core/gimplineart.c:303 ../app/tools/gimpbucketfilloptions.c:172
 msgid "Line art detection threshold"
 msgstr "Vonalrajz-felismerési küszöbérték"
 
-#: ../app/core/gimplineart.c:303 ../app/tools/gimpbucketfilloptions.c:173
+#: ../app/core/gimplineart.c:304 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "A kontúrok észlelésének küszöbértéke (a magasabb értékek több képpontot "
 "tartalmaznak)"
 
-#: ../app/core/gimplineart.c:309 ../app/tools/gimpbucketfilloptions.c:179
+#: ../app/core/gimplineart.c:310 ../app/tools/gimpbucketfilloptions.c:179
 msgid "Maximum growing size"
 msgstr "Növekedés legnagyobb mérete"
 
-#: ../app/core/gimplineart.c:310 ../app/tools/gimpbucketfilloptions.c:180
+#: ../app/core/gimplineart.c:311 ../app/tools/gimpbucketfilloptions.c:180
 msgid "Maximum number of pixels grown under the line art"
 msgstr "A vonalrajz alatt megnövelt képpontok legnagyobb száma"
 
-#: ../app/core/gimplineart.c:316
+#: ../app/core/gimplineart.c:317
 msgid "Maximum curved closing length"
 msgstr "A görbe lezárók legnagyobb hossza"
 
-#: ../app/core/gimplineart.c:317
+#: ../app/core/gimplineart.c:318
 msgid "Maximum curved length (in pixels) to close the line art"
 msgstr "A vonalrajzot záró görbe legnagyobb hossza (képpontokban)"
 
-#: ../app/core/gimplineart.c:323
+#: ../app/core/gimplineart.c:324
 msgid "Maximum straight closing length"
 msgstr "Az egyenes lezárók legnagyobb hossza"
 
-#: ../app/core/gimplineart.c:324
+#: ../app/core/gimplineart.c:325
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "A vonalrajzot záró egyenes vonal legnagyobb hossza (képpontokban)"
 
@@ -18379,11 +18381,15 @@ msgstr "„%s”: érvénytelen URI-séma"
 msgid "Invalid character sequence in URI"
 msgstr "Érvénytelen karaktersorozat az URI-ben"
 
-#: ../app/file-data/file-data.c:58
+#: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
 msgstr "GIMP-ecset"
 
-#: ../app/file-data/file-data.c:123 ../app/file-data/file-data.c:185
+#: ../app/file-data/file-data.c:210
+msgid "GIMP brush (animated)"
+msgstr "GIMP-ecset (animált)"
+
+#: ../app/file-data/file-data.c:274 ../app/file-data/file-data.c:335
 msgid "GIMP pattern"
 msgstr "GIMP-minta"
 
@@ -19213,11 +19219,11 @@ msgstr ""
 "Együttható-tárolók átalakítása koordinátatárolóvá a GIMP ketrec eszköz "
 "számára"
 
-#: ../app/operations/gimpoperationcagetransform.c:130
+#: ../app/operations/gimpoperationcagetransform.c:129
 msgid "Fill with plain color"
 msgstr "Kitöltés homogén színnel"
 
-#: ../app/operations/gimpoperationcagetransform.c:131
+#: ../app/operations/gimpoperationcagetransform.c:130
 msgid "Fill the original position of the cage with a plain color"
 msgstr "A ketrec eredeti területének kitöltése homogén színnel"
 
@@ -21979,38 +21985,38 @@ msgid "Show on-canvas filter controls"
 msgstr "Vásznon lévő szűrővezérlő-elemek megjelenítése"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:387
+#: ../app/tools/gimpfiltertool.c:386
 msgid "Advanced Color Options"
 msgstr "Speciális színbeállítások"
 
-#: ../app/tools/gimpfiltertool.c:643
+#: ../app/tools/gimpfiltertool.c:640
 msgid "Click to switch the original and filtered sides"
 msgstr "Kattintson az eredeti és szűrt oldalak felcseréléséhez"
 
-#: ../app/tools/gimpfiltertool.c:647
+#: ../app/tools/gimpfiltertool.c:644
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kattintson a függőleges és a vízszintes felcseréléséhez"
 
-#: ../app/tools/gimpfiltertool.c:651
+#: ../app/tools/gimpfiltertool.c:648
 msgid "Click to move the split guide"
 msgstr "Kattintson a felosztási segédvonal mozgatásához"
 
-#: ../app/tools/gimpfiltertool.c:653
+#: ../app/tools/gimpfiltertool.c:650
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: az eredeti és a szűrt felcserélése"
 
-#: ../app/tools/gimpfiltertool.c:654
+#: ../app/tools/gimpfiltertool.c:651
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: a vízszintes és a függőleges felcserélése"
 
-#: ../app/tools/gimpfiltertool.c:1341 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1338 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "„%s” beállítások importálása"
 
-#: ../app/tools/gimpfiltertool.c:1343 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1340 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "„%s” beállítások exportálása"
@@ -26736,3 +26742,4 @@ msgstr "kerek"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "lágy"
+
