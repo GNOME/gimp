@@ -1261,9 +1261,10 @@ PROP_ITEM_PATH (since version 3)
   uint32  plength  Total length of the following payload in bytes
   item-path        List of pointers, represented as uint32 values
 
-TODO: The code reads that it is a list of pointers, represented as uint32
-integers and somehow in the context of layers. What this is for and what
-do the property values mean?
+  PROP_ITEM_PATH indicates the path of the layer if inside a group,
+  i.e. its position within the group (last element of the list), but
+  also the position of the group itself within its own level, up to the
+  top-level position (first element).
 
 PROP_GROUP_ITEM_FLAGS (since version 3)
   uint32  31       Type identification
