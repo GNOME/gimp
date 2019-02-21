@@ -16,21 +16,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-18 06:55+0000\n"
-"PO-Revision-Date: 2019-02-18 13:02+0100\n"
-"Last-Translator: Meskó Balázs <mesko.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2019-02-21 16:29+0000\n"
+"PO-Revision-Date: 2019-02-21 20:32+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Lokalize 2.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
 msgid "GNU Image Manipulation Program"
-msgstr "A GNU képszerkesztő program"
+msgstr "GNU képszerkesztő program"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:2
 #: ../desktop/gimp.desktop.in.in.h:3
@@ -67,11 +67,11 @@ msgid ""
 "Microsoft Windows and OS X."
 msgstr ""
 "A GIMP kiegészíthető és bővíthető. Úgy tervezték, hogy bővíthető legyen "
-"bővítményekkel és kiterjesztésekkel, amikkel szinte minden meg lehet "
-"csinálni. A speciális parancsfájlfelület lehetővé tesz mindent a "
-"legegyszerűbb feladatoktól kezdve a legkomplexebb képmanipulációs "
-"eljárásokig egyszerű parancsfájlokkal. A GIMP elérhető Linux, Microsoft "
-"Windows és OS X rendszerekre is."
+"bővítményekkel és kiegészítőkkel, amikkel szinte minden meg lehet csinálni. "
+"A speciális parancsfájlfelület lehetővé tesz mindent a legegyszerűbb "
+"feladatoktól kezdve a legkomplexebb képmanipulációs eljárásokig egyszerű "
+"parancsfájlokkal. A GIMP elérhető Linux, Microsoft Windows és OS X "
+"rendszerekre is."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:6
 msgid "Painting in GIMP"
@@ -924,12 +924,12 @@ msgstr "Színátmenetek"
 #: ../app/actions/actions.c:180 ../app/core/gimp-data-factories.c:390
 #: ../app/dialogs/dialogs.c:359 ../app/dialogs/preferences-dialog.c:3205
 msgid "Tool Presets"
-msgstr "Eszköz előbeállítások"
+msgstr "Eszköz-előbeállítások"
 
 #: ../app/actions/actions.c:183 ../app/dialogs/dialogs.c:436
 #: ../app/widgets/gimptoolpreseteditor.c:95
 msgid "Tool Preset Editor"
-msgstr "Előbeállítás szerkesztő"
+msgstr "Eszköz-előbeállítás szerkesztő"
 
 #: ../app/actions/actions.c:186
 msgid "Help"
@@ -3320,12 +3320,12 @@ msgstr "A „Palettaszerkesztő” párbeszédablak megnyitása"
 #: ../app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
 msgid "Tool presets"
-msgstr "Eszköz előbeállítások"
+msgstr "Eszköz-előbeállítások"
 
 #: ../app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Az „Eszköz előbeállítások” párbeszédablak megnyitása"
+msgstr "Az „Eszköz-előbeállítások” párbeszédablak megnyitása"
 
 #: ../app/actions/dialogs-actions.c:203
 msgctxt "dialogs-action"
@@ -6091,7 +6091,7 @@ msgstr "Rajzvászon illesztése a réte_gekre"
 #: ../app/actions/image-actions.c:119
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
-msgstr "A kép méretének módosítása úgy, hogy az összes réteget tartalmazza"
+msgstr "A kép átméretezése úgy, hogy az összes réteget tartalmazza"
 
 #: ../app/actions/image-actions.c:124
 msgctxt "image-action"
@@ -6101,8 +6101,7 @@ msgstr "Rajzvászon illesztése a ki_jelölésre"
 #: ../app/actions/image-actions.c:125
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
-msgstr ""
-"A kép méretének módosítása úgy, hogy a kijelölés határaihoz illeszkedjen"
+msgstr "A kép átméretezése úgy, hogy a kijelölés határaihoz illeszkedjen"
 
 #: ../app/actions/image-actions.c:130
 msgctxt "image-action"
@@ -6297,12 +6296,12 @@ msgstr "Kép átalakítása 64 bites lebegőpontosra"
 #: ../app/actions/image-actions.c:250
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr "Érzethelyes gamma (sRGB)"
+msgstr "Észlelési gamma (sRGB)"
 
 #: ../app/actions/image-actions.c:252
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
-msgstr "Kép átalakítása érzethelyes (sRGB) gammára"
+msgstr "Kép átalakítása észlelési (sRGB) gammára"
 
 #: ../app/actions/image-actions.c:256
 msgctxt "image-convert-action"
@@ -6808,7 +6807,7 @@ msgstr "Réteg ké_p méretűvé alakítása"
 #: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
-msgstr "A réteg méretének módosítása a kép méretével azonosra"
+msgstr "A réteg átméretezése a kép méretével azonosra"
 
 #: ../app/actions/layers-actions.c:229
 msgctxt "layers-action"
@@ -8312,27 +8311,27 @@ msgstr "Eszközbeállítások menü"
 #: ../app/actions/tool-options-actions.c:61
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr "Eszköz előbeállítás _mentése"
+msgstr "Eszköz-előbeállítás _mentése"
 
 #: ../app/actions/tool-options-actions.c:65
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "Eszköz előbeállítás _visszaállítása"
+msgstr "Eszköz-előbeállítás _visszaállítása"
 
 #: ../app/actions/tool-options-actions.c:69
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
-msgstr "Eszköz előbeállítás s_zerkesztése"
+msgstr "Eszköz-előbeállítás s_zerkesztése"
 
 #: ../app/actions/tool-options-actions.c:73
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "Eszköz előbeállítás _törlése"
+msgstr "Eszköz-előbeállítás _törlése"
 
 #: ../app/actions/tool-options-actions.c:77
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "Ú_j eszköz előbeállítás…"
+msgstr "Ú_j eszköz-előbeállítás…"
 
 #: ../app/actions/tool-options-actions.c:82
 msgctxt "tool-options-action"
@@ -8367,7 +8366,7 @@ msgstr ""
 #: ../app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "Eszköz előbeállítás szerkesztő menü"
+msgstr "Eszköz-előbeállítás szerkesztő menü"
 
 #: ../app/actions/tool-preset-editor-actions.c:48
 msgctxt "tool-preset-editor-action"
@@ -8377,65 +8376,65 @@ msgstr "Eszközbeállítások mentése ki_lépéskor"
 #: ../app/actions/tool-preset-editor-actions.c:49
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
-msgstr "Az aktív eszköz beállításainak mentése ebbe az eszköz előbeállításba"
+msgstr "Az aktív eszköz beállításainak mentése ebbe az eszköz-előbeállításba"
 
 #: ../app/actions/tool-preset-editor-actions.c:55
 msgctxt "tool-preset-editor-action"
 msgid "_Restore Tool Preset"
-msgstr "Eszköz előbeállítás _visszaállítása"
+msgstr "Eszköz-előbeállítás _visszaállítása"
 
 #: ../app/actions/tool-preset-editor-actions.c:56
 msgctxt "tool-preset-editor-action"
 msgid "Restore this tool preset"
-msgstr "Ezen eszköz előbeállítás visszaállítása"
+msgstr "Ezen eszköz-előbeállítás visszaállítása"
 
 #: ../app/actions/tool-preset-editor-actions.c:65
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr "Aktív eszköz előbeállítás szerkesztése"
+msgstr "Aktív eszköz-előbeállítás szerkesztése"
 
 #: ../app/actions/tool-preset-editor-commands.c:64
 #: ../app/actions/tool-presets-commands.c:67
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
-"A(z) „%s” eszköz beállításai nem menthetőek a létező „%s” eszköz "
+"A(z) „%s” eszköz beállításai nem menthetőek a létező „%s” eszköz-"
 "előbeállításba."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
-msgstr "Eszköz előbeállítások menü"
+msgstr "Eszköz-előbeállítások menü"
 
 #: ../app/actions/tool-presets-actions.c:50
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
-msgstr "Ú_j eszköz előbeállítás"
+msgstr "Ú_j eszköz-előbeállítás"
 
 #: ../app/actions/tool-presets-actions.c:51
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
-msgstr "Új eszköz előbeállítás létrehozása"
+msgstr "Új eszköz-előbeállítás létrehozása"
 
 #: ../app/actions/tool-presets-actions.c:56
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
-msgstr "Eszköz előbeállítás kétszere_zése"
+msgstr "Eszköz-előbeállítás kétszere_zése"
 
 #: ../app/actions/tool-presets-actions.c:57
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
-msgstr "Eszköz előbeállítás kétszerezése"
+msgstr "Eszköz-előbeállítás kétszerezése"
 
 #: ../app/actions/tool-presets-actions.c:62
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
-msgstr "Eszköz előbeállítás _helyének másolása"
+msgstr "Eszköz-előbeállítás _helyének másolása"
 
 #: ../app/actions/tool-presets-actions.c:63
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
-msgstr "Eszköz előbeállítás-fájl helyének másolása a vágólapra"
+msgstr "Eszközelőbeállítás-fájl helyének másolása a vágólapra"
 
 #: ../app/actions/tool-presets-actions.c:68
 msgctxt "tool-presets-action"
@@ -8445,7 +8444,7 @@ msgstr "Megjelenítés a _fájlkezelőben"
 #: ../app/actions/tool-presets-actions.c:69
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
-msgstr "Eszköz előbeállítás-fájl helyének megjelenítése a fájlkezelőben"
+msgstr "Eszközelőbeállítás-fájl helyének megjelenítése a fájlkezelőben"
 
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
@@ -8455,47 +8454,47 @@ msgstr "Eszközbeállítások _mentése előbeállításba"
 #: ../app/actions/tool-presets-actions.c:75
 msgctxt "tool-presets-action"
 msgid "Save the active tool options to this tool preset"
-msgstr "Az aktív eszköz beállításainak mentése ebbe az eszköz előbeállításba"
+msgstr "Az aktív eszköz beállításainak mentése ebbe az eszköz-előbeállításba"
 
 #: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
-msgstr "Eszköz előbeállítás _visszaállítása"
+msgstr "Eszköz-előbeállítás _visszaállítása"
 
 #: ../app/actions/tool-presets-actions.c:82
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
-msgstr "Ezen eszköz előbeállítás visszaállítása"
+msgstr "Ezen eszköz-előbeállítás visszaállítása"
 
 #: ../app/actions/tool-presets-actions.c:87
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "Eszköz előbeállítás _törlése"
+msgstr "Eszköz-előbeállítás _törlése"
 
 #: ../app/actions/tool-presets-actions.c:88
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
-msgstr "Ezen eszköz előbeállítás törlése"
+msgstr "Ezen eszköz-előbeállítás törlése"
 
 #: ../app/actions/tool-presets-actions.c:93
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr "Eszköz előbeállítások _frissítése"
+msgstr "Eszköz-előbeállítások _frissítése"
 
 #: ../app/actions/tool-presets-actions.c:94
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Eszköz előbeállítások frissítése"
+msgstr "Eszköz-előbeállítások frissítése"
 
 #: ../app/actions/tool-presets-actions.c:102
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "Eszköz előbeállítás s_zerkesztése…"
+msgstr "Eszköz-előbeállítás s_zerkesztése…"
 
 #: ../app/actions/tool-presets-actions.c:103
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
-msgstr "Ezen eszköz előbeállítás szerkesztése"
+msgstr "Ezen eszköz-előbeállítás szerkesztése"
 
 #: ../app/actions/tools-actions.c:46
 msgctxt "tools-action"
@@ -10491,7 +10490,7 @@ msgstr "Jobbkezes"
 #: ../app/config/config-enums.c:186
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
-msgstr "GIMP Súgóböngésző"
+msgstr "GIMP súgóböngésző"
 
 #: ../app/config/config-enums.c:187
 msgctxt "help-browser-type"
@@ -12047,7 +12046,7 @@ msgstr "Kép átméretezése"
 #: ../app/core/core-enums.c:1103
 msgctxt "undo-type"
 msgid "Resize image"
-msgstr "Képméret módosítása"
+msgstr "Kép átméretezése"
 
 #: ../app/core/core-enums.c:1104
 msgctxt "undo-type"
@@ -12153,7 +12152,7 @@ msgstr "Elem átméretezése"
 #: ../app/core/core-enums.c:1124
 msgctxt "undo-type"
 msgid "Resize item"
-msgstr "Elem méretének módosítása"
+msgstr "Elem átméretezése"
 
 #: ../app/core/core-enums.c:1125
 msgctxt "undo-type"
@@ -12921,7 +12920,7 @@ msgstr "Csatorna átméretezése"
 #: ../app/core/gimpchannel.c:276
 msgctxt "undo-type"
 msgid "Resize Channel"
-msgstr "Csatorna méretének módosítása"
+msgstr "Csatorna átméretezése"
 
 #: ../app/core/gimpchannel.c:277
 msgctxt "undo-type"
@@ -13111,7 +13110,7 @@ msgstr "Betűkészlet"
 
 #: ../app/core/gimpcontext.c:764 ../app/core/gimpcontext.c:765
 msgid "Tool Preset"
-msgstr "Eszköz előbeállítás"
+msgstr "Eszköz-előbeállítás"
 
 #: ../app/core/gimpdatafactory.c:350 ../app/core/gimpdatafactory.c:384
 #: ../app/core/gimpdatafactory.c:718 ../app/core/gimpdatafactory.c:749
@@ -13177,8 +13176,9 @@ msgstr "„%s” betöltése közben hiba történt: "
 msgid "Error loading '%s'"
 msgstr "Hiba a(z) „%s” betöltésekor"
 
-#: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:95
-#: ../app/file-data/file-data-pat.c:99 ../app/xcf/xcf.c:452
+#: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:96
+#: ../app/file-data/file-data-gih.c:101 ../app/file-data/file-data-pat.c:97
+#: ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "„%s” nem nyitható meg olvasásra: "
@@ -13442,7 +13442,7 @@ msgstr "Rétegcsoport átméretezése"
 #: ../app/core/gimpgrouplayer.c:282
 msgctxt "undo-type"
 msgid "Resize Layer Group"
-msgstr "Rétegcsoport méretének módosítása"
+msgstr "Rétegcsoport átméretezése"
 
 #: ../app/core/gimpgrouplayer.c:283
 msgctxt "undo-type"
@@ -13741,7 +13741,7 @@ msgstr "Kép vágása"
 #: ../app/core/gimpimage-crop.c:75 ../app/core/gimpimage-resize.c:91
 msgctxt "undo-type"
 msgid "Resize Image"
-msgstr "Képméret módosítása"
+msgstr "Kép átméretezése"
 
 #: ../app/core/gimpimage-guides.c:53
 msgctxt "undo-type"
@@ -13991,7 +13991,7 @@ msgstr "Réteg átméretezése"
 #: ../app/core/gimplayer.c:444
 msgctxt "undo-type"
 msgid "Resize Layer"
-msgstr "Réteg méretének módosítása"
+msgstr "Réteg átméretezése"
 
 #: ../app/core/gimplayer.c:445
 msgctxt "undo-type"
@@ -14683,7 +14683,7 @@ msgstr "Tárolt betűkészlet használata"
 
 #: ../app/core/gimptoolpreset-load.c:64
 msgid "Tool preset file is corrupt."
-msgstr "Az eszköz előbeállítás-fájl sérült."
+msgstr "Az eszközelőbeállítás-fájl sérült."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -16802,7 +16802,7 @@ msgstr "Menetelő _hangyák sebessége:"
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2810
 msgid "Zoom & Resize Behavior"
-msgstr "Nagyítási és méretmódosítási viselkedés"
+msgstr "Nagyítási és átméretezési viselkedés"
 
 #: ../app/dialogs/preferences-dialog.c:2814
 msgid "Resize window on _zoom"
@@ -17061,15 +17061,15 @@ msgstr "Betűkészletek mappáinak kiválasztása"
 
 #: ../app/dialogs/preferences-dialog.c:3205
 msgid "Tool Preset Folders"
-msgstr "Elődefiniált eszközbeállítások mappái"
+msgstr "Eszköz-előbeállítások mappái"
 
 #: ../app/dialogs/preferences-dialog.c:3208
 msgid "Reset Tool Preset Folders"
-msgstr "Eszköz előbeállítás mappáinak visszaállítása"
+msgstr "Eszköz-előbeállítás mappáinak visszaállítása"
 
 #: ../app/dialogs/preferences-dialog.c:3209
 msgid "Select Tool Preset Folders"
-msgstr "Eszköz előbeállítások mappáinak kiválasztása"
+msgstr "Eszköz-előbeállítások mappáinak kiválasztása"
 
 #: ../app/dialogs/preferences-dialog.c:3211
 msgid "MyPaint Brush Folders"
@@ -17319,7 +17319,7 @@ msgstr "_Középpont"
 
 #: ../app/dialogs/resize-dialog.c:331
 msgid "Resize _layers:"
-msgstr "Rétegek mér_etének módosítása:"
+msgstr "Rét_egek átméretezése:"
 
 #: ../app/dialogs/resize-dialog.c:379
 msgid "Resize _text layers"
@@ -18299,11 +18299,15 @@ msgstr "„%s”: érvénytelen URI-séma"
 msgid "Invalid character sequence in URI"
 msgstr "Érvénytelen karaktersorozat az URI-ben"
 
-#: ../app/file-data/file-data.c:58 ../app/file-data/file-data.c:123
+#: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
 msgstr "GIMP-ecset"
 
-#: ../app/file-data/file-data.c:209 ../app/file-data/file-data.c:270
+#: ../app/file-data/file-data.c:210
+msgid "GIMP brush (animated)"
+msgstr "GIMP-ecset (animált)"
+
+#: ../app/file-data/file-data.c:274 ../app/file-data/file-data.c:335
 msgid "GIMP pattern"
 msgstr "GIMP-minta"
 
@@ -21081,7 +21085,7 @@ msgstr "Szövegréteg átméretezése"
 
 #: ../app/text/gimptextlayer.c:160
 msgid "Resize Text Layer"
-msgstr "Szövegréteg méretének módosítása"
+msgstr "Szövegréteg átméretezése"
 
 #: ../app/text/gimptextlayer.c:161
 msgid "Flip Text Layer"
@@ -22583,11 +22587,11 @@ msgstr "Hisztogram kiszámítása…"
 
 #: ../app/tools/gimpmagnifyoptions.c:83
 msgid "Auto-resize window"
-msgstr "Ablakméret automatikus módosítása"
+msgstr "Ablak automatikus átméretezése"
 
 #: ../app/tools/gimpmagnifyoptions.c:84
 msgid "Resize image window to accommodate new zoom level"
-msgstr "A képablak mérete alkalmazkodjon az új nagyítási szinthez"
+msgstr "Képablak átméretezése, hogy alkalmazkodjon az új nagyítási szinthez"
 
 #: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:92
 #: ../app/widgets/gimpdynamicseditor.c:163
@@ -24034,7 +24038,7 @@ msgstr "Útvonal átméretezése"
 #: ../app/vectors/gimpvectors.c:227
 msgctxt "undo-type"
 msgid "Resize Path"
-msgstr "Útvonal méretének módosítása"
+msgstr "Útvonal átméretezése"
 
 #: ../app/vectors/gimpvectors.c:228
 msgctxt "undo-type"
@@ -25496,7 +25500,7 @@ msgstr "Fájltípus"
 
 #: ../app/widgets/gimpfileprocview.c:212
 msgid "Extensions"
-msgstr "Kiterjesztések"
+msgstr "Kiegészítők"
 
 #: ../app/widgets/gimpfilleditor.c:124
 msgid "Fill Color"
@@ -25626,27 +25630,27 @@ msgstr "_Háttérszín:"
 
 #: ../app/widgets/gimphelp.c:371
 msgid "Help browser is missing"
-msgstr "Súgóböngésző nem található"
+msgstr "A súgóböngésző hiányzik"
 
 #: ../app/widgets/gimphelp.c:372
 msgid "The GIMP help browser is not available."
-msgstr "A GIMP Súgóböngésző nem elérhető."
+msgstr "A GIMP súgóböngésző nem érhető el."
 
 #: ../app/widgets/gimphelp.c:373
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
-"Úgy tűnik, a GIMP Súgóböngésző nincs benne a telepítésben. Használhat "
-"helyette webböngészőt a súgó szövegeinek olvasására."
+"Úgy tűnik, a GIMP súgóböngésző-bővítmény nincs benne a telepítésben. "
+"Használhat helyette webböngészőt a súgó szövegeinek olvasására."
 
 #: ../app/widgets/gimphelp.c:419
 msgid "Help browser doesn't start"
-msgstr "A Súgóböngésző nem indul"
+msgstr "A súgóböngésző nem indul"
 
 #: ../app/widgets/gimphelp.c:420
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Nem lehet elindítani a GIMP Súgóböngészőt."
+msgstr "Nem sikerült elindítani a GIMP súgóböngésző-bővítményt."
 
 #: ../app/widgets/gimphelp.c:422
 msgid "You may instead use the web browser for reading the help pages."
@@ -26341,15 +26345,15 @@ msgstr "Eszközök sorrendjének és láthatóságának visszaállítása"
 
 #: ../app/widgets/gimptooloptionseditor.c:200
 msgid "Save Tool Preset..."
-msgstr "Eszköz előbeállítás mentése…"
+msgstr "Eszköz-előbeállítás mentése…"
 
 #: ../app/widgets/gimptooloptionseditor.c:209
 msgid "Restore Tool Preset..."
-msgstr "Eszköz előbeállítás visszaállítása…"
+msgstr "Eszköz-előbeállítás visszaállítása…"
 
 #: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Delete Tool Preset..."
-msgstr "Eszköz előbeállítás törlése…"
+msgstr "Eszköz-előbeállítás törlése…"
 
 #: ../app/widgets/gimptoolpreseteditor.c:295
 #, c-format
@@ -26673,3 +26677,4 @@ msgstr "kerek"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "lágy"
+
