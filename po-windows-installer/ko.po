@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp windows installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-24 20:14+0000\n"
-"PO-Revision-Date: 2019-01-28 12:38+0900\n"
+"PO-Revision-Date: 2019-02-21 09:38+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: Korean\n"
 "Language: ko\n"
@@ -285,7 +285,7 @@ msgstr "김프에 연결할 파일 유형:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:62
 msgid "Removing previous version of GIMP:"
-msgstr "이전 버전 김프 지우기:"
+msgstr "이전 버전 김프 제거하기:"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:64
 #, no-c-format
@@ -296,10 +296,10 @@ msgid ""
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"김프 %1을 현재 설치된 김프 버전 위에 설치할 수 없으며, 이전 버전을 자동 제거"
-"하는데 실패했습니다.%n%n이전 버전을 제거하고 이 버전을 %2에 설치하거나, 맞춤 "
-"설치를 선택하고, 다른 설치 폴더를 선택하세요.%n%n이제 설치 프로그램을 종료합"
-"니다."
+"김프 %1을(를) 현재 설치된 김프 버전 위에 설치할 수 없으며, 이전 버전을 자동 "
+"제거하는데 실패했습니다.%n%n이전 버전을 제거하고 이 버전을 %2에 설치하거나, "
+"맞춤 설치를 선택하고, 다른 설치 폴더를 선택하세요.%n%n이제 설치 프로그램을 종"
+"료합니다."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
@@ -310,10 +310,10 @@ msgid ""
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"김프 %1을 현재 설치된 김프 버전 위에 설치할 수 없으며, 설치 프로그램이 이전 "
-"버전을 어떻게 자동 제거할지 결정할 수 없습니다.%n%n김프 및 애드온의 이전 버전"
-"을 직접 제거하고 %2에 이 버전을 설치하거나, 맞춤 설치를 선택하고 다른 설치 폴"
-"더를 선택하십시오.%n%n이제 설치 프로그램을 종료합니다."
+"김프 %1을(를) 현재 설치된 김프 버전 위에 설치할 수 없으며, 설치 프로그램이 이"
+"전 버전을 어떻게 자동 제거할지 결정할 수 없습니다.%n%n김프 및 애드온의 이전 "
+"버전을 직접 제거하고 %2에 이 버전을 설치하거나, 맞춤 설치를 선택하고 다른 설"
+"치 폴더를 선택하십시오.%n%n이제 설치 프로그램을 종료합니다."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
@@ -333,7 +333,7 @@ msgstr "설치 다시 시작 중 오류.(%1)"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:71
 msgid "Cleaning up old files..."
-msgstr "오래된 파일 지우기..."
+msgstr "오래된 파일 지우는 중..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:73
 #, no-c-format
@@ -346,23 +346,23 @@ msgstr "자유 업데이트용."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up file associations..."
-msgstr "파일 확장명 연결 설정..."
+msgstr "파일 확장명 연결 설정 중..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "Setting up environment for GIMP Python extension..."
-msgstr "김프 파이썬 확장용 환경 설정..."
+msgstr "김프 파이썬 확장용 환경 설정 중..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up MyPaint brushes..."
-msgstr "내페인트 붓 환경 설정..."
+msgstr "내페인트 붓 환경 설정 중..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up GIMP environment..."
-msgstr "김프 환경 설정..."
+msgstr "김프 환경 설정 중..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "32비트 플러그인 지원용 김프 구성 설정..."
+msgstr "32비트 플러그인 지원용 김프 구성 설정 중..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Launch GIMP"
@@ -370,7 +370,7 @@ msgstr "김프 실행"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Removing add-on"
-msgstr "애드온 없애기"
+msgstr "애드온 없애는 중"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:83
 #, no-c-format
