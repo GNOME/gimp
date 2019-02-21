@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-23 19:36+0000\n"
-"PO-Revision-Date: 2019-02-19 22:59+0900\n"
+"PO-Revision-Date: 2019-02-21 09:35+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -13249,7 +13249,7 @@ msgstr " (들여옴)"
 #: ../app/core/gimpimage.c:2473
 #, c-format
 msgid "Layer mode '%s' was added in %s"
-msgstr "%2$s에 레이어 모드 %1$s가 추가되었음"
+msgstr "%2$s에 레이어 모드 %1$s이(가) 추가되었음"
 
 #: ../app/core/gimpimage.c:2488
 #, c-format
@@ -17620,7 +17620,7 @@ msgstr "클릭-끌기 하면 패닝"
 #: ../app/display/gimptoolgyroscope.c:739
 #, c-format
 msgid "%s to rotate"
-msgstr "%s으로 회전"
+msgstr "%s(으)로 회전"
 
 #: ../app/display/gimptoolgyroscope.c:740
 #, c-format
@@ -23768,7 +23768,9 @@ msgstr "F1 키를 다시 매핑할 수 없습니다."
 #: ../app/widgets/gimpactionview.c:800
 #, c-format
 msgid "Alt+%d is used to switch to display %d and cannot be remapped."
-msgstr "Alt+%d는 디스플레이 %d로 전환하는 데 사용되며 다시 매핑할 수 없습니다."
+msgstr ""
+"Alt+%d은(는) 디스플레이 %d(으)로 전환하는 데 사용되며 다시 매핑할 수 없습니"
+"다."
 
 #: ../app/widgets/gimpactionview.c:904
 msgid "Removing shortcut failed."
