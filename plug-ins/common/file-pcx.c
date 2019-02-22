@@ -469,6 +469,7 @@ load_image (const gchar  *filename,
 
   if (pcx_header.planes == 1 && pcx_header.bpp == 1)
     {
+      const guint8 *colormap = pcx_header.colormap;
       dest = g_new (guchar, ((gsize) width) * height);
       load_1 (fd, width, height, dest, bytesperline);
       /* Monochrome does not mean necessarily B&W. Therefore we still
@@ -481,7 +482,20 @@ load_image (const gchar  *filename,
        * find counter-examples.
        * See bug 159947, comment 21 and 23.
        */
-      gimp_image_set_colormap (image, pcx_header.colormap, 2);
+      /* ... Actually, there *are* files out there with a zeroed 1-bit palette,
+       * which are supposed to be displayed as B&W (see issue #2997.)  These
+       * files *might* be in the wrong (who knows...) but the fact is that
+       * other software, including older versions of GIMP, do display them
+       * "correctly", so let's follow suit: if the two palette colors are
+       * equal, use a B&W palette instead.
+       */
+      if (! memcmp (colormap, colormap + 3, 3))
+        {
+          static const guint8 bw_colormap[6] = {  0,   0,   0,
+                                                255, 255, 255};
+          colormap = bw_colormap;
+        }
+      gimp_image_set_colormap (image, colormap, 2);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 2)
     {
