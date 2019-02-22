@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 23:37+0000\n"
-"PO-Revision-Date: 2019-02-21 09:37+0900\n"
+"PO-Revision-Date: 2019-02-22 13:44+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ko\n"
@@ -1675,8 +1675,8 @@ msgid "redness-cr470"
 msgstr "빨감-cr470"
 
 #: ../plug-ins/common/decompose.c:167
-msgid "루마-y709"
-msgstr "luma-y709"
+msgid "luma-y709"
+msgstr "루마-y709"
 
 #: ../plug-ins/common/decompose.c:168
 msgid "blueness-cb709"
@@ -3927,10 +3927,10 @@ msgstr ""
 #: ../plug-ins/common/file-xwd.c:533
 #, c-format
 msgid ""
-"‘%s’:\n"
+"'%s':\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
-"‘%s’:\n"
+"'%s':\n"
 "이미지 너비가 김프가 처리할 수 있는 것보다 넓음"
 
 #: ../plug-ins/common/file-sunras.c:518 ../plug-ins/common/file-xbm.c:851
@@ -12514,3 +12514,13 @@ msgstr "스캐너/카메라(_S)..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "스캐너/카메라에서 데이터 전송하는 중"
+
+#~ msgid "루마-y709"
+#~ msgstr "luma-y709"
+
+#~ msgid ""
+#~ "‘%s’:\n"
+#~ "Image width is larger than GIMP can handle"
+#~ msgstr ""
+#~ "‘%s’:\n"
+#~ "이미지 너비가 김프가 처리할 수 있는 것보다 넓음"
