@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-25 11:20+0000\n"
-"PO-Revision-Date: 2019-02-21 09:34+0900\n"
+"PO-Revision-Date: 2019-02-22 13:42+0900\n"
 "Last-Translator: Sensu Iun <cieltero@gmail.com>\n"
 "Language-Team: \n"
 "Language: ko\n"
@@ -5261,7 +5261,7 @@ msgstr "대칭 최근접 이웃(_S)..."
 #: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Softglow..."
-msgstr "소프트글로우(_S)..."
+msgstr "부드러운 광채(_S)..."
 
 #: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
