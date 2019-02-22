@@ -59,6 +59,7 @@
 #include "core/gimp-parallel.h"
 #include "core/gimpasync.h"
 #include "core/gimpbacktrace.h"
+#include "core/gimptempbuf.h"
 #include "core/gimpwaitable.h"
 
 #include "gimpactiongroup.h"
@@ -139,6 +140,7 @@ typedef enum
   VARIABLE_MIPMAPED,
   VARIABLE_ASYNC_RUNNING,
   VARIABLE_SCRATCH_TOTAL,
+  VARIABLE_TEMP_BUF_TOTAL,
 
 
   N_VARIABLES,
@@ -703,6 +705,18 @@ static const VariableInfo variables[] =
     .type             = VARIABLE_TYPE_SIZE,
     .sample_func      = gimp_dashboard_sample_gegl_stats,
     .data             = "scratch-total"
+  },
+
+  [VARIABLE_TEMP_BUF_TOTAL] =
+  { .name             = "temp-buf-total",
+    /* Translators:  "TempBuf" is a technical term referring to an internal
+     * GIMP data structure.  It's probably OK to leave it untranslated.
+     */
+    .title            = NC_("dashboard-variable", "TempBuf"),
+    .description      = N_("Total size of temporary buffers"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .sample_func      = gimp_dashboard_sample_function,
+    .data             = gimp_temp_buf_get_total_memsize
   }
 };
 
@@ -902,6 +916,9 @@ static const GroupInfo groups[] =
                             .default_active = TRUE
                           },
                           { .variable       = VARIABLE_SCRATCH_TOTAL,
+                            .default_active = TRUE
+                          },
+                          { .variable       = VARIABLE_TEMP_BUF_TOTAL,
                             .default_active = TRUE
                           },
 
