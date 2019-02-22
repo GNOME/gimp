@@ -53,6 +53,13 @@ typedef struct
 G_STATIC_ASSERT (sizeof (LockData) <= LOCK_DATA_ALIGNMENT);
 
 
+/*  local variables  */
+
+static guintptr gimp_temp_buf_total_memsize = 0;
+
+
+/*  public functions  */
+
 GimpTempBuf *
 gimp_temp_buf_new (gint        width,
                    gint        height,
@@ -75,6 +82,9 @@ gimp_temp_buf_new (gint        width,
   temp->height    = height;
   temp->format    = format;
   temp->data      = gegl_malloc ((gsize) width * height * bpp);
+
+  g_atomic_pointer_add (&gimp_temp_buf_total_memsize,
+                        +gimp_temp_buf_get_memsize (temp));
 
   return temp;
 }
@@ -162,6 +172,10 @@ gimp_temp_buf_unref (GimpTempBuf *buf)
 
   if (buf->ref_count < 1)
     {
+      g_atomic_pointer_add (&gimp_temp_buf_total_memsize,
+                            -gimp_temp_buf_get_memsize (buf));
+
+
       if (buf->data)
         gegl_free (buf->data);
 
@@ -425,4 +439,13 @@ gimp_gegl_buffer_get_temp_buf (GeglBuffer *buffer)
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
 
   return g_object_get_data (G_OBJECT (buffer), "gimp-temp-buf");
+}
+
+
+/*  public functions (stats)  */
+
+guint64
+gimp_temp_buf_get_total_memsize (void)
+{
+  return gimp_temp_buf_total_memsize;
 }
