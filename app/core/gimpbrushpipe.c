@@ -28,28 +28,34 @@
 #include "gimpbrush-private.h"
 #include "gimpbrushpipe.h"
 #include "gimpbrushpipe-load.h"
+#include "gimpbrushpipe-save.h"
+#include "gimptempbuf.h"
 
 
-static void        gimp_brush_pipe_finalize         (GObject          *object);
+static void          gimp_brush_pipe_finalize         (GObject          *object);
 
-static gint64      gimp_brush_pipe_get_memsize      (GimpObject       *object,
-                                                     gint64           *gui_size);
+static gint64        gimp_brush_pipe_get_memsize      (GimpObject       *object,
+                                                       gint64           *gui_size);
 
-static gboolean    gimp_brush_pipe_get_popup_size   (GimpViewable     *viewable,
-                                                     gint              width,
-                                                     gint              height,
-                                                     gboolean          dot_for_dot,
-                                                     gint             *popup_width,
-                                                     gint             *popup_height);
+static gboolean      gimp_brush_pipe_get_popup_size   (GimpViewable     *viewable,
+                                                       gint              width,
+                                                       gint              height,
+                                                       gboolean          dot_for_dot,
+                                                       gint             *popup_width,
+                                                       gint             *popup_height);
 
-static void        gimp_brush_pipe_begin_use        (GimpBrush        *brush);
-static void        gimp_brush_pipe_end_use          (GimpBrush        *brush);
-static GimpBrush * gimp_brush_pipe_select_brush     (GimpBrush        *brush,
-                                                     const GimpCoords *last_coords,
-                                                     const GimpCoords *current_coords);
-static gboolean    gimp_brush_pipe_want_null_motion (GimpBrush        *brush,
-                                                     const GimpCoords *last_coords,
-                                                     const GimpCoords *current_coords);
+static const gchar * gimp_brush_pipe_get_extension    (GimpData         *data);
+static void          gimp_brush_pipe_copy             (GimpData         *data,
+                                                       GimpData         *src_data);
+
+static void          gimp_brush_pipe_begin_use        (GimpBrush        *brush);
+static void          gimp_brush_pipe_end_use          (GimpBrush        *brush);
+static GimpBrush   * gimp_brush_pipe_select_brush     (GimpBrush        *brush,
+                                                       const GimpCoords *last_coords,
+                                                       const GimpCoords *current_coords);
+static gboolean      gimp_brush_pipe_want_null_motion (GimpBrush        *brush,
+                                                       const GimpCoords *last_coords,
+                                                       const GimpCoords *current_coords);
 
 
 G_DEFINE_TYPE (GimpBrushPipe, gimp_brush_pipe, GIMP_TYPE_BRUSH);
@@ -72,8 +78,9 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 
   viewable_class->get_popup_size = gimp_brush_pipe_get_popup_size;
 
-  data_class->save               = NULL; /* don't inherit */
-  data_class->copy               = NULL; /* don't inherit */
+  data_class->save               = gimp_brush_pipe_save;
+  data_class->get_extension      = gimp_brush_pipe_get_extension;
+  data_class->copy               = gimp_brush_pipe_copy;
 
   brush_class->begin_use         = gimp_brush_pipe_begin_use;
   brush_class->end_use           = gimp_brush_pipe_end_use;
@@ -152,6 +159,69 @@ gimp_brush_pipe_get_popup_size (GimpViewable *viewable,
                                 gint         *popup_height)
 {
   return gimp_viewable_get_size (viewable, popup_width, popup_height);
+}
+
+static const gchar *
+gimp_brush_pipe_get_extension (GimpData *data)
+{
+  return GIMP_BRUSH_PIPE_FILE_EXTENSION;
+}
+
+static void
+gimp_brush_pipe_copy (GimpData *data,
+                      GimpData *src_data)
+{
+  GimpBrushPipe *pipe     = GIMP_BRUSH_PIPE (data);
+  GimpBrushPipe *src_pipe = GIMP_BRUSH_PIPE (src_data);
+  gint           i;
+
+  pipe->dimension = src_pipe->dimension;
+
+  g_clear_pointer (&pipe->rank, g_free);
+  pipe->rank = g_memdup (src_pipe->rank,
+                         pipe->dimension * sizeof (gint));
+
+  g_clear_pointer (&pipe->stride, g_free);
+  pipe->stride = g_memdup (src_pipe->stride,
+                           pipe->dimension * sizeof (gint));
+
+  g_clear_pointer (&pipe->select, g_free);
+  pipe->select = g_memdup (src_pipe->select,
+                           pipe->dimension * sizeof (PipeSelectModes));
+
+  g_clear_pointer (&pipe->index, g_free);
+  pipe->index = g_memdup (src_pipe->index,
+                          pipe->dimension * sizeof (gint));
+
+  for (i = 0; i < pipe->n_brushes; i++)
+    if (pipe->brushes[i])
+      g_object_unref (pipe->brushes[i]);
+  g_clear_pointer (&pipe->brushes, g_free);
+
+  pipe->n_brushes = src_pipe->n_brushes;
+
+  pipe->brushes = g_new0 (GimpBrush *, pipe->n_brushes);
+  for (i = 0; i < pipe->n_brushes; i++)
+    if (src_pipe->brushes[i])
+      {
+        pipe->brushes[i] =
+          GIMP_BRUSH (gimp_data_duplicate (GIMP_DATA (src_pipe->brushes[i])));
+        gimp_object_set_name (GIMP_OBJECT (pipe->brushes[i]),
+                              gimp_object_get_name (src_pipe->brushes[i]));
+      }
+
+  g_clear_pointer (&pipe->params, g_free);
+  pipe->params = g_strdup (src_pipe->params);
+
+  pipe->current = pipe->brushes[0];
+
+  GIMP_BRUSH (pipe)->priv->spacing  = pipe->current->priv->spacing;
+  GIMP_BRUSH (pipe)->priv->x_axis   = pipe->current->priv->x_axis;
+  GIMP_BRUSH (pipe)->priv->y_axis   = pipe->current->priv->y_axis;
+  GIMP_BRUSH (pipe)->priv->mask     = pipe->current->priv->mask;
+  GIMP_BRUSH (pipe)->priv->pixmap   = pipe->current->priv->pixmap;
+
+  gimp_data_dirty (data);
 }
 
 static void
