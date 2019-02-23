@@ -102,7 +102,7 @@ gimp_data_factories_init (Gimp *gimp)
                                        "GIMP Brush Pipe",
                                        gimp_brush_pipe_load,
                                        GIMP_BRUSH_PIPE_FILE_EXTENSION,
-                                       FALSE);
+                                       TRUE);
 
   gimp->dynamics_factory =
     gimp_data_loader_factory_new (gimp,
