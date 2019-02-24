@@ -501,7 +501,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                   paint_buffer,
                                                   paint_buffer_x,
                                                   paint_buffer_y,
-                                                  gimp_paint_options_get_brush_mode (paint_options));
+                                                  TRUE);
         }
 
       gimp_gegl_smudge_with_paint (accum_buffer,
