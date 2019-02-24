@@ -153,24 +153,22 @@ gimp_temp_buf_copy (const GimpTempBuf *src)
 }
 
 GimpTempBuf *
-gimp_temp_buf_ref (GimpTempBuf *buf)
+gimp_temp_buf_ref (const GimpTempBuf *buf)
 {
   g_return_val_if_fail (buf != NULL, NULL);
 
-  buf->ref_count++;
+  g_atomic_int_inc ((gint *) &buf->ref_count);
 
-  return buf;
+  return (GimpTempBuf *) buf;
 }
 
 void
-gimp_temp_buf_unref (GimpTempBuf *buf)
+gimp_temp_buf_unref (const GimpTempBuf *buf)
 {
   g_return_if_fail (buf != NULL);
   g_return_if_fail (buf->ref_count > 0);
 
-  buf->ref_count--;
-
-  if (buf->ref_count < 1)
+  if (g_atomic_int_dec_and_test ((gint *) &buf->ref_count))
     {
       g_atomic_pointer_add (&gimp_temp_buf_total_memsize,
                             -gimp_temp_buf_get_memsize (buf));
@@ -179,7 +177,7 @@ gimp_temp_buf_unref (GimpTempBuf *buf)
       if (buf->data)
         gegl_free (buf->data);
 
-      g_slice_free (GimpTempBuf, buf);
+      g_slice_free (GimpTempBuf, (GimpTempBuf *) buf);
     }
 }
 
@@ -365,8 +363,8 @@ gimp_temp_buf_get_memsize (const GimpTempBuf *buf)
   return 0;
 }
 
-GeglBuffer  *
-gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf)
+GeglBuffer *
+gimp_temp_buf_create_buffer (const GimpTempBuf *temp_buf)
 {
   GeglBuffer *buffer;
 
@@ -382,13 +380,14 @@ gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf)
                                       (GDestroyNotify) gimp_temp_buf_unref,
                                       gimp_temp_buf_ref (temp_buf));
 
-  g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", temp_buf);
+  g_object_set_data (G_OBJECT (buffer),
+                     "gimp-temp-buf", (GimpTempBuf *) temp_buf);
 
   return buffer;
 }
 
 GdkPixbuf *
-gimp_temp_buf_create_pixbuf (GimpTempBuf *temp_buf)
+gimp_temp_buf_create_pixbuf (const GimpTempBuf *temp_buf)
 {
   GdkPixbuf    *pixbuf;
   const Babl   *format;
