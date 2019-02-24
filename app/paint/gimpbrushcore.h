@@ -128,7 +128,7 @@ void   gimp_brush_core_color_area_with_pixmap
                                        GeglBuffer               *area,
                                        gint                      area_x,
                                        gint                      area_y,
-                                       GimpBrushApplicationMode  mode);
+                                       gboolean                  apply_mask);
 
 const GimpTempBuf * gimp_brush_core_get_brush_mask
                                       (GimpBrushCore            *core,
