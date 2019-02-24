@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 17:28+0100\n"
-"PO-Revision-Date: 2019-02-21 17:30+0100\n"
+"POT-Creation-Date: 2019-02-24 17:35+0100\n"
+"PO-Revision-Date: 2019-02-24 17:37+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -19083,11 +19083,11 @@ msgstr ""
 "Konwertuje zestaw współczynnika bufora na współczynnik bufora dla narzędzia "
 "klatki programu GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:130
+#: ../app/operations/gimpoperationcagetransform.c:129
 msgid "Fill with plain color"
 msgstr "Wypełnij zwykłym kolorem"
 
-#: ../app/operations/gimpoperationcagetransform.c:131
+#: ../app/operations/gimpoperationcagetransform.c:130
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Wypełnienie pierwotnego położenia klatki prostym kolorem"
 
@@ -24916,280 +24916,292 @@ msgstr "Wystąpiło kilka krytycznych błędów programu GIMP."
 msgid "_Restart GIMP"
 msgstr "_Uruchom program GIMP ponownie"
 
-#: ../app/widgets/gimpdashboard.c:452 ../app/widgets/gimpdashboard.c:504
+#: ../app/widgets/gimpdashboard.c:454 ../app/widgets/gimpdashboard.c:506
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Zajęte"
 
-#: ../app/widgets/gimpdashboard.c:453
+#: ../app/widgets/gimpdashboard.c:455
 msgid "Tile cache occupied size"
 msgstr "Rozmiar zajętej pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:462
+#: ../app/widgets/gimpdashboard.c:464
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Maksymalnie"
 
-#: ../app/widgets/gimpdashboard.c:463
+#: ../app/widgets/gimpdashboard.c:465
 msgid "Maximal tile cache occupied size"
 msgstr "Maksymalny rozmiar zajętej pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:472 ../app/widgets/gimpdashboard.c:524
+#: ../app/widgets/gimpdashboard.c:474 ../app/widgets/gimpdashboard.c:526
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Ograniczenie"
 
-#: ../app/widgets/gimpdashboard.c:473
+#: ../app/widgets/gimpdashboard.c:475
 msgid "Tile cache size limit"
 msgstr "Ograniczenie rozmiaru pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:481 ../app/widgets/gimpdashboard.c:607
+#: ../app/widgets/gimpdashboard.c:483 ../app/widgets/gimpdashboard.c:609
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Kompresja"
 
-#: ../app/widgets/gimpdashboard.c:482
+#: ../app/widgets/gimpdashboard.c:484
 msgid "Tile cache compression ratio"
 msgstr "Współczynnik kompresji pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:491
+#: ../app/widgets/gimpdashboard.c:493
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Trafienia/pudła"
 
-#: ../app/widgets/gimpdashboard.c:492
+#: ../app/widgets/gimpdashboard.c:494
 msgid "Tile cache hit/miss ratio"
 msgstr "Proporcja trafień do pudeł pamięci podręcznej kafli"
 
-#: ../app/widgets/gimpdashboard.c:505
+#: ../app/widgets/gimpdashboard.c:507
 msgid "Swap file occupied size"
 msgstr "Rozmiar zajętego pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:514 ../app/widgets/gimpdashboard.c:671
+#: ../app/widgets/gimpdashboard.c:516 ../app/widgets/gimpdashboard.c:673
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../app/widgets/gimpdashboard.c:515
+#: ../app/widgets/gimpdashboard.c:517
 msgid "Swap file size"
 msgstr "Rozmiar pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:525
+#: ../app/widgets/gimpdashboard.c:527
 msgid "Swap file size limit"
 msgstr "Ograniczenie rozmiaru pliku wymiany"
 
-#: ../app/widgets/gimpdashboard.c:532
+#: ../app/widgets/gimpdashboard.c:534
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "W kolejce"
 
-#: ../app/widgets/gimpdashboard.c:533
+#: ../app/widgets/gimpdashboard.c:535
 msgid "Size of data queued for writing to the swap"
 msgstr "Rozmiar danych w kolejce do zapisania w pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:542
+#: ../app/widgets/gimpdashboard.c:544
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Opóźnienia kolejki"
 
-#: ../app/widgets/gimpdashboard.c:543
+#: ../app/widgets/gimpdashboard.c:545
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 "Ile razy zapis do pamięci wymiany był opóźniony z powodu pełnej kolejki"
 
-#: ../app/widgets/gimpdashboard.c:552
+#: ../app/widgets/gimpdashboard.c:554
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Pełna kolejka"
 
-#: ../app/widgets/gimpdashboard.c:553
+#: ../app/widgets/gimpdashboard.c:555
 msgid "Whether the swap queue is full"
 msgstr "Czy kolejka pamięci wymiany jest pełna"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:564
+#: ../app/widgets/gimpdashboard.c:566
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Odczytane"
 
-#: ../app/widgets/gimpdashboard.c:565
+#: ../app/widgets/gimpdashboard.c:567
 msgid "Total amount of data read from the swap"
 msgstr "Całkowita ilość danych odczytanych z pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:574
+#: ../app/widgets/gimpdashboard.c:576
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Przepustowość odczytu"
 
-#: ../app/widgets/gimpdashboard.c:575
+#: ../app/widgets/gimpdashboard.c:577
 msgid "The rate at which data is read from the swap"
 msgstr "Prędkość, z jaką dane są odczytywane z pamięci wymiany"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:587
+#: ../app/widgets/gimpdashboard.c:589
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Zapisane"
 
-#: ../app/widgets/gimpdashboard.c:588
+#: ../app/widgets/gimpdashboard.c:590
 msgid "Total amount of data written to the swap"
 msgstr "Całkowita ilość danych zapisanych do pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:597
+#: ../app/widgets/gimpdashboard.c:599
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Przepustowość zapisu"
 
-#: ../app/widgets/gimpdashboard.c:598
+#: ../app/widgets/gimpdashboard.c:600
 msgid "The rate at which data is written to the swap"
 msgstr "Prędkość, z jaką dane są zapisywane w pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:608
+#: ../app/widgets/gimpdashboard.c:610
 msgid "Swap compression ratio"
 msgstr "Współczynnik kompresji pamięci wymiany"
 
-#: ../app/widgets/gimpdashboard.c:621
+#: ../app/widgets/gimpdashboard.c:623
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Użycie"
 
-#: ../app/widgets/gimpdashboard.c:622
+#: ../app/widgets/gimpdashboard.c:624
 msgid "Total CPU usage"
 msgstr "Całkowite użycie procesora"
 
-#: ../app/widgets/gimpdashboard.c:630 ../app/widgets/gimpdashboard.c:639
+#: ../app/widgets/gimpdashboard.c:632 ../app/widgets/gimpdashboard.c:641
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Aktywny"
 
-#: ../app/widgets/gimpdashboard.c:631
+#: ../app/widgets/gimpdashboard.c:633
 msgid "Whether the CPU is active"
 msgstr "Czy procesor jest aktywny"
 
-#: ../app/widgets/gimpdashboard.c:640
+#: ../app/widgets/gimpdashboard.c:642
 msgid "Total amount of time the CPU has been active"
 msgstr "Całkowity czas, przez jaki procesor był aktywny"
 
-#: ../app/widgets/gimpdashboard.c:653
+#: ../app/widgets/gimpdashboard.c:655
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Użyte"
 
-#: ../app/widgets/gimpdashboard.c:654
+#: ../app/widgets/gimpdashboard.c:656
 msgid "Amount of memory used by the process"
 msgstr "Pamięć używana przez proces"
 
-#: ../app/widgets/gimpdashboard.c:662
+#: ../app/widgets/gimpdashboard.c:664
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Dostępne"
 
-#: ../app/widgets/gimpdashboard.c:663
+#: ../app/widgets/gimpdashboard.c:665
 msgid "Amount of available physical memory"
 msgstr "Dostępna pamięć fizyczna"
 
-#: ../app/widgets/gimpdashboard.c:672
+#: ../app/widgets/gimpdashboard.c:674
 msgid "Physical memory size"
 msgstr "Rozmiar pamięci fizycznej"
 
-#: ../app/widgets/gimpdashboard.c:683
+#: ../app/widgets/gimpdashboard.c:685
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Mipmapowane"
 
-#: ../app/widgets/gimpdashboard.c:684
+#: ../app/widgets/gimpdashboard.c:686
 msgid "Total size of processed mipmapped data"
 msgstr "Całkowity rozmiar przetworzonych mipmapowanych danych"
 
-#: ../app/widgets/gimpdashboard.c:692
+#: ../app/widgets/gimpdashboard.c:694
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Asynchroniczne"
 
-#: ../app/widgets/gimpdashboard.c:693
+#: ../app/widgets/gimpdashboard.c:695
 msgid "Number of ongoing asynchronous operations"
 msgstr "Liczba trwających działań asynchronicznych"
 
-#: ../app/widgets/gimpdashboard.c:701
+#: ../app/widgets/gimpdashboard.c:703
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr "Brudnopis"
 
-#: ../app/widgets/gimpdashboard.c:702
+#: ../app/widgets/gimpdashboard.c:704
 msgid "Total size of scratch memory"
 msgstr "Całkowity rozmiar pamięci brudnopisu"
 
-#: ../app/widgets/gimpdashboard.c:714
+#. Translators:  "TempBuf" is a technical term referring to an internal
+#. * GIMP data structure.  It's probably OK to leave it untranslated.
+#.
+#: ../app/widgets/gimpdashboard.c:715
+msgctxt "dashboard-variable"
+msgid "TempBuf"
+msgstr "Bufory tymczasowe"
+
+#: ../app/widgets/gimpdashboard.c:716
+msgid "Total size of temporary buffers"
+msgstr "Całkowity rozmiar buforów tymczasowych"
+
+#: ../app/widgets/gimpdashboard.c:728
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Pamięć podręczna"
 
-#: ../app/widgets/gimpdashboard.c:715
+#: ../app/widgets/gimpdashboard.c:729
 msgid "In-memory tile cache"
 msgstr "Pamięć podręczna kafli w pamięci"
 
-#: ../app/widgets/gimpdashboard.c:751
+#: ../app/widgets/gimpdashboard.c:765
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Pamięć wymiany"
 
-#: ../app/widgets/gimpdashboard.c:752
+#: ../app/widgets/gimpdashboard.c:766
 msgid "On-disk tile swap"
 msgstr "Pamięć wymiany kafli na dysku"
 
-#: ../app/widgets/gimpdashboard.c:816
+#: ../app/widgets/gimpdashboard.c:830
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "Procesor"
 
-#: ../app/widgets/gimpdashboard.c:817
+#: ../app/widgets/gimpdashboard.c:831
 msgid "CPU usage"
 msgstr "Użycie procesora"
 
-#: ../app/widgets/gimpdashboard.c:852
+#: ../app/widgets/gimpdashboard.c:866
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Pamięć"
 
-#: ../app/widgets/gimpdashboard.c:853
+#: ../app/widgets/gimpdashboard.c:867
 msgid "Memory usage"
 msgstr "Użycie pamięci"
 
-#: ../app/widgets/gimpdashboard.c:861
+#: ../app/widgets/gimpdashboard.c:875
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Pamięć podręczna"
 
-#: ../app/widgets/gimpdashboard.c:891
+#: ../app/widgets/gimpdashboard.c:905
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Różne"
 
-#: ../app/widgets/gimpdashboard.c:892
+#: ../app/widgets/gimpdashboard.c:906
 msgid "Miscellaneous information"
 msgstr "Różne informacje"
 
-#: ../app/widgets/gimpdashboard.c:1073
+#: ../app/widgets/gimpdashboard.c:1090
 msgid "Select fields"
 msgstr "Zaznacz pola"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3161
+#: ../app/widgets/gimpdashboard.c:3178
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:3170 ../app/widgets/gimpdashboard.c:4068
+#: ../app/widgets/gimpdashboard.c:3187 ../app/widgets/gimpdashboard.c:4085
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Tak"
 
-#: ../app/widgets/gimpdashboard.c:3171 ../app/widgets/gimpdashboard.c:4069
+#: ../app/widgets/gimpdashboard.c:3188 ../app/widgets/gimpdashboard.c:4086
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Nie"
@@ -25198,7 +25210,7 @@ msgstr "Nie"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3255
+#: ../app/widgets/gimpdashboard.c:3272
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -25209,16 +25221,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4058
+#: ../app/widgets/gimpdashboard.c:4075
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4136
+#: ../app/widgets/gimpdashboard.c:4153
 msgid "N/A"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpdashboard.c:4465
+#: ../app/widgets/gimpdashboard.c:4482
 msgid "Resolving symbol information..."
 msgstr "Rozwiązywanie informacji o symbolach…"
 
