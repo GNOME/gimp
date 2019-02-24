@@ -494,7 +494,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
        * gimp_gegl_smudge_with_paint() instead of calling
        * gegl_buffer_set_color() to reduce gegl's internal processing.
        */
-      if (! brush_color_ptr)
+      if (! brush_color_ptr && flow > 0.0)
         {
           gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
                                                   coords, op,
