@@ -55,6 +55,11 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
   color = gegl_node_new_child (node,
                                "operation", "gegl:color",
                                "value",     c,
+                               "format",    gimp_layer_mode_get_format (
+                                              GIMP_LAYER_MODE_NORMAL,
+                                              composite_space,
+                                              GIMP_LAYER_COLOR_SPACE_AUTO,
+                                              NULL),
                                NULL);
   g_object_unref (c);
 
