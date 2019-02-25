@@ -577,12 +577,15 @@ void
 layers_merge_down_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
-  GimpImage *image;
-  GimpLayer *layer;
+  GimpImage   *image;
+  GimpLayer   *layer;
+  GimpDisplay *display;
   return_if_no_layer (image, layer, data);
+  return_if_no_display (display, data);
 
   gimp_image_merge_down (image, layer, action_data_get_context (data),
-                         GIMP_EXPAND_AS_NECESSARY, NULL);
+                         GIMP_EXPAND_AS_NECESSARY,
+                         GIMP_PROGRESS (display), NULL);
   gimp_image_flush (image);
 }
 

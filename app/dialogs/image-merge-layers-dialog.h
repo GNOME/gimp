@@ -24,7 +24,8 @@ typedef void (* GimpMergeLayersCallback) (GtkWidget     *dialog,
                                           GimpContext   *context,
                                           GimpMergeType  merge_type,
                                           gboolean       merge_active_group,
-                                          gboolean       discard_invisible);
+                                          gboolean       discard_invisible,
+                                          gpointer       user_data);
 
 
 GtkWidget *
