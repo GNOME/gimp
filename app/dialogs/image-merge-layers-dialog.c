@@ -182,7 +182,8 @@ image_merge_layers_dialog_response (GtkWidget              *dialog,
                          private->context,
                          private->merge_type,
                          private->merge_active_group,
-                         private->discard_invisible);
+                         private->discard_invisible,
+                         private->user_data);
     }
   else
     {

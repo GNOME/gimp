@@ -755,7 +755,8 @@ HELP
         code => <<'CODE'
 {
   layer = gimp_image_merge_visible_layers (image, context, merge_type,
-                                           FALSE, FALSE);
+                                           FALSE, FALSE,
+                                           progress);
 
   if (! layer)
     success = FALSE;
@@ -801,7 +802,7 @@ HELP
   if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), image, 0, error))
     {
       layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
-                                     error);
+                                     progress, error);
 
       if (! layer)
         success = FALSE;
@@ -840,7 +841,8 @@ HELP
         headers => [ qw("core/gimpimage-merge.h") ],
         code => <<'CODE'
 {
-  layer = gimp_image_flatten (image, context, error);
+  layer = gimp_image_flatten (image, context,
+                              progress, error);
 
   if (! layer)
     success = FALSE;

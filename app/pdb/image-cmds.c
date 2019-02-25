@@ -1483,7 +1483,8 @@ image_flatten_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      layer = gimp_image_flatten (image, context, error);
+      layer = gimp_image_flatten (image, context,
+                                  progress, error);
 
       if (! layer)
         success = FALSE;
@@ -1518,7 +1519,8 @@ image_merge_visible_layers_invoker (GimpProcedure         *procedure,
   if (success)
     {
       layer = gimp_image_merge_visible_layers (image, context, merge_type,
-                                               FALSE, FALSE);
+                                               FALSE, FALSE,
+                                               progress);
 
       if (! layer)
         success = FALSE;
@@ -1557,7 +1559,7 @@ image_merge_down_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), image, 0, error))
         {
           layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
-                                         error);
+                                         progress, error);
 
           if (! layer)
             success = FALSE;

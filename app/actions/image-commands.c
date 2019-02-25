@@ -166,7 +166,8 @@ static void   image_merge_layers_callback      (GtkWidget              *dialog,
                                                 GimpContext            *context,
                                                 GimpMergeType           merge_type,
                                                 gboolean                merge_active_group,
-                                                gboolean                discard_invisible);
+                                                gboolean                discard_invisible,
+                                                gpointer                user_data);
 
 
 /*  private variables  */
@@ -901,10 +902,12 @@ void
 image_merge_layers_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  GtkWidget *dialog;
-  GimpImage *image;
-  GtkWidget *widget;
+  GtkWidget   *dialog;
+  GimpImage   *image;
+  GimpDisplay *display;
+  GtkWidget   *widget;
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
 #define MERGE_LAYERS_DIALOG_KEY "gimp-merge-layers-dialog"
@@ -922,7 +925,7 @@ image_merge_layers_cmd_callback (GtkAction *action,
                                               config->layer_merge_active_group_only,
                                               config->layer_merge_discard_invisible,
                                               image_merge_layers_callback,
-                                              NULL);
+                                              display);
 
       dialogs_attach_dialog (G_OBJECT (image), MERGE_LAYERS_DIALOG_KEY, dialog);
     }
@@ -934,13 +937,16 @@ void
 image_flatten_image_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
-  GimpImage *image;
-  GtkWidget *widget;
-  GError    *error = NULL;
+  GimpImage   *image;
+  GimpDisplay *display;
+  GtkWidget   *widget;
+  GError      *error = NULL;
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_image_flatten (image, action_data_get_context (data), &error))
+  if (! gimp_image_flatten (image, action_data_get_context (data),
+                            GIMP_PROGRESS (display), &error))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
@@ -1475,9 +1481,11 @@ image_merge_layers_callback (GtkWidget     *dialog,
                              GimpContext   *context,
                              GimpMergeType  merge_type,
                              gboolean       merge_active_group,
-                             gboolean       discard_invisible)
+                             gboolean       discard_invisible,
+                             gpointer       user_data)
 {
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GimpDisplay      *display = user_data;
 
   g_object_set (config,
                 "layer-merge-type",              merge_type,
@@ -1489,7 +1497,8 @@ image_merge_layers_callback (GtkWidget     *dialog,
                                    context,
                                    config->layer_merge_type,
                                    config->layer_merge_active_group_only,
-                                   config->layer_merge_discard_invisible);
+                                   config->layer_merge_discard_invisible,
+                                   GIMP_PROGRESS (display));
 
   gimp_image_flush (image);
 

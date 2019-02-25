@@ -636,7 +636,8 @@ file_open_layers (Gimp                *gimp,
 
           layer = gimp_image_merge_visible_layers (new_image, context,
                                                    GIMP_CLIP_TO_IMAGE,
-                                                   FALSE, FALSE);
+                                                   FALSE, FALSE,
+                                                   NULL);
 
           layers = g_list_prepend (NULL, layer);
         }

@@ -48,6 +48,7 @@
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
+#include "gimpprogress.h"
 #include "gimpprojectable.h"
 #include "gimpundostack.h"
 
@@ -58,7 +59,9 @@ static GimpLayer * gimp_image_merge_layers (GimpImage     *image,
                                             GimpContainer *container,
                                             GSList        *merge_list,
                                             GimpContext   *context,
-                                            GimpMergeType  merge_type);
+                                            GimpMergeType  merge_type,
+                                            const gchar   *undo_desc,
+                                            GimpProgress  *progress);
 
 
 /*  public functions  */
@@ -68,7 +71,8 @@ gimp_image_merge_visible_layers (GimpImage     *image,
                                  GimpContext   *context,
                                  GimpMergeType  merge_type,
                                  gboolean       merge_active_group,
-                                 gboolean       discard_invisible)
+                                 gboolean       discard_invisible,
+                                 GimpProgress  *progress)
 {
   GimpContainer *container;
   GList         *list;
@@ -77,6 +81,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
   if (merge_active_group)
     {
@@ -126,13 +131,14 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 
   if (merge_list)
     {
-      GimpLayer *layer;
+      GimpLayer   *layer;
+      const gchar *undo_desc = C_("undo-type", "Merge Visible Layers");
 
       gimp_set_busy (image->gimp);
 
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
-                                   C_("undo-type", "Merge Visible Layers"));
+                                   undo_desc);
 
       /* if there's a floating selection, anchor it */
       if (gimp_image_get_floating_selection (image))
@@ -140,7 +146,8 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 
       layer = gimp_image_merge_layers (image,
                                        container,
-                                       merge_list, context, merge_type);
+                                       merge_list, context, merge_type,
+                                       undo_desc, progress);
       g_slist_free (merge_list);
 
       if (invisible_list)
@@ -164,9 +171,10 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 }
 
 GimpLayer *
-gimp_image_flatten (GimpImage    *image,
-                    GimpContext  *context,
-                    GError      **error)
+gimp_image_flatten (GimpImage     *image,
+                    GimpContext   *context,
+                    GimpProgress  *progress,
+                    GError       **error)
 {
   GList     *list;
   GSList    *merge_list = NULL;
@@ -174,6 +182,7 @@ gimp_image_flatten (GimpImage    *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   for (list = gimp_image_get_layer_iter (image);
@@ -191,11 +200,13 @@ gimp_image_flatten (GimpImage    *image,
 
   if (merge_list)
     {
+      const gchar *undo_desc = C_("undo-type", "Flatten Image");
+
       gimp_set_busy (image->gimp);
 
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
-                                   C_("undo-type", "Flatten Image"));
+                                   undo_desc);
 
       /* if there's a floating selection, anchor it */
       if (gimp_image_get_floating_selection (image))
@@ -204,7 +215,8 @@ gimp_image_flatten (GimpImage    *image,
       layer = gimp_image_merge_layers (image,
                                        gimp_image_get_layers (image),
                                        merge_list, context,
-                                       GIMP_FLATTEN_IMAGE);
+                                       GIMP_FLATTEN_IMAGE,
+                                       undo_desc, progress);
       g_slist_free (merge_list);
 
       gimp_image_alpha_changed (image);
@@ -226,17 +238,20 @@ gimp_image_merge_down (GimpImage      *image,
                        GimpLayer      *current_layer,
                        GimpContext    *context,
                        GimpMergeType   merge_type,
+                       GimpProgress   *progress,
                        GError        **error)
 {
-  GimpLayer *layer;
-  GList     *list;
-  GList     *layer_list = NULL;
-  GSList    *merge_list = NULL;
+  GimpLayer   *layer;
+  GList       *list;
+  GList       *layer_list = NULL;
+  GSList      *merge_list = NULL;
+  const gchar *undo_desc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (current_layer), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (current_layer)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (gimp_layer_is_floating_sel (current_layer))
@@ -299,15 +314,18 @@ gimp_image_merge_down (GimpImage      *image,
 
   merge_list = g_slist_prepend (merge_list, current_layer);
 
+  undo_desc = C_("undo-type", "Merge Down");
+
   gimp_set_busy (image->gimp);
 
   gimp_image_undo_group_start (image,
                                GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
-                               C_("undo-type", "Merge Down"));
+                               undo_desc);
 
   layer = gimp_image_merge_layers (image,
                                    gimp_item_get_container (GIMP_ITEM (current_layer)),
-                                   merge_list, context, merge_type);
+                                   merge_list, context, merge_type,
+                                   undo_desc, progress);
   g_slist_free (merge_list);
 
   gimp_image_undo_group_end (image);
@@ -457,7 +475,9 @@ gimp_image_merge_layers (GimpImage     *image,
                          GimpContainer *container,
                          GSList        *merge_list,
                          GimpContext   *context,
-                         GimpMergeType  merge_type)
+                         GimpMergeType  merge_type,
+                         const gchar   *undo_desc,
+                         GimpProgress  *progress)
 {
   GimpLayer        *parent;
   gint              x1, y1;
@@ -478,6 +498,7 @@ gimp_image_merge_layers (GimpImage     *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
   top_layer = merge_list->data;
   parent    = gimp_layer_get_parent (top_layer);
@@ -658,9 +679,10 @@ gimp_image_merge_layers (GimpImage     *image,
   gegl_node_disconnect (last_node, "input");
 
   /*  Render the graph into the merge layer  */
-  gegl_node_blit_buffer (offset_node,
-                         gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),
-                         NULL, 0, GEGL_ABYSS_NONE);
+  gimp_gegl_apply_operation (NULL, progress, undo_desc, offset_node,
+                             gimp_drawable_get_buffer (
+                               GIMP_DRAWABLE (merge_layer)),
+                             NULL, FALSE);
 
   /*  Reconnect the bottom-layer node's input  */
   if (last_node_source)
