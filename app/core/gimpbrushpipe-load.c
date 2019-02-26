@@ -21,10 +21,8 @@
 #include <stdlib.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpparasiteio.h"
 
 #include "core-types.h"
 
@@ -42,14 +40,12 @@ gimp_brush_pipe_load (GimpContext   *context,
                       GInputStream  *input,
                       GError       **error)
 {
-  GimpBrushPipe     *pipe = NULL;
-  gint               i;
-  gint               num_of_brushes = 0;
-  gint               totalcells;
-  gchar             *paramstring;
-  GString           *buffer;
-  gchar              c;
-  gsize              bytes_read;
+  GimpBrushPipe *pipe      = NULL;
+  gint           n_brushes = 0;
+  GString       *buffer;
+  gchar         *paramstring;
+  gchar          c;
+  gsize          bytes_read;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
@@ -105,10 +101,10 @@ gimp_brush_pipe_load (GimpContext   *context,
 
   if (buffer->len > 0 && buffer->len < 1024)
     {
-      num_of_brushes = strtol (buffer->str, &paramstring, 10);
+      n_brushes = strtol (buffer->str, &paramstring, 10);
     }
 
-  if (num_of_brushes < 1)
+  if (n_brushes < 1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
@@ -122,74 +118,9 @@ gimp_brush_pipe_load (GimpContext   *context,
   while (*paramstring && g_ascii_isspace (*paramstring))
     paramstring++;
 
-  if (*paramstring)
-    {
-      GimpPixPipeParams params;
+  pipe->brushes = g_new0 (GimpBrush *, n_brushes);
 
-      gimp_pixpipe_params_init (&params);
-      gimp_pixpipe_params_parse (paramstring, &params);
-
-      pipe->dimension = params.dim;
-      pipe->rank      = g_new0 (gint, pipe->dimension);
-      pipe->select    = g_new0 (PipeSelectModes, pipe->dimension);
-      pipe->index     = g_new0 (gint, pipe->dimension);
-      /* placement is not used at all ?? */
-
-      for (i = 0; i < pipe->dimension; i++)
-        {
-          pipe->rank[i] = MAX (1, params.rank[i]);
-          if (strcmp (params.selection[i], "incremental") == 0)
-            pipe->select[i] = PIPE_SELECT_INCREMENTAL;
-          else if (strcmp (params.selection[i], "angular") == 0)
-            pipe->select[i] = PIPE_SELECT_ANGULAR;
-          else if (strcmp (params.selection[i], "velocity") == 0)
-            pipe->select[i] = PIPE_SELECT_VELOCITY;
-          else if (strcmp (params.selection[i], "random") == 0)
-            pipe->select[i] = PIPE_SELECT_RANDOM;
-          else if (strcmp (params.selection[i], "pressure") == 0)
-            pipe->select[i] = PIPE_SELECT_PRESSURE;
-          else if (strcmp (params.selection[i], "xtilt") == 0)
-            pipe->select[i] = PIPE_SELECT_TILT_X;
-          else if (strcmp (params.selection[i], "ytilt") == 0)
-            pipe->select[i] = PIPE_SELECT_TILT_Y;
-          else
-            pipe->select[i] = PIPE_SELECT_CONSTANT;
-          pipe->index[i] = 0;
-        }
-
-      gimp_pixpipe_params_free (&params);
-
-      pipe->params = g_strdup (paramstring);
-    }
-  else
-    {
-      pipe->dimension = 1;
-      pipe->rank      = g_new (gint, 1);
-      pipe->rank[0]   = num_of_brushes;
-      pipe->select    = g_new (PipeSelectModes, 1);
-      pipe->select[0] = PIPE_SELECT_INCREMENTAL;
-      pipe->index     = g_new (gint, 1);
-      pipe->index[0]  = 0;
-    }
-
-  g_string_free (buffer, TRUE);
-
-  totalcells = 1;                /* Not all necessarily present, maybe */
-  for (i = 0; i < pipe->dimension; i++)
-    totalcells *= pipe->rank[i];
-  pipe->stride = g_new0 (gint, pipe->dimension);
-  for (i = 0; i < pipe->dimension; i++)
-    {
-      if (i == 0)
-        pipe->stride[i] = totalcells / pipe->rank[i];
-      else
-        pipe->stride[i] = pipe->stride[i-1] / pipe->rank[i];
-    }
-  g_return_val_if_fail (pipe->stride[pipe->dimension-1] == 1, NULL);
-
-  pipe->brushes = g_new0 (GimpBrush *, num_of_brushes);
-
-  while (pipe->n_brushes < num_of_brushes)
+  while (pipe->n_brushes < n_brushes)
     {
       pipe->brushes[pipe->n_brushes] = gimp_brush_load_brush (context,
                                                               file, input,
@@ -198,11 +129,25 @@ gimp_brush_pipe_load (GimpContext   *context,
       if (! pipe->brushes[pipe->n_brushes])
         {
           g_object_unref (pipe);
+          g_string_free (buffer, TRUE);
           return NULL;
         }
 
       pipe->n_brushes++;
     }
+
+  if (! gimp_brush_pipe_set_params (pipe, paramstring))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parse error in brush file '%s': "
+                     "Inconsistent parameters."),
+                   gimp_file_get_utf8_name (file));
+      g_object_unref (pipe);
+      g_string_free (buffer, TRUE);
+      return NULL;
+    }
+
+  g_string_free (buffer, TRUE);
 
   /* Current brush is the first one. */
   pipe->current = pipe->brushes[0];
