@@ -25,7 +25,7 @@ msgstr "라이선스 계약"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:2
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "Setup을 Jernej Simonèiè, jernej-gimp@ena.si가 만듦"
+msgstr "Setup을 Jernej Simoncic, jernej-gimp@ena.si가 만듦"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
 msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
