@@ -32,6 +32,7 @@
 #include "widgets/gimpspinscale.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpperspectivetool.h"
 #include "gimprotatetool.h"
 #include "gimpscaletool.h"
 #include "gimpunifiedtransformtool.h"
@@ -471,6 +472,37 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
 
       gimp_help_set_help_data (button, _("Scale around the center point"),
                                NULL);
+
+      g_free (label);
+    }
+  else if (tool_options->tool_info->tool_type == GIMP_TYPE_PERSPECTIVE_TOOL)
+    {
+      GtkWidget *button;
+      gchar     *label;
+
+      label = g_strdup_printf (_("Constrain handles (%s)"),
+                               gimp_get_mod_string (extend_mask));
+
+      button = gimp_prop_check_button_new (config, "constrain-perspective", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      gimp_help_set_help_data (
+        button, _("Constrain handles to move along edges and diagonal (%s)"),
+        NULL);
+
+      g_free (label);
+
+      label = g_strdup_printf (_("Around center (%s)"),
+                               gimp_get_mod_string (constrain_mask));
+
+      button = gimp_prop_check_button_new (config, "frompivot-perspective", label);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      gimp_help_set_help_data (
+        button, _("Transform around the center point"),
+        NULL);
 
       g_free (label);
     }
