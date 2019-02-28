@@ -801,6 +801,17 @@ transform_is_convex (GimpVector2 *pos)
                                            pos[3].x, pos[3].y);
 }
 
+static gboolean
+transform_grid_is_convex (GimpToolTransformGrid *grid)
+{
+  GimpToolTransformGridPrivate *private = grid->private;
+
+  return gimp_transform_polygon_is_convex (private->tx1, private->ty1,
+                                           private->tx2, private->ty2,
+                                           private->tx3, private->ty3,
+                                           private->tx4, private->ty4);
+}
+
 static inline gboolean
 vectorisnull (GimpVector2 v)
 {
@@ -1309,16 +1320,29 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
   newpos[3].y = oldpos[3].y = private->prev_ty4;
 
   /* put center point in this array too */
-  oldpos[4].x = (oldpos[0].x + oldpos[1].x + oldpos[2].x + oldpos[3].x) / 4.;
-  oldpos[4].y = (oldpos[0].y + oldpos[1].y + oldpos[2].y + oldpos[3].y) / 4.;
+  oldpos[4].x = private->prev_tcx;
+  oldpos[4].y = private->prev_tcy;
 
   d = vectorsubtract (cur, mouse);
 
   newpivot_x = &private->tpx;
   newpivot_y = &private->tpy;
 
-  pivot.x = private->prev_tpx;
-  pivot.y = private->prev_tpy;
+  if (private->use_pivot_handle)
+    {
+      pivot.x = private->prev_tpx;
+      pivot.y = private->prev_tpy;
+    }
+  else
+    {
+      /* when the transform grid doesn't use a pivot handle, use the center
+       * point as the pivot instead.
+       */
+      pivot.x = private->prev_tcx;
+      pivot.y = private->prev_tcy;
+
+      fixedpivot = TRUE;
+    }
 
   /* move */
   if (handle == GIMP_TRANSFORM_HANDLE_CENTER)
@@ -2307,14 +2331,24 @@ gimp_tool_transform_grid_update_box (GimpToolTransformGrid  *grid)
   private->tpx = private->pivot_x;
   private->tpy = private->pivot_y;
 
-  private->tcx = (private->tx1 +
-                  private->tx2 +
-                  private->tx3 +
-                  private->tx4) / 4.0;
-  private->tcy = (private->ty1 +
-                  private->ty2 +
-                  private->ty3 +
-                  private->ty4) / 4.0;
+  if (transform_grid_is_convex (grid))
+    {
+      gimp_matrix3_transform_point (&private->transform,
+                                    (private->x1 + private->x2) / 2.0,
+                                    (private->y1 + private->y2) / 2.0,
+                                    &private->tcx, &private->tcy);
+    }
+  else
+    {
+      private->tcx = (private->tx1 +
+                      private->tx2 +
+                      private->tx3 +
+                      private->tx4) / 4.0;
+      private->tcy = (private->ty1 +
+                      private->ty2 +
+                      private->ty3 +
+                      private->ty4) / 4.0;
+    }
 }
 
 static void

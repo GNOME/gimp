@@ -270,8 +270,6 @@ gimp_scale_tool_get_widget (GimpTransformGridTool *tg_tool)
                                          tr_tool->y2);
 
   g_object_set (widget,
-                "pivot-x",            (tr_tool->x1 + tr_tool->x2) / 2.0,
-                "pivot-y",            (tr_tool->y1 + tr_tool->y2) / 2.0,
                 "inside-function",    GIMP_TRANSFORM_FUNCTION_SCALE,
                 "outside-function",   GIMP_TRANSFORM_FUNCTION_SCALE,
                 "use-corner-handles", TRUE,
@@ -291,12 +289,10 @@ gimp_scale_tool_update_widget (GimpTransformGridTool *tg_tool)
 
   g_object_set (
     tg_tool->widget,
-    "x1",      (gdouble) tr_tool->x1,
-    "y1",      (gdouble) tr_tool->y1,
-    "x2",      (gdouble) tr_tool->x2,
-    "y2",      (gdouble) tr_tool->y2,
-    "pivot-x", (tg_tool->trans_info[X0] + tg_tool->trans_info[X1]) / 2.0,
-    "pivot-y", (tg_tool->trans_info[Y0] + tg_tool->trans_info[Y1]) / 2.0,
+    "x1", (gdouble) tr_tool->x1,
+    "y1", (gdouble) tr_tool->y1,
+    "x2", (gdouble) tr_tool->x2,
+    "y2", (gdouble) tr_tool->y2,
     NULL);
 }
 
