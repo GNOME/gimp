@@ -41,6 +41,8 @@ extern "C"
 #include "gimppickable-contiguous-region.h"
 
 
+#define EPSILON 1e-6
+
 #define PIXELS_PER_THREAD \
   (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
@@ -208,6 +210,14 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (color != NULL, NULL);
+
+  /* increase the threshold by EPSILON, to allow for conversion errors,
+   * especially when threshold == 0 (see issue #1554.)  we need to do this
+   * here, but not in the other functions, since the input color gets converted
+   * to the format in which we perform the comparison through a different path
+   * than the pickable's pixels, which can introduce error.
+   */
+  threshold += EPSILON;
 
   gimp_pickable_flush (pickable);
 
