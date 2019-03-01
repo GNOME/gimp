@@ -45,7 +45,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 # required versions of other packages
 m4_define([alsa_required_version], [1.0.0])
 m4_define([atk_required_version], [2.2.0])
-m4_define([babl_required_version], [0.1.61])
+m4_define([babl_required_version], [0.1.62])
 m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([cairo_required_version], [1.12.2])
 m4_define([fontconfig_required_version], [2.12.4])
