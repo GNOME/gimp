@@ -406,9 +406,16 @@ gimp_operation_mask_components_parent_process (GeglOperation        *operation,
     {
       GObject *aux = gegl_operation_context_get_object (context, "aux");
 
-      gegl_operation_context_set_object (context, "output", aux);
+      /* when there's no aux and the alpha component is masked-in, we set the
+       * result's alpha component to full opacity, rather than full
+       * transparency, so we can't just forward an empty aux in this case.
+       */
+      if (aux)
+        {
+          gegl_operation_context_set_object (context, "output", aux);
 
-      return TRUE;
+          return TRUE;
+        }
     }
 
   return GEGL_OPERATION_CLASS (parent_class)->process (operation, context,
