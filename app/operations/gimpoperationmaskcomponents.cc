@@ -508,7 +508,7 @@ gimp_operation_mask_components_process (const Babl        *format,
   g_return_if_fail (out != NULL);
   g_return_if_fail (n >= 0);
 
-  if (! aux && ! (mask & GIMP_COMPONENT_MASK_ALPHA))
+  if (! aux && (mask & GIMP_COMPONENT_MASK_ALPHA))
     opacity_value = get_opacity_value (format);
 
   switch (babl_format_get_bytes_per_pixel (format))
