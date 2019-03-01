@@ -146,6 +146,37 @@ gimp_operation_mask_components_set_property (GObject      *object,
     }
 }
 
+static guint32
+get_opacity_value (const Babl *format)
+{
+  gfloat src_value = 1.0f;
+
+  switch (babl_format_get_bytes_per_pixel (format))
+    {
+    #define DEF_CASE(bpp, type)                                            \
+      case bpp:                                                            \
+      {                                                                    \
+        type dst_value;                                                    \
+                                                                           \
+        babl_process (                                                     \
+          babl_fish (babl_format_n (babl_type ("float"),              1),  \
+                     babl_format_n (babl_format_get_type (format, 0), 1)), \
+          &src_value, &dst_value, 1);                                      \
+                                                                           \
+        return dst_value;                                                  \
+      }
+
+    DEF_CASE ( 4, guint8)
+    DEF_CASE ( 8, guint16)
+    DEF_CASE (16, guint32)
+
+    #undef DEF_CASE
+
+    default:
+      g_return_val_if_reached (0);
+    }
+}
+
 template <class T>
 struct ProcessGeneric
 {
@@ -154,7 +185,8 @@ struct ProcessGeneric
            gconstpointer     aux_buf,
            gpointer          out_buf,
            gint              n,
-           GimpComponentMask mask)
+           GimpComponentMask mask,
+           T                 opacity_value)
   {
     T    *out = (T *) out_buf;
     gint  i;
@@ -190,13 +222,18 @@ struct ProcessGeneric
 
         for (i = 0; i < n; i++)
           {
-            for (c = 0; c < 4; c++)
+            for (c = 0; c < 3; c++)
               {
                 if (mask & (1 << c))
                   out[c] = 0;
                 else
                   out[c] = in[c];
               }
+
+            if (mask & (1 << 3))
+              out[3] = opacity_value;
+            else
+              out[3] = in[3];
 
             in  += 4;
             out += 4;
@@ -220,7 +257,8 @@ struct Process<guint8>
            gconstpointer     aux_buf,
            gpointer          out_buf,
            gint              n,
-           GimpComponentMask mask)
+           GimpComponentMask mask,
+           guint8            opacity_value)
   {
     const guint32 *in;
     guint32       *out;
@@ -230,7 +268,8 @@ struct Process<guint8>
 
     if (((guintptr) in_buf | (guintptr) aux_buf | (guintptr) out_buf) % 4)
       {
-        ProcessGeneric<guint8>::process (in_buf, aux_buf, out_buf, n, mask);
+        ProcessGeneric<guint8>::process (in_buf, aux_buf, out_buf, n,
+                                         mask, opacity_value);
 
         return;
       }
@@ -260,12 +299,27 @@ struct Process<guint8>
       }
     else
       {
-        for (i = 0; i < n; i++)
+        if (! (mask & GIMP_COMPONENT_MASK_ALPHA))
           {
-            *out = *in & in_mask;
+            for (i = 0; i < n; i++)
+              {
+                *out = *in & in_mask;
 
-            in++;
-            out++;
+                in++;
+                out++;
+              }
+          }
+        else
+          {
+            g_return_if_fail (opacity_value == 0xff);
+
+            for (i = 0; i < n; i++)
+              {
+                *out = (*in & in_mask) | 0xff000000u;
+
+                in++;
+                out++;
+              }
           }
       }
   }
@@ -283,7 +337,8 @@ gimp_operation_mask_components_process (GimpOperationMaskComponents *self,
                                         const GeglRectangle         *roi,
                                         gint                         level)
 {
-  Process<T>::process (in_buf, aux_buf, out_buf, samples, self->mask);
+  Process<T>::process (in_buf, aux_buf, out_buf, samples,
+                       self->mask, self->opacity_value);
 
   return TRUE;
 }
@@ -301,25 +356,32 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
   gegl_operation_set_format (operation, "aux",    format);
   gegl_operation_set_format (operation, "output", format);
 
-  switch (babl_format_get_bytes_per_pixel (format))
+  if (format != self->format)
     {
-    case 4:
-      self->process = (gpointer)
-                        gimp_operation_mask_components_process<guint8>;
-      break;
+      self->format = format;
 
-    case 8:
-      self->process = (gpointer)
-                        gimp_operation_mask_components_process<guint16>;
-      break;
+      self->opacity_value = get_opacity_value (format);
 
-    case 16:
-      self->process = (gpointer)
-                        gimp_operation_mask_components_process<guint32>;
-      break;
+      switch (babl_format_get_bytes_per_pixel (format))
+        {
+        case 4:
+          self->process = (gpointer)
+                            gimp_operation_mask_components_process<guint8>;
+          break;
 
-    default:
-      g_return_if_reached ();
+        case 8:
+          self->process = (gpointer)
+                            gimp_operation_mask_components_process<guint16>;
+          break;
+
+        case 16:
+          self->process = (gpointer)
+                            gimp_operation_mask_components_process<guint32>;
+          break;
+
+        default:
+          g_return_if_reached ();
+        }
     }
 }
 
@@ -439,23 +501,28 @@ gimp_operation_mask_components_process (const Babl        *format,
                                         gint               n,
                                         GimpComponentMask  mask)
 {
+  guint32 opacity_value = 0;
+
   g_return_if_fail (format != NULL);
   g_return_if_fail (in != NULL);
   g_return_if_fail (out != NULL);
   g_return_if_fail (n >= 0);
 
+  if (! aux && ! (mask & GIMP_COMPONENT_MASK_ALPHA))
+    opacity_value = get_opacity_value (format);
+
   switch (babl_format_get_bytes_per_pixel (format))
     {
     case 4:
-      Process<guint8>::process (in, aux, out, n, mask);
+      Process<guint8>::process (in, aux, out, n, mask, opacity_value);
       break;
 
     case 8:
-      Process<guint16>::process (in, aux, out, n, mask);
+      Process<guint16>::process (in, aux, out, n, mask, opacity_value);
       break;
 
     case 16:
-      Process<guint32>::process (in, aux, out, n, mask);
+      Process<guint32>::process (in, aux, out, n, mask, opacity_value);
       break;
 
     default:
