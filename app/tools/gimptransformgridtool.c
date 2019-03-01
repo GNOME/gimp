@@ -706,7 +706,7 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
                                          segs_out, n_segs_out,
                                          &matrix,
                                          0, 0);
-          g_object_add_weak_pointer (G_OBJECT (tg_tool->boundary_in),
+          g_object_add_weak_pointer (G_OBJECT (tg_tool->boundary_out),
                                      (gpointer) &tg_tool->boundary_out);
 
           gimp_canvas_item_set_visible (tg_tool->boundary_out,
