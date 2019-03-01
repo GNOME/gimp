@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 17:35+0100\n"
-"PO-Revision-Date: 2019-02-24 17:37+0100\n"
+"POT-Creation-Date: 2019-03-01 20:22+0100\n"
+"PO-Revision-Date: 2019-03-01 20:24+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1044,13 +1044,13 @@ msgid "Windows"
 msgstr "Okna"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:593
+#: ../app/actions/actions.c:617
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:619
+#: ../app/actions/actions.c:643
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -6377,92 +6377,92 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Odcienie _szarości…"
 
-#: ../app/actions/image-commands.c:559
+#: ../app/actions/image-commands.c:560
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Zapisanie profilu kolorów się nie powiodło: %s"
 
-#: ../app/actions/image-commands.c:598
+#: ../app/actions/image-commands.c:599
 msgid "Save Color Profile"
 msgstr "Zapis profilu kolorów"
 
-#: ../app/actions/image-commands.c:646
+#: ../app/actions/image-commands.c:647
 msgid "Set Image Canvas Size"
 msgstr "Ustawienie wymiarów płótna obrazu"
 
-#: ../app/actions/image-commands.c:676 ../app/actions/image-commands.c:700
-#: ../app/actions/image-commands.c:1358
+#: ../app/actions/image-commands.c:677 ../app/actions/image-commands.c:701
+#: ../app/actions/image-commands.c:1364
 msgid "Resizing"
 msgstr "Zmienianie wymiarów"
 
-#: ../app/actions/image-commands.c:733
+#: ../app/actions/image-commands.c:734
 msgid "Set Image Print Resolution"
 msgstr "Ustawienie rozdzielczości drukowania"
 
-#: ../app/actions/image-commands.c:799 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:800 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:222 ../app/tools/gimpfliptool.c:134
 msgid "Flipping"
 msgstr "Odbijanie"
 
-#: ../app/actions/image-commands.c:823 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:824 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:828
+#: ../app/actions/image-commands.c:851 ../app/actions/layers-commands.c:831
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
-#: ../app/actions/image-commands.c:888
+#: ../app/actions/image-commands.c:889
 msgid "Cannot crop because the image has no content."
 msgstr "Nie można wykadrować, ponieważ obraz nie ma zawartości."
 
-#: ../app/actions/image-commands.c:894
+#: ../app/actions/image-commands.c:895
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ obraz jest już wykadrowany do zawartości."
 
-#: ../app/actions/image-commands.c:1029
+#: ../app/actions/image-commands.c:1035
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Konwertowanie do RGB (%s)"
 
-#: ../app/actions/image-commands.c:1067
+#: ../app/actions/image-commands.c:1073
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Konwertowanie do odcieni szarości (%s)"
 
-#: ../app/actions/image-commands.c:1129
+#: ../app/actions/image-commands.c:1135
 msgid "Converting to indexed colors"
 msgstr "Konwertowanie na kolory indeksowane"
 
-#: ../app/actions/image-commands.c:1217
+#: ../app/actions/image-commands.c:1223
 #, c-format
 msgid "Converting image to %s"
 msgstr "Konwertowanie obrazu do %s"
 
-#: ../app/actions/image-commands.c:1248
+#: ../app/actions/image-commands.c:1254
 msgid "Assign color profile"
 msgstr "Przydziel profil kolorów"
 
-#: ../app/actions/image-commands.c:1294
+#: ../app/actions/image-commands.c:1300
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Konwertowanie do „%s”"
 
-#: ../app/actions/image-commands.c:1400
+#: ../app/actions/image-commands.c:1406
 msgid "Change Print Size"
 msgstr "Zmień rozmiar wydruku"
 
-#: ../app/actions/image-commands.c:1444
+#: ../app/actions/image-commands.c:1450
 msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1618
+#: ../app/actions/image-commands.c:1459 ../app/actions/layers-commands.c:1621
 #: ../app/dialogs/preferences-dialog.c:1669
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -7324,7 +7324,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Do _nowej warstwy"
 
-#: ../app/actions/layers-commands.c:262 ../app/actions/layers-commands.c:1467
+#: ../app/actions/layers-commands.c:262 ../app/actions/layers-commands.c:1470
 msgid "Layer Attributes"
 msgstr "Atrybuty warstwy"
 
@@ -7346,27 +7346,27 @@ msgstr "Nowa warstwa"
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../app/actions/layers-commands.c:734
+#: ../app/actions/layers-commands.c:737
 msgid "Set Layer Boundary Size"
 msgstr "Ustawienie wymiarów granic warstwy"
 
-#: ../app/actions/layers-commands.c:796
+#: ../app/actions/layers-commands.c:799
 msgid "Scale Layer"
 msgstr "Skalowanie warstwy"
 
-#: ../app/actions/layers-commands.c:838
+#: ../app/actions/layers-commands.c:841
 msgid "Crop Layer to Selection"
 msgstr "Kadruj warstwę według zaznaczenia"
 
-#: ../app/actions/layers-commands.c:868
+#: ../app/actions/layers-commands.c:871
 msgid "Crop Layer to Content"
 msgstr "Kadruj warstwę do zawartości"
 
-#: ../app/actions/layers-commands.c:881
+#: ../app/actions/layers-commands.c:884
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nie można wykadrować, ponieważ aktywna warstwa nie ma zawartości."
 
-#: ../app/actions/layers-commands.c:888
+#: ../app/actions/layers-commands.c:891
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ aktywna warstwa jest już wykadrowana do "
@@ -13762,51 +13762,51 @@ msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Połączenie widocznych warstw"
 
-#: ../app/core/gimpimage-merge.c:198
+#: ../app/core/gimpimage-merge.c:203
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Spłaszczenie obrazu"
 
-#: ../app/core/gimpimage-merge.c:220
+#: ../app/core/gimpimage-merge.c:232
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Nie można spłaszczyć obrazu bez żadnej widocznej warstwy."
 
-#: ../app/core/gimpimage-merge.c:245
+#: ../app/core/gimpimage-merge.c:260
 msgid "Cannot merge down a floating selection."
 msgstr "Nie można połączyć w dół oderwanego zaznaczenia."
 
-#: ../app/core/gimpimage-merge.c:252
+#: ../app/core/gimpimage-merge.c:267
 msgid "Cannot merge down an invisible layer."
 msgstr "Nie można połączyć w dół niewidocznej warstwy."
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:292
 msgid "Cannot merge down to a layer group."
 msgstr "Nie można połączyć w dół do grupy warstw."
 
-#: ../app/core/gimpimage-merge.c:284
+#: ../app/core/gimpimage-merge.c:299
 msgid "The layer to merge down to is locked."
 msgstr "Warstwa do połączenia w dół jest zablokowana."
 
-#: ../app/core/gimpimage-merge.c:296
+#: ../app/core/gimpimage-merge.c:311
 msgid "There is no visible layer to merge down to."
 msgstr "Nie ma widocznych warstw do połączenia w dół."
 
-#: ../app/core/gimpimage-merge.c:306
+#: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Połączenie w dół"
 
-#: ../app/core/gimpimage-merge.c:334
+#: ../app/core/gimpimage-merge.c:352
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Połączenie grupy warstw"
 
-#: ../app/core/gimpimage-merge.c:410
+#: ../app/core/gimpimage-merge.c:428
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Połączenie widocznych ścieżek"
 
-#: ../app/core/gimpimage-merge.c:446
+#: ../app/core/gimpimage-merge.c:464
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są co "
@@ -17891,7 +17891,7 @@ msgid "%s for constrained steps"
 msgstr "%s dla wymuszonych kroków"
 
 #: ../app/display/gimptoolgyroscope.c:724
-#: ../app/display/gimptooltransformgrid.c:1788
+#: ../app/display/gimptooltransformgrid.c:1812
 msgid "Click-Drag to rotate"
 msgstr "Kliknięcie i przeciągnięcie obróci"
 
@@ -17921,7 +17921,7 @@ msgid "%s to zoom"
 msgstr "%s powiększy"
 
 #: ../app/display/gimptoolhandlegrid.c:865
-#: ../app/display/gimptooltransformgrid.c:1779
+#: ../app/display/gimptooltransformgrid.c:1803
 msgid "Click-Drag to move"
 msgstr "Kliknięcie i przeciągnięcie przeniesie"
 
@@ -17934,7 +17934,7 @@ msgid "Click-Drag to shear and scale"
 msgstr "Kliknięcie i przeciągnięcie nachyli i przeskaluje"
 
 #: ../app/display/gimptoolhandlegrid.c:874
-#: ../app/display/gimptooltransformgrid.c:1767
+#: ../app/display/gimptooltransformgrid.c:1791
 msgid "Click-Drag to change perspective"
 msgstr "Kliknięcie i przeciągnięcie zmieni perspektywę"
 
@@ -18179,16 +18179,16 @@ msgstr "Prostokąt: "
 msgid "Position: "
 msgstr "Położenie: "
 
-#: ../app/display/gimptooltransformgrid.c:1772
-#: ../app/display/gimptooltransformgrid.c:1777
+#: ../app/display/gimptooltransformgrid.c:1796
+#: ../app/display/gimptooltransformgrid.c:1801
 msgid "Click-Drag to scale"
 msgstr "Kliknięcie i przeciągnięcie przeskaluje"
 
-#: ../app/display/gimptooltransformgrid.c:1781
+#: ../app/display/gimptooltransformgrid.c:1805
 msgid "Click-Drag to move the pivot point"
 msgstr "Kliknięcie i przeciągnięcie przemieści punkt osi"
 
-#: ../app/display/gimptooltransformgrid.c:1786
+#: ../app/display/gimptooltransformgrid.c:1810
 msgid "Click-Drag to shear"
 msgstr "Kliknięcie i przeciągnięcie nachyli"
 
@@ -18210,11 +18210,11 @@ msgstr "Wtyczka %s zwróciła kod powodzenia, ale nie zwróciła obrazu"
 msgid "%s plug-in could not open image"
 msgstr "Wtyczka %s nie może otworzyć obrazu"
 
-#: ../app/file/file-open.c:658
+#: ../app/file/file-open.c:659
 msgid "Image doesn't contain any layers"
 msgstr "Obraz nie zawiera żadnych warstw"
 
-#: ../app/file/file-open.c:717
+#: ../app/file/file-open.c:718
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otwarcie pliku „%s” się nie powiodło: %s"
@@ -19245,11 +19245,11 @@ msgstr "Tylko ruch"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/paint/gimpbrushcore.c:378
+#: ../app/paint/gimpbrushcore.c:370
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
 
-#: ../app/paint/gimpbrushcore.c:385
+#: ../app/paint/gimpbrushcore.c:377
 msgid "No paint dynamics available for use with this tool."
 msgstr "Brak dostępnych dynamik rysowania dla tego narzędzia."
 
@@ -19713,8 +19713,8 @@ msgstr "Odwrócenie"
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:330 ../app/pdb/transform-tools-cmds.c:171
 #: ../app/tools/gimpperspectivetool.c:82
-#: ../app/tools/gimptransformgridoptions.c:497
-#: ../app/tools/gimptransformgridoptions.c:506
+#: ../app/tools/gimptransformgridoptions.c:529
+#: ../app/tools/gimptransformgridoptions.c:538
 msgid "Perspective"
 msgstr "Perspektywa"
 
@@ -20159,7 +20159,7 @@ msgstr ""
 "Procedura „%s” została wywołana z wartością „%s”, jako parametr „%s” (#%d, "
 "typ %s). Ta wartość jest poza zakresem."
 
-#: ../app/pdb/image-cmds.c:2524
+#: ../app/pdb/image-cmds.c:2526
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -22764,8 +22764,8 @@ msgid "Show lattice"
 msgstr "Kratka"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:94 ../app/tools/gimptransformgridoptions.c:491
-#: ../app/tools/gimptransformgridoptions.c:502
+#: ../app/tools/gimpscaletool.c:94 ../app/tools/gimptransformgridoptions.c:523
+#: ../app/tools/gimptransformgridoptions.c:534
 msgid "Scale"
 msgstr "Skalowanie"
 
@@ -22937,7 +22937,7 @@ msgid "Use all visible layers when shrinking the selection"
 msgstr "Używa wszystkich widocznych warstw podczas zmniejszania zaznaczenia"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformgridoptions.c:122
+#: ../app/tools/gimptransformgridoptions.c:123
 msgid "Composition guides such as rule of thirds"
 msgstr "Prowadnice kompozycji, takie jak jedna trzecia"
 
@@ -23072,7 +23072,7 @@ msgstr "Rysuje maskę zaznaczonego obszaru"
 msgid "Move the mouse to change threshold"
 msgstr "Poruszenie myszą zmieni próg"
 
-#: ../app/tools/gimprotatetool.c:97 ../app/tools/gimptransformgridoptions.c:493
+#: ../app/tools/gimprotatetool.c:97 ../app/tools/gimptransformgridoptions.c:525
 msgid "Rotate"
 msgstr "Obrót"
 
@@ -23228,8 +23228,8 @@ msgstr "Nie można odjąć od pustego zaznaczenia."
 msgid "Cannot intersect with an empty selection."
 msgstr "Nie można przeciąć z pustym zaznaczeniem."
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:495
-#: ../app/tools/gimptransformgridoptions.c:504
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:527
+#: ../app/tools/gimptransformgridoptions.c:536
 msgid "Shear"
 msgstr "Nachylenie"
 
@@ -23471,132 +23471,147 @@ msgstr ""
 "Brak opcji\n"
 "powiązanych z narzędziem."
 
-#: ../app/tools/gimptransformgridoptions.c:107
+#: ../app/tools/gimptransformgridoptions.c:108
 msgid "Show image preview"
 msgstr "Podgląd obrazu"
 
-#: ../app/tools/gimptransformgridoptions.c:108
+#: ../app/tools/gimptransformgridoptions.c:109
 msgid "Show a preview of the transformed image"
 msgstr "Wyświetlenie podglądu przekształcanego obrazu"
 
-#: ../app/tools/gimptransformgridoptions.c:114
+#: ../app/tools/gimptransformgridoptions.c:115
 msgid "Image opacity"
 msgstr "Krycie obrazu"
 
-#: ../app/tools/gimptransformgridoptions.c:115
+#: ../app/tools/gimptransformgridoptions.c:116
 msgid "Opacity of the preview image"
 msgstr "Krycie obrazu podglądu"
 
-#: ../app/tools/gimptransformgridoptions.c:121
-#: ../app/tools/gimptransformgridoptions.c:413
+#: ../app/tools/gimptransformgridoptions.c:122
+#: ../app/tools/gimptransformgridoptions.c:414
 msgid "Guides"
 msgstr "Prowadnice"
 
-#: ../app/tools/gimptransformgridoptions.c:130
+#: ../app/tools/gimptransformgridoptions.c:131
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Rozmiar komórki siatki dla zmiennej liczby prowadnic kompozycji"
 
-#: ../app/tools/gimptransformgridoptions.c:436
+#: ../app/tools/gimptransformgridoptions.c:437
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 stopni (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:443
+#: ../app/tools/gimptransformgridoptions.c:444
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Ograniczenie kroków obrotu do 15 stopni"
 
-#: ../app/tools/gimptransformgridoptions.c:453
+#: ../app/tools/gimptransformgridoptions.c:454
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Stałe proporcje (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:460
+#: ../app/tools/gimptransformgridoptions.c:461
 msgid "Keep the original aspect ratio"
 msgstr "Utrzymywanie pierwotnych proporcji"
 
-#: ../app/tools/gimptransformgridoptions.c:465
+#: ../app/tools/gimptransformgridoptions.c:466
+#: ../app/tools/gimptransformgridoptions.c:496
 #, c-format
 msgid "Around center (%s)"
 msgstr "Wokół środka (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:472
+#: ../app/tools/gimptransformgridoptions.c:473
 msgid "Scale around the center point"
 msgstr "Skalowanie wokół punktu środkowego"
 
-#: ../app/tools/gimptransformgridoptions.c:488
+#: ../app/tools/gimptransformgridoptions.c:483
+#, c-format
+msgid "Constrain handles (%s)"
+msgstr "Ograniczenie uchwytów (%s)"
+
+#: ../app/tools/gimptransformgridoptions.c:491
+#, c-format
+msgid "Constrain handles to move along edges and diagonal (%s)"
+msgstr "Ograniczenie ruchu uchwytów wzdłuż krawędzi i przekątnej (%s)"
+
+#: ../app/tools/gimptransformgridoptions.c:504
+msgid "Transform around the center point"
+msgstr "Przekształcenie wokół punktu środkowego"
+
+#: ../app/tools/gimptransformgridoptions.c:520
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Ograniczenie (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:489
+#: ../app/tools/gimptransformgridoptions.c:521
 msgid "Move"
 msgstr "Ruch"
 
-#: ../app/tools/gimptransformgridoptions.c:490
+#: ../app/tools/gimptransformgridoptions.c:522
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Ograniczenie ruchu do 45 stopni od środka (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:492
+#: ../app/tools/gimptransformgridoptions.c:524
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Utrzymywanie proporcji podczas skalowania (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:494
+#: ../app/tools/gimptransformgridoptions.c:526
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Ograniczenie obrotu do 15-stopniowych kroków (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:496
+#: ../app/tools/gimptransformgridoptions.c:528
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Nachylanie tylko wzdłuż kierunku krawędzi (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:498
+#: ../app/tools/gimptransformgridoptions.c:530
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Ograniczenie ruchu uchwytów perspektywy wzdłuż krawędzi i przekątnej (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:501
+#: ../app/tools/gimptransformgridoptions.c:533
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Od osi  (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:503
+#: ../app/tools/gimptransformgridoptions.c:535
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Skalowanie od punktu osi (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:505
+#: ../app/tools/gimptransformgridoptions.c:537
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Nachylanie przeciwległej krawędzi o tę samą wartość (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:507
+#: ../app/tools/gimptransformgridoptions.c:539
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Utrzymywanie położenia osi podczas zmieniania perspektywy (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:510
+#: ../app/tools/gimptransformgridoptions.c:542
 msgid "Pivot"
 msgstr "Oś"
 
-#: ../app/tools/gimptransformgridoptions.c:511
+#: ../app/tools/gimptransformgridoptions.c:543
 #, c-format
 msgid "Snap (%s)"
 msgstr "Przyciąganie (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:512
+#: ../app/tools/gimptransformgridoptions.c:544
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Przyciąganie osi do rogów i środka (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:513
+#: ../app/tools/gimptransformgridoptions.c:545
 msgid "Lock"
 msgstr "Blokowanie"
 
-#: ../app/tools/gimptransformgridoptions.c:514
+#: ../app/tools/gimptransformgridoptions.c:546
 msgid "Lock pivot position to canvas"
 msgstr "Blokowanie położenia osi do płótna"
 
