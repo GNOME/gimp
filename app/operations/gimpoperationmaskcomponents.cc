@@ -210,6 +210,8 @@ struct Process : ProcessGeneric<T>
 {
 };
 
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+
 template <>
 struct Process<guint8>
 {
@@ -268,6 +270,8 @@ struct Process<guint8>
       }
   }
 };
+
+#endif /* G_BYTE_ORDER == G_LITTLE_ENDIAN */
 
 template <class T>
 static gboolean
