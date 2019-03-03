@@ -47,6 +47,7 @@ struct _GimpWarpOptions
   GimpInterpolationType  interpolation;
   GeglAbyssPolicy        abyss_policy;
   gboolean               high_quality_preview;
+  gboolean               real_time_preview;
 
   gboolean               stroke_during_motion;
   gboolean               stroke_periodically;
