@@ -51,6 +51,15 @@ Core:
     otherwise, align the cleared rectangle to the channel buffer's tile
     grid, so that all affected tiles are dropped, rather than zeroed.
     Furthermore, only update the affected region of the channel.
+  - Brush and pattern saving logics has been moved to core code (instead
+    of plug-in).
+  - Clipboard brushes and pattern can now be duplicated.
+  - Add an "Open as Image" button to the brushes dialog.
+  - Parametric brushes are now 32-bit float to avoid posterization on
+    large brushes.
+    Note: raster brushes are still 8-bit and plug-ins only have access
+    to 8-bit versions of high-precision brushes/patterns. New API will
+    be required to handle high-precision data.
 
 User interface:
 
@@ -65,6 +74,7 @@ User interface:
   - Foreground and background color icons will now display out-of-gamut
     warning on indexed images for colors outside of the palette, as well
     as on grayscale images, for non-gray colors.
+  - Pack color picker and hexadecimal entry on same line in Color dock.
 
 Usability:
 
@@ -122,6 +132,9 @@ Tools:
   - Selection by color is now parallelized, hence improving speed of the
     Select by Color tool (and any other processing which may share this
     piece of code now or in the future).
+  - Add "Constrain handles" and "Around center" options to the
+    perspective-transform tool's GUI, which are similar to the
+    corresponding options of the unified-transform tool.
 
 Plug-ins:
 
