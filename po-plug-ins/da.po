@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-20 12:31+0000\n"
-"PO-Revision-Date: 2019-01-27 15:12+0100\n"
+"POT-Creation-Date: 2019-02-24 18:28+0000\n"
+"PO-Revision-Date: 2019-02-26 19:39+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -379,11 +379,8 @@ msgid "_Border Average..."
 msgstr "_Kantgennemsnit …"
 
 #: ../plug-ins/common/border-average.c:173
-msgid "Border Average"
-msgstr "Kantgennemsnit"
-
 #: ../plug-ins/common/border-average.c:358
-msgid "Borderaverage"
+msgid "Border Average"
 msgstr "Kantgennemsnit"
 
 #: ../plug-ins/common/border-average.c:380
@@ -684,7 +681,7 @@ msgstr "Mætning"
 #: ../plug-ins/gimpressionist/size.c:158
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
-msgstr "Lyshed"
+msgstr "Valør"
 
 #: ../plug-ins/common/cml-explorer.c:307
 msgid "(None)"
@@ -775,7 +772,7 @@ msgstr "Mæ_tning"
 
 #: ../plug-ins/common/cml-explorer.c:1333 ../plug-ins/common/filter-pack.c:707
 msgid "_Value"
-msgstr "_Lyshed"
+msgstr "_Valør"
 
 #: ../plug-ins/common/cml-explorer.c:1337
 msgid "_Advanced"
@@ -952,7 +949,7 @@ msgstr "Gem parametre til CML-værktøjet"
 
 #: ../plug-ins/common/cml-explorer.c:2065 ../plug-ins/common/curve-bend.c:841
 #: ../plug-ins/common/file-dicom.c:1376 ../plug-ins/common/file-mng.c:648
-#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:860
+#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:471 ../plug-ins/common/file-png.c:1596
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
@@ -1119,7 +1116,7 @@ msgstr "Sortér efter mætning"
 
 #: ../plug-ins/common/colormap-remap.c:509
 msgid "Sort on Value"
-msgstr "Sortér efter lyshed"
+msgstr "Sortér efter valør"
 
 #: ../plug-ins/common/colormap-remap.c:513
 msgid "Reverse Order"
@@ -1185,7 +1182,7 @@ msgstr "_Mætning:"
 
 #: ../plug-ins/common/compose.c:160
 msgid "_Value:"
-msgstr "_Lyshed:"
+msgstr "_Valør:"
 
 #: ../plug-ins/common/compose.c:164
 msgid "_Lightness:"
@@ -1655,7 +1652,7 @@ msgstr "mætning"
 
 #: ../plug-ins/common/decompose.c:140
 msgid "value"
-msgstr "lyshed"
+msgstr "valør"
 
 #: ../plug-ins/common/decompose.c:144
 msgid "lightness"
@@ -2097,20 +2094,19 @@ msgstr "EOF eller fejl ved læsning af billedheader"
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
+#: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:353 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:370
-#: ../plug-ins/common/file-pdf-load.c:849 ../plug-ins/common/file-pix.c:357
-#: ../plug-ins/common/file-png.c:934 ../plug-ins/common/file-pnm.c:566
-#: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
-#: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
-#: ../plug-ins/common/file-wmf.c:992 ../plug-ins/common/file-xbm.c:740
-#: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
-#: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
-#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
-#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:131
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:849
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:934
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
+#: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:992
+#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
+#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
+#: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:185
+#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
+#: ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2187,10 +2183,9 @@ msgstr "\"%s\": EOF eller fejl ved læsning af paletdata"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gbr.c:711
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1309
-#: ../plug-ins/common/file-heif.c:634 ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:747
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
+#: ../plug-ins/common/file-gih.c:893 ../plug-ins/common/file-heif.c:634
+#: ../plug-ins/common/file-html-table.c:238 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1589
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
@@ -2243,7 +2238,7 @@ msgstr "Brug _1 byte-rækkekomprimering (RLE)"
 
 #: ../plug-ins/common/file-csource.c:983
 msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr "G_em alfa-kanal (RGBA/RGB)"
+msgstr "G_em alfakanal (RGBA/RGB)"
 
 #. RGB-565
 #.
@@ -2306,7 +2301,7 @@ msgstr "\"%s\" er ikke en DICOM-fil."
 
 #: ../plug-ins/common/file-dicom.c:1341
 msgid "Cannot save images with alpha channel."
-msgstr "Kan ikke gemme billeder med alfa-kanal."
+msgstr "Kan ikke gemme billeder med alfakanal."
 
 #: ../plug-ins/common/file-dicom.c:1360 ../plug-ins/common/file-ps.c:1232
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
@@ -2314,53 +2309,21 @@ msgstr "Kan ikke gemme billeder med alfa-kanal."
 msgid "Cannot operate on unknown image types."
 msgstr "Kan ikke arbejde med ukendte billedtyper."
 
-#: ../plug-ins/common/file-gbr.c:131 ../plug-ins/common/file-gbr.c:153
+#: ../plug-ins/common/file-gbr.c:109
 msgid "GIMP brush"
 msgstr "GIMP-pensel"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
-#, c-format
-msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr "Ugyldige headerdata i \"%s\": bredde=%lu, højde=%lu, byte=%lu"
-
-#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
-#: ../plug-ins/common/file-gbr.c:456
-#, c-format
-msgid "Unsupported brush format"
-msgstr "Ikke-understøttet pernselformat"
-
-#: ../plug-ins/common/file-gbr.c:468
-#, c-format
-msgid "Invalid header data in '%s': Brush name is too long: %lu"
-msgstr "Ugyldige headerdata i \"%s\": Penselnavnet er for langt: %lu"
-
-#: ../plug-ins/common/file-gbr.c:482
-#, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "Fejl i GIMP-penselfilen \"%s\""
-
-#: ../plug-ins/common/file-gbr.c:490
-#, c-format
-msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Ugyldig UTF-8-tekst i penselfilen \"%s\"."
-
-#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
-#: ../plug-ins/common/file-gih.c:1211 ../plug-ins/common/file-pat.c:398
-#: ../plug-ins/gradient-flare/gradient-flare.c:3065
-msgid "Unnamed"
-msgstr "Unavngivet"
-
-#: ../plug-ins/common/file-gbr.c:831
+#: ../plug-ins/common/file-gbr.c:316
 msgid "Brush"
 msgstr "Pensel"
 
-#: ../plug-ins/common/file-gbr.c:847 ../plug-ins/common/file-gih.c:944
-#: ../plug-ins/common/file-pat.c:659 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:332 ../plug-ins/common/file-gih.c:528
+#: ../plug-ins/common/file-pat.c:302 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Beskrivelse:"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:859 ../plug-ins/common/grid.c:795
+#: ../plug-ins/common/file-gbr.c:344 ../plug-ins/common/grid.c:795
 msgid "Spacing:"
 msgstr "Mellemrum:"
 
@@ -2513,69 +2476,65 @@ msgstr ""
 msgid "The default comment is limited to %d characters."
 msgstr "Standardkommentaren er begrænset til %d tegn."
 
-#: ../plug-ins/common/file-gih.c:189 ../plug-ins/common/file-gih.c:213
+#: ../plug-ins/common/file-gih.c:176
 msgid "GIMP brush (animated)"
 msgstr "GIMP-pensel (animeret)"
 
-#: ../plug-ins/common/file-gih.c:502
-#, c-format
-msgid "Brush name is too long: %lu"
-msgstr "Penselnavnet er for langt: %lu"
-
-#: ../plug-ins/common/file-gih.c:595
-msgid "GIMP brush file appears to be corrupted."
-msgstr "GIMP-penselfil synes at være beskadiget."
-
 # med småt da der står Eksportér billede som foran
-#: ../plug-ins/common/file-gih.c:926
+#: ../plug-ins/common/file-gih.c:510
 msgid "Brush Pipe"
 msgstr "penselrørledning"
 
-#: ../plug-ins/common/file-gih.c:958
+#: ../plug-ins/common/file-gih.c:542
 msgid "Spacing (percent):"
 msgstr "Mellemrum (procent):"
 
-#: ../plug-ins/common/file-gih.c:1011
+#: ../plug-ins/common/file-gih.c:595
 msgid "Pixels"
 msgstr "Pixels"
 
-#: ../plug-ins/common/file-gih.c:1016
+#: ../plug-ins/common/file-gih.c:600
 msgid "Cell size:"
 msgstr "Cellestørrelse:"
 
-#: ../plug-ins/common/file-gih.c:1028
+#: ../plug-ins/common/file-gih.c:612
 msgid "Number of cells:"
 msgstr "Antal celler:"
 
 # med småt, da det optræder inde i en tekst; der står et tal foran, som kan være 1
-#: ../plug-ins/common/file-gih.c:1053
+#: ../plug-ins/common/file-gih.c:637
 msgid " Rows of "
 msgstr " række(r) med "
 
 # med småt, da det optræder inde i en tekst; der står et tal foran, som kan være 1
-#: ../plug-ins/common/file-gih.c:1065
+#: ../plug-ins/common/file-gih.c:649
 msgid " Columns on each layer"
 msgstr " kolonne(r) i hvert lag"
 
-#: ../plug-ins/common/file-gih.c:1069
+#: ../plug-ins/common/file-gih.c:653
 msgid " (Width Mismatch!) "
 msgstr " (bredde passer ikke!) "
 
-#: ../plug-ins/common/file-gih.c:1073
+#: ../plug-ins/common/file-gih.c:657
 msgid " (Height Mismatch!) "
 msgstr " (højde passer ikke!) "
 
-#: ../plug-ins/common/file-gih.c:1078
+#: ../plug-ins/common/file-gih.c:662
 msgid "Display as:"
 msgstr "Vis som:"
 
-#: ../plug-ins/common/file-gih.c:1089
+#: ../plug-ins/common/file-gih.c:673
 msgid "Dimension:"
 msgstr "Dimensioner:"
 
-#: ../plug-ins/common/file-gih.c:1162
+#: ../plug-ins/common/file-gih.c:746
 msgid "Ranks:"
 msgstr "Elementer:"
+
+#: ../plug-ins/common/file-gih.c:795
+#: ../plug-ins/gradient-flare/gradient-flare.c:3065
+msgid "Unnamed"
+msgstr "Unavngivet"
 
 #: ../plug-ins/common/file-header.c:82
 msgid "C source code header"
@@ -3005,21 +2964,11 @@ msgstr ""
 msgid "MNG animation"
 msgstr "MNG-animation"
 
-#: ../plug-ins/common/file-pat.c:103 ../plug-ins/common/file-pat.c:126
+#: ../plug-ins/common/file-pat.c:83
 msgid "GIMP pattern"
 msgstr "GIMP-mønster"
 
-#: ../plug-ins/common/file-pat.c:373
-#, c-format
-msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-msgstr "Ugyldige headerdata i \"%s\": Mønsternavnet er for langt: %lu"
-
-#: ../plug-ins/common/file-pat.c:392
-#, c-format
-msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Ugyldig UTF-8-tekst i mønsterfilen \"%s\"."
-
-#: ../plug-ins/common/file-pat.c:644
+#: ../plug-ins/common/file-pat.c:287
 msgid "Pattern"
 msgstr "Mønster"
 
@@ -3062,35 +3011,35 @@ msgstr "Opløsningen er over grænsen i XCX-hovedet; bruger 72×72"
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Billedet er for stort: bredde %d × højde %d"
 
-#: ../plug-ins/common/file-pcx.c:531
+#: ../plug-ins/common/file-pcx.c:545
 msgid "Unusual PCX flavour, giving up"
 msgstr "Usædvanlig PCX-variant, giver op"
 
-#: ../plug-ins/common/file-pcx.c:813 ../plug-ins/common/file-pnm.c:1245
+#: ../plug-ins/common/file-pcx.c:827 ../plug-ins/common/file-pnm.c:1245
 msgid "Cannot export images with alpha channel."
-msgstr "Kan ikke eksportere billeder med alfa-kanal."
+msgstr "Kan ikke eksportere billeder med alfakanal."
 
-#: ../plug-ins/common/file-pcx.c:833
+#: ../plug-ins/common/file-pcx.c:847
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Ugyldig x-forskydning: %d"
 
-#: ../plug-ins/common/file-pcx.c:839
+#: ../plug-ins/common/file-pcx.c:853
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Ugyldig y-forskydning: %d"
 
-#: ../plug-ins/common/file-pcx.c:845
+#: ../plug-ins/common/file-pcx.c:859
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Højre kant er over grænsen (skal være < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:852
+#: ../plug-ins/common/file-pcx.c:866
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Nedre kant er over grænsen (skal være < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:926
+#: ../plug-ins/common/file-pcx.c:940
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Skrivning til filen \"%s\" mislykkedes: %s"
@@ -3482,7 +3431,7 @@ msgstr "Kunne ikke fortolke PostScript-filen \"%s\""
 #: ../plug-ins/common/file-ps.c:1219
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
-msgstr "PostScript-eksport kan ikke håndtere billeder med alfa-kanaler"
+msgstr "PostScript-eksport kan ikke håndtere billeder med alfakanaler"
 
 #: ../plug-ins/common/file-ps.c:3394
 msgid "Import from PostScript"
@@ -4039,7 +3988,7 @@ msgstr "Billeddybden understøttes ikke"
 #: ../plug-ins/common/file-sunras.c:586
 #, c-format
 msgid "SUNRAS export cannot handle images with alpha channels"
-msgstr "Kan ikke eksportere billeder med alfa-kanaler til SUNRAS"
+msgstr "Kan ikke eksportere billeder med alfakanaler til SUNRAS"
 
 #: ../plug-ins/common/file-sunras.c:597
 msgid "Can't operate on unknown image types"
@@ -4246,7 +4195,7 @@ msgid ""
 "which has no alpha channel."
 msgstr ""
 "Du kan ikke gemme en markørmaske for et billede\n"
-"som ikke har nogen alfa-kanal."
+"som ikke har nogen alfakanal."
 
 #: ../plug-ins/common/file-xbm.c:1250
 msgid "XBM"
@@ -4390,7 +4339,7 @@ msgid ""
 "theme-size\"."
 msgstr ""
 "Vælg billedernes nominelle størrelse.\n"
-"Har du ingen planer om at lave markører i flere størrelser, eller du du ikke "
+"Har du ingen planer om at lave markører i flere størrelser, eller du ikke "
 "aner det, så lad den stå på \"32px\".\n"
 "Nominel størrelse har ingen relation til faktisk størrelse (højde eller "
 "bredde).\n"
@@ -4625,7 +4574,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xwd.c:636
 msgid "Cannot export images with alpha channels."
-msgstr "Kan ikke eksportere billeder med alfa-kanaler."
+msgstr "Kan ikke eksportere billeder med alfakanaler."
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
@@ -4886,7 +4835,7 @@ msgstr "_Avanceret"
 
 #: ../plug-ins/common/filter-pack.c:731
 msgid "Value Variations"
-msgstr "Variationer i lyshed"
+msgstr "Variationer i valør"
 
 #: ../plug-ins/common/filter-pack.c:773
 msgid "Saturation Variations"
@@ -4906,7 +4855,7 @@ msgstr "_Mætning"
 
 #: ../plug-ins/common/filter-pack.c:830
 msgid "V_alue"
-msgstr "_Lyshed"
+msgstr "Va_lør"
 
 #: ../plug-ins/common/filter-pack.c:856
 msgid "Show"
@@ -5393,7 +5342,7 @@ msgstr "Filter"
 
 #: ../plug-ins/common/nl-filter.c:1051
 msgid "_Alpha trimmed mean"
-msgstr "_Alfa-trimmet gennemsnit"
+msgstr "_Alfatrimmet gennemsnit"
 
 #: ../plug-ins/common/nl-filter.c:1053
 msgid "Op_timal estimation"
@@ -6726,7 +6675,7 @@ msgstr ""
 
 #: ../plug-ins/file-bmp/bmp-save.c:184 ../plug-ins/file-bmp/bmp-save.c:217
 msgid "Alpha channel will be ignored."
-msgstr "Alfa-kanal vil blive ignoreret."
+msgstr "Alfakanal vil blive ignoreret."
 
 # https://en.wikipedia.org/wiki/Run-length_encoding
 #. Run-Length Encoded
@@ -6793,7 +6742,7 @@ msgstr "Afkod YCoCg (skaleret)"
 
 #: ../plug-ins/file-dds/dds.c:196
 msgid "Decode Alpha exponent"
-msgstr "Afkod alfa-eksponent"
+msgstr "Afkod alfaeksponent"
 
 #: ../plug-ins/file-dds/ddsread.c:1266
 msgid "Load DDS"
@@ -6879,11 +6828,11 @@ msgstr "Gamma:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2168
 msgid "Preserve alpha test coverage"
-msgstr "Bevar alfa-testdækning"
+msgstr "Bevar alfatestdækning"
 
 #: ../plug-ins/file-dds/ddswrite.c:2179
 msgid "Alpha test threshold:"
-msgstr "Alfa-testtærskel:"
+msgstr "Alfatesttærskel:"
 
 #: ../plug-ins/file-exr/file-exr.c:193
 #, c-format
@@ -6928,7 +6877,7 @@ msgstr "FITS-fil indeholder ingen fremviselige billeder"
 
 #: ../plug-ins/file-fits/fits.c:457
 msgid "FITS export cannot handle images with alpha channels"
-msgstr "FITS-eksport kan ikke håndtere billeder med alfa-kanaler"
+msgstr "FITS-eksport kan ikke håndtere billeder med alfakanaler"
 
 #: ../plug-ins/file-fits/fits.c:1146
 msgid "Load FITS File"
@@ -7557,7 +7506,7 @@ msgstr "TIFF-kanal"
 #: ../plug-ins/file-tiff/file-tiff-save.c:606
 #, c-format
 msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr "TIFF-eksport kan ikke håndtere indekserede billeder med en alfa-kanal."
+msgstr "TIFF-eksport kan ikke håndtere indekserede billeder med en alfakanal."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:619
 msgid ""
@@ -7646,11 +7595,11 @@ msgstr "Billedkvalitet"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:157
 msgid "Alpha quality:"
-msgstr "Alfa-kvalitet:"
+msgstr "Alfakvalitet:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:165
 msgid "Alpha channel quality"
-msgstr "Alfa-kanalkvalitet"
+msgstr "Alfakanalkvalitet"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:190
 msgid "Source type:"
@@ -8994,7 +8943,7 @@ msgstr "Vinkelstørrelsen på den første pensel der skal laves"
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr "Værdien (lysstyrken) i området bestemmer penselstrøgenes retning"
+msgstr "Valøren (lysstyrken) i området bestemmer penselstrøgenes retning"
 
 #: ../plug-ins/gimpressionist/orientation.c:155
 #: ../plug-ins/gimpressionist/size.c:162
@@ -9326,7 +9275,7 @@ msgstr "Størrelse afhænger af:"
 #: ../plug-ins/gimpressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "Værdien (lysstyrken) af området bestemmer størrelsen på strøget"
+msgstr "Valøren (lysstyrken) af området bestemmer størrelsen på strøget"
 
 #: ../plug-ins/gimpressionist/size.c:163
 msgid ""
@@ -10468,7 +10417,7 @@ msgstr "Skalér farvetone med:"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:654
 msgid "Scale value by:"
-msgstr "Skalér lyshed med:"
+msgstr "Skalér valør med:"
 
 #. Full color control section
 #: ../plug-ins/ifs-compose/ifs-compose.c:671
@@ -12726,6 +12675,36 @@ msgstr "_Skanner/kamera …"
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Overfører data fra skanner/kamera"
+
+#~ msgid "Borderaverage"
+#~ msgstr "Kantgennemsnit"
+
+#~ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+#~ msgstr "Ugyldige headerdata i \"%s\": bredde=%lu, højde=%lu, byte=%lu"
+
+#~ msgid "Unsupported brush format"
+#~ msgstr "Ikke-understøttet pernselformat"
+
+#~ msgid "Invalid header data in '%s': Brush name is too long: %lu"
+#~ msgstr "Ugyldige headerdata i \"%s\": Penselnavnet er for langt: %lu"
+
+#~ msgid "Error in GIMP brush file '%s'"
+#~ msgstr "Fejl i GIMP-penselfilen \"%s\""
+
+#~ msgid "Invalid UTF-8 string in brush file '%s'."
+#~ msgstr "Ugyldig UTF-8-tekst i penselfilen \"%s\"."
+
+#~ msgid "Brush name is too long: %lu"
+#~ msgstr "Penselnavnet er for langt: %lu"
+
+#~ msgid "GIMP brush file appears to be corrupted."
+#~ msgstr "GIMP-penselfil synes at være beskadiget."
+
+#~ msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+#~ msgstr "Ugyldige headerdata i \"%s\": Mønsternavnet er for langt: %lu"
+
+#~ msgid "Invalid UTF-8 string in pattern file '%s'."
+#~ msgstr "Ugyldig UTF-8-tekst i mønsterfilen \"%s\"."
 
 #~ msgid "Transform image with the Mandelbrot Fractal"
 #~ msgstr "Transformér billede med Mandelbrot-fraktalen"
