@@ -41,14 +41,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #include <libgimpbase/gimpparasiteio.h>
-
-#include "app/core/gimpbrush-header.h"
-#include "app/core/gimppattern-header.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -88,25 +83,17 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void      query               (void);
-static void      run                 (const gchar      *name,
-                                      gint              nparams,
-                                      const GimpParam  *param,
-                                      gint             *nreturn_vals,
-                                      GimpParam       **return_vals);
+static void      query           (void);
+static void      run             (const gchar      *name,
+                                  gint              nparams,
+                                  const GimpParam  *param,
+                                  gint             *nreturn_vals,
+                                  GimpParam       **return_vals);
 
-static gboolean  gih_save_dialog     (gint32            image_ID);
-static gboolean  gih_save_one_brush  (GOutputStream    *output,
-                                      gint32            drawable_ID,
-                                      GeglRectangle    *rect,
-                                      const gchar      *name,
-                                      GError          **error);
-static gboolean  gih_save_image      (GFile            *file,
-                                      gint32            image_ID,
-                                      gint32            orig_image_ID,
-                                      gint32            drawable_ID,
-                                      GError          **error);
+static gboolean  gih_save_dialog (gint32            image_ID);
 
+
+/*  private variables  */
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -115,9 +102,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
-
-
-/*  private variables  */
 
 static BrushInfo info =
 {
@@ -198,12 +182,11 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
   gint32             drawable_ID;
-  gint               i;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
+  gint               i;
 
   INIT_I18N();
-  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
@@ -216,8 +199,7 @@ run (const gchar      *name,
   if (strcmp (name, SAVE_PROC) == 0)
     {
       GFile        *file;
-      GimpParasite *name_parasite;
-      GimpParasite *pipe_parasite;
+      GimpParasite *parasite;
       gint32        orig_image_ID;
 
       image_ID    = param[1].data.d_int32;
@@ -247,17 +229,17 @@ run (const gchar      *name,
           /*  Possibly retrieve data  */
           gimp_get_data (SAVE_PROC, &info);
 
-          name_parasite = gimp_image_get_parasite (orig_image_ID,
-                                                   "gimp-brush-pipe-name");
-          if (name_parasite)
+          parasite = gimp_image_get_parasite (orig_image_ID,
+                                              "gimp-brush-pipe-name");
+          if (parasite)
             {
               strncpy (info.description,
-                       gimp_parasite_data (name_parasite),
+                       gimp_parasite_data (parasite),
                        MIN (sizeof (info.description),
-                            gimp_parasite_data_size (name_parasite)));
+                            gimp_parasite_data_size (parasite)));
               info.description[sizeof (info.description) - 1] = '\0';
 
-              gimp_parasite_free (name_parasite);
+              gimp_parasite_free (parasite);
             }
           else
             {
@@ -292,13 +274,13 @@ run (const gchar      *name,
           gihparams.cellwidth  = gimp_image_width (image_ID)  / gihparams.cols;
           gihparams.cellheight = gimp_image_height (image_ID) / gihparams.rows;
 
-          pipe_parasite = gimp_image_get_parasite (orig_image_ID,
-                                                   "gimp-brush-pipe-parameters");
-          if (pipe_parasite)
+          parasite = gimp_image_get_parasite (orig_image_ID,
+                                              "gimp-brush-pipe-parameters");
+          if (parasite)
             {
-              gimp_pixpipe_params_parse (gimp_parasite_data (pipe_parasite),
+              gimp_pixpipe_params_parse (gimp_parasite_data (parasite),
                                          &gihparams);
-              gimp_parasite_free (pipe_parasite);
+              gimp_parasite_free (parasite);
             }
 
           /* Force default rank to same as number of cells if there is
@@ -347,28 +329,67 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
-          pipe_parasite = gimp_image_get_parasite (orig_image_ID,
-                                                   "gimp-brush-pipe-parameters");
-          if (pipe_parasite)
+          parasite = gimp_image_get_parasite (orig_image_ID,
+                                              "gimp-brush-pipe-parameters");
+          if (parasite)
             {
-              gimp_pixpipe_params_parse (gimp_parasite_data (pipe_parasite),
+              gimp_pixpipe_params_parse (gimp_parasite_data (parasite),
                                          &gihparams);
-              gimp_parasite_free (pipe_parasite);
+              gimp_parasite_free (parasite);
             }
           break;
         }
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (gih_save_image (file, image_ID, orig_image_ID, drawable_ID,
-                              &error))
+          GimpParam *save_retvals;
+          gint       n_save_retvals;
+          gchar     *paramstring;
+
+          paramstring = gimp_pixpipe_params_build (&gihparams);
+
+          save_retvals =
+            gimp_run_procedure ("file-gih-save-internal",
+                                &n_save_retvals,
+                                GIMP_PDB_INT32,    GIMP_RUN_NONINTERACTIVE,
+                                GIMP_PDB_IMAGE,    image_ID,
+                                GIMP_PDB_DRAWABLE, drawable_ID,
+                                GIMP_PDB_STRING,   param[3].data.d_string,
+                                GIMP_PDB_STRING,   param[4].data.d_string,
+                                GIMP_PDB_INT32,    info.spacing,
+                                GIMP_PDB_STRING,   info.description,
+                                GIMP_PDB_STRING,   paramstring,
+                                GIMP_PDB_END);
+
+          if (save_retvals[0].data.d_status == GIMP_PDB_SUCCESS)
             {
               gimp_set_data (SAVE_PROC, &info, sizeof (info));
+
+              parasite = gimp_parasite_new ("gimp-brush-pipe-name",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (info.description) + 1,
+                                            info.description);
+              gimp_image_attach_parasite (orig_image_ID, parasite);
+              gimp_parasite_free (parasite);
+
+              parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (paramstring) + 1,
+                                            paramstring);
+              gimp_image_attach_parasite (orig_image_ID, parasite);
+              gimp_parasite_free (parasite);
             }
           else
             {
+              g_set_error (&error, 0, 0,
+                           "Running procedure 'file-gih-save-internal' "
+                           "failed: %s",
+                           gimp_get_pdb_error ());
+
               status = GIMP_PDB_EXECUTION_ERROR;
             }
+
+          g_free (paramstring);
         }
 
       gimp_pixpipe_params_free (&gihparams);
@@ -777,238 +798,4 @@ gih_save_dialog (gint32 image_ID)
     gimp_image_delete_guide (image_ID, cellh_adjust.guides[i]);
 
   return run;
-}
-
-static gboolean
-gih_save_one_brush (GOutputStream  *output,
-                    gint32          drawable_ID,
-                    GeglRectangle  *rect,
-                    const gchar    *name,
-                    GError        **error)
-{
-  GeglBuffer      *buffer;
-  const Babl      *format;
-  GimpBrushHeader  bh;
-  guchar          *data;
-  GimpImageType    drawable_type;
-  gint             bpp;
-  gint             y;
-
-  buffer = gimp_drawable_get_buffer (drawable_ID);
-
-  drawable_type = gimp_drawable_type (drawable_ID);
-
-  if (! name)
-    name = _("Unnamed");
-
-  switch (drawable_type)
-    {
-    case GIMP_GRAY_IMAGE:
-    case GIMP_GRAYA_IMAGE: /* alpha channel is ignored */
-      format = babl_format ("Y' u8");
-      break;
-
-    case GIMP_RGB_IMAGE: /* alpha channel is added */
-    case GIMP_RGBA_IMAGE:
-      format = babl_format ("R'G'B'A u8");
-      break;
-
-    default:
-      g_return_val_if_reached (FALSE);
-      break;
-    }
-
-  bpp = babl_format_get_bytes_per_pixel (format);
-
-  bh.header_size  = g_htonl (sizeof (bh) + strlen (name) + 1);
-  bh.version      = g_htonl (2);
-  bh.width        = g_htonl (rect->width);
-  bh.height       = g_htonl (rect->height);
-  bh.bytes        = g_htonl (bpp);
-  bh.magic_number = g_htonl (GIMP_BRUSH_MAGIC);
-  bh.spacing      = g_htonl (info.spacing);
-
-  if (! g_output_stream_write_all (output, &bh, sizeof (bh),
-                                   NULL, NULL, error))
-    {
-      return FALSE;
-    }
-
-  if (! g_output_stream_write_all (output, name, strlen (name) + 1,
-                                   NULL, NULL, error))
-    {
-      return FALSE;
-    }
-
-  data = g_malloc (rect->width * bpp);
-
-  for (y = 0; y < rect->height; y++)
-    {
-      gint x;
-
-      gegl_buffer_get (buffer,
-                       GEGL_RECTANGLE (rect->x, rect->y + y, rect->width, 1),
-                       1.0, format, data,
-                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-
-      switch (bpp)
-        {
-        case 1: /* GRAY */
-          for (x = 0; x < rect->width; x++)
-            data[x] = 255 - data[x];
-        }
-
-      if (! g_output_stream_write_all (output, data, rect->width * bpp,
-                                       NULL, NULL, error))
-        {
-          g_free (data);
-          return FALSE;
-        }
-    }
-
-  g_free (data);
-  g_object_unref (buffer);
-
-  return TRUE;
-}
-
-static gboolean
-gih_save_image (GFile    *file,
-                gint32    image_ID,
-                gint32    orig_image_ID,
-                gint32    drawable_ID,
-                GError  **error)
-{
-  GOutputStream *output;
-  GimpParasite  *name_parasite;
-  GimpParasite  *pipe_parasite;
-  gchar         *header;
-  gchar         *parstring;
-  gint32        *layer_ID;
-  gint           nlayers, layer;
-  gint           row, col;
-  gint           imagew, imageh;
-  gint           offsetx, offsety;
-  gint           k;
-
-  if (gihparams.ncells < 1)
-    return FALSE;
-
-  imagew = gimp_image_width (image_ID);
-  imageh = gimp_image_height (image_ID);
-
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             g_file_get_parse_name (file));
-
-  output = G_OUTPUT_STREAM (g_file_replace (file,
-                                            NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, error));
-  if (! output)
-    return FALSE;
-
-  parstring = gimp_pixpipe_params_build (&gihparams);
-
-  header = g_strdup_printf ("%s\n%d %s\n",
-                            info.description, gihparams.ncells, parstring);
-
-  if (! g_output_stream_write_all (output, header, strlen (header),
-                                   NULL, NULL, error))
-    {
-      GCancellable *cancellable = g_cancellable_new ();
-
-      g_cancellable_cancel (cancellable);
-      g_output_stream_close (output, cancellable, NULL);
-      g_object_unref (cancellable);
-
-      g_free (parstring);
-      g_free (header);
-      g_object_unref (output);
-      return FALSE;
-    }
-
-  g_free (header);
-
-  name_parasite = gimp_parasite_new ("gimp-brush-pipe-name",
-                                     GIMP_PARASITE_PERSISTENT,
-                                     strlen (info.description) + 1,
-                                     info.description);
-  gimp_image_attach_parasite (orig_image_ID, name_parasite);
-  gimp_parasite_free (name_parasite);
-
-  pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
-                                     GIMP_PARASITE_PERSISTENT,
-                                     strlen (parstring) + 1, parstring);
-  gimp_image_attach_parasite (orig_image_ID, pipe_parasite);
-  gimp_parasite_free (pipe_parasite);
-
-  g_free (parstring);
-
-  layer_ID = gimp_image_get_layers (image_ID, &nlayers);
-
-  for (layer = 0, k = 0; layer < nlayers; layer++)
-    {
-      gchar *name   = gimp_item_get_name (layer_ID[layer]);
-      gint   width  = gimp_drawable_width (layer_ID[layer]);
-      gint   height = gimp_drawable_height (layer_ID[layer]);
-
-      gimp_drawable_offsets (layer_ID[layer], &offsetx, &offsety);
-
-      for (row = 0; row < gihparams.rows; row++)
-        {
-          gint y, ynext;
-          gint thisy, thish;
-
-          y = (row * imageh) / gihparams.rows;
-          ynext = ((row + 1) * imageh / gihparams.rows);
-
-          /* Assume layer is offset to positive direction in x and y.
-           * That's reasonable, as otherwise all of the layer
-           * won't be visible.
-           * thisy and thisx are in the drawable's coordinate space.
-           */
-          thisy = MAX (0, y - offsety);
-          thish = (ynext - offsety) - thisy;
-          thish = MIN (thish, height - thisy);
-
-          for (col = 0; col < gihparams.cols; col++)
-            {
-              gint x, xnext;
-              gint thisx, thisw;
-
-              x = (col * imagew / gihparams.cols);
-              xnext = ((col + 1) * imagew / gihparams.cols);
-              thisx = MAX (0, x - offsetx);
-              thisw = (xnext - offsetx) - thisx;
-              thisw = MIN (thisw, width - thisx);
-
-              if (! gih_save_one_brush (output, layer_ID[layer],
-                                        GEGL_RECTANGLE (thisx, thisy,
-                                                        thisw, thish),
-                                        name, error))
-                {
-                  GCancellable *cancellable = g_cancellable_new ();
-
-                  g_cancellable_cancel (cancellable);
-                  g_output_stream_close (output, cancellable, NULL);
-                  g_object_unref (cancellable);
-
-                  g_object_unref (output);
-                  return FALSE;
-                }
-
-              k++;
-              gimp_progress_update ((gdouble) k / gihparams.ncells);
-            }
-        }
-
-      g_free (name);
-    }
-
-
-  g_free (layer_ID);
-  g_object_unref (output);
-
-  gimp_progress_update (1.0);
-
-  return TRUE;
 }

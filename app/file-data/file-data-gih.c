@@ -50,9 +50,9 @@
 static GimpImage     * file_gih_pipe_to_image (Gimp          *gimp,
                                                GimpBrushPipe *pipe);
 static GimpBrushPipe * file_gih_image_to_pipe (GimpImage     *image,
-                                               GimpDrawable  *drawable,
                                                const gchar   *name,
-                                               gdouble        spacing);
+                                               gdouble        spacing,
+                                               const gchar   *paramstring);
 
 
 /*  public functions  */
@@ -125,25 +125,25 @@ file_gih_save_invoker (GimpProcedure         *procedure,
 {
   GimpValueArray *return_vals;
   GimpImage      *image;
-  GimpDrawable   *drawable;
   GimpBrushPipe  *pipe;
   const gchar    *uri;
   const gchar    *name;
+  const gchar    *params;
   GFile          *file;
   gint            spacing;
   gboolean        success;
 
   gimp_set_busy (gimp);
 
-  image    = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  uri      = g_value_get_string (gimp_value_array_index (args, 3));
-  spacing  = g_value_get_int (gimp_value_array_index (args, 5));
-  name     = g_value_get_string (gimp_value_array_index (args, 6));
+  image   = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  uri     = g_value_get_string (gimp_value_array_index (args, 3));
+  spacing = g_value_get_int (gimp_value_array_index (args, 5));
+  name    = g_value_get_string (gimp_value_array_index (args, 6));
+  params  = g_value_get_string (gimp_value_array_index (args, 7));
 
   file = g_file_new_for_uri (uri);
 
-  pipe = file_gih_image_to_pipe (image, drawable, name, spacing);
+  pipe = file_gih_image_to_pipe (image, name, spacing, params);
 
   gimp_data_set_file (GIMP_DATA (pipe), file, TRUE, TRUE);
 
@@ -235,109 +235,102 @@ file_gih_pipe_to_image (Gimp          *gimp,
 }
 
 static GimpBrushPipe *
-file_gih_image_to_pipe (GimpImage    *image,
-                        GimpDrawable *drawable,
-                        const gchar  *name,
-                        gdouble       spacing)
+file_gih_image_to_pipe (GimpImage   *image,
+                        const gchar *name,
+                        gdouble      spacing,
+                        const gchar *paramstring)
 {
-#if 0
-  GimpBrush   *brush;
-  GeglBuffer  *buffer;
-  GimpTempBuf *mask;
-  GimpTempBuf *pixmap = NULL;
-  gint         width;
-  gint         height;
+  GimpBrushPipe     *pipe;
+  GimpPixPipeParams  params;
+  GList             *layers;
+  GList             *list;
+  GList             *brushes = NULL;
+  gint               image_width;
+  gint               image_height;
+  gint               i;
 
-  buffer = gimp_drawable_get_buffer (drawable);
-  width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-  height = gimp_item_get_height (GIMP_ITEM (drawable));
+  pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE,
+                       "name",      name,
+                       "mime-type", "image/x-gimp-gih",
+                       "spacing",   spacing,
+                       NULL);
 
-  brush = g_object_new (GIMP_TYPE_BRUSH,
-                        "name",      name,
-                        "mime-type", "image/x-gimp-gih",
-                        "spacing",   spacing,
-                        NULL);
+  gimp_pixpipe_params_init (&params);
+  gimp_pixpipe_params_parse (paramstring, &params);
 
-  mask = gimp_temp_buf_new (width, height, babl_format ("Y u8"));
+  image_width  = gimp_image_get_width  (image);
+  image_height = gimp_image_get_height (image);
 
-  if (gimp_drawable_is_gray (drawable))
+  layers = gimp_image_get_layer_iter (image);
+
+  for (list = layers; list; list = g_list_next (list))
     {
-      guchar *m = gimp_temp_buf_get_data (mask);
-      gint    i;
+      GimpLayer *layer = list->data;
+      gint       width;
+      gint       height;
+      gint       offset_x;
+      gint       offset_y;
+      gint       row;
 
-      if (gimp_drawable_has_alpha (drawable))
+      width  = gimp_item_get_width  (GIMP_ITEM (layer));
+      height = gimp_item_get_height (GIMP_ITEM (layer));
+
+      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+
+      for (row = 0; row < params.rows; row++)
         {
-          GeglBufferIterator *iter;
-          GimpRGB             white;
+          gint y, ynext;
+          gint thisy, thish;
+          gint col;
 
-          gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
+          y     = (row * image_height) / params.rows;
+          ynext = ((row + 1) * image_height / params.rows);
 
-          iter = gegl_buffer_iterator_new (buffer, NULL, 0,
-                                           babl_format ("Y'A u8"),
-                                           GEGL_ACCESS_READ, GEGL_ABYSS_NONE,
-                                           1);
+          /* Assume layer is offset to positive direction in x and y.
+           * That's reasonable, as otherwise all of the layer
+           * won't be visible.
+           * thisy and thisx are in the drawable's coordinate space.
+           */
+          thisy = MAX (0, y - offset_y);
+          thish = (ynext - offset_y) - thisy;
+          thish = MIN (thish, height - thisy);
 
-          while (gegl_buffer_iterator_next (iter))
+          for (col = 0; col < params.cols; col++)
             {
-              guint8 *data = (guint8 *) iter->items[0].data;
-              gint    j;
+              GimpBrush *brush;
+              gint       x, xnext;
+              gint       thisx, thisw;
 
-              for (j = 0; j < iter->length; j++)
-                {
-                  GimpRGB gray;
-                  gint    x, y;
-                  gint    dest;
+              x     = (col * image_width / params.cols);
+              xnext = ((col + 1) * image_width / params.cols);
+              thisx = MAX (0, x - offset_x);
+              thisw = (xnext - offset_x) - thisx;
+              thisw = MIN (thisw, width - thisx);
 
-                  gimp_rgba_set_uchar (&gray,
-                                       data[0], data[0], data[0],
-                                       data[1]);
+              brush = file_gbr_drawable_to_brush (GIMP_DRAWABLE (layer),
+                                                  GEGL_RECTANGLE (thisx, thisy,
+                                                                  thisw, thish),
+                                                  gimp_object_get_name (layer),
+                                                  spacing);
 
-                  gimp_rgb_composite (&gray, &white,
-                                      GIMP_RGB_COMPOSITE_BEHIND);
-
-                  x = iter->items[0].roi.x + j % iter->items[0].roi.width;
-                  y = iter->items[0].roi.y + j / iter->items[0].roi.width;
-
-                  dest = y * width + x;
-
-                  gimp_rgba_get_uchar (&gray, &m[dest], NULL, NULL, NULL);
-
-                  data += 2;
-                }
+              brushes = g_list_prepend (brushes, brush);
             }
         }
-      else
-        {
-          gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
-                           babl_format ("Y' u8"), m,
-                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-        }
-
-      /*  invert  */
-      for (i = 0; i < width * height; i++)
-        m[i] = 255 - m[i];
-    }
-  else
-    {
-      pixmap = gimp_temp_buf_new (width, height, babl_format ("R'G'B' u8"));
-
-      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
-                       babl_format ("R'G'B' u8"),
-                       gimp_temp_buf_get_data (pixmap),
-                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-
-      gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, width, height), 1.0,
-                       babl_format ("A u8"),
-                       gimp_temp_buf_get_data (mask),
-                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
     }
 
+  brushes = g_list_reverse (brushes);
 
-  brush->priv->mask   = mask;
-  brush->priv->pixmap = pixmap;
+  pipe->n_brushes = g_list_length (brushes);
+  pipe->brushes   = g_new0 (GimpBrush *, pipe->n_brushes);
 
-  return brush;
-#endif
+  for (list = brushes, i = 0; list; list = g_list_next (list), i++)
+    pipe->brushes[i] = list->data;
 
-  return NULL;
+  g_list_free (brushes);
+
+  gimp_pixpipe_params_free (&params);
+
+  gimp_brush_pipe_set_params (pipe, paramstring);
+
+  return pipe;
 }
