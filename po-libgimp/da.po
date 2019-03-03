@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-17 11:01+0000\n"
-"PO-Revision-Date: 2019-01-20 15:18+0100\n"
+"POT-Creation-Date: 2019-02-24 16:50+0000\n"
+"PO-Revision-Date: 2019-02-26 19:24+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -31,22 +31,22 @@ msgstr ""
 "X-Source-Language: C\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1264
+#: ../libgimp/gimp.c:1267
 msgid "success"
 msgstr "gennemført"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1268
+#: ../libgimp/gimp.c:1271
 msgid "execution error"
 msgstr "kørselsfejl"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1272
+#: ../libgimp/gimp.c:1275
 msgid "calling error"
 msgstr "fejl i kald"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1276
+#: ../libgimp/gimp.c:1279
 msgid "cancelled"
 msgstr "afbrudt"
 
@@ -172,11 +172,11 @@ msgstr ""
 #: ../libgimp/gimpexport.c:382
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "Udvidelsesmodulet %s kræver en alfa-kanal"
+msgstr "Udvidelsesmodulet %s kræver en alfakanal"
 
 #: ../libgimp/gimpexport.c:383
 msgid "Add Alpha Channel"
-msgstr "Tilføj alfa-kanal"
+msgstr "Tilføj alfakanal"
 
 #: ../libgimp/gimpexport.c:442
 msgid "Confirm Save"
@@ -440,12 +440,12 @@ msgstr "_Sort (fuld gennemsigtighed)"
 #: ../libgimpbase/gimpbaseenums.c:30
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
-msgstr "Lagets _alfa-kanal"
+msgstr "Lagets _alfakanal"
 
 #: ../libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
-msgstr "_Overfør lagets alfa-kanal"
+msgstr "_Overfør lagets alfakanal"
 
 #: ../libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
@@ -766,7 +766,7 @@ msgstr "Luminans"
 #: ../libgimpbase/gimpbaseenums.c:518
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
-msgstr "Lyshed (HSV)"
+msgstr "Valør (HSV)"
 
 # http://meetthegimp.org/wp-content/uploads/meetthegimp069.mp4
 #: ../libgimpbase/gimpbaseenums.c:547
@@ -1314,7 +1314,7 @@ msgstr "HSV-mætning"
 #: ../libgimpbase/gimpbaseenums.c:1656
 msgctxt "select-criterion"
 msgid "HSV Value"
-msgstr "HSV-lyshed"
+msgstr "HSV-valør"
 
 #: ../libgimpbase/gimpbaseenums.c:1657
 msgctxt "select-criterion"
@@ -1506,33 +1506,33 @@ msgstr "Fortolkning af IPTC-data mislykkedes."
 msgid "Parsing XMP data failed."
 msgstr "Fortolkning af XMP-data mislykkedes."
 
-#: ../libgimpbase/gimputils.c:225 ../libgimpbase/gimputils.c:230
+#: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
 msgid "(invalid UTF-8 string)"
 msgstr "(ugyldig UTF-8-streng)"
 
-#: ../libgimpbase/gimputils.c:400
+#: ../libgimpbase/gimputils.c:394
 msgid "File path is NULL"
 msgstr "Filstien er NULL"
 
 # Har det et dansk navn: https://en.wikipedia.org/wiki/Wide_character
-#: ../libgimpbase/gimputils.c:409 ../libgimpbase/gimputils.c:420
+#: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Fejl ved konvertering af filnavn i UTF-8 til \"wide character\""
 
-#: ../libgimpbase/gimputils.c:428
+#: ../libgimpbase/gimputils.c:422
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() mislykkedes"
 
-#: ../libgimpbase/gimputils.c:465
+#: ../libgimpbase/gimputils.c:459
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Kan ikke konvertere \"%s\" til en gyldig NSURL."
 
-#: ../libgimpbase/gimputils.c:493
+#: ../libgimpbase/gimputils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Kunne ikke forbinde til org.freedesktop.FileManager1: "
 
-#: ../libgimpbase/gimputils.c:517
+#: ../libgimpbase/gimputils.c:511
 msgid "Calling ShowItems failed: "
 msgstr "Kunne ikke kalde ShowItems: "
 
@@ -2342,7 +2342,7 @@ msgstr "_V"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgid "HSV Value"
-msgstr "Lyshed (HSV)"
+msgstr "HSV-valør"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
@@ -2924,11 +2924,11 @@ msgstr "Advarselsfarve for falske pixels"
 
 #: ../modules/display-filter-clip-warning.c:217
 msgid "Include alpha component"
-msgstr "Medtag alfa-komponenten"
+msgstr "Medtag alfakomponenten"
 
 #: ../modules/display-filter-clip-warning.c:218
 msgid "Include alpha component in the warning"
-msgstr "Medtag alfa-komponenten i advarslen"
+msgstr "Medtag alfakomponenten i advarslen"
 
 #: ../modules/display-filter-clip-warning.c:224
 msgid "Include transparent pixels"
