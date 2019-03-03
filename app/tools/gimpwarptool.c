@@ -20,7 +20,7 @@
 #include "config.h"
 
 #include <gegl.h>
-#include "gegl-utils.h"
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -127,6 +127,8 @@ static GeglRectangle
                   gimp_warp_tool_get_node_bounds    (GeglNode              *node);
 static void       gimp_warp_tool_clear_node_bounds  (GeglNode              *node);
 static void       gimp_warp_tool_update_bounds      (GimpWarpTool          *wt);
+static void       gimp_warp_tool_update_area        (GimpWarpTool          *wt,
+                                                     const GeglRectangle   *area);
 static void       gimp_warp_tool_update_stroke      (GimpWarpTool          *wt,
                                                      GeglNode              *node);
 static void       gimp_warp_tool_stroke_changed     (GeglPath              *stroke,
@@ -1045,6 +1047,25 @@ gimp_warp_tool_update_bounds (GimpWarpTool *wt)
 }
 
 static void
+gimp_warp_tool_update_area (GimpWarpTool        *wt,
+                            const GeglRectangle *area)
+{
+  GeglRectangle rect = *area;
+
+  if (! wt->filter)
+    return;
+
+  if (wt->render_node)
+    {
+      GeglOperation *operation = gegl_node_get_gegl_operation (wt->render_node);
+
+      rect = gegl_operation_get_invalidated_by_change (operation, "aux", &rect);
+    }
+
+  gimp_drawable_filter_apply (wt->filter, &rect);
+}
+
+static void
 gimp_warp_tool_update_stroke (GimpWarpTool *wt,
                               GeglNode     *node)
 {
@@ -1073,7 +1094,7 @@ gimp_warp_tool_update_stroke (GimpWarpTool *wt,
               bounds.width, bounds.height);
 #endif
 
-      gimp_drawable_filter_apply (wt->filter, &bounds);
+      gimp_warp_tool_update_area (wt, &bounds);
     }
 }
 
@@ -1107,7 +1128,7 @@ gimp_warp_tool_stroke_changed (GeglPath            *path,
       gimp_warp_tool_update_bounds (wt);
     }
 
-  gimp_drawable_filter_apply (wt->filter, &update_region);
+  gimp_warp_tool_update_area (wt, &update_region);
 }
 
 static void
