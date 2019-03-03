@@ -97,16 +97,16 @@ _("This is the distance in pixels where Guide and Grid snapping " \
   "activates.")
 
 #define SNAP_TO_GUIDES_BLURB \
-"Snap to guides by default in new image windows."
+_("Snap to guides by default in new image windows.")
 
 #define SNAP_TO_GRID_BLURB \
-"Snap to the grid by default in new image windows."
+_("Snap to the grid by default in new image windows.")
 
 #define SNAP_TO_CANVAS_BLURB \
-"Snap to the canvas edges by default in new image windows."
+_("Snap to the canvas edges by default in new image windows.")
 
 #define SNAP_TO_PATH_BLURB \
-"Snap to the active path by default in new image windows."
+_("Snap to the active path by default in new image windows.")
 
 #define DEFAULT_THRESHOLD_BLURB \
 _("Tools such as fuzzy-select and bucket fill find regions based on a " \
