@@ -201,7 +201,7 @@ gimp_spin_button_new_with_range (gdouble min,
   g_return_val_if_fail (min <= max, NULL);
   g_return_val_if_fail (step != 0.0, NULL);
 
-  spin_button = g_object_new (GTK_TYPE_SPIN_BUTTON, NULL);
+  spin_button = g_object_new (GIMP_TYPE_SPIN_BUTTON, NULL);
 
   adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (min, min, max,
                                                    step, 10.0 * step, 0.0));
