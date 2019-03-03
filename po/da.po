@@ -27,7 +27,9 @@
 # Hue -> Farvetone (denstoredanske.dk om "farve" har kulør, men farvetone har vundet hævd - bruges også af Photoshop)
 # Saturation -> Mætning (denstoredanske.dk om "farve" har mætningsgrad, men Photoshop bruger mætning)
 # Brightness -> Lysstyrke. Lysstyrke er ok til skærme, der udsender lys, men et dårligt udtryk til at beskrive billeders lyshed/mørke (denstoredanske.dk om "farve" har lyshed, men Photoshop bruger lysstyrke, og det lader til at have vundet hævd)
-# Value -> Værdi eller Lyshed (denstoredanske.dk om "farve")
+# Value -> Værdi
+# Value (i forbindelse med HSV) -> Valør (denstoredanske.dk om "farve" har lyshed, men har også et opslag om valør; ordnet har valør; se også billedguiden.dk/?page_id=45)
+# Lightness -> Lyshed
 # Opacity/opaque -> Uigennemsigtighed/uigennemsigtig (Opacitet forstås nok af de færreste)
 # Transparency/transparent -> Gennemsigtighed/gennemsigtig
 # Airbrush -> Airbrush (bruges i Photoshop: https://helpx.adobe.com/dk/photoshop/using/painting-tools.html, af MS og er i RO)
@@ -39,23 +41,23 @@
 # Shear -> Vrid(ning) (Adobe Illustrator har Forskydning, men det er ikke dækkende - Trapezer(ing) er håbløst: hverken i RO eller Den danske ordbog)
 # Intersect -> Gennemskær (Adobe Photoshop)
 #
-# Følgende genvejstaster er IKKE brugt i menuerne (v. 2.10.2):
-# Fil: DHJQRTVWXYZÆØ
-# Redigér: CEIPQWXZÅ
+# Følgende genvejstaster er IKKE brugt i menuerne (v. 2.10.8):
+# Fil: DHJQRTWXYZÆØ
+# Redigér: CQUWXZÅ
 # Markering: BCGJPQWXYZÅ
-# Vis: BCHQWXØÅ
+# Vis: BCQWXØÅ
 # Billede: COQVWXZØÅ
 # Lag: CIJOPQUVWXZÆÅ
-# Farver: QWXZÅ (FN brugt to gange hver)
+# Farver: BQWXZÅ (FNV brugt to gange hver)
 # Værktøjer: BCDEHIJLNQUVWXYÆØÅ
-# Filtre: BHJMPQRXYZÆÅ
+# Filtre: CHJMPQXYZÆÅ
 # Vinduer/Dokbare dialoger: CQWXZÅ (KLP anvendt to gange hver)
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-01-18 22:47+0000\n"
-"PO-Revision-Date: 2019-01-20 12:01+0100\n"
+"PO-Revision-Date: 2019-03-02 14:03+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -221,7 +223,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "New DDS format loading/exporting plug-in"
-msgstr "Nyt udvidelsemodul til indlæsning og eksport i DDS-formatet"
+msgstr "Nyt udvidelsesmodul til indlæsning og eksport i DDS-formatet"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
@@ -283,7 +285,7 @@ msgstr "Nyt “Lille planet”-filter (gegl:stereographic-projection)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "New \"Long Shadow\" filter"
-msgstr ""
+msgstr "Nyt “Lang skygge”-filter"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
@@ -477,18 +479,16 @@ msgstr ""
 "levere en mere flydende maleoplevelse. Større ændringer er:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
-#, fuzzy
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
 msgstr ""
 "Større kerneoptimeringer af maling og visning, inklusive paralleliseret "
-"malekode."
+"malekode"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
-#, fuzzy
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
-msgstr "Symmetrier bevares nu i XCF-filer (gemt som billedparasitter)."
+msgstr "Symmetrier bevares nu i XCF-filer (gemt som billedparasitter)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid ""
@@ -497,7 +497,7 @@ msgid ""
 msgstr ""
 "Temaerne “Lys” og “Mørk” er genskrevet fra bunden for at slippe for "
 "forskellige problemer med brugervenlighed. Temaerne “Lysere” og “mørkere” er "
-"fjernet."
+"fjernet"
 
 # GimpToolGyroscope optræder kun her
 # Der er tale om drejning omkring de tre akser: https://en.wikipedia.org/wiki/Yaw_(rotation)
@@ -512,7 +512,6 @@ msgstr ""
 "lærredet for 3D-rotation (drejning omkring alle tre akser)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
-#, fuzzy
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -521,7 +520,7 @@ msgstr ""
 "Fejlfinding af udvidelsesmoduler er forbedret til at udskrive stakspor fra "
 "udvidelsesmoduler med kommandolinjetilvalget --stack-trace-mode; ikke kun "
 "når der modtages signaler, men også ved advarsler og kritiske fejl når "
-"fejlfindingsnøglen “fatal-warnings” er angivet."
+"fejlfindingsnøglen “fatal-warnings” er angivet"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
@@ -2287,37 +2286,37 @@ msgstr "Forgrundsmætning: Forøg med 10 %"
 #: ../app/actions/context-actions.c:545
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "Forgrundslyshed: Sæt"
+msgstr "Forgrundsvalør: Sæt"
 
 #: ../app/actions/context-actions.c:549
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "Forgrundslyshed: Sæt til minimum"
+msgstr "Forgrundsvalør: Sæt til minimum"
 
 #: ../app/actions/context-actions.c:553
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "Forgrundslyshed: Sæt til maksimum"
+msgstr "Forgrundsvalør: Sæt til maksimum"
 
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 1%"
-msgstr "Forgrundslyshed: Formindsk med 1 %"
+msgstr "Forgrundsvalør: Formindsk med 1 %"
 
 #: ../app/actions/context-actions.c:561
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 1%"
-msgstr "Forgrundslyshed: Forøg med 1 %"
+msgstr "Forgrundsvalør: Forøg med 1 %"
 
 #: ../app/actions/context-actions.c:565
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 10%"
-msgstr "Forgrundslyshed: Formindsk med 10 %"
+msgstr "Forgrundsvalør: Formindsk med 10 %"
 
 #: ../app/actions/context-actions.c:569
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 10%"
-msgstr "Forgrundslyshed: Forøg med 10 %"
+msgstr "Forgrundsvalør: Forøg med 10 %"
 
 #: ../app/actions/context-actions.c:577
 msgctxt "context-action"
@@ -2392,37 +2391,37 @@ msgstr "Baggrundsmætning: Forøg med 10 %"
 #: ../app/actions/context-actions.c:641
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "Baggrundslyshed: Sæt"
+msgstr "Baggrundsvalør: Sæt"
 
 #: ../app/actions/context-actions.c:645
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "Baggrundslyshed: Sæt til minimum"
+msgstr "Baggrundsvalør: Sæt til minimum"
 
 #: ../app/actions/context-actions.c:649
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "Baggrundslyshed: Sæt til maksimum"
+msgstr "Baggrundsvalør: Sæt til maksimum"
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
 msgid "Background Value: Decrease by 1%"
-msgstr "Baggrundslyshed: Formindsk med 1 %"
+msgstr "Baggrundsvalør: Formindsk med 1 %"
 
 #: ../app/actions/context-actions.c:657
 msgctxt "context-action"
 msgid "Background Value: Increase by 1%"
-msgstr "Baggrundslyshed: Forøg med 1 %"
+msgstr "Baggrundsvalør: Forøg med 1 %"
 
 #: ../app/actions/context-actions.c:661
 msgctxt "context-action"
 msgid "Background Value: Decrease by 10%"
-msgstr "Baggrundslyshed: Formindsk med 10 %"
+msgstr "Baggrundsvalør: Formindsk med 10 %"
 
 #: ../app/actions/context-actions.c:665
 msgctxt "context-action"
 msgid "Background Value: Increase by 10%"
-msgstr "Baggrundslyshed: Forøg med 10 %"
+msgstr "Baggrundsvalør: Forøg med 10 %"
 
 #: ../app/actions/context-actions.c:673
 msgctxt "context-action"
@@ -3542,15 +3541,14 @@ msgid "Search commands by keyword, and run them"
 msgstr "Find kommandoer med nøgleord og kør dem"
 
 #: ../app/actions/dialogs-actions.c:299
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
-msgstr "Starter udvidelser"
+msgstr "Håndtér _udvidelser"
 
 #: ../app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
-msgstr ""
+msgstr "Håndtér udvidelser: søg, installér, afinstallér, opdatér."
 
 #: ../app/actions/dialogs-actions.c:363
 #: ../app/dialogs/preferences-dialog.c:2089
@@ -4393,7 +4391,7 @@ msgstr "Kopiér synlig navngivet "
 
 #: ../app/actions/edit-commands.c:523 ../app/tools/gimppainttool.c:848
 msgid "The active layer's alpha channel is locked."
-msgstr "Det aktive lags alfa-kanal er låst."
+msgstr "Det aktive lags alfakanal er låst."
 
 #: ../app/actions/edit-commands.c:582 ../app/display/gimpdisplayshell-dnd.c:478
 msgid "Pasted as new layer because the target is a layer group."
@@ -4801,7 +4799,7 @@ msgstr "Senest anvendte"
 #: ../app/actions/filters-actions.c:62
 msgctxt "filters-action"
 msgid "_Blur"
-msgstr "_Sløring"
+msgstr "Slø_ring"
 
 #: ../app/actions/filters-actions.c:64
 msgctxt "filters-action"
@@ -4916,7 +4914,7 @@ msgstr "_Invertér"
 #: ../app/actions/filters-actions.c:124
 msgctxt "filters-action"
 msgid "_Value Invert"
-msgstr "Invertér l_yshed"
+msgstr "Invertér _valør"
 
 # Nok bedst at bruge de engelske forkortelser, som folk kan google, i stedet for at finde på nogle.
 #: ../app/actions/filters-actions.c:129
@@ -4930,7 +4928,7 @@ msgid "_Dilate"
 msgstr "_Udvid"
 
 #: ../app/actions/filters-actions.c:138
-msgctxt "filters-action"
+msgctxt "drawable-action"
 msgid "Grow lighter areas of the image"
 msgstr "Forøg lysere områder i billedet"
 
@@ -4940,7 +4938,7 @@ msgid "_Erode"
 msgstr "_Erodér"
 
 #: ../app/actions/filters-actions.c:154
-msgctxt "filters-action"
+msgctxt "drawable-action"
 msgid "Grow darker areas of the image"
 msgstr "Forøg mørkere områder i billedet"
 
@@ -5450,7 +5448,7 @@ msgstr "Tær_skel …"
 #: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
-msgstr "Alfa-t_ærskel …"
+msgstr "Alfat_ærskel …"
 
 #: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
@@ -5476,7 +5474,7 @@ msgstr "Gør skarpere (us_karp maskering) …"
 #: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Value Propagate..."
-msgstr "_Udbred værdi …"
+msgstr "Valør_udbredelse …"
 
 #: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
@@ -5532,7 +5530,7 @@ msgstr "Vis dialogen for det senest anvendte filter igen"
 #: ../app/actions/filters-actions.c:1063
 #, c-format
 msgid "Re_peat \"%s\""
-msgstr "_Gentag \"%s\""
+msgstr "Gen_tag \"%s\""
 
 #: ../app/actions/filters-actions.c:1064
 #, c-format
@@ -6282,10 +6280,9 @@ msgid "Display information about this image"
 msgstr "Vis oplysningerne om billedet"
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
-msgstr "_RGB-profil:"
+msgstr "Brug _sRGB-profil"
 
 #: ../app/actions/image-actions.c:182
 msgctxt "image-action"
@@ -6947,7 +6944,7 @@ msgstr "Tilføj en maske med de senest anvendte værdier"
 #: ../app/actions/layers-actions.c:271
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
-msgstr "Tilf_øj alfa-kanal"
+msgstr "Tilf_øj alfakanal"
 
 #: ../app/actions/layers-actions.c:272
 msgctxt "layers-action"
@@ -6957,7 +6954,7 @@ msgstr "Tilføj information om gennemsigtighed til laget"
 #: ../app/actions/layers-actions.c:277
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
-msgstr "_Fjern alfa-kanal"
+msgstr "_Fjern alfakanal"
 
 #: ../app/actions/layers-actions.c:278
 msgctxt "layers-action"
@@ -7013,7 +7010,7 @@ msgstr "L_ås lagets placering"
 #: ../app/actions/layers-actions.c:330
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
-msgstr "_Lås alfa-kanal"
+msgstr "_Lås alfakanal"
 
 #: ../app/actions/layers-actions.c:332
 msgctxt "layers-action"
@@ -7269,7 +7266,7 @@ msgstr "_Alfa til markering"
 #: ../app/actions/layers-actions.c:517
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
-msgstr "Erstat markeringen med lagets alfa-kanal"
+msgstr "Erstat markeringen med lagets alfakanal"
 
 #: ../app/actions/layers-actions.c:522
 msgctxt "layers-action"
@@ -7279,17 +7276,17 @@ msgstr "_Læg til markering"
 #: ../app/actions/layers-actions.c:524
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
-msgstr "Tilføj lagets alfa-kanal til den nuværende markering"
+msgstr "Tilføj lagets alfakanal til den nuværende markering"
 
 #: ../app/actions/layers-actions.c:531
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr "Træk lagets alfa-kanal fra den nuværende markering"
+msgstr "Træk lagets alfakanal fra den nuværende markering"
 
 #: ../app/actions/layers-actions.c:538
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr "Gennemskær lagets alfa-kanal med den nuværende markering"
+msgstr "Gennemskær lagets alfakanal med den nuværende markering"
 
 #: ../app/actions/layers-actions.c:546
 msgctxt "layers-action"
@@ -7786,7 +7783,7 @@ msgstr "Redigér mønster"
 #: ../app/actions/plug-in-actions.c:82
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
-msgstr "Nulstil alle _filtre"
+msgstr "Nulstil _alle filtre"
 
 #: ../app/actions/plug-in-actions.c:83
 msgctxt "plug-in-action"
@@ -9858,17 +9855,17 @@ msgid "Toggle fullscreen view"
 msgstr "Slå fuldskærmsvisning til/fra"
 
 #: ../app/actions/view-actions.c:320
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Set zoom factor"
 msgstr "Angiv zoomfaktor"
 
 #: ../app/actions/view-actions.c:325
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom out as far as possible"
 msgstr "Zoom så langt ud som muligt"
 
 #: ../app/actions/view-actions.c:330
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom in as far as possible"
 msgstr "Zoom så langt ind som muligt"
 
@@ -9903,12 +9900,12 @@ msgid "Zoom In"
 msgstr "Zoom ind"
 
 #: ../app/actions/view-actions.c:359
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom out a lot"
 msgstr "Zoom langt ud"
 
 #: ../app/actions/view-actions.c:364
-msgctxt "view-zoom-action"
+msgctxt "view-action"
 msgid "Zoom in a lot"
 msgstr "Zoom langt ind"
 
@@ -10295,7 +10292,6 @@ msgstr "An_den (%s) …"
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
 
-# horizontal-vertical? Hue-value?
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
 #: ../app/actions/view-actions.c:1124
@@ -10852,7 +10848,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid "Add an alpha channel to all layers of imported images."
-msgstr "Tilføj en alfa-kanal til alle lag i importerede billeder."
+msgstr "Tilføj en alfakanal til alle lag i importerede billeder."
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid "Which plug-in to use for importing raw digital camera files."
@@ -11623,10 +11619,9 @@ msgid "BG color fill"
 msgstr "Angiv farveprofil"
 
 #: ../app/core/core-enums.c:116
-#, fuzzy
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Mønster"
+msgstr "Mønsterudfyldning"
 
 #: ../app/core/core-enums.c:145
 msgctxt "channel-border-style"
@@ -12045,22 +12040,19 @@ msgid "Large (256x256)"
 msgstr "Stor (256x256)"
 
 #: ../app/core/core-enums.c:972
-#, fuzzy
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "Lineær"
 
 #: ../app/core/core-enums.c:973
-#, fuzzy
 msgctxt "trc-type"
 msgid "Non-Linear"
-msgstr "Lineær"
+msgstr "Ikkelineær"
 
 #: ../app/core/core-enums.c:974
-#, fuzzy
 msgctxt "trc-type"
 msgid "Perceptual"
-msgstr "_Perceptuel"
+msgstr "Perceptuel"
 
 #: ../app/core/core-enums.c:1164
 msgctxt "undo-type"
@@ -12289,10 +12281,9 @@ msgid "Change indexed palette"
 msgstr "Skift indekseret palet"
 
 #: ../app/core/core-enums.c:1210
-#, fuzzy
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
-msgstr "Angiv farveprofil"
+msgstr "Vis/skjul farveprofil"
 
 #: ../app/core/core-enums.c:1215
 #, fuzzy
@@ -12343,7 +12334,7 @@ msgstr "Sæt lagets uigennemsigtighed"
 #: ../app/core/core-enums.c:1229
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
-msgstr "Lås/oplås alfa-kanal"
+msgstr "Lås/oplås alfakanal"
 
 #: ../app/core/core-enums.c:1230
 msgctxt "undo-type"
@@ -12617,9 +12608,9 @@ msgid ""
 msgstr ""
 
 #: ../app/core/gimpextension.c:704
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a relative path."
-msgstr "Pensel \"%s\" er ikke en genereret pensel"
+msgstr "“%s” er ikke en relativ sti."
 
 #: ../app/core/gimpextension.c:738
 #, fuzzy, c-format
@@ -12627,14 +12618,14 @@ msgid "'%s' is not a child of the extension."
 msgstr "'%s:' er ikke et gyldigt URI-skema"
 
 #: ../app/core/gimpextension.c:752
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a directory."
-msgstr "Pensel \"%s\" kan ikke redigeres"
+msgstr "“%s” er ikke en mappe."
 
 #: ../app/core/gimpextension.c:766
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid file."
-msgstr "'%s:' er ikke et gyldigt URI-skema"
+msgstr "“%s” er ikke en gyldig fil."
 
 #: ../app/core/gimpextension.c:807
 #, c-format
@@ -13709,11 +13700,11 @@ msgstr "Arrangér objekter"
 
 #: ../app/core/gimpimage-color-profile.c:120
 msgid "Enable 'Use sRGB Profile'"
-msgstr ""
+msgstr "Aktivér “Brug sRGB-profil”"
 
 #: ../app/core/gimpimage-color-profile.c:137
 msgid "Disable 'Use sRGB Profile'"
-msgstr ""
+msgstr "Deaktivér “Brug sRGB-profil”"
 
 #: ../app/core/gimpimage-color-profile.c:195
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
@@ -13746,9 +13737,8 @@ msgstr ""
 "Validering af ICC-profil mislykkedes: Farveprofilen er ikke til RGB-farverum"
 
 #: ../app/core/gimpimage-color-profile.c:473
-#, fuzzy
 msgid "Assigning color profile"
-msgstr "Tildel farveprofil"
+msgstr "Tildeler farveprofil"
 
 #: ../app/core/gimpimage-color-profile.c:474
 #, fuzzy
@@ -13816,7 +13806,7 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Konverterer til indekserede farver (trin 3)"
 
 #: ../app/core/gimpimage-convert-precision.c:79
-#, fuzzy, c-format
+#, c-format
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "Konvertér billede til %s"
@@ -14207,12 +14197,12 @@ msgstr "Vis lagmaske"
 #: ../app/core/gimplayer.c:2420
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
-msgstr "Tilføj alfa-kanal"
+msgstr "Tilføj alfakanal"
 
 #: ../app/core/gimplayer.c:2456
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
-msgstr "Fjern alfa-kanal"
+msgstr "Fjern alfakanal"
 
 #: ../app/core/gimplayer.c:2477
 msgctxt "undo-type"
@@ -14728,9 +14718,8 @@ msgstr "Præcision"
 
 #: ../app/core/gimptemplate.c:206 ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:110
-#, fuzzy
 msgid "Linear/Perceptual"
-msgstr "_Perceptuel"
+msgstr "Lineær/perceptuel"
 
 #: ../app/core/gimptemplate.c:215
 msgid "Color profile"
@@ -15103,14 +15092,12 @@ msgid "Linear light"
 msgstr "Lineært lys"
 
 #: ../app/dialogs/convert-precision-dialog.c:208
-#, fuzzy
 msgid "Non-Linear"
-msgstr "Lineær"
+msgstr "Ikkelineær"
 
 #: ../app/dialogs/convert-precision-dialog.c:211
-#, fuzzy
 msgid "Perceptual (sRGB)"
-msgstr "Perceptuel gamma (sRGB)"
+msgstr "Perceptuel (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:244
 msgid "_Layers:"
@@ -15232,7 +15219,6 @@ msgstr "Starter udvidelser"
 msgid "System Extensions"
 msgstr "efter filendelse"
 
-# Jeg er i tvivl om der er tale om programudvidelser eller filendelser????
 #: ../app/dialogs/extensions-dialog.c:140
 #: ../app/dialogs/extensions-dialog.c:141
 #, fuzzy
@@ -16201,7 +16187,7 @@ msgstr "Foretag rastersimulering af billeder, når de opløftes til flydende tal
 
 #: ../app/dialogs/preferences-dialog.c:1500
 msgid "Add an alpha channel to imported images"
-msgstr "Tilføj en alfa-kanal til importerede billeder"
+msgstr "Tilføj en alfakanal til importerede billeder"
 
 #: ../app/dialogs/preferences-dialog.c:1505
 #: ../app/dialogs/preferences-dialog.c:2160
@@ -18526,7 +18512,7 @@ msgstr "Blå komponent"
 #: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
 #: ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
 msgid "Alpha component"
-msgstr "Alfa-komponent"
+msgstr "Alfakomponent"
 
 #: ../app/gegl/gimp-babl.c:350
 msgid "Indexed-alpha"
@@ -18763,14 +18749,14 @@ msgstr "HSL-farve (f)"
 #: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
 msgid "HSV Value (legacy)"
-msgstr "HSV-lyshed (forældet)"
+msgstr "HSV-valør (forældet)"
 
 #. Translators: this is an abbreviated version of "HSV Value (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:209
 msgctxt "layer-mode"
 msgid "HSV Value (l)"
-msgstr "HSV-lyshed (f)"
+msgstr "HSV-valør (f)"
 
 #: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
@@ -18960,7 +18946,7 @@ msgstr "HSL-farve"
 #: ../app/operations/operations-enums.c:259
 msgctxt "layer-mode"
 msgid "HSV Value"
-msgstr "HSV-lyshed"
+msgstr "HSV-valør"
 
 #: ../app/operations/operations-enums.c:260
 msgctxt "layer-mode"
@@ -19147,9 +19133,8 @@ msgstr "Bevar lysstyrke"
 
 #: ../app/operations/gimpcurvesconfig.c:106
 #: ../app/operations/gimplevelsconfig.c:111
-#, fuzzy
 msgid "Work on linear or perceptual RGB"
-msgstr "Arbejd med lineær RGB"
+msgstr "Arbejd med lineær eller perceptuel RGB"
 
 #: ../app/operations/gimpcurvesconfig.c:113
 #: ../app/operations/gimplevelsconfig.c:118
@@ -19352,7 +19337,7 @@ msgid ""
 "value"
 msgstr ""
 "Gør gennemsigtighed til alt eller intet ved at angive en tærskelværdi for "
-"alfa-kanalen"
+"alfakanalen"
 
 #: ../app/gui/gui.c:312
 msgid "Image Recovery"
@@ -20442,10 +20427,9 @@ msgid "Lens Flare"
 msgstr "Linseoverstråling"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1685
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fractal Trace"
-msgstr "_Fraktaltransformering …"
+msgstr "Fraktaltransformering"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1869
 msgctxt "undo-type"
@@ -20591,7 +20575,7 @@ msgstr "Spred"
 #: ../app/pdb/plug-in-compat-cmds.c:3691
 msgctxt "undo-type"
 msgid "Threshold Alpha"
-msgstr "Alfa-tærskel"
+msgstr "Alfatærskel"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3737
 msgctxt "undo-type"
@@ -20606,12 +20590,12 @@ msgstr "Video"
 #: ../app/pdb/plug-in-compat-cmds.c:3820
 msgctxt "undo-type"
 msgid "Value Invert"
-msgstr "Invertér lyshed"
+msgstr "Invertér valør"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3924
 msgctxt "undo-type"
 msgid "Value Propagate"
-msgstr "Overfør værdi"
+msgstr "Valørudbredelse"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3971
 msgctxt "undo-type"
@@ -22798,7 +22782,7 @@ msgstr "Orientering  (%s)"
 #: ../app/tools/gimpmeasureoptions.c:161 ../app/tools/gimpmeasureoptions.c:171
 #: ../app/tools/gimpmeasuretool.c:349
 msgid "Straighten"
-msgstr "Opret"
+msgstr "Ret op"
 
 #: ../app/tools/gimpmeasureoptions.c:175
 msgid "Rotate the active layer, selection or path by the measured angle"
@@ -23040,7 +23024,7 @@ msgstr "%s for en ret linje"
 
 #: ../app/tools/gimppainttool.c:838
 msgid "The active layer does not have an alpha channel."
-msgstr "Det aktive lag har ikke nogen alfa-kanal."
+msgstr "Det aktive lag har ikke nogen alfakanal."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -25444,14 +25428,12 @@ msgid "Wheel"
 msgstr "Hjul"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:151
-#, fuzzy
 msgid "Distance"
-msgstr "Afstand:"
+msgstr "Afstand"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:152
-#, fuzzy
 msgid "Rotation"
-msgstr "Roterer"
+msgstr "Rotation"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:153
 msgid "Slider"
@@ -25469,9 +25451,8 @@ msgid "Keys"
 msgstr "Knapper"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:367
-#, fuzzy
 msgid "Source:"
-msgstr "Kilde"
+msgstr "Kilde:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:372
 msgid "Vendor ID:"
@@ -25482,9 +25463,8 @@ msgid "Product ID:"
 msgstr ""
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:382
-#, fuzzy
 msgid "Tool type:"
-msgstr "Udfyldningstype:"
+msgstr "Værktøjsstype:"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:387
 #, fuzzy
@@ -25884,9 +25864,8 @@ msgid "Read _Online"
 msgstr "L_æs på nettet"
 
 #: ../app/widgets/gimphistogrameditor.c:112
-#, fuzzy
 msgid "Linear/Preceptual"
-msgstr "_Perceptuel"
+msgstr "Lineær/perceptuel"
 
 #: ../app/widgets/gimphistogrameditor.c:132
 msgid "Mean:"
@@ -26038,7 +26017,7 @@ msgstr "Skift til en anden gruppe tilstande"
 
 #: ../app/widgets/gimplayertreeview.c:310
 msgid "Lock alpha channel"
-msgstr "Lås alfa-kanal"
+msgstr "Lås alfakanal"
 
 #: ../app/widgets/gimpmessagebox.c:454
 #, c-format
@@ -27014,7 +26993,6 @@ msgstr "sløret"
 #~ msgid "All images"
 #~ msgstr "Alle billeder"
 
-# Lyshed eller værdier?
 #~ msgid "Show values in linear space"
 #~ msgstr "Vis værdier i lineært rum"
 
@@ -27329,7 +27307,7 @@ msgstr "sløret"
 
 #, fuzzy
 #~ msgid "Linear Invert"
-#~ msgstr "Hårdt lys"
+#~ msgstr "In_vertér lineært"
 
 #, fuzzy
 #~ msgid "Value Invert"
@@ -27525,3 +27503,100 @@ msgstr "sløret"
 
 #~ msgid "When enabled, menus can be torn off."
 #~ msgstr "Når denne er aktiveret, kan menuer løsrives."
+
+#~ msgid ""
+#~ "Full rewrite of the Spyrogimp plug-in with more options and better "
+#~ "interaction"
+#~ msgstr ""
+#~ "Fuldstændig omskrivning af udvidelsesmodulet Spyrogimp med flere "
+#~ "valgmuligheder og bedre interaktion"
+
+#~ msgctxt "filters-action"
+#~ msgid "L_inear Invert"
+#~ msgstr "In_vertér lineært"
+
+#~ msgid "When enabled, a search of actions will also return inactive actions."
+#~ msgstr ""
+#~ "Når denne er aktiveret, vil en søgning efter handlinger også returnere "
+#~ "inaktive handlinger."
+
+#~ msgid "The maximum number of actions saved in history."
+#~ msgstr "Maksimalt antal handlinger som gemmes i historikken."
+
+#~ msgid ""
+#~ "OpenCL drivers and support are experimental, expect slowdowns and "
+#~ "possible crashes (please report)."
+#~ msgstr ""
+#~ "Drivere til og understøttelse af OpenCL er eksperimentelle. Forvent "
+#~ "langsommere afvikling og mulige nedbrud (rapportér venligst)."
+
+#~ msgid "GIMP brush"
+#~ msgstr "GIMP-pensel"
+
+#~ msgid "GIMP brush (animated)"
+#~ msgstr "GIMP-pensel (animeret)"
+
+#~ msgid "GIMP pattern"
+#~ msgstr "GIMP-mønster"
+
+#~ msgid "The color"
+#~ msgstr "Farven"
+
+#~ msgid "Value"
+#~ msgstr "Værdi"
+
+#~ msgid "The alpha value"
+#~ msgstr "Værdien for alfa"
+
+#~ msgctxt "undo-type"
+#~ msgid "Straighten"
+#~ msgstr "Ret op"
+
+#~ msgctxt "undo-type"
+#~ msgid "Straighten by %-3.3g°"
+#~ msgstr "Ret op med %-3.3g°"
+
+#~ msgctxt "undo-type"
+#~ msgid "Straighten Horizontally by %-3.3g°"
+#~ msgstr "Ret op vandret med %-3.3g°"
+
+#~ msgctxt "undo-type"
+#~ msgid "Straighten Vertically by %-3.3g°"
+#~ msgstr "Ret op lodret med %-3.3g°"
+
+#~ msgctxt "undo-type"
+#~ msgid "Rotate by %-3.3g°"
+#~ msgstr "Rotér med %-3.3g°"
+
+#~ msgctxt "undo-type"
+#~ msgid "Shear"
+#~ msgstr "Vridning"
+
+#~ msgid "%s (Corrective)"
+#~ msgstr "%s (korrigerende)"
+
+#~ msgid "Transform"
+#~ msgstr "Transformér"
+
+#~ msgctxt "dashboard-variable"
+#~ msgid "TempBuf"
+#~ msgstr "TempBuf"
+
+#~ msgid "Total size of temporary buffers"
+#~ msgstr "Midlertidige bufferes totale størrelse"
+
+#~ msgctxt "icon-size"
+#~ msgid "Small"
+#~ msgstr "Små"
+
+#~ msgctxt "icon-size"
+#~ msgid "Medium"
+#~ msgstr "Medium"
+
+#~ msgctxt "icon-size"
+#~ msgid "Large"
+#~ msgstr "Stor"
+
+#~ msgctxt "icon-size"
+#~ msgid "Huge"
+#~ msgstr "Kæmpestor"
