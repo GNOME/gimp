@@ -222,11 +222,9 @@ file_data_init (Gimp *gimp)
                                      "Loads GIMP animated brushes",
                                      "This procedure loads a GIMP brush "
                                      "pipe as an image.",
-                                     "Jens Lautenbacher, Sven Neumann, "
-                                     "Michael Natterer",
-                                     "Jens Lautenbacher, Sven Neumann, "
-                                     "Michael Natterer",
-                                     "1995-2019",
+                                     "Tor Lillqvist, Michael Natterer",
+                                     "Tor Lillqvist, Michael Natterer",
+                                     "1999-2019",
                                      NULL);
 
   gimp_procedure_add_argument (procedure,
@@ -258,6 +256,99 @@ file_data_init (Gimp *gimp)
                                                              "Output image",
                                                              gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
+
+  gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
+  g_object_unref (procedure);
+
+  /*  file-gih-save-internal  */
+  file = g_file_new_for_path ("file-gih-save-internal");
+  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  g_object_unref (file);
+
+  procedure->proc_type    = GIMP_INTERNAL;
+  procedure->marshal_func = file_gih_save_invoker;
+
+  proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+  proc->menu_label = g_strdup (N_("GIMP brush (animated)"));
+  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
+                                   (const guint8 *) "gimp-brush",
+                                   strlen ("gimp-brush") + 1);
+
+#if 0
+  /* do not register as file procedure */
+  gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
+  gimp_plug_in_procedure_set_file_proc (proc, "gih", "", NULL);
+  gimp_plug_in_procedure_set_mime_types (proc, "image/x-gimp-gih");
+  gimp_plug_in_procedure_set_handles_uri (proc);
+#endif
+
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "file-gih-save-internal");
+  gimp_procedure_set_static_strings (procedure,
+                                     "file-gih-save-internal",
+                                     "Exports Gimp animated brush file (.gih)",
+                                     "Exports Gimp animated brush file (.gih)",
+                                     "Tor Lillqvist, Michael Natterer",
+                                     "Tor Lillqvist, Michael Natterer",
+                                     "1999-2019",
+                                     NULL);
+
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("dummy-param",
+                                                      "Dummy Param",
+                                                      "Dummy parameter",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "Image",
+                                                         "Input image",
+                                                         gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "Drawable",
+                                                            "Active drawable "
+                                                            "of input image",
+                                                            gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("uri",
+                                                       "URI",
+                                                       "The URI of the file "
+                                                       "to export",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("raw-uri",
+                                                       "Raw URI",
+                                                       "The URI of the file "
+                                                       "to export",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("spacing",
+                                                      "spacing",
+                                                      "Spacing of the brush",
+                                                      1, 1000, 10,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the "
+                                                       "brush",
+                                                       FALSE, FALSE, TRUE,
+                                                       "GIMP Brush",
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("params",
+                                                       "params",
+                                                       "The pipe's parameters",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
 
   gimp_plug_in_manager_add_procedure (gimp->plug_in_manager, proc);
   g_object_unref (procedure);
