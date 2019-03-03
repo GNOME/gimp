@@ -192,6 +192,7 @@ gimp_warp_tool_init (GimpWarpTool *self)
 {
   GimpTool *tool = GIMP_TOOL (self);
 
+  gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
   gimp_tool_control_set_preserve        (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask      (tool->control,
                                          GIMP_DIRTY_IMAGE           |
