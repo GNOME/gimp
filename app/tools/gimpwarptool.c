@@ -128,7 +128,8 @@ static GeglRectangle
 static void       gimp_warp_tool_clear_node_bounds  (GeglNode              *node);
 static void       gimp_warp_tool_update_bounds      (GimpWarpTool          *wt);
 static void       gimp_warp_tool_update_area        (GimpWarpTool          *wt,
-                                                     const GeglRectangle   *area);
+                                                     const GeglRectangle   *area,
+                                                     gboolean               synchronous);
 static void       gimp_warp_tool_update_stroke      (GimpWarpTool          *wt,
                                                      GeglNode              *node);
 static void       gimp_warp_tool_stroke_append      (GimpWarpTool          *wt,
@@ -1091,7 +1092,8 @@ gimp_warp_tool_update_bounds (GimpWarpTool *wt)
 
 static void
 gimp_warp_tool_update_area (GimpWarpTool        *wt,
-                            const GeglRectangle *area)
+                            const GeglRectangle *area,
+                            gboolean             synchronous)
 {
   GeglRectangle rect = *area;
 
@@ -1105,7 +1107,28 @@ gimp_warp_tool_update_area (GimpWarpTool        *wt,
       rect = gegl_operation_get_invalidated_by_change (operation, "aux", &rect);
     }
 
-  gimp_drawable_filter_apply (wt->filter, &rect);
+  if (synchronous)
+    {
+      GimpTool  *tool  = GIMP_TOOL (wt);
+      GimpImage *image = gimp_display_get_image (tool->display);
+
+      g_signal_handlers_block_by_func (wt->filter,
+                                       gimp_warp_tool_filter_flush,
+                                       wt);
+
+      gimp_drawable_filter_apply (wt->filter, &rect);
+
+      gimp_projection_flush_now (gimp_image_get_projection (image), TRUE);
+      gimp_display_flush_now (tool->display);
+
+      g_signal_handlers_unblock_by_func (wt->filter,
+                                         gimp_warp_tool_filter_flush,
+                                         wt);
+    }
+  else
+    {
+      gimp_drawable_filter_apply (wt->filter, &rect);
+    }
 }
 
 static void
@@ -1137,7 +1160,7 @@ gimp_warp_tool_update_stroke (GimpWarpTool *wt,
               bounds.width, bounds.height);
 #endif
 
-      gimp_warp_tool_update_area (wt, &bounds);
+      gimp_warp_tool_update_area (wt, &bounds, FALSE);
     }
 }
 
@@ -1175,7 +1198,7 @@ gimp_warp_tool_stroke_append (GimpWarpTool *wt,
       gimp_warp_tool_update_bounds (wt);
     }
 
-  gimp_warp_tool_update_area (wt, &area);
+  gimp_warp_tool_update_area (wt, &area, options->real_time_preview);
 }
 
 static void

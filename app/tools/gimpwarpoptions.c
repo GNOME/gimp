@@ -47,6 +47,7 @@ enum
   PROP_INTERPOLATION,
   PROP_ABYSS_POLICY,
   PROP_HIGH_QUALITY_PREVIEW,
+  PROP_REAL_TIME_PREVIEW,
   PROP_STROKE_DURING_MOTION,
   PROP_STROKE_PERIODICALLY,
   PROP_STROKE_PERIODICALLY_RATE,
@@ -137,6 +138,13 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_REAL_TIME_PREVIEW,
+                            "real-time-preview",
+                            _("Real-time preview"),
+                            _("Render preview in real time (slower)"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_DURING_MOTION,
                             "stroke-during-motion",
                             _("During motion"),
@@ -205,6 +213,9 @@ gimp_warp_options_set_property (GObject      *object,
     case PROP_HIGH_QUALITY_PREVIEW:
       options->high_quality_preview = g_value_get_boolean (value);
       break;
+    case PROP_REAL_TIME_PREVIEW:
+      options->real_time_preview = g_value_get_boolean (value);
+      break;
     case PROP_STROKE_DURING_MOTION:
       options->stroke_during_motion = g_value_get_boolean (value);
       break;
@@ -257,6 +268,9 @@ gimp_warp_options_get_property (GObject    *object,
       break;
     case PROP_HIGH_QUALITY_PREVIEW:
       g_value_set_boolean (value, options->high_quality_preview);
+      break;
+    case PROP_REAL_TIME_PREVIEW:
+      g_value_set_boolean (value, options->real_time_preview);
       break;
     case PROP_STROKE_DURING_MOTION:
       g_value_set_boolean (value, options->stroke_during_motion);
@@ -334,6 +348,10 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   button = gimp_prop_check_button_new (config, "high-quality-preview", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_prop_check_button_new (config, "real-time-preview", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
