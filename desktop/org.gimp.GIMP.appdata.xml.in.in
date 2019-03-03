@@ -99,8 +99,18 @@
           when scaling up or down
           </_li>
           <_li>
+          Add "Constrain handles" and "Around center" options to the
+          perspective-transform tool's GUI
+          </_li>
+          <_li>
           New generic canvas modifier 'Alt + middle click' to pick
           layers
+          </_li>
+          <_li>
+          Parametric brushes now 32-bit float to avoid posterization
+          </_li>
+          <_li>
+          Clipboard brushes and pattern can now be duplicated
           </_li>
           <_li>
           Failure to edit locked layers will blink to shift attention to
