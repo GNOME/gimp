@@ -1425,24 +1425,23 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
 static void
 gimp_layer_invalidate_boundary (GimpDrawable *drawable)
 {
-  GimpLayer   *layer = GIMP_LAYER (drawable);
-  GimpImage   *image;
-  GimpChannel *mask;
+  GimpLayer *layer = GIMP_LAYER (drawable);
 
-  if (! (image = gimp_item_get_image (GIMP_ITEM (layer))))
-    return;
-
-  /*  Turn the current selection off  */
-  gimp_image_selection_invalidate (image);
-
-  /*  get the selection mask channel  */
-  mask = gimp_image_get_mask (image);
-
-  /*  Only bother with the bounds if there is a selection  */
-  if (! gimp_channel_is_empty (mask))
+  if (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
+      gimp_item_is_visible (GIMP_ITEM (drawable)))
     {
-      mask->bounds_known   = FALSE;
-      mask->boundary_known = FALSE;
+      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpChannel *mask  = gimp_image_get_mask (image);
+
+      /*  Turn the current selection off  */
+      gimp_image_selection_invalidate (image);
+
+      /*  Only bother with the bounds if there is a selection  */
+      if (! gimp_channel_is_empty (mask))
+        {
+          mask->bounds_known   = FALSE;
+          mask->boundary_known = FALSE;
+        }
     }
 
   if (gimp_layer_is_floating_sel (layer))
