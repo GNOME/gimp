@@ -41,8 +41,7 @@ struct _GimpWarpTool
 {
   GimpDrawTool        parent_instance;
 
-  gdouble             cursor_x;      /* Hold the cursor x position */
-  gdouble             cursor_y;      /* Hold the cursor y position */
+  GimpVector2         cursor_pos;    /* Hold the cursor position */
 
   GeglBuffer         *coords_buffer; /* Buffer where coordinates are stored */
 
@@ -51,6 +50,9 @@ struct _GimpWarpTool
 
   GeglPath           *current_stroke;
   guint               stroke_timer;
+
+  GimpVector2         last_pos;
+  gdouble             total_dist;
 
   GimpDrawableFilter *filter;
 

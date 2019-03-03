@@ -111,7 +111,7 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                            "stroke-spacing",
                            _("Spacing"),
                            _("Stroke Spacing"),
-                           1.0, 100.0, 20.0,
+                           1.0, 100.0, 10.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
