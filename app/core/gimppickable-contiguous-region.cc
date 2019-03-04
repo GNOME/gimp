@@ -297,9 +297,9 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
   const Babl    *format  = babl_format ("Y float");
   gfloat        *distmap = NULL;
   GeglRectangle  extent;
-  gfloat         start_col;
-  gboolean       free_line_art  = FALSE;
-  gint           line_art_max_grow;
+  gboolean       free_line_art = FALSE;
+  gboolean       filled        = FALSE;
+  guchar         start_col;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable) || GIMP_IS_LINE_ART (line_art), NULL);
 
@@ -317,40 +317,116 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
   src_buffer = gimp_line_art_get (line_art, &distmap);
   g_return_val_if_fail (src_buffer && distmap, NULL);
 
-  gegl_buffer_sample (src_buffer, x, y, NULL, &start_col, format,
+  gegl_buffer_sample (src_buffer, x, y, NULL, &start_col, NULL,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
   extent = *gegl_buffer_get_extent (src_buffer);
 
-  mask_buffer = gegl_buffer_new (&extent, babl_format ("Y float"));
+  mask_buffer = gegl_buffer_new (&extent, format);
 
   if (start_col)
     {
-      /* As a special exception, if you fill over a line art pixel, only
-       * fill the pixel and exit
-       */
-      start_col = 1.0;
-      gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (x, y, 1, 1),
-                       0, babl_format ("Y float"), &start_col,
-                       GEGL_AUTO_ROWSTRIDE);
+      if (start_col == 1)
+        {
+          /* As a special exception, if you fill over a line art pixel, only
+           * fill the pixel and exit
+           */
+          gfloat col = 1.0;
+
+          gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (x, y, 1, 1),
+                           0, format, &col, GEGL_AUTO_ROWSTRIDE);
+        }
+      else /* start_col == 2 */
+        {
+          /* If you fill over a closure pixel, let's fill on all sides
+           * of the start point. Otherwise we get a very weird result
+           * with only a single pixel filled in the middle of an empty
+           * region (since closure pixels are invisible by nature).
+           */
+          gfloat col = 0.0;
+
+          if (x - 1 >= extent.x && x - 1 < extent.x + extent.width &&
+              y - 1 >= extent.y && y - 1 < (extent.y + extent.height))
+            find_contiguous_region (src_buffer, mask_buffer,
+                                    format, 1, FALSE,
+                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, 0.0, FALSE,
+                                    x - 1, y - 1, &col);
+          if (x - 1 >= extent.x && x - 1 < extent.x + extent.width &&
+              y >= extent.y && y < (extent.y + extent.height))
+            find_contiguous_region (src_buffer, mask_buffer,
+                                    format, 1, FALSE,
+                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, 0.0, FALSE,
+                                    x - 1, y, &col);
+          if (x - 1 >= extent.x && x - 1 < extent.x + extent.width &&
+              y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
+            find_contiguous_region (src_buffer, mask_buffer,
+                                    format, 1, FALSE,
+                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, 0.0, FALSE,
+                                    x - 1, y + 1, &col);
+          if (x >= extent.x && x < extent.x + extent.width &&
+              y - 1 >= extent.y && y - 1 < (extent.y + extent.height))
+            find_contiguous_region (src_buffer, mask_buffer,
+                                    format, 1, FALSE,
+                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, 0.0, FALSE,
+                                    x, y - 1, &col);
+          if (x >= extent.x && x < extent.x + extent.width &&
+              y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
+            find_contiguous_region (src_buffer, mask_buffer,
+                                    format, 1, FALSE,
+                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, 0.0, FALSE,
+                                    x, y + 1, &col);
+          if (x + 1 >= extent.x && x + 1 < extent.x + extent.width &&
+              y - 1 >= extent.y && y - 1 < (extent.y + extent.height))
+            find_contiguous_region (src_buffer, mask_buffer,
+                                    format, 1, FALSE,
+                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, 0.0, FALSE,
+                                    x + 1, y - 1, &col);
+          if (x + 1 >= extent.x && x + 1 < extent.x + extent.width &&
+              y >= extent.y && y < (extent.y + extent.height))
+            find_contiguous_region (src_buffer, mask_buffer,
+                                    format, 1, FALSE,
+                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, 0.0, FALSE,
+                                    x + 1, y, &col);
+          if (x + 1 >= extent.x && x + 1 < extent.x + extent.width &&
+              y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
+            find_contiguous_region (src_buffer, mask_buffer,
+                                    format, 1, FALSE,
+                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, 0.0, FALSE,
+                                    x + 1, y + 1, &col);
+          filled = TRUE;
+        }
     }
   else if (x >= extent.x && x < (extent.x + extent.width) &&
            y >= extent.y && y < (extent.y + extent.height))
     {
-      gfloat *mask;
-      GQueue *queue  = g_queue_new ();
-      gint    width  = gegl_buffer_get_width (src_buffer);
-      gint    height = gegl_buffer_get_height (src_buffer);
-      gint    nx, ny;
-
-      GIMP_TIMER_START();
+      gfloat col = 0.0;
 
       find_contiguous_region (src_buffer, mask_buffer,
                               format, 1, FALSE,
                               FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
                               FALSE, 0.0, FALSE,
-                              x, y, &start_col);
+                              x, y, &col);
+      filled = TRUE;
+    }
 
+  if (filled)
+    {
+      GQueue *queue  = g_queue_new ();
+      gfloat *mask;
+      gint    width  = gegl_buffer_get_width (src_buffer);
+      gint    height = gegl_buffer_get_height (src_buffer);
+      gint    line_art_max_grow;
+      gint    nx, ny;
+
+      GIMP_TIMER_START();
       /* The last step of the line art algorithm is to make sure that
        * selections does not leave "holes" between its borders and the
        * line arts, while not stepping over as well.
