@@ -1478,23 +1478,28 @@ save_image (const gchar  *filename,
       background.blue = blue;
       background.gray = gimp_rgb_luminance_uchar (&color);
 
-      if (type == GIMP_INDEXED_IMAGE) {
+      if (type == GIMP_INDEXED_IMAGE) 
+		{
     	  struct {
     		  guchar red;
     		  guchar green;
     		  guchar blue;
-    	  } *p=pngg.palette;
+    	  } *p = pngg.palette;
 
-		  for(i=0;i<pngg.num_palette;i++) {
-			  if (background.red == p->red &&
-				  background.green == p->green &&
-				  background.blue == p->blue) {
+		  for(i = 0;i < pngg.num_palette;i++) 
+			{
+			  if (
+				background.red == p->red &&
+				background.green == p->green &&
+				background.blue == p->blue
+				) 
+				{
 					  background.index = i;
 					  break;
-			  }
+			  	}
 			  p++;
-		  }
-      }
+		  	}
+      	}
 
       png_set_bKGD (pp, info, &background);
     }
