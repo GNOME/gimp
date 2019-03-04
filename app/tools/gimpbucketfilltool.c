@@ -116,6 +116,9 @@ static void     gimp_bucket_fill_tool_options_notify   (GimpTool              *t
                                                         GimpToolOptions       *options,
                                                         const GParamSpec      *pspec);
 
+static void gimp_bucket_fill_tool_line_art_computing_start (GimpBucketFillTool *tool);
+static void gimp_bucket_fill_tool_line_art_computing_end   (GimpBucketFillTool *tool);
+
 static void     gimp_bucket_fill_tool_start            (GimpBucketFillTool    *tool,
                                                         const GimpCoords      *coords,
                                                         GimpDisplay           *display);
@@ -226,6 +229,12 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   g_object_bind_property (options,  "line-art-max-gap-length",
                           line_art, "segment-max-length",
                           G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);
+  g_signal_connect_swapped (line_art, "computing-start",
+                            G_CALLBACK (gimp_bucket_fill_tool_line_art_computing_start),
+                            tool);
+  g_signal_connect_swapped (line_art, "computing-end",
+                            G_CALLBACK (gimp_bucket_fill_tool_line_art_computing_end),
+                            tool);
   bucket_tool->priv->line_art = line_art;
 
   gimp_bucket_fill_tool_reset_line_art (bucket_tool);
@@ -831,6 +840,22 @@ gimp_bucket_fill_tool_options_notify (GimpTool         *tool,
           break;
         }
     }
+}
+
+static void
+gimp_bucket_fill_tool_line_art_computing_start (GimpBucketFillTool *tool)
+{
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+
+  gtk_widget_show (options->line_art_busy_box);
+}
+
+static void
+gimp_bucket_fill_tool_line_art_computing_end (GimpBucketFillTool *tool)
+{
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
+
+  gtk_widget_hide (options->line_art_busy_box);
 }
 
 static void
