@@ -235,6 +235,7 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   g_signal_connect_swapped (line_art, "computing-end",
                             G_CALLBACK (gimp_bucket_fill_tool_line_art_computing_end),
                             tool);
+  gimp_line_art_bind_gap_length (line_art, TRUE);
   bucket_tool->priv->line_art = line_art;
 
   gimp_bucket_fill_tool_reset_line_art (bucket_tool);
@@ -800,19 +801,17 @@ gimp_bucket_fill_tool_options_notify (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
   if (! strcmp (pspec->name, "fill-area"))
-    /* We want more motion events when the tool is used in a paint tool
-     * fashion. Unfortunately we only set exact mode in line art fill,
-     * because we can't as easily remove events from the similar color
-     * mode just because a point has already been selected  (unless
-     * threshold were 0, but that's an edge case).
-     */
-    gimp_tool_control_set_motion_mode (tool->control,
-                                       bucket_options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
-                                       GIMP_MOTION_MODE_EXACT : GIMP_MOTION_MODE_COMPRESS);
-
-  if (! strcmp (pspec->name, "fill-area") ||
-      ! strcmp (pspec->name, "sample-merged"))
     {
+      /* We want more motion events when the tool is used in a paint tool
+       * fashion. Unfortunately we only set exact mode in line art fill,
+       * because we can't as easily remove events from the similar color
+       * mode just because a point has already been selected  (unless
+       * threshold were 0, but that's an edge case).
+       */
+      gimp_tool_control_set_motion_mode (tool->control,
+                                         bucket_options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
+                                         GIMP_MOTION_MODE_EXACT : GIMP_MOTION_MODE_COMPRESS);
+
       gimp_bucket_fill_tool_reset_line_art (bucket_tool);
     }
   else if (! strcmp (pspec->name, "fill-mode"))
