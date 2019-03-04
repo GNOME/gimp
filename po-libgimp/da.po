@@ -1,5 +1,5 @@
 # Danish translation for GIMP libgimp.
-# Copyright (C) 1999, 2000, 01, 02, 03, 04, 05 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 01, 02, 03, 04, 05, 18 Free Software Foundation, Inc.
 #
 # Yderligere oplysninger og konventioner kan findes på
 # http://wiki.dansk-gruppen.dk/index.php/GIMP
@@ -11,22 +11,23 @@
 # Per Kongstad <p_kongstad@op.pl>, 2009.
 # Joe Hansen <joedalton2@yahoo.dk>, 2011, 2015.
 # scootergrisen, 2015, 2016.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2018 (oversat og gennemgået i sin helhed).
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-16 07:09+0000\n"
-"PO-Revision-Date: 2016-02-26 00:00+0200\n"
-"Last-Translator: scootergrisen\n"
+"Report-Msgid-Bugs-To: "
+"https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-12-31 16:55+0000\n"
+"PO-Revision-Date: 2018-02-07 19:38+0100\n"
+"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: \n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 
@@ -57,12 +58,12 @@ msgstr "Penselvalg"
 #: ../libgimp/gimpbrushselectbutton.c:927
 #: ../libgimp/gimppatternselectbutton.c:725
 msgid "_Browse..."
-msgstr "_Gennemse..."
+msgstr "G_ennemse …"
 
 #: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "Pluginet %s kan ikke håndtere lag"
+msgstr "Udvidelsesmodulet %s kan ikke håndtere lag"
 
 #: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
 #: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
@@ -72,12 +73,14 @@ msgstr "Forén synlige lag"
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "Pluginet %s kan ikke håndtere lagforskydning, størrelse eller opacitet"
+msgstr ""
+"Udvidelsesmodulet %s kan ikke håndtere lagforskydning, størrelse eller "
+"uigennemsigtighed"
 
 #: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "Pluginet %s kan kun håndtere lag som animationsbilleder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere lag som animationsbilleder"
 
 #: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
@@ -86,26 +89,27 @@ msgstr "Gem som animation"
 #: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
 #: ../libgimp/gimpexport.c:289
 msgid "Flatten Image"
-msgstr "Fladgør billede"
+msgstr "Forén billedets lag (bevar gennemsigtighed)"
 
 #: ../libgimp/gimpexport.c:288
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "Pluginet %s kan ikke håndtere gennemsigtighed"
+msgstr "Udvidelsesmodulet %s kan ikke håndtere gennemsigtighed"
 
 #: ../libgimp/gimpexport.c:297
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "Pluginet %s kan ikke håndtere lagmasker"
+msgstr "Udvidelsesmodulet %s kan ikke håndtere lagmasker"
 
+# Fra GIMP
 #: ../libgimp/gimpexport.c:298
 msgid "Apply Layer Masks"
-msgstr "Anvend lagmasker"
+msgstr "Påfør lagmasker"
 
 #: ../libgimp/gimpexport.c:306
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "Pluginet %s kan kun håndtere RGB-billeder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere RGB-billeder"
 
 #: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:354
@@ -115,17 +119,17 @@ msgstr "Konvertér til RGB"
 #: ../libgimp/gimpexport.c:315
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Pluginet %s kan kun håndtere gråtonebilleder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere gråtonebilleder"
 
 #: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
-msgstr "Konvertér til gråtone"
+msgstr "Konvertér til gråtoner"
 
 #: ../libgimp/gimpexport.c:324
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "Pluginet %s kan kun håndtere indekserede billeder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere indekserede billeder"
 
 #: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
 #: ../libgimp/gimpexport.c:364
@@ -139,7 +143,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Pluginet %s kan kun håndtere bitmap-indekserede (tofarvede) billeder"
+msgstr ""
+"Udvidelsesmodulet %s kan kun håndtere bitmap-indekserede (tofarvede) billeder"
 
 #: ../libgimp/gimpexport.c:335
 msgid ""
@@ -152,7 +157,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:344
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "Pluginet %s kan kun håndtere RGB- eller gråtonebilleder"
+msgstr "Udvidelsesmodulet %s kan kun håndtere RGB- eller gråtonebilleder"
 
 #: ../libgimp/gimpexport.c:353
 #, c-format
@@ -162,12 +167,13 @@ msgstr "Pluginet %s kan kun håndtere RGB- eller indekserede billeder"
 #: ../libgimp/gimpexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Pluginet %s kan kun håndtere gråtone- eller indekserede billeder"
+msgstr ""
+"Udvidelsesmodulet %s kan kun håndtere gråtone- eller indekserede billeder"
 
 #: ../libgimp/gimpexport.c:374
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "Pluginet %s kræver en alfa-kanal"
+msgstr "Udvidelsesmodulet %s kræver en alfa-kanal"
 
 #: ../libgimp/gimpexport.c:375
 msgid "Add Alpha Channel"
@@ -175,7 +181,7 @@ msgstr "Tilføj alfa-kanal"
 
 #: ../libgimp/gimpexport.c:430
 msgid "Confirm Save"
-msgstr "Bekræft gemning"
+msgstr "Bekræft gem"
 
 #: ../libgimp/gimpexport.c:436
 msgid "Confirm"
@@ -378,7 +384,7 @@ msgstr "procent"
 #: ../libgimpbase/gimpbaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
-msgstr "_Hvid (fuld opacitet)"
+msgstr "_Hvid (fuld uigennemsigtighed)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
 msgctxt "add-mask-type"
@@ -430,7 +436,7 @@ msgstr "Fg. til gennemsigtig"
 #: ../libgimpbase/gimpbaseenums.c:68
 msgctxt "blend-mode"
 msgid "Custom gradient"
-msgstr "Tilpasset overgang"
+msgstr "Tilpasset farveovergang"
 
 #: ../libgimpbase/gimpbaseenums.c:98
 msgctxt "bucket-fill-mode"
@@ -465,7 +471,7 @@ msgstr "Erstat den aktuelle markering"
 #: ../libgimpbase/gimpbaseenums.c:134
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr "Kryds med den aktuelle markering"
+msgstr "Gennemskær med den aktuelle markering"
 
 #: ../libgimpbase/gimpbaseenums.c:167
 msgctxt "channel-type"
@@ -522,7 +528,7 @@ msgstr "Lyse tern"
 #: ../libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Mid-tone checks"
-msgstr "Mellemtone tern"
+msgstr "Mellemtonetern"
 
 # http://docs.gimp.org/en/plug-in-checkerboard.html
 #: ../libgimpbase/gimpbaseenums.c:239
@@ -605,12 +611,12 @@ msgstr "Kvadratisk"
 #: ../libgimpbase/gimpbaseenums.c:404
 msgctxt "gradient-type"
 msgid "Conical (sym)"
-msgstr "Konisk (sym.)"
+msgstr "Konisk (sym)"
 
 #: ../libgimpbase/gimpbaseenums.c:405
 msgctxt "gradient-type"
 msgid "Conical (asym)"
-msgstr "Konisk (asym.)"
+msgstr "Konisk (asym)"
 
 #: ../libgimpbase/gimpbaseenums.c:406
 msgctxt "gradient-type"
@@ -630,13 +636,13 @@ msgstr "Formet (forsænket)"
 #: ../libgimpbase/gimpbaseenums.c:409
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
-msgstr "Spiral (med uret)"
+msgstr "Spiral (↻)"
 
 # http://developer.gimp.org/api/2.0/libgimpbase/libgimpbase-gimpbaseenums.html
 #: ../libgimpbase/gimpbaseenums.c:410
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
-msgstr "Spiral (mod uret)"
+msgstr "Spiral (↺)"
 
 #: ../libgimpbase/gimpbaseenums.c:442
 msgctxt "grid-style"
@@ -686,7 +692,7 @@ msgstr "RGB-farve"
 #: ../libgimpbase/gimpbaseenums.c:509
 msgctxt "image-base-type"
 msgid "Grayscale"
-msgstr "Gråtone"
+msgstr "Gråtoner"
 
 #: ../libgimpbase/gimpbaseenums.c:510
 msgctxt "image-base-type"
@@ -706,7 +712,7 @@ msgstr "RGB-alfa"
 #: ../libgimpbase/gimpbaseenums.c:545
 msgctxt "image-type"
 msgid "Grayscale"
-msgstr "Gråtone"
+msgstr "Gråtoner"
 
 #: ../libgimpbase/gimpbaseenums.c:546
 msgctxt "image-type"
@@ -751,7 +757,7 @@ msgstr "Konstant"
 #: ../libgimpbase/gimpbaseenums.c:612
 msgctxt "paint-application-mode"
 msgid "Incremental"
-msgstr "Forøgende"
+msgstr "Trinvis"
 
 #: ../libgimpbase/gimpbaseenums.c:642
 msgctxt "repeat-mode"
@@ -846,7 +852,7 @@ msgstr "Intern GIMP-procedure"
 #: ../libgimpbase/gimpbaseenums.c:936
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
-msgstr "GIMP-plugin"
+msgstr "GIMP-udvidelsesmodul"
 
 #: ../libgimpbase/gimpbaseenums.c:937
 msgctxt "pdb-proc-type"
@@ -938,7 +944,7 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Hvis aktiveret vil GIMP'en forsøge at bruge farveprofilen for skærmen fra "
+"Hvis aktiveret vil GIMP forsøge at bruge farveprofilen for skærmen fra "
 "vinduessystemet. Den konfigurerede skærmprofil bliver så kun brugt som "
 "nødplan."
 
@@ -1013,7 +1019,7 @@ msgstr "Sanselig"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
-msgstr "Relativ farvemåling"
+msgstr "Relativ kolorimetrisk"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgctxt "color-rendering-intent"
@@ -1023,7 +1029,7 @@ msgstr "Mætning"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:60
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
-msgstr "Absolut farvemåling"
+msgstr "Absolut kolorimetrisk"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:109
 #, c-format
@@ -1125,7 +1131,7 @@ msgstr "Fejl under fortolkning af \"%s\" i linje %d: %s"
 #: ../libgimpmodule/gimpmodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "Indlæsningsfejl for modul \"%s\": %s"
+msgstr "Indlæsningsfejl for modulet \"%s\": %s"
 
 #: ../libgimpmodule/gimpmodule.c:385
 msgid "Module error"
@@ -1137,7 +1143,7 @@ msgstr "Indlæst"
 
 #: ../libgimpmodule/gimpmodule.c:387
 msgid "Load failed"
-msgstr "Indlæsning fejlede"
+msgstr "Indlæsning mislykkedes"
 
 #: ../libgimpmodule/gimpmodule.c:388
 msgid "Not loaded"
@@ -1189,7 +1195,7 @@ msgstr "_Hvid"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:146
 msgid "Select color profile from disk..."
-msgstr "Vælg farveprofil fra disk..."
+msgstr "Vælg farveprofil fra disken …"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgctxt "profile"
@@ -1297,13 +1303,14 @@ msgstr "Skrivbar"
 msgid "Folder"
 msgstr "Mappe"
 
+# Eyedropper findes ikke mere og er erstattet af color picker
 #: ../libgimpwidgets/gimppickbutton.c:130
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Klik på pipetten og klik derefter et vilkårligt på skærmen for at vælge den "
-"pågældende farve."
+"Klik på farvevælgeren og klik derefter et vilkårligt sted på skærmen for at "
+"vælge den pågældende farve."
 
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:290
@@ -1396,11 +1403,11 @@ msgstr "_Rotér"
 
 #: ../libgimpwidgets/gimpstock.c:341
 msgid "_Shear"
-msgstr "T_rapezér"
+msgstr "_Vrid"
 
 #: ../libgimpwidgets/gimpunitmenu.c:264
 msgid "More..."
-msgstr "Flere..."
+msgstr "Flere …"
 
 #: ../libgimpwidgets/gimpunitmenu.c:490
 msgid "Unit Selection"
@@ -1419,12 +1426,12 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Benyt denne værdi som startværdi til generatoren af tilfældige tal - dette "
+"Benyt denne værdi som basistal til generatoren af tilfældige tal - dette "
 "tillader dig at gentage en given \"tilfældig\" handling"
 
 #: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
-msgstr "_Ny startværdi"
+msgstr "_Nyt basistal til tilfældighedsgeneratoren"
 
 #: ../libgimpwidgets/gimpwidgets.c:533
 msgid "Seed random number generator with a generated random number"
@@ -1432,7 +1439,7 @@ msgstr "Start generatoren af tilfældige tal med et genereret tilfældigt tal"
 
 #: ../libgimpwidgets/gimpwidgets.c:537
 msgid "_Randomize"
-msgstr "_Tilfældiggør"
+msgstr "_Tilfældig"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:49
 msgctxt "input-mode"
@@ -1677,58 +1684,58 @@ msgstr "Knap %d slip"
 #: ../modules/controller-dx-dinput.c:441
 #: ../modules/controller-linux-input.c:89
 msgid "X Move Left"
-msgstr "X flyt venstre"
+msgstr "x flyt venstre"
 
 #: ../modules/controller-dx-dinput.c:444
 #: ../modules/controller-linux-input.c:90
 msgid "X Move Right"
-msgstr "X flyt højre"
+msgstr "x flyt højre"
 
 #: ../modules/controller-dx-dinput.c:450
 msgid "Y Move Away"
-msgstr "Y flyt væk"
+msgstr "y flyt væk"
 
 #: ../modules/controller-dx-dinput.c:453
 msgid "Y Move Near"
-msgstr "Y flyt tættere"
+msgstr "y flyt tættere"
 
 #: ../modules/controller-dx-dinput.c:459
 #: ../modules/controller-linux-input.c:93
 msgid "Z Move Up"
-msgstr "Z flyt op"
+msgstr "z flyt op"
 
 #: ../modules/controller-dx-dinput.c:462
 #: ../modules/controller-linux-input.c:94
 msgid "Z Move Down"
-msgstr "Z flyt ned"
+msgstr "z flyt ned"
 
 #: ../modules/controller-dx-dinput.c:468
 msgid "X Axis Tilt Away"
-msgstr "X-akse hæld væk"
+msgstr "x-akse hæld væk"
 
 #: ../modules/controller-dx-dinput.c:471
 msgid "X Axis Tilt Near"
-msgstr "X-akse hæld tættere"
+msgstr "x-akse hæld tættere"
 
 #: ../modules/controller-dx-dinput.c:477
 #: ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
-msgstr "Y-akse hæld højre"
+msgstr "y-akse hæld højre"
 
 #: ../modules/controller-dx-dinput.c:480
 #: ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
-msgstr "Y-akse hæld venstre"
+msgstr "y-akse hæld venstre"
 
 #: ../modules/controller-dx-dinput.c:486
 #: ../modules/controller-linux-input.c:100
 msgid "Z Axis Turn Left"
-msgstr "Z-akse drej venstre"
+msgstr "z-akse drej venstre"
 
 #: ../modules/controller-dx-dinput.c:489
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Right"
-msgstr "Z-akse drej højre"
+msgstr "z-akse drej højre"
 
 #: ../modules/controller-dx-dinput.c:500
 #, c-format
@@ -1859,19 +1866,19 @@ msgstr "Knap gear op"
 
 #: ../modules/controller-linux-input.c:91
 msgid "Y Move Forward"
-msgstr "Y flyt frem"
+msgstr "y flyt frem"
 
 #: ../modules/controller-linux-input.c:92
 msgid "Y Move Back"
-msgstr "Y flyt tilbage"
+msgstr "y flyt tilbage"
 
 #: ../modules/controller-linux-input.c:96
 msgid "X Axis Tilt Forward"
-msgstr "X-akse hæld fremad"
+msgstr "x-akse hæld fremad"
 
 #: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Back"
-msgstr "X-akse hæld tilbage"
+msgstr "x-akse hæld tilbage"
 
 #: ../modules/controller-linux-input.c:103
 msgid "Horiz. Wheel Turn Back"
@@ -1903,7 +1910,7 @@ msgstr "Styreenhed til Linux-inputhændelser"
 
 #: ../modules/controller-linux-input.c:218
 msgid "The name of the device to read Linux Input events from."
-msgstr "Navnet på enhed der skal læses Linux-inputhændelser fra."
+msgstr "Navnet på enheden der skal læses Linux-inputhændelser fra."
 
 #: ../modules/controller-linux-input.c:229
 msgid "Linux Input"
@@ -1924,11 +1931,11 @@ msgstr "Læser fra %s"
 #: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
 #, c-format
 msgid "Device not available: %s"
-msgstr "Enhed ikke tilgængelig: %s"
+msgstr "Enheden ikke tilgængelig: %s"
 
 #: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
 msgid "End of file"
-msgstr "Fil slut"
+msgstr "Filen slut"
 
 #: ../modules/controller-midi.c:163
 msgid "MIDI event controller"
@@ -2000,11 +2007,11 @@ msgstr "Tritanopia (kan ikke se blå)"
 # simulering er svært at stoppe ind og vist overflødigt
 #: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Farveblindhedsfilter (Brettel-Vienot-Mollon-algoritmen)"
+msgstr "Farveblindhedsfilter (Brettel–Vienot–Mollon-algoritmen)"
 
 #: ../modules/display-filter-color-blind.c:257
 msgid "Color Deficient Vision"
-msgstr "Farveblindt syn"
+msgstr "Farveblindhed"
 
 #: ../modules/display-filter-color-blind.c:486
 msgid "Color _deficiency type:"
@@ -2104,3 +2111,4 @@ msgstr "_Formål:"
 #: ../modules/display-filter-proof.c:482
 msgid "_Black Point Compensation"
 msgstr "_Kompensér for sortpunkt"
+

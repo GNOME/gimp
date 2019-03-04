@@ -186,15 +186,15 @@ struct mnglib_userdata_t
  * Function prototypes
  */
 
-static mng_ptr   myalloc       (mng_size_t  size);
-static void      myfree        (mng_ptr     ptr,
-                                mng_size_t  size);
-static mng_bool  myopenstream  (mng_handle  handle);
-static mng_bool  myclosestream (mng_handle  handle);
-static mng_bool  mywritedata   (mng_handle  handle,
-                                mng_ptr     buf,
-                                mng_uint32  size,
-                                mng_uint32 *written_size);
+static mng_ptr  MNG_DECL  myalloc       (mng_size_t  size);
+static void     MNG_DECL  myfree        (mng_ptr     ptr,
+                                         mng_size_t  size);
+static mng_bool MNG_DECL  myopenstream  (mng_handle  handle);
+static mng_bool MNG_DECL  myclosestream (mng_handle  handle);
+static mng_bool MNG_DECL  mywritedata   (mng_handle  handle,
+                                         mng_ptr     buf,
+                                         mng_uint32  size,
+                                         mng_uint32 *written_size);
 
 
 static gint32    parse_chunks_type_from_layer_name   (const gchar *str);
@@ -232,7 +232,7 @@ static void      run             (const gchar      *name,
  * Callbacks for libmng
  */
 
-static mng_ptr
+static mng_ptr MNG_DECL
 myalloc (mng_size_t size)
 {
   gpointer ptr;
@@ -245,26 +245,26 @@ myalloc (mng_size_t size)
   return ((mng_ptr) ptr);
 }
 
-static void
+static void MNG_DECL
 myfree (mng_ptr    ptr,
         mng_size_t size)
 {
   g_free (ptr);
 }
 
-static mng_bool
+static mng_bool MNG_DECL
 myopenstream (mng_handle handle)
 {
   return MNG_TRUE;
 }
 
-static mng_bool
+static mng_bool MNG_DECL
 myclosestream (mng_handle handle)
 {
   return MNG_TRUE;
 }
 
-static mng_bool
+static mng_bool MNG_DECL
 mywritedata (mng_handle  handle,
              mng_ptr     buf,
              mng_uint32  size,

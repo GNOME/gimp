@@ -8,11 +8,11 @@ AC_PREREQ(2.54)
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [8])
-m4_define([gimp_micro_version], [22])
+m4_define([gimp_micro_version], [23])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
-m4_define([gimp_interface_age], [22])
+m4_define([gimp_interface_age], [23])
 m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
@@ -50,7 +50,7 @@ m4_define([cairo_required_version], [1.10.2])
 m4_define([cairo_pdf_required_version], [1.10.2])
 m4_define([pangocairo_required_version], [1.29.4])
 m4_define([fontconfig_required_version], [2.2.0])
-m4_define([fontconfig_win32_recommended_version], [2.11.1])
+m4_define([fontconfig_win32_required_version], [2.12.4])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([webkit_required_version], [1.6.1])
 m4_define([alsa_required_version], [1.0.0])
@@ -128,13 +128,13 @@ GLIB_REQUIRED_VERSION=glib_required_version
 GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
-FONTCONFIG_WIN32_RECOMMENDED_VERSION=fontconfig_win32_recommended_version
+FONTCONFIG_WIN32_REQUIRED_VERSION=fontconfig_win32_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
-AC_SUBST(FONTCONFIG_WIN32_RECOMMENDED_VERSION)
+AC_SUBST(FONTCONFIG_WIN32_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
@@ -543,6 +543,31 @@ else
 fi
 AC_MSG_RESULT($have_glib_2_31)
 
+AC_MSG_CHECKING([for glib-networking (GIO TLS implementation)])
+gimp_save_CFLAGS="$CFLAGS"
+gimp_save_LIBS="$LIBS"
+CFLAGS="$CFLAGS $GIO_CFLAGS"
+LIBS="$LIBS $GIO_LIBS"
+AC_RUN_IFELSE([AC_LANG_PROGRAM([#include <gio/gio.h>],
+                               [return !g_tls_backend_supports_tls (g_tls_backend_get_default ());])],
+              [have_glib_networking="yes"],
+              [have_glib_networking="no"],
+              [have_glib_networking="unknown (cross-compiling)"])
+CFLAGS="$gimp_save_CFLAGS"
+LIBS="$gimp_save_LIBS"
+AC_MSG_RESULT($have_glib_networking)
+
+if test "x$have_glib_networking" = "xno"; then
+  AC_MSG_ERROR([Test for glib-networking failed. This is required.])
+elif test "x$have_glib_networking" != "xyes"; then
+  warning_glib_networking="
+WARNING: Test for glib-networking cannot be performed while cross-compiling.
+         Make sure glib-networking is installed, otherwise GIMP will not be able
+         to display the remote help pages through the help browser, nor will it
+         be able to open remote HTTPS (or other protocol using SSL/TLS) files.
+         HTTPS is becoming the expected standard and should not be considered
+         optional anymore."
+fi
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 gimp_save_LIBS=$LIBS
@@ -596,24 +621,16 @@ PKG_CHECK_MODULES(PANGOCAIRO,
 gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
-PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
-
 # Windows platform had a few bugs fixed in earlier fontconfig.
-# Display a warning when compiling with a flawed fontconfig.
-# See bugs 708110 and 703331.
-have_recommended_fontconfig=""
+# The bugs are serious enough (for instance very slow startups at each
+# GIMP start, but also slowness when closing, broken font features,
+# etc.) that we should bump the requirement for Win32.
+# See bugs 708110 (fontconfig 2.11.0), 703331 (2.11.1) and 782676
+# (2.12.4).
 if test "x$platform_win32" = "xyes"; then
-    PKG_CHECK_MODULES(RECOMMENDED_WIN32_FONTCONFIG, fontconfig >= fontconfig_win32_recommended_version,
-                      have_recommended_fontconfig="yes", have_recommended_fontconfig="no")
-
-    if test "x$have_recommended_fontconfig" = xno; then
-        have_recommended_fontconfig="
-WARNING: Your fontconfig version is `$PKG_CONFIG --modversion fontconfig`.
-         The recommended fontconfig version under Windows is $FONTCONFIG_WIN32_RECOMMENDED_VERSION or over.
-         If you continue without updating fontconfig, your build may have partially broken font processing."
-    else
-        have_recommended_fontconfig=""
-    fi
+  PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_win32_required_version)
+else
+  PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 fi
 
 AC_MSG_CHECKING([if Pango is version 1.32.0 or newer])
@@ -1316,6 +1333,9 @@ if test "x$with_libmng" != xno && test -z "$MNG_LIBS" &&
   if test "$mng_ok" = yes; then
     have_libmng=yes
     FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"; MNG_CFLAGS="$PNG_CFLAGS"
+    if test "x$platform_win32" = "xyes"; then
+      MNG_CFLAGS="$MNG_CFLAGS -DMNG_USE_DLL"
+    fi
   else
     have_libmng="no (MNG header file not found)"
   fi
@@ -2500,5 +2520,5 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
-$have_recommended_xgettext $have_recommended_fontconfig
+$have_recommended_xgettext$warning_glib_networking
 ]);

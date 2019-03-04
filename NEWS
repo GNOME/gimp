@@ -7,6 +7,25 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.8.22 to GIMP 2.8.24
+===================================================
+
+Tools:
+
+ - Limit number of transform tool grid lines to prevent freezes
+
+
+Windows Installer:
+
+ - Add Scottish Gaelic translation
+
+
+General:
+
+ - Fix make test for clang compiler
+ - configure check for glib-networking to get TLS support
+
+
 Overview of Changes from GIMP 2.8.20 to GIMP 2.8.22
 ===================================================
 

@@ -8,10 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-09-19 05:21+0000\n"
-"PO-Revision-Date: 2014-10-04 11:43+0700\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-04-11 20:24+0000\n"
+"PO-Revision-Date: 2017-09-21 21:07+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -39,7 +39,12 @@ msgstr ""
 "Hak Cipta © 1995-%s\n"
 "Spencer Kimball, Peter Mattis dan Tim Pengembangan GIMP."
 
-#: ../app/about.h:34
+#. TRANSLATORS: do not end the license URL with a dot, because it would
+#. * be in the link. Because of technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../app/about.h:39
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -52,8 +57,19 @@ msgid ""
 "details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with "
-"GIMP.  If not, see http://www.gnu.org/licenses/."
+"GIMP. If not, see: http://www.gnu.org/licenses/"
 msgstr ""
+"GIMP adalah perangkat lunak bebas; Anda dapat menyebarluaskannya dan/atau "
+"mengubahnya di bawah syarat GNU General Public License sebagaimana "
+"dipublikasikan oleh Free Software Foundation; baik versi 3 dari Lisensi, "
+"atau (terserah pilihan Anda) versi setelahnya.\n"
+"\n"
+"GIMP didistribusikan dengan harapan akan berguna, tetapi TANPA ADANYA "
+"JAMINAN; termasuk tanpa jaminan KETERDAGANGAN atau KECOCOKAN UNTUK TUJUAN "
+"TERTENTU. Lihat GNU General Public License untuk rincian lebih lanjut.\n"
+"\n"
+"Anda seharusnya menerima salinan dari GNU General Public License bersama "
+"dengan GIMP. Jika tidak, lihat: http://www.gnu.org/licenses/"
 
 #: ../app/app.c:225
 #, c-format
@@ -63,6 +79,10 @@ msgid ""
 "To avoid data loss, please check the location and permissions of the swap "
 "directory defined in your Preferences (currently \"%s\")."
 msgstr ""
+"Tidak bisa membuka sebuah berkas swap percobaan.\n"
+"\n"
+"Untuk menghindari kehilangan data, harap periksa lokasi dan izin dari "
+"direktori swap yang didefinisikan dalam Preferensi Anda (saat ini \"%s\")."
 
 #: ../app/batch.c:75
 #, c-format
@@ -168,11 +188,11 @@ msgstr "Keluarkan berkas gimprc dengan pengaturan baku"
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Keluarkan daftar terurut dari prosedur yang tak dipakai lagi dalam PDB"
 
-#: ../app/main.c:399
+#: ../app/main.c:433
 msgid "[FILE|URI...]"
 msgstr "[BERKAS|URI...]"
 
-#: ../app/main.c:421
+#: ../app/main.c:455
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -180,20 +200,20 @@ msgstr ""
 "GIMP tak bisa menginisiasi antar muka pengguna grafis.\n"
 "Pastikan bahwa penyiapan yang benar bagi lingkungan tampilan Anda ada."
 
-#: ../app/main.c:440
+#: ../app/main.c:474
 msgid "Another GIMP instance is already running."
 msgstr "Instansi GIMP lain tengah berjalan."
 
-#: ../app/main.c:512
+#: ../app/main.c:546
 msgid "GIMP output. Type any character to close this window."
 msgstr "Keluaran GIMP. Ketik sebarang karakter untuk menutup jendela ini."
 
-#: ../app/main.c:513
+#: ../app/main.c:547
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Ketikkan karakter apapun untuk menutup jendela ini)\n"
 
-#: ../app/main.c:530
+#: ../app/main.c:564
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Keluaran GIMP. Anda dapat meminimalkan jendela ini, tapi jangan menutupnya."
@@ -244,7 +264,7 @@ msgstr "Penyunting Kuas"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:112 ../app/core/gimp.c:951
-#: ../app/dialogs/dialogs.c:317 ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/dialogs.c:317 ../app/dialogs/preferences-dialog.c:2783
 msgid "Brushes"
 msgstr "Kuas"
 
@@ -291,13 +311,13 @@ msgstr "Dapat ditambatkan"
 
 #. Document History
 #: ../app/actions/actions.c:145 ../app/dialogs/dialogs.c:329
-#: ../app/dialogs/preferences-dialog.c:1577
+#: ../app/dialogs/preferences-dialog.c:1612
 msgid "Document History"
 msgstr "Riwayat Dokumen"
 
 #: ../app/actions/actions.c:148
 msgid "Drawable"
-msgstr ""
+msgstr "Dapat digambar"
 
 #. Some things do not have grids, so just list
 #: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:335
@@ -322,7 +342,7 @@ msgid "File"
 msgstr "Berkas"
 
 #: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:325
-#: ../app/dialogs/preferences-dialog.c:2766
+#: ../app/dialogs/preferences-dialog.c:2803
 msgid "Fonts"
 msgstr "Fonta"
 
@@ -333,12 +353,12 @@ msgstr "Penyunting Gradien"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:172 ../app/core/gimp.c:971
-#: ../app/dialogs/dialogs.c:321 ../app/dialogs/preferences-dialog.c:2762
+#: ../app/dialogs/dialogs.c:321 ../app/dialogs/preferences-dialog.c:2799
 msgid "Gradients"
 msgstr "Gradien"
 
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:983
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2770
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2807
 msgid "Tool Presets"
 msgstr "Pratata Alat"
 
@@ -372,26 +392,25 @@ msgstr "Penyunting Palet"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:196 ../app/core/gimp.c:966
-#: ../app/dialogs/dialogs.c:323 ../app/dialogs/preferences-dialog.c:2758
+#: ../app/dialogs/dialogs.c:323 ../app/dialogs/preferences-dialog.c:2795
 msgid "Palettes"
 msgstr "Palet"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:199 ../app/core/gimp.c:961
-#: ../app/dialogs/dialogs.c:319 ../app/dialogs/preferences-dialog.c:2754
+#: ../app/dialogs/dialogs.c:319 ../app/dialogs/preferences-dialog.c:2791
 msgid "Patterns"
 msgstr "Pola"
 
-#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2774
+#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2811
 msgid "Plug-Ins"
 msgstr "Pengaya"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:386
-#: ../app/dialogs/preferences-dialog.c:2032
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2069
 msgid "Quick Mask"
-msgstr "Mask Subnet"
+msgstr "Topeng Cepat"
 
 #: ../app/actions/actions.c:208 ../app/dialogs/dialogs.c:370
 msgid "Sample Points"
@@ -416,7 +435,7 @@ msgid "Text Editor"
 msgstr "Penyunting Teks"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:436
+#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:464
 msgid "Tool Options"
 msgstr "Opsi Alat"
 
@@ -714,8 +733,7 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Perpotongkan kanal ini dengan pilihan saat ini"
 
-#: ../app/actions/channels-commands.c:85
-#: ../app/actions/channels-commands.c:402
+#: ../app/actions/channels-commands.c:85 ../app/actions/channels-commands.c:402
 msgid "Channel Attributes"
 msgstr "Atribut Kanal"
 
@@ -727,8 +745,7 @@ msgstr "Sunting Atribut Kanal"
 msgid "Edit Channel Color"
 msgstr "Sunting Warna Kanal"
 
-#: ../app/actions/channels-commands.c:91
-#: ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:91 ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
 msgstr "Kelegapan _pengisian:"
 
@@ -876,12 +893,12 @@ msgstr "Jeja_ri"
 #: ../app/actions/context-actions.c:71
 msgctxt "context-action"
 msgid "S_pikes"
-msgstr ""
+msgstr "_Paku"
 
 #: ../app/actions/context-actions.c:73
 msgctxt "context-action"
 msgid "_Hardness"
-msgstr ""
+msgstr "_Kekerasan"
 
 #: ../app/actions/context-actions.c:75
 msgctxt "context-action"
@@ -914,9 +931,9 @@ msgid "Exchange foreground and background colors"
 msgstr "Pertukarkan warna latar depan dan belakang"
 
 #: ../app/actions/context-commands.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Paint Mode: %s"
-msgstr "_Moda impor:"
+msgstr "Mode Cat: %s"
 
 #: ../app/actions/context-commands.c:552
 #, c-format
@@ -949,13 +966,13 @@ msgid "Use the composite color of all visible layers"
 msgstr "Gunakan warna komposit dari semua lapisan yang tampak"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
-#: ../app/dialogs/file-open-dialog.c:277
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:265
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:592
 #: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:168
-#: ../app/widgets/gimptoolbox.c:818
+#: ../app/widgets/gimptoolbox.c:817
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -966,8 +983,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:118
-#: ../app/actions/tool-options-commands.c:72
+#: ../app/actions/data-commands.c:118 ../app/actions/tool-options-commands.c:72
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1529
 #: ../app/core/gimppalette-import.c:211 ../app/core/gimppalette-load.c:224
 #: ../app/core/gimppalette.c:399 ../app/dialogs/palette-import-dialog.c:771
@@ -1106,10 +1122,9 @@ msgid "Colo_rs"
 msgstr "Wa_rna"
 
 #: ../app/actions/dialogs-actions.c:128
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
-msgstr "Buka dialog untuk memilih warna"
+msgstr "Buka dialog warna FG/BG"
 
 #: ../app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
@@ -1314,12 +1329,12 @@ msgstr "Buka dialog manajer modul"
 #: ../app/actions/dialogs-actions.c:258
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
-msgstr ""
+msgstr "_Tip Hari Ini"
 
 #: ../app/actions/dialogs-actions.c:259
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
-msgstr ""
+msgstr "Tampilkan beberapa tip berguna tentang memakai GIMP"
 
 #: ../app/actions/dialogs-actions.c:265 ../app/actions/dialogs-actions.c:271
 msgctxt "dialogs-action"
@@ -1337,28 +1352,26 @@ msgid "_About"
 msgstr "Tent_ang"
 
 #: ../app/actions/dialogs-actions.c:333
-#: ../app/dialogs/preferences-dialog.c:1951 ../app/widgets/gimptoolbox.c:540
+#: ../app/dialogs/preferences-dialog.c:1988 ../app/widgets/gimptoolbox.c:539
 msgid "Toolbox"
-msgstr "Kotak alat"
+msgstr "Kotak Perkakas"
 
 #: ../app/actions/dialogs-actions.c:334
-#, fuzzy
 msgid "Raise the toolbox"
-msgstr "kotak alat (warna)"
+msgstr "Naikkan kotak perkakas"
 
 #: ../app/actions/dialogs-actions.c:338
 msgid "New Toolbox"
-msgstr "Kotak Alat Baru"
+msgstr "Kotak Perkakas Baru"
 
 #: ../app/actions/dialogs-actions.c:339
 msgid "Create a new toolbox"
 msgstr "Buat kotak alat baru"
 
 #: ../app/actions/dock-actions.c:45
-#, fuzzy
 msgctxt "dock-action"
 msgid "M_ove to Screen"
-msgstr "Layar X yang akan dipakai"
+msgstr "Pind_ah ke Layar"
 
 #: ../app/actions/dock-actions.c:49
 msgctxt "dock-action"
@@ -1368,7 +1381,7 @@ msgstr "Tutup Dok"
 #: ../app/actions/dock-actions.c:54
 msgctxt "dock-action"
 msgid "_Open Display..."
-msgstr "_Buka Tampilan…"
+msgstr "_Buka Tampilan..."
 
 #: ../app/actions/dock-actions.c:55
 msgctxt "dock-action"
@@ -1411,7 +1424,6 @@ msgid "_Close Tab"
 msgstr "_Tutup Tab"
 
 #: ../app/actions/dockable-actions.c:65
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Detach Tab"
 msgstr "_Lepaskan Tab"
@@ -1449,17 +1461,17 @@ msgstr "Eks_tra Besar"
 #: ../app/actions/dockable-actions.c:96
 msgctxt "preview-size"
 msgid "_Huge"
-msgstr ""
+msgstr "San_gat Besar"
 
 #: ../app/actions/dockable-actions.c:98
 msgctxt "preview-size"
 msgid "_Enormous"
-msgstr ""
+msgstr "Sanga_t Sangat Besar"
 
 #: ../app/actions/dockable-actions.c:100
 msgctxt "preview-size"
 msgid "_Gigantic"
-msgstr ""
+msgstr "Lua_r Biasa Besar"
 
 #: ../app/actions/dockable-actions.c:106
 msgctxt "tab-style"
@@ -1492,10 +1504,9 @@ msgid "Automatic"
 msgstr "Otomatis"
 
 #: ../app/actions/dockable-actions.c:126
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
-msgstr "Pindah ke tab ini"
+msgstr "_Kunci Tab ke Dok"
 
 #: ../app/actions/dockable-actions.c:128
 msgctxt "dockable-action"
@@ -1533,16 +1544,14 @@ msgid "Open the selected entry"
 msgstr "Buka entri yang dipilih"
 
 #: ../app/actions/documents-actions.c:51
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Raise or Open Image"
-msgstr "Naikkan tampilan gambar"
+msgstr "Naikkan atau Buka Cit_ra"
 
 #: ../app/actions/documents-actions.c:52
-#, fuzzy
 msgctxt "documents-action"
 msgid "Raise window if already open"
-msgstr "Naikkan jendela bila terhalangi, bila tidak maka turunkan"
+msgstr "Naikkan jendela bila sudah terbuka"
 
 #: ../app/actions/documents-actions.c:57
 msgctxt "documents-action"
@@ -1585,16 +1594,14 @@ msgid "Clear the entire document history"
 msgstr "Bersihkan seluruh riwayat dokumen"
 
 #: ../app/actions/documents-actions.c:81
-#, fuzzy
 msgctxt "documents-action"
 msgid "Recreate _Preview"
-msgstr "Pratilik Thread"
+msgstr "Buat Ulang _Pratilik"
 
 #: ../app/actions/documents-actions.c:82
-#, fuzzy
 msgctxt "documents-action"
 msgid "Recreate preview"
-msgstr "Pratilik Thread"
+msgstr "Buat ulang pratilik"
 
 #: ../app/actions/documents-actions.c:87
 msgctxt "documents-action"
@@ -1607,10 +1614,9 @@ msgid "Reload all previews"
 msgstr "Muat ulang semua pratinjau"
 
 #: ../app/actions/documents-actions.c:93
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove Dangling E_ntries"
-msgstr "Tambah/Hapus _Hyperlink"
+msgstr "Hapus E_ntri Menggantung"
 
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
@@ -1634,7 +1640,6 @@ msgstr ""
 "dokumen baru-baru ini."
 
 #: ../app/actions/drawable-actions.c:45
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_Equalize"
 msgstr "_Samakan"
@@ -1645,10 +1650,9 @@ msgid "Automatic contrast enhancement"
 msgstr "Peningkatan kontras otomatis"
 
 #: ../app/actions/drawable-actions.c:51
-#, fuzzy
 msgctxt "drawable-action"
 msgid "In_vert"
-msgstr "Step Masuk"
+msgstr "_Balikkan"
 
 #: ../app/actions/drawable-actions.c:52
 msgctxt "drawable-action"
@@ -1656,13 +1660,11 @@ msgid "Invert the colors"
 msgstr "Balikkan warna"
 
 #: ../app/actions/drawable-actions.c:57
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_White Balance"
-msgstr "Koreksi white balance"
+msgstr "_White Balance"
 
 #: ../app/actions/drawable-actions.c:58
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
 msgstr "Koreksi white balance otomatis"
@@ -1675,7 +1677,7 @@ msgstr "_Ofset…"
 #: ../app/actions/drawable-actions.c:65
 msgctxt "drawable-action"
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr ""
+msgstr "Geser piksel, secara opsional melipat mereka di tepi"
 
 #: ../app/actions/drawable-actions.c:73
 msgctxt "drawable-action"
@@ -1704,10 +1706,9 @@ msgid "L_ock pixels"
 msgstr "Kun_ci piksel"
 
 #: ../app/actions/drawable-actions.c:89
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
-msgstr "Pertahankan piksel-piksel"
+msgstr "Pertahankan piksel-piksel pada drawable ini dari perubahan"
 
 #: ../app/actions/drawable-actions.c:98
 msgctxt "drawable-action"
@@ -1760,18 +1761,16 @@ msgid "Rotate 90 degrees to the left"
 msgstr "Memutar gambar 90 derajat ke kiri"
 
 #: ../app/actions/drawable-commands.c:63
-#, fuzzy
 msgid "Equalize does not operate on indexed layers."
-msgstr "derajat tidak dapat digunakan pada gambar berindeks."
+msgstr "Penyamaan tidak dapat digunakan pada gambar berindeks."
 
 #: ../app/actions/drawable-commands.c:87
-#, fuzzy
 msgid "Invert does not operate on indexed layers."
-msgstr "derajat tidak dapat digunakan pada gambar berindeks."
+msgstr "Inversi tidak dapat digunakan pada lapisan berindeks."
 
 #: ../app/actions/drawable-commands.c:111
 msgid "White Balance operates only on RGB color layers."
-msgstr ""
+msgstr "White Balance hanya beroperasi pada lapisan warna RGB."
 
 #: ../app/actions/dynamics-actions.c:42
 msgctxt "dynamics-action"
@@ -1889,10 +1888,9 @@ msgid "Redo the last operation that was undone"
 msgstr "Jadikan lagi operasi yang sebelumnya dibatalkan"
 
 #: ../app/actions/edit-actions.c:84
-#, fuzzy
 msgctxt "edit-action"
 msgid "Strong Undo"
-msgstr "_Batalkan Langkah"
+msgstr ""
 
 #: ../app/actions/edit-actions.c:85
 msgctxt "edit-action"
@@ -1900,10 +1898,9 @@ msgid "Undo the last operation, skipping visibility changes"
 msgstr "Tak jadi laksanakan operasi terakhir, melewati perubahan kenampakan"
 
 #: ../app/actions/edit-actions.c:90
-#, fuzzy
 msgctxt "edit-action"
 msgid "Strong Redo"
-msgstr "_Ulangi Langkah"
+msgstr ""
 
 #: ../app/actions/edit-actions.c:92
 msgctxt "edit-action"
@@ -1924,7 +1921,7 @@ msgstr "Hapus semua operasi dari riwayat pembatalan operasi"
 #: ../app/actions/edit-actions.c:103
 msgctxt "edit-action"
 msgid "_Fade..."
-msgstr ""
+msgstr "_Pudar..."
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
@@ -2099,9 +2096,9 @@ msgid "_Redo %s"
 msgstr "_Jadi Lagi %s"
 
 #: ../app/actions/edit-actions.c:326
-#, fuzzy, c-format
+#, c-format
 msgid "_Fade %s..."
-msgstr "_Fade:"
+msgstr "_Pudarkan %s..."
 
 #: ../app/actions/edit-actions.c:338
 msgid "_Undo"
@@ -2112,18 +2109,16 @@ msgid "_Redo"
 msgstr "_Jadi Lagi"
 
 #: ../app/actions/edit-actions.c:340
-#, fuzzy
 msgid "_Fade..."
-msgstr "_Fade:"
+msgstr "_Pudar..."
 
 #: ../app/actions/edit-commands.c:137
 msgid "Clear Undo History"
 msgstr "Bersihkan Riwayat Tak Jadi"
 
 #: ../app/actions/edit-commands.c:163
-#, fuzzy
 msgid "Really clear image's undo history?"
-msgstr "Mundur dalam riwayat pembatalan"
+msgstr "Yakin bersihkan riwayat pembatalan citra?"
 
 #: ../app/actions/edit-commands.c:176
 #, c-format
@@ -2156,9 +2151,8 @@ msgstr "Potong Bernama"
 
 #: ../app/actions/edit-commands.c:377 ../app/actions/edit-commands.c:418
 #: ../app/actions/edit-commands.c:438
-#, fuzzy
 msgid "Enter a name for this buffer"
-msgstr "Silakan masukkan suatu nama bagi situs web ini"
+msgstr "Masukkan suatu nama bagi penyangga ini"
 
 #: ../app/actions/edit-commands.c:415
 msgid "Copy Named"
@@ -2222,10 +2216,9 @@ msgid "Save S_election to File..."
 msgstr "Simpan Pilihan k_e Berkas…"
 
 #: ../app/actions/error-console-actions.c:65
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Write the selected error messages to a file"
-msgstr "Kesalahan saat coba menulis berkas CSV"
+msgstr "Tulis pesan kesalahan yang dipilih ke suatu berkas"
 
 #: ../app/actions/error-console-commands.c:84
 msgid "Cannot save. Nothing is selected."
@@ -2255,7 +2248,6 @@ msgid "Crea_te"
 msgstr "Bua_t"
 
 #: ../app/actions/file-actions.c:73
-#, fuzzy
 msgctxt "file-action"
 msgid "Open _Recent"
 msgstr "Buka Te_rkini"
@@ -2276,28 +2268,24 @@ msgid "Op_en as Layers..."
 msgstr "Buka s_ebagai Lapisan…"
 
 #: ../app/actions/file-actions.c:83
-#, fuzzy
 msgctxt "file-action"
 msgid "Open an image file as layers"
-msgstr "Pilih sebuah Berkas Gambar untuk Dijadikan Pola"
+msgstr "Buka sebuah berkas gambar sebagai lapisan"
 
 #: ../app/actions/file-actions.c:88
-#, fuzzy
 msgctxt "file-action"
 msgid "Open _Location..."
 msgstr "Buka _Lokasi..."
 
 #: ../app/actions/file-actions.c:89
-#, fuzzy
 msgctxt "file-action"
 msgid "Open an image file from a specified location"
-msgstr "Impor berkas ICC dari lokasi lain"
+msgstr "Buka sebuah berkas citra dari lokasi yang dinyatakan"
 
 #: ../app/actions/file-actions.c:94
-#, fuzzy
 msgctxt "file-action"
 msgid "Create Template..."
-msgstr "Buat template baru"
+msgstr "Buat Templat..."
 
 #: ../app/actions/file-actions.c:95
 msgctxt "file-action"
@@ -2305,16 +2293,14 @@ msgid "Create a new template from this image"
 msgstr "Membuat suatu templat baru dari citra ini"
 
 #: ../app/actions/file-actions.c:100
-#, fuzzy
 msgctxt "file-action"
 msgid "Re_vert"
-msgstr "Bua_ng"
+msgstr "Kem_balikan"
 
 #: ../app/actions/file-actions.c:101
-#, fuzzy
 msgctxt "file-action"
 msgid "Reload the image file from disk"
-msgstr "Muat berkas core dari disk"
+msgstr "Muat ulang berkas citra dari disk"
 
 #: ../app/actions/file-actions.c:106
 msgctxt "file-action"
@@ -2327,16 +2313,15 @@ msgid "Close all opened images"
 msgstr "Tutup semua citra yang terbuka"
 
 #: ../app/actions/file-actions.c:112
-#, fuzzy
 msgctxt "file-action"
 msgid "_Quit"
 msgstr "_Keluar"
 
 #: ../app/actions/file-actions.c:113
-#, fuzzy
 msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "Program pajanan digunakan ketika menangkap gambar"
+msgstr ""
+"Keluar dari GNU Image Manipulation Program (Program Manipulasi Citra GNU)"
 
 #: ../app/actions/file-actions.c:121
 msgctxt "file-action"
@@ -2418,9 +2403,9 @@ msgid "Export to %s"
 msgstr "Ekspor ke %s"
 
 #: ../app/actions/file-actions.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "Over_write %s"
-msgstr "Ti_mpa"
+msgstr "Ti_mpa %s"
 
 #: ../app/actions/file-actions.c:306
 msgid "Export"
@@ -2432,15 +2417,14 @@ msgid "Open Image"
 msgstr "Buka Gambar"
 
 #: ../app/actions/file-commands.c:140
-#, fuzzy
 msgid "Open Image as Layers"
-msgstr "Jadikan _Gambar sebagai Latarbelakang"
+msgstr "Buka Citra sebagai Lapisan"
 
 #: ../app/actions/file-commands.c:272
 msgid "No changes need to be saved"
 msgstr "Tak ada perubahan yang perlu disimpan"
 
-#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:701
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:703
 #: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Simpan Citra"
@@ -2477,11 +2461,11 @@ msgid ""
 "changes, including all undo information."
 msgstr ""
 
-#: ../app/actions/file-commands.c:731
+#: ../app/actions/file-commands.c:733
 msgid "(Unnamed Template)"
 msgstr "(Templat Tanpa Nama)"
 
-#: ../app/actions/file-commands.c:782
+#: ../app/actions/file-commands.c:784
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3239,16 +3223,14 @@ msgstr "Mengubah Ukuran"
 msgid "Set Image Print Resolution"
 msgstr "Atur Resolusi Cetak Citra"
 
-#: ../app/actions/image-commands.c:379
-#: ../app/pdb/drawable-transform-cmds.c:159
+#: ../app/actions/image-commands.c:379 ../app/pdb/drawable-transform-cmds.c:159
 #: ../app/pdb/drawable-transform-cmds.c:247
 #: ../app/pdb/item-transform-cmds.c:162
 #, fuzzy
 msgid "Flipping"
 msgstr "Membolak-balik antar halaman"
 
-#: ../app/actions/image-commands.c:403
-#: ../app/pdb/drawable-transform-cmds.c:602
+#: ../app/actions/image-commands.c:403 ../app/pdb/drawable-transform-cmds.c:602
 #: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:534
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
@@ -3269,7 +3251,7 @@ msgstr "Skalakan Citra"
 
 #. Scaling
 #: ../app/actions/image-commands.c:693 ../app/actions/layers-commands.c:1145
-#: ../app/dialogs/preferences-dialog.c:1906
+#: ../app/dialogs/preferences-dialog.c:1943
 #: ../app/pdb/drawable-transform-cmds.c:783
 #: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
 #: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
@@ -4653,14 +4635,13 @@ msgstr "Buka file teks (UTF-8)"
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
 #: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
-#: ../app/core/gimpbrushgenerated-load.c:73
-#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
-#: ../app/core/gimpgradient-load.c:63 ../app/core/gimppalette-load.c:77
-#: ../app/core/gimppalette-load.c:274 ../app/core/gimppalette-load.c:320
-#: ../app/core/gimppalette-load.c:377 ../app/core/gimppalette-load.c:467
-#: ../app/core/gimppalette-load.c:634 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:649 ../app/tools/gimplevelstool.c:747
-#: ../app/xcf/xcf.c:359
+#: ../app/core/gimpbrushgenerated-load.c:73 ../app/core/gimpbrushpipe-load.c:81
+#: ../app/core/gimpcurve-load.c:54 ../app/core/gimpgradient-load.c:63
+#: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
+#: ../app/core/gimppalette-load.c:320 ../app/core/gimppalette-load.c:377
+#: ../app/core/gimppalette-load.c:467 ../app/core/gimppalette-load.c:634
+#: ../app/core/gimppattern-load.c:76 ../app/tools/gimpcurvestool.c:658
+#: ../app/tools/gimplevelstool.c:747 ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Tak bisa membuka '%s' untuk baca: %s"
@@ -5216,7 +5197,7 @@ msgstr "Path stroke"
 #, fuzzy
 msgctxt "view-action"
 msgid "_View"
-msgstr "_Tampilan"
+msgstr "_Tampilkan"
 
 #: ../app/actions/view-actions.c:69
 msgctxt "view-action"
@@ -5754,7 +5735,7 @@ msgstr "Pindahkan jendela ke tengah layar"
 #, fuzzy
 msgctxt "windows-action"
 msgid "_Windows"
-msgstr "_Jendela"
+msgstr "_Windows"
 
 #: ../app/actions/windows-actions.c:95
 #, fuzzy
@@ -5815,7 +5796,7 @@ msgstr "Gunakan fonta dalam label pada mode info fonta"
 #, fuzzy
 msgctxt "curve-type"
 msgid "Smooth"
-msgstr "Halus"
+msgstr "Mulus"
 
 #: ../app/base/base-enums.c:24
 msgctxt "curve-type"
@@ -5872,7 +5853,7 @@ msgstr "Di belakang"
 #, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Multiply"
-msgstr "Perkalian"
+msgstr "Melipat-gandakan"
 
 #: ../app/base/base-enums.c:117
 #, fuzzy
@@ -5901,7 +5882,7 @@ msgstr "Penjumlahan"
 #, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Subtract"
-msgstr "Kurangi"
+msgstr "Kurang"
 
 #: ../app/base/base-enums.c:122
 #, fuzzy
@@ -5939,7 +5920,7 @@ msgstr "Nilai"
 #, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Divide"
-msgstr "Pembagian"
+msgstr "Membagi"
 
 #: ../app/base/base-enums.c:129
 #, fuzzy
@@ -6123,7 +6104,7 @@ msgstr "Tangan kanan"
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:62
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:702
+#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:711
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
 #: ../app/xcf/xcf.c:452
 #, c-format
@@ -6724,7 +6705,7 @@ msgstr "Putih"
 #, fuzzy
 msgctxt "fill-type"
 msgid "Transparency"
-msgstr "Warna transparansi"
+msgstr "Transparansi"
 
 #: ../app/core/core-enums.c:257
 msgctxt "fill-type"
@@ -6760,15 +6741,16 @@ msgid "Stroke with a paint tool"
 msgstr "Alat dengan nama yang sama sudah ada!"
 
 #: ../app/core/core-enums.c:345
+#, fuzzy
 msgctxt "join-style"
 msgid "Miter"
-msgstr ""
+msgstr "Miter"
 
 #: ../app/core/core-enums.c:346
 #, fuzzy
 msgctxt "join-style"
 msgid "Round"
-msgstr "Pembulatan"
+msgstr "Bulat"
 
 #: ../app/core/core-enums.c:347
 msgctxt "join-style"
@@ -6776,15 +6758,16 @@ msgid "Bevel"
 msgstr "Bevel"
 
 #: ../app/core/core-enums.c:376
+#, fuzzy
 msgctxt "cap-style"
 msgid "Butt"
-msgstr ""
+msgstr "Butt"
 
 #: ../app/core/core-enums.c:377
 #, fuzzy
 msgctxt "cap-style"
 msgid "Round"
-msgstr "Pembulatan"
+msgstr "Bulat"
 
 #: ../app/core/core-enums.c:378
 msgctxt "cap-style"
@@ -7155,7 +7138,7 @@ msgstr "Teks"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transform"
-msgstr "Transformasi"
+msgstr "Transformasikan"
 
 #: ../app/core/core-enums.c:866 ../app/core/core-enums.c:908
 msgctxt "undo-type"
@@ -7428,9 +7411,10 @@ msgid "Hardness"
 msgstr ""
 
 #: ../app/core/core-enums.c:1297
+#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Force"
-msgstr ""
+msgstr "Kekuatan"
 
 #: ../app/core/core-enums.c:1298
 msgctxt "dynamics-output-type"
@@ -7441,7 +7425,7 @@ msgstr "Rasio aspek"
 #, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Spacing"
-msgstr "Sela"
+msgstr "Jarak"
 
 #: ../app/core/core-enums.c:1300
 #, fuzzy
@@ -7594,7 +7578,7 @@ msgid "Parasites"
 msgstr ""
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2750
+#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2787
 #: ../app/tools/gimppaintoptions-gui.c:201
 msgid "Dynamics"
 msgstr "Dinamika"
@@ -7605,7 +7589,7 @@ msgid "Fonts (this may take a while)"
 msgstr "Fonta (ini mungkin makan waktu)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2782
+#: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2819
 #, fuzzy
 msgid "Modules"
 msgstr "Modul"
@@ -7986,8 +7970,8 @@ msgstr "_Moda impor:"
 msgid "Could not delete '%s': %s"
 msgstr "Tak bisa menghapus '%s': %s"
 
-#: ../app/core/gimpdatafactory.c:428 ../app/core/gimpdatafactory.c:457
-#: ../app/core/gimpdatafactory.c:623 ../app/core/gimpdatafactory.c:645
+#: ../app/core/gimpdatafactory.c:445 ../app/core/gimpdatafactory.c:470
+#: ../app/core/gimpdatafactory.c:637 ../app/core/gimpdatafactory.c:659
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7998,17 +7982,17 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:537 ../app/core/gimpdatafactory.c:540
+#: ../app/core/gimpdatafactory.c:551 ../app/core/gimpdatafactory.c:554
 #: ../app/core/gimpitem.c:495 ../app/core/gimpitem.c:498
 msgid "copy"
 msgstr "salin"
 
-#: ../app/core/gimpdatafactory.c:549 ../app/core/gimpitem.c:507
+#: ../app/core/gimpdatafactory.c:563 ../app/core/gimpitem.c:507
 #, c-format
 msgid "%s copy"
 msgstr "Salinan %s"
 
-#: ../app/core/gimpdatafactory.c:742
+#: ../app/core/gimpdatafactory.c:756
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -8016,7 +8000,7 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:763
+#: ../app/core/gimpdatafactory.c:777
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -8024,12 +8008,12 @@ msgid ""
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:773
+#: ../app/core/gimpdatafactory.c:787
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:941
+#: ../app/core/gimpdatafactory.c:955
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8041,9 +8025,10 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdrawable-blend.c:245
+#, fuzzy
 msgctxt "undo-type"
 msgid "Blend"
-msgstr ""
+msgstr "Campur"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:70
 #: ../app/core/gimpdrawable-brightness-contrast.c:83
@@ -8070,9 +8055,10 @@ msgstr "Keseimbangan Warna"
 
 #: ../app/core/gimpdrawable-colorize.c:72
 #: ../app/core/gimpdrawable-colorize.c:84
+#, fuzzy
 msgctxt "undo-type"
 msgid "Colorize"
-msgstr ""
+msgstr "Warnai"
 
 #: ../app/core/gimpdrawable-curves.c:162 ../app/core/gimpdrawable-curves.c:179
 msgctxt "undo-type"
@@ -8108,7 +8094,7 @@ msgstr "Hue_Saturasion"
 #: ../app/core/gimpdrawable-invert.c:54 ../app/core/gimpdrawable-invert.c:62
 #, fuzzy
 msgid "Invert"
-msgstr "Balikkan"
+msgstr "Balik"
 
 #: ../app/core/gimpdrawable-levels.c:153 ../app/core/gimpdrawable-levels.c:169
 #: ../app/tools/gimplevelstool.c:150
@@ -8174,7 +8160,7 @@ msgstr "Tapis Akses"
 #: ../app/core/gimpdrawable-transform.c:915
 #, fuzzy
 msgid "Transformation"
-msgstr "Matriks transformasi"
+msgstr "Transformasi"
 
 #: ../app/core/gimpdrawable.c:494
 msgctxt "undo-type"
@@ -8414,19 +8400,19 @@ msgctxt "undo-type"
 msgid "Translate Items"
 msgstr "<i>Menyunting {0} dari {1} butir</i>"
 
-#: ../app/core/gimpimage-item-list.c:78
+#: ../app/core/gimpimage-item-list.c:79
 #, fuzzy
 msgctxt "undo-type"
 msgid "Flip Items"
 msgstr "<i>Menyunting {0} dari {1} butir</i>"
 
-#: ../app/core/gimpimage-item-list.c:105
+#: ../app/core/gimpimage-item-list.c:108 ../app/core/gimpitem-linked.c:125
 #, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Items"
 msgstr "<i>Menyunting {0} dari {1} butir</i>"
 
-#: ../app/core/gimpimage-item-list.c:135
+#: ../app/core/gimpimage-item-list.c:140
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transform Items"
@@ -8599,7 +8585,7 @@ msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Hapus path"
 
-#: ../app/core/gimpimagefile.c:719 ../app/dialogs/preferences-dialog.c:1715
+#: ../app/core/gimpimagefile.c:719 ../app/dialogs/preferences-dialog.c:1750
 msgid "Folder"
 msgstr "Folder"
 
@@ -8702,7 +8688,7 @@ msgstr "Pilihan Mengambang ke Lapisan"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Rename Layer"
-msgstr "Tapis Akses"
+msgstr "Ubah Nama Lapisan"
 
 #: ../app/core/gimplayer.c:269
 #, fuzzy
@@ -8774,7 +8760,7 @@ msgstr "\"%s\" tidak dapat ditambahkan ke pemilihan."
 msgid "Layer cannot be lowered more."
 msgstr "Error penguraian berikutnya tidak akan ditampilkan."
 
-#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1528
+#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1532
 #: ../app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -8789,50 +8775,50 @@ msgstr ""
 "Pilihan Mengambang\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1448
+#: ../app/core/gimplayer.c:1452
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 
-#: ../app/core/gimplayer.c:1459
+#: ../app/core/gimplayer.c:1463
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Tak dapat menambah masker lapisan dengan dimensi berbeda dari lapisan yang "
 "dinyatakan."
 
-#: ../app/core/gimplayer.c:1465
+#: ../app/core/gimplayer.c:1469
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Tambah Masker Lapisan"
 
-#: ../app/core/gimplayer.c:1583
+#: ../app/core/gimplayer.c:1587
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Atur ke mask host"
 
-#: ../app/core/gimplayer.c:1753
+#: ../app/core/gimplayer.c:1757
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Terapkan Masker Lapisan"
 
-#: ../app/core/gimplayer.c:1754
+#: ../app/core/gimplayer.c:1758
 #, fuzzy
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "<b>Alamat:</b> %s <b>Subnet mask:</b> %s"
 
-#: ../app/core/gimplayer.c:1873
+#: ../app/core/gimplayer.c:1877
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Tambah Kanal Alfa"
 
-#: ../app/core/gimplayer.c:1927
+#: ../app/core/gimplayer.c:1931
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Lebar daftar kanal"
 
-#: ../app/core/gimplayer.c:1947
+#: ../app/core/gimplayer.c:1951
 #, fuzzy
 msgctxt "undo-type"
 msgid "Layer to Image Size"
@@ -8907,8 +8893,8 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Membaca berkas palet '%s': Cacah kolom tak valid di baris %d. Memakai "
-"nilai baku."
+"Membaca berkas palet '%s': Cacah kolom tak valid di baris %d. Memakai nilai "
+"baku."
 
 #: ../app/core/gimppalette-load.c:185
 #, c-format
@@ -8928,8 +8914,7 @@ msgstr "Membaca berkas palet '%s': Kurang komponen BLUE di baris %d."
 #: ../app/core/gimppalette-load.c:211
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
-"Membaca berkas palet '%s': Nilai RGB di luar rentang pada baris %d."
+msgstr "Membaca berkas palet '%s': Nilai RGB di luar rentang pada baris %d."
 
 #: ../app/core/gimppalette-load.c:478
 #, c-format
@@ -9007,7 +8992,7 @@ msgstr "Bersihkan Pi_lihan"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Select None"
-msgstr "Tiada Pilihan"
+msgstr "Pilih Tak Satupun"
 
 #: ../app/core/gimpselection.c:175
 #, fuzzy
@@ -9124,7 +9109,7 @@ msgstr "poin"
 #, fuzzy
 msgctxt "unit-plural"
 msgid "points"
-msgstr "point"
+msgstr "titik"
 
 #: ../app/core/gimpunit.c:74
 msgctxt "unit-singular"
@@ -9242,7 +9227,7 @@ msgid ""
 msgstr ""
 "Benarkah Anda ingin menghapus '%s' dari daftar dan menghapusnya dari disk?"
 
-#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:162
+#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:174
 #: ../app/gui/gui-message.c:149
 msgid "GIMP Message"
 msgstr "Pesan GIMP"
@@ -9288,7 +9273,7 @@ msgstr "Pilihan teks penyunting"
 #: ../app/dialogs/dialogs.c:366
 #, fuzzy
 msgid "Undo"
-msgstr "Undo"
+msgstr "Batalkan"
 
 #: ../app/dialogs/dialogs.c:366
 #, fuzzy
@@ -9333,7 +9318,7 @@ msgstr "_Mode:"
 msgid "_Opacity:"
 msgstr "Kelegapan"
 
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/dialogs/file-open-dialog.c:254
 #, fuzzy
 msgid "Open layers"
 msgstr "Tidak ada lapisan"
@@ -9356,18 +9341,18 @@ msgstr "Ekspor Gambar"
 msgid "_Export"
 msgstr "_Ekspor"
 
-#: ../app/dialogs/file-save-dialog.c:458
+#: ../app/dialogs/file-save-dialog.c:454
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:601
 msgid "The given filename cannot be used for exporting"
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:602
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9376,16 +9361,16 @@ msgstr ""
 "Bila Anda ingin menyimpan citra ke format XCF GIMP, gunakan Berkas→Simpan "
 "sebagai gantinya."
 
-#: ../app/dialogs/file-save-dialog.c:609
+#: ../app/dialogs/file-save-dialog.c:605
 #, fuzzy
 msgid "Take me to the Save dialog"
 msgstr "Buka Dialog Pencarian"
 
-#: ../app/dialogs/file-save-dialog.c:613
+#: ../app/dialogs/file-save-dialog.c:609
 msgid "The given filename cannot be used for saving"
 msgstr "Nama berkas yang diberikan tak dapat dipakai untuk menyimpan"
 
-#: ../app/dialogs/file-save-dialog.c:614
+#: ../app/dialogs/file-save-dialog.c:610
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9393,17 +9378,17 @@ msgstr ""
 "Anda dapat memakai dialog ini untuk menyimpan ke format XCF GIMP. Gunakan "
 "Berkas→Ekspor untuk mengekspor ke format berkas lain."
 
-#: ../app/dialogs/file-save-dialog.c:616
+#: ../app/dialogs/file-save-dialog.c:612
 #, fuzzy
 msgid "Take me to the Export dialog"
 msgstr "Buka Dialog Pencarian"
 
-#: ../app/dialogs/file-save-dialog.c:619 ../app/dialogs/file-save-dialog.c:694
+#: ../app/dialogs/file-save-dialog.c:615 ../app/dialogs/file-save-dialog.c:690
 #, fuzzy
 msgid "Extension Mismatch"
 msgstr "Versi tak cocok"
 
-#: ../app/dialogs/file-save-dialog.c:678
+#: ../app/dialogs/file-save-dialog.c:674
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9412,21 +9397,21 @@ msgstr ""
 "masukkan sebuah ekstensi berkas yang dikenal atau pilih suatu format berkas "
 "dari daftar format berkas."
 
-#: ../app/dialogs/file-save-dialog.c:710
+#: ../app/dialogs/file-save-dialog.c:706
 msgid "The given file extension does not match the chosen file type."
 msgstr ""
 "Ekstensi berkas yang diberikan tak cocok dengan tipe berkas yang dipilih."
 
-#: ../app/dialogs/file-save-dialog.c:714
+#: ../app/dialogs/file-save-dialog.c:710
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Apakah Anda ingin menyimpan citra memakai nama ini saja?"
 
-#: ../app/dialogs/file-save-dialog.c:776
+#: ../app/dialogs/file-save-dialog.c:772
 #, fuzzy
 msgid "Saving canceled"
 msgstr "Pencarian dibatalkan."
 
-#: ../app/dialogs/file-save-dialog.c:784 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:780 ../app/widgets/gimpdnd-xds.c:186
 #, fuzzy, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -9459,7 +9444,7 @@ msgstr "Berikutnya - Opsi penerimaan"
 #: ../app/dialogs/image-merge-layers-dialog.c:76
 #, fuzzy
 msgid "_Merge"
-msgstr "_Merge"
+msgstr "_Gabung"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:96
 #, fuzzy
@@ -9494,10 +9479,10 @@ msgid "Create a New Image"
 msgstr "Buat suatu Gambar Baru"
 
 #: ../app/dialogs/image-new-dialog.c:135
-#: ../app/dialogs/preferences-dialog.c:2016
+#: ../app/dialogs/preferences-dialog.c:2053
 #, fuzzy
 msgid "_Template:"
-msgstr "_Template:"
+msgstr "_Templat:"
 
 #: ../app/dialogs/image-new-dialog.c:316
 msgid "Confirm Image Size"
@@ -9717,7 +9702,7 @@ msgstr "<b>Perilaku Jendela</b>"
 #: ../app/dialogs/offset-dialog.c:226
 #, fuzzy
 msgid "_Wrap around"
-msgstr "_Lipat sekeliling"
+msgstr "_Putar balik"
 
 #: ../app/dialogs/offset-dialog.c:229
 #, fuzzy
@@ -9743,7 +9728,7 @@ msgid "Select Source"
 msgstr "Pilih Sumber"
 
 #: ../app/dialogs/palette-import-dialog.c:214
-#: ../app/dialogs/preferences-dialog.c:1930
+#: ../app/dialogs/preferences-dialog.c:1967
 msgid "_Gradient"
 msgstr "_Gradien"
 
@@ -9804,29 +9789,29 @@ msgstr "I_nterval:"
 #: ../app/dialogs/palette-import-dialog.c:361
 #, fuzzy
 msgid "Preview"
-msgstr "Pratayang"
+msgstr "Pratinjau"
 
 #: ../app/dialogs/palette-import-dialog.c:382
 #, fuzzy
 msgid "The selected source contains no colors."
 msgstr "Berkas gambar '%s' tak memuat data"
 
-#: ../app/dialogs/preferences-dialog.c:268
+#: ../app/dialogs/preferences-dialog.c:266
 #, fuzzy
 msgid "Reset All Preferences"
 msgstr "Reset semua preferensi"
 
-#: ../app/dialogs/preferences-dialog.c:286
+#: ../app/dialogs/preferences-dialog.c:284
 #, fuzzy
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Hapus template terpilih"
 
-#: ../app/dialogs/preferences-dialog.c:356
+#: ../app/dialogs/preferences-dialog.c:362
 #, fuzzy
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "Anda perlu memulai ulang gthumb agar perubahan ini berdampak"
 
-#: ../app/dialogs/preferences-dialog.c:538
+#: ../app/dialogs/preferences-dialog.c:544
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -9834,17 +9819,17 @@ msgstr ""
 "Pintasan papan tik Anda akan direset ke nilai baku kali berikutnya Anda "
 "memulai GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:549
+#: ../app/dialogs/preferences-dialog.c:555
 #, fuzzy
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Fungsikan pintasan papan tik aksesibilitas"
 
-#: ../app/dialogs/preferences-dialog.c:571
+#: ../app/dialogs/preferences-dialog.c:577
 #, fuzzy
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "Hapus template terpilih"
 
-#: ../app/dialogs/preferences-dialog.c:612
+#: ../app/dialogs/preferences-dialog.c:618
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -9852,7 +9837,7 @@ msgstr ""
 "Penyiapan jendela Anda akan direset ke nilai baku kali berikutnya Anda "
 "memulai GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:647
+#: ../app/dialogs/preferences-dialog.c:653
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -9860,892 +9845,900 @@ msgstr ""
 "Pengaturan perangkat masukan Anda akan direset ke nilai baku kali berikutnya "
 "Anda memulai GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:682
+#: ../app/dialogs/preferences-dialog.c:688
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
 "Opsi alat Anda akan direset ke nilai baku kali berikutnya Anda memulai GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:1268
+#: ../app/dialogs/preferences-dialog.c:1303
 msgid "Show _menubar"
 msgstr "Tampilkan bilah _menu"
 
-#: ../app/dialogs/preferences-dialog.c:1272
+#: ../app/dialogs/preferences-dialog.c:1307
 #, fuzzy
 msgid "Show _rulers"
 msgstr "Tampilkan _Penggaris"
 
-#: ../app/dialogs/preferences-dialog.c:1275
+#: ../app/dialogs/preferences-dialog.c:1310
 #, fuzzy
 msgid "Show scroll_bars"
 msgstr "Menghitung batang persentasi..."
 
-#: ../app/dialogs/preferences-dialog.c:1278
+#: ../app/dialogs/preferences-dialog.c:1313
 #, fuzzy
 msgid "Show s_tatusbar"
 msgstr "<u>tampilkan rincian</u>"
 
-#: ../app/dialogs/preferences-dialog.c:1286
+#: ../app/dialogs/preferences-dialog.c:1321
 #, fuzzy
 msgid "Show s_election"
 msgstr "<u>tampilkan rincian</u>"
 
-#: ../app/dialogs/preferences-dialog.c:1289
+#: ../app/dialogs/preferences-dialog.c:1324
 #, fuzzy
 msgid "Show _layer boundary"
 msgstr "DVD+R dual layer"
 
-#: ../app/dialogs/preferences-dialog.c:1292
+#: ../app/dialogs/preferences-dialog.c:1327
 #, fuzzy
 msgid "Show _guides"
 msgstr "Panduan _Indentasi"
 
-#: ../app/dialogs/preferences-dialog.c:1295
+#: ../app/dialogs/preferences-dialog.c:1330
 #, fuzzy
 msgid "Show gri_d"
 msgstr "<u>tampilkan rincian</u>"
 
-#: ../app/dialogs/preferences-dialog.c:1301
+#: ../app/dialogs/preferences-dialog.c:1336
 msgid "Canvas _padding mode:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1306
+#: ../app/dialogs/preferences-dialog.c:1341
 #, fuzzy
 msgid "Custom p_adding color:"
 msgstr "Pilih warna:"
 
-#: ../app/dialogs/preferences-dialog.c:1307
+#: ../app/dialogs/preferences-dialog.c:1342
 #, fuzzy
 msgid "Select Custom Canvas Padding Color"
 msgstr "Ganti Warna"
 
-#: ../app/dialogs/preferences-dialog.c:1405
+#: ../app/dialogs/preferences-dialog.c:1440
 msgid "Preferences"
 msgstr "Preferensi"
 
-#: ../app/dialogs/preferences-dialog.c:1518
-#: ../app/dialogs/preferences-dialog.c:2790
+#: ../app/dialogs/preferences-dialog.c:1553
+#: ../app/dialogs/preferences-dialog.c:2827
 msgid "Environment"
 msgstr "Lingkungan"
 
-#: ../app/dialogs/preferences-dialog.c:1532
+#: ../app/dialogs/preferences-dialog.c:1567
 #, fuzzy
 msgid "Resource Consumption"
 msgstr "<b>Tak Sertakan Sumber Daya</b>"
 
-#: ../app/dialogs/preferences-dialog.c:1542
+#: ../app/dialogs/preferences-dialog.c:1577
 #, fuzzy
 msgid "Minimal number of _undo levels:"
 msgstr "nomor _Maksimum dari tingkat pembatalan:"
 
-#: ../app/dialogs/preferences-dialog.c:1545
+#: ../app/dialogs/preferences-dialog.c:1580
 #, fuzzy
 msgid "Maximum undo _memory:"
 msgstr "Tingkatan Undo Maksimum"
 
-#: ../app/dialogs/preferences-dialog.c:1548
+#: ../app/dialogs/preferences-dialog.c:1583
 #, fuzzy
 msgid "Tile cache _size:"
 msgstr "Ukuran cache disk"
 
-#: ../app/dialogs/preferences-dialog.c:1551
+#: ../app/dialogs/preferences-dialog.c:1586
 #, fuzzy
 msgid "Maximum _new image size:"
 msgstr "Ukuran gambar maksimal untuk dibuatkan ikon miniaturnya"
 
-#: ../app/dialogs/preferences-dialog.c:1556
+#: ../app/dialogs/preferences-dialog.c:1591
 #, fuzzy
 msgid "Number of _processors to use:"
 msgstr "Nomor port untuk dipakai bagi permintaan HTTP."
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1561
+#: ../app/dialogs/preferences-dialog.c:1596
 msgid "Image Thumbnails"
 msgstr "Gambar Mini Citra"
 
-#: ../app/dialogs/preferences-dialog.c:1566
+#: ../app/dialogs/preferences-dialog.c:1601
 #, fuzzy
 msgid "Size of _thumbnails:"
 msgstr "Semua & Gambar Mini"
 
-#: ../app/dialogs/preferences-dialog.c:1570
+#: ../app/dialogs/preferences-dialog.c:1605
 #, fuzzy
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Ukuran gambar maksimal untuk dibuatkan ikon miniaturnya"
 
-#: ../app/dialogs/preferences-dialog.c:1580
+#: ../app/dialogs/preferences-dialog.c:1615
 msgid "Keep record of used files in the Recent Documents list"
 msgstr ""
 "Simpan catatan tentang berkas-berkas yang dipakai dalam daftar Dokumen Baru-"
 "baru Ini"
 
-#: ../app/dialogs/preferences-dialog.c:1589
+#: ../app/dialogs/preferences-dialog.c:1624
 msgid "User Interface"
 msgstr "Antar Muka Pengguna"
 
-#: ../app/dialogs/preferences-dialog.c:1592
+#: ../app/dialogs/preferences-dialog.c:1627
 msgid "Interface"
 msgstr "Antarmuka"
 
-#: ../app/dialogs/preferences-dialog.c:1602
+#: ../app/dialogs/preferences-dialog.c:1637
 msgid "Language"
 msgstr "Bahasa"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1608
+#: ../app/dialogs/preferences-dialog.c:1643
 #, fuzzy
 msgid "Previews"
 msgstr "Hasil jadi ukuran kecil"
 
-#: ../app/dialogs/preferences-dialog.c:1611
+#: ../app/dialogs/preferences-dialog.c:1646
 #, fuzzy
 msgid "_Enable layer & channel previews"
 msgstr "- pratilik definisi UI glade"
 
-#: ../app/dialogs/preferences-dialog.c:1617
+#: ../app/dialogs/preferences-dialog.c:1652
 #, fuzzy
 msgid "_Default layer & channel preview size:"
 msgstr "Pratinjau ukuran, orientasi, dan tata letak halaman"
 
-#: ../app/dialogs/preferences-dialog.c:1620
+#: ../app/dialogs/preferences-dialog.c:1655
 #, fuzzy
 msgid "Na_vigation preview size:"
 msgstr "Pratinjau ukuran, orientasi, dan tata letak halaman"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1624
+#: ../app/dialogs/preferences-dialog.c:1659
 #, fuzzy
 msgid "Keyboard Shortcuts"
-msgstr "Tombol Pintas"
+msgstr "Pintasan Papan Tik"
 
-#: ../app/dialogs/preferences-dialog.c:1628
+#: ../app/dialogs/preferences-dialog.c:1663
 #, fuzzy
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "Fungsikan pintasan papan tik aksesibilitas"
 
-#: ../app/dialogs/preferences-dialog.c:1632
+#: ../app/dialogs/preferences-dialog.c:1667
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Atur Pintasan Papan Ti_k…"
 
-#: ../app/dialogs/preferences-dialog.c:1639
+#: ../app/dialogs/preferences-dialog.c:1674
 #, fuzzy
 msgid "_Save keyboard shortcuts on exit"
 msgstr "Bersihkan Tong Sampah saat keluar"
 
-#: ../app/dialogs/preferences-dialog.c:1643
+#: ../app/dialogs/preferences-dialog.c:1678
 #, fuzzy
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Fungsikan pintasan papan tik aksesibilitas"
 
-#: ../app/dialogs/preferences-dialog.c:1650
+#: ../app/dialogs/preferences-dialog.c:1685
 #, fuzzy
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "Tak bisa menulis ulang pernyataan UPDATE untuk menangani nilai baku"
 
-#: ../app/dialogs/preferences-dialog.c:1659
+#: ../app/dialogs/preferences-dialog.c:1694
 #, fuzzy
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Fungsikan pintasan papan tik aksesibilitas"
 
-#: ../app/dialogs/preferences-dialog.c:1671
-#: ../app/dialogs/preferences-dialog.c:1710
+#: ../app/dialogs/preferences-dialog.c:1706
+#: ../app/dialogs/preferences-dialog.c:1745
 msgid "Theme"
 msgstr "Tema"
 
-#: ../app/dialogs/preferences-dialog.c:1680
+#: ../app/dialogs/preferences-dialog.c:1715
 msgid "Select Theme"
 msgstr "Pilih Tema"
 
-#: ../app/dialogs/preferences-dialog.c:1762
+#: ../app/dialogs/preferences-dialog.c:1797
 #, fuzzy
 msgid "Reload C_urrent Theme"
 msgstr "Nama berkas tema"
 
-#: ../app/dialogs/preferences-dialog.c:1774
+#: ../app/dialogs/preferences-dialog.c:1809
 msgid "Help System"
 msgstr "Sistem Bantuan"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1786
-#: ../app/dialogs/preferences-dialog.c:1873
-#: ../app/dialogs/preferences-dialog.c:2086
+#: ../app/dialogs/preferences-dialog.c:1821
+#: ../app/dialogs/preferences-dialog.c:1910
+#: ../app/dialogs/preferences-dialog.c:2123
 #: ../app/widgets/gimpcontrollereditor.c:185
 msgid "General"
 msgstr "Umum"
 
-#: ../app/dialogs/preferences-dialog.c:1789
+#: ../app/dialogs/preferences-dialog.c:1824
 #, fuzzy
 msgid "Show _tooltips"
 msgstr "Tampilkan Tooltip"
 
-#: ../app/dialogs/preferences-dialog.c:1792
+#: ../app/dialogs/preferences-dialog.c:1827
 #, fuzzy
 msgid "Show help _buttons"
 msgstr "Tampilkan button switcher"
 
-#: ../app/dialogs/preferences-dialog.c:1805
+#: ../app/dialogs/preferences-dialog.c:1832
 #, fuzzy
 msgid "Use the online version"
 msgstr "Tidak dapat menggunakan versi ini!"
 
-#: ../app/dialogs/preferences-dialog.c:1806
+#: ../app/dialogs/preferences-dialog.c:1833
 #, fuzzy
 msgid "Use a locally installed copy"
 msgstr ""
 "Salin isi folder secara lokal untuk keperluan saat tidak terhubung ke "
 "jaringan"
 
-#: ../app/dialogs/preferences-dialog.c:1807
+#: ../app/dialogs/preferences-dialog.c:1834
 msgid "User manual:"
 msgstr "Manual pengguna:"
 
-#: ../app/dialogs/preferences-dialog.c:1814
+#: ../app/dialogs/preferences-dialog.c:1841
 #, fuzzy
 msgid "There's a local installation of the user manual."
 msgstr "Tak bisa tampilkan manual pengguna daring"
 
-#: ../app/dialogs/preferences-dialog.c:1819
+#: ../app/dialogs/preferences-dialog.c:1847
 #, fuzzy
 msgid "The user manual is not installed locally."
 msgstr "Mesin kripto %s tidak dipasang dengan benar."
 
-#: ../app/dialogs/preferences-dialog.c:1844
+#. If there is no webkit available, assume we are on a platform
+#. *  that doesn't use the help browser, so don't bother showing
+#. *  the combo.
+#.
+#: ../app/dialogs/preferences-dialog.c:1860
 msgid "Help Browser"
 msgstr "Peramban Bantuan"
 
-#: ../app/dialogs/preferences-dialog.c:1848
+#: ../app/dialogs/preferences-dialog.c:1867
 msgid "H_elp browser to use:"
 msgstr "P_eramban bantuan untuk dipakai:"
 
-#: ../app/dialogs/preferences-dialog.c:1876
+#: ../app/dialogs/preferences-dialog.c:1873
+msgid ""
+"The GIMP help browser doesn't seem to be installed. Using the web browser "
+"instead."
+msgstr ""
+
+#: ../app/dialogs/preferences-dialog.c:1913
 #, fuzzy
 msgid "_Save tool options on exit"
 msgstr "Bersihkan Tong Sampah saat keluar"
 
-#: ../app/dialogs/preferences-dialog.c:1880
+#: ../app/dialogs/preferences-dialog.c:1917
 #, fuzzy
 msgid "Save Tool Options _Now"
 msgstr "Menampilkan opsi memuat/menyimpan"
 
-#: ../app/dialogs/preferences-dialog.c:1887
+#: ../app/dialogs/preferences-dialog.c:1924
 #, fuzzy
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "Simpan seleksi ke dalam Channel"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1897
+#: ../app/dialogs/preferences-dialog.c:1934
 msgid "Guide & Grid Snapping"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1902
+#: ../app/dialogs/preferences-dialog.c:1939
 #, fuzzy
 msgid "_Snap distance:"
 msgstr "Jarak Maksimum"
 
-#: ../app/dialogs/preferences-dialog.c:1910
+#: ../app/dialogs/preferences-dialog.c:1947
 #, fuzzy
 msgid "Default _interpolation:"
 msgstr "Pakai baku"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1917
+#: ../app/dialogs/preferences-dialog.c:1954
 msgid "Paint Options Shared Between Tools"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1921
+#: ../app/dialogs/preferences-dialog.c:1958
 msgid "_Brush"
 msgstr "_Kuas"
 
-#: ../app/dialogs/preferences-dialog.c:1924
+#: ../app/dialogs/preferences-dialog.c:1961
 msgid "_Dynamics"
 msgstr "_Dinamika"
 
-#: ../app/dialogs/preferences-dialog.c:1927
+#: ../app/dialogs/preferences-dialog.c:1964
 msgid "_Pattern"
 msgstr "_Pola"
 
 #. Move Tool
-#: ../app/dialogs/preferences-dialog.c:1934
+#: ../app/dialogs/preferences-dialog.c:1971
 #, fuzzy
 msgid "Move Tool"
 msgstr "Editor Alat"
 
-#: ../app/dialogs/preferences-dialog.c:1938
+#: ../app/dialogs/preferences-dialog.c:1975
 #, fuzzy
 msgid "Set layer or path as active"
 msgstr "Opasitas"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1963
-#: ../app/dialogs/preferences-dialog.c:2162
-#: ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2000
+#: ../app/dialogs/preferences-dialog.c:2199 ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Penampilan"
 
-#: ../app/dialogs/preferences-dialog.c:1967
+#: ../app/dialogs/preferences-dialog.c:2004
 #, fuzzy
 msgid "Show _foreground & background color"
 msgstr "Silakan nyatakan warna latar depan atau latar belakang!"
 
-#: ../app/dialogs/preferences-dialog.c:1971
+#: ../app/dialogs/preferences-dialog.c:2008
 #, fuzzy
 msgid "Show active _brush, pattern & gradient"
 msgstr ""
 "Gradien aktif.\n"
 "Klik untuk membuka kotak Gradien"
 
-#: ../app/dialogs/preferences-dialog.c:1975
+#: ../app/dialogs/preferences-dialog.c:2012
 #, fuzzy
 msgid "Show active _image"
 msgstr "Tampilkan Anima_si gambar"
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:1983
+#: ../app/dialogs/preferences-dialog.c:2020
 #, fuzzy
 msgid "Tools configuration"
 msgstr "Pilih Konfigurasi"
 
-#: ../app/dialogs/preferences-dialog.c:1998
+#: ../app/dialogs/preferences-dialog.c:2035
 #, fuzzy
 msgid "Default New Image"
 msgstr "Brasero — File Image Baru"
 
-#: ../app/dialogs/preferences-dialog.c:2001
+#: ../app/dialogs/preferences-dialog.c:2038
 #, fuzzy
 msgid "Default Image"
 msgstr "Render citra"
 
-#: ../app/dialogs/preferences-dialog.c:2035
+#: ../app/dialogs/preferences-dialog.c:2072
 #, fuzzy
 msgid "Set the default Quick Mask color"
 msgstr "Pilih warna standar kertas catatan"
 
-#: ../app/dialogs/preferences-dialog.c:2041
+#: ../app/dialogs/preferences-dialog.c:2078
 #, fuzzy
 msgid "Quick Mask color:"
 msgstr "Warna isi sorotan"
 
-#: ../app/dialogs/preferences-dialog.c:2051
+#: ../app/dialogs/preferences-dialog.c:2088
 #, fuzzy
 msgid "Default Image Grid"
 msgstr "Pencetakan Garis Grid Default"
 
-#: ../app/dialogs/preferences-dialog.c:2054
+#: ../app/dialogs/preferences-dialog.c:2091
 #, fuzzy
 msgid "Default Grid"
 msgstr "Grid Matrix"
 
-#: ../app/dialogs/preferences-dialog.c:2074
+#: ../app/dialogs/preferences-dialog.c:2111
 msgid "Image Windows"
 msgstr "Jendela Citra"
 
-#: ../app/dialogs/preferences-dialog.c:2089
+#: ../app/dialogs/preferences-dialog.c:2126
 #, fuzzy
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Moda interaksi baku yang dipakai"
 
-#: ../app/dialogs/preferences-dialog.c:2095
+#: ../app/dialogs/preferences-dialog.c:2132
 #, fuzzy
 msgid "Marching _ants speed:"
 msgstr "Rata-rata kecepatan drive:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2099
+#: ../app/dialogs/preferences-dialog.c:2136
 #, fuzzy
 msgid "Zoom & Resize Behavior"
 msgstr "Perilaku susunan shift"
 
-#: ../app/dialogs/preferences-dialog.c:2103
+#: ../app/dialogs/preferences-dialog.c:2140
 #, fuzzy
 msgid "Resize window on _zoom"
 msgstr "Nyalakan <gui>Zum</gui>."
 
-#: ../app/dialogs/preferences-dialog.c:2106
+#: ../app/dialogs/preferences-dialog.c:2143
 #, fuzzy
 msgid "Resize window on image _size change"
 msgstr "Apakah mengubah ukuran jendela agar pas dengan ukuran gambar"
 
-#: ../app/dialogs/preferences-dialog.c:2112
+#: ../app/dialogs/preferences-dialog.c:2149
 #, fuzzy
 msgid "Fit to window"
 msgstr "Paskan ke jendela"
 
-#: ../app/dialogs/preferences-dialog.c:2114
+#: ../app/dialogs/preferences-dialog.c:2151
 msgid "Initial zoom _ratio:"
 msgstr "_Rasio zum awal:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2118
+#: ../app/dialogs/preferences-dialog.c:2155
 #, fuzzy
 msgid "Space Bar"
 msgstr "kotak menu"
 
-#: ../app/dialogs/preferences-dialog.c:2124
+#: ../app/dialogs/preferences-dialog.c:2161
 #, fuzzy
 msgid "_While space bar is pressed:"
 msgstr "Ketika tombol _suspensi ditekan:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2128
+#: ../app/dialogs/preferences-dialog.c:2165
 #, fuzzy
 msgid "Mouse Pointers"
 msgstr "Penunjuk Tetikus"
 
-#: ../app/dialogs/preferences-dialog.c:2132
+#: ../app/dialogs/preferences-dialog.c:2169
 #, fuzzy
 msgid "Show _brush outline"
 msgstr "Tampilkan outline kolom %d"
 
-#: ../app/dialogs/preferences-dialog.c:2135
+#: ../app/dialogs/preferences-dialog.c:2172
 #, fuzzy
 msgid "Show pointer for paint _tools"
 msgstr "Perkakas batch bagi berkas berganda"
 
-#: ../app/dialogs/preferences-dialog.c:2141
+#: ../app/dialogs/preferences-dialog.c:2178
 #, fuzzy
 msgid "Pointer _mode:"
 msgstr "Mode penunjuk"
 
-#: ../app/dialogs/preferences-dialog.c:2144
+#: ../app/dialogs/preferences-dialog.c:2181
 #, fuzzy
 msgid "Pointer re_ndering:"
 msgstr "Mode penunjuk"
 
-#: ../app/dialogs/preferences-dialog.c:2147
+#: ../app/dialogs/preferences-dialog.c:2184
 #, fuzzy
 msgid "Pointer _handedness:"
 msgstr "Punya Penunjuk"
 
-#: ../app/dialogs/preferences-dialog.c:2159
+#: ../app/dialogs/preferences-dialog.c:2196
 msgid "Image Window Appearance"
 msgstr "Penampilan Jendela Citra"
 
-#: ../app/dialogs/preferences-dialog.c:2170
+#: ../app/dialogs/preferences-dialog.c:2207
 #, fuzzy
 msgid "Default Appearance in Normal Mode"
 msgstr "Cacah foto pada moda rentetan."
 
-#: ../app/dialogs/preferences-dialog.c:2175
+#: ../app/dialogs/preferences-dialog.c:2212
 #, fuzzy
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Kunci Epiphany di modus layar penuh."
 
-#: ../app/dialogs/preferences-dialog.c:2184
+#: ../app/dialogs/preferences-dialog.c:2221
 msgid "Image Title & Statusbar Format"
 msgstr "Format Bilah Status & Judul Citra"
 
-#: ../app/dialogs/preferences-dialog.c:2187
+#: ../app/dialogs/preferences-dialog.c:2224
 #, fuzzy
 msgid "Title & Status"
 msgstr "Status Anjuta"
 
-#: ../app/dialogs/preferences-dialog.c:2205
+#: ../app/dialogs/preferences-dialog.c:2242
 #, fuzzy
 msgid "Current format"
 msgstr "Format kini"
 
-#: ../app/dialogs/preferences-dialog.c:2206
+#: ../app/dialogs/preferences-dialog.c:2243
 #, fuzzy
 msgid "Default format"
 msgstr "Format tanggal baku"
 
-#: ../app/dialogs/preferences-dialog.c:2207
+#: ../app/dialogs/preferences-dialog.c:2244
 #, fuzzy
 msgid "Show zoom percentage"
 msgstr "Tampilkan waktu/per_sentase:"
 
-#: ../app/dialogs/preferences-dialog.c:2208
+#: ../app/dialogs/preferences-dialog.c:2245
 #, fuzzy
 msgid "Show zoom ratio"
 msgstr "menangkap rasio pembesaran digital"
 
-#: ../app/dialogs/preferences-dialog.c:2209
+#: ../app/dialogs/preferences-dialog.c:2246
 #, fuzzy
 msgid "Show image size"
 msgstr "Ukuran Gambar Tidak Sah"
 
-#: ../app/dialogs/preferences-dialog.c:2222
+#: ../app/dialogs/preferences-dialog.c:2259
 msgid "Image Title Format"
 msgstr "Format Judul Citra"
 
-#: ../app/dialogs/preferences-dialog.c:2224
+#: ../app/dialogs/preferences-dialog.c:2261
 msgid "Image Statusbar Format"
 msgstr "Format Bilah Status Citra"
 
-#: ../app/dialogs/preferences-dialog.c:2309
+#: ../app/dialogs/preferences-dialog.c:2346
 msgid "Display"
 msgstr "Tampilan"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2321
+#: ../app/dialogs/preferences-dialog.c:2358
 #, fuzzy
 msgid "Transparency"
-msgstr "Warna transparansi"
+msgstr "Transparansi"
 
-#: ../app/dialogs/preferences-dialog.c:2325
+#: ../app/dialogs/preferences-dialog.c:2362
 msgid "_Check style:"
 msgstr "Gaya _contreng:"
 
-#: ../app/dialogs/preferences-dialog.c:2328
+#: ../app/dialogs/preferences-dialog.c:2365
 msgid "Check _size:"
 msgstr "_Ukuran contreng:"
 
-#: ../app/dialogs/preferences-dialog.c:2331
+#: ../app/dialogs/preferences-dialog.c:2368
 #, fuzzy
 msgid "Monitor Resolution"
 msgstr "Resolusi kebocoran:"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2335
-#: ../app/display/gimpcursorview.c:206 ../app/widgets/gimpgrideditor.c:199
-#: ../app/widgets/gimpgrideditor.c:231
+#: ../app/dialogs/preferences-dialog.c:2372 ../app/display/gimpcursorview.c:208
+#: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Piksel"
 
-#: ../app/dialogs/preferences-dialog.c:2353
+#: ../app/dialogs/preferences-dialog.c:2390
 msgid "Horizontal"
 msgstr "Horisontal"
 
-#: ../app/dialogs/preferences-dialog.c:2355
+#: ../app/dialogs/preferences-dialog.c:2392
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: ../app/dialogs/preferences-dialog.c:2357
+#: ../app/dialogs/preferences-dialog.c:2394
 #: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2373
+#: ../app/dialogs/preferences-dialog.c:2410
 #, fuzzy, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "Otom_atis deteksi BPM bagi semua lagu"
 
-#: ../app/dialogs/preferences-dialog.c:2391
+#: ../app/dialogs/preferences-dialog.c:2428
 #, fuzzy
 msgid "_Enter manually"
 msgstr "Kelola secara manual"
 
-#: ../app/dialogs/preferences-dialog.c:2406
+#: ../app/dialogs/preferences-dialog.c:2443
 msgid "C_alibrate..."
 msgstr "K_alibrasi…"
 
-#: ../app/dialogs/preferences-dialog.c:2434
+#: ../app/dialogs/preferences-dialog.c:2471
 msgid "Color Management"
 msgstr "Manajemen Warna"
 
-#: ../app/dialogs/preferences-dialog.c:2454
+#: ../app/dialogs/preferences-dialog.c:2491
 #, fuzzy
 msgid "_RGB profile:"
 msgstr "Profil RGB bawaan."
 
-#: ../app/dialogs/preferences-dialog.c:2455
+#: ../app/dialogs/preferences-dialog.c:2492
 #, fuzzy
 msgid "Select RGB Color Profile"
 msgstr "Impor profil warna ICC %s?"
 
-#: ../app/dialogs/preferences-dialog.c:2456
+#: ../app/dialogs/preferences-dialog.c:2493
 msgid "_CMYK profile:"
 msgstr "Profil _CMYK:"
 
-#: ../app/dialogs/preferences-dialog.c:2457
+#: ../app/dialogs/preferences-dialog.c:2494
 #, fuzzy
 msgid "Select CMYK Color Profile"
 msgstr "Impor profil warna ICC %s?"
 
-#: ../app/dialogs/preferences-dialog.c:2458
+#: ../app/dialogs/preferences-dialog.c:2495
 #, fuzzy
 msgid "_Monitor profile:"
 msgstr "Nama Profil"
 
-#: ../app/dialogs/preferences-dialog.c:2459
+#: ../app/dialogs/preferences-dialog.c:2496
 #, fuzzy
 msgid "Select Monitor Color Profile"
 msgstr "Impor profil warna ICC %s?"
 
-#: ../app/dialogs/preferences-dialog.c:2460
+#: ../app/dialogs/preferences-dialog.c:2497
 #, fuzzy
 msgid "_Print simulation profile:"
 msgstr "Nama profil plugin"
 
-#: ../app/dialogs/preferences-dialog.c:2461
+#: ../app/dialogs/preferences-dialog.c:2498
 #, fuzzy
 msgid "Select Printer Color Profile"
 msgstr "Warna;ICC;Profil;Kalibrasi;Pencetak;Tampilan;"
 
-#: ../app/dialogs/preferences-dialog.c:2472
+#: ../app/dialogs/preferences-dialog.c:2509
 #, fuzzy
 msgid "_Mode of operation:"
 msgstr "Operasi gagal"
 
-#: ../app/dialogs/preferences-dialog.c:2502
+#: ../app/dialogs/preferences-dialog.c:2539
 #, fuzzy
 msgid "_Try to use the system monitor profile"
 msgstr "Profile yang dipakai untuk terminal baru"
 
-#: ../app/dialogs/preferences-dialog.c:2512
+#: ../app/dialogs/preferences-dialog.c:2549
 #, fuzzy
 msgid "_Display rendering intent:"
 msgstr "Intensi perenderan (tampilan):"
 
-#: ../app/dialogs/preferences-dialog.c:2521
+#: ../app/dialogs/preferences-dialog.c:2558
 #, fuzzy
 msgid "_Softproof rendering intent:"
 msgstr "Intensi perenderan (softproof):"
 
-#: ../app/dialogs/preferences-dialog.c:2534
+#: ../app/dialogs/preferences-dialog.c:2571
 #, fuzzy
 msgid "Mark out of gamut colors"
 msgstr "Balikkan warna pada suatu halaman"
 
-#: ../app/dialogs/preferences-dialog.c:2539
+#: ../app/dialogs/preferences-dialog.c:2576
 #, fuzzy
 msgid "Select Warning Color"
 msgstr "Pilih warna depan"
 
-#: ../app/dialogs/preferences-dialog.c:2552
+#: ../app/dialogs/preferences-dialog.c:2589
 #, fuzzy
 msgid "File Open behaviour:"
 msgstr "Buka berkas log"
 
-#: ../app/dialogs/preferences-dialog.c:2564
+#: ../app/dialogs/preferences-dialog.c:2601
 msgid "Input Devices"
 msgstr "Perangkat Masukan"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2574
+#: ../app/dialogs/preferences-dialog.c:2611
 #, fuzzy
 msgid "Extended Input Devices"
 msgstr "Tidak ada perangkat input tambahan"
 
-#: ../app/dialogs/preferences-dialog.c:2578
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "Configure E_xtended Input Devices..."
 msgstr "Konfigurasikan Perang_kat Masukan Yang Diperluas…"
 
-#: ../app/dialogs/preferences-dialog.c:2585
+#: ../app/dialogs/preferences-dialog.c:2622
 #, fuzzy
 msgid "_Save input device settings on exit"
 msgstr "Gagal mengatur masukan %d di divais %s."
 
-#: ../app/dialogs/preferences-dialog.c:2589
+#: ../app/dialogs/preferences-dialog.c:2626
 #, fuzzy
 msgid "Save Input Device Settings _Now"
 msgstr "Silahkan memilih perangkat masukan suara:"
 
-#: ../app/dialogs/preferences-dialog.c:2596
+#: ../app/dialogs/preferences-dialog.c:2633
 #, fuzzy
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "Simpan seleksi ke dalam Channel"
 
-#: ../app/dialogs/preferences-dialog.c:2611
+#: ../app/dialogs/preferences-dialog.c:2648
 msgid "Additional Input Controllers"
 msgstr "Pengendali Masukan Tambahan"
 
-#: ../app/dialogs/preferences-dialog.c:2614
+#: ../app/dialogs/preferences-dialog.c:2651
 msgid "Input Controllers"
 msgstr "Pengendali Masukan"
 
-#: ../app/dialogs/preferences-dialog.c:2630
+#: ../app/dialogs/preferences-dialog.c:2667
 msgid "Window Management"
 msgstr "Manajemen Jendela"
 
-#: ../app/dialogs/preferences-dialog.c:2639
+#: ../app/dialogs/preferences-dialog.c:2676
 #, fuzzy
 msgid "Window Manager Hints"
 msgstr "Petunjuk Manajer Jendela Yang Diperluas"
 
-#: ../app/dialogs/preferences-dialog.c:2645
+#: ../app/dialogs/preferences-dialog.c:2682
 msgid "Hint for _docks and toolbox:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2648
+#: ../app/dialogs/preferences-dialog.c:2685
 msgid "Focus"
 msgstr "Fokus"
 
-#: ../app/dialogs/preferences-dialog.c:2652
+#: ../app/dialogs/preferences-dialog.c:2689
 msgid "Activate the _focused image"
 msgstr "Mengaktifkan citra ter_fokus"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2656
+#: ../app/dialogs/preferences-dialog.c:2693
 #, fuzzy
 msgid "Window Positions"
 msgstr "Posisi keseimbangan: %s %s (%s)"
 
-#: ../app/dialogs/preferences-dialog.c:2659
+#: ../app/dialogs/preferences-dialog.c:2696
 #, fuzzy
 msgid "_Save window positions on exit"
 msgstr ""
 "Tentukan koordinat X dari jendela pencarian; disimpan ketika Gnote keluar."
 
-#: ../app/dialogs/preferences-dialog.c:2663
+#: ../app/dialogs/preferences-dialog.c:2700
 #, fuzzy
 msgid "Save Window Positions _Now"
 msgstr "Simpan cuplikan layar dari suatu jendela ke direktori Gambar"
 
-#: ../app/dialogs/preferences-dialog.c:2670
+#: ../app/dialogs/preferences-dialog.c:2707
 #, fuzzy
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "Pilih properti yang ingin Anda reset ke nilai bawaannya"
 
-#: ../app/dialogs/preferences-dialog.c:2685
+#: ../app/dialogs/preferences-dialog.c:2722
 msgid "Folders"
 msgstr "Folder"
 
-#: ../app/dialogs/preferences-dialog.c:2705
+#: ../app/dialogs/preferences-dialog.c:2742
 #, fuzzy
 msgid "Temporary folder:"
 msgstr "Pilih Folder"
 
-#: ../app/dialogs/preferences-dialog.c:2706
+#: ../app/dialogs/preferences-dialog.c:2743
 #, fuzzy
 msgid "Select Folder for Temporary Files"
 msgstr "Direktori untuk berkas temporer"
 
-#: ../app/dialogs/preferences-dialog.c:2710
+#: ../app/dialogs/preferences-dialog.c:2747
 #, fuzzy
 msgid "Swap folder:"
 msgstr "Pilih Folder"
 
-#: ../app/dialogs/preferences-dialog.c:2711
+#: ../app/dialogs/preferences-dialog.c:2748
 msgid "Select Swap Folder"
 msgstr "Pilih Folder Swap"
 
-#: ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/preferences-dialog.c:2783
 msgid "Brush Folders"
 msgstr "Folder Kuas"
 
-#: ../app/dialogs/preferences-dialog.c:2748
+#: ../app/dialogs/preferences-dialog.c:2785
 #, fuzzy
 msgid "Select Brush Folders"
 msgstr "Klik disini untuk memilih folder tempat posting"
 
-#: ../app/dialogs/preferences-dialog.c:2750
+#: ../app/dialogs/preferences-dialog.c:2787
 #, fuzzy
 msgid "Dynamics Folders"
 msgstr "Folder Lokal"
 
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/dialogs/preferences-dialog.c:2789
 #, fuzzy
 msgid "Select Dynamics Folders"
 msgstr "Klik disini untuk memilih folder tempat posting"
 
-#: ../app/dialogs/preferences-dialog.c:2754
+#: ../app/dialogs/preferences-dialog.c:2791
 #, fuzzy
 msgid "Pattern Folders"
 msgstr "Folder Lokal"
 
-#: ../app/dialogs/preferences-dialog.c:2756
+#: ../app/dialogs/preferences-dialog.c:2793
 #, fuzzy
 msgid "Select Pattern Folders"
 msgstr "Pilih berkas menurut pola"
 
-#: ../app/dialogs/preferences-dialog.c:2758
+#: ../app/dialogs/preferences-dialog.c:2795
 #, fuzzy
 msgid "Palette Folders"
 msgstr "Folder Lokal"
 
-#: ../app/dialogs/preferences-dialog.c:2760
+#: ../app/dialogs/preferences-dialog.c:2797
 #, fuzzy
 msgid "Select Palette Folders"
 msgstr "Klik disini untuk memilih folder tempat posting"
 
-#: ../app/dialogs/preferences-dialog.c:2762
+#: ../app/dialogs/preferences-dialog.c:2799
 msgid "Gradient Folders"
 msgstr "Folder Gradien"
 
-#: ../app/dialogs/preferences-dialog.c:2764
+#: ../app/dialogs/preferences-dialog.c:2801
 #, fuzzy
 msgid "Select Gradient Folders"
 msgstr "Klik disini untuk memilih folder tempat posting"
 
-#: ../app/dialogs/preferences-dialog.c:2766
+#: ../app/dialogs/preferences-dialog.c:2803
 msgid "Font Folders"
 msgstr "Folder Fonta"
 
-#: ../app/dialogs/preferences-dialog.c:2768
+#: ../app/dialogs/preferences-dialog.c:2805
 #, fuzzy
 msgid "Select Font Folders"
 msgstr "Pilih Fonta Dasher"
 
-#: ../app/dialogs/preferences-dialog.c:2770
+#: ../app/dialogs/preferences-dialog.c:2807
 #, fuzzy
 msgid "Tool Preset Folders"
 msgstr "Salin berkas/folder"
 
-#: ../app/dialogs/preferences-dialog.c:2772
+#: ../app/dialogs/preferences-dialog.c:2809
 #, fuzzy
 msgid "Select Tool Preset Folders"
 msgstr "Klik disini untuk memilih folder tempat posting"
 
-#: ../app/dialogs/preferences-dialog.c:2774
+#: ../app/dialogs/preferences-dialog.c:2811
 #, fuzzy
 msgid "Plug-In Folders"
 msgstr "Memindai folder di '%s'"
 
-#: ../app/dialogs/preferences-dialog.c:2776
+#: ../app/dialogs/preferences-dialog.c:2813
 #, fuzzy
 msgid "Select Plug-In Folders"
 msgstr "Pasang plugin Flash"
 
-#: ../app/dialogs/preferences-dialog.c:2778
+#: ../app/dialogs/preferences-dialog.c:2815
 #, fuzzy
 msgid "Scripts"
 msgstr "Script"
 
-#: ../app/dialogs/preferences-dialog.c:2778
+#: ../app/dialogs/preferences-dialog.c:2815
 #, fuzzy
 msgid "Script-Fu Folders"
 msgstr "Konsol Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2780
+#: ../app/dialogs/preferences-dialog.c:2817
 msgid "Select Script-Fu Folders"
 msgstr "Pilih Folder Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2782
+#: ../app/dialogs/preferences-dialog.c:2819
 #, fuzzy
 msgid "Module Folders"
 msgstr "Folder Lokal"
 
-#: ../app/dialogs/preferences-dialog.c:2784
+#: ../app/dialogs/preferences-dialog.c:2821
 #, fuzzy
 msgid "Select Module Folders"
 msgstr "<Pilih sebarang modul>"
 
-#: ../app/dialogs/preferences-dialog.c:2786
+#: ../app/dialogs/preferences-dialog.c:2823
 msgid "Interpreters"
 msgstr "Interpreter"
 
-#: ../app/dialogs/preferences-dialog.c:2786
+#: ../app/dialogs/preferences-dialog.c:2823
 msgid "Interpreter Folders"
 msgstr "Folder Interpreter"
 
-#: ../app/dialogs/preferences-dialog.c:2788
+#: ../app/dialogs/preferences-dialog.c:2825
 #, fuzzy
 msgid "Select Interpreter Folders"
 msgstr "Klik disini untuk memilih folder tempat posting"
 
-#: ../app/dialogs/preferences-dialog.c:2790
+#: ../app/dialogs/preferences-dialog.c:2827
 #, fuzzy
 msgid "Environment Folders"
 msgstr "Folder Lokal"
 
-#: ../app/dialogs/preferences-dialog.c:2792
+#: ../app/dialogs/preferences-dialog.c:2829
 #, fuzzy
 msgid "Select Environment Folders"
 msgstr "Klik disini untuk memilih folder tempat posting"
 
-#: ../app/dialogs/preferences-dialog.c:2794
+#: ../app/dialogs/preferences-dialog.c:2831
 #, fuzzy
 msgid "Themes"
 msgstr "Tema"
 
-#: ../app/dialogs/preferences-dialog.c:2794
+#: ../app/dialogs/preferences-dialog.c:2831
 #, fuzzy
 msgid "Theme Folders"
 msgstr "Folder Lokal"
 
-#: ../app/dialogs/preferences-dialog.c:2796
+#: ../app/dialogs/preferences-dialog.c:2833
 #, fuzzy
 msgid "Select Theme Folders"
 msgstr "Pilih Theme Album"
@@ -10825,11 +10818,10 @@ msgstr ""
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
 
-#: ../app/dialogs/quit-dialog.c:341
-#: ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:180
 #, fuzzy
 msgid "_Discard Changes"
-msgstr "_Buang Perubahan"
+msgstr "_Abaikan Perubahan"
 
 #: ../app/dialogs/quit-dialog.c:423
 #, fuzzy, c-format
@@ -11043,86 +11035,86 @@ msgstr "Garis diagonal"
 #, fuzzy
 msgctxt "guides-type"
 msgid "Number of lines"
-msgstr "Lipat baris"
+msgstr "Banyaknya baris"
 
 #: ../app/display/display-enums.c:67
 #, fuzzy
 msgctxt "guides-type"
 msgid "Line spacing"
-msgstr "Jarak baris:"
+msgstr "Jarak antarbaris"
 
-#: ../app/display/gimpcursorview.c:216 ../app/display/gimpcursorview.c:222
-#: ../app/display/gimpcursorview.c:241 ../app/display/gimpcursorview.c:247
-#: ../app/display/gimpcursorview.c:266 ../app/display/gimpcursorview.c:272
-#: ../app/display/gimpcursorview.c:288 ../app/display/gimpcursorview.c:295
-#: ../app/display/gimpcursorview.c:672 ../app/display/gimpcursorview.c:673
-#: ../app/display/gimpcursorview.c:674 ../app/display/gimpcursorview.c:675
-#: ../app/display/gimpcursorview.c:788 ../app/display/gimpcursorview.c:789
-#: ../app/display/gimpcursorview.c:790 ../app/display/gimpcursorview.c:791
+#: ../app/display/gimpcursorview.c:218 ../app/display/gimpcursorview.c:224
+#: ../app/display/gimpcursorview.c:243 ../app/display/gimpcursorview.c:249
+#: ../app/display/gimpcursorview.c:268 ../app/display/gimpcursorview.c:274
+#: ../app/display/gimpcursorview.c:290 ../app/display/gimpcursorview.c:297
+#: ../app/display/gimpcursorview.c:688 ../app/display/gimpcursorview.c:689
+#: ../app/display/gimpcursorview.c:690 ../app/display/gimpcursorview.c:691
+#: ../app/display/gimpcursorview.c:804 ../app/display/gimpcursorview.c:805
+#: ../app/display/gimpcursorview.c:806 ../app/display/gimpcursorview.c:807
 #: ../app/widgets/gimpcolorframe.c:633
 #, fuzzy
 msgid "n/a"
 msgstr "n/a"
 
-#: ../app/display/gimpcursorview.c:219 ../app/display/gimpcursorview.c:244
-#: ../app/display/gimpcursorview.c:269
+#: ../app/display/gimpcursorview.c:221 ../app/display/gimpcursorview.c:246
+#: ../app/display/gimpcursorview.c:271
 #: ../app/widgets/gimpdeviceinfoeditor.c:138
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:250
-#: ../app/display/gimpcursorview.c:275
+#: ../app/display/gimpcursorview.c:227 ../app/display/gimpcursorview.c:252
+#: ../app/display/gimpcursorview.c:277
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "Y"
 msgstr "Y"
 
 #. Units
-#: ../app/display/gimpcursorview.c:231
+#: ../app/display/gimpcursorview.c:233
 msgid "Units"
 msgstr "Unit"
 
 #. Selection Bounding Box
-#: ../app/display/gimpcursorview.c:256
+#: ../app/display/gimpcursorview.c:258
 #, fuzzy
 msgid "Selection Bounding Box"
 msgstr "Warna Kotak Pilihan"
 
 #. Width
-#: ../app/display/gimpcursorview.c:292
+#: ../app/display/gimpcursorview.c:294
 msgid "W"
 msgstr "L"
 
 #. Height
-#: ../app/display/gimpcursorview.c:299
+#: ../app/display/gimpcursorview.c:301
 msgid "H"
 msgstr "T"
 
-#: ../app/display/gimpcursorview.c:328
+#: ../app/display/gimpcursorview.c:330
 #, fuzzy
 msgid "_Sample Merged"
 msgstr "Entri Tergabung"
 
-#: ../app/display/gimpdisplayshell.c:508
+#: ../app/display/gimpdisplayshell.c:519
 msgid "Access the image menu"
 msgstr "Mengakses nenu gambar"
 
-#: ../app/display/gimpdisplayshell.c:622
+#: ../app/display/gimpdisplayshell.c:633
 #, fuzzy
 msgid "Zoom image when window size changes"
 msgstr "Apakah mengubah ukuran jendela agar pas dengan ukuran gambar"
 
-#: ../app/display/gimpdisplayshell.c:651
+#: ../app/display/gimpdisplayshell.c:662
 #, fuzzy
 msgid "Toggle Quick Mask"
 msgstr "<b>Alamat:</b> %s <b>Subnet mask:</b> %s"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:685
 #, fuzzy
 msgid "Navigate the image display"
 msgstr "Tampilkan bagian sebagai gambar"
 
-#: ../app/display/gimpdisplayshell.c:746
-#: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:253
+#: ../app/display/gimpdisplayshell.c:757 ../app/display/gimpdisplayshell.c:1342
+#: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Jatuhkan berkas citra di sini untuk membuka mereka"
 
@@ -11198,7 +11190,7 @@ msgstr "Tak dapat mengubah piksel dari grup lapisan."
 #: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1466
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1481
 #, fuzzy
 msgid "The active layer's pixels are locked."
 msgstr "Nilai yang mungkin: piksel, persentase."
@@ -11266,7 +11258,7 @@ msgstr "(bersih)"
 
 #: ../app/display/gimpdisplayshell-title.c:338
 #: ../app/display/gimpdisplayshell-title.c:351
-#: ../app/widgets/gimpactiongroup.c:860
+#: ../app/widgets/gimpactiongroup.c:884
 msgid "(none)"
 msgstr "(nihil)"
 
@@ -11275,31 +11267,31 @@ msgstr "(nihil)"
 msgid "Cancel <i>%s</i>"
 msgstr "Batalkan <i>%s</i>"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
+#: ../app/file/file-open.c:129 ../app/file/file-save.c:115
 #, fuzzy
 msgid "Not a regular file"
 msgstr "Bukan berkas biasa"
 
-#: ../app/file/file-open.c:188
+#: ../app/file/file-open.c:197
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "plug-in %s mengembalikan SUCCESS tapi tak mengembalikan suatu citra"
 
-#: ../app/file/file-open.c:199
+#: ../app/file/file-open.c:208
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "plug-in %s tak bisa membuka citra"
 
-#: ../app/file/file-open.c:530
+#: ../app/file/file-open.c:539
 msgid "Image doesn't contain any layers"
 msgstr "Citra tak memuat sebarang lapisan apapun"
 
-#: ../app/file/file-open.c:590
+#: ../app/file/file-open.c:599
 #, fuzzy, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Membuka %s gagal: %s\n"
 
-#: ../app/file/file-open.c:700
+#: ../app/file/file-open.c:709
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11371,22 +11363,21 @@ msgstr "Warna yang mengisi kotak sorotan"
 msgid "Fill the original position of the cage with a plain color"
 msgstr ""
 
-#. Normally this should have been taken care of during command line
-#. * parsing as a post-parse hook of gtk_get_option_group(), using the
-#. * system locales.
-#. * But user config may have overriden the language, therefore we must
-#. * check the widget directions again.
+#. TRANSLATORS: there is no need to translate this in GIMP. This uses
+#. * "gtk20" domain as a special trick to determine language direction,
+#. * but xgettext extracts it anyway mistakenly into GIMP po files.
+#. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:208
+#: ../app/gui/gui.c:219
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. initialize the document history
-#: ../app/gui/gui.c:433
+#: ../app/gui/gui.c:461
 msgid "Documents"
 msgstr "Dokumen"
 
-#: ../app/gui/splash.c:115
+#: ../app/gui/splash.c:112
 #, fuzzy
 msgid "GIMP Startup"
 msgstr "Program startup"
@@ -11574,7 +11565,7 @@ msgstr "Kabur"
 #, fuzzy
 msgctxt "convolve-type"
 msgid "Sharpen"
-msgstr "_Pertajam..."
+msgstr "Pertajam"
 
 #: ../app/paint/paint-enums.c:144
 msgctxt "ink-blob-type"
@@ -11585,7 +11576,7 @@ msgstr "Lingkaran"
 #, fuzzy
 msgctxt "ink-blob-type"
 msgid "Square"
-msgstr "Bujur Sangkar"
+msgstr "Kotak"
 
 #: ../app/paint/paint-enums.c:146
 #, fuzzy
@@ -11815,8 +11806,7 @@ msgstr "Lokasi berkas tak dapat diakses karena tidak dikaitkan."
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
-"Citra '%s' (%d) bertipe '%s', tapi sebuah citra bertipe '"
-"%s' yang diharapkan"
+"Citra '%s' (%d) bertipe '%s', tapi sebuah citra bertipe '%s' yang diharapkan"
 
 #: ../app/pdb/gimppdb-utils.c:621
 #, c-format
@@ -11835,8 +11825,7 @@ msgid ""
 "%s, got %s."
 msgstr ""
 
-#: ../app/pdb/gimppdbcontext.c:89
-#: ../app/tools/gimpforegroundselectoptions.c:79
+#: ../app/pdb/gimppdbcontext.c:89 ../app/tools/gimpforegroundselectoptions.c:79
 #: ../app/tools/gimpselectionoptions.c:78
 #, fuzzy
 msgid "Smooth edges"
@@ -11912,11 +11901,6 @@ msgstr "Resolusi citra di luar batas, memakai resolusi baku sebagai gantinya."
 #: ../app/tools/gimpfreeselecttool.c:196
 msgid "Free Select"
 msgstr "Memilih Bebas"
-
-#: ../app/pdb/layer-cmds.c:475 ../app/pdb/layer-cmds.c:513
-#, fuzzy
-msgid "Move Layer"
-msgstr "Tapis Akses"
 
 #: ../app/pdb/text-layer-cmds.c:91
 #, fuzzy, c-format
@@ -12011,11 +11995,11 @@ msgid ""
 "%s"
 msgstr "Kesalahan query untuk kata kunci."
 
-#: ../app/plug-in/gimpplugin-progress.c:331
+#: ../app/plug-in/gimpplugin-progress.c:339
 msgid "Cancelled"
 msgstr "Dibatalkan"
 
-#: ../app/plug-in/gimpplugin.c:643
+#: ../app/plug-in/gimpplugin.c:648
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -12025,9 +12009,9 @@ msgid ""
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
 
-#: ../app/plug-in/gimppluginmanager-call.c:173
-#: ../app/plug-in/gimppluginmanager-call.c:223
-#: ../app/plug-in/gimppluginmanager-call.c:321
+#: ../app/plug-in/gimppluginmanager-call.c:185
+#: ../app/plug-in/gimppluginmanager-call.c:235
+#: ../app/plug-in/gimppluginmanager-call.c:333
 #, fuzzy, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "Gagal menala stasiun. {0}"
@@ -12124,7 +12108,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1402
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1415
 msgid "Add Text Layer"
 msgstr "Tambah Lapisan Teks"
 
@@ -12198,7 +12182,7 @@ msgid ""
 "you don't need to worry about this."
 msgstr ""
 
-#: ../app/text/gimptextlayout.c:577
+#: ../app/text/gimptextlayout.c:578
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -12208,7 +12192,7 @@ msgstr ""
 #, fuzzy
 msgctxt "text-box-mode"
 msgid "Dynamic"
-msgstr "Dinamik"
+msgstr "Dinamis"
 
 #: ../app/text/text-enums.c:24
 #, fuzzy
@@ -12295,7 +12279,7 @@ msgstr "Ratakan dengan dasar target"
 #: ../app/tools/gimpalignoptions.c:324
 #, fuzzy
 msgid "Distribute"
-msgstr "Sebar"
+msgstr "Sebarkan"
 
 #: ../app/tools/gimpalignoptions.c:338
 #, fuzzy
@@ -12393,8 +12377,9 @@ msgid "Max depth"
 msgstr "Kedalaman maksimum"
 
 #: ../app/tools/gimpblendtool.c:109
+#, fuzzy
 msgid "Blend"
-msgstr ""
+msgstr "Campur"
 
 #: ../app/tools/gimpblendtool.c:110
 msgid "Blend Tool: Fill selected area with a color gradient"
@@ -12412,7 +12397,7 @@ msgstr ""
 msgid "No gradient available for use with this tool."
 msgstr ""
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:625
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s untuk sudut terkendala"
@@ -12568,7 +12553,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Pilih warna depan"
 
-#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1123
+#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1128
 msgid "Cage Transform"
 msgstr ""
 
@@ -12580,16 +12565,16 @@ msgstr ""
 msgid "_Cage Transform"
 msgstr ""
 
-#: ../app/tools/gimpcagetool.c:356
+#: ../app/tools/gimpcagetool.c:357
 #, fuzzy
 msgid "Press ENTER to commit the transform"
 msgstr "Tombol yang ditangkap: %s. Tekan enter untuk konfirmasi."
 
-#: ../app/tools/gimpcagetool.c:1064
+#: ../app/tools/gimpcagetool.c:1069
 msgid "Computing Cage Coefficients"
 msgstr ""
 
-#: ../app/tools/gimpcagetool.c:1241
+#: ../app/tools/gimpcagetool.c:1246
 msgid "Cage transform"
 msgstr ""
 
@@ -12617,8 +12602,7 @@ msgstr "%s untuk menata sebuah sumber klon baru"
 msgid "Click to set a new clone source"
 msgstr "Klik untuk menata sebuah sumber klon baru"
 
-#: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:899
+#: ../app/tools/gimpclonetool.c:109 ../app/tools/gimpperspectiveclonetool.c:899
 msgid "Source"
 msgstr "Sumber"
 
@@ -12708,8 +12692,9 @@ msgid "Preserve _luminosity"
 msgstr "_Jaga bentuk huruf"
 
 #: ../app/tools/gimpcolorizetool.c:90
+#, fuzzy
 msgid "Colorize"
-msgstr ""
+msgstr "Warnai"
 
 #: ../app/tools/gimpcolorizetool.c:91
 msgid "Colorize Tool: Colorize the image"
@@ -12741,19 +12726,16 @@ msgstr ""
 msgid "Select Color"
 msgstr "Pilih sebuah warna"
 
-#: ../app/tools/gimpcolorizetool.c:241
-#: ../app/tools/gimphuesaturationtool.c:381
+#: ../app/tools/gimpcolorizetool.c:241 ../app/tools/gimphuesaturationtool.c:381
 msgid "_Hue:"
 msgstr "_Hue:"
 
-#: ../app/tools/gimpcolorizetool.c:254
-#: ../app/tools/gimphuesaturationtool.c:413
+#: ../app/tools/gimpcolorizetool.c:254 ../app/tools/gimphuesaturationtool.c:413
 #, fuzzy
 msgid "_Saturation:"
-msgstr "_Saturasi:"
+msgstr "_Penjenuhan:"
 
-#: ../app/tools/gimpcolorizetool.c:267
-#: ../app/tools/gimphuesaturationtool.c:397
+#: ../app/tools/gimpcolorizetool.c:267 ../app/tools/gimphuesaturationtool.c:397
 #, fuzzy
 msgid "_Lightness:"
 msgstr "_Penerangan:"
@@ -12764,8 +12746,7 @@ msgstr "Jari-jari Rata-rata Penitik Warna"
 
 #: ../app/tools/gimpcoloroptions.c:157
 #: ../app/tools/gimprectangleselectoptions.c:163
-#: ../app/tools/gimpselectionoptions.c:277
-#: ../app/widgets/gimpbrusheditor.c:155
+#: ../app/tools/gimpselectionoptions.c:277 ../app/widgets/gimpbrusheditor.c:155
 #, fuzzy
 msgid "Radius"
 msgstr "Radius"
@@ -12933,7 +12914,7 @@ msgstr "Perkakas Pangkas: Buang area tepi dari citra atau lapisan"
 #: ../app/tools/gimpcroptool.c:119
 #, fuzzy
 msgid "_Crop"
-msgstr "_PotongPendek"
+msgstr "_Potong"
 
 #: ../app/tools/gimpcroptool.c:253
 msgid "Click or press Enter to crop"
@@ -12944,68 +12925,68 @@ msgstr "Klik atau tekan Enter untuk memangkas"
 msgid "There is no active layer to crop."
 msgstr "Pencarian hanya dapat dilakukan pada dokumen yang aktif!"
 
-#: ../app/tools/gimpcurvestool.c:150
+#: ../app/tools/gimpcurvestool.c:145
 msgid "Curves"
 msgstr "Kurva"
 
-#: ../app/tools/gimpcurvestool.c:151
+#: ../app/tools/gimpcurvestool.c:146
 #, fuzzy
 msgid "Curves Tool: Adjust color curves"
 msgstr "Otomatis sesuaikan tingkatan warna"
 
-#: ../app/tools/gimpcurvestool.c:152
+#: ../app/tools/gimpcurvestool.c:147
 msgid "_Curves..."
 msgstr "_Kurva…"
 
-#: ../app/tools/gimpcurvestool.c:178
+#: ../app/tools/gimpcurvestool.c:174
 msgid "Adjust Color Curves"
 msgstr "Sesuaikan Kurva Warna"
 
-#: ../app/tools/gimpcurvestool.c:180
+#: ../app/tools/gimpcurvestool.c:176
 msgid "Import Curves"
 msgstr "Impor Kurva"
 
-#: ../app/tools/gimpcurvestool.c:181
+#: ../app/tools/gimpcurvestool.c:177
 #, fuzzy
 msgid "Export Curves"
 msgstr "_Moda ekspor:"
 
-#: ../app/tools/gimpcurvestool.c:232
+#: ../app/tools/gimpcurvestool.c:239
 #, fuzzy
 msgid "Curves does not operate on indexed layers."
 msgstr "derajat tidak dapat digunakan pada gambar berindeks."
 
-#: ../app/tools/gimpcurvestool.c:340
+#: ../app/tools/gimpcurvestool.c:348
 msgid "Click to add a control point"
 msgstr "Klik untuk menambah sebuah titik kendali"
 
-#: ../app/tools/gimpcurvestool.c:345
+#: ../app/tools/gimpcurvestool.c:353
 msgid "Click to add control points to all channels"
 msgstr "Klik untuk menambah titik kendali ke semua kanal"
 
-#: ../app/tools/gimpcurvestool.c:350
+#: ../app/tools/gimpcurvestool.c:358
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr "Klik untuk menentukan lokasi pada kurva (cobalah Shift, Ctrl)"
 
-#: ../app/tools/gimpcurvestool.c:463 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:473 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
-#: ../app/tools/gimpcurvestool.c:489 ../app/tools/gimplevelstool.c:408
+#: ../app/tools/gimpcurvestool.c:499 ../app/tools/gimplevelstool.c:408
 #, fuzzy
 msgid "R_eset Channel"
 msgstr "Sunting kanal"
 
-#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:590 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr ")Tipe kurva:"
 
-#: ../app/tools/gimpcurvestool.c:658 ../app/tools/gimplevelstool.c:756
+#: ../app/tools/gimpcurvestool.c:667 ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Tak bisa membaca kepala dari '%s': %s"
 
-#: ../app/tools/gimpcurvestool.c:731
+#: ../app/tools/gimpcurvestool.c:740
 #, fuzzy
 msgid "Use _old curves file format"
 msgstr "Device Independent file format (.dvi)"
@@ -13085,28 +13066,23 @@ msgstr "Tipe  (%s)"
 #: ../app/tools/gimpdodgeburntool.c:230
 #, fuzzy
 msgid "Range"
-msgstr "Cakupan"
+msgstr "Jangkauan"
 
 #: ../app/tools/gimpdodgeburntool.c:236
 msgid "Exposure"
 msgstr "Pencahayaan"
 
-#: ../app/tools/gimpeditselectiontool.c:242
-#, fuzzy
-msgid "Move Selection"
-msgstr "Bersihkan Pi_lihan"
-
-#: ../app/tools/gimpeditselectiontool.c:246
-#: ../app/tools/gimpeditselectiontool.c:1241
-#, fuzzy
-msgid "Move Floating Selection"
-msgstr "Memindahkan seleksi saat ini pada desktop"
-
-#: ../app/tools/gimpeditselectiontool.c:455
-#: ../app/tools/gimpeditselectiontool.c:732
+#: ../app/tools/gimpeditselectiontool.c:484
+#: ../app/tools/gimpeditselectiontool.c:670
 #, fuzzy
 msgid "Move: "
 msgstr "_Pindahkan"
+
+#: ../app/tools/gimpeditselectiontool.c:982
+#: ../app/tools/gimpeditselectiontool.c:1234
+#, fuzzy
+msgid "Move Floating Selection"
+msgstr "Memindahkan seleksi saat ini pada desktop"
 
 #: ../app/tools/gimpellipseselecttool.c:66
 #, fuzzy
@@ -13522,7 +13498,7 @@ msgstr "Menyimpan %i byte ke %s"
 #: ../app/tools/gimpimagemaptool.c:363
 #, fuzzy
 msgid "_Preview"
-msgstr "_Preview"
+msgstr "_Pratinjau"
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:54
@@ -13534,8 +13510,7 @@ msgstr "Penyesuaian"
 msgid "Size"
 msgstr "Ukuran"
 
-#: ../app/tools/gimpinkoptions-gui.c:71
-#: ../app/tools/gimppaintoptions-gui.c:181
+#: ../app/tools/gimpinkoptions-gui.c:71 ../app/tools/gimppaintoptions-gui.c:181
 #: ../app/widgets/gimpbrusheditor.c:199
 msgid "Angle"
 msgstr "Sudut"
@@ -13545,8 +13520,7 @@ msgstr "Sudut"
 msgid "Sensitivity"
 msgstr "Sensitivitas"
 
-#: ../app/tools/gimpinkoptions-gui.c:94
-#: ../app/widgets/gimpdynamicseditor.c:144
+#: ../app/tools/gimpinkoptions-gui.c:94 ../app/widgets/gimpdynamicseditor.c:144
 #: ../app/widgets/gimpdynamicsoutputeditor.c:72
 #, fuzzy
 msgid "Tilt"
@@ -13561,7 +13535,7 @@ msgstr "Kecepatan"
 #: ../app/tools/gimpinkoptions-gui.c:107
 #, fuzzy
 msgid "Shape"
-msgstr "Bentuk"
+msgstr "Membentuk"
 
 #: ../app/tools/gimpinktool.c:55
 msgid "Ink Tool: Calligraphy-style painting"
@@ -13786,7 +13760,7 @@ msgstr "Klik-Seret untuk memindah semua titik"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:633
+#: ../app/tools/gimppainttool.c:634
 msgid "pixels"
 msgstr "piksel"
 
@@ -13881,8 +13855,8 @@ msgid "_Paintbrush"
 msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:89
-#: ../app/tools/gimpselectionoptions.c:217
-#: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:268
+#: ../app/tools/gimpselectionoptions.c:217 ../app/widgets/gimpbrushselect.c:190
+#: ../app/widgets/gimplayertreeview.c:268
 msgid "Mode:"
 msgstr "Mode:"
 
@@ -13932,11 +13906,10 @@ msgstr "Pilihan penerimaan"
 msgid "Fade length"
 msgstr "Jeda panjang:"
 
-#: ../app/tools/gimppaintoptions-gui.c:332
-#: ../app/widgets/gimpviewablebox.c:311
+#: ../app/tools/gimppaintoptions-gui.c:332 ../app/widgets/gimpviewablebox.c:311
 #, fuzzy
 msgid "Reverse"
-msgstr "Balik"
+msgstr "Kebalikan"
 
 #: ../app/tools/gimppaintoptions-gui.c:339
 msgid "Color Options"
@@ -13976,7 +13949,7 @@ msgstr "%s untuk menitik suatu warna"
 msgid "Cannot paint on layer groups."
 msgstr "Tak dapat mengecat pada grup lapisan."
 
-#: ../app/tools/gimppainttool.c:679
+#: ../app/tools/gimppainttool.c:680
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s untuk sebuah garis lurus"
@@ -14020,12 +13993,10 @@ msgid "Perspective transformation"
 msgstr "Matriks transformasi"
 
 #: ../app/tools/gimpperspectivetool.c:131
-#, fuzzy
 msgid "Transformation Matrix"
-msgstr "Matriks transformasi"
+msgstr "Matriks Transformasi"
 
 #: ../app/tools/gimpperspectivetool.c:256
-#, fuzzy
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Perspektif"
@@ -14131,7 +14102,7 @@ msgstr "Membuat image disk dari file pilihan"
 #: ../app/tools/gimprectangleoptions.c:761
 #, fuzzy
 msgid "Current"
-msgstr "Yang Sekarang"
+msgstr "Sekarang"
 
 #: ../app/tools/gimprectangleoptions.c:839
 #, fuzzy
@@ -14176,14 +14147,12 @@ msgid "Radius of rounding in pixels"
 msgstr "Lebar kursor, dalam piksel"
 
 #: ../app/tools/gimprectangleselectoptions.c:167
-#, fuzzy
 msgid "Rounded corners"
-msgstr "Clines Corners"
+msgstr ""
 
 #: ../app/tools/gimprectangleselecttool.c:168
-#, fuzzy
 msgid "Rectangle Select"
-msgstr "Pilih Semua"
+msgstr "Pilih Persegi"
 
 #: ../app/tools/gimprectangleselecttool.c:169
 #, fuzzy
@@ -14336,7 +14305,7 @@ msgstr ""
 #: ../app/tools/gimpsheartool.c:83
 #, fuzzy
 msgid "Shear"
-msgstr "Sudut potong"
+msgstr "Geser"
 
 #: ../app/tools/gimpsheartool.c:84
 #, fuzzy
@@ -14441,9 +14410,8 @@ msgid "Font"
 msgstr "Fonta"
 
 #: ../app/tools/gimptextoptions.c:535
-#, fuzzy
 msgid "Use editor"
-msgstr "Gunakan penyunting eksternal"
+msgstr "Gunakan penyunting"
 
 #: ../app/tools/gimptextoptions.c:555
 msgid "Hinting:"
@@ -14482,21 +14450,21 @@ msgstr "Buat atau sunting penentuan Pencarian Folder"
 msgid "Te_xt"
 msgstr "Te_ks"
 
-#: ../app/tools/gimptexttool.c:959
+#: ../app/tools/gimptexttool.c:972
 #, fuzzy
 msgid "Reshape Text Layer"
 msgstr "DVD+R dual layer"
 
-#: ../app/tools/gimptexttool.c:1513 ../app/tools/gimptexttool.c:1516
+#: ../app/tools/gimptexttool.c:1526 ../app/tools/gimptexttool.c:1529
 msgid "Confirm Text Editing"
 msgstr "Konfirmasi Penyuntingan Teks"
 
-#: ../app/tools/gimptexttool.c:1520
+#: ../app/tools/gimptexttool.c:1533
 #, fuzzy
 msgid "Create _New Layer"
 msgstr "Buat direktori baru"
 
-#: ../app/tools/gimptexttool.c:1544
+#: ../app/tools/gimptexttool.c:1557
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -14505,7 +14473,7 @@ msgid ""
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
 
-#: ../app/tools/gimptexttool-editor.c:1199
+#: ../app/tools/gimptexttool-editor.c:1236
 msgid "GIMP Text Editor"
 msgstr "Editor Teks GIMP"
 
@@ -14514,9 +14482,8 @@ msgid "Threshold Tool: Reduce image to two colors using a threshold"
 msgstr ""
 
 #: ../app/tools/gimpthresholdtool.c:92
-#, fuzzy
 msgid "_Threshold..."
-msgstr "Ambang:"
+msgstr "_Ambang..."
 
 #: ../app/tools/gimpthresholdtool.c:109
 msgid "Apply Threshold"
@@ -14527,9 +14494,8 @@ msgid "Import Threshold Settings"
 msgstr "Impor Pengaturan Ambang"
 
 #: ../app/tools/gimpthresholdtool.c:112
-#, fuzzy
 msgid "Export Threshold Settings"
-msgstr "Timpa setelan default"
+msgstr "Ekspor Setelan Ambang"
 
 #: ../app/tools/gimpthresholdtool.c:162
 #, fuzzy
@@ -14632,17 +14598,24 @@ msgstr "Pertahankan rasio aspek (kotak surat):"
 msgid "Transforming"
 msgstr "Masalah saat menransformasi gambar: %s"
 
-#: ../app/tools/gimptransformtool.c:1465
+#: ../app/tools/gimptransformtool.c:269
+#, fuzzy, c-format
+#| msgid "The given file extension does not match the chosen file type."
+msgid "The selection does not intersect with the layer."
+msgstr ""
+"Ekstensi berkas yang diberikan tak cocok dengan tipe berkas yang dipilih."
+
+#: ../app/tools/gimptransformtool.c:1480
 #, fuzzy
 msgid "There is no layer to transform."
 msgstr "Tidak ada trek untuk dibakar"
 
-#: ../app/tools/gimptransformtool.c:1476
+#: ../app/tools/gimptransformtool.c:1491
 #, fuzzy
 msgid "There is no path to transform."
 msgstr "Tidak ada trek untuk dibakar"
 
-#: ../app/tools/gimptransformtool.c:1477
+#: ../app/tools/gimptransformtool.c:1492
 #, fuzzy
 msgid "The active path's strokes are locked."
 msgstr "Tidak ada log yang aktif."
@@ -14702,24 +14675,20 @@ msgid "Insert Anchor"
 msgstr "Sisip Jangkar"
 
 #: ../app/tools/gimpvectortool.c:422
-#, fuzzy
 msgid "Drag Handle"
-msgstr "Handel Penyeretan"
+msgstr "Seret Pegangan"
 
 #: ../app/tools/gimpvectortool.c:453
-#, fuzzy
 msgid "Drag Anchor"
-msgstr "Gravitasi Jangkar"
+msgstr "Seret Jangkar"
 
 #: ../app/tools/gimpvectortool.c:471
-#, fuzzy
 msgid "Drag Anchors"
-msgstr "Jumlah Jangkar/Anchor"
+msgstr "Seret Jangkar"
 
 #: ../app/tools/gimpvectortool.c:494
-#, fuzzy
 msgid "Drag Curve"
-msgstr "Kurva Gamma"
+msgstr "Seret Kurva"
 
 #: ../app/tools/gimpvectortool.c:523
 msgid "Connect Strokes"
@@ -14735,19 +14704,16 @@ msgid "Convert Edge"
 msgstr ""
 
 #: ../app/tools/gimpvectortool.c:597
-#, fuzzy
 msgid "Delete Anchor"
-msgstr "Gravitasi Jangkar"
+msgstr "Hapus Jangkar"
 
 #: ../app/tools/gimpvectortool.c:620
-#, fuzzy
 msgid "Delete Segment"
 msgstr "Hapus Segmen"
 
 #: ../app/tools/gimpvectortool.c:842
-#, fuzzy
 msgid "Move Anchors"
-msgstr "Jumlah Jangkar/Anchor"
+msgstr "Pindahkan Jangkar"
 
 #: ../app/tools/gimpvectortool.c:1205
 msgid "Click to pick path to edit"
@@ -14819,9 +14785,8 @@ msgid "Click to make this node angular"
 msgstr ""
 
 #: ../app/tools/gimpvectortool.c:1810
-#, fuzzy
 msgid "Delete Anchors"
-msgstr "Jumlah Jangkar/Anchor"
+msgstr "Hapus Jangkar"
 
 #: ../app/tools/gimpvectortool.c:1969
 msgid "There is no active layer or channel to stroke to"
@@ -14853,25 +14818,21 @@ msgid "Free select"
 msgstr "Memilih bebas"
 
 #: ../app/tools/tools-enums.c:183
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed size"
-msgstr "Ukuran Tetap"
+msgstr "Ukuran tetap"
 
 #: ../app/tools/tools-enums.c:184
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
-msgstr "Jaga Rasio Aspek"
+msgstr "Rasio aspek tetap"
 
 #: ../app/tools/tools-enums.c:213
-#, fuzzy
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "Lapisan"
 
 #: ../app/tools/tools-enums.c:214
-#, fuzzy
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "Pilihan"
@@ -14882,19 +14843,16 @@ msgid "Path"
 msgstr "Path"
 
 #: ../app/tools/tools-enums.c:244
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Disain"
 
 #: ../app/tools/tools-enums.c:245
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Edit"
-msgstr "Edit"
+msgstr "Sunting"
 
 #: ../app/tools/tools-enums.c:246
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Pindah"
@@ -15041,7 +14999,7 @@ msgstr "Berkas tempat asal impor data"
 msgid "_Search:"
 msgstr "_Cari:"
 
-#: ../app/widgets/gimpactiongroup.c:857
+#: ../app/widgets/gimpactiongroup.c:881
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -15106,8 +15064,7 @@ msgid "Aspect ratio"
 msgstr "Rasio aspek"
 
 #: ../app/widgets/gimpbrusheditor.c:210
-#: ../app/widgets/gimpbrushfactoryview.c:80
-#: ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:80 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Jarak"
 
@@ -15164,7 +15121,7 @@ msgstr "Hapus dari daftar dan _disk"
 msgid "No filter selected"
 msgstr "Tak ada stash yang dipilih."
 
-#: ../app/widgets/gimpcoloreditor.c:260
+#: ../app/widgets/gimpcoloreditor.c:264
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -15348,7 +15305,6 @@ msgid "Cursor Right"
 msgstr "Kursor Kanan"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:175
-#, fuzzy
 msgid "Keyboard"
 msgstr "Papan Tik"
 
@@ -15360,7 +15316,6 @@ msgstr "Kejadian keyboard"
 #: ../app/widgets/gimpcontrollerkeyboard.c:217
 #: ../app/widgets/gimpcontrollermouse.c:245
 #: ../app/widgets/gimpcontrollerwheel.c:219
-#, fuzzy
 msgid "Ready"
 msgstr "Siap"
 
@@ -15522,7 +15477,6 @@ msgstr "Tombol Mouse Pertama"
 #: ../app/widgets/gimpcontrollerwheel.c:84
 #: ../app/widgets/gimpcontrollerwheel.c:87
 #: ../app/widgets/gimpcontrollerwheel.c:90
-#, fuzzy
 msgid "Scroll Up"
 msgstr "Gulung Naik"
 
@@ -15534,7 +15488,6 @@ msgstr "Gulung Naik"
 #: ../app/widgets/gimpcontrollerwheel.c:109
 #: ../app/widgets/gimpcontrollerwheel.c:112
 #: ../app/widgets/gimpcontrollerwheel.c:115
-#, fuzzy
 msgid "Scroll Down"
 msgstr "Gulung Turun"
 
@@ -15546,9 +15499,8 @@ msgstr "Gulung Turun"
 #: ../app/widgets/gimpcontrollerwheel.c:134
 #: ../app/widgets/gimpcontrollerwheel.c:137
 #: ../app/widgets/gimpcontrollerwheel.c:140
-#, fuzzy
 msgid "Scroll Left"
-msgstr "Menggulung Ke Kiri"
+msgstr "Gulung Kiri"
 
 #: ../app/widgets/gimpcontrollerwheel.c:144
 #: ../app/widgets/gimpcontrollerwheel.c:147
@@ -15558,14 +15510,12 @@ msgstr "Menggulung Ke Kiri"
 #: ../app/widgets/gimpcontrollerwheel.c:159
 #: ../app/widgets/gimpcontrollerwheel.c:162
 #: ../app/widgets/gimpcontrollerwheel.c:165
-#, fuzzy
 msgid "Scroll Right"
-msgstr "Menggulung Ke Kanan"
+msgstr "Gulung Kanan"
 
 #: ../app/widgets/gimpcontrollerwheel.c:177
-#, fuzzy
 msgid "Mouse Wheel"
-msgstr "Roda Warna"
+msgstr "Roda Tetikus"
 
 #: ../app/widgets/gimpcontrollerwheel.c:218
 #, fuzzy
@@ -15640,13 +15590,13 @@ msgstr "Sumbu"
 #: ../app/widgets/gimpdeviceinfoeditor.c:269
 #, fuzzy
 msgid "Keys"
-msgstr "Tombol-tombol"
+msgstr "Tombol"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:366
 #: ../app/widgets/gimpdeviceinfoeditor.c:585
 #, fuzzy, c-format
 msgid "none"
-msgstr "tak ada"
+msgstr "nihil"
 
 #. e.g. "Pressure Curve" for mapping input device axes
 #: ../app/widgets/gimpdeviceinfoeditor.c:415
@@ -15756,7 +15706,6 @@ msgstr "Kecepatan"
 
 #: ../app/widgets/gimpdynamicseditor.c:146
 #: ../app/widgets/gimpdynamicsoutputeditor.c:74
-#, fuzzy
 msgid "Random"
 msgstr "Acak"
 
@@ -15764,7 +15713,7 @@ msgstr "Acak"
 #: ../app/widgets/gimpdynamicsoutputeditor.c:75
 #, fuzzy
 msgid "Fade"
-msgstr "_Fade:"
+msgstr "Kabur"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -15824,7 +15773,7 @@ msgstr "Ekstensi"
 #: ../app/widgets/gimpfilleditor.c:124
 #, fuzzy
 msgid "Fill Color"
-msgstr "Warna isi:"
+msgstr "Warna Isi"
 
 #: ../app/widgets/gimpfilleditor.c:143
 msgid "_Antialiasing"
@@ -15846,9 +15795,9 @@ msgid "Position: %0.4f"
 msgstr "Posisi: %0.4f"
 
 #: ../app/widgets/gimpgradienteditor.c:954
-#, fuzzy, c-format
+#, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpgradienteditor.c:956
 #, c-format
@@ -15856,9 +15805,9 @@ msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
 #: ../app/widgets/gimpgradienteditor.c:958
-#, fuzzy, c-format
+#, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Kelegapan minimal dari papan tik"
+msgstr "Luminansi: %0.1f    Kelegapan: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:989
 #, c-format
@@ -15908,14 +15857,13 @@ msgid "Handle position: %0.4f"
 msgstr "Posisi pegangan: %0.4f"
 
 #: ../app/widgets/gimpgradienteditor.c:1540
-#, fuzzy, c-format
+#, c-format
 msgid "Distance: %0.4f"
-msgstr "Jarak Maksimum"
+msgstr "Jarak: %0.4f"
 
 #: ../app/widgets/gimpgrideditor.c:147
-#, fuzzy
 msgid "Line _style:"
-msgstr "Gaya garis"
+msgstr "Gaya gari_s:"
 
 #: ../app/widgets/gimpgrideditor.c:151
 msgid "Change grid foreground color"
@@ -15941,60 +15889,59 @@ msgstr "Lebar"
 msgid "Height"
 msgstr "Tinggi"
 
-#: ../app/widgets/gimphelp.c:297
+#: ../app/widgets/gimphelp.c:308
 msgid "Help browser is missing"
 msgstr "Peramban bantuan hilang"
 
-#: ../app/widgets/gimphelp.c:298
-#, fuzzy
+#: ../app/widgets/gimphelp.c:309
 msgid "The GIMP help browser is not available."
-msgstr "Pesan ini sekarang tidak ada"
+msgstr "Peramban bantuan GIMP tidak tersedia."
 
-#: ../app/widgets/gimphelp.c:299
+#: ../app/widgets/gimphelp.c:310
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
 
-#: ../app/widgets/gimphelp.c:340
+#: ../app/widgets/gimphelp.c:351
 msgid "Help browser doesn't start"
 msgstr "Peramban bantuan tak mulai"
 
-#: ../app/widgets/gimphelp.c:341
+#: ../app/widgets/gimphelp.c:352
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Tak bisa memulai plug-in peramban bantuan GIMP."
 
-#: ../app/widgets/gimphelp.c:368
-#, fuzzy
-msgid "Use _Web Browser"
-msgstr "Peramban Web Epiphany"
+#: ../app/widgets/gimphelp.c:354
+msgid "You may instead use the web browser for reading the help pages."
+msgstr ""
 
-#: ../app/widgets/gimphelp.c:712
+#: ../app/widgets/gimphelp.c:380
+msgid "Use _Web Browser"
+msgstr "Gunakan Peramban _Web"
+
+#: ../app/widgets/gimphelp.c:724
 msgid "GIMP user manual is missing"
 msgstr "Manual pengguna GIMP hilang"
 
-#: ../app/widgets/gimphelp.c:719
-#, fuzzy
+#: ../app/widgets/gimphelp.c:731
 msgid "_Read Online"
-msgstr "Sumber Daring"
+msgstr "Baca Da_ring"
 
-#: ../app/widgets/gimphelp.c:743
+#: ../app/widgets/gimphelp.c:755
 msgid "The GIMP user manual is not installed on your computer."
 msgstr ""
 
-#: ../app/widgets/gimphelp.c:746
+#: ../app/widgets/gimphelp.c:758
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr ""
 
 #: ../app/widgets/gimphistogrameditor.c:99
-#, fuzzy
 msgid "Mean:"
-msgstr "Rata-rata:"
+msgstr "Rerata:"
 
 #: ../app/widgets/gimphistogrameditor.c:100
-#, fuzzy
 msgid "Std dev:"
 msgstr "Dev std:"
 
@@ -16011,9 +15958,8 @@ msgid "Count:"
 msgstr "Cacah:"
 
 #: ../app/widgets/gimphistogrameditor.c:104
-#, fuzzy
 msgid "Percentile:"
-msgstr "Ranking dan Persentil"
+msgstr "Persentil:"
 
 #: ../app/widgets/gimphistogrameditor.c:122
 msgid "Channel:"
@@ -16021,9 +15967,8 @@ msgstr "Kanal:"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
-#, fuzzy
 msgid "Use default comment"
-msgstr "Gunakan locale standar"
+msgstr "Gunakan komentar baku"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid ""
@@ -16041,12 +15986,10 @@ msgid "Size in pixels:"
 msgstr "Ukuran dalam piksel:"
 
 #: ../app/widgets/gimpimagepropview.c:116
-#, fuzzy
 msgid "Print size:"
-msgstr "Ukuran Berkas"
+msgstr "Ukuran cetak:"
 
 #: ../app/widgets/gimpimagepropview.c:119
-#, fuzzy
 msgid "Resolution:"
 msgstr "Resolusi:"
 
@@ -16071,34 +16014,28 @@ msgid "Size in memory:"
 msgstr "Ukuran dalam memori:"
 
 #: ../app/widgets/gimpimagepropview.c:144
-#, fuzzy
 msgid "Undo steps:"
-msgstr "Tahapan zoom"
+msgstr ""
 
 #: ../app/widgets/gimpimagepropview.c:147
-#, fuzzy
 msgid "Redo steps:"
-msgstr "Tahapan zoom"
+msgstr ""
 
 #: ../app/widgets/gimpimagepropview.c:152
-#, fuzzy
 msgid "Number of pixels:"
-msgstr "%s  (%dx%d piksel)"
+msgstr "Banyaknya piksel:"
 
 #: ../app/widgets/gimpimagepropview.c:155
-#, fuzzy
 msgid "Number of layers:"
-msgstr "Tidak ada lapisan"
+msgstr "Banyaknya lapisan:"
 
 #: ../app/widgets/gimpimagepropview.c:158
-#, fuzzy
 msgid "Number of channels:"
-msgstr "Jumlah kanal:"
+msgstr "Banyaknya kanal:"
 
 #: ../app/widgets/gimpimagepropview.c:161
-#, fuzzy
 msgid "Number of paths:"
-msgstr "Lokasi CLang"
+msgstr "Banyaknya path:"
 
 #. no undo (or redo) steps available
 #: ../app/widgets/gimpimagepropview.c:410
@@ -16126,16 +16063,14 @@ msgid "Lock:"
 msgstr "Kunci"
 
 #: ../app/widgets/gimplayertreeview.c:307
-#, fuzzy
 msgid "Lock alpha channel"
-msgstr "Lebar daftar kanal"
+msgstr ""
 
 #: ../app/widgets/gimpmessagebox.c:433
-#, fuzzy, c-format
+#, c-format
 msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
-msgstr[0] "Pesan diulang sekali."
-msgstr[1] "Pesan diulang sekali."
+msgstr[0] "Pesan diulang %d kali."
 
 #: ../app/widgets/gimppaletteeditor.c:240
 #: ../app/widgets/gimppaletteeditor.c:715
@@ -16147,16 +16082,14 @@ msgid "Columns:"
 msgstr "Kolom:"
 
 #: ../app/widgets/gimppanedbox.c:58
-#, fuzzy
 msgid "You can drop dockable dialogs here"
-msgstr "Di sini, Anda bisa membuat gaya huruf."
+msgstr "Anda dapat menjatuhkan dialog yang dapat dilabuhkan di sini"
 
 #: ../app/widgets/gimpprofilechooserdialog.c:127
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil warna ICC (*.icc, *.icm)"
 
 #: ../app/widgets/gimpprogressdialog.c:221
-#, fuzzy
 msgid "Progress"
 msgstr "Kemajuan"
 
@@ -16173,9 +16106,8 @@ msgid "Invalid UTF-8"
 msgstr "UTF-8 tak valid"
 
 #: ../app/widgets/gimpsettingsbox.c:269
-#, fuzzy
 msgid "Pick a setting from the list"
-msgstr "Ambil bahasa dari daftar bahasa"
+msgstr "Ambil suatu pengaturan dari daftar"
 
 #: ../app/widgets/gimpsettingsbox.c:291
 msgid "Add settings to favorites"
@@ -16190,42 +16122,36 @@ msgid "_Export Settings to File..."
 msgstr "_Ekspor Pengaturan ke Berkas..."
 
 #: ../app/widgets/gimpsettingsbox.c:332
-#, fuzzy
 msgid "_Manage Settings..."
-msgstr "Kelola Tatanan X"
+msgstr "Kelola Pe_ngaturan..."
 
 #: ../app/widgets/gimpsettingsbox.c:636
 msgid "Add Settings to Favorites"
 msgstr "Tambah Pengaturan ke Favorit"
 
 #: ../app/widgets/gimpsettingsbox.c:639
-#, fuzzy
 msgid "Enter a name for the settings"
-msgstr "Masukkan nama baru untuk suatu bab:"
+msgstr "Masukkan sebuah nama untuk pengaturan"
 
 #: ../app/widgets/gimpsettingsbox.c:640
-#, fuzzy
 msgid "Saved Settings"
-msgstr "Pengaturan foto tersimpan"
+msgstr "Pengaturan Tersimpan"
 
 #: ../app/widgets/gimpsettingsbox.c:681
-#, fuzzy
 msgid "Manage Saved Settings"
-msgstr "Pengaturan foto tersimpan"
+msgstr "Kelola Pengaturan Tersimpan"
 
 #: ../app/widgets/gimpsettingseditor.c:194
 msgid "Import settings from a file"
 msgstr "Impor pengaturan dari suatu berkas"
 
 #: ../app/widgets/gimpsettingseditor.c:203
-#, fuzzy
 msgid "Export the selected settings to a file"
-msgstr "Ekspor sederhana ke berkas Zip"
+msgstr "Ekspor pengaturan yang dipilih ke sebuah berkas"
 
 #: ../app/widgets/gimpsettingseditor.c:212
-#, fuzzy
 msgid "Delete the selected settings"
-msgstr "Hapus tag yang dipilih"
+msgstr "Hapus pengaturan yang dipilih"
 
 #: ../app/widgets/gimpsizebox.c:458
 #, c-format
@@ -16238,38 +16164,32 @@ msgid "%d ppi"
 msgstr "%d ppi"
 
 #: ../app/widgets/gimpstrokeeditor.c:129
-#, fuzzy
 msgid "Line width:"
 msgstr "Lebar garis:"
 
 #: ../app/widgets/gimpstrokeeditor.c:141
-#, fuzzy
 msgid "_Line Style"
-msgstr "Gaya garis"
+msgstr "_Gaya Garis"
 
 #: ../app/widgets/gimpstrokeeditor.c:160
 msgid "_Cap style:"
 msgstr ""
 
 #: ../app/widgets/gimpstrokeeditor.c:166
-#, fuzzy
 msgid "_Join style:"
-msgstr "Gaya _Kartu"
+msgstr ""
 
 #: ../app/widgets/gimpstrokeeditor.c:171
-#, fuzzy
 msgid "_Miter limit:"
-msgstr "_Batasi sampai"
+msgstr ""
 
 #: ../app/widgets/gimpstrokeeditor.c:178
-#, fuzzy
 msgid "Dash pattern:"
-msgstr "_Pola nama berkas"
+msgstr ""
 
 #: ../app/widgets/gimpstrokeeditor.c:241
-#, fuzzy
 msgid "Dash _preset:"
-msgstr "Puntuasi, Tanda Kurang"
+msgstr ""
 
 #: ../app/widgets/gimptagentry.c:45
 #, fuzzy
@@ -16277,15 +16197,14 @@ msgid "filter"
 msgstr "Filter"
 
 #: ../app/widgets/gimptagentry.c:46
-#, fuzzy
 msgid "enter tags"
-msgstr "Tag API (C/C++)"
+msgstr ""
 
 #. Seperator for tags
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1734
+#: ../app/widgets/gimptagentry.c:1750
 msgid ","
 msgstr ","
 
@@ -16328,17 +16247,17 @@ msgstr "%d × %d ppi, %s"
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:344
+#: ../app/widgets/gimptextbuffer-serialize.c:269
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
 msgstr "Atribut \"%s\" tak valid pada elemen <%s> dalam konteks ini"
 
-#: ../app/widgets/gimptextbuffer-serialize.c:416
-#, fuzzy, c-format
+#: ../app/widgets/gimptextbuffer-serialize.c:341
+#, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
-msgstr "Bagian terluar dari teks harus <text_view_markup> bukan <%s>"
+msgstr "Elemen terluar dalam teks harus <markup> bukan <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1454
+#: ../app/widgets/gimptextbuffer.c:1460
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Data UTF-8 tak valid dalam berkas '%s'."
@@ -16397,24 +16316,21 @@ msgid ""
 msgstr ""
 
 #: ../app/widgets/gimpthumbbox.c:347
-#, fuzzy
 msgid "Pr_eview"
-msgstr "Pr_eferensi"
+msgstr "Pr_atinjau"
 
 #: ../app/widgets/gimpthumbbox.c:404 ../app/widgets/gimpthumbbox.c:468
-#, fuzzy
 msgid "No selection"
-msgstr "Bersihkan Pi_lihan"
+msgstr "Tidak ada pilihan"
 
-#: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:617
-#, fuzzy, c-format
+#: ../app/widgets/gimpthumbbox.c:612 ../app/widgets/gimpthumbbox.c:633
+#, c-format
 msgid "Thumbnail %d of %d"
-msgstr "Gambar kecil"
+msgstr "Gambar mini %d dari %d"
 
-#: ../app/widgets/gimpthumbbox.c:730 ../app/widgets/gimpthumbbox.c:740
-#, fuzzy
+#: ../app/widgets/gimpthumbbox.c:746 ../app/widgets/gimpthumbbox.c:756
 msgid "Creating preview..."
-msgstr "Pratilik Thread"
+msgstr "Membuat pratilik..."
 
 #: ../app/widgets/gimptoolbox-color-area.c:79
 msgid ""
@@ -16438,13 +16354,10 @@ msgstr "Ganti Warna Latar Belakang"
 
 #: ../app/widgets/gimptoolbox-image-area.c:118
 #: ../app/widgets/gimptoolbox-image-area.c:123
-#, fuzzy
 msgid ""
 "The active image.\n"
 "Click to open the Image Dialog."
 msgstr ""
-"Kuas yang sedang dipakai.\n"
-"Klik untuk membuka kotak pemilih kuas."
 
 #: ../app/widgets/gimptoolbox-image-area.c:120
 msgid "Drag to an XDS enabled file-manager to save the image."
@@ -16475,44 +16388,36 @@ msgstr ""
 "Klik untuk membuka kotak Gradien"
 
 #: ../app/widgets/gimptooleditor.c:294
-#, fuzzy
 msgid "Raise this tool"
-msgstr "Naikkan tampilan gambar"
+msgstr "Naikkan perkakas ini"
 
 #: ../app/widgets/gimptooleditor.c:295
-#, fuzzy
 msgid "Raise this tool to the top"
-msgstr "Tombol alat radio tempat grup pemilik tombol ini."
+msgstr "Naikkan perkakas ini ke puncak"
 
 #: ../app/widgets/gimptooleditor.c:302
-#, fuzzy
 msgid "Lower this tool"
-msgstr "Ukuran ikon di palet perkakas ini"
+msgstr "Turunkan perkakas ini"
 
 #: ../app/widgets/gimptooleditor.c:303
-#, fuzzy
 msgid "Lower this tool to the bottom"
-msgstr "Tombol alat radio tempat grup pemilik tombol ini."
+msgstr "Turunkan perkakas ini ke dasar"
 
 #: ../app/widgets/gimptooleditor.c:310
-#, fuzzy
 msgid "Reset tool order and visibility"
-msgstr "Alat menggambar bebas dan animasi."
+msgstr "Reset kenampakan dan urutan perkakas"
 
 #: ../app/widgets/gimptooloptionseditor.c:202
-#, fuzzy
 msgid "Save Tool Preset..."
-msgstr "Tambah Prasetel _Baru"
+msgstr "Simpan Prasetel Perkakas..."
 
 #: ../app/widgets/gimptooloptionseditor.c:210
-#, fuzzy
 msgid "Restore Tool Preset..."
-msgstr "Tambah Prasetel _Baru"
+msgstr "Pulihkan Prasetel Perkakas..."
 
 #: ../app/widgets/gimptooloptionseditor.c:218
-#, fuzzy
 msgid "Delete Tool Preset..."
-msgstr "Hapus satu alat build"
+msgstr "Hapus Prasetel Perkakas..."
 
 #: ../app/widgets/gimptoolpreseteditor.c:148
 msgid "Icon:"
@@ -16560,38 +16465,33 @@ msgid "English"
 msgstr "Inggris"
 
 #: ../app/widgets/gimpuimanager.c:742
-#, fuzzy
 msgid "Your GIMP installation is incomplete:"
-msgstr "atribut tilikan buku kerja tak lengkap"
+msgstr "Instalasi GIMP Anda tidak lengkap:"
 
 #: ../app/widgets/gimpuimanager.c:744
 msgid "Please make sure the menu XML files are correctly installed."
 msgstr ""
 
 #: ../app/widgets/gimpuimanager.c:750
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
-msgstr ""
-"Ada galat yang masih dapat diperbaiki ketika menerapkan profil pengguna dari "
-"berkas '%s'."
+msgstr "Ada galat saat mengurai definisi menu dari %s: %s"
 
 #: ../app/widgets/gimpundoeditor.c:262
 msgid "[ Base Image ]"
 msgstr "[ Gambar Dasar ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:111
-#, fuzzy
 msgid "Lock path strokes"
-msgstr "Pertahankan path target:"
+msgstr ""
 
 #: ../app/widgets/gimpviewablebox.c:87
 msgid "Open the brush selection dialog"
 msgstr "Buka kotak pemilih kuas"
 
 #: ../app/widgets/gimpviewablebox.c:151
-#, fuzzy
 msgid "Open the dynamics selection dialog"
-msgstr "Buka kotak pemilih kuas"
+msgstr "Buka dialog pemilihan dinamika"
 
 #: ../app/widgets/gimpviewablebox.c:216
 msgid "Open the pattern selection dialog"
@@ -16602,9 +16502,8 @@ msgid "Open the gradient selection dialog"
 msgstr "Buka kotak pemilih gradien"
 
 #: ../app/widgets/gimpviewablebox.c:401
-#, fuzzy
 msgid "Open the palette selection dialog"
-msgstr "Buka kotak pemilih kuas"
+msgstr "Buka dialog pemilihan palet"
 
 #: ../app/widgets/gimpviewablebox.c:466
 msgid "Open the font selection dialog"
@@ -16661,22 +16560,19 @@ msgid "CMYK"
 msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:118
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Pick only"
-msgstr "[hanya-baca]"
+msgstr ""
 
 #: ../app/widgets/widgets-enums.c:119
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Set foreground color"
-msgstr "Tentukan Warna Depan"
+msgstr "Atur warna depan"
 
 #: ../app/widgets/widgets-enums.c:120
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Set background color"
-msgstr "Warna Latar Belakang Ditata"
+msgstr "Atur warna latar"
 
 #: ../app/widgets/widgets-enums.c:121
 msgctxt "color-pick-mode"
@@ -16684,16 +16580,14 @@ msgid "Add to palette"
 msgstr "Tambah ke palet"
 
 #: ../app/widgets/widgets-enums.c:178
-#, fuzzy
 msgctxt "histogram-scale"
 msgid "Linear histogram"
-msgstr "Skala linier"
+msgstr "Histogram linier"
 
 #: ../app/widgets/widgets-enums.c:179
-#, fuzzy
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
-msgstr "Skala logaritmik"
+msgstr "Histogram logaritmik"
 
 #: ../app/widgets/widgets-enums.c:215
 msgctxt "tab-style"
@@ -16736,10 +16630,9 @@ msgid "Status & desc"
 msgstr "Status & ket."
 
 #: ../app/widgets/widgets-enums.c:223
-#, fuzzy
 msgctxt "tab-style"
 msgid "Undefined"
-msgstr "Belum didefinisikan"
+msgstr "Tidak ditentukan"
 
 #: ../app/xcf/xcf-load.c:392
 msgid ""
@@ -16761,16 +16654,15 @@ msgid ""
 msgstr ""
 
 #: ../app/xcf/xcf-read.c:174
-#, fuzzy
 msgid "Invalid UTF-8 string in XCF file"
-msgstr "Tidak dapat lakukan seek dalam file XCF: %s"
+msgstr "String UTF-8 yang tidak valid dalam berkas XCF"
 
-#: ../app/xcf/xcf-write.c:128
-#, fuzzy, c-format
+#: ../app/xcf/xcf-write.c:155
+#, c-format
 msgid "Error writing XCF: %s"
-msgstr "Galat saat menulis berkas XCF: %s"
+msgstr "Galat saat menulis XCF: %s"
 
-#: ../app/xcf/xcf-seek.c:61 ../app/xcf/xcf-seek.c:87 ../app/xcf/xcf-seek.c:98
+#: ../app/xcf/xcf-seek.c:61
 #, c-format
 msgid "Could not seek in XCF file: %s"
 msgstr "Tak dapat lakukan seek dalam berkas XCF: %s"

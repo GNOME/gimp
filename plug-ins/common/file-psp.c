@@ -890,6 +890,12 @@ read_creator_block (FILE     *f,
               g_free (string);
               return -1;
             }
+          if (string[length - 1] != '\0')
+            {
+              g_message ("Creator keyword data not nul-terminated");
+              g_free (string);
+              return -1;
+            }
           switch (keyword)
             {
             case PSP_CRTR_FLD_TITLE:
@@ -1770,6 +1776,15 @@ load_image (const gchar  *filename,
                                      &block_total_len)) != -1)
     {
       block_start = ftell (f);
+
+      if (block_start + block_total_len > st.st_size)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Could not open '%s' for reading: %s"),
+                       gimp_filename_to_utf8 (filename),
+                       _("invalid block size"));
+          goto error;
+        }
 
       if (id == PSP_IMAGE_BLOCK)
         {

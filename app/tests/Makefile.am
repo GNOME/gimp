@@ -68,22 +68,22 @@ AM_CPPFLAGS = \
 # We need this due to circular dependencies, see more detailed
 # comments about it in app/Makefile.am
 AM_LDFLAGS = \
-	-u $(SYMPREFIX)xcf_init				\
-	-u $(SYMPREFIX)base_init			\
-	-u $(SYMPREFIX)internal_procs_init		\
-	-u $(SYMPREFIX)gimp_plug_in_manager_restore	\
-	-u $(SYMPREFIX)gimp_pdb_compat_param_spec	\
-	-u $(SYMPREFIX)gui_init				\
-	-u $(SYMPREFIX)plug_in_icc_profile_apply_rgb	\
-	-u $(SYMPREFIX)gimp_image_map_config_get_type	\
-	-u $(SYMPREFIX)gimp_vectors_undo_get_type	\
-	-u $(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-u $(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
-	-u $(SYMPREFIX)actions_init			\
-	-u $(SYMPREFIX)gimp_error_dialog_new		\
-	-u $(SYMPREFIX)menus_save			\
-	-u $(SYMPREFIX)gimp_tools_save			\
-	-u $(SYMPREFIX)gimp_curve_map_pixels
+	-Wl,-u$(SYMPREFIX)xcf_init				\
+	-Wl,-u$(SYMPREFIX)base_init				\
+	-Wl,-u$(SYMPREFIX)internal_procs_init			\
+	-Wl,-u$(SYMPREFIX)gimp_plug_in_manager_restore		\
+	-Wl,-u$(SYMPREFIX)gimp_pdb_compat_param_spec		\
+	-Wl,-u$(SYMPREFIX)gui_init				\
+	-Wl,-u$(SYMPREFIX)plug_in_icc_profile_apply_rgb		\
+	-Wl,-u$(SYMPREFIX)gimp_image_map_config_get_type	\
+	-Wl,-u$(SYMPREFIX)gimp_vectors_undo_get_type		\
+	-Wl,-u$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
+	-Wl,-u$(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
+	-Wl,-u$(SYMPREFIX)actions_init				\
+	-Wl,-u$(SYMPREFIX)gimp_error_dialog_new			\
+	-Wl,-u$(SYMPREFIX)menus_save				\
+	-Wl,-u$(SYMPREFIX)gimp_tools_save			\
+	-Wl,-u$(SYMPREFIX)gimp_curve_map_pixels
 
 # Note that we have some duplicate entries here too to work around
 # circular dependencies and systems on the same architectural layer as

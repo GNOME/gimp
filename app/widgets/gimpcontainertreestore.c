@@ -300,13 +300,25 @@ gimp_container_tree_store_remove_item (GimpContainerTreeStore *store,
 {
   if (iter)
     {
+      GtkTreeModel *model = GTK_TREE_MODEL (store);
+      GtkTreePath  *path;
+
+      /* emit a "row-changed" signal for 'iter', so that editing of
+       * corresponding tree-view rows is canceled.  otherwise, if we remove the
+       * item while a corresponding row is being edited, bad things happen (see
+       * bug #792991).
+       */
+      path = gtk_tree_model_get_path (model, iter);
+      gtk_tree_model_row_changed (model, path, iter);
+      gtk_tree_path_free (path);
+
       gtk_tree_store_remove (GTK_TREE_STORE (store), iter);
 
       /*  If the store is empty after this remove, clear out renderers
        *  from all cells so they don't keep refing the viewables
        *  (see bug #149906).
        */
-      if (! gtk_tree_model_iter_n_children (GTK_TREE_MODEL (store), NULL))
+      if (! gtk_tree_model_iter_n_children (model, NULL))
         {
           GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
           GList                         *list;

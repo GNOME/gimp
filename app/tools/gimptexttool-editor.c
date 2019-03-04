@@ -103,6 +103,9 @@ static void   gimp_text_tool_im_preedit_end     (GtkIMContext    *context,
 static void   gimp_text_tool_im_preedit_changed (GtkIMContext    *context,
                                                  GimpTextTool    *text_tool);
 
+static void     gimp_text_tool_editor_copy_selection_to_clipboard
+                                                  (GimpTextTool    *text_tool);
+
 
 /*  public functions  */
 
@@ -323,19 +326,7 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
 void
 gimp_text_tool_editor_button_release (GimpTextTool *text_tool)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
-
-  if (gtk_text_buffer_get_has_selection (buffer))
-    {
-      GimpTool         *tool  = GIMP_TOOL (text_tool);
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-      GtkClipboard     *clipboard;
-
-      clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
-                                            GDK_SELECTION_PRIMARY);
-
-      gtk_text_buffer_copy_clipboard (buffer, clipboard);
-    }
+  gimp_text_tool_editor_copy_selection_to_clipboard (text_tool);
 }
 
 void
@@ -930,6 +921,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
   gimp_text_tool_reset_im_context (text_tool);
 
   gtk_text_buffer_select_range (buffer, &cursor, sel_start);
+  gimp_text_tool_editor_copy_selection_to_clipboard (text_tool);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
@@ -1410,4 +1402,23 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
   if (text_tool->preedit_label)
     gtk_label_set_text (GTK_LABEL (text_tool->preedit_label),
                         text_tool->preedit_string);
+}
+
+static void
+gimp_text_tool_editor_copy_selection_to_clipboard (GimpTextTool *text_tool)
+{
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+
+  if (! text_tool->editor_dialog &&
+      gtk_text_buffer_get_has_selection (buffer))
+    {
+      GimpTool         *tool  = GIMP_TOOL (text_tool);
+      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+      GtkClipboard     *clipboard;
+
+      clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
+                                            GDK_SELECTION_PRIMARY);
+
+      gtk_text_buffer_copy_clipboard (buffer, clipboard);
+    }
 }

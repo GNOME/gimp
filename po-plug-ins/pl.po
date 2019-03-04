@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 13:29+0200\n"
-"PO-Revision-Date: 2017-04-04 13:30+0200\n"
+"POT-Creation-Date: 2017-12-20 17:42+0100\n"
+"PO-Revision-Date: 2017-12-20 17:44+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -614,7 +614,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
 #: ../plug-ins/common/file-png.c:898 ../plug-ins/common/file-pnm.c:585
 #: ../plug-ins/common/file-raw.c:780 ../plug-ins/common/file-sunras.c:979
-#: ../plug-ins/common/file-tga.c:1095 ../plug-ins/common/file-tiff-load.c:1011
+#: ../plug-ins/common/file-tga.c:1100 ../plug-ins/common/file-tiff-load.c:1011
 #: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:700 ../plug-ins/file-faxg3/faxg3.c:474
@@ -1027,12 +1027,12 @@ msgstr "Wczytanie ustawień miksera kanałów"
 #: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
 #: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
 #: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
-#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:728
-#: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
-#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
-#: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
-#: ../plug-ins/common/file-xmc.c:842 ../plug-ins/common/file-xwd.c:437
-#: ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/common/file-psp.c:1777 ../plug-ins/common/file-raw.c:257
+#: ../plug-ins/common/file-raw.c:728 ../plug-ins/common/file-sunras.c:393
+#: ../plug-ins/common/file-svg.c:333 ../plug-ins/common/file-svg.c:713
+#: ../plug-ins/common/file-tga.c:443 ../plug-ins/common/file-xbm.c:738
+#: ../plug-ins/common/file-xmc.c:657 ../plug-ins/common/file-xmc.c:842
+#: ../plug-ins/common/file-xwd.c:437 ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:206 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:461
 #: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:672
@@ -1057,7 +1057,7 @@ msgstr "Zapis ustawień miksera kanałów"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:409
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
 #: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -1066,9 +1066,9 @@ msgstr "Zapis ustawień miksera kanałów"
 #: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1370
 #: ../plug-ins/common/file-pnm.c:1012 ../plug-ins/common/file-ps.c:1195
 #: ../plug-ins/common/file-raw.c:623 ../plug-ins/common/file-raw.c:651
-#: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1202
+#: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1207
 #: ../plug-ins/common/file-tiff-save.c:842 ../plug-ins/common/file-xbm.c:1037
-#: ../plug-ins/common/file-xmc.c:1449 ../plug-ins/common/file-xwd.c:637
+#: ../plug-ins/common/file-xmc.c:1456 ../plug-ins/common/file-xwd.c:637
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:311 ../plug-ins/file-fits/fits.c:478
 #: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1020
@@ -1105,7 +1105,7 @@ msgstr "Dodawanie szachownicy"
 msgid "Checkerboard"
 msgstr "Szachownica"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1156
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1163
 #: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Rozmiar:"
@@ -3120,8 +3120,8 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
 #: ../plug-ins/common/file-png.c:1377 ../plug-ins/common/file-pnm.c:1017
 #: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
-#: ../plug-ins/common/file-tga.c:1207 ../plug-ins/common/file-tiff-save.c:713
-#: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
+#: ../plug-ins/common/file-tga.c:1212 ../plug-ins/common/file-tiff-save.c:713
+#: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1461
 #: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
 #: ../plug-ins/file-bmp/bmp-write.c:322 ../plug-ins/file-fits/fits.c:483
 #: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1014
@@ -3135,49 +3135,49 @@ msgstr "Zapisywanie „%s”"
 msgid "C source code"
 msgstr "Kod źródłowy języka C"
 
-#: ../plug-ins/common/file-csource.c:701
+#: ../plug-ins/common/file-csource.c:705
 msgid "C-Source"
 msgstr "Kod źródłowy języka C"
 
-#: ../plug-ins/common/file-csource.c:719
+#: ../plug-ins/common/file-csource.c:723
 msgid "_Prefixed name:"
 msgstr "_Przedrostek nazw:"
 
-#: ../plug-ins/common/file-csource.c:728
+#: ../plug-ins/common/file-csource.c:732
 msgid "Co_mment:"
 msgstr "Kom_entarz:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:735
+#: ../plug-ins/common/file-csource.c:739
 msgid "_Save comment to file"
 msgstr "Zapisanie ko_mentarza w pliku"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:747
+#: ../plug-ins/common/file-csource.c:751
 msgid "_Use GLib types (guint8*)"
 msgstr "Użycie typów z _biblioteki GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:760
+#: ../plug-ins/common/file-csource.c:764
 msgid "Us_e macros instead of struct"
 msgstr "_Makra zamiast struktur"
 
-#: ../plug-ins/common/file-csource.c:773
+#: ../plug-ins/common/file-csource.c:777
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "_1-bajtowe kodowanie RLE (Run-Length-Encoding)"
 
-#: ../plug-ins/common/file-csource.c:786
+#: ../plug-ins/common/file-csource.c:790
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Zapisanie ka_nału alfa (RGBA/RGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:798
+#: ../plug-ins/common/file-csource.c:802
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Zapisanie jako _RGB565 (16-bitowy)"
 
-#: ../plug-ins/common/file-csource.c:821
+#: ../plug-ins/common/file-csource.c:825
 msgid "Op_acity:"
 msgstr "_Krycie:"
 
@@ -3942,51 +3942,51 @@ msgstr ""
 "Proszę się upewnić, że podano prawidłową nazwę pliku i zaznaczone położenie "
 "nie jest tylko do odczytu."
 
-#: ../plug-ins/common/file-pdf-save.c:803
-#: ../plug-ins/common/file-pdf-save.c:920
+#: ../plug-ins/common/file-pdf-save.c:808
+#: ../plug-ins/common/file-pdf-save.c:925
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Pominięcie ukrytych warstw i warstw o zerowym kryciu"
 
-#: ../plug-ins/common/file-pdf-save.c:807
-#: ../plug-ins/common/file-pdf-save.c:924
+#: ../plug-ins/common/file-pdf-save.c:812
+#: ../plug-ins/common/file-pdf-save.c:929
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Konwersja bitmap do grafik wektorowych, jeśli to możliwe"
 
-#: ../plug-ins/common/file-pdf-save.c:811
-#: ../plug-ins/common/file-pdf-save.c:928
+#: ../plug-ins/common/file-pdf-save.c:816
+#: ../plug-ins/common/file-pdf-save.c:933
 msgid "Apply layer masks before saving"
 msgstr "Zastosowanie masek warstw przed zapisaniem"
 
-#: ../plug-ins/common/file-pdf-save.c:814
-#: ../plug-ins/common/file-pdf-save.c:931
+#: ../plug-ins/common/file-pdf-save.c:819
+#: ../plug-ins/common/file-pdf-save.c:936
 msgid "Keeping the masks will not change the output"
 msgstr "Utrzymanie masek nie zmieni pliku wyjściowego"
 
-#: ../plug-ins/common/file-pdf-save.c:867
+#: ../plug-ins/common/file-pdf-save.c:872
 msgid "Save to:"
 msgstr "Zapisywanie do:"
 
-#: ../plug-ins/common/file-pdf-save.c:871
+#: ../plug-ins/common/file-pdf-save.c:876
 msgid "Browse..."
 msgstr "Przeglądaj…"
 
-#: ../plug-ins/common/file-pdf-save.c:872
+#: ../plug-ins/common/file-pdf-save.c:877
 msgid "Multipage PDF export"
 msgstr "Eksport wielostronicowych plików PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:905
+#: ../plug-ins/common/file-pdf-save.c:910
 msgid "Remove the selected pages"
 msgstr "Usunięcie zaznaczonych stron"
 
-#: ../plug-ins/common/file-pdf-save.c:915
+#: ../plug-ins/common/file-pdf-save.c:920
 msgid "Add this image"
 msgstr "Dodanie tego obrazu"
 
-#: ../plug-ins/common/file-pdf-save.c:1028
+#: ../plug-ins/common/file-pdf-save.c:1033
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Błąd. Aby zapisać plik, należy dodać co najmniej jeden obraz."
 
-#: ../plug-ins/common/file-pdf-save.c:1351
+#: ../plug-ins/common/file-pdf-save.c:1356
 #: ../plug-ins/print/print-draw-page.c:228
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Nie można obsłużyć rozmiaru (szerokości lub wysokości) obrazu."
@@ -4348,6 +4348,10 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
+#: ../plug-ins/common/file-psp.c:1779
+msgid "invalid block size"
+msgstr "nieprawidłowy rozmiar bloku"
+
 #: ../plug-ins/common/file-raw.c:187 ../plug-ins/common/file-raw.c:202
 msgid "Raw image data"
 msgstr "Dane obrazu Raw"
@@ -4619,24 +4623,24 @@ msgstr "Nie można odczytać rozszerzenia z pliku „%s”"
 msgid "Cannot read header from '%s'"
 msgstr "Nie można odczytać nagłówka z pliku „%s”"
 
-#: ../plug-ins/common/file-tga.c:1403
+#: ../plug-ins/common/file-tga.c:1408
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1412
+#: ../plug-ins/common/file-tga.c:1417
 msgid "_RLE compression"
 msgstr "Kompresja _RLE"
 
-#: ../plug-ins/common/file-tga.c:1426
+#: ../plug-ins/common/file-tga.c:1431
 msgid "Or_igin:"
 msgstr "_Oryginał:"
 
-#: ../plug-ins/common/file-tga.c:1430
+#: ../plug-ins/common/file-tga.c:1435
 msgid "Bottom left"
 msgstr "Dolny lewy"
 
-#: ../plug-ins/common/file-tga.c:1431
+#: ../plug-ins/common/file-tga.c:1436
 msgid "Top left"
 msgstr "Górny lewy"
 
@@ -4833,7 +4837,7 @@ msgstr "Przedrostek _identyfikatora:"
 msgid "_Write hot spot values"
 msgstr "_Zapisywanie wartości gorącego punktu"
 
-#: ../plug-ins/common/file-xbm.c:1267 ../plug-ins/common/file-xmc.c:1083
+#: ../plug-ins/common/file-xbm.c:1267 ../plug-ins/common/file-xmc.c:1090
 msgid "Hot spot _X:"
 msgstr "_Poziomy gorący punkt:"
 
@@ -4855,7 +4859,7 @@ msgid "_Mask file extension:"
 msgstr "Rozszerzenie pliku _maski:"
 
 #: ../plug-ins/common/file-xmc.c:331 ../plug-ins/common/file-xmc.c:369
-#: ../plug-ins/common/file-xmc.c:1046
+#: ../plug-ins/common/file-xmc.c:1053
 msgid "X11 Mouse Cursor"
 msgstr "Kursor myszy systemu X11"
 
@@ -4883,22 +4887,22 @@ msgstr "Klatka %d z „%s” jest za szeroka dla kursora X."
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Klatka %d z „%s” jest za wysoka dla kursora X."
 
-#: ../plug-ins/common/file-xmc.c:890
+#: ../plug-ins/common/file-xmc.c:897
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "brak fragmentu obrazu w „%s”."
 
-#: ../plug-ins/common/file-xmc.c:932
+#: ../plug-ins/common/file-xmc.c:939
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "„%s” jest za szerokie dla kursora X."
 
-#: ../plug-ins/common/file-xmc.c:939
+#: ../plug-ins/common/file-xmc.c:946
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "„%s” jest za wysokie dla kursora X."
 
-#: ../plug-ins/common/file-xmc.c:1009
+#: ../plug-ins/common/file-xmc.c:1016
 #, c-format
 msgid "A read error occurred."
 msgstr "Wystąpił błąd odczytu."
@@ -4906,27 +4910,27 @@ msgstr "Wystąpił błąd odczytu."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1051
+#: ../plug-ins/common/file-xmc.c:1058
 msgid "XMC Options"
 msgstr "Opcje XMC"
 
-#: ../plug-ins/common/file-xmc.c:1079
+#: ../plug-ins/common/file-xmc.c:1086
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Proszę podać współrzędną X gorącego punktu. Punktem odniesienia jest górny "
 "lewy róg."
 
-#: ../plug-ins/common/file-xmc.c:1097
+#: ../plug-ins/common/file-xmc.c:1104
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Proszę podać współrzędną Y gorącego punktu. Punktem odniesienia jest górny "
 "lewy róg."
 
-#: ../plug-ins/common/file-xmc.c:1108
+#: ../plug-ins/common/file-xmc.c:1115
 msgid "_Auto-Crop all frames."
 msgstr "_Automatyczne przycinanie wszystkich klatek."
 
-#: ../plug-ins/common/file-xmc.c:1121
+#: ../plug-ins/common/file-xmc.c:1128
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4939,7 +4943,7 @@ msgstr ""
 "Należy odznaczyć, jeśli planowane jest modyfikowanie wyeksportowanego "
 "kursora za pomocą innych programów."
 
-#: ../plug-ins/common/file-xmc.c:1144
+#: ../plug-ins/common/file-xmc.c:1151
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4958,56 +4962,56 @@ msgstr ""
 "animacji, oraz która sekwencja jest używana na podstawie wartości „gtk-"
 "cursor-theme-size”."
 
-#: ../plug-ins/common/file-xmc.c:1161
+#: ../plug-ins/common/file-xmc.c:1168
 msgid "_Use this value only for a frame which size is not specified."
 msgstr "_Użycie tej wartości tylko dla klatek bez podanego rozmiaru."
 
-#: ../plug-ins/common/file-xmc.c:1164
+#: ../plug-ins/common/file-xmc.c:1171
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "_Zastąpienie rozmiaru wszystkich klatek, nawet jeśli go podano."
 
-#: ../plug-ins/common/file-xmc.c:1198
+#: ../plug-ins/common/file-xmc.c:1205
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Proszę wprowadzić czas renderowania każdej klatki w milisekundach."
 
-#: ../plug-ins/common/file-xmc.c:1201
+#: ../plug-ins/common/file-xmc.c:1208
 msgid "_Delay:"
 msgstr "_Opóźnienie:"
 
-#: ../plug-ins/common/file-xmc.c:1206
+#: ../plug-ins/common/file-xmc.c:1213
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr "_Użycie tej wartości tylko dla klatek bez podanego opóźnienia."
 
-#: ../plug-ins/common/file-xmc.c:1209
+#: ../plug-ins/common/file-xmc.c:1216
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "_Zastąpienie opóźnienia wszystkich klatek, nawet jeśli go podano."
 
-#: ../plug-ins/common/file-xmc.c:1234
+#: ../plug-ins/common/file-xmc.c:1241
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "Część informacji o prawach autorskich przekraczającą 65535 znaków została "
 "usunięta."
 
-#: ../plug-ins/common/file-xmc.c:1244
+#: ../plug-ins/common/file-xmc.c:1251
 msgid "Enter copyright information."
 msgstr "Proszę wprowadzić informacje o prawach autorskich."
 
-#: ../plug-ins/common/file-xmc.c:1246
+#: ../plug-ins/common/file-xmc.c:1253
 msgid "_Copyright:"
 msgstr "_Prawa autorskie:"
 
-#: ../plug-ins/common/file-xmc.c:1262
+#: ../plug-ins/common/file-xmc.c:1269
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "Część informacji o licencji przekraczającą 65535 znaków została usunięta."
 
-#: ../plug-ins/common/file-xmc.c:1272
+#: ../plug-ins/common/file-xmc.c:1279
 msgid "Enter license information."
 msgstr "Proszę wprowadzić informacje o licencji."
 
-#: ../plug-ins/common/file-xmc.c:1274
+#: ../plug-ins/common/file-xmc.c:1281
 msgid "_License:"
 msgstr "_Licencja:"
 
@@ -5016,44 +5020,44 @@ msgstr "_Licencja:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1281
+#: ../plug-ins/common/file-xmc.c:1288
 msgid "_Other:"
 msgstr "_Inne:"
 
-#: ../plug-ins/common/file-xmc.c:1315
+#: ../plug-ins/common/file-xmc.c:1322
 msgid "Enter other comment if you want."
 msgstr "Proszę wprowadzić inne komentarze, jeśli są potrzebne."
 
-#: ../plug-ins/common/file-xmc.c:1365
+#: ../plug-ins/common/file-xmc.c:1372
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "Komentarz jest ograniczony do %d znaków."
 
-#: ../plug-ins/common/file-xmc.c:1483
+#: ../plug-ins/common/file-xmc.c:1490
 #, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
 "Ta wtyczka obsługuje tylko pliki obrazów RGBA o 8-bitowej głębi kolorów."
 
-#: ../plug-ins/common/file-xmc.c:1501
+#: ../plug-ins/common/file-xmc.c:1508
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "Klatka „%s” jest za szeroka. Proszę ją zmniejszyć nie więcej niż o %d "
 "pikseli."
 
-#: ../plug-ins/common/file-xmc.c:1508
+#: ../plug-ins/common/file-xmc.c:1515
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "Klatka „%s” jest za wysoka. Proszę ją zmniejszyć nie więcej niż o %d pikseli."
 
-#: ../plug-ins/common/file-xmc.c:1515
+#: ../plug-ins/common/file-xmc.c:1522
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Szerokość lub wysokość klatki „%s” wynosi zero."
 
-#: ../plug-ins/common/file-xmc.c:1555
+#: ../plug-ins/common/file-xmc.c:1562
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
@@ -5065,7 +5069,7 @@ msgstr ""
 "Proszę spróbować zmienić położenie gorącego punktu, geometrię warstw lub "
 "zapisać bez automatycznego przycinania."
 
-#: ../plug-ins/common/file-xmc.c:1712
+#: ../plug-ins/common/file-xmc.c:1719
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
@@ -5076,7 +5080,7 @@ msgstr ""
 "o szerokości lub wysokości większej niż %i pikseli.\n"
 "Spowoduje to zaśmiecenie ekranu w niektórych środowiskach."
 
-#: ../plug-ins/common/file-xmc.c:1719
+#: ../plug-ins/common/file-xmc.c:1726
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
@@ -5089,7 +5093,7 @@ msgstr ""
 "klatek…” w oknie zapisywania. W innym przypadku kursor nie pojawi się "
 "w ustawieniach środowiska GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1956
+#: ../plug-ins/common/file-xmc.c:1963
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -5099,7 +5103,7 @@ msgstr ""
 "Zostały skrócone, aby pasowały."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2159
+#: ../plug-ins/common/file-xmc.c:2166
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "

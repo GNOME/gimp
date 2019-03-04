@@ -413,6 +413,13 @@ load_image (const gchar  *filename,
       /* And we need to rewind the handle, 4 due spacing and 4 due magic */
       lseek (fd, -8, SEEK_CUR);
       bh.header_size += 8;
+      if (bh.header_size < sizeof (BrushHeader))
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Unsupported brush format"));
+          close (fd);
+          return -1;
+        }
       break;
 
     case 3: /*  cinepaint brush  */
@@ -453,7 +460,7 @@ load_image (const gchar  *filename,
           return -1;
         }
 
-      name = gimp_any_to_utf8 (temp, -1,
+      name = gimp_any_to_utf8 (temp, size - 1,
                                _("Invalid UTF-8 string in brush file '%s'."),
                                gimp_filename_to_utf8 (filename));
       g_free (temp);

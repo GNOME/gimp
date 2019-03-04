@@ -1,19 +1,19 @@
 # Swedish messages for the GIMP.
-# Copyright © 1999-2015 Free Software Foundation, Inc.
+# Copyright © 1999-2018 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2010, 2011, 2012.
 # Påvel Nicklasson <pavel@frimix.se>, 2014
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-09-15 07:19+0000\n"
-"PO-Revision-Date: 2016-09-19 11:52+0200\n"
+"POT-Creation-Date: 2018-01-08 14:12+0000\n"
+"PO-Revision-Date: 2018-01-08 21:57+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -440,7 +440,7 @@ msgid "Text Editor"
 msgstr "Textredigerare"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:441
+#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:464
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
@@ -3898,11 +3898,11 @@ msgstr "Zooma _ut"
 msgid "Zoom _All"
 msgstr "_Zooma allt"
 
-#: ../app/actions/palette-editor-commands.c:68
+#: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
 msgstr "Redigera palettfärg"
 
-#: ../app/actions/palette-editor-commands.c:70
+#: ../app/actions/palette-editor-commands.c:71
 msgid "Edit Color Palette Entry"
 msgstr "Redigera färgpalettpost"
 
@@ -4601,7 +4601,7 @@ msgstr "Öppna textfil (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:450
 #: ../app/core/gimpbrushgenerated-load.c:73 ../app/core/gimpbrushpipe-load.c:81
 #: ../app/core/gimpcurve-load.c:54 ../app/core/gimpgradient-load.c:63
 #: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
@@ -7486,27 +7486,32 @@ msgstr "Ödesdigert tolkningsfel i penselfilen \"%s\": Okänt djup %d."
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Ödesdigert tolkningsfel i penselfilen \"%s\": Okänd version %d."
 
-#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:410
-#: ../app/core/gimpbrush-load.c:626 ../app/core/gimpbrush-load.c:700
-#: ../app/core/gimpbrush-load.c:763 ../app/core/gimpbrush-load.c:779
-#: ../app/core/gimpbrush-load.c:822
+#: ../app/core/gimpbrush-load.c:266
+#, c-format
+msgid "Unsupported brush format"
+msgstr "Penselformat stöds inte"
+
+#: ../app/core/gimpbrush-load.c:280 ../app/core/gimpbrush-load.c:417
+#: ../app/core/gimpbrush-load.c:633 ../app/core/gimpbrush-load.c:707
+#: ../app/core/gimpbrush-load.c:770 ../app/core/gimpbrush-load.c:786
+#: ../app/core/gimpbrush-load.c:829
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Ödesdigert tolkningsfel i penselfilen \"%s\": Filen verkar avhuggen."
 
-#: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:288 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 
-#: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:295 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Namnlös"
 
-#: ../app/core/gimpbrush-load.c:354
+#: ../app/core/gimpbrush-load.c:361
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7519,7 +7524,7 @@ msgstr ""
 "Detta kan vara en föråldrad GIMP-penselfil, försök läsa in den som bild och "
 "spara den igen."
 
-#: ../app/core/gimpbrush-load.c:399
+#: ../app/core/gimpbrush-load.c:406
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7528,7 +7533,7 @@ msgstr ""
 "Ödesdigert tolkningsfel i penselfilen \"%s\": Penseldjupet %d stöds inte.\n"
 "GIMP-penslar måste vara GRÅ eller RGBA."
 
-#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:909
+#: ../app/core/gimpbrush-load.c:478 ../app/core/gimpbrush-load.c:916
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7536,7 +7541,7 @@ msgstr ""
 "Ödesdigert tolkningsfel i penselfilen \"%s\": kunde inte avkoda abr-format "
 "version %d."
 
-#: ../app/core/gimpbrush-load.c:647
+#: ../app/core/gimpbrush-load.c:654
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -8225,34 +8230,38 @@ msgstr "Platta ut bilden"
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Kan inte platta ut en bild utan synliga lager."
 
-#: ../app/core/gimpimage-merge.c:260
+#: ../app/core/gimpimage-merge.c:242
+msgid "Cannot merge down a floating selection."
+msgstr "Kan inte sammanfoga en flytande markering nedåt."
+
+#: ../app/core/gimpimage-merge.c:267
 msgid "Cannot merge down to a layer group."
 msgstr "Kan inte sammanfoga nedåt till en lagergrupp."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:274
 msgid "The layer to merge down to is locked."
 msgstr "Lagret för att sammanfoga nedåt är låst."
 
-#: ../app/core/gimpimage-merge.c:279
+#: ../app/core/gimpimage-merge.c:286
 msgid "There is no visible layer to merge down to."
 msgstr "Det finns inget synligt lager att sammanfoga neråt till."
 
-#: ../app/core/gimpimage-merge.c:289
+#: ../app/core/gimpimage-merge.c:296
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Sammanfoga nedåt"
 
-#: ../app/core/gimpimage-merge.c:317
+#: ../app/core/gimpimage-merge.c:324
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Sammanfoga lagergrupp"
 
-#: ../app/core/gimpimage-merge.c:370
+#: ../app/core/gimpimage-merge.c:377
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Sammanfoga synliga banor"
 
-#: ../app/core/gimpimage-merge.c:406
+#: ../app/core/gimpimage-merge.c:413
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Det finns inte tillräckligt många synliga banor för att sammanfoga. Det "
@@ -8970,7 +8979,7 @@ msgstr ""
 "Är du säker att du vill ta bort \"%s\" från listan och ta bort den från "
 "disken?"
 
-#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:162
+#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:174
 #: ../app/gui/gui-message.c:149
 msgid "GIMP Message"
 msgstr "GIMP-meddelande"
@@ -10636,23 +10645,23 @@ msgstr "N"
 msgid "_Sample Merged"
 msgstr "Sa_mpla sammanfogade"
 
-#: ../app/display/gimpdisplayshell.c:508
+#: ../app/display/gimpdisplayshell.c:519
 msgid "Access the image menu"
 msgstr "Kom åt bildmenyn"
 
-#: ../app/display/gimpdisplayshell.c:622
+#: ../app/display/gimpdisplayshell.c:633
 msgid "Zoom image when window size changes"
 msgstr "Zooma bild när fönsterstorlek ändras"
 
-#: ../app/display/gimpdisplayshell.c:651
+#: ../app/display/gimpdisplayshell.c:662
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:685
 msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
-#: ../app/display/gimpdisplayshell.c:746 ../app/display/gimpdisplayshell.c:1331
+#: ../app/display/gimpdisplayshell.c:757 ../app/display/gimpdisplayshell.c:1342
 #: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
@@ -10907,12 +10916,12 @@ msgstr "Fyll burens ursprungliga läge med en vanlig färg"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:207
+#: ../app/gui/gui.c:219
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. initialize the document history
-#: ../app/gui/gui.c:438
+#: ../app/gui/gui.c:461
 msgid "Documents"
 msgstr "Dokument"
 
@@ -11727,7 +11736,7 @@ msgstr ""
 "Vissa textegenskaper kan vara felaktiga. Om du inte vill redigera textlagret "
 "behöver du inte oroa dig för detta."
 
-#: ../app/text/gimptextlayout.c:577
+#: ../app/text/gimptextlayout.c:578
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -11928,7 +11937,7 @@ msgstr "Toning fungerar inte på indexerade lager."
 msgid "No gradient available for use with this tool."
 msgstr "Ingen gradient tillgänglig för detta verktyg."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:625
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
@@ -13192,7 +13201,7 @@ msgstr "Klicka och dra för att flytta alla punkter"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:633
+#: ../app/tools/gimppainttool.c:634
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -13363,7 +13372,7 @@ msgstr "%s för att välja en färg"
 msgid "Cannot paint on layer groups."
 msgstr "Kan inte måla på lagergrupper."
 
-#: ../app/tools/gimppainttool.c:679
+#: ../app/tools/gimppainttool.c:680
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s för en rak linje"
@@ -13853,7 +13862,7 @@ msgstr ""
 "\n"
 "Du kan redigera lagret eller skapa ett nytt textlager från dess textattribut."
 
-#: ../app/tools/gimptexttool-editor.c:1236
+#: ../app/tools/gimptexttool-editor.c:1228
 msgid "GIMP Text Editor"
 msgstr "GIMP-textredigerare"
 
@@ -16086,6 +16095,11 @@ msgstr "Bildredigerare"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Skapa bilder och redigera fotografier"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: ../desktop/gimp.desktop.in.in.h:5
+msgid "GIMP;graphic;design;illustration;painting;"
+msgstr "GIMP;grafik;design;illustrera;målning;rita;"
 
 #~ msgid "Move Layer"
 #~ msgstr "Flytta lager"

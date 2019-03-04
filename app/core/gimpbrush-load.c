@@ -161,7 +161,7 @@ gimp_brush_load_brush (GimpContext  *context,
                        GError      **error)
 {
   GimpBrush   *brush;
-  gint         bn_size;
+  gsize        bn_size;
   BrushHeader  header;
   gchar       *name = NULL;
   guchar      *pixmap;
@@ -260,6 +260,13 @@ gimp_brush_load_brush (GimpContext  *context,
       return NULL;
     }
 
+  if (header.header_size < sizeof (BrushHeader))
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Unsupported brush format"));
+      return NULL;
+    }
+
   /*  Read in the brush name  */
   if ((bn_size = (header.header_size - sizeof (header))))
     {
@@ -277,7 +284,7 @@ gimp_brush_load_brush (GimpContext  *context,
           return NULL;
         }
 
-      utf8 = gimp_any_to_utf8 (name, -1,
+      utf8 = gimp_any_to_utf8 (name, bn_size - 1,
                                _("Invalid UTF-8 string in brush file '%s'."),
                                gimp_filename_to_utf8 (filename));
       g_free (name);

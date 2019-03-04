@@ -19,7 +19,7 @@
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
-		<string></string>
+		<string>%GIMP_MAJOR_VERSION%.%GIMP_MINOR_VERSION%.%GIMP_MICRO_VERSION%</string>
 		<key>CFBundleSignature</key>
 		<string>gimp</string>
 		<key>CFBundleVersion</key>

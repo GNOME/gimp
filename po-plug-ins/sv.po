@@ -10,10 +10,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-02-14 23:50+0000\n"
-"PO-Revision-Date: 2017-02-18 01:12+0100\n"
+"POT-Creation-Date: 2017-12-20 15:53+0000\n"
+"PO-Revision-Date: 2017-12-21 12:25+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:120
 msgid "Original"
@@ -614,7 +614,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
 #: ../plug-ins/common/file-png.c:898 ../plug-ins/common/file-pnm.c:585
 #: ../plug-ins/common/file-raw.c:780 ../plug-ins/common/file-sunras.c:979
-#: ../plug-ins/common/file-tga.c:1095 ../plug-ins/common/file-tiff-load.c:1011
+#: ../plug-ins/common/file-tga.c:1100 ../plug-ins/common/file-tiff-load.c:1011
 #: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
 #: ../plug-ins/file-bmp/bmp-read.c:700 ../plug-ins/file-faxg3/faxg3.c:474
@@ -1028,12 +1028,12 @@ msgstr "Läs in kanalblandarinställningar"
 #: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
 #: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
 #: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
-#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:728
-#: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
-#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
-#: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
-#: ../plug-ins/common/file-xmc.c:842 ../plug-ins/common/file-xwd.c:437
-#: ../plug-ins/common/sphere-designer.c:2010
+#: ../plug-ins/common/file-psp.c:1777 ../plug-ins/common/file-raw.c:257
+#: ../plug-ins/common/file-raw.c:728 ../plug-ins/common/file-sunras.c:393
+#: ../plug-ins/common/file-svg.c:333 ../plug-ins/common/file-svg.c:713
+#: ../plug-ins/common/file-tga.c:443 ../plug-ins/common/file-xbm.c:738
+#: ../plug-ins/common/file-xmc.c:657 ../plug-ins/common/file-xmc.c:842
+#: ../plug-ins/common/file-xwd.c:437 ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:206 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:461
 #: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:672
@@ -1058,7 +1058,7 @@ msgstr "Spara kanalblandarinställningar"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:409
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
 #: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -1067,9 +1067,9 @@ msgstr "Spara kanalblandarinställningar"
 #: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1370
 #: ../plug-ins/common/file-pnm.c:1012 ../plug-ins/common/file-ps.c:1195
 #: ../plug-ins/common/file-raw.c:623 ../plug-ins/common/file-raw.c:651
-#: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1202
+#: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1207
 #: ../plug-ins/common/file-tiff-save.c:842 ../plug-ins/common/file-xbm.c:1037
-#: ../plug-ins/common/file-xmc.c:1449 ../plug-ins/common/file-xwd.c:637
+#: ../plug-ins/common/file-xmc.c:1456 ../plug-ins/common/file-xwd.c:637
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:311 ../plug-ins/file-fits/fits.c:478
 #: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1020
@@ -1106,7 +1106,7 @@ msgstr "Lägger till schackrutor"
 msgid "Checkerboard"
 msgstr "Schackrutor"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1156
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1163
 #: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Storlek:"
@@ -3119,8 +3119,8 @@ msgstr "\"%s\": EOF eller fel vid läsning av palettdata"
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
 #: ../plug-ins/common/file-png.c:1377 ../plug-ins/common/file-pnm.c:1017
 #: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
-#: ../plug-ins/common/file-tga.c:1207 ../plug-ins/common/file-tiff-save.c:713
-#: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
+#: ../plug-ins/common/file-tga.c:1212 ../plug-ins/common/file-tiff-save.c:713
+#: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1461
 #: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
 #: ../plug-ins/file-bmp/bmp-write.c:322 ../plug-ins/file-fits/fits.c:483
 #: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1014
@@ -3134,50 +3134,50 @@ msgstr "Sparar \"%s\""
 msgid "C source code"
 msgstr "C källkod"
 
-#: ../plug-ins/common/file-csource.c:701
+#: ../plug-ins/common/file-csource.c:705
 msgid "C-Source"
 msgstr "C-källkod"
 
-#: ../plug-ins/common/file-csource.c:719
+#: ../plug-ins/common/file-csource.c:723
 msgid "_Prefixed name:"
 msgstr "_Prefixnamn:"
 
 # src/header_stuff.c:462
-#: ../plug-ins/common/file-csource.c:728
+#: ../plug-ins/common/file-csource.c:732
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:735
+#: ../plug-ins/common/file-csource.c:739
 msgid "_Save comment to file"
 msgstr "_Spara kommentar till fil"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:747
+#: ../plug-ins/common/file-csource.c:751
 msgid "_Use GLib types (guint8*)"
 msgstr "_Använd GLib-typer (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:760
+#: ../plug-ins/common/file-csource.c:764
 msgid "Us_e macros instead of struct"
 msgstr "An_vänd makron istället för structar"
 
-#: ../plug-ins/common/file-csource.c:773
+#: ../plug-ins/common/file-csource.c:777
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Använd _1-bytes Run-Length-kodning"
 
-#: ../plug-ins/common/file-csource.c:786
+#: ../plug-ins/common/file-csource.c:790
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Spa_ra alfakanal (RGBARGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:798
+#: ../plug-ins/common/file-csource.c:802
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Spara som _RGB565 (16-bitars)"
 
-#: ../plug-ins/common/file-csource.c:821
+#: ../plug-ins/common/file-csource.c:825
 msgid "Op_acity:"
 msgstr "Op_acitet:"
 
@@ -3412,7 +3412,7 @@ msgstr "Kunde inte läsa in en pensel i röret; ger upp."
 
 #: ../plug-ins/common/file-gih.c:859
 msgid "Brush Pipe"
-msgstr "Penselpipa"
+msgstr "Penselrör"
 
 #: ../plug-ins/common/file-gih.c:876
 msgid "Spacing (percent):"
@@ -3936,51 +3936,51 @@ msgstr ""
 "Kontrollera att du angett ett giltigt filnamn och att den valda platsen är "
 "skrivbar!"
 
-#: ../plug-ins/common/file-pdf-save.c:803
-#: ../plug-ins/common/file-pdf-save.c:920
+#: ../plug-ins/common/file-pdf-save.c:808
+#: ../plug-ins/common/file-pdf-save.c:925
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Utelämna gömda lager och lager med noll opacitet"
 
-#: ../plug-ins/common/file-pdf-save.c:807
-#: ../plug-ins/common/file-pdf-save.c:924
+#: ../plug-ins/common/file-pdf-save.c:812
+#: ../plug-ins/common/file-pdf-save.c:929
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Konvertera bitmap-bilder till vektorgrafik där det är möjligt"
 
-#: ../plug-ins/common/file-pdf-save.c:811
-#: ../plug-ins/common/file-pdf-save.c:928
+#: ../plug-ins/common/file-pdf-save.c:816
+#: ../plug-ins/common/file-pdf-save.c:933
 msgid "Apply layer masks before saving"
 msgstr "Tillämpa lagermasker innan du sparar"
 
-#: ../plug-ins/common/file-pdf-save.c:814
-#: ../plug-ins/common/file-pdf-save.c:931
+#: ../plug-ins/common/file-pdf-save.c:819
+#: ../plug-ins/common/file-pdf-save.c:936
 msgid "Keeping the masks will not change the output"
 msgstr "Att behålla maskerna kommer inte att ändra utdatan"
 
-#: ../plug-ins/common/file-pdf-save.c:867
+#: ../plug-ins/common/file-pdf-save.c:872
 msgid "Save to:"
 msgstr "Spara till:"
 
-#: ../plug-ins/common/file-pdf-save.c:871
+#: ../plug-ins/common/file-pdf-save.c:876
 msgid "Browse..."
 msgstr "Bläddra..."
 
-#: ../plug-ins/common/file-pdf-save.c:872
+#: ../plug-ins/common/file-pdf-save.c:877
 msgid "Multipage PDF export"
 msgstr "Flersidig PDF-export"
 
-#: ../plug-ins/common/file-pdf-save.c:905
+#: ../plug-ins/common/file-pdf-save.c:910
 msgid "Remove the selected pages"
 msgstr "Ta bort markerade sidor"
 
-#: ../plug-ins/common/file-pdf-save.c:915
+#: ../plug-ins/common/file-pdf-save.c:920
 msgid "Add this image"
 msgstr "Lägg till denna bild"
 
-#: ../plug-ins/common/file-pdf-save.c:1028
+#: ../plug-ins/common/file-pdf-save.c:1033
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Fel! För att spara filen bör åtminstone en bild läggas till!"
 
-#: ../plug-ins/common/file-pdf-save.c:1351
+#: ../plug-ins/common/file-pdf-save.c:1356
 #: ../plug-ins/print/print-draw-page.c:228
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Kan inte hantera storleken (antingen bredd eller höjd) på bilden."
@@ -4344,6 +4344,10 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
+#: ../plug-ins/common/file-psp.c:1779
+msgid "invalid block size"
+msgstr "ogiltig blockstorlek"
+
 #: ../plug-ins/common/file-raw.c:187 ../plug-ins/common/file-raw.c:202
 msgid "Raw image data"
 msgstr "Råa bilddata"
@@ -4613,24 +4617,24 @@ msgstr "Kan inte läsa ändelse från \"%s\""
 msgid "Cannot read header from '%s'"
 msgstr "Kan inte läsa huvud från \"%s\""
 
-#: ../plug-ins/common/file-tga.c:1403
+#: ../plug-ins/common/file-tga.c:1408
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1412
+#: ../plug-ins/common/file-tga.c:1417
 msgid "_RLE compression"
 msgstr "_RLE-komprimeringsnivå"
 
-#: ../plug-ins/common/file-tga.c:1426
+#: ../plug-ins/common/file-tga.c:1431
 msgid "Or_igin:"
 msgstr "Urspr_ung:"
 
-#: ../plug-ins/common/file-tga.c:1430
+#: ../plug-ins/common/file-tga.c:1435
 msgid "Bottom left"
 msgstr "Nedre vänster"
 
-#: ../plug-ins/common/file-tga.c:1431
+#: ../plug-ins/common/file-tga.c:1436
 msgid "Top left"
 msgstr "Övre vänster"
 
@@ -4826,7 +4830,7 @@ msgstr "_ID-prefix:"
 msgid "_Write hot spot values"
 msgstr "_Skriv hot spot-värden"
 
-#: ../plug-ins/common/file-xbm.c:1267 ../plug-ins/common/file-xmc.c:1083
+#: ../plug-ins/common/file-xbm.c:1267 ../plug-ins/common/file-xmc.c:1090
 msgid "Hot spot _X:"
 msgstr "Hot spot _X:"
 
@@ -4848,7 +4852,7 @@ msgid "_Mask file extension:"
 msgstr "_Maskfilsändelse:"
 
 #: ../plug-ins/common/file-xmc.c:331 ../plug-ins/common/file-xmc.c:369
-#: ../plug-ins/common/file-xmc.c:1046
+#: ../plug-ins/common/file-xmc.c:1053
 msgid "X11 Mouse Cursor"
 msgstr "X11-muspekare"
 
@@ -4876,22 +4880,22 @@ msgstr "Bildruta %d av \"%s\" är för bred för en X-muspekare."
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "Bildruta %d av \"%s\" är för hög för en X-muspekare."
 
-#: ../plug-ins/common/file-xmc.c:890
+#: ../plug-ins/common/file-xmc.c:897
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "det finns ingen bilddel i \"%s\"."
 
-#: ../plug-ins/common/file-xmc.c:932
+#: ../plug-ins/common/file-xmc.c:939
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "\"%s\" är för bred för en X-muspekare."
 
-#: ../plug-ins/common/file-xmc.c:939
+#: ../plug-ins/common/file-xmc.c:946
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "\"%s\" är för hög för en X-muspekare."
 
-#: ../plug-ins/common/file-xmc.c:1009
+#: ../plug-ins/common/file-xmc.c:1016
 #, c-format
 msgid "A read error occurred."
 msgstr "Ett läsfel har inträffat."
@@ -4899,23 +4903,23 @@ msgstr "Ett läsfel har inträffat."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1051
+#: ../plug-ins/common/file-xmc.c:1058
 msgid "XMC Options"
 msgstr "XMC-inställningar"
 
-#: ../plug-ins/common/file-xmc.c:1079
+#: ../plug-ins/common/file-xmc.c:1086
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr "Ange X-koordinat för hot spot. Ursprunget är övre vänstra hörnet."
 
-#: ../plug-ins/common/file-xmc.c:1097
+#: ../plug-ins/common/file-xmc.c:1104
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr "Ange Y-koordinat för hot spot. Ursprunget är övre vänstra hörnet."
 
-#: ../plug-ins/common/file-xmc.c:1108
+#: ../plug-ins/common/file-xmc.c:1115
 msgid "_Auto-Crop all frames."
 msgstr "Beskär _automatiskt alla bildrutor."
 
-#: ../plug-ins/common/file-xmc.c:1121
+#: ../plug-ins/common/file-xmc.c:1128
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4928,7 +4932,7 @@ msgstr ""
 "Avmarkera om du planerar att redigera den exporterade markören i andra "
 "program."
 
-#: ../plug-ins/common/file-xmc.c:1144
+#: ../plug-ins/common/file-xmc.c:1151
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4947,57 +4951,57 @@ msgstr ""
 "animeringssekvens och vilken sekvens som används baseras på värdet av \"gtk-"
 "cursor-theme-size\"."
 
-#: ../plug-ins/common/file-xmc.c:1161
+#: ../plug-ins/common/file-xmc.c:1168
 msgid "_Use this value only for a frame which size is not specified."
 msgstr ""
 "Använd detta värde endast för en bildr_uta vars storlek inte är specificerad."
 
-#: ../plug-ins/common/file-xmc.c:1164
+#: ../plug-ins/common/file-xmc.c:1171
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "_Ersätt storleken för alla bildrutor även om de har angivits."
 
-#: ../plug-ins/common/file-xmc.c:1198
+#: ../plug-ins/common/file-xmc.c:1205
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Ange tidsspann i millisekunder i vilken varje bildruta renderas."
 
-#: ../plug-ins/common/file-xmc.c:1201
+#: ../plug-ins/common/file-xmc.c:1208
 msgid "_Delay:"
 msgstr "Fördrö_jning:"
 
-#: ../plug-ins/common/file-xmc.c:1206
+#: ../plug-ins/common/file-xmc.c:1213
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr ""
 "Använd detta värde endast för en bildr_uta vars fördröjning inte är "
 "specificerad."
 
-#: ../plug-ins/common/file-xmc.c:1209
+#: ../plug-ins/common/file-xmc.c:1216
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "E_rsätt fördröjningen på alla bildrutor även om den är specificerad."
 
-#: ../plug-ins/common/file-xmc.c:1234
+#: ../plug-ins/common/file-xmc.c:1241
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "Delen för upphovsrättslig information som översteg 65535 tecken togs bort."
 
-#: ../plug-ins/common/file-xmc.c:1244
+#: ../plug-ins/common/file-xmc.c:1251
 msgid "Enter copyright information."
 msgstr "Ange upphovsrättslig information."
 
-#: ../plug-ins/common/file-xmc.c:1246
+#: ../plug-ins/common/file-xmc.c:1253
 msgid "_Copyright:"
 msgstr "Upp_hovsrätt:"
 
-#: ../plug-ins/common/file-xmc.c:1262
+#: ../plug-ins/common/file-xmc.c:1269
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr "Delen för licensinformation som översteg 65535 tecken togs bort."
 
-#: ../plug-ins/common/file-xmc.c:1272
+#: ../plug-ins/common/file-xmc.c:1279
 msgid "Enter license information."
 msgstr "Ange licensinformation."
 
-#: ../plug-ins/common/file-xmc.c:1274
+#: ../plug-ins/common/file-xmc.c:1281
 msgid "_License:"
 msgstr "_Licens:"
 
@@ -5006,40 +5010,40 @@ msgstr "_Licens:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1281
+#: ../plug-ins/common/file-xmc.c:1288
 msgid "_Other:"
 msgstr "A_nnat:"
 
-#: ../plug-ins/common/file-xmc.c:1315
+#: ../plug-ins/common/file-xmc.c:1322
 msgid "Enter other comment if you want."
 msgstr "Ange en kommentar om du vill."
 
-#: ../plug-ins/common/file-xmc.c:1365
+#: ../plug-ins/common/file-xmc.c:1372
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "Kommentaren är begränsad till %d tecken."
 
-#: ../plug-ins/common/file-xmc.c:1483
+#: ../plug-ins/common/file-xmc.c:1490
 #, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr "Denna insticksmodul kan bara hantera RGBA-bilder med 8bit färgdjup."
 
-#: ../plug-ins/common/file-xmc.c:1501
+#: ../plug-ins/common/file-xmc.c:1508
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "Bildruta \"%s\" är för bred. Reducera till högst %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1508
+#: ../plug-ins/common/file-xmc.c:1515
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "Bildruta \"%s\" är för hög. Reducera till högst %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1515
+#: ../plug-ins/common/file-xmc.c:1522
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Bredd och/eller höjd på bildruta \"%s\" är noll!"
 
-#: ../plug-ins/common/file-xmc.c:1555
+#: ../plug-ins/common/file-xmc.c:1562
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
@@ -5050,7 +5054,7 @@ msgstr ""
 "Försök att ändra hot spot-läge, lagergeometri eller spara utan automatisk "
 "beskärning."
 
-#: ../plug-ins/common/file-xmc.c:1712
+#: ../plug-ins/common/file-xmc.c:1719
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
@@ -5061,7 +5065,7 @@ msgstr ""
 "bredd eller höjd är större än %ipx.\n"
 "Det kommer att göra skärmen rörig i vissa miljöer."
 
-#: ../plug-ins/common/file-xmc.c:1719
+#: ../plug-ins/common/file-xmc.c:1726
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
@@ -5074,7 +5078,7 @@ msgstr ""
 "bildrutor...\" i dialogrutan för att spara, annars kanske markören inte "
 "visas i GNOME:s inställningar."
 
-#: ../plug-ins/common/file-xmc.c:1956
+#: ../plug-ins/common/file-xmc.c:1963
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -5084,7 +5088,7 @@ msgstr ""
 "att passa."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2159
+#: ../plug-ins/common/file-xmc.c:2166
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -5884,88 +5888,88 @@ msgstr "\"%s\" verkar inte vara en ICC-färgprofil"
 msgid "Converting from '%s' to '%s'"
 msgstr "Konverterar från \"%s\" till \"%s\""
 
-#: ../plug-ins/common/lcms.c:1248
+#: ../plug-ins/common/lcms.c:1252
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Kunde inte läsa in ICC-profil från \"%s\""
 
-#: ../plug-ins/common/lcms.c:1270
+#: ../plug-ins/common/lcms.c:1274
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Bilden \"%s\" har en inbäddad färgprofil:"
 
-#: ../plug-ins/common/lcms.c:1314
+#: ../plug-ins/common/lcms.c:1318
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Konvertera bilden till RGB-arbetsrymden (%s)?"
 
-#: ../plug-ins/common/lcms.c:1345
+#: ../plug-ins/common/lcms.c:1349
 msgid "Convert to RGB working space?"
 msgstr "Konvertera till RGB-arbetsrymd?"
 
-#: ../plug-ins/common/lcms.c:1350
+#: ../plug-ins/common/lcms.c:1354
 msgid "_Keep"
 msgstr "_Behåll"
 
-#: ../plug-ins/common/lcms.c:1355
+#: ../plug-ins/common/lcms.c:1359
 msgid "_Convert"
 msgstr "_Konvertera"
 
-#: ../plug-ins/common/lcms.c:1383 ../plug-ins/file-jpeg/jpeg-exif.c:436
+#: ../plug-ins/common/lcms.c:1387 ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
 msgstr "_Fråga mig inte igen"
 
-#: ../plug-ins/common/lcms.c:1450
+#: ../plug-ins/common/lcms.c:1454
 msgid "Select destination profile"
 msgstr "Välj målprofil"
 
-#: ../plug-ins/common/lcms.c:1477
+#: ../plug-ins/common/lcms.c:1481
 msgid "All files (*.*)"
 msgstr "Alla filer (*.*)"
 
-#: ../plug-ins/common/lcms.c:1482
+#: ../plug-ins/common/lcms.c:1486
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-färgprofil (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1526
+#: ../plug-ins/common/lcms.c:1530
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB-arbetsrymd (%s)"
 
-#: ../plug-ins/common/lcms.c:1576
+#: ../plug-ins/common/lcms.c:1580
 msgid "Convert to ICC Color Profile"
 msgstr "Konvertera till ICC-färgprofil"
 
-#: ../plug-ins/common/lcms.c:1577
+#: ../plug-ins/common/lcms.c:1581
 msgid "Assign ICC Color Profile"
 msgstr "Tilldela ICC-färgprofil"
 
-#: ../plug-ins/common/lcms.c:1585
+#: ../plug-ins/common/lcms.c:1589
 msgid "_Assign"
 msgstr "_Tilldela"
 
-#: ../plug-ins/common/lcms.c:1603
+#: ../plug-ins/common/lcms.c:1607
 msgid "Current Color Profile"
 msgstr "Aktuell färgprofil"
 
-#: ../plug-ins/common/lcms.c:1618
+#: ../plug-ins/common/lcms.c:1622
 msgid "Convert to"
 msgstr "Konvertera till"
 
-#: ../plug-ins/common/lcms.c:1618
+#: ../plug-ins/common/lcms.c:1622
 msgid "Assign"
 msgstr "Tilldela"
 
 # Klart osäker
-#: ../plug-ins/common/lcms.c:1642
+#: ../plug-ins/common/lcms.c:1646
 msgid "_Rendering Intent:"
 msgstr "_Renderingsintention:"
 
-#: ../plug-ins/common/lcms.c:1658
+#: ../plug-ins/common/lcms.c:1662
 msgid "_Black Point Compensation"
 msgstr "Svartpunkts_kompensation"
 
-#: ../plug-ins/common/lcms.c:1700
+#: ../plug-ins/common/lcms.c:1704
 msgid "Destination profile is not for RGB color space."
 msgstr "Målprofilen är inte för RGB-färgrymd."
 

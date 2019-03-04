@@ -1445,15 +1445,16 @@ static gboolean
 xcf_load_level (XcfInfo     *info,
                 TileManager *tiles)
 {
-  guint32 saved_pos;
-  guint32 offset, offset2;
-  guint ntiles;
-  gint  width;
-  gint  height;
-  gint  i;
-  gint  fail;
-  Tile *previous;
-  Tile *tile;
+  guint32  saved_pos;
+  guint32  offset, offset2;
+  guint32  max_data_length;
+  guint    ntiles;
+  gint     width;
+  gint     height;
+  gint     i;
+  gint     fail;
+  Tile    *previous;
+  Tile    *tile;
 
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
@@ -1461,6 +1462,13 @@ xcf_load_level (XcfInfo     *info,
   if (width  != tile_manager_width  (tiles) ||
       height != tile_manager_height (tiles))
     return FALSE;
+
+  /* maximal allowable size of on-disk tile data.  make it somewhat bigger than
+   * the uncompressed tile size, to allow for the possibility of negative
+   * compression.
+   */
+  max_data_length = TILE_WIDTH * TILE_HEIGHT * 4 *
+                    XCF_TILE_MAX_DATA_LENGTH_FACTOR /* = 1.5, currently */;
 
   /* read in the first tile offset.
    *  if it is '0', then this tile level is empty
@@ -1499,13 +1507,20 @@ xcf_load_level (XcfInfo     *info,
       /* if the offset is 0 then we need to read in the maximum possible
          allowing for negative compression */
       if (offset2 == 0)
-        offset2 = offset + TILE_WIDTH * TILE_WIDTH * 4 * 1.5;
-                                        /* 1.5 is probably more
-                                           than we need to allow */
+        offset2 = offset + max_data_length;
 
       /* seek to the tile offset */
       if (! xcf_seek_pos (info, offset, NULL))
         return FALSE;
+
+      if (offset2 < offset || offset2 - offset > max_data_length)
+        {
+          gimp_message (info->gimp, G_OBJECT (info->progress),
+                        GIMP_MESSAGE_ERROR,
+                        "invalid tile data length: %u",
+                        offset2 - offset);
+          return FALSE;
+        }
 
       /* get the tile from the tile manager */
       tile = tile_manager_get (tiles, i, TRUE, TRUE);

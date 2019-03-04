@@ -1,12 +1,12 @@
 # Polish translation for gimp.
-# Copyright © 1999-2017 the gimp authors.
+# Copyright © 1999-2018 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # Paweł Dziekoński, 1999-2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 # Piotr Zaryk <pzaryk@aviary.pl>, 2008.
 # Robert Gomulka <carramba@epf.pl>, 2008.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2018.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2018.
 #
 # Terminy:
 #  drawable    - obszar rysowania (warstwa, kanał itp.)
@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 13:29+0200\n"
-"PO-Revision-Date: 2017-04-04 13:30+0200\n"
+"POT-Creation-Date: 2018-01-05 23:59+0100\n"
+"PO-Revision-Date: 2018-01-06 00:00+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1241,12 +1241,12 @@ msgstr "Otwiera edytor palet"
 #: ../app/actions/dialogs-actions.c:187
 msgctxt "dialogs-action"
 msgid "Tool presets"
-msgstr "Opcje narzędzia"
+msgstr "Ustawienia narzędzia"
 
 #: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Otwiera okno opcji narzędzia"
+msgstr "Otwiera okno ustawień narzędzia"
 
 #: ../app/actions/dialogs-actions.c:193
 msgctxt "dialogs-action"
@@ -3913,11 +3913,11 @@ msgstr "_Dalej"
 msgid "Zoom _All"
 msgstr "_Całość"
 
-#: ../app/actions/palette-editor-commands.c:68
+#: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
 msgstr "Modyfikacja koloru z palety"
 
-#: ../app/actions/palette-editor-commands.c:70
+#: ../app/actions/palette-editor-commands.c:71
 msgid "Edit Color Palette Entry"
 msgstr "Modyfikacja koloru elementu palety"
 
@@ -4612,7 +4612,7 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:443
+#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:450
 #: ../app/core/gimpbrushgenerated-load.c:73 ../app/core/gimpbrushpipe-load.c:81
 #: ../app/core/gimpcurve-load.c:54 ../app/core/gimpgradient-load.c:63
 #: ../app/core/gimppalette-load.c:77 ../app/core/gimppalette-load.c:274
@@ -4751,7 +4751,7 @@ msgstr "Przywraca domyślne opcje wszystkich narzędzi"
 
 #: ../app/actions/tool-options-commands.c:186
 msgid "Reset All Tool Options"
-msgstr "Opcje przywracania opcji narzędzia"
+msgstr "Przywrócenie domyślnych opcji wszystkich narzędzi"
 
 #: ../app/actions/tool-options-commands.c:209
 msgid "Do you really want to reset all tool options to default values?"
@@ -7518,29 +7518,34 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku „%s” z pędzlami: nieznana wersja "
 "%d."
 
-#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:410
-#: ../app/core/gimpbrush-load.c:626 ../app/core/gimpbrush-load.c:700
-#: ../app/core/gimpbrush-load.c:763 ../app/core/gimpbrush-load.c:779
-#: ../app/core/gimpbrush-load.c:822
+#: ../app/core/gimpbrush-load.c:266
+#, c-format
+msgid "Unsupported brush format"
+msgstr "Nieobsługiwany format pędzla"
+
+#: ../app/core/gimpbrush-load.c:280 ../app/core/gimpbrush-load.c:417
+#: ../app/core/gimpbrush-load.c:633 ../app/core/gimpbrush-load.c:707
+#: ../app/core/gimpbrush-load.c:770 ../app/core/gimpbrush-load.c:786
+#: ../app/core/gimpbrush-load.c:829
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku „%s” z pędzlami: plik wydaje się "
 "być obcięty."
 
-#: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:288 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nieprawidłowy ciąg UTF-8 w pliku z pędzlami „%s”."
 
-#: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:146
+#: ../app/core/gimpbrush-load.c:295 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:317
 msgid "Unnamed"
 msgstr "Bez nazwy"
 
-#: ../app/core/gimpbrush-load.c:354
+#: ../app/core/gimpbrush-load.c:361
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7555,7 +7560,7 @@ msgstr ""
 "Może to być przestarzały plik z pędzlami programu GIMP, proszę spróbować "
 "wczytać go jako obraz i zapisać ponownie."
 
-#: ../app/core/gimpbrush-load.c:399
+#: ../app/core/gimpbrush-load.c:406
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7566,7 +7571,7 @@ msgstr ""
 "Pędzle programu GIMP muszą być zapisane albo w odcieniach szarości lub "
 "w formacie RGBA."
 
-#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:909
+#: ../app/core/gimpbrush-load.c:478 ../app/core/gimpbrush-load.c:916
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7574,7 +7579,7 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku „%s” z pędzlami: nie można "
 "dekodować wersji formatu abr %d."
 
-#: ../app/core/gimpbrush-load.c:647
+#: ../app/core/gimpbrush-load.c:654
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -8273,34 +8278,38 @@ msgstr "Spłaszczenie obrazu"
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Nie można spłaszczyć obrazu bez żadnej widocznej warstwy."
 
-#: ../app/core/gimpimage-merge.c:260
+#: ../app/core/gimpimage-merge.c:242
+msgid "Cannot merge down a floating selection."
+msgstr "Nie można połączyć w dół oderwanego zaznaczenia."
+
+#: ../app/core/gimpimage-merge.c:267
 msgid "Cannot merge down to a layer group."
 msgstr "Nie można połączyć w dół do grupy warstw."
 
-#: ../app/core/gimpimage-merge.c:267
+#: ../app/core/gimpimage-merge.c:274
 msgid "The layer to merge down to is locked."
 msgstr "Warstwa do połączenia w dół jest zablokowana."
 
-#: ../app/core/gimpimage-merge.c:279
+#: ../app/core/gimpimage-merge.c:286
 msgid "There is no visible layer to merge down to."
 msgstr "Nie ma widocznych warstw do połączenia w dół."
 
-#: ../app/core/gimpimage-merge.c:289
+#: ../app/core/gimpimage-merge.c:296
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Połączenie w dół"
 
-#: ../app/core/gimpimage-merge.c:317
+#: ../app/core/gimpimage-merge.c:324
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Połączenie grupy warstw"
 
-#: ../app/core/gimpimage-merge.c:370
+#: ../app/core/gimpimage-merge.c:377
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Połączenie widocznych ścieżek"
 
-#: ../app/core/gimpimage-merge.c:406
+#: ../app/core/gimpimage-merge.c:413
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są co "
@@ -8956,8 +8965,8 @@ msgstr ""
 "Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011\n"
 "Piotr Zaryk <pzaryk@aviary.pl>, 2008\n"
 "Robert Gomulka <carramba@epf.pl>, 2008\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2011-2017\n"
-"Aviary.pl <community-poland@mozilla.org>, 2011-2017"
+"Piotr Drąg <piotrdrag@gmail.com>, 2011-2018\n"
+"Aviary.pl <community-poland@mozilla.org>, 2011-2018"
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
@@ -9837,11 +9846,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1913
 msgid "_Save tool options on exit"
-msgstr "_Zapisywanie ustawień narzędzi przy zakończeniu"
+msgstr "_Zapisywanie opcji narzędzi przy zakończeniu"
 
 #: ../app/dialogs/preferences-dialog.c:1917
 msgid "Save Tool Options _Now"
-msgstr "Zapisz ustawienia _narzędzi"
+msgstr "Zapisz opcje _narzędzi"
 
 #: ../app/dialogs/preferences-dialog.c:1924
 msgid "_Reset Saved Tool Options to Default Values"
@@ -13754,15 +13763,15 @@ msgstr "Kliknięcie i przeciągnięcie przetnie z bieżącym zaznaczeniem"
 
 #: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to move the selection mask"
-msgstr "Kliknięcie i przeciągnięcie przesunie zaznaczoną maskę"
+msgstr "Kliknięcie i przeciągnięcie przemieści zaznaczoną maskę"
 
 #: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move the selected pixels"
-msgstr "Kliknięcie i przeciągnięcie przesunie zaznaczone piksele"
+msgstr "Kliknięcie i przeciągnięcie przemieści zaznaczone piksele"
 
 #: ../app/tools/gimpselectiontool.c:308
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "Kliknięcie i przeciągnięcie przesunie kopię zaznaczonych pikseli"
+msgstr "Kliknięcie i przeciągnięcie przemieści kopię zaznaczonych pikseli"
 
 #: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
@@ -13941,7 +13950,7 @@ msgstr ""
 "Możliwe jest zmodyfikowanie warstwy lub utworzenie nowej warstwy tekstowej "
 "na podstawie atrybutów obecnej."
 
-#: ../app/tools/gimptexttool-editor.c:1236
+#: ../app/tools/gimptexttool-editor.c:1228
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
@@ -15616,7 +15625,7 @@ msgstr "Deseń kreski:"
 
 #: ../app/widgets/gimpstrokeeditor.c:241
 msgid "Dash _preset:"
-msgstr "_Początkowe ustawienie kreski:"
+msgstr "_Ustawienia kreski:"
 
 #: ../app/widgets/gimptagentry.c:45
 msgid "filter"
@@ -15855,36 +15864,36 @@ msgstr "Ikona:"
 
 #: ../app/widgets/gimptoolpreseteditor.c:159
 msgid "Apply stored FG/BG"
-msgstr "Zastosuj zachowane kolory"
+msgstr "Zastosowanie zachowanych kolorów"
 
 #: ../app/widgets/gimptoolpreseteditor.c:165
 msgid "Apply stored brush"
-msgstr "Zastosuj zachowany pędzel"
+msgstr "Zastosowanie zachowanego pędzla"
 
 #: ../app/widgets/gimptoolpreseteditor.c:171
 msgid "Apply stored dynamics"
-msgstr "Zastosuj zachowaną dynamikę"
+msgstr "Zastosowanie zachowanej dynamiki"
 
 #: ../app/widgets/gimptoolpreseteditor.c:177
 msgid "Apply stored gradient"
-msgstr "Zastosuj zachowany gradient"
+msgstr "Zastosowanie zachowanego gradientu"
 
 #: ../app/widgets/gimptoolpreseteditor.c:183
 msgid "Apply stored pattern"
-msgstr "Zastosuj zachowany deseń"
+msgstr "Zastosowanie zachowanego desenia"
 
 #: ../app/widgets/gimptoolpreseteditor.c:189
 msgid "Apply stored palette"
-msgstr "Zastosuj zachowaną paletę"
+msgstr "Zastosowanie zachowanej palety"
 
 #: ../app/widgets/gimptoolpreseteditor.c:195
 msgid "Apply stored font"
-msgstr "Zastosuj zachowaną czcionkę"
+msgstr "Zastosowanie zachowanej czcionki"
 
 #: ../app/widgets/gimptoolpreseteditor.c:292
 #, c-format
 msgid "%s Preset"
-msgstr "Ustawienia %s"
+msgstr "Ustawienia narzędzia %s"
 
 #: ../app/widgets/gimptranslationstore.c:100
 msgid "System Language"
@@ -16177,3 +16186,11 @@ msgstr "Edytor obrazów"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Tworzenie oraz obróbka obrazów i fotografii"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: ../desktop/gimp.desktop.in.in.h:5
+msgid "GIMP;graphic;design;illustration;painting;"
+msgstr ""
+"GIMP;grafika;graficzny;design;dizajn;projektowanie;wzornictwo;ilustracja;"
+"ilustrowanie;rysunek;rysowanie;rysownictwo;malowanie;malarstwo;obrazy;"
+"obrazki;fotografia;zdjęcia;retuszowanie;renderowanie;wtyczki;"
