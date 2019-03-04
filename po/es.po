@@ -14,21 +14,21 @@
 # Luis Angel Gonzo <luisangelgonzo@gmail.com>, 2017.
 # Luis Ángel Gonzo <luisangelgonzo@gmail.com>, 2017, 2018.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2019.
-# Rodrigo <rodhos92@gmail.com>, 2018, 2019.
+# Rodrigo <rodhos92@gmail.com>, 2018-2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-13 16:28+0000\n"
-"PO-Revision-Date: 2019-02-14 11:57+0100\n"
+"POT-Creation-Date: 2019-03-01 19:27+0000\n"
+"PO-Revision-Date: 2019-03-02 17:03+0100\n"
 "Last-Translator: Rodrigo <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 3.30.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -1003,7 +1003,7 @@ msgid "Plug-ins"
 msgstr "Complementos"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:388
+#: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:385
 #: ../app/dialogs/preferences-dialog.c:1747
 msgid "Quick Mask"
 msgstr "Máscara rápida"
@@ -1053,13 +1053,13 @@ msgid "Windows"
 msgstr "Ventanas"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:593
+#: ../app/actions/actions.c:617
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:619
+#: ../app/actions/actions.c:643
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -3030,7 +3030,7 @@ msgstr "240 segundos"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:330
+#: ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:1095
 #: ../app/tools/gimptransformtool.c:332 ../app/widgets/gimpactionview.c:669
@@ -4858,9 +4858,10 @@ msgid "_Color Enhance"
 msgstr "_Realzar color"
 
 #: ../app/actions/filters-actions.c:114
+#| msgid "Linear light"
 msgctxt "filters-action"
-msgid "_Linear Invert"
-msgstr "Inversión _lineal"
+msgid "L_inear Invert"
+msgstr "Invertido l_ineal"
 
 #: ../app/actions/filters-actions.c:119
 msgctxt "filters-action"
@@ -6405,92 +6406,92 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Escala de gr_ises…"
 
-#: ../app/actions/image-commands.c:559
+#: ../app/actions/image-commands.c:560
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Falló al guardar el perfil de color: %s"
 
-#: ../app/actions/image-commands.c:598
+#: ../app/actions/image-commands.c:599
 msgid "Save Color Profile"
 msgstr "Guardar perfil de color"
 
-#: ../app/actions/image-commands.c:646
+#: ../app/actions/image-commands.c:647
 msgid "Set Image Canvas Size"
 msgstr "Establece el tamaño del lienzo de la imagen"
 
-#: ../app/actions/image-commands.c:676 ../app/actions/image-commands.c:700
-#: ../app/actions/image-commands.c:1358
+#: ../app/actions/image-commands.c:677 ../app/actions/image-commands.c:701
+#: ../app/actions/image-commands.c:1364
 msgid "Resizing"
 msgstr "Redimensionando"
 
-#: ../app/actions/image-commands.c:733
+#: ../app/actions/image-commands.c:734
 msgid "Set Image Print Resolution"
 msgstr "Establecer la resolución de impresión de la imagen"
 
-#: ../app/actions/image-commands.c:799 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:800 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:222 ../app/tools/gimpfliptool.c:134
 msgid "Flipping"
 msgstr "Volteando"
 
-#: ../app/actions/image-commands.c:823 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:824 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:125
 msgid "Rotating"
 msgstr "Rotando"
 
-#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:828
+#: ../app/actions/image-commands.c:851 ../app/actions/layers-commands.c:831
 msgid "Cannot crop because the current selection is empty."
 msgstr "No se puede recortar porque la selección actual está vacía."
 
-#: ../app/actions/image-commands.c:888
+#: ../app/actions/image-commands.c:889
 msgid "Cannot crop because the image has no content."
 msgstr "No se puede recortar porque la imagen no tiene contenido."
 
-#: ../app/actions/image-commands.c:894
+#: ../app/actions/image-commands.c:895
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "No se puede recortar porque la imagen ya está recortada a su contenido."
 
-#: ../app/actions/image-commands.c:1029
+#: ../app/actions/image-commands.c:1035
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Convertir a RGB (%s)"
 
-#: ../app/actions/image-commands.c:1067
+#: ../app/actions/image-commands.c:1073
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Convertir a escala de grises (%s)"
 
-#: ../app/actions/image-commands.c:1129
+#: ../app/actions/image-commands.c:1135
 msgid "Converting to indexed colors"
 msgstr "Convirtiendo a colores indexados"
 
-#: ../app/actions/image-commands.c:1217
+#: ../app/actions/image-commands.c:1223
 #, c-format
 msgid "Converting image to %s"
 msgstr "Convirtiendo imagen a «%s»"
 
-#: ../app/actions/image-commands.c:1248
+#: ../app/actions/image-commands.c:1254
 msgid "Assign color profile"
 msgstr "Asignar perfil de color"
 
-#: ../app/actions/image-commands.c:1294
+#: ../app/actions/image-commands.c:1300
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Convertir a «%s»"
 
-#: ../app/actions/image-commands.c:1400
+#: ../app/actions/image-commands.c:1406
 msgid "Change Print Size"
 msgstr "Cambiar el tamaño de la impresión"
 
-#: ../app/actions/image-commands.c:1444
+#: ../app/actions/image-commands.c:1450
 msgid "Scale Image"
 msgstr "Escalar la imagen"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1618
+#: ../app/actions/image-commands.c:1459 ../app/actions/layers-commands.c:1621
 #: ../app/dialogs/preferences-dialog.c:1669
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -7360,7 +7361,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "A una capa _nueva"
 
-#: ../app/actions/layers-commands.c:262 ../app/actions/layers-commands.c:1467
+#: ../app/actions/layers-commands.c:262 ../app/actions/layers-commands.c:1470
 msgid "Layer Attributes"
 msgstr "Atributos de la capa"
 
@@ -7382,27 +7383,27 @@ msgstr "Crear una capa nueva"
 msgid "Visible"
 msgstr "Visible"
 
-#: ../app/actions/layers-commands.c:734
+#: ../app/actions/layers-commands.c:737
 msgid "Set Layer Boundary Size"
 msgstr "Establecer el tamaño de borde de capa"
 
-#: ../app/actions/layers-commands.c:796
+#: ../app/actions/layers-commands.c:799
 msgid "Scale Layer"
 msgstr "Escalar la capa"
 
-#: ../app/actions/layers-commands.c:838
+#: ../app/actions/layers-commands.c:841
 msgid "Crop Layer to Selection"
 msgstr "Recortar capa a la selección"
 
-#: ../app/actions/layers-commands.c:868
+#: ../app/actions/layers-commands.c:871
 msgid "Crop Layer to Content"
 msgstr "Recortar capa al contenido"
 
-#: ../app/actions/layers-commands.c:881
+#: ../app/actions/layers-commands.c:884
 msgid "Cannot crop because the active layer has no content."
 msgstr "No se puede recortar porque la capa activa no tiene contenido."
 
-#: ../app/actions/layers-commands.c:888
+#: ../app/actions/layers-commands.c:891
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "No se puede recortar porque la capa activa ya está recortada a su contenido."
@@ -7758,7 +7759,7 @@ msgstr "Restablecer todos los filtros"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:329 ../app/tools/gimptransformgridtool.c:1094
+#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1094
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -10296,7 +10297,7 @@ msgstr "Mover esta ventana a la pantalla %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:195
-#: ../app/tools/gimpfiltertool.c:331 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:330 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -10655,7 +10656,7 @@ msgstr ""
 msgid "Layer"
 msgstr "Capa"
 
-#: ../app/config/gimpdialogconfig.c:406 ../app/core/gimpchannel.c:274
+#: ../app/config/gimpdialogconfig.c:406 ../app/core/gimpchannel.c:272
 #: ../app/operations/gimpcurvesconfig.c:110
 #: ../app/operations/gimplevelsconfig.c:115
 #: ../app/operations/gimpoperationthreshold.c:89
@@ -12961,148 +12962,148 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Seleccionar por color indexado"
 
-#: ../app/core/gimpchannel.c:275
+#: ../app/core/gimpchannel.c:273
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Renombrar el canal"
 
-#: ../app/core/gimpchannel.c:276
+#: ../app/core/gimpchannel.c:274
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Mover el canal"
 
-#: ../app/core/gimpchannel.c:277
+#: ../app/core/gimpchannel.c:275
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Escalar el canal"
 
-#: ../app/core/gimpchannel.c:278
+#: ../app/core/gimpchannel.c:276
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Redimensionar el canal"
 
-#: ../app/core/gimpchannel.c:279
+#: ../app/core/gimpchannel.c:277
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Voltear el canal"
 
-#: ../app/core/gimpchannel.c:280
+#: ../app/core/gimpchannel.c:278
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Rotar el canal"
 
-#: ../app/core/gimpchannel.c:281 ../app/core/gimpdrawable-transform.c:1093
+#: ../app/core/gimpchannel.c:279 ../app/core/gimpdrawable-transform.c:1093
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transformar el canal"
 
-#: ../app/core/gimpchannel.c:282 ../app/core/gimpchannel.c:314
+#: ../app/core/gimpchannel.c:280 ../app/core/gimpchannel.c:311
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Rellenar el canal"
 
-#: ../app/core/gimpchannel.c:283
+#: ../app/core/gimpchannel.c:281
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Impresionar el canal"
 
-#: ../app/core/gimpchannel.c:284
+#: ../app/core/gimpchannel.c:282
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Canal a selección"
 
-#: ../app/core/gimpchannel.c:285
+#: ../app/core/gimpchannel.c:283
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Reordenar el canal"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:284
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Elevar el canal"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:285
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Elevar el canal hasta lo alto"
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:286
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Bajar el canal"
 
-#: ../app/core/gimpchannel.c:289
+#: ../app/core/gimpchannel.c:287
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Bajar el canal hasta lo más bajo"
 
-#: ../app/core/gimpchannel.c:290
+#: ../app/core/gimpchannel.c:288
 msgid "Channel cannot be raised higher."
 msgstr "El canal no puede ser elevado más alto."
 
-#: ../app/core/gimpchannel.c:291
+#: ../app/core/gimpchannel.c:289
 msgid "Channel cannot be lowered more."
 msgstr "El canal no puede descender más."
 
-#: ../app/core/gimpchannel.c:311
+#: ../app/core/gimpchannel.c:308
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Difuminar el canal"
 
-#: ../app/core/gimpchannel.c:312
+#: ../app/core/gimpchannel.c:309
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Enfocar el canal"
 
-#: ../app/core/gimpchannel.c:313
+#: ../app/core/gimpchannel.c:310
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Limpiar el canal"
 
-#: ../app/core/gimpchannel.c:315
+#: ../app/core/gimpchannel.c:312
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Invertir el canal"
 
-#: ../app/core/gimpchannel.c:316
+#: ../app/core/gimpchannel.c:313
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Bordear el canal"
 
-#: ../app/core/gimpchannel.c:317
+#: ../app/core/gimpchannel.c:314
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Agrandar el canal"
 
-#: ../app/core/gimpchannel.c:318
+#: ../app/core/gimpchannel.c:315
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Achicar el canal"
 
-#: ../app/core/gimpchannel.c:319
+#: ../app/core/gimpchannel.c:316
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Inundar canal"
 
-#: ../app/core/gimpchannel.c:848
+#: ../app/core/gimpchannel.c:845
 msgid "Cannot fill empty channel."
 msgstr "No se puede rellenar un canal vacío."
 
-#: ../app/core/gimpchannel.c:884
+#: ../app/core/gimpchannel.c:881
 msgid "Cannot stroke empty channel."
 msgstr "No se puede trazar un canal vacío."
 
-#: ../app/core/gimpchannel.c:1723
+#: ../app/core/gimpchannel.c:1713
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Definir el color del canal"
 
-#: ../app/core/gimpchannel.c:1774
+#: ../app/core/gimpchannel.c:1764
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Definir la opacidad del canal"
 
-#: ../app/core/gimpchannel.c:1863 ../app/core/gimpselection.c:169
+#: ../app/core/gimpchannel.c:1853 ../app/core/gimpselection.c:169
 msgid "Selection Mask"
 msgstr "Máscara de selección"
 
@@ -13235,8 +13236,9 @@ msgstr "Error al cargar «%s»: "
 msgid "Error loading '%s'"
 msgstr "Error al cargar «%s»"
 
-#: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:89
-#: ../app/file-data/file-data-pat.c:99 ../app/xcf/xcf.c:452
+#: ../app/core/gimpdataloaderfactory.c:474 ../app/file-data/file-data-gbr.c:96
+#: ../app/file-data/file-data-gih.c:101 ../app/file-data/file-data-pat.c:97
+#: ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "No se ha podido abrir «%s» para lectura: "
@@ -13252,7 +13254,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:498 ../app/tools/gimpscaletool.c:118
+#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:118
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Redimensionar"
@@ -13855,51 +13857,51 @@ msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Combinar las capas visibles"
 
-#: ../app/core/gimpimage-merge.c:198
+#: ../app/core/gimpimage-merge.c:203
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Aplanar la imagen"
 
-#: ../app/core/gimpimage-merge.c:220
+#: ../app/core/gimpimage-merge.c:232
 msgid "Cannot flatten an image without any visible layer."
 msgstr "No se puede aplanar una imagen sin una capa visible."
 
-#: ../app/core/gimpimage-merge.c:245
+#: ../app/core/gimpimage-merge.c:260
 msgid "Cannot merge down a floating selection."
 msgstr "No se puede combinar una selección flotante."
 
-#: ../app/core/gimpimage-merge.c:252
+#: ../app/core/gimpimage-merge.c:267
 msgid "Cannot merge down an invisible layer."
 msgstr "No se puede combinar una capa invisible."
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:292
 msgid "Cannot merge down to a layer group."
 msgstr "No se puede hacer una combinación a un grupo de capas."
 
-#: ../app/core/gimpimage-merge.c:284
+#: ../app/core/gimpimage-merge.c:299
 msgid "The layer to merge down to is locked."
 msgstr "La capa a la que se pretende combinar está bloqueada."
 
-#: ../app/core/gimpimage-merge.c:296
+#: ../app/core/gimpimage-merge.c:311
 msgid "There is no visible layer to merge down to."
 msgstr "No hay ninguna capa visible a la que hacer la combinación."
 
-#: ../app/core/gimpimage-merge.c:306
+#: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Combinar hacia abajo"
 
-#: ../app/core/gimpimage-merge.c:334
+#: ../app/core/gimpimage-merge.c:352
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Combinar el grupo de capas"
 
-#: ../app/core/gimpimage-merge.c:410
+#: ../app/core/gimpimage-merge.c:428
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Combinar las rutas visibles"
 
-#: ../app/core/gimpimage-merge.c:446
+#: ../app/core/gimpimage-merge.c:464
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "No hay suficientes capas visibles para hacer una combinación. Deben haber "
@@ -17988,7 +17990,7 @@ msgid "%s for constrained steps"
 msgstr "%s para pasos restringidos"
 
 #: ../app/display/gimptoolgyroscope.c:724
-#: ../app/display/gimptooltransformgrid.c:1788
+#: ../app/display/gimptooltransformgrid.c:1812
 msgid "Click-Drag to rotate"
 msgstr "Pulse y arrastre para rotar"
 
@@ -18019,7 +18021,7 @@ msgid "%s to zoom"
 msgstr "%s para ampliar"
 
 #: ../app/display/gimptoolhandlegrid.c:865
-#: ../app/display/gimptooltransformgrid.c:1779
+#: ../app/display/gimptooltransformgrid.c:1803
 msgid "Click-Drag to move"
 msgstr "Pulse y arrastre para mover"
 
@@ -18033,7 +18035,7 @@ msgid "Click-Drag to shear and scale"
 msgstr "Pulse y arrastre para inclinar y escalar"
 
 #: ../app/display/gimptoolhandlegrid.c:874
-#: ../app/display/gimptooltransformgrid.c:1767
+#: ../app/display/gimptooltransformgrid.c:1791
 msgid "Click-Drag to change perspective"
 msgstr "Pulse y arrastre para cambiar la perspectiva"
 
@@ -18281,17 +18283,17 @@ msgstr "Rectángulo: "
 msgid "Position: "
 msgstr "Posición: "
 
-#: ../app/display/gimptooltransformgrid.c:1772
-#: ../app/display/gimptooltransformgrid.c:1777
+#: ../app/display/gimptooltransformgrid.c:1796
+#: ../app/display/gimptooltransformgrid.c:1801
 msgid "Click-Drag to scale"
 msgstr "Pulse y arrastre para escalar"
 
 # pivote, eje
-#: ../app/display/gimptooltransformgrid.c:1781
+#: ../app/display/gimptooltransformgrid.c:1805
 msgid "Click-Drag to move the pivot point"
 msgstr "Pulse y arrastre para mover el punto de pivote"
 
-#: ../app/display/gimptooltransformgrid.c:1786
+#: ../app/display/gimptooltransformgrid.c:1810
 msgid "Click-Drag to shear"
 msgstr "Pulse y arrastre para inclinar"
 
@@ -18311,15 +18313,14 @@ msgstr ""
 
 #: ../app/file/file-open.c:268
 #, c-format
-#| msgid "%s plug-In could not open image"
 msgid "%s plug-in could not open image"
 msgstr "El complemento %s no ha podido abrir la imagen"
 
-#: ../app/file/file-open.c:658
+#: ../app/file/file-open.c:659
 msgid "Image doesn't contain any layers"
 msgstr "La imagen no contiene ninguna capa"
 
-#: ../app/file/file-open.c:717
+#: ../app/file/file-open.c:718
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "La apertura de «%s» ha fallado: %s"
@@ -18374,13 +18375,16 @@ msgstr "«%s:» no es un esquema de URI válido"
 msgid "Invalid character sequence in URI"
 msgstr "Secuencia de caracteres no válida en el URI"
 
-#: ../app/file-data/file-data.c:58
-#| msgid "Mybrush"
+#: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
 msgstr "Pincel GIMP"
 
-#: ../app/file-data/file-data.c:123 ../app/file-data/file-data.c:185
-#| msgid "Pattern"
+#: ../app/file-data/file-data.c:210
+#| msgid "GIMP brush"
+msgid "GIMP brush (animated)"
+msgstr "Pincel GIMP (animado)"
+
+#: ../app/file-data/file-data.c:274 ../app/file-data/file-data.c:335
 msgid "GIMP pattern"
 msgstr "Patrón GIMP"
 
@@ -19192,11 +19196,11 @@ msgstr ""
 "Convertir un conjunto de búfer de coeficientes a un búfer de coordenadas "
 "para la herramienta «jaula» de GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:130
+#: ../app/operations/gimpoperationcagetransform.c:129
 msgid "Fill with plain color"
 msgstr "Rellenar con color sencillo"
 
-#: ../app/operations/gimpoperationcagetransform.c:131
+#: ../app/operations/gimpoperationcagetransform.c:130
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Rellenar la posición original de la jaula con un color sencillo"
 
@@ -19353,11 +19357,11 @@ msgstr "Sólo movimiento"
 msgid "Flow"
 msgstr "Flujo"
 
-#: ../app/paint/gimpbrushcore.c:378
+#: ../app/paint/gimpbrushcore.c:370
 msgid "No brushes available for use with this tool."
 msgstr "No hay pinceles disponibles para usar con esta herramienta."
 
-#: ../app/paint/gimpbrushcore.c:385
+#: ../app/paint/gimpbrushcore.c:377
 msgid "No paint dynamics available for use with this tool."
 msgstr ""
 "No hay dinámicas de pintura disponibles para su uso con esta herramienta."
@@ -19823,8 +19827,8 @@ msgstr "Invertir"
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:330 ../app/pdb/transform-tools-cmds.c:171
 #: ../app/tools/gimpperspectivetool.c:82
-#: ../app/tools/gimptransformgridoptions.c:497
-#: ../app/tools/gimptransformgridoptions.c:506
+#: ../app/tools/gimptransformgridoptions.c:529
+#: ../app/tools/gimptransformgridoptions.c:538
 msgid "Perspective"
 msgstr "Perspectiva"
 
@@ -20270,7 +20274,7 @@ msgstr ""
 "El procedimiento «%s» se ha llamado con un valor «%s» para el argumento "
 "«%s» (#%d, tipo %s). Este valor está fuera de los límites."
 
-#: ../app/pdb/image-cmds.c:2524
+#: ../app/pdb/image-cmds.c:2526
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -22013,48 +22017,48 @@ msgid "Color _managed"
 msgstr "Color _gestionado"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:389
+#: ../app/tools/gimpfiltertool.c:388
 msgid "Advanced Color Options"
 msgstr "Opciones de color avanzadas"
 
-#: ../app/tools/gimpfiltertool.c:408
+#: ../app/tools/gimpfiltertool.c:407
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr "Convertir píxeles a sRGB integrado para aplicar el filtro (lento)"
 
-#: ../app/tools/gimpfiltertool.c:409
+#: ../app/tools/gimpfiltertool.c:408
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Suponer que los píxeles son sRGB integrado (ignorar el espacio de color real "
 "de la imagen)"
 
-#: ../app/tools/gimpfiltertool.c:653
+#: ../app/tools/gimpfiltertool.c:650
 msgid "Click to switch the original and filtered sides"
 msgstr "Pulse para cambiar los lados originales y filtrados"
 
-#: ../app/tools/gimpfiltertool.c:657
+#: ../app/tools/gimpfiltertool.c:654
 msgid "Click to switch between vertical and horizontal"
 msgstr "Pulse para cambiar entre vertical y horizontal"
 
-#: ../app/tools/gimpfiltertool.c:661
+#: ../app/tools/gimpfiltertool.c:658
 msgid "Click to move the split guide"
 msgstr "Pulse para mover la guía de división"
 
-#: ../app/tools/gimpfiltertool.c:663
+#: ../app/tools/gimpfiltertool.c:660
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: cambiar original y filtrado"
 
-#: ../app/tools/gimpfiltertool.c:664
+#: ../app/tools/gimpfiltertool.c:661
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: cambiar horizontal y vertical"
 
-#: ../app/tools/gimpfiltertool.c:1359 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1356 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importar los ajustes «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1361 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1358 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exportar los ajustes «%s»"
@@ -22268,7 +22272,7 @@ msgid "Fuzzy Select"
 msgstr "Selección difusa"
 
 #: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:543
-#: ../app/tools/gimpgegltool.c:544 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:544 ../app/tools/gimpoperationtool.c:138
 msgid "GEGL Operation"
 msgstr "Operación de GEGL"
 
@@ -22277,7 +22281,7 @@ msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "Herramienta GEGL: utilice una operación GEGL arbitraria"
 
 # Location lo traducimos por lugar (Serrador)
-#: ../app/tools/gimpgegltool.c:80 ../app/tools/gimpoperationtool.c:136
+#: ../app/tools/gimpgegltool.c:80 ../app/tools/gimpoperationtool.c:140
 msgid "_GEGL Operation..."
 msgstr "Operación _GEGL…"
 
@@ -22891,8 +22895,8 @@ msgid "Show lattice"
 msgstr "Mostrar cuadrícula"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:94 ../app/tools/gimptransformgridoptions.c:491
-#: ../app/tools/gimptransformgridoptions.c:502
+#: ../app/tools/gimpscaletool.c:94 ../app/tools/gimptransformgridoptions.c:523
+#: ../app/tools/gimptransformgridoptions.c:534
 msgid "Scale"
 msgstr "Redimensionar"
 
@@ -22916,18 +22920,18 @@ msgstr ""
 msgid "_N-Point Deformation"
 msgstr "Deformación _N-Point"
 
-#: ../app/tools/gimpoperationtool.c:135
+#: ../app/tools/gimpoperationtool.c:139
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Herramienta de operación: utilizar una operación GEGL arbitraria"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:564
+#: ../app/tools/gimpoperationtool.c:620
 #, c-format
 msgid "Aux Input"
 msgstr "Entrada auxiliar"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:570
+#: ../app/tools/gimpoperationtool.c:626
 #, c-format
 msgid "Aux%d Input"
 msgstr "Entrada auxiliar%d"
@@ -23069,7 +23073,7 @@ msgstr ""
 "Utilizar todas las capas visibles cuando se está encogiendo la selección"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformgridoptions.c:122
+#: ../app/tools/gimptransformgridoptions.c:123
 msgid "Composition guides such as rule of thirds"
 msgstr "Guías de composición tales como la regla de los tercios"
 
@@ -23205,7 +23209,7 @@ msgstr "Dibujar la máscara de la región seleccionada"
 msgid "Move the mouse to change threshold"
 msgstr "Mueva el ratón para cambiar el umbral"
 
-#: ../app/tools/gimprotatetool.c:97 ../app/tools/gimptransformgridoptions.c:493
+#: ../app/tools/gimprotatetool.c:97 ../app/tools/gimptransformgridoptions.c:525
 msgid "Rotate"
 msgstr "Rotar"
 
@@ -23367,8 +23371,8 @@ msgstr "No puede intersecarse con una selección vacía."
 
 # Viendo el programa, parece más bien "cizalla". FVD
 # Según la RAE cizallar es cortar usando la cizalla y aquí no se corta nada. RLM
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:495
-#: ../app/tools/gimptransformgridoptions.c:504
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:527
+#: ../app/tools/gimptransformgridoptions.c:536
 msgid "Shear"
 msgstr "Inclinar"
 
@@ -23614,133 +23618,153 @@ msgstr ""
 "Esta herramienta\n"
 "no tiene opciones."
 
-#: ../app/tools/gimptransformgridoptions.c:107
+#: ../app/tools/gimptransformgridoptions.c:108
 msgid "Show image preview"
 msgstr "Mostrar vista previa de la imagen"
 
-#: ../app/tools/gimptransformgridoptions.c:108
+#: ../app/tools/gimptransformgridoptions.c:109
 msgid "Show a preview of the transformed image"
 msgstr "Muestra una vista previa de la imagen transformada"
 
-#: ../app/tools/gimptransformgridoptions.c:114
+#: ../app/tools/gimptransformgridoptions.c:115
 msgid "Image opacity"
 msgstr "Opacidad de la imagen"
 
-#: ../app/tools/gimptransformgridoptions.c:115
+#: ../app/tools/gimptransformgridoptions.c:116
 msgid "Opacity of the preview image"
 msgstr "Opacidad de la imagen de vista previa"
 
-#: ../app/tools/gimptransformgridoptions.c:121
-#: ../app/tools/gimptransformgridoptions.c:413
+#: ../app/tools/gimptransformgridoptions.c:122
+#: ../app/tools/gimptransformgridoptions.c:414
 msgid "Guides"
 msgstr "Guías"
 
-#: ../app/tools/gimptransformgridoptions.c:130
+#: ../app/tools/gimptransformgridoptions.c:131
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Tamaño de una celda para un número variable de guías de composición"
 
-#: ../app/tools/gimptransformgridoptions.c:436
+#: ../app/tools/gimptransformgridoptions.c:437
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 grados (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:443
+#: ../app/tools/gimptransformgridoptions.c:444
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Limitar los pasos de rotación a 15 grados"
 
-#: ../app/tools/gimptransformgridoptions.c:453
+#: ../app/tools/gimptransformgridoptions.c:454
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Mantener proporción (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:460
+#: ../app/tools/gimptransformgridoptions.c:461
 msgid "Keep the original aspect ratio"
 msgstr "Mantener la relación de aspecto original"
 
-#: ../app/tools/gimptransformgridoptions.c:465
+#: ../app/tools/gimptransformgridoptions.c:466
+#: ../app/tools/gimptransformgridoptions.c:496
 #, c-format
 msgid "Around center (%s)"
 msgstr "Alrededor del centro (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:472
+#: ../app/tools/gimptransformgridoptions.c:473
 msgid "Scale around the center point"
 msgstr "Escalar alrededor del punto central"
 
-#: ../app/tools/gimptransformgridoptions.c:488
+#: ../app/tools/gimptransformgridoptions.c:483
+#, c-format
+#| msgid "Constrain (%s)"
+msgid "Constrain handles (%s)"
+msgstr "Restringir tiradores (%s)"
+
+#: ../app/tools/gimptransformgridoptions.c:491
+#, c-format
+#| msgid "Constrain perspective handles to move along edges and diagonal (%s)"
+msgid "Constrain handles to move along edges and diagonal (%s)"
+msgstr ""
+"Restringir los tiradores para que se muevan a lo largo los bordes y la "
+"diagonal (%s)"
+
+#: ../app/tools/gimptransformgridoptions.c:504
+#| msgid "Scale around the center point"
+msgid "Transform around the center point"
+msgstr "Transformar alrededor del punto central"
+
+#: ../app/tools/gimptransformgridoptions.c:520
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Restringir (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:489
+#: ../app/tools/gimptransformgridoptions.c:521
 msgid "Move"
 msgstr "Mover"
 
-#: ../app/tools/gimptransformgridoptions.c:490
+#: ../app/tools/gimptransformgridoptions.c:522
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Restringir el movimiento a ángulos de 45 grados desde el centro (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:492
+#: ../app/tools/gimptransformgridoptions.c:524
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Mantener la proporción de aspecto cuando se escala (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:494
+#: ../app/tools/gimptransformgridoptions.c:526
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Restringir la rotación a incrementos de 15 grados (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:496
+#: ../app/tools/gimptransformgridoptions.c:528
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Inclinar a lo largo de la dirección del borde solamente (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:498
+#: ../app/tools/gimptransformgridoptions.c:530
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Restringir la perspectiva de los tiradores para mover a lo largo los bordes "
 "y la diagonal (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:501
+#: ../app/tools/gimptransformgridoptions.c:533
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "Desde el pivote (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:503
+#: ../app/tools/gimptransformgridoptions.c:535
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Escalar desde el punto de pivote (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:505
+#: ../app/tools/gimptransformgridoptions.c:537
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Inclinar el borde opuesto de la misma cantidad (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:507
+#: ../app/tools/gimptransformgridoptions.c:539
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Mantener la posición del pivote mientras se cambia la perspectiva (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:510
+#: ../app/tools/gimptransformgridoptions.c:542
 msgid "Pivot"
 msgstr "Pivote"
 
-#: ../app/tools/gimptransformgridoptions.c:511
+#: ../app/tools/gimptransformgridoptions.c:543
 #, c-format
 msgid "Snap (%s)"
 msgstr "Ajustar (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:512
+#: ../app/tools/gimptransformgridoptions.c:544
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Ajustar el pivote a las esquinas y el centro (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:513
+#: ../app/tools/gimptransformgridoptions.c:545
 msgid "Lock"
 msgstr "Bloquear"
 
-#: ../app/tools/gimptransformgridoptions.c:514
+#: ../app/tools/gimptransformgridoptions.c:546
 msgid "Lock pivot position to canvas"
 msgstr "Bloquear la posición del pivote al lienzo"
 
@@ -25063,283 +25087,297 @@ msgstr "GIMP ha encontrado varios errores críticos."
 msgid "_Restart GIMP"
 msgstr "_Reiniciar GIMP"
 
-#: ../app/widgets/gimpdashboard.c:452 ../app/widgets/gimpdashboard.c:504
+#: ../app/widgets/gimpdashboard.c:454 ../app/widgets/gimpdashboard.c:506
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Ocupado"
 
-#: ../app/widgets/gimpdashboard.c:453
+#: ../app/widgets/gimpdashboard.c:455
 msgid "Tile cache occupied size"
 msgstr "Tamaño ocupado de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:462
+#: ../app/widgets/gimpdashboard.c:464
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Máximo"
 
-#: ../app/widgets/gimpdashboard.c:463
+#: ../app/widgets/gimpdashboard.c:465
 msgid "Maximal tile cache occupied size"
 msgstr "Tamaño máximo ocupado de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:472 ../app/widgets/gimpdashboard.c:524
+#: ../app/widgets/gimpdashboard.c:474 ../app/widgets/gimpdashboard.c:526
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Límite"
 
-#: ../app/widgets/gimpdashboard.c:473
+#: ../app/widgets/gimpdashboard.c:475
 msgid "Tile cache size limit"
 msgstr "Tamaño límite de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:481 ../app/widgets/gimpdashboard.c:607
+#: ../app/widgets/gimpdashboard.c:483 ../app/widgets/gimpdashboard.c:609
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Compresión"
 
-#: ../app/widgets/gimpdashboard.c:482
+#: ../app/widgets/gimpdashboard.c:484
 msgid "Tile cache compression ratio"
 msgstr "Tasa de compresión de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:491
+#: ../app/widgets/gimpdashboard.c:493
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Acierto/Fallo"
 
-#: ../app/widgets/gimpdashboard.c:492
+#: ../app/widgets/gimpdashboard.c:494
 msgid "Tile cache hit/miss ratio"
 msgstr "Tasa de acierto/fallo de la caché de mosaico"
 
-#: ../app/widgets/gimpdashboard.c:505
+#: ../app/widgets/gimpdashboard.c:507
 msgid "Swap file occupied size"
 msgstr "Tamaño ocupado del archivo de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:514 ../app/widgets/gimpdashboard.c:671
+#: ../app/widgets/gimpdashboard.c:516 ../app/widgets/gimpdashboard.c:673
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../app/widgets/gimpdashboard.c:515
+#: ../app/widgets/gimpdashboard.c:517
 msgid "Swap file size"
 msgstr "Tamaño de archivo de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:525
+#: ../app/widgets/gimpdashboard.c:527
 msgid "Swap file size limit"
 msgstr "Límite de tamaño del archivo de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:532
+#: ../app/widgets/gimpdashboard.c:534
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "En cola"
 
-#: ../app/widgets/gimpdashboard.c:533
+#: ../app/widgets/gimpdashboard.c:535
 msgid "Size of data queued for writing to the swap"
 msgstr "Cantidad de datos en cola que escribir en el área de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:542
+#: ../app/widgets/gimpdashboard.c:544
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr "Detenciones de cola"
 
-#: ../app/widgets/gimpdashboard.c:543
+#: ../app/widgets/gimpdashboard.c:545
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 "Número de veces que se ha detenido la escritura en el área de intercambio, "
 "debido a una cola llena"
 
-#: ../app/widgets/gimpdashboard.c:552
+#: ../app/widgets/gimpdashboard.c:554
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr "Cola llena"
 
-#: ../app/widgets/gimpdashboard.c:553
+#: ../app/widgets/gimpdashboard.c:555
 msgid "Whether the swap queue is full"
 msgstr "Indica si la cola del área de intercambio está llena"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:564
+#: ../app/widgets/gimpdashboard.c:566
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Leer"
 
-#: ../app/widgets/gimpdashboard.c:565
+#: ../app/widgets/gimpdashboard.c:567
 msgid "Total amount of data read from the swap"
 msgstr "Cantidad total de datos leídos del intercambio"
 
-#: ../app/widgets/gimpdashboard.c:574
+#: ../app/widgets/gimpdashboard.c:576
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Rendimiento de escritura"
 
-#: ../app/widgets/gimpdashboard.c:575
+#: ../app/widgets/gimpdashboard.c:577
 msgid "The rate at which data is read from the swap"
 msgstr "La tasa a la que se leen los datos del área de intercambio"
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:587
+#: ../app/widgets/gimpdashboard.c:589
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Escrito"
 
-#: ../app/widgets/gimpdashboard.c:588
+#: ../app/widgets/gimpdashboard.c:590
 msgid "Total amount of data written to the swap"
 msgstr "Cantidad total de datos escritos en el área de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:597
+#: ../app/widgets/gimpdashboard.c:599
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Rendimiento de escritura"
 
-#: ../app/widgets/gimpdashboard.c:598
+#: ../app/widgets/gimpdashboard.c:600
 msgid "The rate at which data is written to the swap"
 msgstr "La tasa a la que se escriben datos en el área de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:608
+#: ../app/widgets/gimpdashboard.c:610
 msgid "Swap compression ratio"
 msgstr "Tasa de compresión del área de intercambio"
 
-#: ../app/widgets/gimpdashboard.c:621
+#: ../app/widgets/gimpdashboard.c:623
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Uso"
 
-#: ../app/widgets/gimpdashboard.c:622
+#: ../app/widgets/gimpdashboard.c:624
 msgid "Total CPU usage"
 msgstr "Uso total de CPU"
 
-#: ../app/widgets/gimpdashboard.c:630 ../app/widgets/gimpdashboard.c:639
+#: ../app/widgets/gimpdashboard.c:632 ../app/widgets/gimpdashboard.c:641
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Activo"
 
-#: ../app/widgets/gimpdashboard.c:631
+#: ../app/widgets/gimpdashboard.c:633
 msgid "Whether the CPU is active"
 msgstr "Indica si la CPU está activa"
 
-#: ../app/widgets/gimpdashboard.c:640
+#: ../app/widgets/gimpdashboard.c:642
 msgid "Total amount of time the CPU has been active"
 msgstr "Cantidad total de tiempo que la CPU ha estado activa."
 
-#: ../app/widgets/gimpdashboard.c:653
+#: ../app/widgets/gimpdashboard.c:655
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Usado"
 
-#: ../app/widgets/gimpdashboard.c:654
+#: ../app/widgets/gimpdashboard.c:656
 msgid "Amount of memory used by the process"
 msgstr "Cantidad de memoria usada por el proceso"
 
-#: ../app/widgets/gimpdashboard.c:662
+#: ../app/widgets/gimpdashboard.c:664
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Disponible"
 
-#: ../app/widgets/gimpdashboard.c:663
+#: ../app/widgets/gimpdashboard.c:665
 msgid "Amount of available physical memory"
 msgstr "Cantidad de memoria física disponible"
 
-#: ../app/widgets/gimpdashboard.c:672
+#: ../app/widgets/gimpdashboard.c:674
 msgid "Physical memory size"
 msgstr "Tamaño de la memoria física"
 
 # MIP: Del latín Multum In Parvo
-#: ../app/widgets/gimpdashboard.c:683
+#: ../app/widgets/gimpdashboard.c:685
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "En mapas MIP"
 
-#: ../app/widgets/gimpdashboard.c:684
+#: ../app/widgets/gimpdashboard.c:686
 msgid "Total size of processed mipmapped data"
 msgstr "Tamaño total de los datos en mapas MIP procesados"
 
-#: ../app/widgets/gimpdashboard.c:692
+#: ../app/widgets/gimpdashboard.c:694
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Asínc"
 
-#: ../app/widgets/gimpdashboard.c:693
+#: ../app/widgets/gimpdashboard.c:695
 msgid "Number of ongoing asynchronous operations"
 msgstr "Número de operaciones asíncronas en curso"
 
-#: ../app/widgets/gimpdashboard.c:701
+#: ../app/widgets/gimpdashboard.c:703
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr "Arañazo"
 
 # Es probablemente una memoria temporal que nada tiene que ver con arañazos.
-#: ../app/widgets/gimpdashboard.c:702
+#: ../app/widgets/gimpdashboard.c:704
 msgid "Total size of scratch memory"
 msgstr "Tamaño total de la memoria de arañazo"
 
-#: ../app/widgets/gimpdashboard.c:714
+#. Translators:  "TempBuf" is a technical term referring to an internal
+#. * GIMP data structure.  It's probably OK to leave it untranslated.
+#.
+#: ../app/widgets/gimpdashboard.c:715
+msgctxt "dashboard-variable"
+msgid "TempBuf"
+msgstr "TempBuf"
+
+# Es probablemente una memoria temporal que nada tiene que ver con arañazos.
+#: ../app/widgets/gimpdashboard.c:716
+#| msgid "Total size of scratch memory"
+msgid "Total size of temporary buffers"
+msgstr "Tamaño total de los búferes temporales"
+
+#: ../app/widgets/gimpdashboard.c:728
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Caché"
 
-#: ../app/widgets/gimpdashboard.c:715
+#: ../app/widgets/gimpdashboard.c:729
 msgid "In-memory tile cache"
 msgstr "Caché de mosaico en memoria"
 
-#: ../app/widgets/gimpdashboard.c:751
+#: ../app/widgets/gimpdashboard.c:765
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Intercambio"
 
-#: ../app/widgets/gimpdashboard.c:752
+#: ../app/widgets/gimpdashboard.c:766
 msgid "On-disk tile swap"
 msgstr "Intercambio de mosaico en disco"
 
-#: ../app/widgets/gimpdashboard.c:816
+#: ../app/widgets/gimpdashboard.c:830
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "CPU"
 
-#: ../app/widgets/gimpdashboard.c:817
+#: ../app/widgets/gimpdashboard.c:831
 msgid "CPU usage"
 msgstr "Uso de CPU"
 
-#: ../app/widgets/gimpdashboard.c:852
+#: ../app/widgets/gimpdashboard.c:866
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Memoria"
 
-#: ../app/widgets/gimpdashboard.c:853
+#: ../app/widgets/gimpdashboard.c:867
 msgid "Memory usage"
 msgstr "Uso de memoria"
 
-#: ../app/widgets/gimpdashboard.c:861
+#: ../app/widgets/gimpdashboard.c:875
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Caché"
 
-#: ../app/widgets/gimpdashboard.c:891
+#: ../app/widgets/gimpdashboard.c:905
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Varios"
 
-#: ../app/widgets/gimpdashboard.c:892
+#: ../app/widgets/gimpdashboard.c:906
 msgid "Miscellaneous information"
 msgstr "Información variada"
 
-#: ../app/widgets/gimpdashboard.c:1073
+#: ../app/widgets/gimpdashboard.c:1090
 msgid "Select fields"
 msgstr "Seleccionar campos"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3161
+#: ../app/widgets/gimpdashboard.c:3178
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "N/D"
 
-#: ../app/widgets/gimpdashboard.c:3170 ../app/widgets/gimpdashboard.c:4068
+#: ../app/widgets/gimpdashboard.c:3187 ../app/widgets/gimpdashboard.c:4085
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Sí"
 
-#: ../app/widgets/gimpdashboard.c:3171 ../app/widgets/gimpdashboard.c:4069
+#: ../app/widgets/gimpdashboard.c:3188 ../app/widgets/gimpdashboard.c:4086
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "No"
@@ -25348,7 +25386,7 @@ msgstr "No"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3255
+#: ../app/widgets/gimpdashboard.c:3272
 #, c-format
 msgid "%g/s"
 msgstr "%g/s"
@@ -25359,16 +25397,16 @@ msgstr "%g/s"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4058
+#: ../app/widgets/gimpdashboard.c:4075
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../app/widgets/gimpdashboard.c:4136
+#: ../app/widgets/gimpdashboard.c:4153
 msgid "N/A"
 msgstr "N/D"
 
-#: ../app/widgets/gimpdashboard.c:4465
+#: ../app/widgets/gimpdashboard.c:4482
 msgid "Resolving symbol information..."
 msgstr "Resolviendo información de símbolos..."
 
@@ -26811,6 +26849,10 @@ msgstr "redondo"
 msgid "fuzzy"
 msgstr "borroso"
 
+#~ msgctxt "filters-action"
+#~ msgid "_Linear Invert"
+#~ msgstr "Inversión _lineal"
+
 #~ msgid ""
 #~ "Fatal parse error in brush file:\n"
 #~ "Unsupported brush depth %d\n"
@@ -27327,11 +27369,6 @@ msgstr "borroso"
 #~ msgctxt "drawable-action"
 #~ msgid "Flip vertically"
 #~ msgstr "Voltear verticalmente"
-
-#, fuzzy
-#~| msgid "Linear light"
-#~ msgid "Linear Invert"
-#~ msgstr "Luz lineal"
 
 #, fuzzy
 #~| msgctxt "undo-type"
