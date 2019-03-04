@@ -1055,7 +1055,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
                           if (p.x >= 0 && p.x < gegl_buffer_get_width (closed) &&
                               p.y >= 0 && p.y < gegl_buffer_get_height (closed))
                             {
-                              guchar val = 1;
+                              guchar val = 2;
 
                               gegl_buffer_set (closed, GEGL_RECTANGLE ((gint) p.x, (gint) p.y, 1, 1), 0,
                                                NULL, &val, GEGL_AUTO_ROWSTRIDE);
@@ -1111,7 +1111,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
                       for (j = 0; j < segment->len; j++)
                         {
                           Pixel  p2 = g_array_index (segment, Pixel, j);
-                          guchar val = 1;
+                          guchar val = 2;
 
                           gegl_buffer_set (closed, GEGL_RECTANGLE ((gint) p2.x, (gint) p2.y, 1, 1), 0,
                                            NULL, &val, GEGL_AUTO_ROWSTRIDE);
