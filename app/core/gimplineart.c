@@ -564,6 +564,7 @@ gimp_line_art_compute (GimpLineArt *line_art)
        * it can't actually be interrupted.  instead gimp_line_art_compute_cb()
        * bails if the async has been canceled, to avoid accessing the line art.
        */
+      g_signal_emit (line_art, gimp_line_art_signals[COMPUTING_END], 0);
       gimp_cancelable_cancel (GIMP_CANCELABLE (line_art->priv->async));
       g_clear_object (&line_art->priv->async);
     }
@@ -604,8 +605,6 @@ static void
 gimp_line_art_compute_cb (GimpAsync   *async,
                           GimpLineArt *line_art)
 {
-  g_signal_emit (line_art, gimp_line_art_signals[COMPUTING_END], 0);
-
   if (gimp_async_is_canceled (async))
     return;
 
@@ -618,6 +617,7 @@ gimp_line_art_compute_cb (GimpAsync   *async,
       line_art->priv->closed  = g_object_ref (result->closed);
       line_art->priv->distmap = result->distmap;
       result->distmap  = NULL;
+      g_signal_emit (line_art, gimp_line_art_signals[COMPUTING_END], 0);
     }
 
   g_clear_object (&line_art->priv->async);
