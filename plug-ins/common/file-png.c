@@ -1480,11 +1480,7 @@ save_image (const gchar  *filename,
 
       if (type == GIMP_INDEXED_IMAGE) 
 		{
-    	  struct {
-    		  guchar red;
-    		  guchar green;
-    		  guchar blue;
-    	  } *p = pngg.palette;
+    	  png_color *p = pngg.palette;
 
 		  for(i = 0;i < pngg.num_palette;i++) 
 			{
