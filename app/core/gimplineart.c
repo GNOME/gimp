@@ -80,6 +80,7 @@ struct _GimpLineArtPrivate
   gdouble       threshold;
   gint          spline_max_len;
   gint          segment_max_len;
+  gboolean      max_len_bound;
 
   /* Used in the grow step. */
   gint          max_grow;
@@ -380,23 +381,39 @@ gimp_line_art_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_SELECT_TRANSPARENT:
-      line_art->priv->select_transparent = g_value_get_boolean (value);
-      gimp_line_art_compute (line_art);
+      if (line_art->priv->select_transparent != g_value_get_boolean (value))
+        {
+          line_art->priv->select_transparent = g_value_get_boolean (value);
+          gimp_line_art_compute (line_art);
+        }
       break;
     case PROP_MAX_GROW:
       line_art->priv->max_grow = g_value_get_int (value);
       break;
     case PROP_THRESHOLD:
-      line_art->priv->threshold = g_value_get_double (value);
-      gimp_line_art_compute (line_art);
+      if (line_art->priv->threshold != g_value_get_double (value))
+        {
+          line_art->priv->threshold = g_value_get_double (value);
+          gimp_line_art_compute (line_art);
+        }
       break;
     case PROP_SPLINE_MAX_LEN:
-      line_art->priv->spline_max_len = g_value_get_int (value);
-      gimp_line_art_compute (line_art);
+      if (line_art->priv->spline_max_len != g_value_get_int (value))
+        {
+          line_art->priv->spline_max_len = g_value_get_int (value);
+          if (line_art->priv->max_len_bound)
+            line_art->priv->segment_max_len = line_art->priv->spline_max_len;
+          gimp_line_art_compute (line_art);
+        }
       break;
     case PROP_SEGMENT_MAX_LEN:
-      line_art->priv->segment_max_len = g_value_get_int (value);
-      gimp_line_art_compute (line_art);
+      if (line_art->priv->segment_max_len != g_value_get_int (value))
+        {
+          line_art->priv->segment_max_len = g_value_get_int (value);
+          if (line_art->priv->max_len_bound)
+            line_art->priv->spline_max_len = line_art->priv->segment_max_len;
+          gimp_line_art_compute (line_art);
+        }
       break;
 
     default:
@@ -444,6 +461,13 @@ gimp_line_art_new (void)
 {
   return g_object_new (GIMP_TYPE_LINE_ART,
                        NULL);
+}
+
+void
+gimp_line_art_bind_gap_length (GimpLineArt *line_art,
+                               gboolean     bound)
+{
+  line_art->priv->max_len_bound = bound;
 }
 
 void
