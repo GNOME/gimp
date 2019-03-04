@@ -35,12 +35,20 @@
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplineart.h"
+#include "gimpmarshal.h"
 #include "gimppickable.h"
 #include "gimpprojection.h"
 #include "gimpviewable.h"
 #include "gimpwaitable.h"
 
 #include "gimp-intl.h"
+
+enum
+{
+  COMPUTING_START,
+  COMPUTING_END,
+  LAST_SIGNAL,
+};
 
 enum
 {
@@ -72,6 +80,7 @@ struct _GimpLineArtPrivate
   gdouble       threshold;
   gint          spline_max_len;
   gint          segment_max_len;
+  gboolean      max_len_bound;
 
   /* Used in the grow step. */
   gint          max_grow;
@@ -282,10 +291,29 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
 G_DEFINE_TYPE_WITH_CODE (GimpLineArt, gimp_line_art, GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpLineArt))
 
+static guint gimp_line_art_signals[LAST_SIGNAL] = { 0 };
+
 static void
 gimp_line_art_class_init (GimpLineArtClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  gimp_line_art_signals[COMPUTING_START] =
+    g_signal_new ("computing-start",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLineArtClass, computing_start),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+  gimp_line_art_signals[COMPUTING_END] =
+    g_signal_new ("computing-end",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLineArtClass, computing_end),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize     = gimp_line_art_finalize;
   object_class->set_property = gimp_line_art_set_property;
@@ -354,23 +382,39 @@ gimp_line_art_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_SELECT_TRANSPARENT:
-      line_art->priv->select_transparent = g_value_get_boolean (value);
-      gimp_line_art_compute (line_art);
+      if (line_art->priv->select_transparent != g_value_get_boolean (value))
+        {
+          line_art->priv->select_transparent = g_value_get_boolean (value);
+          gimp_line_art_compute (line_art);
+        }
       break;
     case PROP_MAX_GROW:
       line_art->priv->max_grow = g_value_get_int (value);
       break;
     case PROP_THRESHOLD:
-      line_art->priv->threshold = g_value_get_double (value);
-      gimp_line_art_compute (line_art);
+      if (line_art->priv->threshold != g_value_get_double (value))
+        {
+          line_art->priv->threshold = g_value_get_double (value);
+          gimp_line_art_compute (line_art);
+        }
       break;
     case PROP_SPLINE_MAX_LEN:
-      line_art->priv->spline_max_len = g_value_get_int (value);
-      gimp_line_art_compute (line_art);
+      if (line_art->priv->spline_max_len != g_value_get_int (value))
+        {
+          line_art->priv->spline_max_len = g_value_get_int (value);
+          if (line_art->priv->max_len_bound)
+            line_art->priv->segment_max_len = line_art->priv->spline_max_len;
+          gimp_line_art_compute (line_art);
+        }
       break;
     case PROP_SEGMENT_MAX_LEN:
-      line_art->priv->segment_max_len = g_value_get_int (value);
-      gimp_line_art_compute (line_art);
+      if (line_art->priv->segment_max_len != g_value_get_int (value))
+        {
+          line_art->priv->segment_max_len = g_value_get_int (value);
+          if (line_art->priv->max_len_bound)
+            line_art->priv->spline_max_len = line_art->priv->segment_max_len;
+          gimp_line_art_compute (line_art);
+        }
       break;
 
     default:
@@ -418,6 +462,13 @@ gimp_line_art_new (void)
 {
   return g_object_new (GIMP_TYPE_LINE_ART,
                        NULL);
+}
+
+void
+gimp_line_art_bind_gap_length (GimpLineArt *line_art,
+                               gboolean     bound)
+{
+  line_art->priv->max_len_bound = bound;
 }
 
 void
@@ -514,6 +565,7 @@ gimp_line_art_compute (GimpLineArt *line_art)
        * it can't actually be interrupted.  instead gimp_line_art_compute_cb()
        * bails if the async has been canceled, to avoid accessing the line art.
        */
+      g_signal_emit (line_art, gimp_line_art_signals[COMPUTING_END], 0);
       gimp_cancelable_cancel (GIMP_CANCELABLE (line_art->priv->async));
       g_clear_object (&line_art->priv->async);
     }
@@ -538,6 +590,7 @@ gimp_line_art_compute (GimpLineArt *line_art)
         G_CALLBACK (gimp_line_art_input_invalidate_preview),
         line_art);
       line_art->priv->async = gimp_line_art_prepare_async (line_art, +1);
+      g_signal_emit (line_art, gimp_line_art_signals[COMPUTING_START], 0);
       g_signal_handlers_unblock_by_func (
         line_art->priv->input,
         G_CALLBACK (gimp_line_art_input_invalidate_preview),
@@ -565,6 +618,7 @@ gimp_line_art_compute_cb (GimpAsync   *async,
       line_art->priv->closed  = g_object_ref (result->closed);
       line_art->priv->distmap = result->distmap;
       result->distmap  = NULL;
+      g_signal_emit (line_art, gimp_line_art_signals[COMPUTING_END], 0);
     }
 
   g_clear_object (&line_art->priv->async);
@@ -1002,7 +1056,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
                           if (p.x >= 0 && p.x < gegl_buffer_get_width (closed) &&
                               p.y >= 0 && p.y < gegl_buffer_get_height (closed))
                             {
-                              guchar val = 1;
+                              guchar val = 2;
 
                               gegl_buffer_set (closed, GEGL_RECTANGLE ((gint) p.x, (gint) p.y, 1, 1), 0,
                                                NULL, &val, GEGL_AUTO_ROWSTRIDE);
@@ -1058,7 +1112,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
                       for (j = 0; j < segment->len; j++)
                         {
                           Pixel  p2 = g_array_index (segment, Pixel, j);
-                          guchar val = 1;
+                          guchar val = 2;
 
                           gegl_buffer_set (closed, GEGL_RECTANGLE ((gint) p2.x, (gint) p2.y, 1, 1), 0,
                                            NULL, &val, GEGL_AUTO_ROWSTRIDE);

@@ -1804,7 +1804,7 @@ save_image (const gchar  *filename,
         {
           png_color *p = pngg.palette;
 
-          for(i = 0; i < pngg.num_palette; i++)
+          for (i = 0; i < pngg.num_palette; i++)
             {
               if (background.red == p->red &&
                   background.green == p->green &&

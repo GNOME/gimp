@@ -45,12 +45,20 @@ struct _GimpLineArt
 struct _GimpLineArtClass
 {
   GimpObjectClass     parent_class;
+
+  /* Signals */
+
+  void (* computing_start) (GimpLineArt *line_art);
+  void (* computing_end)   (GimpLineArt *line_art);
 };
 
 
 GType                gimp_line_art_get_type         (void) G_GNUC_CONST;
 
 GimpLineArt        * gimp_line_art_new              (void);
+
+void                 gimp_line_art_bind_gap_length  (GimpLineArt  *line_art,
+                                                     gboolean      bound);
 
 void                 gimp_line_art_set_input        (GimpLineArt  *line_art,
                                                      GimpPickable *pickable);
