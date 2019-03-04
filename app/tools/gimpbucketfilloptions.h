@@ -46,6 +46,7 @@ struct _GimpBucketFillOptions
   gboolean                      antialias;
   gdouble                       threshold;
 
+  GtkWidget                    *line_art_busy_box;
   GimpLineArtSource             line_art_source;
   gdouble                       line_art_threshold;
   gint                          line_art_max_grow;

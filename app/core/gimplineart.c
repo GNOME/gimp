@@ -35,12 +35,20 @@
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimplineart.h"
+#include "gimpmarshal.h"
 #include "gimppickable.h"
 #include "gimpprojection.h"
 #include "gimpviewable.h"
 #include "gimpwaitable.h"
 
 #include "gimp-intl.h"
+
+enum
+{
+  COMPUTING_START,
+  COMPUTING_END,
+  LAST_SIGNAL,
+};
 
 enum
 {
@@ -281,10 +289,29 @@ static void       gimp_edgelset_next8             (const GeglBuffer  *buffer,
 G_DEFINE_TYPE_WITH_CODE (GimpLineArt, gimp_line_art, GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpLineArt))
 
+static guint gimp_line_art_signals[LAST_SIGNAL] = { 0 };
+
 static void
 gimp_line_art_class_init (GimpLineArtClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  gimp_line_art_signals[COMPUTING_START] =
+    g_signal_new ("computing-start",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLineArtClass, computing_start),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+  gimp_line_art_signals[COMPUTING_END] =
+    g_signal_new ("computing-end",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLineArtClass, computing_end),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize     = gimp_line_art_finalize;
   object_class->set_property = gimp_line_art_set_property;
@@ -537,6 +564,7 @@ gimp_line_art_compute (GimpLineArt *line_art)
         G_CALLBACK (gimp_line_art_input_invalidate_preview),
         line_art);
       line_art->priv->async = gimp_line_art_prepare_async (line_art, +1);
+      g_signal_emit (line_art, gimp_line_art_signals[COMPUTING_START], 0);
       g_signal_handlers_unblock_by_func (
         line_art->priv->input,
         G_CALLBACK (gimp_line_art_input_invalidate_preview),
@@ -552,6 +580,8 @@ static void
 gimp_line_art_compute_cb (GimpAsync   *async,
                           GimpLineArt *line_art)
 {
+  g_signal_emit (line_art, gimp_line_art_signals[COMPUTING_END], 0);
+
   if (gimp_async_is_canceled (async))
     return;
 

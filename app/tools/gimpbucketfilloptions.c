@@ -364,13 +364,14 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   GimpBucketFillOptions *options = GIMP_BUCKET_FILL_OPTIONS (tool_options);
   GObject               *config = G_OBJECT (tool_options);
   GtkWidget             *vbox   = gimp_paint_options_gui (tool_options);
-  GtkWidget             *vbox2;
+  GtkWidget             *box2;
   GtkWidget             *frame;
   GtkWidget             *hbox;
-  GtkWidget             *button;
+  GtkWidget             *widget;
   GtkWidget             *scale;
   GtkWidget             *combo;
   gchar                 *str;
+  gboolean               bold;
   GdkModifierType        extend_mask = gimp_get_extend_selection_mask ();
   GdkModifierType        toggle_mask = GDK_MOD1_MASK;
 
@@ -404,86 +405,105 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   options->priv->similar_color_frame = frame;
   gtk_widget_show (frame);
 
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (frame), box2);
+  gtk_widget_show (box2);
 
   /*  the fill transparent areas toggle  */
-  button = gimp_prop_check_button_new (config, "fill-transparent", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  widget = gimp_prop_check_button_new (config, "fill-transparent", NULL);
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
   /*  the sample merged toggle  */
-  button = gimp_prop_check_button_new (config, "sample-merged", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  widget = gimp_prop_check_button_new (config, "sample-merged", NULL);
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
   /*  the diagonal neighbors toggle  */
-  button = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  options->priv->diagonal_neighbors_checkbox = button;
-  gtk_widget_show (button);
+  widget = gimp_prop_check_button_new (config, "diagonal-neighbors", NULL);
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+  options->priv->diagonal_neighbors_checkbox = widget;
+  gtk_widget_show (widget);
 
   /*  the antialias toggle  */
-  button = gimp_prop_check_button_new (config, "antialias", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  widget = gimp_prop_check_button_new (config, "antialias", NULL);
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
   /*  the threshold scale  */
   scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
                                     1.0, 16.0, 1);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
   options->priv->threshold_scale = scale;
   gtk_widget_show (scale);
 
   /*  the fill criterion combo  */
   combo = gimp_prop_enum_combo_box_new (config, "fill-criterion", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fill by"));
-  gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box2), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   /* Line art frame */
-  frame = gimp_frame_new (_("Line Art Detection"));
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   options->priv->line_art_frame = frame;
   gtk_widget_show (frame);
 
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
+  /* Line art: label widget */
+  box2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), box2);
+  gtk_widget_show (box2);
+
+  widget = gtk_label_new (_("Line Art Detection"));
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+  gtk_widget_style_get (GTK_WIDGET (frame),
+                        "label-bold", &bold,
+                        NULL);
+  gimp_label_set_attributes (GTK_LABEL (widget),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
+  gtk_widget_show (widget);
+
+  options->line_art_busy_box = gimp_busy_box_new (_("(computing...)"));
+  gtk_box_pack_start (GTK_BOX (box2), options->line_art_busy_box,
+                      FALSE, FALSE, 0);
+
+  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (frame), box2);
+  gtk_widget_show (box2);
 
   /*  Line Art: source combo (replace sample merged!) */
   combo = gimp_prop_enum_combo_box_new (config, "line-art-source", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Source"));
-  gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box2), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
   /*  the fill transparent areas toggle  */
-  button = gimp_prop_check_button_new (config, "fill-transparent", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  widget = gimp_prop_check_button_new (config, "fill-transparent", NULL);
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
   /*  the antialias toggle  */
-  button = gimp_prop_check_button_new (config, "antialias", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  widget = gimp_prop_check_button_new (config, "antialias", NULL);
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
   /*  Line Art: max growing size */
   scale = gimp_prop_spin_scale_new (config, "line-art-max-grow", NULL,
                                     1, 5, 0);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Line Art: stroke threshold */
   scale = gimp_prop_spin_scale_new (config, "line-art-threshold", NULL,
                                     0.05, 0.1, 2);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  Line Art: max gap length */
   scale = gimp_prop_spin_scale_new (config, "line-art-max-gap-length", NULL,
                                     1, 5, 0);
-  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   gimp_bucket_fill_options_update_area (options);

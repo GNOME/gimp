@@ -45,6 +45,11 @@ struct _GimpLineArt
 struct _GimpLineArtClass
 {
   GimpObjectClass     parent_class;
+
+  /* Signals */
+
+  void (* computing_start) (GimpLineArt *line_art);
+  void (* computing_end)   (GimpLineArt *line_art);
 };
 
 
