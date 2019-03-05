@@ -64,8 +64,6 @@ gboolean       gimp_item_tree_get_insert_pos   (GimpItemTree  *tree,
                                                 GimpItem     **parent,
                                                 gint          *position);
 
-void           gimp_item_tree_clear            (GimpItemTree  *tree);
-
 void           gimp_item_tree_add_item         (GimpItemTree  *tree,
                                                 GimpItem      *item,
                                                 GimpItem      *parent,

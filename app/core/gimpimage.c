@@ -1034,9 +1034,9 @@ gimp_image_dispose (GObject *object)
                                         gimp_image_channel_remove,
                                         image);
 
-  gimp_item_tree_clear (private->layers);
-  gimp_item_tree_clear (private->channels);
-  gimp_item_tree_clear (private->vectors);
+  g_object_run_dispose (G_OBJECT (private->layers));
+  g_object_run_dispose (G_OBJECT (private->channels));
+  g_object_run_dispose (G_OBJECT (private->vectors));
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
