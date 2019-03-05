@@ -720,8 +720,31 @@ pixel_difference (const gfloat        *col1,
           break;
 
         case GIMP_SELECT_CRITERION_H:
-          max = fabs (col1[0] - col2[0]);
-          max = MIN (max, 1.0 - max);
+          if (col1[1] > EPSILON)
+            {
+              if (col2[1] > EPSILON)
+                {
+                  max = fabs (col1[0] - col2[0]);
+                  max = MIN (max, 1.0 - max);
+                }
+              else
+                {
+                  /* "infinite" difference.  anything >> 1 will do. */
+                  max = 10.0;
+                }
+            }
+          else
+            {
+              if (col2[1] > EPSILON)
+                {
+                  /* "infinite" difference.  anything >> 1 will do. */
+                  max = 10.0;
+                }
+              else
+                {
+                  max = 0.0;
+                }
+            }
           break;
 
         case GIMP_SELECT_CRITERION_S:
@@ -741,8 +764,31 @@ pixel_difference (const gfloat        *col1,
           break;
 
         case GIMP_SELECT_CRITERION_LCH_H:
-          max = fabs (col1[2] - col2[2]) / 360.0;
-          max = MIN (max, 1.0 - max);
+          if (col1[1] > 100.0 * EPSILON)
+            {
+              if (col2[1] > 100.0 * EPSILON)
+                {
+                  max = fabs (col1[2] - col2[2]) / 360.0;
+                  max = MIN (max, 1.0 - max);
+                }
+              else
+                {
+                  /* "infinite" difference.  anything >> 1 will do. */
+                  max = 10.0;
+                }
+            }
+          else
+            {
+              if (col2[1] > 100.0 * EPSILON)
+                {
+                  /* "infinite" difference.  anything >> 1 will do. */
+                  max = 10.0;
+                }
+              else
+                {
+                  max = 0.0;
+                }
+            }
           break;
         }
     }
