@@ -1034,12 +1034,9 @@ gimp_image_dispose (GObject *object)
                                         gimp_image_channel_remove,
                                         image);
 
-  gimp_container_foreach (private->layers->container,
-                          (GFunc) gimp_item_removed, NULL);
-  gimp_container_foreach (private->channels->container,
-                          (GFunc) gimp_item_removed, NULL);
-  gimp_container_foreach (private->vectors->container,
-                          (GFunc) gimp_item_removed, NULL);
+  gimp_item_tree_clear (private->layers);
+  gimp_item_tree_clear (private->channels);
+  gimp_item_tree_clear (private->vectors);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
