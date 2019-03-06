@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: GIMP script-fu gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-24 16:52+0000\n"
-"PO-Revision-Date: 2019-03-05 00:00+0000\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"PO-Revision-Date: 2019-03-05 03:05+0200\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -205,6 +205,7 @@ msgstr "Script-Fu Renk Seçimi"
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Dosya Seçimi"
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Dizin Seçimi"
@@ -412,7 +413,7 @@ msgstr "GIF İçin Hazırla"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
-msgstr "Hız (benek/kare)"
+msgstr "Hız (piksel/kare)"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:168
 msgid "Carved Surface"
@@ -759,11 +760,11 @@ msgstr "_Süzgeç (düzenli anlatım)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:162
 msgid "Font _size (pixels)"
-msgstr "Yazı tipi _boyutu (benek)"
+msgstr "Yazı tipi _boyutu (piksel)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
 msgid "_Border (pixels)"
-msgstr "_Sınır (benek)"
+msgstr "_Sınır (piksel)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "_Color scheme"
@@ -988,7 +989,7 @@ msgstr "Yeni _Kılavuz..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "Belirlenen yön ve konuma (benek olarak) bir kılavuz ekle"
+msgstr "Belirlenen yön ve konuma (piksel olarak) bir kılavuz ekle"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "Position"
@@ -1135,17 +1136,17 @@ msgstr "Renksiz"
 msgid "Mottle"
 msgstr "Benekle"
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
-msgstr "Çıktı dosyasının klasörü"
+msgstr "Çıktı dosyası dizini"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:227
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"Oluşturulacak dosyanın adı (eğer bu adda bir dosya varsa, "
-"değiştirilecektir)"
+"Oluşturulacak dosyanın adı (eğer bu adda bir dosya varsa, değiştirilecektir)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
@@ -1265,11 +1266,11 @@ msgstr "Kenar miktarı"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:130
 msgid "Pixelize"
-msgstr "Benekleştir"
+msgstr "Pikselleştir"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:131
 msgid "Pixel amount"
-msgstr "Benek miktarı"
+msgstr "Piksel miktarı"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer Order"
@@ -1527,7 +1528,7 @@ msgstr "İç dişler"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
 msgid "Margin (pixels)"
-msgstr "Boşluk (benek)"
+msgstr "Boşluk (piksel)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
 msgid "Hole ratio"
