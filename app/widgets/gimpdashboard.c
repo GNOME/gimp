@@ -4473,10 +4473,9 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
     {
       GimpAsync *async;
 
-      async = gimp_parallel_run_async_full (
-        -1,
+      async = gimp_parallel_run_async_independent (
         (GimpParallelRunAsyncFunc) gimp_dashboard_log_write_address_map,
-        dashboard, NULL);
+        dashboard);
 
       gimp_wait (priv->gimp, GIMP_WAITABLE (async),
                  _("Resolving symbol information..."));
