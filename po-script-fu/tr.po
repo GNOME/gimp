@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: GIMP script-fu gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-24 16:52+0000\n"
-"PO-Revision-Date: 2019-03-05 03:05+0200\n"
+"PO-Revision-Date: 2019-03-06 19:23+0200\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -88,7 +88,7 @@ msgstr "_Classic.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:331
 msgid "Alpha to _Logo"
-msgstr "_Logodan Görünüre"
+msgstr "Alfadan _Logoya"
 
 #: ../plug-ins/script-fu/script-fu.c:334
 msgid "Re-read all available Script-Fu scripts"
@@ -491,7 +491,7 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"Belirtilen kalıbı (gri tonlama) kullanarak seçili bölgeye (veya görünüre) "
+"Belirtilen kalıbı (gri tonlama) kullanarak seçili bölgeye (veya alfaya) "
 "gümüş etkisi uygula"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:238
@@ -533,7 +533,7 @@ msgstr "_Devre..."
 #: ../plug-ins/script-fu/scripts/circuit.scm:128
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr "Seçili bölgeyi (ya da görünürü) devre üzerindeymiş gibi izlerle doldur"
+msgstr "Seçili bölgeyi (veya alfayı) devre üzerindeymiş gibi izlerle doldur"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:135
 msgid "Oilify mask size"
@@ -566,7 +566,7 @@ msgstr "_Bezimsileştir..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr "Seçilen bölgeye (veya görünüre) bezimsi bir doku ekle"
+msgstr "Seçilen bölgeye (veya alfaya) bezimsi bir doku ekle"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
@@ -654,7 +654,7 @@ msgstr "_Gölge (eski)..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr "Seçili bölgeye (veya görünüre) gölge ekle"
+msgstr "Seçili bölgeye (veya alfaya) gölge ekle"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset X"
@@ -989,7 +989,7 @@ msgstr "Yeni _Kılavuz..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "Belirlenen yön ve konuma (piksel olarak) bir kılavuz ekle"
+msgstr "Belirlenen yönelim ve konuma (piksel olarak) bir kılavuz ekle"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "Position"
@@ -1234,7 +1234,7 @@ msgstr "_Perspektif..."
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr "Seçilen bölgeye (veya görünüre) perspektif gölgesi ekle"
+msgstr "Seçilen bölgeye (veya alfaya) perspektif gölgesi ekle"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
 msgid "Angle"
@@ -1258,7 +1258,7 @@ msgstr "_Yırtıcı..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Seçili bölgeye (veya görünüre) 'Yırtıcı' etkisi uygula"
+msgstr "Seçili bölgeye (veya alfaya) 'Yırtıcı' etkisi uygula"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
 msgid "Edge amount"
@@ -1690,7 +1690,7 @@ msgstr "_Cam Etkisi..."
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:122
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "Seçili bölgeye (veya görünüre) 3 boyutlu cam etkisi ekle"
+msgstr "Seçili bölgeye (veya alfaya) 3 boyutlu cam etkisi ekle"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
