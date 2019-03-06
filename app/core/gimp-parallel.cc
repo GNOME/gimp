@@ -185,6 +185,14 @@ GimpAsync *
 gimp_parallel_run_async_independent (GimpParallelRunAsyncFunc func,
                                      gpointer                 user_data)
 {
+  return gimp_parallel_run_async_independent_full (0, func, user_data);
+}
+
+GimpAsync *
+gimp_parallel_run_async_independent_full (gint                     priority,
+                                          GimpParallelRunAsyncFunc func,
+                                          gpointer                 user_data)
+{
   GimpAsync                *async;
   GimpParallelRunAsyncTask *task;
   GThread                  *thread;
@@ -196,6 +204,7 @@ gimp_parallel_run_async_independent (GimpParallelRunAsyncFunc func,
   task = g_slice_new0 (GimpParallelRunAsyncTask);
 
   task->async     = GIMP_ASYNC (g_object_ref (async));
+  task->priority  = priority;
   task->func      = func;
   task->user_data = user_data;
 
@@ -205,12 +214,22 @@ gimp_parallel_run_async_independent (GimpParallelRunAsyncFunc func,
     {
       GimpParallelRunAsyncTask *task = (GimpParallelRunAsyncTask *) data;
 
-      /* lower the thread's priority */
+      /* adjust the thread's priority */
 #if defined (G_OS_WIN32)
-      SetThreadPriority (GetCurrentThread (), THREAD_MODE_BACKGROUND_BEGIN);
+      if (task->priority < 0)
+        {
+          SetThreadPriority (GetCurrentThread (), THREAD_MODE_BACKGROUND_BEGIN);
+        }
+      else if (task->priority > 0)
+        {
+          SetThreadPriority (GetCurrentThread (), THREAD_MODE_ABOVE_NORMAL);
+        }
 #elif defined (HAVE_UNISTD_H) && defined (__gnu_linux__)
-      nice (+10) != -1;
-              /* ^-- avoid "unused result" warning */
+      if (task->priority)
+        {
+          nice (task->priority) != -1;
+                             /* ^-- avoid "unused result" warning */
+        }
 #endif
 
       while (gimp_parallel_run_async_execute_task (task));
