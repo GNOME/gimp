@@ -1052,15 +1052,17 @@ gimp_paint_core_replace (GimpPaintCore            *core,
           combined_mask_buffer = gegl_buffer_new (&aligned_combined_mask_rect,
                                                   babl_format ("Y float"));
 
-          gegl_buffer_copy (core->mask_buffer,
-                            GEGL_RECTANGLE (aligned_combined_mask_rect.x -
-                                            core->mask_x_offset,
-                                            aligned_combined_mask_rect.y -
-                                            core->mask_y_offset,
-                                            aligned_combined_mask_rect.width,
-                                            aligned_combined_mask_rect.height),
-                            GEGL_ABYSS_NONE,
-                            combined_mask_buffer, &aligned_combined_mask_rect);
+          gimp_gegl_buffer_copy (
+            core->mask_buffer,
+            GEGL_RECTANGLE (aligned_combined_mask_rect.x -
+                            core->mask_x_offset,
+                            aligned_combined_mask_rect.y -
+                            core->mask_y_offset,
+                            aligned_combined_mask_rect.width,
+                            aligned_combined_mask_rect.height),
+            GEGL_ABYSS_NONE,
+            combined_mask_buffer,
+            &aligned_combined_mask_rect);
 
           gimp_gegl_combine_mask (mask_buffer,          &mask_rect,
                                   combined_mask_buffer, &combined_mask_rect,

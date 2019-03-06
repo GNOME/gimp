@@ -27,6 +27,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-loops.h"
+
 #include "gimp-parallel.h"
 #include "gimp-priorities.h"
 #include "gimp-utils.h" /* GIMP_TIMER */
@@ -900,7 +902,7 @@ gimp_line_art_close (GeglBuffer  *buffer,
   /* Transform the line art from any format to gray. */
   strokes = gegl_buffer_new (gegl_buffer_get_extent (buffer),
                              gray_format);
-  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, strokes, NULL);
+  gimp_gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, strokes, NULL);
   gegl_buffer_set_format (strokes, babl_format ("Y' u8"));
 
   if (! select_transparent)
