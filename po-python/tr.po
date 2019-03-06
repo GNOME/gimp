@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: GIMP python gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-02-24 16:52+0000\n"
-"PO-Revision-Date: 2019-03-05 00:00+0000\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"PO-Revision-Date: 2019-03-05 03:15+0200\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -53,6 +53,7 @@ msgstr "Evet"
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu Dosya Seçimi"
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Klasör Seçimi"
@@ -100,7 +101,7 @@ msgstr "Okunacak _dosya ya da kullanılacak karakterler"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
-msgstr "Benek ci_nsinden yazı tipi boyutu"
+msgstr "Piksel olarak _yazı tipi boyutu"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
@@ -149,7 +150,7 @@ msgstr "Çıktı biçimi"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Pixel count"
-msgstr "Benek sayısı"
+msgstr "Piksel sayısı"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Normalized"
@@ -374,10 +375,12 @@ msgstr "Görüntü ismi öneki"
 msgid "Image format"
 msgstr "Görüntü biçimi"
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Görüntü klasörünü ayır"
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Görüntü dışa aktarımı için klasör"
@@ -545,8 +548,7 @@ msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
-"Epitrokoit deseni, hareketli dişlinin sabit dişlinin dışında olduğu "
-"zamandır."
+"Epitrokoit deseni, hareketli dişlinin sabit dişlinin dışında olduğu zamandır."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
 msgid "Tool"
@@ -583,7 +585,7 @@ msgid ""
 "you follow the instructions from the toy kit manuals, results should be "
 "similar."
 msgstr ""
-"Desen yalnızca aktif sekme ile belirlenir. Oyuncak Seti, Dişlilere benzer, "
+"Desen yalnızca etkin sekme ile belirlenir. Oyuncak Seti, Dişlilere benzer, "
 "ancak oyuncak setinde bulunan dişli ve delik numaralarını kullanır. Oyuncak "
 "seti kılavuzlarındaki talimatları izlerseniz, sonuçlar benzer olmalıdır."
 
@@ -681,7 +683,7 @@ msgstr "Yanlar"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
 msgid "Number of sides of the shape."
-msgstr "Şeklin yan sayısı"
+msgstr "Şeklin yan sayısı."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
 msgid "Morph"
@@ -697,7 +699,7 @@ msgstr "Sabit dişlinin döndürülme açısı, derece olarak"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
 msgid "Margin (px)"
-msgstr "Boşluk (benek)"
+msgstr "Boşluk (px)"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
 msgid "Margin from edge of selection."
@@ -724,8 +726,8 @@ msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
 msgstr ""
-"Eğer ki bir aracın ayarlarını, rengi veya seçimi değiştirirseniz, "
-"deseni önizlemek için bu düğmeye basın."
+"Eğer ki bir aracın ayarlarını, rengi veya seçimi değiştirirseniz, deseni "
+"önizlemek için bu düğmeye basın."
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
 msgid "Reset"
