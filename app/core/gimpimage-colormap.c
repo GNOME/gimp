@@ -41,8 +41,9 @@
 
 /*  local function prototype  */
 
-static void   gimp_image_colormap_set_palette_entry (GimpImage *image,
-                                                     gint       index);
+static void   gimp_image_colormap_set_palette_entry (GimpImage     *image,
+                                                     const GimpRGB *color,
+                                                     gint           index);
 
 
 /*  public functions  */
@@ -213,7 +214,7 @@ gimp_image_set_colormap (GimpImage    *image,
     gimp_palette_delete_entry (private->palette, entry);
 
   for (i = 0; i < private->n_colors; i++)
-    gimp_image_colormap_set_palette_entry (image, i);
+    gimp_image_colormap_set_palette_entry (image, NULL, i);
 
   gimp_data_thaw (GIMP_DATA (private->palette));
 
@@ -293,7 +294,7 @@ gimp_image_set_colormap_entry (GimpImage     *image,
                       &private->colormap[color_index * 3 + 2]);
 
   if (private->palette)
-    gimp_image_colormap_set_palette_entry (image, color_index);
+    gimp_image_colormap_set_palette_entry (image, color, color_index);
 
   gimp_image_colormap_changed (image, color_index);
 }
@@ -323,7 +324,7 @@ gimp_image_add_colormap_entry (GimpImage     *image,
   private->n_colors++;
 
   if (private->palette)
-    gimp_image_colormap_set_palette_entry (image, private->n_colors - 1);
+    gimp_image_colormap_set_palette_entry (image, color, private->n_colors - 1);
 
   gimp_image_colormap_changed (image, -1);
 }
@@ -332,18 +333,25 @@ gimp_image_add_colormap_entry (GimpImage     *image,
 /*  private functions  */
 
 static void
-gimp_image_colormap_set_palette_entry (GimpImage *image,
-                                       gint       index)
+gimp_image_colormap_set_palette_entry (GimpImage     *image,
+                                       const GimpRGB *c,
+                                       gint           index)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GimpRGB           color;
   gchar             name[64];
 
-  gimp_rgba_set_uchar (&color,
-                       private->colormap[3 * index + 0],
-                       private->colormap[3 * index + 1],
-                       private->colormap[3 * index + 2],
-                       255);
+  /* Avoid converting to char then back to double if we have the
+   * original GimpRGB color.
+   */
+  if (c)
+    color = *c;
+  else
+    gimp_rgba_set_uchar (&color,
+                         private->colormap[3 * index + 0],
+                         private->colormap[3 * index + 1],
+                         private->colormap[3 * index + 2],
+                         255);
 
   g_snprintf (name, sizeof (name), "#%d", index);
 
