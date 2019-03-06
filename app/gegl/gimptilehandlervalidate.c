@@ -22,6 +22,7 @@
 
 #include "gimp-gegl-types.h"
 
+#include "gimp-gegl-loops.h"
 #include "gimptilehandlervalidate.h"
 
 
@@ -609,8 +610,8 @@ gimp_tile_handler_validate_buffer_copy (GeglBuffer          *src_buffer,
 
   dst_validate->suspend_validate++;
 
-  gegl_buffer_copy (src_buffer, &real_src_rect, GEGL_ABYSS_NONE,
-                    dst_buffer, &real_dst_rect);
+  gimp_gegl_buffer_copy (src_buffer, &real_src_rect, GEGL_ABYSS_NONE,
+                         dst_buffer, &real_dst_rect);
 
   dst_validate->suspend_validate--;
 
