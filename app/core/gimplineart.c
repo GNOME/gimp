@@ -1149,11 +1149,12 @@ gimp_line_art_close (GeglBuffer  *buffer,
 
  end3:
           g_list_free_full (candidates, g_free);
-          g_clear_object (&strokes);
 
           if (gimp_async_is_stopped (async))
             goto end2;
         }
+
+      g_clear_object (&strokes);
 
       /* Draw straight line segments */
       if (segment_max_length > 0)
@@ -1238,11 +1239,17 @@ gimp_line_art_close (GeglBuffer  *buffer,
       g_free (normals);
       g_free (curvatures);
       g_free (smoothed_curvatures);
-      g_array_free (keypoints, TRUE);
-      g_hash_table_destroy (visited);
+      g_clear_pointer (&radii, g_free);
+      if (keypoints)
+        g_array_free (keypoints, TRUE);
+      g_clear_pointer (&visited, g_hash_table_destroy);
 
       if (gimp_async_is_stopped (async))
         goto end1;
+    }
+  else
+    {
+      g_clear_object (&strokes);
     }
 
   if (closed_distmap)
@@ -1323,7 +1330,7 @@ gimp_lineart_denoise (GeglBuffer *buffer,
 
             while (! g_queue_is_empty (q))
               {
-                Pixel *p = (Pixel *) g_queue_pop_head (q);
+                Pixel *p;
                 gint   p2x;
                 gint   p2y;
 
@@ -1333,6 +1340,8 @@ gimp_lineart_denoise (GeglBuffer *buffer,
 
                     goto end;
                   }
+
+                p = (Pixel *) g_queue_pop_head (q);
 
                 p2x = p->x + 1;
                 p2y = p->y;
@@ -2657,6 +2666,8 @@ gimp_edgelset_new (GeglBuffer *buffer,
 
       if (gimp_async_is_canceled (async))
         {
+          gegl_buffer_iterator_stop (gi);
+
           gimp_async_abort (async);
 
           goto end;
