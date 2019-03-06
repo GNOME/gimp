@@ -803,9 +803,20 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
   gtk_widget_queue_draw (GTK_WIDGET (editor));
 
   if (editor->active_image)
-    g_signal_handlers_disconnect_by_func (editor->active_image,
-                                          G_CALLBACK (gtk_widget_queue_draw),
-                                          editor);
+    {
+      g_signal_handlers_disconnect_by_func (editor->active_image,
+                                            G_CALLBACK (gtk_widget_queue_draw),
+                                            editor);
+      if (gimp_image_get_base_type (editor->active_image) == GIMP_INDEXED)
+        {
+          GimpPalette *palette;
+
+          palette = gimp_image_get_colormap_palette (editor->active_image);
+          g_signal_handlers_disconnect_by_func (palette,
+                                                G_CALLBACK (gtk_widget_queue_draw),
+                                                editor);
+        }
+    }
   editor->active_image = image;
   if (image)
     {
@@ -815,5 +826,15 @@ gimp_fg_bg_editor_image_changed (GimpFgBgEditor *editor,
       g_signal_connect_swapped (image, "colormap-changed",
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 editor);
+
+      if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+        {
+          GimpPalette *palette;
+
+          palette = gimp_image_get_colormap_palette (editor->active_image);
+          g_signal_connect_swapped (palette, "dirty",
+                                    G_CALLBACK (gtk_widget_queue_draw),
+                                    editor);
+        }
     }
 }
