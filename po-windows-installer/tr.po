@@ -298,6 +298,7 @@ msgstr "GIMP ile eşleştirilecek dosya türleri:"
 msgid "Removing previous version of GIMP:"
 msgstr "GIMP'in önceki sürümü kaldırılıyor:"
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../build/windows/installer/lang/setup.isl.in.h:64
 #, no-c-format
 msgid ""
@@ -310,8 +311,9 @@ msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor ve eski "
 "sürümün kendiliğinden kaldırılması başarısız oldu.%n%nBu sürümü %2 içine "
 "kurmadan önce önceki GIMP sürümünü kendi başınıza kaldırın veya Özel "
-"kurulumu ve başka kurulum dizini seçin.%n%nKurulum şimdi çıkacak."
+"kurulumu ve başka kurulum klasörü seçin.%n%nKurulum şimdi çıkacak."
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
 msgid ""
@@ -324,7 +326,7 @@ msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor. Kurulum, "
 "eski sürümü nasıl kaldıracağını kendiliğinden saptayamıyor.%n%nBu sürümü %2 "
 "içine kurmadan önce tüm eklentileri ve önceki GIMP sürümünü kendi başınıza "
-"kaldırın veya Özel kurulumu ve başka kurulum dizini seçin.%n%nKurulum şimdi "
+"kaldırın veya Özel kurulumu ve başka kurulum klasörü seçin.%n%nKurulum şimdi "
 "çıkacak."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:68
