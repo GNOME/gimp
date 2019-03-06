@@ -80,6 +80,8 @@ struct _GimpColorAreaPrivate
   GimpRGB             color;
   guint               draw_border  : 1;
   guint               needs_render : 1;
+
+  gboolean            out_of_gamut;
 };
 
 #define GET_PRIVATE(obj) (((GimpColorArea *) (obj))->priv)
@@ -457,9 +459,10 @@ gimp_color_area_draw (GtkWidget *widget,
     }
 
   if (priv->config &&
-      (priv->color.r < 0.0 || priv->color.r > 1.0 ||
-       priv->color.g < 0.0 || priv->color.g > 1.0 ||
-       priv->color.b < 0.0 || priv->color.b > 1.0))
+      ((priv->color.r < 0.0 || priv->color.r > 1.0 ||
+        priv->color.g < 0.0 || priv->color.g > 1.0 ||
+        priv->color.b < 0.0 || priv->color.b > 1.0) ||
+       priv->out_of_gamut))
     {
       GimpRGB color;
       gint    side = MIN (priv->width, priv->height) * 2 / 3;
@@ -649,6 +652,38 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
       gtk_widget_queue_draw (GTK_WIDGET (area));
 
       g_object_notify (G_OBJECT (area), "draw-border");
+    }
+}
+
+/**
+ * gimp_color_area_set_out_of_gamut:
+ * @area:   a #GimpColorArea widget.
+ * @config: a #GimpColorConfig object.
+ *
+ * Sets the color area to render as an out-of-gamut color, i.e. with a
+ * small triangle on a corner using the color management out of gamut
+ * color (as per gimp_color_area_set_color_config()).
+ *
+ * By default, @area will render as out-of-gamut for any RGB color with
+ * a channel out of the [0; 1] range. This function allows to consider
+ * more colors out of gamut (for instance non-gray colors on a grayscale
+ * image, or colors absent of palettes in indexed images, etc.)
+ *
+ * Since: 2.10.10
+ */
+void
+gimp_color_area_set_out_of_gamut (GimpColorArea *area,
+                                  gboolean       out_of_gamut)
+{
+  GimpColorAreaPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_COLOR_AREA (area));
+
+  priv = GET_PRIVATE (area);
+  if (priv->out_of_gamut != out_of_gamut)
+    {
+      priv->out_of_gamut = out_of_gamut;
+      gtk_widget_queue_draw (GTK_WIDGET (area));
     }
 }
 

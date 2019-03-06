@@ -37,6 +37,7 @@ struct _GimpColorHistory
   GtkGrid       parent_instance;
 
   GimpContext  *context;
+  GimpImage    *active_image;
 
   GtkWidget   **color_areas;
   GtkWidget   **buttons;

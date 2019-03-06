@@ -32,6 +32,8 @@
 #include "core/gimp.h"
 #include "core/gimp-palettes.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "app/core/gimpimage-colormap.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppalettemru.h"
 
@@ -55,6 +57,7 @@ enum
 
 #define DEFAULT_HISTORY_SIZE 12
 #define COLOR_AREA_SIZE      20
+#define CHANNEL_EPSILON      1e-3
 
 /* GObject methods */
 static void   gimp_color_history_constructed                    (GObject           *object);
@@ -85,11 +88,14 @@ static void   gimp_color_history_size_allocate                  (GtkWidget      
 static void   gimp_color_history_color_clicked                  (GtkWidget         *widget,
                                                                  GimpColorHistory  *history);
 
-static void   gimp_color_history_palette_dirty                  (GimpPalette       *palette,
-                                                                 GimpColorHistory  *history);
+static void   gimp_color_history_palette_dirty                  (GimpColorHistory  *history);
 
 static void   gimp_color_history_color_changed                  (GtkWidget         *widget,
                                                                  gpointer           data);
+
+static void   gimp_color_history_image_changed                  (GimpContext       *context,
+                                                                 GimpImage         *image,
+                                                                 GimpColorHistory  *history);
 
 /* Utils */
 static void   gimp_color_history_reorganize                     (GimpColorHistory  *history);
@@ -169,7 +175,7 @@ gimp_color_history_constructed (GObject *object)
 
   g_signal_connect_object (palette, "dirty",
                            G_CALLBACK (gimp_color_history_palette_dirty),
-                           G_OBJECT (history), 0);
+                           G_OBJECT (history), G_CONNECT_SWAPPED);
 }
 
 static void
@@ -196,15 +202,41 @@ gimp_color_history_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_CONTEXT:
+      if (history->context)
+        g_signal_handlers_disconnect_by_func (history->context,
+                                              gimp_color_history_image_changed,
+                                              history);
+      if (history->active_image)
+        {
+          g_signal_handlers_disconnect_by_func (history->active_image,
+                                                G_CALLBACK (gimp_color_history_palette_dirty),
+                                                history);
+          history->active_image = NULL;
+        }
       history->context = g_value_get_object (value);
+      if (history->context)
+        {
+          g_signal_connect (history->context, "image-changed",
+                            G_CALLBACK (gimp_color_history_image_changed),
+                            history);
+          history->active_image = gimp_context_get_image (history->context);
+          if (history->active_image)
+            {
+              g_signal_connect_swapped (history->active_image, "notify::base-type",
+                                        G_CALLBACK (gimp_color_history_palette_dirty),
+                                        history);
+              g_signal_connect_swapped (history->active_image, "colormap-changed",
+                                        G_CALLBACK (gimp_color_history_palette_dirty),
+                                        history);
+            }
+        }
       break;
 
     case PROP_HISTORY_SIZE:
         {
-          GimpPalette *palette;
-          GtkWidget   *button;
-          GtkWidget   *color_area;
-          gint         i;
+          GtkWidget *button;
+          GtkWidget *color_area;
+          gint       i;
 
           history->history_size = g_value_get_int (value);
 
@@ -249,8 +281,7 @@ gimp_color_history_set_property (GObject      *object,
               history->color_areas[i] = color_area;
             }
 
-          palette = gimp_palettes_get_color_history (history->context->gimp);
-          gimp_color_history_palette_dirty (palette, history);
+          gimp_color_history_palette_dirty (history);
         }
       break;
 
@@ -426,22 +457,47 @@ gimp_color_history_color_clicked (GtkWidget        *widget,
 /* Color history palette callback. */
 
 static void
-gimp_color_history_palette_dirty (GimpPalette      *palette,
-                                  GimpColorHistory *history)
+gimp_color_history_palette_dirty (GimpColorHistory *history)
 {
-  gint i;
+  GimpPalette       *palette;
+  GimpPalette       *colormap_palette = NULL;
+  GimpImageBaseType  base_type        = GIMP_RGB;
+  gint               i;
+
+  palette = gimp_palettes_get_color_history (history->context->gimp);
+  if (history->active_image)
+    {
+      base_type = gimp_image_get_base_type (history->active_image);
+      if (base_type == GIMP_INDEXED)
+        colormap_palette = gimp_image_get_colormap_palette (history->active_image);
+    }
 
   for (i = 0; i < history->history_size; i++)
     {
       GimpPaletteEntry *entry = gimp_palette_get_entry (palette, i);
       GimpRGB           black = { 0.0, 0.0, 0.0, 1.0 };
+      GimpRGB           color = entry ? entry->color : black;
+      gboolean          oog   = FALSE;
 
       g_signal_handlers_block_by_func (history->color_areas[i],
                                        gimp_color_history_color_changed,
                                        GINT_TO_POINTER (i));
 
       gimp_color_area_set_color (GIMP_COLOR_AREA (history->color_areas[i]),
-                                 entry ? &entry->color : &black);
+                                 &color);
+      if (/* Common out-of-gamut case */
+          (color.r < 0.0 || color.r > 1.0 ||
+           color.g < 0.0 || color.g > 1.0 ||
+           color.b < 0.0 || color.b > 1.0) ||
+          /* Indexed images */
+          (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL)) ||
+          /* Grayscale images */
+          (base_type == GIMP_GRAY &&
+           (ABS (color.r - color.g) > CHANNEL_EPSILON ||
+            ABS (color.r - color.b) > CHANNEL_EPSILON ||
+            ABS (color.g - color.b) > CHANNEL_EPSILON)))
+        oog = TRUE;
+      gimp_color_area_set_out_of_gamut (GIMP_COLOR_AREA (history->color_areas[i]), oog);
 
       g_signal_handlers_unblock_by_func (history->color_areas[i],
                                          gimp_color_history_color_changed,
@@ -467,6 +523,31 @@ gimp_color_history_color_changed (GtkWidget *widget,
   gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
 
   gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &color);
+}
+
+static void
+gimp_color_history_image_changed (GimpContext      *context,
+                                  GimpImage        *image,
+                                  GimpColorHistory *history)
+{
+  /* Update active image. */
+  if (history->active_image)
+    g_signal_handlers_disconnect_by_func (history->active_image,
+                                          G_CALLBACK (gimp_color_history_palette_dirty),
+                                          history);
+  history->active_image = image;
+  if (image)
+    {
+      g_signal_connect_swapped (image, "notify::base-type",
+                                G_CALLBACK (gimp_color_history_palette_dirty),
+                                history);
+      g_signal_connect_swapped (image, "colormap-changed",
+                                G_CALLBACK (gimp_color_history_palette_dirty),
+                                history);
+    }
+
+  /* Update the palette. */
+  gimp_color_history_palette_dirty (history);
 }
 
 static void
