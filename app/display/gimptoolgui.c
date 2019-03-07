@@ -227,7 +227,6 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
   GimpToolGui        *gui;
   GimpToolGuiPrivate *private;
   va_list             args;
-  const gchar        *button_text;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
