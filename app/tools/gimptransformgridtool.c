@@ -56,7 +56,8 @@
 #include "gimp-intl.h"
 
 
-#define RESPONSE_RESET 1
+#define RESPONSE_RESET    1
+#define RESPONSE_READJUST 2
 
 
 typedef struct
@@ -210,6 +211,7 @@ gimp_transform_grid_tool_class_init (GimpTransformGridToolClass *klass)
   klass->dialog              = NULL;
   klass->dialog_update       = NULL;
   klass->prepare             = NULL;
+  klass->readjust            = NULL;
   klass->get_widget          = NULL;
   klass->update_widget       = gimp_transform_grid_tool_real_update_widget;
   klass->widget_changed      = gimp_transform_grid_tool_real_widget_changed;
@@ -1090,18 +1092,20 @@ gimp_transform_grid_tool_dialog (GimpTransformGridTool *tg_tool)
                                     gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                     TRUE,
-
-                                    _("_Reset"),     RESPONSE_RESET,
-                                    _("_Cancel"),    GTK_RESPONSE_CANCEL,
-                                    ok_button_label, GTK_RESPONSE_OK,
-
                                     NULL);
+
+  gimp_tool_gui_add_button   (tg_tool->gui, _("_Reset"),     RESPONSE_RESET);
+  if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust)
+    gimp_tool_gui_add_button (tg_tool->gui, _("_Readjust"),  RESPONSE_READJUST);
+  gimp_tool_gui_add_button   (tg_tool->gui, _("_Cancel"),    GTK_RESPONSE_CANCEL);
+  gimp_tool_gui_add_button   (tg_tool->gui, ok_button_label, GTK_RESPONSE_OK);
 
   gimp_tool_gui_set_auto_overlay (tg_tool->gui, TRUE);
   gimp_tool_gui_set_default_response (tg_tool->gui, GTK_RESPONSE_OK);
 
   gimp_tool_gui_set_alternative_button_order (tg_tool->gui,
                                               RESPONSE_RESET,
+                                              RESPONSE_READJUST,
                                               GTK_RESPONSE_OK,
                                               GTK_RESPONSE_CANCEL,
                                               -1);
@@ -1231,9 +1235,10 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
                                    gint                   response_id,
                                    GimpTransformGridTool *tg_tool)
 {
-  GimpTool          *tool    = GIMP_TOOL (tg_tool);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tg_tool);
-  GimpDisplay       *display = tool->display;
+  GimpTool                 *tool       = GIMP_TOOL (tg_tool);
+  GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
+  GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GimpDisplay              *display    = tool->display;
 
   switch (response_id)
     {
@@ -1247,6 +1252,26 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
 
       /*  push the restored info to the undo stack  */
       gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      break;
+
+    case RESPONSE_READJUST:
+      {
+        gboolean direction_linked;
+
+        /*  readjust the transformation info  */
+        GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust (tg_tool);
+
+        /*  recalculate the tool's transformtion matrix, preserving the overall
+         *  transformation
+         */
+        direction_linked             = tg_options->direction_linked;
+        tg_options->direction_linked = TRUE;
+        gimp_transform_tool_recalc_matrix (tr_tool, display);
+        tg_options->direction_linked = direction_linked;
+
+        /*  push the new info to the undo stack  */
+        gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      }
       break;
 
     case GTK_RESPONSE_OK:

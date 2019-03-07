@@ -82,6 +82,7 @@ struct _GimpTransformGridToolClass
   void             (* dialog)         (GimpTransformGridTool  *tg_tool);
   void             (* dialog_update)  (GimpTransformGridTool  *tg_tool);
   void             (* prepare)        (GimpTransformGridTool  *tg_tool);
+  void             (* readjust)       (GimpTransformGridTool  *tg_tool);
   GimpToolWidget * (* get_widget)     (GimpTransformGridTool  *tg_tool);
   void             (* update_widget)  (GimpTransformGridTool  *tg_tool);
   void             (* widget_changed) (GimpTransformGridTool  *tg_tool);
