@@ -22,9 +22,11 @@
 
 #include "core-types.h"
 
+#include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-pick-color.h"
+#include "gimplayer.h"
 #include "gimppickable.h"
 
 
@@ -47,6 +49,25 @@ gimp_image_pick_color (GimpImage     *image,
   g_return_val_if_fail (drawable == NULL ||
                         gimp_item_get_image (GIMP_ITEM (drawable)) == image,
                         FALSE);
+
+  if (sample_merged && drawable)
+    {
+      if ((GIMP_IS_LAYER (drawable) &&
+           gimp_image_get_n_layers (image) == 1) ||
+          (GIMP_IS_CHANNEL (drawable) &&
+           gimp_image_get_n_channels (image) == 1))
+        {
+          /* Let's add a special exception when an image has only one
+           * layer. This was useful in particular for indexed image as
+           * it allows to pick the right index value even when "Sample
+           * merged" is checked. There are more possible exceptions, but
+           * we can't just take them all in considerations unless we
+           * want to make code extra-complicated).
+           * See #3041.
+           */
+          sample_merged = FALSE;
+        }
+    }
 
   if (! sample_merged)
     {
