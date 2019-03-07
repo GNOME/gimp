@@ -33,6 +33,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 #include "display/gimptoolgui.h"
 #include "display/gimptoolrotategrid.h"
 
@@ -70,6 +71,7 @@ static gchar          * gimp_rotate_tool_get_undo_desc  (GimpTransformGridTool *
 static void             gimp_rotate_tool_dialog         (GimpTransformGridTool *tg_tool);
 static void             gimp_rotate_tool_dialog_update  (GimpTransformGridTool *tg_tool);
 static void             gimp_rotate_tool_prepare        (GimpTransformGridTool *tg_tool);
+static void             gimp_rotate_tool_readjust       (GimpTransformGridTool *tg_tool);
 static GimpToolWidget * gimp_rotate_tool_get_widget     (GimpTransformGridTool *tg_tool);
 static void             gimp_rotate_tool_update_widget  (GimpTransformGridTool *tg_tool);
 static void             gimp_rotate_tool_widget_changed (GimpTransformGridTool *tg_tool);
@@ -117,6 +119,7 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
   tg_class->dialog          = gimp_rotate_tool_dialog;
   tg_class->dialog_update   = gimp_rotate_tool_dialog_update;
   tg_class->prepare         = gimp_rotate_tool_prepare;
+  tg_class->readjust        = gimp_rotate_tool_readjust;
   tg_class->get_widget      = gimp_rotate_tool_get_widget;
   tg_class->update_widget   = gimp_rotate_tool_update_widget;
   tg_class->widget_changed  = gimp_rotate_tool_widget_changed;
@@ -377,6 +380,24 @@ gimp_rotate_tool_prepare (GimpTransformGridTool *tg_tool)
   g_signal_handlers_unblock_by_func (rotate->sizeentry,
                                      rotate_center_changed,
                                      tg_tool);
+}
+
+static void
+gimp_rotate_tool_readjust (GimpTransformGridTool *tg_tool)
+{
+  GimpTool         *tool  = GIMP_TOOL (tg_tool);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+
+  tg_tool->trans_info[ANGLE] = -gimp_deg_to_rad (shell->rotate_angle);
+
+  if (tg_tool->trans_info[ANGLE] <= -G_PI)
+    tg_tool->trans_info[ANGLE] += 2.0 * G_PI;
+
+  gimp_display_shell_untransform_xy_f (shell,
+                                       shell->disp_width  / 2.0,
+                                       shell->disp_height / 2.0,
+                                       &tg_tool->trans_info[PIVOT_X],
+                                       &tg_tool->trans_info[PIVOT_Y]);
 }
 
 static GimpToolWidget *

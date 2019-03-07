@@ -28,6 +28,8 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 #include "display/gimptoolgui.h"
 #include "display/gimptooltransformgrid.h"
 
@@ -57,6 +59,7 @@ enum
 static void             gimp_perspective_tool_matrix_to_info (GimpTransformGridTool    *tg_tool,
                                                               const GimpMatrix3        *transform);
 static void             gimp_perspective_tool_prepare        (GimpTransformGridTool    *tg_tool);
+static void             gimp_perspective_tool_readjust       (GimpTransformGridTool    *tg_tool);
 static GimpToolWidget * gimp_perspective_tool_get_widget     (GimpTransformGridTool    *tg_tool);
 static void             gimp_perspective_tool_update_widget  (GimpTransformGridTool    *tg_tool);
 static void             gimp_perspective_tool_widget_changed (GimpTransformGridTool    *tg_tool);
@@ -97,6 +100,7 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 
   tg_class->matrix_to_info      = gimp_perspective_tool_matrix_to_info;
   tg_class->prepare             = gimp_perspective_tool_prepare;
+  tg_class->readjust            = gimp_perspective_tool_readjust;
   tg_class->get_widget          = gimp_perspective_tool_get_widget;
   tg_class->update_widget       = gimp_perspective_tool_update_widget;
   tg_class->widget_changed      = gimp_perspective_tool_widget_changed;
@@ -159,6 +163,37 @@ gimp_perspective_tool_prepare (GimpTransformGridTool *tg_tool)
   tg_tool->trans_info[Y2] = (gdouble) tr_tool->y2;
   tg_tool->trans_info[X3] = (gdouble) tr_tool->x2;
   tg_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
+}
+
+static void
+gimp_perspective_tool_readjust (GimpTransformGridTool *tg_tool)
+{
+  GimpTool         *tool  = GIMP_TOOL (tg_tool);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  gdouble           x;
+  gdouble           y;
+  gdouble           r;
+
+  x = shell->disp_width  / 2.0;
+  y = shell->disp_height / 2.0;
+  r = MIN (x, y) / G_SQRT2;
+
+  gimp_display_shell_untransform_xy_f (shell,
+                                       x - r, y - r,
+                                       &tg_tool->trans_info[X0],
+                                       &tg_tool->trans_info[Y0]);
+  gimp_display_shell_untransform_xy_f (shell,
+                                       x + r, y - r,
+                                       &tg_tool->trans_info[X1],
+                                       &tg_tool->trans_info[Y1]);
+  gimp_display_shell_untransform_xy_f (shell,
+                                       x - r, y + r,
+                                       &tg_tool->trans_info[X2],
+                                       &tg_tool->trans_info[Y2]);
+  gimp_display_shell_untransform_xy_f (shell,
+                                       x + r, y + r,
+                                       &tg_tool->trans_info[X3],
+                                       &tg_tool->trans_info[Y3]);
 }
 
 static GimpToolWidget *
