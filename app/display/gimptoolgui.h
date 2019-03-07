@@ -97,6 +97,12 @@ void          gimp_tool_gui_set_focus_on_map       (GimpToolGui      *gui,
                                                     gboolean          focus_on_map);
 gboolean      gimp_tool_gui_get_focus_on_map       (GimpToolGui      *gui);
 
+
+void          gimp_tool_gui_add_buttons_valist     (GimpToolGui      *gui,
+                                                    va_list           args);
+void          gimp_tool_gui_add_button             (GimpToolGui      *gui,
+                                                    const gchar      *button_text,
+                                                    gint              response_id);
 void          gimp_tool_gui_set_default_response   (GimpToolGui      *gui,
                                                     gint              response_id);
 void          gimp_tool_gui_set_response_sensitive (GimpToolGui      *gui,
