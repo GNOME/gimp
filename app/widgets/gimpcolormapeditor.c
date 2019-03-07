@@ -411,7 +411,7 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
                                gimp_dialog_factory_get_singleton (),
                                "gimp-colormap-editor-color-dialog",
                                (const GimpRGB *) &color,
-                               FALSE, FALSE);
+                               TRUE, FALSE);
 
       g_signal_connect (editor->color_dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
@@ -772,18 +772,15 @@ gimp_colormap_editor_edit_color_update (GimpColorDialog      *dialog,
 {
   GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
 
+  gimp_image_set_colormap_entry (image, editor->col_index, color, TRUE);
+  gimp_image_flush (image);
   switch (state)
     {
-    case GIMP_COLOR_DIALOG_UPDATE:
-      break;
-
     case GIMP_COLOR_DIALOG_OK:
-      gimp_image_set_colormap_entry (image, editor->col_index, color, TRUE);
-      gimp_image_flush (image);
-      /* Fall through */
-
     case GIMP_COLOR_DIALOG_CANCEL:
       gtk_widget_hide (editor->color_dialog);
+      break;
+    case GIMP_COLOR_DIALOG_UPDATE:
       break;
     }
 }
