@@ -35,6 +35,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 #include "display/gimptoolgui.h"
 #include "display/gimptooltransformgrid.h"
 
@@ -68,6 +69,7 @@ static gchar          * gimp_scale_tool_get_undo_desc  (GimpTransformGridTool *t
 static void             gimp_scale_tool_dialog         (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_dialog_update  (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_prepare        (GimpTransformGridTool *tg_tool);
+static void             gimp_scale_tool_readjust       (GimpTransformGridTool *tg_tool);
 static GimpToolWidget * gimp_scale_tool_get_widget     (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_update_widget  (GimpTransformGridTool *tg_tool);
 static void             gimp_scale_tool_widget_changed (GimpTransformGridTool *tg_tool);
@@ -111,6 +113,7 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
   tg_class->dialog          = gimp_scale_tool_dialog;
   tg_class->dialog_update   = gimp_scale_tool_dialog_update;
   tg_class->prepare         = gimp_scale_tool_prepare;
+  tg_class->readjust        = gimp_scale_tool_readjust;
   tg_class->get_widget      = gimp_scale_tool_get_widget;
   tg_class->update_widget   = gimp_scale_tool_update_widget;
   tg_class->widget_changed  = gimp_scale_tool_widget_changed;
@@ -252,6 +255,29 @@ gimp_scale_tool_prepare (GimpTransformGridTool *tg_tool)
   g_signal_connect (scale->box, "notify",
                     G_CALLBACK (gimp_scale_tool_size_notify),
                     tg_tool);
+}
+
+static void
+gimp_scale_tool_readjust (GimpTransformGridTool *tg_tool)
+{
+  GimpTool         *tool  = GIMP_TOOL (tg_tool);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  gdouble           x;
+  gdouble           y;
+  gdouble           r;
+
+  x = shell->disp_width  / 2.0;
+  y = shell->disp_height / 2.0;
+  r = MIN (x, y) / G_SQRT2;
+
+  gimp_display_shell_untransform_xy_f (shell,
+                                       x, y,
+                                       &x, &y);
+
+  tg_tool->trans_info[X0] = RINT (x - FUNSCALEX (shell, r));
+  tg_tool->trans_info[Y0] = RINT (y - FUNSCALEY (shell, r));
+  tg_tool->trans_info[X1] = RINT (x + FUNSCALEX (shell, r));
+  tg_tool->trans_info[Y1] = RINT (y + FUNSCALEY (shell, r));
 }
 
 static GimpToolWidget *
