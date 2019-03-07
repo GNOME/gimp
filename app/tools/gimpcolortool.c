@@ -499,17 +499,38 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
     {
       GtkWidget *widget;
 
-      if (babl_format_is_palette (sample_format))
+      widget = gimp_dialog_factory_find_widget (dialog_factory,
+                                                "gimp-indexed-palette");
+      if (widget)
         {
-          widget = gimp_dialog_factory_find_widget (dialog_factory,
-                                                    "gimp-indexed-palette");
-          if (widget)
+          GtkWidget *editor = gtk_bin_get_child (GTK_BIN (widget));
+          GimpImage *image  = gimp_display_get_image (display);
+
+          if (babl_format_is_palette (sample_format))
             {
-              GtkWidget *editor = gtk_bin_get_child (GTK_BIN (widget));
-              guchar    *index  = pixel;
+              guchar *index  = pixel;
 
               gimp_colormap_editor_set_index (GIMP_COLORMAP_EDITOR (editor),
                                               *index, NULL);
+            }
+          else if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+            {
+              /* When Sample merged is set, we don't have the index
+               * information and it is possible to pick colors out of
+               * the colormap (with compositing). In such a case, the
+               * sample format will not be a palette format even though
+               * the image is indexed. Still search if the color exists
+               * in the colormap.
+               * Note that even if it does, we might still pick the
+               * wrong color, since several indexes may contain the same
+               * color and we can't know for sure which is the right
+               * one.
+               */
+              gint index = gimp_colormap_editor_get_index (GIMP_COLORMAP_EDITOR (editor),
+                                                           color);
+              if (index > -1)
+                gimp_colormap_editor_set_index (GIMP_COLORMAP_EDITOR (editor),
+                                                index, NULL);
             }
         }
 
