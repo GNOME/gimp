@@ -1243,15 +1243,26 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
   switch (response_id)
     {
     case RESPONSE_RESET:
-      /*  restore the initial transformation info  */
-      memcpy (tg_tool->trans_info, tg_tool->init_trans_info,
-              sizeof (TransInfo));
+      {
+        gboolean direction_linked;
 
-      /*  recalculate the tool's transformtion matrix  */
-      gimp_transform_tool_recalc_matrix (tr_tool, display);
+        /*  restore the initial transformation info  */
+        memcpy (tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD],
+                tg_tool->init_trans_info,
+                sizeof (TransInfo));
+        memcpy (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
+                tg_tool->init_trans_info,
+                sizeof (TransInfo));
 
-      /*  push the restored info to the undo stack  */
-      gimp_transform_grid_tool_push_internal_undo (tg_tool);
+        /*  recalculate the tool's transformation matrix  */
+        direction_linked             = tg_options->direction_linked;
+        tg_options->direction_linked = FALSE;
+        gimp_transform_tool_recalc_matrix (tr_tool, display);
+        tg_options->direction_linked = direction_linked;
+
+        /*  push the restored info to the undo stack  */
+        gimp_transform_grid_tool_push_internal_undo (tg_tool);
+      }
       break;
 
     case RESPONSE_READJUST:
@@ -1261,8 +1272,8 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
         /*  readjust the transformation info  */
         GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust (tg_tool);
 
-        /*  recalculate the tool's transformtion matrix, preserving the overall
-         *  transformation
+        /*  recalculate the tool's transformation matrix, preserving the
+         *  overall transformation
          */
         direction_linked             = tg_options->direction_linked;
         tg_options->direction_linked = TRUE;
@@ -1297,12 +1308,18 @@ gimp_transform_grid_tool_update_sensitivity (GimpTransformGridTool *tg_tool)
   if (! tg_tool->gui)
     return;
 
-  gimp_tool_gui_set_response_sensitive (tg_tool->gui, GTK_RESPONSE_OK,
-                                        tr_tool->transform_valid);
-  gimp_tool_gui_set_response_sensitive (tg_tool->gui, RESPONSE_RESET,
-                                        memcmp (tg_tool->trans_info,
-                                                tg_tool->init_trans_info,
-                                                sizeof (TransInfo)) != 0);
+  gimp_tool_gui_set_response_sensitive (
+    tg_tool->gui, GTK_RESPONSE_OK,
+    tr_tool->transform_valid);
+
+  gimp_tool_gui_set_response_sensitive (
+    tg_tool->gui, RESPONSE_RESET,
+    memcmp (tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD],
+            tg_tool->init_trans_info,
+            sizeof (TransInfo)) ||
+    memcmp (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
+            tg_tool->init_trans_info,
+            sizeof (TransInfo)));
 }
 
 static void
