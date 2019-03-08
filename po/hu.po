@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-07 13:53+0000\n"
-"PO-Revision-Date: 2019-03-08 10:28+0100\n"
+"POT-Creation-Date: 2019-03-08 10:04+0000\n"
+"PO-Revision-Date: 2019-03-08 11:25+0100\n"
 "Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -3025,7 +3025,7 @@ msgstr "240 másodperc"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1095
+#: ../app/tools/gimptransformgridtool.c:1100
 #: ../app/tools/gimptransformtool.c:332 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -6422,7 +6422,7 @@ msgstr "Tükrözés"
 #: ../app/actions/image-commands.c:824 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
-#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:125
+#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:128
 msgid "Rotating"
 msgstr "Elforgatás"
 
@@ -6482,7 +6482,7 @@ msgstr "Kép átméretezése"
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
 #: ../app/pdb/item-transform-cmds.c:618 ../app/pdb/layer-cmds.c:401
 #: ../app/pdb/layer-cmds.c:448 ../app/pdb/transform-tools-cmds.c:346
-#: ../app/tools/gimpscaletool.c:119
+#: ../app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "Átméretezés"
 
@@ -7743,7 +7743,7 @@ msgstr "Összes szűrő visszaállítása"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1094
+#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1097
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -13235,7 +13235,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:118
+#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Méretezés"
@@ -13303,7 +13303,7 @@ msgctxt "undo-type"
 msgid "Flip"
 msgstr "Tükrözés"
 
-#: ../app/core/gimpdrawable-transform.c:946 ../app/tools/gimprotatetool.c:124
+#: ../app/core/gimpdrawable-transform.c:946 ../app/tools/gimprotatetool.c:127
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Forgatás"
@@ -15340,7 +15340,7 @@ msgid "Confirm Scaling"
 msgstr "Átméretezés megerősítése"
 
 #: ../app/dialogs/image-scale-dialog.c:211 ../app/dialogs/scale-dialog.c:138
-#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimpscaletool.c:120
+#: ../app/tools/gimpscaletool.c:98 ../app/tools/gimpscaletool.c:123
 msgid "_Scale"
 msgstr "Át_méretezés"
 
@@ -19782,7 +19782,7 @@ msgstr "Megfordítás"
 #: ../app/pdb/drawable-transform-cmds.c:355
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:330 ../app/pdb/transform-tools-cmds.c:171
-#: ../app/tools/gimpperspectivetool.c:82
+#: ../app/tools/gimpperspectivetool.c:85
 #: ../app/tools/gimptransformgridoptions.c:529
 #: ../app/tools/gimptransformgridoptions.c:538
 msgid "Perspective"
@@ -22827,7 +22827,7 @@ msgid "Show lattice"
 msgstr "Rács megjelenítése"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:94 ../app/tools/gimptransformgridoptions.c:523
+#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:523
 #: ../app/tools/gimptransformgridoptions.c:534
 msgid "Scale"
 msgstr "Méretezés"
@@ -22969,22 +22969,22 @@ msgstr "_Perspektivikus klón"
 msgid "Ctrl-Click to set a clone source"
 msgstr "Másolási forrás beállítása: Ctrl+kattintás"
 
-#: ../app/tools/gimpperspectivetool.c:83
+#: ../app/tools/gimpperspectivetool.c:86
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
 msgstr ""
 "Perspektíva-eszköz: réteg, kijelölés vagy útvonal perspektívájának "
 "megváltoztatása"
 
-#: ../app/tools/gimpperspectivetool.c:85
+#: ../app/tools/gimpperspectivetool.c:88
 msgid "_Perspective"
 msgstr "_Perspektíva"
 
-#: ../app/tools/gimpperspectivetool.c:106
+#: ../app/tools/gimpperspectivetool.c:110
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Perspektíva"
 
-#: ../app/tools/gimpperspectivetool.c:107
+#: ../app/tools/gimpperspectivetool.c:111
 msgid "Perspective transformation"
 msgstr "Perspektivikus átalakítás"
 
@@ -23137,43 +23137,43 @@ msgstr "A kiválasztott régió maszkjának rajzolása"
 msgid "Move the mouse to change threshold"
 msgstr "A küszöb módosításához mozgassa az egeret"
 
-#: ../app/tools/gimprotatetool.c:97 ../app/tools/gimptransformgridoptions.c:525
+#: ../app/tools/gimprotatetool.c:99 ../app/tools/gimptransformgridoptions.c:525
 msgid "Rotate"
 msgstr "Forgatás"
 
-#: ../app/tools/gimprotatetool.c:98
+#: ../app/tools/gimprotatetool.c:100
 msgid "Rotate Tool: Rotate the layer, selection or path"
 msgstr "Forgatási eszköz: réteg, kijelölés vagy útvonal forgatása"
 
-#: ../app/tools/gimprotatetool.c:99
+#: ../app/tools/gimprotatetool.c:101
 msgid "_Rotate"
 msgstr "_Forgatás"
 
-#: ../app/tools/gimprotatetool.c:126
+#: ../app/tools/gimprotatetool.c:129
 msgid "R_otate"
 msgstr "For_gatás"
 
-#: ../app/tools/gimprotatetool.c:242
+#: ../app/tools/gimprotatetool.c:245
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g°"
 msgstr "Forgatás %-3.3g°-kal"
 
-#: ../app/tools/gimprotatetool.c:248
+#: ../app/tools/gimprotatetool.c:251
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g° around (%g, %g)"
 msgstr "Forgatás %-3.3g°-kal (%g, %g) körül"
 
-#: ../app/tools/gimprotatetool.c:278
+#: ../app/tools/gimprotatetool.c:281
 msgid "_Angle:"
 msgstr "S_zög:"
 
-#: ../app/tools/gimprotatetool.c:296
+#: ../app/tools/gimprotatetool.c:299
 msgid "Center _X:"
 msgstr "Középpont, _X:"
 
-#: ../app/tools/gimprotatetool.c:305
+#: ../app/tools/gimprotatetool.c:308
 msgid "Center _Y:"
 msgstr "Középpont, _Y:"
 
@@ -23195,11 +23195,11 @@ msgstr "Mintapont áthelyezése: "
 msgid "Add Sample Point: "
 msgstr "Mintapont felvétele: "
 
-#: ../app/tools/gimpscaletool.c:95
+#: ../app/tools/gimpscaletool.c:97
 msgid "Scale Tool: Scale the layer, selection or path"
 msgstr "Átméretezési eszköz: réteg, kijelölés vagy útvonal átméretezése"
 
-#: ../app/tools/gimpscaletool.c:183
+#: ../app/tools/gimpscaletool.c:186
 #, c-format
 msgctxt "undo-type"
 msgid "Scale to %d x %d"
@@ -23681,20 +23681,24 @@ msgstr "Zárolás"
 msgid "Lock pivot position to canvas"
 msgstr "Sarokpont pozíciójának zárolása a rajzvászonra"
 
-#: ../app/tools/gimptransformgridtool.c:218
+#: ../app/tools/gimptransformgridtool.c:220
 #: ../app/tools/gimptransformtool.c:333
 msgid "_Transform"
 msgstr "Át_alakítás"
 
-#: ../app/tools/gimptransformgridtool.c:490
-#: ../app/tools/gimptransformgridtool.c:502
+#: ../app/tools/gimptransformgridtool.c:492
+#: ../app/tools/gimptransformgridtool.c:504
 msgid "Transform Step"
 msgstr "Átalakítási lépés"
 
-#: ../app/tools/gimptransformgridtool.c:874
+#: ../app/tools/gimptransformgridtool.c:876
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (javító)"
+
+#: ../app/tools/gimptransformgridtool.c:1099
+msgid "Re_adjust"
+msgstr "Újra_igazítás"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -23769,24 +23773,24 @@ msgstr "Az aktív útvonalnak nincsenek vonalai."
 msgid "The current transform is invalid"
 msgstr "A jelenlegi átalakítás érvénytelen"
 
-#: ../app/tools/gimpunifiedtransformtool.c:84
+#: ../app/tools/gimpunifiedtransformtool.c:87
 msgid "Unified Transform"
 msgstr "Egységes átalakítás"
 
-#: ../app/tools/gimpunifiedtransformtool.c:85
+#: ../app/tools/gimpunifiedtransformtool.c:88
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr "Egységes átalakító eszköz: réteg, kijelölés vagy útvonal átalakítása"
 
-#: ../app/tools/gimpunifiedtransformtool.c:87
+#: ../app/tools/gimpunifiedtransformtool.c:90
 msgid "_Unified Transform"
 msgstr "_Egységes átalakítás"
 
-#: ../app/tools/gimpunifiedtransformtool.c:108
+#: ../app/tools/gimpunifiedtransformtool.c:112
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Egységes átalakítás"
 
-#: ../app/tools/gimpunifiedtransformtool.c:109
+#: ../app/tools/gimpunifiedtransformtool.c:113
 msgid "Unified transform"
 msgstr "Egységes átalakítás"
 
