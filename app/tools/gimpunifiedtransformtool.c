@@ -188,7 +188,9 @@ gimp_unified_transform_tool_readjust (GimpTransformGridTool *tg_tool)
 
   x = shell->disp_width  / 2.0;
   y = shell->disp_height / 2.0;
-  r = MIN (x, y) / G_SQRT2;
+  r = MAX (MIN (x, y) / G_SQRT2 -
+           GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0,
+           GIMP_TOOL_TRANSFORM_GRID_MAX_HANDLE_SIZE / 2.0);
 
   gimp_display_shell_untransform_xy_f (shell,
                                        x, y,
