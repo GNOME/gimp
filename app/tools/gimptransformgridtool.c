@@ -1096,7 +1096,7 @@ gimp_transform_grid_tool_dialog (GimpTransformGridTool *tg_tool)
 
   gimp_tool_gui_add_button   (tg_tool->gui, _("_Reset"),     RESPONSE_RESET);
   if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust)
-    gimp_tool_gui_add_button (tg_tool->gui, _("_Readjust"),  RESPONSE_READJUST);
+    gimp_tool_gui_add_button (tg_tool->gui, _("Re_adjust"),  RESPONSE_READJUST);
   gimp_tool_gui_add_button   (tg_tool->gui, _("_Cancel"),    GTK_RESPONSE_CANCEL);
   gimp_tool_gui_add_button   (tg_tool->gui, ok_button_label, GTK_RESPONSE_OK);
 
@@ -1266,23 +1266,24 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
       break;
 
     case RESPONSE_READJUST:
-      {
-        gboolean direction_linked;
+      if (GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust)
+        {
+          gboolean direction_linked;
 
-        /*  readjust the transformation info  */
-        GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust (tg_tool);
+          /*  readjust the transformation info  */
+          GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->readjust (tg_tool);
 
-        /*  recalculate the tool's transformation matrix, preserving the
-         *  overall transformation
-         */
-        direction_linked             = tg_options->direction_linked;
-        tg_options->direction_linked = TRUE;
-        gimp_transform_tool_recalc_matrix (tr_tool, display);
-        tg_options->direction_linked = direction_linked;
+          /*  recalculate the tool's transformation matrix, preserving the
+           *  overall transformation
+           */
+          direction_linked             = tg_options->direction_linked;
+          tg_options->direction_linked = TRUE;
+          gimp_transform_tool_recalc_matrix (tr_tool, display);
+          tg_options->direction_linked = direction_linked;
 
-        /*  push the new info to the undo stack  */
-        gimp_transform_grid_tool_push_internal_undo (tg_tool);
-      }
+          /*  push the new info to the undo stack  */
+          gimp_transform_grid_tool_push_internal_undo (tg_tool);
+        }
       break;
 
     case GTK_RESPONSE_OK:
