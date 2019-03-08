@@ -856,7 +856,6 @@ load_image (const gchar  *filename,
   gint              bpp;                  /* Bytes per pixel */
   gint              width;                /* image width */
   gint              height;               /* image height */
-  gint              empty;                /* Number of fully transparent indices */
   gint              num_passes;           /* Number of interlace passes in file */
   gint              pass;                 /* Current pass in file */
   gint              tile_height;          /* Height of tile in GIMP */
@@ -1187,30 +1186,14 @@ load_image (const gchar  *filename,
    * Load the colormap as necessary...
    */
 
-  empty = 0; /* by default assume no full transparent palette entries */
-
   if (png_get_color_type (pp, info) & PNG_COLOR_MASK_PALETTE)
     {
       png_colorp palette;
       int num_palette;
 
       png_get_PLTE (pp, info, &palette, &num_palette);
-      if (png_get_valid (pp, info, PNG_INFO_tRNS))
-        {
-          for (empty = 0; empty < 256 && alpha[empty] == 0; ++empty)
-            /* Calculates number of fully transparent "empty" entries */;
-
-          /*  keep at least one entry  */
-          empty = MIN (empty, num_palette - 1);
-
-          gimp_image_set_colormap (image, (guchar *) (palette + empty),
-                                   num_palette - empty);
-        }
-      else
-        {
-          gimp_image_set_colormap (image, (guchar *) palette,
-                                   num_palette);
-        }
+      gimp_image_set_colormap (image, (guchar *) palette,
+                               num_palette);
     }
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
@@ -1380,7 +1363,6 @@ load_image (const gchar  *filename,
           while (length--)
             {
               data[1] = alpha[data[0]];
-              data[0] -= empty;
 
               data += n_components;
             }
