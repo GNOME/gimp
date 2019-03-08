@@ -772,8 +772,12 @@ gimp_colormap_editor_edit_color_update (GimpColorDialog      *dialog,
 {
   GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
 
-  gimp_image_set_colormap_entry (image, editor->col_index, color, TRUE);
-  gimp_image_flush (image);
+  if (image)
+    {
+      gimp_image_set_colormap_entry (image, editor->col_index, color, TRUE);
+      gimp_image_flush (image);
+    }
+
   switch (state)
     {
     case GIMP_COLOR_DIALOG_OK:
