@@ -560,6 +560,7 @@ save_image (GFile        *file,
       break;
 
     case GIMP_INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       cmap = gimp_image_get_colormap (image, &num_colors);
 
       if (num_colors == 2 || num_colors == 1)
@@ -593,18 +594,14 @@ save_image (GFile        *file,
             }
        }
 
-      samplesperpixel = 1;
+      samplesperpixel = (drawable_type == GIMP_INDEXEDA_IMAGE) ? 2 : 1;
       bytesperrow     = cols;
-      alpha           = FALSE;
+      alpha           = (drawable_type == GIMP_INDEXEDA_IMAGE);
       format          = gimp_drawable_get_format (layer);
 
       g_free (cmap);
       break;
 
-    case GIMP_INDEXEDA_IMAGE:
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("TIFF export cannot handle indexed images with "
-                     "an alpha channel."));
     default:
       goto out;
     }
@@ -667,7 +664,14 @@ save_image (GFile        *file,
 
   if (alpha)
     {
-      if (tsvals->save_transp_pixels)
+      if (tsvals->save_transp_pixels ||
+          /* Associated alpha, hence premultiplied components is
+           * meaningless for palette images with transparency in TIFF
+           * format, since alpha is set per pixel, not per color (so a
+           * given color could be set to different alpha on different
+           * pixels, hence it cannot be premultiplied).
+           */
+          drawable_type == GIMP_INDEXEDA_IMAGE)
         extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
       else
         extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
@@ -771,7 +775,8 @@ save_image (GFile        *file,
   /* save path data */
   save_paths (tif, orig_image);
 
-  if (!is_bw && drawable_type == GIMP_INDEXED_IMAGE)
+  if (! is_bw &&
+      (drawable_type == GIMP_INDEXED_IMAGE || drawable_type == GIMP_INDEXEDA_IMAGE))
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);
 
   /* array to rearrange data */
@@ -796,6 +801,7 @@ save_image (GFile        *file,
           switch (drawable_type)
             {
             case GIMP_INDEXED_IMAGE:
+            case GIMP_INDEXEDA_IMAGE:
               if (is_bw)
                 {
                   byte2bit (t, bytesperrow, data, invert);
@@ -1011,8 +1017,8 @@ save_dialog (TiffSaveVals  *tsvals,
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-alpha"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                has_alpha && tsvals->save_transp_pixels);
-  gtk_widget_set_sensitive (toggle, has_alpha);
+                                has_alpha && (tsvals->save_transp_pixels || is_indexed));
+  gtk_widget_set_sensitive (toggle, has_alpha && ! is_indexed);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_transp_pixels);
