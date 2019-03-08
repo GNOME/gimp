@@ -1,23 +1,26 @@
-# Turkish translation for gimp.
-# Copyright (C) 2017 gimp's COPYRIGHT HOLDER
+# Turkish translation for GIMP
+#
+# Copyright (C) 2001-2019 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
+#
 # Muhammet Kara <muhammetk@gmail.com>, 2017.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2018.
+# Sabri Ünal <libreajans@gmail.com>, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp master\n"
+"Project-Id-Version: GIMP windows installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-08-04 02:16+0000\n"
-"PO-Revision-Date: 2018-08-15 18:36+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2019-03-06 18:20+0000\n"
+"PO-Revision-Date: 2019-03-06 22:46+0200\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -28,9 +31,6 @@ msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
 msgstr "Kurulum; Jernej Simonèiè, jernej-gimp@ena.si tarafından inşa edildi"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:3
-#| msgid ""
-#| "This version of GIMP requires Windows XP with Service Pack 3, or a newer "
-#| "version of Windows."
 msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
 msgstr ""
 "GIMP'in bu sürümü Windows 7 veya Windows'un daha yeni sürümünü gerektirir."
@@ -41,14 +41,6 @@ msgstr "Geliştirme sürümü"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:6
 #, no-c-format
-#| msgid ""
-#| "This is a development version of GIMP where some features may not be "
-#| "finished, or it may be unstable.%nThis version of GIMP is not intended "
-#| "for day-to-day work as it may be unstable, and you could lose your work."
-#| "%nIf you encounter any problems, first verify that they haven't already "
-#| "been fixed in GIT before you contact the developers or report it in GIMP "
-#| "bugzilla:%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo "
-#| "you wish to continue with installation anyway?"
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
@@ -61,10 +53,9 @@ msgstr ""
 "Bu, GIMP'in bazı özelliklerinin bitmemiş veya kararsız olabileceği bir "
 "geliştirme sürümüdür.%nGIMP'in bu sürümü kararsız olabileceğinden günlük "
 "işlere yönelik değildir ve işinizi kaybedebilirsiniz.%nEğer herhangi bir "
-"sorunla karşılaşırsanız, geliştiricilere başvurmadan önce sorunun GIT'te "
-"halihazırda çözülmediğini doğrulayın veya GIMP gitlab'e bildirin:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nYine de kuruluma devam etmek istiyor "
-"musunuz?"
+"sorunla karşılaşırsanız, geliştiricilere başvurmadan veya GIMP gitlab'e "
+"bildirmeden önce sorunun GIT'te çözülmediğinden emin olun:%n_https://gitlab."
+"gnome.org/GNOME/gimp/issues%n%nYine de kuruluma devam etmek istiyor musunuz?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -90,7 +81,7 @@ msgid ""
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
-"Kurulum, Windows'unuzun piksel başına 32-bit görüntü kipinde çalışmadığını "
+"Kurulum, Windows'unuzun piksel başına 32 bit görüntü kipinde çalışmadığını "
 "saptadı. Bunun GIMP ile kararlılık sorunları yarattığı bilinmektedir, devam "
 "etmeden önce görüntü renk derinliğini 32BPP'ye geçirmeniz önerilir."
 
@@ -156,7 +147,7 @@ msgstr "Hata ayıklama simgeleri"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:25
 msgid "Include information to help with debugging GIMP"
-msgstr "GIMP hata ayıklamasına yardımcı bilgiyi içer"
+msgstr "GIMP hata ayıklamasına yardımcı olacak bilgileri içer"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:26
 msgid "MS-Windows engine for GTK+"
@@ -238,7 +229,7 @@ msgid ""
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
 "%1 içindeki GIMP ortamı güncellenirken hata. Eğer eklentileri yüklerken "
-"herhangi bir hata alırsanız lütfen GIMP'i kaldırmayı ve yeniden yüklemeyi "
+"herhangi bir hata alırsanız, lütfen GIMP'i kaldırmayı ve yeniden yüklemeyi "
 "deneyin."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:46
@@ -307,6 +298,7 @@ msgstr "GIMP ile eşleştirilecek dosya türleri:"
 msgid "Removing previous version of GIMP:"
 msgstr "GIMP'in önceki sürümü kaldırılıyor:"
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../build/windows/installer/lang/setup.isl.in.h:64
 #, no-c-format
 msgid ""
@@ -319,8 +311,9 @@ msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor ve eski "
 "sürümün kendiliğinden kaldırılması başarısız oldu.%n%nBu sürümü %2 içine "
 "kurmadan önce önceki GIMP sürümünü kendi başınıza kaldırın veya Özel "
-"kurulumu yeğleyin ve başka kurulum dizini seçin.%n%nKurulum şimdi çıkacak."
+"kurulumu ve başka kurulum klasörü seçin.%n%nKurulum şimdi çıkacak."
 
+# Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
 msgid ""
@@ -333,8 +326,8 @@ msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor. Kurulum, "
 "eski sürümü nasıl kaldıracağını kendiliğinden saptayamıyor.%n%nBu sürümü %2 "
 "içine kurmadan önce tüm eklentileri ve önceki GIMP sürümünü kendi başınıza "
-"kaldırın veya Özel kurulumu yeğleyin ve başka kurulum dizini seçin.%n"
-"%nKurulum şimdi çıkacak."
+"kaldırın veya Özel kurulumu ve başka kurulum klasörü seçin.%n%nKurulum şimdi "
+"çıkacak."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
@@ -359,11 +352,11 @@ msgstr "Eski dosyalar temizleniyor..."
 #: ../build/windows/installer/lang/setup.isl.in.h:73
 #, no-c-format
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "Unutmayın: GIMP, Özgür Yazılımdır.%n%nÜcretsiz güncellemeler"
+msgstr "Unutmayın: GIMP, Özgür Yazılımdır.%n%nÜcretsiz güncellemeler için"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:74
 msgid "for free updates."
-msgstr "için lütfen ziyaret edin."
+msgstr "adresini lütfen ziyaret edin."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:75
 msgid "Setting up file associations..."
@@ -371,7 +364,7 @@ msgstr "Dosya ilişkilendirmeleri ayarlanıyor..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "Setting up environment for GIMP Python extension..."
-msgstr "GIMP Python eklentisi için ortam ayarlanıyor..."
+msgstr "GIMP Python uzantısı için ortam ayarlanıyor..."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up MyPaint brushes..."
