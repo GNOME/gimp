@@ -770,7 +770,8 @@ gimp_colormap_editor_edit_color_update (GimpColorDialog      *dialog,
                                         GimpColorDialogState  state,
                                         GimpColormapEditor   *editor)
 {
-  GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
+  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GimpImage       *image        = image_editor->image;
 
   if (image)
     {
@@ -781,6 +782,11 @@ gimp_colormap_editor_edit_color_update (GimpColorDialog      *dialog,
   switch (state)
     {
     case GIMP_COLOR_DIALOG_OK:
+      if (state & gimp_get_toggle_behavior_mask ())
+        gimp_context_set_background (image_editor->context, color);
+      else
+        gimp_context_set_foreground (image_editor->context, color);
+      /* Pass through */
     case GIMP_COLOR_DIALOG_CANCEL:
       gtk_widget_hide (editor->color_dialog);
       break;
