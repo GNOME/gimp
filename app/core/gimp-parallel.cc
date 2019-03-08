@@ -218,7 +218,7 @@ gimp_parallel_run_async_independent_full (gint                     priority,
 #if defined (G_OS_WIN32)
       if (task->priority < 0)
         {
-          SetThreadPriority (GetCurrentThread (), THREAD_MODE_ABOVE_NORMAL);
+          SetThreadPriority (GetCurrentThread (), THREAD_PRIORITY_ABOVE_NORMAL);
         }
       else if (task->priority > 0)
         {
