@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 19:08+0100\n"
-"PO-Revision-Date: 2019-03-06 18:09+0100\n"
+"POT-Creation-Date: 2019-03-08 19:39+0100\n"
+"PO-Revision-Date: 2019-03-08 19:40+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3041,7 +3041,7 @@ msgstr "240 sekund"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1095
+#: ../app/tools/gimptransformgridtool.c:1100
 #: ../app/tools/gimptransformtool.c:332 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -6105,7 +6105,7 @@ msgstr "Wy_miary płótna…"
 #: ../app/actions/image-actions.c:113
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
-msgstr "Dostosowuje wymiary obrazu"
+msgstr "Modyfikuje wymiary obrazu"
 
 #: ../app/actions/image-actions.c:118
 msgctxt "image-action"
@@ -6135,7 +6135,7 @@ msgstr "_Rozmiar wydruku…"
 #: ../app/actions/image-actions.c:131
 msgctxt "image-action"
 msgid "Adjust the print resolution"
-msgstr "Dostosowuje rozdzielczość drukowania"
+msgstr "Modyfikuje rozdzielczość drukowania"
 
 #: ../app/actions/image-actions.c:136
 msgctxt "image-action"
@@ -6426,7 +6426,7 @@ msgstr "Odbijanie"
 #: ../app/actions/image-commands.c:824 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
-#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:125
+#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:128
 msgid "Rotating"
 msgstr "Obracanie"
 
@@ -6487,7 +6487,7 @@ msgstr "Skalowanie obrazu"
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
 #: ../app/pdb/item-transform-cmds.c:618 ../app/pdb/layer-cmds.c:401
 #: ../app/pdb/layer-cmds.c:448 ../app/pdb/transform-tools-cmds.c:346
-#: ../app/tools/gimpscaletool.c:119
+#: ../app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "Skalowanie"
 
@@ -6817,7 +6817,7 @@ msgstr "Wymiary grani_c warstwy…"
 #: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
-msgstr "Dostosowuje wymiary warstwy"
+msgstr "Modyfikuje wymiary warstwy"
 
 #: ../app/actions/layers-actions.c:223
 msgctxt "layers-action"
@@ -7742,7 +7742,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1094
+#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1097
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -13202,7 +13202,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:118
+#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
@@ -13270,7 +13270,7 @@ msgctxt "undo-type"
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/core/gimpdrawable-transform.c:946 ../app/tools/gimprotatetool.c:124
+#: ../app/core/gimpdrawable-transform.c:946 ../app/tools/gimprotatetool.c:127
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
@@ -13624,27 +13624,27 @@ msgstr "Konwertowanie z „%s” do „%s”"
 msgid "Color profile conversion"
 msgstr "Konwersja profilu kolorów"
 
-#: ../app/core/gimpimage-colormap.c:65
+#: ../app/core/gimpimage-colormap.c:66
 #, c-format
 msgid "Colormap of Image #%d (%s)"
 msgstr "%d. paleta kolorów obrazu (%s)"
 
-#: ../app/core/gimpimage-colormap.c:195
+#: ../app/core/gimpimage-colormap.c:196
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Ustawienie palety kolorów"
 
-#: ../app/core/gimpimage-colormap.c:235
+#: ../app/core/gimpimage-colormap.c:236
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Cofnięcie ustawienia palety kolorów"
 
-#: ../app/core/gimpimage-colormap.c:288
+#: ../app/core/gimpimage-colormap.c:289
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Zmiana elementu palety kolorów"
 
-#: ../app/core/gimpimage-colormap.c:316
+#: ../app/core/gimpimage-colormap.c:317
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Dodanie koloru do palety kolorów"
@@ -14141,40 +14141,40 @@ msgstr "Maska warstwy na zaznaczenie"
 msgid "Cannot rename layer masks."
 msgstr "Nie można zmienić nazwy maski warstwy."
 
-#: ../app/core/gimplineart.c:325 ../app/core/gimplineart.c:326
+#: ../app/core/gimplineart.c:336 ../app/core/gimplineart.c:337
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Zaznaczenie przezroczystych pikseli zamiast szarych"
 
-#: ../app/core/gimplineart.c:332 ../app/tools/gimpbucketfilloptions.c:172
+#: ../app/core/gimplineart.c:343 ../app/tools/gimpbucketfilloptions.c:172
 msgid "Line art detection threshold"
 msgstr "Próg wykrycia kresek rysunku"
 
-#: ../app/core/gimplineart.c:333 ../app/tools/gimpbucketfilloptions.c:173
+#: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Próg do wykrycia konturu (wyższe wartości będą zawierały więcej pikseli)"
 
-#: ../app/core/gimplineart.c:339 ../app/tools/gimpbucketfilloptions.c:179
+#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:179
 msgid "Maximum growing size"
 msgstr "Maksymalny rozmiar powiększenia"
 
-#: ../app/core/gimplineart.c:340 ../app/tools/gimpbucketfilloptions.c:180
+#: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:180
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Maksymalna liczba pikseli dodanych pod kreskami rysunku"
 
-#: ../app/core/gimplineart.c:346
+#: ../app/core/gimplineart.c:357
 msgid "Maximum curved closing length"
 msgstr "Maksymalna długość zamykania krzywej"
 
-#: ../app/core/gimplineart.c:347
+#: ../app/core/gimplineart.c:358
 msgid "Maximum curved length (in pixels) to close the line art"
 msgstr "Maksymalna długość krzywej (w pikselach) do zamknięcia kresek rysunku"
 
-#: ../app/core/gimplineart.c:353
+#: ../app/core/gimplineart.c:364
 msgid "Maximum straight closing length"
 msgstr "Maksymalna długość zamykania prostej"
 
-#: ../app/core/gimplineart.c:354
+#: ../app/core/gimplineart.c:365
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr "Maksymalna długość prostej (w pikselach) do zamknięcia kresek rysunku"
 
@@ -15313,7 +15313,7 @@ msgid "Confirm Scaling"
 msgstr "Potwierdzenie skalowania"
 
 #: ../app/dialogs/image-scale-dialog.c:211 ../app/dialogs/scale-dialog.c:138
-#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimpscaletool.c:120
+#: ../app/tools/gimpscaletool.c:98 ../app/tools/gimpscaletool.c:123
 msgid "_Scale"
 msgstr "_Skaluj"
 
@@ -18404,7 +18404,7 @@ msgstr "Indeksowane"
 #: ../app/gegl/gimp-gegl-enums.c:24
 msgctxt "cage-mode"
 msgid "Create or adjust the cage"
-msgstr "Utworzenie lub dostosowanie klatki"
+msgstr "Utworzenie lub modyfikacja klatki"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
 msgctxt "cage-mode"
@@ -19753,7 +19753,7 @@ msgstr "Odwrócenie"
 #: ../app/pdb/drawable-transform-cmds.c:355
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:330 ../app/pdb/transform-tools-cmds.c:171
-#: ../app/tools/gimpperspectivetool.c:82
+#: ../app/tools/gimpperspectivetool.c:85
 #: ../app/tools/gimptransformgridoptions.c:529
 #: ../app/tools/gimptransformgridoptions.c:538
 msgid "Perspective"
@@ -20866,7 +20866,7 @@ msgstr "Łączn_ie"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:134
 msgid "Adjust all colors"
-msgstr "Dopasowanie wszystkich kolorów"
+msgstr "Modyfikacja wszystkich kolorów"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:135
 msgid "_R"
@@ -20902,7 +20902,7 @@ msgstr "P_okrywanie"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:241
 msgid "Adjust Selected Color"
-msgstr "Dopasowanie zaznaczonego koloru"
+msgstr "Modyfikacja zaznaczonego koloru"
 
 #: ../app/propgui/gimppropgui-hue-saturation.c:251
 msgid "_Hue"
@@ -22596,7 +22596,7 @@ msgstr "_Automatyczne poziomy wejściowe"
 
 #: ../app/tools/gimplevelstool.c:622
 msgid "Adjust levels for all channels automatically"
-msgstr "Dopasowuje poziomy automatycznie dla wszystkich kanałów"
+msgstr "Modyfikuje poziomy automatycznie dla wszystkich kanałów"
 
 #: ../app/tools/gimplevelstool.c:649
 msgid "Edit these Settings as Curves"
@@ -22808,7 +22808,7 @@ msgid "Show lattice"
 msgstr "Kratka"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:94 ../app/tools/gimptransformgridoptions.c:523
+#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:523
 #: ../app/tools/gimptransformgridoptions.c:534
 msgid "Scale"
 msgstr "Skalowanie"
@@ -22950,20 +22950,20 @@ msgstr "_Klon perspektywy"
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl i kliknięcie ustawi źródło klonowania"
 
-#: ../app/tools/gimpperspectivetool.c:83
+#: ../app/tools/gimpperspectivetool.c:86
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
 msgstr "Perspektywa: zmienia perspektywę warstwy, zaznaczenia lub ścieżki"
 
-#: ../app/tools/gimpperspectivetool.c:85
+#: ../app/tools/gimpperspectivetool.c:88
 msgid "_Perspective"
 msgstr "_Perspektywa"
 
-#: ../app/tools/gimpperspectivetool.c:106
+#: ../app/tools/gimpperspectivetool.c:110
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Perspektywa"
 
-#: ../app/tools/gimpperspectivetool.c:107
+#: ../app/tools/gimpperspectivetool.c:111
 msgid "Perspective transformation"
 msgstr "Przekształcenie perspektywiczne"
 
@@ -23116,43 +23116,43 @@ msgstr "Rysuje maskę zaznaczonego obszaru"
 msgid "Move the mouse to change threshold"
 msgstr "Poruszenie myszą zmieni próg"
 
-#: ../app/tools/gimprotatetool.c:97 ../app/tools/gimptransformgridoptions.c:525
+#: ../app/tools/gimprotatetool.c:99 ../app/tools/gimptransformgridoptions.c:525
 msgid "Rotate"
 msgstr "Obrót"
 
-#: ../app/tools/gimprotatetool.c:98
+#: ../app/tools/gimprotatetool.c:100
 msgid "Rotate Tool: Rotate the layer, selection or path"
 msgstr "Obrót: obraca warstwy, zaznaczenia lub ścieżki"
 
-#: ../app/tools/gimprotatetool.c:99
+#: ../app/tools/gimprotatetool.c:101
 msgid "_Rotate"
 msgstr "Ob_rót"
 
-#: ../app/tools/gimprotatetool.c:126
+#: ../app/tools/gimprotatetool.c:129
 msgid "R_otate"
 msgstr "O_bróć"
 
-#: ../app/tools/gimprotatetool.c:242
+#: ../app/tools/gimprotatetool.c:245
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g°"
 msgstr "Obrót o %-3.3g°"
 
-#: ../app/tools/gimprotatetool.c:248
+#: ../app/tools/gimprotatetool.c:251
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g° around (%g, %g)"
 msgstr "Obrót o %-3.3g° wokół (%g, %g)"
 
-#: ../app/tools/gimprotatetool.c:278
+#: ../app/tools/gimprotatetool.c:281
 msgid "_Angle:"
 msgstr "_Kąt:"
 
-#: ../app/tools/gimprotatetool.c:296
+#: ../app/tools/gimprotatetool.c:299
 msgid "Center _X:"
 msgstr "_Poziomy środek:"
 
-#: ../app/tools/gimprotatetool.c:305
+#: ../app/tools/gimprotatetool.c:308
 msgid "Center _Y:"
 msgstr "Pi_onowy środek:"
 
@@ -23174,11 +23174,11 @@ msgstr "Przesunięcie punktu wzorcowego: "
 msgid "Add Sample Point: "
 msgstr "Dodanie punktu wzorcowego: "
 
-#: ../app/tools/gimpscaletool.c:95
+#: ../app/tools/gimpscaletool.c:97
 msgid "Scale Tool: Scale the layer, selection or path"
 msgstr "Skalowanie: skaluje warstwę, zaznaczenie lub ścieżkę"
 
-#: ../app/tools/gimpscaletool.c:183
+#: ../app/tools/gimpscaletool.c:186
 #, c-format
 msgctxt "undo-type"
 msgid "Scale to %d x %d"
@@ -23382,7 +23382,7 @@ msgstr "Odstęp między wierszami"
 
 #: ../app/tools/gimptextoptions.c:185
 msgid "Adjust line spacing"
-msgstr "Dopasowanie odstępu między wierszami"
+msgstr "Modyfikacja odstępu między wierszami"
 
 #: ../app/tools/gimptextoptions.c:192
 msgid "Letter spacing"
@@ -23390,7 +23390,7 @@ msgstr "Odstęp między literami"
 
 #: ../app/tools/gimptextoptions.c:193
 msgid "Adjust letter spacing"
-msgstr "Dopasowanie odstępu między literami"
+msgstr "Modyfikacja odstępu między literami"
 
 #: ../app/tools/gimptextoptions.c:200
 msgid "Box"
@@ -23659,20 +23659,24 @@ msgstr "Blokowanie"
 msgid "Lock pivot position to canvas"
 msgstr "Blokowanie położenia osi do płótna"
 
-#: ../app/tools/gimptransformgridtool.c:218
+#: ../app/tools/gimptransformgridtool.c:220
 #: ../app/tools/gimptransformtool.c:333
 msgid "_Transform"
 msgstr "Prze_kształć"
 
-#: ../app/tools/gimptransformgridtool.c:490
-#: ../app/tools/gimptransformgridtool.c:502
+#: ../app/tools/gimptransformgridtool.c:492
+#: ../app/tools/gimptransformgridtool.c:504
 msgid "Transform Step"
 msgstr "Krok przekształcenia"
 
-#: ../app/tools/gimptransformgridtool.c:874
+#: ../app/tools/gimptransformgridtool.c:876
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (korekta)"
+
+#: ../app/tools/gimptransformgridtool.c:1099
+msgid "Re_adjust"
+msgstr "_Dopasuj"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -23746,25 +23750,25 @@ msgstr "Aktywna ścieżka nie ma krzywych."
 msgid "The current transform is invalid"
 msgstr "Bieżące przekształcenie jest nieprawidłowe"
 
-#: ../app/tools/gimpunifiedtransformtool.c:84
+#: ../app/tools/gimpunifiedtransformtool.c:87
 msgid "Unified Transform"
 msgstr "Uniwersalne przekształcenie"
 
-#: ../app/tools/gimpunifiedtransformtool.c:85
+#: ../app/tools/gimpunifiedtransformtool.c:88
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr ""
 "Uniwersalne przekształcenie: przekształca warstwę, zaznaczenie lub ścieżkę"
 
-#: ../app/tools/gimpunifiedtransformtool.c:87
+#: ../app/tools/gimpunifiedtransformtool.c:90
 msgid "_Unified Transform"
 msgstr "_Uniwersalne przekształcenie"
 
-#: ../app/tools/gimpunifiedtransformtool.c:108
+#: ../app/tools/gimpunifiedtransformtool.c:112
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Uniwersalne przekształcenie"
 
-#: ../app/tools/gimpunifiedtransformtool.c:109
+#: ../app/tools/gimpunifiedtransformtool.c:113
 msgid "Unified transform"
 msgstr "Uniwersalne przekształcenie"
 
