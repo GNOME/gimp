@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-29 18:06+0000\n"
+"POT-Creation-Date: 2019-02-01 16:53+0000\n"
 "PO-Revision-Date: 2018-07-07 14:57+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -64,7 +64,7 @@ msgstr "रंगीत एक्सएचटीएमएल [XHTML] म्ह�
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
-msgstr "रंगीत एक्सएचटीएमएल म्हणून जतन करा "
+msgstr "रंगीत एक्सएचटीएमएल यास्वरुपात साठवा"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
@@ -92,7 +92,7 @@ msgstr "_धारिका वाचण्यासाठी किंवा �
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
-msgstr "दृश्यबिंदूमध्ये टं_क आकारमान"
+msgstr "चित्रकणांमध्ये [पिक्सेल] टं_क आकारमान"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
@@ -108,7 +108,7 @@ msgstr "धारिकेचे नाव"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
 msgid "Exports the image histogram to a text file (CSV)"
-msgstr "प्रतिमा स्तंभालेख एका मजकूर धरिकेमध्ये (सीएसव्ही) निर्यात करा"
+msgstr "प्रतिमा स्तंभालेख एका मजकूर धारिकेमध्ये (सीएसव्ही) निर्यात करा"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
 msgid "_Export histogram..."
@@ -120,7 +120,7 @@ msgstr "_प्रतिमा"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Drawable"
-msgstr "_चित्रीकरणायोग्य"
+msgstr "_रेखांकनायोग्य"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "Histogram _File"
@@ -140,7 +140,7 @@ msgstr "आउटपुट स्वरुप"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Pixel count"
-msgstr "दृश्यबिंदू संख्या"
+msgstr "चित्रकण [पिक्सेल] संख्या"
 
 #: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Normalized"
@@ -342,8 +342,7 @@ msgstr "तुकडे [स्लाईस]"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
-"त्याच्या विभाजकांसह एक प्रतिमा कापून, प्रतिमा आणि लहान तुकड्यांची एचटीएमएल तक्ता  "
-"बनवते "
+"त्याच्या विभाजकांसह एक प्रतिमा कापून, प्रतिमा आणि लहान तुकड्यांची एचटीएमएल तक्ता  बनवते "
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
@@ -410,7 +409,7 @@ msgstr "लिहू शकत नाही '%s': %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
-msgstr "पायथॉन-फू आज्ञापटल [कन्सोल] आउटपुट जतन [सेव्ह] करा"
+msgstr "पायथॉन-फू आज्ञापटल [कन्सोल] आउटपुट साठवा [सेव्ह]"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
@@ -447,3 +446,322 @@ msgstr "पडछाया [शॅडो] टाकून _एक्स वि�
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "पडछाया [शॅडो] टाकून _वाय विस्थापन [डिस्प्लेसमेंट]"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:43
+msgid "Spyro Layer"
+msgstr "स्पायरो स्तर"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:89
+msgid "Circle"
+msgstr "वर्तृळ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:125
+msgid "Polygon-Star"
+msgstr "बहुभुज-चांदणी"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:141
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:834
+msgid "Sine"
+msgstr "साइन"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:151
+msgid "Bumps"
+msgstr "अडथळे [बम्प्स]"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:256
+msgid "Rack"
+msgstr "मांडणी [रॅक]"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:300
+msgid "Frame"
+msgstr "चौकट [फ्रेम]"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:389
+msgid "Selection"
+msgstr "निवड"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:479
+msgid "Pencil"
+msgstr "पेन्सिल"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:495
+msgid "AirBrush"
+msgstr "फवारा कुंचला"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:555
+msgid "Preview"
+msgstr "पूर्वावलोकन"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:560
+msgid "Stroke"
+msgstr "फटकारा [स्ट्रोक]"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:588
+msgid "PaintBrush"
+msgstr "रंग कुंचला"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:590
+msgid "Ink"
+msgstr "शाई"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:591
+msgid "MyPaintBrush"
+msgstr "मायपेंट कुंचला"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:820
+msgid "Spyrograph"
+msgstr "स्पायरोग्राफ"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:827
+msgid "Epitrochoid"
+msgstr "Epitrochoid"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:854
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
+msgid "Curve Type"
+msgstr "वक्र प्रकार"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+"Epitrochoid नमुना म्हणजे जेव्हा हलणारा गियर निश्चित गियरच्या बाहेर असतो."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1104
+msgid "Tool"
+msgstr "साधन"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1105
+msgid ""
+"The tool with which to draw the pattern.The Preview tool just draws quickly."
+msgstr ""
+"साधनासह कोणता नमुना काढावा. पूर्वावलोकन साधन फक्त वेगाने काढते."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1110
+msgid "Long Gradient"
+msgstr "लांब रंगछटा"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1112
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"तपासले नसल्यावर [अनचेक], वर्तमान साधन सेटिंग्ज वापरल्या जातील. तपासल्यावर, रंगछटा [ग्रेडियंट] साधन सेटिंग्जवरील "
+"वर्तमान रंगछटा आणि पुन्हा करा रीतीच्या आधारावर, नमुन्याच्या लांबीशी जुळण्यासाठी दीर्घ रंगछटेचा [ग्रेडियंट] वापर करेल."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1132
+msgid "Specify pattern using one of the following tabs:"
+msgstr "खालील उपपटलापैकी [टॅब] एक वापरुन नमुना निर्दिष्ट करा:"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1134
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"नमुना केवळ सक्रिय उपपटलाद्वारे [टॅब] निर्दिष्ट केला आहे. खेळण्यांचा संच [टॉय किट] गियरसारखाच आहे, परंतु ते खेळण्यांमध्ये "
+"सापडलेल्या गियर आणि छिद्रांची संख्या वापरते. आपण खेळण्यांच्या संच हस्तलिखितामधील [मॅन्यूअल] निर्देशांचे अनुसरण "
+"केल्यास, परिणाम समान असले पाहिजेत."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1158
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+"निश्चित गिअरच्या दातांची संख्या. निश्चित गिअरचा आकार दातांच्या संख्येशी प्रमाणबद्ध आहे."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1161
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1187
+msgid "Fixed Gear Teeth"
+msgstr "निश्चित गिअर दात"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1167
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+"हलणाऱ्या गिअरच्या दातांची संख्या. हलणाऱ्या गिअरचा आकार दातांच्या संख्येशी प्रमाणबद्ध आहे."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1170
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1192
+msgid "Moving Gear Teeth"
+msgstr "गिअर दात हलवित आहे"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1175
+msgid "Hole percent"
+msgstr "छिद्र टक्के"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1176
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+"हलणाऱ्या गिअरच्या मध्यभागापासून छिद्र किती लांब आहे. १००% याचा अर्थ छिद्र गिअरच्या कडेला आहे."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1197
+msgid "Hole Number"
+msgstr "छिद्र क्रमांक"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1198
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"छिद्र #१ गिअरच्या कडेला आहे. जास्तीत जास्त छिद्र क्रमांक मध्यभागी आहे. प्रत्येक गिअरसाठी जास्तीत जास्त छेद क्रमांक भिन्न असतो."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1207
+msgid "Toy Kit"
+msgstr "खेळण्यांचा संच [टॉय किट]"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1212
+msgid "Gears"
+msgstr "गिअर"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1224
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation"
+msgstr "परिभ्रमण [रोटेशन]"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1225
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+"नमुन्याचे परिभ्रमण, अंशामध्ये. निश्चित गिअरमध्ये हलणाऱ्या गिअरची प्रारंभिक स्थिती."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1248
+msgid "Shape"
+msgstr "आकार"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1249
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"वर्तमान निवडीच्या आत निश्चित गिअरचा आकार वापरला जाईल. मांडणी [रॅक] हे खेळण्यांच्या संचामध्ये [टॉय किट] दिलेले लांब "
+"गोल-कडा आकाराचे आहे. चौकट आयताकृती निवडीच्या सीमांना जोडते, सीमा स्पर्श करण्यासाठी गिअर चिन्हांकनामध्ये [नोटेशन] "
+"छिद्र=१०० वापरा. निवड वर्तमान निवडीची सीमा ओलांडेल - काही आयताकृती नसलेले वापरून पहा."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Sides"
+msgstr "बाजू"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1258
+msgid "Number of sides of the shape."
+msgstr "आकाराच्या बाजूंची संख्या."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph"
+msgstr "रूप [मॉर्फ]"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1263
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "रूप [मॉर्फ] निश्चित गिअर आकार. केवळ काही आकारांवर प्रभाव टाकतो."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1268
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "निश्चित गिअरचे परिभ्रमण, अंशामध्ये"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin (px)"
+msgstr "समास [मार्जिन] (पीएक्स)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1283
+msgid "Margin from edge of selection."
+msgstr "निवडीच्या कडांपासून समास [मार्जिन]."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1288
+msgid "Make width and height equal"
+msgstr "रुंदी आणि उंची समान करा"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1290
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"तपासले नसल्यावर [अनचेक], नमुना वर्तमान प्रतिमेला किंवा निवडीला भरेल. तपासल्यावर, नमुन्याची रूंदी आणि उंची समान "
+"असेल, आणि केंद्रीत होईल."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1314
+msgid "Redraw"
+msgstr "पुन्हा काढा"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1315
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+"आपण एखाद्या साधनाची सेटिंग्ज बदलल्यास, नमुना कसा दिसेल याचे पूर्वावलोकन करण्यासाठी, रंग बदला, किंवा निवड बदला,  हे दाबा."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1317
+msgid "Reset"
+msgstr "पूर्ववत करा"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1318
+msgid "Cancel"
+msgstr "रद्द करा"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1319
+msgid "OK"
+msgstr "ठीक आहे"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1321
+msgid ""
+"Keep\n"
+"Layer"
+msgstr ""
+"ठेवा\n"
+"स्तर"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1323
+msgid ""
+"If checked, then once OK is pressed, the spyro layer is kept, and the plugin "
+"exits quickly. If unchecked, the spyro layer is deleted, and the pattern is "
+"redrawn on the layer that was active when the plugin was launched."
+msgstr ""
+"तपासल्यास, ठीक आहे एकदा दाबले की, स्पायरो स्तर ठेवला जातो, आणि जोडणी [प्लग-इन] द्रुतपणे निघून जाते. तपासले नसल्यास "
+"[अनचेक], स्पायरो स्तर हटविला जाईल, आणि जोडणी [प्लग-इन] सुरु झाल्यानंतर [लॉन्च] सक्रिय असलेल्या स्तरावर नमुना पुन्हा काढला जाईल."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1337
+msgid "Spyrogimp"
+msgstr "स्पायरोगिम्प"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "वर्तमान साधन सेटिंग्ज आणि निवड वापरुन स्पायरोग्राफ काढा."
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1359
+msgid "Curve Pattern"
+msgstr "वक्र नमुना"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1362
+msgid "Fixed Gear"
+msgstr "निश्चित गिअर"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1365
+msgid "Size"
+msgstr "आकार"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1650
+msgid "Rendering Pattern"
+msgstr "नमुना प्रस्तुत करीत आहे"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1662
+msgid "Please wait : Rendering Pattern"
+msgstr "कृपया प्रतिक्षा करा: नमुना प्रस्तुत करीत आहे"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1771
+msgid "Spyrogimp..."
+msgstr "स्पायरोगिम्प..."
