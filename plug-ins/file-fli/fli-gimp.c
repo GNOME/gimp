@@ -897,7 +897,7 @@ load_dialog (const gchar *filename)
    * But for now you can set a start- and a end-frame:
    */
   adj = gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             C_("frame-range", "From:"), 0.0, 0.5,
@@ -907,7 +907,7 @@ load_dialog (const gchar *filename)
                     &from_frame);
 
   adj = gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             C_("frame-range", "To:"), 0.0, 0.5,
@@ -955,7 +955,7 @@ save_dialog (gint32 image_id)
    * But for now you can set a start- and a end-frame:
    */
   adj = gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             C_("frame-range", "From:"), 0.0, 0.5,
@@ -965,7 +965,7 @@ save_dialog (gint32 image_id)
                     &from_frame);
 
   adj = gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             C_("frame-range", "To:"), 0.0, 0.5,

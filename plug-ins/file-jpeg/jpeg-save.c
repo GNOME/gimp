@@ -1010,7 +1010,7 @@ save_dialog (void)
                                        DEFAULT_RESTART_MCU_ROWS : jsvals.restart),
                                       1.0, 64.0, 1.0, 1.0, 0);
   pg.restart = restart_markers_scale = spinbutton =
-    gtk_spin_button_new (pg.scale_data, 1.0, 0);
+    gimp_spin_button_new (pg.scale_data, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_grid_attach (GTK_GRID (grid), spinbutton, 5, 1, 1, 1);
   gtk_widget_show (spinbutton);

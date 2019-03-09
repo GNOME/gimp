@@ -1324,7 +1324,7 @@ save_dialog (gint32 drawable_ID)
   adj = gtk_adjustment_new (xsvals.x_hot, 0,
                             gimp_drawable_width (drawable_ID) - 1,
                             1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Hot spot _X:"), 0.0, 0.5,
@@ -1337,7 +1337,7 @@ save_dialog (gint32 drawable_ID)
   adj = gtk_adjustment_new (xsvals.y_hot, 0,
                             gimp_drawable_height (drawable_ID) - 1,
                             1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Hot spot _Y:"), 0.0, 0.5,

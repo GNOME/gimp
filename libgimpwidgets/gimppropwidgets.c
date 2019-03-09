@@ -1232,7 +1232,7 @@ gimp_prop_spin_button_new (GObject     *config,
   adjustment = gtk_adjustment_new (value, lower, upper,
                                    step_increment, page_increment, 0);
 
-  spinbutton = gtk_spin_button_new (adjustment, step_increment, digits);
+  spinbutton = gimp_spin_button_new (adjustment, step_increment, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);

@@ -1569,7 +1569,7 @@ smp_dialog (void)
   data = gtk_adjustment_new ((gfloat)g_values.lvl_in_min, 0.0, 254.0, 1, 10, 0);
   g_di.adj_lvl_in_min = data;
 
-  spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_min, 0.5, 0);
+  spinbutton = gimp_spin_button_new (g_di.adj_lvl_in_min, 0.5, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1582,7 +1582,7 @@ smp_dialog (void)
   data = gtk_adjustment_new ((gfloat)g_values.lvl_in_gamma, 0.1, 10.0, 0.02, 0.2, 0);
   g_di.adj_lvl_in_gamma = data;
 
-  spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_gamma, 0.5, 2);
+  spinbutton = gimp_spin_button_new (g_di.adj_lvl_in_gamma, 0.5, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1595,7 +1595,7 @@ smp_dialog (void)
   data = gtk_adjustment_new ((gfloat)g_values.lvl_in_max, 1.0, 255.0, 1, 10, 0);
   g_di.adj_lvl_in_max = data;
 
-  spinbutton = gtk_spin_button_new (g_di.adj_lvl_in_max, 0.5, 0);
+  spinbutton = gimp_spin_button_new (g_di.adj_lvl_in_max, 0.5, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1619,7 +1619,7 @@ smp_dialog (void)
   data = gtk_adjustment_new ((gfloat)g_values.lvl_out_min, 0.0, 254.0, 1, 10, 0);
   g_di.adj_lvl_out_min = data;
 
-  spinbutton = gtk_spin_button_new (g_di.adj_lvl_out_min, 0.5, 0);
+  spinbutton = gimp_spin_button_new (g_di.adj_lvl_out_min, 0.5, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -1632,7 +1632,7 @@ smp_dialog (void)
   data = gtk_adjustment_new ((gfloat)g_values.lvl_out_max, 0.0, 255.0, 1, 10, 0);
   g_di.adj_lvl_out_max = data;
 
-  spinbutton = gtk_spin_button_new (g_di.adj_lvl_out_max, 0.5, 0);
+  spinbutton = gimp_spin_button_new (g_di.adj_lvl_out_max, 0.5, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);

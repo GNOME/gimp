@@ -26,11 +26,6 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "gimpwidgetstypes.h"
-
-#include "gimpdialog.h"
-#include "gimpquerybox.h"
-#include "gimpsizeentry.h"
 #include "gimpwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -338,7 +333,7 @@ gimp_query_int_box (const gchar          *title,
     return NULL;
 
   adjustment = gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
@@ -401,7 +396,7 @@ gimp_query_double_box (const gchar             *title,
     return NULL;
 
   adjustment = gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);

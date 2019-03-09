@@ -793,7 +793,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gtk_widget_show (hbox);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);

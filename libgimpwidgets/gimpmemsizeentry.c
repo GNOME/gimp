@@ -200,7 +200,7 @@ gimp_memsize_entry_new (guint64  value,
                                             CAST (upper >> shift),
                                             1, 8, 0);
 
-  private->spinbutton = gtk_spin_button_new (private->adjustment, 1.0, 0);
+  private->spinbutton = gimp_spin_button_new (private->adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (private->spinbutton), TRUE);
 
 #undef CAST

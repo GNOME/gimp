@@ -557,7 +557,7 @@ gih_save_dialog (gint32 image_ID)
    * Spacing: __
    */
   adjustment = gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Spacing (percent):"), 0.0, 0.5,
@@ -574,7 +574,7 @@ gih_save_dialog (gint32 image_ID)
 
   adjustment = gtk_adjustment_new (gihparams.cellwidth,
                                    2, gimp_image_width (image_ID), 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -597,7 +597,7 @@ gih_save_dialog (gint32 image_ID)
 
   adjustment = gtk_adjustment_new (gihparams.cellheight,
                                    2, gimp_image_height (image_ID), 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -627,7 +627,7 @@ gih_save_dialog (gint32 image_ID)
    * Number of cells: ___
    */
   adjustment = gtk_adjustment_new (gihparams.ncells, 1, 1000, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("Number of cells:"), 0.0, 0.5,
@@ -688,7 +688,7 @@ gih_save_dialog (gint32 image_ID)
    */
   adjustment = gtk_adjustment_new (gihparams.dim,
                                    1, GIMP_PIXPIPE_MAXDIM, 1, 1, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
                             _("Dimension:"), 0.0, 0.5,
@@ -709,7 +709,7 @@ gih_save_dialog (gint32 image_ID)
       gint j;
 
       adjustment = gtk_adjustment_new (gihparams.rank[i], 1, 100, 1, 1, 0);
-      spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+      spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_grid_attach (GTK_GRID (dimgrid), spinbutton, 0, i, 1, 1);
 
