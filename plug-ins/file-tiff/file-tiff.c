@@ -161,7 +161,7 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996,2000-2003",
                           N_("TIFF image"),
-                          "RGB*, GRAY*, INDEXED",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args_old), 0,
                           save_args_old, NULL);
@@ -179,7 +179,7 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "1995-1996,2000-2003",
                           N_("TIFF image"),
-                          "RGB*, GRAY*, INDEXED",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
