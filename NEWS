@@ -60,6 +60,8 @@ Core:
     Note: raster brushes are still 8-bit and plug-ins only have access
     to 8-bit versions of high-precision brushes/patterns. New API will
     be required to handle high-precision data.
+  - On-canvas preview while editing a color in the colormap of an
+    indexed image.
 
 User interface:
 
@@ -71,9 +73,10 @@ User interface:
     better on a particular image.
   - Add basic support for cursors with a scale factor of 2 for HiDPI
     (artwork to be updated).
-  - Foreground and background color icons will now display out-of-gamut
-    warning on indexed images for colors outside of the palette, as well
-    as on grayscale images, for non-gray colors.
+  - Foreground and background color icons, as well as color history will
+    now display out-of-gamut warning on indexed images for colors
+    outside of the palette, as well as on grayscale images, for non-gray
+    colors.
   - Pack color picker and hexadecimal entry on same line in Color dock.
 
 Usability:
@@ -135,6 +138,8 @@ Tools:
   - Add "Constrain handles" and "Around center" options to the
     perspective-transform tool's GUI, which are similar to the
     corresponding options of the unified-transform tool.
+  - Improve color picking on indexed image to always select an indexed
+    color corresponding to the picked pixel in the colormap.
 
 Plug-ins:
 
@@ -148,6 +153,7 @@ Plug-ins:
   - Remove the "Advanced" expanders from the PNG and TIFF export dialogs.
   - Full rewrite of the Spyrogimp plug-in with much more options and
     better interaction.
+  - Indexed TIFF with alpha channel now supported.
 
 Filters:
 
