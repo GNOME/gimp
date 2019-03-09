@@ -37,9 +37,14 @@
  * @title: GimpSpinButton
  * @short_description: A #GtkSpinButton with a some tweaked functionality.
  *
- * #GimpSpinButton modifies the behavior of #GtkSpinButton, so that
- * when the spin-button loses focus, its adjustment value is only
- * updated if the entry text has been changed.
+ * #GimpSpinButton is a drop-in replacement for #GtkSpinButton, with the
+ * following changes:
+ *
+ *   - When the spin-button loses focus, its adjustment value is only
+ *     updated if the entry text has been changed.
+ *
+ *   - When the spin-button's "wrap" property is TRUE, values input through the
+ *     entry are wrapped around.
  **/
 
 
@@ -59,6 +64,9 @@ static gboolean   gimp_spin_button_focus_in  (GtkWidget     *widget,
 static gboolean   gimp_spin_button_focus_out (GtkWidget     *widget,
                                               GdkEventFocus *event);
 
+static gint       gimp_spin_button_input     (GtkSpinButton *spin_button,
+                                              gdouble       *new_value);
+
 static void       gimp_spin_button_changed   (GtkEditable   *editable,
                                               gpointer       data);
 
@@ -75,10 +83,13 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpSpinButton, gimp_spin_button,
 static void
 gimp_spin_button_class_init (GimpSpinButtonClass *klass)
 {
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass     *widget_class      = GTK_WIDGET_CLASS (klass);
+  GtkSpinButtonClass *spin_button_class = GTK_SPIN_BUTTON_CLASS (klass);
 
   widget_class->focus_in_event  = gimp_spin_button_focus_in;
   widget_class->focus_out_event = gimp_spin_button_focus_out;
+
+  spin_button_class->input      = gimp_spin_button_input;
 }
 
 static void
@@ -121,6 +132,51 @@ gimp_spin_button_focus_out (GtkWidget     *widget,
     gtk_editable_set_editable (GTK_EDITABLE (widget), editable);
 
   return result;
+}
+
+static gint
+gimp_spin_button_input (GtkSpinButton *spin_button,
+                        gdouble       *new_value)
+{
+  if (gtk_spin_button_get_wrap (spin_button))
+    {
+      gdouble  value;
+      gdouble  min;
+      gdouble  max;
+      gchar   *endptr;
+
+      value = g_strtod (gtk_entry_get_text (GTK_ENTRY (spin_button)), &endptr);
+
+      if (*endptr)
+        return FALSE;
+
+      gtk_spin_button_get_range (spin_button, &min, &max);
+
+      if (min < max)
+        {
+          gdouble rem;
+
+          rem = fmod (value - min, max - min);
+
+          if (rem < 0.0)
+            rem += max - min;
+
+          if (rem == 0.0)
+            value = CLAMP (value, min, max);
+          else
+            value = min + rem;
+        }
+      else
+        {
+          value = min;
+        }
+
+      *new_value = value;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void
