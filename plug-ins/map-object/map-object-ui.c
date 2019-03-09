@@ -404,8 +404,8 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
                 gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
-                                    climb_rate, digits);
+  spinbutton = gimp_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+                                     climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 

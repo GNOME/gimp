@@ -450,8 +450,8 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
   *adjustment = gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
-                                    climb_rate, digits);
+  spinbutton = gimp_spin_button_new (GTK_ADJUSTMENT (*adjustment),
+                                     climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
@@ -508,7 +508,7 @@ gimp_random_seed_new (guint    *seed,
 
   adj = (GtkAdjustment *)
     gtk_adjustment_new (*seed, 0, (guint32) -1, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  spinbutton = gimp_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -741,7 +741,7 @@ gimp_coordinates_new (GimpUnit         unit,
   GtkWidget           *chainbutton;
 
   adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 0, 1, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
+  spinbutton = gimp_spin_button_new (adjustment, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   if (spinbutton_width > 0)

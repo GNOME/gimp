@@ -143,7 +143,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   /*  low spinbutton  */
   box->low_adj = (GtkAdjustment *)
     gtk_adjustment_new (0.0, 0.0, 255.0, 1.0, 16.0, 0.0);
-  box->low_spinbutton = gtk_spin_button_new (box->low_adj, 1.0, 0);
+  box->low_spinbutton = gimp_spin_button_new (box->low_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (box->low_spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), box->low_spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (box->low_spinbutton);
@@ -158,7 +158,7 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   /*  high spinbutton  */
   box->high_adj = (GtkAdjustment *)
     gtk_adjustment_new (255.0, 0.0, 255.0, 1.0, 16.0, 0.0);
-  box->high_spinbutton = gtk_spin_button_new (box->high_adj, 1.0, 0);
+  box->high_spinbutton = gimp_spin_button_new (box->high_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (box->high_spinbutton), TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), box->high_spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (box->high_spinbutton);

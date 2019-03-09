@@ -130,7 +130,7 @@ static void       gimp_spin_scale_setup_mnemonic    (GimpSpinScale    *scale,
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpSpinScale, gimp_spin_scale,
-                            GTK_TYPE_SPIN_BUTTON)
+                            GIMP_TYPE_SPIN_BUTTON)
 
 #define parent_class gimp_spin_scale_parent_class
 

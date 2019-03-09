@@ -1532,7 +1532,7 @@ mng_save_dialog (gint32 image_id)
   spinbutton_adj = (GtkAdjustment *)
     gtk_adjustment_new (mng_data.default_delay,
                         0, 65000, 10, 100, 0);
-  spinbutton = gtk_spin_button_new (spinbutton_adj, 1.0, 0);
+  spinbutton = gimp_spin_button_new (spinbutton_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   g_signal_connect (spinbutton_adj, "value-changed",

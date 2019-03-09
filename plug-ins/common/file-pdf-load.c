@@ -1552,8 +1552,8 @@ gimp_resolution_entry_field_init (GimpResolutionEntry      *gre,
                         gref->min_value,
                         gref->max_value,
                         1.0, 10.0, 0.0);
-  gref->spinbutton = gtk_spin_button_new (gref->adjustment,
-                                          1.0, digits);
+  gref->spinbutton = gimp_spin_button_new (gref->adjustment,
+                                           1.0, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (gref->spinbutton), TRUE);
 
   if (spinbutton_width > 0)

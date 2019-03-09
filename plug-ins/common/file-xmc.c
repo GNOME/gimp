@@ -1094,7 +1094,7 @@ save_dialog (const gint32   image_ID,
 
   adjustment = (GtkAdjustment *)
     gtk_adjustment_new (xmcparas.x, x1, x2, 1, 5, 0);
-  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  tmpwidget = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
@@ -1117,7 +1117,7 @@ save_dialog (const gint32   image_ID,
 
   adjustment = (GtkAdjustment *)
     gtk_adjustment_new (xmcparas.y, y1, y2, 1, 5, 0);
-  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  tmpwidget = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
@@ -1223,7 +1223,7 @@ save_dialog (const gint32   image_ID,
   adjustment = (GtkAdjustment *)
     gtk_adjustment_new (xmcvals.delay, CURSOR_MINIMUM_DELAY,
                         CURSOR_MAX_DELAY, 1, 5, 0);
-  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  tmpwidget = gimp_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/

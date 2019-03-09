@@ -697,7 +697,7 @@ shoot_dialog (GdkScreen **screen)
   adj = (GtkAdjustment *)
     gtk_adjustment_new (shootvals.select_delay,
                         0.0, 100.0, 1.0, 5.0, 0.0);
-  spinner = gtk_spin_button_new (adj, 0, 0);
+  spinner = gimp_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -760,7 +760,7 @@ shoot_dialog (GdkScreen **screen)
   adj = (GtkAdjustment *)
     gtk_adjustment_new (shootvals.screenshot_delay,
                         0.0, 100.0, 1.0, 5.0, 0.0);
-  spinner = gtk_spin_button_new (adj, 0, 0);
+  spinner = gimp_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);

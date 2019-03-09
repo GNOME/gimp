@@ -167,7 +167,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSpinButton" id="delay-spin">
+                      <object class="GimpSpinButton" id="delay-spin">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">&#x25CF;</property>

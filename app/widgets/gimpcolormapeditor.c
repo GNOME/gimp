@@ -202,8 +202,8 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
 
   editor->index_adjustment = (GtkAdjustment *)
     gtk_adjustment_new (0, 0, 0, 1, 10, 0);
-  editor->index_spinbutton = gtk_spin_button_new (editor->index_adjustment,
-                                                  1.0, 0);
+  editor->index_spinbutton = gimp_spin_button_new (editor->index_adjustment,
+                                                   1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (editor->index_spinbutton),
                                TRUE);
 

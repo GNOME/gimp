@@ -241,7 +241,7 @@ new_unit_dialog (GtkWidget *main_dialog,
                         gimp_unit_get_factor (template) : 1.0,
                         GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                         0.01, 0.1, 0.0);
-  spinbutton = gtk_spin_button_new (factor_adj, 0.01, 5);
+  spinbutton = gimp_spin_button_new (factor_adj, 0.01, 5);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Factor:"), 0.0, 0.5,
@@ -253,7 +253,7 @@ new_unit_dialog (GtkWidget *main_dialog,
     gtk_adjustment_new ((template != GIMP_UNIT_PIXEL) ?
                         gimp_unit_get_digits (template) : 2.0,
                         0, 5, 1, 1, 0);
-  spinbutton = gtk_spin_button_new (digits_adj, 0, 0);
+  spinbutton = gimp_spin_button_new (digits_adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Digits:"), 0.0, 0.5,

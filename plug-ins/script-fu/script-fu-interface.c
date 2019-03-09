@@ -437,9 +437,9 @@ script_fu_interface (SFScript  *script,
                                     arg->default_value.sfa_adjustment.step,
                                     arg->default_value.sfa_adjustment.page,
                                     0);
-              widget = gtk_spin_button_new (arg->value.sfa_adjustment.adj,
-                                            arg->default_value.sfa_adjustment.step,
-                                            arg->default_value.sfa_adjustment.digits);
+              widget = gimp_spin_button_new (arg->value.sfa_adjustment.adj,
+                                             arg->default_value.sfa_adjustment.step,
+                                             arg->default_value.sfa_adjustment.digits);
               gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (widget), TRUE);
               gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
               break;

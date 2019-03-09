@@ -274,7 +274,7 @@ gimp_rotate_tool_dialog (GimpTransformGridTool *tg_tool)
 
   rotate->angle_adj = (GtkAdjustment *)
     gtk_adjustment_new (0, -180, 180, 0.1, 15, 0);
-  button = gtk_spin_button_new (rotate->angle_adj, 1.0, 2);
+  button = gimp_spin_button_new (rotate->angle_adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (button), TRUE);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (button), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
@@ -293,7 +293,7 @@ gimp_rotate_tool_dialog (GimpTransformGridTool *tg_tool)
   gtk_widget_show (scale);
 
   adj = (GtkAdjustment *) gtk_adjustment_new (0, -1, 1, 1, 10, 0);
-  button = gtk_spin_button_new (adj, 1.0, 2);
+  button = gimp_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (button), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2, _("Center _X:"),

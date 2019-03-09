@@ -1296,7 +1296,7 @@ gimp_gradient_tool_editor_init_endpoint_gui (GimpGradientTool *gradient_tool)
   gtk_widget_show (label);
 
   /* the position size entry */
-  spinbutton = gtk_spin_button_new_with_range (0.0, 0.0, 1.0);
+  spinbutton = gimp_spin_button_new_with_range (0.0, 0.0, 1.0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
 

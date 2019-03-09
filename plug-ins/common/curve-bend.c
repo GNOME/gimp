@@ -1326,7 +1326,7 @@ bender_new_dialog (GimpDrawable *drawable)
   cd->rotate_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0.0, 360.0, 1, 45, 0));
   gtk_adjustment_set_value (cd->rotate_data, cd->rotation);
 
-  spinbutton = gtk_spin_button_new (cd->rotate_data, 0.5, 1);
+  spinbutton = gimp_spin_button_new (cd->rotate_data, 0.5, 1);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);

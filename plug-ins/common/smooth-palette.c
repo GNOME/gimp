@@ -471,7 +471,7 @@ dialog (gint32 drawable_id)
 
   adj = GTK_ADJUSTMENT (gtk_adjustment_new (config.ntries,
                                             1, 1024, 1, 10, 0));
-  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  spinbutton = gimp_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   gimp_table_attach_aligned (GTK_TABLE (sizeentry), 0, 2,

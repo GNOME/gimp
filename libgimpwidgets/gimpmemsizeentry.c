@@ -27,6 +27,7 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpmemsizeentry.h"
+#include "gimpspinbutton.h"
 #include "gimpwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -200,7 +201,7 @@ gimp_memsize_entry_new (guint64  value,
                                               CAST (upper >> shift),
                                               1, 8, 0);
 
-  entry->spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  entry->spinbutton = gimp_spin_button_new (adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (entry->spinbutton), TRUE);
 
 #undef CAST

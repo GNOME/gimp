@@ -35,12 +35,12 @@ typedef struct _GimpSpinScaleClass GimpSpinScaleClass;
 
 struct _GimpSpinScale
 {
-  GtkSpinButton  parent_instance;
+  GimpSpinButton  parent_instance;
 };
 
 struct _GimpSpinScaleClass
 {
-  GtkSpinButtonClass  parent_class;
+  GimpSpinButtonClass  parent_class;
 };
 
 

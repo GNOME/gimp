@@ -279,7 +279,7 @@ save_dialog (WebPSaveParams *params,
       adj_kf = (GtkAdjustment *) gtk_adjustment_new (params->kf_distance,
                                                      0.0, 10000.0,
                                                      1.0, 10.0, 0.0);
-      kf_distance = gtk_spin_button_new (adj_kf, 1, 0);
+      kf_distance = gimp_spin_button_new (adj_kf, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (kf_distance), TRUE);
       gtk_box_pack_start (GTK_BOX (hbox_kf), kf_distance, FALSE, FALSE, 0);
       gtk_widget_show (kf_distance);
@@ -336,7 +336,7 @@ save_dialog (WebPSaveParams *params,
       /* default delay */
       adj = (GtkAdjustment *) gtk_adjustment_new (params->delay,
                                                   1, 10000, 1, 10, 0);
-      delay = gtk_spin_button_new (adj, 1, 0);
+      delay = gimp_spin_button_new (adj, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (delay), TRUE);
       gtk_box_pack_start (GTK_BOX (hbox), delay, FALSE, FALSE, 0);
       gtk_widget_show (delay);

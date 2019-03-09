@@ -2006,7 +2006,7 @@ save_dialog (gint32 image_id,
                     G_CALLBACK (transindex_clicked), 0);
   gtk_widget_show (check);
 
-  spin = gtk_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 255, 1, 1, 0)), 1, 0);
+  spin = gimp_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 255, 1, 1, 0)), 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spin, 1, 1, 0);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spin),
                                      GTK_UPDATE_IF_VALID);
@@ -2154,7 +2154,7 @@ save_dialog (gint32 image_id,
                     (GtkAttachOptions)(0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
 
-  spin = gtk_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.gamma, 1e-05, 100, 0.1, 0.5, 0)), 1, 1);
+  spin = gimp_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.gamma, 1e-05, 100, 0.1, 0.5, 0)), 1, 1);
   gtk_table_attach (GTK_TABLE (table), spin, 1, 2, 4, 5,
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
@@ -2183,7 +2183,7 @@ save_dialog (gint32 image_id,
                     (GtkAttachOptions)(0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label), 1, 0.5);
 
-  spin = gtk_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.alpha_test_threshold, 0, 1, 0.01, 0.1, 0)), 1, 2);
+  spin = gimp_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (dds_write_vals.alpha_test_threshold, 0, 1, 0.01, 0.1, 0)), 1, 2);
   gtk_table_attach (GTK_TABLE (table), spin, 1, 2, 6, 7,
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(GTK_EXPAND), 0, 0);
