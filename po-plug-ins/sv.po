@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-16 19:58+0000\n"
-"PO-Revision-Date: 2019-01-19 00:40+0100\n"
+"POT-Creation-Date: 2019-03-11 09:58+0000\n"
+"PO-Revision-Date: 2019-03-11 17:53+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -445,7 +445,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:992
 #: ../plug-ins/common/file-jp2-load.c:1275 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1087 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-png.c:1086 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:745
@@ -496,11 +496,8 @@ msgid "_Border Average..."
 msgstr "_Kantmedelvärde…"
 
 #: ../plug-ins/common/border-average.c:173
-msgid "Border Average"
-msgstr "Kantmedelvärde"
-
 #: ../plug-ins/common/border-average.c:358
-msgid "Borderaverage"
+msgid "Border Average"
 msgstr "Kantmedelvärde"
 
 #: ../plug-ins/common/border-average.c:380
@@ -1054,8 +1051,8 @@ msgstr "Spara parametrar för CML-utforskare"
 
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
-#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:860
-#: ../plug-ins/common/file-pdf-save.c:471 ../plug-ins/common/file-png.c:1591
+#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
+#: ../plug-ins/common/file-pdf-save.c:471 ../plug-ins/common/file-png.c:1573
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1504
@@ -1063,7 +1060,7 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
 #: ../plug-ins/file-jpeg/jpeg-save.c:330 ../plug-ins/file-psd/psd-save.c:1599
-#: ../plug-ins/file-tiff/file-tiff-save.c:645 ../plug-ins/flame/flame.c:442
+#: ../plug-ins/file-tiff/file-tiff-save.c:642 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -1084,7 +1081,7 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:935
+#: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:934
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
@@ -2202,20 +2199,19 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
+#: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:353 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:370
-#: ../plug-ins/common/file-pdf-load.c:1030 ../plug-ins/common/file-pix.c:357
-#: ../plug-ins/common/file-png.c:927 ../plug-ins/common/file-pnm.c:566
-#: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
-#: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
-#: ../plug-ins/common/file-wmf.c:1014 ../plug-ins/common/file-xbm.c:740
-#: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
-#: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
-#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
-#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:131
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1030
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:926
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
+#: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1014
+#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
+#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
+#: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:185
+#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
+#: ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2292,19 +2288,17 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gbr.c:711
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1316
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
 #: ../plug-ins/common/file-heif.c:634 ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:747
-#: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1584
-#: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
-#: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:663
-#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:310
-#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
-#: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:287
-#: ../plug-ins/file-psd/psd-save.c:1570 ../plug-ins/file-sgi/sgi.c:579
-#: ../plug-ins/file-tiff/file-tiff-save.c:317
+#: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
+#: ../plug-ins/common/file-png.c:1566 ../plug-ins/common/file-pnm.c:1249
+#: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
+#: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1040
+#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
+#: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
+#: ../plug-ins/file-jpeg/jpeg-save.c:287 ../plug-ins/file-psd/psd-save.c:1570
+#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exporterar ”%s”"
@@ -2417,53 +2411,21 @@ msgstr "Kan inte spara bilder med en alfakanal."
 msgid "Cannot operate on unknown image types."
 msgstr "Kan inte arbeta med okända bildtyper."
 
-#: ../plug-ins/common/file-gbr.c:131 ../plug-ins/common/file-gbr.c:153
+#: ../plug-ins/common/file-gbr.c:109
 msgid "GIMP brush"
 msgstr "GIMP-pensel"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
-#, c-format
-msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr "Ogiltig huvuddata i ”%s”: bredd=%lu, höjd=%lu, byte=%lu"
-
-#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
-#: ../plug-ins/common/file-gbr.c:456
-#, c-format
-msgid "Unsupported brush format"
-msgstr "Penselformat stöds inte"
-
-#: ../plug-ins/common/file-gbr.c:468
-#, c-format
-msgid "Invalid header data in '%s': Brush name is too long: %lu"
-msgstr "Ogiltig huvuddata i ”%s”: Penselnamnet är för långt: %lu"
-
-#: ../plug-ins/common/file-gbr.c:482
-#, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "Fel i GIMP-penselfilen ”%s”"
-
-#: ../plug-ins/common/file-gbr.c:490
-#, c-format
-msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Ogiltig UTF-8-sträng i penselfilen ”%s”."
-
-#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
-#: ../plug-ins/common/file-gih.c:1218 ../plug-ins/common/file-pat.c:398
-#: ../plug-ins/gradient-flare/gradient-flare.c:3064
-msgid "Unnamed"
-msgstr "Namnlös"
-
-#: ../plug-ins/common/file-gbr.c:831
+#: ../plug-ins/common/file-gbr.c:316
 msgid "Brush"
 msgstr "Pensel"
 
-#: ../plug-ins/common/file-gbr.c:847 ../plug-ins/common/file-gih.c:944
-#: ../plug-ins/common/file-pat.c:659 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:332 ../plug-ins/common/file-gih.c:549
+#: ../plug-ins/common/file-pat.c:302 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Beskrivning:"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:859 ../plug-ins/common/grid.c:799
+#: ../plug-ins/common/file-gbr.c:344 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "Mellanrum:"
 
@@ -2607,64 +2569,55 @@ msgstr ""
 msgid "The default comment is limited to %d characters."
 msgstr "Standardkommentaren är begränsad till %d tecken."
 
-#: ../plug-ins/common/file-gih.c:189 ../plug-ins/common/file-gih.c:213
+#: ../plug-ins/common/file-gih.c:160
 msgid "GIMP brush (animated)"
 msgstr "GIMP-pensel (animerad)"
 
-#: ../plug-ins/common/file-gih.c:502
-#, c-format
-msgid "Brush name is too long: %lu"
-msgstr "Penselnamnet är för långt: %lu"
-
-#: ../plug-ins/common/file-gih.c:595
-msgid "GIMP brush file appears to be corrupted."
-msgstr "GIMP-penselfilen verkar vara skadad."
-
-#: ../plug-ins/common/file-gih.c:926
+#: ../plug-ins/common/file-gih.c:531
 msgid "Brush Pipe"
 msgstr "Penselrör"
 
-#: ../plug-ins/common/file-gih.c:959
+#: ../plug-ins/common/file-gih.c:564
 msgid "Spacing (percent):"
 msgstr "Mellanrum (procent):"
 
-#: ../plug-ins/common/file-gih.c:1014
+#: ../plug-ins/common/file-gih.c:619
 msgid "Pixels"
 msgstr "Bildpunkter"
 
-#: ../plug-ins/common/file-gih.c:1019
+#: ../plug-ins/common/file-gih.c:624
 msgid "Cell size:"
 msgstr "Cellstorlek:"
 
-#: ../plug-ins/common/file-gih.c:1032
+#: ../plug-ins/common/file-gih.c:637
 msgid "Number of cells:"
 msgstr "Antal celler:"
 
-#: ../plug-ins/common/file-gih.c:1057
+#: ../plug-ins/common/file-gih.c:662
 msgid " Rows of "
 msgstr " Rader med "
 
-#: ../plug-ins/common/file-gih.c:1069
+#: ../plug-ins/common/file-gih.c:674
 msgid " Columns on each layer"
 msgstr " Kolumner på varje lager"
 
-#: ../plug-ins/common/file-gih.c:1073
+#: ../plug-ins/common/file-gih.c:678
 msgid " (Width Mismatch!) "
 msgstr " (Fel bredd!) "
 
-#: ../plug-ins/common/file-gih.c:1077
+#: ../plug-ins/common/file-gih.c:682
 msgid " (Height Mismatch!) "
 msgstr " (Fel höjd!) "
 
-#: ../plug-ins/common/file-gih.c:1082
+#: ../plug-ins/common/file-gih.c:687
 msgid "Display as:"
 msgstr "Visa som:"
 
-#: ../plug-ins/common/file-gih.c:1093
+#: ../plug-ins/common/file-gih.c:698
 msgid "Dimension:"
 msgstr "Dimension:"
 
-#: ../plug-ins/common/file-gih.c:1169
+#: ../plug-ins/common/file-gih.c:774
 msgid "Ranks:"
 msgstr "Ranger:"
 
@@ -2971,7 +2924,7 @@ msgstr "JP2-bilden ”%s” har en okänd färgrymd."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2294
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2276
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kunde inte spara transparens utan informationsförlust; sparar opacitet "
@@ -3006,7 +2959,7 @@ msgid "Save creation time"
 msgstr "Spara skapad tid"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2352
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2334
 msgid "PNG"
 msgstr "PNG"
 
@@ -3094,21 +3047,11 @@ msgstr ""
 msgid "MNG animation"
 msgstr "MNG-animation"
 
-#: ../plug-ins/common/file-pat.c:103 ../plug-ins/common/file-pat.c:126
+#: ../plug-ins/common/file-pat.c:83
 msgid "GIMP pattern"
 msgstr "GIMP-mönster"
 
-#: ../plug-ins/common/file-pat.c:373
-#, c-format
-msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-msgstr "Ogiltig huvuddata i ”%s”: Mönsternamnet är för långt: %lu"
-
-#: ../plug-ins/common/file-pat.c:392
-#, c-format
-msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Ogiltig UTF-8-sträng i mönsterfilen ”%s”."
-
-#: ../plug-ins/common/file-pat.c:644
+#: ../plug-ins/common/file-pat.c:287
 msgid "Pattern"
 msgstr "Mönster"
 
@@ -3151,35 +3094,35 @@ msgstr "Upplösning utanför giltigt intervall i XCX-huvud, använder 72x72"
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Bilddimensionerna är för stora: bredd %d x höjd %d"
 
-#: ../plug-ins/common/file-pcx.c:531
+#: ../plug-ins/common/file-pcx.c:545
 msgid "Unusual PCX flavour, giving up"
 msgstr "Ovanlig PCX-variant; ger upp"
 
-#: ../plug-ins/common/file-pcx.c:813 ../plug-ins/common/file-pnm.c:1245
+#: ../plug-ins/common/file-pcx.c:827 ../plug-ins/common/file-pnm.c:1245
 msgid "Cannot export images with alpha channel."
 msgstr "Kan inte exportera bilder med en alfakanal."
 
-#: ../plug-ins/common/file-pcx.c:833
+#: ../plug-ins/common/file-pcx.c:847
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Ogiltig X-position: %d"
 
-#: ../plug-ins/common/file-pcx.c:839
+#: ../plug-ins/common/file-pcx.c:853
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Ogiltig Y-position: %d"
 
-#: ../plug-ins/common/file-pcx.c:845
+#: ../plug-ins/common/file-pcx.c:859
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Högra ramen är utanför intervallet (måste vara < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:852
+#: ../plug-ins/common/file-pcx.c:866
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Nedre ramen är utanför intervallet (måste vara < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:926
+#: ../plug-ins/common/file-pcx.c:940
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Skrivning till filen ”%s” misslyckades: %s"
@@ -3381,33 +3324,33 @@ msgstr "PNG-bild"
 msgid "Error loading PNG file: %s\n"
 msgstr "Fel vid inläsning av PNG-fil: %s\n"
 
-#: ../plug-ins/common/file-png.c:893
+#: ../plug-ins/common/file-png.c:892
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Fel vid skapande av läs-struct för PNG då ”%s” lästes in."
 
-#: ../plug-ins/common/file-png.c:902
+#: ../plug-ins/common/file-png.c:901
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Fel vid läsning av ”%s”. Kunde inte skapa informationsstruktur för PNG-huvud."
 
-#: ../plug-ins/common/file-png.c:910
+#: ../plug-ins/common/file-png.c:909
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fel vid inläsning av ”%s”. Skadad fil?"
 
-#: ../plug-ins/common/file-png.c:1065
+#: ../plug-ins/common/file-png.c:1064
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Okänd färgmodell i PNG-filen ”%s”."
 
-#: ../plug-ins/common/file-png.c:1078 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1077 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Kunde inte skapa ny bild för ”%s”: %s"
 
-#: ../plug-ins/common/file-png.c:1134
+#: ../plug-ins/common/file-png.c:1133
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3415,19 +3358,19 @@ msgstr ""
 "PNG-filen angav en position som orsakade att lagret blev placerat utanför "
 "bilden."
 
-#: ../plug-ins/common/file-png.c:1411
+#: ../plug-ins/common/file-png.c:1393
 msgid "Apply PNG Offset"
 msgstr "Tillämpa PNG-position"
 
-#: ../plug-ins/common/file-png.c:1415
+#: ../plug-ins/common/file-png.c:1397
 msgid "Ignore PNG offset"
 msgstr "Ignorera PNG-position"
 
-#: ../plug-ins/common/file-png.c:1416
+#: ../plug-ins/common/file-png.c:1398
 msgid "Apply PNG offset to layer"
 msgstr "Tillämpa PNG-position på lager"
 
-#: ../plug-ins/common/file-png.c:1441
+#: ../plug-ins/common/file-png.c:1423
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3436,30 +3379,30 @@ msgstr ""
 "PNG-bilden du importerar anger en position på %d, %d. Vill du tillämpa denna "
 "position på lagret?"
 
-#: ../plug-ins/common/file-png.c:1550
+#: ../plug-ins/common/file-png.c:1532
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Fel vid skapande av PNG skriv-struct då ”%s” exporterades."
 
-#: ../plug-ins/common/file-png.c:1559
+#: ../plug-ins/common/file-png.c:1541
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Fel vid export av ”%s”. Kunde inte skapa informationsstruktur för PNG-huvud."
 
-#: ../plug-ins/common/file-png.c:1567
+#: ../plug-ins/common/file-png.c:1549
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Fel vid export av ”%s”. Kunde inte exportera bild."
 
-#: ../plug-ins/common/file-png.c:2369 ../plug-ins/common/file-raw-data.c:2129
-#: ../plug-ins/file-tiff/file-tiff-save.c:959
+#: ../plug-ins/common/file-png.c:2351 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/file-tiff/file-tiff-save.c:965
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Fel vid inläsning av användargränssnittsfilen ”%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2370 ../plug-ins/common/file-raw-data.c:2130
-#: ../plug-ins/file-tiff/file-tiff-save.c:960
+#: ../plug-ins/common/file-png.c:2352 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/file-tiff/file-tiff-save.c:966
 msgid "Unknown error"
 msgstr "Okänt fel"
 
@@ -3993,7 +3936,7 @@ msgstr "Indexerad"
 
 #: ../plug-ins/common/file-raw-data.c:1949
 msgid "Indexed Alpha"
-msgstr "Indexerad alfa"
+msgstr "Indexerat alfa"
 
 #: ../plug-ins/common/file-raw-data.c:1950
 msgid "Gray unsigned 16 bit Big Endian"
@@ -6943,7 +6886,7 @@ msgid "<b>Advanced Options</b>"
 msgstr "<b>Avancerade inställningar</b>"
 
 #: ../plug-ins/file-dds/ddswrite.c:2055
-#: ../plug-ins/file-tiff/file-tiff-save.c:975
+#: ../plug-ins/file-tiff/file-tiff-save.c:981
 msgid "Compression"
 msgstr "Komprimering"
 
@@ -7230,7 +7173,7 @@ msgstr "Spara _miniatyrbild"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:924
 #: ../plug-ins/ui/plug-in-file-png.ui.h:16
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "Save color profile"
 msgstr "Spara färgprofil"
 
@@ -7651,13 +7594,7 @@ msgstr "%s-%d-av-%d-sidor"
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:606
-#, c-format
-msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr ""
-"Exportering av TIFF kan inte hantera indexerade bilder med en alfakanal."
-
-#: ../plug-ins/file-tiff/file-tiff-save.c:619
+#: ../plug-ins/file-tiff/file-tiff-save.c:616
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7665,11 +7602,11 @@ msgstr ""
 "Endast monokroma bilder kan komprimeras med ”CCITT Group 4” eller ”CCITT "
 "Group 3”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:633
+#: ../plug-ins/file-tiff/file-tiff-save.c:630
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Indexerade bilder kan inte komprimeras med ”JPEG”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:732
+#: ../plug-ins/file-tiff/file-tiff-save.c:736
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7677,40 +7614,40 @@ msgstr ""
 "TIFF-formatet stöder endast kommentarer i\n"
 "7-bitars ASCII. Ingen kommentar sparad."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:824
+#: ../plug-ins/file-tiff/file-tiff-save.c:830
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Misslyckades med skrivning av en scanlinje på rad %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:949
+#: ../plug-ins/file-tiff/file-tiff-save.c:955
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:979
+#: ../plug-ins/file-tiff/file-tiff-save.c:985
 msgid "_None"
 msgstr "_Ingen"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:980
+#: ../plug-ins/file-tiff/file-tiff-save.c:986
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:981
+#: ../plug-ins/file-tiff/file-tiff-save.c:987
 msgid "_Pack Bits"
 msgstr "_Packa bitar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:982
+#: ../plug-ins/file-tiff/file-tiff-save.c:988
 msgid "_Deflate"
 msgstr "_Packa ihop"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:983
+#: ../plug-ins/file-tiff/file-tiff-save.c:989
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:984
+#: ../plug-ins/file-tiff/file-tiff-save.c:990
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Group _3-fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:985
+#: ../plug-ins/file-tiff/file-tiff-save.c:991
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4-fax"
 
@@ -9568,22 +9505,22 @@ msgid "S_ave Defaults"
 msgstr "S_para standardvärden"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "Save Exif data"
 msgstr "Spara Exif-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:13
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save XMP data"
 msgstr "Spara XMP-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:14
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Save IPTC data"
 msgstr "Spara IPTC-data"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:15
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "Save thumbnail"
 msgstr "Spara miniatyrbild"
 
@@ -9643,8 +9580,12 @@ msgstr "Planär (RRR,GGG,BBB)"
 msgid "Save color values from transparent pixels"
 msgstr "Spara färgvärden från transparenta bildpunkter"
 
-# src/sidebar.c:107
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+msgid "Colors are not stored premultiplied by the associated alpha"
+msgstr "Färger lagras inte förmultiplicerade av associerat alfa"
+
+# src/sidebar.c:107
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "<b>Comment</b>"
 msgstr "<b>Kommentar</b>"
 
@@ -10201,6 +10142,10 @@ msgstr "Ny gradientöverstrålning"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3063
 msgid "Enter a name for the new GFlare"
 msgstr "Ge namn på ny GFlare"
+
+#: ../plug-ins/gradient-flare/gradient-flare.c:3064
+msgid "Unnamed"
+msgstr "Namnlös"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3083
 #: ../plug-ins/gradient-flare/gradient-flare.c:3164
@@ -12782,6 +12727,40 @@ msgstr "_Bildläsare/Kamera…"
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
+
+#~ msgid "Borderaverage"
+#~ msgstr "Kantmedelvärde"
+
+#~ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+#~ msgstr "Ogiltig huvuddata i ”%s”: bredd=%lu, höjd=%lu, byte=%lu"
+
+#~ msgid "Unsupported brush format"
+#~ msgstr "Penselformat stöds inte"
+
+#~ msgid "Invalid header data in '%s': Brush name is too long: %lu"
+#~ msgstr "Ogiltig huvuddata i ”%s”: Penselnamnet är för långt: %lu"
+
+#~ msgid "Error in GIMP brush file '%s'"
+#~ msgstr "Fel i GIMP-penselfilen ”%s”"
+
+#~ msgid "Invalid UTF-8 string in brush file '%s'."
+#~ msgstr "Ogiltig UTF-8-sträng i penselfilen ”%s”."
+
+#~ msgid "Brush name is too long: %lu"
+#~ msgstr "Penselnamnet är för långt: %lu"
+
+#~ msgid "GIMP brush file appears to be corrupted."
+#~ msgstr "GIMP-penselfilen verkar vara skadad."
+
+#~ msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+#~ msgstr "Ogiltig huvuddata i ”%s”: Mönsternamnet är för långt: %lu"
+
+#~ msgid "Invalid UTF-8 string in pattern file '%s'."
+#~ msgstr "Ogiltig UTF-8-sträng i mönsterfilen ”%s”."
+
+#~ msgid "TIFF export cannot handle indexed images with an alpha channel."
+#~ msgstr ""
+#~ "Exportering av TIFF kan inte hantera indexerade bilder med en alfakanal."
 
 #~ msgid "_Guillotine"
 #~ msgstr "_Pappersskärare"
