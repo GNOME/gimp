@@ -42,6 +42,7 @@
         <child>
           <object class="GtkCheckButton" id="save-alpha">
             <property name="label" translatable="yes">Save color values from transparent pixels</property>
+            <property name="tooltip_text" translatable="yes">Colors are not stored premultiplied by the associated alpha</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">False</property>

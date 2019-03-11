@@ -129,7 +129,7 @@ query (void)
   static const GimpParamDef save_args[] =
   {
     COMMON_SAVE_ARGS,
-    { GIMP_PDB_INT32, "save-transp-pixels", "Keep the color data masked by an alpha channel intact" }
+    { GIMP_PDB_INT32, "save-transp-pixels", "Keep the color data masked by an alpha channel intact (do not store premultiplied components)" }
   };
 
   gimp_install_procedure (LOAD_PROC,
