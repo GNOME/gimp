@@ -188,13 +188,13 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_PALETTE_DIALOG },
 
   { "dialogs-palette-editor", GIMP_ICON_PALETTE,
-    NC_("dialogs-action", "Palette Editor"), NULL,
+    NC_("dialogs-action", "Palette _Editor"), NULL,
     NC_("dialogs-action", "Open the palette editor"),
     "gimp-palette-editor",
     GIMP_HELP_PALETTE_EDIT },
 
   { "dialogs-tool-presets", GIMP_ICON_TOOL_PRESET,
-    NC_("dialogs-action", "Tool presets"), NULL,
+    NC_("dialogs-action", "Tool Pre_sets"), NULL,
     NC_("dialogs-action", "Open tool presets dialog"),
     "gimp-tool-preset-list|gimp-tool-preset-grid",
     GIMP_HELP_TOOL_PRESET_DIALOG },
