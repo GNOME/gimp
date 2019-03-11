@@ -1259,9 +1259,9 @@ gimp_size_entry_attach_eevl (GtkSpinButton      *spin_button,
   gtk_spin_button_set_numeric (spin_button, FALSE);
   gtk_spin_button_set_update_policy (spin_button, GTK_UPDATE_IF_VALID);
 
-  g_signal_connect (spin_button, "input",
-                    G_CALLBACK (gimp_size_entry_eevl_input_callback),
-                    gsef);
+  g_signal_connect_after (spin_button, "input",
+                          G_CALLBACK (gimp_size_entry_eevl_input_callback),
+                          gsef);
 }
 
 static gint
