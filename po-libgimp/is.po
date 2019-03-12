@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-03-08 18:34+0000\n"
-"PO-Revision-Date: 2019-03-11 19:46+0000\n"
+"PO-Revision-Date: 2019-03-12 12:07+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -1347,22 +1347,22 @@ msgstr "Frá hægri til vinstri"
 #: ../libgimpbase/gimpbaseenums.c:1787
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (blönduð stefna)"
 
 #: ../libgimpbase/gimpbaseenums.c:1788
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (upprétt stefna)"
 
 #: ../libgimpbase/gimpbaseenums.c:1789
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (blönduð stefna)"
 
 #: ../libgimpbase/gimpbaseenums.c:1790
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (upprétt stefna)"
 
 #: ../libgimpbase/gimpbaseenums.c:1821
 msgctxt "text-hint-style"
