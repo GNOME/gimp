@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-08 19:39+0100\n"
-"PO-Revision-Date: 2019-03-08 19:40+0100\n"
+"POT-Creation-Date: 2019-03-12 18:53+0100\n"
+"PO-Revision-Date: 2019-03-12 18:54+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3342,8 +3342,8 @@ msgstr "Otwiera okno palet"
 
 #: ../app/actions/dialogs-actions.c:191
 msgctxt "dialogs-action"
-msgid "Palette Editor"
-msgstr "Edytor palety"
+msgid "Palette _Editor"
+msgstr "_Edytor palety"
 
 #: ../app/actions/dialogs-actions.c:192
 msgctxt "dialogs-action"
@@ -3352,8 +3352,8 @@ msgstr "Otwiera edytor palet"
 
 #: ../app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
-msgid "Tool presets"
-msgstr "Ustawienia narzędzia"
+msgid "Tool Pre_sets"
+msgstr "_Ustawienia narzędzia"
 
 #: ../app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
