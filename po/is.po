@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-03-08 08:46+0000\n"
-"PO-Revision-Date: 2019-03-11 19:43+0000\n"
+"PO-Revision-Date: 2019-03-12 12:09+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -91,6 +91,8 @@ msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
+"Fyllingarverkfæri: nýtt \"Fylla með greindri línumynd\" fyrir svæði í"
+" línumynd (line-art) sem ekki eru fullkomlega lokuð"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
@@ -101,6 +103,8 @@ msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
+"Fyllingarverkfærð gerir kleift að fylla \"áþekka liti\" og \"með greindri"
+" línumynd\" með því að halda músinni"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "Scale tool scales around center even when using numeric input"
@@ -2788,7 +2792,7 @@ msgstr "Hefja/Stöðva upptöku..."
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
 msgid "Start/stop recording performance log"
-msgstr ""
+msgstr "Hefja/Stöðva upptöku á afkastaskráningu"
 
 #: ../app/actions/dashboard-actions.c:56
 #| msgctxt "layers-action"
@@ -3410,7 +3414,7 @@ msgstr "Sýsla m_eð forritsviðauka"
 #: ../app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
-msgstr ""
+msgstr "Sýsla með forritsviðauka: leita, setja inn, fjarlægja, uppfæra."
 
 #: ../app/actions/dialogs-actions.c:363
 #: ../app/dialogs/preferences-dialog.c:2095
@@ -6131,6 +6135,8 @@ msgid ""
 "discarding the image's color profile, but allows to easily restore the "
 "profile."
 msgstr ""
+"Nota sRGB-litasnið tímabundið fyrir myndina. Þetta er það sama og að henda"
+" litasniði myndarinnar, en gerir auðvelt að endurheimta litasniðið."
 
 #: ../app/actions/image-actions.c:193 ../app/actions/image-actions.c:446
 msgctxt "image-convert-action"
@@ -8050,42 +8056,42 @@ msgstr "Frá hægri til vinstri"
 #: ../app/actions/text-editor-actions.c:71
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
-msgstr ""
+msgstr "TTB-RTL"
 
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (blönduð stefna)"
 
 #: ../app/actions/text-editor-actions.c:77
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
-msgstr ""
+msgstr "TTB-RTL-UPPRÉTT"
 
 #: ../app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (upprétt stefna)"
 
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
-msgstr ""
+msgstr "TTB-LTR"
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (blönduð stefna)"
 
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
-msgstr ""
+msgstr "TTB-LTR-UPPRÉTT"
 
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (upprétt stefna)"
 
 #: ../app/actions/text-editor-commands.c:60
 #: ../app/actions/text-tool-commands.c:114
@@ -8189,22 +8195,22 @@ msgstr "Frá hægri til vinstri"
 #: ../app/actions/text-tool-actions.c:116
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (blönduð stefna)"
 
 #: ../app/actions/text-tool-actions.c:121
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (upprétt stefna)"
 
 #: ../app/actions/text-tool-actions.c:126
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (blönduð stefna)"
 
 #: ../app/actions/text-tool-actions.c:131
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (upprétt stefna)"
 
 #: ../app/actions/tool-options-actions.c:57
 msgctxt "tool-options-action"
@@ -11146,7 +11152,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:520
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna gerð fyllingar í glugganum 'Stærð myndflatar'."
 
 #: ../app/config/gimprc-blurbs.h:523
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
@@ -14051,7 +14057,7 @@ msgstr "Velja gegnsæja mynddíla í stað grárra"
 
 #: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:172
 msgid "Line art detection threshold"
-msgstr ""
+msgstr "Litmörk fyrir greiningu línumyndar"
 
 #: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
@@ -14063,10 +14069,9 @@ msgid "Maximum growing size"
 msgstr "Mesta stærð vaxtar"
 
 #: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:180
-#, fuzzy
 #| msgid "Maximum number of strokes on the X axis"
 msgid "Maximum number of pixels grown under the line art"
-msgstr "Hámarksfjöldi stroka á X-ásnum"
+msgstr "Hámarksfjöldi mynddíla sem vaxa undir línumyndinni"
 
 #: ../app/core/gimplineart.c:358
 msgid "Maximum curved closing length"
@@ -14074,7 +14079,7 @@ msgstr ""
 
 #: ../app/core/gimplineart.c:359
 msgid "Maximum curved length (in pixels) to close the line art"
-msgstr ""
+msgstr "Hámarkslengd boglínu (í mynddílum) til að loka línumyndinni"
 
 #: ../app/core/gimplineart.c:365
 msgid "Maximum straight closing length"
@@ -14082,7 +14087,7 @@ msgstr ""
 
 #: ../app/core/gimplineart.c:366
 msgid "Maximum straight length (in pixels) to close the line art"
-msgstr ""
+msgstr "Hámarkslengd beinnar línu (í mynddílum) til að loka línumyndinni"
 
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
@@ -20594,10 +20599,9 @@ msgid "Unknown file type"
 msgstr "Óþekkt skráategund"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:230
-#, fuzzy
 #| msgid "Starting Extensions"
 msgid "Loading extension plug-ins"
-msgstr "Ræsi viðbætur"
+msgstr "Hleð inn viðbótum forritsviðauka"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:250
 msgid "Searching plug-ins"
@@ -21354,10 +21358,9 @@ msgid "Maximum color difference"
 msgstr "Hámarks litamunur"
 
 #: ../app/tools/gimpbucketfilloptions.c:165
-#, fuzzy
 #| msgid "Set Image Print Resolution"
 msgid "Source image for line art computation"
-msgstr "Stilla myndupplausn fyrir prentun"
+msgstr "Uppruni myndar fyrir útreikning línumyndar"
 
 #: ../app/tools/gimpbucketfilloptions.c:186
 msgid "Maximum gap length"
@@ -21365,7 +21368,7 @@ msgstr "Hámarkslengd bils"
 
 #: ../app/tools/gimpbucketfilloptions.c:187
 msgid "Maximum gap (in pixels) in line art which can be closed"
-msgstr ""
+msgstr "Hámarkslengd bils (í mynddílum) í línumynd sem hægt er að loka"
 
 #: ../app/tools/gimpbucketfilloptions.c:193
 #: ../app/tools/gimpbucketfilloptions.c:442
@@ -21394,11 +21397,10 @@ msgid "Finding Similar Colors"
 msgstr "Finna áþekka liti"
 
 #: ../app/tools/gimpbucketfilloptions.c:457
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Invert Selection"
 msgid "Line Art Detection"
-msgstr "Umhverfa myndvali"
+msgstr "Greining línumyndar"
 
 #: ../app/tools/gimpbucketfilloptions.c:467
 msgid "(computing...)"
@@ -21430,10 +21432,9 @@ msgid "The active layer is not visible."
 msgstr "Virka lagið er ekki sýnilegt."
 
 #: ../app/tools/gimpbucketfilltool.c:511
-#, fuzzy
 #| msgid "No filter selected"
 msgid "No valid line art source selected."
-msgstr "Engin sía valin"
+msgstr "Enginn gildur uppruni línumyndar valinn."
 
 #: ../app/tools/gimpbucketfilltool.c:695 ../app/tools/gimpbucketfilltool.c:828
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:448
@@ -23927,11 +23928,10 @@ msgid "Fill similar colors"
 msgstr "Fylla áþekka liti"
 
 #: ../app/tools/tools-enums.c:27
-#, fuzzy
 #| msgid "Fill whole selection"
 msgctxt "bucket-fill-area"
 msgid "Fill by line art detection"
-msgstr "Fylla allt valið"
+msgstr "Fylla með greindri línumynd"
 
 #: ../app/tools/tools-enums.c:57
 #| msgctxt "item-set"
@@ -25164,20 +25164,20 @@ msgstr "Heildarstærð meðhöndlaðra mipmap-gagna"
 #: ../app/widgets/gimpdashboard.c:687
 msgctxt "dashboard-variable"
 msgid "Async"
-msgstr ""
+msgstr "Async"
 
 #: ../app/widgets/gimpdashboard.c:688
 msgid "Number of ongoing asynchronous operations"
-msgstr ""
+msgstr "Fjöldi ósamstilltra aðgerða í gangi"
 
 #: ../app/widgets/gimpdashboard.c:696
 msgctxt "dashboard-variable"
 msgid "Scratch"
-msgstr ""
+msgstr "Scratch"
 
 #: ../app/widgets/gimpdashboard.c:697
 msgid "Total size of scratch memory"
-msgstr ""
+msgstr "Heildarstærð bráðabirgða(krass)minnis"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
@@ -25185,11 +25185,11 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:708
 msgctxt "dashboard-variable"
 msgid "TempBuf"
-msgstr ""
+msgstr "TempBuf"
 
 #: ../app/widgets/gimpdashboard.c:709
 msgid "Total size of temporary buffers"
-msgstr ""
+msgstr "Heildarstærð bráðabirgðabiðminnis"
 
 #: ../app/widgets/gimpdashboard.c:721
 msgctxt "dashboard-group"
