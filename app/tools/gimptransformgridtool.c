@@ -1312,19 +1312,17 @@ gimp_transform_grid_tool_response (GimpToolGui           *gui,
               if (tr_options->direction == GIMP_TRANSFORM_BACKWARD)
                 gimp_matrix3_invert (&transform);
 
-              memcpy (tg_tool->trans_infos[GIMP_TRANSFORM_FORWARD],
-                      tg_tool->init_trans_info,
-                      sizeof (TransInfo));
-              memcpy (tg_tool->trans_infos[GIMP_TRANSFORM_BACKWARD],
-                      tg_tool->init_trans_info,
+              memcpy (tg_tool->trans_info, tg_tool->init_trans_info,
                       sizeof (TransInfo));
 
               GIMP_TRANSFORM_GRID_TOOL_GET_CLASS (tg_tool)->matrix_to_info (
                 tg_tool, &transform);
 
-              /*  recalculate the tool's transformation matrix  */
+              /*  recalculate the tool's transformation matrix, preserving the
+               *  overall transformation
+               */
               direction_linked             = tg_options->direction_linked;
-              tg_options->direction_linked = FALSE;
+              tg_options->direction_linked = TRUE;
               gimp_transform_tool_recalc_matrix (tr_tool, display);
               tg_options->direction_linked = direction_linked;
 
