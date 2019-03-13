@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-12 18:53+0100\n"
-"PO-Revision-Date: 2019-03-12 18:54+0100\n"
+"POT-Creation-Date: 2019-03-13 18:10+0100\n"
+"PO-Revision-Date: 2019-03-13 18:11+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3041,7 +3041,7 @@ msgstr "240 sekund"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1100
+#: ../app/tools/gimptransformgridtool.c:1108
 #: ../app/tools/gimptransformtool.c:332 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -7742,7 +7742,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1097
+#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1105
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -23659,24 +23659,28 @@ msgstr "Blokowanie"
 msgid "Lock pivot position to canvas"
 msgstr "Blokowanie położenia osi do płótna"
 
-#: ../app/tools/gimptransformgridtool.c:220
+#: ../app/tools/gimptransformgridtool.c:228
 #: ../app/tools/gimptransformtool.c:333
 msgid "_Transform"
 msgstr "Prze_kształć"
 
-#: ../app/tools/gimptransformgridtool.c:492
-#: ../app/tools/gimptransformgridtool.c:504
+#: ../app/tools/gimptransformgridtool.c:500
+#: ../app/tools/gimptransformgridtool.c:512
 msgid "Transform Step"
 msgstr "Krok przekształcenia"
 
-#: ../app/tools/gimptransformgridtool.c:876
+#: ../app/tools/gimptransformgridtool.c:884
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (korekta)"
 
-#: ../app/tools/gimptransformgridtool.c:1099
+#: ../app/tools/gimptransformgridtool.c:1107
 msgid "Re_adjust"
 msgstr "_Dopasuj"
+
+#: ../app/tools/gimptransformgridtool.c:1354
+msgid "Cannot readjust the transformation"
+msgstr "Nie można dopasować przekształcenia"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -24480,24 +24484,24 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "Niedostępne"
 
-#: ../app/widgets/gimpcolormapeditor.c:211
+#: ../app/widgets/gimpcolormapeditor.c:212
 msgid "Color index:"
 msgstr "Indeks koloru:"
 
-#: ../app/widgets/gimpcolormapeditor.c:220
+#: ../app/widgets/gimpcolormapeditor.c:221
 msgid "HTML notation:"
 msgstr "Notacja języka HTML:"
 
-#: ../app/widgets/gimpcolormapeditor.c:400
+#: ../app/widgets/gimpcolormapeditor.c:401
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Modyfikacja %d. elementu palety"
 
-#: ../app/widgets/gimpcolormapeditor.c:407
+#: ../app/widgets/gimpcolormapeditor.c:408
 msgid "Edit Colormap Entry"
 msgstr "Modyfikacja elementu palety kolorów"
 
-#: ../app/widgets/gimpcolormapeditor.c:549
+#: ../app/widgets/gimpcolormapeditor.c:550
 msgid "Only indexed images have a colormap."
 msgstr "Tylko indeksowane obrazy mają paletę kolorów."
 
