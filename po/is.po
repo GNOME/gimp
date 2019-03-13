@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-03-08 08:46+0000\n"
-"PO-Revision-Date: 2019-03-12 12:09+0000\n"
+"PO-Revision-Date: 2019-03-13 09:07+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -228,7 +228,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr ""
+msgstr "Ný sía \"Lítil pláneta\" (gegl:stereographic-projection - rúmsjármynd)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "New \"Long Shadow\" filter"
@@ -483,7 +483,7 @@ msgstr "Margar endurbætur á notagildi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Manual can be displayed in the user's preferred language"
-msgstr ""
+msgstr "Hægt er að birta handbina á umbeðnu tungumáli notandans"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "Improvements for the Wavelet Decompose filter"
@@ -677,7 +677,7 @@ msgstr "Birta kjörstillingasíðu með tilraunaeiginleikum"
 
 #: ../app/main.c:290
 msgid "Show an image submenu with debug actions"
-msgstr ""
+msgstr "Birta undirvalmynd myndar með aðgerðum fyrir villuleit"
 
 #: ../app/main.c:466
 msgid "[FILE|URI...]"
@@ -5006,7 +5006,7 @@ msgstr "_Hnitanet..."
 #: ../app/actions/filters-actions.c:372
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr ""
+msgstr "_Hátíðnisía (high-pass)..."
 
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
@@ -5051,7 +5051,7 @@ msgstr "_Litatíðnistig..."
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr ""
+msgstr "_Lítil pláneta..."
 
 #: ../app/actions/filters-actions.c:422
 #| msgctxt "filters-action"
@@ -10292,6 +10292,8 @@ msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
 "toolbox and try again."
 msgstr ""
+"Valið nýlegt spjald inniheldur verkfærakassa. Lokaðu spjaldinu sem nú er opið"
+" og reyndu aftur."
 
 #: ../app/config/config-enums.c:25
 msgctxt "canvas-padding-mode"
@@ -10826,6 +10828,9 @@ msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr ""
+"Skilgreinir hvort GIMP eigi að búa til forskoðanir af lagahópum. Slíkar"
+" forskoðunarmyndir geta hægt mun meira á afköstum heldur en venjuleg"
+" forskoðun laga."
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid ""
@@ -10879,6 +10884,8 @@ msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
 msgstr ""
+"Þegar þetta er virkt, verður sama verkfæri og valkostir þess notað fyrir öll"
+" inntakstæki. Ekki verður skipt um verkfæri þegar inntakstæki breytist."
 
 #: ../app/config/gimprc-blurbs.h:354
 msgid ""
@@ -11157,101 +11164,113 @@ msgstr "Setur sjálfgefna gerð fyllingar í glugganum 'Stærð myndflatar'."
 #: ../app/config/gimprc-blurbs.h:523
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
+"Setur sjálfgefið sett af lögum til að stærðarbreyta í glugganum 'Stærð"
+" myndflatar'."
 
 #: ../app/config/gimprc-blurbs.h:526
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Breyta stærð textalaga' í glugganum 'Stærð"
+" myndflatar'."
 
 #: ../app/config/gimprc-blurbs.h:529
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið heiti á lagi fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:532
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn ham fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:535
 msgid "Sets the default blend space for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna litarýmd blöndunar fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:538
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna litarýmd samsetningar fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:541
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn ham samsetningar fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið ógegnsæi í glugganum 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna gerð fyllingar í glugganum 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:550
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna gerð fyllingar í glugganum 'Stærð á mörkum lags'."
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna laghulu í glugganum 'Bæta inn laghulu'."
 
 #: ../app/config/gimprc-blurbs.h:556
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Umhverfa laghulu' í glugganum 'Bæta inn laghulu'."
 
 #: ../app/config/gimprc-blurbs.h:559
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna gerð sameiningar í glugganum 'Sameina sýnileg lög'."
 
 #: ../app/config/gimprc-blurbs.h:562
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"Setur sjálfgefið 'Sameina einungis innan virks hóps' í glugganum 'Sameina"
+" sýnileg lög'."
 
 #: ../app/config/gimprc-blurbs.h:565
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið 'Henda ósýnilegu' í glugganum 'Sameina sýnileg lög'."
 
 #: ../app/config/gimprc-blurbs.h:568
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið nafn litrásar í glugganum 'Ný litrás'."
 
 #: ../app/config/gimprc-blurbs.h:571
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn lit og ógegnsæi í glugganum 'Ný litrás'."
 
 #: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr "Setur sjálfgefið nafn slóðar í 'Ný slóð'-glugganum."
+msgstr "Setur sjálfgefið nafn ferils í glugganum 'Nýr ferill'."
 
 #: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default folder path for the 'Export Path' dialog."
-msgstr "Setur sjálfgefna slóð á möppu í 'Flytja út slóð'-glugganum."
+msgstr "Setur sjálfgefna slóð á möppu í glugganum 'Flytja út feril'."
 
 #: ../app/config/gimprc-blurbs.h:580
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Flytja út virkan feril' í glugganum 'Flytja út feril'."
 
 #: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default folder path for the 'Import Path' dialog."
-msgstr "Setur sjálfgefna slóð á möppu í 'Flytja inn slóð'-glugganum."
+msgstr "Setur sjálfgefna slóð á möppu í glugganum 'Flytja inn feril'."
 
 #: ../app/config/gimprc-blurbs.h:586
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Sameina innflutta ferla' í glugganum 'Flytja inn"
+" feril'."
 
 #: ../app/config/gimprc-blurbs.h:589
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Kvarða innflutta ferla þannig að passi við stærð' í"
+" glugganum 'Flytja inn feril'."
 
 #: ../app/config/gimprc-blurbs.h:592
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
@@ -11263,7 +11282,7 @@ msgstr "Setur sjálfgefinn vaxtarradíus fyrir 'Víkka val' gluggann."
 
 #: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn minnkunarradíus fyrir 'Minnka val' gluggann."
 
 #: ../app/config/gimprc-blurbs.h:601
 msgid ""
@@ -11374,6 +11393,7 @@ msgstr "Ef þetta er virkjað, er OpenCL notað í nokkrum aðgerðum."
 #: ../app/config/gimprc-blurbs.h:689
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
+"Þegar þetta er virkt, mun leit að aðgerðum einnig skila óvirkum aðgerðum.."
 
 #: ../app/config/gimprc-blurbs.h:692
 #| msgid "Maximum number of strokes on the X axis"
@@ -13426,12 +13446,12 @@ msgstr " (flutt inn)"
 #: ../app/core/gimpimage.c:2466
 #, c-format
 msgid "Layer mode '%s' was added in %s"
-msgstr ""
+msgstr "Lagahamnum '%s' var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2481
 #, c-format
 msgid "Layer groups were added in %s"
-msgstr ""
+msgstr "Lagahópum var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2488
 #, c-format
@@ -13442,7 +13462,7 @@ msgstr "Laghulum á hópuð lög var bætt við í %s"
 #: ../app/core/gimpimage.c:2504
 #, c-format
 msgid "High bit-depth images were added in %s"
-msgstr ""
+msgstr "Myndum með hárri bitadýpt var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2512
 #, c-format
@@ -13452,12 +13472,12 @@ msgstr ""
 #: ../app/core/gimpimage.c:2520
 #, c-format
 msgid "Internal zlib compression was added in %s"
-msgstr ""
+msgstr "Innri Zlib-þjöppun var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2537
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
-msgstr ""
+msgstr "Stuðningi við skrár stærri en 4GB var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2631
 msgctxt "undo-type"
@@ -13474,6 +13494,8 @@ msgstr "Breyta einingum myndar"
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
+"Fullgilding á 'gimp-comment' sníkli mistókst: athugasemd inniheldur ógilt"
+" UTF-8"
 
 #: ../app/core/gimpimage.c:3637
 msgctxt "undo-type"
@@ -14062,6 +14084,7 @@ msgstr "Litmörk fyrir greiningu línumyndar"
 #: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
+"Þolvik til að greina útjaðar (hærri gildi munu innifela fleiri mynddíla)"
 
 #: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:179
 #| msgid "Maximum _new image size:"
@@ -14075,7 +14098,7 @@ msgstr "Hámarksfjöldi mynddíla sem vaxa undir línumyndinni"
 
 #: ../app/core/gimplineart.c:358
 msgid "Maximum curved closing length"
-msgstr ""
+msgstr "Hámarkslengd boglínu til að loka"
 
 #: ../app/core/gimplineart.c:359
 msgid "Maximum curved length (in pixels) to close the line art"
@@ -14083,7 +14106,7 @@ msgstr "Hámarkslengd boglínu (í mynddílum) til að loka línumyndinni"
 
 #: ../app/core/gimplineart.c:365
 msgid "Maximum straight closing length"
-msgstr ""
+msgstr "Hámarkslengd beinnar línu til að loka"
 
 #: ../app/core/gimplineart.c:366
 msgid "Maximum straight length (in pixels) to close the line art"
@@ -15789,6 +15812,8 @@ msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
 msgstr ""
+"OpenCL-reklar og stuðningur við þá eru á tilraunastigi, búast má við lakari"
+" afköstum og mögulegu hruni (endilega tilkynna ef svo fer)."
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1199
@@ -15819,6 +15844,9 @@ msgid ""
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
 "bugs."
 msgstr ""
+"Við vonum svo sannanlega að þú þurfir ekki á þessum stillingum að halda, en"
+" eins og í öðrum hugbúnaði, þá eru villur í GIMP og mögulegt er að það"
+" hrynji. Ef slíkt gerist, geturðu hjálpað okkur með því að tilkynna villurnar."
 
 #: ../app/dialogs/preferences-dialog.c:1249
 msgid "Bug Reporting"
@@ -16066,7 +16094,7 @@ msgstr "Tlraunasvæði"
 
 #: ../app/dialogs/preferences-dialog.c:1595
 msgid "Playground"
-msgstr "Leikvöllur"
+msgstr "Tlraunasvæði"
 
 #: ../app/dialogs/preferences-dialog.c:1602
 msgid ""
@@ -16074,6 +16102,9 @@ msgid ""
 "use them unless you really know what you are doing or you intend to "
 "contribute patches."
 msgstr ""
+"Þessir eiginleikar eru ókláraðir, innihalda einhverjar villur og geta látið"
+" GIMP hrynja. Ekki er ráðlagt að nota þá nema þú vitir nákvæmlega hvað þú"
+" ætlar þér eða ætlir að leggja fram endurbætur."
 
 #: ../app/dialogs/preferences-dialog.c:1611
 msgid "Insane Options"
@@ -17817,7 +17848,7 @@ msgstr "(enginn)"
 #: ../app/display/gimpdisplayshell-tool-events.c:1566
 #, c-format
 msgid "Layer picked: '%s'"
-msgstr ""
+msgstr "Lag valið: '%s'"
 
 #: ../app/display/gimpdisplayshell-utils.c:174
 #: ../app/tools/gimpmeasuretool.c:625 ../app/tools/gimpmeasuretool.c:777
@@ -19191,6 +19222,8 @@ msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
 msgstr ""
+"Gera gegnsæi að allt-eða-ekkert, með því að stilla alfa-gegnsæisrás á"
+" eitthvað gildi"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:90
 #| msgctxt "histogram-channel"
@@ -19200,7 +19233,7 @@ msgstr "Litgildi"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:91
 msgid "The alpha value"
-msgstr ""
+msgstr "Alfa-gegnsæisgildið"
 
 #: ../app/gui/gui.c:312
 msgid "Image Recovery"
@@ -20226,12 +20259,12 @@ msgstr "Litur í gegnsæi"
 #: ../app/pdb/plug-in-compat-cmds.c:1030
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
-msgstr ""
+msgstr "Fylkið 'matrix' er aðeins með %d meðlimi, verður að hafa 25"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1038
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
-msgstr ""
+msgstr "Fylkið 'channels' er aðeins með %d meðlimi, verður að hafa 5"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1110
 msgctxt "undo-type"
