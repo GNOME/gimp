@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-03-11 09:58+0000\n"
-"PO-Revision-Date: 2019-03-12 14:17+0000\n"
+"PO-Revision-Date: 2019-03-13 10:47+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -2838,34 +2838,34 @@ msgid "Couldn't set parameters on decoder for '%s'."
 msgstr "Gat ekki afkóðað '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1090
-#, fuzzy, c-format
+#, c-format
 #| msgid "Could not read header from '%s'"
 msgid "Couldn't read JP2 header from '%s'."
-msgstr "Gat ekki lesið haus frá '%s'"
+msgstr "Gat ekki lesið JP2-haus úr '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1098
-#, fuzzy, c-format
+#, c-format
 #| msgid "Couldn't decode '%s'."
 msgid "Couldn't decode JP2 image in '%s'."
-msgstr "Gat ekki afkóðað '%s'."
+msgstr "Gat ekki afkóðað JP2-mynd í '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1106
-#, fuzzy, c-format
+#, c-format
 #| msgid "Couldn't decode '%s'."
 msgid "Couldn't decompress JP2 image in '%s'."
-msgstr "Gat ekki afkóðað '%s'."
+msgstr "Gat ekki afþjappað JP2-mynd í '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1135
-#, fuzzy, c-format
+#, c-format
 #| msgid "Couldn't decode '%s'."
 msgid "Couldn't decode CIELAB JP2 image in '%s'."
-msgstr "Gat ekki afkóðað '%s'."
+msgstr "Gat ekki afkóðað CIELAB JP2-mynd í '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1192
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unknown color model in PNG file '%s'."
 msgid "Unknown color space in JP2 codestream '%s'."
-msgstr "Óþekktur litaskali í PNG skrá '%s'."
+msgstr "Óþekkt litrýmd í JP2-kóðastreyminu '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:1203
 #, c-format
@@ -2883,10 +2883,10 @@ msgid "Couldn't convert xvYCC JP2 image in '%s' to RGB."
 msgstr ""
 
 #: ../plug-ins/common/file-jp2-load.c:1250
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unsupported color mode: %s"
 msgid "Unsupported color space in JP2 image '%s'."
-msgstr "Óstuddur litahamur: %s"
+msgstr "Óstudd litrýmd í JP2-mynd %s"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3210,10 +3210,10 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:933
 #: ../plug-ins/common/file-pdf-save.c:1132
-#, fuzzy, c-format
+#, c-format
 #| msgid "Layers as pages"
 msgid "Layers as pages (%s)"
-msgstr "Lög sem síður"
+msgstr "Lög sem síður (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:935
 #: ../plug-ins/common/file-pdf-save.c:1134
@@ -3222,10 +3222,9 @@ msgstr ""
 
 #: ../plug-ins/common/file-pdf-save.c:935
 #: ../plug-ins/common/file-pdf-save.c:1134
-#, fuzzy
 #| msgid "Bottom left"
 msgid "bottom layers first"
-msgstr "Neðst til vinstri"
+msgstr "neðstu lög fyrst"
 
 #: ../plug-ins/common/file-pdf-save.c:943
 msgid "Reverse the pages order"
@@ -3278,10 +3277,10 @@ msgid "PNG image"
 msgstr "PNG mynd"
 
 #: ../plug-ins/common/file-png.c:776
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error loading PNG file: %s"
 msgid "Error loading PNG file: %s\n"
-msgstr "Villa við að hlaða inn PNG-skrá: %s"
+msgstr "Villa við að hlaða inn PNG-skrá: %s\n"
 
 #: ../plug-ins/common/file-png.c:892
 #, c-format
@@ -3289,10 +3288,10 @@ msgid "Error creating PNG read struct while loading '%s'."
 msgstr ""
 
 #: ../plug-ins/common/file-png.c:901
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error while exporting '%s'. Could not export image."
 msgid "Error while reading '%s'. Could not create PNG header info structure."
-msgstr "Villa við að flytja út '%s'. Gat ekki flutt myndina út."
+msgstr "Villa við að lesa '%s'. Gat ekki útbúið upplýsingastrúktúr í PNG-haus."
 
 #: ../plug-ins/common/file-png.c:909
 #, c-format
@@ -3340,10 +3339,11 @@ msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 
 #: ../plug-ins/common/file-png.c:1541
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error while exporting '%s'. Could not export image."
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
-msgstr "Villa við að flytja út '%s'. Gat ekki flutt myndina út."
+msgstr ""
+"Villa við að flytja út '%s'. Gat ekki útbúið upplýsingastrúktúr í PNG-haus."
 
 #: ../plug-ins/common/file-png.c:1549
 #, c-format
@@ -6476,52 +6476,54 @@ msgstr ""
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "Stýrikerfið hefur klárað minni eða önnur tilföng."
 
 #: ../plug-ins/common/web-browser.c:144
 msgid "The specified file was not found."
-msgstr ""
+msgstr "Tiltekna skráin fannst ekki."
 
 #: ../plug-ins/common/web-browser.c:147
 msgid "The specified path was not found."
-msgstr ""
+msgstr "Tiltekin slóð fannst ekki."
 
 #: ../plug-ins/common/web-browser.c:150
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
+"Þessi .exe skrá er ógild (ekki-Microsoft Win32 .exe eða villa í .exe "
+"diskmynd)."
 
 #: ../plug-ins/common/web-browser.c:153
 msgid "The operating system denied access to the specified file."
-msgstr ""
+msgstr "Stýrikerfið heimilaði ekki aðgang að uppgefinni skrá."
 
 #: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
-msgstr ""
+msgstr "Vensl skráarheita eru ekki fullgerð eða eru ógild."
 
 #: ../plug-ins/common/web-browser.c:159
 msgid "DDE transaction busy"
-msgstr ""
+msgstr "DDE-aðgerð er upptekin"
 
 #: ../plug-ins/common/web-browser.c:162
 msgid "The DDE transaction failed."
-msgstr ""
+msgstr "DDE-aðgerðin mistókst."
 
 #: ../plug-ins/common/web-browser.c:165
 msgid "The DDE transaction timed out."
-msgstr ""
+msgstr "DDE-aðgerðin féll á tímamörkum."
 
 #: ../plug-ins/common/web-browser.c:168
 msgid "The specified DLL was not found."
-msgstr ""
+msgstr "Tiltekið DLL fannst ekki."
 
 #: ../plug-ins/common/web-browser.c:171
 msgid "There is no application associated with the given file name extension."
-msgstr ""
+msgstr "Ekkert forrit er tengt uppgefinni skráarendingu."
 
 #: ../plug-ins/common/web-browser.c:174
 msgid "There was not enough memory to complete the operation."
-msgstr ""
+msgstr "Ekki nægt minni til að ljúka aðgerðinni."
 
 #: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
@@ -6707,11 +6709,11 @@ msgstr "DDS-mynd"
 
 #: ../plug-ins/file-dds/dds.c:170
 msgid "Decode YCoCg"
-msgstr ""
+msgstr "Afkóða YCoCg"
 
 #: ../plug-ins/file-dds/dds.c:183
 msgid "Decode YCoCg (scaled)"
-msgstr ""
+msgstr "Afkóða YCoCg (kvarðað)"
 
 #: ../plug-ins/file-dds/dds.c:196
 msgid "Decode Alpha exponent"
@@ -6719,7 +6721,7 @@ msgstr ""
 
 #: ../plug-ins/file-dds/ddsread.c:1266
 msgid "Load DDS"
-msgstr ""
+msgstr "Hlaða inn DDS"
 
 #: ../plug-ins/file-dds/ddsread.c:1268 ../plug-ins/file-dds/ddswrite.c:1887
 #| msgid "_Cancel"
@@ -6732,10 +6734,9 @@ msgid "OK"
 msgstr "Í lagi"
 
 #: ../plug-ins/file-dds/ddsread.c:1285
-#, fuzzy
 #| msgid "Loads HEIF images"
 msgid "Load mipmaps"
-msgstr "Hleður inn HEIF-myndum"
+msgstr "Lesa inn mipmap-myndir"
 
 #: ../plug-ins/file-dds/ddsread.c:1292
 msgid "Automatically decode YCoCg/AExp images when detected"
@@ -6763,7 +6764,7 @@ msgstr "Vista:"
 
 #: ../plug-ins/file-dds/ddswrite.c:1972
 msgid "Mipmaps:"
-msgstr ""
+msgstr "Mipmaps:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2003
 #| msgid "Transparent"
@@ -6786,7 +6787,7 @@ msgstr ""
 
 #: ../plug-ins/file-dds/ddswrite.c:2077
 msgid "Mipmaps"
-msgstr ""
+msgstr "Mipmaps"
 
 #: ../plug-ins/file-dds/ddswrite.c:2088
 #| msgid "Filter"
@@ -6804,7 +6805,7 @@ msgstr "Virkja litrófsleiðréttingu"
 
 #: ../plug-ins/file-dds/ddswrite.c:2139
 msgid "Use sRGB colorspace"
-msgstr ""
+msgstr "Nota sRGB litrýmd"
 
 #: ../plug-ins/file-dds/ddswrite.c:2150 ../plug-ins/gimpressionist/brush.c:544
 msgid "Gamma:"
@@ -7286,10 +7287,9 @@ msgid "Photoshop image"
 msgstr "Photoshop mynd"
 
 #: ../plug-ins/file-psd/psd.c:130
-#, fuzzy
 #| msgid "Photoshop image"
 msgid "Photoshop image (merged)"
-msgstr "Photoshop mynd"
+msgstr "Photoshop mynd (sameinuð)"
 
 #: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -7464,7 +7464,7 @@ msgstr "TIFF mynd"
 #: ../plug-ins/file-tiff/file-tiff.c:231
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr ""
+msgstr "TIFF '%s' inniheldur engar möppur"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:143
 msgid "Import from TIFF"
@@ -7650,11 +7650,11 @@ msgstr "rangar stærðir myndar"
 
 #: ../plug-ins/file-webp/file-webp-save.c:122
 msgid "partition is bigger than 512K"
-msgstr ""
+msgstr "disksneið er stærri en 512K"
 
 #: ../plug-ins/file-webp/file-webp-save.c:124
 msgid "partition is bigger than 16M"
-msgstr ""
+msgstr "disksneið er stærri en 16M"
 
 #: ../plug-ins/file-webp/file-webp-save.c:126
 msgid "unable to flush bytes"
@@ -8024,7 +8024,7 @@ msgstr "Hlaða inn brotamynd úr skrá"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:819
 msgid "Reset parameters to default values"
-msgstr ""
+msgstr "Frumstilla færibreytur á sjálfgefin gildi"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:828
 msgid "Save active fractal to file"
@@ -8094,20 +8094,20 @@ msgstr "Þéttleiki litar"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:958
 msgid "Change the intensity of the red channel"
-msgstr ""
+msgstr "Breyta styrk rauðu litrásarinnar"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:968
 msgid "Change the intensity of the green channel"
-msgstr ""
+msgstr "Breyta styrk grænu litrásarinnar"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:978
 msgid "Change the intensity of the blue channel"
-msgstr ""
+msgstr "Breyta styrk bláu litrásarinnar"
 
 #. Color Function frame
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:984
 msgid "Color Function"
-msgstr ""
+msgstr "Litafall"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:997
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1038
@@ -8126,13 +8126,13 @@ msgstr "Ekkert"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1047
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1088
 msgid "Use sine-function for this color component"
-msgstr ""
+msgstr "Nota sínusfall fyrir þennan litþátt"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1050
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1091
 msgid "Use cosine-function for this color component"
-msgstr ""
+msgstr "Nota kósínusfall fyrir þennan litþátt"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1012
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1053
@@ -8163,7 +8163,7 @@ msgstr "Litahamur"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1125
 msgid "As specified above"
-msgstr ""
+msgstr "Eins og tilgreint er hér að ofan"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1137
 msgid ""
@@ -8190,7 +8190,7 @@ msgstr "_Brotamyndir"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1562
 #, c-format
 msgid "Could not write '%s': %s"
-msgstr ""
+msgstr "Gat ekki skrifað '%s': %s"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1637
 msgid "Load Fractal Parameters"
@@ -9334,7 +9334,7 @@ msgstr "Vista _bakgrunnslit"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save layer o_ffset"
-msgstr ""
+msgstr "Vista _hliðrun lags"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
@@ -9346,11 +9346,11 @@ msgstr "Vista sköpunartíma"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:7
 msgid "Save comme_nt"
-msgstr ""
+msgstr "Vista athugase_md"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
 msgid "Save color _values from transparent pixels"
-msgstr ""
+msgstr "Vista lit_gildi úr gegnsæjum mynddílum"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:7
@@ -9523,7 +9523,7 @@ msgstr "Tegund hugverkaréttar"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:21
 msgid "IPTC Scene Code"
-msgstr ""
+msgstr "IPTC kóði myndefnis"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
 msgid "Sublocation\t"
@@ -9973,7 +9973,7 @@ msgstr "Hámarksdýpt"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2858
 msgid "_Threshold"
-msgstr "Þröskuldur:"
+msgstr "_Litmörk"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2868
 msgid "_Settings"
@@ -10098,7 +10098,7 @@ msgstr "Snúningur:"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3725
 #: ../plug-ins/gradient-flare/gradient-flare.c:3862
 msgid "Hue rotation:"
-msgstr ""
+msgstr "Snúningur litblæs:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3633
 msgid "G_low"
@@ -10410,7 +10410,7 @@ msgstr "Hámarksminni:"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1210
 msgid "Subdivide:"
-msgstr ""
+msgstr "Deila upp:"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1223
 msgid "Spot radius:"
@@ -11807,19 +11807,19 @@ msgstr "_Flytja út"
 
 #: ../plug-ins/metadata/metadata-tags.h:250
 msgid "Original digital capture of a real life scene"
-msgstr ""
+msgstr "Upprunaleg stafræn myndataka á raunverulegri senu"
 
 #: ../plug-ins/metadata/metadata-tags.h:251
 msgid "Digitized from a negative on film"
-msgstr ""
+msgstr "Stafræn afritun af negatífri filmu"
 
 #: ../plug-ins/metadata/metadata-tags.h:252
 msgid "Digitized from a positive on film"
-msgstr ""
+msgstr "Stafræn afritun af pósitífri filmu"
 
 #: ../plug-ins/metadata/metadata-tags.h:253
 msgid "Digitized from a print on non-transparent medium"
-msgstr ""
+msgstr "Stafræn afritun af útprentun á ógegnsæu efni"
 
 #: ../plug-ins/metadata/metadata-tags.h:254
 msgid "Created by software"
@@ -12429,9 +12429,8 @@ msgid "Says whether or not to remove 'knee' points after finding the outline."
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:287
-#, fuzzy
 msgid "Line Reversion Threshold:"
-msgstr "Klasaþröskuldur:"
+msgstr "Þolvik fyrir viðsnúning línu:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:291
 msgid ""
@@ -12442,10 +12441,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:303
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Line Threshold:"
-msgstr "Þröskuldur:"
+msgstr "Þolvik línu:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:307
 msgid ""
@@ -12498,10 +12496,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:375
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Subdivide Threshold:"
-msgstr "Þröskuldur:"
+msgstr "Þolvik uppdeilingar:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:379
 msgid ""
