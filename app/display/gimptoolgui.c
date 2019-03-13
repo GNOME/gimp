@@ -709,7 +709,8 @@ gimp_tool_gui_set_response_sensitive (GimpToolGui *gui,
 
   entry = response_entry_find (private->response_entries, response_id);
 
-  g_return_if_fail (entry != NULL);
+  if (! entry)
+    return;
 
   entry->sensitive = sensitive;
 
