@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-08 08:46+0000\n"
-"PO-Revision-Date: 2019-03-08 10:27+0100\n"
+"POT-Creation-Date: 2019-03-09 12:20+0000\n"
+"PO-Revision-Date: 2019-03-11 11:14+0100\n"
 "Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -10243,7 +10243,7 @@ msgstr "(F) "
 #: ../app/actions/view-actions.c:1143
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
-msgstr "%s _tükrözés és forgatás (%d°)"
+msgstr "Tük_rözés %sés forgatás (%d°)"
 
 #: ../app/actions/view-commands.c:1014
 msgid "Set Canvas Padding Color"
@@ -17437,7 +17437,7 @@ msgstr "V_isszaállítás"
 
 #: ../app/dialogs/resize-dialog.c:186
 msgid "_Resize"
-msgstr "Át_méretezés"
+msgstr "Á_tméretezés"
 
 #: ../app/dialogs/resize-dialog.c:270
 msgid "C_enter"
