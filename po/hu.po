@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-08 10:04+0000\n"
-"PO-Revision-Date: 2019-03-08 11:25+0100\n"
+"POT-Creation-Date: 2019-03-10 13:40+0000\n"
+"PO-Revision-Date: 2019-03-11 11:11+0100\n"
 "Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -10249,7 +10249,7 @@ msgstr "(F) "
 #: ../app/actions/view-actions.c:1156
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
-msgstr "%s _tükrözés és forgatás (%d°)"
+msgstr "Tük_rözés %sés forgatás (%d°)"
 
 #: ../app/actions/view-commands.c:1016
 msgid "Set Canvas Padding Color"
@@ -13653,27 +13653,27 @@ msgstr "Átalakítás erről: „%s” erre: „%s”"
 msgid "Color profile conversion"
 msgstr "Színprofil-átalakítás"
 
-#: ../app/core/gimpimage-colormap.c:65
+#: ../app/core/gimpimage-colormap.c:66
 #, c-format
 msgid "Colormap of Image #%d (%s)"
 msgstr "%d. kép színtérképe (%s)"
 
-#: ../app/core/gimpimage-colormap.c:195
+#: ../app/core/gimpimage-colormap.c:196
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Színtérkép beállítása"
 
-#: ../app/core/gimpimage-colormap.c:235
+#: ../app/core/gimpimage-colormap.c:236
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Színtérkép visszaállítása"
 
-#: ../app/core/gimpimage-colormap.c:288
+#: ../app/core/gimpimage-colormap.c:289
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Színtérkép-bejegyzés módosítása"
 
-#: ../app/core/gimpimage-colormap.c:316
+#: ../app/core/gimpimage-colormap.c:317
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Szín felvétele a színtérképbe"
@@ -17352,7 +17352,7 @@ msgstr "V_isszaállítás"
 
 #: ../app/dialogs/resize-dialog.c:187
 msgid "_Resize"
-msgstr "Át_méretezés"
+msgstr "Á_tméretezés"
 
 #: ../app/dialogs/resize-dialog.c:277
 msgid "C_enter"
