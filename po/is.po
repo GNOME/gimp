@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-03-08 18:30+0000\n"
-"PO-Revision-Date: 2019-03-11 19:01+0000\n"
+"PO-Revision-Date: 2019-03-13 09:53+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -91,6 +91,8 @@ msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
+"Fyllingarverkfæri: nýtt \"Fylla með greindri línumynd\" fyrir svæði í"
+" línumynd (line-art) sem ekki eru fullkomlega lokuð"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
@@ -101,6 +103,8 @@ msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
+"Fyllingarverkfærð gerir kleift að fylla \"áþekka liti\" og \"með greindri"
+" línumynd\" með því að halda músinni"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "Scale tool scales around center even when using numeric input"
@@ -187,6 +191,8 @@ msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr ""
+"GIMP 2.10.4 er fyrst og fremst útgáfa fyrir villulagfæringar og bestanir."
+" Helstar eru:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
@@ -215,6 +221,8 @@ msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
 msgstr ""
+"GIMP 2.10.6 kemur með margar villulagfæringar, bestanir og nýja eiginleika."
+" Eftirtektarverðar breytingar eru:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
@@ -224,7 +232,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr ""
+msgstr "Ný sía \"Lítil pláneta\" (gegl:stereographic-projection - rúmsjármynd)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "New \"Long Shadow\" filter"
@@ -261,6 +269,8 @@ msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
+"GIMP 2.10.4 kemur með margar villulagfæringar og bestanir ýmsum atriðum."
+" Eftirtektarverðar breytingar eru:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
@@ -409,6 +419,9 @@ msgid ""
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
+"GIMP 2.10.0-RC1 er fyrsta tilgátuútgáfan á undan stðugu GIMP 2.10.0"
+" útgáfunni, með áherslu á villulagfæringar og stöðugleika. Fyrir utan margar"
+" leiðréttingar á villum, eru helstu eiginleikarnir þessir:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "New dashboard dockable to monitor GIMP resource usage"
@@ -452,6 +465,8 @@ msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
+"GIMP 2.9.8 kemur með breytingar litstigla á myndfleti auk ýmissa endurbóta"
+" með áherslu á villulagfæringar og stöðugleika."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "On-canvas gradient editing"
@@ -479,7 +494,7 @@ msgstr "Margar endurbætur á notagildi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Manual can be displayed in the user's preferred language"
-msgstr ""
+msgstr "Hægt er að birta handbina á umbeðnu tungumáli notandans"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "Improvements for the Wavelet Decompose filter"
@@ -673,7 +688,7 @@ msgstr "Birta kjörstillingasíðu með tilraunaeiginleikum"
 
 #: ../app/main.c:290
 msgid "Show an image submenu with debug actions"
-msgstr ""
+msgstr "Birta undirvalmynd myndar með aðgerðum fyrir villuleit"
 
 #: ../app/main.c:466
 msgid "[FILE|URI...]"
@@ -890,7 +905,7 @@ msgstr "Mynstur"
 
 #: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3217
 msgid "Plug-ins"
-msgstr "Viðbætur"
+msgstr "Hjálparforrit"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:385
@@ -2788,7 +2803,7 @@ msgstr "Hefja/Stöðva upptöku..."
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
 msgid "Start/stop recording performance log"
-msgstr ""
+msgstr "Hefja/Stöðva upptöku á afkastaskráningu"
 
 #: ../app/actions/dashboard-actions.c:56
 #| msgctxt "layers-action"
@@ -4996,7 +5011,7 @@ msgstr "_Hnitanet..."
 #: ../app/actions/filters-actions.c:372
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr ""
+msgstr "_Hátíðnisía (high-pass)..."
 
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
@@ -5041,7 +5056,7 @@ msgstr "_Litatíðnistig..."
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr ""
+msgstr "_Lítil pláneta..."
 
 #: ../app/actions/filters-actions.c:422
 #| msgctxt "filters-action"
@@ -8056,42 +8071,42 @@ msgstr "Frá hægri til vinstri"
 #: ../app/actions/text-editor-actions.c:71
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
-msgstr ""
+msgstr "TTB-RTL"
 
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (blönduð stefna)"
 
 #: ../app/actions/text-editor-actions.c:77
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
-msgstr ""
+msgstr "TTB-RTL-UPPRÉTT"
 
 #: ../app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (upprétt stefna)"
 
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
-msgstr ""
+msgstr "TTB-LTR"
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (blönduð stefna)"
 
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
-msgstr ""
+msgstr "TTB-LTR-UPPRÉTT"
 
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (upprétt stefna)"
 
 #: ../app/actions/text-editor-commands.c:60
 #: ../app/actions/text-tool-commands.c:114
@@ -8195,22 +8210,22 @@ msgstr "Frá hægri til vinstri"
 #: ../app/actions/text-tool-actions.c:116
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (blönduð stefna)"
 
 #: ../app/actions/text-tool-actions.c:121
 msgctxt "text-tool-action"
 msgid "Vertical, right to left (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, hægri til vinstri (upprétt stefna)"
 
 #: ../app/actions/text-tool-actions.c:126
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (mixed orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (blönduð stefna)"
 
 #: ../app/actions/text-tool-actions.c:131
 msgctxt "text-tool-action"
 msgid "Vertical, left to right (upright orientation)"
-msgstr ""
+msgstr "Lóðrétt, vinstri til hægri (upprétt stefna)"
 
 #: ../app/actions/tool-options-actions.c:57
 msgctxt "tool-options-action"
@@ -10292,6 +10307,8 @@ msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
 "toolbox and try again."
 msgstr ""
+"Valið nýlegt spjald inniheldur verkfærakassa. Lokaðu spjaldinu sem nú er opið"
+" og reyndu aftur."
 
 #: ../app/config/config-enums.c:25
 msgctxt "canvas-padding-mode"
@@ -10715,6 +10732,8 @@ msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
 msgstr ""
+"Þegar innfluttum myndum er umbreytt í fleytitölunákvæmni, þá ætti að bæta við"
+" lágmarkssuði til að dreifa litagildum ofurlítið."
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid "Add an alpha channel to all layers of imported images."
@@ -10758,7 +10777,7 @@ msgstr "Flytja sjálfgefið út IPTC-lýsigögn."
 
 #: ../app/config/gimprc-blurbs.h:232
 msgid "Try generating debug data for bug reporting when appropriate."
-msgstr ""
+msgstr "Reyna að útbúa aflúsunargögn fyrir villuskýrslur þegar það á við."
 
 #: ../app/config/gimprc-blurbs.h:235
 msgid ""
@@ -10856,6 +10875,9 @@ msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr ""
+"Skilgreinir hvort GIMP eigi að búa til forskoðanir af lagahópum. Slíkar"
+" forskoðunarmyndir geta hægt mun meira á afköstum heldur en venjuleg"
+" forskoðun laga."
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid ""
@@ -10909,6 +10931,8 @@ msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
 msgstr ""
+"Þegar þetta er virkt, verður sama verkfæri og valkostir þess notað fyrir öll"
+" inntakstæki. Ekki verður skipt um verkfæri þegar inntakstæki breytist."
 
 #: ../app/config/gimprc-blurbs.h:354
 msgid ""
@@ -11186,106 +11210,118 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:523
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna gerð fyllingar í glugganum 'Stærð myndflatar'."
 
 #: ../app/config/gimprc-blurbs.h:526
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
+"Setur sjálfgefið sett af lögum til að stærðarbreyta í glugganum 'Stærð"
+" myndflatar'."
 
 #: ../app/config/gimprc-blurbs.h:529
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Breyta stærð textalaga' í glugganum 'Stærð"
+" myndflatar'."
 
 #: ../app/config/gimprc-blurbs.h:532
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið heiti á lagi fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:535
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn ham fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:538
 msgid "Sets the default blend space for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna litarýmd blöndunar fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:541
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna litarýmd samsetningar fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn ham samsetningar fyrir gluggann 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið ógegnsæi í glugganum 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:550
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna gerð fyllingar í glugganum 'Nýtt lag'."
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna gerð fyllingar í glugganum 'Stærð á mörkum lags'."
 
 #: ../app/config/gimprc-blurbs.h:556
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna laghulu í glugganum 'Bæta inn laghulu'."
 
 #: ../app/config/gimprc-blurbs.h:559
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Umhverfa laghulu' í glugganum 'Bæta inn laghulu'."
 
 #: ../app/config/gimprc-blurbs.h:562
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "Setur sjálfgefna gerð sameiningar í glugganum 'Sameina sýnileg lög'."
 
 #: ../app/config/gimprc-blurbs.h:565
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"Setur sjálfgefið 'Sameina einungis innan virks hóps' í glugganum 'Sameina"
+" sýnileg lög'."
 
 #: ../app/config/gimprc-blurbs.h:568
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið 'Henda ósýnilegu' í glugganum 'Sameina sýnileg lög'."
 
 #: ../app/config/gimprc-blurbs.h:571
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið nafn litrásar í glugganum 'Ný litrás'."
 
 #: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn lit og ógegnsæi í glugganum 'Ný litrás'."
 
 #: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr "Setur sjálfgefið nafn slóðar í 'Ný slóð'-glugganum."
+msgstr "Setur sjálfgefið nafn ferils í glugganum 'Nýr ferill'."
 
 #: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default folder path for the 'Export Path' dialog."
-msgstr "Setur sjálfgefna slóð á möppu í 'Flytja út slóð'-glugganum."
+msgstr "Setur sjálfgefna slóð á möppu í glugganum 'Flytja út feril'."
 
 #: ../app/config/gimprc-blurbs.h:583
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Flytja út virkan feril' í glugganum 'Flytja út feril'."
 
 #: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default folder path for the 'Import Path' dialog."
-msgstr "Setur sjálfgefna slóð á möppu í 'Flytja inn slóð'-glugganum."
+msgstr "Setur sjálfgefna slóð á möppu í glugganum 'Flytja inn feril'."
 
 #: ../app/config/gimprc-blurbs.h:589
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Sameina innflutta ferla' í glugganum 'Flytja inn"
+" feril'."
 
 #: ../app/config/gimprc-blurbs.h:592
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
+"Setur sjálfgefna stöðu 'Kvarða innflutta ferla þannig að passi við stærð' í"
+" glugganum 'Flytja inn feril'."
 
 #: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
@@ -11297,7 +11333,7 @@ msgstr "Setur sjálfgefinn vaxtarradíus fyrir 'Víkka val' gluggann."
 
 #: ../app/config/gimprc-blurbs.h:601
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
-msgstr ""
+msgstr "Setur sjálfgefinn minnkunarradíus fyrir 'Minnka val' gluggann."
 
 #: ../app/config/gimprc-blurbs.h:604
 msgid ""
@@ -11408,6 +11444,7 @@ msgstr "Ef þetta er virkjað, er OpenCL notað í nokkrum aðgerðum."
 #: ../app/config/gimprc-blurbs.h:692
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
+"Þegar þetta er virkt, mun leit að aðgerðum einnig skila óvirkum aðgerðum.."
 
 #: ../app/config/gimprc-blurbs.h:695
 #| msgid "Maximum number of strokes on the X axis"
@@ -13335,12 +13372,12 @@ msgstr " (flutt inn)"
 #: ../app/core/gimpimage.c:2470
 #, c-format
 msgid "Layer mode '%s' was added in %s"
-msgstr ""
+msgstr "Lagahamnum '%s' var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2485
 #, c-format
 msgid "Layer groups were added in %s"
-msgstr ""
+msgstr "Lagahópum var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2492
 #, c-format
@@ -13351,17 +13388,17 @@ msgstr "Laghulum á hópuð lög var bætt við í %s"
 #: ../app/core/gimpimage.c:2508
 #, c-format
 msgid "High bit-depth images were added in %s"
-msgstr ""
+msgstr "Myndum með hárri bitadýpt var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2520
 #, c-format
 msgid "Internal zlib compression was added in %s"
-msgstr ""
+msgstr "Innri Zlib-þjöppun var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2537
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
-msgstr ""
+msgstr "Stuðningi við skrár stærri en 4GB var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2631
 msgctxt "undo-type"
@@ -13378,6 +13415,8 @@ msgstr "Breyta einingum myndar"
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
+"Fullgilding á 'gimp-comment' sníkli mistókst: athugasemd inniheldur ógilt"
+" UTF-8"
 
 #: ../app/core/gimpimage.c:3637
 msgctxt "undo-type"
@@ -13985,11 +14024,12 @@ msgstr "Velja gegnsæja mynddíla í stað grárra"
 
 #: ../app/core/gimplineart.c:343 ../app/tools/gimpbucketfilloptions.c:172
 msgid "Line art detection threshold"
-msgstr ""
+msgstr "Litmörk fyrir greiningu línumyndar"
 
 #: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:173
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
+"Þolvik til að greina útjaðar (hærri gildi munu innifela fleiri mynddíla)"
 
 #: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:179
 #| msgid "Maximum _new image size:"
@@ -13997,26 +14037,25 @@ msgid "Maximum growing size"
 msgstr "Mesta stærð vaxtar"
 
 #: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:180
-#, fuzzy
 #| msgid "Maximum number of strokes on the X axis"
 msgid "Maximum number of pixels grown under the line art"
-msgstr "Hámarksfjöldi stroka á X-ásnum"
+msgstr "Hámarksfjöldi mynddíla sem vaxa undir línumyndinni"
 
 #: ../app/core/gimplineart.c:357
 msgid "Maximum curved closing length"
-msgstr ""
+msgstr "Hámarkslengd boglínu til að loka"
 
 #: ../app/core/gimplineart.c:358
 msgid "Maximum curved length (in pixels) to close the line art"
-msgstr ""
+msgstr "Hámarkslengd boglínu (í mynddílum) til að loka línumyndinni"
 
 #: ../app/core/gimplineart.c:364
 msgid "Maximum straight closing length"
-msgstr ""
+msgstr "Hámarkslengd beinnar línu til að loka"
 
 #: ../app/core/gimplineart.c:365
 msgid "Maximum straight length (in pixels) to close the line art"
-msgstr ""
+msgstr "Hámarkslengd beinnar línu (í mynddílum) til að loka línumyndinni"
 
 #: ../app/core/gimpmybrush-load.c:75
 #, c-format
@@ -14048,7 +14087,7 @@ msgstr "Óþekkt tegund litaspjaldskrár: %s"
 #: ../app/core/gimppalette-load.c:71
 #, c-format
 msgid "Missing magic header."
-msgstr ""
+msgstr "Vantar 'magic header' skilgreiningu."
 
 #: ../app/core/gimppalette-load.c:94
 #, c-format
@@ -15687,6 +15726,8 @@ msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
 msgstr ""
+"OpenCL-reklar og stuðningur við þá eru á tilraunastigi, búast má við lakari"
+" afköstum og mögulegu hruni (endilega tilkynna ef svo fer)."
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1204
@@ -15717,6 +15758,9 @@ msgid ""
 "bugs, and crashes can occur. If it happens, you can help us by reporting "
 "bugs."
 msgstr ""
+"Við vonum svo sannanlega að þú þurfir ekki á þessum stillingum að halda, en"
+" eins og í öðrum hugbúnaði, þá eru villur í GIMP og mögulegt er að það"
+" hrynji. Ef slíkt gerist, geturðu hjálpað okkur með því að tilkynna villurnar."
 
 #: ../app/dialogs/preferences-dialog.c:1254
 msgid "Bug Reporting"
@@ -15964,7 +16008,7 @@ msgstr "Tlraunasvæði"
 
 #: ../app/dialogs/preferences-dialog.c:1603
 msgid "Playground"
-msgstr "Leikvöllur"
+msgstr "Tlraunasvæði"
 
 #: ../app/dialogs/preferences-dialog.c:1610
 msgid ""
@@ -15972,6 +16016,9 @@ msgid ""
 "use them unless you really know what you are doing or you intend to "
 "contribute patches."
 msgstr ""
+"Þessir eiginleikar eru ókláraðir, innihalda einhverjar villur og geta látið"
+" GIMP hrynja. Ekki er ráðlagt að nota þá nema þú vitir nákvæmlega hvað þú"
+" ætlar þér eða ætlir að leggja fram endurbætur."
 
 #: ../app/dialogs/preferences-dialog.c:1619
 msgid "Insane Options"
@@ -17712,7 +17759,7 @@ msgstr "ekki litastýrð"
 #: ../app/display/gimpdisplayshell-tool-events.c:1603
 #, c-format
 msgid "Layer picked: '%s'"
-msgstr ""
+msgstr "Lag valið: '%s'"
 
 #: ../app/display/gimpdisplayshell-utils.c:174
 #: ../app/tools/gimpmeasuretool.c:625 ../app/tools/gimpmeasuretool.c:778
@@ -19060,6 +19107,8 @@ msgid ""
 "Make transparency all-or-nothing, by thresholding the alpha channel to a "
 "value"
 msgstr ""
+"Gera gegnsæi að allt-eða-ekkert, með því að stilla alfa-gegnsæisrás á"
+" eitthvað gildi"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:90
 #| msgctxt "histogram-channel"
@@ -19069,7 +19118,7 @@ msgstr "Litgildi"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:91
 msgid "The alpha value"
-msgstr ""
+msgstr "Alfa-gegnsæisgildið"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -20125,12 +20174,12 @@ msgstr "Litur í gegnsæi"
 #: ../app/pdb/plug-in-compat-cmds.c:1030
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
-msgstr ""
+msgstr "Fylkið 'matrix' er aðeins með %d meðlimi, verður að hafa 25"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1038
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
-msgstr ""
+msgstr "Fylkið 'channels' er aðeins með %d meðlimi, verður að hafa 5"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1110
 msgctxt "undo-type"
@@ -20259,12 +20308,12 @@ msgstr "Slembið kast"
 #: ../app/pdb/plug-in-compat-cmds.c:3221
 msgctxt "undo-type"
 msgid "Random Pick"
-msgstr ""
+msgstr "Slembið val"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3274
 msgctxt "undo-type"
 msgid "Random Slur"
-msgstr ""
+msgstr "Slembið útmá"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3349
 msgctxt "undo-type"
@@ -20547,7 +20596,7 @@ msgstr "Litnúmerað með alfa-gegnsæi"
 
 #: ../app/plug-in/gimppluginprocedure.c:1071
 msgid "This plug-in only works on the following layer types:"
-msgstr ""
+msgstr "Þetta hjálparforrit virkar einungis á eftirgarandi tegundir laga:"
 
 #: ../app/plug-in/gimppluginprocedure.c:1274
 #, c-format
@@ -21224,6 +21273,9 @@ msgid ""
 "or on line  art borders. Disable antialiasing to fill the entire area "
 "uniformly."
 msgstr ""
+"Grunn-ógegnsæi fyllingar á litamismun miðað við ásmelltan mynddíl (sjá þolvik"
+" - threshold) eða smell á jaðra línumynda. Gerðu afstöllun (antialiasing)"
+" óvirka til að fylla jafnt út í allt svæðið."
 
 #: ../app/tools/gimpbucketfilloptions.c:157
 #: ../app/tools/gimpgradientoptions.c:121
@@ -21238,10 +21290,9 @@ msgid "Maximum color difference"
 msgstr "Hámarks litamunur"
 
 #: ../app/tools/gimpbucketfilloptions.c:165
-#, fuzzy
 #| msgid "Set Image Print Resolution"
 msgid "Source image for line art computation"
-msgstr "Stilla myndupplausn fyrir prentun"
+msgstr "Uppruni myndar fyrir útreikning línumyndar"
 
 #: ../app/tools/gimpbucketfilloptions.c:186
 msgid "Maximum gap length"
@@ -21249,7 +21300,7 @@ msgstr "Hámarkslengd bils"
 
 #: ../app/tools/gimpbucketfilloptions.c:187
 msgid "Maximum gap (in pixels) in line art which can be closed"
-msgstr ""
+msgstr "Hámarkslengd bils (í mynddílum) í línumynd sem hægt er að loka"
 
 #: ../app/tools/gimpbucketfilloptions.c:193
 #: ../app/tools/gimpbucketfilloptions.c:442
@@ -21278,11 +21329,10 @@ msgid "Finding Similar Colors"
 msgstr "Finna áþekka liti"
 
 #: ../app/tools/gimpbucketfilloptions.c:457
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Invert Selection"
 msgid "Line Art Detection"
-msgstr "Umhverfa myndvali"
+msgstr "Greining línumyndar"
 
 #: ../app/tools/gimpbucketfilloptions.c:467
 msgid "(computing...)"
@@ -21314,10 +21364,9 @@ msgid "The active layer is not visible."
 msgstr "Virka lagið er ekki sýnilegt."
 
 #: ../app/tools/gimpbucketfilltool.c:511
-#, fuzzy
 #| msgid "No filter selected"
 msgid "No valid line art source selected."
-msgstr "Engin sía valin"
+msgstr "Enginn gildur uppruni línumyndar valinn."
 
 #: ../app/tools/gimpbucketfilltool.c:695 ../app/tools/gimpbucketfilltool.c:828
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:448
@@ -22123,6 +22172,8 @@ msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
 msgstr ""
+"Virki litstigullinn er ekki ritanlegur og er því ekki hægt að breyta honum"
+" beint. Taktu hakið úr þessum valkosti til að breyta afriti af litstiglinum."
 
 #: ../app/tools/gimpgradienttool.c:160
 msgid "Gradient Tool: Fill selected area with a color gradient"
@@ -22502,7 +22553,7 @@ msgstr "Stefna"
 
 #: ../app/tools/gimpmeasureoptions.c:72
 msgid "Orientation against which the angle is measured"
-msgstr ""
+msgstr "Stefnan sem mæling hornsins miðast við"
 
 #: ../app/tools/gimpmeasureoptions.c:80
 msgid "Open a floating dialog to view details about measurements"
@@ -23055,6 +23106,8 @@ msgstr "Fínstillingarkvarði"
 msgid ""
 "Maximal scale of refinement points to be used for the interpolation mesh"
 msgstr ""
+"Hámarkskvarði fínstillingarpunkta til að nota fyrir hnitanet brúunar"
+" (interpolation mesh)"
 
 #: ../app/tools/gimpseamlessclonetool.c:190
 #: ../app/tools/gimpseamlessclonetool.c:751
@@ -23542,7 +23595,7 @@ msgstr "Skref umbreytingar"
 #: ../app/tools/gimptransformgridtool.c:876
 #, c-format
 msgid "%s (Corrective)"
-msgstr ""
+msgstr "%s (leiðréttandi)"
 
 #: ../app/tools/gimptransformgridtool.c:1099
 msgid "Re_adjust"
@@ -23590,6 +23643,8 @@ msgid ""
 "Applying the transformation will result in an item that is over %g times "
 "larger than the image."
 msgstr ""
+"Sé ummyndunin virkjuð verður til atriði sem er meira en %g sinnum stærra en"
+" myndin."
 
 #: ../app/tools/gimptransformtool.c:532
 msgid "There is no layer to transform."
@@ -23704,7 +23759,7 @@ msgstr "Millibil á strokum"
 
 #: ../app/tools/gimpwarpoptions.c:128 ../app/tools/gimpwarpoptions.c:345
 msgid "Abyss policy"
-msgstr ""
+msgstr "Stefna varðandi gögn sem lenda utan myndsviðs (abyss policy)"
 
 #: ../app/tools/gimpwarpoptions.c:129
 msgid "Out-of-bounds sampling behavior"
@@ -23726,7 +23781,7 @@ msgstr "Rauntímaforskoðun"
 
 #: ../app/tools/gimpwarpoptions.c:144
 msgid "Render preview in real time (slower)"
-msgstr ""
+msgstr "Myndgera forskoðun í rauntíma (hægvirkara)"
 
 #: ../app/tools/gimpwarpoptions.c:150
 msgid "During motion"
@@ -23800,11 +23855,11 @@ msgstr "Engin strokuatvik valin."
 
 #: ../app/tools/gimpwarptool.c:736
 msgid "No warp to erase."
-msgstr ""
+msgstr "Engin beyglun til að stroka út."
 
 #: ../app/tools/gimpwarptool.c:740
 msgid "No warp to smooth."
-msgstr ""
+msgstr "Engin beyglun til að mýkja."
 
 #: ../app/tools/gimpwarptool.c:964
 msgid "Warp transform"
@@ -23841,11 +23896,10 @@ msgid "Fill similar colors"
 msgstr "Fylla áþekka liti"
 
 #: ../app/tools/tools-enums.c:27
-#, fuzzy
 #| msgid "Fill whole selection"
 msgctxt "bucket-fill-area"
 msgid "Fill by line art detection"
-msgstr "Fylla allt valið"
+msgstr "Fylla með greindri línumynd"
 
 #: ../app/tools/tools-enums.c:57
 #| msgctxt "item-set"
@@ -24889,7 +24943,7 @@ msgstr "Hámark"
 
 #: ../app/widgets/gimpdashboard.c:465
 msgid "Maximal tile cache occupied size"
-msgstr ""
+msgstr "Hámarksstærð notaðs tiglaskyndiminnis"
 
 #: ../app/widgets/gimpdashboard.c:474 ../app/widgets/gimpdashboard.c:526
 msgctxt "dashboard-variable"
@@ -24907,7 +24961,7 @@ msgstr "Þjöppun"
 
 #: ../app/widgets/gimpdashboard.c:484
 msgid "Tile cache compression ratio"
-msgstr ""
+msgstr "Þjöppunarhlutfall tiglaskyndiminnis"
 
 #: ../app/widgets/gimpdashboard.c:493
 msgctxt "dashboard-variable"
@@ -24947,7 +25001,7 @@ msgstr "Stærð gagna sem bíða eftir að vera skrifuð á í diskminnið"
 #: ../app/widgets/gimpdashboard.c:544
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
-msgstr ""
+msgstr "Stíflur í biðröð"
 
 #: ../app/widgets/gimpdashboard.c:545
 msgid ""
@@ -25050,7 +25104,7 @@ msgstr "Notað"
 
 #: ../app/widgets/gimpdashboard.c:656
 msgid "Amount of memory used by the process"
-msgstr ""
+msgstr "Minni sem notað er af ferlinu"
 
 #: ../app/widgets/gimpdashboard.c:664
 #| msgid "Available Filters"
@@ -25060,11 +25114,11 @@ msgstr "Tiltækt"
 
 #: ../app/widgets/gimpdashboard.c:665
 msgid "Amount of available physical memory"
-msgstr ""
+msgstr "Magn af tiltæku raunminni"
 
 #: ../app/widgets/gimpdashboard.c:674
 msgid "Physical memory size"
-msgstr ""
+msgstr "Stærð raunminnis"
 
 #: ../app/widgets/gimpdashboard.c:685
 msgctxt "dashboard-variable"
@@ -25078,20 +25132,20 @@ msgstr "Heildarstærð meðhöndlaðra mipmap-gagna"
 #: ../app/widgets/gimpdashboard.c:694
 msgctxt "dashboard-variable"
 msgid "Async"
-msgstr ""
+msgstr "Async"
 
 #: ../app/widgets/gimpdashboard.c:695
 msgid "Number of ongoing asynchronous operations"
-msgstr ""
+msgstr "Fjöldi ósamstilltra aðgerða í gangi"
 
 #: ../app/widgets/gimpdashboard.c:703
 msgctxt "dashboard-variable"
 msgid "Scratch"
-msgstr ""
+msgstr "Scratch"
 
 #: ../app/widgets/gimpdashboard.c:704
 msgid "Total size of scratch memory"
-msgstr ""
+msgstr "Heildarstærð bráðabirgða(krass)minnis"
 
 #. Translators:  "TempBuf" is a technical term referring to an internal
 #. * GIMP data structure.  It's probably OK to leave it untranslated.
@@ -25099,11 +25153,11 @@ msgstr ""
 #: ../app/widgets/gimpdashboard.c:715
 msgctxt "dashboard-variable"
 msgid "TempBuf"
-msgstr ""
+msgstr "TempBuf"
 
 #: ../app/widgets/gimpdashboard.c:716
 msgid "Total size of temporary buffers"
-msgstr ""
+msgstr "Heildarstærð bráðabirgðabiðminnis"
 
 #: ../app/widgets/gimpdashboard.c:728
 msgctxt "dashboard-group"
@@ -25207,7 +25261,7 @@ msgstr "Ekki tiltækt"
 
 #: ../app/widgets/gimpdashboard.c:4481
 msgid "Resolving symbol information..."
-msgstr ""
+msgstr "Leysi táknaupplýsingar..."
 
 #: ../app/widgets/gimpdataeditor.c:413
 #, c-format
@@ -25943,6 +25997,8 @@ msgid ""
 "On edge cases, better compression algorithms might still end up on bigger "
 "file size; manual check recommended"
 msgstr ""
+"Í jaðartilfellum geta betri þjöppunarútreikningar samt endað með meiri"
+" skráastærð, best er að prófa þetta handvirkt"
 
 #: ../app/widgets/gimpsavedialog.c:398
 #, c-format
@@ -26577,7 +26633,7 @@ msgstr "Villa við að búa til '%s': "
 
 #: ../app/xcf/xcf-load.c:228
 msgid "Invalid image mode and precision combination."
-msgstr ""
+msgstr "Ógild samsetning myndhams og nákvæmni."
 
 #: ../app/xcf/xcf-load.c:353
 #, c-format
