@@ -2,13 +2,13 @@
 # Copyright (C) 2017 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
-# Sveinn í Felli <sv1@fellsnet.is>, 2017, 2018.
+# Sveinn í Felli <sv1@fellsnet.is>, 2017, 2018, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-05-14 22:02+0000\n"
-"PO-Revision-Date: 2018-05-17 12:14+0000\n"
+"POT-Creation-Date: 2019-03-08 18:36+0000\n"
+"PO-Revision-Date: 2019-03-13 10:05+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -41,9 +41,9 @@ msgid ""
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP bugzilla:"
-"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
-"continue with installation anyway?"
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
 msgstr ""
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
@@ -82,8 +82,8 @@ msgid ""
 "have more control over what gets installed."
 msgstr ""
 "GIMP er núna tilbúið til uppsetningar. Smelltu á 'Setja upp' hnappinn til að "
-"setja upp með sjálfgefnum stillingum, eða smelltu á 'Sérsníða' hnappinn ef þú "
-"vilt stjórna því hvernig uppsetningin fer fram."
+"setja upp með sjálfgefnum stillingum, eða smelltu á 'Sérsníða' hnappinn ef "
+"þú vilt stjórna því hvernig uppsetningin fer fram."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:14
 msgid "&Install"
@@ -124,6 +124,8 @@ msgstr "Aðgerðasöfn fyrir keyrsluumhverfi (run-time)"
 #: ../build/windows/installer/lang/setup.isl.in.h:23
 msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
 msgstr ""
+"Aðgerðasöfn fyrir keyrsluumhverfi sem GIMP notar, þar með talið GTK+"
+" keyrsluumhverfið (run-time environment)"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:24
 msgid "Debug symbols"
@@ -147,7 +149,7 @@ msgstr "Stuðningur við eldri hjálparforrit"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:29
 msgid "Install libraries needed by old third-party plug-ins"
-msgstr ""
+msgstr "Setja inn aðgerðasöfn sem eldri utanaðkomandi hjálparforrit þurfa"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Translations"
@@ -160,6 +162,8 @@ msgstr "Python-skriftun"
 #: ../build/windows/installer/lang/setup.isl.in.h:32
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
+"Gerir þér kleift að nota GIMP-hjáparforrit sem skrifuð eru með Python"
+" skriftunarmálinu."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
 msgid "MyPaint brushes"
@@ -187,6 +191,8 @@ msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr ""
+"Hafa með skrár sem nauðsynlegar eru til að nota 32-bita hjálparforrit."
+"%nNauðsynlegt fyrir stuðning við Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:40
 msgid "Additional icons:"
@@ -254,6 +260,8 @@ msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
 msgstr ""
+"Þetta mun láta valdar skrár opnast í GIMP þegar þú tvísmellir á þær í"
+" Explorer skráastjóranum."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:58
 msgid "Select &All"
@@ -359,4 +367,5 @@ msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr ""
+"Það lítur ekki út fyrir að GIMP sé uppsett í valinni möppu. Halda samt áfram?"
 
