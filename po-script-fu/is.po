@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-03-08 18:36+0000\n"
-"PO-Revision-Date: 2019-03-12 14:23+0000\n"
+"PO-Revision-Date: 2019-03-13 11:00+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -1024,7 +1024,7 @@ msgstr "Fjöldi lína"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Sharpness (degrees)"
-msgstr ""
+msgstr "Skerpa (gráður)"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:118
 msgid "Offset radius"
@@ -1060,11 +1060,11 @@ msgstr "Millibil"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Re_ctangular, Feathered..."
-msgstr ""
+msgstr "Rétth_yrnt, fjaðrað..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
-msgstr ""
+msgstr "Búa til rétthyrndan pensil með fjöðruðum jöðrum"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:142
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:267
@@ -1077,15 +1077,15 @@ msgstr "Sp_oröskjulaga..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:190
 msgid "Create an elliptical brush"
-msgstr ""
+msgstr "Búa til sporöskjulaga pensil"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
-msgstr ""
+msgstr "S_poröskjulaga, fjaðrað..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
-msgstr ""
+msgstr "Búa til sporöskjulaga pensil með fjöðruðum jöðrum"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
@@ -1093,7 +1093,7 @@ msgstr "Gömul ljósm_ynd..."
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:90
 msgid "Make an image look like an old photo"
-msgstr ""
+msgstr "Láta mynd líta út eins og gamla ljósmynd"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:97
 msgid "Defocus"
@@ -1112,7 +1112,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
-msgstr ""
+msgstr "Mappa fyrir úttaksskrá"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:227
 msgid ""
@@ -1122,7 +1122,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
-msgstr ""
+msgstr "Skráarheitið sem þú settir er ekki hentugt nafn á skrá."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:237
 msgid ""
@@ -1165,7 +1165,7 @@ msgstr "_Nýr pensill..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste the clipboard contents into a new brush"
-msgstr ""
+msgstr "Líma innihald klippispjalds inn í nýjan pensil"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
@@ -1185,7 +1185,7 @@ msgstr "_Nýtt mynstur..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste the clipboard contents into a new pattern"
-msgstr ""
+msgstr "Líma innihald klippispjalds inn í nýtt mynstur"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
@@ -1198,7 +1198,7 @@ msgstr "Fjar_vídd..."
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Bæta fjarvíddarskugga við valið svæði (eða alfa-gegnsæi)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
 msgid "Angle"
@@ -1206,11 +1206,11 @@ msgstr "Horn"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Relative distance of horizon"
-msgstr ""
+msgstr "Hlutfallsleg fjarlægð sjóndeildarhrings"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
 msgid "Relative length of shadow"
-msgstr ""
+msgstr "Hlutfallsleg lengd skugga"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
 msgid "Interpolation"
@@ -1234,15 +1234,15 @@ msgstr "Gera stöllótt"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:131
 msgid "Pixel amount"
-msgstr ""
+msgstr "Magn mynddíla"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer Order"
-msgstr ""
+msgstr "Snúa við röð laga"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
-msgstr ""
+msgstr "Snúa við röðun laga í myndinni"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
 msgid "_Rippling..."
@@ -1289,7 +1289,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:137
 msgid "Edge radius"
-msgstr ""
+msgstr "Radíus jaðars"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm:138
 msgid "Add drop-shadow"
@@ -1325,7 +1325,7 @@ msgstr "Ávalur f_erhyrningur..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
-msgstr ""
+msgstr "Rúnna hornin á fyrirliggjandi vali"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
 msgid "Radius (%)"
@@ -1337,19 +1337,19 @@ msgstr "Íhvolft"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
-msgstr ""
+msgstr "Í _pensil..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
 msgid "Convert a selection to a brush"
-msgstr ""
+msgstr "Umbreyta vali yfir í pensil"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:81
 msgid "To _Image"
-msgstr ""
+msgstr "í _mynd"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm:82
 msgid "Convert a selection to an image"
-msgstr ""
+msgstr "Umbreyta vali yfir í mynd"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
 msgid "To _Pattern..."
@@ -1357,7 +1357,7 @@ msgstr "Í m_ynstur..."
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
 msgid "Convert a selection to a pattern"
-msgstr ""
+msgstr "Umbreyta vali yfir í mynstur"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
@@ -1397,7 +1397,7 @@ msgstr "Rammar"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
 msgid "Turn from left to right"
-msgstr ""
+msgstr "Snúa frá vinstri til hægri"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
 msgid "Transparent background"
@@ -1477,19 +1477,19 @@ msgstr "Marghyrningur: 10 hliðar"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
 msgid "Outer teeth"
-msgstr ""
+msgstr "Ytri tennur"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
 msgid "Inner teeth"
-msgstr ""
+msgstr "Innri tennur"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
 msgid "Margin (pixels)"
-msgstr ""
+msgstr "Spássía (mynddílar)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
 msgid "Hole ratio"
-msgstr ""
+msgstr "Hlutfall gata"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
 msgid "Start angle"
@@ -1592,7 +1592,7 @@ msgstr "Bylgjulengd"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
-msgstr ""
+msgstr "Snúa við stefnu"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:397
 msgid "_Weave..."
@@ -1606,11 +1606,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
-msgstr ""
+msgstr "Breidd borða"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:406
 msgid "Ribbon spacing"
-msgstr ""
+msgstr "Millibil borða"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:407
 msgid "Shadow darkness"
@@ -1622,15 +1622,15 @@ msgstr "Dýpt skugga"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:409
 msgid "Thread length"
-msgstr ""
+msgstr "Lengd þráðar"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:410
 msgid "Thread density"
-msgstr ""
+msgstr "Þéttleiki þráðar"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:411
 msgid "Thread intensity"
-msgstr ""
+msgstr "Styrkur þráðar"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:92
 msgid "Shadow"
@@ -1646,11 +1646,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
-msgstr ""
+msgstr "X-hliðrun áherslulitunar"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight Y offset"
-msgstr ""
+msgstr "Y-hliðrun áherslulitunar"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight color"
@@ -1658,7 +1658,7 @@ msgstr "Litur á ljómun"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
-msgstr ""
+msgstr "Gegnsæi áherslulitunar"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
