@@ -33,6 +33,7 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppalette.h"
+#include "core/gimpprojection.h"
 
 #include "gimpcolordialog.h"
 #include "gimpcolormapeditor.h"
@@ -772,25 +773,47 @@ gimp_colormap_editor_edit_color_update (GimpColorDialog      *dialog,
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
   GimpImage       *image        = image_editor->image;
-
-  if (image)
-    {
-      gimp_image_set_colormap_entry (image, editor->col_index, color, TRUE);
-      gimp_image_flush (image);
-    }
+  gboolean         push_undo    = FALSE;
 
   switch (state)
     {
     case GIMP_COLOR_DIALOG_OK:
+      push_undo = TRUE;
+
       if (state & gimp_get_toggle_behavior_mask ())
         gimp_context_set_background (image_editor->context, color);
       else
         gimp_context_set_foreground (image_editor->context, color);
-      /* Pass through */
+      /* Fall through */
+
     case GIMP_COLOR_DIALOG_CANCEL:
       gtk_widget_hide (editor->color_dialog);
       break;
+
     case GIMP_COLOR_DIALOG_UPDATE:
       break;
+    }
+
+  if (image)
+    {
+      if (push_undo)
+        {
+          GimpRGB old_color;
+
+          gimp_color_selection_get_old_color (
+            GIMP_COLOR_SELECTION (dialog->selection), &old_color);
+
+          /* Restore old color for undo */
+          gimp_image_set_colormap_entry (image, editor->col_index, &old_color,
+                                         FALSE);
+        }
+
+      gimp_image_set_colormap_entry (image, editor->col_index, color,
+                                     push_undo);
+
+      if (push_undo)
+        gimp_image_flush (image);
+      else
+        gimp_projection_flush (gimp_image_get_projection (image));
     }
 }
