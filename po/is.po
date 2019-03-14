@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-03-08 18:30+0000\n"
-"PO-Revision-Date: 2019-03-13 09:53+0000\n"
+"PO-Revision-Date: 2019-03-14 07:58+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -343,12 +343,14 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "Most tools improved, several new transformation tools"
-msgstr ""
+msgstr "Flest verkfæri betrumbætt, nokkur ný ummyndunarverkfæri"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
+"Bættur stuðningur við margar gerðir myndskráa, sérstaklega betri"
+" innflutningur PSD-skráa"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
@@ -359,6 +361,8 @@ msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
 msgstr ""
+"Bætt stafræn málun: snúningur og fletting myndflatar, samhverf málun, MyPaint"
+" málunarpenslar…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
