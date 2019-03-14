@@ -109,7 +109,7 @@ gimp_histogram_editor_class_init (GimpHistogramEditorClass *klass)
 
   g_object_class_install_property (object_class, PROP_TRC,
                                    g_param_spec_enum ("trc",
-                                                      _("Linear/Preceptual"),
+                                                      _("Linear/Perceptual"),
                                                       NULL,
                                                       GIMP_TYPE_TRC_TYPE,
                                                       GIMP_TRC_LINEAR,
