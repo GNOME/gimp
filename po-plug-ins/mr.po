@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-20 11:48+0000\n"
+"POT-Creation-Date: 2019-03-13 17:24+0000\n"
 "PO-Revision-Date: 2018-12-30 20:43+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -440,7 +440,7 @@ msgstr "_उभा"
 #: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:992
 #: ../plug-ins/common/file-jp2-load.c:1275 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1087 ../plug-ins/common/file-pnm.c:685
+#: ../plug-ins/common/file-png.c:1086 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1392
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1097
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:745
@@ -491,11 +491,8 @@ msgid "_Border Average..."
 msgstr "_बाह्य कडा सरासरी..."
 
 #: ../plug-ins/common/border-average.c:173
-msgid "Border Average"
-msgstr "बाह्य कडा सरासरी"
-
 #: ../plug-ins/common/border-average.c:358
-msgid "Borderaverage"
+msgid "Border Average"
 msgstr "बाह्य कडा सरासरी"
 
 #: ../plug-ins/common/border-average.c:380
@@ -1045,8 +1042,8 @@ msgstr "सीएमएल एक्सप्लोरर परिमाणे 
 
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
-#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:860
-#: ../plug-ins/common/file-pdf-save.c:471 ../plug-ins/common/file-png.c:1591
+#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
+#: ../plug-ins/common/file-pdf-save.c:471 ../plug-ins/common/file-png.c:1573
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1504
@@ -1054,7 +1051,7 @@ msgstr "सीएमएल एक्सप्लोरर परिमाणे 
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
 #: ../plug-ins/file-jpeg/jpeg-save.c:330 ../plug-ins/file-psd/psd-save.c:1599
-#: ../plug-ins/file-tiff/file-tiff-save.c:645 ../plug-ins/flame/flame.c:442
+#: ../plug-ins/file-tiff/file-tiff-save.c:642 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -1075,7 +1072,7 @@ msgstr "सीएमएल एक्सप्लोरर लोड करा"
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:935
+#: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:934
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
 #: ../plug-ins/common/file-psp.c:1772 ../plug-ins/common/file-psp.c:1826
 #: ../plug-ins/common/file-raw-data.c:477
@@ -2190,20 +2187,19 @@ msgstr "प्रतिमा शीर्षक वाचताना EOF क�
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:312
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:690
+#: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:353 ../plug-ins/common/file-jp2-load.c:1064
-#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:370
-#: ../plug-ins/common/file-pdf-load.c:1030 ../plug-ins/common/file-pix.c:357
-#: ../plug-ins/common/file-png.c:927 ../plug-ins/common/file-pnm.c:566
-#: ../plug-ins/common/file-ps.c:1063 ../plug-ins/common/file-raw-data.c:1294
-#: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
-#: ../plug-ins/common/file-wmf.c:1014 ../plug-ins/common/file-xbm.c:740
-#: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:354
-#: ../plug-ins/common/file-xwd.c:448 ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
-#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:665
-#: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:131
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1030
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:926
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
+#: ../plug-ins/common/file-raw-data.c:1294 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1014
+#: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
+#: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
+#: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:185
+#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
+#: ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
@@ -2278,19 +2274,17 @@ msgstr "'%s': रंगफळी माहिती वाचताना EOF �
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gbr.c:711
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1316
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
 #: ../plug-ins/common/file-heif.c:634 ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-pat.c:552 ../plug-ins/common/file-pcx.c:747
-#: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1584
-#: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1202
-#: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:663
-#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:310
-#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
-#: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:287
-#: ../plug-ins/file-psd/psd-save.c:1570 ../plug-ins/file-sgi/sgi.c:579
-#: ../plug-ins/file-tiff/file-tiff-save.c:317
+#: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
+#: ../plug-ins/common/file-png.c:1566 ../plug-ins/common/file-pnm.c:1249
+#: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
+#: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1040
+#: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
+#: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
+#: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
+#: ../plug-ins/file-jpeg/jpeg-save.c:287 ../plug-ins/file-psd/psd-save.c:1570
+#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
 msgstr "'%s' निर्यात करत आहे"
@@ -2402,53 +2396,21 @@ msgstr "अल्फा चॅनेलसह प्रतिमा साठव
 msgid "Cannot operate on unknown image types."
 msgstr "अज्ञात प्रतिमा प्रकार हाताळू शकत नाही"
 
-#: ../plug-ins/common/file-gbr.c:131 ../plug-ins/common/file-gbr.c:153
+#: ../plug-ins/common/file-gbr.c:109
 msgid "GIMP brush"
 msgstr "गिम्प कुंचला"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:441
-#, c-format
-msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr "'%s' मध्ये अवैध शीर्षक माहिती : रूंदी=%lu, उंची=%lu, बाइट्स=%lu"
-
-#: ../plug-ins/common/file-gbr.c:413 ../plug-ins/common/file-gbr.c:445
-#: ../plug-ins/common/file-gbr.c:456
-#, c-format
-msgid "Unsupported brush format"
-msgstr "असमर्थित कुंचला स्वरूप"
-
-#: ../plug-ins/common/file-gbr.c:468
-#, c-format
-msgid "Invalid header data in '%s': Brush name is too long: %lu"
-msgstr "'%s' मध्ये अवैध शीर्षक माहिती : कुंचल्याचे नाव खूप मोठे आहे: %lu"
-
-#: ../plug-ins/common/file-gbr.c:482
-#, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "गिम्प कुंचला धारिका '%s' मध्ये त्रुटी"
-
-#: ../plug-ins/common/file-gbr.c:490
-#, c-format
-msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "कुंचला धारिका '%s' मध्ये अवैध UTF-8 स्ट्रिंग."
-
-#: ../plug-ins/common/file-gbr.c:496 ../plug-ins/common/file-gih.c:519
-#: ../plug-ins/common/file-gih.c:1218 ../plug-ins/common/file-pat.c:398
-#: ../plug-ins/gradient-flare/gradient-flare.c:3064
-msgid "Unnamed"
-msgstr "अनामित"
-
-#: ../plug-ins/common/file-gbr.c:831
+#: ../plug-ins/common/file-gbr.c:316
 msgid "Brush"
 msgstr "कुंचला"
 
-#: ../plug-ins/common/file-gbr.c:847 ../plug-ins/common/file-gih.c:944
-#: ../plug-ins/common/file-pat.c:659 ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/common/file-gbr.c:332 ../plug-ins/common/file-gih.c:549
+#: ../plug-ins/common/file-pat.c:302 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "वर्णन:"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:859 ../plug-ins/common/grid.c:799
+#: ../plug-ins/common/file-gbr.c:344 ../plug-ins/common/grid.c:799
 msgid "Spacing:"
 msgstr "अंतर:"
 
@@ -2591,64 +2553,55 @@ msgstr ""
 msgid "The default comment is limited to %d characters."
 msgstr "मूळचे भाष्य %d वर्णांपर्यंत मर्यादित आहे."
 
-#: ../plug-ins/common/file-gih.c:189 ../plug-ins/common/file-gih.c:213
+#: ../plug-ins/common/file-gih.c:160
 msgid "GIMP brush (animated)"
 msgstr "गिम्प कुंचला (चलाभासित)"
 
-#: ../plug-ins/common/file-gih.c:502
-#, c-format
-msgid "Brush name is too long: %lu"
-msgstr "कुंचल्याचे नाव खूप मोठे आहे: %lu"
-
-#: ../plug-ins/common/file-gih.c:595
-msgid "GIMP brush file appears to be corrupted."
-msgstr "गिम्प कुंचला धारिका दूषित [खराब] झाली आहे."
-
-#: ../plug-ins/common/file-gih.c:926
+#: ../plug-ins/common/file-gih.c:531
 msgid "Brush Pipe"
 msgstr "कुंचला नळी"
 
-#: ../plug-ins/common/file-gih.c:959
+#: ../plug-ins/common/file-gih.c:564
 msgid "Spacing (percent):"
 msgstr "अंतर (टक्के):"
 
-#: ../plug-ins/common/file-gih.c:1014
+#: ../plug-ins/common/file-gih.c:619
 msgid "Pixels"
 msgstr "चित्रकणे [पिक्सेल्स]"
 
-#: ../plug-ins/common/file-gih.c:1019
+#: ../plug-ins/common/file-gih.c:624
 msgid "Cell size:"
 msgstr "सेल आकारमान:"
 
-#: ../plug-ins/common/file-gih.c:1032
+#: ../plug-ins/common/file-gih.c:637
 msgid "Number of cells:"
 msgstr "सेल्सची संख्या:"
 
-#: ../plug-ins/common/file-gih.c:1057
+#: ../plug-ins/common/file-gih.c:662
 msgid " Rows of "
 msgstr " पंक्ती "
 
-#: ../plug-ins/common/file-gih.c:1069
+#: ../plug-ins/common/file-gih.c:674
 msgid " Columns on each layer"
 msgstr " प्रत्येक स्तरावरील स्तंभ [कॉलम]"
 
-#: ../plug-ins/common/file-gih.c:1073
+#: ../plug-ins/common/file-gih.c:678
 msgid " (Width Mismatch!) "
 msgstr " (रूंदी जूळत नाही!)"
 
-#: ../plug-ins/common/file-gih.c:1077
+#: ../plug-ins/common/file-gih.c:682
 msgid " (Height Mismatch!) "
 msgstr " (उंची जूळत नाही!) "
 
-#: ../plug-ins/common/file-gih.c:1082
+#: ../plug-ins/common/file-gih.c:687
 msgid "Display as:"
 msgstr "म्हणून प्रदर्शित करा:"
 
-#: ../plug-ins/common/file-gih.c:1093
+#: ../plug-ins/common/file-gih.c:698
 msgid "Dimension:"
 msgstr "परिमाण:"
 
-#: ../plug-ins/common/file-gih.c:1169
+#: ../plug-ins/common/file-gih.c:774
 msgid "Ranks:"
 msgstr "श्रेणी:"
 
@@ -2955,7 +2908,7 @@ msgstr " जेपी२ प्रतिमा मध्ये असमर्�
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2294
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2276
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "दोषरहितरित्या पारदर्शकता साठविणे शक्य नाही, त्याऐवजी अपारदर्शकता साठवित आहोत."
@@ -2989,7 +2942,7 @@ msgid "Save creation time"
 msgstr "निर्मिती वेळ साठवा"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2352
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2334
 msgid "PNG"
 msgstr "पीएनजी"
 
@@ -3076,21 +3029,11 @@ msgstr ""
 msgid "MNG animation"
 msgstr "एमएनजी चलाभास"
 
-#: ../plug-ins/common/file-pat.c:103 ../plug-ins/common/file-pat.c:126
+#: ../plug-ins/common/file-pat.c:83
 msgid "GIMP pattern"
 msgstr "गिम्प नमुने"
 
-#: ../plug-ins/common/file-pat.c:373
-#, c-format
-msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-msgstr "'%s' मध्ये अवैध शीर्षक माहिती: नमुन्याचे नाव खूप मोठे आहे: %lu"
-
-#: ../plug-ins/common/file-pat.c:392
-#, c-format
-msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "'%s' या नमुना धारिकेमध्ये अवैध युटीएफ-8 स्ट्रिंग."
-
-#: ../plug-ins/common/file-pat.c:644
+#: ../plug-ins/common/file-pat.c:287
 msgid "Pattern"
 msgstr "नमुना"
 
@@ -3134,35 +3077,35 @@ msgstr ""
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "प्रतिमा परिमाणे खूप मोठे: रूंदी %d x उंची %d"
 
-#: ../plug-ins/common/file-pcx.c:531
+#: ../plug-ins/common/file-pcx.c:545
 msgid "Unusual PCX flavour, giving up"
 msgstr "असामान्य पीसीएक्स विशेष गुण [फ्लेवर], सोडून देत आहे"
 
-#: ../plug-ins/common/file-pcx.c:813 ../plug-ins/common/file-pnm.c:1245
+#: ../plug-ins/common/file-pcx.c:827 ../plug-ins/common/file-pnm.c:1245
 msgid "Cannot export images with alpha channel."
 msgstr "अल्फा चॅनेलसह प्रतिमा निर्यात करू शकत नाही."
 
-#: ../plug-ins/common/file-pcx.c:833
+#: ../plug-ins/common/file-pcx.c:847
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "अवैध X ऑफसेट: %d"
 
-#: ../plug-ins/common/file-pcx.c:839
+#: ../plug-ins/common/file-pcx.c:853
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "अवैध Y ऑफसेट: %d"
 
-#: ../plug-ins/common/file-pcx.c:845
+#: ../plug-ins/common/file-pcx.c:859
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "उजवी कडा सीमेबाहेर आहे (%d पेक्षा लहान हवी): %d"
 
-#: ../plug-ins/common/file-pcx.c:852
+#: ../plug-ins/common/file-pcx.c:866
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "तळाची कडा सीमेबाहेर आहे (%d पेक्षा लहान हवी): %d"
 
-#: ../plug-ins/common/file-pcx.c:926
+#: ../plug-ins/common/file-pcx.c:940
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "धारिका '%s' मध्ये लिहिणे शक्य नाही: %s"
@@ -3362,50 +3305,50 @@ msgstr "पीएनजी प्रतिमा"
 msgid "Error loading PNG file: %s\n"
 msgstr "पीएनजी धारिका लोड करताना त्रुटी: %s\n"
 
-#: ../plug-ins/common/file-png.c:893
+#: ../plug-ins/common/file-png.c:892
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "लोड करताना पीएनजी वाचन रचना तयार करताना %s त्रुटी."
 
-#: ../plug-ins/common/file-png.c:902
+#: ../plug-ins/common/file-png.c:901
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr "वाचताना त्रुटी %s.पीएनजी  शीर्षक माहिती संरचना तयार करु शकत नाही."
 
-#: ../plug-ins/common/file-png.c:910
+#: ../plug-ins/common/file-png.c:909
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "वाचताना त्रुटी '%s'. धारिका दूषित आहे का?"
 
-#: ../plug-ins/common/file-png.c:1065
+#: ../plug-ins/common/file-png.c:1064
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "पीएनजी धारिकेमध्ये अज्ञात रंग प्रतिकृती '%s'."
 
-#: ../plug-ins/common/file-png.c:1078 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1077 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "यासाठी नवीन प्रतिमा तयार करू शकत नाही '%s': %s"
 
-#: ../plug-ins/common/file-png.c:1134
+#: ../plug-ins/common/file-png.c:1133
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr "पीएनजी धारिका ऑफसेट स्थिती निर्दिष्ट करते ज्यामुळे स्तर प्रतिमेच्या बाहेर आहे."
 
-#: ../plug-ins/common/file-png.c:1411
+#: ../plug-ins/common/file-png.c:1393
 msgid "Apply PNG Offset"
 msgstr "पीएनजी ऑफसेट लागू करा"
 
-#: ../plug-ins/common/file-png.c:1415
+#: ../plug-ins/common/file-png.c:1397
 msgid "Ignore PNG offset"
 msgstr "पीएनजी ऑफसेटकडे दुर्लक्ष करा"
 
-#: ../plug-ins/common/file-png.c:1416
+#: ../plug-ins/common/file-png.c:1398
 msgid "Apply PNG offset to layer"
 msgstr "स्तरांना पीएनजी ऑफसेट लागू करा "
 
-#: ../plug-ins/common/file-png.c:1441
+#: ../plug-ins/common/file-png.c:1423
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3414,29 +3357,29 @@ msgstr ""
 "आपण आयात करीत असलेली पीएनजी प्रतिमा %d, %d ऑफसेट निर्दिष्ट करते. आपण हे ऑफसेट स्तराला "
 "लागू करू इच्छिता?"
 
-#: ../plug-ins/common/file-png.c:1550
+#: ../plug-ins/common/file-png.c:1532
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "निर्यात करताना पीएनजी लेखन रचना तयार करण्यात त्रुटी %s ."
 
-#: ../plug-ins/common/file-png.c:1559
+#: ../plug-ins/common/file-png.c:1541
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr "निर्यात करताना त्रुटी '%s'.पीएनजी शीर्षक माहिती संरचना तयार करु शकत नाही."
 
-#: ../plug-ins/common/file-png.c:1567
+#: ../plug-ins/common/file-png.c:1549
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "निर्यात करताना त्रुटी '%s'. प्रतिमा निर्यात करणे शक्य झाले नाही."
 
-#: ../plug-ins/common/file-png.c:2369 ../plug-ins/common/file-raw-data.c:2129
-#: ../plug-ins/file-tiff/file-tiff-save.c:959
+#: ../plug-ins/common/file-png.c:2351 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/file-tiff/file-tiff-save.c:965
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "युआय धारिका लोड करताना त्रुटी '%s': %s"
 
-#: ../plug-ins/common/file-png.c:2370 ../plug-ins/common/file-raw-data.c:2130
-#: ../plug-ins/file-tiff/file-tiff-save.c:960
+#: ../plug-ins/common/file-png.c:2352 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/file-tiff/file-tiff-save.c:966
 msgid "Unknown error"
 msgstr "अज्ञात त्रुटी"
 
@@ -6899,7 +6842,7 @@ msgid "<b>Advanced Options</b>"
 msgstr "<b>प्रगत पर्याय</b>"
 
 #: ../plug-ins/file-dds/ddswrite.c:2055
-#: ../plug-ins/file-tiff/file-tiff-save.c:975
+#: ../plug-ins/file-tiff/file-tiff-save.c:981
 msgid "Compression"
 msgstr "संक्षिप्तीकरण [कॉम्प्रेशन]"
 
@@ -7186,7 +7129,7 @@ msgstr "_लघुप्रतिमा साठवा"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:924
 #: ../plug-ins/ui/plug-in-file-png.ui.h:16
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "Save color profile"
 msgstr "रंग प्रोफाइल साठवा"
 
@@ -7605,12 +7548,7 @@ msgstr "%s-%d-पुढील-%d-पाने"
 msgid "TIFF Channel"
 msgstr "टीआयएफएफ चॅनेल"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:606
-#, c-format
-msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr "टीआयएफएफ निर्यात अल्फा चॅनेल अनुक्रमित प्रतिमा हाताळू शकत नाही."
-
-#: ../plug-ins/file-tiff/file-tiff-save.c:619
+#: ../plug-ins/file-tiff/file-tiff-save.c:616
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7618,11 +7556,11 @@ msgstr ""
 "केवळ एका रंगात चित्रित चित्र \"सीसीआयटीटी गट 4\" किंवा \"सीसीआयटीटी गट 3\" सह "
 "संक्षिप्त [कॉम्प्रेस] केले जाऊ शकतात."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:633
+#: ../plug-ins/file-tiff/file-tiff-save.c:630
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "अनुक्रमित [इंडेक्सड्] चित्रे \"जेपीईजी\" सह संकुचित केले जाऊ शकत नाही."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:732
+#: ../plug-ins/file-tiff/file-tiff-save.c:736
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7630,40 +7568,40 @@ msgstr ""
 "टीआयएफएफ स्वरूप केवळ \n"
 "७बिट आस्की एन्कोडिंग समर्थन करते. कोणतेही भाष्य साठविले नाही."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:824
+#: ../plug-ins/file-tiff/file-tiff-save.c:830
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "पंक्ती %d वर स्कॅनलाइन लिहिण्यास अयशस्वी"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:949
+#: ../plug-ins/file-tiff/file-tiff-save.c:955
 msgid "TIFF"
 msgstr "टीफ [टीआयएफएफ]"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:979
+#: ../plug-ins/file-tiff/file-tiff-save.c:985
 msgid "_None"
 msgstr "_काहीही नाही"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:980
+#: ../plug-ins/file-tiff/file-tiff-save.c:986
 msgid "_LZW"
 msgstr "_एलझेडडब्ल्यू"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:981
+#: ../plug-ins/file-tiff/file-tiff-save.c:987
 msgid "_Pack Bits"
 msgstr "_संच बिट्स"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:982
+#: ../plug-ins/file-tiff/file-tiff-save.c:988
 msgid "_Deflate"
 msgstr "_डिफ्लेट [हवा सोडणे]"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:983
+#: ../plug-ins/file-tiff/file-tiff-save.c:989
 msgid "_JPEG"
 msgstr "_जेपीईजी"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:984
+#: ../plug-ins/file-tiff/file-tiff-save.c:990
 msgid "CCITT Group _3 fax"
 msgstr "सीसीआयटीटी गट _३ फॅक्स"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:985
+#: ../plug-ins/file-tiff/file-tiff-save.c:991
 msgid "CCITT Group _4 fax"
 msgstr "सीसीआयटीटी गट _४ फॅक्स"
 
@@ -9506,22 +9444,22 @@ msgid "S_ave Defaults"
 msgstr "मूळ सा_ठवा"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "Save Exif data"
 msgstr "Exif माहिती साठवा"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:13
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save XMP data"
 msgstr "एक्सएमपी माहिती साठवा"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:14
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Save IPTC data"
 msgstr "आयपीटीसी माहिती साठवा"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:15
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "Save thumbnail"
 msgstr "लघुप्रतिमा [थंबनेल] साठवा"
 
@@ -9582,6 +9520,10 @@ msgid "Save color values from transparent pixels"
 msgstr "पारदर्शी चित्रकणांपासून [पिक्सेल्स] रंग मूल्ये साठवा"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+msgid "Colors are not stored premultiplied by the associated alpha"
+msgstr "संबंधित अल्फा द्वारे पूर्व गुणाकार रंग संग्रहित नाहीत"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "<b>Comment</b>"
 msgstr "<b>भाष्य</b>"
 
@@ -10137,6 +10079,10 @@ msgstr "नवीन फ्लेअर रंगछटा"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3063
 msgid "Enter a name for the new GFlare"
 msgstr "नवीन फ्लेअर रंगछटेसाठी नाव प्रविष्ट करा"
+
+#: ../plug-ins/gradient-flare/gradient-flare.c:3064
+msgid "Unnamed"
+msgstr "अनामित"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3083
 #: ../plug-ins/gradient-flare/gradient-flare.c:3164
@@ -12465,9 +12411,9 @@ msgid ""
 "smaller than this, it's a corner, even if it's within 'corner_surround' "
 "pixels of a point with a smaller angle."
 msgstr ""
-"एखाद्या बिंदूने आणि त्याच्या पुर्व [प्रिडीसेसर] आणि उत्तराधिकारी [सक्सेसर] यांनी परिभाषित केलेला कोन "
-"यापेक्षा लहान असल्यास, तो लहान कोनासह बिंदूच्या 'कोपऱ्या_भोवती' "
-"चित्रकणांमध्ये [पिक्सेल्स] असूनही, तो एक कोपरा आहे."
+"एखाद्या बिंदूने आणि त्याच्या पुर्व [प्रिडीसेसर] आणि उत्तराधिकारी [सक्सेसर] यांनी परिभाषित "
+"केलेला कोन यापेक्षा लहान असल्यास, तो लहान कोनासह बिंदूच्या 'कोपऱ्या_भोवती' चित्रकणांमध्ये "
+"[पिक्सेल्स] असूनही, तो एक कोपरा आहे."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:144
 msgid "Corner Surround:"
@@ -12535,9 +12481,9 @@ msgid ""
 "any points that 'should' be corners aren't found, the curve goes to hell "
 "around that point."
 msgstr ""
-"मूळ माहिती बिंदू सुलभ [स्मूथ] करण्यासाठी किती वेळा. नाटकीयदृष्ट्या ही संख्या वाढवित आहे --- ५० "
-"किंवा त्यापेक्षा जास्त --- उत्कृष्ट परिणाम प्रदान करू शकते. परंतु जर कोपरा 'असणारा' कोणताही बिंदू "
-"आढळला नाही तर त्या बिंदूभोवती असणारा वक्र निघून जातो."
+"मूळ माहिती बिंदू सुलभ [स्मूथ] करण्यासाठी किती वेळा. नाटकीयदृष्ट्या ही संख्या वाढवित आहे "
+"--- ५० किंवा त्यापेक्षा जास्त --- उत्कृष्ट परिणाम प्रदान करू शकते. परंतु जर कोपरा "
+"'असणारा' कोणताही बिंदू आढळला नाही तर त्या बिंदूभोवती असणारा वक्र निघून जातो."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:232
 msgid "Filter Percent:"
@@ -12557,7 +12503,8 @@ msgid ""
 "Number of adjacent points to consider if 'filter_surround' points defines a "
 "straight line."
 msgstr ""
-"जेव्हा 'गाळणी_सभोवती' बिंदू सरळ रेषा परिभाषित करतील तेव्हा समीप बिंदूंची संख्या विचारात घ्या."
+"जेव्हा 'गाळणी_सभोवती' बिंदू सरळ रेषा परिभाषित करतील तेव्हा समीप बिंदूंची संख्या विचारात "
+"घ्या."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:259
 msgid "Filter Surround:"
@@ -12573,8 +12520,7 @@ msgstr "गुडघे ठेवा [कीप नी]"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:276
 msgid "Says whether or not to remove 'knee' points after finding the outline."
-msgstr ""
-"बाह्यरेखा शोधल्यानंतर 'गुडघा [नी]' बिंदू काढायचे की नाही हे सांगते."
+msgstr "बाह्यरेखा शोधल्यानंतर 'गुडघा [नी]' बिंदू काढायचे की नाही हे सांगते."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:287
 msgid "Line Reversion Threshold:"
@@ -12627,10 +12573,10 @@ msgid ""
 "Raphson iteration to improve it.  It may be that it would be better to "
 "detect the cases where we didn't find any corners."
 msgstr ""
-"त्रुटीअधिक असल्याने पुनर्परिभाषित [रिपॅरामीटराईज] करणे व्यर्थ आहे. जेव्हा आपण रेषेच्या बाहेर 'O' च्या "
-"बाह्यरेषा बसवण्याचा प्रयत्न करतो तेव्हा हे घडते. सुरवातीचे समाधान व्यवस्थित नसल्याने न्युटन-रॅफसन "
-"प्रक्रियेचाही उपयोग होत नाही. कदाचित आपल्याला कुठलेही कोपरे सापडले नाहीत "
-"अशा प्रकरणांचा शोध घेणे चांगले होईल."
+"त्रुटीअधिक असल्याने पुनर्परिभाषित [रिपॅरामीटराईज] करणे व्यर्थ आहे. जेव्हा आपण रेषेच्या बाहेर "
+"'O' च्या बाह्यरेषा बसवण्याचा प्रयत्न करतो तेव्हा हे घडते. सुरवातीचे समाधान व्यवस्थित "
+"नसल्याने न्युटन-रॅफसन प्रक्रियेचाही उपयोग होत नाही. कदाचित आपल्याला कुठलेही कोपरे सापडले "
+"नाहीत अशा प्रकरणांचा शोध घेणे चांगले होईल."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:348
 msgid "Subdivide Search:"
@@ -12689,6 +12635,39 @@ msgstr "_स्कॅनर/कॅमेरा..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "स्कॅनर/कॅमेऱ्या पासून माहिती स्थानांतरित करणे"
+
+#~ msgid "Borderaverage"
+#~ msgstr "बाह्य कडा सरासरी"
+
+#~ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
+#~ msgstr "'%s' मध्ये अवैध शीर्षक माहिती : रूंदी=%lu, उंची=%lu, बाइट्स=%lu"
+
+#~ msgid "Unsupported brush format"
+#~ msgstr "असमर्थित कुंचला स्वरूप"
+
+#~ msgid "Invalid header data in '%s': Brush name is too long: %lu"
+#~ msgstr "'%s' मध्ये अवैध शीर्षक माहिती : कुंचल्याचे नाव खूप मोठे आहे: %lu"
+
+#~ msgid "Error in GIMP brush file '%s'"
+#~ msgstr "गिम्प कुंचला धारिका '%s' मध्ये त्रुटी"
+
+#~ msgid "Invalid UTF-8 string in brush file '%s'."
+#~ msgstr "कुंचला धारिका '%s' मध्ये अवैध UTF-8 स्ट्रिंग."
+
+#~ msgid "Brush name is too long: %lu"
+#~ msgstr "कुंचल्याचे नाव खूप मोठे आहे: %lu"
+
+#~ msgid "GIMP brush file appears to be corrupted."
+#~ msgstr "गिम्प कुंचला धारिका दूषित [खराब] झाली आहे."
+
+#~ msgid "Invalid header data in '%s': Pattern name is too long: %lu"
+#~ msgstr "'%s' मध्ये अवैध शीर्षक माहिती: नमुन्याचे नाव खूप मोठे आहे: %lu"
+
+#~ msgid "Invalid UTF-8 string in pattern file '%s'."
+#~ msgstr "'%s' या नमुना धारिकेमध्ये अवैध युटीएफ-8 स्ट्रिंग."
+
+#~ msgid "TIFF export cannot handle indexed images with an alpha channel."
+#~ msgstr "टीआयएफएफ निर्यात अल्फा चॅनेल अनुक्रमित प्रतिमा हाताळू शकत नाही."
 
 #~ msgid "_Guillotine"
 #~ msgstr "_गिलोटिन"
