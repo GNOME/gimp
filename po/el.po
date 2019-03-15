@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-13 08:42+0000\n"
-"PO-Revision-Date: 2019-03-14 10:19+0200\n"
+"POT-Creation-Date: 2019-03-14 16:47+0000\n"
+"PO-Revision-Date: 2019-03-15 13:07+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -3053,7 +3053,7 @@ msgstr "240 δευτερόλεπτα"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:327
 #: ../app/tools/gimpforegroundselecttool.c:313 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1099
+#: ../app/tools/gimptransformgridtool.c:1107
 #: ../app/tools/gimptransformtool.c:335 ../app/widgets/gimpactionview.c:602
 #: ../app/widgets/gimpcolordialog.c:125
 #: ../app/widgets/gimpcontrollereditor.c:661
@@ -7796,7 +7796,7 @@ msgstr "Επαναφορά όλων των φίλτρων"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:326 ../app/tools/gimptransformgridtool.c:1096
+#: ../app/tools/gimpfiltertool.c:326 ../app/tools/gimptransformgridtool.c:1104
 #: ../app/widgets/gimpcolordialog.c:124
 #: ../app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
@@ -14820,6 +14820,7 @@ msgstr "Ακρίβεια"
 
 #: ../app/core/gimptemplate.c:206 ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:110
+#: ../app/widgets/gimphistogrameditor.c:112
 msgid "Linear/Perceptual"
 msgstr "Γραμμικά/Διαισθητικά"
 
@@ -23973,24 +23974,28 @@ msgstr "Κλείδωμα"
 msgid "Lock pivot position to canvas"
 msgstr "Κλείδωμα θέσης περιστροφής στον καμβά"
 
-#: ../app/tools/gimptransformgridtool.c:220
+#: ../app/tools/gimptransformgridtool.c:228
 #: ../app/tools/gimptransformtool.c:336
 msgid "_Transform"
 msgstr "Μετασ_χηματισμός"
 
-#: ../app/tools/gimptransformgridtool.c:492
-#: ../app/tools/gimptransformgridtool.c:504
+#: ../app/tools/gimptransformgridtool.c:500
+#: ../app/tools/gimptransformgridtool.c:512
 msgid "Transform Step"
 msgstr "Βήμα μετασχηματισμού"
 
-#: ../app/tools/gimptransformgridtool.c:876
+#: ../app/tools/gimptransformgridtool.c:884
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (Διορθωτικό)"
 
-#: ../app/tools/gimptransformgridtool.c:1098
+#: ../app/tools/gimptransformgridtool.c:1106
 msgid "Re_adjust"
 msgstr "Ε_παναρρύθμιση"
+
+#: ../app/tools/gimptransformgridtool.c:1353
+msgid "Cannot readjust the transformation"
+msgstr "Αδυναμία επαναρρύθμισης του μετασχηματισμού"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -24797,26 +24802,26 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "μη διαθέσιμο"
 
-#: ../app/widgets/gimpcolormapeditor.c:210
+#: ../app/widgets/gimpcolormapeditor.c:211
 msgid "Color index:"
 msgstr "Δείκτης χρωμάτων:"
 
-#: ../app/widgets/gimpcolormapeditor.c:220
+#: ../app/widgets/gimpcolormapeditor.c:221
 msgid "HTML notation:"
 msgstr "Σημειογραφία HTML:"
 
 #
-#: ../app/widgets/gimpcolormapeditor.c:400
+#: ../app/widgets/gimpcolormapeditor.c:401
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Επεξεργασία εισόδου χρωματολόγιου #%d"
 
 #
-#: ../app/widgets/gimpcolormapeditor.c:407
+#: ../app/widgets/gimpcolormapeditor.c:408
 msgid "Edit Colormap Entry"
 msgstr "Επεξεργασία εισόδου χρωματολογίου"
 
-#: ../app/widgets/gimpcolormapeditor.c:549
+#: ../app/widgets/gimpcolormapeditor.c:550
 msgid "Only indexed images have a colormap."
 msgstr "Χρωματολόγιο διαθέτουν μόνο οι εικόνες από ευρετήριο."
 
@@ -26143,10 +26148,6 @@ msgstr ""
 msgid "Read _Online"
 msgstr "Ανάγνωση στο _διαδίκτυο"
 
-#: ../app/widgets/gimphistogrameditor.c:112
-msgid "Linear/Preceptual"
-msgstr "Γραμμικό/Διαισθητικό"
-
 #: ../app/widgets/gimphistogrameditor.c:132
 msgid "Mean:"
 msgstr "Μέσος όρος:"
@@ -27108,6 +27109,9 @@ msgstr "στρογγυλή"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "θολή"
+
+#~ msgid "Linear/Preceptual"
+#~ msgstr "Γραμμικό/Διαισθητικό"
 
 #~ msgid ""
 #~ "For more information, see https://www.gimp.org/news/2018/04/27/"
