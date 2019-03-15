@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-09 10:01+0000\n"
+"POT-Creation-Date: 2019-03-13 17:21+0000\n"
 "PO-Revision-Date: 2018-07-07 14:57+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -2973,7 +2973,7 @@ msgstr "२४० सेकंद"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1100
+#: ../app/tools/gimptransformgridtool.c:1108
 #: ../app/tools/gimptransformtool.c:332 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -3274,8 +3274,8 @@ msgstr "रंगफळ्या संवादपटल उघडा"
 
 #: ../app/actions/dialogs-actions.c:191
 msgctxt "dialogs-action"
-msgid "Palette Editor"
-msgstr "रंगफळी संपादक"
+msgid "Palette _Editor"
+msgstr "रंगफळी संपादन _सुविधा पटल"
 
 #: ../app/actions/dialogs-actions.c:192
 msgctxt "dialogs-action"
@@ -3284,8 +3284,8 @@ msgstr "रंगफळी संपादक उघडा"
 
 #: ../app/actions/dialogs-actions.c:197
 msgctxt "dialogs-action"
-msgid "Tool presets"
-msgstr "साधन पूर्वनिश्चिती"
+msgid "Tool Pre_sets"
+msgstr "साधन पूर्व_निर्धारित करा"
 
 #: ../app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
@@ -7663,7 +7663,7 @@ msgstr "सर्व गाळण्या पूर्ववत करा"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1097
+#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1105
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -22429,16 +22429,19 @@ msgid "Click-Drag to create a line"
 msgstr "एक रेखा तयार करण्यासाठी क्लिक-ड्रॅग करा"
 
 #: ../app/tools/gimpmeasuretool.c:365
+#, c-format
 msgctxt "undo-type"
 msgid "Straighten by %-3.3g°"
 msgstr "%-3.3g° द्वारा सरळ करा"
 
 #: ../app/tools/gimpmeasuretool.c:370
+#, c-format
 msgctxt "undo-type"
 msgid "Straighten Horizontally by %-3.3g°"
 msgstr "क्षैतिजपणे %-3.3g° द्वारा सरळ करा"
 
 #: ../app/tools/gimpmeasuretool.c:375
+#, c-format
 msgctxt "undo-type"
 msgid "Straighten Vertically by %-3.3g°"
 msgstr "अनुलंबपणे %-3.3g° द्वारा सरळ करा"
@@ -22863,6 +22866,7 @@ msgid "R_otate"
 msgstr "फि_रवा"
 
 #: ../app/tools/gimprotatetool.c:245
+#, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g°"
 msgstr "%-3.3g° द्वारा फिरवा"
@@ -23385,24 +23389,28 @@ msgstr "स्थानबद्ध करा"
 msgid "Lock pivot position to canvas"
 msgstr "मुख्य स्थिती चित्रफळावर स्थानबद्ध करा"
 
-#: ../app/tools/gimptransformgridtool.c:220
+#: ../app/tools/gimptransformgridtool.c:228
 #: ../app/tools/gimptransformtool.c:333
 msgid "_Transform"
 msgstr "_रूपांतर"
 
-#: ../app/tools/gimptransformgridtool.c:492
-#: ../app/tools/gimptransformgridtool.c:504
+#: ../app/tools/gimptransformgridtool.c:500
+#: ../app/tools/gimptransformgridtool.c:512
 msgid "Transform Step"
 msgstr "पायरीचे रूपांतर करा"
 
-#: ../app/tools/gimptransformgridtool.c:876
+#: ../app/tools/gimptransformgridtool.c:884
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (सुधारात्मक)"
 
-#: ../app/tools/gimptransformgridtool.c:1099
+#: ../app/tools/gimptransformgridtool.c:1107
 msgid "Re_adjust"
 msgstr "पुन्हा_समायोजित करा"
+
+#: ../app/tools/gimptransformgridtool.c:1354
+msgid "Cannot readjust the transformation"
+msgstr "परिवर्तन समायोजित करू शकत नाही"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -24200,24 +24208,24 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "n/a"
 
-#: ../app/widgets/gimpcolormapeditor.c:211
+#: ../app/widgets/gimpcolormapeditor.c:212
 msgid "Color index:"
 msgstr "रंग अनुक्रम:"
 
-#: ../app/widgets/gimpcolormapeditor.c:220
+#: ../app/widgets/gimpcolormapeditor.c:221
 msgid "HTML notation:"
 msgstr "एचटीएमएल खुणा:"
 
-#: ../app/widgets/gimpcolormapeditor.c:400
+#: ../app/widgets/gimpcolormapeditor.c:401
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "रंगमंच प्रवेश संपादित करा #%d"
 
-#: ../app/widgets/gimpcolormapeditor.c:407
+#: ../app/widgets/gimpcolormapeditor.c:408
 msgid "Edit Colormap Entry"
 msgstr "रंगमंच प्रवेश संपादित करा"
 
-#: ../app/widgets/gimpcolormapeditor.c:549
+#: ../app/widgets/gimpcolormapeditor.c:550
 msgid "Only indexed images have a colormap."
 msgstr "रंग मंच फक्त अनुक्रमित प्रतिमांमध्ये आहे."
 
@@ -26440,6 +26448,14 @@ msgstr "गोल"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "अविशद"
+
+#~ msgctxt "dialogs-action"
+#~ msgid "Palette Editor"
+#~ msgstr "रंगफळी संपादक"
+
+#~ msgctxt "dialogs-action"
+#~ msgid "Tool presets"
+#~ msgstr "साधन पूर्वनिश्चिती"
 
 #~ msgid ""
 #~ "For more information, see https://www.gimp.org/news/2018/04/27/"
