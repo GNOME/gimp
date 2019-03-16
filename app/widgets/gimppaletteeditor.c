@@ -481,6 +481,7 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
       editor->color_dialog =
         gimp_color_dialog_new (GIMP_VIEWABLE (palette),
                                data_editor->context,
+                               FALSE,
                                _("Edit Palette Color"),
                                GIMP_ICON_PALETTE,
                                _("Edit Color Palette Entry"),

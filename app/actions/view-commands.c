@@ -1011,6 +1011,7 @@ view_padding_color_cmd_callback (GtkAction *action,
             dialog =
               gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                      action_data_get_context (data),
+                                     FALSE,
                                      _("Set Canvas Padding Color"),
                                      GIMP_ICON_FONT,
                                      _("Set Custom Canvas Padding Color"),

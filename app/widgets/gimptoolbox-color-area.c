@@ -228,7 +228,7 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
   if (! color_dialog)
     {
-      color_dialog = gimp_color_dialog_new (NULL, context,
+      color_dialog = gimp_color_dialog_new (NULL, context, TRUE,
                                             NULL, NULL, NULL,
                                             GTK_WIDGET (editor),
                                             gimp_dialog_factory_get_singleton (),

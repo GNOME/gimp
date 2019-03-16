@@ -405,6 +405,7 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
       editor->color_dialog =
         gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                GIMP_IMAGE_EDITOR (editor)->context,
+                               FALSE,
                                _("Edit Colormap Entry"),
                                GIMP_ICON_COLORMAP,
                                desc,

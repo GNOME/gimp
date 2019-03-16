@@ -42,8 +42,14 @@ struct _GimpColorDialog
   GimpViewableDialog   parent_instance;
 
   gboolean             wants_updates;
+  gboolean             context_aware;
 
+  GtkWidget           *stack;
   GtkWidget           *selection;
+  GtkWidget           *colormap_selection;
+
+  GimpImage           *active_image;
+  gboolean             colormap_editing;
 };
 
 struct _GimpColorDialogClass
@@ -60,6 +66,7 @@ GType       gimp_color_dialog_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_dialog_new       (GimpViewable      *viewable,
                                          GimpContext       *context,
+                                         gboolean           context_aware,
                                          const gchar       *title,
                                          const gchar       *icon_name,
                                          const gchar       *desc,

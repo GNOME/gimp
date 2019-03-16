@@ -581,6 +581,7 @@ gimp_gradient_editor_edit_left_color (GimpGradientEditor *editor)
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
                            GIMP_DATA_EDITOR (editor)->context,
+                           TRUE,
                            _("Left Endpoint Color"),
                            GIMP_ICON_GRADIENT,
                            _("Gradient Segment's Left Endpoint Color"),
@@ -625,6 +626,7 @@ gimp_gradient_editor_edit_right_color (GimpGradientEditor *editor)
   editor->color_dialog =
     gimp_color_dialog_new (GIMP_VIEWABLE (gradient),
                            GIMP_DATA_EDITOR (editor)->context,
+                           TRUE,
                            _("Right Endpoint Color"),
                            GIMP_ICON_GRADIENT,
                            _("Gradient Segment's Right Endpoint Color"),

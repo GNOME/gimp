@@ -32,11 +32,16 @@
 #include "core/gimp.h"
 #include "core/gimp-palettes.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
+#include "core/gimpimage-colormap.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppalettemru.h"
+#include "core/gimpprojection.h"
 
+#include "gimpactiongroup.h"
 #include "gimpcolordialog.h"
 #include "gimpcolorhistory.h"
+#include "gimpcolormapselection.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
 #include "gimpwidgets-constructors.h"
@@ -55,14 +60,34 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_CONTEXT_AWARE
+};
 
 static void   gimp_color_dialog_constructed      (GObject            *object);
+static void   gimp_color_dialog_set_property     (GObject            *object,
+                                                  guint               property_id,
+                                                  const GValue       *value,
+                                                  GParamSpec         *pspec);
+static void   gimp_color_dialog_get_property     (GObject            *object,
+                                                  guint               property_id,
+                                                  GValue             *value,
+                                                  GParamSpec         *pspec);
 
 static void   gimp_color_dialog_response         (GtkDialog          *dialog,
                                                   gint                response_id);
 
 static void   gimp_color_dialog_help_func        (const gchar        *help_id,
                                                   gpointer            help_data);
+
+static void   gimp_color_dialog_colormap_clicked (GimpColorDialog    *dialog,
+                                                  GimpPaletteEntry   *entry,
+                                                  GdkModifierType     state);
+static void
+        gimp_color_dialog_colormap_edit_activate (GimpColorDialog    *dialog);
+
 static void   gimp_color_dialog_color_changed    (GimpColorSelection *selection,
                                                   GimpColorDialog    *dialog);
 
@@ -72,6 +97,15 @@ static void   gimp_color_history_add_clicked     (GtkWidget          *widget,
 static void   gimp_color_dialog_history_selected (GimpColorHistory   *history,
                                                   const GimpRGB      *rgb,
                                                   GimpColorDialog    *dialog);
+
+static void   gimp_color_dialog_context_notify   (GimpColorDialog    *dialog,
+                                                  const GParamSpec   *pspec);
+static void   gimp_color_dialog_image_changed    (GimpContext        *context,
+                                                  GimpImage          *image,
+                                                  GimpColorDialog    *dialog);
+static void   gimp_color_dialog_update           (GimpColorDialog    *dialog);
+static void   gimp_color_dialog_show             (GimpColorDialog    *dialog);
+static void   gimp_color_dialog_hide             (GimpColorDialog    *dialog);
 
 
 G_DEFINE_TYPE (GimpColorDialog, gimp_color_dialog, GIMP_TYPE_VIEWABLE_DIALOG)
@@ -87,9 +121,11 @@ gimp_color_dialog_class_init (GimpColorDialogClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
-  object_class->constructed = gimp_color_dialog_constructed;
+  object_class->constructed  = gimp_color_dialog_constructed;
+  object_class->set_property = gimp_color_dialog_set_property;
+  object_class->get_property = gimp_color_dialog_get_property;
 
-  dialog_class->response    = gimp_color_dialog_response;
+  dialog_class->response     = gimp_color_dialog_response;
 
   color_dialog_signals[UPDATE] =
     g_signal_new ("update",
@@ -101,24 +137,17 @@ gimp_color_dialog_class_init (GimpColorDialogClass *klass)
                   G_TYPE_NONE, 2,
                   GIMP_TYPE_RGB,
                   GIMP_TYPE_COLOR_DIALOG_STATE);
+
+  g_object_class_install_property (object_class, PROP_CONTEXT_AWARE,
+                                   g_param_spec_boolean ("context-aware",
+                                                        NULL, NULL, FALSE,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_color_dialog_init (GimpColorDialog *dialog)
 {
-}
-
-static void
-gimp_color_dialog_constructed (GObject *object)
-{
-  GimpColorDialog    *dialog          = GIMP_COLOR_DIALOG (object);
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (object);
-  GtkWidget          *hbox;
-  GtkWidget          *history;
-  GtkWidget          *button;
-
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
   gimp_dialog_add_buttons (GIMP_DIALOG (dialog),
 
                            _("_Reset"),  RESPONSE_RESET,
@@ -133,10 +162,111 @@ gimp_color_dialog_constructed (GObject *object)
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
+  dialog->stack = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      dialog->stack, TRUE, TRUE, 0);
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (dialog->stack), FALSE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (dialog->stack), FALSE);
+  gtk_widget_show (dialog->stack);
+}
+
+static void
+gimp_color_dialog_constructed (GObject *object)
+{
+  GimpColorDialog    *dialog          = GIMP_COLOR_DIALOG (object);
+  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (object);
+  GtkWidget          *hbox;
+  GtkWidget          *history;
+  GtkWidget          *arrow;
+  GtkWidget          *button;
+  GList              *list;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  /** Tab: colormap selection. **/
+  dialog->colormap_selection = gimp_colormap_selection_new (viewable_dialog->context);
+  gtk_notebook_append_page (GTK_NOTEBOOK (dialog->stack),
+                            dialog->colormap_selection, NULL);
+  g_signal_connect_swapped (dialog->colormap_selection, "color-clicked",
+                            G_CALLBACK (gimp_color_dialog_colormap_clicked),
+                            dialog);
+  g_signal_connect_swapped (dialog->colormap_selection, "color-activated",
+                            G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
+                            dialog);
+  gtk_widget_show (dialog->colormap_selection);
+
+  list = gimp_action_groups_from_name ("colormap");
+  if (list)
+    {
+      GtkWidget       *image;
+      GimpActionGroup *group;
+      GtkAction       *action;
+      const gchar     *icon_name;
+      const gchar     *help_id;
+      gchar           *tooltip;
+
+      group = list->data;
+
+      /* Edit color */
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                            "colormap-edit-color");
+
+      button = gimp_button_new ();
+      gtk_button_set_relief (GTK_BUTTON (button), FALSE);
+
+      icon_name = gtk_action_get_icon_name (action);
+      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_LARGE_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+
+      tooltip = g_strdup (gtk_action_get_tooltip (action));
+      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+      gimp_help_set_help_data_with_markup (button, tooltip, help_id);
+      g_free (tooltip);
+
+      /* Note: I only use the "colormap-edit-color" action for icon, and
+       * tooltip, but don't actually run it because it would create yet
+       * another dialog. Instead we switch the stack view.
+       */
+      g_signal_connect_swapped (button, "clicked",
+                                G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
+                                dialog);
+      gtk_widget_show (button);
+      gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
+                          FALSE, FALSE, 0);
+
+      /* Add Color */
+      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                            "colormap-add-color-from-fg");
+
+      button = gimp_button_new ();
+      gtk_button_set_relief (GTK_BUTTON (button), FALSE);
+
+      icon_name = gtk_action_get_icon_name (action);
+      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_LARGE_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+
+      tooltip = g_strdup (gtk_action_get_tooltip (action));
+      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+      gimp_help_set_help_data_with_markup (button, tooltip, help_id);
+      g_free (tooltip);
+
+      gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
+      gtk_widget_show (button);
+      gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
+                          FALSE, FALSE, 0);
+    }
+  else
+    {
+      g_warning ("%s: 'colormap' action group not found", G_STRFUNC);
+    }
+
+  /** Tab: color selection. **/
   dialog->selection = gimp_color_selection_new ();
   gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      dialog->selection, TRUE, TRUE, 0);
+  gtk_notebook_append_page (GTK_NOTEBOOK (dialog->stack),
+                            dialog->selection, NULL);
   gtk_widget_show (dialog->selection);
 
   g_signal_connect (dialog->selection, "color-changed",
@@ -169,14 +299,72 @@ gimp_color_dialog_constructed (GObject *object)
   g_signal_connect (history, "color-selected",
                     G_CALLBACK (gimp_color_dialog_history_selected),
                     dialog);
+
+  g_signal_connect (dialog, "show",
+                    G_CALLBACK (gimp_color_dialog_show),
+                    NULL);
+  g_signal_connect (dialog, "hide",
+                    G_CALLBACK (gimp_color_dialog_hide),
+                    NULL);
+  gimp_color_dialog_show (dialog);
+}
+
+static void
+gimp_color_dialog_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpColorDialog *dialog = GIMP_COLOR_DIALOG (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT_AWARE:
+      dialog->context_aware = g_value_get_boolean (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_dialog_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpColorDialog *dialog = GIMP_COLOR_DIALOG (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTEXT_AWARE:
+      g_value_set_boolean (value, dialog->context_aware);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
 gimp_color_dialog_response (GtkDialog *gtk_dialog,
                             gint       response_id)
 {
-  GimpColorDialog *dialog = GIMP_COLOR_DIALOG (gtk_dialog);
-  GimpRGB          color;
+  GimpColorDialog       *dialog          = GIMP_COLOR_DIALOG (gtk_dialog);
+  GimpViewableDialog    *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+  GimpImage             *image           = NULL;
+  GimpColormapSelection *colormap_selection;
+  gint                   col_index;
+  GimpRGB                color;
+
+  colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
+  col_index = gimp_colormap_selection_get_index (colormap_selection, NULL);
+
+  if (dialog->colormap_editing && viewable_dialog->context)
+    image = gimp_context_get_image (viewable_dialog->context);
 
   switch (response_id)
     {
@@ -188,16 +376,53 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
       gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection),
                                       &color);
 
-      g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
-                     &color, GIMP_COLOR_DIALOG_OK);
+      if (dialog->colormap_editing && image)
+        {
+          GimpRGB old_color;
+
+          dialog->colormap_editing = FALSE;
+
+          /* Restore old color for undo */
+          gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection), &old_color);
+          gimp_image_set_colormap_entry (image, col_index, &old_color, FALSE);
+          gimp_image_set_colormap_entry (image, col_index, &color, TRUE);
+          gimp_image_flush (image);
+
+          gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
+                                         gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
+                                                                dialog->colormap_selection));
+          g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
+                         &color, GIMP_COLOR_DIALOG_UPDATE);
+        }
+      else
+        {
+          g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
+                         &color, GIMP_COLOR_DIALOG_OK);
+        }
       break;
 
     default:
       gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection),
                                           &color);
 
-      g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
-                     &color, GIMP_COLOR_DIALOG_CANCEL);
+      if (dialog->colormap_editing && image)
+        {
+          dialog->colormap_editing = FALSE;
+
+          gimp_image_set_colormap_entry (image, col_index, &color, FALSE);
+          gimp_projection_flush (gimp_image_get_projection (image));
+
+          gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
+                                         gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
+                                                                dialog->colormap_selection));
+          g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
+                         &color, GIMP_COLOR_DIALOG_UPDATE);
+        }
+      else
+        {
+          g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
+                         &color, GIMP_COLOR_DIALOG_CANCEL);
+        }
       break;
     }
 }
@@ -208,6 +433,7 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
 GtkWidget *
 gimp_color_dialog_new (GimpViewable      *viewable,
                        GimpContext       *context,
+                       gboolean           context_aware,
                        const gchar       *title,
                        const gchar       *icon_name,
                        const gchar       *desc,
@@ -245,6 +471,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                          "icon-name",      icon_name,
                          "description",    desc,
                          "context",        context,
+                         "context-aware",  context_aware,
                          "parent",         gtk_widget_get_toplevel (parent),
                          "use-header-bar", use_header_bar,
                          NULL);
@@ -347,15 +574,83 @@ gimp_color_dialog_help_func (const gchar *help_id,
 }
 
 static void
+gimp_color_dialog_colormap_clicked (GimpColorDialog  *dialog,
+                                    GimpPaletteEntry *entry,
+                                    GdkModifierType   state)
+{
+  gimp_color_dialog_set_color (dialog, &entry->color);
+
+  if (dialog->wants_updates)
+    {
+      g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
+                     &entry->color, GIMP_COLOR_DIALOG_UPDATE);
+    }
+}
+
+static void
+gimp_color_dialog_colormap_edit_activate (GimpColorDialog *dialog)
+{
+  GimpColormapSelection *colormap_selection;
+  GimpRGB                color;
+  gint                   col_index;
+
+  dialog->colormap_editing = TRUE;
+
+  colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
+  col_index = gimp_colormap_selection_get_index (colormap_selection, NULL);
+  gimp_image_get_colormap_entry (dialog->active_image, col_index, &color);
+  gimp_color_dialog_set_color (dialog, &color);
+
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
+                                 gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
+                                                        dialog->selection));
+}
+
+static void
 gimp_color_dialog_color_changed (GimpColorSelection *selection,
                                  GimpColorDialog    *dialog)
 {
+  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+  GimpRGB             color;
+
+  gimp_color_selection_get_color (selection, &color);
+
+  if (dialog->colormap_editing && viewable_dialog->context)
+    {
+      GimpImage *image;
+
+      image = gimp_context_get_image (viewable_dialog->context);
+      if (image)
+        {
+          GimpColormapSelection *colormap_selection;
+          gboolean               push_undo = FALSE;
+          gint                   col_index;
+
+          colormap_selection = GIMP_COLORMAP_SELECTION (dialog->colormap_selection);
+          col_index = gimp_colormap_selection_get_index (colormap_selection, NULL);
+          if (push_undo)
+            {
+              GimpRGB old_color;
+
+              gimp_color_selection_get_old_color (GIMP_COLOR_SELECTION (dialog->selection), &old_color);
+
+              /* Restore old color for undo */
+              gimp_image_set_colormap_entry (image, col_index, &old_color,
+                                             FALSE);
+            }
+
+          gimp_image_set_colormap_entry (image, col_index, &color,
+                                         push_undo);
+
+          if (push_undo)
+            gimp_image_flush (image);
+          else
+            gimp_projection_flush (gimp_image_get_projection (image));
+        }
+    }
+
   if (dialog->wants_updates)
     {
-      GimpRGB color;
-
-      gimp_color_selection_get_color (selection, &color);
-
       g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
                      &color, GIMP_COLOR_DIALOG_UPDATE);
     }
@@ -389,4 +684,92 @@ gimp_color_dialog_history_selected (GimpColorHistory *history,
 {
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
                                   rgb);
+}
+
+/* Context-related callbacks */
+
+static void
+gimp_color_dialog_context_notify (GimpColorDialog  *dialog,
+                                  const GParamSpec *pspec)
+{
+  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+  GimpImage          *image;
+
+  if (viewable_dialog->context)
+    {
+      image = gimp_context_get_image (viewable_dialog->context);
+
+      g_signal_connect (viewable_dialog->context, "image-changed",
+                        G_CALLBACK (gimp_color_dialog_image_changed),
+                        dialog);
+
+      gimp_color_dialog_image_changed (viewable_dialog->context,
+                                       image, dialog);
+    }
+}
+
+static void
+gimp_color_dialog_image_changed (GimpContext     *context,
+                                 GimpImage       *image,
+                                 GimpColorDialog *dialog)
+{
+  if (dialog->active_image != image)
+    {
+      if (dialog->active_image)
+        {
+          g_signal_handlers_disconnect_by_func (dialog->active_image,
+                                                G_CALLBACK (gimp_color_dialog_update),
+                                                dialog);
+        }
+      dialog->active_image = image;
+      if (image)
+        {
+          g_signal_connect_swapped (image, "notify::base-type",
+                                    G_CALLBACK (gimp_color_dialog_update),
+                                    dialog);
+        }
+      gimp_color_dialog_update (dialog);
+    }
+}
+
+static void
+gimp_color_dialog_update (GimpColorDialog *dialog)
+{
+  if (dialog->active_image &&
+      gimp_image_get_base_type (dialog->active_image) == GIMP_INDEXED)
+    gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
+                                   gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
+                                                          dialog->colormap_selection));
+  else
+    gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
+                                   gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
+                                                          dialog->selection));
+}
+
+static void
+gimp_color_dialog_show (GimpColorDialog *dialog)
+{
+  dialog->colormap_editing = FALSE;
+
+  if (dialog->context_aware)
+    {
+      g_signal_connect (dialog, "notify::context",
+                        G_CALLBACK (gimp_color_dialog_context_notify),
+                        NULL);
+      gimp_color_dialog_update (dialog);
+    }
+  else
+    {
+      gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
+                                     gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
+                                                            dialog->selection));
+    }
+}
+
+static void
+gimp_color_dialog_hide (GimpColorDialog *dialog)
+{
+  g_signal_handlers_disconnect_by_func (dialog,
+                                        G_CALLBACK (gimp_color_dialog_context_notify),
+                                        NULL);
 }

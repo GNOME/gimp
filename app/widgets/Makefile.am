@@ -84,6 +84,8 @@ libappwidgets_a_sources = \
 	gimpcolorhistory.h		\
 	gimpcolormapeditor.c		\
 	gimpcolormapeditor.h		\
+	gimpcolormapselection.c		\
+	gimpcolormapselection.h		\
 	gimpcolorpanel.c		\
 	gimpcolorpanel.h		\
 	gimpcolorselectorpalette.c	\

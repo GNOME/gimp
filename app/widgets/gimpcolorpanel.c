@@ -187,7 +187,7 @@ gimp_color_panel_clicked (GtkButton *button)
       GimpColorButton *color_button = GIMP_COLOR_BUTTON (button);
 
       panel->color_dialog =
-        gimp_color_dialog_new (NULL, panel->context,
+        gimp_color_dialog_new (NULL, panel->context, TRUE,
                                gimp_color_button_get_title (color_button),
                                NULL, NULL,
                                GTK_WIDGET (button),
