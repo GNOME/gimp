@@ -63,10 +63,11 @@ enum
 enum
 {
   PROP_0,
-  PROP_CONTEXT_AWARE
+  PROP_USER_CONTEXT_AWARE
 };
 
 static void   gimp_color_dialog_constructed      (GObject            *object);
+static void   gimp_color_dialog_finalize         (GObject            *object);
 static void   gimp_color_dialog_set_property     (GObject            *object,
                                                   guint               property_id,
                                                   const GValue       *value,
@@ -98,8 +99,6 @@ static void   gimp_color_dialog_history_selected (GimpColorHistory   *history,
                                                   const GimpRGB      *rgb,
                                                   GimpColorDialog    *dialog);
 
-static void   gimp_color_dialog_context_notify   (GimpColorDialog    *dialog,
-                                                  const GParamSpec   *pspec);
 static void   gimp_color_dialog_image_changed    (GimpContext        *context,
                                                   GimpImage          *image,
                                                   GimpColorDialog    *dialog);
@@ -122,6 +121,7 @@ gimp_color_dialog_class_init (GimpColorDialogClass *klass)
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
   object_class->constructed  = gimp_color_dialog_constructed;
+  object_class->finalize     = gimp_color_dialog_finalize;
   object_class->set_property = gimp_color_dialog_set_property;
   object_class->get_property = gimp_color_dialog_get_property;
 
@@ -138,8 +138,8 @@ gimp_color_dialog_class_init (GimpColorDialogClass *klass)
                   GIMP_TYPE_RGB,
                   GIMP_TYPE_COLOR_DIALOG_STATE);
 
-  g_object_class_install_property (object_class, PROP_CONTEXT_AWARE,
-                                   g_param_spec_boolean ("context-aware",
+  g_object_class_install_property (object_class, PROP_USER_CONTEXT_AWARE,
+                                   g_param_spec_boolean ("user-context-aware",
                                                         NULL, NULL, FALSE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
@@ -184,7 +184,7 @@ gimp_color_dialog_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /** Tab: colormap selection. **/
-  dialog->colormap_selection = gimp_colormap_selection_new (viewable_dialog->context);
+  dialog->colormap_selection = gimp_colormap_selection_new (viewable_dialog->context->gimp->user_context);
   gtk_notebook_append_page (GTK_NOTEBOOK (dialog->stack),
                             dialog->colormap_selection, NULL);
   g_signal_connect_swapped (dialog->colormap_selection, "color-clicked",
@@ -310,6 +310,24 @@ gimp_color_dialog_constructed (GObject *object)
 }
 
 static void
+gimp_color_dialog_finalize (GObject *object)
+{
+  GimpColorDialog    *dialog          = GIMP_COLOR_DIALOG (object);
+  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+
+  if (dialog->user_context_aware && viewable_dialog->context)
+    {
+      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+
+      g_signal_handlers_disconnect_by_func (user_context,
+                                            G_CALLBACK (gimp_color_dialog_image_changed),
+                                            dialog);
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_color_dialog_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
@@ -319,8 +337,8 @@ gimp_color_dialog_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_CONTEXT_AWARE:
-      dialog->context_aware = g_value_get_boolean (value);
+    case PROP_USER_CONTEXT_AWARE:
+      dialog->user_context_aware = g_value_get_boolean (value);
       break;
 
     default:
@@ -339,8 +357,8 @@ gimp_color_dialog_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_CONTEXT_AWARE:
-      g_value_set_boolean (value, dialog->context_aware);
+    case PROP_USER_CONTEXT_AWARE:
+      g_value_set_boolean (value, dialog->user_context_aware);
       break;
 
     default:
@@ -433,7 +451,7 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
 GtkWidget *
 gimp_color_dialog_new (GimpViewable      *viewable,
                        GimpContext       *context,
-                       gboolean           context_aware,
+                       gboolean           user_context_aware,
                        const gchar       *title,
                        const gchar       *icon_name,
                        const gchar       *desc,
@@ -464,16 +482,16 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                 NULL);
 
   dialog = g_object_new (GIMP_TYPE_COLOR_DIALOG,
-                         "title",          title,
-                         "role",           role,
-                         "help-func",      gimp_color_dialog_help_func,
-                         "help-id",        GIMP_HELP_COLOR_DIALOG,
-                         "icon-name",      icon_name,
-                         "description",    desc,
-                         "context",        context,
-                         "context-aware",  context_aware,
-                         "parent",         gtk_widget_get_toplevel (parent),
-                         "use-header-bar", use_header_bar,
+                         "title",              title,
+                         "role",               role,
+                         "help-func",          gimp_color_dialog_help_func,
+                         "help-id",            GIMP_HELP_COLOR_DIALOG,
+                         "icon-name",          icon_name,
+                         "description",        desc,
+                         "context",            context,
+                         "user-context-aware", user_context_aware,
+                         "parent",             gtk_widget_get_toplevel (parent),
+                         "use-header-bar",     use_header_bar,
                          NULL);
 
   if (viewable)
@@ -689,26 +707,6 @@ gimp_color_dialog_history_selected (GimpColorHistory *history,
 /* Context-related callbacks */
 
 static void
-gimp_color_dialog_context_notify (GimpColorDialog  *dialog,
-                                  const GParamSpec *pspec)
-{
-  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
-  GimpImage          *image;
-
-  if (viewable_dialog->context)
-    {
-      image = gimp_context_get_image (viewable_dialog->context);
-
-      g_signal_connect (viewable_dialog->context, "image-changed",
-                        G_CALLBACK (gimp_color_dialog_image_changed),
-                        dialog);
-
-      gimp_color_dialog_image_changed (viewable_dialog->context,
-                                       image, dialog);
-    }
-}
-
-static void
 gimp_color_dialog_image_changed (GimpContext     *context,
                                  GimpImage       *image,
                                  GimpColorDialog *dialog)
@@ -749,13 +747,21 @@ gimp_color_dialog_update (GimpColorDialog *dialog)
 static void
 gimp_color_dialog_show (GimpColorDialog *dialog)
 {
+  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+
   dialog->colormap_editing = FALSE;
 
-  if (dialog->context_aware)
+  if (dialog->user_context_aware && viewable_dialog->context)
     {
-      g_signal_connect (dialog, "notify::context",
-                        G_CALLBACK (gimp_color_dialog_context_notify),
-                        NULL);
+      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+      GimpImage   *image        = gimp_context_get_image (user_context);
+
+      g_signal_connect (user_context, "image-changed",
+                        G_CALLBACK (gimp_color_dialog_image_changed),
+                        dialog);
+
+      gimp_color_dialog_image_changed (viewable_dialog->context,
+                                       image, dialog);
       gimp_color_dialog_update (dialog);
     }
   else
@@ -769,7 +775,13 @@ gimp_color_dialog_show (GimpColorDialog *dialog)
 static void
 gimp_color_dialog_hide (GimpColorDialog *dialog)
 {
-  g_signal_handlers_disconnect_by_func (dialog,
-                                        G_CALLBACK (gimp_color_dialog_context_notify),
-                                        NULL);
+  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+
+  if (dialog->user_context_aware && viewable_dialog->context)
+    {
+      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+      g_signal_handlers_disconnect_by_func (user_context,
+                                            G_CALLBACK (gimp_color_dialog_image_changed),
+                                            dialog);
+    }
 }

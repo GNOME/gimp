@@ -42,7 +42,7 @@ struct _GimpColorDialog
   GimpViewableDialog   parent_instance;
 
   gboolean             wants_updates;
-  gboolean             context_aware;
+  gboolean             user_context_aware;
 
   GtkWidget           *stack;
   GtkWidget           *selection;
