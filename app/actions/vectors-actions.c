@@ -116,7 +116,7 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_LOWER_TO_BOTTOM },
 
   { "vectors-fill", GIMP_ICON_TOOL_BUCKET_FILL,
-    NC_("vectors-action", "Fill Path..."), NULL,
+    NC_("vectors-action", "Fill Pat_h..."), NULL,
     NC_("vectors-action", "Fill the path"),
     G_CALLBACK (vectors_fill_cmd_callback),
     GIMP_HELP_PATH_FILL },
