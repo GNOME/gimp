@@ -36,15 +36,7 @@ struct _GimpColormapEditor
 {
   GimpImageEditor  parent_instance;
 
-  GtkWidget       *view;
-  gint             col_index;
-
-  PangoLayout     *layout;
-
-  GtkAdjustment   *index_adjustment;
-  GtkWidget       *index_spinbutton;
-  GtkWidget       *color_entry;
-
+  GtkWidget       *selection;
   GtkWidget       *color_dialog;
 };
 
