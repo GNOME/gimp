@@ -124,7 +124,7 @@ query (void)
                           "Hartmut Kuhse, Michael Natterer, Ben Touchette",
                           "Hartmut Kuhse, Michael Natterer, Ben Touchette",
                           "2013, 2017",
-                          N_("View Metadata"),
+                          N_("_View Metadata"),
                           "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (metadata_args), 0,

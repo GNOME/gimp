@@ -91,7 +91,7 @@ static const GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_OPEN_LOCATION },
 
   { "file-create-template", NULL,
-    NC_("file-action", "Create Template..."), NULL,
+    NC_("file-action", "Create Temp_late..."), NULL,
     NC_("file-action", "Create a new template from this image"),
     G_CALLBACK (file_create_template_cmd_callback),
     GIMP_HELP_FILE_CREATE_TEMPLATE },
@@ -103,7 +103,7 @@ static const GimpActionEntry file_actions[] =
     GIMP_HELP_FILE_REVERT },
 
   { "file-close-all", GIMP_ICON_CLOSE_ALL,
-    NC_("file-action", "Close all"), "<primary><shift>W",
+    NC_("file-action", "C_lose All"), "<primary><shift>W",
     NC_("file-action", "Close all opened images"),
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
@@ -156,7 +156,7 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_SAVE },
 
   { "file-export", NULL,
-    NC_("file-action", "Export..."), "<primary>E",
+    NC_("file-action", "E_xport..."), "<primary>E",
     NC_("file-action", "Export the image"),
     GIMP_SAVE_MODE_EXPORT, FALSE,
     GIMP_HELP_FILE_EXPORT },
@@ -168,7 +168,7 @@ static const GimpEnumActionEntry file_save_actions[] =
     GIMP_HELP_FILE_OVERWRITE },
 
   { "file-export-as", NULL,
-    NC_("file-action", "Export As..."), "<primary><shift>E",
+    NC_("file-action", "E_xport As..."), "<primary><shift>E",
     NC_("file-action", "Export the image to various file formats such as PNG or JPEG"),
     GIMP_SAVE_MODE_EXPORT_AS, FALSE,
     GIMP_HELP_FILE_EXPORT_AS }
@@ -330,7 +330,7 @@ file_actions_update (GimpActionGroup *group,
     {
       gimp_action_group_set_action_label (group,
                                           "file-export",
-                                          C_("file-action", "Export..."));
+                                          C_("file-action", "E_xport..."));
     }
 
   /*  needed for the empty display  */

@@ -116,7 +116,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_UNDO_DIALOG },
 
   { "dialogs-cursor", GIMP_ICON_CURSOR,
-    NC_("dialogs-action", "Pointer"), NULL,
+    NC_("dialogs-action", "_Pointer"), NULL,
     NC_("dialogs-action", "Open the pointer information dialog"),
     "gimp-cursor-view",
     GIMP_HELP_POINTER_INFO_DIALOG },
@@ -146,7 +146,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_BRUSH_EDIT },
 
   { "dialogs-dynamics", GIMP_ICON_DYNAMICS,
-    NC_("dialogs-action", "Paint Dynamics"), NULL,
+    NC_("dialogs-action", "Paint _Dynamics"), NULL,
     NC_("dialogs-action", "Open paint dynamics dialog"),
     "gimp-dynamics-list|gimp-dynamics-grid",
     GIMP_HELP_DYNAMICS_DIALOG },
@@ -354,12 +354,12 @@ dialogs_actions_update (GimpActionGroup *group,
 
   if (dialogs_actions_toolbox_exists (gimp))
     {
-      toolbox_label   = _("Toolbox");
+      toolbox_label   = _("_Toolbox");
       toolbox_tooltip = _("Raise the toolbox");
     }
   else
     {
-      toolbox_label   = _("New Toolbox");
+      toolbox_label   = _("New _Toolbox");
       toolbox_tooltip = _("Create a new toolbox");
     }
 

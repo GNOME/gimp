@@ -405,7 +405,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Edit metadata (IPTC, EXIF, XMP)"),
+                          N_(" (IPTC, EXIF, XMP)"),
                           "Edit metadata information attached to the "
                           "current image. Some or all of this metadata "
                           "will be saved in the file, depending on the output "
@@ -413,7 +413,7 @@ query (void)
                           "Ben Touchette",
                           "Ben Touchette",
                           "2017",
-                          N_("Edit Metadata"),
+                          N_("_Edit Metadata"),
                           "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (metadata_args), 0,
