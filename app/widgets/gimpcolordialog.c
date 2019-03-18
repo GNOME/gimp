@@ -702,6 +702,8 @@ gimp_color_dialog_image_changed (GimpContext     *context,
     {
       if (dialog->active_image)
         {
+          g_object_remove_weak_pointer (G_OBJECT (dialog->active_image),
+                                        (gpointer) &dialog->active_image);
           g_signal_handlers_disconnect_by_func (dialog->active_image,
                                                 G_CALLBACK (gimp_color_dialog_update),
                                                 dialog);
@@ -709,6 +711,8 @@ gimp_color_dialog_image_changed (GimpContext     *context,
       dialog->active_image = image;
       if (image)
         {
+          g_object_add_weak_pointer (G_OBJECT (dialog->active_image),
+                                     (gpointer) &dialog->active_image);
           g_signal_connect_swapped (image, "notify::base-type",
                                     G_CALLBACK (gimp_color_dialog_update),
                                     dialog);
