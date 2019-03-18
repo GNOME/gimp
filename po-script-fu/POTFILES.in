@@ -51,7 +51,6 @@ plug-ins/script-fu/scripts/select-to-image.scm
 plug-ins/script-fu/scripts/select-to-pattern.scm
 plug-ins/script-fu/scripts/slide.scm
 plug-ins/script-fu/scripts/spinning-globe.scm
-plug-ins/script-fu/scripts/spyrogimp.scm
 plug-ins/script-fu/scripts/test-sphere.scm
 plug-ins/script-fu/scripts/tileblur.scm
 plug-ins/script-fu/scripts/unsharp-mask.scm
