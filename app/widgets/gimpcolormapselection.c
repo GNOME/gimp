@@ -319,6 +319,31 @@ gimp_colormap_selection_finalize (GObject *object)
 {
   GimpColormapSelection *selection = GIMP_COLORMAP_SELECTION (object);
 
+  if (selection->context)
+    {
+      g_signal_handlers_disconnect_by_func (selection->context,
+                                            gtk_widget_queue_draw,
+                                            selection);
+      g_signal_handlers_disconnect_by_func (selection->context,
+                                            G_CALLBACK (gimp_colormap_selection_image_changed),
+                                            selection);
+    }
+  if (selection->active_image)
+    {
+      g_signal_handlers_disconnect_by_func (selection->active_image,
+                                            G_CALLBACK (gtk_widget_queue_draw),
+                                            selection);
+      g_signal_handlers_disconnect_by_func (selection->active_image,
+                                            G_CALLBACK (gimp_colormap_selection_set_palette),
+                                            selection);
+    }
+  if (selection->active_palette)
+    {
+      g_signal_handlers_disconnect_by_func (selection->active_palette,
+                                            G_CALLBACK (gtk_widget_queue_draw),
+                                            selection);
+    }
+
   g_clear_object (&selection->layout);
   g_clear_object (&selection->context);
 
@@ -728,23 +753,25 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
       g_signal_connect_swapped (image, "mode-changed",
                                 G_CALLBACK (gimp_colormap_selection_set_palette),
                                 selection);
-
-      if (HAVE_COLORMAP (image))
-        gimp_colormap_selection_set_palette (selection);
     }
+  gimp_colormap_selection_set_palette (selection);
   gtk_widget_queue_draw (GTK_WIDGET (selection));
 }
 
 static void
 gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
 {
-  GimpPalette *palette;
+  GimpPalette *palette = NULL;
 
-  palette = gimp_image_get_colormap_palette (selection->active_image);
+  if (selection->active_image)
+    palette = gimp_image_get_colormap_palette (selection->active_image);
+
   if (palette != selection->active_palette)
     {
       if (selection->active_palette)
         {
+          g_object_remove_weak_pointer (G_OBJECT (selection->active_palette),
+                                        (gpointer) &selection->active_palette);
           g_signal_handlers_disconnect_by_func (selection->active_palette,
                                                 G_CALLBACK (gtk_widget_queue_draw),
                                                 selection);
@@ -754,6 +781,8 @@ gimp_colormap_selection_set_palette (GimpColormapSelection *selection)
       selection->active_palette = palette;
       if (palette)
         {
+          g_object_add_weak_pointer (G_OBJECT (selection->active_palette),
+                                     (gpointer) &selection->active_palette);
           g_signal_connect_swapped (palette, "dirty",
                                     G_CALLBACK (gtk_widget_queue_draw),
                                     selection);
