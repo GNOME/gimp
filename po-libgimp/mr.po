@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-07-29 18:04+0000\n"
+"POT-Creation-Date: 2019-03-16 10:08+0000\n"
 "PO-Revision-Date: 2018-07-07 14:57+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -20,22 +20,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1264
+#: ../libgimp/gimp.c:1267
 msgid "success"
 msgstr "यशस्वी"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1268
+#: ../libgimp/gimp.c:1271
 msgid "execution error"
 msgstr "अंमलबजावणीमध्ये त्रुटी"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1272
+#: ../libgimp/gimp.c:1275
 msgid "calling error"
 msgstr "संवाद साधण्यात त्रुटी "
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1276
+#: ../libgimp/gimp.c:1279
 msgid "cancelled"
 msgstr "रद्द "
 
@@ -128,7 +128,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:342
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "%s जोडणी केवळ बिंदू आराखडा [बिटमॅप] (दोन रंग) अनुक्रमित [इंडेक्सड्] प्रतिमा हाताळू शकते"
+msgstr ""
+"%s जोडणी केवळ बिंदू आराखडा [बिटमॅप] (दोन रंग) अनुक्रमित [इंडेक्सड्] प्रतिमा हाताळू शकते"
 
 #: ../libgimp/gimpexport.c:343
 msgid ""
@@ -170,9 +171,9 @@ msgstr "साठविल्याची खात्री करा"
 #: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
-#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:492
+#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
+#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
+#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
 msgid "_Cancel"
 msgstr "_रद्द"
 
@@ -235,44 +236,44 @@ msgstr "टंक निवड"
 msgid "Gradient Selection"
 msgstr "रंगछटा निवड"
 
-#: ../libgimp/gimpimagemetadata.c:493
+#: ../libgimp/gimpimagemetadata.c:514
 msgid "GIMP 2.10"
 msgstr "गिम्प २.१०"
 
-#: ../libgimp/gimpimagemetadata.c:686
+#: ../libgimp/gimpimagemetadata.c:703
 msgid "Background"
 msgstr "पृष्ठभाग"
 
-#: ../libgimp/gimpimagemetadata.c:875
+#: ../libgimp/gimpimagemetadata.c:892
 #, c-format
 msgid "Rotate %s?"
-msgstr "फिरवा %s?"
+msgstr "कोनात फिरवा %s?"
 
-#: ../libgimp/gimpimagemetadata.c:881
+#: ../libgimp/gimpimagemetadata.c:898
 msgid "_Keep Original"
 msgstr "_मूळ प्रत ठेवा"
 
-#: ../libgimp/gimpimagemetadata.c:882 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
-msgstr "_फिरवा"
+msgstr "_कोनात फिरवा"
 
-#: ../libgimp/gimpimagemetadata.c:923
+#: ../libgimp/gimpimagemetadata.c:940
 msgid "Original"
 msgstr "मूळ"
 
-#: ../libgimp/gimpimagemetadata.c:939
+#: ../libgimp/gimpimagemetadata.c:956
 msgid "Rotated"
-msgstr "फिरवलेल्या"
+msgstr "कोनात फिरवलेल्या"
 
-#: ../libgimp/gimpimagemetadata.c:957
+#: ../libgimp/gimpimagemetadata.c:974
 msgid "This image contains Exif orientation metadata."
 msgstr "या प्रतिमेत Exif ओरिएन्टेंशनची अधिक माहिती आहे."
 
-#: ../libgimp/gimpimagemetadata.c:975
+#: ../libgimp/gimpimagemetadata.c:992
 msgid "Would you like to rotate the image?"
-msgstr "आपण प्रतिमा फिरवू इच्छिता का?"
+msgstr "आपण प्रतिमा कोनात फिरवू इच्छिता का?"
 
-#: ../libgimp/gimpimagemetadata.c:987
+#: ../libgimp/gimpimagemetadata.c:1004
 msgid "_Don't ask me again"
 msgstr "पूनश्च विचारू _नका"
 
@@ -1269,19 +1270,16 @@ msgid "Blue"
 msgstr "निळा"
 
 #: ../libgimpbase/gimpbaseenums.c:1654
-#| msgid "HSV Hue"
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "एचएसव्ही गडद रंगछटा"
 
 #: ../libgimpbase/gimpbaseenums.c:1655
-#| msgid "HSV Saturation"
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "एचएसव्ही संपृक्तता [सॅच्यूरेशन]"
 
 #: ../libgimpbase/gimpbaseenums.c:1656
-#| msgid "HSV Value"
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "एचएसव्ही मूल्य"
@@ -1292,19 +1290,16 @@ msgid "Alpha"
 msgstr "अल्फा"
 
 #: ../libgimpbase/gimpbaseenums.c:1658
-#| msgid "LCH Lightness"
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "LCh फिकट [लाईटनेस]"
 
 #: ../libgimpbase/gimpbaseenums.c:1659
-#| msgid "LCH Chroma"
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "LCh क्रोमा"
 
 #: ../libgimpbase/gimpbaseenums.c:1660
-#| msgid "LCH Hue"
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "LCh गडद रंगछटा"
@@ -1444,68 +1439,67 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "दृश्यासह [आस्पेक्ट सह] कापा"
 
-#: ../libgimpbase/gimpmetadata.c:846
+#: ../libgimpbase/gimpmetadata.c:878
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "माहितीचा साठा स्थानिक धारिकेवरून भरू शकता"
 
-#: ../libgimpbase/gimpmetadata.c:860 ../libgimpbase/gimpmetadata.c:930
+#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
 #, c-format
 msgid "Conversion of the filename to system codepage failed."
 msgstr "धारिकेचे नाव रूपांतरित करणे सिस्टिम कोडपेजवर अयशस्वी झाले."
 
-#: ../libgimpbase/gimpmetadata.c:917
+#: ../libgimpbase/gimpmetadata.c:949
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "बृहतसाठा [मेटाडेटा] स्थानिक धारिकेवरच साठवू शकता"
 
-#: ../libgimpbase/gimpmetadata.c:979
+#: ../libgimpbase/gimpmetadata.c:1011
 #, c-format
-#| msgid "Parsing Exif data failed."
 msgid "Invalid Exif data size."
 msgstr "अवैध Exif डेटा आकार."
 
-#: ../libgimpbase/gimpmetadata.c:1008
+#: ../libgimpbase/gimpmetadata.c:1040
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Exif माहिती विश्लेषण अयशस्वी."
 
-#: ../libgimpbase/gimpmetadata.c:1058
+#: ../libgimpbase/gimpmetadata.c:1090
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "आयपीटीसी माहिती विश्लेषण अयशस्वी."
 
-#: ../libgimpbase/gimpmetadata.c:1106
+#: ../libgimpbase/gimpmetadata.c:1138
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "एक्सएमपी माहिती विश्लेषण अयशस्वी."
 
-#: ../libgimpbase/gimputils.c:225 ../libgimpbase/gimputils.c:230
+#: ../libgimpbase/gimputils.c:219 ../libgimpbase/gimputils.c:224
 msgid "(invalid UTF-8 string)"
 msgstr "(अवैध UTF-8 स्ट्रिंग)"
 
-#: ../libgimpbase/gimputils.c:400
+#: ../libgimpbase/gimputils.c:394
 msgid "File path is NULL"
 msgstr "धारिका मार्ग निरंक आहे"
 
-#: ../libgimpbase/gimputils.c:409 ../libgimpbase/gimputils.c:420
+#: ../libgimpbase/gimputils.c:403 ../libgimpbase/gimputils.c:414
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "UTF-8 धारिका रुंद अक्षर [wide char] रुपात रुपांतरित करताना येणाऱ्या त्रुटी"
 
-#: ../libgimpbase/gimputils.c:428
+#: ../libgimpbase/gimputils.c:422
 msgid "ILCreateFromPath() failed"
 msgstr "आयएलक्रिएटफ्रॉमपाथ() अयशस्वी"
 
-#: ../libgimpbase/gimputils.c:465
+#: ../libgimpbase/gimputils.c:459
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "वैध NSURL '%s'मध्ये रूपांतरित करू शकत नाही."
 
-#: ../libgimpbase/gimputils.c:493
+#: ../libgimpbase/gimputils.c:487
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Org.freedesktop.FileManager1 सह जोडणे अयशस्वी झाले:"
 
-#: ../libgimpbase/gimputils.c:517	
+#: ../libgimpbase/gimputils.c:511
 msgid "Calling ShowItems failed: "
 msgstr "शो आयटम्स सुरु होऊ शकत नाही :"
 
@@ -1597,22 +1591,20 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"जेव्हा सक्षम असेल,तेव्हा गिम्प विंडोज प्रणालीतील प्रदर्शन रंग प्रोफाइल वापरण्याचा प्रयत्न करेल. रचना "
-"केलेले पडदा प्रोफाइल केवळ फॉलबॅक म्हणून राहील."
+"जेव्हा सक्षम असेल,तेव्हा गिम्प विंडोज प्रणालीतील प्रदर्शन रंग प्रोफाइल वापरण्याचा प्रयत्न "
+"करेल. रचना केलेले पडदा प्रोफाइल केवळ फॉलबॅक म्हणून राहील."
 
 #: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
-msgstr ""
-"पसंतीचे आरजीबी रंग प्रोफाइल. या आरजीबी प्रोफाइलला प्राधान्यक्रम असेल."
+msgstr "पसंतीचे आरजीबी रंग प्रोफाइल. या आरजीबी प्रोफाइलला प्राधान्यक्रम असेल."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
-msgstr ""
-"पसंतीचे कृष्ण-धवल छटा [ग्रेस्केल] रंग प्रोफाइल या प्रोफाइलला प्राधान्य असेल."
+msgstr "पसंतीचे कृष्ण-धवल छटा [ग्रेस्केल] रंग प्रोफाइल या प्रोफाइलला प्राधान्य असेल."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1624,7 +1616,8 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
-"तुमच्या प्रतिमेच्या रंग जागेमधून [कलर स्पेस] सॉफ्ट प्रूफिंग च्या साह्याने इतर रंग जागांमध्ये [प्रिंटरचे सॉफ्ट प्रूफिंग] करता येईल."
+"तुमच्या प्रतिमेच्या रंग जागेमधून [कलर स्पेस] सॉफ्ट प्रूफिंग च्या साह्याने इतर रंग जागांमध्ये "
+"[प्रिंटरचे सॉफ्ट प्रूफिंग] करता येईल."
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1634,13 +1627,14 @@ msgid ""
 "intent really gives you relative colorimetric."
 msgstr ""
 "पडद्याचे रंग आपल्या कलर स्पेस च्या साह्याने कसे बदलले जातात. सापेक्ष रंगमिती सामान्यत: "
-"सर्वोत्तम पर्याय आहे. आपण जोपर्यंत LUT पडदा प्रोफाइल (बहुतेक पडदा प्रोफाइल्स "
-"मॅट्रिक्स आहेत) वापरत नाही तोपर्यंत, संकल्पनात्मक हेतू निवडणे खरोखर आपल्याला सापेक्ष रंगमिती देते."
+"सर्वोत्तम पर्याय आहे. आपण जोपर्यंत LUT पडदा प्रोफाइल (बहुतेक पडदा प्रोफाइल्स मॅट्रिक्स "
+"आहेत) वापरत नाही तोपर्यंत, संकल्पनात्मक हेतू निवडणे खरोखर आपल्याला सापेक्ष रंगमिती देते."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr "काळा बिंदू भरपाई [कॉम्पनसेशन] वापरा (आपल्याला इतर काय वापरायचे हे माहित नसल्यास)."
+msgstr ""
+"काळा बिंदू भरपाई [कॉम्पनसेशन] वापरा (आपल्याला इतर काय वापरायचे हे माहित नसल्यास)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
@@ -1653,13 +1647,15 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
-"प्रतिमेच्या कलर स्पेस मधील रंग आऊटपूट डीव्हाईसला कसे रुपांतरीत होतात."
-"सर्व प्रयत्न करा आणि उत्तम निवडा."
+"प्रतिमेच्या कलर स्पेस मधील रंग आऊटपूट डीव्हाईसला कसे रुपांतरीत होतात.सर्व प्रयत्न करा आणि "
+"उत्तम निवडा."
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
-msgstr "काळ्या बिंदू भरपाई [कॉम्पनसेशन] सहित व त्याशिवाय वापरून पहा आणि काय चांगले दिसते ते निवडा ."
+msgstr ""
+"काळ्या बिंदू भरपाई [कॉम्पनसेशन] सहित व त्याशिवाय वापरून पहा आणि काय चांगले दिसते ते "
+"निवडा ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
@@ -1670,8 +1666,7 @@ msgstr "अक्षम असताना, सॉफ्ट प्रुफि�
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
-msgstr ""
-"सक्षम असताना, सॉफ्ट-प्रुफिंग हे रंग चिन्हांकित करेल जे कलर स्पेस मध्ये असू शकत नाहीत."
+msgstr "सक्षम असताना, सॉफ्ट-प्रुफिंग हे रंग चिन्हांकित करेल जे कलर स्पेस मध्ये असू शकत नाहीत."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1792,7 +1787,7 @@ msgstr "घातक विश्लेषण त्रुटी"
 msgid "File has no path representation"
 msgstr "धारिकेमध्ये मार्ग माहिती नाही"
 
-#: ../libgimpconfig/gimpconfig-path.c:566
+#: ../libgimpconfig/gimpconfig-path.c:570
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "विस्तृत करू शकत नाही ${%s}"
@@ -1906,17 +1901,19 @@ msgid "_Reset"
 msgstr "_मूळ स्थिती"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:573
-#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
-#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:493
+#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
+#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
+#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
 msgid "_OK"
-msgstr "_ठीक"
+msgstr "_ठीक आहे"
 
 #: ../libgimpwidgets/gimpcolorhexentry.c:118
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
-msgstr "एचटीएमएल  आणि सीएसएस मध्ये वापरल्याप्रमाणे हेक्झाडेसिमल रंगांकन. सीएसएस रंग नावे ही चालतील."
+msgstr ""
+"एचटीएमएल  आणि सीएसएस मध्ये वापरल्याप्रमाणे हेक्झाडेसिमल रंगांकन. सीएसएस रंग नावे ही "
+"चालतील."
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:98
 msgid "All files (*.*)"
@@ -1973,7 +1970,6 @@ msgid "0..255"
 msgstr "०..२५५"
 
 #: ../libgimpwidgets/gimpcolorscales.c:460
-#| msgid "LCH"
 msgid "LCh"
 msgstr "LCh"
 
@@ -2098,15 +2094,15 @@ msgstr "_रूपांतरित"
 msgid "_Shear"
 msgstr "_झुकावणे"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:219
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
 msgid "Kilobytes"
 msgstr "किलोबाइट"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Megabytes"
 msgstr "मेगाबाइट"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
 msgid "Gigabytes"
 msgstr "गीगाबाईट"
 
@@ -2186,7 +2182,7 @@ msgstr "आकार तपासा"
 msgid "Check Style"
 msgstr "शैली तपासा"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2177
+#: ../libgimpwidgets/gimppropwidgets.c:2178
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2214,8 +2210,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"यादृच्छिक [रँडम] संख्या तयार करण्यासाठी सुरवात म्हणून ही संख्या वापरा - यामुळे आपणास \"यादृच्छिक [रँडम]\" "
-"प्रक्रिया परत करता येईल "
+"यादृच्छिक [रँडम] संख्या तयार करण्यासाठी सुरवात म्हणून ही संख्या वापरा - यामुळे आपणास "
+"\"यादृच्छिक [रँडम]\" प्रक्रिया परत करता येईल "
 
 #: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
@@ -2328,7 +2324,6 @@ msgid "_L"
 msgstr "_एल"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
-#| msgid "LCH Lightness"
 msgid "LCh Lightness"
 msgstr "LCh फिकट"
 
@@ -2338,7 +2333,6 @@ msgid "_C"
 msgstr "_सी"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
-#| msgid "LCH Chroma"
 msgid "LCh Chroma"
 msgstr "LCh क्रोमा"
 
@@ -2348,7 +2342,6 @@ msgid "_h"
 msgstr "_एच"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
-#| msgid "LCH Hue"
 msgid "LCh Hue"
 msgstr "LCh गडद रंगछटा"
 
@@ -2367,7 +2360,6 @@ msgid "LCH"
 msgstr "एलसीएच"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:169
-#| msgid "CIELCh color model"
 msgid "CIE LCh color model"
 msgstr "CIE LCh रंग नमुना"
 
@@ -2776,8 +2768,8 @@ msgstr "चॅनेल:"
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
-msgstr "घटनांची माहिती एमआयडीआय. चॅनेलवर एमआयडीआय च्या सर्व "
-"चॅनेल्स वाचवण्यासाठी मूल्य -१ करा."
+msgstr ""
+"घटनांची माहिती एमआयडीआय. चॅनेलवर एमआयडीआय च्या सर्व चॅनेल्स वाचवण्यासाठी मूल्य -१ करा."
 
 #: ../modules/controller-midi.c:226
 msgid "MIDI"
