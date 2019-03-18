@@ -183,6 +183,14 @@ gimp_color_history_finalize (GObject *object)
 {
   GimpColorHistory *history = GIMP_COLOR_HISTORY (object);
 
+  if (history->context)
+    g_signal_handlers_disconnect_by_func (history->context,
+                                          gimp_color_history_image_changed,
+                                          history);
+  if (history->active_image)
+    g_signal_handlers_disconnect_by_func (history->active_image,
+                                          G_CALLBACK (gimp_color_history_palette_dirty),
+                                          history);
   g_free (history->color_areas);
   history->color_areas = NULL;
   g_free (history->buttons);
