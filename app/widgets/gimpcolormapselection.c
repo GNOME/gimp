@@ -678,8 +678,13 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
 {
   if (selection->active_image)
     {
+      g_object_remove_weak_pointer (G_OBJECT (selection->active_image),
+                                    (gpointer) &selection->active_image);
       g_signal_handlers_disconnect_by_func (selection->active_image,
                                             G_CALLBACK (gtk_widget_queue_draw),
+                                            selection);
+      g_signal_handlers_disconnect_by_func (selection->active_image,
+                                            G_CALLBACK (gimp_colormap_selection_set_palette),
                                             selection);
       if (gimp_image_get_base_type (selection->active_image) == GIMP_INDEXED)
         {
@@ -713,6 +718,8 @@ gimp_colormap_selection_image_changed (GimpColormapSelection *selection,
   selection->active_image = image;
   if (image)
     {
+      g_object_add_weak_pointer (G_OBJECT (selection->active_image),
+                                 (gpointer) &selection->active_image);
       g_signal_connect_swapped (image, "colormap-changed",
                                 G_CALLBACK (gtk_widget_queue_draw),
                                 selection);
