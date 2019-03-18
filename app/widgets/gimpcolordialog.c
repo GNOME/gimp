@@ -162,11 +162,9 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
-  dialog->stack = gtk_notebook_new ();
+  dialog->stack = gtk_stack_new ();
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->stack, TRUE, TRUE, 0);
-  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (dialog->stack), FALSE);
-  gtk_notebook_set_show_border (GTK_NOTEBOOK (dialog->stack), FALSE);
   gtk_widget_show (dialog->stack);
 }
 
@@ -185,8 +183,8 @@ gimp_color_dialog_constructed (GObject *object)
 
   /** Tab: colormap selection. **/
   dialog->colormap_selection = gimp_colormap_selection_new (viewable_dialog->context->gimp->user_context);
-  gtk_notebook_append_page (GTK_NOTEBOOK (dialog->stack),
-                            dialog->colormap_selection, NULL);
+  gtk_stack_add_named (GTK_STACK (dialog->stack),
+                       dialog->colormap_selection, "colormap");
   g_signal_connect_swapped (dialog->colormap_selection, "color-clicked",
                             G_CALLBACK (gimp_color_dialog_colormap_clicked),
                             dialog);
@@ -265,8 +263,7 @@ gimp_color_dialog_constructed (GObject *object)
   /** Tab: color selection. **/
   dialog->selection = gimp_color_selection_new ();
   gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
-  gtk_notebook_append_page (GTK_NOTEBOOK (dialog->stack),
-                            dialog->selection, NULL);
+  gtk_stack_add_named (GTK_STACK (dialog->stack), dialog->selection, "color");
   gtk_widget_show (dialog->selection);
 
   g_signal_connect (dialog->selection, "color-changed",
@@ -406,9 +403,7 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
           gimp_image_set_colormap_entry (image, col_index, &color, TRUE);
           gimp_image_flush (image);
 
-          gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
-                                         gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
-                                                                dialog->colormap_selection));
+          gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
                          &color, GIMP_COLOR_DIALOG_UPDATE);
         }
@@ -430,9 +425,7 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
           gimp_image_set_colormap_entry (image, col_index, &color, FALSE);
           gimp_projection_flush (gimp_image_get_projection (image));
 
-          gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
-                                         gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
-                                                                dialog->colormap_selection));
+          gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
           g_signal_emit (dialog, color_dialog_signals[UPDATE], 0,
                          &color, GIMP_COLOR_DIALOG_UPDATE);
         }
@@ -619,9 +612,7 @@ gimp_color_dialog_colormap_edit_activate (GimpColorDialog *dialog)
   gimp_image_get_colormap_entry (dialog->active_image, col_index, &color);
   gimp_color_dialog_set_color (dialog, &color);
 
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
-                                 gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
-                                                        dialog->selection));
+  gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "color");
 }
 
 static void
@@ -735,13 +726,9 @@ gimp_color_dialog_update (GimpColorDialog *dialog)
 {
   if (dialog->active_image &&
       gimp_image_get_base_type (dialog->active_image) == GIMP_INDEXED)
-    gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
-                                   gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
-                                                          dialog->colormap_selection));
+    gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "colormap");
   else
-    gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
-                                   gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
-                                                          dialog->selection));
+    gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "color");
 }
 
 static void
@@ -766,9 +753,7 @@ gimp_color_dialog_show (GimpColorDialog *dialog)
     }
   else
     {
-      gtk_notebook_set_current_page (GTK_NOTEBOOK (dialog->stack),
-                                     gtk_notebook_page_num (GTK_NOTEBOOK (dialog->stack),
-                                                            dialog->selection));
+      gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "color");
     }
 }
 
