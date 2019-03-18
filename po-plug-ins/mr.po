@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-13 17:24+0000\n"
+"POT-Creation-Date: 2019-03-16 10:09+0000\n"
 "PO-Revision-Date: 2018-12-30 20:43+0000\n"
 "Last-Translator: Snehalata B Shirude <snehalata.shirude@gmail.com>\n"
 "Language-Team: Marathi\n"
@@ -511,7 +511,7 @@ msgstr "रंगांची संख्या"
 
 #: ../plug-ins/common/border-average.c:434
 msgid "_Bucket size:"
-msgstr "_बादलीचा आकार:"
+msgstr "_रंगाच्या वाटीचा आकार:"
 
 #: ../plug-ins/common/busy-dialog.c:195 ../plug-ins/common/busy-dialog.c:211
 msgid "Please Wait"
@@ -1626,7 +1626,7 @@ msgstr "पर्याय"
 #. Rotate spinbutton
 #: ../plug-ins/common/curve-bend.c:1322
 msgid "Rotat_e:"
-msgstr "फि_रवा:"
+msgstr "कोना_त फिरवा:"
 
 #. The smoothing toggle
 #: ../plug-ins/common/curve-bend.c:1341
@@ -6053,15 +6053,15 @@ msgstr "मोजपट्टी झेड:"
 
 #: ../plug-ins/common/sphere-designer.c:2828
 msgid "Rotate X:"
-msgstr "फिरवा एक्स:"
+msgstr "कोनात फिरवा एक्स:"
 
 #: ../plug-ins/common/sphere-designer.c:2835
 msgid "Rotate Y:"
-msgstr "फिरवा वाय:"
+msgstr "कोनात फिरवा वाय:"
 
 #: ../plug-ins/common/sphere-designer.c:2842
 msgid "Rotate Z:"
-msgstr "फिरवा झेड:"
+msgstr "कोनात फिरवा झेड:"
 
 #: ../plug-ins/common/sphere-designer.c:2849
 msgid "Position X:"
@@ -10481,11 +10481,11 @@ msgstr "हलवा"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1060
 msgid "Rotate"
-msgstr "फिरवा"
+msgstr "कोनात फिरवा"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1060
 msgid "Rotate / Scale"
-msgstr "फिरवा / मोजा"
+msgstr "कोनात फिरवा / मोजा"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1063
 msgid "Stretch"
