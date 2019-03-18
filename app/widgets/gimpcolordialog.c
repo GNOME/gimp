@@ -88,6 +88,8 @@ static void   gimp_color_dialog_colormap_clicked (GimpColorDialog    *dialog,
                                                   GdkModifierType     state);
 static void
         gimp_color_dialog_colormap_edit_activate (GimpColorDialog    *dialog);
+static void
+        gimp_color_dialog_colormap_add_activate  (GimpColorDialog    *dialog);
 
 static void   gimp_color_dialog_color_changed    (GimpColorSelection *selection,
                                                   GimpColorDialog    *dialog);
@@ -175,9 +177,8 @@ gimp_color_dialog_constructed (GObject *object)
   GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (object);
   GtkWidget          *hbox;
   GtkWidget          *history;
-  GtkWidget          *arrow;
   GtkWidget          *button;
-  GList              *list;
+  GtkWidget          *image;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -193,72 +194,47 @@ gimp_color_dialog_constructed (GObject *object)
                             dialog);
   gtk_widget_show (dialog->colormap_selection);
 
-  list = gimp_action_groups_from_name ("colormap");
-  if (list)
-    {
-      GtkWidget       *image;
-      GimpActionGroup *group;
-      GtkAction       *action;
-      const gchar     *icon_name;
-      const gchar     *help_id;
-      gchar           *tooltip;
+  /* Edit color button */
+  button = gimp_button_new ();
+  gtk_button_set_relief (GTK_BUTTON (button), FALSE);
 
-      group = list->data;
+  image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT, GTK_ICON_SIZE_LARGE_TOOLBAR);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
-      /* Edit color */
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            "colormap-edit-color");
+  /* XXX: I use the same icon, tooltip and help id as in
+   * colormap-actions.c. I wanted to just load these strings from
+   * the action, but the group is only registered when the Colormap
+   * dockable is opened.
+   */
+  gimp_help_set_help_data_with_markup (button,
+                                       NC_("colormap-action", "Edit this color"),
+                                       GIMP_HELP_INDEXED_PALETTE_EDIT);
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
+                            dialog);
+  gtk_widget_show (button);
+  gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
+                      FALSE, FALSE, 0);
 
-      button = gimp_button_new ();
-      gtk_button_set_relief (GTK_BUTTON (button), FALSE);
+  /* Add Color button */
+  button = gimp_button_new ();
+  gtk_button_set_relief (GTK_BUTTON (button), FALSE);
 
-      icon_name = gtk_action_get_icon_name (action);
-      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_LARGE_TOOLBAR);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_LIST_ADD, GTK_ICON_SIZE_LARGE_TOOLBAR);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
-      tooltip = g_strdup (gtk_action_get_tooltip (action));
-      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
-      gimp_help_set_help_data_with_markup (button, tooltip, help_id);
-      g_free (tooltip);
+  gimp_help_set_help_data_with_markup (button,
+                                       NC_("colormap-action", "Add current foreground color"),
+                                       GIMP_HELP_INDEXED_PALETTE_ADD);
 
-      /* Note: I only use the "colormap-edit-color" action for icon, and
-       * tooltip, but don't actually run it because it would create yet
-       * another dialog. Instead we switch the stack view.
-       */
-      g_signal_connect_swapped (button, "clicked",
-                                G_CALLBACK (gimp_color_dialog_colormap_edit_activate),
-                                dialog);
-      gtk_widget_show (button);
-      gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
-                          FALSE, FALSE, 0);
-
-      /* Add Color */
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            "colormap-add-color-from-fg");
-
-      button = gimp_button_new ();
-      gtk_button_set_relief (GTK_BUTTON (button), FALSE);
-
-      icon_name = gtk_action_get_icon_name (action);
-      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_LARGE_TOOLBAR);
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
-
-      tooltip = g_strdup (gtk_action_get_tooltip (action));
-      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
-      gimp_help_set_help_data_with_markup (button, tooltip, help_id);
-      g_free (tooltip);
-
-      gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
-      gtk_widget_show (button);
-      gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
-                          FALSE, FALSE, 0);
-    }
-  else
-    {
-      g_warning ("%s: 'colormap' action group not found", G_STRFUNC);
-    }
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gimp_color_dialog_colormap_add_activate),
+                            dialog);
+  gtk_widget_show (button);
+  gtk_box_pack_start (GTK_BOX (GIMP_COLORMAP_SELECTION (dialog->colormap_selection)->right_vbox), button,
+                      FALSE, FALSE, 0);
 
   /** Tab: color selection. **/
   dialog->selection = gimp_color_selection_new ();
@@ -613,6 +589,26 @@ gimp_color_dialog_colormap_edit_activate (GimpColorDialog *dialog)
   gimp_color_dialog_set_color (dialog, &color);
 
   gtk_stack_set_visible_child_name (GTK_STACK (dialog->stack), "color");
+}
+
+static void
+gimp_color_dialog_colormap_add_activate (GimpColorDialog *dialog)
+{
+  GimpViewableDialog *viewable_dialog = GIMP_VIEWABLE_DIALOG (dialog);
+
+  if (dialog->active_image &&
+      gimp_image_get_colormap_size (dialog->active_image) < 256 &&
+      viewable_dialog->context)
+    {
+      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+      GimpRGB      color;
+
+      user_context = viewable_dialog->context->gimp->user_context;
+      gimp_context_get_foreground (user_context, &color);
+
+      gimp_image_add_colormap_entry (dialog->active_image, &color);
+      gimp_image_flush (dialog->active_image);
+    }
 }
 
 static void
