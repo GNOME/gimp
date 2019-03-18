@@ -241,6 +241,7 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
     gtk_adjustment_new (0, 0, 0, 1, 10, 0);
   selection->index_spinbutton = gimp_spin_button_new (selection->index_adjustment,
                                                       1.0, 0);
+  gtk_widget_set_halign (selection->index_spinbutton, GTK_ALIGN_START);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (selection->index_spinbutton),
                                TRUE);
 
@@ -253,6 +254,7 @@ gimp_colormap_selection_init (GimpColormapSelection *selection)
                     selection);
 
   selection->color_entry = gimp_color_hex_entry_new ();
+  gtk_widget_set_halign (selection->color_entry, GTK_ALIGN_START);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("HTML notation:"), 0.0, 0.5,
                             selection->color_entry, 1);

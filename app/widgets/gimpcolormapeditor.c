@@ -21,17 +21,14 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
-#include "core/gimpmarshal.h"
 #include "core/gimppalette.h"
 #include "core/gimpprojection.h"
 
@@ -39,47 +36,32 @@
 #include "gimpcolormapeditor.h"
 #include "gimpcolormapselection.h"
 #include "gimpdialogfactory.h"
-#include "gimpdnd.h"
 #include "gimpdocked.h"
 #include "gimpmenufactory.h"
-#include "gimppaletteview.h"
-#include "gimpuimanager.h"
-#include "gimpviewrendererpalette.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
 
-#define BORDER      6
-#define RGB_EPSILON 1e-6
+static void gimp_colormap_editor_docked_iface_init (GimpDockedInterface  *face);
 
-#define HAVE_COLORMAP(image) \
-        (image != NULL && \
-         gimp_image_get_base_type (image) == GIMP_INDEXED && \
-         gimp_image_get_colormap (image) != NULL)
+static void   gimp_colormap_editor_constructed     (GObject              *object);
+static void   gimp_colormap_editor_dispose         (GObject              *object);
 
+static void   gimp_colormap_editor_unmap           (GtkWidget            *widget);
 
-static void gimp_colormap_editor_docked_iface_init (GimpDockedInterface *face);
+static void   gimp_colormap_editor_set_context     (GimpDocked           *docked,
+                                                    GimpContext          *context);
 
-static void   gimp_colormap_editor_constructed     (GObject            *object);
-static void   gimp_colormap_editor_dispose         (GObject            *object);
+static void   gimp_colormap_editor_color_update    (GimpColorDialog      *dialog,
+                                                    const GimpRGB        *color,
+                                                    GimpColorDialogState  state,
+                                                    GimpColormapEditor   *editor);
 
-static void   gimp_colormap_editor_unmap           (GtkWidget          *widget);
-
-static void   gimp_colormap_editor_set_context     (GimpDocked        *docked,
-                                                    GimpContext       *context);
-
-static void   gimp_colormap_editor_edit_color_update
-                                                   (GimpColorDialog    *dialog,
-                                                    const GimpRGB      *color,
-                                                    GimpColorDialogState state,
-                                                    GimpColormapEditor *editor);
-static void   gimp_colormap_editor_entry_popup     (GimpEditor         *editor);
-
-static void
-gimp_colormap_editor_color_clicked (GimpColormapEditor *editor,
-                                    GimpPaletteEntry   *entry,
-                                    GdkModifierType     state);
+static void   gimp_colormap_editor_entry_popup     (GimpEditor           *editor);
+static void   gimp_colormap_editor_color_clicked   (GimpColormapEditor   *editor,
+                                                    GimpPaletteEntry     *entry,
+                                                    GdkModifierType       state);
 
 G_DEFINE_TYPE_WITH_CODE (GimpColormapEditor, gimp_colormap_editor,
                          GIMP_TYPE_IMAGE_EDITOR,
@@ -221,19 +203,6 @@ gimp_colormap_editor_new (GimpMenuFactory *menu_factory)
                        NULL);
 }
 
-static void
-gimp_colormap_editor_color_clicked (GimpColormapEditor *editor,
-                                    GimpPaletteEntry   *entry,
-                                    GdkModifierType     state)
-{
-  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
-
-  if (state & gimp_get_toggle_behavior_mask ())
-    gimp_context_set_background (image_editor->context, &entry->color);
-  else
-    gimp_context_set_foreground (image_editor->context, &entry->color);
-}
-
 void
 gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
 {
@@ -241,17 +210,17 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
   const guchar *colormap;
   GimpRGB       color;
   gchar        *desc;
-  gint         index;
+  gint          index;
 
   g_return_if_fail (GIMP_IS_COLORMAP_EDITOR (editor));
 
   image = GIMP_IMAGE_EDITOR (editor)->image;
-
-  if (! HAVE_COLORMAP (image))
-    return;
-
   index = gimp_colormap_selection_get_index (GIMP_COLORMAP_SELECTION (editor->selection),
                                              NULL);
+
+  if (index == -1)
+    /* No colormap. */
+    return;
 
   colormap = gimp_image_get_colormap (image);
 
@@ -283,7 +252,7 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
                         &editor->color_dialog);
 
       g_signal_connect (editor->color_dialog, "update",
-                        G_CALLBACK (gimp_colormap_editor_edit_color_update),
+                        G_CALLBACK (gimp_colormap_editor_color_update),
                         editor);
     }
   else
@@ -329,10 +298,10 @@ gimp_colormap_editor_max_index (GimpColormapEditor *editor)
 }
 
 static void
-gimp_colormap_editor_edit_color_update (GimpColorDialog      *dialog,
-                                        const GimpRGB        *color,
-                                        GimpColorDialogState  state,
-                                        GimpColormapEditor   *editor)
+gimp_colormap_editor_color_update (GimpColorDialog      *dialog,
+                                   const GimpRGB        *color,
+                                   GimpColorDialogState  state,
+                                   GimpColormapEditor   *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
   GimpImage       *image        = image_editor->image;
@@ -389,4 +358,17 @@ static void
 gimp_colormap_editor_entry_popup (GimpEditor *editor)
 {
   gimp_editor_popup_menu (editor, NULL, NULL);
+}
+
+static void
+gimp_colormap_editor_color_clicked (GimpColormapEditor *editor,
+                                    GimpPaletteEntry   *entry,
+                                    GdkModifierType     state)
+{
+  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+
+  if (state & gimp_get_toggle_behavior_mask ())
+    gimp_context_set_background (image_editor->context, &entry->color);
+  else
+    gimp_context_set_foreground (image_editor->context, &entry->color);
 }
