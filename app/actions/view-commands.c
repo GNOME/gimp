@@ -999,7 +999,9 @@ view_padding_color_cmd_callback (GtkAction *action,
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:
       {
-        GtkWidget *dialog;
+        GtkWidget             *dialog;
+        GimpRGB               *old_color = g_new (GimpRGB, 1);
+        GimpCanvasPaddingMode  old_padding_mode;
 
         dialog = dialogs_get_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
 
@@ -1018,7 +1020,7 @@ view_padding_color_cmd_callback (GtkAction *action,
                                      GTK_WIDGET (shell),
                                      NULL, NULL,
                                      &options->padding_color,
-                                     FALSE, FALSE);
+                                     TRUE, FALSE);
 
             g_signal_connect (dialog, "update",
                               G_CALLBACK (view_padding_color_dialog_update),
@@ -1027,6 +1029,12 @@ view_padding_color_cmd_callback (GtkAction *action,
             dialogs_attach_dialog (G_OBJECT (shell),
                                    PADDING_COLOR_DIALOG_KEY, dialog);
           }
+        *old_color       = options->padding_color;
+        old_padding_mode = options->padding_mode;
+        g_object_set_data_full (G_OBJECT (dialog), "old-color",
+                                old_color, g_free);
+        g_object_set_data (G_OBJECT (dialog), "old-padding-mode",
+                           GINT_TO_POINTER (old_padding_mode));
 
         gtk_window_present (GTK_WINDOW (dialog));
       }
@@ -1120,11 +1128,17 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
                                   GimpColorDialogState  state,
                                   GimpDisplayShell     *shell)
 {
-  GimpImageWindow    *window;
-  GimpDisplayOptions *options;
-  gboolean            fullscreen;
+  GimpImageWindow       *window;
+  GimpDisplayOptions    *options;
+  GimpRGB               *old_color;
+  GimpCanvasPaddingMode  old_padding_mode;
+  gboolean               fullscreen;
 
-  window = gimp_display_shell_get_window (shell);
+  window           = gimp_display_shell_get_window (shell);
+  old_color        = g_object_get_data (G_OBJECT (dialog), "old-color");
+  old_padding_mode = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "old-padding-mode"));
+
+  g_return_if_fail (old_color);
 
   if (window)
     fullscreen = gimp_image_window_get_fullscreen (window);
@@ -1143,10 +1157,19 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
 
       gimp_display_shell_set_padding (shell, GIMP_CANVAS_PADDING_MODE_CUSTOM,
                                       color);
-      /* fallthru */
+      gtk_widget_destroy (GTK_WIDGET (dialog));
+      break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
+      gimp_display_shell_set_padding (shell,
+                                      old_padding_mode,
+                                      old_color);
       gtk_widget_destroy (GTK_WIDGET (dialog));
+      break;
+
+    case GIMP_COLOR_DIALOG_UPDATE:
+      gimp_display_shell_set_padding (shell, GIMP_CANVAS_PADDING_MODE_CUSTOM,
+                                      color);
       break;
 
     default:
