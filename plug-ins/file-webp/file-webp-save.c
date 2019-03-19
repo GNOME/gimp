@@ -481,6 +481,7 @@ save_animation (const gchar    *filename,
   gboolean               status   = TRUE;
   FILE                  *outfile  = NULL;
   guchar                *buffer   = NULL;
+  gint                   buffer_size = 0;
   gint                   w, h;
   gint                   bpp;
   gboolean               has_alpha;
@@ -584,12 +585,20 @@ save_animation (const gchar    *filename,
             }
 
           /* Attempt to allocate a buffer of the appropriate size */
-          buffer = g_try_malloc (w * h * bpp);
-          if (! buffer)
+          if (! buffer || buffer_size < w * h * bpp)
             {
-              g_printerr ("Buffer error: 'buffer null'\n");
-              status = FALSE;
-              break;
+              buffer = g_try_realloc (buffer, w * h * bpp);
+
+              if (! buffer)
+                {
+                  g_printerr ("Buffer error: 'buffer null'\n");
+                  status = FALSE;
+                  break;
+                }
+              else
+                {
+                  buffer_size = w * h * bpp;
+                }
             }
 
           WebPConfigPreset (&config, params->preset, params->quality);
@@ -638,7 +647,6 @@ save_animation (const gchar    *filename,
             {
               status = WebPPictureImportRGBA (&picture, buffer, w * bpp);
             }
-          g_free (buffer);
 
           if (! status)
             {
@@ -663,6 +671,7 @@ save_animation (const gchar    *filename,
           gimp_progress_update ((loop + 1.0) / nLayers);
           frame_timestamp += (delay <= 0 || force_delay) ? default_delay : delay;
         }
+      g_free (buffer);
 
       if (status == FALSE)
         break;
