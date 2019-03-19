@@ -42,24 +42,35 @@ gimp_gegl_mask_combine_rect (GeglBuffer     *mask,
                              gint            w,
                              gint            h)
 {
-  GeglColor *color;
+  GeglRectangle rect;
+  gfloat        value;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (mask), FALSE);
 
-  if (! gimp_rectangle_intersect (x, y, w, h,
-                                  0, 0,
-                                  gegl_buffer_get_width  (mask),
-                                  gegl_buffer_get_height (mask),
-                                  &x, &y, &w, &h))
-    return FALSE;
+  if (! gegl_rectangle_intersect (&rect,
+                                  GEGL_RECTANGLE (x, y, w, h),
+                                  gegl_buffer_get_abyss (mask)))
+    {
+      return FALSE;
+    }
 
-  if (op == GIMP_CHANNEL_OP_ADD || op == GIMP_CHANNEL_OP_REPLACE)
-    color = gegl_color_new ("#fff");
-  else
-    color = gegl_color_new ("#000");
+  switch (op)
+    {
+    case GIMP_CHANNEL_OP_REPLACE:
+    case GIMP_CHANNEL_OP_ADD:
+      value = 1.0f;
+      break;
 
-  gegl_buffer_set_color (mask, GEGL_RECTANGLE (x, y, w, h), color);
-  g_object_unref (color);
+    case GIMP_CHANNEL_OP_SUBTRACT:
+      value = 0.0f;
+      break;
+
+    case GIMP_CHANNEL_OP_INTERSECT:
+      return TRUE;
+    }
+
+  gegl_buffer_set_color_from_pixel (mask, &rect, &value,
+                                    babl_format ("Y float"));
 
   return TRUE;
 }
