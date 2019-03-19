@@ -1012,7 +1012,8 @@ gimp_export_dialog_new (const gchar *format_name,
                         const gchar *help_id)
 {
   GtkWidget *dialog;
-  gchar     *title  = g_strconcat (_("Export Image as "), format_name, NULL);
+  /* TRANSLATORS: the %s parameter is an image format name (ex: PNG). */
+  gchar     *title  = g_strdup_printf (_("Export Image as %s"), format_name);
 
   dialog = gimp_dialog_new (title, role,
                             NULL, 0,
