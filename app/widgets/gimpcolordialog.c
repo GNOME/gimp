@@ -355,7 +355,11 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
   col_index = gimp_colormap_selection_get_index (colormap_selection, NULL);
 
   if (dialog->colormap_editing && viewable_dialog->context)
-    image = gimp_context_get_image (viewable_dialog->context);
+    {
+      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+
+      image = gimp_context_get_image (user_context);
+    }
 
   switch (response_id)
     {
@@ -622,9 +626,10 @@ gimp_color_dialog_color_changed (GimpColorSelection *selection,
 
   if (dialog->colormap_editing && viewable_dialog->context)
     {
-      GimpImage *image;
+      GimpContext *user_context = viewable_dialog->context->gimp->user_context;
+      GimpImage   *image;
 
-      image = gimp_context_get_image (viewable_dialog->context);
+      image = gimp_context_get_image (user_context);
       if (image)
         {
           GimpColormapSelection *colormap_selection;
