@@ -25,6 +25,9 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
+extern "C"
+{
+
 #include "gimp-gegl-types.h"
 
 #include "gimp-babl.h"
@@ -210,7 +213,7 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      gfloat *data = iter->items[0].data;
+      gfloat *data = (gfloat *) iter->items[0].data;
       gint    py;
 
       for (py = roi->y;
@@ -439,8 +442,8 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
     case GIMP_CHANNEL_OP_REPLACE:
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat       *mask_data   = iter->items[0].data;
-          const gfloat *add_on_data = iter->items[1].data;
+          gfloat       *mask_data   = (gfloat       *) iter->items[0].data;
+          const gfloat *add_on_data = (const gfloat *) iter->items[1].data;
           gint          count       = iter->length;
 
           while (count--)
@@ -458,8 +461,8 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
     case GIMP_CHANNEL_OP_SUBTRACT:
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat       *mask_data   = iter->items[0].data;
-          const gfloat *add_on_data = iter->items[1].data;
+          gfloat       *mask_data   = (gfloat       *) iter->items[0].data;
+          const gfloat *add_on_data = (const gfloat *) iter->items[1].data;
           gint          count       = iter->length;
 
           while (count--)
@@ -478,8 +481,8 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
     case GIMP_CHANNEL_OP_INTERSECT:
       while (gegl_buffer_iterator_next (iter))
         {
-          gfloat       *mask_data   = iter->items[0].data;
-          const gfloat *add_on_data = iter->items[1].data;
+          gfloat       *mask_data   = (gfloat       *) iter->items[0].data;
+          const gfloat *add_on_data = (const gfloat *) iter->items[1].data;
           gint          count       = iter->length;
 
           while (count--)
@@ -499,3 +502,5 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
 
   return TRUE;
 }
+
+} /* extern "C" */

@@ -31,7 +31,7 @@ libappgegl_generic_a_sources = \
 	gimp-gegl-loops.h		\
 	gimp-gegl-mask.c		\
 	gimp-gegl-mask.h		\
-	gimp-gegl-mask-combine.c	\
+	gimp-gegl-mask-combine.cc	\
 	gimp-gegl-mask-combine.h	\
 	gimp-gegl-nodes.c		\
 	gimp-gegl-nodes.h		\
