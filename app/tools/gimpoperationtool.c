@@ -755,8 +755,6 @@ gimp_operation_tool_unlink_chains (GimpOperationTool *op_tool)
       if (active)
         {
           gimp_chain_button_set_active (chain, FALSE);
-
-          g_signal_emit_by_name (chain, "toggled");
         }
 
       chains = chains->next;
@@ -800,8 +798,6 @@ gimp_operation_tool_relink_chains (GimpOperationTool *op_tool)
               g_value_get_double (&double_y))
             {
               gimp_chain_button_set_active (chain, TRUE);
-
-              g_signal_emit_by_name (chain, "toggled");
             }
 
           g_value_unset (&double_x);
