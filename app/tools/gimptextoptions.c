@@ -603,6 +603,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_color_button_new (config, "foreground", _("Text Color"),
                                        40, 24, GIMP_COLOR_AREA_FLAT);
+  gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
   gtk_widget_set_halign (button, GTK_ALIGN_START);

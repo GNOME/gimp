@@ -309,17 +309,11 @@ gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
       break;
 
     case GIMP_COLOR_DIALOG_OK:
-      if (! gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
-      gtk_widget_hide (panel->color_dialog);
-
-      g_signal_emit (panel, color_panel_signals[RESPONSE], 0,
-                     state);
-      break;
-
     case GIMP_COLOR_DIALOG_CANCEL:
-      if (gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
+      /* GimpColorDialog returns the appropriate color (new one or
+       * original one if process cancelled.
+       */
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       gtk_widget_hide (panel->color_dialog);
 
       g_signal_emit (panel, color_panel_signals[RESPONSE], 0,
