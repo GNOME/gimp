@@ -89,24 +89,6 @@ gimp_channel_combine_rect (GimpChannel    *mask,
   gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
 }
 
-/**
- * gimp_channel_combine_ellipse:
- * @mask:      the channel with which to combine the ellipse
- * @op:        whether to replace, add to, or subtract from the current
- *             contents
- * @x:         x coordinate of upper left corner of ellipse
- * @y:         y coordinate of upper left corner of ellipse
- * @w:         width of ellipse bounding box
- * @h:         height of ellipse bounding box
- * @antialias: if %TRUE, antialias the ellipse
- *
- * Mainly used for elliptical selections.  If @op is
- * %GIMP_CHANNEL_OP_REPLACE or %GIMP_CHANNEL_OP_ADD, sets pixels
- * within the ellipse to 255.  If @op is %GIMP_CHANNEL_OP_SUBTRACT,
- * sets pixels within to zero.  If @antialias is %TRUE, pixels that
- * impinge on the edge of the ellipse are set to intermediate values,
- * depending on how much they overlap.
- **/
 void
 gimp_channel_combine_ellipse (GimpChannel    *mask,
                               GimpChannelOps  op,
@@ -120,26 +102,6 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
                                      w / 2.0, h / 2.0, antialias);
 }
 
-/**
- * gimp_channel_combine_ellipse_rect:
- * @mask:      the channel with which to combine the elliptic rect
- * @op:        whether to replace, add to, or subtract from the current
- *             contents
- * @x:         x coordinate of upper left corner of bounding rect
- * @y:         y coordinate of upper left corner of bounding rect
- * @w:         width of bounding rect
- * @h:         height of bounding rect
- * @a:         elliptic a-constant applied to corners
- * @b:         elliptic b-constant applied to corners
- * @antialias: if %TRUE, antialias the elliptic corners
- *
- * Used for rounded cornered rectangles and ellipses.  If @op is
- * %GIMP_CHANNEL_OP_REPLACE or %GIMP_CHANNEL_OP_ADD, sets pixels
- * within the ellipse to 255.  If @op is %GIMP_CHANNEL_OP_SUBTRACT,
- * sets pixels within to zero.  If @antialias is %TRUE, pixels that
- * impinge on the edge of the ellipse are set to intermediate values,
- * depending on how much they overlap.
- **/
 void
 gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                                    GimpChannelOps  op,
@@ -147,20 +109,19 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                                    gint            y,
                                    gint            w,
                                    gint            h,
-                                   gdouble         a,
-                                   gdouble         b,
+                                   gdouble         rx,
+                                   gdouble         ry,
                                    gboolean        antialias)
 {
   GeglBuffer *buffer;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (a >= 0.0 && b >= 0.0);
   g_return_if_fail (op != GIMP_CHANNEL_OP_INTERSECT);
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
   if (! gimp_gegl_mask_combine_ellipse_rect (buffer, op, x, y, w, h,
-                                             a, b, antialias))
+                                             rx, ry, antialias))
     return;
 
   gimp_rectangle_intersect (x, y, w, h,
