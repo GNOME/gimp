@@ -31,6 +31,7 @@ extern "C"
 #include "gimp-gegl-types.h"
 
 #include "gimp-babl.h"
+#include "gimp-gegl-loops.h"
 #include "gimp-gegl-mask-combine.h"
 
 
@@ -505,44 +506,51 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
                                gint            off_x,
                                gint            off_y)
 {
-  GeglBufferIterator *iter;
-  GeglRectangle       rect;
-  const Babl         *mask_format;
-  const Babl         *add_on_format;
-  gint                x, y, w, h;
+  GeglRectangle  mask_rect;
+  GeglRectangle  add_on_rect;
+  const Babl    *mask_format;
+  const Babl    *add_on_format;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (mask), FALSE);
   g_return_val_if_fail (GEGL_IS_BUFFER (add_on), FALSE);
 
-  if (! gimp_rectangle_intersect (off_x, off_y,
-                                  gegl_buffer_get_width  (add_on),
-                                  gegl_buffer_get_height (add_on),
-                                  0, 0,
-                                  gegl_buffer_get_width  (mask),
-                                  gegl_buffer_get_height (mask),
-                                  &x, &y, &w, &h))
-    return FALSE;
+  if (! gegl_rectangle_intersect (&mask_rect,
+                                  GEGL_RECTANGLE (
+                                    off_x, off_y,
+                                    gegl_buffer_get_width  (add_on),
+                                    gegl_buffer_get_height (add_on)),
+                                  gegl_buffer_get_abyss (mask)))
+    {
+      return FALSE;
+    }
 
-  rect.x      = x;
-  rect.y      = y;
-  rect.width  = w;
-  rect.height = h;
+  add_on_rect    = mask_rect;
+  add_on_rect.x -= off_x;
+  add_on_rect.y -= off_y;
 
-  /*  See below: this additional hack is only needed for the
-   *  gimp-channel-combine-masks procedure, it's the only place that
-   *  allows to combine arbitrary channels with each other.
-   */
-  if (gimp_babl_format_get_linear (gegl_buffer_get_format (mask)))
-    mask_format = babl_format ("Y float");
-  else
-    mask_format = babl_format ("Y' float");
+  mask_format   = gegl_buffer_get_format (mask);
+  add_on_format = gegl_buffer_get_format (add_on);
 
-  iter = gegl_buffer_iterator_new (mask, &rect, 0,
-                                   mask_format,
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 2);
+  if (op == GIMP_CHANNEL_OP_REPLACE                                          &&
+      (gimp_babl_is_bounded (gimp_babl_format_get_precision (add_on_format)) ||
+       gimp_babl_is_bounded (gimp_babl_format_get_precision (mask_format))))
+    {
+      /*  See below: this additional hack is only needed for the
+       *  gimp-channel-combine-masks procedure, it's the only place that
+       *  allows to combine arbitrary channels with each other.
+       */
+      gegl_buffer_set_format (
+        add_on,
+        gimp_babl_format_change_linear (
+          add_on_format, gimp_babl_format_get_linear (mask_format)));
 
-  rect.x -= off_x;
-  rect.y -= off_y;
+      gimp_gegl_buffer_copy (add_on, &add_on_rect, GEGL_ABYSS_NONE,
+                             mask,   &mask_rect);
+
+      gegl_buffer_set_format (add_on, NULL);
+
+      return TRUE;
+    }
 
   /*  This is a hack: all selections/layer masks/channels are always
    *  linear except for channels in 8-bit images. We don't want these
@@ -554,78 +562,89 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
    *
    *  See https://bugzilla.gnome.org/show_bug.cgi?id=791519
    */
-  if (gimp_babl_format_get_linear (gegl_buffer_get_format (add_on)))
-    add_on_format = babl_format ("Y float");
-  else
-    add_on_format = babl_format ("Y' float");
+  mask_format = gimp_babl_format_change_component_type (
+    mask_format, GIMP_COMPONENT_TYPE_FLOAT);
 
-  gegl_buffer_iterator_add (iter, add_on, &rect, 0,
-                            add_on_format,
-                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+  add_on_format = gimp_babl_format_change_component_type (
+    add_on_format, GIMP_COMPONENT_TYPE_FLOAT);
 
-  switch (op)
+  gegl_parallel_distribute_area (
+    &mask_rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *mask_area)
     {
-    case GIMP_CHANNEL_OP_ADD:
-    case GIMP_CHANNEL_OP_REPLACE:
-      while (gegl_buffer_iterator_next (iter))
+      GeglBufferIterator *iter;
+      GeglRectangle       add_on_area;
+
+      add_on_area    = *mask_area;
+      add_on_area.x -= off_x;
+      add_on_area.y -= off_y;
+
+      iter = gegl_buffer_iterator_new (mask, mask_area, 0,
+                                       mask_format,
+                                       op == GIMP_CHANNEL_OP_REPLACE ?
+                                         GEGL_ACCESS_WRITE :
+                                         GEGL_ACCESS_READWRITE,
+                                       GEGL_ABYSS_NONE, 2);
+
+      gegl_buffer_iterator_add (iter, add_on, &add_on_area, 0,
+                                add_on_format,
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+      auto process = [=] (auto value)
+      {
+        while (gegl_buffer_iterator_next (iter))
+          {
+            gfloat       *mask_data   = (gfloat       *) iter->items[0].data;
+            const gfloat *add_on_data = (const gfloat *) iter->items[1].data;
+            gint          count       = iter->length;
+
+            while (count--)
+              {
+                const gfloat val = value (mask_data, add_on_data);
+
+                *mask_data = CLAMP (val, 0.0f, 1.0f);
+
+                add_on_data++;
+                mask_data++;
+              }
+          }
+      };
+
+      switch (op)
         {
-          gfloat       *mask_data   = (gfloat       *) iter->items[0].data;
-          const gfloat *add_on_data = (const gfloat *) iter->items[1].data;
-          gint          count       = iter->length;
+        case GIMP_CHANNEL_OP_REPLACE:
+          process ([] (const gfloat *mask,
+                       const gfloat *add_on)
+                   {
+                     return *add_on;
+                   });
+          break;
 
-          while (count--)
-            {
-              const gfloat val = *mask_data + *add_on_data;
+        case GIMP_CHANNEL_OP_ADD:
+          process ([] (const gfloat *mask,
+                       const gfloat *add_on)
+                   {
+                     return *mask + *add_on;
+                   });
+          break;
 
-              *mask_data = CLAMP (val, 0.0, 1.0);
+        case GIMP_CHANNEL_OP_SUBTRACT:
+          process ([] (const gfloat *mask,
+                       const gfloat *add_on)
+                   {
+                     return *mask - *add_on;
+                   });
+          break;
 
-              add_on_data++;
-              mask_data++;
-            }
+        case GIMP_CHANNEL_OP_INTERSECT:
+          process ([] (const gfloat *mask,
+                       const gfloat *add_on)
+                   {
+                     return MIN (*mask, *add_on);
+                   });
+          break;
         }
-      break;
-
-    case GIMP_CHANNEL_OP_SUBTRACT:
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gfloat       *mask_data   = (gfloat       *) iter->items[0].data;
-          const gfloat *add_on_data = (const gfloat *) iter->items[1].data;
-          gint          count       = iter->length;
-
-          while (count--)
-            {
-              if (*add_on_data > *mask_data)
-                *mask_data = 0.0;
-              else
-                *mask_data -= *add_on_data;
-
-              add_on_data++;
-              mask_data++;
-            }
-        }
-      break;
-
-    case GIMP_CHANNEL_OP_INTERSECT:
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gfloat       *mask_data   = (gfloat       *) iter->items[0].data;
-          const gfloat *add_on_data = (const gfloat *) iter->items[1].data;
-          gint          count       = iter->length;
-
-          while (count--)
-            {
-              *mask_data = MIN (*mask_data, *add_on_data);
-
-              add_on_data++;
-              mask_data++;
-            }
-        }
-      break;
-
-    default:
-      g_warning ("%s: unknown operation type", G_STRFUNC);
-      break;
-    }
+    });
 
   return TRUE;
 }
