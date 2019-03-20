@@ -455,6 +455,7 @@ gimp_group_layer_get_size (GimpViewable *viewable,
                            gint         *height)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (viewable);
+  gboolean               result;
 
   if (private->reallocate_width  != 0 &&
       private->reallocate_height != 0)
@@ -465,13 +466,18 @@ gimp_group_layer_get_size (GimpViewable *viewable,
       return TRUE;
     }
 
-  /*  return the size only if there are children...  */
-  if (gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children)))
-    return GIMP_VIEWABLE_CLASS (parent_class)->get_size (viewable,
+  result = GIMP_VIEWABLE_CLASS (parent_class)->get_size (viewable,
                                                          width, height);
 
-  /*  ...otherwise return "no content"  */
-  return FALSE;
+  /* if the group is empty, return "no content" through
+   * gimp_viewable_get_size(), but make sure to set *width and *height anyway,
+   * so that the correct size is reported to the projection through
+   * gimp_projectable_get_size().  see issue #3134.
+   */
+  if (gimp_container_is_empty (private->children))
+    result = FALSE;
+
+  return result;
 }
 
 static GimpContainer *
