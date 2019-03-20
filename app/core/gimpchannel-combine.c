@@ -28,10 +28,337 @@
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-mask-combine.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimpchannel.h"
 #include "gimpchannel-combine.h"
 
+
+typedef struct
+{
+  GeglRectangle rect;
+
+  gboolean      bounds_known;
+  gboolean      empty;
+  GeglRectangle bounds;
+} GimpChannelCombineData;
+
+
+/*  local function prototypes  */
+
+static void       gimp_channel_combine_clear            (GimpChannel            *mask,
+                                                         const GeglRectangle    *rect);
+static void       gimp_channel_combine_clear_complement (GimpChannel            *mask,
+                                                         const GeglRectangle    *rect);
+
+static gboolean   gimp_channel_combine_start            (GimpChannel            *mask,
+                                                         GimpChannelOps          op,
+                                                         const GeglRectangle    *rect,
+                                                         gboolean                full_extent,
+                                                         gboolean                full_value,
+                                                         GimpChannelCombineData *data);
+static void       gimp_channel_combine_end              (GimpChannel            *mask,
+                                                         GimpChannelCombineData *data);
+
+
+/*  private functions  */
+
+static void
+gimp_channel_combine_clear (GimpChannel         *mask,
+                            const GeglRectangle *rect)
+{
+  GeglBuffer    *buffer;
+  GeglRectangle  area;
+  GeglRectangle  update_area;
+
+  if (mask->bounds_known && mask->empty)
+    return;
+
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+  if (rect)
+    {
+      if (rect->width <= 0 || rect->height <= 0)
+        return;
+
+      if (mask->bounds_known)
+        {
+          if (! gegl_rectangle_intersect (&area,
+                                          GEGL_RECTANGLE (mask->x1,
+                                                          mask->y1,
+                                                          mask->x2 - mask->x1,
+                                                          mask->y2 - mask->y1),
+                                          rect))
+            {
+              return;
+            }
+        }
+      else
+        {
+          area = *rect;
+        }
+
+      update_area = area;
+    }
+  else
+    {
+      if (mask->bounds_known)
+        {
+          area.x      = mask->x1;
+          area.y      = mask->y1;
+          area.width  = mask->x2 - mask->x1;
+          area.height = mask->y2 - mask->y1;
+        }
+      else
+        {
+          area.x      = 0;
+          area.y      = 0;
+          area.width  = gimp_item_get_width  (GIMP_ITEM (mask));
+          area.height = gimp_item_get_height (GIMP_ITEM (mask));
+        }
+
+      update_area = area;
+
+      gimp_gegl_rectangle_align_to_tile_grid (&area, &area, buffer);
+    }
+
+  gegl_buffer_clear (buffer, &area);
+
+  gimp_drawable_update (GIMP_DRAWABLE (mask),
+                        update_area.x, update_area.y,
+                        update_area.width, update_area.height);
+}
+
+static void
+gimp_channel_combine_clear_complement (GimpChannel         *mask,
+                                       const GeglRectangle *rect)
+{
+  gint width  = gimp_item_get_width  (GIMP_ITEM (mask));
+  gint height = gimp_item_get_height (GIMP_ITEM (mask));
+
+  gimp_channel_combine_clear (
+    mask,
+    GEGL_RECTANGLE (0,
+                    0,
+                    width,
+                    rect->y));
+
+  gimp_channel_combine_clear (
+    mask,
+    GEGL_RECTANGLE (0,
+                    rect->y + rect->height,
+                    width,
+                    height - (rect->y + rect->height)));
+
+  gimp_channel_combine_clear (
+    mask,
+    GEGL_RECTANGLE (0,
+                    rect->y,
+                    rect->x,
+                    rect->height));
+
+  gimp_channel_combine_clear (
+    mask,
+    GEGL_RECTANGLE (rect->x + rect->width,
+                    rect->y,
+                    width - (rect->x + rect->width),
+                    rect->height));
+}
+
+static gboolean
+gimp_channel_combine_start (GimpChannel            *mask,
+                            GimpChannelOps          op,
+                            const GeglRectangle    *rect,
+                            gboolean                full_extent,
+                            gboolean                full_value,
+                            GimpChannelCombineData *data)
+{
+  GeglBuffer    *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  GeglRectangle  extent;
+  gboolean       intersects;
+
+  extent.x      = 0;
+  extent.y      = 0;
+  extent.width  = gimp_item_get_width  (GIMP_ITEM (mask));
+  extent.height = gimp_item_get_height (GIMP_ITEM (mask));
+
+  intersects = gegl_rectangle_intersect (&data->rect, rect, &extent);
+
+  data->bounds_known  = mask->bounds_known;
+  data->empty         = mask->empty;
+
+  data->bounds.x      = mask->x1;
+  data->bounds.y      = mask->y1;
+  data->bounds.width  = mask->x2 - mask->x1;
+  data->bounds.height = mask->y2 - mask->y1;
+
+  gegl_buffer_freeze_changed (buffer);
+
+  /*  Determine new boundary  */
+  switch (op)
+    {
+    case GIMP_CHANNEL_OP_REPLACE:
+      gimp_channel_combine_clear (mask, NULL);
+
+      if (! intersects)
+        {
+          data->bounds_known = TRUE;
+          data->empty        = TRUE;
+
+          return FALSE;
+        }
+
+      data->bounds_known = FALSE;
+
+      if (full_extent)
+        {
+          data->bounds_known = TRUE;
+          data->empty        = FALSE;
+          data->bounds       = data->rect;
+        }
+      break;
+
+    case GIMP_CHANNEL_OP_ADD:
+      if (! intersects)
+        return FALSE;
+
+      data->bounds_known = FALSE;
+
+      if (full_extent && (mask->bounds_known ||
+                          gegl_rectangle_equal (&data->rect, &extent)))
+        {
+          data->bounds_known = TRUE;
+          data->empty        = FALSE;
+
+          if (mask->bounds_known && ! mask->empty)
+            {
+              gegl_rectangle_bounding_box (&data->bounds,
+                                           &data->bounds, &data->rect);
+            }
+          else
+            {
+              data->bounds = data->rect;
+            }
+        }
+      break;
+
+    case GIMP_CHANNEL_OP_SUBTRACT:
+      if (intersects && mask->bounds_known)
+        {
+          if (mask->empty)
+            {
+              intersects = FALSE;
+            }
+          else
+            {
+              intersects = gegl_rectangle_intersect (&data->rect,
+                                                     &data->rect,
+                                                     &data->bounds);
+            }
+        }
+
+      if (! intersects)
+        return FALSE;
+
+      if (full_value &&
+          gegl_rectangle_contains (&data->rect,
+                                   mask->bounds_known ? &data->bounds :
+                                                        &extent))
+        {
+          gimp_channel_combine_clear (mask, NULL);
+
+          data->bounds_known = TRUE;
+          data->empty        = TRUE;
+
+          return FALSE;
+        }
+
+      data->bounds_known = FALSE;
+
+      gegl_buffer_set_abyss (buffer, &data->rect);
+      break;
+
+    case GIMP_CHANNEL_OP_INTERSECT:
+      if (intersects && mask->bounds_known)
+        {
+          if (mask->empty)
+            {
+              intersects = FALSE;
+            }
+          else
+            {
+              intersects = gegl_rectangle_intersect (&data->rect,
+                                                     &data->rect,
+                                                     &data->bounds);
+            }
+        }
+
+      if (! intersects)
+        {
+          gimp_channel_combine_clear (mask, NULL);
+
+          data->bounds_known = TRUE;
+          data->empty        = TRUE;
+
+          return FALSE;
+        }
+
+      if (full_value && mask->bounds_known &&
+          gegl_rectangle_contains (&data->rect, &data->bounds))
+        {
+          return FALSE;
+        }
+
+      data->bounds_known = FALSE;
+
+      gimp_channel_combine_clear_complement (mask, &data->rect);
+
+      gegl_buffer_set_abyss (buffer, &data->rect);
+      break;
+    }
+
+  return TRUE;
+}
+
+static void
+gimp_channel_combine_end (GimpChannel            *mask,
+                          GimpChannelCombineData *data)
+{
+  GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+  gegl_buffer_set_abyss (buffer, gegl_buffer_get_extent (buffer));
+
+  gegl_buffer_thaw_changed (buffer);
+
+  mask->bounds_known = data->bounds_known;
+
+  if (data->bounds_known)
+    {
+      mask->empty = data->empty;
+
+      if (data->empty)
+        {
+          mask->x1 = 0;
+          mask->y1 = 0;
+          mask->x2 = gimp_item_get_width  (GIMP_ITEM (mask));
+          mask->y2 = gimp_item_get_height (GIMP_ITEM (mask));
+        }
+      else
+        {
+          mask->x1 = data->bounds.x;
+          mask->y1 = data->bounds.y;
+          mask->x2 = data->bounds.x + data->bounds.width;
+          mask->y2 = data->bounds.y + data->bounds.height;
+        }
+    }
+
+  gimp_drawable_update (GIMP_DRAWABLE (mask),
+                        data->rect.x, data->rect.y,
+                        data->rect.width, data->rect.height);
+}
+
+
+/*  public functions  */
 
 void
 gimp_channel_combine_rect (GimpChannel    *mask,
@@ -41,52 +368,19 @@ gimp_channel_combine_rect (GimpChannel    *mask,
                            gint            w,
                            gint            h)
 {
-  GeglBuffer *buffer;
+  GimpChannelCombineData data;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-
-  if (! gimp_gegl_mask_combine_rect (buffer, op, x, y, w, h))
-    return;
-
-  gimp_rectangle_intersect (x, y, w, h,
-                            0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (mask)),
-                            gimp_item_get_height (GIMP_ITEM (mask)),
-                            &x, &y, &w, &h);
-
-  /*  Determine new boundary  */
-  if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && ! mask->empty)
+  if (gimp_channel_combine_start (mask, op, GEGL_RECTANGLE (x, y, w, h),
+                                  TRUE, TRUE, &data))
     {
-      if (x < mask->x1)
-        mask->x1 = x;
-      if (y < mask->y1)
-        mask->y1 = y;
-      if ((x + w) > mask->x2)
-        mask->x2 = (x + w);
-      if ((y + h) > mask->y2)
-        mask->y2 = (y + h);
-    }
-  else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
-    {
-      mask->empty = FALSE;
-      mask->x1    = x;
-      mask->y1    = y;
-      mask->x2    = x + w;
-      mask->y2    = y + h;
-    }
-  else
-    {
-      mask->bounds_known = FALSE;
+      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+
+      gimp_gegl_mask_combine_rect (buffer, op, x, y, w, h);
     }
 
-  mask->x1 = CLAMP (mask->x1, 0, gimp_item_get_width  (GIMP_ITEM (mask)));
-  mask->y1 = CLAMP (mask->y1, 0, gimp_item_get_height (GIMP_ITEM (mask)));
-  mask->x2 = CLAMP (mask->x2, 0, gimp_item_get_width  (GIMP_ITEM (mask)));
-  mask->y2 = CLAMP (mask->y2, 0, gimp_item_get_height (GIMP_ITEM (mask)));
-
-  gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
+  gimp_channel_combine_end (mask, &data);
 }
 
 void
@@ -113,46 +407,20 @@ gimp_channel_combine_ellipse_rect (GimpChannel    *mask,
                                    gdouble         ry,
                                    gboolean        antialias)
 {
-  GeglBuffer *buffer;
+  GimpChannelCombineData data;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (op != GIMP_CHANNEL_OP_INTERSECT);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
-
-  if (! gimp_gegl_mask_combine_ellipse_rect (buffer, op, x, y, w, h,
-                                             rx, ry, antialias))
-    return;
-
-  gimp_rectangle_intersect (x, y, w, h,
-                            0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (mask)),
-                            gimp_item_get_height (GIMP_ITEM (mask)),
-                            &x, &y, &w, &h);
-
-  /*  determine new boundary  */
-  if (mask->bounds_known && (op == GIMP_CHANNEL_OP_ADD) && ! mask->empty)
+  if (gimp_channel_combine_start (mask, op, GEGL_RECTANGLE (x, y, w, h),
+                                  TRUE, FALSE, &data))
     {
-      if (x < mask->x1) mask->x1 = x;
-      if (y < mask->y1) mask->y1 = y;
+      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-      if ((x + w) > mask->x2) mask->x2 = (x + w);
-      if ((y + h) > mask->y2) mask->y2 = (y + h);
-    }
-  else if (op == GIMP_CHANNEL_OP_REPLACE || mask->empty)
-    {
-      mask->empty = FALSE;
-      mask->x1    = x;
-      mask->y1    = y;
-      mask->x2    = x + w;
-      mask->y2    = y + h;
-    }
-  else
-    {
-      mask->bounds_known = FALSE;
+      gimp_gegl_mask_combine_ellipse_rect (buffer, op, x, y, w, h,
+                                           rx, ry, antialias);
     }
 
-  gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
+  gimp_channel_combine_end (mask, &data);
 }
 
 void
@@ -180,27 +448,24 @@ gimp_channel_combine_buffer (GimpChannel    *mask,
                              gint            off_x,
                              gint            off_y)
 {
-  GeglBuffer *buffer;
-  gint        x, y, w, h;
+  GimpChannelCombineData data;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
   g_return_if_fail (GEGL_IS_BUFFER (add_on_buffer));
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+  if (gimp_channel_combine_start (mask, op,
+                                  GEGL_RECTANGLE (
+                                    off_x,
+                                    off_y,
+                                    gegl_buffer_get_width  (add_on_buffer),
+                                    gegl_buffer_get_height (add_on_buffer)),
+                                  FALSE, FALSE, &data))
+    {
+      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
-  if (! gimp_gegl_mask_combine_buffer (buffer, add_on_buffer,
-                                       op, off_x, off_y))
-    return;
+      gimp_gegl_mask_combine_buffer (buffer, add_on_buffer, op,
+                                     off_x, off_y);
+    }
 
-  gimp_rectangle_intersect (off_x, off_y,
-                            gegl_buffer_get_width  (add_on_buffer),
-                            gegl_buffer_get_height (add_on_buffer),
-                            0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (mask)),
-                            gimp_item_get_height (GIMP_ITEM (mask)),
-                            &x, &y, &w, &h);
-
-  mask->bounds_known = FALSE;
-
-  gimp_drawable_update (GIMP_DRAWABLE (mask), x, y, w, h);
+  gimp_channel_combine_end (mask, &data);
 }
