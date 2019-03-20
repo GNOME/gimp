@@ -34,6 +34,12 @@ extern "C"
 #include "gimp-gegl-mask-combine.h"
 
 
+#define EPSILON 1e-6
+
+#define PIXELS_PER_THREAD \
+  (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
+
+
 gboolean
 gimp_gegl_mask_combine_rect (GeglBuffer     *mask,
                              GimpChannelOps  op,
@@ -75,24 +81,6 @@ gimp_gegl_mask_combine_rect (GeglBuffer     *mask,
   return TRUE;
 }
 
-/**
- * gimp_gegl_mask_combine_ellipse:
- * @mask:      the channel with which to combine the ellipse
- * @op:        whether to replace, add to, or subtract from the current
- *             contents
- * @x:         x coordinate of upper left corner of ellipse
- * @y:         y coordinate of upper left corner of ellipse
- * @w:         width of ellipse bounding box
- * @h:         height of ellipse bounding box
- * @antialias: if %TRUE, antialias the ellipse
- *
- * Mainly used for elliptical selections.  If @op is
- * %GIMP_CHANNEL_OP_REPLACE or %GIMP_CHANNEL_OP_ADD, sets pixels
- * within the ellipse to 255.  If @op is %GIMP_CHANNEL_OP_SUBTRACT,
- * sets pixels within to zero.  If @antialias is %TRUE, pixels that
- * impinge on the edge of the ellipse are set to intermediate values,
- * depending on how much they overlap.
- **/
 gboolean
 gimp_gegl_mask_combine_ellipse (GeglBuffer     *mask,
                                 GimpChannelOps  op,
@@ -106,77 +94,6 @@ gimp_gegl_mask_combine_ellipse (GeglBuffer     *mask,
                                               w / 2.0, h / 2.0, antialias);
 }
 
-static void
-gimp_gegl_mask_combine_span (gfloat         *data,
-                             GimpChannelOps  op,
-                             gint            x1,
-                             gint            x2,
-                             gfloat          value)
-{
-  if (x2 <= x1)
-    return;
-
-  switch (op)
-    {
-    case GIMP_CHANNEL_OP_ADD:
-    case GIMP_CHANNEL_OP_REPLACE:
-      if (value == 1.0)
-        {
-          while (x1 < x2)
-            data[x1++] = 1.0;
-        }
-      else
-        {
-          while (x1 < x2)
-            {
-              const gfloat val = data[x1] + value;
-              data[x1++] = val > 1.0 ? 1.0 : val;
-            }
-        }
-      break;
-
-    case GIMP_CHANNEL_OP_SUBTRACT:
-      if (value == 1.0)
-        {
-          while (x1 < x2)
-            data[x1++] = 0.0;
-        }
-      else
-        {
-          while (x1 < x2)
-            {
-              const gfloat val = data[x1] - value;
-              data[x1++] = val > 0.0 ? val : 0.0;
-            }
-        }
-      break;
-
-    case GIMP_CHANNEL_OP_INTERSECT:
-      /* Should not happen */
-      break;
-    }
-}
-
-/**
- * gimp_gegl_mask_combine_ellipse_rect:
- * @mask:      the channel with which to combine the elliptic rect
- * @op:        whether to replace, add to, or subtract from the current
- *             contents
- * @x:         x coordinate of upper left corner of bounding rect
- * @y:         y coordinate of upper left corner of bounding rect
- * @w:         width of bounding rect
- * @h:         height of bounding rect
- * @a:         elliptic a-constant applied to corners
- * @b:         elliptic b-constant applied to corners
- * @antialias: if %TRUE, antialias the elliptic corners
- *
- * Used for rounded cornered rectangles and ellipses.  If @op is
- * %GIMP_CHANNEL_OP_REPLACE or %GIMP_CHANNEL_OP_ADD, sets pixels
- * within the ellipse to 255.  If @op is %GIMP_CHANNEL_OP_SUBTRACT,
- * sets pixels within to zero.  If @antialias is %TRUE, pixels that
- * impinge on the edge of the ellipse are set to intermediate values,
- * depending on how much they overlap.
- **/
 gboolean
 gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
                                      GimpChannelOps  op,
@@ -184,200 +101,399 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
                                      gint            y,
                                      gint            w,
                                      gint            h,
-                                     gdouble         a,
-                                     gdouble         b,
+                                     gdouble         rx,
+                                     gdouble         ry,
                                      gboolean        antialias)
 {
-  GeglBufferIterator *iter;
-  GeglRectangle      *roi;
-  gdouble             a_sqr;
-  gdouble             b_sqr;
-  gdouble             ellipse_center_x;
-  gint                x0, y0;
-  gint                width, height;
+  GeglRectangle  rect;
+  const Babl    *format;
+  gint           bpp;
+  gfloat         one_f = 1.0f;
+  gpointer       one;
+  gdouble        cx;
+  gdouble        cy;
+  gint           left;
+  gint           right;
+  gint           top;
+  gint           bottom;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (mask), FALSE);
-  g_return_val_if_fail (a >= 0.0 && b >= 0.0, FALSE);
-  g_return_val_if_fail (op != GIMP_CHANNEL_OP_INTERSECT, FALSE);
 
-  /* Make sure the elliptic corners fit into the rect */
-  a = MIN (a, w / 2.0);
-  b = MIN (b, h / 2.0);
+  if (rx <= EPSILON || ry <= EPSILON)
+    return gimp_gegl_mask_combine_rect (mask, op, x, y, w, h);
 
-  a_sqr = SQR (a);
-  b_sqr = SQR (b);
+  left   = x;
+  right  = x + w;
+  top    = y;
+  bottom = y + h;
 
-  if (! gimp_rectangle_intersect (x, y, w, h,
-                                  0, 0,
-                                  gegl_buffer_get_width  (mask),
-                                  gegl_buffer_get_height (mask),
-                                  &x0, &y0, &width, &height))
-    return FALSE;
+  cx = (left + right)  / 2.0;
+  cy = (top  + bottom) / 2.0;
 
-  ellipse_center_x = x + a;
+  rx = MIN (rx, w / 2.0);
+  ry = MIN (ry, h / 2.0);
 
-  iter = gegl_buffer_iterator_new (mask,
-                                   GEGL_RECTANGLE (x0, y0, width, height), 0,
-                                   babl_format ("Y float"),
-                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 1);
-  roi = &iter->items[0].roi;
-
-  while (gegl_buffer_iterator_next (iter))
+  if (! gegl_rectangle_intersect (&rect,
+                                  GEGL_RECTANGLE (x, y, w, h),
+                                  gegl_buffer_get_abyss (mask)))
     {
-      gfloat *data = (gfloat *) iter->items[0].data;
-      gint    py;
+      return FALSE;
+    }
 
-      for (py = roi->y;
-           py < roi->y + roi->height;
-           py++, data += roi->width)
+  format = gegl_buffer_get_format (mask);
+
+  if (antialias)
+    {
+      format = gimp_babl_format_change_component_type (
+        format, GIMP_COMPONENT_TYPE_FLOAT);
+    }
+
+  bpp = babl_format_get_bytes_per_pixel (format);
+  one = g_alloca (bpp);
+
+  babl_process (babl_fish ("Y float", format), &one_f, one, 1);
+
+  /* coordinate-system transforms.  (x, y) coordinates are in the image
+   * coordinate-system, and (u, v) coordinates are in a coordinate-system
+   * aligned with the center of one of the elliptic corners, with the positive
+   * directions pointing away from the rectangle.  when converting from (x, y)
+   * to (u, v), we use the closest elliptic corner.
+   */
+  auto x_to_u = [=] (gdouble x)
+  {
+    if (x < cx)
+      return (left + rx) - x;
+    else
+      return x - (right - rx);
+  };
+
+  auto y_to_v = [=] (gdouble y)
+  {
+    if (y < cy)
+      return (top + ry) - y;
+    else
+      return y - (bottom - ry);
+  };
+
+  auto u_to_x_left = [=] (gdouble u)
+  {
+    return (left + rx) - u;
+  };
+
+  auto u_to_x_right = [=] (gdouble u)
+  {
+    return (right - rx) + u;
+  };
+
+  /* intersection of a horizontal line with the ellipse */
+  auto v_to_u = [=] (gdouble v)
+  {
+    if (v > 0.0)
+      return sqrt (MAX (SQR (rx) - SQR (rx * v / ry), 0.0));
+    else
+      return rx;
+  };
+
+  /* intersection of a vertical line with the ellipse */
+  auto u_to_v = [=] (gdouble u)
+  {
+    if (u > 0.0)
+      return sqrt (MAX (SQR (ry) - SQR (ry * u / rx), 0.0));
+    else
+      return ry;
+  };
+
+  /* signed, normalized distance of a point from the ellipse's circumference.
+   * the sign of the result determines if the point is inside (positive) or
+   * outside (negative) the ellipse.  the result is normalized to the cross-
+   * section length of a pixel, in the direction of the closest point along the
+   * ellipse.
+   *
+   * we use the following method to approximate the distance: pass horizontal
+   * and vertical lines at the given point, P, and find their (positive) points
+   * of intersection with the ellipse, A and B.  the segment AB is an
+   * approximation of the corresponding elliptic arc (see bug #147836).  find
+   * the closest point, C, to P, along the segment AB.  find the (positive)
+   * point of intersection, Q, of the line PC and the ellipse.  Q is an
+   * approximation for the closest point to P along the ellipse, and the
+   * approximated distance is the distance from P to Q.
+   */
+  auto ellipse_distance = [=] (gdouble u,
+                               gdouble v)
+  {
+    gdouble du;
+    gdouble dv;
+    gdouble t;
+    gdouble a, b, c;
+    gdouble d;
+
+    u = MAX (u, 0.0);
+    v = MAX (v, 0.0);
+
+    du = v_to_u (v) - u;
+    dv = u_to_v (u) - v;
+
+    t = SQR (du) / (SQR (du) + SQR (dv));
+
+    du *= 1.0 - t;
+    dv *= t;
+
+    v  *= rx / ry;
+    dv *= rx / ry;
+
+    a = SQR (du) + SQR (dv);
+    b = u * du + v * dv;
+    c = SQR (u) + SQR (v) - SQR (rx);
+
+    if (a <= EPSILON)
+      return 0.0;
+
+    if (c < 0.0)
+      t = (-b + sqrt (MAX (SQR (b) - a * c, 0.0))) / a;
+    else
+      t = (-b - sqrt (MAX (SQR (b) - a * c, 0.0))) / a;
+
+    dv *= ry / rx;
+
+    d = sqrt (SQR (du * t) + SQR (dv * t));
+
+    if (c > 0.0)
+      d = -d;
+
+    d /= sqrt (SQR (MIN (du / dv, dv / du)) + 1.0);
+
+    return d;
+  };
+
+  /* anti-aliased value of a pixel */
+  auto pixel_value = [=] (gint x,
+                          gint y)
+  {
+    gdouble u = x_to_u (x + 0.5);
+    gdouble v = y_to_v (y + 0.5);
+    gdouble d = ellipse_distance (u, v);
+
+    /* use the distance of the pixel's center from the ellipse to approximate
+     * the coverage
+     */
+    d = CLAMP (0.5 + d, 0.0, 1.0);
+
+    /* we're at the horizontal boundary of an elliptic corner */
+    if (u < 0.5)
+      d = d * (0.5 + u) + (0.5 - u);
+
+    /* we're at the vertical boundary of an elliptic corner */
+    if (v < 0.5)
+      d = d * (0.5 + v) + (0.5 - v);
+
+    /* opposite horizontal corners intersect the pixel */
+    if (x == (right - 1) - (x - left))
+      d = 2.0 * d - 1.0;
+
+    /* opposite vertical corners intersect the pixel */
+    if (y == (bottom - 1) - (y - top))
+      d = 2.0 * d - 1.0;
+
+    return d;
+  };
+
+  auto ellipse_range = [=] (gdouble  y,
+                            gdouble *x0,
+                            gdouble *x1)
+  {
+    gdouble u = v_to_u (y_to_v (y));
+
+    *x0 = u_to_x_left  (u);
+    *x1 = u_to_x_right (u);
+  };
+
+  auto fill0 = [=] (gpointer dest,
+                    gint     n)
+  {
+    switch (op)
+      {
+      case GIMP_CHANNEL_OP_REPLACE:
+      case GIMP_CHANNEL_OP_INTERSECT:
+        memset (dest, 0, bpp * n);
+        break;
+
+      case GIMP_CHANNEL_OP_ADD:
+      case GIMP_CHANNEL_OP_SUBTRACT:
+        break;
+      }
+
+    return (gpointer) ((guint8 *) dest + bpp * n);
+  };
+
+  auto fill1 = [=] (gpointer dest,
+                    gint     n)
+  {
+    switch (op)
+      {
+      case GIMP_CHANNEL_OP_REPLACE:
+      case GIMP_CHANNEL_OP_ADD:
+        gegl_memset_pattern (dest, one, bpp, n);
+        break;
+
+      case GIMP_CHANNEL_OP_SUBTRACT:
+        memset (dest, 0, bpp * n);
+        break;
+
+      case GIMP_CHANNEL_OP_INTERSECT:
+        break;
+      }
+
+    return (gpointer) ((guint8 *) dest + bpp * n);
+  };
+
+  auto set = [=] (gpointer dest,
+                  gfloat   value)
+  {
+    gfloat *p = (gfloat *) dest;
+
+    switch (op)
+      {
+      case GIMP_CHANNEL_OP_REPLACE:
+        *p = value;
+        break;
+
+      case GIMP_CHANNEL_OP_ADD:
+        *p = MIN (*p + value, 1.0);
+        break;
+
+      case GIMP_CHANNEL_OP_SUBTRACT:
+        *p = MAX (*p - value, 0.0);
+        break;
+
+      case GIMP_CHANNEL_OP_INTERSECT:
+        *p = MIN (*p, value);
+        break;
+      }
+
+    return (gpointer) (p + 1);
+  };
+
+  gegl_parallel_distribute_area (
+    &rect, PIXELS_PER_THREAD,
+    [=] (const GeglRectangle *area)
+    {
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (
+        mask, area, 0, format,
+        op == GIMP_CHANNEL_OP_REPLACE ? GEGL_ACCESS_WRITE :
+                                        GEGL_ACCESS_READWRITE,
+        GEGL_ABYSS_NONE, 1);
+
+      while (gegl_buffer_iterator_next (iter))
         {
-          const gint px = roi->x;
-          gdouble    ellipse_center_y;
+          const GeglRectangle *roi = &iter->items[0].roi;
+          gpointer             d   = iter->items[0].data;
+          gdouble              tx0, ty0;
+          gdouble              tx1, ty1;
+          gdouble              x0;
+          gdouble              x1;
+          gint                 y;
 
-          if (py >= y + b && py < y + h - b)
-            {
-              /*  we are on a row without rounded corners  */
-              gimp_gegl_mask_combine_span (data, op, 0, roi->width, 1.0);
-              continue;
-            }
+          /* tile bounds */
+          tx0 = roi->x;
+          ty0 = roi->y;
 
-          /* Match the ellipse center y with our current y */
-          if (py < y + b)
-            {
-              ellipse_center_y = y + b;
-            }
-          else
-            {
-              ellipse_center_y = y + h - b;
-            }
+          tx1 = roi->x + roi->width;
+          ty1 = roi->y + roi->height;
 
-          /* For a non-antialiased ellipse, use the normal equation
-           * for an ellipse with an arbitrary center
-           * (ellipse_center_x, ellipse_center_y).
-           */
           if (! antialias)
             {
-              gdouble half_ellipse_width_at_y;
-              gint    x_start;
-              gint    x_end;
+              tx0 += 0.5;
+              ty0 += 0.5;
 
-              half_ellipse_width_at_y =
-                sqrt (a_sqr -
-                      a_sqr * SQR (py + 0.5f - ellipse_center_y) / b_sqr);
-
-              x_start = ROUND (ellipse_center_x - half_ellipse_width_at_y);
-              x_end   = ROUND (ellipse_center_x + w - 2 * a +
-                               half_ellipse_width_at_y);
-
-              gimp_gegl_mask_combine_span (data, op,
-                                           MAX (x_start - px, 0),
-                                           MIN (x_end   - px, roi->width), 1.0);
+              tx1 -= 0.5;
+              ty1 -= 0.5;
             }
-          else  /* use antialiasing */
+
+          /* if the tile is fully inside/outside the ellipse, fill it with 1/0,
+           * respectively, and skip the rest.
+           */
+          ellipse_range (ty0, &x0, &x1);
+
+          if (tx0 >= x0 && tx1 <= x1)
             {
-              /* algorithm changed 7-18-04, because the previous one
-               * did not work well for eccentric ellipses.  The new
-               * algorithm measures the distance to the ellipse in the
-               * X and Y directions, and uses trigonometry to
-               * approximate the distance to the ellipse as the
-               * distance to the hypotenuse of a right triangle whose
-               * legs are the X and Y distances.  (WES)
-               */
-              const gfloat yi       = ABS (py + 0.5 - ellipse_center_y);
-              gfloat       last_val = -1;
-              gint         x_start  = px;
-              gint         cur_x;
+              ellipse_range (ty1, &x0, &x1);
 
-              for (cur_x = px; cur_x < (px + roi->width); cur_x++)
+              if (tx0 > x0 && tx1 <= x1)
                 {
-                  gfloat  xj;
-                  gfloat  xdist;
-                  gfloat  ydist;
-                  gfloat  r;
-                  gfloat  dist;
-                  gfloat  val;
+                  fill1 (d, iter->length);
 
-                  if (cur_x < x + w / 2)
+                  continue;
+                }
+            }
+          else if (tx1 < x0 || tx0 > x1)
+            {
+              ellipse_range (ty1, &x0, &x1);
+
+              if (tx1 < x0 || tx0 > x1)
+                {
+                  if ((ty0 - cy) * (ty1 - cy) >= 0.0)
                     {
-                      ellipse_center_x = x + a;
-                    }
-                  else
-                    {
-                      ellipse_center_x = x + w - a;
-                    }
+                      fill0 (d, iter->length);
 
-                  xj = ABS (cur_x + 0.5 - ellipse_center_x);
-
-                  if (yi < b)
-                    xdist = xj - a * sqrt (1 - SQR (yi) / b_sqr);
-                  else
-                    xdist = 1000.0;  /* anything large will work */
-
-                  if (xj < a)
-                    ydist = yi - b * sqrt (1 - SQR (xj) / a_sqr);
-                  else
-                    ydist = 1000.0;  /* anything large will work */
-
-                  r = hypot (xdist, ydist);
-
-                  if (r < 0.001)
-                    dist = 0.0;
-                  else
-                    dist = xdist * ydist / r; /* trig formula for distance to
-                                               * hypotenuse
-                                               */
-
-                  if (xdist < 0.0)
-                    dist *= -1;
-
-                  if (dist < -0.5)
-                    val = 1.0;
-                  else if (dist < 0.5)
-                    val = (1.0 - (dist + 0.5));
-                  else
-                    val = 0.0;
-
-                  if (last_val != val)
-                    {
-                      if (last_val != -1)
-                        gimp_gegl_mask_combine_span (data, op,
-                                                     MAX (x_start - px, 0),
-                                                     MIN (cur_x   - px, roi->width),
-                                                     last_val);
-
-                      x_start = cur_x;
-                      last_val = val;
-                    }
-
-                  /*  skip ahead if we are on the straight segment
-                   *  between rounded corners
-                   */
-                  if (cur_x >= x + a && cur_x < x + w - a)
-                    {
-                      gimp_gegl_mask_combine_span (data, op,
-                                                   MAX (x_start - px, 0),
-                                                   MIN (cur_x   - px, roi->width),
-                                                   last_val);
-
-                      x_start = cur_x;
-                      cur_x = x + w - a;
-                      last_val = val = 1.0;
-                    }
-
-                  /* Time to change center? */
-                  if (cur_x >= x + w / 2)
-                    {
-                      ellipse_center_x = x + w - a;
+                      continue;
                     }
                 }
+            }
 
-              gimp_gegl_mask_combine_span (data, op,
-                                           MAX (x_start - px, 0),
-                                           MIN (cur_x   - px, roi->width),
-                                           last_val);
+          for (y = roi->y; y < roi->y + roi->height; y++)
+            {
+              gint a, b;
+
+              if (antialias)
+                {
+                  gdouble v  = y_to_v (y + 0.5);
+                  gdouble u0 = v_to_u (v - 0.5);
+                  gdouble u1 = v_to_u (v + 0.5);
+                  gint    x;
+
+                  a = floor (u_to_x_left (u0)) - roi->x;
+                  a = CLAMP (a, 0, roi->width);
+
+                  b = ceil  (u_to_x_left (u1)) - roi->x;
+                  b = CLAMP (b, a, roi->width);
+
+                  d = fill0 (d, a);
+
+                  for (x = roi->x + a; x < roi->x + b; x++)
+                    d = set (d, pixel_value (x, y));
+
+                  a = floor (u_to_x_right (u1)) - roi->x;
+                  a = CLAMP (a, b, roi->width);
+
+                  d = fill1 (d, a - b);
+
+                  b = ceil  (u_to_x_right (u0)) - roi->x;
+                  b = CLAMP (b, a, roi->width);
+
+                  for (x = roi->x + a; x < roi->x + b; x++)
+                    d = set (d, pixel_value (x, y));
+
+                  d = fill0 (d, roi->width - b);
+                }
+              else
+                {
+                  ellipse_range (y + 0.5, &x0, &x1);
+
+                  a = ceil  (x0 - 0.5) - roi->x;
+                  a = CLAMP (a, 0, roi->width);
+
+                  b = floor (x1 + 0.5) - roi->x;
+                  b = CLAMP (b, 0, roi->width);
+
+                  d = fill0 (d, a);
+                  d = fill1 (d, b - a);
+                  d = fill0 (d, roi->width - b);
+                }
             }
         }
-    }
+    });
 
   return TRUE;
 }
