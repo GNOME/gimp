@@ -40,6 +40,7 @@ GimpPrecision       gimp_babl_precision        (GimpComponentType  component,
 
 gboolean            gimp_babl_is_valid         (GimpImageBaseType  base_type,
                                                 GimpPrecision      precision);
+GimpComponentType   gimp_babl_is_bounded       (GimpPrecision      precision);
 
 const Babl        * gimp_babl_format           (GimpImageBaseType  base_type,
                                                 GimpPrecision      precision,

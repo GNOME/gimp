@@ -780,6 +780,25 @@ gimp_babl_is_valid (GimpImageBaseType base_type,
   g_return_val_if_reached (FALSE);
 }
 
+GimpComponentType
+gimp_babl_is_bounded (GimpPrecision precision)
+{
+  switch (gimp_babl_component_type (precision))
+    {
+    case GIMP_COMPONENT_TYPE_U8:
+    case GIMP_COMPONENT_TYPE_U16:
+    case GIMP_COMPONENT_TYPE_U32:
+      return TRUE;
+
+    case GIMP_COMPONENT_TYPE_HALF:
+    case GIMP_COMPONENT_TYPE_FLOAT:
+    case GIMP_COMPONENT_TYPE_DOUBLE:
+      return FALSE;
+    }
+
+  g_return_val_if_reached (FALSE);
+}
+
 const Babl *
 gimp_babl_format (GimpImageBaseType  base_type,
                   GimpPrecision      precision,
