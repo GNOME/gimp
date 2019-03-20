@@ -279,17 +279,18 @@ gimp_prop_gui_chain_toggled (GimpChainButton *chain,
   GBinding      *binding;
   GtkAdjustment *y_adj;
 
-  y_adj = g_object_get_data (G_OBJECT (x_adj), "y-adjustment");
+  binding = g_object_get_data (G_OBJECT (chain), "binding");
+  y_adj   = g_object_get_data (G_OBJECT (x_adj), "y-adjustment");
 
   if (gimp_chain_button_get_active (chain))
     {
-      binding = g_object_bind_property (x_adj, "value",
-                                        y_adj, "value",
-                                        G_BINDING_BIDIRECTIONAL);
+      if (! binding)
+        binding = g_object_bind_property (x_adj, "value",
+                                          y_adj, "value",
+                                          G_BINDING_BIDIRECTIONAL);
     }
   else
     {
-      binding = g_object_get_data (G_OBJECT (chain), "binding");
       g_clear_object (&binding);
     }
   g_object_set_data (G_OBJECT (chain), "binding", binding);
