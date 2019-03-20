@@ -1285,6 +1285,32 @@ gimp_babl_component_format (GimpImageBaseType base_type,
   g_return_val_if_reached (NULL);
 }
 
+const Babl *
+gimp_babl_format_change_component_type (const Babl        *format,
+                                        GimpComponentType  component)
+{
+  g_return_val_if_fail (format != NULL, NULL);
+
+  return gimp_babl_format (gimp_babl_format_get_base_type (format),
+                           gimp_babl_precision (
+                             component,
+                             gimp_babl_format_get_linear (format)),
+                           babl_format_has_alpha (format));
+}
+
+const Babl *
+gimp_babl_format_change_linear (const Babl *format,
+                                gboolean    linear)
+{
+  g_return_val_if_fail (format != NULL, NULL);
+
+  return gimp_babl_format (gimp_babl_format_get_base_type (format),
+                           gimp_babl_precision (
+                             gimp_babl_format_get_component_type (format),
+                             linear),
+                           babl_format_has_alpha (format));
+}
+
 gchar **
 gimp_babl_print_pixel (const Babl *format,
                        gpointer    pixel)
