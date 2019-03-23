@@ -1884,8 +1884,8 @@ save_dialog (gint32 image_id,
 
   dlg = gimp_dialog_new (_("Export as DDS"), "dds", NULL, GTK_WIN_POS_MOUSE,
                          gimp_standard_help_func, SAVE_PROC,
-                         _("Cancel"), GTK_RESPONSE_CANCEL,
-                         _("OK"),     GTK_RESPONSE_OK,
+                         _("_Cancel"), GTK_RESPONSE_CANCEL,
+                         _("_Export"), GTK_RESPONSE_OK,
                          NULL);
 
   g_signal_connect (dlg, "response",
