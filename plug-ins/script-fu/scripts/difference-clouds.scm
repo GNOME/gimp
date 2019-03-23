@@ -67,7 +67,7 @@
 )
 
 (script-fu-register "script-fu-difference-clouds"
-                    _"Difference Clouds..."
+                    _"_Difference Clouds..."
                     _"Solid noise applied with Difference layer mode"
                     "Martin Nordholts <enselic@hotmail.com>"
                     "Martin Nordholts"
