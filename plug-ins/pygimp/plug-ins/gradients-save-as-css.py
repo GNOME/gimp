@@ -85,12 +85,12 @@ def gradient_css_save(gradient, file_name):
 
 register(
         "gradient-save-as-css",
-        "Creates a new palette from a given gradient",
+        N_("Creates a new palette from a given gradient"),
         "palette_from_gradient (gradient, number, segment_colors) -> None",
         "Joao S. O. Bueno",
         "(c) GPL V3.0 or later",
         "2011",
-        "Save as CSS...",
+        N_("Save as CSS..."),
         "",
         [
           (PF_GRADIENT, "gradient", N_("Gradient to use"),""),

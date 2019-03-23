@@ -165,7 +165,7 @@ query (void)
                               "");
 
   gimp_install_procedure (DECODE_YCOCG_PROC,
-                          "Converts YCoCg encoded pixels to RGB",
+                          _("Converts YCoCg encoded pixels to RGB"),
                           "Converts YCoCg encoded pixels to RGB",
                           "Shawn Kirst",
                           "Shawn Kirst",
@@ -178,7 +178,7 @@ query (void)
   /*gimp_plugin_menu_register (DECODE_YCOCG_PROC, "<Image>/Filters/Colors");*/
 
   gimp_install_procedure (DECODE_YCOCG_SCALED_PROC,
-                          "Converts YCoCg (scaled) encoded pixels to RGB",
+                          _("Converts YCoCg (scaled) encoded pixels to RGB"),
                           "Converts YCoCg (scaled) encoded pixels to RGB",
                           "Shawn Kirst",
                           "Shawn Kirst",
@@ -191,7 +191,7 @@ query (void)
   /*gimp_plugin_menu_register (DECODE_YCOCG_SCALED_PROC, "<Image>/Filters/Colors");*/
 
   gimp_install_procedure (DECODE_ALPHA_EXP_PROC,
-                          "Converts alpha exponent encoded pixels to RGB",
+                          _("Converts alpha exponent encoded pixels to RGB"),
                           "Converts alpha exponent encoded pixels to RGB",
                           "Shawn Kirst",
                           "Shawn Kirst",
