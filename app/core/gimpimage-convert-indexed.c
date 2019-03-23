@@ -3594,7 +3594,7 @@ init_error_limit (const int error_freedom)
 /* Allocate and fill in the error_limiter table */
 {
   gint *table;
-  gint  in, out;
+  gint  inp, out;
 
   /* #define STEPSIZE 16 */
   /* #define STEPSIZE 200 */
@@ -3608,16 +3608,16 @@ init_error_limit (const int error_freedom)
 
       const gint STEPSIZE = 190;
 
-      for (in = 0; in < STEPSIZE; in++)
+      for (inp = 0; inp < STEPSIZE; inp++)
         {
-          table[in] = in;
-          table[-in] = -in;
+          table[inp] = inp;
+          table[-inp] = -inp;
         }
 
-      for (; in <= 255; in++)
+      for (; inp <= 255; inp++)
         {
-          table[in] = STEPSIZE;
-          table[-in] = -STEPSIZE;
+          table[inp] = STEPSIZE;
+          table[-inp] = -STEPSIZE;
         }
 
       return (table);
@@ -3630,24 +3630,24 @@ init_error_limit (const int error_freedom)
 
       /* Map errors 1:1 up to +- STEPSIZE */
       out = 0;
-      for (in = 0; in < STEPSIZE; in++, out++)
+      for (inp = 0; inp < STEPSIZE; inp++, out++)
         {
-          table[in] = out;
-          table[-in] = -out;
+          table[inp] = out;
+          table[-inp] = -out;
         }
 
       /* Map errors 1:2 up to +- 3*STEPSIZE */
-      for (; in < STEPSIZE*3; in++, out += (in&1) ? 0 : 1)
+      for (; inp < STEPSIZE*3; inp++, out += (inp&1) ? 0 : 1)
         {
-          table[in] = out;
-          table[-in] = -out;
+          table[inp] = out;
+          table[-inp] = -out;
         }
 
       /* Clamp the rest to final out value (which is STEPSIZE*2) */
-      for (; in <= 255; in++)
+      for (; inp <= 255; inp++)
         {
-          table[in] = out;
-          table[-in] = -out;
+          table[inp] = out;
+          table[-inp] = -out;
         }
 
       return table;

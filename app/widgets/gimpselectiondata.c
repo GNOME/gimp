@@ -867,7 +867,7 @@ gimp_unescape_uri_string (const char *escaped,
                           const char *illegal_escaped_characters,
                           gboolean    ascii_must_not_be_escaped)
 {
-  const gchar *in, *in_end;
+  const gchar *inp, *in_end;
   gchar *out, *result;
   int c;
 
@@ -880,17 +880,17 @@ gimp_unescape_uri_string (const char *escaped,
   result = g_malloc (len + 1);
 
   out = result;
-  for (in = escaped, in_end = escaped + len; in < in_end; in++)
+  for (inp = escaped, in_end = escaped + len; inp < in_end; inp++)
     {
-      c = *in;
+      c = *inp;
 
       if (c == '%')
         {
           /* catch partial escape sequences past the end of the substring */
-          if (in + 3 > in_end)
+          if (inp + 3 > in_end)
             break;
 
-          c = unescape_character (in + 1);
+          c = unescape_character (inp + 1);
 
           /* catch bad escape sequences and NUL characters */
           if (c <= 0)
@@ -904,7 +904,7 @@ gimp_unescape_uri_string (const char *escaped,
           if (strchr (illegal_escaped_characters, c) != NULL)
             break;
 
-          in += 2;
+          inp += 2;
         }
 
       *out++ = c;
@@ -913,7 +913,7 @@ gimp_unescape_uri_string (const char *escaped,
   gimp_assert (out - result <= len);
   *out = '\0';
 
-  if (in != in_end)
+  if (inp != in_end)
     {
       g_free (result);
       return NULL;
