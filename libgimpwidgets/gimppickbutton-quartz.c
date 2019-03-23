@@ -35,6 +35,11 @@
 #endif
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED < 1070
+#if MAC_OS_X_VERSION_MAX_ALLOWED < 1060
+@protocol NSWindowDelegate
+@end
+#endif
+
 @interface NSWindow (GIMPExt)
 - (NSRect) convertRectToScreen: (NSRect)aRect;
 @end
