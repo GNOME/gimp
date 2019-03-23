@@ -39,7 +39,7 @@
 )
 
 (script-fu-register "script-fu-reverse-layers"
-  _"Reverse Layer Order"
+  _"Reverse Layer _Order"
   _"Reverse the order of layers in the image"
   "Akkana Peck"
   "Akkana Peck"
