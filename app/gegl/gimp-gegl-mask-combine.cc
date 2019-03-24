@@ -421,7 +421,7 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
             {
               ellipse_range (ty1, &x0, &x1);
 
-              if (tx0 > x0 && tx1 <= x1)
+              if (tx0 >= x0 && tx1 <= x1)
                 {
                   fill1 (d, iter->length);
 
