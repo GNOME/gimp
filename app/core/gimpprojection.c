@@ -662,11 +662,11 @@ gimp_projection_flush_whenever (GimpProjection *proj,
                                 gboolean        now,
                                 gboolean        direct)
 {
-  if (! proj->priv->buffer)
-    return;
-
   if (proj->priv->update_region)
     {
+      /* Make sure we have a buffer */
+      gimp_projection_allocate_buffer (proj);
+
       if (now)  /* Synchronous */
         {
           gint n_rects = cairo_region_num_rectangles (proj->priv->update_region);
