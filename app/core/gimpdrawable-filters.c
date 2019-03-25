@@ -113,13 +113,15 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 {
   GimpImage      *image;
   GimpApplicator *applicator;
+  gboolean        applicator_cache         = FALSE;
+  const Babl     *applicator_output_format = NULL;
   GeglBuffer     *undo_buffer;
   GeglRectangle   undo_rect;
-  GeglBuffer     *cache   = NULL;
-  GeglRectangle  *rects   = NULL;
-  gint            n_rects = 0;
+  GeglBuffer     *cache                    = NULL;
+  GeglRectangle  *rects                    = NULL;
+  gint            n_rects                  = 0;
   GeglRectangle   rect;
-  gboolean        success = TRUE;
+  gboolean        success                  = TRUE;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
@@ -149,6 +151,16 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
        */
       cache = gimp_applicator_get_cache_buffer (applicator,
                                                 &rects, &n_rects);
+
+      /*  skip the cache and output-format conversion while processing
+       *  the remaining area, so that the result is written directly to
+       *  the drawable's buffer.
+       */
+      applicator_cache         = gimp_applicator_get_cache (applicator);
+      applicator_output_format = gimp_applicator_get_output_format (applicator);
+
+      gimp_applicator_set_cache (applicator, FALSE);
+      gimp_applicator_set_output_format (applicator, NULL);
     }
 
   gimp_gegl_rectangle_align_to_tile_grid (
@@ -204,6 +216,12 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
     {
       g_object_unref (cache);
       g_free (rects);
+    }
+
+  if (applicator)
+    {
+      gimp_applicator_set_cache (applicator, applicator_cache);
+      gimp_applicator_set_output_format (applicator, applicator_output_format);
     }
 
   gimp_drawable_update (drawable,

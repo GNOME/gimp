@@ -121,9 +121,11 @@ void         gimp_applicator_set_affect        (GimpApplicator       *applicator
 
 void         gimp_applicator_set_output_format (GimpApplicator       *applicator,
                                                 const Babl           *format);
+const Babl * gimp_applicator_get_output_format (GimpApplicator       *applicator);
 
 void         gimp_applicator_set_cache         (GimpApplicator       *applicator,
                                                 gboolean              enable);
+gboolean     gimp_applicator_get_cache         (GimpApplicator       *applicator);
 GeglBuffer * gimp_applicator_get_cache_buffer  (GimpApplicator       *applicator,
                                                 GeglRectangle       **rectangles,
                                                 gint                 *n_rectangles);

@@ -494,6 +494,14 @@ gimp_applicator_set_output_format (GimpApplicator *applicator,
     }
 }
 
+const Babl *
+gimp_applicator_get_output_format (GimpApplicator *applicator)
+{
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), NULL);
+
+  return applicator->output_format;
+}
+
 void
 gimp_applicator_set_cache (GimpApplicator *applicator,
                            gboolean        enable)
@@ -517,6 +525,14 @@ gimp_applicator_set_cache (GimpApplicator *applicator,
 
       applicator->cache_enabled = enable;
     }
+}
+
+gboolean
+gimp_applicator_get_cache (GimpApplicator *applicator)
+{
+  g_return_val_if_fail (GIMP_IS_APPLICATOR (applicator), FALSE);
+
+  return applicator->cache_enabled;
 }
 
 gboolean gegl_buffer_list_valid_rectangles (GeglBuffer     *buffer,
