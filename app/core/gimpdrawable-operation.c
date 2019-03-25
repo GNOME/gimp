@@ -27,8 +27,6 @@
 
 #include "core-types.h"
 
-#include "gegl/gimpapplicator.h"
-
 #include "gimpdrawable.h"
 #include "gimpdrawable-operation.h"
 #include "gimpdrawablefilter.h"
@@ -45,7 +43,6 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
                                GeglNode     *operation)
 {
   GimpDrawableFilter *filter;
-  GimpApplicator     *applicator;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -59,10 +56,7 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
       return;
     }
 
-  filter     = gimp_drawable_filter_new (drawable, undo_desc, operation, NULL);
-  applicator = gimp_filter_get_applicator (GIMP_FILTER (filter));
-
-  gimp_applicator_set_cache (applicator, FALSE);
+  filter = gimp_drawable_filter_new (drawable, undo_desc, operation, NULL);
 
   gimp_drawable_filter_apply  (filter, NULL);
   gimp_drawable_filter_commit (filter, progress, TRUE);
