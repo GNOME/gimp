@@ -2,13 +2,13 @@
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2008.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-11-18 11:47+0000\n"
-"PO-Revision-Date: 2018-12-29 10:26+0200\n"
+"POT-Creation-Date: 2019-03-09 12:10+0000\n"
+"PO-Revision-Date: 2019-03-10 09:44+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 19.03.70\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -864,7 +864,6 @@ msgid "_Roadmap"
 msgstr "_Плани щодо розробки"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-#| msgid "Bookmark to the GIMP web site"
 msgid "Bookmark to the roadmap of GIMP"
 msgstr "Закладка для сторінки планів щодо розробки GIMP"
 
@@ -873,7 +872,6 @@ msgid "_Wiki"
 msgstr "_Вікі"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-#| msgid "Bookmark to the GIMP web site"
 msgid "Bookmark to the wiki of GIMP"
 msgstr "Закладка для сторінки вікі GIMP"
 
@@ -882,7 +880,6 @@ msgid "_Bug Reports and Feature Requests"
 msgstr "З_віти щодо вад та запити щодо нових можливостей"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-#| msgid "Bookmark to the user manual"
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Закладка для сторінки системи стеження за вадами у GIMP"
 
@@ -1436,13 +1433,14 @@ msgid "Rendering Spyro"
 msgstr "Візуалізація спірографа"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-msgid "_Spyrogimp..."
-msgstr "_Спірограф…"
+msgid "_Spyrogimp (older script-fu version)..."
+msgstr "Сп_іроґімп (застаріла версія script-fu)…"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr "Малювання спірографів, епітрохоїд та кривих Ліссажу"
+msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+msgstr ""
+"Ця процедура є застарілою! Замість неї слід використовувати"
+" «plug-in-spyrogimp»."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
@@ -1709,6 +1707,13 @@ msgstr "Зсув тіні вздовж X"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Зсув тіні вздовж Y"
+
+#~ msgid "_Spyrogimp..."
+#~ msgstr "_Спірограф…"
+
+#~ msgid ""
+#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+#~ msgstr "Малювання спірографів, епітрохоїд та кривих Ліссажу"
 
 #~ msgid "Plug-in _Registry"
 #~ msgstr "_Реєстр доповнень"
