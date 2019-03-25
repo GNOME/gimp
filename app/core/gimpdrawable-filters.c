@@ -160,7 +160,8 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
       applicator_output_format = gimp_applicator_get_output_format (applicator);
 
       gimp_applicator_set_cache (applicator, FALSE);
-      gimp_applicator_set_output_format (applicator, NULL);
+      if (applicator_output_format == gimp_drawable_get_format (drawable))
+        gimp_applicator_set_output_format (applicator, NULL);
     }
 
   gimp_gegl_rectangle_align_to_tile_grid (
