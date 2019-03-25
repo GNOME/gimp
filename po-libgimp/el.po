@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master.el.po\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-15 18:48+0000\n"
-"PO-Revision-Date: 2019-03-17 13:43+0000\n"
+"POT-Creation-Date: 2019-03-24 07:22+0000\n"
+"PO-Revision-Date: 2019-03-25 20:04+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Project-Style: gnome\n"
 
@@ -178,7 +178,7 @@ msgid "Confirm Save"
 msgstr "Επιβεβαίωση αποθήκευσης"
 
 #: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
-#: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:576
+#: ../libgimp/gimpexport.c:1022 ../libgimpwidgets/gimpcolorbutton.c:576
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:164
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
 #: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:268
@@ -201,7 +201,7 @@ msgid "_Ignore"
 msgstr "_Παράβλεψη"
 
 #
-#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1022
+#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1023
 msgid "_Export"
 msgstr "_Εξαγωγή"
 
@@ -238,9 +238,11 @@ msgstr ""
 "Πρόκειται να αποθηκεύσετε ένα κανάλι (αποθηκευμένη επιλογή) ως %s.\n"
 "Προσοχή, δεν θα αποθηκευτούν οι ορατές στρώσεις."
 
-#: ../libgimp/gimpexport.c:1015
-msgid "Export Image as "
-msgstr "Εξαγωγή εικόνας ως "
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#: ../libgimp/gimpexport.c:1016
+#, c-format
+msgid "Export Image as %s"
+msgstr "Εξαγωγή εικόνας ως %s"
 
 #
 #: ../libgimp/gimpfontselectbutton.c:138
