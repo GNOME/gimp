@@ -135,6 +135,7 @@ static void        gimp_projection_add_update_area       (GimpProjection  *proj,
 static void        gimp_projection_flush_whenever        (GimpProjection  *proj,
                                                           gboolean         now,
                                                           gboolean         direct);
+static void        gimp_projection_update_priority_rect  (GimpProjection  *proj);
 static void        gimp_projection_chunk_render_start    (GimpProjection  *proj);
 static void        gimp_projection_chunk_render_stop     (GimpProjection  *proj,
                                                           gboolean         merge);
@@ -505,30 +506,11 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
                                    gint            w,
                                    gint            h)
 {
-  gint off_x, off_y;
-  gint width, height;
-
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
-  gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
-  gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
+  proj->priv->priority_rect = *GEGL_RECTANGLE (x, y, w, h);
 
-  /*  subtract the projectable's offsets because the list of update
-   *  areas is in tile-pyramid coordinates, but our external API is
-   *  always in terms of image coordinates.
-   */
-  x -= off_x;
-  y -= off_y;
-
-  gegl_rectangle_intersect (&proj->priv->priority_rect,
-                            GEGL_RECTANGLE (x, y, w, h),
-                            GEGL_RECTANGLE (0, 0, width, height));
-
-  if (proj->priv->iter)
-    {
-      gimp_chunk_iterator_set_priority_rect (proj->priv->iter,
-                                             &proj->priv->priority_rect);
-    }
+  gimp_projection_update_priority_rect (proj);
 }
 
 void
@@ -708,6 +690,35 @@ gimp_projection_flush_whenever (GimpProjection *proj,
 }
 
 static void
+gimp_projection_update_priority_rect (GimpProjection *proj)
+{
+  if (proj->priv->iter)
+    {
+      GeglRectangle rect;
+      gint          off_x, off_y;
+      gint          width, height;
+
+      rect = proj->priv->priority_rect;
+
+      gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
+      gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
+
+      /*  subtract the projectable's offsets because the list of update
+       *  areas is in tile-pyramid coordinates, but our external API is
+       *  always in terms of image coordinates.
+       */
+      rect.x -= off_x;
+      rect.y -= off_y;
+
+      gegl_rectangle_intersect (&rect,
+                                &rect,
+                                GEGL_RECTANGLE (0, 0, width, height));
+
+      gimp_chunk_iterator_set_priority_rect (proj->priv->iter, &rect);
+    }
+}
+
+static void
 gimp_projection_chunk_render_start (GimpProjection *proj)
 {
   cairo_region_t *region             = proj->priv->update_region;
@@ -736,8 +747,7 @@ gimp_projection_chunk_render_start (GimpProjection *proj)
     {
       proj->priv->iter = gimp_chunk_iterator_new (region);
 
-      gimp_chunk_iterator_set_priority_rect (proj->priv->iter,
-                                             &proj->priv->priority_rect);
+      gimp_projection_update_priority_rect (proj);
 
       if (! proj->priv->idle_id)
         {
@@ -955,11 +965,6 @@ gimp_projection_projectable_structure_changed (GimpProjectable *projectable,
   gimp_projectable_get_size (projectable, &width, &height);
 
   gimp_projection_add_update_area (proj, 0, 0, width, height);
-
-  proj->priv->priority_rect.x      = 0;
-  proj->priv->priority_rect.y      = 0;
-  proj->priv->priority_rect.width  = width;
-  proj->priv->priority_rect.height = height;
 }
 
 static void
@@ -1052,25 +1057,6 @@ gimp_projection_projectable_bounds_changed (GimpProjectable *projectable,
 
       cairo_region_translate           (proj->priv->update_region, dx, dy);
       cairo_region_intersect_rectangle (proj->priv->update_region, &bounds);
-    }
-
-  if (proj->priv->priority_rect.width  > 0 &&
-      proj->priv->priority_rect.height > 0)
-    {
-      proj->priv->priority_rect.x += dx;
-      proj->priv->priority_rect.y += dy;
-
-      gimp_rectangle_intersect (proj->priv->priority_rect.x,
-                                proj->priv->priority_rect.y,
-                                proj->priv->priority_rect.width,
-                                proj->priv->priority_rect.height,
-
-                                0, 0, w, h,
-
-                                &proj->priv->priority_rect.x,
-                                &proj->priv->priority_rect.y,
-                                &proj->priv->priority_rect.width,
-                                &proj->priv->priority_rect.height);
     }
 
   if (dx > 0)
