@@ -219,6 +219,7 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
   node = gimp_filter_get_node (GIMP_FILTER (filter));
 
   gegl_node_add_child (node, operation);
+  gimp_gegl_node_set_underlying_operation (node, operation);
 
   filter->applicator = gimp_applicator_new (node);
 
