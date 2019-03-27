@@ -22,3 +22,16 @@ style "gimp-large-preview"
 }
 
 # class "GimpPreview" style "gimp-large-preview"
+
+#
+# Change the combo-box popup style:
+#
+# This only has effect if GTK is built with the patches
+# in the GIMP source-tree's build/patches/ directory.
+#
+style "combo-box-popup-style"
+{
+  GtkComboBox::popup-style = GTK_COMBO_BOX_POPUP_LIST
+}
+
+class "GtkComboBox" style "combo-box-popup-style"
