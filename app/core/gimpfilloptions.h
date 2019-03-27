@@ -71,6 +71,9 @@ gboolean          gimp_fill_options_set_by_fill_mode (GimpFillOptions     *optio
 
 const gchar     * gimp_fill_options_get_undo_desc    (GimpFillOptions     *options);
 
+const Babl      * gimp_fill_options_get_format       (GimpFillOptions     *options,
+                                                      GimpDrawable        *drawable);
+
 GeglBuffer      * gimp_fill_options_create_buffer    (GimpFillOptions     *options,
                                                       GimpDrawable        *drawable,
                                                       const GeglRectangle *rect,

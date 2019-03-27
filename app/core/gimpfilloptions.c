@@ -29,6 +29,8 @@
 
 #include "core-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gimp.h"
 #include "gimp-palettes.h"
 #include "gimpdrawable.h"
@@ -404,6 +406,23 @@ gimp_fill_options_get_undo_desc (GimpFillOptions *options)
   g_return_val_if_reached (NULL);
 }
 
+const Babl *
+gimp_fill_options_get_format (GimpFillOptions *options,
+                              GimpDrawable    *drawable)
+{
+  GimpContext *context;
+
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  context = GIMP_CONTEXT (options);
+
+  return gimp_layer_mode_get_format (gimp_context_get_paint_mode (context),
+                                     GIMP_LAYER_COLOR_SPACE_AUTO,
+                                     GIMP_LAYER_COLOR_SPACE_AUTO,
+                                     gimp_drawable_get_format (drawable));
+}
+
 GeglBuffer *
 gimp_fill_options_create_buffer (GimpFillOptions     *options,
                                  GimpDrawable        *drawable,
@@ -422,7 +441,7 @@ gimp_fill_options_create_buffer (GimpFillOptions     *options,
   g_return_val_if_fail (rect != NULL, NULL);
 
   buffer = gegl_buffer_new (rect,
-                            gimp_drawable_get_format_with_alpha (drawable));
+                            gimp_fill_options_get_format (options, drawable));
 
   gimp_fill_options_fill_buffer (options, drawable, buffer,
                                  pattern_offset_x, pattern_offset_y);
