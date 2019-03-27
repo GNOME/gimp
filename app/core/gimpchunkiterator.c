@@ -41,10 +41,14 @@
 /* the default iteration interval */
 #define DEFAULT_INTERVAL         (1.0 / 15.0) /* seconds */
 
-/* the minimal processed area on the current iteration, above which we
- * calculate a new target area to render on the next iteration
+/* the minimal area to process per iteration */
+#define MIN_AREA_PER_ITERATION   1024
+
+/* the maximal ratio between the actual processed area and the target area,
+ * above which the current chunk height is readjusted, even in the middle of a
+ * row, to better match the target area
  */
-#define MIN_AREA_PER_UPDATE      1024
+#define MAX_AREA_RATIO           2.0
 
 /* the width of the target-area sliding window */
 #define TARGET_AREA_HISTORY_SIZE 5
@@ -74,6 +78,7 @@ struct _GimpChunkIterator
 
   gdouble         target_area_history[TARGET_AREA_HISTORY_SIZE];
   gint            target_area_history_i;
+  gint            target_area_history_n;
 };
 
 
@@ -86,6 +91,14 @@ static void       gimp_chunk_iterator_merge_current_rect (GimpChunkIterator   *i
 static void       gimp_chunk_iterator_merge              (GimpChunkIterator   *iter);
 
 static gboolean   gimp_chunk_iterator_prepare            (GimpChunkIterator   *iter);
+
+static void       gimp_chunk_iterator_set_target_area    (GimpChunkIterator   *iter,
+                                                          gdouble              target_area);
+static gdouble    gimp_chunk_iterator_get_target_area    (GimpChunkIterator   *iter);
+
+static void       gimp_chunk_iterator_calc_rect          (GimpChunkIterator   *iter,
+                                                          GeglRectangle       *rect,
+                                                          gboolean             readjust_height);
 
 
 /*  private functions  */
@@ -220,6 +233,93 @@ gimp_chunk_iterator_prepare (GimpChunkIterator *iter)
   return TRUE;
 }
 
+static gint
+compare_double (const gdouble *x,
+                const gdouble *y)
+{
+  return (*x > *y) - (*x < *y);
+}
+
+static void
+gimp_chunk_iterator_set_target_area (GimpChunkIterator *iter,
+                                     gdouble            target_area)
+{
+  gdouble target_area_history[TARGET_AREA_HISTORY_SIZE];
+
+  iter->target_area_history[iter->target_area_history_i++] = target_area;
+
+  iter->target_area_history_n  = MAX (iter->target_area_history_n,
+                                      iter->target_area_history_i);
+  iter->target_area_history_i %= TARGET_AREA_HISTORY_SIZE;
+
+  memcpy (target_area_history, iter->target_area_history,
+          iter->target_area_history_n * sizeof (gdouble));
+
+  qsort (target_area_history, iter->target_area_history_n, sizeof (gdouble),
+         (gpointer) compare_double);
+
+  iter->target_area = target_area_history[iter->target_area_history_n / 2];
+}
+
+static gdouble
+gimp_chunk_iterator_get_target_area (GimpChunkIterator *iter)
+{
+  if (iter->target_area_history_n)
+    return iter->target_area;
+  else
+    return iter->tile_rect.width * iter->tile_rect.height;
+}
+
+static void
+gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
+                               GeglRectangle     *rect,
+                               gboolean           readjust_height)
+{
+  gdouble target_area;
+  gdouble aspect_ratio;
+  gint    offset_x;
+  gint    offset_y;
+
+  target_area = gimp_chunk_iterator_get_target_area (iter);
+
+  aspect_ratio = (gdouble) iter->tile_rect.height /
+                 (gdouble) iter->tile_rect.width;
+
+  rect->x = iter->current_x;
+  rect->y = iter->current_y;
+
+  offset_x = rect->x - iter->tile_rect.x;
+  offset_y = rect->y - iter->tile_rect.y;
+
+  if (readjust_height)
+    {
+      rect->height = ceil ((offset_y + sqrt (target_area * aspect_ratio)) /
+                           iter->tile_rect.height)                        *
+                     iter->tile_rect.height                               -
+                     offset_y;
+
+      rect->height = MIN (rect->height,
+                          iter->current_rect.y + iter->current_rect.height -
+                          rect->y);
+      rect->height = MIN (rect->height, MAX_CHUNK_HEIGHT);
+    }
+  else
+    {
+      rect->height = iter->current_height;
+    }
+
+  rect->width = ceil ((offset_x + (gdouble) target_area   /
+                                  (gdouble) rect->height) /
+                      iter->tile_rect.width)              *
+                iter->tile_rect.width                     -
+                offset_x;
+
+  rect->width = MIN (rect->width,
+                     iter->current_rect.x + iter->current_rect.width -
+                     rect->x);
+  rect->width = MIN (rect->width, MAX_CHUNK_WIDTH);
+}
+
 
 /*  public functions  */
 
@@ -319,103 +419,45 @@ gimp_chunk_iterator_next (GimpChunkIterator *iter)
   return TRUE;
 }
 
-static gint
-compare_double (const gdouble *x,
-                const gdouble *y)
-{
-  return (*y < *x) - (*x < *y);
-}
-
 gboolean
 gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
                               GeglRectangle     *rect)
 {
-  gdouble interval;
-  gdouble aspect_ratio;
-  gint    offset_x;
-  gint    offset_y;
-
   g_return_val_if_fail (iter != NULL, FALSE);
   g_return_val_if_fail (rect != NULL, FALSE);
 
   if (! gimp_chunk_iterator_prepare (iter))
     return FALSE;
 
-  interval = (gdouble) (g_get_monotonic_time () - iter->iteration_time) /
-             G_TIME_SPAN_SECOND;
-
-  if (iter->current_area > 0 && interval > iter->interval)
+  if (iter->current_area >= MIN_AREA_PER_ITERATION)
     {
-      /* adjust the target area to be processed on the next iteration,
-       * according to the area processed during this iteration and the elapsed
-       * time, in order to match the desired interval.
-       */
-      if (iter->current_area >= MIN_AREA_PER_UPDATE)
+      gdouble interval;
+
+      interval = (gdouble) (g_get_monotonic_time () - iter->iteration_time) /
+                 G_TIME_SPAN_SECOND;
+
+      gimp_chunk_iterator_set_target_area (
+        iter,
+        iter->current_area * iter->interval / interval);
+
+      if (interval > iter->interval)
+        return FALSE;
+    }
+
+  if (iter->current_x == iter->current_rect.x)
+    {
+      gimp_chunk_iterator_calc_rect (iter, rect, TRUE);
+    }
+  else
+    {
+      gimp_chunk_iterator_calc_rect (iter, rect, FALSE);
+
+      if (rect->width * rect->height >=
+          MAX_AREA_RATIO * gimp_chunk_iterator_get_target_area (iter))
         {
-          gdouble target_area_history[TARGET_AREA_HISTORY_SIZE];
-
-          iter->target_area_history[iter->target_area_history_i] =
-            iter->current_area * iter->interval / interval;
-
-          /* calculate the median target area of the last
-           * TARGET_AREA_HISTORY_SIZE iterations
-           */
-          memcpy (target_area_history, iter->target_area_history,
-                  sizeof (target_area_history));
-
-          qsort (target_area_history, TARGET_AREA_HISTORY_SIZE,
-                 sizeof (gdouble), (gpointer) compare_double);
-
-          iter->target_area = target_area_history[TARGET_AREA_HISTORY_SIZE / 2];
-
-          iter->target_area_history_i++;
-          iter->target_area_history_i %= TARGET_AREA_HISTORY_SIZE;
+          gimp_chunk_iterator_calc_rect (iter, rect, TRUE);
         }
-
-      return FALSE;
     }
-
-  if (! iter->target_area)
-    {
-      gint i;
-
-      iter->target_area = iter->tile_rect.width * iter->tile_rect.height;
-
-      for (i = 0; i < TARGET_AREA_HISTORY_SIZE; i++)
-        iter->target_area_history[i] = iter->target_area;
-
-      iter->target_area_history_i = 0;
-    }
-
-  aspect_ratio = (gdouble) iter->tile_rect.width /
-                 (gdouble) iter->tile_rect.height;
-
-  rect->x = iter->current_x;
-  rect->y = iter->current_y;
-
-  offset_x = rect->x - iter->tile_rect.x;
-  offset_y = rect->y - iter->tile_rect.y;
-
-  rect->width = ceil ((offset_x + sqrt (iter->target_area * aspect_ratio)) /
-                      iter->tile_rect.width)                               *
-                iter->tile_rect.width                                      -
-                offset_x;
-
-  rect->height = ceil ((offset_y + (gdouble) iter->target_area /
-                                   (gdouble) rect->width)      /
-                       iter->tile_rect.height)                 *
-                 iter->tile_rect.height                        -
-                 offset_y;
-
-  rect->width = MIN (rect->width,
-                     iter->current_rect.x + iter->current_rect.width -
-                     rect->x);
-  rect->width = MIN (rect->width, MAX_CHUNK_WIDTH);
-
-  rect->height = MIN (rect->height,
-                      iter->current_rect.y + iter->current_rect.height -
-                      rect->y);
-  rect->height = MIN (rect->height, MAX_CHUNK_HEIGHT);
 
   if (rect->height != iter->current_height)
     {
