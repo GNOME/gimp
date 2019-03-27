@@ -29,6 +29,7 @@
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-edit.h"
+#include "gimpdrawablefilter.h"
 #include "gimpcontext.h"
 #include "gimpfilloptions.h"
 #include "gimpimage.h"
@@ -189,35 +190,42 @@ gimp_drawable_edit_fill (GimpDrawable    *drawable,
   if (gimp_drawable_edit_can_fill_direct (drawable, options))
     {
       gimp_drawable_edit_fill_direct (drawable, options, undo_desc);
+
+      gimp_drawable_update (drawable, x, y, width, height);
     }
   else
     {
-      GeglBuffer    *buffer;
-      gdouble        opacity;
-      GimpLayerMode  mode;
-      GimpLayerMode  composite_mode;
+      GeglNode           *operation;
+      GimpDrawableFilter *filter;
+      gdouble             opacity;
+      GimpLayerMode       mode;
+      GimpLayerMode       composite_mode;
 
       opacity        = gimp_context_get_opacity (context);
       mode           = gimp_context_get_paint_mode (context);
       composite_mode = gimp_layer_mode_get_paint_composite_mode (mode);
 
-      buffer = gimp_fill_options_create_buffer (options, drawable,
-                                                GEGL_RECTANGLE (0, 0,
-                                                                width, height),
-                                                -x, -y);
+      operation = gegl_node_new_child (NULL,
+                                       "operation",        "gimp:fill-source",
+                                       "options",          options,
+                                       "drawable",         drawable,
+                                       "pattern-offset-x", -x,
+                                       "pattern-offset-y", -y,
+                                       NULL);
 
-      gimp_drawable_apply_buffer (drawable, buffer,
-                                  GEGL_RECTANGLE (0, 0, width, height),
-                                  TRUE, undo_desc,
-                                  opacity,
-                                  mode,
-                                  GIMP_LAYER_COLOR_SPACE_AUTO,
-                                  GIMP_LAYER_COLOR_SPACE_AUTO,
-                                  composite_mode,
-                                  NULL, x, y);
+      filter = gimp_drawable_filter_new (drawable, undo_desc, operation, NULL);
 
-      g_object_unref (buffer);
+      gimp_drawable_filter_set_opacity (filter, opacity);
+      gimp_drawable_filter_set_mode    (filter,
+                                        mode,
+                                        GIMP_LAYER_COLOR_SPACE_AUTO,
+                                        GIMP_LAYER_COLOR_SPACE_AUTO,
+                                        composite_mode);
+
+      gimp_drawable_filter_apply  (filter, NULL);
+      gimp_drawable_filter_commit (filter, NULL, FALSE);
+
+      g_object_unref (filter);
+      g_object_unref (operation);
     }
-
-  gimp_drawable_update (drawable, x, y, width, height);
 }
