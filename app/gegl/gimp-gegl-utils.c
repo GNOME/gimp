@@ -117,6 +117,21 @@ gimp_gegl_progress_connect (GeglNode     *node,
 }
 
 gboolean
+gimp_gegl_node_is_source_operation (GeglNode *node)
+{
+  GeglOperation *operation;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), FALSE);
+
+  operation = gegl_node_get_gegl_operation (node);
+
+  if (! operation)
+    return FALSE;
+
+  return GEGL_IS_OPERATION_SOURCE (operation);
+}
+
+gboolean
 gimp_gegl_node_is_point_operation (GeglNode *node)
 {
   GeglOperation *operation;
