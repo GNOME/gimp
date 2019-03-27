@@ -296,48 +296,77 @@ themes_apply_theme (Gimp        *gimp,
     }
   else
     {
-      GFile *theme_dir = themes_get_theme_dir (gimp, theme_name);
-      GFile *gtkrc_theme;
-      GFile *gtkrc_user;
-      gchar *esc_gtkrc_theme;
-      gchar *esc_gtkrc_user;
-      gchar *tmp;
+      GFile  *theme_dir   = themes_get_theme_dir (gimp, theme_name);
+      GFile  *gtkrc_user;
+      GSList *gtkrc_files = NULL;
+      GSList *iter;
 
       if (theme_dir)
         {
-          gtkrc_theme = g_file_get_child (theme_dir, "gtkrc");
+          gtkrc_files = g_slist_prepend (
+            gtkrc_files,
+            g_file_get_child (theme_dir, "gtkrc"));
         }
       else
         {
           /*  get the hardcoded default theme gtkrc  */
-          gtkrc_theme = g_file_new_for_path (gimp_gtkrc ());
+          gtkrc_files = g_slist_prepend (
+            gtkrc_files,
+            g_file_new_for_path (gimp_gtkrc ()));
         }
 
-      gtkrc_user = gimp_directory_file ("gtkrc", NULL);
+      gtkrc_files = g_slist_prepend (
+        gtkrc_files,
+        gimp_sysconf_directory_file ("gtkrc", NULL));
 
-      tmp = g_file_get_path (gtkrc_theme);
-      esc_gtkrc_theme = g_strescape (tmp, NULL);
-      g_free (tmp);
+      gtkrc_user  = gimp_directory_file ("gtkrc", NULL);
+      gtkrc_files = g_slist_prepend (
+        gtkrc_files,
+        gtkrc_user);
 
-      tmp = g_file_get_path (gtkrc_user);
-      esc_gtkrc_user = g_strescape (tmp, NULL);
-      g_free (tmp);
+      gtkrc_files = g_slist_reverse (gtkrc_files);
 
-      if (! g_output_stream_printf
-            (output, NULL, NULL, &error,
-             "# GIMP themerc\n"
-             "#\n"
-             "# This file is written on GIMP startup and on every theme change.\n"
-             "# It is NOT supposed to be edited manually. Edit your personal\n"
-             "# gtkrc file instead (%s).\n"
-             "\n"
-             "include \"%s\"\n"
-             "include \"%s\"\n"
-             "\n"
-             "# end of themerc\n",
-             gimp_file_get_utf8_name (gtkrc_user),
-             esc_gtkrc_theme,
-             esc_gtkrc_user))
+      g_output_stream_printf (
+        output, NULL, NULL, &error,
+        "# GIMP themerc\n"
+        "#\n"
+        "# This file is written on GIMP startup and on every theme change.\n"
+        "# It is NOT supposed to be edited manually. Edit your personal\n"
+        "# gtkrc file instead (%s).\n"
+        "\n",
+        gimp_file_get_utf8_name (gtkrc_user));
+
+      for (iter = gtkrc_files; ! error && iter; iter = g_slist_next (iter))
+        {
+          GFile *file = iter->data;
+
+          if (g_file_query_exists (file, NULL))
+            {
+              gchar *path;
+              gchar *esc_path;
+
+              path     = g_file_get_path (file);
+              esc_path = g_strescape (path, NULL);
+              g_free (path);
+
+              g_output_stream_printf (
+                output, NULL, NULL, &error,
+                "include \"%s\"\n",
+                esc_path);
+
+              g_free (esc_path);
+            }
+        }
+
+      if (! error)
+        {
+          g_output_stream_printf (
+            output, NULL, NULL, &error,
+            "\n"
+            "# end of themerc\n");
+        }
+
+      if (error)
         {
           GCancellable *cancellable = g_cancellable_new ();
 
@@ -359,10 +388,7 @@ themes_apply_theme (Gimp        *gimp,
           g_clear_error (&error);
         }
 
-      g_free (esc_gtkrc_theme);
-      g_free (esc_gtkrc_user);
-      g_object_unref (gtkrc_theme);
-      g_object_unref (gtkrc_user);
+      g_slist_free_full (gtkrc_files, g_object_unref);
       g_object_unref (output);
     }
 
