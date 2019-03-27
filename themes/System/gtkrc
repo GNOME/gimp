@@ -60,7 +60,6 @@ style "gimp-default-style"
   GtkDialog::content-area-border    = 0
   GtkDialog::button-spacing         = 6
   GtkDialog::action-area-border     = 12
-  GimpUnitComboBox::appears-as-list = 0
 }
 
 class "GtkWidget" style "gimp-default-style"

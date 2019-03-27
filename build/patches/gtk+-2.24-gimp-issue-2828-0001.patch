@@ -1,0 +1,73 @@
+From f54275d743cf301ed4fcff41255929ece160392c Mon Sep 17 00:00:00 2001
+From: Ell <ell_se@yahoo.com>
+Date: Mon, 28 Jan 2019 14:46:07 -0500
+Subject: [PATCH 1/2] ComboBox: make sure drop-down list is not narrower than
+ its natural width
+
+When using the "appears-as-list" style, make sure the drop-down
+list is not narrower than either the combo box, *or* the list's own
+natural width, so that horizontal scrolling is never necessary.
+---
+ gtk/gtkcombobox.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
+
+diff --git a/gtk/gtkcombobox.c b/gtk/gtkcombobox.c
+index e74cd297c2..bd5c0d0a23 100644
+--- a/gtk/gtkcombobox.c
++++ b/gtk/gtkcombobox.c
+@@ -1816,21 +1816,11 @@ gtk_combo_box_list_position (GtkComboBox *combo_box,
+   
+   gdk_window_get_root_coords (sample->window, *x, *y, x, y);
+ 
+-  *width = sample->allocation.width;
+-
+   hpolicy = vpolicy = GTK_POLICY_NEVER;
+   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (priv->scrolled_window),
+ 				  hpolicy, vpolicy);
+   gtk_widget_size_request (priv->scrolled_window, &popup_req);
+ 
+-  if (popup_req.width > *width)
+-    {
+-      hpolicy = GTK_POLICY_ALWAYS;
+-      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (priv->scrolled_window),
+-				      hpolicy, vpolicy);
+-      gtk_widget_size_request (priv->scrolled_window, &popup_req);
+-    }
+-
+   *height = popup_req.height;
+ 
+   screen = gtk_widget_get_screen (GTK_WIDGET (combo_box));
+@@ -1838,11 +1828,6 @@ gtk_combo_box_list_position (GtkComboBox *combo_box,
+ 						  GTK_WIDGET (combo_box)->window);
+   gdk_screen_get_monitor_geometry (screen, monitor_num, &monitor);
+ 
+-  if (*x < monitor.x)
+-    *x = monitor.x;
+-  else if (*x + *width > monitor.x + monitor.width)
+-    *x = monitor.x + monitor.width - *width;
+-  
+   if (*y + sample->allocation.height + *height <= monitor.y + monitor.height)
+     *y += sample->allocation.height;
+   else if (*y - *height >= monitor.y)
+@@ -1861,10 +1846,17 @@ gtk_combo_box_list_position (GtkComboBox *combo_box,
+   if (popup_req.height > *height)
+     {
+       vpolicy = GTK_POLICY_ALWAYS;
+-      
+       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (priv->scrolled_window),
+ 				      hpolicy, vpolicy);
++      gtk_widget_size_request (priv->scrolled_window, &popup_req);
+     }
++
++  *width = MAX (sample->allocation.width, popup_req.width);
++
++  if (*x < monitor.x)
++    *x = monitor.x;
++  else if (*x + *width > monitor.x + monitor.width)
++    *x = monitor.x + monitor.width - *width;
+ } 
+ 
+ static gboolean
+-- 
+2.19.1
+
