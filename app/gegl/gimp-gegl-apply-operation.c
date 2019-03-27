@@ -118,13 +118,18 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   if (src_buffer)
     {
       GeglNode *src_node;
+      GeglNode *underlying_operation;
+
+      underlying_operation =
+        gimp_gegl_node_get_underlying_operation (operation);
 
       /* dup() because reading and writing the same buffer doesn't
        * generally work with non-point ops when working in chunks.
        * See bug #701875.
        */
       if (src_buffer == dest_buffer &&
-          ! gimp_gegl_node_is_point_operation (operation))
+          ! (gimp_gegl_node_is_point_operation  (underlying_operation) ||
+             gimp_gegl_node_is_source_operation (underlying_operation)))
         {
           src_buffer = gegl_buffer_dup (src_buffer);
         }
