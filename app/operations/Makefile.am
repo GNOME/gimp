@@ -52,6 +52,8 @@ libappoperations_a_sources = \
 	gimpoperationcomposecrop.h		\
 	gimpoperationequalize.c			\
 	gimpoperationequalize.h			\
+	gimpoperationfillsource.c		\
+	gimpoperationfillsource.h		\
 	gimpoperationflood.c			\
 	gimpoperationflood.h			\
 	gimpoperationgradient.c			\

@@ -36,6 +36,7 @@
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationcomposecrop.h"
 #include "gimpoperationequalize.h"
+#include "gimpoperationfillsource.h"
 #include "gimpoperationflood.h"
 #include "gimpoperationgradient.h"
 #include "gimpoperationgrow.h"
@@ -129,6 +130,7 @@ gimp_operations_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_COMPOSE_CROP);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_FILL_SOURCE);
   g_type_class_ref (GIMP_TYPE_OPERATION_FLOOD);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRADIENT);
   g_type_class_ref (GIMP_TYPE_OPERATION_GROW);
