@@ -62,9 +62,6 @@ gimp_language_combo_box_init (GimpLanguageComboBox *combo)
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), renderer,
                                   "text",  GIMP_LANGUAGE_STORE_LABEL,
                                   NULL);
-
-  /* See issues #2828 and #2642. */
-  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (combo), 1);
 }
 
 /**

@@ -177,9 +177,6 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo)
                     combo);
 
   gtk_widget_set_sensitive (GTK_WIDGET (combo), FALSE);
-
-  /* See issues #2828 and #2642. */
-  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (combo), 1);
 }
 
 static void

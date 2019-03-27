@@ -902,9 +902,6 @@ gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
                                                 priv, NULL);
         }
     }
-
-  /* See issues #2828 and #2642. */
-  gtk_combo_box_set_wrap_width (GTK_COMBO_BOX (combo_box), 1);
 }
 
 static void
