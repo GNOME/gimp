@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
@@ -28,6 +29,7 @@
 
 #include "gimp.h"
 #include "gimpchannel.h"
+#include "gimpchunkiterator.h"
 #include "gimpdrawable-combine.h"
 #include "gimpimage.h"
 
@@ -51,6 +53,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
   GimpImage         *image = gimp_item_get_image (item);
   GimpChannel       *mask  = gimp_image_get_mask (image);
   GimpApplicator    *applicator;
+  GimpChunkIterator *iter;
   gint               x, y, width, height;
   gint               offset_x, offset_y;
 
@@ -126,7 +129,16 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
   gimp_applicator_set_affect (applicator,
                               gimp_drawable_get_active_mask (drawable));
 
-  gimp_applicator_blit (applicator, GEGL_RECTANGLE (x, y, width, height));
+  iter = gimp_chunk_iterator_new (cairo_region_create_rectangle (
+    &(cairo_rectangle_int_t) {x, y, width, height}));
+
+  while (gimp_chunk_iterator_next (iter))
+    {
+      GeglRectangle rect;
+
+      while (gimp_chunk_iterator_get_rect (iter, &rect))
+        gimp_applicator_blit (applicator, &rect);
+    }
 
   g_object_unref (applicator);
 }
