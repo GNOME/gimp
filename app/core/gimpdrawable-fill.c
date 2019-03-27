@@ -92,26 +92,34 @@ gimp_drawable_fill_buffer (GimpDrawable  *drawable,
 
   if (pattern)
     {
-      const Babl       *format;
       GeglBuffer       *src_buffer;
       GeglBuffer       *dest_buffer;
       GimpColorProfile *src_profile;
       GimpColorProfile *dest_profile;
 
       src_buffer = gimp_pattern_create_buffer (pattern);
-      format = gegl_buffer_get_format (src_buffer);
 
-      dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
-                                     format);
+      src_profile  = gimp_babl_format_get_color_profile (
+                       gegl_buffer_get_format (src_buffer));
+      dest_profile = gimp_color_managed_get_color_profile (
+                       GIMP_COLOR_MANAGED (drawable));
 
-      src_profile  = gimp_babl_format_get_color_profile (format);
-      dest_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+      if (gimp_color_transform_can_gegl_copy (src_profile, dest_profile))
+        {
+          dest_buffer = g_object_ref (src_buffer);
+        }
+      else
+        {
+          dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                         gegl_buffer_get_format (buffer));
 
-      gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
-                                       dest_buffer, NULL, dest_profile,
-                                       GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                       TRUE,
-                                       NULL);
+          gimp_gegl_convert_color_profile (
+            src_buffer,  NULL, src_profile,
+            dest_buffer, NULL, dest_profile,
+            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+            TRUE,
+            NULL);
+        }
 
       gegl_buffer_set_pattern (buffer, NULL, dest_buffer,
                                pattern_offset_x, pattern_offset_y);
