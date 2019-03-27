@@ -174,6 +174,33 @@ gimp_gegl_node_get_format (GeglNode    *node,
   return format;
 }
 
+void
+gimp_gegl_node_set_underlying_operation (GeglNode *node,
+                                         GeglNode *operation)
+{
+  g_return_if_fail (GEGL_IS_NODE (node));
+  g_return_if_fail (operation == NULL || GEGL_IS_NODE (operation));
+
+  g_object_set_data (G_OBJECT (node),
+                     "gimp-gegl-node-underlying-operation", operation);
+}
+
+GeglNode *
+gimp_gegl_node_get_underlying_operation (GeglNode *node)
+{
+  GeglNode *operation;
+
+  g_return_val_if_fail (GEGL_IS_NODE (node), NULL);
+
+  operation = g_object_get_data (G_OBJECT (node),
+                                 "gimp-gegl-node-underlying-operation");
+
+  if (operation)
+    return gimp_gegl_node_get_underlying_operation (operation);
+  else
+    return node;
+}
+
 gboolean
 gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
                               const gchar *key,
