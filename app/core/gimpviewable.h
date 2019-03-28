@@ -97,6 +97,9 @@ struct _GimpViewableClass
 
   gboolean        (* is_name_editable)   (GimpViewable  *viewable);
 
+  void            (* preview_freeze)     (GimpViewable  *viewable);
+  void            (* preview_thaw)       (GimpViewable  *viewable);
+
   GimpContainer * (* get_children)       (GimpViewable  *viewable);
 
   void            (* set_expanded)       (GimpViewable  *viewable,
