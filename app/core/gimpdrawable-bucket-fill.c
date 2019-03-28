@@ -339,6 +339,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   gint        mask_offset_x = 0;
   gint        mask_offset_y = 0;
   gint        sel_x, sel_y, sel_width, sel_height;
+  gdouble     feather_radius;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
@@ -453,33 +454,14 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, new_mask,
                            -mask_offset_x, -mask_offset_y, 1.0);
 
-  if (gimp_fill_options_get_antialias (options))
-    {
-      /* Antialias for the line art algorithm is not applied during mask
-       * creation because it is not based on individual pixel colors.
-       * Instead we just want to apply it on the borders of the mask at
-       * the end (since the mask can evolve, we don't want to actually
-       * touch it, but only the intermediate results).
-       */
-      GeglNode   *graph;
-      GeglNode   *input;
-      GeglNode   *op;
-
-      graph = gegl_node_new ();
-      input = gegl_node_new_child (graph,
-                                   "operation", "gegl:buffer-source",
-                                   "buffer", buffer,
-                                   NULL);
-      op  = gegl_node_new_child (graph,
-                                 "operation", "gegl:gaussian-blur",
-                                 "std-dev-x", 0.5,
-                                 "std-dev-y", 0.5,
-                                 NULL);
-      gegl_node_connect_to (input, "output", op, "input");
-      gegl_node_blit_buffer (op, buffer, NULL, 0,
-                             GEGL_ABYSS_NONE);
-      g_object_unref (graph);
-    }
+  if (gimp_fill_options_get_feather (options, &feather_radius))
+    /* Feathering for the line art algorithm is not applied during
+     * mask creation because we just want to apply it on the borders
+     * of the mask at the end (since the mask can evolve, we don't
+     * want to actually touch it, but only the intermediate results).
+     */
+    gimp_gegl_apply_feather (buffer, NULL, NULL, buffer, NULL,
+                             feather_radius, feather_radius);
 
   if (mask_x)
     *mask_x = x;
