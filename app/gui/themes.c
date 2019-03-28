@@ -241,57 +241,84 @@ themes_apply_theme (Gimp          *gimp,
     }
   else
     {
-      GFile *theme_dir = themes_get_theme_dir (gimp, config->theme);
-      GFile *css_theme;
-      GFile *css_user;
-      gchar *esc_css_theme;
-      gchar *esc_css_user;
-      gchar *tmp;
+      GFile  *theme_dir = themes_get_theme_dir (gimp, config->theme);
+      GFile  *css_user;
+      GSList *css_files = NULL;
+      GSList *iter;
 
       if (theme_dir)
         {
-          css_theme = g_file_get_child (theme_dir, "gimp.css");
+          css_files = g_slist_prepend (
+            css_files, g_file_get_child (theme_dir, "gimp.css"));
         }
       else
         {
+          gchar *tmp;
+
           tmp = g_build_filename (gimp_data_directory (),
                                   "themes", "System", "gimp.css",
                                   NULL);
-          css_theme = g_file_new_for_path (tmp);
+          css_files = g_slist_prepend (
+            css_files, g_file_new_for_path (tmp));
           g_free (tmp);
         }
 
-      css_user = gimp_directory_file ("gimp.css", NULL);
+      css_files = g_slist_prepend (
+        css_files, gimp_sysconf_directory_file ("gimp.css", NULL));
 
-      tmp = g_file_get_path (css_theme);
-      esc_css_theme = g_strescape (tmp, NULL);
-      g_free (tmp);
+      css_user  = gimp_directory_file ("gimp.css", NULL);
+      css_files = g_slist_prepend (
+        css_files, css_user);
 
-      tmp = g_file_get_path (css_user);
-      esc_css_user = g_strescape (tmp, NULL);
-      g_free (tmp);
+      css_files = g_slist_reverse (css_files);
 
-      if (! g_output_stream_printf
-            (output, NULL, NULL, &error,
-             "/* GIMP theme.css\n"
-             " *\n"
-             " * This file is written on GIMP startup and on every theme change.\n"
-             " * It is NOT supposed to be edited manually. Edit your personal\n"
-             " * gimp.css file instead (%s).\n"
-             " */\n"
-             "\n"
-             "@import url(\"%s\");\n"
-             "@import url(\"%s\");\n"
-             "\n"
-             "* { -gtk-icon-style: %s; }\n"
-             "\n"
-             "%s"
-             "/* end of theme.css */\n",
-             gimp_file_get_utf8_name (css_user),
-             esc_css_theme,
-             esc_css_user,
-             config->prefer_symbolic_icons ? "symbolic" : "regular",
-             config->prefer_dark_theme ? "/* prefer-dark-theme */\n\n" : ""))
+      g_output_stream_printf (
+        output, NULL, NULL, &error,
+        "/* GIMP theme.css\n"
+        " *\n"
+        " * This file is written on GIMP startup and on every theme change.\n"
+        " * It is NOT supposed to be edited manually. Edit your personal\n"
+        " * gimp.css file instead (%s).\n"
+        " */\n"
+        "\n",
+        gimp_file_get_utf8_name (css_user));
+
+      for (iter = css_files; ! error && iter; iter = g_slist_next (iter))
+        {
+          GFile *file = iter->data;
+
+          if (g_file_query_exists (file, NULL))
+            {
+              gchar *path;
+              gchar *esc_path;
+
+              path     = g_file_get_path (file);
+              esc_path = g_strescape (path, NULL);
+              g_free (path);
+
+              g_output_stream_printf (
+                output, NULL, NULL, &error,
+                "@import url(\"%s\");\n",
+                esc_path);
+
+              g_free (esc_path);
+            }
+        }
+
+      if (! error)
+        {
+          g_output_stream_printf (
+            output, NULL, NULL, &error,
+            "\n"
+            "* { -gtk-icon-style: %s; }\n"
+            "\n"
+            "%s"
+            "/* end of theme.css */\n",
+            config->prefer_symbolic_icons ? "symbolic" : "regular",
+            config->prefer_dark_theme ? "/* prefer-dark-theme */\n\n" : "");
+        }
+
+      if (error)
         {
           GCancellable *cancellable = g_cancellable_new ();
 
@@ -313,10 +340,7 @@ themes_apply_theme (Gimp          *gimp,
           g_clear_error (&error);
         }
 
-      g_free (esc_css_theme);
-      g_free (esc_css_user);
-      g_object_unref (css_theme);
-      g_object_unref (css_user);
+      g_slist_free_full (css_files, g_object_unref);
       g_object_unref (output);
     }
 
