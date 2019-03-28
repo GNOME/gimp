@@ -529,6 +529,8 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
                                               &error))
         {
           gimp_fill_options_set_antialias (fill_options, options->antialias);
+          gimp_fill_options_set_feather (fill_options, options->feather,
+                                         options->feather_radius);
 
           gimp_context_set_opacity (GIMP_CONTEXT (fill_options),
                                     gimp_context_get_opacity (context));
@@ -596,6 +598,8 @@ gimp_bucket_fill_tool_motion (GimpTool         *tool,
                                               &error))
         {
           gimp_fill_options_set_antialias (fill_options, options->antialias);
+          gimp_fill_options_set_feather (fill_options, options->feather,
+                                         options->feather_radius);
 
           gimp_context_set_opacity (GIMP_CONTEXT (fill_options),
                                     gimp_context_get_opacity (context));

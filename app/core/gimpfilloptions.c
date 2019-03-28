@@ -47,6 +47,8 @@ enum
   PROP_0,
   PROP_STYLE,
   PROP_ANTIALIAS,
+  PROP_FEATHER,
+  PROP_FEATHER_RADIUS,
   PROP_PATTERN_VIEW_TYPE,
   PROP_PATTERN_VIEW_SIZE
 };
@@ -58,6 +60,8 @@ struct _GimpFillOptionsPrivate
 {
   GimpFillStyle style;
   gboolean      antialias;
+  gboolean      feather;
+  gdouble       feather_radius;
 
   GimpViewType  pattern_view_type;
   GimpViewSize  pattern_view_size;
@@ -114,6 +118,20 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FEATHER,
+                            "feather",
+                            _("Feather edges"),
+                            _("Enable feathering of fill edges"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
+                           "feather-radius",
+                           _("Radius"),
+                           _("Radius of feathering"),
+                           0.0, 100.0, 10.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   g_object_class_install_property (object_class, PROP_PATTERN_VIEW_TYPE,
                                    g_param_spec_enum ("pattern-view-type",
                                                       NULL, NULL,
@@ -160,6 +178,12 @@ gimp_fill_options_set_property (GObject      *object,
     case PROP_ANTIALIAS:
       private->antialias = g_value_get_boolean (value);
       break;
+    case PROP_FEATHER:
+      private->feather = g_value_get_boolean (value);
+      break;
+    case PROP_FEATHER_RADIUS:
+      private->feather_radius = g_value_get_double (value);
+      break;
 
     case PROP_PATTERN_VIEW_TYPE:
       private->pattern_view_type = g_value_get_enum (value);
@@ -189,6 +213,12 @@ gimp_fill_options_get_property (GObject    *object,
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, private->antialias);
+      break;
+    case PROP_FEATHER:
+      g_value_set_boolean (value, private->feather);
+      break;
+    case PROP_FEATHER_RADIUS:
+      g_value_set_double (value, private->feather_radius);
       break;
 
     case PROP_PATTERN_VIEW_TYPE:
@@ -275,6 +305,29 @@ gimp_fill_options_set_antialias (GimpFillOptions *options,
   g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
 
   g_object_set (options, "antialias", antialias, NULL);
+}
+
+gboolean
+gimp_fill_options_get_feather (GimpFillOptions *options,
+                               gdouble         *radius)
+{
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+
+  if (radius)
+    *radius = GET_PRIVATE (options)->feather_radius;
+
+  return GET_PRIVATE (options)->feather;
+}
+
+void
+gimp_fill_options_set_feather (GimpFillOptions *options,
+                               gboolean         feather,
+                               gdouble          radius)
+{
+  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+
+  g_object_set (options, "feather", feather, NULL);
+  g_object_set (options, "feather-radius", radius, NULL);
 }
 
 gboolean

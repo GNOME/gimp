@@ -44,6 +44,8 @@ struct _GimpBucketFillOptions
   gboolean                      sample_merged;
   gboolean                      diagonal_neighbors;
   gboolean                      antialias;
+  gboolean                      feather;
+  gdouble                       feather_radius;
   gdouble                       threshold;
 
   GtkWidget                    *line_art_busy_box;

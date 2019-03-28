@@ -52,6 +52,8 @@ enum
   PROP_SAMPLE_MERGED,
   PROP_DIAGONAL_NEIGHBORS,
   PROP_ANTIALIAS,
+  PROP_FEATHER,
+  PROP_FEATHER_RADIUS,
   PROP_THRESHOLD,
   PROP_LINE_ART_SOURCE,
   PROP_LINE_ART_THRESHOLD,
@@ -152,6 +154,20 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FEATHER,
+                            "feather",
+                            _("Feather edges"),
+                            _("Enable feathering of fill edges"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
+                           "feather-radius",
+                           _("Radius"),
+                           _("Radius of feathering"),
+                           0.0, 100.0, 10.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                            "threshold",
                            _("Threshold"),
@@ -240,6 +256,12 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_ANTIALIAS:
       options->antialias = g_value_get_boolean (value);
       break;
+    case PROP_FEATHER:
+      options->feather = g_value_get_boolean (value);
+      break;
+    case PROP_FEATHER_RADIUS:
+      options->feather_radius = g_value_get_double (value);
+      break;
     case PROP_THRESHOLD:
       options->threshold = g_value_get_double (value);
       break;
@@ -292,6 +314,12 @@ gimp_bucket_fill_options_get_property (GObject    *object,
       break;
     case PROP_ANTIALIAS:
       g_value_set_boolean (value, options->antialias);
+      break;
+    case PROP_FEATHER:
+      g_value_set_boolean (value, options->feather);
+      break;
+    case PROP_FEATHER_RADIUS:
+      g_value_set_double (value, options->feather_radius);
       break;
     case PROP_THRESHOLD:
       g_value_set_double (value, options->threshold);
@@ -483,10 +511,14 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
 
-  /*  the antialias toggle  */
-  widget = gimp_prop_check_button_new (config, "antialias", NULL);
-  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
+  /*  Line Art: feather radius scale  */
+  scale = gimp_prop_spin_scale_new (config, "feather-radius", NULL,
+                                    1.0, 10.0, 1);
+
+  frame = gimp_prop_expanding_frame_new (config, "feather", NULL,
+                                         scale, NULL);
+  gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   /*  Line Art: max growing size */
   scale = gimp_prop_spin_scale_new (config, "line-art-max-grow", NULL,
