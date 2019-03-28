@@ -425,10 +425,11 @@ gimp_drawable_preview_freeze (GimpViewable *viewable)
 {
   GimpViewable *parent = gimp_viewable_get_parent (viewable);
 
-  if (! parent)
+  if (! parent && gimp_item_is_attached (GIMP_ITEM (viewable)))
     parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (viewable)));
 
-  gimp_viewable_preview_freeze (parent);
+  if (parent)
+    gimp_viewable_preview_freeze (parent);
 }
 
 static void
@@ -436,10 +437,11 @@ gimp_drawable_preview_thaw (GimpViewable *viewable)
 {
   GimpViewable *parent = gimp_viewable_get_parent (viewable);
 
-  if (! parent)
+  if (! parent && gimp_item_is_attached (GIMP_ITEM (viewable)))
     parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (viewable)));
 
-  gimp_viewable_preview_thaw (parent);
+  if (parent)
+    gimp_viewable_preview_thaw (parent);
 }
 
 static GeglNode *
