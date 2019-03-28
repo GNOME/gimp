@@ -102,10 +102,11 @@ gimp_layer_mask_preview_freeze (GimpViewable *viewable)
     {
       GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
 
-      if (! parent)
+      if (! parent && gimp_item_is_attached (GIMP_ITEM (layer)))
         parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (layer)));
 
-      gimp_viewable_preview_freeze (parent);
+      if (parent)
+        gimp_viewable_preview_freeze (parent);
     }
 }
 
@@ -119,10 +120,11 @@ gimp_layer_mask_preview_thaw (GimpViewable *viewable)
     {
       GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
 
-      if (! parent)
+      if (! parent && gimp_item_is_attached (GIMP_ITEM (layer)))
         parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (layer)));
 
-      gimp_viewable_preview_thaw (parent);
+      if (parent)
+        gimp_viewable_preview_thaw (parent);
     }
 }
 
