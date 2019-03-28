@@ -100,6 +100,8 @@ static gint64     gimp_drawable_get_memsize        (GimpObject        *object,
 static gboolean   gimp_drawable_get_size           (GimpViewable      *viewable,
                                                     gint              *width,
                                                     gint              *height);
+static void       gimp_drawable_preview_freeze     (GimpViewable      *viewable);
+static void       gimp_drawable_preview_thaw       (GimpViewable      *viewable);
 
 static GeglNode * gimp_drawable_get_node           (GimpFilter        *filter);
 
@@ -266,6 +268,8 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   viewable_class->get_size        = gimp_drawable_get_size;
   viewable_class->get_new_preview = gimp_drawable_get_new_preview;
   viewable_class->get_new_pixbuf  = gimp_drawable_get_new_pixbuf;
+  viewable_class->preview_freeze  = gimp_drawable_preview_freeze;
+  viewable_class->preview_thaw    = gimp_drawable_preview_thaw;
 
   filter_class->get_node          = gimp_drawable_get_node;
 
@@ -414,6 +418,28 @@ gimp_drawable_get_size (GimpViewable *viewable,
   *height = gimp_item_get_height (item);
 
   return TRUE;
+}
+
+static void
+gimp_drawable_preview_freeze (GimpViewable *viewable)
+{
+  GimpViewable *parent = gimp_viewable_get_parent (viewable);
+
+  if (! parent)
+    parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (viewable)));
+
+  gimp_viewable_preview_freeze (parent);
+}
+
+static void
+gimp_drawable_preview_thaw (GimpViewable *viewable)
+{
+  GimpViewable *parent = gimp_viewable_get_parent (viewable);
+
+  if (! parent)
+    parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (viewable)));
+
+  gimp_viewable_preview_thaw (parent);
 }
 
 static GeglNode *
