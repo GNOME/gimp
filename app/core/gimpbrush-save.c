@@ -68,7 +68,7 @@ gimp_brush_save (GimpData       *data,
   if (pixmap)
     {
       gsize   size = width * height * 4;
-      guchar *data = g_alloca (size);
+      guchar *data = g_malloc (size);
       guchar *p    = gimp_temp_buf_get_data (pixmap);
       guchar *m    = gimp_temp_buf_get_data (mask);
       guchar *d    = data;
@@ -85,9 +85,13 @@ gimp_brush_save (GimpData       *data,
       if (! g_output_stream_write_all (output, data, size,
                                        NULL, NULL, error))
         {
+          g_free (data);
+
           return FALSE;
         }
-     }
+
+      g_free (data);
+    }
   else
     {
       if (! g_output_stream_write_all (output,
