@@ -68,6 +68,7 @@ struct _GimpViewablePrivate
   gchar        *icon_name;
   GdkPixbuf    *icon_pixbuf;
   gint          freeze_count;
+  gboolean      invalidate_pending;
   GimpViewable *parent;
   gint          depth;
 
@@ -588,6 +589,8 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
 
   if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);
+  else
+    private->invalidate_pending = TRUE;
 }
 
 /**
@@ -1305,7 +1308,12 @@ gimp_viewable_preview_thaw (GimpViewable *viewable)
 
   if (private->freeze_count == 0)
     {
-      gimp_viewable_invalidate_preview (viewable);
+      if (private->invalidate_pending)
+        {
+          private->invalidate_pending = FALSE;
+
+          gimp_viewable_invalidate_preview (viewable);
+        }
 
       g_object_notify (G_OBJECT (viewable), "frozen");
 
