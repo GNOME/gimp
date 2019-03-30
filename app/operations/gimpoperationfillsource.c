@@ -26,6 +26,8 @@
 
 #include "operations-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "core/gimpdrawable.h"
 #include "core/gimpfilloptions.h"
 
@@ -233,11 +235,16 @@ gimp_operation_fill_source_process (GeglOperation        *operation,
 
   if (fill_source->options && fill_source->drawable)
     {
-      GeglBuffer *buffer;
+      GeglBuffer    *buffer;
+      GeglRectangle  rect;
+
+      gimp_gegl_rectangle_align_to_tile_grid (
+        &rect, result,
+        gimp_drawable_get_buffer (fill_source->drawable));
 
       buffer = gimp_fill_options_create_buffer (fill_source->options,
                                                 fill_source->drawable,
-                                                result,
+                                                &rect,
                                                 fill_source->pattern_offset_x,
                                                 fill_source->pattern_offset_y);
 
