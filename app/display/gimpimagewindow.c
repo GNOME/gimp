@@ -78,6 +78,8 @@
 #include "gimpstatusbar.h"
 
 #include "gimp-log.h"
+#include "gimp-priorities.h"
+
 #include "gimp-intl.h"
 
 
@@ -1924,8 +1926,10 @@ gimp_image_window_update_ui_manager (GimpImageWindow *window)
   if (! private->update_ui_manager_idle_id)
     {
       private->update_ui_manager_idle_id =
-        g_idle_add ((GSourceFunc) gimp_image_window_update_ui_manager_idle,
-                    window);
+        g_idle_add_full (GIMP_PRIORITY_IMAGE_WINDOW_UPDATE_UI_MANAGER_IDLE,
+                         (GSourceFunc) gimp_image_window_update_ui_manager_idle,
+                         window,
+                         NULL);
     }
 }
 
