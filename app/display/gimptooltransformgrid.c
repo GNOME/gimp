@@ -887,11 +887,11 @@ calcangle (GimpVector2 a,
 
   length = norm (a) * norm (b);
 
-  angle = acos (dotprod (a, b)/length);
+  angle = acos (SAFE_CLAMP (dotprod (a, b) / length, -1.0, +1.0));
   angle2 = b.y;
   b.y = -b.x;
   b.x = angle2;
-  angle2 = acos (dotprod (a, b)/length);
+  angle2 = acos (SAFE_CLAMP (dotprod (a, b) / length, -1.0, +1.0));
 
   return ((angle2 > G_PI / 2.0) ? angle : 2.0 * G_PI - angle);
 }
@@ -1750,12 +1750,6 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
         }
     }
 
-  for (i = 0; i < 4; i++)
-    {
-      *x[i] = newpos[i].x;
-      *y[i] = newpos[i].y;
-    }
-
   /* this will have been set to TRUE if an operation used the pivot in
    * addition to being a user option
    */
@@ -1766,6 +1760,22 @@ gimp_tool_transform_grid_motion (GimpToolWidget   *widget,
     {
       GimpVector2 delta = get_pivot_delta (grid, oldpos, newpos, pivot);
       pivot = vectoradd (pivot, delta);
+    }
+
+  /* make sure the new coordinates are valid */
+  for (i = 0; i < 4; i++)
+    {
+      if (! isfinite (newpos[i].x) || ! isfinite (newpos[i].y))
+        return;
+    }
+
+  if (! isfinite (pivot.x) || ! isfinite (pivot.y))
+    return;
+
+  for (i = 0; i < 4; i++)
+    {
+      *x[i] = newpos[i].x;
+      *y[i] = newpos[i].y;
     }
 
   /* set unconditionally: if options get toggled during operation, we
