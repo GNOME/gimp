@@ -42,7 +42,7 @@
 #define DEFAULT_INTERVAL         (1.0 / 15.0) /* seconds */
 
 /* the minimal area to process per iteration */
-#define MIN_AREA_PER_ITERATION   1024
+#define MIN_AREA_PER_ITERATION   4096
 
 /* the maximal ratio between the actual processed area and the target area,
  * above which the current chunk height is readjusted, even in the middle of a
@@ -51,7 +51,7 @@
 #define MAX_AREA_RATIO           2.0
 
 /* the width of the target-area sliding window */
-#define TARGET_AREA_HISTORY_SIZE 5
+#define TARGET_AREA_HISTORY_SIZE 3
 
 
 struct _GimpChunkIterator
@@ -73,9 +73,11 @@ struct _GimpChunkIterator
 
   gint64          iteration_time;
 
-  gdouble         current_area;
-  gdouble         target_area;
+  gint64          last_time;
+  gint            last_area;
 
+  gdouble         target_area;
+  gdouble         target_area_min;
   gdouble         target_area_history[TARGET_AREA_HISTORY_SIZE];
   gint            target_area_history_i;
   gint            target_area_history_n;
@@ -95,6 +97,7 @@ static gboolean   gimp_chunk_iterator_prepare            (GimpChunkIterator   *i
 static void       gimp_chunk_iterator_set_target_area    (GimpChunkIterator   *iter,
                                                           gdouble              target_area);
 static gdouble    gimp_chunk_iterator_get_target_area    (GimpChunkIterator   *iter);
+static void       gimp_chunk_iterator_reset_target_area  (GimpChunkIterator   *iter);
 
 static void       gimp_chunk_iterator_calc_rect          (GimpChunkIterator   *iter,
                                                           GeglRectangle       *rect,
@@ -246,6 +249,8 @@ gimp_chunk_iterator_set_target_area (GimpChunkIterator *iter,
 {
   gdouble target_area_history[TARGET_AREA_HISTORY_SIZE];
 
+  iter->target_area_min = MIN (iter->target_area_min, target_area);
+
   iter->target_area_history[iter->target_area_history_i++] = target_area;
 
   iter->target_area_history_n  = MAX (iter->target_area_history_n,
@@ -264,10 +269,22 @@ gimp_chunk_iterator_set_target_area (GimpChunkIterator *iter,
 static gdouble
 gimp_chunk_iterator_get_target_area (GimpChunkIterator *iter)
 {
-  if (iter->target_area_history_n)
+  if (iter->target_area)
     return iter->target_area;
   else
     return iter->tile_rect.width * iter->tile_rect.height;
+}
+
+static void
+gimp_chunk_iterator_reset_target_area (GimpChunkIterator *iter)
+{
+  if (iter->target_area_history_n)
+    {
+      iter->target_area           = iter->target_area_min;
+      iter->target_area_min       = MAX_CHUNK_WIDTH * MAX_CHUNK_HEIGHT;
+      iter->target_area_history_i = 0;
+      iter->target_area_history_n = 0;
+    }
 }
 
 static void
@@ -279,6 +296,9 @@ gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
   gdouble aspect_ratio;
   gint    offset_x;
   gint    offset_y;
+
+  if (readjust_height)
+    gimp_chunk_iterator_reset_target_area (iter);
 
   target_area = gimp_chunk_iterator_get_target_area (iter);
 
@@ -293,11 +313,12 @@ gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
 
   if (readjust_height)
     {
-      rect->height = ceil ((offset_y + sqrt (target_area * aspect_ratio)) /
+      rect->height = RINT ((offset_y + sqrt (target_area * aspect_ratio)) /
                            iter->tile_rect.height)                        *
                      iter->tile_rect.height                               -
                      offset_y;
 
+      rect->height = MAX (rect->height, iter->tile_rect.height);
       rect->height = MIN (rect->height,
                           iter->current_rect.y + iter->current_rect.height -
                           rect->y);
@@ -308,12 +329,13 @@ gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
       rect->height = iter->current_height;
     }
 
-  rect->width = ceil ((offset_x + (gdouble) target_area   /
+  rect->width = RINT ((offset_x + (gdouble) target_area   /
                                   (gdouble) rect->height) /
                       iter->tile_rect.width)              *
                 iter->tile_rect.width                     -
                 offset_x;
 
+  rect->width = MAX (rect->width, iter->tile_rect.width);
   rect->width = MIN (rect->width,
                      iter->current_rect.x + iter->current_rect.width -
                      rect->x);
@@ -414,7 +436,8 @@ gimp_chunk_iterator_next (GimpChunkIterator *iter)
 
   iter->iteration_time = g_get_monotonic_time ();
 
-  iter->current_area = 0;
+  iter->last_time = iter->iteration_time;
+  iter->last_area = 0;
 
   return TRUE;
 }
@@ -423,22 +446,27 @@ gboolean
 gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
                               GeglRectangle     *rect)
 {
+  gint64 time;
+
   g_return_val_if_fail (iter != NULL, FALSE);
   g_return_val_if_fail (rect != NULL, FALSE);
 
   if (! gimp_chunk_iterator_prepare (iter))
     return FALSE;
 
-  if (iter->current_area >= MIN_AREA_PER_ITERATION)
+  time = g_get_monotonic_time ();
+
+  if (iter->last_area >= MIN_AREA_PER_ITERATION)
     {
       gdouble interval;
 
-      interval = (gdouble) (g_get_monotonic_time () - iter->iteration_time) /
-                 G_TIME_SPAN_SECOND;
+      interval = (gdouble) (time - iter->last_time) / G_TIME_SPAN_SECOND;
 
       gimp_chunk_iterator_set_target_area (
         iter,
-        iter->current_area * iter->interval / interval);
+        iter->last_area * iter->interval / interval);
+
+      interval = (gdouble) (time - iter->iteration_time) / G_TIME_SPAN_SECOND;
 
       if (interval > iter->interval)
         return FALSE;
@@ -455,7 +483,12 @@ gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
       if (rect->width * rect->height >=
           MAX_AREA_RATIO * gimp_chunk_iterator_get_target_area (iter))
         {
+          GeglRectangle old_rect = *rect;
+
           gimp_chunk_iterator_calc_rect (iter, rect, TRUE);
+
+          if (rect->height >= old_rect.height)
+            *rect = old_rect;
         }
     }
 
@@ -485,7 +518,8 @@ gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
 
   iter->current_x += rect->width;
 
-  iter->current_area += rect->width * rect->height;
+  iter->last_time = time;
+  iter->last_area = rect->width * rect->height;
 
   return TRUE;
 }
