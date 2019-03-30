@@ -318,7 +318,9 @@ gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
                      iter->tile_rect.height                               -
                      offset_y;
 
-      rect->height = MAX (rect->height, iter->tile_rect.height);
+      if (rect->height <= 0)
+        rect->height += iter->tile_rect.height;
+
       rect->height = MIN (rect->height,
                           iter->current_rect.y + iter->current_rect.height -
                           rect->y);
@@ -335,7 +337,9 @@ gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
                 iter->tile_rect.width                     -
                 offset_x;
 
-  rect->width = MAX (rect->width, iter->tile_rect.width);
+  if (rect->width <= 0)
+    rect->width += iter->tile_rect.width;
+
   rect->width = MIN (rect->width,
                      iter->current_rect.x + iter->current_rect.width -
                      rect->x);
