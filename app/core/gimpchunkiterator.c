@@ -113,39 +113,34 @@ gimp_chunk_iterator_set_current_rect (GimpChunkIterator   *iter,
   cairo_region_subtract_rectangle (iter->current_region,
                                    (const cairo_rectangle_int_t *) rect);
 
-  iter->current_rect = *rect;
+  iter->current_rect   = *rect;
 
-  iter->current_x    = rect->x;
-  iter->current_y    = rect->y;
+  iter->current_x      = rect->x;
+  iter->current_y      = rect->y;
+  iter->current_height = 0;
 }
 
 static void
 gimp_chunk_iterator_merge_current_rect (GimpChunkIterator *iter)
 {
   GeglRectangle rect;
-  gint          current_height = 0;
 
   if (gegl_rectangle_is_empty (&iter->current_rect))
     return;
 
   /* merge the remainder of the current row */
-  if (iter->current_x != iter->current_rect.x)
-    {
-      current_height = iter->current_height;
+  rect.x      = iter->current_x;
+  rect.y      = iter->current_y;
+  rect.width  = iter->current_rect.x + iter->current_rect.width -
+                iter->current_x;
+  rect.height = iter->current_height;
 
-      rect.x      = iter->current_x;
-      rect.y      = iter->current_y;
-      rect.width  = iter->current_rect.x + iter->current_rect.width -
-                    iter->current_x;
-      rect.height = current_height;
-
-      cairo_region_union_rectangle (iter->current_region,
-                                    (const cairo_rectangle_int_t *) &rect);
-    }
+  cairo_region_union_rectangle (iter->current_region,
+                                (const cairo_rectangle_int_t *) &rect);
 
   /* merge the remainder of the current rect */
   rect.x      = iter->current_rect.x;
-  rect.y      = iter->current_y + current_height;
+  rect.y      = iter->current_y + iter->current_height;
   rect.width  = iter->current_rect.width;
   rect.height = iter->current_rect.y + iter->current_rect.height - rect.y;
 
@@ -160,6 +155,7 @@ gimp_chunk_iterator_merge_current_rect (GimpChunkIterator *iter)
 
   iter->current_x           = 0;
   iter->current_y           = 0;
+  iter->current_height      = 0;
 }
 
 static void
@@ -174,18 +170,21 @@ gimp_chunk_iterator_merge (GimpChunkIterator *iter)
       cairo_region_union (iter->region, iter->priority_region);
 
       g_clear_pointer (&iter->priority_region, cairo_region_destroy);
+
+      iter->current_region = iter->region;
     }
 }
 
 static gboolean
 gimp_chunk_iterator_prepare (GimpChunkIterator *iter)
 {
-  if (iter->current_x >= iter->current_rect.x + iter->current_rect.width)
+  if (iter->current_x == iter->current_rect.x + iter->current_rect.width)
     {
-      iter->current_x  = iter->current_rect.x;
-      iter->current_y += iter->current_height;
+      iter->current_x       = iter->current_rect.x;
+      iter->current_y      += iter->current_height;
+      iter->current_height  = 0;
 
-      if (iter->current_y >= iter->current_rect.y + iter->current_rect.height)
+      if (iter->current_y == iter->current_rect.y + iter->current_rect.height)
         {
           GeglRectangle rect;
 
@@ -222,6 +221,7 @@ gimp_chunk_iterator_prepare (GimpChunkIterator *iter)
 
               iter->current_x           = 0;
               iter->current_y           = 0;
+              iter->current_height      = 0;
 
               return FALSE;
             }
@@ -358,7 +358,8 @@ gimp_chunk_iterator_new (cairo_region_t *region)
 
   iter = g_slice_new0 (GimpChunkIterator);
 
-  iter->region = region;
+  iter->region         = region;
+  iter->current_region = region;
 
   g_object_get (gegl_config (),
                 "tile-width",  &iter->tile_rect.width,
@@ -396,8 +397,7 @@ gimp_chunk_iterator_set_priority_rect (GimpChunkIterator   *iter,
     {
       iter->priority_rect = *rect;
 
-      if (gimp_chunk_iterator_prepare (iter))
-        gimp_chunk_iterator_merge (iter);
+      gimp_chunk_iterator_merge (iter);
     }
 }
 
@@ -542,8 +542,7 @@ gimp_chunk_iterator_stop (GimpChunkIterator *iter,
     }
   else
     {
-      if (gimp_chunk_iterator_prepare (iter))
-        gimp_chunk_iterator_merge (iter);
+      gimp_chunk_iterator_merge (iter);
 
       result = iter->region;
     }
