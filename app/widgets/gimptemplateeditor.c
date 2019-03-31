@@ -31,6 +31,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
@@ -71,6 +73,7 @@ struct _GimpTemplateEditorPrivate
   GtkWidget     *more_label;
   GtkWidget     *resolution_se;
   GtkWidget     *chain_button;
+  GtkWidget     *precision_combo;
   GtkWidget     *profile_combo;
 };
 
@@ -158,6 +161,7 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *scrolled_window;
   GtkWidget                 *text_view;
   GtkTextBuffer             *text_buffer;
+  GtkListStore              *store;
   GList                     *focus_chain = NULL;
   gchar                     *text;
   gint                       row;
@@ -404,15 +408,28 @@ gimp_template_editor_constructed (GObject *object)
                              _("Color _space:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
-                                        "component-type",
-                                        GIMP_COMPONENT_TYPE_U8,
-                                        GIMP_COMPONENT_TYPE_FLOAT);
+  /* construct the precision combo manually, instead of using
+   * gimp_prop_enum_combo_box_new(), so that we only reset the gamma combo when
+   * the precision is changed through the ui.  see issue #3025.
+   */
+  store = gimp_enum_store_new_with_range (GIMP_TYPE_COMPONENT_TYPE,
+                                          GIMP_COMPONENT_TYPE_U8,
+                                          GIMP_COMPONENT_TYPE_FLOAT);
+
+  private->precision_combo = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                                           "model", store,
+                                           NULL);
+  g_object_unref (store);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Precision:"), 0.0, 0.5,
-                             combo, 1, FALSE);
+                             private->precision_combo, 1, FALSE);
 
-  g_signal_connect (combo, "changed",
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->precision_combo),
+                                 gimp_babl_component_type (
+                                   gimp_template_get_precision (template)));
+
+  g_signal_connect (private->precision_combo, "changed",
                     G_CALLBACK (gimp_template_editor_precision_changed),
                     editor);
 
@@ -642,6 +659,10 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  (gint *) &component_type);
 
+  g_object_set (private->template,
+                "component-type", component_type,
+                NULL);
+
   /* when changing this logic, also change the same switch()
    * in convert-precision-dialog.c
    */
@@ -762,6 +783,20 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
           gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
                                           gimp_template_get_resolution_y (template),
                                           FALSE);
+        }
+      else if (! strcmp (param_spec->name, "component-type"))
+        {
+          g_signal_handlers_block_by_func (private->precision_combo,
+                                           gimp_template_editor_precision_changed,
+                                           editor);
+
+          gimp_int_combo_box_set_active (
+            GIMP_INT_COMBO_BOX (private->precision_combo),
+            gimp_babl_component_type (gimp_template_get_precision (template)));
+
+          g_signal_handlers_unblock_by_func (private->precision_combo,
+                                             gimp_template_editor_precision_changed,
+                                             editor);
         }
     }
 
