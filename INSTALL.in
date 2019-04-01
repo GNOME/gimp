@@ -85,6 +85,9 @@ header files installed.
      If installing from repository, do not install the master branch!
      Checkout the tag "v1.3.0" instead, or simply install from a tarball
      or from your favorite package manager.
+     You may also checkout the "libmypaint-v1" branch, which is the
+     development branch for libmypaint v1.x and has some more recent
+     fixes.
 
  11. We also need the mypaint-brushes data package:
 
