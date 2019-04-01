@@ -37,8 +37,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-14 17:34+0100\n"
-"PO-Revision-Date: 2019-03-14 17:47+0100\n"
+"POT-Creation-Date: 2019-04-01 12:56+0200\n"
+"PO-Revision-Date: 2019-04-01 12:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -148,7 +148,9 @@ msgstr ""
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
-msgstr "Aggiungi le opzioni \"Limita appigli\" e \"Attorno al centro\" alla GIU dello strumento di trasformazione prospettiva"
+msgstr ""
+"Aggiungi le opzioni \"Limita appigli\" e \"Attorno al centro\" alla GIU "
+"dello strumento di trasformazione prospettiva"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
@@ -158,7 +160,9 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "Parametric brushes now 32-bit float to avoid posterization"
-msgstr "I pennelli parametrici ora sono in virgola mobile a 32 bit per evitare l'effetto posterizzazione"
+msgstr ""
+"I pennelli parametrici ora sono in virgola mobile a 32 bit per evitare "
+"l'effetto posterizzazione"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "Clipboard brushes and pattern can now be duplicated"
@@ -10628,7 +10632,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Errore durante l'analisi di \"%%s\": riga più lunga di %s caratteri."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:345
+#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:374
 #: ../app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10739,19 +10743,25 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:100
 msgid "Snap to guides by default in new image windows."
-msgstr "Guide magnetiche per impostazione predefinita nelle finestre nuova immagine."
+msgstr ""
+"Guide magnetiche per impostazione predefinita nelle finestre nuova immagine."
 
 #: ../app/config/gimprc-blurbs.h:103
 msgid "Snap to the grid by default in new image windows."
-msgstr "Griglia magnetica per impostazione predefinita nelle finestre nuova immagine."
+msgstr ""
+"Griglia magnetica per impostazione predefinita nelle finestre nuova immagine."
 
 #: ../app/config/gimprc-blurbs.h:106
 msgid "Snap to the canvas edges by default in new image windows."
-msgstr "Bordi dell'area disegnabile magnetici per impostazione predefinita nelle finestre nuova immagine."
+msgstr ""
+"Bordi dell'area disegnabile magnetici per impostazione predefinita nelle "
+"finestre nuova immagine."
 
 #: ../app/config/gimprc-blurbs.h:109
 msgid "Snap to the active path by default in new image windows."
-msgstr "Tracciati magnetici per impostazione predefinita nelle finestre nuova immagine."
+msgstr ""
+"Tracciati magnetici per impostazione predefinita nelle finestre nuova "
+"immagine."
 
 #: ../app/config/gimprc-blurbs.h:112
 msgid ""
@@ -12663,12 +12673,12 @@ msgstr "Fallita l'esecuzione di un processo figlio “%s” (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:it"
 
-#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:357
+#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:386
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "Errore durante la chiusura di \"%s\": %s"
 
-#: ../app/core/gimp-user-install.c:216
+#: ../app/core/gimp-user-install.c:215
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -12677,7 +12687,7 @@ msgstr ""
 "Sembra sia già stato utilizzato GIMP %s. GIMP migrerà le impostazioni utente "
 "alla versione a \"%s\"."
 
-#: ../app/core/gimp-user-install.c:221
+#: ../app/core/gimp-user-install.c:220
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -12686,22 +12696,22 @@ msgstr ""
 "Sembra che tu stia usando GIMP per la prima volta. GIMP ora creerà una "
 "cartella di nome \"%s\" e vi copiarà alcuni file al suo interno."
 
-#: ../app/core/gimp-user-install.c:420
+#: ../app/core/gimp-user-install.c:419
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Copia del file '%s' da '%s'..."
 
-#: ../app/core/gimp-user-install.c:435 ../app/core/gimp-user-install.c:461
+#: ../app/core/gimp-user-install.c:434 ../app/core/gimp-user-install.c:460
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Creazione cartella '%s'..."
 
-#: ../app/core/gimp-user-install.c:446 ../app/core/gimp-user-install.c:472
+#: ../app/core/gimp-user-install.c:445 ../app/core/gimp-user-install.c:471
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Impossibile creare la cartella '%s': %s"
 
-#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:327
+#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:382
 msgid "No patterns available for this operation."
 msgstr "Nessun motivo disponibile per questa operazione."
 
@@ -12922,38 +12932,38 @@ msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr "Selezione rettangolare"
 
-#: ../app/core/gimpchannel-select.c:118
+#: ../app/core/gimpchannel-select.c:113
 msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr "Selezione ellittica"
 
-#: ../app/core/gimpchannel-select.c:173
+#: ../app/core/gimpchannel-select.c:163
 msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Selezione rettangolare arrotondata"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:448
+#: ../app/core/gimpchannel-select.c:416 ../app/core/gimplayer.c:448
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa a selezione"
 
-#: ../app/core/gimpchannel-select.c:478
+#: ../app/core/gimpchannel-select.c:454
 #, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr "Canale %s a selezione"
 
-#: ../app/core/gimpchannel-select.c:529
+#: ../app/core/gimpchannel-select.c:505
 msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr "Selezione fuzzy"
 
-#: ../app/core/gimpchannel-select.c:577
+#: ../app/core/gimpchannel-select.c:553
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Selezione per colore"
 
-#: ../app/core/gimpchannel-select.c:616
+#: ../app/core/gimpchannel-select.c:592
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Selezione per colore indicizzato"
@@ -13251,7 +13261,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:121
+#: ../app/core/gimpdrawable.c:528 ../app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scala"
@@ -13261,7 +13271,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Riempimento colore"
 
-#: ../app/core/gimpdrawable-edit.c:150
+#: ../app/core/gimpdrawable-edit.c:151
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Cancella"
@@ -13279,11 +13289,11 @@ msgstr "Selezione fluttuante"
 msgid "Computing alpha of unknown pixels"
 msgstr "Calcolo alfa per i pixel sconosciuti"
 
-#: ../app/core/gimpdrawable-fill.c:204 ../app/vectors/gimpvectors.c:668
+#: ../app/core/gimpdrawable-fill.c:212 ../app/vectors/gimpvectors.c:668
 msgid "Not enough points to fill"
 msgstr "Non ci sono abbastanza punti per riempire"
 
-#: ../app/core/gimpdrawable-fill.c:259
+#: ../app/core/gimpdrawable-fill.c:267
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Disegna il delineato"
@@ -13337,42 +13347,63 @@ msgstr "Trasformazione"
 msgid "Output type"
 msgstr "Tipo di uscita"
 
-#: ../app/core/gimpfilloptions.c:102
+#: ../app/core/gimpfilloptions.c:108
 msgid "Style"
 msgstr "Stile"
 
-#: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
-#: ../app/tools/gimpbucketfilloptions.c:147
+#: ../app/core/gimpfilloptions.c:116 ../app/pdb/gimppdbcontext.c:100
+#: ../app/tools/gimpbucketfilloptions.c:149
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
-#: ../app/core/gimpfilloptions.c:300
+#: ../app/core/gimpfilloptions.c:123 ../app/tools/gimpbucketfilloptions.c:159
+#: ../app/tools/gimpselectionoptions.c:87
+msgid "Feather edges"
+msgstr "Margini sfumati"
+
+#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:160
+msgid "Enable feathering of fill edges"
+msgstr "Abilita la sfumatura dei bordi del riempimento"
+
+#: ../app/core/gimpfilloptions.c:130 ../app/paint/gimpmybrushoptions.c:86
+#: ../app/tools/gimpbucketfilloptions.c:166 ../app/tools/gimpcoloroptions.c:85
+#: ../app/tools/gimprectangleselectoptions.c:101
+#: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
+msgid "Radius"
+msgstr "Raggio"
+
+#: ../app/core/gimpfilloptions.c:131 ../app/tools/gimpbucketfilloptions.c:167
+#: ../app/tools/gimpselectionoptions.c:95
+msgid "Radius of feathering"
+msgstr "Raggio di sfumatura"
+
+#: ../app/core/gimpfilloptions.c:355
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Riempi con il colore del primo piano"
 
-#: ../app/core/gimpfilloptions.c:305
+#: ../app/core/gimpfilloptions.c:360
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Riempi con il colore dello sfondo"
 
-#: ../app/core/gimpfilloptions.c:310
+#: ../app/core/gimpfilloptions.c:365
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Riempi con il bianco"
 
-#: ../app/core/gimpfilloptions.c:317
+#: ../app/core/gimpfilloptions.c:372
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Riempi con la trasparenza"
 
-#: ../app/core/gimpfilloptions.c:333 ../app/core/gimpfilloptions.c:401
+#: ../app/core/gimpfilloptions.c:388 ../app/core/gimpfilloptions.c:456
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Riempi con il motivo"
 
-#: ../app/core/gimpfilloptions.c:398
+#: ../app/core/gimpfilloptions.c:453
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
 msgstr "Riempi con tinta unita"
@@ -13977,7 +14008,7 @@ msgstr "(l'anteprima potrebbe non essere aggiornata)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:429
-#: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:681
+#: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -14101,7 +14132,7 @@ msgid "Layer cannot be lowered more."
 msgstr "Il livello non può essere abbassato ulteriormente."
 
 #: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1913
-#: ../app/core/gimplayermask.c:228
+#: ../app/core/gimplayermask.c:270
 #, c-format
 msgid "%s mask"
 msgstr "%s maschera"
@@ -14177,17 +14208,17 @@ msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Livello a dimensione immagine"
 
-#: ../app/core/gimplayermask.c:76
+#: ../app/core/gimplayermask.c:82
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Sposta maschera di livello"
 
-#: ../app/core/gimplayermask.c:77
+#: ../app/core/gimplayermask.c:83
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Maschera di livello a selezione"
 
-#: ../app/core/gimplayermask.c:152
+#: ../app/core/gimplayermask.c:194
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Impossibile rinominare le maschere di livello."
@@ -14196,19 +14227,19 @@ msgstr "Impossibile rinominare le maschere di livello."
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Seleziona i pixel trasparenti invece di quelli grigi"
 
-#: ../app/core/gimplineart.c:343 ../app/tools/gimpbucketfilloptions.c:172
+#: ../app/core/gimplineart.c:343 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
 msgstr "Soglia rilevamento tratteggio"
 
-#: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:173
+#: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr "Soglia di rilevamento contorno (valori alti includeranno più pixel)"
 
-#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:179
+#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:195
 msgid "Maximum growing size"
 msgstr "Massima dimensione massima crescita"
 
-#: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:180
+#: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:196
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Numero massimo di crescita pixel sotto il tratteggio"
 
@@ -14700,7 +14731,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "Profilo colore"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:108
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:110
 msgid "Fill type"
 msgstr "Tipo riempimento"
 
@@ -15042,12 +15073,12 @@ msgid "Precision Conversion"
 msgstr "Conversione di precisione"
 
 #: ../app/dialogs/convert-precision-dialog.c:204
-#: ../app/widgets/gimptemplateeditor.c:422
+#: ../app/widgets/gimptemplateeditor.c:439
 msgid "Perceptual gamma (sRGB)"
 msgstr "Gamma percettivo (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:205
-#: ../app/widgets/gimptemplateeditor.c:421
+#: ../app/widgets/gimptemplateeditor.c:438
 msgid "Linear light"
 msgstr "Luce lineare"
 
@@ -15487,7 +15518,7 @@ msgid "Offset Y:"
 msgstr "Scostamento Y:"
 
 #: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
-#: ../app/widgets/gimptemplateeditor.c:449
+#: ../app/widgets/gimptemplateeditor.c:466
 msgid "_Fill with:"
 msgstr "_Riempi con:"
 
@@ -17253,23 +17284,23 @@ msgstr "Dimensione di stampa"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:175 ../app/widgets/gimpsizebox.c:190
-#: ../app/widgets/gimptemplateeditor.c:195
+#: ../app/widgets/gimptemplateeditor.c:199
 msgid "_Width:"
 msgstr "_Larghezza:"
 
 #: ../app/dialogs/print-size-dialog.c:182 ../app/widgets/gimpsizebox.c:194
-#: ../app/widgets/gimptemplateeditor.c:202
+#: ../app/widgets/gimptemplateeditor.c:206
 msgid "H_eight:"
 msgstr "Alt_ezza:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:257
-#: ../app/widgets/gimptemplateeditor.c:324
+#: ../app/widgets/gimptemplateeditor.c:328
 msgid "_X resolution:"
 msgstr "Risoluzione _X:"
 
 #: ../app/dialogs/print-size-dialog.c:243 ../app/widgets/gimpsizebox.c:260
-#: ../app/widgets/gimptemplateeditor.c:331
+#: ../app/widgets/gimptemplateeditor.c:335
 msgid "_Y resolution:"
 msgstr "Risoluzione _Y:"
 
@@ -17403,7 +17434,7 @@ msgid "_Vertical:"
 msgstr "_Verticale:"
 
 #. Image size frame
-#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:173
+#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:177
 msgid "Image Size"
 msgstr "Dimensione immagine"
 
@@ -17928,7 +17959,7 @@ msgstr "Livello prelevato: \"%s\""
 msgid "pixels"
 msgstr "pixel"
 
-#: ../app/display/gimpstatusbar.c:469
+#: ../app/display/gimpstatusbar.c:472
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Cancella <i>%s</i>"
@@ -17967,7 +17998,7 @@ msgid "%s for constrained steps"
 msgstr "%s per i passi bloccati"
 
 #: ../app/display/gimptoolgyroscope.c:724
-#: ../app/display/gimptooltransformgrid.c:1812
+#: ../app/display/gimptooltransformgrid.c:1822
 msgid "Click-Drag to rotate"
 msgstr "Fare clic e trascinare per ruotare"
 
@@ -17997,7 +18028,7 @@ msgid "%s to zoom"
 msgstr "%s per fare zoom"
 
 #: ../app/display/gimptoolhandlegrid.c:865
-#: ../app/display/gimptooltransformgrid.c:1803
+#: ../app/display/gimptooltransformgrid.c:1813
 msgid "Click-Drag to move"
 msgstr "Fare clic e trascinare per spostare"
 
@@ -18010,7 +18041,7 @@ msgid "Click-Drag to shear and scale"
 msgstr "Fare clic e trascinare per inclinare e scalare"
 
 #: ../app/display/gimptoolhandlegrid.c:874
-#: ../app/display/gimptooltransformgrid.c:1791
+#: ../app/display/gimptooltransformgrid.c:1801
 msgid "Click-Drag to change perspective"
 msgstr "Fare clic e trascinare per cambiare la prospettiva"
 
@@ -18254,16 +18285,16 @@ msgstr "Rettangolo: "
 msgid "Position: "
 msgstr "Posizione: "
 
-#: ../app/display/gimptooltransformgrid.c:1796
-#: ../app/display/gimptooltransformgrid.c:1801
+#: ../app/display/gimptooltransformgrid.c:1806
+#: ../app/display/gimptooltransformgrid.c:1811
 msgid "Click-Drag to scale"
 msgstr "Fare clic e trascinare per scalare"
 
-#: ../app/display/gimptooltransformgrid.c:1805
+#: ../app/display/gimptooltransformgrid.c:1815
 msgid "Click-Drag to move the pivot point"
 msgstr "Fare clic e trascinare per spostare il punto cardine"
 
-#: ../app/display/gimptooltransformgrid.c:1810
+#: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to shear"
 msgstr "Fare clic e trascinare per inclinare"
 
@@ -19336,8 +19367,8 @@ msgstr "Duplica"
 msgid "No patterns available for use with this tool."
 msgstr "Nessun motivo disponibile con questo strumento."
 
-#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:164
-#: ../app/tools/gimpbucketfilloptions.c:477
+#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:180
+#: ../app/tools/gimpbucketfilloptions.c:505
 #: ../app/tools/gimpcloneoptions-gui.c:70
 msgid "Source"
 msgstr "Sorgente"
@@ -19431,12 +19462,6 @@ msgstr "Mypennello"
 #: ../app/paint/gimpmybrushcore.c:157
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Nessun pennello MyPaint disponibile da usare con questo strumento."
-
-#: ../app/paint/gimpmybrushoptions.c:86 ../app/tools/gimpcoloroptions.c:85
-#: ../app/tools/gimprectangleselectoptions.c:101
-#: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
-msgid "Radius"
-msgstr "Raggio"
 
 #: ../app/paint/gimpmybrushoptions.c:93
 msgid "Base Opacity"
@@ -19665,7 +19690,7 @@ msgid "No erasing effect"
 msgstr "Nessun effetto cancellazione"
 
 #: ../app/paint/gimpsmudgeoptions.c:92 ../app/paint/gimpsourceoptions.c:71
-#: ../app/pdb/gimppdbcontext.c:128 ../app/tools/gimpbucketfilloptions.c:132
+#: ../app/pdb/gimppdbcontext.c:128 ../app/tools/gimpbucketfilloptions.c:134
 #: ../app/tools/gimpcoloroptions.c:69 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
@@ -20134,7 +20159,7 @@ msgstr "Soglia campionamento"
 msgid "Sample transparent"
 msgstr "Campione trasparente"
 
-#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:141
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Vicini diagonali"
@@ -21367,32 +21392,32 @@ msgstr "Con_trasto"
 msgid "Edit these Settings as Levels"
 msgstr "Modifica queste impostazioni come livelli"
 
-#: ../app/tools/gimpbucketfilloptions.c:116
+#: ../app/tools/gimpbucketfilloptions.c:118
 msgid "Fill selection"
 msgstr "Riempimento selezione"
 
-#: ../app/tools/gimpbucketfilloptions.c:117
+#: ../app/tools/gimpbucketfilloptions.c:119
 msgid "Which area will be filled"
 msgstr "Quale area da riempire"
 
-#: ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/tools/gimpbucketfilloptions.c:126
 msgid "Fill transparent areas"
 msgstr "Riempi aree trasparenti"
 
-#: ../app/tools/gimpbucketfilloptions.c:125
+#: ../app/tools/gimpbucketfilloptions.c:127
 msgid "Allow completely transparent regions to be filled"
 msgstr "Permetti che le regioni completamente trasparenti vengano riempite"
 
-#: ../app/tools/gimpbucketfilloptions.c:133
+#: ../app/tools/gimpbucketfilloptions.c:135
 msgid "Base filled area on all visible layers"
 msgstr "Basa l'area da riempire su tutti i livelli visibili"
 
-#: ../app/tools/gimpbucketfilloptions.c:140
+#: ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Tratta i pixel vicini diagonalmente come connessi"
 
-#: ../app/tools/gimpbucketfilloptions.c:148
+#: ../app/tools/gimpbucketfilloptions.c:150
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
@@ -21402,61 +21427,61 @@ msgstr ""
 "(vedere soglia) o sui bordi del tratteggio. Disabilita l'antialiasing per "
 "riempire l'intera area uniformemente."
 
-#: ../app/tools/gimpbucketfilloptions.c:157
+#: ../app/tools/gimpbucketfilloptions.c:173
 #: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Soglia"
 
-#: ../app/tools/gimpbucketfilloptions.c:158
+#: ../app/tools/gimpbucketfilloptions.c:174
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "Massima differenza di colore"
 
-#: ../app/tools/gimpbucketfilloptions.c:165
+#: ../app/tools/gimpbucketfilloptions.c:181
 msgid "Source image for line art computation"
 msgstr "Immagine sorgente per l'elaborazione tratteggio"
 
-#: ../app/tools/gimpbucketfilloptions.c:186
+#: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
 msgstr "Lunghezza massima apertura"
 
-#: ../app/tools/gimpbucketfilloptions.c:187
+#: ../app/tools/gimpbucketfilloptions.c:203
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "Massima apertura (in pixel) nel tratteggio che può essere chiusa"
 
-#: ../app/tools/gimpbucketfilloptions.c:193
-#: ../app/tools/gimpbucketfilloptions.c:442
+#: ../app/tools/gimpbucketfilloptions.c:209
+#: ../app/tools/gimpbucketfilloptions.c:470
 msgid "Fill by"
 msgstr "Riempimento per"
 
-#: ../app/tools/gimpbucketfilloptions.c:194
+#: ../app/tools/gimpbucketfilloptions.c:210
 msgid "Criterion used for determining color similarity"
 msgstr "Criterio usato per determinare la somiglianza di colore"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:379
+#: ../app/tools/gimpbucketfilloptions.c:407
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Tipo di riempimento (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:394
+#: ../app/tools/gimpbucketfilloptions.c:422
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Area coinvolta  (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:403
+#: ../app/tools/gimpbucketfilloptions.c:431
 msgid "Finding Similar Colors"
 msgstr "Trova colori simili"
 
-#: ../app/tools/gimpbucketfilloptions.c:457
+#: ../app/tools/gimpbucketfilloptions.c:485
 msgid "Line Art Detection"
 msgstr "Rilevamento tratteggio"
 
-#: ../app/tools/gimpbucketfilloptions.c:467
+#: ../app/tools/gimpbucketfilloptions.c:495
 msgid "(computing...)"
 msgstr "(elaborazione...)"
 
@@ -21489,12 +21514,12 @@ msgstr "Il livello attivo non è visibile."
 msgid "No valid line art source selected."
 msgstr "Nessuna valida sorgente tratteggio selezionata."
 
-#: ../app/tools/gimpbucketfilltool.c:695 ../app/tools/gimpbucketfilltool.c:828
+#: ../app/tools/gimpbucketfilltool.c:699 ../app/tools/gimpbucketfilltool.c:832
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:448
 msgid "Click in any image to pick the background color"
 msgstr "Fare clic sull'immagine per prelevare il colore di sfondo"
 
-#: ../app/tools/gimpbucketfilltool.c:702 ../app/tools/gimpbucketfilltool.c:837
+#: ../app/tools/gimpbucketfilltool.c:706 ../app/tools/gimpbucketfilltool.c:841
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:442
 msgid "Click in any image to pick the foreground color"
 msgstr "Fare clic sull'immagine per prelevare il colore di primo piano"
@@ -23265,17 +23290,9 @@ msgstr "Clone contin_uo"
 msgid "Cloning the foreground object"
 msgstr "Clonazione oggetto in primo piano"
 
-#: ../app/tools/gimpselectionoptions.c:87
-msgid "Feather edges"
-msgstr "Margini sfumati"
-
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Enable feathering of selection edges"
 msgstr "Abilita la sfumatura dei margini della selezione"
-
-#: ../app/tools/gimpselectionoptions.c:95
-msgid "Radius of feathering"
-msgstr "Raggio di sfumatura"
 
 #: ../app/tools/gimpselectionoptions.c:224 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
@@ -24916,7 +24933,7 @@ msgid "Open Bug Tracker"
 msgstr "Apri tracker dei bug"
 
 #: ../app/widgets/gimpcriticaldialog.c:132
-#: ../app/widgets/gimpcriticaldialog.c:454
+#: ../app/widgets/gimpcriticaldialog.c:455
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
@@ -24924,27 +24941,27 @@ msgstr ""
 "semplici passi:"
 
 #: ../app/widgets/gimpcriticaldialog.c:134
-#: ../app/widgets/gimpcriticaldialog.c:456
+#: ../app/widgets/gimpcriticaldialog.c:457
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Copia le informazioni sul bug negli appunti facendo clic:"
 
 #: ../app/widgets/gimpcriticaldialog.c:136
-#: ../app/widgets/gimpcriticaldialog.c:458
+#: ../app/widgets/gimpcriticaldialog.c:459
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Apri il tracker dei bug nel browser facendo clic: "
 
 #: ../app/widgets/gimpcriticaldialog.c:138
-#: ../app/widgets/gimpcriticaldialog.c:460
+#: ../app/widgets/gimpcriticaldialog.c:461
 msgid "Create a login if you don't have one yet."
 msgstr "Crea un account se non ne hai già uno."
 
 #: ../app/widgets/gimpcriticaldialog.c:139
-#: ../app/widgets/gimpcriticaldialog.c:461
+#: ../app/widgets/gimpcriticaldialog.c:462
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Incolla il testo degli appunti in un nuovo rapporto bug."
 
 #: ../app/widgets/gimpcriticaldialog.c:140
-#: ../app/widgets/gimpcriticaldialog.c:462
+#: ../app/widgets/gimpcriticaldialog.c:463
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -25033,13 +25050,13 @@ msgstr "Errore Microsoft Windows sconosciuto."
 msgid "Failed to open '%s': %s"
 msgstr "Impossibile aprire '%s': %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:420
+#: ../app/widgets/gimpcriticaldialog.c:421
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "GIMP è andato in crash con un errore fatale: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:427
+#: ../app/widgets/gimpcriticaldialog.c:428
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "GIMP ha riscontrato un errore: %s"
@@ -25047,12 +25064,12 @@ msgstr "GIMP ha riscontrato un errore: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:435
+#: ../app/widgets/gimpcriticaldialog.c:436
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "GIMP ha riscontrato diversi errori critici!"
 
-#: ../app/widgets/gimpcriticaldialog.c:487
+#: ../app/widgets/gimpcriticaldialog.c:488
 msgid "_Restart GIMP"
 msgstr "_Riavvia GIMP"
 
@@ -25993,7 +26010,7 @@ msgid "Number of paths:"
 msgstr "Numero di tracciati:"
 
 #: ../app/widgets/gimpimagepropview.c:452
-#: ../app/widgets/gimptemplateeditor.c:346
+#: ../app/widgets/gimptemplateeditor.c:350
 #, c-format
 msgid "pixels/%s"
 msgstr "punti/%s"
@@ -26241,57 +26258,57 @@ msgstr "inserimento marcatori"
 msgid ","
 msgstr ","
 
-#: ../app/widgets/gimptemplateeditor.c:216
+#: ../app/widgets/gimptemplateeditor.c:220
 #, c-format
 msgid "%p"
 msgstr "%p"
 
-#: ../app/widgets/gimptemplateeditor.c:291
+#: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Advanced Options"
 msgstr "Opzioni _avanzate"
 
-#: ../app/widgets/gimptemplateeditor.c:404
+#: ../app/widgets/gimptemplateeditor.c:408
 msgid "Color _space:"
 msgstr "_Spazio colore:"
 
-#: ../app/widgets/gimptemplateeditor.c:412
+#: ../app/widgets/gimptemplateeditor.c:425
 msgid "_Precision:"
 msgstr "_Precisione:"
 
-#: ../app/widgets/gimptemplateeditor.c:424
+#: ../app/widgets/gimptemplateeditor.c:441
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../app/widgets/gimptemplateeditor.c:429
+#: ../app/widgets/gimptemplateeditor.c:446
 msgid "Color _manage this image"
 msgstr "Gestisci il colore di quest'im_magine"
 
-#: ../app/widgets/gimptemplateeditor.c:438
+#: ../app/widgets/gimptemplateeditor.c:455
 msgid "Choose A Color Profile"
 msgstr "Scegli un profilo colore"
 
-#: ../app/widgets/gimptemplateeditor.c:442
+#: ../app/widgets/gimptemplateeditor.c:459
 msgid "Co_lor profile:"
 msgstr "Profilo co_lore:"
 
-#: ../app/widgets/gimptemplateeditor.c:459
+#: ../app/widgets/gimptemplateeditor.c:476
 msgid "Comme_nt:"
 msgstr "Comme_nto:"
 
-#: ../app/widgets/gimptemplateeditor.c:574
+#: ../app/widgets/gimptemplateeditor.c:591
 msgid "_Name:"
 msgstr "_Nome:"
 
-#: ../app/widgets/gimptemplateeditor.c:580
+#: ../app/widgets/gimptemplateeditor.c:597
 msgid "_Icon:"
 msgstr "_Icona:"
 
-#: ../app/widgets/gimptemplateeditor.c:799
+#: ../app/widgets/gimptemplateeditor.c:834
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d × %d ppi, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:801
+#: ../app/widgets/gimptemplateeditor.c:836
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
