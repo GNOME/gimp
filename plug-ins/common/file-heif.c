@@ -687,8 +687,8 @@ save_image (GFile             *file,
   err = heif_image_create (width, height,
                            heif_colorspace_RGB,
                            has_alpha ?
-                           heif_chroma_interleaved_32bit :
-                           heif_chroma_interleaved_24bit,
+                           heif_chroma_interleaved_RGBA :
+                           heif_chroma_interleaved_RGB,
                            &image);
 
   if (profile)
