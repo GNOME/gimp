@@ -21,63 +21,6 @@
                 "/share/vala", "*.la", "*.a", "/bin/wmf*", "/bin/libwmf-*",
                 "/bin/pygtk*", "/bin/pygobject*", "/bin/pygobject-codegen-2.0"],
     "modules": [
-        "shared-modules/python2.7/python-2.7.15.json",
-        {
-            "name": "python",
-            "modules": [
-                {
-                    "name": "py2cairo",
-                    "rm-configure": true,
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://cairographics.org/releases/py2cairo-1.10.0.tar.bz2",
-                            "sha256": "d30439f06c2ec1a39e27464c6c828b6eface3b22ee17b2de05dc409e429a7431"
-                        },
-                        {
-                            "type": "script",
-                            "commands": [
-                                "libtoolize --force",
-                                "aclocal",
-                                "autoheader",
-                                "automake --force-missing --add-missing --foreign",
-                                "autoconf"
-                            ],
-                            "dest-filename": "autogen.sh"
-                        }
-                    ]
-                },
-                {
-                    "name": "pygobject",
-                    "config-opts": [ "--disable-introspection" ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.7.tar.xz",
-                            "sha256": "bb9d25a3442ca7511385a7c01b057492095c263784ef31231ffe589d83a96a5a"
-                        },
-                        {
-                            "type": "shell",
-                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
-                        }
-                    ]
-                },
-                {
-                    "name": "pygtk",
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz",
-                            "sha256": "6e3e54fa6e65a69ac60bd58cb2e60a57f3346ac52efe995f3d10b6c38c972fd8"
-                        },
-                        {
-                            "type": "shell",
-                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
-                        }
-                    ]
-                }
-            ]
-        },
         {
             "name": "gexiv2",
             "modules": [
@@ -345,7 +288,7 @@
         {
             "name": "gimp",
             "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html",
-                             "--with-icc-directory=/run/host/usr/share/color/icc/" ],
+                             "--with-icc-directory=/run/host/usr/share/color/icc/", "--disable-python" ],
             "cleanup": [ "/bin/gimptool-3.0", "/bin/gimp-console-2.99" ],
             "sources": [
                 {
