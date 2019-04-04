@@ -416,6 +416,12 @@
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/gimp.git",
                     "branch": "master"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                        "xsltproc -o desktop/org.gimp.GIMP.appdata.xml.in.in build/flatpak/remove-future-appdata-release.xslt desktop/org.gimp.GIMP.appdata.xml.in.in"
+                    ]
                 }
             ],
 	    "post-install": [
