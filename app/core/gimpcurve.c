@@ -1061,7 +1061,7 @@ gimp_curve_plot (GimpCurve *curve,
 
   /*
    * finally calculate the y(t) values for the given bezier values. We can
-   * use homogenously distributed values for t, since x(t) increases linearly.
+   * use homogeneously distributed values for t, since x(t) increases linearly.
    */
   for (i = 0; i <= ROUND (dx * (gdouble) (curve->n_samples - 1)); i++)
     {
