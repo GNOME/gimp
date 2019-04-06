@@ -1617,7 +1617,7 @@ gimp_metadata_copy_tags (GExiv2Metadata  *src,
 
   for (i = 0; tags[i] != NULL; i++)
     {
-      /* don't copy the same tag multile times */
+      /* don't copy the same tag multiple times */
       if (i > 0 && ! strcmp (tags[i], tags[i - 1]))
         continue;
 

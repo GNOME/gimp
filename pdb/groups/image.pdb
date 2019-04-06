@@ -569,7 +569,7 @@ sub image_raise_item {
 
     $help = <<'HELP';
 This procedure raises the specified item one step in the item tree.
-The procecure call will fail if there is no item above it.
+The procedure call will fail if there is no item above it.
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -598,7 +598,7 @@ sub image_lower_item {
 
     $help = <<'HELP';
 This procedure lowers the specified item one step in the item tree.
-The procecure call will fail if there is no item below it.
+The procedure call will fail if there is no item below it.
 HELP
 
     &mitch_pdb_misc('2010', '2.8');

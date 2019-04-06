@@ -1411,7 +1411,7 @@ gimp_image_get_item_position (gint32 image_ID,
  * Raise the specified item in its level in its item tree
  *
  * This procedure raises the specified item one step in the item tree.
- * The procecure call will fail if there is no item above it.
+ * The procedure call will fail if there is no item above it.
  *
  * Returns: TRUE on success.
  *
@@ -1446,7 +1446,7 @@ gimp_image_raise_item (gint32 image_ID,
  * Lower the specified item in its level in its item tree
  *
  * This procedure lowers the specified item one step in the item tree.
- * The procecure call will fail if there is no item below it.
+ * The procedure call will fail if there is no item below it.
  *
  * Returns: TRUE on success.
  *
