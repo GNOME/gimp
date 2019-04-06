@@ -449,7 +449,7 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
  * Registers a file handler procedure as capable of handling URIs.
  *
  * Registers a file handler procedure as capable of handling URIs. This
- * allows GIMP to call the procecure directly for all kinds of URIs,
+ * allows GIMP to call the procedure directly for all kinds of URIs,
  * and the 'filename' traditionally passed to file procesures turns
  * into an URI.
  *

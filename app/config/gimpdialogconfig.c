@@ -185,7 +185,7 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_CONVERT_PROFILE_INTENT,
                          "image-convert-profile-intent",
-                         "Default rendering intent fo color profile conversion",
+                         "Default rendering intent for color profile conversion",
                          IMAGE_CONVERT_PROFILE_INTENT_BLURB,
                          GIMP_TYPE_COLOR_RENDERING_INTENT,
                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
