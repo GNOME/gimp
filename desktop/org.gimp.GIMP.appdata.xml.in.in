@@ -72,8 +72,8 @@
   </provides>
 
   <releases>
-    <release version="2.10.10" date="TODO">
-      <url type="details">https://www.gimp.org/news/2019/01/TODO/gimp-2-10-10-released/</url>
+    <release version="2.10.10" date="2019-04-07">
+      <url type="details">https://www.gimp.org/news/2019/04/07/gimp-2-10-10-released/</url>
       <description>
         <_p>
           GIMP 2.10.10 is quite a big update with many new features and
