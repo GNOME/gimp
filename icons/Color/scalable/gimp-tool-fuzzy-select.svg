@@ -161,7 +161,7 @@
             <rdf:li>select</rdf:li>
             <rdf:li>region</rdf:li>
             <rdf:li>continuous</rdf:li>
-            <rdf:li>homogenous</rdf:li>
+            <rdf:li>homogeneous</rdf:li>
             <rdf:li>color</rdf:li>
           </rdf:Bag>
         </dc:subject>
