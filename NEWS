@@ -7,8 +7,9 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+
 Overview of Changes from GIMP 2.10.8 to GIMP 2.10.10
-===================================================
+====================================================
 
 Core:
 
@@ -54,7 +55,6 @@ Core:
   - Brush and pattern saving logics has been moved to core code (instead
     of plug-in).
   - Clipboard brushes and pattern can now be duplicated.
-  - Add an "Open as Image" button to the brushes dialog.
   - Parametric brushes are now 32-bit float to avoid posterization on
     large brushes.
     Note: raster brushes are still 8-bit and plug-ins only have access
@@ -78,6 +78,7 @@ User interface:
     outside of the palette, as well as on grayscale images, for non-gray
     colors.
   - Pack color picker and hexadecimal entry on same line in Color dock.
+  - Add an "Open as Image" button to the brushes dialog.
 
 Usability:
 
@@ -89,9 +90,6 @@ Usability:
     is chosen.
   - GIMP now allows selecting default export file type for new projects.
     The choice is limited to PNG, JPEG, WebP, PSD, ORA, TIFF, BMP.
-  - Work around weird display of the item list in various drop down all
-    over GIMP (all GIMP classes based off GtkComboBox), which had empty
-    scrollable space at the top.
   - GimpSpinScale widget now has an optional feature to constrain the
     value to integer when dragging with a pointer (even if the scale
     allows for fractional numbers), set with new function
@@ -181,6 +179,7 @@ Build:
   - Bumping GTK+ dependency to the micro update GTK+ 2.24.32 to handle
     several bugs on Windows (broken shortcuts on non-latin layouts and
     broken vector icons).
+
 
 Overview of Changes from GIMP 2.10.6 to GIMP 2.10.8
 ===================================================
