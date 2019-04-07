@@ -36,7 +36,7 @@ Either spaces or tabs may be used to separate the name from the value.
 Valid properties and their default values are:
 
 .TP
-(temp-path "${gimp_dir}/tmp")
+(temp-path "${gimp_temp_dir}")
 
 Sets the folder for temporary storage. Files will appear here during the
 course of running GIMP.  Most files will disappear when GIMP exits, but some
@@ -44,7 +44,7 @@ files are likely to remain, so it is best if this folder not be one that is
 shared by other users.  This is a single folder.
 
 .TP
-(swap-path "${gimp_dir}")
+(swap-path "${gimp_cache_dir}")
 
 Sets the swap file location. GIMP uses a tile based memory allocation scheme.
 The swap file is used to quickly and easily swap tiles out to disk and back
@@ -435,6 +435,12 @@ yes and no.
 
 Which plug-in to use for importing raw digital camera files.  This is a single
 filename.
+
+.TP
+(export-file-type png)
+
+Export file type used by default.  Possible values are png, jpg, ora, psd,
+pdf, tif, bmp and webp.
 
 .TP
 (export-color-profile yes)
@@ -1299,7 +1305,9 @@ Sets the default 'Selected areas continue outside the image' setting for the
 .TP
 (fill-options
     (style solid)
-    (antialias yes))
+    (antialias yes)
+    (feather no)
+    (feather-radius 10.000000))
 
 The default fill options for the fill dialogs.  This is a parameter list.
 
@@ -1307,6 +1315,8 @@ The default fill options for the fill dialogs.  This is a parameter list.
 (stroke-options
     (style solid)
     (antialias yes)
+    (feather no)
+    (feather-radius 10.000000)
     (method line)
     (width 6.000000)
     (unit pixels)
@@ -1378,6 +1388,14 @@ compiled-in default value @gimpplugindir@.
 Path to configuration files, which is set to the value of the environment
 variable GIMP2_SYSCONFDIR or to the compiled-in default value 
 @gimpsysconfdir@.
+.TP
+.I gimp_cache_dir
+Path to cached files, which is set to the value of the environment
+variable GIMP2_CACHEDIR or to the system default for per-user cached files.
+.TP
+.I gimp_temp_dir
+Path to temporary files, which is set to the value of the environment
+variable GIMP2_TEMPDIR or to the system default for temporary files.
 
 .SH FILES
 .TP

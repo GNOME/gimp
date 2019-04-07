@@ -17,7 +17,7 @@
 # some files are likely to remain, so it is best if this folder not be one
 # that is shared by other users.  This is a single folder.
 # 
-# (temp-path "${gimp_dir}/tmp")
+# (temp-path "${gimp_temp_dir}")
 
 # Sets the swap file location. GIMP uses a tile based memory allocation
 # scheme. The swap file is used to quickly and easily swap tiles out to disk
@@ -27,7 +27,7 @@
 # it may be desirable to put your swap file in "/tmp".  This is a single
 # folder.
 # 
-# (swap-path "${gimp_dir}")
+# (swap-path "${gimp_cache_dir}")
 
 # Sets how many threads GIMP should use for operations that support it.  This
 # is an integer value.
@@ -356,6 +356,11 @@
 # single filename.
 # 
 # (import-raw-plug-in "")
+
+# Export file type used by default.  Possible values are png, jpg, ora, psd,
+# pdf, tif, bmp and webp.
+# 
+# (export-file-type png)
 
 # Export the image's color profile by default.  Possible values are yes and
 # no.
@@ -1049,7 +1054,9 @@
 # 
 # (fill-options
 #     (style solid)
-#     (antialias yes))
+#     (antialias yes)
+#     (feather no)
+#     (feather-radius 10.000000))
 
 # The default stroke options for the stroke dialogs.  This is a parameter
 # list.
@@ -1057,6 +1064,8 @@
 # (stroke-options
 #     (style solid)
 #     (antialias yes)
+#     (feather no)
+#     (feather-radius 10.000000)
 #     (method line)
 #     (width 6.000000)
 #     (unit pixels)
