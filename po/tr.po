@@ -1,6 +1,7 @@
 # Turkish translation for GIMP
 #
-# Copyright (C) 2001-2019 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2001,2003, 2004 Free Software Foundation, Inc.
+# Copyright (C) 2005-2019 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Eski Sürüm Çevirmenleri
@@ -43,15 +44,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-13 08:40+0000\n"
-"PO-Revision-Date: 2019-03-13 13:35+0300\n"
+"POT-Creation-Date: 2019-04-06 14:12+0000\n"
+"PO-Revision-Date: 2019-04-08 19:11+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 3.30.1\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-POOTLE-MTIME: 1437505389.000000\n"
@@ -475,7 +476,7 @@ msgid ""
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
 "GIMP 2.10.0'dan önceki bu ikinci sürüm adayında, hata ayıklama hala ana "
-"hedef olmakla birlikte, daha sorunsuz bir boyama deneyimi sağlamak için hız "
+"hedef olmakla birlikte, daha pürüzsüz bir boyama deneyimi sağlamak için hız "
 "ve iyileştirmelere odaklanıldı. Daha büyük değişiklikler şunlar:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
@@ -1277,7 +1278,7 @@ msgstr "Kanal Özniteliklerini _Düzenle..."
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
 msgid "Edit the channel's name, color and opacity"
-msgstr "Kanal adını, rengini ve ışık geçirmezliğini düzenle"
+msgstr "Kanal adını, rengini ve matlığını düzenle"
 
 #: ../app/actions/channels-actions.c:59
 msgctxt "channels-action"
@@ -1566,7 +1567,7 @@ msgstr "Kanal Rengini Düzenle"
 #: ../app/actions/channels-commands.c:120
 #: ../app/actions/channels-commands.c:165
 msgid "_Fill opacity:"
-msgstr "Işık geçirmezliği _doldur:"
+msgstr "_Doldurma matlığı:"
 
 #: ../app/actions/channels-commands.c:159
 #: ../app/widgets/gimpchanneltreeview.c:324
@@ -1677,7 +1678,7 @@ msgstr "_Renkler"
 #: ../app/actions/context-actions.c:51
 msgctxt "context-action"
 msgid "_Opacity"
-msgstr "_Işık Geçirmezlik"
+msgstr "_Matlık"
 
 #: ../app/actions/context-actions.c:53
 msgctxt "context-action"
@@ -2397,37 +2398,37 @@ msgstr "Artalan Değeri: %10 Artır"
 #: ../app/actions/context-actions.c:673
 msgctxt "context-action"
 msgid "Tool Opacity: Set Transparency"
-msgstr "Araç Işık Geçirmezliği: Saydamlık Ata"
+msgstr "Araç Matlığı: Saydamlık Ata"
 
 #: ../app/actions/context-actions.c:677
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Transparent"
-msgstr "Araç Işık Geçirmezliği: Tümüyle Saydam Yap"
+msgstr "Araç Matlığı: Tümüyle Saydam Yap"
 
 #: ../app/actions/context-actions.c:681
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Opaque"
-msgstr "Araç Işık Geçirmezliği: Tümüyle Işık Geçirmez"
+msgstr "Araç Matlığı: Tümüyle Mat Yap"
 
 #: ../app/actions/context-actions.c:685
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Transparent"
-msgstr "Araç Işık Geçirmezliği: %1 Daha Saydam Yap"
+msgstr "Araç Matlığı: %1 Daha Saydam Yap"
 
 #: ../app/actions/context-actions.c:689
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Opaque"
-msgstr "Araç Işık Geçirmezliği: %1 Daha Işık Geçirmez"
+msgstr "Araç Matlığı: %1 Daha Mat Yap"
 
 #: ../app/actions/context-actions.c:693
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Transparent"
-msgstr "Araç Işık Geçirmezliği: %10 Daha Saydam Yap"
+msgstr "Araç Matlığı: %10 Daha Saydam Yap"
 
 #: ../app/actions/context-actions.c:697
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Opaque"
-msgstr "Araç Işık Geçirmezliği: %10 Daha Işık Geçirmez"
+msgstr "Araç Matlığı: %10 Daha Mat Yap"
 
 #: ../app/actions/context-actions.c:705
 msgctxt "context-action"
@@ -3045,7 +3046,7 @@ msgstr "240 Saniye"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1100
+#: ../app/tools/gimptransformgridtool.c:1108
 #: ../app/tools/gimptransformtool.c:332 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -4848,7 +4849,7 @@ msgstr "_Canlandırma"
 #: ../app/actions/filters-actions.c:104
 msgctxt "filters-action"
 msgid "_Antialias"
-msgstr "_Yumuşat"
+msgstr "_Kenar yumuşatma"
 
 #: ../app/actions/filters-actions.c:109
 msgctxt "filters-action"
@@ -4958,7 +4959,7 @@ msgstr "_Renklendir..."
 #: ../app/actions/filters-actions.c:232
 msgctxt "filters-action"
 msgid "Dithe_r..."
-msgstr "_Renk Taklidi..."
+msgstr "_Titreme..."
 
 #: ../app/actions/filters-actions.c:237
 msgctxt "filters-action"
@@ -5105,12 +5106,12 @@ msgstr "_Yüksek Geçiş..."
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "Renk Tonu _Parlaklığı..."
+msgstr "Renk Tonu-Renk _Parlaklığı..."
 
 #: ../app/actions/filters-actions.c:382
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
-msgstr "Renk Tonu _Doygunluğu..."
+msgstr "Renk Tonu-_Doygunluk..."
 
 #: ../app/actions/filters-actions.c:387
 msgctxt "filters-action"
@@ -5561,7 +5562,7 @@ msgstr "Bitim Noktasının Rengini Ka_rıştır"
 #: ../app/actions/gradient-editor-actions.c:117
 msgctxt "gradient-editor-action"
 msgid "Blend Endpoints' Opacit_y"
-msgstr "Bitim Noktasının I_şık Geçirmezliğini Karıştır"
+msgstr "Bitim Noktasının _Matlığını Karıştır"
 
 #: ../app/actions/gradient-editor-actions.c:125
 msgctxt "gradient-editor-action"
@@ -5687,30 +5688,30 @@ msgstr "(Değişen)"
 
 #: ../app/actions/gradient-editor-actions.c:379
 msgid "Zoom In"
-msgstr "Yakınlaş"
+msgstr "Yakınlaştır"
 
 #: ../app/actions/gradient-editor-actions.c:380
 #: ../app/actions/palette-editor-actions.c:90
 msgid "Zoom in"
-msgstr "Yakınlaş"
+msgstr "Yakınlaştır"
 
 #: ../app/actions/gradient-editor-actions.c:385
 msgid "Zoom Out"
-msgstr "Uzaklaş"
+msgstr "Uzaklaştır"
 
 #: ../app/actions/gradient-editor-actions.c:386
 #: ../app/actions/palette-editor-actions.c:96
 msgid "Zoom out"
-msgstr "Uzaklaş"
+msgstr "Uzaklaştır"
 
 #: ../app/actions/gradient-editor-actions.c:391
 msgid "Zoom All"
-msgstr "Hepsine Yakınlaş"
+msgstr "Hepsine Yakınlaştır"
 
 #: ../app/actions/gradient-editor-actions.c:392
 #: ../app/actions/palette-editor-actions.c:102
 msgid "Zoom all"
-msgstr "Hepsine yakınlaş"
+msgstr "Hepsine yakınlaştır"
 
 #: ../app/actions/gradient-editor-actions.c:784
 msgid "_Blending Function for Segment"
@@ -6084,7 +6085,7 @@ msgstr "Görüntüye bir renk profili uygula"
 #: ../app/actions/image-actions.c:100
 msgctxt "image-action"
 msgid "_Discard Color Profile"
-msgstr "Renk Profilini _Geri Al"
+msgstr "Renk Profilinden _Vazgeç"
 
 #: ../app/actions/image-actions.c:101
 msgctxt "image-action"
@@ -6595,7 +6596,7 @@ msgstr "Ö_zellikler"
 #: ../app/actions/layers-actions.c:84
 msgctxt "layers-action"
 msgid "_Opacity"
-msgstr "_Işık Geçirmezlik"
+msgstr "_Matlık"
 
 #: ../app/actions/layers-actions.c:86
 msgctxt "layers-action"
@@ -6785,7 +6786,7 @@ msgstr "Görünen bütün katmanları bir katmana birleştir ve saydamlığı ka
 #: ../app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "_Discard Text Information"
-msgstr "_Metin Bilgisini Sil"
+msgstr "_Metin Bilgisinden Vazgeç"
 
 #: ../app/actions/layers-actions.c:200
 msgctxt "layers-action"
@@ -7274,37 +7275,37 @@ msgstr "Geçerli katmanın altındaki katmanı seç"
 #: ../app/actions/layers-actions.c:573
 msgctxt "layers-action"
 msgid "Layer Opacity: Set"
-msgstr "Katman Işık Geçirmezliği: Ayarla"
+msgstr "Katman Matlığı: Ayarla"
 
 #: ../app/actions/layers-actions.c:577
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Transparent"
-msgstr "Katman Işık Geçirmezliği: Tümüyle Saydam Yap"
+msgstr "Katman Matlığı: Tümüyle Saydam Yap"
 
 #: ../app/actions/layers-actions.c:581
 msgctxt "layers-action"
 msgid "Layer Opacity: Make Completely Opaque"
-msgstr "Katman Işık Geçirmezliği: Tümüyle Işık Geçirmez"
+msgstr "Katman Matlığı: Tümüyle Mat Yap"
 
 #: ../app/actions/layers-actions.c:585
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Transparent"
-msgstr "Katman Işık Geçirmezliği: Daha Fazla Saydam Yap"
+msgstr "Katman Matlığı: Daha Fazla Saydam Yap"
 
 #: ../app/actions/layers-actions.c:589
 msgctxt "layers-action"
 msgid "Layer Opacity: Make More Opaque"
-msgstr "Katman Işık Geçirmezliği: Daha Fazla Işık Geçirmez"
+msgstr "Katman Matlığı: Daha Fazla Mat Yap"
 
 #: ../app/actions/layers-actions.c:593
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Transparent"
-msgstr "Katman Işık Geçirmezliği: %10 Daha Fazla Saydam Yap"
+msgstr "Katman Matlığı: %10 Daha Fazla Saydam Yap"
 
 #: ../app/actions/layers-actions.c:597
 msgctxt "layers-action"
 msgid "Layer Opacity: Make 10% More Opaque"
-msgstr "Katman Işık Geçirmezliği: %10 Daha Fazla Işık Geçirmez"
+msgstr "Katman Matlığı: %10 Daha Fazla Mat Yap"
 
 #: ../app/actions/layers-actions.c:605
 msgctxt "layers-action"
@@ -7518,15 +7519,15 @@ msgstr "Artalan renginden yeni bir giriş oluştur"
 
 #: ../app/actions/palette-editor-actions.c:89
 msgid "Zoom _In"
-msgstr "_Yakınlaş"
+msgstr "_Yakınlaştır"
 
 #: ../app/actions/palette-editor-actions.c:95
 msgid "Zoom _Out"
-msgstr "_Uzaklaş"
+msgstr "_Uzaklaştır"
 
 #: ../app/actions/palette-editor-actions.c:101
 msgid "Zoom _All"
-msgstr "_Tamamını Göster"
+msgstr "_Hepsine Yakınlaştır"
 
 #: ../app/actions/palettes-actions.c:44
 msgctxt "palettes-action"
@@ -7742,7 +7743,7 @@ msgstr "Tüm Süzgeçleri Sıfırla"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1097
+#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1105
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -7760,7 +7761,7 @@ msgstr "Hızlı Maske Menüsü"
 #: ../app/actions/quick-mask-actions.c:47
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "Rengi ve Işık Geçirmezliği _Yapılandır..."
+msgstr "Rengi ve Matlığı _Yapılandır..."
 
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
@@ -7784,19 +7785,19 @@ msgstr "Seçilme_miş Alanları Maskele"
 
 #: ../app/actions/quick-mask-commands.c:125
 msgid "Quick Mask Attributes"
-msgstr "Öznitelikleri Hızlı Maskele"
+msgstr "Hızlı Maske Öznitelikleri"
 
 #: ../app/actions/quick-mask-commands.c:128
 msgid "Edit Quick Mask Attributes"
-msgstr "Öznitelikleri Hızlı Maskelemeyi Düzenle"
+msgstr "Hızlı Maske Özniteliklerini Düzenle"
 
 #: ../app/actions/quick-mask-commands.c:130
 msgid "Edit Quick Mask Color"
-msgstr "Rengi Hızlı Maskelemeyi Düzenle"
+msgstr "Hızlı Maske Rengini Düzenle"
 
 #: ../app/actions/quick-mask-commands.c:131
 msgid "_Mask opacity:"
-msgstr "_Maske Işık Geçirmezliği:"
+msgstr "_Maske matlığı:"
 
 #: ../app/actions/sample-points-actions.c:40
 msgctxt "sample-points-action"
@@ -7871,7 +7872,7 @@ msgstr "Y_umuşat..."
 #: ../app/actions/select-actions.c:76
 msgctxt "select-action"
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr "Seçimin kenarını hafifçe kaybolacak şekilde bulanıklaştır"
+msgstr "Seçimin kenarını pürüzsüzce kaybolacak şekilde bulanıklaştır"
 
 #: ../app/actions/select-actions.c:81
 msgctxt "select-action"
@@ -7975,11 +7976,11 @@ msgstr "Son kullanılan değerlerle seçimi darbele"
 
 #: ../app/actions/select-commands.c:156
 msgid "Feather Selection"
-msgstr "Seçimi Yumuşat"
+msgstr "Seçimi Tüyle"
 
 #: ../app/actions/select-commands.c:160
 msgid "Feather selection by"
-msgstr "Seçimi yumuşat ölçütü"
+msgstr "Seçimi tüyleme ölçütü"
 
 #: ../app/actions/select-commands.c:216
 msgid "Shrink Selection"
@@ -8625,52 +8626,52 @@ msgstr "Hava Fırçası Akışı: 10 Artır"
 #: ../app/actions/tools-actions.c:264
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
-msgstr "Aracın Işık Geçirmezliği: Ayarla"
+msgstr "Aracın Matlığı: Ayarla"
 
 #: ../app/actions/tools-actions.c:268
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
-msgstr "Aracın Işık Geçirmezliği: Varsayılan Değere Ayarla"
+msgstr "Aracın Matlığı: Varsayılan Değere Ayarla"
 
 #: ../app/actions/tools-actions.c:272
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
-msgstr "Aracın Işık Geçirmezliği: En Düşük Değer"
+msgstr "Aracın Matlığı: En Düşük Değer"
 
 #: ../app/actions/tools-actions.c:276
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
-msgstr "Aracın Işık Geçirmezliği: En Yüksek Değer"
+msgstr "Aracın Matlığı: En Yüksek Değer"
 
 #: ../app/actions/tools-actions.c:280
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
-msgstr "Aracın Işık Geçirmezliği: 1 Azalt"
+msgstr "Aracın Matlığı: 1 Azalt"
 
 #: ../app/actions/tools-actions.c:284
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
-msgstr "Aracın Işık Geçirmezliği: 1 Artır"
+msgstr "Aracın Matlığı: 1 Artır"
 
 #: ../app/actions/tools-actions.c:288
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
-msgstr "Aracın Işık Geçirmezliği: 10 Azalt"
+msgstr "Aracın Matlığı: 10 Azalt"
 
 #: ../app/actions/tools-actions.c:292
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
-msgstr "Aracın Işık Geçirmezliği: 10 Artır"
+msgstr "Aracın Matlığı: 10 Artır"
 
 #: ../app/actions/tools-actions.c:296
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease Relative"
-msgstr "Aracın Işık Geçirmezliği: Görece Azalt"
+msgstr "Aracın Matlığı: Görece Azalt"
 
 #: ../app/actions/tools-actions.c:300
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
-msgstr "Aracın Işık Geçirmezliği: Görece Artır"
+msgstr "Aracın Matlığı: Görece Artır"
 
 #: ../app/actions/tools-actions.c:308
 msgctxt "tools-action"
@@ -9407,7 +9408,7 @@ msgstr "_Görünüm"
 #: ../app/actions/view-actions.c:71
 msgctxt "view-action"
 msgid "_Zoom"
-msgstr "_Yakınlaş"
+msgstr "_Yakınlaştır"
 
 #: ../app/actions/view-actions.c:72
 msgctxt "view-action"
@@ -9477,7 +9478,7 @@ msgstr "Görüntüyü Pencereye _Uydur"
 #: ../app/actions/view-actions.c:108
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr "Yakınlaşma oranını ayarlayın, böylece görüntü tümüyle görünür olur"
+msgstr "Yakınlaştırma oranını ayarlayın, böylece görüntü tümüyle görünür olur"
 
 #: ../app/actions/view-actions.c:113
 msgctxt "view-action"
@@ -9493,7 +9494,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:119
 msgctxt "view-action"
 msgid "Zoom to _Selection"
-msgstr "_Seçime Yakınlaş"
+msgstr "_Seçime Yakınlaştır"
 
 #: ../app/actions/view-actions.c:120
 msgctxt "view-action"
@@ -9503,12 +9504,12 @@ msgstr "Seçim pencereyi dolduracak şekilde yakınlaştırma oranını ayarlay�
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
 msgid "Re_vert Zoom"
-msgstr "Yakınlaşmayı _Geri Al"
+msgstr "Yakınlaştırmayı _Geri Al"
 
 #: ../app/actions/view-actions.c:126
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
-msgstr "Önceki yakınlaşma oranını geri yükle"
+msgstr "Önceki yakınlaştırma oranını geri yükle"
 
 #: ../app/actions/view-actions.c:131
 msgctxt "view-action"
@@ -9603,7 +9604,7 @@ msgstr "Bu görünüm için renk yönetimini kullan"
 #: ../app/actions/view-actions.c:191
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr "_Geçirmezlik Renkleri"
+msgstr "_Renk Provası"
 
 #: ../app/actions/view-actions.c:192
 msgctxt "view-action"
@@ -9781,17 +9782,17 @@ msgstr "Tam ekran görünümünü değiştir"
 #: ../app/actions/view-actions.c:321
 msgctxt "view-zoom-action"
 msgid "Set zoom factor"
-msgstr "Yakınlaşma katsayısı ayarla"
+msgstr "Yakınlaştırma katsayısı ayarla"
 
 #: ../app/actions/view-actions.c:326
 msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
-msgstr "Olabildiğince uzaklaş"
+msgstr "Olabildiğince uzaklaştır"
 
 #: ../app/actions/view-actions.c:331
 msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
-msgstr "Olabildiğince yakınlaş"
+msgstr "Olabildiğince yakınlaştır"
 
 #: ../app/actions/view-actions.c:336
 msgctxt "view-zoom-action"
@@ -9801,7 +9802,7 @@ msgstr "_Uzaklaştır"
 #: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:349
 msgctxt "view-zoom-action"
 msgid "Zoom out"
-msgstr "Uzaklaş"
+msgstr "Uzaklaştır"
 
 #: ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
@@ -9811,7 +9812,7 @@ msgstr "_Yakınlaştır"
 #: ../app/actions/view-actions.c:343 ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
 msgid "Zoom in"
-msgstr "Yakınlaş"
+msgstr "Yakınlaştır"
 
 #: ../app/actions/view-actions.c:348
 msgctxt "view-zoom-action"
@@ -9826,12 +9827,12 @@ msgstr "Yakınlaştır"
 #: ../app/actions/view-actions.c:360
 msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
-msgstr "Daha fazla uzaklaş"
+msgstr "Daha fazla uzaklaştır"
 
 #: ../app/actions/view-actions.c:365
 msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
-msgstr "Daha fazla yakınlaş"
+msgstr "Daha fazla yakınlaştır"
 
 #: ../app/actions/view-actions.c:373 ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
@@ -9931,7 +9932,7 @@ msgstr "Diğe_r yakınlaştırma katsayısı..."
 #: ../app/actions/view-actions.c:458
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
-msgstr "Özel bir yakınlaşma katsayısı ata"
+msgstr "Özel bir yakınlaştırma katsayısı ata"
 
 #: ../app/actions/view-actions.c:466
 msgctxt "view-action"
@@ -10199,11 +10200,11 @@ msgstr "Sayfayı aşağı kaydır"
 #: ../app/actions/view-actions.c:911
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
-msgstr "Yakınlaşmayı Ge_ri Al (%d%%)"
+msgstr "Yakınlaştırmayı Ge_ri Al (%d%%)"
 
 #: ../app/actions/view-actions.c:919
 msgid "Re_vert Zoom"
-msgstr "Yakınlaşmayı _Geri Al"
+msgstr "Yakınlaştırmayı _Geri Al"
 
 #: ../app/actions/view-actions.c:1106
 #, c-format
@@ -10213,7 +10214,7 @@ msgstr "Diğe_r (%s)..."
 #: ../app/actions/view-actions.c:1115
 #, c-format
 msgid "_Zoom (%s)"
-msgstr "_Yakınlaş (%s)"
+msgstr "_Yakınlaştır (%s)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
@@ -10600,7 +10601,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "'%%s' ayrıştırma hatası: satır %s karakterden daha uzun."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:345
+#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:374
 #: ../app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10662,7 +10663,7 @@ msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
 msgstr ""
-"Eğer doldurma rengi özel renge ayarlıysa, tuval doldurma rengi kullanılmış "
+"Eğer doldurma kipi özel renge ayarlıysa, tuval doldurma rengi kullanılmış "
 "olarak ayarlanır."
 
 #: ../app/config/gimprc-blurbs.h:37
@@ -10957,7 +10958,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:324
 msgid "Sets the default quick mask color."
-msgstr "Öntanımlı hızlı maskeleme rengini ayarlar."
+msgstr "Öntanımlı hızlı maske rengini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:327
 msgid ""
@@ -11233,7 +11234,7 @@ msgstr ""
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan katman renk taklidi "
+"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan katman titreme "
 "yöntemini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:499
@@ -11241,14 +11242,14 @@ msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
-"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan metin katmanı renk "
-"taklidi yöntemini ayarlar."
+"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan metin katmanı "
+"titremesi yöntemini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:502
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
-"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan kanal renk taklidi "
+"'Hassasiyeti Dönüştür' iletişim kutusu için varsayılan kanal titreme "
 "yöntemini ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:505
@@ -11274,27 +11275,27 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:514
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
-"'İndekliye Dönüştür' iletişim kutusu için varsayılan renk taklidi türünü "
-"ayarlar."
+"'İndekliye Dönüştür' iletişim kutusu için varsayılan titreme türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:517
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
-"'İndekliye Dönüştür' iletişim kutusu için varsayılan 'Dither alpha' durumunu "
-"ayarlar."
+"'İndekliye Dönüştür' iletişim kutusu için varsayılan 'Saydamlık titremesi' "
+"durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:520
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
-"'İndekliye Dönüştür' iletişim kutusu için varsayılan 'Renk taklidi metin "
-"katmanları' durumunu ayarlar."
+"'İndekliye Dönüştür' iletişim kutusu için varsayılan 'Metin katmanları "
+"titremesi' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:523
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
-msgstr "'Tuval Boyutu' iletişim kutusu için varsayılan dolgu türünü ayarlar."
+msgstr ""
+"'Tuval Boyutu' iletişim kutusu için varsayılan doldurma türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:526
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
@@ -11332,17 +11333,17 @@ msgstr "'Yeni Katman' iletişim kutusu için varsayılan bileşik kipini ayarlar
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr ""
-"'Yeni Katman' iletişim kutusu için varsayılan ışık geçirmezliği ayarlar."
+msgstr "'Yeni Katman' iletişim kutusu için varsayılan matlığını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:550
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr "'Yeni Katman' iletişim kutusu için varsayılan dolgu türünü ayarlar."
+msgstr "'Yeni Katman' iletişim kutusu için varsayılan doldurma türünü ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
-"'Katman Sınır Boyutu' iletişim kutusu için varsayılan dolgu türünü ayarlar."
+"'Katman Sınır Boyutu' iletişim kutusu için varsayılan doldurma türünü "
+"ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:556
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
@@ -11372,7 +11373,7 @@ msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "'Görünen Katmanları Birleştir' iletişim kutusu için varsayılan 'Görünmez "
-"katmanları at' durumunu ayarlar."
+"katmanlardan vazgeç' durumunu ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:571
 msgid "Sets the default channel name for the 'New Channel' dialog."
@@ -11380,9 +11381,7 @@ msgstr "'Yeni Kanal' iletişim kutusu için varsayılan kanal adını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr ""
-"'Yeni Kanal' iletişim kutusu için varsayılan rengi ve ışık geçirmezliği "
-"ayarlar."
+msgstr "'Yeni Kanal' iletişim kutusu için varsayılan rengi ve matlığı ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default path name for the 'New Path' dialog."
@@ -11423,8 +11422,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr ""
-"'Seçimi Yumuşat' iletişim kutusu için varsayılan yumuşatma yarıçapını "
-"ayarlar."
+"'Seçimi Tüyle' iletişim kutusu için varsayılan tüyleme yarıçapını ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:598
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
@@ -11604,12 +11602,12 @@ msgstr "Sert"
 #: ../app/core/core-enums.c:115
 msgctxt "channel-border-style"
 msgid "Smooth"
-msgstr "Yumuşak"
+msgstr "Pürüzsüz"
 
 #: ../app/core/core-enums.c:116
 msgctxt "channel-border-style"
 msgid "Feathered"
-msgstr "Yumuşatılmış"
+msgstr "Tüylü"
 
 #: ../app/core/core-enums.c:150
 msgctxt "color-pick-mode"
@@ -11689,7 +11687,7 @@ msgstr "Konumlandırılmış"
 #: ../app/core/core-enums.c:344
 msgctxt "curve-type"
 msgid "Smooth"
-msgstr "Yumuşak"
+msgstr "Pürüzsüz"
 
 #: ../app/core/core-enums.c:345
 msgctxt "curve-type"
@@ -11774,7 +11772,7 @@ msgstr "GIMP’de asla hata ayıklama yapma"
 #: ../app/core/core-enums.c:511
 msgctxt "dynamics-output-type"
 msgid "Opacity"
-msgstr "Işık Geçirmezlik"
+msgstr "Matlık"
 
 #: ../app/core/core-enums.c:512
 msgctxt "dynamics-output-type"
@@ -12278,7 +12276,7 @@ msgstr "Katman kipini ayarla"
 #: ../app/core/core-enums.c:1164
 msgctxt "undo-type"
 msgid "Set layer opacity"
-msgstr "Katman ışık geçirmezliğini ayarla"
+msgstr "Katman matlığını ayarla"
 
 #: ../app/core/core-enums.c:1165
 msgctxt "undo-type"
@@ -12585,12 +12583,12 @@ msgstr "“%s” alt süreci çalıştırılırken hata oluştu (%s)"
 msgid "tags-locale:C"
 msgstr "tags-locale:C"
 
-#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:357
+#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:386
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "'%s': %s kapatılırken hata"
 
-#: ../app/core/gimp-user-install.c:216
+#: ../app/core/gimp-user-install.c:215
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -12599,7 +12597,7 @@ msgstr ""
 "GIMP %s daha önce kullanmış görünüyorsunuz. GIMP şimdi kullanıcı "
 "ayarlarınızı '%s'a aktaracak."
 
-#: ../app/core/gimp-user-install.c:221
+#: ../app/core/gimp-user-install.c:220
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -12608,22 +12606,22 @@ msgstr ""
 "GIMP'i ilk kez kullanıyor görünüyorsunuz. GIMP şimdi '%s' adında yeni bir "
 "klasör oluşturacak ve bazı dosyaları içine kopyalayacak."
 
-#: ../app/core/gimp-user-install.c:420
+#: ../app/core/gimp-user-install.c:419
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "'%s' dosyası '%s'dan kopyalanıyor..."
 
-#: ../app/core/gimp-user-install.c:435 ../app/core/gimp-user-install.c:461
+#: ../app/core/gimp-user-install.c:434 ../app/core/gimp-user-install.c:460
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "'%s' klasör oluşturuluyor..."
 
-#: ../app/core/gimp-user-install.c:446 ../app/core/gimp-user-install.c:472
+#: ../app/core/gimp-user-install.c:445 ../app/core/gimp-user-install.c:471
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "'%s' klasörü oluşturulamadı: %s"
 
-#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:327
+#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:382
 msgid "No patterns available for this operation."
 msgstr "Bu işlem için kullanılır desen yok."
 
@@ -12842,38 +12840,38 @@ msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr "Dikdörtgen Seçimi"
 
-#: ../app/core/gimpchannel-select.c:118
+#: ../app/core/gimpchannel-select.c:113
 msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr "Elips Seçimi"
 
-#: ../app/core/gimpchannel-select.c:173
+#: ../app/core/gimpchannel-select.c:163
 msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Yuvarlatılmış Dikdörtgen Seçimi"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:448
+#: ../app/core/gimpchannel-select.c:416 ../app/core/gimplayer.c:448
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfadan Seçime"
 
-#: ../app/core/gimpchannel-select.c:478
+#: ../app/core/gimpchannel-select.c:454
 #, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr "%s Kanalından Seçime"
 
-#: ../app/core/gimpchannel-select.c:529
+#: ../app/core/gimpchannel-select.c:505
 msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr "Bulanık Seçim"
 
-#: ../app/core/gimpchannel-select.c:577
+#: ../app/core/gimpchannel-select.c:553
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Renge Göre Seç"
 
-#: ../app/core/gimpchannel-select.c:616
+#: ../app/core/gimpchannel-select.c:592
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "İndekli Renge Göre Seç"
@@ -12964,7 +12962,7 @@ msgstr "Kanal daha fazla alçaltılamaz."
 #: ../app/core/gimpchannel.c:308
 msgctxt "undo-type"
 msgid "Feather Channel"
-msgstr "Kanalı Yumuşat"
+msgstr "Kanalı Tüyle"
 
 #: ../app/core/gimpchannel.c:309
 msgctxt "undo-type"
@@ -13017,7 +13015,7 @@ msgstr "Kanal Rengini Ayarla"
 #: ../app/core/gimpchannel.c:1764
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
-msgstr "Kanal Işık Geçirmezliğini Ayarla"
+msgstr "Kanal Matlığını Ayarla"
 
 #: ../app/core/gimpchannel.c:1853 ../app/core/gimpselection.c:169
 msgid "Selection Mask"
@@ -13042,7 +13040,7 @@ msgstr "Artalan rengi"
 #: ../app/core/gimpcontext.c:698 ../app/core/gimpcontext.c:699
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:288
 msgid "Opacity"
-msgstr "Işık Geçirmezlik"
+msgstr "Matlık"
 
 #: ../app/core/gimpcontext.c:707 ../app/core/gimpcontext.c:708
 msgid "Paint Mode"
@@ -13170,7 +13168,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:121
+#: ../app/core/gimpdrawable.c:528 ../app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Ölçekle"
@@ -13180,7 +13178,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Kovadan Dolum"
 
-#: ../app/core/gimpdrawable-edit.c:150
+#: ../app/core/gimpdrawable-edit.c:151
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Temizle"
@@ -13198,11 +13196,11 @@ msgstr "Yüzen Seçim"
 msgid "Computing alpha of unknown pixels"
 msgstr "Bilinmeyen pikseklerin alfası hesaplanıyor"
 
-#: ../app/core/gimpdrawable-fill.c:204 ../app/vectors/gimpvectors.c:668
+#: ../app/core/gimpdrawable-fill.c:212 ../app/vectors/gimpvectors.c:668
 msgid "Not enough points to fill"
 msgstr "Doldurmak için yeterli nokta yok"
 
-#: ../app/core/gimpdrawable-fill.c:259
+#: ../app/core/gimpdrawable-fill.c:267
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Darbeyi Görselleştir"
@@ -13256,42 +13254,63 @@ msgstr "Dönüşüm"
 msgid "Output type"
 msgstr "Çıktı türü"
 
-#: ../app/core/gimpfilloptions.c:102
+#: ../app/core/gimpfilloptions.c:108
 msgid "Style"
 msgstr "Biçem"
 
-#: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
-#: ../app/tools/gimpbucketfilloptions.c:147
+#: ../app/core/gimpfilloptions.c:116 ../app/pdb/gimppdbcontext.c:100
+#: ../app/tools/gimpbucketfilloptions.c:149
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
-msgstr "Yumuşatma"
+msgstr "Kenar yumuşatma"
 
-#: ../app/core/gimpfilloptions.c:300
+#: ../app/core/gimpfilloptions.c:123 ../app/tools/gimpbucketfilloptions.c:159
+#: ../app/tools/gimpselectionoptions.c:87
+msgid "Feather edges"
+msgstr "Kenarları tüyle"
+
+#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:160
+msgid "Enable feathering of fill edges"
+msgstr "Doldurma kenarlarını tüylemeyi etkinleştir"
+
+#: ../app/core/gimpfilloptions.c:130 ../app/paint/gimpmybrushoptions.c:86
+#: ../app/tools/gimpbucketfilloptions.c:166 ../app/tools/gimpcoloroptions.c:85
+#: ../app/tools/gimprectangleselectoptions.c:101
+#: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
+msgid "Radius"
+msgstr "Yarıçap"
+
+#: ../app/core/gimpfilloptions.c:131 ../app/tools/gimpbucketfilloptions.c:167
+#: ../app/tools/gimpselectionoptions.c:95
+msgid "Radius of feathering"
+msgstr "Tüyleme yarıçapı"
+
+#: ../app/core/gimpfilloptions.c:355
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Önalan Rengi İle Doldur"
 
-#: ../app/core/gimpfilloptions.c:305
+#: ../app/core/gimpfilloptions.c:360
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Artalan Rengi İle Doldur"
 
-#: ../app/core/gimpfilloptions.c:310
+#: ../app/core/gimpfilloptions.c:365
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Beyaz İle Doldur"
 
-#: ../app/core/gimpfilloptions.c:317
+#: ../app/core/gimpfilloptions.c:372
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Saydamlık İle Doldur"
 
-#: ../app/core/gimpfilloptions.c:333 ../app/core/gimpfilloptions.c:401
+#: ../app/core/gimpfilloptions.c:388 ../app/core/gimpfilloptions.c:456
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Desen İle Doldur"
 
-#: ../app/core/gimpfilloptions.c:398
+#: ../app/core/gimpfilloptions.c:453
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
 msgstr "Koyu Renk İle Doldur"
@@ -13700,7 +13719,7 @@ msgstr "Görüntüyü 64 bit gama kayan noktalı sayı değerine dönüştür"
 #: ../app/dialogs/convert-precision-dialog.c:221
 #: ../app/tools/gimpgradientoptions.c:128
 msgid "Dithering"
-msgstr "Renk Taklidi"
+msgstr "Titreme"
 
 #: ../app/core/gimpimage-convert-type.c:84
 msgctxt "undo-type"
@@ -13892,7 +13911,7 @@ msgstr "(Önizleme geçerliliğini yitirmiş olabilir)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:429
-#: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:681
+#: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -14014,7 +14033,7 @@ msgid "Layer cannot be lowered more."
 msgstr "Katman daha fazla alçaltılamaz."
 
 #: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1913
-#: ../app/core/gimplayermask.c:228
+#: ../app/core/gimplayermask.c:270
 #, c-format
 msgid "%s mask"
 msgstr "%s maskesi"
@@ -14088,17 +14107,17 @@ msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Katmandan Görüntü Boyutuna"
 
-#: ../app/core/gimplayermask.c:76
+#: ../app/core/gimplayermask.c:82
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Katman Maskesini Taşı"
 
-#: ../app/core/gimplayermask.c:77
+#: ../app/core/gimplayermask.c:83
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Katman Maskesinden Seçime"
 
-#: ../app/core/gimplayermask.c:152
+#: ../app/core/gimplayermask.c:194
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Katman maskeleri yeniden adlandırılamıyor."
@@ -14107,20 +14126,20 @@ msgstr "Katman maskeleri yeniden adlandırılamıyor."
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Gri pikseller yerine saydam pikselleri seç"
 
-#: ../app/core/gimplineart.c:343 ../app/tools/gimpbucketfilloptions.c:172
+#: ../app/core/gimplineart.c:343 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
 msgstr "Çizgi sanatı saptama eşiği"
 
-#: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:173
+#: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Dış hat saptama eşiği (daha yüksek değer daha fazla piksel içerecektir)"
 
-#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:179
+#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:195
 msgid "Maximum growing size"
 msgstr "En fazla büyüme boyutu"
 
-#: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:180
+#: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:196
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Çizgi sanatı altında büyütülecek en fazla piksel sayısı"
 
@@ -14300,7 +14319,7 @@ msgstr "Seçimi Darbele"
 #: ../app/core/gimpselection.c:189
 msgctxt "undo-type"
 msgid "Feather Selection"
-msgstr "Seçimi Yumuşat"
+msgstr "Seçimi Tüyle"
 
 #: ../app/core/gimpselection.c:190
 msgctxt "undo-type"
@@ -14407,7 +14426,7 @@ msgstr ""
 
 #: ../app/core/gimpstrokeoptions.c:201
 msgid "Dash offset"
-msgstr "Çizgi sınırı"
+msgstr "Çizgi konumu"
 
 #: ../app/core/gimpstrokeoptions.c:223
 msgid "Emulate brush dynamics"
@@ -14608,7 +14627,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "Renk profili"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:108
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:110
 msgid "Fill type"
 msgstr "Doldurma türü"
 
@@ -14730,8 +14749,8 @@ msgstr "GIMP web sitesini ziyaret edin"
 msgid "translator-credits"
 msgstr ""
 "Muhammet Kara <muhammetk@gmail.com>\n"
-"Sabri Ünal <libreajans@gmail.com>, 2019.Emin Tufan Çetin <etcetin@gmail."
-"com>, 2019."
+"Sabri Ünal <libreajans@gmail.com>, 2019\n"
+"Emin Tufan Çetin <etcetin@gmail.com>, 2019."
 
 #: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
@@ -14920,22 +14939,21 @@ msgstr "Kullanılmayan veya tekrar eden renkleri renk eşleminden _kaldır"
 
 #: ../app/dialogs/convert-indexed-dialog.c:253
 msgid "Color _dithering:"
-msgstr "Renk _taklidi:"
+msgstr "Renk _titremesi:"
 
 #: ../app/dialogs/convert-indexed-dialog.c:268
 msgid "Enable dithering of _transparency"
-msgstr "_Saydamlığın renk taklidini etkinleştir"
+msgstr "_Saydamlığın titremesini etkinleştir"
 
 #: ../app/dialogs/convert-indexed-dialog.c:280
 #: ../app/dialogs/preferences-dialog.c:2238
 msgid "Enable dithering of text layers"
-msgstr "Metin katmanı renk taklidini etkinleştir"
+msgstr "Metin katmanlarının titremesini etkinleştir"
 
 #: ../app/dialogs/convert-indexed-dialog.c:291
 #: ../app/dialogs/convert-precision-dialog.c:276
 msgid "Dithering text layers will make them uneditable"
-msgstr ""
-"Metin katmanlarını renk taklidi yapmak onları düzenlenemez hale getirir"
+msgstr "Metin katmanlarını titretmek onları düzenlenemez hale getirir"
 
 #: ../app/dialogs/convert-indexed-dialog.c:415
 #: ../app/pdb/image-convert-cmds.c:163
@@ -14952,12 +14970,12 @@ msgid "Precision Conversion"
 msgstr "Hassasiyeti Dönüştür"
 
 #: ../app/dialogs/convert-precision-dialog.c:204
-#: ../app/widgets/gimptemplateeditor.c:422
+#: ../app/widgets/gimptemplateeditor.c:439
 msgid "Perceptual gamma (sRGB)"
 msgstr "Algısal Gama (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:205
-#: ../app/widgets/gimptemplateeditor.c:421
+#: ../app/widgets/gimptemplateeditor.c:438
 msgid "Linear light"
 msgstr "Doğrusal Işık"
 
@@ -15200,7 +15218,7 @@ msgstr "Yalnızca etkin _küme içinde birleştir"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
-msgstr "Görünmez katmanları _at"
+msgstr "Görünmez katmanlardan _vazgeç"
 
 #: ../app/dialogs/image-new-dialog.c:100
 msgid "Create a New Image"
@@ -15378,7 +15396,7 @@ msgstr "Birleşik kip:"
 
 #: ../app/dialogs/layer-options-dialog.c:239
 msgid "_Opacity:"
-msgstr "_Işık geçirmezlik:"
+msgstr "_Matlık:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:823
@@ -15401,7 +15419,7 @@ msgid "Offset Y:"
 msgstr "Y Konumu:"
 
 #: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
-#: ../app/widgets/gimptemplateeditor.c:449
+#: ../app/widgets/gimptemplateeditor.c:466
 msgid "_Fill with:"
 msgstr "_Doldur:"
 
@@ -16185,11 +16203,11 @@ msgstr "Öntanımlı Görüntü"
 
 #: ../app/dialogs/preferences-dialog.c:1751
 msgid "Quick Mask color:"
-msgstr "Hızlı Maskeleme rengi:"
+msgstr "Hızlı Maske rengi:"
 
 #: ../app/dialogs/preferences-dialog.c:1752
 msgid "Set the default Quick Mask color"
-msgstr "Öntanımlı Hızlı Maskeleme rengini ayarla"
+msgstr "Öntanımlı Hızlı Maske rengini ayarla"
 
 #: ../app/dialogs/preferences-dialog.c:1762
 msgid "Default Image Grid"
@@ -16363,15 +16381,15 @@ msgstr "Hassasiyeti Dönüştür iletişim Kutusu"
 
 #: ../app/dialogs/preferences-dialog.c:2199
 msgid "Dither layers:"
-msgstr "Renk taklidi katmanları:"
+msgstr "Titreme katmanları:"
 
 #: ../app/dialogs/preferences-dialog.c:2204
 msgid "Dither text layers:"
-msgstr "Renk taklidi metin katmanları:"
+msgstr "Titreme metin katmanları:"
 
 #: ../app/dialogs/preferences-dialog.c:2209
 msgid "Dither channels/masks:"
-msgstr "Renk taklidi kanalları/maskeleri:"
+msgstr "Titreme kanalları/maskeleri:"
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:2213
@@ -16392,11 +16410,11 @@ msgstr "Kullanılmayan ve tekrar eden renkleri renk eşleminden kaldır"
 
 #: ../app/dialogs/preferences-dialog.c:2231
 msgid "Color dithering:"
-msgstr "Renk taklidi:"
+msgstr "Renk titremesi:"
 
 #: ../app/dialogs/preferences-dialog.c:2235
 msgid "Enable dithering of transparency"
-msgstr "Saydamlığın renk taklidini etkinleştir"
+msgstr "Saydamlığın titremesini etkinleştir"
 
 #: ../app/dialogs/preferences-dialog.c:2247
 msgid "Keep recent settings:"
@@ -16470,7 +16488,7 @@ msgstr "Yalnızca etkin küme içinde birleştir"
 
 #: ../app/dialogs/preferences-dialog.c:2323
 msgid "Discard invisible layers"
-msgstr "Görünmez katmanları at"
+msgstr "Görünmez katmanlardan vazgeç"
 
 #. New Channel Dialog
 #: ../app/dialogs/preferences-dialog.c:2327
@@ -16483,11 +16501,11 @@ msgstr "Kanal adı:"
 
 #: ../app/dialogs/preferences-dialog.c:2336
 msgid "Color and opacity:"
-msgstr "Renk ve ışık geçirmezlik:"
+msgstr "Renk ve matlık:"
 
 #: ../app/dialogs/preferences-dialog.c:2337
 msgid "Default New Channel Color and Opacity"
-msgstr "Varsayılan Yeni Kanal Rengi ve Işık Geçirmezliği"
+msgstr "Varsayılan Yeni Kanal Rengi ve Matlığı"
 
 #. New Path Dialog
 #: ../app/dialogs/preferences-dialog.c:2342
@@ -16539,11 +16557,11 @@ msgstr "İçe aktarılmış yolları ölçekle"
 #. Feather Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2382
 msgid "Feather Selection Dialog"
-msgstr "Seçimi Yumuşat İletişim Kutusu"
+msgstr "Seçimi Tüyle İletişim Kutusu"
 
 #: ../app/dialogs/preferences-dialog.c:2387
 msgid "Feather radius:"
-msgstr "Yumuşatma yarıçapı:"
+msgstr "Tüyleme yarıçapı:"
 
 #. Grow Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2391
@@ -16552,7 +16570,7 @@ msgstr "Seçimi Büyüt İletişim Kutusu"
 
 #: ../app/dialogs/preferences-dialog.c:2396
 msgid "Grow radius:"
-msgstr "Büyütne yarıçapı:"
+msgstr "Büyütme yarıçapı:"
 
 #. Shrink Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2400
@@ -16771,7 +16789,7 @@ msgstr "Yürüyen _karıncaların hızı:"
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2810
 msgid "Zoom & Resize Behavior"
-msgstr "Odaklama ve Boyutlama Davranışı"
+msgstr "Yakınlaştırma ve Yeniden Boyutlandırma Davranışı"
 
 #: ../app/dialogs/preferences-dialog.c:2814
 msgid "Resize window on _zoom"
@@ -16779,7 +16797,7 @@ msgstr "_Yakınlaştırırken pencereyi yeniden boyulandır"
 
 #: ../app/dialogs/preferences-dialog.c:2817
 msgid "Resize window on image _size change"
-msgstr "Görüntü _boyutu değiştiğinde pencereyi yeniden boyulandır"
+msgstr "Görüntü _boyutu değiştiğinde pencereyi yeniden boyutlandır"
 
 #: ../app/dialogs/preferences-dialog.c:2823
 msgid "Show entire image"
@@ -17161,23 +17179,23 @@ msgstr "Yazdırma Boyutu"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:175 ../app/widgets/gimpsizebox.c:190
-#: ../app/widgets/gimptemplateeditor.c:195
+#: ../app/widgets/gimptemplateeditor.c:199
 msgid "_Width:"
 msgstr "_Genişlik:"
 
 #: ../app/dialogs/print-size-dialog.c:182 ../app/widgets/gimpsizebox.c:194
-#: ../app/widgets/gimptemplateeditor.c:202
+#: ../app/widgets/gimptemplateeditor.c:206
 msgid "H_eight:"
 msgstr "_Yükseklik:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:257
-#: ../app/widgets/gimptemplateeditor.c:324
+#: ../app/widgets/gimptemplateeditor.c:328
 msgid "_X resolution:"
 msgstr "_X çözünürlüğü:"
 
 #: ../app/dialogs/print-size-dialog.c:243 ../app/widgets/gimpsizebox.c:260
-#: ../app/widgets/gimptemplateeditor.c:331
+#: ../app/widgets/gimptemplateeditor.c:335
 msgid "_Y resolution:"
 msgstr "_Y çözünürlüğü:"
 
@@ -17312,7 +17330,7 @@ msgid "_Vertical:"
 msgstr "_Dikey:"
 
 #. Image size frame
-#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:173
+#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:177
 msgid "Image Size"
 msgstr "Görüntü Boyutu"
 
@@ -17628,7 +17646,7 @@ msgid ""
 msgstr ""
 "<big>Kararsız Geliştirme Sürümü</big>\n"
 "\n"
-"<small>gönder <tt>%s</tt></small>\n"
+"<small>commit <tt>%s</tt></small>\n"
 "\n"
 "<small>Lütfen bu sürüm ile ilgili hataları bildirmeden önce\n"
 "git ana dalını en son hali ile inşa edin.</small>"
@@ -17829,7 +17847,7 @@ msgstr "Katman seçildi: '%s'"
 msgid "pixels"
 msgstr "piksel"
 
-#: ../app/display/gimpstatusbar.c:469
+#: ../app/display/gimpstatusbar.c:472
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Vazgeç <i>%s</i>"
@@ -17860,7 +17878,7 @@ msgstr "Tüm noktaları taşımak için tıklayıp sürükleyin"
 
 #: ../app/display/gimptoolgyroscope.c:713
 msgid "Click-Drag to zoom"
-msgstr "Yakınlaşmak için tıklayıp sürükleyin"
+msgstr "Yakınlaştırmak için tıklayıp sürükleyin"
 
 #: ../app/display/gimptoolgyroscope.c:717
 #, c-format
@@ -17868,7 +17886,7 @@ msgid "%s for constrained steps"
 msgstr "Kısıtlanmış aşamalar için %s"
 
 #: ../app/display/gimptoolgyroscope.c:724
-#: ../app/display/gimptooltransformgrid.c:1812
+#: ../app/display/gimptooltransformgrid.c:1822
 msgid "Click-Drag to rotate"
 msgstr "Döndürmek için tıklayıp sürükleyin"
 
@@ -17895,10 +17913,10 @@ msgstr "kısıtlanmış eksen için %s"
 #: ../app/display/gimptoolgyroscope.c:741
 #, c-format
 msgid "%s to zoom"
-msgstr "yakınlaşmak için %s"
+msgstr "yakınlaştırmak için %s"
 
 #: ../app/display/gimptoolhandlegrid.c:865
-#: ../app/display/gimptooltransformgrid.c:1803
+#: ../app/display/gimptooltransformgrid.c:1813
 msgid "Click-Drag to move"
 msgstr "Taşımak için tıklayıp sürükleyin"
 
@@ -17911,7 +17929,7 @@ msgid "Click-Drag to shear and scale"
 msgstr "Eğmek ve ölçeklemek için tıklayıp sürükleyin"
 
 #: ../app/display/gimptoolhandlegrid.c:874
-#: ../app/display/gimptooltransformgrid.c:1791
+#: ../app/display/gimptooltransformgrid.c:1801
 msgid "Click-Drag to change perspective"
 msgstr "Perspektifi değiştirmek için tıklayıp sürükleyin"
 
@@ -18149,7 +18167,7 @@ msgstr ""
 
 #: ../app/display/gimptoolrectangle.c:566
 #: ../app/display/gimptoolrectangle.c:882
-#: ../app/tools/gimprectangleselecttool.c:757
+#: ../app/tools/gimprectangleselecttool.c:727
 msgid "Rectangle: "
 msgstr "Dikdörtgen: "
 
@@ -18157,16 +18175,16 @@ msgstr "Dikdörtgen: "
 msgid "Position: "
 msgstr "Konum: "
 
-#: ../app/display/gimptooltransformgrid.c:1796
-#: ../app/display/gimptooltransformgrid.c:1801
+#: ../app/display/gimptooltransformgrid.c:1806
+#: ../app/display/gimptooltransformgrid.c:1811
 msgid "Click-Drag to scale"
 msgstr "Ölçeklemek için tıklayıp sürükleyin"
 
-#: ../app/display/gimptooltransformgrid.c:1805
+#: ../app/display/gimptooltransformgrid.c:1815
 msgid "Click-Drag to move the pivot point"
 msgstr "Pivot noktasını taşımak için tıklayıp sürükleyin"
 
-#: ../app/display/gimptooltransformgrid.c:1810
+#: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to shear"
 msgstr "Eğmek için tıklayıp sürükleyin"
 
@@ -18585,14 +18603,14 @@ msgstr "Böl (e)"
 #: ../app/operations/operations-enums.c:214
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
-msgstr "Temizle (eski)"
+msgstr "Soldur (eski)"
 
 #. Translators: this is an abbreviated version of "Dodge (legacy)".
 #. Keep it short.
 #: ../app/operations/operations-enums.c:217
 msgctxt "layer-mode"
 msgid "Dodge (l)"
-msgstr "Temizle (e)"
+msgstr "Soldur (e)"
 
 #: ../app/operations/operations-enums.c:218
 msgctxt "layer-mode"
@@ -18764,7 +18782,7 @@ msgstr "Böl"
 #: ../app/operations/operations-enums.c:261
 msgctxt "layer-mode"
 msgid "Dodge"
-msgstr "Temizle"
+msgstr "Soldur"
 
 #: ../app/operations/operations-enums.c:262
 msgctxt "layer-mode"
@@ -19167,7 +19185,7 @@ msgstr "Görüntü Kurtar"
 
 #: ../app/gui/gui.c:330
 msgid "_Discard"
-msgstr "Değişikliklerden Va_zgeç"
+msgstr "Va_zgeç"
 
 #: ../app/gui/gui.c:331
 msgid "_Recover"
@@ -19235,8 +19253,8 @@ msgstr "Kopyala"
 msgid "No patterns available for use with this tool."
 msgstr "Bu aletle kullanılabilecek desen yok."
 
-#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:164
-#: ../app/tools/gimpbucketfilloptions.c:477
+#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:180
+#: ../app/tools/gimpbucketfilloptions.c:505
 #: ../app/tools/gimpcloneoptions-gui.c:70
 msgid "Source"
 msgstr "Kaynak"
@@ -19256,7 +19274,7 @@ msgstr "Oran"
 
 #: ../app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
-msgstr "Temizle/Yak"
+msgstr "Soldur/Yak"
 
 #: ../app/paint/gimpdodgeburnoptions.c:70
 msgid "Type"
@@ -19331,15 +19349,9 @@ msgstr "Mybrush"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Bu aletle kullanılabilecek MyPaint fırçası yok."
 
-#: ../app/paint/gimpmybrushoptions.c:86 ../app/tools/gimpcoloroptions.c:85
-#: ../app/tools/gimprectangleselectoptions.c:101
-#: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
-msgid "Radius"
-msgstr "Yarıçap"
-
 #: ../app/paint/gimpmybrushoptions.c:93
 msgid "Base Opacity"
-msgstr "Temel Işık Geçirmezlik"
+msgstr "Temel Matlık"
 
 #: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:231
 #: ../app/tools/gimpwarpoptions.c:99 ../app/widgets/gimpbrusheditor.c:178
@@ -19356,7 +19368,7 @@ msgstr "Silme etkisi yok"
 
 #: ../app/paint/gimpmybrushoptions.c:115 ../app/paint/gimpsmudgeoptions.c:86
 msgid "Never decrease alpha of existing pixels"
-msgstr "Alfa veya varolan pikselleri asla azaltma"
+msgstr "Varolan piksellerin alfasını asla azaltma"
 
 #: ../app/paint/gimppaintbrush.c:68 ../app/tools/gimppaintbrushtool.c:57
 msgid "Paintbrush"
@@ -19442,7 +19454,7 @@ msgstr "Artan"
 
 #: ../app/paint/gimppaintoptions.c:288
 msgid "Every stamp has its own opacity"
-msgstr "Her damga kendi ışık geçirmezliğine sahiptir"
+msgstr "Her damga kendi matlığına sahiptir"
 
 #: ../app/paint/gimppaintoptions.c:295
 msgid "Hard edge"
@@ -19509,15 +19521,15 @@ msgstr "RGB renk geçiş parçalarını harmanlarken kullanılacak renk uzayı"
 
 #: ../app/paint/gimppaintoptions.c:423
 msgid "Smooth stroke"
-msgstr "Yumuşak darbe"
+msgstr "Pürüzsüz darbe"
 
 #: ../app/paint/gimppaintoptions.c:424
 msgid "Paint smoother strokes"
-msgstr "Yumuşak darbelerle boya"
+msgstr "Pürüzsüz darbelerle boya"
 
 #: ../app/paint/gimppaintoptions.c:430
 msgid "Depth of smoothing"
-msgstr "Yumuşatma derinliği"
+msgstr "Pürüzsüzleştirme derinliği"
 
 #: ../app/paint/gimppaintoptions.c:435
 msgid "Weight"
@@ -19564,7 +19576,7 @@ msgid "No erasing effect"
 msgstr "Silme etkisi yok"
 
 #: ../app/paint/gimpsmudgeoptions.c:92 ../app/paint/gimpsourceoptions.c:71
-#: ../app/pdb/gimppdbcontext.c:128 ../app/tools/gimpbucketfilloptions.c:132
+#: ../app/pdb/gimppdbcontext.c:128 ../app/tools/gimpbucketfilloptions.c:134
 #: ../app/tools/gimpcoloroptions.c:69 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
@@ -19656,7 +19668,7 @@ msgstr "Renklendir"
 
 #: ../app/pdb/color-cmds.c:738
 msgid "Hue-Saturation"
-msgstr "Renk Tonu Doygunluğu"
+msgstr "Renk Tonu-Doygunluk"
 
 #: ../app/pdb/color-cmds.c:782 ../app/pdb/drawable-color-cmds.c:726
 msgctxt "undo-type"
@@ -19675,7 +19687,7 @@ msgstr "Önalanı Seç"
 #: ../app/pdb/drawable-color-cmds.c:507
 msgctxt "undo-type"
 msgid "Hue-Saturation"
-msgstr "Renk Tonu Doygunluğu"
+msgstr "Renk Tonu-Doygunluk"
 
 #: ../app/pdb/drawable-color-cmds.c:542
 msgctxt "undo-type"
@@ -19990,19 +20002,19 @@ msgstr ""
 
 #: ../app/pdb/gimppdbcontext.c:101 ../app/tools/gimpselectionoptions.c:81
 msgid "Smooth edges"
-msgstr "Kenarları yumuşat"
+msgstr "Kenarları pürüzsüzleştir"
 
 #: ../app/pdb/gimppdbcontext.c:107
 msgid "Feather"
-msgstr "Yumuşat"
+msgstr "Tüyle"
 
 #: ../app/pdb/gimppdbcontext.c:114
 msgid "Feather radius X"
-msgstr "Yumuşatma yarıçapı X"
+msgstr "Tüyle yarıçapı X"
 
 #: ../app/pdb/gimppdbcontext.c:121
 msgid "Feather radius Y"
-msgstr "Yumuşatma yarıçapı Y"
+msgstr "Tüyle yarıçapı Y"
 
 #: ../app/pdb/gimppdbcontext.c:135
 msgid "Sample criterion"
@@ -20016,7 +20028,7 @@ msgstr "Örnek eşik"
 msgid "Sample transparent"
 msgstr "Örnek saydamlık"
 
-#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:141
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Köşegen komşular"
@@ -20155,7 +20167,7 @@ msgstr "Uzaylı Eşlemi"
 #: ../app/pdb/plug-in-compat-cmds.c:449
 msgctxt "undo-type"
 msgid "Antialias"
-msgstr "Yumuşat"
+msgstr "Kenar yumuşatma"
 
 #: ../app/pdb/plug-in-compat-cmds.c:492
 msgctxt "undo-type"
@@ -20676,7 +20688,7 @@ msgstr "Renk Düzeylerini Ayarla"
 #: ../app/propgui/gimppropgui-color-balance.c:119
 #: ../app/propgui/gimppropgui-hue-saturation.c:138
 msgid "Cyan"
-msgstr "Turkuaz"
+msgstr "Camgöbeği"
 
 #: ../app/propgui/gimppropgui-color-balance.c:119
 #: ../app/propgui/gimppropgui-hue-saturation.c:135
@@ -21044,7 +21056,7 @@ msgstr "Metin Katmanını Dönüştür"
 
 #: ../app/text/gimptextlayer.c:579
 msgid "Discard Text Information"
-msgstr "Metin Bilgisini Sil"
+msgstr "Metin Bilgisinden Vazgeç"
 
 #: ../app/text/gimptextlayer.c:714
 msgid "Due to lack of any fonts, text functionality is not available."
@@ -21246,98 +21258,98 @@ msgstr "_Karşıtlık"
 msgid "Edit these Settings as Levels"
 msgstr "Bu Ayarları, Düzey olarak düzenle"
 
-#: ../app/tools/gimpbucketfilloptions.c:116
+#: ../app/tools/gimpbucketfilloptions.c:118
 msgid "Fill selection"
 msgstr "Seçimi doldur"
 
-#: ../app/tools/gimpbucketfilloptions.c:117
+#: ../app/tools/gimpbucketfilloptions.c:119
 msgid "Which area will be filled"
 msgstr "Hangi alan doldurulacak"
 
-#: ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/tools/gimpbucketfilloptions.c:126
 msgid "Fill transparent areas"
 msgstr "Saydam alanları doldur"
 
-#: ../app/tools/gimpbucketfilloptions.c:125
+#: ../app/tools/gimpbucketfilloptions.c:127
 msgid "Allow completely transparent regions to be filled"
 msgstr "Saydam bölgelerin tümüyle doldurulmasına izin ver"
 
-#: ../app/tools/gimpbucketfilloptions.c:133
+#: ../app/tools/gimpbucketfilloptions.c:135
 msgid "Base filled area on all visible layers"
 msgstr "Tüm görünür katmanlar üzerinde tabanı doldurulmuş alan"
 
-#: ../app/tools/gimpbucketfilloptions.c:140
+#: ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Çapraz olarak komşu pikselleri bağlı kabul et"
 
-#: ../app/tools/gimpbucketfilloptions.c:148
+#: ../app/tools/gimpbucketfilloptions.c:150
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
 "uniformly."
 msgstr ""
-"Temel dolgu ışık geçirmezliği, tıklatılan pikselden (eşiğe bakınız) veya "
-"çizgi sanatı sınırlarından renk farkına göre. Tüm alanı eşit şekilde "
-"doldurmak için yumuşatmayı devre dışı bırakın."
+"Temel doldurma matlığı, tıklatılan pikselden (eşiğe bakınız) veya çizgi "
+"sanatı sınırlarından renk farkına göre. Tüm alanı eşit şekilde doldurmak "
+"için kenar yumuşatmayı devre dışı bırakın."
 
-#: ../app/tools/gimpbucketfilloptions.c:157
+#: ../app/tools/gimpbucketfilloptions.c:173
 #: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Eşik"
 
-#: ../app/tools/gimpbucketfilloptions.c:158
+#: ../app/tools/gimpbucketfilloptions.c:174
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "En fazla renk farklılığı"
 
-#: ../app/tools/gimpbucketfilloptions.c:165
+#: ../app/tools/gimpbucketfilloptions.c:181
 msgid "Source image for line art computation"
 msgstr "Çizgi sanatı hesaplaması için kaynak görüntü"
 
 # azami istisna olarak kullanıldı, genelde en az / en fazla tercih ediliyor
-#: ../app/tools/gimpbucketfilloptions.c:186
+#: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
 msgstr "Azami boşluk uzunluğu"
 
 # azami istisna olarak kullanıldı, genelde en az / en fazla tercih ediliyor
-#: ../app/tools/gimpbucketfilloptions.c:187
+#: ../app/tools/gimpbucketfilloptions.c:203
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "Çizgi sanatında kapatılabilen azami boşluk (piksel olarak)"
 
-#: ../app/tools/gimpbucketfilloptions.c:193
-#: ../app/tools/gimpbucketfilloptions.c:442
+#: ../app/tools/gimpbucketfilloptions.c:209
+#: ../app/tools/gimpbucketfilloptions.c:470
 msgid "Fill by"
 msgstr "Doldur"
 
-#: ../app/tools/gimpbucketfilloptions.c:194
+#: ../app/tools/gimpbucketfilloptions.c:210
 msgid "Criterion used for determining color similarity"
 msgstr "Renk benzerliklerinin belirlenmesi için kullanılan kriter"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:379
+#: ../app/tools/gimpbucketfilloptions.c:407
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Doldurma Türü: (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:394
+#: ../app/tools/gimpbucketfilloptions.c:422
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Etkilenen Bölge (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:403
+#: ../app/tools/gimpbucketfilloptions.c:431
 msgid "Finding Similar Colors"
 msgstr "Benzer Renklerin Bulunması"
 
-#: ../app/tools/gimpbucketfilloptions.c:457
+#: ../app/tools/gimpbucketfilloptions.c:485
 msgid "Line Art Detection"
 msgstr "Çizgi Sanatı Saptaması"
 
-#: ../app/tools/gimpbucketfilloptions.c:467
+#: ../app/tools/gimpbucketfilloptions.c:495
 msgid "(computing...)"
 msgstr "(hesaplanıyor...)"
 
@@ -21369,12 +21381,12 @@ msgstr "Etkin katman görünür değil."
 msgid "No valid line art source selected."
 msgstr "Geçerli bir çizgi sanatı kaynağı seçilmedi."
 
-#: ../app/tools/gimpbucketfilltool.c:695 ../app/tools/gimpbucketfilltool.c:828
+#: ../app/tools/gimpbucketfilltool.c:699 ../app/tools/gimpbucketfilltool.c:832
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:448
 msgid "Click in any image to pick the background color"
 msgstr "Artalan rengini seçmek için herhangi bir görüntüye tıklayın"
 
-#: ../app/tools/gimpbucketfilltool.c:702 ../app/tools/gimpbucketfilltool.c:837
+#: ../app/tools/gimpbucketfilltool.c:706 ../app/tools/gimpbucketfilltool.c:841
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:442
 msgid "Click in any image to pick the foreground color"
 msgstr "Önalan rengini seçmek için herhangi bir görüntüye tıklayın"
@@ -21583,7 +21595,7 @@ msgstr "Seçim çerçevesindeki herşeyi söndür"
 #: ../app/tools/gimpcropoptions.c:86
 #: ../app/tools/gimprectangleselectoptions.c:87
 msgid "Highlight opacity"
-msgstr "Vurgu ışık geçirmezliği"
+msgstr "Vurgu matlığı"
 
 #: ../app/tools/gimpcropoptions.c:87
 #: ../app/tools/gimprectangleselectoptions.c:88
@@ -21709,23 +21721,23 @@ msgstr "_Eski eğrilerin dosya biçimini kullan"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn"
-msgstr "Temizle / Yak"
+msgstr "Soldur / Yak"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr "Temizleme / Yakma Aracı: Fırçayla seçerek renk aç ya da koyulaştır"
+msgstr "Soldurma / Yakma Aracı: Fırçayla seçerek renk aç ya da koyulaştır"
 
 #: ../app/tools/gimpdodgeburntool.c:76
 msgid "Dod_ge / Burn"
-msgstr "Te_mizle / Yak"
+msgstr "Sol_dur / Yak"
 
 #: ../app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge"
-msgstr "Temizlemek için tıklayın"
+msgstr "Soldurmak için tıklayın"
 
 #: ../app/tools/gimpdodgeburntool.c:189
 msgid "Click to dodge the line"
-msgstr "Çizgiyi temizlemek için tıklayın"
+msgstr "Çizgiyi soldurmak için tıklayın"
 
 #: ../app/tools/gimpdodgeburntool.c:190
 #, c-format
@@ -21743,7 +21755,7 @@ msgstr "Çizgiyi yakmak için tıklayın"
 #: ../app/tools/gimpdodgeburntool.c:196
 #, c-format
 msgid "%s to dodge"
-msgstr "Temizlemek için %s"
+msgstr "Soldurmak için %s"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:220
@@ -22762,7 +22774,7 @@ msgstr "Aux%d Girdi"
 
 #: ../app/tools/gimppaintbrushtool.c:58
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
-msgstr "Boya Fırçası Aracı: Bir fırça kullanarak yumuşak darbelerle boya"
+msgstr "Boya Fırçası Aracı: Bir fırça kullanarak pürüzsüz darbelerle boya"
 
 #: ../app/tools/gimppaintbrushtool.c:59
 msgid "_Paintbrush"
@@ -22979,19 +22991,19 @@ msgstr "Seçimin köşelerini yuvarlat"
 msgid "Radius of rounding in pixels"
 msgstr "Piksel olarak yuvarlama yarıçapı"
 
-#: ../app/tools/gimprectangleselecttool.c:151
+#: ../app/tools/gimprectangleselecttool.c:155
 msgid "Rectangle Select"
 msgstr "Dikdörtgen Seçim"
 
-#: ../app/tools/gimprectangleselecttool.c:152
+#: ../app/tools/gimprectangleselecttool.c:156
 msgid "Rectangle Select Tool: Select a rectangular region"
 msgstr "Dikdörtgen Seçim Aracı: Dikdörtgen bir bölge seç"
 
-#: ../app/tools/gimprectangleselecttool.c:153
+#: ../app/tools/gimprectangleselecttool.c:157
 msgid "_Rectangle Select"
 msgstr "D_ikdörtgen Seçim"
 
-#: ../app/tools/gimprectangleselecttool.c:757
+#: ../app/tools/gimprectangleselecttool.c:727
 msgid "Ellipse: "
 msgstr "Elips: "
 
@@ -23123,17 +23135,9 @@ msgstr "_Kusursuz Kopyalama"
 msgid "Cloning the foreground object"
 msgstr "Önalan nesnesi kopyalanıyor"
 
-#: ../app/tools/gimpselectionoptions.c:87
-msgid "Feather edges"
-msgstr "Kenarları yumuşat"
-
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Enable feathering of selection edges"
-msgstr "Seçim kenarlarını yumuşatmayı etkinleştir"
-
-#: ../app/tools/gimpselectionoptions.c:95
-msgid "Radius of feathering"
-msgstr "Yumuşatma yarıçapı"
+msgstr "Seçim kenarlarını tüylemeyi etkinleştir"
 
 #: ../app/tools/gimpselectionoptions.c:224 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
@@ -23438,11 +23442,11 @@ msgstr "Dönüştürülmüş görüntünün bir önizlemesini göster"
 
 #: ../app/tools/gimptransformgridoptions.c:115
 msgid "Image opacity"
-msgstr "Görüntü ışık geçirmezliği"
+msgstr "Görüntü matlığı"
 
 #: ../app/tools/gimptransformgridoptions.c:116
 msgid "Opacity of the preview image"
-msgstr "Önizleme görüntüsünün ışık geçirmezliği"
+msgstr "Önizleme görüntüsünün matlığı"
 
 #: ../app/tools/gimptransformgridoptions.c:122
 #: ../app/tools/gimptransformgridoptions.c:414
@@ -23574,24 +23578,28 @@ msgstr "Kilitle"
 msgid "Lock pivot position to canvas"
 msgstr "Pivot konumunu tuvale kilitle"
 
-#: ../app/tools/gimptransformgridtool.c:220
+#: ../app/tools/gimptransformgridtool.c:228
 #: ../app/tools/gimptransformtool.c:333
 msgid "_Transform"
 msgstr "_Dönüşüm"
 
-#: ../app/tools/gimptransformgridtool.c:492
-#: ../app/tools/gimptransformgridtool.c:504
+#: ../app/tools/gimptransformgridtool.c:500
+#: ../app/tools/gimptransformgridtool.c:512
 msgid "Transform Step"
 msgstr "Dönüşüm Adımı"
 
-#: ../app/tools/gimptransformgridtool.c:876
+#: ../app/tools/gimptransformgridtool.c:884
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (Düzeltici)"
 
-#: ../app/tools/gimptransformgridtool.c:1099
+#: ../app/tools/gimptransformgridtool.c:1107
 msgid "Re_adjust"
-msgstr "Yeniden ayarla"
+msgstr "_Yeniden ayarla"
+
+#: ../app/tools/gimptransformgridtool.c:1354
+msgid "Cannot readjust the transformation"
+msgstr "Dönüşüm yeniden ayarlanamaz"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -23844,7 +23852,7 @@ msgstr "Silinecek bükme yok."
 
 #: ../app/tools/gimpwarptool.c:740
 msgid "No warp to smooth."
-msgstr "Yumuşatacak bükme yok."
+msgstr "Pürüzsüzleştirilecek bükme yok."
 
 #: ../app/tools/gimpwarptool.c:964
 msgid "Warp transform"
@@ -23981,7 +23989,7 @@ msgstr "Bükmeyi sil"
 #: ../app/tools/tools-enums.c:256
 msgctxt "warp-behavior"
 msgid "Smooth warping"
-msgstr "Bükmeyi yumuşat"
+msgstr "Bükmeyi pürüzsüzleştir"
 
 #: ../app/vectors/gimpvectors.c:224
 msgctxt "undo-type"
@@ -24391,24 +24399,24 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "yok"
 
-#: ../app/widgets/gimpcolormapeditor.c:211
+#: ../app/widgets/gimpcolormapeditor.c:212
 msgid "Color index:"
 msgstr "Renk içeriği:"
 
-#: ../app/widgets/gimpcolormapeditor.c:220
+#: ../app/widgets/gimpcolormapeditor.c:221
 msgid "HTML notation:"
 msgstr "HTML gösterim:"
 
-#: ../app/widgets/gimpcolormapeditor.c:400
+#: ../app/widgets/gimpcolormapeditor.c:401
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Renk eşlemi girişini düzenle #%d"
 
-#: ../app/widgets/gimpcolormapeditor.c:407
+#: ../app/widgets/gimpcolormapeditor.c:408
 msgid "Edit Colormap Entry"
 msgstr "Renk Eşlemi Girişini Düzenle"
 
-#: ../app/widgets/gimpcolormapeditor.c:549
+#: ../app/widgets/gimpcolormapeditor.c:550
 msgid "Only indexed images have a colormap."
 msgstr "Yalnızca indeksli görüntülerin bir renk eşlemi olabilir."
 
@@ -24760,7 +24768,7 @@ msgid "Open Bug Tracker"
 msgstr "Hata Takipçisini Aç"
 
 #: ../app/widgets/gimpcriticaldialog.c:132
-#: ../app/widgets/gimpcriticaldialog.c:454
+#: ../app/widgets/gimpcriticaldialog.c:455
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr ""
@@ -24768,27 +24776,27 @@ msgstr ""
 "bildirebilirsiniz:"
 
 #: ../app/widgets/gimpcriticaldialog.c:134
-#: ../app/widgets/gimpcriticaldialog.c:456
+#: ../app/widgets/gimpcriticaldialog.c:457
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Tıklayarak, Hata bilgilerini panoya kopyalayın: "
 
 #: ../app/widgets/gimpcriticaldialog.c:136
-#: ../app/widgets/gimpcriticaldialog.c:458
+#: ../app/widgets/gimpcriticaldialog.c:459
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Tıklayarak hata takipçisini tarayıcınızda açın: "
 
 #: ../app/widgets/gimpcriticaldialog.c:138
-#: ../app/widgets/gimpcriticaldialog.c:460
+#: ../app/widgets/gimpcriticaldialog.c:461
 msgid "Create a login if you don't have one yet."
 msgstr "Henüz sahip değilseniz bir kullanıcı kimliği oluşturun."
 
 #: ../app/widgets/gimpcriticaldialog.c:139
-#: ../app/widgets/gimpcriticaldialog.c:461
+#: ../app/widgets/gimpcriticaldialog.c:462
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Pano metnini yeni hata raporuna yapıştırın."
 
 #: ../app/widgets/gimpcriticaldialog.c:140
-#: ../app/widgets/gimpcriticaldialog.c:462
+#: ../app/widgets/gimpcriticaldialog.c:463
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -24876,13 +24884,13 @@ msgstr "Bilinmeyen Microsoft Windows hatası."
 msgid "Failed to open '%s': %s"
 msgstr "'%s' açılamadı: %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:420
+#: ../app/widgets/gimpcriticaldialog.c:421
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "GIMP ölümcül bir hata ile çöktü: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:427
+#: ../app/widgets/gimpcriticaldialog.c:428
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "GIMP bir hata ile karşılaştı: %s"
@@ -24890,12 +24898,12 @@ msgstr "GIMP bir hata ile karşılaştı: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:435
+#: ../app/widgets/gimpcriticaldialog.c:436
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "GIMP çeşitli kritik hatalar ile karşılaştı!"
 
-#: ../app/widgets/gimpcriticaldialog.c:487
+#: ../app/widgets/gimpcriticaldialog.c:488
 msgid "_Restart GIMP"
 msgstr "GIMP Uygulamasını _Yeniden Başlat"
 
@@ -25480,7 +25488,7 @@ msgstr "Renk Doldur"
 
 #: ../app/widgets/gimpfilleditor.c:143
 msgid "_Antialiasing"
-msgstr "_Yumuşatma"
+msgstr "_Kenar Yumuşatma"
 
 #: ../app/widgets/gimpgradienteditor.c:588
 msgid "Left Endpoint Color"
@@ -25526,7 +25534,7 @@ msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:1245
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Işıklılık: %0.1f    Işık Geçirmezlik: %0.1f"
+msgstr "Işıklılık: %0.1f    Matlık: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:1277
 #, c-format
@@ -25831,7 +25839,7 @@ msgid "Number of paths:"
 msgstr "Yol sayısı:"
 
 #: ../app/widgets/gimpimagepropview.c:452
-#: ../app/widgets/gimptemplateeditor.c:346
+#: ../app/widgets/gimptemplateeditor.c:350
 #, c-format
 msgid "pixels/%s"
 msgstr "piksel/%s"
@@ -26079,57 +26087,57 @@ msgstr "etiket gir"
 msgid ","
 msgstr ","
 
-#: ../app/widgets/gimptemplateeditor.c:216
+#: ../app/widgets/gimptemplateeditor.c:220
 #, c-format
 msgid "%p"
 msgstr "%p"
 
-#: ../app/widgets/gimptemplateeditor.c:291
+#: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Advanced Options"
 msgstr "_Gelişmiş Seçenekler"
 
-#: ../app/widgets/gimptemplateeditor.c:404
+#: ../app/widgets/gimptemplateeditor.c:408
 msgid "Color _space:"
 msgstr "Renk _uzayı:"
 
-#: ../app/widgets/gimptemplateeditor.c:412
+#: ../app/widgets/gimptemplateeditor.c:425
 msgid "_Precision:"
 msgstr "_Hassasiyet:"
 
-#: ../app/widgets/gimptemplateeditor.c:424
+#: ../app/widgets/gimptemplateeditor.c:441
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: ../app/widgets/gimptemplateeditor.c:429
+#: ../app/widgets/gimptemplateeditor.c:446
 msgid "Color _manage this image"
 msgstr "Görüntü için renk _yönetimi"
 
-#: ../app/widgets/gimptemplateeditor.c:438
+#: ../app/widgets/gimptemplateeditor.c:455
 msgid "Choose A Color Profile"
 msgstr "Renk Profili Seç"
 
-#: ../app/widgets/gimptemplateeditor.c:442
+#: ../app/widgets/gimptemplateeditor.c:459
 msgid "Co_lor profile:"
 msgstr "Renk profi_li:"
 
-#: ../app/widgets/gimptemplateeditor.c:459
+#: ../app/widgets/gimptemplateeditor.c:476
 msgid "Comme_nt:"
 msgstr "Yor_um:"
 
-#: ../app/widgets/gimptemplateeditor.c:574
+#: ../app/widgets/gimptemplateeditor.c:591
 msgid "_Name:"
 msgstr "_Ad:"
 
-#: ../app/widgets/gimptemplateeditor.c:580
+#: ../app/widgets/gimptemplateeditor.c:597
 msgid "_Icon:"
 msgstr "_Simge:"
 
-#: ../app/widgets/gimptemplateeditor.c:799
+#: ../app/widgets/gimptemplateeditor.c:834
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d × %d ppi, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:801
+#: ../app/widgets/gimptemplateeditor.c:836
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
