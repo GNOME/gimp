@@ -294,7 +294,7 @@ gimp_brush_load_brush (GimpContext   *context,
     {
     case 1:
       success = (g_input_stream_read_all (input, mask, size,
-                                         &bytes_read, NULL, error) &&
+                                          &bytes_read, NULL, error) &&
                  bytes_read == size);
 
       /* For backwards-compatibility, check if a pattern follows.
@@ -323,8 +323,8 @@ gimp_brush_load_brush (GimpContext   *context,
                   ph.version      == 1                         &&
                   ph.header_size  > sizeof (GimpPatternHeader) &&
                   ph.bytes        == 3                         &&
-                  ph.width        == header.width               &&
-                  ph.height       == header.height              &&
+                  ph.width        == header.width              &&
+                  ph.height       == header.height             &&
                   g_input_stream_skip (input,
                                        ph.header_size -
                                        sizeof (GimpPatternHeader),
@@ -348,11 +348,14 @@ gimp_brush_load_brush (GimpContext   *context,
                                                       error) &&
                              bytes_read == pixmap_size);
                 }
+              else
+                {
+                  /*  seek back if pattern wasn't found  */
+                  success = g_seekable_seek (G_SEEKABLE (input),
+                                             rewind, G_SEEK_SET,
+                                             NULL, error);
+                }
             }
-
-          /*  seek back unconditionally  */
-          g_seekable_seek (G_SEEKABLE (input), rewind, G_SEEK_SET,
-                           NULL, NULL);
         }
       break;
 
