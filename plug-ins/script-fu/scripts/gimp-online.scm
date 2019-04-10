@@ -26,7 +26,7 @@
 )
 
 (define (gimp-help-using-docks)
-  (gimp-help "" "gimp-using-docks")
+  (gimp-help "" "gimp-concepts-docks")
 )
 
 (define (gimp-help-using-simpleobjects)
