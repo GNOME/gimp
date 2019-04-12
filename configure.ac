@@ -1584,13 +1584,15 @@ PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version,,
                  [add_deps_error([liblzma >= liblzma_required_version])])
 
 
-##########################
-# Check for appstream-glib
-##########################
+#############################
+# Check for extension support
+#############################
 
 PKG_CHECK_MODULES(APPSTREAM_GLIB, appstream-glib >= appstream_glib_required_version,,
-                 [add_deps_error([appstream-glib >= appstream_glib_required_version])])
+                  [add_deps_error([appstream-glib >= appstream_glib_required_version])])
 
+PKG_CHECK_MODULES(LIBARCHIVE, libarchive,,
+                  [add_deps_error([libarchive])])
 
 ###############################
 # Check for Ghostscript library
