@@ -575,7 +575,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
               g_list_free (new_layers);
             }
-          else if (status != GIMP_PDB_CANCEL)
+          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
             {
               warn = TRUE;
             }
@@ -591,7 +591,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                               G_OBJECT (gimp_widget_get_monitor (widget)),
                                               &status, &error);
 
-          if (! new_image && status != GIMP_PDB_CANCEL)
+          if (! new_image && status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
             warn = TRUE;
         }
       else
@@ -607,7 +607,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
             {
               g_object_ref (image);
             }
-          else if (status != GIMP_PDB_CANCEL)
+          else if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
             {
               warn = TRUE;
             }

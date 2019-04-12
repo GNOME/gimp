@@ -1022,9 +1022,6 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
       g_free (path);
     }
 
-  /* finally, remove all raw loaders except the configured one from
-   * the list of load_procs
-   */
   list = manager->load_procs;
   while (list)
     {
@@ -1032,6 +1029,9 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
 
       list = g_slist_next (list);
 
+      /* finally, remove all raw loaders except the configured one from
+       * the list of load_procs
+       */
       if (file_proc->handles_raw &&
           ! g_file_equal (gimp_plug_in_procedure_get_file (file_proc),
                           raw_plug_in))
@@ -1041,6 +1041,11 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
           manager->display_load_procs =
             g_slist_remove (manager->display_load_procs, file_proc);
         }
+      /* Remove generic (non-image) loaders from the display loader
+       * list. */
+     if (file_proc->generic_file_proc)
+          manager->display_load_procs =
+            g_slist_remove (manager->display_load_procs, file_proc);
     }
 }
 

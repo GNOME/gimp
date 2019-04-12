@@ -219,7 +219,7 @@ file_open_dialog_open_image (GtkWidget           *dialog,
                                            G_OBJECT (gimp_widget_get_monitor (dialog)),
                                            &status, &error);
 
-  if (! image && status != GIMP_PDB_CANCEL)
+  if (! image && status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL)
     {
       gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),

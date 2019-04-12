@@ -1163,6 +1163,13 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
 }
 
 void
+gimp_plug_in_procedure_set_generic_file_proc (GimpPlugInProcedure *proc,
+                                              gboolean             is_generic_file_proc)
+{
+  proc->generic_file_proc = is_generic_file_proc;
+}
+
+void
 gimp_plug_in_procedure_set_priority (GimpPlugInProcedure *proc,
                                      gint                 priority)
 {

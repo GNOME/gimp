@@ -224,7 +224,7 @@ file_open_image (Gimp                *gimp,
 
   *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
-  if (*status == GIMP_PDB_SUCCESS)
+  if (*status == GIMP_PDB_SUCCESS && ! file_proc->generic_file_proc)
     image = gimp_value_get_image (gimp_value_array_index (return_vals, 1),
                                   gimp);
 
@@ -250,7 +250,7 @@ file_open_image (Gimp                *gimp,
           if (mime_type)
             *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
         }
-      else
+      else if (! file_proc->generic_file_proc)
         {
           if (error && ! *error)
             g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -709,7 +709,7 @@ file_open_from_command_line (Gimp     *gimp,
                               g_object_ref (file),
                               (GDestroyNotify) g_object_unref);
     }
-  else if (status != GIMP_PDB_CANCEL && display)
+  else if (status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL && display)
     {
       gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed: %s"),
