@@ -1739,6 +1739,14 @@ save_image (const gchar  *filename,
           bit_depth = 16;
           break;
       }
+      if (linear && profile)
+        {
+          GimpColorProfile *saved_profile;
+
+          saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+          g_object_unref (profile);
+          profile = saved_profile;
+        }
     }
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
