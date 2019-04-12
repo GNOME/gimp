@@ -19,11 +19,10 @@
 #define __GIMP_BRUSH_HEADER_H__
 
 
-#define GIMP_BRUSH_FILE_VERSION  2
-#define GIMP_BRUSH_MAGIC         (('G' << 24) + ('I' << 16) + \
-                                  ('M' << 8)  + ('P' << 0))
-#define GIMP_BRUSH_MAX_SIZE      10000 /* Max size in either dimension in px */
-#define GIMP_BRUSH_MAX_NAME      256   /* Max length of the brush's name     */
+#define GIMP_BRUSH_MAGIC    (('G' << 24) + ('I' << 16) + \
+                             ('M' << 8)  + ('P' << 0))
+#define GIMP_BRUSH_MAX_SIZE 10000 /* Max size in either dimension in px */
+#define GIMP_BRUSH_MAX_NAME 256   /* Max length of the brush's name     */
 
 
 /*  All field entries are MSB  */
@@ -36,14 +35,15 @@ struct _GimpBrushHeader
   guint32   version;      /*  brush file version #  */
   guint32   width;        /*  width of brush  */
   guint32   height;       /*  height of brush  */
-  guint32   bytes;        /*  depth of brush in bytes--always 1 */
+  guint32   bytes;        /*  depth of brush in bytes  */
   guint32   magic_number; /*  GIMP brush magic number  */
   guint32   spacing;      /*  brush spacing  */
 };
 
-/*  In a brush file, next comes the brush name, null-terminated.  After that
- *  comes the brush data--width * height * bytes bytes of it...
+/*  In a brush file, next comes the brush name, null-terminated.
+ *  After that comes the brush data -- width * height * bytes bytes of
+ *  it...
  */
 
 
-#endif  /*  __GIMP_BRUSH_HEADER_H__  */
+#endif /* __GIMP_BRUSH_HEADER_H__ */
