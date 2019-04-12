@@ -550,7 +550,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                     line_art_queue_pixel (queue, nx, ny, c->level + 1);
                   if (c->y < height - 1)
                     {
-                      ny = c->y - 1;
+                      ny = c->y + 1;
                       if (mask[nx + ny * width] == 0.0 &&
                           distmap[nx + ny * width] > distmap[c->x + c->y * width])
                         line_art_queue_pixel (queue, nx, ny, c->level + 1);
@@ -572,7 +572,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
                     line_art_queue_pixel (queue, nx, ny, c->level + 1);
                   if (c->y < height - 1)
                     {
-                      ny = c->y - 1;
+                      ny = c->y + 1;
                       if (mask[nx + ny * width] == 0.0 &&
                           distmap[nx + ny * width] > distmap[c->x + c->y * width])
                         line_art_queue_pixel (queue, nx, ny, c->level + 1);
