@@ -566,19 +566,12 @@ save_image (const gchar  *filename,
               linear = TRUE;
               break;
 
-            case GIMP_PRECISION_U8_NON_LINEAR:
-            case GIMP_PRECISION_U16_NON_LINEAR:
-            case GIMP_PRECISION_U32_NON_LINEAR:
-            case GIMP_PRECISION_HALF_NON_LINEAR:
-            case GIMP_PRECISION_FLOAT_NON_LINEAR:
-            case GIMP_PRECISION_DOUBLE_NON_LINEAR:
-
-            case GIMP_PRECISION_U8_PERCEPTUAL:
-            case GIMP_PRECISION_U16_PERCEPTUAL:
-            case GIMP_PRECISION_U32_PERCEPTUAL:
-            case GIMP_PRECISION_HALF_PERCEPTUAL:
-            case GIMP_PRECISION_FLOAT_PERCEPTUAL:
-            case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+            case GIMP_PRECISION_U8_GAMMA:
+            case GIMP_PRECISION_U16_GAMMA:
+            case GIMP_PRECISION_U32_GAMMA:
+            case GIMP_PRECISION_HALF_GAMMA:
+            case GIMP_PRECISION_FLOAT_GAMMA:
+            case GIMP_PRECISION_DOUBLE_GAMMA:
               linear = FALSE;
               break;
             }
