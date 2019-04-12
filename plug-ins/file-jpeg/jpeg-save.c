@@ -550,14 +550,55 @@ save_image (const gchar  *filename,
 
       if (profile)
         {
-          const guint8 *icc_data;
-          gsize         icc_length;
+          GimpColorProfile *saved_profile;
+          const guint8     *icc_data;
+          gsize             icc_length;
+          gboolean          linear;
 
-          icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+          switch (gimp_image_get_precision (orig_image_ID))
+            {
+            case GIMP_PRECISION_U8_LINEAR:
+            case GIMP_PRECISION_U16_LINEAR:
+            case GIMP_PRECISION_U32_LINEAR:
+            case GIMP_PRECISION_HALF_LINEAR:
+            case GIMP_PRECISION_FLOAT_LINEAR:
+            case GIMP_PRECISION_DOUBLE_LINEAR:
+              linear = TRUE;
+              break;
 
+            case GIMP_PRECISION_U8_NON_LINEAR:
+            case GIMP_PRECISION_U16_NON_LINEAR:
+            case GIMP_PRECISION_U32_NON_LINEAR:
+            case GIMP_PRECISION_HALF_NON_LINEAR:
+            case GIMP_PRECISION_FLOAT_NON_LINEAR:
+            case GIMP_PRECISION_DOUBLE_NON_LINEAR:
+
+            case GIMP_PRECISION_U8_PERCEPTUAL:
+            case GIMP_PRECISION_U16_PERCEPTUAL:
+            case GIMP_PRECISION_U32_PERCEPTUAL:
+            case GIMP_PRECISION_HALF_PERCEPTUAL:
+            case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+            case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+              linear = FALSE;
+              break;
+            }
+
+          /* Though it would be technically possible to export with a
+           * linear profile, it is not such a great idea to export 8-bit
+           * formats as linear. This is why our current JPEG exporter
+           * only exports 8-bit non linear JPEG images.
+           */
+          if (linear)
+            saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+          else
+            saved_profile = profile;
+
+          icc_data = gimp_color_profile_get_icc_profile (saved_profile, &icc_length);
           jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
 
           g_object_unref (profile);
+          if (linear)
+            g_object_unref (saved_profile);
         }
     }
 
