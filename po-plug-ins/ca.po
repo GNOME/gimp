@@ -950,7 +950,7 @@ msgstr "Graf de les opcions actuals"
 #: ../plug-ins/gfig/gfig-dialog.c:1394 ../plug-ins/ifs-compose/ifs-compose.c:1165
 #: ../plug-ins/metadata/metadata-viewer.c:227
 msgid "_Close"
-msgstr "Tanca"
+msgstr "_Tanca"
 
 #: ../plug-ins/common/cml-explorer.c:1923
 msgid "Warning: the source and the destination are the same channel."
@@ -1450,7 +1450,7 @@ msgstr "Escapça l'espai inútil dels marges i del mig"
 
 #: ../plug-ins/common/crop-zealous.c:74
 msgid "_Zealous Crop"
-msgstr "Tall intel·ligent"
+msgstr "_Tall intel·ligent"
 
 #: ../plug-ins/common/crop-zealous.c:123
 msgid "Zealous cropping"
@@ -1550,7 +1550,7 @@ msgstr "S_uperior"
 #: ../plug-ins/common/curve-bend.c:1404
 msgctxt "curve-border"
 msgid "_Lower"
-msgstr "Inferior"
+msgstr "_Inferior"
 
 #: ../plug-ins/common/curve-bend.c:1414
 msgid "Curve Type"
@@ -2395,7 +2395,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:1090
 msgid "Cr_op"
-msgstr "Escapça"
+msgstr "_Escapça"
 
 #: ../plug-ins/common/file-gif-save.c:1101
 msgid ""
@@ -2986,7 +2986,7 @@ msgstr "No s'ha pogut escriure al fitxer «%s» : %s"
 #: ../plug-ins/common/file-pdf-load.c:321 ../plug-ins/common/file-pdf-load.c:340
 #: ../plug-ins/common/file-pdf-save.c:338 ../plug-ins/common/file-pdf-save.c:355
 msgid "Portable Document Format"
-msgstr "Format de Document Portable"
+msgstr "Format de document portable"
 
 #. TRANSLATORS: first argument is file name,
 #. * second is out-of-range page number, third is
@@ -4568,7 +4568,7 @@ msgstr "Alçada del _número:"
 
 #: ../plug-ins/common/film.c:1247
 msgid "Re_set"
-msgstr "Restableix"
+msgstr "_Restableix"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
@@ -5312,7 +5312,7 @@ msgstr "Mostra informació sobre els connectors"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-in Browser"
-msgstr "Navegador de connectors"
+msgstr "_Navegador de connectors"
 
 #: ../plug-ins/common/plugin-browser.c:363
 msgid "Searching by name"
@@ -5774,7 +5774,7 @@ msgstr "D_uplica"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2929 ../plug-ins/gradient-flare/gradient-flare.c:3210
 #: ../plug-ins/ifs-compose/ifs-compose.c:1031
 msgid "_Delete"
-msgstr "Suprimeix"
+msgstr "_Suprimeix"
 
 #: ../plug-ins/common/sphere-designer.c:2690
 msgid "Properties"
@@ -6078,7 +6078,7 @@ msgstr "Falten dades"
 
 #: ../plug-ins/common/unit-editor.c:353
 msgid "Please fill in all text fields."
-msgstr "Ompliu tot els camps."
+msgstr "Ompliu tots els camps."
 
 #: ../plug-ins/common/unit-editor.c:412
 msgid "Unit Editor"
@@ -6089,7 +6089,7 @@ msgstr "Editor d'unitats"
 #: ../plug-ins/common/unit-editor.c:416 ../plug-ins/fractal-explorer/fractal-explorer.c:1058
 #: ../plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
-msgstr "Actualitza"
+msgstr "_Actualitza"
 
 #: ../plug-ins/common/unsharp-mask.c:132
 msgid "The most widely useful method for sharpening an image"
@@ -6312,7 +6312,7 @@ msgstr "Descomposició de l'oneta"
 
 #: ../plug-ins/common/wavelet-decompose.c:102
 msgid "_Wavelet-decompose..."
-msgstr "Descomposició de l'oneta..."
+msgstr "_Descomposició de l'oneta..."
 
 #: ../plug-ins/common/wavelet-decompose.c:177
 msgid "Wavelet-Decompose"
@@ -7694,7 +7694,7 @@ msgstr "Ampl_ia"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
 msgid "Zoom _Out"
-msgstr "Redueix"
+msgstr "_Redueix"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
 msgid "Undo last zoom change"
@@ -8108,7 +8108,7 @@ msgstr "_Preferències..."
 
 #: ../plug-ins/gfig/gfig-dialog.c:902
 msgid "_Raise"
-msgstr "Apuja"
+msgstr "_Apuja"
 
 #: ../plug-ins/gfig/gfig-dialog.c:902
 msgid "Raise selected object"
@@ -8124,7 +8124,7 @@ msgstr "Abaixa l'objecte seleccionat"
 
 #: ../plug-ins/gfig/gfig-dialog.c:910
 msgid "Raise to _top"
-msgstr "Alça a la part superior"
+msgstr "_Alça a la part superior"
 
 #: ../plug-ins/gfig/gfig-dialog.c:910
 msgid "Raise selected object to top"
@@ -8132,7 +8132,7 @@ msgstr "Apuja l'objecte seleccionat al capdamunt"
 
 #: ../plug-ins/gfig/gfig-dialog.c:914
 msgid "Lower to _bottom"
-msgstr "Baixa a la part inferior"
+msgstr "_Baixa a la part inferior"
 
 #: ../plug-ins/gfig/gfig-dialog.c:914
 msgid "Lower selected object to bottom"
@@ -9744,7 +9744,7 @@ msgstr "Editor del GFlare"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
 msgid "_Rescan Gradients"
-msgstr "Reescaneja els degradats"
+msgstr "_Torna a escanejar els degradats"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3447
