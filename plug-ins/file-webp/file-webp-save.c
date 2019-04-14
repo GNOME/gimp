@@ -162,6 +162,20 @@ save_layer (const gchar    *filename,
   WebPData          chunk;
   int               res;
 
+  profile = gimp_image_get_color_profile (image_ID);
+  if (profile && gimp_color_profile_is_linear (profile))
+    {
+      /* We always save as sRGB data, especially since WebP is
+       * apparently 8-bit max (at least how we export it). If original
+       * data was linear, let's convert the profile.
+       */
+      GimpColorProfile *saved_profile;
+
+      saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+      g_object_unref (profile);
+      profile = saved_profile;
+    }
+
   /* The do...while() loop is a neat little trick that makes it easier
    * to jump to error handling code while still ensuring proper
    * cleanup
@@ -294,7 +308,6 @@ save_layer (const gchar    *filename,
               gboolean saved = FALSE;
 
               /* Save ICC data */
-              profile = gimp_image_get_color_profile (image_ID);
               if (profile)
                 {
                   const guint8 *icc_data;
@@ -307,7 +320,6 @@ save_layer (const gchar    *filename,
                   chunk.bytes = icc_data;
                   chunk.size = icc_data_size;
                   WebPMuxSetChunk(mux, "ICCP", &chunk, 1);
-                  g_object_unref (profile);
                 }
 
               if (saved == TRUE)
@@ -341,6 +353,7 @@ save_layer (const gchar    *filename,
     fclose (outfile);
 
   WebPPictureFree (&picture);
+  g_clear_object (&profile);
 
   return status;
 }
@@ -495,6 +508,20 @@ save_animation (const gchar    *filename,
 
   if (nLayers < 1)
     return FALSE;
+
+  profile = gimp_image_get_color_profile (image_ID);
+  if (profile && gimp_color_profile_is_linear (profile))
+    {
+      /* We always save as sRGB data, especially since WebP is
+       * apparently 8-bit max (at least how we export it). If original
+       * data was linear, let's convert the profile.
+       */
+      GimpColorProfile *saved_profile;
+
+      saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+      g_object_unref (profile);
+      profile = saved_profile;
+    }
 
   gimp_image_undo_freeze (image_ID);
 
@@ -687,7 +714,6 @@ save_animation (const gchar    *filename,
         }
 
       /* Create a mux object if profile is present */
-      profile = gimp_image_get_color_profile (image_ID);
       if (profile)
         {
           WebPMux      *mux;
@@ -708,7 +734,6 @@ save_animation (const gchar    *filename,
           chunk.bytes = icc_data;
           chunk.size  = icc_data_size;
           WebPMuxSetChunk (mux, "ICCP", &chunk, 1);
-          g_object_unref (profile);
 
           WebPDataClear (&webp_data);
           if (WebPMuxAssemble (mux, &webp_data) != WEBP_MUX_OK)
@@ -726,6 +751,7 @@ save_animation (const gchar    *filename,
   /* Free any resources */
   WebPDataClear (&webp_data);
   WebPAnimEncoderDelete (enc);
+  g_clear_object (&profile);
 
   if (prev_frame != NULL)
     {
