@@ -160,20 +160,31 @@ save_layer (const gchar    *filename,
   struct            stat stsz;
   int               fd_outfile;
   WebPData          chunk;
+  gboolean          out_linear = FALSE;
   int               res;
 
   profile = gimp_image_get_color_profile (image_ID);
   if (profile && gimp_color_profile_is_linear (profile))
     {
-      /* We always save as sRGB data, especially since WebP is
-       * apparently 8-bit max (at least how we export it). If original
-       * data was linear, let's convert the profile.
+      /* Since WebP is apparently 8-bit max, we export it as sRGB to
+       * avoid shadow posterization.
+       * We do an exception for 8-bit linear work image, when the
+       * profile is also exported.
        */
-      GimpColorProfile *saved_profile;
+      if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+        {
+          /* If original data was linear, let's convert the profile. */
+          GimpColorProfile *saved_profile;
 
-      saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-      g_object_unref (profile);
-      profile = saved_profile;
+          saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+          g_object_unref (profile);
+          profile = saved_profile;
+        }
+      else
+        {
+          /* Keep linear profile as-is. */
+          out_linear = TRUE;
+        }
     }
 
   /* The do...while() loop is a neat little trick that makes it easier
@@ -202,9 +213,19 @@ save_layer (const gchar    *filename,
       has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
       if (has_alpha)
-        format = babl_format ("R'G'B'A u8");
+        {
+          if (out_linear)
+            format = babl_format ("RGBA u8");
+          else
+            format = babl_format ("R'G'B'A u8");
+        }
       else
-        format = babl_format ("R'G'B' u8");
+        {
+          if (out_linear)
+            format = babl_format ("RGB u8");
+          else
+            format = babl_format ("R'G'B' u8");
+        }
 
       bpp = babl_format_get_bytes_per_pixel (format);
 
