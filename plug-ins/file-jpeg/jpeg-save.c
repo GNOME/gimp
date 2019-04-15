@@ -278,6 +278,7 @@ save_image (const gchar  *filename,
   guchar          *data;
   guchar          *src;
   gboolean         has_alpha;
+  gboolean         out_linear = FALSE;
   gint             rowstride, yend;
 
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -332,6 +333,24 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
+  if (jsvals.save_profile)
+    {
+      /* In most cases we want to save 8-bit image formats as
+       * non-linear, even though the work image may have been linear
+       * itself (yet with higher bit depth). The reasons are shadow
+       * posterization on low bit depth, and the fact that JPEG
+       * compression was designed for perceptually uniform RGB and
+       * introduces shadow artifacts with linear RGB (or so I have been
+       * told; see #1070).
+       * The only exception is when the creator was working explicitly
+       * on 8-bit linear AND if we export the profile.
+       * In such a case, let's consider the creator knows what one is
+       * doing and keep the exported image linear.
+       */
+      if (gimp_image_get_precision (orig_image_ID) == GIMP_PRECISION_U8_LINEAR)
+        out_linear = TRUE;
+    }
+
   jpeg_stdio_dest (&cinfo, outfile);
 
   /* Get the input image and a pointer to its data.
@@ -342,28 +361,43 @@ save_image (const gchar  *filename,
       /* # of color components per pixel */
       cinfo.input_components = 3;
       has_alpha = FALSE;
-      format = babl_format ("R'G'B' u8");
+
+      if (out_linear)
+        format = babl_format ("RGB u8");
+      else
+        format = babl_format ("R'G'B' u8");
       break;
 
     case GIMP_GRAY_IMAGE:
       /* # of color components per pixel */
       cinfo.input_components = 1;
       has_alpha = FALSE;
-      format = babl_format ("Y' u8");
+
+      if (out_linear)
+        format = babl_format ("Y u8");
+      else
+        format = babl_format ("Y' u8");
       break;
 
     case GIMP_RGBA_IMAGE:
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = 4 - 1;
       has_alpha = TRUE;
-      format = babl_format ("R'G'B' u8");
+
+      if (out_linear)
+        format = babl_format ("RGB u8");
+      else
+        format = babl_format ("R'G'B' u8");
       break;
 
     case GIMP_GRAYA_IMAGE:
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = 2 - 1;
       has_alpha = TRUE;
-      format = babl_format ("Y' u8");
+      if (out_linear)
+        format = babl_format ("Y u8");
+      else
+        format = babl_format ("Y' u8");
       break;
 
     case GIMP_INDEXED_IMAGE:
@@ -550,48 +584,42 @@ save_image (const gchar  *filename,
 
       if (profile)
         {
-          GimpColorProfile *saved_profile;
-          const guint8     *icc_data;
-          gsize             icc_length;
-          gboolean          linear;
+          const guint8 *icc_data;
+          gsize         icc_length;
 
           switch (gimp_image_get_precision (orig_image_ID))
             {
-            case GIMP_PRECISION_U8_LINEAR:
             case GIMP_PRECISION_U16_LINEAR:
             case GIMP_PRECISION_U32_LINEAR:
             case GIMP_PRECISION_HALF_LINEAR:
             case GIMP_PRECISION_FLOAT_LINEAR:
             case GIMP_PRECISION_DOUBLE_LINEAR:
-              linear = TRUE;
+              /* Convert profile from linear to sRGB. */
+                {
+                  GimpColorProfile *saved_profile;
+
+                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+                  g_object_unref (profile);
+                  profile = saved_profile;
+                }
               break;
 
+            case GIMP_PRECISION_U8_LINEAR:
+              /* Only exception where we don't convert from linear to
+               * sRGB TRC is when the work format was 8-bit linear. */
             case GIMP_PRECISION_U8_GAMMA:
             case GIMP_PRECISION_U16_GAMMA:
             case GIMP_PRECISION_U32_GAMMA:
             case GIMP_PRECISION_HALF_GAMMA:
             case GIMP_PRECISION_FLOAT_GAMMA:
             case GIMP_PRECISION_DOUBLE_GAMMA:
-              linear = FALSE;
               break;
             }
 
-          /* Though it would be technically possible to export with a
-           * linear profile, it is not such a great idea to export 8-bit
-           * formats as linear. This is why our current JPEG exporter
-           * only exports 8-bit non linear JPEG images.
-           */
-          if (linear)
-            saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-          else
-            saved_profile = profile;
-
-          icc_data = gimp_color_profile_get_icc_profile (saved_profile, &icc_length);
+          icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
           jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
 
           g_object_unref (profile);
-          if (linear)
-            g_object_unref (saved_profile);
         }
     }
 
