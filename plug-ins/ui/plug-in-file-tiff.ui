@@ -116,6 +116,20 @@
       </packing>
     </child>
     <child>
+      <object class="GtkCheckButton" id="save-layers">
+        <property name="label" translatable="yes">Save layers</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">9</property>
+      </packing>
+    </child>
+    <child>
       <object class="GtkFrame" id="frame2">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
@@ -144,7 +158,7 @@
         <property name="expand">True</property>
         <property name="fill">True</property>
         <property name="padding">3</property>
-        <property name="position">11</property>
+        <property name="position">12</property>
       </packing>
     </child>
   </object>

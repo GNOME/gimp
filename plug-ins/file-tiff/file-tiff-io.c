@@ -87,7 +87,7 @@ tiff_open (GFile        *file,
 
       tiff_io.stream = G_OBJECT (tiff_io.input);
     }
-  else
+  else if(! strcmp (mode, "w"))
     {
       tiff_io.output = G_OUTPUT_STREAM (g_file_replace (file,
                                                         NULL, FALSE,
@@ -97,6 +97,21 @@ tiff_open (GFile        *file,
         return NULL;
 
       tiff_io.stream = G_OBJECT (tiff_io.output);
+    }
+  else if(! strcmp (mode, "a"))
+    {
+      GIOStream *iostream = G_IO_STREAM (g_file_open_readwrite (file, NULL,
+                                                                error));
+      if (! iostream)
+        return NULL;
+
+      tiff_io.input  = g_io_stream_get_input_stream (iostream);
+      tiff_io.output = g_io_stream_get_output_stream (iostream);
+      tiff_io.stream = G_OBJECT (iostream);
+    }
+  else
+    {
+      g_assert_not_reached ();
     }
 
 #if 0
@@ -383,7 +398,7 @@ tiff_io_close (thandle_t handle)
   GError   *error  = NULL;
   gboolean  closed = FALSE;
 
-  if (io->input)
+  if (io->input && ! io->output)
     {
       closed = g_input_stream_close (io->input, NULL, &error);
     }
@@ -401,7 +416,14 @@ tiff_io_close (thandle_t handle)
             }
         }
 
-      closed = g_output_stream_close (io->output, NULL, &error);
+      if (io->input)
+        {
+          closed = g_io_stream_close (G_IO_STREAM (io->stream), NULL, &error);
+        }
+      else
+        {
+          closed = g_output_stream_close (io->output, NULL, &error);
+        }
     }
 
   if (! closed)
