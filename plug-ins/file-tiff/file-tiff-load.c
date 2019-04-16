@@ -98,7 +98,11 @@ static void               load_separate    (TIFF         *tif,
                                             gboolean      is_bw,
                                             gint          extra);
 static void               load_paths       (TIFF         *tif,
-                                            gint          image);
+                                            gint          image,
+                                            gint          width,
+                                            gint          height,
+                                            gint          offset_x,
+                                            gint          offset_y);
 
 static void               fill_bit2byte    (void);
 static void               convert_bit2byte (const guchar *src,
@@ -137,6 +141,7 @@ load_dialog (TIFF              *tif,
   GtkWidget  *dialog;
   GtkWidget  *vbox;
   GtkWidget  *selector;
+  GtkWidget  *crop_option;
   gint        i;
   gboolean    run;
 
@@ -160,7 +165,6 @@ load_dialog (TIFF              *tif,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
 
   /* Page Selector */
   selector = gimp_page_selector_new ();
@@ -186,10 +190,17 @@ load_dialog (TIFF              *tif,
                             G_CALLBACK (gtk_window_activate_default),
                             dialog);
 
-  gtk_widget_show (selector);
+  /* Option to shrink the loaded image to its bounding box
+     or keep as much empty space as possible.
+     Note that there seems to be no way to keep the empty
+     space on the right and bottom. */
+  crop_option = gtk_check_button_new_with_label (_("Keep empty space around imported layers"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_option),
+                                pages->keep_empty_space);
+  gtk_box_pack_start (GTK_BOX (vbox), crop_option, TRUE, TRUE, 0);
 
   /* Setup done; display the dialog */
-  gtk_widget_show (dialog);
+  gtk_widget_show_all (dialog);
 
   /* run the dialog */
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
@@ -202,6 +213,9 @@ load_dialog (TIFF              *tif,
       pages->pages =
         gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
                                                &pages->n_pages);
+
+      pages->keep_empty_space =
+        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (crop_option));
 
       /* select all if none selected */
       if (pages->n_pages == 0)
@@ -900,7 +914,11 @@ load_image (GFile              *file,
           gimp_image_set_colormap (image, cmap, (1 << bps));
         }
 
-      load_paths (tif, image);
+      if (pages->target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+        load_paths (tif, image, cols, rows,
+                    layer_offset_x_pixel, layer_offset_y_pixel);
+      else
+        load_paths (tif, image, cols, rows, 0, 0);
 
       /* Allocate ChannelData for all channels, even the background layer */
       channel = g_new0 (ChannelData, extra + 1);
@@ -1031,29 +1049,27 @@ load_image (GFile              *file,
       g_free (channel);
       channel = NULL;
 
-
-      /* TODO: in GIMP 2.6, use a dialog to selectively enable the
-       * following code, as the save plug-in will then save layer offsets
-       * as well.
-       */
-
-      /* compute bounding box of all layers read so far */
-      if (min_col > layer_offset_x_pixel)
-        min_col = layer_offset_x_pixel;
-      if (min_row > layer_offset_y_pixel)
-        min_row = layer_offset_y_pixel;
-
-      if (max_col < layer_offset_x_pixel + cols)
-        max_col = layer_offset_x_pixel + cols;
-      if (max_row < layer_offset_y_pixel + rows)
-        max_row = layer_offset_y_pixel + rows;
-
-      /* position the layer */
-      if (layer_offset_x_pixel > 0 ||
-          layer_offset_y_pixel > 0)
+      if (pages->target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
         {
-          gimp_layer_set_offsets (layer,
-                                  layer_offset_x_pixel, layer_offset_y_pixel);
+          /* compute bounding box of all layers read so far */
+          if (min_col > layer_offset_x_pixel)
+            min_col = layer_offset_x_pixel;
+          if (min_row > layer_offset_y_pixel)
+            min_row = layer_offset_y_pixel;
+
+          if (max_col < layer_offset_x_pixel + cols)
+            max_col = layer_offset_x_pixel + cols;
+          if (max_row < layer_offset_y_pixel + rows)
+            max_row = layer_offset_y_pixel + rows;
+
+          /* position the layer */
+          if (layer_offset_x_pixel > 0 ||
+              layer_offset_y_pixel > 0)
+            {
+              gimp_layer_set_offsets (layer,
+                                      layer_offset_x_pixel,
+                                      layer_offset_y_pixel);
+            }
         }
 
       gimp_image_insert_layer (image, layer, -1, -1);
@@ -1067,16 +1083,7 @@ load_image (GFile              *file,
       gimp_progress_update (1.0);
     }
 
-  if (pages->target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
-    {
-      /* resize image to bounding box of all layers */
-      gimp_image_resize (image,
-                         max_col - min_col, max_row - min_row,
-                         -min_col, -min_row);
-
-      gimp_image_undo_enable (image);
-    }
-  else
+  if (pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
     {
       GList *list = images_list;
 
@@ -1093,6 +1100,22 @@ load_image (GFile              *file,
         }
 
       g_list_free (images_list);
+    }
+  else
+    {
+      if (pages->keep_empty_space)
+        {
+          /* unfortunately we have no idea about empty space
+             at the bottom/right of layers */
+          min_col = 0;
+          min_row = 0;
+        }
+      /* resize image to bounding box of all layers */
+      gimp_image_resize (image,
+                         max_col - min_col, max_row - min_row,
+                         -min_col, -min_row);
+
+      gimp_image_undo_enable (image);
     }
 
   return image;
@@ -1170,17 +1193,16 @@ load_rgba (TIFF        *tif,
 
 static void
 load_paths (TIFF *tif,
-            gint  image)
+            gint  image,
+            gint  width,
+            gint  height,
+            gint  offset_x,
+            gint  offset_y)
 {
-  gint   width;
-  gint   height;
   gsize  n_bytes;
   gchar *bytes;
   gint   path_index;
   gsize  pos;
-
-  width  = gimp_image_width (image);
-  height = gimp_image_height (image);
 
   if (! TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
     return;
@@ -1305,6 +1327,9 @@ load_paths (TIFF *tif,
                           gdouble f;
                           guint32 coord;
 
+                          const gint size = j % 2 ? width : height;
+                          const gint offset = j % 2 ? offset_x : offset_y;
+
                           val32 = (guint32 *) (bytes + rec + 2 + j * 4);
                           coord = GUINT32_FROM_BE (*val32);
 
@@ -1316,7 +1341,7 @@ load_paths (TIFF *tif,
                            * first, gimp expects the horizontal
                            * component first. Sigh.
                            */
-                          points[pointcount * 6 + (j ^ 1)] = f * (j % 2 ? width : height);
+                          points[pointcount * 6 + (j ^ 1)] = f * size + offset;
                         }
 
                       pointcount++;

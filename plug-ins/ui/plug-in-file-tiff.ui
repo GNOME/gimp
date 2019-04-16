@@ -151,6 +151,20 @@
                 <property name="position">1</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkCheckButton" id="save-iptc">
+                <property name="label" translatable="yes">Save IPTC data</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -163,8 +177,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkCheckButton" id="save-iptc">
-                <property name="label" translatable="yes">Save IPTC data</property>
+              <object class="GtkCheckButton" id="save-thumbnail">
+                <property name="label" translatable="yes">Save thumbnail</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -177,8 +191,8 @@
               </packing>
             </child>
             <child>
-              <object class="GtkCheckButton" id="save-thumbnail">
-                <property name="label" translatable="yes">Save thumbnail</property>
+              <object class="GtkCheckButton" id="save-color-profile">
+                <property name="label" translatable="yes">Save color profile</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -191,8 +205,8 @@
               </packing>
             </child>
             <child>
-              <object class="GtkCheckButton" id="save-color-profile">
-                <property name="label" translatable="yes">Save color profile</property>
+              <object class="GtkCheckButton" id="save-layers">
+                <property name="label" translatable="yes">Save layers</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>

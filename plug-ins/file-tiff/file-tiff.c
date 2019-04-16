@@ -45,7 +45,6 @@
 #include "config.h"
 
 #include <tiffio.h>
-#include <gexiv2/gexiv2.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -90,7 +89,8 @@ static TiffSaveVals tsvals =
   FALSE,               /*  save xmp            */
   FALSE,               /*  save iptc           */
   TRUE,                /*  save thumbnail      */
-  TRUE                 /*  save profile        */
+  TRUE,                /*  save profile        */
+  TRUE                 /*  save layer          */
 };
 
 static gchar *image_comment = NULL;
@@ -221,7 +221,12 @@ run (const gchar      *name,
 
           pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 
-          gimp_get_data (LOAD_PROC, &pages.target);
+          gimp_get_data (LOAD_PROC "-target", &pages.target);
+
+          pages.keep_empty_space = TRUE;
+
+          gimp_get_data (LOAD_PROC "-keep-empty-space",
+                         &pages.keep_empty_space);
 
           pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
 
@@ -268,8 +273,12 @@ run (const gchar      *name,
                   gint32    image;
                   gboolean  resolution_loaded = FALSE;
 
-                  gimp_set_data (LOAD_PROC,
+                  gimp_set_data (LOAD_PROC "-target",
                                  &pages.target, sizeof (pages.target));
+
+                  gimp_set_data (LOAD_PROC "-keep-empty-space",
+                                 &pages.keep_empty_space,
+                                 sizeof (pages.keep_empty_space));
 
                   image = load_image (file, tif, &pages,
                                       &resolution_loaded,
@@ -347,7 +356,8 @@ run (const gchar      *name,
                                       GIMP_EXPORT_CAN_HANDLE_RGB     |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA);
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                      GIMP_EXPORT_CAN_HANDLE_LAYERS);
 
           if (export == GIMP_EXPORT_CANCEL)
             {
@@ -462,55 +472,32 @@ run (const gchar      *name,
 
           file = g_file_new_for_uri (param[3].data.d_string);
 
-          if (save_image (file, &tsvals,
-                          image, drawable, orig_image, image_comment,
-                          &saved_bpp, &error))
+          /* saving with layers is not supporting blend modes, so people might
+           * prefer to save a flat copy. */
+          if (! tsvals.save_layers)
             {
-              if (metadata)
-                {
+              gint32 transp;
 
-                  /* See bug 758909: clear TIFFTAG_MIN/MAXSAMPLEVALUE because
-                   * exiv2 saves them with wrong type and the original values
-                   * could be invalid, see also bug 761823
-                   */
-                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata),
-                                             "Exif.Image.0x0118");
-                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata),
-                                             "Exif.Image.0x0119");
-                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata),
-                                             "Exif.Image.PageNumber");
+              /* FIXME: Do we have to update drawable, too? */
+              image = gimp_image_duplicate (image);
 
-                  gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
+              /* borrowed from ./libgimp/gimpexport.c:export_merge()
+               * this makes sure that the exported file size is correct. */
+              transp = gimp_layer_new (image, "-",
+                                       gimp_image_width (image),
+                                       gimp_image_height (image),
+                                       gimp_drawable_type (drawable) | 1,
+                                       100.0, GIMP_LAYER_MODE_NORMAL);
+              gimp_image_insert_layer (image, transp, -1, 1);
+              gimp_selection_none (image);
+              gimp_drawable_edit_clear (transp);
 
-                  if (tsvals.save_exif)
-                    metadata_flags |= GIMP_METADATA_SAVE_EXIF;
-                  else
-                    metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
+              gimp_image_merge_visible_layers (image, GIMP_CLIP_TO_IMAGE);
+            }
 
-                  if (tsvals.save_xmp)
-                    metadata_flags |= GIMP_METADATA_SAVE_XMP;
-                  else
-                    metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
-
-                  if (tsvals.save_iptc)
-                    metadata_flags |= GIMP_METADATA_SAVE_IPTC;
-                  else
-                    metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
-
-                  /* never save metadata thumbnails for TIFF, see bug #729952 */
-                  metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
-
-                  if (tsvals.save_profile)
-                    metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
-                  else
-                    metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
-
-                  gimp_image_metadata_save_finish (image,
-                                                   "image/tiff",
-                                                   metadata, metadata_flags,
-                                                   file, NULL);
-                }
-
+          if (save_image (file, &tsvals, image, orig_image, image_comment,
+                          &saved_bpp, metadata, metadata_flags, &error))
+            {
               /*  Store mvals data  */
               gimp_set_data (SAVE_PROC, &tsvals, sizeof (TiffSaveVals));
             }
