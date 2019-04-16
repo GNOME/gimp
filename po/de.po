@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-01 18:02+0000\n"
-"PO-Revision-Date: 2019-03-31 22:23+0200\n"
+"POT-Creation-Date: 2019-04-08 10:16+0000\n"
+"PO-Revision-Date: 2019-04-15 21:10+0200\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -17500,7 +17500,7 @@ msgstr "_Größe ändern"
 
 #: ../app/dialogs/resize-dialog.c:277
 msgid "C_enter"
-msgstr "Z_entrieren"
+msgstr "_Zentrieren"
 
 #: ../app/dialogs/resize-dialog.c:331
 msgid "Resize _layers:"
@@ -18389,7 +18389,7 @@ msgstr ""
 
 #: ../app/display/gimptoolrectangle.c:566
 #: ../app/display/gimptoolrectangle.c:882
-#: ../app/tools/gimprectangleselecttool.c:757
+#: ../app/tools/gimprectangleselecttool.c:727
 msgid "Rectangle: "
 msgstr "Rechteck: "
 
@@ -23286,19 +23286,19 @@ msgstr "Ecken der Auswahl abrunden"
 msgid "Radius of rounding in pixels"
 msgstr "Radius der Abrundungen in Pixel"
 
-#: ../app/tools/gimprectangleselecttool.c:151
+#: ../app/tools/gimprectangleselecttool.c:155
 msgid "Rectangle Select"
 msgstr "Rechteckige Auswahl"
 
-#: ../app/tools/gimprectangleselecttool.c:152
+#: ../app/tools/gimprectangleselecttool.c:156
 msgid "Rectangle Select Tool: Select a rectangular region"
 msgstr "Rechteckige Auswahl: Einen rechteckigen Bereich auswählen"
 
-#: ../app/tools/gimprectangleselecttool.c:153
+#: ../app/tools/gimprectangleselecttool.c:157
 msgid "_Rectangle Select"
 msgstr "_Rechteckige Auswahl"
 
-#: ../app/tools/gimprectangleselecttool.c:757
+#: ../app/tools/gimprectangleselecttool.c:727
 msgid "Ellipse: "
 msgstr "Ellipse: "
 
@@ -25789,7 +25789,7 @@ msgstr "Bild exportieren"
 
 #: ../app/widgets/gimpexportdialog.c:74
 msgid "_Export"
-msgstr "_Exportieren"
+msgstr "E_xportieren"
 
 #: ../app/widgets/gimpexportdialog.c:76 ../app/widgets/gimpsavedialog.c:144
 msgid "By Extension"
