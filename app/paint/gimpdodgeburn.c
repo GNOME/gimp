@@ -116,6 +116,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   GimpContext          *context   = GIMP_CONTEXT (paint_options);
   GimpDynamics         *dynamics  = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpImage            *image     = gimp_item_get_image (GIMP_ITEM (drawable));
+  GeglBuffer           *src_buffer;
   GeglBuffer           *paint_buffer;
   gint                  paint_buffer_x;
   gint                  paint_buffer_y;
@@ -139,6 +140,11 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                             fade_point);
   if (opacity == 0.0)
     return;
+
+  if (paint_options->application_mode == GIMP_PAINT_CONSTANT)
+    src_buffer = gimp_paint_core_get_orig_image (paint_core);
+  else
+    src_buffer = gimp_drawable_get_buffer (drawable);
 
   gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
                                            drawable,
@@ -165,7 +171,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                         paint_height);
 
       /*  DodgeBurn the region  */
-      gimp_gegl_dodgeburn (gimp_paint_core_get_orig_image (paint_core),
+      gimp_gegl_dodgeburn (src_buffer,
                            GEGL_RECTANGLE (paint_buffer_x,
                                            paint_buffer_y,
                                            gegl_buffer_get_width  (paint_buffer),
@@ -192,6 +198,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                       gimp_context_get_opacity (context),
                                       gimp_paint_options_get_brush_mode (paint_options),
                                       force,
-                                      GIMP_PAINT_CONSTANT, op);
+                                      paint_options->application_mode,
+                                      op);
     }
 }

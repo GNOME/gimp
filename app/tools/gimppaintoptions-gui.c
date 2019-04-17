@@ -258,7 +258,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the "incremental" toggle  */
   if (tool_type == GIMP_TYPE_PENCIL_TOOL     ||
       tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
-      tool_type == GIMP_TYPE_ERASER_TOOL)
+      tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_DODGE_BURN_TOOL)
     {
       GtkWidget *button;
 
