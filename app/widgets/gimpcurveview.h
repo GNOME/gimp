@@ -55,6 +55,7 @@ struct _GimpCurveView
   gdouble            leftmost;
   gdouble            rightmost;
   gboolean           grabbed;
+  GimpCurve         *orig_curve;
 
   GdkCursorType      cursor_type;
 
