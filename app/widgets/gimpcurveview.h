@@ -48,6 +48,8 @@ struct _GimpCurveView
   gint               grid_columns;
 
   gint               selected;
+  gdouble            offset_x;
+  gdouble            offset_y;
   gdouble            last_x;
   gdouble            last_y;
   gdouble            leftmost;

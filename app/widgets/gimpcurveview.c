@@ -212,6 +212,8 @@ gimp_curve_view_init (GimpCurveView *view)
 {
   view->curve       = NULL;
   view->selected    = 0;
+  view->offset_x    = 0.0;
+  view->offset_y    = 0.0;
   view->last_x      = 0.0;
   view->last_y      = 0.0;
   view->cursor_type = -1;
@@ -781,6 +783,8 @@ gimp_curve_view_button_press (GtkWidget      *widget,
   gint           width, height;
   gdouble        x;
   gdouble        y;
+  gdouble        point_x;
+  gdouble        point_y;
   gint           closest_point;
   gint           i;
 
@@ -812,8 +816,6 @@ gimp_curve_view_button_press (GtkWidget      *widget,
       view->leftmost = -1.0;
       for (i = closest_point - 1; i >= 0; i--)
         {
-          gdouble point_x;
-
           gimp_curve_get_point (curve, i, &point_x, NULL);
 
           if (point_x >= 0.0)
@@ -826,8 +828,6 @@ gimp_curve_view_button_press (GtkWidget      *widget,
       view->rightmost = 2.0;
       for (i = closest_point + 1; i < curve->n_points; i++)
         {
-          gdouble point_x;
-
           gimp_curve_get_point (curve, i, &point_x, NULL);
 
           if (point_x >= 0.0)
@@ -839,7 +839,17 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 
       gimp_curve_view_set_selected (view, closest_point);
 
-      gimp_curve_set_point (curve, view->selected, x, 1.0 - y);
+      gimp_curve_get_point (curve, view->selected, &point_x, &point_y);
+
+      if (point_x >= 0.0)
+        {
+          view->offset_x = point_x         - x;
+          view->offset_y = (1.0 - point_y) - y;
+        }
+      else
+        {
+          gimp_curve_set_point (curve, view->selected, x, 1.0 - y);
+        }
       break;
 
     case GIMP_CURVE_FREE:
@@ -865,6 +875,9 @@ gimp_curve_view_button_release (GtkWidget      *widget,
   if (bevent->button != 1)
     return TRUE;
 
+  view->offset_x = 0.0;
+  view->offset_y = 0.0;
+
   view->grabbed = FALSE;
 
   set_cursor (view, GDK_FLEUR);
@@ -885,6 +898,7 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   gdouble         x;
   gdouble         y;
   gdouble         point_x;
+  gdouble         point_y;
   gint            closest_point;
 
   if (! curve)
@@ -899,6 +913,9 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   x = (gdouble) (mevent->x - border) / (gdouble) width;
   y = (gdouble) (mevent->y - border) / (gdouble) height;
 
+  x += view->offset_x;
+  y += view->offset_y;
+
   x = CLAMP (x, 0.0, 1.0);
   y = CLAMP (y, 0.0, 1.0);
 
@@ -909,12 +926,19 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
     case GIMP_CURVE_SMOOTH:
       if (! view->grabbed) /*  If no point is grabbed...  */
         {
-          gimp_curve_get_point (curve, closest_point, &point_x, NULL);
+          gimp_curve_get_point (curve, closest_point, &point_x, &point_y);
 
           if (point_x >= 0.0)
-            new_cursor = GDK_FLEUR;
+            {
+              new_cursor = GDK_FLEUR;
+
+              x = point_x;
+              y = 1.0 - point_y;
+            }
           else
-            new_cursor = GDK_TCROSS;
+            {
+              new_cursor = GDK_TCROSS;
+            }
         }
       else /*  Else, drag the grabbed point  */
         {
