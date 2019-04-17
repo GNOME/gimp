@@ -1,6 +1,7 @@
 # Turkish translation for GIMP
 #
-# Copyright (C) 2001-2019 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# Copyright (C) 2002-2019 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Fatih Demir <kabalak@gtranslator>, 2001.
@@ -14,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-06 18:19+0000\n"
-"PO-Revision-Date: 2019-03-06 22:44+0200\n"
+"POT-Creation-Date: 2019-03-28 13:16+0000\n"
+"PO-Revision-Date: 2019-03-28 17:24+0200\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -180,12 +181,12 @@ msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
 #: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
-#: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:576
+#: ../libgimp/gimpexport.c:1022 ../libgimpwidgets/gimpcolorbutton.c:576
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:164
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:174
-#: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:273
-#: ../libgimpwidgets/gimpquerybox.c:333 ../libgimpwidgets/gimpquerybox.c:396
-#: ../libgimpwidgets/gimpquerybox.c:469
+#: ../libgimpwidgets/gimpfileentry.c:437 ../libgimpwidgets/gimpquerybox.c:268
+#: ../libgimpwidgets/gimpquerybox.c:328 ../libgimpwidgets/gimpquerybox.c:391
+#: ../libgimpwidgets/gimpquerybox.c:464
 msgid "_Cancel"
 msgstr "_İptal"
 
@@ -201,7 +202,7 @@ msgstr "Dosyayı Dışarı Aktar"
 msgid "_Ignore"
 msgstr "_Yoksay"
 
-#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1022
+#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1023
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
@@ -238,9 +239,11 @@ msgstr ""
 "Bir katmanı (kaydedilmiş seçim) %s olarak kaydetmek üzeresiniz.\n"
 "Bu işlem görünebilir katmanları kaydetmeyecektir."
 
-#: ../libgimp/gimpexport.c:1015
-msgid "Export Image as "
-msgstr "Görüntüyü Dışa Aktar "
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#: ../libgimp/gimpexport.c:1016
+#, c-format
+msgid "Export Image as %s"
+msgstr "Görüntüyü %s Olarak Dışa Aktar"
 
 #: ../libgimp/gimpfontselectbutton.c:138
 msgid "Font Selection"
@@ -737,12 +740,12 @@ msgstr "Değer (HSV)"
 #: ../libgimpbase/gimpbaseenums.c:515
 msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr "Aydınlatmak"
+msgstr "Soldur"
 
 #: ../libgimpbase/gimpbaseenums.c:516
 msgctxt "dodge-burn-type"
 msgid "Burn"
-msgstr "Yakma"
+msgstr "Yak"
 
 #: ../libgimpbase/gimpbaseenums.c:548
 msgctxt "fill-type"
@@ -1938,9 +1941,9 @@ msgid "_Reset"
 msgstr "_Sıfırla"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:577
-#: ../libgimpwidgets/gimpfileentry.c:438 ../libgimpwidgets/gimpquerybox.c:273
-#: ../libgimpwidgets/gimpquerybox.c:333 ../libgimpwidgets/gimpquerybox.c:396
-#: ../libgimpwidgets/gimpquerybox.c:469
+#: ../libgimpwidgets/gimpfileentry.c:438 ../libgimpwidgets/gimpquerybox.c:268
+#: ../libgimpwidgets/gimpquerybox.c:328 ../libgimpwidgets/gimpquerybox.c:391
+#: ../libgimpwidgets/gimpquerybox.c:464
 msgid "_OK"
 msgstr "_Tamam"
 
@@ -2352,12 +2355,12 @@ msgstr "Görüntüler"
 #: ../libgimpwidgets/gimpwidgetsenums.c:261
 msgctxt "zoom-type"
 msgid "Zoom in"
-msgstr "Yakınlaş"
+msgstr "Yakınlaştır"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:262
 msgctxt "zoom-type"
 msgid "Zoom out"
-msgstr "Uzaklaş"
+msgstr "Uzaklaştır"
 
 #: ../modules/color-selector-cmyk.c:82
 msgid "CMYK color selector (using color profile)"
@@ -2389,7 +2392,7 @@ msgstr "_K"
 
 #: ../modules/color-selector-cmyk.c:149
 msgid "Cyan"
-msgstr "Turkuaz"
+msgstr "Camgöbeği"
 
 #: ../modules/color-selector-cmyk.c:150
 msgid "Magenta"
@@ -2474,11 +2477,11 @@ msgstr "X Sağa Taşı"
 
 #: ../modules/controller-dx-dinput.c:451
 msgid "Y Move Away"
-msgstr "Y Uzaklaştır"
+msgstr "Y Uzağa Taşı"
 
 #: ../modules/controller-dx-dinput.c:454
 msgid "Y Move Near"
-msgstr "Y Yaklaştır"
+msgstr "Y Yakına Taşı"
 
 #: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
@@ -2771,7 +2774,6 @@ msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI Girdi Denetleyicisi"
 
 #: ../modules/display-filter-aces-rrt.c:84
-#, fuzzy
 msgid ""
 "ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
 "display filter, using a luminance-only approximation of the ACES RRT, a pre-"
@@ -2780,8 +2782,9 @@ msgid ""
 msgstr "ACES RRT (RRT = Reference Rendering Transform)."
 
 #: ../modules/display-filter-aces-rrt.c:121
+#, fuzzy
 msgid "Pre-transform change in stops"
-msgstr ""
+msgstr "Duraklarda ön dönüşüm değişikliği"
 
 #: ../modules/display-filter-aces-rrt.c:126
 msgid "Aces RRT"
