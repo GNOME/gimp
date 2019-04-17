@@ -1,6 +1,7 @@
 # Turkish translation for GIMP
 #
-# Copyright (C) 2001-2019 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# Copyright (C) 2002-2019 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Ömer Fadıl USTA <omer_fad@hotmail.com>, 2002.
@@ -15,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-24 16:52+0000\n"
-"PO-Revision-Date: 2019-03-05 03:15+0200\n"
+"POT-Creation-Date: 2019-04-06 14:16+0000\n"
+"PO-Revision-Date: 2019-04-07 19:58+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -170,7 +171,7 @@ msgstr "_Sis..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "_Layer name"
-msgstr "_Katman ismi"
+msgstr "_Katman adı"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "Clouds"
@@ -186,8 +187,9 @@ msgstr "_Hava Boşluğu"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "Op_acity"
-msgstr "Işık Geçi_rmezlik"
+msgstr "_Matlık"
 
+# fuzzy: aşağıdaki 4 offset çevirisi kontrol edilecek
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
 msgstr "Bir paletteki renkleri dengele"
@@ -365,11 +367,11 @@ msgstr "HTML dışa aktarımı için yol"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
-msgstr "Dışa aktarım için dosya ismi"
+msgstr "Dışa aktarım için dosya adı"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
-msgstr "Görüntü ismi öneki"
+msgstr "Görüntü adı öneki"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
@@ -541,7 +543,7 @@ msgstr "Lissajous"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1098
 msgid "Curve Type"
-msgstr "Eğri Tipi"
+msgstr "Eğri Türü"
 
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1099
 msgid ""
