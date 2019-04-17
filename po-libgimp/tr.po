@@ -1,6 +1,7 @@
 # Turkish translation for GIMP
 #
-# Copyright (C) 2001-2019 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# Copyright (C) 2002-2019 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Fatih Demir <kabalak@gtranslator>, 2001.
@@ -14,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-24 16:50+0000\n"
-"PO-Revision-Date: 2019-03-06 19:23+0200\n"
+"POT-Creation-Date: 2019-04-06 14:14+0000\n"
+"PO-Revision-Date: 2019-04-07 19:59+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -65,19 +66,18 @@ msgstr "%s eklentisi katmanları kullanamaz"
 #: ../libgimp/gimpexport.c:252 ../libgimp/gimpexport.c:261
 #: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:288
 msgid "Merge Visible Layers"
-msgstr "Görünen Katmanları Birleştir"
+msgstr "Görünür Katmanları Birleştir"
 
 #: ../libgimp/gimpexport.c:260
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr ""
-"%s eklentisi katmanın konumlarını, boyutunu ya da ışık geçirmezliğini "
-"kullanamaz"
+msgstr "%s eklentisi katmanın konumlarını, boyutunu ya da matlığını kullanamaz"
 
 #: ../libgimp/gimpexport.c:269 ../libgimp/gimpexport.c:278
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s eklentisi katmanları sadece canlandırma karesi olarak kullanabilir"
+msgstr ""
+"%s eklentisi katmanları yalnızca canlandırma karesi olarak kullanabilir"
 
 #: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:279
 msgid "Save as Animation"
@@ -105,7 +105,7 @@ msgstr "Katman Maskelerini Uygula"
 #: ../libgimp/gimpexport.c:314
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s eklentisi sadece RGB görüntülerini kullanabilir"
+msgstr "%s eklentisi yalnızca RGB görüntülerini kullanabilir"
 
 #: ../libgimp/gimpexport.c:315 ../libgimp/gimpexport.c:353
 #: ../libgimp/gimpexport.c:362
@@ -115,7 +115,7 @@ msgstr "RGB'ye çevir"
 #: ../libgimp/gimpexport.c:323
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s eklentisi sadece gri tonlamalı görüntüleri kullanabilir"
+msgstr "%s eklentisi yalnızca gri tonlamalı görüntüleri kullanabilir"
 
 #: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:353
 #: ../libgimp/gimpexport.c:374
@@ -125,7 +125,7 @@ msgstr "Gri Tonlamaya çevir"
 #: ../libgimp/gimpexport.c:332
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s eklentisi sadece indekslenmiş görüntüleri kullanabilir"
+msgstr "%s eklentisi yalnızca indekslenmiş görüntüleri kullanabilir"
 
 #: ../libgimp/gimpexport.c:333 ../libgimp/gimpexport.c:362
 #: ../libgimp/gimpexport.c:372
@@ -140,7 +140,7 @@ msgstr ""
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"%s eklentisi sadece bit eşlem (iki renk) indeksli görüntüleri kullanabilir"
+"%s eklentisi yalnızca bit eşlem (iki renk) indeksli görüntüleri kullanabilir"
 
 #: ../libgimp/gimpexport.c:343
 msgid ""
@@ -153,18 +153,18 @@ msgstr ""
 #: ../libgimp/gimpexport.c:352
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s eklentisi sadece RGB ya da gri tonlamalı görüntüleri kullanabilir"
+msgstr "%s eklentisi yalnızca RGB ya da gri tonlamalı görüntüleri kullanabilir"
 
 #: ../libgimp/gimpexport.c:361
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
-msgstr "%s eklentisi sadece RGB ya da indeksli görüntüleri kullanabilir"
+msgstr "%s eklentisi yalnızca RGB ya da indeksli görüntüleri kullanabilir"
 
 #: ../libgimp/gimpexport.c:371
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
-"%s eklentisi sadece gri tonlamalı ya da indeksli görüntüleri kullanabilir"
+"%s eklentisi yalnızca gri tonlamalı ya da indeksli görüntüleri kullanabilir"
 
 #: ../libgimp/gimpexport.c:382
 #, c-format
@@ -183,9 +183,9 @@ msgstr "Kaydetmeyi Onayla"
 #: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
-#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
-#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:492
+#: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
+#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
+#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:492
 msgid "_Cancel"
 msgstr "_İptal"
 
@@ -227,7 +227,7 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "Bir katman maskesini %s olarak imlemek üzeresiniz.\n"
-"Bu işlem görünebilir katmanları kaydetmeyecektir."
+"Bu işlem görünür katmanları kaydetmeyecektir."
 
 #: ../libgimp/gimpexport.c:747
 #, c-format
@@ -236,7 +236,7 @@ msgid ""
 "This will not save the visible layers."
 msgstr ""
 "Bir katmanı (kaydedilmiş seçim) %s olarak kaydetmek üzeresiniz.\n"
-"Bu işlem görünebilir katmanları kaydetmeyecektir."
+"Bu işlem görünür katmanları kaydetmeyecektir."
 
 #: ../libgimp/gimpexport.c:1015
 msgid "Export Image as "
@@ -423,7 +423,7 @@ msgstr "yüzdelik"
 #: ../libgimpbase/gimpbaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
-msgstr "_Beyaz (tam ışık geçirmezlik)"
+msgstr "_Beyaz (tam matlık)"
 
 #: ../libgimpbase/gimpbaseenums.c:29
 msgctxt "add-mask-type"
@@ -603,17 +603,17 @@ msgstr "Koyu denetimler"
 #: ../libgimpbase/gimpbaseenums.c:304
 msgctxt "check-type"
 msgid "White only"
-msgstr "Sadece beyaz"
+msgstr "Yalnızca beyaz"
 
 #: ../libgimpbase/gimpbaseenums.c:305
 msgctxt "check-type"
 msgid "Gray only"
-msgstr "Sadece gri"
+msgstr "Yalnızca gri"
 
 #: ../libgimpbase/gimpbaseenums.c:306
 msgctxt "check-type"
 msgid "Black only"
-msgstr "Sadece siyah"
+msgstr "Yalnızca siyah"
 
 #: ../libgimpbase/gimpbaseenums.c:335
 msgctxt "clone-type"
@@ -759,12 +759,12 @@ msgstr "Değer (HSV)"
 #: ../libgimpbase/gimpbaseenums.c:547
 msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr "Aydınlatmak"
+msgstr "Soldur"
 
 #: ../libgimpbase/gimpbaseenums.c:548
 msgctxt "dodge-burn-type"
 msgid "Burn"
-msgstr "Yakma"
+msgstr "Yak"
 
 #: ../libgimpbase/gimpbaseenums.c:580
 msgctxt "fill-type"
@@ -1455,7 +1455,7 @@ msgstr "En boy oranı ile kırp"
 #: ../libgimpbase/gimpmetadata.c:878
 #, c-format
 msgid "Can load metadata only from local files"
-msgstr "Üstveriler sadece yerel dosyalardan yüklenebilir"
+msgstr "Üstveriler yalnızca yerel dosyalardan yüklenebilir"
 
 #: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
 #, c-format
@@ -1465,7 +1465,7 @@ msgstr "Dosya adının sistem kod sayfasına dönüştürülmesi başarısız ol
 #: ../libgimpbase/gimpmetadata.c:949
 #, c-format
 msgid "Can save metadata only to local files"
-msgstr "Üstveriler sadece yerel dosyalara kaydedilebilir"
+msgstr "Üstveriler yalnızca yerel dosyalara kaydedilebilir"
 
 #: ../libgimpbase/gimpmetadata.c:1011
 #, c-format
@@ -1531,7 +1531,7 @@ msgstr "Renk profili belleğe kaydedilemedi"
 
 #: ../libgimpcolor/gimpcolorprofile.c:578
 msgid "(unnamed profile)"
-msgstr "(adlandırılmamış profil)"
+msgstr "(adsız profil)"
 
 #: ../libgimpcolor/gimpcolorprofile.c:620
 #, c-format
@@ -1605,7 +1605,7 @@ msgid ""
 "fallback."
 msgstr ""
 "Etkin olduğunda, GIMP, pencere sistemindeki ekran renk profilini kullanmayı "
-"deneyecek. Sonra yapılandırılmış monitör profili sadece geri alınmış gibi "
+"deneyecek. Sonra yapılandırılmış monitör profili yalnızca geri alınmış gibi "
 "kullanılır."
 
 #: ../libgimpconfig/gimpcolorconfig.c:63
@@ -1930,9 +1930,9 @@ msgid "_Reset"
 msgstr "_Sıfırla"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:573
-#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:274
-#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
-#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:493
+#: ../libgimpwidgets/gimpfileentry.c:436 ../libgimpwidgets/gimpquerybox.c:275
+#: ../libgimpwidgets/gimpquerybox.c:335 ../libgimpwidgets/gimpquerybox.c:399
+#: ../libgimpwidgets/gimpquerybox.c:473 ../libgimpwidgets/gimpunitmenu.c:493
 msgid "_OK"
 msgstr "_Tamam"
 
@@ -2127,15 +2127,15 @@ msgstr "_Dönüştür"
 msgid "_Shear"
 msgstr "_Kırp"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:219
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
 msgid "Kilobytes"
 msgstr "KB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Megabytes"
 msgstr "MB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
 msgid "Gigabytes"
 msgstr "GB"
 
@@ -2219,7 +2219,7 @@ msgstr "Denetleme Boyutu"
 msgid "Check Style"
 msgstr "Denetleme Biçemi"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2177
+#: ../libgimpwidgets/gimppropwidgets.c:2178
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2421,12 +2421,12 @@ msgstr "Görüntüler"
 #: ../libgimpwidgets/gimpwidgetsenums.c:261
 msgctxt "zoom-type"
 msgid "Zoom in"
-msgstr "Yakınlaş"
+msgstr "Yakınlaştır"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:262
 msgctxt "zoom-type"
 msgid "Zoom out"
-msgstr "Uzaklaş"
+msgstr "Uzaklaştır"
 
 #: ../modules/color-selector-cmyk.c:82
 msgid "CMYK color selector (using color profile)"
@@ -2458,7 +2458,7 @@ msgstr "_K"
 
 #: ../modules/color-selector-cmyk.c:148
 msgid "Cyan"
-msgstr "Turkuaz"
+msgstr "Camgöbeği"
 
 #: ../modules/color-selector-cmyk.c:149
 msgid "Magenta"
@@ -2543,11 +2543,11 @@ msgstr "X Sağa Taşı"
 
 #: ../modules/controller-dx-dinput.c:451
 msgid "Y Move Away"
-msgstr "Y Uzaklaştır"
+msgstr "Y Uzağa Taşı"
 
 #: ../modules/controller-dx-dinput.c:454
 msgid "Y Move Near"
-msgstr "Y Yaklaştır"
+msgstr "Y Yakına Taşı"
 
 #: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
@@ -2790,7 +2790,7 @@ msgstr "MIDI olay denetleyicisi"
 
 #: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
-msgstr "MIDI olaylarının okunacağı aygıtın ismi."
+msgstr "MIDI olaylarının okunacağı aygıtın adı."
 
 #: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
@@ -2929,7 +2929,7 @@ msgstr "Eksik renk canlandırma filtresi (Brettel-Vienot-Mollon algoritması)"
 
 #: ../modules/display-filter-color-blind.c:253
 msgid "Type"
-msgstr "Tip"
+msgstr "Tür"
 
 #: ../modules/display-filter-color-blind.c:254
 msgid "Color vision deficiency type"
