@@ -243,6 +243,8 @@ gimp_curve_view_finalize (GObject *object)
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (object);
 
+  g_clear_object (&view->orig_curve);
+
   g_clear_object (&view->layout);
   g_clear_object (&view->cursor_layout);
 
@@ -807,6 +809,8 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 
   view->grabbed = TRUE;
 
+  view->orig_curve = GIMP_CURVE (gimp_data_duplicate (GIMP_DATA (curve)));
+
   set_cursor (view, GDK_TCROSS);
 
   switch (gimp_curve_get_curve_type (curve))
@@ -848,6 +852,9 @@ gimp_curve_view_button_press (GtkWidget      *widget,
         }
       else
         {
+          if (bevent->state & gimp_get_constrain_behavior_mask ())
+            y = 1.0 - gimp_curve_map_value (view->orig_curve, x);
+
           gimp_curve_set_point (curve, view->selected, x, 1.0 - y);
         }
       break;
@@ -874,6 +881,8 @@ gimp_curve_view_button_release (GtkWidget      *widget,
 
   if (bevent->button != 1)
     return TRUE;
+
+  g_clear_object (&view->orig_curve);
 
   view->offset_x = 0.0;
   view->offset_y = 0.0;
@@ -938,11 +947,17 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
           else
             {
               new_cursor = GDK_TCROSS;
+
+              if (mevent->state & gimp_get_constrain_behavior_mask ())
+                y = 1.0 - gimp_curve_map_value (view->curve, x);
             }
         }
       else /*  Else, drag the grabbed point  */
         {
           new_cursor = GDK_TCROSS;
+
+          if (mevent->state & gimp_get_constrain_behavior_mask ())
+            y = 1.0 - gimp_curve_map_value (view->orig_curve, x);
 
           gimp_data_freeze (GIMP_DATA (curve));
 
