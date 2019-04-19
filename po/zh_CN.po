@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2019-04-18 16:17+0000\n"
-"PO-Revision-Date: 2019-04-19 15:46+0800\n"
+"PO-Revision-Date: 2019-04-20 01:36+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -4977,7 +4977,7 @@ msgstr "高通滤波(_H)…"
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "色相-色度(_C)…"
+msgstr "色相-浓度(_C)…"
 
 #: ../app/actions/filters-actions.c:382
 msgctxt "filters-action"
