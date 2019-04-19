@@ -46,6 +46,7 @@ enum
   PROP_CURVE_TYPE,
   PROP_N_POINTS,
   PROP_POINTS,
+  PROP_POINT_TYPES,
   PROP_N_SAMPLES,
   PROP_SAMPLES
 };
@@ -171,6 +172,17 @@ gimp_curve_class_init (GimpCurveClass *klass)
                                                                 GIMP_PARAM_STATIC_STRINGS |
                                                                 GIMP_CONFIG_PARAM_FLAGS));
 
+  array_spec = g_param_spec_enum ("point-type", NULL, NULL,
+                                  GIMP_TYPE_CURVE_POINT_TYPE,
+                                  GIMP_CURVE_POINT_SMOOTH,
+                                  GIMP_PARAM_READWRITE);
+  g_object_class_install_property (object_class, PROP_POINT_TYPES,
+                                   gimp_param_spec_value_array ("point-types",
+                                                                NULL, NULL,
+                                                                array_spec,
+                                                                GIMP_PARAM_STATIC_STRINGS |
+                                                                GIMP_CONFIG_PARAM_FLAGS));
+
   GIMP_CONFIG_PROP_INT  (object_class, PROP_N_SAMPLES,
                          "n-samples",
                          "Number of Samples",
@@ -248,18 +260,22 @@ gimp_curve_set_property (GObject      *object,
     case PROP_POINTS:
       {
         GimpValueArray *array = g_value_get_boxed (value);
+        GimpCurvePoint *points;
         gint            length;
+        gint            n_points;
         gint            i;
 
-        curve->n_points = 0;
-        g_clear_pointer (&curve->points, g_free);
-
         if (! array)
-          break;
+          {
+            gimp_curve_clear_points (curve);
+
+            break;
+          }
 
         length = gimp_value_array_length (array) / 2;
 
-        curve->points = g_new (GimpVector2, length);
+        n_points = 0;
+        points   = g_new (GimpCurvePoint, length);
 
         for (i = 0; i < length; i++)
           {
@@ -270,22 +286,76 @@ gimp_curve_set_property (GObject      *object,
             if (g_value_get_double (x) < 0.0)
               continue;
 
-            curve->points[curve->n_points].x = CLAMP (g_value_get_double (x),
-                                                      0.0, 1.0);
-            curve->points[curve->n_points].y = CLAMP (g_value_get_double (y),
-                                                      0.0, 1.0);
+            points[n_points].x = CLAMP (g_value_get_double (x), 0.0, 1.0);
+            points[n_points].y = CLAMP (g_value_get_double (y), 0.0, 1.0);
 
-            if (curve->n_points > 0)
+            if (n_points > 0)
               {
-                curve->points[curve->n_points].x = MAX (
-                  curve->points[curve->n_points].x,
-                  curve->points[curve->n_points - 1].x);
+                points[n_points].x = MAX (points[n_points].x,
+                                          points[n_points - 1].x);
               }
 
-            curve->n_points++;
+            if (n_points < curve->n_points)
+              points[n_points].type = curve->points[n_points].type;
+            else
+              points[n_points].type = GIMP_CURVE_POINT_SMOOTH;
+
+            n_points++;
           }
 
+        g_free (curve->points);
+
+        curve->n_points = n_points;
+        curve->points   = points;
+
         g_object_notify (object, "n-points");
+        g_object_notify (object, "point-types");
+      }
+      break;
+
+    case PROP_POINT_TYPES:
+      {
+        GimpValueArray *array = g_value_get_boxed (value);
+        GimpCurvePoint *points;
+        gint            length;
+        gdouble         x     = 0.0;
+        gdouble         y     = 0.0;
+        gint            i;
+
+        if (! array)
+          {
+            gimp_curve_clear_points (curve);
+
+            break;
+          }
+
+        length = gimp_value_array_length (array);
+
+        points = g_new (GimpCurvePoint, length);
+
+        for (i = 0; i < length; i++)
+          {
+            GValue *type = gimp_value_array_index (array, i);
+
+            points[i].type = g_value_get_enum (type);
+
+            if (i < curve->n_points)
+              {
+                x = curve->points[i].x;
+                y = curve->points[i].y;
+              }
+
+            points[i].x = x;
+            points[i].y = y;
+          }
+
+        g_free (curve->points);
+
+        curve->n_points = length;
+        curve->points   = points;
+
+        g_object_notify (object, "n-points");
+        g_object_notify (object, "points");
       }
       break;
 
@@ -360,6 +430,26 @@ gimp_curve_get_property (GObject    *object,
       }
       break;
 
+    case PROP_POINT_TYPES:
+      {
+        GimpValueArray *array = gimp_value_array_new (curve->n_points);
+        GValue          v     = G_VALUE_INIT;
+        gint            i;
+
+        g_value_init (&v, GIMP_TYPE_CURVE_POINT_TYPE);
+
+        for (i = 0; i < curve->n_points; i++)
+          {
+            g_value_set_enum (&v, curve->points[i].type);
+            gimp_value_array_append (array, &v);
+          }
+
+        g_value_unset (&v);
+
+        g_value_take_boxed (value, array);
+      }
+      break;
+
     case PROP_N_SAMPLES:
       g_value_set_int (value, curve->n_samples);
       break;
@@ -397,7 +487,7 @@ gimp_curve_get_memsize (GimpObject *object,
   GimpCurve *curve   = GIMP_CURVE (object);
   gint64     memsize = 0;
 
-  memsize += curve->n_points  * sizeof (GimpVector2);
+  memsize += curve->n_points  * sizeof (GimpCurvePoint);
   memsize += curve->n_samples * sizeof (gdouble);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
@@ -513,7 +603,7 @@ gimp_curve_equal (GimpConfig *a,
 
   if (a_curve->n_points != b_curve->n_points ||
       memcmp (a_curve->points, b_curve->points,
-              sizeof (GimpVector2) * a_curve->n_points))
+              sizeof (GimpCurvePoint) * a_curve->n_points))
     {
       return FALSE;
     }
@@ -602,16 +692,19 @@ gimp_curve_reset (GimpCurve *curve,
   g_free (curve->points);
 
   curve->n_points = 2;
-  curve->points   = g_new (GimpVector2, 2);
+  curve->points   = g_new (GimpCurvePoint, 2);
 
-  curve->points[0].x = 0.0;
-  curve->points[0].y = 0.0;
+  curve->points[0].x    = 0.0;
+  curve->points[0].y    = 0.0;
+  curve->points[0].type = GIMP_CURVE_POINT_SMOOTH;
 
-  curve->points[1].x = 1.0;
-  curve->points[1].y = 1.0;
+  curve->points[1].x    = 1.0;
+  curve->points[1].y    = 1.0;
+  curve->points[1].type = GIMP_CURVE_POINT_SMOOTH;
 
   g_object_notify (G_OBJECT (curve), "n-points");
   g_object_notify (G_OBJECT (curve), "points");
+  g_object_notify (G_OBJECT (curve), "point-types");
 
   if (reset_type)
     {
@@ -650,19 +743,21 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
            *  points
            */
           curve->n_points = 9;
-          curve->points   = g_new (GimpVector2, 9);
+          curve->points   = g_new (GimpCurvePoint, 9);
 
           for (i = 0; i < curve->n_points; i++)
             {
               gint sample = i * (curve->n_samples - 1) / (curve->n_points - 1);
 
-              curve->points[i].x = (gdouble) sample /
-                                   (gdouble) (curve->n_samples - 1);
-              curve->points[i].y = curve->samples[sample];
+              curve->points[i].x    = (gdouble) sample /
+                                      (gdouble) (curve->n_samples - 1);
+              curve->points[i].y    = curve->samples[sample];
+              curve->points[i].type = GIMP_CURVE_POINT_SMOOTH;
             }
 
           g_object_notify (G_OBJECT (curve), "n-points");
           g_object_notify (G_OBJECT (curve), "points");
+          g_object_notify (G_OBJECT (curve), "point-types");
         }
       else
         {
@@ -795,8 +890,8 @@ gimp_curve_add_point (GimpCurve *curve,
                       gdouble    x,
                       gdouble    y)
 {
-  GimpVector2 *points;
-  gint         point;
+  GimpCurvePoint *points;
+  gint            point;
 
   g_return_val_if_fail (GIMP_IS_CURVE (curve), -1);
 
@@ -812,15 +907,16 @@ gimp_curve_add_point (GimpCurve *curve,
         break;
     }
 
-  points = g_new (GimpVector2, curve->n_points + 1);
+  points = g_new (GimpCurvePoint, curve->n_points + 1);
 
   memcpy (points,         curve->points,
-          point * sizeof (GimpVector2));
+          point * sizeof (GimpCurvePoint));
   memcpy (points + point + 1, curve->points + point,
-          (curve->n_points - point) * sizeof (GimpVector2));
+          (curve->n_points - point) * sizeof (GimpCurvePoint));
 
-  points[point].x = x;
-  points[point].y = y;
+  points[point].x    = x;
+  points[point].y    = y;
+  points[point].type = GIMP_CURVE_POINT_SMOOTH;
 
   g_free (curve->points);
 
@@ -829,6 +925,7 @@ gimp_curve_add_point (GimpCurve *curve,
 
   g_object_notify (G_OBJECT (curve), "n-points");
   g_object_notify (G_OBJECT (curve), "points");
+  g_object_notify (G_OBJECT (curve), "point-types");
 
   gimp_data_dirty (GIMP_DATA (curve));
 
@@ -839,17 +936,17 @@ void
 gimp_curve_delete_point (GimpCurve *curve,
                          gint       point)
 {
-  GimpVector2 *points;
+  GimpCurvePoint *points;
 
   g_return_if_fail (GIMP_IS_CURVE (curve));
   g_return_if_fail (point >= 0 && point < curve->n_points);
 
-  points = g_new (GimpVector2, curve->n_points - 1);
+  points = g_new (GimpCurvePoint, curve->n_points - 1);
 
   memcpy (points,         curve->points,
-          point * sizeof (GimpVector2));
+          point * sizeof (GimpCurvePoint));
   memcpy (points + point, curve->points + point + 1,
-          (curve->n_points - point - 1) * sizeof (GimpVector2));
+          (curve->n_points - point - 1) * sizeof (GimpCurvePoint));
 
   g_free (curve->points);
 
@@ -858,6 +955,7 @@ gimp_curve_delete_point (GimpCurve *curve,
 
   g_object_notify (G_OBJECT (curve), "n-points");
   g_object_notify (G_OBJECT (curve), "points");
+  g_object_notify (G_OBJECT (curve), "point-types");
 
   gimp_data_dirty (GIMP_DATA (curve));
 }
@@ -914,6 +1012,31 @@ gimp_curve_get_point (GimpCurve *curve,
 }
 
 void
+gimp_curve_set_point_type (GimpCurve          *curve,
+                           gint                point,
+                           GimpCurvePointType  type)
+{
+  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (point >= 0 && point < curve->n_points);
+
+  curve->points[point].type = type;
+
+  g_object_notify (G_OBJECT (curve), "point-types");
+
+  gimp_data_dirty (GIMP_DATA (curve));
+}
+
+GimpCurvePointType
+gimp_curve_get_point_type (GimpCurve *curve,
+                           gint       point)
+{
+  g_return_val_if_fail (GIMP_IS_CURVE (curve), GIMP_CURVE_POINT_SMOOTH);
+  g_return_val_if_fail (point >= 0 && point < curve->n_points, GIMP_CURVE_POINT_SMOOTH);
+
+  return curve->points[point].type;
+}
+
+void
 gimp_curve_clear_points (GimpCurve *curve)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
@@ -925,6 +1048,7 @@ gimp_curve_clear_points (GimpCurve *curve)
 
       g_object_notify (G_OBJECT (curve), "n-points");
       g_object_notify (G_OBJECT (curve), "points");
+      g_object_notify (G_OBJECT (curve), "point-types");
 
       gimp_data_dirty (GIMP_DATA (curve));
     }
@@ -1000,8 +1124,8 @@ gimp_curve_calculate (GimpCurve *curve)
       /*  Initialize boundary curve points */
       if (curve->n_points > 0)
         {
-          GimpVector2 point;
-          gint        boundary;
+          GimpCurvePoint point;
+          gint           boundary;
 
           point    = curve->points[0];
           boundary = ROUND (point.x * (gdouble) (curve->n_samples - 1));
@@ -1022,6 +1146,12 @@ gimp_curve_calculate (GimpCurve *curve)
           p2 = i;
           p3 = i + 1;
           p4 = MIN (i + 2, curve->n_points - 1);
+
+          if (curve->points[p2].type == GIMP_CURVE_POINT_CORNER)
+            p1 = p2;
+
+          if (curve->points[p3].type == GIMP_CURVE_POINT_CORNER)
+            p4 = p3;
 
           gimp_curve_plot (curve, p1, p2, p3, p4);
         }

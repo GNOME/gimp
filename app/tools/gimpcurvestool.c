@@ -124,6 +124,8 @@ static void       curves_graph_selection_callback  (GtkWidget            *widget
 
 static void       curves_point_coords_callback     (GtkWidget            *widget,
                                                     GimpCurvesTool       *tool);
+static void       curves_point_type_callback       (GtkWidget            *widget,
+                                                    GimpCurvesTool       *tool);
 
 static void       curves_curve_type_callback       (GtkWidget            *widget,
                                                     GimpCurvesTool       *tool);
@@ -268,9 +270,19 @@ gimp_curves_tool_button_release (GimpTool              *tool,
 
       if (point < 0)
         {
+          GimpCurvePointType type = GIMP_CURVE_POINT_SMOOTH;
+
+          point = gimp_curve_view_get_selected (
+            GIMP_CURVE_VIEW (c_tool->graph));
+
+          if (point >= 0)
+            type = gimp_curve_get_point_type (curve, point);
+
           point = gimp_curve_add_point (
             curve,
             value, gimp_curve_map_value (curve, value));
+
+          gimp_curve_set_point_type (curve, point, type);
         }
 
       gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph), point);
@@ -278,6 +290,16 @@ gimp_curves_tool_button_release (GimpTool              *tool,
   else if (state & gimp_get_toggle_behavior_mask ())
     {
       GimpHistogramChannel channel;
+      GimpCurvePointType   type = GIMP_CURVE_POINT_SMOOTH;
+      gint                 point;
+
+      point = gimp_curve_view_get_selected (GIMP_CURVE_VIEW (c_tool->graph));
+
+      if (point >= 0)
+        {
+          type = gimp_curve_get_point_type (config->curve[config->channel],
+                                            point);
+        }
 
       for (channel = GIMP_HISTOGRAM_VALUE;
            channel <= GIMP_HISTOGRAM_ALPHA;
@@ -288,8 +310,6 @@ gimp_curves_tool_button_release (GimpTool              *tool,
 
           if (value != -1)
             {
-              gint point;
-
               point = gimp_curve_get_point_at (curve, value);
 
               if (point < 0)
@@ -297,6 +317,8 @@ gimp_curves_tool_button_release (GimpTool              *tool,
                   point = gimp_curve_add_point (
                     curve,
                     value, gimp_curve_map_value (curve, value));
+
+                  gimp_curve_set_point_type (curve, point, type);
                 }
 
               if (channel == config->channel)
@@ -604,9 +626,24 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), tool->point_output);
 
+  label = gtk_label_new_with_mnemonic (_("T_ype:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  hbox2 = gimp_enum_icon_box_new (GIMP_TYPE_CURVE_POINT_TYPE,
+                                  "gimp-curve-point",
+                                  GTK_ICON_SIZE_MENU,
+                                  G_CALLBACK (curves_point_type_callback),
+                                  tool,
+                                  &tool->point_type);
+  gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
+  gtk_widget_show (hbox2);
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), tool->point_type);
 
   label = gtk_label_new_with_mnemonic (_("Curve _type:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -942,6 +979,18 @@ gimp_curves_tool_update_point (GimpCurvesTool *tool)
       g_signal_handlers_unblock_by_func (tool->point_output,
                                          curves_point_coords_callback,
                                          tool);
+
+      g_signal_handlers_block_by_func (tool->point_type,
+                                       curves_point_type_callback,
+                                       tool);
+
+      gimp_int_radio_group_set_active (
+        GTK_RADIO_BUTTON (tool->point_type),
+        gimp_curve_get_point_type (curve, point));
+
+      g_signal_handlers_unblock_by_func (tool->point_type,
+                                         curves_point_type_callback,
+                                         tool);
     }
 }
 
@@ -1046,6 +1095,28 @@ curves_point_coords_callback (GtkWidget      *widget,
       y /= 255.0;
 
       gimp_curve_set_point (curve, point, x, y);
+    }
+}
+
+static void
+curves_point_type_callback (GtkWidget      *widget,
+                            GimpCurvesTool *tool)
+{
+  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpCurvesConfig *config      = GIMP_CURVES_CONFIG (filter_tool->config);
+  GimpCurve        *curve       = config->curve[config->channel];
+  gint              point;
+
+  point = gimp_curve_view_get_selected (GIMP_CURVE_VIEW (tool->graph));
+
+  if (point >= 0 && gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      GimpCurvePointType type;
+
+      type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                 "gimp-item-data"));
+
+      gimp_curve_set_point_type (curve, point, type);
     }
 }
 

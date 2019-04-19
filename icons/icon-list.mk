@@ -101,6 +101,8 @@ scalable_images = \
 	scalable/gimp-convert-rgb.svg				\
 	scalable/gimp-cursor.svg				\
 	scalable/gimp-curve-free.svg				\
+	scalable/gimp-curve-point-corner.svg			\
+	scalable/gimp-curve-point-smooth.svg			\
 	scalable/gimp-curve-smooth.svg				\
 	scalable/gimp-dashboard.svg				\
 	scalable/gimp-default-colors.svg			\
@@ -610,6 +612,8 @@ icons16_images = \
 	16/gimp-convert-rgb.png					\
 	16/gimp-cursor.png					\
 	16/gimp-curve-free.png					\
+	16/gimp-curve-point-corner.png				\
+	16/gimp-curve-point-smooth.png				\
 	16/gimp-curve-smooth.png				\
 	16/gimp-dashboard.png					\
 	16/gimp-device-status.png				\

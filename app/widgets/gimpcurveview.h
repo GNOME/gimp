@@ -50,6 +50,7 @@ struct _GimpCurveView
   gint               selected;
   gdouble            offset_x;
   gdouble            offset_y;
+  GimpCurvePointType point_type;
   gdouble            last_x;
   gdouble            last_y;
   gdouble            leftmost;

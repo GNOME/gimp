@@ -442,16 +442,38 @@ gimp_curve_view_draw_point (GimpCurveView *view,
 
   y = 1.0 - y;
 
-#define RADIUS 3
+#define CIRCLE_RADIUS  3
+#define DIAMOND_RADIUS (G_SQRT2 * CIRCLE_RADIUS)
 
-  cairo_move_to (cr,
-                 border + (gdouble) (width  - 1) * x + RADIUS,
-                 border + (gdouble) (height - 1) * y);
-  cairo_arc (cr,
-             border + (gdouble) (width  - 1) * x,
-             border + (gdouble) (height - 1) * y,
-             RADIUS,
-             0, 2 * G_PI);
+  switch (gimp_curve_get_point_type (view->curve, i))
+    {
+    case GIMP_CURVE_POINT_SMOOTH:
+      cairo_move_to (cr,
+                     border + (gdouble) (width  - 1) * x + CIRCLE_RADIUS,
+                     border + (gdouble) (height - 1) * y);
+      cairo_arc     (cr,
+                     border + (gdouble) (width  - 1) * x,
+                     border + (gdouble) (height - 1) * y,
+                     CIRCLE_RADIUS,
+                     0, 2 * G_PI);
+      break;
+
+    case GIMP_CURVE_POINT_CORNER:
+      cairo_move_to    (cr,
+                        border + (gdouble) (width  - 1) * x,
+                        border + (gdouble) (height - 1) * y - DIAMOND_RADIUS);
+      cairo_line_to    (cr,
+                        border + (gdouble) (width  - 1) * x + DIAMOND_RADIUS,
+                        border + (gdouble) (height - 1) * y);
+      cairo_line_to    (cr,
+                        border + (gdouble) (width  - 1) * x,
+                        border + (gdouble) (height - 1) * y + DIAMOND_RADIUS);
+      cairo_line_to    (cr,
+                        border + (gdouble) (width  - 1) * x - DIAMOND_RADIUS,
+                        border + (gdouble) (height - 1) * y);
+      cairo_close_path (cr);
+      break;
+    }
 }
 
 static void
@@ -837,10 +859,17 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 
       if (point < 0)
         {
+          GimpCurvePointType type = GIMP_CURVE_POINT_SMOOTH;
+
           if (bevent->state & gimp_get_constrain_behavior_mask ())
             y = 1.0 - gimp_curve_map_value (view->orig_curve, x);
 
+          if (view->selected >= 0)
+            type = gimp_curve_get_point_type (curve, view->selected);
+
           point = gimp_curve_add_point (curve, x, 1.0 - y);
+
+          gimp_curve_set_point_type (curve, point, type);
         }
 
       if (point > 0)
@@ -859,6 +888,8 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 
       view->offset_x = point_x         - x;
       view->offset_y = (1.0 - point_y) - y;
+
+      view->point_type = gimp_curve_get_point_type (curve, point);
       break;
 
     case GIMP_CURVE_FREE:
@@ -972,6 +1003,9 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
                   gimp_curve_view_set_selected (
                     view,
                     gimp_curve_add_point (curve, x, 1.0 - y));
+
+                  gimp_curve_set_point_type (curve,
+                                             view->selected, view->point_type);
                 }
               else
                 {
