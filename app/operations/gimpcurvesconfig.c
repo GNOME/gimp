@@ -671,6 +671,8 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
         }
 
       g_string_append_printf (string, "\n");
+
+      g_object_unref (curve);
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,
