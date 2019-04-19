@@ -168,6 +168,7 @@ gimp_colormap_editor_set_context (GimpDocked  *docked,
 
   if (editor->selection)
     gtk_widget_destroy (editor->selection);
+  editor->selection = NULL;
 
   /* Main selection widget. */
   if (context)
