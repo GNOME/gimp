@@ -43,6 +43,9 @@ struct _GimpCurvesTool
   GtkWidget        *xrange;
   GtkWidget        *yrange;
   GtkWidget        *graph;
+  GtkWidget        *point_box;
+  GtkWidget        *point_input;
+  GtkWidget        *point_output;
   GtkWidget        *curve_type;
 
   /* export dialog */
