@@ -37,6 +37,7 @@ struct _GimpCurvesTool
   GimpFilterTool  parent_instance;
 
   /* dialog */
+  gdouble           scale;
   gdouble           picked_color[5];
 
   GtkWidget        *channel_menu;
