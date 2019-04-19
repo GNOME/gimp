@@ -242,8 +242,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
   gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph),
                                0, c_tool->scale);
 
-  gtk_spin_button_set_range (GTK_SPIN_BUTTON (c_tool->point_input),
-                             0, c_tool->scale);
   gtk_spin_button_set_range (GTK_SPIN_BUTTON (c_tool->point_output),
                              0, c_tool->scale);
 
@@ -619,7 +617,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  tool->point_input = gimp_spin_button_new (NULL, 1.0, 0);
+  tool->point_input = gimp_spin_button_new_with_range (0.0, 0.0, 1.0);
   gtk_box_pack_start (GTK_BOX (hbox), tool->point_input, FALSE, FALSE, 0);
   gtk_widget_show (tool->point_input);
 
@@ -633,7 +631,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  tool->point_output = gimp_spin_button_new (NULL, 1.0, 0);
+  tool->point_output = gimp_spin_button_new_with_range (0.0, 0.0, 1.0);
   gtk_box_pack_start (GTK_BOX (hbox), tool->point_output, FALSE, FALSE, 0);
   gtk_widget_show (tool->point_output);
 
