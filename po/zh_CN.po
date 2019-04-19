@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-17 14:03+0000\n"
-"PO-Revision-Date: 2019-04-19 15:41+0800\n"
+"POT-Creation-Date: 2019-04-19 15:37+0000\n"
+"PO-Revision-Date: 2019-04-20 00:47+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -31,6 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 3.32.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -297,8 +298,7 @@ msgid ""
 "the usual bug-fixing version after a major release, with a few dozen bugs "
 "fixed."
 msgstr ""
-"这是 GIMP 2.10 系列的第二个版本，是大版本发布后带有一些缺陷修复的普通小版"
-"本。"
+"这是 GIMP 2.10 系列的第二个版本，是大版本发布后带有一些缺陷修复的普通小版本。"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
@@ -11366,785 +11366,795 @@ msgid "Positioned"
 msgstr "定位"
 
 #: ../app/core/core-enums.c:375
+msgctxt "curve-point-type"
+msgid "Smooth"
+msgstr "平滑"
+
+#: ../app/core/core-enums.c:376
+msgctxt "curve-point-type"
+msgid "Corner"
+msgstr "拐角"
+
+#: ../app/core/core-enums.c:404
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "光滑"
 
-#: ../app/core/core-enums.c:376
+#: ../app/core/core-enums.c:405
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "手绘"
 
-#: ../app/core/core-enums.c:413
+#: ../app/core/core-enums.c:442
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "自定义"
 
-#: ../app/core/core-enums.c:414
+#: ../app/core/core-enums.c:443
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "直线"
 
-#: ../app/core/core-enums.c:415
+#: ../app/core/core-enums.c:444
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "长划线"
 
-#: ../app/core/core-enums.c:416
+#: ../app/core/core-enums.c:445
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "中划线"
 
-#: ../app/core/core-enums.c:417
+#: ../app/core/core-enums.c:446
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "短划线"
 
-#: ../app/core/core-enums.c:418
+#: ../app/core/core-enums.c:447
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "稀疏虚线"
 
-#: ../app/core/core-enums.c:419
+#: ../app/core/core-enums.c:448
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "标准虚线"
 
-#: ../app/core/core-enums.c:420
+#: ../app/core/core-enums.c:449
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "密集虚线"
 
-#: ../app/core/core-enums.c:421
+#: ../app/core/core-enums.c:450
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "细点线"
 
-#: ../app/core/core-enums.c:422
+#: ../app/core/core-enums.c:451
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "划-点线"
 
-#: ../app/core/core-enums.c:423
+#: ../app/core/core-enums.c:452
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "划-点-点线"
 
-#: ../app/core/core-enums.c:453
+#: ../app/core/core-enums.c:482
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
 msgstr "调试警告，严重错误和崩溃"
 
-#: ../app/core/core-enums.c:454
+#: ../app/core/core-enums.c:483
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
 msgstr "调试严重错误和崩溃"
 
-#: ../app/core/core-enums.c:455
+#: ../app/core/core-enums.c:484
 msgctxt "debug-policy"
 msgid "Debug crashes only"
 msgstr "仅调试崩溃"
 
-#: ../app/core/core-enums.c:456
+#: ../app/core/core-enums.c:485
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
 msgstr "从不调试 GIMP"
 
-#: ../app/core/core-enums.c:542
+#: ../app/core/core-enums.c:571
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "不透明度"
 
-#: ../app/core/core-enums.c:543
+#: ../app/core/core-enums.c:572
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "大小"
 
-#: ../app/core/core-enums.c:544
+#: ../app/core/core-enums.c:573
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "角度"
 
-#: ../app/core/core-enums.c:545
+#: ../app/core/core-enums.c:574
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "颜色"
 
-#: ../app/core/core-enums.c:546
+#: ../app/core/core-enums.c:575
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "硬度"
 
-#: ../app/core/core-enums.c:547
+#: ../app/core/core-enums.c:576
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "力度"
 
-#: ../app/core/core-enums.c:548
+#: ../app/core/core-enums.c:577
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "宽高比"
 
-#: ../app/core/core-enums.c:549
+#: ../app/core/core-enums.c:578
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "间距"
 
-#: ../app/core/core-enums.c:550
+#: ../app/core/core-enums.c:579
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "速率"
 
-#: ../app/core/core-enums.c:551
+#: ../app/core/core-enums.c:580
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "流量"
 
-#: ../app/core/core-enums.c:552
+#: ../app/core/core-enums.c:581
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "抖动"
 
-#: ../app/core/core-enums.c:580
+#: ../app/core/core-enums.c:609
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "纯色"
 
-#: ../app/core/core-enums.c:581
+#: ../app/core/core-enums.c:610
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "图案"
 
-#: ../app/core/core-enums.c:609
+#: ../app/core/core-enums.c:638
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "将选区用作输入"
 
-#: ../app/core/core-enums.c:610
+#: ../app/core/core-enums.c:639
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "将整个图层用作输入"
 
-#: ../app/core/core-enums.c:641
+#: ../app/core/core-enums.c:670
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "固定"
 
-#: ../app/core/core-enums.c:642
+#: ../app/core/core-enums.c:671
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "前景色"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: ../app/core/core-enums.c:645
+#: ../app/core/core-enums.c:674
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "前景"
 
-#: ../app/core/core-enums.c:646
+#: ../app/core/core-enums.c:675
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "前景色（透明）"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:649
+#: ../app/core/core-enums.c:678
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "前景 (t)"
 
-#: ../app/core/core-enums.c:650
+#: ../app/core/core-enums.c:679
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "背景色"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: ../app/core/core-enums.c:653
+#: ../app/core/core-enums.c:682
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "背景"
 
-#: ../app/core/core-enums.c:654
+#: ../app/core/core-enums.c:683
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "前景色（透明）"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:657
+#: ../app/core/core-enums.c:686
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "背景 (t)"
 
-#: ../app/core/core-enums.c:770
+#: ../app/core/core-enums.c:799
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "明度"
 
-#: ../app/core/core-enums.c:771
+#: ../app/core/core-enums.c:800
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "红色"
 
-#: ../app/core/core-enums.c:772
+#: ../app/core/core-enums.c:801
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "绿色"
 
-#: ../app/core/core-enums.c:773
+#: ../app/core/core-enums.c:802
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "蓝色"
 
-#: ../app/core/core-enums.c:774
+#: ../app/core/core-enums.c:803
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "透明"
 
-#: ../app/core/core-enums.c:775
+#: ../app/core/core-enums.c:804
 msgctxt "histogram-channel"
 msgid "Luminance"
 msgstr "亮度"
 
-#: ../app/core/core-enums.c:776
+#: ../app/core/core-enums.c:805
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/core/core-enums.c:807
+#: ../app/core/core-enums.c:836
 msgctxt "item-set"
 msgid "None"
 msgstr "无"
 
-#: ../app/core/core-enums.c:808
+#: ../app/core/core-enums.c:837
 msgctxt "item-set"
 msgid "All layers"
 msgstr "全部图层"
 
-#: ../app/core/core-enums.c:809
+#: ../app/core/core-enums.c:838
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "有尺寸的图像的图层"
 
-#: ../app/core/core-enums.c:810
+#: ../app/core/core-enums.c:839
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "全部可见图层"
 
-#: ../app/core/core-enums.c:811
+#: ../app/core/core-enums.c:840
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "全部链接图层"
 
-#: ../app/core/core-enums.c:839
+#: ../app/core/core-enums.c:868
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr "全局抠图"
 
-#: ../app/core/core-enums.c:840
+#: ../app/core/core-enums.c:869
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "莱文抠图"
 
-#: ../app/core/core-enums.c:871
+#: ../app/core/core-enums.c:900
 msgctxt "message-severity"
 msgid "Message"
 msgstr "消息"
 
-#: ../app/core/core-enums.c:872
+#: ../app/core/core-enums.c:901
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "警告"
 
-#: ../app/core/core-enums.c:873
+#: ../app/core/core-enums.c:902
 msgctxt "message-severity"
 msgid "Error"
 msgstr "错误"
 
-#: ../app/core/core-enums.c:874
+#: ../app/core/core-enums.c:903
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr "警告"
 
-#: ../app/core/core-enums.c:875
+#: ../app/core/core-enums.c:904
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "严重"
 
-#: ../app/core/core-enums.c:941
+#: ../app/core/core-enums.c:970
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "无缩略图"
 
-#: ../app/core/core-enums.c:942
+#: ../app/core/core-enums.c:971
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "普通 (128x128)"
 
-#: ../app/core/core-enums.c:943
+#: ../app/core/core-enums.c:972
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "大 (256x256)"
 
-#: ../app/core/core-enums.c:972
+#: ../app/core/core-enums.c:1001
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "线性"
 
-#: ../app/core/core-enums.c:973
+#: ../app/core/core-enums.c:1002
 msgctxt "trc-type"
 msgid "Non-Linear"
 msgstr "非线性"
 
-#: ../app/core/core-enums.c:974
+#: ../app/core/core-enums.c:1003
 msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "感官"
 
-#: ../app/core/core-enums.c:1164
+#: ../app/core/core-enums.c:1193
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<无效>>"
 
-#: ../app/core/core-enums.c:1165
+#: ../app/core/core-enums.c:1194
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "缩放图像"
 
-#: ../app/core/core-enums.c:1166
+#: ../app/core/core-enums.c:1195
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "改变图像大小"
 
-#: ../app/core/core-enums.c:1167
+#: ../app/core/core-enums.c:1196
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "翻转图像"
 
-#: ../app/core/core-enums.c:1168
+#: ../app/core/core-enums.c:1197
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "旋转图像"
 
-#: ../app/core/core-enums.c:1169
+#: ../app/core/core-enums.c:1198
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "剪裁图像"
 
-#: ../app/core/core-enums.c:1170
+#: ../app/core/core-enums.c:1199
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "转换图像"
 
-#: ../app/core/core-enums.c:1171
+#: ../app/core/core-enums.c:1200
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "删除项目"
 
-#: ../app/core/core-enums.c:1172 ../app/core/core-enums.c:1217
+#: ../app/core/core-enums.c:1201 ../app/core/core-enums.c:1246
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "重新排列项目"
 
-#: ../app/core/core-enums.c:1173
+#: ../app/core/core-enums.c:1202
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "合并图层"
 
-#: ../app/core/core-enums.c:1174
+#: ../app/core/core-enums.c:1203
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "合并路径"
 
-#: ../app/core/core-enums.c:1175
+#: ../app/core/core-enums.c:1204
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "快速蒙板"
 
-#: ../app/core/core-enums.c:1176 ../app/core/core-enums.c:1207
+#: ../app/core/core-enums.c:1205 ../app/core/core-enums.c:1236
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "网格"
 
-#: ../app/core/core-enums.c:1177 ../app/core/core-enums.c:1211
+#: ../app/core/core-enums.c:1206 ../app/core/core-enums.c:1240
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "参考线"
 
-#: ../app/core/core-enums.c:1178 ../app/core/core-enums.c:1212
+#: ../app/core/core-enums.c:1207 ../app/core/core-enums.c:1241
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "采样点"
 
-#: ../app/core/core-enums.c:1179 ../app/core/core-enums.c:1213
+#: ../app/core/core-enums.c:1208 ../app/core/core-enums.c:1242
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "图层/通道"
 
-#: ../app/core/core-enums.c:1180 ../app/core/core-enums.c:1214
+#: ../app/core/core-enums.c:1209 ../app/core/core-enums.c:1243
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "图层/通道修改"
 
-#: ../app/core/core-enums.c:1181 ../app/core/core-enums.c:1216
+#: ../app/core/core-enums.c:1210 ../app/core/core-enums.c:1245
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "选区蒙板"
 
-#: ../app/core/core-enums.c:1182 ../app/core/core-enums.c:1220
+#: ../app/core/core-enums.c:1211 ../app/core/core-enums.c:1249
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "项目可见性"
 
-#: ../app/core/core-enums.c:1183 ../app/core/core-enums.c:1221
+#: ../app/core/core-enums.c:1212 ../app/core/core-enums.c:1250
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "链接/取消链接项目"
 
-#: ../app/core/core-enums.c:1184
+#: ../app/core/core-enums.c:1213
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "项目属性"
 
-#: ../app/core/core-enums.c:1185 ../app/core/core-enums.c:1219
+#: ../app/core/core-enums.c:1214 ../app/core/core-enums.c:1248
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "移动项目"
 
-#: ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1215
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "缩放项目"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1216
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "更改项目大小"
 
-#: ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1217
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "添加图层"
 
-#: ../app/core/core-enums.c:1189 ../app/core/core-enums.c:1240
+#: ../app/core/core-enums.c:1218 ../app/core/core-enums.c:1269
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "添加图层蒙板"
 
-#: ../app/core/core-enums.c:1190 ../app/core/core-enums.c:1242
+#: ../app/core/core-enums.c:1219 ../app/core/core-enums.c:1271
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "应用图层蒙板"
 
-#: ../app/core/core-enums.c:1191 ../app/core/core-enums.c:1250
+#: ../app/core/core-enums.c:1220 ../app/core/core-enums.c:1279
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "浮动选区到图层"
 
-#: ../app/core/core-enums.c:1192
+#: ../app/core/core-enums.c:1221
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "浮动选区"
 
-#: ../app/core/core-enums.c:1193
+#: ../app/core/core-enums.c:1222
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "固定浮动选区"
 
-#: ../app/core/core-enums.c:1194 ../app/core/gimp-edit.c:496
+#: ../app/core/core-enums.c:1223 ../app/core/gimp-edit.c:496
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "粘贴"
 
-#: ../app/core/core-enums.c:1195 ../app/core/gimp-edit.c:714
+#: ../app/core/core-enums.c:1224 ../app/core/gimp-edit.c:714
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "剪切"
 
-#: ../app/core/core-enums.c:1196
+#: ../app/core/core-enums.c:1225
 msgctxt "undo-type"
 msgid "Text"
 msgstr "文字"
 
-#: ../app/core/core-enums.c:1197 ../app/core/gimpdrawable-transform.c:773
+#: ../app/core/core-enums.c:1226 ../app/core/gimpdrawable-transform.c:773
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "变换"
 
-#: ../app/core/core-enums.c:1198 ../app/core/core-enums.c:1252
+#: ../app/core/core-enums.c:1227 ../app/core/core-enums.c:1281
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "绘画"
 
-#: ../app/core/core-enums.c:1199 ../app/core/core-enums.c:1255
+#: ../app/core/core-enums.c:1228 ../app/core/core-enums.c:1284
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "添加内嵌信息"
 
-#: ../app/core/core-enums.c:1200 ../app/core/core-enums.c:1256
+#: ../app/core/core-enums.c:1229 ../app/core/core-enums.c:1285
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "删除内嵌信息"
 
-#: ../app/core/core-enums.c:1201
+#: ../app/core/core-enums.c:1230
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "导入路径"
 
-#: ../app/core/core-enums.c:1202
+#: ../app/core/core-enums.c:1231
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "插件"
 
-#: ../app/core/core-enums.c:1203
+#: ../app/core/core-enums.c:1232
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "图像类型"
 
-#: ../app/core/core-enums.c:1204
+#: ../app/core/core-enums.c:1233
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "图像精度"
 
-#: ../app/core/core-enums.c:1205
+#: ../app/core/core-enums.c:1234
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "图像大小"
 
-#: ../app/core/core-enums.c:1206
+#: ../app/core/core-enums.c:1235
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "图像分辨率更改"
 
-#: ../app/core/core-enums.c:1208
+#: ../app/core/core-enums.c:1237
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "更改元数据"
 
-#: ../app/core/core-enums.c:1209
+#: ../app/core/core-enums.c:1238
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "更改索引色板"
 
-#: ../app/core/core-enums.c:1210
+#: ../app/core/core-enums.c:1239
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "隐藏/显示色彩配置文件"
 
-#: ../app/core/core-enums.c:1215
+#: ../app/core/core-enums.c:1244
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "图层/通道格式"
 
-#: ../app/core/core-enums.c:1218
+#: ../app/core/core-enums.c:1247
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "重命名项目"
 
-#: ../app/core/core-enums.c:1222
+#: ../app/core/core-enums.c:1251
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "项目颜色标签"
 
-#: ../app/core/core-enums.c:1223
+#: ../app/core/core-enums.c:1252
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "锁定/解锁内容"
 
-#: ../app/core/core-enums.c:1224
+#: ../app/core/core-enums.c:1253
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "锁定/解锁位置"
 
-#: ../app/core/core-enums.c:1225
+#: ../app/core/core-enums.c:1254
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "新建图层"
 
-#: ../app/core/core-enums.c:1226
+#: ../app/core/core-enums.c:1255
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "删除图层"
 
-#: ../app/core/core-enums.c:1227
+#: ../app/core/core-enums.c:1256
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "设置图层模式"
 
-#: ../app/core/core-enums.c:1228
+#: ../app/core/core-enums.c:1257
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "设置图层不透明度"
 
-#: ../app/core/core-enums.c:1229
+#: ../app/core/core-enums.c:1258
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "锁定/解锁透明通道"
 
-#: ../app/core/core-enums.c:1230
+#: ../app/core/core-enums.c:1259
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "暂停改变群组图层大小"
 
-#: ../app/core/core-enums.c:1231
+#: ../app/core/core-enums.c:1260
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "恢复改变群组图层大小"
 
-#: ../app/core/core-enums.c:1232
+#: ../app/core/core-enums.c:1261
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "停用群组图层蒙板"
 
-#: ../app/core/core-enums.c:1233
+#: ../app/core/core-enums.c:1262
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "恢复群组图层蒙板"
 
-#: ../app/core/core-enums.c:1234
+#: ../app/core/core-enums.c:1263
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "开始变换群组图层"
 
-#: ../app/core/core-enums.c:1235
+#: ../app/core/core-enums.c:1264
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "结束变换群组图层"
 
-#: ../app/core/core-enums.c:1236
+#: ../app/core/core-enums.c:1265
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "转换群组图层"
 
-#: ../app/core/core-enums.c:1237
+#: ../app/core/core-enums.c:1266
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "文字图层"
 
-#: ../app/core/core-enums.c:1238
+#: ../app/core/core-enums.c:1267
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "文字图层修改"
 
-#: ../app/core/core-enums.c:1239
+#: ../app/core/core-enums.c:1268
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "转换文字图层"
 
-#: ../app/core/core-enums.c:1241
+#: ../app/core/core-enums.c:1270
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "删除图层蒙板"
 
-#: ../app/core/core-enums.c:1243
+#: ../app/core/core-enums.c:1272
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "显示图层蒙板"
 
-#: ../app/core/core-enums.c:1244
+#: ../app/core/core-enums.c:1273
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "新建通道"
 
-#: ../app/core/core-enums.c:1245
+#: ../app/core/core-enums.c:1274
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "删除通道"
 
-#: ../app/core/core-enums.c:1246
+#: ../app/core/core-enums.c:1275
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "通道颜色"
 
-#: ../app/core/core-enums.c:1247
+#: ../app/core/core-enums.c:1276
 msgctxt "undo-type"
 msgid "New path"
 msgstr "新建路径"
 
-#: ../app/core/core-enums.c:1248
+#: ../app/core/core-enums.c:1277
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "删除路径"
 
-#: ../app/core/core-enums.c:1249
+#: ../app/core/core-enums.c:1278
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "路径修改"
 
-#: ../app/core/core-enums.c:1251
+#: ../app/core/core-enums.c:1280
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "变换网格"
 
-#: ../app/core/core-enums.c:1253
+#: ../app/core/core-enums.c:1282
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "墨水"
 
-#: ../app/core/core-enums.c:1254
+#: ../app/core/core-enums.c:1283
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "选择前景"
 
-#: ../app/core/core-enums.c:1257
+#: ../app/core/core-enums.c:1286
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "不可撤消"
 
-#: ../app/core/core-enums.c:1292
+#: ../app/core/core-enums.c:1321
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "细小"
 
-#: ../app/core/core-enums.c:1293
+#: ../app/core/core-enums.c:1322
 msgctxt "view-size"
 msgid "Very small"
 msgstr "很小"
 
-#: ../app/core/core-enums.c:1294
+#: ../app/core/core-enums.c:1323
 msgctxt "view-size"
 msgid "Small"
 msgstr "小"
 
-#: ../app/core/core-enums.c:1295
+#: ../app/core/core-enums.c:1324
 msgctxt "view-size"
 msgid "Medium"
 msgstr "正常"
 
-#: ../app/core/core-enums.c:1296
+#: ../app/core/core-enums.c:1325
 msgctxt "view-size"
 msgid "Large"
 msgstr "大"
 
-#: ../app/core/core-enums.c:1297
+#: ../app/core/core-enums.c:1326
 msgctxt "view-size"
 msgid "Very large"
 msgstr "很大"
 
-#: ../app/core/core-enums.c:1298
+#: ../app/core/core-enums.c:1327
 msgctxt "view-size"
 msgid "Huge"
 msgstr "庞大"
 
-#: ../app/core/core-enums.c:1299
+#: ../app/core/core-enums.c:1328
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "巨大"
 
-#: ../app/core/core-enums.c:1300
+#: ../app/core/core-enums.c:1329
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "极大"
 
-#: ../app/core/core-enums.c:1328
+#: ../app/core/core-enums.c:1357
 msgctxt "view-type"
 msgid "View as list"
 msgstr "以列表方式查看"
 
-#: ../app/core/core-enums.c:1329
+#: ../app/core/core-enums.c:1358
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "以阵列方式查看"
@@ -15832,8 +15842,8 @@ msgid ""
 "use them unless you really know what you are doing or you intend to "
 "contribute patches."
 msgstr ""
-"这些特性未完成，有缺陷且可能使 GIMP 崩溃。除非您清楚其中风险或计划开发"
-"补丁，否则不建议使用。"
+"这些特性未完成，有缺陷且可能使 GIMP 崩溃。除非您清楚其中风险或计划开发补丁，"
+"否则不建议使用。"
 
 #: ../app/dialogs/preferences-dialog.c:1611
 msgid "Insane Options"
@@ -17968,12 +17978,12 @@ msgstr "GIMP 扩展 %s 中不允许使用绝对路径：%s"
 #: ../app/file-data/file-data-gex.c:153
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
-msgstr ""
+msgstr "不允许存在于 GIMP 扩展“%s”根目录的文件：%s"
 
 #: ../app/file-data/file-data-gex.c:164
 #, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
-msgstr ""
+msgstr "文件不在 GIMP 扩展“%s”的文件夹目录“%s”中：%s"
 
 #: ../app/file-data/file-data-gex.c:260 ../app/file-data/file-data-gex.c:405
 #: ../app/file-data/file-data-gex.c:417 ../app/file-data/file-data-gex.c:429
@@ -17985,7 +17995,7 @@ msgstr "解压 GIMP 扩展 %s 是发生严重错误：%s"
 #: ../app/file-data/file-data-gex.c:294
 #, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
-msgstr ""
+msgstr "GIMP 扩展“%s”目录（%s）与 AppStream 标识不同：%s"
 
 #: ../app/file-data/file-data-gex.c:303
 #, c-format
@@ -17995,7 +18005,7 @@ msgstr "GIMP 扩展 %s 需要 AppStream 文件：%s"
 #: ../app/file-data/file-data-gex.c:318 ../app/file-data/file-data-gex.c:452
 #, c-format
 msgid "Invalid GIMP extension '%s': %s"
-msgstr "无效的 GIMPP 扩展“%s”：%s"
+msgstr "无效的 GIMP 扩展“%s”：%s"
 
 #: ../app/file-data/file-data.c:60 ../app/file-data/file-data.c:125
 msgid "GIMP brush"
@@ -18011,7 +18021,7 @@ msgstr "GIMP 图案"
 
 #: ../app/file-data/file-data.c:508
 msgid "GIMP extension"
-msgstr "GIMP 按扩"
+msgstr "GIMP 扩展"
 
 #: ../app/gegl/gimp-babl.c:184 ../app/gegl/gimp-babl.c:185
 #: ../app/gegl/gimp-babl.c:186 ../app/gegl/gimp-babl.c:187
@@ -18736,15 +18746,15 @@ msgstr "受影响的通道"
 msgid "Curve"
 msgstr "曲线"
 
-#: ../app/operations/gimpcurvesconfig.c:566
+#: ../app/operations/gimpcurvesconfig.c:563
 msgid "not a GIMP Curves file"
 msgstr "不是 GIMP 曲线文件"
 
-#: ../app/operations/gimpcurvesconfig.c:597
+#: ../app/operations/gimpcurvesconfig.c:594
 msgid "Parse error, didn't find 2 integers"
 msgstr "解析错误，未找到 2 个整数"
 
-#: ../app/operations/gimpcurvesconfig.c:717
+#: ../app/operations/gimpcurvesconfig.c:698
 msgid "Writing curves file failed: "
 msgstr "写入曲线文件失败："
 
@@ -18810,15 +18820,15 @@ msgstr "固定输出"
 msgid "Clamp final output values."
 msgstr "固定最终输出数值。"
 
-#: ../app/operations/gimplevelsconfig.c:862
+#: ../app/operations/gimplevelsconfig.c:855
 msgid "not a GIMP Levels file"
 msgstr "不是 GIMP 色阶文件"
 
-#: ../app/operations/gimplevelsconfig.c:937
+#: ../app/operations/gimplevelsconfig.c:930
 msgid "parse error"
 msgstr "解析错误"
 
-#: ../app/operations/gimplevelsconfig.c:972
+#: ../app/operations/gimplevelsconfig.c:965
 msgid "Writing levels file failed: "
 msgstr "写入色阶文件失败："
 
@@ -18859,7 +18869,7 @@ msgstr "单色化该图像"
 msgid "Color"
 msgstr "颜色"
 
-#: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:143
+#: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:155
 msgid "Adjust color curves"
 msgstr "调整颜色曲线"
 
@@ -21360,58 +21370,70 @@ msgstr "剪裁到："
 msgid "There is no active layer to crop."
 msgstr "没有激活图层可以剪裁。"
 
-#: ../app/tools/gimpcurvestool.c:142
+#: ../app/tools/gimpcurvestool.c:154
 msgid "Curves"
 msgstr "曲线"
 
-#: ../app/tools/gimpcurvestool.c:144
+#: ../app/tools/gimpcurvestool.c:156
 msgid "_Curves..."
 msgstr "曲线(_C)…"
 
-#: ../app/tools/gimpcurvestool.c:326
+#: ../app/tools/gimpcurvestool.c:399
 msgid "Click to add a control point"
 msgstr "单击以添加控制点"
 
-#: ../app/tools/gimpcurvestool.c:331
+#: ../app/tools/gimpcurvestool.c:404
 msgid "Click to add control points to all channels"
 msgstr "单击以在全部通道中添加控制点"
 
-#: ../app/tools/gimpcurvestool.c:336
+#: ../app/tools/gimpcurvestool.c:409
 msgid "Click to locate on curve"
 msgstr "单击以在曲线上定位"
 
-#: ../app/tools/gimpcurvestool.c:338
+#: ../app/tools/gimpcurvestool.c:411
 #, c-format
 msgid "%s: add control point"
 msgstr "%s：添加控制点"
 
-#: ../app/tools/gimpcurvestool.c:339
+#: ../app/tools/gimpcurvestool.c:412
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s：在全部通道中添加控制点"
 
-#: ../app/tools/gimpcurvestool.c:356
+#: ../app/tools/gimpcurvestool.c:429
 msgid "Adjust Color Curves"
 msgstr "调整颜色曲线"
 
-#: ../app/tools/gimpcurvestool.c:401 ../app/tools/gimplevelstool.c:354
+#: ../app/tools/gimpcurvestool.c:474 ../app/tools/gimplevelstool.c:354
 #: ../app/tools/gimpthresholdtool.c:230
 msgid "Cha_nnel:"
 msgstr "通道(_N)："
 
-#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:506 ../app/tools/gimplevelstool.c:384
 msgid "R_eset Channel"
 msgstr "重置通道(_E)"
 
-#: ../app/tools/gimpcurvestool.c:540 ../app/widgets/gimpdeviceinfoeditor.c:499
+#: ../app/tools/gimpcurvestool.c:618
+msgid "_Input:"
+msgstr "输入(_I)："
+
+#: ../app/tools/gimpcurvestool.c:632
+msgid "O_utput:"
+msgstr "输出(_U)："
+
+#: ../app/tools/gimpcurvestool.c:646
+msgid "T_ype:"
+msgstr "类型(_Y)："
+
+#: ../app/tools/gimpcurvestool.c:665 ../app/widgets/gimpdeviceinfoeditor.c:499
 msgid "Curve _type:"
 msgstr "曲线类型(_T)"
 
-#: ../app/tools/gimpcurvestool.c:658 ../app/tools/gimplevelstool.c:750
+#: ../app/tools/gimpcurvestool.c:784 ../app/tools/gimplevelstool.c:750
 msgid "Could not read header: "
 msgstr "无法读取文件头："
 
-#: ../app/tools/gimpcurvestool.c:732
+#: ../app/tools/gimpcurvestool.c:858
 msgid "Use _old curves file format"
 msgstr "使用旧曲线文件格式(_O)"
 
@@ -24044,12 +24066,12 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "n/a"
 
-#: ../app/widgets/gimpcolormapeditor.c:233
+#: ../app/widgets/gimpcolormapeditor.c:234
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "编辑颜色表项 #%d"
 
-#: ../app/widgets/gimpcolormapeditor.c:241
+#: ../app/widgets/gimpcolormapeditor.c:242
 msgid "Edit Colormap Entry"
 msgstr "编辑颜色表项"
 
