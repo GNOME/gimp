@@ -224,14 +224,28 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
   if (gimp_drawable_get_component_type (drawable) == GIMP_COMPONENT_TYPE_U8)
     {
-      gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph), 0, 255);
-      gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph), 0, 255);
+      c_tool->scale = 255.0;
+
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (c_tool->point_input),  0);
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (c_tool->point_output), 0);
     }
   else
     {
-      gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph), 0, 100);
-      gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph), 0, 100);
+      c_tool->scale = 100.0;
+
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (c_tool->point_input),  2);
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (c_tool->point_output), 2);
     }
+
+  gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph),
+                               0, c_tool->scale);
+  gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph),
+                               0, c_tool->scale);
+
+  gtk_spin_button_set_range (GTK_SPIN_BUTTON (c_tool->point_input),
+                             0, c_tool->scale);
+  gtk_spin_button_set_range (GTK_SPIN_BUTTON (c_tool->point_output),
+                             0, c_tool->scale);
 
   for (channel = GIMP_HISTOGRAM_VALUE;
        channel <= GIMP_HISTOGRAM_ALPHA;
@@ -241,6 +255,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                         G_CALLBACK (curves_curve_dirty_callback),
                         tool);
     }
+
+  gimp_curves_tool_update_point (c_tool);
 
   /*  always pick colors  */
   gimp_filter_tool_enable_color_picking (filter_tool, NULL, FALSE);
@@ -594,6 +610,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   gtk_widget_show (table);
 
+  /*  The point properties box  */
   tool->point_box = hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (tool->point_box);
@@ -602,7 +619,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  tool->point_input = gimp_spin_button_new_with_range (0.0, 255.0, 1.0);
+  tool->point_input = gimp_spin_button_new (NULL, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), tool->point_input, FALSE, FALSE, 0);
   gtk_widget_show (tool->point_input);
 
@@ -616,7 +633,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  tool->point_output = gimp_spin_button_new_with_range (0.0, 255.0, 1.0);
+  tool->point_output = gimp_spin_button_new (NULL, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), tool->point_output, FALSE, FALSE, 0);
   gtk_widget_show (tool->point_output);
 
@@ -649,6 +666,7 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
+  /*  The curve-type combo  */
   tool->curve_type = combo = gimp_enum_combo_box_new (GIMP_TYPE_CURVE_TYPE);
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                        "gimp-curve");
@@ -955,10 +973,10 @@ gimp_curves_tool_update_point (GimpCurvesTool *tool)
 
       gimp_curve_get_point (curve, point, &x, &y);
 
-      x   *= 255.0;
-      y   *= 255.0;
-      min *= 255.0;
-      max *= 255.0;
+      x   *= tool->scale;
+      y   *= tool->scale;
+      min *= tool->scale;
+      max *= tool->scale;
 
       g_signal_handlers_block_by_func (tool->point_input,
                                        curves_point_coords_callback,
@@ -1091,8 +1109,8 @@ curves_point_coords_callback (GtkWidget      *widget,
       x = gtk_spin_button_get_value (GTK_SPIN_BUTTON (tool->point_input));
       y = gtk_spin_button_get_value (GTK_SPIN_BUTTON (tool->point_output));
 
-      x /= 255.0;
-      y /= 255.0;
+      x /= tool->scale;
+      y /= tool->scale;
 
       gimp_curve_set_point (curve, point, x, y);
     }
