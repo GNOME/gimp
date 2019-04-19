@@ -56,6 +56,7 @@ enum
 
 enum
 {
+  SELECTION_CHANGED,
   CUT_CLIPBOARD,
   COPY_CLIPBOARD,
   PASTE_CLIPBOARD,
@@ -141,6 +142,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
   widget_class->leave_notify_event   = gimp_curve_view_leave_notify;
   widget_class->key_press_event      = gimp_curve_view_key_press;
 
+  klass->selection_changed           = NULL;
   klass->cut_clipboard               = gimp_curve_view_cut_clipboard;
   klass->copy_clipboard              = gimp_curve_view_copy_clipboard;
   klass->paste_clipboard             = gimp_curve_view_paste_clipboard;
@@ -179,6 +181,15 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
                                    g_param_spec_string ("y-axis-label", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
+
+  curve_view_signals[SELECTION_CHANGED] =
+    g_signal_new ("selection-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpCurveViewClass, selection_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   curve_view_signals[CUT_CLIPBOARD] =
     g_signal_new ("cut-clipboard",
@@ -1386,9 +1397,25 @@ gimp_curve_view_set_selected (GimpCurveView *view,
 {
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
 
-  view->selected = selected;
+  if (selected != view->selected)
+    {
+      view->selected = selected;
 
-  gtk_widget_queue_draw (GTK_WIDGET (view));
+      g_signal_emit (view, curve_view_signals[SELECTION_CHANGED], 0);
+
+      gtk_widget_queue_draw (GTK_WIDGET (view));
+    }
+}
+
+gint
+gimp_curve_view_get_selected (GimpCurveView *view)
+{
+  g_return_val_if_fail (GIMP_IS_CURVE_VIEW (view), -1);
+
+  if (view->curve && view->selected < gimp_curve_get_n_points (view->curve))
+    return view->selected;
+  else
+    return -1;
 }
 
 void
