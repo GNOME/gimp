@@ -402,13 +402,10 @@ gimp_curves_config_new_spline (gint32         channel,
   gimp_data_freeze (GIMP_DATA (curve));
 
   gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
-  gimp_curve_set_n_points (curve, n_points);
-
-  /*  unset the last point  */
-  gimp_curve_set_point (curve, curve->n_points - 1, -1.0, -1.0);
+  gimp_curve_clear_points (curve);
 
   for (i = 0; i < n_points; i++)
-    gimp_curve_set_point (curve, i,
+    gimp_curve_add_point (curve,
                           (gdouble) points[i * 2],
                           (gdouble) points[i * 2 + 1]);
 
@@ -598,18 +595,18 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
       gimp_data_freeze (GIMP_DATA (curve));
 
       gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
-      gimp_curve_set_n_points (curve, GIMP_CURVE_N_CRUFT_POINTS);
-
-      gimp_curve_reset (curve, FALSE);
+      gimp_curve_clear_points (curve);
 
       for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         {
-          if (index[i][j] < 0 || value[i][j] < 0)
-            gimp_curve_set_point (curve, j, -1.0, -1.0);
-          else
-            gimp_curve_set_point (curve, j,
-                                  (gdouble) index[i][j] / 255.0,
-                                  (gdouble) value[i][j] / 255.0);
+          gdouble x;
+          gdouble y;
+
+          x = (gdouble) index[i][j] / 255.0;
+          y = (gdouble) value[i][j] / 255.0;
+
+          if (x >= 0.0)
+            gimp_curve_add_point (curve, x, y);
         }
 
       gimp_data_thaw (GIMP_DATA (curve));
@@ -643,50 +640,34 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
       GimpCurve *curve = config->curve[i];
       gint       j;
 
-      if (curve->curve_type == GIMP_CURVE_FREE)
+      if (curve->curve_type == GIMP_CURVE_SMOOTH)
         {
-          gint n_points;
+          g_object_ref (curve);
+        }
+      else
+        {
+          curve = GIMP_CURVE (gimp_data_duplicate (GIMP_DATA (curve)));
 
-          for (j = 0; j < curve->n_points; j++)
-            {
-              curve->points[j].x = -1;
-              curve->points[j].y = -1;
-            }
-
-          /* pick some points from the curve and make them control
-           * points
-           */
-          n_points = CLAMP (9, curve->n_points / 2, curve->n_points);
-
-          for (j = 0; j < n_points; j++)
-            {
-              gint sample = j * (curve->n_samples - 1) / (n_points - 1);
-              gint point  = j * (curve->n_points  - 1) / (n_points - 1);
-
-              curve->points[point].x = ((gdouble) sample /
-                                        (gdouble) (curve->n_samples - 1));
-              curve->points[point].y = curve->samples[sample];
-            }
+          gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
         }
 
-      for (j = 0; j < curve->n_points; j++)
+      for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         {
-          /* don't use gimp_curve_get_point() because that doesn't
-           * work when the curve type is GIMP_CURVE_FREE
-           */
-          gdouble x = curve->points[j].x;
-          gdouble y = curve->points[j].y;
+          gint x = -1;
+          gint y = -1;
 
-          if (x < 0.0 || y < 0.0)
+          if (j < gimp_curve_get_n_points (curve))
             {
-              g_string_append_printf (string, "%d %d ", -1, -1);
+              gdouble point_x;
+              gdouble point_y;
+
+              gimp_curve_get_point (curve, j, &point_x, &point_y);
+
+              x = floor (point_x * 255.999);
+              y = floor (point_y * 255.999);
             }
-          else
-            {
-              g_string_append_printf (string, "%d %d ",
-                                      (gint) (x * 255.999),
-                                      (gint) (y * 255.999));
-            }
+
+          g_string_append_printf (string, "%d %d ", x, y);
         }
 
       g_string_append_printf (string, "\n");

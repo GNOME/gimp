@@ -65,17 +65,24 @@ void            gimp_curve_set_curve_type    (GimpCurve     *curve,
                                               GimpCurveType  curve_type);
 GimpCurveType   gimp_curve_get_curve_type    (GimpCurve     *curve);
 
-void            gimp_curve_set_n_points      (GimpCurve     *curve,
-                                              gint           n_points);
 gint            gimp_curve_get_n_points      (GimpCurve     *curve);
 
 void            gimp_curve_set_n_samples     (GimpCurve     *curve,
                                               gint           n_samples);
 gint            gimp_curve_get_n_samples     (GimpCurve     *curve);
 
-gint            gimp_curve_get_closest_point (GimpCurve     *curve,
+gint            gimp_curve_get_point_at      (GimpCurve     *curve,
                                               gdouble        x);
+gint            gimp_curve_get_closest_point (GimpCurve     *curve,
+                                              gdouble        x,
+                                              gdouble        y,
+                                              gdouble        max_distance);
 
+gint            gimp_curve_add_point         (GimpCurve     *curve,
+                                              gdouble        x,
+                                              gdouble        y);
+void            gimp_curve_delete_point      (GimpCurve     *curve,
+                                              gint           point);
 void            gimp_curve_set_point         (GimpCurve     *curve,
                                               gint           point,
                                               gdouble        x,
@@ -83,12 +90,11 @@ void            gimp_curve_set_point         (GimpCurve     *curve,
 void            gimp_curve_move_point        (GimpCurve     *curve,
                                               gint           point,
                                               gdouble        y);
-void            gimp_curve_delete_point      (GimpCurve     *curve,
-                                              gint           point);
 void            gimp_curve_get_point         (GimpCurve     *curve,
                                               gint           point,
                                               gdouble       *x,
                                               gdouble       *y);
+void            gimp_curve_clear_points      (GimpCurve     *curve);
 
 void            gimp_curve_set_curve         (GimpCurve     *curve,
                                               gdouble        x,

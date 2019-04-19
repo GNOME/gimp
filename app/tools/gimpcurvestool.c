@@ -242,15 +242,18 @@ gimp_curves_tool_button_release (GimpTool              *tool,
     {
       GimpCurve *curve = config->curve[config->channel];
       gdouble    value = c_tool->picked_color[config->channel];
-      gint       closest;
+      gint       point;
 
-      closest = gimp_curve_get_closest_point (curve, value);
+      point = gimp_curve_get_point_at (curve, value);
 
-      gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
-                                    closest);
+      if (point < 0)
+        {
+          point = gimp_curve_add_point (
+            curve,
+            value, gimp_curve_map_value (curve, value));
+        }
 
-      gimp_curve_set_point (curve, closest,
-                            value, gimp_curve_map_value (curve, value));
+      gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph), point);
     }
   else if (state & gimp_get_toggle_behavior_mask ())
     {
@@ -262,17 +265,25 @@ gimp_curves_tool_button_release (GimpTool              *tool,
         {
           GimpCurve *curve = config->curve[channel];
           gdouble    value = c_tool->picked_color[channel];
-          gint       closest;
 
           if (value != -1)
             {
-              closest = gimp_curve_get_closest_point (curve, value);
+              gint point;
 
-              gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
-                                            closest);
+              point = gimp_curve_get_point_at (curve, value);
 
-              gimp_curve_set_point (curve, closest,
-                                    value, gimp_curve_map_value (curve, value));
+              if (point < 0)
+                {
+                  point = gimp_curve_add_point (
+                    curve,
+                    value, gimp_curve_map_value (curve, value));
+                }
+
+              if (channel == config->channel)
+                {
+                  gimp_curve_view_set_selected (GIMP_CURVE_VIEW (c_tool->graph),
+                                                point);
+                }
             }
         }
     }

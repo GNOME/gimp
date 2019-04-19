@@ -696,17 +696,14 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
        channel++)
     {
       GimpCurve  *curve    = curves->curve[channel];
-      const gint  n_points = gimp_curve_get_n_points (curve);
       static const gint n  = 8;
-      gint        point    = -1;
       gdouble     gamma    = config->gamma[channel];
       gdouble     delta_in;
       gdouble     delta_out;
       gdouble     x, y;
 
       /* clear the points set by default */
-      gimp_curve_set_point (curve, 0, -1, -1);
-      gimp_curve_set_point (curve, n_points - 1, -1, -1);
+      gimp_curve_clear_points (curve);
 
       delta_in  = config->high_input[channel] - config->low_input[channel];
       delta_out = config->high_output[channel] - config->low_output[channel];
@@ -714,8 +711,7 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
       x = config->low_input[channel];
       y = config->low_output[channel];
 
-      point = CLAMP (n_points * x, point + 1, n_points - 1 - n);
-      gimp_curve_set_point (curve, point, x, y);
+      gimp_curve_add_point (curve, x, y);
 
       if (delta_out != 0 && gamma != 1.0)
         {
@@ -755,8 +751,7 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
                   x = config->low_input[channel] + dx;
                   y = config->low_output[channel] + delta_out *
                       gimp_operation_levels_map_input (config, channel, x);
-                  point = CLAMP (n_points * x, point + 1, n_points - 1 - n + i);
-                  gimp_curve_set_point (curve, point, x, y);
+                  gimp_curve_add_point (curve, x, y);
                 }
             }
           else
@@ -792,8 +787,7 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
                   y = config->low_output[channel] + dy;
                   x = config->low_input[channel] + delta_in *
                       gimp_operation_levels_map_input (config_inv, channel, y);
-                  point = CLAMP (n_points * x, point + 1, n_points - 1 - n + i);
-                  gimp_curve_set_point (curve, point, x, y);
+                  gimp_curve_add_point (curve, x, y);
                 }
 
               g_object_unref (config_inv);
@@ -803,8 +797,7 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
       x = config->high_input[channel];
       y = config->high_output[channel];
 
-      point = CLAMP (n_points * x, point + 1, n_points - 1);
-      gimp_curve_set_point (curve, point, x, y);
+      gimp_curve_add_point (curve, x, y);
     }
 
   return curves;
