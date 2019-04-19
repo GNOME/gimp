@@ -228,6 +228,9 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (c_tool->point_input),  0);
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (c_tool->point_output), 0);
+
+      gtk_entry_set_width_chars (GTK_ENTRY (c_tool->point_input),  3);
+      gtk_entry_set_width_chars (GTK_ENTRY (c_tool->point_output), 3);
     }
   else
     {
@@ -235,6 +238,9 @@ gimp_curves_tool_initialize (GimpTool     *tool,
 
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (c_tool->point_input),  2);
       gtk_spin_button_set_digits (GTK_SPIN_BUTTON (c_tool->point_output), 2);
+
+      gtk_entry_set_width_chars (GTK_ENTRY (c_tool->point_input),  6);
+      gtk_entry_set_width_chars (GTK_ENTRY (c_tool->point_output), 6);
     }
 
   gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph),
