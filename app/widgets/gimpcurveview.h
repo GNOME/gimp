@@ -81,9 +81,12 @@ struct _GimpCurveViewClass
 {
   GimpHistogramViewClass  parent_class;
 
-  void (* cut_clipboard)   (GimpCurveView *view);
-  void (* copy_clipboard)  (GimpCurveView *view);
-  void (* paste_clipboard) (GimpCurveView *view);
+  /* signals */
+  void (* selection_changed) (GimpCurveView *view);
+
+  void (* cut_clipboard)     (GimpCurveView *view);
+  void (* copy_clipboard)    (GimpCurveView *view);
+  void (* paste_clipboard)   (GimpCurveView *view);
 };
 
 
@@ -106,6 +109,8 @@ void   gimp_curve_view_remove_all_backgrounds (GimpCurveView *view);
 
 void        gimp_curve_view_set_selected      (GimpCurveView *view,
                                                gint           selected);
+gint        gimp_curve_view_get_selected      (GimpCurveView *view);
+
 void        gimp_curve_view_set_range_x       (GimpCurveView *view,
                                                gdouble        min,
                                                gdouble        max);
