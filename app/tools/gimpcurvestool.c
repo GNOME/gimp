@@ -106,6 +106,10 @@ static void       gimp_curves_tool_export_setup    (GimpSettingsBox      *settin
                                                     gboolean              export,
                                                     GimpCurvesTool       *tool);
 static void       gimp_curves_tool_update_channel  (GimpCurvesTool       *tool);
+static void       gimp_curves_tool_update_point    (GimpCurvesTool       *tool);
+
+static void       curves_curve_dirty_callback      (GimpCurve            *curve,
+                                                    GimpCurvesTool       *tool);
 
 static void       curves_channel_callback          (GtkWidget            *widget,
                                                     GimpCurvesTool       *tool);
@@ -114,6 +118,12 @@ static void       curves_channel_reset_callback    (GtkWidget            *widget
 
 static gboolean   curves_menu_sensitivity          (gint                  value,
                                                     gpointer              data);
+
+static void       curves_graph_selection_callback  (GtkWidget            *widget,
+                                                    GimpCurvesTool       *tool);
+
+static void       curves_point_coords_callback     (GtkWidget            *widget,
+                                                    GimpCurvesTool       *tool);
 
 static void       curves_curve_type_callback       (GtkWidget            *widget,
                                                     GimpCurvesTool       *tool);
@@ -184,12 +194,13 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                              GimpDisplay  *display,
                              GError      **error)
 {
-  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
-  GimpCurvesTool   *c_tool      = GIMP_CURVES_TOOL (tool);
-  GimpImage        *image       = gimp_display_get_image (display);
-  GimpDrawable     *drawable    = gimp_image_get_active_drawable (image);
-  GimpCurvesConfig *config;
-  GimpHistogram    *histogram;
+  GimpFilterTool       *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpCurvesTool       *c_tool      = GIMP_CURVES_TOOL (tool);
+  GimpImage            *image       = gimp_display_get_image (display);
+  GimpDrawable         *drawable    = gimp_image_get_active_drawable (image);
+  GimpCurvesConfig     *config;
+  GimpHistogram        *histogram;
+  GimpHistogramChannel  channel;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -218,6 +229,15 @@ gimp_curves_tool_initialize (GimpTool     *tool,
     {
       gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph), 0, 100);
       gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph), 0, 100);
+    }
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      g_signal_connect (config->curve[channel], "dirty",
+                        G_CALLBACK (curves_curve_dirty_callback),
+                        tool);
     }
 
   /*  always pick colors  */
@@ -521,6 +541,10 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
 
+  g_signal_connect (tool->graph, "selection-changed",
+                    G_CALLBACK (curves_graph_selection_callback),
+                    tool);
+
   /*  The bottom color bar  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_table_attach (GTK_TABLE (table), hbox2, 1, 2, 1, 2,
@@ -548,8 +572,40 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
 
   gtk_widget_show (table);
 
+  tool->point_box = hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (tool->point_box);
+
+  label = gtk_label_new_with_mnemonic (_("_Input:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  tool->point_input = gimp_spin_button_new_with_range (0.0, 255.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (hbox), tool->point_input, FALSE, FALSE, 0);
+  gtk_widget_show (tool->point_input);
+
+  g_signal_connect (tool->point_input, "value-changed",
+                    G_CALLBACK (curves_point_coords_callback),
+                    tool);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), tool->point_input);
+
+  label = gtk_label_new_with_mnemonic (_("O_utput:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  tool->point_output = gimp_spin_button_new_with_range (0.0, 255.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (hbox), tool->point_output, FALSE, FALSE, 0);
+  gtk_widget_show (tool->point_output);
+
+  g_signal_connect (tool->point_output, "value-changed",
+                    G_CALLBACK (curves_point_coords_callback),
+                    tool);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), tool->point_output);
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_end (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (frame_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("Curve _type:"));
@@ -831,6 +887,73 @@ gimp_curves_tool_update_channel (GimpCurvesTool *tool)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->curve_type),
                                  curve->curve_type);
+
+  gimp_curves_tool_update_point (tool);
+}
+
+static void
+gimp_curves_tool_update_point (GimpCurvesTool *tool)
+{
+  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpCurvesConfig *config      = GIMP_CURVES_CONFIG (filter_tool->config);
+  GimpCurve        *curve       = config->curve[config->channel];
+  gint              point;
+
+  point = gimp_curve_view_get_selected (GIMP_CURVE_VIEW (tool->graph));
+
+  gtk_widget_set_sensitive (tool->point_box, point >= 0);
+
+  if (point >= 0)
+    {
+      gdouble min = 0.0;
+      gdouble max = 1.0;
+      gdouble x;
+      gdouble y;
+
+      if (point > 0)
+        gimp_curve_get_point (curve, point - 1, &min, NULL);
+
+      if (point < gimp_curve_get_n_points (curve) - 1)
+        gimp_curve_get_point (curve, point + 1, &max, NULL);
+
+      gimp_curve_get_point (curve, point, &x, &y);
+
+      x   *= 255.0;
+      y   *= 255.0;
+      min *= 255.0;
+      max *= 255.0;
+
+      g_signal_handlers_block_by_func (tool->point_input,
+                                       curves_point_coords_callback,
+                                       tool);
+      g_signal_handlers_block_by_func (tool->point_output,
+                                       curves_point_coords_callback,
+                                       tool);
+
+      gtk_spin_button_set_range (GTK_SPIN_BUTTON (tool->point_input), min, max);
+
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (tool->point_input),  x);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (tool->point_output), y);
+
+
+      g_signal_handlers_unblock_by_func (tool->point_input,
+                                         curves_point_coords_callback,
+                                         tool);
+      g_signal_handlers_unblock_by_func (tool->point_output,
+                                         curves_point_coords_callback,
+                                         tool);
+    }
+}
+
+static void
+curves_curve_dirty_callback (GimpCurve      *curve,
+                             GimpCurvesTool *tool)
+{
+  if (tool->graph &&
+      gimp_curve_view_get_curve (GIMP_CURVE_VIEW (tool->graph)) == curve)
+    {
+      gimp_curves_tool_update_point (tool);
+    }
 }
 
 static void
@@ -891,6 +1014,39 @@ curves_menu_sensitivity (gint      value,
     }
 
   return FALSE;
+}
+
+static void
+curves_graph_selection_callback (GtkWidget      *widget,
+                                 GimpCurvesTool *tool)
+{
+  gimp_curves_tool_update_point (tool);
+}
+
+static void
+curves_point_coords_callback (GtkWidget      *widget,
+                              GimpCurvesTool *tool)
+{
+  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpCurvesConfig *config      = GIMP_CURVES_CONFIG (filter_tool->config);
+  GimpCurve        *curve       = config->curve[config->channel];
+  gint              point;
+
+  point = gimp_curve_view_get_selected (GIMP_CURVE_VIEW (tool->graph));
+
+  if (point >= 0)
+    {
+      gdouble x;
+      gdouble y;
+
+      x = gtk_spin_button_get_value (GTK_SPIN_BUTTON (tool->point_input));
+      y = gtk_spin_button_get_value (GTK_SPIN_BUTTON (tool->point_output));
+
+      x /= 255.0;
+      y /= 255.0;
+
+      gimp_curve_set_point (curve, point, x, y);
+    }
 }
 
 static void
