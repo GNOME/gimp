@@ -227,7 +227,7 @@ struct _GimpToolRectanglePrivate
   /* The title for the statusbar coords */
   gchar                  *status_title;
 
-  /* For saving in case of cancelation. */
+  /* For saving in case of cancellation. */
   gdouble                 saved_x1;
   gdouble                 saved_y1;
   gdouble                 saved_x2;
