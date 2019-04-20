@@ -352,7 +352,7 @@ gimp_view_renderer_drawable_cancel_render (GimpViewRendererDrawable *renderdrawa
    * let it go on without blocking the main thread.
    * gimp_drawable_get_sub_preview_async() can continue rendering safely even
    * after the drawable had died, and our completion callback is prepared to
-   * handle cancelation.
+   * handle cancellation.
    */
   if (renderdrawable->priv->render_async)
     {
