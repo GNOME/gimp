@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-21 00:06+0300\n"
-"PO-Revision-Date: 2019-02-21 01:37+0300\n"
+"POT-Creation-Date: 2019-04-20 23:26+0300\n"
+"PO-Revision-Date: 2019-04-21 00:02+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -110,89 +110,102 @@ msgid ""
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
-msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
+msgid ""
+"Add \"Constrain handles\" and \"Around center\" options to the perspective-"
+"transform tool's GUI"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+msgid "Parametric brushes now 32-bit float to avoid posterization"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+msgid "Clipboard brushes and pattern can now be duplicated"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid "Several optimizations including faster layer group rendering"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
-#, fuzzy
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "HiDPI support improvements"
-msgstr "Повышение удобства использования"
+msgstr "Улучшения в поддержке HiDPI"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid "New preference to choose the default export file type"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "New DDS format loading/exporting plug-in"
-msgstr ""
+msgstr "Новый плагин, добавляющий поддержку импорта и экспорта DDS"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr "Улучшено определение RawTherapee (версия 5.5 и новее) на Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -200,47 +213,47 @@ msgstr ""
 "GIMP 2.10.6 выпущен с множеством исправлений ошибок и оптимизаций. Вот самые "
 "примечательные изменения:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Новый фильтр «Маленькая планета» (gegl:stereographic-projection)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "New \"Long Shadow\" filter"
 msgstr "Новый фильтр «Длинная тень»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Новая локализация (теперь GIMP доступен на 81 языке): марати"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -248,7 +261,7 @@ msgstr ""
 "GIMP 2.10.4 выпущен с множеством исправлений ошибок и различных оптимизаций. "
 "Вот самые примечательные изменения:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -256,29 +269,29 @@ msgstr ""
 "Выравнивание в инструменте измерения: слои можно вращать, используя линию "
 "измерителя как горизонт"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "Быстрый запуск: загрузка шрифтов больше не блокирует старт программы"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
 "Метки для шрифтов с тем же интерфейсом, что для кистей, текстур и градиентов"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr "Поддержка PSD: можно импортировать предварительно сведенную версию PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
 msgstr ""
 "Монитор ресурсов: новая группа \"Память\" и обновленная группа \"Подкачка\" "
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -288,7 +301,7 @@ msgstr ""
 "после версии 2.10.0 и содержит исправления ошибок после выхода этой основной "
 "версии."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -300,7 +313,7 @@ msgstr ""
 "«Сферизация» и «Рекурсивная трансформация». Это хорошие примеры нашей мягкой "
 "политики в отношении дополнений в стабильных микроверсиях."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -308,11 +321,11 @@ msgstr ""
 "Главным новшеством первой версии GIMP в серии 2.10 стал порт на GEGL, новый "
 "движок обработки графики. Основные изменения таковы:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "Обработка с высокой разрядностью (16/32 бит на цветовой канал)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -320,38 +333,38 @@ msgstr ""
 "Управление цветом стало полноправной возможностью программы, большинство "
 "виджетов и областей предпросмотра теперь цветоуправляемы"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Предпросмотр эффектов прямо на холсте, с раздельным просмотром пикселов до и "
 "после обработки"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 "Многопоточные отрисовка, обработка и рисование с использованием аппаратного "
 "ускорения"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 "Улучшения в уже существовавших инструментах и несколько новых инструментов "
 "трансформации"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Улучшена поддержка многих форматов файлов, в частности, усовершенствован "
 "импорт PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Добавлена поддержка новых форматов файлов: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -359,27 +372,27 @@ msgstr ""
 "Улучшен инструментарий для художников: появилось вращение и зеркалирование "
 "холста, симметричное рисование, добавлена кисть MyPaint…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr ""
 "Появились средства просмотра и редактирования метаданных Exif, XMP, IPTC и "
 "DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Базовая поддержка HiDPI: автоматический или пользовательский выбор размеров "
 "значков"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Новые темы интерфейса для GIMP: светлая, серая, тёмная и системная"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "And much, much more…"
 msgstr "И многое, многое другое…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -390,7 +403,7 @@ msgstr ""
 "повышению скорости и оптимизации работы программы для обеспечения большего "
 "комфорта при рисовании. Наиболее масштабные изменения:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 #, fuzzy
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
@@ -398,19 +411,19 @@ msgid ""
 msgstr ""
 "Существенное ускорение рисования за счёт вывода рисования в отдельный поток"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 #, fuzzy
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr "Симметрия рисования теперь сохраняется в файлах XCF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
 "Светлая и тёмная темы переписаны с нуля и теперь не содержат прежних проблем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -421,7 +434,7 @@ msgstr ""
 "вращение вокруг вертикальной (yaw) / поперечной (pitch) / продольной (roll) "
 "оси."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 #, fuzzy
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
@@ -433,7 +446,7 @@ msgstr ""
 "после получения сигналов, но и после предупреждений и критических ошибок "
 "(если установлен ключ отладки «fatal-warnings»)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -442,11 +455,11 @@ msgstr ""
 "GIMP 2.10.0-RC1 — первый кандидат в релизы GIMP 2.10.0. Основной фокус — на "
 "отладке и стабильности. Помимо исправления ошибок основные изменения таковы:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr "Новая панель GIMP, показывающая расход системных ресурсов"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -454,35 +467,35 @@ msgstr ""
 "Новый диалог создаёт отладочные данные и помогает сообщать разработчикам "
 "полезную информацию о произошедших ошибках"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
 "Несохранённые изображения теперь могут быть восстановлены после падения"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "Layer masks on layer groups"
 msgstr "Маски на группах слоёв"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Улучшено чтение JPEG2000: поддерживается более высокая разрядность и разные "
 "цветовые пространства"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Улучшено создание снимков экрана и снятие цвета пипеткой на разных платформах"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid "Metadata defaults preferences now available"
 msgstr "Появился выбор, сохранять или не сохранять по умолчанию метаданные"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Various GUI polishing"
 msgstr "Различные улучшения в пользовательском интерфейсе"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -490,49 +503,49 @@ msgstr ""
 "В GIMP 2.9.8 появилось редактирование градиентов на холсте, а также внесены "
 "различные улучшения. Однако в основном разработчики всё же исправляли ошибки."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "On-canvas gradient editing"
 msgstr "Редактирование градиентов на холсте"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Notification when an image is over/underexposed"
 msgstr "Уведомление о пере- и недоэкспонированности изображения"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Better and faster color management"
 msgstr "Ускоренное и улучшенное управление цветом"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Поддержка цветовой пипетки и снятия скриншотов в Wayland на KDE Plasma"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Paste in place feature"
 msgstr "Вставка на место"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "Many usability improvements"
 msgstr "Повышение удобства использования"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "Manual can be displayed in the user's preferred language"
 msgstr ""
 "Руководство пользователя может быть показано на языке, выбранном "
 "пользователем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Улучшения в фильтре частотного разбора"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Улучшенная поддержка файлов Adobe Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid "New support for password-protected PDF"
 msgstr "Поддержка файлов PDF, защищённых паролем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Поддержка формата HGT (данные Digital Elevation Model)"
 
@@ -983,13 +996,13 @@ msgid "Windows"
 msgstr "Окна"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:593
+#: ../app/actions/actions.c:617
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:619
+#: ../app/actions/actions.c:643
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -2962,7 +2975,7 @@ msgstr "240 секунд"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimpforegroundselecttool.c:314 ../app/tools/gimptexttool.c:1762
-#: ../app/tools/gimptransformgridtool.c:1095
+#: ../app/tools/gimptransformgridtool.c:1108
 #: ../app/tools/gimptransformtool.c:332 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
@@ -2995,8 +3008,8 @@ msgid "Enter a description for the marker"
 msgstr "Введите описание маркера"
 
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
-#: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:226
-#: ../app/dialogs/file-open-dialog.c:267
+#: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:229
+#: ../app/dialogs/file-open-dialog.c:270
 #: ../app/dialogs/file-open-location-dialog.c:223
 #: ../app/dialogs/file-open-location-dialog.c:239
 #: ../app/display/gimpdisplayshell-dnd.c:628
@@ -3013,7 +3026,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2002
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:1999
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -3262,8 +3275,9 @@ msgid "Open the palettes dialog"
 msgstr "Открыть диалог цветовых образцов"
 
 #: ../app/actions/dialogs-actions.c:191
+#, fuzzy
 msgctxt "dialogs-action"
-msgid "Palette Editor"
+msgid "Palette _Editor"
 msgstr "Редактор палитры образцов"
 
 #: ../app/actions/dialogs-actions.c:192
@@ -3272,8 +3286,9 @@ msgid "Open the palette editor"
 msgstr "Открыть редактор цветовых образцов"
 
 #: ../app/actions/dialogs-actions.c:197
+#, fuzzy
 msgctxt "dialogs-action"
-msgid "Tool presets"
+msgid "Tool Pre_sets"
 msgstr "Профили инструментов"
 
 #: ../app/actions/dialogs-actions.c:198
@@ -4590,7 +4605,7 @@ msgid "Over_write %s"
 msgstr "Пере_записать %s"
 
 #: ../app/actions/file-commands.c:118 ../app/actions/file-commands.c:542
-#: ../app/widgets/gimpopendialog.c:66
+#: ../app/widgets/gimpopendialog.c:84
 msgid "Open Image"
 msgstr "Открыть изображение"
 
@@ -6319,104 +6334,104 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Градации _серого"
 
-#: ../app/actions/image-commands.c:559
+#: ../app/actions/image-commands.c:560
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Не удалось сохранить цветовой профиль: %s"
 
-#: ../app/actions/image-commands.c:598
+#: ../app/actions/image-commands.c:599
 msgid "Save Color Profile"
 msgstr "Сохранить цветовой профиль"
 
-#: ../app/actions/image-commands.c:646
+#: ../app/actions/image-commands.c:647
 msgid "Set Image Canvas Size"
 msgstr "Установка размера холста"
 
-#: ../app/actions/image-commands.c:676 ../app/actions/image-commands.c:700
-#: ../app/actions/image-commands.c:1358
+#: ../app/actions/image-commands.c:677 ../app/actions/image-commands.c:701
+#: ../app/actions/image-commands.c:1364
 msgid "Resizing"
 msgstr "Изменяется размер..."
 
-#: ../app/actions/image-commands.c:733
+#: ../app/actions/image-commands.c:734
 msgid "Set Image Print Resolution"
 msgstr "Смена разрешения при печати"
 
-#: ../app/actions/image-commands.c:799 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:800 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:222 ../app/tools/gimpfliptool.c:134
 msgid "Flipping"
 msgstr "Производится отражение..."
 
-#: ../app/actions/image-commands.c:823 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:824 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:518
-#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:125
+#: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:128
 msgid "Rotating"
 msgstr "Производится вращение..."
 
-#: ../app/actions/image-commands.c:850 ../app/actions/layers-commands.c:828
+#: ../app/actions/image-commands.c:851 ../app/actions/layers-commands.c:831
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Не удалось кадрировать из-за того,\n"
 "что выделенная область пуста."
 
-#: ../app/actions/image-commands.c:888
+#: ../app/actions/image-commands.c:889
 msgid "Cannot crop because the image has no content."
 msgstr ""
 "Не удалось кадрировать из-за того,\n"
 "что в изображении нет содержимого."
 
-#: ../app/actions/image-commands.c:894
+#: ../app/actions/image-commands.c:895
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "Не удалось кадрировать из-за того,\n"
 "что изображение уже обрезано до содержимого."
 
-#: ../app/actions/image-commands.c:1029
+#: ../app/actions/image-commands.c:1035
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Преобразование в RGB (%s)"
 
-#: ../app/actions/image-commands.c:1067
+#: ../app/actions/image-commands.c:1073
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Преобразование в градации серого (%s)"
 
-#: ../app/actions/image-commands.c:1129
+#: ../app/actions/image-commands.c:1135
 msgid "Converting to indexed colors"
 msgstr "Преобразование в индексированное"
 
-#: ../app/actions/image-commands.c:1217
+#: ../app/actions/image-commands.c:1223
 #, c-format
 msgid "Converting image to %s"
 msgstr "Смена точности на %s"
 
-#: ../app/actions/image-commands.c:1248
+#: ../app/actions/image-commands.c:1254
 msgid "Assign color profile"
 msgstr "Назначить цветовой профиль"
 
-#: ../app/actions/image-commands.c:1294
+#: ../app/actions/image-commands.c:1300
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Преобразование в %s"
 
-#: ../app/actions/image-commands.c:1400
+#: ../app/actions/image-commands.c:1406
 msgid "Change Print Size"
 msgstr "Изменить размер при печати"
 
-#: ../app/actions/image-commands.c:1444
+#: ../app/actions/image-commands.c:1450
 msgid "Scale Image"
 msgstr "Изменить размер изображения"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1453 ../app/actions/layers-commands.c:1618
+#: ../app/actions/image-commands.c:1459 ../app/actions/layers-commands.c:1621
 #: ../app/dialogs/preferences-dialog.c:1669
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
 #: ../app/pdb/item-transform-cmds.c:618 ../app/pdb/layer-cmds.c:401
 #: ../app/pdb/layer-cmds.c:448 ../app/pdb/transform-tools-cmds.c:346
-#: ../app/tools/gimpscaletool.c:119
+#: ../app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "Масштабирование"
 
@@ -7273,7 +7288,7 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "В _новый слой"
 
-#: ../app/actions/layers-commands.c:262 ../app/actions/layers-commands.c:1467
+#: ../app/actions/layers-commands.c:262 ../app/actions/layers-commands.c:1470
 msgid "Layer Attributes"
 msgstr "Атрибуты слоя"
 
@@ -7295,29 +7310,29 @@ msgstr "Создать новый слой"
 msgid "Visible"
 msgstr "Видимое"
 
-#: ../app/actions/layers-commands.c:734
+#: ../app/actions/layers-commands.c:737
 msgid "Set Layer Boundary Size"
 msgstr "Изменить границы слоя"
 
-#: ../app/actions/layers-commands.c:796
+#: ../app/actions/layers-commands.c:799
 msgid "Scale Layer"
 msgstr "Изменить размер слоя"
 
-#: ../app/actions/layers-commands.c:838
+#: ../app/actions/layers-commands.c:841
 msgid "Crop Layer to Selection"
 msgstr "Обрезать до выделения"
 
-#: ../app/actions/layers-commands.c:868
+#: ../app/actions/layers-commands.c:871
 msgid "Crop Layer to Content"
 msgstr "Обрезать до содержимого"
 
-#: ../app/actions/layers-commands.c:881
+#: ../app/actions/layers-commands.c:884
 msgid "Cannot crop because the active layer has no content."
 msgstr ""
 "Не удалось кадрировать из-за того,\n"
 "что в активном слое нет содержимого."
 
-#: ../app/actions/layers-commands.c:888
+#: ../app/actions/layers-commands.c:891
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Не удалось кадрировать из-за того,\n"
@@ -7674,7 +7689,7 @@ msgstr "Сбросить параметров фильтров"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1094
+#: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimptransformgridtool.c:1105
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -8140,7 +8155,7 @@ msgstr "Открыть текствый файл (UTF-8)"
 #: ../app/actions/text-tool-commands.c:119
 #: ../app/dialogs/file-open-location-dialog.c:81
 #: ../app/dialogs/vectors-import-dialog.c:89
-#: ../app/widgets/gimpiconpicker.c:485 ../app/widgets/gimpopendialog.c:69
+#: ../app/widgets/gimpiconpicker.c:485 ../app/widgets/gimpopendialog.c:87
 #: ../app/widgets/gimpsettingsbox.c:732
 msgid "_Open"
 msgstr "_Открыть"
@@ -10534,7 +10549,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Ошибка при разборе '%%s': в строке больше чем %s символов."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:345
+#: ../app/core/gimp-tags.c:145 ../app/gui/themes.c:374
 #: ../app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10641,6 +10656,24 @@ msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 "Расстояние в пикселах, на котором срабатывает функция прилипания к сетке и "
 "направляющим."
+
+#: ../app/config/gimprc-blurbs.h:100
+msgid "Snap to guides by default in new image windows."
+msgstr ""
+
+#: ../app/config/gimprc-blurbs.h:103
+#, fuzzy
+msgid "Snap to the grid by default in new image windows."
+msgstr "Установите форму текста, отображающегося в заголовке окна изображения"
+
+#: ../app/config/gimprc-blurbs.h:106
+msgid "Snap to the canvas edges by default in new image windows."
+msgstr ""
+
+#: ../app/config/gimprc-blurbs.h:109
+#, fuzzy
+msgid "Snap to the active path by default in new image windows."
+msgstr "Установите форму текста, отображающегося в заголовке окна изображения"
 
 #: ../app/config/gimprc-blurbs.h:112
 msgid ""
@@ -11600,765 +11633,775 @@ msgid "Positioned"
 msgstr "Фиксированное"
 
 #: ../app/core/core-enums.c:344
-msgctxt "curve-type"
+msgctxt "curve-point-type"
 msgid "Smooth"
 msgstr "Сглаженная"
 
 #: ../app/core/core-enums.c:345
+msgctxt "curve-point-type"
+msgid "Corner"
+msgstr "Острая"
+
+#: ../app/core/core-enums.c:373
+msgctxt "curve-type"
+msgid "Smooth"
+msgstr "Сглаженная"
+
+#: ../app/core/core-enums.c:374
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "Рисуемая от руки"
 
-#: ../app/core/core-enums.c:382
+#: ../app/core/core-enums.c:411
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "По выбору"
 
-#: ../app/core/core-enums.c:383
+#: ../app/core/core-enums.c:412
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Линия"
 
-#: ../app/core/core-enums.c:384
+#: ../app/core/core-enums.c:413
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Длинные тире"
 
-#: ../app/core/core-enums.c:385
+#: ../app/core/core-enums.c:414
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Средние тире"
 
-#: ../app/core/core-enums.c:386
+#: ../app/core/core-enums.c:415
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Короткие тире"
 
-#: ../app/core/core-enums.c:387
+#: ../app/core/core-enums.c:416
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Редкие точки"
 
-#: ../app/core/core-enums.c:388
+#: ../app/core/core-enums.c:417
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Точки"
 
-#: ../app/core/core-enums.c:389
+#: ../app/core/core-enums.c:418
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Частые точки"
 
-#: ../app/core/core-enums.c:390
+#: ../app/core/core-enums.c:419
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Пунктир"
 
-#: ../app/core/core-enums.c:391
+#: ../app/core/core-enums.c:420
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Тире, точка"
 
-#: ../app/core/core-enums.c:392
+#: ../app/core/core-enums.c:421
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Тире, точка, точка"
 
-#: ../app/core/core-enums.c:422
+#: ../app/core/core-enums.c:451
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
 msgstr "Предупреждения, критические ошибки и падения"
 
-#: ../app/core/core-enums.c:423
+#: ../app/core/core-enums.c:452
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
 msgstr "Критические ошибки и падения"
 
-#: ../app/core/core-enums.c:424
+#: ../app/core/core-enums.c:453
 msgctxt "debug-policy"
 msgid "Debug crashes only"
 msgstr "Только падения"
 
-#: ../app/core/core-enums.c:425
+#: ../app/core/core-enums.c:454
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
 msgstr "Не выполнять отладку"
 
-#: ../app/core/core-enums.c:511
+#: ../app/core/core-enums.c:540
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Непрозрачность"
 
-#: ../app/core/core-enums.c:512
+#: ../app/core/core-enums.c:541
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Размер"
 
-#: ../app/core/core-enums.c:513
+#: ../app/core/core-enums.c:542
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Угол"
 
-#: ../app/core/core-enums.c:514
+#: ../app/core/core-enums.c:543
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Цвет"
 
-#: ../app/core/core-enums.c:515
+#: ../app/core/core-enums.c:544
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Жёсткость"
 
-#: ../app/core/core-enums.c:516
+#: ../app/core/core-enums.c:545
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Сила"
 
-#: ../app/core/core-enums.c:517
+#: ../app/core/core-enums.c:546
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Соотношение сторон"
 
-#: ../app/core/core-enums.c:518
+#: ../app/core/core-enums.c:547
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Интервал"
 
-#: ../app/core/core-enums.c:519
+#: ../app/core/core-enums.c:548
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Скорость"
 
-#: ../app/core/core-enums.c:520
+#: ../app/core/core-enums.c:549
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Поток"
 
-#: ../app/core/core-enums.c:521
+#: ../app/core/core-enums.c:550
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Дрожание"
 
-#: ../app/core/core-enums.c:549
+#: ../app/core/core-enums.c:578
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Одним цветом"
 
-#: ../app/core/core-enums.c:550
+#: ../app/core/core-enums.c:579
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Текстурой"
 
-#: ../app/core/core-enums.c:578
+#: ../app/core/core-enums.c:607
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Обрабатывать выделение"
 
-#: ../app/core/core-enums.c:579
+#: ../app/core/core-enums.c:608
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Обрабатывать весь слой"
 
-#: ../app/core/core-enums.c:610
+#: ../app/core/core-enums.c:639
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Фиксированный"
 
-#: ../app/core/core-enums.c:611
+#: ../app/core/core-enums.c:640
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "Цвет переднего плана"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: ../app/core/core-enums.c:614
+#: ../app/core/core-enums.c:643
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "ПП"
 
-#: ../app/core/core-enums.c:615
+#: ../app/core/core-enums.c:644
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "Цвет переднего плана (полупрозрачный)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:618
+#: ../app/core/core-enums.c:647
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "ПП (п)"
 
-#: ../app/core/core-enums.c:619
+#: ../app/core/core-enums.c:648
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "Цвет фона"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: ../app/core/core-enums.c:622
+#: ../app/core/core-enums.c:651
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "ЗП"
 
-#: ../app/core/core-enums.c:623
+#: ../app/core/core-enums.c:652
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "Цвет фона (полупрозрачный)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
-#: ../app/core/core-enums.c:626
+#: ../app/core/core-enums.c:655
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "ЗП (т)"
 
-#: ../app/core/core-enums.c:739
+#: ../app/core/core-enums.c:768
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "Значение"
 
-#: ../app/core/core-enums.c:740
+#: ../app/core/core-enums.c:769
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "Красный"
 
-#: ../app/core/core-enums.c:741
+#: ../app/core/core-enums.c:770
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "Зеленый"
 
-#: ../app/core/core-enums.c:742
+#: ../app/core/core-enums.c:771
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "Синий"
 
-#: ../app/core/core-enums.c:743
+#: ../app/core/core-enums.c:772
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "Альфа"
 
-#: ../app/core/core-enums.c:744
+#: ../app/core/core-enums.c:773
 msgctxt "histogram-channel"
 msgid "Luminance"
 msgstr "Светимость"
 
-#: ../app/core/core-enums.c:745
+#: ../app/core/core-enums.c:774
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/core/core-enums.c:776
+#: ../app/core/core-enums.c:805
 msgctxt "item-set"
 msgid "None"
 msgstr "Нет"
 
-#: ../app/core/core-enums.c:777
+#: ../app/core/core-enums.c:806
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Все слои"
 
-#: ../app/core/core-enums.c:778
+#: ../app/core/core-enums.c:807
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Слои размером с изображение"
 
-#: ../app/core/core-enums.c:779
+#: ../app/core/core-enums.c:808
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Все видимые слои"
 
-#: ../app/core/core-enums.c:780
+#: ../app/core/core-enums.c:809
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Все связанные слои"
 
-#: ../app/core/core-enums.c:808
+#: ../app/core/core-enums.c:837
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr "Глобальный"
 
-#: ../app/core/core-enums.c:809
+#: ../app/core/core-enums.c:838
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "Левина"
 
-#: ../app/core/core-enums.c:840
+#: ../app/core/core-enums.c:869
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Сообщение"
 
-#: ../app/core/core-enums.c:841
+#: ../app/core/core-enums.c:870
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: ../app/core/core-enums.c:842
+#: ../app/core/core-enums.c:871
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Ошибка"
 
-#: ../app/core/core-enums.c:843
+#: ../app/core/core-enums.c:872
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr "ПРЕДУПРЕЖДЕНИЕ"
 
-#: ../app/core/core-enums.c:844
+#: ../app/core/core-enums.c:873
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "КРИТИЧЕСКАЯ ОШИБКА"
 
-#: ../app/core/core-enums.c:910
+#: ../app/core/core-enums.c:939
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Без миниатюр"
 
-#: ../app/core/core-enums.c:911
+#: ../app/core/core-enums.c:940
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Обычный (128×128)"
 
-#: ../app/core/core-enums.c:912
+#: ../app/core/core-enums.c:941
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Большой (256×256)"
 
-#: ../app/core/core-enums.c:1101
+#: ../app/core/core-enums.c:1130
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<неправильно>>"
 
-#: ../app/core/core-enums.c:1102
+#: ../app/core/core-enums.c:1131
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Смена размера изображения"
 
-#: ../app/core/core-enums.c:1103
+#: ../app/core/core-enums.c:1132
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Изменить размер изображения"
 
-#: ../app/core/core-enums.c:1104
+#: ../app/core/core-enums.c:1133
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Зеркально отразить изображение"
 
-#: ../app/core/core-enums.c:1105
+#: ../app/core/core-enums.c:1134
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Повернуть изображение"
 
-#: ../app/core/core-enums.c:1106
+#: ../app/core/core-enums.c:1135
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Кадрировать изображение"
 
-#: ../app/core/core-enums.c:1107
+#: ../app/core/core-enums.c:1136
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Преобразовать изображение"
 
-#: ../app/core/core-enums.c:1108
+#: ../app/core/core-enums.c:1137
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Удалить объект"
 
-#: ../app/core/core-enums.c:1109 ../app/core/core-enums.c:1153
+#: ../app/core/core-enums.c:1138 ../app/core/core-enums.c:1182
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Реорганизация элемента"
 
-#: ../app/core/core-enums.c:1110
+#: ../app/core/core-enums.c:1139
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Объединить слои"
 
-#: ../app/core/core-enums.c:1111
+#: ../app/core/core-enums.c:1140
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Объединить контуры"
 
-#: ../app/core/core-enums.c:1112
+#: ../app/core/core-enums.c:1141
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Быстрая маска"
 
-#: ../app/core/core-enums.c:1113 ../app/core/core-enums.c:1144
+#: ../app/core/core-enums.c:1142 ../app/core/core-enums.c:1173
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Сетка"
 
-#: ../app/core/core-enums.c:1114 ../app/core/core-enums.c:1148
+#: ../app/core/core-enums.c:1143 ../app/core/core-enums.c:1177
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Направляющая"
 
-#: ../app/core/core-enums.c:1115 ../app/core/core-enums.c:1149
+#: ../app/core/core-enums.c:1144 ../app/core/core-enums.c:1178
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Образцовая точка"
 
-#: ../app/core/core-enums.c:1116 ../app/core/core-enums.c:1150
+#: ../app/core/core-enums.c:1145 ../app/core/core-enums.c:1179
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Слой/Канал"
 
-#: ../app/core/core-enums.c:1117 ../app/core/core-enums.c:1151
+#: ../app/core/core-enums.c:1146 ../app/core/core-enums.c:1180
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Изменение слоя/канала"
 
-#: ../app/core/core-enums.c:1118 ../app/core/core-enums.c:1152
+#: ../app/core/core-enums.c:1147 ../app/core/core-enums.c:1181
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Маска выделения"
 
-#: ../app/core/core-enums.c:1119 ../app/core/core-enums.c:1156
+#: ../app/core/core-enums.c:1148 ../app/core/core-enums.c:1185
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Видимость объекта"
 
-#: ../app/core/core-enums.c:1120 ../app/core/core-enums.c:1157
+#: ../app/core/core-enums.c:1149 ../app/core/core-enums.c:1186
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "(Рас)соединение объекта"
 
-#: ../app/core/core-enums.c:1121
+#: ../app/core/core-enums.c:1150
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Свойства элемента"
 
-#: ../app/core/core-enums.c:1122 ../app/core/core-enums.c:1155
+#: ../app/core/core-enums.c:1151 ../app/core/core-enums.c:1184
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Перемещение объекта"
 
-#: ../app/core/core-enums.c:1123
+#: ../app/core/core-enums.c:1152
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Масштабирование объекта"
 
-#: ../app/core/core-enums.c:1124
+#: ../app/core/core-enums.c:1153
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Смена размера объекта"
 
-#: ../app/core/core-enums.c:1125
+#: ../app/core/core-enums.c:1154
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Добавление слоя"
 
-#: ../app/core/core-enums.c:1126 ../app/core/core-enums.c:1176
+#: ../app/core/core-enums.c:1155 ../app/core/core-enums.c:1205
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Добавление маски слоя"
 
-#: ../app/core/core-enums.c:1127 ../app/core/core-enums.c:1178
+#: ../app/core/core-enums.c:1156 ../app/core/core-enums.c:1207
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Применение маски слоя"
 
-#: ../app/core/core-enums.c:1128 ../app/core/core-enums.c:1186
+#: ../app/core/core-enums.c:1157 ../app/core/core-enums.c:1215
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Плавающее выделение в слой"
 
-#: ../app/core/core-enums.c:1129
+#: ../app/core/core-enums.c:1158
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Плавающее выделение"
 
-#: ../app/core/core-enums.c:1130
+#: ../app/core/core-enums.c:1159
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Прицепить плавающее выделение"
 
-#: ../app/core/core-enums.c:1131 ../app/core/gimp-edit.c:496
+#: ../app/core/core-enums.c:1160 ../app/core/gimp-edit.c:496
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Вставить"
 
-#: ../app/core/core-enums.c:1132 ../app/core/gimp-edit.c:714
+#: ../app/core/core-enums.c:1161 ../app/core/gimp-edit.c:714
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Вырезать"
 
-#: ../app/core/core-enums.c:1133
+#: ../app/core/core-enums.c:1162
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Текст"
 
-#: ../app/core/core-enums.c:1134 ../app/core/gimpdrawable-transform.c:773
+#: ../app/core/core-enums.c:1163 ../app/core/gimpdrawable-transform.c:773
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Преобразование"
 
-#: ../app/core/core-enums.c:1135 ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1164 ../app/core/core-enums.c:1217
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Рисование"
 
-#: ../app/core/core-enums.c:1136 ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1165 ../app/core/core-enums.c:1220
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Добавить паразита"
 
-#: ../app/core/core-enums.c:1137 ../app/core/core-enums.c:1192
+#: ../app/core/core-enums.c:1166 ../app/core/core-enums.c:1221
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Убрать паразита"
 
-#: ../app/core/core-enums.c:1138
+#: ../app/core/core-enums.c:1167
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Импортировать контуры"
 
-#: ../app/core/core-enums.c:1139
+#: ../app/core/core-enums.c:1168
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Расширение"
 
-#: ../app/core/core-enums.c:1140
+#: ../app/core/core-enums.c:1169
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Тип изображения"
 
-#: ../app/core/core-enums.c:1141
+#: ../app/core/core-enums.c:1170
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Точность изображения"
 
-#: ../app/core/core-enums.c:1142
+#: ../app/core/core-enums.c:1171
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Размер изображения"
 
-#: ../app/core/core-enums.c:1143
+#: ../app/core/core-enums.c:1172
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Размер изображенияСмена разрешения изображения"
 
-#: ../app/core/core-enums.c:1145
+#: ../app/core/core-enums.c:1174
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Изменение метаданных"
 
-#: ../app/core/core-enums.c:1146
+#: ../app/core/core-enums.c:1175
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Сменить индексированную палитру"
 
-#: ../app/core/core-enums.c:1147
+#: ../app/core/core-enums.c:1176
 msgctxt "undo-type"
 msgid "Change color managed state"
 msgstr "Смена режима управления цветом"
 
-#: ../app/core/core-enums.c:1154
+#: ../app/core/core-enums.c:1183
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Переименование элемента"
 
-#: ../app/core/core-enums.c:1158
+#: ../app/core/core-enums.c:1187
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Цветовая метка объекта"
 
-#: ../app/core/core-enums.c:1159
+#: ../app/core/core-enums.c:1188
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "(Раз)блокировка содержимого"
 
-#: ../app/core/core-enums.c:1160
+#: ../app/core/core-enums.c:1189
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "(Раз)блокировка позиции"
 
-#: ../app/core/core-enums.c:1161
+#: ../app/core/core-enums.c:1190
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Новый слой"
 
-#: ../app/core/core-enums.c:1162
+#: ../app/core/core-enums.c:1191
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Удаление слоя"
 
-#: ../app/core/core-enums.c:1163
+#: ../app/core/core-enums.c:1192
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Смена режима слоя"
 
-#: ../app/core/core-enums.c:1164
+#: ../app/core/core-enums.c:1193
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Смена непрозрачности слоя"
 
-#: ../app/core/core-enums.c:1165
+#: ../app/core/core-enums.c:1194
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "(Раз)блокировка альфа-канала"
 
-#: ../app/core/core-enums.c:1166
+#: ../app/core/core-enums.c:1195
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Прекращение изменения группы слоёв"
 
-#: ../app/core/core-enums.c:1167
+#: ../app/core/core-enums.c:1196
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Возобновление изменения размера группы слоёв"
 
-#: ../app/core/core-enums.c:1168
+#: ../app/core/core-enums.c:1197
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Прекращение добавления маски на группу слоёв"
 
-#: ../app/core/core-enums.c:1169
+#: ../app/core/core-enums.c:1198
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Возобновление добавления маски на группу слоёв"
 
-#: ../app/core/core-enums.c:1170
+#: ../app/core/core-enums.c:1199
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Начало преобразования группы слоёв"
 
-#: ../app/core/core-enums.c:1171
+#: ../app/core/core-enums.c:1200
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Конец преобразования группы слоёв"
 
-#: ../app/core/core-enums.c:1172
+#: ../app/core/core-enums.c:1201
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Преобразование группы слоёв"
 
-#: ../app/core/core-enums.c:1173
+#: ../app/core/core-enums.c:1202
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Текстовый слой"
 
-#: ../app/core/core-enums.c:1174
+#: ../app/core/core-enums.c:1203
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Изменение текстового слоя"
 
-#: ../app/core/core-enums.c:1175
+#: ../app/core/core-enums.c:1204
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Преобразование текстового слоя"
 
-#: ../app/core/core-enums.c:1177
+#: ../app/core/core-enums.c:1206
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Удалить маску слоя"
 
-#: ../app/core/core-enums.c:1179
+#: ../app/core/core-enums.c:1208
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Показать маску слоя"
 
-#: ../app/core/core-enums.c:1180
+#: ../app/core/core-enums.c:1209
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Новый канал"
 
-#: ../app/core/core-enums.c:1181
+#: ../app/core/core-enums.c:1210
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Удаление канала"
 
-#: ../app/core/core-enums.c:1182
+#: ../app/core/core-enums.c:1211
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Цвет канала"
 
-#: ../app/core/core-enums.c:1183
+#: ../app/core/core-enums.c:1212
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Новый контур"
 
-#: ../app/core/core-enums.c:1184
+#: ../app/core/core-enums.c:1213
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Удалить контур"
 
-#: ../app/core/core-enums.c:1185
+#: ../app/core/core-enums.c:1214
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Изменение контура"
 
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1216
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Сетка трансформации"
 
-#: ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1218
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Перо"
 
-#: ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1219
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Выбрать цвет переднего плана"
 
-#: ../app/core/core-enums.c:1193
+#: ../app/core/core-enums.c:1222
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Действие не может быть отменено"
 
-#: ../app/core/core-enums.c:1228
+#: ../app/core/core-enums.c:1257
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Крошечный"
 
-#: ../app/core/core-enums.c:1229
+#: ../app/core/core-enums.c:1258
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Очень маленький"
 
-#: ../app/core/core-enums.c:1230
+#: ../app/core/core-enums.c:1259
 msgctxt "view-size"
 msgid "Small"
 msgstr "Маленький"
 
-#: ../app/core/core-enums.c:1231
+#: ../app/core/core-enums.c:1260
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Средний"
 
-#: ../app/core/core-enums.c:1232
+#: ../app/core/core-enums.c:1261
 msgctxt "view-size"
 msgid "Large"
 msgstr "Большой"
 
-#: ../app/core/core-enums.c:1233
+#: ../app/core/core-enums.c:1262
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Очень большой"
 
-#: ../app/core/core-enums.c:1234
+#: ../app/core/core-enums.c:1263
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Огромный"
 
-#: ../app/core/core-enums.c:1235
+#: ../app/core/core-enums.c:1264
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Громадный"
 
-#: ../app/core/core-enums.c:1236
+#: ../app/core/core-enums.c:1265
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Гигантский"
 
-#: ../app/core/core-enums.c:1264
+#: ../app/core/core-enums.c:1293
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Просмотр в виде списка"
 
-#: ../app/core/core-enums.c:1265
+#: ../app/core/core-enums.c:1294
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Просмотр в виде таблицы"
@@ -12501,12 +12544,12 @@ msgstr "Не удалось выполнить процесс-потомок “
 msgid "tags-locale:C"
 msgstr "tags-locale:ru"
 
-#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:357
+#: ../app/core/gimp-tags.c:156 ../app/gui/themes.c:386
 #, fuzzy, c-format
 msgid "Error closing '%s': %s"
 msgstr "Ошибка при загрузке '%s': "
 
-#: ../app/core/gimp-user-install.c:216
+#: ../app/core/gimp-user-install.c:215
 #, c-format
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
@@ -12515,7 +12558,7 @@ msgstr ""
 "Похоже, вы уже использовали GIMP %s ранее.  GIMP перенесёт ваши "
 "пользовательские предпочтения в '%s'."
 
-#: ../app/core/gimp-user-install.c:221
+#: ../app/core/gimp-user-install.c:220
 #, c-format
 msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
@@ -12524,22 +12567,22 @@ msgstr ""
 "Похоже, что вы впервые используете GIMP. Сейчас программа создаст каталог с "
 "именем '%s' и скопирует туда некоторые файлы."
 
-#: ../app/core/gimp-user-install.c:420
+#: ../app/core/gimp-user-install.c:419
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Копирование файла '%s' из '%s'..."
 
-#: ../app/core/gimp-user-install.c:435 ../app/core/gimp-user-install.c:461
+#: ../app/core/gimp-user-install.c:434 ../app/core/gimp-user-install.c:460
 #, c-format
 msgid "Creating folder '%s'..."
 msgstr "Создание папки '%s'..."
 
-#: ../app/core/gimp-user-install.c:446 ../app/core/gimp-user-install.c:472
+#: ../app/core/gimp-user-install.c:445 ../app/core/gimp-user-install.c:471
 #, c-format
 msgid "Cannot create folder '%s': %s"
 msgstr "Не удается создать папку '%s': %s"
 
-#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:327
+#: ../app/core/gimp-utils.c:532 ../app/core/gimpfilloptions.c:382
 msgid "No patterns available for this operation."
 msgstr "Нет текстур, доступных для этой операции."
 
@@ -12585,7 +12628,7 @@ msgstr ""
 "Некорректные данные заголовка в '%s': ширина=%lu, высота=%lu, байтов=%lu"
 
 #: ../app/core/gimpbrush-load.c:272 ../app/core/gimpbrushgenerated-load.c:126
-#: ../app/core/gimpbrushpipe-load.c:74
+#: ../app/core/gimpbrushpipe-load.c:70
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Недопустимая строка UTF-8 в файле кисти '%s'."
@@ -12596,7 +12639,7 @@ msgstr "Недопустимая строка UTF-8 в файле кисти '%s
 msgid "Unnamed"
 msgstr "Безымянный"
 
-#: ../app/core/gimpbrush-load.c:439
+#: ../app/core/gimpbrush-load.c:442
 #, c-format
 msgid ""
 "Fatal parse error in brush file:\n"
@@ -12607,47 +12650,47 @@ msgstr ""
 "Неподдерживаемая глубина цвета кисти %d\n"
 "Кисти GIMP должны быть в режиме RGBA или градации серого."
 
-#: ../app/core/gimpbrush-load.c:515
+#: ../app/core/gimpbrush-load.c:518
 #, c-format
 msgid "Unable to decode abr format version %d."
 msgstr "Невозможно прочитать формат ABR версии %d."
 
-#: ../app/core/gimpbrush-load.c:633 ../app/core/gimpbrush-load.c:852
+#: ../app/core/gimpbrush-load.c:636 ../app/core/gimpbrush-load.c:855
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
 "Неисправимая ошибка разбора файла кисти: повреждено значение диаметра кисти."
 
-#: ../app/core/gimpbrush-load.c:720 ../app/core/gimpbrush-load.c:910
+#: ../app/core/gimpbrush-load.c:723 ../app/core/gimpbrush-load.c:913
 #, c-format
 msgid "Fatal parse error in brush file: Brush dimensions out of range."
 msgstr ""
 "Неисправимая ошибка разбора файла кисти: размеры кисти за пределами "
 "допустимых."
 
-#: ../app/core/gimpbrush-load.c:732
+#: ../app/core/gimpbrush-load.c:735
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
 "Неисправимая ошибка разбора файла кисти: широкие кисти не поддерживаются."
 
-#: ../app/core/gimpbrush-load.c:881
+#: ../app/core/gimpbrush-load.c:884
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr "Неисправимая ошибка разбора файла кисти: файл, вероятно, оборван: "
 
-#: ../app/core/gimpbrush-load.c:918
+#: ../app/core/gimpbrush-load.c:921
 #, c-format
 msgid "Fatal parse error in brush file: Unknown compression method."
 msgstr "Неисправимая ошибка разбора файла кисти: неизвестный способ сжатия."
 
-#: ../app/core/gimpbrush-load.c:1054
+#: ../app/core/gimpbrush-load.c:1057
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
 "Неисправимая ошибка разбора файла кисти: неизвестная версия формата abr '%d'."
 
-#: ../app/core/gimpbrush-load.c:1175 ../app/core/gimpbrush-load.c:1193
+#: ../app/core/gimpbrush-load.c:1178 ../app/core/gimpbrush-load.c:1196
 #, c-format
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
@@ -12740,9 +12783,14 @@ msgstr "Соотношение сторон кисти"
 msgid "Brush Angle"
 msgstr "Угол кисти"
 
-#: ../app/core/gimpbrushpipe-load.c:90 ../app/core/gimpbrushpipe-load.c:114
+#: ../app/core/gimpbrushpipe-load.c:86 ../app/core/gimpbrushpipe-load.c:110
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': файл повреждён."
+
+#: ../app/core/gimpbrushpipe-load.c:142
+#, fuzzy, c-format
+msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': файл повреждён."
 
 #: ../app/core/gimpchannel-select.c:66
@@ -12750,38 +12798,38 @@ msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr "Прямоугольное выделение"
 
-#: ../app/core/gimpchannel-select.c:118
+#: ../app/core/gimpchannel-select.c:113
 msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr "Эллиптическое выделение"
 
-#: ../app/core/gimpchannel-select.c:173
+#: ../app/core/gimpchannel-select.c:163
 msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Прямоугольное закругленное выделение"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:448
+#: ../app/core/gimpchannel-select.c:416 ../app/core/gimplayer.c:448
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Альфа-канал в выделение"
 
-#: ../app/core/gimpchannel-select.c:478
+#: ../app/core/gimpchannel-select.c:454
 #, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr "%s канал в выделение"
 
-#: ../app/core/gimpchannel-select.c:529
+#: ../app/core/gimpchannel-select.c:505
 msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr "Выделение смежных областей"
 
-#: ../app/core/gimpchannel-select.c:577
+#: ../app/core/gimpchannel-select.c:553
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Выделение по цвету"
 
-#: ../app/core/gimpchannel-select.c:616
+#: ../app/core/gimpchannel-select.c:592
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Выделение по индексированному цвету"
@@ -12978,7 +13026,7 @@ msgstr "Текстура"
 #: ../app/core/gimpcontext.c:743 ../app/core/gimpcontext.c:744
 #: ../app/pdb/drawable-edit-cmds.c:253 ../app/pdb/edit-cmds.c:803
 #: ../app/tools/gimpgradientoptions.c:268 ../app/tools/gimpgradienttool.c:159
-#: ../app/tools/gimppaintoptions-gui.c:377
+#: ../app/tools/gimppaintoptions-gui.c:378
 msgid "Gradient"
 msgstr "Градиент"
 
@@ -13078,7 +13126,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:500 ../app/tools/gimpscaletool.c:118
+#: ../app/core/gimpdrawable.c:528 ../app/tools/gimpscaletool.c:121
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Масштабирование"
@@ -13088,7 +13136,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Сплошная заливка"
 
-#: ../app/core/gimpdrawable-edit.c:150
+#: ../app/core/gimpdrawable-edit.c:151
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Очистка"
@@ -13106,11 +13154,11 @@ msgstr "Плавающее выделение"
 msgid "Computing alpha of unknown pixels"
 msgstr "Вычисляются значения в альфа-канале для неизвестных пикселов"
 
-#: ../app/core/gimpdrawable-fill.c:204 ../app/vectors/gimpvectors.c:668
+#: ../app/core/gimpdrawable-fill.c:212 ../app/vectors/gimpvectors.c:668
 msgid "Not enough points to fill"
 msgstr "Недостаточно точек для заливки"
 
-#: ../app/core/gimpdrawable-fill.c:259
+#: ../app/core/gimpdrawable-fill.c:267
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Отрисовка обводки"
@@ -13146,7 +13194,7 @@ msgctxt "undo-type"
 msgid "Flip"
 msgstr "Зеркальное отражение"
 
-#: ../app/core/gimpdrawable-transform.c:946 ../app/tools/gimprotatetool.c:124
+#: ../app/core/gimpdrawable-transform.c:946 ../app/tools/gimprotatetool.c:127
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Вращение"
@@ -13164,42 +13212,64 @@ msgstr "Преобразование"
 msgid "Output type"
 msgstr "Тип выхода"
 
-#: ../app/core/gimpfilloptions.c:102
+#: ../app/core/gimpfilloptions.c:108
 msgid "Style"
 msgstr "Стиль"
 
-#: ../app/core/gimpfilloptions.c:110 ../app/pdb/gimppdbcontext.c:100
-#: ../app/tools/gimpbucketfilloptions.c:147
+#: ../app/core/gimpfilloptions.c:116 ../app/pdb/gimppdbcontext.c:100
+#: ../app/tools/gimpbucketfilloptions.c:149
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Сглаживание"
 
-#: ../app/core/gimpfilloptions.c:300
+#: ../app/core/gimpfilloptions.c:123 ../app/tools/gimpbucketfilloptions.c:159
+#: ../app/tools/gimpselectionoptions.c:87
+msgid "Feather edges"
+msgstr "Растушевать края"
+
+#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:160
+#, fuzzy
+msgid "Enable feathering of fill edges"
+msgstr "Включить растушёвку краёв выделения"
+
+#: ../app/core/gimpfilloptions.c:130 ../app/paint/gimpmybrushoptions.c:86
+#: ../app/tools/gimpbucketfilloptions.c:166 ../app/tools/gimpcoloroptions.c:85
+#: ../app/tools/gimprectangleselectoptions.c:101
+#: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
+msgid "Radius"
+msgstr "Радиус"
+
+#: ../app/core/gimpfilloptions.c:131 ../app/tools/gimpbucketfilloptions.c:167
+#: ../app/tools/gimpselectionoptions.c:95
+msgid "Radius of feathering"
+msgstr "Радиус растушёвки"
+
+#: ../app/core/gimpfilloptions.c:355
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Заливка цветом переднего плана"
 
-#: ../app/core/gimpfilloptions.c:305
+#: ../app/core/gimpfilloptions.c:360
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Заливка цветом фона"
 
-#: ../app/core/gimpfilloptions.c:310
+#: ../app/core/gimpfilloptions.c:365
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Заливка белым"
 
-#: ../app/core/gimpfilloptions.c:317
+#: ../app/core/gimpfilloptions.c:372
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Заливка прозрачностью"
 
-#: ../app/core/gimpfilloptions.c:333 ../app/core/gimpfilloptions.c:401
+#: ../app/core/gimpfilloptions.c:388 ../app/core/gimpfilloptions.c:456
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Заливка текстурой"
 
-#: ../app/core/gimpfilloptions.c:398
+#: ../app/core/gimpfilloptions.c:453
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
 msgstr "Заливка сплошным цветом"
@@ -13351,60 +13421,60 @@ msgstr "Преобразование группы слоёв"
 msgid "Symmetry"
 msgstr "Симметрия"
 
-#: ../app/core/gimpimage.c:2229
+#: ../app/core/gimpimage.c:2226
 msgid " (exported)"
 msgstr " (экспортировано)"
 
-#: ../app/core/gimpimage.c:2233
+#: ../app/core/gimpimage.c:2230
 msgid " (overwritten)"
 msgstr " (перезаписано)"
 
-#: ../app/core/gimpimage.c:2242
+#: ../app/core/gimpimage.c:2239
 msgid " (imported)"
 msgstr " (импортировано)"
 
-#: ../app/core/gimpimage.c:2416 ../app/core/gimpimage.c:2430
-#: ../app/core/gimpimage.c:2473
+#: ../app/core/gimpimage.c:2413 ../app/core/gimpimage.c:2427
+#: ../app/core/gimpimage.c:2470
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Режтим смешивания '%s' добавлен в %s"
 
-#: ../app/core/gimpimage.c:2488
+#: ../app/core/gimpimage.c:2485
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Группы слоев появились в %s"
 
-#: ../app/core/gimpimage.c:2495
+#: ../app/core/gimpimage.c:2492
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Маски на группах слоев добавлены в %s"
 
-#: ../app/core/gimpimage.c:2511
+#: ../app/core/gimpimage.c:2508
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Поддержка изображений с высокой разрядностью добавлена в %s"
 
-#: ../app/core/gimpimage.c:2523
+#: ../app/core/gimpimage.c:2520
 #, fuzzy, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Режтим смешивания '%s' добавлен в %s"
 
-#: ../app/core/gimpimage.c:2540
+#: ../app/core/gimpimage.c:2537
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Поддержка изображений размером более 4ГБ добавлена в %s"
 
-#: ../app/core/gimpimage.c:2634
+#: ../app/core/gimpimage.c:2631
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Смена разрешения изображения"
 
-#: ../app/core/gimpimage.c:2686
+#: ../app/core/gimpimage.c:2683
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Смена единицы измерения"
 
-#: ../app/core/gimpimage.c:3588
+#: ../app/core/gimpimage.c:3585
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -13412,47 +13482,47 @@ msgstr ""
 "Не удалось проверить паразита 'gimp-comment': комментарий содержит "
 "недопустимые значения UTF-8"
 
-#: ../app/core/gimpimage.c:3640
+#: ../app/core/gimpimage.c:3637
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Присоединение паразита к изображению"
 
-#: ../app/core/gimpimage.c:3681
+#: ../app/core/gimpimage.c:3678
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Удаление паразита из изображения"
 
-#: ../app/core/gimpimage.c:4408
+#: ../app/core/gimpimage.c:4405
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Добавление слоя"
 
-#: ../app/core/gimpimage.c:4450 ../app/core/gimpimage.c:4481
+#: ../app/core/gimpimage.c:4447 ../app/core/gimpimage.c:4478
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Удаление слоя"
 
-#: ../app/core/gimpimage.c:4475
+#: ../app/core/gimpimage.c:4472
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Удаление плавающего выделения"
 
-#: ../app/core/gimpimage.c:4642
+#: ../app/core/gimpimage.c:4639
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Добавление канала"
 
-#: ../app/core/gimpimage.c:4670 ../app/core/gimpimage.c:4694
+#: ../app/core/gimpimage.c:4667 ../app/core/gimpimage.c:4691
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Удаление канала"
 
-#: ../app/core/gimpimage.c:4750
+#: ../app/core/gimpimage.c:4747
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Добавление контура"
 
-#: ../app/core/gimpimage.c:4780 ../app/core/gimpimage.c:4787
+#: ../app/core/gimpimage.c:4777 ../app/core/gimpimage.c:4784
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Удаление контура"
@@ -13499,27 +13569,27 @@ msgstr "Преобразование из '%s' в '%s'?"
 msgid "Color profile conversion"
 msgstr "Преобразование цветового профиля"
 
-#: ../app/core/gimpimage-colormap.c:65
+#: ../app/core/gimpimage-colormap.c:66
 #, c-format
 msgid "Colormap of Image #%d (%s)"
 msgstr "Цветовая карта изображения #%d (%s)"
 
-#: ../app/core/gimpimage-colormap.c:195
+#: ../app/core/gimpimage-colormap.c:196
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Установка цветовой карты"
 
-#: ../app/core/gimpimage-colormap.c:235
+#: ../app/core/gimpimage-colormap.c:236
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Установка цветовой карты"
 
-#: ../app/core/gimpimage-colormap.c:288
+#: ../app/core/gimpimage-colormap.c:289
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Изменение элемента цветовой карты"
 
-#: ../app/core/gimpimage-colormap.c:316
+#: ../app/core/gimpimage-colormap.c:317
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Добавление цвета в цветовую карту"
@@ -13675,51 +13745,51 @@ msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Сведение видимых слоёв"
 
-#: ../app/core/gimpimage-merge.c:198
+#: ../app/core/gimpimage-merge.c:203
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Сведение изображения"
 
-#: ../app/core/gimpimage-merge.c:220
+#: ../app/core/gimpimage-merge.c:232
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Невозможно свести изображение без единого видимого слоя"
 
-#: ../app/core/gimpimage-merge.c:245
+#: ../app/core/gimpimage-merge.c:260
 msgid "Cannot merge down a floating selection."
 msgstr "Невозможно объединить плавающее выделение со слоем ниже."
 
-#: ../app/core/gimpimage-merge.c:252
+#: ../app/core/gimpimage-merge.c:267
 msgid "Cannot merge down an invisible layer."
 msgstr "Невозможно объединить невидимый слой со слоем ниже."
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:292
 msgid "Cannot merge down to a layer group."
 msgstr "Невозможно объединить слой с группой слоёв ниже."
 
-#: ../app/core/gimpimage-merge.c:284
+#: ../app/core/gimpimage-merge.c:299
 msgid "The layer to merge down to is locked."
 msgstr "Слой, в который должно быть выполнено сведение, заблокирован"
 
-#: ../app/core/gimpimage-merge.c:296
+#: ../app/core/gimpimage-merge.c:311
 msgid "There is no visible layer to merge down to."
 msgstr "Нет видимого слоя, в который можно выполнить сведение."
 
-#: ../app/core/gimpimage-merge.c:306
+#: ../app/core/gimpimage-merge.c:317
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Сведение с предыдущим"
 
-#: ../app/core/gimpimage-merge.c:334
+#: ../app/core/gimpimage-merge.c:352
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Сведение группы слоёв"
 
-#: ../app/core/gimpimage-merge.c:410
+#: ../app/core/gimpimage-merge.c:428
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Сведение видимых контуров"
 
-#: ../app/core/gimpimage-merge.c:446
+#: ../app/core/gimpimage-merge.c:464
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Недостаточно видимых контуров для объединения. Должно быть хотя бы два."
@@ -13800,7 +13870,7 @@ msgstr "(Возможно, миниатюра устарела)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:823 ../app/widgets/gimpimagepropview.c:429
-#: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:681
+#: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:702
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -13926,8 +13996,8 @@ msgstr "Cлой невозможно поднять выше."
 msgid "Layer cannot be lowered more."
 msgstr "Слой невозможно опустить ниже."
 
-#: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1914
-#: ../app/core/gimplayermask.c:228
+#: ../app/core/gimplayer.c:744 ../app/core/gimplayer.c:1913
+#: ../app/core/gimplayermask.c:270
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
@@ -13941,117 +14011,115 @@ msgstr ""
 "Плавающее выделение\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1820
+#: ../app/core/gimplayer.c:1819
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не удалось добавить маску слоя, так как у слоя уже есть маска."
 
-#: ../app/core/gimplayer.c:1831
+#: ../app/core/gimplayer.c:1830
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Невозможно добавить маску слоя, отличающуюся\n"
 " размерами от указанного слоя."
 
-#: ../app/core/gimplayer.c:1837
+#: ../app/core/gimplayer.c:1836
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Добавление маски слоя"
 
-#: ../app/core/gimplayer.c:1955
+#: ../app/core/gimplayer.c:1954
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Создание маски из альфа-канала"
 
-#: ../app/core/gimplayer.c:2117
+#: ../app/core/gimplayer.c:2116
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Применение маски слоя"
 
-#: ../app/core/gimplayer.c:2118
+#: ../app/core/gimplayer.c:2117
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Удаление маски слоя"
 
-#: ../app/core/gimplayer.c:2220
+#: ../app/core/gimplayer.c:2219
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Включить маску слоя"
 
-#: ../app/core/gimplayer.c:2221
+#: ../app/core/gimplayer.c:2220
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Выключить маску слоя"
 
-#: ../app/core/gimplayer.c:2297
+#: ../app/core/gimplayer.c:2296
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Показывание маски слоя"
 
-#: ../app/core/gimplayer.c:2371
+#: ../app/core/gimplayer.c:2370
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Добавление альфа-канала"
 
-#: ../app/core/gimplayer.c:2406
+#: ../app/core/gimplayer.c:2405
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Удаление альфа-канала"
 
-#: ../app/core/gimplayer.c:2427
+#: ../app/core/gimplayer.c:2426
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Слой к размеру изображения"
 
-#: ../app/core/gimplayermask.c:76
+#: ../app/core/gimplayermask.c:82
 msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Перемещение маски слоя"
 
-#: ../app/core/gimplayermask.c:77
+#: ../app/core/gimplayermask.c:83
 msgctxt "undo-type"
 msgid "Layer Mask to Selection"
 msgstr "Маска слоя в выделение"
 
-#: ../app/core/gimplayermask.c:152
+#: ../app/core/gimplayermask.c:194
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "Невозможно переименовать маски слоёв."
 
-#: ../app/core/gimplineart.c:295 ../app/core/gimplineart.c:296
+#: ../app/core/gimplineart.c:336 ../app/core/gimplineart.c:337
 #, fuzzy
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Выделять прозрачные области"
 
-#: ../app/core/gimplineart.c:302 ../app/tools/gimpbucketfilloptions.c:172
+#: ../app/core/gimplineart.c:343 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
-msgstr ""
+msgstr "Порог определения"
 
-#: ../app/core/gimplineart.c:303 ../app/tools/gimpbucketfilloptions.c:173
+#: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 
-#: ../app/core/gimplineart.c:309 ../app/tools/gimpbucketfilloptions.c:179
-#, fuzzy
+#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:195
 msgid "Maximum growing size"
-msgstr "Макс. размер _нового изображения:"
+msgstr "Макс. наращивание"
 
-#: ../app/core/gimplineart.c:310 ../app/tools/gimpbucketfilloptions.c:180
-#, fuzzy
+#: ../app/core/gimplineart.c:351 ../app/tools/gimpbucketfilloptions.c:196
 msgid "Maximum number of pixels grown under the line art"
-msgstr "Максимальное число штрихов по оси X"
+msgstr "Максимальное количество пикселей, наращиваемых под контурным рисунком"
 
-#: ../app/core/gimplineart.c:316
+#: ../app/core/gimplineart.c:357
 msgid "Maximum curved closing length"
 msgstr ""
 
-#: ../app/core/gimplineart.c:317
+#: ../app/core/gimplineart.c:358
 msgid "Maximum curved length (in pixels) to close the line art"
 msgstr ""
 
-#: ../app/core/gimplineart.c:323
+#: ../app/core/gimplineart.c:364
 msgid "Maximum straight closing length"
 msgstr ""
 
-#: ../app/core/gimplineart.c:324
+#: ../app/core/gimplineart.c:365
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr ""
 
@@ -14526,7 +14594,7 @@ msgstr ""
 msgid "Color profile"
 msgstr "Цветовой профиль"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:108
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:110
 msgid "Fill type"
 msgstr "Тип заливки"
 
@@ -14870,12 +14938,12 @@ msgid "Precision Conversion"
 msgstr "Смена точности"
 
 #: ../app/dialogs/convert-precision-dialog.c:204
-#: ../app/widgets/gimptemplateeditor.c:422
+#: ../app/widgets/gimptemplateeditor.c:439
 msgid "Perceptual gamma (sRGB)"
 msgstr "Нелинейное пространство (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:205
-#: ../app/widgets/gimptemplateeditor.c:421
+#: ../app/widgets/gimptemplateeditor.c:438
 msgid "Linear light"
 msgstr "Линейное пространство"
 
@@ -14980,7 +15048,7 @@ msgstr "Передний план/Фон"
 msgid "FG/BG Color"
 msgstr "Цвет переднего плана/фона"
 
-#: ../app/dialogs/file-open-dialog.c:258
+#: ../app/dialogs/file-open-dialog.c:261
 msgid "Open layers"
 msgstr "Открыть слои"
 
@@ -15180,7 +15248,7 @@ msgid "Confirm Scaling"
 msgstr "Подтвердить масштабирование"
 
 #: ../app/dialogs/image-scale-dialog.c:211 ../app/dialogs/scale-dialog.c:138
-#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimpscaletool.c:120
+#: ../app/tools/gimpscaletool.c:98 ../app/tools/gimpscaletool.c:123
 msgid "_Scale"
 msgstr "_Изменить"
 
@@ -15311,7 +15379,7 @@ msgid "Offset Y:"
 msgstr "Смещение по Y:"
 
 #: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
-#: ../app/widgets/gimptemplateeditor.c:449
+#: ../app/widgets/gimptemplateeditor.c:466
 msgid "_Fill with:"
 msgstr "_Заполнение:"
 
@@ -15724,6 +15792,8 @@ msgid ""
 "OpenCL drivers and support are experimental, expect slowdowns and possible "
 "crashes (please report)."
 msgstr ""
+"Драйверы и поддержка OpenCL экспериментальны, возможно замедление работы и "
+"падение программы (сообщайте об ошибках, пожалуйста)."
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1204
@@ -17067,23 +17137,23 @@ msgstr "Размер при печати"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:175 ../app/widgets/gimpsizebox.c:190
-#: ../app/widgets/gimptemplateeditor.c:195
+#: ../app/widgets/gimptemplateeditor.c:199
 msgid "_Width:"
 msgstr "_Ширина:"
 
 #: ../app/dialogs/print-size-dialog.c:182 ../app/widgets/gimpsizebox.c:194
-#: ../app/widgets/gimptemplateeditor.c:202
+#: ../app/widgets/gimptemplateeditor.c:206
 msgid "H_eight:"
 msgstr "_Высота:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:257
-#: ../app/widgets/gimptemplateeditor.c:324
+#: ../app/widgets/gimptemplateeditor.c:328
 msgid "_X resolution:"
 msgstr "_Разрешение по X:"
 
 #: ../app/dialogs/print-size-dialog.c:243 ../app/widgets/gimpsizebox.c:260
-#: ../app/widgets/gimptemplateeditor.c:331
+#: ../app/widgets/gimptemplateeditor.c:335
 msgid "_Y resolution:"
 msgstr "Р_азрешение по Y:"
 
@@ -17221,7 +17291,7 @@ msgid "_Vertical:"
 msgstr "Вертикальная:"
 
 #. Image size frame
-#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:173
+#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:177
 msgid "Image Size"
 msgstr "Размер изображения"
 
@@ -17627,7 +17697,7 @@ msgid "Drop New Path"
 msgstr "Новый контур извне"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
-#: ../app/tools/gimpbucketfilltool.c:478 ../app/tools/gimpcagetool.c:223
+#: ../app/tools/gimpbucketfilltool.c:488 ../app/tools/gimpcagetool.c:223
 #: ../app/tools/gimpfiltertool.c:274 ../app/tools/gimpgradienttool.c:248
 #: ../app/tools/gimpselectiontool.c:446
 #, c-format
@@ -17635,12 +17705,12 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "Невозможно изменять точки растра группы слоёв"
 
 #: ../app/display/gimpdisplayshell-dnd.c:369
-#: ../app/tools/gimpbucketfilltool.c:492 ../app/tools/gimpcagetool.c:230
+#: ../app/tools/gimpbucketfilltool.c:502 ../app/tools/gimpcagetool.c:230
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1150
 #: ../app/tools/gimpfiltertool.c:281 ../app/tools/gimpgradienttool.c:255
 #: ../app/tools/gimpmovetool.c:309 ../app/tools/gimppainttool.c:287
 #: ../app/tools/gimpselectiontool.c:453 ../app/tools/gimptransformtool.c:537
-#: ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimpwarptool.c:689
 #, c-format
 msgid "The active layer's pixels are locked."
 msgstr "Точки растра активного слоя заблокированы от изменений"
@@ -17748,7 +17818,7 @@ msgstr "без управления цветом"
 #: ../app/display/gimpdisplayshell-tool-events.c:1603
 #, c-format
 msgid "Layer picked: '%s'"
-msgstr ""
+msgstr "Выбран слой: '%s'"
 
 #: ../app/display/gimpdisplayshell-utils.c:174
 #: ../app/tools/gimpmeasuretool.c:625 ../app/tools/gimpmeasuretool.c:778
@@ -17756,7 +17826,7 @@ msgstr ""
 msgid "pixels"
 msgstr "точки растра"
 
-#: ../app/display/gimpstatusbar.c:469
+#: ../app/display/gimpstatusbar.c:472
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Отменить <i>%s</i>"
@@ -17795,7 +17865,7 @@ msgid "%s for constrained steps"
 msgstr "%s для ограничения шага"
 
 #: ../app/display/gimptoolgyroscope.c:724
-#: ../app/display/gimptooltransformgrid.c:1788
+#: ../app/display/gimptooltransformgrid.c:1822
 msgid "Click-Drag to rotate"
 msgstr "Щёлкните и потащите, чтобы вращать"
 
@@ -17825,7 +17895,7 @@ msgid "%s to zoom"
 msgstr "%s для масштабирования"
 
 #: ../app/display/gimptoolhandlegrid.c:865
-#: ../app/display/gimptooltransformgrid.c:1779
+#: ../app/display/gimptooltransformgrid.c:1813
 msgid "Click-Drag to move"
 msgstr "Щёлкните и потащите, чтобы переместить"
 
@@ -17838,7 +17908,7 @@ msgid "Click-Drag to shear and scale"
 msgstr "Щёлкните и перетащите, чтобы скашивать и менять размер"
 
 #: ../app/display/gimptoolhandlegrid.c:874
-#: ../app/display/gimptooltransformgrid.c:1767
+#: ../app/display/gimptooltransformgrid.c:1801
 msgid "Click-Drag to change perspective"
 msgstr "Щёлкните и потащите, чтобы изменить перспективу"
 
@@ -18080,7 +18150,7 @@ msgstr ""
 
 #: ../app/display/gimptoolrectangle.c:566
 #: ../app/display/gimptoolrectangle.c:882
-#: ../app/tools/gimprectangleselecttool.c:757
+#: ../app/tools/gimprectangleselecttool.c:727
 msgid "Rectangle: "
 msgstr "Прямоугольник: "
 
@@ -18088,16 +18158,16 @@ msgstr "Прямоугольник: "
 msgid "Position: "
 msgstr "Позиция:"
 
-#: ../app/display/gimptooltransformgrid.c:1772
-#: ../app/display/gimptooltransformgrid.c:1777
+#: ../app/display/gimptooltransformgrid.c:1806
+#: ../app/display/gimptooltransformgrid.c:1811
 msgid "Click-Drag to scale"
 msgstr "Нажмите для штамповки"
 
-#: ../app/display/gimptooltransformgrid.c:1781
+#: ../app/display/gimptooltransformgrid.c:1815
 msgid "Click-Drag to move the pivot point"
 msgstr "Нажмите и потащите, чтобы переместить точку"
 
-#: ../app/display/gimptooltransformgrid.c:1786
+#: ../app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to shear"
 msgstr "Нажмите, чтобы залечить"
 
@@ -18120,11 +18190,11 @@ msgstr ""
 msgid "%s plug-in could not open image"
 msgstr "Плагин «%s» не может открыть изображение"
 
-#: ../app/file/file-open.c:658
+#: ../app/file/file-open.c:659
 msgid "Image doesn't contain any layers"
 msgstr "Изображение не содержит слоёв"
 
-#: ../app/file/file-open.c:717
+#: ../app/file/file-open.c:718
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Невозможно открыть '%s': %s"
@@ -18183,11 +18253,11 @@ msgstr "Неправильная последовательность симво
 msgid "GIMP brush"
 msgstr "Кисть GIMP"
 
-#: ../app/file-data/file-data.c:210
+#: ../app/file-data/file-data.c:210 ../app/file-data/file-data.c:272
 msgid "GIMP brush (animated)"
 msgstr "Кисть GIMP (анимированная)"
 
-#: ../app/file-data/file-data.c:274 ../app/file-data/file-data.c:335
+#: ../app/file-data/file-data.c:365 ../app/file-data/file-data.c:426
 msgid "GIMP pattern"
 msgstr "Текстура GIMP"
 
@@ -18887,15 +18957,15 @@ msgstr "Затрагиваемый канал"
 msgid "Curve"
 msgstr "Кривая"
 
-#: ../app/operations/gimpcurvesconfig.c:547
+#: ../app/operations/gimpcurvesconfig.c:544
 msgid "not a GIMP Curves file"
 msgstr "не файл кривых GIMP"
 
-#: ../app/operations/gimpcurvesconfig.c:578
+#: ../app/operations/gimpcurvesconfig.c:575
 msgid "Parse error, didn't find 2 integers"
 msgstr "Ошибка разбора, не найдены две переменные"
 
-#: ../app/operations/gimpcurvesconfig.c:698
+#: ../app/operations/gimpcurvesconfig.c:681
 msgid "Writing curves file failed: "
 msgstr "Не удалось записать файл профиля кривых:"
 
@@ -18967,15 +19037,15 @@ msgstr "Обрезать выход"
 msgid "Clamp final output values."
 msgstr "Обрезать итоговые выходные значения"
 
-#: ../app/operations/gimplevelsconfig.c:843
+#: ../app/operations/gimplevelsconfig.c:836
 msgid "not a GIMP Levels file"
 msgstr "не файл цветовых уровней GIMP"
 
-#: ../app/operations/gimplevelsconfig.c:918
+#: ../app/operations/gimplevelsconfig.c:911
 msgid "parse error"
 msgstr "ошибка при синтаксическом разборе"
 
-#: ../app/operations/gimplevelsconfig.c:953
+#: ../app/operations/gimplevelsconfig.c:946
 msgid "Writing levels file failed: "
 msgstr "Не удалось записать файл профиля уровней:"
 
@@ -19000,11 +19070,11 @@ msgstr ""
 "Преобразовать набор буфера коэффициентов в буфер координат для инструмента "
 "преобразования по рамке GIMP"
 
-#: ../app/operations/gimpoperationcagetransform.c:130
+#: ../app/operations/gimpoperationcagetransform.c:129
 msgid "Fill with plain color"
 msgstr "Залить цветом _фона"
 
-#: ../app/operations/gimpoperationcagetransform.c:131
+#: ../app/operations/gimpoperationcagetransform.c:130
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Заливать исходную позицию рамки цветом"
 
@@ -19022,7 +19092,7 @@ msgstr "Тонирование изображения"
 msgid "Color"
 msgstr "Цвет"
 
-#: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:143
+#: ../app/operations/gimpoperationcurves.c:67 ../app/tools/gimpcurvestool.c:155
 msgid "Adjust color curves"
 msgstr "Коррекция цветовых кривых"
 
@@ -19091,7 +19161,7 @@ msgstr "Значение"
 
 #: ../app/operations/gimpoperationthresholdalpha.c:91
 msgid "The alpha value"
-msgstr ""
+msgstr "Значение в альфа-канале"
 
 #. TRANSLATORS: there is no need to translate this in GIMP. This uses
 #. * "gtk20" domain as a special trick to determine language direction,
@@ -19165,11 +19235,11 @@ msgstr "Только движение"
 msgid "Flow"
 msgstr "Поток"
 
-#: ../app/paint/gimpbrushcore.c:378
+#: ../app/paint/gimpbrushcore.c:370
 msgid "No brushes available for use with this tool."
 msgstr "Нет кистей, доступных для использования с этим инструментом."
 
-#: ../app/paint/gimpbrushcore.c:385
+#: ../app/paint/gimpbrushcore.c:377
 msgid "No paint dynamics available for use with this tool."
 msgstr ""
 "Нет динамик рисования, доступных для использования с этим инструментом."
@@ -19182,8 +19252,8 @@ msgstr "Штамп"
 msgid "No patterns available for use with this tool."
 msgstr "Нет текстур, доступных для использования с этим инструментом."
 
-#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:164
-#: ../app/tools/gimpbucketfilloptions.c:457
+#: ../app/paint/gimpcloneoptions.c:66 ../app/tools/gimpbucketfilloptions.c:180
+#: ../app/tools/gimpbucketfilloptions.c:505
 #: ../app/tools/gimpcloneoptions-gui.c:70
 msgid "Source"
 msgstr "Источник"
@@ -19234,7 +19304,7 @@ msgid "Ink"
 msgstr "Перо"
 
 #: ../app/paint/gimpinkoptions.c:74 ../app/paint/gimpinkoptions.c:87
-#: ../app/paint/gimppaintoptions.c:203 ../app/tools/gimpwarpoptions.c:91
+#: ../app/paint/gimppaintoptions.c:203 ../app/tools/gimpwarpoptions.c:92
 msgid "Size"
 msgstr "Размер"
 
@@ -19278,18 +19348,12 @@ msgstr "Кисть MyPaint"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Нет кистей MyPaint, доступных для использования с этим инструментом."
 
-#: ../app/paint/gimpmybrushoptions.c:86 ../app/tools/gimpcoloroptions.c:85
-#: ../app/tools/gimprectangleselectoptions.c:101
-#: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
-msgid "Radius"
-msgstr "Радиус"
-
 #: ../app/paint/gimpmybrushoptions.c:93
 msgid "Base Opacity"
 msgstr "Базовая непрозрачность"
 
 #: ../app/paint/gimpmybrushoptions.c:100 ../app/paint/gimppaintoptions.c:231
-#: ../app/tools/gimpwarpoptions.c:98 ../app/widgets/gimpbrusheditor.c:178
+#: ../app/tools/gimpwarpoptions.c:99 ../app/widgets/gimpbrusheditor.c:178
 msgid "Hardness"
 msgstr "Жёсткость"
 
@@ -19321,7 +19385,7 @@ msgstr "Размер кисти"
 msgid "Aspect Ratio"
 msgstr "Соотношение сторон"
 
-#: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:112
+#: ../app/paint/gimppaintoptions.c:224 ../app/tools/gimpwarpoptions.c:113
 #: ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:82 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
@@ -19437,7 +19501,7 @@ msgstr "Развернуть направление угасания"
 
 #: ../app/paint/gimppaintoptions.c:339 ../app/paint/gimppaintoptions.c:359
 #: ../app/tools/gimpgradientoptions.c:310
-#: ../app/tools/gimppaintoptions-gui.c:355
+#: ../app/tools/gimppaintoptions-gui.c:356
 msgid "Repeat"
 msgstr "Повтор"
 
@@ -19446,7 +19510,7 @@ msgid "How fade is repeated as you paint"
 msgstr "Как угасание повторяется при рисовании"
 
 #: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:282
-#: ../app/tools/gimppaintoptions-gui.c:391
+#: ../app/tools/gimppaintoptions-gui.c:392
 msgid "Blend Color Space"
 msgstr "Пространство"
 
@@ -19511,7 +19575,7 @@ msgid "No erasing effect"
 msgstr "Без эффекта стирания"
 
 #: ../app/paint/gimpsmudgeoptions.c:92 ../app/paint/gimpsourceoptions.c:71
-#: ../app/pdb/gimppdbcontext.c:128 ../app/tools/gimpbucketfilloptions.c:132
+#: ../app/pdb/gimppdbcontext.c:128 ../app/tools/gimpbucketfilloptions.c:134
 #: ../app/tools/gimpcoloroptions.c:69 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:97
 msgid "Sample merged"
@@ -19632,9 +19696,9 @@ msgstr "Инвертирование"
 #: ../app/pdb/drawable-transform-cmds.c:355
 #: ../app/pdb/drawable-transform-cmds.c:455
 #: ../app/pdb/item-transform-cmds.c:330 ../app/pdb/transform-tools-cmds.c:171
-#: ../app/tools/gimpperspectivetool.c:82
-#: ../app/tools/gimptransformgridoptions.c:497
-#: ../app/tools/gimptransformgridoptions.c:506
+#: ../app/tools/gimpperspectivetool.c:85
+#: ../app/tools/gimptransformgridoptions.c:529
+#: ../app/tools/gimptransformgridoptions.c:538
 msgid "Perspective"
 msgstr "Перспектива"
 
@@ -19981,14 +20045,14 @@ msgstr "Применить порог"
 msgid "Sample transparent"
 msgstr "Выбирать прозрачные области"
 
-#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:139
+#: ../app/pdb/gimppdbcontext.c:157 ../app/tools/gimpbucketfilloptions.c:141
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
 msgstr "Соседние по диагонали"
 
 #: ../app/pdb/gimppdbcontext.c:164 ../app/tools/gimptransformoptions.c:100
-#: ../app/tools/gimptransformoptions.c:254 ../app/tools/gimpwarpoptions.c:119
-#: ../app/tools/gimpwarpoptions.c:324
+#: ../app/tools/gimptransformoptions.c:254 ../app/tools/gimpwarpoptions.c:120
+#: ../app/tools/gimpwarpoptions.c:338
 msgid "Interpolation"
 msgstr "Интерполяция"
 
@@ -20081,7 +20145,7 @@ msgstr ""
 "Процедура '%s' вызвана со значением '%s' аргумента '%s' (#%d, тип %s). "
 "Значение выходит из допустимого диапазона."
 
-#: ../app/pdb/image-cmds.c:2524
+#: ../app/pdb/image-cmds.c:2526
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -20954,7 +21018,7 @@ msgstr ""
 "В чащах юга жил-был цитрус.\n"
 "Да, но фальшивый экземпляръ!"
 
-#: ../app/text/gimpfontfactory.c:397
+#: ../app/text/gimpfontfactory.c:398
 #, c-format
 msgid ""
 "Some fonts failed to load:\n"
@@ -21206,32 +21270,32 @@ msgstr "_Контраст"
 msgid "Edit these Settings as Levels"
 msgstr "Изменить эти параметры как уровни"
 
-#: ../app/tools/gimpbucketfilloptions.c:116
+#: ../app/tools/gimpbucketfilloptions.c:118
 msgid "Fill selection"
 msgstr "Плавающее выделение"
 
-#: ../app/tools/gimpbucketfilloptions.c:117
+#: ../app/tools/gimpbucketfilloptions.c:119
 msgid "Which area will be filled"
 msgstr "Какая область будет залита"
 
-#: ../app/tools/gimpbucketfilloptions.c:124
+#: ../app/tools/gimpbucketfilloptions.c:126
 msgid "Fill transparent areas"
 msgstr "Залить прозрачные области"
 
-#: ../app/tools/gimpbucketfilloptions.c:125
+#: ../app/tools/gimpbucketfilloptions.c:127
 msgid "Allow completely transparent regions to be filled"
 msgstr "Разрешить заполнение абсолютно прозрачных областей"
 
-#: ../app/tools/gimpbucketfilloptions.c:133
+#: ../app/tools/gimpbucketfilloptions.c:135
 msgid "Base filled area on all visible layers"
 msgstr "Использовать для определения заполняемой области все видимые слои"
 
-#: ../app/tools/gimpbucketfilloptions.c:140
+#: ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Считать соседние по диагонали пикселы связанными"
 
-#: ../app/tools/gimpbucketfilloptions.c:148
+#: ../app/tools/gimpbucketfilloptions.c:150
 #, fuzzy
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
@@ -21241,95 +21305,100 @@ msgstr ""
 "Установить непрозрачность заполнения по разнице с нажатым пикселом (см. "
 "порог). Выключите сглаживание, чтобы заполнить всю область однородным цветом."
 
-#: ../app/tools/gimpbucketfilloptions.c:157
+#: ../app/tools/gimpbucketfilloptions.c:173
 #: ../app/tools/gimpgradientoptions.c:121
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Порог"
 
-#: ../app/tools/gimpbucketfilloptions.c:158
+#: ../app/tools/gimpbucketfilloptions.c:174
 #: ../app/tools/gimpregionselectoptions.c:113
 msgid "Maximum color difference"
 msgstr "Максимальное различие цветов"
 
-#: ../app/tools/gimpbucketfilloptions.c:165
+#: ../app/tools/gimpbucketfilloptions.c:181
 msgid "Source image for line art computation"
 msgstr "Источник штриховой графики для заливки"
 
-#: ../app/tools/gimpbucketfilloptions.c:186
+#: ../app/tools/gimpbucketfilloptions.c:202
 msgid "Maximum gap length"
-msgstr ""
+msgstr "Макс. пробел"
 
-#: ../app/tools/gimpbucketfilloptions.c:187
+#: ../app/tools/gimpbucketfilloptions.c:203
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr ""
+"Максимальный пробел (в пикселях) контурного рисунка, который может быть "
+"закрыт"
 
-#: ../app/tools/gimpbucketfilloptions.c:193
-#: ../app/tools/gimpbucketfilloptions.c:441
+#: ../app/tools/gimpbucketfilloptions.c:209
+#: ../app/tools/gimpbucketfilloptions.c:470
 msgid "Fill by"
 msgstr "Критерий"
 
-#: ../app/tools/gimpbucketfilloptions.c:194
+#: ../app/tools/gimpbucketfilloptions.c:210
 msgid "Criterion used for determining color similarity"
 msgstr "Критерий определениё похожести цветов"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:378
+#: ../app/tools/gimpbucketfilloptions.c:407
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Тип заливки (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:393
+#: ../app/tools/gimpbucketfilloptions.c:422
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Область применения (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:402
+#: ../app/tools/gimpbucketfilloptions.c:431
 msgid "Finding Similar Colors"
 msgstr "Поиск похожих цветов"
 
-#. Line art frame
-#: ../app/tools/gimpbucketfilloptions.c:446
+#: ../app/tools/gimpbucketfilloptions.c:485
 msgid "Line Art Detection"
 msgstr "Определение контурного рисунка"
 
-#: ../app/tools/gimpbucketfilltool.c:154
+#: ../app/tools/gimpbucketfilloptions.c:495
+msgid "(computing...)"
+msgstr "(выполняется вычисление…)"
+
+#: ../app/tools/gimpbucketfilltool.c:157
 msgid "Bucket Fill"
 msgstr "Плоская заливка"
 
-#: ../app/tools/gimpbucketfilltool.c:155
+#: ../app/tools/gimpbucketfilltool.c:158
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr "Плоская заливка: заливка цветом или текстурой"
 
-#: ../app/tools/gimpbucketfilltool.c:156
+#: ../app/tools/gimpbucketfilltool.c:159
 msgid "_Bucket Fill"
 msgstr "Плоская _заливка"
 
-#: ../app/tools/gimpbucketfilltool.c:286
+#: ../app/tools/gimpbucketfilltool.c:296
 msgid "Bucket fill"
 msgstr "Плоская заливка"
 
-#: ../app/tools/gimpbucketfilltool.c:485 ../app/tools/gimpcagetool.c:239
+#: ../app/tools/gimpbucketfilltool.c:495 ../app/tools/gimpcagetool.c:239
 #: ../app/tools/gimpfiltertool.c:290
 #: ../app/tools/gimpforegroundselecttool.c:289
 #: ../app/tools/gimpgradienttool.c:264 ../app/tools/gimppainttool.c:314
-#: ../app/tools/gimptransformtool.c:545 ../app/tools/gimpwarptool.c:653
+#: ../app/tools/gimptransformtool.c:545 ../app/tools/gimpwarptool.c:702
 msgid "The active layer is not visible."
 msgstr "Активный слой скрыт."
 
-#: ../app/tools/gimpbucketfilltool.c:501
+#: ../app/tools/gimpbucketfilltool.c:511
 msgid "No valid line art source selected."
 msgstr "Не выбран корректный источник штриховой графики"
 
-#: ../app/tools/gimpbucketfilltool.c:685 ../app/tools/gimpbucketfilltool.c:820
+#: ../app/tools/gimpbucketfilltool.c:699 ../app/tools/gimpbucketfilltool.c:832
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:448
 msgid "Click in any image to pick the background color"
 msgstr "Щёлкните любое изображение, чтобы снять с него цвет фона"
 
-#: ../app/tools/gimpbucketfilltool.c:692 ../app/tools/gimpbucketfilltool.c:829
+#: ../app/tools/gimpbucketfilltool.c:706 ../app/tools/gimpbucketfilltool.c:841
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:442
 msgid "Click in any image to pick the foreground color"
 msgstr "Щёлкните любое изображение, чтобы снять с него цвет переднего плана"
@@ -21369,7 +21438,7 @@ msgstr "Преобразование по рамке: деформация вы�
 msgid "_Cage Transform"
 msgstr "Преобразование по _рамке"
 
-#: ../app/tools/gimpcagetool.c:737 ../app/tools/gimpwarptool.c:338
+#: ../app/tools/gimpcagetool.c:737 ../app/tools/gimpwarptool.c:346
 msgid "Press ENTER to commit the transform"
 msgstr "Нажмите клавишу ввода для применения трансформации"
 
@@ -21597,66 +21666,78 @@ msgstr "Обрезать до:"
 msgid "There is no active layer to crop."
 msgstr "Нет активного слоя для кадрирования."
 
-#: ../app/tools/gimpcurvestool.c:142
+#: ../app/tools/gimpcurvestool.c:154
 msgid "Curves"
 msgstr "Кривые"
 
-#: ../app/tools/gimpcurvestool.c:144
+#: ../app/tools/gimpcurvestool.c:156
 msgid "_Curves..."
 msgstr "_Кривые..."
 
-#: ../app/tools/gimpcurvestool.c:326
+#: ../app/tools/gimpcurvestool.c:399
 msgid "Click to add a control point"
 msgstr "Щёлкните, чтобы добавить контрольную точку"
 
-#: ../app/tools/gimpcurvestool.c:331
+#: ../app/tools/gimpcurvestool.c:404
 msgid "Click to add control points to all channels"
 msgstr "Щёлкните, чтобы добавить контрольные точки ко всем каналам"
 
-#: ../app/tools/gimpcurvestool.c:336
+#: ../app/tools/gimpcurvestool.c:409
 msgid "Click to locate on curve"
 msgstr "Щёлкните для закрытия контура"
 
-#: ../app/tools/gimpcurvestool.c:338
+#: ../app/tools/gimpcurvestool.c:411
 #, c-format
 msgid "%s: add control point"
 msgstr "%s: добавить контрольную точку"
 
-#: ../app/tools/gimpcurvestool.c:339
+#: ../app/tools/gimpcurvestool.c:412
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: добавить контрольные точки во всех каналах"
 
-#: ../app/tools/gimpcurvestool.c:356
+#: ../app/tools/gimpcurvestool.c:429
 msgid "Adjust Color Curves"
 msgstr "Коррекция цветовых кривых"
 
-#: ../app/tools/gimpcurvestool.c:401 ../app/tools/gimplevelstool.c:354
+#: ../app/tools/gimpcurvestool.c:474 ../app/tools/gimplevelstool.c:354
 #: ../app/tools/gimpthresholdtool.c:230
 msgid "Cha_nnel:"
 msgstr "_Канал:"
 
-#: ../app/tools/gimpcurvestool.c:433 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:506 ../app/tools/gimplevelstool.c:384
 msgid "R_eset Channel"
 msgstr "_Восстановить"
 
-#: ../app/tools/gimpcurvestool.c:453
+#: ../app/tools/gimpcurvestool.c:526
 msgid "Adjust curves in linear light"
 msgstr "Корректировать кривые в линейном пространстве"
 
-#: ../app/tools/gimpcurvestool.c:454
+#: ../app/tools/gimpcurvestool.c:527
 msgid "Adjust curves perceptually"
 msgstr "Корректировать кривые в нелинейном пространстве"
 
-#: ../app/tools/gimpcurvestool.c:544 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:622
+msgid "_Input:"
+msgstr "_Вход:"
+
+#: ../app/tools/gimpcurvestool.c:636
+msgid "O_utput:"
+msgstr "В_ыход:"
+
+#: ../app/tools/gimpcurvestool.c:650
+msgid "T_ype:"
+msgstr "Т_ип:"
+
+#: ../app/tools/gimpcurvestool.c:669 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "Тип _кривой:"
 
-#: ../app/tools/gimpcurvestool.c:662 ../app/tools/gimplevelstool.c:754
+#: ../app/tools/gimpcurvestool.c:788 ../app/tools/gimplevelstool.c:754
 msgid "Could not read header: "
 msgstr "Невозможно прочесть заголовок: "
 
-#: ../app/tools/gimpcurvestool.c:736
+#: ../app/tools/gimpcurvestool.c:862
 msgid "Use _old curves file format"
 msgstr "_Использовать старый формат кривых"
 
@@ -21950,7 +22031,6 @@ msgid "Active levels"
 msgstr "Активные уровни"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
-#, fuzzy
 msgid "Number of levels to perform solving"
 msgstr "Количество уровней для решения"
 
@@ -22120,7 +22200,7 @@ msgid "Modify the active gradient in-place"
 msgstr "Изменить выбранный градиент на месте"
 
 #: ../app/tools/gimpgradientoptions.c:274
-#: ../app/tools/gimppaintoptions-gui.c:383
+#: ../app/tools/gimppaintoptions-gui.c:384
 msgid "Edit this gradient"
 msgstr "Изменить градиент"
 
@@ -22676,8 +22756,8 @@ msgid "Show lattice"
 msgstr "Показывать сетку"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:230
-#: ../app/tools/gimpscaletool.c:94 ../app/tools/gimptransformgridoptions.c:491
-#: ../app/tools/gimptransformgridoptions.c:502
+#: ../app/tools/gimpscaletool.c:96 ../app/tools/gimptransformgridoptions.c:523
+#: ../app/tools/gimptransformgridoptions.c:534
 msgid "Scale"
 msgstr "Масштабирование"
 
@@ -22755,15 +22835,15 @@ msgstr "Восстановить значение силы по умолчани
 msgid "Edit this dynamics"
 msgstr "Изменить эту динамику"
 
-#: ../app/tools/gimppaintoptions-gui.c:324
+#: ../app/tools/gimppaintoptions-gui.c:325
 msgid "Fade Options"
 msgstr "Параметры угасания"
 
-#: ../app/tools/gimppaintoptions-gui.c:368
+#: ../app/tools/gimppaintoptions-gui.c:369
 msgid "Color Options"
 msgstr "Параметры цвета"
 
-#: ../app/tools/gimppaintoptions-gui.c:578
+#: ../app/tools/gimppaintoptions-gui.c:579
 msgid "Link to brush default"
 msgstr "Связать со значениями кисти по умолчанию"
 
@@ -22817,20 +22897,20 @@ msgstr "Штамп по п_ерспективе"
 msgid "Ctrl-Click to set a clone source"
 msgstr "Нажмите Ctrl для получения источника штампа"
 
-#: ../app/tools/gimpperspectivetool.c:83
+#: ../app/tools/gimpperspectivetool.c:86
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
 msgstr "Перспектива: изменение перспективы слоя, выделения или контура"
 
-#: ../app/tools/gimpperspectivetool.c:85
+#: ../app/tools/gimpperspectivetool.c:88
 msgid "_Perspective"
 msgstr "Пе_рспектива"
 
-#: ../app/tools/gimpperspectivetool.c:106
+#: ../app/tools/gimpperspectivetool.c:110
 msgctxt "undo-type"
 msgid "Perspective"
 msgstr "Перспектива"
 
-#: ../app/tools/gimpperspectivetool.c:107
+#: ../app/tools/gimpperspectivetool.c:111
 msgid "Perspective transformation"
 msgstr "Трансформация перспективы"
 
@@ -22847,7 +22927,7 @@ msgid "Use all visible layers when shrinking the selection"
 msgstr "Использовать все видимые слои при сокращении выделения"
 
 #: ../app/tools/gimprectangleoptions.c:102
-#: ../app/tools/gimptransformgridoptions.c:122
+#: ../app/tools/gimptransformgridoptions.c:123
 msgid "Composition guides such as rule of thirds"
 msgstr "Подсказки по композиции вроде правила третей"
 
@@ -22933,19 +23013,19 @@ msgstr "Закругление углов выделения"
 msgid "Radius of rounding in pixels"
 msgstr "Радиус сглаживания в точках растра"
 
-#: ../app/tools/gimprectangleselecttool.c:151
+#: ../app/tools/gimprectangleselecttool.c:155
 msgid "Rectangle Select"
 msgstr "Прямоугольное выделение"
 
-#: ../app/tools/gimprectangleselecttool.c:152
+#: ../app/tools/gimprectangleselecttool.c:156
 msgid "Rectangle Select Tool: Select a rectangular region"
 msgstr "Прямоугольное выделение: выделение прямоугольной области"
 
-#: ../app/tools/gimprectangleselecttool.c:153
+#: ../app/tools/gimprectangleselecttool.c:157
 msgid "_Rectangle Select"
 msgstr "Пр_ямоугольное выделение"
 
-#: ../app/tools/gimprectangleselecttool.c:757
+#: ../app/tools/gimprectangleselecttool.c:727
 msgid "Ellipse: "
 msgstr "Эллипс: "
 
@@ -22982,43 +23062,43 @@ msgstr "Рисовать маску выделенной области"
 msgid "Move the mouse to change threshold"
 msgstr "Переместите мышь для смены порога"
 
-#: ../app/tools/gimprotatetool.c:97 ../app/tools/gimptransformgridoptions.c:493
+#: ../app/tools/gimprotatetool.c:99 ../app/tools/gimptransformgridoptions.c:525
 msgid "Rotate"
 msgstr "Вращение"
 
-#: ../app/tools/gimprotatetool.c:98
+#: ../app/tools/gimprotatetool.c:100
 msgid "Rotate Tool: Rotate the layer, selection or path"
 msgstr "Вращение: поворот слоёв, выделений или контуров"
 
-#: ../app/tools/gimprotatetool.c:99
+#: ../app/tools/gimprotatetool.c:101
 msgid "_Rotate"
 msgstr "_Вращение"
 
-#: ../app/tools/gimprotatetool.c:126
+#: ../app/tools/gimprotatetool.c:129
 msgid "R_otate"
 msgstr "Пов_ернуть"
 
-#: ../app/tools/gimprotatetool.c:242
+#: ../app/tools/gimprotatetool.c:245
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g°"
 msgstr "Вращение на %-3.3g°"
 
-#: ../app/tools/gimprotatetool.c:248
+#: ../app/tools/gimprotatetool.c:251
 #, c-format
 msgctxt "undo-type"
 msgid "Rotate by %-3.3g° around (%g, %g)"
 msgstr "Вращение на %-3.3g° вокруг (%g, %g)"
 
-#: ../app/tools/gimprotatetool.c:278
+#: ../app/tools/gimprotatetool.c:281
 msgid "_Angle:"
 msgstr "_Угол:"
 
-#: ../app/tools/gimprotatetool.c:296
+#: ../app/tools/gimprotatetool.c:299
 msgid "Center _X:"
 msgstr "Центр _X:"
 
-#: ../app/tools/gimprotatetool.c:305
+#: ../app/tools/gimprotatetool.c:308
 msgid "Center _Y:"
 msgstr "Центр _Y:"
 
@@ -23040,11 +23120,11 @@ msgstr "Сместить образцовую точку: "
 msgid "Add Sample Point: "
 msgstr "Добавить образцовую точку: "
 
-#: ../app/tools/gimpscaletool.c:95
+#: ../app/tools/gimpscaletool.c:97
 msgid "Scale Tool: Scale the layer, selection or path"
 msgstr "Масштаб: изменение размера слоёв, выделенных областей и контуров"
 
-#: ../app/tools/gimpscaletool.c:183
+#: ../app/tools/gimpscaletool.c:186
 #, c-format
 msgctxt "undo-type"
 msgid "Scale to %d x %d"
@@ -23076,17 +23156,9 @@ msgstr "_Бесшовное клонирование"
 msgid "Cloning the foreground object"
 msgstr "Клонирование объекта на переднем плане"
 
-#: ../app/tools/gimpselectionoptions.c:87
-msgid "Feather edges"
-msgstr "Растушевать края"
-
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Enable feathering of selection edges"
 msgstr "Включить растушёвку краёв выделения"
-
-#: ../app/tools/gimpselectionoptions.c:95
-msgid "Radius of feathering"
-msgstr "Радиус растушёвки"
 
 #: ../app/tools/gimpselectionoptions.c:224 ../app/widgets/gimpbrushselect.c:190
 msgid "Mode:"
@@ -23138,8 +23210,8 @@ msgstr "Невозможно вычесть из пустого выделени
 msgid "Cannot intersect with an empty selection."
 msgstr "Невозможно пересечь с пустым выделением."
 
-#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:495
-#: ../app/tools/gimptransformgridoptions.c:504
+#: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:527
+#: ../app/tools/gimptransformgridoptions.c:536
 msgid "Shear"
 msgstr "Наклон"
 
@@ -23381,156 +23453,182 @@ msgstr ""
 "У этого инструмента\n"
 "нет параметров."
 
-#: ../app/tools/gimptransformgridoptions.c:107
+#: ../app/tools/gimptransformgridoptions.c:108
 msgid "Show image preview"
 msgstr "Показывать предпросмотр"
 
-#: ../app/tools/gimptransformgridoptions.c:108
+#: ../app/tools/gimptransformgridoptions.c:109
 msgid "Show a preview of the transformed image"
 msgstr "Показывать предпросмотр преобразуемого изображения"
 
-#: ../app/tools/gimptransformgridoptions.c:114
+#: ../app/tools/gimptransformgridoptions.c:115
 msgid "Image opacity"
 msgstr "Непрозрачность изображения"
 
-#: ../app/tools/gimptransformgridoptions.c:115
+#: ../app/tools/gimptransformgridoptions.c:116
 msgid "Opacity of the preview image"
 msgstr "Непрозрачность предпросмотра"
 
-#: ../app/tools/gimptransformgridoptions.c:121
-#: ../app/tools/gimptransformgridoptions.c:413
+#: ../app/tools/gimptransformgridoptions.c:122
+#: ../app/tools/gimptransformgridoptions.c:414
 msgid "Guides"
 msgstr "Направляющие"
 
-#: ../app/tools/gimptransformgridoptions.c:130
+#: ../app/tools/gimptransformgridoptions.c:131
 msgid "Size of a grid cell for variable number of composition guides"
 msgstr "Размер ячейки таблицы для разного количества подсказок по композиции"
 
-#: ../app/tools/gimptransformgridoptions.c:436
+#: ../app/tools/gimptransformgridoptions.c:437
 #, c-format
 msgid "15 degrees (%s)"
 msgstr "15 градусов (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:443
+#: ../app/tools/gimptransformgridoptions.c:444
 msgid "Limit rotation steps to 15 degrees"
 msgstr "Ограничить вращение шагами по 15 градусов"
 
-#: ../app/tools/gimptransformgridoptions.c:453
+#: ../app/tools/gimptransformgridoptions.c:454
 #, c-format
 msgid "Keep aspect (%s)"
 msgstr "Сохранить пропорции  (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:460
+#: ../app/tools/gimptransformgridoptions.c:461
 msgid "Keep the original aspect ratio"
 msgstr "Сохранять исходное соотношение сторон"
 
-#: ../app/tools/gimptransformgridoptions.c:465
+#: ../app/tools/gimptransformgridoptions.c:466
+#: ../app/tools/gimptransformgridoptions.c:496
 #, c-format
 msgid "Around center (%s)"
 msgstr "Вокруг центра (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:472
+#: ../app/tools/gimptransformgridoptions.c:473
 msgid "Scale around the center point"
 msgstr "Масштабировать от центральной точки"
 
-#: ../app/tools/gimptransformgridoptions.c:488
+#: ../app/tools/gimptransformgridoptions.c:483
+#, fuzzy, c-format
+msgid "Constrain handles (%s)"
+msgstr "Ограничить (%s)"
+
+#: ../app/tools/gimptransformgridoptions.c:491
+#, fuzzy, c-format
+msgid "Constrain handles to move along edges and diagonal (%s)"
+msgstr ""
+"Ограничить перемещение вертикалью, горизонталью и диагональю при коррекции "
+"перспективы (%s)"
+
+#: ../app/tools/gimptransformgridoptions.c:504
+msgid "Transform around the center point"
+msgstr "Трансформировать от центральной точки"
+
+#: ../app/tools/gimptransformgridoptions.c:520
 #, c-format
 msgid "Constrain (%s)"
 msgstr "Ограничить (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:489
+#: ../app/tools/gimptransformgridoptions.c:521
 msgid "Move"
 msgstr "Перемещение"
 
-#: ../app/tools/gimptransformgridoptions.c:490
+#: ../app/tools/gimptransformgridoptions.c:522
 #, c-format
 msgid "Constrain movement to 45 degree angles from center (%s)"
 msgstr "Ограничить движение шагами по 45 градусов от центра (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:492
+#: ../app/tools/gimptransformgridoptions.c:524
 #, c-format
 msgid "Maintain aspect ratio when scaling (%s)"
 msgstr "Сохранять соотношение сторон при масштабировании (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:494
+#: ../app/tools/gimptransformgridoptions.c:526
 #, c-format
 msgid "Constrain rotation to 15 degree increments (%s)"
 msgstr "Ограничить вращение шагами по 15 градусов (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:496
+#: ../app/tools/gimptransformgridoptions.c:528
 #, c-format
 msgid "Shear along edge direction only (%s)"
 msgstr "Искривлять только вдоль края (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:498
+#: ../app/tools/gimptransformgridoptions.c:530
 #, c-format
 msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgstr ""
 "Ограничить перемещение вертикалью, горизонталью и диагональю при коррекции "
 "перспективы (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:501
+#: ../app/tools/gimptransformgridoptions.c:533
 #, c-format
 msgid "From pivot  (%s)"
 msgstr "От опорной точки  (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:503
+#: ../app/tools/gimptransformgridoptions.c:535
 #, c-format
 msgid "Scale from pivot point (%s)"
 msgstr "Масштабировать от опорной точки (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:505
+#: ../app/tools/gimptransformgridoptions.c:537
 #, c-format
 msgid "Shear opposite edge by same amount (%s)"
 msgstr "Искривлять противоположный край на ту же величину (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:507
+#: ../app/tools/gimptransformgridoptions.c:539
 #, c-format
 msgid "Maintain position of pivot while changing perspective (%s)"
 msgstr "Сохранять положение опорной точки при коррекции перспективы (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:510
+#: ../app/tools/gimptransformgridoptions.c:542
 msgid "Pivot"
 msgstr "Опорная точка"
 
-#: ../app/tools/gimptransformgridoptions.c:511
+#: ../app/tools/gimptransformgridoptions.c:543
 #, c-format
 msgid "Snap (%s)"
 msgstr "Прилипать (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:512
+#: ../app/tools/gimptransformgridoptions.c:544
 #, c-format
 msgid "Snap pivot to corners and center (%s)"
 msgstr "Прилипать опорной точкой к углам и центру (%s)"
 
-#: ../app/tools/gimptransformgridoptions.c:513
+#: ../app/tools/gimptransformgridoptions.c:545
 msgid "Lock"
 msgstr "Блокировать"
 
-#: ../app/tools/gimptransformgridoptions.c:514
+#: ../app/tools/gimptransformgridoptions.c:546
 msgid "Lock pivot position to canvas"
 msgstr "Заблокировать положение опорной точки на холсте"
 
-#: ../app/tools/gimptransformgridtool.c:218
+#: ../app/tools/gimptransformgridtool.c:228
 #: ../app/tools/gimptransformtool.c:333
 msgid "_Transform"
 msgstr "Пре_образовать"
 
-#: ../app/tools/gimptransformgridtool.c:490
-#: ../app/tools/gimptransformgridtool.c:502
+#: ../app/tools/gimptransformgridtool.c:500
+#: ../app/tools/gimptransformgridtool.c:512
 msgid "Transform Step"
 msgstr "Шаг преобразования"
 
-#: ../app/tools/gimptransformgridtool.c:874
+#: ../app/tools/gimptransformgridtool.c:884
 #, c-format
 msgid "%s (Corrective)"
 msgstr ""
+
+#: ../app/tools/gimptransformgridtool.c:1107
+msgid "Re_adjust"
+msgstr "О_бновить"
+
+#: ../app/tools/gimptransformgridtool.c:1354
+#, fuzzy
+msgid "Cannot readjust the transformation"
+msgstr "Преобразование по точкам"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
 msgstr "Направление трансформации"
 
-#: ../app/tools/gimptransformoptions.c:101 ../app/tools/gimpwarpoptions.c:120
+#: ../app/tools/gimptransformoptions.c:101 ../app/tools/gimpwarpoptions.c:121
 msgid "Interpolation method"
 msgstr "Интерполяция"
 
@@ -23555,9 +23653,8 @@ msgid "Confirm Transformation"
 msgstr "Подтвердить"
 
 #: ../app/tools/gimptransformtool.c:343
-#, fuzzy
 msgid "Transformation creates a very large item."
-msgstr "Матрица преобразования"
+msgstr "Трансформация создаст очень большой объект."
 
 #: ../app/tools/gimptransformtool.c:347
 #, c-format
@@ -23598,24 +23695,24 @@ msgstr "Активный контур заблокирован от измене
 msgid "The current transform is invalid"
 msgstr "Текущее преобразование некорректно"
 
-#: ../app/tools/gimpunifiedtransformtool.c:84
+#: ../app/tools/gimpunifiedtransformtool.c:87
 msgid "Unified Transform"
 msgstr "Трансформации"
 
-#: ../app/tools/gimpunifiedtransformtool.c:85
+#: ../app/tools/gimpunifiedtransformtool.c:88
 msgid "Unified Transform Tool: Transform the layer, selection or path"
 msgstr "Трансформации: преобразование слоёв, выделений или контуров"
 
-#: ../app/tools/gimpunifiedtransformtool.c:87
+#: ../app/tools/gimpunifiedtransformtool.c:90
 msgid "_Unified Transform"
 msgstr "_Трансформации"
 
-#: ../app/tools/gimpunifiedtransformtool.c:108
+#: ../app/tools/gimpunifiedtransformtool.c:112
 msgctxt "undo-type"
 msgid "Unified Transform"
 msgstr "Трансформации"
 
-#: ../app/tools/gimpunifiedtransformtool.c:109
+#: ../app/tools/gimpunifiedtransformtool.c:113
 msgid "Unified transform"
 msgstr "Трансформации"
 
@@ -23653,144 +23750,152 @@ msgstr "Нет активного слоя или канала для запол
 msgid "There is no active layer or channel to stroke to"
 msgstr "Нет активного слоя или канала для обводки"
 
-#: ../app/tools/gimpwarpoptions.c:83 ../app/tools/gimpwarpoptions.c:84
+#: ../app/tools/gimpwarpoptions.c:84 ../app/tools/gimpwarpoptions.c:85
 msgid "Behavior"
 msgstr "Поведение"
 
-#: ../app/tools/gimpwarpoptions.c:92
+#: ../app/tools/gimpwarpoptions.c:93
 msgid "Effect Size"
 msgstr "Размер области воздействия"
 
-#: ../app/tools/gimpwarpoptions.c:99
+#: ../app/tools/gimpwarpoptions.c:100
 msgid "Effect Hardness"
 msgstr "Жёсткость эффекта"
 
-#: ../app/tools/gimpwarpoptions.c:105
+#: ../app/tools/gimpwarpoptions.c:106
 msgid "Strength"
 msgstr "Сила"
 
-#: ../app/tools/gimpwarpoptions.c:106
+#: ../app/tools/gimpwarpoptions.c:107
 msgid "Effect Strength"
 msgstr "Сила эффекта"
 
-#: ../app/tools/gimpwarpoptions.c:113
+#: ../app/tools/gimpwarpoptions.c:114
 msgid "Stroke Spacing"
 msgstr "Обвести выделенную область"
 
-#: ../app/tools/gimpwarpoptions.c:127 ../app/tools/gimpwarpoptions.c:331
+#: ../app/tools/gimpwarpoptions.c:128 ../app/tools/gimpwarpoptions.c:345
 msgid "Abyss policy"
 msgstr "Обработка данных вне входного буфера"
 
-#: ../app/tools/gimpwarpoptions.c:128
+#: ../app/tools/gimpwarpoptions.c:129
 #, fuzzy
 msgid "Out-of-bounds sampling behavior"
 msgstr "Поведение при выборке вне допустимых пределов"
 
-#: ../app/tools/gimpwarpoptions.c:135
+#: ../app/tools/gimpwarpoptions.c:136
 msgid "High quality preview"
 msgstr "Качественный предпросмотр"
 
-#: ../app/tools/gimpwarpoptions.c:136
+#: ../app/tools/gimpwarpoptions.c:137
 msgid "Use an accurate but slower preview"
 msgstr "Использовать точный, но более медленный предпросмотр"
 
-#: ../app/tools/gimpwarpoptions.c:142
+#: ../app/tools/gimpwarpoptions.c:143
+msgid "Real-time preview"
+msgstr "Мгновенный предпросмотр"
+
+#: ../app/tools/gimpwarpoptions.c:144
+msgid "Render preview in real time (slower)"
+msgstr ""
+
+#: ../app/tools/gimpwarpoptions.c:150
 msgid "During motion"
 msgstr "При движении"
 
-#: ../app/tools/gimpwarpoptions.c:143
+#: ../app/tools/gimpwarpoptions.c:151
 msgid "Apply effect during motion"
 msgstr "Применить эффект во время движения"
 
-#: ../app/tools/gimpwarpoptions.c:149
+#: ../app/tools/gimpwarpoptions.c:157
 msgid "Periodically"
 msgstr "Периодически"
 
-#: ../app/tools/gimpwarpoptions.c:150
+#: ../app/tools/gimpwarpoptions.c:158
 msgid "Apply effect periodically"
 msgstr "Периодически применять эффект"
 
-#: ../app/tools/gimpwarpoptions.c:156
+#: ../app/tools/gimpwarpoptions.c:164
 msgid "Rate"
 msgstr "Частота"
 
-#: ../app/tools/gimpwarpoptions.c:157
+#: ../app/tools/gimpwarpoptions.c:165
 msgid "Periodic stroke rate"
 msgstr "Частота периодических мазков"
 
-#: ../app/tools/gimpwarpoptions.c:163
+#: ../app/tools/gimpwarpoptions.c:171
 msgid "Frames"
 msgstr "Кадры"
 
-#: ../app/tools/gimpwarpoptions.c:164
+#: ../app/tools/gimpwarpoptions.c:172
 msgid "Number of animation frames"
 msgstr "Количество кадров анимации"
 
 #. the stroke frame
-#: ../app/tools/gimpwarpoptions.c:341
+#: ../app/tools/gimpwarpoptions.c:359
 msgid "Stroke"
 msgstr "Делать мазки"
 
 #. the animation frame
-#: ../app/tools/gimpwarpoptions.c:365
+#: ../app/tools/gimpwarpoptions.c:383
 msgid "Animate"
 msgstr "Анимация"
 
-#: ../app/tools/gimpwarpoptions.c:379
+#: ../app/tools/gimpwarpoptions.c:397
 msgid "Create Animation"
 msgstr "Создать анимацию"
 
-#: ../app/tools/gimpwarptool.c:160
+#: ../app/tools/gimpwarptool.c:165
 msgid "Warp Transform"
 msgstr "Искажения"
 
-#: ../app/tools/gimpwarptool.c:161
+#: ../app/tools/gimpwarptool.c:166
 msgid "Warp Transform: Deform with different tools"
 msgstr "Искажения: деформация различными инструментами"
 
-#: ../app/tools/gimpwarptool.c:162
+#: ../app/tools/gimpwarptool.c:167
 msgid "_Warp Transform"
 msgstr "_Искажения"
 
-#: ../app/tools/gimpwarptool.c:493 ../app/tools/gimpwarptool.c:505
+#: ../app/tools/gimpwarptool.c:540 ../app/tools/gimpwarptool.c:552
 msgid "Warp Tool Stroke"
 msgstr "Штрих инструментом искажения"
 
-#: ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimpwarptool.c:678
 msgid "Cannot warp layer groups."
 msgstr "Невозможно применять деформацию к группе слоёв."
 
-#: ../app/tools/gimpwarptool.c:665
+#: ../app/tools/gimpwarptool.c:714
 msgid "No stroke events selected."
 msgstr "Фильтр не выбран"
 
-#: ../app/tools/gimpwarptool.c:687
+#: ../app/tools/gimpwarptool.c:736
 msgid "No warp to erase."
 msgstr "Нет стираемых искажений."
 
-#: ../app/tools/gimpwarptool.c:691
+#: ../app/tools/gimpwarptool.c:740
 msgid "No warp to smooth."
 msgstr "Нет сглаживаемых искажений"
 
-#: ../app/tools/gimpwarptool.c:914
+#: ../app/tools/gimpwarptool.c:964
 msgid "Warp transform"
 msgstr "Искажения"
 
-#: ../app/tools/gimpwarptool.c:1186
+#: ../app/tools/gimpwarptool.c:1298
 msgid "Please add some warp strokes first."
 msgstr "Сначала добавьте несколько мазков искажения."
 
-#: ../app/tools/gimpwarptool.c:1200 ../app/tools/gimpwarptool.c:1237
+#: ../app/tools/gimpwarptool.c:1312 ../app/tools/gimpwarptool.c:1349
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Визуализируется кадр %d"
 
-#: ../app/tools/gimpwarptool.c:1215 ../app/tools/gimpwarptool.c:1245
+#: ../app/tools/gimpwarptool.c:1327 ../app/tools/gimpwarptool.c:1357
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
 
-#: ../app/tools/gimpwarptool.c:1254
+#: ../app/tools/gimpwarptool.c:1366
 msgid "Frame"
 msgstr "Кадр"
 
@@ -23807,7 +23912,7 @@ msgstr "Залить похожие цвета"
 #: ../app/tools/tools-enums.c:27
 msgctxt "bucket-fill-area"
 msgid "Fill by line art detection"
-msgstr "Залить при помощи определения контурного рисунка"
+msgstr "Залить контурный рисунок"
 
 #: ../app/tools/tools-enums.c:57
 msgctxt "line-art-source"
@@ -24320,24 +24425,24 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "н/д"
 
-#: ../app/widgets/gimpcolormapeditor.c:211
+#: ../app/widgets/gimpcolormapeditor.c:212
 msgid "Color index:"
 msgstr "Номер цвета:"
 
-#: ../app/widgets/gimpcolormapeditor.c:220
+#: ../app/widgets/gimpcolormapeditor.c:221
 msgid "HTML notation:"
 msgstr "Нотация HTML:"
 
-#: ../app/widgets/gimpcolormapeditor.c:400
+#: ../app/widgets/gimpcolormapeditor.c:401
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Правка элемента цветовой карты #%d"
 
-#: ../app/widgets/gimpcolormapeditor.c:407
+#: ../app/widgets/gimpcolormapeditor.c:408
 msgid "Edit Colormap Entry"
 msgstr "Правка элемента цветовой карты"
 
-#: ../app/widgets/gimpcolormapeditor.c:549
+#: ../app/widgets/gimpcolormapeditor.c:550
 msgid "Only indexed images have a colormap."
 msgstr "Только у индексированных изображений может быть цветовая карта."
 
@@ -24688,33 +24793,33 @@ msgid "Open Bug Tracker"
 msgstr "Открыть трекер ошибок"
 
 #: ../app/widgets/gimpcriticaldialog.c:132
-#: ../app/widgets/gimpcriticaldialog.c:454
+#: ../app/widgets/gimpcriticaldialog.c:455
 msgid ""
 "To help us improve GIMP, you can report the bug with these simple steps:"
 msgstr "Помогите нам улучшить GIMP и сообщите об этой ошибке:"
 
 #: ../app/widgets/gimpcriticaldialog.c:134
-#: ../app/widgets/gimpcriticaldialog.c:456
+#: ../app/widgets/gimpcriticaldialog.c:457
 msgid "Copy the bug information to the clipboard by clicking: "
 msgstr "Скопируйте собранную информацию об ошибке в буфер обмена, нажав: "
 
 #: ../app/widgets/gimpcriticaldialog.c:136
-#: ../app/widgets/gimpcriticaldialog.c:458
+#: ../app/widgets/gimpcriticaldialog.c:459
 msgid "Open our bug tracker in the browser by clicking: "
 msgstr "Откройте наш трекер ошибок в браузере, щёлкнув: "
 
 #: ../app/widgets/gimpcriticaldialog.c:138
-#: ../app/widgets/gimpcriticaldialog.c:460
+#: ../app/widgets/gimpcriticaldialog.c:461
 msgid "Create a login if you don't have one yet."
 msgstr "Создайте учетную запись, если у вас её ещё нет."
 
 #: ../app/widgets/gimpcriticaldialog.c:139
-#: ../app/widgets/gimpcriticaldialog.c:461
+#: ../app/widgets/gimpcriticaldialog.c:462
 msgid "Paste the clipboard text in a new bug report."
 msgstr "Вставить содержимое буфера обмена в новый отчёт об ошибке."
 
 #: ../app/widgets/gimpcriticaldialog.c:140
-#: ../app/widgets/gimpcriticaldialog.c:462
+#: ../app/widgets/gimpcriticaldialog.c:463
 msgid ""
 "Add relevant information in English in the bug report explaining what you "
 "were doing when this error occurred."
@@ -24802,13 +24907,13 @@ msgstr "Неизвестная ошибка в Microsoft Windows."
 msgid "Failed to open '%s': %s"
 msgstr "Не удалось открыть '%s': %s"
 
-#: ../app/widgets/gimpcriticaldialog.c:420
+#: ../app/widgets/gimpcriticaldialog.c:421
 #, c-format
 msgid "GIMP crashed with a fatal error: %s"
 msgstr "GIMP «упал» из-за критической ошибки: %s"
 
 #. First error. Let's just display it.
-#: ../app/widgets/gimpcriticaldialog.c:427
+#: ../app/widgets/gimpcriticaldialog.c:428
 #, c-format
 msgid "GIMP encountered an error: %s"
 msgstr "В работе GIMP возникла ошибка: %s"
@@ -24816,288 +24921,300 @@ msgstr "В работе GIMP возникла ошибка: %s"
 #. Let's not display all errors. They will be in the bug report
 #. * part anyway.
 #.
-#: ../app/widgets/gimpcriticaldialog.c:435
+#: ../app/widgets/gimpcriticaldialog.c:436
 #, c-format
 msgid "GIMP encountered several critical errors!"
 msgstr "В работе GIMP возникло несколько критических ошибок!"
 
-#: ../app/widgets/gimpcriticaldialog.c:487
+#: ../app/widgets/gimpcriticaldialog.c:488
 msgid "_Restart GIMP"
 msgstr "_Перезапустить GIMP"
 
-#: ../app/widgets/gimpdashboard.c:452 ../app/widgets/gimpdashboard.c:504
+#: ../app/widgets/gimpdashboard.c:454 ../app/widgets/gimpdashboard.c:506
 msgctxt "dashboard-variable"
 msgid "Occupied"
 msgstr "Занято"
 
-#: ../app/widgets/gimpdashboard.c:453
+#: ../app/widgets/gimpdashboard.c:455
 msgid "Tile cache occupied size"
 msgstr "Размер, занимаемый кэшем тайлов"
 
-#: ../app/widgets/gimpdashboard.c:462
+#: ../app/widgets/gimpdashboard.c:464
 msgctxt "dashboard-variable"
 msgid "Maximum"
 msgstr "Максимум"
 
-#: ../app/widgets/gimpdashboard.c:463
+#: ../app/widgets/gimpdashboard.c:465
 msgid "Maximal tile cache occupied size"
 msgstr "Максимальный размер места, занятого кэшем тайлов"
 
-#: ../app/widgets/gimpdashboard.c:472 ../app/widgets/gimpdashboard.c:524
+#: ../app/widgets/gimpdashboard.c:474 ../app/widgets/gimpdashboard.c:526
 msgctxt "dashboard-variable"
 msgid "Limit"
 msgstr "Предел"
 
-#: ../app/widgets/gimpdashboard.c:473
+#: ../app/widgets/gimpdashboard.c:475
 msgid "Tile cache size limit"
 msgstr "Предел размера, занимаемого кэшем тайлов"
 
-#: ../app/widgets/gimpdashboard.c:481 ../app/widgets/gimpdashboard.c:607
+#: ../app/widgets/gimpdashboard.c:483 ../app/widgets/gimpdashboard.c:609
 msgctxt "dashboard-variable"
 msgid "Compression"
 msgstr "Сжатие"
 
-#: ../app/widgets/gimpdashboard.c:482
+#: ../app/widgets/gimpdashboard.c:484
 msgid "Tile cache compression ratio"
 msgstr "Коэффициент сжатия, занимаемого кэшем тайлов"
 
-#: ../app/widgets/gimpdashboard.c:491
+#: ../app/widgets/gimpdashboard.c:493
 msgctxt "dashboard-variable"
 msgid "Hit/Miss"
 msgstr "Попадание/Промах"
 
-#: ../app/widgets/gimpdashboard.c:492
+#: ../app/widgets/gimpdashboard.c:494
 msgid "Tile cache hit/miss ratio"
 msgstr "Соотношение попаданий к промахам при чтении кэша"
 
-#: ../app/widgets/gimpdashboard.c:505
+#: ../app/widgets/gimpdashboard.c:507
 msgid "Swap file occupied size"
 msgstr "Размер места, занимаемого файлом подкачки"
 
-#: ../app/widgets/gimpdashboard.c:514 ../app/widgets/gimpdashboard.c:671
+#: ../app/widgets/gimpdashboard.c:516 ../app/widgets/gimpdashboard.c:673
 msgctxt "dashboard-variable"
 msgid "Size"
 msgstr "Размер"
 
-#: ../app/widgets/gimpdashboard.c:515
+#: ../app/widgets/gimpdashboard.c:517
 msgid "Swap file size"
 msgstr "Размер файла подкачки"
 
-#: ../app/widgets/gimpdashboard.c:525
+#: ../app/widgets/gimpdashboard.c:527
 msgid "Swap file size limit"
 msgstr "Предел места, занимаемого файлом подкачки"
 
-#: ../app/widgets/gimpdashboard.c:532
+#: ../app/widgets/gimpdashboard.c:534
 msgctxt "dashboard-variable"
 msgid "Queued"
 msgstr "В очереди"
 
-#: ../app/widgets/gimpdashboard.c:533
+#: ../app/widgets/gimpdashboard.c:535
 msgid "Size of data queued for writing to the swap"
 msgstr "Размер данных в очереди на запись в подкачку"
 
-#: ../app/widgets/gimpdashboard.c:542
+#: ../app/widgets/gimpdashboard.c:544
 msgctxt "dashboard-variable"
 msgid "Queue stalls"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:543
+#: ../app/widgets/gimpdashboard.c:545
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:552
+#: ../app/widgets/gimpdashboard.c:554
 msgctxt "dashboard-variable"
 msgid "Queue full"
 msgstr ""
 
-#: ../app/widgets/gimpdashboard.c:553
+#: ../app/widgets/gimpdashboard.c:555
 msgid "Whether the swap queue is full"
 msgstr "Заполнена ли очередь подкачки"
 
 #. Translators: this is the past participle form of "read",
 #. *              as in "total amount of data read from the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:564
+#: ../app/widgets/gimpdashboard.c:566
 msgctxt "dashboard-variable"
 msgid "Read"
 msgstr "Прочтено"
 
-#: ../app/widgets/gimpdashboard.c:565
+#: ../app/widgets/gimpdashboard.c:567
 msgid "Total amount of data read from the swap"
 msgstr "Общее количество данных, прочитанных из подкачки"
 
-#: ../app/widgets/gimpdashboard.c:574
+#: ../app/widgets/gimpdashboard.c:576
 msgctxt "dashboard-variable"
 msgid "Read throughput"
 msgstr "Пропускаемость чтения"
 
-#: ../app/widgets/gimpdashboard.c:575
+#: ../app/widgets/gimpdashboard.c:577
 msgid "The rate at which data is read from the swap"
 msgstr "Частота чтения данных из подкачки."
 
 #. Translators: this is the past participle form of "write",
 #. *              as in "total amount of data written to the swap".
 #.
-#: ../app/widgets/gimpdashboard.c:587
+#: ../app/widgets/gimpdashboard.c:589
 msgctxt "dashboard-variable"
 msgid "Written"
 msgstr "Записано"
 
-#: ../app/widgets/gimpdashboard.c:588
+#: ../app/widgets/gimpdashboard.c:590
 msgid "Total amount of data written to the swap"
 msgstr "Общее количество данных, записанных в подкачку"
 
-#: ../app/widgets/gimpdashboard.c:597
+#: ../app/widgets/gimpdashboard.c:599
 msgctxt "dashboard-variable"
 msgid "Write throughput"
 msgstr "Пропускаемость записи"
 
-#: ../app/widgets/gimpdashboard.c:598
+#: ../app/widgets/gimpdashboard.c:600
 msgid "The rate at which data is written to the swap"
 msgstr "Частота записи данных в подкачку."
 
-#: ../app/widgets/gimpdashboard.c:608
+#: ../app/widgets/gimpdashboard.c:610
 msgid "Swap compression ratio"
 msgstr "Коэффициент сжатия подкачки"
 
-#: ../app/widgets/gimpdashboard.c:621
+#: ../app/widgets/gimpdashboard.c:623
 msgctxt "dashboard-variable"
 msgid "Usage"
 msgstr "Использование"
 
-#: ../app/widgets/gimpdashboard.c:622
+#: ../app/widgets/gimpdashboard.c:624
 msgid "Total CPU usage"
 msgstr "Общее использование ЦП"
 
-#: ../app/widgets/gimpdashboard.c:630 ../app/widgets/gimpdashboard.c:639
+#: ../app/widgets/gimpdashboard.c:632 ../app/widgets/gimpdashboard.c:641
 msgctxt "dashboard-variable"
 msgid "Active"
 msgstr "Активность"
 
-#: ../app/widgets/gimpdashboard.c:631
+#: ../app/widgets/gimpdashboard.c:633
 msgid "Whether the CPU is active"
 msgstr "Активен ли центральный процессор"
 
-#: ../app/widgets/gimpdashboard.c:640
+#: ../app/widgets/gimpdashboard.c:642
 msgid "Total amount of time the CPU has been active"
 msgstr "Общая длительность активности центрального процессора"
 
-#: ../app/widgets/gimpdashboard.c:653
+#: ../app/widgets/gimpdashboard.c:655
 msgctxt "dashboard-variable"
 msgid "Used"
 msgstr "Использовано"
 
-#: ../app/widgets/gimpdashboard.c:654
+#: ../app/widgets/gimpdashboard.c:656
 msgid "Amount of memory used by the process"
 msgstr "Объём памяти, используемой процессом"
 
-#: ../app/widgets/gimpdashboard.c:662
+#: ../app/widgets/gimpdashboard.c:664
 msgctxt "dashboard-variable"
 msgid "Available"
 msgstr "Доступно"
 
-#: ../app/widgets/gimpdashboard.c:663
+#: ../app/widgets/gimpdashboard.c:665
 msgid "Amount of available physical memory"
 msgstr "Объём доступной физической памяти"
 
-#: ../app/widgets/gimpdashboard.c:672
+#: ../app/widgets/gimpdashboard.c:674
 msgid "Physical memory size"
 msgstr "Объём физической памяти"
 
-#: ../app/widgets/gimpdashboard.c:683
+#: ../app/widgets/gimpdashboard.c:685
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
 msgstr "Мипмапов"
 
-#: ../app/widgets/gimpdashboard.c:684
+#: ../app/widgets/gimpdashboard.c:686
 msgid "Total size of processed mipmapped data"
 msgstr "Общий размер обработанных мипмапов"
 
-#: ../app/widgets/gimpdashboard.c:692
+#: ../app/widgets/gimpdashboard.c:694
 msgctxt "dashboard-variable"
 msgid "Async"
 msgstr "Асинхр."
 
-#: ../app/widgets/gimpdashboard.c:693
+#: ../app/widgets/gimpdashboard.c:695
 msgid "Number of ongoing asynchronous operations"
 msgstr "Количество выполняющихся асинхронных операций"
 
-#: ../app/widgets/gimpdashboard.c:701
+#: ../app/widgets/gimpdashboard.c:703
 msgctxt "dashboard-variable"
 msgid "Scratch"
 msgstr "Врем. память"
 
-#: ../app/widgets/gimpdashboard.c:702
+#: ../app/widgets/gimpdashboard.c:704
 msgid "Total size of scratch memory"
 msgstr "Общий объём временной памяти"
 
-#: ../app/widgets/gimpdashboard.c:714
+#. Translators:  "TempBuf" is a technical term referring to an internal
+#. * GIMP data structure.  It's probably OK to leave it untranslated.
+#.
+#: ../app/widgets/gimpdashboard.c:715
+msgctxt "dashboard-variable"
+msgid "TempBuf"
+msgstr "TempBuf"
+
+#: ../app/widgets/gimpdashboard.c:716
+msgid "Total size of temporary buffers"
+msgstr "Общий объём временных буферов"
+
+#: ../app/widgets/gimpdashboard.c:728
 msgctxt "dashboard-group"
 msgid "Cache"
 msgstr "Кэш"
 
-#: ../app/widgets/gimpdashboard.c:715
+#: ../app/widgets/gimpdashboard.c:729
 msgid "In-memory tile cache"
 msgstr "Кэш тайлов, хранящийся в оперативной памяти"
 
-#: ../app/widgets/gimpdashboard.c:751
+#: ../app/widgets/gimpdashboard.c:765
 msgctxt "dashboard-group"
 msgid "Swap"
 msgstr "Подкачка"
 
-#: ../app/widgets/gimpdashboard.c:752
+#: ../app/widgets/gimpdashboard.c:766
 msgid "On-disk tile swap"
 msgstr "Файл подкачки тайлов, хранящийся на диске"
 
-#: ../app/widgets/gimpdashboard.c:816
+#: ../app/widgets/gimpdashboard.c:830
 msgctxt "dashboard-group"
 msgid "CPU"
 msgstr "Процессор"
 
-#: ../app/widgets/gimpdashboard.c:817
+#: ../app/widgets/gimpdashboard.c:831
 msgid "CPU usage"
 msgstr "Использование процессора"
 
-#: ../app/widgets/gimpdashboard.c:852
+#: ../app/widgets/gimpdashboard.c:866
 msgctxt "dashboard-group"
 msgid "Memory"
 msgstr "Память"
 
-#: ../app/widgets/gimpdashboard.c:853
+#: ../app/widgets/gimpdashboard.c:867
 msgid "Memory usage"
 msgstr "Использование памяти"
 
-#: ../app/widgets/gimpdashboard.c:861
+#: ../app/widgets/gimpdashboard.c:875
 msgctxt "dashboard-variable"
 msgid "Cache"
 msgstr "Кэш"
 
-#: ../app/widgets/gimpdashboard.c:891
+#: ../app/widgets/gimpdashboard.c:905
 msgctxt "dashboard-group"
 msgid "Misc"
 msgstr "Разное"
 
-#: ../app/widgets/gimpdashboard.c:892
+#: ../app/widgets/gimpdashboard.c:906
 msgid "Miscellaneous information"
 msgstr "Различная информация"
 
-#: ../app/widgets/gimpdashboard.c:1073
+#: ../app/widgets/gimpdashboard.c:1090
 msgid "Select fields"
 msgstr "Выбрать поля"
 
 #. Tranlators: "N/A" is an abbreviation for "not available"
-#: ../app/widgets/gimpdashboard.c:3161
+#: ../app/widgets/gimpdashboard.c:3178
 msgctxt "dashboard-value"
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../app/widgets/gimpdashboard.c:3170 ../app/widgets/gimpdashboard.c:4068
+#: ../app/widgets/gimpdashboard.c:3187 ../app/widgets/gimpdashboard.c:4085
 msgctxt "dashboard-value"
 msgid "Yes"
 msgstr "Да"
 
-#: ../app/widgets/gimpdashboard.c:3171 ../app/widgets/gimpdashboard.c:4069
+#: ../app/widgets/gimpdashboard.c:3188 ../app/widgets/gimpdashboard.c:4086
 msgctxt "dashboard-value"
 msgid "No"
 msgstr "Нет"
@@ -25106,7 +25223,7 @@ msgstr "Нет"
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
 #. * is an abbreviation for "per second".
 #.
-#: ../app/widgets/gimpdashboard.c:3255
+#: ../app/widgets/gimpdashboard.c:3272
 #, c-format
 msgid "%g/s"
 msgstr "%g/с"
@@ -25117,16 +25234,16 @@ msgstr "%g/с"
 #. * abbreviation for "per second" (so the full string would read
 #. * "10 bytes/s", that is, "10 bytes per second".
 #.
-#: ../app/widgets/gimpdashboard.c:4058
+#: ../app/widgets/gimpdashboard.c:4075
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
 
-#: ../app/widgets/gimpdashboard.c:4136
+#: ../app/widgets/gimpdashboard.c:4153
 msgid "N/A"
 msgstr "Н/Д"
 
-#: ../app/widgets/gimpdashboard.c:4465
+#: ../app/widgets/gimpdashboard.c:4481
 msgid "Resolving symbol information..."
 msgstr ""
 
@@ -25744,7 +25861,7 @@ msgid "Number of paths:"
 msgstr "Число контуров:"
 
 #: ../app/widgets/gimpimagepropview.c:452
-#: ../app/widgets/gimptemplateeditor.c:346
+#: ../app/widgets/gimptemplateeditor.c:350
 #, c-format
 msgid "pixels/%s"
 msgstr "пикселов/%s"
@@ -25782,7 +25899,7 @@ msgstr[0] "Сообщение было повторено %d раз"
 msgstr[1] "Сообщение было повторено %d раза"
 msgstr[2] "Сообщение было повторено %d раз"
 
-#: ../app/widgets/gimpopendialog.c:71
+#: ../app/widgets/gimpopendialog.c:89
 msgid "Automatically Detected"
 msgstr "Определено автоматически"
 
@@ -25986,57 +26103,57 @@ msgstr "введите метки"
 msgid ","
 msgstr ","
 
-#: ../app/widgets/gimptemplateeditor.c:216
+#: ../app/widgets/gimptemplateeditor.c:220
 #, c-format
 msgid "%p"
 msgstr "%p"
 
-#: ../app/widgets/gimptemplateeditor.c:291
+#: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Advanced Options"
 msgstr "_Расширенные параметры"
 
-#: ../app/widgets/gimptemplateeditor.c:404
+#: ../app/widgets/gimptemplateeditor.c:408
 msgid "Color _space:"
 msgstr "_Цветовое пространство:"
 
-#: ../app/widgets/gimptemplateeditor.c:412
+#: ../app/widgets/gimptemplateeditor.c:425
 msgid "_Precision:"
 msgstr "То_чность:"
 
-#: ../app/widgets/gimptemplateeditor.c:424
+#: ../app/widgets/gimptemplateeditor.c:441
 msgid "_Gamma:"
 msgstr "_Гамма"
 
-#: ../app/widgets/gimptemplateeditor.c:429
+#: ../app/widgets/gimptemplateeditor.c:446
 msgid "Color _manage this image"
 msgstr "_Управлять цветом этого изображения"
 
-#: ../app/widgets/gimptemplateeditor.c:438
+#: ../app/widgets/gimptemplateeditor.c:455
 msgid "Choose A Color Profile"
 msgstr "Выбрать цветовой профиль"
 
-#: ../app/widgets/gimptemplateeditor.c:442
+#: ../app/widgets/gimptemplateeditor.c:459
 msgid "Co_lor profile:"
 msgstr "_Цветовой профиль:"
 
-#: ../app/widgets/gimptemplateeditor.c:459
+#: ../app/widgets/gimptemplateeditor.c:476
 msgid "Comme_nt:"
 msgstr "_Комментарий:"
 
-#: ../app/widgets/gimptemplateeditor.c:574
+#: ../app/widgets/gimptemplateeditor.c:591
 msgid "_Name:"
 msgstr "_Имя:"
 
-#: ../app/widgets/gimptemplateeditor.c:580
+#: ../app/widgets/gimptemplateeditor.c:597
 msgid "_Icon:"
 msgstr "_Значок:"
 
-#: ../app/widgets/gimptemplateeditor.c:799
+#: ../app/widgets/gimptemplateeditor.c:834
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d × %d ppi, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:801
+#: ../app/widgets/gimptemplateeditor.c:836
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d точек на дюйм, %s"
@@ -26556,6 +26673,14 @@ msgstr "круглые"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "растушеванные"
+
+#~ msgctxt "dialogs-action"
+#~ msgid "Palette Editor"
+#~ msgstr "Редактор палитры образцов"
+
+#~ msgctxt "dialogs-action"
+#~ msgid "Tool presets"
+#~ msgstr "Профили инструментов"
 
 #~ msgid ""
 #~ "For more information, see https://www.gimp.org/news/2018/04/27/"
