@@ -139,10 +139,13 @@ file_open_dialog_response (GtkWidget *dialog,
         {
           if (! file_dialog->image)
             {
-              file_dialog->image = file_open_dialog_open_image (dialog,
-                                                                gimp,
-                                                                file,
-                                                                file_dialog->file_proc);
+              gimp_open_dialog_set_image (
+                open_dialog,
+                file_open_dialog_open_image (dialog,
+                                             gimp,
+                                             file,
+                                             file_dialog->file_proc),
+                TRUE);
 
               if (file_dialog->image)
                 {
