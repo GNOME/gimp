@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-11 11:37+0100\n"
-"PO-Revision-Date: 2019-03-11 11:38+0100\n"
+"POT-Creation-Date: 2019-04-21 13:20+0200\n"
+"PO-Revision-Date: 2019-04-21 13:22+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -73,7 +73,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
+#: ../plug-ins/file-tiff/file-tiff-load.c:152 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -455,7 +455,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1040
 #: ../plug-ins/file-psd/psd-load.c:1852 ../plug-ins/file-sgi/sgi.c:411
-#: ../plug-ins/file-tiff/file-tiff-load.c:924
+#: ../plug-ins/file-tiff/file-tiff-load.c:942
 #: ../plug-ins/file-webp/file-webp-load.c:152
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
@@ -1054,8 +1054,9 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:330 ../plug-ins/file-psd/psd-save.c:1599
-#: ../plug-ins/file-tiff/file-tiff-save.c:642 ../plug-ins/flame/flame.c:442
+#: ../plug-ins/file-jpeg/jpeg-save.c:331 ../plug-ins/file-psd/psd-save.c:1599
+#: ../plug-ins/file-tiff/file-tiff-save.c:996
+#: ../plug-ins/file-tiff/file-tiff-save.c:1094 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -2213,7 +2214,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/file-psd/psd-load.c:131
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:236
+#: ../plug-ins/file-tiff/file-tiff-load.c:250
 #, c-format
 msgid "Opening '%s'"
 msgstr "Otwieranie „%s”"
@@ -2251,7 +2252,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania danych obrazu"
 #: ../plug-ins/common/file-cel.c:557
 #, c-format
 msgid "Unsupported bit depth (%d)!"
-msgstr "Nieobsługiwana głębia kolorów (%d)."
+msgstr "Nieobsługiwana głębia bitowa (%d)."
 
 #: ../plug-ins/common/file-cel.c:642 ../plug-ins/common/file-cel.c:654
 #, c-format
@@ -2296,8 +2297,8 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:287 ../plug-ins/file-psd/psd-save.c:1570
-#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
+#: ../plug-ins/file-jpeg/jpeg-save.c:288 ../plug-ins/file-psd/psd-save.c:1570
+#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:986
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Eksportowanie „%s”"
@@ -2926,7 +2927,7 @@ msgstr "Nieobsługiwana przestrzeń kolorów w obrazie JP2 „%s”."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2276
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2284
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Nie można bezstratnie zapisać przezroczystości, zapisano zamiast tego krycie."
@@ -2960,7 +2961,7 @@ msgid "Save creation time"
 msgstr "Zapis czasu powstania"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2334
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2342
 msgid "PNG"
 msgstr "PNG"
 
@@ -3180,7 +3181,7 @@ msgid "Import from PDF"
 msgstr "Import z PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1260 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:148
+#: ../plug-ins/file-tiff/file-tiff-load.c:153
 #: ../plug-ins/metadata/metadata-editor.c:5649
 msgid "_Import"
 msgstr "Zai_mportuj"
@@ -3297,7 +3298,7 @@ msgstr "Dodanie tego obrazu"
 #: ../plug-ins/common/file-pdf-save.c:1189
 #: ../plug-ins/common/file-pdf-save.c:1257
 #: ../plug-ins/common/file-pdf-save.c:1355 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:926
+#: ../plug-ins/file-tiff/file-tiff-load.c:944
 #, c-format
 msgid "Page %d"
 msgstr "%d. strona"
@@ -3399,14 +3400,14 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
-#: ../plug-ins/common/file-png.c:2351 ../plug-ins/common/file-raw-data.c:2129
-#: ../plug-ins/file-tiff/file-tiff-save.c:965
+#: ../plug-ins/common/file-png.c:2359 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/file-tiff/file-tiff-save.c:1170
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2352 ../plug-ins/common/file-raw-data.c:2130
-#: ../plug-ins/file-tiff/file-tiff-save.c:966
+#: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/file-tiff/file-tiff-save.c:1171
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
@@ -4497,8 +4498,8 @@ msgstr "Komentarz jest ograniczony do %d znaków."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1493
-#: ../plug-ins/file-webp/file-webp-save.c:173
-#: ../plug-ins/file-webp/file-webp-save.c:509
+#: ../plug-ins/file-webp/file-webp-save.c:198
+#: ../plug-ins/file-webp/file-webp-save.c:558
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
@@ -6812,7 +6813,7 @@ msgstr ""
 #. Advanced Options
 #. Advanced expander
 #. Advanced options
-#: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:964
+#: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:1026
 #: ../plug-ins/file-webp/file-webp-dialog.c:220
 #: ../plug-ins/file-webp/file-webp-dialog.c:366
 msgid "_Advanced Options"
@@ -6899,7 +6900,7 @@ msgid "<b>Advanced Options</b>"
 msgstr "<b>Opcje zaawansowane</b>"
 
 #: ../plug-ins/file-dds/ddswrite.c:2055
-#: ../plug-ins/file-tiff/file-tiff-save.c:981
+#: ../plug-ins/file-tiff/file-tiff-save.c:1186
 msgid "Compression"
 msgstr "Kompresja"
 
@@ -7124,31 +7125,31 @@ msgstr "Podgląd JPEG"
 msgid "File size: %s"
 msgstr "Rozmiar pliku: %s"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:610
+#: ../plug-ins/file-jpeg/jpeg-save.c:672
 msgid "Calculating file size..."
 msgstr "Obliczanie rozmiaru pliku…"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:694 ../plug-ins/file-jpeg/jpeg-save.c:837
+#: ../plug-ins/file-jpeg/jpeg-save.c:756 ../plug-ins/file-jpeg/jpeg-save.c:899
 msgid "File size: unknown"
 msgstr "Rozmiar pliku: nieznany"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:757
+#: ../plug-ins/file-jpeg/jpeg-save.c:819
 msgid "JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:785
+#: ../plug-ins/file-jpeg/jpeg-save.c:847
 msgid "_Quality:"
 msgstr "_Jakość:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:789
+#: ../plug-ins/file-jpeg/jpeg-save.c:851
 msgid "JPEG quality parameter"
 msgstr "Parametr jakości JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:801
+#: ../plug-ins/file-jpeg/jpeg-save.c:863
 msgid "_Use quality settings from original image"
 msgstr "_Ustawienia jakości pierwotnego obrazu"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:807
+#: ../plug-ins/file-jpeg/jpeg-save.c:869
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -7158,122 +7159,122 @@ msgstr ""
 "niestandardowych ustawień jakości (tablice kwantyzacji), to włączenie tej "
 "opcji umożliwia uzyskanie prawie takiej samej jakości i rozmiaru pliku."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:847
+#: ../plug-ins/file-jpeg/jpeg-save.c:909
 msgid "Enable preview to obtain the file size."
 msgstr "Włączenie podglądu określi rozmiar pliku."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:850
+#: ../plug-ins/file-jpeg/jpeg-save.c:912
 msgid "Sho_w preview in image window"
 msgstr "_Podgląd w oknie obrazu"
 
 #. Save EXIF data
-#: ../plug-ins/file-jpeg/jpeg-save.c:868
+#: ../plug-ins/file-jpeg/jpeg-save.c:930
 #: ../plug-ins/file-webp/file-webp-dialog.c:383
 msgid "Save _Exif data"
 msgstr "Zapisanie danych _Exif"
 
 #. XMP metadata
-#: ../plug-ins/file-jpeg/jpeg-save.c:882
+#: ../plug-ins/file-jpeg/jpeg-save.c:944
 #: ../plug-ins/file-webp/file-webp-dialog.c:393
 msgid "Save _XMP data"
 msgstr "Zapisanie danych _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:896
+#: ../plug-ins/file-jpeg/jpeg-save.c:958
 msgid "Save _IPTC data"
 msgstr "Zapisanie danych _IPTC"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:910
+#: ../plug-ins/file-jpeg/jpeg-save.c:972
 msgid "Save _thumbnail"
 msgstr "Zapisanie _miniatury"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:924
+#: ../plug-ins/file-jpeg/jpeg-save.c:986
 #: ../plug-ins/ui/plug-in-file-png.ui.h:16
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "Save color profile"
 msgstr "Zapisanie profilu kolorów"
 
 #. Comment
-#: ../plug-ins/file-jpeg/jpeg-save.c:937
+#: ../plug-ins/file-jpeg/jpeg-save.c:999
 msgid "Comment"
 msgstr "Komentarz"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:995
+#: ../plug-ins/file-jpeg/jpeg-save.c:1057
 msgid "S_moothing:"
 msgstr "Wygła_dzanie:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1008
+#: ../plug-ins/file-jpeg/jpeg-save.c:1070
 msgid "Interval (MCU rows):"
 msgstr "Odstęp (rzędy MCU):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1026
+#: ../plug-ins/file-jpeg/jpeg-save.c:1088
 msgid "Use _restart markers"
 msgstr "_Markery przywracania"
 
 #. Optimize
-#: ../plug-ins/file-jpeg/jpeg-save.c:1045
+#: ../plug-ins/file-jpeg/jpeg-save.c:1107
 msgid "_Optimize"
 msgstr "_Optymalizacja"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1068
+#: ../plug-ins/file-jpeg/jpeg-save.c:1130
 msgid "Use arithmetic _coding"
 msgstr "Użycie _kodowania arytmetycznego"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1070
+#: ../plug-ins/file-jpeg/jpeg-save.c:1132
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "Starsze oprogramowanie może mieć problemy podczas otwierania obrazów "
 "zakodowanych arytmetycznie"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1093
+#: ../plug-ins/file-jpeg/jpeg-save.c:1155
 msgid "_Progressive"
 msgstr "_Przyrostowy"
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1111
+#: ../plug-ins/file-jpeg/jpeg-save.c:1173
 msgid "Su_bsampling:"
 msgstr "Podpró_bkowanie:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1118
+#: ../plug-ins/file-jpeg/jpeg-save.c:1180
 msgid "4:4:4 (best quality)"
 msgstr "4∶4∶4 (najlepsza jakość)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1120
+#: ../plug-ins/file-jpeg/jpeg-save.c:1182
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4∶2∶2 poziomo (zmniejszenie nasycenia o połowę)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1122
+#: ../plug-ins/file-jpeg/jpeg-save.c:1184
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4∶2∶2 pionowo (zmniejszenie nasycenia o połowę)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1124
+#: ../plug-ins/file-jpeg/jpeg-save.c:1186
 msgid "4:2:0 (chroma quartered)"
 msgstr "4∶2∶0 (zmniejszenie nasycenia o jedną czwartą)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1156
+#: ../plug-ins/file-jpeg/jpeg-save.c:1218
 msgid "_DCT method:"
 msgstr "Metoda _DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1162
+#: ../plug-ins/file-jpeg/jpeg-save.c:1224
 msgid "Fast Integer"
 msgstr "Szybka stałoprzecinkowa"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1163
+#: ../plug-ins/file-jpeg/jpeg-save.c:1225
 msgid "Integer"
 msgstr "Stałoprzecinkowa"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1164
+#: ../plug-ins/file-jpeg/jpeg-save.c:1226
 msgid "Floating-Point"
 msgstr "Zmiennoprzecinkowa"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1188
+#: ../plug-ins/file-jpeg/jpeg-save.c:1250
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:6
 #: ../plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "_Wczytaj domyślne"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1197
+#: ../plug-ins/file-jpeg/jpeg-save.c:1259
 msgid "Sa_ve Defaults"
 msgstr "_Zapisz jako domyślne"
 
@@ -7319,7 +7320,7 @@ msgstr "Nieobsługiwany tryb kolorów: %s"
 #: ../plug-ins/file-psd/psd-load.c:356
 #, c-format
 msgid "Unsupported bit depth: %d"
-msgstr "Nieobsługiwana głębia kolorów: %d"
+msgstr "Nieobsługiwana głębia bitowa: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:390 ../plug-ins/file-psd/psd-load.c:400
 #: ../plug-ins/file-psd/psd-load.c:611 ../plug-ins/file-psd/psd-load.c:833
@@ -7595,25 +7596,33 @@ msgstr ""
 msgid "TIFF image"
 msgstr "Obraz TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:231
+#: ../plug-ins/file-tiff/file-tiff.c:236
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "Plik TIFF „%s” nie zawiera żadnych katalogów"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:143
+#: ../plug-ins/file-tiff/file-tiff-load.c:148
 msgid "Import from TIFF"
 msgstr "Import z pliku TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:718
+#. Option to shrink the loaded image to its bounding box
+#. or keep as much empty space as possible.
+#. Note that there seems to be no way to keep the empty
+#. space on the right and bottom.
+#: ../plug-ins/file-tiff/file-tiff-load.c:197
+msgid "Keep empty space around imported layers"
+msgstr "Zachowanie pustego miejsca wokół zaimportowanych warstw"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:732
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-z-%d-stron"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:957
+#: ../plug-ins/file-tiff/file-tiff-load.c:975
 msgid "TIFF Channel"
 msgstr "Kanały TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:616
+#: ../plug-ins/file-tiff/file-tiff-save.c:626
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7621,11 +7630,16 @@ msgstr ""
 "Tylko monochromatyczne obrazy mogą być kompresowane za pomocą „CCITT Group "
 "4” lub „CCITT Group 3”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:630
+#: ../plug-ins/file-tiff/file-tiff-save.c:640
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Indeksowane obrazy nie mogą być kompresowane za pomocą „JPEG”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:736
+#: ../plug-ins/file-tiff/file-tiff-save.c:773
+#, c-format
+msgid "Failed a scanline write on row %d"
+msgstr "Zapisanie scanline w rzędzie %d się nie powiodło"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:1013
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7634,40 +7648,40 @@ msgstr ""
 "zapisane w 7-bitowym kodowaniu ASCII.\n"
 "Komentarz nie został zapisany."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:830
+#: ../plug-ins/file-tiff/file-tiff-save.c:1116
 #, c-format
-msgid "Failed a scanline write on row %d"
-msgstr "Zapisanie scanline w rzędzie %d się nie powiodło"
+msgid "Writing pages with different bit depth is strange."
+msgstr "Zapisywanie stron o różnych głębiach bitowych jest dziwne."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:955
+#: ../plug-ins/file-tiff/file-tiff-save.c:1160
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:985
+#: ../plug-ins/file-tiff/file-tiff-save.c:1190
 msgid "_None"
 msgstr "_Brak"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:986
+#: ../plug-ins/file-tiff/file-tiff-save.c:1191
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:987
+#: ../plug-ins/file-tiff/file-tiff-save.c:1192
 msgid "_Pack Bits"
 msgstr "_Kompresowanie bitów"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:988
+#: ../plug-ins/file-tiff/file-tiff-save.c:1193
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:989
+#: ../plug-ins/file-tiff/file-tiff-save.c:1194
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:990
+#: ../plug-ins/file-tiff/file-tiff-save.c:1195
 msgid "CCITT Group _3 fax"
 msgstr "Faks CCITT Group _3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:991
+#: ../plug-ins/file-tiff/file-tiff-save.c:1196
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
@@ -7815,13 +7829,13 @@ msgstr "znak zakończenia listy"
 msgid "unknown error"
 msgstr "nieznany błąd"
 
-#: ../plug-ins/file-webp/file-webp-save.c:181
-#: ../plug-ins/file-webp/file-webp-save.c:517
+#: ../plug-ins/file-webp/file-webp-save.c:206
+#: ../plug-ins/file-webp/file-webp-save.c:566
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Nie można otworzyć pliku „%s” do zapisania: %s"
 
-#: ../plug-ins/file-webp/file-webp-save.c:254
+#: ../plug-ins/file-webp/file-webp-save.c:289
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Błąd WebP: „%s”"
@@ -9611,6 +9625,10 @@ msgstr ""
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "<b>Comment</b>"
 msgstr "<b>Komentarz</b>"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
+msgid "Save layers"
+msgstr "Zapisanie warstw"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -12624,7 +12642,7 @@ msgstr "Liczba uwzględnionych sąsiednich punktów podczas filtrowania."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:271
 msgid "Keep Knees"
-msgstr "Utrzymywanie kolan"
+msgstr "Zachowanie kolan"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:276
 msgid "Says whether or not to remove 'knee' points after finding the outline."
