@@ -926,7 +926,24 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
+  g_signal_handlers_block_by_func (tree_view->priv->selection,
+                                   gimp_container_tree_view_selection_changed,
+                                   tree_view);
+
+  /* temporarily unset the tree-view's model, so that name editing is stopped
+   * now, before clearing the tree store.  otherwise, name editing would stop
+   * when the corresponding item is removed from the store, leading us to
+   * rename the wrong item.  see issue #3284.
+   */
+  gtk_tree_view_set_model (tree_view->view, NULL);
+
   gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (tree_view->model));
+
+  gtk_tree_view_set_model (tree_view->view, tree_view->model);
+
+  g_signal_handlers_unblock_by_func (tree_view->priv->selection,
+                                     gimp_container_tree_view_selection_changed,
+                                     tree_view);
 
   parent_view_iface->clear_items (view);
 }
