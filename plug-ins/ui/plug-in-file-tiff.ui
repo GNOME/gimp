@@ -31,6 +31,20 @@
       </packing>
     </child>
     <child>
+      <object class="GtkCheckButton" id="save-layers">
+        <property name="label" translatable="yes">Save layers</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="draw_indicator">True</property>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
       <object class="GtkCheckButton" id="save-alpha">
         <property name="label" translatable="yes">Save color values from transparent pixels</property>
         <property name="tooltip_text" translatable="yes">Colors are not stored premultiplied by the associated alpha</property>
@@ -42,7 +56,7 @@
       <packing>
         <property name="expand">True</property>
         <property name="fill">True</property>
-        <property name="position">1</property>
+        <property name="position">2</property>
       </packing>
     </child>
     <child>
@@ -56,7 +70,7 @@
       <packing>
         <property name="expand">True</property>
         <property name="fill">True</property>
-        <property name="position">2</property>
+        <property name="position">3</property>
       </packing>
     </child>
     <child>
@@ -112,21 +126,7 @@
       <packing>
         <property name="expand">True</property>
         <property name="fill">True</property>
-        <property name="position">8</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkCheckButton" id="save-layers">
-        <property name="label" translatable="yes">Save layers</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">True</property>
-        <property name="draw_indicator">True</property>
-      </object>
-      <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
-        <property name="position">9</property>
+        <property name="position">7</property>
       </packing>
     </child>
     <child>
