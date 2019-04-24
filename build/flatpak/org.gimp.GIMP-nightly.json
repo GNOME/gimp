@@ -43,8 +43,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.11/gexiv2-0.11.0.tar.xz",
-                    "sha256": "4c7ff71e1c8e37e6de5fd61e19440c600bed4953b461f4a54be3f0b7b61404ec"
+                    "url": "https://download.gnome.org/sources/gexiv2/0.12/gexiv2-0.12.0.tar.xz",
+                    "sha256": "58f539b0386f36300b76f3afea3a508de4914b27e78f58ee4d142486a42f926a"
                 }
             ]
         },
@@ -68,7 +68,7 @@
                 }
             ],
             "config-opts": [ "--disable-static", "--disable-ilmbasetest" ],
-            "cleanup": [ "/bin", "/share/doc" ],
+            "cleanup": [ "/bin", "/share/doc", "/lib/libIlmImfUtil*" ],
             "sources": [
                 {
                     "type": "archive",
@@ -104,8 +104,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.0.tar.gz",
-                    "sha256": "3dc787c1bb6023ba846c2a0d9b1f6e179f1cd255172bde9eb75b01f1e6c7d71a"
+                    "url": "https://github.com/uclouvain/openjpeg/archive/v2.3.1.tar.gz",
+                    "sha256": "63f5a4713ecafc86de51bfad89cc07bb788e9bba24ebbf0c4ca637621aadb6a9"
                 }
             ]
         },
@@ -125,15 +125,16 @@
                     ]
                 }
             ],
-            "config-opts": [ "-DENABLE_GOBJECT_INTROSPECTION=OFF", "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3" ],
+            "config-opts": [ "-DENABLE_GOBJECT_INTROSPECTION=OFF", "-DENABLE_CPP=OFF",
+                             "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3" ],
             "cleanup": [ "/bin", "/share" ],
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-0.69.0.tar.xz",
-                    "sha256": "637ff943f805f304ff1da77ba2e7f1cbd675f474941fd8ae1e0fc01a5b45a3f9"
+                    "url": "https://poppler.freedesktop.org/poppler-0.75.0.tar.xz",
+                    "sha256": "3bbaedb0fa2797cac933a0659d144303e4d09eec6892c65600da987d8707199a"
                 }
             ]
         },
@@ -172,8 +173,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/libwmf/libwmf-0.2.9.tar.gz/sha512/202406cd0909ef70535ccf5523aaffd37618c8a6a35012d39de2e65383a020d5cff65ad4a18cd10d3e43d5d32924f6fd4264506de770a5879b07743547954990/libwmf-0.2.9.tar.gz",
-                    "sha512": "202406cd0909ef70535ccf5523aaffd37618c8a6a35012d39de2e65383a020d5cff65ad4a18cd10d3e43d5d32924f6fd4264506de770a5879b07743547954990"
+                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/libwmf/v0.2.12.tar.gz/sha512/9280851e560becc91546906b911e0c59a1abd690e10680f6d94a335d66aeaec5eb12ccf2214ee7af2a15729a7b5f8b906022822399b4e2bc12c75a2d75748cab/v0.2.12.tar.gz",
+                    "sha512": "9280851e560becc91546906b911e0c59a1abd690e10680f6d94a335d66aeaec5eb12ccf2214ee7af2a15729a7b5f8b906022822399b4e2bc12c75a2d75748cab"
                 },
                 {
                     "type": "shell",
@@ -186,12 +187,12 @@
             "config-opts": [ "--disable-cups" ],
             "make-args": [ "so" ],
             "make-install-args": [ "soinstall" ],
-            "cleanup": [ "/bin", "/share/man", "/share/ghostscript/9.26/doc/", "/share/ghostscript/9.26/examples" ],
+            "cleanup": [ "/bin", "/share/man", "/share/doc/" ],
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs926/ghostscript-9.26.tar.gz",
-                    "sha512": "670159c23618ffafa85c671642bf182a107a82c053a1fd8c3f45f73f203524077be1b212d2ddbabae7892c7713922877e03b020f78bd2aab1ae582c4fc7d820a"
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostscript-9.27.tar.gz",
+                    "sha512": "9ad7bd24b6d9b7d258e943783817be036a2e0234517baffa1016804ef9b6f3062fb5da20a890a0bfc9e58203ddcf25dc4465f5b3bf5e4a61db87bef0606a0884"
                 },
                 {
                     "type": "shell",
@@ -240,11 +241,46 @@
             ]
         },
         {
+            /* Shamelessly taken from org.octave.Octave manifest! */
+            "name": "SuiteSparse",
+            "no-autogen": true,
+            "make-args": [ "LAPACK=", "library" ],
+            "make-install-args": [ "LAPACK=", "INSTALL_LIB=/app/lib", "INSTALL_INCLUDE=/app/include", "library" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-5.4.0.tar.gz",
+                    "sha256": "374dd136696c653e34ef3212dc8ab5b61d9a67a6791d5ec4841efb838e94dbd1"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/suitesparse-reduce-build.patch"
+                }
+            ],
+            "modules": [
+                {
+                    "name": "openblas",
+                    "no-autogen": true,
+                    "make-args": [ "DYNAMIC_ARCH=1", "FC=gfortran", "NO_CBLAS=1", "NO_LAPACKE=1", "USE_OPENMP=0" ],
+                    "make-install-args": [ "PREFIX=/app" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.5.tar.gz",
+                            "sha256": "0950c14bd77c90a6427e26210d6dab422271bc86f9fc69126725833ecdaa0e85"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name" : "libheif",
+            "cleanup": [ "/bin" ],
             "modules": [
                 {
                     "name": "libde265",
                     "config-opts": [ "--disable-sherlock265" ],
+                    "cleanup": [ "/bin" ],
                     "sources": [
                         {
                             "type": "archive",
