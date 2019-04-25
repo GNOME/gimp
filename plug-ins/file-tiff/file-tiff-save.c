@@ -287,7 +287,6 @@ save_layer (TIFF         *tif,
   gboolean          alpha;
   gshort            predictor;
   gshort            photometric;
-  GimpColorProfile *profile = NULL;
   gboolean          linear  = FALSE;
   const Babl       *format;
   const Babl       *type;
@@ -342,7 +341,7 @@ save_layer (TIFF         *tif,
     {
     case GIMP_PRECISION_U8_LINEAR:
       /* only keep 8 bit linear RGB if we also save a profile */
-      if (profile)
+      if (tsvals->save_profile)
         {
           bitspersample = 8;
           sampleformat  = SAMPLEFORMAT_UINT;
@@ -403,7 +402,7 @@ save_layer (TIFF         *tif,
       /* save linear RGB only if we save a profile, or a loader won't
        * do the right thing
        */
-      if (profile)
+      if (tsvals->save_profile)
         linear = TRUE;
       else
         linear = FALSE;
