@@ -101,9 +101,6 @@ struct _GimpToolPolygonPrivate
   /* Is the polygon closed? */
   gboolean           polygon_closed;
 
-  /* The selection operation active when the tool was started */
-  GimpChannelOps     operation_at_start;
-
   /* Whether or not to constrain the angle for newly created polygonal
    * segments.
    */
