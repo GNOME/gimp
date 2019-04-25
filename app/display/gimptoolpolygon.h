@@ -47,6 +47,9 @@ struct _GimpToolPolygon
 struct _GimpToolPolygonClass
 {
   GimpToolWidgetClass  parent_class;
+
+  /*  signals  */
+  void (* change_complete) (GimpToolPolygon *polygon);
 };
 
 

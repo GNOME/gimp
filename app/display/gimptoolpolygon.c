@@ -37,6 +37,7 @@
 #include "display-types.h"
 
 #include "core/gimp-utils.h"
+#include "core/gimpmarshal.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -55,6 +56,13 @@
 #define N_ITEMS_PER_ALLOC       1024
 #define INVALID_INDEX           (-1)
 #define NO_CLICK_TIME_AVAILABLE 0
+
+
+enum
+{
+  CHANGE_COMPLETE,
+  LAST_SIGNAL
+};
 
 
 struct _GimpToolPolygonPrivate
@@ -185,6 +193,8 @@ static gboolean gimp_tool_polygon_get_cursor      (GimpToolWidget        *widget
                                                    GimpToolCursorType    *tool_cursor,
                                                    GimpCursorModifier    *modifier);
 
+static void     gimp_tool_polygon_change_complete (GimpToolPolygon       *polygon);
+
 static gint   gimp_tool_polygon_get_segment_index (GimpToolPolygon       *polygon,
                                                    const GimpCoords      *coords);
 
@@ -193,6 +203,8 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpToolPolygon, gimp_tool_polygon,
                             GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_polygon_parent_class
+
+static guint polygon_signals[LAST_SIGNAL] = { 0, };
 
 static const GimpVector2 vector2_zero = { 0.0, 0.0 };
 
@@ -219,6 +231,15 @@ gimp_tool_polygon_class_init (GimpToolPolygonClass *klass)
   widget_class->motion_modifier = gimp_tool_polygon_motion_modifier;
   widget_class->hover_modifier  = gimp_tool_polygon_hover_modifier;
   widget_class->get_cursor      = gimp_tool_polygon_get_cursor;
+
+  polygon_signals[CHANGE_COMPLETE] =
+    g_signal_new ("change-complete",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolPolygonClass, change_complete),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 }
 
 static void
@@ -1131,6 +1152,8 @@ gimp_tool_polygon_button_release (GimpToolWidget        *widget,
           gimp_tool_polygon_revert_to_saved_state (polygon);
 
           priv->polygon_closed = TRUE;
+
+          gimp_tool_polygon_change_complete (polygon);
         }
 
       priv->last_click_time  = time;
@@ -1152,6 +1175,8 @@ gimp_tool_polygon_button_release (GimpToolWidget        *widget,
         {
           priv->polygon_closed = TRUE;
         }
+
+      gimp_tool_polygon_change_complete (polygon);
       break;
 
     case GIMP_BUTTON_RELEASE_CANCEL:
@@ -1301,12 +1326,16 @@ static gboolean
 gimp_tool_polygon_key_press (GimpToolWidget *widget,
                              GdkEventKey    *kevent)
 {
-  GimpToolPolygon *polygon = GIMP_TOOL_POLYGON (widget);
+  GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
+  GimpToolPolygonPrivate *priv    = polygon->private;
 
   switch (kevent->keyval)
     {
     case GDK_KEY_BackSpace:
       gimp_tool_polygon_remove_last_segment (polygon);
+
+      if (priv->n_segment_indices > 0)
+        gimp_tool_polygon_change_complete (polygon);
       return TRUE;
 
     default:
@@ -1380,6 +1409,12 @@ gimp_tool_polygon_get_cursor (GimpToolWidget     *widget,
     }
 
   return FALSE;
+}
+
+static void
+gimp_tool_polygon_change_complete (GimpToolPolygon *polygon)
+{
+  g_signal_emit (polygon, polygon_signals[CHANGE_COMPLETE], 0);
 }
 
 static gint
