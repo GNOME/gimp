@@ -708,9 +708,10 @@ gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
            * restarting the selection if we don't visit the main loop between
            * the start_change() and end_change() calls.
            */
-          sel_tool->idle_id = g_idle_add (
+          sel_tool->idle_id = g_idle_add_full (
+            G_PRIORITY_HIGH_IDLE,
             (GSourceFunc) gimp_selection_tool_idle,
-            sel_tool);
+            sel_tool, NULL);
         }
     }
 
