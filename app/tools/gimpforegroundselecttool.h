@@ -19,7 +19,7 @@
 #define __GIMP_FOREGROUND_SELECT_TOOL_H__
 
 
-#include "gimpfreeselecttool.h"
+#include "gimppolygonselecttool.h"
 
 
 typedef enum
@@ -45,26 +45,25 @@ typedef struct _GimpForegroundSelectToolClass GimpForegroundSelectToolClass;
 
 struct _GimpForegroundSelectTool
 {
-  GimpFreeSelectTool  parent_instance;
+  GimpPolygonSelectTool  parent_instance;
 
-  MattingState        state;
-  gboolean            in_double_click;
+  MattingState           state;
 
-  GimpCoords          last_coords;
-  GArray             *stroke;
-  GeglBuffer         *trimap;
-  GeglBuffer         *mask;
+  GimpCoords             last_coords;
+  GArray                *stroke;
+  GeglBuffer            *trimap;
+  GeglBuffer            *mask;
 
-  GList              *undo_stack;
-  GList              *redo_stack;
+  GList                 *undo_stack;
+  GList                 *redo_stack;
 
-  GimpToolGui        *gui;
-  GtkWidget          *preview_toggle;
+  GimpToolGui           *gui;
+  GtkWidget             *preview_toggle;
 };
 
 struct _GimpForegroundSelectToolClass
 {
-  GimpFreeSelectToolClass  parent_class;
+  GimpPolygonSelectToolClass  parent_class;
 };
 
 

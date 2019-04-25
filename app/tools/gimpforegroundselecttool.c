@@ -139,10 +139,8 @@ static void   gimp_foreground_select_tool_options_notify (GimpTool         *tool
 
 static void   gimp_foreground_select_tool_draw           (GimpDrawTool     *draw_tool);
 
-static void   gimp_foreground_select_tool_select         (GimpFreeSelectTool *free_sel,
-                                                          GimpDisplay        *display,
-                                                          const GimpVector2  *points,
-                                                          gint                n_points);
+static void   gimp_foreground_select_tool_confirm        (GimpPolygonSelectTool *poly_sel,
+                                                          GimpDisplay           *display);
 
 static void   gimp_foreground_select_tool_halt           (GimpForegroundSelectTool *fg_select);
 static void   gimp_foreground_select_tool_commit         (GimpForegroundSelectTool *fg_select);
@@ -172,7 +170,7 @@ static void         gimp_foreground_select_undo_free     (StrokeUndo            
 
 
 G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
-               GIMP_TYPE_FREE_SELECT_TOOL)
+               GIMP_TYPE_POLYGON_SELECT_TOOL)
 
 #define parent_class gimp_foreground_select_tool_parent_class
 
@@ -198,34 +196,34 @@ gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 {
-  GObjectClass            *object_class    = G_OBJECT_CLASS (klass);
-  GimpToolClass           *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass       *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-  GimpFreeSelectToolClass *free_select_tool_class;
+  GObjectClass               *object_class    = G_OBJECT_CLASS (klass);
+  GimpToolClass              *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass          *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpPolygonSelectToolClass *polygon_select_tool_class;
 
-  free_select_tool_class = GIMP_FREE_SELECT_TOOL_CLASS (klass);
+  polygon_select_tool_class = GIMP_POLYGON_SELECT_TOOL_CLASS (klass);
 
-  object_class->finalize          = gimp_foreground_select_tool_finalize;
+  object_class->finalize             = gimp_foreground_select_tool_finalize;
 
-  tool_class->initialize          = gimp_foreground_select_tool_initialize;
-  tool_class->control             = gimp_foreground_select_tool_control;
-  tool_class->button_press        = gimp_foreground_select_tool_button_press;
-  tool_class->button_release      = gimp_foreground_select_tool_button_release;
-  tool_class->motion              = gimp_foreground_select_tool_motion;
-  tool_class->key_press           = gimp_foreground_select_tool_key_press;
-  tool_class->modifier_key        = gimp_foreground_select_tool_modifier_key;
-  tool_class->active_modifier_key = gimp_foreground_select_tool_active_modifier_key;
-  tool_class->oper_update         = gimp_foreground_select_tool_oper_update;
-  tool_class->cursor_update       = gimp_foreground_select_tool_cursor_update;
-  tool_class->can_undo            = gimp_foreground_select_tool_can_undo;
-  tool_class->can_redo            = gimp_foreground_select_tool_can_redo;
-  tool_class->undo                = gimp_foreground_select_tool_undo;
-  tool_class->redo                = gimp_foreground_select_tool_redo;
-  tool_class->options_notify      = gimp_foreground_select_tool_options_notify;
+  tool_class->initialize             = gimp_foreground_select_tool_initialize;
+  tool_class->control                = gimp_foreground_select_tool_control;
+  tool_class->button_press           = gimp_foreground_select_tool_button_press;
+  tool_class->button_release         = gimp_foreground_select_tool_button_release;
+  tool_class->motion                 = gimp_foreground_select_tool_motion;
+  tool_class->key_press              = gimp_foreground_select_tool_key_press;
+  tool_class->modifier_key           = gimp_foreground_select_tool_modifier_key;
+  tool_class->active_modifier_key    = gimp_foreground_select_tool_active_modifier_key;
+  tool_class->oper_update            = gimp_foreground_select_tool_oper_update;
+  tool_class->cursor_update          = gimp_foreground_select_tool_cursor_update;
+  tool_class->can_undo               = gimp_foreground_select_tool_can_undo;
+  tool_class->can_redo               = gimp_foreground_select_tool_can_redo;
+  tool_class->undo                   = gimp_foreground_select_tool_undo;
+  tool_class->redo                   = gimp_foreground_select_tool_redo;
+  tool_class->options_notify         = gimp_foreground_select_tool_options_notify;
 
-  draw_tool_class->draw           = gimp_foreground_select_tool_draw;
+  draw_tool_class->draw              = gimp_foreground_select_tool_draw;
 
-  free_select_tool_class->select  = gimp_foreground_select_tool_select;
+  polygon_select_tool_class->confirm = gimp_foreground_select_tool_confirm;
 }
 
 static void
@@ -431,14 +429,6 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
     {
       GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
                                                       release_type, display);
-
-      /*  see comment in gimp_foreground_select_tool_select()  */
-      if (fg_select->in_double_click)
-        {
-          gimp_foreground_select_tool_set_trimap (fg_select);
-
-          fg_select->in_double_click = FALSE;
-        }
     }
   else
     {
@@ -611,7 +601,12 @@ gimp_foreground_select_tool_oper_update (GimpTool         *tool,
     {
       if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_SELECT)
         {
-          if (gimp_free_select_tool_get_n_points (GIMP_FREE_SELECT_TOOL (tool)) > 2)
+          gint n_points;
+
+          gimp_polygon_select_tool_get_points (GIMP_POLYGON_SELECT_TOOL (tool),
+                                               NULL, &n_points);
+
+          if (n_points > 2)
             {
               status_mode = _("Roughly outline the object to extract");
               status_stage = _("press Enter to refine.");
@@ -899,18 +894,20 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
-                                    GimpDisplay        *display,
-                                    const GimpVector2  *points,
-                                    gint                n_points)
+gimp_foreground_select_tool_confirm (GimpPolygonSelectTool *poly_sel,
+                                     GimpDisplay           *display)
 {
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (poly_sel);
   GimpImage                *image     = gimp_display_get_image (display);
   GimpDrawable             *drawable  = gimp_image_get_active_drawable (image);
 
   if (drawable && fg_select->state == MATTING_STATE_FREE_SELECT)
     {
-      GimpScanConvert *scan_convert = gimp_scan_convert_new ();
+      GimpScanConvert   *scan_convert = gimp_scan_convert_new ();
+      const GimpVector2 *points;
+      gint               n_points;
+
+      gimp_polygon_select_tool_get_points (poly_sel, &points, &n_points);
 
       gimp_scan_convert_add_polyline (scan_convert, n_points, points, TRUE);
 
@@ -924,20 +921,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                       0, 0, 0.5);
       gimp_scan_convert_free (scan_convert);
 
-      if (! gimp_tool_control_is_active (GIMP_TOOL (fg_select)->control))
-        {
-          gimp_foreground_select_tool_set_trimap (fg_select);
-        }
-      else
-        {
-          /*  if the tool is active we got here by double click
-           *  detected in the parent class. We can't switch to trimap
-           *  mode in the middle of a click. Set a flag and let
-           *  button_release() forward the release to the parent class
-           *  so it can conclude its operation
-           */
-          fg_select->in_double_click = TRUE;
-        }
+      gimp_foreground_select_tool_set_trimap (fg_select);
     }
 }
 
@@ -1032,7 +1016,7 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select)
 
   options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
-  gimp_free_select_tool_halt (GIMP_FREE_SELECT_TOOL (fg_select));
+  gimp_polygon_select_tool_halt (GIMP_POLYGON_SELECT_TOOL (fg_select));
 
   gimp_foreground_select_options_get_mask_color (options, &color);
   gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),

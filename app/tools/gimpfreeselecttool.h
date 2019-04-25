@@ -19,7 +19,7 @@
 #define __GIMP_FREE_SELECT_TOOL_H__
 
 
-#include "gimpselectiontool.h"
+#include "gimppolygonselecttool.h"
 
 
 #define GIMP_TYPE_FREE_SELECT_TOOL            (gimp_free_select_tool_get_type ())
@@ -36,21 +36,14 @@ typedef struct _GimpFreeSelectToolClass   GimpFreeSelectToolClass;
 
 struct _GimpFreeSelectTool
 {
-  GimpSelectionTool          parent_instance;
+  GimpPolygonSelectTool      parent_instance;
 
-  GimpFreeSelectToolPrivate *private;
+  GimpFreeSelectToolPrivate *priv;
 };
 
 struct _GimpFreeSelectToolClass
 {
-  GimpSelectionToolClass  parent_class;
-
-  /*  virtual function  */
-
-  void (* select) (GimpFreeSelectTool *free_select_tool,
-                   GimpDisplay        *display,
-                   const GimpVector2  *points,
-                   gint                n_points);
+  GimpPolygonSelectToolClass  parent_class;
 };
 
 
@@ -58,12 +51,6 @@ void    gimp_free_select_tool_register     (GimpToolRegisterCallback  callback,
                                             gpointer                  data);
 
 GType   gimp_free_select_tool_get_type     (void) G_GNUC_CONST;
-
-gint    gimp_free_select_tool_get_n_points (GimpFreeSelectTool *tool);
-
-/*  protected functions */
-
-void    gimp_free_select_tool_halt         (GimpFreeSelectTool *tool);
 
 
 #endif  /*  __GIMP_FREE_SELECT_TOOL_H__  */
