@@ -37,12 +37,18 @@ typedef struct _GimpSelectionToolClass GimpSelectionToolClass;
 
 struct _GimpSelectionTool
 {
-  GimpDrawTool   parent_instance;
+  GimpDrawTool    parent_instance;
 
-  SelectFunction function;         /*  selection function        */
-  GimpChannelOps saved_operation;  /*  saved tool options state  */
+  SelectFunction  function;         /*  selection function        */
+  GimpChannelOps  saved_operation;  /*  saved tool options state  */
 
-  gboolean       allow_move;
+  gint            change_count;
+  gboolean        saved_show_selection;
+  GimpUndo       *undo;
+  GimpUndo       *redo;
+  gint            idle_id;
+
+  gboolean        allow_move;
 };
 
 struct _GimpSelectionToolClass
@@ -51,12 +57,18 @@ struct _GimpSelectionToolClass
 };
 
 
-GType      gimp_selection_tool_get_type   (void) G_GNUC_CONST;
+GType      gimp_selection_tool_get_type     (void) G_GNUC_CONST;
 
 /*  protected function  */
-gboolean   gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
-                                           GimpDisplay       *display,
-                                           const GimpCoords  *coords);
+gboolean   gimp_selection_tool_start_edit   (GimpSelectionTool *sel_tool,
+                                             GimpDisplay       *display,
+                                             const GimpCoords  *coords);
+
+void       gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
+                                             gboolean           create,
+                                             GimpChannelOps     operation);
+void       gimp_selection_tool_end_change   (GimpSelectionTool *sel_tool,
+                                             gboolean           cancel);
 
 
 #endif  /* __GIMP_SELECTION_TOOL_H__ */

@@ -28,9 +28,12 @@
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-item.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
+#include "core/gimpundostack.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell-appearance.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -43,7 +46,9 @@
 #include "gimp-intl.h"
 
 
-
+static void       gimp_selection_tool_control       (GimpTool           *tool,
+                                                     GimpToolAction      action,
+                                                     GimpDisplay        *display);
 static void       gimp_selection_tool_modifier_key  (GimpTool           *tool,
                                                      GdkModifierType     key,
                                                      gboolean            press,
@@ -59,9 +64,16 @@ static void       gimp_selection_tool_cursor_update (GimpTool           *tool,
                                                      GdkModifierType     state,
                                                      GimpDisplay        *display);
 
+static void       gimp_selection_tool_commit        (GimpSelectionTool  *sel_tool);
+static void       gimp_selection_tool_halt          (GimpSelectionTool  *sel_tool,
+                                                     GimpDisplay        *dispaly);
+
 static gboolean   gimp_selection_tool_check         (GimpSelectionTool  *sel_tool,
                                                      GimpDisplay        *display,
                                                      GError            **error);
+
+static void       gimp_selection_tool_set_undo_ptr  (GimpUndo          **undo_ptr,
+                                                     GimpUndo           *undo);
 
 
 G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL)
@@ -74,6 +86,7 @@ gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
+  tool_class->control       = gimp_selection_tool_control;
   tool_class->modifier_key  = gimp_selection_tool_modifier_key;
   tool_class->key_press     = gimp_edit_selection_tool_key_press;
   tool_class->oper_update   = gimp_selection_tool_oper_update;
@@ -83,10 +96,40 @@ gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 static void
 gimp_selection_tool_init (GimpSelectionTool *selection_tool)
 {
-  selection_tool->function        = SELECTION_SELECT;
-  selection_tool->saved_operation = GIMP_CHANNEL_OP_REPLACE;
+  selection_tool->function             = SELECTION_SELECT;
+  selection_tool->saved_operation      = GIMP_CHANNEL_OP_REPLACE;
 
-  selection_tool->allow_move      = TRUE;
+  selection_tool->saved_show_selection = FALSE;
+  selection_tool->undo                 = NULL;
+  selection_tool->redo                 = NULL;
+  selection_tool->idle_id              = 0;
+
+  selection_tool->allow_move           = TRUE;
+}
+
+static void
+gimp_selection_tool_control (GimpTool       *tool,
+                             GimpToolAction  action,
+                             GimpDisplay    *display)
+{
+  GimpSelectionTool *selection_tool = GIMP_SELECTION_TOOL (tool);
+
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      gimp_selection_tool_halt (selection_tool, display);
+      break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      gimp_selection_tool_commit (selection_tool);
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -396,6 +439,47 @@ gimp_selection_tool_cursor_update (GimpTool         *tool,
                         modifier);
 }
 
+static void
+gimp_selection_tool_commit (GimpSelectionTool *sel_tool)
+{
+  /* make sure gimp_selection_tool_halt() doesn't undo the change, if any */
+  gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+}
+
+static void
+gimp_selection_tool_halt (GimpSelectionTool *sel_tool,
+                          GimpDisplay       *display)
+{
+  g_warn_if_fail (sel_tool->change_count == 0);
+
+  if (display)
+    {
+      GimpTool      *tool       = GIMP_TOOL (sel_tool);
+      GimpImage     *image      = gimp_display_get_image (display);
+      GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
+      GimpUndo      *undo       = gimp_undo_stack_peek (undo_stack);
+
+      /* if we have an existing selection in the current display, then
+       * we have already "executed", and need to undo at this point,
+       * unless the user has done something in the meantime
+       */
+      if (undo && sel_tool->undo == undo)
+        {
+          /* prevent this change from halting the tool */
+          gimp_tool_control_push_preserve (tool->control, TRUE);
+
+          gimp_image_undo (image);
+          gimp_image_flush (image);
+
+          gimp_tool_control_pop_preserve (tool->control);
+        }
+
+      /* reset the automatic undo/redo mechanism */
+      gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+      gimp_selection_tool_set_undo_ptr (&sel_tool->redo, NULL);
+    }
+}
+
 static gboolean
 gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
                            GimpDisplay        *display,
@@ -466,6 +550,25 @@ gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
   return TRUE;
 }
 
+static void
+gimp_selection_tool_set_undo_ptr (GimpUndo **undo_ptr,
+                                  GimpUndo  *undo)
+{
+  if (*undo_ptr)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (*undo_ptr),
+                                    (gpointer *) undo_ptr);
+    }
+
+  *undo_ptr = undo;
+
+  if (*undo_ptr)
+    {
+      g_object_add_weak_pointer (G_OBJECT (*undo_ptr),
+                                 (gpointer *) undo_ptr);
+    }
+}
+
 
 /*  public functions  */
 
@@ -527,4 +630,166 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
     }
 
   return FALSE;
+}
+
+static gboolean
+gimp_selection_tool_idle (GimpSelectionTool *sel_tool)
+{
+  GimpTool         *tool  = GIMP_TOOL (sel_tool);
+  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+
+  gimp_display_shell_set_show_selection (shell, FALSE);
+
+  sel_tool->idle_id = 0;
+
+  return G_SOURCE_REMOVE;
+}
+
+void
+gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
+                                  gboolean           create,
+                                  GimpChannelOps     operation)
+{
+  GimpTool         *tool;
+  GimpDisplayShell *shell;
+  GimpImage        *image;
+  GimpUndoStack    *undo_stack;
+
+  g_return_if_fail (GIMP_IS_SELECTION_TOOL (sel_tool));
+
+  tool = GIMP_TOOL (sel_tool);
+
+  g_return_if_fail (tool->display != NULL);
+
+  if (sel_tool->change_count++ > 0)
+    return;
+
+  shell      = gimp_display_get_shell (tool->display);
+  image      = gimp_display_get_image (tool->display);
+  undo_stack = gimp_image_get_undo_stack (image);
+
+  sel_tool->saved_show_selection =
+    gimp_display_shell_get_show_selection (shell);
+
+  if (create)
+    {
+      gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+    }
+  else
+    {
+      GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
+      GimpUndo      *undo;
+
+      undo = gimp_undo_stack_peek (undo_stack);
+
+      if (undo && undo == sel_tool->undo)
+        {
+          /* prevent this change from halting the tool */
+          gimp_tool_control_push_preserve (tool->control, TRUE);
+
+          gimp_image_undo (image);
+
+          gimp_tool_control_pop_preserve (tool->control);
+
+          gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+
+          /* we will need to redo if the user cancels or executes */
+          gimp_selection_tool_set_undo_ptr (
+            &sel_tool->redo,
+            gimp_undo_stack_peek (redo_stack));
+        }
+
+      /* if the operation is "Replace", turn off the marching ants,
+       * because they are confusing ...
+       */
+      if (operation == GIMP_CHANNEL_OP_REPLACE)
+        {
+          /* ... however, do this in an idle function, to avoid unnecessarily
+           * restarting the selection if we don't visit the main loop between
+           * the start_change() and end_change() calls.
+           */
+          sel_tool->idle_id = g_idle_add (
+            (GSourceFunc) gimp_selection_tool_idle,
+            sel_tool);
+        }
+    }
+
+  gimp_selection_tool_set_undo_ptr (
+    &sel_tool->undo,
+    gimp_undo_stack_peek (undo_stack));
+}
+
+void
+gimp_selection_tool_end_change (GimpSelectionTool *sel_tool,
+                                gboolean           cancel)
+{
+  GimpTool         *tool;
+  GimpDisplayShell *shell;
+  GimpImage        *image;
+  GimpUndoStack    *undo_stack;
+
+  g_return_if_fail (GIMP_IS_SELECTION_TOOL (sel_tool));
+  g_return_if_fail (sel_tool->change_count > 0);
+
+  tool = GIMP_TOOL (sel_tool);
+
+  g_return_if_fail (tool->display != NULL);
+
+  if (--sel_tool->change_count > 0)
+    return;
+
+  shell      = gimp_display_get_shell (tool->display);
+  image      = gimp_display_get_image (tool->display);
+  undo_stack = gimp_image_get_undo_stack (image);
+
+  if (cancel)
+    {
+      GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
+      GimpUndo      *redo       = gimp_undo_stack_peek (redo_stack);
+
+      if (redo && redo == sel_tool->redo)
+        {
+          /* prevent this from halting the tool */
+          gimp_tool_control_push_preserve (tool->control, TRUE);
+
+          gimp_image_redo (image);
+
+          gimp_tool_control_pop_preserve (tool->control);
+
+          gimp_selection_tool_set_undo_ptr (
+            &sel_tool->undo,
+            gimp_undo_stack_peek (undo_stack));
+        }
+      else
+        {
+          gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+        }
+    }
+  else
+    {
+      GimpUndo *undo = gimp_undo_stack_peek (undo_stack);
+
+      /* save the undo that we got when executing, but only if
+       * we actually selected something
+       */
+      if (undo && undo != sel_tool->undo)
+        gimp_selection_tool_set_undo_ptr (&sel_tool->undo, undo);
+      else
+        gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+    }
+
+  gimp_selection_tool_set_undo_ptr (&sel_tool->redo, NULL);
+
+  if (sel_tool->idle_id)
+    {
+      g_source_remove (sel_tool->idle_id);
+      sel_tool->idle_id = 0;
+    }
+  else
+    {
+      gimp_display_shell_set_show_selection (shell,
+                                             sel_tool->saved_show_selection);
+    }
+
+  gimp_image_flush (image);
 }
