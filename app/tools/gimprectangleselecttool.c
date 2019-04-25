@@ -190,6 +190,8 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_tool)
   gimp_tool_control_set_dirty_mask       (tool->control,
                                           GIMP_DIRTY_IMAGE_SIZE |
                                           GIMP_DIRTY_SELECTION);
+  gimp_tool_control_set_dirty_action     (tool->control,
+                                          GIMP_TOOL_ACTION_COMMIT);
 }
 
 static void
