@@ -1437,10 +1437,12 @@ gimp_tool_polygon_get_points (GimpToolPolygon    *polygon,
                               const GimpVector2 **points,
                               gint               *n_points)
 {
-  GimpToolPolygonPrivate *private = polygon->private;
+  GimpToolPolygonPrivate *private;
 
-  g_return_if_fail (points != NULL && n_points != NULL);
+  g_return_if_fail (GIMP_IS_TOOL_POLYGON (polygon));
 
-  *points   = private->points;
-  *n_points = private->n_points;
+  private = polygon->private;
+
+  if (points)   *points   = private->points;
+  if (n_points) *n_points = private->n_points;
 }
