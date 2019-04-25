@@ -54,6 +54,7 @@ GType            gimp_tool_polygon_get_type   (void) G_GNUC_CONST;
 
 GimpToolWidget * gimp_tool_polygon_new        (GimpDisplayShell   *shell);
 
+gboolean         gimp_tool_polygon_is_closed  (GimpToolPolygon    *polygon);
 void             gimp_tool_polygon_get_points (GimpToolPolygon    *polygon,
                                                const GimpVector2 **points,
                                                gint               *n_points);

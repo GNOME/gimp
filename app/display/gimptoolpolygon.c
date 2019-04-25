@@ -1432,6 +1432,18 @@ gimp_tool_polygon_new (GimpDisplayShell *shell)
                        NULL);
 }
 
+gboolean
+gimp_tool_polygon_is_closed (GimpToolPolygon *polygon)
+{
+  GimpToolPolygonPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_POLYGON (polygon), FALSE);
+
+  private = polygon->private;
+
+  return private->polygon_closed;
+}
+
 void
 gimp_tool_polygon_get_points (GimpToolPolygon    *polygon,
                               const GimpVector2 **points,
