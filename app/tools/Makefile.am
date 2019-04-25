@@ -84,14 +84,14 @@ libapptools_a_sources = \
 	gimpflipoptions.h		\
 	gimpfliptool.c			\
 	gimpfliptool.h			\
-	gimpfreeselecttool.c		\
-	gimpfreeselecttool.h		\
 	gimpforegroundselectoptions.c	\
 	gimpforegroundselectoptions.h	\
 	gimpforegroundselecttool.c	\
 	gimpforegroundselecttool.h	\
 	gimpforegroundselecttoolundo.c	\
 	gimpforegroundselecttoolundo.h	\
+	gimpfreeselecttool.c		\
+	gimpfreeselecttool.h		\
 	gimpfuzzyselecttool.c		\
 	gimpfuzzyselecttool.h		\
 	gimpgegltool.c			\
@@ -160,6 +160,8 @@ libapptools_a_sources = \
 	gimpperspectiveclonetool.h	\
 	gimpperspectivetool.c		\
 	gimpperspectivetool.h		\
+	gimppolygonselecttool.c		\
+	gimppolygonselecttool.h		\
 	gimprectangleselecttool.c	\
 	gimprectangleselecttool.h	\
 	gimprectangleselectoptions.c	\
