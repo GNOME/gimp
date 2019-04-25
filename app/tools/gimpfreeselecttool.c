@@ -129,8 +129,13 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_sel)
 
   free_sel->priv = gimp_free_select_tool_get_instance_private (free_sel);
 
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_FREE_SELECT);
+  gimp_tool_control_set_preserve     (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask   (tool->control,
+                                      GIMP_DIRTY_SELECTION);
+  gimp_tool_control_set_dirty_action (tool->control,
+                                      GIMP_TOOL_ACTION_COMMIT);
+  gimp_tool_control_set_tool_cursor  (tool->control,
+                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 }
 
 static void
@@ -278,6 +283,7 @@ gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
                               GimpDisplay        *display)
 {
   GimpSelectionOptions      *options = GIMP_SELECTION_TOOL_GET_OPTIONS (free_sel);
+  GimpTool                  *tool    = GIMP_TOOL (free_sel);
   GimpFreeSelectToolPrivate *priv    = free_sel->priv;
   GimpImage                 *image   = gimp_display_get_image (display);
   const GimpVector2         *points;
@@ -288,6 +294,9 @@ gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
 
   if (n_points > 2)
     {
+      /* prevent this change from halting the tool */
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
       gimp_channel_select_polygon (gimp_image_get_mask (image),
                                    C_("command", "Free Select"),
                                    n_points,
@@ -298,5 +307,7 @@ gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
                                    options->feather_radius,
                                    options->feather_radius,
                                    TRUE);
+
+      gimp_tool_control_pop_preserve (tool->control);
     }
 }
