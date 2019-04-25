@@ -47,25 +47,41 @@
 struct _GimpFreeSelectToolPrivate
 {
   gboolean        started;
+  gboolean        changed;
 
   /* The selection operation active when the tool was started */
   GimpChannelOps  operation_at_start;
 };
 
 
-static void   gimp_free_select_tool_control      (GimpTool              *tool,
-                                                  GimpToolAction         action,
-                                                  GimpDisplay           *display);
-static void   gimp_free_select_tool_button_press (GimpTool              *tool,
-                                                  const GimpCoords      *coords,
-                                                  guint32                time,
-                                                  GdkModifierType        state,
-                                                  GimpButtonPressType    press_type,
-                                                  GimpDisplay           *display);
+static void   gimp_free_select_tool_control         (GimpTool              *tool,
+                                                     GimpToolAction         action,
+                                                     GimpDisplay           *display);
+static void   gimp_free_select_tool_button_press    (GimpTool              *tool,
+                                                     const GimpCoords      *coords,
+                                                     guint32                time,
+                                                     GdkModifierType        state,
+                                                     GimpButtonPressType    press_type,
+                                                     GimpDisplay           *display);
+static void   gimp_free_select_tool_button_release  (GimpTool              *tool,
+                                                     const GimpCoords      *coords,
+                                                     guint32                time,
+                                                     GdkModifierType        state,
+                                                     GimpButtonReleaseType  release_type,
+                                                     GimpDisplay           *display);
+static void   gimp_free_select_tool_options_notify  (GimpTool              *tool,
+                                                     GimpToolOptions       *options,
+                                                     const GParamSpec      *pspec);
 
-static void   gimp_free_select_tool_commit       (GimpFreeSelectTool    *free_sel,
-                                                  GimpDisplay           *display);
-static void   gimp_free_select_tool_halt         (GimpFreeSelectTool    *free_sel);
+static void   gimp_free_select_tool_change_complete (GimpPolygonSelectTool *poly_sel,
+                                                     GimpDisplay           *display);
+
+static void   gimp_free_select_tool_commit          (GimpFreeSelectTool    *free_sel,
+                                                     GimpDisplay           *display);
+static void   gimp_free_select_tool_halt            (GimpFreeSelectTool    *free_sel);
+
+static void   gimp_free_select_tool_select          (GimpFreeSelectTool    *free_sel,
+                                                     GimpDisplay           *display);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpFreeSelectTool, gimp_free_select_tool,
@@ -95,10 +111,15 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass              *tool_class     = GIMP_TOOL_CLASS (klass);
+  GimpPolygonSelectToolClass *poly_sel_class = GIMP_POLYGON_SELECT_TOOL_CLASS (klass);
 
-  tool_class->control      = gimp_free_select_tool_control;
-  tool_class->button_press = gimp_free_select_tool_button_press;
+  tool_class->control             = gimp_free_select_tool_control;
+  tool_class->button_press        = gimp_free_select_tool_button_press;
+  tool_class->button_release      = gimp_free_select_tool_button_release;
+  tool_class->options_notify      = gimp_free_select_tool_options_notify;
+
+  poly_sel_class->change_complete = gimp_free_select_tool_change_complete;
 }
 
 static void
@@ -161,7 +182,77 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
           priv->started            = TRUE;
           priv->operation_at_start = options->operation;
         }
+
+      gimp_selection_tool_start_change (
+        GIMP_SELECTION_TOOL (tool),
+        ! gimp_polygon_select_tool_is_closed (poly_sel),
+        priv->operation_at_start);
+
+      priv->changed = FALSE;
     }
+}
+
+static void
+gimp_free_select_tool_button_release (GimpTool              *tool,
+                                      const GimpCoords      *coords,
+                                      guint32                time,
+                                      GdkModifierType        state,
+                                      GimpButtonReleaseType  release_type,
+                                      GimpDisplay           *display)
+{
+  GimpFreeSelectTool        *free_sel = GIMP_FREE_SELECT_TOOL (tool);
+  GimpPolygonSelectTool     *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
+  GimpFreeSelectToolPrivate *priv     = free_sel->priv;
+
+  if (gimp_polygon_select_tool_is_grabbed (poly_sel))
+    {
+      gimp_selection_tool_end_change (GIMP_SELECTION_TOOL (tool),
+                                      ! priv->changed);
+
+      priv->changed = FALSE;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
+                                                  release_type, display);
+}
+
+static void
+gimp_free_select_tool_options_notify (GimpTool         *tool,
+                                      GimpToolOptions  *options,
+                                      const GParamSpec *pspec)
+{
+  if (! strcmp (pspec->name, "antialias") ||
+      ! strcmp (pspec->name, "feather")   ||
+      ! strcmp (pspec->name, "feather-radius"))
+    {
+      if (tool->display)
+        {
+          gimp_free_select_tool_change_complete (
+            GIMP_POLYGON_SELECT_TOOL (tool), tool->display);
+        }
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+}
+
+static void
+gimp_free_select_tool_change_complete (GimpPolygonSelectTool *poly_sel,
+                                       GimpDisplay           *display)
+{
+  GimpFreeSelectTool        *free_sel = GIMP_FREE_SELECT_TOOL (poly_sel);
+  GimpFreeSelectToolPrivate *priv     = free_sel->priv;
+
+  priv->changed = TRUE;
+
+  gimp_selection_tool_start_change (GIMP_SELECTION_TOOL (free_sel),
+                                    FALSE,
+                                    priv->operation_at_start);
+
+  if (gimp_polygon_select_tool_is_closed (poly_sel))
+    gimp_free_select_tool_select (free_sel, display);
+
+  gimp_selection_tool_end_change (GIMP_SELECTION_TOOL (free_sel),
+                                  FALSE);
 }
 
 static void
@@ -174,6 +265,16 @@ gimp_free_select_tool_halt (GimpFreeSelectTool *free_sel)
 
 static void
 gimp_free_select_tool_commit (GimpFreeSelectTool *free_sel,
+                              GimpDisplay        *display)
+{
+  GimpPolygonSelectTool *poly_sel = GIMP_POLYGON_SELECT_TOOL (free_sel);
+
+  if (! gimp_polygon_select_tool_is_closed (poly_sel))
+    gimp_free_select_tool_select (free_sel, display);
+}
+
+static void
+gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
                               GimpDisplay        *display)
 {
   GimpSelectionOptions      *options = GIMP_SELECTION_TOOL_GET_OPTIONS (free_sel);
@@ -197,7 +298,5 @@ gimp_free_select_tool_commit (GimpFreeSelectTool *free_sel,
                                    options->feather_radius,
                                    options->feather_radius,
                                    TRUE);
-
-      gimp_image_flush (image);
     }
 }
