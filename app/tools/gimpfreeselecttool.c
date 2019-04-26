@@ -54,34 +54,34 @@ struct _GimpFreeSelectToolPrivate
 };
 
 
-static void   gimp_free_select_tool_control         (GimpTool              *tool,
-                                                     GimpToolAction         action,
-                                                     GimpDisplay           *display);
-static void   gimp_free_select_tool_button_press    (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     guint32                time,
-                                                     GdkModifierType        state,
-                                                     GimpButtonPressType    press_type,
-                                                     GimpDisplay           *display);
-static void   gimp_free_select_tool_button_release  (GimpTool              *tool,
-                                                     const GimpCoords      *coords,
-                                                     guint32                time,
-                                                     GdkModifierType        state,
-                                                     GimpButtonReleaseType  release_type,
-                                                     GimpDisplay           *display);
-static void   gimp_free_select_tool_options_notify  (GimpTool              *tool,
-                                                     GimpToolOptions       *options,
-                                                     const GParamSpec      *pspec);
+static void       gimp_free_select_tool_control         (GimpTool              *tool,
+                                                         GimpToolAction         action,
+                                                         GimpDisplay           *display);
+static void       gimp_free_select_tool_button_press    (GimpTool              *tool,
+                                                         const GimpCoords      *coords,
+                                                         guint32                time,
+                                                         GdkModifierType        state,
+                                                         GimpButtonPressType    press_type,
+                                                         GimpDisplay           *display);
+static void       gimp_free_select_tool_button_release  (GimpTool              *tool,
+                                                         const GimpCoords      *coords,
+                                                         guint32                time,
+                                                         GdkModifierType        state,
+                                                         GimpButtonReleaseType  release_type,
+                                                         GimpDisplay           *display);
+static void       gimp_free_select_tool_options_notify  (GimpTool              *tool,
+                                                         GimpToolOptions       *options,
+                                                         const GParamSpec      *pspec);
 
-static void   gimp_free_select_tool_change_complete (GimpPolygonSelectTool *poly_sel,
-                                                     GimpDisplay           *display);
+static void       gimp_free_select_tool_change_complete (GimpPolygonSelectTool *poly_sel,
+                                                         GimpDisplay           *display);
 
-static void   gimp_free_select_tool_commit          (GimpFreeSelectTool    *free_sel,
-                                                     GimpDisplay           *display);
-static void   gimp_free_select_tool_halt            (GimpFreeSelectTool    *free_sel);
+static void       gimp_free_select_tool_commit          (GimpFreeSelectTool    *free_sel,
+                                                         GimpDisplay           *display);
+static void       gimp_free_select_tool_halt            (GimpFreeSelectTool    *free_sel);
 
-static void   gimp_free_select_tool_select          (GimpFreeSelectTool    *free_sel,
-                                                     GimpDisplay           *display);
+static gboolean   gimp_free_select_tool_select          (GimpFreeSelectTool    *free_sel,
+                                                         GimpDisplay           *display);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpFreeSelectTool, gimp_free_select_tool,
@@ -275,10 +275,13 @@ gimp_free_select_tool_commit (GimpFreeSelectTool *free_sel,
   GimpPolygonSelectTool *poly_sel = GIMP_POLYGON_SELECT_TOOL (free_sel);
 
   if (! gimp_polygon_select_tool_is_closed (poly_sel))
-    gimp_free_select_tool_select (free_sel, display);
+    {
+      if (gimp_free_select_tool_select (free_sel, display))
+        gimp_image_flush (gimp_display_get_image (display));
+    }
 }
 
-static void
+static gboolean
 gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
                               GimpDisplay        *display)
 {
@@ -309,5 +312,9 @@ gimp_free_select_tool_select (GimpFreeSelectTool *free_sel,
                                    TRUE);
 
       gimp_tool_control_pop_preserve (tool->control);
+
+      return TRUE;
     }
+
+  return FALSE;
 }
