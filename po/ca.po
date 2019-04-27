@@ -122,7 +122,7 @@ msgid ""
 "up or down"
 msgstr ""
 "L’eina de transformació unificada conserva ara per defecte la relació "
-"d’aspecte quan s' augmenta proporcionalment o es redueix"
+"d’aspecte quan s'augmenta proporcionalment o es redueix"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
@@ -209,7 +209,7 @@ msgid ""
 "interaction"
 msgstr ""
 "Reescriptura completa del connector Spyrogimp amb més opcions i millor "
-"iteracció"
+"iteració"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
@@ -300,7 +300,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
-"El filtrat de format de fitxer es menys confús als diàlegs Obre/Desa/Exporta"
+"El filtrat de format de fitxer és menys confús als diàlegs Obre/Desa/Exporta"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
@@ -6036,7 +6036,7 @@ msgstr "_Guies"
 #: ../app/actions/image-actions.c:65
 msgctxt "image-action"
 msgid "Meta_data"
-msgstr "Meta dades"
+msgstr "Meta_dades"
 
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
@@ -6248,10 +6248,9 @@ msgid "Display information about this image"
 msgstr "Mostra informació d'aquesta imatge"
 
 #: ../app/actions/image-actions.c:181
-#| msgid "_RGB profile:"
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
-msgstr "Usa la perfil _sRGB"
+msgstr "Usa el perfil _sRGB"
 
 #: ../app/actions/image-actions.c:182
 msgctxt "image-action"
@@ -10861,7 +10860,7 @@ msgstr "Exporta el tipus de fitxer usat per defecte."
 
 #: ../app/config/gimprc-blurbs.h:211
 msgid "Export the image's color profile by default."
-msgstr "Exporta el perfil de color per defecte de la imatge"
+msgstr "Exporta el perfil de color per defecte de la imatge."
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
@@ -12621,25 +12620,25 @@ msgstr "Memòria global"
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
-"La extensió AppData ha de ser del tipus «complement», que es troba a «%s»."
+"L'extensió AppData ha de ser del tipus «complement», que es troba a «%s»."
 
 #: ../app/core/gimpextension.c:345
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
-msgstr "La extensió AppData ha d'estendre «org.gimp.GIMP»."
+msgstr "L'extensió AppData ha d'estendre «org.gimp.GIMP»."
 
 #: ../app/core/gimpextension.c:359
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr ""
-"La ID de la extensió AppData («%s») i el directori («%s») han de ser el "
+"La ID de l'extensió AppData («%s») i el directori («%s») han de ser el "
 "mateix."
 
 #: ../app/core/gimpextension.c:374
 #, c-format
 msgid "Extension AppData must advertize a version in a <release> tag."
 msgstr ""
-"La extensió AppData ha d’anunciar una versió amb una etiqueta <release>."
+"L'extensió AppData ha d’anunciar una versió amb una etiqueta <release>."
 
 #: ../app/core/gimpextension.c:408
 #, c-format
@@ -12851,7 +12850,7 @@ msgstr "Aquest format de pinzell no és compatible"
 #, c-format
 msgid "Invalid header data in '%s': Brush name is too long: %lu"
 msgstr ""
-"La dada de capçalera no és vàlida a «%s»: El nom del pinzella és massa "
+"La dada de capçalera no és vàlida a «%s»: El nom del pinzell és massa "
 "llarg: %lu"
 
 #: ../app/core/gimpbrush-load.c:272 ../app/core/gimpbrushgenerated-load.c:126
@@ -14302,11 +14301,11 @@ msgstr "No s'ha pogut canviar el nom de les màscares de capa."
 
 #: ../app/core/gimplineart.c:337 ../app/core/gimplineart.c:338
 msgid "Select transparent pixels instead of gray ones"
-msgstr "Selecciona píxels transparents en compte dels grissos"
+msgstr "Selecciona píxels transparents en compte dels grisos"
 
 #: ../app/core/gimplineart.c:344 ../app/tools/gimpbucketfilloptions.c:188
 msgid "Line art detection threshold"
-msgstr "Llindar de detecció de la línia artistica"
+msgstr "Llindar de detecció de la línia artística"
 
 #: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:189
 msgid "Threshold to detect contour (higher values will include more pixels)"
@@ -16083,7 +16082,7 @@ msgid ""
 "bugs."
 msgstr ""
 "Esperem que mai us calguin aquests paràmetres, però com tot el programari, "
-"el GIMP conté errades, i poden ocórrer fallades. Si això succeïx, ens podeu "
+"el GIMP conté errades, i poden ocórrer fallades. Si això succeeix, ens podeu "
 "ajudar enviant informes d'error."
 
 #: ../app/dialogs/preferences-dialog.c:1249
@@ -17200,11 +17199,11 @@ msgstr "Selecciona una carpeta per als fitxers temporals"
 
 #: ../app/dialogs/preferences-dialog.c:3136
 msgid "Swap folder:"
-msgstr "Directori d'intercanvi:"
+msgstr "Carpeta d'intercanvi:"
 
 #: ../app/dialogs/preferences-dialog.c:3137
 msgid "Select Swap Folder"
-msgstr "Seleccioneu el directori d'intercanvi"
+msgstr "Seleccioneu la carpeta d'intercanvi"
 
 #: ../app/dialogs/preferences-dialog.c:3170
 msgid "Brush Folders"
@@ -23930,7 +23929,7 @@ msgstr "Re_ajusta"
 
 #: ../app/tools/gimptransformgridtool.c:1353
 msgid "Cannot readjust the transformation"
-msgstr "No és pot reajustar la transformació"
+msgstr "No es pot reajustar la transformació"
 
 #: ../app/tools/gimptransformoptions.c:93
 msgid "Direction of transformation"
@@ -26297,8 +26296,8 @@ msgid ""
 "On edge cases, better compression algorithms might still end up on bigger "
 "file size; manual check recommended"
 msgstr ""
-"En els vores, els millors algoritmes de compressió encara podrien acabar amb "
-"una mida de fitxer més gran; es recomana la comprovació manual recomanada"
+"En alguns casos, els millors algoritmes de compressió encara podrien acabar amb "
+"una mida de fitxer més gran; es recomana la comprovació manual"
 
 #: ../app/widgets/gimpsavedialog.c:398
 #, c-format
