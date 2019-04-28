@@ -24,6 +24,16 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#ifdef G_OS_WIN32
+#include <shlobj.h>
+
+/* Constant available since Shell32.dll 5.0 */
+#ifndef CSIDL_LOCAL_APPDATA
+#define CSIDL_LOCAL_APPDATA 0x001c
+#endif
+
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -41,15 +51,15 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_BRUSH         "2. Hardness 050"
-#define DEFAULT_DYNAMICS      "Dynamics Off"
-#define DEFAULT_PATTERN       "Pine"
-#define DEFAULT_PALETTE       "Default"
-#define DEFAULT_GRADIENT      "FG to BG (RGB)"
-#define DEFAULT_TOOL_PRESET   "Current Options"
-#define DEFAULT_FONT          "Sans-serif"
-#define DEFAULT_MYPAINT_BRUSH "Fixme"
-#define DEFAULT_COMMENT       "Created with GIMP"
+#define GIMP_DEFAULT_BRUSH         "2. Hardness 050"
+#define GIMP_DEFAULT_DYNAMICS      "Dynamics Off"
+#define GIMP_DEFAULT_PATTERN       "Pine"
+#define GIMP_DEFAULT_PALETTE       "Default"
+#define GIMP_DEFAULT_GRADIENT      "FG to BG (RGB)"
+#define GIMP_DEFAULT_TOOL_PRESET   "Current Options"
+#define GIMP_DEFAULT_FONT          "Sans-serif"
+#define GIMP_DEFAULT_MYPAINT_BRUSH "Fixme"
+#define GIMP_DEFAULT_COMMENT       "Created with GIMP"
 
 
 enum
@@ -148,6 +158,34 @@ G_DEFINE_TYPE (GimpCoreConfig, gimp_core_config, GIMP_TYPE_GEGL_CONFIG)
 
 #define parent_class gimp_core_config_parent_class
 
+#ifdef G_OS_WIN32
+/*
+ * Taken from glib 2.35 code / gimpenv.c.
+ * Only temporary until the user-font folder detection can go upstream
+ * in fontconfig!
+ * XXX
+ */
+static gchar *
+get_special_folder (int csidl)
+{
+  wchar_t      path[MAX_PATH+1];
+  HRESULT      hr;
+  LPITEMIDLIST pidl = NULL;
+  BOOL         b;
+  gchar       *retval = NULL;
+
+  hr = SHGetSpecialFolderLocation (NULL, csidl, &pidl);
+  if (hr == S_OK)
+    {
+      b = SHGetPathFromIDListW (pidl, path);
+      if (b)
+        retval = g_utf16_to_utf8 (path, -1, NULL, NULL, NULL);
+      CoTaskMemFree (pidl);
+    }
+
+  return retval;
+}
+#endif
 
 static void
 gimp_core_config_class_init (GimpCoreConfigClass *klass)
@@ -381,6 +419,36 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   g_free (path);
 
   path = gimp_config_build_data_path ("fonts");
+#if defined G_OS_WIN32
+  /* XXX: since a Windows 10 update, build 17704, Microsoft added the
+   * concept of user-installed fonts (until now it was only possible to
+   * have system-wide fonts! How weird is that?).
+   * A feature request at fontconfig is also done, but until this gets
+   * implemented upstream, let's add the folder ourselves in GIMP's
+   * default list of folders.
+   * See: https://gitlab.gnome.org/GNOME/gimp/issues/2949
+   * Also: https://gitlab.freedesktop.org/fontconfig/fontconfig/issues/144
+   */
+    {
+      gchar *user_fonts_dir = get_special_folder (CSIDL_LOCAL_APPDATA);
+
+      if (user_fonts_dir)
+        {
+          gchar *path2;
+          gchar *tmp;
+
+          path2 = g_build_filename (user_fonts_dir,
+                                    "Microsoft", "Windows", "Fonts", NULL);
+          g_free (user_fonts_dir);
+
+          /* G_SEARCHPATH_SEPARATOR-separated list of folders. */
+          tmp = g_strconcat (path2, G_SEARCHPATH_SEPARATOR_S, path, NULL);
+          g_free (path2);
+          g_free (path);
+          path = tmp;
+        }
+    }
+#endif
   GIMP_CONFIG_PROP_PATH (object_class, PROP_FONT_PATH,
                          "font-path",
                          "Font path",
@@ -402,56 +470,56 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                            "default-brush",
                            "Default brush",
                            DEFAULT_BRUSH_BLURB,
-                           DEFAULT_BRUSH,
+                           GIMP_DEFAULT_BRUSH,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_DYNAMICS,
                            "default-dynamics",
                            "Default dynamics",
                            DEFAULT_DYNAMICS_BLURB,
-                           DEFAULT_DYNAMICS,
+                           GIMP_DEFAULT_DYNAMICS,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_MYPAINT_BRUSH,
                            "default-mypaint-brush",
                            "Default MyPaint brush",
                            DEFAULT_MYPAINT_BRUSH_BLURB,
-                           DEFAULT_MYPAINT_BRUSH,
+                           GIMP_DEFAULT_MYPAINT_BRUSH,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_PATTERN,
                            "default-pattern",
                            "Default pattern",
                            DEFAULT_PATTERN_BLURB,
-                           DEFAULT_PATTERN,
+                           GIMP_DEFAULT_PATTERN,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_PALETTE,
                            "default-palette",
                            "Default palette",
                            DEFAULT_PALETTE_BLURB,
-                           DEFAULT_PALETTE,
+                           GIMP_DEFAULT_PALETTE,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_GRADIENT,
                            "default-gradient",
                            "Default gradient",
                            DEFAULT_GRADIENT_BLURB,
-                           DEFAULT_GRADIENT,
+                           GIMP_DEFAULT_GRADIENT,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_TOOL_PRESET,
                            "default-tool-preset",
                            "Default tool preset",
                            DEFAULT_TOOL_PRESET_BLURB,
-                           DEFAULT_TOOL_PRESET,
+                           GIMP_DEFAULT_TOOL_PRESET,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_DEFAULT_FONT,
                            "default-font",
                            "Default font",
                            DEFAULT_FONT_BLURB,
-                           DEFAULT_FONT,
+                           GIMP_DEFAULT_FONT,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GLOBAL_BRUSH,
@@ -720,7 +788,7 @@ gimp_core_config_init (GimpCoreConfig *config)
 {
   config->default_image = g_object_new (GIMP_TYPE_TEMPLATE,
                                         "name",    "Default Image",
-                                        "comment", DEFAULT_COMMENT,
+                                        "comment", GIMP_DEFAULT_COMMENT,
                                         NULL);
   g_signal_connect (config->default_image, "notify",
                     G_CALLBACK (gimp_core_config_default_image_notify),
