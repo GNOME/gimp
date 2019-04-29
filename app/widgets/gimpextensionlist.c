@@ -41,20 +41,40 @@ enum
   LAST_SIGNAL
 };
 
+typedef enum
+{
+  GIMP_EXT_LIST_USER,
+  GIMP_EXT_LIST_SYSTEM,
+  GIMP_EXT_LIST_SEARCH,
+} GimpExtensionListContents;
+
 struct _GimpExtensionListPrivate
 {
-  GimpExtensionManager *manager;
+  GimpExtensionManager      *manager;
+
+  GimpExtensionListContents  contents;
 };
 
-static void gimp_extension_list_set      (GimpExtensionList *list,
-                                          const GList       *extensions,
-                                          gboolean           is_system);
-static void gimp_extension_switch_active (GObject           *onoff,
-                                          GParamSpec        *spec,
-                                          gpointer           extension);
-static void gimp_extension_row_activated (GtkListBox        *box,
-                                          GtkListBoxRow     *row,
-                                          gpointer           user_data);
+static void gimp_extension_list_set            (GimpExtensionList *list,
+                                                const GList       *extensions,
+                                                gboolean           is_system);
+
+static void gimp_extension_list_ext_installed  (GimpExtensionManager *manager,
+                                                GimpExtension        *extension,
+                                                gboolean              is_system_ext,
+                                                GimpExtensionList    *list);
+static void gimp_extension_list_ext_removed    (GimpExtensionManager *manager,
+                                                gchar                *extension_id,
+                                                GimpExtensionList    *list);
+
+static void gimp_extension_list_delete_clicked (GtkButton            *delbutton,
+                                                GimpExtensionList    *list);
+static void gimp_extension_switch_active       (GObject              *onoff,
+                                                GParamSpec           *spec,
+                                                gpointer              extension);
+static void gimp_extension_row_activated       (GtkListBox           *box,
+                                                GtkListBoxRow        *row,
+                                                gpointer              user_data);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpExtensionList, gimp_extension_list,
                             GTK_TYPE_LIST_BOX)
@@ -87,6 +107,20 @@ gimp_extension_list_init (GimpExtensionList *list)
   list->p = gimp_extension_list_get_instance_private (list);
 }
 
+static void
+gimp_extension_list_disable (GtkWidget *row,
+                             gchar     *extension_id)
+{
+  GimpExtension *extension;
+  GtkWidget     *outframe = gtk_bin_get_child (GTK_BIN (row));
+
+  extension = g_object_get_data (G_OBJECT (outframe), "extension");
+  g_return_if_fail (extension);
+
+  if (g_strcmp0 (gimp_object_get_name (extension), extension_id) == 0)
+    gtk_widget_set_sensitive (outframe, FALSE);
+}
+
 GtkWidget *
 gimp_extension_list_new (GimpExtensionManager *manager)
 {
@@ -97,12 +131,20 @@ gimp_extension_list_new (GimpExtensionManager *manager)
   list = g_object_new (GIMP_TYPE_EXTENSION_LIST, NULL);
   list->p->manager  = manager;
 
+  g_signal_connect (manager, "extension-installed",
+                    G_CALLBACK (gimp_extension_list_ext_installed),
+                    list);
+  g_signal_connect (manager, "extension-removed",
+                    G_CALLBACK (gimp_extension_list_ext_removed),
+                    list);
+
   return GTK_WIDGET (list);
 }
 
 void
 gimp_extension_list_show_system (GimpExtensionList *list)
 {
+  list->p->contents = GIMP_EXT_LIST_SYSTEM;
   gimp_extension_list_set (list,
                            gimp_extension_manager_get_system_extensions (list->p->manager),
                            TRUE);
@@ -111,6 +153,7 @@ gimp_extension_list_show_system (GimpExtensionList *list)
 void
 gimp_extension_list_show_user (GimpExtensionList *list)
 {
+  list->p->contents = GIMP_EXT_LIST_USER;
   gimp_extension_list_set (list,
                            gimp_extension_manager_get_user_extensions (list->p->manager),
                            FALSE);
@@ -120,6 +163,7 @@ void
 gimp_extension_list_show_search (GimpExtensionList *list,
                                  const gchar       *search_terms)
 {
+  list->p->contents = GIMP_EXT_LIST_SEARCH;
   /* TODO */
   gimp_extension_list_set (list, NULL, FALSE);
 }
@@ -138,53 +182,125 @@ gimp_extension_list_set (GimpExtensionList *list,
   for (; iter; iter = iter->next)
     {
       GimpExtension *extension = iter->data;
-      GtkWidget     *frame;
-      GtkWidget     *hbox;
-      GtkWidget     *onoff;
 
-      frame = gtk_frame_new (gimp_extension_get_name (extension));
-      gtk_container_add (GTK_CONTAINER (list), frame);
-      g_object_set_data (G_OBJECT (gtk_widget_get_parent (frame)),
-                         "extension", extension);
-      gtk_widget_show (frame);
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
-      gtk_widget_show (hbox);
-
-      if (gimp_extension_get_comment (extension))
-        {
-          GtkWidget     *desc = gtk_text_view_new ();
-          GtkTextBuffer *buffer;
-
-          buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (desc));
-          gtk_text_buffer_set_text (buffer,
-                                    gimp_extension_get_comment (extension),
-                                    -1);
-          gtk_text_view_set_editable (GTK_TEXT_VIEW (desc), FALSE);
-          gtk_box_pack_start (GTK_BOX (hbox), desc, TRUE, TRUE, 1);
-          gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (desc),
-                                       GTK_WRAP_WORD_CHAR);
-          gtk_widget_show (desc);
-        }
-
-      onoff = gtk_switch_new ();
-      gtk_switch_set_active (GTK_SWITCH (onoff),
-                             gimp_extension_manager_is_running (list->p->manager,
-                                                                extension));
-      gtk_widget_set_sensitive (onoff,
-                                gimp_extension_manager_can_run (list->p->manager,
-                                                                extension));
-      g_signal_connect (onoff, "notify::active",
-                        G_CALLBACK (gimp_extension_switch_active), extension);
-      gtk_box_pack_end (GTK_BOX (hbox), onoff, FALSE, FALSE, 1);
-      gtk_widget_show (onoff);
+      gimp_extension_list_ext_installed (list->p->manager, extension,
+                                         is_system, list);
     }
   gtk_container_foreach (GTK_CONTAINER (list),
                          (GtkCallback) gtk_list_box_row_set_activatable,
                          GUINT_TO_POINTER (TRUE));
   g_signal_connect (list, "row-activated",
                     G_CALLBACK (gimp_extension_row_activated), NULL);
+}
+
+static void
+gimp_extension_list_ext_installed (GimpExtensionManager *manager,
+                                   GimpExtension        *extension,
+                                   gboolean              is_system_ext,
+                                   GimpExtensionList    *list)
+{
+  GtkWidget *outframe;
+  GtkWidget *frame;
+  GtkWidget *hbox;
+  GtkWidget *onoff;
+  GtkWidget *del_button;
+  GtkWidget *image;
+
+  if (list->p->contents == GIMP_EXT_LIST_SEARCH                  ||
+      (list->p->contents == GIMP_EXT_LIST_USER && is_system_ext) ||
+      (list->p->contents == GIMP_EXT_LIST_SYSTEM && ! is_system_ext))
+    return;
+
+  /* Delete button top right of the frame. */
+  outframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (outframe), GTK_SHADOW_NONE);
+  gtk_frame_set_label_align (GTK_FRAME (outframe), 1.0, 1.0);
+
+  del_button = gtk_button_new ();
+  g_object_set_data (G_OBJECT (del_button), "extension", extension);
+  g_signal_connect (del_button, "clicked",
+                    G_CALLBACK (gimp_extension_list_delete_clicked),
+                    list);
+  gtk_button_set_relief (GTK_BUTTON (del_button), GTK_RELIEF_NONE);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+  gtk_container_add (GTK_CONTAINER (del_button), image);
+  gtk_widget_show (image);
+  gtk_widget_show (del_button);
+  gtk_frame_set_label_widget (GTK_FRAME (outframe), del_button);
+  gtk_container_add (GTK_CONTAINER (list), outframe);
+  gtk_widget_show (outframe);
+
+  frame = gtk_frame_new (gimp_extension_get_name (extension));
+  gtk_container_add (GTK_CONTAINER (outframe), frame);
+  g_object_set_data (G_OBJECT (gtk_widget_get_parent (frame)),
+                     "extension", extension);
+  gtk_widget_show (frame);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  if (gimp_extension_get_comment (extension))
+    {
+      GtkWidget     *desc = gtk_text_view_new ();
+      GtkTextBuffer *buffer;
+
+      buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (desc));
+      gtk_text_buffer_set_text (buffer,
+                                gimp_extension_get_comment (extension),
+                                -1);
+      gtk_text_view_set_editable (GTK_TEXT_VIEW (desc), FALSE);
+      gtk_box_pack_start (GTK_BOX (hbox), desc, TRUE, TRUE, 1);
+      gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (desc),
+                                   GTK_WRAP_WORD_CHAR);
+      gtk_widget_show (desc);
+    }
+
+  onoff = gtk_switch_new ();
+  gtk_switch_set_active (GTK_SWITCH (onoff),
+                         gimp_extension_manager_is_running (list->p->manager,
+                                                            extension));
+  gtk_widget_set_sensitive (onoff,
+                            gimp_extension_manager_can_run (list->p->manager,
+                                                            extension));
+  g_signal_connect (onoff, "notify::active",
+                    G_CALLBACK (gimp_extension_switch_active), extension);
+  gtk_box_pack_end (GTK_BOX (hbox), onoff, FALSE, FALSE, 1);
+  gtk_widget_show (onoff);
+}
+
+static void
+gimp_extension_list_ext_removed (GimpExtensionManager *manager,
+                                 gchar                *extension_id,
+                                 GimpExtensionList    *list)
+{
+  gtk_container_foreach (GTK_CONTAINER (list),
+                         (GtkCallback) gimp_extension_list_disable,
+                         extension_id);
+}
+
+static void
+gimp_extension_list_delete_clicked (GtkButton         *delbutton,
+                                    GimpExtensionList *list)
+{
+  GimpExtensionManager *manager = list->p->manager;
+  GimpExtension        *extension;
+  GError               *error = NULL;
+
+  extension = g_object_get_data (G_OBJECT (delbutton), "extension");
+  g_return_if_fail (extension);
+
+  gimp_extension_manager_remove (manager, extension, &error);
+  if (error)
+    {
+      g_warning ("%s: %s\n", G_STRFUNC, error->message);
+      g_error_free (error);
+    }
+  /* no need to remove from list. The list will listen to manager
+   * events.
+   */
 }
 
 static void
