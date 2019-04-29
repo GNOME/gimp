@@ -102,5 +102,7 @@ GimpImage  * gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer,
                                                     const gchar     *image_name);
 
+gboolean     gimp_rec_rm                           (GFile                *file,
+                                                    GError              **error);
 
 #endif /* __APP_GIMP_UTILS_H__ */

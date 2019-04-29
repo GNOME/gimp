@@ -37,11 +37,14 @@
 #include "core/gimpbrush-load.h"
 #include "core/gimpbrush-private.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpextension.h"
+#include "core/gimpextensionmanager.h"
 #include "core/gimpextension-error.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-new.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimptempbuf.h"
+#include "core/gimp-utils.h"
 
 #include "pdb/gimpprocedure.h"
 
@@ -75,7 +78,7 @@ static gboolean   file_gex_validate_path  (const gchar     *path,
 static gboolean   file_gex_validate       (GFile           *file,
                                            AsApp          **appstream,
                                            GError         **error);
-static gboolean   file_gex_decompress     (GFile           *file,
+static gchar *    file_gex_decompress     (GFile           *file,
                                            gchar           *plugin_id,
                                            GError         **error);
 
@@ -342,13 +345,14 @@ file_gex_validate (GFile   *file,
   return success;
 }
 
-static gboolean
+static gchar *
 file_gex_decompress (GFile   *file,
                      gchar   *plugin_id,
                      GError **error)
 {
   GInputStream *input;
   GFile        *ext_dir = gimp_directory_file ("extensions", NULL);
+  gchar        *plugin_dir = NULL;
   gboolean      success = FALSE;
 
   g_return_val_if_fail (error != NULL && *error == NULL, FALSE);
@@ -476,9 +480,12 @@ file_gex_decompress (GFile   *file,
                       gimp_file_get_utf8_name (file));
     }
 
+  if (success)
+    plugin_dir = g_build_filename (g_file_get_path (ext_dir), plugin_id, NULL);
+
   g_object_unref (ext_dir);
 
-  return success;
+  return plugin_dir;
 }
 
 /*  public functions  */
@@ -494,16 +501,46 @@ file_gex_load_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   const gchar    *uri;
   GFile          *file;
-  gboolean        success   = FALSE;
-  AsApp          *appdata   = NULL;
+  gchar          *ext_dir = NULL;
+  AsApp          *appdata = NULL;
+  gboolean        success = FALSE;
 
   gimp_set_busy (gimp);
 
   uri  = g_value_get_string (gimp_value_array_index (args, 1));
   file = g_file_new_for_uri (uri);
 
-  if (file_gex_validate (file, &appdata, error))
-    success = file_gex_decompress (file, (gchar *) as_app_get_id (appdata), error);
+  success = file_gex_validate (file, &appdata, error);
+  if (success)
+    ext_dir = file_gex_decompress (file, (gchar *) as_app_get_id (appdata), error);
+  if (ext_dir)
+    {
+      GimpExtension *extension;
+      GError        *rm_error = NULL;
+
+      extension = gimp_extension_new (ext_dir, TRUE);
+      success   = gimp_extension_manager_install (gimp->extension_manager, extension, error);
+
+      if (! success)
+        {
+          GFile *file;
+
+          g_object_unref (extension);
+
+          file = g_file_new_for_path (ext_dir);
+          if (! gimp_rec_rm (file, &rm_error))
+            {
+              g_warning ("%s: %s\n", G_STRFUNC, rm_error->message);
+              g_error_free (rm_error);
+            }
+          g_object_unref (file);
+        }
+      g_free (ext_dir);
+    }
+  else
+    {
+      success = FALSE;
+    }
 
   g_object_unref (file);
 

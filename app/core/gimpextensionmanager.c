@@ -37,6 +37,7 @@
 #include "gimpextension-error.h"
 #include "gimpobject.h"
 #include "gimpmarshal.h"
+#include "gimp-utils.h"
 
 #include "gimpextensionmanager.h"
 
@@ -61,6 +62,7 @@ enum
 
 enum
 {
+  EXTENSION_INSTALLED,
   EXTENSION_REMOVED,
   LAST_SIGNAL
 };
@@ -124,9 +126,6 @@ static void     gimp_extension_manager_extension_running   (GimpExtension       
                                                             GParamSpec           *pspec,
                                                             GimpExtensionManager *manager);
 
-/* Utils. */
-static gboolean gimp_extension_manager_rec_delete          (GFile                *file,
-                                                            GError              **error);
 
 G_DEFINE_TYPE_WITH_CODE (GimpExtensionManager, gimp_extension_manager,
                          GIMP_TYPE_OBJECT,
@@ -194,6 +193,16 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
 
+  signals[EXTENSION_INSTALLED] =
+    g_signal_new ("extension-installed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpExtensionManagerClass, extension_installed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT_BOOLEAN,
+                  G_TYPE_NONE, 2,
+                  GIMP_TYPE_EXTENSION,
+                  G_TYPE_BOOLEAN);
   signals[EXTENSION_REMOVED] =
     g_signal_new ("extension-removed",
                   G_TYPE_FROM_CLASS (klass),
@@ -405,7 +414,7 @@ gimp_extension_manager_finalize (GObject *object)
       GFile  *file;
 
       file = g_file_new_for_path (gimp_extension_get_path (iter->data));
-      if (! gimp_extension_manager_rec_delete (file, &error))
+      if (! gimp_rec_rm (file, &error))
         g_warning ("%s: %s\n", G_STRFUNC, error->message);
       g_object_unref (file);
     }
@@ -712,6 +721,36 @@ gimp_extension_manager_can_run (GimpExtensionManager *manager,
 }
 
 /**
+ * gimp_extension_manager_install:
+ * @manager:
+ * @extension:
+ * @error:
+ *
+ * Install @extension. This merely adds the extension in the known
+ * extension list to make the manager aware of it at runtime, and to
+ * emit a signal for GUI update.
+ */
+gboolean
+gimp_extension_manager_install (GimpExtensionManager *manager,
+                                GimpExtension        *extension,
+                                GError              **error)
+{
+  gboolean success = FALSE;
+
+  if ((success = gimp_extension_load (extension, error)))
+    {
+      manager->p->extensions = g_list_prepend (manager->p->extensions,
+                                               extension);
+      g_signal_connect (extension, "notify::running",
+                        G_CALLBACK (gimp_extension_manager_extension_running),
+                        manager);
+      g_signal_emit (manager, signals[EXTENSION_INSTALLED], 0, extension, FALSE);
+    }
+
+  return success;
+}
+
+/**
  * gimp_extension_manager_remove:
  * @manager:
  * @extension:
@@ -966,54 +1005,4 @@ gimp_extension_manager_extension_running (GimpExtension        *extension,
                          (gpointer) gimp_object_get_name (extension));
 
   gimp_extension_manager_refresh (manager);
-}
-
-static gboolean
-gimp_extension_manager_rec_delete (GFile   *file,
-                                   GError **error)
-{
-  gboolean success = TRUE;
-
-  if (g_file_query_exists (file, NULL))
-    {
-      if (g_file_query_file_type (file, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
-                                  NULL) == G_FILE_TYPE_DIRECTORY)
-        {
-          GFileEnumerator *enumerator;
-
-          enumerator = g_file_enumerate_children (file,
-                                                  G_FILE_ATTRIBUTE_STANDARD_NAME ","
-                                                  G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-                                                  G_FILE_ATTRIBUTE_TIME_MODIFIED,
-                                                  G_FILE_QUERY_INFO_NONE,
-                                                  NULL, NULL);
-          if (enumerator)
-            {
-              GFileInfo *info;
-
-              while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
-                {
-                  GFile *child;
-
-                  child = g_file_enumerator_get_child (enumerator, info);
-                  g_object_unref (info);
-
-                  if (! gimp_extension_manager_rec_delete (child, error))
-                    success = FALSE;
-
-                  g_object_unref (child);
-                  if (! success)
-                    break;
-                }
-
-              g_object_unref (enumerator);
-            }
-        }
-
-      if (success)
-        /* Non-directory or empty directory. */
-        success = g_file_delete (file, NULL, error);
-    }
-
-  return success;
 }

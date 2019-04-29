@@ -47,6 +47,9 @@ struct _GimpExtensionManagerClass
 {
   GimpObjectClass      parent_class;
 
+  void              (* extension_installed) (GimpExtensionManager *manager,
+                                             GimpExtension        *extension,
+                                             gboolean              is_system_ext);
   void              (* extension_removed)   (GimpExtensionManager *manager,
                                              gchar                *extension_id);
 };
@@ -67,6 +70,9 @@ gboolean               gimp_extension_manager_is_running            (GimpExtensi
 gboolean               gimp_extension_manager_can_run               (GimpExtensionManager *manager,
                                                                      GimpExtension        *extension);
 
+gboolean               gimp_extension_manager_install               (GimpExtensionManager *manager,
+                                                                     GimpExtension        *extension,
+                                                                     GError              **error);
 gboolean               gimp_extension_manager_remove                (GimpExtensionManager *manager,
                                                                      GimpExtension        *extension,
                                                                      GError              **error);
