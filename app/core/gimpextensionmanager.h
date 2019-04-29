@@ -45,13 +45,16 @@ struct _GimpExtensionManager
 
 struct _GimpExtensionManagerClass
 {
-  GimpObjectClass              parent_class;
+  GimpObjectClass      parent_class;
+
+  void              (* extension_removed)   (GimpExtensionManager *manager,
+                                             gchar                *extension_id);
 };
 
 
-GType                  gimp_extension_manager_get_type   (void) G_GNUC_CONST;
+GType                  gimp_extension_manager_get_type              (void) G_GNUC_CONST;
 
-GimpExtensionManager * gimp_extension_manager_new        (Gimp *gimp);
+GimpExtensionManager * gimp_extension_manager_new                   (Gimp                 *gimp);
 
 void                   gimp_extension_manager_initialize            (GimpExtensionManager *manager);
 void                   gimp_extension_manager_exit                  (GimpExtensionManager *manager);
@@ -63,5 +66,9 @@ gboolean               gimp_extension_manager_is_running            (GimpExtensi
                                                                      GimpExtension        *extension);
 gboolean               gimp_extension_manager_can_run               (GimpExtensionManager *manager,
                                                                      GimpExtension        *extension);
+
+gboolean               gimp_extension_manager_remove                (GimpExtensionManager *manager,
+                                                                     GimpExtension        *extension,
+                                                                     GError              **error);
 
 #endif  /* __GIMP_EXTENSION_MANAGER_H__ */

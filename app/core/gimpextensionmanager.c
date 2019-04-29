@@ -34,6 +34,7 @@
 
 #include "gimp.h"
 #include "gimpextension.h"
+#include "gimpextension-error.h"
 #include "gimpobject.h"
 #include "gimpmarshal.h"
 
@@ -58,6 +59,12 @@ enum
   PROP_PLUG_IN_PATHS,
 };
 
+enum
+{
+  EXTENSION_REMOVED,
+  LAST_SIGNAL
+};
+
 struct _GimpExtensionManagerPrivate
 {
   Gimp       *gimp;
@@ -66,6 +73,8 @@ struct _GimpExtensionManagerPrivate
   GList      *sys_extensions;
   /* Self-installed (read-write) extensions. */
   GList      *extensions;
+  /* Uninstalled extensions (cached to allow undo). */
+  GList      *uninstalled_extensions;
 
   /* Running extensions */
   GHashTable *running_extensions;
@@ -115,6 +124,10 @@ static void     gimp_extension_manager_extension_running   (GimpExtension       
                                                             GParamSpec           *pspec,
                                                             GimpExtensionManager *manager);
 
+/* Utils. */
+static gboolean gimp_extension_manager_rec_delete          (GFile                *file,
+                                                            GError              **error);
+
 G_DEFINE_TYPE_WITH_CODE (GimpExtensionManager, gimp_extension_manager,
                          GIMP_TYPE_OBJECT,
                          G_ADD_PRIVATE (GimpExtensionManager)
@@ -122,6 +135,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpExtensionManager, gimp_extension_manager,
                                                 gimp_extension_manager_config_iface_init))
 
 #define parent_class gimp_extension_manager_parent_class
+
+static guint signals[LAST_SIGNAL] = { 0, };
 
 static void
 gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
@@ -178,6 +193,16 @@ gimp_extension_manager_class_init (GimpExtensionManagerClass *klass)
                                    g_param_spec_pointer ("plug-in-paths",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
+
+  signals[EXTENSION_REMOVED] =
+    g_signal_new ("extension-removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpExtensionManagerClass, extension_removed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
 }
 
 static void
@@ -365,11 +390,26 @@ gimp_extension_manager_deserialize (GimpConfig *config,
 static void
 gimp_extension_manager_finalize (GObject *object)
 {
+  GList *iter;
+
   GimpExtensionManager *manager = GIMP_EXTENSION_MANAGER (object);
 
   g_list_free_full (manager->p->sys_extensions, g_object_unref);
   g_list_free_full (manager->p->extensions, g_object_unref);
   g_hash_table_unref (manager->p->running_extensions);
+
+  for (iter = manager->p->uninstalled_extensions; iter; iter = iter->next)
+    {
+      /* Recursively delete folders of uninstalled extensions. */
+      GError *error = NULL;
+      GFile  *file;
+
+      file = g_file_new_for_path (gimp_extension_get_path (iter->data));
+      if (! gimp_extension_manager_rec_delete (file, &error))
+        g_warning ("%s: %s\n", G_STRFUNC, error->message);
+      g_object_unref (file);
+    }
+  g_list_free_full (manager->p->uninstalled_extensions, g_object_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -671,6 +711,59 @@ gimp_extension_manager_can_run (GimpExtensionManager *manager,
   return TRUE;
 }
 
+/**
+ * gimp_extension_manager_remove:
+ * @manager:
+ * @extension:
+ * @error:
+ *
+ * Uninstall @extension. Technically this only move the object to a
+ * temporary list. The extension folder will be really deleted when GIMP
+ * will stop.
+ * This allows to undo a deletion for as long as the session runs.
+ */
+gboolean
+gimp_extension_manager_remove (GimpExtensionManager  *manager,
+                               GimpExtension         *extension,
+                               GError               **error)
+{
+  GList *iter;
+
+  g_return_val_if_fail (GIMP_IS_EXTENSION_MANAGER (manager), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), FALSE);
+
+  iter = (GList *) gimp_extension_manager_get_system_extensions (manager);
+  for (; iter; iter = iter->next)
+    if (iter->data == extension)
+      {
+        /* System extensions cannot be uninstalled. */
+        if (error)
+          *error = g_error_new (GIMP_EXTENSION_ERROR,
+                                GIMP_EXTENSION_FAILED,
+                                _("System extensions cannot be uninstalled."));
+        return FALSE;
+      }
+
+  iter = (GList *) gimp_extension_manager_get_user_extensions (manager);
+  for (; iter; iter = iter->next)
+    if (gimp_extension_cmp (iter->data, extension) == 0)
+      break;
+
+  /* The extension has to be in the extension list. */
+  g_return_val_if_fail (iter != NULL, FALSE);
+
+  gimp_extension_stop (extension);
+
+  manager->p->extensions = g_list_remove_link (manager->p->extensions,
+                                               iter);
+  manager->p->uninstalled_extensions = g_list_concat (manager->p->uninstalled_extensions,
+                                                      iter);
+  g_signal_emit (manager, signals[EXTENSION_REMOVED], 0,
+                 gimp_object_get_name (extension));
+
+  return TRUE;
+}
+
 /* Private functions. */
 
 static void
@@ -873,4 +966,54 @@ gimp_extension_manager_extension_running (GimpExtension        *extension,
                          (gpointer) gimp_object_get_name (extension));
 
   gimp_extension_manager_refresh (manager);
+}
+
+static gboolean
+gimp_extension_manager_rec_delete (GFile   *file,
+                                   GError **error)
+{
+  gboolean success = TRUE;
+
+  if (g_file_query_exists (file, NULL))
+    {
+      if (g_file_query_file_type (file, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+                                  NULL) == G_FILE_TYPE_DIRECTORY)
+        {
+          GFileEnumerator *enumerator;
+
+          enumerator = g_file_enumerate_children (file,
+                                                  G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                                  G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                                  G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                                  G_FILE_QUERY_INFO_NONE,
+                                                  NULL, NULL);
+          if (enumerator)
+            {
+              GFileInfo *info;
+
+              while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+                {
+                  GFile *child;
+
+                  child = g_file_enumerator_get_child (enumerator, info);
+                  g_object_unref (info);
+
+                  if (! gimp_extension_manager_rec_delete (child, error))
+                    success = FALSE;
+
+                  g_object_unref (child);
+                  if (! success)
+                    break;
+                }
+
+              g_object_unref (enumerator);
+            }
+        }
+
+      if (success)
+        /* Non-directory or empty directory. */
+        success = g_file_delete (file, NULL, error);
+    }
+
+  return success;
 }

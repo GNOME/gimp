@@ -255,6 +255,14 @@ gimp_extension_get_description (GimpExtension *extension)
     as_app_get_description (extension->p->app, NULL);
 }
 
+const gchar *
+gimp_extension_get_path (GimpExtension *extension)
+{
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), NULL);
+
+  return extension->p->path;
+}
+
 gchar *
 gimp_extension_get_markup_description (GimpExtension *extension)
 {
