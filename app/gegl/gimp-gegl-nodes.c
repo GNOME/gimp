@@ -63,6 +63,8 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
                                NULL);
   g_object_unref (c);
 
+  gimp_gegl_node_set_underlying_operation (node, color);
+
   mode = gegl_node_new_child (node,
                               "operation", "gimp:normal",
                               NULL);
@@ -105,6 +107,8 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
                                       "operation", "gegl:opacity",
                                       "value",     opacity,
                                       NULL);
+
+  gimp_gegl_node_set_underlying_operation (node, opacity_node);
 
   mask_source = gimp_gegl_add_buffer_source (node, mask,
                                              mask_offset_x,
