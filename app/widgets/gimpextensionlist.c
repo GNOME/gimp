@@ -118,7 +118,16 @@ gimp_extension_list_disable (GtkWidget *row,
   g_return_if_fail (extension);
 
   if (g_strcmp0 (gimp_object_get_name (extension), extension_id) == 0)
-    gtk_widget_set_sensitive (outframe, FALSE);
+    {
+      GtkWidget *button = gtk_frame_get_label_widget (GTK_FRAME (outframe));
+      GtkWidget *image  = gtk_bin_get_child (GTK_BIN (button));
+
+      gtk_widget_set_sensitive (gtk_bin_get_child (GTK_BIN (outframe)), FALSE);
+
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_EDIT_UNDO,
+                                    GTK_ICON_SIZE_MENU);
+      gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+    }
 }
 
 GtkWidget *
@@ -199,11 +208,14 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
                                    gboolean              is_system_ext,
                                    GimpExtensionList    *list)
 {
+  GList     *rows;
+  GList     *iter;
+
   GtkWidget *outframe;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *onoff;
-  GtkWidget *del_button;
+  GtkWidget *delbutton;
   GtkWidget *image;
 
   if (list->p->contents == GIMP_EXT_LIST_SEARCH                  ||
@@ -211,24 +223,51 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
       (list->p->contents == GIMP_EXT_LIST_SYSTEM && ! is_system_ext))
     return;
 
+  /* Check if extension already listed (i.e. removed then reinstalled). */
+  rows = gtk_container_get_children (GTK_CONTAINER (list));
+  for (iter = rows; iter; iter = iter->next)
+    {
+      GimpExtension *row_ext;
+      GtkWidget     *outframe = gtk_bin_get_child (GTK_BIN (iter->data));
+
+      row_ext = g_object_get_data (G_OBJECT (outframe), "extension");
+      g_return_if_fail (row_ext);
+
+      if (extension == row_ext)
+        {
+          GtkWidget *button = gtk_frame_get_label_widget (GTK_FRAME (outframe));
+
+          image  = gtk_bin_get_child (GTK_BIN (button));
+          gtk_widget_set_sensitive (gtk_bin_get_child (GTK_BIN (outframe)), TRUE);
+
+          gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_EDIT_DELETE,
+                                        GTK_ICON_SIZE_MENU);
+          gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+
+          g_list_free (rows);
+          return;
+        }
+    }
+  g_list_free (rows);
+
   /* Delete button top right of the frame. */
   outframe = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (outframe), GTK_SHADOW_NONE);
   gtk_frame_set_label_align (GTK_FRAME (outframe), 1.0, 1.0);
 
-  del_button = gtk_button_new ();
-  g_object_set_data (G_OBJECT (del_button), "extension", extension);
-  g_signal_connect (del_button, "clicked",
+  delbutton = gtk_button_new ();
+  g_object_set_data (G_OBJECT (delbutton), "extension", extension);
+  g_signal_connect (delbutton, "clicked",
                     G_CALLBACK (gimp_extension_list_delete_clicked),
                     list);
-  gtk_button_set_relief (GTK_BUTTON (del_button), GTK_RELIEF_NONE);
+  gtk_button_set_relief (GTK_BUTTON (delbutton), GTK_RELIEF_NONE);
   image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
                                         GTK_ICON_SIZE_MENU);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
-  gtk_container_add (GTK_CONTAINER (del_button), image);
+  gtk_container_add (GTK_CONTAINER (delbutton), image);
   gtk_widget_show (image);
-  gtk_widget_show (del_button);
-  gtk_frame_set_label_widget (GTK_FRAME (outframe), del_button);
+  gtk_widget_show (delbutton);
+  gtk_frame_set_label_widget (GTK_FRAME (outframe), delbutton);
   gtk_container_add (GTK_CONTAINER (list), outframe);
   gtk_widget_show (outframe);
 
@@ -292,15 +331,16 @@ gimp_extension_list_delete_clicked (GtkButton         *delbutton,
   extension = g_object_get_data (G_OBJECT (delbutton), "extension");
   g_return_if_fail (extension);
 
-  gimp_extension_manager_remove (manager, extension, &error);
+  if (gimp_extension_manager_is_removed (manager, extension))
+    gimp_extension_manager_undo_remove (manager, extension, &error);
+  else
+    gimp_extension_manager_remove (manager, extension, &error);
+
   if (error)
     {
       g_warning ("%s: %s\n", G_STRFUNC, error->message);
       g_error_free (error);
     }
-  /* no need to remove from list. The list will listen to manager
-   * events.
-   */
 }
 
 static void
