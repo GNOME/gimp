@@ -170,6 +170,8 @@ gimp_canvas_passe_partout_get_extents (GimpCanvasItem *item)
 
   cairo_region_xor (outer, inner);
 
+  cairo_region_destroy (inner);
+
   return outer;
 }
 
