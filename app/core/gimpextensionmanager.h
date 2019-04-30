@@ -69,11 +69,16 @@ gboolean               gimp_extension_manager_is_running            (GimpExtensi
                                                                      GimpExtension        *extension);
 gboolean               gimp_extension_manager_can_run               (GimpExtensionManager *manager,
                                                                      GimpExtension        *extension);
+gboolean               gimp_extension_manager_is_removed            (GimpExtensionManager *manager,
+                                                                     GimpExtension        *extension);
 
 gboolean               gimp_extension_manager_install               (GimpExtensionManager *manager,
                                                                      GimpExtension        *extension,
                                                                      GError              **error);
 gboolean               gimp_extension_manager_remove                (GimpExtensionManager *manager,
+                                                                     GimpExtension        *extension,
+                                                                     GError              **error);
+gboolean               gimp_extension_manager_undo_remove           (GimpExtensionManager *manager,
                                                                      GimpExtension        *extension,
                                                                      GError              **error);
 

@@ -721,6 +721,31 @@ gimp_extension_manager_can_run (GimpExtensionManager *manager,
 }
 
 /**
+ * gimp_extension_manager_is_removed:
+ * @manager:
+ * @extension:
+ *
+ * Returns: %TRUE is @extension was installed and has been removed
+ * (hence gimp_extension_manager_undo_remove() can be used on it).
+ */
+gboolean
+gimp_extension_manager_is_removed (GimpExtensionManager *manager,
+                                   GimpExtension        *extension)
+{
+  GList *iter;
+
+  g_return_val_if_fail (GIMP_IS_EXTENSION_MANAGER (manager), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), FALSE);
+
+  iter = manager->p->uninstalled_extensions;
+  for (; iter; iter = iter->next)
+    if (gimp_extension_cmp (iter->data, extension) == 0)
+      break;
+
+  return (iter != NULL);
+}
+
+/**
  * gimp_extension_manager_install:
  * @manager:
  * @extension:
@@ -799,6 +824,31 @@ gimp_extension_manager_remove (GimpExtensionManager  *manager,
                                                       iter);
   g_signal_emit (manager, signals[EXTENSION_REMOVED], 0,
                  gimp_object_get_name (extension));
+
+  return TRUE;
+}
+
+gboolean
+gimp_extension_manager_undo_remove (GimpExtensionManager *manager,
+                                    GimpExtension        *extension,
+                                    GError              **error)
+{
+  GList *iter;
+
+  g_return_val_if_fail (GIMP_IS_EXTENSION_MANAGER (manager), FALSE);
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), FALSE);
+
+  iter = manager->p->uninstalled_extensions;
+  for (; iter; iter = iter->next)
+    if (gimp_extension_cmp (iter->data, extension) == 0)
+      break;
+
+  /* The extension has to be in the uninstalled extension list. */
+  g_return_val_if_fail (iter != NULL, FALSE);
+
+  manager->p->uninstalled_extensions = g_list_remove (manager->p->uninstalled_extensions,
+                                                      extension);
+  gimp_extension_manager_install (manager, extension, error);
 
   return TRUE;
 }
