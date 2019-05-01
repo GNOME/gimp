@@ -511,9 +511,9 @@ class SelectionOp (enum.Enum):
 
 class Selection (GObject.GObject):
     __gsignals__ = {
-        "changed":           (GObject.SIGNAL_RUN_FIRST, None, ()),
-        "change-complete":   (GObject.SIGNAL_RUN_FIRST, None, ()),
-        "highlight-changed": (GObject.SIGNAL_RUN_FIRST, None, ())
+        "changed":           (GObject.SignalFlags.RUN_FIRST, None, ()),
+        "change-complete":   (GObject.SignalFlags.RUN_FIRST, None, ()),
+        "highlight-changed": (GObject.SignalFlags.RUN_FIRST, None, ())
     }
 
     def __init__ (self, iter = ()):
@@ -776,9 +776,9 @@ class CellRendererColorToggle (Gtk.CellRendererToggle):
     color = GObject.Property (type = Gdk.RGBA, default = Gdk.RGBA (0, 0, 0))
 
     def do_render (self, cr, widget, background_area, cell_area, flags):
-        state    = widget.get_state ()
+        state    = widget.get_state_flags ()
         style    = widget.get_style_context ()
-        bg_color = style.get_background_color (state)
+        fg_color = style.get_color (state)
         active   = self.get_property ("active")
         size     = max (min (cell_area.width, cell_area.height) -
                         2 * self.padding,
@@ -786,24 +786,30 @@ class CellRendererColorToggle (Gtk.CellRendererToggle):
 
         (r, g, b, a) = self.color
 
-        if is_bright_color (bg_color):
-            bg = (r, g, b)
-            fg = (0.75 * r, 0.75 * g, 0.75 * b)
-        else:
+        if is_bright_color (fg_color):
             bg = (0.75 * r, 0.75 * g, 0.75 * b)
             fg = (r, g, b)
+        else:
+            bg = (r, g, b)
+            fg = (0.75 * r, 0.75 * g, 0.75 * b)
 
         x = cell_area.x + (cell_area.width  - size) // 2
         y = cell_area.y + (cell_area.height - size) // 2
 
-        cr.rectangle (x, y, size, size)
-
         if active:
-            cr.set_source_rgba (*bg)
-        else:
-            Gdk.cairo_set_source_rgba (cr, bg_color)
+            cr.rectangle (x, y, size, size)
 
-        cr.fill_preserve ()
+            cr.set_source_rgba (*bg)
+            cr.fill ()
+        else:
+            style.save ()
+
+            style.set_state (Gtk.StateFlags (state & ~Gtk.StateFlags.SELECTED))
+            Gtk.render_background (style, cr, x, y, size, size)
+
+            style.restore ()
+
+        cr.rectangle (x, y, size, size)
 
         cr.set_source_rgb (*fg)
         cr.set_line_width (2)
@@ -1126,7 +1132,7 @@ class SampleGraph (Gtk.DrawingArea):
         return False
 
     def do_draw (self, cr):
-        state           = self.get_state ()
+        state           = self.get_state_flags ()
         style           = (self.style_widget if self.model else
                            self).get_style_context ()
         (width, height) = (self.get_allocated_width  (),
@@ -1529,7 +1535,7 @@ class SampleGraphList (Gtk.Box):
                 text  = var_types[var_defs[var].type].format (value) \
                         if value is not None else "N/A"
 
-                label = Gtk.Label (text, halign = Gtk.Align.END)
+                label = Gtk.Label (label = text, halign = Gtk.Align.END)
                 grid.attach (label, 1, row, 1, 1)
                 label.show ()
 
@@ -2349,7 +2355,7 @@ class CellRendererPercentage (Gtk.CellRendererText):
 
         self.value = 0
 
-    @GObject.property (type = float)
+    @GObject.Property (type = float)
     def value (self):
         return self.value_property
 
@@ -2366,7 +2372,7 @@ class CellRendererPercentage (Gtk.CellRendererText):
         if full_width <= 0 or full_height <= 0:
             return
 
-        state    = widget.get_state ()
+        state    = widget.get_state_flags()
         style    = widget.get_style_context ()
         fg_color = style.get_color (state)
 
@@ -2400,9 +2406,6 @@ class CellRendererPercentage (Gtk.CellRendererText):
             style.save ()
             style.set_state (state)
 
-            fg_color = style.get_color (state)
-            bg_color = style.get_background_color (state)
-
             x = round ((full_width - width) * self.get_property ("xalign"))
 
             cr.rectangle (cell_area.x + self.padding + x,
@@ -2412,7 +2415,11 @@ class CellRendererPercentage (Gtk.CellRendererText):
 
             cr.clip ()
 
-            cr.set_source_rgba (*blend_colors (bg_color, fg_color, -0.3))
+            Gtk.render_background (style, cr,
+                                   cell_area.x,     cell_area.y,
+                                   cell_area.width, cell_area.height)
+
+            cr.set_source_rgba (0, 0, 0, 0.25)
             cr.paint ()
 
             Gtk.CellRendererText.do_render (self,
@@ -2587,13 +2594,13 @@ class ProfileViewer (Gtk.ScrolledWindow):
                                         GObject.TYPE_UINT64, str, float, float)
 
         __gsignals__ = {
-            "needs-update":       (GObject.SIGNAL_RUN_FIRST,
+            "needs-update":       (GObject.SignalFlags.RUN_FIRST,
                                    None, (bool,)),
-            "subprofile-added":   (GObject.SIGNAL_RUN_FIRST,
+            "subprofile-added":   (GObject.SignalFlags.RUN_FIRST,
                                    None, (Gtk.Widget,)),
-            "subprofile-removed": (GObject.SIGNAL_RUN_FIRST,
+            "subprofile-removed": (GObject.SignalFlags.RUN_FIRST,
                                    None, (Gtk.Widget,)),
-            "path-changed":       (GObject.SIGNAL_RUN_FIRST,
+            "path-changed":       (GObject.SignalFlags.RUN_FIRST,
                                    None, ())
         }
 
@@ -2649,7 +2656,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 button.add (hbox)
                 hbox.show ()
 
-                label = Gtk.Label ("Threads")
+                label = Gtk.Label (label = "Threads")
                 hbox.pack_start (label, False, False, 0)
                 label.show ()
 
@@ -3051,11 +3058,11 @@ class ProfileViewer (Gtk.ScrolledWindow):
                 Gtk.ListStore.__init__ (self, int, bool, float, float, str)
 
         __gsignals__ = {
-            "subprofile-added":   (GObject.SIGNAL_RUN_FIRST,
+            "subprofile-added":   (GObject.SignalFlags.RUN_FIRST,
                                    None, (Gtk.Widget,)),
-            "subprofile-removed": (GObject.SIGNAL_RUN_FIRST,
+            "subprofile-removed": (GObject.SignalFlags.RUN_FIRST,
                                    None, (Gtk.Widget,)),
-            "path-changed":       (GObject.SIGNAL_RUN_FIRST,
+            "path-changed":       (GObject.SignalFlags.RUN_FIRST,
                                    None, ())
         }
 
@@ -3165,7 +3172,7 @@ class ProfileViewer (Gtk.ScrolledWindow):
                                          xpad   = 8,
                                          family = "Monospace",
                                          weight = Pango.Weight.BOLD,
-                                         scale  =scale)
+                                         scale  = scale)
             col.pack_start (cell, False)
             col.add_attribute (cell, "text", store.LINE)
 
