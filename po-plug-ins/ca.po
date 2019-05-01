@@ -3220,7 +3220,7 @@ msgstr ""
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
-"S'ha produït un error en la lectura de «%s». No s'ha pogut crear la "
+"S'ha produït un error en la lectura de «%s». No s'ha pogut crear l'"
 "estructura d'informació a la capçalera PNG."
 
 #: ../plug-ins/common/file-png.c:916
@@ -3278,7 +3278,7 @@ msgstr ""
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
-"S'ha produït un error en l'exportació de «%s». No s'ha pogut crear la "
+"S'ha produït un error en l'exportació de «%s». No s'ha pogut crear l'"
 "estructura d'informació a la capçalera PNG."
 
 #: ../plug-ins/common/file-png.c:1554
@@ -3484,7 +3484,7 @@ msgstr "Fort"
 
 #: ../plug-ins/common/file-ps.c:3564
 msgid "Graphic antialiasing"
-msgstr "Antiàliasing gràfic"
+msgstr "Antialiàsing gràfic"
 
 #: ../plug-ins/common/file-ps.c:3641
 msgid "PostScript"
@@ -3677,12 +3677,12 @@ msgstr "S'ha produït un error en llegir el fragment de dada del tub"
 #: ../plug-ins/common/file-psp.c:1783
 #, c-format
 msgid "Error reading file header."
-msgstr "S'ha produït un error en llegir la capçalera fitxer."
+msgstr "S'ha produït un error en llegir la capçalera del fitxer."
 
 #: ../plug-ins/common/file-psp.c:1790
 #, c-format
 msgid "Incorrect file signature."
-msgstr "La signatura del fitxer no és correcta"
+msgstr "La signatura del fitxer no és correcta."
 
 #: ../plug-ins/common/file-psp.c:1808
 #, c-format
@@ -6746,7 +6746,7 @@ msgstr "Mipmaps:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2003
 msgid "Transparent index:"
-msgstr "Index transparent:"
+msgstr "Índex transparent:"
 
 #: ../plug-ins/file-dds/ddswrite.c:2041
 msgid "<b>Advanced Options</b>"
