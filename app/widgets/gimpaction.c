@@ -74,6 +74,9 @@ static void   gimp_action_set_proxy         (GimpAction       *action,
                                              GtkWidget        *proxy);
 static void   gimp_action_set_proxy_tooltip (GimpAction       *action,
                                              GtkWidget        *proxy);
+static void   gimp_action_label_notify      (GimpAction       *action,
+                                             const GParamSpec *pspec,
+                                             gpointer          data);
 static void   gimp_action_tooltip_notify    (GimpAction       *action,
                                              const GParamSpec *pspec,
                                              gpointer          data);
@@ -140,6 +143,9 @@ gimp_action_init (GimpAction *action)
   action->ellipsize       = PANGO_ELLIPSIZE_NONE;
   action->max_width_chars = -1;
 
+  g_signal_connect (action, "notify::label",
+                    G_CALLBACK (gimp_action_label_notify),
+                    NULL);
   g_signal_connect (action, "notify::tooltip",
                     G_CALLBACK (gimp_action_tooltip_notify),
                     NULL);
@@ -478,6 +484,34 @@ gimp_action_set_proxy_tooltip (GimpAction *action,
     gimp_help_set_help_data (proxy, tooltip,
                              g_object_get_qdata (G_OBJECT (proxy),
                                                  GIMP_HELP_ID));
+}
+
+static void
+gimp_action_label_notify (GimpAction       *action,
+                          const GParamSpec *pspec,
+                          gpointer          data)
+{
+  GSList *list;
+
+  for (list = gtk_action_get_proxies (GTK_ACTION (action));
+       list;
+       list = g_slist_next (list))
+    {
+      if (GTK_IS_MENU_ITEM (list->data))
+        {
+          GtkWidget *child = gtk_bin_get_child (GTK_BIN (list->data));
+
+          if (GTK_IS_BOX (child))
+            {
+              child = g_object_get_data (G_OBJECT (list->data),
+                                         "gimp-menu-item-label");
+
+              if (GTK_IS_LABEL (child))
+                gtk_label_set_text (GTK_LABEL (child),
+                                    gtk_action_get_label (GTK_ACTION (action)));
+            }
+        }
+    }
 }
 
 static void
