@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-03-30 13:39+0000\n"
-"PO-Revision-Date: 2019-03-30 22:08+0100\n"
+"POT-Creation-Date: 2019-04-28 14:06+0000\n"
+"PO-Revision-Date: 2019-05-04 22:07+0200\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -181,7 +181,7 @@ msgid "Confirm Save"
 msgstr "Speichern bestätigen"
 
 #: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
-#: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
+#: ../libgimp/gimpexport.c:1022 ../libgimpwidgets/gimpcolorbutton.c:572
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -202,9 +202,9 @@ msgstr "Datei exportieren"
 msgid "_Ignore"
 msgstr "_Ignorieren"
 
-#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1022
+#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1023
 msgid "_Export"
-msgstr "_Exportieren"
+msgstr "E_xportieren"
 
 #. the headline
 #: ../libgimp/gimpexport.c:560
@@ -239,9 +239,11 @@ msgstr ""
 "Sie speichern einen Kanal (gespeicherte Auswahl) als %s.\n"
 "Die sichtbaren Ebenen werden dabei nicht gespeichert."
 
-#: ../libgimp/gimpexport.c:1015
-msgid "Export Image as "
-msgstr "Bild exportieren als "
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#: ../libgimp/gimpexport.c:1016
+#, c-format
+msgid "Export Image as %s"
+msgstr "Bild exportieren als %s"
 
 #: ../libgimp/gimpfontselectbutton.c:139
 msgid "Font Selection"
