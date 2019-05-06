@@ -270,13 +270,15 @@ save_image (const gchar  *filename,
   static struct jpeg_compress_struct cinfo;
   static struct my_error_mgr         jerr;
 
-  GimpImageType    drawable_type;
-  GeglBuffer      *buffer;
-  const Babl      *format;
-  JpegSubsampling  subsampling;
-  FILE            * volatile outfile;
-  guchar          *data;
-  guchar          *src;
+  GimpImageType     drawable_type;
+  GeglBuffer       *buffer;
+  const Babl       *format;
+  JpegSubsampling   subsampling;
+  FILE             * volatile outfile;
+  guchar           *data;
+  guchar           *src;
+  GimpColorProfile *profile;
+
   gboolean         has_alpha;
   gboolean         out_linear = FALSE;
   gint             rowstride, yend;
@@ -333,21 +335,16 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
+  profile = gimp_image_get_color_profile (orig_image_ID);
   if (jsvals.save_profile)
     {
-      /* In most cases we want to save 8-bit image formats as
-       * non-linear, even though the work image may have been linear
-       * itself (yet with higher bit depth). The reasons are shadow
-       * posterization on low bit depth, and the fact that JPEG
-       * compression was designed for perceptually uniform RGB and
-       * introduces shadow artifacts with linear RGB (or so I have been
-       * told; see #1070).
-       * The only exception is when the creator was working explicitly
-       * on 8-bit linear AND if we export the profile.
-       * In such a case, let's consider the creator knows what one is
-       * doing and keep the exported image linear.
+      /* When we don't save profiles, we convert data to sRGB because
+       * that's what most/all readers expect on a no-profile JPEG.
+       * If we save an assigned profile, let's just follow its TRC.
+       * If we save the default linear profile (i.e. no assigned
+       * profile), we convert it to sRGB.
        */
-      if (gimp_image_get_precision (orig_image_ID) == GIMP_PRECISION_U8_LINEAR)
+      if (profile && gimp_color_profile_is_linear (profile))
         out_linear = TRUE;
     }
 
@@ -575,53 +572,33 @@ save_image (const gchar  *filename,
                          (guchar *) image_comment, strlen (image_comment));
     }
 
-  /* Step 4.2: store the color profile if there is one */
+  /* Step 4.2: store the color profile */
   if (jsvals.save_profile)
     {
-      GimpColorProfile *profile;
+      const guint8 *icc_data;
+      gsize         icc_length;
 
-      profile = gimp_image_get_effective_color_profile (orig_image_ID);
+      if (! profile)
+        /* There is always an effective profile. */
+        profile = gimp_image_get_effective_color_profile (orig_image_ID);
 
-      if (profile)
+      if (gimp_color_profile_is_linear (profile) && ! out_linear)
         {
-          const guint8 *icc_data;
-          gsize         icc_length;
+          /* Convert profile from linear to sRGB. This would normally
+           * only happen when there was no assigned profile (i.e. the
+           * default linear profile is in use). */
+          GimpColorProfile *saved_profile;
 
-          switch (gimp_image_get_precision (orig_image_ID))
-            {
-            case GIMP_PRECISION_U16_LINEAR:
-            case GIMP_PRECISION_U32_LINEAR:
-            case GIMP_PRECISION_HALF_LINEAR:
-            case GIMP_PRECISION_FLOAT_LINEAR:
-            case GIMP_PRECISION_DOUBLE_LINEAR:
-              /* Convert profile from linear to sRGB. */
-                {
-                  GimpColorProfile *saved_profile;
-
-                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-                  g_object_unref (profile);
-                  profile = saved_profile;
-                }
-              break;
-
-            case GIMP_PRECISION_U8_LINEAR:
-              /* Only exception where we don't convert from linear to
-               * sRGB TRC is when the work format was 8-bit linear. */
-            case GIMP_PRECISION_U8_GAMMA:
-            case GIMP_PRECISION_U16_GAMMA:
-            case GIMP_PRECISION_U32_GAMMA:
-            case GIMP_PRECISION_HALF_GAMMA:
-            case GIMP_PRECISION_FLOAT_GAMMA:
-            case GIMP_PRECISION_DOUBLE_GAMMA:
-              break;
-            }
-
-          icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
-          jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
-
+          saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
           g_object_unref (profile);
+          profile = saved_profile;
         }
+
+      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
     }
+  if (profile)
+    g_object_unref (profile);
 
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
