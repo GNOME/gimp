@@ -191,7 +191,7 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
                       gtk_widget_show (new_dockable);
 
                       gtk_container_remove (GTK_CONTAINER (dockbook),
-                                            dockable);
+                                            GTK_WIDGET (dockable));
 
                       gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
                                                      page_num);

@@ -416,7 +416,7 @@ windows_menu_display_query_tooltip (GtkWidget  *widget,
   gint       height;
 
   if (! image)
-    return;
+    return FALSE;
 
   text = gtk_widget_get_tooltip_text (widget);
   gtk_tooltip_set_text (tooltip, text);
