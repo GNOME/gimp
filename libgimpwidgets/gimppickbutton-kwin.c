@@ -85,7 +85,7 @@ _gimp_pick_button_kwin_pick (GimpPickButton *button)
       GimpRGB rgb;
       guint32 color;
 
-      g_variant_get (retval, "(u)", &color);
+      g_variant_get (retval, "((u))", &color);
       g_variant_unref (retval);
       /* Returned value is ARGB stored in uint32. */
       gimp_rgba_set_uchar (&rgb,
