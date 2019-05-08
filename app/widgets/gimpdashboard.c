@@ -139,6 +139,7 @@ typedef enum
   /* misc */
   VARIABLE_MIPMAPED,
   VARIABLE_ASYNC_RUNNING,
+  VARIABLE_TILE_ALLOC_TOTAL,
   VARIABLE_SCRATCH_TOTAL,
   VARIABLE_TEMP_BUF_TOTAL,
 
@@ -698,6 +699,16 @@ static const VariableInfo variables[] =
     .data             = gimp_async_get_n_running
   },
 
+  [VARIABLE_TILE_ALLOC_TOTAL] =
+  { .name             = "tile-alloc-total",
+    .title            = NC_("dashboard-variable", "Tile"),
+    .description      = N_("Total size of tile memory"),
+    .type             = VARIABLE_TYPE_SIZE,
+    .color            = {0.3, 0.3, 1.0, 1.0},
+    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .data             = "tile-alloc-total"
+  },
+
   [VARIABLE_SCRATCH_TOTAL] =
   { .name             = "scratch-total",
     .title            = NC_("dashboard-variable", "Scratch"),
@@ -874,6 +885,10 @@ static const GroupInfo groups[] =
                           { .variable         = VARIABLE_CACHE_OCCUPIED,
                             .title            = NC_("dashboard-variable", "Cache"),
                             .default_active   = FALSE,
+                            .meter_value      = 4
+                          },
+                          { .variable         = VARIABLE_TILE_ALLOC_TOTAL,
+                            .default_active   = FALSE,
                             .meter_value      = 3
                           },
 
@@ -913,6 +928,9 @@ static const GroupInfo groups[] =
                             .default_active = TRUE
                           },
                           { .variable       = VARIABLE_ASYNC_RUNNING,
+                            .default_active = TRUE
+                          },
+                          { .variable       = VARIABLE_TILE_ALLOC_TOTAL,
                             .default_active = TRUE
                           },
                           { .variable       = VARIABLE_SCRATCH_TOTAL,
