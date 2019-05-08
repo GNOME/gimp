@@ -179,13 +179,13 @@ color_area_dialog_update (GimpColorDialog      *dialog,
       else
         {
           g_signal_handlers_block_by_func (context,
-                                           color_area_foreground_changed,
+                                           color_area_background_changed,
                                            dialog);
 
           gimp_context_set_background (context, color);
 
           g_signal_handlers_unblock_by_func (context,
-                                             color_area_foreground_changed,
+                                             color_area_background_changed,
                                              dialog);
         }
       break;
