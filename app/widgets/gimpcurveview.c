@@ -732,12 +732,12 @@ gimp_curve_view_expose (GtkWidget      *widget,
           /*  stupid heuristic: special-case for 0..255  */
 
           g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
-                      (gint) (view->cursor_x *
-                              (view->range_x_max - view->range_x_min) +
-                              view->range_x_min),
-                      (gint) ((1.0 - view->cursor_y) *
-                              (view->range_y_max - view->range_y_min) +
-                              view->range_y_min));
+                      (gint) round (view->cursor_x *
+                                    (view->range_x_max - view->range_x_min) +
+                                    view->range_x_min),
+                      (gint) round ((1.0 - view->cursor_y) *
+                                    (view->range_y_max - view->range_y_min) +
+                                    view->range_y_min));
         }
       else if (view->range_x_max == 100.0 &&
                view->range_y_max == 100.0)
