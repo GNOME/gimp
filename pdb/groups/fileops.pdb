@@ -595,7 +595,7 @@ sub register_file_handler_uri {
     $help = <<'HELP';
 Registers a file handler procedure as capable of handling URIs. This
 allows GIMP to call the procedure directly for all kinds of URIs, and
-the 'filename' traditionally passed to file procesures turns into an
+the 'filename' traditionally passed to file procedures turns into an
 URI.
 HELP
 
