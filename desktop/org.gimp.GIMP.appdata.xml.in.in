@@ -72,6 +72,37 @@
   </provides>
 
   <releases>
+    <release version="2.10.12" date="TODO">
+      <url type="details">https://www.gimp.org/news/TODO/gimp-2-10-12-released/</url>
+      <description>
+        <_p>
+        GIMP 2.10.12 is a significant bug fix release, which is to be expected
+        after a 2.10.10 with so many changes!
+        Still, very cool improvements are also available, in particular for
+        curves editing:
+        </_p>
+        <ul>
+          <_li>
+          Improved curves interaction overall
+          </_li>
+          <_li>
+          A few enhancements specific to the Curves tool
+          </_li>
+          <_li>
+          Layer support in TIFF
+          </_li>
+          <_li>
+          Discovery of user-installed fonts in Windows
+          </_li>
+          <_li>
+          Incremental mode in the Dodge/Burn tool
+          </_li>
+          <_li>
+          Free Select tool creates preliminary selection
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.10.10" date="2019-04-07">
       <url type="details">https://www.gimp.org/news/2019/04/07/gimp-2-10-10-released/</url>
       <description>
