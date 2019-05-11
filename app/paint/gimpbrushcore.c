@@ -839,13 +839,13 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
           return paint_core->paint_buffer;
         }
 
+      g_clear_object (&paint_core->paint_buffer);
+
       temp_buf = gimp_temp_buf_new ((x2 - x1), (y2 - y1),
                                     format);
 
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
-
-      g_clear_object (&paint_core->paint_buffer);
 
       paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf);
 
