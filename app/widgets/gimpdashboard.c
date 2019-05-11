@@ -2789,7 +2789,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
               n_rows++;
             }
 
-          if (group_info->has_meter && variable_info->color.a)
+          if (group_info->has_meter && field_info->meter_value)
             {
               color_area = gimp_color_area_new (&variable_info->color,
                                                 GIMP_COLOR_AREA_FLAT, 0);
