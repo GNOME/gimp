@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-06 14:16+0000\n"
-"PO-Revision-Date: 2019-04-07 19:58+0300\n"
+"POT-Creation-Date: 2019-05-10 15:40+0000\n"
+"PO-Revision-Date: 2019-05-11 01:29+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -223,7 +223,7 @@ msgstr "Mavi"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
 msgid "Luma (Y)"
-msgstr "Luma (Y)"
+msgstr "Renk Parl. (Y)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
 msgid "Hue"
@@ -243,7 +243,7 @@ msgstr "Doygunluk (HSL)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
 msgid "Lightness (HSL)"
-msgstr "Aydınlık (HSL)"
+msgstr "Açıklık (HSL)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
 msgid "Index"
@@ -255,7 +255,7 @@ msgstr "Rastgele"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
 msgid "Lightness (LAB)"
-msgstr "Aydınlık (LAB)"
+msgstr "Açıklık (LAB)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
 msgid "A-color"
@@ -267,7 +267,7 @@ msgstr "B-renk"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
 msgid "Chroma (LCHab)"
-msgstr "Renk parlaklığı (LCHab)"
+msgstr "Renk saflığı (LCHab)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
 msgid "Hue (LCHab)"
@@ -354,7 +354,7 @@ msgstr "Dilimle"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
-"Bir görüntüyü rehberi boyunca keser, görüntüyü ve bir HTML tablosu parçası "
+"Bir görüntüyü kılavuz boyunca keser, görüntüyü ve bir HTML tablosu parçası "
 "oluşturur"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
@@ -763,7 +763,7 @@ msgstr ""
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-# Menü komutu olduğu için cümle sonunda nokta bulunmaması gerekiyor
+# Menü ipucu olduğu için cümle sonunda nokta bulunmaması gerekiyor
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1346
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1802
 msgid "Draw spyrographs using current tool settings and selection."
