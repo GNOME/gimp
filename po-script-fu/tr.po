@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-06 14:16+0000\n"
-"PO-Revision-Date: 2019-04-07 19:58+0300\n"
+"POT-Creation-Date: 2019-05-10 15:40+0000\n"
+"PO-Revision-Date: 2019-05-11 01:30+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -284,7 +284,7 @@ msgstr "E_ğim Ekle..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:184
 msgid "Add a beveled border to an image"
-msgstr "Bir görüntüye eğimli bir sınır ekle"
+msgstr "Görüntüye eğimli bir kenarlık ekle"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:191
 msgid "Thickness"
@@ -305,27 +305,27 @@ msgstr "Tümsek katmanı koru"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:108
 msgid "Border Layer"
-msgstr "Sınır Katmanı"
+msgstr "Kenarlık Katmanı"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
-msgstr "_Sınır Ekle..."
+msgstr "_Kenarlık Ekle..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
-msgstr "Bir görüntü etrafına bir sınır ekle"
+msgstr "Görüntü etrafına kenarlık ekle"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:170
 msgid "Border X size"
-msgstr "Sınırın X büyüklüğü"
+msgstr "Kenarlığın X büyüklüğü"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:171
 msgid "Border Y size"
-msgstr "Sınırın Y büyüklüğü"
+msgstr "Kenarlığın Y büyüklüğü"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:172
 msgid "Border color"
-msgstr "Sınır rengi"
+msgstr "Kenarlık rengi"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:173
 msgid "Delta value on color"
@@ -386,7 +386,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
-msgstr "Işık rengi"
+msgstr "Parıltı rengi"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
@@ -394,7 +394,7 @@ msgstr "Solma"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
-msgstr "Kararma genişliği"
+msgstr "Solma genişliği"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
@@ -406,7 +406,7 @@ msgstr "Parıltıdan sonra"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
-msgstr "Parlama ekle"
+msgstr "Parıltı ekle"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
@@ -492,16 +492,16 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"Belirtilen kalıbı (gri tonlama) kullanarak seçili bölgeye (veya alfaya) "
-"gümüş etkisi uygula"
+"Belirtilen kalıbı (gri tonlama) kullanarak seçili bölgeye (veya alfaya) krom "
+"etkisi uygula"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:238
 msgid "Chrome saturation"
-msgstr "Krom Doygunluğu"
+msgstr "Krom doygunluğu"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:239
 msgid "Chrome lightness"
-msgstr "Krom aydınlığı"
+msgstr "Krom açıklığı"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:240
 msgid "Chrome factor"
@@ -607,7 +607,7 @@ msgstr "Lekeler"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:91
 msgid "Darken only"
-msgstr "Yalnızca koyulaşan"
+msgstr "Yalnızca koyulaştır"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "Difference Clouds..."
@@ -629,6 +629,7 @@ msgstr "Seçimi yıprat"
 msgid "Threshold (bigger 1<-->254 smaller)"
 msgstr "Eşik (en büyük 1<-->254 en küçük)"
 
+# Arc kelimesiyle karışmaması için bu şekilde çevirildi
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
 msgid "Spread"
 msgstr "Etrafa Saç"
@@ -765,7 +766,7 @@ msgstr "Yazı tipi _boyutu (piksel)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
 msgid "_Border (pixels)"
-msgstr "_Sınır (piksel)"
+msgstr "_Kenarlık (piksel)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "_Color scheme"
@@ -781,20 +782,20 @@ msgstr "Etkin renkler"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "_Fuzzy Border..."
-msgstr "_Bulanık Sınır..."
+msgstr "_Bulanık Kenarlık..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Add a jagged, fuzzy border to an image"
-msgstr "Görüntüye çıkıntılı, donuk çerçeve uygula"
+msgstr "Görüntüye pürüzlü, bulanık bir kenarlık ekle"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
 #: ../plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Border size"
-msgstr "Sınır boyutu"
+msgstr "Kenarlık boyutu"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
 msgid "Blur border"
-msgstr "Bulanık sınır çizgisi"
+msgstr "Kenarlığı bulanıklaştır"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
@@ -806,7 +807,7 @@ msgstr "Gölge ekle"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
-msgstr "Gölge kalınlığı"
+msgstr "Gölge ağırlığı (%)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
@@ -1091,7 +1092,7 @@ msgstr "Dik_dörtgen, Tüylü..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
-msgstr "Tüylü köşeli, dikdörtgen bir fırça oluştur"
+msgstr "Tüylü kenarlı, dikdörtgen bir fırça oluştur"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:142
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:267
@@ -1100,19 +1101,19 @@ msgstr "Tüyleme"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
-msgstr "_Oval..."
+msgstr "_Eliptik..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:190
 msgid "Create an elliptical brush"
-msgstr "Oval bir fırça oluştur"
+msgstr "Eliptik bir fırça oluştur"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
-msgstr "O_val, Tüylü..."
+msgstr "_Eliptik, Tüylü..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
-msgstr "Tüylü köşeli, oval bir fırça oluştur"
+msgstr "Tüylü kenarlı, eliptik bir fırça oluştur"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
@@ -1147,7 +1148,7 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"Oluşturulacak dosyanın adı (eğer bu adda bir dosya varsa, değiştirilecektir)"
+"Oluşturulacak dosyanın adı (bu adda bir dosya zaten varsa, değiştirilir)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
@@ -1289,8 +1290,7 @@ msgstr "_Dalgalanma..."
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
-"Geçerli katmana dalgacık etkisi uygulayarak çok katmanlı yeni bir görüntü "
-"oluştur"
+"Geçerli katmana dalgacık etkisi uygulayarak çok katmanlı yeni görüntü oluştur"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
@@ -1651,7 +1651,7 @@ msgid ""
 "bump map"
 msgstr ""
 "Kaplama veya derinlik etkisi olarak kullanılmak üzere dokuma efektiyle "
-"doldurulmuş yeni bir katman oluştur"
+"doldurulmuş yeni katman oluştur"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
