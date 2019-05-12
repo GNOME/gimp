@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-06 14:14+0000\n"
-"PO-Revision-Date: 2019-04-07 19:59+0300\n"
+"POT-Creation-Date: 2019-05-10 15:39+0000\n"
+"PO-Revision-Date: 2019-05-11 01:29+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -180,7 +180,7 @@ msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
 #: ../libgimp/gimpexport.c:447 ../libgimp/gimpexport.c:529
-#: ../libgimp/gimpexport.c:1021 ../libgimpwidgets/gimpcolorbutton.c:572
+#: ../libgimp/gimpexport.c:1022 ../libgimpwidgets/gimpcolorbutton.c:572
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -201,7 +201,7 @@ msgstr "Dosyayı Dışarı Aktar"
 msgid "_Ignore"
 msgstr "_Yoksay"
 
-#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1022
+#: ../libgimp/gimpexport.c:530 ../libgimp/gimpexport.c:1023
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
@@ -238,9 +238,11 @@ msgstr ""
 "Bir katmanı (kaydedilmiş seçim) %s olarak kaydetmek üzeresiniz.\n"
 "Bu işlem görünür katmanları kaydetmeyecektir."
 
-#: ../libgimp/gimpexport.c:1015
-msgid "Export Image as "
-msgstr "Görüntüyü Dışa Aktar "
+#. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
+#: ../libgimp/gimpexport.c:1016
+#, c-format
+msgid "Export Image as %s"
+msgstr "Görüntüyü %s Olarak Dışa Aktar"
 
 #: ../libgimp/gimpfontselectbutton.c:139
 msgid "Font Selection"
@@ -734,12 +736,15 @@ msgstr "Keskinleştir"
 #: ../libgimpbase/gimpbaseenums.c:514
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
-msgstr "Aydınlık (HSL)"
+msgstr "Açıklık (HSL)"
 
+# Luma kelimesi Luminance kelimesinin kısaltması, biz de çeviriyi kısaltalım
+# Luma metodunun Luminance metodundan farkı var,
+# o sebeple "Renk Parl." çevirisini koruyalım
 #: ../libgimpbase/gimpbaseenums.c:515
 msgctxt "desaturate-mode"
 msgid "Luma"
-msgstr "Luma"
+msgstr "Renk Parl."
 
 #: ../libgimpbase/gimpbaseenums.c:516
 msgctxt "desaturate-mode"
@@ -749,7 +754,7 @@ msgstr "Ortalama (HSI Yoğunluğu)"
 #: ../libgimpbase/gimpbaseenums.c:517
 msgctxt "desaturate-mode"
 msgid "Luminance"
-msgstr "Işıklılık"
+msgstr "Renk Parlaklığı"
 
 #: ../libgimpbase/gimpbaseenums.c:518
 msgctxt "desaturate-mode"
@@ -759,12 +764,12 @@ msgstr "Değer (HSV)"
 #: ../libgimpbase/gimpbaseenums.c:547
 msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr "Soldur"
+msgstr "Soldurma"
 
 #: ../libgimpbase/gimpbaseenums.c:548
 msgctxt "dodge-burn-type"
 msgid "Burn"
-msgstr "Yak"
+msgstr "Yakma"
 
 #: ../libgimpbase/gimpbaseenums.c:580
 msgctxt "fill-type"
@@ -1305,12 +1310,12 @@ msgstr "Alfa"
 #: ../libgimpbase/gimpbaseenums.c:1658
 msgctxt "select-criterion"
 msgid "LCh Lightness"
-msgstr "LCh Aydınlığı"
+msgstr "LCh Açıklık"
 
 #: ../libgimpbase/gimpbaseenums.c:1659
 msgctxt "select-criterion"
 msgid "LCh Chroma"
-msgstr "LCh Renk Parlaklığı"
+msgstr "LCh Renk Saflığı"
 
 #: ../libgimpbase/gimpbaseenums.c:1660
 msgctxt "select-criterion"
@@ -1330,12 +1335,12 @@ msgstr "Nokta"
 #: ../libgimpbase/gimpbaseenums.c:1751
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "Vuruş çizgisi"
+msgstr "Darbe çizgisi"
 
 #: ../libgimpbase/gimpbaseenums.c:1752
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
-msgstr "Bir boya aracıyla vuruş"
+msgstr "Bir boya aracıyla darbele"
 
 #: ../libgimpbase/gimpbaseenums.c:1785
 msgctxt "text-direction"
@@ -1659,7 +1664,7 @@ msgstr "Siyah nokta dengeleme kullanna (bir nedeniniz yoksa)."
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
 msgstr ""
-"Devre dışı bırakıldığında, görüntü gösterimi hız pahasına daha iyi kalitede "
+"Pasifleştirildiğinde, görüntü gösterimi hız pahasına daha iyi kalitede "
 "olabilir."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
@@ -1683,8 +1688,7 @@ msgstr ""
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Devre dışı bırakıldığında, ekran provası hız pahasına daha iyi kalitede "
-"olabilir."
+"Pasifleştirildiğinde, ekran provası hız pahasına daha iyi kalitede olabilir."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
 msgid ""
@@ -1886,24 +1890,24 @@ msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"Geçerli bir minyatür klasörü belirlenemedi.\n"
-"Minyatürler (%s) geçici dosyaları yerine dizinde depolanacaktır."
+"Geçerli bir küçük resim klasörü belirlenemedi.\n"
+"Küçük resimler (%s) geçici dosyaları yerine dizinde depolanacaktır."
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
 #: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "'%s' minyatür klasörü oluşturmada hata."
+msgstr "'%s' küçük resim klasörü oluşturmada hata."
 
 #: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr "Minyatür içeriğinde Thumb::URI etiketi yok"
+msgstr "Küçük resim içeriğinde Thumb::URI etiketi yok"
 
 #: ../libgimpthumb/gimpthumbnail.c:905
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "%s için minyatür oluşturulamadı: %s"
+msgstr "%s için küçük resim oluşturulamadı: %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:114
 msgid "_Search:"
@@ -2009,7 +2013,7 @@ msgstr "HSV"
 
 #: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
-msgstr "Şimdiki:"
+msgstr "Geçerli:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
@@ -2246,7 +2250,7 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Rastgele sayı üretici parçacığı için bu değeri kullanın. Bu, \"rastgele\" "
+"Rastgele sayı oluşturucu parçacığı için bu değeri kullanın. Bu, \"rastgele\" "
 "işlem tekrarı yapmanızı sağlar"
 
 #: ../libgimpwidgets/gimpwidgets.c:525
@@ -2255,7 +2259,7 @@ msgstr "_Yeni Parçacık"
 
 #: ../libgimpwidgets/gimpwidgets.c:538
 msgid "Seed random number generator with a generated random number"
-msgstr "Rastgele üretilen sayı ile rastgele parçacık sayısı üreticisi"
+msgstr "Rastgele oluşturulan sayı ile rastgele parçacık sayısı oluşturucu"
 
 #: ../libgimpwidgets/gimpwidgets.c:542
 msgid "_Randomize"
@@ -2264,7 +2268,7 @@ msgstr "_Rastgele"
 #: ../libgimpwidgets/gimpwidgets-private.c:50
 msgctxt "input-mode"
 msgid "Disabled"
-msgstr "Devre Dışı"
+msgstr "Pasif"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
@@ -2361,7 +2365,7 @@ msgstr "_L"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:136
 msgid "LCh Lightness"
-msgstr "LCh Aydınlığı"
+msgstr "LCh Açıklık"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgctxt "color-selector-channel"
@@ -2370,7 +2374,7 @@ msgstr "_C"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Chroma"
-msgstr "LCh Renk Parlaklığı"
+msgstr "LCh Renk Saflığı"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
@@ -2611,7 +2615,7 @@ msgstr "POV %d Döndü"
 
 #: ../modules/controller-dx-dinput.c:1081
 msgid "DirectInput Events"
-msgstr "Doğrudan Giriş Olayları"
+msgstr "Doğrudan Girdi Olayları"
 
 #: ../modules/controller-dx-dinput.c:1092
 #: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
