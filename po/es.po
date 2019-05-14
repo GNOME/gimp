@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-05-12 13:07+0000\n"
-"PO-Revision-Date: 2019-05-13 11:23+0200\n"
+"POT-Creation-Date: 2019-05-13 22:01+0000\n"
+"PO-Revision-Date: 2019-05-14 08:44+0200\n"
 "Last-Translator: Rodrigo Lledó <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -112,10 +112,13 @@ msgstr "Soporte de capas en TIFF"
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "Descubrimiento de tipografías instaladas por el usuario en Windows"
 
+# He uniformado la traducción de dodge/burn. Elegir uno:
+# Blanquear/Ennegrecer (algunos ya estaban traducidos así)
+# Aclarar/Quemar (lo he visto por internet)
+# Lo importante es que se entiende de las dos maneras.
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
-#, fuzzy
 msgid "Incremental mode in the Dodge/Burn tool"
-msgstr "Modo incremental en la herramienta Dodge/Burn"
+msgstr "Modo incremental en la herramienta Blanquear/Ennegrecer"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Free Select tool creates preliminary selection"
@@ -166,7 +169,6 @@ msgstr ""
 "relación de aspecto al escalar hacia arriba o abajo"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
-#, fuzzy
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -3388,7 +3390,6 @@ msgid "Open the palettes dialog"
 msgstr "Abre el diálogo de paletas"
 
 #: ../app/actions/dialogs-actions.c:191
-#| msgid "Palette Editor"
 msgctxt "dialogs-action"
 msgid "Palette _Editor"
 msgstr "_Editor de paleta"
@@ -3399,7 +3400,6 @@ msgid "Open the palette editor"
 msgstr "Abrir el editor de paletas"
 
 #: ../app/actions/dialogs-actions.c:197
-#| msgid "Tool Presets"
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
 msgstr "_Ajustes predefinidos de herramienta"
@@ -10764,24 +10764,27 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:100
 msgid "Snap to guides by default in new image windows."
 msgstr ""
+"Ajustar a las guías de manera predeterminada en ventanas de imagen nueva."
 
 #: ../app/config/gimprc-blurbs.h:103
-#, fuzzy
 #| msgid "Sets the text to appear in image window titles."
 msgid "Snap to the grid by default in new image windows."
 msgstr ""
-"Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
+"Ajustar a la rejilla de manera predeterminada en las ventanas de imagen "
+"nueva."
 
 #: ../app/config/gimprc-blurbs.h:106
 msgid "Snap to the canvas edges by default in new image windows."
 msgstr ""
+"Ajustar a los bordes del lienzo de manera predeterminada en las ventanas de "
+"imagen nueva."
 
 #: ../app/config/gimprc-blurbs.h:109
-#, fuzzy
 #| msgid "Sets the text to appear in image window titles."
 msgid "Snap to the active path by default in new image windows."
 msgstr ""
-"Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
+"Ajustar a la ruta activa de manera predeterminada en las ventanas de imagen "
+"nueva."
 
 #: ../app/config/gimprc-blurbs.h:112
 msgid ""
@@ -11814,8 +11817,6 @@ msgid "Positioned"
 msgstr "Posicionado"
 
 #: ../app/core/core-enums.c:375
-#| msgctxt "channel-border-style"
-#| msgid "Smooth"
 msgctxt "curve-point-type"
 msgid "Smooth"
 msgstr "Suave"
@@ -12759,7 +12760,7 @@ msgstr "Etiqueta desconocida <%s>."
 #: ../app/core/gimpextensionmanager.c:807
 #, c-format
 msgid "System extensions cannot be uninstalled."
-msgstr "Las extensiones del sistema no se puede desinstalar."
+msgstr "Las extensiones del sistema no se pueden desinstalar."
 
 #: ../app/core/gimpextensionmanager.c:1019
 #, c-format
@@ -13096,7 +13097,6 @@ msgstr ""
 
 #: ../app/core/gimpbrushpipe-load.c:142
 #, c-format
-#| msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr ""
 "Error fatal de análisis en el archivo de pincel «%s»: parámetros "
@@ -13538,7 +13538,6 @@ msgid "Feather edges"
 msgstr "Difuminar los bordes"
 
 #: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:160
-#| msgid "Enable feathering of selection edges"
 msgid "Enable feathering of fill edges"
 msgstr "Permitir el difuminado de los bordes rellenados"
 
@@ -18588,12 +18587,13 @@ msgstr "Las rutas absolutas están prohibidas en la extensión de GIMP «%s»: %
 #: ../app/file-data/file-data-gex.c:156
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
-msgstr ""
+msgstr "El archivo no se permite en la raíz de la extensión de GIMP «%s»: %s"
 
 #: ../app/file-data/file-data-gex.c:167
 #, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
 msgstr ""
+"El archivo no está en la carpeta de extensión de GIMP «%s» con id «%s»: %s"
 
 #: ../app/file-data/file-data-gex.c:263 ../app/file-data/file-data-gex.c:409
 #: ../app/file-data/file-data-gex.c:421 ../app/file-data/file-data-gex.c:433
@@ -18606,6 +18606,7 @@ msgstr "Error fatal al descomprimir la extensión de GIMP «%s»: %s"
 #, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
 msgstr ""
+"La carpeta de extensión de GIMP «%s» (%s) es diferente al id de AppStream: %s"
 
 #: ../app/file-data/file-data-gex.c:306
 #, c-format
@@ -18614,7 +18615,6 @@ msgstr "La extensión de GIMP «%s» requiere un archivo AppStream: %s"
 
 #: ../app/file-data/file-data-gex.c:321 ../app/file-data/file-data-gex.c:456
 #, c-format
-#| msgid "Skipping extension '%s': %s\n"
 msgid "Invalid GIMP extension '%s': %s"
 msgstr "Extensión de GIMP no válida «%s»: %s"
 
@@ -18631,7 +18631,6 @@ msgid "GIMP pattern"
 msgstr "Patrón GIMP"
 
 #: ../app/file-data/file-data.c:508
-#| msgid "By Extension"
 msgid "GIMP extension"
 msgstr "Extensión de GIMP"
 
@@ -19659,7 +19658,7 @@ msgstr "Tasa"
 # //R ????
 #: ../app/paint/gimpdodgeburn.c:67
 msgid "Dodge/Burn"
-msgstr "blanquear/ennegrecer"
+msgstr "Blanquear/Ennegrecer"
 
 #: ../app/paint/gimpdodgeburnoptions.c:70
 msgid "Type"
@@ -22108,17 +22107,14 @@ msgid "R_eset Channel"
 msgstr "R_einiciar el canal"
 
 #: ../app/tools/gimpcurvestool.c:618
-#| msgid "Low Input"
 msgid "_Input:"
 msgstr "_Entrada:"
 
 #: ../app/tools/gimpcurvestool.c:632
-#| msgid "Low Output"
 msgid "O_utput:"
 msgstr "_Salida:"
 
 #: ../app/tools/gimpcurvestool.c:646
-#| msgid "Tool type:"
 msgid "T_ype:"
 msgstr "_Tipo:"
 
@@ -22137,44 +22133,44 @@ msgstr "Usar el formato antigu_o de archivo de curvas"
 # //R ????
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn"
-msgstr "Marcar a fuego / Quemar"
+msgstr "Blanquear / Ennegrecer"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
-"Herramienta de marcado a fuego/ quemar: iluminar u oscurecer selectivamente "
+"Herramienta Blanquear / Ennegrecer: iluminar u oscurecer selectivamente "
 "usando un pincel"
 
 # //R ????
 #: ../app/tools/gimpdodgeburntool.c:76
 msgid "Dod_ge / Burn"
-msgstr "_Marcar a fuego/Quemar"
+msgstr "_Blanquear / Ennegrecer"
 
 #: ../app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge"
-msgstr "Pulse para marcar a fuego"
+msgstr "Pulse para blanquear"
 
 #: ../app/tools/gimpdodgeburntool.c:189
 msgid "Click to dodge the line"
-msgstr "Pulse para marcar a fuego la línea"
+msgstr "Pulse para blanquear la línea"
 
 #: ../app/tools/gimpdodgeburntool.c:190
 #, c-format
 msgid "%s to burn"
-msgstr "%s para quemar"
+msgstr "%s para ennegrecer"
 
 #: ../app/tools/gimpdodgeburntool.c:194
 msgid "Click to burn"
-msgstr "Pulse para quemar"
+msgstr "Pulse para ennegrecer"
 
 #: ../app/tools/gimpdodgeburntool.c:195
 msgid "Click to burn the line"
-msgstr "Pulse para quemar la línea"
+msgstr "Pulse para ennegrecer la línea"
 
 #: ../app/tools/gimpdodgeburntool.c:196
 #, c-format
 msgid "%s to dodge"
-msgstr "%s para marcar a fuego"
+msgstr "%s para blanquear"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:220
@@ -23907,13 +23903,13 @@ msgid "Scale around the center point"
 msgstr "Escalar alrededor del punto central"
 
 #: ../app/tools/gimptransformgridoptions.c:483
-#, fuzzy, c-format
+#, c-format
 #| msgid "Constrain (%s)"
 msgid "Constrain handles (%s)"
 msgstr "Restringir tiradores (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:491
-#, fuzzy, c-format
+#, c-format
 #| msgid "Constrain perspective handles to move along edges and diagonal (%s)"
 msgid "Constrain handles to move along edges and diagonal (%s)"
 msgstr ""
@@ -23921,7 +23917,6 @@ msgstr ""
 "diagonal (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:504
-#| msgid "Scale around the center point"
 msgid "Transform around the center point"
 msgstr "Transformar alrededor del punto central"
 
@@ -24023,7 +24018,6 @@ msgid "Re_adjust"
 msgstr "Re_ajustar"
 
 #: ../app/tools/gimptransformgridtool.c:1353
-#| msgid "Handle transformation"
 msgid "Cannot readjust the transformation"
 msgstr "No se puede reajustar la transformación"
 
@@ -24199,8 +24193,6 @@ msgid "Use an accurate but slower preview"
 msgstr "Usar una vista previa más precisa pero más lenta"
 
 #: ../app/tools/gimpwarpoptions.c:143
-#| msgctxt "documents-action"
-#| msgid "Recreate preview"
 msgid "Real-time preview"
 msgstr "Vista previa en tiempo real"
 
@@ -25545,14 +25537,13 @@ msgstr "Número de operaciones asíncronas en curso"
 #: ../app/widgets/gimpdashboard.c:697
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr ""
+msgstr "Mosaico"
 
 # Es probablemente una memoria temporal que nada tiene que ver con arañazos.
 #: ../app/widgets/gimpdashboard.c:698
-#, fuzzy
 #| msgid "Total size of scratch memory"
 msgid "Total size of tile memory"
-msgstr "Tamaño total de la memoria de arañazo"
+msgstr "Tamaño total de la memoria de mosaico"
 
 #: ../app/widgets/gimpdashboard.c:707
 msgctxt "dashboard-variable"
