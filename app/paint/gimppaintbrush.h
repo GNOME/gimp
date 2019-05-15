@@ -34,7 +34,7 @@ typedef struct _GimpPaintbrushClass GimpPaintbrushClass;
 
 struct _GimpPaintbrush
 {
-  GimpBrushCore  parent_instance;
+  GimpBrushCore      parent_instance;
 
   GeglBuffer        *paint_buffer;
   const GimpTempBuf *paint_pixmap;
