@@ -136,6 +136,9 @@ const GimpTempBuf * gimp_brush_core_get_brush_mask
                                        GeglNode                 *op,
                                        GimpBrushApplicationMode  brush_hardness,
                                        gdouble                   dynamic_hardness);
+const GimpTempBuf * gimp_brush_core_get_brush_pixmap
+                                      (GimpBrushCore            *core,
+                                       GeglNode                 *op);
 
 void   gimp_brush_core_eval_transform_dynamics
                                       (GimpBrushCore            *paint_core,

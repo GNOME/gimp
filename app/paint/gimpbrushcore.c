@@ -103,10 +103,6 @@ static const GimpTempBuf *
                  gimp_brush_core_transform_mask     (GimpBrushCore     *core,
                                                      GimpBrush         *brush,
                                                      GeglNode          *op);
-static const GimpTempBuf *
-                 gimp_brush_core_transform_pixmap   (GimpBrushCore     *core,
-                                                     GimpBrush         *brush,
-                                                     GeglNode          *op);
 
 static void      gimp_brush_core_invalidate_cache   (GimpBrush         *brush,
                                                      GimpBrushCore     *core);
@@ -1046,33 +1042,6 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   return core->transform_brush;
 }
 
-static const GimpTempBuf *
-gimp_brush_core_transform_pixmap (GimpBrushCore *core,
-                                  GimpBrush     *brush,
-                                  GeglNode      *op)
-{
-  const GimpTempBuf *pixmap;
-
-  if (core->scale <= 0.0)
-    return NULL;
-
-  pixmap = gimp_brush_transform_pixmap (brush,
-                                        op,
-                                        core->scale,
-                                        core->aspect_ratio,
-                                        core->angle,
-                                        core->reflect,
-                                        core->hardness);
-
-  if (pixmap == core->transform_pixmap)
-    return pixmap;
-
-  core->transform_pixmap        = pixmap;
-  core->subsample_cache_invalid = TRUE;
-
-  return core->transform_pixmap;
-}
-
 const GimpTempBuf *
 gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
                                 const GimpCoords         *coords,
@@ -1113,6 +1082,32 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
     }
 
   g_return_val_if_reached (NULL);
+}
+
+const GimpTempBuf *
+gimp_brush_core_get_brush_pixmap (GimpBrushCore *core,
+                                  GeglNode      *op)
+{
+  const GimpTempBuf *pixmap;
+
+  if (core->scale <= 0.0)
+    return NULL;
+
+  pixmap = gimp_brush_transform_pixmap (core->brush,
+                                        op,
+                                        core->scale,
+                                        core->aspect_ratio,
+                                        core->angle,
+                                        core->reflect,
+                                        core->hardness);
+
+  if (pixmap == core->transform_pixmap)
+    return pixmap;
+
+  core->transform_pixmap        = pixmap;
+  core->subsample_cache_invalid = TRUE;
+
+  return core->transform_pixmap;
 }
 
 void
@@ -1238,7 +1233,7 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore    *core,
   g_return_if_fail (gimp_brush_get_pixmap (core->brush) != NULL);
 
   /*  scale the brush  */
-  pixmap = gimp_brush_core_transform_pixmap (core, core->brush, op);
+  pixmap = gimp_brush_core_get_brush_pixmap (core, op);
 
   if (! pixmap)
     return;
