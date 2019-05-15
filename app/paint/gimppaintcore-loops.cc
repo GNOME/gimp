@@ -1232,7 +1232,7 @@ struct CombinePaintMaskToCanvasBufferToPaintBufAlpha : Base
   }
 };
 
-static AlgorithmDispatch<
+static SuppressedAlgorithmDispatch<
   CombinePaintMaskToCanvasBufferToPaintBufAlpha,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER |
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
@@ -1405,7 +1405,7 @@ struct CanvasBufferToPaintBufAlpha : Base
   }
 };
 
-static AlgorithmDispatch<
+static SuppressedAlgorithmDispatch<
   CanvasBufferToPaintBufAlpha,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
@@ -1477,7 +1477,7 @@ struct PaintMaskToPaintBufAlpha : Base
   }
 };
 
-static AlgorithmDispatch<
+static SuppressedAlgorithmDispatch<
   PaintMaskToPaintBufAlpha,
   GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA,
   decltype (dispatch_paint_buf),
