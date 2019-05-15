@@ -120,7 +120,21 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
                                sym, GIMP_OPACITY_OPAQUE);
       break;
 
-    default:
+    case GIMP_PAINT_STATE_FINISH:
+      {
+        GimpPaintbrush *paintbrush = GIMP_PAINTBRUSH (paint_core);
+
+        if (paintbrush->paint_buffer)
+          {
+            g_object_remove_weak_pointer (
+              G_OBJECT (paintbrush->paint_buffer),
+              (gpointer) &paintbrush->paint_buffer);
+
+            paintbrush->paint_buffer = NULL;
+          }
+
+        g_clear_pointer (&paintbrush->paint_pixmap, gimp_temp_buf_unref);
+      }
       break;
     }
 }
@@ -133,11 +147,11 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                          gdouble           opacity)
 {
   GimpBrushCore            *brush_core = GIMP_BRUSH_CORE (paint_core);
+  GimpPaintbrush           *paintbrush = GIMP_PAINTBRUSH (paint_core);
   GimpContext              *context    = GIMP_CONTEXT (paint_options);
   GimpDynamics             *dynamics   = brush_core->dynamics;
   GimpImage                *image;
   GimpLayerMode             paint_mode;
-  GimpRGB                   gradient_color;
   GeglBuffer               *paint_buffer;
   gint                      paint_buffer_x;
   gint                      paint_buffer_y;
@@ -187,7 +201,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   n_strokes = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
-      gint paint_width, paint_height;
+      const GimpTempBuf *paint_pixmap = NULL;
+      GimpRGB            paint_color;
+      gint               paint_width, paint_height;
 
       coords = gimp_symmetry_get_coords (sym, i);
 
@@ -208,19 +224,11 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       if (gimp_paint_options_get_gradient_color (paint_options, image,
                                                  grad_point,
                                                  paint_core->pixel_dist,
-                                                 &gradient_color))
+                                                 &paint_color))
         {
           /* optionally take the color from the current gradient */
-
-          GeglColor *color;
-
-          opacity *= gradient_color.a;
-          gimp_rgb_set_alpha (&gradient_color, GIMP_OPACITY_OPAQUE);
-
-          color = gimp_gegl_color_new (&gradient_color);
-
-          gegl_buffer_set_color (paint_buffer, NULL, color);
-          g_object_unref (color);
+          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                             &paint_color, &paint_color);
 
           paint_appl_mode = GIMP_PAINT_INCREMENTAL;
         }
@@ -229,29 +237,78 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
           /* otherwise check if the brush has a pixmap and use that to
            * color the area
            */
-          gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
-                                                  coords, op,
-                                                  paint_buffer,
-                                                  paint_buffer_x,
-                                                  paint_buffer_y,
-                                                  FALSE);
+          paint_pixmap = gimp_brush_core_get_brush_pixmap (brush_core, op);
 
           paint_appl_mode = GIMP_PAINT_INCREMENTAL;
         }
       else
         {
           /* otherwise fill the area with the foreground color */
+          gimp_context_get_foreground (context, &paint_color);
 
-          GimpRGB    foreground;
-          GeglColor *color;
-
-          gimp_context_get_foreground (context, &foreground);
           gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                             &foreground, &foreground);
-          color = gimp_gegl_color_new (&foreground);
+                                             &paint_color, &paint_color);
+        }
 
-          gegl_buffer_set_color (paint_buffer, NULL, color);
-          g_object_unref (color);
+      /* fill the paint buffer.  we can skip this step when reusing the
+       * previous paint buffer, if the paint color/pixmap hasn't changed
+       * (unless using an applicator, which currently modifies the paint buffer
+       * in-place).
+       */
+      if (paint_core->applicator                   ||
+          paint_buffer != paintbrush->paint_buffer ||
+          paint_pixmap != paintbrush->paint_pixmap ||
+          (! paint_pixmap && (gimp_rgba_distance (&paint_color,
+                                                  &paintbrush->paint_color))))
+        {
+          if (paint_buffer != paintbrush->paint_buffer)
+            {
+              if (paintbrush->paint_buffer)
+                {
+                  g_object_remove_weak_pointer (
+                    G_OBJECT (paintbrush->paint_buffer),
+                    (gpointer) &paintbrush->paint_buffer);
+                }
+
+              paintbrush->paint_buffer = paint_buffer;
+
+              g_object_add_weak_pointer (
+                G_OBJECT (paintbrush->paint_buffer),
+                (gpointer) &paintbrush->paint_buffer);
+            }
+
+          if (paint_pixmap != paintbrush->paint_pixmap)
+            {
+              g_clear_pointer (&paintbrush->paint_pixmap, gimp_temp_buf_unref);
+
+              if (paint_pixmap)
+                paintbrush->paint_pixmap = gimp_temp_buf_ref (paint_pixmap);
+            }
+
+          paintbrush->paint_color = paint_color;
+
+          if (paint_pixmap)
+            {
+              gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
+                                                      coords, op,
+                                                      paint_buffer,
+                                                      paint_buffer_x,
+                                                      paint_buffer_y,
+                                                      FALSE);
+            }
+          else
+            {
+              GeglColor *color;
+
+              opacity *= paint_color.a;
+              gimp_rgb_set_alpha (&paint_color, GIMP_OPACITY_OPAQUE);
+
+              color = gimp_gegl_color_new (&paint_color);
+
+              gegl_buffer_set_color (paint_buffer, NULL, color);
+
+              g_object_unref (color);
+            }
         }
 
       if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
