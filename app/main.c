@@ -53,6 +53,7 @@
 #include "config/gimpconfig-dump.h"
 
 #include "core/gimp.h"
+#include "core/gimpbacktrace.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
@@ -323,6 +324,12 @@ main (int    argc,
   argc = __argc;
   argv = __argv;
 #endif
+
+  /* Initialize GimpBacktrace early on.  In particular, we want the
+   * Windows backend to catch the SET_THREAD_NAME exceptions of newly
+   * created threads.
+   */
+  gimp_backtrace_init ();
 
   /* Start signal handlers early. */
   gimp_init_signal_handlers (&backtrace_file);
