@@ -56,7 +56,6 @@
 #include "core/gimp.h"
 #include "core/gimp-batch.h"
 #include "core/gimp-user-install.h"
-#include "core/gimpbacktrace.h"
 #include "core/gimpimage.h"
 
 #include "file/file-open.h"
@@ -212,12 +211,6 @@ app_run (const gchar         *full_prog_name,
 
       filenames = NULL;
     }
-
-  /* Initialize GimpBacktrace early on.  In particular, we want the
-   * Windows backend to catch the SET_THREAD_NAME exceptions of newly
-   * created threads.
-   */
-  gimp_backtrace_init ();
 
   /* Language needs to be determined first, before any GimpContext is
    * instantiated (which happens when the Gimp object is created)
