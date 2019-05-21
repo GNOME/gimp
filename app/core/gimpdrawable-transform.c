@@ -85,10 +85,14 @@ gimp_drawable_transform_get_effective_clip (GimpDrawable        *drawable,
         }
       else
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpChannel *mask  = gimp_image_get_mask (image);
 
-          if (gimp_channel_is_empty (gimp_image_get_mask (image)))
-            clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
+          if (GIMP_CHANNEL (drawable) == mask ||
+              gimp_channel_is_empty (mask))
+            {
+              clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
+            }
         }
     }
 
