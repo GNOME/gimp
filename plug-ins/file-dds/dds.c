@@ -37,12 +37,14 @@
 #include "dds.h"
 #include "misc.h"
 
+
 static void query (void);
 static void run   (const gchar     *name,
                    gint             nparams,
                    const GimpParam *param,
                    gint            *nreturn_vals,
                    GimpParam      **return_vals);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -51,7 +53,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   query,
   run
 };
-
 
 DDSWriteVals dds_write_vals =
 {
@@ -73,54 +74,56 @@ DDSWriteVals dds_write_vals =
 
 DDSReadVals dds_read_vals =
 {
-   1,
-   1
+  1,
+  1
 };
 
 static GimpParamDef load_args[] =
 {
-   {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-   {GIMP_PDB_STRING, "filename", "The name of the file to load"},
-   {GIMP_PDB_STRING, "raw_filename", "The name entered"},
-   {GIMP_PDB_INT32, "load_mipmaps", "Load mipmaps if present"},
-   {GIMP_PDB_INT32, "decode_images", "Decode YCoCg/AExp images when detected"}
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+  { GIMP_PDB_STRING, "filename", "The name of the file to load"},
+  { GIMP_PDB_STRING, "raw_filename", "The name entered"},
+  { GIMP_PDB_INT32, "load_mipmaps", "Load mipmaps if present"},
+  { GIMP_PDB_INT32, "decode_images", "Decode YCoCg/AExp images when detected"}
 };
 
 static GimpParamDef load_return_vals[] =
 {
-   {GIMP_PDB_IMAGE, "image", "Output image"}
+  { GIMP_PDB_IMAGE, "image", "Output image"}
 };
 
 static GimpParamDef save_args[] =
 {
-   {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-   {GIMP_PDB_IMAGE, "image", "Input image"},
-   {GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"},
-   {GIMP_PDB_STRING, "filename", "The name of the file to save the image as"},
-   {GIMP_PDB_STRING, "raw_filename", "The name entered"},
-   {GIMP_PDB_INT32, "compression_format", "Compression format (0 = None, 1 = BC1/DXT1, 2 = BC2/DXT3, 3 = BC3/DXT5, 4 = BC3n/DXT5nm, 5 = BC4/ATI1N, 6 = BC5/ATI2N, 7 = RXGB (DXT5), 8 = Alpha Exponent (DXT5), 9 = YCoCg (DXT5), 10 = YCoCg scaled (DXT5))"},
-   {GIMP_PDB_INT32, "mipmaps", "How to handle mipmaps (0 = No mipmaps, 1 = Generate mipmaps, 2 = Use existing mipmaps (layers)"},
-   {GIMP_PDB_INT32, "savetype", "How to save the image (0 = selected layer, 1 = cube map, 2 = volume map, 3 = texture array"},
-   {GIMP_PDB_INT32, "format", "Custom pixel format (0 = default, 1 = R5G6B5, 2 = RGBA4, 3 = RGB5A1, 4 = RGB10A2)"},
-   {GIMP_PDB_INT32, "transparent_index", "Index of transparent color or -1 to disable (for indexed images only)."},
-   {GIMP_PDB_INT32, "mipmap_filter", "Filtering to use when generating mipmaps (0 = default, 1 = nearest, 2 = box, 3 = triangle, 4 = quadratic, 5 = bspline, 6 = mitchell, 7 = lanczos, 8 = kaiser)"},
-   {GIMP_PDB_INT32, "mipmap_wrap", "Wrap mode to use when generating mipmaps (0 = default, 1 = mirror, 2 = repeat, 3 = clamp)"},
-   {GIMP_PDB_INT32, "gamma_correct", "Use gamma correct mipmap filtering"},
-   {GIMP_PDB_INT32, "srgb", "Use sRGB colorspace for gamma correction"},
-   {GIMP_PDB_FLOAT, "gamma", "Gamma value to use for gamma correction (i.e. 2.2)"},
-   {GIMP_PDB_INT32, "perceptual_metric", "Use a perceptual error metric during compression"},
-   {GIMP_PDB_INT32, "preserve_alpha_coverage", "Preserve alpha test converage for alpha channel maps"},
-   {GIMP_PDB_FLOAT, "alpha_test_threshold", "Alpha test threshold value for which alpha test converage should be preserved"}
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+  { GIMP_PDB_IMAGE, "image", "Input image"},
+  { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"},
+  { GIMP_PDB_STRING, "filename", "The name of the file to save the image as"},
+  { GIMP_PDB_STRING, "raw_filename", "The name entered"},
+  { GIMP_PDB_INT32, "compression_format", "Compression format (0 = None, 1 = BC1/DXT1, 2 = BC2/DXT3, 3 = BC3/DXT5, 4 = BC3n/DXT5nm, 5 = BC4/ATI1N, 6 = BC5/ATI2N, 7 = RXGB (DXT5), 8 = Alpha Exponent (DXT5), 9 = YCoCg (DXT5), 10 = YCoCg scaled (DXT5))"},
+  { GIMP_PDB_INT32, "mipmaps", "How to handle mipmaps (0 = No mipmaps, 1 = Generate mipmaps, 2 = Use existing mipmaps (layers)"},
+  { GIMP_PDB_INT32, "savetype", "How to save the image (0 = selected layer, 1 = cube map, 2 = volume map, 3 = texture array"},
+  { GIMP_PDB_INT32, "format", "Custom pixel format (0 = default, 1 = R5G6B5, 2 = RGBA4, 3 = RGB5A1, 4 = RGB10A2)"},
+  { GIMP_PDB_INT32, "transparent_index", "Index of transparent color or -1 to disable (for indexed images only)."},
+  { GIMP_PDB_INT32, "mipmap_filter", "Filtering to use when generating mipmaps (0 = default, 1 = nearest, 2 = box, 3 = triangle, 4 = quadratic, 5 = bspline, 6 = mitchell, 7 = lanczos, 8 = kaiser)"},
+  { GIMP_PDB_INT32, "mipmap_wrap", "Wrap mode to use when generating mipmaps (0 = default, 1 = mirror, 2 = repeat, 3 = clamp)"},
+  { GIMP_PDB_INT32, "gamma_correct", "Use gamma correct mipmap filtering"},
+  { GIMP_PDB_INT32, "srgb", "Use sRGB colorspace for gamma correction"},
+  { GIMP_PDB_FLOAT, "gamma", "Gamma value to use for gamma correction (i.e. 2.2)"},
+  { GIMP_PDB_INT32, "perceptual_metric", "Use a perceptual error metric during compression"},
+  { GIMP_PDB_INT32, "preserve_alpha_coverage", "Preserve alpha test converage for alpha channel maps"},
+  { GIMP_PDB_FLOAT, "alpha_test_threshold", "Alpha test threshold value for which alpha test converage should be preserved"}
 };
 
 static GimpParamDef decode_args[] =
 {
-   {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-   {GIMP_PDB_IMAGE, "image", "Input image"},
-   {GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"}
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+  { GIMP_PDB_IMAGE, "image", "Input image"},
+  { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"}
 };
 
+
 MAIN ()
+
 
 static void
 query (void)
@@ -225,7 +228,7 @@ run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (!strcmp (name, LOAD_PROC))
+  if (! strcmp (name, LOAD_PROC))
     {
       switch (run_mode)
         {
@@ -233,12 +236,14 @@ run (const gchar      *name,
           gimp_ui_init ("dds", 0);
           gimp_get_data (LOAD_PROC, &dds_read_vals);
           break;
+
         case GIMP_RUN_NONINTERACTIVE:
           dds_read_vals.mipmaps = param[3].data.d_int32;
           dds_read_vals.decode_images = param[4].data.d_int32;
           if (nparams != G_N_ELEMENTS (load_args))
             status = GIMP_PDB_CALLING_ERROR;
           break;
+
         default:
           break;
         }
@@ -256,12 +261,14 @@ run (const gchar      *name,
                 gimp_set_data (LOAD_PROC, &dds_read_vals, sizeof (dds_read_vals));
             }
           else if (status != GIMP_PDB_CANCEL)
-            status = GIMP_PDB_EXECUTION_ERROR;
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
         }
     }
-  else if (!strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, SAVE_PROC))
     {
-      imageID = param[1].data.d_int32;
+      imageID    = param[1].data.d_int32;
       drawableID = param[2].data.d_int32;
 
       switch (run_mode)
@@ -280,6 +287,7 @@ run (const gchar      *name,
               values[0].data.d_status = GIMP_PDB_CANCEL;
               return;
             }
+
         default:
           break;
         }
@@ -289,48 +297,70 @@ run (const gchar      *name,
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data (SAVE_PROC, &dds_write_vals);
           break;
+
         case GIMP_RUN_NONINTERACTIVE:
           if (nparams != G_N_ELEMENTS (save_args))
-            status = GIMP_PDB_CALLING_ERROR;
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
           else
             {
-              dds_write_vals.compression = param[5].data.d_int32;
-              dds_write_vals.mipmaps = param[6].data.d_int32;
-              dds_write_vals.savetype = param[7].data.d_int32;
-              dds_write_vals.format = param[8].data.d_int32;
-              dds_write_vals.transindex = param[9].data.d_int32;
-              dds_write_vals.mipmap_filter = param[10].data.d_int32;
-              dds_write_vals.mipmap_wrap = param[11].data.d_int32;
-              dds_write_vals.gamma_correct = param[12].data.d_int32;
-              dds_write_vals.srgb = param[13].data.d_int32;
-              dds_write_vals.gamma = param[14].data.d_float;
-              dds_write_vals.perceptual_metric = param[15].data.d_int32;
+              dds_write_vals.compression             = param[5].data.d_int32;
+              dds_write_vals.mipmaps                 = param[6].data.d_int32;
+              dds_write_vals.savetype                = param[7].data.d_int32;
+              dds_write_vals.format                  = param[8].data.d_int32;
+              dds_write_vals.transindex              = param[9].data.d_int32;
+              dds_write_vals.mipmap_filter           = param[10].data.d_int32;
+              dds_write_vals.mipmap_wrap             = param[11].data.d_int32;
+              dds_write_vals.gamma_correct           = param[12].data.d_int32;
+              dds_write_vals.srgb                    = param[13].data.d_int32;
+              dds_write_vals.gamma                   = param[14].data.d_float;
+              dds_write_vals.perceptual_metric       = param[15].data.d_int32;
               dds_write_vals.preserve_alpha_coverage = param[16].data.d_int32;
-              dds_write_vals.alpha_test_threshold = param[17].data.d_float;
+              dds_write_vals.alpha_test_threshold    = param[17].data.d_float;
 
               if ((dds_write_vals.compression <  DDS_COMPRESS_NONE) ||
                  (dds_write_vals.compression >= DDS_COMPRESS_MAX))
-                status = GIMP_PDB_CALLING_ERROR;
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
+
               if ((dds_write_vals.mipmaps <  DDS_MIPMAP_NONE) ||
                  (dds_write_vals.mipmaps >= DDS_MIPMAP_MAX))
-                status = GIMP_PDB_CALLING_ERROR;
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
+
               if ((dds_write_vals.savetype <  DDS_SAVE_SELECTED_LAYER) ||
                  (dds_write_vals.savetype >= DDS_SAVE_MAX))
-                status = GIMP_PDB_CALLING_ERROR;
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
+
               if ((dds_write_vals.format <  DDS_FORMAT_DEFAULT) ||
                  (dds_write_vals.format >= DDS_FORMAT_MAX))
-                status = GIMP_PDB_CALLING_ERROR;
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
+
               if ((dds_write_vals.mipmap_filter <  DDS_MIPMAP_FILTER_DEFAULT) ||
                  (dds_write_vals.mipmap_filter >= DDS_MIPMAP_FILTER_MAX))
-                status = GIMP_PDB_CALLING_ERROR;
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
+
               if ((dds_write_vals.mipmap_wrap <  DDS_MIPMAP_WRAP_DEFAULT) ||
                  (dds_write_vals.mipmap_wrap >= DDS_MIPMAP_WRAP_MAX))
-                status = GIMP_PDB_CALLING_ERROR;
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
             }
           break;
+
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_get_data (SAVE_PROC, &dds_write_vals);
           break;
+
         default:
           break;
         }
@@ -353,7 +383,7 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (imageID);
     }
-  else if (!strcmp (name, DECODE_YCOCG_PROC))
+  else if (! strcmp (name, DECODE_YCOCG_PROC))
     {
       imageID = param[1].data.d_int32;
       drawableID = param[2].data.d_int32;
@@ -365,7 +395,7 @@ run (const gchar      *name,
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
-  else if (!strcmp (name, DECODE_YCOCG_SCALED_PROC))
+  else if (! strcmp (name, DECODE_YCOCG_SCALED_PROC))
     {
       imageID = param[1].data.d_int32;
       drawableID = param[2].data.d_int32;
@@ -377,7 +407,7 @@ run (const gchar      *name,
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
-  else if (!strcmp (name, DECODE_ALPHA_EXP_PROC))
+  else if (! strcmp (name, DECODE_ALPHA_EXP_PROC))
     {
       imageID = param[1].data.d_int32;
       drawableID = param[2].data.d_int32;
@@ -390,7 +420,9 @@ run (const gchar      *name,
         gimp_displays_flush ();
     }
   else
-    status = GIMP_PDB_CALLING_ERROR;
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
 
   values[0].data.d_status = status;
 }
