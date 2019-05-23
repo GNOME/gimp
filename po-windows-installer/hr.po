@@ -1,0 +1,400 @@
+# Croatian translation for GIMP.
+# Prijevod za GIMP na hrvatski jezik.
+# Copyright (C) 2019 Free Software Foundation, Inc.
+# This file is distributed under the same license as the GIMP package.
+# Milo Ivir <mail@milotype.de>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2019-05-05 14:52+0000\n"
+"PO-Revision-Date: 2019-05-23 21:36+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: hr\n"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:1
+msgid "License Agreement"
+msgstr "Licencni ugovor"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:2
+msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "Pripremu je izradio Jernej Simonèiè, jernej-gimp@ena.si"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:3
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgstr "Za ovu verziju GIMP-a je potreban Windows 7 i noviji."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:4
+msgid "Development version"
+msgstr "Razvojna verzija"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:6
+#, no-c-format
+msgid ""
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
+msgstr ""
+"Ovo je razvojna verzija GIMP‑a, u kojoj neke funkcije još nisu gotove ili je "
+"program nestabilan.%nOva verzija GIMP‑a nije mišljena za dnevnu upotrebu "
+"budući da je nestabilna, te može prouzročiti gubljenje podataka.%nAko naiđeš "
+"na problem, najprije provjeri na GIT‑u, je li možda već ispravljena. U "
+"suprotnom kontaktiraj razvijatelje ili prijavi grešku na gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nŽeliš li svejedno nastaviti s "
+"instaliranjem?"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:7
+msgid "&Continue"
+msgstr "&Nastavi"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:8
+msgid "Exit"
+msgstr "Izađi"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:9
+msgid ""
+"This version of GIMP requires a processor that supports SSE instructions."
+msgstr ""
+"Za ovu GIMP verziju je potreban procesor koji podržava SSE instrukcije."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:10
+msgid "Display settings problem"
+msgstr "Problem u postavkama za prikaz"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:11
+msgid ""
+"Setup has detected that your Windows is not running in 32 bits-per-pixel "
+"display mode. This has been known to cause stability problems with GIMP, so "
+"it's recommended to change the display colour depth to 32BPP before "
+"continuing."
+msgstr ""
+"Priprema je ustanovila, da tvoj WIndows ne pokreće prikazni modus s 32 bita "
+"po pikselu. Poznato je da to čini GIMP nestabilnim, pa stoga preporučamo "
+"aktiviranje prikaza boja zaslona na 32 BPP prije nastavljanja."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:12
+msgid "E&xit"
+msgstr "&Izađi"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:13
+msgid ""
+"GIMP is now ready to be installed. Click the Install now button to install "
+"using the default settings, or click the Customize button if you'd like to "
+"have more control over what gets installed."
+msgstr ""
+"GIMP se sad može instalirati. Klikni na gumb „Instaliraj sad” za "
+"instaliranje zadanim postavkama. Klikni na gumb „Prilagodi”, ako želiš "
+"odrediti što će se instalirati."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:14
+msgid "&Install"
+msgstr "&Instaliraj"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:15
+msgid "&Customize"
+msgstr "&Prilagodi"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:16
+msgid "Compact installation"
+msgstr "Kompaktna instalacija"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:17
+msgid "Custom installation"
+msgstr "Prilagođena instalacija"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:18
+msgid "Full installation"
+msgstr "Kompletna instalacija"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:19
+msgid "Description"
+msgstr "Opis"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:20
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:21
+msgid "GIMP and all default plug-ins"
+msgstr "GIMP i svi zadani priključci"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:22
+msgid "Run-time libraries"
+msgstr "Izvršne biblioteke"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:23
+msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgstr ""
+"Izvršne biblioteke koje GIMP koristi, uključujući GTK+ izvršno okruženje"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:24
+msgid "Debug symbols"
+msgstr "Ispravljačke oznake"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:25
+msgid "Include information to help with debugging GIMP"
+msgstr "Dodaj informacije za ispravljanje GIMP-ovih grešaka"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:26
+msgid "MS-Windows engine for GTK+"
+msgstr "MS-Windows mehanizam za GTK+"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:27
+msgid "Native Windows look for GIMP"
+msgstr "Izvorni Windows izgled za GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:28
+msgid "Support for old plug-ins"
+msgstr "Podrška za stare priključke"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:29
+msgid "Install libraries needed by old third-party plug-ins"
+msgstr "Instaliraj biblioteke za stare priključke neovisnih proizvođača"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:30
+msgid "Translations"
+msgstr "Prijevodi"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:31
+msgid "Python scripting"
+msgstr "Python skriptanje"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:32
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr "Omogućuje korištenje GIMP priključaka, pisanih Python jezikom."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:33
+msgid "MyPaint brushes"
+msgstr "MyPaint kistovi"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:34
+msgid "Install the default set of MyPaint brushes"
+msgstr "Instaliraj zadanu skupinu MyPaint kistova"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:35
+msgid "PostScript support"
+msgstr "PostScript podrška"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:36
+msgid "Allow GIMP to load PostScript files"
+msgstr "Dozvoli GIMP-u učitavanje PostScript datoteka"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:37
+msgid "Support for 32-bit plug-ins"
+msgstr "Podrška za 32-bitovne priključke"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:39
+#, no-c-format
+msgid ""
+"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"support."
+msgstr ""
+"Uključi datoteke, potrebne za 32-bitovne priključke.%nNužno za Python "
+"podršku."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:40
+msgid "Additional icons:"
+msgstr "Dodatne ikone:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:41
+msgid "Create a &desktop icon"
+msgstr "Stvori &desktop ikonu"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:42
+msgid "Create a &Quick Launch icon"
+msgstr "Stvori ikonu za &brzo pokretanje"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:43
+msgid "Remove previous GIMP version"
+msgstr "Ukloni prethodnu GIMP verziju"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:45
+#, no-c-format
+msgid ""
+"There was a problem updating GIMP's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing GIMP."
+msgstr ""
+"Došlo je do problema prilikom aktualiziranja GIMP okruženja u %1. Ako dođe "
+"do grešaka prilikom učitavanja priključaka, pokušaj deinstalirati te ponovo "
+"instalirati GIMP."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:46
+msgid "Error extracting temporary data."
+msgstr "Greška prilikom otpakiravanja privremenih podataka."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:47
+msgid "Error updating Python interpreter info."
+msgstr "Greška prilikom aktualiziranja informacija Python interpreta."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:48
+msgid "Error updating MyPaint brushes info."
+msgstr "Greška prilikom aktualiziranja informacija MyPaint kistova."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:50
+#, no-c-format
+msgid "There was an error updating %1."
+msgstr "Došlo je do greške prilikom aktualiziranja %1."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:52
+#, no-c-format
+msgid "There was an error updating GIMP's configuration file %1."
+msgstr ""
+"Došlo je do greške prilikom aktualiziranja GIMP-ove konfiguracijske datoteke "
+"%1."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:53
+msgid "Edit with GIMP"
+msgstr "Uredi s GIMP-om"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:54
+msgid "Select file associations"
+msgstr "Odaberi povezane vrste datoteka"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:55
+msgid "Extensions:"
+msgstr "Proširenja:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:56
+msgid "Select the file types you wish to associate with GIMP"
+msgstr "Odaberi vrste datoteka, koje želiš povezati s GIMP-om"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:57
+msgid ""
+"This will make selected files open in GIMP when you double-click them in "
+"Explorer."
+msgstr ""
+"Ovime se odabrane datoteke otvaraju u GIMP-u, kad se dvaput kliknu u "
+"Explorer-u."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:58
+msgid "Select &All"
+msgstr "Odaberi &sve"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:59
+msgid "Unselect &All"
+msgstr "Poništi &sav odabir"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:60
+msgid "Select &Unused"
+msgstr "Odaberi &nekorišteno"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:61
+msgid "File types to associate with GIMP:"
+msgstr "Vrste datoteka, povezane s GIMP-om:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:62
+msgid "Removing previous version of GIMP:"
+msgstr "Uklanjanje prethodne GIMP verzije:"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:64
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"the automatic uninstall of old version has failed.%n%nPlease remove the "
+"previous version of GIMP yourself before installing this version in %2, or "
+"choose a Custom install, and select a different installation folder.%n%nThe "
+"Setup will now exit."
+msgstr ""
+"Nije moguće instalirati GIMP %1 preko trenutačno instalirane GIMP verzije, a "
+"automatsko deinstaliranje stare verzije nije uspjelo.%n%nUkloni prethodnu "
+"GIMP verziju ručno, prije instaliranja ove verzije u %2 ili odaberi "
+"prilagođeno instaliranje i odaberi jednu drugu mapu za instalaciju.%n"
+"%nPriprema se sad prekida."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:66
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"Setup couldn't determine how to remove the old version automatically.%n"
+"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"installing this version in %2, or choose a Custom install, and select a "
+"different installation folder.%n%nThe Setup will now exit."
+msgstr ""
+"Nije moguće instalirati GIMP %1 preko trenutačno instalirane GIMP verzije, a "
+"Priprema nije mogla ustanoviti, kako automatski ukloniti staru verziju.%n"
+"%nUkloni prethodnu GIMP verziju i sve dodatke ručno, prije instaliranja ove "
+"verzije u %2 ili odaberi prilagođeno instaliranje i odaberi jednu drugu mapu "
+"za instalaciju.%n%nPriprema se sad prekida."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:68
+#, no-c-format
+msgid ""
+"Previous GIMP version was removed successfully, but Windows has to be "
+"restarted before the Setup can continue.%n%nAfter restarting your computer, "
+"Setup will continue next time an administrator logs in."
+msgstr ""
+"Prethodna GIMP verzija je uspješno uklonjena, međutim, za nastavljanje s "
+"pripremom, potrebno je ponovo pokrenuti Windows.%n%nNakon ponovog pokretanja "
+"računala, priprema će se nastaviti, kad se administrator sljedeći put "
+"prijavi."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:70
+#, no-c-format
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "Došlo je do greške prilikom ponovog pokretanja pripreme. (%1)"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:71
+msgid "Cleaning up old files..."
+msgstr "Uklanjanje starih datoteka …"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:73
+#, no-c-format
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "Sjeti se: GIMP je slobadan softver.%n%nPosjeti"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:74
+msgid "for free updates."
+msgstr "besplatne nadogradnje."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:75
+msgid "Setting up file associations..."
+msgstr "Postavljanje povezivanja vrsta datoteka …"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:76
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "Postavljanje okruženja za GIMP-ova Python proširenja …"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:77
+msgid "Setting up MyPaint brushes..."
+msgstr "Postavljanje MyPaint kistova …"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:78
+msgid "Setting up GIMP environment..."
+msgstr "Postavljanje GIMP okruženja …"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:79
+msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgstr "Postavljanje GIMP konfiguracije za podršku 32-bitovnih dodataka …"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:80
+msgid "Launch GIMP"
+msgstr "Pokreni GIMP"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:81
+msgid "Removing add-on"
+msgstr "Uklanjanje dodataka"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:83
+#, no-c-format
+msgid "Internal error (%1)."
+msgstr "Interna greška (%1)."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:84
+msgid ""
+"GIMP does not appear to be installed in the selected directory. Continue "
+"anyway?"
+msgstr ""
+"Čini se da GIMP nije instaliran u odabranoj mapi. Želiš li svejedno "
+"nastaviti?"
