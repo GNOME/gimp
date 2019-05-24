@@ -1429,6 +1429,8 @@ gimp_layer_mode_get_format (GimpLayerMode           mode,
                             GimpLayerCompositeMode  composite_mode,
                             const Babl             *preferred_format)
 {
+  GimpLayerCompositeRegion composite_region;
+
   /* for now, all modes perform i/o in the composite space. */
   (void) mode;
   (void) blend_space;
@@ -1439,22 +1441,26 @@ gimp_layer_mode_get_format (GimpLayerMode           mode,
   if (composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
     composite_mode = gimp_layer_mode_get_composite_mode (mode);
 
+  composite_region = gimp_layer_mode_get_included_region (mode, composite_mode);
+
   if (gimp_layer_mode_is_alpha_only (mode))
     {
-      switch (composite_mode)
+      if (composite_region != GIMP_LAYER_COMPOSITE_REGION_UNION)
         {
-        case GIMP_LAYER_COMPOSITE_AUTO:
-        case GIMP_LAYER_COMPOSITE_UNION:
-          break;
-
-        case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
-        case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
-        case GIMP_LAYER_COMPOSITE_INTERSECTION:
           /* alpha-only layer modes don't combine colors in non-union composite
            * modes, hence we can disregard the composite space.
            */
           composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
-          break;
+        }
+    }
+  else if (gimp_layer_mode_is_trivial (mode))
+    {
+      if (! (composite_region & GIMP_LAYER_COMPOSITE_REGION_DESTINATION))
+        {
+          /* trivial layer modes don't combine colors when only the source
+           * region is included, hence we can disregard the composite space.
+           */
+          composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
         }
     }
 
