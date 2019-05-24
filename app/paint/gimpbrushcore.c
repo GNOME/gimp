@@ -816,12 +816,16 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
     {
-      GimpTempBuf *temp_buf;
-      const Babl  *format;
+      GimpTempBuf            *temp_buf;
+      const Babl             *format;
+      GimpLayerCompositeMode  composite_mode;
+
+      composite_mode = gimp_layer_mode_get_paint_composite_mode (paint_mode);
 
       format = gimp_layer_mode_get_format (paint_mode,
                                            GIMP_LAYER_COLOR_SPACE_AUTO,
                                            GIMP_LAYER_COLOR_SPACE_AUTO,
+                                           composite_mode,
                                            gimp_drawable_get_format (drawable));
 
       if (paint_core->paint_buffer                                       &&

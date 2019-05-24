@@ -61,8 +61,9 @@ gboolean                   gimp_layer_mode_get_for_group              (GimpLayer
                                                                        GimpLayerMode          *new_mode);
 
 const Babl               * gimp_layer_mode_get_format                 (GimpLayerMode           mode,
-                                                                       GimpLayerColorSpace     composite_space,
                                                                        GimpLayerColorSpace     blend_space,
+                                                                       GimpLayerColorSpace     composite_space,
+                                                                       GimpLayerCompositeMode  composite_mode,
                                                                        const Babl             *preferred_format);
 
 GimpLayerCompositeRegion   gimp_layer_mode_get_included_region        (GimpLayerMode           mode,
