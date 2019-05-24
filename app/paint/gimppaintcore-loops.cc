@@ -1886,8 +1886,9 @@ struct DoLayerBlend : Base
     layer_mode.real_composite_mode = layer_mode.composite_mode;
 
     iterator_format = gimp_layer_mode_get_format (params->paint_mode,
-                                                  layer_mode.composite_space,
                                                   layer_mode.blend_space,
+                                                  layer_mode.composite_space,
+                                                  layer_mode.composite_mode,
                                                   gimp_temp_buf_get_format (params->paint_buf));
 
     g_return_if_fail (gimp_temp_buf_get_format (params->paint_buf) == iterator_format);

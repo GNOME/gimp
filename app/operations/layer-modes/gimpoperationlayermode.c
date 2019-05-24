@@ -359,8 +359,9 @@ gimp_operation_layer_mode_prepare (GeglOperation *operation)
     }
 
   format = gimp_layer_mode_get_format (self->layer_mode,
-                                       self->composite_space,
                                        self->blend_space,
+                                       self->composite_space,
+                                       self->composite_mode,
                                        preferred_format);
 
   gegl_operation_set_format (operation, "input",  format);

@@ -473,6 +473,8 @@ gimp_fill_options_get_format (GimpFillOptions *options,
   return gimp_layer_mode_get_format (gimp_context_get_paint_mode (context),
                                      GIMP_LAYER_COLOR_SPACE_AUTO,
                                      GIMP_LAYER_COLOR_SPACE_AUTO,
+                                     gimp_layer_mode_get_paint_composite_mode (
+                                       gimp_context_get_paint_mode (context)),
                                      gimp_drawable_get_format (drawable));
 }
 
