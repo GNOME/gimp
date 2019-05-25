@@ -129,6 +129,7 @@ test_config_LDADD = \
 	$(GEXIV2_LIBS)							\
 	$(Z_LIBS)							\
 	$(JSON_C_LIBS)							\
+	$(LIBARCHIVE_LIBS)						\
 	$(LIBMYPAINT_LIBS)						\
 	$(libm)
 
