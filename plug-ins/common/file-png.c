@@ -1471,7 +1471,7 @@ save_image (const gchar  *filename,
   gint              num;              /* Number of rows to load */
   FILE             *fp;               /* File pointer */
   GimpColorProfile *profile = NULL;   /* Color profile */
-  gboolean          linear;           /* Save linear RGB */
+  gboolean          out_linear;       /* Save linear RGB */
   GeglBuffer       *buffer;           /* GEGL buffer for layer */
   const Babl       *file_format;      /* BABL format of file */
   png_structp       pp;               /* PNG read pointer */
@@ -1486,44 +1486,58 @@ save_image (const gchar  *filename,
   time_t            cutime;           /* Time since epoch */
   struct tm        *gmt;              /* GMT broken down */
   gint              color_type;       /* PNG color type */
-  gint              bit_depth = 16;   /* Default to bit bepth 16 */
+  gint              bit_depth;        /* Default to bit depth 16 */
 
   guchar            remap[256];       /* Re-mapping for the palette */
 
   png_textp         text = NULL;
 
+  out_linear = FALSE;
 #if defined(PNG_iCCP_SUPPORTED)
+  profile = gimp_image_get_color_profile (orig_image_ID);
   if (pngvals.save_profile)
-    profile = gimp_image_get_effective_color_profile (orig_image_ID);
+    {
+      if (profile && gimp_color_profile_is_linear (profile) &&
+          pngvals.export_format == PNG_FORMAT_AUTO)
+        out_linear = TRUE;
+
+      if (! profile)
+        profile = gimp_image_get_effective_color_profile (orig_image_ID);
+
+      if (! out_linear && gimp_color_profile_is_linear (profile))
+        {
+          /* This should happen only when using default linear profile
+           * (no profile explicitly set) or when not exporting to
+           * PNG_FORMAT_AUTO.
+           */
+          GimpColorProfile *saved_profile;
+
+          saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+          g_object_unref (profile);
+          profile = saved_profile;
+        }
+    }
 #endif
 
+  /* We save as 8-bit PNG only if:
+   * (1) Work image is 8-bit linear with linear profile to be saved.
+   * (2) Work image is 8-bit non-linear or perceptual with or without
+   * profile.
+   */
+  bit_depth = 16;
   switch (gimp_image_get_precision (image_ID))
     {
     case GIMP_PRECISION_U8_LINEAR:
-      /* only keep 8 bit linear RGB if we also save a profile */
-      if (profile)
+      if (out_linear)
         bit_depth = 8;
-
-    case GIMP_PRECISION_U16_LINEAR:
-    case GIMP_PRECISION_U32_LINEAR:
-    case GIMP_PRECISION_HALF_LINEAR:
-    case GIMP_PRECISION_FLOAT_LINEAR:
-    case GIMP_PRECISION_DOUBLE_LINEAR:
-      /* save linear RGB only if we save a profile, or a loader won't
-       * do the right thing
-       */
-      if (profile)
-        linear = TRUE;
-      else
-        linear = FALSE;
       break;
 
     case GIMP_PRECISION_U8_NON_LINEAR:
     case GIMP_PRECISION_U8_PERCEPTUAL:
       bit_depth = 8;
+      break;
 
     default:
-      linear = FALSE;
       break;
     }
 
@@ -1609,14 +1623,14 @@ save_image (const gchar  *filename,
         color_type = PNG_COLOR_TYPE_RGB;
         if (bit_depth == 8)
           {
-            if (linear)
+            if (out_linear)
               file_format = babl_format ("RGB u8");
             else
               file_format = babl_format ("R'G'B' u8");
           }
         else
           {
-            if (linear)
+            if (out_linear)
               file_format = babl_format ("RGB u16");
             else
               file_format = babl_format ("R'G'B' u16");
@@ -1627,14 +1641,14 @@ save_image (const gchar  *filename,
         color_type = PNG_COLOR_TYPE_RGB_ALPHA;
         if (bit_depth == 8)
           {
-            if (linear)
+            if (out_linear)
               file_format = babl_format ("RGBA u8");
             else
               file_format = babl_format ("R'G'B'A u8");
           }
         else
           {
-            if (linear)
+            if (out_linear)
               file_format = babl_format ("RGBA u16");
             else
               file_format = babl_format ("R'G'B'A u16");
@@ -1645,14 +1659,14 @@ save_image (const gchar  *filename,
         color_type = PNG_COLOR_TYPE_GRAY;
         if (bit_depth == 8)
           {
-            if (linear)
+            if (out_linear)
               file_format = babl_format ("Y u8");
             else
               file_format = babl_format ("Y' u8");
           }
         else
           {
-            if (linear)
+            if (out_linear)
               file_format = babl_format ("Y u16");
             else
               file_format = babl_format ("Y' u16");
@@ -1663,14 +1677,14 @@ save_image (const gchar  *filename,
         color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
         if (bit_depth == 8)
           {
-            if (linear)
+            if (out_linear)
               file_format = babl_format ("YA u8");
             else
               file_format = babl_format ("Y'A u8");
           }
         else
           {
-            if (linear)
+            if (out_linear)
               file_format = babl_format ("YA u16");
             else
               file_format = babl_format ("Y'A u16");
@@ -1744,14 +1758,6 @@ save_image (const gchar  *filename,
           bit_depth = 16;
           break;
       }
-      if (linear && profile)
-        {
-          GimpColorProfile *saved_profile;
-
-          saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-          g_object_unref (profile);
-          profile = saved_profile;
-        }
     }
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
@@ -1836,7 +1842,7 @@ save_image (const gchar  *filename,
     }
 
 #if defined(PNG_iCCP_SUPPORTED)
-  if (profile)
+  if (pngvals.save_profile)
     {
       GimpParasite *parasite;
       gchar        *profile_name = NULL;
@@ -1861,10 +1867,10 @@ save_image (const gchar  *filename,
 
       g_free (profile_name);
 
-      g_object_unref (profile);
-
       *profile_saved = TRUE;
     }
+  if (profile)
+    g_object_unref (profile);
 #endif
 
 #ifdef PNG_zTXt_SUPPORTED
