@@ -70,7 +70,9 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
+
   gimp_set_busy (image->gimp);
+
   buffer = gimp_drawable_get_bucket_fill_buffer (drawable, options,
                                                  fill_transparent, fill_criterion,
                                                  threshold, sample_merged,
@@ -88,13 +90,14 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                                   gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
                                   GIMP_LAYER_COLOR_SPACE_AUTO,
                                   GIMP_LAYER_COLOR_SPACE_AUTO,
-                                  gimp_layer_mode_get_paint_composite_mode (
-                                                                            gimp_context_get_paint_mode (GIMP_CONTEXT (options))),
+                                  gimp_layer_mode_get_paint_composite_mode
+                                  (gimp_context_get_paint_mode (GIMP_CONTEXT (options))),
                                   NULL, (gint) mask_x, mask_y);
       g_object_unref (buffer);
 
       gimp_drawable_update (drawable, mask_x, mask_y, width, height);
     }
+
   gimp_unset_busy (image->gimp);
 }
 
@@ -177,6 +180,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
     }
 
   gimp_set_busy (image->gimp);
+
   if (sample_merged)
     pickable = GIMP_PICKABLE (image);
   else
@@ -201,6 +205,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
                                      GIMP_CHANNEL_OP_ADD, 0, 0);
       g_object_unref (*mask_buffer);
     }
+
   if (mask_buffer)
     *mask_buffer = new_mask;
 
@@ -230,9 +235,11 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
 
                                       &x, &y, &width, &height))
         {
+          /*  The fill region and the selection are disjoint; bail.  */
+
           if (! mask_buffer)
             g_object_unref (new_mask);
-          /*  The fill region and the selection are disjoint; bail.  */
+
           gimp_unset_busy (image->gimp);
 
           return NULL;
@@ -259,7 +266,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
       mask_offset_x = x;
       mask_offset_y = y;
 
-     /*  translate mask bounds to drawable coords  */
+      /*  translate mask bounds to drawable coords  */
       x -= off_x;
       y -= off_y;
     }
@@ -436,7 +443,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
       mask_offset_x = x;
       mask_offset_y = y;
 
-     /*  translate mask bounds to drawable coords  */
+      /*  translate mask bounds to drawable coords  */
       x -= off_x;
       y -= off_y;
     }
@@ -455,13 +462,15 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
                            -mask_offset_x, -mask_offset_y, 1.0);
 
   if (gimp_fill_options_get_feather (options, &feather_radius))
-    /* Feathering for the line art algorithm is not applied during
-     * mask creation because we just want to apply it on the borders
-     * of the mask at the end (since the mask can evolve, we don't
-     * want to actually touch it, but only the intermediate results).
-     */
-    gimp_gegl_apply_feather (buffer, NULL, NULL, buffer, NULL,
-                             feather_radius, feather_radius);
+    {
+      /* Feathering for the line art algorithm is not applied during
+       * mask creation because we just want to apply it on the borders
+       * of the mask at the end (since the mask can evolve, we don't
+       * want to actually touch it, but only the intermediate results).
+       */
+      gimp_gegl_apply_feather (buffer, NULL, NULL, buffer, NULL,
+                               feather_radius, feather_radius);
+    }
 
   if (mask_x)
     *mask_x = x;
