@@ -70,10 +70,6 @@ static void       gimp_tiling_get_property       (GObject      *object,
 static void       gimp_tiling_update_strokes     (GimpSymmetry *tiling,
                                                   GimpDrawable *drawable,
                                                   GimpCoords   *origin);
-static GeglNode * gimp_tiling_get_operation      (GimpSymmetry *tiling,
-                                                  gint          stroke,
-                                                  gint          paint_width,
-                                                  gint          paint_height);
 static void    gimp_tiling_image_size_changed_cb (GimpImage    *image,
                                                   gint          previous_origin_x,
                                                   gint          previous_origin_y,
@@ -101,7 +97,6 @@ gimp_tiling_class_init (GimpTilingClass *klass)
 
   symmetry_class->label           = _("Tiling");
   symmetry_class->update_strokes  = gimp_tiling_update_strokes;
-  symmetry_class->get_operation   = gimp_tiling_get_operation;
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_INTERVAL_X,
                            "interval-x",
@@ -429,16 +424,6 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
   sym->strokes = strokes;
 
   g_signal_emit_by_name (sym, "strokes-updated", sym->image);
-}
-
-static GeglNode *
-gimp_tiling_get_operation (GimpSymmetry *sym,
-                           gint          stroke,
-                           gint          paint_width,
-                           gint          paint_height)
-{
-  /* No buffer transformation happens for tiling. */
-  return NULL;
 }
 
 static void

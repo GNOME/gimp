@@ -75,6 +75,10 @@ static GeglNode * gimp_symmetry_real_get_op         (GimpSymmetry *sym,
                                                      gint          stroke,
                                                      gint          paint_width,
                                                      gint          paint_height);
+static void       gimp_symmetry_real_get_transform  (GimpSymmetry *sym,
+                                                     gint          stroke,
+                                                     gdouble      *angle,
+                                                     gboolean     *reflect);
 static gboolean   gimp_symmetry_real_update_version (GimpSymmetry *sym);
 
 
@@ -134,6 +138,7 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
   klass->label               = _("None");
   klass->update_strokes      = gimp_symmetry_real_update_strokes;
   klass->get_operation       = gimp_symmetry_real_get_op;
+  klass->get_transform       = gimp_symmetry_real_get_transform;
   klass->active_changed      = NULL;
   klass->update_version      = gimp_symmetry_real_update_version;
 
@@ -244,6 +249,16 @@ gimp_symmetry_real_get_op (GimpSymmetry *sym,
   /* The basic symmetry just returns NULL, since no transformation of the
    * brush painting happen. */
   return NULL;
+}
+
+static void
+gimp_symmetry_real_get_transform (GimpSymmetry *sym,
+                                  gint          stroke,
+                                  gdouble      *angle,
+                                  gboolean     *reflect)
+{
+  /* The basic symmetry does nothing, since no transformation of the
+   * brush painting happen. */
 }
 
 static gboolean
@@ -417,6 +432,37 @@ gimp_symmetry_get_operation (GimpSymmetry *sym,
                                                        stroke,
                                                        paint_width,
                                                        paint_height);
+}
+
+/**
+ * gimp_symmetry_get_transform:
+ * @sym:     the #GimpSymmetry
+ * @stroke:  the stroke number
+ * @angle:   output pointer to the transformation rotation angle,
+ *           in degrees (ccw)
+ * @reflect: output pointer to the transformation reflection flag
+ *
+ * Returns the transformation to apply to the paint buffer for stroke
+ * number @stroke.  The transformation is comprised of rotation around the
+ * center, possibly followed by horizontal reflection around the center.
+ **/
+void
+gimp_symmetry_get_transform (GimpSymmetry *sym,
+                             gint          stroke,
+                             gdouble      *angle,
+                             gboolean     *reflect)
+{
+  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+  g_return_if_fail (angle != NULL);
+  g_return_if_fail (reflect != NULL);
+
+  *angle   = 0.0;
+  *reflect = FALSE;
+
+  GIMP_SYMMETRY_GET_CLASS (sym)->get_transform (sym,
+                                                stroke,
+                                                angle,
+                                                reflect);
 }
 
 /*

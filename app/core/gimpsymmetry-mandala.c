@@ -85,6 +85,10 @@ static GeglNode * gimp_mandala_get_operation      (GimpSymmetry *mandala,
                                                    gint          stroke,
                                                    gint          paint_width,
                                                    gint          paint_height);
+static void       gimp_mandala_get_transform      (GimpSymmetry *mandala,
+                                                   gint          stroke,
+                                                   gdouble      *angle,
+                                                   gboolean     *reflect);
 static void    gimp_mandala_image_size_changed_cb (GimpImage    *image,
                                                    gint          previous_origin_x,
                                                    gint          previous_origin_y,
@@ -113,6 +117,7 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
   symmetry_class->label             = _("Mandala");
   symmetry_class->update_strokes    = gimp_mandala_update_strokes;
   symmetry_class->get_operation     = gimp_mandala_get_operation;
+  symmetry_class->get_transform     = gimp_mandala_get_transform;
   symmetry_class->active_changed    = gimp_mandala_active_changed;
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CENTER_X,
@@ -550,6 +555,20 @@ gimp_mandala_get_operation (GimpSymmetry *sym,
     }
 
   return op;
+}
+
+static void
+gimp_mandala_get_transform (GimpSymmetry *sym,
+                            gint          stroke,
+                            gdouble      *angle,
+                            gboolean     *reflect)
+{
+  GimpMandala *mandala = GIMP_MANDALA (sym);
+
+  if (mandala->disable_transformation)
+    return;
+
+  *angle = 360.0 * stroke / mandala->size;
 }
 
 static void

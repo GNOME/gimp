@@ -78,6 +78,10 @@ static GeglNode * gimp_mirror_get_operation           (GimpSymmetry        *mirr
                                                        gint                 stroke,
                                                        gint                 paint_width,
                                                        gint                 paint_height);
+static void       gimp_mirror_get_transform           (GimpSymmetry        *mirror,
+                                                       gint                 stroke,
+                                                       gdouble             *angle,
+                                                       gboolean            *reflect);
 static void       gimp_mirror_reset                   (GimpMirror          *mirror);
 static void       gimp_mirror_add_guide               (GimpMirror          *mirror,
                                                        GimpOrientationType  orientation);
@@ -123,6 +127,7 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
   symmetry_class->label             = _("Mirror");
   symmetry_class->update_strokes    = gimp_mirror_update_strokes;
   symmetry_class->get_operation     = gimp_mirror_get_operation;
+  symmetry_class->get_transform     = gimp_mirror_get_transform;
   symmetry_class->active_changed    = gimp_mirror_active_changed;
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HORIZONTAL_SYMMETRY,
@@ -437,6 +442,50 @@ gimp_mirror_get_operation (GimpSymmetry *sym,
     op = g_object_ref (mirror->central_op);
 
   return op;
+}
+
+static void
+gimp_mirror_get_transform (GimpSymmetry *sym,
+                           gint          stroke,
+                           gdouble      *angle,
+                           gboolean     *reflect)
+{
+  GimpMirror *mirror = GIMP_MIRROR (sym);
+
+  if (mirror->disable_transformation)
+    return;
+
+  if (! mirror->horizontal_mirror && stroke >= 1)
+    stroke++;
+
+  if (! mirror->vertical_mirror && stroke >= 2)
+    stroke++;
+
+  switch (stroke)
+    {
+    /* original */
+    case 0:
+      break;
+
+    /* horizontal */
+    case 1:
+      *angle   = 180.0;
+      *reflect = TRUE;
+      break;
+
+    /* vertical */
+    case 2:
+      *reflect = TRUE;
+      break;
+
+    /* central */
+    case 3:
+      *angle   = 180.0;
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
 }
 
 static void

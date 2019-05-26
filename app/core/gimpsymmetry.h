@@ -67,6 +67,10 @@ struct _GimpSymmetryClass
                                              gint                stroke,
                                              gint                paint_width,
                                              gint                paint_height);
+  void       (* get_transform)              (GimpSymmetry       *symmetry,
+                                             gint                stroke,
+                                             gdouble            *angle,
+                                             gboolean           *reflect);
   void       (* active_changed)             (GimpSymmetry       *symmetry);
 
   gboolean   (* update_version)             (GimpSymmetry       *symmetry);
@@ -90,6 +94,10 @@ GeglNode     * gimp_symmetry_get_operation  (GimpSymmetry       *symmetry,
                                              gint                stroke,
                                              gint                paint_width,
                                              gint                paint_height);
+void           gimp_symmetry_get_transform  (GimpSymmetry       *symmetry,
+                                             gint                stroke,
+                                             gdouble            *angle,
+                                             gboolean           *reflect);
 
 gchar        * gimp_symmetry_parasite_name  (GType               type);
 GimpParasite * gimp_symmetry_to_parasite    (const GimpSymmetry *symmetry);
