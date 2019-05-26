@@ -123,10 +123,11 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options,
                     GimpSymmetry     *sym)
 {
-  GimpEraserOptions *options  = GIMP_ERASER_OPTIONS (paint_options);
-  GimpContext       *context  = GIMP_CONTEXT (paint_options);
-  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpBrushCore     *brush_core = GIMP_BRUSH_CORE (paint_core);
+  GimpEraserOptions *options    = GIMP_ERASER_OPTIONS (paint_options);
+  GimpContext       *context    = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
   gdouble            fade_point;
   gdouble            opacity;
   GimpLayerMode      paint_mode;
@@ -137,7 +138,6 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   GeglColor         *color;
   gdouble            force;
   const GimpCoords  *coords;
-  GeglNode          *op;
   gint               n_strokes;
   gint               paint_width, paint_height;
   gint               i;
@@ -166,7 +166,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   else
     paint_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
 
-  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+  gimp_brush_core_eval_transform_dynamics (brush_core,
                                            drawable,
                                            paint_options,
                                            coords);
@@ -175,6 +175,8 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   for (i = 0; i < n_strokes; i++)
     {
       coords = gimp_symmetry_get_coords (sym, i);
+
+      gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
       if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
         force = gimp_dynamics_get_linear_value (dynamics,
@@ -197,10 +199,6 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
       if (! paint_buffer)
         continue;
 
-      op = gimp_symmetry_get_operation (sym, i,
-                                            paint_width,
-                                            paint_height);
-
       gegl_buffer_set_color (paint_buffer, NULL, color);
 
       gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
@@ -210,7 +208,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                                     paint_mode,
                                     gimp_paint_options_get_brush_mode (paint_options),
                                     force,
-                                    paint_options->application_mode, op);
+                                    paint_options->application_mode);
     }
 
   g_object_unref (color);

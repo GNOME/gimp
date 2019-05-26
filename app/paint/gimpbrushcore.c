@@ -39,6 +39,7 @@
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
+#include "core/gimpsymmetry.h"
 #include "core/gimptempbuf.h"
 
 #include "gimpbrushcore.h"
@@ -99,10 +100,12 @@ static void      gimp_brush_core_real_set_brush     (GimpBrushCore    *core,
 static void      gimp_brush_core_real_set_dynamics  (GimpBrushCore    *core,
                                                      GimpDynamics     *dynamics);
 
+static gdouble   gimp_brush_core_get_angle          (GimpBrushCore     *core);
+static gboolean  gimp_brush_core_get_reflect        (GimpBrushCore     *core);
+
 static const GimpTempBuf *
                  gimp_brush_core_transform_mask     (GimpBrushCore     *core,
-                                                     GimpBrush         *brush,
-                                                     GeglNode          *op);
+                                                     GimpBrush         *brush);
 
 static void      gimp_brush_core_invalidate_cache   (GimpBrush         *brush,
                                                      GimpBrushCore     *core);
@@ -167,9 +170,13 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->dynamics                     = NULL;
   core->spacing                      = 1.0;
   core->scale                        = 1.0;
-  core->angle                        = 1.0;
+  core->angle                        = 0.0;
+  core->reflect                      = FALSE;
   core->hardness                     = 1.0;
   core->aspect_ratio                 = 0.0;
+
+  core->symmetry_angle               = 0.0;
+  core->symmetry_reflect             = FALSE;
 
   core->pressure_brush               = NULL;
 
@@ -380,6 +387,8 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
                                                drawable,
                                                paint_options,
                                                coords);
+
+      gimp_brush_core_eval_transform_symmetry (core, NULL, 0);
     }
 
   core->spacing = paint_options->brush_spacing;
@@ -793,7 +802,8 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
 
   gimp_brush_transform_size (core->brush,
                              core->scale, core->aspect_ratio,
-                             core->angle, core->reflect,
+                             gimp_brush_core_get_angle (core),
+                             gimp_brush_core_get_reflect (core),
                              &brush_width, &brush_height);
 
   if (paint_width)
@@ -921,12 +931,11 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               GimpLayerMode             paint_mode,
                               GimpBrushApplicationMode  brush_hardness,
                               gdouble                   dynamic_force,
-                              GimpPaintApplicationMode  mode,
-                              GeglNode                 *op)
+                              GimpPaintApplicationMode  mode)
 {
   const GimpTempBuf *brush_mask;
 
-  brush_mask = gimp_brush_core_get_brush_mask (core, coords, op,
+  brush_mask = gimp_brush_core_get_brush_mask (core, coords,
                                                brush_hardness,
                                                dynamic_force);
 
@@ -966,12 +975,11 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                 gdouble                   image_opacity,
                                 GimpBrushApplicationMode  brush_hardness,
                                 gdouble                   dynamic_force,
-                                GimpPaintApplicationMode  mode,
-                                GeglNode                 *op)
+                                GimpPaintApplicationMode  mode)
 {
   const GimpTempBuf *brush_mask;
 
-  brush_mask = gimp_brush_core_get_brush_mask (core, coords, op,
+  brush_mask = gimp_brush_core_get_brush_mask (core, coords,
                                                brush_hardness,
                                                dynamic_force);
 
@@ -1018,10 +1026,33 @@ gimp_brush_core_invalidate_cache (GimpBrush     *brush,
  *             LOCAL FUNCTION DEFINITIONS                   *
  ************************************************************/
 
+static gdouble
+gimp_brush_core_get_angle (GimpBrushCore *core)
+{
+  gdouble angle = core->angle;
+
+  if (core->reflect)
+    angle -= core->symmetry_angle;
+  else
+    angle += core->symmetry_angle;
+
+  angle = fmod (angle, 1.0);
+
+  if (angle < 0.0)
+    angle += 1.0;
+
+  return angle;
+}
+
+static gboolean
+gimp_brush_core_get_reflect (GimpBrushCore *core)
+{
+  return core->reflect ^ core->symmetry_reflect;
+}
+
 static const GimpTempBuf *
 gimp_brush_core_transform_mask (GimpBrushCore *core,
-                                GimpBrush     *brush,
-                                GeglNode      *op)
+                                GimpBrush     *brush)
 {
   const GimpTempBuf *mask;
 
@@ -1029,11 +1060,10 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
     return NULL;
 
   mask = gimp_brush_transform_mask (brush,
-                                    op,
                                     core->scale,
                                     core->aspect_ratio,
-                                    core->angle,
-                                    core->reflect,
+                                    gimp_brush_core_get_angle (core),
+                                    gimp_brush_core_get_reflect (core),
                                     core->hardness);
 
   if (mask == core->transform_brush)
@@ -1049,7 +1079,6 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
 const GimpTempBuf *
 gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
                                 const GimpCoords         *coords,
-                                GeglNode                 *op,
                                 GimpBrushApplicationMode  brush_hardness,
                                 gdouble                   dynamic_force)
 {
@@ -1058,7 +1087,7 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
   if (dynamic_force <= 0.0)
     return NULL;
 
-  mask = gimp_brush_core_transform_mask (core, core->brush, op);
+  mask = gimp_brush_core_transform_mask (core, core->brush);
 
   if (! mask)
     return NULL;
@@ -1089,8 +1118,7 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
 }
 
 const GimpTempBuf *
-gimp_brush_core_get_brush_pixmap (GimpBrushCore *core,
-                                  GeglNode      *op)
+gimp_brush_core_get_brush_pixmap (GimpBrushCore *core)
 {
   const GimpTempBuf *pixmap;
 
@@ -1098,11 +1126,10 @@ gimp_brush_core_get_brush_pixmap (GimpBrushCore *core,
     return NULL;
 
   pixmap = gimp_brush_transform_pixmap (core->brush,
-                                        op,
                                         core->scale,
                                         core->aspect_ratio,
-                                        core->angle,
-                                        core->reflect,
+                                        gimp_brush_core_get_angle (core),
+                                        gimp_brush_core_get_reflect (core),
                                         core->hardness);
 
   if (pixmap == core->transform_pixmap)
@@ -1213,10 +1240,31 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
 }
 
 void
+gimp_brush_core_eval_transform_symmetry (GimpBrushCore *core,
+                                         GimpSymmetry  *symmetry,
+                                         gint           stroke)
+{
+  g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
+  g_return_if_fail (symmetry == NULL || GIMP_IS_SYMMETRY (symmetry));
+
+  core->symmetry_angle   = 0.0;
+  core->symmetry_reflect = FALSE;
+
+  if (symmetry)
+    {
+      gimp_symmetry_get_transform (symmetry,
+                                   stroke,
+                                   &core->symmetry_angle,
+                                   &core->symmetry_reflect);
+
+      core->symmetry_angle /= 360.0;
+    }
+}
+
+void
 gimp_brush_core_color_area_with_pixmap (GimpBrushCore    *core,
                                         GimpDrawable     *drawable,
                                         const GimpCoords *coords,
-                                        GeglNode         *op,
                                         GeglBuffer       *area,
                                         gint              area_x,
                                         gint              area_y,
@@ -1237,13 +1285,13 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore    *core,
   g_return_if_fail (gimp_brush_get_pixmap (core->brush) != NULL);
 
   /*  scale the brush  */
-  pixmap = gimp_brush_core_get_brush_pixmap (core, op);
+  pixmap = gimp_brush_core_get_brush_pixmap (core);
 
   if (! pixmap)
     return;
 
   if (apply_mask)
-    mask = gimp_brush_core_transform_mask (core, core->brush, op);
+    mask = gimp_brush_core_transform_mask (core, core->brush);
   else
     mask = NULL;
 

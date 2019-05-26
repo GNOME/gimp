@@ -359,6 +359,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
 {
   GimpPaintCore     *paint_core   = GIMP_PAINT_CORE (source_core);
+  GimpBrushCore     *brush_core   = GIMP_BRUSH_CORE (source_core);
   GimpSourceOptions *options      = GIMP_SOURCE_OPTIONS (paint_options);
   GimpDynamics      *dynamics     = GIMP_BRUSH_CORE (paint_core)->dynamics;
   GimpImage         *image        = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -420,7 +421,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
         }
     }
 
-  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+  gimp_brush_core_eval_transform_dynamics (brush_core,
                                            drawable,
                                            paint_options,
                                            origin);
@@ -431,6 +432,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   for (i = 0; i < n_strokes; i++)
     {
       coords = gimp_symmetry_get_coords (sym, i);
+
+      gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,

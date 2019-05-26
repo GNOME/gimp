@@ -540,7 +540,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
     force = paint_options->brush_force;
 
   mask_buf = gimp_brush_core_get_brush_mask (GIMP_BRUSH_CORE (source_core),
-                                             coords, op,
+                                             coords,
                                              GIMP_BRUSH_HARD,
                                              force);
 
@@ -654,5 +654,5 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
                                   force,
-                                  GIMP_PAINT_INCREMENTAL, NULL);
+                                  GIMP_PAINT_INCREMENTAL);
 }

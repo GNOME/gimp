@@ -160,7 +160,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   gdouble                   grad_point;
   gdouble                   force;
   const GimpCoords         *coords;
-  GeglNode                 *op;
   gint                      n_strokes;
   gint                      i;
 
@@ -207,6 +206,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       coords = gimp_symmetry_get_coords (sym, i);
 
+      if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
+        gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
+
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
                                                        paint_mode,
@@ -218,9 +220,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       if (! paint_buffer)
         continue;
 
-      op = gimp_symmetry_get_operation (sym, i,
-                                        paint_width,
-                                        paint_height);
       if (gimp_paint_options_get_gradient_color (paint_options, image,
                                                  grad_point,
                                                  paint_core->pixel_dist,
@@ -237,7 +236,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
           /* otherwise check if the brush has a pixmap and use that to
            * color the area
            */
-          paint_pixmap = gimp_brush_core_get_brush_pixmap (brush_core, op);
+          paint_pixmap = gimp_brush_core_get_brush_pixmap (brush_core);
 
           paint_appl_mode = GIMP_PAINT_INCREMENTAL;
         }
@@ -290,7 +289,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
           if (paint_pixmap)
             {
               gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
-                                                      coords, op,
+                                                      coords,
                                                       paint_buffer,
                                                       paint_buffer_x,
                                                       paint_buffer_y,
@@ -328,6 +327,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                     paint_mode,
                                     gimp_paint_options_get_brush_mode (paint_options),
                                     force,
-                                    paint_appl_mode, op);
+                                    paint_appl_mode);
     }
 }
