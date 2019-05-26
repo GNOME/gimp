@@ -205,9 +205,10 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                    GimpPaintOptions *paint_options,
                    GimpSymmetry     *sym)
 {
-  GimpSmudge        *smudge  = GIMP_SMUDGE (paint_core);
-  GimpSmudgeOptions *options = GIMP_SMUDGE_OPTIONS (paint_options);
-  GimpImage         *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpSmudge        *smudge     = GIMP_SMUDGE (paint_core);
+  GimpBrushCore     *brush_core = GIMP_BRUSH_CORE (paint_core);
+  GimpSmudgeOptions *options    = GIMP_SMUDGE_OPTIONS (paint_options);
+  GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpPickable      *dest_pickable;
   GeglBuffer        *pickable_buffer;
   GeglBuffer        *paint_buffer;
@@ -222,7 +223,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   gint               x, y;
 
   coords = gimp_symmetry_get_origin (sym);
-  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+  gimp_brush_core_eval_transform_dynamics (brush_core,
                                            drawable,
                                            paint_options,
                                            coords);
@@ -362,7 +363,6 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   /* other variables */
   gdouble             force;
   GimpCoords         *coords;
-  GeglNode           *op;
   gint                paint_width, paint_height;
   gint                n_strokes;
   gint                i;
@@ -395,7 +395,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
+  gimp_brush_core_eval_transform_dynamics (brush_core,
                                            drawable,
                                            paint_options,
                                            coords);
@@ -451,6 +451,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
     {
       coords = gimp_symmetry_get_coords (sym, i);
 
+      gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
+
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
                                                        GIMP_LAYER_MODE_NORMAL,
@@ -461,10 +463,6 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                                        &paint_height);
       if (! paint_buffer)
         continue;
-
-      op = gimp_symmetry_get_operation (sym, i,
-                                        paint_width,
-                                        paint_height);
 
       paint_buffer_width  = gegl_buffer_get_width  (paint_buffer);
       paint_buffer_height = gegl_buffer_get_height (paint_buffer);
@@ -497,7 +495,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
       if (! brush_color_ptr && flow > 0.0)
         {
           gimp_brush_core_color_area_with_pixmap (brush_core, drawable,
-                                                  coords, op,
+                                                  coords,
                                                   paint_buffer,
                                                   paint_buffer_x,
                                                   paint_buffer_y,
@@ -537,7 +535,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                       gimp_context_get_opacity (context),
                                       gimp_paint_options_get_brush_mode (paint_options),
                                       force,
-                                      GIMP_PAINT_INCREMENTAL, op);
+                                      GIMP_PAINT_INCREMENTAL);
     }
 }
 

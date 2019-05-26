@@ -298,14 +298,14 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             {
                GimpBrushGenerated *gen_brush = GIMP_BRUSH_GENERATED (brush);
 
-               mask_buf = gimp_brush_transform_mask (brush, NULL, scale,
+               mask_buf = gimp_brush_transform_mask (brush, scale,
                                                      (gimp_brush_generated_get_aspect_ratio (gen_brush) - 1.0) * 20.0 / 19.0,
                                                      gimp_brush_generated_get_angle (gen_brush) / 360.0,
                                                      FALSE,
                                                      gimp_brush_generated_get_hardness (gen_brush));
             }
           else
-            mask_buf = gimp_brush_transform_mask (brush, NULL, scale,
+            mask_buf = gimp_brush_transform_mask (brush, scale,
                                                   0.0, 0.0, FALSE, 1.0);
 
           if (! mask_buf)
@@ -319,7 +319,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
             }
 
           if (pixmap_buf)
-            pixmap_buf = gimp_brush_transform_pixmap (brush, NULL, scale,
+            pixmap_buf = gimp_brush_transform_pixmap (brush, scale,
                                                       0.0, 0.0, FALSE, 1.0);
 
           mask_width  = gimp_temp_buf_get_width  (mask_buf);
@@ -633,7 +633,6 @@ gimp_brush_transform_size (GimpBrush     *brush,
 
 const GimpTempBuf *
 gimp_brush_transform_mask (GimpBrush *brush,
-                           GeglNode  *op,
                            gdouble    scale,
                            gdouble    aspect_ratio,
                            gdouble    angle,
@@ -653,7 +652,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
                              &width, &height);
 
   mask = gimp_brush_cache_get (brush->priv->mask_cache,
-                               op, width, height,
+                               width, height,
                                scale, aspect_ratio, angle, reflect, hardness);
 
   if (! mask)
@@ -690,37 +689,9 @@ gimp_brush_transform_mask (GimpBrush *brush,
                                                            reflect,
                                                            effective_hardness);
 
-      if (op)
-        {
-          GeglNode   *graph, *source, *target;
-          GeglBuffer *buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) mask);
-
-          graph  = gegl_node_new ();
-          source = gegl_node_new_child (graph,
-                                        "operation", "gegl:buffer-source",
-                                        "buffer", buffer,
-                                        NULL);
-          gegl_node_add_child (graph, op);
-          target = gegl_node_new_child (graph,
-                                        "operation", "gegl:write-buffer",
-                                        "buffer", buffer,
-                                        NULL);
-
-          gegl_node_link_many (source, op, target, NULL);
-          gegl_node_blit (target, 1.0,
-                          GEGL_RECTANGLE (0, 0,
-                                          gegl_buffer_get_width (buffer),
-                                          gegl_buffer_get_height (buffer)),
-                          NULL, NULL, 0, GEGL_BLIT_DEFAULT);
-
-
-          g_object_unref (graph);
-          g_object_unref (buffer);
-        }
-
       gimp_brush_cache_add (brush->priv->mask_cache,
                             (gpointer) mask,
-                            op, width, height,
+                            width, height,
                             scale, aspect_ratio, angle, reflect, effective_hardness);
     }
 
@@ -729,7 +700,6 @@ gimp_brush_transform_mask (GimpBrush *brush,
 
 const GimpTempBuf *
 gimp_brush_transform_pixmap (GimpBrush *brush,
-                             GeglNode  *op,
                              gdouble    scale,
                              gdouble    aspect_ratio,
                              gdouble    angle,
@@ -750,7 +720,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                              &width, &height);
 
   pixmap = gimp_brush_cache_get (brush->priv->pixmap_cache,
-                                 op, width, height,
+                                 width, height,
                                  scale, aspect_ratio, angle, reflect, hardness);
 
   if (! pixmap)
@@ -782,36 +752,9 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
                                                                reflect,
                                                                effective_hardness);
 
-      if (op)
-        {
-          GeglNode   *graph, *source, *target;
-          GeglBuffer *buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) pixmap);
-
-          graph  = gegl_node_new ();
-          source = gegl_node_new_child (graph,
-                                        "operation", "gegl:buffer-source",
-                                        "buffer", buffer,
-                                        NULL);
-          gegl_node_add_child (graph, op);
-          target = gegl_node_new_child (graph,
-                                        "operation", "gegl:write-buffer",
-                                        "buffer", buffer,
-                                        NULL);
-
-          gegl_node_link_many (source, op, target, NULL);
-          gegl_node_blit (target, 1.0,
-                          GEGL_RECTANGLE (0, 0,
-                                          gegl_buffer_get_width (buffer),
-                                          gegl_buffer_get_height (buffer)),
-                          NULL, NULL, 0, GEGL_BLIT_DEFAULT);
-
-          g_object_unref (graph);
-          g_object_unref (buffer);
-        }
-
       gimp_brush_cache_add (brush->priv->pixmap_cache,
                             (gpointer) pixmap,
-                            op, width, height,
+                            width, height,
                             scale, aspect_ratio, angle, reflect, effective_hardness);
     }
 
@@ -840,7 +783,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
                              width, height);
 
   boundary = gimp_brush_cache_get (brush->priv->boundary_cache,
-                                   NULL, *width, *height,
+                                   *width, *height,
                                    scale, aspect_ratio, angle, reflect, hardness);
 
   if (! boundary)
@@ -863,7 +806,7 @@ gimp_brush_transform_boundary (GimpBrush *brush,
       if (boundary)
         gimp_brush_cache_add (brush->priv->boundary_cache,
                               (gpointer) boundary,
-                              NULL, *width, *height,
+                              *width, *height,
                               scale, aspect_ratio, angle, reflect, hardness);
     }
 
