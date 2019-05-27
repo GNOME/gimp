@@ -430,6 +430,13 @@ gimp_colormap_editor_edit_color (GimpColormapEditor *editor)
       g_object_set (editor->color_dialog, "description", desc, NULL);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &color);
+
+      if (! gtk_widget_get_visible (editor->color_dialog))
+        gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
+                                             "gimp-colormap-editor-color-dialog",
+                                             editor->color_dialog,
+                                             gtk_widget_get_screen (GTK_WIDGET (editor)),
+                                             gimp_widget_get_monitor (GTK_WIDGET (editor)));
     }
 
   g_free (desc);

@@ -498,6 +498,13 @@ gimp_palette_editor_edit_color (GimpPaletteEditor *editor)
                                          data_editor->context);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                    &editor->color->color);
+
+      if (! gtk_widget_get_visible (editor->color_dialog))
+        gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
+                                             "gimp-palette-editor-color-dialog",
+                                             editor->color_dialog,
+                                             gtk_widget_get_screen (GTK_WIDGET (editor)),
+                                             gimp_widget_get_monitor (GTK_WIDGET (editor)));
     }
 
   gtk_window_present (GTK_WINDOW (editor->color_dialog));
