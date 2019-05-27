@@ -359,7 +359,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                                        coords->xtilt,
                                        coords->ytilt,
                                        100,
-                                       gimp_deg_to_rad (angle),
+                                       angle,
                                        reflect);
 
           ink->last_blobs = g_list_prepend (ink->last_blobs,
@@ -392,7 +392,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                                   coords->xtilt,
                                   coords->ytilt,
                                   coords->velocity * 100,
-                                  gimp_deg_to_rad (angle),
+                                  angle,
                                   reflect);
 
           last_blob = g_list_nth_data (ink->last_blobs, i);
@@ -473,6 +473,7 @@ ink_pen_ellipse (GimpInkOptions *options,
                  gboolean        reflect)
 {
   GimpBlobFunc blob_function;
+  GimpMatrix3  transform;
   gdouble      size;
   gdouble      tsin, tcos;
   gdouble      aspect, radmin;
@@ -480,7 +481,6 @@ ink_pen_ellipse (GimpInkOptions *options,
   gdouble      tscale;
   gdouble      tscale_c;
   gdouble      tscale_s;
-  gdouble      blob_angle;
 
   /* Adjust the size depending on pressure. */
 
@@ -515,13 +515,6 @@ ink_pen_ellipse (GimpInkOptions *options,
   if (size * SUBSAMPLE < 1.0)
     size = 1.0 / SUBSAMPLE;
 
-  /* Calculate brush angle */
-
-  blob_angle = options->blob_angle - angle;
-
-  if (reflect)
-    blob_angle = -blob_angle;
-
   /* Add brush angle/aspect to tilt vectorially */
 
   /* I'm not happy with the way the brush widget info is combined with
@@ -534,14 +527,14 @@ ink_pen_ellipse (GimpInkOptions *options,
   tscale_c = tscale * cos (gimp_deg_to_rad (options->tilt_angle));
   tscale_s = tscale * sin (gimp_deg_to_rad (options->tilt_angle));
 
-  x = (options->blob_aspect * cos (blob_angle) +
+  x = (options->blob_aspect * cos (options->blob_angle) +
        xtilt * tscale_c - ytilt * tscale_s);
-  y = (options->blob_aspect * sin (blob_angle) +
+  y = (options->blob_aspect * sin (options->blob_angle) +
        ytilt * tscale_c + xtilt * tscale_s);
 
 #ifdef VERBOSE
   g_printerr ("angle %g aspect %g; %g %g; %g %g\n",
-              blob_angle, options->blob_aspect,
+              options->blob_angle, options->blob_aspect,
               tscale_c, tscale_s, x, y);
 #endif
 
@@ -554,9 +547,18 @@ ink_pen_ellipse (GimpInkOptions *options,
     }
   else
     {
-      tsin = sin (blob_angle);
-      tcos = cos (blob_angle);
+      tcos = cos (options->blob_angle);
+      tsin = sin (options->blob_angle);
     }
+
+  gimp_matrix3_identity (&transform);
+  gimp_matrix3_rotate (&transform, -gimp_deg_to_rad (angle));
+  if (reflect)
+    gimp_matrix3_scale (&transform, -1.0, 1.0);
+
+  gimp_matrix3_transform_point (&transform,
+                                tcos,  tsin,
+                                &tcos, &tsin);
 
   aspect = CLAMP (aspect, 1.0, 10.0);
 
