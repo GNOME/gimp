@@ -186,31 +186,14 @@ gimp_edit_selection_tool_finalize (GObject *object)
 {
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (object);
 
-  if (edit_select->segs_in)
-    {
-      g_free (edit_select->segs_in);
-      edit_select->segs_in     = NULL;
-      edit_select->num_segs_in = 0;
-    }
+  g_clear_pointer (&edit_select->segs_in, g_free);
+  edit_select->num_segs_in = 0;
 
-  if (edit_select->segs_out)
-    {
-      g_free (edit_select->segs_out);
-      edit_select->segs_out     = NULL;
-      edit_select->num_segs_out = 0;
-    }
+  g_clear_pointer (&edit_select->segs_out, g_free);
+  edit_select->num_segs_out = 0;
 
-  if (edit_select->live_items)
-    {
-      g_list_free (edit_select->live_items);
-      edit_select->live_items = NULL;
-    }
-
-  if (edit_select->delayed_items)
-    {
-      g_list_free (edit_select->delayed_items);
-      edit_select->delayed_items = NULL;
-    }
+  g_clear_pointer (&edit_select->live_items,    g_list_free);
+  g_clear_pointer (&edit_select->delayed_items, g_list_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

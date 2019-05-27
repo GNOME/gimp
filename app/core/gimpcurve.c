@@ -224,17 +224,11 @@ gimp_curve_finalize (GObject *object)
 {
   GimpCurve *curve = GIMP_CURVE (object);
 
-  if (curve->points)
-    {
-      g_free (curve->points);
-      curve->points = NULL;
-    }
+  g_clear_pointer (&curve->points,  g_free);
+  curve->n_points = 0;
 
-  if (curve->samples)
-    {
-      g_free (curve->samples);
-      curve->samples = NULL;
-    }
+  g_clear_pointer (&curve->samples, g_free);
+  curve->n_samples = 0;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1043,8 +1037,8 @@ gimp_curve_clear_points (GimpCurve *curve)
 
   if (curve->points)
     {
-      curve->n_points = 0;
       g_clear_pointer (&curve->points, g_free);
+      curve->n_points = 0;
 
       g_object_notify (G_OBJECT (curve), "n-points");
       g_object_notify (G_OBJECT (curve), "points");

@@ -186,8 +186,7 @@ gimp_tool_editor_finalize (GObject *object)
           g_free (priv->initial_tool_order[i]);
         }
 
-      g_free (priv->initial_tool_order);
-      priv->initial_tool_order      = NULL;
+      g_clear_pointer (&priv->initial_tool_order, g_free);
     }
 
   if (priv->initial_tool_visibility)

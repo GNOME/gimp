@@ -88,11 +88,7 @@ gimp_session_info_dock_free (GimpSessionInfoDock *dock_info)
 {
   g_return_if_fail (dock_info != NULL);
 
-  if (dock_info->dock_type)
-    {
-      g_free (dock_info->dock_type);
-      dock_info->dock_type = NULL;
-    }
+  g_clear_pointer (&dock_info->dock_type, g_free);
 
   if (dock_info->books)
     {

@@ -143,12 +143,7 @@ gimp_image_parasite_view_finalize (GObject *object)
 {
   GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
 
-  if (view->parasite)
-    {
-      g_free (view->parasite);
-      view->parasite = NULL;
-
-    }
+  g_clear_pointer (&view->parasite, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

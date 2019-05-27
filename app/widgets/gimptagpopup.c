@@ -391,8 +391,7 @@ gimp_tag_popup_dispose (GObject *object)
           g_object_unref (popup->tag_data[i].tag);
         }
 
-      g_free (popup->tag_data);
-      popup->tag_data = NULL;
+      g_clear_pointer (&popup->tag_data, g_free);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);

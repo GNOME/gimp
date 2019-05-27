@@ -116,23 +116,9 @@ gimp_viewable_button_finalize (GObject *object)
 {
   GimpViewableButton *button = GIMP_VIEWABLE_BUTTON (object);
 
-  if (button->dialog_identifier)
-    {
-      g_free (button->dialog_identifier);
-      button->dialog_identifier = NULL;
-    }
-
-  if (button->dialog_icon_name)
-    {
-      g_free (button->dialog_icon_name);
-      button->dialog_icon_name = NULL;
-    }
-
-  if (button->dialog_tooltip)
-    {
-      g_free (button->dialog_tooltip);
-      button->dialog_tooltip = NULL;
-    }
+  g_clear_pointer (&button->dialog_identifier, g_free);
+  g_clear_pointer (&button->dialog_icon_name,  g_free);
+  g_clear_pointer (&button->dialog_tooltip,    g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

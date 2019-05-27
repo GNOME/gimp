@@ -1711,8 +1711,7 @@ gimp_text_tool_im_delete_preedit (GimpTextTool *text_tool)
           text_tool->preedit_end = NULL;
         }
 
-      g_free (text_tool->preedit_string);
-      text_tool->preedit_string = NULL;
+      g_clear_pointer (&text_tool->preedit_string, g_free);
     }
 }
 

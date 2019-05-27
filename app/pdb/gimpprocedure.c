@@ -120,8 +120,7 @@ gimp_procedure_finalize (GObject *object)
       for (i = 0; i < procedure->num_args; i++)
         g_param_spec_unref (procedure->args[i]);
 
-      g_free (procedure->args);
-      procedure->args = NULL;
+      g_clear_pointer (&procedure->args, g_free);
     }
 
   if (procedure->values)
@@ -129,8 +128,7 @@ gimp_procedure_finalize (GObject *object)
       for (i = 0; i < procedure->num_values; i++)
         g_param_spec_unref (procedure->values[i]);
 
-      g_free (procedure->values);
-      procedure->values = NULL;
+      g_clear_pointer (&procedure->values, g_free);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);

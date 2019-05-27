@@ -220,11 +220,7 @@ gimp_tag_entry_dispose (GObject *object)
 {
   GimpTagEntry *entry = GIMP_TAG_ENTRY (object);
 
-  if (entry->selected_items)
-    {
-      g_list_free (entry->selected_items);
-      entry->selected_items = NULL;
-    }
+  g_clear_pointer (&entry->selected_items, g_list_free);
 
   if (entry->common_tags)
     {

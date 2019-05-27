@@ -59,11 +59,7 @@ gimp_session_info_dockable_free (GimpSessionInfoDockable *info)
 {
   g_return_if_fail (info != NULL);
 
-  if (info->identifier)
-    {
-      g_free (info->identifier);
-      info->identifier = NULL;
-    }
+  g_clear_pointer (&info->identifier, g_free);
 
   if (info->aux_info)
     {
