@@ -1,12 +1,12 @@
 # The GIMP Windows installer translation.
 # Copyright (C) 2018 Free Software Foundation, Inc.
-# Marco Ciampa <ciampix@posteo.net>, 2018.
+# Marco Ciampa <ciampix@posteo.net>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Windows Installer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-06 15:31+0200\n"
-"PO-Revision-Date: 2018-10-25 10:38+0200\n"
+"POT-Creation-Date: 2019-05-27 18:48+0200\n"
+"PO-Revision-Date: 2019-05-27 18:24+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: Italian <it@li.org>\n"
 "Language: it\n"
@@ -43,7 +43,15 @@ msgid ""
 "GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
 "gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
 "installation anyway?"
-msgstr "Questa è una versione di sviluppo di GIMP. Alcune caratteristiche potrebbero non essere complete o stabili.%nQuesta versione di GIMP non è intesa per il normale lavoro quotidiano, dato che potrebbe risultare instabile e di conseguenza comportare la perdita del vostro lavoro.%nSe si riscontra qualche difetto, si prega di controllare prima che quest'ultimo non sia già stato sistemato su GIT, prima di contattare gli sviluppatori, o di riportarlo sul gitlab di GIMP:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nContinuare ugualmente con l'installazione?"
+msgstr ""
+"Questa è una versione di sviluppo di GIMP. Alcune caratteristiche potrebbero "
+"non essere complete o stabili.%nQuesta versione di GIMP non è intesa per il "
+"normale lavoro quotidiano, dato che potrebbe risultare instabile e di "
+"conseguenza comportare la perdita del vostro lavoro.%nSe si riscontra "
+"qualche difetto, si prega di controllare prima che quest'ultimo non sia già "
+"stato sistemato su GIT, prima di contattare gli sviluppatori, o di "
+"riportarlo sul gitlab di GIMP:%n_https://gitlab.gnome.org/GNOME/gimp/issues%n"
+"%nContinuare ugualmente con l'installazione?"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:7
 msgid "&Continue"
@@ -70,7 +78,11 @@ msgid ""
 "display mode. This has been known to cause stability problems with GIMP, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
-msgstr "L'installatore ha rilevato che Windows attualmente non è in funzione in modalità schermo a 32 bit-per-pixel. È risaputo che ciò può causare problemi di instabilità in GIMP, perciò si raccomanda di cambiare la profondità di colore dello schermo a 32BPP prima di continuare."
+msgstr ""
+"L'installatore ha rilevato che Windows attualmente non è in funzione in "
+"modalità schermo a 32 bit-per-pixel. È risaputo che ciò può causare problemi "
+"di instabilità in GIMP, perciò si raccomanda di cambiare la profondità di "
+"colore dello schermo a 32BPP prima di continuare."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:12
 msgid "E&xit"
@@ -148,7 +160,8 @@ msgstr "Supporto per i vecchi plugin"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:29
 msgid "Install libraries needed by old third-party plug-ins"
-msgstr "Installazione delle librerie necessarie per i vecchi plug-in di terze parti"
+msgstr ""
+"Installazione delle librerie necessarie per i vecchi plug-in di terze parti"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:30
 msgid "Translations"
@@ -223,7 +236,7 @@ msgstr "Errore durante l'estrazione dei dati temporanei."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:47
 msgid "Error updating Python interpreter info."
-msgstr "Errore aggiornando i dati dell'interprete Python."
+msgstr "Errore durante l'aggiornamento dei dati dell'interprete Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:48
 msgid "Error updating MyPaint brushes info."
