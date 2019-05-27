@@ -32,6 +32,7 @@
 
 #include "paint-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 
 #include "core/gimpbrush.h"
@@ -611,23 +612,8 @@ gimp_heal_motion (GimpSourceCore   *source_core,
 
   if (op)
     {
-      GeglNode    *graph, *source, *target;
-
-      graph    = gegl_node_new ();
-      source   = gegl_node_new_child (graph,
-                                      "operation", "gegl:buffer-source",
-                                      "buffer", src_copy,
-                                      NULL);
-      gegl_node_add_child (graph, op);
-      target  = gegl_node_new_child (graph,
-                                     "operation", "gegl:write-buffer",
-                                     "buffer", src_copy,
-                                     NULL);
-
-      gegl_node_link_many (source, op, target, NULL);
-      gegl_node_process (target);
-
-      g_object_unref (graph);
+      gimp_gegl_apply_operation (src_copy, NULL, NULL, op,
+                                 src_copy, NULL, FALSE);
     }
 
   gimp_heal (src_copy,
