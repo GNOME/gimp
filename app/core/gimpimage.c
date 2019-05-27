@@ -1403,6 +1403,7 @@ gimp_image_color_managed_profile_changed (GimpColorManaged *managed)
   GimpImage     *image  = GIMP_IMAGE (managed);
   GimpItemStack *layers = GIMP_ITEM_STACK (gimp_image_get_layers (image));
 
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
   gimp_item_stack_profile_changed (layers);
 }
