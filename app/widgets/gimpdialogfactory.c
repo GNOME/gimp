@@ -1050,6 +1050,64 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
   gimp_dialog_factory_add_dialog (factory, dialog, screen, monitor);
 }
 
+/**
+ * gimp_dialog_factory_position_dialog:
+ * @factory:
+ * @identifier:
+ * @dialog:
+ * @screen:
+ * @monitor:
+ *
+ * We correctly position all newly created dialog via
+ * gimp_dialog_factory_add_dialog(), but some dialogs (like various
+ * color dialogs) are never destroyed but created only once per
+ * session. On re-showing, whatever window managing magic kicks in and
+ * the dialog sometimes goes where it shouldn't.
+ *
+ * This function correctly positions a dialog on re-showing so it
+ * appears where it was before it was hidden.
+ *
+ * See https://gitlab.gnome.org/GNOME/gimp/issues/1093
+ **/
+void
+gimp_dialog_factory_position_dialog (GimpDialogFactory *factory,
+                                     const gchar       *identifier,
+                                     GtkWidget         *dialog,
+                                     GdkScreen         *screen,
+                                     gint               monitor)
+{
+  GimpSessionInfo *info;
+  GimpGuiConfig   *gui_config;
+
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+  g_return_if_fail (identifier != NULL);
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
+  g_return_if_fail (gtk_widget_is_toplevel (dialog));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
+
+  info = gimp_dialog_factory_find_session_info (factory, identifier);
+
+  if (! info)
+    {
+      g_warning ("%s: no session info found for \"%s\"",
+                 G_STRFUNC, identifier);
+      return;
+    }
+
+  if (gimp_session_info_get_widget (info) != dialog)
+    {
+      g_warning ("%s: session info for \"%s\" is for a different widget",
+                 G_STRFUNC, identifier);
+      return;
+    }
+
+  gui_config = GIMP_GUI_CONFIG (factory->p->context->gimp->config);
+
+  gimp_session_info_apply_geometry (info,
+                                    screen, monitor,
+                                    gui_config->restore_monitor);
+}
+
 void
 gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
                                    GtkWidget         *dialog)
