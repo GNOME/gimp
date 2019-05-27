@@ -274,6 +274,7 @@ gimp_extension_get_markup_description (GimpExtension *extension)
       NULL, /*  passthrough */
       NULL  /*  error       */
     };
+  const gchar *description;
 
   GimpXmlParser *xml_parser;
   gchar         *markup = NULL;
@@ -286,9 +287,9 @@ gimp_extension_get_markup_description (GimpExtension *extension)
   state.unnumbered_list = FALSE;
 
   xml_parser  = gimp_xml_parser_new (&appstream_text_parser, &state);
-  if (! gimp_xml_parser_parse_buffer (xml_parser,
-                                      gimp_extension_get_description (extension),
-                                      -1, &error))
+  description = gimp_extension_get_description (extension);
+  if (description &&
+      ! gimp_xml_parser_parse_buffer (xml_parser, description, -1, &error))
     {
       g_printerr ("%s: %s\n", G_STRFUNC, error->message);
       g_error_free (error);
