@@ -261,23 +261,10 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
        *  function gimp_dialog_factory_position_dialog() and does the
        *  same positioning logic as add_dialog().
        */
-      GimpDialogFactory *dialog_factory = gimp_dialog_factory_get_singleton ();
-      GimpSessionInfo   *info;
-
-      info = gimp_dialog_factory_find_session_info (dialog_factory,
-                                                    "gimp-toolbox-color-dialog");
-
-      if (gimp_session_info_get_widget (info) == color_dialog)
-        {
-          GdkMonitor    *monitor = gimp_widget_get_monitor (GTK_WIDGET (editor));
-          GimpGuiConfig *gui_config;
-
-          gui_config = GIMP_GUI_CONFIG (context->gimp->config);
-
-          gimp_session_info_apply_geometry (info,
-                                            monitor,
-                                            gui_config->restore_monitor);
-        }
+      gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
+                                           "gimp-toolbox-color-dialog",
+                                           color_dialog,
+                                           gimp_widget_get_monitor (GTK_WIDGET (editor)));
     }
 
   gtk_window_set_title (GTK_WINDOW (color_dialog), title);
