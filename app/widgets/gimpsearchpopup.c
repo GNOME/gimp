@@ -755,8 +755,7 @@ gimp_search_popup_find_accel_label (GtkAction *action)
       /* The value returned by gtk_accelerator_get_label() must be
        * freed after use.
        */
-      g_free (accel_string);
-      accel_string = NULL;
+      g_clear_pointer (&accel_string, g_free);
     }
 
   return accel_string;

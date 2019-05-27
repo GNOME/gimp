@@ -149,11 +149,8 @@ gimp_lang_rc_finalize (GObject *object)
 
   g_clear_object (&rc->system_gimprc);
   g_clear_object (&rc->user_gimprc);
-  if (rc->language)
-    {
-      g_free (rc->language);
-      rc->language = NULL;
-    }
+
+  g_clear_pointer (&rc->language, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

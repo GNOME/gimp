@@ -264,14 +264,8 @@ gimp_ui_manager_finalize (GObject *object)
       g_slice_free (GimpUIManagerUIEntry, entry);
     }
 
-  g_list_free (manager->registered_uis);
-  manager->registered_uis = NULL;
-
-  if (manager->name)
-    {
-      g_free (manager->name);
-      manager->name = NULL;
-    }
+  g_clear_pointer (&manager->registered_uis, g_list_free);
+  g_clear_pointer (&manager->name,           g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

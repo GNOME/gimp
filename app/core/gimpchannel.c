@@ -348,17 +348,8 @@ gimp_channel_finalize (GObject *object)
 {
   GimpChannel *channel = GIMP_CHANNEL (object);
 
-  if (channel->segs_in)
-    {
-      g_free (channel->segs_in);
-      channel->segs_in = NULL;
-    }
-
-  if (channel->segs_out)
-    {
-      g_free (channel->segs_out);
-      channel->segs_out = NULL;
-    }
+  g_clear_pointer (&channel->segs_in,  g_free);
+  g_clear_pointer (&channel->segs_out, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1163,14 +1154,10 @@ gimp_channel_real_is_empty (GimpChannel *channel)
     return FALSE;
 
   /*  The mask is empty, meaning we can set the bounds as known  */
-  if (channel->segs_in)
-    g_free (channel->segs_in);
-  if (channel->segs_out)
-    g_free (channel->segs_out);
+  g_clear_pointer (&channel->segs_in,  g_free);
+  g_clear_pointer (&channel->segs_out, g_free);
 
   channel->empty          = TRUE;
-  channel->segs_in        = NULL;
-  channel->segs_out       = NULL;
   channel->num_segs_in    = 0;
   channel->num_segs_out   = 0;
   channel->bounds_known   = TRUE;

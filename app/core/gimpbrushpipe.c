@@ -121,8 +121,7 @@ gimp_brush_pipe_finalize (GObject *object)
         if (pipe->brushes[i])
           g_object_unref (pipe->brushes[i]);
 
-      g_free (pipe->brushes);
-      pipe->brushes = NULL;
+      g_clear_pointer (&pipe->brushes, g_free);
     }
 
   GIMP_BRUSH (pipe)->priv->mask   = NULL;

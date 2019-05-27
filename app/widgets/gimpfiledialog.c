@@ -395,25 +395,11 @@ gimp_file_dialog_dispose (GObject *object)
 
   dialog->progress = NULL;
 
-  if (dialog->help_id)
-    g_free (dialog->help_id);
-  dialog->help_id = NULL;
-
-  if (dialog->ok_button_label)
-    g_free (dialog->ok_button_label);
-  dialog->ok_button_label = NULL;
-
-  if (dialog->automatic_help_id)
-    g_free (dialog->automatic_help_id);
-  dialog->automatic_help_id = NULL;
-
-  if (dialog->automatic_label)
-    g_free (dialog->automatic_label);
-  dialog->automatic_label = NULL;
-
-  if (dialog->file_filter_label)
-    g_free (dialog->file_filter_label);
-  dialog->file_filter_label = NULL;
+  g_clear_pointer (&dialog->help_id,           g_free);
+  g_clear_pointer (&dialog->ok_button_label,   g_free);
+  g_clear_pointer (&dialog->automatic_help_id, g_free);
+  g_clear_pointer (&dialog->automatic_label,   g_free);
+  g_clear_pointer (&dialog->file_filter_label, g_free);
 }
 
 static gboolean

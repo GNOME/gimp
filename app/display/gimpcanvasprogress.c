@@ -173,11 +173,7 @@ gimp_canvas_progress_finalize (GObject *object)
 {
   GimpCanvasProgressPrivate *private = GET_PRIVATE (object);
 
-  if (private->text)
-    {
-      g_free (private->text);
-      private->text = NULL;
-    }
+  g_clear_pointer (&private->text, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

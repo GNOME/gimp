@@ -265,17 +265,8 @@ gimp_overlay_dialog_finalize (GObject *object)
 {
   GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (object);
 
-  if (dialog->title)
-    {
-      g_free (dialog->title);
-      dialog->title = NULL;
-    }
-
-  if (dialog->icon_name)
-    {
-      g_free (dialog->icon_name);
-      dialog->icon_name = NULL;
-    }
+  g_clear_pointer (&dialog->title,     g_free);
+  g_clear_pointer (&dialog->icon_name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

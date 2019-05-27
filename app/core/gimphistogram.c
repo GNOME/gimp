@@ -370,8 +370,7 @@ gimp_histogram_clear_values (GimpHistogram *histogram)
 
   if (histogram->priv->values)
     {
-      g_free (histogram->priv->values);
-      histogram->priv->values = NULL;
+      g_clear_pointer (&histogram->priv->values, g_free);
 
       g_object_notify (G_OBJECT (histogram), "values");
     }

@@ -819,11 +819,7 @@ gimp_tool_rectangle_finalize (GObject *object)
   GimpToolRectangle        *rectangle = GIMP_TOOL_RECTANGLE (object);
   GimpToolRectanglePrivate *private   = rectangle->private;
 
-  if (private->status_title)
-    {
-      g_free (private->status_title);
-      private->status_title = NULL;
-    }
+  g_clear_pointer (&private->status_title, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

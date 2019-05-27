@@ -200,31 +200,10 @@ gimp_dockable_dispose (GObject *object)
   if (dockable->p->context)
     gimp_dockable_set_context (dockable, NULL);
 
-  if (dockable->p->blurb)
-    {
-      if (dockable->p->blurb != dockable->p->name)
-        g_free (dockable->p->blurb);
-
-      dockable->p->blurb = NULL;
-    }
-
-  if (dockable->p->name)
-    {
-      g_free (dockable->p->name);
-      dockable->p->name = NULL;
-    }
-
-  if (dockable->p->icon_name)
-    {
-      g_free (dockable->p->icon_name);
-      dockable->p->icon_name = NULL;
-    }
-
-  if (dockable->p->help_id)
-    {
-      g_free (dockable->p->help_id);
-      dockable->p->help_id = NULL;
-    }
+  g_clear_pointer (&dockable->p->blurb,     g_free);
+  g_clear_pointer (&dockable->p->name,      g_free);
+  g_clear_pointer (&dockable->p->icon_name, g_free);
+  g_clear_pointer (&dockable->p->help_id,   g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -545,7 +524,7 @@ gimp_dockable_new (const gchar *name,
   if (blurb)
     dockable->p->blurb  = g_strdup (blurb);
   else
-    dockable->p->blurb  = dockable->p->name;
+    dockable->p->blurb  = g_strdup (dockable->p->name);
 
   gimp_help_set_help_data (GTK_WIDGET (dockable), NULL, help_id);
 

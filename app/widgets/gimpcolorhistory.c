@@ -147,8 +147,7 @@ gimp_color_history_finalize (GObject *object)
 {
   GimpColorHistory *history = GIMP_COLOR_HISTORY (object);
 
-  g_free (history->color_areas);
-  history->color_areas = NULL;
+  g_clear_pointer (&history->color_areas, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -167,52 +166,52 @@ gimp_color_history_set_property (GObject      *object,
       history->context = g_value_get_object (value);
       break;
     case PROP_HISTORY_SIZE:
-        {
-          GtkWidget *button;
-          gint       i;
+      {
+        GtkWidget *button;
+        gint       i;
 
-          /* Destroy previous color buttons. */
-          gtk_container_foreach (GTK_CONTAINER (history),
-                                 (GtkCallback) gtk_widget_destroy, NULL);
-          history->history_size = g_value_get_int (value);
-          gtk_table_resize (GTK_TABLE (history),
-                            2, (history->history_size + 1)/ 2);
-          gtk_table_set_row_spacings (GTK_TABLE (history), 2);
-          gtk_table_set_col_spacings (GTK_TABLE (history), 2);
-          history->color_areas = g_realloc_n (history->color_areas,
-                                              history->history_size,
-                                              sizeof (GtkWidget*));
-          for (i = 0; i < history->history_size; i++)
-            {
-              GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
-              gint    row, column;
+        /* Destroy previous color buttons. */
+        gtk_container_foreach (GTK_CONTAINER (history),
+                               (GtkCallback) gtk_widget_destroy, NULL);
+        history->history_size = g_value_get_int (value);
+        gtk_table_resize (GTK_TABLE (history),
+                          2, (history->history_size + 1)/ 2);
+        gtk_table_set_row_spacings (GTK_TABLE (history), 2);
+        gtk_table_set_col_spacings (GTK_TABLE (history), 2);
+        history->color_areas = g_realloc_n (history->color_areas,
+                                            history->history_size,
+                                            sizeof (GtkWidget*));
+        for (i = 0; i < history->history_size; i++)
+          {
+            GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
+            gint    row, column;
 
-              column = i % (history->history_size / 2);
-              row    = i / (history->history_size / 2);
+            column = i % (history->history_size / 2);
+            row    = i / (history->history_size / 2);
 
-              button = gtk_button_new ();
-              gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
-              gtk_table_attach_defaults (GTK_TABLE (history), button,
-                                         column, column + 1, row, row + 1);
-              gtk_widget_show (button);
+            button = gtk_button_new ();
+            gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
+            gtk_table_attach_defaults (GTK_TABLE (history), button,
+                                       column, column + 1, row, row + 1);
+            gtk_widget_show (button);
 
-              history->color_areas[i] = gimp_color_area_new (&black,
-                                                             GIMP_COLOR_AREA_SMALL_CHECKS,
-                                                             GDK_BUTTON2_MASK);
-              gimp_color_area_set_color_config (GIMP_COLOR_AREA (history->color_areas[i]),
-                                                history->context->gimp->config->color_management);
-              gtk_container_add (GTK_CONTAINER (button), history->color_areas[i]);
-              gtk_widget_show (history->color_areas[i]);
+            history->color_areas[i] = gimp_color_area_new (&black,
+                                                           GIMP_COLOR_AREA_SMALL_CHECKS,
+                                                           GDK_BUTTON2_MASK);
+            gimp_color_area_set_color_config (GIMP_COLOR_AREA (history->color_areas[i]),
+                                              history->context->gimp->config->color_management);
+            gtk_container_add (GTK_CONTAINER (button), history->color_areas[i]);
+            gtk_widget_show (history->color_areas[i]);
 
-              g_signal_connect (button, "clicked",
-                                G_CALLBACK (gimp_color_history_color_clicked),
-                                history);
+            g_signal_connect (button, "clicked",
+                              G_CALLBACK (gimp_color_history_color_clicked),
+                              history);
 
-              g_signal_connect (history->color_areas[i], "color-changed",
-                                G_CALLBACK (gimp_color_history_color_changed),
-                                GINT_TO_POINTER (i));
-            }
-        }
+            g_signal_connect (history->color_areas[i], "color-changed",
+                              G_CALLBACK (gimp_color_history_color_changed),
+                              GINT_TO_POINTER (i));
+          }
+      }
       break;
 
     default:

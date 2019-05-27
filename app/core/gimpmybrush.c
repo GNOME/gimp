@@ -109,11 +109,7 @@ gimp_mybrush_finalize (GObject *object)
 {
   GimpMybrush *brush = GIMP_MYBRUSH (object);
 
-  if (brush->priv->brush_json)
-    {
-      g_free (brush->priv->brush_json);
-      brush->priv->brush_json = NULL;
-    }
+  g_clear_pointer (&brush->priv->brush_json, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

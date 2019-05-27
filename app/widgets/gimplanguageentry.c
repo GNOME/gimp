@@ -226,11 +226,7 @@ gimp_language_entry_set_code (GimpLanguageEntry *entry,
 
   g_return_val_if_fail (GIMP_IS_LANGUAGE_ENTRY (entry), FALSE);
 
-  if (entry->code)
-    {
-      g_free (entry->code);
-      entry->code = NULL;
-    }
+  g_clear_pointer (&entry->code, g_free);
 
   if (! code || ! strlen (code))
     {

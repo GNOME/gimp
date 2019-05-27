@@ -245,11 +245,7 @@ gimp_text_options_finalize (GObject *object)
 {
   GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
 
-  if (options->language)
-    {
-      g_free (options->language);
-      options->language = NULL;
-    }
+  g_clear_pointer (&options->language, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

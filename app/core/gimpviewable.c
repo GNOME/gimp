@@ -1256,8 +1256,7 @@ gimp_viewable_set_icon_name (GimpViewable *viewable,
 
   private = GET_PRIVATE (viewable);
 
-  g_free (private->icon_name);
-  private->icon_name = NULL;
+  g_clear_pointer (&private->icon_name, g_free);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 

@@ -130,18 +130,10 @@ gimp_canvas_boundary_finalize (GObject *object)
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (object);
 
-  if (private->segs)
-    {
-      g_free (private->segs);
-      private->segs = NULL;
-      private->n_segs = 0;
-    }
+  g_clear_pointer (&private->segs, g_free);
+  private->n_segs = 0;
 
-  if (private->transform)
-    {
-      g_free (private->transform);
-      private->transform = NULL;
-    }
+  g_clear_pointer (&private->transform, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

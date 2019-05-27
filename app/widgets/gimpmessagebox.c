@@ -188,14 +188,12 @@ gimp_message_box_finalize (GObject *object)
   GimpMessageBox *box = GIMP_MESSAGE_BOX (object);
 
   if (box->idle_id)
-    g_source_remove (box->idle_id);
-  box->idle_id = 0;
-
-  if (box->icon_name)
     {
-      g_free (box->icon_name);
-      box->icon_name = NULL;
+      g_source_remove (box->idle_id);
+      box->idle_id = 0;
     }
+
+  g_clear_pointer (&box->icon_name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -102,11 +102,7 @@ gimp_string_action_finalize (GObject *object)
 {
   GimpStringAction *action = GIMP_STRING_ACTION (object);
 
-  if (action->value)
-    {
-      g_free (action->value);
-      action->value = NULL;
-    }
+  g_clear_pointer (&action->value, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

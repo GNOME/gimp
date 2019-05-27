@@ -121,18 +121,10 @@ gimp_canvas_polygon_finalize (GObject *object)
 {
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (object);
 
-  if (private->points)
-    {
-      g_free (private->points);
-      private->points = NULL;
-      private->n_points = 0;
-    }
+  g_clear_pointer (&private->points, g_free);
+  private->n_points = 0;
 
-  if (private->transform)
-    {
-      g_free (private->transform);
-      private->transform = NULL;
-    }
+  g_clear_pointer (&private->transform, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -151,8 +143,7 @@ gimp_canvas_polygon_set_property (GObject      *object,
       {
         GimpArray *array = g_value_get_boxed (value);
 
-        g_free (private->points);
-        private->points = NULL;
+        g_clear_pointer (&private->points, g_free);
         private->n_points = 0;
 
         if (array)

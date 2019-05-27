@@ -423,8 +423,7 @@ gimp_action_view_set_filter (GimpActionView *view,
   if (filter && ! strlen (filter))
     filter = NULL;
 
-  g_free (view->filter);
-  view->filter = NULL;
+  g_clear_pointer (&view->filter, g_free);
 
   if (filter)
     view->filter = g_utf8_casefold (filter, -1);

@@ -2457,8 +2457,7 @@ gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
     {
       if (layer->fs.segs)
         {
-          g_free (layer->fs.segs);
-          layer->fs.segs     = NULL;
+          g_clear_pointer (&layer->fs.segs, g_free);
           layer->fs.num_segs = 0;
         }
 
