@@ -212,8 +212,7 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
   GList     *iter;
 
   GtkWidget *outframe;
-  GtkWidget *frame;
-  GtkWidget *hbox;
+  GtkWidget *grid;
   GtkWidget *onoff;
   GtkWidget *delbutton;
   GtkWidget *image;
@@ -250,37 +249,35 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
     }
   g_list_free (rows);
 
-  /* Delete button top right of the frame. */
-  outframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (outframe), GTK_SHADOW_NONE);
-  gtk_frame_set_label_align (GTK_FRAME (outframe), 1.0, 1.0);
-
-  delbutton = gtk_button_new ();
-  g_object_set_data (G_OBJECT (delbutton), "extension", extension);
-  g_signal_connect (delbutton, "clicked",
-                    G_CALLBACK (gimp_extension_list_delete_clicked),
-                    list);
-  gtk_button_set_relief (GTK_BUTTON (delbutton), GTK_RELIEF_NONE);
-  image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
-                                        GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
-  gtk_container_add (GTK_CONTAINER (delbutton), image);
-  gtk_widget_show (image);
-  gtk_widget_show (delbutton);
-  gtk_frame_set_label_widget (GTK_FRAME (outframe), delbutton);
+  outframe = gtk_frame_new (gimp_extension_get_name (extension));
   gtk_container_add (GTK_CONTAINER (list), outframe);
+  g_object_set_data (G_OBJECT (outframe), "extension", extension);
   gtk_widget_show (outframe);
 
-  frame = gtk_frame_new (gimp_extension_get_name (extension));
-  gtk_container_add (GTK_CONTAINER (outframe), frame);
-  g_object_set_data (G_OBJECT (gtk_widget_get_parent (frame)),
-                     "extension", extension);
-  gtk_widget_show (frame);
+  grid = gtk_grid_new ();
+  gtk_grid_set_column_homogeneous (GTK_GRID (grid), FALSE);
+  gtk_grid_set_row_homogeneous (GTK_GRID (grid), FALSE);
+  gtk_container_add (GTK_CONTAINER (outframe), grid);
+  gtk_widget_show (grid);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+  /* On/Off switch. */
+  onoff = gtk_switch_new ();
+  gtk_widget_set_vexpand (onoff, FALSE);
+  gtk_widget_set_hexpand (onoff, FALSE);
+  gtk_widget_set_halign (onoff, GTK_ALIGN_CENTER);
+  gtk_widget_set_valign (onoff, GTK_ALIGN_CENTER);
+  gtk_switch_set_active (GTK_SWITCH (onoff),
+                         gimp_extension_manager_is_running (list->p->manager,
+                                                            extension));
+  gtk_widget_set_sensitive (onoff,
+                            gimp_extension_manager_can_run (list->p->manager,
+                                                            extension));
+  g_signal_connect (onoff, "notify::active",
+                    G_CALLBACK (gimp_extension_switch_active), extension);
+  gtk_grid_attach (GTK_GRID (grid), onoff, 0, 0, 1, 1);
+  gtk_widget_show (onoff);
 
+  /* Short description. */
   if (gimp_extension_get_comment (extension))
     {
       GtkWidget     *desc = gtk_text_view_new ();
@@ -291,23 +288,32 @@ gimp_extension_list_ext_installed (GimpExtensionManager *manager,
                                 gimp_extension_get_comment (extension),
                                 -1);
       gtk_text_view_set_editable (GTK_TEXT_VIEW (desc), FALSE);
-      gtk_box_pack_start (GTK_BOX (hbox), desc, TRUE, TRUE, 1);
+      gtk_widget_set_vexpand (desc, TRUE);
+      gtk_widget_set_hexpand (desc, TRUE);
+      gtk_grid_attach (GTK_GRID (grid), desc, 1, 0, 1, 1);
       gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (desc),
                                    GTK_WRAP_WORD_CHAR);
       gtk_widget_show (desc);
     }
 
-  onoff = gtk_switch_new ();
-  gtk_switch_set_active (GTK_SWITCH (onoff),
-                         gimp_extension_manager_is_running (list->p->manager,
-                                                            extension));
-  gtk_widget_set_sensitive (onoff,
-                            gimp_extension_manager_can_run (list->p->manager,
-                                                            extension));
-  g_signal_connect (onoff, "notify::active",
-                    G_CALLBACK (gimp_extension_switch_active), extension);
-  gtk_box_pack_end (GTK_BOX (hbox), onoff, FALSE, FALSE, 1);
-  gtk_widget_show (onoff);
+  /* Delete button. */
+  delbutton = gtk_button_new ();
+  g_object_set_data (G_OBJECT (delbutton), "extension", extension);
+  g_signal_connect (delbutton, "clicked",
+                    G_CALLBACK (gimp_extension_list_delete_clicked),
+                    list);
+  gtk_button_set_relief (GTK_BUTTON (delbutton), GTK_RELIEF_NONE);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+  gtk_widget_set_vexpand (delbutton, FALSE);
+  gtk_widget_set_hexpand (delbutton, FALSE);
+  gtk_widget_set_halign (delbutton, GTK_ALIGN_END);
+  gtk_widget_set_valign (delbutton, GTK_ALIGN_START);
+  gtk_container_add (GTK_CONTAINER (delbutton), image);
+  gtk_widget_show (image);
+  gtk_grid_attach (GTK_GRID (grid), delbutton, 2, 0, 1, 1);
+  gtk_widget_show (delbutton);
 }
 
 static void
@@ -379,7 +385,8 @@ gimp_extension_row_activated (GtkListBox    *box,
                               GtkListBoxRow *row,
                               gpointer       user_data)
 {
+  GtkWidget *frame = gtk_bin_get_child (GTK_BIN (row));
+
   g_signal_emit (box, signals[EXTENSION_ACTIVATED], 0,
-                 g_object_get_data (G_OBJECT (row),
-                                    "extension"));
+                 g_object_get_data (G_OBJECT (frame), "extension"));
 }
