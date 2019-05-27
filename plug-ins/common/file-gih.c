@@ -256,6 +256,14 @@ run (const gchar      *name,
 
               g_free (name);
             }
+
+          parasite = gimp_image_get_parasite (orig_image_ID,
+                                              "gimp-brush-pipe-spacing");
+          if (parasite)
+            {
+              info.spacing = atoi (gimp_parasite_data (parasite));
+              gimp_parasite_free (parasite);
+            }
           break;
 
         default:
@@ -344,6 +352,7 @@ run (const gchar      *name,
         {
           GimpParam *save_retvals;
           gint       n_save_retvals;
+          gchar      spacing[8];
           gchar     *paramstring;
 
           paramstring = gimp_pixpipe_params_build (&gihparams);
@@ -369,6 +378,15 @@ run (const gchar      *name,
                                             GIMP_PARASITE_PERSISTENT,
                                             strlen (info.description) + 1,
                                             info.description);
+              gimp_image_attach_parasite (orig_image_ID, parasite);
+              gimp_parasite_free (parasite);
+
+              g_snprintf (spacing, sizeof (spacing), "%d",
+                          info.spacing);
+
+              parasite = gimp_parasite_new ("gimp-brush-pipe-spacing",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            strlen (spacing) + 1, spacing);
               gimp_image_attach_parasite (orig_image_ID, parasite);
               gimp_parasite_free (parasite);
 

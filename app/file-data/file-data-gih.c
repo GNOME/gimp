@@ -171,6 +171,7 @@ file_gih_pipe_to_image (Gimp          *gimp,
   const gchar       *name;
   GimpImageBaseType  base_type;
   GimpParasite      *parasite;
+  gchar              spacing[8];
   gint               i;
 
   if (gimp_brush_get_pixmap (pipe->current))
@@ -186,6 +187,15 @@ file_gih_pipe_to_image (Gimp          *gimp,
   parasite = gimp_parasite_new ("gimp-brush-pipe-name",
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (name) + 1, name);
+  gimp_image_parasite_attach (image, parasite);
+  gimp_parasite_free (parasite);
+
+  g_snprintf (spacing, sizeof (spacing), "%d",
+              gimp_brush_get_spacing (GIMP_BRUSH (pipe)));
+
+  parasite = gimp_parasite_new ("gimp-brush-pipe-spacing",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (spacing) + 1, spacing);
   gimp_image_parasite_attach (image, parasite);
   gimp_parasite_free (parasite);
 
