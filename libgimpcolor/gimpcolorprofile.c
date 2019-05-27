@@ -1544,11 +1544,13 @@ gimp_color_profile_get_lcms_format (const Babl *format,
   const Babl *output_format = NULL;
   const Babl *type;
   const Babl *model;
+  const Babl *space;
   gboolean    has_alpha;
-  gboolean    rgb    = FALSE;
-  gboolean    gray   = FALSE;
-  gboolean    cmyk   = FALSE;
-  gboolean    linear = FALSE;
+  gboolean    rgb      = FALSE;
+  gboolean    gray     = FALSE;
+  gboolean    cmyk     = FALSE;
+  gboolean    linear   = FALSE;
+  gboolean    srgb_trc = FALSE;
 
   g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (lcms_format != NULL, NULL);
@@ -1556,6 +1558,7 @@ gimp_color_profile_get_lcms_format (const Babl *format,
   has_alpha = babl_format_has_alpha (format);
   type      = babl_format_get_type (format, 0);
   model     = babl_format_get_model (format);
+  space     = babl_format_get_space (format);
 
   if (format == babl_format ("cairo-RGB24"))
     {
@@ -1578,6 +1581,13 @@ gimp_color_profile_get_lcms_format (const Babl *format,
       rgb    = TRUE;
       linear = TRUE;
     }
+  else if (model == babl_model ("R~G~B~")  ||
+           model == babl_model ("R~G~B~A") ||
+           model == babl_model ("R~aG~aB~aA"))
+    {
+      rgb      = TRUE;
+      srgb_trc = TRUE;
+    }
   else if (model == babl_model ("R'G'B'")  ||
            model == babl_model ("R'G'B'A") ||
            model == babl_model ("R'aG'aB'aA"))
@@ -1590,6 +1600,13 @@ gimp_color_profile_get_lcms_format (const Babl *format,
     {
       gray   = TRUE;
       linear = TRUE;
+    }
+  else if (model == babl_model ("Y~")  ||
+           model == babl_model ("Y~A") ||
+           model == babl_model ("Y~aA"))
+    {
+      gray     = TRUE;
+      srgb_trc = TRUE;
     }
   else if (model == babl_model ("Y'")  ||
            model == babl_model ("Y'A") ||
@@ -1614,13 +1631,13 @@ gimp_color_profile_get_lcms_format (const Babl *format,
         {
           *lcms_format = TYPE_RGBA_FLT;
 
-          return babl_format ("RGBA float");
+          return babl_format_with_space ("RGBA float", space);
         }
       else
         {
           *lcms_format = TYPE_RGB_FLT;
 
-          return babl_format ("RGB float");
+          return babl_format_with_space ("RGB float", space);
         }
     }
   else if (babl_format_is_palette (format))
@@ -1629,13 +1646,13 @@ gimp_color_profile_get_lcms_format (const Babl *format,
         {
           *lcms_format = TYPE_RGBA_8;
 
-          return babl_format ("R'G'B'A u8");
+          return babl_format_with_space ("R'G'B'A u8", space);
         }
       else
         {
           *lcms_format = TYPE_RGB_8;
 
-          return babl_format ("R'G'B' u8");
+          return babl_format_with_space ("R'G'B' u8", space);
         }
     }
   else
@@ -1663,18 +1680,28 @@ gimp_color_profile_get_lcms_format (const Babl *format,
                 *lcms_format = TYPE_RGBA_##lcms_t;                             \
                                                                                \
                 if (linear)                                                    \
-                  output_format = babl_format ("RGBA " babl_t);                \
+                  output_format = babl_format_with_space ("RGBA " babl_t,      \
+                                                          space);              \
+                else if (srgb_trc)                                             \
+                  output_format = babl_format_with_space ("R~G~B~A " babl_t,   \
+                                                          space);              \
                 else                                                           \
-                  output_format = babl_format ("R'G'B'A " babl_t);             \
+                  output_format = babl_format_with_space ("R'G'B'A " babl_t,   \
+                                                          space);              \
               }                                                                \
             else if (gray)                                                     \
               {                                                                \
                 *lcms_format = TYPE_GRAYA_##lcms_t;                            \
                                                                                \
                 if (linear)                                                    \
-                  output_format = babl_format ("YA " babl_t);                  \
+                  output_format = babl_format_with_space ("YA " babl_t,        \
+                                                          space);              \
+                else if (srgb_trc)                                             \
+                  output_format = babl_format_with_space ("Y~A " babl_t,       \
+                                                          space);              \
                 else                                                           \
-                  output_format = babl_format ("Y'A " babl_t);                 \
+                  output_format = babl_format_with_space ("Y'A " babl_t,       \
+                                                          space);              \
               }                                                                \
             else if (cmyk)                                                     \
               {                                                                \
@@ -1690,18 +1717,28 @@ gimp_color_profile_get_lcms_format (const Babl *format,
                 *lcms_format = TYPE_RGB_##lcms_t;                              \
                                                                                \
                 if (linear)                                                    \
-                  output_format = babl_format ("RGB " babl_t);                 \
+                  output_format = babl_format_with_space ("RGB " babl_t,       \
+                                                          space);              \
+                else if (srgb_trc)                                             \
+                  output_format = babl_format_with_space ("R~G~B~ " babl_t,    \
+                                                          space);              \
                 else                                                           \
-                  output_format = babl_format ("R'G'B' " babl_t);              \
+                  output_format = babl_format_with_space ("R'G'B' " babl_t,    \
+                                                          space);              \
               }                                                                \
             else if (gray)                                                     \
               {                                                                \
                 *lcms_format = TYPE_GRAY_##lcms_t;                             \
                                                                                \
                 if (linear)                                                    \
-                  output_format = babl_format ("Y " babl_t);                   \
+                  output_format = babl_format_with_space ("Y " babl_t,         \
+                                                          space);              \
+                else if (srgb_trc)                                             \
+                  output_format = babl_format_with_space ("Y~ " babl_t,        \
+                                                          space);              \
                 else                                                           \
-                  output_format = babl_format ("Y' " babl_t);                  \
+                  output_format = babl_format_with_space ("Y' " babl_t,        \
+                                                          space);              \
               }                                                                \
             else if (cmyk)                                                     \
               {                                                                \
