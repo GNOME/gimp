@@ -27,6 +27,7 @@
 
 #include "paint-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
 
 #include "core/gimp.h"
@@ -178,25 +179,11 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                              GEGL_RECTANGLE (paint_area_offset_x,
                                              paint_area_offset_y,
                                              0, 0));
+
       if (op)
         {
-          GeglNode    *graph, *source, *target;
-
-          graph    = gegl_node_new ();
-          source   = gegl_node_new_child (graph,
-                                          "operation", "gegl:buffer-source",
-                                          "buffer", paint_buffer,
-                                          NULL);
-          gegl_node_add_child (graph, op);
-          target  = gegl_node_new_child (graph,
-                                         "operation", "gegl:write-buffer",
-                                         "buffer", paint_buffer,
-                                         NULL);
-
-          gegl_node_link_many (source, op, target, NULL);
-          gegl_node_process (target);
-
-          g_object_unref (graph);
+          gimp_gegl_apply_operation (paint_buffer, NULL, NULL, op,
+                                     paint_buffer, NULL, FALSE);
         }
     }
   else if (options->clone_type == GIMP_CLONE_PATTERN)
