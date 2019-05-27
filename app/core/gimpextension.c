@@ -255,6 +255,64 @@ gimp_extension_get_description (GimpExtension *extension)
     as_app_get_description (extension->p->app, NULL);
 }
 
+GdkPixbuf *
+gimp_extension_get_screenshot (GimpExtension  *extension,
+                               gint            width,
+                               gint            height,
+                               const gchar   **caption)
+{
+  GdkPixbuf    *pixbuf = NULL;
+  AsScreenshot *screenshot;
+
+  g_return_val_if_fail (extension->p->app != NULL, NULL);
+
+  screenshot = as_app_get_screenshot_default (extension->p->app);
+  if (screenshot)
+    {
+      AsImage *image;
+
+      image = as_screenshot_get_image_for_locale (screenshot, g_getenv ("LANGUAGE"), width, height);
+      if (! image)
+        image = as_screenshot_get_image_for_locale (screenshot, NULL, width, height);
+
+      pixbuf = as_image_get_pixbuf (image);
+      if (pixbuf)
+        {
+          g_object_ref (pixbuf);
+        }
+      else
+        {
+          GFile            *file;
+          GFileInputStream *istream;
+          GError           *error = NULL;
+
+          file = g_file_new_for_uri (as_image_get_url (image));
+          istream = g_file_read (file, NULL, &error);
+          if (istream)
+            {
+              pixbuf = gdk_pixbuf_new_from_stream (G_INPUT_STREAM (istream), NULL, &error);
+              g_object_unref (istream);
+            }
+
+          if (error)
+            {
+              g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+              g_error_free (error);
+            }
+          g_object_unref (file);
+        }
+
+      if (caption)
+        {
+          *caption = as_screenshot_get_caption (screenshot, g_getenv ("LANGUAGE"));
+          if (*caption == NULL)
+            *caption = as_screenshot_get_caption (screenshot, NULL);
+        }
+    }
+
+  return pixbuf;
+}
+
 const gchar *
 gimp_extension_get_path (GimpExtension *extension)
 {

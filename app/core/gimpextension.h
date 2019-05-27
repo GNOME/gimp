@@ -55,6 +55,10 @@ GimpExtension * gimp_extension_new                     (const gchar    *dir,
 const gchar   * gimp_extension_get_name                (GimpExtension  *extension);
 const gchar   * gimp_extension_get_comment             (GimpExtension  *extension);
 const gchar   * gimp_extension_get_description         (GimpExtension  *extension);
+GdkPixbuf     * gimp_extension_get_screenshot          (GimpExtension  *extension,
+                                                        gint            width,
+                                                        gint            height,
+                                                        const gchar   **caption);
 const gchar   * gimp_extension_get_path                (GimpExtension  *extension);
 
 gchar         * gimp_extension_get_markup_description  (GimpExtension  *extension);
