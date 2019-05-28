@@ -1640,7 +1640,7 @@ gimp_color_profile_get_lcms_format (const Babl *format,
     }
   else
     {
-      g_printerr ("format: %s\n"
+      g_printerr ("format not supported: %s\n"
                   "has_alpha = %s\n"
                   "type = %s\n"
                   "model = %s\n",
