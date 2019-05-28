@@ -126,13 +126,27 @@ gimp_init_signal_handlers (gchar **backtrace_file)
 static LONG WINAPI
 gimp_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
 {
-  /* Just in case, so that we don't loop or anything similar, just
-   * re-establish previous handler.
-   */
-  SetUnhandledExceptionFilter (g_prevExceptionFilter);
+  EXCEPTION_RECORD *er;
+  int               fatal;
 
-  /* Now process the exception. */
-  gimp_fatal_error ("unhandled exception");
+  if (pExceptionInfo == NULL ||
+      pExceptionInfo->ExceptionRecord == NULL)
+    return EXCEPTION_CONTINUE_SEARCH;
+
+  er = pExceptionInfo->ExceptionRecord;
+  fatal = I_RpcExceptionFilter (er->ExceptionCode);
+
+  /* IREF() returns EXCEPTION_CONTINUE_SEARCH for fatal exceptions */
+  if (fatal == EXCEPTION_CONTINUE_SEARCH)
+    {
+      /* Just in case, so that we don't loop or anything similar, just
+       * re-establish previous handler.
+       */
+      SetUnhandledExceptionFilter (g_prevExceptionFilter);
+
+      /* Now process the exception. */
+      gimp_fatal_error ("unhandled exception");
+    }
 
   if (g_prevExceptionFilter && g_prevExceptionFilter != gimp_sigfatal_handler)
     return g_prevExceptionFilter (pExceptionInfo);
