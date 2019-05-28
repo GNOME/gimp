@@ -99,6 +99,9 @@ libpsapi = -lpsapi
 # for GimpBacktrace
 libdbghelp = -ldbghelp
 
+# for I_RpcExceptionFilter()
+librpcrt4 = -lrpcrt4
+
 if HAVE_EXCHNDL
 exchndl = -lexchndl
 endif
@@ -198,7 +201,8 @@ gimpconsoleldadd = \
 	$(libm)							\
 	$(libdl)						\
 	$(libpsapi)						\
-	$(libdbghelp)
+	$(libdbghelp)						\
+	$(librpcrt4)
 
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)						\
