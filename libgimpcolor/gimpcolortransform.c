@@ -217,7 +217,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
                                                     &error);
   if (! priv->src_format)
     {
-      g_printerr ("%s: error making format: %s\n",
+      g_printerr ("%s: error making src format: %s\n",
                   G_STRFUNC, error->message);
       g_clear_error (&error);
     }
@@ -228,7 +228,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
                                                      &error);
   if (! priv->dest_format)
     {
-      g_printerr ("%s: error making format: %s\n",
+      g_printerr ("%s: error making dest format: %s\n",
                   G_STRFUNC, error->message);
       g_clear_error (&error);
     }
