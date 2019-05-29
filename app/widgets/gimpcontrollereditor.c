@@ -280,6 +280,7 @@ gimp_controller_editor_constructed (GObject *object)
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw),
                                        GTK_SHADOW_IN);
+  gtk_widget_set_size_request (sw, 400, 300);
   gtk_container_add (GTK_CONTAINER (sw), tv);
   gtk_widget_show (tv);
 
