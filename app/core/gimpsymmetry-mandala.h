@@ -46,11 +46,6 @@ struct _GimpMandala
 
   GimpGuide    *horizontal_guide;
   GimpGuide    *vertical_guide;
-
-  GList        *ops;
-  gint          cached_size;
-  gint          cached_paint_width;
-  gint          cached_paint_height;
 };
 
 struct _GimpMandalaClass

@@ -81,10 +81,6 @@ static void       gimp_mandala_guide_position_cb  (GObject      *object,
 static void       gimp_mandala_update_strokes     (GimpSymmetry *mandala,
                                                    GimpDrawable *drawable,
                                                    GimpCoords   *origin);
-static GeglNode * gimp_mandala_get_operation      (GimpSymmetry *mandala,
-                                                   gint          stroke,
-                                                   gint          paint_width,
-                                                   gint          paint_height);
 static void       gimp_mandala_get_transform      (GimpSymmetry *mandala,
                                                    gint          stroke,
                                                    gdouble      *angle,
@@ -116,7 +112,6 @@ gimp_mandala_class_init (GimpMandalaClass *klass)
 
   symmetry_class->label             = _("Mandala");
   symmetry_class->update_strokes    = gimp_mandala_update_strokes;
-  symmetry_class->get_operation     = gimp_mandala_get_operation;
   symmetry_class->get_transform     = gimp_mandala_get_transform;
   symmetry_class->active_changed    = gimp_mandala_active_changed;
 
@@ -183,20 +178,6 @@ gimp_mandala_finalize (GObject *object)
 
   g_clear_object (&mandala->horizontal_guide);
   g_clear_object (&mandala->vertical_guide);
-
-  if (mandala->ops)
-    {
-      GList *iter;
-
-      for (iter = mandala->ops; iter; iter = g_list_next (iter))
-        {
-          if (iter->data)
-            g_object_unref (G_OBJECT (iter->data));
-        }
-
-      g_list_free (mandala->ops);
-      mandala->ops = NULL;
-    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -493,68 +474,6 @@ gimp_mandala_update_strokes (GimpSymmetry *sym,
   sym->strokes = g_list_reverse (sym->strokes);
 
   g_signal_emit_by_name (sym, "strokes-updated", sym->image);
-}
-
-static GeglNode *
-gimp_mandala_get_operation (GimpSymmetry *sym,
-                            gint          stroke,
-                            gint          paint_width,
-                            gint          paint_height)
-{
-  GimpMandala *mandala = GIMP_MANDALA (sym);
-  GeglNode    *op      = NULL;
-  gint         i;
-
-  if (! mandala->disable_transformation &&
-      stroke != 0                       &&
-      paint_width != 0                  &&
-      paint_height != 0)
-    {
-      if (mandala->size != mandala->cached_size      ||
-          mandala->cached_paint_width != paint_width ||
-          mandala->cached_paint_height != paint_height)
-        {
-          GList *iter;
-
-          if (mandala->ops)
-            {
-              for (iter = mandala->ops; iter; iter = g_list_next (iter))
-                {
-                  if (iter->data)
-                    g_object_unref (G_OBJECT (iter->data));
-                }
-
-              g_list_free (mandala->ops);
-              mandala->ops = NULL;
-            }
-
-          mandala->ops = g_list_prepend (mandala->ops, NULL);
-
-          for (i = 1; i < mandala->size; i++)
-            {
-              op = gegl_node_new_child (NULL,
-                                        "operation", "gegl:rotate",
-                                        "origin-x",
-                                        (gdouble) paint_width / 2.0,
-                                        "origin-y",
-                                        (gdouble) paint_height / 2.0,
-                                        "degrees",
-                                        i * 360.0 / (gdouble) mandala->size,
-                                        NULL);
-              mandala->ops = g_list_prepend (mandala->ops, op);
-            }
-
-          mandala->ops = g_list_reverse (mandala->ops);
-
-          mandala->cached_size         = mandala->size;
-          mandala->cached_paint_width  = paint_width;
-          mandala->cached_paint_height = paint_height;
-        }
-
-      op = g_list_nth_data (mandala->ops, stroke);
-    }
-
-  return op;
 }
 
 static void
