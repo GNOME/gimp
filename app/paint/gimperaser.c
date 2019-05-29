@@ -38,26 +38,21 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_eraser_paint            (GimpPaintCore             *paint_core,
-                                            GimpDrawable              *drawable,
-                                            GimpPaintOptions          *paint_options,
-                                            GimpSymmetry              *sym,
-                                            GimpPaintState             paint_state,
-                                            guint32                    time);
-
-static void   gimp_eraser_get_paint_params (GimpPaintbrush            *paintbrush,
-                                            GimpDrawable              *drawable,
-                                            GimpPaintOptions          *paint_options,
-                                            GimpSymmetry              *sym,
-                                            GimpLayerMode             *paint_mode,
-                                            GimpPaintApplicationMode  *paint_appl_mode,
-                                            const GimpTempBuf        **paint_pixmap,
-                                            GimpRGB                   *paint_color);
+static gboolean   gimp_eraser_get_color_history_color (GimpPaintbrush            *paintbrush,
+                                                       GimpDrawable              *drawable,
+                                                       GimpPaintOptions          *paint_options,
+                                                       GimpRGB                   *color);
+static void       gimp_eraser_get_paint_params        (GimpPaintbrush            *paintbrush,
+                                                       GimpDrawable              *drawable,
+                                                       GimpPaintOptions          *paint_options,
+                                                       GimpSymmetry              *sym,
+                                                       GimpLayerMode             *paint_mode,
+                                                       GimpPaintApplicationMode  *paint_appl_mode,
+                                                       const GimpTempBuf        **paint_pixmap,
+                                                       GimpRGB                   *paint_color);
 
 
 G_DEFINE_TYPE (GimpEraser, gimp_eraser, GIMP_TYPE_PAINTBRUSH)
-
-#define parent_class gimp_eraser_parent_class
 
 
 void
@@ -75,12 +70,10 @@ gimp_eraser_register (Gimp                      *gimp,
 static void
 gimp_eraser_class_init (GimpEraserClass *klass)
 {
-  GimpPaintCoreClass  *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpPaintbrushClass *paintbrush_class = GIMP_PAINTBRUSH_CLASS (klass);
 
-  paint_core_class->paint            = gimp_eraser_paint;
-
-  paintbrush_class->get_paint_params = gimp_eraser_get_paint_params;
+  paintbrush_class->get_color_history_color = gimp_eraser_get_color_history_color;
+  paintbrush_class->get_paint_params        = gimp_eraser_get_paint_params;
 }
 
 static void
@@ -88,41 +81,25 @@ gimp_eraser_init (GimpEraser *eraser)
 {
 }
 
-static void
-gimp_eraser_paint (GimpPaintCore    *paint_core,
-                   GimpDrawable     *drawable,
-                   GimpPaintOptions *paint_options,
-                   GimpSymmetry     *sym,
-                   GimpPaintState    paint_state,
-                   guint32           time)
+static gboolean
+gimp_eraser_get_color_history_color (GimpPaintbrush   *paintbrush,
+                                     GimpDrawable     *drawable,
+                                     GimpPaintOptions *paint_options,
+                                     GimpRGB          *color)
 {
-  switch (paint_state)
+  /* Erasing on a drawable without alpha is equivalent to
+   * drawing with background color. So let's save history.
+   */
+  if (! gimp_drawable_has_alpha (drawable))
     {
-    case GIMP_PAINT_STATE_INIT:
-        {
-          if (! gimp_drawable_has_alpha (drawable))
-            {
-              /* Erasing on a drawable without alpha is equivalent to
-               * drawing with background color. So let's save history.
-               */
-              GimpContext *context = GIMP_CONTEXT (paint_options);
-              GimpRGB      background;
+      GimpContext *context = GIMP_CONTEXT (paint_options);
 
-              gimp_context_get_background (context, &background);
-              gimp_palettes_add_color_history (context->gimp,
-                                               &background);
+      gimp_context_get_background (context, color);
 
-            }
-        }
-      break;
-
-    default:
-      break;
+      return TRUE;
     }
 
-  GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
-                                               paint_options, sym,
-                                               paint_state, time);
+  return FALSE;
 }
 
 static void
