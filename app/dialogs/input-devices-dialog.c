@@ -35,6 +35,9 @@
 #include "gimp-intl.h"
 
 
+#define RESPONSE_SAVE 1
+
+
 /*  local function prototypes  */
 
 static void   input_devices_dialog_response (GtkWidget *dialog,
@@ -59,15 +62,10 @@ input_devices_dialog_new (Gimp *gimp)
                             gimp_standard_help_func,
                             GIMP_HELP_INPUT_DEVICES,
 
+                            _("_Save"),  RESPONSE_SAVE,
                             _("_Close"), GTK_RESPONSE_CLOSE,
-                            _("_Save"),  GTK_RESPONSE_OK,
 
                             NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CLOSE,
-                                           -1);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (input_devices_dialog_response),
@@ -93,7 +91,7 @@ input_devices_dialog_response (GtkWidget *dialog,
 {
   switch (response_id)
     {
-    case GTK_RESPONSE_OK:
+    case RESPONSE_SAVE:
       gimp_devices_save (gimp, TRUE);
       break;
 
