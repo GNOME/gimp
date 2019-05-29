@@ -28,6 +28,8 @@ GeglNode * gimp_gegl_create_apply_opacity_node (GeglBuffer            *mask,
                                                 gint                   mask_offset_x,
                                                 gint                   mask_offset_y,
                                                 gdouble                opacity);
+GeglNode * gimp_gegl_create_transform_node     (const GimpMatrix3     *matrix);
+
 GeglNode * gimp_gegl_add_buffer_source         (GeglNode              *parent,
                                                 GeglBuffer            *buffer,
                                                 gint                   offset_x,

@@ -126,6 +126,22 @@ gimp_gegl_create_apply_opacity_node (GeglBuffer *mask,
 }
 
 GeglNode *
+gimp_gegl_create_transform_node (const GimpMatrix3 *matrix)
+{
+  GeglNode *node;
+
+  g_return_val_if_fail (matrix != NULL, NULL);
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gegl:transform",
+                              NULL);
+
+  gimp_gegl_node_set_matrix (node, matrix);
+
+  return node;
+}
+
+GeglNode *
 gimp_gegl_add_buffer_source (GeglNode   *parent,
                              GeglBuffer *buffer,
                              gint        offset_x,
