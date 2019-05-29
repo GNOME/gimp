@@ -169,21 +169,28 @@ gimp_clone_motion (GimpSourceCore   *source_core,
 
   if (gimp_source_core_use_source (source_core, source_options))
     {
-      gimp_gegl_buffer_copy (src_buffer,
-                             GEGL_RECTANGLE (src_rect->x,
-                                             src_rect->y,
-                                             paint_area_width,
-                                             paint_area_height),
-                             GEGL_ABYSS_NONE,
-                             paint_buffer,
-                             GEGL_RECTANGLE (paint_area_offset_x,
-                                             paint_area_offset_y,
-                                             0, 0));
-
-      if (op)
+      if (! op)
         {
-          gimp_gegl_apply_operation (paint_buffer, NULL, NULL, op,
-                                     paint_buffer, NULL, FALSE);
+          gimp_gegl_buffer_copy (src_buffer,
+                                 GEGL_RECTANGLE (src_rect->x,
+                                                 src_rect->y,
+                                                 paint_area_width,
+                                                 paint_area_height),
+                                 GEGL_ABYSS_NONE,
+                                 paint_buffer,
+                                 GEGL_RECTANGLE (paint_area_offset_x,
+                                                 paint_area_offset_y,
+                                                 0, 0));
+        }
+      else
+        {
+          gimp_gegl_apply_operation (src_buffer, NULL, NULL, op,
+                                     paint_buffer,
+                                     GEGL_RECTANGLE (paint_area_offset_x,
+                                                     paint_area_offset_y,
+                                                     paint_area_width,
+                                                     paint_area_height),
+                                     FALSE);
         }
     }
   else if (options->clone_type == GIMP_CLONE_PATTERN)

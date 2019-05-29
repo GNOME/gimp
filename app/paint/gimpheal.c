@@ -560,16 +560,23 @@ gimp_heal_motion (GimpSourceCore   *source_core,
     }
 
   /*  heal should work in perceptual space, use R'G'B' instead of RGB  */
-  src_copy = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+  src_copy = gegl_buffer_new (GEGL_RECTANGLE (paint_area_offset_x,
+                                              paint_area_offset_y,
                                               src_rect->width,
                                               src_rect->height),
                               babl_format ("R'G'B'A float"));
 
-  gimp_gegl_buffer_copy (src_buffer, src_rect, GEGL_ABYSS_NONE,
-                         src_copy,
-                         GEGL_RECTANGLE (0, 0,
-                                         src_rect->width,
-                                         src_rect->height));
+  if (! op)
+    {
+      gimp_gegl_buffer_copy (src_buffer, src_rect, GEGL_ABYSS_NONE,
+                             src_copy, gegl_buffer_get_extent (src_copy));
+    }
+  else
+    {
+      gimp_gegl_apply_operation (src_buffer, NULL, NULL, op,
+                                 src_copy, gegl_buffer_get_extent (src_copy),
+                                 FALSE);
+    }
 
   if (src_options->sample_merged)
     {
@@ -610,16 +617,7 @@ gimp_heal_motion (GimpSourceCore   *source_core,
     mask_off_y = (y < 0) ? -y : 0;
   }
 
-  if (op)
-    {
-      gimp_gegl_apply_operation (src_copy, NULL, NULL, op,
-                                 src_copy, NULL, FALSE);
-    }
-
-  gimp_heal (src_copy,
-             GEGL_RECTANGLE (0, 0,
-                             gegl_buffer_get_width  (src_copy),
-                             gegl_buffer_get_height (src_copy)),
+  gimp_heal (src_copy, gegl_buffer_get_extent (src_copy),
              paint_buffer,
              GEGL_RECTANGLE (paint_area_offset_x,
                              paint_area_offset_y,
