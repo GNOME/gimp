@@ -98,6 +98,9 @@ void           gimp_symmetry_get_transform  (GimpSymmetry       *symmetry,
                                              gint                stroke,
                                              gdouble            *angle,
                                              gboolean           *reflect);
+void           gimp_symmetry_get_matrix     (GimpSymmetry       *symmetry,
+                                             gint                stroke,
+                                             GimpMatrix3        *matrix);
 
 gchar        * gimp_symmetry_parasite_name  (GType               type);
 GimpParasite * gimp_symmetry_to_parasite    (const GimpSymmetry *symmetry);
