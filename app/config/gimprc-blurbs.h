@@ -471,7 +471,7 @@ _("Sets the folder for temporary storage. Files will appear here " \
   "is best if this folder not be one that is shared by other users.")
 
 #define THEME_BLURB \
-"The name of the theme to use."
+_("The name of the theme to use.")
 
 #define THEME_PATH_BLURB \
 "Sets the theme search path."
