@@ -46,21 +46,25 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_paintbrush_paint                 (GimpPaintCore             *paint_core,
-                                                     GimpDrawable              *drawable,
-                                                     GimpPaintOptions          *paint_options,
-                                                     GimpSymmetry              *sym,
-                                                     GimpPaintState             paint_state,
-                                                     guint32                    time);
+static void       gimp_paintbrush_paint                        (GimpPaintCore             *paint_core,
+                                                                GimpDrawable              *drawable,
+                                                                GimpPaintOptions          *paint_options,
+                                                                GimpSymmetry              *sym,
+                                                                GimpPaintState             paint_state,
+                                                                guint32                    time);
 
-static void   gimp_paintbrush_real_get_paint_params (GimpPaintbrush            *paintbrush,
-                                                     GimpDrawable              *drawable,
-                                                     GimpPaintOptions          *paint_options,
-                                                     GimpSymmetry              *sym,
-                                                     GimpLayerMode             *paint_mode,
-                                                     GimpPaintApplicationMode  *paint_appl_mode,
-                                                     const GimpTempBuf        **paint_pixmap,
-                                                     GimpRGB                   *paint_color);
+static gboolean   gimp_paintbrush_real_get_color_history_color (GimpPaintbrush            *paintbrush,
+                                                                GimpDrawable              *drawable,
+                                                                GimpPaintOptions          *paint_options,
+                                                                GimpRGB                   *color);
+static void       gimp_paintbrush_real_get_paint_params        (GimpPaintbrush            *paintbrush,
+                                                                GimpDrawable              *drawable,
+                                                                GimpPaintOptions          *paint_options,
+                                                                GimpSymmetry              *sym,
+                                                                GimpLayerMode             *paint_mode,
+                                                                GimpPaintApplicationMode  *paint_appl_mode,
+                                                                const GimpTempBuf        **paint_pixmap,
+                                                                GimpRGB                   *paint_color);
 
 
 G_DEFINE_TYPE (GimpPaintbrush, gimp_paintbrush, GIMP_TYPE_BRUSH_CORE)
@@ -88,6 +92,7 @@ gimp_paintbrush_class_init (GimpPaintbrushClass *klass)
 
   brush_core_class->handles_changing_brush = TRUE;
 
+  klass->get_color_history_color           = gimp_paintbrush_real_get_color_history_color;
   klass->get_paint_params                  = gimp_paintbrush_real_get_paint_params;
 }
 
@@ -104,24 +109,21 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
                        GimpPaintState    paint_state,
                        guint32           time)
 {
+  GimpPaintbrush *paintbrush = GIMP_PAINTBRUSH (paint_core);
+
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
       {
-        GimpContext   *context    = GIMP_CONTEXT (paint_options);
-        GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_core);
-        GimpDynamics  *dynamics   = gimp_context_get_dynamics (context);
+        GimpRGB color;
 
-        if (! gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR) &&
-            (! brush_core->brush || ! gimp_brush_get_pixmap (brush_core->brush)))
+        if (GIMP_PAINTBRUSH_GET_CLASS (paintbrush)->get_color_history_color &&
+            GIMP_PAINTBRUSH_GET_CLASS (paintbrush)->get_color_history_color (
+              paintbrush, drawable, paint_options, &color))
           {
-            /* We don't save gradient color history and pixmap brushes
-             * have no color to save.
-             */
-            GimpRGB foreground;
+            GimpContext *context = GIMP_CONTEXT (paint_options);
 
-            gimp_context_get_foreground (context, &foreground);
-            gimp_palettes_add_color_history (context->gimp, &foreground);
+            gimp_palettes_add_color_history (context->gimp, &color);
           }
       }
       break;
@@ -133,8 +135,6 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
 
     case GIMP_PAINT_STATE_FINISH:
       {
-        GimpPaintbrush *paintbrush = GIMP_PAINTBRUSH (paint_core);
-
         if (paintbrush->paint_buffer)
           {
             g_object_remove_weak_pointer (
@@ -148,6 +148,30 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
       }
       break;
     }
+}
+
+static gboolean
+gimp_paintbrush_real_get_color_history_color (GimpPaintbrush   *paintbrush,
+                                              GimpDrawable     *drawable,
+                                              GimpPaintOptions *paint_options,
+                                              GimpRGB          *color)
+{
+  GimpContext   *context    = GIMP_CONTEXT (paint_options);
+  GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paintbrush);
+  GimpDynamics  *dynamics   = gimp_context_get_dynamics (context);
+
+  /* We don't save gradient color history and pixmap brushes
+   * have no color to save.
+   */
+  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR) ||
+      (brush_core->brush && gimp_brush_get_pixmap (brush_core->brush)))
+    {
+      return FALSE;
+    }
+
+  gimp_context_get_foreground (context, color);
+
+  return TRUE;
 }
 
 static void

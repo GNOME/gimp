@@ -46,14 +46,18 @@ struct _GimpPaintbrushClass
   GimpBrushCoreClass  parent_class;
 
   /*  virtual functions  */
-  void   (* get_paint_params) (GimpPaintbrush            *paintbrush,
-                               GimpDrawable              *drawable,
-                               GimpPaintOptions          *paint_options,
-                               GimpSymmetry              *sym,
-                               GimpLayerMode             *paint_mode,
-                               GimpPaintApplicationMode  *paint_appl_mode,
-                               const GimpTempBuf        **paint_pixmap,
-                               GimpRGB                   *paint_color);
+  gboolean   (* get_color_history_color) (GimpPaintbrush            *paintbrush,
+                                          GimpDrawable              *drawable,
+                                          GimpPaintOptions          *paint_options,
+                                          GimpRGB                   *color);
+  void       (* get_paint_params)        (GimpPaintbrush            *paintbrush,
+                                          GimpDrawable              *drawable,
+                                          GimpPaintOptions          *paint_options,
+                                          GimpSymmetry              *sym,
+                                          GimpLayerMode             *paint_mode,
+                                          GimpPaintApplicationMode  *paint_appl_mode,
+                                          const GimpTempBuf        **paint_pixmap,
+                                          GimpRGB                   *paint_color);
 };
 
 
