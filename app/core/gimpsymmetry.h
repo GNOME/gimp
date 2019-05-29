@@ -63,10 +63,6 @@ struct _GimpSymmetryClass
   void       (* update_strokes)             (GimpSymmetry       *symmetry,
                                              GimpDrawable       *drawable,
                                              GimpCoords         *origin);
-  GeglNode * (* get_operation)              (GimpSymmetry       *symmetry,
-                                             gint                stroke,
-                                             gint                paint_width,
-                                             gint                paint_height);
   void       (* get_transform)              (GimpSymmetry       *symmetry,
                                              gint                stroke,
                                              gdouble            *angle,
@@ -90,10 +86,6 @@ GimpCoords   * gimp_symmetry_get_origin     (GimpSymmetry       *symmetry);
 gint           gimp_symmetry_get_size       (GimpSymmetry       *symmetry);
 GimpCoords   * gimp_symmetry_get_coords     (GimpSymmetry       *symmetry,
                                              gint                stroke);
-GeglNode     * gimp_symmetry_get_operation  (GimpSymmetry       *symmetry,
-                                             gint                stroke,
-                                             gint                paint_width,
-                                             gint                paint_height);
 void           gimp_symmetry_get_transform  (GimpSymmetry       *symmetry,
                                              gint                stroke,
                                              gdouble            *angle,
@@ -101,6 +93,8 @@ void           gimp_symmetry_get_transform  (GimpSymmetry       *symmetry,
 void           gimp_symmetry_get_matrix     (GimpSymmetry       *symmetry,
                                              gint                stroke,
                                              GimpMatrix3        *matrix);
+GeglNode     * gimp_symmetry_get_operation  (GimpSymmetry       *symmetry,
+                                             gint                stroke);
 
 gchar        * gimp_symmetry_parasite_name  (GType               type);
 GimpParasite * gimp_symmetry_to_parasite    (const GimpSymmetry *symmetry);

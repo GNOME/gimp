@@ -71,13 +71,6 @@ static void       gimp_mirror_get_property            (GObject             *obje
 static void       gimp_mirror_update_strokes          (GimpSymmetry        *mirror,
                                                        GimpDrawable        *drawable,
                                                        GimpCoords          *origin);
-static void       gimp_mirror_prepare_operations      (GimpMirror          *mirror,
-                                                       gint                 paint_width,
-                                                       gint                 paint_height);
-static GeglNode * gimp_mirror_get_operation           (GimpSymmetry        *mirror,
-                                                       gint                 stroke,
-                                                       gint                 paint_width,
-                                                       gint                 paint_height);
 static void       gimp_mirror_get_transform           (GimpSymmetry        *mirror,
                                                        gint                 stroke,
                                                        gdouble             *angle,
@@ -126,7 +119,6 @@ gimp_mirror_class_init (GimpMirrorClass *klass)
 
   symmetry_class->label             = _("Mirror");
   symmetry_class->update_strokes    = gimp_mirror_update_strokes;
-  symmetry_class->get_operation     = gimp_mirror_get_operation;
   symmetry_class->get_transform     = gimp_mirror_get_transform;
   symmetry_class->active_changed    = gimp_mirror_active_changed;
 
@@ -209,10 +201,6 @@ gimp_mirror_finalize (GObject *object)
 
   g_clear_object (&mirror->horizontal_guide);
   g_clear_object (&mirror->vertical_guide);
-
-  g_clear_object (&mirror->horizontal_op);
-  g_clear_object (&mirror->vertical_op);
-  g_clear_object (&mirror->central_op);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -367,81 +355,6 @@ gimp_mirror_update_strokes (GimpSymmetry *sym,
   sym->strokes = g_list_reverse (strokes);
 
   g_signal_emit_by_name (sym, "strokes-updated", sym->image);
-}
-
-static void
-gimp_mirror_prepare_operations (GimpMirror *mirror,
-                                gint        paint_width,
-                                gint        paint_height)
-{
-  if (paint_width == mirror->last_paint_width &&
-      paint_height == mirror->last_paint_height)
-    return;
-
-  mirror->last_paint_width  = paint_width;
-  mirror->last_paint_height = paint_height;
-
-  if (mirror->horizontal_op)
-    g_object_unref (mirror->horizontal_op);
-
-  mirror->horizontal_op = gegl_node_new_child (NULL,
-                                               "operation", "gegl:reflect",
-                                               "origin-x",  0.0,
-                                               "origin-y",  paint_height / 2.0,
-                                               "x",         1.0,
-                                               "y",         0.0,
-                                               NULL);
-
-  if (mirror->vertical_op)
-    g_object_unref (mirror->vertical_op);
-
-  mirror->vertical_op = gegl_node_new_child (NULL,
-                                             "operation", "gegl:reflect",
-                                             "origin-x",  paint_width / 2.0,
-                                             "origin-y",  0.0,
-                                             "x",         0.0,
-                                             "y",         1.0,
-                                             NULL);
-
-  if (mirror->central_op)
-    g_object_unref (mirror->central_op);
-
-  mirror->central_op = gegl_node_new_child (NULL,
-                                            "operation", "gegl:rotate",
-                                            "origin-x",  paint_width / 2.0,
-                                            "origin-y",  paint_height / 2.0,
-                                            "degrees",   180.0,
-                                            NULL);
-}
-
-static GeglNode *
-gimp_mirror_get_operation (GimpSymmetry *sym,
-                           gint          stroke,
-                           gint          paint_width,
-                           gint          paint_height)
-{
-  GimpMirror *mirror = GIMP_MIRROR (sym);
-  GeglNode   *op;
-
-  g_return_val_if_fail (stroke >= 0 &&
-                        stroke < g_list_length (sym->strokes), NULL);
-
-  gimp_mirror_prepare_operations (mirror, paint_width, paint_height);
-
-  if (mirror->disable_transformation || stroke == 0 ||
-      paint_width == 0 || paint_height == 0)
-    op = NULL;
-  else if (stroke == 1 && mirror->horizontal_mirror)
-    op = g_object_ref (mirror->horizontal_op);
-  else if ((stroke == 2 && mirror->horizontal_mirror &&
-            mirror->vertical_mirror) ||
-           (stroke == 1 && mirror->vertical_mirror &&
-            !  mirror->horizontal_mirror))
-    op = g_object_ref (mirror->vertical_op);
-  else
-    op = g_object_ref (mirror->central_op);
-
-  return op;
 }
 
 static void

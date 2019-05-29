@@ -31,6 +31,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-nodes.h"
+
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-symmetry.h"
@@ -72,10 +74,6 @@ static void       gimp_symmetry_get_property        (GObject      *object,
 static void       gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
                                                      GimpDrawable *drawable,
                                                      GimpCoords   *origin);
-static GeglNode * gimp_symmetry_real_get_op         (GimpSymmetry *sym,
-                                                     gint          stroke,
-                                                     gint          paint_width,
-                                                     gint          paint_height);
 static void       gimp_symmetry_real_get_transform  (GimpSymmetry *sym,
                                                      gint          stroke,
                                                      gdouble      *angle,
@@ -138,7 +136,6 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
 
   klass->label               = _("None");
   klass->update_strokes      = gimp_symmetry_real_update_strokes;
-  klass->get_operation       = gimp_symmetry_real_get_op;
   klass->get_transform       = gimp_symmetry_real_get_transform;
   klass->active_changed      = NULL;
   klass->update_version      = gimp_symmetry_real_update_version;
@@ -239,17 +236,6 @@ gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
   /* The basic symmetry just uses the origin as is. */
   sym->strokes = g_list_prepend (sym->strokes,
                                  g_memdup (origin, sizeof (GimpCoords)));
-}
-
-static GeglNode *
-gimp_symmetry_real_get_op (GimpSymmetry *sym,
-                           gint          stroke,
-                           gint          paint_width,
-                           gint          paint_height)
-{
-  /* The basic symmetry just returns NULL, since no transformation of the
-   * brush painting happen. */
-  return NULL;
 }
 
 static void
@@ -412,30 +398,6 @@ gimp_symmetry_get_coords (GimpSymmetry *sym,
 }
 
 /**
- * gimp_symmetry_get_operation:
- * @sym:          the #GimpSymmetry
- * @stroke:       the stroke number
- * @paint_width:  the width of the painting area
- * @paint_height: the height of the painting area
- *
- * Returns: the operation to apply to the paint buffer for stroke number @stroke.
- * NULL means to copy the original stroke as-is.
- **/
-GeglNode *
-gimp_symmetry_get_operation (GimpSymmetry *sym,
-                             gint          stroke,
-                             gint          paint_width,
-                             gint          paint_height)
-{
-  g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), NULL);
-
-  return GIMP_SYMMETRY_GET_CLASS (sym)->get_operation (sym,
-                                                       stroke,
-                                                       paint_width,
-                                                       paint_height);
-}
-
-/**
  * gimp_symmetry_get_transform:
  * @sym:     the #GimpSymmetry
  * @stroke:  the stroke number
@@ -443,9 +405,9 @@ gimp_symmetry_get_operation (GimpSymmetry *sym,
  *           in degrees (ccw)
  * @reflect: output pointer to the transformation reflection flag
  *
- * Returns the transformation to apply to the paint buffer for stroke
- * number @stroke.  The transformation is comprised of rotation around the
- * center, possibly followed by horizontal reflection around the center.
+ * Returns: the transformation to apply to the paint content for stroke
+ * number @stroke.  The transformation is comprised of rotation, possibly
+ * followed by horizontal reflection, around the stroke coordinates.
  **/
 void
 gimp_symmetry_get_transform (GimpSymmetry *sym,
@@ -472,7 +434,7 @@ gimp_symmetry_get_transform (GimpSymmetry *sym,
  * @stroke:  the stroke number
  * @matrix:  output pointer to the transformation matrix
  *
- * Returns the transformation matrix to apply to the paint buffer for stroke
+ * Returns: the transformation matrix to apply to the paint content for stroke
  * number @stroke.
  **/
 void
@@ -492,6 +454,32 @@ gimp_symmetry_get_matrix (GimpSymmetry *sym,
   gimp_matrix3_rotate (matrix, -gimp_deg_to_rad (angle));
   if (reflect)
     gimp_matrix3_scale (matrix, -1.0, 1.0);
+}
+
+/**
+ * gimp_symmetry_get_operation:
+ * @sym:          the #GimpSymmetry
+ * @stroke:       the stroke number
+ *
+ * Returns: the transformation operation to apply to the paint content for
+ * stroke number @stroke, or NULL for the identity transformation.
+ *
+ * The returned #GeglNode should be freed by the caller.
+ **/
+GeglNode *
+gimp_symmetry_get_operation (GimpSymmetry *sym,
+                             gint          stroke)
+{
+  GimpMatrix3 matrix;
+
+  g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), NULL);
+
+  gimp_symmetry_get_matrix (sym, stroke, &matrix);
+
+  if (gimp_matrix3_is_identity (&matrix))
+    return NULL;
+
+  return gimp_gegl_create_transform_node (&matrix);
 }
 
 /*
