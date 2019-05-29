@@ -27,6 +27,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
@@ -463,6 +464,34 @@ gimp_symmetry_get_transform (GimpSymmetry *sym,
                                                 stroke,
                                                 angle,
                                                 reflect);
+}
+
+/**
+ * gimp_symmetry_get_matrix:
+ * @sym:     the #GimpSymmetry
+ * @stroke:  the stroke number
+ * @matrix:  output pointer to the transformation matrix
+ *
+ * Returns the transformation matrix to apply to the paint buffer for stroke
+ * number @stroke.
+ **/
+void
+gimp_symmetry_get_matrix (GimpSymmetry *sym,
+                          gint          stroke,
+                          GimpMatrix3  *matrix)
+{
+  gdouble  angle;
+  gboolean reflect;
+
+  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+  g_return_if_fail (matrix != NULL);
+
+  gimp_symmetry_get_transform (sym, stroke, &angle, &reflect);
+
+  gimp_matrix3_identity (matrix);
+  gimp_matrix3_rotate (matrix, -gimp_deg_to_rad (angle));
+  if (reflect)
+    gimp_matrix3_scale (matrix, -1.0, 1.0);
 }
 
 /*
