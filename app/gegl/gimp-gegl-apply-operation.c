@@ -84,7 +84,6 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   GeglNode          *operation_src_node = NULL;
   GimpChunkIterator *iter;
   cairo_region_t    *region;
-  GeglRectangle      rect = { 0, };
   gboolean           progress_started   = FALSE;
   gboolean           cancel             = FALSE;
   gint               all_pixels;
@@ -98,15 +97,8 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   g_return_val_if_fail (valid_rects == NULL || cache != NULL, FALSE);
   g_return_val_if_fail (valid_rects == NULL || n_valid_rects != 0, FALSE);
 
-  if (dest_rect)
-    {
-      rect = *dest_rect;
-    }
-  else
-    {
-      rect = *GEGL_RECTANGLE (0, 0, gegl_buffer_get_width  (dest_buffer),
-                                    gegl_buffer_get_height (dest_buffer));
-    }
+  if (! dest_rect)
+    dest_rect = gegl_buffer_get_extent (dest_buffer);
 
   gegl = gegl_node_new ();
 
@@ -151,10 +143,10 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
           crop_node = gegl_node_new_child (gegl,
                                            "operation", "gegl:crop",
-                                           "x",         (gdouble) rect.x,
-                                           "y",         (gdouble) rect.y,
-                                           "width",     (gdouble) rect.width,
-                                           "height",    (gdouble) rect.height,
+                                           "x",         (gdouble) dest_rect->x,
+                                           "y",         (gdouble) dest_rect->y,
+                                           "width",     (gdouble) dest_rect->width,
+                                           "height",    (gdouble) dest_rect->height,
                                            NULL);
 
           gegl_node_connect_to (src_node,  "output",
@@ -216,10 +208,10 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
   gegl_buffer_freeze_changed (dest_buffer);
 
-  all_pixels  = rect.width * rect.height;
+  all_pixels  = dest_rect->width * dest_rect->height;
   done_pixels = 0;
 
-  region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rect);
+  region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) dest_rect);
 
   if (cache)
     {
@@ -230,7 +222,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
           GeglRectangle valid_rect;
 
           if (! gegl_rectangle_intersect (&valid_rect,
-                                          &valid_rects[i], &rect))
+                                          &valid_rects[i], dest_rect))
             {
               continue;
             }
