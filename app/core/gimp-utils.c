@@ -859,8 +859,8 @@ gimp_ascii_strtod (const gchar  *nptr,
 }
 
 gint
-gimp_list_compare (GList *list1,
-                   GList *list2)
+gimp_g_list_compare (GList *list1,
+                     GList *list2)
 {
   while (list1 && list2)
     {
