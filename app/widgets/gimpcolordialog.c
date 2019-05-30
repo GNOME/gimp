@@ -150,20 +150,6 @@ gimp_color_dialog_class_init (GimpColorDialogClass *klass)
 static void
 gimp_color_dialog_init (GimpColorDialog *dialog)
 {
-  gimp_dialog_add_buttons (GIMP_DIALOG (dialog),
-
-                           _("_Reset"),  RESPONSE_RESET,
-                           _("_Cancel"), GTK_RESPONSE_CANCEL,
-                           _("_OK"),     GTK_RESPONSE_OK,
-
-                           NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                            RESPONSE_RESET,
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
-
   dialog->stack = gtk_stack_new ();
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       dialog->stack, TRUE, TRUE, 0);
@@ -466,6 +452,20 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                          "parent",             gtk_widget_get_toplevel (parent),
                          "use-header-bar",     use_header_bar,
                          NULL);
+
+  gimp_dialog_add_buttons (GIMP_DIALOG (dialog),
+
+                           _("_Reset"),  RESPONSE_RESET,
+                           _("_Cancel"), GTK_RESPONSE_CANCEL,
+                           _("_OK"),     GTK_RESPONSE_OK,
+
+                           NULL);
+
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                            RESPONSE_RESET,
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   if (viewable)
     {
