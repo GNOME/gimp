@@ -174,7 +174,7 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
                             "use-pattern",
                             _("Apply stored pattern"),
                             NULL,
-                            TRUE,
+                            DEFAULT_USE_PATTERN,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_PALETTE,
