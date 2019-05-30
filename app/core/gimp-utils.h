@@ -98,7 +98,7 @@ gboolean     gimp_ascii_strtod                     (const gchar     *nptr,
                                                     gchar          **endptr,
                                                     gdouble         *result);
 
-gint         gimp_list_compare                     (GList           *list1,
+gint         gimp_g_list_compare                   (GList           *list1,
                                                     GList           *list2);
 
 GimpImage  * gimp_create_image_from_buffer         (Gimp            *gimp,

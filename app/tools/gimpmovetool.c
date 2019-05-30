@@ -512,7 +512,7 @@ gimp_move_tool_oper_update (GimpTool         *tool,
                                        FUNSCALEY (shell, snap_distance));
     }
 
-  if (gimp_list_compare (guides, move->guides))
+  if (gimp_g_list_compare (guides, move->guides))
     {
       GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
