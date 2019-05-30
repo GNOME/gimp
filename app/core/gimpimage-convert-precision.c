@@ -116,32 +116,36 @@ gimp_image_convert_precision (GimpImage        *image,
   if (gimp_babl_format_get_trc (old_format) !=
       gimp_babl_format_get_trc (new_format))
     {
-      /* when converting between linear and non-linear, we create a
-       * new profile using the original profile's chromacities and
+      GimpImageBaseType base_type = gimp_image_get_base_type (image);
+      GimpTRCType       new_trc   = gimp_babl_trc (precision);
+
+      /* if the image doesn't use the builtin profile, create a new
+       * one, using the original profile's chromacities and
        * whitepoint, but a linear/sRGB-gamma TRC.
        */
-      if (gimp_babl_format_get_trc (new_format) == GIMP_TRC_LINEAR)
+      if (gimp_image_get_color_profile (image))
         {
-          new_profile =
-            gimp_color_profile_new_linear_from_color_profile (old_profile);
-        }
-      else
-        {
-          new_profile =
-            gimp_color_profile_new_srgb_trc_from_color_profile (old_profile);
+          if (new_trc == GIMP_TRC_LINEAR)
+            {
+              new_profile =
+                gimp_color_profile_new_linear_from_color_profile (old_profile);
+            }
+          else
+            {
+              new_profile =
+                gimp_color_profile_new_srgb_trc_from_color_profile (old_profile);
+            }
         }
 
       /* we always need a profile for convert_type with changing TRC
-       * on the same image, use the new precision's builtin profile as
-       * a fallback if the profile couldn't be converted
+       * on the same image, use the new precision's builtin profile if
+       * the profile couldn't be converted or the image used the old
+       * TRC's builtin profile.
        */
       if (! new_profile)
         {
-          GimpImageBaseType base_type = gimp_image_get_base_type (image);
-          GimpTRCType       trc       = gimp_babl_trc (precision);
-
           new_profile = gimp_babl_get_builtin_color_profile (base_type,
-                                                             trc);
+                                                             new_trc);
           g_object_ref (new_profile);
         }
     }
