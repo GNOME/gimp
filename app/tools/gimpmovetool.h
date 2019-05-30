@@ -40,7 +40,7 @@ struct _GimpMoveTool
   GimpDrawTool         parent_instance;
 
   GimpLayer           *floating_layer;
-  GimpGuide           *guide;
+  GList               *guides;
 
   GimpTransformType    saved_type;
 

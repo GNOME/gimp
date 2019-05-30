@@ -235,19 +235,17 @@ gimp_image_pick_vectors (GimpImage *image,
   return ret;
 }
 
-GimpGuide *
-gimp_image_pick_guide (GimpImage *image,
-                       gdouble    x,
-                       gdouble    y,
-                       gdouble    epsilon_x,
-                       gdouble    epsilon_y)
+static GimpGuide *
+gimp_image_pick_guide_internal (GimpImage           *image,
+                                gdouble              x,
+                                gdouble              y,
+                                gdouble              epsilon_x,
+                                gdouble              epsilon_y,
+                                GimpOrientationType  orientation)
 {
   GList     *list;
   GimpGuide *ret     = NULL;
   gdouble    mindist = G_MAXDOUBLE;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
 
   for (list = GIMP_IMAGE_GET_PRIVATE (image)->guides;
        list;
@@ -260,31 +258,80 @@ gimp_image_pick_guide (GimpImage *image,
       switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          dist = ABS (position - y);
-          if (dist < MIN (epsilon_y, mindist))
+          if (orientation == GIMP_ORIENTATION_HORIZONTAL ||
+              orientation == GIMP_ORIENTATION_UNKNOWN)
             {
-              mindist = dist;
-              ret = guide;
+              dist = ABS (position - y);
+              if (dist < MIN (epsilon_y, mindist))
+                {
+                  mindist = dist;
+                  ret = guide;
+                }
             }
           break;
 
         /* mindist always is in vertical resolution to make it comparable */
         case GIMP_ORIENTATION_VERTICAL:
-          dist = ABS (position - x);
-          if (dist < MIN (epsilon_x, mindist / epsilon_y * epsilon_x))
+          if (orientation == GIMP_ORIENTATION_VERTICAL ||
+              orientation == GIMP_ORIENTATION_UNKNOWN)
             {
-              mindist = dist * epsilon_y / epsilon_x;
-              ret = guide;
+              dist = ABS (position - x);
+              if (dist < MIN (epsilon_x, mindist / epsilon_y * epsilon_x))
+                {
+                  mindist = dist * epsilon_y / epsilon_x;
+                  ret = guide;
+                }
             }
           break;
 
         default:
           continue;
         }
-
     }
 
   return ret;
+}
+
+GimpGuide *
+gimp_image_pick_guide (GimpImage *image,
+                       gdouble    x,
+                       gdouble    y,
+                       gdouble    epsilon_x,
+                       gdouble    epsilon_y)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
+
+  return gimp_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
+                                         GIMP_ORIENTATION_UNKNOWN);
+}
+
+GList *
+gimp_image_pick_guides (GimpImage *image,
+                        gdouble    x,
+                        gdouble    y,
+                        gdouble    epsilon_x,
+                        gdouble    epsilon_y)
+{
+  GimpGuide *guide;
+  GList     *result = NULL;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
+
+  guide = gimp_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
+                                          GIMP_ORIENTATION_HORIZONTAL);
+
+  if (guide)
+    result = g_list_append (result, guide);
+
+  guide = gimp_image_pick_guide_internal (image, x, y, epsilon_x, epsilon_y,
+                                          GIMP_ORIENTATION_VERTICAL);
+
+  if (guide)
+    result = g_list_append (result, guide);
+
+  return result;
 }
 
 GimpSamplePoint *

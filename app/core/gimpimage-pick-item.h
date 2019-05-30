@@ -41,6 +41,12 @@ GimpGuide       * gimp_image_pick_guide           (GimpImage *image,
                                                    gdouble    y,
                                                    gdouble    epsilon_x,
                                                    gdouble    epsilon_y);
+GList           * gimp_image_pick_guides          (GimpImage *image,
+                                                   gdouble    x,
+                                                   gdouble    y,
+                                                   gdouble    epsilon_x,
+                                                   gdouble    epsilon_y);
+
 GimpSamplePoint * gimp_image_pick_sample_point    (GimpImage *image,
                                                    gdouble    x,
                                                    gdouble    y,
