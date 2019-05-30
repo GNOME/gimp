@@ -1269,7 +1269,7 @@ image_profile_assign_callback (GtkWidget                *dialog,
   gimp_image_set_is_color_managed (image, TRUE, TRUE);
 
   /*  omg...  */
-  gimp_image_parasite_detach (image, "icc-profile-name");
+  gimp_image_parasite_detach (image, "icc-profile-name", TRUE);
 
   gimp_image_undo_group_end (image);
 

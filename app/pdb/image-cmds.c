@@ -2847,7 +2847,7 @@ image_attach_parasite_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (gimp_image_parasite_validate (image, parasite, error))
-        gimp_image_parasite_attach (image, parasite);
+        gimp_image_parasite_attach (image, parasite, TRUE);
       else
         success = FALSE;
     }
@@ -2873,7 +2873,7 @@ image_detach_parasite_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_image_parasite_detach (image, name);
+      gimp_image_parasite_detach (image, name, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

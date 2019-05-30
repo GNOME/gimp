@@ -315,9 +315,11 @@ gboolean        gimp_image_parasite_validate     (GimpImage          *image,
                                                   const GimpParasite *parasite,
                                                   GError            **error);
 void            gimp_image_parasite_attach       (GimpImage          *image,
-                                                  const GimpParasite *parasite);
+                                                  const GimpParasite *parasite,
+                                                  gboolean            push_undo);
 void            gimp_image_parasite_detach       (GimpImage          *image,
-                                                  const gchar        *name);
+                                                  const gchar        *name,
+                                                  gboolean            push_undo);
 
 
 /*  tattoos  */

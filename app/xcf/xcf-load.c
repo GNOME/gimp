@@ -915,7 +915,7 @@ xcf_load_image_props (XcfInfo   *info,
                   }
                 else
                   {
-                    gimp_image_parasite_attach (image, p);
+                    gimp_image_parasite_attach (image, p, FALSE);
                   }
 
                 gimp_parasite_free (p);

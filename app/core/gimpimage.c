@@ -3594,7 +3594,8 @@ gimp_image_parasite_validate (GimpImage           *image,
 
 void
 gimp_image_parasite_attach (GimpImage          *image,
-                            const GimpParasite *parasite)
+                            const GimpParasite *parasite,
+                            gboolean            push_undo)
 {
   GimpImagePrivate *private;
   GimpParasite      copy;
@@ -3622,7 +3623,8 @@ gimp_image_parasite_attach (GimpImage          *image,
       if (gimp_color_profile_is_equal (profile, builtin))
         {
           /* setting the builtin profile is equal to removing the profile */
-          gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+          gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME,
+                                      push_undo);
           g_object_unref (profile);
           return;
         }
@@ -3638,7 +3640,7 @@ gimp_image_parasite_attach (GimpImage          *image,
   /*  only set the dirty bit manually if we can be saved and the new
    *  parasite differs from the current one and we aren't undoable
    */
-  if (gimp_parasite_is_undoable (&copy))
+  if (push_undo && gimp_parasite_is_undoable (&copy))
     gimp_image_undo_push_image_parasite (image,
                                          C_("undo-type", "Attach Parasite to Image"),
                                          &copy);
@@ -3651,22 +3653,23 @@ gimp_image_parasite_attach (GimpImage          *image,
    */
   gimp_parasite_list_add (private->parasites, &copy);
 
-  if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
+  if (push_undo && gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
       gimp_parasite_shift_parent (&copy);
       gimp_parasite_attach (image->gimp, &copy);
     }
 
-  g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
-                 name);
-
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     _gimp_image_update_color_profile (image, parasite);
+
+  g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
+                 name);
 }
 
 void
 gimp_image_parasite_detach (GimpImage   *image,
-                            const gchar *name)
+                            const gchar *name,
+                            gboolean     push_undo)
 {
   GimpImagePrivate   *private;
   const GimpParasite *parasite;
@@ -3679,18 +3682,18 @@ gimp_image_parasite_detach (GimpImage   *image,
   if (! (parasite = gimp_parasite_list_find (private->parasites, name)))
     return;
 
-  if (gimp_parasite_is_undoable (parasite))
+  if (push_undo && gimp_parasite_is_undoable (parasite))
     gimp_image_undo_push_image_parasite_remove (image,
                                                 C_("undo-type", "Remove Parasite from Image"),
                                                 name);
 
   gimp_parasite_list_remove (private->parasites, name);
 
-  g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
-                 name);
-
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     _gimp_image_update_color_profile (image, NULL);
+
+  g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
+                 name);
 }
 
 

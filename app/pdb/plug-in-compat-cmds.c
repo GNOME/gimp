@@ -2136,7 +2136,7 @@ plug_in_icc_profile_set_invoker (GimpProcedure         *procedure,
                                            _("Set color profile"));
 
               if (gimp_image_set_color_profile (image, p, error))
-                gimp_image_parasite_detach (image, "icc-profile-name");
+                gimp_image_parasite_detach (image, "icc-profile-name", TRUE);
               else
                 success = FALSE;
 
@@ -2191,7 +2191,7 @@ plug_in_icc_profile_set_rgb_invoker (GimpProcedure         *procedure,
                                            _("Set color profile"));
 
               if (gimp_image_set_color_profile (image, p, error))
-                gimp_image_parasite_detach (image, "icc-profile-name");
+                gimp_image_parasite_detach (image, "icc-profile-name", TRUE);
               else
                 success = FALSE;
 

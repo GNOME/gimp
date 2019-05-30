@@ -39,7 +39,6 @@
 #include "gimpimage-metadata.h"
 #include "gimpimage-private.h"
 #include "gimpimageundo.h"
-#include "gimpparasitelist.h"
 
 
 enum
@@ -501,21 +500,14 @@ gimp_image_undo_pop (GimpUndo            *undo,
     case GIMP_UNDO_PARASITE_REMOVE:
       {
         GimpParasite *parasite = image_undo->parasite;
-        const gchar  *name;
 
         image_undo->parasite = gimp_parasite_copy
           (gimp_image_parasite_find (image, image_undo->parasite_name));
 
         if (parasite)
-          gimp_parasite_list_add (private->parasites, parasite);
+          gimp_image_parasite_attach (image, parasite, FALSE);
         else
-          gimp_parasite_list_remove (private->parasites,
-                                     image_undo->parasite_name);
-
-        name = parasite ? parasite->name : image_undo->parasite_name;
-
-        if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-          _gimp_image_update_color_profile (image, parasite);
+          gimp_image_parasite_detach (image, image_undo->parasite_name, FALSE);
 
         if (parasite)
           gimp_parasite_free (parasite);

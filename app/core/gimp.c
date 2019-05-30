@@ -981,7 +981,7 @@ gimp_create_image (Gimp              *gimp,
                                                       GIMP_PARASITE_PERSISTENT,
                                                       strlen (comment) + 1,
                                                       comment);
-          gimp_image_parasite_attach (image, parasite);
+          gimp_image_parasite_attach (image, parasite, FALSE);
           gimp_parasite_free (parasite);
         }
     }
