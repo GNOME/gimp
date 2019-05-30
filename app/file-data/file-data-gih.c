@@ -187,7 +187,7 @@ file_gih_pipe_to_image (Gimp          *gimp,
   parasite = gimp_parasite_new ("gimp-brush-pipe-name",
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (name) + 1, name);
-  gimp_image_parasite_attach (image, parasite);
+  gimp_image_parasite_attach (image, parasite, FALSE);
   gimp_parasite_free (parasite);
 
   g_snprintf (spacing, sizeof (spacing), "%d",
@@ -196,7 +196,7 @@ file_gih_pipe_to_image (Gimp          *gimp,
   parasite = gimp_parasite_new ("gimp-brush-pipe-spacing",
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (spacing) + 1, spacing);
-  gimp_image_parasite_attach (image, parasite);
+  gimp_image_parasite_attach (image, parasite, FALSE);
   gimp_parasite_free (parasite);
 
   for (i = 0; i < pipe->n_brushes; i++)
@@ -235,7 +235,7 @@ file_gih_pipe_to_image (Gimp          *gimp,
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (paramstring) + 1,
                                         paramstring);
-          gimp_image_parasite_attach (image, parasite);
+          gimp_image_parasite_attach (image, parasite, FALSE);
           gimp_parasite_free (parasite);
           g_free (paramstring);
         }

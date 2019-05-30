@@ -211,7 +211,7 @@ file_pat_pattern_to_image (Gimp        *gimp,
   parasite = gimp_parasite_new ("gimp-pattern-name",
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (name) + 1, name);
-  gimp_image_parasite_attach (image, parasite);
+  gimp_image_parasite_attach (image, parasite, FALSE);
   gimp_parasite_free (parasite);
 
   format = gimp_image_get_layer_format (image, alpha);

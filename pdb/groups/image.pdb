@@ -2743,7 +2743,7 @@ HELP
         code => <<'CODE'
 {
   if (gimp_image_parasite_validate (image, parasite, error))
-    gimp_image_parasite_attach (image, parasite);
+    gimp_image_parasite_attach (image, parasite, TRUE);
   else
     success = FALSE;
 }
@@ -2770,7 +2770,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_image_parasite_detach (image, name);
+  gimp_image_parasite_detach (image, name, TRUE);
 }
 CODE
     );

@@ -232,11 +232,11 @@ gimp_image_set_icc_parasite (GimpImage          *image,
       g_return_if_fail (gimp_image_validate_icc_parasite (image, icc_parasite,
                                                           NULL, NULL) == TRUE);
 
-      gimp_image_parasite_attach (image, icc_parasite);
+      gimp_image_parasite_attach (image, icc_parasite, TRUE);
     }
   else
     {
-      gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+      gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME, TRUE);
     }
 }
 
@@ -482,7 +482,7 @@ gimp_image_assign_color_profile (GimpImage         *image,
 
   gimp_image_set_color_profile (image, dest_profile, NULL);
   /*  omg...  */
-  gimp_image_parasite_detach (image, "icc-profile-name");
+  gimp_image_parasite_detach (image, "icc-profile-name", TRUE);
 
   if (gimp_image_get_base_type (image) == GIMP_INDEXED)
     gimp_image_colormap_update_formats (image);
@@ -533,7 +533,7 @@ gimp_image_convert_color_profile (GimpImage                *image,
 
   gimp_image_set_color_profile (image, dest_profile, NULL);
   /*  omg...  */
-  gimp_image_parasite_detach (image, "icc-profile-name");
+  gimp_image_parasite_detach (image, "icc-profile-name", TRUE);
 
   switch (gimp_image_get_base_type (image))
     {

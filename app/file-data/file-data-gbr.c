@@ -393,7 +393,7 @@ file_gbr_brush_to_image (Gimp      *gimp,
   parasite = gimp_parasite_new ("gimp-brush-name",
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (name) + 1, name);
-  gimp_image_parasite_attach (image, parasite);
+  gimp_image_parasite_attach (image, parasite, FALSE);
   gimp_parasite_free (parasite);
 
   layer = file_gbr_brush_to_layer (image, brush);

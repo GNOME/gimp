@@ -2133,7 +2133,7 @@ gimp_item_parasite_attach (GimpItem           *item,
   if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
       gimp_parasite_shift_parent (&copy);
-      gimp_image_parasite_attach (private->image, &copy);
+      gimp_image_parasite_attach (private->image, &copy, TRUE);
     }
   else if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_GRANDPARENT))
     {
