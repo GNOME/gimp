@@ -531,6 +531,10 @@ gimp_move_tool_oper_update (GimpTool         *tool,
 
       gimp_draw_tool_resume (draw_tool);
     }
+  else
+    {
+      g_list_free (guides);
+    }
 }
 
 static void
