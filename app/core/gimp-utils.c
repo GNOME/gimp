@@ -858,6 +858,29 @@ gimp_ascii_strtod (const gchar  *nptr,
   return TRUE;
 }
 
+gint
+gimp_list_compare (GList *list1,
+                   GList *list2)
+{
+  while (list1 && list2)
+    {
+      if (list1->data < list2->data)
+        return -1;
+      else if (list1->data > list2->data)
+        return +1;
+
+      list1 = g_list_next (list1);
+      list2 = g_list_next (list2);
+    }
+
+  if (! list1)
+    return -1;
+  else if (! list2)
+    return +1;
+
+  return 0;
+}
+
 
 /*  debug stuff  */
 
