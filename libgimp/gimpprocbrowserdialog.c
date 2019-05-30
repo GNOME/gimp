@@ -251,14 +251,20 @@ gimp_proc_browser_dialog_new (const gchar  *title,
 {
   GimpProcBrowserDialog *dialog;
   va_list                args;
+  gboolean               use_header_bar;
 
   va_start (args, help_id);
 
+  g_object_get (gtk_settings_get_default (),
+                "gtk-dialogs-use-header", &use_header_bar,
+                NULL);
+
   dialog = g_object_new (GIMP_TYPE_PROC_BROWSER_DIALOG,
-                         "title",     title,
-                         "role",      role,
-                         "help-func", help_func,
-                         "help-id",   help_id,
+                         "title",          title,
+                         "role",           role,
+                         "help-func",      help_func,
+                         "help-id",        help_id,
+                         "use-header-bar", use_header_bar,
                          NULL);
 
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
