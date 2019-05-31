@@ -29,6 +29,7 @@
 
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimp-utils.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
@@ -114,30 +115,8 @@ convert_precision_dialog_new (GimpImage                    *image,
   dither = (new_bits <  old_bits &&
             new_bits <= CONVERT_PRECISION_DIALOG_MAX_DITHER_BITS);
 
-  /* when changing this logic, also change the same switch()
-   * in gimptemplateeditor.h
-   */
-  switch (component_type)
-    {
-    case GIMP_COMPONENT_TYPE_U8:
-      /* default to gamma when converting 8 bit */
-      trc = GIMP_TRC_NON_LINEAR;
-      break;
-
-    case GIMP_COMPONENT_TYPE_U16:
-    case GIMP_COMPONENT_TYPE_U32:
-    default:
-      /* leave gamma alone by default when converting to 16/32 bit int */
-      trc = gimp_babl_format_get_trc (old_format);
-      break;
-
-    case GIMP_COMPONENT_TYPE_HALF:
-    case GIMP_COMPONENT_TYPE_FLOAT:
-    case GIMP_COMPONENT_TYPE_DOUBLE:
-      /* default to linear when converting to floating point */
-      trc = GIMP_TRC_LINEAR;
-      break;
-    }
+  trc = gimp_babl_format_get_trc (old_format);
+  trc = gimp_suggest_trc_for_component_type (component_type, trc);
 
   private = g_slice_new0 (ConvertDialog);
 

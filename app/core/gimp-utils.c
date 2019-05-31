@@ -772,7 +772,6 @@ gimp_file_with_new_extension (GFile *file,
   return ret;
 }
 
-
 /**
  * gimp_file_delete_recursive:
  * @file: #GFile to delete from file system.
@@ -945,6 +944,36 @@ gimp_g_list_compare (GList *list1,
     return +1;
 
   return 0;
+}
+
+GimpTRCType
+gimp_suggest_trc_for_component_type (GimpComponentType component_type,
+                                     GimpTRCType       old_trc)
+{
+  GimpTRCType new_trc = old_trc;
+
+  switch (component_type)
+    {
+    case GIMP_COMPONENT_TYPE_U8:
+      /* default to non-linear when converting 8 bit */
+      new_trc = GIMP_TRC_NON_LINEAR;
+      break;
+
+    case GIMP_COMPONENT_TYPE_U16:
+    case GIMP_COMPONENT_TYPE_U32:
+    default:
+      /* leave TRC alone by default when converting to 16/32 bit int */
+      break;
+
+    case GIMP_COMPONENT_TYPE_HALF:
+    case GIMP_COMPONENT_TYPE_FLOAT:
+    case GIMP_COMPONENT_TYPE_DOUBLE:
+      /* default to linear when converting to floating point */
+      new_trc = GIMP_TRC_LINEAR;
+      break;
+    }
+
+  return new_trc;
 }
 
 

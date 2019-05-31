@@ -35,6 +35,7 @@
 
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
+#include "core/gimp-utils.h"
 
 #include "gimppropwidgets.h"
 #include "gimptemplateeditor.h"
@@ -630,41 +631,21 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
 {
   GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
   GimpComponentType          component_type;
+  GimpTRCType                trc;
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                  (gint *) &component_type);
 
-  g_object_set (private->template,
-                "component-type", component_type,
+  g_object_get (private->template,
+                "trc", &trc,
                 NULL);
 
-  /* when changing this logic, also change the same switch()
-   * in convert-precision-dialog.c
-   */
-  switch (component_type)
-    {
-    case GIMP_COMPONENT_TYPE_U8:
-      /* default to gamma for 8 bit */
-      g_object_set (private->template,
-                    "trc", GIMP_TRC_NON_LINEAR,
-                    NULL);
-      break;
+  trc = gimp_suggest_trc_for_component_type (component_type, trc);
 
-    case GIMP_COMPONENT_TYPE_U16:
-    case GIMP_COMPONENT_TYPE_U32:
-    default:
-      /* leave gamma alone by default for 16/32 bit int */
-      break;
-
-    case GIMP_COMPONENT_TYPE_HALF:
-    case GIMP_COMPONENT_TYPE_FLOAT:
-    case GIMP_COMPONENT_TYPE_DOUBLE:
-      /* default to linear for floating point */
-      g_object_set (private->template,
-                    "trc", GIMP_TRC_LINEAR,
-                    NULL);
-      break;
-    }
+  g_object_set (private->template,
+                "component-type", component_type,
+                "trc",            trc,
+                NULL);
 }
 
 static void
