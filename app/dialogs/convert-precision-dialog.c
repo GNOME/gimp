@@ -81,6 +81,7 @@ convert_precision_dialog_new (GimpImage                    *image,
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
   GtkWidget     *frame;
+  GtkWidget     *perceptual_radio;
   const gchar   *enum_desc;
   gchar         *blurb;
   const Babl    *old_format;
@@ -209,9 +210,13 @@ convert_precision_dialog_new (GimpImage                    *image,
                                    GIMP_TRC_NON_LINEAR, NULL,
 
                                    _("Perceptual (sRGB)"),
-                                   GIMP_TRC_PERCEPTUAL, NULL,
+                                   GIMP_TRC_PERCEPTUAL, &perceptual_radio,
 
                                    NULL);
+
+  if (private->trc != GIMP_TRC_PERCEPTUAL)
+    gtk_widget_hide (perceptual_radio);
+
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 

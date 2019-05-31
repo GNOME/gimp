@@ -246,17 +246,23 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
 
 static const GimpRadioActionEntry image_convert_trc_actions[] =
 {
-  { "image-convert-gamma", NULL,
-    NC_("image-convert-action", "Perceptual gamma (sRGB)"), NULL,
-    NC_("image-convert-action",
-        "Convert the image to perceptual (sRGB) gamma"),
-    GIMP_TRC_NON_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
-
   { "image-convert-linear", NULL,
     NC_("image-convert-action", "Linear light"), NULL,
     NC_("image-convert-action",
         "Convert the image to linear light"),
-    GIMP_TRC_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA }
+    GIMP_TRC_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
+
+  { "image-convert-non-linear", NULL,
+    NC_("image-convert-action", "Non-Linear"), NULL,
+    NC_("image-convert-action",
+        "Convert the image to non-linear gamma from the color profile"),
+    GIMP_TRC_NON_LINEAR, GIMP_HELP_IMAGE_CONVERT_GAMMA },
+
+  { "image-convert-perceptual", NULL,
+    NC_("image-convert-action", "Perceptual (sRGB)"), NULL,
+    NC_("image-convert-action",
+        "Convert the image to perceptual (sRGB) gamma"),
+    GIMP_TRC_PERCEPTUAL, GIMP_HELP_IMAGE_CONVERT_GAMMA }
 };
 
 static const GimpEnumActionEntry image_flip_actions[] =
@@ -361,6 +367,15 @@ image_actions_update (GimpActionGroup *group,
   gboolean   profile_hidden = FALSE;
   gboolean   profile        = FALSE;
 
+#define SET_LABEL(action,label) \
+        gimp_action_group_set_action_label (group, action, (label))
+#define SET_SENSITIVE(action,condition) \
+        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
+#define SET_ACTIVE(action,condition) \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
+#define SET_VISIBLE(action,condition) \
+        gimp_action_group_set_action_visible (group, action, (condition) != 0)
+
   if (image)
     {
       GimpContainer     *layers;
@@ -368,10 +383,13 @@ image_actions_update (GimpActionGroup *group,
       GimpImageBaseType  base_type;
       GimpPrecision      precision;
       GimpComponentType  component_type;
+      GimpTRCType        trc;
 
       base_type      = gimp_image_get_base_type (image);
       precision      = gimp_image_get_precision (image);
       component_type = gimp_image_get_component_type (image);
+      trc            = gimp_babl_format_get_trc
+                         (gimp_image_get_layer_format (image, FALSE));
 
       switch (base_type)
         {
@@ -380,7 +398,7 @@ image_actions_update (GimpActionGroup *group,
         case GIMP_INDEXED: action = "image-convert-indexed";   break;
         }
 
-      gimp_action_group_set_action_active (group, action, TRUE);
+      SET_ACTIVE (action, TRUE);
 
       switch (component_type)
         {
@@ -392,20 +410,27 @@ image_actions_update (GimpActionGroup *group,
         case GIMP_COMPONENT_TYPE_DOUBLE: action = "image-convert-double"; break;
         }
 
-      gimp_action_group_set_action_active (group, action, TRUE);
+      SET_ACTIVE (action, TRUE);
 
-      if (gimp_babl_format_get_trc (gimp_image_get_layer_format (image,
-                                                                 FALSE)) ==
-          GIMP_TRC_LINEAR)
+      switch (trc)
         {
-          gimp_action_group_set_action_active (group, "image-convert-linear",
-                                               TRUE);
+        case GIMP_TRC_LINEAR:
+          action = "image-convert-linear";
+          SET_VISIBLE ("image-convert-perceptual", FALSE);
+          break;
+
+        case GIMP_TRC_NON_LINEAR:
+          action = "image-convert-non-linear";
+          SET_VISIBLE ("image-convert-perceptual", FALSE);
+          break;
+
+        case GIMP_TRC_PERCEPTUAL:
+          action = "image-convert-perceptual";
+          SET_VISIBLE ("image-convert-perceptual", TRUE);
+          break;
         }
-      else
-        {
-          gimp_action_group_set_action_active (group, "image-convert-gamma",
-                                               TRUE);
-        }
+
+      SET_ACTIVE (action, TRUE);
 
       is_indexed  = (base_type == GIMP_INDEXED);
       is_u8_gamma = (precision == GIMP_PRECISION_U8_NON_LINEAR);
@@ -421,15 +446,10 @@ image_actions_update (GimpActionGroup *group,
       profile_srgb = gimp_image_get_use_srgb_profile (image, &profile_hidden);
       profile      = (gimp_image_get_color_profile (image) != NULL);
     }
-
-#define SET_LABEL(action,label) \
-        gimp_action_group_set_action_label (group, action, (label))
-#define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
-#define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
-#define SET_VISIBLE(action,condition) \
-        gimp_action_group_set_action_visible (group, action, (condition) != 0)
+  else
+    {
+      SET_VISIBLE ("image-convert-perceptual", FALSE);
+    }
 
   SET_SENSITIVE ("image-duplicate", image);
 
@@ -460,8 +480,9 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-double", image && !is_indexed);
   SET_VISIBLE   ("image-convert-double", is_double);
 
-  SET_SENSITIVE ("image-convert-gamma",  image);
-  SET_SENSITIVE ("image-convert-linear", image && !is_indexed);
+  SET_SENSITIVE ("image-convert-linear",     image && !is_indexed);
+  SET_SENSITIVE ("image-convert-non-linear", image);
+  SET_SENSITIVE ("image-convert-perceptual", image && !is_indexed);
 
   SET_SENSITIVE ("image-color-profile-use-srgb", image && (profile || profile_hidden));
   SET_ACTIVE    ("image-color-profile-use-srgb", image && profile_srgb);
