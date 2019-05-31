@@ -96,9 +96,16 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
     {
       GObject *aux;
 
-      aux = gegl_operation_context_get_object (context, "aux");
+      aux = gegl_operation_context_dup_object (context, "aux");
 
-      gegl_operation_context_set_object (context, "output", aux);
+      if (! aux)
+        {
+          aux = G_OBJECT (
+            gegl_buffer_new (result,
+                             gegl_operation_get_format (op, "output")));
+        }
+
+      gegl_operation_context_take_object (context, "output", aux);
 
       return TRUE;
     }
