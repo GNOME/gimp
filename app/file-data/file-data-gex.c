@@ -512,14 +512,17 @@ file_gex_load_invoker (GimpProcedure         *procedure,
 
   success = file_gex_validate (file, &appdata, error);
   if (success)
-    ext_dir = file_gex_decompress (file, (gchar *) as_app_get_id (appdata), error);
+    ext_dir = file_gex_decompress (file, (gchar *) as_app_get_id (appdata),
+                                   error);
+
   if (ext_dir)
     {
       GimpExtension *extension;
       GError        *rm_error = NULL;
 
       extension = gimp_extension_new (ext_dir, TRUE);
-      success   = gimp_extension_manager_install (gimp->extension_manager, extension, error);
+      success   = gimp_extension_manager_install (gimp->extension_manager,
+                                                  extension, error);
 
       if (! success)
         {
@@ -528,13 +531,16 @@ file_gex_load_invoker (GimpProcedure         *procedure,
           g_object_unref (extension);
 
           file = g_file_new_for_path (ext_dir);
-          if (! gimp_rec_rm (file, &rm_error))
+
+          if (! gimp_file_delete_recursive (file, &rm_error))
             {
               g_warning ("%s: %s\n", G_STRFUNC, rm_error->message);
               g_error_free (rm_error);
             }
+
           g_object_unref (file);
         }
+
       g_free (ext_dir);
     }
   else

@@ -772,6 +772,72 @@ gimp_file_with_new_extension (GFile *file,
   return ret;
 }
 
+
+/**
+ * gimp_file_delete_recursive:
+ * @file: #GFile to delete from file system.
+ * @error:
+ *
+ * Delete @file. If file is a directory, it will delete its children as
+ * well recursively. It will not follow symlinks so you won't end up in
+ * infinite loops, not will you be at risk of deleting your whole file
+ * system (unless you pass the root of course!).
+ * Such function unfortunately does not exist in glib, which only allows
+ * to delete single files or empty directories by default.
+ *
+ * Returns: #TRUE if @file was successfully deleted and all its
+ * children, #FALSE otherwise with @error filled.
+ */
+gboolean
+gimp_file_delete_recursive (GFile   *file,
+                            GError **error)
+{
+  gboolean success = TRUE;
+
+  if (g_file_query_exists (file, NULL))
+    {
+      if (g_file_query_file_type (file, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+                                  NULL) == G_FILE_TYPE_DIRECTORY)
+        {
+          GFileEnumerator *enumerator;
+
+          enumerator = g_file_enumerate_children (file,
+                                                  G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                                  G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                                  G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                                  G_FILE_QUERY_INFO_NONE,
+                                                  NULL, NULL);
+          if (enumerator)
+            {
+              GFileInfo *info;
+
+              while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+                {
+                  GFile *child;
+
+                  child = g_file_enumerator_get_child (enumerator, info);
+                  g_object_unref (info);
+
+                  if (! gimp_file_delete_recursive (child, error))
+                    success = FALSE;
+
+                  g_object_unref (child);
+                  if (! success)
+                    break;
+                }
+
+              g_object_unref (enumerator);
+            }
+        }
+
+      if (success)
+        /* Non-directory or empty directory. */
+        success = g_file_delete (file, NULL, error);
+    }
+
+  return success;
+}
+
 gchar *
 gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
                                          gsize             *length,
@@ -927,69 +993,4 @@ gimp_create_image_from_buffer (Gimp        *gimp,
   g_object_unref (image);
 
   return image;
-}
-
-/**
- * gimp_rec_rm:
- * @file: #GFile to delete from file system.
- * @error:
- *
- * Delete @file. If file is a directory, it will delete its children as
- * well recursively. It will not follow symlinks so you won't end up in
- * infinite loops, not will you be at risk of deleting your whole file
- * system (unless you pass the root of course!).
- * Such function unfortunately does not exist in glib, which only allows
- * to delete single files or empty directories by default.
- *
- * Returns: #TRUE if @file was successfully deleted and all its
- * children, #FALSE otherwise with @error filled.
- */
-gboolean
-gimp_rec_rm (GFile   *file,
-             GError **error)
-{
-  gboolean success = TRUE;
-
-  if (g_file_query_exists (file, NULL))
-    {
-      if (g_file_query_file_type (file, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
-                                  NULL) == G_FILE_TYPE_DIRECTORY)
-        {
-          GFileEnumerator *enumerator;
-
-          enumerator = g_file_enumerate_children (file,
-                                                  G_FILE_ATTRIBUTE_STANDARD_NAME ","
-                                                  G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-                                                  G_FILE_ATTRIBUTE_TIME_MODIFIED,
-                                                  G_FILE_QUERY_INFO_NONE,
-                                                  NULL, NULL);
-          if (enumerator)
-            {
-              GFileInfo *info;
-
-              while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
-                {
-                  GFile *child;
-
-                  child = g_file_enumerator_get_child (enumerator, info);
-                  g_object_unref (info);
-
-                  if (! gimp_rec_rm (child, error))
-                    success = FALSE;
-
-                  g_object_unref (child);
-                  if (! success)
-                    break;
-                }
-
-              g_object_unref (enumerator);
-            }
-        }
-
-      if (success)
-        /* Non-directory or empty directory. */
-        success = g_file_delete (file, NULL, error);
-    }
-
-  return success;
 }

@@ -414,7 +414,7 @@ gimp_extension_manager_finalize (GObject *object)
       GFile  *file;
 
       file = g_file_new_for_path (gimp_extension_get_path (iter->data));
-      if (! gimp_rec_rm (file, &error))
+      if (! gimp_file_delete_recursive (file, &error))
         g_warning ("%s: %s\n", G_STRFUNC, error->message);
       g_object_unref (file);
     }

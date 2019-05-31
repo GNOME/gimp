@@ -84,6 +84,8 @@ gboolean     gimp_file_is_executable               (GFile           *file);
 gchar      * gimp_file_get_extension               (GFile           *file);
 GFile      * gimp_file_with_new_extension          (GFile           *file,
                                                     GFile           *ext_file);
+gboolean     gimp_file_delete_recursive            (GFile           *file,
+                                                    GError         **error);
 
 gchar      * gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
                                                       gsize             *length,
@@ -105,7 +107,5 @@ GimpImage  * gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer,
                                                     const gchar     *image_name);
 
-gboolean     gimp_rec_rm                           (GFile                *file,
-                                                    GError              **error);
 
 #endif /* __APP_GIMP_UTILS_H__ */
