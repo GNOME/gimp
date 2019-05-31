@@ -65,9 +65,11 @@ image_properties_dialog_new (GimpImage   *image,
                                      gimp_standard_help_func,
                                      GIMP_HELP_IMAGE_PROPERTIES,
 
-                                     _("_Close"), GTK_RESPONSE_OK,
+                                     _("_Close"), GTK_RESPONSE_CLOSE,
 
                                      NULL);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),
