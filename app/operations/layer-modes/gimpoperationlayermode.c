@@ -450,12 +450,7 @@ gimp_operation_layer_mode_parent_process (GeglOperation        *operation,
       else
         {
           /* ... the output is empty. */
-          gegl_operation_context_take_object (
-            context, "output",
-            G_OBJECT (gegl_buffer_new (result,
-                                       gegl_operation_get_format (operation,
-                                                                  "output"))));
-
+          gegl_operation_context_set_object (context, "output", NULL);
           return TRUE;
         }
     }
