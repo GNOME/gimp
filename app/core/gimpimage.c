@@ -1567,6 +1567,7 @@ gimp_image_get_graph (GimpProjectable *projectable)
     gegl_node_new_child (private->graph,
                          "operation", "gimp:mask-components",
                          "mask",      mask,
+                         "alpha",     1.0,
                          NULL);
 
   gegl_node_connect_to (layers_node,           "output",

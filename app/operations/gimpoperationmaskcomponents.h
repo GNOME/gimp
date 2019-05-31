@@ -40,7 +40,9 @@ struct _GimpOperationMaskComponents
   GeglOperationPointComposer  parent_instance;
 
   GimpComponentMask           mask;
-  guint32                     opacity_value;
+  gdouble                     alpha;
+
+  guint32                     alpha_value;
   gpointer                    process;
   const Babl                 *format;
 };

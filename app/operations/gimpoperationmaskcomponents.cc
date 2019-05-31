@@ -35,7 +35,8 @@ extern "C"
 enum
 {
   PROP_0,
-  PROP_MASK
+  PROP_MASK,
+  PROP_ALPHA
 };
 
 
@@ -99,6 +100,17 @@ gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *kla
                                                        (GParamFlags) (
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT)));
+
+  g_object_class_install_property (object_class, PROP_ALPHA,
+                                   g_param_spec_double ("alpha",
+                                                        "Alpha",
+                                                        "The masked-in alpha value when there's no aux input",
+                                                        -G_MAXDOUBLE,
+                                                        G_MAXDOUBLE,
+                                                        0.0,
+                                                        (GParamFlags) (
+                                                          G_PARAM_READWRITE |
+                                                          G_PARAM_CONSTRUCT)));
 }
 
 static void
@@ -118,6 +130,10 @@ gimp_operation_mask_components_get_property (GObject    *object,
     {
     case PROP_MASK:
       g_value_set_flags (value, self->mask);
+      break;
+
+    case PROP_ALPHA:
+      g_value_set_double (value, self->alpha);
       break;
 
     default:
@@ -140,30 +156,33 @@ gimp_operation_mask_components_set_property (GObject      *object,
       self->mask = (GimpComponentMask) g_value_get_flags (value);
       break;
 
-   default:
+    case PROP_ALPHA:
+      self->alpha = g_value_get_double (value);
+      break;
+
+    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
 
 static guint32
-get_opacity_value (const Babl *format)
+get_alpha_value (const Babl *format,
+                 gfloat      alpha)
 {
-  gfloat src_value = 1.0f;
-
   switch (babl_format_get_bytes_per_pixel (format))
     {
     #define DEF_CASE(bpp, type)                                            \
       case bpp:                                                            \
       {                                                                    \
-        type dst_value;                                                    \
+        type alpha_value;                                                  \
                                                                            \
         babl_process (                                                     \
           babl_fish (babl_format_n (babl_type ("float"),              1),  \
                      babl_format_n (babl_format_get_type (format, 0), 1)), \
-          &src_value, &dst_value, 1);                                      \
+          &alpha, &alpha_value, 1);                                        \
                                                                            \
-        return dst_value;                                                  \
+        return alpha_value;                                                \
       }
 
     DEF_CASE ( 4, guint8)
@@ -186,7 +205,7 @@ struct ProcessGeneric
            gpointer          out_buf,
            gint              n,
            GimpComponentMask mask,
-           T                 opacity_value)
+           T                 alpha_value)
   {
     T    *out = (T *) out_buf;
     gint  i;
@@ -231,7 +250,7 @@ struct ProcessGeneric
               }
 
             if (mask & (1 << 3))
-              out[3] = opacity_value;
+              out[3] = alpha_value;
             else
               out[3] = in[3];
 
@@ -258,7 +277,7 @@ struct Process<guint8>
            gpointer          out_buf,
            gint              n,
            GimpComponentMask mask,
-           guint8            opacity_value)
+           guint8            alpha_value)
   {
     const guint32 *in;
     guint32       *out;
@@ -269,7 +288,7 @@ struct Process<guint8>
     if (((guintptr) in_buf | (guintptr) aux_buf | (guintptr) out_buf) % 4)
       {
         ProcessGeneric<guint8>::process (in_buf, aux_buf, out_buf, n,
-                                         mask, opacity_value);
+                                         mask, alpha_value);
 
         return;
       }
@@ -299,7 +318,7 @@ struct Process<guint8>
       }
     else
       {
-        if (! (mask & GIMP_COMPONENT_MASK_ALPHA))
+        if (! (mask & GIMP_COMPONENT_MASK_ALPHA) || ! alpha_value)
           {
             for (i = 0; i < n; i++)
               {
@@ -311,11 +330,11 @@ struct Process<guint8>
           }
         else
           {
-            g_return_if_fail (opacity_value == 0xff);
+            guint32 alpha_mask = alpha_value << 24;
 
             for (i = 0; i < n; i++)
               {
-                *out = (*in & in_mask) | 0xff000000u;
+                *out = (*in & in_mask) | alpha_mask;
 
                 in++;
                 out++;
@@ -338,7 +357,7 @@ gimp_operation_mask_components_process (GimpOperationMaskComponents *self,
                                         gint                         level)
 {
   Process<T>::process (in_buf, aux_buf, out_buf, samples,
-                       self->mask, self->opacity_value);
+                       self->mask, self->alpha_value);
 
   return TRUE;
 }
@@ -360,7 +379,7 @@ gimp_operation_mask_components_prepare (GeglOperation *operation)
     {
       self->format = format;
 
-      self->opacity_value = get_opacity_value (format);
+      self->alpha_value = get_alpha_value (format, self->alpha);
 
       switch (babl_format_get_bytes_per_pixel (format))
         {
@@ -407,10 +426,10 @@ gimp_operation_mask_components_parent_process (GeglOperation        *operation,
       GObject *aux = gegl_operation_context_get_object (context, "aux");
 
       /* when there's no aux and the alpha component is masked-in, we set the
-       * result's alpha component to full opacity, rather than full
-       * transparency, so we can't just forward an empty aux in this case.
+       * result's alpha component to the value of the "alpha" property; if it
+       * doesn't equal 0, we can't forward an empty aux.
        */
-      if (aux)
+      if (aux || ! self->alpha_value)
         {
           gegl_operation_context_set_object (context, "output", aux);
 
@@ -508,28 +527,23 @@ gimp_operation_mask_components_process (const Babl        *format,
                                         gint               n,
                                         GimpComponentMask  mask)
 {
-  guint32 opacity_value = 0;
-
   g_return_if_fail (format != NULL);
   g_return_if_fail (in != NULL);
   g_return_if_fail (out != NULL);
   g_return_if_fail (n >= 0);
 
-  if (! aux && (mask & GIMP_COMPONENT_MASK_ALPHA))
-    opacity_value = get_opacity_value (format);
-
   switch (babl_format_get_bytes_per_pixel (format))
     {
     case 4:
-      Process<guint8>::process (in, aux, out, n, mask, opacity_value);
+      Process<guint8>::process (in, aux, out, n, mask, 0);
       break;
 
     case 8:
-      Process<guint16>::process (in, aux, out, n, mask, opacity_value);
+      Process<guint16>::process (in, aux, out, n, mask, 0);
       break;
 
     case 16:
-      Process<guint32>::process (in, aux, out, n, mask, opacity_value);
+      Process<guint32>::process (in, aux, out, n, mask, 0);
       break;
 
     default:
