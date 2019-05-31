@@ -167,8 +167,12 @@ gimp_operation_desaturate_process (GeglOperation       *operation,
                                    gint                 level)
 {
   GimpOperationDesaturate *desaturate = GIMP_OPERATION_DESATURATE (operation);
+  
   gfloat                  *src        = in_buf;
   gfloat                  *dest       = out_buf;
+  double red_luminance, green_luminance, blue_luminance;
+  const Babl *space = gegl_operation_get_source_space (operation, "input");
+  babl_space_get_rgb_luminance (space, &red_luminance, &green_luminance, &blue_luminance);
 
   switch (desaturate->mode)
     {
@@ -201,8 +205,9 @@ gimp_operation_desaturate_process (GeglOperation       *operation,
     case GIMP_DESATURATE_LUMINANCE:
       while (samples--)
         {
-          gfloat value = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]);
-
+          gfloat value  = (src[0] * red_luminance) +
+                          (src[1] * green_luminance) +
+                          (src[2] * blue_luminance);
           dest[0] = value;
           dest[1] = value;
           dest[2] = value;
