@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-25 18:04+0000\n"
-"PO-Revision-Date: 2019-04-26 07:52+0200\n"
+"POT-Creation-Date: 2019-05-31 18:43+0000\n"
+"PO-Revision-Date: 2019-06-01 18:57+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -75,7 +75,8 @@ msgstr "Látható rétegek igazítása"
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:647 ../plug-ins/common/warp.c:378
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
+#: ../plug-ins/file-dds/ddswrite.c:1965 ../plug-ins/file-fits/fits.c:1150
+#: ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:152 ../plug-ins/flame/flame.c:473
 #: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
@@ -1052,16 +1053,16 @@ msgstr "CML-böngésző paramétereinek mentése"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
-#: ../plug-ins/common/file-pdf-save.c:471 ../plug-ins/common/file-png.c:1573
+#: ../plug-ins/common/file-pdf-save.c:471 ../plug-ins/common/file-png.c:1583
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1220 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1208 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:331 ../plug-ins/file-psd/psd-save.c:1599
-#: ../plug-ins/file-tiff/file-tiff-save.c:996
-#: ../plug-ins/file-tiff/file-tiff-save.c:1094 ../plug-ins/flame/flame.c:442
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1599
+#: ../plug-ins/file-tiff/file-tiff-save.c:995
+#: ../plug-ins/file-tiff/file-tiff-save.c:1093 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -2300,14 +2301,14 @@ msgstr "„%s”: fájl vége vagy hiba a palettaadatok olvasása közben"
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
 #: ../plug-ins/common/file-heif.c:634 ../plug-ins/common/file-html-table.c:238
 #: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
-#: ../plug-ins/common/file-png.c:1566 ../plug-ins/common/file-pnm.c:1249
+#: ../plug-ins/common/file-png.c:1576 ../plug-ins/common/file-pnm.c:1249
 #: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1202 ../plug-ins/common/file-xbm.c:1040
 #: ../plug-ins/common/file-xpm.c:663 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:288 ../plug-ins/file-psd/psd-save.c:1570
-#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:986
+#: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1570
+#: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:985
 #, c-format
 msgid "Exporting '%s'"
 msgstr "„%s” exportálása"
@@ -2431,7 +2432,7 @@ msgstr "GIMP-ecset"
 msgid "Brush"
 msgstr "Ecset"
 
-#: ../plug-ins/common/file-gbr.c:332 ../plug-ins/common/file-gih.c:549
+#: ../plug-ins/common/file-gbr.c:332 ../plug-ins/common/file-gih.c:567
 #: ../plug-ins/common/file-pat.c:302 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Leírás:"
@@ -2585,51 +2586,51 @@ msgstr "Az alapértelmezett megjegyzés hossza maximum %d karakter."
 msgid "GIMP brush (animated)"
 msgstr "GIMP-ecset (animált)"
 
-#: ../plug-ins/common/file-gih.c:531
+#: ../plug-ins/common/file-gih.c:549
 msgid "Brush Pipe"
 msgstr "Képecset"
 
-#: ../plug-ins/common/file-gih.c:564
+#: ../plug-ins/common/file-gih.c:582
 msgid "Spacing (percent):"
 msgstr "Távolság (százalék):"
 
-#: ../plug-ins/common/file-gih.c:619
+#: ../plug-ins/common/file-gih.c:637
 msgid "Pixels"
 msgstr "Képpont"
 
-#: ../plug-ins/common/file-gih.c:624
+#: ../plug-ins/common/file-gih.c:642
 msgid "Cell size:"
 msgstr "Cellaméret:"
 
-#: ../plug-ins/common/file-gih.c:637
+#: ../plug-ins/common/file-gih.c:655
 msgid "Number of cells:"
 msgstr "Cellák száma:"
 
-#: ../plug-ins/common/file-gih.c:662
+#: ../plug-ins/common/file-gih.c:680
 msgid " Rows of "
 msgstr " sor és "
 
-#: ../plug-ins/common/file-gih.c:674
+#: ../plug-ins/common/file-gih.c:692
 msgid " Columns on each layer"
 msgstr " oszlop minden rétegben"
 
-#: ../plug-ins/common/file-gih.c:678
+#: ../plug-ins/common/file-gih.c:696
 msgid " (Width Mismatch!) "
 msgstr " (Helytelen szélesség) "
 
-#: ../plug-ins/common/file-gih.c:682
+#: ../plug-ins/common/file-gih.c:700
 msgid " (Height Mismatch!) "
 msgstr " (Helytelen magasság) "
 
-#: ../plug-ins/common/file-gih.c:687
+#: ../plug-ins/common/file-gih.c:705
 msgid "Display as:"
 msgstr "Megjelenítés:"
 
-#: ../plug-ins/common/file-gih.c:698
+#: ../plug-ins/common/file-gih.c:716
 msgid "Dimension:"
 msgstr "Dimenzió:"
 
-#: ../plug-ins/common/file-gih.c:774
+#: ../plug-ins/common/file-gih.c:792
 msgid "Ranks:"
 msgstr "Osztály:"
 
@@ -2937,7 +2938,7 @@ msgstr "Nem támogatott színtér a(z) „%s” JP2 képben."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2284
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2286
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Az átlátszóság nem menthető el veszteségmentesen; helyette az "
@@ -2972,7 +2973,7 @@ msgid "Save creation time"
 msgstr "Létrehozás időpontjának mentése"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2342
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2344
 msgid "PNG"
 msgstr "PNG"
 
@@ -3398,33 +3399,33 @@ msgstr ""
 "Az importálandó PNG képben %d, %d eltolás van megadva. Kívánja ezt az "
 "eltolást a rétegre alkalmazni?"
 
-#: ../plug-ins/common/file-png.c:1532
+#: ../plug-ins/common/file-png.c:1542
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "Hiba a(z) „%s” exportálása közben: nem sikerült létrehozni a PNG írási "
 "struktúrát."
 
-#: ../plug-ins/common/file-png.c:1541
+#: ../plug-ins/common/file-png.c:1551
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Hiba a(z) „%s” exportálásakor. A PNG fejléc információs struktúra nem "
 "hozható létre."
 
-#: ../plug-ins/common/file-png.c:1549
+#: ../plug-ins/common/file-png.c:1559
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Hiba a(z) „%s” exportálásakor. A kép exportálása nem sikerült."
 
-#: ../plug-ins/common/file-png.c:2359 ../plug-ins/common/file-raw-data.c:2129
-#: ../plug-ins/file-tiff/file-tiff-save.c:1170
+#: ../plug-ins/common/file-png.c:2361 ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/file-tiff/file-tiff-save.c:1169
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Hiba a(z) „%s” felületfájl betöltésekor: %s"
 
-#: ../plug-ins/common/file-png.c:2360 ../plug-ins/common/file-raw-data.c:2130
-#: ../plug-ins/file-tiff/file-tiff-save.c:1171
+#: ../plug-ins/common/file-png.c:2362 ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/file-tiff/file-tiff-save.c:1170
 msgid "Unknown error"
 msgstr "Ismeretlen hiba"
 
@@ -6822,7 +6823,7 @@ msgstr ""
 #. Advanced Options
 #. Advanced expander
 #. Advanced options
-#: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:1026
+#: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:1003
 #: ../plug-ins/file-webp/file-webp-dialog.c:220
 #: ../plug-ins/file-webp/file-webp-dialog.c:366
 msgid "_Advanced Options"
@@ -6844,108 +6845,113 @@ msgstr "32 bit"
 msgid "Windows BMP image"
 msgstr "Windows BMP-kép"
 
-#: ../plug-ins/file-dds/dds.c:134 ../plug-ins/file-dds/dds.c:153
+#: ../plug-ins/file-dds/dds.c:137 ../plug-ins/file-dds/dds.c:156
 msgid "DDS image"
 msgstr "DDS-kép"
 
-#: ../plug-ins/file-dds/dds.c:170
+#: ../plug-ins/file-dds/dds.c:173
 msgid "Decode YCoCg"
 msgstr "YCoCg dekódolása"
 
-#: ../plug-ins/file-dds/dds.c:183
+#: ../plug-ins/file-dds/dds.c:186
 msgid "Decode YCoCg (scaled)"
 msgstr "YCoCg dekódolása (méretezett)"
 
-#: ../plug-ins/file-dds/dds.c:196
+#: ../plug-ins/file-dds/dds.c:199
 msgid "Decode Alpha exponent"
 msgstr "Alfa-kitevő dekódolása"
 
-#: ../plug-ins/file-dds/ddsread.c:1266
+#: ../plug-ins/file-dds/ddsread.c:1274
 msgid "Load DDS"
 msgstr "DDS betöltése"
 
-#: ../plug-ins/file-dds/ddsread.c:1268 ../plug-ins/file-dds/ddswrite.c:1887
+#: ../plug-ins/file-dds/ddsread.c:1276
 msgid "Cancel"
 msgstr "Mégse"
 
-#: ../plug-ins/file-dds/ddsread.c:1269 ../plug-ins/file-dds/ddswrite.c:1888
+#: ../plug-ins/file-dds/ddsread.c:1277
 msgid "OK"
 msgstr "Rendben"
 
-#: ../plug-ins/file-dds/ddsread.c:1285
+#: ../plug-ins/file-dds/ddsread.c:1293
 msgid "Load mipmaps"
 msgstr "Mipmapok betöltése"
 
-#: ../plug-ins/file-dds/ddsread.c:1292
+#: ../plug-ins/file-dds/ddsread.c:1300
 msgid "Automatically decode YCoCg/AExp images when detected"
 msgstr "YCoCg/AExp képek automatikus dekódolása észleléskor"
 
-#: ../plug-ins/file-dds/ddswrite.c:1885
+#: ../plug-ins/file-dds/ddswrite.c:1963
 msgid "Export as DDS"
 msgstr "Exportálás DDS-ként"
 
-#: ../plug-ins/file-dds/ddswrite.c:1912
+#: ../plug-ins/file-dds/ddswrite.c:1966
+#: ../plug-ins/metadata/metadata-editor.c:5684
+msgid "_Export"
+msgstr "_Exportálás"
+
+#: ../plug-ins/file-dds/ddswrite.c:1990
 msgid "Compression:"
 msgstr "Tömörítés:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1931
+#: ../plug-ins/file-dds/ddswrite.c:2010
 msgid "Format:"
 msgstr "Formátum:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1952
+#: ../plug-ins/file-dds/ddswrite.c:2031
 msgid "Save:"
 msgstr "Mentés:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1972
+#: ../plug-ins/file-dds/ddswrite.c:2052
 msgid "Mipmaps:"
 msgstr "Mipmapok:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2003
+#: ../plug-ins/file-dds/ddswrite.c:2084
 msgid "Transparent index:"
 msgstr "Átlátszó index:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2041
+#: ../plug-ins/file-dds/ddswrite.c:2127
 msgid "<b>Advanced Options</b>"
 msgstr "<b>Speciális beállítások</b>"
 
-#: ../plug-ins/file-dds/ddswrite.c:2055
-#: ../plug-ins/file-tiff/file-tiff-save.c:1186
+#: ../plug-ins/file-dds/ddswrite.c:2144
+#: ../plug-ins/file-tiff/file-tiff-save.c:1185
 msgid "Compression"
 msgstr "Tömörítés"
 
-#: ../plug-ins/file-dds/ddswrite.c:2066
+#: ../plug-ins/file-dds/ddswrite.c:2155
 msgid "Use perceptual error metric"
 msgstr "Észlelési hibametrika használata"
 
-#: ../plug-ins/file-dds/ddswrite.c:2077
+#: ../plug-ins/file-dds/ddswrite.c:2169
 msgid "Mipmaps"
 msgstr "Mipmapok"
 
-#: ../plug-ins/file-dds/ddswrite.c:2088
+#: ../plug-ins/file-dds/ddswrite.c:2180
 msgid "Filter:"
 msgstr "Szűrő:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2108
+#: ../plug-ins/file-dds/ddswrite.c:2200
 msgid "Wrap mode:"
 msgstr "Tördelési mód:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2128
+#: ../plug-ins/file-dds/ddswrite.c:2220
 msgid "Apply gamma correction"
 msgstr "Gammakorrekció alkalmazása"
 
-#: ../plug-ins/file-dds/ddswrite.c:2139
+#: ../plug-ins/file-dds/ddswrite.c:2233
 msgid "Use sRGB colorspace"
 msgstr "sRGB színtér használata"
 
-#: ../plug-ins/file-dds/ddswrite.c:2150 ../plug-ins/gimpressionist/brush.c:544
+#: ../plug-ins/file-dds/ddswrite.c:2246 ../plug-ins/gimpressionist/brush.c:544
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2168
+#: ../plug-ins/file-dds/ddswrite.c:2266
 msgid "Preserve alpha test coverage"
 msgstr "Alfa teszt lefedettség megőrzése"
 
-#: ../plug-ins/file-dds/ddswrite.c:2179
+#: ../plug-ins/file-dds/ddswrite.c:2279
 msgid "Alpha test threshold:"
 msgstr "Alfa teszt küszöb:"
 
@@ -7134,31 +7140,31 @@ msgstr "JPEG-előnézet"
 msgid "File size: %s"
 msgstr "Fájl mérete: %s"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:672
+#: ../plug-ins/file-jpeg/jpeg-save.c:649
 msgid "Calculating file size..."
 msgstr "Fájlméret kiszámítása…"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:756 ../plug-ins/file-jpeg/jpeg-save.c:899
+#: ../plug-ins/file-jpeg/jpeg-save.c:733 ../plug-ins/file-jpeg/jpeg-save.c:876
 msgid "File size: unknown"
 msgstr "Fájlméret: ismeretlen"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:819
+#: ../plug-ins/file-jpeg/jpeg-save.c:796
 msgid "JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:847
+#: ../plug-ins/file-jpeg/jpeg-save.c:824
 msgid "_Quality:"
 msgstr "Mi_nőség:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:851
+#: ../plug-ins/file-jpeg/jpeg-save.c:828
 msgid "JPEG quality parameter"
 msgstr "A JPEG-minőség paramétere"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:863
+#: ../plug-ins/file-jpeg/jpeg-save.c:840
 msgid "_Use quality settings from original image"
 msgstr "Az ere_deti kép minőségi beállításainak használata"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:869
+#: ../plug-ins/file-jpeg/jpeg-save.c:846
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -7168,122 +7174,120 @@ msgstr ""
 "táblákat) használó JPEG-fájlból volt betöltve, akkor ezen opció "
 "bekapcsolásával közel azonos minőség és fájlméret érhető el."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:909
+#: ../plug-ins/file-jpeg/jpeg-save.c:886
 msgid "Enable preview to obtain the file size."
 msgstr "A fájlméret meghatározásához kapcsolja be az előnézetet."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:912
+#: ../plug-ins/file-jpeg/jpeg-save.c:889
 msgid "Sho_w preview in image window"
 msgstr "E_lőnézet megjelenítése a kép ablakában"
 
 #. Save EXIF data
-#: ../plug-ins/file-jpeg/jpeg-save.c:930
+#: ../plug-ins/file-jpeg/jpeg-save.c:907
 #: ../plug-ins/file-webp/file-webp-dialog.c:383
 msgid "Save _Exif data"
 msgstr "E_xif-adatok mentése"
 
 #. XMP metadata
-#: ../plug-ins/file-jpeg/jpeg-save.c:944
+#: ../plug-ins/file-jpeg/jpeg-save.c:921
 #: ../plug-ins/file-webp/file-webp-dialog.c:393
 msgid "Save _XMP data"
 msgstr "XMP-_adatok mentése"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:958
+#: ../plug-ins/file-jpeg/jpeg-save.c:935
 msgid "Save _IPTC data"
 msgstr "_IPTC-adatok mentése"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:972
+#: ../plug-ins/file-jpeg/jpeg-save.c:949
 msgid "Save _thumbnail"
 msgstr "Bél_yegkép mentése"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:986
-#: ../plug-ins/ui/plug-in-file-png.ui.h:16
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
-msgid "Save color profile"
-msgstr "Színprofil mentése"
+#: ../plug-ins/file-jpeg/jpeg-save.c:963
+msgid "Save color _profile"
+msgstr "Szín_profil mentése"
 
 #. Comment
-#: ../plug-ins/file-jpeg/jpeg-save.c:999
+#: ../plug-ins/file-jpeg/jpeg-save.c:976
 msgid "Comment"
 msgstr "Megjegyzés"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1057
+#: ../plug-ins/file-jpeg/jpeg-save.c:1034
 msgid "S_moothing:"
 msgstr "S_imítás:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1070
+#: ../plug-ins/file-jpeg/jpeg-save.c:1047
 msgid "Interval (MCU rows):"
 msgstr "Blokkméret (MCU sorok):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1088
+#: ../plug-ins/file-jpeg/jpeg-save.c:1065
 msgid "Use _restart markers"
 msgstr "Ú_jrakezdési jelölések"
 
 #. Optimize
-#: ../plug-ins/file-jpeg/jpeg-save.c:1107
+#: ../plug-ins/file-jpeg/jpeg-save.c:1084
 msgid "_Optimize"
 msgstr "_Optimalizálás"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1130
+#: ../plug-ins/file-jpeg/jpeg-save.c:1107
 msgid "Use arithmetic _coding"
 msgstr "Számtani _kódolás használata"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1132
+#: ../plug-ins/file-jpeg/jpeg-save.c:1109
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "A régebbi szoftvereknek problémái lehetnek a számtani kódolású képek "
 "megnyitásával"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1155
+#: ../plug-ins/file-jpeg/jpeg-save.c:1132
 msgid "_Progressive"
 msgstr "_Progresszív"
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1173
+#: ../plug-ins/file-jpeg/jpeg-save.c:1150
 msgid "Su_bsampling:"
 msgstr "Al_ulmintavételezés:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1180
+#: ../plug-ins/file-jpeg/jpeg-save.c:1157
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (legjobb minőség)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1182
+#: ../plug-ins/file-jpeg/jpeg-save.c:1159
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 vízszintes (színesség fele)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1184
+#: ../plug-ins/file-jpeg/jpeg-save.c:1161
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 függőleges (színesség fele)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1186
+#: ../plug-ins/file-jpeg/jpeg-save.c:1163
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (színesség negyede)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1218
+#: ../plug-ins/file-jpeg/jpeg-save.c:1195
 msgid "_DCT method:"
 msgstr "D_CT-módszer:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1224
+#: ../plug-ins/file-jpeg/jpeg-save.c:1201
 msgid "Fast Integer"
 msgstr "Gyors egész"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1225
+#: ../plug-ins/file-jpeg/jpeg-save.c:1202
 msgid "Integer"
 msgstr "Egész"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1226
+#: ../plug-ins/file-jpeg/jpeg-save.c:1203
 msgid "Floating-Point"
 msgstr "Lebegőpontos"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1250
+#: ../plug-ins/file-jpeg/jpeg-save.c:1227
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:6
 #: ../plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "Alapértelmezések _betöltése"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1259
+#: ../plug-ins/file-jpeg/jpeg-save.c:1236
 msgid "Sa_ve Defaults"
 msgstr "Alapértelme_zések mentése"
 
@@ -7629,7 +7633,7 @@ msgstr "%s-%d-/-%d-oldal"
 msgid "TIFF Channel"
 msgstr "TIFF-csatorna"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:626
+#: ../plug-ins/file-tiff/file-tiff-save.c:625
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7637,16 +7641,16 @@ msgstr ""
 "Csak fekete-fehér képek tömöríthetők „CCITT Group 4” vagy „CCITT Group 3” "
 "használatával."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:640
+#: ../plug-ins/file-tiff/file-tiff-save.c:639
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Indexelt képeket nem lehet „JPEG” használatával tömöríteni."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:773
+#: ../plug-ins/file-tiff/file-tiff-save.c:772
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Nem sikerült egy sor kiírása a(z) %d. sorban"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1013
+#: ../plug-ins/file-tiff/file-tiff-save.c:1012
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7654,40 +7658,40 @@ msgstr ""
 "A TIFF formátum csak 7 bites ASCII kódolást engedélyez\n"
 "a megjegyzésekben. A megjegyzés nem lett elmentve."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1116
+#: ../plug-ins/file-tiff/file-tiff-save.c:1115
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "A lapok különböző bitmélységgel történő írása furcsa."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1160
+#: ../plug-ins/file-tiff/file-tiff-save.c:1159
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1190
+#: ../plug-ins/file-tiff/file-tiff-save.c:1189
 msgid "_None"
 msgstr "_Nincs"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1191
+#: ../plug-ins/file-tiff/file-tiff-save.c:1190
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1192
+#: ../plug-ins/file-tiff/file-tiff-save.c:1191
 msgid "_Pack Bits"
 msgstr "_Bitek összecsomagolása"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1193
+#: ../plug-ins/file-tiff/file-tiff-save.c:1192
 msgid "_Deflate"
 msgstr "„_Deflate” formátum"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1194
+#: ../plug-ins/file-tiff/file-tiff-save.c:1193
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1195
+#: ../plug-ins/file-tiff/file-tiff-save.c:1194
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Group _3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1196
+#: ../plug-ins/file-tiff/file-tiff-save.c:1195
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 fax"
 
@@ -9567,6 +9571,11 @@ msgstr "IPTC-adatok mentése"
 msgid "Save thumbnail"
 msgstr "Bélyegkép mentése"
 
+#: ../plug-ins/ui/plug-in-file-png.ui.h:16
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
+msgid "Save color profile"
+msgstr "Színprofil mentése"
+
 #: ../plug-ins/ui/plug-in-file-png.ui.h:17
 msgid "Co_mpression level:"
 msgstr "_Tömörítés mértéke:"
@@ -9620,7 +9629,6 @@ msgid "Planar (RRR,GGG,BBB)"
 msgstr "Sík (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
-#| msgid "Save Flame"
 msgid "Save layers"
 msgstr "Rétegek mentése"
 
@@ -12017,10 +12025,6 @@ msgstr "Metaadat fájl importálása"
 #: ../plug-ins/metadata/metadata-editor.c:5680
 msgid "Export Metadata File"
 msgstr "Metaadat fájl exportálása"
-
-#: ../plug-ins/metadata/metadata-editor.c:5684
-msgid "_Export"
-msgstr "_Exportálás"
 
 #: ../plug-ins/metadata/metadata-tags.h:250
 msgid "Original digital capture of a real life scene"
