@@ -481,9 +481,13 @@ gimp_drawable_filter_commit (GimpDrawableFilter *filter,
                                             GIMP_FILTER (filter),
                                             progress,
                                             gimp_object_get_name (filter),
-                                            cancellable);
+                                            cancellable,
+                                            FALSE);
 
       gimp_drawable_filter_remove_filter (filter);
+
+      if (! success)
+        gimp_drawable_filter_update_drawable (filter, NULL);
 
       g_signal_emit (filter, drawable_filter_signals[FLUSH], 0);
     }
