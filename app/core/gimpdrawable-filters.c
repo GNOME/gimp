@@ -109,7 +109,8 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                             GimpFilter   *filter,
                             GimpProgress *progress,
                             const gchar  *undo_desc,
-                            gboolean      cancellable)
+                            gboolean      cancellable,
+                            gboolean      update)
 {
   GimpImage      *image;
   GimpApplicator *applicator;
@@ -225,9 +226,12 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
       gimp_applicator_set_output_format (applicator, applicator_output_format);
     }
 
-  gimp_drawable_update (drawable,
-                        rect.x, rect.y,
-                        rect.width, rect.height);
+  if (update)
+    {
+      gimp_drawable_update (drawable,
+                            rect.x, rect.y,
+                            rect.width, rect.height);
+    }
 
   return success;
 }
