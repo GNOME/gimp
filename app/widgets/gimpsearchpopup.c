@@ -197,6 +197,7 @@ gimp_search_popup_new (Gimp                    *gimp,
 
   widget = g_object_new (GIMP_TYPE_SEARCH_POPUP,
                          "type",          GTK_WINDOW_TOPLEVEL,
+                         "type-hint",     GDK_WINDOW_TYPE_HINT_DIALOG,
                          "decorated",     TRUE,
                          "modal",         TRUE,
                          "role",          role,
