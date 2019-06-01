@@ -146,6 +146,29 @@ typedef enum
 
 
 /**
+ * GimpIntComboBoxLayout:
+ * @GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY:   show icons only
+ * @GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED: show icons and abbreviated labels,
+ *                                         when available
+ * @GIMP_INT_COMBO_BOX_LAYOUT_FULL:        show icons and full labels
+ *
+ * Possible layouts for #GimpIntComboBox.
+ *
+ * Since: 2.10
+ **/
+#define GIMP_TYPE_INT_COMBO_BOX_LAYOUT (gimp_int_combo_box_layout_get_type ())
+
+GType gimp_int_combo_box_layout_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY,
+  GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
+  GIMP_INT_COMBO_BOX_LAYOUT_FULL
+} GimpIntComboBoxLayout;
+
+
+/**
  * GimpPageSelectorTarget:
  * @GIMP_PAGE_SELECTOR_TARGET_LAYERS: import as layers of one image
  * @GIMP_PAGE_SELECTOR_TARGET_IMAGES: import as separate images
@@ -209,27 +232,6 @@ typedef enum
   GIMP_ZOOM_OUT_MAX,   /*< skip >*/
   GIMP_ZOOM_TO         /*< skip >*/
 } GimpZoomType;
-
-
-/**
- * GimpIntComboBoxLayout:
- * @GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY:   show icons only
- * @GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED: show icons and abbreviated labels,
- *                                         when available
- * @GIMP_INT_COMBO_BOX_LAYOUT_FULL:        show icons and full labels
- *
- * Possible layouts for #GimpIntComboBox.
- **/
-#define GIMP_TYPE_INT_COMBO_BOX_LAYOUT (gimp_int_combo_box_layout_get_type ())
-
-GType gimp_int_combo_box_layout_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY,
-  GIMP_INT_COMBO_BOX_LAYOUT_ABBREVIATED,
-  GIMP_INT_COMBO_BOX_LAYOUT_FULL
-} GimpIntComboBoxLayout;
 
 
 G_END_DECLS
