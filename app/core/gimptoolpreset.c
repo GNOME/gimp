@@ -208,7 +208,6 @@ gimp_tool_preset_config_iface_init (GimpConfigInterface *iface)
 static void
 gimp_tool_preset_init (GimpToolPreset *tool_preset)
 {
-  tool_preset->tool_options = NULL;
 }
 
 static void
