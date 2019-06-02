@@ -817,7 +817,7 @@ PKG_CHECK_MODULES(GTK, gtk+-3.0 >= gtk_required_version,,
                   [add_deps_error([gtk+-3.0 >= gtk_required_version],
                                   [Test for GTK+ failed.])])
 
-AC_PATH_PROG(GTK_UPDATE_ICON_CACHE, gtk-update-icon-cache, no)
+AC_PATH_PROGS(GTK_UPDATE_ICON_CACHE, gtk-update-icon-cache-3.0 gtk-update-icon-cache, no)
 if test "x$GTK_UPDATE_ICON_CACHE" = xno; then
   add_deps_error([gtk-update-icon-cache],
                  [Could not find gtk-update-icon-cache in your PATH.])
