@@ -310,6 +310,10 @@ gimp_dockbook_dispose (GObject *object)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (object);
 
+  g_signal_handlers_disconnect_by_func (dockbook->p->ui_manager->gimp->config,
+                                        gimp_dockbook_config_size_changed,
+                                        dockbook);
+
   gimp_dockbook_remove_tab_timeout (dockbook);
 
   while (dockbook->p->dockables)
@@ -331,14 +335,6 @@ gimp_dockbook_finalize (GObject *object)
   GimpDockbook *dockbook = GIMP_DOCKBOOK (object);
 
   g_clear_object (&dockbook->p->ui_manager);
-
-  if (dockbook->p->dock)
-    {
-      g_signal_handlers_disconnect_by_func (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
-                                            gimp_dockbook_config_size_changed,
-                                            dockbook);
-      dockbook->p->dock = NULL;
-    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -880,6 +876,11 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
                                                            dockbook,
                                                            FALSE);
 
+  g_signal_connect (dockbook->p->ui_manager->gimp->config,
+                    "size-changed",
+                    G_CALLBACK (gimp_dockbook_config_size_changed),
+                    dockbook);
+
   gimp_help_connect (GTK_WIDGET (dockbook), gimp_dockbook_help_func,
                      GIMP_HELP_DOCK, dockbook);
 
@@ -901,16 +902,7 @@ gimp_dockbook_set_dock (GimpDockbook *dockbook,
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
   g_return_if_fail (dock == NULL || GIMP_IS_DOCK (dock));
 
-  if (dockbook->p->dock && gimp_dock_get_context (dockbook->p->dock))
-    g_signal_handlers_disconnect_by_func (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
-                                          G_CALLBACK (gimp_dockbook_config_size_changed),
-                                          dockbook);
   dockbook->p->dock = dock;
-  if (dock)
-    g_signal_connect (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
-                      "size-changed",
-                      G_CALLBACK (gimp_dockbook_config_size_changed),
-                      dockbook);
 }
 
 GimpUIManager *
@@ -1615,11 +1607,9 @@ gimp_dockable_create_event_box_tab_widget (GimpDockable *dockable,
 static GtkIconSize
 gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
 {
-  Gimp        *gimp;
-  GimpIconSize size;
+  Gimp        *gimp     = dockbook->p->ui_manager->gimp;
   GtkIconSize  tab_size = DEFAULT_TAB_ICON_SIZE;
-
-  gimp = gimp_dock_get_context (dockbook->p->dock)->gimp;
+  GimpIconSize size;
 
   size = gimp_gui_config_detect_icon_size (GIMP_GUI_CONFIG (gimp->config));
   /* Match GimpIconSize with GtkIconSize. */
@@ -1650,11 +1640,9 @@ gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
 static gint
 gimp_dockbook_get_tab_border (GimpDockbook *dockbook)
 {
-  Gimp         *gimp;
-  GimpIconSize  size;
+  Gimp         *gimp       = dockbook->p->ui_manager->gimp;
   gint          tab_border = DEFAULT_TAB_BORDER;
-
-  gimp = gimp_dock_get_context (dockbook->p->dock)->gimp;
+  GimpIconSize  size;
 
   gtk_widget_style_get (GTK_WIDGET (dockbook),
                         "tab-border", &tab_border,
