@@ -26,16 +26,13 @@
 
 #include "tools-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimptooloptions.h"
 #include "core/gimptoolpreset.h"
-
-#include "paint/gimppaintoptions.h"
 
 #include "display/gimpdisplay.h"
 
@@ -716,65 +713,74 @@ tool_manager_tool_changed (GimpContext     *user_context,
 }
 
 static void
+tool_manager_copy_tool_options (GObject *src,
+                                GObject *dest)
+{
+  GList *diff;
+
+  diff = gimp_config_diff (src, dest, G_PARAM_READWRITE);
+
+  if (diff)
+    {
+      GList *list;
+
+      g_object_freeze_notify (dest);
+
+      for (list = diff; list; list = list->next)
+        {
+          GParamSpec *prop_spec = list->data;
+
+          if (g_type_is_a (prop_spec->owner_type, GIMP_TYPE_TOOL_OPTIONS) &&
+              ! (prop_spec->flags & G_PARAM_CONSTRUCT_ONLY))
+            {
+              GValue value = G_VALUE_INIT;
+
+              g_value_init (&value, prop_spec->value_type);
+
+              g_object_get_property (src,  prop_spec->name, &value);
+              g_object_set_property (dest, prop_spec->name, &value);
+
+              g_value_unset (&value);
+            }
+        }
+
+      g_object_thaw_notify (dest);
+
+      g_list_free (diff);
+    }
+}
+
+static void
 tool_manager_preset_changed (GimpContext     *user_context,
                              GimpToolPreset  *preset,
                              GimpToolManager *tool_manager)
 {
   GimpToolInfo *preset_tool;
-  gchar        *options_name;
-  gboolean      tool_change = FALSE;
 
   if (! preset || user_context->gimp->busy)
     return;
 
   preset_tool = gimp_context_get_tool (GIMP_CONTEXT (preset->tool_options));
 
-  if (preset_tool != gimp_context_get_tool (user_context))
-    tool_change = TRUE;
+  /* first, select the preset's tool, even if it's already the active
+   * tool
+   */
+  gimp_context_set_tool (user_context, preset_tool);
 
-  /*  save the name, we don't want to overwrite it  */
-  options_name = g_strdup (gimp_object_get_name (preset_tool->tool_options));
-
-  gimp_config_copy (GIMP_CONFIG (preset->tool_options),
-                    GIMP_CONFIG (preset_tool->tool_options), 0);
-
-  /*  restore the saved name  */
-  gimp_object_take_name (GIMP_OBJECT (preset_tool->tool_options), options_name);
-
-  if (tool_change)
-    gimp_context_set_tool (user_context, preset_tool);
-
+  /* then, copy the context properties the preset remembers, possibly
+   * changing some tool options due to the "link brush stuff to brush
+   * defaults" settings in gimptooloptions.c
+   */
   gimp_context_copy_properties (GIMP_CONTEXT (preset->tool_options),
                                 user_context,
                                 gimp_tool_preset_get_prop_mask (preset));
 
-  if (GIMP_IS_PAINT_OPTIONS (preset->tool_options))
-    {
-      GimpToolOptions     *src;
-      GimpToolOptions     *dest;
-      GimpContextPropMask  prop_mask = 0;
-
-      src  = preset->tool_options;
-      dest = tool_manager->active_tool->tool_info->tool_options;
-
-      /*  copy various data objects' additional tool options again
-       *  manually, they might have been overwritten by e.g. the "link
-       *  brush stuff to brush defaults" logic in
-       *  gimptooloptions-gui.c
-       */
-      if (preset->use_brush)
-        prop_mask |= GIMP_CONTEXT_PROP_MASK_BRUSH;
-
-      if (preset->use_dynamics)
-        prop_mask |= GIMP_CONTEXT_PROP_MASK_DYNAMICS;
-
-      if (preset->use_gradient)
-        prop_mask |= GIMP_CONTEXT_PROP_MASK_GRADIENT;
-
-      gimp_paint_options_copy_props (GIMP_PAINT_OPTIONS (src),
-                                     GIMP_PAINT_OPTIONS (dest),
-                                     prop_mask);
-    }
+  /* finally, copy all tool options properties, overwriting any
+   * changes resulting from setting the context properties above, we
+   * really want exactly what is in the preset and nothing else
+   */
+  tool_manager_copy_tool_options (G_OBJECT (preset->tool_options),
+                                  G_OBJECT (preset_tool->tool_options));
 }
 
 static void
