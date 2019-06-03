@@ -478,8 +478,13 @@ run (const gchar      *name,
             {
               gint32 transp;
 
-              /* FIXME: Do we have to update drawable, too? */
-              image = gimp_image_duplicate (image);
+              if (export != GIMP_EXPORT_EXPORT)
+                {
+                  image    = gimp_image_duplicate (image);
+                  drawable = gimp_image_get_active_layer (image);
+
+                  export = GIMP_EXPORT_EXPORT;
+                }
 
               /* borrowed from ./libgimp/gimpexport.c:export_merge()
                * this makes sure that the exported file size is correct. */
