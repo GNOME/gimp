@@ -617,13 +617,7 @@ gimp_warp_tool_options_notify (GimpTool         *tool,
     }
   else if (! strcmp (pspec->name, "interpolation"))
     {
-      if (wt_options->high_quality_preview)
-        {
-          gimp_warp_tool_set_sampler (wt, /* commit = */ FALSE);
-
-          gimp_warp_tool_update_bounds (wt);
-          gimp_warp_tool_update_stroke (wt, NULL);
-        }
+      gimp_warp_tool_set_sampler (wt, /* commit = */ FALSE);
     }
   else if (! strcmp (pspec->name, "abyss-policy"))
     {
@@ -639,9 +633,6 @@ gimp_warp_tool_options_notify (GimpTool         *tool,
   else if (! strcmp (pspec->name, "high-quality-preview"))
     {
       gimp_warp_tool_set_sampler (wt, /* commit = */ FALSE);
-
-      gimp_warp_tool_update_bounds (wt);
-      gimp_warp_tool_update_stroke (wt, NULL);
     }
 }
 
@@ -1001,6 +992,9 @@ gimp_warp_tool_set_sampler (GimpWarpTool *wt,
       gegl_node_set (wt->render_node,
                      "sampler-type", sampler,
                      NULL);
+
+      gimp_warp_tool_update_bounds (wt);
+      gimp_warp_tool_update_stroke (wt, NULL);
     }
 }
 
