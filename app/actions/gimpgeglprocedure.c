@@ -339,6 +339,10 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
     {
       tool_name = "gimp-threshold-tool";
     }
+  else if (! strcmp (procedure->original_name, "gimp:offset"))
+    {
+      tool_name = "gimp-offset-tool";
+    }
   else
     {
       tool_name = "gimp-operation-tool";

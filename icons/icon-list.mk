@@ -299,6 +299,7 @@ scalable_images = \
 	scalable/gimp-tool-move.svg				\
 	scalable/gimp-tool-mypaint-brush.svg			\
 	scalable/gimp-tool-n-point-deformation.svg		\
+	scalable/gimp-tool-offset.svg				\
 	scalable/gimp-tool-options.svg				\
 	scalable/gimp-tool-paintbrush.svg			\
 	scalable/gimp-tool-path.svg				\
@@ -475,6 +476,7 @@ vector24_images = \
 	24/gimp-tool-mypaint-brush.svg				\
 	24/gimp-tool-measure.svg				\
 	24/gimp-tool-n-point-deformation.svg			\
+	24/gimp-tool-offset.svg					\
 	24/gimp-tool-options.svg				\
 	24/gimp-tool-paintbrush.svg				\
 	24/gimp-tool-path.svg					\
@@ -765,6 +767,7 @@ icons16_images = \
 	16/gimp-tool-move.png					\
 	16/gimp-tool-mypaint-brush.png				\
 	16/gimp-tool-n-point-deformation.png			\
+	16/gimp-tool-offset.png					\
 	16/gimp-tool-options.png				\
 	16/gimp-tool-paintbrush.png				\
 	16/gimp-tool-path.png					\
@@ -977,6 +980,7 @@ icons24_images = \
 	24/gimp-tool-move.png					\
 	24/gimp-tool-mypaint-brush.png				\
 	24/gimp-tool-n-point-deformation.png			\
+	24/gimp-tool-offset.png					\
 	24/gimp-tool-paintbrush.png				\
 	24/gimp-tool-path.png					\
 	24/gimp-tool-pencil.png					\

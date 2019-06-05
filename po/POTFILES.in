@@ -226,7 +226,6 @@ app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c
 app/dialogs/lebl-dialog.c
 app/dialogs/module-dialog.c
-app/dialogs/offset-dialog.c
 app/dialogs/palette-import-dialog.c
 app/dialogs/preferences-dialog.c
 app/dialogs/print-size-dialog.c
@@ -471,6 +470,7 @@ app/tools/gimpmybrushoptions-gui.c
 app/tools/gimpmybrushtool.c
 app/tools/gimpnpointdeformationoptions.c
 app/tools/gimpnpointdeformationtool.c
+app/tools/gimpoffsettool.c
 app/tools/gimpoperationtool.c
 app/tools/gimppaintbrushtool.c
 app/tools/gimppaintoptions-gui.c

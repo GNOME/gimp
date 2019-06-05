@@ -519,7 +519,7 @@
           <menuitem action="tools-rotate-arbitrary" />
         </placeholder>
         <separator />
-        <menuitem action="drawable-offset" />
+        <menuitem action="filters-offset" />
       </menu>
 
 <!-- Layer Properties

@@ -361,6 +361,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_TOOL_MOVE                 "gimp-tool-move"
 #define GIMP_ICON_TOOL_MYPAINT_BRUSH        "gimp-tool-mypaint-brush"
 #define GIMP_ICON_TOOL_N_POINT_DEFORMATION  "gimp-tool-n-point-deformation"
+#define GIMP_ICON_TOOL_OFFSET               "gimp-tool-offset"
 #define GIMP_ICON_TOOL_PAINTBRUSH           "gimp-tool-paintbrush"
 #define GIMP_ICON_TOOL_PATH                 "gimp-tool-path"
 #define GIMP_ICON_TOOL_PENCIL               "gimp-tool-pencil"

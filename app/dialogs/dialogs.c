@@ -236,6 +236,7 @@ static const GimpDialogFactoryEntry entries[] =
   FOREIGN ("gimp-hue-saturation-tool-dialog",      TRUE,  FALSE),
   FOREIGN ("gimp-levels-tool-dialog",              TRUE,  TRUE),
   FOREIGN ("gimp-measure-tool-dialog",             TRUE,  FALSE),
+  FOREIGN ("gimp-offset-tool-dialog",              TRUE,  FALSE),
   FOREIGN ("gimp-operation-tool-dialog",           TRUE,  FALSE),
   FOREIGN ("gimp-posterize-tool-dialog",           TRUE,  FALSE),
   FOREIGN ("gimp-rotate-tool-dialog",              TRUE,  FALSE),

@@ -318,6 +318,7 @@
 #define GIMP_HELP_TOOL_MOVE                       "gimp-tool-move"
 #define GIMP_HELP_TOOL_MYPAINT_BRUSH              "gimp-tool-mypaint-brush"
 #define GIMP_HELP_TOOL_N_POINT_DEFORMATION        "gimp-tool-n-point-deformation"
+#define GIMP_HELP_TOOL_OFFSET                     "gimp-tool-offset"
 #define GIMP_HELP_TOOL_PATH                       "gimp-tool-path"
 #define GIMP_HELP_TOOL_PAINTBRUSH                 "gimp-tool-paintbrush"
 #define GIMP_HELP_TOOL_PENCIL                     "gimp-tool-pencil"

@@ -23,8 +23,6 @@ void   drawable_equalize_cmd_callback       (GtkAction *action,
                                              gpointer   data);
 void   drawable_levels_stretch_cmd_callback (GtkAction *action,
                                              gpointer   data);
-void   drawable_offset_cmd_callback         (GtkAction *action,
-                                             gpointer   data);
 
 void   drawable_linked_cmd_callback         (GtkAction *action,
                                              gpointer   data);
