@@ -71,6 +71,7 @@
 #include "gimpmovetool.h"
 #include "gimpmybrushtool.h"
 #include "gimpnpointdeformationtool.h"
+#include "gimpoffsettool.h"
 #include "gimppaintbrushtool.h"
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
@@ -172,12 +173,13 @@ gimp_tools_init (Gimp *gimp)
     gimp_smudge_tool_register,
     gimp_dodge_burn_tool_register,
 
-    /*  color tools  */
+    /*  filter tools  */
 
     gimp_brightness_contrast_tool_register,
     gimp_threshold_tool_register,
     gimp_levels_tool_register,
     gimp_curves_tool_register,
+    gimp_offset_tool_register,
     gimp_gegl_tool_register,
     gimp_operation_tool_register
   };

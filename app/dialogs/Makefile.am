@@ -69,8 +69,6 @@ libappdialogs_a_sources = \
 	lebl-dialog.h			\
 	module-dialog.c			\
 	module-dialog.h			\
-	offset-dialog.c			\
-	offset-dialog.h			\
 	palette-import-dialog.c		\
 	palette-import-dialog.h		\
 	preferences-dialog.c		\

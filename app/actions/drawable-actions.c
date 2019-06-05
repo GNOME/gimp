@@ -51,14 +51,7 @@ static const GimpActionEntry drawable_actions[] =
     NC_("drawable-action", "_White Balance"), NULL,
     NC_("drawable-action", "Automatic white balance correction"),
     G_CALLBACK (drawable_levels_stretch_cmd_callback),
-    GIMP_HELP_LAYER_WHITE_BALANCE },
-
-  { "drawable-offset", NULL,
-    NC_("drawable-action", "_Offset..."), "<primary><shift>O",
-    NC_("drawable-action",
-        "Shift the pixels, optionally wrapping them at the borders"),
-    G_CALLBACK (drawable_offset_cmd_callback),
-    GIMP_HELP_LAYER_OFFSET }
+    GIMP_HELP_LAYER_WHITE_BALANCE }
 };
 
 static const GimpToggleActionEntry drawable_toggle_actions[] =
@@ -215,7 +208,6 @@ drawable_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("drawable-equalize",       writable && !children);
   SET_SENSITIVE ("drawable-levels-stretch", writable && !children && is_rgb);
-  SET_SENSITIVE ("drawable-offset",         writable && !children);
 
   SET_SENSITIVE ("drawable-visible",       drawable);
   SET_SENSITIVE ("drawable-linked",        drawable);
