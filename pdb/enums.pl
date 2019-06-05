@@ -379,9 +379,11 @@ package Gimp::CodeGen::enums;
     GimpOffsetType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_OFFSET_BACKGROUND GIMP_OFFSET_TRANSPARENT) ],
+	  symbols => [ qw(GIMP_OFFSET_BACKGROUND GIMP_OFFSET_TRANSPARENT
+			  GIMP_OFFSET_WRAP_AROUND) ],
 	  mapping => { GIMP_OFFSET_BACKGROUND => '0',
-		       GIMP_OFFSET_TRANSPARENT => '1' }
+		       GIMP_OFFSET_TRANSPARENT => '1',
+		       GIMP_OFFSET_WRAP_AROUND => '2' }
 	},
     GimpOrientationType =>
 	{ contig => 1,

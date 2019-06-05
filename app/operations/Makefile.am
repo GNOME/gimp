@@ -64,6 +64,8 @@ libappoperations_a_sources = \
 	gimpoperationhistogramsink.h		\
 	gimpoperationmaskcomponents.cc		\
 	gimpoperationmaskcomponents.h		\
+	gimpoperationoffset.c			\
+	gimpoperationoffset.h			\
 	gimpoperationprofiletransform.c		\
 	gimpoperationprofiletransform.h		\
 	gimpoperationscalarmultiply.c		\
