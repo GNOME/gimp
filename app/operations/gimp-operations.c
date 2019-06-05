@@ -42,6 +42,7 @@
 #include "gimpoperationgrow.h"
 #include "gimpoperationhistogramsink.h"
 #include "gimpoperationmaskcomponents.h"
+#include "gimpoperationoffset.h"
 #include "gimpoperationprofiletransform.h"
 #include "gimpoperationscalarmultiply.h"
 #include "gimpoperationsemiflatten.h"
@@ -136,6 +137,7 @@ gimp_operations_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_GROW);
   g_type_class_ref (GIMP_TYPE_OPERATION_HISTOGRAM_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_MASK_COMPONENTS);
+  g_type_class_ref (GIMP_TYPE_OPERATION_OFFSET);
   g_type_class_ref (GIMP_TYPE_OPERATION_PROFILE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_SCALAR_MULTIPLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_SEMI_FLATTEN);
