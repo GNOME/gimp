@@ -274,6 +274,7 @@ save_layer (TIFF         *tif,
             gint32        orig_image, /* the export function might */
                                       /* have created a duplicate  */
             gint         *saved_bpp,
+            gboolean      out_linear,
             GError      **error)
 {
   gboolean          status = FALSE;
@@ -287,7 +288,6 @@ save_layer (TIFF         *tif,
   gboolean          alpha;
   gshort            predictor;
   gshort            photometric;
-  gboolean          linear  = FALSE;
   const Babl       *format;
   const Babl       *type;
   gshort            samplesperpixel;
@@ -340,8 +340,10 @@ save_layer (TIFF         *tif,
   switch (gimp_image_get_precision (image))
     {
     case GIMP_PRECISION_U8_LINEAR:
-      /* only keep 8 bit linear RGB if we also save a profile */
-      if (tsvals->save_profile)
+    case GIMP_PRECISION_U8_GAMMA:
+      /* Promote to 16-bit if storage and export TRC don't match. */
+      if ((gimp_image_get_precision (image) == GIMP_PRECISION_U8_LINEAR && out_linear) ||
+          (gimp_image_get_precision (image) != GIMP_PRECISION_U8_LINEAR && ! out_linear))
         {
           bitspersample = 8;
           sampleformat  = SAMPLEFORMAT_UINT;
@@ -352,11 +354,6 @@ save_layer (TIFF         *tif,
           sampleformat  = SAMPLEFORMAT_UINT;
           type          = babl_type ("u16");
         }
-      break;
-
-    case GIMP_PRECISION_U8_GAMMA:
-      bitspersample = 8;
-      sampleformat  = SAMPLEFORMAT_UINT;
       break;
 
     case GIMP_PRECISION_U16_LINEAR:
@@ -391,34 +388,6 @@ save_layer (TIFF         *tif,
       break;
     }
 
-  switch (gimp_image_get_precision (image))
-    {
-    case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U16_LINEAR:
-    case GIMP_PRECISION_U32_LINEAR:
-    case GIMP_PRECISION_HALF_LINEAR:
-    case GIMP_PRECISION_FLOAT_LINEAR:
-    case GIMP_PRECISION_DOUBLE_LINEAR:
-      /* save linear RGB only if we save a profile, or a loader won't
-       * do the right thing
-       */
-      if (tsvals->save_profile)
-        linear = TRUE;
-      else
-        linear = FALSE;
-      break;
-
-    default:
-    case GIMP_PRECISION_U8_GAMMA:
-    case GIMP_PRECISION_U16_GAMMA:
-    case GIMP_PRECISION_U32_GAMMA:
-    case GIMP_PRECISION_HALF_GAMMA:
-    case GIMP_PRECISION_FLOAT_GAMMA:
-    case GIMP_PRECISION_DOUBLE_GAMMA:
-      linear = FALSE;
-      break;
-    }
-
   *saved_bpp = bitspersample;
 
   cols = gegl_buffer_get_width (buffer);
@@ -431,7 +400,7 @@ save_layer (TIFF         *tif,
       samplesperpixel = 3;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = FALSE;
-      if (linear)
+      if (out_linear)
         {
           format = babl_format_new (babl_model ("RGB"),
                                     type,
@@ -455,7 +424,7 @@ save_layer (TIFF         *tif,
       samplesperpixel = 1;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = FALSE;
-      if (linear)
+      if (out_linear)
         {
           format = babl_format_new (babl_model ("Y"),
                                     type,
@@ -478,7 +447,7 @@ save_layer (TIFF         *tif,
       alpha           = TRUE;
       if (tsvals->save_transp_pixels)
         {
-          if (linear)
+          if (out_linear)
             {
               format = babl_format_new (babl_model ("RGBA"),
                                         type,
@@ -501,7 +470,7 @@ save_layer (TIFF         *tif,
         }
       else
         {
-          if (linear)
+          if (out_linear)
             {
               format = babl_format_new (babl_model ("RaGaBaA"),
                                         type,
@@ -530,7 +499,7 @@ save_layer (TIFF         *tif,
       alpha           = TRUE;
       if (tsvals->save_transp_pixels)
         {
-          if (linear)
+          if (out_linear)
             {
               format = babl_format_new (babl_model ("YA"),
                                         type,
@@ -549,7 +518,7 @@ save_layer (TIFF         *tif,
         }
       else
         {
-          if (linear)
+          if (out_linear)
             {
               format = babl_format_new (babl_model ("YaA"),
                                         type,
@@ -973,12 +942,12 @@ save_image (GFile                  *file,
             GimpMetadataSaveFlags   metadata_flags,
             GError                **error)
 {
-  gboolean          status = FALSE;
-  TIFF             *tif;
-  GimpColorProfile *profile = NULL;
-  gint              number_of_sub_IFDs = 1;
-  toff_t            sub_IFDs_offsets[1] = { 0UL };
-  gint32            num_layers, *layers, current_layer = 0;
+  TIFF     *tif;
+  gboolean  status              = FALSE;
+  gboolean  out_linear          = FALSE;
+  gint      number_of_sub_IFDs  = 1;
+  toff_t    sub_IFDs_offsets[1] = { 0UL };
+  gint32    num_layers, *layers, current_layer = 0;
 
   layers = gimp_image_get_layers (image, &num_layers);
 
@@ -1033,23 +1002,25 @@ save_image (GFile                  *file,
       gimp_parasite_free (parasite);
     }
 
-  /* do we have an ICC profile? If so, write it to the TIFF file */
 #ifdef TIFFTAG_ICCPROFILE
   if (tsvals->save_profile)
     {
+      GimpColorProfile *profile;
+      const guint8     *icc_data;
+      gsize             icc_length;
+
       profile = gimp_image_get_effective_color_profile (orig_image);
 
-      if (profile)
-        {
-          const guint8 *icc_data;
-          gsize         icc_length;
+      /* Curve of the exported data depends on the saved profile, i.e.
+       * any explicitly-set profile in priority, or the default one for
+       * the storage format as fallback.
+       */
+      out_linear = (gimp_color_profile_is_linear (profile));
 
-          icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
-
-          TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
-
-          g_object_unref (profile);
-        }
+      /* Write the profile to the TIFF file. */
+      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
+      g_object_unref (profile);
     }
 #endif
 
@@ -1061,7 +1032,7 @@ save_image (GFile                  *file,
   if (! save_layer (tif,  tsvals, image,
                     layers[num_layers - current_layer - 1],
                     current_layer, num_layers,
-                    orig_image, saved_bpp, error))
+                    orig_image, saved_bpp, out_linear, error))
     {
       goto out;
     }
@@ -1102,7 +1073,7 @@ save_image (GFile                  *file,
           if (! save_layer (tif,  tsvals, image,
                             layers[num_layers - current_layer - 1],
                             current_layer, num_layers, orig_image,
-                            &tmp_saved_bpp, error))
+                            &tmp_saved_bpp, out_linear, error))
             {
               goto out;
             }
