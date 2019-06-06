@@ -211,9 +211,10 @@ run (const gchar      *name,
           metadata = gimp_image_metadata_save_prepare (image_ID,
                                                        "image/webp",
                                                        &metadata_flags);
-          params.exif = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
-          params.xmp  = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
-          params.iptc = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+          params.exif    = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+          params.xmp     = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+          params.iptc    = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+          params.profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
 
           /*  Possibly override with session data  */
           gimp_get_data (SAVE_PROC, &params);

@@ -163,40 +163,43 @@ save_layer (const gchar    *filename,
   gboolean          out_linear = FALSE;
   int               res;
 
-  profile = gimp_image_get_color_profile (image_ID);
-
-  /* If a profile is explicitly set, follow its TRC, whatever the
-   * storage format.
-   */
-  if (profile && gimp_color_profile_is_linear (profile))
-    out_linear = TRUE;
-
-  /* When no profile was explicitly set, since WebP is apparently
-   * 8-bit max, we export it as sRGB to avoid shadow posterization
-   * (we don't care about storage TRC).
-   * We do an exception for 8-bit linear work image to avoid
-   * conversion loss while the precision is the same.
-   */
-  if (! profile)
+  if (params->profile)
     {
-      /* There is always an effective profile. */
-      profile = gimp_image_get_effective_color_profile (image_ID);
+      profile = gimp_image_get_color_profile (image_ID);
 
-      if (gimp_color_profile_is_linear (profile))
+      /* If a profile is explicitly set, follow its TRC, whatever the
+       * storage format.
+       */
+      if (profile && gimp_color_profile_is_linear (profile))
+        out_linear = TRUE;
+
+      /* When no profile was explicitly set, since WebP is apparently
+       * 8-bit max, we export it as sRGB to avoid shadow posterization
+       * (we don't care about storage TRC).
+       * We do an exception for 8-bit linear work image to avoid
+       * conversion loss while the precision is the same.
+       */
+      if (! profile)
         {
-          if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
-            {
-              /* If stored data was linear, let's convert the profile. */
-              GimpColorProfile *saved_profile;
+          /* There is always an effective profile. */
+          profile = gimp_image_get_effective_color_profile (image_ID);
 
-              saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-              g_object_unref (profile);
-              profile = saved_profile;
-            }
-          else
+          if (gimp_color_profile_is_linear (profile))
             {
-              /* Keep linear profile as-is for 8-bit linear image. */
-              out_linear = TRUE;
+              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+                {
+                  /* If stored data was linear, let's convert the profile. */
+                  GimpColorProfile *saved_profile;
+
+                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+                  g_object_unref (profile);
+                  profile = saved_profile;
+                }
+              else
+                {
+                  /* Keep linear profile as-is for 8-bit linear image. */
+                  out_linear = TRUE;
+                }
             }
         }
     }
@@ -861,6 +864,11 @@ save_image (const gchar            *filename,
           metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
           metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
         }
+
+      if (params->profile)
+        metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
+      else
+        metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
 
       file = g_file_new_for_path (filename);
       gimp_image_metadata_save_finish (image_ID,
