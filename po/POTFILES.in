@@ -297,6 +297,7 @@ app/operations/gimpoperationcurves.c
 app/operations/gimpoperationdesaturate.c
 app/operations/gimpoperationhuesaturation.c
 app/operations/gimpoperationlevels.c
+app/operations/gimpoperationoffset.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
 app/operations/gimpoperationthreshold.c
