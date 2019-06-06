@@ -362,27 +362,10 @@ save_dialog (WebPSaveParams *params,
                         &params->force_delay);
   }
 
-  /* Advanced options */
-  text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
-  expander = gtk_expander_new_with_mnemonic (text);
-  gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
-  g_free (text);
-
-  gtk_box_pack_start (GTK_BOX (vbox), expander, TRUE, TRUE, 0);
-  gtk_widget_show (expander);
-
-  frame = gimp_frame_new ("<expander>");
-  gtk_container_add (GTK_CONTAINER (expander), frame);
-  gtk_widget_show (frame);
-
-  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  gtk_widget_show (vbox2);
-
   /* Save EXIF data */
   toggle = gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->exif);
-  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -392,7 +375,7 @@ save_dialog (WebPSaveParams *params,
   /* XMP metadata */
   toggle = gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->xmp);
-  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -402,7 +385,7 @@ save_dialog (WebPSaveParams *params,
   /* Color profile */
   toggle = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->profile);
-  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
