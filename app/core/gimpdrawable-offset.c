@@ -43,12 +43,29 @@ gimp_drawable_offset (GimpDrawable   *drawable,
                       gint            offset_y)
 {
   GeglNode *node;
+  gint      width;
+  gint      height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                  NULL, NULL, &width, &height))
+    {
+      return;
+    }
+
   if (wrap_around)
     fill_type = GIMP_OFFSET_WRAP_AROUND;
+
+  if (fill_type == GIMP_OFFSET_WRAP_AROUND)
+    {
+      offset_x %= width;
+      offset_y %= height;
+    }
+
+  if (offset_x == 0 || offset_y == 0)
+    return;
 
   node = gegl_node_new_child (NULL,
                               "operation", "gimp:offset",
