@@ -341,6 +341,7 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
       "tools-brightness-contrast",
       "tools-curves",
       "tools-levels",
+      "tools-offset",
       "tools-threshold"
     };
 

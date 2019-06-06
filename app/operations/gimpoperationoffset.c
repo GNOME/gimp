@@ -33,6 +33,8 @@
 
 #include "gimpoperationoffset.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -112,8 +114,8 @@ gimp_operation_offset_class_init (GimpOperationOffsetClass *klass)
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:offset",
-                                 "categories",  "gimp",
-                                 "description", "GIMP Offset operation",
+                                 "categories",  "transform",
+                                 "description", _("Shift the pixels, optionally wrapping them at the borders"),
                                  NULL);
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
