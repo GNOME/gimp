@@ -89,6 +89,7 @@ struct _GimpFilterToolClass
                                    GOutputStream     *output,
                                    GError           **error);
 
+  void        (* region_changed)  (GimpFilterTool    *filter_tool);
   void        (* color_picked)    (GimpFilterTool    *filter_tool,
                                    gpointer           identifier,
                                    gdouble            x,
