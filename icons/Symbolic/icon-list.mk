@@ -295,6 +295,7 @@ scalable_images = \
 	scalable/gimp-tool-move-symbolic.svg				\
 	scalable/gimp-tool-mypaint-brush-symbolic.svg			\
 	scalable/gimp-tool-n-point-deformation-symbolic.svg		\
+	scalable/gimp-tool-offset-symbolic.svg				\
 	scalable/gimp-tool-options-symbolic.svg				\
 	scalable/gimp-tool-paintbrush-symbolic.svg			\
 	scalable/gimp-tool-path-symbolic.svg				\
@@ -470,6 +471,7 @@ vector24_images = \
 	24/gimp-tool-mypaint-brush-symbolic.svg				\
 	24/gimp-tool-measure-symbolic.svg				\
 	24/gimp-tool-n-point-deformation-symbolic.svg			\
+	24/gimp-tool-offset-symbolic.svg				\
 	24/gimp-tool-options-symbolic.svg				\
 	24/gimp-tool-paintbrush-symbolic.svg				\
 	24/gimp-tool-path-symbolic.svg					\
@@ -755,6 +757,7 @@ icons16_images = \
 	16/gimp-tool-move-symbolic.symbolic.png					\
 	16/gimp-tool-mypaint-brush-symbolic.symbolic.png			\
 	16/gimp-tool-n-point-deformation-symbolic.symbolic.png			\
+	16/gimp-tool-offset-symbolic.symbolic.png				\
 	16/gimp-tool-options-symbolic.symbolic.png				\
 	16/gimp-tool-paintbrush-symbolic.symbolic.png				\
 	16/gimp-tool-path-symbolic.symbolic.png					\
@@ -966,6 +969,7 @@ icons24_images = \
 	24/gimp-tool-move-symbolic.symbolic.png					\
 	24/gimp-tool-mypaint-brush-symbolic.symbolic.png			\
 	24/gimp-tool-n-point-deformation-symbolic.symbolic.png			\
+	24/gimp-tool-offset-symbolic.symbolic.png				\
 	24/gimp-tool-paintbrush-symbolic.symbolic.png				\
 	24/gimp-tool-path-symbolic.symbolic.png					\
 	24/gimp-tool-pencil-symbolic.symbolic.png				\
