@@ -218,7 +218,6 @@
 #define GIMP_HELP_LAYER_ROTATE_90                 "gimp-layer-rotate-90"
 #define GIMP_HELP_LAYER_ROTATE_180                "gimp-layer-rotate-180"
 #define GIMP_HELP_LAYER_ROTATE_270                "gimp-layer-rotate-270"
-#define GIMP_HELP_LAYER_OFFSET                    "gimp-layer-offset"
 #define GIMP_HELP_LAYER_RESIZE                    "gimp-layer-resize"
 #define GIMP_HELP_LAYER_RESIZE_TO_IMAGE           "gimp-layer-resize-to-image"
 #define GIMP_HELP_LAYER_SCALE                     "gimp-layer-scale"

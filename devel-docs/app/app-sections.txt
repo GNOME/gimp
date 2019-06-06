@@ -11880,11 +11880,6 @@ module_dialog_new
 </SECTION>
 
 <SECTION>
-<FILE>offset-dialog</FILE>
-offset_dialog_new
-</SECTION>
-
-<SECTION>
 <FILE>palette-import-dialog</FILE>
 palette_import_dialog_new
 </SECTION>

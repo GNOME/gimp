@@ -26,6 +26,7 @@
 
 #include "operations-types.h"
 
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpcontext.h"
@@ -376,8 +377,8 @@ gimp_operation_offset_process (GeglOperation       *operation,
               offset_roi.x -= offset_x;
               offset_roi.y -= offset_y;
 
-              gegl_buffer_copy (input,  &offset_roi, GEGL_ABYSS_NONE,
-                                output, &offset_bounds);
+              gimp_gegl_buffer_copy (input,  &offset_roi, GEGL_ABYSS_NONE,
+                                     output, &offset_bounds);
             }
           else if (color)
             {
@@ -429,6 +430,11 @@ gimp_operation_offset_get_offset (GimpOperationOffset *offset,
 
       if (*y < 0)
         *y += bounds.height;
+    }
+  else
+    {
+      *x = CLAMP (*x, -bounds.width,  +bounds.width);
+      *y = CLAMP (*y, -bounds.height, +bounds.height);
     }
 }
 
