@@ -78,9 +78,6 @@ static void       gimp_offset_tool_cursor_update         (GimpTool              
                                                           const GimpCoords      *coords,
                                                           GdkModifierType        state,
                                                           GimpDisplay           *display);
-static void       gimp_offset_tool_options_notify        (GimpTool              *tool,
-                                                          GimpToolOptions       *options,
-                                                          const GParamSpec      *pspec);
 
 static gchar    * gimp_offset_tool_get_operation         (GimpFilterTool        *filter_tool,
                                                           gchar                **description);
@@ -88,6 +85,7 @@ static void       gimp_offset_tool_dialog                (GimpFilterTool        
 static void       gimp_offset_tool_config_notify         (GimpFilterTool        *filter_tool,
                                                           GimpConfig            *config,
                                                           const GParamSpec      *pspec);
+static void       gimp_offset_tool_region_changed        (GimpFilterTool        *filter_tool);
 
 static void       gimp_offset_tool_offset_changed        (GimpSizeEntry         *se,
                                                           GimpOffsetTool        *offset_tool);
@@ -142,18 +140,18 @@ gimp_offset_tool_class_init (GimpOffsetToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  tool_class->initialize           = gimp_offset_tool_initialize;
-  tool_class->control              = gimp_offset_tool_control;
-  tool_class->button_press         = gimp_offset_tool_button_press;
-  tool_class->button_release       = gimp_offset_tool_button_release;
-  tool_class->motion               = gimp_offset_tool_motion;
-  tool_class->oper_update          = gimp_offset_tool_oper_update;
-  tool_class->cursor_update        = gimp_offset_tool_cursor_update;
-  tool_class->options_notify       = gimp_offset_tool_options_notify;
+  tool_class->initialize            = gimp_offset_tool_initialize;
+  tool_class->control               = gimp_offset_tool_control;
+  tool_class->button_press          = gimp_offset_tool_button_press;
+  tool_class->button_release        = gimp_offset_tool_button_release;
+  tool_class->motion                = gimp_offset_tool_motion;
+  tool_class->oper_update           = gimp_offset_tool_oper_update;
+  tool_class->cursor_update         = gimp_offset_tool_cursor_update;
 
-  filter_tool_class->get_operation = gimp_offset_tool_get_operation;
-  filter_tool_class->dialog        = gimp_offset_tool_dialog;
-  filter_tool_class->config_notify = gimp_offset_tool_config_notify;
+  filter_tool_class->get_operation  = gimp_offset_tool_get_operation;
+  filter_tool_class->dialog         = gimp_offset_tool_dialog;
+  filter_tool_class->config_notify  = gimp_offset_tool_config_notify;
+  filter_tool_class->region_changed = gimp_offset_tool_region_changed;
 }
 
 static void
@@ -444,19 +442,6 @@ gimp_offset_tool_cursor_update (GimpTool         *tool,
 }
 
 static void
-gimp_offset_tool_options_notify (GimpTool         *tool,
-                                 GimpToolOptions  *options,
-                                 const GParamSpec *pspec)
-{
-  GimpOffsetTool *offset_tool = GIMP_OFFSET_TOOL (tool);
-
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
-
-  if (! strcmp (pspec->name, "region"))
-    gimp_offset_tool_update (offset_tool);
-}
-
-static void
 gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
 {
   GimpOffsetTool *offset_tool = GIMP_OFFSET_TOOL (filter_tool);
@@ -577,6 +562,12 @@ gimp_offset_tool_config_notify (GimpFilterTool   *filter_tool,
 
   GIMP_FILTER_TOOL_CLASS (parent_class)->config_notify (filter_tool,
                                                         config, pspec);
+}
+
+static void
+gimp_offset_tool_region_changed (GimpFilterTool *filter_tool)
+{
+  gimp_offset_tool_update (GIMP_OFFSET_TOOL (filter_tool));
 }
 
 static void

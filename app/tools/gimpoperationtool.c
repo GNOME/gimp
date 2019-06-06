@@ -78,9 +78,6 @@ static gboolean    gimp_operation_tool_initialize                (GimpTool      
 static void        gimp_operation_tool_control                   (GimpTool          *tool,
                                                                   GimpToolAction     action,
                                                                   GimpDisplay       *display);
-static void        gimp_operation_tool_options_notify            (GimpTool          *tool,
-                                                                  GimpToolOptions   *options,
-                                                                  const GParamSpec  *pspec);
 
 static gchar     * gimp_operation_tool_get_operation             (GimpFilterTool    *filter_tool,
                                                                   gchar            **description);
@@ -88,6 +85,7 @@ static void        gimp_operation_tool_dialog                    (GimpFilterTool
 static void        gimp_operation_tool_reset                     (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_set_config                (GimpFilterTool    *filter_tool,
                                                                   GimpConfig        *config);
+static void        gimp_operation_tool_region_changed            (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_color_picked              (GimpFilterTool    *filter_tool,
                                                                   gpointer           identifier,
                                                                   gdouble            x,
@@ -150,17 +148,17 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->finalize           = gimp_operation_tool_finalize;
+  object_class->finalize            = gimp_operation_tool_finalize;
 
-  tool_class->initialize           = gimp_operation_tool_initialize;
-  tool_class->control              = gimp_operation_tool_control;
-  tool_class->options_notify       = gimp_operation_tool_options_notify;
+  tool_class->initialize            = gimp_operation_tool_initialize;
+  tool_class->control               = gimp_operation_tool_control;
 
-  filter_tool_class->get_operation = gimp_operation_tool_get_operation;
-  filter_tool_class->dialog        = gimp_operation_tool_dialog;
-  filter_tool_class->reset         = gimp_operation_tool_reset;
-  filter_tool_class->set_config    = gimp_operation_tool_set_config;
-  filter_tool_class->color_picked  = gimp_operation_tool_color_picked;
+  filter_tool_class->get_operation  = gimp_operation_tool_get_operation;
+  filter_tool_class->dialog         = gimp_operation_tool_dialog;
+  filter_tool_class->reset          = gimp_operation_tool_reset;
+  filter_tool_class->set_config     = gimp_operation_tool_set_config;
+  filter_tool_class->region_changed = gimp_operation_tool_region_changed;
+  filter_tool_class->color_picked   = gimp_operation_tool_color_picked;
 }
 
 static void
@@ -239,35 +237,6 @@ gimp_operation_tool_control (GimpTool       *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
-}
-
-static void
-gimp_operation_tool_options_notify (GimpTool         *tool,
-                                    GimpToolOptions  *options,
-                                    const GParamSpec *pspec)
-{
-  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (tool);
-
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
-
-  if (! strcmp (pspec->name, "region"))
-    {
-      GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
-
-      /* when the region changes, do we want the operation's on-canvas
-       * controller to move to a new position, or the operation to
-       * change its properties to match the on-canvas controller?
-       *
-       * decided to leave the on-canvas controller where it is and
-       * pretend it has changed, so the operation is updated
-       * accordingly...
-       */
-      if (filter_tool->widget)
-        g_signal_emit_by_name (filter_tool->widget, "changed");
-
-      if (filter_tool->config && tool->drawable)
-        gimp_operation_tool_sync_op (op_tool, FALSE);
-    }
 }
 
 static gchar *
@@ -356,6 +325,25 @@ gimp_operation_tool_set_config (GimpFilterTool *filter_tool,
     gimp_operation_tool_sync_op (op_tool, FALSE);
 
   gimp_operation_tool_relink_chains (op_tool);
+}
+
+static void
+gimp_operation_tool_region_changed (GimpFilterTool *filter_tool)
+{
+  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
+
+  /* when the region changes, do we want the operation's on-canvas
+   * controller to move to a new position, or the operation to
+   * change its properties to match the on-canvas controller?
+   *
+   * decided to leave the on-canvas controller where it is and
+   * pretend it has changed, so the operation is updated
+   * accordingly...
+   */
+  if (filter_tool->widget)
+    g_signal_emit_by_name (filter_tool->widget, "changed");
+
+  gimp_operation_tool_sync_op (op_tool, FALSE);
 }
 
 static void

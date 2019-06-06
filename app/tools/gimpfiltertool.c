@@ -156,6 +156,8 @@ static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_to
 
 static void      gimp_filter_tool_create_filter  (GimpFilterTool      *filter_tool);
 
+static void      gimp_filter_tool_region_changed (GimpFilterTool      *filter_tool);
+
 static void      gimp_filter_tool_flush          (GimpDrawableFilter  *filter,
                                                   GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_config_notify  (GObject             *object,
@@ -456,13 +458,13 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
   gimp_tool_gui_show (filter_tool->gui);
 
-  gimp_filter_tool_create_filter (filter_tool);
-
   g_signal_connect_object (image, "mask-changed",
                            G_CALLBACK (gimp_filter_tool_mask_changed),
                            filter_tool, 0);
 
   gimp_filter_tool_mask_changed (image, filter_tool);
+
+  gimp_filter_tool_create_filter (filter_tool);
 
   return TRUE;
 }
@@ -806,6 +808,8 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
     {
       gimp_drawable_filter_set_region (filter_tool->filter,
                                        filter_options->region);
+
+      gimp_filter_tool_region_changed (filter_tool);
     }
   else if (! strcmp (pspec->name, "color-managed") &&
            filter_tool->filter)
@@ -1123,6 +1127,16 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 }
 
 static void
+gimp_filter_tool_region_changed (GimpFilterTool *filter_tool)
+{
+  if (filter_tool->filter &&
+      GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->region_changed)
+    {
+      GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->region_changed (filter_tool);
+    }
+}
+
+static void
 gimp_filter_tool_flush (GimpDrawableFilter *filter,
                         GimpFilterTool     *filter_tool)
 {
@@ -1146,6 +1160,8 @@ static void
 gimp_filter_tool_mask_changed (GimpImage      *image,
                                GimpFilterTool *filter_tool)
 {
+  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+
   if (filter_tool->gui)
     {
       GimpChannel *mask = gimp_image_get_mask (image);
@@ -1153,6 +1169,9 @@ gimp_filter_tool_mask_changed (GimpImage      *image,
       gtk_widget_set_sensitive (filter_tool->region_combo,
                                 ! gimp_channel_is_empty (mask));
     }
+
+  if (options->region == GIMP_FILTER_REGION_SELECTION)
+    gimp_filter_tool_region_changed (filter_tool);
 }
 
 static void
