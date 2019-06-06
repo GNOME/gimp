@@ -277,7 +277,7 @@ save_image (const gchar  *filename,
   FILE             * volatile outfile;
   guchar           *data;
   guchar           *src;
-  GimpColorProfile *profile;
+  GimpColorProfile *profile = NULL;
 
   gboolean         has_alpha;
   gboolean         out_linear = FALSE;
@@ -335,17 +335,44 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  profile = gimp_image_get_color_profile (orig_image_ID);
+  /* When we don't save profiles, we convert data to sRGB because
+   * that's what most/all readers expect on a no-profile JPEG.
+   * If we save an assigned profile, let's just follow its TRC.
+   * If we save the default linear profile (i.e. no assigned
+   * profile), we convert it to sRGB, except when it is 8-bit linear.
+   */
   if (jsvals.save_profile)
     {
-      /* When we don't save profiles, we convert data to sRGB because
-       * that's what most/all readers expect on a no-profile JPEG.
-       * If we save an assigned profile, let's just follow its TRC.
-       * If we save the default linear profile (i.e. no assigned
-       * profile), we convert it to sRGB.
+      profile = gimp_image_get_color_profile (orig_image_ID);
+
+      /* If a profile is explicitly set, follow its TRC, whatever the
+       * storage format.
        */
       if (profile && gimp_color_profile_is_linear (profile))
         out_linear = TRUE;
+
+      if (! profile)
+        {
+          /* There is always an effective profile. */
+          profile = gimp_image_get_effective_color_profile (orig_image_ID);
+
+          if (gimp_color_profile_is_linear (profile))
+            {
+              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+                {
+                  GimpColorProfile *saved_profile;
+
+                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+                  g_object_unref (profile);
+                  profile = saved_profile;
+                }
+              else
+                {
+                  /* Keep linear profile as-is for 8-bit linear image. */
+                  out_linear = TRUE;
+                }
+            }
+        }
     }
 
   jpeg_stdio_dest (&cinfo, outfile);
@@ -578,27 +605,11 @@ save_image (const gchar  *filename,
       const guint8 *icc_data;
       gsize         icc_length;
 
-      if (! profile)
-        /* There is always an effective profile. */
-        profile = gimp_image_get_effective_color_profile (orig_image_ID);
-
-      if (gimp_color_profile_is_linear (profile) && ! out_linear)
-        {
-          /* Convert profile from linear to sRGB. This would normally
-           * only happen when there was no assigned profile (i.e. the
-           * default linear profile is in use). */
-          GimpColorProfile *saved_profile;
-
-          saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-          g_object_unref (profile);
-          profile = saved_profile;
-        }
-
       icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
       jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
+
+      g_object_unref (profile);
     }
-  if (profile)
-    g_object_unref (profile);
 
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
