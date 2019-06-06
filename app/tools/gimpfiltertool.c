@@ -1814,11 +1814,17 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
       switch (options->region)
         {
         case GIMP_FILTER_REGION_SELECTION:
-          gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                    &drawable_area->x,
-                                    &drawable_area->y,
-                                    &drawable_area->width,
-                                    &drawable_area->height);
+          if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                          &drawable_area->x,
+                                          &drawable_area->y,
+                                          &drawable_area->width,
+                                          &drawable_area->height))
+            {
+              drawable_area->x      = 0;
+              drawable_area->y      = 0;
+              drawable_area->width  = 1;
+              drawable_area->height = 1;
+            }
           break;
 
         case GIMP_FILTER_REGION_DRAWABLE:
