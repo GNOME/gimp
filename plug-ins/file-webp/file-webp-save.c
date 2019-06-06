@@ -67,6 +67,10 @@ gboolean      save_animation        (const gchar       *filename,
                                      WebPSaveParams    *params,
                                      GError           **error);
 
+static void   webp_decide_output    (gint32             image_ID,
+                                     WebPSaveParams    *params,
+                                     GimpColorProfile **profile,
+                                     gboolean          *out_linear);
 
 int
 webp_anim_file_writer (FILE          *outfile,
@@ -163,46 +167,7 @@ save_layer (const gchar    *filename,
   gboolean          out_linear = FALSE;
   int               res;
 
-  if (params->profile)
-    {
-      profile = gimp_image_get_color_profile (image_ID);
-
-      /* If a profile is explicitly set, follow its TRC, whatever the
-       * storage format.
-       */
-      if (profile && gimp_color_profile_is_linear (profile))
-        out_linear = TRUE;
-
-      /* When no profile was explicitly set, since WebP is apparently
-       * 8-bit max, we export it as sRGB to avoid shadow posterization
-       * (we don't care about storage TRC).
-       * We do an exception for 8-bit linear work image to avoid
-       * conversion loss while the precision is the same.
-       */
-      if (! profile)
-        {
-          /* There is always an effective profile. */
-          profile = gimp_image_get_effective_color_profile (image_ID);
-
-          if (gimp_color_profile_is_linear (profile))
-            {
-              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
-                {
-                  /* If stored data was linear, let's convert the profile. */
-                  GimpColorProfile *saved_profile;
-
-                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-                  g_object_unref (profile);
-                  profile = saved_profile;
-                }
-              else
-                {
-                  /* Keep linear profile as-is for 8-bit linear image. */
-                  out_linear = TRUE;
-                }
-            }
-        }
-    }
+  webp_decide_output (image_ID, params, &profile, &out_linear);
 
   /* The do...while() loop is a neat little trick that makes it easier
    * to jump to error handling code while still ensuring proper
@@ -537,29 +502,18 @@ save_animation (const gchar    *filename,
   gint                   bpp;
   gboolean               has_alpha;
   const Babl            *format;
-  GimpColorProfile      *profile;
+  GimpColorProfile      *profile = NULL;
   WebPAnimEncoderOptions enc_options;
   WebPData               webp_data;
   int                    frame_timestamp = 0;
   WebPAnimEncoder       *enc = NULL;
   GeglBuffer            *prev_frame = NULL;
+  gboolean               out_linear = FALSE;
 
   if (nLayers < 1)
     return FALSE;
 
-  profile = gimp_image_get_color_profile (image_ID);
-  if (profile && gimp_color_profile_is_linear (profile))
-    {
-      /* We always save as sRGB data, especially since WebP is
-       * apparently 8-bit max (at least how we export it). If original
-       * data was linear, let's convert the profile.
-       */
-      GimpColorProfile *saved_profile;
-
-      saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-      g_object_unref (profile);
-      profile = saved_profile;
-    }
+  webp_decide_output (image_ID, params, &profile, &out_linear);
 
   gimp_image_undo_freeze (image_ID);
 
@@ -623,9 +577,19 @@ save_animation (const gchar    *filename,
           has_alpha = gimp_drawable_has_alpha (drawable);
 
           if (has_alpha)
-            format = babl_format ("R'G'B'A u8");
+            {
+              if (out_linear)
+                format = babl_format ("RGBA u8");
+              else
+                format = babl_format ("R'G'B'A u8");
+            }
           else
-            format = babl_format ("R'G'B' u8");
+            {
+              if (out_linear)
+                format = babl_format ("RGB u8");
+              else
+                format = babl_format ("R'G'B' u8");
+            }
 
           bpp = babl_format_get_bytes_per_pixel (format);
 
@@ -880,4 +844,55 @@ save_image (const gchar            *filename,
 
   /* Return the status */
   return status;
+}
+
+static void
+webp_decide_output (gint32             image_ID,
+                    WebPSaveParams    *params,
+                    GimpColorProfile **profile,
+                    gboolean          *out_linear)
+{
+  g_return_if_fail (profile && *profile == NULL);
+
+  *out_linear = FALSE;
+  if (params->profile)
+    {
+      *profile = gimp_image_get_color_profile (image_ID);
+
+      /* If a profile is explicitly set, follow its TRC, whatever the
+       * storage format.
+       */
+      if (*profile && gimp_color_profile_is_linear (*profile))
+        *out_linear = TRUE;
+
+      /* When no profile was explicitly set, since WebP is apparently
+       * 8-bit max, we export it as sRGB to avoid shadow posterization
+       * (we don't care about storage TRC).
+       * We do an exception for 8-bit linear work image to avoid
+       * conversion loss while the precision is the same.
+       */
+      if (! *profile)
+        {
+          /* There is always an effective profile. */
+          *profile = gimp_image_get_effective_color_profile (image_ID);
+
+          if (gimp_color_profile_is_linear (*profile))
+            {
+              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+                {
+                  /* If stored data was linear, let's convert the profile. */
+                  GimpColorProfile *saved_profile;
+
+                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (*profile);
+                  g_clear_object (profile);
+                  *profile = saved_profile;
+                }
+              else
+                {
+                  /* Keep linear profile as-is for 8-bit linear image. */
+                  *out_linear = TRUE;
+                }
+            }
+        }
+    }
 }
