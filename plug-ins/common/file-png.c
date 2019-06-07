@@ -1494,27 +1494,47 @@ save_image (const gchar  *filename,
 
   out_linear = FALSE;
 #if defined(PNG_iCCP_SUPPORTED)
-  profile = gimp_image_get_color_profile (orig_image_ID);
+  /* If no profile is written: export as sRGB.
+   * If manually assigned profile written: follow its TRC.
+   * If default profile written:
+   *   - when export as auto or 16-bit: follow the storage TRC.
+   *   - when export from 8-bit storage: follow the storage TRC.
+   *   - when converting high bit depth to 8-bit: export as sRGB.
+   */
   if (pngvals.save_profile)
     {
-      if (profile && gimp_color_profile_is_linear (profile) &&
-          pngvals.export_format == PNG_FORMAT_AUTO)
-        out_linear = TRUE;
+      profile = gimp_image_get_color_profile (orig_image_ID);
 
-      if (! profile)
-        profile = gimp_image_get_effective_color_profile (orig_image_ID);
-
-      if (! out_linear && gimp_color_profile_is_linear (profile))
+      if (profile                                     ||
+          pngvals.export_format == PNG_FORMAT_AUTO    ||
+          pngvals.export_format == PNG_FORMAT_RGB16   ||
+          pngvals.export_format == PNG_FORMAT_RGBA16  ||
+          pngvals.export_format == PNG_FORMAT_GRAY16  ||
+          pngvals.export_format == PNG_FORMAT_GRAYA16 ||
+          gimp_image_get_precision (image_ID) == GIMP_PRECISION_U8_LINEAR     ||
+          gimp_image_get_precision (image_ID) == GIMP_PRECISION_U8_NON_LINEAR ||
+          gimp_image_get_precision (image_ID) == GIMP_PRECISION_U8_PERCEPTUAL)
         {
-          /* This should happen only when using default linear profile
-           * (no profile explicitly set) or when not exporting to
-           * PNG_FORMAT_AUTO.
-           */
-          GimpColorProfile *saved_profile;
+          if (! profile)
+            profile = gimp_image_get_effective_color_profile (orig_image_ID);
+          out_linear = (gimp_color_profile_is_linear (profile));
+        }
+      else
+        {
+          /* When converting higher bit depth work image into 8-bit,
+           * with no manually assigned profile, make sure the result if
+           * sRGB. */
+          profile = gimp_image_get_effective_color_profile (orig_image_ID);
 
-          saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-          g_object_unref (profile);
-          profile = saved_profile;
+          if (gimp_color_profile_is_linear (profile))
+            {
+              GimpColorProfile *saved_profile;
+
+              saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+              g_object_unref (profile);
+              profile = saved_profile;
+            }
+
         }
     }
 #endif
@@ -1534,7 +1554,8 @@ save_image (const gchar  *filename,
 
     case GIMP_PRECISION_U8_NON_LINEAR:
     case GIMP_PRECISION_U8_PERCEPTUAL:
-      bit_depth = 8;
+      if (! out_linear)
+        bit_depth = 8;
       break;
 
     default:
@@ -1718,45 +1739,70 @@ save_image (const gchar  *filename,
       {
         case PNG_FORMAT_RGB8:
           color_type = PNG_COLOR_TYPE_RGB;
-          file_format = babl_format ("R'G'B' u8");
+          if (out_linear)
+            file_format = babl_format ("RGB u8");
+          else
+            file_format = babl_format ("R'G'B' u8");
           bit_depth = 8;
           break;
         case PNG_FORMAT_GRAY8:
           color_type = PNG_COLOR_TYPE_GRAY;
-          file_format = babl_format ("Y' u8");
+          if (out_linear)
+            file_format = babl_format ("Y u8");
+          else
+            file_format = babl_format ("Y' u8");
           bit_depth = 8;
           break;
-        case PNG_FORMAT_AUTO: // shut up gcc
         case PNG_FORMAT_RGBA8:
           color_type = PNG_COLOR_TYPE_RGB_ALPHA;
-          file_format = babl_format ("R'G'B'A u8");
+          if (out_linear)
+            file_format = babl_format ("RGBA u8");
+          else
+            file_format = babl_format ("R'G'B'A u8");
           bit_depth = 8;
           break;
         case PNG_FORMAT_GRAYA8:
           color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
-          file_format = babl_format ("Y'A u8");
+          if (out_linear)
+            file_format = babl_format ("YA u8");
+          else
+            file_format = babl_format ("Y'A u8");
           bit_depth = 8;
           break;
         case PNG_FORMAT_RGB16:
           color_type = PNG_COLOR_TYPE_RGB;
-          file_format = babl_format ("R'G'B' u16");
+          if (out_linear)
+            file_format = babl_format ("RGB u16");
+          else
+            file_format = babl_format ("R'G'B' u16");
           bit_depth = 16;
           break;
         case PNG_FORMAT_GRAY16:
           color_type = PNG_COLOR_TYPE_GRAY;
-          file_format = babl_format ("Y' u16");
+          if (out_linear)
+            file_format = babl_format ("Y u16");
+          else
+            file_format = babl_format ("Y' u16");
           bit_depth = 16;
           break;
         case PNG_FORMAT_RGBA16:
           color_type = PNG_COLOR_TYPE_RGB_ALPHA;
-          file_format = babl_format ("R'G'B'A u16");
+          if (out_linear)
+            file_format = babl_format ("RGBA u16");
+          else
+            file_format = babl_format ("R'G'B'A u16");
           bit_depth = 16;
           break;
         case PNG_FORMAT_GRAYA16:
           color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
-          file_format = babl_format ("Y'A u16");
+          if (out_linear)
+            file_format = babl_format ("YA u16");
+          else
+            file_format = babl_format ("Y'A u16");
           bit_depth = 16;
           break;
+        case PNG_FORMAT_AUTO:
+          g_return_val_if_reached (FALSE);
       }
     }
 
@@ -1868,9 +1914,8 @@ save_image (const gchar  *filename,
       g_free (profile_name);
 
       *profile_saved = TRUE;
+      g_object_unref (profile);
     }
-  if (profile)
-    g_object_unref (profile);
 #endif
 
 #ifdef PNG_zTXt_SUPPORTED
