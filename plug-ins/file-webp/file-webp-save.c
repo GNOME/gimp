@@ -308,25 +308,18 @@ save_layer (const gchar    *filename,
 
           if (mux)
             {
-              gboolean saved = FALSE;
-
               /* Save ICC data */
               if (profile)
                 {
                   const guint8 *icc_data;
                   gsize         icc_data_size;
 
-                  saved = TRUE;
-
                   icc_data = gimp_color_profile_get_icc_profile (profile,
                                                                  &icc_data_size);
                   chunk.bytes = icc_data;
                   chunk.size = icc_data_size;
                   WebPMuxSetChunk(mux, "ICCP", &chunk, 1);
-                }
 
-              if (saved == TRUE)
-                {
                   WebPMuxAssemble (mux, &wp_data);
                   rewind (outfile);
                   webp_anim_file_writer (outfile, wp_data.bytes, wp_data.size);
