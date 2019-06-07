@@ -301,22 +301,31 @@ gimp_operation_offset_parent_process (GeglOperation        *operation,
 
       if (input)
         {
-          const GeglRectangle *extent;
+          GeglRectangle bounds;
+          GeglRectangle extent;
 
-          extent = gegl_buffer_get_extent (GEGL_BUFFER (input));
+          bounds = gegl_operation_get_bounding_box (GEGL_OPERATION (offset));
 
-          output = g_object_new (GEGL_TYPE_BUFFER,
-            "source", input,
-            "x",      extent->x,
-            "y",      extent->y,
-            "width",  extent->width,
-            "height", extent->height,
-            "shift-x", -x,
-            "shift-y", -y,
-            NULL);
+          extent = *gegl_buffer_get_extent (GEGL_BUFFER (input));
 
-          if (gegl_object_get_has_forked (input))
-            gegl_object_set_has_forked (output);
+          extent.x += x;
+          extent.y += y;
+
+          if (gegl_rectangle_intersect (&extent, &extent, &bounds))
+            {
+              output = g_object_new (GEGL_TYPE_BUFFER,
+                "source", input,
+                "x",      extent.x,
+                "y",      extent.y,
+                "width",  extent.width,
+                "height", extent.height,
+                "shift-x", -x,
+                "shift-y", -y,
+                NULL);
+
+              if (gegl_object_get_has_forked (input))
+                gegl_object_set_has_forked (output);
+            }
         }
 
       gegl_operation_context_take_object (context, "output", output);
