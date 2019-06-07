@@ -314,14 +314,14 @@ gimp_operation_offset_parent_process (GeglOperation        *operation,
           if (gegl_rectangle_intersect (&extent, &extent, &bounds))
             {
               output = g_object_new (GEGL_TYPE_BUFFER,
-                "source", input,
-                "x",      extent.x,
-                "y",      extent.y,
-                "width",  extent.width,
-                "height", extent.height,
-                "shift-x", -x,
-                "shift-y", -y,
-                NULL);
+                                     "source",  input,
+                                     "x",       extent.x,
+                                     "y",       extent.y,
+                                     "width",   extent.width,
+                                     "height",  extent.height,
+                                     "shift-x", -x,
+                                     "shift-y", -y,
+                                     NULL);
 
               if (gegl_object_get_has_forked (input))
                 gegl_object_set_has_forked (output);
