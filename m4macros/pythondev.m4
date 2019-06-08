@@ -219,12 +219,6 @@ dnl function also defines PYTHON_INCLUDES
 AC_DEFUN([AM_CHECK_PYTHON_HEADERS],
 [AC_REQUIRE([AM_PATH_PYTHON2])
 AC_MSG_CHECKING(for headers required to compile python extensions)
-dnl Win32 doesn't have a versioned directory for headers
-if test "$PYTHON_PLATFORM" != "win32"; then
-  py_versiondir="/python${PYTHON_VERSION}"
-else
-  py_versiondir=
-fi
 dnl deduce PYTHON_INCLUDES
 py_prefix=`$PYTHON -c "import sys; print(sys.prefix)"`
 py_exec_prefix=`$PYTHON -c "import sys; print(sys.exec_prefix)"`
