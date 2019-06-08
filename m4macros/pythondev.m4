@@ -219,6 +219,7 @@ dnl function also defines PYTHON_INCLUDES
 AC_DEFUN([AM_CHECK_PYTHON_HEADERS],
 [AC_REQUIRE([AM_PATH_PYTHON2])
 AC_MSG_CHECKING(for headers required to compile python extensions)
+py_versiondir="/python${PYTHON_VERSION}"
 dnl deduce PYTHON_INCLUDES
 py_prefix=`$PYTHON -c "import sys; print(sys.prefix)"`
 py_exec_prefix=`$PYTHON -c "import sys; print(sys.exec_prefix)"`
