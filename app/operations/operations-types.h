@@ -64,7 +64,8 @@ typedef gboolean (* GimpLayerModeFunc)      (GeglOperation          *operation,
                                              const GeglRectangle    *roi,
                                              gint                    level);
 
-typedef  void    (* GimpLayerModeBlendFunc) (const gfloat           *in,
+typedef  void    (* GimpLayerModeBlendFunc) (GeglOperation          *operation,
+                                             const gfloat           *in,
                                              const gfloat           *layer,
                                              gfloat                 *out,
                                              gint                    samples);

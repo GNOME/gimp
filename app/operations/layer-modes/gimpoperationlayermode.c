@@ -678,7 +678,7 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
           babl_process (composite_to_blend_fish,
                         layer + first, blend_layer + first, count);
 
-          blend_function (blend_in + first, blend_layer + first,
+          blend_function (operation, blend_in + first, blend_layer + first,
                           blend_out + first, count);
 
           babl_process (blend_to_composite_fish,
@@ -703,7 +703,7 @@ gimp_operation_layer_mode_real_process (GeglOperation       *operation,
           blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
         }
 
-      blend_function (blend_in, blend_layer, blend_out, samples);
+      blend_function (operation, blend_in, blend_layer, blend_out, samples);
     }
 
   if (! gimp_layer_mode_is_subtractive (layer_mode->layer_mode))
