@@ -815,6 +815,11 @@ gimp_operation_layer_mode_blend_luma_darken_only (GeglOperation *operation,
                                                   gfloat        *comp,
                                                   gint           samples)
 {
+  const Babl *space  = gegl_operation_get_source_space (operation, "input");
+  double red_luminance, green_luminance, blue_luminance;
+  babl_space_get_rgb_luminance (space, 
+    &red_luminance, &green_luminance, &blue_luminance);
+
   while (samples--)
     {
       if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
@@ -823,8 +828,13 @@ gimp_operation_layer_mode_blend_luma_darken_only (GeglOperation *operation,
           gfloat src_luminance;
           gint   c;
 
-          dest_luminance = GIMP_RGB_LUMINANCE (in[0],    in[1],    in[2]);
-          src_luminance  = GIMP_RGB_LUMINANCE (layer[0], layer[1], layer[2]);
+          dest_luminance  = (in[0]    * red_luminance)   +
+                            (in[1]    * green_luminance) +
+                            (in[2]    * blue_luminance);
+
+          src_luminance   = (layer[0] * red_luminance)   +
+                            (layer[1] * green_luminance) +
+                            (layer[2] * blue_luminance);
 
           if (dest_luminance <= src_luminance)
             {
@@ -853,6 +863,11 @@ gimp_operation_layer_mode_blend_luma_lighten_only (GeglOperation *operation,
                                                    gfloat        *comp,
                                                    gint           samples)
 {
+  const Babl *space  = gegl_operation_get_source_space (operation, "input");
+  double red_luminance, green_luminance, blue_luminance;
+  babl_space_get_rgb_luminance (space, 
+    &red_luminance, &green_luminance, &blue_luminance);
+
   while (samples--)
     {
       if (in[ALPHA] != 0.0f && layer[ALPHA] != 0.0f)
@@ -861,8 +876,13 @@ gimp_operation_layer_mode_blend_luma_lighten_only (GeglOperation *operation,
           gfloat src_luminance;
           gint   c;
 
-          dest_luminance = GIMP_RGB_LUMINANCE (in[0],    in[1],    in[2]);
-          src_luminance  = GIMP_RGB_LUMINANCE (layer[0], layer[1], layer[2]);
+          dest_luminance  = (in[0]    * red_luminance)   +
+                            (in[1]    * green_luminance) +
+                            (in[2]    * blue_luminance);
+
+          src_luminance   = (layer[0] * red_luminance)   +
+                            (layer[1] * green_luminance) +
+                            (layer[2] * blue_luminance);
 
           if (dest_luminance >= src_luminance)
             {
@@ -891,14 +911,15 @@ gimp_operation_layer_mode_blend_luminance (GeglOperation *operation,
                                            gfloat        *comp,
                                            gint           samples)
 {
-  const Babl *fish;
-  gfloat     *scratch;
-  gfloat     *in_Y;
-  gfloat     *layer_Y;
-  const Babl *space = gegl_operation_get_source_space (operation, "input");
+  static const Babl *fish;
+  gfloat            *scratch;
+  gfloat            *in_Y;
+  gfloat            *layer_Y;
+  const Babl *format = gegl_operation_get_source_format (operation, "input");
+  const Babl *space  = gegl_operation_get_source_space (operation, "input");
 
   fish  = babl_fish (babl_format_with_space ("RGBA float", space),
-                     babl_format_with_space ("Y float", space));
+            babl_format_with_space ("Y float", space));
 
   scratch = gegl_scratch_new (gfloat, 2 * samples);
 
