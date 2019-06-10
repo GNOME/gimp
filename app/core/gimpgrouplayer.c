@@ -789,6 +789,16 @@ gimp_group_layer_translate (GimpLayer *layer,
   /*  redirect stack updates to the drawable, rather than to the projection  */
   private->direct_update++;
 
+  /*  if this is a nested group layer, we need to update the child-layers'
+   *  original area *before* updating the group's offset.  once we update the
+   *  group's offset, our parent's size will also be updated, and the
+   *  subsequent area-updates of the child layers during translation will be
+   *  clipped to the updated parent bounds, potentially failing to update their
+   *  original area.  see issue #3484.
+   */
+  if (gimp_viewable_get_depth (GIMP_VIEWABLE (group)) > 0)
+    gimp_drawable_update_all (GIMP_DRAWABLE (group));
+
   gimp_item_get_offset (GIMP_ITEM (group), &x, &y);
 
   x += offset_x;
