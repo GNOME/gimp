@@ -169,6 +169,8 @@ static gint64  gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
                                                     gint               width,
                                                     gint               height);
 
+static void       gimp_drawable_real_update_all    (GimpDrawable      *drawable);
+
 static GimpComponentMask
                 gimp_drawable_real_get_active_mask (GimpDrawable      *drawable);
 
@@ -285,6 +287,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->format_changed           = NULL;
   klass->alpha_changed            = NULL;
   klass->estimate_memsize         = gimp_drawable_real_estimate_memsize;
+  klass->update_all               = gimp_drawable_real_update_all;
   klass->invalidate_boundary      = NULL;
   klass->get_active_components    = NULL;
   klass->get_active_mask          = gimp_drawable_real_get_active_mask;
@@ -801,6 +804,12 @@ gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
   return (gint64) babl_format_get_bytes_per_pixel (format) * width * height;
 }
 
+static void
+gimp_drawable_real_update_all (GimpDrawable *drawable)
+{
+  gimp_drawable_update (drawable, 0, 0, -1, -1);
+}
+
 static GimpComponentMask
 gimp_drawable_real_get_active_mask (GimpDrawable *drawable)
 {
@@ -1109,6 +1118,14 @@ gimp_drawable_update (GimpDrawable *drawable,
               }
         }
     }
+}
+
+void
+gimp_drawable_update_all (GimpDrawable *drawable)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  GIMP_DRAWABLE_GET_CLASS (drawable)->update_all (drawable);
 }
 
 void

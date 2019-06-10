@@ -58,6 +58,7 @@ struct _GimpDrawableClass
                                            GimpComponentType     component_type,
                                            gint                  width,
                                            gint                  height);
+  void          (* update_all)            (GimpDrawable         *drawable);
   void          (* invalidate_boundary)   (GimpDrawable         *drawable);
   void          (* get_active_components) (GimpDrawable         *drawable,
                                            gboolean             *active);
@@ -126,6 +127,7 @@ void            gimp_drawable_update             (GimpDrawable       *drawable,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height);
+void            gimp_drawable_update_all         (GimpDrawable       *drawable);
 
 void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
 void         gimp_drawable_get_active_components (GimpDrawable       *drawable,

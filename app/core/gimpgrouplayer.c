@@ -124,6 +124,7 @@ static gint64      gimp_group_layer_estimate_memsize (GimpDrawable      *drawabl
                                                       GimpComponentType  component_type,
                                                       gint               width,
                                                       gint               height);
+static void            gimp_group_layer_update_all   (GimpDrawable      *drawable);
 
 static void            gimp_group_layer_translate    (GimpLayer       *layer,
                                                       gint             offset_x,
@@ -285,6 +286,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->transform_desc             = C_("undo-type", "Transform Layer Group");
 
   drawable_class->estimate_memsize       = gimp_group_layer_estimate_memsize;
+  drawable_class->update_all             = gimp_group_layer_update_all;
   drawable_class->get_source_node        = gimp_group_layer_get_source_node;
 
   layer_class->opacity_changed           = gimp_group_layer_opacity_changed;
@@ -743,6 +745,29 @@ gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
          GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
                                                                component_type,
                                                                width, height);
+}
+
+static void
+gimp_group_layer_update_all (GimpDrawable *drawable)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
+  GList                 *list;
+
+  /*  redirect stack updates to the drawable, rather than to the projection  */
+  private->direct_update++;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpFilter *child = list->data;
+
+      if (gimp_filter_get_active (child))
+        gimp_drawable_update_all (GIMP_DRAWABLE (child));
+    }
+
+  /*  redirect stack updates back to the projection  */
+  private->direct_update--;
 }
 
 static void
