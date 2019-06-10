@@ -911,15 +911,14 @@ gimp_operation_layer_mode_blend_luminance (GeglOperation *operation,
                                            gfloat        *comp,
                                            gint           samples)
 {
-  static const Babl *fish;
-  gfloat            *scratch;
-  gfloat            *in_Y;
-  gfloat            *layer_Y;
-  const Babl *format = gegl_operation_get_source_format (operation, "input");
-  const Babl *space  = gegl_operation_get_source_space (operation, "input");
+  const Babl *fish;
+  gfloat     *scratch;
+  gfloat     *in_Y;
+  gfloat     *layer_Y;
+  const Babl *space = gegl_operation_get_source_space (operation, "input");
 
-  fish  = babl_fish (babl_format_with_space ("RGBA float", space),
-            babl_format_with_space ("Y float", space));
+  fish = babl_fish (babl_format_with_space ("RGBA float", space),
+                    babl_format_with_space ("Y float",    space));
 
   scratch = gegl_scratch_new (gfloat, 2 * samples);
 
