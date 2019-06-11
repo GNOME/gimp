@@ -178,6 +178,16 @@ tiff_io_warning (const gchar *module,
 
       return;
     }
+  else if (! strcmp (module, "TIFFReadDirectory") &&
+           ! strcmp (fmt,
+                     "Sum of Photometric type-related color channels and ExtraSamples doesn't match SamplesPerPixel."
+                     " Defining non-color channels as ExtraSamples."))
+    {
+      /* We will process this issue in our code. Just report to stderr. */
+      g_printerr ("%s: [%s] %s\n", G_STRFUNC, module, fmt);
+
+      return;
+    }
 
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }

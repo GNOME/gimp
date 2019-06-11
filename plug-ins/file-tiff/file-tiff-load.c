@@ -448,21 +448,43 @@ load_image (GFile              *file,
           tsvals.save_transp_pixels = TRUE;
           extra--;
         }
-      else
+      else /* extra == 0 */
         {
-          alpha = FALSE;
+          /* ExtraSamples field not set, yet we have more channels than
+           * the PhotometricInterpretation field suggests.
+           * This should not happen as the spec clearly says "This field
+           * must be present if there are extra samples". So the files
+           * can be considered non-conformant. For now, let's consider
+           * the first extra field as alpha non-premultiplied.
+           *
+           * TODO: we should rather pop-up a dialog asking what to do:
+           * 1/ open as channel;
+           * 2/ use as premultiplied alpha;
+           * 3/ use as non-premultiplied alpha.
+           */
+          if ((photomet == PHOTOMETRIC_RGB && spp > 3) ||
+              /* All other color space expect 1 channel (grayscale,
+               * palette, mask). */
+              (photomet != PHOTOMETRIC_RGB && spp > 1))
+            {
+              /* assuming unassociated alpha if unspecified */
+              g_message ("File '%s' does not conform to TIFF specification: "
+                         "ExtraSamples field is not set while extra channels are present. "
+                         "Assuming the first extra channel as non-premultiplied alpha.",
+                         gimp_file_get_utf8_name (file));
+              alpha = TRUE;
+              tsvals.save_transp_pixels = TRUE;
+            }
+          else
+            {
+              alpha = FALSE;
+            }
         }
 
-      if (photomet == PHOTOMETRIC_RGB && spp > 3 + extra)
-        {
-          alpha = TRUE;
-          extra = spp - 4;
-        }
-      else if (photomet != PHOTOMETRIC_RGB && spp > 1 + extra)
-        {
-          alpha = TRUE;
-          extra = spp - 2;
-        }
+      if (photomet == PHOTOMETRIC_RGB && spp > 3 + (alpha ? 1 : 0) + extra)
+        extra = spp - 3 - (alpha ? 1 : 0);
+      else if (photomet != PHOTOMETRIC_RGB && spp > 1 + (alpha ? 1 : 0) + extra)
+        extra = spp - 1 - (alpha ? 1 : 0);
 
       is_bw = FALSE;
 
