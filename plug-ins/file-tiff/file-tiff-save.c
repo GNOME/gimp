@@ -590,6 +590,9 @@ save_layer (TIFF         *tif,
       goto out;
     }
 
+  format = babl_format_with_space (babl_format_get_encoding (format),
+                                   gegl_buffer_get_format (buffer));
+
   bytesperrow = cols * babl_format_get_bytes_per_pixel (format);
 
   if (compression == COMPRESSION_CCITTFAX3 ||

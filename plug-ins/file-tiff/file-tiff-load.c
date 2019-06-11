@@ -980,6 +980,12 @@ load_image (GFile              *file,
            */
           base_format = gimp_drawable_get_format (layer);
         }
+      else
+        {
+          base_format =
+            babl_format_with_space (babl_format_get_encoding (base_format),
+                                    gegl_buffer_get_format (channel[0].buffer));
+        }
 
       channel[0].ID     = layer;
       channel[0].buffer = gimp_drawable_get_buffer (layer);
