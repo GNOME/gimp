@@ -72,8 +72,8 @@
   </provides>
 
   <releases>
-    <release version="2.10.12" date="TODO">
-      <url type="details">https://www.gimp.org/news/TODO/gimp-2-10-12-released/</url>
+    <release version="2.10.12" date="2019-06-12">
+      <url type="details">https://www.gimp.org/news/2019/06/12/gimp-2-10-12-released/</url>
       <description>
         <_p>
         GIMP 2.10.12 is a significant bug fix release, which is to be expected
