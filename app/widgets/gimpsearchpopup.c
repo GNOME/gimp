@@ -193,7 +193,7 @@ gimp_search_popup_new (Gimp                    *gimp,
                        GimpSearchPopupCallback  callback,
                        gpointer                 callback_data)
 {
-  GtkWidget    *widget;
+  GtkWidget *widget;
 
   widget = g_object_new (GIMP_TYPE_SEARCH_POPUP,
                          "type",          GTK_WINDOW_TOPLEVEL,
@@ -207,6 +207,7 @@ gimp_search_popup_new (Gimp                    *gimp,
                          "callback",      callback,
                          "callback-data", callback_data,
                          NULL);
+  gtk_window_set_modal (GTK_WINDOW (widget), FALSE);
 
 
   return widget;
