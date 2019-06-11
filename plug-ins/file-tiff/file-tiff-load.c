@@ -973,6 +973,8 @@ load_image (GFile              *file,
           g_free (name);
         }
 
+      channel[0].buffer = gimp_drawable_get_buffer (layer);
+
       if (! base_format && image_type == GIMP_INDEXED)
         {
           /* can't create the palette format here, need to get it from
@@ -988,7 +990,6 @@ load_image (GFile              *file,
         }
 
       channel[0].ID     = layer;
-      channel[0].buffer = gimp_drawable_get_buffer (layer);
       channel[0].format = base_format;
 
       if (extra > 0 && ! worst_case)
