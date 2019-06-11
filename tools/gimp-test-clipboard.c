@@ -18,6 +18,11 @@
 #include <unistd.h>
 #endif
 
+#include <glib/gstdio.h>
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -373,7 +378,7 @@ test_clipboard_paste (GtkClipboard *clipboard,
       if (! strcmp (filename, "-"))
         fd = 1;
       else
-        fd = open (filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+        fd = g_open (filename, O_WRONLY | O_CREAT | O_TRUNC | _O_BINARY, 0666);
 
       if (fd < 0)
         {
