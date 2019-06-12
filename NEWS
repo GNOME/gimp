@@ -7,6 +7,122 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
+=====================================================
+
+Core:
+
+  - Add an "Incremental" option to the Dodge/Burn tool, which, similarly
+    to the Paintbrush, Pencil, and Eraser tools, applies the effect
+    incrementally as the pointer moves.
+  - Curves now have a concept of smooth vs corner points: smooth points
+    produce a smooth curve, while corner points produce a sharp curve
+    (previously, all points were smooth).
+  - Search the user font directory path on Windows (since Windows 10,
+    non-admin users have the ability to install fonts). This is only a
+    temporary hack until fontconfig adds proper upstream support:
+    https://gitlab.freedesktop.org/fontconfig/fontconfig/issues/144
+  - In gimp_brush_core_get_paint_buffer(), when allocating a new paint
+    buffer, clear the old buffer *before* allocating the new one, to
+    reduce the amount of simultaneously allocated memory.
+  - In GimpPaintbrush, avoid refilling the paint buffer at each dab if
+    the paint color/pixmap hasn't changed, hence allowing faster
+    painting in some specific cases.
+  - Add hygon cpu detection and enable MMX/SSE support.
+  - Add a GimpSymmetry::get_transform() virtual function and a
+    corresponding gimp_symmetry_get_transform() function which return
+    the brush transform corresponding to a given symmetry stroke in
+    terms of the rotation angle and reflection flag (in contrast to
+    gimp_symmetry_get_operation() which returns the same transforation
+    in terms of a GeglNode). This allows us to simplify, fix (artifact
+    bugs, etc.), and improve the painting-code performance for several
+    symmetry painting cases.
+  - New gimp-brush-pipe-spacing parasite set by core code to preserve
+    GIH brush's spacing across reloads.
+  - Add a new Offset filter tool, as a front-end to gimp:offset. The
+    tool replaces, and provides the same interface as the drawable-
+    offset dialog while also providing live preview and on-canvas
+    interaction.
+
+
+Plug-ins:
+  - Exported profile and data format strategy updated in several file
+    plug-ins.
+    * When not saving a profile, we always export as sRGB data, as most
+      viewers would not display the image properly otherwise.
+    * When saving a profile:
+        * If a profile was manually assigned, we always export to the
+          assigned format, hence pixel data is converted accordingly, whatever
+          the work format.
+        * If no profile was assigned:
+            * If the export format support high-bit depth, we export the
+              work format as-is.
+            * If the export format is 8-bit max, we convert the work
+              format to sRGB, exept if the work format is 8-bit linear.
+    The following plug-ins were updated: JPEG, PNG, TIFF and WebP.
+  - TIFF plug-in now supports layer export.
+  - Add accelerator on "Save color _profile" item in JPEG export so that
+    all items in the dialog have keyboard accelerators.
+  - Add a "Save color profile" checkbox in WebP export and remove the
+    "Advanced Options" expander (all metadata and profile writing
+    options are now directly visible).
+  - Process cases of non-conformant TIFF file with extra channels while
+    ExtraSamples is not set by assuming the first extra channel is a
+    non-premultiplied alpha channel and outputting a warning. In the
+    future, this should be updated further by a dialog asking what to do
+    with the non-defined dialog (consider as premultiplied or
+    non-premultiplied alpha channel, or just save as extra channels).
+
+Tools:
+
+  - Add input/output spin-buttons to the Curves tool, which allow
+    setting the selected point's coordinates numerically. When the image
+    precision is greater than 8-bpc, use a 0.00-100.00 range for the
+    point-coordinate spin-buttons instead of a 0-255 range.
+  - In the Curves tool, allow changing the curve's point types (cf. new
+    curve corner points in Core section). Corner points are displayed
+    with a diamond shape instead of a circle.
+  - Free Select tool now creates a selection as soon as the polygon is
+    closed. This selection is updated when the polygon, or the relevant
+    tool-options, change, similarly to GimpRectangleSelectTool.
+  - Derive GimpEraser from GimpPaintbrush, instead of directly from
+    GimpBrushCore.
+    This allows GimpEraser to reuse the paint-buffer content across
+    dabs, improving performance.
+  - Allow moving an intersecting pair of guides with the Move tool.
+
+User interface:
+
+  - In GimpCurveView, when dragging an existing curve point, don't
+    immediately move the point to the cursor position upon button
+    press, but rather move it relative to its current position as the
+    cursor moves. This allows selecting a point without moving it, and
+    adjusting its position more easily.
+  - when the cursor hovers above a point in GimpCurveView, or when
+    dragging a point, have the coordinate indicator show the point's
+    position, rather than the cursor's.
+  - In GimpCurveView, when holding down Ctrl while adding/dragging a
+    point, snap the y-coordinate to the original curve (at the start of
+    the drag). This is particularly useful for adding points along the
+    curve.
+  - In GimpDashboard, don't show legend for groups with no meter.
+  - Add a tile-alloc-total variable to the dashboard's memory and misc
+    groups, showing the total amount of memory used by the tile
+    allocator.
+  - Add a "Save Keyboard Shortcuts Now" button to the Configure Keyboard
+    Shortcuts dialog.
+
+Installers:
+
+  - Windows: enable InnoSetup "unofficial" translations. Otherwise we
+    had a bunch of wasted work from our translators of several languages
+    whose translations were never used in the installer.
+
+Translations:
+
+   - 12 translations were updated: Catalan, Chinese, French, German,
+     Hungarian, Indonesian, Italian, Polish, Russian, Spanish, Swedish
+     and Turkish.
 
 Overview of Changes from GIMP 2.10.8 to GIMP 2.10.10
 ====================================================
