@@ -7,17 +7,18 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+
 Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
 =====================================================
 
 Core:
 
-  - Add an "Incremental" option to the Dodge/Burn tool, which, similarly
-    to the Paintbrush, Pencil, and Eraser tools, applies the effect
-    incrementally as the pointer moves.
-  - Curves now have a concept of smooth vs corner points: smooth points
-    produce a smooth curve, while corner points produce a sharp curve
-    (previously, all points were smooth).
+  - Add an "Incremental" option to the Dodge/Burn tool, which,
+    similarly to the Paintbrush, Pencil, and Eraser tools, applies the
+    effect incrementally as the pointer moves.
+  - Curves now have a concept of smooth vs corner points: smooth
+    points produce a smooth curve, while corner points produce a sharp
+    curve (previously, all points were smooth).
   - Search the user font directory path on Windows (since Windows 10,
     non-admin users have the ability to install fonts). This is only a
     temporary hack until fontconfig adds proper upstream support:
@@ -44,33 +45,36 @@ Core:
     offset dialog while also providing live preview and on-canvas
     interaction.
 
-
 Plug-ins:
+
   - Exported profile and data format strategy updated in several file
     plug-ins.
+
     * When not saving a profile, we always export as sRGB data, as most
       viewers would not display the image properly otherwise.
     * When saving a profile:
         * If a profile was manually assigned, we always export to the
-          assigned format, hence pixel data is converted accordingly, whatever
-          the work format.
+          assigned format, hence pixel data is converted accordingly,
+	  whatever the work format.
         * If no profile was assigned:
             * If the export format support high-bit depth, we export the
               work format as-is.
             * If the export format is 8-bit max, we convert the work
-              format to sRGB, exept if the work format is 8-bit linear.
+              format to sRGB, except if the work format is 8-bit linear.
+
     The following plug-ins were updated: JPEG, PNG, TIFF and WebP.
+
   - TIFF plug-in now supports layer export.
-  - Add accelerator on "Save color _profile" item in JPEG export so that
-    all items in the dialog have keyboard accelerators.
+  - Add accelerator on "Save color _profile" item in JPEG export so
+    that all items in the dialog have keyboard accelerators.
   - Add a "Save color profile" checkbox in WebP export and remove the
     "Advanced Options" expander (all metadata and profile writing
     options are now directly visible).
-  - Process cases of non-conformant TIFF file with extra channels while
-    ExtraSamples is not set by assuming the first extra channel is a
-    non-premultiplied alpha channel and outputting a warning. In the
-    future, this should be updated further by a dialog asking what to do
-    with the non-defined dialog (consider as premultiplied or
+  - Process cases of non-conformant TIFF file with extra channels
+    while ExtraSamples is not set by assuming the first extra channel
+    is a non-premultiplied alpha channel and outputting a warning. In
+    the future, this should be updated further by a dialog asking what
+    to do with the non-defined dialog (consider as premultiplied or
     non-premultiplied alpha channel, or just save as extra channels).
 
 Tools:
@@ -102,27 +106,28 @@ User interface:
     dragging a point, have the coordinate indicator show the point's
     position, rather than the cursor's.
   - In GimpCurveView, when holding down Ctrl while adding/dragging a
-    point, snap the y-coordinate to the original curve (at the start of
-    the drag). This is particularly useful for adding points along the
-    curve.
+    point, snap the y-coordinate to the original curve (at the start
+    of the drag). This is particularly useful for adding points along
+    the curve.
   - In GimpDashboard, don't show legend for groups with no meter.
   - Add a tile-alloc-total variable to the dashboard's memory and misc
     groups, showing the total amount of memory used by the tile
     allocator.
-  - Add a "Save Keyboard Shortcuts Now" button to the Configure Keyboard
-    Shortcuts dialog.
+  - Add a "Save Keyboard Shortcuts Now" button to the Configure
+    Keyboard Shortcuts dialog.
 
 Installers:
 
   - Windows: enable InnoSetup "unofficial" translations. Otherwise we
-    had a bunch of wasted work from our translators of several languages
-    whose translations were never used in the installer.
+    had a bunch of wasted work from our translators of several
+    languages whose translations were never used in the installer.
 
 Translations:
 
    - 12 translations were updated: Catalan, Chinese, French, German,
      Hungarian, Indonesian, Italian, Polish, Russian, Spanish, Swedish
      and Turkish.
+
 
 Overview of Changes from GIMP 2.10.8 to GIMP 2.10.10
 ====================================================
