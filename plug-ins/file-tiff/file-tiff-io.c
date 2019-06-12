@@ -74,8 +74,8 @@ tiff_open (GFile        *file,
            const gchar  *mode,
            GError      **error)
 {
-  TIFFSetWarningHandler (tiff_io_warning);
-  TIFFSetErrorHandler (tiff_io_error);
+  TIFFSetWarningHandler ((TIFFErrorHandler) tiff_io_warning);
+  TIFFSetErrorHandler ((TIFFErrorHandler) tiff_io_error);
 
   tiff_io.file = file;
 
