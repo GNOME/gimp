@@ -514,7 +514,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_mnemonic ("By _width/2");
+  button = gtk_button_new_with_mnemonic (_("By _width/2"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -522,7 +522,7 @@ gimp_offset_tool_dialog (GimpFilterTool *filter_tool)
                     G_CALLBACK (gimp_offset_tool_half_x_clicked),
                     offset_tool);
 
-  button = gtk_button_new_with_mnemonic ("By _height/2");
+  button = gtk_button_new_with_mnemonic (_("By _height/2"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
