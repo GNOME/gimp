@@ -126,6 +126,17 @@ typedef enum
 } GimpMattingDrawMode;
 
 
+#define GIMP_TYPE_MATTING_PREVIEW_MODE (gimp_matting_preview_mode_get_type ())
+
+GType gimp_matting_preview_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+ GIMP_MATTING_PREVIEW_MODE_ON_COLOR,        /*< desc="On color" >*/
+ GIMP_MATTING_PREVIEW_MODE_GRAYSCALE,       /*< desc="Grayscale" >*/
+} GimpMattingPreviewMode;
+
+
 #define GIMP_TYPE_WARP_BEHAVIOR (gimp_warp_behavior_get_type ())
 
 GType gimp_warp_behavior_get_type (void) G_GNUC_CONST;
