@@ -49,6 +49,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasitem.h"
+#include "display/gimpcanvasbufferpreview.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimptoolgui.h"
@@ -246,6 +248,7 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
                                      "tools/tools-foreground-select-brush-size-set");
 
   fg_select->state = MATTING_STATE_FREE_SELECT;
+  fg_select->grayscale_preview = NULL;
 }
 
 static void
@@ -777,7 +780,8 @@ gimp_foreground_select_tool_options_notify (GimpTool         *tool,
   if (! tool->display)
     return;
 
-  if (! strcmp (pspec->name, "mask-color"))
+  if (! strcmp (pspec->name, "mask-color") ||
+      ! strcmp (pspec->name, "preview-mode"))
     {
       if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
         {
@@ -890,6 +894,9 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
                                 x - radius, y - radius,
                                 2 * radius, 2 * radius,
                                 0.0, 2.0 * G_PI);
+
+      if (fg_select->grayscale_preview)
+        gimp_draw_tool_add_preview (draw_tool, fg_select->grayscale_preview);
     }
 }
 
@@ -921,6 +928,10 @@ gimp_foreground_select_tool_confirm (GimpPolygonSelectTool *poly_sel,
                                       0, 0, 0.5);
       gimp_scan_convert_free (scan_convert);
 
+      fg_select->grayscale_preview =
+          gimp_canvas_buffer_preview_new (gimp_display_get_shell (display),
+                                          fg_select->trimap);
+
       gimp_foreground_select_tool_set_trimap (fg_select);
     }
 }
@@ -928,8 +939,15 @@ gimp_foreground_select_tool_confirm (GimpPolygonSelectTool *poly_sel,
 static void
 gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
 {
-  GimpTool *tool = GIMP_TOOL (fg_select);
+  GimpTool     *tool = GIMP_TOOL (fg_select);
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (fg_select);
 
+  if (draw_tool->preview)
+    {
+      gimp_draw_tool_remove_preview (draw_tool, fg_select->grayscale_preview);
+    }
+
+  g_clear_object (&fg_select->grayscale_preview);
   g_clear_object (&fg_select->trimap);
   g_clear_object (&fg_select->mask);
 
@@ -1010,7 +1028,6 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select)
 {
   GimpTool                    *tool = GIMP_TOOL (fg_select);
   GimpForegroundSelectOptions *options;
-  GimpRGB                      color;
 
   g_return_if_fail (fg_select->trimap != NULL);
 
@@ -1018,9 +1035,28 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select)
 
   gimp_polygon_select_tool_halt (GIMP_POLYGON_SELECT_TOOL (fg_select));
 
-  gimp_foreground_select_options_get_mask_color (options, &color);
-  gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
-                               fg_select->trimap, 0, 0, &color, TRUE);
+  if (options->preview_mode == GIMP_MATTING_PREVIEW_MODE_ON_COLOR)
+    {
+      if (fg_select->grayscale_preview)
+        gimp_canvas_item_set_visible (fg_select->grayscale_preview, FALSE);
+
+      gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                   fg_select->trimap, 0, 0,
+                                   &options->mask_color, TRUE);
+    }
+  else
+    {
+      gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                   NULL, 0, 0, NULL, FALSE);
+
+      if (fg_select->grayscale_preview)
+        {
+          g_object_set (fg_select->grayscale_preview, "buffer",
+                        fg_select->trimap, NULL);
+
+          gimp_canvas_item_set_visible (fg_select->grayscale_preview, TRUE);
+        }
+    }
 
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PAINTBRUSH);
@@ -1047,15 +1083,32 @@ gimp_foreground_select_tool_set_preview (GimpForegroundSelectTool *fg_select)
 
   GimpTool                    *tool = GIMP_TOOL (fg_select);
   GimpForegroundSelectOptions *options;
-  GimpRGB                      color;
 
   g_return_if_fail (fg_select->mask != NULL);
 
   options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
-  gimp_foreground_select_options_get_mask_color (options, &color);
-  gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
-                               fg_select->mask, 0, 0, &color, TRUE);
+  if (options->preview_mode == GIMP_MATTING_PREVIEW_MODE_ON_COLOR)
+    {
+      if (fg_select->grayscale_preview)
+        gimp_canvas_item_set_visible (fg_select->grayscale_preview, FALSE);
+
+      gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                   fg_select->mask, 0, 0,
+                                   &options->mask_color, TRUE);
+    }
+  else
+    {
+      gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                   NULL, 0, 0, NULL, FALSE);
+
+      if (fg_select->grayscale_preview)
+        {
+          g_object_set (fg_select->grayscale_preview, "buffer",
+                    fg_select->mask, NULL);
+          gimp_canvas_item_set_visible (fg_select->grayscale_preview, TRUE);
+        }
+    }
 
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_PAINTBRUSH);

@@ -231,6 +231,35 @@ gimp_matting_draw_mode_get_type (void)
 }
 
 GType
+gimp_matting_preview_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MATTING_PREVIEW_MODE_ON_COLOR, "GIMP_MATTING_PREVIEW_MODE_ON_COLOR", "on-color" },
+    { GIMP_MATTING_PREVIEW_MODE_GRAYSCALE, "GIMP_MATTING_PREVIEW_MODE_GRAYSCALE", "grayscale" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_MATTING_PREVIEW_MODE_ON_COLOR, NC_("matting-preview-mode", "On color"), NULL },
+    { GIMP_MATTING_PREVIEW_MODE_GRAYSCALE, NC_("matting-preview-mode", "Grayscale"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpMattingPreviewMode", values);
+      gimp_type_set_translation_context (type, "matting-preview-mode");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_warp_behavior_get_type (void)
 {
   static const GEnumValue values[] =

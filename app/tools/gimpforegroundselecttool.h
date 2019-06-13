@@ -59,6 +59,8 @@ struct _GimpForegroundSelectTool
 
   GimpToolGui           *gui;
   GtkWidget             *preview_toggle;
+
+  GimpCanvasItem        *grayscale_preview;
 };
 
 struct _GimpForegroundSelectToolClass
