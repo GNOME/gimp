@@ -218,13 +218,10 @@ Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 Name: mypaint; Description: "{cm:ComponentsMyPaint}"; Types: full custom
 
 #ifdef PYTHON
-Name: py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('32')
+Name: py; Description: "{cm:ComponentsPython}"; Types: full custom
 #endif
 
 Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
-#ifdef PYTHON
-Name: gimp32on64\py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('64')
-#endif
 Name: gimp32on64\compat; Description: "{cm:ComponentsCompat}"; Types: full custom; Flags: dontinheritcheck; Check: Check3264('64')
 
 [Tasks]
@@ -278,24 +275,19 @@ Source: "{#GIMP_DIR64}\lib\gimp\2.0\plug-ins\twain\twain.exe"; DestDir: "{app}\l
 ;special case due to MS-Windows engine
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\32\etc\gtk-2.0"; Excludes: gtkrc; Components: gimp32on64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\32\etc\gtk-2.0"; Components: gimp32on64 and deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-;python scripts
-#ifdef PYTHON
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; Excludes: "*.debug"; DestDir: "{app}\32\lib\gimp\2.0\python"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-#endif
 ;compat libraries
 Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}\32\"; Components: gimp32on64\compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+
+#ifdef PYTHON
+;*.py files are the same on 32 and 64-bit
+Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#endif
 
 ;32bit
 #define PLATFORM 32
 #include "files.isi"
 ;special case, since 64bit version doesn't work, and is excluded in files.isi
 Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\twain.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp32; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-;python scripts
-#ifdef PYTHON
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\plug-ins\*.py"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-Source: "{#GIMP_DIR32}\lib\gimp\2.0\python\*.p*"; Excludes: "*.debug"; DestDir: "{app}\lib\gimp\2.0\python"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-#endif
 Source: "{#DEPS_DIR}\compat\*.dll"; DestDir: "{app}"; Components: deps32\compat; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 
 ;64bit
@@ -310,18 +302,6 @@ Source: "{#DEPS_DIR64}\bin\zlib1.dll"; DestDir: "{sys}"; Components: gimp64; Fla
 ;overridden configuration files
 #include "configoverride.isi"
 
-;python
-#ifdef PYTHON
-Source: "{#DEPS_DIR32}\bin\python2w.exe"; DestDir: "{app}\bin"; DestName: "pythonw.exe"; Components: py; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\bin\python2.exe"; DestDir: "{app}\bin"; DestName: "python.exe"; Components: py; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\bin\libpython2.7.dll"; DestDir: "{app}\bin"; Components: py; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\lib\python2.7\*"; DestDir: "{app}\lib\python2.7"; Components: py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-
-Source: "{#DEPS_DIR32}\bin\python2w.exe"; DestDir: "{app}\32\bin"; DestName: "pythonw.exe"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\bin\python2.exe"; DestDir: "{app}\32\bin"; DestName: "python.exe"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\bin\libpython2.7.dll"; DestDir: "{app}\32\bin"; Components: gimp32on64\py; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR32}\lib\python2.7\*"; DestDir: "{app}\32\lib\python2.7"; Components: gimp32on64\py; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
-#endif
 #endif //NOFILES
 
 [InstallDelete]
@@ -343,7 +323,6 @@ Type: files; Name: "{app}\32\bin\zlib1.dll"
 ;old ghostscript
 Type: filesandordirs; Name: "{app}\share\ghostscript\*"
 ;obsolete plugins from gimp 2.8
-Type: files; Name: "{app}\lib\babl-0.1\sse-fixups.dll"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\pyconsole.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\metadata.exe"
@@ -558,6 +537,15 @@ Type: files; Name: "{commondesktop}\GIMP 2.lnk"
 ;get previous GIMP icon name from uninstall name in Registry
 Type: files; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
 Type: files; Name: "{commondesktop}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1,DisplayName|GIMP 2}.lnk"; Check: CheckRegValueExists('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\GIMP-2_is1','DisplayName')
+;32-bit Python
+Type: filesandordirs; Name: "{app}\32\lib\gimp\2.0\python"
+Type: files; Name: "{app}\32\bin\python2w.exe"
+Type: files; Name: "{app}\32\bin\python2.exe"
+Type: files; Name: "{app}\32\bin\libpython2.7.dll"
+Type: filesandordirs; Name: "{app}\32\\lib\python2.7"
+;remove old babl and gegl plugins
+Type: filesandordirs; Name: "{app}\lib\babl-0.1"
+Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 
 [Registry]
 ;fix broken toolbox icons
@@ -781,25 +769,16 @@ end;
 procedure PreparePyGimp();
 var PyGimpInterp,Interp: String;
 begin
-	if IsComponentSelected('py') or IsComponentSelected('gimp32on64\py') then
+	if IsComponentSelected('py') then
 	begin
 		StatusLabel(CustomMessage('SettingUpPyGimp'),'');
 
 		PyGimpInterp := ExpandConstant('{app}\lib\gimp\2.0\interpreters\pygimp.interp');
         DebugMsg('PreparePyGimp','Writing interpreter file for gimp-python: ' + PyGimpInterp);
 		
-		if IsComponentSelected('py') then
-		begin
-			Interp := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
-			          'python2=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
-			          '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
-		end else
-		begin
-			Interp := 'python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10 +
-			          'python2=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10 +
-			          '/usr/bin/python=' + ExpandConstant('{app}\32\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
-		end;
-
+		Interp := 'python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+		          'python2=' + ExpandConstant('{app}\bin\pythonw.exe') + #10 +
+		          '/usr/bin/python=' + ExpandConstant('{app}\bin\pythonw.exe') + #10':Python:E::py::python:'#10;
 		
 		if not SaveStringToUTF8File(PyGimpInterp,Interp,False) then
 		begin
@@ -828,9 +807,6 @@ begin
 
 		Env := Env + ';${gimp_installation_dir}\32\bin' + #10;
 
-		if IsComponentSelected('gimp32on64\py') then
-			Env := Env + 'PYTHONPATH=${gimp_installation_dir}\32\lib\gimp\2.0\python;${gimp_plug_in_dir}\plug-ins\python-console' + #10;
-
 	end else
 	begin
 
@@ -850,7 +826,7 @@ begin
 	end;
 
 	//workaround for high-DPI awareness of Python plug-ins
-	if IsComponentSelected('gimp32on64\py') or IsComponentSelected('py') then
+	if IsComponentSelected('py') then
 	begin
 		EnvFile := ExpandConstant('{app}\lib\gimp\2.0\environ\pygimp.env');
 		DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
