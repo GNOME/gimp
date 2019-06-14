@@ -37,6 +37,15 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\gegl-0.4\*.dll"; DestDir: "{app}\lib\gegl-0.4";
 Source: "{#DEPS_DIR}\{#DDIR}\lib\gio\*.dll"; DestDir: "{app}\lib\gio"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\gtk-2.0\*.dll"; DestDir: "{app}\lib\gtk-2.0"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 
+;python scripts
+#ifdef PYTHON
+Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\python\*.p*"; Excludes: "*.debug"; DestDir: "{app}\lib\gimp\2.0\python"; Components: py and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\python2w.exe"; DestDir: "{app}\bin"; DestName: "pythonw.exe"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\python2.exe"; DestDir: "{app}\bin"; DestName: "python.exe"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\libpython2.7.dll"; DestDir: "{app}\bin"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\lib\python2.7\*"; DestDir: "{app}\lib\python2.7"; Components: py and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+#endif
+
 #if PLATFORM==64
 Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-mng\file-mng.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\file-mng"; Components: gimp{#PLATFORM}; Flags: restartreplace ignoreversion uninsrestartdelete
 #endif
