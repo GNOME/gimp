@@ -2,10 +2,12 @@
 !GTK
 etc\fonts\
 lib\gtk-2.0\2.10.0\engines\*.dll
-lib\gtk-2.0\2.10.0\loaders\*.dll
+#lib\gtk-2.0\2.10.0\loaders\*.dll
 lib\gtk-2.0\modules\*.dll
 lib\gdk-pixbuf-2.0\2.10.0\loaders\*.dll
 lib\gdk-pixbuf-2.0\2.10.0\loaders.cache
+lib\babl-0.1\*.dll
+lib\gegl-0.4\*.dll
 share\themes\
 bin\gspawn*.exe
 bin\*.dll
