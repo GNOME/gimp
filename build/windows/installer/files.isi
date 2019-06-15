@@ -15,7 +15,7 @@
 Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\2.0\plug-ins\twain\twain.exe,\lib\gimp\2.0\plug-ins\file-ps\file-ps.exe,\lib\gimp\2.0\plug-ins\file-mng\file-mng.exe,\bin\gimp.exe,\bin\gimp-console.exe"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #ifdef DEBUG_SYMBOLS
-Source: "{#GIMP_DIR}\{#DIR}\*.debug"; DestDir: "{app}"; Components: gimp{#PLATFORM} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete
+Source: "{#GIMP_DIR}\{#DIR}\*.debug"; DestDir: "{app}"; Components: gimp{#PLATFORM} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
 Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps\file-ps.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins\file-ps"; Components: gs and gimp{#PLATFORM}; Flags: restartreplace ignoreversion uninsrestartdelete

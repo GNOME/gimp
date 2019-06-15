@@ -40,7 +40,6 @@ begin
 	SetupRestartData := AddParam(SetupRestartData, 'TYPE', Quote(WizardSetupType(False)));
 	SetupRestartData := AddParam(SetupRestartData, 'COMPONENTS', Quote(WizardSelectedComponents(False)));
 	SetupRestartData := AddParam(SetupRestartData, 'TASKS', Quote(WizardSelectedTasks(False)));
-	SetupRestartData := AddParam(SetupRestartData, 'ASSOC', Quote(Associations_GetSelected()));
 
 	if Force32bitInstall then
 		SetupRestartData := AddSimpleParam(SetupRestartData, '32');

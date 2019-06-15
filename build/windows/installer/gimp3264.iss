@@ -23,7 +23,7 @@
 ;.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.,.;
 ;
 ;Install script for GIMP and GTK+
-;requires Inno Setup 5.4.2 unicode + ISPP
+;requires Inno Setup 6
 ;
 ;See directories.isi 
 ;
@@ -80,9 +80,18 @@
 #pragma option -e+
 
 #ifndef VERSION
-	#define VERSION "2.7.0"
-	#define REVISION "20100414"
+	#define DEVEL "is6"
+	#define VERSION "2.10.12"
 	#define NOFILES
+	#define GIMP_DIR "W:\msys64-gtk2\opt\output\2.10.12"
+	#define DIR32 "i686-w64-mingw32"
+	#define DIR64 "x86_64-w64-mingw32" 
+	#define DEPS_DIR "W:\msys64-gtk2\opt\comb"
+	#define DDIR32 "mingw32"
+	#define DDIR64 "mingw64"
+	#define PYTHON 
+	#define DEBUG_SYMBOLS 
+	#define NOCOMPRESSION
 #endif
 
 #include "directories.isi"
@@ -113,11 +122,11 @@ AlwaysShowDirOnReadyPage=yes
 ChangesEnvironment=yes
 
 #if Defined(DEVEL) && DEVEL != ""
-DefaultDirName={pf}\GIMP {#MAJOR}.{#MINOR}
+DefaultDirName={autopf}\GIMP {#MAJOR}.{#MINOR}
 LZMANumBlockThreads=4
 LZMABlockSize=76800
 #else
-DefaultDirName={pf}\GIMP {#MAJOR}
+DefaultDirName={autopf}\GIMP {#MAJOR}
 #endif
 
 ;AllowNoIcons=true
@@ -159,6 +168,8 @@ OutputBaseFileName=gimp-{#VERSION}-setup
 #else
 OutputBaseFileName=gimp-{#VERSION}-{#REVISION}-setup
 #endif
+
+PrivilegesRequiredOverridesAllowed=dialog
 
 [Languages]
 Name: "en"; MessagesFile: "compiler:Default.isl,lang\en.setup.isl"
@@ -229,8 +240,8 @@ Name: desktopicon; Description: "{cm:AdditionalIconsDesktop}"; GroupDescription:
 
 [Icons]
 #define ICON_VERSION=MAJOR + "." + MINOR + "." + MICRO
-Name: "{commonprograms}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"
-Name: "{commondesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"; Tasks: desktopicon
+Name: "{autoprograms}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"
+Name: "{autodesktop}\GIMP {#ICON_VERSION}"; Filename: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"; WorkingDir: "%USERPROFILE%"; Comment: "GIMP {#VERSION}"; Tasks: desktopicon
 
 [Files]
 ;setup files
@@ -548,10 +559,9 @@ Type: filesandordirs; Name: "{app}\lib\babl-0.1"
 Type: filesandordirs; Name: "{app}\lib\gegl-0.4"
 
 [Registry]
-;fix broken toolbox icons
-Root: HKLM; Subkey: "Software\Classes\.svg"; ValueType: string; ValueName: "Content Type"; ValueData: "image/svg+xml"; Flags: noerror createvalueifdoesntexist
 ;remove LIBTHAI_DICTDIR variable set by original 2.10.8 installer
-Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: none; ValueName: "LIBTHAI_DICTDIR"; Flags: deletevalue uninsdeletevalue
+Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: none; ValueName: "LIBTHAI_DICTDIR"; Flags: deletevalue uninsdeletevalue noerror
+#include "associations.isi"
 
 [UninstallDelete]
 Type: files; Name: "{app}\uninst\uninst.inf"
@@ -584,6 +594,7 @@ procedure ComponentsListOnClick(pSender: TObject); forward;
 procedure SaveToUninstInf(const pText: AnsiString); forward;
 procedure CreateRunOnceEntry; forward;
 function RestartSetupAfterReboot(): Boolean; forward;
+procedure AssociationsCleanUp(); forward;
 
 const
 	CP_ACP = 0;
@@ -620,21 +631,6 @@ var
 	ReadyMemoRichText: String;
 
 	WelcomeBitmapBottom: TBitmapImage;
-
-	Associations: record
-		AssociationsPage: record
-			Page: TWizardPage;
-			clbAssociations: TNewCheckListBox;
-			lblAssocInfo2: TNewStaticText;
-		end;
-		Association: array of record
-			Description: String;
-			Extensions: TArrayOfString;
-			Selected: Boolean;
-			Associated: Boolean;
-			AssociatedElsewhere: String;
-		end;
-	end;
 
 	//pgSimple: TWizardPage;
 	btnInstall, btnCustomize: TNewButton;
@@ -761,9 +757,6 @@ begin
 	end;
 	DebugMsg('CheckExternalConf', pFile + ': ' + BoolToStr(Result));
 end;
-
-
-#include "associations.isi"
 
 
 procedure PreparePyGimp();
@@ -902,104 +895,11 @@ end;
 
 
 procedure InitCustomPages();
-var lblAssocInfo: TNewStaticText;
-	btnSelectAll,btnSelectUnused: TNewButton;
-	i,ButtonWidth: Integer;
+var	i,ButtonWidth: Integer;
 	ButtonText: TArrayOfString;
 	MeasureLabel: TNewStaticText;
 	//lblInfo: TNewStaticText;
 begin
-	DebugMsg('InitCustomPages','pgAssociations');
-	Associations.AssociationsPage.Page := CreateCustomPage(wpSelectComponents,CustomMessage('SelectAssociationsCaption'),CustomMessage('SelectAssociationsCaption'));
-
-	lblAssocInfo := TNewStaticText.Create(Associations.AssociationsPage.Page);
-	with lblAssocInfo do
-	begin
-		Parent := Associations.AssociationsPage.Page.Surface;
-		Left := 0;
-		Top := 0;
-		Width := Associations.AssociationsPage.Page.SurfaceWidth;
-		Height := ScaleY(13);
-		WordWrap := True;
-		AutoSize := True;
-		Caption := CustomMessage('SelectAssociationsInfo1')+#13+CustomMessage('SelectAssociationsInfo2')+#13;
-	end;	
-	Associations.AssociationsPage.lblAssocInfo2 := TNewStaticText.Create(Associations.AssociationsPage.Page);
-	with Associations.AssociationsPage.lblAssocInfo2 do
-	begin
-		Parent := Associations.AssociationsPage.Page.Surface;
-		Left := 0;
-		Width := Associations.AssociationsPage.Page.SurfaceWidth;
-		Height := 13;
-		AutoSize := True;
-		Caption := #13+CustomMessage('SelectAssociationsExtensions');
-	end;
-	
-	Associations.AssociationsPage.clbAssociations := TNewCheckListBox.Create(Associations.AssociationsPage.Page);
-	with Associations.AssociationsPage.clbAssociations do
-	begin
-		Parent := Associations.AssociationsPage.Page.Surface;
-		Left := 0;
-		Top := lblAssocInfo.Top + lblAssocInfo.Height;
-		Width := Associations.AssociationsPage.Page.SurfaceWidth;
-		Height := Associations.AssociationsPage.Page.SurfaceHeight - lblAssocInfo.Height - Associations.AssociationsPage.lblAssocInfo2.Height - ScaleX(8);
-		TabOrder := 1;
-		Flat := True;
-
-                // the box's height, minus the 2-pixel border, has to be a
-                // multiple of the item height, which has to be even, otherwise
-                // clicking the last visible item may scroll to the next item,
-                // causing it to be toggled.  see bug #786840.
-                MinItemHeight := ScaleY(16) / 2 * 2;
-                Height := (Height - 4) / MinItemHeight * MinItemHeight + 4;
-
-		Associations.AssociationsPage.lblAssocInfo2.Top := Height + Top;
-
-		OnClick := @Associations_OnClick;
-
-		for i := 0 to GetArrayLength(Associations.Association) - 1 do
-			AddCheckBox(Associations.Association[i].Description,
-			            '',
-			            0,
-			            Associations.Association[i].Selected,
-			            not Associations.Association[i].Associated, //don't allow unchecking associations that are already present
-			            False,
-			            False,
-			            nil
-			           );			
-
-	end;
-
-	SetArrayLength(ButtonText, 3);
-	ButtonText[0] := CustomMessage('SelectAssociationsSelectUnused');
-	ButtonText[1] := CustomMessage('SelectAssociationsSelectAll');
-	ButtonText[2] := CustomMessage('SelectAssociationsUnselectAll');
-	ButtonWidth := GetButtonWidth(ButtonText, WizardForm.NextButton.Width);
-
-	btnSelectUnused := TNewButton.Create(Associations.AssociationsPage.Page);
-	with btnSelectUnused do
-	begin
-		Parent := Associations.AssociationsPage.Page.Surface;
-		Width := ButtonWidth;
-		Left := Associations.AssociationsPage.Page.SurfaceWidth - Width * 2;
-		Height := WizardForm.NextButton.Height;
-		Top := Associations.AssociationsPage.clbAssociations.Top + Associations.AssociationsPage.clbAssociations.Height + ScaleX(8);
-		Caption := CustomMessage('SelectAssociationsSelectUnused');
-		OnClick := @Associations_SelectUnused;
-	end;
-
-	btnSelectAll := TNewButton.Create(Associations.AssociationsPage.Page);
-	with btnSelectAll do
-	begin
-		Parent := Associations.AssociationsPage.Page.Surface;
-		Width := ButtonWidth;
-		Left := Associations.AssociationsPage.Page.SurfaceWidth - Width;
-		Height := WizardForm.NextButton.Height;
-		Top := Associations.AssociationsPage.clbAssociations.Top + Associations.AssociationsPage.clbAssociations.Height + ScaleX(8);
-		Caption := CustomMessage('SelectAssociationsSelectAll');
-		OnClick := @Associations_SelectAll;
-	end;
-
 	DebugMsg('InitCustomPages','wpLicense');
 
 	btnInstall := TNewButton.Create(WizardForm);
@@ -1303,23 +1203,6 @@ begin
 		sText := sText + ParseReadyMemoText(pSpace,pMemoDirInfo) + '\sb100';
 	sText := sText + ParseReadyMemoText(pSpace,pMemoTypeInfo);
 	sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoComponentsInfo);
-
-	for i := 0 to GetArrayLength(Associations.Association) - 1 do
-		if Associations.Association[i].Selected then
-			bShowAssoc := True;
-
-	if bShowAssoc then
-	begin
-		sText := sText + '\sb100\b '+Unicode2RTF(CustomMessage('ReadyMemoAssociations'))+'\par \sb0\li284\b0 '; //which file types to associate
-
-		for i := 0 to GetArrayLength(Associations.Association) - 1 do							
-			if Associations.Association[i].Selected then
-				for j := 0 to GetArrayLength(Associations.Association[i].Extensions) - 1 do
-					sText := sText + LowerCase(Associations.Association[i].Extensions[j]) + ', ';
-					
-		sText := Copy(sText, 1, Length(sText) - 2) + '\par \pard';
-
-	end;
 
 	If pMemoTasksInfo<>'' then
 		sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoTasksInfo);
@@ -1635,13 +1518,12 @@ begin
 		ssInstall:
 		begin
 			RemoveDebugFiles();
+			AssociationsCleanup();
 		end;
 		ssPostInstall:
 		begin
-			Associations_Create();
 			PreparePyGimp();
 			PrepareGimpEnvironment();
-			//PrepareGimpRC();
 		end;
 	end;
 end;
@@ -1801,8 +1683,6 @@ begin
 		Result := False;
 		exit;
 	end;
-
-	Associations_Init();
 
 	//if InstallMode <> imRebootContinue then
 	//	SuppressibleMsgBox(CustomMessage('UninstallWarning'),mbError,MB_OK,IDOK);

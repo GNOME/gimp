@@ -1,318 +1,39 @@
-#if 0
-//for syntax highlighting
-[Code]
+[Registry]
+#pragma option -e-
+
+#define protected
+
+#define FileHandle
+#define FileLine
+
+#define Line=0
+
+#sub ProcessAssociation
+	#if !defined(Finished)
+		#if Copy(FileLine,1,1)=="#" || FileLine==""
+			//skip comments and empty lines
+		#else
+			#pragma message "Processing associations.list: " + FileLine
+;
+Root: HKA; Subkey: "Software\Classes\.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP2.{#FileLine}"; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\.{#FileLine}\OpenWithProgids"; ValueType: string; ValueName: "GIMP2.{#FileLine}"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}"; ValueType: string; ValueName: ""; ValueData: "GIMP {#ICON_VERSION}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe,1"
+Root: HKA; Subkey: "Software\Classes\GIMP2.{#FileLine}\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"" ""%1"""
+		#endif
+	#endif
+#endsub
+
+#for {FileHandle = FileOpen(AddBackslash(SourcePath)+"associations.list"); \
+  FileHandle && !FileEof(FileHandle); FileLine = FileRead(FileHandle)} \
+  ProcessAssociation
+#if FileHandle
+  #expr FileClose(FileHandle)
 #endif
+;special case for .ico files
+Root: HKA; Subkey: "Software\Classes\.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP2.ico"; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\.ico\OpenWithProgids"; ValueType: string; ValueName: "GIMP2.ico"; ValueData: ""; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\GIMP2.ico"; ValueType: string; ValueName: ""; ValueData: "GIMP {#ICON_VERSION}"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\GIMP2.ico\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "%1"
+Root: HKA; Subkey: "Software\Classes\GIMP2.ico\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe"" ""%1"""
 
-//Encode registry keys saved to uninst.inf
-function Encode(pText: String): String;
-begin
-	pText := Replace('%','%25', pText);
-	Result := Replace('\','%5c', pText);
-end;
-
-//reverse encoding done by Encode
-function Decode(pText: String): String;
-var p: Integer;
-	tmp: String;
-begin
-	if Pos('%',pText) = 0 then
-		Result := pText
-	else
-	begin		
-		Result := '';
-		while Length(pText) > 0 do
-		begin
-			p := Pos('%',pText);
-			if p = 0 then
-			begin
-				Result := Result + pText;
-				break;
-			end;
-			Result := Result + Copy(pText,1,p-1);
-			tmp := '$' + Copy(pText,p+1,2);
-			Result := Result + Chr(StrToIntDef(tmp,32));
-			pText := Copy(pText,p+3,Length(pText));
-		end;
-	end;
-end;
-
-
-function Associations_Write(const pSubKey,pValue,pData: String): Boolean;
-begin
-	Result := RegWriteStringValue(HKCR,pSubKey,pValue,pData)
-	SaveToUninstInf('RegVal:HKCR/'+pSubKey+'\'+Encode(pValue));
-end;
-
-
-function Associations_Read(const pSubKey,pValue: String; var pData: String): Boolean;
-begin
-	Result := RegQueryStringValue(HKCR,pSubKey,pValue,pData)
-end;
-
-
-procedure Association_Fix(const pKey: String);
-begin
-	if RegKeyExists(HKCR,pKey+'\shell\Open with GIMP') then
-	begin
-		if RegDeleteKeyIncludingSubkeys(HKCR,pKey+'\shell\Open with GIMP') then
-			DebugMsg('Association_Fix','Removed leftover Open with GIMP from ' + pKey)
-		else
-			DebugMsg('Association_Fix','Failed removing leftover Open with GIMP from ' + pKey)
-	end;
-end;
-
-
-procedure Associations_Create();
-var i,j: Integer;
-	sIconFile: String;
-begin
-
-	for i := 0 to GetArrayLength(Associations.Association) - 1 do
-	begin
-		for j := 0 to GetArrayLength(Associations.Association[i].Extensions) - 1 do
-		begin			
-
-			if Associations.Association[i].Selected then //user wants to use the GIMP as default program for this type of image
-			begin
-
-				DebugMsg('Create associations',Associations.Association[i].Extensions[j]);
-
-				StatusLabel(CustomMessage('SettingUpAssociations'), Associations.Association[i].Description + ' ('
-				            + Associations.Association[i].Extensions[j]+')');
-
-				SaveToUninstInf('RegKeyEmpty:HKCR/GIMP-{#ASSOC_VERSION}-'+
-				                Associations.Association[i].Extensions[0]);
-				SaveToUninstInf('RegKeyEmpty:HKCR/GIMP-{#ASSOC_VERSION}-'+
-				                Associations.Association[i].Extensions[0]+'\DefaultIcon');
-				SaveToUninstInf('RegKeyEmpty:HKCR/GIMP-{#ASSOC_VERSION}-'+
-				                Associations.Association[i].Extensions[0]+'\shell');
-				SaveToUninstInf('RegKeyEmpty:HKCR/GIMP-{#ASSOC_VERSION}-'+
-				                Associations.Association[i].Extensions[0]+'\shell\open');
-				SaveToUninstInf('RegKeyEmpty:HKCR/GIMP-{#ASSOC_VERSION}-'+
-				                Associations.Association[i].Extensions[0]+'\shell\open\command');
-				SaveToUninstInf('RegKeyEmpty:HKCR/.'+Associations.Association[i].Extensions[j]);
-
-				if not Associations_Write('GIMP-{#ASSOC_VERSION}-'+Associations.Association[i].Extensions[0],'',
-				                          Associations.Association[i].Description) then
-					continue; //something's very wrong in user's registry if any of these continues are called
-
-				if Associations.Association[i].Extensions[0] <> 'ico' then //special case for icons
-					sIconFile := ExpandConstant('{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe')+',1'
-				else
-					sIconFile := '%1';
-
-				if not Associations_Write('GIMP-{#ASSOC_VERSION}-'+Associations.Association[i].Extensions[0]+'\DefaultIcon',
-				                          '',sIconFile) then
-					continue;
-
-				if not Associations_Write('GIMP-{#ASSOC_VERSION}-'+Associations.Association[i].Extensions[0]+'\shell\open\command',
-							  '','"'+ExpandConstant('{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe')+'" "%1"') then
-					continue;
-
-				if not Associations_Write('.'+Associations.Association[i].Extensions[j],'',
-				                          'GIMP-{#ASSOC_VERSION}-'+Associations.Association[i].Extensions[0]) then
-					continue;
-
-			end else //add "Open with GIMP" to another program's association
-			begin
-
-				if Associations.Association[i].AssociatedElsewhere <> '' then
-				begin
-
-					DebugMsg('Adding Open with GIMP',Associations.Association[i].Extensions[j]);
-
-					SaveToUninstInf('RegKey:HKCR/'+Associations.Association[i].AssociatedElsewhere+
-					                '\shell\'+CustomMessage('OpenWithGIMP'));
-
-					if not Associations_Write(Associations.Association[i].AssociatedElsewhere+'\shell\'+
-					                          CustomMessage('OpenWithGIMP'),
-					                          '',CustomMessage('OpenWithGimp')) then
-						continue;
-
-					if not Associations_Write(Associations.Association[i].AssociatedElsewhere+'\shell\'+
-					                          CustomMessage('OpenWithGIMP')+'\command','',
-					                          '"'+ExpandConstant('{app}\bin\gimp-{#MAJOR}.{#MINOR}.exe')+'" "%1"') then
-						continue;
-				end else
-				begin
-					DebugMsg('Skipping association',Associations.Association[i].Extensions[j]);
-					//TODO: decide what to do here (user doesn't want to associate file type with GIMP, and there's no existing assoc.)
-				end;
-
-			end;
-
-		end;
-	end;
-end;
-
-
-procedure Associations_Init();
-var i,j,c,d,iNumAssoc: Integer;
-	sAssociation,sExt,sCheck: String;
-	CmdLineAssoc: TArrayOfString;
-	CmdLine: String;
-begin
-	iNumAssoc := 0;
-	while IniKeyExists('File Associations', IntToStr(iNumAssoc + 1), SetupINI) do
-		iNumAssoc := iNumAssoc + 1;
-
-	DebugMsg('Associations_Init','Found ' + IntToStr(iNumAssoc) + ' associations');
-
-	SetArrayLength(Associations.Association,iNumAssoc);
-
-	CmdLine := ExpandConstant('{param:assoc|}');
-	if CmdLine <> '' then
-	begin
-		DebugMsg('Associations_Init','Associations requested through command-line: ' + CmdLine);
-		Explode(CmdLineAssoc,LowerCase(CmdLine),',');
-	end;
-	
-	for i := 1 to iNumAssoc do
-	begin
-		sAssociation := GetIniString('File Associations',IntToStr(i),'',SetupINI);
-
-		DebugMsg('Associations Init',sAssociation);
-		
-		d := Pos(':',sAssociation);
-		if d = 0 then
-		begin
-			DebugMsg('InitAssociations',': not found');
-			MsgBox(FmtMessage(CustomMessage('InternalError'),['10']),mbError,MB_OK);
-			exit;
-		end;
-
-		Associations.Association[i-1].Description := Copy(sAssociation,1,d-1); //split description
-		sAssociation := Copy(sAssociation,d+1,Length(sAssociation));
-
-		Explode(Associations.Association[i-1].Extensions, LowerCase(sAssociation), ':'); //split extensions
-
-		Associations.Association[i-1].Associated := False; //initialize structure (not sure if needed, but better safe than sorry)
-		Associations.Association[i-1].Selected := False;
-		Associations.Association[i-1].AssociatedElsewhere := '';
-
-		for j := 0 to GetArrayLength(Associations.Association[i - 1].Extensions) - 1 do
-		begin
-			sExt := LowerCase(Associations.Association[i-1].Extensions[j]);
-
-			for c := 0 to GetArrayLength(CmdLineAssoc) - 1 do //association requested through command line
-				if CmdLineAssoc[c] = sExt then
-					Associations.Association[i-1].Selected := True;
-	
-			sCheck := '';
-			if Associations_Read('.'+sExt,'',sCheck) then //check if anything else claims this association
-			begin
-				if (Pos('GIMP-{#ASSOC_VERSION}',sCheck) = 1) //already associated by this version of GIMP
-				   or (Pos('GIMP-2.0',sCheck) = 1) //associated by previous GIMP version
-				   then 
-				begin
-					Associations.Association[i-1].Associated := True;
-					Associations.Association[i-1].Selected := True;
-					DebugMsg('InitAssociations','Associated in registry:'+Associations.Association[i-1].Extensions[0]);
-				end else
-				begin                                      //associated by something else
-					if RegKeyExists(HKCR,sCheck) or RegKeyExists(HKCU,'SOFTWARE\Classes\'+sCheck) then //ensure that "something else"
-					begin                                                                              //still actually exists
-						Associations.Association[i-1].AssociatedElsewhere := sCheck;
-						Association_Fix(sCheck);  //clean up after old broken installers
-					end;
-				end;
-			end else
-			begin
-			
-				if Pos('GIMP',Associations.Association[i-1].Description) > 0 then
-					Associations.Association[i-1].Selected := True; //select GIMP's types by default if it's not associated by anything yet
-
-			end;
-		end;
-	end;
-end;
-
-
-procedure Associations_OnClick(Sender: TObject);
-var i,j: Integer;
-	ext: String;
-begin
-	DebugMsg('Associations_OnClick','');
-
-	for i := 0 to GetArrayLength(Associations.Association) - 1 do
-	begin
-		if TNewCheckListbox(Sender).Selected[i] then
-		begin
-			ext := '';
-			for j := 0 to GetArrayLength(Associations.Association[i].Extensions) - 1 do
-				ext := ext + LowerCase(Associations.Association[i].Extensions[j]) + ', ';
-			ext := Copy(ext, 1, Length(ext) - 2);
-			
-			Associations.AssociationsPage.lblAssocInfo2.Caption := #13+CustomMessage('SelectAssociationsExtensions')+' ' + ext;
-
-		end;
-		if TNewCheckListbox(Sender).Checked[i] then
-			Associations.Association[i].Selected := True
-		else
-			Associations.Association[i].Selected := False;
-	end;
-end;
-
-
-procedure Associations_SelectAll(Sender: TObject);
-var i: Integer;
-	SelAll, UnSelAll: String;
-begin
-
-	SelAll := CustomMessage('SelectAssociationsSelectAll')
-	UnselAll := CustomMessage('SelectAssociationsUnselectAll');
-
-	if TNewButton(Sender).Caption = SelAll then
-	begin
-	
-		for i := 0 to GetArrayLength(Associations.Association) - 1 do
-			Associations.AssociationsPage.clbAssociations.Checked[i] := True;
-
-		TNewButton(Sender).Caption := UnselAll;
-
-	end else
-	begin
-
-		for i := 0 to GetArrayLength(Associations.Association) - 1 do
-			if Associations.Association[i].Associated = False then //don't uncheck associations that are already active
-				Associations.AssociationsPage.clbAssociations.Checked[i] := False;
-
-		TNewButton(Sender).Caption := SelAll;
-
-	end;
-
-	Associations_OnClick(Associations.AssociationsPage.clbAssociations);
-
-end;
-
-
-procedure Associations_SelectUnused(Sender: TObject);
-var i: Integer;
-begin
-
-	for i := 0 to GetArrayLength(Associations.Association) - 1 do
-		if Associations.Association[i].AssociatedElsewhere = '' then
-			Associations.AssociationsPage.clbAssociations.Checked[i] := True;
-
-	Associations_OnClick(Associations.AssociationsPage.clbAssociations);
-
-end;
-
-
-function Associations_GetSelected(): String;
-var Selected: String;
-	i: Integer;
-begin
-
-	Selected := '';
-
-	for i := 0 to GetArrayLength(Associations.Association) - 1 do
-		if Associations.Association[i].Selected then
-			if Selected = '' then
-				Selected := Associations.Association[i].Extensions[0]
-			else
-				Selected := Selected + ',' + Associations.Association[i].Extensions[0];
-
-	Result := Selected;
-
-end;

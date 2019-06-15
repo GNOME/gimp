@@ -223,7 +223,7 @@ begin
 	begin
 		Left := ScaleX(MWU_LEFTBORDER);
 		Top := ScaleY(MWU_TOPBORDER);
-		Center := False;
+		Center := False; //!!! Inno6
 		Stretch := False;
 		AutoSize := True;
 		Bitmap.Width := GetSystemMetrics(SM_CXICON);
@@ -488,7 +488,7 @@ begin
 
 	Message_SetUpButtons(Button, ButtonText, ButtonWidth, DefaultButton, CancelButton, MessageForm);
 
-	MessageForm.Center;
+	//MessageForm.Center; //!!! Inno6
 
 	MessageForm.OnKeyUp := @Message_KeyUp; //needed for keyboard access of URL labels
 	MessageForm.KeyPreView := True;

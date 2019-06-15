@@ -146,3 +146,32 @@ begin
 	WizardForm.FilenameLabel.Caption := Status2;
 	WizardForm.Refresh();
 end;
+
+
+//reverse encoding done by Encode
+function Decode(pText: String): String;
+var p: Integer;
+	tmp: String;
+begin
+	if Pos('%',pText) = 0 then
+		Result := pText
+	else
+	begin		
+		Result := '';
+		while Length(pText) > 0 do
+		begin
+			p := Pos('%',pText);
+			if p = 0 then
+			begin
+				Result := Result + pText;
+				break;
+			end;
+			Result := Result + Copy(pText,1,p-1);
+			tmp := '$' + Copy(pText,p+1,2);
+			Result := Result + Chr(StrToIntDef(tmp,32));
+			pText := Copy(pText,p+3,Length(pText));
+		end;
+	end;
+end;
+
+
