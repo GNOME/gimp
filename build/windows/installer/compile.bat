@@ -12,7 +12,7 @@ set DEPS32=%~6
 set DEPS64=%~7
 
 if [%INNOPATH%]==[] (
-FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 5_is1" /v "Inno Setup: App Path" /reg:32`) DO set INNOPATH=%%B
+FOR /F "usebackq tokens=5,* skip=2" %%A IN (`REG QUERY "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Inno Setup 6_is1" /v "Inno Setup: App Path" /reg:32`) DO set INNOPATH=%%B
 )
 if not exist "%INNOPATH%\iscc.exe" goto noinno
 
@@ -32,7 +32,7 @@ shift
 goto doparams
 :paramsdone
 
-"%INNOPATH%\iscc.exe" -DVERSION="%VER%" -DGIMP_DIR="%GIMP_BASE%" -DDIR32="%GIMP32%" -DDIR64="%GIMP64%" -DDEPS_DIR="%DEPS_BASE%" -DDDIR32="%DEPS32%" -DDDIR64="%DEPS64%" %PARAMS% gimp3264.iss
+"%INNOPATH%\iscc.exe" -DVERSION="%VER%" -DGIMP_DIR="%GIMP_BASE%" -DDIR32="%GIMP32%" -DDIR64="%GIMP64%" -DDEPS_DIR="%DEPS_BASE%" -DDDIR32="%DEPS32%" -DDDIR64="%DEPS64%" %PARAMS% gimp3264_6.iss
 goto :eof
 
 :help

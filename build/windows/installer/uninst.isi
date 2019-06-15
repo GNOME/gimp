@@ -219,6 +219,10 @@ uninst.inf documentation:
 
 Directives are parsed from the end of the file backwards as the first step of uninstall.
 
+IMPORTANT: From GIMP 2.10.12 onwards (Inno Setup 6 with support for per-user install), Registry keys referring to HKCR will be
+processed by the installer as the first step of install (and the entries will be removed from uninst.inf), since file associations
+code was rewritten.
+
 *)
 procedure ParseUninstInf();
 var i,d: Integer;
@@ -267,3 +271,65 @@ begin
 	end;
 end;
 
+
+procedure AssociationsCleanUp();
+var i, d, countNew,countUI: Integer;
+	asTemp, asNew: TArrayOfString;
+	sKey,sVal: String;
+	iRootKey: Integer;
+begin
+	if FileExists(ExpandConstant('{app}\uninst\uninst.inf')) then
+	begin
+		DebugMsg('AssociationsCleanUp','Parsing old uninst.inf');
+		LoadStringsFromFile(ExpandConstant('{app}\uninst\uninst.inf'),asTemp);
+
+		countNew := 0;
+		countUI := 0;
+		SetArrayLength(asNew, GetArrayLength(asTemp));
+		SetArrayLength(asUninstInf, GetArrayLength(asTemp));
+
+		for i := 0 to GetArrayLength(asTemp) - 1 do //extract associations-related entries from uninst.inf
+		begin
+
+			if (Length(asTemp[i]) = 0) or (asTemp[i][1] = '#') then //comment/empty line
+			begin
+				asNew[countNew] := asTemp[i];
+				Inc(countNew);
+				continue;
+			end;
+
+			d := Pos(':',asTemp[i]);
+			if d = 0 then //something wrong, ignore
+				continue;
+
+			if Copy(asTemp[i],1,3) = 'Reg' then
+			begin
+
+				sVal := 'nil';
+				if not SplitRegParams(Copy(asTemp[i], d + 1, Length(asTemp[i])),iRootKey,sKey,sVal) then
+					continue; //malformed line, ignore
+
+				if iRootKey = HKCR then //old association, prepare for cleanup
+				begin
+					DebugMsg('AssociationsCleanUp','Preparing for cleanup: '+asTemp[i]);
+					asUninstInf[countUI] := asTemp[i];
+					Inc(countUI);
+					continue;
+				end;
+				
+			end;
+
+			//something else, keep for new uninst.inf
+			asNew[countNew] := asTemp[i];
+			Inc(countNew);
+
+		end;
+
+		SetArrayLength(asNew, countNew);
+		SetArrayLength(asUninstInf, countUI);
+
+		SaveStringsToUTF8File(ExpandConstant('{app}\uninst\uninst.inf'), asNew, False); //replace uninst.inf with a cleaned one
+		
+		ParseUninstInf(); //remove old associations
+	end;
+end;

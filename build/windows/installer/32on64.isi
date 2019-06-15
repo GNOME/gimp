@@ -1,7 +1,7 @@
 #if 0
 [Files]
 #endif
-//process list of 32bit GIMP files that are installed on x64 (for TWAIN and Python support)
+//process list of 32bit GIMP files that are installed on x64 (for TWAIN support)
 #pragma option -e-
 
 #define protected
@@ -19,11 +19,11 @@
 #sub DoActualWork
 	#if Copy(FileLine,Len(FileLine),1)=="\"
 		//include whole directory
-Source: "{#SRC_DIR}\{#FileLine}*"; DestDir: "{app}\32\{#Copy(FileLine,1,Len(FileLine)-1)}"; Components: gimp32on64; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete
+Source: "{#SRC_DIR}\{#FileLine}*"; DestDir: "{app}\32\{#Copy(FileLine,1,Len(FileLine)-1)}"; Components: gimp32on64; Flags: recursesubdirs restartreplace replacesameversion uninsrestartdelete ignoreversion
 	#else
 		//include files from a certain directory
 		#define OutputDir Copy(FileLine,1,RPos("\",FileLine)-1)
-Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: gimp32on64; Flags: restartreplace replacesameversion uninsrestartdelete
+Source: "{#SRC_DIR}\{#FileLine}"; DestDir: "{app}\32\{#OutputDir}"; Components: gimp32on64; Flags: restartreplace replacesameversion uninsrestartdelete ignoreversion
 	#endif
 #endsub
 
