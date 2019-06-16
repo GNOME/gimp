@@ -184,6 +184,7 @@ static gboolean   gimp_channel_real_is_empty (GimpChannel         *channel);
 static void       gimp_channel_real_feather  (GimpChannel         *channel,
                                               gdouble              radius_x,
                                               gdouble              radius_y,
+                                              gboolean             edge_lock,
                                               gboolean             push_undo);
 static void       gimp_channel_real_sharpen  (GimpChannel         *channel,
                                               gboolean             push_undo);
@@ -1174,6 +1175,7 @@ static void
 gimp_channel_real_feather (GimpChannel *channel,
                            gdouble      radius_x,
                            gdouble      radius_y,
+                           gboolean     edge_lock,
                            gboolean     push_undo)
 {
   gint x1, y1, x2, y2;
@@ -1205,7 +1207,8 @@ gimp_channel_real_feather (GimpChannel *channel,
                            gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                            GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
                            radius_x,
-                           radius_y);
+                           radius_y,
+                           edge_lock);
 
   gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
@@ -1887,6 +1890,7 @@ void
 gimp_channel_feather (GimpChannel *channel,
                       gdouble      radius_x,
                       gdouble      radius_y,
+                      gboolean     edge_lock,
                       gboolean     push_undo)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
@@ -1895,7 +1899,7 @@ gimp_channel_feather (GimpChannel *channel,
     push_undo = FALSE;
 
   GIMP_CHANNEL_GET_CLASS (channel)->feather (channel, radius_x, radius_y,
-                                             push_undo);
+                                             edge_lock, push_undo);
 }
 
 void

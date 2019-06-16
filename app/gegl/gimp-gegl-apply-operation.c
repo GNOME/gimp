@@ -360,11 +360,19 @@ gimp_gegl_apply_feather (GeglBuffer          *src_buffer,
                          GeglBuffer          *dest_buffer,
                          const GeglRectangle *dest_rect,
                          gdouble              radius_x,
-                         gdouble              radius_y)
+                         gdouble              radius_y,
+                         gboolean             edge_lock)
 {
+  GaussianBlurAbyssPolicy abyss_policy;
+
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  if (edge_lock)
+    abyss_policy = GAUSSIAN_BLUR_ABYSS_CLAMP;
+  else
+    abyss_policy = GAUSSIAN_BLUR_ABYSS_NONE;
 
   /* 3.5 is completely magic and picked to visually match the old
    * gaussian_blur_region() on a crappy laptop display
@@ -373,7 +381,8 @@ gimp_gegl_apply_feather (GeglBuffer          *src_buffer,
                                  progress, undo_desc,
                                  dest_buffer, dest_rect,
                                  radius_x / 3.5,
-                                 radius_y / 3.5);
+                                 radius_y / 3.5,
+                                 abyss_policy);
 }
 
 void
@@ -544,13 +553,14 @@ gimp_gegl_apply_flood (GeglBuffer          *src_buffer,
 }
 
 void
-gimp_gegl_apply_gaussian_blur (GeglBuffer          *src_buffer,
-                               GimpProgress        *progress,
-                               const gchar         *undo_desc,
-                               GeglBuffer          *dest_buffer,
-                               const GeglRectangle *dest_rect,
-                               gdouble              std_dev_x,
-                               gdouble              std_dev_y)
+gimp_gegl_apply_gaussian_blur (GeglBuffer              *src_buffer,
+                               GimpProgress            *progress,
+                               const gchar             *undo_desc,
+                               GeglBuffer              *dest_buffer,
+                               const GeglRectangle     *dest_rect,
+                               gdouble                  std_dev_x,
+                               gdouble                  std_dev_y,
+                               GaussianBlurAbyssPolicy  abyss_policy)
 {
   GeglNode *node;
 
@@ -559,9 +569,10 @@ gimp_gegl_apply_gaussian_blur (GeglBuffer          *src_buffer,
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
   node = gegl_node_new_child (NULL,
-                              "operation", "gegl:gaussian-blur",
-                              "std-dev-x", std_dev_x,
-                              "std-dev-y", std_dev_y,
+                              "operation",    "gegl:gaussian-blur",
+                              "std-dev-x",    std_dev_x,
+                              "std-dev-y",    std_dev_y,
+                              "abyss-policy", abyss_policy,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,

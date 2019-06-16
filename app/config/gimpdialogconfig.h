@@ -96,6 +96,7 @@ struct _GimpDialogConfig
   gboolean                  vectors_import_scale;
 
   gdouble                   selection_feather_radius;
+  gboolean                  selection_feather_edge_lock;
 
   gdouble                   selection_grow_radius;
 
