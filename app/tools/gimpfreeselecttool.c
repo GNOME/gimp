@@ -125,7 +125,8 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 static void
 gimp_free_select_tool_init (GimpFreeSelectTool *free_sel)
 {
-  GimpTool *tool = GIMP_TOOL (free_sel);
+  GimpTool          *tool     = GIMP_TOOL (free_sel);
+  GimpSelectionTool *sel_tool = GIMP_SELECTION_TOOL (tool);
 
   free_sel->priv = gimp_free_select_tool_get_instance_private (free_sel);
 
@@ -136,6 +137,8 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_sel)
                                       GIMP_TOOL_ACTION_COMMIT);
   gimp_tool_control_set_tool_cursor  (tool->control,
                                       GIMP_TOOL_CURSOR_FREE_SELECT);
+
+  sel_tool->allow_move = TRUE;
 }
 
 static void
@@ -176,6 +179,13 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
   GimpPolygonSelectTool     *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv     = free_sel->priv;
 
+  if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (poly_sel),
+                                      display, coords))
+    {
+      if (display)
+        gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+      return;
+    }
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
                                                 press_type, display);
 
