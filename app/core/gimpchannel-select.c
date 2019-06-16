@@ -82,7 +82,8 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
 
       gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                                feather_radius_x,
-                               feather_radius_y);
+                               feather_radius_y,
+                               TRUE);
 
       gimp_channel_combine_buffer (channel, add_on, op, 0, 0);
       g_object_unref (add_on);
@@ -130,7 +131,8 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
 
       gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                                feather_radius_x,
-                               feather_radius_y);
+                               feather_radius_y,
+                               TRUE);
 
       gimp_channel_combine_buffer (channel, add_on, op, 0, 0);
       g_object_unref (add_on);
@@ -182,7 +184,8 @@ gimp_channel_select_round_rect (GimpChannel         *channel,
 
       gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                                feather_radius_x,
-                               feather_radius_y);
+                               feather_radius_y,
+                               TRUE);
 
       gimp_channel_combine_buffer (channel, add_on, op, 0, 0);
       g_object_unref (add_on);
@@ -234,7 +237,8 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
   if (feather)
     gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                              feather_radius_x,
-                             feather_radius_y);
+                             feather_radius_y,
+                             TRUE);
 
   gimp_channel_combine_buffer (channel, add_on, op, 0, 0);
   g_object_unref (add_on);
@@ -343,7 +347,8 @@ gimp_channel_select_buffer (GimpChannel    *channel,
 
       gimp_gegl_apply_feather (add_on2, NULL, NULL, add_on2, NULL,
                                feather_radius_x,
-                               feather_radius_y);
+                               feather_radius_y,
+                               TRUE);
 
       gimp_channel_combine_buffer (channel, add_on2, op, 0, 0);
       g_object_unref (add_on2);
@@ -446,6 +451,7 @@ gimp_channel_select_component (GimpChannel     *channel,
     gimp_channel_feather (add_on,
                           feather_radius_x,
                           feather_radius_y,
+                          TRUE,
                           FALSE /* no undo */);
 
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,

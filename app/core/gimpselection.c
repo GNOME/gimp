@@ -113,6 +113,7 @@ static gboolean   gimp_selection_is_empty      (GimpChannel         *channel);
 static void       gimp_selection_feather       (GimpChannel         *channel,
                                                 gdouble              radius_x,
                                                 gdouble              radius_y,
+                                                gboolean             edge_lock,
                                                 gboolean             push_undo);
 static void       gimp_selection_sharpen       (GimpChannel         *channel,
                                                 gboolean             push_undo);
@@ -507,10 +508,11 @@ static void
 gimp_selection_feather (GimpChannel *channel,
                         gdouble      radius_x,
                         gdouble      radius_y,
+                        gboolean     edge_lock,
                         gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->feather (channel, radius_x, radius_y,
-                                              push_undo);
+                                              edge_lock, push_undo);
 }
 
 static void
