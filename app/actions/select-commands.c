@@ -170,7 +170,7 @@ select_feather_cmd_callback (GtkAction *action,
       button = gtk_check_button_new_with_mnemonic (_("_Selected areas continue outside the image"));
       g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
       gimp_help_set_help_data (button,
-                               _("When feathering, act as if selected areas"
+                               _("When feathering, act as if selected areas "
                                  "continued outside the image."),
                                NULL);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
