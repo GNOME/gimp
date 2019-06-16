@@ -464,7 +464,8 @@ gimp_create_mainimage (Gimp     *gimp,
                                 GIMP_PARASITE_PERSISTENT,
                                 GIMP_MAINIMAGE_PARASITE_SIZE,
                                 GIMP_MAINIMAGE_PARASITE_DATA);
-  gimp_image_parasite_attach (image, parasite, FALSE);
+  gimp_image_parasite_attach (image,
+                              parasite, FALSE);
   gimp_parasite_free (parasite);
   parasite = gimp_parasite_new ("gimp-comment",
                                 GIMP_PARASITE_PERSISTENT,
