@@ -614,6 +614,8 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
       {
         GimpTranslateMode edit_mode;
 
+        gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+
         if (sel_tool->function == SELECTION_MOVE)
           edit_mode = GIMP_TRANSLATE_MODE_MASK_TO_LAYER;
         else

@@ -181,11 +181,8 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
 
   if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (poly_sel),
                                       display, coords))
-    {
-      if (display)
-        gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-      return;
-    }
+    return;
+
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
                                                 press_type, display);
 
