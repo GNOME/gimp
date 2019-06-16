@@ -468,7 +468,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
        * want to actually touch it, but only the intermediate results).
        */
       gimp_gegl_apply_feather (buffer, NULL, NULL, buffer, NULL,
-                               feather_radius, feather_radius);
+                               feather_radius, feather_radius, TRUE);
     }
 
   if (mask_x)
