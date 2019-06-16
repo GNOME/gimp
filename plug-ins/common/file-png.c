@@ -1087,6 +1087,31 @@ load_image (const gchar  *filename,
     }
 
   /*
+   * Attach the color profile, if any
+   */
+
+  if (profile)
+    {
+      gimp_image_set_color_profile (image, profile);
+      g_object_unref (profile);
+
+      if (profile_name)
+        {
+          GimpParasite *parasite;
+
+          parasite = gimp_parasite_new ("icc-profile-name",
+                                        GIMP_PARASITE_PERSISTENT |
+                                        GIMP_PARASITE_UNDOABLE,
+                                        strlen (profile_name),
+                                        profile_name);
+          gimp_image_attach_parasite (image, parasite);
+          gimp_parasite_free (parasite);
+
+          g_free (profile_name);
+        }
+    }
+
+  /*
    * Create the "background" layer to hold the image...
    */
 
@@ -1307,31 +1332,6 @@ load_image (const gchar  *filename,
         }
 
       g_free (comment);
-    }
-
-  /*
-   * Attach the color profile, if any
-   */
-
-  if (profile)
-    {
-      gimp_image_set_color_profile (image, profile);
-      g_object_unref (profile);
-
-      if (profile_name)
-        {
-          GimpParasite *parasite;
-
-          parasite = gimp_parasite_new ("icc-profile-name",
-                                        GIMP_PARASITE_PERSISTENT |
-                                        GIMP_PARASITE_UNDOABLE,
-                                        strlen (profile_name),
-                                        profile_name);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
-
-          g_free (profile_name);
-        }
     }
 
   /*
@@ -1736,7 +1736,7 @@ save_image (const gchar  *filename,
   else
     {
       switch (pngvals.export_format)
-      {
+        {
         case PNG_FORMAT_RGB8:
           color_type = PNG_COLOR_TYPE_RGB;
           if (out_linear)
@@ -1805,6 +1805,10 @@ save_image (const gchar  *filename,
           g_return_val_if_reached (FALSE);
       }
     }
+
+  if (! babl_format_is_palette (file_format))
+    file_format = babl_format_with_space (babl_format_get_encoding (file_format),
+                                          gimp_drawable_get_format (drawable_ID));
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
