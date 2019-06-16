@@ -337,8 +337,9 @@ selection_feather_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      /* FIXME: "edge-lock" hardcoded to  TRUE */
       gimp_channel_feather (gimp_image_get_mask (image),
-                            radius, radius, TRUE);
+                            radius, radius, TRUE, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

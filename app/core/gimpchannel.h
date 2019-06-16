@@ -77,6 +77,7 @@ struct _GimpChannelClass
   void     (* feather)       (GimpChannel             *channel,
                               gdouble                  radius_x,
                               gdouble                  radius_y,
+                              gboolean                 edge_lock,
                               gboolean                 push_undo);
   void     (* sharpen)       (GimpChannel             *channel,
                               gboolean                 push_undo);
@@ -180,6 +181,7 @@ gboolean      gimp_channel_is_empty           (GimpChannel            *mask);
 void          gimp_channel_feather            (GimpChannel            *mask,
                                                gdouble                 radius_x,
                                                gdouble                 radius_y,
+                                               gboolean                edge_lock,
                                                gboolean                push_undo);
 void          gimp_channel_sharpen            (GimpChannel            *mask,
                                                gboolean                push_undo);

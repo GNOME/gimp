@@ -332,8 +332,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
+  /* FIXME: "edge-lock" hardcoded to  TRUE */
   gimp_channel_feather (gimp_image_get_mask (image),
-                        radius, radius, TRUE);
+                        radius, radius, TRUE, TRUE);
 }
 CODE
     );

@@ -2388,6 +2388,10 @@ prefs_dialog_new (Gimp       *gimp,
                          _("Feather radius:"),
                          GTK_GRID (grid), 0, size_group);
 
+  prefs_check_button_add (object, "selection-feather-edge-lock",
+                          _("Selected areas continue outside the image"),
+                          GTK_BOX (vbox2));
+
   /*  Grow Selection Dialog  */
   vbox2 = prefs_frame_new (_("Grow Selection Dialog"),
                            GTK_CONTAINER (vbox), FALSE);
