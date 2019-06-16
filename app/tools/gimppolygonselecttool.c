@@ -145,7 +145,8 @@ gimp_polygon_select_tool_class_init (GimpPolygonSelectToolClass *klass)
 static void
 gimp_polygon_select_tool_init (GimpPolygonSelectTool *poly_sel)
 {
-  GimpTool *tool = GIMP_TOOL (poly_sel);
+  GimpTool          *tool     = GIMP_TOOL (poly_sel);
+  GimpSelectionTool *sel_tool = GIMP_SELECTION_TOOL (tool);
 
   poly_sel->priv = gimp_polygon_select_tool_get_instance_private (poly_sel);
 
@@ -157,6 +158,8 @@ gimp_polygon_select_tool_init (GimpPolygonSelectTool *poly_sel)
                                             GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
   gimp_tool_control_set_precision          (tool->control,
                                             GIMP_CURSOR_PRECISION_SUBPIXEL);
+
+  sel_tool->allow_move = FALSE;
 }
 
 static void
@@ -204,17 +207,13 @@ gimp_polygon_select_tool_oper_update (GimpTool         *tool,
   GimpPolygonSelectTool        *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
   GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
 
-  if (display != tool->display)
-    {
-      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
-                                                   proximity, display);
-      return;
-    }
-
-  if (priv->widget)
+  if (priv->widget && display == tool->display)
     {
       gimp_tool_widget_hover (priv->widget, coords, state, proximity);
     }
+
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               display);
 }
 
 static void
@@ -227,23 +226,22 @@ gimp_polygon_select_tool_cursor_update (GimpTool         *tool,
   GimpPolygonSelectToolPrivate *priv     = poly_sel->priv;
   GimpCursorModifier            modifier = GIMP_CURSOR_MODIFIER_NONE;
 
-  if (tool->display == NULL)
+  if (tool->display)
     {
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
-                                                     display);
-      return;
+      if (priv->widget && display == tool->display)
+        {
+          gimp_tool_widget_get_cursor (priv->widget, coords, state,
+                                       NULL, NULL, &modifier);
+        }
+
+      gimp_tool_set_cursor (tool, display,
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            modifier);
     }
 
-  if (priv->widget && display == tool->display)
-    {
-      gimp_tool_widget_get_cursor (priv->widget, coords, state,
-                                   NULL, NULL, &modifier);
-    }
-
-  gimp_tool_set_cursor (tool, display,
-                        gimp_tool_control_get_cursor (tool->control),
-                        gimp_tool_control_get_tool_cursor (tool->control),
-                        modifier);
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+                                                 display);
 }
 
 static void
