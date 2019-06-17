@@ -52,6 +52,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "file-tiff-io.h"
 #include "file-tiff-load.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -76,39 +77,51 @@ typedef struct
   guchar     *pixel;
 } ChannelData;
 
+typedef enum
+{
+  GIMP_TIFF_LOAD_ASSOCALPHA,
+  GIMP_TIFF_LOAD_UNASSALPHA,
+  GIMP_TIFF_LOAD_CHANNEL
+} DefaultExtra;
 
 /* Declare some local functions */
 
-static GimpColorProfile * load_profile     (TIFF         *tif);
+static GimpColorProfile * load_profile     (TIFF              *tif);
 
-static void               load_rgba        (TIFF         *tif,
-                                            ChannelData  *channel);
-static void               load_contiguous  (TIFF         *tif,
-                                            ChannelData  *channel,
-                                            const Babl   *type,
-                                            gushort       bps,
-                                            gushort       spp,
-                                            gboolean      is_bw,
-                                            gint          extra);
-static void               load_separate    (TIFF         *tif,
-                                            ChannelData  *channel,
-                                            const Babl   *type,
-                                            gushort       bps,
-                                            gushort       spp,
-                                            gboolean      is_bw,
-                                            gint          extra);
-static void               load_paths       (TIFF         *tif,
-                                            gint          image,
-                                            gint          width,
-                                            gint          height,
-                                            gint          offset_x,
-                                            gint          offset_y);
+static void               load_rgba        (TIFF              *tif,
+                                            ChannelData       *channel);
+static void               load_contiguous  (TIFF              *tif,
+                                            ChannelData       *channel,
+                                            const Babl        *type,
+                                            gushort            bps,
+                                            gushort            spp,
+                                            gboolean           is_bw,
+                                            gint               extra);
+static void               load_separate    (TIFF              *tif,
+                                            ChannelData       *channel,
+                                            const Babl        *type,
+                                            gushort            bps,
+                                            gushort            spp,
+                                            gboolean           is_bw,
+                                            gint               extra);
+static void               load_paths       (TIFF              *tif,
+                                            gint               image,
+                                            gint               width,
+                                            gint               height,
+                                            gint               offset_x,
+                                            gint               offset_y);
 
 static void               fill_bit2byte    (void);
-static void               convert_bit2byte (const guchar *src,
-                                            guchar       *dest,
-                                            gint          width,
-                                            gint          height);
+static void               convert_bit2byte (const guchar      *src,
+                                            guchar            *dest,
+                                            gint               width,
+                                            gint               height);
+
+static gboolean           load_dialog      (TIFF              *tif,
+                                            const gchar       *help_id,
+                                            TiffSelectedPages *pages,
+                                            const gchar       *extra_message,
+                                            DefaultExtra      *default_extra);
 
 
 static TiffSaveVals tsvals =
@@ -133,127 +146,158 @@ tiff_get_page_name (TIFF *tif)
   return NULL;
 }
 
-gboolean
-load_dialog (TIFF              *tif,
-             const gchar       *help_id,
-             TiffSelectedPages *pages)
+GimpPDBStatusType
+load_image (GFile        *file,
+            GimpRunMode   run_mode,
+            gint32       *image,
+            gboolean     *resolution_loaded,
+            GError      **error)
 {
-  GtkWidget  *dialog;
-  GtkWidget  *vbox;
-  GtkWidget  *selector;
-  GtkWidget  *crop_option;
-  gint        i;
-  gboolean    run;
+  TIFF              *tif;
+  TiffSelectedPages  pages;
 
-  dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, help_id,
+  GList             *images_list      = NULL;
+  DefaultExtra       default_extra    = GIMP_TIFF_LOAD_UNASSALPHA;
+  gint               first_image_type = GIMP_RGB;
+  gint               min_row          = G_MAXINT;
+  gint               min_col          = G_MAXINT;
+  gint               max_row          = 0;
+  gint               max_col          = 0;
+  gint               li;
 
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Import"), GTK_RESPONSE_OK,
+  *image = 0;
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_file_get_utf8_name (file));
 
-                            NULL);
+  tif = tiff_open (file, "r", error);
+  if (! tif)
+    return GIMP_PDB_EXECUTION_ERROR;
 
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+  pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+  gimp_get_data (LOAD_PROC "-target", &pages.target);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  pages.keep_empty_space = TRUE;
+  gimp_get_data (LOAD_PROC "-keep-empty-space",
+                 &pages.keep_empty_space);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-
-  /* Page Selector */
-  selector = gimp_page_selector_new ();
-  gtk_widget_set_size_request (selector, 300, 200);
-  gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
-
-  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
-                                  pages->n_pages);
-  gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), pages->target);
-
-  for (i = 0; i < pages->n_pages; i++)
+  pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
+  if (pages.n_pages == 0)
     {
-      const gchar *name = tiff_get_page_name (tif);
+      TIFFClose (tif);
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("TIFF '%s' does not contain any directories"),
+                   gimp_file_get_utf8_name (file));
 
-      if (name)
-        gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector),
-                                           i, name);
-
-      TIFFReadDirectory (tif);
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  g_signal_connect_swapped (selector, "activate",
-                            G_CALLBACK (gtk_window_activate_default),
-                            dialog);
-
-  /* Option to shrink the loaded image to its bounding box
-     or keep as much empty space as possible.
-     Note that there seems to be no way to keep the empty
-     space on the right and bottom. */
-  crop_option = gtk_check_button_new_with_label (_("Keep empty space around imported layers"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_option),
-                                pages->keep_empty_space);
-  gtk_box_pack_start (GTK_BOX (vbox), crop_option, TRUE, TRUE, 0);
-
-  /* Setup done; display the dialog */
-  gtk_widget_show_all (dialog);
-
-  /* run the dialog */
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  if (run)
+  pages.pages = NULL;
+  if (run_mode != GIMP_RUN_INTERACTIVE)
     {
-      pages->target =
-        gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
+      pages.pages = g_new (gint, pages.n_pages);
 
-      pages->pages =
-        gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
-                                               &pages->n_pages);
+      for (li = 0; li < pages.n_pages; li++)
+        pages.pages[li] = li;
+    }
+  else
+    {
+      const gchar *extra_message = NULL;
 
-      pages->keep_empty_space =
-        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (crop_option));
-
-      /* select all if none selected */
-      if (pages->n_pages == 0)
+      if (pages.n_pages == 1)
         {
-          gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
+          pages.pages  = g_new0 (gint, pages.n_pages);
+          pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+        }
 
-          pages->pages =
-            gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
-                                                   &pages->n_pages);
+      /* Check all pages if any has an unspecified or unset channel. */
+      for (li = 0; li < pages.n_pages; li++)
+        {
+          gushort  spp;
+          gushort  photomet;
+          gushort  extra;
+          gushort *extra_types;
+
+          TIFFSetDirectory (tif, li);
+          TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
+          if (! TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
+            {
+              guint16 compression;
+
+              if (TIFFGetField (tif, TIFFTAG_COMPRESSION, &compression) &&
+                  (compression == COMPRESSION_CCITTFAX3 ||
+                   compression == COMPRESSION_CCITTFAX4 ||
+                   compression == COMPRESSION_CCITTRLE  ||
+                   compression == COMPRESSION_CCITTRLEW))
+                {
+                  photomet = PHOTOMETRIC_MINISWHITE;
+                }
+              else
+                {
+                  /* old AppleScan software misses out the photometric tag
+                   * (and incidentally assumes min-is-white, but xv
+                   * assumes min-is-black, so we follow xv's lead.  It's
+                   * not much hardship to invert the image later).
+                   */
+                  photomet = PHOTOMETRIC_MINISBLACK;
+                }
+            }
+          if (! TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
+            extra = 0;
+
+          /* TODO: current code always assumes that the alpha channel
+           * will be the first extra channel, though the TIFF spec does
+           * not mandate such assumption. A future improvement should be
+           * to actually loop through the extra channels and save the
+           * alpha channel index.
+           * Of course, this is an edge case, as most image would likely
+           * have only a single extra channel anyway. But still we could
+           * be more accurate.
+           */
+          if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNSPECIFIED))
+            {
+              extra_message = _("Extra channels with unspecified data.");
+              break;
+            }
+          else if (extra == 0 &&
+                   ((photomet == PHOTOMETRIC_RGB && spp > 3) ||
+                    /* All other color space expect 1 channel (grayscale,
+                     * palette, mask). */
+                    (photomet != PHOTOMETRIC_RGB && spp > 1)))
+            {
+              /* ExtraSamples field not set, yet we have more channels than
+               * the PhotometricInterpretation field suggests.
+               * This should not happen as the spec clearly says "This field
+               * must be present if there are extra samples". So the files
+               * can be considered non-conformant.
+               * Let's ask what to do with the channel.
+               */
+              extra_message = _("Non-conformant TIFF: extra channels without 'ExtraSamples' field.");
+              break;
+            }
+        }
+      TIFFSetDirectory (tif, 0);
+
+      if ((pages.n_pages > 1 || extra_message) &&
+          ! load_dialog (tif, LOAD_PROC, &pages,
+                         extra_message, &default_extra))
+        {
+          TIFFClose (tif);
+          g_clear_pointer (&pages.pages, g_free);
+
+          return GIMP_PDB_CANCEL;
         }
     }
 
-  return run;
-}
-
-gint32
-load_image (GFile              *file,
-            TIFF               *tif,
-            TiffSelectedPages  *pages,
-            gboolean           *resolution_loaded,
-            GError            **error)
-{
-  GList *images_list      = NULL;
-  gint   image            = 0;
-  gint   first_image_type = GIMP_RGB;
-  gint   min_row          = G_MAXINT;
-  gint   min_col          = G_MAXINT;
-  gint   max_row          = 0;
-  gint   max_col          = 0;
-  gint   li;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  gimp_set_data (LOAD_PROC "-target",
+                 &pages.target, sizeof (pages.target));
+  gimp_set_data (LOAD_PROC "-keep-empty-space",
+                 &pages.keep_empty_space,
+                 sizeof (pages.keep_empty_space));
 
   /* We will loop through the all pages in case of multipage TIFF
    * and load every page as a separate layer.
    */
-  for (li = 0; li < pages->n_pages; li++)
+  for (li = 0; li < pages.n_pages; li++)
     {
       gint              ilayer;
       gushort           bps;
@@ -286,8 +330,8 @@ load_image (GFile              *file,
       TiffSaveVals      save_vals;
       const gchar      *name;
 
-      TIFFSetDirectory (tif, pages->pages[li]);
-      ilayer = pages->pages[li];
+      TIFFSetDirectory (tif, pages.pages[li]);
+      ilayer = pages.pages[li];
 
       gimp_progress_update (0.0);
 
@@ -383,16 +427,18 @@ load_image (GFile              *file,
 
       if (! TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
         {
+          TIFFClose (tif);
           g_message ("Could not get image width from '%s'",
                      gimp_file_get_utf8_name (file));
-          return -1;
+          return GIMP_PDB_EXECUTION_ERROR;
         }
 
       if (! TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
         {
+          TIFFClose (tif);
           g_message ("Could not get image length from '%s'",
                      gimp_file_get_utf8_name (file));
-          return -1;
+          return GIMP_PDB_EXECUTION_ERROR;
         }
 
       if (! TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
@@ -440,40 +486,55 @@ load_image (GFile              *file,
         }
       else if (extra > 0 && (extra_types[0] == EXTRASAMPLE_UNSPECIFIED))
         {
-          /* assuming unassociated alpha if unspecified */
-          g_message ("alpha channel type not defined for file %s. "
-                     "Assuming alpha is not premultiplied",
-                     gimp_file_get_utf8_name (file));
-          alpha = TRUE;
-          tsvals.save_transp_pixels = TRUE;
+          if (run_mode != GIMP_RUN_INTERACTIVE)
+            /* In non-interactive mode, we assume unassociated alpha if unspecified.
+             * We don't output messages in interactive mode as the user
+             * has already the ability to choose through a dialog. */
+            g_message ("alpha channel type not defined for file %s. "
+                       "Assuming alpha is not premultiplied",
+                       gimp_file_get_utf8_name (file));
+
+          switch (default_extra)
+            {
+            case GIMP_TIFF_LOAD_ASSOCALPHA:
+              alpha = TRUE;
+              tsvals.save_transp_pixels = FALSE;
+              break;
+            case GIMP_TIFF_LOAD_UNASSALPHA:
+              alpha = TRUE;
+              tsvals.save_transp_pixels = TRUE;
+              break;
+            default: /* GIMP_TIFF_LOAD_CHANNEL */
+              alpha = FALSE;
+              break;
+            }
           extra--;
         }
       else /* extra == 0 */
         {
-          /* ExtraSamples field not set, yet we have more channels than
-           * the PhotometricInterpretation field suggests.
-           * This should not happen as the spec clearly says "This field
-           * must be present if there are extra samples". So the files
-           * can be considered non-conformant. For now, let's consider
-           * the first extra field as alpha non-premultiplied.
-           *
-           * TODO: we should rather pop-up a dialog asking what to do:
-           * 1/ open as channel;
-           * 2/ use as premultiplied alpha;
-           * 3/ use as non-premultiplied alpha.
-           */
           if ((photomet == PHOTOMETRIC_RGB && spp > 3) ||
-              /* All other color space expect 1 channel (grayscale,
-               * palette, mask). */
               (photomet != PHOTOMETRIC_RGB && spp > 1))
             {
-              /* assuming unassociated alpha if unspecified */
-              g_message ("File '%s' does not conform to TIFF specification: "
-                         "ExtraSamples field is not set while extra channels are present. "
-                         "Assuming the first extra channel as non-premultiplied alpha.",
-                         gimp_file_get_utf8_name (file));
-              alpha = TRUE;
-              tsvals.save_transp_pixels = TRUE;
+              if (run_mode != GIMP_RUN_INTERACTIVE)
+                g_message ("File '%s' does not conform to TIFF specification: "
+                           "ExtraSamples field is not set while extra channels are present. "
+                           "Assuming the first extra channel as non-premultiplied alpha.",
+                           gimp_file_get_utf8_name (file));
+
+              switch (default_extra)
+                {
+                case GIMP_TIFF_LOAD_ASSOCALPHA:
+                  alpha = TRUE;
+                  tsvals.save_transp_pixels = FALSE;
+                  break;
+                case GIMP_TIFF_LOAD_UNASSALPHA:
+                  alpha = TRUE;
+                  tsvals.save_transp_pixels = TRUE;
+                  break;
+                default: /* GIMP_TIFF_LOAD_CHANNEL */
+                  alpha = FALSE;
+                  break;
+                }
             }
           else
             {
@@ -712,7 +773,7 @@ load_image (GFile              *file,
             }
         }
 
-      if (pages->target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
+      if (pages.target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
         {
           if (li == 0)
             {
@@ -724,43 +785,44 @@ load_image (GFile              *file,
             }
         }
 
-      if ((pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! image))
+      if ((pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! *image))
         {
-          image = gimp_image_new_with_precision (cols, rows, image_type,
-                                                 image_precision);
+          *image = gimp_image_new_with_precision (cols, rows, image_type,
+                                                  image_precision);
 
-          if (image < 1)
+          if (*image < 1)
             {
+              TIFFClose (tif);
               g_message ("Could not create a new image: %s",
                          gimp_get_pdb_error ());
-              return -1;
+              return GIMP_PDB_EXECUTION_ERROR;
             }
 
-          gimp_image_undo_disable (image);
+          gimp_image_undo_disable (*image);
 
-          if (pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+          if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             {
               gchar *fname = g_strdup_printf ("%s-%d", g_file_get_uri (file),
                                               ilayer);
 
-              gimp_image_set_filename (image, fname);
+              gimp_image_set_filename (*image, fname);
               g_free (fname);
 
               images_list = g_list_prepend (images_list,
-                                            GINT_TO_POINTER (image));
+                                            GINT_TO_POINTER (*image));
             }
-          else if (pages->o_pages != pages->n_pages)
+          else if (pages.o_pages != pages.n_pages)
             {
               gchar *fname = g_strdup_printf (_("%s-%d-of-%d-pages"),
                                               g_file_get_uri (file),
-                                              pages->n_pages, pages->o_pages);
+                                              pages.n_pages, pages.o_pages);
 
-              gimp_image_set_filename (image, fname);
+              gimp_image_set_filename (*image, fname);
               g_free (fname);
             }
           else
             {
-              gimp_image_set_filename (image, g_file_get_uri (file));
+              gimp_image_set_filename (*image, g_file_get_uri (file));
             }
         }
 
@@ -768,7 +830,7 @@ load_image (GFile              *file,
 
       if (profile)
         {
-          gimp_image_set_color_profile (image, profile);
+          gimp_image_set_color_profile (*image, profile);
           g_object_unref (profile);
         }
 
@@ -779,7 +841,7 @@ load_image (GFile              *file,
 
         parasite = gimp_parasite_new ("tiff-save-options", 0,
                                       sizeof (save_vals), &save_vals);
-        gimp_image_attach_parasite (image, parasite);
+        gimp_image_attach_parasite (*image, parasite);
         gimp_parasite_free (parasite);
 
         /* Attach a parasite containing the image description.
@@ -792,7 +854,7 @@ load_image (GFile              *file,
             parasite = gimp_parasite_new ("gimp-comment",
                                           GIMP_PARASITE_PERSISTENT,
                                           strlen (img_desc) + 1, img_desc);
-            gimp_image_attach_parasite (image, parasite);
+            gimp_image_attach_parasite (*image, parasite);
             gimp_parasite_free (parasite);
           }
       }
@@ -858,9 +920,9 @@ load_image (GFile              *file,
              */
             if (read_unit != RESUNIT_NONE)
               {
-                gimp_image_set_resolution (image, xres, yres);
+                gimp_image_set_resolution (*image, xres, yres);
                 if (unit != GIMP_UNIT_PIXEL)
-                  gimp_image_set_unit (image, unit);
+                  gimp_image_set_unit (*image, unit);
 
                 *resolution_loaded = TRUE;
               }
@@ -920,9 +982,10 @@ load_image (GFile              *file,
               if (! TIFFGetField (tif, TIFFTAG_COLORMAP,
                                   &redmap, &greenmap, &bluemap))
                 {
+                  TIFFClose (tif);
                   g_message ("Could not get colormaps from '%s'",
                              gimp_file_get_utf8_name (file));
-                  return -1;
+                  return GIMP_PDB_EXECUTION_ERROR;
                 }
 
               for (i = 0, j = 0; i < (1 << bps); i++)
@@ -933,14 +996,14 @@ load_image (GFile              *file,
                 }
             }
 
-          gimp_image_set_colormap (image, cmap, (1 << bps));
+          gimp_image_set_colormap (*image, cmap, (1 << bps));
         }
 
-      if (pages->target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
-        load_paths (tif, image, cols, rows,
+      if (pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+        load_paths (tif, *image, cols, rows,
                     layer_offset_x_pixel, layer_offset_y_pixel);
       else
-        load_paths (tif, image, cols, rows, 0, 0);
+        load_paths (tif, *image, cols, rows, 0, 0);
 
       /* Allocate ChannelData for all channels, even the background layer */
       channel = g_new0 (ChannelData, extra + 1);
@@ -950,11 +1013,11 @@ load_image (GFile              *file,
 
       if (name)
         {
-          layer = gimp_layer_new (image, name,
+          layer = gimp_layer_new (*image, name,
                                   cols, rows,
                                   layer_type,
                                   100,
-                                  gimp_image_get_default_new_layer_mode (image));
+                                  gimp_image_get_default_new_layer_mode (*image));
         }
       else
         {
@@ -965,11 +1028,11 @@ load_image (GFile              *file,
           else
             name = g_strdup_printf (_("Page %d"), ilayer);
 
-          layer = gimp_layer_new (image, name,
+          layer = gimp_layer_new (*image, name,
                                   cols, rows,
                                   layer_type,
                                   100,
-                                  gimp_image_get_default_new_layer_mode (image));
+                                  gimp_image_get_default_new_layer_mode (*image));
           g_free (name);
         }
 
@@ -994,10 +1057,10 @@ load_image (GFile              *file,
 
               gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
-              channel[i].ID = gimp_channel_new (image, _("TIFF Channel"),
+              channel[i].ID = gimp_channel_new (*image, _("TIFF Channel"),
                                                 cols, rows,
                                                 100.0, &color);
-              gimp_image_insert_channel (image, channel[i].ID, -1, 0);
+              gimp_image_insert_channel (*image, channel[i].ID, -1, 0);
               channel[i].buffer = gimp_drawable_get_buffer (channel[i].ID);
               channel[i].format = babl_format_new (babl_model ("Y'"),
                                                    type,
@@ -1071,7 +1134,7 @@ load_image (GFile              *file,
       g_free (channel);
       channel = NULL;
 
-      if (pages->target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+      if (pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
         {
           /* compute bounding box of all layers read so far */
           if (min_col > layer_offset_x_pixel)
@@ -1094,24 +1157,24 @@ load_image (GFile              *file,
             }
         }
 
-      gimp_image_insert_layer (image, layer, -1, -1);
+      gimp_image_insert_layer (*image, layer, -1, -1);
 
-      if (pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+      if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
         {
-          gimp_image_undo_enable (image);
-          gimp_image_clean_all (image);
+          gimp_image_undo_enable (*image);
+          gimp_image_clean_all (*image);
         }
 
       gimp_progress_update (1.0);
     }
 
-  if (pages->target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
+  if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
     {
       GList *list = images_list;
 
       if (list)
         {
-          image = GPOINTER_TO_INT (list->data);
+          *image = GPOINTER_TO_INT (list->data);
 
           list = g_list_next (list);
         }
@@ -1125,7 +1188,7 @@ load_image (GFile              *file,
     }
   else
     {
-      if (pages->keep_empty_space)
+      if (pages.keep_empty_space)
         {
           /* unfortunately we have no idea about empty space
              at the bottom/right of layers */
@@ -1133,14 +1196,17 @@ load_image (GFile              *file,
           min_row = 0;
         }
       /* resize image to bounding box of all layers */
-      gimp_image_resize (image,
+      gimp_image_resize (*image,
                          max_col - min_col, max_row - min_row,
                          -min_col, -min_row);
 
-      gimp_image_undo_enable (image);
+      gimp_image_undo_enable (*image);
     }
 
-  return image;
+  g_free (pages.pages);
+  TIFFClose (tif);
+
+  return GIMP_PDB_SUCCESS;
 }
 
 static GimpColorProfile *
@@ -1754,4 +1820,134 @@ convert_bit2byte (const guchar *src,
           src++;
         }
     }
+}
+
+static gboolean
+load_dialog (TIFF              *tif,
+             const gchar       *help_id,
+             TiffSelectedPages *pages,
+             const gchar       *extra_message,
+             DefaultExtra      *default_extra)
+{
+  GtkWidget  *dialog;
+  GtkWidget  *vbox;
+  GtkWidget  *selector    = NULL;
+  GtkWidget  *crop_option = NULL;
+  GtkWidget  *extra_radio = NULL;
+  gboolean    run;
+
+  dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
+                            NULL, 0,
+                            gimp_standard_help_func, help_id,
+
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Import"), GTK_RESPONSE_OK,
+
+                            NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      vbox, TRUE, TRUE, 0);
+
+  if (pages->n_pages > 1)
+    {
+      gint i;
+
+      /* Page Selector */
+      selector = gimp_page_selector_new ();
+      gtk_widget_set_size_request (selector, 300, 200);
+      gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
+
+      gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
+                                      pages->n_pages);
+      gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), pages->target);
+
+      for (i = 0; i < pages->n_pages; i++)
+        {
+          const gchar *name = tiff_get_page_name (tif);
+
+          if (name)
+            gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector),
+                                               i, name);
+
+          TIFFReadDirectory (tif);
+        }
+
+      g_signal_connect_swapped (selector, "activate",
+                                G_CALLBACK (gtk_window_activate_default),
+                                dialog);
+
+      /* Option to shrink the loaded image to its bounding box
+         or keep as much empty space as possible.
+         Note that there seems to be no way to keep the empty
+         space on the right and bottom. */
+      crop_option = gtk_check_button_new_with_label (_("Keep empty space around imported layers"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (crop_option),
+                                    pages->keep_empty_space);
+      gtk_box_pack_start (GTK_BOX (vbox), crop_option, TRUE, TRUE, 0);
+    }
+
+  if (extra_message)
+    {
+      GtkWidget *warning;
+
+      warning = g_object_new (GIMP_TYPE_HINT_BOX,
+                             "icon-name", GIMP_ICON_DIALOG_WARNING,
+                             "hint",      extra_message,
+                             NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), warning, TRUE, TRUE, 0);
+      gtk_widget_show (warning);
+
+      extra_radio = gimp_int_radio_group_new (TRUE, _("Process extra channel as:"),
+                                              (GCallback) gimp_radio_button_update,
+                                              default_extra, GIMP_TIFF_LOAD_UNASSALPHA,
+                                              _("Non-premultiplied alpha"), GIMP_TIFF_LOAD_UNASSALPHA, NULL,
+                                              _("Premultiplied alpha"),     GIMP_TIFF_LOAD_ASSOCALPHA, NULL,
+                                              _("Channel"),                 GIMP_TIFF_LOAD_CHANNEL,    NULL,
+                                              NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), extra_radio, TRUE, TRUE, 0);
+      gtk_widget_show (extra_radio);
+    }
+
+  /* Setup done; display the dialog */
+  gtk_widget_show_all (dialog);
+
+  /* run the dialog */
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  if (run)
+    {
+      if (pages->n_pages > 1)
+        {
+          pages->target =
+            gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
+
+          pages->pages =
+            gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
+                                                   &pages->n_pages);
+
+          pages->keep_empty_space =
+            gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (crop_option));
+
+          /* select all if none selected */
+          if (pages->n_pages == 0)
+            {
+              gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
+
+              pages->pages =
+                gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
+                                                       &pages->n_pages);
+            }
+        }
+    }
+
+  return run;
 }

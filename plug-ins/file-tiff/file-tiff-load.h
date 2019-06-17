@@ -22,6 +22,7 @@
 #ifndef __FILE_TIFF_LOAD_H__
 #define __FILE_TIFF_LOAD_H__
 
+#define LOAD_PROC      "file-tiff-load"
 
 typedef struct
 {
@@ -33,15 +34,11 @@ typedef struct
 } TiffSelectedPages;
 
 
-gboolean   load_dialog (TIFF               *tif,
-                        const gchar        *help_id,
-                        TiffSelectedPages  *pages);
-
-gint32     load_image  (GFile              *file,
-                        TIFF               *tif,
-                        TiffSelectedPages  *pages,
-                        gboolean           *resolution_loaded,
-                        GError            **error);
+GimpPDBStatusType load_image  (GFile              *file,
+                               GimpRunMode         run_mode,
+                               gint32             *image,
+                               gboolean           *resolution_loaded,
+                               GError            **error);
 
 
 #endif /* __FILE_TIFF_LOAD_H__ */
