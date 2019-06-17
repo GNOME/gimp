@@ -49,14 +49,12 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "file-tiff-io.h"
 #include "file-tiff-load.h"
 #include "file-tiff-save.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC      "file-tiff-load"
 #define SAVE_PROC      "file-tiff-save"
 #define SAVE2_PROC     "file-tiff-save2"
 #define PLUG_IN_BINARY "file-tiff"
@@ -210,125 +208,42 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      GFile *file = g_file_new_for_uri (param[1].data.d_string);
-      TIFF  *tif;
+      GFile    *file  = g_file_new_for_uri (param[1].data.d_string);
+      gint32    image = 0;
+      gboolean  resolution_loaded = FALSE;
 
-      tif = tiff_open (file, "r", &error);
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      if (tif)
+      status = load_image (file, run_mode, &image,
+                           &resolution_loaded,
+                           &error);
+
+      if (image > 0)
         {
-          TiffSelectedPages pages;
+          GimpMetadata *metadata;
 
-          pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+          metadata = gimp_image_metadata_load_prepare (image,
+                                                       "image/tiff",
+                                                       file, NULL);
 
-          gimp_get_data (LOAD_PROC "-target", &pages.target);
-
-          pages.keep_empty_space = TRUE;
-
-          gimp_get_data (LOAD_PROC "-keep-empty-space",
-                         &pages.keep_empty_space);
-
-          pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
-
-          if (pages.n_pages == 0)
+          if (metadata)
             {
-              g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                           _("TIFF '%s' does not contain any directories"),
-                           gimp_file_get_utf8_name (file));
+              GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
 
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-          else
-            {
-              gboolean run_it = FALSE;
-              gint     i;
+              if (resolution_loaded)
+                flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-              if (run_mode != GIMP_RUN_INTERACTIVE)
-                {
-                  pages.pages = g_new (gint, pages.n_pages);
+              gimp_image_metadata_load_finish (image, "image/tiff",
+                                               metadata, flags,
+                                               run_mode == GIMP_RUN_INTERACTIVE);
 
-                  for (i = 0; i < pages.n_pages; i++)
-                    pages.pages[i] = i;
-
-                  run_it = TRUE;
-                }
-              else
-                {
-                  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-                }
-
-              if (pages.n_pages == 1)
-                {
-                  pages.pages  = g_new0 (gint, pages.n_pages);
-                  pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
-
-                  run_it = TRUE;
-                }
-
-              if ((! run_it) && (run_mode == GIMP_RUN_INTERACTIVE))
-                run_it = load_dialog (tif, LOAD_PROC, &pages);
-
-              if (run_it)
-                {
-                  gint32    image;
-                  gboolean  resolution_loaded = FALSE;
-
-                  gimp_set_data (LOAD_PROC "-target",
-                                 &pages.target, sizeof (pages.target));
-
-                  gimp_set_data (LOAD_PROC "-keep-empty-space",
-                                 &pages.keep_empty_space,
-                                 sizeof (pages.keep_empty_space));
-
-                  image = load_image (file, tif, &pages,
-                                      &resolution_loaded,
-                                      &error);
-
-                  g_free (pages.pages);
-
-                  if (image > 0)
-                    {
-                      GimpMetadata *metadata;
-
-                      metadata = gimp_image_metadata_load_prepare (image,
-                                                                   "image/tiff",
-                                                                   file, NULL);
-
-                      if (metadata)
-                        {
-                          GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
-
-                          if (resolution_loaded)
-                            flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
-
-                          gimp_image_metadata_load_finish (image, "image/tiff",
-                                                           metadata, flags,
-                                                           run_mode == GIMP_RUN_INTERACTIVE);
-
-                          g_object_unref (metadata);
-                        }
-
-                      *nreturn_vals = 2;
-                      values[1].type         = GIMP_PDB_IMAGE;
-                      values[1].data.d_image = image;
-                    }
-                  else
-                    {
-                      status = GIMP_PDB_EXECUTION_ERROR;
-                    }
-
-                }
-              else
-                {
-                  status = GIMP_PDB_CANCEL;
-                }
+              g_object_unref (metadata);
             }
 
-          TIFFClose (tif);
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image;
         }
 
       g_object_unref (file);
