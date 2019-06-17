@@ -628,9 +628,9 @@ load_image (GFile        *file,
                 {
                   if (profile_linear)
                     {
-                      base_format = babl_format_new (babl_model ("Y'"),
+                      base_format = babl_format_new (babl_model ("Y"),
                                                      type,
-                                                     babl_component ("Y'"),
+                                                     babl_component ("Y"),
                                                      NULL);
                     }
                   else
