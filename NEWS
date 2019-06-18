@@ -7,6 +7,30 @@ This is the stable branch of GIMP. Unlike earlier stable branches,
 we do allow some new features here, if they are not too invasive.
 Otherwise, this branch is only for bug-fixes.
 
+Overview of Changes from GIMP 2.10.12 to GIMP 2.10.14
+=====================================================
+
+Core:
+
+  - New "Selected areas continue outside the image" toggle option to the
+    "Feather Selection" dialog.
+
+Tools:
+
+  - Free Select tool: fast copy|cut-paste modifiers (Alt + Ctrl|Shift)
+    are now working even when the selection is not committed. Starting a
+    fast copy|cut-paste will automatically close the polygon and commit
+    the selection, accelerating fast usage of free selections.
+  - Foreground-select tool: new 'Grayscale' Preview Mode.
+  - Foreground selection tool: color selector for "On color" preview
+    (original preview mode) now available, to select any color and
+    opacity for the preview.
+
+Installers:
+
+  - Install 64-bit Python on 64-bit Windows (until now, the installer
+    used to install 32-bit Python for all architectures).
+  - Windows installer now supports per-user install.
 
 Overview of Changes from GIMP 2.10.10 to GIMP 2.10.12
 =====================================================
