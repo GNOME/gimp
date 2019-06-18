@@ -1068,10 +1068,25 @@ load_image (GFile        *file,
                                                 100.0, &color);
               gimp_image_insert_channel (*image, channel[i].ID, -1, 0);
               channel[i].buffer = gimp_drawable_get_buffer (channel[i].ID);
-              channel[i].format = babl_format_new (babl_model ("Y"),
-                                                   type,
-                                                   babl_component ("Y"),
-                                                   NULL);
+
+              /* Unlike color channels, we don't care about the source
+               * TRC for extra channels. We just want to import them
+               * as-is without any value conversion. Since extra
+               * channels are always linear in GIMP, we consider TIFF
+               * extra channels with unspecified data to be linear too.
+               * Only exception are 8-bit non-linear images whose
+               * channel are Y' for legacy/compatibility reasons.
+               */
+              if (image_precision == GIMP_PRECISION_U8_NON_LINEAR)
+                channel[i].format = babl_format_new (babl_model ("Y'"),
+                                                     type,
+                                                     babl_component ("Y'"),
+                                                     NULL);
+              else
+                channel[i].format = babl_format_new (babl_model ("Y"),
+                                                     type,
+                                                     babl_component ("Y"),
+                                                     NULL);
             }
         }
 
