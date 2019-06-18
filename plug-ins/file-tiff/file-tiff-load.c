@@ -1068,9 +1068,9 @@ load_image (GFile        *file,
                                                 100.0, &color);
               gimp_image_insert_channel (*image, channel[i].ID, -1, 0);
               channel[i].buffer = gimp_drawable_get_buffer (channel[i].ID);
-              channel[i].format = babl_format_new (babl_model ("Y'"),
+              channel[i].format = babl_format_new (babl_model ("Y"),
                                                    type,
-                                                   babl_component ("Y'"),
+                                                   babl_component ("Y"),
                                                    NULL);
             }
         }
