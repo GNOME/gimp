@@ -720,13 +720,13 @@ gimp_config_deserialize_object (GValue     *value,
 
           if (! gimp_scanner_parse_string (scanner, &type_name))
             return G_TOKEN_STRING;
-            
+
           if (! (type_name && *type_name))
-           {
+            {
               g_scanner_error (scanner, "Type name is empty");
               g_free (type_name);
-              return G_TOKEN_ERROR;
-           }
+              return G_TOKEN_NONE;
+            }
 
           type = g_type_from_name (type_name);
           g_free (type_name);
