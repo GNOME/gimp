@@ -104,6 +104,7 @@ static gint32         load_image   (const gchar       *filename,
                                     OPJ_CODEC_FORMAT   format,
                                     OPJ_COLOR_SPACE    color_space,
                                     gboolean           interactive,
+                                    gboolean          *profile_loaded,
                                     GError           **error);
 
 static OPJ_COLOR_SPACE open_dialog (const gchar      *filename,
@@ -206,6 +207,7 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               image_ID;
+  gboolean           profile_loaded = FALSE;
   GError            *error = NULL;
 
   run_mode = param[0].data.d_int32;
@@ -232,6 +234,7 @@ run (const gchar      *name,
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           interactive = TRUE;
           break;
+
         default:
           if (strcmp (name, LOAD_J2K_PROC) == 0)
             {
@@ -266,11 +269,17 @@ run (const gchar      *name,
         }
 
       if (strcmp (name, LOAD_JP2_PROC) == 0)
-        image_ID = load_image (param[1].data.d_string, OPJ_CODEC_JP2,
-                               color_space, interactive, &error);
+        {
+          image_ID = load_image (param[1].data.d_string, OPJ_CODEC_JP2,
+                                 color_space, interactive, &profile_loaded,
+                                 &error);
+        }
       else /* strcmp (name, LOAD_J2K_PROC) == 0 */
-        image_ID = load_image (param[1].data.d_string, OPJ_CODEC_J2K,
-                               color_space, interactive, &error);
+        {
+          image_ID = load_image (param[1].data.d_string, OPJ_CODEC_J2K,
+                                 color_space, interactive, &profile_loaded,
+                                 &error);
+        }
 
       if (image_ID != -1)
         {
@@ -283,6 +292,9 @@ run (const gchar      *name,
           if (metadata)
             {
               GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+
+              if (profile_loaded)
+                flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
               gimp_image_metadata_load_finish (image_ID, "image/jp2",
                                                metadata, flags,
@@ -1028,6 +1040,7 @@ load_image (const gchar       *filename,
             OPJ_CODEC_FORMAT   format,
             OPJ_COLOR_SPACE    color_space,
             gboolean           interactive,
+            gboolean          *profile_loaded,
             GError           **error)
 {
   opj_stream_t      *stream;
@@ -1117,6 +1130,8 @@ load_image (const gchar       *filename,
                                                              error);
           if (! profile)
             goto out;
+
+          *profile_loaded = TRUE;
 
           if (image->color_space == OPJ_CLRSPC_UNSPECIFIED ||
               image->color_space == OPJ_CLRSPC_UNKNOWN)

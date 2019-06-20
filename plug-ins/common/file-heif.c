@@ -528,10 +528,7 @@ load_image (GFile     *file,
   gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   if (profile)
-    {
-      gimp_image_set_color_profile (image_ID, profile);
-      g_object_unref (profile);
-    }
+    gimp_image_set_color_profile (image_ID, profile);
 
   layer_ID = gimp_layer_new (image_ID,
                              _("image content"),
@@ -604,7 +601,8 @@ load_image (GFile     *file,
 
     if (exif_data || xmp_data)
       {
-        GimpMetadata *metadata = gimp_metadata_new ();
+        GimpMetadata          *metadata = gimp_metadata_new ();
+        GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_ALL;
 
         if (exif_data)
           gimp_metadata_set_from_exif (metadata,
@@ -614,11 +612,17 @@ load_image (GFile     *file,
           gimp_metadata_set_from_xmp (metadata,
                                       xmp_data, xmp_data_size, NULL);
 
+        if (profile)
+          flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+
         gimp_image_metadata_load_finish (image_ID, "image/heif",
-                                         metadata, GIMP_METADATA_LOAD_ALL,
+                                         metadata, flags,
                                          interactive);
       }
   }
+
+  if (profile)
+    g_object_unref (profile);
 
   heif_image_handle_release (handle);
   heif_context_free (ctx);

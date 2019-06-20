@@ -25,6 +25,7 @@
 gint32  load_image (const gchar  *filename,
                     gboolean      merged_image_only,
                     gboolean     *resolution_loaded,
+                    gboolean     *profile_loaded,
                     GError      **error);
 
 

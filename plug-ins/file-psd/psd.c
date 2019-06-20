@@ -202,6 +202,7 @@ run (const gchar      *name,
       strcmp (name, LOAD_MERGED_PROC) == 0)
     {
       gboolean resolution_loaded = FALSE;
+      gboolean profile_loaded    = FALSE;
       gboolean interactive;
 
       switch (run_mode)
@@ -218,7 +219,9 @@ run (const gchar      *name,
 
       image_ID = load_image (param[1].data.d_string,
                              strcmp (name, LOAD_MERGED_PROC) == 0,
-                             &resolution_loaded, &error);
+                             &resolution_loaded,
+                             &profile_loaded,
+                             &error);
 
       if (image_ID != -1)
         {
@@ -234,6 +237,9 @@ run (const gchar      *name,
 
               if (resolution_loaded)
                 flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+
+              if (profile_loaded)
+                flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
               gimp_image_metadata_load_finish (image_ID, "image/x-psd",
                                                metadata, flags,

@@ -278,6 +278,7 @@ load_image_resource (PSDimageres  *res_a,
                      PSDimage     *img_a,
                      FILE         *f,
                      gboolean     *resolution_loaded,
+                     gboolean     *profile_loaded,
                      GError      **error)
 {
   gint  pad;
@@ -367,7 +368,8 @@ load_image_resource (PSDimageres  *res_a,
             break;
 
           case PSD_ICC_PROFILE:
-            load_resource_1039 (res_a, image_id, f, error);
+            if (! load_resource_1039 (res_a, image_id, f, error))
+              *profile_loaded = TRUE;
             break;
 
           case PSD_ALPHA_NAMES_UNI:
