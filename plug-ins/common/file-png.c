@@ -158,6 +158,7 @@ static void      run                       (const gchar      *name,
 static gint32    load_image                (const gchar      *filename,
                                             gboolean          interactive,
                                             gboolean         *resolution_loaded,
+                                            gboolean         *profile_loaded,
                                             GError          **error);
 static gboolean  save_image                (const gchar      *filename,
                                             gint32            image_ID,
@@ -453,6 +454,7 @@ run (const gchar      *name,
     {
       gboolean interactive;
       gboolean resolution_loaded = FALSE;
+      gboolean profile_loaded    = FALSE;
 
       switch (run_mode)
         {
@@ -469,6 +471,7 @@ run (const gchar      *name,
       image_ID = load_image (param[1].data.d_string,
                              interactive,
                              &resolution_loaded,
+                             &profile_loaded,
                              &error);
 
       if (image_ID != -1)
@@ -485,6 +488,9 @@ run (const gchar      *name,
 
               if (resolution_loaded)
                 flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+
+              if (profile_loaded)
+                flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
               gimp_image_metadata_load_finish (image_ID, "image/png",
                                                metadata, flags,
@@ -856,6 +862,7 @@ static gint32
 load_image (const gchar  *filename,
             gboolean      interactive,
             gboolean     *resolution_loaded,
+            gboolean     *profile_loaded,
             GError      **error)
 {
   gint              i;                    /* Looping var */
@@ -962,7 +969,11 @@ load_image (const gchar  *filename,
   profile = load_color_profile (pp, info, &profile_name);
 
   if (profile)
-    linear = gimp_color_profile_is_linear (profile);
+    {
+      *profile_loaded = TRUE;
+
+      linear = gimp_color_profile_is_linear (profile);
+    }
 
   /*
    * Get image precision and color model

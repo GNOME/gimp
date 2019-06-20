@@ -211,12 +211,14 @@ run (const gchar      *name,
       GFile    *file  = g_file_new_for_uri (param[1].data.d_string);
       gint32    image = 0;
       gboolean  resolution_loaded = FALSE;
+      gboolean  profile_loaded    = FALSE;
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       status = load_image (file, run_mode, &image,
                            &resolution_loaded,
+                           &profile_loaded,
                            &error);
 
       if (image > 0)
@@ -233,6 +235,9 @@ run (const gchar      *name,
 
               if (resolution_loaded)
                 flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
+
+              if (profile_loaded)
+                flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
 
               gimp_image_metadata_load_finish (image, "image/tiff",
                                                metadata, flags,

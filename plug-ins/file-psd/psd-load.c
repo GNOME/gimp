@@ -70,6 +70,7 @@ static gint             add_image_resources        (gint32        image_id,
                                                     PSDimage     *img_a,
                                                     FILE         *f,
                                                     gboolean     *resolution_loaded,
+                                                    gboolean     *profile_loaded,
                                                     GError      **error);
 
 static gint             add_layers                 (gint32        image_id,
@@ -115,6 +116,7 @@ gint32
 load_image (const gchar  *filename,
             gboolean      merged_image_only,
             gboolean     *resolution_loaded,
+            gboolean     *profile_loaded,
             GError      **load_error)
 {
   FILE         *f;
@@ -189,7 +191,9 @@ load_image (const gchar  *filename,
 
   /* ----- Add image resources ----- */
   IFDBG(2) g_debug ("Add image resources");
-  if (add_image_resources (image_id, &img_a, f, resolution_loaded, &error) < 0)
+  if (add_image_resources (image_id, &img_a, f,
+                           resolution_loaded, profile_loaded,
+                           &error) < 0)
     goto load_error;
   gimp_progress_update (0.8);
 
@@ -1064,6 +1068,7 @@ add_image_resources (gint32     image_id,
                      PSDimage  *img_a,
                      FILE      *f,
                      gboolean  *resolution_loaded,
+                     gboolean  *profile_loaded,
                      GError   **error)
 {
   PSDimageres  res_a;
@@ -1097,7 +1102,8 @@ add_image_resources (gint32     image_id,
         }
 
       if (load_image_resource (&res_a, image_id, img_a, f,
-                               resolution_loaded, error) < 0)
+                               resolution_loaded, profile_loaded,
+                               error) < 0)
         return -1;
     }
 

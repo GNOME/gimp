@@ -34,11 +34,12 @@ typedef struct
 } TiffSelectedPages;
 
 
-GimpPDBStatusType load_image  (GFile              *file,
-                               GimpRunMode         run_mode,
-                               gint32             *image,
-                               gboolean           *resolution_loaded,
-                               GError            **error);
+GimpPDBStatusType load_image  (GFile        *file,
+                               GimpRunMode   run_mode,
+                               gint32       *image,
+                               gboolean     *resolution_loaded,
+                               gboolean     *profile_loaded,
+                               GError      **error);
 
 
 #endif /* __FILE_TIFF_LOAD_H__ */

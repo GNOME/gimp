@@ -151,6 +151,7 @@ load_image (GFile        *file,
             GimpRunMode   run_mode,
             gint32       *image,
             gboolean     *resolution_loaded,
+            gboolean     *profile_loaded,
             GError      **error)
 {
   TIFF              *tif;
@@ -341,7 +342,12 @@ load_image (GFile        *file,
 
       profile = load_profile (tif);
       if (profile)
-        profile_linear = gimp_color_profile_is_linear (profile);
+        {
+          if (! *image)
+            *profile_loaded = TRUE;
+
+          profile_linear = gimp_color_profile_is_linear (profile);
+        }
 
       if (bps > 8 && bps != 8 && bps != 16 && bps != 32 && bps != 64)
         worst_case = TRUE; /* Wrong sample width => RGBA */
@@ -1216,6 +1222,7 @@ load_image (GFile        *file,
           min_col = 0;
           min_row = 0;
         }
+
       /* resize image to bounding box of all layers */
       gimp_image_resize (*image,
                          max_col - min_col, max_row - min_row,
