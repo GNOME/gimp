@@ -337,7 +337,6 @@ load_image (GFile     *file,
   struct heif_error         err;
   struct heif_image_handle *handle = NULL;
   struct heif_image        *img = NULL;
-  GimpColorProfile         *profile = NULL;
   gint                      n_images;
   heif_item_id              primary;
   heif_item_id              selected_image;
@@ -479,42 +478,6 @@ load_image (GFile     *file,
      return -1;
     }
 
-  switch (heif_image_handle_get_color_profile_type (handle))
-    {
-    case heif_color_profile_type_not_present:
-      break;
-    case heif_color_profile_type_rICC:
-    case heif_color_profile_type_prof:
-      /* I am unsure, but it looks like both these types represent an
-       * ICC color profile. XXX
-       */
-        {
-          void   *profile_data;
-          size_t  profile_size;
-
-          profile_size = heif_image_handle_get_raw_color_profile_size (handle);
-          profile_data = g_malloc0 (profile_size);
-          err = heif_image_handle_get_raw_color_profile (handle, profile_data);
-
-          if (err.code)
-            g_warning ("%s: color profile loading failed and discarded.",
-                       G_STRFUNC);
-          else
-            profile = gimp_color_profile_new_from_icc_profile ((guint8 *) profile_data,
-                                                               profile_size, NULL);
-
-          g_free (profile_data);
-        }
-      break;
-    default:
-      /* heif_color_profile_type_nclx (what is that?) and any future
-       * profile type which we don't support in GIMP (yet).
-       */
-      g_warning ("%s: unknown color profile type has been discarded.",
-                 G_STRFUNC);
-      break;
-    }
-
   gimp_progress_update (0.75);
 
   width  = heif_image_get_width  (img, heif_channel_interleaved);
@@ -526,12 +489,6 @@ load_image (GFile     *file,
 
   image_ID = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_set_filename (image_ID, g_file_get_uri (file));
-
-  if (profile)
-    {
-      gimp_image_set_color_profile (image_ID, profile);
-      g_object_unref (profile);
-    }
 
   layer_ID = gimp_layer_new (image_ID,
                              _("image content"),
@@ -665,7 +622,6 @@ save_image (GFile             *file,
   struct heif_image_handle *handle;
   struct heif_writer        writer;
   struct heif_error         err;
-  GimpColorProfile         *profile = NULL;
   GOutputStream            *output;
   GeglBuffer               *buffer;
   const Babl               *format;
@@ -678,9 +634,8 @@ save_image (GFile             *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
-  profile = gimp_image_get_effective_color_profile (image_ID);
-  width   = gimp_drawable_width  (drawable_ID);
-  height  = gimp_drawable_height (drawable_ID);
+  width  = gimp_drawable_width  (drawable_ID);
+  height = gimp_drawable_height (drawable_ID);
 
   has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
@@ -690,16 +645,6 @@ save_image (GFile             *file,
                            heif_chroma_interleaved_32bit :
                            heif_chroma_interleaved_24bit,
                            &image);
-
-  if (profile)
-    {
-      const guint8 *icc_data;
-      gsize         icc_length;
-
-      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
-      heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
-      g_object_unref (profile);
-    }
 
   heif_image_add_plane (image, heif_channel_interleaved,
                         width, height, has_alpha ? 32 : 24);
