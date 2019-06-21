@@ -159,11 +159,8 @@ gimp_image_metadata_update_colorspace (GimpImage *image)
 
   if (metadata)
     {
-      /*  This seems to be controversial, see the discussions in issue
-       *  #3532 and issue #301. Enable the code below to test the
-       *  proposed syncing of color profile and DCF info.
-       */
-#if 0
+      /*  See the discussions in issue #3532 and issue #301  */
+
       GimpColorProfile       *profile = gimp_image_get_color_profile (image);
       GimpMetadataColorspace  space   = GIMP_METADATA_COLORSPACE_UNSPECIFIED;
 
@@ -183,6 +180,5 @@ gimp_image_metadata_update_colorspace (GimpImage *image)
         }
 
       gimp_metadata_set_colorspace (metadata, space);
-#endif
     }
 }
