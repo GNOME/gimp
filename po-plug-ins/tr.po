@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-06-21 15:57+0000\n"
-"PO-Revision-Date: 2019-06-23 00:49+0300\n"
+"POT-Creation-Date: 2019-06-22 21:51+0000\n"
+"PO-Revision-Date: 2019-06-23 01:01+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -7181,10 +7181,9 @@ msgstr "_Küçük resmi kaydet"
 #. Color profile
 #: ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:386
-#, fuzzy
 #| msgid "Save color profile"
 msgid "Save color _profile"
-msgstr "Renk profilini kaydet"
+msgstr "Renk _profilini kaydet"
 
 #. Comment
 #: ../plug-ins/file-jpeg/jpeg-save.c:987
@@ -7593,7 +7592,7 @@ msgstr "TIFF '%s' her hangi bir dizin içermiyor"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:258
 msgid "Extra channels with unspecified data."
-msgstr ""
+msgstr "Belirtilmemiş verili ek kanallar."
 
 #. ExtraSamples field not set, yet we have more channels than
 #. * the PhotometricInterpretation field suggests.
@@ -7605,6 +7604,7 @@ msgstr ""
 #: ../plug-ins/file-tiff/file-tiff-load.c:274
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
+"Standarda uygun olmayan TIFF: 'ExtraSamples' alanı olmayan ek kanallar."
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:816
 #, c-format
@@ -7628,24 +7628,22 @@ msgid "Keep empty space around imported layers"
 msgstr "İçe aktarılan katmanlar etrafındaki boş alanı koru"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1909
-#, fuzzy
 #| msgid "Source channel:"
 msgid "Process extra channel as:"
-msgstr "Kaynak kanalı:"
+msgstr "Ek kanalı şöyle işle:"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1912
 msgid "Non-premultiplied alpha"
-msgstr ""
+msgstr "Önceden çoğaltılmış olmayan alfa"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1913
 msgid "Premultiplied alpha"
-msgstr ""
+msgstr "Önceden çoğaltılmış alfa"
 
 #: ../plug-ins/file-tiff/file-tiff-load.c:1914
-#, fuzzy
 #| msgid "Channels"
 msgid "Channel"
-msgstr "Kanallar"
+msgstr "Kanal"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:594
 msgid ""
