@@ -94,20 +94,33 @@ static const RulerMetric ruler_metric_decimal =
 
 static const RulerMetric ruler_metric_inches =
 {
-  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
-  { 1, 4, 8, 16, 12 * 16 }
+  /* 12 inch = 1 foot; 36 inch = 1 yard; 72 inchs = 1 fathom */
+  { 1, 2, 6, 12, 36, 72, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+
+  /* Inches are divided by multiples of 2. */
+  { 1, 2, 4, 8, 16, 32, 64, 128, 256 }
 };
 
 static const RulerMetric ruler_metric_feet =
 {
-  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
-  { 1, 3, 6, 12, 12 * 8 }
+  /* 3 feet = 1 yard; 6 feet = 1 fathom */
+  { 1, 3, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+
+  /* 1 foot = 12 inches, so let's divide up to 12. */
+  { 1, 3, 6, 12,
+  /* then since inches are divided by 2, continue by 2-divisions. */
+    24, 48, 96, 192 }
 };
 
 static const RulerMetric ruler_metric_yards =
 {
-  { 1, 2, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
-  { 1, 3, 6, 12, 12 * 12 }
+  /* 1 fathom = 2 yards. Should we go back to base-10 digits? */
+  { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+
+  /* 1 yard = 3 feet = 36 inches. */
+  { 1, 3, 6, 12, 36,
+  /* Then divide by 2, inch style */
+    72, 144, 288 }
 };
 
 
@@ -1389,6 +1402,13 @@ gimp_ruler_get_metric (GimpUnit unit)
     {
       return  &ruler_metric_inches;
     }
+  /* XXX: recognizing feet or yard unit this way definitely sucks.
+   * Actually the subdvision and rule scale rules should probably become
+   * settable values in unitrc instead of hardcoded rules.
+   * This way, people would be able to set how they want a unit to be
+   * shown (we could definitely imagine someone wanting to see inches
+   * with base-10 divisions).
+   */
   else if (FACTOR_EQUAL (unit, 0.083333))
     {
       return  &ruler_metric_feet;
