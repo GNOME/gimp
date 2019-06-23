@@ -1385,9 +1385,6 @@ gimp_ruler_get_layout (GtkWidget   *widget,
 static const RulerMetric *
 gimp_ruler_get_metric (GimpUnit unit)
 {
-  /*  not enabled until we double checked the metrics  */
-  return &ruler_metric_decimal;
-
   if (unit == GIMP_UNIT_INCH)
     {
       return  &ruler_metric_inches;
