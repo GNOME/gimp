@@ -98,18 +98,18 @@ static const RulerMetric ruler_metric_inches =
   { 1, 2, 6, 12, 36, 72, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
 
   /* Inches are divided by multiples of 2. */
-  { 1, 2, 4, 8, 16, 32, 64, 128, 256 }
+  { 1, 2, 4, 8, 16 }
 };
 
 static const RulerMetric ruler_metric_feet =
 {
   /* 3 feet = 1 yard; 6 feet = 1 fathom */
-  { 1, 3, 6, 12, 36, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
+  { 1, 3, 6, 12, 36, 72, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
 
-  /* 1 foot = 12 inches, so let's divide up to 12. */
+  /* 1 foot = 12 inches, so let's divide up to 12, */
   { 1, 3, 6, 12,
-  /* then since inches are divided by 2, continue by 2-divisions. */
-    24, 48, 96, 192 }
+  /* then divide the inch by 2. */
+    24 }
 };
 
 static const RulerMetric ruler_metric_yards =
@@ -118,9 +118,7 @@ static const RulerMetric ruler_metric_yards =
   { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
 
   /* 1 yard = 3 feet = 36 inches. */
-  { 1, 3, 6, 12, 36,
-  /* Then divide by 2, inch style */
-    72, 144, 288 }
+  { 1, 3, 6, 12, 36 }
 };
 
 
