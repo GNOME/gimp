@@ -310,7 +310,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) && ! config->edit_non_visible)
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      ! config->edit_non_visible)
     {
       gimp_tool_message_literal (tool, display,
                                  _("The active layer is not visible."));
@@ -495,7 +496,8 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
           gimp_item_is_content_locked (GIMP_ITEM (drawable))                  ||
           ! gimp_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
-          ! (gimp_item_is_visible (GIMP_ITEM (drawable)) || config->edit_non_visible))
+          ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
+             config->edit_non_visible))
         {
           modifier        = GIMP_CURSOR_MODIFIER_BAD;
           toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;

@@ -688,7 +688,8 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
       return FALSE;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) && ! config->edit_non_visible)
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      ! config->edit_non_visible)
     {
       if (show_message)
         {
