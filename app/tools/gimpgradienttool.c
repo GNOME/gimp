@@ -262,7 +262,8 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) && ! config->edit_non_visible)
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)) &&
+      ! config->edit_non_visible)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("The active layer is not visible."));
@@ -453,7 +454,8 @@ gimp_gradient_tool_cursor_update (GimpTool         *tool,
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
       gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
-      ! (gimp_item_is_visible (GIMP_ITEM (drawable)) || config->edit_non_visible))
+      ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
+         config->edit_non_visible))
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),

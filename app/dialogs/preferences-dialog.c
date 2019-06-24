@@ -1645,8 +1645,8 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "edit-non-visible",
-  _("Allow _editing on non-visible layers"),
-  GTK_BOX (vbox2));
+                          _("Allow _editing on non-visible layers"),
+                          GTK_BOX (vbox2));
 
   prefs_check_button_add (object, "save-tool-options",
                           _("_Save tool options on exit"),
