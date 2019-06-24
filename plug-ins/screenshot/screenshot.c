@@ -752,7 +752,7 @@ shoot_dialog (GdkScreen **screen)
       gtk_widget_show (table);
     }
 
-  label = gtk_label_new (_("Screenshot delay: "));
+  label = gtk_label_new_with_mnemonic (_("Screenshot dela_y: "));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
@@ -764,6 +764,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_table_attach (GTK_TABLE (table), spinner, 1, 2, 0, 1,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (spinner));
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
