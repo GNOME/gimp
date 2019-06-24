@@ -748,7 +748,7 @@ shoot_dialog (GdkMonitor **monitor)
       gtk_widget_show (grid);
     }
 
-  label = gtk_label_new (_("Screenshot delay: "));
+  label = gtk_label_new_with_mnemonic (_("Screenshot dela_y: "));
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
@@ -757,6 +757,7 @@ shoot_dialog (GdkMonitor **monitor)
   spinner = gimp_spin_button_new (adj, 0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (spinner));
   gtk_widget_show (spinner);
 
   g_signal_connect (adj, "value-changed",
