@@ -429,6 +429,9 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
+  format = babl_format_with_space (babl_format_get_encoding (format),
+                                   gimp_drawable_get_format (drawable_ID));
+
   /* Step 3: set parameters for compression */
 
   /* First we supply a description of the input image.
