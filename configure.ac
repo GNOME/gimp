@@ -65,7 +65,7 @@ m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([intltool_required_version], [0.40.1])
 m4_define([lcms_required_version], [2.8])
 m4_define([libgudev_required_version], [167])
-m4_define([libheif_required_version], [1.4.0])
+m4_define([libheif_required_version], [1.3.2])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([libmypaint_required_version], [1.3.0])
 m4_define([libpng_required_version], [1.6.25])
@@ -1776,7 +1776,10 @@ AC_ARG_WITH(libheif, [  --without-libheif       build without libheif support])
 
 have_libheif=no
 if test "x$with_libheif" != xno; then
+  have_libheif_1_4_0=yes
   have_libheif=yes
+  PKG_CHECK_MODULES(LIBHEIF, libheif >= 1.4.0,,
+    [have_libheif_1_4_0="no (libheif >= 1.4.0 not found)"])
   PKG_CHECK_MODULES(LIBHEIF, libheif >= libheif_required_version,
     FILE_HEIF='file-heif$(EXEEXT)',
     [have_libheif="no (libheif not found)"])
@@ -1788,6 +1791,11 @@ fi
 
 AC_SUBST(FILE_HEIF)
 AM_CONDITIONAL(HAVE_LIBHEIF, test "x$have_libheif" = xyes)
+
+if test "x$have_libheif_1_4_0" = xyes; then
+  AC_DEFINE(HAVE_LIBHEIF_1_4_0, 1,
+            [Define to 1 if libheif >= 1.4.0 is available])
+fi
 
 
 ########################
@@ -3010,6 +3018,7 @@ Optional Plug-Ins:
   OpenEXR:                   $have_openexr
   WebP:                      $have_webp
   Heif:                      $have_libheif
+  Heif >= 1.4.0:             $have_libheif_1_4_0
   PDF (export):              $have_cairo_pdf
   Print:                     $enable_print
   Python 2:                  $enable_python

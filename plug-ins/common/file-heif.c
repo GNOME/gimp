@@ -479,6 +479,7 @@ load_image (GFile     *file,
      return -1;
     }
 
+#ifdef HAVE_LIBHEIF_1_4_0
   switch (heif_image_handle_get_color_profile_type (handle))
     {
     case heif_color_profile_type_not_present:
@@ -506,6 +507,7 @@ load_image (GFile     *file,
           g_free (profile_data);
         }
       break;
+
     default:
       /* heif_color_profile_type_nclx (what is that?) and any future
        * profile type which we don't support in GIMP (yet).
@@ -514,6 +516,7 @@ load_image (GFile     *file,
                  G_STRFUNC);
       break;
     }
+#endif /* HAVE_LIBHEIF_1_4_0 */
 
   gimp_progress_update (0.75);
 
@@ -697,11 +700,13 @@ save_image (GFile             *file,
 
   if (profile)
     {
+#ifdef HAVE_LIBHEIF_1_4_0
       const guint8 *icc_data;
       gsize         icc_length;
 
       icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
       heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
+#endif /* HAVE_LIBHEIF_1_4_0 */
       g_object_unref (profile);
     }
 
