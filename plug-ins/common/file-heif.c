@@ -545,9 +545,11 @@ load_image (GFile     *file,
   buffer = gimp_drawable_get_buffer (layer_ID);
 
   if (has_alpha)
-    format = babl_format ("R'G'B'A u8");
+    format = babl_format_with_space ("R'G'B'A u8",
+                                     gegl_buffer_get_format (buffer));
   else
-    format = babl_format ("R'G'B' u8");
+    format = babl_format_with_space ("R'G'B' u8",
+                                     gegl_buffer_get_format (buffer));
 
   data = heif_image_get_plane_readonly (img, heif_channel_interleaved,
                                         &stride);
@@ -718,9 +720,11 @@ save_image (GFile             *file,
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
   if (has_alpha)
-    format = babl_format ("R'G'B'A u8");
+    format = babl_format_with_space ("R'G'B'A u8",
+                                     gegl_buffer_get_format (buffer));
   else
-    format = babl_format ("R'G'B' u8");
+    format = babl_format_with_space ("R'G'B' u8",
+                                     gegl_buffer_get_format (buffer));
 
   gegl_buffer_get (buffer,
                    GEGL_RECTANGLE (0, 0, width, height),
