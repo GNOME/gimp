@@ -553,12 +553,8 @@ gimp_settings_box_setting_selected (GimpContainerView *view,
                                     GimpSettingsBox   *box)
 {
   if (object)
-    {
-      g_signal_emit (box, settings_box_signals[SELECTED], 0,
-                     object);
-
-      gimp_container_view_select_item (view, NULL);
-    }
+    g_signal_emit (box, settings_box_signals[SELECTED], 0,
+                   object);
 }
 
 static gboolean
@@ -960,4 +956,16 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
   gimp_settings_box_truncate_list (box, max_recent);
 
   gimp_operation_config_serialize (private->gimp, private->container, NULL);
+}
+
+void
+gimp_settings_box_unset (GimpSettingsBox *box)
+{
+  GimpSettingsBoxPrivate *private;
+
+  g_return_if_fail (GIMP_IS_SETTINGS_BOX (box));
+
+  private = GET_PRIVATE (box);
+
+  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->combo), NULL);
 }

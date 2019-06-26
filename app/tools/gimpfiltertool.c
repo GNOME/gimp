@@ -163,6 +163,9 @@ static void      gimp_filter_tool_flush          (GimpDrawableFilter  *filter,
 static void      gimp_filter_tool_config_notify  (GObject             *object,
                                                   const GParamSpec    *pspec,
                                                   GimpFilterTool      *filter_tool);
+static void      gimp_filter_tool_unset_setting  (GObject             *object,
+                                                  const GParamSpec    *pspec,
+                                                  GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_mask_changed   (GimpImage           *image,
                                                   GimpFilterTool      *filter_tool);
 
@@ -1001,6 +1004,9 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
       g_signal_handlers_disconnect_by_func (filter_tool->config,
                                             gimp_filter_tool_config_notify,
                                             filter_tool);
+      g_signal_handlers_disconnect_by_func (filter_tool->config,
+                                            gimp_filter_tool_unset_setting,
+                                            filter_tool);
       g_clear_object (&filter_tool->config);
     }
 
@@ -1138,6 +1144,18 @@ gimp_filter_tool_config_notify (GObject          *object,
   GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->config_notify (filter_tool,
                                                            GIMP_CONFIG (object),
                                                            pspec);
+}
+
+static void
+gimp_filter_tool_unset_setting (GObject          *object,
+                                const GParamSpec *pspec,
+                                GimpFilterTool   *filter_tool)
+{
+  g_signal_handlers_disconnect_by_func (filter_tool->config,
+                                        gimp_filter_tool_unset_setting,
+                                        filter_tool);
+
+  gimp_settings_box_unset (GIMP_SETTINGS_BOX (filter_tool->settings_box));
 }
 
 static void
@@ -1421,6 +1439,9 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
       g_signal_handlers_disconnect_by_func (filter_tool->config,
                                             gimp_filter_tool_config_notify,
                                             filter_tool);
+      g_signal_handlers_disconnect_by_func (filter_tool->config,
+                                            gimp_filter_tool_unset_setting,
+                                            filter_tool);
       g_clear_object (&filter_tool->config);
     }
 
@@ -1516,10 +1537,22 @@ gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
   g_return_if_fail (GIMP_IS_SETTINGS (config));
 
+  /* if the user didn't change a setting since the last set_config(),
+   * this handler is still connected
+   */
+  g_signal_handlers_disconnect_by_func (filter_tool->config,
+                                        gimp_filter_tool_unset_setting,
+                                        filter_tool);
+
   GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->set_config (filter_tool, config);
 
   if (filter_tool->widget)
     gimp_filter_tool_reset_widget (filter_tool, filter_tool->widget);
+
+  if (filter_tool->settings_box)
+    g_signal_connect_object (filter_tool->config, "notify",
+                             G_CALLBACK (gimp_filter_tool_unset_setting),
+                             G_OBJECT (filter_tool), 0);
 }
 
 void

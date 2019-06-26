@@ -70,5 +70,7 @@ GtkWidget * gimp_settings_box_get_combo   (GimpSettingsBox *box);
 void        gimp_settings_box_add_current (GimpSettingsBox *box,
                                            gint             max_recent);
 
+void        gimp_settings_box_unset       (GimpSettingsBox *box);
+
 
 #endif  /*  __GIMP_SETTINGS_BOX_H__  */
