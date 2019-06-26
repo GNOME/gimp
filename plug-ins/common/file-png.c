@@ -1524,8 +1524,9 @@ save_image (const gchar  *filename,
       else
         {
           /* When converting higher bit depth work image into 8-bit,
-           * with no manually assigned profile, make sure the result if
-           * sRGB. */
+           * with no manually assigned profile, make sure the result is
+           * sRGB.
+           */
           profile = gimp_image_get_effective_color_profile (orig_image_ID);
 
           if (gimp_color_profile_is_linear (profile))
@@ -1536,7 +1537,6 @@ save_image (const gchar  *filename,
               g_object_unref (profile);
               profile = saved_profile;
             }
-
         }
     }
 #endif
