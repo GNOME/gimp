@@ -378,11 +378,13 @@ load_image (const gchar  *filename,
 static void
 sanitize_comment (gchar *comment)
 {
-  if (! g_utf8_validate (comment, -1, NULL))
-    {
-      gchar *c;
+  const gchar *start_invalid;
 
-      for (c = comment; *c; c++)
+  if (! g_utf8_validate (comment, -1, &start_invalid))
+    {
+      guchar *c;
+
+      for (c = (guchar *) start_invalid; *c; c++)
         {
           if (*c > 126 || (*c < 32 && *c != '\t' && *c != '\n' && *c != '\r'))
             *c = '?';
