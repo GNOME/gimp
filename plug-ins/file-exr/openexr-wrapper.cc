@@ -1,4 +1,25 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "config.h"
+
+#include <string>
+
+#include <lcms2.h>
 
 /*  These libgimp includes are not needed here at all, but this is a
  *  convenient place to make sure the public libgimp headers are
@@ -7,9 +28,13 @@
  */
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
-
-#include "openexr-wrapper.h"
+#include "libgimpconfig/gimpconfig.h"
+#include "libgimpmodule/gimpmodule.h"
+#include "libgimpthumb/gimpthumb.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #if defined(__MINGW32__)
 #ifndef FLT_EPSILON
@@ -29,9 +54,8 @@
 #include <ImfRgbaYca.h>
 #include <ImfStandardAttributes.h>
 
-#include <string>
-
 #include "exr-attribute-blob.h"
+#include "openexr-wrapper.h"
 
 using namespace Imf;
 using namespace Imf::RgbaYca;
