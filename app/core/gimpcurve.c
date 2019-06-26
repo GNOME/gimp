@@ -269,7 +269,7 @@ gimp_curve_set_property (GObject      *object,
         length = gimp_value_array_length (array) / 2;
 
         n_points = 0;
-        points   = g_new (GimpCurvePoint, length);
+        points   = g_new0 (GimpCurvePoint, length);
 
         for (i = 0; i < length; i++)
           {
@@ -325,7 +325,7 @@ gimp_curve_set_property (GObject      *object,
 
         length = gimp_value_array_length (array);
 
-        points = g_new (GimpCurvePoint, length);
+        points = g_new0 (GimpCurvePoint, length);
 
         for (i = 0; i < length; i++)
           {
@@ -686,7 +686,7 @@ gimp_curve_reset (GimpCurve *curve,
   g_free (curve->points);
 
   curve->n_points = 2;
-  curve->points   = g_new (GimpCurvePoint, 2);
+  curve->points   = g_new0 (GimpCurvePoint, 2);
 
   curve->points[0].x    = 0.0;
   curve->points[0].y    = 0.0;
@@ -737,7 +737,7 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
            *  points
            */
           curve->n_points = 9;
-          curve->points   = g_new (GimpCurvePoint, 9);
+          curve->points   = g_new0 (GimpCurvePoint, 9);
 
           for (i = 0; i < curve->n_points; i++)
             {
@@ -901,7 +901,7 @@ gimp_curve_add_point (GimpCurve *curve,
         break;
     }
 
-  points = g_new (GimpCurvePoint, curve->n_points + 1);
+  points = g_new0 (GimpCurvePoint, curve->n_points + 1);
 
   memcpy (points,         curve->points,
           point * sizeof (GimpCurvePoint));
@@ -935,7 +935,7 @@ gimp_curve_delete_point (GimpCurve *curve,
   g_return_if_fail (GIMP_IS_CURVE (curve));
   g_return_if_fail (point >= 0 && point < curve->n_points);
 
-  points = g_new (GimpCurvePoint, curve->n_points - 1);
+  points = g_new0 (GimpCurvePoint, curve->n_points - 1);
 
   memcpy (points,         curve->points,
           point * sizeof (GimpCurvePoint));
