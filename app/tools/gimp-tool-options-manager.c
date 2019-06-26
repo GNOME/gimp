@@ -34,6 +34,8 @@
 
 #include "paint/gimppaintoptions.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimp-tool-options-manager.h"
 
 
@@ -422,6 +424,13 @@ tool_options_manager_tool_changed (GimpContext            *user_context,
   if (manager->active_tool)
     {
       GimpToolInfo *active = manager->active_tool;
+
+      /*  make sure the tool options GUI always exists, this call
+       *  creates it if needed, so tools always have their option GUI
+       *  available even if the tool options dockable is not open, see
+       *  for example issue #3435
+       */
+      gimp_tools_get_tool_options_gui (active->tool_options);
 
       /*  copy the new tool's context properties that are not
        *  currently global to the user context, so they get used by
