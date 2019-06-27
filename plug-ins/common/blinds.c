@@ -57,11 +57,6 @@ typedef struct data
   gboolean bg_trans;
 } BlindVals;
 
-/* Array to hold each size of fans. And no there are not each the
- * same size (rounding errors...)
- */
-
-static gint fanwidths[MAX_FANS];
 
 static void      query  (void);
 static void      run    (const gchar      *name,
@@ -70,19 +65,18 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gboolean  blinds_dialog         (GimpDrawable  *drawable);
+static gboolean  blinds_dialog         (gint32         drawable_id);
 
-static void      dialog_update_preview (GimpDrawable  *drawable,
+static void      dialog_update_preview (gpointer       drawable_id,
                                         GimpPreview   *preview);
-static void      apply_blinds          (GimpDrawable  *drawable);
+static void      apply_blinds          (gint32         drawable_id);
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
-};
+
+/* Array to hold each size of fans. And no there are not each the
+ * same size (rounding errors...)
+ */
+
+static gint fanwidths[MAX_FANS];
 
 /* Values when first invoked */
 static BlindVals bvals =
@@ -93,7 +87,17 @@ static BlindVals bvals =
   FALSE
 };
 
+const GimpPlugInInfo PLUG_IN_INFO =
+{
+  NULL,    /* init_proc */
+  NULL,    /* quit_proc */
+  query,   /* query_proc */
+  run,     /* run_proc */
+};
+
+
 MAIN ()
+
 
 static void
 query (void)
@@ -129,37 +133,35 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
+  static GimpParam  values[1];
+  gint32            drawable_id;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
-  run_mode = param[0].data.d_int32;
-
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  drawable_id = param[2].data.d_drawable;
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &bvals);
-      if (! blinds_dialog (drawable))
-        {
-          gimp_drawable_detach (drawable);
-          return;
-        }
+      if (! blinds_dialog (drawable_id))
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 7)
         status = GIMP_PDB_CALLING_ERROR;
+
       if (status == GIMP_PDB_SUCCESS)
         {
           bvals.angledsp    = param[3].data.d_int32;
@@ -177,12 +179,12 @@ run (const gchar      *name,
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-      gimp_drawable_is_gray (drawable->drawable_id))
+  if (gimp_drawable_is_rgb  (drawable_id) ||
+      gimp_drawable_is_gray (drawable_id))
     {
       gimp_progress_init (_("Adding blinds"));
 
-      apply_blinds (drawable);
+      apply_blinds (drawable_id);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -196,13 +198,11 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-
-  gimp_drawable_detach (drawable);
 }
 
 
 static gboolean
-blinds_dialog (GimpDrawable *drawable)
+blinds_dialog (gint32 drawable_id)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -240,13 +240,13 @@ blinds_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new_from_drawable_id (drawable->drawable_id);
+  preview = gimp_aspect_preview_new_from_drawable_id (drawable_id);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (dialog_update_preview),
-                            drawable);
+                            GINT_TO_POINTER (drawable_id));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -291,7 +291,7 @@ blinds_dialog (GimpDrawable *drawable)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bvals.bg_trans);
 
-  if (!gimp_drawable_has_alpha (drawable->drawable_id))
+  if (! gimp_drawable_has_alpha (drawable_id))
     {
       gtk_widget_set_sensitive (toggle, FALSE);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
@@ -442,9 +442,10 @@ blindsapply (guchar *srow,
 }
 
 static void
-dialog_update_preview (GimpDrawable *drawable,
-                       GimpPreview  *preview)
+dialog_update_preview (gpointer     drawable_ptr,
+                       GimpPreview *preview)
 {
+  gint32   drawable_id = GPOINTER_TO_INT (drawable_ptr);
   gint     y;
   guchar  *p, *buffer, *cache;
   GimpRGB  background;
@@ -452,8 +453,7 @@ dialog_update_preview (GimpDrawable *drawable,
   gint     width, height, bpp;
 
   gimp_preview_get_size (preview, &width, &height);
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+  cache = gimp_drawable_get_thumbnail_data (drawable_id,
                                             &width, &height, &bpp);
   p = cache;
 
@@ -462,7 +462,15 @@ dialog_update_preview (GimpDrawable *drawable,
   if (bvals.bg_trans)
     gimp_rgb_set_alpha (&background, 0.0);
 
-  gimp_drawable_get_color_uchar (drawable->drawable_id, &background, bg);
+  if (gimp_drawable_is_gray (drawable_id))
+    {
+      bg[0] = gimp_rgb_luminance_uchar (&background);
+      gimp_rgba_get_uchar (&background, NULL, NULL, NULL, bg + 3);
+    }
+  else
+    {
+      gimp_rgba_get_uchar (&background, bg, bg + 1, bg + 2, bg + 3);
+    }
 
   buffer = g_new (guchar, width * height * bpp);
 
@@ -549,36 +557,43 @@ dialog_update_preview (GimpDrawable *drawable,
 #define STEP 40
 
 static void
-apply_blinds (GimpDrawable *drawable)
+apply_blinds (gint32 drawable_id)
 {
-  GimpPixelRgn  des_rgn;
-  GimpPixelRgn  src_rgn;
-  guchar       *src_rows, *des_rows;
-  gint          x, y;
-  GimpRGB       background;
-  guchar        bg[4];
-  gint          sel_x1, sel_y1;
-  gint          sel_width, sel_height;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  guchar     *src_rows, *des_rows;
+  gint        bytes;
+  gint        x, y;
+  GimpRGB     background;
+  guchar      bg[4];
+  gint        sel_x1, sel_y1;
+  gint        sel_width, sel_height;
 
   gimp_context_get_background (&background);
 
   if (bvals.bg_trans)
     gimp_rgb_set_alpha (&background, 0.0);
 
-  gimp_drawable_get_color_uchar (drawable->drawable_id, &background, bg);
+  gimp_rgba_get_uchar (&background, bg, bg + 1, bg + 2, bg + 3);
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_id,
                                       &sel_x1, &sel_y1,
                                       &sel_width, &sel_height))
     return;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&des_rgn, drawable,
-                       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
+  if (gimp_drawable_has_alpha (drawable_id))
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
 
-  src_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP);
-  des_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP);
+  bytes = babl_format_get_bytes_per_pixel (format);
+
+  src_buffer  = gimp_drawable_get_buffer (drawable_id);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+
+  src_rows = g_new (guchar, MAX (sel_width, sel_height) * bytes * STEP);
+  des_rows = g_new (guchar, MAX (sel_width, sel_height) * bytes * STEP);
 
   if (bvals.orientation == GIMP_ORIENTATION_VERTICAL)
     {
@@ -587,30 +602,28 @@ apply_blinds (GimpDrawable *drawable)
           gint rr;
           gint step;
 
-          if((y + STEP) > sel_height)
+          if ((y + STEP) > sel_height)
             step = sel_height - y;
           else
             step = STEP;
 
-          gimp_pixel_rgn_get_rect (&src_rgn,
-                                   src_rows,
-                                   sel_x1,
-                                   sel_y1 + y,
-                                   sel_width,
-                                   step);
+          gegl_buffer_get (src_buffer,
+                           GEGL_RECTANGLE (sel_x1, sel_y1 + y,
+                                           sel_width, step), 1.0,
+                           format, src_rows,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
           /* OK I could make this better */
           for (rr = 0; rr < STEP; rr++)
-            blindsapply (src_rows + (sel_width * rr * src_rgn.bpp),
-                         des_rows + (sel_width * rr * src_rgn.bpp),
-                         sel_width, src_rgn.bpp, bg);
+            blindsapply (src_rows + (sel_width * rr * bytes),
+                         des_rows + (sel_width * rr * bytes),
+                         sel_width, bytes, bg);
 
-          gimp_pixel_rgn_set_rect (&des_rgn,
-                                   des_rows,
-                                   sel_x1,
-                                   sel_y1 + y,
-                                   sel_width,
-                                   step);
+          gegl_buffer_set (dest_buffer,
+                           GEGL_RECTANGLE (sel_x1, sel_y1 + y,
+                                           sel_width, step), 0,
+                           format, des_rows,
+                           GEGL_AUTO_ROWSTRIDE);
 
           gimp_progress_update ((double) y / (double) sel_height);
         }
@@ -623,13 +636,13 @@ apply_blinds (GimpDrawable *drawable)
        * rows. Make row 0 invalid so we can find it again!
        */
       gint    i;
-      gint   *sr  = g_new (gint, sel_height * 4);
-      gint   *dr  = g_new (gint, sel_height * 4);
-      guchar *dst = g_new (guchar, STEP * 4);
+      gint   *sr  = g_new (gint, sel_height * bytes);
+      gint   *dr  = g_new (gint, sel_height * bytes);
+      guchar *dst = g_new (guchar, STEP * bytes);
       guchar  dummybg[4];
 
       memset (dummybg, 0, 4);
-      memset (dr, 0, sel_height * 4); /* all dr rows are background rows */
+      memset (dr, 0, sel_height * bytes); /* all dr rows are background rows */
       for (y = 0; y < sel_height; y++)
         {
           sr[y] = y+1;
@@ -647,9 +660,9 @@ apply_blinds (GimpDrawable *drawable)
         {
           int     j;
           guchar *bgdst;
-          bgdst = &dst[i * src_rgn.bpp];
+          bgdst = &dst[i * bytes];
 
-          for (j = 0 ; j < src_rgn.bpp; j++)
+          for (j = 0 ; j < bytes; j++)
             {
               bgdst[j] = bg[j];
             }
@@ -666,12 +679,11 @@ apply_blinds (GimpDrawable *drawable)
           else
             step = STEP;
 
-          gimp_pixel_rgn_get_rect (&src_rgn,
-                                   src_rows,
-                                   sel_x1 + x,
-                                   sel_y1,
-                                   step,
-                                   sel_height);
+          gegl_buffer_get (src_buffer,
+                           GEGL_RECTANGLE (sel_x1 + x, sel_y1,
+                                           step, sel_height), 1.0,
+                           format, src_rows,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
           /* OK I could make this better */
           for (rr = 0; rr < sel_height; rr++)
@@ -684,18 +696,17 @@ apply_blinds (GimpDrawable *drawable)
               else
                 {
                   /* Draw line from src */
-                  p = src_rows + (step * src_rgn.bpp * (dr[rr] - 1));
+                  p = src_rows + (step * bytes * (dr[rr] - 1));
                 }
-              memcpy (des_rows + (rr * step * src_rgn.bpp), p,
-                      step * src_rgn.bpp);
+              memcpy (des_rows + (rr * step * bytes), p,
+                      step * bytes);
             }
 
-          gimp_pixel_rgn_set_rect (&des_rgn,
-                                   des_rows,
-                                   sel_x1 + x,
-                                   sel_y1,
-                                   step,
-                                   sel_height);
+          gegl_buffer_set (dest_buffer,
+                           GEGL_RECTANGLE (sel_x1 + x, sel_y1,
+                                           step, sel_height), 0,
+                           format, des_rows,
+                           GEGL_AUTO_ROWSTRIDE);
 
           gimp_progress_update ((double) x / (double) sel_width);
         }
@@ -708,9 +719,12 @@ apply_blinds (GimpDrawable *drawable)
   g_free (src_rows);
   g_free (des_rows);
 
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
+
   gimp_progress_update (1.0);
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id,
+
+  gimp_drawable_merge_shadow (drawable_id, TRUE);
+  gimp_drawable_update (drawable_id,
                         sel_x1, sel_y1, sel_width, sel_height);
 }
