@@ -227,10 +227,28 @@ do_checkerboard_pattern (GimpDrawable *drawable,
   GimpRGB              color;
 
   gimp_context_get_background (&color);
-  gimp_drawable_get_color_uchar (drawable->drawable_id, &color, param.bg);
+  if (gimp_drawable_is_gray (drawable->drawable_id))
+    {
+      param.bg[0] = gimp_rgb_luminance_uchar (&color);
+      gimp_rgba_get_uchar (&color, NULL, NULL, NULL, param.bg + 3);
+    }
+  else
+    {
+      gimp_rgba_get_uchar (&color,
+                           param.bg, param.bg + 1, param.bg + 2, param.bg + 3);
+    }
 
   gimp_context_get_foreground (&color);
-  gimp_drawable_get_color_uchar (drawable->drawable_id, &color, param.fg);
+  if (gimp_drawable_is_gray (drawable->drawable_id))
+    {
+      param.fg[0] = gimp_rgb_luminance_uchar (&color);
+      gimp_rgba_get_uchar (&color, NULL, NULL, NULL, param.fg + 3);
+    }
+  else
+    {
+      gimp_rgba_get_uchar (&color,
+                           param.fg, param.fg + 1, param.fg + 2, param.fg + 3);
+    }
 
   if (cvals.size < 1)
     {
