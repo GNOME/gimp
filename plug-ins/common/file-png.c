@@ -1485,6 +1485,7 @@ save_image (const gchar  *filename,
   gboolean          out_linear;       /* Save linear RGB */
   GeglBuffer       *buffer;           /* GEGL buffer for layer */
   const Babl       *file_format;      /* BABL format of file */
+  const Babl       *space;
   png_structp       pp;               /* PNG read pointer */
   png_infop         info;             /* PNG info pointer */
   gint              offx, offy;       /* Drawable offsets from origin */
@@ -1504,6 +1505,7 @@ save_image (const gchar  *filename,
   png_textp         text = NULL;
 
   out_linear = FALSE;
+  space      = gimp_drawable_get_format (drawable_ID);
 #if defined(PNG_iCCP_SUPPORTED)
   /* If no profile is written: export as sRGB.
    * If manually assigned profile written: follow its TRC.
@@ -1546,6 +1548,23 @@ save_image (const gchar  *filename,
               g_object_unref (profile);
               profile = saved_profile;
             }
+        }
+
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* XXX: the profile space should normally be the same one as
+           * the drawable's so let's continue with it. We were mostly
+           * getting the profile space to be complete. Still let's
+           * display the error to standard error channel because if the
+           * space could not be extracted, there is a problem somewhere!
+           */
+          g_printerr ("%s: error getting the profile space: %s",
+                     G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+          space = gimp_drawable_get_format (drawable_ID);
         }
     }
 #endif
@@ -1819,7 +1838,7 @@ save_image (const gchar  *filename,
 
   if (! babl_format_is_palette (file_format))
     file_format = babl_format_with_space (babl_format_get_encoding (file_format),
-                                          gimp_drawable_get_format (drawable_ID));
+                                          space);
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
