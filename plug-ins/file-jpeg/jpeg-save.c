@@ -273,6 +273,7 @@ save_image (const gchar  *filename,
   GimpImageType     drawable_type;
   GeglBuffer       *buffer;
   const Babl       *format;
+  const Babl       *space;
   JpegSubsampling   subsampling;
   FILE             * volatile outfile;
   guchar           *data;
@@ -285,6 +286,7 @@ save_image (const gchar  *filename,
 
   drawable_type = gimp_drawable_type (drawable_ID);
   buffer = gimp_drawable_get_buffer (drawable_ID);
+  space = gimp_drawable_get_format (drawable_ID);
 
   if (! preview)
     gimp_progress_init_printf (_("Exporting '%s'"),
@@ -373,6 +375,22 @@ save_image (const gchar  *filename,
                 }
             }
         }
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* XXX: the profile space should normally be the same one as
+           * the drawable's so let's continue with it. We were mostly
+           * getting the profile space to be complete. Still let's
+           * display the error to standard error channel because if the
+           * space could not be extracted, there is a problem somewhere!
+           */
+          g_printerr ("%s: error getting the profile space: %s",
+                     G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+          space = gimp_drawable_get_format (drawable_ID);
+        }
     }
 
   jpeg_stdio_dest (&cinfo, outfile);
@@ -429,8 +447,7 @@ save_image (const gchar  *filename,
       return FALSE;
     }
 
-  format = babl_format_with_space (babl_format_get_encoding (format),
-                                   gimp_drawable_get_format (drawable_ID));
+  format = babl_format_with_space (babl_format_get_encoding (format), space);
 
   /* Step 3: set parameters for compression */
 
