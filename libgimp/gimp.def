@@ -205,7 +205,6 @@ EXPORTS
 	gimp_drawable_free_shadow
 	gimp_drawable_get
 	gimp_drawable_get_buffer
-	gimp_drawable_get_color_uchar
 	gimp_drawable_get_format
 	gimp_drawable_get_pixel
 	gimp_drawable_get_shadow_buffer
