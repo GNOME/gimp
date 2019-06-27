@@ -58,11 +58,6 @@ GimpTile     * gimp_drawable_get_tile               (GimpDrawable  *drawable,
                                                      gboolean       shadow,
                                                      gint           row,
                                                      gint           col);
-GIMP_DEPRECATED_FOR(gimp_drawable_get_buffer)
-GimpTile     * gimp_drawable_get_tile2              (GimpDrawable  *drawable,
-                                                     gboolean       shadow,
-                                                     gint           x,
-                                                     gint           y);
 
 guchar       * gimp_drawable_get_thumbnail_data     (gint32         drawable_ID,
                                                      gint          *width,

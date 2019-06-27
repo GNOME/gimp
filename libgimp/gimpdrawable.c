@@ -212,23 +212,6 @@ gimp_drawable_get_tile (GimpDrawable *drawable,
   return &tiles[tile_num];
 }
 
-GimpTile *
-gimp_drawable_get_tile2 (GimpDrawable *drawable,
-                         gboolean      shadow,
-                         gint          x,
-                         gint          y)
-{
-  gint row;
-  gint col;
-
-  g_return_val_if_fail (drawable != NULL, NULL);
-
-  col = x / TILE_WIDTH;
-  row = y / TILE_HEIGHT;
-
-  return gimp_drawable_get_tile (drawable, shadow, row, col);
-}
-
 guchar *
 gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
                                   gint   *width,
