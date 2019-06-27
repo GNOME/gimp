@@ -159,7 +159,7 @@ static PyObject *
 drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
     GimpTile *t;
-    int shadow, x, y;
+    int shadow, x, y, row, col;
 
     static char *kwlist[] = { "shadow", "x", "y", NULL };
 
@@ -174,7 +174,10 @@ drw_get_tile2(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
         return Py_None;
     }
 
-    t = gimp_drawable_get_tile2(self->drawable, shadow, x, y);
+    col = x / TILE_WIDTH;
+    row = y / TILE_HEIGHT;
+
+    t = gimp_drawable_get_tile(self->drawable, shadow, col, row);
     return pygimp_tile_new(t, self);
 }
 
