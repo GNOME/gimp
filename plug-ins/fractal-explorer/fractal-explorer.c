@@ -95,7 +95,7 @@ gchar               *fractalexplorer_path = NULL;
 
 static gfloat        cx = -0.75;
 static gfloat        cy = -0.2;
-GimpDrawable        *drawable;
+gint32               drawable_id;
 static GList        *fractalexplorer_list = NULL;
 
 explorer_interface_t wint =
@@ -141,7 +141,7 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static void explorer            (GimpDrawable *drawable);
+static void explorer            (gint32 drawable_id);
 
 /**********************************************************************
  Declare local functions
@@ -266,8 +266,6 @@ run (const gchar      *name,
   gint               sel_width;
   gint               sel_height;
 
-  run_mode = param[0].data.d_int32;
-
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -275,11 +273,12 @@ run (const gchar      *name,
   *return_vals = values;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
-  /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  run_mode    = param[0].data.d_int32;
+  drawable_id = param[2].data.d_drawable;
 
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_id,
                                       &sel_x, &sel_y,
                                       &sel_width, &sel_height))
     return;
@@ -362,32 +361,20 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      /*  Make sure that the drawable is not indexed */
-      if (! gimp_drawable_is_indexed (drawable->drawable_id))
-        {
-          gimp_progress_init (_("Rendering fractal"));
+      gimp_progress_init (_("Rendering fractal"));
 
-          /* Set the tile cache size */
-          gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
-          /* Run! */
+      explorer (drawable_id);
 
-          explorer (drawable);
-          if (run_mode != GIMP_RUN_NONINTERACTIVE)
-            gimp_displays_flush ();
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
 
-          /* Store data */
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            gimp_set_data ("plug_in_fractalexplorer",
-                           &wvals, sizeof (explorer_vals_t));
-        }
-      else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
+      /* Store data */
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_set_data ("plug_in_fractalexplorer",
+                       &wvals, sizeof (explorer_vals_t));
     }
-  values[0].data.d_status = status;
 
-  gimp_drawable_detach (drawable);
+  values[0].data.d_status = status;
 }
 
 /**********************************************************************
@@ -395,20 +382,21 @@ run (const gchar      *name,
  *********************************************************************/
 
 static void
-explorer (GimpDrawable * drawable)
+explorer (gint32 drawable_id)
 {
-  GimpPixelRgn  srcPR;
-  GimpPixelRgn  destPR;
-  gint          width;
-  gint          height;
-  gint          bpp;
-  gint          row;
-  gint          x;
-  gint          y;
-  gint          w;
-  gint          h;
-  guchar       *src_row;
-  guchar       *dest_row;
+  GeglBuffer *src_buffer;
+  GeglBuffer *dest_buffer;
+  const Babl *format;
+  gint        width;
+  gint        height;
+  gint        bpp;
+  gint        row;
+  gint        x;
+  gint        y;
+  gint        w;
+  gint        h;
+  guchar     *src_row;
+  guchar     *dest_row;
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
@@ -416,42 +404,39 @@ explorer (GimpDrawable * drawable)
    *  need to be done for correct operation. (It simply makes it go
    *  faster, since fewer pixels need to be operated on).
    */
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x, &y, &w, &h))
+  if (! gimp_drawable_mask_intersect (drawable_id, &x, &y, &w, &h))
     return;
 
   /* Get the size of the input image. (This will/must be the same
    *  as the size of the output image.
    */
-  width  = drawable->width;
-  height = drawable->height;
-  bpp  = drawable->bpp;
+  width  = gimp_drawable_width  (drawable_id);
+  height = gimp_drawable_height (drawable_id);
+
+  if (gimp_drawable_has_alpha (drawable_id))
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
+
+  bpp = babl_format_get_bytes_per_pixel (format);
 
   /*  allocate row buffers  */
   src_row  = g_new (guchar, bpp * w);
   dest_row = g_new (guchar, bpp * w);
 
-  /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  src_buffer  = gimp_drawable_get_buffer (drawable_id);
+  dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
 
   xbild = width;
   ybild = height;
   xdiff = (xmax - xmin) / xbild;
   ydiff = (ymax - ymin) / ybild;
 
-  /* for grayscale drawables */
-  if (bpp < 3)
-    {
-      gint     i;
-      for (i = 0; i < MAXNCOLORS; i++)
-          valuemap[i] = GIMP_RGB_LUMINANCE (colormap[i].r,
-                                            colormap[i].g,
-                                            colormap[i].b);
-    }
-
   for (row = y; row < y + h; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x, row, w);
+      gegl_buffer_get (src_buffer, GEGL_RECTANGLE (x, row, w, 1), 1.0,
+                       format, src_row,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       explorer_render_row (src_row,
                            dest_row,
@@ -459,21 +444,25 @@ explorer (GimpDrawable * drawable)
                            w,
                            bpp);
 
-      /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x, row, w);
+      gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (x, row, w, 1), 0,
+                       format, dest_row,
+                       GEGL_AUTO_ROWSTRIDE);
 
       if ((row % 10) == 0)
         gimp_progress_update ((double) row / (double) h);
     }
-  gimp_progress_update (1.0);
 
-  /*  update the processed region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x, y, w, h);
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 
   g_free (src_row);
   g_free (dest_row);
+
+  gimp_progress_update (1.0);
+
+  /*  update the processed region  */
+  gimp_drawable_merge_shadow (drawable_id, TRUE);
+  gimp_drawable_update (drawable_id, x, y, w, h);
 }
 
 /**********************************************************************
