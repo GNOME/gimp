@@ -71,6 +71,7 @@ GtkWidget    * gimp_drawable_preview_new                  (GimpDrawable        *
 GIMP_DEPRECATED_FOR(gimp_drawable_preview_get_drawable_id)
 GimpDrawable * gimp_drawable_preview_get_drawable         (GimpDrawablePreview *preview);
 
+GIMP_DEPRECATED_FOR(gimp_preview_draw_buffer)
 void           gimp_drawable_preview_draw_region          (GimpDrawablePreview *preview,
                                                            const GimpPixelRgn  *region);
 
