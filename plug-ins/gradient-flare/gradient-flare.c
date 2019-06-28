@@ -1634,26 +1634,67 @@ gflares_list_remove (GFlare *gflare)
  * Load all gflares, which are founded in gflare-path-list, into gflares_list.
  */
 static void
-gflares_list_load_one (const GimpDatafileData *file_data,
-                       gpointer                user_data)
-{
-  GFlare *gflare;
-
-  gflare = gflare_load (file_data->filename, file_data->basename);
-
-  if (gflare)
-    gflares_list_insert (gflare);
-}
-
-static void
 gflares_list_load_all (void)
 {
+  GList *path;
+  GList *list;
+
   /*  Make sure to clear any existing gflares  */
   gflares_list_free_all ();
 
-  gimp_datafiles_read_directories (gflare_path, G_FILE_TEST_EXISTS,
-                                   gflares_list_load_one,
-                                   NULL);
+  path = gimp_config_path_expand_to_files (gflare_path, NULL);
+
+  for (list = path; list; list = g_list_next (list))
+    {
+      GFileEnumerator *enumerator;
+
+      enumerator = g_file_enumerate_children (list->data,
+                                              G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                              G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                              G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                              G_FILE_QUERY_INFO_NONE,
+                                              NULL, NULL);
+
+      if (enumerator)
+        {
+          GFileInfo *info;
+
+          while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+            {
+              GFileType file_type = g_file_info_get_file_type (info);
+
+              if (file_type == G_FILE_TYPE_REGULAR &&
+                  ! g_file_info_get_is_hidden (info))
+                {
+                  GFlare *gflare;
+                  GFile  *child;
+                  gchar  *filename;
+                  gchar  *basename;
+
+                  child = g_file_enumerator_get_child (enumerator, info);
+
+                  filename = g_file_get_path (child);
+                  basename = g_file_get_basename (child);
+
+                  gflare = gflare_load (filename, basename);
+
+                  g_free (filename);
+                  g_free (basename);
+
+                  if (gflare)
+                    gflares_list_insert (gflare);
+
+                  g_object_unref (child);
+                }
+
+              g_object_unref (info);
+            }
+
+          g_object_unref (enumerator);
+        }
+    }
+
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 }
 
 static void
