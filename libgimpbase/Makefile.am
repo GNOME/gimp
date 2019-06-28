@@ -107,8 +107,6 @@ libgimpbase_sources = \
 	gimpchecks.h           	\
 	gimpcpuaccel.c		\
 	gimpcpuaccel.h		\
-	gimpdatafiles.c		\
-	gimpdatafiles.h		\
 	gimpenv.c		\
 	gimpenv.h		\
 	gimpmemsize.c		\
@@ -156,7 +154,6 @@ libgimpbaseinclude_HEADERS = \
 	gimpversion.h		\
 	\
 	gimpchecks.h		\
-	gimpdatafiles.h		\
 	gimpenv.h		\
 	gimpmemsize.h		\
 	gimpmetadata.h		\

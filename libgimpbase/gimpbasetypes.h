@@ -51,11 +51,7 @@ typedef struct _GimpEnumDesc     GimpEnumDesc;
 typedef struct _GimpFlagsDesc    GimpFlagsDesc;
 typedef struct _GimpValueArray   GimpValueArray;
 
-
-typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
-                                         gpointer                user_data);
-
-typedef struct _GimpMetadata GimpMetadata;
+typedef struct _GimpMetadata     GimpMetadata;
 
 
 /**
