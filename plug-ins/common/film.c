@@ -87,9 +87,7 @@ static gint32    create_new_image   (const gchar    *filename,
                                      guint           width,
                                      guint           height,
                                      GimpImageType   gdtype,
-                                     gint32         *layer_ID,
-                                     GimpDrawable  **drawable,
-                                     GimpPixelRgn   *pixel_rgn);
+                                     gint32         *layer_ID);
 
 static gchar   * compose_image_name (gint32          image_ID);
 
@@ -103,13 +101,6 @@ static void      set_pixels         (gint            numpix,
 
 static guchar  * create_hole_rgb    (gint            width,
                                      gint            height);
-
-static void      draw_hole_rgb      (GimpDrawable   *drw,
-                                     gint            x,
-                                     gint            y,
-                                     gint            width,
-                                     gint            height,
-                                     guchar         *hole);
 
 static void      draw_number        (gint32          layer_ID,
                                      gint            num,
@@ -242,6 +233,7 @@ run (const gchar      *name,
   gint              k;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   run_mode = param[0].data.d_int32;
 
@@ -346,8 +338,6 @@ film (void)
   gint32       *image_ID_src, image_ID_dst, layer_ID_src, layer_ID_dst;
   gint          image_ID_tmp;
   gint32       *layers;
-  GimpDrawable *drawable_dst;
-  GimpPixelRgn  pixel_rgn_dst;
   gint          new_layer;
   gint          floating_sel;
 
@@ -422,17 +412,16 @@ film (void)
 
   image_ID_dst = create_new_image (_("Untitled"),
                                    (guint) film_width, (guint) film_height,
-                                   GIMP_RGB_IMAGE, &layer_ID_dst,
-                                   &drawable_dst, &pixel_rgn_dst);
+                                   GIMP_RGB_IMAGE, &layer_ID_dst);
 
   /* Fill film background */
   gimp_drawable_fill (layer_ID_dst, GIMP_FILL_BACKGROUND);
 
   /* Draw all the holes */
   hole_offset = film_height * filmvals.hole_offset;
-  hole_width = film_height * filmvals.hole_width;
+  hole_width  = film_height * filmvals.hole_width;
   hole_height = film_height * filmvals.hole_height;
-  hole_space = film_height * filmvals.hole_space;
+  hole_space  = film_height * filmvals.hole_space;
   hole_x = hole_space / 2;
 
 #ifdef FILM_DEBUG
@@ -443,21 +432,32 @@ film (void)
   hole = create_hole_rgb (hole_width, hole_height);
   if (hole)
     {
+      GeglBuffer *buffer = gimp_drawable_get_buffer (layer_ID_dst);
+
       while (hole_x < film_width)
         {
-          draw_hole_rgb (drawable_dst, hole_x,
-                         hole_offset,
-                         hole_width, hole_height, hole);
-          draw_hole_rgb (drawable_dst, hole_x,
-                         film_height-hole_offset-hole_height,
-                         hole_width, hole_height, hole);
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (hole_x,
+                                           hole_offset,
+                                           hole_width,
+                                           hole_height), 0,
+                           babl_format ("R'G'B' u8"), hole,
+                           GEGL_AUTO_ROWSTRIDE);
+
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (hole_x,
+                                           film_height - hole_offset - hole_height,
+                                           hole_width,
+                                           hole_height), 0,
+                           babl_format ("R'G'B' u8"), hole,
+                           GEGL_AUTO_ROWSTRIDE);
 
           hole_x += hole_width + hole_space;
         }
+
+      g_object_unref (buffer);
       g_free (hole);
     }
-  gimp_drawable_detach (drawable_dst);
-
 
   /* Compose all images and layers */
   picture_x0 = 0;
@@ -608,55 +608,6 @@ create_hole_rgb (gint width,
   return hole;
 }
 
-/* Draw the hole at the specified position */
-static void
-draw_hole_rgb (GimpDrawable *drw,
-               gint          x,
-               gint          y,
-               gint          width,
-               gint          height,
-               guchar       *hole)
-{
-  GimpPixelRgn    rgn;
-  guchar         *data;
-  gint            tile_height = gimp_tile_height ();
-  gint            i, j, scan_lines;
-  gint            d_width = gimp_drawable_width (drw->drawable_id);
-  gint            length;
-
-  if ((width <= 0) || (height <= 0))
-    return;
-  if ((x+width <= 0) || (x >= d_width))
-    return;
-  length = width;   /* Check that we don't draw past the image */
-  if ((x+length) >= d_width)
-    length = d_width-x;
-
-  data = g_new (guchar, length * tile_height * drw->bpp);
-
-  gimp_pixel_rgn_init (&rgn, drw, x, y, length, height, TRUE, FALSE);
-
-  i = 0;
-  while (i < height)
-    {
-      scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i);
-      if (length == width)
-        {
-          memcpy (data, hole + 3*width*i, width*scan_lines*3);
-        }
-      else  /* We have to do some clipping */
-        {
-          for (j = 0; j < scan_lines; j++)
-            memcpy (data + j*length*3, hole + (i+j)*width*3, length*3);
-        }
-      gimp_pixel_rgn_set_rect (&rgn, data, x, y+i, length, scan_lines);
-
-      i += scan_lines;
-    }
-
-  g_free (data);
-}
-
 /* Draw the number of the picture onto the film */
 static void
 draw_number (gint32 layer_ID,
@@ -666,7 +617,6 @@ draw_number (gint32 layer_ID,
              gint   height)
 {
   gchar         buf[32];
-  GimpDrawable *drw;
   gint          k, delta, max_delta;
   gint32        image_ID;
   gint32        text_layer_ID;
@@ -675,7 +625,6 @@ draw_number (gint32 layer_ID,
 
   g_snprintf (buf, sizeof (buf), "%d", num);
 
-  drw = gimp_drawable_get (layer_ID);
   image_ID = gimp_item_get_image (layer_ID);
 
   max_delta = height / 10;
@@ -714,8 +663,6 @@ draw_number (gint32 layer_ID,
 
   if (text_layer_ID == -1)
     g_message ("draw_number: Error in drawing text\n");
-
-  gimp_drawable_detach (drw);
 }
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
@@ -724,9 +671,7 @@ create_new_image (const gchar    *filename,
                   guint           width,
                   guint           height,
                   GimpImageType   gdtype,
-                  gint32         *layer_ID,
-                  GimpDrawable  **drawable,
-                  GimpPixelRgn   *pixel_rgn)
+                  gint32         *layer_ID)
 {
   gint32            image_ID;
   GimpImageBaseType gitype;
@@ -747,14 +692,6 @@ create_new_image (const gchar    *filename,
                               100,
                               gimp_image_get_default_new_layer_mode (image_ID));
   gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
-
-  if (drawable)
-    {
-      *drawable = gimp_drawable_get (*layer_ID);
-      if (pixel_rgn != NULL)
-        gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,
-                             (*drawable)->height, TRUE, FALSE);
-    }
 
   return image_ID;
 }
