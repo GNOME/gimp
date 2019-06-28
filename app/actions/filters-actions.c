@@ -183,6 +183,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:apply-lens",
     GIMP_HELP_FILTER_APPLY_LENS },
 
+  { "filters-bayer-matrix", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Bayer Matrix..."), NULL, NULL,
+    "gegl:bayer-matrix",
+    GIMP_HELP_FILTER_BAYER_MATRIX },
+
   { "filters-brightness-contrast", GIMP_ICON_TOOL_BRIGHTNESS_CONTRAST,
     NC_("filters-action", "B_rightness-Contrast..."), NULL, NULL,
     "gimp:brightness-contrast",
@@ -412,6 +417,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     NC_("filters-action", "_Levels..."), NULL, NULL,
     "gimp:levels",
     GIMP_HELP_TOOL_LEVELS },
+
+  { "filters-linear-sinusoid", GIMP_ICON_TOOL_LEVELS,
+    NC_("filters-action", "_Linear Sinusoid..."), NULL, NULL,
+    "gegl:linear-sinusoid",
+    GIMP_HELP_FILTER_LINEAR_SINUSOID },
 
   { "filters-little-planet", GIMP_ICON_GEGL,
     NC_("filters-action", "_Little Planet..."), NULL, NULL,
