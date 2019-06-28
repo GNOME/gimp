@@ -69,7 +69,7 @@ static void      run               (const gchar      *name,
                                     const GimpParam  *param,
                                     gint             *nreturn_vals,
                                     GimpParam       **return_vals);
-static void      flame             (GimpDrawable     *drawable);
+static void      flame             (gint32            drawable_id);
 
 static gboolean  flame_dialog      (void);
 static void      set_flame_preview (void);
@@ -178,16 +178,18 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam  values[1];
-  GimpDrawable     *drawable = NULL;
+  gint32            drawable_id;
   GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  run_mode = param[0].data.d_int32;
+  run_mode    = param[0].data.d_int32;
+  drawable_id = param[2].data.d_drawable;
 
   INIT_I18N ();
+  gegl_init (NULL, NULL);
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
@@ -198,16 +200,13 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &config);
       maybe_init_cp ();
 
-      drawable = gimp_drawable_get (param[2].data.d_drawable);
-      config.cp.width  = drawable->width;
-      config.cp.height = drawable->height;
+      config.cp.width  = gimp_drawable_width  (drawable_id);
+      config.cp.height = gimp_drawable_height (drawable_id);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           if (! flame_dialog ())
             {
-              gimp_drawable_detach (drawable);
-
               status = GIMP_PDB_CANCEL;
             }
         }
@@ -222,13 +221,11 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (gimp_drawable_is_rgb (drawable->drawable_id))
+      if (gimp_drawable_is_rgb (drawable_id))
         {
           gimp_progress_init (_("Drawing flame"));
-          gimp_tile_cache_ntiles (2 * (drawable->width /
-                                       gimp_tile_width () + 1));
 
-          flame (drawable);
+          flame (drawable_id);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -239,8 +236,6 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
-
-      gimp_drawable_detach (drawable);
     }
 
   values[0].type          = GIMP_PDB_STATUS;
@@ -250,10 +245,7 @@ run (const gchar      *name,
 static void
 drawable_to_cmap (control_point *cp)
 {
-  gint          i, j;
-  GimpPixelRgn  pr;
-  GimpDrawable *d;
-  guchar       *p;
+  gint i, j;
 
   if (TABLE_DRAWABLE >= config.cmap_drawable)
     {
@@ -285,38 +277,44 @@ drawable_to_cmap (control_point *cp)
     }
   else
     {
-      d = gimp_drawable_get (config.cmap_drawable);
-      p = g_new (guchar, d->bpp);
-      gimp_pixel_rgn_init (&pr, d, 0, 0,
-                           d->width, d->height, FALSE, FALSE);
+      GeglBuffer *buffer = gimp_drawable_get_buffer (config.cmap_drawable);
+      gint        width  = gegl_buffer_get_width  (buffer);
+      gint        height = gegl_buffer_get_height (buffer);
+      guchar      p[3];
+
       for (i = 0; i < 256; i++)
         {
-          gimp_pixel_rgn_get_pixel (&pr, p, i % d->width,
-                                    (i / d->width) % d->height);
+          gegl_buffer_sample (buffer,
+                              i % width,
+                              (i / width) % height,
+                              NULL, p, babl_format ("R'G'B'"),
+                              GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+
           for (j = 0; j < 3; j++)
-            cp->cmap[i][j] =
-              (d->bpp >= 3) ? (p[j] / 255.0) : (p[0]/255.0);
+            cp->cmap[i][j] = p[j] / 255.0;
         }
-      g_free (p);
+
+      g_object_unref (buffer);
     }
 }
 
 static void
-flame (GimpDrawable *drawable)
+flame (gint32 drawable_id)
 {
-  gint    width, height;
-  guchar *tmp;
-  gint    bytes;
+  const Babl *format;
+  gint        width, height;
+  guchar     *tmp;
+  gint        bytes;
 
-  width  = drawable->width;
-  height = drawable->height;
-  bytes  = drawable->bpp;
+  width  = gimp_drawable_width  (drawable_id);
+  height = gimp_drawable_height (drawable_id);
 
-  if (3 != bytes && 4 != bytes)
-    {
-      g_message (_("Flame works only on RGB drawables."));
-      return;
-    }
+  if (gimp_drawable_has_alpha (drawable_id))
+    format = babl_format ("R'G'B'A u8");
+  else
+    format = babl_format ("R'G'B' u8");
+
+  bytes = babl_format_get_bytes_per_pixel (format);
 
   tmp = g_new (guchar, width * height * 4);
 
@@ -331,31 +329,34 @@ flame (GimpDrawable *drawable)
   gimp_progress_update (1.0);
 
   /* update destination */
-  if (4 == bytes)
+  if (bytes == 4)
     {
-      GimpPixelRgn pr;
-      gimp_pixel_rgn_init (&pr, drawable, 0, 0, width, height,
-                           TRUE, TRUE);
-      gimp_pixel_rgn_set_rect (&pr, tmp, 0, 0, width, height);
+      GeglBuffer *buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+
+      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                       format, tmp,
+                       GEGL_AUTO_ROWSTRIDE);
+
+      g_object_unref (buffer);
     }
-  else if (3 == bytes)
+  else if (bytes == 3)
     {
-      gint       i, j;
-      GimpPixelRgn  src_pr, dst_pr;
-      guchar    *sl;
+      GeglBuffer *src_buffer  = gimp_drawable_get_buffer (drawable_id);
+      GeglBuffer *dest_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
+      gint        i, j;
+      guchar     *sl;
 
       sl = g_new (guchar, 3 * width);
 
-      gimp_pixel_rgn_init (&src_pr, drawable,
-                           0, 0, width, height, FALSE, FALSE);
-      gimp_pixel_rgn_init (&dst_pr, drawable,
-                           0, 0, width, height, TRUE, TRUE);
       for (i = 0; i < height; i++)
         {
           guchar *rr = tmp + 4 * i * width;
           guchar *sld = sl;
 
-          gimp_pixel_rgn_get_rect (&src_pr, sl, 0, i, width, 1);
+          gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, i, width, 1), 1.0,
+                           format, sl,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
           for (j = 0; j < width; j++)
             {
               gint k, alpha = rr[3];
@@ -370,15 +371,22 @@ flame (GimpDrawable *drawable)
               rr += 4;
               sld += 3;
             }
-          gimp_pixel_rgn_set_rect (&dst_pr, sl, 0, i, width, 1);
+
+          gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (0, i, width, 1), 0,
+                           format, sl,
+                           GEGL_AUTO_ROWSTRIDE);
         }
+
       g_free (sl);
+
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
     }
 
   g_free (tmp);
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
+
+  gimp_drawable_merge_shadow (drawable_id, TRUE);
+  gimp_drawable_update (drawable_id, 0, 0, width, height);
 }
 
 static void
