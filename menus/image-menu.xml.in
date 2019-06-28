@@ -804,9 +804,11 @@
 	  <menuitem action="filters-noise-solid" />
 	</menu>
         <menu action="filters-render-pattern-menu" name="Pattern">
+	  <menuitem action="filters-bayer-matrix" />
 	  <menuitem action="filters-checkerboard" />
 	  <menuitem action="filters-diffraction-patterns" />
 	  <menuitem action="filters-grid" />
+	  <menuitem action="filters-linear-sinusoid" />
 	  <menuitem action="filters-maze" />
 	  <menuitem action="filters-sinus" />
 	  <menuitem action="filters-spiral" />

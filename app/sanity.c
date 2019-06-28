@@ -518,7 +518,7 @@ sanity_check_gegl (void)
 
 #define GEGL_REQUIRED_MAJOR 0
 #define GEGL_REQUIRED_MINOR 4
-#define GEGL_REQUIRED_MICRO 16
+#define GEGL_REQUIRED_MICRO 17
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
@@ -605,6 +605,7 @@ sanity_check_gegl_ops (void)
   static const gchar *required_ops[] =
   {
     "gegl:alien-map",
+    "gegl:bayer-matrix",
     "gegl:buffer-sink",
     "gegl:buffer-source",
     "gegl:c2g",
@@ -652,6 +653,7 @@ sanity_check_gegl_ops (void)
     "gegl:invert-linear",
     "gegl:lens-distortion",
     "gegl:lens-flare",
+    "gegl:linear-sinusoid",
     "gegl:long-shadow",
     "gegl:mantiuk06",
     "gegl:map-absolute",
