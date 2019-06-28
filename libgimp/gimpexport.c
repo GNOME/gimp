@@ -152,6 +152,25 @@ export_flatten (gint32  image_ID,
 }
 
 static void
+export_remove_alpha (gint32  image_ID,
+                     gint32 *drawable_ID)
+{
+  gint32  n_layers;
+  gint32 *layers;
+  gint    i;
+
+  layers = gimp_image_get_layers (image_ID, &n_layers);
+
+  for (i = 0; i < n_layers; i++)
+    {
+      if (gimp_drawable_has_alpha (layers[i]))
+        gimp_layer_flatten (layers[i]);
+    }
+
+  g_free (layers);
+}
+
+static void
 export_apply_masks (gint32  image_ID,
                     gint   *drawable_ID)
 {
@@ -294,6 +313,15 @@ static ExportAction export_action_flatten =
   export_flatten,
   NULL,
   N_("%s plug-in can't handle transparency"),
+  { N_("Flatten Image"), NULL },
+  0
+};
+
+static ExportAction export_action_remove_alpha =
+{
+  export_remove_alpha,
+  NULL,
+  N_("%s plug-in can't handle transparent layers"),
   { N_("Flatten Image"), NULL },
   0
 };
@@ -724,7 +752,8 @@ gimp_export_image (gint32                 *image_ID,
   if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
-  if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS)
+  if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS &&
+      ! (capabilities & GIMP_EXPORT_NEEDS_OPAQUE_LAYERS))
     capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA;
 
   if (format_name && g_getenv ("GIMP_INTERACTIVE_EXPORT"))
@@ -768,9 +797,17 @@ gimp_export_image (gint32                 *image_ID,
         {
           if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA))
             {
-              actions = g_slist_prepend (actions, &export_action_flatten);
-              added_flatten = TRUE;
-              break;
+              if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+                {
+                  actions = g_slist_prepend (actions, &export_action_flatten);
+                  added_flatten = TRUE;
+                  break;
+                }
+              else
+                {
+                  actions = g_slist_prepend (actions, &export_action_remove_alpha);
+                  break;
+                }
             }
         }
       else

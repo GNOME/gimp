@@ -41,7 +41,8 @@ typedef enum
   GIMP_EXPORT_CAN_HANDLE_LAYERS              = 1 << 5,
   GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 6,
   GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS         = 1 << 7,
-  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 8
+  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 8,
+  GIMP_EXPORT_NEEDS_OPAQUE_LAYERS            = 1 << 9
 } GimpExportCapabilities;
 
 typedef enum
