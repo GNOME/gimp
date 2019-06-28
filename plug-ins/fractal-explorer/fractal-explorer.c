@@ -968,28 +968,69 @@ fractalexplorer_load (const gchar *filename,
 }
 
 static void
-fractalexplorer_list_load_one (const GimpDatafileData *file_data,
-                               gpointer                user_data)
+fractalexplorer_list_load_all (const gchar *explorer_path)
 {
-  fractalexplorerOBJ *fractalexplorer;
+  GList *path;
+  GList *list;
 
-  fractalexplorer = fractalexplorer_load (file_data->filename,
-                                          file_data->basename);
-
-  if (fractalexplorer)
-    fractalexplorer_list_insert (fractalexplorer);
-}
-
-static void
-fractalexplorer_list_load_all (const gchar *path)
-{
   /*  Make sure to clear any existing fractalexplorers  */
   current_obj = NULL;
   fractalexplorer_list_free_all ();
 
-  gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
-                                   fractalexplorer_list_load_one,
-                                   NULL);
+  path = gimp_config_path_expand_to_files (explorer_path, NULL);
+
+  for (list = path; list; list = g_list_next (list))
+    {
+      GFileEnumerator *enumerator;
+
+      enumerator = g_file_enumerate_children (list->data,
+                                              G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                              G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                              G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                              G_FILE_QUERY_INFO_NONE,
+                                              NULL, NULL);
+
+      if (enumerator)
+        {
+          GFileInfo *info;
+
+          while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+            {
+              GFileType file_type = g_file_info_get_file_type (info);
+
+              if (file_type == G_FILE_TYPE_REGULAR &&
+                  ! g_file_info_get_is_hidden (info))
+                {
+                  fractalexplorerOBJ *fractalexplorer;
+                  GFile              *child;
+                  gchar              *filename;
+                  gchar              *basename;
+
+                  child = g_file_enumerator_get_child (enumerator, info);
+
+                  filename = g_file_get_path (child);
+                  basename = g_file_get_basename (child);
+
+                  fractalexplorer = fractalexplorer_load (filename,
+                                                          basename);
+
+                  g_free (filename);
+                  g_free (basename);
+
+                  if (fractalexplorer)
+                    fractalexplorer_list_insert (fractalexplorer);
+
+                  g_object_unref (child);
+                }
+
+              g_object_unref (info);
+            }
+
+          g_object_unref (enumerator);
+        }
+    }
+
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   if (!fractalexplorer_list)
     {
