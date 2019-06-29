@@ -54,10 +54,6 @@ enum
 };
 
 
-static void   gimp_pdb_dialog_class_init      (GimpPdbDialogClass *klass);
-static void   gimp_pdb_dialog_init            (GimpPdbDialog      *dialog,
-                                               GimpPdbDialogClass *klass);
-
 static void   gimp_pdb_dialog_constructed     (GObject            *object);
 static void   gimp_pdb_dialog_dispose         (GObject            *object);
 static void   gimp_pdb_dialog_set_property    (GObject            *object,
@@ -76,37 +72,10 @@ static void   gimp_pdb_dialog_plug_in_closed  (GimpPlugInManager  *manager,
                                                GimpPdbDialog      *dialog);
 
 
-static GimpDialogClass *parent_class = NULL;
+G_DEFINE_ABSTRACT_TYPE (GimpPdbDialog, gimp_pdb_dialog, GIMP_TYPE_DIALOG)
 
+#define parent_class gimp_pdb_dialog_parent_class
 
-GType
-gimp_pdb_dialog_get_type (void)
-{
-  static GType dialog_type = 0;
-
-  if (! dialog_type)
-    {
-      const GTypeInfo dialog_info =
-      {
-        sizeof (GimpPdbDialogClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_pdb_dialog_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpPdbDialog),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_pdb_dialog_init,
-      };
-
-      dialog_type = g_type_register_static (GIMP_TYPE_DIALOG,
-                                            "GimpPdbDialog",
-                                            &dialog_info,
-                                            G_TYPE_FLAG_ABSTRACT);
-    }
-
-  return dialog_type;
-}
 
 static void
 gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
@@ -166,11 +135,8 @@ gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
 }
 
 static void
-gimp_pdb_dialog_init (GimpPdbDialog      *dialog,
-                      GimpPdbDialogClass *klass)
+gimp_pdb_dialog_init (GimpPdbDialog *dialog)
 {
-  klass->dialogs = g_list_prepend (klass->dialogs, dialog);
-
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          _("_Close"), GTK_RESPONSE_CLOSE);
 }
@@ -178,10 +144,13 @@ gimp_pdb_dialog_init (GimpPdbDialog      *dialog,
 static void
 gimp_pdb_dialog_constructed (GObject *object)
 {
-  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
-  const gchar   *signal_name;
+  GimpPdbDialog      *dialog = GIMP_PDB_DIALOG (object);
+  GimpPdbDialogClass *klass  = GIMP_PDB_DIALOG_GET_CLASS (object);
+  const gchar        *signal_name;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  klass->dialogs = g_list_prepend (klass->dialogs, dialog);
 
   gimp_assert (GIMP_IS_PDB (dialog->pdb));
   gimp_assert (GIMP_IS_CONTEXT (dialog->caller_context));

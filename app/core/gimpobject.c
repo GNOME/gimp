@@ -56,9 +56,7 @@ struct _GimpObjectPrivate
 };
 
 
-static void    gimp_object_class_init       (GimpObjectClass *klass);
-static void    gimp_object_init             (GimpObject      *object,
-                                             GimpObjectClass *klass);
+static void    gimp_object_constructed      (GObject         *object);
 static void    gimp_object_dispose          (GObject         *object);
 static void    gimp_object_finalize         (GObject         *object);
 static void    gimp_object_set_property     (GObject         *object,
@@ -74,38 +72,13 @@ static gint64  gimp_object_real_get_memsize (GimpObject      *object,
 static void    gimp_object_name_normalize   (GimpObject      *object);
 
 
-static GObjectClass *parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpObject, gimp_object, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (GimpObject))
+
+#define parent_class gimp_object_parent_class
 
 static guint object_signals[LAST_SIGNAL] = { 0 };
 
-
-GType
-gimp_object_get_type (void)
-{
-  static GType object_type = 0;
-
-  if (! object_type)
-    {
-      const GTypeInfo object_info =
-      {
-        sizeof (GimpObjectClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_object_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpObject),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_object_init,
-      };
-
-      object_type = g_type_register_static (G_TYPE_OBJECT,
-                                            "GimpObject",
-                                            &object_info, 0);
-    }
-
-  return object_type;
-}
 
 static void
 gimp_object_class_init (GimpObjectClass *klass)
@@ -132,6 +105,7 @@ gimp_object_class_init (GimpObjectClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->constructed  = gimp_object_constructed;
   object_class->dispose      = gimp_object_dispose;
   object_class->finalize     = gimp_object_finalize;
   object_class->set_property = gimp_object_set_property;
@@ -147,21 +121,23 @@ gimp_object_class_init (GimpObjectClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
-  g_type_class_add_private (klass,
-                            sizeof (GimpObjectPrivate));
 }
 
 static void
-gimp_object_init (GimpObject      *object,
-                  GimpObjectClass *klass)
+gimp_object_init (GimpObject *object)
 {
-  object->p = G_TYPE_INSTANCE_GET_PRIVATE (object,
-                                           GIMP_TYPE_OBJECT,
-                                           GimpObjectPrivate);
+  object->p = gimp_object_get_instance_private (object);
+
   object->p->name       = NULL;
   object->p->normalized = NULL;
+}
 
-  gimp_debug_add_instance (G_OBJECT (object), G_OBJECT_CLASS (klass));
+static void
+gimp_object_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_debug_add_instance (object, G_OBJECT_GET_CLASS (object));
 }
 
 static void
