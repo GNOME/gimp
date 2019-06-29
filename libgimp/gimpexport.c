@@ -752,10 +752,6 @@ gimp_export_image (gint32                 *image_ID,
   if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
-  if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS &&
-      ! (capabilities & GIMP_EXPORT_NEEDS_OPAQUE_LAYERS))
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA;
-
   if (format_name && g_getenv ("GIMP_INTERACTIVE_EXPORT"))
     interactive = TRUE;
 
