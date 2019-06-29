@@ -86,7 +86,7 @@ static gint32    *image_id;
 static void sendBMPToGimp                      (HBITMAP         hBMP,
                                                 HDC             hDC,
                                                 RECT            rect);
-static void     doWindowCapture                    (void);
+static int      doWindowCapture                    (void);
 static gboolean doCapture                          (HWND            selectedHwnd);
 static BOOL     isWindowIsAboveCaptureRegion       (HWND            hwndWindow,
                                                     RECT            rectCapture);
@@ -183,9 +183,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
     }
   else if (shootvals->shoot_type == SHOOT_WINDOW)
     {
-      doWindowCapture ();
-
-      status = GIMP_PDB_SUCCESS;
+      status = 0 == doWindowCapture () ? GIMP_PDB_CANCEL : GIMP_PDB_SUCCESS;
     }
   else if (shootvals->shoot_type == SHOOT_REGION)
     {
@@ -352,7 +350,7 @@ sendBMPToGimp (HBITMAP hBMP,
  * ENTRY POINT FOR WINSNAP NONROOT
  *
  */
-static void
+static int
 doWindowCapture (void)
 {
   /* Start up a standard Win32
@@ -360,7 +358,7 @@ doWindowCapture (void)
    * selection of the window
    * to be captured
    */
-  winsnapWinMain ();
+  return winsnapWinMain ();
 }
 
 /******************************************************************
@@ -1260,7 +1258,7 @@ WndProc (HWND   hwnd,
       if (selectedHwnd)
         doCapture (selectedHwnd);
 
-      PostQuitMessage (0);
+      PostQuitMessage (selectedHwnd != NULL);
 
       break;
 
