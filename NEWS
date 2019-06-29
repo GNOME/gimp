@@ -14,6 +14,7 @@ Core:
 
   - New "Selected areas continue outside the image" toggle option to the
     "Feather Selection" dialog.
+  - New settings "Allow editing on non-visible layers" in Preferences.
 
 Tools:
 
@@ -25,6 +26,22 @@ Tools:
   - Foreground selection tool: color selector for "On color" preview
     (original preview mode) now available, to select any color and
     opacity for the preview.
+
+Plug-ins:
+
+  - More filters ported to GEGL: nl-filter, film, fractal-explorer,
+    flame, blinds, jigsaw.
+  - Added color profile support for HEIF (only when libheif 1.4.0 is
+    available).
+  - TIFF import will now ask (in interactive mode) how to process
+    unspecified TIFF channels: non-premultiplied (used to be the
+    default) alpha, premultiplied alpha, or just import as generic
+    channel.
+
+User interface:
+
+  - gegl:bayer-matrix and gegl:linear-sinusoid added to the `Filters ->
+    Render -> Pattern` menu.
 
 Installers:
 
