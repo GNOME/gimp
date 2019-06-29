@@ -198,6 +198,10 @@ file_open_location_response (GtkDialog *dialog,
         {
           GFile *entered_file = g_file_new_for_uri (text);
 
+          /* should not fail but does, see issue #3093 */
+          if (! entered_file)
+            entered_file = g_object_ref (file);
+
           gtk_widget_show (box);
 
           gtk_editable_set_editable (GTK_EDITABLE (entry), FALSE);
@@ -236,7 +240,9 @@ file_open_location_response (GtkDialog *dialog,
         {
           gimp_message (gimp, G_OBJECT (box), GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
-                        text, error->message);
+                        text,
+                        /* error should never be NULL, also issue #3093 */
+                        error ? error->message : _("Invalid URI"));
           g_clear_error (&error);
         }
     }
