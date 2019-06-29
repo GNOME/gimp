@@ -124,8 +124,9 @@ typedef enum  /*< pdb-skip >*/
   GIMP_COLOR_PICK_MODE_LAB,         /*< desc="CIE LAB"      >*/
   GIMP_COLOR_PICK_MODE_CMYK,        /*< desc="CMYK"         >*/
   GIMP_COLOR_PICK_MODE_XYY,         /*< desc="CIE xyY"      >*/
+  GIMP_COLOR_PICK_MODE_YUV,         /*< desc="CIE Yu'v'"      >*/
 
-  GIMP_COLOR_PICK_MODE_LAST = GIMP_COLOR_PICK_MODE_XYY /*< skip >*/
+  GIMP_COLOR_PICK_MODE_LAST = GIMP_COLOR_PICK_MODE_YUV /*< skip >*/
 } GimpColorPickMode;
 
 

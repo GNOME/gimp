@@ -158,6 +158,7 @@ gimp_color_frame_init (GimpColorFrame *frame)
                                            GIMP_COLOR_PICK_MODE_LCH,
                                            GIMP_COLOR_PICK_MODE_LAB,
                                            GIMP_COLOR_PICK_MODE_XYY,
+                                           GIMP_COLOR_PICK_MODE_YUV,
                                            GIMP_COLOR_PICK_MODE_CMYK);
   frame->combo = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
   g_object_unref (store);
@@ -966,6 +967,38 @@ gimp_color_frame_update (GimpColorFrame *frame)
           values[1] = g_strdup_printf ("%1.6f  ",  xyY[1]);
           values[2] = g_strdup_printf ("%1.6f  ",  xyY[2]);
           values[3] = g_strdup_printf ("%.01f %%", xyY[3] * 100.0);
+        }
+      break;
+
+    case GIMP_COLOR_PICK_MODE_YUV:
+      /* TRANSLATORS: Y from Yu'v' color space */
+      names[0] = C_("Yu'v' color space", "Y:");
+      /* TRANSLATORS: u' from Yu'v' color space */
+      names[1] = C_("Yu'v' color space", "u':");
+      /* TRANSLATORS: v' from Yu'v' color space */
+      names[2] = C_("Yu'v' color space", "v':");
+
+      if (has_alpha)
+        /* TRANSLATORS: A for Alpha (color transparency) */
+        names[3] = C_("Alpha channel", "A:");
+
+      if (frame->sample_valid)
+        {
+          static const Babl *fish = NULL;
+          gfloat             Yuv[4];
+
+          if (G_UNLIKELY (! fish))
+            fish = babl_fish (babl_format ("R'G'B'A double"),
+                              babl_format ("CIE Yuv alpha float"));
+
+          babl_process (fish, &frame->color, Yuv, 1);
+
+          values = g_new0 (gchar *, 5);
+
+          values[0] = g_strdup_printf ("%1.6f  ",  Yuv[0]);
+          values[1] = g_strdup_printf ("%1.6f  ",  Yuv[1]);
+          values[2] = g_strdup_printf ("%1.6f  ",  Yuv[2]);
+          values[3] = g_strdup_printf ("%.01f %%", Yuv[3] * 100.0);
         }
       break;
 
