@@ -381,8 +381,10 @@ run (const gchar      *name,
 
               if (tsvals.compression == COMPRESSION_CCITTFAX3 ||
                   tsvals.compression == COMPRESSION_CCITTFAX4)
-                capabilities = GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                               GIMP_EXPORT_NEEDS_OPAQUE_LAYERS;
+                /* G3/G4 are fax compressions. They only support
+                 * monochrome images without alpha support.
+                 */
+                capabilities = GIMP_EXPORT_CAN_HANDLE_INDEXED;
               else
                 capabilities = GIMP_EXPORT_CAN_HANDLE_RGB     |
                                GIMP_EXPORT_CAN_HANDLE_GRAY    |
