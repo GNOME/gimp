@@ -1121,6 +1121,7 @@ save_dialog (TiffSaveVals  *tsvals,
              gboolean       has_alpha,
              gboolean       is_monochrome,
              gboolean       is_indexed,
+             gboolean       is_multi_layer,
              gchar        **image_comment)
 {
   GError      *error = NULL;
@@ -1254,11 +1255,19 @@ save_dialog (TiffSaveVals  *tsvals,
 #endif
 
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "save-layers"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                tsvals->save_layers);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &tsvals->save_layers);
+  if (is_multi_layer)
+    {
+      /* If single-layer TIFF, set the toggle insensitive and show it as
+       * unchecked though I don't actually change the tsvals value to
+       * keep storing previously chosen value.
+       */
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                    tsvals->save_layers);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &tsvals->save_layers);
+    }
+  gtk_widget_set_sensitive (toggle, is_multi_layer);
 
   gtk_widget_show (dialog);
 

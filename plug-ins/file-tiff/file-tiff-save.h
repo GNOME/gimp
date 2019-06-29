@@ -52,6 +52,7 @@ gboolean  save_dialog (TiffSaveVals *tsvals,
                        gboolean      has_alpha,
                        gboolean      is_monochrome,
                        gboolean      is_indexed,
+                       gboolean      is_multi_layer,
                        gchar       **image_comment);
 
 

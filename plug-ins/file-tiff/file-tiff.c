@@ -60,14 +60,15 @@
 #define PLUG_IN_BINARY "file-tiff"
 
 
-static void       query               (void);
-static void       run                 (const gchar      *name,
-                                       gint              nparams,
-                                       const GimpParam  *param,
-                                       gint             *nreturn_vals,
-                                       GimpParam       **return_vals);
+static void       query                (void);
+static void       run                  (const gchar      *name,
+                                        gint              nparams,
+                                        const GimpParam  *param,
+                                        gint             *nreturn_vals,
+                                        GimpParam       **return_vals);
 
-static gboolean   image_is_monochrome (gint32            image);
+static gboolean   image_is_monochrome  (gint32            image);
+static gboolean   image_is_multi_layer (gint32            image);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -320,6 +321,7 @@ run (const gchar      *name,
                              gimp_drawable_has_alpha (drawable),
                              image_is_monochrome (image),
                              gimp_image_base_type (image) == GIMP_INDEXED,
+                             image_is_multi_layer (image),
                              &image_comment))
             {
               status = GIMP_PDB_CANCEL;
@@ -389,7 +391,7 @@ run (const gchar      *name,
                                GIMP_EXPORT_CAN_HANDLE_INDEXED |
                                GIMP_EXPORT_CAN_HANDLE_ALPHA;
 
-              if (tsvals.save_layers)
+              if (tsvals.save_layers && image_is_multi_layer (image))
                 capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
               export = gimp_export_image (&image, &drawable, "TIFF", capabilities);
@@ -476,4 +478,16 @@ image_is_monochrome (gint32 image)
     }
 
   return monochrome;
+}
+
+static gboolean
+image_is_multi_layer (gint32 image)
+{
+  gint32 *layers;
+  gint32  n_layers;
+
+  layers = gimp_image_get_layers (image, &n_layers);
+  g_free (layers);
+
+  return (n_layers > 1);
 }
