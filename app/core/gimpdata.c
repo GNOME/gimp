@@ -52,8 +52,6 @@ enum
 };
 
 
-typedef struct _GimpDataPrivate GimpDataPrivate;
-
 struct _GimpDataPrivate
 {
   GFile  *file;
@@ -73,15 +71,10 @@ struct _GimpDataPrivate
   GList  *tags;
 };
 
-#define GIMP_DATA_GET_PRIVATE(data) \
-        G_TYPE_INSTANCE_GET_PRIVATE (data, GIMP_TYPE_DATA, GimpDataPrivate)
+#define GIMP_DATA_GET_PRIVATE(obj) (((GimpData *) (obj))->priv)
 
 
-static void       gimp_data_class_init        (GimpDataClass       *klass);
 static void       gimp_data_tagged_iface_init (GimpTaggedInterface *iface);
-
-static void       gimp_data_init              (GimpData            *data,
-                                               GimpDataClass       *data_class);
 
 static void       gimp_data_constructed       (GObject             *object);
 static void       gimp_data_finalize          (GObject             *object);
@@ -114,47 +107,15 @@ static gchar    * gimp_data_get_identifier    (GimpTagged          *tagged);
 static gchar    * gimp_data_get_checksum      (GimpTagged          *tagged);
 
 
+G_DEFINE_TYPE_WITH_CODE (GimpData, gimp_data, GIMP_TYPE_VIEWABLE,
+                         G_ADD_PRIVATE (GimpData)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_TAGGED,
+                                                gimp_data_tagged_iface_init))
+
+#define parent_class gimp_data_parent_class
+
 static guint data_signals[LAST_SIGNAL] = { 0 };
 
-static GimpViewableClass *parent_class = NULL;
-
-
-GType
-gimp_data_get_type (void)
-{
-  static GType data_type = 0;
-
-  if (! data_type)
-    {
-      const GTypeInfo data_info =
-      {
-        sizeof (GimpDataClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_data_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpData),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_data_init,
-      };
-
-      const GInterfaceInfo tagged_info =
-      {
-        (GInterfaceInitFunc) gimp_data_tagged_iface_init,
-        NULL,           /* interface_finalize */
-        NULL            /* interface_data     */
-      };
-
-      data_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-                                          "GimpData",
-                                          &data_info, 0);
-
-      g_type_add_interface_static (data_type, GIMP_TYPE_TAGGED, &tagged_info);
-    }
-
-  return data_type;
-}
 
 static void
 gimp_data_class_init (GimpDataClass *klass)
@@ -212,8 +173,6 @@ gimp_data_class_init (GimpDataClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_type_class_add_private (klass, sizeof (GimpDataPrivate));
 }
 
 static void
@@ -227,20 +186,15 @@ gimp_data_tagged_iface_init (GimpTaggedInterface *iface)
 }
 
 static void
-gimp_data_init (GimpData      *data,
-                GimpDataClass *data_class)
+gimp_data_init (GimpData *data)
 {
-  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (data);
+  GimpDataPrivate *private = gimp_data_get_instance_private (data);
+
+  data->priv = private;
 
   private->writable  = TRUE;
   private->deletable = TRUE;
   private->dirty     = TRUE;
-
-  /*  look at the passed class pointer, not at GIMP_DATA_GET_CLASS(data)
-   *  here, because the latter is always GimpDataClass itself
-   */
-  if (! data_class->save)
-    private->writable = FALSE;
 
   /*  freeze the data object during construction  */
   gimp_data_freeze (data);
@@ -249,7 +203,12 @@ gimp_data_init (GimpData      *data,
 static void
 gimp_data_constructed (GObject *object)
 {
+  GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
+
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  if (! GIMP_DATA_GET_CLASS (object)->save)
+    private->writable = FALSE;
 
   gimp_data_thaw (GIMP_DATA (object));
 }
