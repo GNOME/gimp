@@ -108,10 +108,7 @@ struct _GimpColorButtonPrivate
 #define GET_PRIVATE(obj) (((GimpColorButton *) (obj))->priv)
 
 
-static void     gimp_color_button_class_init     (GimpColorButtonClass *klass);
-static void     gimp_color_button_init           (GimpColorButton      *button,
-                                                  GimpColorButtonClass *klass);
-
+static void     gimp_color_button_constructed         (GObject         *object);
 static void     gimp_color_button_finalize            (GObject         *object);
 static void     gimp_color_button_dispose             (GObject         *object);
 static void     gimp_color_button_get_property        (GObject         *object,
@@ -168,38 +165,14 @@ static const GtkActionEntry actions[] =
   }
 };
 
-static guint   gimp_color_button_signals[LAST_SIGNAL] = { 0 };
 
-static GimpButtonClass * parent_class = NULL;
+G_DEFINE_TYPE_WITH_CODE (GimpColorButton, gimp_color_button, GIMP_TYPE_BUTTON,
+                         G_ADD_PRIVATE (GimpColorButton))
 
+#define parent_class gimp_color_button_parent_class
 
-GType
-gimp_color_button_get_type (void)
-{
-  static GType button_type = 0;
+static guint gimp_color_button_signals[LAST_SIGNAL] = { 0 };
 
-  if (! button_type)
-    {
-      const GTypeInfo button_info =
-      {
-        sizeof (GimpColorButtonClass),
-        (GBaseInitFunc) NULL,
-        (GBaseFinalizeFunc) NULL,
-        (GClassInitFunc) gimp_color_button_class_init,
-        NULL,           /* class_finalize */
-        NULL,           /* class_data     */
-        sizeof (GimpColorButton),
-        0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_color_button_init,
-      };
-
-      button_type = g_type_register_static (GIMP_TYPE_BUTTON,
-                                            "GimpColorButton",
-                                            &button_info, 0);
-    }
-
-  return button_type;
-}
 
 static void
 gimp_color_button_class_init (GimpColorButtonClass *klass)
@@ -220,6 +193,7 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->constructed         = gimp_color_button_constructed;
   object_class->finalize            = gimp_color_button_finalize;
   object_class->dispose             = gimp_color_button_dispose;
   object_class->get_property        = gimp_color_button_get_property;
@@ -334,23 +308,14 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
                                                         "The color config object used",
                                                         GIMP_TYPE_COLOR_CONFIG,
                                                         G_PARAM_READWRITE));
-
-  g_type_class_add_private (object_class, sizeof (GimpColorButtonPrivate));
 }
 
 static void
-gimp_color_button_init (GimpColorButton      *button,
-                        GimpColorButtonClass *klass)
+gimp_color_button_init (GimpColorButton *button)
 {
-  GimpColorButtonPrivate *priv;
-  GtkActionGroup         *group;
-  gint                    i;
+  GimpColorButtonPrivate *priv = gimp_color_button_get_instance_private (button);
 
-  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
-                                              GIMP_TYPE_COLOR_BUTTON,
-                                              GimpColorButtonPrivate);
-
-  priv = GET_PRIVATE (button);
+  button->priv = priv;
 
   priv->color_area = g_object_new (GIMP_TYPE_COLOR_AREA,
                                    "drag-mask", GDK_BUTTON1_MASK,
@@ -362,6 +327,18 @@ gimp_color_button_init (GimpColorButton      *button,
 
   gtk_container_add (GTK_CONTAINER (button), priv->color_area);
   gtk_widget_show (priv->color_area);
+}
+
+static void
+gimp_color_button_constructed (GObject *object)
+{
+  GimpColorButton        *button = GIMP_COLOR_BUTTON (object);
+  GimpColorButtonClass   *klass  = GIMP_COLOR_BUTTON_GET_CLASS (object);
+  GimpColorButtonPrivate *priv   = GET_PRIVATE (object);
+  GtkActionGroup         *group;
+  gint                    i;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /* right-click opens a popup */
   priv->ui_manager = gtk_ui_manager_new ();
