@@ -155,6 +155,7 @@ save_layer (const gchar    *filename,
   gint              w, h;
   gboolean          has_alpha;
   const Babl       *format;
+  const Babl       *space      = NULL;
   gint              bpp;
   GimpColorProfile *profile    = NULL;
   GeglBuffer       *geglbuffer = NULL;
@@ -168,6 +169,23 @@ save_layer (const gchar    *filename,
   int               res;
 
   webp_decide_output (image_ID, params, &profile, &out_linear);
+  if (profile)
+    {
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* Don't make this a hard failure yet still output the error.
+           */
+          g_printerr ("%s: error getting the profile space: %s",
+                      G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+        }
+
+    }
+  if (! space)
+    space = gimp_drawable_get_format (drawable_ID);
 
   /* The do...while() loop is a neat little trick that makes it easier
    * to jump to error handling code while still ensuring proper
@@ -209,6 +227,7 @@ save_layer (const gchar    *filename,
             format = babl_format ("R'G'B' u8");
         }
 
+      format = babl_format_with_space (babl_format_get_encoding (format), space);
       bpp = babl_format_get_bytes_per_pixel (format);
 
       /* Retrieve the buffer for the layer */
@@ -495,6 +514,7 @@ save_animation (const gchar    *filename,
   gint                   bpp;
   gboolean               has_alpha;
   const Babl            *format;
+  const Babl            *space   = NULL;
   GimpColorProfile      *profile = NULL;
   WebPAnimEncoderOptions enc_options;
   WebPData               webp_data;
@@ -507,6 +527,23 @@ save_animation (const gchar    *filename,
     return FALSE;
 
   webp_decide_output (image_ID, params, &profile, &out_linear);
+  if (profile)
+    {
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* Don't make this a hard failure yet still output the error.
+           */
+          g_printerr ("%s: error getting the profile space: %s",
+                      G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+        }
+
+    }
+  if (! space)
+    space = gimp_drawable_get_format (drawable_ID);
 
   gimp_image_undo_freeze (image_ID);
 
@@ -584,6 +621,7 @@ save_animation (const gchar    *filename,
                 format = babl_format ("R'G'B' u8");
             }
 
+          format = babl_format_with_space (babl_format_get_encoding (format), space);
           bpp = babl_format_get_bytes_per_pixel (format);
 
           /* fix layers to avoid offset errors */
