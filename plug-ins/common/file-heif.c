@@ -678,6 +678,7 @@ save_image (GFile             *file,
   GOutputStream            *output;
   GeglBuffer               *buffer;
   const Babl               *format;
+  const Babl               *space   = NULL;
   guint8                   *data;
   gint                      stride;
   gint                      width;
@@ -708,9 +709,22 @@ save_image (GFile             *file,
 
       icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
       heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* Don't make this a hard failure yet output the error. */
+          g_printerr ("%s: error getting the profile space: %s",
+                      G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+        }
+
 #endif /* HAVE_LIBHEIF_1_4_0 */
       g_object_unref (profile);
     }
+  if (! space)
+    space = gimp_drawable_get_format (drawable_ID);
 
   heif_image_add_plane (image, heif_channel_interleaved,
                         width, height, has_alpha ? 32 : 24);
@@ -720,11 +734,9 @@ save_image (GFile             *file,
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
   if (has_alpha)
-    format = babl_format_with_space ("R'G'B'A u8",
-                                     gegl_buffer_get_format (buffer));
+    format = babl_format_with_space ("R'G'B'A u8", space);
   else
-    format = babl_format_with_space ("R'G'B' u8",
-                                     gegl_buffer_get_format (buffer));
+    format = babl_format_with_space ("R'G'B' u8", space);
 
   gegl_buffer_get (buffer,
                    GEGL_RECTANGLE (0, 0, width, height),
