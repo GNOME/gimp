@@ -228,7 +228,9 @@ file_open_location_response (GtkDialog *dialog,
               g_clear_error (&error);
             }
 
-          g_object_unref (file);
+         if (file != NULL) {
+             g_object_unref(file);
+            }
 
           if (image != NULL)
             {
