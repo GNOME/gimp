@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-24 16:10+0200\n"
-"PO-Revision-Date: 2019-06-24 16:15+0200\n"
+"POT-Creation-Date: 2019-06-30 15:29+0200\n"
+"PO-Revision-Date: 2019-06-30 15:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3073,7 +3073,7 @@ msgstr "240 sekund"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:333
+#: ../app/tools/gimpfiltertool.c:336
 #: ../app/tools/gimpforegroundselecttool.c:319 ../app/tools/gimptexttool.c:1762
 #: ../app/tools/gimptransformgridtool.c:1108
 #: ../app/tools/gimptransformtool.c:334 ../app/widgets/gimpactionview.c:668
@@ -3083,7 +3083,7 @@ msgstr "240 sekund"
 #: ../app/widgets/gimpdeviceeditor.c:509 ../app/widgets/gimpdnd-xds.c:228
 #: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
 #: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:484
-#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:730
+#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:726
 msgid "_Cancel"
 msgstr "_Anuluj"
 
@@ -3110,8 +3110,8 @@ msgstr "Opis oznaczenia"
 #: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:383
 #: ../app/actions/file-commands.c:205 ../app/dialogs/file-open-dialog.c:229
 #: ../app/dialogs/file-open-dialog.c:270
-#: ../app/dialogs/file-open-location-dialog.c:223
-#: ../app/dialogs/file-open-location-dialog.c:239
+#: ../app/dialogs/file-open-location-dialog.c:227
+#: ../app/dialogs/file-open-location-dialog.c:243
 #: ../app/display/gimpdisplayshell-dnd.c:628
 #: ../app/widgets/gimplayertreeview.c:770 ../app/widgets/gimptoolbox.c:801
 #: ../app/widgets/gimptoolbox-dnd.c:170
@@ -4485,7 +4485,7 @@ msgstr "Zapis dziennika błędów do pliku"
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:69
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
-#: ../app/widgets/gimpsavedialog.c:142 ../app/widgets/gimpsettingsbox.c:732
+#: ../app/widgets/gimpsavedialog.c:142 ../app/widgets/gimpsettingsbox.c:728
 msgid "_Save"
 msgstr "_Zapisz"
 
@@ -4936,579 +4936,589 @@ msgstr "Zastosuj _soczewki…"
 
 #: ../app/actions/filters-actions.c:187
 msgctxt "filters-action"
+msgid "_Bayer Matrix..."
+msgstr "Macierz _Bayera…"
+
+#: ../app/actions/filters-actions.c:192
+msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
 msgstr "Jas_ność i kontrast…"
 
-#: ../app/actions/filters-actions.c:192
+#: ../app/actions/filters-actions.c:197
 msgctxt "filters-action"
 msgid "_Bump Map..."
 msgstr "Mapa wyp_ukłości…"
 
-#: ../app/actions/filters-actions.c:197
+#: ../app/actions/filters-actions.c:202
 msgctxt "filters-action"
 msgid "_Color to Gray..."
 msgstr "Zmiana _koloru na odcienie szarości…"
 
-#: ../app/actions/filters-actions.c:202
+#: ../app/actions/filters-actions.c:207
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
 msgstr "Film _rysunkowy…"
 
-#: ../app/actions/filters-actions.c:207
+#: ../app/actions/filters-actions.c:212
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
 msgstr "Mi_kser kanałów…"
 
-#: ../app/actions/filters-actions.c:212
+#: ../app/actions/filters-actions.c:217
 msgctxt "filters-action"
 msgid "_Checkerboard..."
 msgstr "_Szachownica…"
 
-#: ../app/actions/filters-actions.c:217
+#: ../app/actions/filters-actions.c:222
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "_Balans kolorów…"
 
-#: ../app/actions/filters-actions.c:222
+#: ../app/actions/filters-actions.c:227
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "_Wymiana kolorów…"
 
-#: ../app/actions/filters-actions.c:227
+#: ../app/actions/filters-actions.c:232
 msgctxt "filters-action"
 msgid "Colori_ze..."
 msgstr "_Barwienie…"
 
-#: ../app/actions/filters-actions.c:232
+#: ../app/actions/filters-actions.c:237
 msgctxt "filters-action"
 msgid "Dithe_r..."
 msgstr "_Mieszaj kolory…"
 
-#: ../app/actions/filters-actions.c:237
+#: ../app/actions/filters-actions.c:242
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
 msgstr "O_bróć kolory…"
 
-#: ../app/actions/filters-actions.c:242
+#: ../app/actions/filters-actions.c:247
 msgctxt "filters-action"
 msgid "Color T_emperature..."
 msgstr "T_emperatura kolorów…"
 
-#: ../app/actions/filters-actions.c:247
+#: ../app/actions/filters-actions.c:252
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
 msgstr "Kolor na _alfę…"
 
-#: ../app/actions/filters-actions.c:252
+#: ../app/actions/filters-actions.c:257
 msgctxt "filters-action"
 msgid "_Extract Component..."
 msgstr "_Wydobądź składową…"
 
-#: ../app/actions/filters-actions.c:257
+#: ../app/actions/filters-actions.c:262
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
 msgstr "_Zniekształcenia macierzowe…"
 
-#: ../app/actions/filters-actions.c:262
+#: ../app/actions/filters-actions.c:267
 msgctxt "filters-action"
 msgid "_Cubism..."
 msgstr "_Kubizm…"
 
-#: ../app/actions/filters-actions.c:267
+#: ../app/actions/filters-actions.c:272
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Krzywe…"
 
-#: ../app/actions/filters-actions.c:272
+#: ../app/actions/filters-actions.c:277
 msgctxt "filters-action"
 msgid "_Deinterlace..."
 msgstr "_Usuń przeplot…"
 
-#: ../app/actions/filters-actions.c:277
+#: ../app/actions/filters-actions.c:282
 msgctxt "filters-action"
 msgid "_Desaturate..."
 msgstr "_Desaturacja…"
 
-#: ../app/actions/filters-actions.c:282
+#: ../app/actions/filters-actions.c:287
 msgctxt "filters-action"
 msgid "Difference of Gaussians..."
 msgstr "Różnicowe rozmycie Gaussa…"
 
-#: ../app/actions/filters-actions.c:287
+#: ../app/actions/filters-actions.c:292
 msgctxt "filters-action"
 msgid "Diffraction Patterns..."
 msgstr "Desenie dyfrakcyjne…"
 
-#: ../app/actions/filters-actions.c:292
+#: ../app/actions/filters-actions.c:297
 msgctxt "filters-action"
 msgid "Displace..."
 msgstr "Przemieść…"
 
-#: ../app/actions/filters-actions.c:297
+#: ../app/actions/filters-actions.c:302
 msgctxt "filters-action"
 msgid "Distance Map..."
 msgstr "Mapa odległości…"
 
-#: ../app/actions/filters-actions.c:302
+#: ../app/actions/filters-actions.c:307
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
 msgstr "_Rzucanie cienia…"
 
-#: ../app/actions/filters-actions.c:307
+#: ../app/actions/filters-actions.c:312
 msgctxt "filters-action"
 msgid "_Edge..."
 msgstr "_Krawędź…"
 
-#: ../app/actions/filters-actions.c:312
+#: ../app/actions/filters-actions.c:317
 msgctxt "filters-action"
 msgid "_Laplace"
 msgstr "_Laplace"
 
-#: ../app/actions/filters-actions.c:317
+#: ../app/actions/filters-actions.c:322
 msgctxt "filters-action"
 msgid "_Neon..."
 msgstr "_Neon…"
 
-#: ../app/actions/filters-actions.c:322
+#: ../app/actions/filters-actions.c:327
 msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobel…"
 
-#: ../app/actions/filters-actions.c:327
+#: ../app/actions/filters-actions.c:332
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "_Wytłoczenie…"
 
-#: ../app/actions/filters-actions.c:332
+#: ../app/actions/filters-actions.c:337
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Graweruj…"
 
-#: ../app/actions/filters-actions.c:337
+#: ../app/actions/filters-actions.c:342
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Ekspozycja…"
 
-#: ../app/actions/filters-actions.c:342
+#: ../app/actions/filters-actions.c:347
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
 msgstr "_Fattal i inni 2002…"
 
-#: ../app/actions/filters-actions.c:347
+#: ../app/actions/filters-actions.c:352
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "Śledzenie _fraktalne…"
 
-#: ../app/actions/filters-actions.c:352
+#: ../app/actions/filters-actions.c:357
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "Rozmycie _Gaussa…"
 
-#: ../app/actions/filters-actions.c:357
+#: ../app/actions/filters-actions.c:362
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Wybiórcze rozmycie Gaussa…"
 
-#: ../app/actions/filters-actions.c:362
+#: ../app/actions/filters-actions.c:367
 msgctxt "filters-action"
 msgid "_GEGL graph..."
 msgstr "Wykres biblioteki _GEGL…"
 
-#: ../app/actions/filters-actions.c:367
+#: ../app/actions/filters-actions.c:372
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Siatka…"
 
-#: ../app/actions/filters-actions.c:372
+#: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "_Wysokie przejście…"
 
-#: ../app/actions/filters-actions.c:377
+#: ../app/actions/filters-actions.c:382
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "_Barwa i nasycenie…"
 
-#: ../app/actions/filters-actions.c:382
+#: ../app/actions/filters-actions.c:387
 msgctxt "filters-action"
 msgid "Hue-_Saturation..."
 msgstr "_Barwa i nasycenie…"
 
-#: ../app/actions/filters-actions.c:387
+#: ../app/actions/filters-actions.c:392
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Iluzja…"
 
-#: ../app/actions/filters-actions.c:392
+#: ../app/actions/filters-actions.c:397
 msgctxt "filters-action"
 msgid "_Image Gradient..."
 msgstr "_Gradient obrazu…"
 
-#: ../app/actions/filters-actions.c:397
+#: ../app/actions/filters-actions.c:402
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Kalejdoskop…"
 
-#: ../app/actions/filters-actions.c:402
+#: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
 msgid "Lens Distortion..."
 msgstr "Zniekształcenie soczewki…"
 
-#: ../app/actions/filters-actions.c:407
+#: ../app/actions/filters-actions.c:412
 msgctxt "filters-action"
 msgid "Lens Flare..."
 msgstr "Błysk soczewki…"
 
-#: ../app/actions/filters-actions.c:412
+#: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Levels..."
 msgstr "_Poziomy…"
 
-#: ../app/actions/filters-actions.c:417
+#: ../app/actions/filters-actions.c:422
+msgctxt "filters-action"
+msgid "_Linear Sinusoid..."
+msgstr "_Sinusoid liniowy…"
+
+#: ../app/actions/filters-actions.c:427
 msgctxt "filters-action"
 msgid "_Little Planet..."
 msgstr "M_ała planeta…"
 
-#: ../app/actions/filters-actions.c:422
+#: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Long Shadow..."
 msgstr "_Długi cień…"
 
-#: ../app/actions/filters-actions.c:427
+#: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006…"
 
-#: ../app/actions/filters-actions.c:432
+#: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Labirynt…"
 
-#: ../app/actions/filters-actions.c:437
+#: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Median Blur..."
 msgstr "_Rozmycie środkowe…"
 
-#: ../app/actions/filters-actions.c:442
+#: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Mikser monochromatyczny…"
 
-#: ../app/actions/filters-actions.c:447
+#: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mozaika…"
 
-#: ../app/actions/filters-actions.c:452
+#: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Koliste rozmycie ruchu…"
 
-#: ../app/actions/filters-actions.c:457
+#: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Liniowe rozmycie ruchu…"
 
-#: ../app/actions/filters-actions.c:462
+#: ../app/actions/filters-actions.c:472
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Rozmycie ruchu powiększenia…"
 
-#: ../app/actions/filters-actions.c:467
+#: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "Szum _komórkowy…"
 
-#: ../app/actions/filters-actions.c:472
+#: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Szum lch CIE…"
 
-#: ../app/actions/filters-actions.c:477
+#: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Szum HSV…"
 
-#: ../app/actions/filters-actions.c:482
+#: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Wygnieć…"
 
-#: ../app/actions/filters-actions.c:487
+#: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Szum _Perlina…"
 
-#: ../app/actions/filters-actions.c:492
+#: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Wyciosaj…"
 
-#: ../app/actions/filters-actions.c:497
+#: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Szum _RGB…"
 
-#: ../app/actions/filters-actions.c:502
+#: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "R_edukcja szumu…"
 
-#: ../app/actions/filters-actions.c:507
+#: ../app/actions/filters-actions.c:517
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Szum Simplex…"
 
-#: ../app/actions/filters-actions.c:512
+#: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Rozszarp…"
 
-#: ../app/actions/filters-actions.c:517
+#: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Jednolity szum…"
 
-#: ../app/actions/filters-actions.c:522
+#: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Rozrzuć…"
 
-#: ../app/actions/filters-actions.c:527
+#: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Offset..."
 msgstr "_Przesunięcie…"
 
-#: ../app/actions/filters-actions.c:532
+#: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Farba _olejna…"
 
-#: ../app/actions/filters-actions.c:537
+#: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Rzut panoramy…"
 
-#: ../app/actions/filters-actions.c:542
+#: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopia…"
 
-#: ../app/actions/filters-actions.c:547
+#: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pikselizuj…"
 
-#: ../app/actions/filters-actions.c:552
+#: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plazma…"
 
-#: ../app/actions/filters-actions.c:557
+#: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Współrzędne p_olarne…"
 
-#: ../app/actions/filters-actions.c:562
+#: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Redukcja kolorów…"
 
-#: ../app/actions/filters-actions.c:567
+#: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "_Recursive Transform..."
 msgstr "_Przekształcenie rekurencyjne…"
 
-#: ../app/actions/filters-actions.c:572
+#: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Usuwanie efektu _czerwonych oczu…"
 
-#: ../app/actions/filters-actions.c:577
+#: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005…"
 
-#: ../app/actions/filters-actions.c:582
+#: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "Przy_cięcie RGB…"
 
-#: ../app/actions/filters-actions.c:587
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Falowanie…"
 
-#: ../app/actions/filters-actions.c:592
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Nasycenie…"
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "Pół_spłaszczenie…"
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
 msgstr "_Cień i podświetlenie…"
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Przesuń…"
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus…"
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_SLIC…"
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symetryczni najbliżsi sąsiedzi…"
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Lekki żar…"
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "Spheri_ze..."
 msgstr "_Utwórz kulę…"
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "S_pirala…"
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Rozciągnij kontrast…"
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_STRESS…"
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nowa…"
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Threshold..."
 msgstr "P_rogowanie…"
 
-#: ../app/actions/filters-actions.c:667
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Próg alfy…"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Szklane płytki…"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Kawałki papieru…"
 
-#: ../app/actions/filters-actions.c:682
+#: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Bezszwowe kafelki…"
 
-#: ../app/actions/filters-actions.c:687
+#: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
 msgstr "Wyostrz (_maska wyostrzająca)…"
 
-#: ../app/actions/filters-actions.c:692
+#: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Rozprowadzanie _wartości…"
 
-#: ../app/actions/filters-actions.c:697
+#: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradacja wideo…"
 
-#: ../app/actions/filters-actions.c:702
+#: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Winieta…"
 
-#: ../app/actions/filters-actions.c:707
+#: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Piksele wody…"
 
-#: ../app/actions/filters-actions.c:712
+#: ../app/actions/filters-actions.c:722
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Fale…"
 
-#: ../app/actions/filters-actions.c:717
+#: ../app/actions/filters-actions.c:727
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "S_kręć i zaciśnij…"
 
-#: ../app/actions/filters-actions.c:722
+#: ../app/actions/filters-actions.c:732
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_iatr…"
 
-#: ../app/actions/filters-actions.c:730
+#: ../app/actions/filters-actions.c:740
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:732
+#: ../app/actions/filters-actions.c:742
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Uruchamia ponownie ostatnio używany filtr z tymi samymi ustawieniami"
 
-#: ../app/actions/filters-actions.c:737
+#: ../app/actions/filters-actions.c:747
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Wyświetl ponownie ostatni"
 
-#: ../app/actions/filters-actions.c:738
+#: ../app/actions/filters-actions.c:748
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Wyświetla jeszcze raz okno ostatnio używanego filtru"
 
-#: ../app/actions/filters-actions.c:1069
+#: ../app/actions/filters-actions.c:1079
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz „%s”"
 
-#: ../app/actions/filters-actions.c:1070
+#: ../app/actions/filters-actions.c:1080
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl „%s” ponownie"
 
-#: ../app/actions/filters-actions.c:1108
+#: ../app/actions/filters-actions.c:1118
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:1110
+#: ../app/actions/filters-actions.c:1120
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -7772,7 +7782,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:332 ../app/tools/gimptransformgridtool.c:1105
+#: ../app/tools/gimpfiltertool.c:335 ../app/tools/gimptransformgridtool.c:1105
 #: ../app/widgets/gimpcolordialog.c:109
 #: ../app/widgets/gimpcolordisplayeditor.c:331
 msgid "_Reset"
@@ -8244,7 +8254,7 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 #: ../app/dialogs/file-open-location-dialog.c:81
 #: ../app/dialogs/vectors-import-dialog.c:89
 #: ../app/widgets/gimpiconpicker.c:485 ../app/widgets/gimpopendialog.c:87
-#: ../app/widgets/gimpsettingsbox.c:732
+#: ../app/widgets/gimpsettingsbox.c:728
 msgid "_Open"
 msgstr "_Otwórz"
 
@@ -10304,7 +10314,7 @@ msgstr "Przenieś to okno na ekran %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:195
-#: ../app/tools/gimpfiltertool.c:334 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:337 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:662
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:178
 msgid "_OK"
@@ -12637,12 +12647,12 @@ msgid "Please wait: %s\n"
 msgstr "Proszę czekać: %s\n"
 
 #: ../app/core/gimp-internal-data.c:286 ../app/core/gimp-internal-data.c:299
-#: ../app/core/gimpdata.c:590 ../app/core/gimpdata.c:603
+#: ../app/core/gimpdata.c:549 ../app/core/gimpdata.c:562
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/core/gimp-internal-data.c:305 ../app/core/gimpdata.c:609
+#: ../app/core/gimp-internal-data.c:305 ../app/core/gimpdata.c:568
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Błąd podczas zapisywania „%s”"
@@ -14405,7 +14415,7 @@ msgstr "Nieprawidłowy ciąg UTF-8 w pliku z deseniami „%s”."
 msgid "Fatal parse error in pattern file: "
 msgstr "Krytyczny błąd podczas przetwarzania pliku palety: "
 
-#: ../app/core/gimppdbprogress.c:268 ../app/widgets/gimppdbdialog.c:310
+#: ../app/core/gimppdbprogress.c:268 ../app/widgets/gimppdbdialog.c:279
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -15208,6 +15218,11 @@ msgstr "Otwarcie położenia"
 msgid "Enter location (URI):"
 msgstr "Położenie (adres URI):"
 
+#. error should never be NULL, also issue #3093
+#: ../app/dialogs/file-open-location-dialog.c:246
+msgid "Invalid URI"
+msgstr "Nieprawidłowy adres URI"
+
 #: ../app/dialogs/file-save-dialog.c:458
 msgid ""
 "Saving remote files needs to determine the file format from the file "
@@ -15374,8 +15389,8 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:351
 #: ../app/tools/gimpgradienttool-editor.c:1857
 #: ../app/tools/gimpmeasuretool.c:748 ../app/widgets/gimpcontrollerlist.c:640
-#: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:175
-#: ../app/widgets/gimpsettingsbox.c:659 ../app/widgets/gimptexteditor.c:163
+#: ../app/widgets/gimpcriticaldialog.c:97 ../app/widgets/gimppdbdialog.c:141
+#: ../app/widgets/gimpsettingsbox.c:655 ../app/widgets/gimptexteditor.c:163
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -17816,7 +17831,7 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
 #: ../app/tools/gimpbucketfilltool.c:491 ../app/tools/gimpcagetool.c:227
-#: ../app/tools/gimpfiltertool.c:277 ../app/tools/gimpgradienttool.c:252
+#: ../app/tools/gimpfiltertool.c:280 ../app/tools/gimpgradienttool.c:252
 #: ../app/tools/gimpselectiontool.c:530
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
@@ -17825,7 +17840,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/display/gimpdisplayshell-dnd.c:369
 #: ../app/tools/gimpbucketfilltool.c:506 ../app/tools/gimpcagetool.c:234
 #: ../app/tools/gimpcroptool.c:461 ../app/tools/gimpeditselectiontool.c:1133
-#: ../app/tools/gimpfiltertool.c:284 ../app/tools/gimpgradienttool.c:259
+#: ../app/tools/gimpfiltertool.c:287 ../app/tools/gimpgradienttool.c:259
 #: ../app/tools/gimpmovetool.c:326 ../app/tools/gimppainttool.c:289
 #: ../app/tools/gimpselectiontool.c:537 ../app/tools/gimptransformtool.c:540
 #: ../app/tools/gimpwarptool.c:683
@@ -21490,7 +21505,7 @@ msgid "Bucket fill"
 msgstr "Wypełnienie kubełkiem"
 
 #: ../app/tools/gimpbucketfilltool.c:499 ../app/tools/gimpcagetool.c:244
-#: ../app/tools/gimpfiltertool.c:294
+#: ../app/tools/gimpfiltertool.c:297
 #: ../app/tools/gimpforegroundselecttool.c:294
 #: ../app/tools/gimpgradienttool.c:269 ../app/tools/gimppainttool.c:317
 #: ../app/tools/gimptransformtool.c:549 ../app/tools/gimpwarptool.c:697
@@ -21994,50 +22009,50 @@ msgid "Color _managed"
 msgstr "_Zarządzanie kolorami"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:392
+#: ../app/tools/gimpfiltertool.c:395
 msgid "Advanced Color Options"
 msgstr "Zaawansowane opcje kolorów"
 
-#: ../app/tools/gimpfiltertool.c:411
+#: ../app/tools/gimpfiltertool.c:414
 msgid "Convert pixels to built-in sRGB to apply filter (slow)"
 msgstr ""
 "Konwertowanie pikseli do wbudowanej przestrzeni sRGB, aby zastosować filtr "
 "(wolne)"
 
-#: ../app/tools/gimpfiltertool.c:412
+#: ../app/tools/gimpfiltertool.c:415
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
 msgstr ""
 "Przyjmowanie, że piksele są we wbudowanej przestrzeni sRGB (ignorowanie "
 "prawdziwej przestrzeni kolorów obrazu)"
 
-#: ../app/tools/gimpfiltertool.c:654
+#: ../app/tools/gimpfiltertool.c:657
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:658
+#: ../app/tools/gimpfiltertool.c:661
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:662
+#: ../app/tools/gimpfiltertool.c:665
 msgid "Click to move the split guide"
 msgstr "Kliknięcie przemieści prowadnicę podziału"
 
-#: ../app/tools/gimpfiltertool.c:664
+#: ../app/tools/gimpfiltertool.c:667
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:665
+#: ../app/tools/gimpfiltertool.c:668
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:1377 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1395 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1379 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1397 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
@@ -22253,8 +22268,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Różdżka"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:543
-#: ../app/tools/gimpgegltool.c:544 ../app/tools/gimpoperationtool.c:136
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:545
+#: ../app/tools/gimpgegltool.c:546 ../app/tools/gimpoperationtool.c:136
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -22267,7 +22282,7 @@ msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:488
+#: ../app/tools/gimpgegltool.c:490
 msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
@@ -26234,19 +26249,19 @@ msgstr "Wy_eksportuj bieżące ustawienia do pliku…"
 msgid "_Manage Saved Presets..."
 msgstr "_Zarządzaj zapisanymi ustawieniami…"
 
-#: ../app/widgets/gimpsettingsbox.c:609
+#: ../app/widgets/gimpsettingsbox.c:605
 msgid "Save Settings as Named Preset"
 msgstr "Zapisanie ustawień"
 
-#: ../app/widgets/gimpsettingsbox.c:612
+#: ../app/widgets/gimpsettingsbox.c:608
 msgid "Enter a name for the preset"
 msgstr "Nazwa ustawień"
 
-#: ../app/widgets/gimpsettingsbox.c:613
+#: ../app/widgets/gimpsettingsbox.c:609
 msgid "Saved Settings"
 msgstr "Zapisane ustawienia"
 
-#: ../app/widgets/gimpsettingsbox.c:654
+#: ../app/widgets/gimpsettingsbox.c:650
 msgid "Manage Saved Presets"
 msgstr "Zarządzanie zapisanymi ustawieniami"
 
