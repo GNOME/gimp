@@ -672,7 +672,11 @@ save_image (GFile             *file,
   struct heif_image_handle *handle;
   struct heif_writer        writer;
   struct heif_error         err;
+#ifdef HAVE_LIBHEIF_1_4_0
   GimpColorProfile         *profile = NULL;
+  const guint8             *icc_data;
+  gsize                     icc_length;
+#endif
   GOutputStream            *output;
   GeglBuffer               *buffer;
   const Babl               *format;
@@ -681,11 +685,11 @@ save_image (GFile             *file,
   gint                      width;
   gint                      height;
   gboolean                  has_alpha;
+  gboolean                  out_linear = FALSE;
 
   gimp_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
-  profile = gimp_image_get_effective_color_profile (image_ID);
   width   = gimp_drawable_width  (drawable_ID);
   height  = gimp_drawable_height (drawable_ID);
 
@@ -698,17 +702,38 @@ save_image (GFile             *file,
                            heif_chroma_interleaved_RGB,
                            &image);
 
-  if (profile)
-    {
 #ifdef HAVE_LIBHEIF_1_4_0
-      const guint8 *icc_data;
-      gsize         icc_length;
+  profile = gimp_image_get_color_profile (image_ID);
+  if (profile && gimp_color_profile_is_linear (profile))
+    out_linear = TRUE;
 
-      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
-      heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
-#endif /* HAVE_LIBHEIF_1_4_0 */
-      g_object_unref (profile);
+  if (! profile)
+    {
+      profile = gimp_image_get_effective_color_profile (image_ID);
+
+      if (gimp_color_profile_is_linear (profile))
+        {
+          if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+            {
+              /* If stored data was linear, let's convert the profile. */
+              GimpColorProfile *saved_profile;
+
+              saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+              g_clear_object (&profile);
+              profile = saved_profile;
+            }
+          else
+            {
+              /* Keep linear profile as-is for 8-bit linear image. */
+              out_linear = TRUE;
+            }
+        }
     }
+
+  icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+  heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
+  g_object_unref (profile);
+#endif /* HAVE_LIBHEIF_1_4_0 */
 
   heif_image_add_plane (image, heif_channel_interleaved,
                         width, height, has_alpha ? 32 : 24);
@@ -718,9 +743,19 @@ save_image (GFile             *file,
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
   if (has_alpha)
-    format = babl_format ("R'G'B'A u8");
+    {
+      if (out_linear)
+        format = babl_format ("RGBA u8");
+      else
+        format = babl_format ("R'G'B'A u8");
+    }
   else
-    format = babl_format ("R'G'B' u8");
+    {
+      if (out_linear)
+        format = babl_format ("RGB u8");
+      else
+        format = babl_format ("R'G'B' u8");
+    }
 
   gegl_buffer_get (buffer,
                    GEGL_RECTANGLE (0, 0, width, height),
