@@ -1212,11 +1212,11 @@ load_dialog (struct heif_context *heif,
 
 static void
 save_dialog_lossless_button_toggled (GtkToggleButton *source,
-                                     GtkWidget       *slider)
+                                     GtkWidget       *hbox)
 {
   gboolean lossless = gtk_toggle_button_get_active (source);
 
-  gtk_widget_set_sensitive (slider, ! lossless);
+  gtk_widget_set_sensitive (hbox, ! lossless);
 }
 
 gboolean
@@ -1227,6 +1227,7 @@ save_dialog (SaveParams *params)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *lossless_button;
+  GtkWidget *frame;
   GtkWidget *profile_button;
   GtkWidget *quality_slider;
   gboolean   run = FALSE;
@@ -1238,25 +1239,29 @@ save_dialog (SaveParams *params)
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
 
-  lossless_button = gtk_check_button_new_with_label (_("Lossless"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), lossless_button, FALSE, FALSE, 0);
+  frame = gimp_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+
+  lossless_button = gtk_check_button_new_with_mnemonic (_("_Lossless"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), lossless_button);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  label = gtk_label_new (_("Quality:"));
+  label = gtk_label_new_with_mnemonic (_("_Quality:"));
   quality_slider = gtk_hscale_new_with_range (0, 100, 5);
   gtk_scale_set_value_pos (GTK_SCALE (quality_slider), GTK_POS_RIGHT);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), quality_slider, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   gtk_range_set_value (GTK_RANGE (quality_slider), params->quality);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lossless_button),
                                 params->lossless);
   gtk_widget_set_sensitive (quality_slider, !params->lossless);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), quality_slider);
 
   g_signal_connect (lossless_button, "toggled",
                     G_CALLBACK (save_dialog_lossless_button_toggled),
-                    quality_slider);
+                    hbox);
 
 #ifdef HAVE_LIBHEIF_1_4_0
   profile_button = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
