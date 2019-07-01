@@ -37,6 +37,7 @@ struct _SaveParams
 {
   gint     quality;
   gboolean lossless;
+  gboolean save_profile;
 };
 
 
@@ -216,13 +217,20 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
-      gint32           image_ID    = param[1].data.d_int32;
-      gint32           drawable_ID = param[2].data.d_int32;
-      GimpExportReturn export      = GIMP_EXPORT_CANCEL;
-      SaveParams       params;
+      gint32                 image_ID    = param[1].data.d_int32;
+      gint32                 drawable_ID = param[2].data.d_int32;
+      GimpExportReturn       export      = GIMP_EXPORT_CANCEL;
+      SaveParams             params;
+      GimpMetadata          *metadata = NULL;
+      GimpMetadataSaveFlags  metadata_flags;
 
-      params.lossless = FALSE;
-      params.quality  = 50;
+      metadata = gimp_image_metadata_save_prepare (image_ID,
+                                                   "image/heif",
+                                                   &metadata_flags);
+
+      params.lossless     = FALSE;
+      params.quality      = 50;
+      params.save_profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
 
       switch (run_mode)
         {
@@ -235,6 +243,7 @@ run (const gchar      *name,
           if (export == GIMP_EXPORT_CANCEL)
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
+              g_clear_object (&metadata);
               return;
             }
           break;
@@ -278,15 +287,21 @@ run (const gchar      *name,
                           &params,
                           &error))
             {
+              if (metadata)
+                gimp_image_metadata_save_finish (image_ID,
+                                                 "image/heif",
+                                                 metadata, metadata_flags,
+                                                 file, NULL);
               gimp_set_data (SAVE_PROC, &params, sizeof (params));
             }
           else
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }
-
           g_object_unref (file);
         }
+
+      g_clear_object (&metadata);
     }
   else
     {
@@ -672,11 +687,6 @@ save_image (GFile             *file,
   struct heif_image_handle *handle;
   struct heif_writer        writer;
   struct heif_error         err;
-#ifdef HAVE_LIBHEIF_1_4_0
-  GimpColorProfile         *profile = NULL;
-  const guint8             *icc_data;
-  gsize                     icc_length;
-#endif
   GOutputStream            *output;
   GeglBuffer               *buffer;
   const Babl               *format;
@@ -703,36 +713,54 @@ save_image (GFile             *file,
                            &image);
 
 #ifdef HAVE_LIBHEIF_1_4_0
-  profile = gimp_image_get_color_profile (image_ID);
-  if (profile && gimp_color_profile_is_linear (profile))
-    out_linear = TRUE;
-
-  if (! profile)
+  if (params->save_profile)
     {
-      profile = gimp_image_get_effective_color_profile (image_ID);
+      GimpColorProfile *profile = NULL;
+      const guint8     *icc_data;
+      gsize             icc_length;
 
-      if (gimp_color_profile_is_linear (profile))
+      profile = gimp_image_get_color_profile (image_ID);
+      if (profile && gimp_color_profile_is_linear (profile))
+        out_linear = TRUE;
+
+      if (! profile)
         {
-          if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
-            {
-              /* If stored data was linear, let's convert the profile. */
-              GimpColorProfile *saved_profile;
+          profile = gimp_image_get_effective_color_profile (image_ID);
 
-              saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
-              g_clear_object (&profile);
-              profile = saved_profile;
-            }
-          else
+          if (gimp_color_profile_is_linear (profile))
             {
-              /* Keep linear profile as-is for 8-bit linear image. */
-              out_linear = TRUE;
+              if (gimp_image_get_precision (image_ID) != GIMP_PRECISION_U8_LINEAR)
+                {
+                  /* If stored data was linear, let's convert the profile. */
+                  GimpColorProfile *saved_profile;
+
+                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+                  g_clear_object (&profile);
+                  profile = saved_profile;
+                }
+              else
+                {
+                  /* Keep linear profile as-is for 8-bit linear image. */
+                  out_linear = TRUE;
+                }
             }
         }
-    }
 
-  icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
-  heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
-  g_object_unref (profile);
+      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      heif_image_set_raw_color_profile (image, "prof", icc_data, icc_length);
+      space = gimp_color_profile_get_space (profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            error);
+      if (error && *error)
+        {
+          /* Don't make this a hard failure yet output the error. */
+          g_printerr ("%s: error getting the profile space: %s",
+                      G_STRFUNC, (*error)->message);
+          g_clear_error (error);
+        }
+
+      g_object_unref (profile);
+    }
 #endif /* HAVE_LIBHEIF_1_4_0 */
 
   heif_image_add_plane (image, heif_channel_interleaved,
@@ -1199,6 +1227,7 @@ save_dialog (SaveParams *params)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *lossless_button;
+  GtkWidget *profile_button;
   GtkWidget *quality_slider;
   gboolean   run = FALSE;
 
@@ -1228,6 +1257,16 @@ save_dialog (SaveParams *params)
   g_signal_connect (lossless_button, "toggled",
                     G_CALLBACK (save_dialog_lossless_button_toggled),
                     quality_slider);
+
+#ifdef HAVE_LIBHEIF_1_4_0
+  profile_button = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (profile_button),
+                                params->save_profile);
+  g_signal_connect (profile_button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &params->save_profile);
+  gtk_box_pack_start (GTK_BOX (main_vbox), profile_button, FALSE, FALSE, 0);
+#endif
 
   gtk_widget_show_all (dialog);
 
