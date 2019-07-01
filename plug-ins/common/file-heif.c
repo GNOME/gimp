@@ -350,8 +350,8 @@ load_image (GFile     *file,
   gsize                     bytes_read;
   struct heif_context      *ctx;
   struct heif_error         err;
-  struct heif_image_handle *handle = NULL;
-  struct heif_image        *img = NULL;
+  struct heif_image_handle *handle  = NULL;
+  struct heif_image        *img     = NULL;
   GimpColorProfile         *profile = NULL;
   gint                      n_images;
   heif_item_id              primary;
@@ -480,8 +480,8 @@ load_image (GFile     *file,
   err = heif_decode_image (handle,
                            &img,
                            heif_colorspace_RGB,
-                           has_alpha ? heif_chroma_interleaved_32bit :
-                           heif_chroma_interleaved_24bit,
+                           has_alpha ? heif_chroma_interleaved_RGBA :
+                           heif_chroma_interleaved_RGB,
                            NULL);
   if (err.code)
     {
@@ -685,8 +685,8 @@ save_image (GFile             *file,
 {
   struct heif_image        *image   = NULL;
   struct heif_context      *context = heif_context_alloc ();
-  struct heif_encoder      *encoder;
-  struct heif_image_handle *handle;
+  struct heif_encoder      *encoder = NULL;
+  struct heif_image_handle *handle  = NULL;
   struct heif_writer        writer;
   struct heif_error         err;
   GOutputStream            *output;
@@ -802,8 +802,6 @@ save_image (GFile             *file,
 
   /*  encode to HEIF file  */
 
-  context = heif_context_alloc ();
-
   err = heif_context_get_encoder_for_format (context,
                                              heif_compression_HEVC,
                                              &encoder);
@@ -903,14 +901,14 @@ load_thumbnails (struct heif_context *heif,
 
   for (i = 0; i < n_images; i++)
     {
-      struct heif_image_handle *handle;
+      struct heif_image_handle *handle = NULL;
       struct heif_error         err;
       gint                      width;
       gint                      height;
-      struct heif_image_handle *thumbnail_handle;
+      struct heif_image_handle *thumbnail_handle = NULL;
       heif_item_id              thumbnail_ID;
       gint                      n_thumbnails;
-      struct heif_image        *thumbnail_img;
+      struct heif_image        *thumbnail_img = NULL;
       gint                      thumbnail_width;
       gint                      thumbnail_height;
 
@@ -978,7 +976,7 @@ load_thumbnails (struct heif_context *heif,
       err = heif_decode_image (thumbnail_handle,
                                &thumbnail_img,
                                heif_colorspace_RGB,
-                               heif_chroma_interleaved_24bit,
+                               heif_chroma_interleaved_RGB,
                                NULL);
       if (err.code)
         {
