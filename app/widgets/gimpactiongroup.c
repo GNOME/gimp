@@ -139,7 +139,7 @@ gimp_action_group_constructed (GObject *object)
 
   gimp_assert (GIMP_IS_GIMP (group->gimp));
 
-  name = gimp_action_group_get_name (object);
+  name = gimp_action_group_get_name (group);
 
   if (name)
     {
@@ -160,7 +160,7 @@ gimp_action_group_constructed (GObject *object)
 static void
 gimp_action_group_dispose (GObject *object)
 {
-  const gchar *name = gimp_action_group_get_name (object);
+  const gchar *name = gimp_action_group_get_name (GIMP_ACTION_GROUP (object));
 
   if (name)
     {
@@ -421,7 +421,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
                           entries[i].callback,
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, action,
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -472,7 +472,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
                           entries[i].callback,
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, action,
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -530,7 +530,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       if (value == entries[i].value)
         gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
 
-      gimp_action_group_add_action_with_accel (group, action,
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -589,7 +589,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
                           callback,
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, action,
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -640,7 +640,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
                           callback,
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, action,
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -677,7 +677,7 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                           callback,
                           group->user_data);
 
-      gimp_action_group_add_action_with_accel (group, action,
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
                                                entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
@@ -809,8 +809,8 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
       return;
     }
 
-  gimp_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                 active ? TRUE : FALSE);
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+                                active ? TRUE : FALSE);
 }
 
 void
