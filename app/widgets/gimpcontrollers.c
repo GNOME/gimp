@@ -32,6 +32,8 @@
 #include "core/gimp.h"
 #include "core/gimplist.h"
 
+#include "gimpaction.h"
+#include "gimpactiongroup.h"
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollers.h"
 #include "gimpcontrollerkeyboard.h"
@@ -337,17 +339,16 @@ gimp_controllers_event_mapped (GimpControllerInfo        *info,
                                const gchar               *action_name,
                                GimpControllerManager     *manager)
 {
-  GtkUIManager *ui_manager = GTK_UI_MANAGER (manager->ui_manager);
-  GList        *list;
+  GList *list;
 
-  for (list = gtk_ui_manager_get_action_groups (ui_manager);
+  for (list = gimp_ui_manager_get_action_groups (manager->ui_manager);
        list;
        list = g_list_next (list))
     {
-      GtkActionGroup *group = list->data;
-      GtkAction      *action;
+      GimpActionGroup *group = list->data;
+      GimpAction      *action;
 
-      action = gtk_action_group_get_action (group, action_name);
+      action = gimp_action_group_get_action (group, action_name);
 
       if (action)
         {
@@ -369,7 +370,7 @@ gimp_controllers_event_mapped (GimpControllerInfo        *info,
 
             case GIMP_CONTROLLER_EVENT_TRIGGER:
             default:
-              gtk_action_activate (action);
+              gimp_action_activate (action);
               break;
             }
 

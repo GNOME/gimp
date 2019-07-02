@@ -376,7 +376,7 @@ gimp_image_window_constructed (GObject *object)
                            window, G_CONNECT_SWAPPED);
 
   gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (private->menubar_manager)));
+                              gimp_ui_manager_get_accel_group (private->menubar_manager));
 
   g_signal_connect (private->menubar_manager, "show-tooltip",
                     G_CALLBACK (gimp_image_window_show_tooltip),
@@ -394,9 +394,8 @@ gimp_image_window_constructed (GObject *object)
 
   /* Create the menubar */
 #ifndef GDK_WINDOWING_QUARTZ
-  private->menubar =
-    gtk_ui_manager_get_widget (GTK_UI_MANAGER (private->menubar_manager),
-                               "/image-menubar");
+  private->menubar = gimp_ui_manager_get_widget (private->menubar_manager,
+                                                 "/image-menubar");
 #endif /* !GDK_WINDOWING_QUARTZ */
   if (private->menubar)
     {

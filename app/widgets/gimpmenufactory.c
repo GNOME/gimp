@@ -31,7 +31,9 @@
 
 #include "core/gimp.h"
 
+#include "gimpaction.h"
 #include "gimpactionfactory.h"
+#include "gimpactiongroup.h"
 #include "gimpmenufactory.h"
 #include "gimpuimanager.h"
 
@@ -190,11 +192,11 @@ gimp_menu_factory_get_registered_menus (GimpMenuFactory *factory)
 
 static void
 gimp_menu_factory_manager_action_added (GimpActionGroup *group,
-                                        GtkAction       *action,
+                                        GimpAction      *action,
                                         GtkAccelGroup   *accel_group)
 {
-  gtk_action_set_accel_group (action, accel_group);
-  gtk_action_connect_accelerator (action);
+  gimp_action_set_accel_group (action, accel_group);
+  gimp_action_connect_accelerator (action);
 }
 
 GimpUIManager *
@@ -218,7 +220,7 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
           GList         *list;
 
           manager = gimp_ui_manager_new (factory->p->gimp, entry->identifier);
-          accel_group = gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (manager));
+          accel_group = gimp_ui_manager_get_accel_group (manager);
 
           for (list = entry->action_groups; list; list = g_list_next (list))
             {
@@ -230,14 +232,14 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                                      (const gchar *) list->data,
                                                      callback_data);
 
-              actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+              actions = gimp_action_group_list_actions (group);
 
               for (list2 = actions; list2; list2 = g_list_next (list2))
                 {
-                  GtkAction *action = list2->data;
+                  GimpAction *action = list2->data;
 
-                  gtk_action_set_accel_group (action, accel_group);
-                  gtk_action_connect_accelerator (action);
+                  gimp_action_set_accel_group (action, accel_group);
+                  gimp_action_connect_accelerator (action);
                 }
 
               g_list_free (actions);
@@ -246,10 +248,7 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                        G_CALLBACK (gimp_menu_factory_manager_action_added),
                                        accel_group, 0);
 
-              gtk_ui_manager_insert_action_group (GTK_UI_MANAGER (manager),
-                                                  GTK_ACTION_GROUP (group),
-                                                  -1);
-
+              gimp_ui_manager_insert_action_group (manager, group, -1);
               g_object_unref (group);
             }
 

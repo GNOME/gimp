@@ -26,6 +26,7 @@
 
 #include "core/gimpmarshal.h"
 
+#include "gimpaction.h"
 #include "gimpstringaction.h"
 
 
@@ -55,7 +56,7 @@ static void   gimp_string_action_get_property (GObject      *object,
 static void   gimp_string_action_activate     (GtkAction    *action);
 
 
-G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION)
+G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION_IMPL)
 
 #define parent_class gimp_string_action_parent_class
 
@@ -94,7 +95,6 @@ gimp_string_action_class_init (GimpStringActionClass *klass)
 static void
 gimp_string_action_init (GimpStringAction *action)
 {
-  action->value = NULL;
 }
 
 static void
@@ -151,6 +151,7 @@ gimp_string_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
                         const gchar *icon_name,
+                        const gchar *help_id,
                         const gchar *value)
 {
   GimpStringAction *action;
@@ -162,6 +163,8 @@ gimp_string_action_new (const gchar *name,
                          "icon-name", icon_name,
                          "value",     value,
                          NULL);
+
+  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
 
   return action;
 }

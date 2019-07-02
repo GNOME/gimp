@@ -29,6 +29,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpradioaction.h"
 #include "widgets/gimptextbuffer.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -182,7 +183,7 @@ text_tool_direction_cmd_callback (GtkAction *action,
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
   gint          value;
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   g_object_set (text_tool->proxy,
                 "base-direction", (GimpTextDirection) value,

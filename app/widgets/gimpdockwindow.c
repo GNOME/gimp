@@ -323,8 +323,7 @@ gimp_dock_window_constructed (GObject *object)
     gimp_menu_factory_manager_new (menu_factory,
                                    dock_window->p->ui_manager_name,
                                    dock_window);
-  accel_group =
-    gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (dock_window->p->ui_manager));
+  accel_group = gimp_ui_manager_get_accel_group (dock_window->p->ui_manager);
   gtk_window_add_accel_group (GTK_WINDOW (dock_window), accel_group);
 
   g_signal_connect_object (dock_window->p->context, "display-changed",

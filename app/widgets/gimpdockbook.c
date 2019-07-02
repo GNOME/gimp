@@ -36,6 +36,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
+#include "gimpactiongroup.h"
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpdock.h"
@@ -326,7 +327,6 @@ gimp_dockbook_create_window (GtkNotebook *notebook,
                              gint         y)
 {
   GimpDockbook      *dockbook = GIMP_DOCKBOOK (notebook);
-  GimpDockable      *dockable = GIMP_DOCKABLE (page);
   GimpDialogFactory *dialog_factory;
   GimpMenuFactory   *menu_factory;
   GimpDockWindow    *src_dock_window;
@@ -466,7 +466,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
   const gchar   *dialog_ui_path;
   gpointer       dialog_popup_data;
   GtkWidget     *parent_menu_widget;
-  GtkAction     *parent_menu_action;
+  GimpAction    *parent_menu_action;
   GimpDockable  *dockable;
   gint           page_num;
 
@@ -476,11 +476,11 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
     return FALSE;
 
   parent_menu_widget =
-    gtk_ui_manager_get_widget (GTK_UI_MANAGER (dockbook_ui_manager),
-                               "/dockable-popup/dockable-menu");
+    gimp_ui_manager_get_widget (dockbook_ui_manager,
+                                "/dockable-popup/dockable-menu");
   parent_menu_action =
-    gtk_ui_manager_get_action (GTK_UI_MANAGER (dockbook_ui_manager),
-                               "/dockable-popup/dockable-menu");
+    gimp_ui_manager_get_action (dockbook_ui_manager,
+                                "/dockable-popup/dockable-menu");
 
   if (! parent_menu_widget || ! parent_menu_action)
     return FALSE;
@@ -498,13 +498,12 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
 
   if (dialog_ui_manager && dialog_ui_path)
     {
-      GtkWidget *child_menu_widget;
-      GtkAction *child_menu_action;
-      gchar     *label;
+      GtkWidget  *child_menu_widget;
+      GimpAction *child_menu_action;
+      gchar      *label;
 
       child_menu_widget =
-        gtk_ui_manager_get_widget (GTK_UI_MANAGER (dialog_ui_manager),
-                                   dialog_ui_path);
+        gimp_ui_manager_get_widget (dialog_ui_manager, dialog_ui_path);
 
       if (! child_menu_widget)
         {
@@ -514,8 +513,8 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
         }
 
       child_menu_action =
-        gtk_ui_manager_get_action (GTK_UI_MANAGER (dialog_ui_manager),
-                                   dialog_ui_path);
+        gimp_ui_manager_get_action (dialog_ui_manager,
+                                    dialog_ui_path);
 
       if (! child_menu_action)
         {
@@ -596,8 +595,7 @@ gimp_dockbook_menu_end (GimpDockable *dockable)
   if (dialog_ui_manager && dialog_ui_path)
     {
       GtkWidget *child_menu_widget =
-        gtk_ui_manager_get_widget (GTK_UI_MANAGER (dialog_ui_manager),
-                                   dialog_ui_path);
+        gimp_ui_manager_get_widget (dialog_ui_manager, dialog_ui_path);
 
       if (child_menu_widget)
         gtk_menu_detach (GTK_MENU (child_menu_widget));
@@ -730,7 +728,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
 {
   GtkWidget      *tab_widget;
   GimpDockWindow *dock_window;
-  GtkAction      *action = NULL;
+  GimpAction     *action = NULL;
   GtkIconSize     tab_size = DEFAULT_TAB_ICON_SIZE;
 
   gtk_widget_style_get (GTK_WIDGET (dockbook),
@@ -780,7 +778,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
               GList *actions;
               GList *list;
 
-              actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+              actions = gimp_action_group_list_actions (group);
 
               for (list = actions; list; list = g_list_next (list))
                 {

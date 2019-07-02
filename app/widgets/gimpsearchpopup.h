@@ -68,7 +68,7 @@ GtkWidget * gimp_search_popup_new        (Gimp                    *gimp,
                                           gpointer                 callback_data);
 
 void        gimp_search_popup_add_result (GimpSearchPopup *popup,
-                                          GtkAction       *action,
+                                          GimpAction      *action,
                                           gint             section);
 
 #endif  /*  __GIMP_SEARCH_POPUP_H__  */

@@ -22,7 +22,7 @@
 #define __GIMP_PROCEDURE_ACTION_H__
 
 
-#include "gimpaction.h"
+#include "gimpactionimpl.h"
 
 
 #define GIMP_TYPE_PROCEDURE_ACTION            (gimp_procedure_action_get_type ())
@@ -37,14 +37,14 @@ typedef struct _GimpProcedureActionClass GimpProcedureActionClass;
 
 struct _GimpProcedureAction
 {
-  GimpAction     parent_instance;
+  GimpActionImpl  parent_instance;
 
-  GimpProcedure *procedure;
+  GimpProcedure  *procedure;
 };
 
 struct _GimpProcedureActionClass
 {
-  GimpActionClass parent_class;
+  GimpActionImplClass parent_class;
 
   void (* selected) (GimpProcedureAction *action,
                      GimpProcedure       *procedure);
@@ -57,7 +57,9 @@ GimpProcedureAction * gimp_procedure_action_new      (const gchar         *name,
                                                       const gchar         *label,
                                                       const gchar         *tooltip,
                                                       const gchar         *icon_name,
+                                                      const gchar         *help_id,
                                                       GimpProcedure       *procedure);
+
 void                  gimp_procedure_action_selected (GimpProcedureAction *action,
                                                       GimpProcedure       *procedure);
 

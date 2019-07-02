@@ -29,6 +29,7 @@
 
 #include "pdb/gimpprocedure.h"
 
+#include "gimpaction.h"
 #include "gimpprocedureaction.h"
 #include "gimpwidgets-utils.h"
 
@@ -61,7 +62,8 @@ static void   gimp_procedure_action_connect_proxy (GtkAction    *action,
                                                    GtkWidget    *proxy);
 
 
-G_DEFINE_TYPE (GimpProcedureAction, gimp_procedure_action, GIMP_TYPE_ACTION)
+G_DEFINE_TYPE (GimpProcedureAction, gimp_procedure_action,
+               GIMP_TYPE_ACTION_IMPL)
 
 #define parent_class gimp_procedure_action_parent_class
 
@@ -101,7 +103,6 @@ gimp_procedure_action_class_init (GimpProcedureActionClass *klass)
 static void
 gimp_procedure_action_init (GimpProcedureAction *action)
 {
-  action->procedure = NULL;
 }
 
 static void
@@ -222,15 +223,22 @@ gimp_procedure_action_new (const gchar   *name,
                            const gchar   *label,
                            const gchar   *tooltip,
                            const gchar   *icon_name,
+                           const gchar   *help_id,
                            GimpProcedure *procedure)
 {
-  return g_object_new (GIMP_TYPE_PROCEDURE_ACTION,
-                       "name",       name,
-                       "label",      label,
-                       "tooltip",    tooltip,
-                       "icon-name",  icon_name,
-                       "procedure",  procedure,
-                       NULL);
+  GimpProcedureAction *action;
+
+  action = g_object_new (GIMP_TYPE_PROCEDURE_ACTION,
+                         "name",       name,
+                         "label",      label,
+                         "tooltip",    tooltip,
+                         "icon-name",  icon_name,
+                         "procedure",  procedure,
+                         NULL);
+
+  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+
+  return action;
 }
 
 void

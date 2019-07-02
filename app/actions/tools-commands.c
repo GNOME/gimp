@@ -701,8 +701,8 @@ tools_activate_enum_action (const gchar *action_desc,
 
   if (action_name)
     {
-      GList     *managers;
-      GtkAction *action;
+      GList      *managers;
+      GimpAction *action;
 
       *action_name++ = '\0';
 

@@ -310,7 +310,7 @@ gimp_tool_palette_hierarchy_changed (GtkWidget *widget,
         {
           GimpToolInfo  *tool_info = list->data;
           GtkToolItem   *item;
-          GtkAction     *action;
+          GimpAction    *action;
           const gchar   *identifier;
           gchar         *tmp;
           gchar         *name;

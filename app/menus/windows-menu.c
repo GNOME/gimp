@@ -33,6 +33,7 @@
 #include "core/gimpviewable.h"
 
 #include "widgets/gimpaction.h"
+#include "widgets/gimpactionimpl.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdockwindow.h"
@@ -178,7 +179,7 @@ windows_menu_display_remove (GimpContainer *container,
                                                   merge_key));
 
   if (merge_id)
-    gtk_ui_manager_remove_ui (GTK_UI_MANAGER (manager), merge_id);
+    gimp_ui_manager_remove_ui (manager, merge_id);
 
   g_object_set_data (G_OBJECT (manager), merge_key, NULL);
 
@@ -205,7 +206,7 @@ windows_menu_display_reorder (GimpContainer *container,
    * the same ones may simply cancel the effect of the removal, hence
    * losing the menu reordering.
    */
-  gtk_ui_manager_ensure_update (GTK_UI_MANAGER (manager));
+  gimp_ui_manager_ensure_update (manager);
 
   for (i = new_index; i < n_display; i++)
     {
@@ -243,24 +244,23 @@ windows_menu_image_notify (GimpDisplay      *display,
           action_name = gimp_display_get_action_name (display);
           action_path = g_strdup_printf ("%s/Windows/Images", ui_path);
 
-          merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+          merge_id = gimp_ui_manager_new_merge_id (manager);
 
           g_object_set_data (G_OBJECT (manager), merge_key,
                              GUINT_TO_POINTER (merge_id));
 
-          gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                                 action_path, action_name, action_name,
-                                 GTK_UI_MANAGER_MENUITEM,
-                                 FALSE);
+          gimp_ui_manager_add_ui (manager, merge_id,
+                                  action_path, action_name, action_name,
+                                  GTK_UI_MANAGER_MENUITEM,
+                                  FALSE);
 
           full_path = g_strconcat (action_path, "/", action_name, NULL);
 
-          widget = gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
-                                              full_path);
+          widget = gimp_ui_manager_get_widget (manager, full_path);
 
           if (widget)
             {
-              GtkAction *action;
+              GimpAction *action;
 
               action = gimp_ui_manager_find_action (manager,
                                                     "windows", action_name);
@@ -301,15 +301,15 @@ windows_menu_dock_window_added (GimpDialogFactory *factory,
                                  ui_path);
 
   merge_key = windows_menu_dock_window_to_merge_id (dock_window);
-  merge_id  = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+  merge_id  = gimp_ui_manager_new_merge_id (manager);
 
   g_object_set_data (G_OBJECT (manager), merge_key,
                      GUINT_TO_POINTER (merge_id));
 
-  gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                         action_path, action_name, action_name,
-                         GTK_UI_MANAGER_MENUITEM,
-                         FALSE);
+  gimp_ui_manager_add_ui (manager, merge_id,
+                          action_path, action_name, action_name,
+                          GTK_UI_MANAGER_MENUITEM,
+                          FALSE);
 
   g_free (merge_key);
   g_free (action_path);
@@ -325,7 +325,7 @@ windows_menu_dock_window_removed (GimpDialogFactory *factory,
   guint  merge_id  = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                           merge_key));
   if (merge_id)
-    gtk_ui_manager_remove_ui (GTK_UI_MANAGER (manager), merge_id);
+    gimp_ui_manager_remove_ui (manager, merge_id);
 
   g_object_set_data (G_OBJECT (manager), merge_key, NULL);
 
@@ -360,15 +360,15 @@ windows_menu_recent_add (GimpContainer   *container,
   action_path = g_strdup_printf ("%s/Windows/Recently Closed Docks", ui_path);
 
   merge_key = g_strdup_printf ("windows-recent-%04d-merge-id", info_id);
-  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+  merge_id = gimp_ui_manager_new_merge_id (manager);
 
   g_object_set_data (G_OBJECT (manager), merge_key,
                      GUINT_TO_POINTER (merge_id));
 
-  gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                         action_path, action_name, action_name,
-                         GTK_UI_MANAGER_MENUITEM,
-                         TRUE);
+  gimp_ui_manager_add_ui (manager, merge_id,
+                          action_path, action_name, action_name,
+                          GTK_UI_MANAGER_MENUITEM,
+                          TRUE);
 
   g_free (merge_key);
   g_free (action_path);
@@ -393,7 +393,7 @@ windows_menu_recent_remove (GimpContainer   *container,
                                                   merge_key));
 
   if (merge_id)
-    gtk_ui_manager_remove_ui (GTK_UI_MANAGER (manager), merge_id);
+    gimp_ui_manager_remove_ui (manager, merge_id);
 
   g_object_set_data (G_OBJECT (manager), merge_key, NULL);
 
@@ -408,12 +408,13 @@ windows_menu_display_query_tooltip (GtkWidget  *widget,
                                     GtkTooltip *tooltip,
                                     GimpAction *action)
 {
-  GimpImage *image = GIMP_IMAGE (action->viewable);
-  gchar     *text;
-  gdouble    xres;
-  gdouble    yres;
-  gint       width;
-  gint       height;
+  GimpActionImpl *impl  = GIMP_ACTION_IMPL (action);
+  GimpImage      *image = GIMP_IMAGE (impl->viewable);
+  gchar          *text;
+  gdouble         xres;
+  gdouble         yres;
+  gint            width;
+  gint            height;
 
   if (! image)
     return FALSE;
@@ -431,8 +432,8 @@ windows_menu_display_query_tooltip (GtkWidget  *widget,
                                    &width, &height, NULL);
 
   gtk_tooltip_set_icon (tooltip,
-                        gimp_viewable_get_pixbuf (action->viewable,
-                                                  action->context,
+                        gimp_viewable_get_pixbuf (impl->viewable,
+                                                  impl->context,
                                                   width, height));
 
   return TRUE;

@@ -376,8 +376,8 @@ gimp_tool_options_editor_menu_popup (GimpToolOptionsEditor *editor,
 {
   GimpEditor *gimp_editor = GIMP_EDITOR (editor);
 
-  gtk_ui_manager_get_widget (GTK_UI_MANAGER (gimp_editor_get_ui_manager (gimp_editor)),
-                             gimp_editor_get_ui_path (gimp_editor));
+  gimp_ui_manager_get_widget (gimp_editor_get_ui_manager (gimp_editor),
+                              gimp_editor_get_ui_path (gimp_editor));
   gimp_ui_manager_update (gimp_editor_get_ui_manager (gimp_editor),
                           gimp_editor_get_popup_data (gimp_editor));
 

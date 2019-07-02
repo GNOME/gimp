@@ -80,10 +80,37 @@ GList         * gimp_ui_managers_from_name  (const gchar            *name);
 
 void            gimp_ui_manager_update      (GimpUIManager          *manager,
                                              gpointer                update_data);
-GimpActionGroup * gimp_ui_manager_get_action_group (GimpUIManager   *manager,
-                                                    const gchar     *name);
 
-GtkAction     * gimp_ui_manager_find_action     (GimpUIManager      *manager,
+void            gimp_ui_manager_insert_action_group (GimpUIManager   *manager,
+                                                     GimpActionGroup *group,
+                                                     gint             pos);
+GimpActionGroup * gimp_ui_manager_get_action_group  (GimpUIManager   *manager,
+                                                     const gchar     *name);
+GList         * gimp_ui_manager_get_action_groups   (GimpUIManager   *manager);
+
+GtkAccelGroup * gimp_ui_manager_get_accel_group (GimpUIManager      *manager);
+
+GtkWidget     * gimp_ui_manager_get_widget      (GimpUIManager      *manager,
+                                                 const gchar        *path);
+
+gchar          * gimp_ui_manager_get_ui         (GimpUIManager      *manager);
+
+guint            gimp_ui_manager_new_merge_id   (GimpUIManager      *manager);
+void             gimp_ui_manager_add_ui         (GimpUIManager      *manager,
+                                                 guint               merge_id,
+                                                 const gchar        *path,
+                                                 const gchar        *name,
+                                                 const gchar        *action,
+                                                 GtkUIManagerItemType type,
+                                                 gboolean            top);
+void            gimp_ui_manager_remove_ui       (GimpUIManager      *manager,
+                                                 guint               merge_id);
+
+void            gimp_ui_manager_ensure_update   (GimpUIManager      *manager);
+
+GimpAction    * gimp_ui_manager_get_action      (GimpUIManager      *manager,
+                                                 const gchar        *path);
+GimpAction    * gimp_ui_manager_find_action     (GimpUIManager      *manager,
                                                  const gchar        *group_name,
                                                  const gchar        *action_name);
 gboolean        gimp_ui_manager_activate_action (GimpUIManager      *manager,

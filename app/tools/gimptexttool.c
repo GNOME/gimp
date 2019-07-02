@@ -837,8 +837,8 @@ gimp_text_tool_get_popup (GimpTool         *tool,
                                            "<TextTool>",
                                            text_tool);
 
-          im_menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (text_tool->ui_manager),
-                                               "/text-tool-popup/text-tool-input-methods-menu");
+          im_menu = gimp_ui_manager_get_widget (text_tool->ui_manager,
+                                                "/text-tool-popup/text-tool-input-methods-menu");
 
           if (GTK_IS_MENU_ITEM (im_menu))
             im_menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (im_menu));

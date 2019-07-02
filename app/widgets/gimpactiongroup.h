@@ -53,7 +53,7 @@ struct _GimpActionGroupClass
 
   /* signals */
   void (* action_added) (GimpActionGroup *group,
-                         GtkAction       *action);
+                         GimpAction      *action);
 };
 
 struct _GimpActionEntry
@@ -142,6 +142,20 @@ GimpActionGroup *gimp_action_group_new        (Gimp                  *gimp,
 
 GList *gimp_action_groups_from_name           (const gchar           *name);
 
+const gchar * gimp_action_group_get_name       (GimpActionGroup       *group);
+
+void  gimp_action_group_add_action            (GimpActionGroup *action_group,
+                                               GimpAction      *action);
+void  gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
+                                               GimpAction      *action,
+                                               const gchar     *accelerator);
+void  gimp_action_group_remove_action         (GimpActionGroup *action_group,
+                                               GimpAction      *action);
+
+GimpAction  * gimp_action_group_get_action     (GimpActionGroup       *group,
+                                                const gchar           *action_name);
+GList       * gimp_action_group_list_actions   (GimpActionGroup       *group);
+
 void   gimp_action_group_update               (GimpActionGroup       *group,
                                                gpointer               update_data);
 
@@ -175,8 +189,8 @@ void   gimp_action_group_add_procedure_actions(GimpActionGroup             *grou
                                                guint                        n_entries,
                                                GCallback                    callback);
 
-void   gimp_action_group_remove_action        (GimpActionGroup             *group,
-                                               GimpAction                  *action);
+void   gimp_action_group_remove_action_and_accel (GimpActionGroup          *group,
+                                                  GimpAction               *action);
 
 void          gimp_action_group_activate_action       (GimpActionGroup *group,
                                                        const gchar     *action_name);

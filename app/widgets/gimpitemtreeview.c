@@ -45,6 +45,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "gimpaction.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
@@ -1214,7 +1215,7 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
   if (item_view_class->new_default_action &&
       viewable && gimp_container_view_lookup (view, viewable))
     {
-      GtkAction *action;
+      GimpAction *action;
 
       action = gimp_ui_manager_find_action (gimp_editor_get_ui_manager (GIMP_EDITOR (view)),
                                             item_view_class->action_group,
@@ -1223,7 +1224,7 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
       if (action)
         {
           g_object_set (action, "viewable", viewable, NULL);
-          gtk_action_activate (action);
+          gimp_action_activate (action);
           g_object_set (action, "viewable", NULL, NULL);
         }
     }

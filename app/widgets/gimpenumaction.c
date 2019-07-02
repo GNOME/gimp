@@ -26,6 +26,7 @@
 
 #include "core/gimpmarshal.h"
 
+#include "gimpaction.h"
 #include "gimpenumaction.h"
 
 
@@ -55,7 +56,8 @@ static void   gimp_enum_action_get_property (GObject      *object,
 static void   gimp_enum_action_activate     (GtkAction    *action);
 
 
-G_DEFINE_TYPE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION)
+G_DEFINE_TYPE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION_IMPL)
+
 
 #define parent_class gimp_enum_action_parent_class
 
@@ -99,8 +101,6 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
 static void
 gimp_enum_action_init (GimpEnumAction *action)
 {
-  action->value          = 0;
-  action->value_variable = FALSE;
 }
 
 static void
@@ -152,17 +152,24 @@ gimp_enum_action_new (const gchar *name,
                       const gchar *label,
                       const gchar *tooltip,
                       const gchar *icon_name,
+                      const gchar *help_id,
                       gint         value,
                       gboolean     value_variable)
 {
-  return g_object_new (GIMP_TYPE_ENUM_ACTION,
-                       "name",           name,
-                       "label",          label,
-                       "tooltip",        tooltip,
-                       "icon-name",      icon_name,
-                       "value",          value,
-                       "value-variable", value_variable,
-                       NULL);
+  GimpEnumAction *action;
+
+  action = g_object_new (GIMP_TYPE_ENUM_ACTION,
+                         "name",           name,
+                         "label",          label,
+                         "tooltip",        tooltip,
+                         "icon-name",      icon_name,
+                         "value",          value,
+                         "value-variable", value_variable,
+                         NULL);
+
+  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+
+  return action;
 }
 
 static void

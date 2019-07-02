@@ -35,6 +35,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimpprogress.h"
 
+#include "widgets/gimptoggleaction.h"
+
 #include "dialogs/dialogs.h"
 
 #include "actions.h"
@@ -91,7 +93,7 @@ drawable_linked_cmd_callback (GtkAction *action,
   gboolean      linked;
   return_if_no_drawable (image, drawable, data);
 
-  linked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  linked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (GIMP_IS_LAYER_MASK (drawable))
     drawable =
@@ -122,7 +124,7 @@ drawable_visible_cmd_callback (GtkAction *action,
   gboolean      visible;
   return_if_no_drawable (image, drawable, data);
 
-  visible = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  visible = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (GIMP_IS_LAYER_MASK (drawable))
     drawable =
@@ -153,7 +155,7 @@ drawable_lock_content_cmd_callback (GtkAction *action,
   gboolean      locked;
   return_if_no_drawable (image, drawable, data);
 
-  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  locked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (GIMP_IS_LAYER_MASK (drawable))
     drawable =
@@ -188,7 +190,7 @@ drawable_lock_position_cmd_callback (GtkAction *action,
   gboolean      locked;
   return_if_no_drawable (image, drawable, data);
 
-  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  locked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (GIMP_IS_LAYER_MASK (drawable))
     drawable =

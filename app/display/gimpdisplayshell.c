@@ -376,7 +376,7 @@ gimp_display_shell_constructed (GObject *object)
   GimpColorDisplayStack *filter;
   GtkWidget             *grid;
   GtkWidget             *gtk_image;
-  GtkAction             *action;
+  GimpAction            *action;
   gint                   image_width;
   gint                   image_height;
   gint                   shell_width;

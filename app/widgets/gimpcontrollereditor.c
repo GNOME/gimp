@@ -34,6 +34,7 @@
 
 #include "core/gimpcontext.h"
 
+#include "gimpaction.h"
 #include "gimpactioneditor.h"
 #include "gimpactionview.h"
 #include "gimpcontrollereditor.h"
@@ -317,12 +318,12 @@ gimp_controller_editor_constructed (GObject *object)
 
       if (event_action)
         {
-          GtkAction *action;
+          GimpAction *action;
 
           action = gimp_ui_manager_find_action (ui_manager, NULL, event_action);
 
           if (action)
-            icon_name = gtk_action_get_icon_name (action);
+            icon_name = gimp_action_get_icon_name (action);
         }
 
       gtk_list_store_append (store, &iter);

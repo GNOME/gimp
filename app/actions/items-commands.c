@@ -33,6 +33,8 @@
 #include "core/gimpitem.h"
 #include "core/gimpitemundo.h"
 
+#include "widgets/gimptoggleaction.h"
+
 #include "dialogs/dialogs.h"
 #include "dialogs/fill-dialog.h"
 #include "dialogs/stroke-dialog.h"
@@ -68,7 +70,7 @@ items_visible_cmd_callback (GtkAction *action,
 {
   gboolean visible;
 
-  visible = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  visible = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (visible != gimp_item_get_visible (item))
     {
@@ -93,7 +95,7 @@ items_linked_cmd_callback (GtkAction *action,
 {
   gboolean linked;
 
-  linked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  linked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (linked != gimp_item_get_linked (item))
     {
@@ -118,7 +120,7 @@ items_lock_content_cmd_callback (GtkAction *action,
 {
   gboolean locked;
 
-  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  locked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (locked != gimp_item_get_lock_content (item))
     {
@@ -143,7 +145,7 @@ items_lock_position_cmd_callback (GtkAction *action,
 {
   gboolean locked;
 
-  locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  locked = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (locked != gimp_item_get_lock_position (item))
     {

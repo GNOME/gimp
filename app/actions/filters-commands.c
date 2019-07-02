@@ -36,6 +36,8 @@
 #include "core/gimpprogress.h"
 #include "core/gimpsettings.h"
 
+#include "widgets/gimpaction.h"
+
 #include "actions.h"
 #include "filters-commands.h"
 #include "gimpgeglprocedure.h"
@@ -58,7 +60,7 @@ static void    filters_run_procedure   (Gimp          *gimp,
 /*  public functions  */
 
 void
-filters_apply_cmd_callback (GtkAction   *action,
+filters_apply_cmd_callback (GimpAction  *action,
                             const gchar *operation_str,
                             gpointer     data)
 {
@@ -71,18 +73,17 @@ filters_apply_cmd_callback (GtkAction   *action,
 
   operation = filters_parse_operation (image->gimp,
                                        operation_str,
-                                       gtk_action_get_icon_name (action),
+                                       gimp_action_get_icon_name (action),
                                        &settings);
 
   procedure = gimp_gegl_procedure_new (image->gimp,
                                        GIMP_RUN_NONINTERACTIVE, settings,
                                        operation,
-                                       gtk_action_get_name (action),
-                                       gtk_action_get_label (action),
-                                       gtk_action_get_tooltip (action),
-                                       gtk_action_get_icon_name (action),
-                                       g_object_get_qdata (G_OBJECT (action),
-                                                           GIMP_HELP_ID));
+                                       gimp_action_get_name (action),
+                                       gimp_action_get_label (action),
+                                       gimp_action_get_tooltip (action),
+                                       gimp_action_get_icon_name (action),
+                                       gimp_action_get_help_id (action));
 
   g_free (operation);
 
@@ -96,7 +97,7 @@ filters_apply_cmd_callback (GtkAction   *action,
 }
 
 void
-filters_apply_interactive_cmd_callback (GtkAction   *action,
+filters_apply_interactive_cmd_callback (GimpAction  *action,
                                         const gchar *operation,
                                         gpointer     data)
 {
@@ -108,12 +109,11 @@ filters_apply_interactive_cmd_callback (GtkAction   *action,
   procedure = gimp_gegl_procedure_new (image->gimp,
                                        GIMP_RUN_INTERACTIVE, NULL,
                                        operation,
-                                       gtk_action_get_name (action),
-                                       gtk_action_get_label (action),
-                                       gtk_action_get_tooltip (action),
-                                       gtk_action_get_icon_name (action),
-                                       g_object_get_qdata (G_OBJECT (action),
-                                                           GIMP_HELP_ID));
+                                       gimp_action_get_name (action),
+                                       gimp_action_get_label (action),
+                                       gimp_action_get_tooltip (action),
+                                       gimp_action_get_icon_name (action),
+                                       gimp_action_get_help_id (action));
 
   gimp_filter_history_add (image->gimp, procedure);
   filters_history_cmd_callback (NULL, procedure, data);
@@ -122,9 +122,9 @@ filters_apply_interactive_cmd_callback (GtkAction   *action,
 }
 
 void
-filters_repeat_cmd_callback (GtkAction *action,
-                             gint       value,
-                             gpointer   data)
+filters_repeat_cmd_callback (GimpAction *action,
+                             gint        value,
+                             gpointer    data)
 {
   GimpImage     *image;
   GimpDrawable  *drawable;
@@ -141,7 +141,7 @@ filters_repeat_cmd_callback (GtkAction *action,
 }
 
 void
-filters_history_cmd_callback (GtkAction     *action,
+filters_history_cmd_callback (GimpAction    *action,
                               GimpProcedure *procedure,
                               gpointer       data)
 {

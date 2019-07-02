@@ -22,6 +22,8 @@
 
 #include "actions-types.h"
 
+#include "widgets/gimptoggleaction.h"
+
 #include "display/gimpcursorview.h"
 
 #include "cursor-info-commands.h"
@@ -36,7 +38,7 @@ cursor_info_sample_merged_cmd_callback (GtkAction *action,
   GimpCursorView *view = GIMP_CURSOR_VIEW (data);
   gboolean        active;
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   gimp_cursor_view_set_sample_merged (view, active);
 }

@@ -47,6 +47,7 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "gimpaction.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockcontainer.h"
@@ -974,15 +975,15 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
 
   if (accel_closure == widget_closure)
     {
-      GtkAction   *action;
+      GimpAction  *action;
       GtkAccelKey *accel_key;
       const gchar *tooltip;
       const gchar *help_id;
 
       action = g_object_get_data (G_OBJECT (widget), "gimp-accel-action");
 
-      tooltip = gtk_action_get_tooltip (action);
-      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+      tooltip = gimp_action_get_tooltip (action);
+      help_id = gimp_action_get_help_id (action);
 
       accel_key = gtk_accel_group_find (accel_group,
                                         gimp_widget_accel_find_func,
@@ -1034,8 +1035,8 @@ gimp_accel_help_widget_weak_notify (gpointer  accel_group,
 }
 
 void
-gimp_widget_set_accel_help (GtkWidget *widget,
-                            GtkAction *action)
+gimp_widget_set_accel_help (GtkWidget  *widget,
+                            GimpAction *action)
 {
   GtkAccelGroup *accel_group;
   GClosure      *accel_closure;
@@ -1056,7 +1057,7 @@ gimp_widget_set_accel_help (GtkWidget *widget,
       g_object_set_data (G_OBJECT (widget), "gimp-accel-group", NULL);
     }
 
-  accel_closure = gtk_action_get_accel_closure (action);
+  accel_closure = gimp_action_get_accel_closure (action);
 
   if (accel_closure)
     {
@@ -1087,13 +1088,10 @@ gimp_widget_set_accel_help (GtkWidget *widget,
     }
   else
     {
-      const gchar *tooltip;
-      const gchar *help_id;
+      gimp_help_set_help_data (widget,
+                               gimp_action_get_tooltip (action),
+                               gimp_action_get_help_id (action));
 
-      tooltip = gtk_action_get_tooltip (action);
-      help_id = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
-
-      gimp_help_set_help_data (widget, tooltip, help_id);
     }
 }
 

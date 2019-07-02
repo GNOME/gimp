@@ -48,6 +48,8 @@
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
+#include "widgets/gimpaction.h"
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcolorselectorpalette.h"
@@ -532,7 +534,7 @@ gui_add_to_app_menu (GimpUIManager     *ui_manager,
 {
   GtkWidget *item;
 
-  item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (ui_manager), action_path);
+  item = gimp_ui_manager_get_widget (ui_manager, action_path);
 
   if (GTK_IS_MENU_ITEM (item))
     gtkosx_application_insert_app_menu_item (osx_app, GTK_WIDGET (item), index);
@@ -606,8 +608,8 @@ gui_restore_after_callback (Gimp               *gimp,
 
     osx_app = gtkosx_application_get ();
 
-    menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/image-menubar");
+    menu = gimp_ui_manager_get_widget (image_ui_manager,
+                                       "/image-menubar");
     if (GTK_IS_MENU_ITEM (menu))
       menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
@@ -640,8 +642,8 @@ gui_restore_after_callback (Gimp               *gimp,
     item = gtk_separator_menu_item_new ();
     gtkosx_application_insert_app_menu_item (osx_app, item, 8);
 
-    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
-                                      "/image-menubar/File/file-quit");
+    item = gimp_ui_manager_get_widget (image_ui_manager,
+                                       "/image-menubar/File/file-quit");
     gtk_widget_hide (item);
 
     g_signal_connect (osx_app, "NSApplicationBlockTermination",
@@ -972,30 +974,34 @@ gui_check_action_exists (const gchar *accel_path)
   GList         *list;
 
   manager = gimp_ui_managers_from_name ("<Image>")->data;
-  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+
+  for (list = gimp_ui_manager_get_action_groups (manager);
        list;
        list = g_list_next (list))
     {
-      GtkActionGroup *group   = list->data;
-      GList          *actions = NULL;
-      GList          *list2;
+      GimpActionGroup *group   = list->data;
+      GList           *actions = NULL;
+      GList           *list2;
 
-      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+      actions = gimp_action_group_list_actions (group);
+
       for (list2 = actions; list2; list2 = g_list_next (list2))
         {
-          const gchar *path;
-          GtkAction   *action = list2->data;
+          GimpAction  *action = list2->data;
+          const gchar *path   = gimp_action_get_accel_path (action);
 
-          path = gtk_action_get_accel_path (action);
           if (g_strcmp0 (path, accel_path) == 0)
             {
               action_exists = TRUE;
               break;
             }
         }
+
       g_list_free (actions);
+
       if (action_exists)
         break;
     }
+
   return action_exists;
 }

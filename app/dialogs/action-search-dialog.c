@@ -36,6 +36,7 @@
 #include "core/gimp.h"
 
 #include "widgets/gimpaction.h"
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsearchpopup.h"
@@ -49,7 +50,7 @@
 static void         action_search_history_and_actions      (GimpSearchPopup   *popup,
                                                             const gchar       *keyword,
                                                             gpointer           data);
-static gboolean     action_search_match_keyword            (GtkAction         *action,
+static gboolean     action_search_match_keyword            (GimpAction        *action,
                                                             const gchar*       keyword,
                                                             gint              *section,
                                                             Gimp              *gimp);
@@ -97,11 +98,11 @@ action_search_history_and_actions (GimpSearchPopup *popup,
   /* First put on top of the list any matching action of user history. */
   for (list = history_actions; list; list = g_list_next (list))
     {
-      gimp_search_popup_add_result (popup, GTK_ACTION (list->data), 0);
+      gimp_search_popup_add_result (popup, list->data, 0);
     }
 
   /* Now check other actions. */
-  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+  for (list = gimp_ui_manager_get_action_groups (manager);
        list;
        list = g_list_next (list))
     {
@@ -109,17 +110,17 @@ action_search_history_and_actions (GimpSearchPopup *popup,
       GimpActionGroup *group   = list->data;
       GList           *actions = NULL;
 
-      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+      actions = gimp_action_group_list_actions (group);
       actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
 
       for (list2 = actions; list2; list2 = g_list_next (list2))
         {
           const gchar *name;
-          GtkAction   *action       = list2->data;
+          GimpAction  *action       = list2->data;
           gboolean     is_redundant = FALSE;
           gint         section;
 
-          name = gtk_action_get_name (action);
+          name = gimp_action_get_name (action);
 
           /* The action search dialog doesn't show any non-historized
            * actions, with a few exceptions.  See the difference between
@@ -129,8 +130,8 @@ action_search_history_and_actions (GimpSearchPopup *popup,
           if (gimp_action_history_is_blacklisted_action (name))
             continue;
 
-          if (! gtk_action_is_visible (action)    ||
-              (! gtk_action_is_sensitive (action) &&
+          if (! gimp_action_is_visible (action)    ||
+              (! gimp_action_is_sensitive (action) &&
                ! GIMP_GUI_CONFIG (gimp->config)->search_show_unavailable))
             continue;
 
@@ -143,7 +144,7 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                */
               for (list3 = history_actions; list3; list3 = g_list_next (list3))
                 {
-                  if (strcmp (gtk_action_get_name (GTK_ACTION (list3->data)),
+                  if (strcmp (gimp_action_get_name (list3->data),
                               name) == 0)
                     {
                       is_redundant = TRUE;
@@ -165,7 +166,7 @@ action_search_history_and_actions (GimpSearchPopup *popup,
 }
 
 static gboolean
-action_search_match_keyword (GtkAction   *action,
+action_search_match_keyword (GimpAction  *action,
                              const gchar *keyword,
                              gint        *section,
                              Gimp        *gimp)
@@ -189,7 +190,7 @@ action_search_match_keyword (GtkAction   *action,
     }
 
   key_tokens   = g_str_tokenize_and_fold (keyword, gimp->config->language, NULL);
-  tmp          = gimp_strip_uline (gtk_action_get_label (action));
+  tmp          = gimp_strip_uline (gimp_action_get_label (action));
   label_tokens = g_str_tokenize_and_fold (tmp, gimp->config->language, &label_alternates);
   g_free (tmp);
 
@@ -283,14 +284,14 @@ one_matched:
     }
 
   if (! matched && key_tokens[0] && g_utf8_strlen (key_tokens[0], -1) > 2 &&
-      gtk_action_get_tooltip (action) != NULL)
+      gimp_action_get_tooltip (action) != NULL)
     {
       gchar    **tooltip_tokens;
       gchar    **tooltip_alternates = NULL;
       gboolean   mixed_match;
       gint       i;
 
-      tooltip_tokens = g_str_tokenize_and_fold (gtk_action_get_tooltip (action),
+      tooltip_tokens = g_str_tokenize_and_fold (gimp_action_get_tooltip (action),
                                                 gimp->config->language, &tooltip_alternates);
 
       if (g_strv_length (tooltip_tokens) > 0)

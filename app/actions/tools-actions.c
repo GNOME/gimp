@@ -31,6 +31,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
@@ -618,8 +619,8 @@ static const GimpEnumActionEntry tools_object_2_actions[] =
 void
 tools_actions_setup (GimpActionGroup *group)
 {
-  GtkAction *action;
-  GList     *list;
+  GimpAction *action;
+  GList      *list;
 
   gimp_action_group_add_actions (group, "tools-action",
                                  tools_actions,
@@ -630,9 +631,9 @@ tools_actions_setup (GimpActionGroup *group)
                                         G_N_ELEMENTS (tools_alternative_actions),
                                         G_CALLBACK (tools_select_cmd_callback));
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "tools-by-color-select-short");
-  gtk_action_set_accel_path (action, "<Actions>/tools/tools-by-color-select");
+  action = gimp_action_group_get_action (group,
+                                         "tools-by-color-select-short");
+  gimp_action_set_accel_path (action, "<Actions>/tools/tools-by-color-select");
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_color_average_radius_actions,

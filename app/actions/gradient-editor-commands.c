@@ -31,6 +31,7 @@
 
 #include "widgets/gimpgradienteditor.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpradioaction.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -72,7 +73,7 @@ gradient_editor_left_color_type_cmd_callback (GtkAction *action,
 
   gimp_gradient_editor_get_selection (editor, &gradient, &left, NULL);
 
-  color_type = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  color_type = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (gradient        &&
       color_type >= 0 &&
@@ -189,7 +190,7 @@ gradient_editor_right_color_type_cmd_callback (GtkAction *action,
 
   gimp_gradient_editor_get_selection (editor, &gradient, NULL, &right);
 
-  color_type = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  color_type = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (gradient        &&
       color_type >= 0 &&
@@ -299,7 +300,7 @@ gradient_editor_blending_func_cmd_callback (GtkAction *action,
 
   gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
-  type = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  type = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   enum_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_TYPE);
 
@@ -327,7 +328,7 @@ gradient_editor_coloring_type_cmd_callback (GtkAction *action,
 
   gimp_gradient_editor_get_selection (editor, &gradient, &left, &right);
 
-  color = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  color = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   enum_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_COLOR);
 

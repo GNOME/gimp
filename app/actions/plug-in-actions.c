@@ -38,7 +38,9 @@
 #include "plug-in/gimppluginmanager-menu-branch.h"
 #include "plug-in/gimppluginprocedure.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpactionimpl.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "actions.h"
@@ -253,18 +255,18 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
       if (plug_in_proc->menu_label &&
           ! plug_in_proc->file_proc)
         {
-          GtkAction *action;
+          GimpAction *action;
 
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
                    gimp_object_get_name (procedure));
 #endif
 
-          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                gimp_object_get_name (procedure));
+          action = gimp_action_group_get_action (group,
+                                                 gimp_object_get_name (procedure));
 
           if (action)
-            gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+            gimp_action_group_remove_action (group, action);
         }
     }
 }
@@ -438,8 +440,8 @@ plug_in_actions_build_path (GimpActionGroup *group,
 
   if (p1 && p2 && ! g_hash_table_lookup (path_table, copy_original))
     {
-      GtkAction *action;
-      gchar     *label;
+      GimpAction *action;
+      gchar      *label;
 
       label = p2 + 1;
 
@@ -448,8 +450,8 @@ plug_in_actions_build_path (GimpActionGroup *group,
                copy_original, label);
 #endif
 
-      action = gtk_action_new (copy_original, label, NULL, NULL);
-      gtk_action_group_add_action (GTK_ACTION_GROUP (group), action);
+      action = gimp_action_impl_new (copy_original, label, NULL, NULL, NULL);
+      gimp_action_group_add_action (group, action);
       g_object_unref (action);
 
       g_hash_table_insert (path_table, g_strdup (copy_original), action);

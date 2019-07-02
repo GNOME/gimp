@@ -29,6 +29,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "gimpaction.h"
 #include "gimpcolordialog.h"
 #include "gimpdialogfactory.h"
 #include "gimpfgbgeditor.h"
@@ -277,7 +278,7 @@ color_area_tooltip (GimpFgBgEditor *editor,
                     GimpToolbox    *toolbox)
 {
   GimpUIManager *manager = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox));
-  GtkAction     *action  = NULL;
+  GimpAction    *action  = NULL;
   const gchar   *text    = NULL;
 
   switch (target)
@@ -295,13 +296,13 @@ color_area_tooltip (GimpFgBgEditor *editor,
     case GIMP_FG_BG_TARGET_SWAP:
       action = gimp_ui_manager_find_action (manager, "context",
                                             "context-colors-swap");
-      text = gtk_action_get_tooltip (action);
+      text = gimp_action_get_tooltip (action);
       break;
 
     case GIMP_FG_BG_TARGET_DEFAULT:
       action = gimp_ui_manager_find_action (manager, "context",
                                             "context-colors-default");
-      text = gtk_action_get_tooltip (action);
+      text = gimp_action_get_tooltip (action);
       break;
 
     default:
@@ -318,7 +319,7 @@ color_area_tooltip (GimpFgBgEditor *editor,
           GClosure      *accel_closure;
           GtkAccelKey   *accel_key;
 
-          accel_closure = gtk_action_get_accel_closure (action);
+          accel_closure = gimp_action_get_accel_closure (action);
           accel_group   = gtk_accel_group_from_accel_closure (accel_closure);
 
           accel_key = gtk_accel_group_find (accel_group,
