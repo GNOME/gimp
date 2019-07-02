@@ -611,7 +611,7 @@ remove_substring (const gchar *string,
       gchar *p = strstr (string, substring);
       if (p)
         {
-          strcpy (p, p + strlen (substring));
+          strcpy (p, p + (gint) strlen (substring));
         }
     }
 }
