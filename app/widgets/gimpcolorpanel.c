@@ -31,7 +31,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
-#include "gimpaction.h"
+#include "gimpactionimpl.h"
 #include "gimpcolordialog.h"
 #include "gimpcolorpanel.h"
 
@@ -216,7 +216,7 @@ gimp_color_panel_clicked (GtkButton *button)
 static GType
 gimp_color_panel_get_action_type (GimpColorButton *button)
 {
-  return GIMP_TYPE_ACTION;
+  return GIMP_TYPE_ACTION_IMPL;
 }
 
 
