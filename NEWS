@@ -37,6 +37,13 @@ Plug-ins:
     unspecified TIFF channels: non-premultiplied (used to be the
     default) alpha, premultiplied alpha, or just import as generic
     channel.
+  - HEIF export now improved with same profile logics as JPEG or WebP
+    (it can actually export higher bit-depth data, so profile logics
+    should be the one as in PNG, but we only support 8 bpc HEIF for the
+    time being).
+  - HEIF export dialog now has a "Save color profile" checkbox allowing
+    to not export with a profile when needed (needs libheif 1.4.0 or
+    higher).
 
 User interface:
 
