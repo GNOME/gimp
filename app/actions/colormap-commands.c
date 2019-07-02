@@ -36,8 +36,8 @@
 /*  public functions  */
 
 void
-colormap_edit_color_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+colormap_edit_color_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
 
@@ -45,9 +45,9 @@ colormap_edit_color_cmd_callback (GtkAction *action,
 }
 
 void
-colormap_add_color_cmd_callback (GtkAction *action,
-                                 gint       value,
-                                 gpointer   data)
+colormap_add_color_cmd_callback (GimpAction *action,
+                                 gint        value,
+                                 gpointer    data)
 {
   GimpContext *context;
   GimpImage   *image;
@@ -69,9 +69,9 @@ colormap_add_color_cmd_callback (GtkAction *action,
 }
 
 void
-colormap_to_selection_cmd_callback (GtkAction *action,
-                                    gint       value,
-                                    gpointer   data)
+colormap_to_selection_cmd_callback (GimpAction *action,
+                                    gint        value,
+                                    gpointer    data)
 {
   GimpColormapEditor *editor;
   GimpImage          *image;

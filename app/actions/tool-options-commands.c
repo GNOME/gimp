@@ -62,8 +62,8 @@ static void   tool_options_show_preset_editor (Gimp           *gimp,
 /*  public functions  */
 
 void
-tool_options_save_new_preset_cmd_callback (GtkAction *action,
-                                           gpointer   user_data)
+tool_options_save_new_preset_cmd_callback (GimpAction *action,
+                                           gpointer    user_data)
 {
   GimpEditor  *editor  = GIMP_EDITOR (user_data);
   Gimp        *gimp    = gimp_editor_get_ui_manager (editor)->gimp;
@@ -77,9 +77,9 @@ tool_options_save_new_preset_cmd_callback (GtkAction *action,
 }
 
 void
-tool_options_save_preset_cmd_callback (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data)
+tool_options_save_preset_cmd_callback (GimpAction *action,
+                                       gint        value,
+                                       gpointer    data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
   Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
@@ -100,9 +100,9 @@ tool_options_save_preset_cmd_callback (GtkAction *action,
 }
 
 void
-tool_options_restore_preset_cmd_callback (GtkAction *action,
-                                          gint       value,
-                                          gpointer   data)
+tool_options_restore_preset_cmd_callback (GimpAction *action,
+                                          gint        value,
+                                          gpointer    data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
   Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
@@ -123,9 +123,9 @@ tool_options_restore_preset_cmd_callback (GtkAction *action,
 }
 
 void
-tool_options_edit_preset_cmd_callback (GtkAction *action,
-                                       gint       value,
-                                       gpointer   data)
+tool_options_edit_preset_cmd_callback (GimpAction *action,
+                                       gint        value,
+                                       gpointer    data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
   Gimp           *gimp      = gimp_editor_get_ui_manager (editor)->gimp;
@@ -143,9 +143,9 @@ tool_options_edit_preset_cmd_callback (GtkAction *action,
 }
 
 void
-tool_options_delete_preset_cmd_callback (GtkAction *action,
-                                         gint       value,
-                                         gpointer   data)
+tool_options_delete_preset_cmd_callback (GimpAction *action,
+                                         gint        value,
+                                         gpointer    data)
 {
   GimpEditor     *editor    = GIMP_EDITOR (data);
   GimpContext    *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
@@ -168,8 +168,8 @@ tool_options_delete_preset_cmd_callback (GtkAction *action,
 }
 
 void
-tool_options_reset_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+tool_options_reset_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GimpEditor   *editor    = GIMP_EDITOR (data);
   GimpContext  *context   = gimp_get_user_context (gimp_editor_get_ui_manager (editor)->gimp);
@@ -179,8 +179,8 @@ tool_options_reset_cmd_callback (GtkAction *action,
 }
 
 void
-tool_options_reset_all_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+tool_options_reset_all_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpEditor *editor = GIMP_EDITOR (data);
   GtkWidget  *dialog;

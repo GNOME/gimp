@@ -19,25 +19,25 @@
 #define __TEXT_TOOL_COMMANDS_H__
 
 
-void   text_tool_cut_cmd_callback             (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_copy_cmd_callback            (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_paste_cmd_callback           (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_delete_cmd_callback          (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_load_cmd_callback            (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_clear_cmd_callback           (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_text_to_path_cmd_callback    (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_text_along_path_cmd_callback (GtkAction *action,
-                                               gpointer   data);
-void   text_tool_direction_cmd_callback       (GtkAction *action,
-                                               GtkAction *current,
-                                               gpointer   data);
+void   text_tool_cut_cmd_callback             (GimpAction *action,
+                                               gpointer    data);
+void   text_tool_copy_cmd_callback            (GimpAction *action,
+                                               gpointer    data);
+void   text_tool_paste_cmd_callback           (GimpAction *action,
+                                               gpointer    data);
+void   text_tool_delete_cmd_callback          (GimpAction *action,
+                                               gpointer    data);
+void   text_tool_load_cmd_callback            (GimpAction *action,
+                                               gpointer    data);
+void   text_tool_clear_cmd_callback           (GimpAction *action,
+                                               gpointer    data);
+void   text_tool_text_to_path_cmd_callback    (GimpAction *action,
+                                               gpointer    data);
+void   text_tool_text_along_path_cmd_callback (GimpAction *action,
+                                               gpointer    data);
+void   text_tool_direction_cmd_callback       (GimpAction *action,
+                                               GimpAction *current,
+                                               gpointer    data);
 
 
 #endif /* __TEXT_TOOL_COMMANDS_H__ */

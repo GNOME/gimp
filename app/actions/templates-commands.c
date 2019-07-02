@@ -80,8 +80,8 @@ static void   templates_delete_data_free (TemplateDeleteData *delete_data);
 /*  public functions */
 
 void
-templates_create_image_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+templates_create_image_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   Gimp                *gimp;
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
@@ -111,8 +111,8 @@ templates_create_image_cmd_callback (GtkAction *action,
 }
 
 void
-templates_new_cmd_callback (GtkAction *action,
-                            gpointer   data)
+templates_new_cmd_callback (GimpAction *action,
+                            gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContext         *context;
@@ -143,8 +143,8 @@ templates_new_cmd_callback (GtkAction *action,
 }
 
 void
-templates_duplicate_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+templates_duplicate_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -173,8 +173,8 @@ templates_duplicate_cmd_callback (GtkAction *action,
 }
 
 void
-templates_edit_cmd_callback (GtkAction *action,
-                             gpointer   data)
+templates_edit_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -214,8 +214,8 @@ templates_edit_cmd_callback (GtkAction *action,
 }
 
 void
-templates_delete_cmd_callback (GtkAction *action,
-                               gpointer   data)
+templates_delete_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;

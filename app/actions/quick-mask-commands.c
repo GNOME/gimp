@@ -67,8 +67,8 @@ static void   quick_mask_configure_callback (GtkWidget     *dialog,
 /*  public functions */
 
 void
-quick_mask_toggle_cmd_callback (GtkAction *action,
-                                gpointer   data)
+quick_mask_toggle_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   GimpImage *image;
   gboolean   active;
@@ -84,9 +84,9 @@ quick_mask_toggle_cmd_callback (GtkAction *action,
 }
 
 void
-quick_mask_invert_cmd_callback (GtkAction *action,
-                                GtkAction *current,
-                                gpointer   data)
+quick_mask_invert_cmd_callback (GimpAction *action,
+                                GimpAction *current,
+                                gpointer    data)
 {
   GimpImage *image;
   gint       value;
@@ -102,8 +102,8 @@ quick_mask_invert_cmd_callback (GtkAction *action,
 }
 
 void
-quick_mask_configure_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+quick_mask_configure_cmd_callback (GimpAction *action,
+                                   gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;

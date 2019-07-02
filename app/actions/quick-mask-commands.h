@@ -19,13 +19,13 @@
 #define __QUICK_MASK_COMMANDS_H__
 
 
-void   quick_mask_toggle_cmd_callback    (GtkAction *action,
-                                          gpointer   data);
-void   quick_mask_invert_cmd_callback    (GtkAction *action,
-                                          GtkAction *current,
-                                          gpointer   data);
-void   quick_mask_configure_cmd_callback (GtkAction *action,
-                                          gpointer   data);
+void   quick_mask_toggle_cmd_callback    (GimpAction *action,
+                                          gpointer    data);
+void   quick_mask_invert_cmd_callback    (GimpAction *action,
+                                          GimpAction *current,
+                                          gpointer    data);
+void   quick_mask_configure_cmd_callback (GimpAction *action,
+                                          gpointer    data);
 
 
 #endif /* __QUICK_MASK_COMMANDS_H__ */

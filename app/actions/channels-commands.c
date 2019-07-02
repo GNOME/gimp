@@ -90,8 +90,8 @@ static void   channels_edit_attributes_callback (GtkWidget     *dialog,
 /*  public functions  */
 
 void
-channels_edit_attributes_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+channels_edit_attributes_cmd_callback (GimpAction *action,
+                                       gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -136,8 +136,8 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
 }
 
 void
-channels_new_cmd_callback (GtkAction *action,
-                           gpointer   data)
+channels_new_cmd_callback (GimpAction *action,
+                           gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -181,8 +181,8 @@ channels_new_cmd_callback (GtkAction *action,
 }
 
 void
-channels_new_last_vals_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+channels_new_last_vals_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpImage        *image;
   GimpChannel      *channel;
@@ -207,8 +207,8 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
 }
 
 void
-channels_raise_cmd_callback (GtkAction *action,
-                             gpointer   data)
+channels_raise_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -219,8 +219,8 @@ channels_raise_cmd_callback (GtkAction *action,
 }
 
 void
-channels_raise_to_top_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+channels_raise_to_top_cmd_callback (GimpAction *action,
+                                    gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -231,8 +231,8 @@ channels_raise_to_top_cmd_callback (GtkAction *action,
 }
 
 void
-channels_lower_cmd_callback (GtkAction *action,
-                             gpointer   data)
+channels_lower_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -243,8 +243,8 @@ channels_lower_cmd_callback (GtkAction *action,
 }
 
 void
-channels_lower_to_bottom_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+channels_lower_to_bottom_cmd_callback (GimpAction *action,
+                                       gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -255,8 +255,8 @@ channels_lower_to_bottom_cmd_callback (GtkAction *action,
 }
 
 void
-channels_duplicate_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+channels_duplicate_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *new_channel;
@@ -307,8 +307,8 @@ channels_duplicate_cmd_callback (GtkAction *action,
 }
 
 void
-channels_delete_cmd_callback (GtkAction *action,
-                              gpointer   data)
+channels_delete_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -319,9 +319,9 @@ channels_delete_cmd_callback (GtkAction *action,
 }
 
 void
-channels_to_selection_cmd_callback (GtkAction *action,
-                                    gint       value,
-                                    gpointer   data)
+channels_to_selection_cmd_callback (GimpAction *action,
+                                    gint        value,
+                                    gpointer    data)
 {
   GimpChannelOps  op;
   GimpImage      *image;
@@ -351,8 +351,8 @@ channels_to_selection_cmd_callback (GtkAction *action,
 }
 
 void
-channels_visible_cmd_callback (GtkAction *action,
-                               gpointer   data)
+channels_visible_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -362,8 +362,8 @@ channels_visible_cmd_callback (GtkAction *action,
 }
 
 void
-channels_linked_cmd_callback (GtkAction *action,
-                              gpointer   data)
+channels_linked_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -373,8 +373,8 @@ channels_linked_cmd_callback (GtkAction *action,
 }
 
 void
-channels_lock_content_cmd_callback (GtkAction *action,
-                                    gpointer   data)
+channels_lock_content_cmd_callback (GimpAction *action,
+                                    gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -384,8 +384,8 @@ channels_lock_content_cmd_callback (GtkAction *action,
 }
 
 void
-channels_lock_position_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+channels_lock_position_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -395,9 +395,9 @@ channels_lock_position_cmd_callback (GtkAction *action,
 }
 
 void
-channels_color_tag_cmd_callback (GtkAction *action,
-                                 gint       value,
-                                 gpointer   data)
+channels_color_tag_cmd_callback (GimpAction *action,
+                                 gint        value,
+                                 gpointer    data)
 {
   GimpImage   *image;
   GimpChannel *channel;
@@ -408,9 +408,9 @@ channels_color_tag_cmd_callback (GtkAction *action,
 }
 
 void
-channels_select_cmd_callback (GtkAction *action,
-                              gint       value,
-                              gpointer   data)
+channels_select_cmd_callback (GimpAction *action,
+                              gint        value,
+                              gpointer    data)
 {
   GimpImage      *image;
   GimpChannel    *channel;

@@ -52,8 +52,8 @@
 
 
 void
-windows_hide_docks_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+windows_hide_docks_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   Gimp     *gimp;
   gboolean  active;
@@ -68,8 +68,24 @@ windows_hide_docks_cmd_callback (GtkAction *action,
 }
 
 void
-windows_show_tabs_cmd_callback (GtkAction *action,
-                                gpointer data)
+windows_use_single_window_mode_cmd_callback (GimpAction *action,
+                                             gpointer    data)
+{
+  Gimp     *gimp;
+  gboolean  active;
+  return_if_no_gimp (gimp, data);
+
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+
+  if (active != GIMP_GUI_CONFIG (gimp->config)->single_window_mode)
+    g_object_set (gimp->config,
+                  "single-window-mode", active,
+                  NULL);
+}
+
+void
+windows_show_tabs_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   Gimp     *gimp;
   gboolean  active;
@@ -85,9 +101,9 @@ windows_show_tabs_cmd_callback (GtkAction *action,
 
 
 void
-windows_set_tabs_position_cmd_callback (GtkAction *action,
-                                        GtkAction *current,
-                                        gpointer   data)
+windows_set_tabs_position_cmd_callback (GimpAction *action,
+                                        GimpAction *current,
+                                        gpointer    data)
 {
   Gimp         *gimp;
   GimpPosition  value;
@@ -102,24 +118,8 @@ windows_set_tabs_position_cmd_callback (GtkAction *action,
 }
 
 void
-windows_use_single_window_mode_cmd_callback (GtkAction *action,
-                                             gpointer   data)
-{
-  Gimp     *gimp;
-  gboolean  active;
-  return_if_no_gimp (gimp, data);
-
-  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
-
-  if (active != GIMP_GUI_CONFIG (gimp->config)->single_window_mode)
-    g_object_set (gimp->config,
-                  "single-window-mode", active,
-                  NULL);
-}
-
-void
-windows_show_display_next_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+windows_show_display_next_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   GimpDisplay *display;
   Gimp        *gimp;
@@ -140,8 +140,8 @@ windows_show_display_next_cmd_callback (GtkAction *action,
 }
 
 void
-windows_show_display_previous_cmd_callback (GtkAction *action,
-                                            gpointer   data)
+windows_show_display_previous_cmd_callback (GimpAction *action,
+                                            gpointer    data)
 {
   GimpDisplay *display;
   Gimp        *gimp;
@@ -162,8 +162,8 @@ windows_show_display_previous_cmd_callback (GtkAction *action,
 }
 
 void
-windows_show_display_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+windows_show_display_cmd_callback (GimpAction *action,
+                                   gpointer    data)
 {
   GimpDisplay *display = g_object_get_data (G_OBJECT (action), "display");
 
@@ -171,8 +171,8 @@ windows_show_display_cmd_callback (GtkAction *action,
 }
 
 void
-windows_show_dock_cmd_callback (GtkAction *action,
-                                gpointer   data)
+windows_show_dock_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   GtkWindow *dock_window = g_object_get_data (G_OBJECT (action), "dock-window");
 
@@ -180,8 +180,8 @@ windows_show_dock_cmd_callback (GtkAction *action,
 }
 
 void
-windows_open_recent_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+windows_open_recent_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpSessionInfo        *info;
   GimpDialogFactoryEntry *entry;

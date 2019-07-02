@@ -38,8 +38,8 @@
 /*  public functions  */
 
 void
-window_close_cmd_callback (GtkAction *action,
-                           gpointer   data)
+window_close_cmd_callback (GimpAction *action,
+                           gpointer    data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
@@ -60,8 +60,8 @@ window_close_cmd_callback (GtkAction *action,
 }
 
 void
-window_open_display_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+window_open_display_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GtkWidget *widget;
   GtkWidget *dialog;
@@ -132,9 +132,9 @@ window_open_display_cmd_callback (GtkAction *action,
 }
 
 void
-window_move_to_screen_cmd_callback (GtkAction *action,
-                                    GtkAction *current,
-                                    gpointer   data)
+window_move_to_screen_cmd_callback (GimpAction *action,
+                                    GimpAction *current,
+                                    gpointer    data)
 {
   GtkWidget *widget;
   GdkScreen *screen;

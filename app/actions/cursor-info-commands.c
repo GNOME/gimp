@@ -32,8 +32,8 @@
 /*  public functions  */
 
 void
-cursor_info_sample_merged_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+cursor_info_sample_merged_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   GimpCursorView *view = GIMP_CURSOR_VIEW (data);
   gboolean        active;

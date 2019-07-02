@@ -103,8 +103,8 @@ static void        file_revert_confirm_response (GtkWidget    *dialog,
 
 
 void
-file_open_cmd_callback (GtkAction *action,
-                        gpointer   data)
+file_open_cmd_callback (GimpAction *action,
+                        gpointer    data)
 {
   Gimp        *gimp;
   GtkWidget   *widget;
@@ -120,8 +120,8 @@ file_open_cmd_callback (GtkAction *action,
 }
 
 void
-file_open_as_layers_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+file_open_as_layers_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   Gimp        *gimp;
   GtkWidget   *widget;
@@ -141,8 +141,8 @@ file_open_as_layers_cmd_callback (GtkAction *action,
 }
 
 void
-file_open_location_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+file_open_location_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
@@ -155,9 +155,9 @@ file_open_location_cmd_callback (GtkAction *action,
 }
 
 void
-file_open_recent_cmd_callback (GtkAction *action,
-                               gint       value,
-                               gpointer   data)
+file_open_recent_cmd_callback (GimpAction *action,
+                               gint        value,
+                               gpointer    data)
 {
   Gimp          *gimp;
   GimpImagefile *imagefile;
@@ -213,9 +213,9 @@ file_open_recent_cmd_callback (GtkAction *action,
 }
 
 void
-file_save_cmd_callback (GtkAction *action,
-                        gint       value,
-                        gpointer   data)
+file_save_cmd_callback (GimpAction *action,
+                        gint        value,
+                        gpointer    data)
 {
   Gimp         *gimp;
   GimpDisplay  *display;
@@ -354,8 +354,8 @@ file_save_cmd_callback (GtkAction *action,
 }
 
 void
-file_create_template_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+file_create_template_cmd_callback (GimpAction *action,
+                                   gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -376,8 +376,8 @@ file_create_template_cmd_callback (GtkAction *action,
 }
 
 void
-file_revert_cmd_callback (GtkAction *action,
-                          gpointer   data)
+file_revert_cmd_callback (GimpAction *action,
+                          gpointer    data)
 {
   GimpDisplay *display;
   GimpImage   *image;
@@ -448,8 +448,8 @@ file_revert_cmd_callback (GtkAction *action,
 }
 
 void
-file_close_all_cmd_callback (GtkAction *action,
-                             gpointer   data)
+file_close_all_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   Gimp *gimp;
   return_if_no_gimp (gimp, data);
@@ -471,8 +471,8 @@ file_close_all_cmd_callback (GtkAction *action,
 }
 
 void
-file_copy_location_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+file_copy_location_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   Gimp         *gimp;
   GimpDisplay  *display;
@@ -495,8 +495,8 @@ file_copy_location_cmd_callback (GtkAction *action,
 }
 
 void
-file_show_in_file_manager_cmd_callback (GtkAction *action,
-                                        gpointer   data)
+file_show_in_file_manager_cmd_callback (GimpAction *action,
+                                        gpointer    data)
 {
   Gimp         *gimp;
   GimpDisplay  *display;
@@ -524,8 +524,8 @@ file_show_in_file_manager_cmd_callback (GtkAction *action,
 }
 
 void
-file_quit_cmd_callback (GtkAction *action,
-                        gpointer   data)
+file_quit_cmd_callback (GimpAction *action,
+                        gpointer    data)
 {
   Gimp *gimp;
   return_if_no_gimp (gimp, data);

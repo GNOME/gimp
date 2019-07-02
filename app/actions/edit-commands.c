@@ -83,8 +83,8 @@ static void       copy_named_visible_buffer_callback (GtkWidget     *widget,
 /*  public functions  */
 
 void
-edit_undo_cmd_callback (GtkAction *action,
-                        gpointer   data)
+edit_undo_cmd_callback (GimpAction *action,
+                        gpointer    data)
 {
   GimpImage   *image;
   GimpDisplay *display;
@@ -99,8 +99,8 @@ edit_undo_cmd_callback (GtkAction *action,
 }
 
 void
-edit_redo_cmd_callback (GtkAction *action,
-                        gpointer   data)
+edit_redo_cmd_callback (GimpAction *action,
+                        gpointer    data)
 {
   GimpImage   *image;
   GimpDisplay *display;
@@ -115,8 +115,8 @@ edit_redo_cmd_callback (GtkAction *action,
 }
 
 void
-edit_strong_undo_cmd_callback (GtkAction *action,
-                               gpointer   data)
+edit_strong_undo_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpImage *image;
   return_if_no_image (image, data);
@@ -126,8 +126,8 @@ edit_strong_undo_cmd_callback (GtkAction *action,
 }
 
 void
-edit_strong_redo_cmd_callback (GtkAction *action,
-                               gpointer   data)
+edit_strong_redo_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GimpImage *image;
   return_if_no_image (image, data);
@@ -137,8 +137,8 @@ edit_strong_redo_cmd_callback (GtkAction *action,
 }
 
 void
-edit_undo_clear_cmd_callback (GtkAction *action,
-                              gpointer   data)
+edit_undo_clear_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpImage     *image;
   GimpUndoStack *undo_stack;
@@ -206,8 +206,8 @@ edit_undo_clear_cmd_callback (GtkAction *action,
 }
 
 void
-edit_cut_cmd_callback (GtkAction *action,
-                       gpointer   data)
+edit_cut_cmd_callback (GimpAction *action,
+                       gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -245,8 +245,8 @@ edit_cut_cmd_callback (GtkAction *action,
 }
 
 void
-edit_copy_cmd_callback (GtkAction *action,
-                        gpointer   data)
+edit_copy_cmd_callback (GimpAction *action,
+                        gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -281,8 +281,8 @@ edit_copy_cmd_callback (GtkAction *action,
 }
 
 void
-edit_copy_visible_cmd_callback (GtkAction *action,
-                                gpointer   data)
+edit_copy_visible_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   GimpImage *image;
   GError    *error = NULL;
@@ -310,9 +310,9 @@ edit_copy_visible_cmd_callback (GtkAction *action,
 }
 
 void
-edit_paste_cmd_callback (GtkAction *action,
-                         gint       value,
-                         gpointer   data)
+edit_paste_cmd_callback (GimpAction *action,
+                         gint        value,
+                         gpointer    data)
 {
   GimpDisplay   *display    = action_data_get_display (data);
   GimpPasteType  paste_type = (GimpPasteType) value;
@@ -346,8 +346,8 @@ edit_paste_cmd_callback (GtkAction *action,
 }
 
 void
-edit_paste_as_new_image_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+edit_paste_as_new_image_cmd_callback (GimpAction *action,
+                                      gpointer    data)
 {
   Gimp       *gimp;
   GtkWidget  *widget;
@@ -380,8 +380,8 @@ edit_paste_as_new_image_cmd_callback (GtkAction *action,
 }
 
 void
-edit_named_cut_cmd_callback (GtkAction *action,
-                             gpointer   data)
+edit_named_cut_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -400,8 +400,8 @@ edit_named_cut_cmd_callback (GtkAction *action,
 }
 
 void
-edit_named_copy_cmd_callback (GtkAction *action,
-                              gpointer   data)
+edit_named_copy_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -420,8 +420,8 @@ edit_named_copy_cmd_callback (GtkAction *action,
 }
 
 void
-edit_named_copy_visible_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+edit_named_copy_visible_cmd_callback (GimpAction *action,
+                                      gpointer    data)
 {
   GimpImage *image;
   GtkWidget *widget;
@@ -440,8 +440,8 @@ edit_named_copy_visible_cmd_callback (GtkAction *action,
 }
 
 void
-edit_named_paste_cmd_callback (GtkAction *action,
-                               gpointer   data)
+edit_named_paste_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   Gimp      *gimp;
   GtkWidget *widget;
@@ -457,8 +457,8 @@ edit_named_paste_cmd_callback (GtkAction *action,
 }
 
 void
-edit_clear_cmd_callback (GtkAction *action,
-                         gpointer   data)
+edit_clear_cmd_callback (GimpAction *action,
+                         gpointer    data)
 {
   GimpImage    *image;
   GimpDrawable *drawable;
@@ -472,9 +472,9 @@ edit_clear_cmd_callback (GtkAction *action,
 }
 
 void
-edit_fill_cmd_callback (GtkAction *action,
-                        gint       value,
-                        gpointer   data)
+edit_fill_cmd_callback (GimpAction *action,
+                        gint        value,
+                        gpointer    data)
 {
   GimpImage       *image;
   GimpDrawable    *drawable;

@@ -46,7 +46,7 @@ static GimpDockable * dockable_get_current (GimpDockbook *dockbook);
 /*  public functions  */
 
 void
-dockable_add_tab_cmd_callback (GtkAction   *action,
+dockable_add_tab_cmd_callback (GimpAction  *action,
                                const gchar *value,
                                gpointer     data)
 {
@@ -58,8 +58,8 @@ dockable_add_tab_cmd_callback (GtkAction   *action,
 }
 
 void
-dockable_close_tab_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+dockable_close_tab_cmd_callback (GimpAction *action,
+                                 gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
@@ -74,8 +74,8 @@ dockable_close_tab_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_detach_tab_cmd_callback (GtkAction *action,
-                                  gpointer   data)
+dockable_detach_tab_cmd_callback (GimpAction *action,
+                                  gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
@@ -85,8 +85,8 @@ dockable_detach_tab_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_lock_tab_cmd_callback (GtkAction *action,
-                                gpointer   data)
+dockable_lock_tab_cmd_callback (GimpAction *action,
+                                gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
@@ -101,9 +101,9 @@ dockable_lock_tab_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_toggle_view_cmd_callback (GtkAction *action,
-                                   GtkAction *current,
-                                   gpointer   data)
+dockable_toggle_view_cmd_callback (GimpAction *action,
+                                   GimpAction *current,
+                                   gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable;
@@ -214,9 +214,9 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_view_size_cmd_callback (GtkAction *action,
-                                 GtkAction *current,
-                                 gpointer   data)
+dockable_view_size_cmd_callback (GimpAction *action,
+                                 GimpAction *current,
+                                 gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
@@ -242,9 +242,9 @@ dockable_view_size_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_tab_style_cmd_callback (GtkAction *action,
-                                 GtkAction *current,
-                                 gpointer   data)
+dockable_tab_style_cmd_callback (GimpAction *action,
+                                 GimpAction *current,
+                                 gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);
@@ -268,8 +268,8 @@ dockable_tab_style_cmd_callback (GtkAction *action,
 }
 
 void
-dockable_show_button_bar_cmd_callback (GtkAction *action,
-                                       gpointer   data)
+dockable_show_button_bar_cmd_callback (GimpAction *action,
+                                       gpointer    data)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
   GimpDockable *dockable = dockable_get_current (dockbook);

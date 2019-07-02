@@ -46,9 +46,9 @@
 /*  public functions */
 
 void
-buffers_paste_cmd_callback (GtkAction *action,
-                            gint       value,
-                            gpointer   data)
+buffers_paste_cmd_callback (GimpAction *action,
+                            gint        value,
+                            gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -96,8 +96,8 @@ buffers_paste_cmd_callback (GtkAction *action,
 }
 
 void
-buffers_paste_as_new_image_cmd_callback (GtkAction *action,
-                                         gpointer   data)
+buffers_paste_as_new_image_cmd_callback (GimpAction *action,
+                                         gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
@@ -125,8 +125,8 @@ buffers_paste_as_new_image_cmd_callback (GtkAction *action,
 }
 
 void
-buffers_delete_cmd_callback (GtkAction *action,
-                             gpointer   data)
+buffers_delete_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
 

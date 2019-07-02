@@ -31,8 +31,8 @@
 /*  public functions  */
 
 void
-sample_points_sample_merged_cmd_callback (GtkAction *action,
-                                          gpointer   data)
+sample_points_sample_merged_cmd_callback (GimpAction *action,
+                                          gpointer    data)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (data);
   gboolean               active;

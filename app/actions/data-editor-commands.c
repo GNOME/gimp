@@ -31,8 +31,8 @@
 /*  public functions */
 
 void
-data_editor_edit_active_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+data_editor_edit_active_cmd_callback (GimpAction *action,
+                                      gpointer    data)
 {
   GimpDataEditor *editor = GIMP_DATA_EDITOR (data);
   gboolean        edit_active;

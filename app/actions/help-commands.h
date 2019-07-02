@@ -19,10 +19,10 @@
 #define __HELP_COMMANDS_H__
 
 
-void   help_help_cmd_callback         (GtkAction *action,
-                                       gpointer   data);
-void   help_context_help_cmd_callback (GtkAction *action,
-                                       gpointer   data);
+void   help_help_cmd_callback         (GimpAction *action,
+                                       gpointer    data);
+void   help_context_help_cmd_callback (GimpAction *action,
+                                       gpointer    data);
 
 
 #endif /* __HELP_COMMANDS_H__ */

@@ -54,8 +54,8 @@ static void   palettes_merge_callback (GtkWidget   *widget,
 /*  public functions */
 
 void
-palettes_import_cmd_callback (GtkAction *action,
-                              gpointer   data)
+palettes_import_cmd_callback (GimpAction *action,
+                              gpointer    data)
 {
   GtkWidget *widget;
   return_if_no_widget (widget, data);
@@ -68,8 +68,8 @@ palettes_import_cmd_callback (GtkAction *action,
 }
 
 void
-palettes_merge_cmd_callback (GtkAction *action,
-                             gpointer   data)
+palettes_merge_cmd_callback (GimpAction *action,
+                             gpointer    data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GtkWidget           *dialog;

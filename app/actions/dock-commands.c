@@ -48,8 +48,8 @@ dock_commands_get_dock_window_from_widget (GtkWidget *widget)
 /*  public functions  */
 
 void
-dock_toggle_image_menu_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+dock_toggle_image_menu_cmd_callback (GimpAction *action,
+                                     gpointer    data)
 {
   GtkWidget      *widget      = NULL;
   GimpDockWindow *dock_window = NULL;
@@ -67,8 +67,8 @@ dock_toggle_image_menu_cmd_callback (GtkAction *action,
 }
 
 void
-dock_toggle_auto_cmd_callback (GtkAction *action,
-                               gpointer   data)
+dock_toggle_auto_cmd_callback (GimpAction *action,
+                               gpointer    data)
 {
   GtkWidget      *widget      = NULL;
   GimpDockWindow *dock_window = NULL;
