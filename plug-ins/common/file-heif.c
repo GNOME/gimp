@@ -691,12 +691,15 @@ save_image (GFile             *file,
   struct heif_error         err;
   GOutputStream            *output;
   GeglBuffer               *buffer;
+  gchar                    *format_enc;
   const Babl               *format;
   const Babl               *space   = NULL;
   guint8                   *data;
   gint                      stride;
   gint                      width;
   gint                      height;
+  enum heif_chroma          chroma;
+  gint                      bit_depth;
   gboolean                  has_alpha;
   gboolean                  out_linear = FALSE;
 
@@ -708,12 +711,29 @@ save_image (GFile             *file,
 
   has_alpha = gimp_drawable_has_alpha (drawable_ID);
 
-  err = heif_image_create (width, height,
-                           heif_colorspace_RGB,
-                           has_alpha ?
-                           heif_chroma_interleaved_RGBA :
-                           heif_chroma_interleaved_RGB,
-                           &image);
+#ifdef HAVE_LIBHEIF_1_4_0
+  switch (gimp_image_get_precision (image_ID))
+    {
+    case GIMP_PRECISION_U8_LINEAR:
+    case GIMP_PRECISION_U8_NON_LINEAR:
+    case GIMP_PRECISION_U8_PERCEPTUAL:
+#ifndef GIMP_DISABLE_DEPRECATED
+    case GIMP_PRECISION_U8_GAMMA:
+#endif
+      chroma = has_alpha ?  heif_chroma_interleaved_RGBA : heif_chroma_interleaved_RGB;
+      bit_depth = 8;
+      break;
+    default:
+      chroma = has_alpha ?  heif_chroma_interleaved_RRGGBBAA_BE : heif_chroma_interleaved_RRGGBB_BE;
+      bit_depth = 16;
+      break;
+    }
+#else
+  /* Older libheif only support 8-bit per channel export. */
+  chroma = has_alpha ?  heif_chroma_interleaved_RGBA : heif_chroma_interleaved_RGB;
+  bit_depth = 8;
+#endif /* HAVE_LIBHEIF_1_4_0 */
+  err = heif_image_create (width, height, heif_colorspace_RGB, chroma, &image);
 
 #ifdef HAVE_LIBHEIF_1_4_0
   if (params->save_profile)
@@ -770,27 +790,18 @@ save_image (GFile             *file,
     space = gimp_drawable_get_format (drawable_ID);
 
   heif_image_add_plane (image, heif_channel_interleaved,
-                        width, height, has_alpha ? 32 : 24);
+                        width, height,
+                        bit_depth * (has_alpha ? 4 : 3));
 
   data = heif_image_get_plane (image, heif_channel_interleaved, &stride);
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
-
-  if (has_alpha)
-    {
-      if (out_linear)
-        format = babl_format ("RGBA u8");
-      else
-        format = babl_format ("R'G'B'A u8");
-    }
-  else
-    {
-      if (out_linear)
-        format = babl_format ("RGB u8");
-      else
-        format = babl_format ("R'G'B' u8");
-    }
-  format = babl_format_with_space (babl_format_get_encoding (format), space);
+  format_enc = g_strdup_printf ("%s%s u%d",
+                                out_linear ? "RGB" : "R'G'B'",
+                                has_alpha  ? "A"   : "",
+                                bit_depth);
+  format = babl_format_with_space (format_enc, space);
+  g_free (format_enc);
 
   gegl_buffer_get (buffer,
                    GEGL_RECTANGLE (0, 0, width, height),
