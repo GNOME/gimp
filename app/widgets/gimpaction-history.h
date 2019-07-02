@@ -22,7 +22,7 @@
 #define __GIMP_ACTION_HISTORY_H__
 
 
-typedef gboolean (* GimpActionMatchFunc) (GtkAction   *action,
+typedef gboolean (* GimpActionMatchFunc) (GimpAction  *action,
                                           const gchar *keyword,
                                           gint        *section,
                                           Gimp        *gimp);
@@ -40,7 +40,7 @@ GList    * gimp_action_history_search                (Gimp                *gimp,
 gboolean   gimp_action_history_is_blacklisted_action (const gchar         *action_name);
 gboolean   gimp_action_history_is_excluded_action    (const gchar         *action_name);
 
-void       gimp_action_history_action_activated      (GtkAction           *action);
+void       gimp_action_history_action_activated      (GimpAction          *action);
 
 
 #endif  /* __GIMP_ACTION_HISTORY_H__ */

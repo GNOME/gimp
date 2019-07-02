@@ -28,6 +28,7 @@
 #include "core/gimp.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpradioaction.h"
 #include "widgets/gimptextbuffer.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpuimanager.h"
@@ -110,7 +111,7 @@ text_editor_direction_cmd_callback (GtkAction *action,
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (data);
   gint            value;
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   gimp_text_editor_set_direction (editor, (GimpTextDirection) value);
 }

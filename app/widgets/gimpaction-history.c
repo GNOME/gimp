@@ -288,14 +288,14 @@ gimp_action_history_search (Gimp                *gimp,
        actions = g_list_next (actions), i++)
     {
       GimpActionHistoryItem *item   = actions->data;
-      GtkAction             *action;
+      GimpAction            *action;
 
       action = gimp_ui_manager_find_action (manager, NULL, item->action_name);
       if (action == NULL)
         continue;
 
-      if (! gtk_action_is_visible (action)    ||
-          (! gtk_action_is_sensitive (action) &&
+      if (! gimp_action_is_visible (action)    ||
+          (! gimp_action_is_sensitive (action) &&
            ! config->search_show_unavailable))
         continue;
 
@@ -352,7 +352,7 @@ gimp_action_history_is_excluded_action (const gchar *action_name)
  * It allows us to log all used actions.
  */
 void
-gimp_action_history_action_activated (GtkAction *action)
+gimp_action_history_action_activated (GimpAction *action)
 {
   GimpGuiConfig         *config;
   const gchar           *action_name;
@@ -366,7 +366,7 @@ gimp_action_history_action_activated (GtkAction *action)
   if (config->action_history_size == 0)
     return;
 
-  action_name = gtk_action_get_name (action);
+  action_name = gimp_action_get_name (action);
 
   /* Some specific actions are of no log interest. */
   if (gimp_action_history_is_excluded_action (action_name))

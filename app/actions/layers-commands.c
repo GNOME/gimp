@@ -65,6 +65,8 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprogressdialog.h"
+#include "widgets/gimpradioaction.h"
+#include "widgets/gimptoggleaction.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -1006,7 +1008,7 @@ layers_mask_edit_cmd_callback (GtkAction *action,
     {
       gboolean active;
 
-      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
       gimp_layer_set_edit_mask (layer, active);
       gimp_image_flush (image);
@@ -1025,7 +1027,7 @@ layers_mask_show_cmd_callback (GtkAction *action,
     {
       gboolean active;
 
-      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
       gimp_layer_set_show_mask (layer, active, TRUE);
       gimp_image_flush (image);
@@ -1044,7 +1046,7 @@ layers_mask_disable_cmd_callback (GtkAction *action,
     {
       gboolean active;
 
-      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
       gimp_layer_set_apply_mask (layer, ! active, TRUE);
       gimp_image_flush (image);
@@ -1190,7 +1192,7 @@ layers_blend_space_cmd_callback (GtkAction *action,
   GimpLayerColorSpace  blend_space;
   return_if_no_layer (image, layer, data);
 
-  blend_space = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  blend_space = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (blend_space != gimp_layer_get_blend_space (layer))
     {
@@ -1218,7 +1220,7 @@ layers_composite_space_cmd_callback (GtkAction *action,
   GimpLayerColorSpace  composite_space;
   return_if_no_layer (image, layer, data);
 
-  composite_space = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  composite_space = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (composite_space != gimp_layer_get_composite_space (layer))
     {
@@ -1246,7 +1248,7 @@ layers_composite_mode_cmd_callback (GtkAction *action,
   GimpLayerCompositeMode  composite_mode;
   return_if_no_layer (image, layer, data);
 
-  composite_mode = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  composite_mode = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (composite_mode != gimp_layer_get_composite_mode (layer))
     {
@@ -1317,7 +1319,7 @@ layers_lock_alpha_cmd_callback (GtkAction *action,
   gboolean   lock_alpha;
   return_if_no_layer (image, layer, data);
 
-  lock_alpha = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  lock_alpha = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (lock_alpha != gimp_layer_get_lock_alpha (layer))
     {

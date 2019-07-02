@@ -39,6 +39,7 @@
 
 #include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpactionimpl.h"
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
@@ -355,17 +356,17 @@ file_actions_last_opened_update (GimpContainer   *container,
 
   for (i = 0; i < n; i++)
     {
-      GtkAction *action;
-      gchar     *name = g_strdup_printf ("file-open-recent-%02d", i + 1);
+      GimpAction *action;
+      gchar      *name = g_strdup_printf ("file-open-recent-%02d", i + 1);
 
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
+      action = gimp_action_group_get_action (group, name);
 
       if (i < num_documents)
         {
           GimpImagefile *imagefile = (GimpImagefile *)
             gimp_container_get_child_by_index (container, i);
 
-          if (GIMP_ACTION (action)->viewable != (GimpViewable *) imagefile)
+          if (GIMP_ACTION_IMPL (action)->viewable != (GimpViewable *) imagefile)
             {
               GFile       *file;
               const gchar *name;

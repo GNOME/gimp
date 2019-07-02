@@ -54,6 +54,8 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpradioaction.h"
+#include "widgets/gimptoggleaction.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -243,7 +245,7 @@ image_convert_base_type_cmd_callback (GtkAction *action,
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (value == gimp_image_get_base_type (image))
     return;
@@ -359,7 +361,7 @@ image_convert_precision_cmd_callback (GtkAction *action,
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (value == gimp_image_get_component_type (image))
     return;
@@ -407,7 +409,7 @@ image_convert_gamma_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_display (display, data);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (value == gimp_babl_format_get_linear (gimp_image_get_layer_format (image,
                                                                          FALSE)))
@@ -432,7 +434,7 @@ image_color_management_enabled_cmd_callback (GtkAction *action,
   gboolean   enabled;
   return_if_no_image (image, data);
 
-  enabled = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  enabled = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (enabled != gimp_image_get_is_color_managed (image))
     {

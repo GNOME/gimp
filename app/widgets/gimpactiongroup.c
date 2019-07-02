@@ -33,8 +33,9 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
-#include "gimpactiongroup.h"
 #include "gimpaction.h"
+#include "gimpactiongroup.h"
+#include "gimpactionimpl.h"
 #include "gimpenumaction.h"
 #include "gimpprocedureaction.h"
 #include "gimpradioaction.h"
@@ -120,7 +121,7 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                   NULL, NULL,
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  GTK_TYPE_ACTION);
+                  GIMP_TYPE_ACTION);
 }
 
 static void
@@ -138,7 +139,7 @@ gimp_action_group_constructed (GObject *object)
 
   gimp_assert (GIMP_IS_GIMP (group->gimp));
 
-  name = gtk_action_group_get_name (GTK_ACTION_GROUP (object));
+  name = gimp_action_group_get_name (object);
 
   if (name)
     {
@@ -159,7 +160,7 @@ gimp_action_group_constructed (GObject *object)
 static void
 gimp_action_group_dispose (GObject *object)
 {
-  const gchar *name = gtk_action_group_get_name (GTK_ACTION_GROUP (object));
+  const gchar *name = gimp_action_group_get_name (object);
 
   if (name)
     {
@@ -252,12 +253,11 @@ static gboolean
 gimp_action_group_check_unique_action (GimpActionGroup *group,
                                        const gchar     *action_name)
 {
-  if (G_UNLIKELY (gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                               action_name)))
+  if (G_UNLIKELY (gimp_action_group_get_action (group, action_name)))
     {
       g_warning ("Refusing to add non-unique action '%s' to action group '%s'",
                  action_name,
-                 gtk_action_group_get_name (GTK_ACTION_GROUP (group)));
+                 gimp_action_group_get_name (group));
       return FALSE;
     }
 
@@ -305,6 +305,52 @@ gimp_action_group_new (Gimp                      *gimp,
   group->update_func = update_func;
 
   return group;
+}
+
+const gchar *
+gimp_action_group_get_name (GimpActionGroup *group)
+{
+  return gtk_action_group_get_name ((GtkActionGroup *) group);
+}
+
+void
+gimp_action_group_add_action (GimpActionGroup *action_group,
+                              GimpAction      *action)
+{
+  gtk_action_group_add_action ((GtkActionGroup *) action_group,
+                               (GtkAction *) action);
+}
+
+void
+gimp_action_group_add_action_with_accel (GimpActionGroup *action_group,
+                                         GimpAction      *action,
+                                         const gchar     *accelerator)
+{
+  gtk_action_group_add_action_with_accel ((GtkActionGroup *) action_group,
+                                          (GtkAction *) action,
+                                          accelerator);
+}
+
+void
+gimp_action_group_remove_action (GimpActionGroup *action_group,
+                                 GimpAction      *action)
+{
+  gtk_action_group_remove_action ((GtkActionGroup *) action_group,
+                                  (GtkAction *) action);
+}
+
+GimpAction *
+gimp_action_group_get_action (GimpActionGroup *group,
+                              const gchar     *action_name)
+{
+  return (GimpAction *) gtk_action_group_get_action ((GtkActionGroup *) group,
+                                                     action_name);
+}
+
+GList *
+gimp_action_group_list_actions (GimpActionGroup *group)
+{
+  return gtk_action_group_list_actions ((GtkActionGroup *) group);
 }
 
 GList *
@@ -366,23 +412,18 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
           tooltip = gettext (entries[i].tooltip);
         }
 
-      action = gimp_action_new (entries[i].name, label, tooltip,
-                                entries[i].icon_name);
+      action = gimp_action_impl_new (entries[i].name, label, tooltip,
+                                     entries[i].icon_name,
+                                     entries[i].help_id);
 
       if (entries[i].callback)
         g_signal_connect (action, "activate",
                           entries[i].callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (group, action,
+                                               entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
-
-      if (entries[i].help_id)
-        g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
-                                 g_strdup (entries[i].help_id),
-                                 (GDestroyNotify) g_free);
 
       g_object_unref (action);
     }
@@ -421,7 +462,8 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
         }
 
       action = gimp_toggle_action_new (entries[i].name, label, tooltip,
-                                       entries[i].icon_name);
+                                       entries[i].icon_name,
+                                       entries[i].help_id);
 
       gtk_toggle_action_set_active (action, entries[i].is_active);
 
@@ -430,15 +472,9 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
                           entries[i].callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (group, action,
+                                               entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
-
-      if (entries[i].help_id)
-        g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
-                                 g_strdup (entries[i].help_id),
-                                 (GDestroyNotify) g_free);
 
       g_object_unref (action);
     }
@@ -482,6 +518,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
 
       action = gimp_radio_action_new (entries[i].name, label, tooltip,
                                       entries[i].icon_name,
+                                      entries[i].help_id,
                                       entries[i].value);
 
       if (i == 0)
@@ -493,15 +530,9 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       if (value == entries[i].value)
         gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (group, action,
+                                               entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
-
-      if (entries[i].help_id)
-        g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
-                                 g_strdup (entries[i].help_id),
-                                 (GDestroyNotify) g_free);
 
       g_object_unref (action);
     }
@@ -549,6 +580,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
 
       action = gimp_enum_action_new (entries[i].name, label, tooltip,
                                      entries[i].icon_name,
+                                     entries[i].help_id,
                                      entries[i].value,
                                      entries[i].value_variable);
 
@@ -557,15 +589,9 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
                           callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (group, action,
+                                               entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
-
-      if (entries[i].help_id)
-        g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
-                                 g_strdup (entries[i].help_id),
-                                 (GDestroyNotify) g_free);
 
       g_object_unref (action);
     }
@@ -606,6 +632,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
 
       action = gimp_string_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
+                                       entries[i].help_id,
                                        entries[i].value);
 
       if (callback)
@@ -613,15 +640,9 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
                           callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (group, action,
+                                               entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
-
-      if (entries[i].help_id)
-        g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
-                                 g_strdup (entries[i].help_id),
-                                 (GDestroyNotify) g_free);
 
       g_object_unref (action);
     }
@@ -648,6 +669,7 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                                           entries[i].label,
                                           entries[i].tooltip,
                                           entries[i].icon_name,
+                                          entries[i].help_id,
                                           entries[i].procedure);
 
       if (callback)
@@ -655,22 +677,16 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                           callback,
                           group->user_data);
 
-      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
-                                              GTK_ACTION (action),
-                                              entries[i].accelerator);
+      gimp_action_group_add_action_with_accel (group, action,
+                                               entries[i].accelerator);
       g_signal_emit (group, signals[ACTION_ADDED], 0, action);
-
-      if (entries[i].help_id)
-        g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
-                                 g_strdup (entries[i].help_id),
-                                 (GDestroyNotify) g_free);
 
       g_object_unref (action);
     }
 }
 
 /**
- * gimp_action_group_remove_action:
+ * gimp_action_group_remove_action_and_accel:
  * @group:  the #GimpActionGroup to which @action belongs.
  * @action: the #GimpAction.
  *
@@ -680,22 +696,21 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
  * gtk_action_group_remove_action() instead.
  */
 void
-gimp_action_group_remove_action (GimpActionGroup *group,
-                                 GimpAction      *action)
+gimp_action_group_remove_action_and_accel (GimpActionGroup *group,
+                                           GimpAction      *action)
 {
   const gchar *action_name;
   const gchar *group_name;
   gchar       *accel_path;
 
-  action_name = gtk_action_get_name (GTK_ACTION (action));
-  group_name  = gtk_action_group_get_name (GTK_ACTION_GROUP (group));
+  action_name = gimp_action_get_name (action);
+  group_name  = gimp_action_group_get_name (group);
   accel_path = g_strconcat ("<Actions>/", group_name, "/",
                             action_name, NULL);
 
   gtk_accel_map_change_entry (accel_path, 0, 0, FALSE);
 
-  gtk_action_group_remove_action (GTK_ACTION_GROUP (group),
-                                  GTK_ACTION (action));
+  gimp_action_group_remove_action (group, action);
   g_free (accel_path);
 }
 
@@ -703,12 +718,12 @@ void
 gimp_action_group_activate_action (GimpActionGroup *group,
                                    const gchar     *action_name)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -717,7 +732,7 @@ gimp_action_group_activate_action (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_activate (action);
+  gimp_action_activate (action);
 }
 
 void
@@ -725,12 +740,12 @@ gimp_action_group_set_action_visible (GimpActionGroup *group,
                                       const gchar     *action_name,
                                       gboolean         visible)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -740,7 +755,7 @@ gimp_action_group_set_action_visible (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_set_visible (action, visible);
+  gimp_action_set_visible (action, visible);
 }
 
 void
@@ -748,12 +763,12 @@ gimp_action_group_set_action_sensitive (GimpActionGroup *group,
                                         const gchar     *action_name,
                                         gboolean         sensitive)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -763,7 +778,7 @@ gimp_action_group_set_action_sensitive (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_set_sensitive (action, sensitive);
+  gimp_action_set_sensitive (action, sensitive);
 }
 
 void
@@ -771,12 +786,12 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
                                      const gchar     *action_name,
                                      gboolean         active)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -794,8 +809,8 @@ gimp_action_group_set_action_active (GimpActionGroup *group,
       return;
     }
 
-  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
-                                active ? TRUE : FALSE);
+  gimp_toggle_action_set_active (GTK_TOGGLE_ACTION (action),
+                                 active ? TRUE : FALSE);
 }
 
 void
@@ -803,12 +818,12 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
                                     const gchar     *action_name,
                                     const gchar     *label)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -818,7 +833,7 @@ gimp_action_group_set_action_label (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_set_label (action, label);
+  gimp_action_set_label (action, label);
 }
 
 void
@@ -826,12 +841,12 @@ gimp_action_group_set_action_pixbuf (GimpActionGroup *group,
                                      const gchar     *action_name,
                                      GdkPixbuf       *pixbuf)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -841,7 +856,7 @@ gimp_action_group_set_action_pixbuf (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_set_gicon (action, G_ICON (pixbuf));
+  gtk_action_set_gicon (GTK_ACTION (action), G_ICON (pixbuf));
 }
 
 
@@ -850,12 +865,12 @@ gimp_action_group_set_action_tooltip (GimpActionGroup     *group,
                                       const gchar         *action_name,
                                       const gchar         *tooltip)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -865,19 +880,19 @@ gimp_action_group_set_action_tooltip (GimpActionGroup     *group,
       return;
     }
 
-  gtk_action_set_tooltip (action, tooltip);
+  gimp_action_set_tooltip (action, tooltip);
 }
 
 const gchar *
 gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
                                       const gchar         *action_name)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_val_if_fail (GIMP_IS_ACTION_GROUP (group), NULL);
   g_return_val_if_fail (action_name != NULL, NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -887,7 +902,7 @@ gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
       return NULL;
     }
 
-  return gtk_action_get_tooltip (action);
+  return gimp_action_get_tooltip (action);
 }
 
 void
@@ -895,13 +910,13 @@ gimp_action_group_set_action_context (GimpActionGroup *group,
                                       const gchar     *action_name,
                                       GimpContext     *context)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -928,12 +943,12 @@ gimp_action_group_set_action_color (GimpActionGroup *group,
                                     const GimpRGB   *color,
                                     gboolean         set_label)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -978,13 +993,13 @@ gimp_action_group_set_action_viewable (GimpActionGroup *group,
                                        const gchar     *action_name,
                                        GimpViewable    *viewable)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
   g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -1010,12 +1025,12 @@ gimp_action_group_set_action_hide_empty (GimpActionGroup *group,
                                          const gchar     *action_name,
                                          gboolean         hide_empty)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -1033,12 +1048,12 @@ gimp_action_group_set_action_always_show_image (GimpActionGroup *group,
                                                 const gchar     *action_name,
                                                 gboolean         always_show_image)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (action_name != NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -1048,5 +1063,5 @@ gimp_action_group_set_action_always_show_image (GimpActionGroup *group,
       return;
     }
 
-  gtk_action_set_always_show_image (action, always_show_image);
+  gtk_action_set_always_show_image (GTK_ACTION (action), always_show_image);
 }

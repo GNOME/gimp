@@ -30,6 +30,7 @@
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptextbuffer.h"
+#include "widgets/gimptoggleaction.h"
 
 #include "error-console-commands.h"
 
@@ -138,7 +139,7 @@ error_console_highlight_error_cmd_callback (GtkAction *action,
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   gboolean          active;
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   console->highlight[GIMP_MESSAGE_ERROR] = active;
 }
@@ -150,7 +151,7 @@ error_console_highlight_warning_cmd_callback (GtkAction *action,
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   gboolean          active;
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   console->highlight[GIMP_MESSAGE_WARNING] = active;
 }
@@ -162,7 +163,7 @@ error_console_highlight_info_cmd_callback (GtkAction *action,
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
   gboolean          active;
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   console->highlight[GIMP_MESSAGE_INFO] = active;
 }

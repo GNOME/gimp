@@ -38,6 +38,8 @@
 #include "widgets/gimpcolordialog.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpradioaction.h"
+#include "widgets/gimptoggleaction.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
@@ -269,7 +271,7 @@ view_zoom_explicit_cmd_callback (GtkAction *action,
   gint              value;
   return_if_no_shell (shell, data);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (value != 0 /* not Other... */)
     {
@@ -289,7 +291,7 @@ view_zoom_other_cmd_callback (GtkAction *action,
   return_if_no_shell (shell, data);
 
   /* check if we are activated by the user or from
-   * view_actions_set_zoom()
+   * view_actions_set_zoom(), also SIC GTK_TOGGLE_ACTION()
    */
   if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)) &&
       shell->other_scale != gimp_zoom_model_get_factor (shell->zoom))
@@ -309,7 +311,7 @@ view_dot_for_dot_cmd_callback (GtkAction *action,
 
   shell = gimp_display_get_shell (display);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != shell->dot_for_dot)
     {
@@ -338,7 +340,7 @@ view_flip_horizontally_cmd_callback (GtkAction *action,
 
   shell = gimp_display_get_shell (display);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != shell->flip_horizontally)
     {
@@ -357,7 +359,7 @@ view_flip_vertically_cmd_callback (GtkAction *action,
 
   shell = gimp_display_get_shell (display);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != shell->flip_vertically)
     {
@@ -540,7 +542,7 @@ view_color_management_enable_cmd_callback (GtkAction *action,
 
   color_config = gimp_display_shell_get_color_config (shell);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   mode = gimp_color_config_get_mode (color_config);
 
@@ -575,7 +577,7 @@ view_color_management_softproof_cmd_callback (GtkAction *action,
 
   color_config = gimp_display_shell_get_color_config (shell);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   mode = gimp_color_config_get_mode (color_config);
 
@@ -610,7 +612,7 @@ view_display_intent_cmd_callback (GtkAction *action,
 
   color_config = gimp_display_shell_get_color_config (shell);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (value != gimp_color_config_get_display_intent (color_config))
     {
@@ -632,7 +634,7 @@ view_display_bpc_cmd_callback (GtkAction *action,
 
   color_config = gimp_display_shell_get_color_config (shell);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_color_config_get_display_bpc (color_config))
     {
@@ -696,7 +698,7 @@ view_softproof_intent_cmd_callback (GtkAction *action,
 
   color_config = gimp_display_shell_get_color_config (shell);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (value != gimp_color_config_get_simulation_intent (color_config))
     {
@@ -718,7 +720,7 @@ view_softproof_bpc_cmd_callback (GtkAction *action,
 
   color_config = gimp_display_shell_get_color_config (shell);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_color_config_get_simulation_bpc (color_config))
     {
@@ -740,7 +742,7 @@ view_softproof_gamut_check_cmd_callback (GtkAction *action,
 
   color_config = gimp_display_shell_get_color_config (shell);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_color_config_get_simulation_gamut_check (color_config))
     {
@@ -759,7 +761,7 @@ view_toggle_selection_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_selection (shell))
     {
@@ -775,7 +777,7 @@ view_toggle_layer_boundary_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_layer (shell))
     {
@@ -791,7 +793,7 @@ view_toggle_menubar_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_menubar (shell))
     {
@@ -807,7 +809,7 @@ view_toggle_rulers_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_rulers (shell))
     {
@@ -823,7 +825,7 @@ view_toggle_scrollbars_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_scrollbars (shell))
     {
@@ -839,7 +841,7 @@ view_toggle_statusbar_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_statusbar (shell))
     {
@@ -855,7 +857,7 @@ view_toggle_guides_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_guides (shell))
     {
@@ -871,7 +873,7 @@ view_toggle_grid_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_grid (shell))
     {
@@ -887,7 +889,7 @@ view_toggle_sample_points_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_show_sample_points (shell))
     {
@@ -903,7 +905,7 @@ view_snap_to_guides_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_snap_to_guides (shell))
     {
@@ -919,7 +921,7 @@ view_snap_to_grid_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_snap_to_grid (shell))
     {
@@ -935,7 +937,7 @@ view_snap_to_canvas_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_snap_to_canvas (shell))
     {
@@ -951,7 +953,7 @@ view_snap_to_vectors_cmd_callback (GtkAction *action,
   gboolean          active;
   return_if_no_shell (shell, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_display_shell_get_snap_to_vectors (shell))
     {
@@ -1080,7 +1082,7 @@ view_fullscreen_cmd_callback (GtkAction *action,
     {
       gboolean active;
 
-      active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
       gimp_image_window_set_fullscreen (window, active);
     }

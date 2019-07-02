@@ -34,6 +34,7 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
 
@@ -235,7 +236,7 @@ edit_actions_setup (GimpActionGroup *group)
   GimpContext *context = gimp_get_user_context (group->gimp);
   GimpRGB      color;
   GimpPattern *pattern;
-  GtkAction   *action;
+  GimpAction  *action;
 
   gimp_action_group_add_actions (group, "edit-action",
                                  edit_actions,
@@ -251,9 +252,10 @@ edit_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (edit_fill_actions),
                                       G_CALLBACK (edit_fill_cmd_callback));
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "edit-paste-as-new-image-short");
-  gtk_action_set_accel_path (action, "<Actions>/edit/edit-paste-as-new-image");
+  action = gimp_action_group_get_action (group,
+                                         "edit-paste-as-new-image-short");
+  gimp_action_set_accel_path (action,
+                              "<Actions>/edit/edit-paste-as-new-image");
 
   gimp_action_group_set_action_context (group, "edit-fill-fg", context);
   gimp_action_group_set_action_context (group, "edit-fill-bg", context);

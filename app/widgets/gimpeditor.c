@@ -31,11 +31,14 @@
 
 #include "core/gimp.h"
 
+#include "gimpaction.h"
+#include "gimpactiongroup.h"
 #include "gimpdocked.h"
 #include "gimpeditor.h"
 #include "gimpdnd.h"
 #include "gimphighlightablebutton.h"
 #include "gimpmenufactory.h"
+#include "gimptoggleaction.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
@@ -582,7 +585,7 @@ gimp_editor_add_icon_box (GimpEditor  *editor,
 typedef struct
 {
   GdkModifierType  mod_mask;
-  GtkAction       *action;
+  GimpAction      *action;
 } ExtendedAction;
 
 static void
@@ -609,9 +612,9 @@ gimp_editor_button_extended_clicked (GtkWidget       *button,
       ExtendedAction *ext = list->data;
 
       if ((ext->mod_mask & mask) == ext->mod_mask &&
-          gtk_action_get_sensitive (ext->action))
+          gimp_action_get_sensitive (ext->action))
         {
-          gtk_action_activate (ext->action);
+          gimp_action_activate (ext->action);
           break;
         }
     }
@@ -624,7 +627,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
                                ...)
 {
   GimpActionGroup *group;
-  GtkAction       *action;
+  GimpAction      *action;
   GtkWidget       *button;
   GtkWidget       *old_child;
   GtkWidget       *image;
@@ -645,22 +648,21 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
   g_return_val_if_fail (group != NULL, NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   g_return_val_if_fail (action != NULL, NULL);
 
   button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
 
-  if (GTK_IS_TOGGLE_ACTION (action))
+  if (GIMP_IS_TOGGLE_ACTION (action))
     button = gtk_toggle_button_new ();
   else
     button = gimp_highlightable_button_new ();
 
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
 
-  icon_name = gtk_action_get_icon_name (action);
-  tooltip   = g_strdup (gtk_action_get_tooltip (action));
+  icon_name = gimp_action_get_icon_name (action);
+  tooltip   = g_strdup (gimp_action_get_tooltip (action));
   help_id   = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
   old_child = gtk_bin_get_child (GTK_BIN (button));
@@ -672,7 +674,8 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gtk_activatable_set_related_action (GTK_ACTIVATABLE (button), action);
+  gtk_activatable_set_related_action (GTK_ACTIVATABLE (button),
+                                      GTK_ACTION (action));
   gtk_box_pack_start (GTK_BOX (editor->priv->button_box), button,
                       TRUE, TRUE, 0);
   gtk_widget_show (button);
@@ -687,8 +690,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
       mod_mask = va_arg (args, GdkModifierType);
 
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            action_name);
+      action = gimp_action_group_get_action (group, action_name);
 
       if (action && mod_mask)
         {
@@ -701,7 +703,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
           if (tooltip)
             {
-              const gchar *ext_tooltip = gtk_action_get_tooltip (action);
+              const gchar *ext_tooltip = gimp_action_get_tooltip (action);
 
               if (ext_tooltip)
                 {

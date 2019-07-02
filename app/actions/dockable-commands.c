@@ -33,7 +33,9 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocked.h"
+#include "widgets/gimpradioaction.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimptoggleaction.h"
 
 #include "dockable-commands.h"
 
@@ -91,7 +93,8 @@ dockable_lock_tab_cmd_callback (GtkAction *action,
 
   if (dockable)
     {
-      gboolean lock = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      gboolean lock =
+        gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
       gimp_dockable_set_locked (dockable, lock);
     }
@@ -108,7 +111,7 @@ dockable_toggle_view_cmd_callback (GtkAction *action,
   gint          page_num;
 
   view_type = (GimpViewType)
-    gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+    gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
@@ -219,7 +222,7 @@ dockable_view_size_cmd_callback (GtkAction *action,
   GimpDockable *dockable = dockable_get_current (dockbook);
   gint          view_size;
 
-  view_size = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  view_size = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (dockable)
     {
@@ -248,7 +251,7 @@ dockable_tab_style_cmd_callback (GtkAction *action,
   GimpTabStyle  tab_style;
 
   tab_style = (GimpTabStyle)
-    gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+    gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (dockable && gimp_dockable_get_tab_style (dockable) != tab_style)
     {
@@ -277,7 +280,7 @@ dockable_show_button_bar_cmd_callback (GtkAction *action,
       gboolean    show;
 
       docked = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
-      show   = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+      show   = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
       gimp_docked_set_show_button_bar (docked, show);
     }

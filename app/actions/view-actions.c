@@ -693,7 +693,7 @@ static const GimpEnumActionEntry view_scroll_vertical_actions[] =
 void
 view_actions_setup (GimpActionGroup *group)
 {
-  GtkAction *action;
+  GimpAction *action;
 
   gimp_action_group_add_actions (group, "view-action",
                                  view_actions,
@@ -761,8 +761,8 @@ view_actions_setup (GimpActionGroup *group)
   /*  connect "activate" of view-zoom-other manually so it can be
    *  selected even if it's the active item of the radio group
    */
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "view-zoom-other");
+  action = gimp_action_group_get_action (group, "view-zoom-other");
+
   g_signal_connect (action, "activate",
                     G_CALLBACK (view_zoom_other_cmd_callback),
                     group->user_data);

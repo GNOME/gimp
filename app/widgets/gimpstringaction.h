@@ -22,7 +22,7 @@
 #define __GIMP_STRING_ACTION_H__
 
 
-#include "gimpaction.h"
+#include "gimpactionimpl.h"
 
 
 #define GIMP_TYPE_STRING_ACTION            (gimp_string_action_get_type ())
@@ -37,14 +37,14 @@ typedef struct _GimpStringActionClass GimpStringActionClass;
 
 struct _GimpStringAction
 {
-  GimpAction  parent_instance;
+  GimpActionImpl  parent_instance;
 
   gchar      *value;
 };
 
 struct _GimpStringActionClass
 {
-  GimpActionClass parent_class;
+  GimpActionImplClass parent_class;
 
   void (* selected) (GimpStringAction *action,
                      const gchar      *value);
@@ -57,7 +57,9 @@ GimpStringAction * gimp_string_action_new      (const gchar      *name,
                                                 const gchar      *label,
                                                 const gchar      *tooltip,
                                                 const gchar      *icon_name,
+                                                const gchar      *help_id,
                                                 const gchar      *value);
+
 void               gimp_string_action_selected (GimpStringAction *action,
                                                 const gchar      *value);
 

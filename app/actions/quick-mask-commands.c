@@ -31,6 +31,8 @@
 #include "core/gimpimage-quick-mask.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpradioaction.h"
+#include "widgets/gimptoggleaction.h"
 
 #include "dialogs/dialogs.h"
 #include "dialogs/channel-options-dialog.h"
@@ -72,7 +74,7 @@ quick_mask_toggle_cmd_callback (GtkAction *action,
   gboolean   active;
   return_if_no_image (image, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != gimp_image_get_quick_mask_state (image))
     {
@@ -90,7 +92,7 @@ quick_mask_invert_cmd_callback (GtkAction *action,
   gint       value;
   return_if_no_image (image, data);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (value != gimp_image_get_quick_mask_inverted (image))
     {

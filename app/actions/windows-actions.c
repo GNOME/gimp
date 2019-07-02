@@ -322,7 +322,7 @@ windows_actions_display_remove (GimpContainer   *container,
                                 GimpActionGroup *group)
 {
   GimpDisplayShell *shell = gimp_display_get_shell (display);
-  GtkAction        *action;
+  GimpAction       *action;
   gchar            *action_name;
 
   if (shell)
@@ -331,13 +331,11 @@ windows_actions_display_remove (GimpContainer   *container,
                                           group);
 
   action_name = gimp_display_get_action_name (display);
-
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
+  g_free (action_name);
 
   if (action)
-    gimp_action_group_remove_action (group,
-                                     GIMP_ACTION (action));
-  g_free (action_name);
+    gimp_action_group_remove_action_and_accel (group, action);
 
   windows_actions_update_display_accels (group);
 }
@@ -356,14 +354,13 @@ windows_actions_image_notify (GimpDisplay      *display,
                               const GParamSpec *unused,
                               GimpActionGroup  *group)
 {
-  GimpImage *image = gimp_display_get_image (display);
-  GtkAction *action;
-  gchar     *action_name;
+  GimpImage  *image = gimp_display_get_image (display);
+  GimpAction *action;
+  gchar      *action_name;
 
   action_name = gimp_display_get_action_name (display);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   if (! action)
     {
@@ -381,8 +378,7 @@ windows_actions_image_notify (GimpDisplay      *display,
 
       gimp_action_group_set_action_always_show_image (group, action_name,
                                                       TRUE);
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            action_name);
+      action = gimp_action_group_get_action (group, action_name);
 
       g_object_set_data (G_OBJECT (action), "display", display);
     }
@@ -443,7 +439,7 @@ windows_actions_update_display_accels (GimpActionGroup *group)
        list = g_list_next (list), i++)
     {
       GimpDisplay *display = list->data;
-      GtkAction   *action;
+      GimpAction  *action;
       gchar       *action_name;
 
       if (! gimp_display_get_image (display))
@@ -451,8 +447,7 @@ windows_actions_update_display_accels (GimpActionGroup *group)
 
       action_name = gimp_display_get_action_name (display);
 
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            action_name);
+      action = gimp_action_group_get_action (group, action_name);
       g_free (action_name);
 
       if (action)
@@ -460,7 +455,7 @@ windows_actions_update_display_accels (GimpActionGroup *group)
           const gchar *accel_path;
           guint        accel_key;
 
-          accel_path = gtk_action_get_accel_path (action);
+          accel_path = gimp_action_get_accel_path (action);
 
           if (i < 9)
             accel_key = GDK_KEY_1 + i;
@@ -479,7 +474,7 @@ windows_actions_dock_window_added (GimpDialogFactory *factory,
                                    GimpDockWindow    *dock_window,
                                    GimpActionGroup   *group)
 {
-  GtkAction       *action;
+  GimpAction      *action;
   GimpActionEntry  entry;
   gchar           *action_name = windows_actions_dock_window_to_action_name (dock_window);
 
@@ -493,8 +488,7 @@ windows_actions_dock_window_added (GimpDialogFactory *factory,
 
   gimp_action_group_add_actions (group, NULL, &entry, 1);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   g_object_set (action,
                 "ellipsize", PANGO_ELLIPSIZE_END,
@@ -517,15 +511,15 @@ windows_actions_dock_window_removed (GimpDialogFactory *factory,
                                      GimpDockWindow    *dock_window,
                                      GimpActionGroup   *group)
 {
-  GtkAction *action;
-  gchar     *action_name = windows_actions_dock_window_to_action_name (dock_window);
+  GimpAction *action;
+  gchar      *action_name;
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action_name = windows_actions_dock_window_to_action_name (dock_window);
+  action = gimp_action_group_get_action (group, action_name);
+  g_free (action_name);
 
   if (action)
-    gimp_action_group_remove_action (group, GIMP_ACTION (action));
-
-  g_free (action_name);
+    gimp_action_group_remove_action_and_accel (group, action);
 }
 
 static void
@@ -533,11 +527,11 @@ windows_actions_dock_window_notify (GimpDockWindow   *dock_window,
                                     const GParamSpec *pspec,
                                     GimpActionGroup  *group)
 {
-  GtkAction *action;
-  gchar     *action_name;
+  GimpAction *action;
+  gchar      *action_name;
 
   action_name = windows_actions_dock_window_to_action_name (dock_window);
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
   g_free (action_name);
 
   if (action)
@@ -552,7 +546,7 @@ windows_actions_recent_add (GimpContainer   *container,
                             GimpSessionInfo *info,
                             GimpActionGroup *group)
 {
-  GtkAction       *action;
+  GimpAction      *action;
   GimpActionEntry  entry;
   gint             info_id;
   static gint      info_id_counter = 1;
@@ -581,8 +575,7 @@ windows_actions_recent_add (GimpContainer   *container,
 
   gimp_action_group_add_actions (group, NULL, &entry, 1);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        action_name);
+  action = gimp_action_group_get_action (group, action_name);
 
   g_object_set (action,
                 "ellipsize",       PANGO_ELLIPSIZE_END,
@@ -599,21 +592,19 @@ windows_actions_recent_remove (GimpContainer   *container,
                                GimpSessionInfo *info,
                                GimpActionGroup *group)
 {
-  GtkAction *action;
-  gint       info_id;
-  gchar     *action_name;
+  GimpAction *action;
+  gint        info_id;
+  gchar      *action_name;
 
   info_id = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (info),
                                                 "recent-action-id"));
 
   action_name = g_strdup_printf ("windows-recent-%04d", info_id);
-
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+  action = gimp_action_group_get_action (group, action_name);
+  g_free (action_name);
 
   if (action)
-    gimp_action_group_remove_action (group, GIMP_ACTION (action));
-
-  g_free (action_name);
+    gimp_action_group_remove_action_and_accel (group, action);
 }
 
 static void

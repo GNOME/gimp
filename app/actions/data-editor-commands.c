@@ -23,6 +23,7 @@
 #include "actions-types.h"
 
 #include "widgets/gimpdataeditor.h"
+#include "widgets/gimptoggleaction.h"
 
 #include "data-editor-commands.h"
 
@@ -36,7 +37,7 @@ data_editor_edit_active_cmd_callback (GtkAction *action,
   GimpDataEditor *editor = GIMP_DATA_EDITOR (data);
   gboolean        edit_active;
 
-  edit_active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  edit_active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   gimp_data_editor_set_edit_active (editor, edit_active);
 }

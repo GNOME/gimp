@@ -34,7 +34,9 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpradioaction.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimptoggleaction.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -57,7 +59,7 @@ windows_hide_docks_cmd_callback (GtkAction *action,
   gboolean  active;
   return_if_no_gimp (gimp, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != GIMP_GUI_CONFIG (gimp->config)->hide_docks)
     g_object_set (gimp->config,
@@ -73,7 +75,7 @@ windows_show_tabs_cmd_callback (GtkAction *action,
   gboolean  active;
   return_if_no_gimp (gimp, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != GIMP_GUI_CONFIG (gimp->config)->show_tabs)
     g_object_set (gimp->config,
@@ -91,7 +93,7 @@ windows_set_tabs_position_cmd_callback (GtkAction *action,
   GimpPosition  value;
   return_if_no_gimp (gimp, data);
 
-  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   if (value != GIMP_GUI_CONFIG (gimp->config)->tabs_position)
     g_object_set (gimp->config,
@@ -107,7 +109,7 @@ windows_use_single_window_mode_cmd_callback (GtkAction *action,
   gboolean  active;
   return_if_no_gimp (gimp, data);
 
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  active = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   if (active != GIMP_GUI_CONFIG (gimp->config)->single_window_mode)
     g_object_set (gimp->config,

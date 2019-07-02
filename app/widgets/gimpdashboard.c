@@ -70,6 +70,7 @@
 #include "gimphighlightablebutton.h"
 #include "gimpmeter.h"
 #include "gimpsessioninfo-aux.h"
+#include "gimptoggleaction.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
@@ -265,21 +266,21 @@ struct _FieldData
 
 struct _GroupData
 {
-  gint             n_fields;
-  gint             n_meter_values;
+  gint              n_fields;
+  gint              n_meter_values;
 
-  gboolean         active;
-  gdouble          limit;
+  gboolean          active;
+  gdouble           limit;
 
-  GtkToggleAction *action;
-  GtkExpander     *expander;
-  GtkLabel        *header_values_label;
-  GtkButton       *menu_button;
-  GtkMenu         *menu;
-  GimpMeter       *meter;
-  GtkTable        *table;
+  GimpToggleAction *action;
+  GtkExpander      *expander;
+  GtkLabel         *header_values_label;
+  GtkButton        *menu_button;
+  GtkMenu          *menu;
+  GimpMeter        *meter;
+  GtkTable         *table;
 
-  FieldData       *fields;
+  FieldData        *fields;
 };
 
 struct _GimpDashboardPrivate
@@ -338,7 +339,7 @@ static gboolean   gimp_dashboard_group_expander_button_press    (GimpDashboard  
                                                                  GtkWidget           *widget);
 
 static void       gimp_dashboard_group_action_toggled           (GimpDashboard       *dashboard,
-                                                                 GtkToggleAction     *action);
+                                                                 GimpToggleAction    *action);
 static void       gimp_dashboard_field_menu_item_toggled        (GimpDashboard       *dashboard,
                                                                  GtkCheckMenuItem    *item);
 
@@ -1255,7 +1256,7 @@ gimp_dashboard_constructed (GObject *object)
   GimpDashboardPrivate *priv = dashboard->priv;
   GimpUIManager        *ui_manager;
   GimpActionGroup      *action_group;
-  GtkAction            *action;
+  GimpAction           *action;
   GtkWidget            *button;
   GtkWidget            *alignment;
   GtkWidget            *box;
@@ -1285,7 +1286,7 @@ gimp_dashboard_constructed (GObject *object)
                                             &entry, 1);
 
       action = gimp_ui_manager_find_action (ui_manager, "dashboard", entry.name);
-      group_data->action = GTK_TOGGLE_ACTION (action);
+      group_data->action = GIMP_TOGGLE_ACTION (action);
 
       g_object_set_data (G_OBJECT (action),
                          "gimp-dashboard-group", GINT_TO_POINTER (group));
@@ -1309,8 +1310,8 @@ gimp_dashboard_constructed (GObject *object)
                                           gimp_get_extend_selection_mask (),
                                           NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (action_group),
-                                        "dashboard-log-add-marker");
+  action = gimp_action_group_get_action (action_group,
+                                         "dashboard-log-add-marker");
   g_object_bind_property (action, "sensitive",
                           button, "visible",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
@@ -1337,8 +1338,8 @@ gimp_dashboard_constructed (GObject *object)
   button = gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
                                           "dashboard-reset", NULL);
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (action_group),
-                                        "dashboard-reset");
+  action = gimp_action_group_get_action (action_group,
+                                         "dashboard-reset");
   g_object_bind_property (action, "sensitive",
                           button, "visible",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
@@ -1680,8 +1681,8 @@ gimp_dashboard_group_expander_button_press (GimpDashboard  *dashboard,
 }
 
 static void
-gimp_dashboard_group_action_toggled (GimpDashboard   *dashboard,
-                                     GtkToggleAction *action)
+gimp_dashboard_group_action_toggled (GimpDashboard    *dashboard,
+                                     GimpToggleAction *action)
 {
   GimpDashboardPrivate *priv = dashboard->priv;
   Group                 group;
@@ -1691,7 +1692,7 @@ gimp_dashboard_group_action_toggled (GimpDashboard   *dashboard,
                                                    "gimp-dashboard-group"));
   group_data = &priv->groups[group];
 
-  group_data->active = gtk_toggle_action_get_active (action);
+  group_data->active = gimp_toggle_action_get_active (action);
 
   gimp_dashboard_update_group (dashboard, group);
 }
@@ -2987,7 +2988,7 @@ gimp_dashboard_group_set_active (GimpDashboard *dashboard,
                                            gimp_dashboard_group_action_toggled,
                                            dashboard);
 
-          gtk_toggle_action_set_active (group_data->action, active);
+          gimp_toggle_action_set_active (group_data->action, active);
 
           g_signal_handlers_unblock_by_func (group_data->action,
                                              gimp_dashboard_group_action_toggled,
@@ -4745,7 +4746,7 @@ gimp_dashboard_menu_setup (GimpUIManager *manager,
   g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+  merge_id = gimp_ui_manager_new_merge_id (manager);
 
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
     {
@@ -4756,10 +4757,10 @@ gimp_dashboard_menu_setup (GimpUIManager *manager,
       action_name = g_strdup_printf ("dashboard-group-%s", group_info->name);
       action_path = g_strdup_printf ("%s/Groups/Groups", ui_path);
 
-      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                             action_path, action_name, action_name,
-                             GTK_UI_MANAGER_MENUITEM,
-                             FALSE);
+      gimp_ui_manager_add_ui (manager, merge_id,
+                              action_path, action_name, action_name,
+                              GTK_UI_MANAGER_MENUITEM,
+                              FALSE);
 
       g_free (action_name);
       g_free (action_path);

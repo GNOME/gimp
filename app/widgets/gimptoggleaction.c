@@ -28,19 +28,17 @@
 
 #include "widgets-types.h"
 
+#include "gimpaction.h"
 #include "gimptoggleaction.h"
 
 
-static void   gimp_toggle_action_connect_proxy     (GtkAction        *action,
-                                                    GtkWidget        *proxy);
-static void   gimp_toggle_action_set_proxy_tooltip (GimpToggleAction *action,
-                                                    GtkWidget        *proxy);
-static void   gimp_toggle_action_tooltip_notify    (GimpToggleAction *action,
-                                                    const GParamSpec *pspec,
-                                                    gpointer          data);
+static void   gimp_toggle_action_connect_proxy (GtkAction *action,
+                                                GtkWidget *proxy);
 
 
-G_DEFINE_TYPE (GimpToggleAction, gimp_toggle_action, GTK_TYPE_TOGGLE_ACTION)
+G_DEFINE_TYPE_WITH_CODE (GimpToggleAction, gimp_toggle_action,
+                         GTK_TYPE_TOGGLE_ACTION,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
 
 #define parent_class gimp_toggle_action_parent_class
 
@@ -56,9 +54,7 @@ gimp_toggle_action_class_init (GimpToggleActionClass *klass)
 static void
 gimp_toggle_action_init (GimpToggleAction *action)
 {
-  g_signal_connect (action, "notify::tooltip",
-                    G_CALLBACK (gimp_toggle_action_tooltip_notify),
-                    NULL);
+  gimp_action_init (GIMP_ACTION (action));
 }
 
 static void
@@ -67,7 +63,7 @@ gimp_toggle_action_connect_proxy (GtkAction *action,
 {
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  gimp_toggle_action_set_proxy_tooltip (GIMP_TOGGLE_ACTION (action), proxy);
+  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
 }
 
 
@@ -77,7 +73,8 @@ GtkToggleAction *
 gimp_toggle_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
-                        const gchar *icon_name)
+                        const gchar *icon_name,
+                        const gchar *help_id)
 {
   GtkToggleAction *action;
 
@@ -88,36 +85,20 @@ gimp_toggle_action_new (const gchar *name,
                          "icon-name", icon_name,
                          NULL);
 
+  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+
   return action;
 }
 
-
-/*  private functions  */
-
-
-static void
-gimp_toggle_action_set_proxy_tooltip (GimpToggleAction *action,
-                                      GtkWidget        *proxy)
+void
+gimp_toggle_action_set_active (GimpToggleAction *action,
+                               gboolean          active)
 {
-  const gchar *tooltip = gtk_action_get_tooltip (GTK_ACTION (action));
-
-  if (tooltip)
-    gimp_help_set_help_data (proxy, tooltip,
-                             g_object_get_qdata (G_OBJECT (proxy),
-                                                 GIMP_HELP_ID));
+  return gtk_toggle_action_set_active ((GtkToggleAction *) action, active);
 }
 
-static void
-gimp_toggle_action_tooltip_notify (GimpToggleAction *action,
-                                   const GParamSpec *pspec,
-                                   gpointer          data)
+gboolean
+gimp_toggle_action_get_active (GimpToggleAction *action)
 {
-  GSList *list;
-
-  for (list = gtk_action_get_proxies (GTK_ACTION (action));
-       list;
-       list = g_slist_next (list))
-    {
-      gimp_toggle_action_set_proxy_tooltip (action, list->data);
-    }
+  return gtk_toggle_action_get_active ((GtkToggleAction *) action);
 }

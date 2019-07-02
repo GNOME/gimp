@@ -97,7 +97,7 @@ plug_in_menus_setup (GimpUIManager *manager,
 
   plug_in_manager = manager->gimp->plug_in_manager;
 
-  merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+  merge_id = gimp_ui_manager_new_merge_id (manager);
 
   for (i = 0; i < manager->gimp->config->filter_history_size; i++)
     {
@@ -108,10 +108,10 @@ plug_in_menus_setup (GimpUIManager *manager,
       action_path = g_strdup_printf ("%s/Filters/Recently Used/Plug-ins",
                                      ui_path);
 
-      gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                             action_path, action_name, action_name,
-                             GTK_UI_MANAGER_MENUITEM,
-                             FALSE);
+      gimp_ui_manager_add_ui (manager, merge_id,
+                              action_path, action_name, action_name,
+                              GTK_UI_MANAGER_MENUITEM,
+                              FALSE);
 
       g_free (action_name);
       g_free (action_path);
@@ -266,8 +266,7 @@ plug_in_menus_unregister_procedure (GimpPDB       *pdb,
                   g_free (merge_key);
 
                   if (merge_id)
-                    gtk_ui_manager_remove_ui (GTK_UI_MANAGER (manager),
-                                              merge_id);
+                    gimp_ui_manager_remove_ui (manager, merge_id);
 
                   break;
                 }
@@ -404,7 +403,7 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
 
   if (! merge_id)
     {
-      merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+      merge_id = gimp_ui_manager_new_merge_id (manager);
       g_object_set_data (G_OBJECT (manager), merge_key,
                          GUINT_TO_POINTER (merge_id));
     }
@@ -416,7 +415,7 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
 
   if (! menu_merge_id)
     {
-      menu_merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));
+      menu_merge_id = gimp_ui_manager_new_merge_id (manager);
       g_object_set_data (G_OBJECT (manager), "plug-in-menu-merge-id",
                          GUINT_TO_POINTER (menu_merge_id));
     }
@@ -435,12 +434,12 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
   GIMP_LOG (MENUS, "adding menu item for '%s' (@ %s)",
             gimp_object_get_name (proc), action_path);
 
-  gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                         action_path,
-                         gimp_object_get_name (proc),
-                         gimp_object_get_name (proc),
-                         GTK_UI_MANAGER_MENUITEM,
-                         FALSE);
+  gimp_ui_manager_add_ui (manager, merge_id,
+                          action_path,
+                          gimp_object_get_name (proc),
+                          gimp_object_get_name (proc),
+                          GTK_UI_MANAGER_MENUITEM,
+                          FALSE);
 
   g_free (action_path);
   g_free (path);
@@ -494,7 +493,7 @@ plug_in_menus_build_path (GimpUIManager *manager,
 
   action_path = g_strdup_printf ("%s%s", ui_path, strchr (menu_path, '/'));
 
-  if (! gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager), action_path))
+  if (! gimp_ui_manager_get_widget (manager, action_path))
     {
       gchar *parent_menu_path   = g_strdup (menu_path);
       gchar *parent_action_path = NULL;
@@ -517,26 +516,25 @@ plug_in_menus_build_path (GimpUIManager *manager,
           action_path = g_strdup_printf ("%s/%s",
                                          parent_action_path, menu_item_name);
 
-          if (! gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
-                                           action_path))
+          if (! gimp_ui_manager_get_widget (manager, action_path))
             {
               GIMP_LOG (MENUS, "adding menu '%s' at path '%s' for action '%s'",
                         menu_item_name, action_path, menu_path);
 
-              gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                                     parent_action_path, menu_item_name,
-                                     menu_path,
-                                     GTK_UI_MANAGER_MENU,
-                                     FALSE);
+              gimp_ui_manager_add_ui (manager, merge_id,
+                                      parent_action_path, menu_item_name,
+                                      menu_path,
+                                      GTK_UI_MANAGER_MENU,
+                                      FALSE);
 
-              gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                                     action_path, "Menus", NULL,
-                                     GTK_UI_MANAGER_PLACEHOLDER,
-                                     FALSE);
-              gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,
-                                     action_path, "Separator", NULL,
-                                     GTK_UI_MANAGER_SEPARATOR,
-                                     FALSE);
+              gimp_ui_manager_add_ui (manager, merge_id,
+                                      action_path, "Menus", NULL,
+                                      GTK_UI_MANAGER_PLACEHOLDER,
+                                      FALSE);
+              gimp_ui_manager_add_ui (manager, merge_id,
+                                      action_path, "Separator", NULL,
+                                      GTK_UI_MANAGER_SEPARATOR,
+                                      FALSE);
             }
 
           g_free (parent_action_path);
@@ -556,8 +554,7 @@ plug_in_menus_build_path (GimpUIManager *manager,
     {
       gchar *placeholder_path = g_strdup_printf ("%s/%s", action_path, "Menus");
 
-      if (gtk_ui_manager_get_widget (GTK_UI_MANAGER (manager),
-                                     placeholder_path))
+      if (gimp_ui_manager_get_widget (manager, placeholder_path))
         {
           g_free (action_path);
 

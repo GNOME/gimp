@@ -172,18 +172,17 @@ tool_options_actions_update_presets (GimpActionGroup *group,
 
   for (i = 0; ; i++)
     {
-      gchar     *action_name;
-      GtkAction *action;
+      gchar      *action_name;
+      GimpAction *action;
 
       action_name = g_strdup_printf ("%s-%03d", action_prefix, i);
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            action_name);
+      action = gimp_action_group_get_action (group, action_name);
       g_free (action_name);
 
       if (! action)
         break;
 
-      gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+      gimp_action_group_remove_action (group, action);
     }
 
   if (presets)

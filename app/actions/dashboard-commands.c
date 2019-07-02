@@ -28,6 +28,8 @@
 
 #include "widgets/gimpdashboard.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpradioaction.h"
+#include "widgets/gimptoggleaction.h"
 #include "widgets/gimpuimanager.h"
 
 #include "dialogs/dialogs.h"
@@ -59,7 +61,8 @@ dashboard_update_interval_cmd_callback (GtkAction *action,
   GimpDashboard              *dashboard = GIMP_DASHBOARD (data);
   GimpDashboardUpdateInteval  update_interval;
 
-  update_interval = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  update_interval =
+    gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   gimp_dashboard_set_update_interval (dashboard, update_interval);
 }
@@ -72,7 +75,8 @@ dashboard_history_duration_cmd_callback (GtkAction *action,
   GimpDashboard                *dashboard = GIMP_DASHBOARD (data);
   GimpDashboardHistoryDuration  history_duration;
 
-  history_duration = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  history_duration =
+    gimp_radio_action_get_current_value (GIMP_RADIO_ACTION (action));
 
   gimp_dashboard_set_history_duration (dashboard, history_duration);
 }
@@ -235,7 +239,8 @@ dashboard_low_swap_space_warning_cmd_callback (GtkAction *action,
   GimpDashboard *dashboard = GIMP_DASHBOARD (data);
   gboolean       low_swap_space_warning;
 
-  low_swap_space_warning = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+  low_swap_space_warning =
+    gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
 
   gimp_dashboard_set_low_swap_space_warning (dashboard, low_swap_space_warning);
 }

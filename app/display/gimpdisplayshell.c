@@ -391,7 +391,7 @@ gimp_display_shell_constructed (GObject *object)
   GtkWidget             *lower_hbox;
   GtkWidget             *inner_table;
   GtkWidget             *gtk_image;
-  GtkAction             *action;
+  GimpAction            *action;
   gint                   image_width;
   gint                   image_height;
   gint                   shell_width;
