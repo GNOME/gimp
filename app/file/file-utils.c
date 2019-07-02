@@ -103,6 +103,18 @@ file_utils_filename_to_file (Gimp         *gimp,
 
   file = g_file_new_for_uri (filename);
 
+  if (! file)
+    {
+      /* Despite the docs says it never fails, it actually can on Windows.
+       * See issue #3093 (and glib#1819).
+       */
+      g_set_error_literal (error,
+                           G_CONVERT_ERROR,
+                           G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
+                           _("Invalid character sequence in URI"));
+      return NULL;
+    }
+
   /*  check for prefixes like http or ftp  */
   if (gimp_plug_in_manager_file_procedure_find_by_prefix (gimp->plug_in_manager,
                                                           GIMP_FILE_PROCEDURE_GROUP_OPEN,
