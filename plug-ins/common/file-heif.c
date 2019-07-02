@@ -1226,7 +1226,9 @@ save_dialog (SaveParams *params)
   GtkWidget *label;
   GtkWidget *lossless_button;
   GtkWidget *frame;
+#ifdef HAVE_LIBHEIF_1_4_0
   GtkWidget *profile_button;
+#endif
   GtkWidget *quality_slider;
   gboolean   run = FALSE;
 
