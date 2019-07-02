@@ -179,7 +179,8 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
   GimpPolygonSelectTool     *poly_sel = GIMP_POLYGON_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv     = free_sel->priv;
 
-  if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (poly_sel),
+  if (press_type == GIMP_BUTTON_PRESS_NORMAL &&
+      gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (poly_sel),
                                       display, coords))
     return;
 
